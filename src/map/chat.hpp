@@ -11,8 +11,7 @@ struct chat_data;
 
 #define MAX_CHAT_USERS 20
 
-struct chat_data {
-	struct block_list bl;            // data for this map object
+struct chat_data : public block_list {
 	char title[CHATROOM_TITLE_SIZE]; // room title 
 	char pass[CHATROOM_PASS_SIZE];   // password
 	bool pub;                        // private/public flag

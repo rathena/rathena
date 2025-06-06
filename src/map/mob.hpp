@@ -277,6 +277,8 @@ struct s_mob_db {
 	uint32 option;
 	std::vector<std::shared_ptr<s_mob_skill>> skill;
 	uint16 damagetaken;
+	int32 group_id;
+	std::string title;
 
 	e_mob_bosstype get_bosstype();
 	s_mob_db();
@@ -287,7 +289,7 @@ private:
 	bool parseDropNode( std::string nodeName, const ryml::NodeRef& node, uint8 max, std::vector<std::shared_ptr<s_mob_drop>>& drops );
 
 public:
-	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 4, 1) {
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 5, 1) {
 
 	}
 
@@ -332,8 +334,7 @@ struct s_dmglog{
 	uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 };
 
-struct mob_data {
-	struct block_list bl;
+struct mob_data : public block_list {
 	struct unit_data  ud;
 	struct view_data *vd;
 	bool vd_changed;
@@ -524,6 +525,7 @@ bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick);
 TIMER_FUNC(mob_attacked);
 TIMER_FUNC(mob_norm_attacked);
 int32 mob_target(struct mob_data *md,struct block_list *bl,int32 dist);
+void mob_randomtarget(mob_data& md, int32& target_id);
 int32 mob_unlocktarget(struct mob_data *md, t_tick tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int32 mob_spawn(struct mob_data *md);

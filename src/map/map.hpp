@@ -478,8 +478,7 @@ struct spawn_data {
 	char filepath[256];
 };
 
-struct flooritem_data {
-	struct block_list bl;
+struct flooritem_data : public block_list {
 	unsigned char subx,suby;
 	int32 cleartimer;
 	int32 first_get_charid,second_get_charid,third_get_charid;
@@ -1280,7 +1279,7 @@ typedef struct s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
-	( ((bl) == (struct block_list*)nullptr || (bl)->type != (type_)) ? (T ## type_ *)nullptr : (T ## type_ *)(bl) )
+	( ((bl) == nullptr || (bl)->type != (type_)) ? static_cast<T ## type_ *>(nullptr) : static_cast<T ## type_ *>(bl) )
 
 extern int32 db_use_sqldbs;
 

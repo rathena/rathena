@@ -55,6 +55,8 @@ enum e_hom_state2 : uint8;
 enum _sp;
 enum e_searchstore_failure : uint16;
 
+#define DMGVAL_IGNORE -30000
+
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xCFF,
