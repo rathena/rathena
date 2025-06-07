@@ -1271,7 +1271,7 @@ static int32 mob_can_changetarget(struct mob_data* md, struct block_list* target
  */
 bool mob_randomtarget(mob_data& md, int32& target_id) {
 	if (!status_has_mode(&md.status, MD_RANDOMTARGET))
-		return true;
+		return true; // Keep current target
 
 	// Pick a random visible target
 	block_list* target = battle_getenemy(&md, DEFAULT_ENEMY_TYPE((&md)), md.status.rhw.range);
