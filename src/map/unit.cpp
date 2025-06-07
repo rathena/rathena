@@ -118,15 +118,15 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 
 	// Reached destination, start attacking
 	if (tbl != nullptr && tbl->type != BL_ITEM && tbl->m == bl.m && ud->walkpath.path_pos > 0 && check_distance_bl(&bl, tbl, ud->chaserange)) {
-		e_unit_attack atk_result = ATTACK_FAIL;
+		int32 stop_flag = USW_FIXPOS|USW_RELEASE_TARGET;
 
 		if (ud->state.attack_continue)
-			atk_result = unit_attack(&bl, tbl->id, ud->state.attack_continue);
+			stop_flag = unit_attack(&bl, tbl->id, ud->state.attack_continue);
 
 		// Stop, unless the attack was skipped
-		if (atk_result != ATTACK_SKIP) {
+		if (stop_flag != USW_NONE) {
 			// We need to make sure the walkpath is cleared here so a monster doesn't continue walking in case it unlocked its target
-			unit_stop_walking(&bl, USW_FIXPOS|USW_FORCE_STOP|USW_RELEASE_TARGET);
+			unit_stop_walking(&bl, stop_flag|USW_FORCE_STOP);
 			return true;
 		}
 	}
@@ -1694,9 +1694,14 @@ bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay ){
 		return false;
 	}
 
-	ud = unit_bl2ud(bl);
+	if (ud = unit_bl2ud(bl); ud == nullptr)
+		return false;
 
-	if(!ud || (!(type&USW_FORCE_STOP) && ud->walktimer == INVALID_TIMER))
+	// Need to release chase target even if already not walking
+	if (type&USW_RELEASE_TARGET)
+		ud->target_to = 0;
+
+	if (!(type&USW_FORCE_STOP) && ud->walktimer == INVALID_TIMER)
 		return false;
 
 	// NOTE: We are using timer data after deleting it because we know the
@@ -1728,9 +1733,6 @@ bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay ){
 	ud->walkpath.path_pos = 0;
 	ud->to_x = bl->x;
 	ud->to_y = bl->y;
-
-	if (type&USW_RELEASE_TARGET)
-		ud->target_to = 0;
 
 	if( canmove_delay > 0 ){
 		ud->canmove_tick = gettick() + canmove_delay;
@@ -2888,44 +2890,46 @@ int32 unit_unattackable(struct block_list *bl)
  * @param continuous: 
  *		0x1 - Whether or not the attack is ongoing
  *		0x2 - Whether function was called from unit_step_timer or not
- * @return see e_unit_attack
+ * @return How the unit should stop; see e_unit_stop_walking
  */
-e_unit_attack unit_attack(struct block_list *src,int32 target_id,int32 continuous)
+int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 {
 	struct block_list *target;
 	struct unit_data  *ud;
 	int32 range;
 
 	if (ud = unit_bl2ud(src); ud == nullptr)
-		return ATTACK_SKIP;	
+		return USW_NONE;
 
 	mob_data* md = BL_CAST(BL_MOB, src);
 
 	// Check for special monster random target mode, function might overwrite the original target
 	if (md != nullptr && !mob_randomtarget(*md, target_id))
-		return ATTACK_SKIP;
+		return USW_NONE; // Continue walking
+
+	int32 stop_flag = (USW_FIXPOS|USW_RELEASE_TARGET);
 
 	target = map_id2bl(target_id);
 	if( target == nullptr || status_isdead(*target) ) {
 		unit_unattackable(src);
-		return ATTACK_FAIL;
+		return stop_flag;
 	}
 
 	if( src->type == BL_PC &&
 		target->type == BL_NPC ) {
 		// Monster npcs [Valaris]
 		npc_click((TBL_PC*)src,(TBL_NPC*)target);
-		return ATTACK_SUCCESS;
+		return stop_flag;
 	}
 
 	if( !unit_can_attack(src, target_id) ) {
 		unit_stop_attack(src);
-		return ATTACK_SKIP;
+		return USW_NONE; // Continue walking
 	}
 
 	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) ) {
 		unit_unattackable(src);
-		return ATTACK_FAIL;
+		return stop_flag;
 	}
 
 	ud->state.attack_continue = (continuous&1)?1:0;
@@ -2939,7 +2943,7 @@ e_unit_attack unit_attack(struct block_list *src,int32 target_id,int32 continuou
 
 	// Just change target/type. [Skotlex]
 	if(ud->attacktimer != INVALID_TIMER)
-		return ATTACK_SUCCESS;
+		return stop_flag;
 
 	// New action request received, delete previous action request if not executed yet
 	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
@@ -2950,20 +2954,25 @@ e_unit_attack unit_attack(struct block_list *src,int32 target_id,int32 continuou
 		ud->target_to = ud->target;
 		ud->stepskill_id = 0;
 		ud->stepskill_lv = 0;
-		return ATTACK_SUCCESS; // Attacking will be handled by unit_walktoxy_timer in this case
+		// Attacking will be handled by unit_walktoxy_timer in this case
+		return USW_NONE;
 	}
 	
 	if(DIFF_TICK(ud->attackabletime, gettick()) > 0) // Do attack next time it is possible. [Skotlex]
 		ud->attacktimer=add_timer(ud->attackabletime,unit_attack_timer,src->id,0);
-	else // Attack NOW.
+	else { // Attack NOW.
+		// We need to send fixpos before the attack so that we don't cancel the attack animation
+		clif_fixpos(*src);
 		unit_attack_timer(INVALID_TIMER, gettick(), src->id, 0);
+		stop_flag &= ~USW_FIXPOS;
+	}
 
 	// Monster state is set regardless of whether the attack is executed now or later
 	// The check is here because unit_attack can be called from both the monster AI and the walking logic
 	if (md != nullptr)
 		mob_setstate(*md, MSS_BERSERK);
 
-	return ATTACK_SUCCESS;
+	return stop_flag;
 }
 
 /** 
