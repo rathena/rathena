@@ -23,20 +23,16 @@ dali02,43,129,5	script	Unpleasant Royal Guard#	4_M_SAKRAYROYAL,{
 		mes "I can only open the secret passage for party leaders. Please have your party leader talk to me.";
 		close;
 	}
+
 	switch( checkquest(1261,PLAYTIME) ) {
 	case -1:
 		break;
-	case 0:
-	case 1:
-		mes "[Unpleasant Royal Guard]";
-		mes "Have you found the princess yet?! Is she safe?";
-		close;
-	case 2:
+	default:
 		mes "[Unpleasant Royal Guard]";
 		mes "The monsters around the secret passage have disappeared. Now is our chance to save the princess!";
 		erasequest 1261;// Cursed Swordman
-		close;
 	}
+
 	mes "[Unpleasant Royal Guard]";
 	mes "I need help, even from the likes of you.";
 	next;
@@ -980,7 +976,7 @@ OnTouch_:
 	else {
 		setquest 1263;// Cursed Swordman
 		completequest 1263;
-		getexp 900000,500000;
+		getexp 50000,50000;
 		getitem 6672,2;// Gray Shard
 	}
 	warp "dali02",46,129;

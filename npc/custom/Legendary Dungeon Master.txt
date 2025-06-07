@@ -1,0 +1,329 @@
+//===== rAthena Script =======================================
+//Legenday Dungeon
+//===== By: ==================================================
+//= SovietBR
+//https://rathena.org/board/profile/103320-sovietbr/
+//===== Current Version: =====================================
+//= 1.0
+//===== Description: =========================================
+//============================================================
+//============================================================
+
+prontera,147,164,5	script	Dungeon Master	65,{
+    mes "[Dungeon Master]";
+    mes "Welcome, adventurer!";
+    mes "I'm just a quest giver, if you want to now more about it, talk to,";
+    mes "our guild lider in prontera";
+    next;
+
+    
+    if (#active_quest) {
+        mes "You have an active quest";
+        mes "Use the atdungeonquest to see your progress.";
+        for (set .@i, 0; .@i < getarraysize(#target_mobs); set .@i, .@i + 1) {
+            mes getmonsterinfo(#target_mobs[.@i], MOB_NAME) + ": " + 
+               #current_kills[.@i] + "/" + #required_kills[.@i];
+        }
+        next;
+        if (select("Abandon Quest:Nevermind") == 1) {
+            // Reset all quest data
+            set #active_quest, 0;
+            deletearray #target_mobs, getarraysize(#target_mobs);
+            deletearray #required_kills, getarraysize(#required_kills);
+            deletearray #current_kills, getarraysize(#current_kills);
+            mes "Quest abandoned!";
+            close;
+        }
+        close;
+    }
+
+
+    mes "Choose your challenge:";
+    next;
+    // Difficulty selection
+    set .@difficulty, select("Easy:Medium:Hard");
+
+    // Show dungeons based on difficulty
+    switch(.@difficulty) {
+        case 1: // Easy
+            set .@dungeon_choice, select("Amatsu Tatami Maze:Ant Hell:Ayothaya Shrine Maze: Brasilis Dungeon: Izlude UnderwaterCave: Clock Tower: Mjolnir Dead Pit: Gonryun Dungeon: Hidden Temple: Louyang Dungeon: Orcs Dungeon: Payon Cave: Prontera Culvert: Sunken Ship: Toy Factory: Umbala Dungeon");
+            set @difficulty_bonus, 5; // 5% bonus
+            set @rolls, 1;
+            // Calculate global dungeon ID: Easy = 1-16
+            set .@dungeon_id, .@dungeon_choice;
+            break;
+        case 2: // Medium
+            set .@dungeon_choice, select("Comodo West Cave:Einbech Mine: Geffen Dungeon: Ice Cave: Magma Dungeon: Pyramids: Sphinx: Turtle Island");
+            set @difficulty_bonus, 10; // 10% bonus
+            set @rolls, 2;
+            // Calculate global dungeon ID: Medium = 17-24
+            set .@dungeon_id, 16 + .@dungeon_choice;
+            break;
+        case 3: // Hard
+            set .@dungeon_choice, select("Abyss Lake: Biolab: Kiel Robot Factory: Curse Abbey: Odin Temple: Rachel Holy Grounds: Thors Volcano: Geffenia");
+            set @difficulty_bonus, 15; // 15% bonus
+            set @rolls, 3;
+            // Calculate global dungeon ID: Hard = 25-32
+            set .@dungeon_id, 24 + .@dungeon_choice;
+            break;
+    }
+
+    // Load dungeon configuration using the GLOBAL dungeon ID
+    callsub L_LoadDungeon, .@dungeon_id;
+
+    mes "[Dungeon Master]";
+    mes "Your quest begins!";
+    close;
+
+OnNPCKillEvent:
+    if (!#active_quest) end;
+
+    // Check killed monster
+    for (set .@i, 0; .@i < getarraysize(#target_mobs); set .@i, .@i + 1) {
+        if (killedrid == #target_mobs[.@i] && #current_kills[.@i] < #required_kills[.@i]) {
+            set #current_kills[.@i], #current_kills[.@i] + 1;
+            dispbottom getmonsterinfo(#target_mobs[.@i], MOB_NAME) + ": " + #current_kills[.@i] + "/" + #required_kills[.@i];
+            
+            // Check completion
+            set .@complete, 1;
+            for (set .@j, 0; .@j < getarraysize(#required_kills); set .@j, .@j + 1) {
+                if (#current_kills[.@j] < #required_kills[.@j]) {
+                    set .@complete, 0;
+                    break;
+                }
+            }
+            
+            if (.@complete) {
+                callsub L_GrantRewards;
+                // Reset quest
+                set #active_quest, 0;
+                deletearray #target_mobs, getarraysize(#target_mobs);
+                deletearray #required_kills, getarraysize(#required_kills);
+                deletearray #current_kills, getarraysize(#current_kills);
+            }
+            break;
+        }
+    }
+    end;
+
+OnInit:
+    // Bind the command when the NPC loads
+    bindatcmd("dungeonquest", strnpcinfo(0) + "::OnQuestProgress");
+    end;
+
+OnQuestProgress:
+    if (!#active_quest) {
+        dispbottom "No active quest.";
+        end;
+    }
+    dispbottom "Quest Progress:";
+    for (set .@i, 0; .@i < getarraysize(#target_mobs); set .@i, .@i + 1) {
+        dispbottom getmonsterinfo(#target_mobs[.@i], MOB_NAME) + ": " 
+                  + #current_kills[.@i] + "/" + #required_kills[.@i];
+    }
+    end;
+
+
+L_LoadDungeon:
+    
+    deletearray #target_mobs, getarraysize(#target_mobs);
+    deletearray #required_kills, getarraysize(#required_kills);
+    set #active_quest, 1;
+
+    switch(getarg(0)) {
+        case 1: // Amatsu Tatami Maze (Easy)
+            setarray #target_mobs, 1401, 1403, 1404, 1129, 1375, 1402, 1191, 1405;
+            setarray #required_kills, 40, 70, 70, 10, 20, 35, 5, 40;
+            break;
+        case 2: // Ant Hell (Easy)
+            setarray #target_mobs, 1005, 1095, 1105, 1121, 1160, 1176;
+            setarray #required_kills, 35, 60, 45, 5, 50, 35;
+            break;
+        case 3: // Ayothaya Shrine Maze (Easy)
+            setarray #target_mobs, 1036, 1179, 1586, 1587, 1583;
+            setarray #required_kills, 30, 30, 65, 25, 100;
+            break;
+        case 4: // Brasilis Dungeon (Easy)
+            setarray #target_mobs, 1068, 1141, 1161, 2069, 2070;
+            setarray #required_kills, 15, 10, 15, 150, 160;
+            break;
+        case 5: // Izlude Underwater Cave (Easy)
+            setarray #target_mobs, 1066, 1067, 1068, 1070, 1141, 1161, 1044, 1144, 1264, 1045, 1069, 1142, 1158, 1065, 1108;
+            setarray #required_kills, 75, 70, 80, 50, 15, 20, 40, 40, 40, 40, 50, 30, 45, 50, 3;
+            break;
+        case 6: // Clock Tower (Easy)
+            setarray #target_mobs, 1102, 1195, 1199, 1270, 1191, 1269, 1377, 1193, 1111, 1194, 1189, 1211, 1213, 1209, 1216; 
+            setarray #required_kills, 1, 80, 100, 5, 8, 40, 1, 80, 60, 70, 20, 20, 50, 25, 45;
+            break;
+        case 7: // Mjolnir Dead Pit (Easy)
+            setarray #target_mobs, 1005, 1145, 1175,    1111, 1121, 1169,   1151,1209;
+            setarray #required_kills, 30, 85, 60,   20, 35, 90,     35,1;
+            break;
+        case 8: // Gonryun Dungeon (Easy)
+            setarray #target_mobs, 1408, 1410, 1417, 1412, 1415, 1413, 1416;
+            setarray #required_kills, 75, 50, 30, 50, 3, 20, 50;
+            break;
+        case 9: // Hidden Temple (Easy)
+            setarray #target_mobs, 1002,  1007,  1011, 1013, 1018, 1025, 1031, 1035, 1037, 1042, 1052, 1056, 1057, 1060, 1243, 1306, 1088, 1090, 1092, 1093, 1101;
+            setarray #required_kills, 2,    2,    2, 2, 2, 2, 40, 20, 20, 2, 2, 2, 2, 5, 1, 1, 1, 1, 1, 10;
+            break;
+        case 10: // Louyang Dungeon (Easy)
+            setarray #target_mobs, 1037, 1129, 1306, 1385, 1516, 1517, 1026, 1191, 1512, 1514, 1513, 1631;
+            setarray #required_kills, 5, 15, 1, 15, 15, 20, 25, 5, 65, 30, 15, 5;
+            break;
+        case 11: // Orcs Dungeon (Easy)
+            setarray #target_mobs, 1005, 1042, 1111, 1152, 1153,    1177, 1189;
+            setarray #required_kills, 15, 30, 25, 50, 50,   20, 3;
+            break;
+        case 12: // Payon Cave (Easy)
+            setarray #target_mobs, 1005, 1015, 1031, 1076, 1016, 1028, 1111, 1116, 1026, 1188, 1170, 1110, 1129, 1180, 1277, 1290, 1301, 1307;
+            setarray #required_kills, 15, 20, 20, 35, 30, 35, 3, 15, 40, 30, 50, 40, 30, 30, 15, 1, 1, 1;
+            break;
+        case 13: // Prontera Culvert (Easy)
+            setarray #target_mobs, 1005,  1048,  1051, 1175, 1014, 1053, 1161, 1054, 1077, 1111, 1209;
+            setarray #required_kills, 5,    50,    20, 30, 10, 55, 15, 35, 5, 10, 5;
+            break;
+        case 14: // Sunken Ship (Easy)
+            setarray #target_mobs, 1068, 1070, 1071, 1077, 1179,    1143, 1120,1191,1208, 1216;
+            setarray #required_kills, 70, 40, 40, 5, 10,     1, 1,3,1, 25;
+            break;
+        case 15: // Toy Factory (Easy)
+            setarray #target_mobs, 1002, 1031, 1090, 1096, 1113, 1242, 1246, 1249, 1250, 1265, 1248, 1515;
+            setarray #required_kills, 10, 20, 1, 1, 10, 20, 60, 55, 1, 60, 35, 1;
+            break;
+        case 16: // Umbala Dungeon (Easy)
+            setarray #target_mobs, 1495, 1498, 1499, 1493, 1497;
+            setarray #required_kills, 70, 20, 10, 25, 50;
+            break;
+        case 17: // Comodo West Cave (Medium)
+            setarray #target_mobs, 1148, 1255, 1256, 1264;
+            setarray #required_kills, 60, 20, 20, 1;
+            break;
+        case 18: // Einbech Mine Dungeon (Medium)
+            setarray #target_mobs, 1616, 1617, 1618, 1619, 1620, 1621, 1614, 1615, 1622;
+            setarray #required_kills, 70, 10, 1, 30, 30, 10, 15, 10, 10;
+            break;
+        case 19: // Geffen Dungeon (Medium)
+            setarray #target_mobs, 1031, 1035, 1077,    1015, 1036, 1061, 1111, 1130, 1204,     1109, 1143, 1179;
+            setarray #required_kills, 15, 25, 25,   25, 50, 50, 20, 30, 1,      35, 20, 20;
+            break;
+        case 20: // Ice Cave (Medium)
+            setarray #target_mobs, 1176, 1778, 1780, 1782,      1775, 1777;
+            setarray #required_kills, 105, 50, 5, 5,      85, 50;
+            break;
+        case 21: // Magma Dungeon (Medium)
+            setarray #target_mobs, 1072, 1366, 1367, 1381, 1383, 1379, 1382, 1384, 1385, 1387;
+            setarray #required_kills, 30, 20, 20, 10, 30, 15, 10, 25, 25, 10;
+            break;
+        case 22: // Pyramids (Medium)
+            setarray #target_mobs,  1005,  1031,  1016, 1028, 1029, 1041, 1111, 1032, 1146, 1191, 1297, 1149, 1194;
+            setarray #required_kills, 25,    20,    15, 15, 30, 60, 20, 35, 15, 20, 10, 25, 10;
+            break;    
+        case 23: // Sphinx (Medium)
+            setarray #target_mobs, 1111, 1146, 1164, 1178, 1140, 1154, 1191, 1098, 1149, 1037;
+            setarray #required_kills, 30, 30, 40, 40, 40, 95, 10, 25, 50, 20;
+            break;   
+        case 24: // Turtle Island (Medium)
+            setarray #target_mobs, 1034, 1256, 1314, 1321, 1322, 1316, 1319, 1315, 1318, 1208;
+            setarray #required_kills, 10, 30, 70, 15, 25, 40, 65, 55, 30, 1;
+            break;     
+        case 25: // Abyss Lake (Hard)
+            setarray #target_mobs, 1191, 1216, 1699, 1714, 1715, 1717, 1718,    1713, 1716;
+            setarray #required_kills, 15, 10, 15, 65, 15, 50, 15,   65, 65;
+            break;
+        case 26: // Lhz Bio Lab (Hard)
+            setarray #target_mobs, 1613, 1627, 1652, 1653, 1654, 1655, 1656, 1657, 1681, 1682, 1634, 1635, 1636, 1637, 1638, 1639, 1640, 1641, 1642, 1643, 1644, 1645;
+            setarray #required_kills, 50, 70, 20, 20, 20, 20, 20, 20, 10, 100, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10;
+            break;
+        case 27: // Kiel Robot Factory (Hard)
+            setarray #target_mobs, 1275, 1735, 1736, 1737;
+            setarray #required_kills, 20, 30, 25, 40;
+            break;
+        case 28: // Abbey (Hard)
+            setarray #target_mobs, 1036;
+            setarray #required_kills, 1;
+            break;
+        case 29: // Odin Temple (Hard)
+            setarray #target_mobs, 1692, 1752, 1753,    1765;
+            setarray #required_kills, 5, 35, 35, 1;
+            break;
+        case 30: // Rachel Holy Grounds (Hard)
+            setarray #target_mobs, 1632, 1633, 1771, 1772, 1773,     1774,  1769, 1770;
+            setarray #required_kills, 15, 13, 70, 105, 70,   50,    90, 80;
+            break;
+        case 31: // Thors Volcano (Hard)
+            setarray #target_mobs, 1829, 1830, 1831, 1833, 1836, 1837, 1839,    1072, 1838;
+            setarray #required_kills, 1, 1, 20, 20, 10, 15, 1,      10, 55;
+            break;
+        case 32: // Geffenia (Hard)
+            setarray #target_mobs, 1204, 1205, 1219, 1268, 1292, 1370, 1371, 1374, 1390;
+            setarray #required_kills, 1, 1, 1, 40, 1, 100, 50, 150, 50, 140;
+            break;
+    }
+
+
+    copyarray #current_kills, #required_kills, getarraysize(#required_kills);
+    for (set .@i, 0; .@i < getarraysize(#current_kills); set .@i, .@i + 1) {
+        set #current_kills[.@i], 0;
+    }
+    return;
+
+L_GrantRewards:
+    // Reward pools (base chances)
+    setarray .@base_chances, 1000, 1000, 1000, 1000, 1000, 1000; // Pool 1-6 (1 = 0.1% chance)
+    set .@pool7_chance, 1000; // Total chance pool (1000 = 100%)
+
+
+    for (set .@i, 0; .@i < 6; set .@i, .@i + 1) {
+        set .@base_chances[.@i], .@base_chances[.@i] + @difficulty_bonus;
+        set .@pool7_chance, .@pool7_chance - .@base_chances[.@i];
+    }
+
+    // Roll rewards
+    for (set .@roll, 0; .@roll < @rolls; set .@roll, .@roll + 1) {
+        set .@roll_result, rand(1000);
+
+        if (.@roll_result < .@base_chances[0]) { // Pool 1
+            setarray .@rewards, 13855, 13607, 12399, 14233, 13851, 13853, 12532, 13849, 13534, 13812, 673, 12913, 14540, 617, 665,13990, 13989,14004, 14108 ; // Potions
+            set .@qty, rand(1, 3); // Give 1-3 items
+        } else if (.@roll_result < .@base_chances[0] + .@base_chances[1]) { // Pool 2
+            setarray .@rewards, 12912, 14234, 14261, 13761, 12831, 14232, 13813, 12531, 673, 12915, 12916, 12399, 13635, 13996, 13545, 13543, 13544, 13546, 13810, 12162, 12172, 12182, 14109, 7776,12909, 7621, 14601 ; // Coins
+            set .@qty, rand(1, 2); // Give 1-3 items
+        } else if (.@roll_result < .@base_chances[0] + .@base_chances[1] + .@base_chances[2]) { // Pool 3
+            setarray .@rewards, 13721, 13835, 13599, 7776, 13603, 13600, 12549, 13600, 13749, 13755, 14107, 14112, 12294, 14252, 13759,13997,  12399, 13636, 12918, 13590, 13624, 13745, 12216, 12219, 14113, 6173; // Refining Mats
+            set .@qty, rand(1, 2); // Give 1-3 items
+        } else if (.@roll_result < .@base_chances[0] + .@base_chances[1] + .@base_chances[2] + .@base_chances[3]) { // Pool 4
+            setarray .@rewards, 13862, 13813, 12105, 616, 7517, 13953, 14259, 13809, 12937, 12352, 13894, 13891, 13892, 6185, 13893, 12399, 13639, 13587, 13591, 13541, 14194, 13542, 13538, 14317; // Better Potions
+            set .@qty, rand(1, 2); // Give 1-3 items
+        } else if (.@roll_result < .@base_chances[0] + .@base_chances[1] + .@base_chances[2] + .@base_chances[3] + .@base_chances[4]) { // Pool 5
+            setarray .@rewards, 13640, 12921, 13692, 13691, 13694, 13693, 12314, 12103, 12246, 6234, 6230, 7517, 12399, 13997, 13540,12920 , 14198, 14605, 14081, 14602, 661, 1371, 1468, 1420, 1476, 1175, 5123, 1737, 1716, 1231, 2327, 1723, 2318, 2342, 2412, 1524, 13710; // MVP Items
+            set .@qty, rand(1, 2); // Give 1-3 items
+        } else if (.@roll_result < .@base_chances[0] + .@base_chances[1] + .@base_chances[2] + .@base_chances[3] + .@base_chances[4] + .@base_chances[5]) { // Pool 6 (0.1% chance)
+            setarray .@rewards, 2357, 2524, 2421, 5171, 13046, 13047, 1189, 1165, 1387, 1366, 1285, 1167, 1422, 2677, 2004, 5160, 1417, 2700, 1473, 1557, 1722, 1242, 1531, 13017, 1377, 2650, 2651, 2648, 2649, 1141, 2659, 2660, 2661, 2662, 2111, 2509, 1720, 1228, 1724, 2374, 2375, 2433, 5808, 2679, 2678, 1138, 1140, 1364, 1365, 1368, 1369, 1415, 1166, 1132, 1469, 1470, 2519, 2655, 1484, 2554, 12381, 6228, 6232; // Ultra Rare Items (replace with your desired items)
+            set .@qty, 1; // Give only 1 item
+            set .@ultra_rare, 1; // Flag for ultra-rare reward
+        } else { // Pool 7 (It will pick from here in case any other is not)
+            setarray .@rewards, 12399, 13532, 12914, 617, 603, 673,12999, 12998, 12997, 12111, 607, 7059; // Fallback items
+            set .@qty, rand(2, 4); // Give 1-3 items
+        }
+
+        
+        for (set .@k, 0; .@k < .@qty; set .@k, .@k + 1) {
+            set .@item, .@rewards[rand(getarraysize(.@rewards))];
+            getitem .@item, 1;
+
+            
+            if (.@ultra_rare) {
+                announce "Congratulations to " + strcharinfo(0) + " for obtaining the exotic item [" + getitemname(.@item) + "]!", bc_all;
+                set .@ultra_rare, 0; // Reset flag
+            }
+        }
+    }
+    return;
+}
+
+
+
+
+
+

@@ -2091,109 +2091,98 @@ veins,337,284,0	script	#ghostestilla_3rdgc	139,3,3,{
 	end;
 OnTouch:
 	if (job_3rd_gc == 9) {
-		if ((checkquest(7104,PLAYTIME) == 0) || (checkquest(7105,PLAYTIME) == 0)) {
-			mes ".....?";
-			mes "There's a sign of somebody present.";
-			mes "You still have time.";
-			close;
-		} else if ((checkquest(7104,PLAYTIME) == 2) || (checkquest(7105,PLAYTIME) == 2)) {
-			mes "The blind alley that Melissa told me about must be this street.";
+		mes "The blind alley that Melissa told me about must be this street.";
+		next;
+		mes "There's a sign of somebody present.";
+		mes "A blonde girl shows up!";
+		donpcevent "Estillda#3rdgc10::OnEnable";
+		next;
+		select("Make a surprise attack.");
+		set .@c_spec, readparam(bDex)+readparam(bAspd)+readparam(bCritical);
+		if (.@c_spec > 209 || (!rand(2) && .@c_spec > 190 && .@c_spec < 210) || (!rand(3) && .@c_spec < 191)) {
+			mes "You take her by the wrist trying not to let her see you.";
+			mes "The food that she is holding falls on the floor.";
 			next;
-			mes "There's a sign of somebody present.";
-			mes "A blonde girl shows up!";
-			donpcevent "Estillda#3rdgc10::OnEnable";
+			mes "[Estillda]";
+			mes "Ahhhh!";
+			mes "Who are you?";
+			mes "What are you doing?";
 			next;
-			select("Make a surprise attack.");
-			set .@c_spec, readparam(bDex)+readparam(bAspd)+readparam(bCritical);
-			if (.@c_spec > 209 || (!rand(2) && .@c_spec > 190 && .@c_spec < 210) || (!rand(3) && .@c_spec < 191)) {
-				mes "You take her by the wrist trying not to let her see you.";
-				mes "The food that she is holding falls on the floor.";
-				next;
+			if(select("Who sent you?:Who's from Rachel?") == 2) {
 				mes "[Estillda]";
-				mes "Ahhhh!";
-				mes "Who are you?";
-				mes "What are you doing?";
+				mes "I don't know! I don't have any idea. I don't know him!";
 				next;
-				if(select("Who sent you?:Who's from Rachel?") == 2) {
-					mes "[Estillda]";
-					mes "I don't know! I don't have any idea. I don't know him!";
-					next;
-				}
-				mes "[Estillda]";
-				mes "If I buy stuff for him...";
-				mes "He said that he can pay for my labor and production costs.";
-				next;
-				mes "[Estillda]";
-				mes "I don't know who he is.";
-				mes "It's true.";
-				mes "Is he bad guy?";
-				next;
-				mes "[Estillda]";
-				mes "Help me, please?";
-				mes "Help me.";
-				mes "I'll do anything you want.";
-				next;
-				mes "[Estillda]";
-				mes "I didn't know anything about him, I don't know if he's a bad guy.";
-				mes "I just bought some stuff... (sobbing)...";
-				next;
-				mes "- Estillda is in shock because she thinks that she's in trouble. -";
-				next;
-				select("Calm her down.");
-				mes "["+strcharinfo(0)+"]";
-				mes "Just relax for a second.";
-				mes "I totally understand what you're saying.";
-				mes "You won't get into any trouble.";
-				next;
-				mes "["+strcharinfo(0)+"]";
-				mes "I'm looking for a guy who committed a crime and ran away.";
-				mes "I have to catch him.";
-				next;
-				mes "["+strcharinfo(0)+"]";
-				mes "So who made you get those supplies?";
-				next;
-				mes "["+strcharinfo(0)+"]";
-				mes "If you cooperate with me, I'm going to protect you until this is all done.";
-				mes "The Assassin Guild will protect you.";
-				next;
-				mes "[Estillda]";
-				mes "You promise, right?";
-				mes "How can I help you?";
-				next;
-				select("When are you supposed to meet?");
-				mes "[Estillda]";
-				mes "Oh, I already delivered the stuff.";
-				mes "I'm on my way back.";
-				next;
-				mes "[Estillda]";
-				mes "Ah, these are mine.";
-				mes "I got a lot of zeny.";
-				next;
-				mes "["+strcharinfo(0)+"]";
-				mes "Then go straight this way and pretend that nothing happened.";
-				next;
-				mes "- I demand that she walks as usual and tell her how to get to Daora's pub. -";
-				donpcevent "Estillda#3rdgc10::OnDisable";
-				if (checkquest(7104) > -1) erasequest 7104;
-				if (checkquest(7105) > -1) erasequest 7105;
-				set job_3rd_gc, 10;
-				setquest 7106;
-				next;
-				mes "- The pub in the underground of Veins is the best place to keep her safe. -";
-				close;
-			} else {
-				mes "- I tried to take her by the wrist, but she already knew and ran away screaming. -";
-				donpcevent "Estillda#3rdgc10::OnDisable";
-				if (checkquest(7104) > -1) erasequest 7104;
-				if (checkquest(7105) > -1) erasequest 7105;
-				setquest 7105;
-				next;
-				mes "You couldn't catch Estillda.";
-				close;
 			}
+			mes "[Estillda]";
+			mes "If I buy stuff for him...";
+			mes "He said that he can pay for my labor and production costs.";
+			next;
+			mes "[Estillda]";
+			mes "I don't know who he is.";
+			mes "It's true.";
+			mes "Is he bad guy?";
+			next;
+			mes "[Estillda]";
+			mes "Help me, please?";
+			mes "Help me.";
+			mes "I'll do anything you want.";
+			next;
+			mes "[Estillda]";
+			mes "I didn't know anything about him, I don't know if he's a bad guy.";
+			mes "I just bought some stuff... (sobbing)...";
+			next;
+			mes "- Estillda is in shock because she thinks that she's in trouble. -";
+			next;
+			select("Calm her down.");
+			mes "["+strcharinfo(0)+"]";
+			mes "Just relax for a second.";
+			mes "I totally understand what you're saying.";
+			mes "You won't get into any trouble.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "I'm looking for a guy who committed a crime and ran away.";
+			mes "I have to catch him.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "So who made you get those supplies?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "If you cooperate with me, I'm going to protect you until this is all done.";
+			mes "The Assassin Guild will protect you.";
+			next;
+			mes "[Estillda]";
+			mes "You promise, right?";
+			mes "How can I help you?";
+			next;
+			select("When are you supposed to meet?");
+			mes "[Estillda]";
+			mes "Oh, I already delivered the stuff.";
+			mes "I'm on my way back.";
+			next;
+			mes "[Estillda]";
+			mes "Ah, these are mine.";
+			mes "I got a lot of zeny.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Then go straight this way and pretend that nothing happened.";
+			next;
+			mes "- I demand that she walks as usual and tell her how to get to Daora's pub. -";
+			donpcevent "Estillda#3rdgc10::OnDisable";
+			if (checkquest(7104) > -1) erasequest 7104;
+			if (checkquest(7105) > -1) erasequest 7105;
+			set job_3rd_gc, 10;
+			setquest 7106;
+			next;
+			mes "- The pub in the underground of Veins is the best place to keep her safe. -";
+			close;
 		} else {
-			mes "An error has occurred.";
-			mes "Please contact the GM team to fix this situation.";
+			mes "- I tried to take her by the wrist, but she already knew and ran away screaming. -";
+			donpcevent "Estillda#3rdgc10::OnDisable";
+			if (checkquest(7104) > -1) erasequest 7104;
+			if (checkquest(7105) > -1) erasequest 7105;
+			setquest 7105;
+			next;
+			mes "You couldn't catch Estillda.";
 			close;
 		}
 	}
@@ -2336,32 +2325,22 @@ OnInit:
 	end;
 OnTouch_:
 	if (job_3rd_gc == 12) {
-		if (checkquest(7107,PLAYTIME) == 2) {
-			mes "This must be the place Estillda told me about.";
-			next;
-			switch(select("Go inside.:Observe the situation.")) {
-			case 1:
-				if ($@3rdgc_room01 == 0) {
-					warp "job3_guil02",34,44;
-					set $@3rdgc_room01, 1;
-				} else {
-					mes "You tried to open the door but it's locked.";
-					mes "It doesn't show any signs of life.";
-					next;
-					mes "Come back here later.";
-				}
-				close;
-			case 2:
-				mes "I back up to watch the situation unfold.";
-				close;
+		mes "This must be the place Estillda told me about.";
+		next;
+		switch(select("Go inside.:Observe the situation.")) {
+		case 1:
+			if ($@3rdgc_room01 == 0) {
+				warp "job3_guil02",34,44;
+				set $@3rdgc_room01, 1;
+			} else {
+				mes "You tried to open the door but it's locked.";
+				mes "It doesn't show any signs of life.";
+				next;
+				mes "Come back here later.";
 			}
-		} else if (checkquest(7107,PLAYTIME) == 0) {
-			mes "This must be the place Estillda told me about.";
-			mes "I have enough time for meeting.";
 			close;
-		} else {
-			mes "An error has occurred.";
-			mes "Contact the GM team to resolve the situation.";
+		case 2:
+			mes "I back up to watch the situation unfold.";
 			close;
 		}
 	}

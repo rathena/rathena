@@ -9516,6 +9516,8 @@ Body:
         Rate: 150
       - Item: Old_Magic_Book
         Rate: 10
+      - Item: Rideword_Hat
+        Rate: 1
       - Item: Rideword_Card
         Rate: 1
         StealProtected: true
@@ -79981,7 +79983,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Gray_Shard
-        Rate: 1000
+        Rate: 10000
       - Item: Decayed_Nail
         Rate: 3000
   - Id: 2949
@@ -80016,7 +80018,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Gray_Shard
-        Rate: 1000
+        Rate: 10000
       - Item: Mementos
         Rate: 2500
       - Item: Worn_Out_Page
@@ -80055,7 +80057,7 @@ Body:
       Detector: true
     Drops:
       - Item: Gray_Shard
-        Rate: 1000
+        Rate: 10000
       - Item: Withered_Flower
         Rate: 2500
       - Item: Exorcize_Herb
@@ -80094,7 +80096,7 @@ Body:
       Detector: true
     Drops:
       - Item: Gray_Shard
-        Rate: 1000
+        Rate: 10000
       - Item: Sticky_Mucus
         Rate: 3000
       - Item: Horn
@@ -80133,7 +80135,7 @@ Body:
       Detector: true
     Drops:
       - Item: Gray_Shard
-        Rate: 1000
+        Rate: 10000
       - Item: Immortal_Heart
         Rate: 2500
   - Id: 2953
@@ -80168,7 +80170,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Gray_Shard
-        Rate: 1000
+        Rate: 10000
       - Item: Decayed_Nail
         Rate: 3000
   - Id: 2954
@@ -80203,7 +80205,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Gray_Shard
-        Rate: 1000
+        Rate: 10000
       - Item: Horrendous_Mouth
         Rate: 3500
       - Item: Sharpened_Cuspid
@@ -80240,7 +80242,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Gray_Shard
-        Rate: 1000
+        Rate: 10000
       - Item: Skel_Bone
         Rate: 3500
       - Item: Manacles
@@ -80277,7 +80279,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Gray_Shard
-        Rate: 1000
+        Rate: 10000
       - Item: Immortal_Heart
         Rate: 2000
       - Item: Realgar_Wine
@@ -80314,7 +80316,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Gray_Shard
-        Rate: 1500
+        Rate: 10000
       - Item: Realgar_Wine
         Rate: 5000
       - Item: Exorcize_Herb
@@ -80353,7 +80355,7 @@ Body:
       Detector: true
     Drops:
       - Item: Gray_Shard
-        Rate: 1500
+        Rate: 10000
       - Item: Tendon
         Rate: 2500
       - Item: Petite_DiablOfs_Horn

@@ -79,17 +79,8 @@ prontera,164,171,3	script	MvP Ladder Warper	56,{
 		}
 	}
 	attachrid .@origin;
-	if ( $@partymembercount != .register_min ) {
-		mes "[MvP Ladder Warper]";
-		mes "You have to form a party with exactly "+ .register_min +" members to play.";
-		close;
-	}
-	else if ( .@online != .register_min )  {
-		mes "[MvP Ladder Warper]";
-		mes "Your party must have "+ .register_min +" members online on map '"+ strnpcinfo(4) +"'.";
-		close;
-	}
-	else if ( .register_cost && Zeny < .register_cost ) {
+	
+	if ( .register_cost && Zeny < .register_cost ) {
 		mes "[MvP Ladder Warper]";
 		mes "You don't have enough zeny. Please come back when you do.";
 		close;
@@ -222,7 +213,7 @@ OnInit:
 	set .timeout, 60;
 
 	// entrance fee (in Zeny)
-	set .register_cost, 100000;
+	set .register_cost, 1000;
 
 	// exact amount of party members needed to start the game
 	set .register_min, 2;

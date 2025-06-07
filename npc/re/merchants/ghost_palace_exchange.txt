@@ -39,33 +39,33 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 	switch(.@type) {
 	case 0:
 		setarray .@items[0],
-			13441, 200,		// Thanos Sword
-			21009, 200, 	// Thanos Great Sword
-			1438,  200,		// Thanos Spear
-			1496,  200,		// Thanos Long Spear
-			1669,  200,		// Thanos Staff
-			2023,  200,		// Thanos Rod
-			18119, 200,		// Thanos Bow
-			13093, 200,		// Thanos Dagger
-			28000, 200,		// Thanos Katar
-			1836,  200,		// Thanos Knuckle
-			16028, 200,		// Thanos Hammer
-			28100, 200,		// Thanos Axe
-			1933,  200,		// Thanos Violin
-			1988,  200;		// Thanos Whip
+			13441, 100,		// Thanos Sword
+			21009, 100, 	// Thanos Great Sword
+			1438,  100,		// Thanos Spear
+			1496,  100,		// Thanos Long Spear
+			1669,  100,		// Thanos Staff
+			2023,  100,		// Thanos Rod
+			18119, 100,		// Thanos Bow
+			13093, 100,		// Thanos Dagger
+			28000, 100,		// Thanos Katar
+			1836,  100,		// Thanos Knuckle
+			16028, 100,		// Thanos Hammer
+			28100, 100,		// Thanos Axe
+			1933,  100,		// Thanos Violin
+			1988,  100;		// Thanos Whip
 		break;
 	case 1:
 		setarray .@items[0],
-			2187,  100,		// Shield Of Gray
-			15090, 100, 	// Armor Of Gray
-			15091, 100,		// Gray Robe
-			20721, 100,		// Cloak Of Gray
-			22033, 100,		// Boots Of Gray
-			18820, 100;		// Gray Helmet
+			2187,  50,		// Shield Of Gray
+			15090, 50, 		// Armor Of Gray
+			15091, 50,		// Gray Robe
+			20721, 50,		// Cloak Of Gray
+			22033, 50,		// Boots Of Gray
+			18820, 50;		// Gray Helmet
 		break;
 	case 2:
 		setarray .@items[0],
-			27184, 10000,		// Knight Sakray Card
+			27184, 100,			// Knight Sakray Card
 			23676, 50, 			// Gray Charcoal Melee (Melee)
 			23677, 50,			// Gray Charcoal Magic (Magic)
 			23678, 50;			// Gray Charcoal Range (Range)
