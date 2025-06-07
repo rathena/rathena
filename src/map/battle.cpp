@@ -171,7 +171,7 @@ static int32 battle_getenemy_sub(struct block_list *bl, va_list ap)
 	if (status_isdead(*bl))
 		return 0;
 
-	if (!status_check_visibility(target, bl, true))
+	if (!status_check_visibility(target, bl, false))
 		return 0;
 
 	if (battle_check_target(target, bl, BCT_ENEMY) > 0) {
