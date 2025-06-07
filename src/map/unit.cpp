@@ -118,11 +118,17 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 
 	// Reached destination, start attacking
 	if (tbl != nullptr && tbl->type != BL_ITEM && tbl->m == bl.m && ud->walkpath.path_pos > 0 && check_distance_bl(&bl, tbl, ud->chaserange)) {
-		// We need to make sure the walkpath is cleared here so a monster doesn't continue walking in case it unlocks its target
-		unit_stop_walking(&bl, USW_FIXPOS|USW_FORCE_STOP|USW_RELEASE_TARGET);
+		e_unit_attack atk_result = ATTACK_FAIL;
+
 		if (ud->state.attack_continue)
-			unit_attack(&bl, tbl->id, ud->state.attack_continue);
-		return true;
+			atk_result = unit_attack(&bl, tbl->id, ud->state.attack_continue);
+
+		// Stop, unless the attack was skipped
+		if (atk_result != ATTACK_SKIP) {
+			// We need to make sure the walkpath is cleared here so a monster doesn't continue walking in case it unlocked its target
+			unit_stop_walking(&bl, USW_FIXPOS|USW_FORCE_STOP|USW_RELEASE_TARGET);
+			return true;
+		}
 	}
 	// Cancel chase
 	else if (tbl == nullptr || (fullcheck && !status_check_visibility(&bl, tbl, (bl.type == BL_MOB)))) {
@@ -2882,43 +2888,44 @@ int32 unit_unattackable(struct block_list *bl)
  * @param continuous: 
  *		0x1 - Whether or not the attack is ongoing
  *		0x2 - Whether function was called from unit_step_timer or not
- * @return Success(0); Fail(1);
+ * @return see e_unit_attack
  */
-int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
+e_unit_attack unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 {
 	struct block_list *target;
 	struct unit_data  *ud;
 	int32 range;
 
-	nullpo_ret(ud = unit_bl2ud(src));
+	if (ud = unit_bl2ud(src); ud == nullptr)
+		return ATTACK_SKIP;	
 
 	mob_data* md = BL_CAST(BL_MOB, src);
 
 	// Check for special monster random target mode, function might overwrite the original target
 	if (md != nullptr && !mob_randomtarget(*md, target_id))
-		return 0; //TODO: This should prevent monsters from stopping
+		return ATTACK_SKIP;
 
 	target = map_id2bl(target_id);
 	if( target == nullptr || status_isdead(*target) ) {
 		unit_unattackable(src);
-		return 1;
+		return ATTACK_FAIL;
 	}
 
 	if( src->type == BL_PC &&
 		target->type == BL_NPC ) {
 		// Monster npcs [Valaris]
 		npc_click((TBL_PC*)src,(TBL_NPC*)target);
-		return 0;
+		return ATTACK_SUCCESS;
 	}
 
 	if( !unit_can_attack(src, target_id) ) {
 		unit_stop_attack(src);
-		return 0;
+		return ATTACK_SKIP;
 	}
 
 	if( battle_check_target(src,target,BCT_ENEMY) <= 0 || !status_check_skilluse(src, target, 0, 0) ) {
 		unit_unattackable(src);
-		return 1;
+		return ATTACK_FAIL;
 	}
 
 	ud->state.attack_continue = (continuous&1)?1:0;
@@ -2932,7 +2939,7 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 
 	// Just change target/type. [Skotlex]
 	if(ud->attacktimer != INVALID_TIMER)
-		return 0;
+		return ATTACK_SUCCESS;
 
 	// New action request received, delete previous action request if not executed yet
 	if(ud->stepaction || ud->steptimer != INVALID_TIMER)
@@ -2943,7 +2950,7 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 		ud->target_to = ud->target;
 		ud->stepskill_id = 0;
 		ud->stepskill_lv = 0;
-		return 0; // Attacking will be handled by unit_walktoxy_timer in this case
+		return ATTACK_SUCCESS; // Attacking will be handled by unit_walktoxy_timer in this case
 	}
 	
 	if(DIFF_TICK(ud->attackabletime, gettick()) > 0) // Do attack next time it is possible. [Skotlex]
@@ -2956,7 +2963,7 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 	if (md != nullptr)
 		mob_setstate(*md, MSS_BERSERK);
 
-	return 0;
+	return ATTACK_SUCCESS;
 }
 
 /** 

@@ -120,6 +120,13 @@ enum e_delay_event {
 	DELAY_EVENT_PARRY, /// Parry activated
 };
 
+/// Enum for unit_attack
+enum e_unit_attack {
+	ATTACK_SUCCESS = 0, /// Unit is attacking, switch to attack mode
+	ATTACK_FAIL = 1, /// Unit tried to attack but failed, switch to idle mode
+	ATTACK_SKIP = 2, /// Attack was skipped completely, do not stop the unit from moving
+};
+
 // PC, MOB, PET
 
 // Does walk action for unit
@@ -159,7 +166,7 @@ bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int32 range
 // Unit attack functions
 int32 unit_stopattack(struct block_list *bl, va_list ap);
 void unit_stop_attack(struct block_list *bl);
-int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous);
+e_unit_attack unit_attack(struct block_list *src,int32 target_id,int32 continuous);
 int32 unit_cancel_combo(struct block_list *bl);
 bool unit_can_attack(struct block_list *bl, int32 target_id);
 
