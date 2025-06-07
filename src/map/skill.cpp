@@ -9442,17 +9442,22 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 
 	case BA_PANGVOICE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv, sc_start(src,bl,SC_CONFUSION,70,7,skill_get_time(skill_id,skill_lv)));
 #ifdef RENEWAL
-		sc_start(src, bl, SC_BLEEDING, 30, skill_lv, skill_get_time2(skill_id, skill_lv)); // TODO: Confirm success rate
+		// In Renewal it causes Confusion and Bleeding to 100% base chance
+		sc_start(src, bl, SC_CONFUSION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		sc_start(src, bl, SC_BLEEDING, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+#else
+		// In Pre-renewal it causes Confusion to 70% base chance
+		sc_start(src, bl, SC_CONFUSION, 70, skill_lv, skill_get_time(skill_id, skill_lv));
 #endif
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
 	case DC_WINKCHARM:
 		if( dstsd ) {
 #ifdef RENEWAL
 			// In Renewal it causes Confusion and Hallucination to 100% base chance
-			sc_start(src, bl, SC_CONFUSION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+			sc_start(src, bl, SC_CONFUSION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 			sc_start(src, bl, SC_HALLUCINATION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 #else
 			// In Pre-Renewal it only causes Wink Charm, if Confusion was successfully started
