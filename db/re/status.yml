@@ -1127,7 +1127,6 @@ Body:
       Shadowweapon: true
       Ghostweapon: true
   - Status: Volcano
-    Icon: EFST_GROUNDMAGIC
     DurationLookup: SA_VOLCANO
     CalcFlags:
       Batk: true
@@ -1138,7 +1137,6 @@ Body:
       NoClearance: true
       RemoveOnHermode: true
   - Status: Deluge
-    Icon: EFST_GROUNDMAGIC
     DurationLookup: SA_DELUGE
     CalcFlags:
       MaxHp: true
@@ -1146,13 +1144,20 @@ Body:
       NoSave: true
       NoClearance: true
   - Status: Violentgale
-    Icon: EFST_GROUNDMAGIC
     DurationLookup: SA_VIOLENTGALE
     CalcFlags:
       Flee: true
     Flags:
       NoSave: true
       NoClearance: true
+  - Status: Groundmagic
+    Icon: EFST_GROUNDMAGIC
+    Flags:
+      # NoRemoveOnDead: true  # todo
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
   - Status: Watk_Element
     DurationLookup: MS_MAGNUM
     Flags:

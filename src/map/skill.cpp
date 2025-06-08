@@ -14489,6 +14489,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 				clif_skill_poseffect( *src, skill_id, skill_lv, x, y, tick );
 	}
 
+	// !TODO : early "return" prevents "skill_onskillusage" from being called, intended?
 	switch(skill_id)
 	{
 	case PR_BENEDICTIO:
@@ -14536,21 +14537,24 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 	case SA_VOLCANO:
 	case SA_DELUGE:
 	case SA_VIOLENTGALE:
-	{	//Does not consumes if the skill is already active. [Skotlex]
-		std::shared_ptr<s_skill_unit_group> sg2;
-		if ((sg2= skill_locate_element_field(src)) != nullptr && ( sg2->skill_id == SA_VOLCANO || sg2->skill_id == SA_DELUGE || sg2->skill_id == SA_VIOLENTGALE ))
-		{
-			if (sg2->limit - DIFF_TICK(gettick(), sg2->tick) > 0)
-			{
-				skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-				return 0; // not to consume items
+		// Does not consume gemstones if the skill is already active.
+		if (std::shared_ptr<s_skill_unit_group> sg2 = skill_locate_element_field(src); sg2 != nullptr) {
+			switch( sg2->skill_id ) {
+				case SA_VOLCANO:
+				case SA_DELUGE:
+				case SA_VIOLENTGALE:
+					if (sg2->limit - DIFF_TICK(gettick(), sg2->tick) > 0) {
+						skill_unitsetting(src,skill_id,skill_lv,x,y,0);
+						return 0; // not to consume items
+					}
+					sg2->limit = 0; // Disable it.
+					break;
 			}
-			else
-				sg2->limit = 0; //Disable it.
 		}
+		sc_start(src, src, SC_GROUNDMAGIC, 100, 0, skill_get_time(skill_id, skill_lv));
+
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
-	}
 
 	// Skill Unit Setting
 	case MG_SAFETYWALL: {
@@ -16077,22 +16081,20 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 	case SA_VIOLENTGALE:
 	case SC_CHAOSPANIC:
 	case SOA_TOTEM_OF_TUTELARY:
-	{
-		std::shared_ptr<s_skill_unit_group> old_sg = skill_locate_element_field(src);
-
-		if (old_sg != nullptr)
-		{	//HelloKitty confirmed that these are interchangeable,
-			//so you can change element and not consume gemstones.
-			if ((
-				old_sg->skill_id == SA_VOLCANO ||
-				old_sg->skill_id == SA_DELUGE ||
-				old_sg->skill_id == SA_VIOLENTGALE
-			) && old_sg->limit > 0)
-			{	//Use the previous limit (minus the elapsed time) [Skotlex]
-				limit = old_sg->limit - DIFF_TICK(gettick(), old_sg->tick);
-				if (limit < 0)	//This can happen...
-					limit = skill_get_time(skill_id,skill_lv);
+		if (std::shared_ptr<s_skill_unit_group> old_sg = skill_locate_element_field(src); old_sg != nullptr) {
+			if (old_sg->limit > 0) {
+				switch( old_sg->skill_id ) {
+					case SA_VOLCANO:
+					case SA_DELUGE:
+					case SA_VIOLENTGALE:
+						// These are interchangeable, so you can change the element and casting does not consume gemstones.
+						// Use the previous limit (minus the elapsed time)
+						limit = old_sg->limit - DIFF_TICK(gettick(), old_sg->tick);
+						if (limit < 0)	// This can happen...
+							limit = skill_get_time(skill_id,skill_lv);
+						break;
 			}
+			// Delete previous unit
 			skill_clear_group(src,1);
 		}
 		break;
