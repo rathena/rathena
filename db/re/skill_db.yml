@@ -817,7 +817,29 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Fire
-    SplashArea: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 2
+      - Level: 10
+        Area: 2
+      - Level: 11
+        Area: 3
     CopyFlags:
       Skill:
         Plagiarism: true
