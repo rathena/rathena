@@ -1000,433 +1000,433 @@ Body:
     RequiredRequirementsCount: 10
     Requirements:
       - Item: Danggie
-        Amount: 10
+        Amount: 5
       - Item: Tree_Root
-        Amount: 10
+        Amount: 5
       - Item: Reptile_Tongue
-        Amount: 10
+        Amount: 5
       - Item: Scorpion's_Tail
-        Amount: 10
+        Amount: 5
       - Item: Stem
-        Amount: 10
+        Amount: 5
       - Item: Pointed_Scale
-        Amount: 10
+        Amount: 5
       - Item: Resin
-        Amount: 10
+        Amount: 5
       - Item: Spawn
-        Amount: 10
+        Amount: 5
       - Item: Jellopy
-        Amount: 10
+        Amount: 5
       - Item: Garlet
-        Amount: 10
+        Amount: 5
       - Item: Scell
-        Amount: 10
+        Amount: 5
       - Item: Zargon
-        Amount: 10
+        Amount: 5
       - Item: Tooth_Of_Bat
-        Amount: 10
+        Amount: 5
       - Item: Fluff
-        Amount: 10
+        Amount: 5
       - Item: Chrysalis
-        Amount: 10
+        Amount: 5
       - Item: Feather_Of_Birds
-        Amount: 10
+        Amount: 5
       - Item: Talon
-        Amount: 10
+        Amount: 5
       - Item: Sticky_Webfoot
-        Amount: 10
+        Amount: 5
       - Item: Animal's_Skin
-        Amount: 10
+        Amount: 5
       - Item: Claw_Of_Wolves
-        Amount: 10
+        Amount: 5
       - Item: Mushroom_Spore
-        Amount: 10
+        Amount: 5
       - Item: Orcish_Cuspid
-        Amount: 10
+        Amount: 5
       - Item: Evil_Horn
-        Amount: 10
+        Amount: 5
       - Item: Powder_Of_Butterfly
-        Amount: 10
+        Amount: 5
       - Item: Bill_Of_Birds
-        Amount: 10
+        Amount: 5
       - Item: Scale_Of_Snakes
-        Amount: 10
+        Amount: 5
       - Item: Insect_Feeler
-        Amount: 10
+        Amount: 5
       - Item: Immortal_Heart
-        Amount: 10
+        Amount: 5
       - Item: Rotten_Bandage
-        Amount: 10
+        Amount: 5
       - Item: Orcish_Voucher
-        Amount: 10
+        Amount: 5
       - Item: Skel_Bone
-        Amount: 10
+        Amount: 5
       - Item: Shell
-        Amount: 10
+        Amount: 5
       - Item: Scales_Shell
-        Amount: 10
+        Amount: 5
       - Item: Posionous_Canine
-        Amount: 10
+        Amount: 5
       - Item: Sticky_Mucus
-        Amount: 10
+        Amount: 5
       - Item: Bee_Sting
-        Amount: 10
+        Amount: 5
       - Item: Grasshopper's_Leg
-        Amount: 10
+        Amount: 5
       - Item: Nose_Ring
-        Amount: 10
+        Amount: 5
       - Item: Yoyo_Tail
-        Amount: 10
+        Amount: 5
       - Item: Solid_Shell
-        Amount: 10
+        Amount: 5
       - Item: Horseshoe
-        Amount: 10
+        Amount: 5
       - Item: Raccoon_Leaf
-        Amount: 10
+        Amount: 5
       - Item: Snail's_Shell
-        Amount: 10
+        Amount: 5
       - Item: Horn
-        Amount: 10
+        Amount: 5
       - Item: Bear's_Foot
-        Amount: 10
+        Amount: 5
       - Item: Feather
-        Amount: 10
+        Amount: 5
       - Item: Heart_Of_Mermaid
-        Amount: 10
+        Amount: 5
       - Item: Fin
-        Amount: 10
+        Amount: 5
       - Item: Cactus_Needle
-        Amount: 10
+        Amount: 5
       - Item: Stone_Heart
-        Amount: 10
+        Amount: 5
       - Item: Shining_Scales
-        Amount: 10
+        Amount: 5
       - Item: Worm_Peelings
-        Amount: 10
+        Amount: 5
       - Item: Gill
-        Amount: 10
+        Amount: 5
       - Item: Decayed_Nail
-        Amount: 10
+        Amount: 5
       - Item: Horrendous_Mouth
-        Amount: 10
+        Amount: 5
       - Item: Rotten_Scale
-        Amount: 10
+        Amount: 5
       - Item: Nipper
-        Amount: 10
+        Amount: 5
       - Item: Conch
-        Amount: 10
+        Amount: 5
       - Item: Tentacle
-        Amount: 10
+        Amount: 5
       - Item: Sharp_Scale
-        Amount: 10
+        Amount: 5
       - Item: Crap_Shell
-        Amount: 10
+        Amount: 5
       - Item: Clam_Shell
-        Amount: 10
+        Amount: 5
       - Item: Flesh_Of_Clam
-        Amount: 10
+        Amount: 5
       - Item: Turtle_Shell
-        Amount: 10
+        Amount: 5
       - Item: Voucher_Of_Orcish_Hero
-        Amount: 10
+        Amount: 5
       - Item: Gold
-        Amount: 10
+        Amount: 5
       - Item: Lizard_Scruff
-        Amount: 10
+        Amount: 5
       - Item: Colorful_Shell
-        Amount: 10
+        Amount: 5
       - Item: Jaws_Of_Ant
-        Amount: 10
+        Amount: 5
       - Item: Thin_N'_Long_Tongue
-        Amount: 10
+        Amount: 5
       - Item: Rat_Tail
-        Amount: 10
+        Amount: 5
       - Item: Moustache_Of_Mole
-        Amount: 10
+        Amount: 5
       - Item: Nail_Of_Mole
-        Amount: 10
+        Amount: 5
       - Item: Wooden_Block
-        Amount: 10
+        Amount: 5
       - Item: Long_Hair
-        Amount: 10
+        Amount: 5
       - Item: Dokkaebi_Horn
-        Amount: 10
+        Amount: 5
       - Item: Fox_Tail
-        Amount: 10
+        Amount: 5
       - Item: Fish_Tail
-        Amount: 10
+        Amount: 5
       - Item: Chinese_Ink
-        Amount: 10
+        Amount: 5
       - Item: Spiderweb
-        Amount: 10
+        Amount: 5
       - Item: Acorn
-        Amount: 10
+        Amount: 5
       - Item: Porcupine_Spike
-        Amount: 10
+        Amount: 5
       - Item: Wild_Boar's_Mane
-        Amount: 10
+        Amount: 5
       - Item: Tiger's_Skin
-        Amount: 10
+        Amount: 5
       - Item: Tiger_Footskin
-        Amount: 10
+        Amount: 5
       - Item: Limb_Of_Mantis
-        Amount: 10
+        Amount: 5
       - Item: Blossom_Of_Maneater
-        Amount: 10
+        Amount: 5
       - Item: Root_Of_Maneater
-        Amount: 10
+        Amount: 5
       - Item: Cobold_Hair
-        Amount: 10
+        Amount: 5
       - Item: Dragon_Canine
-        Amount: 10
+        Amount: 5
       - Item: Dragon_Scale
-        Amount: 10
+        Amount: 5
       - Item: Dragon_Train
-        Amount: 10
+        Amount: 5
       - Item: Petite_DiablOfs_Horn
-        Amount: 10
+        Amount: 5
       - Item: Petite_DiablOfs_Wing
-        Amount: 10
+        Amount: 5
       - Item: Elder_Pixie's_Beard
-        Amount: 10
+        Amount: 5
       - Item: Lantern
-        Amount: 10
+        Amount: 5
       - Item: Short_Leg
-        Amount: 10
+        Amount: 5
       - Item: Nail_Of_Orc
-        Amount: 10
+        Amount: 5
       - Item: Tooth_Of_
-        Amount: 10
+        Amount: 5
       - Item: Sacred_Masque
-        Amount: 10
+        Amount: 5
       - Item: Tweezer
-        Amount: 10
+        Amount: 5
       - Item: Head_Of_Medusa
-        Amount: 10
+        Amount: 5
       - Item: Slender_Snake
-        Amount: 10
+        Amount: 5
       - Item: Skirt_Of_Virgin
-        Amount: 10
+        Amount: 5
       - Item: Tendon
-        Amount: 10
+        Amount: 5
       - Item: Detonator
-        Amount: 10
+        Amount: 5
       - Item: Single_Cell
-        Amount: 10
+        Amount: 5
       - Item: Tooth_Of_Ancient_Fish
-        Amount: 10
+        Amount: 5
       - Item: Lip_Of_Ancient_Fish
-        Amount: 10
+        Amount: 5
       - Item: Earthworm_Peeling
-        Amount: 10
+        Amount: 5
       - Item: Grit
-        Amount: 10
+        Amount: 5
       - Item: Moth_Dust
-        Amount: 10
+        Amount: 5
       - Item: Wing_Of_Moth
-        Amount: 10
+        Amount: 5
       - Item: Transparent_Cloth
-        Amount: 10
+        Amount: 5
       - Item: Golden_Hair
-        Amount: 10
+        Amount: 5
       - Item: Starsand_Of_Witch
-        Amount: 10
+        Amount: 5
       - Item: Pumpkin_Head
-        Amount: 10
+        Amount: 5
       - Item: Sharpened_Cuspid
-        Amount: 10
+        Amount: 5
       - Item: Reins
-        Amount: 10
+        Amount: 5
       - Item: Tree_Of_Archer_1
-        Amount: 10
+        Amount: 5
       - Item: Tree_Of_Archer_2
-        Amount: 10
+        Amount: 5
       - Item: Tree_Of_Archer_3
-        Amount: 10
+        Amount: 5
       - Item: Short_Daenggie
-        Amount: 10
+        Amount: 5
       - Item: Needle_Of_Alarm
-        Amount: 10
+        Amount: 5
       - Item: Round_Shell
-        Amount: 10
+        Amount: 5
       - Item: Worn_Out_Page
-        Amount: 10
+        Amount: 5
       - Item: Manacles
-        Amount: 10
+        Amount: 5
       - Item: Worn_Out_Prison_Uniform
-        Amount: 10
+        Amount: 5
       - Item: Light_Up_Card1
-        Amount: 10
+        Amount: 5
       - Item: Light_Up_Card2
-        Amount: 10
+        Amount: 5
       - Item: Light_Up_Card3
-        Amount: 10
+        Amount: 5
       - Item: Light_Up_Card4
-        Amount: 10
+        Amount: 5
       - Item: Fur
-        Amount: 10
+        Amount: 5
       - Item: Peaked_Hat
-        Amount: 10
+        Amount: 5
       - Item: Hard_Skin
-        Amount: 10
+        Amount: 5
       - Item: Mystic_Horn
-        Amount: 10
+        Amount: 5
       - Item: Rakehorn_Helm
-        Amount: 10
+        Amount: 5
       - Item: Antler_Helm
-        Amount: 10
+        Amount: 5
       - Item: Twinhorn_Helm
-        Amount: 10
+        Amount: 5
       - Item: Singlehorn_Helm
-        Amount: 10
+        Amount: 5
       - Item: White_Spider_Limb
-        Amount: 10
+        Amount: 5
       - Item: Fortune_Cookie_Fail
-        Amount: 10
+        Amount: 5
       - Item: Tikbalang_Thick_Spine
-        Amount: 10
+        Amount: 5
       - Item: Mould_Powder
-        Amount: 10
+        Amount: 5
       - Item: Ogre_Tooth
-        Amount: 10
+        Amount: 5
       - Item: Anolian_Skin
-        Amount: 10
+        Amount: 5
       - Item: Mud_Lump
-        Amount: 10
+        Amount: 5
       - Item: Skull
-        Amount: 10
+        Amount: 5
       - Item: Wing_Of_Red_Bat
-        Amount: 10
+        Amount: 5
       - Item: Claw_Of_Rat
-        Amount: 10
+        Amount: 5
       - Item: Stiff_Horn
-        Amount: 10
+        Amount: 5
       - Item: Glitter_Shell
-        Amount: 10
+        Amount: 5
       - Item: Tail_Of_Steel_Scorpion
-        Amount: 10
+        Amount: 5
       - Item: Claw_Of_Monkey
-        Amount: 10
+        Amount: 5
       - Item: Tough_Scalelike_Stem
-        Amount: 10
+        Amount: 5
       - Item: Coral_Reef
-        Amount: 10
+        Amount: 5
       - Item: Executioner's_Mitten
-        Amount: 10
+        Amount: 5
       - Item: Claw_Of_Desert_Wolf
-        Amount: 10
+        Amount: 5
       - Item: Old_Frying_Pan
-        Amount: 10
+        Amount: 5
       - Item: Piece_Of_Egg_Shell
-        Amount: 10
+        Amount: 5
       - Item: Poison_Spore
-        Amount: 10
+        Amount: 5
       - Item: Alice's_Apron
-        Amount: 10
+        Amount: 5
       - Item: Talon_Of_Griffin
-        Amount: 10
+        Amount: 5
       - Item: Cyfar
-        Amount: 10
+        Amount: 5
       - Item: Brigan
-        Amount: 10
+        Amount: 5
       - Item: Treasure_Box
-        Amount: 10
+        Amount: 5
       - Item: Old_White_Cloth
-        Amount: 10
+        Amount: 5
       - Item: Clattering_Skull
-        Amount: 10
+        Amount: 5
       - Item: Broken_Farming_Utensil
-        Amount: 10
+        Amount: 5
       - Item: Broken_Crown
-        Amount: 10
+        Amount: 5
       - Item: Glast_Decayed_Nail
-        Amount: 10
+        Amount: 5
       - Item: Glast_Horrendous_Mouth
-        Amount: 10
+        Amount: 5
       - Item: Shabby_Crown
-        Amount: 10
+        Amount: 5
       - Item: Stone_Of_Chill
-        Amount: 10
+        Amount: 5
       - Item: Soften_Skin
-        Amount: 10
+        Amount: 5
       - Item: Porcupine_Big_Spike
-        Amount: 10
+        Amount: 5
       - Item: Shabby_Old_Belt
-        Amount: 10
+        Amount: 5
       - Item: Moving_Black_Things
-        Amount: 10
+        Amount: 5
       - Item: Valkyrie_Fragment
-        Amount: 10
+        Amount: 5
       - Item: Will_Of_Owner
-        Amount: 10
+        Amount: 5
       - Item: Piece_Of_Chimera
-        Amount: 10
+        Amount: 5
       - Item: Fallen_Leaves_Branch
-        Amount: 10
+        Amount: 5
       - Item: Core_Jelly
-        Amount: 10
+        Amount: 5
       - Item: CleanBone
-        Amount: 10
+        Amount: 5
       - Item: DeadlyPoisonPowder
-        Amount: 10
+        Amount: 5
       - Item: BanditsScarf
-        Amount: 10
+        Amount: 5
       - Item: CrudeAmmo
-        Amount: 10
+        Amount: 5
       - Item: BrokenShotgun
-        Amount: 10
+        Amount: 5
       - Item: CrudeScimiter
-        Amount: 10
+        Amount: 5
       - Item: WornRevolver
-        Amount: 10
+        Amount: 5
       - Item: BrownMuffler
-        Amount: 10
+        Amount: 5
       - Item: SwampBugPeelings
-        Amount: 10
+        Amount: 5
       - Item: BrownRatTail
-        Amount: 10
+        Amount: 5
       - Item: Frozen_PieceOfRock
-        Amount: 10
+        Amount: 5
       - Item: SpritJewel
-        Amount: 10
+        Amount: 5
       - Item: Snowball
-        Amount: 10
+        Amount: 5
       - Item: KTULLANUXsEye
-        Amount: 10
+        Amount: 5
       - Item: HazyDream
-        Amount: 10
+        Amount: 5
       - Item: BrokenArrow
-        Amount: 10
+        Amount: 5
       - Item: SubjugationFlyer
-        Amount: 10
+        Amount: 5
       - Item: IllusoryStone
-        Amount: 10
+        Amount: 5
       - Item: Torn_Diary
-        Amount: 10
+        Amount: 5
       - Item: Dried_Clover
-        Amount: 10
+        Amount: 5
       - Item: Short_Bat_Fur
-        Amount: 10
+        Amount: 5
       - Item: NightmareOfLump
-        Amount: 10
+        Amount: 5
       - Item: Shining_Spore
-        Amount: 10
+        Amount: 5
       - Item: Dried_Leaf_Of_Ygg
-        Amount: 10
+        Amount: 5
       - Item: SuspiciousMagicCircle
-        Amount: 10
+        Amount: 5
       - Item: PieceOfBlackSpirit
-        Amount: 10
+        Amount: 5
       - Item: OldDoll
-        Amount: 10
+        Amount: 5
       - Item: OldShell
-        Amount: 10
+        Amount: 5
       - Item: Ein_SOLIDDUST
-        Amount: 10
+        Amount: 5
       - Item: Ein_RUSTHELM
-        Amount: 10
+        Amount: 5
       - Item: Ein_EYEROCK
-        Amount: 10
+        Amount: 5
   - Item: PetEgg_Recipe
     RewardGroup: PET_EGG_BOX
     RequiredRequirementsCount: 2
@@ -2150,609 +2150,609 @@ Body:
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 10
+        Amount: 2
       - Item: Token_of_OrcGeneral
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_8
     RewardGroup: BS_ITEM_M_S_8
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 10
+        Amount: 2
       - Item: Valhalla_Flower
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_10
     RewardGroup: BS_ITEM_M_S_10
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 10
+        Amount: 2
       - Item: Broken_Crown
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_11
     RewardGroup: BS_ITEM_M_S_11
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 10
+        Amount: 2
       - Item: Mother's_Nightmare
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_34
     RewardGroup: BS_ITEM_M_S_34
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 10
+        Amount: 2
       - Item: Piece_Of_Bone_Armor
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_41
     RewardGroup: BS_ITEM_M_S_41
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 10
+        Amount: 2
       - Item: Mother's_Nightmare
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_42
     RewardGroup: BS_ITEM_M_S_42
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 10
+        Amount: 2
       - Item: Shine_Spear_Blade
-        Amount: 50
+        Amount: 5
   - Item: Bs_Item_M_S_43
     RewardGroup: BS_ITEM_M_S_43
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 10
+        Amount: 2
       - Item: Osiris_Doll
-        Amount: 30
+        Amount: 5
   - Item: Bs_Item_M_S_44
     RewardGroup: BS_ITEM_M_S_44
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 10
+        Amount: 2
       - Item: Fang_Of_Garm
-        Amount: 120
+        Amount: 5
   - Item: Bs_Sha_M_S_1
     RewardGroup: BS_SHA_M_S_1
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 10
+        Amount: 2
       - Item: Pocket_Watch
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_17
     RewardGroup: BS_SHA_M_S_17
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 10
+        Amount: 2
       - Item: Osiris_Doll
-        Amount: 10
+        Amount: 5
   - Item: Bs_Sha_M_S_18
     RewardGroup: BS_SHA_M_S_18
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 10
+        Amount: 2
       - Item: Baphomet_Doll
-        Amount: 10
+        Amount: 5
   - Item: Bs_Sha_M_S_19
     RewardGroup: BS_SHA_M_S_19
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 10
+        Amount: 2
       - Item: Shine_Spear_Blade
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_20
     RewardGroup: BS_SHA_M_S_20
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 10
+        Amount: 2
       - Item: Loki's_Whispers
-        Amount: 50
+        Amount: 5
   - Item: Bs_Item_M_S_4
     RewardGroup: BS_ITEM_M_S_4
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Baphomet_Doll
-        Amount: 30
+        Amount: 5
   - Item: Bs_Item_M_S_6
     RewardGroup: BS_ITEM_M_S_6
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Tiger_Footskin
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_7
     RewardGroup: BS_ITEM_M_S_7
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: White_Snake_Tear
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_12
     RewardGroup: BS_ITEM_M_S_12
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Gemstone
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_13
     RewardGroup: BS_ITEM_M_S_13
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Young_Twig
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_15
     RewardGroup: BS_ITEM_M_S_15
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Taegeuk_Plate
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_28
     RewardGroup: BS_ITEM_M_S_28
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Ice_Scale
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_29
     RewardGroup: BS_ITEM_M_S_29
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Gemstone
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_31
     RewardGroup: BS_ITEM_M_S_31
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Dark_Red_Scale
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_32
     RewardGroup: BS_ITEM_M_S_32
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Mother's_Nightmare
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_33
     RewardGroup: BS_ITEM_M_S_33
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Broken_Crown
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_36
     RewardGroup: BS_ITEM_M_S_36
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Tiger_Footskin
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_37
     RewardGroup: BS_ITEM_M_S_37
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Loki's_Whispers
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_38
     RewardGroup: BS_ITEM_M_S_38
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Pocket_Watch
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_39
     RewardGroup: BS_ITEM_M_S_39
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Tutankhamen's_Mask
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_40
     RewardGroup: BS_ITEM_M_S_40
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Broken_Pharaoh_Symbol
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_45
     RewardGroup: BS_ITEM_M_S_45
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Dark_Red_Scale
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_46
     RewardGroup: BS_ITEM_M_S_46
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Scale_Of_Red_Dragon
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_47
     RewardGroup: BS_ITEM_M_S_47
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Konts_Letter
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_48
     RewardGroup: BS_ITEM_M_S_48
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Osiris_Doll
-        Amount: 30
+        Amount: 5
   - Item: Bs_Item_M_S_49
     RewardGroup: BS_ITEM_M_S_49
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Token_of_OrcGeneral
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_50
     RewardGroup: BS_ITEM_M_S_50
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Young_Twig
-        Amount: 150
+        Amount: 5
   - Item: Bs_Sha_M_S_2
     RewardGroup: BS_SHA_M_S_2
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 20
+        Amount: 2
       - Item: Scale_Of_Red_Dragon
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_5
     RewardGroup: BS_SHA_M_S_5
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 20
+        Amount: 2
       - Item: Queen_Wing_Piece
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_6
     RewardGroup: BS_SHA_M_S_6
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 20
+        Amount: 2
       - Item: Tiger_Footskin
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_7
     RewardGroup: BS_SHA_M_S_7
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 20
+        Amount: 2
       - Item: Boroken_Shiled_Piece
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_8
     RewardGroup: BS_SHA_M_S_8
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 20
+        Amount: 2
       - Item: Will_Of_Darkness_
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_13
     RewardGroup: BS_SHA_M_S_13
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 20
+        Amount: 2
       - Item: Voucher_Of_Orcish_Hero
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_15
     RewardGroup: BS_SHA_M_S_15
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 20
+        Amount: 2
       - Item: Token_of_OrcGeneral
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_16
     RewardGroup: BS_SHA_M_S_16
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 20
+        Amount: 2
       - Item: Mother's_Nightmare
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_23
     RewardGroup: BS_SHA_M_S_23
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 20
+        Amount: 2
       - Item: Broken_Horn
-        Amount: 50
+        Amount: 5
   - Item: Bs_Item_M_S_5
     RewardGroup: BS_ITEM_M_S_5
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 25
+        Amount: 2
       - Item: Osiris_Doll
-        Amount: 30
+        Amount: 5
   - Item: Bs_Item_M_S_9
     RewardGroup: BS_ITEM_M_S_9
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 25
+        Amount: 2
       - Item: Valhalla_Flower
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_14
     RewardGroup: BS_ITEM_M_S_14
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 25
+        Amount: 2
       - Item: Dark_Red_Scale
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_16
     RewardGroup: BS_ITEM_M_S_16
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 25
+        Amount: 2
       - Item: Will_Of_Darkness_
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_17
     RewardGroup: BS_ITEM_M_S_17
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 25
+        Amount: 2
       - Item: Mother's_Nightmare
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_19
     RewardGroup: BS_ITEM_M_S_19
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 25
+        Amount: 2
       - Item: Ice_Scale
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_27
     RewardGroup: BS_ITEM_M_S_27
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 25
+        Amount: 2
       - Item: Broken_Crown
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_35
     RewardGroup: BS_ITEM_M_S_35
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 25
+        Amount: 2
       - Item: Will_Of_Darkness_
-        Amount: 150
+        Amount: 5
   - Item: Bs_Sha_M_S_9
     RewardGroup: BS_SHA_M_S_9
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 25
+        Amount: 2
       - Item: Young_Twig
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_10
     RewardGroup: BS_SHA_M_S_10
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 25
+        Amount: 2
       - Item: Tiger_Footskin
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_11
     RewardGroup: BS_SHA_M_S_11
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 25
+        Amount: 2
       - Item: Will_Of_Darkness_
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_21
     RewardGroup: BS_SHA_M_S_21
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 25
+        Amount: 2
       - Item: Shine_Spear_Blade
-        Amount: 10
+        Amount: 5
   - Item: Bs_Sha_M_S_22
     RewardGroup: BS_SHA_M_S_22
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 25
+        Amount: 2
       - Item: Fang_Of_Garm
-        Amount: 50
+        Amount: 5
   - Item: Bs_Item_M_S_1
     RewardGroup: BS_ITEM_M_S_1
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Valhalla_Flower
-        Amount: 300
+        Amount: 5
   - Item: Bs_Item_M_S_3
     RewardGroup: BS_ITEM_M_S_3
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Broken_Crown
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_18
     RewardGroup: BS_ITEM_M_S_18
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Rojerta_Piece
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_20
     RewardGroup: BS_ITEM_M_S_20
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Loki's_Whispers
-        Amount: 200
+        Amount: 5
   - Item: Bs_Item_M_S_21
     RewardGroup: BS_ITEM_M_S_21
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Broken_Horn
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_22
     RewardGroup: BS_ITEM_M_S_22
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Taegeuk_Plate
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_23
     RewardGroup: BS_ITEM_M_S_23
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Fang_Of_Garm
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_24
     RewardGroup: BS_ITEM_M_S_24
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Gemstone
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_25
     RewardGroup: BS_ITEM_M_S_25
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Young_Twig
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_26
     RewardGroup: BS_ITEM_M_S_26
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Boroken_Shiled_Piece
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_30
     RewardGroup: BS_ITEM_M_S_30
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 30
+        Amount: 2
       - Item: Shine_Spear_Blade
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_3
     RewardGroup: BS_SHA_M_S_3
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 30
+        Amount: 2
       - Item: Piece_Of_Bone_Armor
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_4
     RewardGroup: BS_SHA_M_S_4
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 30
+        Amount: 2
       - Item: Konts_Letter
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_12
     RewardGroup: BS_SHA_M_S_12
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 30
+        Amount: 2
       - Item: Taegeuk_Plate
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_14
     RewardGroup: BS_SHA_M_S_14
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 30
+        Amount: 2
       - Item: Loki's_Whispers
-        Amount: 50
+        Amount: 5
   - Item: Bs_Sha_M_S_24
     RewardGroup: BS_SHA_M_S_24
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 25
+        Amount: 2
       - Item: Pocket_Watch
-        Amount: 150
+        Amount: 5
   - Item: Bs_Sha_M_S_25
     RewardGroup: BS_SHA_M_S_25
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Shadowdecon
-        Amount: 25
+        Amount: 2
       - Item: Gemstone
-        Amount: 150
+        Amount: 5
   - Item: Bs_Item_M_S_51
     RewardGroup: BS_ITEM_M_S_51
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 20
+        Amount: 2
       - Item: Queen_Wing_Piece
-        Amount: 150
+        Amount: 5
   - Item: EnchantStone_Recipe_9m
     RewardGroup: ENCHANTSTONE_RECIPE_9M
     Requirements:
@@ -4494,28 +4494,28 @@ Body:
     RewardGroup: BS_ITEM_M_S_52
     Requirements:
       - Item: Zelunium
-        Amount: 150
+        Amount: 2
   - Item: Bs_Item_M_S_53
     RewardGroup: BS_ITEM_M_S_53
     Requirements:
       - Item: Shadowdecon
-        Amount: 150
+        Amount: 2
   - Item: Bs_Item_M_S_54
     RewardGroup: BS_ITEM_M_S_54
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 200
+        Amount: 2
       - Item: Shadowdecon
-        Amount: 200
+        Amount: 2
   - Item: Bs_Item_M_S_55
     RewardGroup: BS_ITEM_M_S_55
     RequiredRequirementsCount: 2
     Requirements:
       - Item: Zelunium
-        Amount: 200
+        Amount: 2
       - Item: Shadowdecon
-        Amount: 200
+        Amount: 2
   - Item: Bs_Item_M_S_56
     RewardGroup: BS_ITEM_M_S_56
     RequiredRequirementsCount: 4
@@ -4523,9 +4523,9 @@ Body:
       - Item: Mightysoul_Essence
       - Item: M_Dimension_Essence
       - Item: Zelunium
-        Amount: 150
+        Amount: 2
       - Item: Shadowdecon
-        Amount: 150
+        Amount: 2
 #  - Item: Bs_Item_M_S_57
 #    RewardGroup: BS_ITEM_M_S_57
 #    RequiredRequirementsCount: 2
