@@ -23,7 +23,7 @@
 
 // Poison Herb Merchants (Guillotine Cross) :: poison_herb_3rd_trader
 //============================================================
--	shop	Herb_Seller	HIDDEN_NPC,no,7932:4000,7933:4000,7934:4000,7935:4000,7936:4000,7937:4000,7931:5000
+-	shop	Herb_Seller	HIDDEN_NPC,no,7134:-1,7933:500,7003:-1,7934:500,7033:-1,7935:500,7932:500,957:-1,7936:500,7937:500,7155:-1,709:500,7565:-1,7931:2000
 
 -	script	::phs	HIDDEN_NPC,{
 	npctalk "Do you need poison?", "", bc_self;
@@ -34,6 +34,7 @@
 job3_guil01,79,96,3	duplicate(phs)	Poison Herb Merchant	4_F_YUNYANG
 morocc,193,100,4	duplicate(phs)	Poison Herb Merchant#moc	4_F_YUNYANG
 lhz_in02,16,205,4	duplicate(phs)	Poison Herb Merchant#lhz	4_F_YUNYANG
+prt_in,125,70,4	duplicate(phs)	Poison Herb Merchant#prt	4_F_YUNYANG
 
 // Rune Stone Merchants (Rune Knight) :: rune_3rd_trader
 //============================================================

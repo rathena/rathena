@@ -76,33 +76,20 @@ mal_dun01,151,235,5	script	Starfish	551,{
 			break;
 		case 2:
 			set .@playtime, checkquest(4197,PLAYTIME);
-			if (.@playtime == 0 || .@playtime == 1) {
-				mes "[Starfish]";
-				mes "Octopus is not around now, hehe.";
-				mes "Please come back later.";
-				close;
-			}
 			if (.@playtime == 2) erasequest 4197;
-			if (rentalcountitem(6442)) {
-				if (instance_create(.@md_name$) < 0) {
-					mes "[Starfish]";
-					mes "Party name is... "+getpartyname(.@party_id)+".";
-					mes "Party leader is... "+strcharinfo(0)+".";
-					mes "^0000ff"+.@md_name$+"^000000, I cannot open now, hehe.";
-					mes "Now is not the time, please wait.";
-					close;
-				}
+			
+			if (instance_create(.@md_name$) < 0) {
 				mes "[Starfish]";
-				mes "I will open the gate for a while to ^0000ff"+.@md_name$+"^000000.";
-				mes "Please catch that pervert octopus,";
-				mes "and come back with it sticked to the pick, hehe.";
+				mes "Party name is... "+getpartyname(.@party_id)+".";
+				mes "Party leader is... "+strcharinfo(0)+".";
+				mes "^0000ff"+.@md_name$+"^000000, I cannot open now, hehe.";
+				mes "Now is not the time, please wait.";
 				close;
 			}
 			mes "[Starfish]";
-			mes "Prepare a pick first,";
-			mes "so you can thread that octopus";
-			mes "with that pick.";
-			mes "Then, I will let you in for a while, hehe.";
+			mes "I will open the gate for a while to ^0000ff"+.@md_name$+"^000000.";
+			mes "Please catch that pervert octopus,";
+			mes "and come back with it sticked to the pick, hehe.";
 			close;
 		case 3:
 			mes "[Starfish]";
@@ -118,38 +105,30 @@ mal_dun01,153,237,5	script	Weird Entrance	844,{
 	next;
 	switch(select("Go in.:Stop.")) {
 	case 1:
-		if (rentalcountitem(6442)) {
-			switch(instance_enter("Octopus Cave")) {
-			case IE_OTHER:
-				mes "[Starfish]";
-				mes "Ah, now is not the time...";
-				mes "Would you come back later? Hehe.";
-				close;
-			case IE_NOINSTANCE:
-			case IE_NOMEMBER:
-				mes "[Starfish]";
-				mes "There is a secret with that entrance.";
-				mes "So, please be careful with it, will ya? Hehe.";
-				close;
-			case IE_OK:
-				mapannounce "mal_dun01", getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member started to hunt the Octopus!",bc_map,"0x00ff99";
-				if (checkquest(4197) == -1) setquest 4197;
-				//warp instance_mapname("1@cash"),199,99;
-				close;
-			default:
-				mes "[Starfish]";
-				mes "Shhh... Weird aura is";
-				mes "coming from that entrance.";
-				mes "Big trouble is waiting, if you go in now.";
-				close;
-			}
+		switch(instance_enter("Octopus Cave")) {
+		case IE_OTHER:
+			mes "[Starfish]";
+			mes "Ah, now is not the time...";
+			mes "Would you come back later? Hehe.";
+			close;
+		case IE_NOINSTANCE:
+		case IE_NOMEMBER:
+			mes "[Starfish]";
+			mes "There is a secret with that entrance.";
+			mes "So, please be careful with it, will ya? Hehe.";
+			close;
+		case IE_OK:
+			mapannounce "mal_dun01", getpartyname(getcharid(1))+" party's "+strcharinfo(0)+" member started to hunt the Octopus!",bc_map,"0x00ff99";
+			if (checkquest(4197) == -1) setquest 4197;
+			//warp instance_mapname("1@cash"),199,99;
+			close;
+		default:
+			mes "[Starfish]";
+			mes "Shhh... Weird aura is";
+			mes "coming from that entrance.";
+			mes "Big trouble is waiting, if you go in now.";
+			close;
 		}
-		mes "[Starfish]";
-		mes "You should definitely prepare";
-		mes "hunting stick if you want to";
-		mes "punish the Octopus.";
-		mes "Or I will not let you in! Hehe.";
-		close;
 	case 2:
 		mes "[Starfish]";
 		mes "Yes Yes, you better quit.";

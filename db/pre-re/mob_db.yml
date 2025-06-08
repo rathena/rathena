@@ -35431,9 +35431,9 @@ Body:
     AegisName: BEELZEBUB_FLY
     Name: Hell Fly
     Level: 66
-    Hp: 500000
-    Attack: 1200
-    Attack2: 2000
+    Hp: 50000
+    Attack: 120
+    Attack2: 200
     Defense: 25
     MagicDefense: 15
     Str: 33
@@ -35493,8 +35493,8 @@ Body:
     BaseExp: 6666666
     JobExp: 6666666
     MvpExp: 3333333
-    Attack: 10000
-    Attack2: 13410
+    Attack: 4100
+    Attack2: 4960
     Defense: 40
     MagicDefense: 40
     Str: 6

@@ -154,10 +154,7 @@ malaya,266,76,3	script	Rodel the Guard#malaya	570,4,4,{
 				next;
 				mes "[Rodel the Guard]";
 				mes "I think there will be more Jejeling hunts in the future. Please join us again next time.";
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-					getitem 6497, 2; // Lesser_Agimat
-				else
-					getitem 6497, 1; // Lesser_Agimat
+				getitem 6497, 200; // Lesser_Agimat
 				getexp 200000,200000;
 				erasequest 7404;
 				setquest 7405;
@@ -707,10 +704,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 		erasequest 7374;
 		erasequest 7379;
 		setquest 7375;
-		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-			getitem 6497, 2; // Lesser_Agimat
-		else
-			getitem 6497, 1; // Lesser_Agimat
+		getitem 6497, 200; // Lesser_Agimat
 		getexp 200000,200000;
 		if (rand(2))
 			$malayaNames$[0] = strcharinfo(0);
@@ -745,10 +739,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 				delitem 6502, 6; // Silver_Cross
 				erasequest 7380;
 				setquest 7381;
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-					getitem 6497, 2; // Lesser_Agimat
-				else
-					getitem 6497, 1; // Lesser_Agimat
+				getitem 6497, 200; // Lesser_Agimat
 				getexp 200000,200000;
 				close;
 			} else {
@@ -813,10 +804,7 @@ malaya,169,350,5	script	Imelda#malaya	475,{
 				setquest 7375;
 				erasequest 7374;
 				erasequest 7379;
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-					getitem 6497, 2; // Lesser_Agimat
-				else
-					getitem 6497, 1; // Lesser_Agimat
+				getitem 6497, 200; // Lesser_Agimat
 				getexp 200000,200000;
 				if (rand(2))
 					$malayaNames$[0] = strcharinfo(0);
@@ -1115,10 +1103,7 @@ malaya,181,353,5	script	Old Man Nardo#malaya	574,{
 					delitem 6503, 5; // Soul_Protection
 					setquest 7378;
 					erasequest 7377;
-					if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-						getitem 6497, 2; // Lesser_Agimat
-					else
-						getitem 6497, 1; // Lesser_Agimat
+					getitem 6497, 200; // Lesser_Agimat
 					getexp 200000,200000;
 					if (!rand(3))
 						$malayaNames$[2] = strcharinfo(0);
@@ -1729,10 +1714,7 @@ malaya,295,171,3	script	Collection Dealer Woeon	582,{
 					delitem 6498, countitem(6498); //Jejellopy
 					setquest 7392;
 					erasequest 7391;
-					if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-						getitem 6497, 2; // Lesser_Agimat
-					else
-						getitem 6497, 1; // Lesser_Agimat
+					getitem 6497, 200; // Lesser_Agimat
 					getexp 200000,200000;
 					set .@memo_name, rand(1,3);
 					if (!rand(3))
@@ -1963,10 +1945,7 @@ malaya,119,217,3	script	Blacksmith Pandoi	538,{
 				delitem 6508, 10; //Silver_Bracelet
 				setquest 7394;
 				erasequest 7393;
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-					getitem 6497, 2; // Lesser_Agimat
-				else
-					getitem 6497, 1; // Lesser_Agimat
+				getitem 6497, 200; // Lesser_Agimat
 				getexp 200000,200000;
 				if (!rand(3))
 					$malayaNames$[1] = strcharinfo(0);
@@ -2074,7 +2053,7 @@ malaya,119,217,3	script	Blacksmith Pandoi	538,{
 			case 3:
 				mes "[Pandoi]";
 				mes "How many Silver Crosses do you need?";
-				mes "I can make up to 50 at a time.";
+				mes "I can make up to 200 at a time.";
 				next;
 				input .@amount;
 				if (.@amount == 0) {
@@ -2082,9 +2061,9 @@ malaya,119,217,3	script	Blacksmith Pandoi	538,{
 					mes "Don't need Silver Crosses?";
 					mes "Well, I can take a rest then. Ha ha ha ha~";
 					close;
-				} else if (.@amount > 50) {
+				} else if (.@amount > 200) {
 					mes "[Pandoi]";
-					mes "A maximum of 50 at a time!";
+					mes "A maximum of 200 at a time!";
 					close;
 				}
 				if (countitem(6508) < (2 * .@amount)) {
@@ -2105,7 +2084,7 @@ malaya,119,217,3	script	Blacksmith Pandoi	538,{
 			close2;
 			progressbar "0xffff00", .@time;
 			delitem 6508, .@amount * 2; //Silver_Bracelet
-			getitem 6502, .@amount; // Silver_Cross
+			getitem 6502, .@amount * 20; // Silver_Cross
 			mes "[Pandoi]";
 			mes "Look at this!";
 			mes "Very nice indeed.";
@@ -2375,10 +2354,7 @@ malaya,326,68,2	script	Pedro the Sailor	100,{
 			set malaya_diwata, 6;
 			erasequest 7399;
 			setquest 7401;
-			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-				getitem 6497, 2; // Lesser_Agimat
-			else
-				getitem 6497, 1; // Lesser_Agimat
+			getitem 6497, 200; // Lesser_Agimat
 			getexp 200000,200000;
 			if (!rand(3))
 				$malayaNames$[0] = strcharinfo(0);
@@ -2438,10 +2414,7 @@ malaya,326,68,2	script	Pedro the Sailor	100,{
 				mes "I think you kind of like doing it.";
 				setquest 7401;
 				erasequest 7403;
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-					getitem 6497, 2; // Lesser_Agimat
-				else
-					getitem 6497, 1; // Lesser_Agimat
+				getitem 6497, 200; // Lesser_Agimat
 				getexp 200000,200000;
 				if (!rand(3))
 					$malayaNames$[0] = strcharinfo(0);
@@ -2929,10 +2902,7 @@ ma_fild01,239,253,3	script	Dhong the Guard	570,{
 				delitem 6505, 10; // Purified_Bone
 				setquest 7408;
 				erasequest 7407;
-				if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-					getitem 6497, 2; // Lesser_Agimat
-				else
-					getitem 6497, 1; // Lesser_Agimat
+				getitem 6497, 200; // Lesser_Agimat
 				getexp 200000,200000;
 				if (!rand(0, 2))
 					$malayaNames$[2] = strcharinfo(0);
@@ -3025,10 +2995,7 @@ ma_fild01,200,190,3	script	Maries#malaya	579,{
 			mes "Thank you for delivering those precious shirts to my children.";
 			setquest 7390;
 			erasequest 7389;
-			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-				getitem 6497, 2; // Lesser_Agimat
-			else
-				getitem 6497, 1; // Lesser_Agimat
+			getitem 6497, 200; // Lesser_Agimat
 			getexp 200000,200000;
 			if (!rand(3))
 				$malayaNames$[2] = strcharinfo(0);
@@ -3264,10 +3231,7 @@ ma_fild02,241,39,5	script	Good Capre Budidai	572,{
 					mes "This is a blessing for friends. Hey hey hey~";
 					setquest 7410;
 					erasequest 7409;
-					if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-						getitem 6497, 2; // Lesser_Agimat
-					else
-						getitem 6497, 1; // Lesser_Agimat
+					getitem 6497, 200; // Lesser_Agimat
 					getexp 200000,200000;
 					if (!rand(3))
 						$malayaNames$[1] = strcharinfo(0);
@@ -3418,7 +3382,7 @@ ma_fild01,166,214,6	script	Old Man in Dilemma#GA	575,{
 }
 
 ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
-	if (MaxWeight - Weight < 50 || checkweight(1201,1) == 0) {
+	if (MaxWeight - Weight < 200 || checkweight(1201,1) == 0) {
 		mes "Cannot proceed because you have too many items in your possession.";
 		close;
 	}
@@ -4269,10 +4233,7 @@ ma_in01,47,101,3	script	Totoy#buwaya	577,7,7,{
 		mes "[Dog]";
 		mes "Woof woof woof!!!!";
 		set malaya_buwaya,14;
-		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-			getitem 6497,10; //Lesser_Agimat
-		else
-			getitem 6497,5; //Lesser_Agimat
+		getitem 6497, 200; // Lesser_Agimat
 		disablenpc "Dog#buwaya_totoi";
 		erasequest 2279;
 		setquest 2280;
@@ -4705,10 +4666,7 @@ malaya,290,340,3	script	Guard Leader#buwaya	571,{
 			mes "[Guard Leader]";
 			mes "Good work.";
 			erasequest 2281;
-			if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-				getitem 6497,10; //Lesser_Agimat
-			else
-				getitem 6497,5; //Lesser_Agimat
+			getitem 6497, 200; // Lesser_Agimat
 			getexp 0,600000;
 		} else {
 			mes "[Guard Leader]";
@@ -5856,10 +5814,7 @@ malaya,283,265,4	script	Village Chief#bako2	580,{
 		erasequest 1193;
 		set malaya_bakona2,15;
 		getexp 1000000,600000;
-		if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE))
-			getitem 6497,7; //Lesser_Agimat
-		else
-			getitem 6497,5; //Lesser_Agimat
+		getitem 6497, 200; // Lesser_Agimat
 		close;
 	} else if (malaya_bakona2 == 15) {
 		mes "[Village Chief]";
@@ -6758,13 +6713,8 @@ L_Warp:
 	}
 
 L_Reward:
-	if (!VIP_SCRIPT || vip_status(VIP_STATUS_ACTIVE)) {
-		getitem 6499,5; //Ancient_Grudge
-		getitem 6497,10; //Lesser_Agimat
-	} else {
-		getitem 6499,3; //Ancient_Grudge
-		getitem 6497,5; //Lesser_Agimat
-	}
+	getitem 6499,5; //Ancient_Grudge
+	getitem 6497, 200; // Lesser_Agimat
 	getitem 617,1; //Old_Violet_Box
 	getexp 1000000,0;
 	return;
@@ -7913,13 +7863,13 @@ malaya,53,68,4	script	Bushes#ma	844,{
 				if (rand(2)) {
 					set malaya_bang,15;
 					changequest 11295,11296;
-					getitem 6497,1; //Lesser_Agimat
+					getitem 6497, 200; // Lesser_Agimat
 					donpcevent "Tent"+replacestr(strnpcinfo(3),"MalayaStick","")+"#ma::OnEnable";
 					next;
 					mes "Better show Las the talisman.";
 					close;
 				} else {
-					getitem 6497,1; //Lesser_Agimat
+					getitem 6497, 200; // Lesser_Agimat
 					donpcevent "Tent"+replacestr(strnpcinfo(3),"MalayaStick","")+"#ma::OnEnable";
 					close;
 				}
@@ -8542,10 +8492,10 @@ ma_fild01,179,260,2	script	Festival Helper Boy#pin	577,{
 			break;
 		case 2:
 			mes "[Isco]";
-			mes "He he... I'm slow with numbers. I get lost when it's over 50. How many will you give me?";
+			mes "He he... I'm slow with numbers. I get lost when it's over 200. How many will you give me?";
 			next;
 			input .@amount;
-			if (.@amount < 1 || .@amount > 50) {
+			if (.@amount < 1 || .@amount > 200) {
 				mes "[Isco]";
 				mes "Sigh~ I'm lost! I can't count if the numbers are weird.";
 				close;

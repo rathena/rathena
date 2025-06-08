@@ -66,16 +66,23 @@ Body:
         Zeny: 50000
         RequiredItems:
           - Index: 0
+            Item: Small_Bradium
+            Amount: 2
+      - Index: 3
+        Item: Bradium
+        Zeny: 50000
+        RequiredItems:
+          - Index: 0
             Item: Oridecon
             Amount: 3
-      - Index: 3
+      - Index: 4
         Item: Carnium
         Zeny: 50000
         RequiredItems:
           - Index: 0
             Item: Elunium
             Amount: 3
-      - Index: 4
+      - Index: 5
         Item: Carnium
         Zeny: 50000
         RequiredItems:

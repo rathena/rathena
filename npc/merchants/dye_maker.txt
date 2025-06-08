@@ -104,60 +104,68 @@ S_MakeDye:
 	mes "[Dye Maker Java Dullihan]";
 	switch(getarg(0)) {
 	case 1:
-		mes "Mmm... I need 30 Red Herbs, 1 Counteragent, and 1 Empty Bottle to make Red Dyestuffs. The fee is only 3000 zeny to make it.";
+		mes "Mmm... I need 30 Red Herbs, 1 Counteragent, and 1 Empty Bottle to make 30x Red Dyestuffs. The fee is only 300 zeny to make it.";
 		setarray .@item[0], 507, 973, 713;
 		setarray .@count[0], 30,   1,   1;
-		set .@cost,3000;
+		set .@cost,300;
 		set .@dyestuff,975;
+		set .@dyestuffCount,30;
 		break;
 	case 2:
-		mes "Mmm... I need 30 Yellow Herbs, 1 Couneragent, and 1 Empty Bottle to make Lemon Dyestuffs. The fee is only 3000 zeny to make it.";
+		mes "Mmm... I need 30 Yellow Herbs, 1 Couneragent, and 1 Empty Bottle to make 30x Lemon Dyestuffs. The fee is only 300 zeny to make it.";
 		setarray .@item[0], 508, 973, 713;
 		setarray .@count[0], 30,   1,   1;
-		set .@cost,3000;
+		set .@cost,300;
 		set .@dyestuff,976;
+		set .@dyestuffCount,30;
 		break;
 	case 3:
-		mes "Mmm... I need 20 Blue Herbs, 1 Counteragent, and 1 Empty Bottle to make Cobaltblue Dyestuff. It's hard to use the Blue Herb, so the fee is going to be 3500 zeny.";
+		mes "Mmm... I need 30 Blue Herbs, 1 Counteragent, and 1 Empty Bottle to make 30x Cobaltblue Dyestuff. It's hard to use the Blue Herb, so the fee is going to be 300 zeny.";
 		setarray .@item[0], 510, 973, 713;
-		setarray .@count[0], 20,   1,   1;
-		set .@cost,3500;
+		setarray .@count[0], 30,   1,   1;
+		set .@cost,300;
 		set .@dyestuff,978;
+		set .@dyestuffCount,30;
 		break;
 	case 4:
-		mes "Mmm... I need 5 Blue Herbs, 20 Green Herbs, 20 Yellow Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle to make Darkgreen Dyestuffs. Don't get all of the materials confused. The fee is only 5000 zeny.";
+		mes "Mmm... I need 5 Blue Herbs, 20 Green Herbs, 20 Yellow Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle to make 45x Darkgreen Dyestuffs. Don't get all of the materials confused. The fee is only 500 zeny.";
 		setarray .@item[0], 510, 511, 508, 974, 973, 713;
 		setarray .@count[0],  5,  20,  20,   1,   1,   1;
-		set .@cost,5000;
+		set .@cost,500;
 		set .@dyestuff,979;
+		set .@dyestuffCount,45;
 		break;
 	case 5:
-		mes "Mmm... I need 20 Red Herbs, 20 Yellow Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle to make Orange Dyestuff. The fee is going to be 5000 zeny.";
+		mes "Mmm... I need 20 Red Herbs, 20 Yellow Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle to make 40x Orange Dyestuff. The fee is going to be 500 zeny.";
 		setarray .@item[0], 507, 508, 974, 973, 713;
 		setarray .@count[0], 20,  20,   1,   1,   1;
-		set .@cost,5000;
-		set .@dyestuff,980;
+		set .@cost,500;
+		set .@dyestuff,980;		
+		set .@dyestuffCount,40;
 		break;
 	case 6:
-		mes "Mmm... I need 10 Blue Herbs, 30 Red Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle to make Violet Dyestuffs. The fee will be 5000 zeny.";
+		mes "Mmm... I need 10 Blue Herbs, 30 Red Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle to make 40x Violet Dyestuffs. The fee will be 500 zeny.";
 		setarray .@item[0], 510, 507, 974, 973, 713;
 		setarray .@count[0], 10,  30,   1,   1,   1;
-		set .@cost,5000;
-		set .@dyestuff,981;
+		set .@cost,500;
+		set .@dyestuff,981;	
+		set .@dyestuffCount,40;
 		break;
 	case 7:
-		mes "Mmm... I need 30 White Herbs, 1 Counteragent, and 1 Empty bottle to make White Dyestuffs. The fee will be 3000 zeny.";
+		mes "Mmm... I need 30 White Herbs, 1 Counteragent, and 1 Empty bottle to make 30x White Dyestuffs. The fee will be 300 zeny.";
 		setarray .@item[0], 509, 973, 713;
 		setarray .@count[0], 30,   1,   1; 
-		set .@cost,3000;
+		set .@cost,300;
 		set .@dyestuff,982;
+		set .@dyestuffCount,30;
 		break;
 	case 8:
-		mes "Mmm... I need 30 of each Red, Yellow, and Green Herb, 5 Blue Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle. The process takes longer and more effort than the others, so it is going to be 7000 zeny.";
+		mes "Mmm... I need 30 of each Red, Yellow, and Green Herb, 5 Blue Herbs, 1 Counteragent, 1 Mixture, and 1 Empty Bottle. The process takes longer and more effort than the others, so it is going to be 700 zeny.";
 		setarray .@item[0], 507, 508, 511, 510, 974, 973, 713;
 		setarray .@count[0], 30,  30,  30,   5,   1,   1,   1;
-		set .@cost,7000;
+		set .@cost,700;
 		set .@dyestuff,983;
+		set .@dyestuffCount,95;
 		break;
 	}
 	next;
@@ -186,7 +194,7 @@ S_MakeDye:
 			delitem .@item[.@i], .@count[.@i];
 		set Zeny, Zeny-.@cost;
 		// get dyestuff
-		getitem .@dyestuff,1;
+		getitem .@dyestuff,.@dyestuffCount;
 		
 		mes "[Dye Maker Java Dullihan]";
 		mes "Hmm... It came out pretty well. A very rich color. Of course I'll be trying harder to make a more charming color...";

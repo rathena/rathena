@@ -328,7 +328,7 @@ mid_camp,148,222,4	script	Theore#ep14_1_bs	982,3,3,{
 		mes "Oh yeah!!!!";
 		set ep14_1_bs,19;
 		getexp 0,200000;
-		getitem 6380,5; //Mora_Coin
+		getitem 6380,15; //Mora_Coin
 		close;
 	} else if (ep14_1_bs > 18) {
 		mes "[Theore]";
@@ -1424,9 +1424,9 @@ splendide,121,260,4	script	Daphrer#ep14_1_bs	435,{
 			set ep14_1_bs,18;
 			completequest 11208;
 			getexp 0,500000;
-			getitem 6380,5; //Mora_Coin
+			getitem 6380,15; //Mora_Coin
 		} else
-			getitem 6380,2; //Mora_Coin
+			getitem 6380,10; //Mora_Coin
 		close;
 	}
 	if (ep14_1_bs == 17) {
@@ -1441,7 +1441,7 @@ splendide,121,260,4	script	Daphrer#ep14_1_bs	435,{
 		set ep14_1_bs,18;
 		completequest 11208;
 		getexp 0,200000;
-		getitem 6380,2; //Mora_Coin
+		getitem 6380,10; //Mora_Coin
 		close;
 	}
 	mes "[Daphrer]";
@@ -2716,7 +2716,7 @@ mora,31,138,6	script	Raffle Researcher#ep14	522,{
 		mes "and rest up? There's nothing for you to do right now.";
 		delitem 6385,1; //Research_Tool_Bag
 		set ep14_1_muk,2;
-		getitem 6380,1; //Mora_Coin
+		getitem 6380,10; //Mora_Coin
 		erasequest 5016;
 		close;
 	} else if (ep14_1_muk == 2) {
@@ -2881,7 +2881,7 @@ mora,31,138,6	script	Raffle Researcher#ep14	522,{
 		mes "It usually takes about 24 hours.";
 		mes "Why don't you come back then?";
 		delitem 6386,10; //Bathtub_R_Sample
-		getitem 6380,1; //Mora_Coin
+		getitem 6380,10; //Mora_Coin
 		set ep14_1_muk,8;
 		erasequest 5019;
 		setquest 5020;
@@ -2967,7 +2967,7 @@ mora,31,138,6	script	Raffle Researcher#ep14	522,{
 			mes "Why don't you go for a walk";
 			mes "and come back then?";
 			delitem .@item,10;
-			getitem 6380,1; //Mora_Coin
+			getitem 6380,10; //Mora_Coin
 			erasequest .@quest;
 			setquest 5023;
 			close;
@@ -3185,7 +3185,7 @@ mora,31,138,6	script	Raffle Researcher#ep14	522,{
 		mes "why don't you go and entertain yourself?";
 		delitem 6389,1; //Puddle_R_Sample
 		set ep14_1_muk,14;
-		getitem 6380,4; //Mora_Coin
+		getitem 6380,15; //Mora_Coin
 		erasequest 5027;
 		setquest 5028;
 		next;
@@ -3418,7 +3418,7 @@ L_ShowReport:
 	mes "the mysterious power.";
 	mes " ";
 	mes "<Material analysis>";
-	mes "*** Temperature ***** 33.5¡Æ";
+	mes "*** Temperature ***** 33.5ï¿½ï¿½";
 	mes "*** PH ************ 9.8";
 	mes "*** Solid residues *** 176";
 	mes "*** K+ ************ 0,23";
@@ -3783,7 +3783,7 @@ mora,114,79,0	script	Black Shadow#ep14_muk	844,{
 					}
 					mes "While you were checking the body of the unidentified creature, your fingers touch something. Lucky. Obtained a ^0000FF Mora Coin^000000.";
 					set ep14_1_goki, ep14_1_goki+1;
-					getitem 6380,1; //Mora_Coin
+					getitem 6380,10; //Mora_Coin
 					setquest 5029;
 					next;
 					mes "The creature wakes up and disappears into the dark hole.";
@@ -4535,7 +4535,7 @@ mora,115,98,8	script	Hotcha#pa0829	509,{
 				getexp 0, (JobLevel * JobLevel * (110/100) * 50);	// note 110/100 is from the original file
 			else if (BaseLevel < 100 && JobLevel < 70)
 				getexp 0, (JobLevel * JobLevel * (110/100) * 10);
-			getitem 6380,3; //Mora_Coin
+			getitem 6380,15; //Mora_Coin
 			close;
 		}
 	}
@@ -4736,7 +4736,7 @@ L_CheckQuest:
 			getexp 0, ((JobLevel < 50)?JobLevel * JobLevel * (110/100) * 50:0);
 		else
 			getexp 0, ((JobLevel < 70)?JobLevel * JobLevel * (110/100) * 10:0);
-		getitem 6380,1; //Mora_Coin
+		getitem 6380,10; //Mora_Coin
 		close;
 	}
 	return;
@@ -4932,7 +4932,7 @@ L_CheckQuest:
 			getexp 0, JobLevel * JobLevel * (110/100) * 50;
 		else if( BaseLevel < 99 && JobLevel < 70 )
 			getexp 0, JobLevel * JobLevel * (110/100) * 10;
-		getitem 6380,1; //Mora_Coin
+		getitem 6380,10; //Mora_Coin
 		close;
 	}
 	return;
@@ -5188,7 +5188,7 @@ mora,116,165,5	script	Knights Boss#mo	524,{
 		mes "it's the Order of the Neighborhood Knights's work, right?";
 		setquest 1119;
 		delitem 12561,200; //Mysterious_Seed
-		getitem 6380,1; //Mora_Coin
+		getitem 6380,10; //Mora_Coin
 		close;
 	}
 	mes "[Order of the Knights Boss]";
@@ -5320,7 +5320,7 @@ mora,114,163,5	script	Knights Head#mo	522,{
 		completequest 1118;
 		delitem 6383,30; //Clue_Of_Lope
 		set ep14_1_rope,13;
-		getitem 6380,2; //Mora_Coin
+		getitem 6380,10; //Mora_Coin
 		getexp 1000000,1000000;
 		close;
 	} else if (ep14_1_rope > 12) {

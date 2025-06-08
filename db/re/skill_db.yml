@@ -10324,26 +10324,26 @@ Body:
     Element: Poison
     Duration1:
       - Level: 1
-        Time: 40000
+        Time: 400000
       - Level: 2
-        Time: 60000
+        Time: 600000
       - Level: 3
-        Time: 80000
+        Time: 800000
       - Level: 4
-        Time: 100000
+        Time: 1000000
       - Level: 5
-        Time: 120000
+        Time: 1200000
     Duration2:
       - Level: 1
-        Time: 20000
+        Time: 200000
       - Level: 2
-        Time: 30000
+        Time: 300000
       - Level: 3
-        Time: 40000
+        Time: 400000
       - Level: 4
-        Time: 50000
+        Time: 500000
       - Level: 5
-        Time: 60000
+        Time: 600000
     Cooldown: 2000
     Requires:
       SpCost:
@@ -11264,6 +11264,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
+    AfterCastActDelay: 500
     Requires:
       SpCost: 50
   - Id: 408
@@ -20474,20 +20475,20 @@ Body:
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
-        Time: 60000
+        Time: 600000
       - Level: 2
-        Time: 120000
+        Time: 1200000
       - Level: 3
-        Time: 180000
+        Time: 1800000
       - Level: 4
-        Time: 240000
+        Time: 2400000
       - Level: 5
-        Time: 300000
+        Time: 3000000
     Duration2:
       - Level: 1
-        Time: 15000
+        Time: 150000
       - Level: 2
-        Time: 300000
+        Time: 3000000
     Requires:
       SpCost:
         - Level: 1
@@ -20514,8 +20515,8 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 2000
-    Duration1: 180000
-    Duration2: 10000
+    Duration1: 1800000
+    Duration2: 100000
     Requires:
       SpCost:
         - Level: 1
@@ -20718,17 +20719,16 @@ Body:
     HitCount: 1
     Duration1:
       - Level: 1
-        Time: 30000
+        Time: 300000
       - Level: 2
-        Time: 35000
+        Time: 350000
       - Level: 3
-        Time: 40000
+        Time: 400000
       - Level: 4
-        Time: 45000
+        Time: 450000
       - Level: 5
-        Time: 50000
-    Duration2: 25000
-    Cooldown: 300000
+        Time: 500000
+    Cooldown: 30000
     Requires:
       SpCost: 100
       HpRateCost: 10
@@ -32739,7 +32739,7 @@ Body:
       Skill:
         Reproduce: true
     Duration1: 20000
-    Cooldown: 60000
+    Cooldown: 6000
     Requires:
       SpCost:
         - Level: 1

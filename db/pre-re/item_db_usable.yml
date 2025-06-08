@@ -3650,7 +3650,7 @@ Body:
     AegisName: Elemental_Fire
     Name: Elemental Converter
     Type: Delayconsume
-    Buy: 2
+    Buy: 500
     Weight: 10
     Flags:
       BuyingStore: true
@@ -3660,7 +3660,7 @@ Body:
     AegisName: Elemental_Water
     Name: Elemental Converter
     Type: Delayconsume
-    Buy: 2
+    Buy: 500
     Weight: 10
     Flags:
       BuyingStore: true
@@ -3670,7 +3670,7 @@ Body:
     AegisName: Elemental_Earth
     Name: Elemental Converter
     Type: Delayconsume
-    Buy: 2
+    Buy: 500
     Weight: 10
     Flags:
       BuyingStore: true
@@ -3680,7 +3680,7 @@ Body:
     AegisName: Elemental_Wind
     Name: Elemental Converter
     Type: Delayconsume
-    Buy: 2
+    Buy: 500
     Weight: 10
     Flags:
       BuyingStore: true
@@ -4913,7 +4913,7 @@ Body:
     AegisName: Aspersio_5_Scroll
     Name: LV5 Aspersio Scroll
     Type: Usable
-    Buy: 2
+    Buy: 500
     Weight: 10
     NoUse:
       Sitting: true
