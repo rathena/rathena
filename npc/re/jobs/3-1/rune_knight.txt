@@ -845,7 +845,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 			mes "If you succeed in making the rune stone it will automatically become the rune stone you'll use for yourself when you become a Rune Knight, so try your best.";
 			next;
 			mes "[Rune Knight, Renoa]";
-			mes "The total number of rune stones you need to make is 20.";
+			mes "The total number of rune stones you need to make is 5.";
 			mes "Remember that well.";
 			set job_rune_edq,15;
 			changequest 3213,3214;
@@ -860,26 +860,26 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 			mes "If you succeed in making the rune stone automatically it becomes the rune stone you'll use for yourself when you succeed, and it's delivered to Captain Tigris...so try hard.";
 			next;
 			mes "[Rune Knight, Renoa]";
-			mes "The number of total rune stones you need to make is exactly 20. Remember that well.";
+			mes "The number of total rune stones you need to make is exactly 5. Remember that well.";
 			next;
-			switch(select("Check number of made runes?:I've made all the 20 rune stones.")) {
+			switch(select("Check number of made runes?:I've made all the 5 rune stones.")) {
 			case 1:
 				mes "[Rune Knight, Renoa]";
 				mes "The number of rune stones made 'til now is " + job_rune_edq2 + ".";
 				close;
 			case 2:
-				if (job_rune_edq2 < 20) {
+				if (job_rune_edq2 < 5) {
 					mes "[Rune Knight, Renoa]";
-					mes "Hey! I think I told you to make at least 20.";
+					mes "Hey! I think I told you to make at least 5.";
 					close;
 				}
-				if (job_rune_edq2 == 20) {
+				if (job_rune_edq2 == 5) {
 					mes "[Rune Knight, Renoa]";
 					mes "You've brought just the right amount. I'll hand over all the finished rune stones to Captain Tigris.";
 					next;
 				} else {
 					mes "[Rune Knight, Renoa]";
-					mes "Wow! What's this? You've made over 20. It's ok for now but remember to follow directions next time.";
+					mes "Wow! What's this? You've made over 5. It's ok for now but remember to follow directions next time.";
 					mes "I'll hand over all the made rune stones to Captain Tigris.";
 					next;
 				}
@@ -892,7 +892,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 				mes "[Rune Knight, Renoa]";
 				mes "Ha! You did a good job considering how difficult my test is. If you were nervous, you can relax now.";
 				set job_rune_edq,16;
-				if (job_rune_edq2 == 20)
+				if (job_rune_edq2 == 5)
 					changequest 3214,3215;
 				close;
 			}

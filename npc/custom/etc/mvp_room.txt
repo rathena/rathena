@@ -228,9 +228,9 @@ OnInit:
 	// Do NOT set this to zero!
 	set .timeout, 60;
 
-	set .rentcost, 100000;	// Zeny cost for renting a room (0 = free)
-	set .mvpcost, 100000;	// Zeny cost to summon an MVP (0 = free)
-	set .bosscost, 50000;	// Zeny cost to summon a boss monster (0 = free)
+	set .rentcost, 0;	// Zeny cost for renting a room (0 = free)
+	set .mvpcost, 0;	// Zeny cost to summon an MVP (0 = free)
+	set .bosscost, 0;	// Zeny cost to summon a boss monster (0 = free)
 
 	//	Options setting inside MVP room
 	set .@menu[1], 1;	// Turn Heal option On/Off

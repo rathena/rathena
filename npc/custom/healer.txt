@@ -29,8 +29,32 @@
 			end;
 		Zeny -= .@Price;
 	}
+	
+	sc_end SC_STONE;
+	sc_end SC_SLOWDOWN;
+	sc_end SC_FREEZE;
+	sc_end SC_SLEEP;
+	sc_end SC_CURSE;
+	sc_end SC_SILENCE;
+	sc_end SC_CONFUSION;
+	sc_end SC_BLIND;
+	sc_end SC_BLEEDING;
+	sc_end SC_DECREASEAGI;
+	sc_end SC_POISON;
+	sc_end SC_HALLUCINATION;
+	sc_end SC_STRIPWEAPON;
+	sc_end SC_STRIPARMOR;
+	sc_end SC_STRIPHELM;
+	sc_end SC_STRIPSHIELD;
+	sc_end SC_CHANGEUNDEAD;
+	sc_end SC_ORCISH;
+	sc_end SC_BERSERK;
+	sc_end SC_SKE;
+	sc_end SC_SWOO;
+	sc_end SC_SKA;
 	specialeffect2 EF_HEAL2;
 	percentheal 100,100;
+	
 	if (.@Buffs) {
 		specialeffect2 EF_INCAGILITY;
 		sc_start SC_INCREASEAGI,3600000,10;

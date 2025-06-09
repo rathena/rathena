@@ -423,6 +423,7 @@ S_Quest1:
 		mes "Ok, may Freya bless you~!";
 		para_suv01 = 1;
 		setquest 7128;
+		warp "moc_fild11", 182, 251;
 		close;
 	}
 	if (BaseLevel < 26) {
@@ -490,6 +491,7 @@ S_Quest2:
 		mes "Ok, may Freya bless you~!";
 		para_suv01 = 13;
 		setquest 7138;
+		warp "pay_arche", 42, 131;
 		close;
 	}
 	if (BaseLevel < 40) {
@@ -553,6 +555,7 @@ S_Quest3:
 		mes "Ok, may Freya bless you!";
 		para_suv01 = 24;
 		setquest 7147;
+		warp "in_orcs01", 36, 173;
 	}
 	else if (BaseLevel < 60) {
 		mes "You are on the third step of course B.";
@@ -578,6 +581,7 @@ S_Quest3:
 		mes "Ok, may Freya bless you!";
 		para_suv01 = 29;
 		setquest 7152;
+		warp "in_orcs01", 36, 173;
 	}
 	else {
 		mes "You are on the last step.";
@@ -2536,6 +2540,7 @@ moc_para01,23,35,5	script	Instructor Ur#2nd01	4_M_KNIGHT_BLACK,{
 			mes "Well, then come back here alive when you're done!";
 			para_2nd01 = 1;
 			setquest 7214;// Advanced Training at Comodo
+			warp "comodo", 173, 351;
 		}
 		else if (BaseLevel < 80) {
 			mes "Let's see...";
@@ -2553,6 +2558,7 @@ moc_para01,23,35,5	script	Instructor Ur#2nd01	4_M_KNIGHT_BLACK,{
 			mes "Please, come back alive.";
 			para_2nd01 = 7;
 			setquest 7219;// Advanced Training at Glast Heim
+			warp "glast_01", 199, 131;
 		}
 		else if (BaseLevel < 90) {
 			mes "Ah, ok so for you...";
@@ -2567,6 +2573,7 @@ moc_para01,23,35,5	script	Instructor Ur#2nd01	4_M_KNIGHT_BLACK,{
 			mes "Anyways, go to Einbroch and find the Dispatched Instructor there. He should be in the field south of the main city.";
 			setquest 7223;// Advanced Training in Einbroch
 			para_2nd01 = 12;
+			warp "ein_fild08", 169, 356;
 		}
 		else
 			callsub S_Quest89100;
@@ -3377,6 +3384,7 @@ ice_dun01,154,13,5	script	Dispatched Instructor#05	4_F_JOB_BLACKSMITH,{
 		para_2nd01 = 18;
 		erasequest 7229;// Advanced Training in Ice Dungeon
 		setquest 7230;// Siroma hunting
+		warp "ice_dun01", 157, 18;
 	}
 	else if (para_2nd01 == 18) {
 		if (checkquest(7230,HUNTING) == 2) {
