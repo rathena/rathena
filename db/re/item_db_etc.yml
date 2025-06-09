@@ -20288,13 +20288,13 @@ Body:
       NoAuction: true
   - Id: 6521
     AegisName: Royal_Certificate
-    Name: Royal Certificate
+    Name: King's Mark
     Type: Etc
     Flags:
       BuyingStore: true
   - Id: 6522
     AegisName: Royal_Certificate_
-    Name: Royal Certificate
+    Name: King's Mark
     Type: Etc
     Flags:
       BuyingStore: true
@@ -36436,7 +36436,7 @@ Body:
       NoAuction: true
   - Id: 25464
     AegisName: World_Tour_Ticket
-    Name: World Tour Ticket
+    Name: World Moving Ticket
     Type: Etc
     Buy: 20
     Flags:
@@ -37193,7 +37193,7 @@ Body:
     Weight: 10
   - Id: 25728
     AegisName: Shadowdecon_Ore
-    Name: Rough Shadowdecon
+    Name: Shadowdecon Ore
     Type: Etc
     Weight: 10
     Flags:
@@ -37209,7 +37209,7 @@ Body:
       DropEffect: CLIENT
   - Id: 25730
     AegisName: Zelunium_Ore
-    Name: Rough Zelunium
+    Name: Zelunium Ore
     Type: Etc
     Weight: 10
     Flags:
@@ -37784,7 +37784,7 @@ Body:
       BuyingStore: true
   - Id: 25865
     AegisName: Jewel_Of_Time_Ore
-    Name: Temperal Gemstone
+    Name: Temporal Gemstone
     Type: Etc
     Weight: 10
     Flags:
@@ -40287,7 +40287,7 @@ Body:
       DropEffect: CLIENT
   - Id: 27202
     AegisName: Jurgen_Card
-    Name: Juergen Card
+    Name: Jurgen Card
     Type: Card
     Weight: 10
     Locations:
@@ -41435,7 +41435,7 @@ Body:
       bonus2 bAddEle,Ele_Poison,40;
   - Id: 27320
     AegisName: E_EA1L_Card
-    Name: E-EA1L card
+    Name: E-EA1L Card
     Type: Card
     Buy: 20
     Weight: 10
@@ -48367,7 +48367,7 @@ Body:
       bonus2 bMagicAddEle,Ele_Water,50;
   - Id: 300081
     AegisName: Assistant_Card
-    Name: Assistant Bot Card
+    Name: Research Assistant Bot Card
     Type: Card
     Weight: 10
     Locations:
@@ -55484,7 +55484,7 @@ Body:
       }
   - Id: 300618
     AegisName: aegis_300618
-    Name: Kung Fu Panda Collaboration Card    # !todo check english name
+    Name: Kung Fu Panda Card
     Type: Card
     Weight: 10
     Locations:
@@ -55552,6 +55552,600 @@ Body:
              bonus2 bMagicAddSize,Size_All,10;
          }
       }
+  - Id: 300633
+    AegisName: aegis_300633
+    Name: Yggring Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCrt,7;
+  - Id: 300634
+    AegisName: aegis_300634
+    Name: Leafeing Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCrt,3;
+  - Id: 300635
+    AegisName: aegis_300635
+    Name: Charcoaring Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bDef,80+15*(.@r/3);
+      bonus bRes,40+8*(.@r/3);
+  - Id: 300636
+    AegisName: aegis_300636
+    Name: Vulring Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,7;
+      bonus2 bAddEle,Ele_Wind,12;
+      if (getrefine()>=10) {
+         bonus2 bAddEle,Ele_Wind,8;
+      }
+  - Id: 300637
+    AegisName: aegis_300637
+    Name: Fireloop Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,15;
+      bonus bLongAtkRate,20+4*(getrefine()/3);
+  - Id: 300638
+    AegisName: aegis_300638
+    Name: Firafflesia Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,8;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_DemiHuman,12;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_DemiHuman,8;
+         }
+      }
+  - Id: 300639
+    AegisName: aegis_300639
+    Name: Volimpet Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bMagicAddEle,Ele_Earth,7;
+      if (getrefine()>=10) {
+         bonus2 bMagicAddEle,Ele_Earth,8;
+      }
+  - Id: 300640
+    AegisName: aegis_300640
+    Name: Fire Flower Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bAtkRate,8;
+      if (.@r>=7) {
+         bonus2 bAddRace,RC_Plant,12;
+         if (.@r>=9) {
+            bonus2 bAddRace,RC_Plant,8;
+         }
+      }
+  - Id: 300641
+    AegisName: aegis_300641
+    Name: Peeping Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-5;
+      bonus2 bMagicAtkEle,Ele_Fire,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Neutral,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Holy,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Dark,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Ghost,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Wind,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Undead,4*(.@r/3);
+      if (.@r<11) {
+         bonus2 bMagicAtkEle,Ele_Fire,20;
+         bonus2 bMagicAtkEle,Ele_Neutral,20;
+         bonus2 bMagicAtkEle,Ele_Holy,20;
+         bonus2 bMagicAtkEle,Ele_Dark,20;
+         bonus2 bMagicAtkEle,Ele_Ghost,20;
+         bonus2 bMagicAtkEle,Ele_Wind,20;
+         bonus2 bMagicAtkEle,Ele_Undead,20;
+      }
+  - Id: 300642
+    AegisName: aegis_300642
+    Name: Polluted Silk Frog Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,7;
+      bonus2 bAddEle,Ele_Fire,12;
+      if (getrefine()>=10) {
+         bonus2 bAddEle,Ele_Fire,8;
+      }
+  - Id: 300643
+    AegisName: aegis_300643
+    Name: Polluted Silk Snail Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-5;
+      bonus2 bMagicAtkEle,Ele_Fire,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Water,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Earth,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Dark,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Neutral,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Wind,4*(.@r/3);
+      bonus2 bMagicAtkEle,Ele_Poison,4*(.@r/3);
+      if (.@r<11) {
+         bonus2 bMagicAtkEle,Ele_Fire,20;
+         bonus2 bMagicAtkEle,Ele_Water,20;
+         bonus2 bMagicAtkEle,Ele_Earth,20;
+         bonus2 bMagicAtkEle,Ele_Dark,20;
+         bonus2 bMagicAtkEle,Ele_Neutral,20;
+         bonus2 bMagicAtkEle,Ele_Wind,20;
+         bonus2 bMagicAtkEle,Ele_Poison,20;
+      }
+  - Id: 300644
+    AegisName: aegis_300644
+    Name: Encroached Exploration Robot Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,20;
+      bonus bShortAtkRate,20+4*(getrefine()/3);
+  - Id: 300645
+    AegisName: aegis_300645
+    Name: Encroached Repair Robot Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus2 bMagicAtkEle,Ele_All,3*(getrefine()/2);
+  - Id: 300646
+    AegisName: aegis_300646
+    Name: Encroached Dimik Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,7;
+      bonus bFlee,30;
+      bonus bLongAtkRate,3*(.@r/2);
+      bonus bShortAtkRate,3*(.@r/2);
+  - Id: 300647
+    AegisName: aegis_300647
+    Name: Nyaise Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bMagicAddEle,Ele_Dark,7;
+      if (getrefine()>=10) {
+         bonus2 bMagicAddEle,Ele_Dark,8;
+      }
+  - Id: 300648
+    AegisName: aegis_300648
+    Name: Shadow Jailer Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,7;
+      bonus2 bAddEle,Ele_Ghost,12;
+      if (getrefine()>=10) {
+         bonus2 bAddEle,Ele_Ghost,8;
+      }
+  - Id: 300649
+    AegisName: aegis_300649
+    Name: Tulip Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate,-5;
+      bonus bMaxSPrate,-5;
+  - Id: 300650
+    AegisName: aegis_300650
+    Name: Calendula Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bShortAtkRate,7;
+      bonus bCritical,2;
+  - Id: 300651
+    AegisName: aegis_300651
+    Name: Scabiosa Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bLongAtkRate,7;
+      bonus bVariableCastrate,-5;
+  - Id: 300652
+    AegisName: aegis_300652
+    Name: Lobelia Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bDelayrate,-3;
+      bonus bVariableCastrate,5;
+  - Id: 300653
+    AegisName: aegis_300653
+    Name: Myosotis Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bCRate,1;
+      bonus bCritical,5;
+      bonus bShortAtkRate,5;
+  - Id: 300654
+    AegisName: aegis_300654
+    Name: Anemone Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bVariableCastrate,-3;
+      bonus bCritical,5;
+      bonus bLongAtkRate,7;
+  - Id: 300655
+    AegisName: aegis_300655
+    Name: Uncanny Skogul Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMatkRate,5;
+      if (.@r>=7) {
+         bonus2 bMagicAddRace,RC_Angel,10;
+         if (.@r>=9) {
+            bonus2 bMagicAddRace,RC_Angel,7;
+         }
+      }
+  - Id: 300656
+    AegisName: aegis_300656
+    Name: Uncanny Frus Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,7;
+      bonus2 bAddEle,Ele_Holy,12;
+      if (getrefine()>=10) {
+         bonus2 bAddEle,Ele_Holy,8;
+      }
+  - Id: 300657
+    AegisName: aegis_300657
+    Name: Listener Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bMagicAddEle,Ele_Water,7;
+      if (getrefine()>=10) {
+         bonus2 bMagicAddEle,Ele_Water,8;
+      }
+  - Id: 300658
+    AegisName: aegis_300658
+    Name: Immortal Corps Officer Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bMagicAddEle,Ele_Holy,7;
+      if (getrefine()>=10) {
+         bonus2 bMagicAddEle,Ele_Holy,8;
+      }
+  - Id: 300659
+    AegisName: aegis_300659
+    Name: Toxit Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,7;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL) == 5) {
+         bonus2 bAddClass,Class_Boss,2*getrefine()/3;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bAddEle,Ele_All,10;
+      }
+  - Id: 300660
+    AegisName: aegis_300660
+    Name: Lunarina Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,5;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL) == 5) {
+         bonus2 bMagicAddClass,Class_Normal,2*getrefine()/3;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bMagicAddSize,Size_All,12;
+      }
+  - Id: 300661
+    AegisName: aegis_300661
+    Name: Bloody Slasher Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,7;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL) == 5) {
+         bonus2 bAddClass,Class_Normal,2*getrefine()/3;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bAddSize,Size_All,12;
+      }
+  - Id: 300662
+    AegisName: aegis_300662
+    Name: Shadist Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,5;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL) == 5) {
+         bonus2 bMagicAddClass,Class_Boss,2*getrefine()/3;
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bMagicAddEle,Ele_All,10;
+      }
+  - Id: 300663
+    AegisName: aegis_300663
+    Name: High Succubus Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,5;
+      bonus2 bMagicAddEle,Ele_Neutral,7;
+      if (getrefine()>=10) {
+         bonus2 bMagicAddEle,Ele_Neutral,8;
+      }
+  - Id: 300664
+    AegisName: aegis_300664
+    Name: High Incubus Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Head_Low: true
+      Head_Mid: true
+      Head_Top: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bPAtk,7;
+      bonus2 bAddEle,Ele_Neutral,12;
+      if (getrefine()>=10) {
+         bonus2 bAddEle,Ele_Neutral,8;
+      }
+  - Id: 300665
+    AegisName: aegis_300665
+    Name: Abyss Knight Commander Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Armor: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      .@r = getrefine();
+      bonus bMaxHPrate,-25;
+      if (getequiparmorlv() == 2) {
+         bonus2 bMagicAddClass,Class_Boss,2*(.@r/3);
+         bonus2 bAddClass,Class_Boss,2*(.@r/3);
+      }
+      if (getenchantgrade()>=ENCHANTGRADE_A) {
+         bonus2 bMagicAddClass,Class_Boss,10;
+         bonus2 bAddClass,Class_Boss,10;
+      }
+      if (.@r>11) {
+         bonus2 bMagicAddClass,Class_Boss,4;
+         bonus2 bAddClass,Class_Boss,7;
+      }
+  - Id: 300666
+    AegisName: aegis_300666
+    Name: Bulgasari Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Left_Accessory: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bSMatk,15;
+      bonus bAspd,3;
+      bonus5 bAutoSpell,"AG_ROCK_DOWN",5,100,BF_SHORT|BF_NORMAL,1;
+      bonus5 bAutoSpell,"ABC_ABYSS_FLAME_ATK",5,70,BF_SHORT|BF_NORMAL,1;
+  - Id: 300667
+    AegisName: aegis_300667
+    Name: Glutto Card
+    Type: Card
+    Weight: 10
+    Locations:
+      Shoes: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus bMaxHPrate,25;
+      bonus bMaxSPrate,-25;
+      bonus2 bAddItemHealRate,517,150;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -85397,17 +85991,17 @@ Body:
       }
   - Id: 313558
     AegisName: aegis_313558
-    Name: Dumpling Footprint    # !todo check english name
+    Name: Dumpling Footprint
     Type: Card
     SubType: Enchant
   - Id: 313559
     AegisName: aegis_313559
-    Name: Panda Footprint    # !todo check english name
+    Name: Panda Basic Footprint
     Type: Card
     SubType: Enchant
   - Id: 313560
     AegisName: aegis_313560
-    Name: Panda Color Footprint    # !todo check english name
+    Name: Panda Color Footprint
     Type: Card
     SubType: Enchant
   - Id: 313561
@@ -85484,7 +86078,7 @@ Body:
       bonus2 bSkillAtk,"SH_HYUN_ROK_SPIRIT_POWER",2+(getrefine()/2);
   - Id: 313725
     AegisName: aegis_313725
-    Name: Critical Rate Stone (Garment)    # !todo check english name
+    Name: Critical Rate Stone (Garment)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85492,7 +86086,7 @@ Body:
       bonus bCritical,3;
   - Id: 313726
     AegisName: aegis_313726
-    Name: Rune Knight Stone II (Upper)    # !todo check english name
+    Name: Rune Knight Stone II (Upper)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85500,21 +86094,21 @@ Body:
       bonus bShortAtkRate,2*getskilllv("RK_DRAGONTRAINING");
   - Id: 313727
     AegisName: aegis_313727
-    Name: Rune Knight Stone II (Middle)    # !todo check english name
+    Name: Rune Knight Stone II (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"RK_WINDCUTTER",5*getskilllv("RK_RUNEMASTERY");
   - Id: 313728
     AegisName: aegis_313728
-    Name: Rune Knight Stone II (Lower)    # !todo check english name
+    Name: Rune Knight Stone II (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bCritAtkRate,getskilllv("RK_ENCHANTBLADE");
   - Id: 313729
     AegisName: aegis_313729
-    Name: Wondermint Stone II (Upper)    # !todo check english name
+    Name: Wander Mins Stone II (Upper)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85522,7 +86116,7 @@ Body:
       bonus2 bSkillAtk,"WM_METALICSOUND",5*(getskilllv("WM_LESSON")/2);
   - Id: 313730
     AegisName: aegis_313730
-    Name: Wondermint Stone II (Middle)    # !todo check english name
+    Name: Wander Mins Stone II (Middle)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85530,49 +86124,49 @@ Body:
       bonus2 bMagicAddSize,Size_All,3*getskilllv("WM_SIRCLEOFNATURE");
   - Id: 313731
     AegisName: aegis_313731
-    Name: Wondermint Stone II (Lower)    # !todo check english name
+    Name: Wander Mins Stone II (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("WM_REVERBERATION");
   - Id: 313732
     AegisName: aegis_313732
-    Name: Summoner Stone II (Upper)    # !todo check english name
+    Name: Summoner Stone II (Upper)
     Type: Card
     SubType: Enchant
     Script: |
       bonus bFixedCast,-100*getskilllv("SU_FRESHSHRIMP");
   - Id: 313733
     AegisName: aegis_313733
-    Name: Summoner Stone II (Middle)    # !todo check english name
+    Name: Summoner Stone II (Middle)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"SU_PICKYPECK",7*getskilllv("SU_LUNATICCARROTBEAT");
   - Id: 313734
     AegisName: aegis_313734
-    Name: Summoner Stone II (Lower)    # !todo check english name
+    Name: Summoner Stone II (Lower)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"SU_CN_METEOR",7*getskilllv("SU_SV_STEMSPEAR");
   - Id: 313735
     AegisName: aegis_313735
-    Name: Dragon Knight Stone II (Garment)    # !todo check english name
+    Name: Dragon Knight Stone II (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bSkillAtk,"DK_MADNESS_CRUSHER",15;
   - Id: 313736
     AegisName: aegis_313736
-    Name: Troubadour & Trouble Stone II (Garment)    # !todo check english name
+    Name: Troubadour & Trouvere Stone II (Garment)
     Type: Card
     SubType: Enchant
     Script: |
       bonus2 bMagicAtkEle,Ele_All,2*getskilllv("TR_SOUNDBLEND");
   - Id: 313737
     AegisName: aegis_313737
-    Name: Spirit Master Stone II (Garment)    # !todo check english name
+    Name: Spirit Handler Stone II (Garment)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85581,7 +86175,7 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Doram,-3*(getskilllv("SH_MYSTICAL_CREATURE_MASTERY")/2);
   - Id: 313798
     AegisName: Glacier_F_Orb_168
-    Name: Snow Flower Magic (Dragonic Pierce)    # !todo check english name
+    Name: Glacier Flower Spell (Dragonic Pierce)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85592,7 +86186,7 @@ Body:
       }
   - Id: 313799
     AegisName: Glacier_F_Orb_169
-    Name: Snowflakes Magic (Radiant Spear)    # !todo check english name
+    Name: Glacier Flower Spell (Radiant Spear)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85603,7 +86197,7 @@ Body:
       }
   - Id: 313800
     AegisName: Glacier_F_Orb_170
-    Name: Snowflakes Magic (Imperial Cross)    # !todo check english name
+    Name: Glacier Flower Spell (Imperial Cross)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85614,7 +86208,7 @@ Body:
       }
   - Id: 313801
     AegisName: Glacier_F_Orb_171
-    Name: Snowflakes Magic (Imperial Pressure)    # !todo check english name
+    Name: Glacier Flower Spell (Imperial Pressure)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85625,7 +86219,7 @@ Body:
       }
   - Id: 313802
     AegisName: Glacier_F_Orb_172
-    Name: Snowflakes Magic (Rush Strike)    # !todo check english name
+    Name: Glacier Flower Spell (Rush Strike)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85636,7 +86230,7 @@ Body:
       }
   - Id: 313803
     AegisName: Glacier_F_Orb_173
-    Name: Snowflakes Magic (Powerful Swing)    # !todo check english name
+    Name: Glacier Flower Spell (Powerful Swing)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85647,7 +86241,7 @@ Body:
       }
   - Id: 313804
     AegisName: Glacier_F_Orb_174
-    Name: Snowflakes Magic (Energy Cannonade)    # !todo check english name
+    Name: Glacier Flower Spell (Energy Cannonade)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85658,7 +86252,7 @@ Body:
       }
   - Id: 313805
     AegisName: Glacier_F_Orb_175
-    Name: Snowflakes Magic (Mystery Powder)    # !todo check english name
+    Name: Glacier Flower Spell (Mystery Powder)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85669,7 +86263,7 @@ Body:
       }
   - Id: 313806
     AegisName: Glacier_F_Orb_176
-    Name: Snowflakes Magic (Dust Explosion)    # !todo check english name
+    Name: Glacier Flower Spell (Dust Explosion)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85680,7 +86274,7 @@ Body:
       }
   - Id: 313807
     AegisName: Glacier_F_Orb_177
-    Name: Snowflakes Magic (Cross Slash)    # !todo check english name
+    Name: Glacier Flower Spell (Cross Slash)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85691,7 +86285,7 @@ Body:
       }
   - Id: 313808
     AegisName: Glacier_F_Orb_178
-    Name: Snowflakes Magic (Heat and Sliding)    # !todo check english name
+    Name: Glacier Flower Spell (Hit and Sliding)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85702,7 +86296,7 @@ Body:
       }
   - Id: 313809
     AegisName: Glacier_F_Orb_179
-    Name: Snowflakes Magic (Chasing Break)    # !todo check english name
+    Name: Glacier Flower Spell (Chasing Break)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85713,7 +86307,7 @@ Body:
       }
   - Id: 313810
     AegisName: Glacier_F_Orb_180
-    Name: Snowflakes Magic (Chasing Shot)    # !todo check english name
+    Name: Glacier Flower Spell (Chasing Shot)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85724,7 +86318,7 @@ Body:
       }
   - Id: 313811
     AegisName: Glacier_F_Orb_181
-    Name: Snowflakes Magic (Abyss Flame)    # !todo check english name
+    Name: Glacier Flower Spell (Abyss Flame)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85737,7 +86331,7 @@ Body:
       }
   - Id: 313812
     AegisName: Glacier_F_Orb_182
-    Name: Snowflakes Magic (Divinus Flos)    # !todo check english name
+    Name: Glacier Flower Spell (Divinus Flos)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85748,7 +86342,7 @@ Body:
       }
   - Id: 313813
     AegisName: Glacier_F_Orb_183
-    Name: Snow Flower Magic (Heat Fire Bullet)    # !todo check english name
+    Name: Glacier Flower Spell (Blazing Flame Blast)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85759,7 +86353,7 @@ Body:
       }
   - Id: 313814
     AegisName: Glacier_F_Orb_184
-    Name: Snow Flower Magic (Rhythmic Wave)    # !todo check english name
+    Name: Glacier Flower Spell (Rhythmical Wave)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85770,7 +86364,7 @@ Body:
       }
   - Id: 313815
     AegisName: Glacier_F_Orb_185
-    Name: Snow Flower Magic (Wild Shot)    # !todo check english name
+    Name: Glacier Flower Spell (Wild Shot)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85781,7 +86375,7 @@ Body:
       }
   - Id: 313816
     AegisName: Glacier_F_Orb_186
-    Name: Snow Flower Magic (Midnight Fallen)    # !todo check english name
+    Name: Glacier Flower Spell (Midnight Fallen)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85792,7 +86386,7 @@ Body:
       }
   - Id: 313817
     AegisName: Glacier_F_Orb_187
-    Name: Snow Flower Magic (Cheon Ki Shin Yang)    # !todo check english name
+    Name: Glacier Flower Spell (Sky Sun)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85803,7 +86397,7 @@ Body:
       }
   - Id: 313818
     AegisName: Glacier_F_Orb_188
-    Name: Snow Flower Magic (Cheon Ki Shin Moon)    # !todo check english name
+    Name: Glacier Flower Spell (Sky Moon)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85814,7 +86408,7 @@ Body:
       }
   - Id: 313819
     AegisName: Glacier_F_Orb_189
-    Name: Snow Flower Magic (Cheon Seong Ji Haeng)    # !todo check english name
+    Name: Glacier Flower Spell (Star Light Kick)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85825,7 +86419,7 @@ Body:
       }
   - Id: 313820
     AegisName: Glacier_F_Orb_190
-    Name: Snow Flower Magic (Iron Tiger Rampage)    # !todo check english name
+    Name: Glacier Flower Spell (Chulho Battering)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85836,7 +86430,7 @@ Body:
       }
   - Id: 313821
     AegisName: Glacier_F_Orb_191
-    Name: Snow Flower Magic (Hyeon Rok's Spiritual Power)    # !todo check english name
+    Name: Glacier Flower Spell (Hyunrok Spirit Power)
     Type: Card
     SubType: Enchant
     Script: |
@@ -85845,6 +86439,3295 @@ Body:
       if (.@r>=9) {
          bonus2 bSkillAtk,"SH_HYUN_ROK_SPIRIT_POWER",10;
       }
+  - Id: 313822
+    AegisName: Ch01_1_War
+    Name: Frontier Spell (Warrior)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,30;
+      if (.@r>=7) {
+         bonus bShortAtkRate,3;
+         if (.@r>=9) {
+            bonus bShortAtkRate,4;
+         }
+      }
+  - Id: 313823
+    AegisName: Ch01_1_Ran
+    Name: Frontier Spell (Ranger)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,30;
+      if (.@r>=7) {
+         bonus bLongAtkRate,3;
+         if (.@r>=9) {
+            bonus bLongAtkRate,4;
+         }
+      }
+  - Id: 313824
+    AegisName: Ch01_1_Sage
+    Name: Frontier Spell (Sage)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,30;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Earth,7;
+         bonus2 bMagicAtkEle,Ele_Water,7;
+         bonus2 bMagicAtkEle,Ele_Wind,7;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_Neutral,7;
+            bonus2 bMagicAtkEle,Ele_Fire,7;
+            bonus2 bMagicAtkEle,Ele_Poison,7;
+            bonus2 bMagicAtkEle,Ele_Dark,7;
+         }
+      }
+  - Id: 313825
+    AegisName: Ch01_1_Mag
+    Name: Frontier Spell (Mage)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMatk,30;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Holy,7;
+         bonus2 bMagicAtkEle,Ele_Fire,7;
+         bonus2 bMagicAtkEle,Ele_Neutral,7;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_Undead,7;
+            bonus2 bMagicAtkEle,Ele_Wind,7;
+            bonus2 bMagicAtkEle,Ele_Ghost,7;
+            bonus2 bMagicAtkEle,Ele_Dark,7;
+         }
+      }
+  - Id: 313826
+    AegisName: Ch01_1_Assassin
+    Name: Frontier Spell (Assassin)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bCritical,2;
+      bonus bBaseAtk,20;
+      if (.@r>=7) {
+         bonus bCritAtkRate,3;
+         if (.@r>=9) {
+            bonus bCritAtkRate,4;
+         }
+      }
+  - Id: 313827
+    AegisName: Ch01_2_War2
+    Name: Frontier Spell (Berserker)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      bonus bBaseAtk,25;
+      if (.@r>=7) {
+         bonus bShortAtkRate,5;
+         if (.@r>=9) {
+            bonus bShortAtkRate,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,5;
+         }
+      }
+  - Id: 313828
+    AegisName: Ch01_2_Ran2
+    Name: Frontier Spell (Marksman)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      bonus bBaseAtk,25;
+      if (.@r>=7) {
+         bonus bLongAtkRate,5;
+         if (.@r>=9) {
+            bonus bLongAtkRate,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
+         }
+      }
+  - Id: 313829
+    AegisName: Ch01_2_Sage2
+    Name: Frontier Spell (Grand Sage)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bSMatk,2;
+      bonus bMatkRate,2;
+      bonus bMatk,25;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Earth,10;
+         bonus2 bMagicAtkEle,Ele_Water,10;
+         bonus2 bMagicAtkEle,Ele_Wind,10;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_Neutral,10;
+            bonus2 bMagicAtkEle,Ele_Fire,10;
+            bonus2 bMagicAtkEle,Ele_Poison,10;
+            bonus2 bMagicAtkEle,Ele_Dark,10;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_Neutral,5;
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         bonus2 bMagicAtkEle,Ele_Earth,5;
+         bonus2 bMagicAtkEle,Ele_Water,5;
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+         bonus2 bMagicAtkEle,Ele_Poison,5;
+         bonus2 bMagicAtkEle,Ele_Dark,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Neutral,5;
+            bonus2 bMagicAtkEle,Ele_Fire,5;
+            bonus2 bMagicAtkEle,Ele_Earth,5;
+            bonus2 bMagicAtkEle,Ele_Water,5;
+            bonus2 bMagicAtkEle,Ele_Wind,5;
+            bonus2 bMagicAtkEle,Ele_Poison,5;
+            bonus2 bMagicAtkEle,Ele_Dark,5;
+         }
+      }
+  - Id: 313830
+    AegisName: Ch01_2_Mag2
+    Name: Frontier Spell (Grand Mage)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bSMatk,2;
+      bonus bMatkRate,2;
+      bonus bMatk,25;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Holy,10;
+         bonus2 bMagicAtkEle,Ele_Fire,10;
+         bonus2 bMagicAtkEle,Ele_Neutral,10;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_Undead,10;
+            bonus2 bMagicAtkEle,Ele_Wind,10;
+            bonus2 bMagicAtkEle,Ele_Ghost,10;
+            bonus2 bMagicAtkEle,Ele_Dark,10;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_Undead,5;
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         bonus2 bMagicAtkEle,Ele_Neutral,5;
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+         bonus2 bMagicAtkEle,Ele_Ghost,5;
+         bonus2 bMagicAtkEle,Ele_Holy,5;
+         bonus2 bMagicAtkEle,Ele_Dark,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Undead,5;
+            bonus2 bMagicAtkEle,Ele_Fire,5;
+            bonus2 bMagicAtkEle,Ele_Neutral,5;
+            bonus2 bMagicAtkEle,Ele_Wind,5;
+            bonus2 bMagicAtkEle,Ele_Ghost,5;
+            bonus2 bMagicAtkEle,Ele_Holy,5;
+            bonus2 bMagicAtkEle,Ele_Dark,5;
+         }
+      }
+  - Id: 313831
+    AegisName: Ch01_2_Assassin2
+    Name: Frontier Spell (Executioner)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPAtk,2;
+      bonus bCritical,5;
+      bonus bBaseAtk,25;
+      if (.@r>=7) {
+         bonus bCritAtkRate,5;
+         if (.@r>=9) {
+            bonus bCritAtkRate,5;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCritAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,5;
+         }
+      }
+  - Id: 313832
+    AegisName: Ch01_3_S_Delay
+    Name: Frontier Spell (Global Cooldown)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bDelayrate,-2;
+      if (.@r>=7) {
+         bonus bDelayrate,-2;
+         if (.@r>=9) {
+            bonus bDelayrate,-2;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bDelayrate,-2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bDelayrate,-2;
+         }
+      }
+  - Id: 313833
+    AegisName: Ch01_3_Force
+    Name: Frontier Spell (Power Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPAtk,1;
+      bonus bAtkRate,2;
+      if (.@r>=7) {
+         bonus bAtkRate,3;
+         if (.@r>=9) {
+            bonus bAtkRate,4;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bAtkRate,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bAtkRate,3;
+         }
+      }
+  - Id: 313834
+    AegisName: Ch01_3_M_Force
+    Name: Frontier Spell (Magic Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bSMatk,1;
+      bonus bMatkRate,2;
+      if (.@r>=7) {
+         bonus bMatkRate,3;
+         if (.@r>=9) {
+            bonus bMatkRate,4;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMatkRate,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bMatkRate,3;
+         }
+      }
+  - Id: 313835
+    AegisName: Ch01_1_Def
+    Name: Frontier Spell (Physical Defense)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bDef,100;
+      bonus bRes,15;
+      if (.@r>=7) {
+         bonus bDef,25;
+         bonus bRes,5;
+         if (.@r>=9) {
+            bonus bDef,25;
+            bonus bRes,5;
+         }
+      }
+  - Id: 313836
+    AegisName: Ch01_1_Mdef
+    Name: Frontier Spell (Magical Defense)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bMdef,20;
+      bonus bMRes,10;
+      if (.@r>=7) {
+         bonus bMdef,5;
+         bonus bMRes,3;
+         if (.@r>=9) {
+            bonus bMdef,5;
+            bonus bMRes,3;
+         }
+      }
+  - Id: 313837
+    AegisName: Ch01_2_Speed
+    Name: Frontier Spell (Speed)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bAspdRate,10;
+      if (.@r>=7) {
+         bonus bAspdRate,5;
+         if (.@r>=9) {
+            bonus bAspdRate,5;
+         }
+      }
+  - Id: 313838
+    AegisName: Ch01_2_Caster
+    Name: Frontier Spell (Caster)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bVariableCastrate,-10;
+      if (.@r>=7) {
+         bonus bVariableCastrate,-5;
+         if (.@r>=9) {
+            bonus bVariableCastrate,-5;
+         }
+      }
+  - Id: 313839
+    AegisName: Ch01_3_Melee
+    Name: Frontier Spell (Melee)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bShortAtkRate,5;
+      bonus bPAtk,2;
+      if (.@r>=7) {
+         bonus bShortAtkRate,3;
+         if (.@r>=9) {
+            bonus bShortAtkRate,3;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,4;
+         bonus bPerfectHitAddRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,5;
+            bonus bPerfectHitAddRate,5;
+         }
+      }
+  - Id: 313840
+    AegisName: Ch01_3_Range
+    Name: Frontier Spell (Range)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bLongAtkRate,5;
+      bonus bPAtk,2;
+      if (.@r>=7) {
+         bonus bLongAtkRate,3;
+         if (.@r>=9) {
+            bonus bLongAtkRate,3;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,4;
+         bonus bPerfectHitAddRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
+            bonus bPerfectHitAddRate,5;
+         }
+      }
+  - Id: 313841
+    AegisName: Ch01_3_Spell
+    Name: Frontier Spell (Spell)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bMagicAtkEle,Ele_Neutral,5;
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      bonus2 bMagicAtkEle,Ele_Earth,5;
+      bonus2 bMagicAtkEle,Ele_Water,5;
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      bonus2 bMagicAtkEle,Ele_Poison,5;
+      bonus2 bMagicAtkEle,Ele_Dark,5;
+      bonus bSMatk,2;
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Earth,6;
+         bonus2 bMagicAtkEle,Ele_Water,6;
+         bonus2 bMagicAtkEle,Ele_Wind,6;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_Neutral,6;
+            bonus2 bMagicAtkEle,Ele_Fire,6;
+            bonus2 bMagicAtkEle,Ele_Poison,6;
+            bonus2 bMagicAtkEle,Ele_Dark,6;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_Neutral,4;
+         bonus2 bMagicAtkEle,Ele_Fire,4;
+         bonus2 bMagicAtkEle,Ele_Earth,4;
+         bonus2 bMagicAtkEle,Ele_Water,4;
+         bonus2 bMagicAtkEle,Ele_Wind,4;
+         bonus2 bMagicAtkEle,Ele_Poison,4;
+         bonus2 bMagicAtkEle,Ele_Dark,4;
+         bonus bMaxSPrate,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Neutral,5;
+            bonus2 bMagicAtkEle,Ele_Fire,5;
+            bonus2 bMagicAtkEle,Ele_Earth,5;
+            bonus2 bMagicAtkEle,Ele_Water,5;
+            bonus2 bMagicAtkEle,Ele_Wind,5;
+            bonus2 bMagicAtkEle,Ele_Poison,5;
+            bonus2 bMagicAtkEle,Ele_Dark,5;
+            bonus bMaxSPrate,3;
+         }
+      }
+  - Id: 313842
+    AegisName: Ch01_3_Magic_P
+    Name: Frontier Spell (Magic)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (.@r>=7) {
+         bonus2 bMagicAtkEle,Ele_Holy,6;
+         bonus2 bMagicAtkEle,Ele_Fire,6;
+         bonus2 bMagicAtkEle,Ele_Neutral,6;
+         if (.@r>=9) {
+            bonus2 bMagicAtkEle,Ele_Undead,6;
+            bonus2 bMagicAtkEle,Ele_Wind,6;
+            bonus2 bMagicAtkEle,Ele_Ghost,6;
+            bonus2 bMagicAtkEle,Ele_Dark,6;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bMaxSPrate,2;
+         bonus2 bMagicAtkEle,Ele_Fire,4;
+         bonus2 bMagicAtkEle,Ele_Neutral,4;
+         bonus2 bMagicAtkEle,Ele_Holy,4;
+         bonus2 bMagicAtkEle,Ele_Wind,4;
+         bonus2 bMagicAtkEle,Ele_Dark,4;
+         bonus2 bMagicAtkEle,Ele_Ghost,4;
+         bonus2 bMagicAtkEle,Ele_Undead,4;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bMaxSPrate,3;
+            bonus2 bMagicAtkEle,Ele_Fire,5;
+            bonus2 bMagicAtkEle,Ele_Neutral,5;
+            bonus2 bMagicAtkEle,Ele_Holy,5;
+            bonus2 bMagicAtkEle,Ele_Wind,5;
+            bonus2 bMagicAtkEle,Ele_Dark,5;
+            bonus2 bMagicAtkEle,Ele_Ghost,5;
+            bonus2 bMagicAtkEle,Ele_Undead,5;
+         }
+      }
+  - Id: 313843
+    AegisName: Ch01_3_Critical
+    Name: Frontier Spell (Critical)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bCritAtkRate,5;
+      bonus bCRate,2;
+      if (.@r>=7) {
+         bonus bCritAtkRate,3;
+         if (.@r>=9) {
+            bonus bCritAtkRate,3;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCritAtkRate,4;
+         bonus bCritical,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,5;
+            bonus bCritical,3;
+         }
+      }
+  - Id: 313844
+    AegisName: Ch01_1_Size_Atk
+    Name: Frontier Spell (Size Attack)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bAddSize,Size_All,3;
+      if (.@r>=7) {
+         bonus2 bAddSize,Size_All,3;
+         if (.@r>=9) {
+            bonus2 bAddSize,Size_All,2;
+         }
+      }
+  - Id: 313845
+    AegisName: Ch01_1_Size_Matk
+    Name: Frontier Spell (Size Spell)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus2 bMagicAddSize,Size_All,3;
+      if (.@r>=7) {
+         bonus2 bMagicAddSize,Size_All,3;
+         if (.@r>=9) {
+            bonus2 bMagicAddSize,Size_All,2;
+         }
+      }
+  - Id: 313846
+    AegisName: Ch01_2_P_F
+    Name: Frontier Spell (Physical Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bPAtk,1;
+      bonus bAtkRate,1;
+      bonus bBaseAtk,10;
+      if (.@r>=7) {
+         bonus bAtkRate,1;
+         bonus bBaseAtk,10;
+         if (.@r>=9) {
+            bonus bAtkRate,2;
+            bonus bBaseAtk,15;
+         }
+      }
+  - Id: 313847
+    AegisName: Ch01_2_M_F
+    Name: Frontier Spell (Magical Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bSMatk,1;
+      bonus bMatkRate,1;
+      bonus bMatk,10;
+      if (.@r>=7) {
+         bonus bMatkRate,1;
+         bonus bMatk,10;
+         if (.@r>=9) {
+            bonus bMatkRate,2;
+            bonus bMatk,15;
+         }
+      }
+  - Id: 313848
+    AegisName: Ch01_3_Over_Power
+    Name: Frontier Spell (Over Power)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bPAtk,3;
+      bonus bAtkRate,2;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bShortAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bShortAtkRate,5;
+            bonus bPAtk,2;
+         }
+      }
+  - Id: 313849
+    AegisName: Ch01_3_Fire_Shot
+    Name: Frontier Spell (Firing Shot)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bPAtk,3;
+      bonus bAtkRate,2;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bLongAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,5;
+            bonus bPAtk,2;
+         }
+      }
+  - Id: 313850
+    AegisName: Ch01_3_Spl_Buster
+    Name: Frontier Spell (Spell Buster)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bSMatk,3;
+      bonus bMatkRate,2;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_Neutral,5;
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         bonus2 bMagicAtkEle,Ele_Earth,5;
+         bonus2 bMagicAtkEle,Ele_Water,5;
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+         bonus2 bMagicAtkEle,Ele_Poison,5;
+         bonus2 bMagicAtkEle,Ele_Dark,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Neutral,5;
+            bonus2 bMagicAtkEle,Ele_Fire,5;
+            bonus2 bMagicAtkEle,Ele_Earth,5;
+            bonus2 bMagicAtkEle,Ele_Water,5;
+            bonus2 bMagicAtkEle,Ele_Wind,5;
+            bonus2 bMagicAtkEle,Ele_Poison,5;
+            bonus2 bMagicAtkEle,Ele_Dark,5;
+            bonus bSMatk,2;
+         }
+      }
+  - Id: 313851
+    AegisName: Ch01_3_Mag_Storm
+    Name: Frontier Spell (Magic Storm)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bSMatk,3;
+      bonus bMatkRate,2;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAtkEle,Ele_Undead,5;
+         bonus2 bMagicAtkEle,Ele_Fire,5;
+         bonus2 bMagicAtkEle,Ele_Neutral,5;
+         bonus2 bMagicAtkEle,Ele_Wind,5;
+         bonus2 bMagicAtkEle,Ele_Ghost,5;
+         bonus2 bMagicAtkEle,Ele_Holy,5;
+         bonus2 bMagicAtkEle,Ele_Dark,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Undead,5;
+            bonus2 bMagicAtkEle,Ele_Fire,5;
+            bonus2 bMagicAtkEle,Ele_Neutral,5;
+            bonus2 bMagicAtkEle,Ele_Wind,5;
+            bonus2 bMagicAtkEle,Ele_Ghost,5;
+            bonus2 bMagicAtkEle,Ele_Holy,5;
+            bonus2 bMagicAtkEle,Ele_Dark,5;
+            bonus bSMatk,2;
+         }
+      }
+  - Id: 313852
+    AegisName: Ch01_3_Lukcy_Strike
+    Name: Frontier Spell (Lucky Strike)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bPAtk,3;
+      bonus bCritical,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCritAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,5;
+            bonus bCRate,2;
+         }
+      }
+  - Id: 313853
+    AegisName: Ch01_S_E_Life01
+    Name: Frontier Crystal (Life) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Brute,3;
+      bonus2 bMagicAddRace,RC_Brute,3;
+      bonus2 bAddRace,RC_Plant,3;
+      bonus2 bMagicAddRace,RC_Plant,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Brute,1;
+         bonus2 bMagicAddRace,RC_Brute,1;
+         bonus2 bAddRace,RC_Plant,1;
+         bonus2 bMagicAddRace,RC_Plant,1;
+      }
+  - Id: 313854
+    AegisName: Ch01_S_E_Life02
+    Name: Frontier Crystal (Life) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Brute,4;
+      bonus2 bMagicAddRace,RC_Brute,4;
+      bonus2 bAddRace,RC_Plant,4;
+      bonus2 bMagicAddRace,RC_Plant,4;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Brute,1;
+         bonus2 bMagicAddRace,RC_Brute,1;
+         bonus2 bAddRace,RC_Plant,1;
+         bonus2 bMagicAddRace,RC_Plant,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Brute,1;
+            bonus2 bMagicAddRace,RC_Brute,1;
+            bonus2 bAddRace,RC_Plant,1;
+            bonus2 bMagicAddRace,RC_Plant,1;
+         }
+      }
+  - Id: 313855
+    AegisName: Ch01_S_E_Life03
+    Name: Frontier Crystal (Life) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Brute,5;
+      bonus2 bMagicAddRace,RC_Brute,5;
+      bonus2 bAddRace,RC_Plant,5;
+      bonus2 bMagicAddRace,RC_Plant,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Brute,1;
+         bonus2 bMagicAddRace,RC_Brute,1;
+         bonus2 bAddRace,RC_Plant,1;
+         bonus2 bMagicAddRace,RC_Plant,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Brute,1;
+            bonus2 bMagicAddRace,RC_Brute,1;
+            bonus2 bAddRace,RC_Plant,1;
+            bonus2 bMagicAddRace,RC_Plant,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Brute,2;
+               bonus2 bMagicAddRace,RC_Brute,2;
+               bonus2 bAddRace,RC_Plant,2;
+               bonus2 bMagicAddRace,RC_Plant,2;
+            }
+         }
+      }
+  - Id: 313856
+    AegisName: Ch01_S_E_Life04
+    Name: Frontier Crystal (Life) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Brute,7;
+      bonus2 bMagicAddRace,RC_Brute,7;
+      bonus2 bAddRace,RC_Plant,7;
+      bonus2 bMagicAddRace,RC_Plant,7;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Brute,1;
+         bonus2 bMagicAddRace,RC_Brute,1;
+         bonus2 bAddRace,RC_Plant,1;
+         bonus2 bMagicAddRace,RC_Plant,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Brute,1;
+            bonus2 bMagicAddRace,RC_Brute,1;
+            bonus2 bAddRace,RC_Plant,1;
+            bonus2 bMagicAddRace,RC_Plant,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Brute,2;
+               bonus2 bMagicAddRace,RC_Brute,2;
+               bonus2 bAddRace,RC_Plant,2;
+               bonus2 bMagicAddRace,RC_Plant,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Brute,2;
+                  bonus2 bMagicAddRace,RC_Brute,2;
+                  bonus2 bAddRace,RC_Plant,2;
+                  bonus2 bMagicAddRace,RC_Plant,2;
+               }
+            }
+         }
+      }
+  - Id: 313857
+    AegisName: Ch01_S_E_Life05
+    Name: Frontier Crystal (Life) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Brute,10;
+      bonus2 bMagicAddRace,RC_Brute,10;
+      bonus2 bAddRace,RC_Plant,10;
+      bonus2 bMagicAddRace,RC_Plant,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Brute,1;
+         bonus2 bMagicAddRace,RC_Brute,1;
+         bonus2 bAddRace,RC_Plant,1;
+         bonus2 bMagicAddRace,RC_Plant,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Brute,1;
+            bonus2 bMagicAddRace,RC_Brute,1;
+            bonus2 bAddRace,RC_Plant,1;
+            bonus2 bMagicAddRace,RC_Plant,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Brute,2;
+               bonus2 bMagicAddRace,RC_Brute,2;
+               bonus2 bAddRace,RC_Plant,2;
+               bonus2 bMagicAddRace,RC_Plant,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Brute,4;
+                  bonus2 bMagicAddRace,RC_Brute,4;
+                  bonus2 bAddRace,RC_Plant,4;
+                  bonus2 bMagicAddRace,RC_Plant,4;
+               }
+            }
+         }
+      }
+  - Id: 313858
+    AegisName: Ch01_S_E_Regiment01
+    Name: Frontier Crystal (Regiment) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Fish,3;
+      bonus2 bMagicAddRace,RC_Fish,3;
+      bonus2 bAddRace,RC_DemiHuman,3;
+      bonus2 bMagicAddRace,RC_DemiHuman,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Fish,1;
+         bonus2 bMagicAddRace,RC_Fish,1;
+         bonus2 bAddRace,RC_DemiHuman,1;
+         bonus2 bMagicAddRace,RC_DemiHuman,1;
+      }
+  - Id: 313859
+    AegisName: Ch01_S_E_Regiment02
+    Name: Frontier Crystal (Regiment) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Fish,4;
+      bonus2 bMagicAddRace,RC_Fish,4;
+      bonus2 bAddRace,RC_DemiHuman,4;
+      bonus2 bMagicAddRace,RC_DemiHuman,4;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Fish,1;
+         bonus2 bMagicAddRace,RC_Fish,1;
+         bonus2 bAddRace,RC_DemiHuman,1;
+         bonus2 bMagicAddRace,RC_DemiHuman,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Fish,1;
+            bonus2 bMagicAddRace,RC_Fish,1;
+            bonus2 bAddRace,RC_DemiHuman,1;
+            bonus2 bMagicAddRace,RC_DemiHuman,1;
+         }
+      }
+  - Id: 313860
+    AegisName: Ch01_S_E_Regiment03
+    Name: Frontier Crystal (Regiment) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Fish,5;
+      bonus2 bMagicAddRace,RC_Fish,5;
+      bonus2 bAddRace,RC_DemiHuman,5;
+      bonus2 bMagicAddRace,RC_DemiHuman,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Fish,1;
+         bonus2 bMagicAddRace,RC_Fish,1;
+         bonus2 bAddRace,RC_DemiHuman,1;
+         bonus2 bMagicAddRace,RC_DemiHuman,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Fish,1;
+            bonus2 bMagicAddRace,RC_Fish,1;
+            bonus2 bAddRace,RC_DemiHuman,1;
+            bonus2 bMagicAddRace,RC_DemiHuman,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Fish,2;
+               bonus2 bMagicAddRace,RC_Fish,2;
+               bonus2 bAddRace,RC_DemiHuman,2;
+               bonus2 bMagicAddRace,RC_DemiHuman,2;
+            }
+         }
+      }
+  - Id: 313861
+    AegisName: Ch01_S_E_Regiment04
+    Name: Frontier Crystal (Regiment) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Fish,7;
+      bonus2 bMagicAddRace,RC_Fish,7;
+      bonus2 bAddRace,RC_DemiHuman,7;
+      bonus2 bMagicAddRace,RC_DemiHuman,7;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Fish,1;
+         bonus2 bMagicAddRace,RC_Fish,1;
+         bonus2 bAddRace,RC_DemiHuman,1;
+         bonus2 bMagicAddRace,RC_DemiHuman,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Fish,1;
+            bonus2 bMagicAddRace,RC_Fish,1;
+            bonus2 bAddRace,RC_DemiHuman,1;
+            bonus2 bMagicAddRace,RC_DemiHuman,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Fish,2;
+               bonus2 bMagicAddRace,RC_Fish,2;
+               bonus2 bAddRace,RC_DemiHuman,2;
+               bonus2 bMagicAddRace,RC_DemiHuman,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Fish,2;
+                  bonus2 bMagicAddRace,RC_Fish,2;
+                  bonus2 bAddRace,RC_DemiHuman,2;
+                  bonus2 bMagicAddRace,RC_DemiHuman,2;
+               }
+            }
+         }
+      }
+  - Id: 313862
+    AegisName: Ch01_S_E_Regiment05
+    Name: Frontier Crystal (Regiment) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Fish,10;
+      bonus2 bMagicAddRace,RC_Fish,10;
+      bonus2 bAddRace,RC_DemiHuman,10;
+      bonus2 bMagicAddRace,RC_DemiHuman,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Fish,1;
+         bonus2 bMagicAddRace,RC_Fish,1;
+         bonus2 bAddRace,RC_DemiHuman,1;
+         bonus2 bMagicAddRace,RC_DemiHuman,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Fish,1;
+            bonus2 bMagicAddRace,RC_Fish,1;
+            bonus2 bAddRace,RC_DemiHuman,1;
+            bonus2 bMagicAddRace,RC_DemiHuman,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Fish,2;
+               bonus2 bMagicAddRace,RC_Fish,2;
+               bonus2 bAddRace,RC_DemiHuman,2;
+               bonus2 bMagicAddRace,RC_DemiHuman,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Fish,4;
+                  bonus2 bMagicAddRace,RC_Fish,4;
+                  bonus2 bAddRace,RC_DemiHuman,4;
+                  bonus2 bMagicAddRace,RC_DemiHuman,4;
+               }
+            }
+         }
+      }
+  - Id: 313863
+    AegisName: Ch01_S_E_GAE01
+    Name: Frontier Crystal (Good and Evil) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Angel,3;
+      bonus2 bMagicAddRace,RC_Angel,3;
+      bonus2 bAddRace,RC_Demon,3;
+      bonus2 bMagicAddRace,RC_Demon,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Angel,1;
+         bonus2 bMagicAddRace,RC_Angel,1;
+         bonus2 bAddRace,RC_Demon,1;
+         bonus2 bMagicAddRace,RC_Demon,1;
+      }
+  - Id: 313864
+    AegisName: Ch01_S_E_GAE02
+    Name: Frontier Crystal (Good and Evil) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Angel,4;
+      bonus2 bMagicAddRace,RC_Angel,4;
+      bonus2 bAddRace,RC_Demon,4;
+      bonus2 bMagicAddRace,RC_Demon,4;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Angel,1;
+         bonus2 bMagicAddRace,RC_Angel,1;
+         bonus2 bAddRace,RC_Demon,1;
+         bonus2 bMagicAddRace,RC_Demon,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Angel,1;
+            bonus2 bMagicAddRace,RC_Angel,1;
+            bonus2 bAddRace,RC_Demon,1;
+            bonus2 bMagicAddRace,RC_Demon,1;
+         }
+      }
+  - Id: 313865
+    AegisName: Ch01_S_E_GAE03
+    Name: Frontier Crystal (Good and Evil) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Angel,5;
+      bonus2 bMagicAddRace,RC_Angel,5;
+      bonus2 bAddRace,RC_Demon,5;
+      bonus2 bMagicAddRace,RC_Demon,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Angel,1;
+         bonus2 bMagicAddRace,RC_Angel,1;
+         bonus2 bAddRace,RC_Demon,1;
+         bonus2 bMagicAddRace,RC_Demon,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Angel,1;
+            bonus2 bMagicAddRace,RC_Angel,1;
+            bonus2 bAddRace,RC_Demon,1;
+            bonus2 bMagicAddRace,RC_Demon,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Angel,2;
+               bonus2 bMagicAddRace,RC_Angel,2;
+               bonus2 bAddRace,RC_Demon,2;
+               bonus2 bMagicAddRace,RC_Demon,2;
+            }
+         }
+      }
+  - Id: 313866
+    AegisName: Ch01_S_E_GAE04
+    Name: Frontier Crystal (Good and Evil) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Angel,7;
+      bonus2 bMagicAddRace,RC_Angel,7;
+      bonus2 bAddRace,RC_Demon,7;
+      bonus2 bMagicAddRace,RC_Demon,7;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Angel,1;
+         bonus2 bMagicAddRace,RC_Angel,1;
+         bonus2 bAddRace,RC_Demon,1;
+         bonus2 bMagicAddRace,RC_Demon,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Angel,1;
+            bonus2 bMagicAddRace,RC_Angel,1;
+            bonus2 bAddRace,RC_Demon,1;
+            bonus2 bMagicAddRace,RC_Demon,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Angel,2;
+               bonus2 bMagicAddRace,RC_Angel,2;
+               bonus2 bAddRace,RC_Demon,2;
+               bonus2 bMagicAddRace,RC_Demon,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Angel,2;
+                  bonus2 bMagicAddRace,RC_Angel,2;
+                  bonus2 bAddRace,RC_Demon,2;
+                  bonus2 bMagicAddRace,RC_Demon,2;
+               }
+            }
+         }
+      }
+  - Id: 313867
+    AegisName: Ch01_S_E_GAE05
+    Name: Frontier Crystal (Good and Evil) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Angel,10;
+      bonus2 bMagicAddRace,RC_Angel,10;
+      bonus2 bAddRace,RC_Demon,10;
+      bonus2 bMagicAddRace,RC_Demon,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Angel,1;
+         bonus2 bMagicAddRace,RC_Angel,1;
+         bonus2 bAddRace,RC_Demon,1;
+         bonus2 bMagicAddRace,RC_Demon,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Angel,1;
+            bonus2 bMagicAddRace,RC_Angel,1;
+            bonus2 bAddRace,RC_Demon,1;
+            bonus2 bMagicAddRace,RC_Demon,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Angel,2;
+               bonus2 bMagicAddRace,RC_Angel,2;
+               bonus2 bAddRace,RC_Demon,2;
+               bonus2 bMagicAddRace,RC_Demon,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Angel,4;
+                  bonus2 bMagicAddRace,RC_Angel,4;
+                  bonus2 bAddRace,RC_Demon,4;
+                  bonus2 bMagicAddRace,RC_Demon,4;
+               }
+            }
+         }
+      }
+  - Id: 313868
+    AegisName: Ch01_S_E_Immo01
+    Name: Frontier Crystal (Immortal) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Undead,3;
+      bonus2 bMagicAddRace,RC_Undead,3;
+      bonus2 bAddRace,RC_Dragon,3;
+      bonus2 bMagicAddRace,RC_Dragon,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Undead,1;
+         bonus2 bMagicAddRace,RC_Undead,1;
+         bonus2 bAddRace,RC_Dragon,1;
+         bonus2 bMagicAddRace,RC_Dragon,1;
+      }
+  - Id: 313869
+    AegisName: Ch01_S_E_Immo02
+    Name: Frontier Crystal (Immortal) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Undead,4;
+      bonus2 bMagicAddRace,RC_Undead,4;
+      bonus2 bAddRace,RC_Dragon,4;
+      bonus2 bMagicAddRace,RC_Dragon,4;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Undead,1;
+         bonus2 bMagicAddRace,RC_Undead,1;
+         bonus2 bAddRace,RC_Dragon,1;
+         bonus2 bMagicAddRace,RC_Dragon,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Undead,1;
+            bonus2 bMagicAddRace,RC_Undead,1;
+            bonus2 bAddRace,RC_Dragon,1;
+            bonus2 bMagicAddRace,RC_Dragon,1;
+         }
+      }
+  - Id: 313870
+    AegisName: Ch01_S_E_Immo03
+    Name: Frontier Crystal (Immortal) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Undead,5;
+      bonus2 bMagicAddRace,RC_Undead,5;
+      bonus2 bAddRace,RC_Dragon,5;
+      bonus2 bMagicAddRace,RC_Dragon,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Undead,1;
+         bonus2 bMagicAddRace,RC_Undead,1;
+         bonus2 bAddRace,RC_Dragon,1;
+         bonus2 bMagicAddRace,RC_Dragon,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Undead,1;
+            bonus2 bMagicAddRace,RC_Undead,1;
+            bonus2 bAddRace,RC_Dragon,1;
+            bonus2 bMagicAddRace,RC_Dragon,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Undead,2;
+               bonus2 bMagicAddRace,RC_Undead,2;
+               bonus2 bAddRace,RC_Dragon,2;
+               bonus2 bMagicAddRace,RC_Dragon,2;
+            }
+         }
+      }
+  - Id: 313871
+    AegisName: Ch01_S_E_Immo04
+    Name: Frontier Crystal (Immortal) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Undead,7;
+      bonus2 bMagicAddRace,RC_Undead,7;
+      bonus2 bAddRace,RC_Dragon,7;
+      bonus2 bMagicAddRace,RC_Dragon,7;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Undead,1;
+         bonus2 bMagicAddRace,RC_Undead,1;
+         bonus2 bAddRace,RC_Dragon,1;
+         bonus2 bMagicAddRace,RC_Dragon,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Undead,1;
+            bonus2 bMagicAddRace,RC_Undead,1;
+            bonus2 bAddRace,RC_Dragon,1;
+            bonus2 bMagicAddRace,RC_Dragon,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Undead,2;
+               bonus2 bMagicAddRace,RC_Undead,2;
+               bonus2 bAddRace,RC_Dragon,2;
+               bonus2 bMagicAddRace,RC_Dragon,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Undead,2;
+                  bonus2 bMagicAddRace,RC_Undead,2;
+                  bonus2 bAddRace,RC_Dragon,2;
+                  bonus2 bMagicAddRace,RC_Dragon,2;
+               }
+            }
+         }
+      }
+  - Id: 313872
+    AegisName: Ch01_S_E_Immo05
+    Name: Frontier Crystal (Immortal) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Undead,10;
+      bonus2 bMagicAddRace,RC_Undead,10;
+      bonus2 bAddRace,RC_Dragon,10;
+      bonus2 bMagicAddRace,RC_Dragon,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Undead,1;
+         bonus2 bMagicAddRace,RC_Undead,1;
+         bonus2 bAddRace,RC_Dragon,1;
+         bonus2 bMagicAddRace,RC_Dragon,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Undead,1;
+            bonus2 bMagicAddRace,RC_Undead,1;
+            bonus2 bAddRace,RC_Dragon,1;
+            bonus2 bMagicAddRace,RC_Dragon,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Undead,2;
+               bonus2 bMagicAddRace,RC_Undead,2;
+               bonus2 bAddRace,RC_Dragon,2;
+               bonus2 bMagicAddRace,RC_Dragon,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Undead,4;
+                  bonus2 bMagicAddRace,RC_Undead,4;
+                  bonus2 bAddRace,RC_Dragon,4;
+                  bonus2 bMagicAddRace,RC_Dragon,4;
+               }
+            }
+         }
+      }
+  - Id: 313873
+    AegisName: Ch01_S_E_Vain01
+    Name: Frontier Crystal (Vain) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddRace,RC_Insect,3;
+      bonus2 bMagicAddRace,RC_Insect,3;
+      bonus2 bAddRace,RC_Formless,3;
+      bonus2 bMagicAddRace,RC_Formless,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Insect,1;
+         bonus2 bMagicAddRace,RC_Insect,1;
+         bonus2 bAddRace,RC_Formless,1;
+         bonus2 bMagicAddRace,RC_Formless,1;
+      }
+  - Id: 313874
+    AegisName: Ch01_S_E_Vain02
+    Name: Frontier Crystal (Vain) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Insect,4;
+      bonus2 bMagicAddRace,RC_Insect,4;
+      bonus2 bAddRace,RC_Formless,4;
+      bonus2 bMagicAddRace,RC_Formless,4;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Insect,1;
+         bonus2 bMagicAddRace,RC_Insect,1;
+         bonus2 bAddRace,RC_Formless,1;
+         bonus2 bMagicAddRace,RC_Formless,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Insect,1;
+            bonus2 bMagicAddRace,RC_Insect,1;
+            bonus2 bAddRace,RC_Formless,1;
+            bonus2 bMagicAddRace,RC_Formless,1;
+         }
+      }
+  - Id: 313875
+    AegisName: Ch01_S_E_Vain03
+    Name: Frontier Crystal (Vain) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Insect,5;
+      bonus2 bMagicAddRace,RC_Insect,5;
+      bonus2 bAddRace,RC_Formless,5;
+      bonus2 bMagicAddRace,RC_Formless,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Insect,1;
+         bonus2 bMagicAddRace,RC_Insect,1;
+         bonus2 bAddRace,RC_Formless,1;
+         bonus2 bMagicAddRace,RC_Formless,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Insect,1;
+            bonus2 bMagicAddRace,RC_Insect,1;
+            bonus2 bAddRace,RC_Formless,1;
+            bonus2 bMagicAddRace,RC_Formless,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Insect,2;
+               bonus2 bMagicAddRace,RC_Insect,2;
+               bonus2 bAddRace,RC_Formless,2;
+               bonus2 bMagicAddRace,RC_Formless,2;
+            }
+         }
+      }
+  - Id: 313876
+    AegisName: Ch01_S_E_Vain04
+    Name: Frontier Crystal (Vain) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Insect,7;
+      bonus2 bMagicAddRace,RC_Insect,7;
+      bonus2 bAddRace,RC_Formless,7;
+      bonus2 bMagicAddRace,RC_Formless,7;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Insect,1;
+         bonus2 bMagicAddRace,RC_Insect,1;
+         bonus2 bAddRace,RC_Formless,1;
+         bonus2 bMagicAddRace,RC_Formless,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Insect,1;
+            bonus2 bMagicAddRace,RC_Insect,1;
+            bonus2 bAddRace,RC_Formless,1;
+            bonus2 bMagicAddRace,RC_Formless,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Insect,2;
+               bonus2 bMagicAddRace,RC_Insect,2;
+               bonus2 bAddRace,RC_Formless,2;
+               bonus2 bMagicAddRace,RC_Formless,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Insect,2;
+                  bonus2 bMagicAddRace,RC_Insect,2;
+                  bonus2 bAddRace,RC_Formless,2;
+                  bonus2 bMagicAddRace,RC_Formless,2;
+               }
+            }
+         }
+      }
+  - Id: 313877
+    AegisName: Ch01_S_E_Vain05
+    Name: Frontier Crystal (Vain) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Insect,10;
+      bonus2 bMagicAddRace,RC_Insect,10;
+      bonus2 bAddRace,RC_Formless,10;
+      bonus2 bMagicAddRace,RC_Formless,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Insect,1;
+         bonus2 bMagicAddRace,RC_Insect,1;
+         bonus2 bAddRace,RC_Formless,1;
+         bonus2 bMagicAddRace,RC_Formless,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Insect,1;
+            bonus2 bMagicAddRace,RC_Insect,1;
+            bonus2 bAddRace,RC_Formless,1;
+            bonus2 bMagicAddRace,RC_Formless,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Insect,2;
+               bonus2 bMagicAddRace,RC_Insect,2;
+               bonus2 bAddRace,RC_Formless,2;
+               bonus2 bMagicAddRace,RC_Formless,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Insect,4;
+                  bonus2 bMagicAddRace,RC_Insect,4;
+                  bonus2 bAddRace,RC_Formless,4;
+                  bonus2 bMagicAddRace,RC_Formless,4;
+               }
+            }
+         }
+      }
+  - Id: 313878
+    AegisName: Ch01_S_E_Flame01
+    Name: Frontier Crystal (Flame) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddEle,Ele_Dark,3;
+      bonus2 bAddEle,Ele_Dark,3;
+      bonus2 bMagicAddEle,Ele_Fire,3;
+      bonus2 bAddEle,Ele_Fire,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Dark,1;
+         bonus2 bAddEle,Ele_Dark,1;
+         bonus2 bMagicAddEle,Ele_Fire,1;
+         bonus2 bAddEle,Ele_Fire,1;
+      }
+  - Id: 313879
+    AegisName: Ch01_S_E_Flame02
+    Name: Frontier Crystal (Flame) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Dark,4;
+      bonus2 bAddEle,Ele_Dark,4;
+      bonus2 bMagicAddEle,Ele_Fire,4;
+      bonus2 bAddEle,Ele_Fire,4;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Dark,1;
+         bonus2 bAddEle,Ele_Dark,1;
+         bonus2 bMagicAddEle,Ele_Fire,1;
+         bonus2 bAddEle,Ele_Fire,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Dark,1;
+            bonus2 bAddEle,Ele_Dark,1;
+            bonus2 bMagicAddEle,Ele_Fire,1;
+            bonus2 bAddEle,Ele_Fire,1;
+         }
+      }
+  - Id: 313880
+    AegisName: Ch01_S_E_Flame03
+    Name: Frontier Crystal (Flame) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Dark,5;
+      bonus2 bAddEle,Ele_Dark,5;
+      bonus2 bMagicAddEle,Ele_Fire,5;
+      bonus2 bAddEle,Ele_Fire,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Dark,1;
+         bonus2 bAddEle,Ele_Dark,1;
+         bonus2 bMagicAddEle,Ele_Fire,1;
+         bonus2 bAddEle,Ele_Fire,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Dark,1;
+            bonus2 bAddEle,Ele_Dark,1;
+            bonus2 bMagicAddEle,Ele_Fire,1;
+            bonus2 bAddEle,Ele_Fire,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Dark,2;
+               bonus2 bAddEle,Ele_Dark,2;
+               bonus2 bMagicAddEle,Ele_Fire,2;
+               bonus2 bAddEle,Ele_Fire,2;
+            }
+         }
+      }
+  - Id: 313881
+    AegisName: Ch01_S_E_Flame04
+    Name: Frontier Crystal (Flame) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Dark,7;
+      bonus2 bAddEle,Ele_Dark,7;
+      bonus2 bMagicAddEle,Ele_Fire,7;
+      bonus2 bAddEle,Ele_Fire,7;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Dark,1;
+         bonus2 bAddEle,Ele_Dark,1;
+         bonus2 bMagicAddEle,Ele_Fire,1;
+         bonus2 bAddEle,Ele_Fire,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Dark,1;
+            bonus2 bAddEle,Ele_Dark,1;
+            bonus2 bMagicAddEle,Ele_Fire,1;
+            bonus2 bAddEle,Ele_Fire,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Dark,2;
+               bonus2 bAddEle,Ele_Dark,2;
+               bonus2 bMagicAddEle,Ele_Fire,2;
+               bonus2 bAddEle,Ele_Fire,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Dark,2;
+                  bonus2 bAddEle,Ele_Dark,2;
+                  bonus2 bMagicAddEle,Ele_Fire,2;
+                  bonus2 bAddEle,Ele_Fire,2;
+               }
+            }
+         }
+      }
+  - Id: 313882
+    AegisName: Ch01_S_E_Flame05
+    Name: Frontier Crystal (Flame) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Dark,10;
+      bonus2 bAddEle,Ele_Dark,10;
+      bonus2 bMagicAddEle,Ele_Fire,10;
+      bonus2 bAddEle,Ele_Fire,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Dark,1;
+         bonus2 bAddEle,Ele_Dark,1;
+         bonus2 bMagicAddEle,Ele_Fire,1;
+         bonus2 bAddEle,Ele_Fire,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Dark,1;
+            bonus2 bAddEle,Ele_Dark,1;
+            bonus2 bMagicAddEle,Ele_Fire,1;
+            bonus2 bAddEle,Ele_Fire,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Dark,2;
+               bonus2 bAddEle,Ele_Dark,2;
+               bonus2 bMagicAddEle,Ele_Fire,2;
+               bonus2 bAddEle,Ele_Fire,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Dark,4;
+                  bonus2 bAddEle,Ele_Dark,4;
+                  bonus2 bMagicAddEle,Ele_Fire,4;
+                  bonus2 bAddEle,Ele_Fire,4;
+               }
+            }
+         }
+      }
+  - Id: 313883
+    AegisName: Ch01_S_E_Frozen01
+    Name: Frontier Crystal (Frozen) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddEle,Ele_Holy,3;
+      bonus2 bAddEle,Ele_Holy,3;
+      bonus2 bMagicAddEle,Ele_Water,3;
+      bonus2 bAddEle,Ele_Water,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Holy,1;
+         bonus2 bAddEle,Ele_Holy,1;
+         bonus2 bMagicAddEle,Ele_Water,1;
+         bonus2 bAddEle,Ele_Water,1;
+      }
+  - Id: 313884
+    AegisName: Ch01_S_E_Frozen02
+    Name: Frontier Crystal (Frozen) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Holy,4;
+      bonus2 bAddEle,Ele_Holy,4;
+      bonus2 bMagicAddEle,Ele_Water,4;
+      bonus2 bAddEle,Ele_Water,4;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Holy,1;
+         bonus2 bAddEle,Ele_Holy,1;
+         bonus2 bMagicAddEle,Ele_Water,1;
+         bonus2 bAddEle,Ele_Water,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Holy,1;
+            bonus2 bAddEle,Ele_Holy,1;
+            bonus2 bMagicAddEle,Ele_Water,1;
+            bonus2 bAddEle,Ele_Water,1;
+         }
+      }
+  - Id: 313885
+    AegisName: Ch01_S_E_Frozen03
+    Name: Frontier Crystal (Frozen) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Holy,5;
+      bonus2 bAddEle,Ele_Holy,5;
+      bonus2 bMagicAddEle,Ele_Water,5;
+      bonus2 bAddEle,Ele_Water,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Holy,1;
+         bonus2 bAddEle,Ele_Holy,1;
+         bonus2 bMagicAddEle,Ele_Water,1;
+         bonus2 bAddEle,Ele_Water,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Holy,1;
+            bonus2 bAddEle,Ele_Holy,1;
+            bonus2 bMagicAddEle,Ele_Water,1;
+            bonus2 bAddEle,Ele_Water,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Holy,2;
+               bonus2 bAddEle,Ele_Holy,2;
+               bonus2 bMagicAddEle,Ele_Water,2;
+               bonus2 bAddEle,Ele_Water,2;
+            }
+         }
+      }
+  - Id: 313886
+    AegisName: Ch01_S_E_Frozen04
+    Name: Frontier Crystal (Frozen) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Holy,7;
+      bonus2 bAddEle,Ele_Holy,7;
+      bonus2 bMagicAddEle,Ele_Water,7;
+      bonus2 bAddEle,Ele_Water,7;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Holy,1;
+         bonus2 bAddEle,Ele_Holy,1;
+         bonus2 bMagicAddEle,Ele_Water,1;
+         bonus2 bAddEle,Ele_Water,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Holy,1;
+            bonus2 bAddEle,Ele_Holy,1;
+            bonus2 bMagicAddEle,Ele_Water,1;
+            bonus2 bAddEle,Ele_Water,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Holy,2;
+               bonus2 bAddEle,Ele_Holy,2;
+               bonus2 bMagicAddEle,Ele_Water,2;
+               bonus2 bAddEle,Ele_Water,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Holy,2;
+                  bonus2 bAddEle,Ele_Holy,2;
+                  bonus2 bMagicAddEle,Ele_Water,2;
+                  bonus2 bAddEle,Ele_Water,2;
+               }
+            }
+         }
+      }
+  - Id: 313887
+    AegisName: Ch01_S_E_Frozen05
+    Name: Frontier Crystal (Frozen) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Holy,10;
+      bonus2 bAddEle,Ele_Holy,10;
+      bonus2 bMagicAddEle,Ele_Water,10;
+      bonus2 bAddEle,Ele_Water,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Holy,1;
+         bonus2 bAddEle,Ele_Holy,1;
+         bonus2 bMagicAddEle,Ele_Water,1;
+         bonus2 bAddEle,Ele_Water,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Holy,1;
+            bonus2 bAddEle,Ele_Holy,1;
+            bonus2 bMagicAddEle,Ele_Water,1;
+            bonus2 bAddEle,Ele_Water,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Holy,2;
+               bonus2 bAddEle,Ele_Holy,2;
+               bonus2 bMagicAddEle,Ele_Water,2;
+               bonus2 bAddEle,Ele_Water,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Holy,4;
+                  bonus2 bAddEle,Ele_Holy,4;
+                  bonus2 bMagicAddEle,Ele_Water,4;
+                  bonus2 bAddEle,Ele_Water,4;
+               }
+            }
+         }
+      }
+  - Id: 313888
+    AegisName: Ch01_S_E_Earth01
+    Name: Frontier Crystal (Earth) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddEle,Ele_Earth,3;
+      bonus2 bAddEle,Ele_Earth,3;
+      bonus2 bMagicAddEle,Ele_Wind,3;
+      bonus2 bAddEle,Ele_Wind,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Earth,1;
+         bonus2 bAddEle,Ele_Earth,1;
+         bonus2 bMagicAddEle,Ele_Wind,1;
+         bonus2 bAddEle,Ele_Wind,1;
+      }
+  - Id: 313889
+    AegisName: Ch01_S_E_Earth02
+    Name: Frontier Crystal (Earth) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Earth,4;
+      bonus2 bAddEle,Ele_Earth,4;
+      bonus2 bMagicAddEle,Ele_Wind,4;
+      bonus2 bAddEle,Ele_Wind,4;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Earth,1;
+         bonus2 bAddEle,Ele_Earth,1;
+         bonus2 bMagicAddEle,Ele_Wind,1;
+         bonus2 bAddEle,Ele_Wind,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Earth,1;
+            bonus2 bAddEle,Ele_Earth,1;
+            bonus2 bMagicAddEle,Ele_Wind,1;
+            bonus2 bAddEle,Ele_Wind,1;
+         }
+      }
+  - Id: 313890
+    AegisName: Ch01_S_E_Earth03
+    Name: Frontier Crystal (Earth) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Earth,5;
+      bonus2 bAddEle,Ele_Earth,5;
+      bonus2 bMagicAddEle,Ele_Wind,5;
+      bonus2 bAddEle,Ele_Wind,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Earth,1;
+         bonus2 bAddEle,Ele_Earth,1;
+         bonus2 bMagicAddEle,Ele_Wind,1;
+         bonus2 bAddEle,Ele_Wind,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Earth,1;
+            bonus2 bAddEle,Ele_Earth,1;
+            bonus2 bMagicAddEle,Ele_Wind,1;
+            bonus2 bAddEle,Ele_Wind,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Earth,2;
+               bonus2 bAddEle,Ele_Earth,2;
+               bonus2 bMagicAddEle,Ele_Wind,2;
+               bonus2 bAddEle,Ele_Wind,2;
+            }
+         }
+      }
+  - Id: 313891
+    AegisName: Ch01_S_E_Earth04
+    Name: Frontier Crystal (Earth) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Earth,7;
+      bonus2 bAddEle,Ele_Earth,7;
+      bonus2 bMagicAddEle,Ele_Wind,7;
+      bonus2 bAddEle,Ele_Wind,7;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Earth,1;
+         bonus2 bAddEle,Ele_Earth,1;
+         bonus2 bMagicAddEle,Ele_Wind,1;
+         bonus2 bAddEle,Ele_Wind,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Earth,1;
+            bonus2 bAddEle,Ele_Earth,1;
+            bonus2 bMagicAddEle,Ele_Wind,1;
+            bonus2 bAddEle,Ele_Wind,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Earth,2;
+               bonus2 bAddEle,Ele_Earth,2;
+               bonus2 bMagicAddEle,Ele_Wind,2;
+               bonus2 bAddEle,Ele_Wind,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Earth,2;
+                  bonus2 bAddEle,Ele_Earth,2;
+                  bonus2 bMagicAddEle,Ele_Wind,2;
+                  bonus2 bAddEle,Ele_Wind,2;
+               }
+            }
+         }
+      }
+  - Id: 313892
+    AegisName: Ch01_S_E_Earth05
+    Name: Frontier Crystal (Earth) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Earth,10;
+      bonus2 bAddEle,Ele_Earth,10;
+      bonus2 bMagicAddEle,Ele_Wind,10;
+      bonus2 bAddEle,Ele_Wind,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Earth,1;
+         bonus2 bAddEle,Ele_Earth,1;
+         bonus2 bMagicAddEle,Ele_Wind,1;
+         bonus2 bAddEle,Ele_Wind,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Earth,1;
+            bonus2 bAddEle,Ele_Earth,1;
+            bonus2 bMagicAddEle,Ele_Wind,1;
+            bonus2 bAddEle,Ele_Wind,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Earth,2;
+               bonus2 bAddEle,Ele_Earth,2;
+               bonus2 bMagicAddEle,Ele_Wind,2;
+               bonus2 bAddEle,Ele_Wind,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Earth,4;
+                  bonus2 bAddEle,Ele_Earth,4;
+                  bonus2 bMagicAddEle,Ele_Wind,4;
+                  bonus2 bAddEle,Ele_Wind,4;
+               }
+            }
+         }
+      }
+  - Id: 313893
+    AegisName: Ch01_S_E_Death01
+    Name: Frontier Crystal (Death) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bAddEle,Ele_Ghost,3;
+      bonus2 bMagicAddEle,Ele_Ghost,3;
+      bonus2 bAddEle,Ele_Undead,3;
+      bonus2 bMagicAddEle,Ele_Undead,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Ghost,1;
+         bonus2 bMagicAddEle,Ele_Ghost,1;
+         bonus2 bAddEle,Ele_Undead,1;
+         bonus2 bMagicAddEle,Ele_Undead,1;
+      }
+  - Id: 313894
+    AegisName: Ch01_S_E_Death02
+    Name: Frontier Crystal (Death) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle,Ele_Ghost,4;
+      bonus2 bMagicAddEle,Ele_Ghost,4;
+      bonus2 bAddEle,Ele_Undead,4;
+      bonus2 bMagicAddEle,Ele_Undead,4;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Ghost,1;
+         bonus2 bMagicAddEle,Ele_Ghost,1;
+         bonus2 bAddEle,Ele_Undead,1;
+         bonus2 bMagicAddEle,Ele_Undead,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Ghost,1;
+            bonus2 bMagicAddEle,Ele_Ghost,1;
+            bonus2 bAddEle,Ele_Undead,1;
+            bonus2 bMagicAddEle,Ele_Undead,1;
+         }
+      }
+  - Id: 313895
+    AegisName: Ch01_S_E_Death03
+    Name: Frontier Crystal (Death) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle,Ele_Ghost,5;
+      bonus2 bMagicAddEle,Ele_Ghost,5;
+      bonus2 bAddEle,Ele_Undead,5;
+      bonus2 bMagicAddEle,Ele_Undead,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Ghost,1;
+         bonus2 bMagicAddEle,Ele_Ghost,1;
+         bonus2 bAddEle,Ele_Undead,1;
+         bonus2 bMagicAddEle,Ele_Undead,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Ghost,1;
+            bonus2 bMagicAddEle,Ele_Ghost,1;
+            bonus2 bAddEle,Ele_Undead,1;
+            bonus2 bMagicAddEle,Ele_Undead,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Ghost,2;
+               bonus2 bMagicAddEle,Ele_Ghost,2;
+               bonus2 bAddEle,Ele_Undead,2;
+               bonus2 bMagicAddEle,Ele_Undead,2;
+            }
+         }
+      }
+  - Id: 313896
+    AegisName: Ch01_S_E_Death04
+    Name: Frontier Crystal (Death) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle,Ele_Ghost,7;
+      bonus2 bMagicAddEle,Ele_Ghost,7;
+      bonus2 bAddEle,Ele_Undead,7;
+      bonus2 bMagicAddEle,Ele_Undead,7;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Ghost,1;
+         bonus2 bMagicAddEle,Ele_Ghost,1;
+         bonus2 bAddEle,Ele_Undead,1;
+         bonus2 bMagicAddEle,Ele_Undead,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Ghost,1;
+            bonus2 bMagicAddEle,Ele_Ghost,1;
+            bonus2 bAddEle,Ele_Undead,1;
+            bonus2 bMagicAddEle,Ele_Undead,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Ghost,2;
+               bonus2 bMagicAddEle,Ele_Ghost,2;
+               bonus2 bAddEle,Ele_Undead,2;
+               bonus2 bMagicAddEle,Ele_Undead,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Ghost,2;
+                  bonus2 bMagicAddEle,Ele_Ghost,2;
+                  bonus2 bAddEle,Ele_Undead,2;
+                  bonus2 bMagicAddEle,Ele_Undead,2;
+               }
+            }
+         }
+      }
+  - Id: 313897
+    AegisName: Ch01_S_E_Death05
+    Name: Frontier Crystal (Death) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle,Ele_Ghost,10;
+      bonus2 bMagicAddEle,Ele_Ghost,10;
+      bonus2 bAddEle,Ele_Undead,10;
+      bonus2 bMagicAddEle,Ele_Undead,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Ghost,1;
+         bonus2 bMagicAddEle,Ele_Ghost,1;
+         bonus2 bAddEle,Ele_Undead,1;
+         bonus2 bMagicAddEle,Ele_Undead,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Ghost,1;
+            bonus2 bMagicAddEle,Ele_Ghost,1;
+            bonus2 bAddEle,Ele_Undead,1;
+            bonus2 bMagicAddEle,Ele_Undead,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Ghost,2;
+               bonus2 bMagicAddEle,Ele_Ghost,2;
+               bonus2 bAddEle,Ele_Undead,2;
+               bonus2 bMagicAddEle,Ele_Undead,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Ghost,4;
+                  bonus2 bMagicAddEle,Ele_Ghost,4;
+                  bonus2 bAddEle,Ele_Undead,4;
+                  bonus2 bMagicAddEle,Ele_Undead,4;
+               }
+            }
+         }
+      }
+  - Id: 313898
+    AegisName: Ch01_S_E_Poison01
+    Name: Frontier Crystal (Poison) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddEle,Ele_Poison,3;
+      bonus2 bAddEle,Ele_Poison,3;
+      bonus2 bMagicAddEle,Ele_Neutral,3;
+      bonus2 bAddEle,Ele_Neutral,3;
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Poison,1;
+         bonus2 bAddEle,Ele_Poison,1;
+         bonus2 bMagicAddEle,Ele_Neutral,1;
+         bonus2 bAddEle,Ele_Neutral,1;
+      }
+  - Id: 313899
+    AegisName: Ch01_S_E_Poison02
+    Name: Frontier Crystal (Poison) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Poison,4;
+      bonus2 bAddEle,Ele_Poison,4;
+      bonus2 bMagicAddEle,Ele_Neutral,4;
+      bonus2 bAddEle,Ele_Neutral,4;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Poison,1;
+         bonus2 bAddEle,Ele_Poison,1;
+         bonus2 bMagicAddEle,Ele_Neutral,1;
+         bonus2 bAddEle,Ele_Neutral,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Poison,1;
+            bonus2 bAddEle,Ele_Poison,1;
+            bonus2 bMagicAddEle,Ele_Neutral,1;
+            bonus2 bAddEle,Ele_Neutral,1;
+         }
+      }
+  - Id: 313900
+    AegisName: Ch01_S_E_Poison03
+    Name: Frontier Crystal (Poison) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Poison,5;
+      bonus2 bAddEle,Ele_Poison,5;
+      bonus2 bMagicAddEle,Ele_Neutral,5;
+      bonus2 bAddEle,Ele_Neutral,5;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Poison,1;
+         bonus2 bAddEle,Ele_Poison,1;
+         bonus2 bMagicAddEle,Ele_Neutral,1;
+         bonus2 bAddEle,Ele_Neutral,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Poison,1;
+            bonus2 bAddEle,Ele_Poison,1;
+            bonus2 bMagicAddEle,Ele_Neutral,1;
+            bonus2 bAddEle,Ele_Neutral,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Poison,2;
+               bonus2 bAddEle,Ele_Poison,2;
+               bonus2 bMagicAddEle,Ele_Neutral,2;
+               bonus2 bAddEle,Ele_Neutral,2;
+            }
+         }
+      }
+  - Id: 313901
+    AegisName: Ch01_S_E_Poison04
+    Name: Frontier Crystal (Poison) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Poison,7;
+      bonus2 bAddEle,Ele_Poison,7;
+      bonus2 bMagicAddEle,Ele_Neutral,7;
+      bonus2 bAddEle,Ele_Neutral,7;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Poison,1;
+         bonus2 bAddEle,Ele_Poison,1;
+         bonus2 bMagicAddEle,Ele_Neutral,1;
+         bonus2 bAddEle,Ele_Neutral,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Poison,1;
+            bonus2 bAddEle,Ele_Poison,1;
+            bonus2 bMagicAddEle,Ele_Neutral,1;
+            bonus2 bAddEle,Ele_Neutral,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Poison,2;
+               bonus2 bAddEle,Ele_Poison,2;
+               bonus2 bMagicAddEle,Ele_Neutral,2;
+               bonus2 bAddEle,Ele_Neutral,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Poison,2;
+                  bonus2 bAddEle,Ele_Poison,2;
+                  bonus2 bMagicAddEle,Ele_Neutral,2;
+                  bonus2 bAddEle,Ele_Neutral,2;
+               }
+            }
+         }
+      }
+  - Id: 313902
+    AegisName: Ch01_S_E_Poison05
+    Name: Frontier Crystal (Poison) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Poison,10;
+      bonus2 bAddEle,Ele_Poison,10;
+      bonus2 bMagicAddEle,Ele_Neutral,10;
+      bonus2 bAddEle,Ele_Neutral,10;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Poison,1;
+         bonus2 bAddEle,Ele_Poison,1;
+         bonus2 bMagicAddEle,Ele_Neutral,1;
+         bonus2 bAddEle,Ele_Neutral,1;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Poison,1;
+            bonus2 bAddEle,Ele_Poison,1;
+            bonus2 bMagicAddEle,Ele_Neutral,1;
+            bonus2 bAddEle,Ele_Neutral,1;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Poison,2;
+               bonus2 bAddEle,Ele_Poison,2;
+               bonus2 bMagicAddEle,Ele_Neutral,2;
+               bonus2 bAddEle,Ele_Neutral,2;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Poison,4;
+                  bonus2 bAddEle,Ele_Poison,4;
+                  bonus2 bMagicAddEle,Ele_Neutral,4;
+                  bonus2 bAddEle,Ele_Neutral,4;
+               }
+            }
+         }
+      }
+  - Id: 313903
+    AegisName: Ch01_S_E_Fighting01
+    Name: Frontier Crystal (Fighting Spirit) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bPAtk,3;
+         bonus bPow,1;
+      }
+  - Id: 313904
+    AegisName: Ch01_S_E_Fighting02
+    Name: Frontier Crystal (Fighting Spirit) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,4;
+         bonus bPow,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,2;
+            bonus bShortAtkRate,2;
+         }
+      }
+  - Id: 313905
+    AegisName: Ch01_S_E_Fighting03
+    Name: Frontier Crystal (Fighting Spirit) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         bonus bPow,3;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,4;
+            bonus bShortAtkRate,4;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPow,3;
+               bonus bBaseAtk,3*(getrefine()/5);
+            }
+         }
+      }
+  - Id: 313906
+    AegisName: Ch01_S_E_Fighting04
+    Name: Frontier Crystal (Fighting Spirit) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,6;
+         bonus bPow,4;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,6;
+            bonus bShortAtkRate,6;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPow,4;
+               bonus bBaseAtk,5*(.@r/4);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPow,5*(.@r/3);
+               }
+            }
+         }
+      }
+  - Id: 313907
+    AegisName: Ch01_S_E_Fighting05
+    Name: Frontier Crystal (Fighting Spirit) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,7;
+         bonus bPow,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,8;
+            bonus bShortAtkRate,8;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPow,5;
+               bonus bBaseAtk,7*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPow,6*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313908
+    AegisName: Ch01_S_E_Fighting06
+    Name: Dimension World Crystal (Fighting Spirit)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddClass,Class_Boss,5;
+      bonus2 bAddSize,Size_All,15;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,7;
+         bonus bPow,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,12;
+            bonus bShortAtkRate,12;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bPow,5;
+               bonus bBaseAtk,9*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPow,6*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313909
+    AegisName: Ch01_S_E_Prudence01
+    Name: Frontier Crystal (Prudence) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bPAtk,3;
+         bonus bCon,3;
+      }
+  - Id: 313910
+    AegisName: Ch01_S_E_Prudence02
+    Name: Frontier Crystal (Prudence) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,4;
+         bonus bCon,4;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,4;
+            bonus bShortAtkRate,4;
+         }
+      }
+  - Id: 313911
+    AegisName: Ch01_S_E_Prudence03
+    Name: Frontier Crystal (Prudence) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,5;
+         bonus bCon,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,6;
+            bonus bShortAtkRate,6;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCon,5;
+               bonus bBaseAtk,4*(getrefine()/5);
+            }
+         }
+      }
+  - Id: 313912
+    AegisName: Ch01_S_E_Prudence04
+    Name: Frontier Crystal (Prudence) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,6;
+         bonus bCon,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,8;
+            bonus bShortAtkRate,8;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCon,6;
+               bonus bBaseAtk,6*(.@r/4);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCon,6*(.@r/3);
+               }
+            }
+         }
+      }
+  - Id: 313913
+    AegisName: Ch01_S_E_Prudence05
+    Name: Frontier Crystal (Prudence) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,7;
+         bonus bCon,7;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,10;
+            bonus bShortAtkRate,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCon,7;
+               bonus bBaseAtk,8*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCon,7*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313914
+    AegisName: Ch01_S_E_Prudence06
+    Name: Dimension World Crystal (Prudence)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddClass,Class_Boss,5;
+      bonus2 bAddSize,Size_All,15;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bPAtk,7;
+         bonus bCon,7;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bLongAtkRate,15;
+            bonus bShortAtkRate,15;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCon,7;
+               bonus bBaseAtk,10*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCon,6*(.@r/2);   /* TODO: bonus bCon,7*(.@r/2); according to description */
+               }
+            }
+         }
+      }
+  - Id: 313915
+    AegisName: Ch01_S_E_Pride01
+    Name: Frontier Crystal (Pride) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bSMatk,3;
+         bonus bSpl,1;
+      }
+  - Id: 313916
+    AegisName: Ch01_S_E_Pride02
+    Name: Frontier Crystal (Pride) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,4;
+         bonus bSpl,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Neutral,2;
+            bonus2 bMagicAtkEle,Ele_Fire,2;
+            bonus2 bMagicAtkEle,Ele_Earth,2;
+            bonus2 bMagicAtkEle,Ele_Water,2;
+            bonus2 bMagicAtkEle,Ele_Wind,2;
+            bonus2 bMagicAtkEle,Ele_Poison,2;
+            bonus2 bMagicAtkEle,Ele_Dark,2;
+         }
+      }
+  - Id: 313917
+    AegisName: Ch01_S_E_Pride03
+    Name: Frontier Crystal (Pride) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         bonus bSpl,3;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Neutral,4;
+            bonus2 bMagicAtkEle,Ele_Fire,4;
+            bonus2 bMagicAtkEle,Ele_Earth,4;
+            bonus2 bMagicAtkEle,Ele_Water,4;
+            bonus2 bMagicAtkEle,Ele_Wind,4;
+            bonus2 bMagicAtkEle,Ele_Poison,4;
+            bonus2 bMagicAtkEle,Ele_Dark,4;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSpl,3;
+               bonus bMatk,3*(getrefine()/5);
+            }
+         }
+      }
+  - Id: 313918
+    AegisName: Ch01_S_E_Pride04
+    Name: Frontier Crystal (Pride) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,6;
+         bonus bSpl,4;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Neutral,6;
+            bonus2 bMagicAtkEle,Ele_Fire,6;
+            bonus2 bMagicAtkEle,Ele_Earth,6;
+            bonus2 bMagicAtkEle,Ele_Water,6;
+            bonus2 bMagicAtkEle,Ele_Wind,6;
+            bonus2 bMagicAtkEle,Ele_Poison,6;
+            bonus2 bMagicAtkEle,Ele_Dark,6;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSpl,4;
+               bonus bMatk,5*(.@r/4);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSpl,5*(.@r/3);
+               }
+            }
+         }
+      }
+  - Id: 313919
+    AegisName: Ch01_S_E_Pride05
+    Name: Frontier Crystal (Pride) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,7;
+         bonus bSpl,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Neutral,8;
+            bonus2 bMagicAtkEle,Ele_Fire,8;
+            bonus2 bMagicAtkEle,Ele_Earth,8;
+            bonus2 bMagicAtkEle,Ele_Water,8;
+            bonus2 bMagicAtkEle,Ele_Wind,8;
+            bonus2 bMagicAtkEle,Ele_Poison,8;
+            bonus2 bMagicAtkEle,Ele_Dark,8;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSpl,5;
+               bonus bMatk,7*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSpl,6*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313920
+    AegisName: Ch01_S_E_Pride06
+    Name: Dimension World Crystal (Pride)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bMagicAddClass,Class_Boss,5;
+      bonus2 bMagicAddSize,Size_All,15;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,7;
+         bonus bSpl,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Neutral,12;
+            bonus2 bMagicAtkEle,Ele_Fire,12;
+            bonus2 bMagicAtkEle,Ele_Earth,12;
+            bonus2 bMagicAtkEle,Ele_Water,12;
+            bonus2 bMagicAtkEle,Ele_Wind,12;
+            bonus2 bMagicAtkEle,Ele_Poison,12;
+            bonus2 bMagicAtkEle,Ele_Dark,12;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSpl,5;
+               bonus bMatk,9*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSpl,6*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313921
+    AegisName: Ch01_S_E_Sageness01
+    Name: Frontier Crystal (Sageness) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bSMatk,3;
+         bonus bSpl,1;
+      }
+  - Id: 313922
+    AegisName: Ch01_S_E_Sageness02
+    Name: Frontier Crystal (Sageness) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,4;
+         bonus bSpl,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Undead,2;
+            bonus2 bMagicAtkEle,Ele_Fire,2;
+            bonus2 bMagicAtkEle,Ele_Neutral,2;
+            bonus2 bMagicAtkEle,Ele_Wind,2;
+            bonus2 bMagicAtkEle,Ele_Ghost,2;
+            bonus2 bMagicAtkEle,Ele_Holy,2;
+            bonus2 bMagicAtkEle,Ele_Dark,2;
+         }
+      }
+  - Id: 313923
+    AegisName: Ch01_S_E_Sageness03
+    Name: Frontier Crystal (Sageness) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,5;
+         bonus bSpl,3;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Undead,4;
+            bonus2 bMagicAtkEle,Ele_Fire,4;
+            bonus2 bMagicAtkEle,Ele_Neutral,4;
+            bonus2 bMagicAtkEle,Ele_Wind,4;
+            bonus2 bMagicAtkEle,Ele_Ghost,4;
+            bonus2 bMagicAtkEle,Ele_Holy,4;
+            bonus2 bMagicAtkEle,Ele_Dark,4;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSpl,3;
+               bonus bMatk,3*(getrefine()/5);
+            }
+         }
+      }
+  - Id: 313924
+    AegisName: Ch01_S_E_Sageness04
+    Name: Frontier Crystal (Sageness) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,6;
+         bonus bSpl,4;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Undead,6;
+            bonus2 bMagicAtkEle,Ele_Fire,6;
+            bonus2 bMagicAtkEle,Ele_Neutral,6;
+            bonus2 bMagicAtkEle,Ele_Wind,6;
+            bonus2 bMagicAtkEle,Ele_Ghost,6;
+            bonus2 bMagicAtkEle,Ele_Holy,6;
+            bonus2 bMagicAtkEle,Ele_Dark,6;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSpl,4;
+               bonus bMatk,5*(.@r/4);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSpl,5*(.@r/3);
+               }
+            }
+         }
+      }
+  - Id: 313925
+    AegisName: Ch01_S_E_Sageness05
+    Name: Frontier Crystal (Sageness) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,7;
+         bonus bSpl,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Undead,8;
+            bonus2 bMagicAtkEle,Ele_Fire,8;
+            bonus2 bMagicAtkEle,Ele_Neutral,8;
+            bonus2 bMagicAtkEle,Ele_Wind,8;
+            bonus2 bMagicAtkEle,Ele_Ghost,8;
+            bonus2 bMagicAtkEle,Ele_Holy,8;
+            bonus2 bMagicAtkEle,Ele_Dark,8;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSpl,5;
+               bonus bMatk,7*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSpl,6*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313926
+    AegisName: Ch01_S_E_Sageness06
+    Name: Dimension World Crystal (Sageness)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bMagicAddClass,Class_Boss,5;
+      bonus2 bMagicAddSize,Size_All,15;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bSMatk,7;
+         bonus bSpl,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAtkEle,Ele_Undead,12;
+            bonus2 bMagicAtkEle,Ele_Fire,12;
+            bonus2 bMagicAtkEle,Ele_Neutral,12;
+            bonus2 bMagicAtkEle,Ele_Wind,12;
+            bonus2 bMagicAtkEle,Ele_Ghost,12;
+            bonus2 bMagicAtkEle,Ele_Holy,12;
+            bonus2 bMagicAtkEle,Ele_Dark,12;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bSpl,5;
+               bonus bMatk,9*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bSpl,6*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313927
+    AegisName: Ch01_S_E_Volition01
+    Name: Frontier Crystal (Volition) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bCRate,1;
+         bonus bPAtk,2;
+         bonus bPow,1;
+      }
+  - Id: 313928
+    AegisName: Ch01_S_E_Volition02
+    Name: Frontier Crystal (Volition) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCRate,2;
+         bonus bPAtk,2;
+         bonus bPow,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,1;
+            bonus bLongAtkRate,1;
+            bonus bShortAtkRate,1;
+         }
+      }
+  - Id: 313929
+    AegisName: Ch01_S_E_Volition03
+    Name: Frontier Crystal (Volition) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCRate,2;
+         bonus bPAtk,3;
+         bonus bPow,3;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,1;
+            bonus bLongAtkRate,3;
+            bonus bShortAtkRate,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCrt,3;
+               bonus bCritical,(.@r/5);
+               bonus bBaseAtk,2*(.@r/5);
+            }
+         }
+      }
+  - Id: 313930
+    AegisName: Ch01_S_E_Volition04
+    Name: Frontier Crystal (Volition) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCRate,2;
+         bonus bPAtk,4;
+         bonus bPow,4;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,3;
+            bonus bLongAtkRate,3;
+            bonus bShortAtkRate,3;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCrt,4;
+               bonus bCritical,2*(.@r/4);
+               bonus bBaseAtk,3*(.@r/4);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPow,4*(.@r/3);
+                  bonus bCrt,(.@r/3);
+               }
+            }
+         }
+      }
+  - Id: 313931
+    AegisName: Ch01_S_E_Volition05
+    Name: Frontier Crystal (Volition) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCRate,3;
+         bonus bPAtk,4;
+         bonus bPow,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,5;
+            bonus bLongAtkRate,5;
+            bonus bShortAtkRate,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCrt,5;
+               bonus bCritical,2*(.@r/3);
+               bonus bBaseAtk,5*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPow,4*(.@r/2);
+                  bonus bCrt,2*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313932
+    AegisName: Ch01_S_E_Volition06
+    Name: Dimension World Crystal (Volition)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddClass,Class_Boss,5;
+      bonus2 bAddSize,Size_All,15;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCRate,3;
+         bonus bPAtk,4;
+         bonus bPow,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,7;
+            bonus bLongAtkRate,7;
+            bonus bShortAtkRate,7;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCrt,5;
+               bonus bCritical,4*(.@r/3);
+               bonus bBaseAtk,5*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bPow,4*(.@r/2);
+                  bonus bCrt,2*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313933
+    AegisName: Ch01_S_E_Will01
+    Name: Frontier Crystal (Will) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (getenchantgrade()>=ENCHANTGRADE_D) {
+         bonus bCRate,1;
+         bonus bPAtk,2;
+         bonus bCon,3;
+      }
+  - Id: 313934
+    AegisName: Ch01_S_E_Will02
+    Name: Frontier Crystal (Will) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCRate,2;
+         bonus bPAtk,2;
+         bonus bCon,4;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,1;
+            bonus bLongAtkRate,3;
+            bonus bShortAtkRate,3;
+         }
+      }
+  - Id: 313935
+    AegisName: Ch01_S_E_Will03
+    Name: Frontier Crystal (Will) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCRate,2;
+         bonus bPAtk,3;
+         bonus bCon,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,1;
+            bonus bLongAtkRate,5;
+            bonus bShortAtkRate,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCrt,3;
+               bonus bCritical,(.@r/5);
+               bonus bBaseAtk,3*(.@r/5);
+            }
+         }
+      }
+  - Id: 313936
+    AegisName: Ch01_S_E_Will04
+    Name: Frontier Crystal (Will) 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCRate,2;
+         bonus bPAtk,4;
+         bonus bCon,6;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,3;
+            bonus bLongAtkRate,5;
+            bonus bShortAtkRate,5;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCrt,4;
+               bonus bCritical,2*(.@r/4);
+               bonus bBaseAtk,3*(.@r/4);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCon,3*(.@r/3);
+                  bonus bCrt,2*(.@r/3);
+               }
+            }
+         }
+      }
+  - Id: 313937
+    AegisName: Ch01_S_E_Will05
+    Name: Frontier Crystal (Will) 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCRate,3;
+         bonus bPAtk,4;
+         bonus bCon,7;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,5;
+            bonus bLongAtkRate,7;
+            bonus bShortAtkRate,7;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCrt,5;
+               bonus bCritical,2*(.@r/3);
+               bonus bBaseAtk,6*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCon,4*(.@r/2);
+                  bonus bCrt,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313938
+    AegisName: Ch01_S_E_Will06
+    Name: Dimension World Crystal (Will)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus2 bAddClass,Class_Boss,5;
+      bonus2 bAddSize,Size_All,15;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bCRate,3;
+         bonus bPAtk,4;
+         bonus bCon,7;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bCritAtkRate,8;
+            bonus bLongAtkRate,10;
+            bonus bShortAtkRate,10;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus bCrt,5;
+               bonus bCritical,4*(.@r/3);
+               bonus bBaseAtk,6*(.@r/3);
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus bCon,4*(.@r/2);
+                  bonus bCrt,3*(.@r/2);
+               }
+            }
+         }
+      }
+  - Id: 313939
+    AegisName: Ch01_S_E_Life06
+    Name: Dimension World Crystal (Life)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Brute,12;
+      bonus2 bMagicAddRace,RC_Brute,12;
+      bonus2 bAddRace,RC_Plant,12;
+      bonus2 bMagicAddRace,RC_Plant,12;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Brute,2;
+         bonus2 bMagicAddRace,RC_Brute,2;
+         bonus2 bAddRace,RC_Plant,2;
+         bonus2 bMagicAddRace,RC_Plant,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Brute,2;
+            bonus2 bMagicAddRace,RC_Brute,2;
+            bonus2 bAddRace,RC_Plant,2;
+            bonus2 bMagicAddRace,RC_Plant,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Brute,4;
+               bonus2 bMagicAddRace,RC_Brute,4;
+               bonus2 bAddRace,RC_Plant,4;
+               bonus2 bMagicAddRace,RC_Plant,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Brute,5;
+                  bonus2 bMagicAddRace,RC_Brute,5;
+                  bonus2 bAddRace,RC_Plant,5;
+                  bonus2 bMagicAddRace,RC_Plant,5;
+               }
+            }
+         }
+      }
+  - Id: 313940
+    AegisName: Ch01_S_E_Regiment06
+    Name: Dimension World Crystal (Regiment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Fish,12;
+      bonus2 bMagicAddRace,RC_Fish,12;
+      bonus2 bAddRace,RC_DemiHuman,12;
+      bonus2 bMagicAddRace,RC_DemiHuman,12;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Fish,2;
+         bonus2 bMagicAddRace,RC_Fish,2;
+         bonus2 bAddRace,RC_DemiHuman,2;
+         bonus2 bMagicAddRace,RC_DemiHuman,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Fish,2;
+            bonus2 bMagicAddRace,RC_Fish,2;
+            bonus2 bAddRace,RC_DemiHuman,2;
+            bonus2 bMagicAddRace,RC_DemiHuman,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Fish,4;
+               bonus2 bMagicAddRace,RC_Fish,4;
+               bonus2 bAddRace,RC_DemiHuman,4;
+               bonus2 bMagicAddRace,RC_DemiHuman,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Fish,5;
+                  bonus2 bMagicAddRace,RC_Fish,5;
+                  bonus2 bAddRace,RC_DemiHuman,5;
+                  bonus2 bMagicAddRace,RC_DemiHuman,5;
+               }
+            }
+         }
+      }
+  - Id: 313941
+    AegisName: Ch01_S_E_GAE06
+    Name: Dimension World Crystal (Good and Evil)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Angel,12;
+      bonus2 bMagicAddRace,RC_Angel,12;
+      bonus2 bAddRace,RC_Demon,12;
+      bonus2 bMagicAddRace,RC_Demon,12;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Angel,2;
+         bonus2 bMagicAddRace,RC_Angel,2;
+         bonus2 bAddRace,RC_Demon,2;
+         bonus2 bMagicAddRace,RC_Demon,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Angel,2;
+            bonus2 bMagicAddRace,RC_Angel,2;
+            bonus2 bAddRace,RC_Demon,2;
+            bonus2 bMagicAddRace,RC_Demon,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Angel,4;
+               bonus2 bMagicAddRace,RC_Angel,4;
+               bonus2 bAddRace,RC_Demon,4;
+               bonus2 bMagicAddRace,RC_Demon,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Angel,5;
+                  bonus2 bMagicAddRace,RC_Angel,5;
+                  bonus2 bAddRace,RC_Demon,5;
+                  bonus2 bMagicAddRace,RC_Demon,5;
+               }
+            }
+         }
+      }
+  - Id: 313942
+    AegisName: Ch01_S_E_Immo06
+#   Name: Decision of the dimensional world Decision (Immortal)
+    Name: Dimension World Crystal (Immortal)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Undead,12;
+      bonus2 bMagicAddRace,RC_Undead,12;
+      bonus2 bAddRace,RC_Dragon,12;
+      bonus2 bMagicAddRace,RC_Dragon,12;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Undead,2;
+         bonus2 bMagicAddRace,RC_Undead,2;
+         bonus2 bAddRace,RC_Dragon,2;
+         bonus2 bMagicAddRace,RC_Dragon,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Undead,2;
+            bonus2 bMagicAddRace,RC_Undead,2;
+            bonus2 bAddRace,RC_Dragon,2;
+            bonus2 bMagicAddRace,RC_Dragon,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Undead,4;
+               bonus2 bMagicAddRace,RC_Undead,4;
+               bonus2 bAddRace,RC_Dragon,4;
+               bonus2 bMagicAddRace,RC_Dragon,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Undead,5;
+                  bonus2 bMagicAddRace,RC_Undead,5;
+                  bonus2 bAddRace,RC_Dragon,5;
+                  bonus2 bMagicAddRace,RC_Dragon,5;
+               }
+            }
+         }
+      }
+  - Id: 313943
+    AegisName: Ch01_S_E_Vain06
+    Name: Dimension World Crystal (Vain)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddRace,RC_Insect,12;
+      bonus2 bMagicAddRace,RC_Insect,12;
+      bonus2 bAddRace,RC_Formless,12;
+      bonus2 bMagicAddRace,RC_Formless,12;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddRace,RC_Insect,2;
+         bonus2 bMagicAddRace,RC_Insect,2;
+         bonus2 bAddRace,RC_Formless,2;
+         bonus2 bMagicAddRace,RC_Formless,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddRace,RC_Insect,2;
+            bonus2 bMagicAddRace,RC_Insect,2;
+            bonus2 bAddRace,RC_Formless,2;
+            bonus2 bMagicAddRace,RC_Formless,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddRace,RC_Insect,4;
+               bonus2 bMagicAddRace,RC_Insect,4;
+               bonus2 bAddRace,RC_Formless,4;
+               bonus2 bMagicAddRace,RC_Formless,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddRace,RC_Insect,5;
+                  bonus2 bMagicAddRace,RC_Insect,5;
+                  bonus2 bAddRace,RC_Formless,5;
+                  bonus2 bMagicAddRace,RC_Formless,5;
+               }
+            }
+         }
+      }
+  - Id: 313944
+    AegisName: Ch01_S_E_Flame06
+    Name: Dimension World Crystal (Flame)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Dark,12;
+      bonus2 bAddEle,Ele_Dark,12;
+      bonus2 bMagicAddEle,Ele_Fire,12;
+      bonus2 bAddEle,Ele_Fire,12;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Dark,2;
+         bonus2 bAddEle,Ele_Dark,2;
+         bonus2 bMagicAddEle,Ele_Fire,2;
+         bonus2 bAddEle,Ele_Fire,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Dark,2;
+            bonus2 bAddEle,Ele_Dark,2;
+            bonus2 bMagicAddEle,Ele_Fire,2;
+            bonus2 bAddEle,Ele_Fire,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Dark,4;
+               bonus2 bAddEle,Ele_Dark,4;
+               bonus2 bMagicAddEle,Ele_Fire,4;
+               bonus2 bAddEle,Ele_Fire,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Dark,5;
+                  bonus2 bAddEle,Ele_Dark,5;
+                  bonus2 bMagicAddEle,Ele_Fire,5;
+                  bonus2 bAddEle,Ele_Fire,5;
+               }
+            }
+         }
+      }
+  - Id: 313945
+    AegisName: Ch01_S_E_Frozen06
+    Name: Dimension World Crystal (Frozen)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Holy,12;
+      bonus2 bAddEle,Ele_Holy,12;
+      bonus2 bMagicAddEle,Ele_Water,12;
+      bonus2 bAddEle,Ele_Water,12;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Holy,2;
+         bonus2 bAddEle,Ele_Holy,2;
+         bonus2 bMagicAddEle,Ele_Water,2;
+         bonus2 bAddEle,Ele_Water,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Holy,2;
+            bonus2 bAddEle,Ele_Holy,2;
+            bonus2 bMagicAddEle,Ele_Water,2;
+            bonus2 bAddEle,Ele_Water,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Holy,4;
+               bonus2 bAddEle,Ele_Holy,4;
+               bonus2 bMagicAddEle,Ele_Water,4;
+               bonus2 bAddEle,Ele_Water,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Holy,5;
+                  bonus2 bAddEle,Ele_Holy,5;
+                  bonus2 bMagicAddEle,Ele_Water,5;
+                  bonus2 bAddEle,Ele_Water,5;
+               }
+            }
+         }
+      }
+  - Id: 313946
+    AegisName: Ch01_S_E_Earth06
+    Name: Dimension World Crystal (Earth)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Earth,12;
+      bonus2 bAddEle,Ele_Earth,12;
+      bonus2 bMagicAddEle,Ele_Wind,12;
+      bonus2 bAddEle,Ele_Wind,12;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Earth,2;
+         bonus2 bAddEle,Ele_Earth,2;
+         bonus2 bMagicAddEle,Ele_Wind,2;
+         bonus2 bAddEle,Ele_Wind,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Earth,2;
+            bonus2 bAddEle,Ele_Earth,2;
+            bonus2 bMagicAddEle,Ele_Wind,2;
+            bonus2 bAddEle,Ele_Wind,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Earth,4;
+               bonus2 bAddEle,Ele_Earth,4;
+               bonus2 bMagicAddEle,Ele_Wind,4;
+               bonus2 bAddEle,Ele_Wind,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Earth,5;
+                  bonus2 bAddEle,Ele_Earth,5;
+                  bonus2 bMagicAddEle,Ele_Wind,5;
+                  bonus2 bAddEle,Ele_Wind,5;
+               }
+            }
+         }
+      }
+  - Id: 313947
+    AegisName: Ch01_S_E_Death06
+    Name: Dimension World Crystal (Death)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bAddEle,Ele_Ghost,12;
+      bonus2 bMagicAddEle,Ele_Ghost,12;
+      bonus2 bAddEle,Ele_Undead,12;
+      bonus2 bMagicAddEle,Ele_Undead,12;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bAddEle,Ele_Ghost,2;
+         bonus2 bMagicAddEle,Ele_Ghost,2;
+         bonus2 bAddEle,Ele_Undead,2;
+         bonus2 bMagicAddEle,Ele_Undead,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bAddEle,Ele_Ghost,2;
+            bonus2 bMagicAddEle,Ele_Ghost,2;
+            bonus2 bAddEle,Ele_Undead,2;
+            bonus2 bMagicAddEle,Ele_Undead,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bAddEle,Ele_Ghost,4;
+               bonus2 bMagicAddEle,Ele_Ghost,4;
+               bonus2 bAddEle,Ele_Undead,4;
+               bonus2 bMagicAddEle,Ele_Undead,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bAddEle,Ele_Ghost,5;
+                  bonus2 bMagicAddEle,Ele_Ghost,5;
+                  bonus2 bAddEle,Ele_Undead,5;
+                  bonus2 bMagicAddEle,Ele_Undead,5;
+               }
+            }
+         }
+      }
+  - Id: 313948
+    AegisName: Ch01_S_E_Poison06
+    Name: Dimension World Crystal (Poison)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus2 bMagicAddEle,Ele_Poison,12;
+      bonus2 bAddEle,Ele_Poison,12;
+      bonus2 bMagicAddEle,Ele_Neutral,12;
+      bonus2 bAddEle,Ele_Neutral,12;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus2 bMagicAddEle,Ele_Poison,2;
+         bonus2 bAddEle,Ele_Poison,2;
+         bonus2 bMagicAddEle,Ele_Neutral,2;
+         bonus2 bAddEle,Ele_Neutral,2;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus2 bMagicAddEle,Ele_Poison,2;
+            bonus2 bAddEle,Ele_Poison,2;
+            bonus2 bMagicAddEle,Ele_Neutral,2;
+            bonus2 bAddEle,Ele_Neutral,2;
+            if (.@g>=ENCHANTGRADE_B) {
+               bonus2 bMagicAddEle,Ele_Poison,4;
+               bonus2 bAddEle,Ele_Poison,4;
+               bonus2 bMagicAddEle,Ele_Neutral,4;
+               bonus2 bAddEle,Ele_Neutral,4;
+               if (.@g>=ENCHANTGRADE_A) {
+                  bonus2 bMagicAddEle,Ele_Poison,5;
+                  bonus2 bAddEle,Ele_Poison,5;
+                  bonus2 bMagicAddEle,Ele_Neutral,5;
+                  bonus2 bAddEle,Ele_Neutral,5;
+               }
+            }
+         }
+      }
+  - Id: 313955
+    AegisName: aegis_313955
+    Name: Blue Butterfly Footprint
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_BUTTERFLY_BLUE,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_BUTTERFLY_BLUE,false;
+  - Id: 314021
+    AegisName: aegis_314021
+    Name: Guillotine Cross Stone II (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-(getskilllv("GC_RESEARCHNEWPOISON")/2);
+  - Id: 314022
+    AegisName: aegis_314022
+    Name: Guillotine Cross Stone II (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritAtkRate,2*getskilllv("GC_CROSSIMPACT");
+      bonus bCritical,getskilllv("GC_CROSSIMPACT");
+  - Id: 314023
+    AegisName: aegis_314023
+    Name: Guillotine Cross Stone II (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAtkRate,getskilllv("GC_DARKCROW");
+  - Id: 314024
+    AegisName: aegis_314024
+    Name: Shadow Cross Stone II (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCRate,3;
+      bonus2 bSkillAtk,"SHC_CROSS_SLASH",10;
+  - Id: 314025
+    AegisName: aegis_314025
+    Name: Sura Stone II (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-100*(getskilllv("SR_TIGERCANNON")/2);
+  - Id: 314026
+    AegisName: aegis_314026
+    Name: Sura Stone II (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bLongAtkRate,2*getskilllv("SR_GENTLETOUCH_ENERGYGAIN");
+      bonus bShortAtkRate,2*getskilllv("SR_GENTLETOUCH_ENERGYGAIN");
+  - Id: 314027
+    AegisName: aegis_314027
+    Name: Sura Stone II (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SR_KNUCKLEARROW",10*getskilllv("SR_GENTLETOUCH_CHANGE");
+      bonus2 bSkillAtk,"SR_RIDEINLIGHTNING",10*getskilllv("SR_GENTLETOUCH_CHANGE");
+  - Id: 314028
+    AegisName: aegis_314028
+    Name: Inquisitor Stone II (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bShortAtkRate,2*getskilllv("IQ_SECOND_FLAME");
+  - Id: 314029
+    AegisName: aegis_314029
+    Name: Soul Reaper Stone II (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SP_SPA",3*getskilllv("SP_SPA");
+  - Id: 314030
+    AegisName: aegis_314030
+    Name: Soul Reaper Stone II (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SP_SWHOO",2*getskilllv("SP_SWHOO");
+  - Id: 314031
+    AegisName: aegis_314031
+    Name: Soul Reaper Stone II (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,2*getskilllv("SP_SOULCOLLECT");
+  - Id: 314032
+    AegisName: aegis_314032
+    Name: Soul Ascetic Stone II (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAddRace,RC_All,3*(getskilllv("SOA_SOUL_MASTERY")/2);
+      bonus2 bMagicAddRace,RC_Player_Human,-3*(getskilllv("SOA_SOUL_MASTERY")/2);
+      bonus2 bMagicAddRace,RC_Player_Doram,-3*(getskilllv("SOA_SOUL_MASTERY")/2);
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -86143,7 +90026,7 @@ Body:
       NoAuction: true
   - Id: 1000103
     AegisName: BarMealTicket
-    Name: Barmeal Ticket
+    Name: Barmil Ticket
     Type: Etc
     Flags:
       BuyingStore: true
@@ -88615,7 +92498,7 @@ Body:
       BuyingStore: true
   - Id: 1000705
     AegisName: Ep19_Rgan_Core
-    Name: Rgan Magic Core
+    Name: Rgan's Magic Core
     Type: Etc
     Trade:
       NoDrop: true
@@ -88735,7 +92618,7 @@ Body:
     Type: Etc
   - Id: 1000727
     AegisName: Ice_F_Stone_Critical
-    Name: Ice Magic Stone (Critical)
+    Name: Ice Flower Magic Stone (Critical)
     Type: Etc
   - Id: 1000728
     AegisName: Ice_F_Stone_Guide
@@ -89071,7 +92954,8 @@ Body:
     Type: Etc
   - Id: 1000811
     AegisName: Snow_F_Ore
-    Name: Snowflower Ore
+    Name: Snow Flower Ore
+    Type: Etc
     Weight: 1
     Flags:
       BuyingStore: true
@@ -89089,7 +92973,8 @@ Body:
       BuyingStore: true
   - Id: 1000814
     AegisName: Snow_F_Stone3
-    Name: Brilliant Snowflower Gem
+    Name: Brilliant Snow Flower Manastone
+    Type: Etc
     Weight: 1
     Flags:
       BuyingStore: true
@@ -89189,7 +93074,8 @@ Body:
       BuyingStore: true
   - Id: 1000834
     AegisName: EP19_Sharp_Bone
-    Name: Long Sharp Bone
+    Name: Sharp Bone Fragment
+    Type: Etc
     Weight: 10
     Flags:
       BuyingStore: true
@@ -89407,7 +93293,7 @@ Body:
     Weight: 1
   - Id: 1000889
     AegisName: Mixed_Fruits_Juice
-    Name: Compound Fruit Juice
+    Name: Complex Fruit Juice
     Type: Etc
     Buy: 1000
     Weight: 10
@@ -90575,17 +94461,17 @@ Body:
       BuyingStore: true
   - Id: 1001135
     AegisName: aegis_1001135
-    Name: Hard ice    # !todo check english name
+    Name: Solid Ice
     Type: Etc
     Weight: 10
   - Id: 1001136
     AegisName: aegis_1001136
-    Name: Professional Instruments    # !todo check english name
+    Name: Professional Instrument
     Type: Etc
     Weight: 10
   - Id: 1001137
     AegisName: aegis_1001137
-    Name: Black jewel    # !todo check english name
+    Name: Black Jewelry
     Type: Etc
     Weight: 10
   - Id: 1001138
@@ -94714,12 +98600,12 @@ Body:
       NoAuction: true
   - Id: 1001886
     AegisName: aegis_1001886
-    Name: Panda Collaboration Coin    # !todo check english name
+    Name: "[Collab] Kung Fu Coin"
     Type: Etc
     Weight: 10
   - Id: 1001903
     AegisName: E_Snowflake_Coin
-    Name: Cold Snow Flower    # !todo check english name
+    Name: Cold Snowflake
     Type: Etc
     Trade:
       NoDrop: true
@@ -94731,7 +98617,7 @@ Body:
       NoAuction: true
   - Id: 1001904
     AegisName: E_Wish_Envelope
-    Name: Wish Card Envelope    # !todo check english name
+    Name: Wish Card Envelope
     Type: Etc
     Trade:
       NoDrop: true
@@ -94743,7 +98629,7 @@ Body:
       NoAuction: true
   - Id: 1001905
     AegisName: aegis_1001905
-    Name: Small Part Piece    # !todo check english name
+    Name: Small Part Piece
     Type: Etc
     Weight: 10
     Flags:
@@ -94755,79 +98641,852 @@ Body:
     Weight: 100
   - Id: 1001908
     AegisName: aegis_1001908
-    Name: Panda Footprint (Garment)    # !todo check english name
+    Name: Panda Basic Footprint Effect (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001909
     AegisName: aegis_1001909
-    Name: Panda Color Footprint (Garment)    # !todo check english name
+    Name: Panda Color Footprint Effect (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001938
     AegisName: aegis_1001938
-    Name: Critical Rate Stone (Garment)    # !todo check english name
+    Name: Critical Rate Stone (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001939
     AegisName: aegis_1001939
-    Name: Rune Knight Stone II (Upper)    # !todo check english name
+    Name: Rune Knight Stone II (Upper)
     Type: Etc
     Weight: 100
   - Id: 1001940
     AegisName: aegis_1001940
-    Name: Rune Knight Stone II (Middle)    # !todo check english name
+    Name: Rune Knight Stone II (Middle)
     Type: Etc
     Weight: 100
   - Id: 1001941
     AegisName: aegis_1001941
-    Name: Rune Knight Stone II (Lower)    # !todo check english name
+    Name: Rune Knight Stone II (Lower)
     Type: Etc
     Weight: 100
   - Id: 1001942
     AegisName: aegis_1001942
-    Name: Wondermint Stone II (Upper)    # !todo check english name
+    Name: Wander Mins Stone II (Upper)
     Type: Etc
     Weight: 100
   - Id: 1001943
     AegisName: aegis_1001943
-    Name: Wondermint Stone II (Middle)    # !todo check english name
+    Name: Wander Mins Stone II (Middle)
     Type: Etc
     Weight: 100
   - Id: 1001944
     AegisName: aegis_1001944
-    Name: Wondermint Stone II (Lower)    # !todo check english name
+    Name: Wander Mins Stone II (Lower)
     Type: Etc
     Weight: 100
   - Id: 1001945
     AegisName: aegis_1001945
-    Name: Summoner Stone II (Upper)    # !todo check english name
+    Name: Summoner Stone II (Upper)
     Type: Etc
     Weight: 100
   - Id: 1001946
     AegisName: aegis_1001946
-    Name: Summoner Stone II (Middle)    # !todo check english name
+    Name: Summoner Stone II (Middle)
     Type: Etc
     Weight: 100
   - Id: 1001947
     AegisName: aegis_1001947
-    Name: Summoner Stone II (Lower)    # !todo check english name
+    Name: Summoner Stone II (Lower)
     Type: Etc
     Weight: 100
   - Id: 1001948
     AegisName: aegis_1001948
-    Name: Dragon Knight Stone II (Garment)    # !todo check english name
+    Name: Dragon Knight Stone II (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001949
     AegisName: aegis_1001949
-    Name: Troubadour & Trouble Stone II (Garment)    # !todo check english name
+    Name: Troubadour & Trouvere Stone II (Garment)
     Type: Etc
     Weight: 100
   - Id: 1001950
     AegisName: aegis_1001950
-    Name: Spirit Master Stone II (Garment)    # !todo check english name
+    Name: Spirit Handler Stone II (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1001972
+    AegisName: Ch1_Root_Coin
+    Name: Root Gold Coin    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001973
+    AegisName: Ch1_Purifi_Amulet
+    Name: Purification Amulet    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001974
+    AegisName: Ch1_Sample
+    Name: Collected Sample    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001975
+    AegisName: aegis_1001975
+    Name: Gray Petal    # !todo check english name
+    Type: Etc
+    Buy: 1050
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001976
+    AegisName: Ch1_Broken_Petal
+    Name: Broken Petal    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001977
+    AegisName: aegis_1001977
+    Name: Hal    # !todo check english name
+    Type: Etc
+    Buy: 1100
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001978
+    AegisName: aegis_1001978
+    Name: Crimson Hal    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001979
+    AegisName: aegis_1001979
+    Name: Light Green Hal    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001980
+    AegisName: aegis_1001980
+    Name: Light Yellow Hal    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001981
+    AegisName: aegis_1001981
+    Name: Sky Blue Hal    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001982
+    AegisName: aegis_1001982
+    Name: Purple Hal    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001983
+    AegisName: aegis_1001983
+    Name: Black Hal    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001984
+    AegisName: Ch1_Ultimate_Hal
+    Name: Ultimate Hal    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1001985
+    AegisName: aegis_1001985
+    Name: Stacho    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001986
+    AegisName: aegis_1001986
+    Name: Black Wing Piece    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001987
+    AegisName: aegis_1001987
+    Name: Giant Fireweed Leaf    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001988
+    AegisName: aegis_1001988
+    Name: Sound Bean    # !todo check english name
+    Type: Etc
+    Buy: 1250
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001989
+    AegisName: aegis_1001989
+    Name: Red Ash    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001990
+    AegisName: aegis_1001990
+    Name: Fire Ring    # !todo check english name
+    Type: Etc
+    Buy: 1340
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001991
+    AegisName: aegis_1001991
+    Name: Thick Tooth Piece    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001992
+    AegisName: aegis_1001992
+    Name: Noise    # !todo check english name
+    Type: Etc
+    Buy: 1450
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001993
+    AegisName: aegis_1001993
+    Name: Violet Anemone    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001994
+    AegisName: aegis_1001994
+    Name: Black Tulip    # !todo check english name
+    Type: Etc
+    Buy: 1340
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001995
+    AegisName: aegis_1001995
+    Name: Calendula    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1001996
+    AegisName: Ch1_Mana_Ring
+    Name: Mana Ring    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+  - Id: 1001997
+    AegisName: Frontier_Magic_Dust
+    Name: Boundary Magic Powder    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001998
+    AegisName: Frontier_M_Stone
+    Name: Boundary Magic Stone    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1001999
+    AegisName: Illusion_Fragment_BL
+    Name: Azure Illusion Stone Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002000
+    AegisName: Illusion_Fragment_YL
+    Name: Sunset Illusion Stone Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002001
+    AegisName: Illusion_Fragment_GR
+    Name: Teal Illusion Stone Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002002
+    AegisName: Illusion_Fragment_BK
+    Name: Jet Black Illusion Stone Fragment    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002003
+    AegisName: Illusion_Stone_BL
+    Name: Azure Illusion Stone    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002004
+    AegisName: Illusion_Stone_YL
+    Name: Sunset Illusion Stone    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002005
+    AegisName: Illusion_Stone_GR
+    Name: Teal Illusion Stone    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002006
+    AegisName: Illusion_Stone_BK
+    Name: Jet Black Illusion Stone    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002007
+    AegisName: Frontier_Stone_BL
+    Name: Azure Illusion Stone    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002008
+    AegisName: Frontier_Stone_YL
+    Name: Sunset Illusion Stone    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002009
+    AegisName: Frontier_Stone_GR
+    Name: Teal Illusion Stone    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002010
+    AegisName: Frontier_Stone_BK
+    Name: Jet Black Illusion Stone    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002011
+    AegisName: Chaotic_Rune_Ore
+    Name: Chaotic Rune Fragment of Magic Power    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002012
+    AegisName: Chaotic_Rune
+    Name: Rune of Chaotic Magic Power    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002013
+    AegisName: Chaotic_Essence
+    Name: Essence of Chaotic Magic Power    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002014
+    AegisName: Disparate_Rune_Ore
+    Name: Rune Fragment of Heterogeneous Magic Power    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002015
+    AegisName: Disparate_Rune
+    Name: Rune of Heterogeneous Magic Power    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002016
+    AegisName: Disparate_Essence
+    Name: Essence of Heterogeneous Magic Power    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002017
+    AegisName: aegis_1002017
+    Name: Scabiosa    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002018
+    AegisName: aegis_1002018
+    Name: Myosotis    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002019
+    AegisName: aegis_1002019
+    Name: Lobelia    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002020
+    AegisName: aegis_1002020
+    Name: Tears of the King's Eye    # !todo check english name
+    Type: Etc
+    Buy: 1160
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002021
+    AegisName: aegis_1002021
+    Name: Igpi    # !todo check english name
+    Type: Etc
+    Buy: 840
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002034
+    AegisName: Dimension_Energy_BL
+    Name: Azure Dimensional Energy    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002035
+    AegisName: Dimension_Energy_YL
+    Name: Sunset Dimensional Energy    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002036
+    AegisName: Dimension_Energy_GR
+    Name: Turquoise Dimensional Energy    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002037
+    AegisName: Dimension_Energy_BK
+    Name: Pitch Black Dimensional Energy    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002038
+    AegisName: Dimension_Essence_BL
+    Name: Azure Dimensional Essence    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002039
+    AegisName: Dimension_Essence_YL
+    Name: Sunset Dimensional Essence    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002040
+    AegisName: Dimension_Essence_GR
+    Name: Turquoise Dimensional Jeongsu    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002041
+    AegisName: Dimension_Essence_BK
+    Name: Pitch Black Dimensional Jeongsu    # !todo check english name
+    Type: Etc
+    Weight: 1
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002048
+    AegisName: aegis_1002048
+    Name: Soft Lava Jelly    # !todo check english name
+    Type: Etc
+    Buy: 1180
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002069
+    AegisName: aegis_1002069
+    Name: Munch Coin    # !todo check english name
+    Type: Etc
+  - Id: 1002094
+    AegisName: aegis_1002094
+    Name: Fresh Meat    # !todo check english name
+    Type: Etc
+    Weight: 10
+  - Id: 1002096
+    AegisName: aegis_1002096
+    Name: Guillotine Cross Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1002097
+    AegisName: aegis_1002097
+    Name: Guillotine Cross Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1002098
+    AegisName: aegis_1002098
+    Name: Guillotine Cross Stone II (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1002099
+    AegisName: aegis_1002099
+    Name: Shadow Cross Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002100
+    AegisName: aegis_1002100
+    Name: Sura Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1002101
+    AegisName: aegis_1002101
+    Name: Sura Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1002102
+    AegisName: aegis_1002102
+    Name: Sura Stone II (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1002103
+    AegisName: aegis_1002103
+    Name: Inquisitor Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002104
+    AegisName: aegis_1002104
+    Name: Soul Reaper Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1002105
+    AegisName: aegis_1002105
+    Name: Soul Reaper Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1002106
+    AegisName: aegis_1002106
+    Name: Soul Reaper Stone II (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1002107
+    AegisName: aegis_1002107
+    Name: Soul Ascetic Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002108
+    AegisName: aegis_1002108
+    Name: Blue Butterfly Footprints (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002109
+    AegisName: R_Glacier_Armor
+    Name: Printed Glacier Armor
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002110
+    AegisName: R_Glacier_Manteau
+    Name: Printed Glacier Manteau
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002111
+    AegisName: R_Glacier_Ring
+    Name: Printed Glacier Ring
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002112
+    AegisName: R_Glacier_Boots
+    Name: Printed Glacier Boots
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002113
+    AegisName: R_Glacier_Robe
+    Name: Printed Glacier Robe
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002114
+    AegisName: R_Glacier_Muffler
+    Name: Printed Glacier Muffler
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002115
+    AegisName: R_Glacier_Earring
+    Name: Printed Glacier Earring
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002116
+    AegisName: R_Glacier_Shoes
+    Name: Printed Glacier Shoes
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002117
+    AegisName: R_Glacier_Pendant
+    Name: Printed Glacier Pendant
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002118
+    AegisName: R_Glacier_Necklace
+    Name: Printed Glacier Necklace
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002119
+    AegisName: R_Glacier_Guard
+    Name: Printed Glacier Guard
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002137
+    AegisName: Pow_Meteor_Extract
+    Name: Power Meteorite Extract    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002138
+    AegisName: Wis_Meteor_Extract
+    Name: Spirit Meteorite Extract    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002139
+    AegisName: Spl_Meteor_Extract
+    Name: Wisdom Meteorite Extract    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002140
+    AegisName: Sta_Meteor_Extract
+    Name: Stamina Meteorite Extract    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002141
+    AegisName: Con_Meteor_Extract
+    Name: Agility Meteorite Extract    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002142
+    AegisName: Crt_Meteor_Extract
+    Name: Luck Meteorite Extract    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002143
+    AegisName: Frontier_Extract_BL
+    Name: Azure Light Boundary Magic Extract    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002144
+    AegisName: Frontier_Extract_YL
+    Name: Sunset Light Boundary Magic Extract    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002145
+    AegisName: Frontier_Extract_GR
+    Name: Turquoise Light Boundary Magic Extract    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+  - Id: 1002146
+    AegisName: Frontier_Extract_BK
+    Name: Pitch Black Light Boundary Magic Extract    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
