@@ -120,6 +120,9 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 	if (tbl != nullptr && tbl->type != BL_ITEM && tbl->m == bl.m && ud->walkpath.path_pos > 0 && check_distance_bl(&bl, tbl, ud->chaserange)) {
 		int32 stop_flag = USW_FIXPOS|USW_RELEASE_TARGET;
 
+		// Source may die due to reflect damage
+		map_freeblock_lock();
+
 		if (ud->state.attack_continue)
 			stop_flag = unit_attack(&bl, tbl->id, ud->state.attack_continue);
 
@@ -127,8 +130,10 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 		if (stop_flag != USW_NONE) {
 			// We need to make sure the walkpath is cleared here so a monster doesn't continue walking in case it unlocked its target
 			unit_stop_walking(&bl, stop_flag|USW_FORCE_STOP);
+			map_freeblock_unlock();
 			return true;
 		}
+		map_freeblock_unlock();
 	}
 	// Cancel chase
 	else if (tbl == nullptr || (fullcheck && !status_check_visibility(&bl, tbl, (bl.type == BL_MOB)))) {
@@ -2957,7 +2962,10 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 		// Attacking will be handled by unit_walktoxy_timer in this case
 		return USW_NONE;
 	}
-	
+
+	// Source may die due to reflect damage
+	map_freeblock_lock();
+
 	if(DIFF_TICK(ud->attackabletime, gettick()) > 0) // Do attack next time it is possible. [Skotlex]
 		ud->attacktimer=add_timer(ud->attackabletime,unit_attack_timer,src->id,0);
 	else { // Attack NOW.
@@ -2972,6 +2980,7 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 	if (md != nullptr)
 		mob_setstate(*md, MSS_BERSERK);
 
+	map_freeblock_unlock();
 	return stop_flag;
 }
 
@@ -3299,14 +3308,14 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 		if(sd && sd->status.pet_id > 0 && sd->pd && battle_config.pet_attack_support)
 			pet_target_check(sd->pd,target,0);
 
-		map_freeblock_unlock();
-
 		/**
 		 * Applied when you're unable to attack (e.g. out of ammo)
 		 * We should stop here otherwise timer keeps on and this happens endlessly
 		 */
-		if( ud->attacktarget_lv == ATK_NONE )
+		if (ud->attacktarget_lv == ATK_NONE) {
+			map_freeblock_unlock();
 			return 1;
+		}
 
 		unit_set_attackdelay(*src, tick, DELAY_EVENT_ATTACK);
 
@@ -3319,7 +3328,7 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 			unit_set_walkdelay(src, tick, sstatus->amotion, 1);
 	}
 
-	if(ud->state.attack_continue) {
+	if (ud->state.attack_continue && !status_isdead(*src)) {
 		if (src->type == BL_PC && battle_config.idletime_option&IDLE_ATTACK)
 			((TBL_PC*)src)->idletime = last_tick;
 
@@ -3329,6 +3338,7 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 	if( sd && battle_config.prevent_logout_trigger&PLT_ATTACK )
 		sd->canlog_tick = gettick();
 
+	map_freeblock_unlock();
 	return 1;
 }
 
