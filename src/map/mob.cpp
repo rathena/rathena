@@ -2142,8 +2142,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	// Normal attack / berserk skill is only used when target is in range
 	if (battle_check_range(md, tbl, md->status.rhw.range))
 	{
-		// Stop and make sure there is no chase target when already in attack range
-		unit_stop_walking(md, USW_FIXPOS|USW_RELEASE_TARGET);
+		int32 stop_flag = USW_FIXPOS|USW_RELEASE_TARGET;
 
 		// Hiding is a special case because it prevents normal attacks but allows skill usage
 		// TODO: Some other states also have this behavior and should be investigated
@@ -2152,7 +2151,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			// Target within range and potentially able to use normal attack, engage
 			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)
 			{ //Only attack if no more attack delay left
-				unit_attack(md, tbl->id, 1);
+				stop_flag = unit_attack(md, tbl->id, 1);
 			}
 		}
 		else {
@@ -2160,6 +2159,11 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			// This results in the monster going into an attack state despite not attacking
 			mob_setstate(*md, MSS_BERSERK);
 		}
+
+		// Stop and make sure there is no chase target when attack was not skipped
+		if (stop_flag != USW_NONE)
+			unit_stop_walking(md, stop_flag);
+
 		//Target still in attack range, no need to chase the target
 		return true;
 	}
