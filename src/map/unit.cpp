@@ -289,7 +289,7 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 	}
 #if PACKETVER >= 20170726
 	// If this is a walking NPC and it will use a player sprite
-	else if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+	else if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->look[LOOK_BASE] ) ){
 		// Respawn the NPC as player unit
 		unit_refresh( bl, true );
 	}
@@ -621,7 +621,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
 #if PACKETVER >= 20170726
 		// If this was a walking NPC and it used a player sprite
-		if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->class_ ) ){
+		if( bl->type == BL_NPC && pcdb_checkid( status_get_viewdata( bl )->look[LOOK_BASE] ) ){
 			// Respawn the NPC as NPC unit
 			unit_refresh( bl, false );
 		}
@@ -2892,11 +2892,11 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 
 	nullpo_ret(ud = unit_bl2ud(src));
 
-	// Check for special monster random target mode
-	if (src->type == BL_MOB) {
-		mob_data& md = *static_cast<mob_data*>(src);
-		mob_randomtarget(md, target_id);
-	}
+	mob_data* md = BL_CAST(BL_MOB, src);
+
+	// Check for special monster random target mode, function might overwrite the original target
+	if (md != nullptr && !mob_randomtarget(*md, target_id))
+		return 0; //TODO: This should prevent monsters from stopping
 
 	target = map_id2bl(target_id);
 	if( target == nullptr || status_isdead(*target) ) {
@@ -2953,10 +2953,8 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 
 	// Monster state is set regardless of whether the attack is executed now or later
 	// The check is here because unit_attack can be called from both the monster AI and the walking logic
-	if (src->type == BL_MOB) {
-		mob_data& md = reinterpret_cast<mob_data&>(*src);
-		mob_setstate(md, MSS_BERSERK);
-	}
+	if (md != nullptr)
+		mob_setstate(*md, MSS_BERSERK);
 
 	return 0;
 }
