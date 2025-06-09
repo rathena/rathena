@@ -67087,7 +67087,7 @@ Body:
       showscript "Oh My GOODNESS!!! I FEEL AWESOMELY STRONG!!! WOWOW";
   - Id: 100065
     AegisName: WL_MB_SG
-    Name: Spell Book (Storm Gust)
+    Name: Spell Book(Storm Gust)
     Type: DelayConsume
     Flags:
       NoConsume: true
@@ -67095,7 +67095,7 @@ Body:
       itemskill "WL_READING_SB_READING",1;
   - Id: 100066
     AegisName: WL_MB_LOV
-    Name: Spell Book (Lord of Vermilion)
+    Name: Spell Book(Lord of Vermilion)
     Type: DelayConsume
     Flags:
       NoConsume: true
@@ -67103,7 +67103,7 @@ Body:
       itemskill "WL_READING_SB_READING",2;
   - Id: 100067
     AegisName: WL_MB_MS
-    Name: Spell Book (Meteor Storm)
+    Name: Spell Book(Meteor Storm)
     Type: DelayConsume
     Flags:
       NoConsume: true
@@ -67111,7 +67111,7 @@ Body:
       itemskill "WL_READING_SB_READING",3;
   - Id: 100068
     AegisName: WL_MB_DL
-    Name: Spell Book (Drain Life)
+    Name: Spell Book(Drain Life)
     Type: DelayConsume
     Flags:
       NoConsume: true
@@ -67119,7 +67119,7 @@ Body:
       itemskill "WL_READING_SB_READING",4;
   - Id: 100069
     AegisName: WL_MB_JF
-    Name: Spell Book (Jack Frost)
+    Name: Spell Book(Jack Frost)
     Type: DelayConsume
     Flags:
       NoConsume: true
@@ -67127,7 +67127,7 @@ Body:
       itemskill "WL_READING_SB_READING",5;
   - Id: 100070
     AegisName: WL_MB_ES
-    Name: Spell Book (Earth Strain)
+    Name: Spell Book(Earth Strain)
     Type: DelayConsume
     Flags:
       NoConsume: true
@@ -67135,7 +67135,7 @@ Body:
       itemskill "WL_READING_SB_READING",6;
   - Id: 100071
     AegisName: WL_MB_CR
-    Name: Spell Book (Crimson Rock)
+    Name: Spell Book(Crimson Rock)
     Type: DelayConsume
     Flags:
       NoConsume: true
@@ -67143,7 +67143,7 @@ Body:
       itemskill "WL_READING_SB_READING",7;
   - Id: 100072
     AegisName: WL_MB_CL
-    Name: Spell Book (Chain Lightning)
+    Name: Spell Book(Chain Lightning)
     Type: DelayConsume
     Flags:
       NoConsume: true
@@ -67159,7 +67159,7 @@ Body:
       itemskill "WL_READING_SB_READING",9;
   - Id: 100074
     AegisName: WL_MB_TV
-    Name: Spell Book (Tetra Vortex)
+    Name: Spell Book(Tetra Vortex)
     Type: DelayConsume
     Flags:
       NoConsume: true
@@ -81231,7 +81231,7 @@ Body:
       getgroupitem(IG_CH1_MD_REWARD_4);
   - Id: 104174
     AegisName: Hanmac_Collabo_1
-    Name: "[Not for Sale] Hanmac Food Collaboration Box I"    # !todo check english name
+    Name: "[NotForSale] Hanmac Food Collaboration Box I"    # !todo check english name
     Type: Usable
     Flags:
       Container: true
@@ -81247,7 +81247,7 @@ Body:
       getgroupitem(IG_HANMAC_COLLABO_1);
   - Id: 104175
     AegisName: Hanmac_Collabo_2
-    Name: "[Not for Sale] Hanmac Food Collaboration Box II"    # !todo check english name
+    Name: "[NotForSale] Hanmac Food Collaboration Box II"    # !todo check english name
     Type: Usable
     Flags:
       Container: true
@@ -81263,7 +81263,7 @@ Body:
       getgroupitem(IG_HANMAC_COLLABO_2);
   - Id: 104205
     AegisName: Comp_AID_Buff_Box_
-    Name: "[Non-Sellable] Premium Buff Box"    # !todo check english name
+    Name: "[NotForSale] Premium Buff Box"
     Type: Usable
     Flags:
       Container: true
@@ -81279,7 +81279,7 @@ Body:
       getgroupitem(IG_COMP_AID_BUFF_BOX_);
   - Id: 104206
     AegisName: Reward_Job_BM25_
-    Name: "[Non-Sellable] JOB Combat Manual"    # !todo check english name
+    Name: "[NotForSale] JOB Combat Manual"
     Type: Usable
     Trade:
       NoDrop: true
@@ -81291,7 +81291,7 @@ Body:
       NoAuction: true
   - Id: 104233
     AegisName: E_EXP_Drop_Up_7days_
-    Name: "[Non-Sellable] Capra Buff (7 Days)"    # !todo check english name
+    Name: "[NotForSale] Kafra Buff (7 Days)"
     Type: Usable
     Trade:
       NoDrop: true
@@ -81303,7 +81303,7 @@ Body:
       NoAuction: true
   - Id: 104236
     AegisName: CLB_HM_Card_WE
-    Name: Anyway Lucky Card    # !todo check english name
+    Name: White Lucky Card
     Type: Usable
     Weight: 10
     Trade:
@@ -81318,7 +81318,7 @@ Body:
       sc_start SC_C_BUFF_3,3600000,5;
   - Id: 104237
     AegisName: CLB_HM_Card_GR
-    Name: Green Lucky Card    # !todo check english name
+    Name: Green Lucky Card
     Type: Usable
     Weight: 10
     Trade:
@@ -81333,7 +81333,7 @@ Body:
       sc_start SC_C_BUFF_4,3600000,25;
   - Id: 104238
     AegisName: CLB_HM_Card_PK
-    Name: Pink Lucky Card    # !todo check english name
+    Name: Pink Lucky Card
     Type: Usable
     Weight: 10
     Trade:
@@ -81348,7 +81348,7 @@ Body:
       sc_start2 SC_C_BUFF_5,3600000,10,1;
   - Id: 104239
     AegisName: CLB_HM_Card_PP
-    Name: Purple Lucky Card    # !todo check english name
+    Name: Purple Lucky Card
     Type: Usable
     Weight: 10
     Trade:
@@ -81395,7 +81395,7 @@ Body:
       NoAuction: true
   - Id: 104421
     AegisName: CLB_HM_DubleBurger
-    Name: Hanmac Double Buck    # !todo check english name
+    Name: Hanmac Double Burger
     Type: Usable
     Weight: 10
     Trade:
@@ -85374,7 +85374,7 @@ Body:
       getgroupitem(IG_IF_INFINITY_10_BOX);
   - Id: 200523
     AegisName: If_Infinity_Box
-    Name: Infinity Potion Box (10)
+    Name: Ifrit Infinity Package (10)
     Type: Cash
     Weight: 10
     Flags:
