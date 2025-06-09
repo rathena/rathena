@@ -674,125 +674,125 @@ lhz_dun_n,134,265,2	script	Wandering Mind#JCv2	4_CENERE,{
 		else {
 			// enchant leveling
 			switch( .@card[1] ) {
-			case 29706:	// Tenacity1Lv
 			case 29061:	// Ambition1Lv
 			case 29071:	// Tab1Lv
 			case 29081:	// Expect1Lv
 			case 29091:	// ArchLine1Lv
 			case 29101:	// Steel1Lv
 			case 29111:	// Mercy1Lv
+			case 29706:	// Tenacity1Lv
 				mes "Kr... he... he... You are... lucky... I wish... you all the success!... Only then... will you come and visit me... with more grudges... I suppose...";
 				.@requirement = 20;
 				.@enchant_level = 1;
 				.@enchant_rate = 70;
 				break;
-			case 29707:	// Tenacity2Lv
 			case 29062:	// Ambition2Lv
 			case 29072:	// Tab2Lv
 			case 29082:	// Expect2Lv
 			case 29092:	// ArchLine2Lv
 			case 29102:	// Steel2Lv
 			case 29112:	// Mercy2Lv
+			case 29707:	// Tenacity2Lv
 				mes "3rd... level... reinforcement?... If you succeed... you will... gain... much stronger powers... but if you fail... you'll lose the powers... that you've gathered... so far...";
 				.@requirement = 40;
 				.@enchant_level = 2;
 				.@enchant_rate = 50;
 				break;
-			case 29708:	// Tenacity3Lv
 			case 29063:	// Ambition3Lv
 			case 29073:	// Tab3Lv
 			case 29083:	// Expect3Lv
 			case 29093:	// ArchLine3Lv
 			case 29103:	// Steel3Lv
 			case 29113:	// Mercy3Lv
+			case 29708:	// Tenacity3Lv
 				mes "4th... level... reinforcement?... If you succeed... you will... gain... much stronger powers... but if you fail... you'll lose the powers... that you've gathered... so far...";
 				.@requirement = 50;
 				.@enchant_level = 3;
 				.@enchant_rate = 35;
 				break;
-			case 29709:	// Tenacity4Lv
 			case 29064:	// Ambition4Lv
 			case 29074:	// Tab4Lv
 			case 29084:	// Expect4Lv
 			case 29094:	// ArchLine4Lv
 			case 29104:	// Steel4Lv
 			case 29114:	// Mercy4Lv
+			case 29709:	// Tenacity4Lv
 				mes "5th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 70;
 				.@enchant_level = 4;
 				.@enchant_rate = 25;
 				break;
-			case 29710:	// Tenacity5Lv
 			case 29065:	// Ambition5Lv
 			case 29075:	// Tab5Lv
 			case 29085:	// Expect5Lv
 			case 29095:	// ArchLine5Lv
 			case 29105:	// Steel5Lv
 			case 29115:	// Mercy5Lv
+			case 29710:	// Tenacity5Lv
 				mes "6th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 100;
 				.@enchant_level = 5;
 				.@enchant_rate = 18;
 				break;
-			case 29711:	// Tenacity6Lv
 			case 29066:	// Ambition6Lv
 			case 29076:	// Tab6Lv
 			case 29086:	// Expect6Lv
 			case 29096:	// ArchLine6Lv
 			case 29106:	// Steel6Lv
 			case 29116:	// Mercy6Lv
+			case 29711:	// Tenacity6Lv
 				// custom text
 				mes "7th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 150;
 				.@enchant_level = 6;
 				.@enchant_rate = 13;
 				break;
-			case 29712:	// Tenacity7Lv
 			case 29067:	// Ambition7Lv
 			case 29077:	// Tab7Lv
 			case 29087:	// Expect7Lv
 			case 29097:	// ArchLine7Lv
 			case 29107:	// Steel7Lv
 			case 29117:	// Mercy7Lv
+			case 29712:	// Tenacity7Lv
 				// custom text
 				mes "8th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 250;
 				.@enchant_level = 7;
 				.@enchant_rate = 9;
 				break;
-			case 29713:	// Tenacity8Lv
 			case 29068:	// Ambition8Lv
 			case 29078:	// Tab8Lv
 			case 29088:	// Expect8Lv
 			case 29098:	// ArchLine8Lv
 			case 29108:	// Steel8Lv
 			case 29118:	// Mercy8Lv
+			case 29713:	// Tenacity8Lv
 				// custom text
 				mes "9th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 500;
 				.@enchant_level = 8;
 				.@enchant_rate = 6;
 				break;
-			case 29714:	// Tenacity9Lv
 			case 29069:	// Ambition9Lv
 			case 29079:	// Tab9Lv
 			case 29089:	// Expect9Lv
 			case 29099:	// ArchLine9Lv
 			case 29109:	// Steel9Lv
 			case 29119:	// Mercy9Lv
+			case 29714:	// Tenacity9Lv
 				// custom text
 				mes "10th... level... reinforcement?... Are you... ready... to control... such huge... powers?... but if you fail... the result will be... worth... seeing...";
 				.@requirement = 1000;
 				.@enchant_level = 9;
 				.@enchant_rate = 4;
 				break;
-			case 29715:	// Tenacity10Lv
 			case 29070:	// Ambition10Lv
 			case 29080:	// Tab10Lv
 			case 29090:	// Expect10Lv
 			case 29100:	// ArchLine10Lv
 			case 29110:	// Steel10Lv
 			case 29120:	// Mercy10Lv
+			case 29715:	// Tenacity10Lv
 				// custom text
 			default:
 				mes "Krr hehe... It's impossible... to reinforce... this power... The only way left is... to reset...";
