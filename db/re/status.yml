@@ -9796,3 +9796,46 @@ Body:
       StopAttacking: true
       StopCasting: true
       BossResist: true
+  - Status: C_Buff_3
+    Icon: EFST_C_BUFF_3
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_C_BUFF_3, 1);
+      bonus bMaxHPrate, .@val1;
+      bonus bMaxSPrate, .@val1;
+  - Status: C_Buff_4
+    Icon: EFST_C_BUFF_4
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_C_BUFF_4, 1);
+      bonus bFlee, .@val1;
+      bonus bHit, .@val1;
+  - Status: C_Buff_5
+    Icon: EFST_C_BUFF_5
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus bCritical, getstatus(SC_C_BUFF_5, 1);
+      bonus bAspd, getstatus(SC_C_BUFF_5, 2);
+  - Status: C_Buff_6
+    Icon: EFST_C_BUFF_6
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_C_BUFF_6, 1);
+      bonus bAtkRate, .@val1;
+      bonus bMatkRate, .@val1;
