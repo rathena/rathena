@@ -608,6 +608,32 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				}
 			}
 
+			if( this->nodeExists( itemNode, "Refine" ) ){
+				std::shared_ptr<item_data> data = item_db.find( item->nameid );
+
+				if( data->flag.no_refine ){
+					this->invalidWarning( itemNode["Refine"], "barter_parseBodyNode: Item %s is not refineable.\n", data->name.c_str() );
+					return 0;
+				}
+
+				int16 refine;
+
+				if( !this->asInt16( itemNode, "Refine", refine ) ){
+					return 0;
+				}
+
+				if( refine > MAX_REFINE ){
+					this->invalidWarning( itemNode["Refine"], "barter_parseBodyNode: Refine %hd is too high, capping to %d.\n", refine, MAX_REFINE );
+					refine = MAX_REFINE;
+				}
+
+				item->refine = (int8)refine;
+			}else{
+				if( !item_exists ){
+					item->refine = 0;
+				}
+			}
+
 			if( this->nodeExists( itemNode, "RequiredItems" ) ){
 				for( const ryml::NodeRef& requiredItemNode : itemNode["RequiredItems"] ){
 					uint16 requirement_index;
@@ -684,7 +710,7 @@ uint64 BarterDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						}
 
 						if( refine > MAX_REFINE ){
-							this->invalidWarning( requiredItemNode["Amount"], "barter_parseBodyNode: Refine %hd is too high, capping to %d.\n", refine, MAX_REFINE );
+							this->invalidWarning( requiredItemNode["Refine"], "barter_parseBodyNode: Refine %hd is too high, capping to %d.\n", refine, MAX_REFINE );
 							refine = MAX_REFINE;
 						}
 
@@ -731,6 +757,12 @@ void BarterDatabase::loadingFinished(){
 		for( const auto& itemPair : barter->items ){
 			// Normal barter cannot have zeny requirements
 			if( itemPair.second->price > 0 ){
+				extended = true;
+				break;
+			}
+
+			// Normal barter cannot have refined items
+			if( itemPair.second->refine > 0 ){
 				extended = true;
 				break;
 			}
@@ -3351,6 +3383,7 @@ e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_n
 
 					it.nameid = purchase.item->nameid;
 					it.identify = true;
+					it.refine = purchase.item->refine;
 
 					if( pc_additem( &sd, &it, 1, LOG_TYPE_BARTER ) != ADDITEM_SUCCESS ){
 						return e_purchase_result::PURCHASE_FAIL_EXCHANGE_FAILED;
@@ -6285,11 +6318,11 @@ void do_init_npc(void){
 
 	//Stock view data for normal npcs.
 	memset(&npc_viewdb, 0, sizeof(npc_viewdb));
-	npc_viewdb[0].class_ = JT_INVISIBLE; //Invisible class is stored here.
+	npc_viewdb[0].look[LOOK_BASE] = JT_INVISIBLE; //Invisible class is stored here.
 	for( i = 1; i < MAX_NPC_CLASS; i++ )
-		npc_viewdb[i].class_ = i;
+		npc_viewdb[i].look[LOOK_BASE] = i;
 	for( i = MAX_NPC_CLASS2_START; i < MAX_NPC_CLASS2_END; i++ )
-		npc_viewdb2[i - MAX_NPC_CLASS2_START].class_ = i;
+		npc_viewdb2[i - MAX_NPC_CLASS2_START].look[LOOK_BASE] = i;
 
 	ev_db = strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA), EVENT_NAME_LENGTH);
 	npcname_db = strdb_alloc(DB_OPT_BASE, NPC_NAME_LENGTH+1);
