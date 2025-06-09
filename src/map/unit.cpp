@@ -1686,7 +1686,6 @@ void unit_stop_walking_soon(struct block_list& bl, t_tick tick)
  * @return Success(true); Failed(false);
  */
 bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay ){
-	struct unit_data *ud;
 	const struct TimerData* td = nullptr;
 	t_tick tick;
 
@@ -1694,7 +1693,8 @@ bool unit_stop_walking( block_list* bl, int32 type, t_tick canmove_delay ){
 		return false;
 	}
 
-	if (ud = unit_bl2ud(bl); ud == nullptr)
+	unit_data* ud = unit_bl2ud(bl);
+	if (ud == nullptr)
 		return false;
 
 	// Need to release chase target even if already not walking
@@ -2895,10 +2895,10 @@ int32 unit_unattackable(struct block_list *bl)
 int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 {
 	struct block_list *target;
-	struct unit_data  *ud;
 	int32 range;
 
-	if (ud = unit_bl2ud(src); ud == nullptr)
+	unit_data* ud = unit_bl2ud(src);
+	if (ud == nullptr)
 		return USW_NONE;
 
 	mob_data* md = BL_CAST(BL_MOB, src);
