@@ -59,7 +59,7 @@
 #   ClientAttackMotion      Client attack speed. (Default: AttackMotion)
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
-#   GroupID                 Monster group ID. (Default: 0)
+#   GroupId                 Monster group ID. (Default: 0)
 #   Title                   Monster title. (Default: None)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)
 #   Class                   Aegis monster class. (Default: Normal)
@@ -100699,6 +100699,7 @@ Body:
     Race: Insect
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 5
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 200
@@ -100751,6 +100752,7 @@ Body:
     Race: Formless
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 5
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 150
@@ -100801,6 +100803,7 @@ Body:
     Race: Formless
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 5
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 200
@@ -100910,6 +100913,7 @@ Body:
     Race: Plant
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 4
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 175
@@ -100960,6 +100964,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 4
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -101010,6 +101015,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 4
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 200
@@ -104509,6 +104515,7 @@ Body:
   - Id: 20620
     AegisName: MD_REDPEPPER
     Name: Red Pepper
+    Title: "<Red Pepper>"
     Level: 135
     Hp: 9514800
     BaseExp: 426099
@@ -104562,6 +104569,7 @@ Body:
   - Id: 20621
     AegisName: MD_REDPEPPER_H
     Name: Senior Red Pepper
+    Title: "<Red Pepper>"
     Level: 185
     Hp: 1008398847
     BaseExp: 3381619
