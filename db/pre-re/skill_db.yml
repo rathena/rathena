@@ -16955,8 +16955,8 @@ Body:
     Hit: Single
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 10000
-    Duration2: 30000
+    Duration1: 30000
+    Duration2: 10000
     Requires:
       SpCost: 40
     Status: WinkCharm
