@@ -5398,10 +5398,10 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		mob->damagetaken = damage;
 	}
 
-	if (this->nodeExists(node, "GroupID")) {
+	if (this->nodeExists(node, "GroupId")) {
 		uint16 group_id;
 
-		if (!this->asUInt16Rate(node, "GroupID", group_id))
+		if (!this->asUInt16Rate(node, "GroupId", group_id))
 			return 0;
 
 		mob->group_id = group_id;
