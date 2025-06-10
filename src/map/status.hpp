@@ -1430,6 +1430,12 @@ enum sc_type : int16 {
 	SC_C_BUFF_4,
 	SC_C_BUFF_5,
 	SC_C_BUFF_6,
+	SC_CONTENTS_15,
+	SC_CONTENTS_16,
+	SC_CONTENTS_17,
+	SC_CONTENTS_18,
+	SC_CONTENTS_19,
+	SC_CONTENTS_20,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
