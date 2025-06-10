@@ -19791,6 +19791,10 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 			case MC_IDENTIFY:
 				require.sp = 0;
 				break;
+			case AL_HOLYLIGHT:
+				if(sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_PRIEST)
+					require.sp *= 5;
+				break;
 			case MO_KITRANSLATION:
 				//Spiritual Bestowment only uses spirit sphere when giving it to someone
 				require.spiritball = 0;
@@ -20136,10 +20140,6 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 #else
 				req.zeny -= req.zeny*10/100;
 #endif
-			break;
-		case AL_HOLYLIGHT:
-			if(sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_PRIEST)
-				req.sp *= 5;
 			break;
 		case SL_SMA:
 		case SL_STUN:
