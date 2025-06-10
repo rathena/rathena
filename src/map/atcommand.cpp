@@ -759,7 +759,7 @@ ACMD_FUNC(jump)
  *------------------------------------------*/
 ACMD_FUNC(who) {
 	map_session_data* pl_sd = nullptr;
-	struct s_mapiterator *iter = nullptr;	
+	struct s_mapiterator *iter = nullptr;
 	char player_name[NAME_LENGTH] = "";
 	int32 count = 0;
 	int32 level = 0;
