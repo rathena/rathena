@@ -381,6 +381,7 @@ struct Battle_Config
 	int32 multi_level_up;
 	int32 multi_level_up_base;
 	int32 multi_level_up_job;
+	int32 min_exp_gain_rate; //Min amount of exp bar % you can get in one go.
 	int32 max_exp_gain_rate; //Max amount of exp bar % you can get in one go.
 	int32 pk_mode;
 	int32 pk_mode_mes;

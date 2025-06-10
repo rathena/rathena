@@ -29,6 +29,8 @@ bool exists(const char* filename);
 uint32 get_percentage(const uint32 A, const uint32 B);
 uint32 get_percentage_exp(const uint64 a, const uint64 b);
 
+float calculate_min_exp_gain(int32 rate);
+
 //////////////////////////////////////////////////////////////////////////
 // byte word dword access [Shinomori]
 //////////////////////////////////////////////////////////////////////////

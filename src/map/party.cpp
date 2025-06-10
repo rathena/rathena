@@ -364,7 +364,7 @@ int32 party_recv_info(struct party* sp, uint32 char_id)
 		if (p->instance_id > 0)
 			instance_reqinfo(sd, p->instance_id);
 	}
-	
+
 	// If a player was renamed, make sure to resend the party information
 	if( rename ){
 		clif_party_info( *p );
@@ -1283,10 +1283,11 @@ void party_exp_share(struct party_data* p, struct block_list* src, t_exp base_ex
 				if (job_exp)
 					job_gained = (t_exp)cap_value(apply_rate(job_exp, rate), 1, MAX_EXP);
 			}
+
+			pc_gainexp(sd[i], src, base_gained, job_gained, 0, rate);
 		}
-		pc_gainexp(sd[i], src, base_gained, job_gained, 0);
 #else
-		pc_gainexp(sd[i], src, base_exp, job_exp, 0);
+		pc_gainexp(sd[i], src, base_exp, job_exp, 0, 100);
 #endif
 
 		if (zeny) // zeny from mobs [Valaris]

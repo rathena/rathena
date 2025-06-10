@@ -1372,7 +1372,7 @@ public:
 
 extern PlayerStatPointDatabase statpoint_db;
 
-/// Enum of Summoner Power of 
+/// Enum of Summoner Power of
 enum e_summoner_power_type {
 	SUMMONER_POWER_LAND = 0,
 	SUMMONER_POWER_LIFE,
@@ -1516,7 +1516,7 @@ bool pc_is_maxbaselv(map_session_data *sd);
 bool pc_is_maxjoblv(map_session_data *sd);
 int32 pc_checkbaselevelup(map_session_data *sd);
 int32 pc_checkjoblevelup(map_session_data *sd);
-void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_exp job_exp, uint8 exp_flag);
+void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_exp job_exp, uint8 exp_flag, int32 rate);
 void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, t_exp job_exp, t_exp next_job_exp, bool lost);
 void pc_lostexp(map_session_data *sd, t_exp base_exp, t_exp job_exp);
 t_exp pc_nextbaseexp(map_session_data *sd);

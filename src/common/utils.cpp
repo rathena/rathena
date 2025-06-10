@@ -60,7 +60,7 @@ void ShowDump(const void* buffer, size_t length)
 
 	ShowDebug("--- 00-01-02-03-04-05-06-07-08-09-0A-0B-0C-0D-0E-0F   0123456789ABCDEF\n");
 	ascii[16] = 0;
-        
+
 	for( i = 0; i < length; i++ )
 	{
 		char c = RBUFB(buffer,i);
@@ -399,4 +399,10 @@ uint32 get_percentage_exp(const uint64 a, const uint64 b)
 	}
 
 	return (uint32)floor(result);
+}
+
+float calculate_min_exp_gain(const int32 rate)
+{
+	if (rate <= 10) return 0.01f;
+	return static_cast<float>(rate) / 100;
 }

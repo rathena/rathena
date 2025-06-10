@@ -278,7 +278,7 @@ static t_tick battle_calc_walkdelay(block_list& bl, int64 damage, int16 div_, t_
 	if (div_ == 0)
 		return 0;
 
-	t_tick delay = status_get_status_data(bl)->dmotion;	
+	t_tick delay = status_get_status_data(bl)->dmotion;
 
 	// Multi-hit skills mean higher delays
 	if (div_ > 1) {
@@ -1307,7 +1307,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 		element = battle_get_magic_element(src, target, skill_id, skill_lv, d->miscflag);
 	else
 		element = battle_get_misc_element(src, target, skill_id, skill_lv, d->miscflag);
-	
+
 	switch( element ){
 		case ELE_NEUTRAL:
 			if( sc->getSCE( SC_IMMUNE_PROPERTY_NOTHING ) ){
@@ -1628,7 +1628,7 @@ bool battle_status_block_damage(struct block_list *src, struct block_list *targe
 			status_change_end(target, SC_BUNSINJYUTSU);
 		return false;
 	}
-	
+
 	if ((sce = sc->getSCE(SC_DAMAGE_HEAL))) {
 		if (damage > 0 && (flag & sce->val2)) {
 			int32 heal = static_cast<int32>( i64min( damage, INT32_MAX ) );
@@ -1962,7 +1962,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			switch (skill_id) {
 				case HN_SHIELD_CHAIN_RUSH:
 				case HN_DOUBLEBOWLINGBASH:
-					damage += damage * 120 / 100; 
+					damage += damage * 120 / 100;
 					break;
 				case HN_MEGA_SONIC_BLOW:
 				case HN_SPIRAL_PIERCE_MAX:
@@ -2043,7 +2043,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (md && md->damagetaken != 100)
 			damage = i64max(damage * md->damagetaken / 100, 1);
 	}
-	
+
 	if (tsc != nullptr && !tsc->empty()) {
 		if (!battle_status_block_damage(src, bl, tsc, d, damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
 			return 0;
@@ -3637,7 +3637,7 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	status_change *sc = status_get_sc(src);
 	status_data* sstatus = status_get_status_data(*src);
-	
+
 	if (element == ELE_WEAPON) { // pl=-1 : the skill takes the weapon's element
 		element = sstatus->rhw.ele;
 		if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm >= MAX_SPIRITCHARM)
@@ -3727,7 +3727,7 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 
 int32 battle_get_misc_element(struct block_list* src, struct block_list* target, uint16 skill_id, uint16 skill_lv, int32 mflag) {
 	int32 element = skill_get_ele(skill_id, skill_lv);
-	
+
 	if (element == ELE_WEAPON || element == ELE_ENDOWED) //Attack that takes weapon's element for misc attacks? Make it neutral [Skotlex]
 		element = ELE_NEUTRAL;
 	else if (element == ELE_RANDOM) //Use random element
@@ -4389,7 +4389,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 				if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0) {
 					if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) { // exclude the player himself [Inkfish]
 						// Reduce count by one (self) [Tydus1]
-						i -= 1; 
+						i -= 1;
 						ATK_ADDRATE(wd->damage, wd->damage2, 2*skill*i);
 					}
 				}
@@ -5326,7 +5326,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			if (sc && sc->getSCE(SC_FEARBREEZE))
 				skillratio += -100 + 800 + 35 * skill_lv;
 			else
-				skillratio += -100 + 500 + 20 * skill_lv;	
+				skillratio += -100 + 500 + 20 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case RA_CLUSTERBOMB:
@@ -5578,9 +5578,9 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case SR_HOWLINGOFLION:
 			skillratio += -100 + 500 * skill_lv;
-			RE_LVL_DMOD(100);	
+			RE_LVL_DMOD(100);
 			break;
-		case SR_RIDEINLIGHTNING: 
+		case SR_RIDEINLIGHTNING:
 			skillratio += -100 + 40 * skill_lv;
 			if (sd && sd->status.weapon == W_KNUCKLE)
 				skillratio += 50 * skill_lv;
@@ -6421,7 +6421,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += 5 * sstatus->con;
 			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
 				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 150 * skill_lv;
-			if (sd && sd->weapontype1 == W_RIFLE) 
+			if (sd && sd->weapontype1 == W_RIFLE)
 				skillratio += 200 + 1100 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
@@ -7664,7 +7664,7 @@ void battle_do_reflect(int32 attack_type, struct Damage *wd, struct block_list* 
 			if (!tsc->getSCE(SC_KYOMU) && !(tsc->getSCE(SC_DARKCROW) && (wd->flag&BF_SHORT))) //SC_KYOMU invalidates reflecting ability. SC_DARKCROW also does, but only for short weapon attack.
 				skill_castend_damage_id(target, src, NPC_MAXPAIN_ATK, sce->val1, tick, ((wd->flag & 1) ? wd->flag - 1 : wd->flag));
 		}
-		
+
 		// Calculate skill reflect damage separately
 		if ((ud && !ud->immune_attack) || !status_bl_has_mode(target, MD_SKILLIMMUNE))
 			rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id,true);
@@ -8011,7 +8011,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 						wd.damage = sce->val3 * skill_lv / 10;
 				}
 			}
-			else 
+			else
 				wd.damage = 0;
 			break;
 	}
@@ -10078,7 +10078,7 @@ struct Damage battle_calc_attack(int32 attack_type,struct block_list *bl,struct 
 		d.dmotion = 0;
 		if(bl->type == BL_PC)
 			d.div_ = 1;
-		
+
 		status_change *tsc = status_get_sc(target);
 
 		// Weapon Blocking has the ability to trigger on ATK_MISS as well.
@@ -11844,6 +11844,7 @@ static const struct _battle_data {
 	{ "multi_level_up",                     &battle_config.multi_level_up,                  0,      0,      1,              },
 	{ "multi_level_up_base",                &battle_config.multi_level_up_base,             0,      0,      MAX_LEVEL,      },
 	{ "multi_level_up_job",                 &battle_config.multi_level_up_job,              0,      0,      MAX_LEVEL,      },
+	{ "min_exp_gain_rate",                  &battle_config.min_exp_gain_rate,               0,      0,      INT_MAX,        },
 	{ "max_exp_gain_rate",                  &battle_config.max_exp_gain_rate,               0,      0,      INT_MAX,        },
 	{ "backstab_bow_penalty",               &battle_config.backstab_bow_penalty,            0,      0,      1,              },
 	{ "night_at_start",                     &battle_config.night_at_start,                  0,      0,      1,              },

@@ -822,7 +822,7 @@ void BarterDatabase::loadingFinished(){
 			if( map_addblock( nd ) ){
 				continue;
 			}
-			
+
 			status_change_init( nd );
 			unit_dataset( nd );
 			nd->ud.dir = barter->dir;
@@ -1035,7 +1035,7 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag)
 {
 	if (char_id > 0 && (flag & NPCVIEW_CLOAK)) {
 		map_session_data *sd = map_charid2sd(char_id);
-	
+
 		if (!sd) {
 			ShowError("npc_enable: Attempted to %s a NPC '%s' on an invalid target %d.\n", (flag & NPCVIEW_VISIBLE) ? "show" : "hide", nd.name, char_id);
 			return false;
@@ -2657,7 +2657,7 @@ void npc_shop_currency_type(map_session_data *sd, struct npc_data *nd, int32 cos
 				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point Shop List: '%s'
 				clif_broadcast(sd, output, strlen(output) + 1, BC_BLUE,SELF);
 			}
-			
+
 			cost[0] = static_cast<int32>(pc_readreg2(sd, nd->u.shop.pointshop_str));
 			break;
 	}
@@ -2938,7 +2938,7 @@ e_purchase_result npc_buylist( map_session_data* sd, std::vector<s_npc_buy_list>
 			z = z * (double)skill * (double)battle_config.shop_exp/10000.;
 			if( z < 1 )
 				z = 1;
-			pc_gainexp(sd,nullptr,0,(int32)z, 0);
+			pc_gainexp(sd,nullptr,0,(int32)z, 0,100);
 		}
 	}
 
@@ -3128,7 +3128,7 @@ uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_S
 			z = z * (double)skill * (double)battle_config.shop_exp/10000.;
 			if( z < 1 )
 				z = 1;
-			pc_gainexp(sd, nullptr, 0, (int32)z, 0);
+			pc_gainexp(sd, nullptr, 0, (int32)z, 0,100);
 		}
 	}
 
@@ -3504,7 +3504,7 @@ int32 npc_unload(struct npc_data* nd, bool single) {
 			}
 		}
 	}
-	
+
 	if( single && nd->m != -1 )
 		map_remove_questinfo(nd->m, nd);
 
@@ -4105,7 +4105,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			}
 			break;
 	}
-	
+
 	nd = npc_create_npc(m, x, y);
 	nd->u.shop.count = 0;
 	while ( p ) {
@@ -4163,7 +4163,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		//for logs filters, atcommands and iteminfo script command
 		if( id->maxchance == 0 )
 			id->maxchance = -1; // -1 would show that the item's sold in NPC Shop
-		
+
 #if PACKETVER >= 20131223
 		if (nd->u.shop.count && type == NPCTYPE_MARKETSHOP) {
 			uint16 i;
@@ -5049,7 +5049,7 @@ void npc_unsetcells(struct npc_data* nd)
 
 bool npc_movenpc(struct npc_data* nd, int16 x, int16 y)
 {
-	if (nd->m < 0 || nd->prev == nullptr) 
+	if (nd->m < 0 || nd->prev == nullptr)
 		return false;	//Not on a map.
 
 	struct map_data *mapdata = map_getmapdata(nd->m);
@@ -5541,7 +5541,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				map_setmapflag_sub(m, mapflag, state, &args);
 			}
 			break;
-			
+
 		case MF_SPECIALPOPUP: {
 				union u_mapflag_args args = {};
 
@@ -5575,7 +5575,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 
 						args.skill_damage.caster = static_cast<uint16>(val_tmp);
 					}
-					
+
 					if (args.skill_damage.caster == 0)
 						args.skill_damage.caster = BL_ALL;
 
@@ -5637,11 +5637,11 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
  */
 int32 npc_parsesrcfile(const char* filepath)
 {
-	if (check_filepath(filepath) != 2) { //this is not a file 
+	if (check_filepath(filepath) != 2) { //this is not a file
 		ShowDebug("npc_parsesrcfile: Path doesn't seem to be a file skipping it : '%s'.\n", filepath);
 		return 0;
-	} 
-            
+	}
+
 	// read whole file to buffer
 	FILE* fp = fopen(filepath, "rb");
 	if (fp == nullptr) {
