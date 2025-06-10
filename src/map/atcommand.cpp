@@ -674,7 +674,7 @@ ACMD_FUNC(where)
  *------------------------------------------*/
 ACMD_FUNC(jumpto)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 
 	nullpo_retr(-1, sd);
 
@@ -758,8 +758,8 @@ ACMD_FUNC(jump)
  * various info.
  *------------------------------------------*/
 ACMD_FUNC(who) {
-	map_session_data* pl_sd = nullptr;;
-	struct s_mapiterator *iter = nullptr;	
+	map_session_data* pl_sd = nullptr;
+	struct s_mapiterator *iter = nullptr;
 	char player_name[NAME_LENGTH] = "";
 	int32 count = 0;
 	int32 level = 0;
@@ -3346,7 +3346,7 @@ ACMD_FUNC(petrename)
  *
  *------------------------------------------*/
 ACMD_FUNC(recall) {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 
 	nullpo_retr(-1, sd);
 
@@ -5524,7 +5524,7 @@ ACMD_FUNC(unjail)
 }
 
 ACMD_FUNC(jailfor) {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	char * modif_p;
 	int32 jailtime = 0;
 
@@ -6084,7 +6084,7 @@ ACMD_FUNC(addwarp)
  *------------------------------------------*/
 ACMD_FUNC(follow)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -6409,7 +6409,7 @@ ACMD_FUNC(skillid) {
  *------------------------------------------*/
 ACMD_FUNC(useskill)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	struct block_list *bl;
 	uint16 skill_id;
 	uint16 skill_lv;
@@ -6546,7 +6546,7 @@ ACMD_FUNC(displayskillunit)
  *------------------------------------------*/
 ACMD_FUNC(skilltree)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	uint16 skill_id;
 	nullpo_retr(-1, sd);
 
@@ -6618,7 +6618,7 @@ void getring (map_session_data* sd)
  *------------------------------------------*/
 ACMD_FUNC(marry)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 
 	nullpo_retr(-1, sd);
 
@@ -7654,7 +7654,7 @@ ACMD_FUNC(adjgroup)
  *------------------------------------------*/
 ACMD_FUNC(trade)
 {
-    map_session_data* pl_sd = nullptr;;
+    map_session_data* pl_sd = nullptr;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -7708,7 +7708,7 @@ ACMD_FUNC(setbattleflag)
  *------------------------------------------*/
 ACMD_FUNC(unmute)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -7806,7 +7806,7 @@ ACMD_FUNC(changecharsex)
  *------------------------------------------------*/
 ACMD_FUNC(mute)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	int32 manner;
 	nullpo_retr(-1, sd);
 
@@ -10543,7 +10543,7 @@ ACMD_FUNC(langtype)
 
 ACMD_FUNC(vip) {
 #ifdef VIP_ENABLE
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	char * modif_p;
 	int32 vipdifftime = 0;
 	time_t now=time(nullptr);
