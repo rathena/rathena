@@ -20233,7 +20233,8 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 		case BO_ACIDIFIED_ZONE_WIND:
 		case BO_ACIDIFIED_ZONE_FIRE:
 			if (sc != nullptr && sc->getSCE(SC_RESEARCHREPORT) != nullptr)
-				req.amount[0] = 1;
+				if (req.amount[0] > 0)
+					req.amount[0] = 1;
 			break;
 	}
 
