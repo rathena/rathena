@@ -20228,6 +20228,13 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 			if( sc && (sc->getSCE(SC_HEATER_OPTION) || sc->getSCE(SC_COOLER_OPTION) || sc->getSCE(SC_CURSED_SOIL_OPTION) || sc->getSCE(SC_BLAST_OPTION)) )
 				req.sp += req.sp / 2; // 1.5x SP cost
 			break;
+		case BO_ACIDIFIED_ZONE_WATER:
+		case BO_ACIDIFIED_ZONE_GROUND:
+		case BO_ACIDIFIED_ZONE_WIND:
+		case BO_ACIDIFIED_ZONE_FIRE:
+			if (sc != nullptr && sc->hasSCE(SC_RESEARCHREPORT) && req.amount[0] > 0)
+				req.amount[0]--;
+			break;
 	}
 
 	//Check if player is using the copied skill [Cydh]
