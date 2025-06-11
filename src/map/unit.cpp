@@ -3284,6 +3284,8 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 	if (tid == INVALID_TIMER && sd)
 		clif_fixpos( *src );
 
+	map_freeblock_lock();
+
 	if( DIFF_TICK(ud->attackabletime,tick) <= 0 ) {
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change))
 			unit_setdir(src, map_calc_dir(src, target->x, target->y), false);
@@ -3299,10 +3301,11 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 			}
 		}
 
-		if(src->type == BL_PET && pet_attackskill((TBL_PET*)src, target->id))
+		if (src->type == BL_PET && pet_attackskill((TBL_PET*)src, target->id)) {
+			map_freeblock_unlock();
 			return 1;
+		}
 
-		map_freeblock_lock();
 		ud->attacktarget_lv = battle_weapon_attack(src,target,tick,0);
 
 		if(sd && sd->status.pet_id > 0 && sd->pd && battle_config.pet_attack_support)

@@ -2167,8 +2167,9 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		if (stop_flag != USW_NONE)
 			unit_stop_walking(md, stop_flag);
 
-		//Target still in attack range, no need to chase the target
 		map_freeblock_unlock();
+
+		//Target still in attack range, no need to chase the target
 		return true;
 	}
 
