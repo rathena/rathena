@@ -78897,6 +78897,10 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      specialeffect2 EF_POTION_BERSERK;
+      specialeffect2 EF_PROVIDENCE;
+      sc_start SC_CONTENTS_15,900000,10;
   - Id: 103066
     AegisName: 24_S_Ev_Grilled
     Name: Herb Calamari Barbecue
@@ -78910,6 +78914,9 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      specialeffect2 EF_SPELLBREAKER;
+      sc_start SC_CONTENTS_16,900000,10;
   - Id: 103067
     AegisName: 24_S_Ev_Podding
     Name: Sweet Watermelon Pudding
@@ -78923,6 +78930,9 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      specialeffect2 EF_LIGHTSPHERE;
+      sc_start SC_CONTENTS_17,900000,10;
   - Id: 103068
     AegisName: 24_S_Ev_Juice
     Name: Cool Watermelon Juice
@@ -78936,6 +78946,9 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      specialeffect2 EF_BASH3D;
+      sc_start SC_CONTENTS_18,900000,15;
   - Id: 103069
     AegisName: 24_S_Ev_IceFlake
     Name: Cool Red Beans Bingsu
@@ -78949,6 +78962,9 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      specialeffect2 EF_STEAL;
+      sc_start SC_CONTENTS_19,900000,10;
   - Id: 103070
     AegisName: 24_S_Ev_Pop_Corn
     Name: Gourmet Butter Popcorn
@@ -78962,11 +78978,17 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+    Script: |
+      specialeffect2 EF_HASTEUP;
+      sc_start2 SC_CONTENTS_20,900000,-10,2;
   - Id: 103071
     AegisName: 24_S_Ev_Ripe_Melon
     Name: Ripe Golden Melon
     Type: Usable
     Weight: 50
+    Delay:
+      Duration: 3000
+      Status: Reuse_Limit_H
     Trade:
       NoDrop: true
       NoTrade: true
@@ -78977,6 +78999,7 @@ Body:
       NoAuction: true
     Script: |
       percentheal 100,100;
+      specialeffect2 EF_POTION4;
   - Id: 103094
     AegisName: CLB_SS_Box
     Name: Shiba Says Costume Selection Box
