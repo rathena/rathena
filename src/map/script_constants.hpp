@@ -10735,7 +10735,7 @@
 	export_constant(OPT2_POISON);
 	export_constant(OPT2_CURSE);
 	export_constant(OPT2_SILENCE);
-	export_constant(OPT2_SIGNUMCRUCIS);
+	export_constant(OPT2_CONFUSION);
 	export_constant(OPT2_BLIND);
 	export_constant(OPT2_ANGELUS);
 	export_constant(OPT2_BLEEDING);

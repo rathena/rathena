@@ -11186,11 +11186,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			} else // Caster
 				val2 = 10; // After-cast delay % reduction
 			break;
-
-		case SC_CONFUSION:
-			if (!val4)
-				clif_emotion( *bl, ET_QUESTION );
-			break;
 		case SC_GRADUAL_GRAVITY:
 			val2 = 10 * val1;
 			tick_time = status_get_sc_interval(type);

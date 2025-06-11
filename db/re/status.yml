@@ -224,7 +224,10 @@ Body:
       Protection: true
   - Status: Confusion
     DurationLookup: NPC_WIDECONFUSE
+    Opt2:
+      Confusion: true
     Flags:
+      SendOption: true
       BossResist: true
       StopWalking: true
       SpreadEffect: true
@@ -456,11 +459,10 @@ Body:
     DurationLookup: AL_CRUCIS
     CalcFlags:
       Def: true
-    Opt2:
-      SignumCrucis: true
     Flags:
-      SendOption: true
       Debuff: true
+    Fail:
+      Signumcrucis: true
   - Status: Increaseagi
     Icon: EFST_INC_AGI
     DurationLookup: AL_INCAGI
