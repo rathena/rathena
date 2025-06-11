@@ -9839,3 +9839,69 @@ Body:
       .@val1 = getstatus(SC_C_BUFF_6, 1);
       bonus bAtkRate, .@val1;
       bonus bMatkRate, .@val1;
+  - Status: Contents_15
+    Icon: EFST_CONTENTS_15
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_15, 1);
+      bonus2 bAddEle,Ele_All, .@val1;
+      bonus2 bMagicAddEle,Ele_All, .@val1;
+  - Status: Contents_16
+    Icon: EFST_CONTENTS_16
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_16, 1);
+      bonus2 bAddSize,Size_All, .@val1;
+      bonus2 bMagicAddSize,Size_All, .@val1;
+  - Status: Contents_17
+    Icon: EFST_CONTENTS_17
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_17, 1);
+      bonus2 bMagicAtkEle,Ele_All, .@val1;
+      bonus bShortAtkRate, .@val1;
+      bonus bLongAtkRate, .@val1;
+  - Status: Contents_18
+    Icon: EFST_CONTENTS_18
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_18, 1);
+      bonus bMatkRate, .@val1;
+      bonus bAtkRate, .@val1;
+  - Status: Contents_19
+    Icon: EFST_CONTENTS_19
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_19, 1);
+      bonus bMaxHPrate, .@val1;
+      bonus bMaxSPrate, .@val1;
+  - Status: Contents_20
+    Icon: EFST_CONTENTS_20
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus bVariableCastrate, getstatus(SC_CONTENTS_20, 1);
+      bonus bAspd, getstatus(SC_CONTENTS_20, 2);
