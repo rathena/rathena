@@ -82289,7 +82289,7 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      getitem 25793,10; /* Inventory Expansion Coupon */
+      getitem 25793,100; /* Inventory Expansion Coupon */
   - Id: 200003
     AegisName: LI_HD_Oridecon_Box2
     Name: (Limited) HD Oridecon Box (Blacksmith)(30)

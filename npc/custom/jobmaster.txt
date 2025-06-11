@@ -351,8 +351,10 @@ function	Job_Change	{
 	if (.@to_cls == Job_Novice_High && .LastJob)
 		lastJob = Class; // Saves the lastJob for rebirth
 	jobchange .@to_cls;
-	if (.@to_cls == Job_Novice_High)
+	if (.@to_cls == Job_Novice_High){
 		resetlvl(1);
+		getitem 25793,1; //Inventory Expansion Coupon
+	}
 	else if (.@to_cls == Job_Baby) {
 		resetstatus;
 		resetskill;

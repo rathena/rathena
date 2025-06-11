@@ -151,7 +151,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			set MISC_QUEST,MISC_QUEST & ~1024;//<-reset Skill Reset Event
 			skill "NV_FIRSTAID",1,SKILL_PERM;
 			skill "NV_TRICKDEAD",1,SKILL_PERM;
-			completequest 1000;
+			completequest 1000;		
 			next;
 			mes "[Valkyrie]";
 			mes "Congratulations.";
@@ -161,6 +161,7 @@ valkyrie,48,86,4	script	Valkyrie#	811,{
 			mes "in preparation for your new adventures.";
 			getitem 1202,1; //Knife_
 			getitem 2302,1; //Cotton_Shirt_
+			getitem 25793,1; //Inventory Expansion Coupon
 			next;
 			mes "[Valkyrie]";
 			mes "I wish that the release the goddess Urd has granted you proves to be a blessing. I hope that the memories Verdandi has recorded will always honor you.";
