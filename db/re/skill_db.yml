@@ -18542,8 +18542,8 @@ Body:
     Hit: Single
     CastTime: 800
     AfterCastActDelay: 2000
-    Duration1: 17000
-    Duration2: 120000
+    Duration1: 10000
+    Duration2: 10000
     FixedCastTime: 200
     Requires:
       SpCost: 40
@@ -18562,7 +18562,7 @@ Body:
     CastTime: 800
     AfterCastActDelay: 2000
     Duration1: 10000
-    Duration2: 18000
+    Duration2: 10000
     FixedCastTime: 200
     Requires:
       SpCost: 40
