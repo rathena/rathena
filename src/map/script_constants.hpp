@@ -10735,7 +10735,8 @@
 	export_constant(OPT2_POISON);
 	export_constant(OPT2_CURSE);
 	export_constant(OPT2_SILENCE);
-	export_constant(OPT2_SIGNUMCRUCIS);
+	export_deprecated_constant3("OPT2_SIGNUMCRUCIS", OPT2_CONFUSION, "OPT2_CONFUSION"); // June 2025
+	export_constant(OPT2_CONFUSION);
 	export_constant(OPT2_BLIND);
 	export_constant(OPT2_ANGELUS);
 	export_constant(OPT2_BLEEDING);
