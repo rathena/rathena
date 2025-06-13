@@ -2633,6 +2633,7 @@ moc_para01,23,35,5	script	Instructor Ur#2nd01	4_M_KNIGHT_BLACK,{
 					mes "Please come back alive.";
 					para_2nd01 = 7;
 					setquest 7219;// Advanced Training at Glast Heim
+					warp "glast_01", 198, 130;
 				}
 				else if (BaseLevel < 90)
 					callsub S_Quest7990;

@@ -3145,6 +3145,8 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				zeny=(int32) ((md->level+rnd()%md->level)*per*bonus/100.);
 				if( md->get_bosstype() == BOSSTYPE_MVP )
 					zeny*=rnd()%250;
+
+				zeny = zeny * 25;
 			}
 
 			if (map_getmapflag(m, MF_NOBASEEXP) || !md->db->base_exp)

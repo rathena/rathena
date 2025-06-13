@@ -1,0 +1,37 @@
+// Location: prontera 141 180
+prontera,141,180,4	script	Buff Food Vendor	90,{
+	mes "[Buff Food Vendor]";
+	mes "Welcome! I sell delicious food that boosts your stats.";
+	next;
+
+	switch(select("STR:VIT:INT:DEX:AGI:LUK:Cancel")) {
+		case 1: callshop "str_food_shop", 1; end;
+		case 3: callshop "vit_food_shop", 1; end;
+		case 4: callshop "int_food_shop", 1; end;
+		case 5: callshop "dex_food_shop", 1; end;
+		case 2: callshop "agi_food_shop", 1; end;
+		case 6: callshop "luk_food_shop", 1; end;
+		default: mes "Come back anytime!"; end;
+	}
+    
+    close;
+}
+
+
+// STR Buff Food Shop
+-	shop	str_food_shop	HIDDEN_NPC,no,12041:-1,12042:-1,12043:-1,12044:-1,12045:-1,12071:-1,12072:-1,12073:-1,12074:-1,12075:-1
+
+// AGI Buff Food Shop
+-	shop	agi_food_shop	HIDDEN_NPC,no,12051:-1,12052:-1,12053:-1,12054:-1,12055:-1,12081:-1,12082:-1,12083:-1,12084:-1,12085:-1
+
+// VIT Buff Food Shop
+-	shop	vit_food_shop	HIDDEN_NPC,no,12046:-1,12047:-1,12048:-1,12049:-1,12050:-1,12076:-1,12077:-1,12078:-1,12079:-1,12080:-1
+
+// INT Buff Food Shop
+-	shop	int_food_shop	HIDDEN_NPC,no,12061:-1,12062:-1,12063:-1,12064:-1,12065:-1,12091:-1,12092:-1,12093:-1,12094:-1,12095:-1
+
+// DEX Buff Food Shop
+-	shop	dex_food_shop	HIDDEN_NPC,no,12056:-1,12057:-1,12058:-1,12059:-1,12060:-1,12086:-1,12087:-1,12088:-1,12089:-1,12090:-1
+
+// LUK Buff Food Shop
+-	shop	luk_food_shop	HIDDEN_NPC,no,12066:-1,12067:-1,12068:-1,12069:-1,12070:-1,12096:-1,12097:-1,12098:-1,12099:-1,12100:-1

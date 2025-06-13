@@ -1,0 +1,53 @@
+prontera,165,190,4	script	SoulLinkerBuffer	871,{	
+mes "[Soul Linker]";
+	mes "I can bless you with a Soul Link.";
+	mes "It costs ^FF000010,000 Zeny^000000.";
+	mes "Do you want to proceed?";
+	next;
+
+	if(select("Yes, please!:No thanks.") == 2) {
+		mes "[Soul Linker]";
+		mes "Maybe next time.";
+		close;
+	}
+
+	if (Zeny < 10000) {
+		mes "[Soul Linker]";
+		mes "You don't have enough Zeny!";
+		close;
+	}
+
+	Zeny -= 10000;
+
+	mes "[Soul Linker]";
+	mes "Choose your class to receive the proper link:";
+	next;
+
+    switch ( basejob ) {
+        case Job_Alchemist:	set .@spirit, 445; break;
+        case Job_Monk:	 set .@spirit, 447; break;
+        case Job_Star_Gladiator:  set .@spirit, 448; break;
+        case Job_Sage:	 set .@spirit, 449; break;
+        case Job_Crusader:	set .@spirit, 450; break;
+        case Job_SuperNovice:   set .@spirit, 451; break;
+        case Job_Knight:	set .@spirit, 452; break;
+        case Job_Wizard:	set .@spirit, 453; break;
+        case Job_Priest:	set .@spirit, 454; break;
+        case Job_Bard: case Job_Dancer: set .@spirit, 455; break;
+        case Job_Rogue:	 set .@spirit, 456; break;
+        case Job_Assassin:	set .@spirit, 457; break;
+        case Job_Blacksmith:   set .@spirit, 458; break;
+        case Job_Hunter:	set .@spirit, 460; break;
+        case Job_Soul_Linker:   set .@spirit, 461; break;
+        default:
+        if ( upper == 1 && baselevel < 70 )
+        set .@spirit, 494;
+    }
+
+    if ( .@spirit ) {
+        sc_start4 sc_spirit, 3600000, 5, .@spirit,0,0;
+        skilleffect .@spirit, 5;
+    }
+
+	close;
+}

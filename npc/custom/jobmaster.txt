@@ -348,8 +348,13 @@ function	Job_Change	{
 	next;
 	mes .NPCName$;
 	mes "You are now " + callfunc("F_InsertArticle", jobname(.@to_cls)) + "!";
-	if (.@to_cls == Job_Novice_High && .LastJob)
-		lastJob = Class; // Saves the lastJob for rebirth
+	if (.@to_cls == Job_Novice_High && .LastJob){
+		lastJob = Class;		// Saves the lastJob for rebirth
+		ADVJOB = Class + 4001;	// Sets rebirth path for regular job change
+		set valkyrie_Q,2;		// Complete Book of Ymir Quest
+		completequest 1000;		// Complete Rebirth Quest
+	}
+
 	jobchange .@to_cls;
 	if (.@to_cls == Job_Novice_High){
 		resetlvl(1);

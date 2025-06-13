@@ -1,0 +1,54 @@
+// NPC: Monster Society Teleporter (mit Levelvoraussetzung)
+prontera,172,125,4	script	Monster Society Warper	98,{
+	mes "[Monster Society Warper]";
+	mes "Where would you like to travel?";
+	next;
+
+	switch(select(
+		"Einbroch Field 06 [Lv70]",
+		"Geffen Field 06 [Lv71]",
+		"Lighthalzen Field 01 [Lv71]",
+		"Malang Dungeon 01 [Lv75]",
+		"Hugel Field 01 [Lv75]",
+		"Turtle Dungeon 01 [Lv75]",
+		"Einbroch Field 03 [Lv76]",
+		"Lighthalzen Field 03 [Lv77]",
+		"Turtle Dungeon 02 [Lv80]",
+		"Turtle Dungeon 03 [Lv80]",
+		"Rachel Field 12 [Lv80]",
+		"Ice Dungeon 01 [Lv85]",
+		"Rachel Field 08 [Lv85]",
+		"Rachel Field 04 [Lv86]",
+		"Prontera Field 07 [Lv86]",
+		"Rachel Field 03 [Lv86]",
+		"Rachel Field 05 [Lv87]",
+		"Rachel Field 01 [Lv88]",
+		"Prontera Field 01 [Lv90]",
+		"Prontera Field 04 [Lv90]",
+		"Rachel Field 06 [Lv93]",
+		"Prontera Field 03 [Lv95]"
+	)) {
+	case 1:  warp("ein_fild06",200,180); end;
+	case 2:  warp("gef_fild06",200,180); end;
+	case 3:  warp("lhz_fild01",200,180); end;
+	case 4:  warp("mal_dun01",200,180); end;
+	case 5:  warp("hu_fild01",200,180); end;
+	case 6:  warp("tur_dun01",200,180); end;
+	case 7:  warp("ein_fild03",200,180); end;
+	case 8:  warp("lhz_fild03",200,180); end;
+	case 9:  warp("tur_dun02",200,180); end;
+	case 10: warp("tur_dun03",200,180); end;
+	case 11: warp("ra_fild12",200,180); end;
+	case 12: warp("ice_dun01",200,180); end;
+	case 13: warp("ra_fild08",200,180); end;
+	case 14: warp("ra_fild04",200,180); end;
+	case 15: warp("ve_fild07",200,180); end;
+	case 16: warp("ra_fild03",200,180); end;
+	case 17: warp("ra_fild05",200,180); end;
+	case 18: warp("ra_fild01",200,180); end;
+	case 19: warp("ve_fild01",200,180); end;
+	case 20: warp("ve_fild04",200,180); end;
+	case 21: warp("ra_fild06",200,180); end;
+	case 22: warp("ve_fild03",200,180); end;
+	}
+}
