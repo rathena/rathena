@@ -10220,14 +10220,11 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			clif_autospell( *sd, skill_lv );
 		} else {
 			int32 maxlv=1,spellid=0;
-			static const int32 spellarray[3] = { MG_COLDBOLT,MG_FIREBOLT,MG_LIGHTNINGBOLT };
+			constexpr std::array<uint16,3> spellarray = { MG_COLDBOLT,MG_FIREBOLT,MG_LIGHTNINGBOLT };
 
 			if(skill_lv >= 10) {
 				spellid = MG_FROSTDIVER;
-//				if (tsc && tsc->getSCE(SC_SPIRIT) && tsc->getSCE(SC_SPIRIT)->val2 == SA_SAGE)
-//					maxlv = 10;
-//				else
-					maxlv = skill_lv - 9;
+				maxlv = skill_lv - 9;
 			}
 			else if(skill_lv >=8) {
 				spellid = MG_FIREBALL;
@@ -20896,32 +20893,18 @@ int32 skill_autospell(map_session_data *sd, uint16 skill_id)
 		maxlv = 10; //Soul Linker bonus. [Skotlex]
 	else
 		maxlv = skill_lv / 2; // Half of Autospell's level unless player learned a lower level (capped below)
-#else
-	if(skill_id==MG_NAPALMBEAT)	maxlv=3;
-	else if(skill_id==MG_COLDBOLT || skill_id==MG_FIREBOLT || skill_id==MG_LIGHTNINGBOLT){
-		if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SAGE)
-			maxlv = 10; //Soul Linker bonus. [Skotlex]
-		else if(skill_lv==2) maxlv=1;
-		else if(skill_lv==3) maxlv=2;
-		else if(skill_lv>=4) maxlv=3;
-	}
-	else if(skill_id==MG_SOULSTRIKE){
-		if(skill_lv==5) maxlv=1;
-		else if(skill_lv==6) maxlv=2;
-		else if(skill_lv>=7) maxlv=3;
-	}
-	else if(skill_id==MG_FIREBALL){
-		if(skill_lv==8) maxlv=1;
-		else if(skill_lv>=9) maxlv=2;
-	}
-	else if(skill_id==MG_FROSTDIVER) maxlv=1;
-	else return 0;
-#endif
 
 	maxlv = min(lv, maxlv);
-
 	sc_start4(sd,sd,SC_AUTOSPELL,100,skill_lv,skill_id,maxlv,0,
 		skill_get_time(SA_AUTOSPELL,skill_lv));
+#else
+	constexpr std::array<uint16,7> allowed_skills = {MG_NAPALMBEAT,MG_COLDBOLT,MG_LIGHTNINGBOLT,MG_FIREBOLT,MG_SOULSTRIKE,MG_FIREBALL,MG_FROSTDIVER};
+	if(std::find(allowed_skills.begin(),allowed_skills.end(),skill_id) == allowed_skills.end())
+		return 0;
+	//In prere, players check autospell level on each proc.
+	sc_start2(sd,sd,SC_AUTOSPELL,100,0,skill_id,skill_get_time(SA_AUTOSPELL,skill_lv));
+#endif
+
 	return 0;
 }
 
