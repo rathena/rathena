@@ -674,7 +674,7 @@ ACMD_FUNC(where)
  *------------------------------------------*/
 ACMD_FUNC(jumpto)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 
 	nullpo_retr(-1, sd);
 
@@ -758,8 +758,8 @@ ACMD_FUNC(jump)
  * various info.
  *------------------------------------------*/
 ACMD_FUNC(who) {
-	map_session_data* pl_sd = nullptr;;
-	struct s_mapiterator *iter = nullptr;	
+	map_session_data* pl_sd = nullptr;
+	struct s_mapiterator *iter = nullptr;
 	char player_name[NAME_LENGTH] = "";
 	int32 count = 0;
 	int32 level = 0;
@@ -3346,7 +3346,7 @@ ACMD_FUNC(petrename)
  *
  *------------------------------------------*/
 ACMD_FUNC(recall) {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 
 	nullpo_retr(-1, sd);
 
@@ -5524,7 +5524,7 @@ ACMD_FUNC(unjail)
 }
 
 ACMD_FUNC(jailfor) {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	char * modif_p;
 	int32 jailtime = 0;
 
@@ -6084,7 +6084,7 @@ ACMD_FUNC(addwarp)
  *------------------------------------------*/
 ACMD_FUNC(follow)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -6409,7 +6409,7 @@ ACMD_FUNC(skillid) {
  *------------------------------------------*/
 ACMD_FUNC(useskill)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	struct block_list *bl;
 	uint16 skill_id;
 	uint16 skill_lv;
@@ -6546,7 +6546,7 @@ ACMD_FUNC(displayskillunit)
  *------------------------------------------*/
 ACMD_FUNC(skilltree)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	uint16 skill_id;
 	nullpo_retr(-1, sd);
 
@@ -6618,7 +6618,7 @@ void getring (map_session_data* sd)
  *------------------------------------------*/
 ACMD_FUNC(marry)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 
 	nullpo_retr(-1, sd);
 
@@ -7654,7 +7654,7 @@ ACMD_FUNC(adjgroup)
  *------------------------------------------*/
 ACMD_FUNC(trade)
 {
-    map_session_data* pl_sd = nullptr;;
+    map_session_data* pl_sd = nullptr;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -7708,7 +7708,7 @@ ACMD_FUNC(setbattleflag)
  *------------------------------------------*/
 ACMD_FUNC(unmute)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -7806,7 +7806,7 @@ ACMD_FUNC(changecharsex)
  *------------------------------------------------*/
 ACMD_FUNC(mute)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	int32 manner;
 	nullpo_retr(-1, sd);
 
@@ -8464,42 +8464,42 @@ ACMD_FUNC(homstats)
 
 	evo = (hom->class_ == db->evo_class);
 	min = db->base.HP +lv*db->gmin.HP +(evo?db->emin.HP:0);
-	max = db->base.HP +lv*db->gmax.HP +(evo?db->emax.HP:0);;
+	max = db->base.HP +lv*db->gmax.HP +(evo?db->emax.HP:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1267), hom->max_hp, min, max); // Max HP: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.SP +lv*db->gmin.SP +(evo?db->emin.SP:0);
-	max = db->base.SP +lv*db->gmax.SP +(evo?db->emax.SP:0);;
+	max = db->base.SP +lv*db->gmax.SP +(evo?db->emax.SP:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1268), hom->max_sp, min, max); // Max SP: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.str +lv*(db->gmin.str/10) +(evo?db->emin.str:0);
-	max = db->base.str +lv*(db->gmax.str/10) +(evo?db->emax.str:0);;
+	max = db->base.str +lv*(db->gmax.str/10) +(evo?db->emax.str:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1269), hom->str/10, min, max); // Str: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.agi +lv*(db->gmin.agi/10) +(evo?db->emin.agi:0);
-	max = db->base.agi +lv*(db->gmax.agi/10) +(evo?db->emax.agi:0);;
+	max = db->base.agi +lv*(db->gmax.agi/10) +(evo?db->emax.agi:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1270), hom->agi/10, min, max); // Agi: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.vit +lv*(db->gmin.vit/10) +(evo?db->emin.vit:0);
-	max = db->base.vit +lv*(db->gmax.vit/10) +(evo?db->emax.vit:0);;
+	max = db->base.vit +lv*(db->gmax.vit/10) +(evo?db->emax.vit:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1271), hom->vit/10, min, max); // Vit: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.int_ +lv*(db->gmin.int_/10) +(evo?db->emin.int_:0);
-	max = db->base.int_ +lv*(db->gmax.int_/10) +(evo?db->emax.int_:0);;
+	max = db->base.int_ +lv*(db->gmax.int_/10) +(evo?db->emax.int_:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1272), hom->int_/10, min, max); // Int: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.dex +lv*(db->gmin.dex/10) +(evo?db->emin.dex:0);
-	max = db->base.dex +lv*(db->gmax.dex/10) +(evo?db->emax.dex:0);;
+	max = db->base.dex +lv*(db->gmax.dex/10) +(evo?db->emax.dex:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1273), hom->dex/10, min, max); // Dex: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.luk +lv*(db->gmin.luk/10) +(evo?db->emin.luk:0);
-	max = db->base.luk +lv*(db->gmax.luk/10) +(evo?db->emax.luk:0);;
+	max = db->base.luk +lv*(db->gmax.luk/10) +(evo?db->emax.luk:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1274), hom->luk/10, min, max); // Luk: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
@@ -10543,7 +10543,7 @@ ACMD_FUNC(langtype)
 
 ACMD_FUNC(vip) {
 #ifdef VIP_ENABLE
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	char * modif_p;
 	int32 vipdifftime = 0;
 	time_t now=time(nullptr);

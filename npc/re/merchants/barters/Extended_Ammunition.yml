@@ -507,7 +507,7 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Vulcan_Bullet
-            Amount: 500
+            Amount: 1000
       - Index: 12
         Item: Magic_Gear_Fuel_Box
         RequiredItems:
