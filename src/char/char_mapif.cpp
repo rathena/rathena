@@ -1391,6 +1391,35 @@ void chmapif_connectack(int32 fd, uint8 errCode){
 	WFIFOSET(fd,3);
 }
 
+int32 chmapif_parse_macro_user_report(int32 fd)
+{
+	if (RFIFOREST(fd) < 268)
+	{
+		return 0;
+	}
+
+	const uint32 reporterAID = RFIFOL(fd, 2);
+	const uint32 reportedAID = RFIFOL(fd, 6);
+	const uint16 reportType = RFIFOW(fd, 10);
+	const char* reportMessage = RFIFOCP(fd, 12);
+
+	StringBuf buffer;
+	StringBuf_Init(&buffer);
+	StringBuf_Printf(&buffer, "INSERT INTO `macro_user_report` (`reporter_aid`, `reported_aid`, `report_type`, `report_msg`) VALUES ('%u', '%u', '%hu', '%s')",
+		reporterAID, reportedAID, reportType, reportMessage
+	);
+
+	if (Sql_QueryStr(sql_handle, StringBuf_Value(&buffer)) == SQL_ERROR)
+	{
+		Sql_ShowDebug(sql_handle);
+	}
+
+	StringBuf_Destroy(&buffer); // Corrected from &Buffer to &buffer
+	RFIFOSKIP(fd, 268);
+
+	return 1;
+}
+
 /**
  * Entry point from map-server to char-server.
  * Function that checks incoming command, then splits it to the correct handler.
@@ -1444,7 +1473,7 @@ int32 chmapif_parse(int32 fd){
 			case 0x2b26: next=chmapif_parse_reqauth(fd,id); break;
 			case 0x2b28: next=chmapif_parse_reqcharban(fd); break; //charban
 			case 0x2b2a: next=chmapif_parse_reqcharunban(fd); break; //charunban
-			//case 0x2b2c: /*free*/; break;
+			case 0x2b2c: next=chmapif_parse_macro_user_report(fd); break;
 			case 0x2b2d: next=chmapif_bonus_script_get(fd); break; //Load data
 			case 0x2b2e: next=chmapif_bonus_script_save(fd); break;//Save data
 			default:
