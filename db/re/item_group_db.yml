@@ -120230,3 +120230,3173 @@ Body:
           - Index: 3
             Item: aegis_103909
             Amount: 10
+  - Group: MD_FRAGMENT_BOX_BL
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Illusion_Fragment_BL
+            Rate: 1400
+            Amount: 26
+          - Index: 1
+            Item: Illusion_Fragment_BL
+            Rate: 1300
+            Amount: 27
+          - Index: 2
+            Item: Illusion_Fragment_BL
+            Rate: 1200
+            Amount: 28
+          - Index: 3
+            Item: Illusion_Fragment_BL
+            Rate: 1100
+            Amount: 29
+          - Index: 4
+            Item: Illusion_Fragment_BL
+            Rate: 1000
+            Amount: 30
+          - Index: 5
+            Item: Illusion_Fragment_BL
+            Rate: 850
+            Amount: 31
+          - Index: 6
+            Item: Illusion_Fragment_BL
+            Rate: 750
+            Amount: 32
+          - Index: 7
+            Item: Illusion_Fragment_BL
+            Rate: 650
+            Amount: 33
+          - Index: 8
+            Item: Illusion_Fragment_BL
+            Rate: 550
+            Amount: 34
+          - Index: 9
+            Item: Illusion_Fragment_BL
+            Rate: 450
+            Amount: 35
+          - Index: 10
+            Item: Illusion_Fragment_BL
+            Rate: 350
+            Amount: 36
+          - Index: 11
+            Item: Illusion_Fragment_BL
+            Rate: 250
+            Amount: 37
+          - Index: 12
+            Item: Illusion_Fragment_BL
+            Rate: 150
+            Amount: 38
+  - Group: MD_FRAGMENT_BOX_YL
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Illusion_Fragment_YL
+            Rate: 1400
+            Amount: 26
+          - Index: 1
+            Item: Illusion_Fragment_YL
+            Rate: 1300
+            Amount: 27
+          - Index: 2
+            Item: Illusion_Fragment_YL
+            Rate: 1200
+            Amount: 28
+          - Index: 3
+            Item: Illusion_Fragment_YL
+            Rate: 1100
+            Amount: 29
+          - Index: 4
+            Item: Illusion_Fragment_YL
+            Rate: 1000
+            Amount: 30
+          - Index: 5
+            Item: Illusion_Fragment_YL
+            Rate: 850
+            Amount: 31
+          - Index: 6
+            Item: Illusion_Fragment_YL
+            Rate: 750
+            Amount: 32
+          - Index: 7
+            Item: Illusion_Fragment_YL
+            Rate: 650
+            Amount: 33
+          - Index: 8
+            Item: Illusion_Fragment_YL
+            Rate: 550
+            Amount: 34
+          - Index: 9
+            Item: Illusion_Fragment_YL
+            Rate: 450
+            Amount: 35
+          - Index: 10
+            Item: Illusion_Fragment_YL
+            Rate: 350
+            Amount: 36
+          - Index: 11
+            Item: Illusion_Fragment_YL
+            Rate: 250
+            Amount: 37
+          - Index: 12
+            Item: Illusion_Fragment_YL
+            Rate: 150
+            Amount: 38
+  - Group: MD_FRAGMENT_BOX_GR
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Illusion_Fragment_GR
+            Rate: 1400
+            Amount: 26
+          - Index: 1
+            Item: Illusion_Fragment_GR
+            Rate: 1300
+            Amount: 27
+          - Index: 2
+            Item: Illusion_Fragment_GR
+            Rate: 1200
+            Amount: 28
+          - Index: 3
+            Item: Illusion_Fragment_GR
+            Rate: 1100
+            Amount: 29
+          - Index: 4
+            Item: Illusion_Fragment_GR
+            Rate: 1000
+            Amount: 30
+          - Index: 5
+            Item: Illusion_Fragment_GR
+            Rate: 850
+            Amount: 31
+          - Index: 6
+            Item: Illusion_Fragment_GR
+            Rate: 750
+            Amount: 32
+          - Index: 7
+            Item: Illusion_Fragment_GR
+            Rate: 650
+            Amount: 33
+          - Index: 8
+            Item: Illusion_Fragment_GR
+            Rate: 550
+            Amount: 34
+          - Index: 9
+            Item: Illusion_Fragment_GR
+            Rate: 450
+            Amount: 35
+          - Index: 10
+            Item: Illusion_Fragment_GR
+            Rate: 350
+            Amount: 36
+          - Index: 11
+            Item: Illusion_Fragment_GR
+            Rate: 250
+            Amount: 37
+          - Index: 12
+            Item: Illusion_Fragment_GR
+            Rate: 150
+            Amount: 38
+  - Group: MD_FRAGMENT_BOX_BK
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Illusion_Fragment_BK
+            Rate: 1400
+            Amount: 26
+          - Index: 1
+            Item: Illusion_Fragment_BK
+            Rate: 1300
+            Amount: 27
+          - Index: 2
+            Item: Illusion_Fragment_BK
+            Rate: 1200
+            Amount: 28
+          - Index: 3
+            Item: Illusion_Fragment_BK
+            Rate: 1100
+            Amount: 29
+          - Index: 4
+            Item: Illusion_Fragment_BK
+            Rate: 1000
+            Amount: 30
+          - Index: 5
+            Item: Illusion_Fragment_BK
+            Rate: 850
+            Amount: 31
+          - Index: 6
+            Item: Illusion_Fragment_BK
+            Rate: 750
+            Amount: 32
+          - Index: 7
+            Item: Illusion_Fragment_BK
+            Rate: 650
+            Amount: 33
+          - Index: 8
+            Item: Illusion_Fragment_BK
+            Rate: 550
+            Amount: 34
+          - Index: 9
+            Item: Illusion_Fragment_BK
+            Rate: 450
+            Amount: 35
+          - Index: 10
+            Item: Illusion_Fragment_BK
+            Rate: 350
+            Amount: 36
+          - Index: 11
+            Item: Illusion_Fragment_BK
+            Rate: 250
+            Amount: 37
+          - Index: 12
+            Item: Illusion_Fragment_BK
+            Rate: 150
+            Amount: 38
+  - Group: CH1_MD_REWARD_1
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Ch1_Root_Coin
+            Amount: 20
+          - Index: 1
+            Item: Ch1_Mana_Ring
+            Amount: 10
+          - Index: 2
+            Item: MD_Fragment_Box_BL
+  - Group: CH1_MD_REWARD_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Ch1_Root_Coin
+            Amount: 40
+          - Index: 1
+            Item: Ch1_Mana_Ring
+            Amount: 20
+          - Index: 2
+            Item: MD_Fragment_Box_BL
+          - Index: 3
+            Item: MD_Fragment_Box_YL
+  - Group: CH1_MD_REWARD_3
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Ch1_Root_Coin
+            Amount: 60
+          - Index: 1
+            Item: Ch1_Mana_Ring
+            Amount: 30
+          - Index: 2
+            Item: MD_Fragment_Box_BL
+          - Index: 3
+            Item: MD_Fragment_Box_YL
+          - Index: 4
+            Item: MD_Fragment_Box_GR
+  - Group: CH1_MD_REWARD_4
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Ch1_Root_Coin
+            Amount: 100
+          - Index: 1
+            Item: Ch1_Mana_Ring
+            Amount: 50
+          - Index: 2
+            Item: MD_Fragment_Box_BL
+          - Index: 3
+            Item: MD_Fragment_Box_YL
+          - Index: 4
+            Item: MD_Fragment_Box_GR
+          - Index: 5
+            Item: MD_Fragment_Box_BK
+  - Group: COMP_AID_BUFF_BOX_
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Premium_Box
+  - Group: COSTUMEMILEPACK_38_1
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 100
+          - Index: 1
+            Item: Evt_Cos_Coin
+            Amount: 12
+          - Index: 2
+            Item: aegis_103909
+            Amount: 3
+  - Group: COSTUMEMILEPACK_38_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 200
+          - Index: 1
+            Item: Evt_Cos_Coin
+            Amount: 25
+          - Index: 2
+            Item: aegis_103909
+            Amount: 5
+  - Group: COSTUMEMILEPACK_38_3
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 400
+          - Index: 1
+            Item: Evt_Cos_Coin
+            Amount: 50
+          - Index: 2
+            Item: aegis_103909
+            Amount: 10
+  - Group: HANMAC_COLLABO_1
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_EXP_Drop_Up_3days
+          - Index: 1
+            Item: Comp_AID_Buff_Box
+          - Index: 2
+            Item: CLB_HM_Masitta
+            Amount: 10
+          - Index: 3
+            Item: CLB_HM_PC_Onion
+            Amount: 10
+          - Index: 4
+            Item: CLB_HM_DubleBurger
+            Amount: 5
+  - Group: HANMAC_COLLABO_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_EXP_Drop_Up_5days
+          - Index: 1
+            Item: Comp_AID_Buff_Box
+          - Index: 2
+            Item: CLB_HM_Masitta
+            Amount: 20
+          - Index: 3
+            Item: CLB_HM_PC_Onion
+            Amount: 20
+          - Index: 4
+            Item: CLB_HM_DubleBurger
+            Amount: 10
+  - Group: AEGIS_104386
+    SubGroups:
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: CLB_HM_Card_PP
+            Rate: 2500
+          - Index: 1
+            Item: CLB_HM_Card_PK
+            Rate: 2500
+          - Index: 2
+            Item: CLB_HM_Card_GR
+            Rate: 2500
+          - Index: 3
+            Item: CLB_HM_Card_WE
+            Rate: 2500
+  - Group: RT_EP19_SNOWFLOWER_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 60
+  - Group: RT_EP19_SNOWFLOWER_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Blacksmith_Blessing
+          - Index: 1
+            Item: aegis_1001478
+            Amount: 2
+  - Group: RT_EP19_GLACIER_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 60
+  - Group: RT_EP19_GLACIER_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Blacksmith_Blessing
+          - Index: 1
+            Item: aegis_1001478
+            Amount: 2
+  - Group: RT_EP19_GLACIER_3
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+  - Group: RT_EP19_GLACIER_5
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Blacksmith_Blessing
+          - Index: 1
+            Item: aegis_1001478
+  - Group: RT_EP19_ULRALI_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 80
+  - Group: RT_EP19_ULRALI_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+            Amount: 5
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 2
+            Item: aegis_1001480
+            Amount: 5
+  - Group: RT_EP19_JUNCEA_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 120
+  - Group: RT_EP19_JUNCEA_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 250
+          - Index: 2
+            Item: aegis_1001480
+            Amount: 5
+  - Group: RT_EP19_SNOWFIELD_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 90
+  - Group: RT_EP19_SNOWFIELD_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 90
+          - Index: 2
+            Item: aegis_1001478
+            Amount: 2
+  - Group: RT_EP19_SNOWFIELD_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: aegis_1001478
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 90
+  - Group: RT_EP19_FAMILY_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 90
+  - Group: RT_EP19_FAMILY_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 120
+          - Index: 2
+            Item: aegis_1001478
+            Amount: 2
+  - Group: RT_EP19_FAMILY_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: aegis_1001478
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 80
+  - Group: RT_EP19_IRRITATION_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 90
+  - Group: RT_EP19_IRRITATION_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 100
+          - Index: 1
+            Item: aegis_1001478
+            Amount: 2
+  - Group: RT_EP19_BASEMENT_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 90
+  - Group: RT_EP19_BASEMENT_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: aegis_1001478
+            Amount: 2
+          - Index: 1
+            Item: Perfect_Rune
+  - Group: RT_EP19_RGAN_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 90
+  - Group: RT_EP19_RGAN_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: aegis_1001478
+            Amount: 3
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 2
+            Item: Blacksmith_Blessing
+  - Group: RT_EP19_RGAN_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: aegis_1001478
+            Amount: 2
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 100
+  - Group: RT_EP19_RABRE_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 90
+  - Group: RT_EP19_RABRE_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: aegis_1001478
+            Amount: 2
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 2
+            Item: Blacksmith_Blessing
+            Amount: 150
+  - Group: RT_EP19_RABRE_3
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: aegis_1001478
+            Amount: 2
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 100
+  - Group: RT_EP20_GLACIER_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 70
+  - Group: RT_EP20_GLACIER_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Blacksmith_Blessing
+          - Index: 1
+            Item: aegis_1001478
+            Amount: 2
+  - Group: RT_EP20_SANCTUARY_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 120
+  - Group: RT_EP20_SANCTUARY_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+            Amount: 2
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 250
+          - Index: 2
+            Item: aegis_1001480
+            Amount: 5
+  - Group: RT_EP20_SANCTUARY_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 1
+            Item: aegis_1001480
+  - Group: RT_EP20_PREDATOR_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 120
+  - Group: RT_EP20_PREDATOR_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+            Amount: 2
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 200
+          - Index: 2
+            Item: aegis_1001480
+            Amount: 5
+  - Group: RT_EP20_GUARDIAN_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 70
+  - Group: RT_EP20_GUARDIAN_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 120
+          - Index: 1
+            Item: aegis_1001478
+            Amount: 2
+  - Group: RT_EP20_GUARDIAN_3
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: aegis_1001478
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 80
+  - Group: RT_EP20_SANGEL_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 110
+  - Group: RT_EP20_SANGEL_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+            Amount: 2
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 220
+          - Index: 2
+            Item: aegis_1001480
+            Amount: 5
+  - Group: RT_EP20_SANGEL_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 150
+          - Index: 1
+            Item: aegis_1001480
+  - Group: RT_EP20_DAY_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 70
+  - Group: RT_EP20_DAY_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: aegis_1001478
+            Amount: 2
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 120
+  - Group: RT_EP20_RETIRE_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 70
+  - Group: RT_EP20_RETIRE_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 120
+          - Index: 1
+            Item: aegis_1001478
+            Amount: 2
+          - Index: 2
+            Item: Blacksmith_Blessing
+  - Group: RT_EP20_RETIRE_2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 70
+          - Index: 1
+            Item: aegis_1001478
+  - Group: RT_EP20_RETIRE_4
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 100
+          - Index: 1
+            Item: aegis_1001478
+  - Group: RT_EP20_ROOTS_A
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Perfect_Rune
+          - Index: 1
+            Item: Imperfect_Rune
+            Amount: 70
+  - Group: RT_EP20_ROOTS_C
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 120
+          - Index: 1
+            Item: aegis_1001478
+            Amount: 2
+          - Index: 2
+            Item: Blacksmith_Blessing
+  - Group: RT_EP20_ROOTS_3
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 70
+          - Index: 1
+            Item: aegis_1001478
+  - Group: RT_EP20_ROOTS_5
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Imperfect_Rune
+            Amount: 100
+          - Index: 1
+            Item: aegis_1001478
+            Amount: 2
+  - Group: AEGIS_104501
+    SubGroups:
+      - SubGroup: 6
+        List:
+          - Index: 0
+            Item: Greed_Stone
+            Rate: 5
+          - Index: 1
+            Item: Range_Stone_Robe_D
+            Rate: 10
+          - Index: 2
+            Item: Melee_Stone_Robe_D
+            Rate: 10
+          - Index: 3
+            Item: Magic_Stone_Robe_D
+            Rate: 10
+          - Index: 4
+            Item: SmatkStone_Robe
+            Rate: 11
+          - Index: 5
+            Item: M_PATKStone_Robe
+            Rate: 11
+          - Index: 6
+            Item: R_PATKStone_Robe
+            Rate: 11
+          - Index: 7
+            Item: ResistDefStone_Robe
+            Rate: 11
+          - Index: 8
+            Item: aegis_1001938
+            Rate: 11
+          - Index: 9
+            Item: StaminaWISStone_Robe_D
+            Rate: 10
+          - Index: 10
+            Item: POWStone_Robe_D
+            Rate: 10
+          - Index: 11
+            Item: SplStone_Robe_D
+            Rate: 10
+          - Index: 12
+            Item: ConStone_Robe_D
+            Rate: 10
+          - Index: 13
+            Item: CrtStone_Robe_D
+            Rate: 10
+          - Index: 14
+            Item: aegis_1002108
+            Rate: 10
+          - Index: 15
+            Item: aegis_1002099
+            Rate: 10
+          - Index: 16
+            Item: aegis_1002103
+            Rate: 10
+          - Index: 17
+            Item: aegis_1002107
+            Rate: 10
+          - Index: 18
+            Item: ReloadStone_Robe_D
+            Rate: 10
+          - Index: 19
+            Item: CriticalStone_Robe_D
+            Rate: 10
+          - Index: 20
+            Item: DoubleAttack_Stone
+            Rate: 20
+          - Index: 21
+            Item: Critical_Stone_Robe
+            Rate: 20
+          - Index: 22
+            Item: CastStone_Robe_D
+            Rate: 40
+          - Index: 23
+            Item: SPdrainStone_Robe_D
+            Rate: 40
+          - Index: 24
+            Item: HPdrainStone_Robe_D
+            Rate: 80
+          - Index: 25
+            Item: ASPDStone_Robe_D
+            Rate: 80
+          - Index: 26
+            Item: CastStone_Robe
+            Rate: 80
+          - Index: 27
+            Item: aegis_1002096
+            Rate: 80
+          - Index: 28
+            Item: aegis_1002097
+            Rate: 80
+          - Index: 29
+            Item: aegis_1002098
+            Rate: 80
+          - Index: 30
+            Item: aegis_1002100
+            Rate: 80
+          - Index: 31
+            Item: aegis_1002101
+            Rate: 80
+          - Index: 32
+            Item: aegis_1002102
+            Rate: 80
+          - Index: 33
+            Item: aegis_1002104
+            Rate: 80
+          - Index: 34
+            Item: aegis_1002105
+            Rate: 80
+          - Index: 35
+            Item: aegis_1002106
+            Rate: 80
+          - Index: 36
+            Item: Stone_Robe_Box
+            Rate: 160
+          - Index: 37
+            Item: Stone_Robe3_Box
+            Rate: 160
+          - Index: 38
+            Item: Magic_Stone_Top
+            Rate: 200
+          - Index: 39
+            Item: Magic_Stone_Middle
+            Rate: 200
+          - Index: 40
+            Item: Magic_Stone_Bottom
+            Rate: 200
+          - Index: 41
+            Item: Range_Stone_Top
+            Rate: 200
+          - Index: 42
+            Item: Range_Stone
+            Rate: 200
+          - Index: 43
+            Item: Range_Stone_Bottom
+            Rate: 200
+          - Index: 44
+            Item: Melee_Stone_Top
+            Rate: 200
+          - Index: 45
+            Item: Melee_Stone_Middle
+            Rate: 200
+          - Index: 46
+            Item: Melee_Stone_Bottom
+            Rate: 200
+          - Index: 47
+            Item: DefenseStone_Top
+            Rate: 200
+          - Index: 48
+            Item: DefenseStone_Middle
+            Rate: 200
+          - Index: 49
+            Item: DefenseStone_Bottom
+            Rate: 200
+          - Index: 50
+            Item: ReloadStone_Top
+            Rate: 200
+          - Index: 51
+            Item: ReloadStone_Middle
+            Rate: 200
+          - Index: 52
+            Item: ReloadStone_Bottom
+            Rate: 200
+          - Index: 53
+            Item: EXPStone_Middle
+            Rate: 200
+          - Index: 54
+            Item: EXPStone_Bottom
+            Rate: 200
+          - Index: 55
+            Item: EXPStone_Top
+            Rate: 200
+          - Index: 56
+            Item: Stone_Top_Box
+            Rate: 400
+          - Index: 57
+            Item: Stone_Top2_Box
+            Rate: 400
+          - Index: 58
+            Item: Stone_Middle_Box
+            Rate: 400
+          - Index: 59
+            Item: Stone_Middle2_Box
+            Rate: 400
+          - Index: 60
+            Item: Stone_Bottom_Box
+            Rate: 400
+          - Index: 61
+            Item: Stone_Bottom2_Box
+            Rate: 400
+          - Index: 62
+            Item: CastingStone_Top
+            Rate: 400
+          - Index: 63
+            Item: CastingStone_Middle
+            Rate: 400
+          - Index: 64
+            Item: CastingStone_Bottom
+            Rate: 400
+          - Index: 65
+            Item: Critical_Stone
+            Rate: 400
+          - Index: 66
+            Item: Critical_Stone_Top
+            Rate: 400
+          - Index: 67
+            Item: Critical_Stone_Bottom
+            Rate: 400
+  - Group: HANMAC_COLLABO_1S
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_EXP_Drop_Up_3days
+          - Index: 1
+            Item: Comp_AID_Buff_Box
+          - Index: 2
+            Item: CLB_HM_Masitta
+            Amount: 10
+          - Index: 3
+            Item: CLB_HM_PC_Onion
+            Amount: 10
+          - Index: 4
+            Item: CLB_HM_DubleBurger
+            Amount: 5
+  - Group: HANMAC_COLLABO_2S
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: E_EXP_Drop_Up_5days
+          - Index: 1
+            Item: Comp_AID_Buff_Box
+          - Index: 2
+            Item: CLB_HM_Masitta
+            Amount: 20
+          - Index: 3
+            Item: CLB_HM_PC_Onion
+            Amount: 20
+          - Index: 4
+            Item: CLB_HM_DubleBurger
+            Amount: 10
+  - Group: LI_A_HD_ELUNIUM_BOX2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: HD_Elunium
+            Amount: 52
+          - Index: 1
+            Item: Mental_Potion
+            Amount: 12
+          - Index: 2
+            Item: K_Secret_Key
+            Amount: 20
+          - Index: 3
+            Item: Shadow_Refine_Hammer
+            Amount: 8
+          - Index: 4
+            Item: S_Enchant_Essence
+            Amount: 5
+  - Group: LI_A_HD_ORIDECON_BOX2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: HD_Oridecon
+            Amount: 52
+          - Index: 1
+            Item: Mental_Potion
+            Amount: 12
+          - Index: 2
+            Item: K_Secret_Key
+            Amount: 20
+          - Index: 3
+            Item: Shadow_Refine_Hammer
+            Amount: 8
+          - Index: 4
+            Item: S_Enchant_Essence
+            Amount: 5
+  - Group: LI_A_ELUNIUM_BOX2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Enriched_Elunium
+            Amount: 200
+          - Index: 1
+            Item: K_Secret_Key
+            Amount: 20
+          - Index: 2
+            Item: Shadow_Refine_Hammer
+            Amount: 8
+          - Index: 3
+            Item: S_Enchant_Essence
+            Amount: 5
+  - Group: LI_A_ORIDECON_BOX2
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Enriched_Oridecon
+            Amount: 200
+          - Index: 1
+            Item: K_Secret_Key
+            Amount: 20
+          - Index: 2
+            Item: Shadow_Refine_Hammer
+            Amount: 8
+          - Index: 3
+            Item: S_Enchant_Essence
+            Amount: 5
+  - Group: LI_NYANGVINE_BOX1_39
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 100
+          - Index: 1
+            Item: aegis_104501
+            Amount: 2
+          - Index: 2
+            Item: Comp_Bubble_Gum
+            Amount: 3
+  - Group: LI_NYANGVINE_BOX2_39
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 200
+          - Index: 1
+            Item: Battle_Manual100
+            Amount: 2
+          - Index: 2
+            Item: aegis_104501
+            Amount: 5
+  - Group: LI_NYANGVINE_BOX3_39
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Nyangvine_Fruit
+            Amount: 400
+          - Index: 1
+            Item: Comp_Bubble_Gum
+            Amount: 5
+          - Index: 2
+            Item: Battle_Manual100
+            Amount: 5
+          - Index: 3
+            Item: aegis_104501
+            Amount: 10
+  - Group: MYSTERIOUS_EGG
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Lucky_Egg_C
+            Rate: 10
+          - Index: 1
+            Item: Lucky_Egg_C2
+            Rate: 10
+          - Index: 2
+            Item: Lucky_Egg_C3
+            Rate: 10
+          - Index: 3
+            Item: Lucky_Egg_C4
+            Rate: 10
+          - Index: 4
+            Item: Lucky_Egg_C5
+            Rate: 10
+          - Index: 5
+            Item: Lucky_Egg_C6
+            Rate: 10
+  - Group: OLD_EQUIPMENT_BOX
+    SubGroups:
+      - SubGroup: 0
+        Algorithm: All
+        List:
+          - Index: 0
+            Item: Sandals
+  - Group: SIEGE_KIT_BOX
+    SubGroups:
+      - SubGroup: 1
+        List:
+          - Index: 0
+            Item: Frost_Giant_Blood
+            Rate: 1
+          - Index: 1
+            Item: Golem_Stone
+            Rate: 1
+          - Index: 2
+            Item: Elf_Tear_Stun
+            Rate: 4
+          - Index: 3
+            Item: Elf_Tear_Stone_Curse
+            Rate: 4
+          - Index: 4
+            Item: Elf_Tear_Freezing
+            Rate: 4
+          - Index: 5
+            Item: Elf_Tear_Sleep
+            Rate: 4
+          - Index: 6
+            Item: Elf_Tear_Curse
+            Rate: 4
+          - Index: 7
+            Item: Elf_Tear_Silence
+            Rate: 4
+          - Index: 8
+            Item: Elf_Tear_Blind
+            Rate: 4
+          - Index: 9
+            Item: Old_Card_Album
+            Rate: 1
+          - Index: 10
+            Item: Union_Of_Tribe
+            Rate: 1
+          - Index: 11
+            Item: Bloody_Dead_Branch
+            Rate: 1
+          - Index: 12
+            Item: Sg_White_Potion_Box
+            Rate: 28
+          - Index: 13
+            Item: Sg_Violet_Potion_Box
+            Rate: 28
+          - Index: 14
+            Item: Sg_Blue_Potion_Box
+            Rate: 28
+          - Index: 15
+            Item: Old_Blue_Box
+            Rate: 30
+          - Index: 16
+            Item: Old_Violet_Box
+            Rate: 30
+          - Index: 17
+            Item: Snow_Flip
+            Rate: 7
+          - Index: 18
+            Item: Peony_Mommy
+            Rate: 7
+          - Index: 19
+            Item: Slapping_Herb
+            Rate: 7
+          - Index: 20
+            Item: Yggdrasil_Dust
+            Rate: 7
+      - SubGroup: 2
+        List:
+          - Index: 0
+            Item: Frost_Giant_Blood
+            Rate: 1
+          - Index: 1
+            Item: Golem_Stone
+            Rate: 1
+          - Index: 2
+            Item: Elf_Tear_Stun
+            Rate: 4
+          - Index: 3
+            Item: Elf_Tear_Stone_Curse
+            Rate: 4
+          - Index: 4
+            Item: Elf_Tear_Freezing
+            Rate: 4
+          - Index: 5
+            Item: Elf_Tear_Sleep
+            Rate: 4
+          - Index: 6
+            Item: Elf_Tear_Curse
+            Rate: 4
+          - Index: 7
+            Item: Elf_Tear_Silence
+            Rate: 4
+          - Index: 8
+            Item: Elf_Tear_Blind
+            Rate: 4
+          - Index: 9
+            Item: Old_Card_Album
+            Rate: 1
+          - Index: 10
+            Item: Union_Of_Tribe
+            Rate: 1
+          - Index: 11
+            Item: Bloody_Dead_Branch
+            Rate: 1
+          - Index: 12
+            Item: Sg_White_Potion_Box
+            Rate: 28
+          - Index: 13
+            Item: Sg_Violet_Potion_Box
+            Rate: 28
+          - Index: 14
+            Item: Sg_Blue_Potion_Box
+            Rate: 28
+          - Index: 15
+            Item: Old_Blue_Box
+            Rate: 30
+          - Index: 16
+            Item: Old_Violet_Box
+            Rate: 30
+          - Index: 17
+            Item: Snow_Flip
+            Rate: 7
+          - Index: 18
+            Item: Peony_Mommy
+            Rate: 7
+          - Index: 19
+            Item: Slapping_Herb
+            Rate: 7
+          - Index: 20
+            Item: Yggdrasil_Dust
+            Rate: 7
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Frost_Giant_Blood
+            Rate: 1
+          - Index: 1
+            Item: Golem_Stone
+            Rate: 1
+          - Index: 2
+            Item: Elf_Tear_Stun
+            Rate: 4
+          - Index: 3
+            Item: Elf_Tear_Stone_Curse
+            Rate: 4
+          - Index: 4
+            Item: Elf_Tear_Freezing
+            Rate: 4
+          - Index: 5
+            Item: Elf_Tear_Sleep
+            Rate: 4
+          - Index: 6
+            Item: Elf_Tear_Curse
+            Rate: 4
+          - Index: 7
+            Item: Elf_Tear_Silence
+            Rate: 4
+          - Index: 8
+            Item: Elf_Tear_Blind
+            Rate: 4
+          - Index: 9
+            Item: Old_Card_Album
+            Rate: 1
+          - Index: 10
+            Item: Union_Of_Tribe
+            Rate: 1
+          - Index: 11
+            Item: Bloody_Dead_Branch
+            Rate: 1
+          - Index: 12
+            Item: Sg_White_Potion_Box
+            Rate: 28
+          - Index: 13
+            Item: Sg_Violet_Potion_Box
+            Rate: 28
+          - Index: 14
+            Item: Sg_Blue_Potion_Box
+            Rate: 28
+          - Index: 15
+            Item: Old_Blue_Box
+            Rate: 30
+          - Index: 16
+            Item: Old_Violet_Box
+            Rate: 30
+          - Index: 17
+            Item: Snow_Flip
+            Rate: 7
+          - Index: 18
+            Item: Peony_Mommy
+            Rate: 7
+          - Index: 19
+            Item: Slapping_Herb
+            Rate: 7
+          - Index: 20
+            Item: Yggdrasil_Dust
+            Rate: 7
+  - Group: WEAPON_BOX_SPEAR
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Skewer
+            Rate: 1
+          - Index: 1
+            Item: Tjungkuletti
+            Rate: 1
+          - Index: 2
+            Item: Pole_Axe
+            Rate: 12
+          - Index: 3
+            Item: Gungnir
+            Rate: 12
+          - Index: 4
+            Item: Long_Horn
+            Rate: 1
+          - Index: 5
+            Item: Battle_Hook
+            Rate: 1
+          - Index: 6
+            Item: Hunting_Spear
+            Rate: 1
+          - Index: 7
+            Item: Crescent_Scythe
+            Rate: 1
+          - Index: 8
+            Item: Bill_Guisarme
+            Rate: 1
+          - Index: 9
+            Item: Zephyrus
+            Rate: 1
+          - Index: 10
+            Item: Longinus's_Spear
+            Rate: 1
+          - Index: 11
+            Item: Brionac
+            Rate: 1
+          - Index: 12
+            Item: Hell_Fire
+            Rate: 1
+          - Index: 13
+            Item: Gae_Bolg
+            Rate: 1
+          - Index: 14
+            Item: Spectral_Spear
+            Rate: 1
+          - Index: 15
+            Item: Ivory_Lance
+            Rate: 1
+          - Index: 16
+            Item: Cardo
+            Rate: 1
+          - Index: 17
+            Item: Battle_Fork
+            Rate: 12
+          - Index: 18
+            Item: Ahlspiess
+            Rate: 12
+  - Group: WEAPON_BOX_MACE
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Golden_Mace
+            Rate: 7
+          - Index: 1
+            Item: Long_Mace
+            Rate: 7
+          - Index: 2
+            Item: Slash
+            Rate: 1
+          - Index: 3
+            Item: Quadrille
+            Rate: 1
+          - Index: 4
+            Item: Grand_Cross
+            Rate: 1
+          - Index: 5
+            Item: Iron_Driver
+            Rate: 1
+          - Index: 6
+            Item: Spanner
+            Rate: 1
+          - Index: 7
+            Item: Nemesis
+            Rate: 7
+          - Index: 8
+            Item: Lunakaligo
+            Rate: 7
+          - Index: 9
+            Item: Veteran_Hammer
+            Rate: 7
+          - Index: 10
+            Item: Erde
+            Rate: 7
+          - Index: 11
+            Item: Red_Square_Bag
+            Rate: 7
+          - Index: 12
+            Item: Carga_Mace
+            Rate: 7
+          - Index: 13
+            Item: Red_Ether_Bag
+            Rate: 7
+          - Index: 14
+            Item: Bloody_Cross
+            Rate: 1
+  - Group: WEAPON_BOX_DAGGER
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Forturn_Sword
+            Rate: 1
+          - Index: 1
+            Item: Sword_Breaker
+            Rate: 1
+          - Index: 2
+            Item: Mail_Breaker
+            Rate: 1
+          - Index: 3
+            Item: Weeder_Knife
+            Rate: 6
+          - Index: 4
+            Item: Combat_Knife
+            Rate: 1
+          - Index: 5
+            Item: Mama's_Knife
+            Rate: 6
+          - Index: 6
+            Item: House_Auger
+            Rate: 1
+          - Index: 7
+            Item: Bazerald
+            Rate: 1
+          - Index: 8
+            Item: Assasin_Dagger
+            Rate: 6
+          - Index: 9
+            Item: Exercise
+            Rate: 1
+          - Index: 10
+            Item: Moonlight_Sword
+            Rate: 1
+          - Index: 11
+            Item: Azoth
+            Rate: 1
+          - Index: 12
+            Item: Sucsamad
+            Rate: 1
+          - Index: 13
+            Item: Grimtooth_
+            Rate: 1
+          - Index: 14
+            Item: Zeny_Knife
+            Rate: 1
+          - Index: 15
+            Item: Poison_Knife
+            Rate: 6
+          - Index: 16
+            Item: Cursed_Dagger
+            Rate: 6
+          - Index: 17
+            Item: Counter_Dagger
+            Rate: 6
+          - Index: 18
+            Item: Dragon_Killer
+            Rate: 6
+          - Index: 19
+            Item: Ginnungagap
+            Rate: 6
+          - Index: 20
+            Item: Tooth_Blade
+            Rate: 1
+          - Index: 21
+            Item: Twilight_Desert
+            Rate: 1
+          - Index: 22
+            Item: Sandstorm
+            Rate: 1
+          - Index: 23
+            Item: Dagger_Of_Hunter
+            Rate: 1
+          - Index: 24
+            Item: Ivory_Knife
+            Rate: 1
+          - Index: 25
+            Item: Krieg
+            Rate: 1
+          - Index: 26
+            Item: Weihna
+            Rate: 1
+          - Index: 27
+            Item: Black_Wing
+            Rate: 1
+          - Index: 28
+            Item: Ancient_Dagger
+            Rate: 1
+          - Index: 29
+            Item: Aztoe_Nail
+            Rate: 1
+          - Index: 30
+            Item: Scarletto_Nail
+            Rate: 1
+  - Group: WEAPON_BOX_AXE
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Cleaver
+            Rate: 1
+          - Index: 1
+            Item: War_Axe
+            Rate: 1
+          - Index: 2
+            Item: Vecer_Axe
+            Rate: 1
+          - Index: 3
+            Item: Right_Epsilon
+            Rate: 1
+          - Index: 4
+            Item: Brood_Axe
+            Rate: 2
+          - Index: 5
+            Item: Great_Axe
+            Rate: 1
+          - Index: 6
+            Item: Sabbath
+            Rate: 1
+          - Index: 7
+            Item: Slaughter
+            Rate: 1
+          - Index: 8
+            Item: Tomahawk
+            Rate: 1
+          - Index: 9
+            Item: Guillotine
+            Rate: 1
+          - Index: 10
+            Item: Doom_Slayer
+            Rate: 1
+          - Index: 11
+            Item: Berdysz
+            Rate: 1
+          - Index: 12
+            Item: Heart_Breaker
+            Rate: 1
+          - Index: 13
+            Item: Hurricane_Fury
+            Rate: 1
+          - Index: 14
+            Item: Veteran_Axe
+            Rate: 1
+          - Index: 15
+            Item: Giant_Axe
+            Rate: 1
+          - Index: 16
+            Item: Ygnus_Stale
+            Rate: 1
+          - Index: 17
+            Item: End_Sektura
+            Rate: 1
+  - Group: WEAPON_BOX_BOW
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Bow_Of_Rudra
+            Rate: 1
+          - Index: 1
+            Item: Balistar
+            Rate: 1
+          - Index: 2
+            Item: Luna_Bow
+            Rate: 5
+          - Index: 3
+            Item: Dragon_Wing
+            Rate: 5
+          - Index: 4
+            Item: Burning_Bow
+            Rate: 5
+          - Index: 5
+            Item: Frozen_Bow
+            Rate: 5
+          - Index: 6
+            Item: Earth_Bow
+            Rate: 5
+          - Index: 7
+            Item: Gust_Bow
+            Rate: 5
+          - Index: 8
+            Item: Orc_Archer_Bow
+            Rate: 5
+          - Index: 9
+            Item: Double_Bound
+            Rate: 5
+          - Index: 10
+            Item: Ixion_Wing
+            Rate: 5
+          - Index: 11
+            Item: Nepenthes_Bow
+            Rate: 5
+          - Index: 12
+            Item: Cursed_Lyre
+            Rate: 5
+          - Index: 13
+            Item: Falken_Blitz
+            Rate: 5
+          - Index: 14
+            Item: Catapult
+            Rate: 1
+          - Index: 15
+            Item: Big_CrossBow
+            Rate: 1
+          - Index: 16
+            Item: Creeper_Bow
+            Rate: 1
+  - Group: WEAPON_BOX_SWORD
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Haedonggum
+            Rate: 3
+          - Index: 1
+            Item: Nagan
+            Rate: 3
+          - Index: 2
+            Item: Ice_Falchon
+            Rate: 3
+          - Index: 3
+            Item: Edge
+            Rate: 3
+          - Index: 4
+            Item: Fire_Brand
+            Rate: 3
+          - Index: 5
+            Item: Scissores_Sword
+            Rate: 3
+          - Index: 6
+            Item: Cutlas
+            Rate: 3
+          - Index: 7
+            Item: Solar_Sword
+            Rate: 3
+          - Index: 8
+            Item: Excalibur
+            Rate: 1
+          - Index: 9
+            Item: Mysteltainn_
+            Rate: 1
+          - Index: 10
+            Item: Tale_Fing_
+            Rate: 1
+          - Index: 11
+            Item: Byeorrun_Gum
+            Rate: 3
+          - Index: 12
+            Item: Immaterial_Sword
+            Rate: 3
+          - Index: 13
+            Item: Jewel_Sword
+            Rate: 3
+          - Index: 14
+            Item: Gaia_Sword
+            Rate: 3
+          - Index: 15
+            Item: Sasimi
+            Rate: 3
+          - Index: 16
+            Item: Holy_Avenger
+            Rate: 3
+          - Index: 17
+            Item: Muramasa
+            Rate: 3
+          - Index: 18
+            Item: Masamune
+            Rate: 3
+          - Index: 19
+            Item: Dragon_Slayer
+            Rate: 3
+          - Index: 20
+            Item: Schweizersabel
+            Rate: 3
+          - Index: 21
+            Item: Zweihander
+            Rate: 3
+          - Index: 22
+            Item: Executioner_
+            Rate: 1
+          - Index: 23
+            Item: Katzbalger
+            Rate: 1
+          - Index: 24
+            Item: Altas_Weapon
+            Rate: 1
+          - Index: 25
+            Item: Muscle_Cutter
+            Rate: 1
+          - Index: 26
+            Item: Tae_Goo_Lyeon
+            Rate: 1
+          - Index: 27
+            Item: Bloody_Eater
+            Rate: 1
+          - Index: 28
+            Item: Death_Guidance
+            Rate: 1
+          - Index: 29
+            Item: Krasnaya
+            Rate: 1
+          - Index: 30
+            Item: Alca_Bringer
+            Rate: 1
+          - Index: 31
+            Item: Chrome_Twohand_Sword
+            Rate: 3
+          - Index: 32
+            Item: Chrome_Sword
+            Rate: 3
+          - Index: 33
+            Item: Twin_Edge_B
+            Rate: 1
+          - Index: 34
+            Item: Twin_Edge_R
+            Rate: 1
+          - Index: 35
+            Item: Elemental_Sword
+            Rate: 1
+          - Index: 36
+            Item: Ruber
+            Rate: 1
+          - Index: 37
+            Item: Violet_Fear
+            Rate: 1
+  - Group: WEAPON_BOX_FIST
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Horn_Of_Hilthrion
+            Rate: 10
+          - Index: 1
+            Item: Sura_Rampage
+            Rate: 10
+          - Index: 2
+            Item: Kaiser_Knuckle
+            Rate: 10
+          - Index: 3
+            Item: Berserk
+            Rate: 10
+          - Index: 4
+            Item: Claw_Of_Garm
+            Rate: 10
+          - Index: 5
+            Item: Combo_Battle_Glove
+            Rate: 10
+  - Group: WEAPON_BOX_BOOK
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Girl's_Diary
+            Rate: 10
+          - Index: 1
+            Item: Legacy_Of_Dragon
+            Rate: 10
+          - Index: 2
+            Item: Diary_Of_Great_Sage
+            Rate: 10
+          - Index: 3
+            Item: Hardback
+            Rate: 10
+          - Index: 4
+            Item: Encyclopedia
+            Rate: 10
+          - Index: 5
+            Item: Death_Note
+            Rate: 10
+          - Index: 6
+            Item: Principles_Of_Magic
+            Rate: 10
+          - Index: 7
+            Item: Ancient_Magic
+            Rate: 10
+  - Group: WEAPON_BOX_GUITAR
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Oriental_Lute
+            Rate: 10
+          - Index: 1
+            Item: Electronic_Guitar
+            Rate: 10
+          - Index: 2
+            Item: Base_Guitar
+            Rate: 10
+          - Index: 3
+            Item: Berserk_Guitar
+            Rate: 10
+          - Index: 4
+            Item: Cello
+            Rate: 10
+          - Index: 5
+            Item: Harp_Of_Nepenthes
+            Rate: 10
+  - Group: WEAPON_BOX_WHIP
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Lariat
+            Rate: 10
+          - Index: 1
+            Item: Rapture_Rose
+            Rate: 10
+          - Index: 2
+            Item: Chemeti
+            Rate: 10
+          - Index: 3
+            Item: Bladed_Whip
+            Rate: 10
+          - Index: 4
+            Item: Queen's_Whip
+            Rate: 10
+          - Index: 5
+            Item: Electric_Eel
+            Rate: 10
+          - Index: 6
+            Item: Sea_Witch_Foot
+            Rate: 10
+          - Index: 7
+            Item: Carrot_Whip
+            Rate: 10
+          - Index: 8
+            Item: Stem_Of_Nepenthes
+            Rate: 10
+          - Index: 9
+            Item: Whip_Of_Balance
+            Rate: 10
+  - Group: WEAPON_BOX_WAND
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Staff_Of_Soul
+            Rate: 7
+          - Index: 1
+            Item: Wizardy_Staff
+            Rate: 7
+          - Index: 2
+            Item: Staff_Of_Wing
+            Rate: 7
+          - Index: 3
+            Item: Survival_Rod
+            Rate: 7
+          - Index: 4
+            Item: Survival_Rod_
+            Rate: 7
+          - Index: 5
+            Item: Lich_Bone_Wand
+            Rate: 1
+          - Index: 6
+            Item: Piercing_Staff
+            Rate: 7
+          - Index: 7
+            Item: Walking_Stick
+            Rate: 7
+          - Index: 8
+            Item: Release_Of_Wish
+            Rate: 7
+          - Index: 9
+            Item: Holy_Stick
+            Rate: 7
+          - Index: 10
+            Item: Thorn_Staff
+            Rate: 1
+          - Index: 11
+            Item: Eraser
+            Rate: 1
+          - Index: 12
+            Item: Dead_Tree_Cane
+            Rate: 1
+          - Index: 13
+            Item: La'cryma_Stick
+            Rate: 1
+          - Index: 14
+            Item: Croce_Staff
+            Rate: 1
+          - Index: 15
+            Item: Destruction_Rod
+            Rate: 1
+          - Index: 16
+            Item: Divine_Cross
+            Rate: 1
+          - Index: 17
+            Item: Kronos
+            Rate: 1
+          - Index: 18
+            Item: Dea_Staff
+            Rate: 1
+          - Index: 19
+            Item: Mental_Stick
+            Rate: 1
+          - Index: 20
+            Item: Recovery_Light
+            Rate: 1
+  - Group: PET_TICKET_BOX
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Ticket_Incubus
+            Rate: 1
+          - Index: 1
+            Item: Pet_Exchange
+            Rate: 1
+  - Group: BRILLIANT_HAT_BOX
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Horn_Of_Succubus
+            Rate: 1
+          - Index: 1
+            Item: Inccubus_Horn
+            Rate: 1
+          - Index: 2
+            Item: Magestic_Goat_
+            Rate: 1
+          - Index: 3
+            Item: Sharp_Gear_
+            Rate: 1
+          - Index: 4
+            Item: Corsair_
+            Rate: 1
+          - Index: 5
+            Item: Valkyrie_Helm
+            Rate: 1
+          - Index: 6
+            Item: Crown_
+            Rate: 1
+          - Index: 7
+            Item: Tiara_
+            Rate: 1
+          - Index: 8
+            Item: Horn_Of_Succubus
+            Rate: 1
+          - Index: 9
+            Item: Inccubus_Horn
+            Rate: 1
+          - Index: 10
+            Item: Magestic_Goat_
+            Rate: 1
+          - Index: 11
+            Item: Sharp_Gear_
+            Rate: 1
+          - Index: 12
+            Item: Corsair_
+            Rate: 1
+          - Index: 13
+            Item: Valkyrie_Helm
+            Rate: 1
+          - Index: 14
+            Item: Crown_
+            Rate: 1
+          - Index: 15
+            Item: Tiara_
+            Rate: 1
+          - Index: 16
+            Item: Horn_Of_Succubus
+            Rate: 1
+          - Index: 17
+            Item: Inccubus_Horn
+            Rate: 1
+          - Index: 18
+            Item: Magestic_Goat_
+            Rate: 1
+          - Index: 19
+            Item: Sharp_Gear_
+            Rate: 1
+          - Index: 20
+            Item: Corsair_
+            Rate: 1
+          - Index: 21
+            Item: Valkyrie_Helm
+            Rate: 1
+          - Index: 22
+            Item: Crown_
+            Rate: 1
+          - Index: 23
+            Item: Tiara_
+            Rate: 1
+          - Index: 24
+            Item: Ancient_Gold_Deco
+            Rate: 1
+          - Index: 25
+            Item: Feather_Beret_
+            Rate: 1
+          - Index: 26
+            Item: Mask_Of_Ifrit
+            Rate: 1
+          - Index: 27
+            Item: Glory_FB_Hat
+            Rate: 1
+          - Index: 28
+            Item: Wanderer's_Sakkat
+            Rate: 1
+          - Index: 29
+            Item: K_Rabbit_Bonnet
+            Rate: 1
+          - Index: 30
+            Item: Evil_Marcher_Hat
+            Rate: 1
+          - Index: 31
+            Item: Wondering_Wolf_Helm
+            Rate: 1
+  - Group: CHEST_OF_DEATH
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: Soul_Of_Swordman
+            Rate: 10
+          - Index: 1
+            Item: Soul_Of_Merchant
+            Rate: 10
+          - Index: 2
+            Item: Soul_Of_Thief
+            Rate: 10
+          - Index: 3
+            Item: Soul_Of_Magicion
+            Rate: 10
+          - Index: 4
+            Item: Soul_Of_Archer
+            Rate: 10
+          - Index: 5
+            Item: Soul_Of_Acolyte
+            Rate: 10
+  - Group: SHADOW_CUBE_SAK
+    SubGroups:
+      - SubGroup: 6
+        Algorithm: Random
+        List:
+          - Index: 0
+            Item: S_Physical_Earring
+            Rate: 1
+          - Index: 1
+            Item: S_Physical_Weapon
+            Rate: 1
+          - Index: 2
+            Item: S_Physical_Pendant
+            Rate: 1
+          - Index: 3
+            Item: S_Magical_Earring
+            Rate: 1
+          - Index: 4
+            Item: S_Magical_Weapon
+            Rate: 1
+          - Index: 5
+            Item: S_Magical_Pendant
+            Rate: 1
+          - Index: 6
+            Item: S_Breezy_Armor
+            Rate: 1
+          - Index: 7
+            Item: S_Champion_Shoes
+            Rate: 1
+          - Index: 8
+            Item: S_Athena_Shield
+            Rate: 1
+          - Index: 9
+            Item: S_Immune_Armor
+            Rate: 1
+          - Index: 10
+            Item: S_Hard_Armor
+            Rate: 1
+          - Index: 11
+            Item: S_Ancient_Armor
+            Rate: 1
+          - Index: 12
+            Item: S_Critical_Armor
+            Rate: 1
+          - Index: 13
+            Item: S_Kingbird_Weapon
+            Rate: 1
+          - Index: 14
+            Item: S_Cri_Hit_Weapon
+            Rate: 1
+          - Index: 15
+            Item: S_Healing_Weapon
+            Rate: 1
+          - Index: 16
+            Item: S_Lucky_Weapon
+            Rate: 1
+          - Index: 17
+            Item: S_Power_Earring
+            Rate: 1
+          - Index: 18
+            Item: S_Int_Pendant
+            Rate: 1
+          - Index: 19
+            Item: S_Dexterous_Armor
+            Rate: 1
+          - Index: 20
+            Item: S_Vital_Shoes
+            Rate: 1
+          - Index: 21
+            Item: S_Athletic_Shield
+            Rate: 1
+          - Index: 22
+            Item: S_Lucky_Armor
+            Rate: 1
+          - Index: 23
+            Item: S_Power_Pendant
+            Rate: 1
+          - Index: 24
+            Item: S_Int_Earring
+            Rate: 1
+          - Index: 25
+            Item: S_Dexterous_Weapon
+            Rate: 1
+          - Index: 26
+            Item: S_Vital_Shield
+            Rate: 1
+          - Index: 27
+            Item: S_Athletic_Shoes
+            Rate: 1
+          - Index: 28
+            Item: S_Resist_Spell_Pendant
+            Rate: 1
+          - Index: 29
+            Item: S_Rapid_Pendant
+            Rate: 1
+          - Index: 30
+            Item: S_Caster_Pendant
+            Rate: 1
+          - Index: 31
+            Item: S_Hard_Earring
+            Rate: 1
+          - Index: 32
+            Item: S_Wise_Earring
+            Rate: 1
+          - Index: 33
+            Item: S_Athena_Earring
+            Rate: 1
+          - Index: 34
+            Item: S_Cranial_Shield
+            Rate: 1
+          - Index: 35
+            Item: S_Safeguard_Shield
+            Rate: 1
+          - Index: 36
+            Item: S_Brutal_Shield
+            Rate: 1
+          - Index: 37
+            Item: S_Gargantua_Shield
+            Rate: 1
+          - Index: 38
+            Item: S_Homers_Shield
+            Rate: 1
+          - Index: 39
+            Item: S_Dragoon_Shield
+            Rate: 1
+          - Index: 40
+            Item: S_Satanic_Shield
+            Rate: 1
+          - Index: 41
+            Item: S_Flameguard_Shield
+            Rate: 1
+          - Index: 42
+            Item: S_Requiem_Shield
+            Rate: 1
+          - Index: 43
+            Item: S_Cadi_Shield
+            Rate: 1
+          - Index: 44
+            Item: S_Bloody_Shoes
+            Rate: 1
+          - Index: 45
+            Item: S_Liberation_Shoes
+            Rate: 1
+          - Index: 46
+            Item: S_Chemical_Shoes
+            Rate: 1
+          - Index: 47
+            Item: S_Clamorous_Shoes
+            Rate: 1
+          - Index: 48
+            Item: S_Insecticide_Shoes
+            Rate: 1
+          - Index: 49
+            Item: S_Fisher_Shoes
+            Rate: 1
+          - Index: 50
+            Item: S_Seraphim_Shoes
+            Rate: 1
+          - Index: 51
+            Item: S_Beholder_Shoes
+            Rate: 1
+          - Index: 52
+            Item: S_Divine_Shoes
+            Rate: 1
+          - Index: 53
+            Item: S_Dragoon_Shoes
+            Rate: 1
+          - Index: 54
+            Item: S_Big_Armor
+            Rate: 1
+          - Index: 55
+            Item: S_Medium_Armor
+            Rate: 1
+          - Index: 56
+            Item: S_Small_Armor
+            Rate: 1
+          - Index: 57
+            Item: S_Big_Weapon
+            Rate: 1
+          - Index: 58
+            Item: S_Medium_Weapon
+            Rate: 1
+          - Index: 59
+            Item: S_Small_Weapon
+            Rate: 1
+          - Index: 60
+            Item: S_Spiritual_Weapon
+            Rate: 1
+          - Index: 61
+            Item: S_Spiritual_Earring
+            Rate: 1
+          - Index: 62
+            Item: S_Spiritual_Pendent
+            Rate: 1
+          - Index: 63
+            Item: S_Malicious_Armor
+            Rate: 1
+          - Index: 64
+            Item: S_Malicious_Shoes
+            Rate: 1
+          - Index: 65
+            Item: S_Malicious_Shield
+            Rate: 1
+          - Index: 66
+            Item: S_Gemstone_Armor
+            Rate: 1
+          - Index: 67
+            Item: S_Gemstone_Shoes
+            Rate: 1
+          - Index: 68
+            Item: S_Gemstone_Shield
+            Rate: 1
+          - Index: 69
+            Item: S_Gemstone_Weapon
+            Rate: 1
+          - Index: 70
+            Item: S_Gemstone_Earring
+            Rate: 1
+          - Index: 71
+            Item: S_Gemstone_Pendent
+            Rate: 1
+          - Index: 72
+            Item: S_Stability_Shield
+            Rate: 1
+          - Index: 73
+            Item: S_Plasterer's_Armor
+            Rate: 1
+          - Index: 74
+            Item: S_Plasterer's_Shoes
+            Rate: 1
+          - Index: 75
+            Item: S_Insomniac_Armor
+            Rate: 1
+          - Index: 76
+            Item: S_Insomniac_Shoes
+            Rate: 1
+          - Index: 77
+            Item: S_Peerless_Armor
+            Rate: 1
+          - Index: 78
+            Item: S_Peerless_Shoes
+            Rate: 1
+          - Index: 79
+            Item: S_Adurate_Armor
+            Rate: 1
+          - Index: 80
+            Item: S_Adurate_Shoes
+            Rate: 1
+          - Index: 81
+            Item: Unfreez_Weapon_S
+            Rate: 1
+          - Index: 82
+            Item: Unfreeze_Earing_S
+            Rate: 1
+          - Index: 83
+            Item: Unfreeze_Pendent_S
+            Rate: 1
+          - Index: 84
+            Item: Vitality_Earing_S
+            Rate: 1
+          - Index: 85
+            Item: Vitality_Pendant_S
+            Rate: 1
+          - Index: 86
+            Item: S_Neutral_Weapon
+            Rate: 1
+          - Index: 87
+            Item: S_Neutral_Earring
+            Rate: 1
+          - Index: 88
+            Item: S_Neutral_Pendent
+            Rate: 1
+          - Index: 89
+            Item: S_Curse_Lift_Earring
+            Rate: 1
+          - Index: 90
+            Item: S_Curse_Lift_Pendent
+            Rate: 1
+          - Index: 91
+            Item: S_Caster_earring
+            Rate: 1
+          - Index: 92
+            Item: S_Caster_Weapon
+            Rate: 1
+          - Index: 93
+            Item: S_Spell_Flow_Shoes
+            Rate: 1
+          - Index: 94
+            Item: S_Spell_Flow_Armor
+            Rate: 1
+          - Index: 95
+            Item: S_Spell_Flow_Shield
+            Rate: 1
+          - Index: 96
+            Item: S_Greed_Armor
+            Rate: 1
+          - Index: 97
+            Item: S_Greed_Shoes
+            Rate: 1
+          - Index: 98
+            Item: S_Greed_Shield
+            Rate: 1
+          - Index: 99
+            Item: S_Greed_Weapon
+            Rate: 1
+          - Index: 100
+            Item: S_Greed_Earring
+            Rate: 1
+          - Index: 101
+            Item: S_Greed_Pendant
+            Rate: 1
+          - Index: 102
+            Item: S_Heal_Armor
+            Rate: 1
+          - Index: 103
+            Item: S_Heal_Shoes
+            Rate: 1
+          - Index: 104
+            Item: S_Heal_Shield
+            Rate: 1
+          - Index: 105
+            Item: S_Heal_Weapon
+            Rate: 1
+          - Index: 106
+            Item: S_Heal_Earring
+            Rate: 1
+          - Index: 107
+            Item: S_Heal_Pendant
+            Rate: 1
+          - Index: 108
+            Item: S_Hiding_Armor
+            Rate: 1
+          - Index: 109
+            Item: S_Hiding_Shoes
+            Rate: 1
+          - Index: 110
+            Item: S_Hiding_Shield
+            Rate: 1
+          - Index: 111
+            Item: S_Hiding_Weapon
+            Rate: 1
+          - Index: 112
+            Item: S_Hiding_Earring
+            Rate: 1
+          - Index: 113
+            Item: S_Hiding_Pendant
+            Rate: 1
+          - Index: 114
+            Item: S_Cloaking_Armor
+            Rate: 1
+          - Index: 115
+            Item: S_Cloaking_Shoes
+            Rate: 1
+          - Index: 116
+            Item: S_Cloaking_Shield
+            Rate: 1
+          - Index: 117
+            Item: S_Cloaking_Weapon
+            Rate: 1
+          - Index: 118
+            Item: S_Cloaking_Earring
+            Rate: 1
+          - Index: 119
+            Item: S_Cloaking_Pendant
+            Rate: 1
+          - Index: 120
+            Item: S_Teleport_Armor
+            Rate: 1
+          - Index: 121
+            Item: S_Teleport_Shoes
+            Rate: 1
+          - Index: 122
+            Item: S_Teleport_Shield
+            Rate: 1
+          - Index: 123
+            Item: S_Teleport_Weapon
+            Rate: 1
+          - Index: 124
+            Item: S_Teleport_Earring
+            Rate: 1
+          - Index: 125
+            Item: S_Teleport_Pendant
+            Rate: 1
+          - Index: 126
+            Item: S_Steal_Armor
+            Rate: 1
+          - Index: 127
+            Item: S_Steal_Shoes
+            Rate: 1
+          - Index: 128
+            Item: S_Steal_Shield
+            Rate: 1
+          - Index: 129
+            Item: S_Steal_Weapon
+            Rate: 1
+          - Index: 130
+            Item: S_Steal_Earring
+            Rate: 1
+          - Index: 131
+            Item: S_Steal_Pendant
+            Rate: 1
+          - Index: 132
+            Item: S_Infinity_Earring
+            Rate: 1
+          - Index: 133
+            Item: S_Infinity_Pendant
+            Rate: 1
+          - Index: 134
+            Item: S_Solid_Weapon
+            Rate: 1
+          - Index: 135
+            Item: S_Solid_Earring
+            Rate: 1
+          - Index: 136
+            Item: S_Immortal_Armor
+            Rate: 1
+          - Index: 137
+            Item: S_Immortal_Pendant
+            Rate: 1
+          - Index: 138
+            Item: S_Executioner_Weapon
+            Rate: 1
+          - Index: 139
+            Item: S_Exorcist_Weapon
+            Rate: 1
+          - Index: 140
+            Item: S_Hunting_Weapon
+            Rate: 1
+          - Index: 141
+            Item: S_Insect_Net_Weapon
+            Rate: 1
+          - Index: 142
+            Item: S_Fishing_Weapon
+            Rate: 1
+          - Index: 143
+            Item: S_Dragon_Killer_Weapon
+            Rate: 1
+          - Index: 144
+            Item: S_Corrupt_Weapon
+            Rate: 1
+          - Index: 145
+            Item: S_Vibration_Weapon
+            Rate: 1
+          - Index: 146
+            Item: S_Holy_Water_Weapon
+            Rate: 1
+          - Index: 147
+            Item: S_Scissors_Weapon
+            Rate: 1
+          - Index: 148
+            Item: S_Penetration_Earring
+            Rate: 1
+          - Index: 149
+            Item: S_Penetration_Pendent
+            Rate: 1
+          - Index: 150
+            Item: S_Tempest_Earring
+            Rate: 1
+          - Index: 151
+            Item: S_Tempest_Pendent
+            Rate: 1
+          - Index: 152
+            Item: S_M_Executioner_Weapon
+            Rate: 1
+          - Index: 153
+            Item: S_M_Exorcist_Weapon
+            Rate: 1
+          - Index: 154
+            Item: S_M_Hunting_Weapon
+            Rate: 1
+          - Index: 155
+            Item: S_M_Insect_Net_Weapon
+            Rate: 1
+          - Index: 156
+            Item: S_M_Fishing_Weapon
+            Rate: 1
+          - Index: 157
+            Item: S_M_Dragon_K_Weapon
+            Rate: 1
+          - Index: 158
+            Item: S_M_Corrupt_Weapon
+            Rate: 1
+          - Index: 159
+            Item: S_M_Vibration_Weapon
+            Rate: 1
+          - Index: 160
+            Item: S_M_Holy_Water_Weapon
+            Rate: 1
+          - Index: 161
+            Item: S_M_Scissors_Weapon
+            Rate: 1
+          - Index: 162
+            Item: S_Bearers_Armor
+            Rate: 1
+          - Index: 163
+            Item: S_Bearers_Shoes
+            Rate: 1
+          - Index: 164
+            Item: S_Bearers_Shield
+            Rate: 1
+          - Index: 165
+            Item: S_Bearers_Weapon
+            Rate: 1
+          - Index: 166
+            Item: S_Bearers_Earring
+            Rate: 1
+          - Index: 167
+            Item: S_Bearers_Pendent
+            Rate: 1
+          - Index: 168
+            Item: S_Basis_Armor
+            Rate: 1
+          - Index: 169
+            Item: S_Hallowed_Armor
+            Rate: 1
+          - Index: 170
+            Item: S_Saharic_Armor
+            Rate: 1
+          - Index: 171
+            Item: S_Underneath_Armor
+            Rate: 1
+          - Index: 172
+            Item: S_Flam_Armor
+            Rate: 1
+          - Index: 173
+            Item: S_Windy_Armor
+            Rate: 1
+          - Index: 174
+            Item: S_Envenom_Armor
+            Rate: 1
+          - Index: 175
+            Item: S_Damned_Armor
+            Rate: 1
+          - Index: 176
+            Item: S_Geist_Armor
+            Rate: 1
+          - Index: 177
+            Item: S_Divine_Armor
+            Rate: 1
+          - Index: 178
+            Item: S_Hasty_Shoes
+            Rate: 1
+          - Index: 179
+            Item: S_Hasty_Armor
+            Rate: 1
+          - Index: 180
+            Item: S_Basis_Shield
+            Rate: 1
+          - Index: 181
+            Item: S_Hallowed_Shield
+            Rate: 1
+          - Index: 182
+            Item: S_Saharic_Shield
+            Rate: 1
+          - Index: 183
+            Item: S_Underneath_Shield
+            Rate: 1
+          - Index: 184
+            Item: S_Flam_Shield
+            Rate: 1
+          - Index: 185
+            Item: S_Windy_Shield
+            Rate: 1
+          - Index: 186
+            Item: S_Envenom_Shield
+            Rate: 1
+          - Index: 187
+            Item: S_Damned_Shield
+            Rate: 1
+          - Index: 188
+            Item: S_Geist_Shield
+            Rate: 1
+          - Index: 189
+            Item: S_Divine_Shield
+            Rate: 1
+          - Index: 190
+            Item: S_Expert_Shoes
+            Rate: 1
+          - Index: 191
+            Item: S_Expert_Shield
+            Rate: 1
+          - Index: 192
+            Item: S_Beginner_Shoes
+            Rate: 1
+          - Index: 193
+            Item: S_Beginner_Shield
+            Rate: 1
+          - Index: 194
+            Item: S_Rookie_Shoes
+            Rate: 1
+          - Index: 195
+            Item: S_Rookie_Shield
+            Rate: 1
+          - Index: 196
+            Item: S_Advanced_Shoes
+            Rate: 1
+          - Index: 197
+            Item: S_Advanced_Shield
+            Rate: 1
+          - Index: 198
+            Item: S_Attack_Armor
+            Rate: 1
+          - Index: 199
+            Item: S_Blitz_Earring
+            Rate: 1
+          - Index: 200
+            Item: S_Blitz_Pendent
+            Rate: 1
+          - Index: 201
+            Item: S_ColdBolt_Armor
+            Rate: 1
+          - Index: 202
+            Item: S_FireBolt_Armor
+            Rate: 1
+          - Index: 203
+            Item: S_LightingBolt_Armor
+            Rate: 1
+          - Index: 204
+            Item: S_EarthSpike_Armor
+            Rate: 1
+          - Index: 205
+            Item: S_Enhance_Force_Weapon
+            Rate: 1
+          - Index: 206
+            Item: S_Force_Weapon
+            Rate: 1
+          - Index: 207
+            Item: S_Force_Earring
+            Rate: 1
+          - Index: 208
+            Item: S_Force_Pendant
+            Rate: 1
+          - Index: 209
+            Item: S_Enhance_Spirit_Weapon
+            Rate: 1
+          - Index: 210
+            Item: S_Spirit_Weapon
+            Rate: 1
+          - Index: 211
+            Item: S_Spirit_Earring
+            Rate: 1
+          - Index: 212
+            Item: S_Spirit_Pendant
+            Rate: 1
+          - Index: 213
+            Item: S_Blitz_Shoes
+            Rate: 1
+          - Index: 214
+            Item: S_Blitz_Shield
+            Rate: 1
+          - Index: 215
+            Item: S_Exceed_Weapon
+            Rate: 1
+          - Index: 216
+            Item: S_Titan_Earring
+            Rate: 1
+          - Index: 217
+            Item: S_Titan_Pendant
+            Rate: 1
+          - Index: 218
+            Item: S_Boned_Earring
+            Rate: 1
+          - Index: 219
+            Item: S_Boned_Pendant
+            Rate: 1
+          - Index: 220
+            Item: S_Gigantic_Earring
+            Rate: 1
+          - Index: 221
+            Item: S_Gigantic_Pendant
+            Rate: 1
+          - Index: 222
+            Item: S_Caster_Shoes
+            Rate: 1
+          - Index: 223
+            Item: S_Caster_Shield
+            Rate: 1
+          - Index: 224
+            Item: S_Caster_Armor
+            Rate: 1
+          - Index: 225
+            Item: S_Reload_Shoes
+            Rate: 1
+          - Index: 226
+            Item: S_Reload_Shield
+            Rate: 1
+          - Index: 227
+            Item: S_Reload_Armor
+            Rate: 1
+          - Index: 228
+            Item: S_Swordman_earring
+            Rate: 1
+          - Index: 229
+            Item: S_Merchant_earring
+            Rate: 1
+          - Index: 230
+            Item: S_Acolyte_earring
+            Rate: 1
+          - Index: 231
+            Item: S_Magician_earring
+            Rate: 1
+          - Index: 232
+            Item: S_Swordman_Pendant
+            Rate: 1
+          - Index: 233
+            Item: S_Merchant_Pendant
+            Rate: 1
+          - Index: 234
+            Item: S_Acolyte_Pendant
+            Rate: 1
+          - Index: 235
+            Item: S_Thief_Pendant
+            Rate: 1
+          - Index: 236
+            Item: S_Magician_Pendant
+            Rate: 1
+          - Index: 237
+            Item: S_Archer_Pendant
+            Rate: 1
+          - Index: 238
+            Item: S_Knight_Shoes
+            Rate: 1
+          - Index: 239
+            Item: S_Crusader_Shoes
+            Rate: 1
+          - Index: 240
+            Item: S_Blacksmith_Shoes
+            Rate: 1
+          - Index: 241
+            Item: S_Alchemist_Shoes
+            Rate: 1
+          - Index: 242
+            Item: S_Priest_Shoes
+            Rate: 1
+          - Index: 243
+            Item: S_Monk_Shoes
+            Rate: 1
+          - Index: 244
+            Item: S_Assassin_Shoes
+            Rate: 1
+          - Index: 245
+            Item: S_Rogue_Shoes
+            Rate: 1
+          - Index: 246
+            Item: S_Wizard_Shoes
+            Rate: 1
+          - Index: 247
+            Item: S_Sage_Shoes
+            Rate: 1
+          - Index: 248
+            Item: S_Hunter_Shoes
+            Rate: 1
+          - Index: 249
+            Item: S_Bard_Shoes
+            Rate: 1
+          - Index: 250
+            Item: S_Dancer_Shoes
+            Rate: 1
+          - Index: 251
+            Item: S_Knight_Armor
+            Rate: 1
+          - Index: 252
+            Item: S_Crusader_Armor
+            Rate: 1
+          - Index: 253
+            Item: S_Blacksmith_Armor
+            Rate: 1
+          - Index: 254
+            Item: S_Alchemist_Armor
+            Rate: 1
+          - Index: 255
+            Item: S_Priest_Armor
+            Rate: 1
+          - Index: 256
+            Item: S_Monk_Armor
+            Rate: 1
+          - Index: 257
+            Item: S_Assassin_Armor
+            Rate: 1
+          - Index: 258
+            Item: S_Rogue_Armor
+            Rate: 1
+          - Index: 259
+            Item: S_Wizard_Armor
+            Rate: 1
+          - Index: 260
+            Item: S_Sage_Armor
+            Rate: 1
+          - Index: 261
+            Item: S_Hunter_Armor
+            Rate: 1
+          - Index: 262
+            Item: S_Bard_Armor
+            Rate: 1
+          - Index: 263
+            Item: S_Dancer_Armor
+            Rate: 1
+          - Index: 264
+            Item: S_SuperNovice_Weapon
+            Rate: 1
+          - Index: 265
+            Item: S_Gunslinger_Weapon
+            Rate: 1
+          - Index: 266
+            Item: S_Taekwon_Weapon
+            Rate: 1
+          - Index: 267
+            Item: S_Ninja_Weapon
+            Rate: 1
+          - Index: 268
+            Item: S_DoramMagical_Weapon
+            Rate: 1
+          - Index: 269
+            Item: S_DoramPhysical_Weapon
+            Rate: 1
+          - Index: 270
+            Item: S_Runeknight_Weapon
+            Rate: 1
+          - Index: 271
+            Item: S_Royalguard_Weapon
+            Rate: 1
+          - Index: 272
+            Item: S_Mechanic_weapon
+            Rate: 1
+          - Index: 273
+            Item: S_Genetic_Weapon
+            Rate: 1
+          - Index: 274
+            Item: S_Archbishop_Weapon
+            Rate: 1
+          - Index: 275
+            Item: S_Sura_weapon
+            Rate: 1
+          - Index: 276
+            Item: S_Guillotine_Weapon
+            Rate: 1
+          - Index: 277
+            Item: S_Shadowchaser_Weapon
+            Rate: 1
+          - Index: 278
+            Item: S_Warlock_Weapon
+            Rate: 1
+          - Index: 279
+            Item: S_Sorcerer_Weapon
+            Rate: 1
+          - Index: 280
+            Item: S_Ranger_Weapon
+            Rate: 1
+          - Index: 281
+            Item: S_Minstrel_Weapon
+            Rate: 1
+          - Index: 282
+            Item: S_Wanderer_Weapon
+            Rate: 1
+          - Index: 283
+            Item: S_Runeknight_Shield
+            Rate: 1
+          - Index: 284
+            Item: S_Royalguard_Shield
+            Rate: 1
+          - Index: 285
+            Item: S_Mechanic_Shield
+            Rate: 1
+          - Index: 286
+            Item: S_Genetic_Shield
+            Rate: 1
+          - Index: 287
+            Item: S_Archbishop_Shield
+            Rate: 1
+          - Index: 288
+            Item: S_Sura_Shield
+            Rate: 1
+          - Index: 289
+            Item: S_Guillotine_Shield
+            Rate: 1
+          - Index: 290
+            Item: S_Shadowchaser_Shield
+            Rate: 1
+          - Index: 291
+            Item: S_Warlock_Shield
+            Rate: 1
+          - Index: 292
+            Item: S_Sorcerer_Shield
+            Rate: 1
+          - Index: 293
+            Item: S_Ranger_Shield
+            Rate: 1
+          - Index: 294
+            Item: S_Minstrel_Shield
+            Rate: 1
+          - Index: 295
+            Item: S_Wanderer_Shield
+            Rate: 1
+          - Index: 296
+            Item: S_Thief_earring
+            Rate: 1
+          - Index: 297
+            Item: S_Archer_earring
+            Rate: 1
