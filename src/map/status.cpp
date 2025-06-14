@@ -10968,7 +10968,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 #ifdef RENEWAL
 			val4 = val1 * 2; // Chance of casting
 #else
-			val4 = 5 + val1*2; // Chance of casting
+			val4 = 5 + val1*2; // Chance of casting for non-players
 #endif
 			break;
 		case SC_VOLCANO:
