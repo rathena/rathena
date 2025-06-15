@@ -10801,7 +10801,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			if(rnd()%100 >= sc->getSCE(SC_AUTOSPELL)->val4)
 				return;
 
-			int32 sp = 0;
 			uint16 skill_id = sc->getSCE(SC_AUTOSPELL)->val2;
 			if(skill_id == 0)
 				return;
