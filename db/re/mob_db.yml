@@ -82698,7 +82698,7 @@ Body:
     Name: Awakened Ferre
     JapaneseName: Grand Pere
     Level: 140
-    Hp: 19471800
+    Hp: 771800
     BaseExp: 3132000
     JobExp: 2720300
 #   MvpExp:
@@ -83782,7 +83782,7 @@ Body:
     AegisName: JITTERBUG1
     Name: Jitterbug1
     Level: 135
-    Hp: 2614000
+    Hp: 261400
     BaseExp: 36804
     JobExp: 23170
     Attack: 3210
@@ -83834,7 +83834,7 @@ Body:
     AegisName: JITTERBUG2
     Name: Jitterbug2
     Level: 135
-    Hp: 2614000
+    Hp: 261400
     BaseExp: 36804
     JobExp: 23170
     Attack: 3210
@@ -91540,7 +91540,7 @@ Body:
     Name: Renovated Amdarais
     JapaneseName: P Amdarais
     Level: 99
-    Hp: 10000000
+    Hp: 300000
     Sp: 0
     Attack: 800
     Attack2: 800
@@ -91617,7 +91617,7 @@ Body:
     AegisName: BIJOU
     Name: Bijou
     Level: 115
-    Hp: 10000000
+    Hp: 400000
     Sp: 0
     BaseExp: 66666
     JobExp: 66666
@@ -94697,7 +94697,7 @@ Body:
     AegisName: EP16_2_H_HUNTER_EV
     Name: Heart Hunter Ebel
     Level: 110
-    Hp: 2800000
+    Hp: 800000
     BaseExp: 800000
     JobExp: 400000
     MvpExp: 5000
@@ -94788,7 +94788,7 @@ Body:
     AegisName: EP16_2_E_BOLKOBA
     Name: Elena Bolkova
     Level: 115
-    Hp: 2000000
+    Hp: 400000
     BaseExp: 300000
     JobExp: 150000
     Attack: 1200

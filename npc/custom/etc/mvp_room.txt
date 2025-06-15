@@ -120,8 +120,42 @@ OnInit:
 		sc_end SC_SKE;
 		sc_end SC_SWOO;
 		sc_end SC_SKA;
+		
 		percentheal 100,100;
 		specialeffect2 EF_HEAL;
+
+		specialeffect2 EF_INCAGILITY;
+		sc_start SC_INCREASEAGI,3600000,10;
+
+		if (BaseLevel >= 10) {
+			specialeffect2 EF_BLESSING;
+			sc_start SC_BLESSING,3600000,10;
+		}
+		
+		if (BaseLevel >= 20) {
+			specialeffect2 EF_IMPOSITIO;
+			sc_start SC_IMPOSITIO,3600000,5;
+		}
+		
+		if (BaseLevel >= 60) {
+			specialeffect2 EF_ASSUMPTIO;
+			sc_start SC_ASSUMPTIO,3600000,5;
+
+			specialeffect2 EF_MAGNIFICAT;
+      		sc_start SC_MAGNIFICAT,3600000,5;
+		}
+
+		if (BaseLevel >= 100) {
+			specialeffect2 AM_CP_HELM;
+			sc_start SC_CP_HELM,3600000,5;
+			specialeffect2 AM_CP_ARMOR;
+			sc_start SC_CP_ARMOR,3600000,5;
+			specialeffect2 AM_CP_SHIELD;
+			sc_start SC_CP_SHIELD,3600000,5;
+			specialeffect2 AM_CP_WEAPON;
+			sc_start SC_CP_WEAPON,3600000,5;
+		}
+
 		mes "You are completely healed.";
 		close;
 	case 2:

@@ -30,25 +30,25 @@ prontera,172,125,4	script	Monster Society Warper	98,{
 	)) {
 		case 1:  warp("ein_fild06", 257, 352); end;
 		case 2:  warp("gef_fild06", 209, 32); end;
-		case 2:  warp("lhz_fild01", 240, 108); end;
-		case 3:  warp("mal_dun01", 141, 127); end;
-		case 4:  warp("hu_fild01", 133, 158); end;
-		case 5:  warp("tur_dun01", 159, 47); end;
-		case 6:  warp("ein_fild03", 135, 47); end;
-		case 7:  warp("lhz_fild03", 167, 345); end;
-		case 8:  warp("tur_dun02", 151, 257); end;
-		case 9:  warp("tur_dun03", 125, 137); end;
-		case 10:  warp("ra_fild12", 50, 130); end;
-		case 11:  warp("ice_dun01", 161, 14); end;
-		case 12:  warp("ra_fild08", 163, 48); end;
-		case 13:  warp("ra_fild04", 274, 70); end;
-		case 14:  warp("ve_fild07", 158, 355); end;
-		case 15:  warp("ra_fild03", 368, 184); end;
-		case 16:  warp("ra_fild05", 48, 357); end;
-		case 17:  warp("ra_fild01", 224, 320); end;
-		case 18:  warp("ve_fild01", 354, 281); end;
-		case 19:  warp("ve_fild04", 52, 243); end;
-		case 20:  warp("ra_fild06", 292, 40); end;
-		case 21:  warp("ve_fild03", 348, 231); end;
+		case 3:  warp("lhz_fild01", 240, 108); end;
+		case 4:  warp("mal_dun01", 141, 127); end;
+		case 5:  warp("hu_fild01", 133, 158); end;
+		case 6:  warp("tur_dun01", 159, 47); end;
+		case 7:  warp("ein_fild03", 135, 47); end;
+		case 8:  warp("lhz_fild03", 167, 345); end;
+		case 9:  warp("tur_dun02", 151, 257); end;
+		case 10:  warp("tur_dun03", 125, 137); end;
+		case 11:  warp("ra_fild12", 50, 130); end;
+		case 12:  warp("ice_dun01", 161, 14); end;
+		case 13:  warp("ra_fild08", 163, 48); end;
+		case 14:  warp("ra_fild04", 274, 70); end;
+		case 15:  warp("ve_fild07", 158, 355); end;
+		case 16:  warp("ra_fild03", 368, 184); end;
+		case 17:  warp("ra_fild05", 48, 357); end;
+		case 18:  warp("ra_fild01", 224, 320); end;
+		case 19:  warp("ve_fild01", 354, 281); end;
+		case 20:  warp("ve_fild04", 52, 243); end;
+		case 21:  warp("ra_fild06", 292, 40); end;
+		case 22:  warp("ve_fild03", 348, 231); end;
 	}
 }

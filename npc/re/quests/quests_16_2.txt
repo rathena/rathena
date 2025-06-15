@@ -4901,10 +4901,9 @@ OnTouch:
 	end;
 OnStart:
 	monster "rebel_in",201,19, "Elena Volkova",3630,1, "#job_rmA::OnMobDead";	// EP16_2_E_BOLKOBA
-	if (.base_job == Job_Priest)
+	if (.base_job == Job_Priest){
 		setunitdata $@mobid[0], UMOB_HP, 19000;
-	else
-		setunitdata $@mobid[0], UMOB_HP, 1100000;
+	}
 	end;
 OnMobDead:
 	stopnpctimer;

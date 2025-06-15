@@ -25490,27 +25490,7 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 120000
-      - Level: 2
-        Time: 140000
-      - Level: 3
-        Time: 160000
-      - Level: 4
-        Time: 180000
-      - Level: 5
-        Time: 200000
-      - Level: 6
-        Time: 220000
-      - Level: 7
-        Time: 240000
-      - Level: 8
-        Time: 260000
-      - Level: 9
-        Time: 280000
-      - Level: 10
-        Time: 300000
+    Duration1: 3600000
     Cooldown: 30000
     Requires:
       SpCost: 120
@@ -25725,8 +25705,8 @@ Body:
     HitCount: 1
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1: 240000
-    Duration2: 600000
+    Duration1: 3600000
+    Duration2: 3600000
     Cooldown: 1000
     FixedCastTime:
       - Level: 1
@@ -25775,7 +25755,7 @@ Body:
     HitCount: 1
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1: 240000
+    Duration1: 3600000
     Cooldown: 1000
     FixedCastTime: 1000
     Requires:
@@ -25815,7 +25795,7 @@ Body:
     HitCount: 1
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1: 240000
+    Duration1: 3600000
     Cooldown: 1000
     FixedCastTime: 1000
     Requires:

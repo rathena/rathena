@@ -72,6 +72,9 @@
 		if (BaseLevel >= 60) {
 			specialeffect2 EF_ASSUMPTIO;
 			sc_start SC_ASSUMPTIO,3600000,5;
+
+			specialeffect2 EF_MAGNIFICAT;
+      		sc_start SC_MAGNIFICAT,3600000,5;
 		}
 
 		if (BaseLevel >= 100) {

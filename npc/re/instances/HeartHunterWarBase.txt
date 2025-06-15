@@ -24,7 +24,36 @@ ein_fild04,275,342,5	script	Striker Unit Commander#	4_M_REBELLION3,{
 	case 0:
 	case 1:
 		mes "[Striker Unit Commander]";
-		mes "We are arranging the situation inside the base. We cannot let you in yet.";
+		mes "We are arranging the situation inside the base.";
+		
+		switch( instance_enter(.@md_name$) ) {
+			case IE_NOMEMBER:
+				mes "^0000ffSeems like an adventurer without his/her unit (party) cannot enter.^000000";
+				close;
+			case IE_NOINSTANCE:
+				mes "[Striker Unit Commander]";
+				mes "The field of operation is " + .@md_name$ + " Check whether the operation was applied properly.";
+				next;
+				mes "^ff0000Goint to the outer boundary of Heart Hunter War Base without clearing the Heart Hunter War Base is prohibited. Also, you cannot enter the Heart Hunter War Base that has already been cleared. Please check your operation point^000000";
+				next;
+				mes "^ff0000This is when your progress is different from your party leader of the party member. In this case, find another party member who can go to the same place with you.^000000";
+				next;
+				mes "^ff0000The entry is also impossible if the Memorial Dungeon has not been created as an operation field.^000000";
+				close;
+			case IE_OTHER:
+				mes "Wait a while before you retry to enter.";
+				erasequest 12375;// Base maintenance
+				close;
+			case IE_OK:
+				mapannounce "ein_fild04", "" + strcharinfo(0) + " of the party, " + getpartyname( getcharid(1) ) + ", is entering the " + .@md_name$ + ".", bc_map, 0xFF99;
+				setquest 12375;// Base maintenance
+				// if (terra_gloria_main == 20)
+				// 	warp "1@swat",35,65;
+				// else
+				// 	warp "1@swat",73,118;
+				end;
+		}
+
 		close;
 	case 2:
 		mes "^0000ffSeems like the base has been arranged inside. ^000000";
@@ -46,6 +75,7 @@ ein_fild04,275,342,5	script	Striker Unit Commander#	4_M_REBELLION3,{
 		.@md_name$ = "Heart Hunter War Base 1";
 	else
 		.@md_name$ = "Heart Hunter War Base 2";
+
 	switch( instance_enter(.@md_name$) ) {
 	case IE_NOMEMBER:
 		mes "^0000ffSeems like an adventurer without his/her unit (party) cannot enter.^000000";

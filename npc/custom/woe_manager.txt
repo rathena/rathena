@@ -1,0 +1,21 @@
+prontera,140,170,4	script	Woe Manager	98,{
+	mes "[Woe Manager]";
+	mes "What do you want?";
+	next;
+
+	switch(select(
+		"Start WOE",
+		"Stop WOE"
+	)) {
+		case 1:
+			agitstart();
+			announce "[WOE] War of Emperium has started! Prepare for battle!", bc_all, 0xFF0000;
+			mes "WOE started.";
+			close;
+		case 2:
+			agitend();
+			announce "[WOE] War of Emperium has ended. Thank you for participating!", bc_all, 0x00FFFF;
+			mes "WOE stopped.";
+			close;
+	}
+}

@@ -326,6 +326,7 @@ OnInit:
 
 	//Add Hunting Quests here (You can add as many required mobs as you want)
 	//AddHunting("<Quest Name>",<Min Lvl>,<Max Lvl>,<Reward|Item ID>,<Reward|Item Amount>,<Zeny Reward>,<Base EXP>,<Job EXP>,<Monster ID>,<Monster Amount>,...);
+	
 	end;
 
 

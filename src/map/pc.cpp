@@ -8486,7 +8486,7 @@ void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_
 		if (nextbp > 0)
 		{
 			float percentGainMin = calculate_min_exp_gain(rate);
-			float minExp = (t_exp)floor((float) nextb / 100 * percentGainMin);
+			t_exp minExp = floor((float) nextb / 100 * percentGainMin);
 			base_exp = max(base_exp, minExp);
 		}
 
@@ -8502,7 +8502,7 @@ void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_
 		if (nextjp > 0)
 		{
 			float percentGainMin = calculate_min_exp_gain(rate);
-			float minExp = (t_exp)floor((float) nextjp / 100 * percentGainMin);
+			t_exp minExp = floor((float) nextj / 100 * percentGainMin);
 			job_exp = max(job_exp, minExp);
 		}
 

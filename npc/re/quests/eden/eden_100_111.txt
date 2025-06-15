@@ -39,7 +39,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 		mes "[Gelkah]";
 		mes "The request is from ^FF0000somewhere else^000000 other than Midgard.";
 	}
-	else if (BaseLevel < 111) {
+	else if (BaseLevel < 120) {
 		if (para_100lv01 == 0) {
 			mes "Adventurers!";
 			emotion ET_SMILE;
@@ -89,7 +89,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 				mes "I would like to know if you are capable of doing a request. Let me see...";
 				next;
 				mes "[Gelkah]";
-				mes "Collect 50 ^ff0000Brigan.^000000 It is a simple and complicated test.";
+				mes "Collect 10 ^ff0000Brigan.^000000 It is a simple and complicated test.";
 				next;
 				mes "[Gelkah]";
 				mes "It is easy to find from monsters at Turtle Island or at Glastheim.";
@@ -102,7 +102,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 			}
 		}
 		else if (para_100lv01 == 1) {
-			if (countitem(7054) > 49) {// Brigan
+			if (countitem(7054) > 9) {// Brigan
 				mes "Did you bring all the Brigans I asked for?";
 				next;
 				mes "[Gelkah]";
@@ -132,7 +132,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 				next;
 				mes "[Gelkah]";
 				mes strcharinfo(0) +" will make a request list for you so go talk to my Master now and show your respects.";
-				delitem 7054,50;// Brigan
+				delitem 7054,10;// Brigan
 				completequest 13002;// Brigan collecting
 				para_100lv01 = 2;
 				getitem 6549,1;// Courtesy_Ticket
@@ -166,7 +166,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13004,PLAYTIME) == 0)
 							mes "You just finished a request. It is important that you rest for a while. There will always be a requests waiting for you.";
 						else if (checkquest(13003,HUNTING) == 1) {
-							cutin "Ä³·µÄ«µå",3;  //carat_card
+							cutin "Ä³ï¿½ï¿½Ä«ï¿½ï¿½",3;  //carat_card
 							mes "This request is to clear ^0000FF30^000000 ^FF0000Carat^000000 inside of Glastheim castle's first floor.";
 							next;
 							cutin "gelca01",2;
@@ -178,7 +178,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13003,13004,106000,148000;
 						}
 						else {
-							cutin "Ä³·µÄ«µå",3;  //carat_card
+							cutin "Ä³ï¿½ï¿½Ä«ï¿½ï¿½",3;  //carat_card
 							mes "This request is from a merchant from Morocc who is somehow losing business from these monsters in Glastheim.";
 							next;
 							mes "[Gelkah]";
@@ -190,7 +190,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13006,PLAYTIME) == 0)
 							mes "You just finished a request. Please take a rest. There will always be a request for you.";
 						else if (checkquest(13005,HUNTING) == 1) {
-							cutin "¾ÆÅ©¶ó¿ì½ºÄ«µå",3;  //arclouse_card
+							cutin "ï¿½ï¿½Å©ï¿½ï¿½ì½ºÄ«ï¿½ï¿½",3;  //arclouse_card
 							mes "Please clear ^FF000022 Arclouse^000000.";
 							next;
 							cutin "gelca01",2;
@@ -203,7 +203,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13005,13006,106000,148000;
 						}
 						else {
-							cutin "¾ÆÅ©¶ó¿ì½ºÄ«µå",3;  //arclouse_card
+							cutin "ï¿½ï¿½Å©ï¿½ï¿½ì½ºÄ«ï¿½ï¿½",3;  //arclouse_card
 							mes "Do you know there are beans used as food here in Midgard? When an Arclouse rolls, it resembles a bean.";
 							next;
 							mes "[Gelkah]";
@@ -221,7 +221,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13008,PLAYTIME) == 0)
 							mes "You just finished a request. Adventure is important but taking a rest is important too. There will always be a request waiting for.";
 						else if (checkquest(13007,HUNTING) == 1) {
-							cutin "¾Æ³î¸®¾ÈÄ«µå",3;  //anolian_card
+							cutin "ï¿½Æ³î¸®ï¿½ï¿½Ä«ï¿½ï¿½",3;  //anolian_card
 							mes "A monk is on a pilgrimage and seeks protection against some alligator-like creatures.";
 							next;
 							mes "[Gelkah]";
@@ -236,7 +236,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13007,13008,112000,186500;
 						}
 						else {
-							cutin "¾Æ³î¸®¾ÈÄ«µå",3;  //anolian_card
+							cutin "ï¿½Æ³î¸®ï¿½ï¿½Ä«ï¿½ï¿½",3;  //anolian_card
 							mes "Glastheim seems to be a good sacred place not only to adventurers but also to monks. I have no idea what really attracts them there.";
 							next;
 							mes "[Gelkah]";
@@ -248,7 +248,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13010,PLAYTIME) == 0)
 							mes "You just finished a request. Adventure is important but taking a rest is important too. There will always be a request waiting for.";
 						else if (checkquest(13009,HUNTING) == 1) {
-							cutin "½ºÆÃÄ«µå",3;  //sting_card
+							cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",3;  //sting_card
 							mes "There are many Sting monsters in the underground waterway and underground cave so it will be easy to clear.";
 							next;
 							mes "[Gelkah]";
@@ -263,7 +263,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13009,13010,112000,186500;
 						}
 						else {
-							cutin "½ºÆÃÄ«µå",3;  //sting_card
+							cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",3;  //sting_card
 							mes "Have you heard about a monk's pilgrimage? There are so many Stings in the underground waterway and cave so they disturb the peaceful monks.";
 							next;
 							mes "[Gelkah]";
@@ -275,7 +275,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13012,PLAYTIME) == 0)
 							mes "You just finished a request. Adventure is important but taking a rest is important too. Pilgrimage will be continued so there will be another request again.";
 						else if (checkquest(13011,HUNTING) == 1) {
-							cutin "¸ÞÀÌÀú¿ì·Î½ºÄ«µå",3;  //majoruros_card
+							cutin "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½Ä«ï¿½ï¿½",3;  //majoruros_card
 							mes "I wonder what the reason is behind these monk pilgrimages and why they keep doing it... There must be a hidden reason.";
 							next;
 							mes "[Gelkah]";
@@ -291,7 +291,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13011,13012,112000,252000;
 						}
 						else {
-							cutin "¸ÞÀÌÀú¿ì·Î½ºÄ«µå",3;  //majoruros_card
+							cutin "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î½ï¿½Ä«ï¿½ï¿½",3;  //majoruros_card
 							mes "The monk's pilgrimage destination is on the 2nd floor of the Glastheim castle underground cave. It is not an easy journey but will be a good experience.";
 							next;
 							mes "[Gelkah]";
@@ -308,7 +308,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13014,PLAYTIME) == 0)
 							mes "You just finished a request. Adventure is important but taking a rest is important too. Please take a rest. There will always be a request for you.";
 						else if (checkquest(13013,HUNTING) == 1) {
-							cutin "ÇÉ±ÍÅ§¶óÄ«µå",3;  //pinguicula_card
+							cutin "ï¿½É±ï¿½Å§ï¿½ï¿½Ä«ï¿½ï¿½",3;  //pinguicula_card
 							mes "Outbound space is mysterious.. Monsters are unique.";
 							next;
 							mes "[Gelkah]";
@@ -324,7 +324,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13013,13014,106000,148000;
 						}
 						else {
-							cutin "ÇÉ±ÍÅ§¶óÄ«µå",3;  //pinguicula_card
+							cutin "ï¿½É±ï¿½Å§ï¿½ï¿½Ä«ï¿½ï¿½",3;  //pinguicula_card
 							mes "Pinguicula is one of the first monsters that adventurers encounter when they step into the Ash Vacuum. They expect us to reduce monsters around the Expedition Camp.";
 							next;
 							mes "[Gelkah]";
@@ -337,7 +337,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13016,PLAYTIME) == 0)
 							mes "You just finished a request. Adventure is important but taking a rest is important too. Please take a rest. This request is not worth working so hard.";
 						else if (checkquest(13015,HUNTING) == 1) {
-							cutin "·ç½Ã¿Ã¶óº£½ºÆÄÄ«µå",3;  //luciola_vespa_card
+							cutin "ï¿½ï¿½Ã¿Ã¶óº£½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",3;  //luciola_vespa_card
 							mes "This is a strange request and a strange reason but we should accept it anyway.";
 							next;
 							mes "[Gelkah]";
@@ -352,7 +352,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13015,13016,112000,186500;
 						}
 						else {
-							cutin "·ç½Ã¿Ã¶óº£½ºÆÄÄ«µå",3;  //luciola_vespa_card
+							cutin "ï¿½ï¿½Ã¿Ã¶óº£½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",3;  //luciola_vespa_card
 							mes "This is a very personal request. It is unusual but this request is from an adventurer who is friendly with Rohtert.. It is requested by Pretty Boy. Why did he write this?";
 							next;
 							mes "[Gelkah]";
@@ -375,7 +375,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13018,PLAYTIME) == 0)
 							mes "You just finished a request. Adventure is important but taking a rest is important too.";
 						else if (checkquest(13017,HUNTING) == 1) {
-							cutin "µ¥ÀúÆ®¿ïÇÁÄ«µå",3;  //desert_wolf_card
+							cutin "ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",3;  //desert_wolf_card
 							mes "Have you read old books? That is about an adventurer who was fighting with big wolves and it ended up with a friendship. It's called Samba's with Wolves.";
 							next;
 							mes "[Gelkah]";
@@ -391,7 +391,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13017,13018,106000,148000;
 						}
 						else {
-							cutin "µ¥ÀúÆ®¿ïÇÁÄ«µå",3;  //desert_wolf_card
+							cutin "ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",3;  //desert_wolf_card
 							mes "The Ice cave is directly north of Rachel. The problem is that the Wolves frighten tourists when they are heading to see the Ice cave.";
 							next;
 							mes "[Gelkah]";
@@ -403,7 +403,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13020,PLAYTIME) == 0)
 							mes "You just finished a request. Adventure is important but taking a rest is important too.";
 						else if (checkquest(13019,HUNTING) == 1) {
-							cutin "½º³ëÀÌ¾îÄ«µå",3;  //snowier_card
+							cutin "ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½Ä«ï¿½ï¿½",3;  //snowier_card
 							mes "Rough breath, insecure eyes, freezing cold.. It is not easy request so get yourself warm.";
 							next;
 							mes "[Gelkah]";
@@ -419,7 +419,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13019,13020,106000,148000;
 						}
 						else {
-							cutin "½º³ëÀÌ¾îÄ«µå",3;  //snowier_card
+							cutin "ï¿½ï¿½ï¿½ï¿½ï¿½Ì¾ï¿½Ä«ï¿½ï¿½",3;  //snowier_card
 							mes "People who have been to ice dungeon say there are noisy monsters disturbing their visits. Please clear them if you can put up with it.";
 							next;
 							mes "[Gelkah]";
@@ -431,7 +431,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13022,PLAYTIME) == 0)
 							mes "You just finished a request. Adventure is important but taking a rest is important too.";
 						else if (checkquest(13021,HUNTING) == 1) {
-							cutin "¾ÆÀÌ½ºÆ¼ÅºÄ«µå",3;  //ice_titan_card
+							cutin "ï¿½ï¿½ï¿½Ì½ï¿½Æ¼ÅºÄ«ï¿½ï¿½",3;  //ice_titan_card
 							mes "Please clear ^FF000030 Ice Titan^000000 at the Ice cave.";
 							next;
 							cutin "gelca01",2;
@@ -444,7 +444,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13021,13022,112000,186500;
 						}
 						else {
-							cutin "¾ÆÀÌ½ºÆ¼ÅºÄ«µå",3;  //ice_titan_card
+							cutin "ï¿½ï¿½ï¿½Ì½ï¿½Æ¼ÅºÄ«ï¿½ï¿½",3;  //ice_titan_card
 							mes "Have you been to Ice cave north of Rachel? There are monsters called as Ice Titans deep in the dungeon. Scholars want to determine if they are golems or not.";
 							next;
 							mes "[Gelkah]";
@@ -461,7 +461,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13024,PLAYTIME) == 0)
 							mes "You just finished a request. Thanks for keeping memory.. but You should take a rest.";
 						else if (checkquest(13023,HUNTING) == 1) {
-							cutin "³ªÀÌÆ®¸Þ¾îÅ×·¯Ä«µå",3;  //nightmare_terror_card
+							//cutin "ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Þ¾ï¿½ï¿½×·ï¿½Ä«ï¿½ï¿½",3;  //nightmare_terror_card
 							mes "The memory of a girl is important ! Please clear ^FF000030 Nightmare Terror^000000.";
 							next;
 							cutin "gelca01",2;
@@ -473,7 +473,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13023,13024,106000,148000;
 						}
 						else {
-							cutin "³ªÀÌÆ®¸Þ¾îÅ×·¯Ä«µå",3;  //nightmare_terror_card
+							//cutin "ï¿½ï¿½ï¿½ï¿½Æ®ï¿½Þ¾ï¿½ï¿½×·ï¿½Ä«ï¿½ï¿½",3;  //nightmare_terror_card
 							mes "This request is from a client that is sad because the magma dungeon is full of monsters when she came back to return after breaking up with her lover. Apparently, she spent a lot of time with him there and wants some peace.";
 							next;
 							mes "[Gelkah]";
@@ -486,7 +486,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13026,PLAYTIME) == 0)
 							mes "You just finished a request. Did you take enough time to cool down? Take enough rest.";
 						else if (checkquest(13025,HUNTING) == 1) {
-							cutin "°øÁßµô¸®ÅÍÄ«µå",3;  //flying_deleter_card
+							//cutin "ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",3;  //flying_deleter_card
 							mes "A client showed a wonderful dance to a lover. One day, they were attacked from a Deleter while they are dancing in the magma dungeon.";
 							next;
 							mes "[Gelkah]";
@@ -506,7 +506,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13025,13026,106000,148000;
 						}
 						else {
-							cutin "°øÁßµô¸®ÅÍÄ«µå",3;  //flying_deleter_card
+							//cutin "ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",3;  //flying_deleter_card
 							mes "A client showed a wonderful dance to a lover. One day, they were attacked from a Deleter while they are dancing in the magma dungeon.";
 							next;
 							mes "[Gelkah]";
@@ -527,7 +527,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13041,PLAYTIME) == 0)
 							mes "I think you should rest a bit. Even adventurers need their rest right?";
 						else if (checkquest(13040,HUNTING) == 1) {
-							cutin "·Î¸®·ç¸®Ä«µå",3;  //loli_ruri_card
+							//cutin "ï¿½Î¸ï¿½ï¿½ç¸®Ä«ï¿½ï¿½",3;  //loli_ruri_card
 							mes "Eden Group is planning to send a notice that unmature adventurers are not sent to night time requests because it is too dangerous.";
 							next;
 							mes "[Gelkah]";
@@ -546,7 +546,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13040,13041,112000,186500;
 						}
 						else {
-							cutin "·Î¸®·ç¸®Ä«µå",3;  //loli_ruri_card
+							//cutin "ï¿½Î¸ï¿½ï¿½ç¸®Ä«ï¿½ï¿½",3;  //loli_ruri_card
 							mes "A secret society requested the protection of the Eden Group from the Loli Ruris because they believe that they have mental powers.";
 							next;
 							mes "[Gelkah]";
@@ -561,7 +561,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13043,PLAYTIME) == 0)
 							mes "Adventure is important but taking a rest is important too.";
 						else if (checkquest(13042,HUNTING) == 1) {
-							cutin "¸ÞµÎ»çÄ«µå",3;  //medusa_card
+							//cutin "ï¿½ÞµÎ»ï¿½Ä«ï¿½ï¿½",3;  //medusa_card
 							mes "I do not know why master likes this kind of request. He also used to say any request is a good request for an adventurer...";
 							next;
 							mes "[Gelkah]";
@@ -577,7 +577,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13042,13043,106000,148000;
 						}
 						else {
-							cutin "¸ÞµÎ»çÄ«µå",3;  //medusa_card
+							//cutin "ï¿½ÞµÎ»ï¿½Ä«ï¿½ï¿½",3;  //medusa_card
 							mes "This is a request from a hair designer in Alberta. He wants to know if the snakes on the Medusa's head are really snakes or fancy hair...";
 							next;
 							mes "[Gelkah]";
@@ -592,7 +592,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						if (checkquest(13045,PLAYTIME) == 0)
 							mes "The request from Sphinx is done. Please take a rest.";
 						else if (checkquest(13044,HUNTING) == 1) {
-							cutin "¾Æ´©ºñ½ºÄ«µå",3;  //anubis_card
+							//cutin "ï¿½Æ´ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",3;  //anubis_card
 							mes "I shoud investigate about the client by myself but for now please clear ^FF000020 Anubis^000000 on the 4th floor of Sphinx dungeon.";
 							next;
 							cutin "gelca01",2;
@@ -606,7 +606,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 							callsub S_Quest,13044,13045,112000,186500;
 						}
 						else {
-							cutin "¾Æ´©ºñ½ºÄ«µå",3;  //anubis_card
+							//cutin "ï¿½Æ´ï¿½ï¿½ï¿½Ä«ï¿½ï¿½",3;  //anubis_card
 							mes "An anonymous client sent a request to help clear monsters in Sphinx dungeon because adventurers hardly visit Morocc anymore. The monsters seem to be running rampant there.";
 							next;
 							mes "[Gelkah]";
@@ -1017,17 +1017,17 @@ moc_para01,41,95,5	script	Rohtert#12	4_M_ROTERT,{
 		mes "[Rohtert]";
 		if (BaseLevel < 100)
 			mes "Such a novice... go and train yourself more. What? Don't like the way I talk? Then get stronger.";
-		else if (BaseLevel > 110) {
-			mes "You are a little bit too mature of an adventurer. You have no business with me. Just leave. My business is with new third class adventurers up to level 110.";
-			if (checkquest(13047,PLAYTIME) == 2)
-				erasequest 13047;
-			if (checkquest(13049,PLAYTIME) == 2)
-				erasequest 13049;
-			if (checkquest(13048,HUNTING) > -1)
-				erasequest 13048;
-			if (checkquest(13046,HUNTING) > -1)
-				erasequest 13046;
-		}
+		//else if (BaseLevel > 110) {
+		//	mes "You are a little bit too mature of an adventurer. You have no business with me. Just leave. My business is with new third class adventurers up to level 110.";
+		//	if (checkquest(13047,PLAYTIME) == 2)
+		//		erasequest 13047;
+		//	if (checkquest(13049,PLAYTIME) == 2)
+		//		erasequest 13049;
+		//	if (checkquest(13048,HUNTING) > -1)
+		//		erasequest 13048;
+		//	if (checkquest(13046,HUNTING) > -1)
+		//		erasequest 13046;
+		//}
 		else if (para_100lv01 < 2) {
 			mes "Yeah waddya want from me kid? You think I'm just gonna say ok I'll be your master and teach you everything I know?";
 			next;
