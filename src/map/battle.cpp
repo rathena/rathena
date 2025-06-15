@@ -10794,44 +10794,129 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			}
 		}
 	}
-	if (sc && sc->getSCE(SC_AUTOSPELL) && rnd()%100 < sc->getSCE(SC_AUTOSPELL)->val4) {
-		int32 sp = 0;
-		uint16 skill_id = sc->getSCE(SC_AUTOSPELL)->val2;
-		uint16 skill_lv = sc->getSCE(SC_AUTOSPELL)->val3;
-		int32 i = rnd()%100;
-		if (sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_SAGE)
-			i = 0; //Max chance, no skill_lv reduction. [Skotlex]
+	
+	if(sc && sc->getSCE(SC_AUTOSPELL)){
+		[&]{
+#ifdef RENEWAL
+			if(rnd()%100 >= sc->getSCE(SC_AUTOSPELL)->val4)
+				return;
+
+			uint16 skill_id = sc->getSCE(SC_AUTOSPELL)->val2;
+			if(skill_id == 0)
+				return;
+			uint16 skill_lv = sc->getSCE(SC_AUTOSPELL)->val3;
+			if(skill_lv == 0)
+				return;
+			int32 i = rnd()%100;
+			if(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_SAGE)
+				i = 0; //Max chance, no skill_lv reduction. [Skotlex]
 		//reduction only for skill_lv > 1
-		if (skill_lv > 1) {
-			if (i >= 50) skill_lv /= 2;
-			else if (i >= 15) skill_lv--;
-		}
-		sp = skill_get_sp(skill_id,skill_lv) * 2 / 3;
-
-		if (status_charge(src, 0, sp)) {
-			struct unit_data *ud = unit_bl2ud(src);
-
-			switch (skill_get_casttype(skill_id)) {
-				case CAST_GROUND:
-					skill_castend_pos2(src, target->x, target->y, skill_id, skill_lv, tick, flag);
-					break;
-				case CAST_NODAMAGE:
-					skill_castend_nodamage_id(src, target, skill_id, skill_lv, tick, flag);
-					break;
-				case CAST_DAMAGE:
-					skill_castend_damage_id(src, target, skill_id, skill_lv, tick, flag);
-					break;
+			if(skill_lv > 1){
+				if(i >= 50) skill_lv /= 2;
+				else if(i >= 15) skill_lv--;
 			}
-			if (ud) {
-				int32 autospell_tick = skill_delayfix(src, skill_id, skill_lv);
+#else
+			uint16 autospell_level{};
+			if(sd != nullptr){
+				autospell_level = pc_checkskill(sd,SA_AUTOSPELL);
 
-				if (DIFF_TICK(ud->canact_tick, tick + autospell_tick) < 0) {
-					ud->canact_tick = i64max(tick + autospell_tick, ud->canact_tick);
-					if (battle_config.display_status_timers && sd)
-						clif_status_change(src, EFST_POSTDELAY, 1, autospell_tick, 0, 0, 0);
+				if(autospell_level == 0)
+					return;
+
+				if(rnd()%100 >= (5 + autospell_level * 2))
+					return;
+			}else{
+				if(rnd()%100 >= sc->getSCE(SC_AUTOSPELL)->val4)
+					return;
+			}
+
+			uint16 skill_id = sc->getSCE(SC_AUTOSPELL)->val2;
+			if(skill_id == 0)
+				return;
+
+			uint16 learned_level{};
+			if(sd){
+				learned_level = pc_checkskill(sd,skill_id);
+				if(learned_level == 0)
+					return;
+			}
+
+			uint16 skill_lv{};
+			if(sd == nullptr)
+				skill_lv = sc->getSCE(SC_AUTOSPELL)->val3;
+			else if(sc->hasSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_SAGE)
+				skill_lv = learned_level;
+			else{			
+				uint16 max_lvl = 1;
+				switch(skill_id){
+					case MG_NAPALMBEAT:
+						max_lvl = 3;
+						break;
+					case MG_COLDBOLT:
+					case MG_FIREBOLT:
+					case MG_LIGHTNINGBOLT:
+						if(autospell_level == 3)
+							max_lvl = 2;
+						else if(autospell_level >= 4)
+							max_lvl = 3;
+						break;
+					case MG_SOULSTRIKE:
+						if(autospell_level == 6)
+							max_lvl = 2;
+						else if(autospell_level >= 7)
+							max_lvl = 3;
+						break;
+					case MG_FIREBALL:
+						max_lvl = 2;
+						break;
+				}
+
+				max_lvl = min(learned_level,max_lvl);
+				skill_lv = 1;
+				if(max_lvl > 1){
+					uint32 i = rnd()%1000;
+					switch(max_lvl){
+						case 2: //For level 1~2 skills, chance is 76.5%/23.5% 
+							if(i < 235)
+								skill_lv = 2;
+							break;
+						case 3: //For level 1~3 skills, chance is 65%/20%/15%
+							if(i < 150)
+								skill_lv = 3;
+							else if(i < 350)
+								skill_lv = 2;
+							break;
+					}
 				}
 			}
-		}
+#endif
+			int32 sp = skill_get_sp(skill_id,skill_lv) * 2 / 3;
+
+			if(status_charge(src,0,sp)){
+				struct unit_data *ud = unit_bl2ud(src);
+
+				switch(skill_get_casttype(skill_id)){
+					case CAST_GROUND:
+						skill_castend_pos2(src,target->x,target->y,skill_id,skill_lv,tick,flag);
+						break;
+					case CAST_NODAMAGE:
+						skill_castend_nodamage_id(src,target,skill_id,skill_lv,tick,flag);
+						break;
+					case CAST_DAMAGE:
+						skill_castend_damage_id(src,target,skill_id,skill_lv,tick,flag);
+						break;
+				}
+				if(ud){
+					int32 autospell_tick = skill_delayfix(src,skill_id,skill_lv);
+
+					if(DIFF_TICK(ud->canact_tick,tick + autospell_tick) < 0){
+						ud->canact_tick = i64max(tick + autospell_tick,ud->canact_tick);
+						if(battle_config.display_status_timers && sd)
+							clif_status_change(src,EFST_POSTDELAY,1,autospell_tick,0,0,0);
+					}
+				}
+			}
+		}();
 	}
 	if (sd) {
 		uint16 r_skill = 0, sk_idx = 0;
