@@ -48,6 +48,7 @@ Body:
     Commands:
       changedress: true
       resurrect: true
+      nofx: true
     Permissions:
       # without this basic permissions regular players could not trade or party
       can_trade: true
