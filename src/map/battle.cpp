@@ -10818,7 +10818,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			}
 #else
 			uint16 autospell_level{};
-			if(sd){
+			if(sd != nullptr){
 				autospell_level = pc_checkskill(sd,SA_AUTOSPELL);
 
 				if(autospell_level == 0)
@@ -10830,8 +10830,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				if(rnd()%100 >= sc->getSCE(SC_AUTOSPELL)->val4)
 					return;
 			}
-			uint16 skill_lv{};
-			int32 sp{};
+
 
 			uint16 skill_id = sc->getSCE(SC_AUTOSPELL)->val2;
 			if(skill_id == 0)
@@ -10842,7 +10841,9 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			if(max_level == 0)
 				return;
 
-			if(!sd || (sd && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2  ==  SL_SAGE))
+			uint16 skill_lv = 1;
+
+			if(sd == nullptr || (sc->hasSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_SAGE))
 				skill_lv = max_level;
 			else{
 				switch(skill_id){
@@ -10851,34 +10852,21 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 						break;
 					case MG_COLDBOLT:
 					case MG_FIREBOLT:
-						[[fallthrough]];
 					case MG_LIGHTNINGBOLT:
-						if(autospell_level == 2)
-							skill_lv = 1;
-						else if(autospell_level == 3)
+						if(autospell_level == 3)
 							skill_lv = 2;
 						else if(autospell_level >= 4)
 							skill_lv = 3;
 						break;
 					case MG_SOULSTRIKE:
-						if(autospell_level == 5)
-							skill_lv = 1;
-						else if(autospell_level == 6)
+						if(autospell_level == 6)
 							skill_lv = 2;
 						else if(autospell_level >= 7)
 							skill_lv = 3;
 						break;
 					case MG_FIREBALL:
-						if(autospell_level == 8)
-							skill_lv = 1;
-						else if(autospell_level >= 9)
-							skill_lv = 2;
+						skill_lv = 2;
 						break;
-					case MG_FROSTDIVER:
-						skill_lv = 1;
-						break;
-					default:
-						return;
 				}
 
 				skill_lv = min(max_level,skill_lv);
@@ -10899,7 +10887,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				}
 			}
 #endif
-			sp = skill_get_sp(skill_id,skill_lv) * 2 / 3;
+			int32 sp = skill_get_sp(skill_id,skill_lv) * 2 / 3;
 
 			if(status_charge(src,0,sp)){
 				struct unit_data *ud = unit_bl2ud(src);
