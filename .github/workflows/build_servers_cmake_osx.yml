@@ -47,7 +47,6 @@ jobs:
           brew install mysql-client
           brew install cmake
 
-
       # Install latest CMake.
       - uses: lukka/get-cmake@latest
 

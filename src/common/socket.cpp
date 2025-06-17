@@ -1643,13 +1643,13 @@ uint32_t host2ip(const char* hostname)
     hints.ai_family = AF_INET;  // IPv4 address
     hints.ai_socktype = SOCK_STREAM;
 
-    int err = getaddrinfo(hostname, NULL, &hints, &res);
-    if (err != 0 || res == NULL)
+    int32 err = getaddrinfo(hostname, nullptr, &hints, &res);
+    if (err != 0 || res == nullptr)
     {
         return 0;  // Return 0 if there's an error resolving the hostname
     }
 
-    struct sockaddr_in* sockaddr_in = (struct sockaddr_in*)res->ai_addr;
+    struct sockaddr_in* sockaddr_in = reinterpret_cast<struct sockaddr_in *>(res->ai_addr);
     uint32_t ip = ntohl(sockaddr_in->sin_addr.s_addr);
     freeaddrinfo(res);  // Don't forget to free the memory used by getaddrinfo
 
