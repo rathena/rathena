@@ -1,0 +1,139 @@
+//===========================
+//= Custom Midgear Slotter =
+//===========================
+// Version: 1.0
+// By: Darkelfen
+
+payon,147,63,5	script	PiercingExpert	100,{
+	// Gewicht prüfen
+	if (checkweight(1201,1) == 0) {
+		mes "You are carrying too much objects. Put some of them in Kafra storage.";
+		close;
+	}
+	if (MaxWeight - Weight < 10000) {
+		mes "You are carrying too much weight, come back when you’ve reduced it.";
+		close;
+	}
+
+	@zenyCost = 2000000;
+
+	mes "[Olivia Van de'Bar]";
+	mes "Hello adventurer. Years of development and hard work";
+	mes "made it possible to add slots to mid headgears.";
+	mes "Not all mid headgears can be slotted, just a few.";
+	next;
+
+	mes "The following headgears can be slotted:";
+	mes "Angel Wing Ears, Black Devil's Mask, Black Frame Glasses,";
+	mes "Blush, Dark Blinder, Elven Ears, Evil Wing Ears, Glasses, Small Ribbons.";
+	next;
+
+	mes "It costs only " + @zenyCost + " Zeny to slot it.";
+	next;
+
+	mes "What do you want to do?";
+	switch(select("Slot my gear:I've changed my mind")) {
+		case 1:
+			next;
+			switch(select(
+				"Angel Wing Ears",
+				"Black Devil's Mask",
+				"Black Frame Glasses",
+				"Blush",
+				"Dark Blinder",
+				"Elven Ears",
+				"Evil Wing Ears",
+				"Glasses",
+				"Small Ribbons",
+				"Nothing"
+			)) {
+
+				case 1: // Angel Wing Ears
+					callfunc "slot_headgear", 5074, @zenyCost, 18518, "Angel Wing Ears [1]";
+					break;
+
+				case 2: // Black Devil's Mask
+					callfunc "slot_headgear", 18599, @zenyCost, 18603, "Black Devil's Mask [1]";
+					break;
+
+				case 3: // Black Frame Glasse
+					callfunc "slot_headgear", 5401, @zenyCost, 18611, "Black Frame Glasses [1]";
+					break;
+
+				case 4: // Blush
+					callfunc "slot_headgear", 5040, @zenyCost, 18607, "Blush [1]";
+					break;
+
+				case 5: // Dark Blinder
+					callfunc "slot_headgear", 5104, @zenyCost, 18609, "Dark Blinder [1]";
+					break;
+
+				case 6: // Elven Ears
+					callfunc "slot_headgear", 2286, @zenyCost, 18507, "Elven Ears [1]";
+					break;
+
+				case 7: // Evil Wing Ears
+					callfunc "slot_headgear", 5068, @zenyCost, 18519, "Evil Wing Ears [1]";
+					break;
+
+				case 8: // Glasses
+					callfunc "slot_headgear", 2203, @zenyCost, 2204, "Glasses [1]";
+					break;
+
+				case 9: // Small Ribbons
+					callfunc "slot_headgear", 5085, @zenyCost, 18608, "Small Ribbons [1]";
+					break;
+
+				case 10:
+					goto L_exit;
+			}
+			break;
+
+		case 2:
+			next;
+			goto L_exit;
+	}
+
+L_exit:
+	mes "See you then, take care.";
+	close;
+
+L_sorry:
+	specialeffect EF_SUI_EXPLOSION;
+	mes "Something went wrong... I’m very sorry.";
+	close;
+}
+
+//================================================
+// Slot Headgear Function (for cleaner scripting)
+//================================================
+function	script	slot_headgear	{
+	.@source = getarg(0);    // Unsocketed item ID
+	.@zeny = getarg(1);      // Cost
+	.@result = getarg(2);    // Resulting slotted item ID
+	.@name$ = getarg(3);     // Item name (for message)
+
+	mes "Are you completely sure about adding the slot to your " + .@name$;
+	if(select("Shut up and do it!:Not really") == 2) close;
+	next;
+
+	if (Zeny < .@zeny) {
+		mes "You don't have enough Zeny.";
+		mes "You need " + .@zeny + " Zeny.";
+		close;
+	}
+
+	if (countitem(.@source) >= 1) {
+		delitem .@source,1;
+		set zeny, zeny - .@zeny;
+		getitem .@result, 1;
+		mes "Enjoy your " + .@name$ + "!";
+		close;
+	} else {
+		mes "You don't have the required item.";
+		mes "Come back when you've gathered everything.";
+		close;
+	}
+
+	return;
+}

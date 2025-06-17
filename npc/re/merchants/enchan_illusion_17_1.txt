@@ -247,7 +247,7 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 		mes "I gave you an Armor Modification Module.";
 		mes "If you want to refine it, the <NAVI>[Tin Can]<INFO>sp_cor,106,136,0,101,0</INFO></NAVI> next to me can take good care of you.";
 		delitem 25669,30;	// EP17_1_EVT02
-		delitem 25723,5;	// EP17_1_EVT39
+		delitem 25723,30;	// EP17_1_EVT39
 		// consumeitem 23775;	// EP17_1_SPC04
 		getgroupitem(IG_EP17_1_SPC04);
 		close;
@@ -287,7 +287,7 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 	case 1:
 		cutin "ep171_elyumina01",0;
 		mes "[Elyumina]";
-		mes "OS weapons? I'll handle that if you bring me 1 " + mesitemlink( 25668 ) + " and 50 " + mesitemlink( 25669 ) + ".";
+		mes "OS weapons? I'll handle that if you bring me 1 " + mesitemlink( 25668 ) + " and 10 " + mesitemlink( 25669 ) + ".";
 		mes "I'll give you whatever kind I want to give you, among the ones I have. Why should I let you pick?";
 		next;
 		cutin "",255;
@@ -315,10 +315,10 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 			close3;
 		}
 		disable_items;
-		if (countitem(25668) < 1 || countitem(25669) < 50) {
+		if (countitem(25668) < 1 || countitem(25669) < 10) {
 			cutin "ep171_elyumina03",0;
 			mes "[Elyumina]";
-			mes "I told you, bring me 1 Damaged Weapon and 50 Mysterious Components. You should listen when people talk.";
+			mes "I told you, bring me 1 Damaged Weapon and 10 Mysterious Components. You should listen when people talk.";
 			close3;
 		}
 		if (checkweight(28136,2) == 0) {
@@ -333,14 +333,14 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 		mes "There. If you want another, then bring me more Damaged Weapons and Mysterious Components.";
 		mes "I'm locked up in here, fixing toys, because of you. You can deal with this, right?";
 		delitem 25668,1;	// EP17_1_EVT01
-		delitem 25669,50;	// EP17_1_EVT02
+		delitem 25669,10;	// EP17_1_EVT02
 		// consumeitem 23772;	// EP17_1_SPC01
 		getgroupitem(IG_EP17_1_SPC01);
 		close3;
 	case 2:
 		cutin "ep171_elyumina04",0;
 		mes "[Elyumina]";
-		mes "If you want Illusion armor, bring me 50 " + mesitemlink( 25723 ) + ". I'll give you a piece.";
+		mes "If you want Illusion armor, bring me 10 " + mesitemlink( 25723 ) + ". I'll give you a piece.";
 		mes "Let's see... Ooh, when did I make so many varieties? Alright, I feel generous. What do you want?";
 		next;
 		cutin "",255;
@@ -371,7 +371,7 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 		.@id = .@item[ select( getitemname(.@item[0]), getitemname(.@item[1]) ) -1 ];
 		cutin "ep171_elyumina04",0;
 		mes "[Elyumina]";
-		mes "Alright, " + getitemname(.@id) + ", right? Do you really want to trade it for 50 Cor Cores?";
+		mes "Alright, " + getitemname(.@id) + ", right? Do you really want to trade it for 10 Cor Cores?";
 		next;
 		cutin "",255;
 		if (select( "Exchange.", "Do not exchange." ) == 2) {
@@ -381,7 +381,7 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 			close3;
 		}
 		disable_items;
-		if (countitem(25723) < 50) {
+		if (countitem(25723) < 10) {
 			cutin "ep171_elyumina02",0;
 			mes "[Elyumina]";
 			mes "Hey, are you kidding me? You don't have all the Cor Cores! Hey, I tried to be nice!";
@@ -391,7 +391,7 @@ sp_cor,111,130,3	script	Elyumina#rm171_4	4_EP17_ELYUMINA,{
 		cutin "ep171_elyumina04",0;
 		mes "[Elyumina]";
 		mes "Here, take this " + getitemname(.@id) + ". I bet it's probably the best armor you've ever had. You really ought to be grateful.";
-		delitem 25723,50;	// EP17_1_EVT390
+		delitem 25723,10;	// EP17_1_EVT390
 		getitem .@id,1;
 		enable_items;
 		close3;

@@ -222,31 +222,31 @@ ba_in01,87,370,3	script	Lisa#ep172_merchant	20698,{
 //= Merchants
 -	marketshop	ep172littlemanager00	-1,1000227:172:999999
 
-ba_in01,87,386,3	script	Child Manager ©¬#ep172_pet	EP17_2_CHILD_ADMIN1,{
+ba_in01,87,386,3	script	Child Manager ï¿½ï¿½#ep172_pet	EP17_2_CHILD_ADMIN1,{
 	if (checkweight(1201,3) == 0) {
 		mes "- You have too many items.";
 		mes "Please clear your inventory and try again. -";
 		close;
 	}
-	mes "[Child Manager ©¬]";
+	mes "[Child Manager ï¿½ï¿½]";
 	mes "I have a whole bunch of little stuffs!";
 	next;
 	switch( select( "Little Manager", "Cloud Cotton", "Little Headress", "Cancel" ) ) {
 	case 1:
-		mes "[Child Manager ©¬]";
+		mes "[Child Manager ï¿½ï¿½]";
 		mes "If you want to play with the little manager, it would cost you 30 Barmeal Tickets.";
 		next;
 		if (select( "Exchange.", "Stop." ) == 2) {
-			mes "[Child Manager ©¬]";
+			mes "[Child Manager ï¿½ï¿½]";
 			mes "Then, it's time for me to play!";
 			close;
 		}
 		if (countitem(1000103) < 30) {
-			mes "[Child Manager ©¬]";
+			mes "[Child Manager ï¿½ï¿½]";
 			mes "Like I said, if you want to play with the little manager, you'll need 30 Barmeal Tickets!";
 			close;
 		}
-		mes "[Child Manager ©¬]";
+		mes "[Child Manager ï¿½ï¿½]";
 		mes "Have fun with your new friend!";
 		delitem 1000103,30;
 		getitem 9123,1;
@@ -258,7 +258,7 @@ ba_in01,87,386,3	script	Child Manager ©¬#ep172_pet	EP17_2_CHILD_ADMIN1,{
 		callshop "barter_Ep_17_2_C_Admin_Acc";
 		end;
 	case 4:
-		mes "[Child Manager ©¬]";
+		mes "[Child Manager ï¿½ï¿½]";
 		mes "Then, it's time for me to play!";
 		close;
 	}
@@ -356,7 +356,7 @@ ba_in01,87,380,3	script	Yecheon#ep172module_trader	4_EP17_CLEANER_W,{
 		mes "Then, combat-specialized guest, do safely improve your abilities.";
 		close3;
 	case 2:
-		.@price = 90;
+		.@price = 5;
 		cutin "ep172_omega",2;
 		mes "[Yecheon]";
 		mes "I will exchange 1 random Automatic Module excluding the epic grade modules for " + .@price + " " + mesitemlink(1000103) + ".";
@@ -379,7 +379,7 @@ ba_in01,87,380,3	script	Yecheon#ep172module_trader	4_EP17_CLEANER_W,{
 		getitem rand(1000105,1000149),1;
 		close3;
 	case 3:
-		.@price = 45;
+		.@price = 2;
 		.@zeny = 1500000;
 		cutin "ep172_omega",2;
 		mes "[Yecheon]";
@@ -421,7 +421,7 @@ ba_in01,87,380,3	script	Yecheon#ep172module_trader	4_EP17_CLEANER_W,{
 			getitem 100166,1;
 		close3;
 	case 4:
-		.@price = 45;
+		.@price = 2;
 		.@zeny = 1500000;
 		cutin "ep172_omega",2;
 		mes "[Yecheon]";

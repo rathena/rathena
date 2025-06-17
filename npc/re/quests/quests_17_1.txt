@@ -587,7 +587,7 @@ ein_fild01,95,146,5	script	Kaya Tos#171_einf	4_EP17_KAYA,{
 		getexp 600000,600000;
 		completequest 17013;
 		setquest 17014;
-		getitem 25723,20;
+		getitem 25723,25;
 		close3;
 	}
 	cutin "ep171_kaya01",0;
@@ -3953,7 +3953,7 @@ sp_rudus,184,360,5	script	Elena Volkova#171_rudus	4_F_ELENA,{
 		mes "This place is just a dump.";
 		completequest 7858;
 		setquest 7859;
-		getitem 25723,15;
+		getitem 25723,25;
 		getexp 800000,800000;
 		close3;
 	}
@@ -4344,8 +4344,8 @@ sp_rudus,130,200,4	script	Morning#171_rudus	4_EP17_MORNING,{
 				setquest 5861;
 				erasequest atoi(.@temp$[0]);
 				delitem atoi(.@temp$[1]),10;
-				getitem 25669,5; //= Unknown Part
-				getitem 25723,1; //= Cor Core
+				getitem 25669,25; //= Unknown Part
+				getitem 25723,25; //= Cor Core
 				getexp 750000,750000;
 				setpcblock PCBLOCK_ALL,false;
 				cutin "",255;
@@ -5756,7 +5756,7 @@ sp_cor,137,146,3	script	Kaya Tos#171_cor	4_EP17_KAYA,{
 		mes "Thank you for everything you have done so far.";
 		completequest 17032;
 		getexp 600000,600000;
-		getitem 25723,20;
+		getitem 25723,25;
 		close3;
 	}
 	cutin "ep171_kaya01",2;
@@ -6096,8 +6096,8 @@ sp_cor,135,147,3	script	Aas#171_cor	4_EP17_AS,{
 		mes "You must be pretty tired.";
 		delitem 25666,10;
 		getexp 200000,200000;
-		getitem 25723,1;
-		getitem 25669,5;
+		getitem 25723,25;
+		getitem 25669,25;
 		erasequest 17034;
 		setquest 17035;
 		close3;
@@ -6437,8 +6437,8 @@ sp_cor,180,169,3	script	Elena Volkova#rm171_1	4_F_ELENA,{
 		getexp 0,300000;
 		getexp 0,300000;
 		getexp 0,250000;
-		getitem 25668,1;	// EP17_1_EVT01
-		getitem 25723,5;	// EP17_1_EVT39
+		getitem 25668,2;	// EP17_1_EVT01
+		getitem 25723,25;	// EP17_1_EVT39
 		close3;
 	case 2:
 		break;
@@ -7928,8 +7928,8 @@ sp_cor,155,94,3	script	Juslan#171_daily_merc	4_M_GUNSLINGER3,{
 		setquest 7868;
 		erasequest 7867;
 		getexp 200000,200000;
-		getitem 25669,5;
-		getitem 25723,1;
+		getitem 25669,25;
+		getitem 25723,25;
 		close2;
 		npctalk "I need a break...","",bc_self;
 		end;
@@ -8028,8 +8028,8 @@ sp_cor,246,97,3	script	Farmhand#rm171_1	1_M_03,{
 				getexp 0,300000;
 				getexp 0,300000;
 				getexp 0,250000;
-				getitem 25723,1;	// EP17_1_EVT39
-				getitem 25669,5;	// EP17_1_EVT02
+				getitem 25723,25;	// EP17_1_EVT39
+				getitem 25669,25;	// EP17_1_EVT02
 				completequest 16364;
 			}
 			if (isbegin_quest(16366) == 1) {
@@ -8037,8 +8037,8 @@ sp_cor,246,97,3	script	Farmhand#rm171_1	1_M_03,{
 				getexp 0,100000;
 				getexp 0,100000;
 				getexp 0,100000;
-				getitem 25723,1;	// EP17_1_EVT39
-				getitem 25669,5;	// EP17_1_EVT02
+				getitem 25723,25;	// EP17_1_EVT39
+				getitem 25669,25;	// EP17_1_EVT02
 				erasequest 16366;
 			}
 			setquest 16365;

@@ -1436,27 +1436,7 @@ Body:
     HitCount: 1
     CastTime: 800
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 80000
-      - Level: 3
-        Time: 100000
-      - Level: 4
-        Time: 120000
-      - Level: 5
-        Time: 140000
-      - Level: 6
-        Time: 160000
-      - Level: 7
-        Time: 180000
-      - Level: 8
-        Time: 200000
-      - Level: 9
-        Time: 220000
-      - Level: 10
-        Time: 240000
+    Duration1: 3600000
     FixedCastTime: 200
     Requires:
       HpCost: 15
@@ -1590,27 +1570,7 @@ Body:
     SplashArea: 18
     CastTime: 350
     AfterCastActDelay: 3500
-    Duration1:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 60000
-      - Level: 3
-        Time: 90000
-      - Level: 4
-        Time: 120000
-      - Level: 5
-        Time: 150000
-      - Level: 6
-        Time: 180000
-      - Level: 7
-        Time: 210000
-      - Level: 8
-        Time: 240000
-      - Level: 9
-        Time: 270000
-      - Level: 10
-        Time: 300000
+    Duration1: 3600000
     FixedCastTime: 150
     Requires:
       SpCost:
@@ -1646,27 +1606,7 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 80000
-      - Level: 3
-        Time: 100000
-      - Level: 4
-        Time: 120000
-      - Level: 5
-        Time: 140000
-      - Level: 6
-        Time: 160000
-      - Level: 7
-        Time: 180000
-      - Level: 8
-        Time: 200000
-      - Level: 9
-        Time: 220000
-      - Level: 10
-        Time: 240000
+    Duration1: 3600000
     Requires:
       SpCost:
         - Level: 1
@@ -2648,17 +2588,7 @@ Body:
     SplashArea: 18
     CastTime: 3200
     AfterCastActDelay: 2000
-    Duration1:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 45000
-      - Level: 3
-        Time: 60000
-      - Level: 4
-        Time: 75000
-      - Level: 5
-        Time: 90000
+    Duration1: 3600000
     FixedCastTime: 800
     Requires:
       SpCost: 40
@@ -2676,17 +2606,7 @@ Body:
     HitCount: 1
     SplashArea: 18
     AfterCastActDelay: 2000
-    Duration1:
-      - Level: 1
-        Time: 10000
-      - Level: 2
-        Time: 15000
-      - Level: 3
-        Time: 20000
-      - Level: 4
-        Time: 25000
-      - Level: 5
-        Time: 30000
+    Duration1: 3600000
     Requires:
       SpCost: 20
     Status: Gloria
@@ -24891,7 +24811,7 @@ Body:
     Description: Dragon Combo
     MaxLevel: 10
     Type: Weapon
-    TargetType: Attack
+    TargetType: Self
     Range: 2
     Hit: Multi_Hit
     HitCount: -2
@@ -24899,6 +24819,8 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
+    Flags:
+      NoTargetSelf: true
     Duration1: 4500
     Requires:
       SpCost:
@@ -25706,7 +25628,7 @@ Body:
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1: 3600000
-    Duration2: 3600000
+    Duration2: 600000
     Cooldown: 1000
     FixedCastTime:
       - Level: 1

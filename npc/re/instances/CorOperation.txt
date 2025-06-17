@@ -719,8 +719,8 @@ OnTimer10000:
 			mes "[Elena Volkova]";
 			mes "Good job. It's funny that we have to do this again tomorrow. See you tomorrow.";
 			setquest 16363;
-			getitem 25723,1;
-			getitem 25669,5;
+			getitem 25723,25;
+			getitem 25669,25;
 			close2;
 			warp "sp_cor",111,125;
 		}

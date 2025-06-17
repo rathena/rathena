@@ -13,7 +13,7 @@
 //= 1.0 First version, edited. [Euphy]
 //============================================================
 
-prontera,148,174,5	script	Private MVP Room	100,{
+prontera,164,162,5	script	Private MVP Room	100,{
 	mes "[Private MVP Room]";
 	mes "Please select a private MVP room.";
 	if ( getvariableofnpc( .rentcost, "MVP Summoner" ) )

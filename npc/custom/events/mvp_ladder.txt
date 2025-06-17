@@ -12,7 +12,7 @@
 //= 1.0 First version, edited. [Euphy]
 //============================================================
 
-prontera,164,171,3	script	MvP Ladder Warper	56,{
+prontera,164,159,3	script	MvP Ladder Warper	56,{
 	mes "[MvP Ladder Warper]";
 	mes "Say... do you want to play the MvP Ladder game?";
 	next;

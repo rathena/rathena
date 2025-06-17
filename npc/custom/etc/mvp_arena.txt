@@ -17,7 +17,7 @@
 //============================================================
 
 // Entrance
-prontera,154,197,3	script	MVP Warper	768,{
+prontera,164,165,3	script	MVP Warper	768,{
 	mes "[ ^0065DFMVP Warper^000000 ]";
 	mes "Would you like to enter";
 	mes "the MVP Arena?";

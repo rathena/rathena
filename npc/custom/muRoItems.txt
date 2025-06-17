@@ -10,7 +10,7 @@
 //= https://wiki.muhro.eu/Equipment_Crafting
 //============================================================
 					
-prontera,164,168,5	script	Crafting Items	59,{
+prontera,126,210,5	script	Crafting Items	59,{
 
 function Add; function Chk; function Slot; function A_An;
 

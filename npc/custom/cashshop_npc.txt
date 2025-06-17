@@ -1,0 +1,31 @@
+// File: npc/custom/cashshop_npc.txt
+
+prontera,142,196,5	script	Credit Shop	100,{
+	mes "[Credit Shop]";
+	mes "Welcome! Here you can purchase Credit Points in exchange for Zeny.";
+	mes "Each Credit Point costs 100000 Zeny.";
+	next;
+
+	mes "How many Credit Points would you like to buy?";
+	input .@amount;
+
+	if (.@amount <= 0) {
+		mes "Invalid amount.";
+		close;
+	}
+
+	set .@cost, .@amount * 100000;
+
+	if (Zeny < .@cost) {
+		mes "You don't have enough Zeny.";
+		mes "You need " + .@cost + " Zeny.";
+		close;
+	}
+
+	Zeny -= .@cost;
+	#CASHPOINTS += .@amount;
+
+	mes "You have purchased " + .@amount + " Credit Points.";
+	mes "You now have a total of " + #CASHPOINTS + " Credit Points.";
+	close;
+}

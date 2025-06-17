@@ -6,7 +6,7 @@
 
 //= Varmundt Mansion Garden
 //============================================================
-ba_maison,0,0	monster	Broken Beta	20630,15,5000
+ba_maison,0,0	monster	Broken Beta	20630,30,5000
 ba_maison,0,0	monster	Omega Cleaner	20640,5,5000
 ba_maison,0,0	monster	Guardian Parts	20679,15,5000
 ba_maison,0,0	monster	Bookworm	20683,2,5000

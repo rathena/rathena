@@ -8,9 +8,9 @@
 //============================================================
 
 // sp_rudus estimated amount (possibly area spawns)
-sp_rudus,0,0	monster	Venenum	20363,30,5000
-sp_rudus,0,0	monster	Dolor	20361,30,5000
-sp_rudus,0,0	monster	Twin Caput	20365,30,5000
+sp_rudus,0,0	monster	Venenum	20363,60,5000
+sp_rudus,0,0	monster	Dolor	20361,60,5000
+sp_rudus,0,0	monster	Twin Caput	20365,40,5000
 
 sp_rudus2,0,0	monster	High Hunter Bellare	20356,40,5000
 sp_rudus2,0,0	monster	High Hunter Sanare	20358,37,5000

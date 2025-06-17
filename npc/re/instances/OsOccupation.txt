@@ -445,8 +445,8 @@ OnTimer10000:
 		mes "...";
 		if (isbegin_quest(12452) == 1)
 			completequest 12452;
-		getitem 25668,1;
-		getitem 25723,5;
+		getitem 25668,2;
+		getitem 25723,30;
 		getexp 300000,300000;
 		close;
 	}
@@ -479,8 +479,8 @@ OnTimer10000:
 		mes "Here are the supplies and experience given to the troops that joined the operation. Take it.";
 		erasequest 12454;
 		getexp 150000,150000;
-		getitem 25669,5;
-		getitem 25723,1;
+		getitem 25669,25;
+		getitem 25723,25;
 		next;
 		mes "[Operation Officer]";
 		mes "Even though it's a CP7 Rated, sorry I couldn't give you more experience.";
