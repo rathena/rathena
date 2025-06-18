@@ -28,7 +28,7 @@
 #include <cctype>    
 #include <string>    
 
-ACMD_FUNC(nofx) // Déclare la commande @nofx by Absinthe
+ACMD_FUNC(nofx) 
 {
 
 	uint16 skill_id = 0;
@@ -40,7 +40,7 @@ ACMD_FUNC(nofx) // Déclare la commande @nofx by Absinthe
 
 	if (args_read < 1) { 
 		clif_displaymessage(sd->fd, "Usage: @nofx <Skill ID> {on|off|clear}");
-		clif_displaymessage(sd->fd, "  'on' pour cacher, 'off' pour afficher, 'clear' pour tout afficher.");
+		clif_displaymessage(sd->fd, "  'on' hide, 'off' show, 'clear' show all.");
 		return 0;
 	}
 
@@ -49,41 +49,41 @@ ACMD_FUNC(nofx) // Déclare la commande @nofx by Absinthe
 
 	if (strcmp(temp_str, "clear") == 0) {
 		if (args_read > 1) { 
-			clif_displaymessage(sd->fd, "Usage: @nofx clear (ne prend pas d'arguments supplementaires).");
+			clif_displaymessage(sd->fd, "Usage: @nofx clear (does not take additional arguments).");
 			
 			return 0;
 		}
 		
 		custom_effects_data* ce_data = CustomEffectManager::get_instance()->get_effects(sd->status.char_id);
 		if (!ce_data) { 
-			clif_displaymessage(sd->fd, "[Erreur] Données d'effets personnalises introuvables. Contactez un administrateur.");
+			clif_displaymessage(sd->fd, "[Erreur] Custom effects data not found. Contact an administrator.");
 			ShowError("ATCOMMAND: @nofx clear - Failed to get custom_effects_data for char_id %u.\n", sd->status.char_id);
 			return 0;
 		}
 
 		ce_data->clear_all_hidden_skills();
-		clif_displaymessage(sd->fd, "[Effets] Tous les effets de competence sont maintenant visibles.");
+		clif_displaymessage(sd->fd, "[Effets] All skill effects are now visible.");
 		
 		return 0; 
 	}
 
 	if (args_read < 2) { 
 		clif_displaymessage(sd->fd, "Usage: @nofx <Skill ID> {on|off|clear}");
-		clif_displaymessage(sd->fd, "  'on' pour cacher, 'off' pour afficher, 'clear' pour tout afficher.");
+		clif_displaymessage(sd->fd, "  'on' hide, 'off' show, 'clear' show all.");
 		
 		return 0;
 	}
 
 	
 	if (sscanf(arg1_str, "%hu", &skill_id) != 1) {
-		clif_displaymessage(sd->fd, "ID de competence invalide. Doit etre un nombre.");
+		clif_displaymessage(sd->fd, "Invalid skill ID. Must be a number.");
 		
 		return 0;
 	}
 
 	custom_effects_data* ce_data = CustomEffectManager::get_instance()->get_effects(sd->status.char_id);
 	if (!ce_data) {
-		clif_displaymessage(sd->fd, "[Erreur] Données d'effets personnalises introuvables. Contactez un administrateur.");
+		clif_displaymessage(sd->fd, "[Erreur] Custom effects data not found. Contact an administrator.");
 		ShowError("ATCOMMAND: @nofx - Failed to get custom_effects_data for char_id %u.\n", sd->status.char_id);
 		return 0;
 	}
@@ -94,17 +94,17 @@ ACMD_FUNC(nofx) // Déclare la commande @nofx by Absinthe
 	if (strcmp(temp_str, "on") == 0) {
 		ce_data->set_skill_effect_hidden(skill_id, true);
 		char output_msg[256];
-		snprintf(output_msg, sizeof(output_msg), "[Effets] Skill ID %hu est maintenant cache.", skill_id);
+		snprintf(output_msg, sizeof(output_msg), "[Effets] Skill ID %hu is now hidden.", skill_id);
 		clif_displaymessage(sd->fd, output_msg);
 		
 	} else if (strcmp(temp_str, "off") == 0) {
 		ce_data->set_skill_effect_hidden(skill_id, false);
 		char output_msg[256];
-		snprintf(output_msg, sizeof(output_msg), "[Effets] Skill ID %hu est maintenant visible.", skill_id);
+		snprintf(output_msg, sizeof(output_msg), "[Effets] Skill ID %hu is now visible.", skill_id);
 		clif_displaymessage(sd->fd, output_msg);
 		
 	} else {
-		clif_displaymessage(sd->fd, "Action invalide. Utilisez 'on', 'off' ou 'clear'.");
+		clif_displaymessage(sd->fd, "Invalid action. Use 'on', 'off' or 'clear'.");
 		
 	}
 
