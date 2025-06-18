@@ -58,7 +58,7 @@
 #include "storage.hpp"
 #include "unit.hpp"
 #include "vending.hpp"
-#include "../custom/nofx.hpp" // Nofx by Absinthe
+#include "../custom/nofx.hpp" 
 
 using namespace rathena;
 
@@ -419,7 +419,6 @@ static int32 clif_send_sub(struct block_list *bl, va_list ap)
 	nullpo_ret(src_bl = va_arg(ap,struct block_list*));
 	type = va_arg(ap,int32);
 
-	// Nofx by Absinthe
 	if (buf && len >= sizeof(PACKET_ZC_NOTIFY_GROUNDSKILL) &&
 	((const PACKET_ZC_NOTIFY_GROUNDSKILL*)buf)->PacketType == HEADER_ZC_NOTIFY_GROUNDSKILL)
 	{
@@ -5483,10 +5482,9 @@ void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, 
 
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
 void clif_skill_unit_test(struct block_list *bl, int16 x, int16 y, int32 unit_id, int16 range, int16 skill_lv) {
-	// Nofx by Absinthe
 	if (bl && bl->type == BL_PC) {
 	map_session_data* sd_viewer = map_id2sd(bl->id);
-	if (sd_viewer && CustomEffectManager::clif_is_skill_hidden_for_viewer(sd_viewer->id, unit_id)) { // unit_id est le skill_id ici
+	if (sd_viewer && CustomEffectManager::clif_is_skill_hidden_for_viewer(sd_viewer->id, unit_id)) {
 		return;
 	}
 }
@@ -6009,7 +6007,6 @@ void clif_skill_cooldown( map_session_data &sd, uint16 skill_id, t_tick tick ){
 /// 0114 <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.W <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL)
 /// 01de <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.L <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL2)
 void clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int16 div, uint16 skill_id, uint16 skill_lv, e_damage_type type ){
-	// Nofx by Absinthe
 	if (src.type == BL_PC) {
 	map_session_data* sd_viewer = map_id2sd(src.id);
 	if (sd_viewer && CustomEffectManager::clif_is_skill_hidden_for_viewer(sd_viewer->id, skill_id)) {
@@ -6136,7 +6133,6 @@ int32 clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick ti
 /// 011a <skill id>.W <heal>.W <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL)
 /// 09cb <skill id>.W <heal>.L <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL2)
 bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int32 heal, bool success ){
-	// Nofx by Absinthe
 	if (src && src->type == BL_PC) {
 		map_session_data* sd_viewer = map_id2sd(src->id);
 		if (sd_viewer && CustomEffectManager::clif_is_skill_hidden_for_viewer(sd_viewer->id, skill_id)) {
@@ -6188,7 +6184,6 @@ void clif_skill_poseffect( block_list& bl, uint16 skill_id, uint16 skill_lv, uin
 	packet.yPos = y;
 	packet.startTime = client_tick( tick );
 
-	// Nofx by Absinthe
 	uint32 displayed_src_id = bl.id;
 	if (disguised(&bl)) {
 	displayed_src_id = disguised_bl_id(bl.id);
