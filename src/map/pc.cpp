@@ -63,7 +63,7 @@
 #include "storage.hpp"
 #include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
 #include "vending.hpp" // struct s_vending
-#include "../custom/nofx.hpp" // Nofx by Absinthe
+#include "../custom/nofx.hpp" 
 
 using namespace rathena;
 
