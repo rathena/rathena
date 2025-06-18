@@ -10797,117 +10797,104 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	
 	if(sc && sc->getSCE(SC_AUTOSPELL)){
 		[&]{
+			uint16 autospell_lv{};
+
+			if(sd != nullptr)
+				autospell_lv = pc_checkskill(sd,SA_AUTOSPELL);
+			else
+				autospell_lv = sc->getSCE(SC_AUTOSPELL)->val1; //For non-players, we keep autospell level in the status entry
+
+			if(autospell_lv == 0)
+				return;
 #ifdef RENEWAL
-			if(rnd()%100 >= sc->getSCE(SC_AUTOSPELL)->val4)
-				return;
-
-			uint16 skill_id = sc->getSCE(SC_AUTOSPELL)->val2;
-			if(skill_id == 0)
-				return;
-			uint16 skill_lv = sc->getSCE(SC_AUTOSPELL)->val3;
-			if(skill_lv == 0)
-				return;
-			int32 i = rnd()%100;
-			if(sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_SAGE)
-				i = 0; //Max chance, no skill_lv reduction. [Skotlex]
-		//reduction only for skill_lv > 1
-			if(skill_lv > 1){
-				if(i >= 50) skill_lv /= 2;
-				else if(i >= 15) skill_lv--;
-			}
+			uint32 base_chance = 0;
 #else
-			uint16 autospell_level{};
-			if(sd != nullptr){
-				autospell_level = pc_checkskill(sd,SA_AUTOSPELL);
-
-				if(autospell_level == 0)
-					return;
-
-				if(rnd()%100 >= (5 + autospell_level * 2))
-					return;
-			}else{
-				if(rnd()%100 >= sc->getSCE(SC_AUTOSPELL)->val4)
-					return;
-			}
-
-			uint16 skill_id = sc->getSCE(SC_AUTOSPELL)->val2;
-			if(skill_id == 0)
+			uint32 base_chance = 5;
+#endif
+			if(rnd()%100 >= (base_chance + autospell_lv * 2))
 				return;
 
-			uint16 learned_level{};
-			if(sd){
-				learned_level = pc_checkskill(sd,skill_id);
-				if(learned_level == 0)
-					return;
-			}
+			uint16 proced_skill_id = sc->getSCE(SC_AUTOSPELL)->val2;
+			if(proced_skill_id == 0)
+				return;
 
-			uint16 skill_lv{};
-			if(sd == nullptr)
-				skill_lv = sc->getSCE(SC_AUTOSPELL)->val3;
-			else if(sc->hasSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_SAGE)
-				skill_lv = learned_level;
-			else{			
-				uint16 max_lvl = 1;
-				switch(skill_id){
+			uint16 learned_lv{};
+			if(sd != nullptr)
+				learned_lv = pc_checkskill(sd,proced_skill_id);
+			else
+				learned_lv = skill_get_max(proced_skill_id); //For non-players, we use the maximum level of the proc'ed skill
+
+			if(learned_lv == 0)
+				return;
+
+			uint16 proced_skill_lv{};
+			if(sd && sc->hasSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_SAGE)
+				proced_skill_lv = learned_lv;
+			else{
+#ifdef RENEWAL
+				//In Renewal, autocasted skills are always up to half autospell level
+				proced_skill_lv = min(learned_lv,autospell_lv / 2);
+#else
+				uint16 max_proced_lv = 1;
+				switch(proced_skill_id){
 					case MG_NAPALMBEAT:
-						max_lvl = 3;
+						max_proced_lv = 3;
 						break;
 					case MG_COLDBOLT:
 					case MG_FIREBOLT:
 					case MG_LIGHTNINGBOLT:
-						if(autospell_level == 3)
-							max_lvl = 2;
-						else if(autospell_level >= 4)
-							max_lvl = 3;
+						if(autospell_lv == 3)
+							max_proced_lv = 2;
+						else if(autospell_lv >= 4)
+							max_proced_lv = 3;
 						break;
 					case MG_SOULSTRIKE:
-						if(autospell_level == 6)
-							max_lvl = 2;
-						else if(autospell_level >= 7)
-							max_lvl = 3;
+						if(autospell_lv == 6)
+							max_proced_lv = 2;
+						else if(autospell_lv >= 7)
+							max_proced_lv = 3;
 						break;
 					case MG_FIREBALL:
-						max_lvl = 2;
+						max_proced_lv = 2;
 						break;
 				}
-
-				max_lvl = min(learned_level,max_lvl);
-				skill_lv = 1;
-				if(max_lvl > 1){
+				max_proced_lv = min(learned_lv,max_proced_lv);
+				proced_skill_lv = 1;
+				if(max_proced_lv > 1){
 					uint32 i = rnd()%1000;
-					switch(max_lvl){
-						case 2: //For level 1~2 skills, chance is 76.5%/23.5% 
+					switch(max_proced_lv){
+						case 2: //For level 1~2 skills, official proc chance can be approximated by 76.5%/23.5% 
 							if(i < 235)
-								skill_lv = 2;
+								proced_skill_lv = 2;
 							break;
-						case 3: //For level 1~3 skills, chance is 65%/20%/15%
+						case 3: //For level 1~3 skills, 65%/20%/15%
 							if(i < 150)
-								skill_lv = 3;
+								proced_skill_lv = 3;
 							else if(i < 350)
-								skill_lv = 2;
+								proced_skill_lv = 2;
 							break;
 					}
 				}
-			}
 #endif
-			int32 sp = skill_get_sp(skill_id,skill_lv) * 2 / 3;
+			}
+			int32 sp = skill_get_sp(proced_skill_id,proced_skill_lv) * 2 / 3;
 
 			if(status_charge(src,0,sp)){
 				struct unit_data *ud = unit_bl2ud(src);
 
-				switch(skill_get_casttype(skill_id)){
+				switch(skill_get_casttype(proced_skill_id)){
 					case CAST_GROUND:
-						skill_castend_pos2(src,target->x,target->y,skill_id,skill_lv,tick,flag);
+						skill_castend_pos2(src,target->x,target->y,proced_skill_id,proced_skill_lv,tick,flag);
 						break;
 					case CAST_NODAMAGE:
-						skill_castend_nodamage_id(src,target,skill_id,skill_lv,tick,flag);
+						skill_castend_nodamage_id(src,target,proced_skill_id,proced_skill_lv,tick,flag);
 						break;
 					case CAST_DAMAGE:
-						skill_castend_damage_id(src,target,skill_id,skill_lv,tick,flag);
+						skill_castend_damage_id(src,target,proced_skill_id,proced_skill_lv,tick,flag);
 						break;
 				}
 				if(ud){
-					int32 autospell_tick = skill_delayfix(src,skill_id,skill_lv);
+					int32 autospell_tick = skill_delayfix(src,proced_skill_id,proced_skill_lv);
 
 					if(DIFF_TICK(ud->canact_tick,tick + autospell_tick) < 0){
 						ud->canact_tick = i64max(tick + autospell_tick,ud->canact_tick);

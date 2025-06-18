@@ -10961,16 +10961,6 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			if (!sd) // Int reduction
 				val2 = 40;
 			break;
-		case SC_AUTOSPELL:
-			// Val1 Skill LV of Autospell
-			// Val2 Skill ID to cast
-			// Val3 Max Lv to cast
-#ifdef RENEWAL
-			val4 = val1 * 2; // Chance of casting
-#else
-			val4 = 5 + val1*2; // Chance of casting for non-players
-#endif
-			break;
 		case SC_VOLCANO:
 			{
 				int8 enchant_eff[] = { 10, 14, 17, 19, 20 }; // Enchant addition
