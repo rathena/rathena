@@ -52,7 +52,7 @@
 #include "quest.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
-#include "../custom/nofx.hpp" // New command by Absinthe
+#include "../custom/nofx.hpp" 
 
 using namespace rathena;
 using namespace rathena::server_map;
@@ -2319,7 +2319,7 @@ int32 map_quit(map_session_data *sd) {
 	pc_macro_detector_disconnect(*sd);
 	chrif_save(sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 		
-	CustomEffectManager::get_instance()->remove_effects(sd->status.char_id); // by Absinthe
+	CustomEffectManager::get_instance()->remove_effects(sd->status.char_id); 
 		
 	unit_free_pc(sd);
 	return 0;
