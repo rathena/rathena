@@ -10,4 +10,4 @@
 
 //ACMD_DEF(newcommand),
 
-ACMD_DEF(nofx), // Déclare la commande @nofx by Absinthe
+ACMD_DEF(nofx),
