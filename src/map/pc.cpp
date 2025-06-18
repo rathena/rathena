@@ -2174,13 +2174,13 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 
 	status_change_init(sd);
 
-	CustomEffectManager::get_instance()->get_effects(sd->id); // by Absinthe
+	CustomEffectManager::get_instance()->get_effects(sd->id); 
 
 	sd->sc.option = sd->status.option; //This is the actual option used in battle.
 
 	unit_dataset(sd);
 
-	map_addiddb(sd); // by Absinthe
+	map_addiddb(sd); 
 
 	sd->guild_x = -1;
 	sd->guild_y = -1;
