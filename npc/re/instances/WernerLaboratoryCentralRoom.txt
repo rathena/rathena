@@ -981,6 +981,7 @@ OnTouch:
 	mes "[Seyren]";
 	mes "While I still have my will now, I have one message to give you.";
 	next;
+
 	if (instance_live_info(ILI_NAME) == "Werner Laboratory central room#1") {
 		mes "[Seyren]";
 		mes "Please, go ahead.";
@@ -1019,16 +1020,17 @@ OnTouch:
 		warp "que_swat",155,50;
 		end;
 	}
+
 	// daily
 	mes "[Seyren]";
 	mes "It was great to see you at the end.";
 	mes "Thank you... Bye.";
 	close2;
+	atcommand "@refresh";
 	setpcblock PCBLOCK_NPC, true;
 	cutin "",255;
 	specialeffect EF_ICECRASH, AREA, .@seyren$;
 	cloakonnpc .@seyren$;
-	// monster 'map_slw$,56,171, "Seyren", SEYREN, 1;
 	sleep2 1000;
 	specialeffect2 EF_SCREEN_QUAKE;
 	sleep2 1000;
@@ -1037,9 +1039,12 @@ OnTouch:
 	setpcblock PCBLOCK_NPC, false;
 	if (is_party_leader() == true)
 		'event_final = 0;
-	mapannounce 'map_slw$, "The setting of the central room has been initialized.", bc_map,0xFF99;
-	warpparty 'map_slw$,54,134,getcharid(1),'map_slw$,2,2;
+
 	disablenpc .@seyren$;
+	specialeffect2 0;
+
+	donpcevent instance_npcname("#boss_seyren_master") + "::OnStart";
+
 	end;
 }
 
@@ -1086,6 +1091,22 @@ OnMobDead:
 		mapannounce 'map_slw$, "The Magic field has been eliminated. An entrance has been created.", bc_map,0xFF99;
 		enablenpc instance_npcname("Emergency exit#exit_war");
 		disablenpc instance_npcname("#boss_master_lab");
+	}
+	end;
+}
+
+1@slw,1,1,3	script	#boss_seyren_master	HIDDEN_WARP_NPC,5,5,{
+	end;
+OnStart:
+	enablenpc instance_npcname("#boss_seyren_master");
+	if (mobcount( 'map_slw$, instance_npcname("#boss_seyren_master") + "::OnMobDead" ) < 1)
+		monster 'map_slw$,55,170, "Seyren", 3826, 1, instance_npcname("#boss_seyren_master") + "::OnMobDead";	// E16_2_SEYREN
+	end;
+OnMobDead:
+	if (mobcount( 'map_slw$, instance_npcname("#boss_seyren_master") + "::OnMobDead" ) < 1) {
+		mapannounce 'map_slw$, "The Magic field has been eliminated. An entrance has been created.", bc_map,0xFF99;
+		enablenpc instance_npcname("Emergency exit#exit_war");
+		disablenpc instance_npcname("#boss_seyren_master");
 	}
 	end;
 }

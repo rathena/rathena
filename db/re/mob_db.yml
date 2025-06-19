@@ -99227,8 +99227,58 @@ Body:
 #    AegisName: E_EXPLOSION
 #  - Id: 3825
 #    AegisName: E_SALAMANDER
-#  - Id: 3826
-#    AegisName: E16_2_SEYREN
+  - Id: 3826
+    AegisName: E16_2_SEYREN
+    Name: Seyren Windsor
+    JapaneseName: Seyren
+    Level:  189
+    Hp: 14400000
+    BaseExp: 17751
+    JobExp: 19661
+    Attack: 3505
+    Attack2: 1317
+    Defense: 800
+    MagicDefense: 400
+    Str: 340
+    Agi: 200
+    Vit: 400
+    Int: 100
+    Dex: 400
+    Luk: 120
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Class: Boss
+    Modes:
+      Mvp: true
+    Size: Medium
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 170
+    AttackDelay: 76
+    AttackMotion: 384
+    ClientAttackMotion: 288
+    DamageMotion: 288
+    Ai: 19
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Brigan
+        Rate: 500
+      - Item: Elunium
+        Rate: 300
+      - Item: Oridecon
+        Rate: 300
+      - Item: YSF01_Plate
+        Rate: 15
+        StealProtected: true
+      - Item: YSF01_Greave
+        Rate: 15
+        StealProtected: true
+      - Item: YSF01_Manteau
+        Rate: 15
+        StealProtected: true
 #  - Id: 3827
 #    AegisName: AB_MOB_001
 #  - Id: 3828

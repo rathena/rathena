@@ -3568,6 +3568,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 		mes "[Rookie]";
 		mes "Anyway, let's see if that guy shows up again.";
 		mes "It's so~ interesting.";
+		erasequest 7743;// Sweeping the remnants (Standby)
 		close3;
 	case 2:
 		erasequest 7743;// Sweeping the remnants (Standby)
