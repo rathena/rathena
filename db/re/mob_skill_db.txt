@@ -4847,10 +4847,10 @@
 //1894,Pouring@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
 //1894,Pouring@AL_TELEPORT,idle,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,,
 //1894,Pouring@AL_TELEPORT,walk,26,1,5000,0,5000,yes,self,rudeattacked,,,,,,,,
-1894,Pouring@WZ_STORMGUST,chase,89,10,2000,0,5000,no,target,always,0,,,,,,,
-1894,Pouring@WZ_STORMGUST,attack,89,10,2000,0,5000,no,target,always,0,,,,,,,
-1894,Pouring@WZ_WATERBALL,attack,86,10,10000,500,5000,no,target,always,0,,,,,,,
-1894,Pouring@WZ_WATERBALL,chase,86,10,10000,500,5000,no,target,always,0,,,,,,,
+//1894,Pouring@WZ_STORMGUST,chase,89,10,2000,0,5000,no,target,always,0,,,,,,,
+//1894,Pouring@WZ_STORMGUST,attack,89,10,2000,0,5000,no,target,always,0,,,,,,,
+//1894,Pouring@WZ_WATERBALL,attack,86,10,10000,500,5000,no,target,always,0,,,,,,,
+//1894,Pouring@WZ_WATERBALL,chase,86,10,10000,500,5000,no,target,always,0,,,,,,,
 
 1904,Bomb Poring@NPC_SELFDESTRUCTION,any,173,1,10000,3000,0,no,self,always,0,,,,,,,
 

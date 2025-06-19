@@ -2079,7 +2079,7 @@ OnTouch:	// unknown effect
 		mes "I brought some old items from the past. It might help you, so take it.";
 		close2;
 		erasequest .@qid;
-		getitem 1000103,6;
+		getitem 1000103,20;
 		if (.@qid == 12500) {
 			if (rand(1,100) < 95)
 				getitem 1000104,rand(1,5);

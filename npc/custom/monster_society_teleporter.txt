@@ -37,8 +37,8 @@ prontera,172,125,4	script	Monster Society Warper	98,{
 		case 7:  warp("ein_fild03", 135, 47); end;
 		case 8:  warp("lhz_fild03", 167, 345); end;
 		case 9:  warp("tur_dun02", 151, 257); end;
-		case 10:  warp("tur_dun03", 125, 137); end;
-		case 11:  warp("ra_fild12", 50, 130); end;
+		case 10:  warp("tur_dun03", 128, 185); end;
+		case 11:  warp("ra_fild12", 50, 215); end;
 		case 12:  warp("ice_dun01", 161, 14); end;
 		case 13:  warp("ra_fild08", 163, 48); end;
 		case 14:  warp("ra_fild04", 274, 70); end;

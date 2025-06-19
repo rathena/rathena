@@ -317,10 +317,10 @@ ba_pw01,87,290,3	script	Alp#ep172_bapw1-00	4_M_BLACKMAN,{
 		warp "ba_in01",23,315;
 		end;
 	}
-	mes "[¾ËÇÁ]";
-	mes "¾öÃ»³­ ÀåÄ¡µé¡¦";
-	mes "µµ½Ã¡¦ ¾Æ´Ï ³ª¶ó ¼öÁØÀÇ ±Ô¸ð¿¡ ¿¡³ÊÁö¸¦ °ø±ÞÇÒ ¼ö ÀÖ°Ú±º.";
-	mes "´ëÃ¼ ¹» À§ÇØ ÀÌ·¸°Ô ±îÁö¡¦";
+	mes "[ï¿½ï¿½ï¿½ï¿½]";
+	mes "ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½é¡¦";
+	mes "ï¿½ï¿½ï¿½Ã¡ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö°Ú±ï¿½.";
+	mes "ï¿½ï¿½Ã¼ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 	cutin "bu_alp1.bmp",2;
 	close3;
 
@@ -431,7 +431,7 @@ ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
 		if (ep17_2_main == 7) {
 			ep17_2_main = 8;
 			completequest 11620;
-			getitem 1000103,5;
+			getitem 1000103,20;
 			getexp 401075,0;
 		}
 		close2;
@@ -631,7 +631,7 @@ ba_maison,70,145,3	script	Tamarin#ep172_bamaison-00	4_EP17_TAMARIN,{
 		mes "I have confirmed that you completed this request. Thank you very much.";
 		erasequest 11638;
 		setquest 11639;
-		getitem 1000103,2;
+		getitem 1000103,20;
 		getexp 500000,300000;
 		close3;
 	}
@@ -652,7 +652,7 @@ ba_maison,66,145,5	duplicate(dummy_cloaked_npc)	Mark#ep172_bamaison-00	4_M_BLUEM
 ba_maison,68,146,5	duplicate(dummy_cloaked_npc)	Magi#ep172_bamaison-00	4_F_PINKWOMAN
 
 // Daily quest : Supply the spare parts
-ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
+ba_maison,74,150,3	script	Mansion Manager ï¿½ï¿½#172nw01	4_EP17_MASTER_A,{
 	if (checkweight(1000103,15) == 0) {
 		mes "The number of items in your possession is too high, so you cannot proceed with the conversation.";
 		mes "Please clean up your inventory and try again.";
@@ -660,40 +660,40 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 	}
 	if (ep17_2_main < 8) {
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "If you are a guest to the mansion, please complete a guest registration first. Please understand that we are not responsible for any mishap that is caused by mistaking you as an intruder.";
 		close3;
 	}
 	if (ep17_2_main == 8) {
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Welcome. It's a pleasure to meet you. I was worried that you got lost in the mansion.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "We have issued you a guest license. Unlike a formal invitation from Varmundt, this card is only temporary.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Since you did not commit any harm to the property such as vandalism or theft, unlike the other intruders. You were given a temporary license for the investigation.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "This is a measure taken to prevent unpleasant incidents that may occur while you're wandering the mansion prior to the investigation.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "We kindly ask for your understanding. After confirming the purpose, method, and your identity, we will allow your investigation in the mansion.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "First, please tell me your name.";
 		next;
 		cutin "",255;
 		select( "I'm " + strcharinfo(0) + "." );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "" + strcharinfo(0) + ". What is the purpose of your visit to the mansion?";
 		next;
 		cutin "",255;
 		select( "I am..." );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes ".....";
 		mes "Please wait a moment..";
 		npctalk "The purpose... is... for.......", "", bc_self;
@@ -707,7 +707,7 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 		mes ".............";
 		mes "...................";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "...Do you happen to have a party with you?";
 		next;
 		cutin "",255;
@@ -722,49 +722,49 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 		mes "...................";
 		next;
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Excuse me. " + strcharinfo(0) + ", I will issue you a formal guest license right away.";
 		next;
 		cutin "",255;
 		select( "What? Suddenly?" );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "I registered after confirming the identity and purpose of the visit of the other party members who came together from other places in the mansion.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Your ^0000CDparty^000000 has been granted formal status automatically because they were from the ^0000CDsame party^000000 who visited this mansion the other day.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "In addition, they have also stated that, you have come here to ^0000CDcatch the intruders^000000 who are making a disturbance inside the mansion.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Therefore, we will also issue a formal guest license for the mansion to your party, " + strcharinfo(0);
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Please wait a moment.";
 		next;
 		cutin "",255;
 		progressbar_npc "00FF00",2;
 		specialeffect EF_VALLENTINE;
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
-		mes "" + strcharinfo(0) + ". Welcome to the Varmundt's Mansion. Nice to meet you. I'm ¥á the manager of this mansion.";
+		mes "[Mansion Manager ï¿½ï¿½]";
+		mes "" + strcharinfo(0) + ". Welcome to the Varmundt's Mansion. Nice to meet you. I'm ï¿½ï¿½ the manager of this mansion.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "From now on. " + strcharinfo(0) + ", As a guest of honor, you are free to use the facilities in this mansion. If you have any question, please feel free to contact the nearest automatic dolls.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Also, if you need help cleaning up and information about the intruders in the mansion, we will fully cooperate.";
 		mes "To that end, we've opened the outside of the mansion to the general public.";
 		next;
 		cutin "",255;
 		select( "Thank you." );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "I'll share the list of the new registered guests with " + strcharinfo(0) + " to the other automatic dolls.";
 		next;
 		progressbar_npc "00FF00",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "" + strcharinfo(0) + ", all of the automatic dolls in the mansion are... dear... oh...";
 		next;
 		mes ".....";
@@ -777,7 +777,7 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 		mes "...................";
 		next;
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "I'm sorry, please wait a moment.";
 		ep17_2_main = 9;
 		setquest 17333;
@@ -785,48 +785,48 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 	}
 	if (ep17_2_main == 9) {
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Again... trouble...";
 		next;
 		cutin "",255;
 		select( "Is there a problem?" );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "There's a problem with the ^0000CDrepeaters^000000 in some areas. The signal is not transmitting or not being received.";
 		next;
 		close2;
 		select( "Repeater?" );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "All the automatic dolls in the mansion are connected to a wireless network.";
 		mes "We use that network to share information to every automatic dolls in the mansion in an instant.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "It's important for things like, guest registration and schedules sharing.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "If you want to relay an information to anywhere in the mansion. Use the repeater to relay the information to all automatic dolls.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "I have already send the information of the updated guest lists. But, I haven't received a confirmation from some automatic dolls.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "The repeater in the area where the signal is not transmitting has failed.";
 		next;
 		close2;
 		select( "Does it break down often?" );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Failure is not frequent because we meticulously maintain it.";
 		mes "However, when the ^0000CDintruders^000000 entered the mansion the other day, they disassembled and extorted the facilities in the mansion.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Some automatic dolls were destroyed by the intruders.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "I'll have to check which area's repeater is not functioning properly.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "I apologize, but could you wait a little longer? I have to check which area is the problem and manually forward the updated guest list.";
 		next;
 		cutin "",255;
@@ -847,7 +847,7 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 		sleep2 2000;
 		npctalk "Garden... Signal failed...", "", bc_self;
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Our of the 20 repeaters, only three have not responded. I'm glad that the count is small. We'll go the place where the signal can't get through to manually pass through the updated guest list. We also need to check the repeaters.";
 		next;
 		cutin "",255;
@@ -863,7 +863,7 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 		npctalk "Oh, adventurer, here you are.", "Meimei#172nw01", bc_self;
 		next;
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Another person. Are they a part of your party?";
 		next;
 		cutin "",255;
@@ -877,46 +877,46 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 		next;
 		select( "I'll be waiting." );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "If you're new, please come this way. I'll officially register you as a guest of the mansion.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Oh, before that... " + strcharinfo(0) + ", have you looked around the mansion?";
 		next;
 		cutin "",255;
 		select( "Not yet." );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Then, may I take the liberty of asking you a favor? I didn't mean to eavesdrop, but you said you needed to figure out the structure of the mansion.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Can you tell the automatic dolls near the broken repeater to check the broken repeater?";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "It's a good course to take a look around the mansion.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "It's my job, but I don't have enough time to register, update and share information manually since guests are still coming in.";
 		next;
 		cutin "",255;
 		if (select( "I'll do that.", "I need to do something first." ) == 2) {
-			mes "[Mansion Manager ¥á]";
+			mes "[Mansion Manager ï¿½ï¿½]";
 			mes "Is that so, I'm sorry for asking too much on your busy schedule.";
 			mes "Feel free to look around the mansion.";
 			close3;
 		}
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Thank you for accepting my troublesome request.";
 		mes "There are automatic dolls who haven't receieve the updated guest list yet, but we have officially granted " + strcharinfo(0) + " as a guest. The dolls will recognize you as you get close to them.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Everyone else has received the list, so it won't be that inconvenient to use the mansion. If you need any assistance, feel free to contact the nearest automatic doll.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "First, the nearest is the <NAVI>[restaurant]<INFO>ba_maison,146,109,0,101,0</INFO></NAVI>. You should go over there. If you tell the nearest automatic doll near the repeater about the problem, they will take care of it for you.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Then, please.";
 		ep17_2_main = 10;
 		erasequest 17333;
@@ -928,30 +928,30 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 	}
 	if (ep17_2_main == 10 || ep17_2_main == 11) {
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "First, the nearest is the <NAVI>[restaurant]<INFO>ba_maison,146,109,0,101,0</INFO></NAVI>. You should go over there. If you tell the nearest automatic doll near the repeater about the problem, they will take care of it for you.";
 		close3;
 	}
 	if (ep17_2_main == 12) {
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "The <NAVI>[pavilion]<INFO>ba_maison,334,143,0,101,0</INFO></NAVI> is this way. Automatic doll over there will take care of the broken repeater if you deliver it.";
 		close3;
 	}
 	if (ep17_2_main == 13) {
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Tell the problem to the automatic doll near the broken repeater on the <NAVI>[central garden]<INFO>ba_maison,245,206,0,0,0</INFO></NAVI> area and it will take care of it.";
 		close3;
 	}
 	if (ep17_2_main == 14) {
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "" + strcharinfo(0) + ", welcome back. Have you looked around the mansion? Also, did you delivered the message to the automatic dolls near the broken repeater's area?";
 		next;
 		cutin "",255;
 		select( "I delivered them all." );
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Thank you so much for your hard work. Let me check the network status for a moment.";
 		progressbar_npc "00FF00",2;
 		next;
@@ -972,61 +972,61 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 		sleep2 2000;
 		npctalk "Garden... Signal received...", "", bc_self;
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "The network of the mansion has been restored and the signals in all areas are being sent and received clearly.";
 		mes "Now, you can use all the facilities of the mansion as an official guest.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "" + strcharinfo(0) + ", Thank you very much.";
 		mes "You handled this troublesome intruders very well. It gave me an impression that, you're a very skilled adventurer who handles this kind of situation splendidly.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "You quickly learned the geography of the mansion, and you quickly become accustomed with the automatic dolls. It was impressive.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Please take a look around the mansion and if you ever find any problems, I would like to ask for your help.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "We automatic dolls serve the human guests as how we served the owner of the mansion, we are already familiar with it. But we have insufficient information and response skills to unfamiliar problems.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "We still haven't resolved the problem with the intruders. From a non-human perspective, it seems difficult to resolve it because there are many parts that doesn't have enough information.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "We would like to collect resolving intruder problems related data through " + strcharinfo(0) + ", It will be a great help in future cases.";
 		next;
 		cutin "",255;
 		select( "Okay." );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "It's not much, but as a token of appreciation, I will give you this.";
 		mes "This is a ^0000CDBarmeal Ticket^000000, you can use it in the mansion's restaurant.";
 		mes "You can freely eat anything with it, feel free to use it anytime.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "The mansion's <NAVI>[restaurant]<INFO>ba_maison,146,109,0,101,0</INFO></NAVI> is located at the bottom, as I showed earlier.";
 		next;
 		cutin "",255;
 		select( "Have you seen my party?" );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Those who came before you are now staying at the <NAVI>[tea house]<INFO>ba_in01,206,106,0,101,0</INFO></NAVI>, please take a look around and talk with them.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "If you have any inconvenience in the mansion, please feel free to tell any automatic dolls. Please take this Barmeal Ticket, as a token of appreciation for your hard work.";
 		ep17_2_main = 15;
 		erasequest 17338;
 		setquest 17381;
-		getitem 1000103,15;
+		getitem 1000103,20;
 		getexp 900000,0;	// note: ~exp. getbaseexp_ratio?
 		close3;
 	}
 	cutin "ep172_alpha",2;
-	mes "[Mansion Manager ¥á]";
+	mes "[Mansion Manager ï¿½ï¿½]";
 	mes "Welcome, " + strcharinfo(0) + ".";
 	next;
 	if (ep17_2_main == 15) {
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Those who came before you are now staying at the <NAVI>[tea house]<INFO>ba_in01,206,106,0,101,0</INFO></NAVI>, please take a look around and talk with them.";
 		next;
 	}
@@ -1035,34 +1035,34 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 		break;
 	case 0:
 	case 1:
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Do you have something you need or are you uncomfortable in any ways?";
 		mes "Oh, by any chance did you come to bring me a spare communication chips for the repeater?";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "The supply of the repeater's communication chips is sufficient.";
 		mes "Don't worry about the repeater. Please rest for today and come back ^0000CDafter dawn^000000.";
 		close3;
 	case 2:
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Are you here today to help me get spare communication chips for the repeater?";
 		next;
 		if (select( "Yes.", "No." ) == 2) {
-			mes "[Mansion Manager ¥á]";
+			mes "[Mansion Manager ï¿½ï¿½]";
 			mes "In that case, did you come here because of any inconvenience while using the mansion facilities?";
 			mes "If you tell the nearest automatic doll, we'll take care of it right away.";
 			close3;
 		}
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Thank you so much for your help today.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Please bring me ^0000CD10 Automatic Doll Communication Chips^000000 for the repeater. I think that will be enough for the days supply.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "It also help us with the broken automatic dolls roaming around the mansion. Please take care of any Broken Betas roaming around the mansion and bring it's communication chips with you.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Then, please adventurer.";
 		erasequest 17341;
 		setquest 17340;
@@ -1070,67 +1070,67 @@ ba_maison,74,150,3	script	Mansion Manager ¥á#172nw01	4_EP17_MASTER_A,{
 	}
 	switch( isbegin_quest(17340) ) {
 	case 0:
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Do you have something you need or are you uncomfortable in any ways?";
 		next;
 		cutin "",255;
 		select( "Is the network working fine?" );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Are you here for that matter? Thank you very much for your concern.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Just like the previous situation, the network status in some area of the mansion are losing connectivity.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Although it's repaired upon discovery, it's a problem that occurs continuously. The necessary communication chips demand are difficult to supply.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "In addition, the broken automatic dolls is wandering around and keeps destroying the repeaters, doubling the supply needed.";
 		next;
 		cutin "",255;
 		if (select( "Can I help?", "Oh, that must be difficult." ) == 2) {
-			mes "[Mansion Manager ¥á]";
+			mes "[Mansion Manager ï¿½ï¿½]";
 			mes "Thank you for considering the difficulties. We will take care of the repeater as soon as possible so that there will be no inconvenience when using it.";
 			close;
 		}
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Thank you very much. But I'm afraid that I'm taking too much of your time " + strcharinfo(0) + "... If you don't mind at all, I'd like to ask you a favor.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Please bring me ^0000CD10 Automatic Doll Communication Chips^000000 for the repeater. I think that will be enough for the days supply.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "It also help us with the broken automatic dolls roaming around the mansion. Please take care of any Broken Betas roaming around the mansion and bring it's communication chips with you.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Then, please adventurer.";
 		setquest 17340;
 		close3;
 	case 1:
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Did you bring the Automatic Doll Communication Chips that I asked for?";
 		next;
 		if (countitem(1000232) < 10) {
-			mes "[Mansion Manager ¥á]";
+			mes "[Mansion Manager ï¿½ï¿½]";
 			mes "Please bring me ^0000CD10 Automatic Doll Communication Chips^000000 for the repeater. I think that will be enough for the days supply.";
 			next;
-			mes "[Mansion Manager ¥á]";
+			mes "[Mansion Manager ï¿½ï¿½]";
 			mes "It also help us with the broken automatic dolls roaming around the mansion. Please take care of any Broken Betas roaming around the mansion and bring its communication chips with you.";
 			close3;
 		}
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "This is enough for the day. Thank you for your hard work.";
 		mes "If you have time, I'd like to ask for your help again ^0000CDafter dawn^000000, If you don't mind please come again tomorrow.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Thank you very much. Please take this with you.";
 		erasequest 17340;
 		setquest 17341;
 		delitem 1000232,10;
-		getitem 1000103,2;
+		getitem 1000103,20;
 		getexp 949720,664800;
 		close3;
 	}
@@ -1344,7 +1344,7 @@ ba_maison,146,109,5	script	Tasty#172nw01	4_EP17_BASIC_B,{
 		ep17_2_main = 12;
 		erasequest 17335;
 		setquest 17336;
-		getitem 1000103,5;
+		getitem 1000103,20;
 		getexp 300000,0;	// note: ~exp. getbaseexp_ratio?
 		close2;
 		navigateto("ba_maison",334,143);
@@ -1488,7 +1488,7 @@ ba_maison,334,143,3	script	Repeater#172nw02	2_POSTBOX,{
 		ep17_2_main = 13;
 		erasequest 17336;
 		setquest 17337;
-		getitem 1000103,5;
+		getitem 1000103,20;
 		getexp 300000,0;	// note: ~exp. getbaseexp_ratio?
 		close;
 	}
@@ -1628,7 +1628,7 @@ OnTouch:
 		ep17_2_main = 14;
 		erasequest 17337;
 		setquest 17338;
-		getitem 1000103,5;
+		getitem 1000103,20;
 		getexp 300000,0;	// note: ~exp. getbaseexp_ratio?
 		close;
 	}
@@ -2603,7 +2603,7 @@ ba_maison,103,92,3	script	Kaya Toss#jh5_2	4_EP17_KAYA,{
 		ep17_2_main = 24;
 		erasequest 16451;
 		setquest 16452;
-		getitem 1000103,15;
+		getitem 1000103,20;
 		getexp 900000,0;	// note: ~exp. getbaseexp_ratio?
 		end;
 	}
@@ -3532,7 +3532,7 @@ ba_maison,303,141,3	script	Elena Bolkova#ep172_eln	4_F_ELENA,{
 		erasequest 18013;
 		setquest 18014;
 		delitem 1000226,countitem(1000226);
-		getitem 1000103,10;
+		getitem 1000103,20;
 		getexp 515668,0;	// getbaseexp_ratio?
 		close2;
 		cutin "",255;
@@ -3861,7 +3861,7 @@ ba_in01,15,147,3	script	Elyumina#ep172_elmn02	4_EP17_ELYUMINA,{
 		erasequest 18015;
 		setquest 18016;
 		getitem 1000092,1; //Elyumina Tracker
-		getitem 1000103,10;
+		getitem 1000103,20;
 		getexp 1031336,0;	// getbaseexp_ratio?
 		close3;
 	}
@@ -4125,7 +4125,7 @@ ba_in01,26,266,3	script	Smart Elly#ep172_ely01	4_EP17_TABLET,{
 		ep17_2_main = 33;
 		completequest 18018;
 		// note: unlock episode 18 main quest
-		getitem 1000103,15;
+		getitem 1000103,20;
 		getexp 1547004,0;	// getbaseexp_ratio?
 		next;
 		cutin "ep162_est01",1;
@@ -4818,14 +4818,14 @@ ba_in01,384,38,3	script	Shrine#172ba01	4_EP17_BUCKETS,5,5,{
 		mes "Go ahead <NAVI>[inside]<INFO>ba_bath,165,43,0,101,0</INFO></NAVI>. If you see a monster while inside the bath, please don't rush to make contact with it and tell the dolls around you.";
 		navigateto("ba_bath",165,43);
 		next;
-		mes "^EE0000[ ¡ØCaution¡Ø ]^000000";
+		mes "^EE0000[ ï¿½ï¿½Cautionï¿½ï¿½ ]^000000";
 		mes "For protection and management of the facility, the grand bathhouse Meditatio prohibits the use of the skills such as ^CC0000Water Ball and Aqua Benedicta^000000.";
 		close;
 	}
 	mes "[Shrine]";
 	mes "Hello. Feel free to use the bathhouse to comfortably to relieve your fatigue.";
 	next;
-	mes "^EE0000[ ¡ØCaution¡Ø ]^000000";
+	mes "^EE0000[ ï¿½ï¿½Cautionï¿½ï¿½ ]^000000";
 	mes "For protection and management of the facility, the grand bathhouse Meditatio prohibits the use of the skills such as ^CC0000Water Ball and Aqua Benedicta^000000.";
 	close;
 
@@ -5206,7 +5206,7 @@ ba_bath,286,68,5	script	Boiler#172ba02	4_EP17_BASIC_B,{
 		ep17_2_bath = 3;
 		erasequest 17364;
 		setquest 17365;
-		getitem 1000103,7;
+		getitem 1000103,20;
 		getexp2 260267,0;
 		close3;
 	}
@@ -5455,7 +5455,7 @@ ba_bath,286,68,5	script	Boiler#172ba02	4_EP17_BASIC_B,{
 		setquest 17377;
 		delitem 1000231,5;
 		getitem rand(100147,100149),1;
-		getitem 1000103,2;
+		getitem 1000103,20;
 		getexp 834974,584500;
 		close3;
 	}
@@ -5636,7 +5636,7 @@ ba_bath,203,58,3	script(CLOAKED)	Rookie#172ba04	4_M_ROOKIE,{
 		ep17_2_bath = 6;
 		erasequest 17367;
 		setquest 17368;
-		getitem 1000103,7;
+		getitem 1000103,20;
 		getitem 1000100,4;
 		getexp 309400,0;
 		close2;
@@ -6387,7 +6387,7 @@ ba_bath,286,298,3	script(CLOAKED)	Unknown Creature#172ba01	4_EP17_MERMAID,{
 		mes "You'd better go now. See you next time.";
 		ep17_2_bath = 13;
 		completequest 17374;
-		getitem 1000103,16;
+		getitem 1000103,20;
 		getexp 515668,0;
 		close2;
 		cloakonnpcself();
@@ -6588,7 +6588,7 @@ ba_bath,288,68,3	script	Sweep#172ba02	4_EP17_CLEANER,{
 		mes "Perfect. Thank you very much. I'd be more grateful if you could come back after dawn.";
 		erasequest 17379;
 		setquest 17380;
-		getitem 1000103,2;
+		getitem 1000103,20;
 		getexp 722940,506070;
 		close3;
 	}
@@ -6612,25 +6612,25 @@ ba_bath,284,67,5	script	Valve#172ba01	4_EP17_CLEANER_W,{
 ba_bath,289,64,5	duplicate(dummy_cloaked_npc)	Valve#172ba02	4_EP17_CLEANER_W
 
 ba_bath,254,270,3	script	Nameless Spring#bathifo	4_BOARD3,{
-	mes "^006600¢ÍNameless Spring¢Í^000000";
+	mes "^006600ï¿½ï¿½Nameless Springï¿½ï¿½^000000";
 	mes "^006600This is the place when you want to forget everything and immerse yourself into nature. However, if things are too difficult. Please come to us for assistance.^000000";
 	close;
 }
 
 ba_bath,259,191,3	script	Footbath#bathifo	4_BOARD3,{
-	mes "^006600¢ÍFootbath¢Í^000000";
+	mes "^006600ï¿½ï¿½Footbathï¿½ï¿½^000000";
 	mes "^006600No need to be grand. Feel free to go and soak your feet.^000000";
 	close;
 }
 
 ba_bath,162,139,3	script	Fountain of Wisdom#bathifo	4_BOARD3,{
-	mes "^006600¢ÍFountain of Wisdom - Public Bath¢Í^000000";
+	mes "^006600ï¿½ï¿½Fountain of Wisdom - Public Bathï¿½ï¿½^000000";
 	mes "^006600The oldest and most famous bath in Varmundt Mansion. Soak yourself in this bath and think about the deepest, most difficult things in your heart. The answer will surely come up.^000000";
 	close;
 }
 
 ba_bath,31,276,5	script	Cold Spring#bathifo	4_BOARD3,{
-	mes "^006600¢ÍCold Spring - Cold Bath¢Í^000000";
+	mes "^006600ï¿½ï¿½Cold Spring - Cold Bathï¿½ï¿½^000000";
 	mes "^0000CDSoak yourself in the cold spring if you want to be ice-cold. The cold air in the bath will bring together your disordered spirit.^000000";
 	close;
 }
@@ -6993,7 +6993,7 @@ ba_2whs01,150,51,5	script	Chirp#172wh01	4_EP17_BASKET,{
 			ep17_2_chirp = 2;
 			erasequest 17342;
 			setquest 17343;
-			getitem 1000103,3;
+			getitem 1000103,20;
 			close3;
 		}
 	}
@@ -7061,7 +7061,7 @@ ba_2whs01,150,51,5	script	Chirp#172wh01	4_EP17_BASKET,{
 		mes "The warehouse is very dangerous, so you have to be very careful. Okay?";
 		ep17_2_chirp = 4;
 		erasequest 17344;
-		getitem 1000103,3;
+		getitem 1000103,20;
 		setquest 17345;
 		setquest 17346;
 		setquest 17347;
@@ -7181,7 +7181,7 @@ ba_2whs01,150,51,5	script	Chirp#172wh01	4_EP17_BASKET,{
 		ep17_2_chirp = 12;
 		completequest 17358;
 		delitem 1000102,3;
-		getitem 1000103,6;
+		getitem 1000103,20;
 		getexp2 3156050,0;
 		close3;
 	}
@@ -7280,7 +7280,7 @@ ba_2whs01,150,51,5	script	Chirp#172wh01	4_EP17_BASKET,{
 		mes "Thank you. Please come back after dawn.";
 		setquest .@cooldown;
 		erasequest .@hunt;
-		getitem 1000103,1;
+		getitem 1000103,20;
 		if (.@hunt == 17359)
 			getexp 4431108,3101780;
 		else
@@ -7633,7 +7633,7 @@ ba_2whs02,37,312,3	script(CLOAKED)	Head#ep172_2whs01	4_GHOSTRING,{
 		ep17_2_chirp = 11;
 		erasequest 17353;
 		setquest 17358;
-		getitem 1000103,3;
+		getitem 1000103,20;
 		close;
 	}
 	if (ep17_2_chirp == 11) {
@@ -7755,58 +7755,58 @@ OnInit:
 
 
 // Daily Quest : Cleaning Robot Omega
-ba_in01,24,322,3	script	Cleaning Robot ¥Ø#ba_pw01_02Q	20640,{
+ba_in01,24,322,3	script	Cleaning Robot ï¿½ï¿½#ba_pw01_02Q	20640,{
 	if (checkweight(1000103,2) == 0) {
 		mes "- You cannot proceed because you have too many items. -";
 		close;
 	}
 	setpcblock PCBLOCK_NPC, true;
-	npctalk "(¥è_¥è?) ¢Ï Loading..", "", bc_self;
+	npctalk "(ï¿½ï¿½_ï¿½ï¿½?) ï¿½ï¿½ Loading..", "", bc_self;
 	sleep2 1000;
-	npctalk "Cleaning Robot ¥Ø : Communication is in progress for user recognition.", "", bc_self;
+	npctalk "Cleaning Robot ï¿½ï¿½ : Communication is in progress for user recognition.", "", bc_self;
 	sleep2 2000;
-	npctalk "(¢Á_¢Á*) ¢Ï Connect !!", "", bc_self;
+	npctalk "(ï¿½ï¿½_ï¿½ï¿½*) ï¿½ï¿½ Connect !!", "", bc_self;
 	sleep2 1000;
 	if (ep17_2_main < 9) {
-		npctalk "Cleaning Robot ¥Ø : Unauthorized user. Communication terminated.", "", bc_self;
+		npctalk "Cleaning Robot ï¿½ï¿½ : Unauthorized user. Communication terminated.", "", bc_self;
 		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
-	npctalk "Cleaning Robot ¥Ø : User authorized. Nice to meet you.";
+	npctalk "Cleaning Robot ï¿½ï¿½ : User authorized. Nice to meet you.";
 	sleep2 1000;
 	setpcblock PCBLOCK_NPC, false;
 
 	if (isbegin_quest(5892) == 0) {
-		mes "[Cleaning Robot ¥Ø]";
-		mes "Hello, Guest! Nice to meet you~ I'm Cleaning Robot ¥Ø~";
+		mes "[Cleaning Robot ï¿½ï¿½]";
+		mes "Hello, Guest! Nice to meet you~ I'm Cleaning Robot ï¿½ï¿½~";
 		next;
 		select( "Hi. Nice to meet you." );
-		mes "[Cleaning Robot ¥Ø]";
+		mes "[Cleaning Robot ï¿½ï¿½]";
 		mes "The task of the cleaning robot is to clean up the sewage and the first power plant.";
-		npctalk "¦®(^¡ä^)¦°Cleaning..", "", bc_self;
+		npctalk "ï¿½ï¿½(^ï¿½ï¿½^)ï¿½ï¿½Cleaning..", "", bc_self;
 		next;
-		mes "[Cleaning Robot ¥Ø]";
-		mes "But Cleaning Robot ¥Ø can't clean right now~ Sad~";
-		npctalk "¤ð(X_X)¤ð", "", bc_self;
+		mes "[Cleaning Robot ï¿½ï¿½]";
+		mes "But Cleaning Robot ï¿½ï¿½ can't clean right now~ Sad~";
+		npctalk "ï¿½ï¿½(X_X)ï¿½ï¿½", "", bc_self;
 		next;
-		mes "[Cleaning Robot ¥Ø]";
+		mes "[Cleaning Robot ï¿½ï¿½]";
 		mes "Unauthorized users prevents us cleaning robots to do our job~";
 		npctalk "(-_-a);;;", "", bc_self;
 		next;
-		mes "[Cleaning Robot ¥Ø]";
-		mes "Cleaning Robot ¥Ø is having difficulties. Good Guest, I need your help~ Please~";
-		npctalk "¢Ñ¢Ð ¢Ñ¢¾¢Ð ¢Ñ¢Ð", "", bc_self;
+		mes "[Cleaning Robot ï¿½ï¿½]";
+		mes "Cleaning Robot ï¿½ï¿½ is having difficulties. Good Guest, I need your help~ Please~";
+		npctalk "ï¿½Ñ¢ï¿½ ï¿½Ñ¢ï¿½ï¿½ï¿½ ï¿½Ñ¢ï¿½", "", bc_self;
 		next;
 		if (select( "Okay. I'll help you.", " I don't want to!" ) == 2) {
-			mes "[Cleaning Robot ¥Ø]";
-			mes "Cleaning Robot ¥Ø~ is sad..";
-			npctalk "(¤Ð_¤Ð)¤ð", "", bc_self;
+			mes "[Cleaning Robot ï¿½ï¿½]";
+			mes "Cleaning Robot ï¿½ï¿½~ is sad..";
+			npctalk "(ï¿½ï¿½_ï¿½ï¿½)ï¿½ï¿½", "", bc_self;
 			close;
 		}
-		mes "[Cleaning Robot ¥Ø]";
+		mes "[Cleaning Robot ï¿½ï¿½]";
 		mes "The guest are really kind~";
-		mes "Cleaning Robot ¥Ø~ is very happy";
-		npctalk "(¡Ã¡ä¡Â)¢¾¢½¢¾¢½¢¾¢½", "", bc_self;
+		mes "Cleaning Robot ï¿½ï¿½~ is very happy";
+		npctalk "(ï¿½Ã¡ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", "", bc_self;
 		setquest 5892;
 		completequest 5892;
 		close;
@@ -7815,14 +7815,14 @@ ba_in01,24,322,3	script	Cleaning Robot ¥Ø#ba_pw01_02Q	20640,{
 	.@status[1] = F_queststatus(HUNTING,5897,5898,5899);
 
 	if (.@status[0] == 2 || .@status[1] == 2) {
-		mes "[Cleaning Robot ¥Ø]";
-		mes "Thank you very much, Cleaning Robot ¥Ø is happy to be able to go clean up.";
+		mes "[Cleaning Robot ï¿½ï¿½]";
+		mes "Thank you very much, Cleaning Robot ï¿½ï¿½ is happy to be able to go clean up.";
 		if (.@status[0] == 2) {
 			erasequest 5893;
 			erasequest 5894;
 			erasequest 5895;
 			setquest 5896;
-			getitem 1000103,2;
+			getitem 1000103,20;
 			getexp 5065368,3500000;
 		}
 		if (.@status[1] == 2) {
@@ -7830,29 +7830,29 @@ ba_in01,24,322,3	script	Cleaning Robot ¥Ø#ba_pw01_02Q	20640,{
 			erasequest 5898;
 			erasequest 5899;
 			setquest 5900;
-			getitem 1000103,2;
+			getitem 1000103,20;
 			getexp 5197368,3500000;
 		}
 		close;
 	}
 	switch( rand(1,4) ) {
 	case 1:
-		npctalk "(¡Ã¡ä¡Â)/", "", bc_self;
+		npctalk "(ï¿½Ã¡ï¿½ï¿½)/", "", bc_self;
 		break;
 	case 2:
-		npctalk "¦±(^¡ä^)¦° Power..", "", bc_self;
+		npctalk "ï¿½ï¿½(^ï¿½ï¿½^)ï¿½ï¿½ Power..", "", bc_self;
 		break;
 	case 3:
-		npctalk "(¡Ã¡ä¡Â)~¢Ý", "", bc_self;
+		npctalk "(ï¿½Ã¡ï¿½ï¿½)~ï¿½ï¿½", "", bc_self;
 		break;
 	case 4:
-		npctalk "¦®(^¡ä^)¦° Cleaning..", "", bc_self;
+		npctalk "ï¿½ï¿½(^ï¿½ï¿½^)ï¿½ï¿½ Cleaning..", "", bc_self;
 		break;
 	}
 	.@quest_menu$[0] = callsub( S_Menu, 5893,5894,5895,5896, "Sewage Plant Cleaning" );
 	.@quest_menu$[1] = callsub( S_Menu, 5897,5898,5899,5900, "1st Power Plant Cleaning" );
 
-	mes "[Cleaning Robot ¥Ø]";
+	mes "[Cleaning Robot ï¿½ï¿½]";
 	mes "Cleaning is fun~";
 	next;
 	switch( select( .@quest_menu$[0], .@quest_menu$[1], "Good luck." ) ) {
@@ -7865,8 +7865,8 @@ ba_in01,24,322,3	script	Cleaning Robot ¥Ø#ba_pw01_02Q	20640,{
 		.@cd = 5900;
 		break;
 	case 3:
-		npctalk "(¥È_¥È). .(¥è_¥è). .(zZzZ)", "", bc_self;
-		mes "[Cleaning Robot ¥Ø]";
+		npctalk "(ï¿½ï¿½_ï¿½ï¿½). .(ï¿½ï¿½_ï¿½ï¿½). .(zZzZ)", "", bc_self;
+		mes "[Cleaning Robot ï¿½ï¿½]";
 		mes "Communication ended.";
 		close;
 	}
@@ -7876,12 +7876,12 @@ ba_in01,24,322,3	script	Cleaning Robot ¥Ø#ba_pw01_02Q	20640,{
 	case 0:
 	case 1:
 		if (.@quest[0] == 5893) {
-			mes "[Cleaning Robot ¥Ø]";
-			mes "Thank you, nice guest~ Cleaning Robot ¥Ø has already treated the sewage plant.";
+			mes "[Cleaning Robot ï¿½ï¿½]";
+			mes "Thank you, nice guest~ Cleaning Robot ï¿½ï¿½ has already treated the sewage plant.";
 		}
 		else {
-			mes "[Cleaning Robot ¥Ø]";
-			mes "Thank you, nice guest~ Cleaning Robot ¥Ø has already cleaned the first power plant.";
+			mes "[Cleaning Robot ï¿½ï¿½]";
+			mes "Thank you, nice guest~ Cleaning Robot ï¿½ï¿½ has already cleaned the first power plant.";
 		}
 		close;
 	case 2:
@@ -7891,37 +7891,37 @@ ba_in01,24,322,3	script	Cleaning Robot ¥Ø#ba_pw01_02Q	20640,{
 	switch( checkquest(.@quest[0],HUNTING) ) {
 	case -1:
 		if (.@quest[0] == 5893) {
-			mes "[Cleaning Robot ¥Ø]";
-			mes "Cleaning Robot ¥Ø was supposed to be the one treating the sewage plant.";
+			mes "[Cleaning Robot ï¿½ï¿½]";
+			mes "Cleaning Robot ï¿½ï¿½ was supposed to be the one treating the sewage plant.";
 			mes "We can't clean up because there more, Venenum, Waterfall, and Cramps~";
 		}
 		else {
-			mes "[Cleaning Robot ¥Ø]";
-			mes "Cleaning Robot ¥Ø can't clean the first power plant because there are many Elite Bellare, Magical Dolor, and Unleashed Magic.";
+			mes "[Cleaning Robot ï¿½ï¿½]";
+			mes "Cleaning Robot ï¿½ï¿½ can't clean the first power plant because there are many Elite Bellare, Magical Dolor, and Unleashed Magic.";
 		}
-		npctalk "(¤Ð^¤Ð) OTL ..", "", bc_self;
+		npctalk "(ï¿½ï¿½^ï¿½ï¿½) OTL ..", "", bc_self;
 		next;
 		if (.@quest[0] == 5893) {
-			mes "[Cleaning Robot ¥Ø]";
-			mes "Cleaning Robot ¥Ø is sad~";
+			mes "[Cleaning Robot ï¿½ï¿½]";
+			mes "Cleaning Robot ï¿½ï¿½ is sad~";
 			mes "I think I'll be able to treat the sewage plant, if you're able to take care of 44 Venenum, Waterfall, and Cramps.";
 		}
 		else {
-			mes "[Cleaning Robot ¥Ø]";
-			mes "Cleaning Robot ¥Ø is sad~";
+			mes "[Cleaning Robot ï¿½ï¿½]";
+			mes "Cleaning Robot ï¿½ï¿½ is sad~";
 			mes "I think I'll be able to treat the first power plant, if you're able to take care of 44 Elite Bellare, Magical Dolor, and Unleashed Magic.";
 		}
-		npctalk "(?¡ä?)~¢½", "", bc_self;
+		npctalk "(?ï¿½ï¿½?)~ï¿½ï¿½", "", bc_self;
 		next;
 		if (select( "I'll help.", "Refuse." ) == 2) {
-			npctalk "¤ð(@¤Ð@)¤ð", "", bc_self;
-			mes "[Cleaning Robot ¥Ø]";
-			mes "Cleaning Robot ¥Ø~ is sad..";
+			npctalk "ï¿½ï¿½(@ï¿½ï¿½@)ï¿½ï¿½", "", bc_self;
+			mes "[Cleaning Robot ï¿½ï¿½]";
+			mes "Cleaning Robot ï¿½ï¿½~ is sad..";
 			close;
 		}
-		mes "[Cleaning Robot ¥Ø]";
+		mes "[Cleaning Robot ï¿½ï¿½]";
 		mes "Thank you very much~";
-		npctalk "(¢½¬©¢½)~¢¾", "", bc_self;
+		npctalk "(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)~ï¿½ï¿½", "", bc_self;
 		for ( .@i = 0; .@i < 3; ++.@i )
 			setquest .@quest[.@i];
 		close;
@@ -7929,16 +7929,16 @@ ba_in01,24,322,3	script	Cleaning Robot ¥Ø#ba_pw01_02Q	20640,{
 	case 1:
 	case 2:
 		if (.@quest[0] == 5893) {
-			mes "[Cleaning Robot ¥Ø]";
-			mes "Cleaning Robot ¥Ø was supposed to be the one treating the sewage plant.";
+			mes "[Cleaning Robot ï¿½ï¿½]";
+			mes "Cleaning Robot ï¿½ï¿½ was supposed to be the one treating the sewage plant.";
 			mes "I'm sad because I can't clean~ Monsters are so scary~";
 		}
 		else {
-			mes "[Cleaning Robot ¥Ø]";
-			mes "Cleaning Robot ¥Ø was supposed to be the one cleaning the first power plant.";
+			mes "[Cleaning Robot ï¿½ï¿½]";
+			mes "Cleaning Robot ï¿½ï¿½ was supposed to be the one cleaning the first power plant.";
 			mes "I'm sad because I can't clean~ Monsters are so scary~";
 		}
-		npctalk "¤ð(¤Ð_¡Â)¤ð", "", bc_self;
+		npctalk "ï¿½ï¿½(ï¿½ï¿½_ï¿½ï¿½)ï¿½ï¿½", "", bc_self;
 		close;
 	}
 	end;
@@ -7977,31 +7977,31 @@ OnMove:
 	unitwalk .@gid,.@x,.@y;
 	switch( rand(1,11) ) {
 	case 1:
-		npctalk "(¢¸¢º¥ø¢¸¢º)";
+		npctalk "(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)";
 		break;
 	case 2:
-		npctalk "¢Ð(^¡ä^)¢Ñ¥Î¡Õ=¬©";
+		npctalk "ï¿½ï¿½(^ï¿½ï¿½^)ï¿½Ñ¥Î¡ï¿½=ï¿½ï¿½";
 		break;
 	case 3:
-		npctalk "(¡Ã¡ä¡Â)¢¾¢½¢¾¢½¢¾¢½";
+		npctalk "(ï¿½Ã¡ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
 		break;
 	case 4:
-		npctalk "(¢Á¥ø¢Á)";
+		npctalk "(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)";
 		break;
 	case 5:
-		npctalk "(¡Ü¨·¡Ü)";
+		npctalk "(ï¿½Ü¨ï¿½ï¿½ï¿½)";
 		break;
 	case 6:
-		npctalk "(¡Û¥ø¡Û)";
+		npctalk "(ï¿½Û¥ï¿½ï¿½ï¿½)";
 		break;
 	case 7:
-		npctalk "(¢½¬©¢½)~¢¾";
+		npctalk "(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)~ï¿½ï¿½";
 		break;
 	case 8:
-		npctalk "(¡Ý¥ø¡Ý)";
+		npctalk "(ï¿½Ý¥ï¿½ï¿½ï¿½)";
 		break;
 	case 9:
-		npctalk "(*'¡å'*)b";
+		npctalk "(*'ï¿½ï¿½'*)b";
 		break;
 	default:
 		break;
@@ -8047,9 +8047,9 @@ ba_maison,85,111,3	script	Fountain#ba	4_ENERGY_BLUE,{
 		mes "What are you doing in the fountain!!!";
 		mes "Get out of there now!!!";
 		next;
-		cloakoffnpcself( "Mansion Manager ¥â#ep172_fountain" );
+		cloakoffnpcself( "Mansion Manager ï¿½ï¿½#ep172_fountain" );
 		cutin "ep172_beta",2;
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Warning.";
 		mes "This facility is not for cleaning. Going in it is prohibited.";
 		next;
@@ -8059,21 +8059,21 @@ ba_maison,85,111,3	script	Fountain#ba	4_ENERGY_BLUE,{
 		mes "Who is that!!!";
 		next;
 		cutin "ep172_beta",2;
-		mes "[Mansion Manager ¥â]";
-		mes "I'm Mansion Manager ¥â of [The Mansion of the Great Sage Varmundt].";
+		mes "[Mansion Manager ï¿½ï¿½]";
+		mes "I'm Mansion Manager ï¿½ï¿½ of [The Mansion of the Great Sage Varmundt].";
 		mes "The facilities in the mansion are public, and is being used by every guest.";
 		mes "Please follow thhe instructions when using the facility.";
 		next;
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Warnings are being recorded during abnormal usage of a facility, and if warnings accumulate, you will be removed from the mansion.";
 		next;
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "In addition, there is a facility for body washing located in the basement of the mansion. We encourage guests who visits the mansion, to visit Meditatio, the great bathhouse.";
 		next;
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Then, I hope you have a comfortable time. Thank you.";
 		next;
-		cloakonnpcself( "Mansion Manager ¥â#ep172_fountain" );
+		cloakonnpcself( "Mansion Manager ï¿½ï¿½#ep172_fountain" );
 		cutin "bu_du4",2;
 		mes "[Dew]";
 		mes "Isn't it too much to probibit washing in the fountain?";
@@ -8214,7 +8214,7 @@ OnInit:
 	end;
 }
 
-ba_maison,82,110,5	duplicate(dummy_cloaked_npc)	Mansion Manager ¥â#ep172_fountain	4_EP17_BASIC_B
+ba_maison,82,110,5	duplicate(dummy_cloaked_npc)	Mansion Manager ï¿½ï¿½#ep172_fountain	4_EP17_BASIC_B
 ba_maison,89,109,3	duplicate(dummy_cloaked_npc)	Dew#ep172_fountain	4_M_REDMAN
 ba_maison,88,113,5	duplicate(dummy_cloaked_npc)	Mark#ep172_fountain	4_M_BLUEMAN
 ba_maison,87,114,5	duplicate(dummy_cloaked_npc)	Magi#ep172_fountain	4_F_PINKWOMAN
@@ -8261,7 +8261,7 @@ OnTouch:
 		mes "What's going on here?";
 		next;
 		mes "Click";
-		cloakoffnpcself( "Mansion Manager ¥á#ep172_libent" );
+		cloakoffnpcself( "Mansion Manager ï¿½ï¿½#ep172_libent" );
 		next;
 		cloakoffnpcself( "#fire1" );
 		cloakoffnpcself( "#fire2" );
@@ -8272,10 +8272,10 @@ OnTouch:
 		cloakonnpcself( "#fire3_0" );
 		cloakonnpcself( "#fire4_0" );
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "This material is installed by the master himself, and cannot be removed with the master's permission.";
 		next;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Therefore, we would like to ask you to refrain from entering. It could pose a fatal risk to your discharge from the mansion, and we are not responsible for any injuries or deaths if you forced your way in despite the warning.";
 		next;
 		cutin "bu_du5",2;
@@ -8300,10 +8300,10 @@ OnTouch:
 		mes "......";
 		next;
 		cutin "ep172_alpha",2;
-		mes "[Mansion Manager ¥á]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "I hope you stay safe and have a comfortable time.";
 		next;
-		cloakonnpcself( "Mansion Manager ¥á#ep172_libent" );
+		cloakonnpcself( "Mansion Manager ï¿½ï¿½#ep172_libent" );
 		cutin "bu_alp1",2;
 		mes "[Alp]";
 		mes "...";
@@ -8368,7 +8368,7 @@ ba_in01,209,181,5	duplicate(dummy_cloaked_npc)	Mark#ep172_libent	4_M_BLUEMAN
 ba_in01,209,179,5	duplicate(dummy_cloaked_npc)	Magi#ep172_libent	4_F_PINKWOMAN
 ba_in01,213,181,3	duplicate(dummy_cloaked_npc)	Oliver#ep172_libent	4_M_OLIVER
 ba_in01,210,184,5	duplicate(dummy_cloaked_npc)	Alp#ep172_libent	4_M_BLACKMAN
-ba_in01,209,186,5	duplicate(dummy_cloaked_npc)	Mansion Manager ¥á#ep172_libent	4_EP17_MASTER_A
+ba_in01,209,186,5	duplicate(dummy_cloaked_npc)	Mansion Manager ï¿½ï¿½#ep172_libent	4_EP17_MASTER_A
 ba_in01,210,186,3	duplicate(dummy_npc)	#fire1	4_BONFIRE
 ba_in01,211,186,3	duplicate(dummy_npc)	#fire2	4_BONFIRE
 ba_in01,212,186,3	duplicate(dummy_npc)	#fire3	4_BONFIRE
@@ -8381,7 +8381,7 @@ ba_in01,213,186,3	duplicate(dummy_cloaked_npc)	#fire4_0	4_TRACE
 // Sidequest quest : Be quiet in the Library! - Step 4, 6
 // Daily quest : Hunting Bookworm
 // Daily quest : Hunting Roaming Spellbook
-ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
+ba_lib,157,19,5	script	Mansion Manager ï¿½ï¿½#ep172_balib	4_EP17_BASIC_B,{
 	if (checkweight(1000103,5) == 0) {
 		mes "- You have too many items.";
 		mes "Please clear your inventory and try again. -";
@@ -8392,11 +8392,11 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 		end;
 	if (ep17_2_library == 3) {
 		cutin "ep172_beta",2;
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Please be quiet inside the library. Also, you need to register to use the library. If you don't register, you won't be able to read any book inside the library.";
 		next;
 		select( "Register." );
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "You have been registered.";
 		mes "Would you like to confirm your party's registration?";
 		next;
@@ -8427,10 +8427,10 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 	if (ep17_2_library == 4) {
 		if (F_queststatus(HAVEQUEST, 11629,11630,11631,11632,11633) != 1) {
 			cutin "ep172_beta",2;
-			mes "[Mansion Manager ¥â]";
+			mes "[Mansion Manager ï¿½ï¿½]";
 			mes "Please be quiet inside the library. Also, you need to register to use the library. If you don't register, you won't be able to read any book inside the library.";
 			next;
-			mes "[Mansion Manager ¥â]";
+			mes "[Mansion Manager ï¿½ï¿½]";
 			mes "Would you like to confirm your party's registration?";
 			next;
 			cutin "bu_du3",2;
@@ -8451,7 +8451,7 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 			close3;
 		}
 		cutin "ep172_beta",2;
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Thank you for your party confirmation.";
 		mes "" + strcharinfo(0) + " and 4... 5... 4... 6... 7... 4... 3... people has been registered.";
 		mes "Thank you for your cooperation.";
@@ -8461,13 +8461,13 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 		erasequest 11631;
 		erasequest 11632;
 		erasequest 11633;
-		getitem 1000103,5;
+		getitem 1000103,20;
 		getexp 1031336,0;
 		close3;
 	}
 	// Daily quests
 	cutin "ep172_beta",2;
-	mes "[Mansion Manager ¥â]";
+	mes "[Mansion Manager ï¿½ï¿½]";
 	mes "Hello, " + strcharinfo(0) + ".";
 	mes "The following requests are only for library users, we'd appreciate if you'd give us your support.";
 	next;
@@ -8486,7 +8486,7 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 		setarray .@exp[0],934000,653800;
 		break;
 	case 3:
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "I hope you stay safe and have a comfortable time.";
 		close3;
 	}
@@ -8495,7 +8495,7 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 		break;
 	case 0:
 	case 1:
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Today's work has already been completed.";
 		mes "Thank you.";
 		close3;
@@ -8506,37 +8506,37 @@ ba_lib,157,19,5	script	Mansion Manager ¥â#ep172_balib	4_EP17_BASIC_B,{
 	switch( checkquest(.@hunt,HUNTING) ) {
 	case -1:
 		if (.@hunt == 11634) {
-			mes "[Mansion Manager ¥â]";
+			mes "[Mansion Manager ï¿½ï¿½]";
 			mes "Recently, we received an inquiry that the number of the Bookworms that feeds on magic books has increased exponentially, causing inconvenience in using the library.";
 			mes "Please take care of 20 Bookworms to improve the environment of the library.";
 		}
 		else {
-			mes "[Mansion Manager ¥â]";
+			mes "[Mansion Manager ï¿½ï¿½]";
 			mes "Recently, we received an inquiry that the library's bookshelves was in a mess because of the spellbooks, that wanders away from their designated section.";
 			mes "Please collect 20 Roaming Spellbook around to improve the environment of the library.";
 		}
 		next;
 		if (select( "Accept", "Decline" ) == 2) {
-			mes "[Mansion Manager ¥â]";
+			mes "[Mansion Manager ï¿½ï¿½]";
 			mes "I hope you stay safe and have a comfortable time.";
 			close3;
 		}
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "Thank you very much.";
 		setquest .@hunt;
 		close3;
 	case 0:
 	case 1:
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "This quest is already active.";
 		close3;
 	case 2:
-		mes "[Mansion Manager ¥â]";
+		mes "[Mansion Manager ï¿½ï¿½]";
 		mes "I have confirmed the completion of the request.";
 		mes "Thank you.";
 		setquest .@cooldown;
 		erasequest .@hunt;
-		getitem 1000103,2;
+		getitem 1000103,20;
 		getexp .@exp[0],.@exp[1];
 		close3;
 	}
@@ -8866,7 +8866,7 @@ ba_maison,306,206,5	script	Cotton#greeen	4_EP17_BASIC_B,{
 			mes "Here's your payment for your hard work.";
 			setquest 8595;
 			erasequest .@quest_id[.@i];
-			getitem 1000103,2;
+			getitem 1000103,20;
 			getexp 1800000,1320000;
 			next;
 			mes "[Cotton]";
@@ -9077,7 +9077,7 @@ ba_maison,79,278,3	script	Europa#eorpa	4_EP17_BASIC_B,{
 		mes "[Europa]";
 		mes "The processing of potato chips has been confirmed. Thank you very much.";
 		delitem 1000225,10;
-		getitem 1000103,1;
+		getitem 1000103,20;
 		completequest 3390;
 		setquest 3391;
 		getexp 11560465,9728632;
@@ -9126,7 +9126,7 @@ ba_maison,79,278,3	script	Europa#eorpa	4_EP17_BASIC_B,{
 		mes "[Europa]";
 		mes "The processing of potato chips has been confirmed. Thank you very much.";
 		delitem 1000225,10;
-		getitem 1000103,1;
+		getitem 1000103,20;
 		erasequest 3392;
 		setquest 3391;
 		getexp 6236863,4365714;
@@ -9286,7 +9286,7 @@ ba_in01,28,255,5	script	Manager Beta Almond#ep172_amd01	4_EP17_BASIC_B,{
 		erasequest 18024;
 		setquest 18025;
 		delitem 1000226,10;
-		getitem 1000103,2;
+		getitem 1000103,20;
 		getexp2 206267,0;
 		close3;
 	case 2:
@@ -9494,7 +9494,7 @@ ba_in01,32,250,3	script	Sweety#ep172_swty	4_EP17_SWEETY,{
 		mes "Just take this and go away!";
 		erasequest 18022;
 		setquest 18023;
-		getitem 1000103,4;
+		getitem 1000103,20;
 		getexp2 206267,0;
 		close3;
 	}
@@ -10413,7 +10413,7 @@ ba_maison,239,47,3	script	Seihyu#jh_ba	4_EP17_SCISSORE,{
 			cutin "",255;
 			setquest 16432;
 			erasequest 16431;
-			getitem 1000103,4;
+			getitem 1000103,20;
 			getexp 800000,500000;
 			end;
 		}
@@ -10495,7 +10495,7 @@ ba_maison,239,47,3	script	Seihyu#jh_ba	4_EP17_SCISSORE,{
 			cutin "",255;
 			setquest 16434;
 			erasequest 16433;
-			getitem 1000103,4;
+			getitem 1000103,20;
 			getexp 8000000,5000000;
 			end;
 		}
@@ -10547,7 +10547,7 @@ ba_maison,239,47,3	script	Seihyu#jh_ba	4_EP17_SCISSORE,{
 				setquest 16436;
 				erasequest 16435;
 				delitem 1000099,countitem(1000099);
-				getitem 1000103,4;
+				getitem 1000103,20;
 				getexp 800000,500000;
 				end;
 			}

@@ -1345,14 +1345,17 @@ OnMobDead:
 				delitem .@item[.@i], countitem(.@item[.@i]);
 			}
 		}
+		
 		if (.@count >= 20)
-			.@reward = 4;
+			.@reward = 20;
 		else
 			.@reward = 2;
+
 		if (countitem(1000098) > 0) {
 			delitem 1000098, countitem(1000098);
 			.@reward += 2;
 		}
+
 		mes "[Silk]";
 		mes "The total is " + .@count + ".";
 		mes "Thank you for your hard work!";

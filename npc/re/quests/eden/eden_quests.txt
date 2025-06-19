@@ -2836,6 +2836,7 @@ S_Quest7990:
 	mes "This should be pretty easy for you.";
 	para_2nd01 = 12;
 	setquest 7223;// Advanced Training in Einbroch
+	warp "ein_fild08", 170, 359;
 	return;
 
 S_Quest89100:
@@ -2849,6 +2850,7 @@ S_Quest89100:
 		mes "Find the Dispatched Instructor there.";
 		para_2nd01 = 17;
 		setquest 7229;// Advanced Training in Ice Dungeon
+		warp "ice_dun01", 157, 18;
 	}
 	else {
 		mes "Well, well...";
@@ -3304,6 +3306,7 @@ ein_fild08,172,359,3	script	Dispatched Instructor#04	4_M_4THPRIN1,{
 			erasequest 7227;// Teddy Bear hunting
 			setquest 7228;// Report to Instructor Ur
 			getexp 30000,30000;
+			warp "ein_fild04", 184, 42;
 			// erasequest 7225;
 		}
 		else {
@@ -3385,7 +3388,6 @@ ice_dun01,154,13,5	script	Dispatched Instructor#05	4_F_JOB_BLACKSMITH,{
 		para_2nd01 = 18;
 		erasequest 7229;// Advanced Training in Ice Dungeon
 		setquest 7230;// Siroma hunting
-		warp "ice_dun01", 157, 18;
 	}
 	else if (para_2nd01 == 18) {
 		if (checkquest(7230,HUNTING) == 2) {

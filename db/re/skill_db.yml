@@ -4042,17 +4042,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    Duration1:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 60000
-      - Level: 3
-        Time: 90000
-      - Level: 4
-        Time: 120000
-      - Level: 5
-        Time: 150000
+    Duration1: 3600000
     Requires:
       SpCost:
         - Level: 1
@@ -4084,17 +4074,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    Duration1:
-      - Level: 1
-        Time: 10000
-      - Level: 2
-        Time: 20000
-      - Level: 3
-        Time: 30000
-      - Level: 4
-        Time: 40000
-      - Level: 5
-        Time: 50000
+    Duration1: 3600000
     Requires:
       SpCost:
         - Level: 1
@@ -4122,17 +4102,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    Duration1:
-      - Level: 1
-        Time: 20000
-      - Level: 2
-        Time: 40000
-      - Level: 3
-        Time: 60000
-      - Level: 4
-        Time: 80000
-      - Level: 5
-        Time: 100000
+    Duration1: 3600000
     Requires:
       SpCost:
         - Level: 1
@@ -4183,17 +4153,7 @@ Body:
       Toggleable: true
     Hit: Single
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 1000
-      - Level: 2
-        Time: 2000
-      - Level: 3
-        Time: 3000
-      - Level: 4
-        Time: 4000
-      - Level: 5
-        Time: 5000
+    Duration1: 3600000
     Requires:
       SpCost: 10
     Status: MaximizePower
@@ -5397,7 +5357,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     CastTime: 1000
-    Duration1: 300000
+    Duration1: 3600000
     Cooldown: 30000
     FixedCastTime: 300
     Requires:
@@ -7302,6 +7262,8 @@ Body:
     Description: Raging Trifecta Blow
     MaxLevel: 10
     Type: Weapon
+    DamageFlags:
+      Critical: true
     Flags:
       TargetTrap: true
     Range: -1
@@ -10504,27 +10466,7 @@ Body:
     Flags:
       AllowOnMado: true
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 15000
-      - Level: 2
-        Time: 20000
-      - Level: 3
-        Time: 25000
-      - Level: 4
-        Time: 30000
-      - Level: 5
-        Time: 35000
-      - Level: 6
-        Time: 40000
-      - Level: 7
-        Time: 45000
-      - Level: 8
-        Time: 50000
-      - Level: 9
-        Time: 55000
-      - Level: 10
-        Time: 60000
+    Duration1: 3600000
     Duration2: 5000
     FixedCastTime:
       - Level: 1
@@ -10614,7 +10556,7 @@ Body:
       AllowOnMado: true
     Hit: Single
     HitCount: 1
-    Duration1: 60000
+    Duration1: 3600000
     Requires:
       SpCost: 20
       State: Cart
@@ -12450,7 +12392,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    Duration1: 150000
+    Duration1: 3600000
     Requires:
       SpCost: 64
       Weapon:
@@ -13319,7 +13261,7 @@ Body:
       AllowOnMado: true
     Hit: Single
     HitCount: 1
-    Duration1: 180000
+    Duration1: 3600000
     Requires:
       SpCost: 15
       ZenyCost:

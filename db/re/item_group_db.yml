@@ -23165,50 +23165,53 @@ Body:
             Item: Wind_Of_Verdure
             Rate: 22
           - Index: 5
-            Item: Phracon
-            Rate: 20
-          - Index: 6
             Item: Crystal_Blue
             Rate: 18
-          - Index: 7
+          - Index: 6
             Item: Boody_Red
             Rate: 16
-          - Index: 8
+          - Index: 7
             Item: Steel
             Rate: 14
-          - Index: 9
-            Item: Emveretarcon
-            Rate: 12
-          - Index: 10
+          - Index: 8
             Item: Elunium_Stone
             Rate: 10
-          - Index: 11
+          - Index: 9
             Item: Oridecon_Stone
             Rate: 9
-          - Index: 12
+          - Index: 10
             Item: Great_Nature
             Rate: 8
-          - Index: 13
+          - Index: 11
             Item: Rough_Wind
             Rate: 7
-          - Index: 14
+          - Index: 12
             Item: Mistic_Frozen
             Rate: 6
-          - Index: 15
+          - Index: 13
             Item: Flame_Heart
             Rate: 5
-          - Index: 16
+          - Index: 14
             Item: Elunium
             Rate: 4
-          - Index: 17
+          - Index: 15
             Item: Oridecon
-            Rate: 3
-          - Index: 18
+            Rate: 22
+          - Index: 16
             Item: Gold
-            Rate: 2
+            Rate: 10
+          - Index: 17
+            Item: HD_Oridecon
+            Rate: 10
+          - Index: 18
+            Item: HD_Elunium
+            Rate: 10
           - Index: 19
-            Item: Emperium
-            Rate: 1
+            Item: Bradium
+            Rate: 10
+          - Index: 20
+            Item: HD_Bradium
+            Rate: 10
   - Group: OX_TAIL_SCROLL
     SubGroups:
       - SubGroup: 1
