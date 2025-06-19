@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2021 rAthena Development Team
+#   Copyright(C) 2025 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -2106,6 +2106,7 @@ Body:
     SplashArea: 2
     ActiveInstance: 5
     Knockback: 2
+    CastCancel: false
     CastTime: 700
     Duration1: 1000
     Requires:
@@ -2114,7 +2115,6 @@ Body:
         1hSpear: true
         2hSpear: true
       State: Riding
-    CastCancel: false
   - Id: 58
     Name: KN_SPEARSTAB
     Description: Spear Stab
@@ -2288,6 +2288,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    CastCancel: false
     CastTime: 700
     Requires:
       SpCost:
@@ -2311,7 +2312,6 @@ Body:
           Amount: 21
         - Level: 10
           Amount: 22
-    CastCancel: false
   - Id: 63
     Name: KN_RIDING
     Description: Peco Peco Riding
@@ -5150,6 +5150,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    CastCancel: false
     CastTime: 1500
     Requires:
       SpCost: 15
@@ -5158,7 +5159,6 @@ Body:
       Ammo:
         Arrow: true
       AmmoAmount: 1
-    CastCancel: false
   - Id: 149
     Name: TF_SPRINKLESAND
     Description: Sand Attack
@@ -6105,6 +6105,7 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
+    CastCancel: false
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -6131,7 +6132,6 @@ Body:
         - Level: 5
           Amount: 25
     Status: StripWeapon
-    CastCancel: false
   - Id: 216
     Name: RG_STRIPSHIELD
     Description: Divest Shield
@@ -6143,6 +6143,7 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
+    CastCancel: false
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -6169,7 +6170,6 @@ Body:
         - Level: 5
           Amount: 20
     Status: StripShield
-    CastCancel: false
   - Id: 217
     Name: RG_STRIPARMOR
     Description: Divest Armor
@@ -6181,6 +6181,7 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
+    CastCancel: false
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -6207,7 +6208,6 @@ Body:
         - Level: 5
           Amount: 25
     Status: StripArmor
-    CastCancel: false
   - Id: 218
     Name: RG_STRIPHELM
     Description: Divest Helm
@@ -6219,6 +6219,7 @@ Body:
     Range: 1
     Hit: Single
     HitCount: 1
+    CastCancel: false
     CastTime: 1000
     AfterCastActDelay: 1000
     Duration1:
@@ -6245,7 +6246,6 @@ Body:
         - Level: 5
           Amount: 20
     Status: StripHelm
-    CastCancel: false
   - Id: 219
     Name: RG_INTIMIDATE
     Description: Snatch
@@ -6873,6 +6873,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    CastCancel: false
     CastDefenseReduction: 33
     CastTime: 3000
     AfterCastActDelay: 1500
@@ -6910,7 +6911,6 @@ Body:
       Flag:
         PathCheck: true
     Status: Blind
-    CastCancel: false
   - Id: 255
     Name: CR_DEVOTION
     Description: Sacrifice
@@ -7057,11 +7057,11 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
+    CastCancel: false
     CastTime: 1000
     Duration1: 600000
     Requires:
       SpCost: 8
-    CastCancel: false
   - Id: 262
     Name: MO_ABSORBSPIRITS
     Description: Absorb Spirit Sphere
@@ -7129,6 +7129,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    CastCancel: false
     CastTime: 1000
     AfterCastActDelay: 500
     Requires:
@@ -7144,7 +7145,6 @@ Body:
         - Level: 5
           Amount: 20
       SpiritSphereCost: 1
-    CastCancel: false
   - Id: 267
     Name: MO_FINGEROFFENSIVE
     Description: Throw Spirit Sphere
@@ -7171,6 +7171,7 @@ Body:
       Skill:
         Plagiarism: true
         Reproduce: true
+    CastCancel: false
     CastTime: 1000
     AfterCastActDelay: 500
     AfterCastWalkDelay:
@@ -7195,7 +7196,6 @@ Body:
           Amount: 4
         - Level: 5
           Amount: 5
-    CastCancel: false
   - Id: 268
     Name: MO_STEELBODY
     Description: Mental Strength
@@ -7206,6 +7206,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
+    CastCancel: false
     CastTime: 5000
     Duration1:
       - Level: 1
@@ -7222,7 +7223,6 @@ Body:
       SpCost: 200
       SpiritSphereCost: 5
     Status: SteelBody
-    CastCancel: false
   - Id: 269
     Name: MO_BLADESTOP
     Description: Root
@@ -9239,7 +9239,7 @@ Body:
       IsNpc: true
     Hit: Single
     HitCount: 1
-    Duration: 30000
+    Duration1: 30000
     Status: WeaponBreaker
   - Id: 344
     Name: NPC_ARMORBRAKE
@@ -9796,6 +9796,7 @@ Body:
     Range: 9
     Hit: Multi_Hit
     HitCount: 1
+    CastCancel: false
     CastTime:
       - Level: 1
         Time: 2000
@@ -9841,7 +9842,6 @@ Body:
           Amount: 45
         - Level: 5
           Amount: 50
-    CastCancel: false
   - Id: 368
     Name: PA_SACRIFICE
     Description: Martyr's Reckoning
@@ -10736,6 +10736,7 @@ Body:
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
+    CastCancel: false
     CastTime:
       - Level: 1
         Time: 300
@@ -10775,7 +10776,6 @@ Body:
         1hSpear: true
         2hSpear: true
     Status: Ankle
-    CastCancel: false
   - Id: 398
     Name: LK_HEADCRUSH
     Description: Traumatic Blow
@@ -11486,6 +11486,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
+    CastCancel: false
     CastTime:
       - Level: 1
         Time: 5000
@@ -11499,7 +11500,6 @@ Body:
         Time: 1000
     Requires:
       SpCost: 50
-    CastCancel: false
   - Id: 427
     Name: SG_FEEL
     Description: Feeling the Sun Moon and Stars
@@ -13349,8 +13349,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element:
-      - Level: 1
-        Element: Neutral
       - Level: 2
         Element: Water
       - Level: 3
@@ -16596,10 +16594,10 @@ Body:
     MaxLevel: 5
     Type: Magic
     TargetType: Ground
-    Range: 9
     Flags:
       IsNpc: true
       ShowScale: true
+    Range: 9
     Hit: Single
     HitCount: 1
     Element: Poison
@@ -16668,17 +16666,16 @@ Body:
         Size: 15
     Hit: Single
     HitCount: 1
-    Element: Neutral
   - Id: 742
     Name: NPC_POISON_BUSTER
     Description: Poison Buster
     MaxLevel: 2
     Type: Magic
     TargetType: Attack
-    Flags:
-      IsNpc: true
     DamageFlags:
       Splash: true
+    Flags:
+      IsNpc: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -16689,10 +16686,10 @@ Body:
     Description: Hallucination Walk
     MaxLevel: 5
     TargetType: Self
-    Flags:
-      IsNpc: true
     DamageFlags:
       NoDamage: true
+    Flags:
+      IsNpc: true
     Hit: Single
     HitCount: 1
     Duration1: 20000
@@ -17257,6 +17254,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -5
     Element: Weapon
+    CastCancel: false
     CastTime:
       - Level: 1
         Time: 1000
@@ -17285,7 +17283,6 @@ Body:
       Weapon:
         1hSpear: true
         2hSpear: true
-    CastCancel: false
   - Id: 2005
     Name: RK_WINDCUTTER
     Description: Wind Cutter
@@ -17338,6 +17335,7 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
+    CastCancel: false
     CastTime: 1000
     Cooldown: 2000
     Requires:
@@ -17358,7 +17356,6 @@ Body:
         2hSword: true
         1hSpear: true
         2hSpear: true
-    CastCancel: false
   - Id: 2007
     Name: RK_DRAGONTRAINING
     Description: Dragon Training
@@ -17399,6 +17396,7 @@ Body:
         Area: 4
       - Level: 10
         Area: 4
+    CastCancel: false
     CastTime:
       - Level: 4
         Time: 1000
@@ -17439,7 +17437,6 @@ Body:
         - Level: 10
           Amount: 75
       State: Ridingdragon
-    CastCancel: false
   - Id: 2009
     Name: RK_DRAGONHOWLING
     Description: Dragon Howling
@@ -17578,11 +17575,11 @@ Body:
     Element: Weapon
     SplashArea: 3
     Knockback: 7
+    CastCancel: false
     CastTime: 2000
     AfterCastActDelay: 1000
     Requires:
       SpCost: 1
-    CastCancel: false
   - Id: 2018
     Name: RK_FIGHTINGSPIRIT
     Description: Fighting Spirit
@@ -18316,16 +18313,6 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea:
-      - Level: 1
-        Area: 0
-      - Level: 2
-        Area: 0
-      - Level: 3
-        Area: 0
-      - Level: 4
-        Area: 0
-      - Level: 5
-        Area: 0
       - Level: 6
         Area: 1
       - Level: 7
@@ -20607,6 +20594,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Weapon
+    CastCancel: false
     CastTime:
       - Level: 1
         Time: 200
@@ -20631,7 +20619,6 @@ Body:
         - Level: 5
           Amount: 15
       State: Mado
-    CastCancel: false
   - Id: 2257
     Name: NC_PILEBUNKER
     Description: Pile Bunker
@@ -20703,6 +20690,7 @@ Body:
     Element: Fire
     SplashArea: 1
     ActiveInstance: 5
+    CastCancel: false
     CastTime:
       - Level: 1
         Time: 500
@@ -20732,7 +20720,6 @@ Body:
           Amount: 0
         - Item: Magic_Gear_Fuel
           Amount: 1
-    CastCancel: false
   - Id: 2260
     Name: NC_COLDSLOWER
     Description: Cold Slower
@@ -20755,6 +20742,7 @@ Body:
         Area: 3
       - Level: 3
         Area: 4
+    CastCancel: false
     CastTime: 1000
     AfterCastActDelay:
       - Level: 1
@@ -20779,7 +20767,6 @@ Body:
           Amount: 1
         - Item: Liquid_Condensed_Bullet
           Amount: 1
-    CastCancel: false
   - Id: 2261
     Name: NC_ARMSCANNON
     Description: Arm Cannon
@@ -20816,6 +20803,7 @@ Body:
         Area: 2
       - Level: 5
         Area: 3
+    CastCancel: false
     CastTime:
       - Level: 1
         Time: 1400
@@ -20849,7 +20837,6 @@ Body:
       ItemCost:
         - Item: Magic_Gear_Fuel
           Amount: 1
-    CastCancel: false
   - Id: 2262
     Name: NC_ACCELERATION
     Description: Acceleration
@@ -20970,6 +20957,7 @@ Body:
       - Level: 3
         Area: 4
     Knockback: 5
+    CastCancel: false
     CastTime:
       - Level: 1
         Time: 2000
@@ -20986,7 +20974,6 @@ Body:
           Amount: 3
       Equipment:
         Suicidal_Device: true
-    CastCancel: false
   - Id: 2268
     Name: NC_SHAPESHIFT
     Description: Shape Shift
@@ -21477,6 +21464,7 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 2
+    CastCancel: false
     Duration1:
       - Level: 1
         Time: 20000
@@ -21513,7 +21501,6 @@ Body:
           Amount: 1
         - Item: Steel
           Amount: 2
-    CastCancel: false
   - Id: 2282
     Name: NC_MAGICDECOY
     Description: FAW - Magic Decoy
@@ -21527,6 +21514,7 @@ Body:
     Hit: Single
     HitCount: 1
     ActiveInstance: 2
+    CastCancel: false
     Duration1:
       - Level: 1
         Time: 20000
@@ -21563,7 +21551,6 @@ Body:
           Amount: 2
         - Item: Brigan
           Amount: 1
-    CastCancel: false
   - Id: 2283
     Name: NC_DISJOINT
     Description: FAW Removal
@@ -22450,6 +22437,7 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
+    CastCancel: false
     CastTime: 1000
     Duration1: 1500
     Cooldown: 5000
@@ -22488,7 +22476,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    CastCancel: false
   - Id: 2307
     Name: LG_CANNONSPEAR
     Description: Cannon Spear
@@ -22700,10 +22687,6 @@ Body:
     Knockback:
       - Level: 1
         Amount: 2
-      - Level: 2
-        Amount: 0
-      - Level: 3
-        Amount: 0
     CopyFlags:
       Skill:
         Reproduce: true
@@ -23880,6 +23863,7 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
+    CastCancel: false
     CastTime:
       - Level: 1
         Time: 1000
@@ -23925,7 +23909,6 @@ Body:
     Requires:
       SpCost: 100
       SpiritSphereCost: 2
-    CastCancel: false
   - Id: 2344
     Name: SR_GENTLETOUCH_QUIET
     Description: Gentle Touch - Quiet
@@ -24136,6 +24119,7 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
+    CastCancel: false
     CastTime: 1000
     Duration1:
       - Level: 1
@@ -24172,7 +24156,6 @@ Body:
           Amount: 4
         - Level: 5
           Amount: 5
-    CastCancel: false
   - Id: 2518
     Name: SR_RIDEINLIGHTNING
     Description: Ride In Lightening
@@ -29825,6 +29808,7 @@ Body:
         Area: 4
       - Level: 10
         Area: 4
+    CastCancel: false
     CastTime:
       - Level: 4
         Time: 1000
@@ -29865,7 +29849,6 @@ Body:
         - Level: 10
           Amount: 75
       State: Ridingdragon
-    CastCancel: false
   - Id: 5005
     Name: RK_LUXANIMA
     Description: Lux Anima
@@ -29899,6 +29882,7 @@ Body:
     CopyFlags:
       Skill:
         Reproduce: true
+    CastCancel: false
     CastTime: 1000
     AfterCastActDelay: 500
     Duration1: 5000
@@ -29934,7 +29918,6 @@ Body:
       Flag:
         NoOverlap: true
         PathCheck: true
-    CastCancel: false
   - Id: 5007
     Name: WM_FRIGG_SONG
     Description: Frigg's Song
@@ -30771,7 +30754,6 @@ Body:
       TargetTrap: true
     Hit: Single
     HitCount: 1
-    Element: Neutral
     SplashArea: 5
     Duration1: 1500
     Requires:
@@ -31983,6 +31965,7 @@ Body:
     Element: Weapon
     SplashArea: 1
     Knockback: 1
+    CastCancel: false
     CastTime: 700
     Requires:
       SpCost:
@@ -32006,7 +31989,6 @@ Body:
           Amount: 21
         - Level: 10
           Amount: 22
-    CastCancel: false
   - Id: 8204
     Name: MS_PARRYING
     Description: Parry
@@ -32342,6 +32324,7 @@ Body:
     HitCount: 1
     Element: Weapon
     Knockback: 6
+    CastCancel: false
     CastTime: 1500
     CastTimeFlags:
       IgnoreDex: true
@@ -32352,7 +32335,6 @@ Body:
       Ammo:
         Arrow: true
       AmmoAmount: 1
-    CastCancel: false
   - Id: 8215
     Name: MA_SHARPSHOOTING
     Description: Focused_Arrow_Strike
@@ -32417,6 +32399,7 @@ Body:
     SplashArea: 2
     ActiveInstance: 5
     Knockback: 2
+    CastCancel: false
     CastTime: 700
     CastTimeFlags:
       IgnoreDex: true
@@ -32424,7 +32407,6 @@ Body:
       IgnoreItemBonus: true
     Requires:
       SpCost: 12
-    CastCancel: false
   - Id: 8218
     Name: ML_SPIRALPIERCE
     Description: Spiral_Pierce
@@ -32439,6 +32421,7 @@ Body:
     Hit: Multi_Hit
     HitCount: 5
     Element: Weapon
+    CastCancel: false
     CastTime:
       - Level: 1
         Time: 300
@@ -32479,7 +32462,6 @@ Body:
         - Level: 5
           Amount: 30
     Status: Ankle
-    CastCancel: false
   - Id: 8219
     Name: ML_DEFENDER
     Description: Defending_Aura
