@@ -13631,8 +13631,6 @@ Body:
     Hit: Single
     HitCount: 1
     Element:
-      - Level: 1
-        Element: Neutral
       - Level: 2
         Element: Water
       - Level: 3
@@ -20841,8 +20839,6 @@ Body:
     Element: Weapon
     AfterCastActDelay: 300
     Cooldown: # !TODO: Confirm cooldown
-      - Level: 1
-        Time: 0
       - Level: 2
         Time: 50
       - Level: 3

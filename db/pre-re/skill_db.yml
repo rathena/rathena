@@ -22678,12 +22678,8 @@ Body:
     Hit: Single
     HitCount: 1
     Element:
-      - Level: 1
-        Element: Neutral
       - Level: 2
         Element: Holy
-      - Level: 3
-        Element: Neutral
     Knockback:
       - Level: 1
         Amount: 2
@@ -31042,12 +31038,8 @@ Body:
     Element:
       - Level: 1
         Element: Wind
-      - Level: 2
-        Element: Neutral
       - Level: 3
         Element: Wind
-      - Level: 4
-        Element: Neutral
       - Level: 5
         Element: Wind
     CastTime:
@@ -31088,12 +31080,8 @@ Body:
     Element:
       - Level: 1
         Element: Wind
-      - Level: 2
-        Element: Neutral
       - Level: 3
         Element: Wind
-      - Level: 4
-        Element: Neutral
       - Level: 5
         Element: Wind
     SplashArea:
