@@ -13011,7 +13011,7 @@
 3826,E16_2_SEYREN@NPC_FIREATTACK,attack,186,10,1000,0,5000,yes,target,always,0,,,,,,,
 3826,E16_2_SEYREN@NPC_CHANGEFIRE,attack,164,1,10000,500,60000000,no,self,myhpltmaxrate,70,,,,,,,
 3826,E16_2_SEYREN@NPC_CHANGEHOLY,attack,167,1,10000,500,60000000,no,self,myhpltmaxrate,40,,,,,,,
-3826,E16_2_SEYREN@NPC_EARTHQUAKE_K,attack,750,10,3000,1000,30000,no,target,myhpltmaxrate,30,,,,,,,
+//3826,E16_2_SEYREN@NPC_EARTHQUAKE_K,attack,750,10,3000,1000,30000,no,target,myhpltmaxrate,30,,,,,,,
 3826,E16_2_SEYREN@NPC_CHANGETELEKINESIS,attack,169,1,10000,500,60000000,no,self,myhpltmaxrate,10,,,,,,,
 3826,E16_2_SEYREN@NPC_ALLHEAL,attack,687,1,5000,500,600000,no,target,myhpltmaxrate,5,,,,,,,
 

@@ -32,6 +32,7 @@ wolfvill,79,260,4	script(CLOAKED)	Aira#con	4_M_BRZ_JACI,{
 	case 1:
 		mes "[Aira]";
 		mes "Please wait the end of the quest delay.";
+		erasequest 12522;
 		close;
 	case 2:
 		erasequest 12522;
@@ -347,7 +348,11 @@ S_Spawn:
 		end;
 	disablenpc instance_npcname("#sw_1");
 	'sw[0] = 1;
-	donpcevent instance_npcname("#sw_timer") + "::OnStart";
+
+	if ('sw[0] == 1 && 'sw[1] == 1) {
+		mapannounce 'map_advs$, "Two souls are simultaneously liberated, opening the door to the center.", bc_map, 0xAAAAFF;
+		donpcevent instance_npcname("#advs_step_2") + "::OnStart";
+	}
 	end;
 
 OnTouch_:
@@ -366,41 +371,14 @@ OnTouch_:
 		end;
 	disablenpc instance_npcname("#sw_2");
 	'sw[1] = 1;
-	donpcevent instance_npcname("#sw_timer") + "::OnStart";
+	
+	if ('sw[0] == 1 && 'sw[1] == 1) {
+		mapannounce 'map_advs$, "Two souls are simultaneously liberated, opening the door to the center.", bc_map, 0xAAAAFF;
+		donpcevent instance_npcname("#advs_step_2") + "::OnStart";
+	}
 	end;
 
 OnTouch_:
-	end;
-}
-
-1@advs,1,1,5	script	#sw_timer	-1,{
-	end;
-OnStart:
-	if ('sw_timer == 1)
-		end;
-	'sw_timer = 1;
-	initnpctimer;
-	end;
-
-OnTimer3000:
-	stopnpctimer;
-	if ('sw[0] != 1 || 'sw[1] != 1) {
-		'sw_timer = 0;
-		if ('sw[0] == 1)
-			enablenpc instance_npcname("#sw_1");
-		if ('sw[1] == 1)
-			enablenpc instance_npcname("#sw_2");
-		'sw[0] = 0;
-		'sw[1] = 0;
-		npctalk "Ah... my half soul beyond this hallway is still unfulfilled...", instance_npcname("#sw_1");
-		npctalk "Ah... my half soul beyond this hallway is still unfulfilled...", instance_npcname("#sw_2");
-		mapannounce 'map_advs$, "You must free both souls on the left and right of the hallway at the same time.", bc_map, 0xAAAAFF;
-		end;
-	}
-	if ('advs_step != 0)
-		end;
-	mapannounce 'map_advs$, "Two souls are simultaneously liberated, opening the door to the center.", bc_map, 0xAAAAFF;
-	donpcevent instance_npcname("#advs_step_2") + "::OnStart";
 	end;
 }
 

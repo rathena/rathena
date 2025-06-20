@@ -1,0 +1,333 @@
+//===== Hercules Script ====================================== 
+//= Premium Buffer Script
+//===== By: ================================================== 
+//= Original by Gurrath
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= Hercules
+//===== Description: ========================================= 
+//= Premium Buffer
+//===== Additional Comments: ================================= 
+//= 1.0: initial release
+//============================================================ 
+
+prontera,154,184,5	script	Premium Buffer	861,{
+	if(#punished_time > gettimetick(2)){
+		query_sql "SELECT char_name,reason FROM `Punishment_Log` WHERE `punished_name` ='" + strcharinfo(0) + "'",.@name$,.@reason$;
+		mes "[Premium Buffer]";
+		mes "You are not allowed to use that service for " + (((#punished_time - gettimetick(2))/3600)+1) + " hours.";
+		mes "You've been punished by " + .@name$ + " for " + .@reason$ + ".";
+		close;
+	}
+	mes "[Premium Buffer]";
+	mes "I have amazing buffing powers!!";
+	mes "You look like a person who needs them";
+	mes "I can buff you for small fee";
+	mes "But remember, my powers are limited so choose wisely";
+	mes "Which do you want?";
+	next;
+	menu "Custom list of buffs",L_IMPORTLIST,"Create list of buffs",L_CREATELIST,"Blessing -> 10000",L_BLESS,"Increase Agility -> 10000",L_AGI,"Angelus -> 10000",L_ANGELUS,"Magificat -> 10000",L_MAGNI,"Assumptio -> 20000",L_ASSUMP,"Imposito Manus -> 20000",L_MANUS,"Aspersio -> 45000",L_ASPERSIO,"Suffragium -> 20000",L_SUFFRAGIUM,"Gloria -> 20000",L_GLORIA,"FCP -> 45000",L_PROTECTION,"All buffs -> 250000",L_ALL,"Reset list",L_RESETLIST,"Don't need buffs",CANCEL;
+
+	L_BLESS:
+		if(Zeny < 10000) goto NeedZeny;
+		set Zeny, Zeny-10000;
+		sc_start SC_BLESSING,240000,10;
+		skilleffect 34,0;
+		goto FAREWELL;
+	L_AGI:
+		if(Zeny < 10000) goto NeedZeny;
+		set Zeny, Zeny-10000;
+		sc_start SC_INC_AGI,240000,10;
+		skilleffect 29,0;
+		goto FAREWELL;
+	L_ANGELUS:
+		if(Zeny < 10000) goto NeedZeny;
+		set Zeny, Zeny-10000;
+		sc_start SC_ANGELUS,300000,10;
+		skilleffect 33,0;
+		goto FAREWELL;
+	L_MAGNI:
+		if(Zeny < 10000) goto NeedZeny;
+		set Zeny, Zeny-10000;
+		sc_start SC_MAGNIFICAT,300000,5;
+		skilleffect 74,0;
+		goto FAREWELL;
+	L_ASSUMP:
+		if(Zeny < 20000) goto NeedZeny;
+		set Zeny, Zeny-20000;
+		sc_start SC_ASSUMPTIO,100000,5;
+		skilleffect 361,0;
+		goto FAREWELL;
+	L_MANUS:
+		if(Zeny < 20000) goto NeedZeny;
+		set Zeny, Zeny-20000;
+		sc_start SC_IMPOSITIO,60000,5;
+		skilleffect 66,0;
+		goto FAREWELL;
+	L_ASPERSIO:
+		if(Zeny < 45000) goto NeedZeny;
+		if(countitem(523) < 1) goto NeedWater;
+		delitem 523, 1;
+		set Zeny, Zeny-45000;
+		sc_start SC_ASPERSIO,180000,5;
+		goto FAREWELL;
+	L_SUFFRAGIUM:
+		if(Zeny < 20000) goto NeedZeny;
+		set Zeny, Zeny-20000;
+		sc_start SC_SUFFRAGIUM,30000,3;
+		skilleffect 67,0;
+		goto FAREWELL;
+	L_GLORIA:
+		if(Zeny < 20000) goto NeedZeny;
+		set Zeny, Zeny-20000;
+		sc_start SC_GLORIA,30000,5;
+		skilleffect 75,0;
+		goto FAREWELL;
+	L_Windwalk:
+		if(Zeny < 20000) goto NeedZeny;
+		set Zeny, Zeny-20000;
+		sc_start SC_WINDWALK,240000,5; 
+		skilleffect 75,0;
+		goto FAREWELL;
+	L_PROTECTION:
+		if(#time_regain < gettimetick(2)){
+			set #time, 5;
+			set #time_regain, gettimetick(2) + 3600;
+		}
+		if(#time == 0){
+			mes "[Premium Buffer]";
+			mes "M..my powers, are g..gone..";
+			mes "Let me rest for another " + (#time_regain - gettimetick(2))/60 + " minutes before giving you protection.";
+			close;
+		}
+		if(countitem(7139) < 4) goto NeedGlist;
+		delitem 7139, 4;			
+		if(Zeny<45000) goto NeedZeny;
+		set Zeny, Zeny - 45000; 
+		sc_start SC_PROTECTWEAPON,600000,5;
+		sc_start SC_PROTECTSHIELD,600000,5;
+		sc_start SC_PROTECTARMOR,600000,5;
+		sc_start SC_PROTECTHELM,600000,5;
+		set #time, #time - 1;
+		close;
+	L_FOOD:
+		if(Zemy<1000000) goto NeedZeny;
+		if(countitem(7139) < 4) goto NeedGlist;
+		delitem 7139, 4;
+		set Zeny, Zeny - 1000000; 
+		sc_start SC_FOOD_STR,360000,10;
+		sc_start SC_FOOD_AGI,360000,10;
+		sc_start SC_FOOD_VIT,360000,10;
+		sc_start SC_FOOD_INT,360000,10;
+		sc_start SC_FOOD_DEX,360000,10;
+		sc_start SC_FOOD_LUK,360000,10;
+		mes "[Premium Buffer]";
+		mes "Wonderful, You aren't hungry anymore!.";
+		mes "Have fun!!";
+		close;
+	L_ALL:	
+		if(Zeny<250000) goto NeedZeny;
+		set Zeny, Zeny - 250000; 
+		skilleffect 383,0; sc_start SC_WINDWALK,180000,5;
+		skilleffect 33,0; sc_start SC_ANGELUS,300000,10;
+		skilleffect 74,0; sc_start SC_MAGNIFICAT,90000,5;
+		skilleffect 75,0; sc_start SC_GLORIA,30000,5;
+		skilleffect 66,0; sc_start SC_IMPOSITIO,60000,5;
+		skilleffect 67,0; sc_start SC_SUFFRAGIUM,30000,3;
+		skilleffect 34,0; sc_start SC_BLESSING,240000,10;
+		skilleffect 29,0; sc_start SC_INC_AGI,240000,10;
+		skilleffect 361,0; sc_start SC_ASSUMPTIO,100000,5;				
+		if(#time_regain < gettimetick(2)){
+			set #time, 5;
+			set #time_regain, gettimetick(2) + 3600;
+		}
+		if(#time == 0){
+			mes "[Premium Buffer]";
+			mes "M..my powers, are g..gone..";
+			mes "Let me rest for another " + (#time_regain - gettimetick(2))/60 + " minutes before giving you protection.";
+			close;
+		}
+		if(countitem(7139) < 4) goto NeedGlist;
+		delitem 7139, 4;			
+		if(Zeny<45000) goto NeedZeny;
+		set Zeny, Zeny - 45000; 
+		sc_start SC_PROTECTWEAPON,600000,5;
+		sc_start SC_PROTECTSHIELD,600000,5;
+		sc_start SC_PROTECTARMOR,600000,5;
+		sc_start SC_PROTECTHELM,600000,5;
+		set #time, #time - 1;
+
+		if(countitem(523) < 1) goto NeedWater;
+		delitem 523, 1;
+		sc_start SC_ASPERSIO,180000,5;
+		close;
+
+	L_RESETLIST:
+		set #first_buff$, "";
+		set #second_buff$, "";
+		set #third_buff$, "";
+		set #fourth_buff$, "";
+		set #fifth_buff$, "";
+		set #sixth_buff$, "";
+		set #seventh_buff$, "";
+		set #eighth_buff$, "";
+		set #ninth_buff$, "";
+		set #tenth_buff$, "";
+		mes "[Premium Buffer]";
+		mes "Your list has been resetted.";
+		close;
+
+	L_CREATELIST:
+		mes "[Premium Buffer]";
+		mes "Which do you want?";
+		next;
+		menu "Blessing",L_LIST,"Increase Agility",L_LIST,"Angelus",L_LIST,"Magificat",L_LIST,"Assumptio",L_LIST,"Imposito Manus",L_LIST,"Aspersio",L_LIST,"Suffragium",L_LIST,"Gloria",L_LIST,"FCP",L_LIST,"Finnish",CANCEL;
+
+	L_LIST:
+		switch(@menu){
+			case 1:
+				set #first_buff$, "bless";
+				goto L_CREATELIST;
+				close;
+			case 2:
+				set #second_buff$, "agi";
+				goto L_CREATELIST;
+				close;
+			case 3:
+				set #third_buff$, "angelus";
+				goto L_CREATELIST;
+				close;
+			case 4:
+				set #fourth_buff$, "magni";
+				goto L_CREATELIST;
+				close;
+			case 5:
+				set #fifth_buff$, "assump";
+				goto L_CREATELIST;
+				close;
+			case 6:
+				set #sixth_buff$, "manus";
+				goto L_CREATELIST;
+				close;
+			case 7:
+				set #seventh_buff$, "aspersio";
+				goto L_CREATELIST;
+				close;
+			case 8:
+				set #eighth_buff$, "suffragium";
+				goto L_CREATELIST;
+				close;
+			case 9:
+				set #ninth_buff$, "gloria";
+				goto L_CREATELIST;
+				close;
+			case 10:
+				set #tenth_buff$, "fcp";
+				goto L_CREATELIST;
+				close;
+		}
+		close;
+
+	L_IMPORTLIST:
+			if(#first_buff$ == "bless"){	
+				if(Zeny<10000) goto NeedZeny;
+				set Zeny, Zeny - 10000; 
+				skilleffect 34,0; sc_start SC_BLESSING,240000,10;
+			}
+			if(#second_buff$ == "agi"){
+				if(Zeny<10000) goto NeedZeny;
+				set Zeny, Zeny - 10000; 
+				skilleffect 29,0; sc_start SC_INC_AGI,240000,10;
+			}
+			if(#third_buff$ == "angelus"){
+				if(Zeny<10000) goto NeedZeny;
+				set Zeny, Zeny - 10000; 
+				skilleffect 33,0; sc_start SC_ANGELUS,360000,10;
+			}
+			if(#fourth_buff$ == "magni"){
+				if(Zeny<20000) goto NeedZeny;
+				set Zeny, Zeny - 20000; 
+				skilleffect 74,0; sc_start SC_MAGNIFICAT,360000,5;
+			}
+			if(#fifth_buff$ == "assump"){
+				if(Zeny<20000) goto NeedZeny;
+				set Zeny, Zeny - 20000; 
+				skilleffect 361,0; sc_start SC_ASSUMPTIO,100000,5;
+			}
+			if(#sixth_buff$ == "manus"){
+				if(Zeny<20000) goto NeedZeny;
+				set Zeny, Zeny - 20000;
+				skilleffect 66,0; sc_start SC_IMPOSITIO,60000,5;
+			}
+			if(#seventh_buff$ == "aspersio"){
+				if(Zeny<45000) goto NeedZeny;
+				set Zeny, Zeny - 45000; 
+				if(countitem(523) < 1) goto NeedWater;
+				delitem 523, 1;
+				sc_start SC_ASPERSIO,180000,5;
+			}
+			if(#eighth_buff$ == "suffragium"){
+				if(Zeny<20000) goto NeedZeny;
+				set Zeny, Zeny - 20000; 
+				skilleffect 67,0; sc_start SC_SUFFRAGIUM,30000,3;
+			}
+			if(#ninth_buff$ == "gloria"){
+				if(Zeny<20000) goto NeedZeny;
+				set Zeny, Zeny - 20000; 
+				skilleffect 75,0; sc_start SC_GLORIA,30000,5;
+			}
+			if(#tenth_buff$ == "fcp"){		
+				if(#time_regain < gettimetick(2)){
+					set #time, 5;
+					set #time_regain, gettimetick(2) + 3600;
+				}
+				if(#time == 0){
+					mes "[Premium Buffer]";
+					mes "M..my powers, are g..gone..";
+					mes "Let me rest for another " + (#time_regain - gettimetick(2))/60 + " minutes before giving you protection.";
+					close;
+				}
+				if(countitem(7139) < 4) goto NeedGlist;
+				delitem 7139, 4;			
+				if(Zeny<45000) goto NeedZeny;
+				set Zeny, Zeny - 45000; 
+				sc_start SC_PROTECTWEAPON,600000,5;
+				sc_start SC_PROTECTSHIELD,600000,5;
+				sc_start SC_PROTECTARMOR,600000,5;
+				sc_start SC_PROTECTHELM,600000,5;
+				set #time, #time - 1;
+			}
+		close;
+
+	NeedZeny:
+		mes "[Premium Buffer]";
+		mes "Sorry but you dont have enough zeny.";
+		close;
+
+	NeedGlist:
+		mes "[Premium Buffer]";
+		mes "Sorry but you dont have enough glistening coats.";
+		close;
+
+	NeedWater:
+		mes "[Premium Buffer]";
+		mes "Sorry but you dont have enough holy water.";
+		close;
+
+	NeedList:
+		mes "[Premium Buffer]";
+		mes "Sorry but you dont have list.";
+		close;
+
+	CANCEL:
+		mes "[Premium Buffer]";
+		mes "Alright, come back if you need a buff.";
+		close;
+
+	FAREWELL:
+		mes "[Premium Buffer]";
+		mes "Wonderful, You are now buffed!.";
+		mes "Have fun!!";
+		close;		
+}

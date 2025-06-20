@@ -187,6 +187,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 					mes "I don't think this works";
 					mes "without the -Dungeon Pass-.";
 					mes "I can't open the warp without it.";
+					rentitem 14505,3600;// Sky Fortress Ticket
 					close;
 				}
 				mes "[Scientist Doyeon]";
@@ -602,7 +603,8 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 			mes "[Scientist Doyeon]";
 			mes "I don't think this works";
 			mes "without the -Dungeon Pass-.";
-			mes "I can't open the warp without it.";
+			mes "I can't open the warp without it.";			
+			rentitem 14505,3600;// Sky Fortress Ticket
 			close;
 		}
 		mes "[Scientist Doyeon]";

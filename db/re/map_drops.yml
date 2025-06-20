@@ -1491,79 +1491,79 @@ Body:
         Drops:
           - Index: 0
             Item: Adulter_F_Axe
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 1
             Item: Adulter_F_Ballista
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 2
             Item: Adulter_F_Bible
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 3
             Item: Adulter_F_Cakram
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 4
             Item: Adulter_F_C_Humma
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 5
             Item: Adulter_F_Dagger
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 6
             Item: Adulter_F_F_Wand
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 7
             Item: Adulter_F_Gatling
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 8
             Item: Adulter_F_G_Sword
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 9
             Item: Adulter_F_Harp
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 10
             Item: Adulter_F_Knuckle
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 11
             Item: Adulter_F_M_Book
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 12
             Item: Adulter_F_Moon_B
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 13
             Item: Adulter_F_Lapier
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 14
             Item: Adulter_F_Shotgun
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 15
             Item: Adulter_F_S_Stick
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 16
             Item: Adulter_F_T_Staff
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 17
             Item: Adulter_F_T_Sword
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 18
             Item: Adulter_F_Violin
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 19
             Item: Ep18_Amethyst_Fragment
@@ -1576,88 +1576,88 @@ Body:
             Rate: 10000
           - Index: 22
             Item: Vila_Basement_Key
-            Rate: 1000
+            Rate: 10000
       - Monster: EP18_MD_DEMI_FREYJA_R
         Drops:
           - Index: 0
             Item: Adulter_F_A_Bow
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 1
             Item: Adulter_F_C_Rope
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 2
             Item: Adulter_F_Claw
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 3
             Item: Adulter_F_C_Bow
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 4
             Item: Adulter_F_D_Wand
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 5
             Item: Adulter_F_F_model
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 6
             Item: Adulter_F_G_Spear
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 7
             Item: Adulter_F_Humma
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 8
             Item: Adulter_F_Katar
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 9
             Item: Adulter_F_Lance
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 10
             Item: Adulter_F_Launcher
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 11
             Item: Adulter_F_Mace
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 12
             Item: Adulter_F_P_Book
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 13
             Item: Adulter_F_Revolver
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 14
             Item: Adulter_F_Ribbon
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 15
             Item: Adulter_F_Rifle
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 16
             Item: Adulter_F_Rod
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 17
             Item: Adulter_F_Hall
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 18
             Item: Adulter_F_Star_B
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_COURAGE
           - Index: 19
             Item: Adulter_F_Wand
-            Rate: 1500
+            Rate: 15000
             RandomOptionGroup: PONTIFEX_WISDOM
           - Index: 20
             Item: Ep18_Amethyst_Fragment
@@ -1670,7 +1670,7 @@ Body:
             Rate: 10000
           - Index: 23
             Item: Vila_Basement_Key
-            Rate: 1000
+            Rate: 100000
       - Monster: EP18_MD_SANARE_R
         Drops:
           - Index: 0

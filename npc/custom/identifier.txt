@@ -1,11 +1,23 @@
 prontera,132,216,4	script	Identifier	123,{
-	getinventorylist;
-	for( set .@i,0; .@i < @inventorylist_count; set .@i, .@i + 1 ) {
-		if ( @inventorylist_identify[.@i] == 1 ) continue;
+	mes "[Item Identifier]";
+	mes "I can identify all of your unidentified items.";
+	mes "Shall I proceed?";
+	next;
 
-		delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
-		getitem @inventorylist_id[.@i],1;
+	getinventorylist;
+	set .@count, 0;
+
+	for (set .@i, 0; .@i < @inventorylist_count; set .@i, .@i + 1) {
+		if (@inventorylist_identify[.@i] == 0) {
+			set .@count, .@count + 1;
+		}
 	}
 
-	specialeffect2 EF_STEAL;
+	if (.@count > 0) {
+		atcommand "@identifyall";
+		mes "I identified "+.@count+" item"+((.@count > 1) ? "s" : "")+".";
+	} else {
+		mes "You have no unidentified items.";
+	}
+	close;
 }
