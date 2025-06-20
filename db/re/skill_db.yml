@@ -44652,7 +44652,8 @@ Body:
         Area: 2
       - Level: 5
         Area: 3
-    Cooldown: 3000
+    AfterCastActDelay: 500
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -44691,8 +44692,11 @@ Body:
         Area: 3
       - Level: 5
         Area: 4
-    CastTime: 2000
-    Cooldown: 3000
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 300
+    Cooldown: 1000
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
@@ -44731,7 +44735,8 @@ Body:
         Area: 3
       - Level: 5
         Area: 3
-    Cooldown: 3000
+    AfterCastActDelay: 300
+    Cooldown: 1000
     Requires:
       SpCost:
         - Level: 1
