@@ -7898,8 +7898,8 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			res = static_cast<decltype(res)>(res - ignore_res * res / 100.0);
 
 			// Apply damage reduction.
-			wd.damage = static_cast<decltype(wd.damage)>(wd.damage - res / (res + 400.0) * 80.0 / 100.0 * wd.damage);
-			wd.damage2 = static_cast<decltype(wd.damage2)>(wd.damage2 - res / (res + 400.0) * 80.0 / 100.0 * wd.damage2);
+			wd.damage -= static_cast<decltype(wd.damage)>(static_cast<float>(res / (res + 400.0)) * 80.0 / 100.0 * static_cast<double>(wd.damage));
+			wd.damage2 -= static_cast<decltype(wd.damage2)>(static_cast<float>(res / (res + 400.0)) * 80.0 / 100.0 * static_cast<double>(wd.damage2));
 		}
 
 #else
@@ -9372,7 +9372,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 			mres = static_cast<decltype(mres)>(mres - ignore_mres * mres / 100.0);
 
-			ad.damage = static_cast<decltype(ad.damage)>(ad.damage - mres / (mres + 400.0) * 80.0 / 100.0 * ad.damage);
+			ad.damage -= static_cast<decltype(ad.damage)>(static_cast<float>(mres / (mres + 400.0)) * 80.0 / 100.0 * static_cast<double>(ad.damage));
 		}
 #endif
 
