@@ -221,10 +221,10 @@ Body:
         RequiredItems:
           - Index: 0
             Item: Shadowdecon_Ore
-            Amount: 20
+            Amount: 2
       - Index: 1
         Item: Zelunium
         RequiredItems:
           - Index: 0
             Item: Zelunium_Ore
-            Amount: 20
+            Amount: 2

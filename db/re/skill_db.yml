@@ -8181,7 +8181,6 @@ Body:
     Duration1: 1200000
     Requires:
       SpCost: 1
-    Status: Orcish
   - Id: 295
     Name: SA_DEATH
     Description: Grim Reaper
@@ -16575,7 +16574,6 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 1200000
-    Status: Orcish
   - Id: 698
     Name: ALL_WEWISH
     Description: Christmas Carol

@@ -551,7 +551,6 @@ Body:
     CalcFlags:
       Def_Ele: true
     Flags:
-      NoSave: true
       NoClearance: true
       #RemoveOnUnequipArmor: true
       RemoveOnHermode: true
@@ -568,7 +567,6 @@ Body:
       Regen: true
     Flags:
       FailedMado: true
-      NoSave: true
       SuperNoviceAngel: true
       RemoveOnHermode: true
     EndOnStart:
@@ -1035,7 +1033,6 @@ Body:
     Flags:
       Debuff: true
       NoClearance: true
-      NoSave: true
       RemoveOnHermode: true
   - Status: Combo
     Flags:
@@ -1136,7 +1133,6 @@ Body:
       Watk: true
       Matk: true
     Flags:
-      NoSave: true
       NoClearance: true
       RemoveOnHermode: true
   - Status: Deluge
@@ -1145,7 +1141,6 @@ Body:
     CalcFlags:
       MaxHp: true
     Flags:
-      NoSave: true
       NoClearance: true
   - Status: Violentgale
     Icon: EFST_GROUNDMAGIC
@@ -1153,12 +1148,9 @@ Body:
     CalcFlags:
       Flee: true
     Flags:
-      NoSave: true
       NoClearance: true
   - Status: Watk_Element
     DurationLookup: MS_MAGNUM
-    Flags:
-      NoSave: true
     EndOnStart:
       Watk_Element: true
   - Status: Armor
@@ -1201,7 +1193,6 @@ Body:
     Opt3:
       AuraBlade: true
     Flags:
-      NoSave: true
       RequireWeapon: true
       RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
@@ -1222,7 +1213,6 @@ Body:
     Opt3:
       Quicken: true
     Flags:
-      NoSave: true
       RemoveOnHermode: true
   - Status: Tensionrelax
     Icon: EFST_TENSIONRELAX
@@ -1263,7 +1253,6 @@ Body:
       Speed: true
       Aspd: true
     Flags:
-      NoSave: true
       RemoveOnHermode: true
   - Status: Assumptio
     Icon: EFST_ASSUMPTIO2
@@ -1296,7 +1285,6 @@ Body:
     CalcFlags:
       Matk: true
     Flags:
-      NoSave: true
       RemoveOnHermode: true
     EndOnStart:
       Magicpower: true
@@ -1323,7 +1311,6 @@ Body:
       Hit: true
     Flags:
       FailedMado: true
-      NoSave: true
       RemoveOnHermode: true
     Fail:
       Quagmire: true
@@ -1335,7 +1322,6 @@ Body:
       Speed: true
     Flags:
       FailedMado: true
-      NoSave: true
       RemoveOnHermode: true
     Fail:
       Quagmire: true
@@ -1348,7 +1334,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      NoSave: true
   - Status: Cartboost
     Icon: EFST_CARTBOOST
     DurationLookup: WS_CARTBOOST
@@ -1358,7 +1343,6 @@ Body:
       MadoCancel: true
       NoRemoveOnDead: true
       NoClearance: true
-      NoSave: true
       NoBanishingBuster: true
       NoDispell: true
     Fail:
@@ -1589,7 +1573,6 @@ Body:
     CalcFlags:
       Atk_Ele: true
     Flags:
-      NoSave: true
       NoClearance: true
       RemoveOnHermode: true
     EndOnStart:
@@ -1607,7 +1590,6 @@ Body:
       Aspd: true
     Flags:
       MadoCancel: true
-      NoSave: true
       RequireWeapon: true
       RemoveOnHermode: true
     Fail:
@@ -1619,7 +1601,6 @@ Body:
     CalcFlags:
       Atk_Ele: true
     Flags:
-      NoSave: true
       NoClearance: true
       RemoveOnHermode: true
     EndOnStart:
@@ -1637,7 +1618,6 @@ Body:
     Icon: EFST_KAAHI
     DurationLookup: SL_KAAHI
     Flags:
-      NoSave: true
       NoClearance: true
       RemoveOnHermode: true
     EndOnStart:
@@ -1646,7 +1626,6 @@ Body:
     Icon: EFST_KAUPE
     DurationLookup: SL_KAUPE
     Flags:
-      NoSave: true
       NoClearance: true
       RemoveOnHermode: true
   - Status: Onehand
@@ -1657,7 +1636,6 @@ Body:
     Opt3:
       Quicken: true
     Flags:
-      NoSave: true
       NoClearance: true
       RequireWeapon: true
       RemoveOnHermode: true
@@ -1695,7 +1673,6 @@ Body:
     Icon: EFST_DOUBLECASTING
     DurationLookup: PF_DOUBLECASTING
     Flags:
-      NoSave: true
       NoClearance: true
       RemoveOnHermode: true
   - Status: Maxoverthrust
@@ -1705,7 +1682,6 @@ Body:
       OverThrust: true
     Flags:
       MadoCancel: true
-      NoSave: true
       RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
     EndOnStart:
@@ -2084,7 +2060,6 @@ Body:
       SoulLink: true
     Flags:
       NoClearance: true
-      NoSave: true
       NoBanishingBuster: true
       RemoveOnHermode: true
     Fail:
@@ -2435,7 +2410,6 @@ Body:
     Opt3:
       Kaite: true
     Flags:
-      NoSave: true
       NoClearance: true
       RemoveOnHermode: true
     EndOnStart:
@@ -3690,7 +3664,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      NoSave: true
   - Status: Rollingcutter
     Icon: EFST_ROLLINGCUTTER
     DurationLookup: GC_ROLLINGCUTTER
@@ -3883,7 +3856,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       RequireShield: true
-      NoSave: true
     EndOnStart:
       Reflectshield: true
   - Status: Forceofvanguard
@@ -4472,7 +4444,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-      NoSave: true
   - Status: Gt_Energygain
     Icon: EFST_GENTLETOUCH_ENERGYGAIN
     DurationLookup: SR_GENTLETOUCH_ENERGYGAIN

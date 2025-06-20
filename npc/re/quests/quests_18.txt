@@ -401,7 +401,7 @@ rachel,183,170,3	script(CLOAKED)	Nervous Priest#e18a	4_M_TRAINEE,{
 		mes "Let's continue talking in front of the temple.";
 		changequest 8683,8684;	// todo 8684 unlock side quest kids bas gauche and gramp bas middle. kid flower uncloed at start
 		ep18_main = 4;
-		getitem 1000405,20;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 18252408,2000000;
 		navigateto("ra_temple",72,54);
 		close;
@@ -697,7 +697,7 @@ ra_temple,30,142,1	script(CLOAKED)	Nervous Priest#e18c	4_M_TRAINEE,{
 		erasequest 8686;
 		setquest 8687;
 		ep18_main = 7;
-		getitem 1000405,30;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 18252408,2000000;
 		close2;
 		navigateto("ra_temin",173,40);
@@ -3106,7 +3106,7 @@ wolfvill,143,113,5	script	Imril#ep18_wv	4_EP18_IMRIL,{
 		next;
 		cutin "",255;
 		completequest 11735;
-		getitem 1000405,20;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 18252408,2000000;
 		mes "^4d4dffYou receive a favorable evaluation about you.^000000";
 		add_reputation_points(REPUTATION_EP18, 100);
@@ -3197,7 +3197,7 @@ wolfvill,143,113,5	script	Imril#ep18_wv	4_EP18_IMRIL,{
 				ep18_main = 37;
 				setquest 18082;
 			}
-			getitem 1000405,3+.@bonus;	// Ep18_Amethyst_Fragment
+			getitem 1000405,50+.@bonus;	// Ep18_Amethyst_Fragment
 			getexp 4364880,3000000;
 			close3;
 		}
@@ -3255,7 +3255,7 @@ wolfvill,143,113,5	script	Imril#ep18_wv	4_EP18_IMRIL,{
 				ep18_main = 37;
 				setquest 18082;
 			}
-			getitem 1000405,3+.@bonus;	// Ep18_Amethyst_Fragment
+			getitem 1000405,50+.@bonus;	// Ep18_Amethyst_Fragment
 			getexp 11588320,3000000;
 			close3;
 		}
@@ -4049,7 +4049,7 @@ wolfvill,148,153,3	script(CLOAKED)	Miriam#1	4_EP18_MIRIAM,{
 		erasequest 16573;
 		setquest 16574;
 		ep18_main = 42;
-		getitem 1000405,40;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 18252408,2000000;
 		close2;
 		cutin "",255;
@@ -4548,7 +4548,7 @@ wolfvill,140,112,5	script(CLOAKED)	Suad#sms01	4_EP18_SUAD,{
 		next;
 		cutin "ep18_maram_01.png",2;
 		mes "[Maram]";
-		mes "Let's go together. I know where it is! <NAVI>[¾îµð¿¡]<INFO>wolfvill,131,257,0,101,0</INFO></NAVI>Adventure, come with us. I have a feeling that we might need a third-party witness!";
+		mes "Let's go together. I know where it is! <NAVI>[ï¿½ï¿½ï¿½]<INFO>wolfvill,131,257,0,101,0</INFO></NAVI>Adventure, come with us. I have a feeling that we might need a third-party witness!";
 		erasequest 16580;
 		setquest 17517;
 		ep18_main = 48;
@@ -4897,7 +4897,7 @@ wolfvill,131,252,3	script(CLOAKED)	Lamacus#sms01	EP18_ARMED_VILLAGER01,{
 		erasequest 17518;
 		setquest 17519;
 		ep18_main = 50;
-		getitem 1000405,30;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 18252408,2000000;
 		close2;
 		cutin "",255;
@@ -5051,11 +5051,11 @@ rachel,116,200,5	script	Niren#sms01	4_F_MADAME,{
 		next;
 		cutin "ep18_miriam_01.png",1;
 		mes "[Miriam]";
-		mes "Let's go, adventurer. Before heading to the villa, there's someone who will accompany us. Let's meet at <NAVI>[¿ÀÁîÀÇ ¹Ì·Î]<INFO>oz_dun01,223,116,0,101,0</INFO></NAVI>";
+		mes "Let's go, adventurer. Before heading to the villa, there's someone who will accompany us. Let's meet at <NAVI>[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì·ï¿½]<INFO>oz_dun01,223,116,0,101,0</INFO></NAVI>";
 		erasequest 17521;
 		setquest 17525;
 		ep18_main = 53;
-		getitem 1000405,60;	// Ep18_Amethyst_Fragment
+		getitem 1000405,100;	// Ep18_Amethyst_Fragment
 		getexp 18252408,2000000;
 		close2;
 		cutin "",255;
@@ -5739,7 +5739,7 @@ ra_temin,258,117,3	script(CLOAKED)	Elly's Figure#c12_02	4_EP17_TABLET,{
 		completequest 18085;
 		delitem 400127,1;	// Ep18_Mini_Elly
 		getitem 400128,1;	// Costume Dropping Elly
-		getitem 1000405,180;	// Ep18_Amethyst_Fragment
+		getitem 1000405,200;	// Ep18_Amethyst_Fragment
 		getexp 18252408,2000000;
 		next;
 		cloakonnpcself( "Elly's Figure#c12_02" );
@@ -6521,7 +6521,7 @@ wolfvill,117,119,5	script	Scania#wms01	4_EP18_GW_MAN02,5,5,{
 		mes "Sure, see you on our walk then.";
 		mes "^4d4dffYou receive favorable evaluations.^000000";
 		completequest 17512;
-		getitem 1000405,10;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;
 		add_reputation_points(REPUTATION_EP18, 100);
 		if (get_reputation_points(REPUTATION_EP18) >= 1000 && ep18_main == 36) {// Custom implementation: reputation 1000 on wolfvill => player can continue the main quest
@@ -6562,7 +6562,7 @@ wolfvill,117,119,5	script	Scania#wms01	4_EP18_GW_MAN02,5,5,{
 			mes "^4d4dff The villagers of the gray wolf have accepted you as part of the village.^000000";
 			mes "You are eligible to participate in the ^4d4dff conference.^000000";
 		}
-		getitem 1000405,3+.@bonus;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50+.@bonus;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;
 		close;
 	}
@@ -6870,7 +6870,7 @@ wolfvill,100,177,1	script	Boksil#wms02	EP18_GREY_WOLF_BABY,{
 		delitem 517,1;	// Meat
 		completequest 17511;
 		setquest 17512;
-		getitem 1000405,10;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;
 		close;
 	case 2:
@@ -7106,7 +7106,7 @@ wolfvill,85,111,3	script	Zlan#ep18	4_M_RACHMAN1,{
 		mes "I may not be a representative at the village meetings... but we'll show some courtesy.";
 		mes "We're lucky to have someone like you.";
 		completequest 16566;
-		getitem 1000405,20;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;
 		mes " ";
 		mes "^4d4dffA favorable evaluation of you occurs.^000000";
@@ -7646,7 +7646,7 @@ wolfvill,61,170,5	script	Folklorist Gudra#ep18	4_F_SHABBY,{
 		delitem 1000408,1;	// Ep18_Recording_Note
 		completequest 16554;
 		setquest 16559;
-		getitem 1000405,20;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;
 		mes " ";
 		mes "^4d4dffA favorable evaluation of you occurs.^000000";
@@ -7754,7 +7754,7 @@ wolfvill,61,170,5	script	Folklorist Gudra#ep18	4_F_SHABBY,{
 			mes "^4d4dff The villagers of the gray wolf have accepted you as part of the village.^000000";
 			mes "You are eligible to participate in the ^4d4dff conference.^000000";
 		}
-		getitem 1000405,3+.@bonus;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50+.@bonus;	// Ep18_Amethyst_Fragment
 		getexp 18252408,2000000;
 		close;
 	case 2:	// shouldn't happen
@@ -8026,7 +8026,7 @@ wolfvill,103,230,3	script	Budan#ep18	4_M_RACHMAN1,{
 			close;
 		}
 		delitem 1000411,1;	// Ep18_Purified_Bucket
-		getitem 1000405,20;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;
 		completequest 8693;
 		setquest 8694;
@@ -8083,7 +8083,7 @@ wolfvill,103,230,3	script	Budan#ep18	4_M_RACHMAN1,{
 			mes "^4d4dff The villagers of the gray wolf have accepted you as part of the village.^000000";
 			mes "You are eligible to participate in the ^4d4dff conference.^000000";
 		}
-		getitem 1000405,3+.@bonus;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50+.@bonus;	// Ep18_Amethyst_Fragment
 		// erasequest 8695;
 		// erasequest 8696;
 		erasequest 8697;
@@ -8812,7 +8812,7 @@ wolfvill,75,214,4	script(CLOAKED)	Hazar#ep18_3	4_EP18_HAZAR,{
 		npctalk "Thank you very much " + strcharinfo(0) + "You're my lifesaver. Here's a small token of my gratitude.", "Camille#ep18_3", bc_self;
 		emotion ET_CRY, getnpcid(0,"Observer#ep18_31");
 		completequest 12531;
-		getitem 1000405,20;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;
 		add_reputation_points(REPUTATION_EP18, 100);
 		if (get_reputation_points(REPUTATION_EP18) >= 1000 && ep18_main == 36) {// Custom implementation: reputation 1000 on wolfvill => player can continue the main quest
@@ -9350,7 +9350,7 @@ wolfvill,171,253,5	script	Ezekiel#hms01	4_M_RACHMAN2,5,5,{
 		mes "Well, until next time, and maybe I'll ask you for a favor, so stop by often!";
 		completequest 17507;
 		mes "^4d4dffThis will result in a favorable evaluation of you.^000000";
-		getitem 1000405,20;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;
 		add_reputation_points(REPUTATION_EP18, 100);
 		if (get_reputation_points(REPUTATION_EP18) >= 1000 && ep18_main == 36) {// Custom implementation: reputation 1000 on wolfvill => player can continue the main quest
@@ -9425,7 +9425,7 @@ wolfvill,171,253,5	script	Ezekiel#hms01	4_M_RACHMAN2,5,5,{
 			mes "^4d4dff The villagers of the gray wolf have accepted you as part of the village.^000000";
 			mes "You are eligible to participate in the ^4d4dff conference.^000000";
 		}
-		getitem 1000405,3+.@bonus;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50+.@bonus;	// Ep18_Amethyst_Fragment
 		getexp 18252408,2000000;
 		close;
 	case 2:	// impossible
@@ -9670,7 +9670,7 @@ wolfvill,202,166,3	script	Eruin#ep18	4_F_SHABBY,{
 
 		completequest 8688;
 		setquest 8689;
-		getitem 1000405,20;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;
 		mes "^4d4dffThis will result in a favorable assessment of you.^000000";
 		add_reputation_points(REPUTATION_EP18, 100);
@@ -9767,7 +9767,7 @@ wolfvill,202,166,3	script	Eruin#ep18	4_F_SHABBY,{
 			mes "^4d4dff The villagers of the gray wolf have accepted you as part of the village.^000000";
 			mes "You are eligible to participate in the ^4d4dff conference.^000000";
 		}
-		getitem 1000405,3+.@bonus;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50+.@bonus;	// Ep18_Amethyst_Fragment
 		getexp 18252408,2000000;
 		mes "[Eruin]";
 		mes "...Okay. Good job.";
@@ -9949,7 +9949,7 @@ wolfvill,147,97,5	script	Ahir#ep18	4_M_DST_CHILD,3,3,{
 			mes "Please accept even a small heart, adventurer.";
 			completequest 16548;
 			setquest 16550;
-			getitem 1000405,20;	// Ep18_Amethyst_Fragment
+			getitem 1000405,50;	// Ep18_Amethyst_Fragment
 			getexp 7769124,3000000;
 			mes " ";
 			mes "^4d4dff A favorable rating for you occurs.^000000";
@@ -10032,7 +10032,7 @@ wolfvill,147,97,5	script	Ahir#ep18	4_M_DST_CHILD,3,3,{
 			mes "^4d4dff The villagers of the gray wolf have accepted you as part of the village.^000000";
 			mes "You are eligible to participate in the ^4d4dff conference.^000000";
 		}
-		getitem 1000405,3+.@bonus;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50+.@bonus;	// Ep18_Amethyst_Fragment
 		getexp 10318080,3000000;
 		close;
 	}
@@ -10620,7 +10620,7 @@ wolfvill,266,26,5	script(CLOAKED)	Horim#ep1815	4_M_RACHMAN2,{
 		mes "[Horim]";
 		mes "May your journey be blessed, adventurer...";
 		completequest 8703;
-		getitem 1000405,20;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;
 		mes "^4d4dffA favorable evaluation of you will occur.^000000";
 		add_reputation_points(REPUTATION_EP18, 100);
@@ -10838,7 +10838,7 @@ rachel,36,45,5	script	Naiman#ep18	4_F_DST_CHILD,{
 		mes "It's not exactly a pleasant feeling, but....";
 		cloakonnpcself( "Karl#ep18" );
 		erasequest 16583;
-		getitem 1000405,10;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		close;
 	}
 	mes "[Naiman]";
@@ -10923,7 +10923,7 @@ rachel,181,51,3	script	Amodipin#ep18	4_M_MIDDLE,{
 		mes "But even if it does, I don't have the courage to live there. Oh, I've talked too much.";
 		mes "I'm sorry for keeping you busy. Thank you so much!";
 		erasequest 16585;
-		getitem 1000405,10;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		close;
 	}
 	mes "[Amodipin]";
@@ -11116,7 +11116,7 @@ rachel,155,236,3	script	Junok#atm	4_M_TRAINEE,{
 			mes "[Junok]";
 			mes "It's worse than I expected. Hm... I wonder what can be done about this.";
 			next;
-			getitem 1000405,10;	// Ep18_Amethyst_Fragment
+			getitem 1000405,50;	// Ep18_Amethyst_Fragment
 			getexp 7769124,3000000;	// dummy value
 			break;
 		case 0:
@@ -11134,7 +11134,7 @@ rachel,155,236,3	script	Junok#atm	4_M_TRAINEE,{
 			mes "[Junok]";
 			mes "It's worse than I expected. Hm... I wonder what can be done about this.";
 			next;
-			getitem 1000405,3;	// Ep18_Amethyst_Fragment
+			getitem 1000405,50;	// Ep18_Amethyst_Fragment
 			getexp 18252408,2000000;
 			break;
 		}
@@ -12138,7 +12138,7 @@ rachel,70,135,4	script(CLOAKED)	Mejai#E18_5	4_M_DST_CHILD,{
 			delitem 1000407,1;	// Ep18_Half_Flower
 		completequest 5936;
 		setquest 5937;
-		getitem 1000405,10;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50;	// Ep18_Amethyst_Fragment
 		getexp 7769124,3000000;	// dummy value
 		mes "[Mejai]";
 		mes "What I'm giving you now is a reward for today's training. Rest well and see you tomorrow.";
@@ -12174,7 +12174,7 @@ rachel,72,133,4	script(CLOAKED)	Half Flower#E18_6	4_EP18_HALFFLOWER,{
 		next;
 		npctalk "Mejai: Shall we start by cutting the stems of the Half Flowers?", "Mejai#E18_5", bc_self;
 		next;
-		if (select( "Cut at 10¡Æ angle.", "Cut at 20¡Æ angle.", "Cut at 30¡Æ angle.", "Cut at 40¡Æ angle." ) != .@good_answer[0])
+		if (select( "Cut at 10ï¿½ï¿½ angle.", "Cut at 20ï¿½ï¿½ angle.", "Cut at 30ï¿½ï¿½ angle.", "Cut at 40ï¿½ï¿½ angle." ) != .@good_answer[0])
 			.@time /= 2;
 		progressbar "FFFF00",1;
 		npctalk "Mejai: Thank you for your decision. Let's start by cutting the stem first.", "Mejai#E18_5", bc_self;
@@ -12328,7 +12328,7 @@ rachel,70,135,4	script(CLOAKED)	Mejai#E18_7	4_M_DST_CHILD,{
 			if (checkquest(5937,PLAYTIME) == 2)
 				erasequest 5937;
 			setquest 5937;
-			getitem 1000405,3;	// Ep18_Amethyst_Fragment
+			getitem 1000405,50;	// Ep18_Amethyst_Fragment
 			getexp 18252408,2000000;
 			npctalk "Mejai: You've worked hard today as well. Please leave the rest to me.", "Mejai#E18_7", bc_self;
 			end;
@@ -12411,7 +12411,7 @@ gw_fild01,325,376,1	script	Half Flower#EP18_R01	4_EP18_HALFFLOWER,7,7,{
 	next;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : What angle should I cut the stem?", bc_self;
 	next;
-	if (select("Cut at 10¡Æ angle", "Cut at 20¡Æ angle", "Cut at 30¡Æ angle", "Cut at 40¡Æ angle" ) != .@good_answer[0])
+	if (select("Cut at 10ï¿½ï¿½ angle", "Cut at 20ï¿½ï¿½ angle", "Cut at 30ï¿½ï¿½ angle", "Cut at 40ï¿½ï¿½ angle" ) != .@good_answer[0])
 		.@time /= 2;
 	progressbar "FFFF00",1;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : How many leaves should I leave?", bc_self;
@@ -12529,7 +12529,7 @@ gw_fild01,32,101,3	script	Camper#to_wolfvill	4_M_SITDOWN,{
 			mes "^4d4dff The villagers of the gray wolf have accepted you as part of the village.^000000";
 			mes "You are eligible to participate in the ^4d4dff conference.^000000";
 		}
-		getitem 1000405,3+.@bonus;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50+.@bonus;	// Ep18_Amethyst_Fragment
 		getexp 9956480,2000000;
 		next;
 	}

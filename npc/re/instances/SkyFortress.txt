@@ -1942,7 +1942,7 @@ OnMobDead:
 1@sthd,94,119,0	script	#pantheon_damage1	HIDDEN_WARP_NPC,6,5,{
 	end;
 OnTouch:
-	unitkill getcharid(3);
+	percentheal -(getstatus(SP_HP) * 10 / 100), 0;
 	end;
 OnEvent:
 	specialeffect EF_GUMGANG4;

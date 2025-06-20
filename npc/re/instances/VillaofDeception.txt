@@ -940,7 +940,7 @@ OnTouch:	// effect ?
 		mes "^0000ffFound something in a bright glowing halo.^000000";
 		if (get_reputation_points(3) >= 5000)
 			.@bonus = 2;
-		getitem 1000405,8+.@bonus;	// Ep18_Amethyst_Fragment
+		getitem 1000405,50+.@bonus;	// Ep18_Amethyst_Fragment
 		if (.@is_hard)
 			erasequest 12521;
 		else
