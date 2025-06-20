@@ -378,9 +378,8 @@ struct s_qi_display {
 	e_questinfo_markcolor color;
 };
 
-class map_session_data {
+class map_session_data : public block_list {
 public:
-	struct block_list bl;
 	struct unit_data ud;
 	struct view_data vd;
 	struct status_data base_status, battle_status;
@@ -500,8 +499,8 @@ public:
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
 	int32 npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
-	std::vector<int> npc_id_dynamic;
-	std::vector<int> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
+	std::vector<int32> npc_id_dynamic;
+	std::vector<int32> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
 	int32 npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int32 npc_menu; // internal variable, used in npc menu handling
 	int32 npc_amount;
@@ -673,11 +672,13 @@ public:
 		int32 fixcastrate, varcastrate, delayrate; // n/100
 		int32 add_fixcast, add_varcast; // in milliseconds
 		int32 ematk; // matk bonus from equipment
+		int32 ematk_hidden; // matk bonus not visible in status window
 		int32 eatk; // atk bonus from equipment
 		uint8 absorb_dmg_maxhp; // [Cydh]
 		uint8 absorb_dmg_maxhp2;
 		int16 critical_rangeatk;
 		int16 weapon_atk_rate, weapon_matk_rate;
+		int32 skill_ratio;
 	} bonus;
 	// zeroed vars end here.
 
@@ -718,6 +719,7 @@ public:
 			int16 index, amount;
 		} item[10];
 		int32 zeny, weight;
+		uint8 inventory_space;
 	} deal;
 
 	bool party_creating; // whether the char is requesting party creation
@@ -818,9 +820,9 @@ public:
 	} achievement_data;
 
 	// Title system
-	std::vector<int> titles;
+	std::vector<int32> titles;
 
-	std::vector<int> cloaked_npc;
+	std::vector<int32> cloaked_npc;
 
 	/* ShowEvent Data Cache flags from map */
 	std::vector<s_qi_display> qi_display;
@@ -946,6 +948,8 @@ public:
 	s_macro_detect macro_detect;
 
 	std::vector<uint32> party_booking_requests;
+
+	void update_look( _look look );
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
@@ -1148,7 +1152,7 @@ extern JobDatabase job_db;
 #endif
 
 #define pc_setdead(sd)        ( (sd)->state.dead_sit = (sd)->vd.dead_sit = 1 )
-#define pc_setsit(sd)         { unit_stop_walking( &(sd)->bl, USW_FIXPOS|USW_MOVE_FULL_CELL ); unit_stop_attack( &(sd)->bl ); (sd)->state.dead_sit = (sd)->vd.dead_sit = 2; }
+#define pc_setsit(sd)         { unit_stop_walking( (sd), USW_FIXPOS|USW_MOVE_FULL_CELL ); unit_stop_attack( (sd) ); (sd)->state.dead_sit = (sd)->vd.dead_sit = 2; }
 #define pc_isdead(sd)         ( (sd)->state.dead_sit == 1 )
 #define pc_issit(sd)          ( (sd)->vd.dead_sit == 2 )
 #define pc_isidle_party(sd)   ( (sd)->chatID || (sd)->state.vending || (sd)->state.buyingstore || DIFF_TICK(last_tick, (sd)->idletime) >= battle_config.idle_no_share )
@@ -1188,9 +1192,6 @@ static bool pc_cant_act( map_session_data* sd ){
 #define pc_isfalcon(sd)       ( (sd)->sc.option&OPTION_FALCON )
 #define pc_isriding(sd)       ( (sd)->sc.option&OPTION_RIDING )
 #define pc_isinvisible(sd)    ( (sd)->sc.option&OPTION_INVISIBLE )
-#define pc_is50overweight(sd) ( (sd)->weight * 100 >= (sd)->max_weight * battle_config.natural_heal_weight_rate )
-#define pc_is70overweight(sd) ( (sd)->weight * 100 >= (sd)->max_weight * battle_config.natural_heal_weight_rate_renewal )
-#define pc_is90overweight(sd) ( (sd)->weight * 10 >= (sd)->max_weight * 9 )
 
 static inline bool pc_hasprogress(map_session_data *sd, enum e_wip_block progress) {
 	return sd == nullptr || (sd->state.workinprogress&progress) == progress;
@@ -1247,7 +1248,7 @@ enum e_mado_type : uint16 {
 	#define pc_rightside_def(sd) ((sd)->battle_status.def)
 	#define pc_leftside_mdef(sd) ((sd)->battle_status.mdef2)
 	#define pc_rightside_mdef(sd) ((sd)->battle_status.mdef)
-	#define pc_leftside_matk(sd) (status_base_matk_min(&(sd)->bl, status_get_status_data((sd)->bl), (sd)->status.base_level))
+	#define pc_leftside_matk(sd) (status_base_matk_min((sd), status_get_status_data(*(sd)), (sd)->status.base_level))
 #define pc_rightside_matk(sd) \
 	(\
 	(sd)->battle_status.rhw.matk + \
@@ -1405,7 +1406,7 @@ void pc_setequipindex(map_session_data *sd);
 uint8 pc_isequip(map_session_data *sd,int32 n);
 int32 pc_equippoint(map_session_data *sd,int32 n);
 int32 pc_equippoint_sub(map_session_data *sd, struct item_data* id);
-void pc_setinventorydata(map_session_data *sd);
+void pc_setinventorydata( map_session_data& sd );
 
 int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 uint8 pc_checkskill(map_session_data *sd,uint16 skill_id);
@@ -1445,7 +1446,7 @@ char pc_checkadditem(map_session_data *sd, t_itemid nameid, int32 amount);
 uint8 pc_inventoryblank(map_session_data *sd);
 int16 pc_search_inventory(map_session_data *sd, t_itemid nameid);
 char pc_payzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uint32 log_charid = 0);
-enum e_additem_result pc_additem(map_session_data *sd, struct item *item, int32 amount, e_log_pick_type log_type);
+enum e_additem_result pc_additem(map_session_data *sd, struct item *item, int32 amount, e_log_pick_type log_type, bool favorite=false);
 char pc_getzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uint32 log_charid = 0);
 char pc_delitem(map_session_data *sd, int32 n, int32 amount, int32 type, int16 reason, e_log_pick_type log_type);
 
@@ -1471,7 +1472,8 @@ bool pc_isequipped(map_session_data *sd, t_itemid nameid);
 enum adopt_responses pc_try_adopt(map_session_data *p1_sd, map_session_data *p2_sd, map_session_data *b_sd);
 bool pc_adoption(map_session_data *p1_sd, map_session_data *p2_sd, map_session_data *b_sd);
 
-void pc_updateweightstatus(map_session_data *sd);
+uint16 pc_getpercentweight(map_session_data& sd, uint32 weight = 0);
+void pc_updateweightstatus(map_session_data& sd);
 
 bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, int16 rate, uint32 dur, uint16 atk_type, const char *o_script, uint32 pos, bool onskill);
 void pc_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> *bonus, std::shared_ptr<s_autobonus> autobonus);

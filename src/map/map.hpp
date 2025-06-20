@@ -373,6 +373,10 @@ enum e_race2 : uint8{
 	RC2_ILLUSION_MOONLIGHT,
 	RC2_EP16_DEF,
 	RC2_EDDA_ARUNAFELTZ,
+	RC2_LASAGNA,
+	RC2_GLAST_HEIM_ABYSS,
+	RC2_DESTROYED_VALKYRIE_REALM,
+	RC2_ENCROACHED_GEPHENIA,
 	RC2_MAX
 };
 
@@ -476,8 +480,7 @@ struct spawn_data {
 	char filepath[256];
 };
 
-struct flooritem_data {
-	struct block_list bl;
+struct flooritem_data : public block_list {
 	unsigned char subx,suby;
 	int32 cleartimer;
 	int32 first_get_charid,second_get_charid,third_get_charid;
@@ -579,7 +582,7 @@ enum _sp {
 	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE, SP_MAGIC_SUBSIZE, SP_CRIT_DEF_RATE, // 2093-2097
 	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN, SP_ADD_ITEM_SPHEAL_RATE, SP_ADD_ITEMGROUP_SPHEAL_RATE, // 2098-2101
 	SP_WEAPON_SUBSIZE, SP_ABSORB_DMG_MAXHP2, // 2102-2103
-	SP_SP_IGNORE_RES_RACE_RATE, SP_SP_IGNORE_MRES_RACE_RATE, // 2104-2105
+	SP_SP_IGNORE_RES_RACE_RATE, SP_SP_IGNORE_MRES_RACE_RATE, SP_EMATK_HIDDEN, SP_SKILL_RATIO // 2104-2107
 };
 
 enum _look {
@@ -597,7 +600,8 @@ enum _look {
 	LOOK_RESET_COSTUMES,//Makes all headgear sprites on player vanish when activated.
 	LOOK_ROBE,
 	// LOOK_FLOOR,	// TODO : fix me!! offcial use this ?
-	LOOK_BODY2
+	LOOK_BODY2,
+	LOOK_MAX
 };
 
 enum e_mapflag : int16 {
@@ -682,6 +686,7 @@ enum e_mapflag : int16 {
 	MF_NODYNAMICNPC,
 	MF_NOBANK,
 	MF_SPECIALPOPUP,
+	MF_NOMACROCHECKER,
 	MF_MAX
 };
 
@@ -825,11 +830,12 @@ struct map_data {
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
-	std::unordered_map<uint16, int> skill_duration;
+	std::unordered_map<uint16, int32> skill_duration;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
 	int32 mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
+	t_tick last_macrocheck;
 
 	// Instance Variables
 	int32 instance_id;
@@ -839,7 +845,7 @@ struct map_data {
 	struct Channel *channel;
 
 	/* ShowEvent Data Cache */
-	std::vector<int> qi_npc;
+	std::vector<int32> qi_npc;
 
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	uint16 hpmeter_visible;
@@ -857,7 +863,7 @@ struct map_data {
 	void copyFlags(const map_data& other);
 
 private:
-	std::vector<int> flags;
+	std::vector<int32> flags;
 };
 
 /// Stores information about a remote map (for multi-mapserver setups).
@@ -1135,6 +1141,7 @@ struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int16 x,int16 
 int32 map_get_new_object_id(void);
 int32 map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int32 flag, int32 tries = 50);
 bool map_closest_freecell(int16 m, int16 *x, int16 *y, int32 type, int32 flag);
+bool map_nearby_freecell(int16 m, int16 &x, int16 &y, int32 type, int32 flag);
 //
 int32 map_quit(map_session_data *);
 // npc
@@ -1248,7 +1255,6 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level
 #define CHK_RACE(race) ((race) > RC_NONE_ && (race) < RC_MAX) /// Check valid Race
-#define CHK_RACE2(race2) ((race2) >= RC2_NONE && (race2) < RC2_MAX) /// Check valid Race2
 #define CHK_CLASS(class_) ((class_) > CLASS_NONE && (class_) < CLASS_MAX) /// Check valid Class
 
 //Other languages supported
@@ -1275,7 +1281,7 @@ typedef struct s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
-	( ((bl) == (struct block_list*)nullptr || (bl)->type != (type_)) ? (T ## type_ *)nullptr : (T ## type_ *)(bl) )
+	( ((bl) == nullptr || (bl)->type != (type_)) ? static_cast<T ## type_ *>(nullptr) : static_cast<T ## type_ *>(bl) )
 
 extern int32 db_use_sqldbs;
 

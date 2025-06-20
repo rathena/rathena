@@ -324,7 +324,7 @@ bool path_search(struct walkpath_data *wpd, int16 m, int16 x0, int16 y0, int16 x
 
 		return false; // easy path unsuccessful
 	} else { // !(flag&1)
-		// FIXME: This array is too small to ensure all paths int16er than MAX_WALKPATH
+		// FIXME: This array is too small to ensure all paths shorter than MAX_WALKPATH
 		// can be found without node collision: calc_index(node1) = calc_index(node2).
 		// Figure out more proper size or another way to keep track of known nodes.
 		struct path_node tp[MAX_WALKPATH * MAX_WALKPATH];
@@ -490,6 +490,17 @@ bool check_distance_client(int32 dx, int32 dy, int32 distance)
 }
 
 /**
+ * Returns distance using the mathematical calculation for length of a line
+ * @param dx: Horizontal distance
+ * @param dy: Vertical distance
+ * @return Mathematical distance
+ */
+double distance_math(int32 dx, int32 dy)
+{
+	return std::sqrt(dx * dx + dy * dy);
+}
+
+/**
  * The client uses a circular distance instead of the square one. The circular distance
  * is only used by units sending their attack commands via the client (not monsters).
  * @param dx: Horizontal distance
@@ -498,7 +509,7 @@ bool check_distance_client(int32 dx, int32 dy, int32 distance)
  */
 int32 distance_client(int32 dx, int32 dy)
 {
-	double temp_dist = sqrt((double)(dx*dx + dy*dy));
+	double temp_dist = distance_math(dx, dy);
 
 	//Bonus factor used by client
 	//This affects even horizontal/vertical lines so they are one cell longer than expected

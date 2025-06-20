@@ -4251,7 +4251,7 @@ static bool read_constdb( char* fields[], size_t columns, size_t current ){
 // job_db.yml function
 //----------------------
 static bool pc_readdb_job2( char* fields[], size_t columns, size_t current ){
-	std::vector<int> stats;
+	std::vector<int32> stats;
 
 	stats.resize(MAX_LEVEL);
 	std::fill(stats.begin(), stats.end(), 0); // Fill with 0 so we don't produce arbitrary stats

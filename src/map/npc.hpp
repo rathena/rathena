@@ -93,6 +93,7 @@ struct s_npc_barter_item{
 	bool stockLimited;
 	uint32 stock;
 	uint32 price;
+	int8 refine;
 	std::map<uint16, std::shared_ptr<s_npc_barter_requirement>> requirements;
 };
 
@@ -111,7 +112,7 @@ struct s_npc_barter{
 
 class BarterDatabase : public TypesafeYamlDatabase<std::string, s_npc_barter>{
 public:
-	BarterDatabase() : TypesafeYamlDatabase( "BARTER_DB", 1 ){
+	BarterDatabase() : TypesafeYamlDatabase( "BARTER_DB", 2, 1 ){
 
 	}
 
@@ -154,8 +155,7 @@ enum e_npcv_status : uint8 {
 	NPCVIEW_CLOAK     = NPCVIEW_CLOAKOFF | NPCVIEW_CLOAKON,
 };
 
-struct npc_data {
-	struct block_list bl;
+struct npc_data : public block_list {
 	struct unit_data ud; //Because they need to be able to move....
 	struct view_data vd;
 	status_change sc; //They can't have status changes, but.. they want the visual opt values.
@@ -1533,6 +1533,34 @@ enum e_job_types
 	JT_4_CLB_SS_AJ,
 	JT_4_CLB_SS_LK,
 	JT_4_SMART_ANDRE,
+	JT_4_ALEXSANDER,
+	JT_4_KASANDRA,
+	JT_4_CLB_KP_P1,
+	JT_4_CH1_LITHIU,
+	JT_4_CH1_GRAY_VALKYRIE,
+	JT_4_CH1_DELEGACY01,
+	JT_4_CLB_KP_SF,
+	JT_4_CLB_KP_ZH,
+	JT_4_CH1_DELEGACY02,
+	JT_4_CH1_DELEGACY03,
+	JT_4_CH1_DELEGACY04,
+	JT_4_CH1_YUP,
+	JT_4_CH1_KAL,
+	JT_4_M_PATIENT01,
+	JT_4_F_PATIENT01,
+	JT_4_M_PATIENT02,
+	JT_4_F_PATIENT02,
+	JT_4_PATIEN_KID,
+	JT_4_CH1_NEUMANN,
+	JT_4_CH1_BRANCH,
+
+	JT_4_HM_UZAGI = 10621,
+	JT_4_HM_TARONG,
+	JT_4_HM_CHUBBY,
+	JT_4_HM_NONI,
+	JT_4_HM_LOLBBY,
+	JT_4_HM_YOBBY,
+	JT_4_HM_MUNCH,
 
 	JT_ROZ_MQ_XAVIER = 13000,
 	JT_ROZ_MQ_MOCLORD,
@@ -1570,6 +1598,7 @@ enum npce_event : uint8 {
 	NPCE_DIE,
 	NPCE_KILLPC,
 	NPCE_KILLNPC,
+	NPCE_IDENTIFY,
 	NPCE_MAX
 };
 

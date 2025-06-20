@@ -563,7 +563,7 @@ static int32 pet_reload_sub( map_session_data *sd, va_list args ){
 	pd->db = mob_db.find( pet_db_ptr->class_ );
 
 	if( battle_config.pet_status_support ){
-		run_script( pet_db_ptr->pet_support_script, 0, sd->bl.id, 0 );
+		run_script( pet_db_ptr->pet_support_script, 0, sd->id, 0 );
 	}
 
 	// Recalculate the player status based on the new data
@@ -695,8 +695,8 @@ void pet_unlocktarget(struct pet_data *pd)
 	nullpo_retv(pd);
 
 	pd->target_id = 0;
-	unit_stop_attack( &pd->bl );
-	unit_stop_walking( &pd->bl, USW_FIXPOS );
+	unit_stop_attack( pd );
+	unit_stop_walking( pd, USW_FIXPOS );
 }
 
 /**
@@ -720,16 +720,16 @@ int32 pet_attackskill(struct pet_data *pd, int32 target_id)
 
 		bl = map_id2bl(target_id);
 
-		if(bl == nullptr || pd->bl.m != bl->m || bl->prev == nullptr || status_isdead(*bl) ||
-			!check_distance_bl(&pd->bl, bl, pd->db->range3))
+		if(bl == nullptr || pd->m != bl->m || bl->prev == nullptr || status_isdead(*bl) ||
+			!check_distance_bl(pd, bl, pd->db->range3))
 			return 0;
 
 		inf = skill_get_inf(pd->a_skill->id);
 
 		if (inf & INF_GROUND_SKILL)
-			unit_skilluse_pos(&pd->bl, bl->x, bl->y, pd->a_skill->id, pd->a_skill->lv);
+			unit_skilluse_pos(pd, bl->x, bl->y, pd->a_skill->id, pd->a_skill->lv);
 		else	//Offensive self skill? Could be stuff like GX.
-			unit_skilluse_id(&pd->bl,(inf&INF_SELF_SKILL?pd->bl.id:bl->id), pd->a_skill->id, pd->a_skill->lv);
+			unit_skilluse_id(pd,(inf&INF_SELF_SKILL?pd->id:bl->id), pd->a_skill->id, pd->a_skill->lv);
 
 		return 1; //Skill invoked.
 	}
@@ -757,8 +757,8 @@ int32 pet_target_check(struct pet_data *pd,struct block_list *bl,int32 type)
 		pd->pet.class_ == status_get_class(bl))
 		return 0;
 
-	if(pd->bl.m != bl->m ||
-		!check_distance_bl(&pd->bl, bl, pd->db->range2))
+	if(pd->m != bl->m ||
+		!check_distance_bl(pd, bl, pd->db->range2))
 		return 0;
 
 	if (!battle_config.pet_master_dead && pc_isdead(pd->master)) {
@@ -766,7 +766,7 @@ int32 pet_target_check(struct pet_data *pd,struct block_list *bl,int32 type)
 		return 0;
 	}
 
-	if (!status_check_skilluse(&pd->bl, bl, 0, 0))
+	if (!status_check_skilluse(pd, bl, 0, 0))
 		return 0;
 
 	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
@@ -815,7 +815,7 @@ int32 pet_sc_check(map_session_data *sd, int32 type)
 	||  pd->recovery->type != type )
 		return 1;
 
-	pd->recovery->timer = add_timer(gettick()+pd->recovery->delay*1000,pet_recovery_timer,sd->bl.id,0);
+	pd->recovery->timer = add_timer(gettick()+pd->recovery->delay*1000,pet_recovery_timer,sd->id,0);
 
 	return 0;
 }
@@ -862,7 +862,7 @@ static TIMER_FUNC(pet_hungry){
 	pd->pet.hungry -= pet_db_ptr->fullness;
 
 	if( pd->pet.hungry < PET_HUNGRY_NONE ) {
-		unit_stop_attack( &pd->bl );
+		unit_stop_attack( pd );
 		pd->pet.hungry = PET_HUNGRY_NONE;
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->hungry_intimacy_dec);
 
@@ -882,7 +882,7 @@ static TIMER_FUNC(pet_hungry){
 	}
 
 	interval = max(interval, 1);
-	pd->pet_hungry_timer = add_timer(tick+interval,pet_hungry,sd->bl.id,0);
+	pd->pet_hungry_timer = add_timer(tick+interval,pet_hungry,sd->id,0);
 
 	return 0;
 }
@@ -936,7 +936,7 @@ int32 pet_hungry_timer_delete(struct pet_data *pd)
  */
 static int32 pet_performance(map_session_data *sd, struct pet_data *pd)
 {
-	unit_stop_walking( &pd->bl, USW_NONE, 2000 );
+	unit_stop_walking( pd, USW_NONE, 2000 );
 	clif_send_petdata( nullptr, *pd, CHANGESTATEPET_PERFORMANCE );
 	pet_lootitem_drop( *pd, nullptr );
 
@@ -965,7 +965,7 @@ bool pet_return_egg( map_session_data *sd, struct pet_data *pd ){
 	clif_inventorylist(sd);
 	clif_send_petdata( sd, *pd, CHANGESTATEPET_UPDATE_EGG );
 #endif
-	unit_free(&pd->bl,CLR_OUTSIGHT);
+	unit_free(pd,CLR_OUTSIGHT);
 
 	status_calc_pc(sd,SCO_NONE);
 	sd->status.pet_id = 0;
@@ -1019,24 +1019,24 @@ bool pet_data_init(map_session_data *sd, struct s_pet *pet)
 	pd = (struct pet_data *)aCalloc(1,sizeof(struct pet_data));
 	new(pd) pet_data();
 	sd->pd = pd;
-	pd->bl.type = BL_PET;
-	pd->bl.id = npc_get_new_npc_id();
+	pd->type = BL_PET;
+	pd->id = npc_get_new_npc_id();
 
 	pd->master = sd;
 	pd->db = mob_db.find(pet->class_);
 	memcpy(&pd->pet, pet, sizeof(struct s_pet));
-	status_set_viewdata(&pd->bl, pet->class_);
-	unit_dataset(&pd->bl);
+	status_set_viewdata(pd, pet->class_);
+	unit_dataset(pd);
 	pd->ud.dir = sd->ud.dir;
 
-	pd->bl.m = sd->bl.m;
-	pd->bl.x = sd->bl.x;
-	pd->bl.y = sd->bl.y;
-	unit_calc_pos(&pd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
-	pd->bl.x = pd->ud.to_x;
-	pd->bl.y = pd->ud.to_y;
+	pd->m = sd->m;
+	pd->x = sd->x;
+	pd->y = sd->y;
+	unit_calc_pos(pd, sd->x, sd->y, sd->ud.dir);
+	pd->x = pd->ud.to_x;
+	pd->y = pd->ud.to_y;
 
-	map_addiddb(&pd->bl);
+	map_addiddb(pd);
 	status_calc_pet(pd,SCO_FIRST);
 
 	pd->last_thinktime = gettick();
@@ -1044,7 +1044,7 @@ bool pet_data_init(map_session_data *sd, struct s_pet *pet)
 
 	if( pet_db_ptr != nullptr ) {
 		if( battle_config.pet_status_support )
-			run_script(pet_db_ptr->pet_support_script,0,sd->bl.id,0);
+			run_script(pet_db_ptr->pet_support_script,0,sd->id,0);
 
 		if( pet_db_ptr->pet_bonus_script )
 			status_calc_pc(sd,SCO_NONE);
@@ -1059,7 +1059,7 @@ bool pet_data_init(map_session_data *sd, struct s_pet *pet)
 
 	interval = max(interval, 1);
 
-	pd->pet_hungry_timer = add_timer(gettick() + interval, pet_hungry, sd->bl.id, 0);
+	pd->pet_hungry_timer = add_timer(gettick() + interval, pet_hungry, sd->id, 0);
 	pd->masterteleport_timer = INVALID_TIMER;
 
 	if( !pet->rename_flag ){
@@ -1100,11 +1100,11 @@ int32 pet_birth_process(map_session_data *sd, struct s_pet *pet)
 	if (save_settings&CHARSAVE_PET)
 		chrif_save(sd, CSAVE_INVENTORY); //is it REALLY Needed to save the char for hatching a pet? [Skotlex]
 
-	if(sd->bl.prev != nullptr) {
-		if(map_addblock(&sd->pd->bl))
+	if(sd->prev != nullptr) {
+		if(map_addblock(sd->pd))
 			return 1;
 
-		clif_spawn(&sd->pd->bl);
+		clif_spawn(sd->pd);
 		clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INIT );
 		clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_HAIRSTYLE );
 #if PACKETVER >= 20180704
@@ -1161,11 +1161,11 @@ int32 pet_recv_petdata(uint32 account_id,struct s_pet *p,int32 flag)
 	} else {
 		pet_data_init(sd,p);
 
-		if(sd->pd && sd->bl.prev != nullptr) {
-			if(map_addblock(&sd->pd->bl))
+		if(sd->pd && sd->prev != nullptr) {
+			if(map_addblock(sd->pd))
 				return 1;
 
-			clif_spawn(&sd->pd->bl);
+			clif_spawn(sd->pd);
 			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INIT );
 			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_HAIRSTYLE );
 			clif_send_petdata( nullptr, *sd->pd, CHANGESTATEPET_ACCESSORY );
@@ -1212,7 +1212,7 @@ int32 pet_select_egg(map_session_data *sd,int16 egg_index)
  * @param item_id : item ID of the taming item used
  */
 void pet_catch_process_start( map_session_data& sd, t_itemid item_id, e_pet_catch_flag flag ){
-	if (map_getmapflag(sd.bl.m, MF_NOPETCAPTURE)) {
+	if (map_getmapflag(sd.m, MF_NOPETCAPTURE)) {
 		clif_displaymessage(sd.fd, msg_txt(&sd, 669)); // You can't catch any pet on this map.
 		return;
 	}
@@ -1249,14 +1249,14 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 
 	mob_data* md = map_id2md( target_id );
 
-	if(md == nullptr || md->bl.prev == nullptr) { // Invalid inputs/state, abort capture.
+	if(md == nullptr || md->prev == nullptr) { // Invalid inputs/state, abort capture.
 		clif_pet_roulette( sd, false );
 		pet_catchprocesses.erase( sd.status.char_id );
 
 		return;
 	}
 
-	if (map_getmapflag(sd.bl.m, MF_NOPETCAPTURE)) {
+	if (map_getmapflag(sd.m, MF_NOPETCAPTURE)) {
 		clif_pet_roulette( sd, false );
 		pet_catchprocesses.erase( sd.status.char_id );
 		clif_displaymessage(sd.fd, msg_txt(&sd, 669)); // You can't catch any pet on this map.
@@ -1301,7 +1301,7 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 			break;
 	}
 
-	if( battle_config.pet_distance_check && distance_bl( &sd.bl, &md->bl ) > battle_config.pet_distance_check ){
+	if( battle_config.pet_distance_check && distance_bl( &sd, md ) > battle_config.pet_distance_check ){
 		clif_pet_roulette(sd, false);
 		pet_catchprocesses.erase( sd.status.char_id );
 
@@ -1311,12 +1311,12 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 	if (!pc_inventoryblank(&sd)) {
 		clif_pet_roulette(sd, false);
 		pet_catchprocesses.erase( sd.status.char_id );
-		clif_msg_color(&sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED]);
+		clif_msg_color( sd, MSI_CANT_GET_ITEM_BECAUSE_COUNT, color_table[COLOR_RED] );
 
 		return;
 	}
 
-	status_change* tsc = status_get_sc( &md->bl );
+	status_change* tsc = status_get_sc( md );
 
 	if( battle_config.pet_hide_check && tsc && ( tsc->getSCE(SC_HIDING) || tsc->getSCE(SC_CLOAKING) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_NEWMOON) || tsc->getSCE(SC_CLOAKINGEXCEED) ) ){
 		clif_pet_roulette( sd, false );
@@ -1340,8 +1340,8 @@ void pet_catch_process_end( map_session_data& sd, int32 target_id ){
 
 	if(rnd_chance(pet_catch_rate, 10000)) {
 		achievement_update_objective(&sd, AG_TAMING, 1, md->mob_id);
-		unit_remove_map(&md->bl,CLR_OUTSIGHT);
-		status_kill(&md->bl);
+		unit_remove_map(md,CLR_OUTSIGHT);
+		status_kill(md);
 		clif_pet_roulette( sd, true );
 
 		std::shared_ptr<s_mob_db> mdb = mob_db.find(pet->class_);
@@ -1500,7 +1500,7 @@ int32 pet_change_name_ack(map_session_data *sd, char* name, int32 flag)
 	}
 
 	safestrncpy(pd->pet.name, name, NAME_LENGTH);
-	clif_name_area(&pd->bl);
+	clif_name_area(pd);
 	pd->pet.rename_flag = 1;
 	clif_send_petdata( nullptr, *pd, CHANGESTATEPET_ACCESSORY );
 	clif_send_petstatus( *sd, *pd );
@@ -1546,7 +1546,7 @@ int32 pet_equipitem(map_session_data *sd,int32 index)
 
 	pc_delitem(sd,index,1,0,0,LOG_TYPE_OTHER);
 	pd->pet.equip = nameid;
-	status_set_viewdata(&pd->bl, pd->pet.class_); //Updates view_data.
+	status_set_viewdata(pd, pd->pet.class_); //Updates view_data.
 	clif_send_petdata( nullptr, *pd, CHANGESTATEPET_ACCESSORY );
 
 	if (battle_config.pet_equip_required) { // Skotlex: start support timers if need
@@ -1554,13 +1554,13 @@ int32 pet_equipitem(map_session_data *sd,int32 index)
 
 		if (pd->s_skill && pd->s_skill->timer == INVALID_TIMER) {
 			if (pd->s_skill->id)
-				pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000, pet_skill_support_timer, sd->bl.id, 0);
+				pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000, pet_skill_support_timer, sd->id, 0);
 			else
-				pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000, pet_heal_timer, sd->bl.id, 0);
+				pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000, pet_heal_timer, sd->id, 0);
 		}
 
 		if (pd->bonus && pd->bonus->timer == INVALID_TIMER)
-			pd->bonus->timer=add_timer(tick+pd->bonus->delay*1000, pet_skill_bonus_timer, sd->bl.id, 0);
+			pd->bonus->timer=add_timer(tick+pd->bonus->delay*1000, pet_skill_bonus_timer, sd->id, 0);
 	}
 
 	return 0;
@@ -1599,7 +1599,7 @@ static int32 pet_unequipitem(map_session_data *sd, struct pet_data *pd)
 	}
 
 	pd->pet.equip = 0;
-	status_set_viewdata(&pd->bl, pd->pet.class_);
+	status_set_viewdata(pd, pd->pet.class_);
 	clif_send_petdata( nullptr, *pd, CHANGESTATEPET_ACCESSORY );
 
 	if( battle_config.pet_equip_required ) { // Skotlex: halt support timers if needed
@@ -1652,7 +1652,7 @@ int32 pet_food(map_session_data *sd, struct pet_data *pd)
 	if (pd->pet.hungry > PET_HUNGRY_SATISFIED) {
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->r_full);
 		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
-			unit_stop_attack( &pd->bl );
+			unit_stop_attack( pd );
 			pd->status.speed = pd->get_pet_walk_speed();
 		}
 	}
@@ -1697,7 +1697,7 @@ static int32 pet_randomwalk(struct pet_data *pd,t_tick tick)
 
 	Assert((pd->master == 0) || (pd->master->pd == pd));
 
-	if(DIFF_TICK(pd->next_walktime,tick) < 0 && unit_can_move(&pd->bl)) {
+	if(DIFF_TICK(pd->next_walktime,tick) < 0 && unit_can_move(pd)) {
 		const int32 retrycount = 20;
 		int32 i, c, d = 12-pd->move_fail_count;
 
@@ -1707,10 +1707,10 @@ static int32 pet_randomwalk(struct pet_data *pd,t_tick tick)
 		for(i = 0; i < retrycount; i++) {
 			int32 x, y;
 
-			x = pd->bl.x + rnd_value(-d, d);
-			y = pd->bl.y + rnd_value(-d, d);
+			x = pd->x + rnd_value(-d, d);
+			y = pd->y + rnd_value(-d, d);
 
-			if(map_getcell(pd->bl.m,x,y,CELL_CHKPASS) && unit_walktoxy(&pd->bl,x,y,0)) {
+			if(map_getcell(pd->m,x,y,CELL_CHKPASS) && unit_walktoxy(pd,x,y,0)) {
 				pd->move_fail_count = 0;
 				break;
 			}
@@ -1719,7 +1719,7 @@ static int32 pet_randomwalk(struct pet_data *pd,t_tick tick)
 				pd->move_fail_count++;
 
 				if(pd->move_fail_count > 1000) {
-					ShowWarning("Pet can't move. Holding position %d, class = %d\n",pd->bl.id,pd->pet.class_);
+					ShowWarning("Pet can't move. Holding position %d, class = %d\n",pd->id,pd->pet.class_);
 					pd->move_fail_count = 0;
 					pd->ud.canmove_tick = tick + 60000;
 
@@ -1754,7 +1754,7 @@ static int32 pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick t
 {
 	struct block_list *target = nullptr;
 
-	if(pd->bl.prev == nullptr || sd == nullptr || sd->bl.prev == nullptr)
+	if(pd->prev == nullptr || sd == nullptr || sd->prev == nullptr)
 		return 0;
 
 	if(DIFF_TICK(tick,pd->last_thinktime) < MIN_PETTHINKTIME)
@@ -1762,7 +1762,7 @@ static int32 pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick t
 
 	pd->last_thinktime = tick;
 
-	if(pd->ud.attacktimer != INVALID_TIMER || pd->ud.skilltimer != INVALID_TIMER || pd->bl.m != sd->bl.m)
+	if(pd->ud.attacktimer != INVALID_TIMER || pd->ud.skilltimer != INVALID_TIMER || pd->m != sd->m)
 		return 0;
 
 	if(pd->ud.walktimer != INVALID_TIMER && pd->ud.walkpath.path_pos <= 2)
@@ -1775,12 +1775,12 @@ static int32 pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick t
 		return 0;
 	}
 
-	if (!check_distance_bl(&sd->bl, &pd->bl, pd->db->range3)) {
+	if (!check_distance_bl(sd, pd, pd->db->range3)) {
 		// Master too far, chase.
 		if(pd->target_id)
 			pet_unlocktarget(pd);
 
-		if(pd->ud.walktimer != INVALID_TIMER && pd->ud.target == sd->bl.id)
+		if(pd->ud.walktimer != INVALID_TIMER && pd->ud.target == sd->id)
 			return 0; // Already walking to him
 
 		if (DIFF_TICK(tick, pd->ud.canmove_tick) < 0)
@@ -1791,7 +1791,7 @@ static int32 pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick t
 		if(pd->status.speed == 0)
 			pd->status.speed = 1;
 
-		if (!unit_walktobl(&pd->bl, &sd->bl, 3, 0))
+		if (!unit_walktobl(pd, sd, 3, 0))
 			pet_randomwalk(pd,tick);
 
 		return 0;
@@ -1809,8 +1809,8 @@ static int32 pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick t
 	if (pd->target_id) {
 		target = map_id2bl(pd->target_id);
 
-		if (!target || pd->bl.m != target->m || status_isdead(*target) ||
-			!check_distance_bl(&pd->bl, target, pd->db->range3)) {
+		if (!target || pd->m != target->m || status_isdead(*target) ||
+			!check_distance_bl(pd, target, pd->db->range3)) {
 			target = nullptr;
 			pet_unlocktarget(pd);
 		}
@@ -1818,19 +1818,19 @@ static int32 pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick t
 
 	if(!target && pd->loot && pd->loot->count < pd->loot->max && DIFF_TICK(tick,pd->ud.canact_tick) > 0) {
 		// Use half the pet's range of sight.
-		map_foreachinallrange(pet_ai_sub_hard_lootsearch, &pd->bl, pd->db->range2 / 2, BL_ITEM, pd, &target);
+		map_foreachinallrange(pet_ai_sub_hard_lootsearch, pd, pd->db->range2 / 2, BL_ITEM, pd, &target);
 	}
 
 	if (!target) { // Just walk around.
-		if (check_distance_bl(&sd->bl, &pd->bl, 3))
+		if (check_distance_bl(sd, pd, 3))
 			return 0; // Already next to master.
 
-		if(pd->ud.walktimer != INVALID_TIMER && check_distance_blxy(&sd->bl, pd->ud.to_x,pd->ud.to_y, 3))
+		if(pd->ud.walktimer != INVALID_TIMER && check_distance_blxy(sd, pd->ud.to_x,pd->ud.to_y, 3))
 			return 0; // Already walking to him
 
-		unit_calc_pos(&pd->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
+		unit_calc_pos(pd, sd->x, sd->y, sd->ud.dir);
 
-		if(!unit_walktoxy(&pd->bl,pd->ud.to_x,pd->ud.to_y,0))
+		if(!unit_walktoxy(pd,pd->ud.to_x,pd->ud.to_y,0))
 			pet_randomwalk(pd,tick);
 
 		return 0;
@@ -1841,18 +1841,18 @@ static int32 pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick t
 		return 0; //Target already locked.
 
 	if (target->type != BL_ITEM) { // enemy targeted
-		if(!battle_check_range(&pd->bl,target,pd->status.rhw.range)) { // Chase
-			if(!unit_walktobl(&pd->bl, target, pd->status.rhw.range, 2))
+		if(!battle_check_range(pd,target,pd->status.rhw.range)) { // Chase
+			if(!unit_walktobl(pd, target, pd->status.rhw.range, 2))
 				pet_unlocktarget(pd); // Unreachable target.
 
 			return 0;
 		}
 
 		//Continuous attack.
-		unit_attack(&pd->bl, pd->target_id, 1);
+		unit_attack(pd, pd->target_id, 1);
 	} else { // Item Targeted, attempt loot
-		if (!check_distance_bl(&pd->bl, target, 1)) { // Out of range
-			if(!unit_walktobl(&pd->bl, target, 1, 1)) // Unreachable target.
+		if (!check_distance_bl(pd, target, 1)) { // Out of range
+			if(!unit_walktobl(pd, target, 1, 1)) // Unreachable target.
 				pet_unlocktarget(pd);
 
 			return 0;
@@ -1927,9 +1927,9 @@ static int32 pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 	if(sd_charid && sd_charid != pd->master->status.char_id)
 		return 0;
 
-	if(unit_can_reach_bl(&pd->bl,bl, pd->db->range2, 1, nullptr, nullptr) &&
+	if(unit_can_reach_bl(pd,bl, pd->db->range2, 1, nullptr, nullptr) &&
 		((*target) == nullptr || //New target closer than previous one.
-		!check_distance_bl(&pd->bl, *target, distance_bl(&pd->bl, bl)))) {
+		!check_distance_bl(pd, *target, distance_bl(pd, bl)))) {
 		(*target) = bl;
 		pd->target_id = bl->id;
 
@@ -1977,9 +1977,9 @@ void pet_lootitem_drop( pet_data& pd, map_session_data* sd ){
 
 	std::shared_ptr<s_item_drop_list> dlist = std::make_shared<s_item_drop_list>();
 
-	dlist->m = pd.bl.m;
-	dlist->x = pd.bl.x;
-	dlist->y = pd.bl.y;
+	dlist->m = pd.m;
+	dlist->x = pd.x;
+	dlist->y = pd.y;
 	dlist->first_charid = 0;
 	dlist->second_charid = 0;
 	dlist->third_charid = 0;
@@ -2013,9 +2013,9 @@ void pet_lootitem_drop( pet_data& pd, map_session_data* sd ){
 	pd.ud.canact_tick = gettick()+10000;	//prevent picked up during 10*1000ms
 
 	if( !dlist->items.empty() ){
-		pet_delayed_drops[pd.bl.id] = dlist;
+		pet_delayed_drops[pd.id] = dlist;
 
-		add_timer( gettick() + 500, pet_delay_item_drop, pd.bl.id, 0 );
+		add_timer( gettick() + 500, pet_delay_item_drop, pd.id, 0 );
 	}
 }
 
@@ -2061,7 +2061,7 @@ TIMER_FUNC(pet_skill_bonus_timer){
 	}
 
 	// wait for the next timer
-	pd->bonus->timer=add_timer(tick+timer,pet_skill_bonus_timer,sd->bl.id,0);
+	pd->bonus->timer=add_timer(tick+timer,pet_skill_bonus_timer,sd->id,0);
 	return 0;
 }
 
@@ -2091,9 +2091,9 @@ TIMER_FUNC(pet_recovery_timer){
 	if(sd->sc.getSCE(pd->recovery->type)) {
 		//Display a heal animation?
 		//Detoxify is chosen for now.
-		clif_skill_nodamage(&pd->bl,sd->bl,TF_DETOXIFY,1);
-		status_change_end(&sd->bl, pd->recovery->type);
-		clif_emotion(&pd->bl, ET_OK);
+		clif_skill_nodamage(pd,*sd,TF_DETOXIFY,1);
+		status_change_end(sd, pd->recovery->type);
+		clif_emotion( *pd, ET_OK );
 	}
 
 	pd->recovery->timer = INVALID_TIMER;
@@ -2121,22 +2121,22 @@ TIMER_FUNC(pet_heal_timer){
 		return 0;
 	}
 
-	status_data* status = status_get_status_data(sd->bl);
+	status_data* status = status_get_status_data(*sd);
 
 	if(pc_isdead(sd) ||
 		(rate = get_percentage(status->sp, status->max_sp)) > pd->s_skill->sp ||
 		(rate = get_percentage(status->hp, status->max_hp)) > pd->s_skill->hp ||
 		(rate = (pd->ud.skilltimer != INVALID_TIMER)) //Another skill is in effect
 	) {  //Wait (how long? 1 sec for every 10% of remaining)
-		pd->s_skill->timer=add_timer(gettick()+(rate>10?rate:10)*100,pet_heal_timer,sd->bl.id,0);
+		pd->s_skill->timer=add_timer(gettick()+(rate>10?rate:10)*100,pet_heal_timer,sd->id,0);
 		return 0;
 	}
 
-	unit_stop_attack( &pd->bl );
-	unit_stop_walking( &pd->bl, USW_FIXPOS );
-	clif_skill_nodamage(&pd->bl,sd->bl,AL_HEAL,pd->s_skill->lv);
-	status_heal(&sd->bl, pd->s_skill->lv,0, 0);
-	pd->s_skill->timer = add_timer(tick+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
+	unit_stop_attack( pd );
+	unit_stop_walking( pd, USW_FIXPOS );
+	clif_skill_nodamage(pd,*sd,AL_HEAL,pd->s_skill->lv);
+	status_heal(sd, pd->s_skill->lv,0, 0);
+	pd->s_skill->timer = add_timer(tick+pd->s_skill->delay*1000,pet_heal_timer,sd->id,0);
 	return 0;
 }
 
@@ -2163,11 +2163,11 @@ TIMER_FUNC(pet_skill_support_timer){
 		return 0;
 	}
 
-	status_data* status = status_get_status_data(sd->bl);
+	status_data* status = status_get_status_data(*sd);
 
 	if (DIFF_TICK(pd->ud.canact_tick, tick) > 0) {
 		//Wait until the pet can act again.
-		pd->s_skill->timer=add_timer(pd->ud.canact_tick,pet_skill_support_timer,sd->bl.id,0);
+		pd->s_skill->timer=add_timer(pd->ud.canact_tick,pet_skill_support_timer,sd->id,0);
 		return 0;
 	}
 
@@ -2176,18 +2176,18 @@ TIMER_FUNC(pet_skill_support_timer){
 		(rate = get_percentage(status->hp, status->max_hp)) > pd->s_skill->hp ||
 		(rate = (pd->ud.skilltimer != INVALID_TIMER)) //Another skill is in effect
 	) {  //Wait (how long? 1 sec for every 10% of remaining)
-		pd->s_skill->timer=add_timer(tick+(rate>10?rate:10)*100,pet_skill_support_timer,sd->bl.id,0);
+		pd->s_skill->timer=add_timer(tick+(rate>10?rate:10)*100,pet_skill_support_timer,sd->id,0);
 		return 0;
 	}
 
-	unit_stop_attack( &pd->bl );
-	unit_stop_walking( &pd->bl, USW_FIXPOS );
-	pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000,pet_skill_support_timer,sd->bl.id,0);
+	unit_stop_attack( pd );
+	unit_stop_walking( pd, USW_FIXPOS );
+	pd->s_skill->timer=add_timer(tick+pd->s_skill->delay*1000,pet_skill_support_timer,sd->id,0);
 
 	if (skill_get_inf(pd->s_skill->id) & INF_GROUND_SKILL)
-		unit_skilluse_pos(&pd->bl, sd->bl.x, sd->bl.y, pd->s_skill->id, pd->s_skill->lv);
+		unit_skilluse_pos(pd, sd->x, sd->y, pd->s_skill->id, pd->s_skill->lv);
 	else
-		unit_skilluse_id(&pd->bl, sd->bl.id, pd->s_skill->id, pd->s_skill->lv);
+		unit_skilluse_id(pd, sd->id, pd->s_skill->id, pd->s_skill->lv);
 	return 0;
 }
 
@@ -2319,7 +2319,7 @@ void pet_evolution(map_session_data *sd, int16 pet_id) {
 	clif_additem(sd, idx, 1, 0);
 
 	// Remove the old pet from sight
-	unit_remove_map(&sd->pd->bl, CLR_OUTSIGHT);
+	unit_remove_map(sd->pd, CLR_OUTSIGHT);
 
 	// Prepare the new pet
 	sd->pd->pet.class_ = pet_id;
@@ -2330,7 +2330,7 @@ void pet_evolution(map_session_data *sd, int16 pet_id) {
 
 		safestrncpy(sd->pd->pet.name, mdb->jname.c_str(), NAME_LENGTH);
 	}
-	status_set_viewdata(&sd->pd->bl, pet_id);
+	status_set_viewdata(sd->pd, pet_id);
 
 	// Save the pet and inventory data
 	intif_save_petdata(sd->status.account_id, &sd->pd->pet);
@@ -2338,16 +2338,16 @@ void pet_evolution(map_session_data *sd, int16 pet_id) {
 		chrif_save(sd, CSAVE_INVENTORY);
 
 	// Spawn it
-	if (map_addblock(&sd->pd->bl))
+	if (map_addblock(sd->pd))
 		return;
 
-	clif_spawn(&sd->pd->bl);
+	clif_spawn(sd->pd);
 	clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INIT );
 	clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_HAIRSTYLE );
 	clif_send_petdata( nullptr, *sd->pd, CHANGESTATEPET_ACCESSORY );
 	clif_send_petstatus( *sd, *sd->pd );
-	clif_emotion(&sd->bl, ET_BEST);
-	clif_specialeffect(&sd->pd->bl, EF_HO_UP, AREA);
+	clif_emotion( *sd, ET_BEST );
+	clif_specialeffect(sd->pd, EF_HO_UP, AREA);
 
 	clif_pet_evolution_result(sd, e_pet_evolution_result::SUCCESS);
 	clif_inventorylist(sd);
@@ -2448,7 +2448,7 @@ void pet_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_petaut
 		script_run_petautobonus(autobonus->other_script, sd);
 	}
 
-	autobonus->timer = add_timer(gettick() + autobonus->duration, pet_endautobonus, sd.bl.id, (intptr_t)bonus);
+	autobonus->timer = add_timer(gettick() + autobonus->duration, pet_endautobonus, sd.id, (intptr_t)bonus);
 	status_calc_pc(&sd, SCO_FORCE);
 }
 

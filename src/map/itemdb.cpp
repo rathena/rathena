@@ -4914,7 +4914,7 @@ void itemdb_reload(void) {
 	for( sd = (map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 		sd->combos.clear(); // clear combo bonuses
-		pc_setinventorydata(sd);
+		pc_setinventorydata( *sd );
 		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
 		pc_load_combo(sd); // Check to see if new combos are available
 		status_calc_pc(sd, SCO_FORCE); // 
