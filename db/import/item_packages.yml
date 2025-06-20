@@ -1,0 +1,39 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Package Database
+###########################################################################
+#
+# Item Package Settings
+#
+###########################################################################
+# - Item                       Item that triggers Item Package Selection.
+#   Groups:                    Groups that can be selected.
+#     - Group                  Group ID that can be selected (has to match the client's LUA file).
+#       Items:                 Items that will be given out.
+#         - Item               Item that will be given out.
+#           Amount             Amount of the item. (Default: 1)
+#                              To remove an item via import set amount to 0.
+#           RentalHours        Rental time in hours. (Default: 0)
+#           Refine             Refine level of the item. (Default: 0)
+#           RandomOptionGroup  Name of the random option group that will be applied. (Default: none)
+###########################################################################
+
+Header:
+  Type: ITEM_PACKAGE_DB
+  Version: 1

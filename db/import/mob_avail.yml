@@ -1,0 +1,76 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2024 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Mob Availability and Alias Database
+###########################################################################
+#
+# Mob Availability and Alias Settings
+#
+###########################################################################
+# - Mob                     Mob to adjust.
+#   Sprite                  Sprite which will be sent to the client instead of Mob.
+#   Sex                     Sex (if Sprite is a player). (Default: Female)
+#   HairStyle               Hair Style ID (if Sprite is a player). (Default: 0)
+#   HairColor               Hair Color ID (if Sprite is a player). (Default: 0)
+#   ClothColor              Cloth Color ID (if Sprite is a player). (Default: 0)
+#   Weapon                  Item name of weapon (if Sprite is a player). (Default: 0)
+#   Shield                  Item name of shield (if Sprite is a player). (Default: 0)
+#   HeadTop                 Item name of headgear (if Sprite is a player). (Default: 0)
+#   HeadMid                 Item name of headgear (if Sprite is a player). (Default: 0)
+#   HeadLow                 Item name of headgear (if Sprite is a player). (Default: 0)
+#   Robe                    Item name of robe (if Sprite is a player). (Default: 0)
+#   PetEquip                Item name of pet equipment (if Mob is a valid pet). (Default: 0)
+#   Options:                Set an option for an object. (Optional)
+#     <Option>: bool
+###########################################################################
+
+Header:
+  Type: MOB_AVAIL_DB
+  Version: 1
+
+Body:
+  - Mob: Crystal01
+    Sprite: S_EMPEL_1
+  - Mob: Crystal01_
+    Sprite: S_EMPEL_1
+  - Mob: Crystal05
+    Sprite: S_EMPEL_1
+  - Mob: Crystal05_
+    Sprite: S_EMPEL_1
+  - Mob: Crystal10_
+    Sprite: S_EMPEL_1
+  - Mob: Crystal10
+    Sprite: S_EMPEL_1
+  - Mob: Crystal25
+    Sprite: S_EMPEL_1
+  - Mob: Crystal25_
+    Sprite: S_EMPEL_1
+  - Mob: Crystal50_
+    Sprite: S_EMPEL_1
+  - Mob: Crystal50
+    Sprite: S_EMPEL_1
+  - Mob: Crystal70
+    Sprite: S_EMPEL_1
+  - Mob: Crystal70_
+    Sprite: S_EMPEL_1
+  - Mob: Crystal99_
+    Sprite: S_EMPEL_1
+  - Mob: Crystal99
+    Sprite: S_EMPEL_1
+  - Mob: E16_2_SEYREN
+    Sprite: SEYREN

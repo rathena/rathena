@@ -1,0 +1,46 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Achievement Database
+###########################################################################
+#
+# Achievement Settings
+#
+###########################################################################
+# - Id                  Achievement ID.
+#   Group               Achievement group type. (Defaut: None)
+#   Name                Achievement name.
+#   Targets:            List of targets the achievement requires. (Default: null)
+#     - Id              Index value used for import methods.
+#       Mob             Target mob. (Default: 0)
+#       Count           Target count. (Default: 1)
+#   Condition           Conditional statement that must be met for the achievement to be considered complete. (Default: null)
+#   Map                 Map name that is used for the AG_CHATTING type. (Default: -1)
+#   Dependents:         List of achievements that need to be completed before this achievement is considered complete. (Default: null)
+#     - Id: <bool>      Achievement ID pre-requisite.
+#   Rewards:            List of rewards that are given on completion. (Default: null)
+#     Item              Item name.
+#     Amount            Amount of item. (Default: 1)
+#     Script            Bonus Script. (Default: null)
+#     TitleId           Title ID. (Default: 0)
+#   Score               Achievement points that are given on completion. (Default: 0)
+###########################################################################
+
+Header:
+  Type: ACHIEVEMENT_DB
+  Version: 2

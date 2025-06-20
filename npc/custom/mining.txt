@@ -1,0 +1,365 @@
+//===== EinherjarRO Scripts ================================== 
+//= Mining System 
+//===== By: ================================================== 
+//= Stolao
+//===== Current Version: ===================================== 
+//= 4.4B
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//===== Description: ========================================= 
+//= Mining System 
+//===== Comments: ============================================
+//= [Stolao]
+//= Needs More Mining Spots
+//= Add Prision Mine
+//===== Additional Comments: =================================
+//= For Older See Old Versions
+//= 4.36 Added More Iron Locations
+//= 4.37 Changed Delete Item != Pickaxe code to use Failed Refine (needs testing)
+//= 4.38 Added a Test Mine for new Break Rates
+//= 4.39 Fixed Missing ""
+//= 4.3A Removed Test Mine, was giveng an error
+//= 4.3B Added at_command for checking mining level and exp
+//= 4.3C Added Failed Refine to Pickaxe break
+//= 4.3D Delete Note Lines from Delitem -> Break Changes
+//= 4.3E Fixed typo in OnMineCheck
+//= 4.3F Added lua files to Extras
+//= 4.40 Added Mining Gear Shop
+//= 4.41 Removed Oridecon Pick from shop & produce db
+//= 4.42 Update iteminfo.lua(lub) with custom picks
+//= 4.43 Fixed Mobs for new Ra update
+//= 4.44 Fixed bug with weapon sprite crashing (changed weapon type client side to 0)
+//= 4.45 Changed mob ids to 3900+
+//= 4.46 Tabulation
+//= 4.47 More Tabulation fixes
+//= 4.48 Removed extra {
+//= 4.49 Removed use of 'set'
+//= 4.4A Fixed not collecting later rewards
+//= 4.4B Changed Iron Break Chance from 1200 -> 120
+//===== Contact Ifo: =========================================
+//= [Stolao] 
+//= Email: Taingram11@gmail.com
+//============================================================
+//calfunc "MiningFunc",<MinBaseLevel>,<MinMineLvl>,<Min Pick>,<Break Chance>,<Damage Chance>,<Exp>,<ItemID1>,<Get Chance1>{,<ItemID2>,<Get Chance2>.....,<ItemID10>,<Get Chance10>};
+// 0 - MinBaseLevel
+//	Minimal Base Level to collect items from this mine
+// 1 - MinMineLvl
+//	Minimal Mining Level to collect items from this mine
+// 2 - Min Pick
+//	Minimal Pick required to mine
+// 3 - Break Chance
+//	Chance of breaking your pickaxe permently
+// 4 - Damage Chance
+//	Chance of damaging your pickaxe, just need to repair
+// 5 - Exp
+//	Amount of Mining Exp earned
+// 6 - ItemID1 - 10
+//	Item Id
+// 7 - Get Chance1 - 10
+//	Chance of Collecting / 10000
+//
+//
+//calfunc "MiningSpawn"<Amount>,<Tier>{,<Location>};
+// 0 - Amount
+//	Amount of Deposits to spawn, Default 1
+// 1 - Tier
+//	The Spawn Group defined in Oninit:
+// 2 - Location
+//	Optional Variable used to pick an exact location value in the arrays
+//	Should be smaller then getarraysize() of Tier used
+
+prontera,188,186,4	shop	Mining Gear	123,47001:-1,47002:-1,47003:-1
+
+-	script	Mining	-1,{
+function MiningSpawn;	function MiningFunc;
+OnMineJell:
+	MiningSpawn(1,0);
+	MiningFunc(0,0,.Pick[0],5,100,rand(1,2),7049,5000,909,2500,909,1250,909,625,909,625,909,625,909,625,909,625,909,625,7126,625);
+	end;
+OnMineCoal:
+	MiningSpawn(1,1);
+	MiningFunc(5,5,.Pick[0],6,110,rand(5,10),909,1000,7049,2500,1003,1000,7049,1000,1003,5750,984,500);
+	end;
+OnMineIron:
+	MiningSpawn(1,2);
+	MiningFunc(10,10,.Pick[0],7,120,rand(25,70),7049,1000,1002,1000,7049,1000,1002,1000,7049,1000,1002,2000,984,1500,1002,4500,1002,2500,998,5000);
+	end;
+OnMineFire:
+	MiningSpawn(1,3);
+	MiningFunc(25,25,.Pick[1],8,130,rand(100,200),7049,3000,7096,1000,7097,1000,7098,1000,7521,1000,1003,1000,990,3000,1002,1000,990,3000,994,2500);
+	end;
+OnMineIce:
+	MiningSpawn(1,3);
+	MiningFunc(25,25,.Pick[1],8,130,rand(100,200),7049,3000,7066,1000,7066,1000,7561,1000,7522,1000,1003,1000,991,3000,1002,1000,991,3000,995,2500);
+	end;
+OnMineWind:
+	MiningSpawn(1,3);
+	MiningFunc(25,25,.Pick[1],8,130,rand(100,200),7049,3000,7189,1000,7189,1000,7189,1000,7523,1000,1003,1000,992,3000,1002,1000,992,3000,996,2500);
+	end;
+OnMineEarth:
+	MiningSpawn(1,3);
+	MiningFunc(25,25,.Pick[1],8,130,rand(100,200),7049,3000,953,1000,953,1000,1002,1000,953,1000,1003,1000,993,3000,7049,1000,993,3000,997,2500);
+end;
+OnMineGold:
+	MiningSpawn(1,4);
+	MiningFunc(50,50,.Pick[2],9,140,rand(300,500),7049,2000,969,1000,1002,3000,969,1500,984,1500,998,1500,1002,2000,969,3000,1002,2000,969,4000);
+	end;
+OnMineGems:
+	MiningSpawn(1,4);
+	switch(rand(0,1)){
+		case 0: MiningFunc(50,50,.Pick[2],9,140,rand(300,500),909,3000,718,1750,719,1750,720,1750,721,1750,722,1750,723,1750,715,1500,716,1500,717,1500);	break;
+		case 1: MiningFunc(50,50,.Pick[2],9,140,rand(300,500),909,3000,724,1750,725,1750,726,1750,727,1750,728,1750,729,1750,715,1500,716,1500,717,1500);	break;
+	}
+	end;
+OnMineCryst:
+	MiningSpawn(1,5);
+	MiningFunc(70,70,.Pick[3],10,180,rand(600,2500),7049,1000,rand(7445,7448),2500,7563,1000,7511,1500,733,500,7799,1000,7315,1500,rand(730,731),2500,rand(730,733),700,714,2000);
+	end;
+OnMineOri:
+	MiningSpawn(1,5);
+	MiningFunc(70,70,.Pick[3],10,180,rand(600,2500),7049,1000,909,1000,998,1500,994,1500,756,4500,984,3500,6240,10);
+	end;
+OnMineElu:
+	MiningSpawn(1,5);
+	MiningFunc(70,70,.Pick[3],10,180,rand(600,2500),7049,1000,909,1000,998,1500,994,1500,757,4500,985,3500,7619,10);
+	end;
+OnMineMaster:
+	MiningSpawn(1,6);
+	MiningFunc(90,90,.Pick[3],15,250,7500,1002,1000,7619,50,6240,50,984,3500,985,3500,969,2500,7444,2500);
+	end;
+OnMineCheck:
+	set .@expneed,MineMaster*(MineMaster*.expcurve)+10+MineMaster;
+	message strcharinfo(0),"[Mining]: Level "+ MineMaster +" - "+ MineExp +"/"+ (.@expneed + 1) +"Exp For Level"+ (MineMaster + 1);
+	end;
+OnInit:
+	function MiningSpawn;	function MiningFunc;
+	set .MinelvlMax,100;
+	set .expcurve,25;
+	setarray .Pick, 47001,47002,47003,47004,47005;
+	setarray .MobIds,3901,3902;
+	bindatcmd("Mining","Mining::OnMineCheck",0,99);
+	bindatcmd("mining","Mining::OnMineCheck",0,99);
+																														
+	setarray .Tier0_N$[0],		"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy";
+	setarray .Tier0_T$[0],		"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell";
+	setarray .Tier0_M$[0],		"prt_fild08"	,"prt_fild08"	,"einbech"	,"pay_dun00"	,"prt_fild06"	,"orcsdun02"	,"thor_v02"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03"	,"gef_fild10"	,"prt_fild08"	,"prt_fild05"	,"prt_fild06";
+	setarray .Tier0_X1[0],		181		,41		,132		,147		,97		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier0_X2[0],		209		,57		,122		,156		,102		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier0_Y1[0],		303		,46		,231		,173		,152		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier0_Y2[0],		283		,61		,253		,172		,136		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	set .@g,getarraysize(.Tier0_N$);
+	setarray .Tier0_N$[.@g],	"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy";
+	setarray .Tier0_T$[.@g],	"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell";
+	setarray .Tier0_M$[.@g],	"anthell01"	,"anthell02"	,"ice_dun01"	,"ice_dun02"	,"ice_dun03"	,"beach_dun"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03"	,"iz_dun01"	,"man_fild01"	,"man_fild02"	,"man_fild03";
+	setarray .Tier0_X1[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier0_X2[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier0_Y1[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier0_Y2[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	set .@g,getarraysize(.Tier0_N$);
+	setarray .Tier0_N$[.@g],	"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy"	,"Jellopy";
+	setarray .Tier0_T$[.@g],	"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell"	,"OnMineJell";
+	setarray .Tier0_M$[.@g],	"anthell01"	,"anthell02"	,"gefenia02"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03"	,"gef_fild10"	,"gef_fild08"	,"pay_dun02"	,"hu_fild03"	,"lou_fild01";
+	setarray .Tier0_X1[.@g],	-1		,-1		,124		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier0_X2[.@g],	-1		,-1		,110		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier0_Y1[.@g],	-1		,-1		,120		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier0_Y2[.@g],	-1		,-1		,111		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+
+	setarray .Tier1_N$[0],		"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal";
+	setarray .Tier1_T$[0],		"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal";
+	setarray .Tier1_M$[0],		"mjo_dun01"	,"mjo_dun01"	,"mjo_dun03"	,"ein_dun01"	,"einbech"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03"	,"ein_fild05"	,"ein_fild08"	,"abyss_03"	,"thor_v02";
+	setarray .Tier1_X1[0],		39		,143		,20		,181		,132		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier1_X2[0],		35		,135		,300		,50		,122		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier1_Y1[0],		174		,143		,20		,214		,231		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier1_Y2[0],		135		,300		,68		,135		,253		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	set .@g,getarraysize(.Tier1_N$);
+	setarray .Tier1_N$[.@g],	"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal"		,"Coal";
+	setarray .Tier1_T$[.@g],	"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal"	,"OnMineCoal";
+	setarray .Tier1_M$[.@g],	"anthell01"	,"anthell02"	,"mag_dun01"	,"mag_dun02"	,"thor_v01"	,"thor_v02"	,"thor_v03"	,"ve_fild03"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03";
+	setarray .Tier1_X1[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,88		,-1		,-1		,-1;
+	setarray .Tier1_X2[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,308		,-1		,-1		,-1;
+	setarray .Tier1_Y1[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,176		,-1		,-1		,-1;
+	setarray .Tier1_Y2[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,267		,-1		,-1		,-1;
+
+	setarray .Tier2_N$[0],		"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron";
+	setarray .Tier2_T$[0],		"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron";
+	setarray .Tier2_M$[0],		"mjo_dun01"	,"mjo_dun03"	,"ein_dun01"	,"ein_dun01"	,"hu_fild05"	,"orcsdun01"	,"orcsdun02"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03"	,"ein_fild08"	,"abyss_03"	,"thor_v02";
+	setarray .Tier2_X1[0],		143		,-1		,137		,181		,101		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier2_X2[0],		135		,-1		,122		,50		,110		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier2_Y1[0],		143		,-1		,264		,214		,109		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier2_Y2[0],		135		,-1		,252		,68		,119		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	set .@g,getarraysize(.Tier2_N$);
+	setarray .Tier2_N$[.@g],	"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron"		,"Iron";
+	setarray .Tier2_T$[.@g],	"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron"	,"OnMineIron";
+	setarray .Tier2_M$[.@g],	"hu_fild05"	,"anthell01"	,"anthell02"	,"orcsdun02"	,"beach_dun"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03"	,"ve_fild01"	,"ve_fild02"	,"ve_fild03"	,"ve_fild07";
+	setarray .Tier2_X1[.@g],	101		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier2_X2[.@g],	110		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier2_Y1[.@g],	109		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier2_Y2[.@g],	119		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+
+	setarray .Tier3_N$[0],		"Fire"		,"Fire"		,"Fire"		,"Fire"		,"Fire"		,"Fire"		,"Fire"		,"Fire"		,"Fire"		,"Fire"		,"Fire";
+	setarray .Tier3_T$[0],		"OnMineFire"	,"OnMineFire"	,"OnMineFire"	,"OnMineFire"	,"OnMineFire"	,"OnMineFire"	,"OnMineFire"	,"OnMineFire"	,"OnMineFire"	,"OnMineFire"	,"OnMineFire";
+	setarray .Tier3_M$[0],		"anthell01"	,"anthell02"	,"mag_dun01"	,"mag_dun02"	,"thor_v01"	,"thor_v02"	,"thor_v03"	,"ve_fild03"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03";
+	setarray .Tier3_X1[0],		-1		,-1		,-1		,-1		,-1		,-1		,-1		,88		,-1		,-1		,-1;
+	setarray .Tier3_X2[0],		-1		,-1		,-1		,-1		,-1		,-1		,-1		,308		,-1		,-1		,-1;
+	setarray .Tier3_Y1[0],		-1		,-1		,-1		,-1		,-1		,-1		,-1		,176		,-1		,-1		,-1;
+	setarray .Tier3_Y2[0],		-1		,-1		,-1		,-1		,-1		,-1		,-1		,267		,-1		,-1		,-1;
+	set .@g,getarraysize(.Tier3_N$);
+	setarray .Tier3_N$[.@g],	"Ice"		,"Ice"		,"Ice"		,"Ice"		,"Ice"		,"Ice"		,"Ice"		,"Ice"		,"Ice"		,"Ice"		,"Ice"		,"Ice"		,"Ice";
+	setarray .Tier3_T$[.@g],	"OnMineIce"	,"OnMineIce"	,"OnMineIce"	,"OnMineIce"	,"OnMineIce"	,"OnMineIce"	,"OnMineIce"	,"OnMineIce"	,"OnMineIce"	,"OnMineIce"	,"OnMineIce"	,"OnMineIce"	,"OnMineIce";
+	setarray .Tier3_M$[.@g],	"anthell01"	,"anthell02"	,"ice_dun01"	,"ice_dun02"	,"ice_dun03"	,"beach_dun"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03"	,"iz_dun01"	,"man_fild01"	,"man_fild02"	,"man_fild03";
+	setarray .Tier3_X1[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier3_X2[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier3_Y1[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier3_Y2[.@g],	-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	set .@g,getarraysize(.Tier3_N$);
+	setarray .Tier3_N$[.@g],	"Wind"		,"Wind"		,"Wind"		,"Wind"		,"Wind"		,"Wind"		,"Wind"		,"Wind"		,"Wind"		,"Wind"		,"Wind";
+	setarray .Tier3_T$[.@g],	"OnMineWind"	,"OnMineWind"	,"OnMineWind"	,"OnMineWind"	,"OnMineWind"	,"OnMineWind"	,"OnMineWind"	,"OnMineWind"	,"OnMineWind"	,"OnMineWind"	,"OnMineWind";
+	setarray .Tier3_M$[.@g],	"anthell01"	,"anthell02"	,"gefenia02"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03"	,"gef_fild10"	,"gef_fild08"	,"pay_dun02"	,"hu_fild03"	,"lou_fild01";
+	setarray .Tier3_X1[.@g],	-1		,-1		,124		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier3_X2[.@g],	-1		,-1		,110		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier3_Y1[.@g],	-1		,-1		,120		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier3_Y2[.@g],	-1		,-1		,111		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	set .@g,getarraysize(.Tier3_N$);
+	setarray .Tier3_N$[.@g],	"Earth"		,"Earth"	,"Earth"	,"Earth"	,"Earth"	,"Earth"	,"Earth"	,"Earth"	,"Earth"	,"Earth"	,"Earth"	,"Earth";
+	setarray .Tier3_T$[.@g],	"OnMineEarth"	,"OnMineEarth"	,"OnMineEarth"	,"OnMineEarth"	,"OnMineEarth"	,"OnMineEarth"	,"OnMineEarth"	,"OnMineEarth"	,"OnMineEarth"	,"OnMineEarth"	,"OnMineEarth"	,"OnMineEarth";
+	setarray .Tier3_M$[.@g],	"hu_fild05"	,"anthell01"	,"anthell02"	,"orcsdun02"	,"beach_dun"	,"prt_maze01"	,"prt_maze02"	,"prt_maze03"	,"ve_fild01"	,"ve_fild02"	,"ve_fild03"	,"ve_fild07";
+	setarray .Tier3_X1[.@g],	101		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier3_X2[.@g],	110		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier3_Y1[.@g],	109		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+	setarray .Tier3_Y2[.@g],	119		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1		,-1;
+
+	setarray .Tier4_N$[0],		"Gold"		,"Gold"		,"Gold"		,"Gold"		,"Gold"		,"Gold";
+	setarray .Tier4_T$[0],		"OnMineGold"	,"OnMineGold"	,"OnMineGold"	,"OnMineGold"	,"OnMineGold"	,"OnMineGold";
+	setarray .Tier4_M$[0],		"abyss_01"	,"abyss_02"	,"abyss_03"	,"prt_maze02"	,"ein_fild08"	,"lou_fild01";
+	setarray .Tier4_X1[0],		206		,176		,40		,11		,-1		,-1;
+	setarray .Tier4_X2[0],		270		,158		,148		,22		,-1		,-1;
+	setarray .Tier4_Y1[0],		34		,217		,54		,188		,-1		,-1;
+	setarray .Tier4_Y2[0],		91		,207		,162		,169		,-1		,-1;
+	set .@g,getarraysize(.Tier4_N$);
+	setarray .Tier4_N$[.@g],	"Gem"		,"Gem"		,"Gem"		,"Gem"		,"Gem"		,"Gem";
+	setarray .Tier4_T$[.@g],	"OnMineGems"	,"OnMineGems"	,"OnMineGems"	,"OnMineGems"	,"OnMineGems"	,"OnMineGems";
+	setarray .Tier4_M$[.@g],	"abyss_02"	,"abyss_03"	,"prt_maze02"	,"iz_dun01"	,"ein_fild08"	,"mjolnir_09";
+	setarray .Tier4_X1[.@g],	33		,40		,11		,-1		,-1		,-1;
+	setarray .Tier4_X2[.@g],	26		,148		,22		,-1		,-1		,-1;
+	setarray .Tier4_Y1[.@g],	225		,54		,188		,-1		,-1		,-1;
+	setarray .Tier4_Y2[.@g],	220		,162		,169		,-1		,-1		,-1;
+
+	setarray .Tier5_N$[0],		"Crystal"	,"Crystal"	,"Crystal"	,"Crystal"	,"Crystal";
+	setarray .Tier5_T$[0],		"OnMineCryst"	,"OnMineCryst"	,"OnMineCryst"	,"OnMineCryst"	,"OnMineCryst";
+	setarray .Tier5_M$[0],		"abyss_03"	,"prt_maze02"	,"dic_fild01"	,"ein_fild05"	,"man_fild01";
+	setarray .Tier5_X1[0],		40		,11		,-1		,-1		,-1;
+	setarray .Tier5_X2[0],		148		,22		,-1		,-1		,-1;
+	setarray .Tier5_Y1[0],		54		,188		,-1		,-1		,-1;
+	setarray .Tier5_Y2[0],		162		,169		,-1		,-1		,-1;
+	set .@g,getarraysize(.Tier5_N$);
+	setarray .Tier5_N$[.@g],	"Oridecon"	,"Oridecon"	,"Oridecon"	,"Oridecon"	,"Oridecon";
+	setarray .Tier5_T$[.@g],	"OnMineOri"	,"OnMineOri"	,"OnMineOri"	,"OnMineOri"	,"OnMineOri";
+	setarray .Tier5_M$[.@g],	"abyss_03"	,"prt_maze02"	,"pay_dun02"	,"ein_fild05"	,"ein_fild08";
+	setarray .Tier5_X1[.@g],	40		,11		,-1		,-1		,-1;
+	setarray .Tier5_X2[.@g],	148		,22		,-1		,-1		,-1;
+	setarray .Tier5_Y1[.@g],	54		,188		,-1		,-1		,-1;
+	setarray .Tier5_Y2[.@g],	162		,169		,-1		,-1		,-1;
+	set .@g,getarraysize(.Tier5_N$);
+	setarray .Tier5_N$[.@g],	"Elunium"	,"Elunium"	,"Elunium"	,"Elunium"	,"Elunium";
+	setarray .Tier5_T$[.@g],	"OnMineElu"	,"OnMineElu"	,"OnMineElu"	,"OnMineElu"	,"OnMineElu";
+	setarray .Tier5_M$[.@g],	"abyss_03"	,"prt_maze02"	,"ein_fild05"	,"ein_fild08"	,"man_fild01";
+	setarray .Tier5_X1[.@g],	40		,11		,-1		,-1		,-1;
+	setarray .Tier5_X2[.@g],	148		,22		,-1		,-1		,-1;
+	setarray .Tier5_Y1[.@g],	54		,188		,-1		,-1		,-1;
+	setarray .Tier5_Y2[.@g],	162		,169		,-1		,-1		,-1;
+
+	setarray .Tier6_N$[0],		"Master"	,"Master"	,"Master"	,"Master"	,"Master";
+	setarray .Tier6_T$[0],		"OnMineMaster"	,"OnMineMaster"	,"OnMineMaster"	,"OnMineMaster"	,"OnMineMaster";
+	setarray .Tier6_M$[0],		"abyss_03"	,"prt_maze02"	,"hu_fild05"	,"man_fild01"	,"mjolnir_09";
+	setarray .Tier6_X1[0],		40		,11		,-1		,-1		,-1;
+	setarray .Tier6_X2[0],		148		,22		,-1		,-1		,-1;
+	setarray .Tier6_Y1[0],		54		,188		,-1		,-1		,-1;
+	setarray .Tier6_Y2[0],		162		,169		,-1		,-1		,-1;
+
+	// Initial Spawn
+	MiningSpawn(200,0);
+	MiningSpawn(160,1);
+	MiningSpawn(140,2);
+	MiningSpawn(120,3);
+	MiningSpawn(90,4);
+	MiningSpawn(50,5);
+	MiningSpawn(28,6);
+	end;
+
+	function MiningSpawn {
+	// MiningSpawn(<Amount>,<Tier>{,<Location>})
+		freeloop(1);
+		for(.@i = getarg(0,1); .@i > 0; .@i--){
+			.@lv = getarg(1,rand(0,6));
+			.@s = getarg(2,rand(getarraysize(getd(".Tier"+ .@lv +"_M$"))));
+			if(getd(".Tier"+.@lv+"_X1["+.@s+"]") < 0 || getd(".Tier"+.@lv+"_X2["+.@s+"]") < 0 || getd(".Tier"+.@lv+"_Y1["+.@s+"]") < 0 || getd(".Tier"+.@lv+"_Y2["+.@s+"]") < 0)
+				monster getd(".Tier"+.@lv+"_M$["+.@s+"]"),0,0,getd(".Tier"+.@lv+"_N$["+.@s+"]")+" Deposit",rand(.MobIds[0],.MobIds[1]) + 2*.@lv,1,"Mining::"+(getd(".Tier"+.@lv+"_T$["+.@s+"]"))+"";
+			else	areamonster getd(".Tier"+.@lv+"_M$["+.@s+"]"),getd(".Tier"+.@lv+"_X1["+.@s+"]"),getd(".Tier"+.@lv+"_Y1["+.@s+"]"),getd(".Tier"+.@lv+"_X2["+.@s+"]"),getd(".Tier"+.@lv+"_Y2["+.@s+"]"),getd(".Tier"+.@lv+"_N$["+.@s+"]")+" Deposit",rand(.MobIds[0],.MobIds[1]) + 2*.@lv,1,"Mining::"+(getd(".Tier"+.@lv+"_T$["+.@s+"]"))+"";
+		}
+		freeloop(0);
+	return;
+	}
+
+	function MiningFunc {
+	//calfunc "MiningFunc",<MinBaseLevel>,<MinMineLvl>,<Min Pick>,<Break Chance>,<Damage Chance>,<Exp>,<ItemID1>,<Get Chance1>{,<ItemID2>,<Get Chance2>.....,<ItemID10>,<Get Chance10>};
+		.@T = getequipid(EQI_HAND_R);
+		if(.@T < 1){
+			message strcharinfo(0),"[Mining]: "+strcharinfo(0)+" your hand looks as though it could break...";
+			end;
+		}
+
+		if( .@T < .Pick[0] || .@T > .Pick[4] )
+		{
+			message strcharinfo(0),"[Mining]: "+strcharinfo(0)+" your "+getitemname(.@T)+" was not strong enough.";
+			end;
+		} 
+		else if(getarg(0,0) > BaseLevel)
+		{
+			message strcharinfo(0),"[Mining]: "+strcharinfo(0)+" your body is too weak to harvest this.";
+			end;
+		} 
+		else if(getarg(1,0) > MineMaster)
+		{
+			message strcharinfo(0),"[Mining]: "+strcharinfo(0)+" your not skilled enough to harvest this effectivly.";
+			end;
+		} 
+		else if(getarg(2,.Pick[0]) > .@T)
+		{
+			message strcharinfo(0),"[Mining]: "+strcharinfo(0)+" your pickaxe is not advanced enough to harvest this.";
+			end;
+		} 
+		else 
+		{
+			for(.@i = 6; .@i < getargcount() && !.@C; .@i += 2 ){
+				if(getarg(.@i + 1,0) + MineMaster * (.@i - 5) / 7 > rand(10000)){
+					getitem getarg(.@i,7049),1;
+					.@C = 1;
+				}
+			}
+
+			if(!.@C)
+			{
+				message strcharinfo(0),"[Mining]: "+strcharinfo(0)+" you failed to harvest anything.";
+				end;
+			} 
+			else if(MineMaster != .MinelvlMax)
+			{
+				.@expneed = MineMaster*(MineMaster*.expcurve)+10+MineMaster;
+				MineExp += getarg(5,1);
+				if(MineExp > .@expneed && MineMaster < .MinelvlMax){
+					MineMaster++;
+					MineExp = 0;
+					announce "[Mining]: Level has advanced to Lv "+MineMaster+"!",bc_blue|bc_self;
+					specialeffect2 371;
+				} 
+				else
+				{
+					message strcharinfo(0),"[Mining]: "+getarg(5,1)+" Exp Gained "+MineExp+"/"+(.@expneed+1)+" untill Lv "+(MineMaster+1)+"";
+				}
+			}
+
+			return;
+		}
+	end;
+	}
+}

@@ -1,0 +1,5 @@
+47001,Iron_Pick,Iron Pick,5,5000,,250,25,,,0,0xffffffff,7,2,2,1,10,,,{},{},{}
+47002,Steel_Pick,Steel Pick,5,10000,,350,35,,,0,0xffffffff,7,2,2,1,25,,,{},{},{}
+47003,Emveretarcon_Pick,Emveretarcon Pick,5,100000,,500,50,,,0,0xffffffff,7,2,2,2,50,,,{},{},{}
+47004,Oridecon_Pick,Oridecon Pick,5,500000,,650,65,,,0,0xffffffff,7,2,2,3,75,,,{},{},{}
+47005,Emperium_Pick,Emperium Pick,5,1000000,,800,80,,,0,0xffffffff,7,2,2,4,90,,,{},{},{}

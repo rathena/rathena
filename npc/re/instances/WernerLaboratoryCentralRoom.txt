@@ -1148,7 +1148,7 @@ OnTimer33000:
 OnTimer35000:
 	removespecialeffect 898;
 	disablenpc instance_npcname("Seyren Windsor#seiren");
-	monster 'map_slw$,55,170, "YSF01 Seyren", 3826, 1, instance_npcname("#boss_master_lab") + "::OnMobDead";	// EP16_2_MM_CUTIE	
+	monster 'map_slw$,55,170, "YSF01 Seyren", 3826, 1, instance_npcname("#boss_master_lab") + "::OnMobDead";	// E16_2_SEYREN	
 	end;
 }
 
