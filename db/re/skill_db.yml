@@ -44708,9 +44708,10 @@ Body:
     Element: Weapon
     GiveAp: 2
     CastCancel: true
-    FixedCastTime: 1000
+    CastTime: 500
+    AfterCastActDelay: 700
     Cooldown: 500
-    AfterCastActDelay: 300
+    FixedCastTime: 500
     Requires:
       SpCost:
         - Level: 1
