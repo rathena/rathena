@@ -45044,9 +45044,10 @@ Body:
       - Level: 5
         Area: 3
     CastCancel: true
-    FixedCastTime: 2000
+    CastTime: 3000
+    AfterCastActDelay: 1000
     Cooldown: 700
-    AfterCastActDelay: 500
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
