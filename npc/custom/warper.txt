@@ -1340,52 +1340,53 @@ OnInit:
 // --------------------------------------------------
 //	Duplicates:
 // --------------------------------------------------
-alb2trea,57,70,6	duplicate(Warper)	Warper#tre	811
-alberta,28,240,4	duplicate(Warper)	Warper#alb	811
-aldebaran,145,118,4	duplicate(Warper)	Warper#alde	811
-amatsu,203,87,4	duplicate(Warper)	Warper#ama	811
-ayothaya,209,169,6	duplicate(Warper)	Warper#ayo	811
-comodo,194,158,4	duplicate(Warper)	Warper#com	811
-einbech,59,38,6	duplicate(Warper)	Warper#einbe	811
-einbroch,69,202,4	duplicate(Warper)	Warper#einbr	811
-gef_fild10,71,339,4	duplicate(Warper)	Warper#orc	811
-geffen,124,72,4	duplicate(Warper)	Warper#gef	811
-glast_01,372,308,4	duplicate(Warper)	Warper#glh	811
-gonryun,162,122,4	duplicate(Warper)	Warper#gon	811
-hugel,101,151,4	duplicate(Warper)	Warper#hug	811
-izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	811
-izlude,134,150,4	duplicate(Warper)	Warper#izl	811	//Pre-RE: (132,120)
-jawaii,253,138,4	duplicate(Warper)	Warper#jaw	811
-lighthalzen,162,102,4	duplicate(Warper)	Warper#lhz	811
-louyang,208,103,6	duplicate(Warper)	Warper#lou	811
-manuk,274,146,6	duplicate(Warper)	Warper#man	811
-mid_camp,216,288,4	duplicate(Warper)	Warper#mid	811
-mjolnir_02,85,364,4	duplicate(Warper)	Warper#mjo	811
-moc_ruins,64,164,4	duplicate(Warper)	Warper#moc	811
-morocc,159,97,4	duplicate(Warper)	Warper#mor	811
-moscovia,229,191,4	duplicate(Warper)	Warper#mos	811
-nameless_n,259,213,4	duplicate(Warper)	Warper#nam	811
-niflheim,205,179,4	duplicate(Warper)	Warper#nif	811
-pay_arche,42,134,4	duplicate(Warper)	Warper#arc	811
-payon,182,108,4	duplicate(Warper)	Warper#pay	811
-prontera,159,192,4	duplicate(Warper)	Warper#prt	811
-prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	811
-rachel,135,116,4	duplicate(Warper)	Warper#rac	811
-splendide,205,153,4	duplicate(Warper)	Warper#spl	811
-thor_camp,249,76,4	duplicate(Warper)	Warper#thor	811
-umbala,106,150,3	duplicate(Warper)	Warper#umb	811
-veins,214,123,4	duplicate(Warper)	Warper#ve	811
-xmas,150,136,6	duplicate(Warper)	Warper#xmas	811
-yuno,162,47,4	duplicate(Warper)	Warper#yuno	811
+alb2trea,57,70,6	duplicate(Warper)	Warper#tre	735
+alberta,28,240,4	duplicate(Warper)	Warper#alb	735
+aldebaran,145,118,4	duplicate(Warper)	Warper#alde	735
+amatsu,203,87,4	duplicate(Warper)	Warper#ama	735
+ayothaya,209,169,6	duplicate(Warper)	Warper#ayo	735
+comodo,194,158,4	duplicate(Warper)	Warper#com	735
+einbech,59,38,6	duplicate(Warper)	Warper#einbe	735
+einbroch,69,202,4	duplicate(Warper)	Warper#einbr	735
+gef_fild10,71,339,4	duplicate(Warper)	Warper#orc	735
+geffen,124,72,4	duplicate(Warper)	Warper#gef	735
+glast_01,372,308,4	duplicate(Warper)	Warper#glh	735
+gonryun,162,122,4	duplicate(Warper)	Warper#gon	735
+hugel,101,151,4	duplicate(Warper)	Warper#hug	735
+izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	735
+izlude,134,150,4	duplicate(Warper)	Warper#izl	735	//Pre-RE: (132,120)
+jawaii,253,138,4	duplicate(Warper)	Warper#jaw	735
+lighthalzen,162,102,4	duplicate(Warper)	Warper#lhz	735
+louyang,208,103,6	duplicate(Warper)	Warper#lou	735
+manuk,274,146,6	duplicate(Warper)	Warper#man	735
+mid_camp,216,288,4	duplicate(Warper)	Warper#mid	735
+mjolnir_02,85,364,4	duplicate(Warper)	Warper#mjo	735
+moc_ruins,64,164,4	duplicate(Warper)	Warper#moc	735
+morocc,159,97,4	duplicate(Warper)	Warper#mor	735
+moscovia,229,191,4	duplicate(Warper)	Warper#mos	735
+nameless_n,259,213,4	duplicate(Warper)	Warper#nam	735
+niflheim,205,179,4	duplicate(Warper)	Warper#nif	735
+pay_arche,42,134,4	duplicate(Warper)	Warper#arc	735
+payon,182,108,4	duplicate(Warper)	Warper#pay	735
+prontera,159,192,4	duplicate(Warper)	Warper#prt	735
+prt_fild05,279,223,6	duplicate(Warper)	Warper#cul	735
+rachel,135,116,4	duplicate(Warper)	Warper#rac	735
+splendide,205,153,4	duplicate(Warper)	Warper#spl	735
+thor_camp,249,76,4	duplicate(Warper)	Warper#thor	735
+umbala,106,150,3	duplicate(Warper)	Warper#umb	735
+veins,214,123,4	duplicate(Warper)	Warper#ve	735
+xmas,150,136,6	duplicate(Warper)	Warper#xmas	735
+yuno,162,47,4	duplicate(Warper)	Warper#yuno	735
 
 // --------------------------------------------------
 //	Duplicates (Renewal):
 // --------------------------------------------------
-brasilis,201,222,4	duplicate(Warper)	Warper#bra	811
-dewata,204,186,6	duplicate(Warper)	Warper#dew	811
-dicastes01,194,194,6	duplicate(Warper)	Warper#dic	811
-ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	811
-lasagna,196,187,4	duplicate(Warper)	Warper#las	811
-malangdo,134,117,6	duplicate(Warper)	Warper#mal	811
-malaya,231,204,4	duplicate(Warper)	Warper#ma	811
-mora,57,152,4	duplicate(Warper)	Warper#mora	811
+brasilis,201,222,4	duplicate(Warper)	Warper#bra	735
+dewata,204,186,6	duplicate(Warper)	Warper#dew	735
+dicastes01,194,194,6	duplicate(Warper)	Warper#dic	735
+ecl_in01,51,60,4	duplicate(Warper)	Warper#ecl	735
+lasagna,196,187,4	duplicate(Warper)	Warper#las	735
+malangdo,134,117,6	duplicate(Warper)	Warper#mal	735
+malaya,231,204,4	duplicate(Warper)	Warper#ma	735
+mora,57,152,4	duplicate(Warper)	Warper#mora	735
+wolfvill,135,132,4	duplicate(Warper)	Warper#wolfvill	735

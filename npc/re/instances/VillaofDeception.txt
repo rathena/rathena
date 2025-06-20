@@ -161,7 +161,6 @@ OnInstanceInit:
 		'advs_difficult = 1;
 		'sanare_id = 21377;	// EP18_MD_SANARE_L
 		'hunter_id = 21378;	// EP18_MD_HEARTHUNTER_L
-		'monster_relieve = 10;	// need check but the damages are very low compared to normal mode
 
 		// Total of monster to kill in step 1, 2, 3
 		'total_monster_step_1 = 80;
@@ -184,7 +183,6 @@ OnInstanceInit:
 		'advs_difficult = 0;
 		'sanare_id = 21318;	// EP18_MD_SANARE_R
 		'hunter_id = 21319;	// EP18_MD_HEARTHUNTER_R2
-		'monster_relieve = 9;
 
 		// Total of monster to kill in step 1, 2, 3
 		'total_monster_step_1 = 35;
@@ -332,7 +330,6 @@ S_Spawn:
 		areamonster 'map_advs$,63,89,184,101,"--en--",.@mob_id,1, .@label$;
 	else
 		areamonster 'map_advs$,184,89,174,182,"--en--",.@mob_id,1, .@label$;
-	unitskilluseid $@mobid[0], 771, 'monster_relieve;	// NPC_RELIEVE_ON
 	return;
 }
 
@@ -496,7 +493,6 @@ S_Spawn:
 		areamonster 'map_advs$,113,205,135,125,"--en--",.@mob_id,1, .@label$;
 	else
 		areamonster 'map_advs$,113,205,135,125,"--en--",.@mob_id,1, .@label$;
-	unitskilluseid $@mobid[0], 771, 'monster_relieve;	// NPC_RELIEVE_ON
 	return;
 }
 
@@ -610,7 +606,6 @@ S_Spawn:
 		areamonster 'map_advs$,128,238,138,248,"--en--",.@mob_id,1, .@label$;
 	else
 		areamonster 'map_advs$,128,219,138,229,"--en--",.@mob_id,1, .@label$;
-	unitskilluseid $@mobid[0], 771, 'monster_relieve;	// NPC_RELIEVE_ON
 	return;
 }
 
@@ -653,10 +648,8 @@ OnMove:
 	disablenpc instance_npcname("#boss1");
 	monster 'map_advs$,124,290,"--en--",'schulang_id,1, instance_npcname("#boss1_advs") + "::OnMobDead";
 	'schulang_gid = $@mobid[0];
-	unitskilluseid $@mobid[0], 771, 1;	// NPC_RELIEVE_ON
 	unittalk 'schulang_gid, "I'm in a bit of trouble if I approach this more than that!!!";
 	monster 'map_advs$,123,285,"--en--",21319,1;	// EP18_MD_HEARTHUNTER_R2
-	unitskilluseid $@mobid[0], 771, 'monster_relieve;	// NPC_RELIEVE_ON
 	donpcevent instance_npcname("#boss1_advs_skill_1") + "::OnStart";
 	end;
 // OnTouch:	// effect ?
@@ -736,7 +729,6 @@ OnMove:
 	disablenpc instance_npcname("#boss2");
 	monster 'map_advs$,124,346,"--en--",'freyja_id,1, instance_npcname("#boss2_sw") + "::OnMobDead";
 	'freyja_gid = $@mobid[0];
-	donpcevent instance_npcname("#advs_boss_relieve") + "::OnStart";
 	sleep 3000;
 	mapannounce 'map_advs$, "Tip: Twisted God Freyja is weaken as it get closer to the chandelier.", bc_map, 0xFFCC;
 	if ('advs_difficult == 1)
@@ -761,7 +753,6 @@ OnMove:
 
 OnMobDead:
 	'freyja_gid = 0;
-	donpcevent instance_npcname("#advs_boss_relieve") + "::OnStop";
 	disablenpc instance_npcname("#boss2_sw");
 	enablenpc instance_npcname("#box_admin");
 	if ('advs_difficult == 1) {
@@ -775,28 +766,6 @@ OnMobDead:
 	// end;
 }
 1@advs,124,356,4	duplicate(dummy_npc)	#boss2	CLEAR_NPC,1,1
-
-1@advs,1,1,4	script	#advs_boss_relieve	-1,{
-	end;
-OnStart:
-	if (unitexists('freyja_gid) == false)
-		end;
-	getunitdata 'freyja_gid, .@data;
-	.@d = distance(124,356,.@data[UMOB_X],.@data[UMOB_Y]);
-	.@lv = (.@d / 2) + 1;	// level 6 on spawn
-	.@lv = min(10,.@lv);
-	.@lv = max(1,.@lv);
-	unitskilluseid 'freyja_gid, 772, 1;	// NPC_RELIEVE_OFF
-	unitskilluseid 'freyja_gid, 771, .@lv;	// NPC_RELIEVE_ON
-	initnpctimer;
-	end;
-OnTimer2000:
-	donpcevent instance_npcname("#advs_boss_relieve") + "::OnStart";
-	end;
-OnStop:
-	stopnpctimer;
-	end;
-}
 
 // circles
 1@advs,124,337,5	script	#b_tr1	MD_HIDDEN_GROUND02,2,2,{

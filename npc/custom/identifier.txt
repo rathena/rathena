@@ -1,4 +1,4 @@
-prontera,132,216,4	script	Identifier	123,{
+prontera,132,216,4	script	Identifier	743,{
 	mes "[Item Identifier]";
 	mes "I can identify all of your unidentified items.";
 	mes "Shall I proceed?";
@@ -21,3 +21,8 @@ prontera,132,216,4	script	Identifier	123,{
 	}
 	close;
 }
+
+// --------------------------------------------------
+//	Duplicates (Renewal):
+// --------------------------------------------------
+wolfvill,119,128,4	duplicate(Identifier)	Identifier#wolfvill	743
