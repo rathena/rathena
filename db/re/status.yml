@@ -9907,3 +9907,14 @@ Body:
     Script: |
       bonus bVariableCastrate, getstatus(SC_CONTENTS_20, 1);
       bonus bAspd, getstatus(SC_CONTENTS_20, 2);
+  - Status: Overcoming_Crisis
+    Icon: EFST_OVERCOMING_CRISIS
+    DurationLookup: HN_OVERCOMING_CRISIS
+    CalcFlags:
+      Patk: true
+      Smatk: true
+      MaxHp: true
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true

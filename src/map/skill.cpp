@@ -10954,6 +10954,12 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		status_heal(bl, 0, (skill_lv * (skill_lv + 1) / 2) * 40, 1);
 		break;
 
+	case HN_OVERCOMING_CRISIS:
+		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id,skill_lv));
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		status_percent_heal(bl, 100, 0);
+		break;
+
 	// New guild skills [Celest]
 	case GD_BATTLEORDER:
 	case GD_REGENERATION:
