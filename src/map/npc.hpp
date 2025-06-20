@@ -93,6 +93,7 @@ struct s_npc_barter_item{
 	bool stockLimited;
 	uint32 stock;
 	uint32 price;
+	int8 refine;
 	std::map<uint16, std::shared_ptr<s_npc_barter_requirement>> requirements;
 };
 
@@ -111,7 +112,7 @@ struct s_npc_barter{
 
 class BarterDatabase : public TypesafeYamlDatabase<std::string, s_npc_barter>{
 public:
-	BarterDatabase() : TypesafeYamlDatabase( "BARTER_DB", 1 ){
+	BarterDatabase() : TypesafeYamlDatabase( "BARTER_DB", 2, 1 ){
 
 	}
 
@@ -154,13 +155,12 @@ enum e_npcv_status : uint8 {
 	NPCVIEW_CLOAK     = NPCVIEW_CLOAKOFF | NPCVIEW_CLOAKON,
 };
 
-struct npc_data {
-	struct block_list bl;
+struct npc_data : public block_list {
 	struct unit_data ud; //Because they need to be able to move....
 	struct view_data vd;
 	status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	struct npc_data *master_nd;
-	short class_,speed;
+	int16 class_,speed;
 	char name[NPC_NAME_LENGTH+1];// display name
 	char exname[NPC_NAME_LENGTH+1];// unique npc name
 	int32 chat_id,touching_id;
@@ -184,7 +184,7 @@ struct npc_data {
 	union {
 		struct {
 			struct script_code *script;
-			short xs,ys; // OnTouch area radius
+			int16 xs,ys; // OnTouch area radius
 			int32 guild_id;
 			t_tick timer;
 			int32 timerid,timeramount,rid;
@@ -201,8 +201,8 @@ struct npc_data {
 			bool discount;
 		} shop;
 		struct {
-			short xs,ys; // OnTouch area radius
-			short x,y; // destination coords
+			int16 xs,ys; // OnTouch area radius
+			int16 x,y; // destination coords
 			uint16 mapindex; // destination map
 		} warp;
 		struct {
@@ -1533,6 +1533,34 @@ enum e_job_types
 	JT_4_CLB_SS_AJ,
 	JT_4_CLB_SS_LK,
 	JT_4_SMART_ANDRE,
+	JT_4_ALEXSANDER,
+	JT_4_KASANDRA,
+	JT_4_CLB_KP_P1,
+	JT_4_CH1_LITHIU,
+	JT_4_CH1_GRAY_VALKYRIE,
+	JT_4_CH1_DELEGACY01,
+	JT_4_CLB_KP_SF,
+	JT_4_CLB_KP_ZH,
+	JT_4_CH1_DELEGACY02,
+	JT_4_CH1_DELEGACY03,
+	JT_4_CH1_DELEGACY04,
+	JT_4_CH1_YUP,
+	JT_4_CH1_KAL,
+	JT_4_M_PATIENT01,
+	JT_4_F_PATIENT01,
+	JT_4_M_PATIENT02,
+	JT_4_F_PATIENT02,
+	JT_4_PATIEN_KID,
+	JT_4_CH1_NEUMANN,
+	JT_4_CH1_BRANCH,
+
+	JT_4_HM_UZAGI = 10621,
+	JT_4_HM_TARONG,
+	JT_4_HM_CHUBBY,
+	JT_4_HM_NONI,
+	JT_4_HM_LOLBBY,
+	JT_4_HM_YOBBY,
+	JT_4_HM_MUNCH,
 
 	JT_ROZ_MQ_XAVIER = 13000,
 	JT_ROZ_MQ_MOCLORD,
@@ -1570,6 +1598,7 @@ enum npce_event : uint8 {
 	NPCE_DIE,
 	NPCE_KILLPC,
 	NPCE_KILLNPC,
+	NPCE_IDENTIFY,
 	NPCE_MAX
 };
 
@@ -1591,7 +1620,7 @@ static int32 npc_buylist_sub(map_session_data* sd, std::vector<s_npc_buy_list>& 
 uint8 npc_selllist(map_session_data* sd, int32 list_length, const PACKET_CZ_PC_SELL_ITEMLIST_sub* item_list);
 e_purchase_result npc_barter_purchase( map_session_data& sd, std::shared_ptr<s_npc_barter> barter, std::vector<s_barter_purchase>& purchases );
 void npc_parse_mob2(struct spawn_data* mob);
-struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, uint16 to_mapindex, short to_x, short to_y);
+struct npc_data* npc_add_warp(char* name, int16 from_mapid, int16 from_x, int16 from_y, int16 xs, int16 ys, uint16 to_mapindex, int16 to_x, int16 to_y);
 int32 npc_globalmessage(const char* name,const char* mes);
 const char *npc_get_script_event_name(int32 npce_index);
 npc_data* npc_duplicate_npc( npc_data& nd, char name[NPC_NAME_LENGTH + 1], int16 mapid, int16 x, int16 y, int32 class_, uint8 dir, int16 xs, int16 ys, map_session_data* owner = nullptr );
@@ -1605,7 +1634,7 @@ bool npc_is_hidden_dynamicnpc( struct npc_data& nd, map_session_data& tsd );
 bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag);
 #define npc_enable(nd, flag) npc_enable_target(nd, 0, flag)
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
-void npc_setclass(struct npc_data* nd, short class_);
+void npc_setclass(struct npc_data* nd, int16 class_);
 struct npc_data* npc_name2id(const char* name);
 int32 npc_isnear_sub(struct block_list* bl, va_list args);
 bool npc_isnear(struct block_list * bl);

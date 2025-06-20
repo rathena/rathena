@@ -295,12 +295,12 @@ int32 mercenary_delete(s_mercenary_data *md, int32 reply) {
 	mercenary_contract_stop(md);
 
 	if( !sd )
-		return unit_free(&md->bl, CLR_OUTSIGHT);
+		return unit_free(md, CLR_OUTSIGHT);
 
 	if( md->devotion_flag )
 	{
 		md->devotion_flag = 0;
-		status_change_end(&sd->bl, SC_DEVOTION);
+		status_change_end(sd, SC_DEVOTION);
 	}
 
 	switch( reply )
@@ -308,16 +308,16 @@ int32 mercenary_delete(s_mercenary_data *md, int32 reply) {
 		case 0:
 			// +1 Loyalty on Contract ends.
 			mercenary_set_faith(md, 1);
-			clif_msg(sd, MSI_MER_FINISH);
+			clif_msg( *sd, MSI_MER_FINISH );
 			break; 
 		case 1:
 			// -1 Loyalty on Mercenary killed
 			mercenary_set_faith(md, -1);
-			clif_msg(sd, MSI_MER_DIE);
+			clif_msg( *sd, MSI_MER_DIE );
 			break; 
 	}
 
-	return unit_remove_map(&md->bl, CLR_OUTSIGHT);
+	return unit_remove_map(md, CLR_OUTSIGHT);
 }
 
 /**
@@ -337,7 +337,7 @@ void mercenary_contract_stop(s_mercenary_data *md) {
 **/
 void merc_contract_init(s_mercenary_data *md) {
 	if( md->contract_timer == INVALID_TIMER )
-		md->contract_timer = add_timer(gettick() + md->mercenary.life_time, merc_contract_end, md->master->bl.id, 0);
+		md->contract_timer = add_timer(gettick() + md->mercenary.life_time, merc_contract_end, md->master->id, 0);
 
 	md->regen.state.block = 0;
 }
@@ -369,30 +369,30 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 		sd->md = md = (s_mercenary_data*)aCalloc(1,sizeof(s_mercenary_data));
 		new (sd->md) s_mercenary_data();
 
-		md->bl.type = BL_MER;
-		md->bl.id = npc_get_new_npc_id();
+		md->type = BL_MER;
+		md->id = npc_get_new_npc_id();
 		md->devotion_flag = 0;
 
 		md->master = sd;
 		md->db = db;
 		memcpy(&md->mercenary, merc, sizeof(s_mercenary));
-		status_set_viewdata(&md->bl, md->mercenary.class_);
-		status_change_init(&md->bl);
-		unit_dataset(&md->bl);
+		status_set_viewdata(md, md->mercenary.class_);
+		status_change_init(md);
+		unit_dataset(md);
 		md->ud.dir = sd->ud.dir;
 
-		md->bl.m = sd->bl.m;
-		md->bl.x = sd->bl.x;
-		md->bl.y = sd->bl.y;
-		unit_calc_pos(&md->bl, sd->bl.x, sd->bl.y, sd->ud.dir);
-		md->bl.x = md->ud.to_x;
-		md->bl.y = md->ud.to_y;
+		md->m = sd->m;
+		md->x = sd->x;
+		md->y = sd->y;
+		unit_calc_pos(md, sd->x, sd->y, sd->ud.dir);
+		md->x = md->ud.to_x;
+		md->y = md->ud.to_y;
 
 		// Ticks need to be initialized before adding bl to map_addiddb
 		md->regen.tick.hp = tick;
 		md->regen.tick.sp = tick;
 
-		map_addiddb(&md->bl);
+		map_addiddb(md);
 		status_calc_mercenary(md, SCO_FIRST);
 		md->contract_timer = INVALID_TIMER;
 		md->masterteleport_timer = INVALID_TIMER;
@@ -406,10 +406,10 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 		mercenary_set_calls(md, 1);
 	sd->status.mer_id = merc->mercenary_id;
 
-	if( md && md->bl.prev == nullptr && sd->bl.prev != nullptr ) {
-		if(map_addblock(&md->bl))
+	if( md && md->prev == nullptr && sd->prev != nullptr ) {
+		if(map_addblock(md))
 			return false;
-		clif_spawn(&md->bl);
+		clif_spawn(md);
 		clif_mercenary_info(sd);
 		clif_mercenary_skillblock(sd);
 	}
@@ -454,7 +454,7 @@ bool mercenary_dead(s_mercenary_data *md) {
 void mercenary_killbonus(s_mercenary_data *md) {
 	std::vector<sc_type> scs = { SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP };
 
-	sc_start(&md->bl,&md->bl, util::vector_random(scs), 100, rnd_value(1, 5), 300000); //Bonus lasts for 5 minutes
+	sc_start(md,md, util::vector_random(scs), 100, rnd_value(1, 5), 300000); //Bonus lasts for 5 minutes
 }
 
 /**
@@ -864,7 +864,7 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackDelay", speed))
 			return 0;
 
-		mercenary->status.adelay = cap_value(speed, 0, 4000);
+		mercenary->status.adelay = cap_value(speed, MAX_ASPD_NOPC, MIN_ASPD);
 	} else {
 		if (!exists)
 			mercenary->status.adelay = 4000;
@@ -876,7 +876,8 @@ uint64 MercenaryDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		if (!this->asUInt16(node, "AttackMotion", speed))
 			return 0;
 
-		mercenary->status.amotion = cap_value(speed, 0, 2000);
+		// amotion is only capped to MAX_ASPD_NOPC when receiving buffs/debuffs
+		mercenary->status.amotion = cap_value(speed, 1, MIN_ASPD/AMOTION_DIVIDER_NOPC);
 	} else {
 		if (!exists)
 			mercenary->status.amotion = 2000;

@@ -1731,6 +1731,411 @@ struct PACKET_ZC_UPDATE_MAPINFO{
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_UPDATE_MAPINFO, 0x192);
 
+struct PACKET_CZ_REQ_ENTER_ROOM{
+	int16 packetType;
+	uint32 chat_id;
+	char password[8];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ENTER_ROOM, 0xd9);
+
+struct PACKET_CZ_CHANGE_CHATROOM{
+	int16 packetType;
+	uint16 packetSize;
+	uint16 limit;
+	uint8 type;
+	char password[8];
+	char title[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CHANGE_CHATROOM, 0xde);
+
+struct PACKET_CZ_ADD_EXCHANGE_ITEM{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ADD_EXCHANGE_ITEM, 0xe8);
+
+struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_BODY{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_CART_TO_BODY, 0x127);
+
+struct PACKET_CZ_SELECT_WARPPOINT{
+	int16 packetType;
+	int16 skill_id;
+	char mapname[MAP_NAME_LENGTH_EXT];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SELECT_WARPPOINT, 0x11b);
+
+struct PACKET_CZ_INPUT_EDITDLG{
+	int16 packetType;
+	uint32 GID;
+	int32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_INPUT_EDITDLG, 0x143);
+
+struct PACKET_CZ_INPUT_EDITDLGSTR{
+	int16 packetType;
+	uint16 packetSize;
+	int32 GID;
+	char value[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_INPUT_EDITDLGSTR, 0x1d5);
+
+struct PACKET_CZ_CLOSE_DIALOG{
+	int16 packetType;
+	uint32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_CLOSE_DIALOG, 0x146);
+
+struct PACKET_CZ_RESET{
+	int16 packetType;
+	uint16 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_RESET, 0x197);
+
+struct PACKET_CZ_MOVE_ITEM_FROM_STORE_TO_CART{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_STORE_TO_CART, 0x128);
+
+struct PACKET_CZ_REQ_ITEMIDENTIFY{
+	int16 packetType;
+	uint16 index;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMIDENTIFY, 0x178);
+
+struct PACKET_CZ_SELECTAUTOSPELL{
+	int16 packetType;
+	uint32 skill_id;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SELECTAUTOSPELL, 0x1ce);
+
+struct PACKET_CZ_REQ_ITEMCOMPOSITION_LIST{
+	int16 packetType;
+	uint16 index;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMCOMPOSITION_LIST, 0x17a);
+
+struct PACKET_CZ_REQ_ITEMCOMPOSITION{
+	int16 packetType;
+	uint16 index_card;
+	uint16 index_equip;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_ITEMCOMPOSITION, 0x17c);
+
+struct PACKET_CZ_LOCALBROADCAST{
+	int16 packetType;
+	uint16 packetSize;
+	char message[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_LOCALBROADCAST, 0x19c);
+
+struct PACKET_CZ_MOVE_ITEM_FROM_CART_TO_STORE{
+	int16 packetType;
+	uint16 index;
+	int32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_FROM_CART_TO_STORE, 0x129);
+
+#if PACKETVER_MAIN_NUM >= 20180307 || PACKETVER_RE_NUM >= 20180221 || PACKETVER_ZERO_NUM >= 20180328
+struct PACKET_ZC_FRIENDS_STATE{
+	int16 packetType;
+	uint32 AID;
+	uint32 CID;
+	uint8 offline;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_FRIENDS_STATE, 0x206);
+#else
+struct PACKET_ZC_FRIENDS_STATE{
+	int16 packetType;
+	uint32 AID;
+	uint32 CID;
+	uint8 offline;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_FRIENDS_STATE, 0x206);
+#endif
+
+struct PACKET_CZ_MAKE_GROUP{
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MAKE_GROUP, 0xf9);
+
+struct PACKET_CZ_MAKE_GROUP2{
+	int16 packetType;
+	char name[NAME_LENGTH];
+	uint8 item_pickup;
+	uint8 item_share;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MAKE_GROUP2, 0x1e8);
+
+struct PACKET_CZ_GM_CHECKER{
+	int16 packetType;
+	char mapname[MAP_NAME_LENGTH_EXT];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_GM_CHECKER, 0xc0b);
+
+struct PACKET_ZC_GM_CHECKER{
+	int16 packetType;
+	int16 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_GM_CHECKER, 0xc0c);
+
+struct PACKET_ZC_CONFIG_NOTIFY {
+	int16 packetType;
+	uint8 flag;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CONFIG_NOTIFY, 0x2da);
+
+struct PACKET_ZC_CONGRATULATION {
+	int16 packetType;
+	int32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_CONGRATULATION, 0x1ea);
+
+struct PACKET_ZC_DIVORCE{
+	int16 packetType;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DIVORCE, 0x205);
+
+struct PACKET_ZC_EMOTION {
+	int16 packetType;
+	int32 GID;
+	uint8 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EMOTION, 0xc0);
+
+struct PACKET_ZC_MSG {
+	int16 packetType;
+	uint16 msgId;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MSG, 0x291);
+
+struct PACKET_ZC_MSG_SKILL {
+	int16 packetType;
+	uint16 skillId;
+	int32 msgId;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MSG_SKILL, 0x7e6);
+
+struct PACKET_ZC_MSG_VALUE {
+	int16 packetType;
+	uint16 message;
+	int32 value;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MSG_VALUE, 0x7e2);
+
+struct PACKET_ZC_NOTIFY_MANNER_POINT_GIVEN {
+	int16 packetType;
+	uint8 type;
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_MANNER_POINT_GIVEN, 0x14b);
+
+struct PACKET_ZC_NOTIFY_TIME {
+	int16 packetType;
+	uint32 time;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_NOTIFY_TIME, 0x7f);
+
+struct PACKET_ZC_SETTING_WHISPER_PC {
+	int16 packetType;
+	uint8 type;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SETTING_WHISPER_PC, 0xd1);
+
+struct PACKET_ZC_SETTING_WHISPER_STATE {
+	int16 packetType;
+	uint8 type;
+	uint8 result;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SETTING_WHISPER_STATE, 0xd2);
+
+struct PACKET_ZC_SKILLMSG {
+	int16 packetType;
+	int32 msgId;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_SKILLMSG, 0x215);
+
+struct PACKET_CZ_REQ_EMOTION_EXPANSION{
+	int16 packetType;
+	uint8 unknown[4];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_EMOTION_EXPANSION, 0xbe9);
+
+struct PACKET_ZC_DISAPPEAR_ENTRY{
+	int16 packetType;
+	int32 GID;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_DISAPPEAR_ENTRY, 0x132);
+
+#if PACKETVER >= 20120618
+struct PACKET_ZC_EFST_SET_ENTER{
+	uint16 packetType;
+	uint32 targetID;
+	uint16 type;
+	uint32 duration;
+	uint32 duration2;
+	int32 val1;
+	int32 val2;
+	int32 val3;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x984)
+#else
+struct PACKET_ZC_EFST_SET_ENTER{
+	uint16 packetType;
+	uint32 targetID;
+	uint16 type;
+	uint32 duration;
+	int32 val1;
+	int32 val2;
+	int32 val3;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_EFST_SET_ENTER, 0x8ff)
+#endif
+
+struct PACKET_CZ_SETTING_WHISPER_STATE{
+	int16 packetType;
+	int8 type;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_SETTING_WHISPER_STATE, 0xd0);
+
+struct PACKET_ZC_WHISPER_LIST_sub{
+	char name[NAME_LENGTH];
+} __attribute__((packed));
+
+struct PACKET_ZC_WHISPER_LIST{
+	int16 packetType;
+	uint16 packetSize;
+	PACKET_ZC_WHISPER_LIST_sub names[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_WHISPER_LIST, 0xd4);
+
+struct PACKET_CZ_ALLY_CHAT{
+	int16 packetType;
+	int16 packetLength;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_ALLY_CHAT, 0xbdd);
+
+struct PACKET_CZ_REQ_REPORT_USER{
+	int16 packetType;
+	uint8 unknown[135];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_REQ_REPORT_USER, 0xbe2);
+
+struct PACKET_CZ_QUEST_STATUS_REQ{
+	int16 packetType;
+	int16 packetLength;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_QUEST_STATUS_REQ, 0xbf3);
+
+struct PACKET_CZ_MOVE_ITEM_TO_PERSONAL{
+	int16 packetType;
+	uint32 unknown;
+	uint16 index;
+	uint32 amount;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(CZ_MOVE_ITEM_TO_PERSONAL, 0xc22);
+
+#if PACKETVER_MAIN_NUM >= 20250402
+struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 {
+	uint32 nameid;
+	uint16 refine_level;
+	uint32 amount;
+	uint16 type;
+} __attribute__((packed));
+
+struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub {
+	uint32 nameid;
+	uint16 type;
+	uint32 amount;
+	uint32 weight;
+	uint32 index;
+	uint32 zeny;
+	uint16 viewSprite;
+	uint32 location;
+	uint32 currency_count;
+	uint32 refine_level;
+	// Workaround: this should be currencies[], but compilers do not support multiple layers of incomplete types. See error C2233
+	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 currencies[1];
+} __attribute__((packed));
+
+struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO {
+	int16 packetType;
+	int16 packetLength;
+	int32 items_count;
+	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub items[];
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO, 0x0b79);
+#elif PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
+struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 {
+	uint32 nameid;
+	uint16 refine_level;
+	uint32 amount;
+	uint16 type;
+} __attribute__((packed));
+
+struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub {
+	uint32 nameid;
+	uint16 type;
+	uint32 amount;
+	uint32 weight;
+	uint32 index;
+	uint32 zeny;
+	uint16 viewSprite;
+	uint32 location;
+	uint32 currency_count;
+	// Workaround: this should be currencies[], but compilers do not support multiple layers of incomplete types. See error C2233
+	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 currencies[1];
+} __attribute__((packed));
+
+struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO {
+	int16 packetType;
+	int16 packetLength;
+	int32 items_count;
+	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub items[];
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO, 0x0b79);
+#elif PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
+struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 {
+	uint32 nameid;
+	uint16 refine_level;
+	uint32 amount;
+	uint16 type;
+} __attribute__((packed));
+
+struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub {
+	uint32 nameid;
+	uint16 type;
+	uint32 amount;
+	uint32 weight;
+	uint32 index;
+	uint32 zeny;
+	uint32 currency_count;
+	// Workaround: this should be currencies[], but compilers do not support multiple layers of incomplete types. See error C2233
+	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 currencies[1];
+} __attribute__((packed));
+
+struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO {
+	int16 packetType;
+	int16 packetLength;
+	int32 items_count;
+	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub items[];
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO, 0x0b56);
+#endif  // PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -1782,6 +2187,7 @@ DEFINE_PACKET_HEADER(ZC_WARPLIST, 0xabe)
 #else
 DEFINE_PACKET_HEADER(ZC_WARPLIST, 0x11c)
 #endif
+DEFINE_PACKET_HEADER(ZC_MSG_COLOR, 0x9cd);
 
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
