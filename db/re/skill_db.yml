@@ -44813,10 +44813,10 @@ Body:
       - Level: 5
         Area: 4
     CastCancel: true
-    CastTime: 1500
-    AfterCastActDelay: 2000
-    Cooldown: 2000
-    FixedCastTime: 500
+    CastTime: 2000
+    AfterCastActDelay: 1000
+    Cooldown: 450
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
