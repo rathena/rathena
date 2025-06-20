@@ -45033,9 +45033,10 @@ Body:
     SplashArea: 3
     GiveAp: 2
     CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 850
+    Cooldown: 700
     FixedCastTime: 1500
-    AfterCastActDelay: 500
-    Cooldown: 2500
     Requires:
       SpCost:
         - Level: 1
