@@ -44393,24 +44393,10 @@ Body:
         Area: 3
       - Level: 7
         Area: 3
-    AfterCastActDelay: 500
     CastCancel: true
-    CastTime: 2000
-    Cooldown:
-      - Level: 1
-        Time: 1150
-      - Level: 2
-        Time: 1000
-      - Level: 3
-        Time: 850
-      - Level: 4
-        Time: 700
-      - Level: 5
-        Time: 550
-      - Level: 6
-        Time: 400
-      - Level: 7
-        Time: 250
+    AfterCastActDelay: 1000
+    Cooldown: 700
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -44456,8 +44442,10 @@ Body:
       - Level: 7
         Area: 4
     CastCancel: true
-    CastTime: 3000
-    AfterCastActDelay: 1000
+    CastTime: 2000
+    AfterCastActDelay: 700
+    Cooldown: 1000
+    FixedCastTime: 1500
     Requires:
       SpCost:
         - Level: 1
