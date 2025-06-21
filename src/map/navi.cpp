@@ -407,7 +407,7 @@ void write_spawn(std::ostream &os, const struct map_data * m, const std::shared_
 #if PACKETVER >= 20140000
 	os << "" << (amount << 16 | (mobinfo->vd.look[LOOK_BASE] & 0xFFFF)) << ", ";
 #else
-	os << "\t\t" << mobinfo->vd.class_ << ", ";
+	os << "\t\t" << mobinfo->vd.look[LOOK_BASE] << ", ";
 #endif
 	os << "\"" << mobinfo->jname.c_str() << "\", "; //c_str'ed because the strings have been resized to 24
 	os << "\"" << mobinfo->sprite.c_str() << "\", ";

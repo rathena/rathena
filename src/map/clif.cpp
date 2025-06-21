@@ -8542,7 +8542,7 @@ void clif_mvp_exp( map_session_data& sd, t_exp exp ){
 	PACKET_ZC_MVP_GETTING_SPECIAL_EXP packet{};
 
 	packet.packetType = HEADER_ZC_MVP_GETTING_SPECIAL_EXP;
-	packet.exp = std::min( static_cast<decltype(packet.exp)>( exp ), MAX_EXP );
+	packet.exp = static_cast<decltype(packet.exp)>(std::min(exp, MAX_EXP));
 
 	clif_send( &packet, sizeof( packet ), &sd, SELF );
 #endif
