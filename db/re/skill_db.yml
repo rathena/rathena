@@ -9534,7 +9534,7 @@ Body:
       IsNpc: true
     Hit: Single
     HitCount: 1
-    Duration1: 30000
+    Duration: 30000
     Status: WeaponBreaker
   - Id: 344
     Name: NPC_ARMORBRAKE
@@ -20447,13 +20447,13 @@ Body:
     Cooldown: # !TODO: Confirm cooldown
       - Level: 1
         Time: 150
-      - Level: 2
+      - Level: 1
         Time: 200
-      - Level: 3
+      - Level: 1
         Time: 250
-      - Level: 4
+      - Level: 1
         Time: 300
-      - Level: 5
+      - Level: 1
         Time: 350
     CastDelayFlags:
       IgnoreStatus: true
@@ -20839,13 +20839,15 @@ Body:
     Element: Weapon
     AfterCastActDelay: 300
     Cooldown: # !TODO: Confirm cooldown
-      - Level: 2
+      - Level: 1
+        Time: 0
+      - Level: 1
         Time: 50
-      - Level: 3
+      - Level: 1
         Time: 100
-      - Level: 4
+      - Level: 1
         Time: 150
-      - Level: 5
+      - Level: 1
         Time: 200
     Requires:
       SpCost:
