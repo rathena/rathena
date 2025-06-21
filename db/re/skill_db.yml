@@ -44611,8 +44611,8 @@ Body:
     DamageFlags:
       NoDamage: true
     Range: 1
-    Duration1: 300000
     AfterCastActDelay: 500
+    Duration1: 300000
     Cooldown: 60000
     Requires:
       SpCost:
