@@ -45148,8 +45148,8 @@ Body:
       - Level: 5
         Area: 4
     GiveAp: 3
-    Cooldown: 1500
-    FixedCastTime: 1000
+    Cooldown: 1500 #TODO: confirm cooldown
+    FixedCastTime: 1000 #TODO: confirm fixed cast time
     Requires:
       SpCost:
         - Level: 1
