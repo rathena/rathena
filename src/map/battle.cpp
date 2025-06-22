@@ -3081,6 +3081,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case SHC_ETERNAL_SLASH:
 			case SHC_IMPACT_CRATER:
 			case SHC_CROSS_SLASH:
+			case SH_CHUL_HO_BATTERING:
 				cri /= 2;
 				break;
 			case WH_GALESTORM:
