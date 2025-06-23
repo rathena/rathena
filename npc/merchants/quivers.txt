@@ -32,7 +32,7 @@ payon_in01,5,134,5	script	Inventor Jaax	89,{
 		close;
 	}
 	mes "[Inventor Jaax]";
-	mes "My name is Jaxx.";
+	mes "My name is Jaax.";
 	mes "Without ego, I can";
 	mes "say that I am perhaps the";
 	mes "^663300greatest inventor of our time^000000.";
