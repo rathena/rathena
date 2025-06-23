@@ -4,7 +4,7 @@
 #ifndef MMO_HPP
 #define MMO_HPP
 
-#include <time.h>
+#include <ctime>
 
 #include <config/core.hpp>
 
@@ -89,8 +89,9 @@ typedef uint32 t_itemid;
 #endif
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1500 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
-#define DEFAULT_WALK_SPEED 150 ///Default walk speed
+#define MAX_SKILL 1634 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define DEFAULT_WALK_SPEED 150 ///Default walk speed (other than NPC)
+#define DEFAULT_NPC_WALK_SPEED 200 ///Default NPC walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
 #define MAX_STORAGE 600 ///Max number of storage slots a player can have
@@ -114,7 +115,10 @@ typedef uint32 t_itemid;
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6
 #ifndef MAX_BARTER_REQUIREMENTS
-	#define MAX_BARTER_REQUIREMENTS 5
+	#define MAX_BARTER_REQUIREMENTS 6
+#endif
+#ifndef WEB_AUTH_TOKEN_LENGTH
+	#define WEB_AUTH_TOKEN_LENGTH 16+1
 #endif
 
 enum e_enchantgrade : uint16{
@@ -148,7 +152,7 @@ const t_itemid WEDDING_RING_F = 2635;
 //For character names, title names, guilds, maps, etc.
 //Includes null-terminator as it is the length of the array.
 #define NAME_LENGTH (23 + 1)
-#define PASSWD_LENGTH (32+1)
+#define PASSWD_LENGTH (32 + 1)
 //NPC names can be longer than it's displayed on client (NAME_LENGTH).
 #define NPC_NAME_LENGTH 50
 // <NPC_NAME_LENGTH> for npc name + 2 for a "::" + <NAME_LENGTH> for label + 1 for EOS
@@ -280,19 +284,19 @@ enum e_quest_state : uint8 {
 
 /// Questlog entry
 struct quest {
-	int quest_id;                    ///< Quest ID
+	int32 quest_id;                    ///< Quest ID
 	uint32 time;                     ///< Expiration time
-	int count[MAX_QUEST_OBJECTIVES]; ///< Kill counters of each quest objective
+	int32 count[MAX_QUEST_OBJECTIVES]; ///< Kill counters of each quest objective
 	e_quest_state state;             ///< Current quest state
 };
 
 /// Achievement log entry
 struct achievement {
-	int achievement_id;                    ///< Achievement ID
-	int count[MAX_ACHIEVEMENT_OBJECTIVES]; ///< Counters of each achievement objective
+	int32 achievement_id;                    ///< Achievement ID
+	int32 count[MAX_ACHIEVEMENT_OBJECTIVES]; ///< Counters of each achievement objective
 	time_t completed;                      ///< Date completed
 	time_t rewarded;                       ///< Received reward?
-	int score;                             ///< Amount of points achievement is worth
+	int32 score;                             ///< Amount of points achievement is worth
 };
 
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
@@ -301,25 +305,25 @@ struct achievement {
 #endif
 
 struct s_item_randomoption {
-	short id;
-	short value;
+	int16 id;
+	int16 value;
 	char param;
 } __attribute__((packed));
 
 struct item {
-	int id;
+	int32 id;
 	t_itemid nameid;
-	short amount;
-	unsigned int equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
+	int16 amount;
+	uint32 equip; // location(s) where item is equipped (using enum equip_pos for bitmasking)
 	char identify;
 	char refine;
 	char attribute;
 	t_itemid card[MAX_SLOTS];
 	struct s_item_randomoption option[MAX_ITEM_RDM_OPT];		// max of 5 random options can be supported.
-	unsigned int expire_time;
+	uint32 expire_time;
 	char favorite, bound;
 	uint64 unique_id;
-	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
+	uint32 equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 	uint8 enchantgrade;
 } __attribute__((packed));
 
@@ -370,7 +374,7 @@ struct s_point_str{
 
 struct startitem {
 	t_itemid nameid;
-	unsigned short amount;
+	uint16 amount;
 	uint32 pos;
 };
 
@@ -394,8 +398,8 @@ struct s_skill {
 };
 
 struct script_reg_state {
-	unsigned int type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
-	unsigned int update : 1; // whether it needs to be sent to char server for insertion/update/delete
+	uint32 type : 1; // because I'm a memory hoarder and having them in the same struct would be a 8-byte/instance waste while ints outnumber str on a 10000-to-1 ratio.
+	uint32 update : 1; // whether it needs to be sent to char server for insertion/update/delete
 };
 
 struct script_reg_num {
@@ -410,7 +414,7 @@ struct script_reg_str {
 
 //For saving status changes across sessions. [Skotlex]
 struct status_change_data {
-	unsigned short type; //SC_type
+	uint16 type; //SC_type
 	long val1, val2, val3, val4;
 	t_tick tick; //Remaining duration.
 };
@@ -424,8 +428,8 @@ struct bonus_script_data {
 	uint8 type; ///< 0 - None, 1 - Buff, 2 - Debuff
 };
 
-struct skill_cooldown_data {
-	unsigned short skill_id;
+struct s_skill_cooldown_data {
+	uint16 skill_id;
 	t_tick tick;
 };
 
@@ -474,13 +478,13 @@ struct s_storage_table {
 struct s_pet {
 	uint32 account_id;
 	uint32 char_id;
-	int pet_id;
-	short class_;
-	short level;
+	int32 pet_id;
+	int16 class_;
+	int16 level;
 	t_itemid egg_id;//pet egg id
 	t_itemid equip;//pet equip name_id
-	short intimate;//pet friendly
-	short hungry;//pet hungry
+	int16 intimate;//pet friendly
+	int16 hungry;//pet hungry
 	char name[NAME_LENGTH];
 	char rename_flag;
 	char incubate;
@@ -489,53 +493,55 @@ struct s_pet {
 
 struct s_homunculus {	//[orn]
 	char name[NAME_LENGTH];
-	int hom_id;
+	int32 hom_id;
 	uint32 char_id;
-	short class_;
-	short prev_class;
-	int hp,max_hp,sp,max_sp;
-	unsigned int intimacy;	//[orn]
-	short hunger;
+	int16 class_;
+	int16 prev_class;
+	uint32 hp,max_hp,sp,max_sp;
+	uint32 intimacy;	//[orn]
+	int16 hunger;
 	struct s_skill hskill[MAX_HOMUNSKILL]; //albator
-	short skillpts;
-	short level;
+	s_skill_cooldown_data scd[MAX_SKILLCOOLDOWN];
+	int16 skillpts;
+	int16 level;
 	t_exp exp;
-	short rename_flag;
-	short vaporize; //albator
-	int str;
-	int agi;
-	int vit;
-	int int_;
-	int dex;
-	int luk;
+	int16 rename_flag;
+	int16 vaporize; //albator
+	int32 str;
+	int32 agi;
+	int32 vit;
+	int32 int_;
+	int32 dex;
+	int32 luk;
 
-	int str_value;
-	int agi_value;
-	int vit_value;
-	int int_value;
-	int dex_value;
-	int luk_value;
+	int32 str_value;
+	int32 agi_value;
+	int32 vit_value;
+	int32 int_value;
+	int32 dex_value;
+	int32 luk_value;
 
 	char spiritball; //for homun S [lighta]
 	bool autofeed;
 };
 
 struct s_mercenary {
-	int mercenary_id;
+	int32 mercenary_id;
 	uint32 char_id;
-	short class_;
-	int hp, sp;
-	unsigned int kill_count;
+	int16 class_;
+	int32 hp, sp;
+	uint32 kill_count;
 	t_tick life_time;
+	s_skill_cooldown_data scd[MAX_SKILLCOOLDOWN];
 };
 
 struct s_elemental {
-	int elemental_id;
+	int32 elemental_id;
 	uint32 char_id;
-	short class_;
-	int mode;
-	int hp, sp, max_hp, max_sp, matk, atk, atk2;
-	short hit, flee, amotion, def, mdef;
+	int16 class_;
+	int32 mode;
+	int32 hp, sp, max_hp, max_sp, matk, atk, atk2;
+	int16 hit, flee, amotion, def, mdef;
 	t_tick life_time;
 };
 
@@ -547,8 +553,8 @@ struct s_friend {
 
 #ifdef HOTKEY_SAVING
 struct hotkey {
-	unsigned int id;
-	unsigned short lv;
+	uint32 id;
+	uint16 lv;
 	unsigned char type; // 0: item, 1: skill
 };
 #endif
@@ -562,33 +568,33 @@ struct mmo_charstatus {
 	uint32 child;
 
 	t_exp base_exp,job_exp;
-	int zeny;
+	int32 zeny;
 
-	short class_; ///< Player's JobID
-	unsigned int status_point,skill_point,trait_point;
-	int hp,max_hp,sp,max_sp,ap,max_ap;
-	unsigned int option;
-	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
+	int16 class_; ///< Player's JobID
+	uint32 status_point,skill_point,trait_point;
+	int32 hp,max_hp,sp,max_sp,ap,max_ap;
+	uint32 option;
+	int16 manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
-	short hair,hair_color,clothes_color,body;
-	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id,clan_id;
-	int fame;
+	int16 hair,hair_color,clothes_color,body;
+	int32 party_id,guild_id,pet_id,hom_id,mer_id,ele_id,clan_id;
+	int32 fame;
 
 	// Mercenary Guilds Rank
-	int arch_faith, arch_calls;
-	int spear_faith, spear_calls;
-	int sword_faith, sword_calls;
+	int32 arch_faith, arch_calls;
+	int32 spear_faith, spear_calls;
+	int32 sword_faith, sword_calls;
 
-	short weapon; // enum weapon_type
-	short shield; // view-id
-	short head_top,head_mid,head_bottom;
-	short robe;
+	int16 weapon; // enum weapon_type
+	int16 shield; // view-id
+	int16 head_top,head_mid,head_bottom;
+	int16 robe;
 	uint8 body_direction;
 
 	char name[NAME_LENGTH];
-	unsigned int base_level,job_level;
-	unsigned short str,agi,vit,int_,dex,luk;
-	unsigned short pow,sta,wis,spl,con,crt;
+	uint32 base_level,job_level;
+	uint16 str,agi,vit,int_,dex,luk;
+	uint16 pow,sta,wis,spl,con,crt;
 	unsigned char slot,sex;
 
 	uint32 mapip;
@@ -604,14 +610,15 @@ struct mmo_charstatus {
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS_DB];
 #endif
-	bool show_equip,allow_party, disable_call;
-	short rename;
+	bool show_equip, disable_call;
+	bool disable_partyinvite;
+	int16 rename;
 
 	time_t delete_date;
 	time_t unban_time;
 
 	// Char server addon system
-	unsigned int character_moves;
+	uint32 character_moves;
 
 	unsigned char font;
 
@@ -645,7 +652,7 @@ enum mail_attachment_type {
 };
 
 struct mail_message {
-	int id;
+	int32 id;
 	uint32 send_id;                 //hold char_id of sender
 	char send_name[NAME_LENGTH];    //sender nickname
 	uint32 dest_id;                 //hold char_id of receiver
@@ -663,43 +670,43 @@ struct mail_message {
 };
 
 struct mail_data {
-	short amount;
+	int16 amount;
 	bool full;
-	short unchecked, unread;
+	int16 unchecked, unread;
 	struct mail_message msg[MAIL_MAX_INBOX];
 };
 
 struct auction_data {
-	unsigned int auction_id;
-	int seller_id;
+	uint32 auction_id;
+	int32 seller_id;
 	char seller_name[NAME_LENGTH];
-	int buyer_id;
+	int32 buyer_id;
 	char buyer_name[NAME_LENGTH];
 
 	struct item item;
 	// This data is required for searching, as itemdb is not read by char server
 	char item_name[ITEM_NAME_LENGTH];
-	short type;
+	int16 type;
 
-	unsigned short hours;
-	int price, buynow;
+	uint16 hours;
+	int32 price, buynow;
 	time_t timestamp; // auction's end time
-	int auction_end_timer;
+	int32 auction_end_timer;
 };
 
 struct party_member {
 	uint32 account_id;
 	uint32 char_id;
 	char name[NAME_LENGTH];
-	unsigned short class_;
+	uint16 class_;
 	char map[MAP_NAME_LENGTH_EXT];
-	unsigned short lv;
+	uint16 lv;
 	unsigned leader : 1,
 	         online : 1;
 };
 
 struct party {
-	int party_id;
+	int32 party_id;
 	char name[NAME_LENGTH];
 	unsigned char count; //Count of online characters.
 	unsigned exp : 1,
@@ -710,9 +717,9 @@ struct party {
 class map_session_data;
 struct guild_member {
 	uint32 account_id, char_id;
-	short hair,hair_color,gender,class_,lv;
+	int16 hair,hair_color,gender,class_,lv;
 	t_exp exp;
-	short online,position;
+	int16 online,position;
 	char name[NAME_LENGTH];
 	map_session_data *sd;
 	unsigned char modified;
@@ -721,14 +728,14 @@ struct guild_member {
 
 struct guild_position {
 	char name[NAME_LENGTH];
-	int mode;
-	int exp_mode;
+	int32 mode;
+	int32 exp_mode;
 	unsigned char modified;
 };
 
 struct guild_alliance {
-	int opposition;
-	int guild_id;
+	int32 opposition;
+	int32 guild_id;
 	char name[NAME_LENGTH];
 };
 
@@ -736,36 +743,30 @@ struct guild_expulsion {
 	char name[NAME_LENGTH];
 	char mes[40];
 	uint32 account_id;
+	uint32 char_id;
 };
 
 struct guild_skill {
-	int id,lv;
+	int32 id,lv;
 };
 
 struct Channel;
-struct guild {
-	int guild_id;
-	short guild_lv, connect_member, max_member, average_lv;
+struct mmo_guild {
+	int32 guild_id;
+	int16 guild_lv, connect_member, max_member, average_lv;
 	t_exp exp;
 	t_exp next_exp;
-	int skill_point;
+	int32 skill_point;
 	char name[NAME_LENGTH],master[NAME_LENGTH];
 	struct guild_member member[MAX_GUILD];
 	struct guild_position position[MAX_GUILDPOSITION];
 	char mes1[MAX_GUILDMES1],mes2[MAX_GUILDMES2];
-	int emblem_len,emblem_id;
+	int32 emblem_len,emblem_id;
 	char emblem_data[2048];
 	struct guild_alliance alliance[MAX_GUILDALLIANCE];
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
 	struct guild_skill skill[MAX_GUILDSKILL];
-	struct Channel *channel;
-	int instance_id;
 	time_t last_leader_change;
-
-	/* Used by char-server to save events for guilds */
-	unsigned short save_flag;
-
-	int32 chargeshout_flag_id;
 };
 
 enum e_woe_type{
@@ -776,8 +777,8 @@ enum e_woe_type{
 };
 
 struct guild_castle {
-	int castle_id;
-	int mapindex;
+	int32 castle_id;
+	int32 mapindex;
 	char castle_name[NAME_LENGTH];
 	char castle_event[NPC_NAME_LENGTH];
 	e_woe_type type;
@@ -787,21 +788,21 @@ struct guild_castle {
 	uint16 warp_y;
 	uint32 zeny;
 	uint32 zeny_siege;
-	int guild_id;
-	int economy;
-	int defense;
-	int triggerE;
-	int triggerD;
-	int nextTime;
-	int payTime;
-	int createTime;
-	int visibleC;
+	int32 guild_id;
+	int32 economy;
+	int32 defense;
+	int32 triggerE;
+	int32 triggerD;
+	int32 nextTime;
+	int32 payTime;
+	int32 createTime;
+	int32 visibleC;
 	struct {
 		unsigned visible : 1;
-		int id; // object id
+		int32 id; // object id
 	} guardian[MAX_GUARDIANS];
-	int* temp_guardians; // ids of temporary guardians (mobs)
-	int temp_guardians_max;
+	int32* temp_guardians; // ids of temporary guardians (mobs)
+	int32 temp_guardians_max;
 };
 
 /// Enum for guild castle data script commands
@@ -835,8 +836,8 @@ enum e_guild_permission {
 };
 
 struct fame_list {
-	int id;
-	int fame;
+	int32 id;
+	int32 fame;
 	char name[NAME_LENGTH];
 };
 
@@ -1126,8 +1127,8 @@ enum e_pc_reg_loading {
 enum e_party_member_withdraw {
 	PARTY_MEMBER_WITHDRAW_LEAVE,	  ///< /leave
 	PARTY_MEMBER_WITHDRAW_EXPEL,	  ///< Kicked
-	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< TODO: Cannot /leave
-	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
+	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< Cannot /leave
+	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< Cannot be kicked
 };
 
 enum e_rank {
@@ -1138,20 +1139,20 @@ enum e_rank {
 };
 
 struct clan_alliance {
-	int opposition;
-	int clan_id;
+	int32 opposition;
+	int32 clan_id;
 	char name[NAME_LENGTH];
 };
 
 struct clan{
-	int id;
+	int32 id;
 	char name[NAME_LENGTH];
 	char master[NAME_LENGTH];
 	char map[MAP_NAME_LENGTH_EXT];
-	short max_member, connect_member;
+	int16 max_member, connect_member;
 	map_session_data *members[MAX_CLAN];
 	struct clan_alliance alliance[MAX_CLANALLIANCE];
-	unsigned short instance_id;
+	uint16 instance_id;
 };
 
 // Sanity checks...

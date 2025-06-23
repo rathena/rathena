@@ -25,7 +25,7 @@
 //=     from npc\other\lighthalzen_???.txt [Lupus]
 //= 1.2 Moved some NPCs to Lighthalzen quests. [SinSloth]
 //= 1.3 Moved some other NPCs for quests purposes. [SinSloth]
-//= 1.4 Corrected NPC names to fall within proper resctrictions. [L0ne_W0lf]
+//= 1.4 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.6 Massive NPC clean up, includes corrected dialogs and [L0ne_W0lf]
 //=     added missing dialogs, fixed indentation, corrected some NPC
@@ -33,12 +33,12 @@
 //=     whitespace (empty lines after header and before end curly)
 //=     reduced usage of the command "goto", grammatical corrections.
 //=     Added additional missing NPCs.
-//= 1.7 Removed Auciton Staff as the offical auction file has been added. [L0ne_W0lf]
+//= 1.7 Removed Auction Staff as the official auction file has been added. [L0ne_W0lf]
 //=     Corrected Lucius so he checks the donation variable. (bugreport:1103) [L0ne_W0lf]
 //= 1.7a Another fix to Lucius. (bugreport:1118) [L0ne_W0lf]
 //= 1.7b Another fix to Lucius (trivial). (bugreport:1125)
 //= 1.8 Replaced effect numerics with constants. [L0ne_W0lf]
-//= 1.9 Added Cool Corp. Event Staff, who oringialy resided in the DTS_warper script file. [L0ne_W0lf]
+//= 1.9 Added Cool Corp. Event Staff, who originally resided in the DTS_warper script file. [L0ne_W0lf]
 //= 2.0 Added missing Lab Staff#amano08 NPC. (bugreport:4319) [Gepard]
 //= 2.1 Commented out Duplicate NPCs. (bugreport:4555)
 //= 2.2 Added missing NPC found in AEGIS files. [L0ne_W0lf]

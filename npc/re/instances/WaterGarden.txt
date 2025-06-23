@@ -579,7 +579,7 @@ OnTouch_:	// note: hidden player doesn't trigger it!
 	end;
 }
 
-1@ghg,315,149,0	script(DISABLED)	mob3_1#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,315,149,0	script	mob3_1#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:	// note: hidden player doesn't trigger it!
 	disablenpc();
@@ -598,7 +598,7 @@ OnTouch_:	// note: hidden player doesn't trigger it!
 	}
 	end;
 }
-1@ghg,295,149,0	script(DISABLED)	mob3_2#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,295,149,0	script	mob3_2#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -618,7 +618,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,275,149,0	script(DISABLED)	mob3_3#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,275,149,0	script	mob3_3#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -638,7 +638,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,255,149,0	script(DISABLED)	mob3_4#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,255,149,0	script	mob3_4#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -658,7 +658,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,231,162,0	script(DISABLED)	mob3_5#ghg	HIDDEN_WARP_NPC,3,1,{
+1@ghg,231,162,0	script	mob3_5#ghg	HIDDEN_WARP_NPC,3,1,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -678,7 +678,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,255,173,0	script(DISABLED)	mob3_6#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,255,173,0	script	mob3_6#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -698,7 +698,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,275,173,0	script(DISABLED)	mob3_7#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,275,173,0	script	mob3_7#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -718,7 +718,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,295,173,0	script(DISABLED)	mob3_8#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,295,173,0	script	mob3_8#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();
@@ -738,7 +738,7 @@ OnTouch_:
 	end;
 }
 
-1@ghg,315,173,0	script(DISABLED)	mob3_9#ghg	HIDDEN_WARP_NPC,1,3,{
+1@ghg,315,173,0	script	mob3_9#ghg	HIDDEN_WARP_NPC,1,3,{
 	end;
 OnTouch_:
 	disablenpc();

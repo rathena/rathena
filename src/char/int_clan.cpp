@@ -3,12 +3,11 @@
 
 #include "int_clan.hpp"
 
+#include <cstdlib>
+#include <cstring> //memset
 #include <memory>
 #include <unordered_map>
 #include <vector>
-
-#include <stdlib.h>
-#include <string.h> //memset
 
 #include <common/cbasetypes.hpp>
 #include <common/malloc.hpp>
@@ -21,12 +20,12 @@
 #include "char_mapif.hpp"
 #include "inter.hpp"
 
-// int clan_id -> struct clan*
+// int32 clan_id -> struct clan*
 static std::unordered_map<int32, std::shared_ptr<struct clan>> clan_db;
 
 using namespace rathena;
 
-int inter_clan_removemember_tosql(uint32 account_id, uint32 char_id){
+int32 inter_clan_removemember_tosql(uint32 account_id, uint32 char_id){
 	if( SQL_ERROR == Sql_Query( sql_handle, "UPDATE `%s` SET `clan_id` = '0' WHERE `char_id` = '%d'", schema_config.char_db, char_id ) ){
 		Sql_ShowDebug( sql_handle );
 		return 1;
@@ -35,10 +34,10 @@ int inter_clan_removemember_tosql(uint32 account_id, uint32 char_id){
 	}
 }
 
-std::shared_ptr<struct clan> inter_clan_fromsql(int clan_id){
+std::shared_ptr<struct clan> inter_clan_fromsql(int32 clan_id){
 	char* data;
 	size_t len;
-	int i;
+	int32 i;
 
 	if( clan_id <= 0 )
 		return nullptr;
@@ -61,10 +60,13 @@ std::shared_ptr<struct clan> inter_clan_fromsql(int clan_id){
 	clan = std::make_shared<struct clan>();
 
 	clan->id = clan_id;
-	Sql_GetData(sql_handle,  0, &data, &len); memcpy(clan->name, data, min(len, NAME_LENGTH));
-	Sql_GetData(sql_handle,  1, &data, &len); memcpy(clan->master, data, min(len, NAME_LENGTH));
-	Sql_GetData(sql_handle,  2, &data, &len); memcpy(clan->map, data, min(len, MAP_NAME_LENGTH_EXT));
-	Sql_GetData(sql_handle,  3, &data, NULL); clan->max_member = atoi(data);
+	Sql_GetData( sql_handle,  0, &data, &len );
+	memcpy( clan->name, data, std::min( len, static_cast<decltype(len)>( NAME_LENGTH ) ) );
+	Sql_GetData( sql_handle,  1, &data, &len );
+	memcpy( clan->master, data, std::min( len, static_cast<decltype(len)>( NAME_LENGTH ) ) );
+	Sql_GetData( sql_handle,  2, &data, &len );
+	memcpy( clan->map, data, std::min( len, static_cast<decltype(len)>( MAP_NAME_LENGTH_EXT ) ) );
+	Sql_GetData(sql_handle,  3, &data, nullptr); clan->max_member = atoi(data);
 
 	clan->connect_member = 0;
 
@@ -83,8 +85,8 @@ std::shared_ptr<struct clan> inter_clan_fromsql(int clan_id){
 	for( i = 0; i < MAX_CLANALLIANCE && SQL_SUCCESS == Sql_NextRow(sql_handle); i++ ){
 		struct clan_alliance* a = &clan->alliance[i];
 
-		Sql_GetData(sql_handle, 0, &data, NULL); a->opposition = atoi(data);
-		Sql_GetData(sql_handle, 1, &data, NULL); a->clan_id = atoi(data);
+		Sql_GetData(sql_handle, 0, &data, nullptr); a->opposition = atoi(data);
+		Sql_GetData(sql_handle, 1, &data, nullptr); a->clan_id = atoi(data);
 		Sql_GetData(sql_handle, 2, &data, &len); memcpy(a->name, data, zmin(len, NAME_LENGTH));
 	}
 
@@ -96,17 +98,14 @@ std::shared_ptr<struct clan> inter_clan_fromsql(int clan_id){
 	return clan;
 }
 
-int mapif_clan_info( int fd ){
-	int offset;
-	int length;
-
-	length = 4 + clan_db.size() * sizeof( struct clan );
+int32 mapif_clan_info( int32 fd ){
+	size_t offset = 4;
+	size_t length = offset + clan_db.size() * sizeof( struct clan );
 
 	WFIFOHEAD( fd, length );
 	WFIFOW( fd, 0 ) = 0x38A0;
-	WFIFOW( fd, 2 ) = length;
+	WFIFOW( fd, 2 ) = static_cast<int16>( length );
 
-	offset = 4;
 	for( const auto& pair : clan_db ){
 		std::shared_ptr<struct clan> clan = pair.second;
 
@@ -119,13 +118,13 @@ int mapif_clan_info( int fd ){
 	return 0;
 }
 
-static int mapif_parse_clan_request( int fd ){
+static int32 mapif_parse_clan_request( int32 fd ){
 	mapif_clan_info( fd );
 
 	return 0;
 }
 
-static int mapif_parse_clan_message( int fd ){
+static int32 mapif_parse_clan_message( int32 fd ){
 	unsigned char buf[500];
 	uint16 len;
 
@@ -139,7 +138,7 @@ static int mapif_parse_clan_message( int fd ){
 	return 0;
 }
 
-static void mapif_clan_refresh_onlinecount( int fd, std::shared_ptr<struct clan> clan ){
+static void mapif_clan_refresh_onlinecount( int32 fd, std::shared_ptr<struct clan> clan ){
 	unsigned char buf[8];
 
 	WBUFW(buf,0) = 0x38A2;
@@ -149,7 +148,7 @@ static void mapif_clan_refresh_onlinecount( int fd, std::shared_ptr<struct clan>
 	chmapif_sendallwos( fd, buf, 8 );
 }
 
-static void mapif_parse_clan_member_left( int fd ){
+static void mapif_parse_clan_member_left( int32 fd ){
 	std::shared_ptr<struct clan> clan = util::umap_find( clan_db, static_cast<int32>( RFIFOL( fd, 2 ) ) );
 
 	// Unknown clan
@@ -164,7 +163,7 @@ static void mapif_parse_clan_member_left( int fd ){
 	}
 }
 
-static void mapif_parse_clan_member_joined( int fd ){
+static void mapif_parse_clan_member_joined( int32 fd ){
 	std::shared_ptr<struct clan> clan = util::umap_find( clan_db, static_cast<int32>( RFIFOL( fd, 2 ) ) );
 
 	// Unknown clan
@@ -184,8 +183,7 @@ static void mapif_parse_clan_member_joined( int fd ){
 // Must Return
 //	1 : ok
 //  0 : error
-int inter_clan_parse_frommap( int fd ){
-	RFIFOHEAD(fd);
+int32 inter_clan_parse_frommap( int32 fd ){
 	switch(RFIFOW(fd,0)) {
 		case 0x30A0:
 			mapif_parse_clan_request( fd );
@@ -205,7 +203,7 @@ int inter_clan_parse_frommap( int fd ){
 }
 
 // Initialize clan sql
-int inter_clan_init(void){
+int32 inter_clan_init(void){
 	if( SQL_ERROR == Sql_Query( sql_handle, "SELECT `clan_id` FROM `%s`", schema_config.clan_table ) ){
 		Sql_ShowDebug(sql_handle);
 		return 1;

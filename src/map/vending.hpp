@@ -13,9 +13,9 @@ struct s_search_store_search;
 struct s_autotrader;
 
 struct s_vending {
-	short index; /// cart index (return item data)
-	short amount; ///amout of the item for vending
-	unsigned int value; ///at wich price
+	int16 index; /// cart index (return item data)
+	int16 amount; ///amout of the item for vending
+	uint32 value; ///at which price
 };
 
 DBMap * vending_getdb();
@@ -23,11 +23,11 @@ void do_final_vending(void);
 void do_init_vending(void);
 void do_init_vending_autotrade( void );
  
-void vending_reopen( map_session_data* sd );
+void vending_reopen( map_session_data& sd );
 void vending_closevending(map_session_data* sd);
-int8 vending_openvending(map_session_data* sd, const char* message, const uint8* data, int count, struct s_autotrader *at);
-void vending_vendinglistreq(map_session_data* sd, int id);
-void vending_purchasereq(map_session_data* sd, int aid, int uid, const uint8* data, int count);
+int8 vending_openvending( map_session_data& sd, const char* message, const uint8* data, int32 count, struct s_autotrader *at );
+void vending_vendinglistreq(map_session_data* sd, int32 id);
+void vending_purchasereq(map_session_data* sd, int32 aid, int32 uid, const uint8* data, int32 count);
 bool vending_search(map_session_data* sd, t_itemid nameid);
 bool vending_searchall(map_session_data* sd, const struct s_search_store_search* s);
 void vending_update(map_session_data &sd);

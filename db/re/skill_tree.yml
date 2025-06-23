@@ -6683,6 +6683,13 @@ Body:
         Requires:
           - Name: DK_TWOHANDDEF
             Level: 5
+      - Name: DK_DRAGONIC_BREATH
+        MaxLevel: 10
+        Requires:
+          - Name: RK_DRAGONBREATH
+            Level: 10
+          - Name: RK_DRAGONBREATH_WATER
+            Level: 10
       - Name: DK_DRAGONIC_AURA
         MaxLevel: 10
         Requires:
@@ -6765,6 +6772,21 @@ Body:
             Level: 3
           - Name: MT_SUMMON_ABR_BATTLE_WARIOR
             Level: 2
+      - Name: MT_SPARK_BLASTER
+        MaxLevel: 10
+        Requires:
+          - Name: MT_M_MACHINE
+            Level: 1
+      - Name: MT_TRIPLE_LASER
+        MaxLevel: 5
+        Requires:
+          - Name: MT_SPARK_BLASTER
+            Level: 5
+      - Name: MT_MIGHTY_SMASH
+        MaxLevel: 10
+        Requires:
+          - Name: MT_AXE_STOMP
+            Level: 3
       - Name: MT_SUMMON_ABR_MOTHER_NET
         MaxLevel: 4
         Requires:
@@ -6785,6 +6807,21 @@ Body:
             Level: 4
           - Name: MT_SUMMON_ABR_MOTHER_NET
             Level: 4
+      - Name: MT_RUSH_STRIKE
+        MaxLevel: 5
+        Requires:
+          - Name: MT_RUSH_QUAKE
+            Level: 5
+      - Name: MT_POWERFUL_SWING
+        MaxLevel: 5
+        Requires:
+          - Name: MT_RUSH_STRIKE
+            Level: 3
+      - Name: MT_ENERGY_CANNONADE
+        MaxLevel: 5
+        Requires:
+          - Name: MT_TRIPLE_LASER
+            Level: 3
   - Job: Shadow_Cross
     Inherit:
       Novice: true
@@ -6869,6 +6906,13 @@ Body:
             Level: 5
           - Name: SHC_SHADOW_STAB
             Level: 5
+      - Name: SHC_CROSS_SLASH
+        MaxLevel: 5
+        Requires:
+          - Name: GC_WEAPONBLOCKING
+            Level: 3
+          - Name: SHC_DANCING_KNIFE
+            Level: 3
   - Job: Arch_Mage
     Inherit:
       Novice: true
@@ -6974,6 +7018,13 @@ Body:
         MaxLevel: 5
         Requires:
           - Name: AG_RAIN_OF_CRYSTAL
+            Level: 1
+      - Name: AG_ENERGY_CONVERSION
+        MaxLevel: 5
+        Requires:
+          - Name: WL_RECOGNIZEDSPELL
+            Level: 2
+          - Name: AG_CLIMAX
             Level: 1
   - Job: Cardinal
     Inherit:
@@ -7157,6 +7208,13 @@ Body:
         Requires:
           - Name: WH_SOLIDTRAP
             Level: 1
+      - Name: WH_WILD_WALK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_NATUREFRIENDLY
+            Level: 3
+          - Name: WH_HAWKRUSH
+            Level: 3
   - Job: Imperial_Guard
     Inherit:
       Novice: true
@@ -7235,6 +7293,18 @@ Body:
         Requires:
           - Name: IG_SHIELD_MASTERY
             Level: 1
+      - Name: IG_IMPERIAL_CROSS
+        MaxLevel: 5
+        Requires:
+          - Name: IG_OVERSLASH
+            Level: 5
+      - Name: IG_RADIANT_SPEAR
+        MaxLevel: 10
+        Requires:
+          - Name: IG_OVERSLASH
+            Level: 3
+          - Name: IG_SHIELD_SHOOTING
+            Level: 3
   - Job: Biolo
     Inherit:
       Novice: true
@@ -7313,6 +7383,28 @@ Body:
           - Name: BO_WOODENWARRIOR
             Level: 3
           - Name: BO_WOODEN_FAIRY
+            Level: 3
+      - Name: BO_EXPLOSIVE_POWDER
+        MaxLevel: 5
+        Requires:
+          - Name: BO_BIONICS_M
+            Level: 3
+      - Name: BO_MAYHEMIC_THORNS
+        MaxLevel: 10
+        Requires:
+          - Name: BO_BIONICS_M
+            Level: 5
+          - Name: BO_EXPLOSIVE_POWDER
+            Level: 3
+      - Name: BO_MYSTERY_POWDER
+        MaxLevel: 5
+        Requires:
+          - Name: BO_EXPLOSIVE_POWDER
+            Level: 5
+      - Name: BO_DUST_EXPLOSION
+        MaxLevel: 5
+        Requires:
+          - Name: BO_MYSTERY_POWDER
             Level: 3
   - Job: Abyss_Chaser
     Inherit:
@@ -7830,3 +7922,709 @@ Body:
       Royal_Guard: true
       Royal_Guard_T: true
       Imperial_Guard: true
+  - Job: Soul_Ascetic
+    Inherit:
+      Novice: true
+      Taekwon: true
+      Soul_Linker: true
+      Soul_Reaper: true
+    Tree:
+      - Name: SOA_SOUL_MASTERY
+        MaxLevel: 10
+      - Name: SOA_TALISMAN_MASTERY
+        MaxLevel: 10
+      - Name: SOA_SOUL_GATHERING
+        MaxLevel: 5
+        Requires:
+          - Name: SP_SOULENERGY
+            Level: 5
+          - Name: SOA_SOUL_MASTERY
+            Level: 3
+      - Name: SOA_TALISMAN_OF_PROTECTION
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_TALISMAN_OF_WARRIOR
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_TALISMAN_OF_MAGICIAN
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_EXORCISM_OF_MALICIOUS_SOUL
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_SOUL_GATHERING
+            Level: 1
+          - Name: SP_SOULCURSE
+            Level: 5
+      - Name: SOA_TALISMAN_OF_SOUL_STEALING
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+          - Name: SOA_SOUL_MASTERY
+            Level: 1
+      - Name: SOA_TOTEM_OF_TUTELARY
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 3
+          - Name: SOA_SOUL_MASTERY
+            Level: 3
+      - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_MASTERY
+            Level: 1
+      - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_SOUL_STEALING
+            Level: 1
+      - Name: SOA_TALISMAN_OF_WHITE_TIGER
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+            Level: 1
+      - Name: SOA_TALISMAN_OF_RED_PHOENIX
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_WHITE_TIGER
+            Level: 1
+      - Name: SOA_TALISMAN_OF_BLACK_TORTOISE
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_RED_PHOENIX
+            Level: 1
+      - Name: SOA_TALISMAN_OF_FOUR_BEARING_GOD
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_TALISMAN_OF_BLUE_DRAGON
+            Level: 1
+          - Name: SOA_TALISMAN_OF_WHITE_TIGER
+            Level: 1
+          - Name: SOA_TALISMAN_OF_RED_PHOENIX
+            Level: 1
+          - Name: SOA_TALISMAN_OF_BLACK_TORTOISE
+            Level: 1
+      - Name: SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS
+        MaxLevel: 5
+        Requires:
+          - Name: SOA_SOUL_MASTERY
+            Level: 3
+          - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
+            Level: 1
+          - Name: SOA_TALISMAN_OF_FOUR_BEARING_GOD
+            Level: 1
+      - Name: SOA_SOUL_OF_HEAVEN_AND_EARTH
+        MaxLevel: 10
+        Requires:
+          - Name: SOA_TALISMAN_OF_PROTECTION
+            Level: 5
+          - Name: SOA_TALISMAN_OF_WARRIOR
+            Level: 5
+          - Name: SOA_TALISMAN_OF_MAGICIAN
+            Level: 5
+          - Name: SOA_TALISMAN_OF_FIVE_ELEMENTS
+            Level: 5
+  - Job: Night_Watch
+    Inherit:
+      Novice: true
+      Gunslinger: true
+      Rebellion: true
+    Tree:
+      - Name: NW_P_F_I
+        MaxLevel: 10
+      - Name: NW_GRENADE_MASTERY
+        MaxLevel: 10
+      - Name: NW_INTENSIVE_AIM
+        MaxLevel: 1
+        Requires:
+          - Name: NW_P_F_I
+            Level: 1
+      - Name: NW_HIDDEN_CARD
+        MaxLevel: 10
+        Requires:
+          - Name: NW_P_F_I
+            Level: 5
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_BASIC_GRENADE
+        MaxLevel: 5
+        Requires:
+          - Name: NW_GRENADE_MASTERY
+            Level: 3
+      - Name: NW_GRENADE_FRAGMENT
+        MaxLevel: 7
+        Requires:
+          - Name: NW_GRENADE_MASTERY
+            Level: 1
+      - Name: NW_THE_VIGILANTE_AT_NIGHT
+        MaxLevel: 5
+        Requires:
+          - Name: NW_P_F_I
+            Level: 3
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_ONLY_ONE_BULLET
+        MaxLevel: 5
+        Requires:
+          - Name: NW_P_F_I
+            Level: 3
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_SPIRAL_SHOOTING
+        MaxLevel: 5
+        Requires:
+          - Name: NW_P_F_I
+            Level: 3
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_MAGAZINE_FOR_ONE
+        MaxLevel: 5
+        Requires:
+          - Name: NW_P_F_I
+            Level: 3
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_WILD_FIRE
+        MaxLevel: 5
+        Requires:
+          - Name: NW_P_F_I
+            Level: 3
+          - Name: NW_INTENSIVE_AIM
+            Level: 1
+      - Name: NW_HASTY_FIRE_IN_THE_HOLE
+        MaxLevel: 5
+        Requires:
+          - Name: NW_BASIC_GRENADE
+            Level: 3
+      - Name: NW_GRENADES_DROPPING
+        MaxLevel: 5
+        Requires:
+          - Name: NW_HASTY_FIRE_IN_THE_HOLE
+            Level: 3
+      - Name: NW_AUTO_FIRING_LAUNCHER
+        MaxLevel: 5
+        Requires:
+          - Name: NW_GRENADES_DROPPING
+            Level: 3
+      - Name: NW_MISSION_BOMBARD
+        MaxLevel: 10
+        Requires:
+          - Name: NW_GRENADE_MASTERY
+            Level: 5
+          - Name: NW_GRENADES_DROPPING
+            Level: 3
+  - Job: Hyper_Novice
+    Inherit:
+      Novice: true
+      Supernovice: true
+      Super_Novice_E: true
+    Tree:
+      - Name: HN_SELFSTUDY_TATICS
+        MaxLevel: 10
+      - Name: HN_SELFSTUDY_SOCERY
+        MaxLevel: 10
+      - Name: HN_DOUBLEBOWLINGBASH
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_TATICS
+            Level: 5
+      - Name: HN_SHIELD_CHAIN_RUSH
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_TATICS
+            Level: 5
+      - Name: HN_METEOR_STORM_BUSTER
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_JUPITEL_THUNDER_STORM
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_JACK_FROST_NOVA
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_HELLS_DRIVE
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_MEGA_SONIC_BLOW
+        MaxLevel: 10
+        Requires:
+          - Name: HN_DOUBLEBOWLINGBASH
+            Level: 7
+      - Name: HN_SPIRAL_PIERCE_MAX
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SHIELD_CHAIN_RUSH
+            Level: 7
+      - Name: HN_GROUND_GRAVITATION
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_NAPALM_VULCAN_STRIKE
+        MaxLevel: 10
+        Requires:
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+      - Name: HN_BREAKINGLIMIT
+        MaxLevel: 1
+        Requires:
+          - Name: HN_DOUBLEBOWLINGBASH
+            Level: 7
+          - Name: HN_MEGA_SONIC_BLOW
+            Level: 7
+          - Name: HN_SHIELD_CHAIN_RUSH
+            Level: 7
+          - Name: HN_SPIRAL_PIERCE_MAX
+            Level: 7
+      - Name: HN_RULEBREAK
+        MaxLevel: 1
+        Requires:
+          - Name: HN_METEOR_STORM_BUSTER
+            Level: 5
+          - Name: HN_JUPITEL_THUNDER_STORM
+            Level: 5
+          - Name: HN_JACK_FROST_NOVA
+            Level: 5
+          - Name: HN_HELLS_DRIVE
+            Level: 5
+          - Name: HN_GROUND_GRAVITATION
+            Level: 5
+          - Name: HN_NAPALM_VULCAN_STRIKE
+            Level: 5
+      - Name: HN_OVERCOMING_CRISIS
+        MaxLevel: 5
+        Requires:
+          - Name: HN_SELFSTUDY_TATICS
+            Level: 5
+          - Name: HN_SELFSTUDY_SOCERY
+            Level: 5
+  - Job: Spirit_Handler
+    Inherit:
+      Summoner: true
+    Tree:
+      - Name: SH_MYSTICAL_CREATURE_MASTERY
+        MaxLevel: 10
+      - Name: SH_CHUL_HO_SONIC_CLAW
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_KI_SUL_WATER_SPRAYING
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_COLORS_OF_HYUN_ROK
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 1
+      - Name: SH_HOWLING_OF_CHUL_HO
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 3
+      - Name: SH_MARINE_FESTIVAL_OF_KI_SUL
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_KI_SUL_WATER_SPRAYING
+            Level: 3
+      - Name: SH_SANDY_FESTIVAL_OF_KI_SUL
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_KI_SUL_WATER_SPRAYING
+            Level: 3
+      - Name: SH_HYUN_ROKS_BREEZE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 3
+          - Name: SH_COLORS_OF_HYUN_ROK
+            Level: 3
+      - Name: SH_HOGOGONG_STRIKE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 3
+      - Name: SH_KI_SUL_RAMPAGE
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_MARINE_FESTIVAL_OF_KI_SUL
+            Level: 2
+          - Name: SH_SANDY_FESTIVAL_OF_KI_SUL
+            Level: 2
+      - Name: SH_HYUN_ROK_CANNON
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 5
+          - Name: SH_HYUN_ROKS_BREEZE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_CHUL_HO
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HOGOGONG_STRIKE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_KI_SUL
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_KI_SUL_RAMPAGE
+            Level: 3
+      - Name: SH_COMMUNE_WITH_HYUN_ROK
+        MaxLevel: 1
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HYUN_ROK_CANNON
+            Level: 3
+      - Name: SH_TEMPORARY_COMMUNION
+        MaxLevel: 5
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 10
+      - Name: SH_BLESSING_OF_MYSTICAL_CREATURES
+        MaxLevel: 5
+        Requires:
+          - Name: SH_COMMUNE_WITH_KI_SUL
+            Level: 1
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 10
+      - Name: SH_CHUL_HO_BATTERING
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 5
+      - Name: SH_HYUN_ROK_SPIRIT_POWER
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HYUN_ROKS_BREEZE
+            Level: 5
+  - Job: Sky_Emperor
+    Inherit:
+      Novice: true
+      Taekwon: true
+      Star_Gladiator: true
+      Star_Emperor: true
+    Tree:
+      - Name: SKE_WAR_BOOK_MASTERY
+        MaxLevel: 10
+      - Name: SKE_SKY_MASTERY
+        MaxLevel: 10
+      - Name: SKE_RISING_SUN
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 1
+      - Name: SKE_RISING_MOON
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 1
+      - Name: SKE_TWINKLING_GALAXY
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 1
+      - Name: SKE_NOON_BLAST
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 3
+          - Name: SKE_RISING_SUN
+            Level: 1
+      - Name: SKE_MIDNIGHT_KICK
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 3
+          - Name: SKE_RISING_MOON
+            Level: 1
+      - Name: SKE_STAR_BURST
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 3
+          - Name: SKE_TWINKLING_GALAXY
+            Level: 1
+      - Name: SKE_SUNSET_BLAST
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 5
+          - Name: SKE_NOON_BLAST
+            Level: 1
+      - Name: SKE_DAWN_BREAK
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 5
+          - Name: SKE_MIDNIGHT_KICK
+            Level: 1
+      - Name: SKE_STAR_CANNON
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 5
+          - Name: SKE_STAR_BURST
+            Level: 1
+      - Name: SKE_ALL_IN_THE_SKY
+        MaxLevel: 10
+        Requires:
+          - Name: SKE_WAR_BOOK_MASTERY
+            Level: 5
+          - Name: SKE_RISING_SUN
+            Level: 1
+          - Name: SKE_RISING_MOON
+            Level: 1
+      - Name: SKE_ENCHANTING_SKY
+        MaxLevel: 10
+        Requires:
+          - Name: SKE_SKY_MASTERY
+            Level: 5
+  - Job: Sky_Emperor2
+    Inherit:
+      Novice: true
+      Taekwon: true
+      Star_Gladiator: true
+      Star_Emperor: true
+      Sky_Emperor: true
+  - Job: Shinkiro
+    Inherit:
+      Novice: true
+      Ninja: true
+      Kagerou: true
+    Tree:
+      - Name: SS_SHINKIROU
+        MaxLevel: 1
+      - Name: SS_SEKIENHOU
+        MaxLevel: 10
+      - Name: SS_SHIMIRU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIWAIKYOKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KAGEGARI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_REIKETSUHOU
+        MaxLevel: 10
+      - Name: SS_TOKEDASU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIKAITEN
+        MaxLevel: 5
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_FUUMASHOUAKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_KAGENOMAI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGEGARI
+            Level: 3
+      - Name: SS_RAIDENPOU
+        MaxLevel: 10
+      - Name: SS_AKUMUKESU
+        MaxLevel: 1
+      - Name: SS_KUNAIKUSSETSU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+      - Name: SS_FUUMAKOUCHIKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_FUUMASHOUAKU
+            Level: 5
+      - Name: SS_KAGEGISSEN
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGENOMAI
+            Level: 5
+      - Name: SS_KINRYUUHOU
+        MaxLevel: 10
+      - Name: SS_HITOUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 5
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+          - Name: SS_KUNAIKUSSETSU
+            Level: 5
+      - Name: SS_KAGEAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KAGEGISSEN
+            Level: 7
+      - Name: SS_ANTENPOU
+        MaxLevel: 10
+      - Name: SS_ANKOKURYUUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_SEKIENHOU
+            Level: 5
+          - Name: SS_REIKETSUHOU
+            Level: 5
+          - Name: SS_RAIDENPOU
+            Level: 5
+          - Name: SS_KINRYUUHOU
+            Level: 5
+          - Name: SS_ANTENPOU
+            Level: 5
+  - Job: Shiranui
+    Inherit:
+      Novice: true
+      Ninja: true
+      Oboro: true
+    Tree:
+      - Name: SS_SHINKIROU
+        MaxLevel: 1
+      - Name: SS_SEKIENHOU
+        MaxLevel: 10
+      - Name: SS_SHIMIRU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIWAIKYOKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KAGEGARI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_REIKETSUHOU
+        MaxLevel: 10
+      - Name: SS_TOKEDASU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIKAITEN
+        MaxLevel: 5
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_FUUMASHOUAKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_KAGENOMAI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGEGARI
+            Level: 3
+      - Name: SS_RAIDENPOU
+        MaxLevel: 10
+      - Name: SS_AKUMUKESU
+        MaxLevel: 1
+      - Name: SS_KUNAIKUSSETSU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+      - Name: SS_FUUMAKOUCHIKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_FUUMASHOUAKU
+            Level: 5
+      - Name: SS_KAGEGISSEN
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGENOMAI
+            Level: 5
+      - Name: SS_KINRYUUHOU
+        MaxLevel: 10
+      - Name: SS_HITOUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 5
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+          - Name: SS_KUNAIKUSSETSU
+            Level: 5
+      - Name: SS_KAGEAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KAGEGISSEN
+            Level: 7
+      - Name: SS_ANTENPOU
+        MaxLevel: 10
+      - Name: SS_ANKOKURYUUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_SEKIENHOU
+            Level: 5
+          - Name: SS_REIKETSUHOU
+            Level: 5
+          - Name: SS_RAIDENPOU
+            Level: 5
+          - Name: SS_KINRYUUHOU
+            Level: 5
+          - Name: SS_ANTENPOU
+            Level: 5

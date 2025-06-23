@@ -1710,7 +1710,7 @@ OnTouch:
 		mes "Why don't we go back to Prontera?";
 		next;
 		mes "[Karian]";
-		mes "I can't get rid of the the memories that I was impressed with when I entered Prontera's gates.";
+		mes "I can't get rid of the memories that I was impressed with when I entered Prontera's gates.";
 		set job_min,22;
 		changequest 11153,11154;
 		donpcevent "Karian#cmd8::OnDisable";

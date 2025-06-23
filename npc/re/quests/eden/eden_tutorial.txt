@@ -390,7 +390,7 @@ moc_para01,34,178,3	script	Tutorial Instructor	904,{
 		mes "^006400SOCKET ENCHANT^000000!!";
 		next;
 		mes "[Tutorial Instructor]";
-		mes "There. The Enchant is done. You can't understand the the process by just watching me, so I'll let you look at the items themselves.";
+		mes "There. The Enchant is done. You can't understand the process by just watching me, so I'll let you look at the items themselves.";
 		delitem 909,10; //Jellopy
 		completequest 9171;
 		setquest 9172;
@@ -1061,7 +1061,7 @@ moc_para01,12,179,6	script	Battleground Master	419,{
 					switch(rand(1,3)) {
 					case 1:
 						mes "[Battleground Expert]";
-						mes "For starters, you have to pick either the side of [] Camp or [] Camp in order to to participate in Battleground.";
+						mes "For starters, you have to pick either the side of [] Camp or [] Camp in order to participate in Battleground.";
 						mes "What words go in the empty spaces of []?";
 						next;
 						if(select("Guillaume, Tierra:Rachel, KVM:Guillaume, Croix:Maroll, KVM") == 3)
@@ -1311,7 +1311,7 @@ moc_para01,28,167,3	script	Memorial Dungeon Expert	868,{
 						mes "If you ever want to go over things about ^006400Memorial Dungeon^000000, come talk to me any time.";
 						next;
 						mes "[Memorial Dungeon Expert]";
-						mes "Now, off you go to the the ^0000FFMap Expert^000000!";
+						mes "Now, off you go to the ^0000FFMap Expert^000000!";
 						completequest 4164;
 						setquest 4165;
 						getexp 2000,1000;

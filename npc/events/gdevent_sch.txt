@@ -81,7 +81,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 				mes "I am Morestone and I collect rare gems.";
 				next;
 				mes "[Morestone]";
-				mes "In my travels, I was told that there were alot of gems in Valfreyja and Nidhoggur, so I came down here.";
+				mes "In my travels, I was told that there were a lot of gems in Valfreyja and Nidhoggur, so I came down here.";
 				mes "But here, the soil is very hard to dig into. Fortunately, my ^3131FFPickaxe^000000 never lets me down!";
 				next;
 				select("Pickaxe!");
@@ -95,7 +95,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 				next;
 				select("Something strange??");
 				mes "[Morestone]";
-				mes "No, but it was worth quite alot.";
+				mes "No, but it was worth quite a lot.";
 				mes "But we did not have much time to celebrate. Suddenly, a monster appeared that stole my pickaxe.";
 				mes "His name was^3131FFKublin^000000!";
 				next;
@@ -214,7 +214,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 					mes "I am Morestone and I collect rare gems.";
 					next;
 					mes "[Morestone]";
-					mes "In my travels, I was told that there were alot of gems in Valfreyja and Nidhoggur, so I came down here.";
+					mes "In my travels, I was told that there were a lot of gems in Valfreyja and Nidhoggur, so I came down here.";
 					mes "But here, the soil is very hard to dig into. Fortunately, my ^3131FFPickaxe^000000 never lets me down!";
 					next;
 					select("Pickaxe!");
@@ -228,7 +228,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 					next;
 					select("Something strange??");
 					mes "[Morestone]";
-					mes "No, but it was worth quite alot.";
+					mes "No, but it was worth quite a lot.";
 					mes "But we did not have much time to celebrate. Suddenly, a monster appeared that stole my pickaxe.";
 					mes "His name was^3131FFKublin^000000!";
 					next;
@@ -357,7 +357,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 					mes "I am Morestone and I collect rare gems.";
 					next;
 					mes "[Morestone]";
-					mes "In my travels, I was told that there were alot of gems in Valfreyja and Nidhoggur, so I came down here.";
+					mes "In my travels, I was told that there were a lot of gems in Valfreyja and Nidhoggur, so I came down here.";
 					mes "But here, the soil is very hard to dig into. Fortunately, my ^3131FFPickaxe^000000 never lets me down!";
 					next;
 					select("Pickaxe!");
@@ -371,7 +371,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 					next;
 					select("Something strange??");
 					mes "[Morestone]";
-					mes "No, but it was worth quite alot.";
+					mes "No, but it was worth quite a lot.";
 					mes "But we did not have much time to celebrate. Suddenly, a monster appeared that stole my pickaxe.";
 					mes "His name was^3131FFKublin^000000!";
 					next;

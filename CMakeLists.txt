@@ -22,20 +22,13 @@
 #####################################################################
 
 
-#cmake_minimum_required( VERSION 2.8.4 )
-# Functional changes from 2.8.3 to 2.8.4:
-#   string(SUBSTRING) works with length -1 as "rest of string"
-#   changes to some CPack generators
-#   CYGWIN no longer defines WIN32
-#   CMP0017: Prefer files from the CMake module directory when including from there.
-# Update to 3.1 for CMAKE_CXX_STANDARD cross support definition
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
-cmake_minimum_required( VERSION 3.1 )
+cmake_minimum_required( VERSION 3.13 )
 project( rAthena )
 if( CYGWIN )
 	unset( WIN32 )
 endif()
-set(CMAKE_CXX_STANDARD 14) # C++14...
+set(CMAKE_CXX_STANDARD 17) # C++17...
 set(CMAKE_CXX_STANDARD_REQUIRED ON) #...is required...
 #set(CMAKE_CXX_EXTENSIONS OFF) #...without compiler extensions like gnu++11
 
@@ -236,7 +229,7 @@ option( ENABLE_WEB_SERVER "Build web-server (default=ON)" ON )
 #
 TEST_BIG_ENDIAN( BIG_ENDIAN )
 if( NOT DEFINED BIG_ENDIAN )
-	message( WARNING "unable to determine endianess, only LITTLE ENDIAN is supported" )
+	message( WARNING "unable to determine endianness, only LITTLE ENDIAN is supported" )
 elseif( BIG_ENDIAN )
 	message( FATAL_ERROR "bigendian is not supported" )
 endif()

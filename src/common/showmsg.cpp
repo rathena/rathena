@@ -3,8 +3,8 @@
 
 #include "showmsg.hpp"
 
-#include <stdlib.h> // atexit
-#include <time.h>
+#include <cstdlib> // atexit
+#include <ctime>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -45,10 +45,10 @@
 /// when redirecting output:
 /// if true prints escape sequences
 /// if false removes the escape sequences
-int stdout_with_ansisequence = 0;
+int32 stdout_with_ansisequence = 0;
 
-int msg_silent = 0; //Specifies how silent the console is.
-int console_msg_log = 0;//[Ind] msg error logging
+int32 msg_silent = 0; //Specifies how silent the console is.
+int32 console_msg_log = 0;//[Ind] msg error logging
 char console_log_filepath[32] = "./log/unknown.log";
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -61,8 +61,8 @@ char console_log_filepath[32] = "./log/unknown.log";
 		char s_[SBUF_SIZE];		\
 		StringBuf *d_;			\
 		char *v_;				\
-		int l_;					\
-	} buf ={"",NULL,NULL,0};	\
+		size_t l_;					\
+	} buf ={"",nullptr,nullptr,0};	\
 //define NEWBUF
 
 #define BUFVPRINTF(buf,fmt,args)						\
@@ -87,9 +87,9 @@ char console_log_filepath[32] = "./log/unknown.log";
 	if( buf.d_ )				\
 	{							\
 		StringBuf_Free(buf.d_);	\
-		buf.d_ = NULL;			\
+		buf.d_ = nullptr;			\
 	}							\
-	buf.v_ = NULL;				\
+	buf.v_ = nullptr;				\
 //define FREEBUF
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -190,7 +190,7 @@ Escape sequences for Select Character Set
 #define is_console(handle) (FILE_TYPE_CHAR==GetFileType(handle))
 
 ///////////////////////////////////////////////////////////////////////////////
-int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
+int32	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 {
 	/////////////////////////////////////////////////////////////////
 	/* XXX Two streams are being used. Disabled to avoid inconsistency [flaviojs]
@@ -210,13 +210,13 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 
 	if( !is_console(handle) && stdout_with_ansisequence )
 	{
-		WriteFile(handle, BUFVAL(tempbuf), BUFLEN(tempbuf), &written, 0);
+		WriteFile( handle, BUFVAL( tempbuf ), (DWORD)BUFLEN( tempbuf ), &written, 0 );
 		return 0;
 	}
 
 	// start with processing
 	p = BUFVAL(tempbuf);
-	while ((q = strchr(p, 0x1b)) != NULL)
+	while ((q = strchr(p, 0x1b)) != nullptr)
 	{	// find the escape character
 		if( 0==WriteConsole(handle, p, (DWORD)(q-p), &written, 0) ) // write up to the escape
 			WriteFile(handle, p, (DWORD)(q-p), &written, 0);
@@ -349,7 +349,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 					//    \033[1J - Clears the screen from start to cursor. The cursor position is unchanged.
 					//    \033[2J - Clears the screen and moves the cursor to the home position (line 1, column 1).
 					uint8 num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
-					int cnt;
+					int32 cnt;
 					DWORD tmp;
 					COORD origin = {0,0};
 					if(num==1)
@@ -377,7 +377,7 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 
 					uint8 num = (numbers[numpoint]>>4)*10+(numbers[numpoint]&0x0F);
 					COORD origin = {0,info.dwCursorPosition.Y}; //warning C4204
-					SHORT cnt;
+					int16 cnt;
 					DWORD tmp;
 					if(num==1)
 					{
@@ -507,9 +507,9 @@ int	VFPRINTF(HANDLE handle, const char *fmt, va_list argptr)
 	return 0;
 }
 
-int	FPRINTF(HANDLE handle, const char *fmt, ...)
+int32	FPRINTF(HANDLE handle, const char *fmt, ...)
 {
-	int ret;
+	int32 ret;
 	va_list argptr;
 	va_start(argptr, fmt);
 	ret = VFPRINTF(handle,fmt,argptr);
@@ -528,7 +528,7 @@ int	FPRINTF(HANDLE handle, const char *fmt, ...)
 #define is_console(file) (0!=isatty(fileno(file)))
 
 //vprintf_without_ansiformats
-int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
+int32	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 {
 	char *p, *q;
 	NEWBUF(tempbuf); // temporary buffer
@@ -547,9 +547,9 @@ int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 
 	// start with processing
 	p = BUFVAL(tempbuf);
-	while ((q = strchr(p, 0x1b)) != NULL)
+	while ((q = strchr(p, 0x1b)) != nullptr)
 	{	// find the escape character
-		fprintf(file, "%.*s", (int)(q-p), p); // write up to the escape
+		fprintf(file, "%.*s", (int32)(q-p), p); // write up to the escape
 		if( q[1]!='[' )
 		{	// write the escape char (whatever purpose it has) 
 			fprintf(file, "%.*s", 1, q);
@@ -643,9 +643,9 @@ int	VFPRINTF(FILE *file, const char *fmt, va_list argptr)
 	FREEBUF(tempbuf);
 	return 0;
 }
-int	FPRINTF(FILE *file, const char *fmt, ...)
+int32	FPRINTF(FILE *file, const char *fmt, ...)
 {
-	int ret;
+	int32 ret;
 	va_list argptr;
 	va_start(argptr, fmt);
 	ret = VFPRINTF(file,fmt,argptr);
@@ -662,7 +662,7 @@ int	FPRINTF(FILE *file, const char *fmt, ...)
 
 char timestamp_format[20] = ""; //For displaying Timestamps
 
-int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
+int32 _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 {
 	va_list apcopy;
 	char prefix[100];
@@ -688,7 +688,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		( flag == MSG_WARNING && console_msg_log&1 ) ||
 		( ( flag == MSG_ERROR || flag == MSG_SQL ) && console_msg_log&2 ) ||
 		( flag == MSG_DEBUG && console_msg_log&4 ) ) {//[Ind]
-		FILE *log = NULL;
+		FILE *log = nullptr;
 		if( (log = fopen(console_log_filepath, "a+")) ) {
 			char timestring[255];
 			time_t curtime;
@@ -720,7 +720,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 
 	if (timestamp_format[0] && flag != MSG_NONE)
 	{	//Display time format. [Skotlex]
-		time_t t = time(NULL);
+		time_t t = time(nullptr);
 		strftime(prefix, 80, timestamp_format, localtime(&t));
 	} else prefix[0]='\0';
 
@@ -775,7 +775,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 #if defined(DEBUGLOGMAP) || defined(DEBUGLOGCHAR) || defined(DEBUGLOGLOGIN)
 	if(strlen(DEBUGLOGPATH) > 0) {
 		fp=fopen(DEBUGLOGPATH,"a");
-		if (fp == NULL)	{
+		if (fp == nullptr)	{
 			FPRINTF(STDERR, CL_RED "[ERROR]" CL_RESET ": Could not open '" CL_WHITE "%s" CL_RESET "', access denied.\n", DEBUGLOGPATH);
 			FFLUSH(STDERR);
 		} else {
@@ -800,9 +800,9 @@ void ClearScreen(void)
 	ShowMessage(CL_CLS);	// to prevent empty string passed messages
 #endif
 }
-int _ShowMessage(enum msg_type flag, const char *string, ...)
+int32 _ShowMessage(enum msg_type flag, const char *string, ...)
 {
-	int ret;
+	int32 ret;
 	va_list ap;
 	va_start(ap, string);
 	ret = _vShowMessage(flag, string, ap);
