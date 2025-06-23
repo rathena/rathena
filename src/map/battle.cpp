@@ -2994,7 +2994,6 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 #ifdef RENEWAL
 			case ASC_BREAKER:
 #endif
-			case DK_DRAGONIC_PIERCE:
 			case GC_CROSSIMPACT:
 			case SHC_SAVAGE_IMPACT:
 			case SHC_ETERNAL_SLASH:
@@ -5853,7 +5852,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += -100 + 850 + 600 * skill_lv;
 			skillratio += 7 * sstatus->pow;
 
-			if (sc && sc->getSCE(SC_DRAGONIC_AURA))
+			if (sc != nullptr && sc->hasSCE(SC_DRAGONIC_AURA))
 				skillratio += 100 + 50 * skill_lv;
 
 			RE_LVL_DMOD(100);
