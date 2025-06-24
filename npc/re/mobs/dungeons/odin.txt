@@ -54,3 +54,17 @@ odin_tem03,0,0	monster	Valkyrie	1765,2,5400000,1800000
 odin_tem03,0,0,0,0	boss_monster	Valkyrie Randgris	1751,1,28800000,600000,1
 odin_tem03,0,0	monster	Blue Plant	1079,18,1800000,900000
 odin_tem03,0,0	monster	Shining Plant	1083,18,1800000,900000
+
+//==================================================
+// odin_past - Odin's past
+//==================================================
+odin_past,0,0	monster	Blue Plant	1079,18,1800000,900000
+odin_past,0,0	monster	Shining Plant	1083,18,1800000,900000
+odin_past,0,0	monster	Angelgolt	20604,40,5000
+odin_past,0,0	monster	Angelgolt	20605,60,5000
+odin_past,0,0	monster	Plasma Spectrum	20609,5,5000
+odin_past,0,0	monster	Arch Plasma	20608,5,5000
+odin_past,0,0	monster	Holy Frus	20606,45,5000
+odin_past,0,0	monster	Holy Skogul	20607,45,5000
+odin_past,0,0,0,0	boss_monster	Valkyrie Reginleif	20610,1,28800000,600000,1
+odin_past,0,0,0,0	boss_monster	Valkyrie Ingrid	20611,1,28800000,600000,1

@@ -105362,22 +105362,409 @@ Body:
       - Item: Abyss_Man_Card
         Rate: 1
         StealProtected: true
-#  - Id: 20604
-#    AegisName: ANGELGOLT
-#  - Id: 20605
-#    AegisName: ANGELGOLT2
-#  - Id: 20606
-#    AegisName: HOLY_FRUS
-#  - Id: 20607
-#    AegisName: HOLY_SKOGUL
-#  - Id: 20608
-#    AegisName: PLASMA_ARCH
-#  - Id: 20609
-#    AegisName: PLASMA_SPT
-#  - Id: 20610
-#    AegisName: REGINLEIF
-##  - Id: 20611
-#    AegisName: INGRID
+  - Id: 20604
+    AegisName: ANGELGOLT
+    Name: Angelgolt
+    Level: 196
+    Hp: 2634990
+    BaseExp: 179251
+    JobExp: 125476
+    Attack: 4067
+    Attack2: 889
+    Defense: 252
+    MagicDefense: 71
+    Str: 166
+    Agi: 153
+    Vit: 77
+    Int: 68
+    Dex: 162
+    Luk: 65
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 672
+    AttackMotion: 780
+    ClientAttackMotion: 384
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+    - Item: Angelic_Chain
+      Rate: 2
+    - Item: Soft_Feather
+      Rate: 300
+    - Item: Angel_Dream
+      Rate: 150
+    - Item: Stone_Of_Intelligence_
+      Rate: 15
+    - Item: Odin_itembox
+      Rate: 5
+    - Item: Shadowdecon_Ore
+      Rate: 150
+    - Item: Rune_Of_Darkness
+      Rate: 200
+    - Item: Angelgolt_Card
+      Rate: 1
+      StealProtected: true
+  - Id: 20605
+    AegisName: ANGELGOLT2
+    Name: Angelgolt
+    Level: 196
+    Hp: 2634476
+    BaseExp: 179216
+    JobExp: 125451
+    Attack: 3798
+    Attack2: 823
+    Defense: 246
+    MagicDefense: 71
+    Str: 155
+    Agi: 158
+    Vit: 74
+    Int: 63
+    Dex: 166
+    Luk: 41
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Angel
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 672
+    AttackMotion: 780
+    ClientAttackMotion: 384
+    DamageMotion: 480
+    Ai: 04
+    Drops:
+    - Item: Angelic_Chain
+      Rate: 2
+    - Item: Soft_Feather
+      Rate: 300
+    - Item: Angel_Dream
+      Rate: 150
+    - Item: Stone_Of_Intelligence_
+      Rate: 15
+    - Item: Odin_itembox
+      Rate: 5
+    - Item: Shadowdecon_Ore
+      Rate: 150
+    - Item: Rune_Of_Darkness
+      Rate: 200
+    - Item: Angelgolt_Card
+      Rate: 1
+      StealProtected: true
+  - Id: 20606
+    AegisName: HOLY_FRUS
+    Name: Holy Frus
+    Level: 201
+    Hp: 2700802
+    BaseExp: 183728
+    JobExp: 128610
+    Attack: 4422
+    Attack2: 1487
+    Defense: 239
+    MagicDefense: 76
+    Str: 176
+    Agi: 148
+    Vit: 69
+    Int: 111
+    Dex: 144
+    Luk: 87
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 130
+    AttackDelay: 480
+    AttackMotion: 576
+    ClientAttackMotion: 384
+    DamageMotion: 432
+    Ai: 21
+    Drops:
+    - Item: Angel_Dream
+      Rate: 300
+    - Item: Shard_Gold
+      Rate: 2
+    - Item: Brigan
+      Rate: 3000
+    - Item: Zelunium
+      Rate: 8
+    - Item: Odin_itembox
+      Rate: 10
+    - Item: Soft_Feather
+      Rate: 300
+    - Item: Rune_Of_Darkness
+      Rate: 200
+    - Item: Holy_Frus_Card
+      Rate: 1
+      StealProtected: true
+  - Id: 20607
+    AegisName: HOLY_SKOGUL
+    Name: Holy Skogul
+    Level: 202
+    Hp: 2714947
+    BaseExp: 184690
+    JobExp: 129283
+    Attack: 4520
+    Attack2: 1535
+    Defense: 247
+    MagicDefense: 77
+    Str: 179
+    Agi: 149
+    Vit: 73
+    Int: 114
+    Dex: 146
+    Luk: 88
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 150
+    AttackDelay: 720
+    AttackMotion: 1254
+    ClientAttackMotion: 384
+    DamageMotion: 480
+    Ai: 21
+    Drops:
+    - Item: Angel_Dream
+      Rate: 300
+    - Item: Shard_Blue
+      Rate: 2
+    - Item: Brigan
+      Rate: 3000
+    - Item: Shadowdecon
+      Rate: 8
+    - Item: Odin_itembox
+      Rate: 10
+    - Item: Soft_Feather
+      Rate: 300
+    - Item: Rune_Of_Darkness
+      Rate: 200
+    - Item: Holy_Skogul_Card
+      Rate: 1
+      StealProtected: true
+  - Id: 20608
+    AegisName: PLASMA_ARCH
+    Name: Arch Plasma
+    Level: 198
+    Hp: 7588702
+    BaseExp: 596255
+    JobExp: 417379
+    Attack: 3589
+    Attack2: 1426
+    Defense: 229
+    MagicDefense: 75
+    Str: 145
+    Agi: 133
+    Vit: 65
+    Int: 108
+    Dex: 151
+    Luk: 79
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Holy
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 768
+    AttackMotion: 1440
+    ClientAttackMotion: 384
+    DamageMotion: 576
+    Ai: 05
+    Drops:
+    - Item: Scell
+      Rate: 5000
+    - Item: Light_Granule
+      Rate: 1250
+    - Item: Soft_Feather
+      Rate: 4000
+    - Item: Crystal_Jewel_
+      Rate: 125
+    - Item: Odin_itembox
+      Rate: 300
+    - Item: Old_Violet_Box
+      Rate: 125
+    - Item: Shadowdecon_Ore
+      Rate: 150
+    - Item: Plasma_Arch_Card
+      Rate: 1
+      StealProtected: true
+  - Id: 20609
+    AegisName: PLASMA_SPT
+    Name: Plasma Spectrum
+    Level: 197
+    Hp: 7549720
+    BaseExp: 593192
+    JobExp: 415234
+    Attack: 3669
+    Attack2: 1300
+    Defense: 225
+    MagicDefense: 74
+    Str: 149
+    Agi: 133
+    Vit: 63
+    Int: 99
+    Dex: 148
+    Luk: 78
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 4
+    WalkSpeed: 250
+    AttackDelay: 720
+    AttackMotion: 1056
+    ClientAttackMotion: 384
+    DamageMotion: 360
+    Ai: 05
+    Drops:
+    - Item: Scell
+      Rate: 5000
+    - Item: Light_Granule
+      Rate: 1250
+    - Item: Soft_Feather
+      Rate: 4000
+    - Item: Crystal_Jewel_
+      Rate: 125
+    - Item: Odin_itembox
+      Rate: 300
+    - Item: Old_Violet_Box
+      Rate: 125
+    - Item: Zelunium_Ore
+      Rate: 150
+    - Item: Plasma_Spt_Card
+      Rate: 1
+      StealProtected: true
+  - Id: 20610
+    AegisName: REGINLEIF
+    Name: Valkyrie Reginleif
+    Level: 207
+    Hp: 79619337
+    BaseExp: 5700403
+    JobExp: 3990282
+    MvpExp: 5700403
+    Attack: 7711
+    Attack2: 2029
+    Defense: 506
+    MagicDefense: 94
+    Str: 281
+    Agi: 183
+    Vit: 147
+    Int: 298
+    Dex: 201
+    Luk: 101
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Fire
+    ElementLevel: 4
+    WalkSpeed: 120
+    AttackDelay: 576
+    AttackMotion: 576
+    ClientAttackMotion: 384
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Angel_Dream
+        Rate: 5000
+      - Item: Odin_itembox
+        Rate: 6000
+    Drops:
+    - Item: Angel_Dream
+      Rate: 7000
+    - Item: Rune_Of_Darkness
+      Rate: 10000
+    - Item: Soft_Feather
+      Rate: 10000
+    - Item: Zelunium
+      Rate: 50
+    - Item: Valhalla_Flower
+      Rate: 5000
+    - Item: Cassock_Boots
+      Rate: 1000
+    - Item: Shadowdecon
+      Rate: 50
+    - Item: Reginleif_Card
+      Rate: 1
+      StealProtected: true
+  - Id: 20611
+    AegisName: INGRID
+    Name: Valkyrie Ingrid
+    Level: 207
+    Hp: 79577937
+    BaseExp: 5684138
+    JobExp: 3978897
+    MvpExp: 5684138
+    Attack: 7685
+    Attack2: 3767
+    Defense: 374
+    MagicDefense: 92
+    Str: 297
+    Agi: 185
+    Vit: 135
+    Int: 273
+    Dex: 205
+    Luk: 99
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Water
+    ElementLevel: 4
+    WalkSpeed: 130
+    AttackDelay: 576
+    AttackMotion: 576
+    ClientAttackMotion: 384
+    DamageMotion: 480
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Angel_Dream
+        Rate: 5000
+      - Item: Odin_itembox
+        Rate: 6000
+    Drops:
+    - Item: Angel_Dream
+      Rate: 7000
+    - Item: Rune_Of_Darkness
+      Rate: 10000
+    - Item: Soft_Feather
+      Rate: 10000
+    - Item: Zelunium
+      Rate: 50
+    - Item: Valhalla_Flower
+      Rate: 5000
+    - Item: Cassock_Manteau
+      Rate: 1000
+    - Item: Shadowdecon
+      Rate: 50
+    - Item: Ingrid_Card
+      Rate: 1
+      StealProtected: true
+
 ##  - Id: 20612
 #    AegisName: FERUS_P
 #  - Id: 20613

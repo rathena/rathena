@@ -25,3 +25,4 @@ odin_tem02,153,349,0	warp	odin05	1,1,odin_tem03,120,54
 odin_tem03,121,49,0	warp	odin06	1,1,odin_tem02,154,345
 odin_tem02,261,377,0	warp	odin07	1,1,odin_tem03,247,40
 odin_tem03,247,34,0	warp	odin08	1,1,odin_tem02,263,372
+odin_tem03,279,234,0	warp	odin09	1,1,odin_past,290,230
