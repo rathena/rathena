@@ -32,7 +32,11 @@ ba_maison,238,44,5	script	Harad#jh_ba1	4_EP17_BASIC_B,{
 		next;
 		mes "[Harad]";
 		mes "Thank you for your understanding.";
-		mes "Please take enough rest and come back again after dawn!";
+		mes "Please take enough rest and come back again after dawn!";	
+		next;
+		mes "[Harad]";
+		mes "Oh wait, the time it up, you can try again.";
+		erasequest 16439;
 		close3;
 	case 2:
 		erasequest 16439;
@@ -237,6 +241,19 @@ OnStart:
 		monster 'map_ghg$,227,96,"--ja--",20669,1, .@event$;
 		monster 'map_ghg$,226,83,"--ja--",20669,1, .@event$;
 		monster 'map_ghg$,244,59,"--ja--",20669,1, .@event$;
+		
+		monster 'map_ghg$,247,89,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,257,90,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,228,89,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,227,93,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,238,54,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,245,52,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,251,89,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,253,92,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,244,53,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,227,96,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,226,83,"--ja--",20671,5, .@event$;
+		monster 'map_ghg$,244,59,"--ja--",20671,5, .@event$;
 	}
 	else {
 		monster 'map_ghg$,257,65,"--ja--","MD_ARIES_H",1, .@event$;
