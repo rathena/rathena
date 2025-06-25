@@ -3701,6 +3701,7 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 		case WM_REVERBERATION:
 		case TR_METALIC_FURY:
 		case TR_SOUNDBLEND:
+		case TR_RHYTHMICAL_WAVE:
 			if (sd)
 				element = sd->bonus.arrow_ele;
 			break;
@@ -9076,6 +9077,16 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
 								skillratio += skillratio * 50 / 100;
 						}
+						break;
+					case TR_RHYTHMICAL_WAVE:
+						skillratio += -100 + 250 + 3650 * skill_lv;
+						skillratio += pc_checkskill(sd, TR_STAGE_MANNER) * 25; // !TODO: check Stage Manner ratio
+						skillratio += 5 * sstatus->spl;	// !TODO: check SPL ratio
+
+						if (sc != nullptr && sc->getSCE(SC_MYSTIC_SYMPHONY) != nullptr)
+							skillratio += 200 + 1000 * skill_lv;
+
+						RE_LVL_DMOD(100);
 						break;
 					case EM_DIAMOND_STORM:
 						skillratio += -100 + 500 + 2400 * skill_lv;

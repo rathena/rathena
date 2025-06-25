@@ -45722,6 +45722,50 @@ Body:
           Amount: 111
         - Level: 5
           Amount: 115
+  - Id: 6521
+    Name: TR_RHYTHMICAL_WAVE
+    Description: Rhythmical Wave
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 5
+    GiveAp: 3
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 4
+    CastCancel: true
+    Cooldown: 1500
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 56
+        - Level: 2
+          Amount: 62
+        - Level: 3
+          Amount: 68
+        - Level: 4
+          Amount: 74
+        - Level: 5
+          Amount: 80
+      Weapon:
+        Musical: true
+        Whip: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 1
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch

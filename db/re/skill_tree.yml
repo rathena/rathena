@@ -7848,6 +7848,11 @@ Body:
         Requires:
           - Name: TR_AIN_RHAPSODY
             Level: 1
+      - Name: TR_RHYTHMICAL_WAVE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_METALIC_FURY
+            Level: 3
   - Job: Trouvere
     Inherit:
       Novice: true
@@ -7932,6 +7937,11 @@ Body:
         Requires:
           - Name: TR_AIN_RHAPSODY
             Level: 1
+      - Name: TR_RHYTHMICAL_WAVE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_METALIC_FURY
+            Level: 3
   - Job: Windhawk2
     Inherit:
       Novice: true
