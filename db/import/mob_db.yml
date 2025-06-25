@@ -454,3 +454,2187 @@ Body:
       IgnoreMelee: true
       IgnoreMisc: true
       IgnoreRanged: true
+  - Id: 1113
+    AegisName: DROPS
+    Name: Drops
+    Drops:
+      - Item: T_Str1_Armor_S
+        Rate: 80
+  - Id: 1365
+    AegisName: APOCALIPS
+    Name: Apocalypse
+    Drops:
+      - Item: T_Dex1_Weapon_S
+        Rate: 80
+      - Item: S_Hallowed_Shield
+        Rate: 80
+  - Id: 2317
+    AegisName: BANGUNGOT_1
+    Name: Bangungot
+    Drops:
+      - Item: T_Luk1_Shield_S
+        Rate: 80
+  - Id: 1614
+    AegisName: MINERAL
+    Name: Mineral
+    Drops:
+      - Item: T_Agi1_Shoes_S
+        Rate: 80
+  - Id: 1416
+    AegisName: WICKED_NYMPH
+    Name: Evil Nymph
+    Drops:
+      - Item: T_Vit1_Acc_R_S
+        Rate: 80
+  - Id: 1494
+    AegisName: KIND_OF_BEETLE
+    Name: Beetle King
+    Drops:
+      - Item: T_Int1_Acc_L_S
+        Rate: 80
+  - Id: 1584
+    AegisName: TAMRUAN
+    Name: Tamruan
+    Drops:
+      - Item: T_Str2_Armor_S
+        Rate: 80
+  - Id: 2085
+    AegisName: ANTLER_SCARABA
+    Name: Antler Scaraba
+    Drops:
+      - Item: T_Dex2_Weapon_S
+        Rate: 80
+  - Id: 3452
+    AegisName: ZOMBIE_GUARD
+    Name: Zombie Guard
+    Drops:
+      - Item: T_Luk2_Shield_S
+        Rate: 80
+  - Id: 1654
+    AegisName: ARMAIA
+    Name: Armeyer Dinze
+    Drops:
+      - Item: T_Agi2_Shoes_S
+        Rate: 80
+  - Id: 1670
+    AegisName: DIMIK_1
+    Name: Dimik
+    Drops:
+      - Item: T_Vit2_Acc_R_S
+        Rate: 80
+  - Id: 1165
+    AegisName: SAND_MAN
+    Name: Sandman
+    Drops:
+      - Item: T_Int2_Acc_L_S
+        Rate: 80
+  - Id: 1101
+    AegisName: BAPHOMET_
+    Name: Baphomet Jr.
+    Drops:
+      - Item: S_Promotion_Weapon
+        Rate: 80
+  - Id: 1047
+    AegisName: PECOPECO_EGG
+    Name: Peco Peco Egg
+    Drops:
+      - Item: S_Promotion_Armor
+        Rate: 80
+  - Id: 1191
+    AegisName: MIMIC
+    Name: Mimic
+    Drops:
+      - Item: S_Promotion_Shoes
+        Rate: 80
+  - Id: 1367
+    AegisName: BLAZZER
+    Name: Blazer
+    Drops:
+      - Item: S_Promotion_Shield
+        Rate: 80
+  - Id: 1499
+    AegisName: WOOTAN_FIGHTER
+    Name: Wootan Fighter
+    Drops:
+      - Item: S_Promotion_Earring
+        Rate: 80
+  - Id: 1122
+    AegisName: GOBLIN_1
+    Name: Goblin
+    Drops:
+      - Item: S_Promotion_Pendant
+        Rate: 80
+  - Id: 3249
+    AegisName: EXPLORATION_ROVER_T
+    Name: Explorer Robot Turbo
+    Drops:
+      - Item: S_Physical_Earring
+        Rate: 80
+  - Id: 1207
+    AegisName: STING
+    Name: Sting
+    Drops:
+      - Item: S_Physical_Weapon
+        Rate: 80
+  - Id: 1687
+    AegisName: GREEN_IGUANA
+    Name: Grove
+    Drops:
+      - Item: S_Physical_Pendant
+        Rate: 80
+  - Id: 1678
+    AegisName: VENATU_3
+    Name: Venatu
+    Drops:
+      - Item: S_Magical_Earring
+        Rate: 80
+  - Id: 1117
+    AegisName: EVIL_DRUID
+    Name: Evil Druid
+    Drops:
+      - Item: S_Magical_Weapon
+        Rate: 80
+  - Id: 1144
+    AegisName: MARSE
+    Name: Marse
+    Drops:
+      - Item: S_Magical_Pendant
+        Rate: 80
+  - Id: 1697
+    AegisName: PLASMA_B
+    Name: Plasma
+    Drops:
+      - Item: S_Breezy_Armor
+        Rate: 80
+  - Id: 1256
+    AegisName: PEST
+    Name: Pest
+    Drops:
+      - Item: S_Champion_Shoes
+        Rate: 80
+  - Id: 1169
+    AegisName: SKEL_WORKER
+    Name: Skeleton Worker
+    Drops:
+      - Item: S_Athena_Shield
+        Rate: 80
+  - Id: 1208
+    AegisName: WANDER_MAN
+    Name: Wanderer
+    Drops:
+      - Item: S_Immune_Armor
+        Rate: 80
+  - Id: 1045
+    AegisName: MARC
+    Name: Marc
+    Drops:
+      - Item: S_Hard_Armor
+        Rate: 80
+  - Id: 1255
+    AegisName: NERAID
+    Name: Nereid
+    Drops:
+      - Item: S_Ancient_Armor
+        Rate: 80
+  - Id: 1273
+    AegisName: ORC_LADY
+    Name: Orc Lady
+    Drops:
+      - Item: S_Critical_Armor
+        Rate: 80
+  - Id: 2368
+    AegisName: LICHTERN_Y
+    Name: Lichtern
+    Drops:
+      - Item: S_Kingbird_Weapon
+        Rate: 80
+  - Id: 1103
+    AegisName: CARAMEL
+    Name: Caramel
+    Drops:
+      - Item: S_Cri_Hit_Weapon
+        Rate: 80
+  - Id: 1012
+    AegisName: RODA_FROG
+    Name: Roda Frog
+    Drops:
+      - Item: S_Healing_Weapon
+        Rate: 80
+  - Id: 1155
+    AegisName: PETIT
+    Name: Petite
+    Drops:
+      - Item: S_Lucky_Weapon
+        Rate: 80
+  - Id: 2366
+    AegisName: ANTIQUE_BOOK
+    Name: Antique Book
+    Drops:
+      - Item: S_Power_Earring
+        Rate: 80
+      - Item: S_Geist_Armor
+        Rate: 80
+  - Id: 1125
+    AegisName: GOBLIN_4
+    Name: Goblin
+    Drops:
+      - Item: S_Int_Pendant
+        Rate: 80
+  - Id: 1274
+    AegisName: MEGALITH
+    Name: Megalith
+    Drops:
+      - Item: S_Dexterous_Armor
+        Rate: 80
+  - Id: 1194
+    AegisName: ARCLOUSE
+    Name: Arclouze
+    Drops:
+      - Item: S_Vital_Shoes
+        Rate: 80
+  - Id: 1048
+    AegisName: THIEF_BUG_EGG
+    Name: Thief Bug Egg
+    Drops:
+      - Item: S_Athletic_Shield
+        Rate: 80
+  - Id: 1216
+    AegisName: PENOMENA
+    Name: Penomena
+    Drops:
+      - Item: S_Lucky_Armor
+        Rate: 80
+  - Id: 1628
+    AegisName: MOLE
+    Name: Holden
+    Drops:
+      - Item: S_Power_Pendant
+        Rate: 80
+  - Id: 2226
+    AegisName: ALPHOCCIO
+    Name: Alphoccio
+    Drops:
+      - Item: S_Int_Earring
+        Rate: 80
+      - Item: S_Insomniac_Shoes
+        Rate: 80
+  - Id: 1206
+    AegisName: ANOLIAN
+    Name: Anolian
+    Drops:
+      - Item: S_Dexterous_Weapon
+        Rate: 80
+  - Id: 1679
+    AegisName: VENATU_4
+    Name: Venatu
+    Drops:
+      - Item: S_Vital_Shield
+        Rate: 80
+  - Id: 1401
+    AegisName: SHINOBI
+    Name: Shinobi
+    Drops:
+      - Item: S_Athletic_Shoes
+        Rate: 80
+  - Id: 1013
+    AegisName: WOLF
+    Name: Wolf
+    Drops:
+      - Item: S_Resist_Spell_Pendant
+        Rate: 80
+  - Id: 1180
+    AegisName: NINE_TAIL
+    Name: Nine Tail
+    Drops:
+      - Item: S_Rapid_Pendant
+        Rate: 80
+  - Id: 1380
+    AegisName: DRILLER
+    Name: Driller
+    Drops:
+      - Item: S_Caster_Pendant
+        Rate: 80
+  - Id: 1129
+    AegisName: HORONG
+    Name: Horong
+    Drops:
+      - Item: S_Hard_Earring
+        Rate: 80
+  - Id: 1069
+    AegisName: SWORD_FISH
+    Name: Swordfish
+    Drops:
+      - Item: S_Wise_Earring
+        Rate: 80
+  - Id: 1676
+    AegisName: VENATU_1
+    Name: Venatu
+    Drops:
+      - Item: S_Athena_Earring
+        Rate: 80
+  - Id: 1199
+    AegisName: PUNK
+    Name: Punk
+    Drops:
+      - Item: S_Cranial_Shield
+        Rate: 80
+  - Id: 3248
+    AegisName: REPAIR_ROBOT_T
+    Name: Repair Robot Turbo
+    Drops:
+      - Item: S_Safeguard_Shield
+        Rate: 80
+  - Id: 3503
+    AegisName: DR_BASILISK2
+    Name: Combat Basilisk
+    Drops:
+      - Item: S_Brutal_Shield
+        Rate: 80
+  - Id: 1366
+    AegisName: LAVA_GOLEM
+    Name: Lava Golem
+    Drops:
+      - Item: S_Gargantua_Shield
+        Rate: 80
+  - Id: 1156
+    AegisName: PETIT_
+    Name: Petite
+    Drops:
+      - Item: S_Homers_Shield
+        Rate: 80
+  - Id: 1498
+    AegisName: WOOTAN_SHOOTER
+    Name: Wootan Shooter
+    Drops:
+      - Item: S_Dragoon_Shield
+        Rate: 80
+  - Id: 1111
+    AegisName: DRAINLIAR
+    Name: Drainliar
+    Drops:
+      - Item: S_Satanic_Shield
+        Rate: 80
+  - Id: 1053
+    AegisName: THIEF_BUG_
+    Name: Thief Bug Female
+    Drops:
+      - Item: S_Flameguard_Shield
+        Rate: 80
+  - Id: 1248
+    AegisName: CRUISER
+    Name: Cruiser
+    Drops:
+      - Item: S_Requiem_Shield
+        Rate: 80
+  - Id: 2221
+    AegisName: RANDEL
+    Name: Randel
+    Drops:
+      - Item: S_Cadi_Shield
+        Rate: 80
+  - Id: 1311
+    AegisName: GULLINBURSTI
+    Name: Gullinbursti
+    Drops:
+      - Item: S_Bloody_Shoes
+        Rate: 80
+      - Item: S_Elegant_Pendent
+        Rate: 80
+  - Id: 1001
+    AegisName: SCORPION
+    Name: Scorpion
+    Drops:
+      - Item: S_Liberation_Shoes
+        Rate: 80
+  - Id: 1095
+    AegisName: ANDRE
+    Name: Andre
+    Drops:
+      - Item: S_Chemical_Shoes
+        Rate: 80
+  - Id: 1413
+    AegisName: WILD_GINSENG
+    Name: Hermit Plant
+    Drops:
+      - Item: S_Clamorous_Shoes
+        Rate: 80
+  - Id: 1617
+    AegisName: WASTE_STOVE
+    Name: Old Stove
+    Drops:
+      - Item: S_Insecticide_Shoes
+        Rate: 80
+  - Id: 1994
+    AegisName: LUCIOLA_VESPA
+    Name: Luciola Vespa
+    Drops:
+      - Item: S_Fisher_Shoes
+        Rate: 80
+  - Id: 1402
+    AegisName: POISON_TOAD
+    Name: Poisonous Toad
+    Drops:
+      - Item: S_Seraphim_Shoes
+        Rate: 80
+  - Id: 1736
+    AegisName: ALIOT
+    Name: Aliot
+    Drops:
+      - Item: S_Beholder_Shoes
+        Rate: 80
+  - Id: 1315
+    AegisName: ASSULTER
+    Name: Assaulter
+    Drops:
+      - Item: S_Divine_Shoes
+        Rate: 80
+  - Id: 1044
+    AegisName: OBEAUNE
+    Name: Obeaune
+    Drops:
+      - Item: S_Dragoon_Shoes
+        Rate: 80
+  - Id: 1198
+    AegisName: DARK_PRIEST
+    Name: Dark Priest
+    Drops:
+      - Item: S_Big_Armor
+        Rate: 80
+  - Id: 1405
+    AegisName: TENGU
+    Name: Tengu
+    Drops:
+      - Item: S_Medium_Armor
+        Rate: 80
+  - Id: 1107
+    AegisName: DESERT_WOLF_B
+    Name: Baby Desert Wolf
+    Drops:
+      - Item: S_Small_Armor
+        Rate: 80
+  - Id: 1213
+    AegisName: HIGH_ORC
+    Name: High Orc
+    Drops:
+      - Item: S_Big_Weapon
+        Rate: 80
+  - Id: 1026
+    AegisName: MUNAK
+    Name: Munak
+    Drops:
+      - Item: S_Medium_Weapon
+        Rate: 80
+  - Id: 1836
+    AegisName: MAGMARING
+    Name: Magmaring
+    Drops:
+      - Item: S_Small_Weapon
+        Rate: 80
+  - Id: 1267
+    AegisName: CARAT
+    Name: Carat
+    Drops:
+      - Item: S_Spiritual_Weapon
+        Rate: 80
+  - Id: 1211
+    AegisName: BRILIGHT
+    Name: Brilight
+    Drops:
+      - Item: S_Spiritual_Earring
+        Rate: 80
+  - Id: 1264
+    AegisName: MERMAN
+    Name: Merman
+    Drops:
+      - Item: S_Spiritual_Pendent
+        Rate: 80
+  - Id: 1029
+    AegisName: ISIS
+    Name: Isis
+    Drops:
+      - Item: S_Malicious_Armor
+        Rate: 80
+  - Id: 1495
+    AegisName: STONE_SHOOTER
+    Name: Stone Shooter
+    Drops:
+      - Item: S_Malicious_Shoes
+        Rate: 80
+  - Id: 1586
+    AegisName: LEAF_CAT
+    Name: Leaf Cat
+    Drops:
+      - Item: S_Malicious_Shield
+        Rate: 80
+  - Id: 1004
+    AegisName: HORNET
+    Name: Hornet
+    Drops:
+      - Item: S_Gemstone_Armor
+        Rate: 80
+  - Id: 1316
+    AegisName: SOLIDER
+    Name: Solider
+    Drops:
+      - Item: S_Gemstone_Shoes
+        Rate: 80
+  - Id: 1105
+    AegisName: DENIRO
+    Name: Deniro
+    Drops:
+      - Item: S_Gemstone_Shield
+        Rate: 80
+  - Id: 1772
+    AegisName: ISILLA
+    Name: Isilla
+    Drops:
+      - Item: S_Gemstone_Weapon
+        Rate: 80
+  - Id: 2480
+    AegisName: NG_EVIL_DRUID
+    Name: Nightmare Evil Druid
+    Drops:
+      - Item: S_Gemstone_Earring
+        Rate: 80
+  - Id: 1638
+    AegisName: SHECIL
+    Name: Cecil Damon
+    Drops:
+      - Item: S_Gemstone_Pendent
+        Rate: 80
+  - Id: 1783
+    AegisName: GALION
+    Name: Galion
+    Drops:
+      - Item: S_Stability_Shield
+        Rate: 80
+  - Id: 1291
+    AegisName: WRAITH_DEAD
+    Name: Wraith Dead
+    Drops:
+      - Item: S_Plasterer's_Armor
+        Rate: 80
+  - Id: 1376
+    AegisName: HARPY
+    Name: Harpy
+    Drops:
+      - Item: S_Plasterer's_Shoes
+        Rate: 80
+  - Id: 3506
+    AegisName: DR_MANDRAGORA
+    Name: Jungle Madragora
+    Drops:
+      - Item: S_Insomniac_Armor
+        Rate: 80
+  - Id: 1292
+    AegisName: MINI_DEMON
+    Name: Mini Demon
+    Drops:
+      - Item: S_Peerless_Armor
+        Rate: 80
+  - Id: 1372
+    AegisName: GOAT
+    Name: Goat
+    Drops:
+      - Item: S_Peerless_Shoes
+        Rate: 80
+  - Id: 1192
+    AegisName: WRAITH
+    Name: Wraith
+    Drops:
+      - Item: S_Adurate_Armor
+        Rate: 80
+  - Id: 1131
+    AegisName: JOKER
+    Name: Joker
+    Drops:
+      - Item: S_Adurate_Shoes
+        Rate: 80
+  - Id: 1065
+    AegisName: STROUF
+    Name: Strouf
+    Drops:
+      - Item: Unfreez_Weapon_S
+        Rate: 80
+  - Id: 1974
+    AegisName: BANSHEE_MASTER
+    Name: Banshee Master
+    Drops:
+      - Item: Unfreeze_Earing_S
+        Rate: 80
+  - Id: 1279
+    AegisName: TRI_JOINT
+    Name: Tri Joint
+    Drops:
+      - Item: Unfreeze_Pendent_S
+        Rate: 80
+  - Id: 1633
+    AegisName: BEHOLDER
+    Name: Beholder
+    Drops:
+      - Item: Vitality_Earing_S
+        Rate: 80
+  - Id: 1306
+    AegisName: LEIB_OLMAI
+    Name: Leib Olmai
+    Drops:
+      - Item: Vitality_Pendant_S
+        Rate: 80
+      - Item: S_M_DragonVib_Armor
+        Rate: 80
+  - Id: 2478
+    AegisName: NG_RIDEWORD
+    Name: Nightmare Rideword
+    Drops:
+      - Item: S_Neutral_Weapon
+        Rate: 80
+  - Id: 1104
+    AegisName: COCO
+    Name: Coco
+    Drops:
+      - Item: S_Neutral_Earring
+        Rate: 80
+  - Id: 1099
+    AegisName: ARGIOPE
+    Name: Argiope
+    Drops:
+      - Item: S_Neutral_Pendent
+        Rate: 80
+  - Id: 1135
+    AegisName: KOBOLD_3
+    Name: Kobold
+    Drops:
+      - Item: S_Curse_Lift_Earring
+        Rate: 80
+  - Id: 1383
+    AegisName: EXPLOSION
+    Name: Explosion
+    Drops:
+      - Item: S_Curse_Lift_Pendent
+        Rate: 80
+  - Id: 1987
+    AegisName: CENTIPEDE
+    Name: Centipede
+    Drops:
+      - Item: S_Caster_earring
+        Rate: 80
+      - Item: S_Caster_Armor
+        Rate: 80
+  - Id: 1829
+    AegisName: SWORD_GUARDIAN
+    Name: Sword Guardian
+    Drops:
+      - Item: S_Caster_Weapon
+        Rate: 80
+  - Id: 1410
+    AegisName: LIVE_PEACH_TREE
+    Name: Enchanted Peach Tree
+    Drops:
+      - Item: S_Spell_Flow_Shoes
+        Rate: 80
+  - Id: 2477
+    AegisName: NG_WANDER_MAN
+    Name: Nightmare Wander Man
+    Drops:
+      - Item: S_Spell_Flow_Armor
+        Rate: 80
+  - Id: 1167
+    AegisName: SAVAGE_BABE
+    Name: Savage Babe
+    Drops:
+      - Item: S_Spell_Flow_Shield
+        Rate: 80
+  - Id: 1277
+    AegisName: GREATEST_GENERAL
+    Name: Greatest General
+    Drops:
+      - Item: S_Greed_Armor
+        Rate: 80
+  - Id: 1692
+    AegisName: BREEZE
+    Name: Breeze
+    Drops:
+      - Item: S_Greed_Shoes
+        Rate: 80
+  - Id: 1219
+    AegisName: KNIGHT_OF_ABYSS
+    Name: Abysmal Knight
+    Drops:
+      - Item: S_Greed_Shield
+        Rate: 80
+  - Id: 2227
+    AegisName: TRENTINI
+    Name: Trentini
+    Drops:
+      - Item: S_Greed_Weapon
+        Rate: 80
+  - Id: 1780
+    AegisName: MUSCIPULAR
+    Name: Muscipular
+    Drops:
+      - Item: S_Greed_Earring
+        Rate: 80
+  - Id: 1024
+    AegisName: WORM_TAIL
+    Name: Wormtail
+    Drops:
+      - Item: S_Greed_Pendant
+        Rate: 80
+  - Id: 1041
+    AegisName: MUMMY
+    Name: Mummy
+    Drops:
+      - Item: S_Heal_Armor
+        Rate: 80
+  - Id: 1668
+    AegisName: ARCHDAM
+    Name: Archdam
+    Drops:
+      - Item: S_Heal_Shoes
+        Rate: 80
+  - Id: 1721
+    AegisName: DRAGON_EGG
+    Name: Dragon Egg
+    Drops:
+      - Item: S_Heal_Shield
+        Rate: 80
+  - Id: 1257
+    AegisName: INJUSTICE
+    Name: Injustice
+    Drops:
+      - Item: S_Heal_Weapon
+        Rate: 80
+  - Id: 1506
+    AegisName: DISGUISE
+    Name: Disguise
+    Drops:
+      - Item: S_Heal_Earring
+        Rate: 80
+  - Id: 2137
+    AegisName: MIMING
+    Name: Miming
+    Drops:
+      - Item: S_Heal_Pendant
+        Rate: 80
+  - Id: 1057
+    AegisName: YOYO
+    Name: Yoyo
+    Drops:
+      - Item: S_Hiding_Armor
+        Rate: 80
+  - Id: 1390
+    AegisName: VIOLY
+    Name: Violy
+    Drops:
+      - Item: S_Hiding_Shoes
+        Rate: 80
+  - Id: 1504
+    AegisName: DULLAHAN
+    Name: Dullahan
+    Drops:
+      - Item: S_Hiding_Shield
+        Rate: 80
+  - Id: 1778
+    AegisName: GAZETI
+    Name: Gazeti
+    Drops:
+      - Item: S_Hiding_Weapon
+        Rate: 80
+  - Id: 1695
+    AegisName: PLASMA_G
+    Name: Plasma
+    Drops:
+      - Item: S_Hiding_Earring
+        Rate: 80
+  - Id: 1314
+    AegisName: PERMETER
+    Name: Permeter
+    Drops:
+      - Item: S_Hiding_Pendant
+        Rate: 80
+  - Id: 2136
+    AegisName: LITTLE_FATUM
+    Name: Little Fatum
+    Drops:
+      - Item: S_Cloaking_Armor
+        Rate: 80
+  - Id: 1094
+    AegisName: AMBERNITE
+    Name: Ambernite
+    Drops:
+      - Item: S_Cloaking_Shoes
+        Rate: 80
+  - Id: 1637
+    AegisName: MAGALETA
+    Name: Margaretha Sorin
+    Drops:
+      - Item: S_Cloaking_Shield
+        Rate: 80
+  - Id: 1371
+    AegisName: FAKE_ANGEL
+    Name: False Angel
+    Drops:
+      - Item: S_Cloaking_Weapon
+        Rate: 80
+  - Id: 1098
+    AegisName: ANUBIS
+    Name: Anubis
+    Drops:
+      - Item: S_Cloaking_Earring
+        Rate: 80
+  - Id: 1997
+    AegisName: G_TATACHO
+    Name: Tatacho
+    Drops:
+      - Item: S_Cloaking_Pendant
+        Rate: 80
+  - Id: 1587
+    AegisName: KRABEN
+    Name: Kraben
+    Drops:
+      - Item: S_Teleport_Armor
+        Rate: 80
+  - Id: 1193
+    AegisName: ALARM
+    Name: Alarm
+    Drops:
+      - Item: S_Teleport_Shoes
+        Rate: 80
+  - Id: 1266
+    AegisName: ASTER
+    Name: Aster
+    Drops:
+      - Item: S_Teleport_Shield
+        Rate: 80
+  - Id: 1699
+    AegisName: ANCIENT_MIMIC
+    Name: Ancient Mimic
+    Drops:
+      - Item: S_Teleport_Weapon
+        Rate: 80
+  - Id: 1493
+    AegisName: DRYAD
+    Name: Dryad
+    Drops:
+      - Item: S_Teleport_Earring
+        Rate: 80
+  - Id: 1116
+    AegisName: EGGYRA
+    Name: Eggyra
+    Drops:
+      - Item: S_Teleport_Pendant
+        Rate: 80
+  - Id: 1128
+    AegisName: HORN
+    Name: Horn
+    Drops:
+      - Item: S_Steal_Armor
+        Rate: 80
+  - Id: 1290
+    AegisName: SKELETON_GENERAL
+    Name: Skeleton General
+    Drops:
+      - Item: S_Steal_Shoes
+        Rate: 80
+  - Id: 1031
+    AegisName: POPORING
+    Name: Poporing
+    Drops:
+      - Item: S_Steal_Shield
+        Rate: 80
+  - Id: 2363
+    AegisName: MENBLATT
+    Name: Menblatt
+    Drops:
+      - Item: S_Steal_Weapon
+        Rate: 80
+  - Id: 1197
+    AegisName: ZOMBIE_PRISONER
+    Name: Zombie Prisoner
+    Drops:
+      - Item: S_Steal_Earring
+        Rate: 80
+  - Id: 1178
+    AegisName: ZEROM
+    Name: Zerom
+    Drops:
+      - Item: S_Steal_Pendant
+        Rate: 80
+  - Id: 1133
+    AegisName: KOBOLD_1
+    Name: Kobold
+    Drops:
+      - Item: S_Infinity_Earring
+        Rate: 80
+  - Id: 3501
+    AegisName: DR_SPORE
+    Name: Trans Spore
+    Drops:
+      - Item: S_Infinity_Pendant
+        Rate: 80
+  - Id: 1034
+    AegisName: THARA_FROG
+    Name: Thara Frog
+    Drops:
+      - Item: S_Solid_Weapon
+        Rate: 80
+  - Id: 1715
+    AegisName: NOVUS
+    Name: Novus
+    Drops:
+      - Item: S_Solid_Earring
+        Rate: 80
+  - Id: 1510
+    AegisName: HYLOZOIST
+    Name: Heirozoist
+    Drops:
+      - Item: S_Immortal_Armor
+        Rate: 80
+  - Id: 1056
+    AegisName: SMOKIE
+    Name: Smokie
+    Drops:
+      - Item: S_Immortal_Pendant
+        Rate: 80
+  - Id: 3502
+    AegisName: DR_BASILISK1
+    Name: Scout Basilisk
+    Drops:
+      - Item: S_Executioner_Weapon
+        Rate: 80
+  - Id: 1382
+    AegisName: DIABOLIC
+    Name: Diabolic
+    Drops:
+      - Item: S_Exorcist_Weapon
+        Rate: 80
+  - Id: 1696
+    AegisName: PLASMA_P
+    Name: Plasma
+    Drops:
+      - Item: S_Hunting_Weapon
+        Rate: 80
+  - Id: 1755
+    AegisName: SKEGGIOLD_
+    Name: Skeggiold
+    Drops:
+      - Item: S_Insect_Net_Weapon
+        Rate: 80
+  - Id: 1321
+    AegisName: DRAGON_TAIL
+    Name: Dragon Tail
+    Drops:
+      - Item: S_Fishing_Weapon
+        Rate: 80
+  - Id: 3737
+    AegisName: COWRAIDERS2
+    Name: Buffalo Bandit Duelist
+    Drops:
+      - Item: S_Dragon_Killer_Weapon
+        Rate: 80
+      - Item: S_Spirit_Pendant
+        Rate: 80
+  - Id: 1042
+    AegisName: STEEL_CHONCHON
+    Name: Steel Chonchon
+    Drops:
+      - Item: S_Corrupt_Weapon
+        Rate: 80
+  - Id: 3736
+    AegisName: COWRAIDERS1
+    Name: Buffalo Bandit Sharpsho
+    Drops:
+      - Item: S_Vibration_Weapon
+        Rate: 80
+  - Id: 3739
+    AegisName: COYOTE
+    Name: Coyote
+    Drops:
+      - Item: S_Holy_Water_Weapon
+        Rate: 80
+  - Id: 1682
+    AegisName: REMOVAL
+    Name: Remover
+    Drops:
+      - Item: S_Scissors_Weapon
+        Rate: 80
+  - Id: 1160
+    AegisName: PIERE
+    Name: Piere
+    Drops:
+      - Item: S_Penetration_Earring
+        Rate: 80
+  - Id: 1672
+    AegisName: DIMIK_3
+    Name: Dimik
+    Drops:
+      - Item: S_Penetration_Pendent
+        Rate: 80
+  - Id: 1179
+    AegisName: WHISPER
+    Name: Whisper
+    Drops:
+      - Item: S_Tempest_Earring
+        Rate: 80
+  - Id: 1070
+    AegisName: KUKRE
+    Name: Kukre
+    Drops:
+      - Item: S_Tempest_Pendent
+        Rate: 80
+  - Id: 1166
+    AegisName: SAVAGE
+    Name: Savage
+    Drops:
+      - Item: S_M_Executioner_Weapon
+        Rate: 80
+  - Id: 1686
+    AegisName: ORC_BABY
+    Name: Orc Baby
+    Drops:
+      - Item: S_M_Hunting_Weapon
+        Rate: 80
+  - Id: 1505
+    AegisName: LOLI_RURI
+    Name: Loli Ruri
+    Drops:
+      - Item: S_M_Insect_Net_Weapon
+        Rate: 80
+  - Id: 1019
+    AegisName: PECOPECO
+    Name: Peco Peco
+    Drops:
+      - Item: S_M_Fishing_Weapon
+        Rate: 80
+  - Id: 1073
+    AegisName: CRAB
+    Name: Crab
+    Drops:
+      - Item: S_M_Dragon_K_Weapon
+        Rate: 80
+  - Id: 1513
+    AegisName: CIVIL_SERVANT
+    Name: Mao Guai
+    Drops:
+      - Item: S_M_Corrupt_Weapon
+        Rate: 80
+  - Id: 1152
+    AegisName: ORC_SKELETON
+    Name: Orc Skeleton
+    Drops:
+      - Item: S_M_Vibration_Weapon
+        Rate: 80
+  - Id: 3499
+    AegisName: DR_RODA_FROG
+    Name: Sweet Roda Frog
+    Drops:
+      - Item: S_M_Holy_Water_Weapon
+        Rate: 80
+  - Id: 1693
+    AegisName: PLASMA_Y
+    Name: Plasma
+    Drops:
+      - Item: S_M_Scissors_Weapon
+        Rate: 80
+  - Id: 1033
+    AegisName: ELDER_WILOW
+    Name: Elder Willow
+    Drops:
+      - Item: S_Bearers_Armor
+        Rate: 80
+  - Id: 1040
+    AegisName: GOLEM
+    Name: Golem
+    Drops:
+      - Item: S_Bearers_Shoes
+        Rate: 80
+  - Id: 1517
+    AegisName: LI_ME_MANG_RYANG
+    Name: Jing Guai
+    Drops:
+      - Item: S_Bearers_Shield
+        Rate: 80
+  - Id: 1999
+    AegisName: CENTIPEDE_LARVA
+    Name: Centipede Larva
+    Drops:
+      - Item: S_Bearers_Weapon
+        Rate: 80
+  - Id: 1384
+    AegisName: DELETER
+    Name: Deleter
+    Drops:
+      - Item: S_Bearers_Earring
+        Rate: 80
+  - Id: 1837
+    AegisName: IMP
+    Name: Imp
+    Drops:
+      - Item: S_Bearers_Pendent
+        Rate: 80
+  - Id: 1149
+    AegisName: MINOROUS
+    Name: Minorous
+    Drops:
+      - Item: S_Basis_Armor
+        Rate: 80
+  - Id: 1054
+    AegisName: THIEF_BUG__
+    Name: Thief Bug Male
+    Drops:
+      - Item: S_Hallowed_Armor
+        Rate: 80
+  - Id: 1209
+    AegisName: CRAMP
+    Name: Cramp
+    Drops:
+      - Item: S_Saharic_Armor
+        Rate: 80
+  - Id: 3498
+    AegisName: DR_HORNET
+    Name: Wild Hornet
+    Drops:
+      - Item: S_Underneath_Armor
+        Rate: 80
+  - Id: 1671
+    AegisName: DIMIK_2
+    Name: Dimik
+    Drops:
+      - Item: S_Flam_Armor
+        Rate: 80
+  - Id: 1639
+    AegisName: KATRINN
+    Name: Kathryne Keyron
+    Drops:
+      - Item: S_Windy_Armor
+        Rate: 80
+  - Id: 1677
+    AegisName: VENATU_2
+    Name: Venatu
+    Drops:
+      - Item: S_Envenom_Armor
+        Rate: 80
+  - Id: 1404
+    AegisName: MIYABI_NINGYO
+    Name: Miyabi Doll
+    Drops:
+      - Item: S_Damned_Armor
+        Rate: 80
+  - Id: 1698
+    AegisName: DEATHWORD
+    Name: Death Word
+    Drops:
+      - Item: S_Divine_Armor
+        Rate: 80
+  - Id: 1694
+    AegisName: PLASMA_R
+    Name: Plasma
+    Drops:
+      - Item: S_Hasty_Shoes
+        Rate: 80
+  - Id: 1297
+    AegisName: ANCIENT_MUMMY
+    Name: Ancient Mummy
+    Drops:
+      - Item: S_Hasty_Armor
+        Rate: 80
+  - Id: 1718
+    AegisName: NOVUS_
+    Name: Novus
+    Drops:
+      - Item: S_Basis_Shield
+        Rate: 80
+  - Id: 1714
+    AegisName: FERUS
+    Name: Ferus
+    Drops:
+      - Item: S_Saharic_Shield
+        Rate: 80
+  - Id: 1655
+    AegisName: EREND
+    Name: Errende Ebecee
+    Drops:
+      - Item: S_Underneath_Shield
+        Rate: 80
+  - Id: 1176
+    AegisName: VITATA
+    Name: Vitata
+    Drops:
+      - Item: S_Flam_Shield
+        Rate: 80
+  - Id: 1700
+    AegisName: OBSERVATION
+    Name: Dame of Sentinel
+    Drops:
+      - Item: S_Windy_Shield
+        Rate: 80
+  - Id: 1374
+    AegisName: INCUBUS
+    Name: Incubus
+    Drops:
+      - Item: S_Envenom_Shield
+        Rate: 80
+  - Id: 1294
+    AegisName: KILLER_MANTIS
+    Name: Killer Mantis
+    Drops:
+      - Item: S_Damned_Shield
+        Rate: 80
+  - Id: 1109
+    AegisName: DEVIRUCHI
+    Name: Deviruchi
+    Drops:
+      - Item: S_Geist_Shield
+        Rate: 80
+  - Id: 1777
+    AegisName: ICE_TITAN
+    Name: Ice Titan
+    Drops:
+      - Item: S_Divine_Shield
+        Rate: 80
+  - Id: 1118
+    AegisName: FLORA
+    Name: Flora
+    Drops:
+      - Item: S_Expert_Shoes
+        Rate: 80
+  - Id: 1507
+    AegisName: BLOODY_MURDERER
+    Name: Bloody Murderer
+    Drops:
+      - Item: S_Expert_Shield
+        Rate: 80
+  - Id: 1011
+    AegisName: CHONCHON
+    Name: Chonchon
+    Drops:
+      - Item: S_Beginner_Shoes
+        Rate: 80
+  - Id: 1627
+    AegisName: ANOPHELES
+    Name: Anopheles
+    Drops:
+      - Item: S_Beginner_Shield
+        Rate: 80
+  - Id: 1151
+    AegisName: MYST
+    Name: Myst
+    Drops:
+      - Item: S_Rookie_Shoes
+        Rate: 80
+  - Id: 1271
+    AegisName: ALLIGATOR
+    Name: Alligator
+    Drops:
+      - Item: S_Rookie_Shield
+        Rate: 80
+  - Id: 1119
+    AegisName: FRILLDORA
+    Name: Frilldora
+    Drops:
+      - Item: S_Advanced_Shoes
+        Rate: 80
+  - Id: 1258
+    AegisName: GOBLIN_ARCHER
+    Name: Goblin Archer
+    Drops:
+      - Item: S_Advanced_Shield
+        Rate: 80
+  - Id: 1164
+    AegisName: REQUIEM
+    Name: Requiem
+    Drops:
+      - Item: S_Attack_Armor
+        Rate: 80
+  - Id: 1322
+    AegisName: SPRING_RABBIT
+    Name: Spring Rabbit
+    Drops:
+      - Item: S_Blitz_Earring
+        Rate: 80
+  - Id: 1068
+    AegisName: HYDRA
+    Name: Hydra
+    Drops:
+      - Item: S_Blitz_Pendent
+        Rate: 80
+  - Id: 1865
+    AegisName: RAGGED_ZOMBIE
+    Name: Ragged Zombie
+    Drops:
+      - Item: S_ColdBolt_Armor
+        Rate: 80
+  - Id: 1140
+    AegisName: MARDUK
+    Name: Marduk
+    Drops:
+      - Item: S_FireBolt_Armor
+        Rate: 80
+  - Id: 1391
+    AegisName: GALAPAGO
+    Name: Galapago
+    Drops:
+      - Item: S_LightingBolt_Armor
+        Rate: 80
+  - Id: 1050
+    AegisName: PICKY_
+    Name: Picky
+    Drops:
+      - Item: S_EarthSpike_Armor
+        Rate: 80
+  - Id: 1242
+    AegisName: MARIN
+    Name: Marin
+    Drops:
+      - Item: S_Enhance_Force_Weapon
+        Rate: 80
+  - Id: 1100
+    AegisName: ARGOS
+    Name: Argos
+    Drops:
+      - Item: S_Force_Weapon
+        Rate: 80
+  - Id: 1177
+    AegisName: ZENORC
+    Name: Zenorc
+    Drops:
+      - Item: S_Force_Earring
+        Rate: 80
+  - Id: 1254
+    AegisName: RAGGLER
+    Name: Raggler
+    Drops:
+      - Item: S_Force_Pendant
+        Rate: 80
+  - Id: 1370
+    AegisName: SUCCUBUS
+    Name: Succubus
+    Drops:
+      - Item: S_Enhance_Spirit_Weapon
+        Rate: 80
+  - Id: 1310
+    AegisName: MAJORUROS
+    Name: Majoruros
+    Drops:
+      - Item: S_Spirit_Weapon
+        Rate: 80
+  - Id: 1716
+    AegisName: ACIDUS_
+    Name: Acidus
+    Drops:
+      - Item: S_Spirit_Earring
+        Rate: 80
+  - Id: 1028
+    AegisName: SOLDIER_SKELETON
+    Name: Soldier Skeleton
+    Drops:
+      - Item: S_Blitz_Shoes
+        Rate: 80
+  - Id: 3738
+    AegisName: COWRAIDERS3
+    Name: Bowie Buffalo Bandit
+    Drops:
+      - Item: S_Blitz_Shield
+        Rate: 80
+  - Id: 1097
+    AegisName: ANT_EGG
+    Name: Ant Egg
+    Drops:
+      - Item: S_Exceed_Weapon
+        Rate: 80
+  - Id: 1201
+    AegisName: RYBIO
+    Name: Rybio
+    Drops:
+      - Item: S_Titan_Earring
+        Rate: 80
+  - Id: 1622
+    AegisName: TEDDY_BEAR
+    Name: Teddy Bear
+    Drops:
+      - Item: S_Titan_Pendant
+        Rate: 80
+  - Id: 3740
+    AegisName: GASTER
+    Name: Gaster
+    Drops:
+      - Item: S_Boned_Earring
+        Rate: 80
+  - Id: 1276
+    AegisName: RAYDRIC_ARCHER
+    Name: Raydric Archer
+    Drops:
+      - Item: S_Boned_Pendant
+        Rate: 80
+  - Id: 1275
+    AegisName: ALICE
+    Name: Alice
+    Drops:
+      - Item: S_Gigantic_Earring
+        Rate: 80
+  - Id: 1074
+    AegisName: SHELLFISH
+    Name: Shellfish
+    Drops:
+      - Item: S_Gigantic_Pendant
+        Rate: 80
+  - Id: 1052
+    AegisName: ROCKER
+    Name: Rocker
+    Drops:
+      - Item: S_Caster_Shoes
+        Rate: 80
+  - Id: 1515
+    AegisName: GARM_BABY
+    Name: Baby Hatii
+    Drops:
+      - Item: S_Caster_Shield
+        Rate: 80
+  - Id: 2092
+    AegisName: DOLOMEDES
+    Name: Dolomedes
+    Drops:
+      - Item: S_Reload_Shoes
+        Rate: 80
+  - Id: 1657
+    AegisName: RAWREL
+    Name: Laurell Weinder
+    Drops:
+      - Item: S_Reload_Shield
+        Rate: 80
+  - Id: 2286
+    AegisName: GLD_KOBOLD_3
+    Name: Dark Mace Kobold
+    Drops:
+      - Item: S_Reload_Armor
+        Rate: 80
+  - Id: 1189
+    AegisName: ORC_ARCHER
+    Name: Orc Archer
+    Drops:
+      - Item: S2_Caster_Armor
+        Rate: 80
+  - Id: 1635
+    AegisName: EREMES
+    Name: Eremes Guile
+    Drops:
+      - Item: S_MagicCompose_Armor
+        Rate: 80
+  - Id: 1377
+    AegisName: ELDER
+    Name: Elder
+    Drops:
+      - Item: S_Tempest_Shield
+        Rate: 80
+  - Id: 1007
+    AegisName: FABRE
+    Name: Fabre
+    Drops:
+      - Item: S_Tempest_Shoes
+        Rate: 80
+  - Id: 1158
+    AegisName: PHEN
+    Name: Phen
+    Drops:
+      - Item: S_M_ExeHoly_Armor
+        Rate: 80
+  - Id: 1049
+    AegisName: PICKY
+    Name: Picky
+    Drops:
+      - Item: S_M_ExoCorrupt_Armor
+        Rate: 80
+  - Id: 1018
+    AegisName: CREAMY
+    Name: Creamy
+    Drops:
+      - Item: S_M_SciHunting_Armor
+        Rate: 80
+  - Id: 1174
+    AegisName: STAINER
+    Name: Stainer
+    Drops:
+      - Item: S_M_FishInsect_Armor
+        Rate: 80
+  - Id: 1170
+    AegisName: SOHEE
+    Name: Sohee
+    Drops:
+      - Item: S_Tension_Weapon
+        Rate: 80
+  - Id: 1412
+    AegisName: EVIL_CLOUD_HERMIT
+    Name: Taoist Hermit
+    Drops:
+      - Item: S_Tension_Earring
+        Rate: 80
+  - Id: 1652
+    AegisName: YGNIZEM
+    Name: Egnigem Cenia
+    Drops:
+      - Item: S_Tension_Pendent
+        Rate: 80
+  - Id: 1713
+    AegisName: ACIDUS
+    Name: Acidus
+    Drops:
+      - Item: S_Elegant_Weapon
+        Rate: 80
+  - Id: 1303
+    AegisName: GIANT_HONET
+    Name: Giant Hornet
+    Drops:
+      - Item: S_Elegant_Earring
+        Rate: 80
+  - Id: 1403
+    AegisName: ANTIQUE_FIRELOCK
+    Name: Firelock Soldier
+    Drops:
+      - Item: S_Healing_Shield
+        Rate: 80
+  - Id: 1030
+    AegisName: ANACONDAQ
+    Name: Anacondaq
+    Drops:
+      - Item: S_Healing_Shoes
+        Rate: 80
+  - Id: 1773
+    AegisName: HODREMLIN
+    Name: Hodremlin
+    Drops:
+      - Item: S_Restore_Earring
+        Rate: 80
+  - Id: 1516
+    AegisName: INCREASE_SOIL
+    Name: Mi Gao
+    Drops:
+      - Item: S_Restore_Pendent
+        Rate: 80
+  - Id: 1717
+    AegisName: FERUS_
+    Name: Ferus
+    Drops:
+      - Item: S_MortalBlow_Weapon
+        Rate: 80
+  - Id: 1838
+    AegisName: KNOCKER
+    Name: Knocker
+    Drops:
+      - Item: S_MortalBlow_Earring
+        Rate: 80
+  - Id: 1735
+    AegisName: ALICEL
+    Name: Alicel
+    Drops:
+      - Item: S_MortalBlow_Pendent
+        Rate: 80
+  - Id: 1153
+    AegisName: ORC_ZOMBIE
+    Name: Orc Zombie
+    Drops:
+      - Item: S_Penetration_Shoes
+        Rate: 80
+  - Id: 1132
+    AegisName: KHALITZBURG
+    Name: Khalitzburg
+    Drops:
+      - Item: S_Penetration_Shield
+        Rate: 80
+  - Id: 1071
+    AegisName: PIRATE_SKEL
+    Name: Pirate Skeleton
+    Drops:
+      - Item: S_ExeHoly_Armor
+        Rate: 80
+  - Id: 1503
+    AegisName: GIBBET
+    Name: Gibbet
+    Drops:
+      - Item: S_ExoCorrupt_Armor
+        Rate: 80
+  - Id: 1621
+    AegisName: VENOMOUS
+    Name: Venomous
+    Drops:
+      - Item: S_DragonVib_Armor
+        Rate: 80
+  - Id: 1776
+    AegisName: SIROMA
+    Name: Siroma
+    Drops:
+      - Item: S_SciHunting_Armor
+        Rate: 80
+  - Id: 1753
+    AegisName: FRUS
+    Name: Frus
+    Drops:
+      - Item: S_FishInsect_Armor
+        Rate: 80
+  - Id: 1015
+    AegisName: ZOMBIE
+    Name: Zombie
+    Drops:
+      - Item: S_CriticalHit_Armor
+        Rate: 80
+  - Id: 1063
+    AegisName: LUNATIC
+    Name: Lunatic
+    Drops:
+      - Item: S2_Hasty_Shoes
+        Rate: 80
+  - Id: 1295
+    AegisName: OWL_BARON
+    Name: Owl Baron
+    Drops:
+      - Item: S2_Bearers_Pendent
+        Rate: 80
+  - Id: 1319
+    AegisName: FREEZER
+    Name: Freezer
+    Drops:
+      - Item: S2_Gemstone_Earring
+        Rate: 80
+  - Id: 1615
+    AegisName: OBSIDIAN
+    Name: Obsidian
+    Drops:
+      - Item: S2_Spell_Flow_Shield
+        Rate: 80
+  - Id: 1260
+    AegisName: DARK_FRAME
+    Name: Dark Frame
+    Drops:
+      - Item: S2_Spiritual_Weapon
+        Rate: 80
+  - Id: 1196
+    AegisName: SKEL_PRISONER
+    Name: Skeleton Prisoner
+    Drops:
+      - Item: S2_Malicious_Armor
+        Rate: 80
+      - Item: S_Sigrun_Armor
+        Rate: 80
+  - Id: 1737
+    AegisName: ALIZA
+    Name: Aliza
+    Drops:
+      - Item: S_Sigrun_Shield
+        Rate: 80
+  - Id: 2166
+    AegisName: I_HORN_SCARABA_EGG
+    Name: Gold One-Horn Scaraba E
+    Drops:
+      - Item: S2_Force_Ex_Weapon
+        Rate: 80
+  - Id: 1215
+    AegisName: STEM_WORM
+    Name: Stem Worm
+    Drops:
+      - Item: S2_Spirit_M_E_Weapon
+        Rate: 80
+  - Id: 1771
+    AegisName: VANBERK
+    Name: Vanberk
+    Drops:
+      - Item: S2_Reload_Armor
+        Rate: 80
+  - Id: 1123
+    AegisName: GOBLIN_2
+    Name: Goblin
+    Drops:
+      - Item: S_Critical_Shield
+        Rate: 80
+  - Id: 1620
+    AegisName: NOXIOUS
+    Name: Noxious
+    Drops:
+      - Item: S_Critical_Shoes
+        Rate: 80
+  - Id: 1269
+    AegisName: CLOCK
+    Name: Clock
+    Drops:
+      - Item: S2_Gemstone_Weapon
+        Rate: 80
+  - Id: 1989
+    AegisName: HILLSRION
+    Name: Hillthrion
+    Drops:
+      - Item: S2_Gemstone_Shield
+        Rate: 80
+  - Id: 1064
+    AegisName: MEGALODON
+    Name: Megalodon
+    Drops:
+      - Item: S2_Bearers_Armor
+        Rate: 80
+  - Id: 1265
+    AegisName: COOKIE
+    Name: Cookie
+    Drops:
+      - Item: S_AllRace_Shoes
+        Rate: 80
+  - Id: 1055
+    AegisName: MUKA
+    Name: Muka
+    Drops:
+      - Item: S2_Plasterer's_Armor
+        Rate: 80
+  - Id: 1076
+    AegisName: SKELETON
+    Name: Skeleton
+    Drops:
+      - Item: S2_Insomniac_Shoes
+        Rate: 80
+  - Id: 1323
+    AegisName: SEE_OTTER
+    Name: Sea Otter
+    Drops:
+      - Item: S2_Peerless_Armor
+        Rate: 80
+  - Id: 1114
+    AegisName: DUSTINESS
+    Name: Dustiness
+    Drops:
+      - Item: S2_Adurate_Shoes
+        Rate: 80
+  - Id: 1127
+    AegisName: HODE
+    Name: Hode
+    Drops:
+      - Item: Unfreez_Weapon_S2
+        Rate: 80
+  - Id: 1317
+    AegisName: FUR_SEAL
+    Name: Seal
+    Drops:
+      - Item: Vitality_Earing_S2
+        Rate: 80
+  - Id: 1616
+    AegisName: PITMAN
+    Name: Pitman
+    Drops:
+      - Item: S2_Neutral_Weapon
+        Rate: 80
+  - Id: 1833
+    AegisName: KASA
+    Name: Kasa
+    Drops:
+      - Item: S2_Curse_Lift_Pendent
+        Rate: 80
+  - Id: 1141
+    AegisName: MARINA
+    Name: Marina
+    Drops:
+      - Item: S_AllRace_Shield
+        Rate: 80
+  - Id: 1305
+    AegisName: ANCIENT_WORM
+    Name: Ancient Worm
+    Drops:
+      - Item: S2_Bearers_Shoes
+        Rate: 80
+  - Id: 1138
+    AegisName: MAGNOLIA
+    Name: Magnolia
+    Drops:
+      - Item: Sentimental_Weapone_S
+        Rate: 80
+  - Id: 1051
+    AegisName: THIEF_BUG
+    Name: Thief Bug
+    Drops:
+      - Item: Sentimental_Earring_S
+        Rate: 80
+  - Id: 1282
+    AegisName: KOBOLD_ARCHER
+    Name: Kobold Archer
+    Drops:
+      - Item: Sentimental_Pendant_S
+        Rate: 80
+  - Id: 1106
+    AegisName: DESERT_WOLF
+    Name: Desert Wolf
+    Drops:
+      - Item: Enchanting_Weapone_S
+        Rate: 80
+  - Id: 1139
+    AegisName: MANTIS
+    Name: Mantis
+    Drops:
+      - Item: Enchanting_Earring_S
+        Rate: 80
+  - Id: 1032
+    AegisName: VERIT
+    Name: Verit
+    Drops:
+      - Item: Enchanting_Pendant_S
+        Rate: 80
+  - Id: 1010
+    AegisName: WILOW
+    Name: Willow
+    Drops:
+      - Item: S_Infinity_Weapon
+        Rate: 80
+  - Id: 1636
+    AegisName: HARWORD
+    Name: Howard Alt-Eisen
+    Drops:
+      - Item: Rebeginer_Armor_S
+        Rate: 80
+  - Id: 1309
+    AegisName: GAJOMART
+    Name: Gajomart
+    Drops:
+      - Item: Rebeginer_Shield_S
+        Rate: 80
+  - Id: 1409
+    AegisName: RICE_CAKE_BOY
+    Name: Dumpling Child
+    Drops:
+      - Item: Rebeginer_Shoes_S
+        Rate: 80
+  - Id: 1134
+    AegisName: KOBOLD_2
+    Name: Kobold
+    Drops:
+      - Item: Rebeginer_Weapon_S
+        Rate: 80
+  - Id: 3507
+    AegisName: DR_POM_SPIDER
+    Name: Fruits Pom Spider
+    Drops:
+      - Item: Rebeginer_Earring_S
+        Rate: 80
+  - Id: 1701
+    AegisName: SHELTER
+    Name: Mistress of Shelter
+    Drops:
+      - Item: Rebeginer_Pendant_S
+        Rate: 80
+  - Id: 1002
+    AegisName: PORING
+    Name: Poring
+    Drops:
+      - Item: S_Physical_Shoes
+        Rate: 80
+  - Id: 1318
+    AegisName: HEATER
+    Name: Heater
+    Drops:
+      - Item: S_Physical_Shield
+        Rate: 80
+  - Id: 1061
+    AegisName: NIGHTMARE
+    Name: Nightmare
+    Drops:
+      - Item: S_Physical_Armor
+        Rate: 80
+  - Id: 1369
+    AegisName: GRAND_PECO
+    Name: Grand Peco
+    Drops:
+      - Item: S_Magical_Shoes
+        Rate: 80
+  - Id: 1110
+    AegisName: DOKEBI
+    Name: Dokebi
+    Drops:
+      - Item: S_Magical_Shield
+        Rate: 80
+  - Id: 1866
+    AegisName: HELL_POODLE
+    Name: Hellhound
+    Drops:
+      - Item: S_Magical_Armor
+        Rate: 80
+  - Id: 2091
+    AegisName: RAKE_SCARABA_EGG
+    Name: Rake Scaraba Egg
+    Drops:
+      - Item: S_ImmunedAthena_Shield
+        Rate: 80
+  - Id: 1782
+    AegisName: ROWEEN
+    Name: Roween
+    Drops:
+      - Item: S_HardChamption_Shoes
+        Rate: 80
+  - Id: 1278
+    AegisName: STALACTIC_GOLEM
+    Name: Stalactic Golem
+    Drops:
+      - Item: S_KingbirdAncient_Armor
+        Rate: 80
+  - Id: 3765
+    AegisName: ILL_FURY_HERO
+    Name: Deranged Adventurer
+    Drops:
+      - Item: S_Swordman_earring
+        Rate: 80
+  - Id: 3760
+    AegisName: ILL_MUNAK
+    Name: Resentful Munak
+    Drops:
+      - Item: S_Merchant_earring
+        Rate: 80
+  - Id: 3761
+    AegisName: ILL_BON_GUN
+    Name: Resentful Bongun
+    Drops:
+      - Item: S_Acolyte_earring
+        Rate: 80
+  - Id: 3762
+    AegisName: ILL_SOHEE
+    Name: Resentful Sohee
+    Drops:
+      - Item: S_Magician_earring
+        Rate: 80
+  - Id: 3752
+    AegisName: ILL_ZOMBIE
+    Name: Starving Living Dead
+    Drops:
+      - Item: S_Swordman_Pendant
+        Rate: 80
+  - Id: 3753
+    AegisName: ILL_GHOUL
+    Name: Living Dead
+    Drops:
+      - Item: S_Merchant_Pendant
+        Rate: 80
+      - Item: S_Acolyte_Pendant
+        Rate: 80
+  - Id: 3754
+    AegisName: ILL_NIGHTMARE
+    Name: Sweet Nightmare
+    Drops:
+      - Item: S_Thief_Pendant
+        Rate: 80
+  - Id: 3755
+    AegisName: ILL_BLACK_MUSHROOM
+    Name: Black Mushroom
+    Drops:
+      - Item: S_Magician_Pendant
+        Rate: 80
+  - Id: 3750
+    AegisName: ILL_DRAINLIAR
+    Name: Matt Drainliar
+    Drops:
+      - Item: S_Archer_Pendant
+        Rate: 80
+  - Id: 3759
+    AegisName: ILL_NINE_TAIL
+    Name: Angry Nine Tail
+    Drops:
+      - Item: S_Thief_earring
+        Rate: 80
+  - Id: 3763
+    AegisName: ILL_ARCHER_SKELETON
+    Name: Resentful Soldier
+    Drops:
+      - Item: S_Archer_earring
+        Rate: 80
+  - Id: 3792
+    AegisName: ILL_GAZETI
+    Name: Angry Gazeti
+    Drops:
+      - Item: S_Knight_Shoes
+        Rate: 80
+      - Item: S_Gunslinger_Shield
+        Rate: 80
+  - Id: 3794
+    AegisName: ILL_ICE_TITAN
+    Name: Angry Ice Titan
+    Drops:
+      - Item: S_Crusader_Shoes
+        Rate: 80
+      - Item: S_DoramMagical_Shield
+        Rate: 80
+  - Id: 3799
+    AegisName: ILL_ASSULTER
+    Name: Ominous Assulter
+    Drops:
+      - Item: S_Blacksmith_Shoes
+        Rate: 80
+      - Item: S_Taekwon_Shield
+        Rate: 80
+  - Id: 3801
+    AegisName: ILL_FREEZER
+    Name: Ominous Freezer
+    Drops:
+      - Item: S_Alchemist_Shoes
+        Rate: 80
+      - Item: S_Wizard_Armor
+        Rate: 80
+  - Id: 20272
+    AegisName: ILL_MEGALITH
+    Name: Ancient Megalith
+    Drops:
+      - Item: S_Priest_Shoes
+        Rate: 80
+      - Item: S_Hunter_Shoes
+        Rate: 80
+      - Item: S_DoramMagical_Weapon
+        Rate: 80
+  - Id: 20271
+    AegisName: ILL_STALACTIC_GOLEM
+    Name: Ancient Stalactic Golem
+    Drops:
+      - Item: S_Monk_Shoes
+        Rate: 80
+      - Item: S_Ninja_Weapon
+        Rate: 80
+  - Id: 20274
+    AegisName: ILL_STONE_SHOOTER
+    Name: Ancient Stone Shooter
+    Drops:
+      - Item: S_Assassin_Shoes
+        Rate: 80
+      - Item: S_Taekwon_Weapon
+        Rate: 80
+  - Id: 20275
+    AegisName: ILL_WOOTAN_SHOOTER
+    Name: Ancient Wootan Shooter
+    Drops:
+      - Item: S_Rogue_Shoes
+        Rate: 80
+      - Item: S_Priest_Armor
+        Rate: 80
+  - Id: 20276
+    AegisName: ILL_WOOTAN_FIGHTER
+    Name: Ancient Wootan Fighter
+    Drops:
+      - Item: S_Wizard_Shoes
+        Rate: 80
+      - Item: S_Monk_Armor
+        Rate: 80
+  - Id: 20270
+    AegisName: ILL_TRI_JOINT
+    Name: Ancient Tri Joint
+    Drops:
+      - Item: S_Sage_Shoes
+        Rate: 80
+      - Item: S_Assassin_Armor
+        Rate: 80
+  - Id: 3793
+    AegisName: ILL_SNOWIER
+    Name: Angry Snowier
+    Drops:
+      - Item: S_Knight_Armor
+        Rate: 80
+      - Item: S_SuperNovice_Shield
+        Rate: 80
+  - Id: 3795
+    AegisName: ILL_ICEICLE
+    Name: Solid Icicle
+    Drops:
+      - Item: S_Crusader_Armor
+        Rate: 80
+      - Item: S_DoramPhysical_Shield
+        Rate: 80
+  - Id: 3800
+    AegisName: ILL_PERMETER
+    Name: Ominous Permeter
+    Drops:
+      - Item: S_Blacksmith_Armor
+        Rate: 80
+      - Item: S_Rogue_Armor
+        Rate: 80
+  - Id: 3802
+    AegisName: ILL_SOLIDER
+    Name: Ominous Solider
+    Drops:
+      - Item: S_Alchemist_Armor
+        Rate: 80
+      - Item: S_Sage_Armor
+        Rate: 80
+  - Id: 3803
+    AegisName: ILL_HEATER
+    Name: Ominous Heater
+    Drops:
+      - Item: S_Hunter_Armor
+        Rate: 80
+      - Item: S_DoramPhysical_Weapon
+        Rate: 80
+  - Id: 20255
+    AegisName: ILL_TEDDY_BEAR_R
+    Name: Red Teddy Bear
+    Drops:
+      - Item: S_Runeknight_Weapon
+        Rate: 80
+      - Item: S_Warlock_Weapon
+        Rate: 80
+      - Item: S_Rebellion_Shoes
+        Rate: 80
+  - Id: 20256
+    AegisName: ILL_TEDDY_BEAR_Y
+    Name: Yellow Teddy Bear
+    Drops:
+      - Item: S_Royalguard_Weapon
+        Rate: 80
+      - Item: S_Sorcerer_Weapon
+        Rate: 80
+      - Item: S_Kagerou_Shoes
+        Rate: 80
+  - Id: 20257
+    AegisName: ILL_TEDDY_BEAR_G
+    Name: Green Teddy Bear
+    Drops:
+      - Item: S_Mechanic_weapon
+        Rate: 80
+      - Item: S_Ranger_Weapon
+        Rate: 80
+      - Item: S_Oboro_Shoes
+        Rate: 80
+  - Id: 20258
+    AegisName: ILL_TEDDY_BEAR_W
+    Name: White Teddy Bear
+    Drops:
+      - Item: S_Genetic_Weapon
+        Rate: 80
+      - Item: S_Minstrel_Weapon
+        Rate: 80
+      - Item: S_DoramPhysical_Armor
+        Rate: 80
+      - Item: S_DoramMagical_Shoes
+        Rate: 80
+  - Id: 20259
+    AegisName: ILL_TEDDY_BEAR_B
+    Name: Blue Teddy Bear
+    Drops:
+      - Item: S_Archbishop_Weapon
+        Rate: 80
+      - Item: S_Sura_weapon
+        Rate: 80
+      - Item: S_DoramPhysical_Shoes
+        Rate: 80
+      - Item: S_DoramMagical_Armor
+        Rate: 80
+  - Id: 20262
+    AegisName: ILL_MINERAL
+    Name: Soul Fragment
+    Drops:
+      - Item: S_Guillotine_Weapon
+        Rate: 80
+      - Item: S_Ninja_Shield
+        Rate: 80
+      - Item: S_Dancer_Armor
+        Rate: 80
+      - Item: S_Bard_Armor
+        Rate: 80
+      - Item: S_Wanderer_Weapon
+        Rate: 80
+  - Id: 20263
+    AegisName: ILL_OBSIDIAN
+    Name: Sinister Obsidian
+    Drops:
+      - Item: S_Shadowchaser_Weapon
+        Rate: 80
+      - Item: S_Bard_Shoes
+        Rate: 80
+      - Item: S_Dancer_Shoes
+        Rate: 80
+      - Item: S_Gunslinger_Weapon
+        Rate: 80
+      - Item: S_SuperNovice_Weapon
+        Rate: 80

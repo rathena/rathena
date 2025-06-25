@@ -40,16 +40,14 @@ Body:
   - Tab: Limited
     Items:
   - Tab: Rental
-    Items:
-     - Item: Blue_Scroll
-       Price: 1000
-     - Item: Spring_Festival_Scroll
-       Price: 1000   
+    Items:  
   - Tab: Permanent
     Items:
   - Tab: Scrolls
     Items:
   - Tab: Consumables
-    Items:
+    Items:  
+     - Item: Shadow_Mix_Recipe
+       Price: 100   
   - Tab: Other
     Items:
