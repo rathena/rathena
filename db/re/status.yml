@@ -9092,6 +9092,9 @@ Body:
   - Status: Chasing
     Icon: EFST_CHASING
     DurationLookup: ABC_HIT_AND_SLIDING
+  - Status: Fire_Charm_Power
+    Icon: EFST_FIRE_CHARM_POWER
+    DurationLookup: SS_FOUR_CHARM
   - Status: Bath_foam_a
     Icon: EFST_BATH_FOAM_A
     Flags:

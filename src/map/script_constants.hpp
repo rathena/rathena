@@ -1899,6 +1899,10 @@
 	export_constant(SC_POWERUP);
 	export_constant(SC_AGIUP);
 	export_constant(SC_PROTECTION);
+	export_constant(SC_FIRE_CHARM_POWER);
+	export_constant(SC_WATER_CHARM_POWER);
+	export_constant(SC_WIND_CHARM_POWER);
+	export_constant(SC_GROUND_CHARM_POWER);
 	export_constant(SC_BATH_FOAM_A);
 	export_constant(SC_BATH_FOAM_B);
 	export_constant(SC_BATH_FOAM_C);
