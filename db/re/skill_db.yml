@@ -44614,14 +44614,14 @@ Body:
     HitCount: -7
     GiveAp: 2
     Element: Weapon
-
-
-
-
-
-
-
-
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
         Area: 3
       - Level: 5
         Area: 3
