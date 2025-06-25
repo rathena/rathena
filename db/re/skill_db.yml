@@ -45477,6 +45477,7 @@ Body:
     Range: 11
     Hit: Multi_Hit
     HitCount: -3
+    CastCancel: true
     CastTime: 3000
     FixedCastTime: 350
     AfterCastActDelay: 500
