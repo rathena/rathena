@@ -103686,7 +103686,7 @@ Body:
     Hp: 21278744
     BaseExp: 4255749
     JobExp: 2979024
-    #MvpExp:
+    MvpExp: 4255749
     Attack: 6141
     Attack2: 3168
     Defense: 343
@@ -103710,6 +103710,8 @@ Body:
     DamageMotion: 768
     Ai: 21
     Class: Boss
+    Modes:
+      Mvp: true
     MvpDrops:
       - Item: Old_Violet_Box
         Rate: 3000

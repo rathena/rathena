@@ -13306,9 +13306,10 @@ uint16 pc_level_penalty_mod( map_session_data* sd, e_penalty_type type, std::sha
 		return 100;
 	}
 
-	if ((type == PENALTY_DROP && map_getmapflag(sd->m, MF_NORENEWALDROPPENALTY)) || (type == PENALTY_EXP && map_getmapflag(sd->m, MF_NORENEWALEXPPENALTY))) {
-		return 100;
-	}
+	// reworked in favor of the always min exp
+	// if ((type == PENALTY_DROP && map_getmapflag(sd->m, MF_NORENEWALDROPPENALTY)) || (type == PENALTY_EXP && map_getmapflag(sd->m, MF_NORENEWALEXPPENALTY))) {
+	// 	return 100;
+	// }
 
 	int32 monster_level;
 
