@@ -99841,8 +99841,57 @@ Body:
 #    AegisName: MD_TRE_WHISPER
 #  - Id: 20117
 #    AegisName: MD_TRE_HYDRA
-#  - Id: 20118
-#    AegisName: GOBLIN_KING
+  - Id: 20118
+    AegisName: GOBLIN_KING
+    Name: Goblin King
+    Level: 255
+    Hp: 343542229
+    BaseExp: 12269365
+    JobExp: 8179577
+    #MvpExp:
+    Attack: 10804
+    Attack2: 1792
+    Defense: 670
+    MagicDefense: 104
+    Resistance: 500
+    MagicResistance: 500
+    Str: 170
+    Agi: 201
+    Vit: 84
+    Int: 160
+    Dex: 170
+    Luk: 70
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Wind
+    ElementLevel: 3
+    WalkSpeed: 110
+    AttackDelay: 1120
+    AttackMotion: 624
+    DamageMotion: 288
+    DamageTaken: 10
+    Ai: 21
+    Class: Boss
+    Modes:
+      Mvp: true
+    MvpDrops:
+      - Item: Etel_Stone
+        Rate: 2000
+      - Item: Old_Card_Album
+        Rate: 1500
+    Drops:
+      - Item: Shadowdecon
+        Rate: 1000
+      - Item: Zelunium
+        Rate: 1000
+      - Item: Goblin_Mask_04
+        Rate: 500
+      - Item: Goblin_King_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20119
 #    AegisName: BAD_CATCUMBER
 #  - Id: 20120
@@ -99955,16 +100004,257 @@ Body:
 #    AegisName: RAYDRIC_ARCHER_MJ
 #  - Id: 20174
 #    AegisName: RAGGED_ZOMBIE_MJ
-#  - Id: 20175
-#    AegisName: EXTRA_JOKER
-#  - Id: 20176
-#    AegisName: ERZSEBET
-#  - Id: 20177
-#    AegisName: JENIFFER
-#  - Id: 20178
-#    AegisName: GENERAL_ORC
-#  - Id: 20179
-#    AegisName: SIEGLOUSE
+  - Id: 20175
+    AegisName: EXTRA_JOKER
+    Name: Extra Joker
+    Level: 255
+    Hp: 39326510
+    BaseExp: 755552
+    JobExp: 527566
+    Attack: 14886
+    Attack2: 3788
+    Defense: 288
+    MagicDefense: 158
+    Resistance: 241
+    MagicResistance: 200
+    Str: 217
+    Agi: 255
+    Vit: 142
+    Int: 182
+    Dex: 233
+    Luk: 223
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demon
+    Element: Wind
+    ElementLevel: 4
+    WalkSpeed: 100
+    AttackDelay: 1364
+    AttackMotion: 432
+    DamageMotion: 288
+    Ai: 04  # TODO
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Zargon
+        Rate: 5000
+      - Item: Old_Card_Album
+        Rate: 5
+      - Item: Shadowdecon_Ore
+        Rate: 400
+      - Item: Shadowdecon
+        Rate: 35
+      - Item: WitchsBroomStick
+        Rate: 3
+      - Item: Oridecon
+        Rate: 250
+      - Item: Jokers_Wild
+        Rate: 2500
+      - Item: Extra_Joker_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20176
+    AegisName: ERZSEBET
+    Name: Erzsebet
+    Level: 254
+    Hp: 37709580
+    BaseExp: 748788
+    JobExp: 523891
+    Attack: 11074
+    Attack2: 5078
+    Defense: 277
+    MagicDefense: 291
+    Resistance: 240
+    MagicResistance: 375
+    Str: 131
+    Agi: 141
+    Vit: 147
+    Int: 199
+    Dex: 177
+    Luk: 199
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 1504
+    AttackMotion: 840
+    DamageMotion: 540
+    Ai: 04  # TODO
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Starsand_Of_Witch
+        Rate: 3500
+      - Item: Witchs_White_Shirt
+        Rate: 3
+      - Item: Shadowdecon
+        Rate: 25
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium
+        Rate: 25
+      - Item: Cute_Broom
+        Rate: 2200
+      - Item: Erzsebet_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20177
+    AegisName: JENIFFER
+    Name: Jennifer
+    Level: 255
+    Hp: 40978470
+    BaseExp: 755552
+    JobExp: 527566
+    Attack: 13432
+    Attack2: 3103
+    Defense: 264
+    MagicDefense: 140
+    Resistance: 191
+    MagicResistance: 153
+    Str: 150
+    Agi: 176
+    Vit: 98
+    Int: 126
+    Dex: 207
+    Luk: 154
+    AttackRange: 7
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Fish
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 300
+    AttackDelay: 832
+    AttackMotion: 432
+    DamageMotion: 600
+    Ai: 04  # TODO
+    Drops:
+      - Item: Coral_Reef
+        Rate: 7500
+      - Item: Tentacle
+        Rate: 7500
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Shadowdecon
+        Rate: 25
+      - Item: Zelunium
+        Rate: 25
+      - Item: Showy_Coral_Reef
+        Rate: 2100
+      - Item: Jeniffer_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20178
+    AegisName: GENERAL_ORC
+    Name: General Orc
+    Level: 255
+    Hp: 48805390
+    BaseExp: 767150
+    JobExp: 533799
+    Attack: 11892
+    Attack2: 3327
+    Defense: 528
+    MagicDefense: 231
+    Resistance: 468
+    MagicResistance: 277
+    Str: 140
+    Agi: 136
+    Vit: 191
+    Int: 165
+    Dex: 170
+    Luk: 157
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1500
+    AttackMotion: 864
+    DamageMotion: 288
+    Ai: 04  # TODO
+    Drops:
+      - Item: Steel
+        Rate: 225
+      - Item: Green_Crystal_Fragment
+        Rate: 2300
+      - Item: Elunium
+        Rate: 133
+      - Item: Shadowdecon_Ore
+        Rate: 150
+      - Item: Zelunium_Ore
+        Rate: 150
+      - Item: Zelunium
+        Rate: 25
+      - Item: Shadowdecon
+        Rate: 25
+      - Item: General_Orc_Card
+        Rate: 1
+        StealProtected: true
+  - Id: 20179
+    AegisName: SIEGLOUSE
+    Name: Sieglouse
+    Level: 253
+    Hp: 39324220
+    BaseExp: 742800
+    JobExp: 518662
+    Attack: 13393
+    Attack2: 3416
+    Defense: 289
+    MagicDefense: 159
+    Resistance: 242
+    MagicResistance: 201
+    Str: 219
+    Agi: 257
+    Vit: 143
+    Int: 184
+    Dex: 235
+    Luk: 225
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Insect
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 100
+    AttackDelay: 960
+    AttackMotion: 960
+    DamageMotion: 480
+    Ai: 04  # TODO
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Round_Shell
+        Rate: 8750
+      - Item: Solid_Shell
+        Rate: 2000
+      - Item: C_Garden_Knife
+        Rate: 3
+      - Item: Red_Gemstone
+        Rate: 750
+      - Item: Shining_Round_Shell
+        Rate: 2000
+      - Item: Shadowdecon_Ore
+        Rate: 250
+      - Item: Shadowdecon
+        Rate: 30
+      - Item: Sieglouse_Card
+        Rate: 1
+        StealProtected: true
 #  - Id: 20180
 #    AegisName: TACNU_BRZ
 #  - Id: 20181

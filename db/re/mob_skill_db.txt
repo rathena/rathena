@@ -13015,6 +13015,8 @@
 3826,E16_2_SEYREN@NPC_CHANGETELEKINESIS,attack,169,1,10000,500,60000000,no,self,myhpltmaxrate,10,,,,,,,
 3826,E16_2_SEYREN@NPC_ALLHEAL,attack,687,1,5000,500,600000,no,target,myhpltmaxrate,5,,,,,,,
 
+// Clock Tower Unknown Basement (placeholder). Ids [20118], [20175-20179]
+
 // Illusion of Luanda
 //20270,ILL_TRI_JOINT@AL_TELEPORT,idle,26,1,5000,0,5000,yes,self,rudeattacked,0,,,,,,,
 20270,ILL_TRI_JOINT@AL_HEAL,idle,28,9,5000,0,1500,yes,friend,mystatuson,hiding,,,,,,18,

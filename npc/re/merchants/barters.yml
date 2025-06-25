@@ -64,4 +64,5 @@ Footer:
   - Path: npc/re/merchants/barters/refine.yml
   - Path: npc/re/merchants/barters/rgsr_in.yml
   - Path: npc/re/merchants/barters/quests_19.yml
+  - Path: npc/re/merchants/barters/clock_unknown_basement.yml
 
