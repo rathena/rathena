@@ -44394,6 +44394,103 @@ Body:
     Name: NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN
     Description: The Vigilante At Night Gun Shotgun
     MaxLevel: 5
+  - Id: 5506
+    Name: SH_CHUL_HO_BATTERING
+    Description: Chulho Battering
+    MaxLevel: 7
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 5
+    GiveAp: 1
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 3
+    CastCancel: true
+    AfterCastActDelay: 1000
+    Cooldown: 700
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 64
+        - Level: 2
+          Amount: 66
+        - Level: 3
+          Amount: 68
+        - Level: 4
+          Amount: 70
+        - Level: 5
+          Amount: 72
+        - Level: 6
+          Amount: 74
+        - Level: 7
+          Amount: 76
+  - Id: 5507
+    Name: SH_HYUN_ROK_SPIRIT_POWER
+    Description: Hyunrok Spirit Power
+    MaxLevel: 7
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    GiveAp: 1
+    Hit: Multi_Hit
+    HitCount: 7
+    Element: Neutral
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 4
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay: 700
+    Cooldown: 1000
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 70
+        - Level: 2
+          Amount: 73
+        - Level: 3
+          Amount: 76
+        - Level: 4
+          Amount: 79
+        - Level: 5
+          Amount: 82
+        - Level: 6
+          Amount: 85
+        - Level: 7
+          Amount: 88
   - Id: 5505
     Name: HN_OVERCOMING_CRISIS
     Description: Overcoming Crisis
