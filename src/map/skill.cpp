@@ -9341,7 +9341,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case NPC_SELFDESTRUCTION:
 		//Self Destruction hits everyone in range (allies+enemies)
 		//Except for Summoned Marine spheres on non-versus maps, where it's just enemies and your own slaves.
-		if ((md == nullptr || md->special_state.ai == AI_SPHERE) && !map_flag_vs(src->m)) {
+		if ((md == nullptr || md->special_state.ai == AI_SPHERE) && !map_flag_vs(src->m) || md && map_getmapflag(src->m, MF_NO_NPC_SELFDESTRUCTION_ON_ALL)) {
 			// Enable Marine Spheres to damage own Homunculus and summons outside PVP
 			if (battle_config.alchemist_summon_setting&8)
 				i = BCT_ENEMY|BCT_SLAVE;
@@ -13805,6 +13805,10 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 			map_foreachinrange( skill_area_sub, bl, range, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_nodamage_id );
 		}
+		break;
+
+	case DE_BERSERKAIZER:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
 	default: {

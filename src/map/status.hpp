@@ -1447,6 +1447,7 @@ enum sc_type : int16 {
 	SC_WATER_CHARM_POWER,
 	SC_WIND_CHARM_POWER,
 	SC_GROUND_CHARM_POWER,
+	SC_MTP_W_POTION_100,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };

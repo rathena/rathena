@@ -522,6 +522,8 @@
 	export_constant(MF_NOBANK);
 	export_constant(MF_SPECIALPOPUP);
 	export_constant(MF_NOMACROCHECKER);
+	export_constant(MF_NOLOOTNORMALMOB);
+	export_constant(MF_NO_NPC_SELFDESTRUCTION_ON_ALL);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -1976,6 +1978,7 @@
 	export_constant(SC_SBUNSHIN);
 	export_constant(SC_CONTENTS_34);
 	export_constant(SC_CONTENTS_35);
+	export_constant(SC_MTP_W_POTION_100);
 	export_constant(SC_NOACTION);
 	export_constant(SC_C_BUFF_3);
 	export_constant(SC_C_BUFF_4);
@@ -3838,7 +3841,7 @@
 	export_constant(MOB_ID);
 
 	// Renamed monsterinfo types - 2025-03-11
-	export_deprecated_constant2("MOB_ATK1",MOB_ATKMIN); 
+	export_deprecated_constant2("MOB_ATK1",MOB_ATKMIN);
 	export_deprecated_constant2("MOB_ATK2",MOB_ATKMAX);
 	export_deprecated_constant2("MOB_RANGE",MOB_ATKRANGE);
 	export_deprecated_constant2("MOB_RANGE2",MOB_SKILLRANGE);
@@ -4266,7 +4269,7 @@
 	export_constant(ADOPT_MORE_CHILDREN);
 	export_constant(ADOPT_LEVEL_70);
 	export_constant(ADOPT_MARRIED);
-	
+
 	/* directions */
 	export_constant(DIR_NORTH);
 	export_constant(DIR_NORTHWEST);
@@ -4336,7 +4339,7 @@
 	export_constant(IE_NOMEMBER);
 	export_constant(IE_NOINSTANCE);
 	export_constant(IE_OTHER);
-	
+
 	/* months */
 	export_constant(JANUARY);
 	export_constant(FEBRUARY);
@@ -4350,7 +4353,7 @@
 	export_constant(OCTOBER);
 	export_constant(NOVEMBER);
 	export_constant(DECEMBER);
-	
+
 	/* days of the week */
 	export_constant(SUNDAY);
 	export_constant(MONDAY);
@@ -4359,7 +4362,7 @@
 	export_constant(THURSDAY);
 	export_constant(FRIDAY);
 	export_constant(SATURDAY);
-	
+
 	/* date types */
 	export_constant(DT_SECOND);
 	export_constant(DT_MINUTE);
@@ -7184,6 +7187,7 @@
 	export_constant(IG_LI_NYANGVINE_BOX1_38);
 	export_constant(IG_LI_NYANGVINE_BOX2_38);
 	export_constant(IG_LI_NYANGVINE_BOX3_38);
+	export_constant(IG_D_GW_EXTRACTOR);
 	export_constant(IG_MD_FRAGMENT_BOX_BL);
 	export_constant(IG_MD_FRAGMENT_BOX_YL);
 	export_constant(IG_MD_FRAGMENT_BOX_GR);
@@ -10878,7 +10882,7 @@
 	export_constant(GROUP_ALGORITHM_RANDOM);
 	export_constant(GROUP_ALGORITHM_SHAREDPOOL);
 	export_constant(GROUP_ALGORITHM_ALL);
-	
+
 	/* guildinfo script command */
 	export_constant(GUILDINFO_NAME);
 	export_constant(GUILDINFO_LEVEL);

@@ -3248,7 +3248,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		}
 	}
 
-	if( !(type&1) && !map_getmapflag(m, MF_NOMOBLOOT) && !md->state.rebirth && (
+	if( !(type&1) && !map_getmapflag(m, MF_NOMOBLOOT) && !(md->get_bosstype() == BOSSTYPE_NONE && map_getmapflag(m, MF_NOLOOTNORMALMOB)) && !md->state.rebirth && (
 		!md->special_state.ai || //Non special mob
 		battle_config.alchemist_summon_reward == 2 || //All summoned give drops
 		(md->special_state.ai==AI_SPHERE && battle_config.alchemist_summon_reward == 1) //Marine Sphere Drops items.

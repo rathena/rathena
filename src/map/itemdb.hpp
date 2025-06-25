@@ -3118,6 +3118,7 @@ enum e_random_item_group {
 	IG_BRILLIANT_HAT_BOX,
 	IG_CHEST_OF_DEATH,
 	IG_SHADOW_CUBE_SAK,
+	IG_D_GW_EXTRACTOR,
 
 	IG_MAX
 };
