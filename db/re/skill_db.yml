@@ -45218,6 +45218,72 @@ Body:
       ApCost: 5
       State: Falcon
     Status: Wild_Walk
+  - Id: 6515
+    Name: ABC_ABYSS_FLAME
+    Description: Abyss Flame
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Fire
+    GiveAp: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 1000
+    Cooldown: 700
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 82
+        - Level: 2
+          Amount: 86
+        - Level: 3
+          Amount: 90
+        - Level: 4
+          Amount: 94
+        - Level: 5
+          Amount: 98
+  - Id: 6522
+    Name: ABC_ABYSS_FLAME_ATK
+    Description: Abyss Flame Attack
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Fire
+    GiveAp: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch
