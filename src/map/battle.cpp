@@ -3081,6 +3081,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case SHC_ETERNAL_SLASH:
 			case SHC_IMPACT_CRATER:
 			case SHC_CROSS_SLASH:
+			case IQ_BLAZING_FLAME_BLAST:
 				cri /= 2;
 				break;
 			case WH_GALESTORM:
@@ -5986,6 +5987,13 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case IQ_THIRD_CONSECRATION:
 			skillratio += -100 + 700 * skill_lv + 10 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case IQ_BLAZING_FLAME_BLAST:
+			skillratio += -100 + 2000 + 3800 * skill_lv;
+			skillratio += 10 * sstatus->pow;
+			if( sc != nullptr && sc->getSCE( SC_MASSIVE_F_BLASTER ) != nullptr)
+				skillratio += 1500 + 400 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case IG_GRAND_JUDGEMENT:
