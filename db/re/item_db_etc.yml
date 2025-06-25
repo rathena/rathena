@@ -94460,17 +94460,17 @@ Body:
     Flags:
       BuyingStore: true
   - Id: 1001135
-    AegisName: aegis_1001135
+    AegisName: Hard_Ice
     Name: Solid Ice
     Type: Etc
     Weight: 10
   - Id: 1001136
-    AegisName: aegis_1001136
+    AegisName: Pro_Instruments
     Name: Professional Instrument
     Type: Etc
     Weight: 10
   - Id: 1001137
-    AegisName: aegis_1001137
+    AegisName: Black_Jewelry
     Name: Black Jewelry
     Type: Etc
     Weight: 10
