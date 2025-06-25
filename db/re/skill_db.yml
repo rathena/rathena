@@ -44736,6 +44736,23 @@ Body:
       Ammo:
         Bullet: true
       AmmoAmount: 5
+  - Id: 5499
+    Name: SS_FOUR_CHARM
+    Description: Four Colors Charm
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: 300000
+    Cooldown: 3000
+    Requires:
+      SpCost: 90
+      ApCost: 20
   - Id: 6001
     Name: DK_DRAGONIC_BREATH
     Description: Dragonic Breath
