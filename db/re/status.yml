@@ -9089,6 +9089,9 @@ Body:
       Bleeding: true
       Confusion: true
       Freeze: true
+  - Status: Chasing
+    Icon: EFST_CHASING
+    DurationLookup: ABC_HIT_AND_SLIDING
   - Status: Bath_foam_a
     Icon: EFST_BATH_FOAM_A
     Flags:
