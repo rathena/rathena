@@ -44717,6 +44717,38 @@ Body:
           Amount: 84
         - Level: 10
           Amount: 86
+  - Id: 6502
+    Name: DK_DRAGONIC_PIERCE
+    Description: Dragonic Pierce
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Weapon
+    GiveAp: 2
+    CastCancel: true
+    CastTime: 500
+    AfterCastActDelay: 700
+    Cooldown: 500
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 45
+        - Level: 2
+          Amount: 50
+        - Level: 3
+          Amount: 55
+        - Level: 4
+          Amount: 60
+        - Level: 5
+          Amount: 65
+      Weapon:
+        2hSpear: true
   - Id: 6503
     Name: IG_RADIANT_SPEAR
     Description: Radiant Spear
