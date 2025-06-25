@@ -5853,6 +5853,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case EM_EL_STORM_WIND:
 	case EM_EL_AVALANCHE:
 	case EM_EL_DEADLY_POISON:
+	case EM_PSYCHIC_STREAM:
 	case BO_EXPLOSIVE_POWDER:
 	case BO_MAYHEMIC_THORNS:
 	case BO_MYSTERY_POWDER:
@@ -6009,6 +6010,24 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 					if (skill_check_unit_movepos(5, src, bl->x + dirx[dir], bl->y + diry[dir], 0, 1))
 						clif_blown(src);
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);// Trigger animation
+					break;
+				}
+				case EM_PSYCHIC_STREAM:
+				{
+					uint8 dir = DIR_NORTHEAST;
+
+					if (bl->x != src->x || bl->y != src->y)
+						dir = map_calc_dir(bl, src->x, src->y);	// dir based on target as we move player based on target location
+
+					if (skill_check_unit_movepos(0, src, bl->x + dirx[dir], bl->y + diry[dir], 1, 1)) {
+						clif_blown(src);
+						skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
+						clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+					}
+					else {
+						if (sd != nullptr)
+							clif_skill_fail(*sd, skill_id, USESKILL_FAIL);
+					}
 					break;
 				}
 				case AG_CRYSTAL_IMPACT_ATK:
@@ -13891,7 +13910,7 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 
 	// Fogwall makes all offensive-type targetted skills fail at 75%
 	// Jump Kick can still fail even though you can jump to friendly targets.
-	if ((inf&BCT_ENEMY || skill_id == TK_JUMPKICK) && tsc && tsc->getSCE(SC_FOGWALL) && rnd() % 100 < 75)
+	if ((inf&BCT_ENEMY || skill_id == TK_JUMPKICK || skill_id == EM_PSYCHIC_STREAM) && tsc && tsc->getSCE(SC_FOGWALL) && rnd() % 100 < 75)
 		return USESKILL_FAIL_LEVEL;
 
 	return -1;
@@ -19224,6 +19243,12 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		case SKE_DAWN_BREAK:
 			if( sc == nullptr || ( sc->getSCE( SC_DAWN_MOON ) == nullptr && sc->getSCE( SC_MIDNIGHT_MOON ) == nullptr && sc->getSCE( SC_SKY_ENCHANT ) == nullptr ) ){
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_CONDITION);
+				return false;
+			}
+			break;
+		case EM_PSYCHIC_STREAM:
+			if (sc != nullptr && sc->getSCE(SC_ENERGYCOAT) != nullptr) {
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL);
 				return false;
 			}
 			break;
