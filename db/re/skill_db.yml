@@ -44394,6 +44394,32 @@ Body:
     Name: NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN
     Description: The Vigilante At Night Gun Shotgun
     MaxLevel: 5
+  - Id: 5505
+    Name: HN_OVERCOMING_CRISIS
+    Description: Overcoming Crisis
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Duration1: 300000
+    AfterCastActDelay: 500
+    Cooldown: 60000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 70
+        - Level: 2
+          Amount: 73
+        - Level: 3
+          Amount: 76
+        - Level: 4
+          Amount: 79
+        - Level: 5
+          Amount: 82
+      ApCost: 50
+    Status: Overcoming_Crisis
   - Id: 6001
     Name: DK_DRAGONIC_BREATH
     Description: Dragonic Breath
