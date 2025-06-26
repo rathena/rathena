@@ -18738,7 +18738,7 @@ BUILDIN_FUNC(getmonsterinfo)
 	}
 
 	switch ( type ) {
-		case MOB_NAME:       script_pushstrcopy(st, mob->jname.c_str()); break;
+		case MOB_NAME:       script_pushstrcopy(st, mob->name.c_str()); break;
 		case MOB_LV:         script_pushint(st, mob->lv); break;
 		case MOB_MAXHP:      script_pushint(st, mob->status.max_hp); break;
 		case MOB_MAXSP:      script_pushint(st, mob->status.max_sp); break;
