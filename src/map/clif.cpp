@@ -1047,7 +1047,7 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 	int32 g_id = status_get_guild_id( bl );
 
 #if PACKETVER < 20091103
-	if( !pcdb_checkid( vd->class_ ) ){
+	if( !pcdb_checkid( vd->look[LOOK_BASE] ) ){
 		struct packet_idle_unit2 p;
 
 		p.PacketType = idle_unit2Type;
@@ -1059,22 +1059,22 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 		p.bodyState = ( sc ) ? sc->opt1 : 0;
 		p.healthState = ( sc ) ? sc->opt2 : 0;
 		p.effectState = ( sc ) ? sc->option : 0;
-		p.job = vd->class_;
-		p.head = vd->hair_style;
-		p.weapon = vd->weapon;
-		p.accessory = vd->head_bottom;
-		if( bl->type == BL_NPC && vd->class_ == JT_GUILD_FLAG ){
+		p.job = vd->look[LOOK_BASE];
+		p.head = vd->look[LOOK_HAIR];
+		p.weapon = vd->look[LOOK_WEAPON];
+		p.accessory = vd->look[LOOK_HEAD_BOTTOM];
+		if( bl->type == BL_NPC && vd->look[LOOK_BASE] == JT_GUILD_FLAG ){
 			// The hell, why flags work like this?
 			p.shield = status_get_emblem_id( bl );
 			p.accessory2 = GetWord( g_id, 1 );
 			p.accessory3 = GetWord( g_id, 0 );
 		}else{
-			p.shield = vd->shield;
-			p.accessory2 = vd->head_top;
-			p.accessory3 = vd->head_mid;
+			p.shield = vd->look[LOOK_SHIELD];
+			p.accessory2 = vd->look[LOOK_HEAD_TOP];
+			p.accessory3 = vd->look[LOOK_HEAD_MID];
 		}
-		p.headpalette = vd->hair_color;
-		p.bodypalette = vd->cloth_color;
+		p.headpalette = vd->look[LOOK_HAIR_COLOR];
+		p.bodypalette = vd->look[LOOK_CLOTHES_COLOR];
 		p.headDir = ( sd )? sd->head_dir : 0;
 		p.GUID = g_id;
 		p.GEmblemVer = status_get_emblem_id( bl );
@@ -1212,7 +1212,7 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 	int32 g_id = status_get_guild_id( bl );
 
 #if PACKETVER < 20091103
-	if( !pcdb_checkid( vd->class_ ) ){
+	if( !pcdb_checkid( vd->look[LOOK_BASE] ) ){
 		struct packet_spawn_unit2 p;
 
 		p.PacketType = spawn_unit2Type;
@@ -1224,22 +1224,22 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 		p.bodyState = ( sc ) ? sc->opt1 : 0;
 		p.healthState = ( sc ) ? sc->opt2 : 0;
 		p.effectState = ( sc ) ? sc->option : 0;
-		p.head = vd->hair_style;
-		p.weapon = vd->weapon;
-		p.accessory = vd->head_bottom;
-		p.job = vd->class_;
-		if( bl->type == BL_NPC && vd->class_ == JT_GUILD_FLAG ){
+		p.head = vd->look[LOOK_HAIR];
+		p.weapon = vd->look[LOOK_WEAPON];
+		p.accessory = vd->look[LOOK_HEAD_BOTTOM];
+		p.job = vd->look[LOOK_BASE];
+		if( bl->type == BL_NPC && vd->look[LOOK_BASE] == JT_GUILD_FLAG ){
 			// The hell, why flags work like this?
 			p.shield = status_get_emblem_id( bl );
 			p.accessory2 = GetWord( g_id, 1 );
 			p.accessory3 = GetWord( g_id, 0 );
 		}else{
-			p.shield = vd->shield;
-			p.accessory2 = vd->head_top;
-			p.accessory3 = vd->head_mid;
+			p.shield = vd->look[LOOK_SHIELD];
+			p.accessory2 = vd->look[LOOK_HEAD_TOP];
+			p.accessory3 = vd->look[LOOK_HEAD_MID];
 		}
-		p.headpalette = vd->hair_color;
-		p.bodypalette = vd->cloth_color;
+		p.headpalette = vd->look[LOOK_HAIR_COLOR];
+		p.bodypalette = vd->look[LOOK_CLOTHES_COLOR];
 		p.headDir = ( sd ) ? sd->head_dir : 0;
 		p.isPKModeON = ( sd && sd->status.karma ) ? 1 : 0;
 		p.sex = vd->sex;
@@ -1643,7 +1643,7 @@ void clif_refresh_clothcolor( block_list& bl, enum send_target target, block_lis
 		return;
 	}
 
-	if( vd->cloth_color == 0 ){
+	if( vd->look[LOOK_CLOTHES_COLOR] == 0 ){
 		return;
 	}
 
@@ -1651,7 +1651,7 @@ void clif_refresh_clothcolor( block_list& bl, enum send_target target, block_lis
 		tbl = &bl;
 	}
 
-	clif_sprite_change( tbl, bl.id, LOOK_CLOTHES_COLOR, vd->cloth_color, 0, target );
+	clif_sprite_change( tbl, bl.id, LOOK_CLOTHES_COLOR, vd->look[LOOK_CLOTHES_COLOR], 0, target );
 #endif
 }
 
@@ -8542,7 +8542,7 @@ void clif_mvp_exp( map_session_data& sd, t_exp exp ){
 	PACKET_ZC_MVP_GETTING_SPECIAL_EXP packet{};
 
 	packet.packetType = HEADER_ZC_MVP_GETTING_SPECIAL_EXP;
-	packet.exp = std::min( static_cast<decltype(packet.exp)>( exp ), MAX_EXP );
+	packet.exp = static_cast<decltype(packet.exp)>(std::min(exp, MAX_EXP));
 
 	clif_send( &packet, sizeof( packet ), &sd, SELF );
 #endif
