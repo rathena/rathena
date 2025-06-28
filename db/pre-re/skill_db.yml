@@ -9239,7 +9239,7 @@ Body:
       IsNpc: true
     Hit: Single
     HitCount: 1
-    Duration: 30000
+    Duration1: 30000
     Status: WeaponBreaker
   - Id: 344
     Name: NPC_ARMORBRAKE
