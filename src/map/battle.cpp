@@ -3597,7 +3597,7 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 			break;
 		case CD_DIVINUS_FLOS:
 		case AB_ADORAMUS:
-			if (sc != nullptr && sc->getSCE(SC_ANCILLA) != nullptr)
+			if (sc != nullptr && sc->hasSCE(SC_ANCILLA))
 				element = ELE_NEUTRAL;
 			break;
 		case LG_RAYOFGENESIS:
@@ -8751,7 +8751,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case CD_DIVINUS_FLOS:
 						skillratio += -100 + 4000 * skill_lv;
 						skillratio += 70 * pc_checkskill(sd,CD_FIDUS_ANIMUS);
-						skillratio += 5 * sstatus->spl;
+						skillratio += 5 * sstatus->spl;	// !TODO: unknown ratio
 						RE_LVL_DMOD(100);
 						break;
 					case AG_DESTRUCTIVE_HURRICANE_CLIMAX:
