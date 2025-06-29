@@ -5850,7 +5850,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case DK_DRAGONIC_PIERCE:
 			skillratio += -100 + 850 + 600 * skill_lv;
-			skillratio += 7 * sstatus->pow;
+			skillratio += 7 * sstatus->pow;	// !TODO: unknown ratio
 
 			if (sc != nullptr && sc->hasSCE(SC_DRAGONIC_AURA))
 				skillratio += 100 + 50 * skill_lv;
