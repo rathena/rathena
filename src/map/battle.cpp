@@ -3604,7 +3604,7 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 				element = ELE_NEUTRAL;
 			break;
 		case IG_IMPERIAL_PRESSURE:
-			if (sc != nullptr && sc->getSCE(SC_GUARD_STANCE) != nullptr)
+			if (sc != nullptr && sc->hasSCE(SC_GUARD_STANCE))
 				element = ELE_HOLY;
 			break;
 		case WM_REVERBERATION:
@@ -8726,11 +8726,9 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						break;
 					case IG_IMPERIAL_PRESSURE:
 						skillratio += -100 + 5600 + 1850 * skill_lv;
-						skillratio += 10 * sstatus->spl;
+						skillratio += 7 * sstatus->spl;
 						skillratio += 50 * pc_checkskill( sd, IG_SPEAR_SWORD_M );
 						RE_LVL_DMOD(100);
-						if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
-							skillratio += skillratio * i / 100;
 						break;
 					case CD_ARBITRIUM:
 						skillratio += -100 + 1000 * skill_lv + 10 * sstatus->spl;

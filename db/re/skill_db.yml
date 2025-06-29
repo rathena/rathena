@@ -44798,8 +44798,7 @@ Body:
       Splash: true
     Range: 9
     Hit: Multi_Hit
-    HitCount: 5
-    Element: Neutral
+    HitCount: -7
     GiveAp: 2
     SplashArea:
       - Level: 1
