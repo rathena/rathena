@@ -18268,7 +18268,6 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 					}
 #ifdef RENEWAL
 					sc_start(sd, sd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
-					sc_start(sd, tsd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
 #endif
 				}
 				return c;
