@@ -5582,7 +5582,11 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	case RG_BACKSTAP:
 		{
-			if (check_distance_bl(src, bl, 1)) {
+			bool is_skip_check = false;
+			#ifdef RENEWAL
+			is_skip_check = true;
+			#endif
+			if (is_skip_check || !check_distance_bl(src, bl, 0)) {
 #ifdef RENEWAL
 				uint8 dir = map_calc_dir(src, bl->x, bl->y);
 				int16 x, y;
