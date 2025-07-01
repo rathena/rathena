@@ -250,7 +250,6 @@ int32 elemental_data_received(s_elemental *ele, bool flag) {
 		memcpy(&ed->elemental, ele, sizeof(s_elemental));
 		status_set_viewdata(ed, ed->elemental.class_);
 		ed->vd->look[LOOK_HEAD_MID] = 10; // TODO: Why?
-		status_change_init(ed);
 		unit_dataset(ed);
 		ed->ud.dir = sd->ud.dir;
 

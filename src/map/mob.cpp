@@ -224,7 +224,6 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	if(map_addblock(nd))
 		return;
 	status_set_viewdata(nd, nd->class_);
-	status_change_init(nd);
 	unit_dataset(nd);
 
 	mvptomb_setdelayspawn(nd);
@@ -492,7 +491,6 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->centerX = data->x;
 	md->centerY = data->y;
 	status_set_viewdata(md, md->mob_id);
-	status_change_init(md);
 	unit_dataset(md);
 
 	map_addiddb(md);
