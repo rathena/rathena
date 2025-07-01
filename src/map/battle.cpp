@@ -5943,6 +5943,15 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 
 			RE_LVL_DMOD(100);
 			break;
+		case DK_DRAGONIC_PIERCE:
+			skillratio += -100 + 850 + 600 * skill_lv;
+			skillratio += 7 * sstatus->pow;	// !TODO: unknown ratio
+
+			if (sc != nullptr && sc->hasSCE(SC_DRAGONIC_AURA))
+				skillratio += 100 + 50 * skill_lv;
+
+			RE_LVL_DMOD(100);
+			break;
 		case IQ_OLEUM_SANCTUM:
 			skillratio += -100 + 500 + 2000 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
