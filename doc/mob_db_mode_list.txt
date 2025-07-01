@@ -87,7 +87,7 @@ Target Weak: Allows aggressive monsters to only be aggressive against
 	characters that are five levels below it's own level.
 	For example, a monster of level 104 will not pick fights with a level 99.
 
-Random Target: Picks a new random target in range on each attack / skill.
+Random Target: Picks a new random target in range for each normal attack.
 
 Ignore Melee: The mob will take 1 HP damage from physical attacks.
 

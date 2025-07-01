@@ -72,8 +72,7 @@ struct s_elemental_db {
 	std::unordered_map<e_elemental_skillmode, std::shared_ptr<s_elemental_skill>> skill;	/// mode, skill
 };
 
-struct s_elemental_data {
-	block_list bl;
+struct s_elemental_data : public block_list {
 	unit_data ud;
 	view_data *vd;
 	status_data base_status, battle_status;

@@ -363,8 +363,7 @@ struct skill_timerskill {
 };
 
 /// Skill unit
-struct skill_unit {
-	struct block_list bl;
+struct skill_unit : public block_list {
 	std::shared_ptr<s_skill_unit_group> group; /// Skill group reference
 	t_tick limit;
 	int32 val1, val2;
@@ -404,7 +403,7 @@ struct s_skill_unit_group {
 
 	~s_skill_unit_group() {
 		if (this->unit)
-			map_freeblock(&this->unit->bl); // schedules deallocation of whole array (HACK)
+			map_freeblock(this->unit); // schedules deallocation of whole array (HACK)
 	}
 };
 
@@ -440,6 +439,13 @@ enum e_skill_blown	{
 	BLOWN_MD_KNOCKBACK_IMMUNE	= 0x08, // If target is MD_KNOCKBACK_IMMUNE
 	BLOWN_TARGET_NO_KNOCKBACK	= 0x10, // If target has 'special_state.no_knockback'
 	BLOWN_TARGET_BASILICA		= 0x20, // If target is in Basilica area
+};
+
+// Enum for skill_dance_overlap flag parameter
+enum e_dance_overlap : int32 {
+	OVERLAP_REMOVE = 0, // Skill unit is about to be removed, remove overlap marker from overlapping units on the cell if applicable
+	OVERLAP_SET, // Skill unit was placed, add overlap marker to overlapping units on the cell
+	OVERLAP_COUNT, // Don't change overlap marker, just count units overlapping with skill unit (excluding itself)
 };
 
 /// Create Database item

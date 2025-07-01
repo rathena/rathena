@@ -32,7 +32,7 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 {
 	nullpo_retv(sd);
 
-	if (map_getmapflag(sd->bl.m, MF_NOTRADE)) {
+	if (map_getmapflag(sd->m, MF_NOTRADE)) {
 		clif_displaymessage (sd->fd, msg_txt(sd,272));
 		return; //Can't trade in notrade mapflag maps.
 	}
@@ -78,7 +78,7 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 
 	// Players can not request trade from far away, unless they are allowed to use @trade.
 	if (!pc_can_use_command(sd, "trade", COMMAND_ATCOMMAND) &&
-	    (sd->bl.m != target_sd->bl.m || !check_distance_bl(&sd->bl, &target_sd->bl, TRADE_DISTANCE))) {
+	    (sd->m != target_sd->m || !check_distance_bl(sd, target_sd, TRADE_DISTANCE))) {
 		clif_traderesponse(*sd, TRADE_ACK_TOOFAR);
 		return ;
 	}
@@ -120,7 +120,7 @@ void trade_tradeack(map_session_data *sd, int32 type)
 		return;
 	}
 
-	if (tsd->state.trading || tsd->trade_partner.id != sd->bl.id) {
+	if (tsd->state.trading || tsd->trade_partner.id != sd->id) {
 		clif_traderesponse(*sd, TRADE_ACK_FAILED);
 		sd->trade_partner = {0,0};
 		return; // Already trading or wrong partner.
@@ -142,7 +142,7 @@ void trade_tradeack(map_session_data *sd, int32 type)
 	// Players can not request trade from far away, unless they are allowed to use @trade.
 	// Check here as well since the original character could had warped.
 	if (!pc_can_use_command(sd, "trade", COMMAND_ATCOMMAND) &&
-	    (sd->bl.m != tsd->bl.m || !check_distance_bl(&sd->bl, &tsd->bl, TRADE_DISTANCE))) {
+	    (sd->m != tsd->m || !check_distance_bl(sd, tsd, TRADE_DISTANCE))) {
 		clif_traderesponse(*sd, TRADE_ACK_TOOFAR);
 		sd->trade_partner = {0,0};
 		tsd->trade_partner = {0,0};

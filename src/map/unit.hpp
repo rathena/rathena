@@ -83,19 +83,7 @@ private:
 };
 
 struct view_data {
-	uint16 class_;
-	t_itemid
-		weapon,
-		shield, //Or left-hand weapon.
-		robe,
-		head_top,
-		head_mid,
-		head_bottom;
-	uint16
-		hair_style,
-		hair_color,
-		cloth_color,
-		body_style;
+	int32 look[LOOK_MAX];
 	char sex;
 	unsigned dead_sit : 2; // 0: Standing, 1: Dead, 2: Sitting
 };

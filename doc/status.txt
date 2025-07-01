@@ -24,6 +24,9 @@ See src/map/script_constants.hpp for EFST_ constants.
 
 DurationLookup: Used for default duration lookup in skill_db.yml. The lookup is used for some item bonuses as default duration.
 
+The duration used is Duration2 defined for the skill linked in DurationLookup.
+If different durations are defined per level, level 7 is used for the lookup.
+
 ---------------------------------------
 
 States: Specified states given when the SC is active.

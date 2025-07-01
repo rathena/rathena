@@ -41,7 +41,7 @@ manuk,274,239,5	script	Soldier#ep13_2	455,{
 		close;
 	}
 	else {
-		mes "[Injured Manuk Soldier";
+		mes "[Injured Manuk Soldier]";
 		mes "Bhiio aaas dgwer fdds rrrrrpppp Ee";
 		close;
 		mes "[Injured Manuk Soldier]";

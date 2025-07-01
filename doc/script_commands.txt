@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20220308
+//= 20250517
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -1017,6 +1017,13 @@ This special label triggers when a player steps in a map marked with the
 mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 every time a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
+
+OnPCIdentifyEvent:
+
+This special label triggers when a player successfully identifies an item.
+It is invoked each time the player uses an identifying action (such as using a Magnifier or MC_IDENTIFY).
+The temporary variable '@identify_idx' contains the index number of the item that was
+identified in the list, allowing scripts to determine which item was identified by the player.
 
 OnWhisperGlobal:
 
@@ -3355,6 +3362,13 @@ Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 Returns the map name of the given map ID. Returns an empty string if given
 map ID doesn't exist.
+
+---------------------------------------
+
+*mapname2id(<"map name">)
+
+Returns the map ID of the given map name or -1 if the given
+map name doesn't exist or is on another map-server.
 
 ---------------------------------------
 
@@ -11329,6 +11343,7 @@ Examples:
 ---------------------------------------
 
 *mesitemicon(<item_id>{,<display_name>});
+*mesitemicon(<"item_name">{,<display_name>});
 
 Generates an itemicon string for an item and can be used with NPC's mes command.
 The NPC message will show the item's icon which will be clickable and opens the
@@ -11340,6 +11355,7 @@ However if you provide a <display_name>, this name will be displayed instead.
 Examples:
 
 	mes mesitemicon( 1201 ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
+	mes mesitemicon( "Knife" ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 
 ========================
 |14.- Channel commands.|

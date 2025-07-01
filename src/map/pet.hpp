@@ -181,8 +181,7 @@ struct s_pet_autobonus_wrapper {
 
 extern std::unordered_map<std::string, std::shared_ptr<s_pet_autobonus_wrapper>> pet_autobonuses;
 
-struct pet_data {
-	struct block_list bl;
+struct pet_data : public block_list {
 	struct unit_data ud;
 	struct view_data vd;
 	struct s_pet pet;

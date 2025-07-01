@@ -55,6 +55,8 @@ enum e_hom_state2 : uint8;
 enum _sp;
 enum e_searchstore_failure : uint16;
 
+#define DMGVAL_IGNORE -30000
+
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xCFF,
@@ -1181,8 +1183,6 @@ void clif_GM_silence( map_session_data& sd, map_session_data& tsd, bool muted );
 
 void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag);
 #define clif_disp_overhead(bl, mes) clif_disp_overhead_(bl, mes, AREA)
-
-void clif_get_weapon_view(map_session_data* sd, t_itemid *rhand, t_itemid *lhand);
 
 void clif_party_xy_remove(map_session_data *sd); //Fix for minimap [Kevin]
 void clif_gospel_info( map_session_data& sd, int32 type );

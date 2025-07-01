@@ -1271,6 +1271,28 @@ jor_sklf1
 jor_sklf2
 cmd_bhole
 1@ep21c
+1@ch1a
+1@ch1b
+ch1_dw
+ch1_gef_in
+ch1_geffen
+ch1_gfn01
+ch1_gfn03
+ch1_que01
+ch1_sf01
+ch1_sf02
+ch1_sf03
+ch1_vrgef1
+ch1_vrgef2
+hem_dun01
+hem_dun02
+hem_fild
+mu_fild01
+uknw_ruin
+uknw_ruin2
+ygg_edge
+ygg_fruit
+ygg_roots
 
 //======================================================================================
 // - Other/Extra maps -

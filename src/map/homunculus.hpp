@@ -84,8 +84,7 @@ enum e_hom_state2 : uint8 {
 	SP_HUNGRY   = 0x2,
 };
 
-struct homun_data {
-	struct block_list bl;
+struct homun_data : public block_list {
 	struct unit_data  ud;
 	struct view_data *vd;
 	struct status_data base_status, battle_status;
