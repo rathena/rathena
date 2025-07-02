@@ -27,11 +27,11 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The ubuntu-latest label currently points to ubuntu-22.04.
-          # Available: ubuntu-22.04, ubuntu-20.04
-          os: [ubuntu-20.04]
+          # The ubuntu-latest label currently points to ubuntu-24.04.
+          # Available: ubuntu-24.04, ubuntu-22.04
+          os: [ubuntu-22.04]
           # Version list can be found on https://github.com/marketplace/actions/install-clang
-          clang: ['6.0', '7', '8', '9', '10', '11'] #, '12', '13']
+          clang: ['13','14','15','16','17','18','19','20']
 
     steps:
       - uses: actions/checkout@v4

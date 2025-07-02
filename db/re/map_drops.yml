@@ -2428,3 +2428,131 @@ Body:
           - Index: 8
             Item: Evilspirit_Gloves
             Rate: 50
+  - Map: ein_d02_i
+    SpecificDrops:
+      - Monster: ILL_TEDDY_BEAR_B 
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Survival_Staff_IL
+            Rate: 25
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_MINERAL
+        Drops:
+          - Index: 0
+            Item: IllusionStone
+            Rate: 10
+          - Index: 1
+            Item: Survival_Staff_IL
+            Rate: 25
+            RandomOptionGroup: ILL_MAGIC_NORMAL
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_PITMAN
+        Drops:
+          - Index: 0
+            Item: Gate_KeeperDD_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_TEDDY_BEAR_R
+        Drops:
+          - Index: 0
+            Item: Headband_Of_Power_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_TEDDY_BEAR_Y
+        Drops:
+          - Index: 0
+            Item: Boots_IL
+            Rate: 25
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_TEDDY_BEAR_W
+        Drops:
+          - Index: 0
+            Item: Counter_Dagger_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_OBSIDIAN
+        Drops:
+          - Index: 0
+            Item: Counter_Dagger_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_TEDDY_BEAR_G
+        Drops:
+          - Index: 0
+            Item: Gate_KeeperDD_IL
+            Rate: 25
+            RandomOptionGroup: ILL_PHYSIC_NORMAL
+          - Index: 1
+            Item: IllusionStone
+            Rate: 10
+          - Index: 2
+            Item: Teddy_Bear_Box_IL
+            Rate: 5
+      - Monster: ILL_TEDDY_BEAR_S
+        Drops:
+          - Index: 0
+            Item: Boots_IL
+            Rate: 5000
+          - Index: 1
+            Item: Counter_Dagger_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 2
+            Item: Gate_KeeperDD_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_PHYSIC_BOSS
+          - Index: 3
+            Item: Headband_Of_Power_IL
+            Rate: 5000
+          - Index: 4
+            Item: IllusionStone
+            Rate: 5000
+          - Index: 5
+            Item: IllusionStone
+            Rate: 10000
+          - Index: 6
+            Item: IllusionStone
+            Rate: 15000
+          - Index: 7
+            Item: Survival_Staff_IL
+            Rate: 5000
+            RandomOptionGroup: ILL_MAGIC_BOSS
+          - Index: 8
+            Item: S_Teddy_Bear_Box_IL
+            Rate: 150
