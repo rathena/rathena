@@ -5407,9 +5407,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, sta
 
 	// No natural SP regen
 	if (sc->getSCE(SC_DANCING) ||
-#ifdef RENEWAL
 		sc->getSCE(SC_MAXIMIZEPOWER) ||
-#endif
 #ifndef RENEWAL
 		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
 		(sc->getSCE(SC_EXTREMITYFIST) || sc->getSCE(SC_EXPLOSIONSPIRITS)) && (!sc->getSCE(SC_SPIRIT) || sc->getSCE(SC_SPIRIT)->val2 != SL_MONK)) ||
