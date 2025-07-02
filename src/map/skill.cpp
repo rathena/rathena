@@ -5394,6 +5394,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id,skill_lv));
 		break;
+	case DK_DRAGONIC_PIERCE:
 	case DK_STORMSLASH:
 	case IG_IMPERIAL_CROSS:
 	case CD_EFFLIGO:
@@ -5815,6 +5816,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case IQ_THIRD_CONSECRATION:
 	case IG_OVERSLASH:
 	case IG_RADIANT_SPEAR:
+	case IG_IMPERIAL_PRESSURE:
 	case CD_ARBITRIUM_ATK:
 	case CD_PETITIO:
 	case CD_FRAMEN:
@@ -5946,6 +5948,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 			switch ( skill_id ) {
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
+				case IG_IMPERIAL_PRESSURE:
 				case BO_MAYHEMIC_THORNS:
 				case DK_DRAGONIC_BREATH:
 				case DK_HACKANDSLASHER:

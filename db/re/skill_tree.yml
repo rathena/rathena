@@ -6720,6 +6720,11 @@ Body:
             Level: 5
           - Name: DK_TWOHANDDEF
             Level: 10
+      - Name: DK_DRAGONIC_PIERCE
+        MaxLevel: 5
+        Requires:
+          - Name: DK_HACKANDSLASHER
+            Level: 7
   - Job: Meister
     Inherit:
       Novice: true
@@ -7304,6 +7309,13 @@ Body:
           - Name: IG_OVERSLASH
             Level: 3
           - Name: IG_SHIELD_SHOOTING
+            Level: 3
+      - Name: IG_IMPERIAL_PRESSURE
+        MaxLevel: 5
+        Requires:
+          - Name: IG_SPEAR_SWORD_M
+            Level: 7
+          - Name: IG_GUARD_STANCE
             Level: 3
   - Job: Biolo
     Inherit:

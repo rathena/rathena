@@ -3690,6 +3690,10 @@ int32 battle_get_magic_element(struct block_list* src, struct block_list* target
 			if (sc && sc->getSCE(SC_INSPIRATION))
 				element = ELE_NEUTRAL;
 			break;
+		case IG_IMPERIAL_PRESSURE:
+			if (sc != nullptr && sc->hasSCE(SC_GUARD_STANCE))
+				element = ELE_HOLY;
+			break;
 		case WM_REVERBERATION:
 		case TR_METALIC_FURY:
 		case TR_SOUNDBLEND:
@@ -5936,6 +5940,15 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 				skillratio += (skill_lv * (sstatus->max_hp * 25 / 100) * 5) / 100;	// Skill level x 0.05 x ((MaxHP / 4) + (MaxSP / 2))
 				skillratio += (skill_lv * (sstatus->max_sp * 50 / 100) * 5) / 100;
 			}
+
+			RE_LVL_DMOD(100);
+			break;
+		case DK_DRAGONIC_PIERCE:
+			skillratio += -100 + 850 + 600 * skill_lv;
+			skillratio += 7 * sstatus->pow;	// !TODO: unknown ratio
+
+			if (sc != nullptr && sc->hasSCE(SC_DRAGONIC_AURA))
+				skillratio += 100 + 50 * skill_lv;
 
 			RE_LVL_DMOD(100);
 			break;
@@ -8925,6 +8938,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += -100 + ( 450 + 10 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
 						}
 						skillratio += 7 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
+					case IG_IMPERIAL_PRESSURE:
+						skillratio += -100 + 5600 + 1850 * skill_lv;
+						skillratio += 7 * sstatus->spl;
+						skillratio += 50 * pc_checkskill( sd, IG_SPEAR_SWORD_M );
 						RE_LVL_DMOD(100);
 						break;
 					case CD_ARBITRIUM:
