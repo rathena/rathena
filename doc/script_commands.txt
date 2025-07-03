@@ -9865,6 +9865,8 @@ with the given character id.
 Only useful when using the map-server-generator. Registers an extra warp from this
 npc to the destination map/x/y for the generated client files.
 
+If <Name of Link> is empty, the NPC will be registered as a warp (type 200) instead of a regular NPC.
+
 ---------------------------------------
 
 *navihide
