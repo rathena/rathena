@@ -21,13 +21,9 @@
 
 function	script	F_BBQ	{
 	explode(.@M$, getarg(2), ",");
-	explode(.@B$, getarg(3), ",");
-	explode(.@J$, getarg(4), ",");
 
 	for (.@i = 0; .@i < getarraysize(.@M$); .@i++) {
 		.@MobIds[.@i] = atoi(.@M$[.@i]);
-		.@BaseExp[.@i] = atoi(.@B$[.@i]);
-		.@JobExp[.@i] = atoi(.@J$[.@i]);
 	}
 
 	mes "[ Quest Board ]";
@@ -49,31 +45,10 @@ function	script	F_BBQ	{
 	if (.@s >= getarraysize(.@MobIds)) {
 		for (.@i = 0; .@i < getarraysize(.@MobIds); .@i++) {
 			if (Target[.@MobIds[.@i] - 1000] > 20) {
-				.@Jexp += .@JobExp[.@i];
-				.@Bexp += .@BaseExp[.@i];
+				.@Bexp += getmonsterinfo(.@MobIds[.@i], MOB_BASEEXP)*5;
+				.@Jexp += getmonsterinfo(.@MobIds[.@i], MOB_JOBEXP)*5;
 				Target[.@MobIds[.@i] - 1000] = 0;
 				.@c++;
-			}
-		}
-
-		if (vip_status(1)) {
-			// Menüauswahl fixen: Prompt braucht eindeutige Auswahloptionen
-			.@sel = prompt(
-				"Both (" + .@Bexp + "/" + .@Jexp + ")",
-				"Only Base (" + (.@Bexp + .@Jexp) + ")",
-				"Only Job (" + (.@Bexp + .@Jexp) + ")"
-			);
-			switch (.@sel) {
-				case 3:
-					.@Jexp += .@Bexp;
-					.@Bexp = 0;
-					break;
-				case 2:
-					.@Bexp += .@Jexp;
-					.@Jexp = 0;
-					break;
-				default:
-					break;
 			}
 		}
 
@@ -93,19 +68,18 @@ function	script	F_BBQ	{
 			Target[.@MobIds[.@s] - 1000] = 1;
 		}
 	}
+
 	close;
 }
 
 payon,148,95,4	script	Bounty Board 1-20#pay	837,{
 
-	callfunc "F_BBQ", .Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+	callfunc "F_BBQ", .Levels[0], .Levels[1], .MobIds$;
 	end;
 
 OnInit:
 	setarray .Levels, 1, 20;
 	.MobIds$  = "1010,1014,1025";
-	.BaseExp$ = "6975,13050,13050";
-	.JobExp$  = "5175,9675,9675";
 	end;
 
 OnNPCKillEvent:
@@ -140,282 +114,466 @@ OnNPCKillEvent:
 	end;
 }
 
-payon,148,93,4	script	Bounty Board 21-50#pay	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 21,50;
-	.MobIds$ =  "1060,1128,1076,1028";
-	.BaseExp$ = "20250,24300,18225,24300";
-	.JobExp$ =  "22725,27225,20475,27225";
-}
-
-payon,148,91,4	script	Bounty Board 41-75#pay	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 41,75;
-	.MobIds$ =  "1277, 1013, 1016, 1026, 1188";
-	.BaseExp$ = "54675,38475,45450,55575,59625";
-	.JobExp$ =  "61650,43425,51075,62550,67050";
-}
-
-payon,148,89,4	script	Bounty Board 61-100#pay	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 61,100;
-	.MobIds$ =  "1170, 1110,  1180";
-	.BaseExp$ = "66750,75900, 99750";
-	.JobExp$ =  "75150,85350,111200";
-}
-
-prontera,136,225,5	script	Bounty Board 1-20#prt	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 1,20;
-	.MobIds$ =  "1063,1004,1012,1052,1167,1048,1094";
-	.BaseExp$ = "5400,9000,10125,11025,10125,14175,13050";
-	.JobExp$ =  "3900,6750,7650,8325,7650,15975,9675";
-}
-
-prontera,138,227,5	script	Bounty Board 21-50#prt	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 21,50;
-	.MobIds$ =  "1051,1175,1174,1019,1104,1157,1053,1054,1031,1033,1055";
-	.BaseExp$ = "14175,15075,14175,18225,30375,30375,20250,22275,22275,26100,12150";
-	.JobExp$ =  "15975,17100,15975,20475,34200,34200,22725,25200,25200,29475,27337";
-}
-
-prontera,140,229,5	script	Bounty Board 41-70#prt	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 41,70;
-	.MobIds$ =  "1138,1100,1494,1166";
-	.BaseExp$ = "49500,40500,50625,64350";
-	.JobExp$ =  "55575,45450,56925,72450";
-}
-
-prontera,142,231,5	script	Bounty Board 61-100#prt	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 61,100;
-	.MobIds$ =  "1380,1035,1139,1037,1099";
-	.BaseExp$ = "66825,67950,66825,162000,91125";
-	.JobExp$ =  "75150,76500,75263,182250,102600";
-}
-
-geffen,77,74,3	script	Bounty Board 1-21#gef	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 1,21;
-	.MobIds$ =  "1011,1012,1020,1094";
-	.BaseExp$ = "4950,10125,16200,13050";
-	.JobExp$ =  "4050,7650,12151,9675";
-}
-
-geffen,76,75,3	script	Bounty Board 21-50#gef	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 21,50;
-	.MobIds$ =  "1018,1103,1104,1128,1177,1056,1145,1033";
-	.BaseExp$ = "16200,18225,30375,24300,18225,18225,20250,26100";
-	.JobExp$ =  "18225,20475,34200,27225,20475,20475,22725,29475";
-}
-
-geffen,75,76,3	script	Bounty Board 41-75#gef	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 41,75;
-	.MobIds$ =  "1023,1273,1122,1258,1169";
-	.BaseExp$ = "39375,24750,41400,50625,37350";
-	.JobExp$ =  "60750,48825,46575,56925,42075";
-}
-
-geffen,74,77,3	script	Bounty Board 61-100#gef	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 61,100;
-	.MobIds$ =  "1036,1130,1061";
-	.BaseExp$ = "65475,71100,56250";
-	.JobExp$ =  "73800,79875,116100";
-}
-
-geffen,73,78,3	script	Bounty Board 81-120#gef	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 81,120;
-	.MobIds$ =  "1109,1143,1192,1198,1253,1156,1155,1117,1263";
-	.BaseExp$ = "203175,162225,133875,273375,213750,101250,131625,150525,103275";
-	.JobExp$ =  "243675,225900,133875,187425,160275,133850,148050,144000,150075";
-}
-
-geffen,78,79,3	script	Bounty Board 101-150#gef	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels,101,150;
-	.MobIds$ =  "1267,1310,1208,1207,1194,1163,1132,1206,1371,1390,1292";
-	.BaseExp$ = "300000,300000,381150,300000,300000,311625,321975,300000,300000,321975,300000";
-	.JobExp$ =  "250000,250000,277425,250000,250000,233550,241425,250000,250000,241425,250000";
-}
-
-umbala,124,85,4	script	Bounty Board 40-100#umb	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
-OnInit:
-	setarray .Levels, 40,100;
-	.MobIds$ =  "1261,1493,1499,1500";
-	.BaseExp$ = "81000,94050,79650,103725";
-	.JobExp$ =  "124875,105525,89775,150300";
-}
-
-comodo,104,136,4	script	Bounty Board 40-60#com	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+izlude,107,176,4	script	Bounty Board 40-60#izlude	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
 	setarray .Levels, 40,60;
-	.MobIds$ =  "1034,1323,1317,1254,1687,1271,1118";
-	.BaseExp$ = "52312,72225,60750,62212,164025,82012,59140";
-	.JobExp$ =  "59062,81000,68287,69862,184950,92475,66491";
+	.MobIds$ =  "1141,1264,1161,1065,1066";
 }
 
-comodo,106,136,4	script	Bounty Board 60-105#com	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+payon,148,95,4	script	Bounty Board 1-20#payon	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 60,105;
-	.MobIds$ =  "1040,1278,1148";
-	.BaseExp$ = "91125,113850,293062";
-	.JobExp$ =  "102600,128025,219712";
+	setarray .Levels, 1,20;
+	.MobIds$ =  "1010,1014,1025";
 }
 
-yuno,207,143,4	script	Bounty Board 70-110#jun	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+payon,148,93,4	script	Bounty Board 20-40#payon	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 70,110;
-	.MobIds$ =  "1372,1376,1386,1369";
-	.BaseExp$ = "119812,135112,116325,99787";
-	.JobExp$ =  "134662,151762,130500,112275";
+	setarray .Levels, 20,40;
+	.MobIds$ =  "1060,1076,1028";
 }
 
-yuno,208,142,4	script	Bounty Board 101-150#jun	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+payon,148,91,4	script	Bounty Board 40-60#payon	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 101,150;
-	.MobIds$ =  "1385,1384,1379,1676,1677,1678,1679,1365";
-	.BaseExp$ = "236025,236025,274725,275400,296550,297225,297225,342225";
-	.JobExp$ =  "177075,177075,206100,206550,222750,222975,222975,256725";
+	setarray .Levels, 40,60;
+	.MobIds$ =  "1277,1013,1016,1026,1188";
 }
 
-brasilis,190,224,4	script	Bounty Board 70-115#bra	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+payon,148,89,4	script	Bounty Board 60-80#payon	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 70,115;
-	.MobIds$ =  "2074,2071,2072,2073,2070,2069";
-	.BaseExp$ = "93300,151650,108000,98850,89850,160500";
-	.JobExp$ =  "67500,168000,76800,81600,153450,133500";
+	setarray .Levels, 60,80;
+	.MobIds$ =  "1170,1110,1180";
 }
 
-lighthalzen,194,161,4	script	Bounty Board 81-100#lgt	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+prontera,136,225,4	script	Bounty Board 1-20#prontera	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 81,100;
-	.MobIds$ =  "1613,1162,1215,1692,1627,"; //In Official is set to '??' so i just add '1' as dummy just create your own custom BaseEXP and JobEXP.
-	.BaseExp$ = "107325,131625,121500,179775,190125";
-	.JobExp$ =  "1,148050,136575,1,213975";
+	setarray .Levels, 1,20;
+	.MobIds$ =  "1094,1007,1004,1063,1052";
 }
 
-lighthalzen,192,161,4	script	Bounty Board 101-150#lgt	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+prontera,138,227,4	script	Bounty Board 20-40#prontera	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 101,150;
-	.MobIds$ =  "1133,1134,1135,1282"; //In Official is set to '??' so i just add '1' as dummy just create your own custom BaseEXP and JobEXP.
-	.BaseExp$ = "1,1,1,1";
-	.JobExp$ =  "1,1,1,1";
+	setarray .Levels, 20,40;
+	.MobIds$ =  "1104,1033,1055,1019,1031";
 }
 
-lighthalzen,190,161,4	script	Bounty Board 121-175#lgt	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+prontera,140,229,4	script	Bounty Board 40-60#prontera	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 121,175;
+	setarray .Levels, 40,60;
+	.MobIds$ =  "1100,1494,1138,1166";
+}
+
+prontera,142,231,4	script	Bounty Board 60-80#prontera	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 60,80;
+	.MobIds$ =  "1099,1380,1139,1037";
+}
+
+geffen,57,96,4	script	Bounty Board 1-20#geffen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 1,20;
+	.MobIds$ =  "1011,1012,1020,1094";
+}
+
+geffen,57,98,4	script	Bounty Board 20-40#geffen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 20,40;
+	.MobIds$ =  "1018,1103,1104,1128,1077,1056,1145";
+}
+
+geffen,57,100,4	script	Bounty Board 40-60#geffen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 40,60;
+	.MobIds$ =  "1124,1122,1123,1125,1126,1258,1273,1023,1169";
+}
+
+geffen,57,102,4	script	Bounty Board 60-80#geffen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 60,80;
+	.MobIds$ =  "1036,1130,1061";
+}
+
+geffen,57,104,4	script	Bounty Board 80-100#geffen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 80,100;
+	.MobIds$ =  "1198,1117,1253,1156,1155,1263,1192";
+}
+
+geffen,57,106,4	script	Bounty Board 100-120#geffen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 100,120;
+	.MobIds$ =  "1206,1194,1267,1371,1132,1310,1292,1163,1207,1390,1208";
+}
+
+geffen,57,108,4	script	Bounty Board 130-150#geffen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 130,150;
+	.MobIds$ =  "2480,2356,2477,2481";
+}
+
+alberta,99,144,4	script	Bounty Board 1-20#alberta	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 1,20;
+	.MobIds$ =  "1024";
+}
+
+alberta,99,142,4	script	Bounty Board 20-40#alberta	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 20,40;
+	.MobIds$ =  "1068";
+}
+
+alberta,99,140,4	script	Bounty Board 40-60#alberta	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 40,60;
+	.MobIds$ =  "1071";
+}
+
+alberta,99,138,4	script	Bounty Board 80-100#alberta	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 80,100;
+	.MobIds$ =  "1314,1316,1319";
+}
+
+morocc,51,114,4	script	Bounty Board 1-20#morocc	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 1,20;
+	.MobIds$ =  "1107,1113,1049,1050,1001";
+}
+
+morocc,51,116,4	script	Bounty Board 20-40#morocc	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 20,40;
+	.MobIds$ =  "1097,1095,1105,1005,1160";
+}
+
+morocc,51,118,4	script	Bounty Board 40-60#morocc	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 40,60;
+	.MobIds$ =  "1029,1058,1149,1041,1032";
+}
+
+morocc,51,120,4	script	Bounty Board 60-80#morocc	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 60,80;
+	.MobIds$ =  "1040,1127,1140,1154,1164";
+}
+
+morocc,51,122,4	script	Bounty Board 120-140#morocc	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 120,140;
+	.MobIds$ =  "2353,2356,2355";
+}
+
+aldebaran,190,61,4	script	Bounty Board 40-80#aldebaran	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 40,80;
+	.MobIds$ =  "1111,1114,1368,1195";
+}
+
+aldebaran,190,61,4	script	Bounty Board 80-100#aldebaran	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 80,100;
+	.MobIds$ =  "1193,1102,1269,1213,1216,1199";
+}
+
+aldebaran,190,61,4	script	Bounty Board 100-120#aldebaran	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 100,120;
+	.MobIds$ =  "1194";
+}
+
+aldebaran,190,61,4	script	Bounty Board 150-175#aldebaran	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 150,175;
+	.MobIds$ =  "2917,2919";
+}
+
+xmas,118,126,4	script	Bounty Board 20-40#xmas	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 20,40;
+	.MobIds$ =  "1265,1246,1248,1242,1249";
+}
+
+comodo,104,136,4	script	Bounty Board 40-60#comodo	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 40,60;
+	.MobIds$ =  "1271,1118,1317,1687,1254,1323,1034";
+}
+
+comodo,106,136,4	script	Bounty Board 60-80#comodo	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 60,80;
+	.MobIds$ =  "1278";
+}
+
+comodo,108,136,4	script	Bounty Board 80-105#comodo	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 80,105;
+	.MobIds$ =  "1148";
+}
+
+umbala,132,132,4	script	Bounty Board 60-80#umbala	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 60,80;
+	.MobIds$ =  "1493,1500,1495,1261,1499,1498";
+}
+
+niflheim,213,202,4	script	Bounty Board 100-120#niflheim	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 100,120;
+	.MobIds$ =  "1506,1505";
+}
+
+malangdo,233,176,4	script	Bounty Board 75-95#malangdo	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 75,95;
+	.MobIds$ =  "2197,2199";
+}
+
+lasagna,163,137,4	script	Bounty Board 1-20#lasagna	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 1,20;
+	.MobIds$ =  "3495,3497,3500,3496,3499,3498";
+}
+
+lasagna,163,139,4	script	Bounty Board 140-160#lasagna	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 140,160;
+	.MobIds$ =  "3504,3503,3506";
+}
+
+yuno,180,145,4	script	Bounty Board 70-90#yuno	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 70,90;
+	.MobIds$ =  "1372,1369,1376,1386";
+}
+
+yuno,182,145,4	script	Bounty Board 90-110#yuno	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 90,110;
+	.MobIds$ =  "1385,1384,1379";
+}
+
+yuno,184,145,4	script	Bounty Board 110-130#yuno	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 110,130;
+	.MobIds$ =  "1365,1679,1677,1678,1676";
+}
+
+lighthalzen,194,161,4	script	Bounty Board 80-100#lighthalzen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 80,100;
+	.MobIds$ =  "1613,1162,1215,1692";
+}
+
+lighthalzen,192,161,4	script	Bounty Board 100-120#lighthalzen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 100,120;
+	.MobIds$ =  "1133,1134,1135,1282";
+}
+
+lighthalzen,190,161,4	script	Bounty Board 120-140#lighthalzen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 120,140;
 	.MobIds$ =  "1682,1657,1655,1654,1653,1656,1652";
-	.BaseExp$ = "424350,506250,546750,550575,573075,573975,588510";
-	.JobExp$ =  "318150,503550,511200,552150,531000,481050,501750";
 }
 
-lighthalzen,188,159,4	script	Bounty Board 141-175#lgt	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+lighthalzen,186,157,4	script	Bounty Board 140-160#lighthalzen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 141,175;
+	setarray .Levels, 140,160;
 	.MobIds$ =  "1639,1637,1638,1635,1634,1636,2227,2223,2226,2225,2224,2222,2221";
-	.BaseExp$ = "1516950,1736100,1863225,1880325,1996987,1918687,1799325,2486925,2496600,2729925,2889450,2969550,3641175";
-	.JobExp$ =  "1997550,1738912,1861312,1993162,2010825,2022525,1490400,2139300,2286225,2276100,2228625,2596500,2706075";
 }
 
-hugel,67,153,4	script	Bounty Board 81-100#hug	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+lighthalzen,188,159,4	script	Bounty Board 160-175#lighthalzen	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 81,100;
-	.MobIds$ =  "1715,1718";
-	.BaseExp$ = "146700,121500";
-	.JobExp$ =  "169200,136575";
+	setarray .Levels, 160,175;
+	.MobIds$ =  "3210,3209,3211,3208,3213,3212,3232,3228,3231,3230,3229,3227,3226";
 }
 
-hugel,66,152,4	script	Bounty Board 101-150#hug	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+einbroch,224,215,4	script	Bounty Board 80-100#einbroch	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 101,150;
-	.MobIds$ =  "1699,1698"; //In Official is set to '??' so i just add '1' as dummy just create your own custom BaseEXP and JobEXP.
-	.BaseExp$ = "275400,1";
-	.JobExp$ =  "232650,1";
+	setarray .Levels, 80,100;
+	.MobIds$ =  "1628,1613,1620,1619,1622,1621";
 }
 
-hugel,65,151,4	script	Bounty Board 121-160#hug	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+hugel,67,153,4	script	Bounty Board 80-100#hugel	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 121,160;
+	setarray .Levels, 80,100;
+	.MobIds$ =  "1715,1718,1320";
+}
+
+hugel,66,152,4	script	Bounty Board 100-120#hugel	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 100,120;
+	.MobIds$ =  "1699,1698,1295";
+}
+
+hugel,65,151,4	script	Bounty Board 120-140#hugel	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 120,140;
 	.MobIds$ =  "1714,1717,1752,1753,1716,1713";
-	.BaseExp$ = "448312,470812,481500,513225,508500,508500";
-	.JobExp$ =  "336262,336262,386775,402412,381262,381262";
 }
 
-mid_camp,182,253,4	script	Bounty Board 100-150#mid	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+rachel,87,73,4	script	Bounty Board 80-100#rachel	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 100,150;
-	.MobIds$ =  "1995,2015,1988,1992,1993,1994";
-	.BaseExp$ = "249750,236250,292275,702000,331200,182475";
-	.JobExp$ =  "186975,272100,201600,450450,248850,203175";
+	setarray .Levels, 80,100;
+	.MobIds$ =  "1030,1782,1776";
 }
 
-dicastes01,196,48,4	script	Bounty Board 101-140#mid	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+rachel,89,73,4	script	Bounty Board 100-120#rachel	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 101,140;
-	.MobIds$ =  "1987,1999,1986,2092,";
-	.BaseExp$ = "360112,329625,423225,579937";
-	.JobExp$ =  "304987,225225,347850,579937";
+	setarray .Levels, 100,120;
+	.MobIds$ =  "1106,1781,1680,1777,1775";
 }
 
-dicastes01,196,46,4	script	Bounty Board 120-175#mid	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+rachel,91,73,4	script	Bounty Board 120-140#rachel	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 120,175;
+	setarray .Levels, 120,140;
+	.MobIds$ =  "1769,1770,1773,1772,1774,1771";
+}
+
+veins,226,154,4	script	Bounty Board 80-100#veins	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 80,100;
+	.MobIds$ =  "1784";
+}
+
+veins,224,154,4	script	Bounty Board 100-120#veins	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 100,120;
+	.MobIds$ =  "1781,1783,1836,1780";
+}
+
+veins,222,154,4	script	Bounty Board 120-140#veins	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 120,140;
+	.MobIds$ =  "1833,1838,1870,1865,1831,1864";
+}
+
+verus04,146,244,4	script	Bounty Board 150-170#verus04	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 150,170;
+	.MobIds$ =  "3247,3249,3248,3255,3256";
+}
+
+manuk,301,137,4	script	Bounty Board 120-140#manuk	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 120,140;
+	.MobIds$ =  "2024,1999,1989,1986";
+}
+
+manuk,299,137,4	script	Bounty Board 140-160#manuk	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 140,160;
 	.MobIds$ =  "2083,2084,2085,2086";
-	.BaseExp$ = "587250,650250,712125,786375";
-	.JobExp$ =  "3451237,511762,591187,674437";
 }
 
-aldebaran,143,129,4	script	Bounty Board 140-175#ald	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+// map existiert noch nicht
+//eldicastes,140,111,4	script	Bounty Board 120-140#eldicastes	837,{
+//	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+//OnInit:
+//	setarray .Levels, 120,140;
+//	.MobIds$ =  "1987,2092,1986";
+//}
+
+splendide,204,240,4	script	Bounty Board 100-120#splendide	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 140,175;
-	.MobIds$ =  "2479,2478,2917,2616,2919";
-	.BaseExp$ = "622800,1181250,1690425,1675575,1321650";
-	.JobExp$ =  "529650,1782000,1902825,1576125,1489050";
+	setarray .Levels, 100,120;
+	.MobIds$ =  "1995,2015,1988,1992,1993,1994";
 }
 
-mora,98,110,4	script	Bounty Board 141-175#mor	837,{
-	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$, .BaseExp$, .JobExp$;
+mora,98,110,4	script	Bounty Board 140-160#mora	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
-	setarray .Levels, 141,175;
-	.MobIds$ =  "2137,2136,2365,2363,2364,2133,2366,2368,2367,2369,2370";
-	.BaseExp$ = "798750,843750,800662,466875,456525,876375,812812,795487,808537,810112,811575";
-	.JobExp$ =  "708750,731250,848137,461812,378,112,789750,871650,862762,846562,892800,811575";
-
+	setarray .Levels, 140,160;
+	.MobIds$ =  "2137,2136,2363,2364,2133";
 }
+
+ecl_in01,67,86,4	script	Bounty Board 145-165#ecl_in01	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 145,165;
+	.MobIds$ =  "2366,2365,2368,2367,2369,2370";
+}
+
+pay_d03_i,164,44,4	script	Bounty Board 100-175#pay_d03_i	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 100,175;
+	.MobIds$ =  "3759,3760,3761,3762,3763,3765";
+}
+
+gef_d01_i,119,221,4	script	Bounty Board 130-175#gef_d01_i	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 130,175;
+	.MobIds$ =  "3754,3750,3752,3751,3753";
+}
+
+ice_d03_i,145,39,4	script	Bounty Board 75-175#ice_d03_i	837,{
+	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
+OnInit:
+	setarray .Levels, 75,175;
+	.MobIds$ =  "3792,3793,3794";
+}
+

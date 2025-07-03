@@ -7723,27 +7723,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 120000
-      - Level: 2
-        Time: 150000
-      - Level: 3
-        Time: 180000
-      - Level: 4
-        Time: 210000
-      - Level: 5
-        Time: 240000
-      - Level: 6
-        Time: 270000
-      - Level: 7
-        Time: 300000
-      - Level: 8
-        Time: 330000
-      - Level: 9
-        Time: 360000
-      - Level: 10
-        Time: 390000
+    Duration1: 3600000
     FixedCastTime: 3000
     Requires:
       SpCost: 35

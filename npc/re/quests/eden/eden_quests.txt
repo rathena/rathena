@@ -3276,6 +3276,7 @@ ein_fild08,172,359,3	script	Dispatched Instructor#04	4_M_4THPRIN1,{
 			setquest 7226;// Venomous hunting
 			setquest 7227;// Teddy Bear hunting
 			getexp 30000,30000;
+			warp "ein_fild04", 184, 42;
 		}
 		else {
 			mes "So, have you punished those Porcellio's yet?";
@@ -3306,7 +3307,6 @@ ein_fild08,172,359,3	script	Dispatched Instructor#04	4_M_4THPRIN1,{
 			erasequest 7227;// Teddy Bear hunting
 			setquest 7228;// Report to Instructor Ur
 			getexp 30000,30000;
-			warp "ein_fild04", 184, 42;
 			// erasequest 7225;
 		}
 		else {
