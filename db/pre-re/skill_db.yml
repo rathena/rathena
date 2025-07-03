@@ -832,7 +832,29 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Fire
-    SplashArea: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 2
+      - Level: 10
+        Area: 2
+      - Level: 11
+        Area: 3
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -3067,7 +3089,7 @@ Body:
       - Level: 10
         Area: 3
       - Level: 11
-        Area: 14
+        Area: 16
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -3115,6 +3137,8 @@ Body:
         Time: 6000
       - Level: 10
         Time: 7000
+      - Level: 11
+        Time: 10000
     Duration2: 5000
     Requires:
       SpCost:
@@ -4244,7 +4268,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    SplashArea: 1
     Duration1:
       - Level: 1
         Time: 200000
@@ -4330,7 +4353,6 @@ Body:
     Range: 3
     Hit: Single
     HitCount: 1
-    SplashArea: 1
     Duration1:
       - Level: 1
         Time: 150000
@@ -4347,7 +4369,7 @@ Body:
       SpCost: 12
       ItemCost:
         - Item: Booby_Trap
-          Amount: 2
+          Amount: 1
     Unit:
       Id: Flasher
       Range: 1
@@ -4407,7 +4429,7 @@ Body:
       SpCost: 10
       ItemCost:
         - Item: Booby_Trap
-          Amount: 2
+          Amount: 1
     Unit:
       Id: Freezingtrap
       Range: 1
@@ -4876,7 +4898,8 @@ Body:
       - Level: 9
         Time: 60000
       - Level: 10
-        Time: 65000
+        Time: 60000
+    Duration2: 60000
     Requires:
       SpCost:
         - Level: 1
@@ -9216,7 +9239,7 @@ Body:
       IsNpc: true
     Hit: Single
     HitCount: 1
-    Duration: 30000
+    Duration1: 30000
     Status: WeaponBreaker
   - Id: 344
     Name: NPC_ARMORBRAKE
@@ -11366,7 +11389,7 @@ Body:
     Description: Flying Kick
     MaxLevel: 7
     Type: Weapon
-    TargetType: Support
+    TargetType: Attack
     DamageFlags:
       NoDamage: true
     Range: 9
@@ -15453,8 +15476,6 @@ Body:
           Size: 13
       Interval: 300
       Target: Enemy
-      Flag:
-        PathCheck: true
   - Id: 654
     Name: NPC_FIREBREATH
     Description: Fire Breath
@@ -16917,7 +16938,7 @@ Body:
     Hit: Single
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 17000
+    Duration1: 30000
     Requires:
       SpCost: 20
   - Id: 1011
@@ -16934,8 +16955,8 @@ Body:
     Hit: Single
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 10000
-    Duration2: 17000
+    Duration1: 30000
+    Duration2: 10000
     Requires:
       SpCost: 40
     Status: WinkCharm
