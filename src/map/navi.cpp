@@ -333,9 +333,9 @@ int32 map_type(const struct map_data * m) {
 
 	if (segmented && has_mob) {
 		return 5005;
-	} else if (segmented) {
-		return 5003;
-	}
+	}/* else if (segmented) {
+		return 5003; // This is problematic, hides minimaps on maps that it shouldn't.
+	}*/
 
 	return 5001;
 }
