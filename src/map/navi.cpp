@@ -465,7 +465,14 @@ void write_object_lists() {
 			} else { // Other NPCs
 				if (nd->class_ == -1 || nd->class_ == JT_HIDDEN_NPC
 					|| nd->class_ == JT_HIDDEN_WARP_NPC || nd->class_ == JT_GUILD_FLAG
+					|| nd->class_ == JT_WARPNPC
 					|| nd->navi.hidden)
+					continue;
+				
+				// Also exclude NPCs with empty visible names
+				std::string name = nd->name;
+				std::string visible_name = name.substr(0, name.find('#'));
+				if (visible_name.empty())
 					continue;
 				
 				nd->navi.id = 11984 + npc_count;
