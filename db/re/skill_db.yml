@@ -11516,7 +11516,7 @@ Body:
     Hit: Multi_Hit
     HitCount: -3
     Element: Weapon
-    Duration2: 2500
+    Duration2: 3000
     Requires:
       SpCost:
         - Level: 1
@@ -11565,6 +11565,7 @@ Body:
     Element: Weapon
     SplashArea: 1
     Knockback: 2
+    Duration1: 4500
     Duration2: 2000
     Requires:
       SpCost:

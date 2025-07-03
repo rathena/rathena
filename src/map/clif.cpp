@@ -1657,15 +1657,14 @@ void clif_weather(int16 m)
  * @param bl: Block data
  * @return True if NPC is disabled or false otherwise
  */
-static inline bool clif_npc_mayapurple(block_list *bl) {
-	nullpo_retr(false, bl);
-
-	if (bl->type == BL_NPC) {
-		npc_data *nd = map_id2nd(bl->id);
+static inline bool clif_npc_mayapurple( block_list& bl ){
+	if( bl.type == BL_NPC ){
+		npc_data& nd = reinterpret_cast<npc_data&>( bl );
 
 		// TODO: Confirm if waitingroom cause any special cases
-		if (/* nd->chat_id == 0 && */ nd->is_invisible)
+		if( /* nd->chat_id == 0 && */ nd.is_invisible ){
 			return true;
+		}
 	}
 
 	return false;
@@ -1697,6 +1696,10 @@ void clif_refresh_clothcolor( block_list& bl, enum send_target target, block_lis
  * Main function to spawn a unit on the client (player/mob/pet/etc)
  **/
 int32 clif_spawn( struct block_list *bl, bool walking ){
+	if( bl == nullptr ){
+		return 0;
+	}
+
 	struct view_data *vd;
 
 	vd = status_get_viewdata(bl);
@@ -1704,8 +1707,9 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 		return 0;
 
 	// Hide NPC from Maya Purple card
-	if (clif_npc_mayapurple(bl))
+	if( clif_npc_mayapurple( *bl ) ){
 		return 0;
+	}
 
 	if( bl->type == BL_NPC && !vd->dead_sit ){
 		clif_set_unit_idle( bl, walking, AREA_WOS, bl );
@@ -2087,8 +2091,9 @@ void clif_move( struct unit_data& ud )
 		return;
 
 	// Hide NPC from Maya Purple card
-	if (clif_npc_mayapurple(bl))
+	if( clif_npc_mayapurple( *bl ) ){
 		return;
+	}
 
 	status_change* sc = nullptr;
 
@@ -4087,8 +4092,10 @@ void clif_changelook(struct block_list *bl, int32 type, int32 val) {
 		target = SELF;
 
 #if PACKETVER < 4
-	if (target != SELF && bl->type == BL_NPC && (((TBL_NPC*)bl)->is_invisible))
+	if( target != SELF && clif_npc_mayapurple( *bl ) ){
 		target = SELF;
+	}
+
 	clif_sprite_change(bl, bl->id, type, val, 0, target);
 #else
 	if (bl->type != BL_NPC) {
@@ -4808,11 +4815,17 @@ void clif_tradeadditem( map_session_data* sd, map_session_data* tsd, int32 index
 ///     0 = success
 ///     1 = overweight
 ///     2 = trade canceled
+///     3 = inventory full
+///     4 = stacked item amount exceeded
 void clif_tradeitemok(map_session_data& sd, int32 index, e_exitem_add_result result)
 {
 	PACKET_ZC_ACK_ADD_EXCHANGE_ITEM p = {};
 	p.packetType = HEADER_ZC_ACK_ADD_EXCHANGE_ITEM;
 	p.index = client_index(index);
+#if PACKETVER < 20110705
+	if (result > EXITEM_ADD_FAILED_CLOSED)
+		result = EXITEM_ADD_FAILED_OVERWEIGHT;
+#endif
 	p.result = static_cast<uint8>(result);
 
 	clif_send(&p, sizeof(p), &sd.bl, SELF);
@@ -5019,6 +5032,10 @@ static void clif_getareachar_pc(map_session_data* sd,map_session_data* dstsd)
 }
 
 void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
+	if( bl == nullptr ){
+		return;
+	}
+
 	struct unit_data *ud;
 	struct view_data *vd;
 	bool option = false;
@@ -5029,8 +5046,9 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		return;
 
 	// Hide NPC from Maya Purple card
-	if (clif_npc_mayapurple(bl))
+	if( clif_npc_mayapurple( *bl ) ){
 		return;
+	}
 
 	if( bl->type == BL_NPC && npc_is_hidden_dynamicnpc( *( (struct npc_data*)bl ), *sd ) ){
 		// Do not send anything
@@ -5119,14 +5137,12 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 
 //Modifies the type of damage according to target status changes [Skotlex]
 //Aegis data specifies that: 4 endure against single hit sources, 9 against multi-hit.
-static enum e_damage_type clif_calc_delay(block_list& bl, e_damage_type type, int32 div, int64 damage, int32 delay) {
+static enum e_damage_type clif_calc_delay(block_list& bl, e_damage_type type, int32 div, int64 damage, int32 delay, t_tick tick) {
 	if (damage < 1)
 		return type;
 
-	// Currently we set dmotion to 0 to mark situations that should use the endure effect
-	// However, this also impacts units that naturally have 0 dmotion
-	// TODO: Collect all possible situations that create the endure effect and implement function
-	if (delay != 0)
+	// Check if unit has endure
+	if (!status_isendure(bl, tick, true))
 		return type;
 
 	// General change of type based on div against target with endure effect
@@ -5153,33 +5169,6 @@ static enum e_damage_type clif_calc_delay(block_list& bl, e_damage_type type, in
 
 	// Custom, unknown result of endure with types not listed
 	return (div > 1 ? DMG_MULTI_HIT_ENDURE : DMG_ENDURE);
-}
-
-/*==========================================
- * Estimates walk delay based on the damage criteria. [Skotlex]
- *------------------------------------------*/
-static int32 clif_calc_walkdelay( block_list &bl, int32 delay, e_damage_type type, int64 damage, int32 div_ ) {
-	if (damage < 1)
-		return 0;
-
-	switch( type ) {
-		case DMG_ENDURE:
-		case DMG_MULTI_HIT_ENDURE:
-		case DMG_SPLASH_ENDURE:
-			return 0;
-	}
-
-	if (bl.type == BL_PC) {
-		if (battle_config.pc_walk_delay_rate != 100)
-			delay = delay*battle_config.pc_walk_delay_rate/100;
-	} else
-		if (battle_config.walk_delay_rate != 100)
-			delay = delay*battle_config.walk_delay_rate/100;
-
-	if (div_ > 1) //Multi-hit skills mean higher delays.
-		delay += battle_config.multihit_delay*(div_-1);
-
-	return (delay > 0) ? delay : 1; //Return 1 to specify there should be no noticeable delay, but you should stop walking.
 }
 
 /*========================================== [Playtester]
@@ -5240,12 +5229,11 @@ static int64 clif_hallucination_damage( block_list& bl, int64 damage ){
 ///     11 = lucky dodge
 ///     12 = (touch skill?)
 ///     13 = multi-hit critical
-int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int32 div, enum e_damage_type type, int64 sdamage2, bool spdamage){
+void clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int16 div, enum e_damage_type type, int64 sdamage2, bool spdamage){
 	int32 damage = (int32)cap_value(sdamage,INT_MIN,INT_MAX);
 	int32 damage2 = (int32)cap_value(sdamage2,INT_MIN,INT_MAX);
 
-	if (type != DMG_MULTI_HIT_CRITICAL)
-		type = clif_calc_delay( dst, type, div, damage+damage2, ddelay );
+	type = clif_calc_delay(dst, type, div, damage+damage2, ddelay, tick);
 
 	damage = static_cast<decltype(damage)>(clif_hallucination_damage(dst, damage));
 	damage2 = static_cast<decltype(damage2)>(clif_hallucination_damage(dst, damage2));
@@ -5315,14 +5303,6 @@ int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, i
 
 	if(&src == &dst) 
 		unit_setdir(&src, unit_getdir(&src));
-
-	// In case this assignment is bypassed by DMG_MULTI_HIT_CRITICAL
-	if( type == DMG_MULTI_HIT_CRITICAL ){
-		type = clif_calc_delay( dst, type, div, damage+damage2, ddelay );
-	}
-
-	//Return adjusted can't walk delay for further processing.
-	return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div);
 }
 
 /*==========================================
@@ -5651,8 +5631,9 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 			clif_clearchar_skillunit( *((skill_unit *)bl), *tsd );
 			break;
 		case BL_NPC:
-			if(!(((TBL_NPC*)bl)->is_invisible))
+			if( !clif_npc_mayapurple( *bl ) ){
 				clif_clearunit_single( bl->id, CLR_OUTSIGHT, *tsd );
+			}
 			break;
 		default:
 			if((vd=status_get_viewdata(bl)) && vd->class_ != JT_INVISIBLE)
@@ -5665,7 +5646,7 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 		if(tbl->type == BL_SKILL) //Trap knocked out of sight
 			clif_clearchar_skillunit( *((skill_unit *)tbl), *sd );
 		else if(((vd=status_get_viewdata(tbl)) && vd->class_ != JT_INVISIBLE) &&
-			!(tbl->type == BL_NPC && (((TBL_NPC*)tbl)->is_invisible)))
+			!clif_npc_mayapurple( *tbl ) )
 			clif_clearunit_single( tbl->id, CLR_OUTSIGHT, *sd );
 	}
 	return 0;
@@ -6041,8 +6022,8 @@ void clif_skill_cooldown( map_session_data &sd, uint16 skill_id, t_tick tick ){
 /// Skill attack effect and damage.
 /// 0114 <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.W <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL)
 /// 01de <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.L <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL2)
-int32 clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int32 div, uint16 skill_id, uint16 skill_lv, e_damage_type type ){
-	type = clif_calc_delay( dst, type, div, sdamage, ddelay );
+void clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int16 div, uint16 skill_id, uint16 skill_lv, e_damage_type type ){
+	type = clif_calc_delay(dst, type, div, sdamage, ddelay, tick);
 	sdamage = clif_hallucination_damage( dst, sdamage );
 
 	PACKET_ZC_NOTIFY_SKILL packet{};
@@ -6093,9 +6074,6 @@ int32 clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sd
 		}
 		clif_send( &packet, sizeof( packet ), &src, SELF );
 	}
-
-	//Because the damage delay must be synced with the client, here is where the can-walk tick must be updated. [Skotlex]
-	return clif_calc_walkdelay( dst, ddelay, type, damage, div );
 }
 
 
@@ -12775,12 +12753,10 @@ static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, map_session_da
 		return;
 	}
 
-#ifdef RENEWAL
-	if (hd->sc.getSCE(SC_BASILICA_CELL))
-#else
+#ifndef RENEWAL
 	if (hd->sc.getSCE(SC_BASILICA))
-#endif
 		return;
+#endif
 	lv = hom_checkskill(hd, skill_id);
 	if( skill_lv > lv )
 		skill_lv = lv;
@@ -12828,12 +12804,10 @@ static void clif_parse_UseSkillToPos_mercenary(s_mercenary_data *md, map_session
 		return;
 	}
 
-#ifdef RENEWAL
-	if (md->sc.getSCE(SC_BASILICA_CELL))
-#else
+#ifndef RENEWAL
 	if (md->sc.getSCE(SC_BASILICA))
-#endif
 		return;
+#endif
 	lv = mercenary_checkskill(md, skill_id);
 	if( skill_lv > lv )
 		skill_lv = lv;

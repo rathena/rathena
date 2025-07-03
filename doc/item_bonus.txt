@@ -198,6 +198,7 @@ bonus2 bSkillUseSPrate,sk,n;		Decreases SP consumption of skill sk by n%
 Atk/Def
 -------
 bonus2 bSkillAtk,sk,n;    		Increases damage of skill sk by n%
+bonus bSkillRatio,n;			Adds n to the skillratio of all attacks/skills that use it
 bonus bShortAtkRate,n;			Increases damage of short ranged attacks by n%
 bonus bLongAtkRate,n;     		Increases damage of long ranged attacks by n%
 bonus bCritAtkRate,n;     		Increases critical damage by +n%

@@ -1191,7 +1191,6 @@ int32 mob_spawn (struct mob_data *md)
 	md->ud.state.blockedmove = false;
 	md->next_walktime = tick+rnd()%1000+MIN_RANDOMWALKTIME;
 	md->last_linktime = 0;
-	md->dmgtick = tick - 5000;
 	md->last_pcneartime = 0;
 	md->last_canmove = tick;
 	md->last_skillcheck = tick;
@@ -1244,7 +1243,11 @@ static int32 mob_can_changetarget(struct mob_data* md, struct block_list* target
 		case MSS_BERSERK:
 			if (!(mode&MD_CHANGETARGETMELEE))
 				return 0;
-			if (!(battle_config.mob_ai&0x80) && md->norm_attacked_id != target->id)
+			// If the special normal attacked event occured, always change target in berserk state
+			if (md->norm_attacked_id == target->id)
+				return 1;
+			// If the special setting to switch target even on skills is set, we need to verify the range here
+			if (!(battle_config.mob_ai&0x80))
 				return 0;
 			return (battle_config.mob_ai&0x4 || check_distance_bl(&md->bl, target, md->status.rhw.range+1));
 		case MSS_RUSH:
@@ -1923,12 +1926,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 					)
 					|| !mob_can_reach(md, tbl, md->db->range3)
 				)
-			&&  md->state.attacked_count++ >= RUDE_ATTACKED_COUNT
-			&&  !mobskill_use(md, tick, MSC_RUDEATTACKED) // If can't rude Attack
-			&&  can_move && unit_escape(&md->bl, tbl, rnd()%10 +1)) // Attempt escape
-			{	//Escaped
-				md->attacked_id = md->norm_attacked_id = 0;
-				return true;
+			&&  ++md->state.attacked_count > RUDE_ATTACKED_COUNT) {
+				mobskill_use(md, tick, MSC_RUDEATTACKED);
 			}
 		}
 		else
@@ -1951,13 +1950,8 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 				) )
 			{ // Rude attacked
 				if (abl->id != md->bl.id //Self damage does not cause rude attack
-				&& md->state.attacked_count++ >= RUDE_ATTACKED_COUNT				
-				&& !mobskill_use(md, tick, MSC_RUDEATTACKED) && can_move
-				&& !tbl && unit_escape(&md->bl, abl, rnd()%10 +1))
-				{	//Escaped.
-					//TODO: Maybe it shouldn't attempt to run if it has another, valid target?
-					md->attacked_id = md->norm_attacked_id = 0;
-					return true;
+				&& ++md->state.attacked_count > RUDE_ATTACKED_COUNT) {
+					mobskill_use(md, tick, MSC_RUDEATTACKED);
 				}
 			}
 			else
@@ -2231,6 +2225,89 @@ bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick)
 	// Go through the whole monster AI
 	mob_ai_sub_hard(&md, tick);
 	return true;
+}
+
+/**
+ * Sets attacked ID based on bl type of attacker
+ * Then calls the mob AI to process it immediately
+ * @param src_id: ID of attacker
+ * @param target_id: ID of attacked monster
+ * @param tick: Current tick
+ * @param is_norm_attacked: When true, sets a special normal attacked ID to trigger a target change in attack state
+ */
+void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_norm_attacked) {
+	block_list* src = map_id2bl(src_id);
+	if (src == nullptr)
+		return;
+
+	mob_data* md = map_id2md(target_id);
+	if (md == nullptr)
+		return;
+
+	switch (src->type)
+	{
+		case BL_PET:
+		{
+			struct pet_data& pd = *reinterpret_cast<pet_data*>(src);
+			if (pd.master)
+			{
+				// Let mobs retaliate against the pet's master
+				md->attacked_id = pd.master->bl.id;
+			}
+			break;
+		}
+		case BL_MOB:
+		{
+			struct mob_data& md2 = *reinterpret_cast<mob_data*>(src);
+			// Config to decide whether to retaliate versus the master or the mob
+			if (md2.master_id && battle_config.retaliate_to_master)
+				md->attacked_id = md2.master_id;
+			else
+				md->attacked_id = src->id;
+			break;
+		}
+		default:
+			// Retaliate against attacker
+			md->attacked_id = src->id;
+			break;
+	}
+
+	if (is_norm_attacked)
+		md->norm_attacked_id = md->attacked_id;
+
+	// As it was attacked, monster leaves aggressive mode
+	md->state.aggressive = 0;
+
+	// Need to call mob AI routine immediately, otherwise the attacked ID might get overwritten before it is processed
+	mob_ai_sub_hard(md, tick);
+}
+
+/**
+ * Timer that triggers after walk delay when a monster was attacked by skills or from outside [attack range+1]
+ * Sets attacked ID and calls the mob AI to process it immediately
+ * @param tid: Timer ID
+ * @param tick: Current tick
+ * @param id: ID of attacked monster
+ * @param data: ID of attacker
+ * @return 0
+ */
+TIMER_FUNC(mob_attacked) {
+	mob_set_attacked_id(static_cast<int32>(data), id, tick, false);
+	return 0;
+}
+
+/**
+ * Timer that triggers after walk delay when a berserk-state monster was attacked by a normal attack from within [attack range+1]
+ * Same as mob_attacked, but sets a special normal attacked ID to trigger a target change in attack state
+ * @param tid: Timer ID
+ * @param tick: Current tick
+ * @param id: ID of attacked monster
+ * @param data: ID of attacker
+ * @return 0
+ */
+TIMER_FUNC(mob_norm_attacked) {
+	mob_set_attacked_id(static_cast<int32>(data), id, tick, true);
+	return 0;
 }
 
 static int32 mob_ai_sub_hard_timer(struct block_list *bl,va_list ap)
@@ -2591,8 +2668,6 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 		{
 			map_session_data *sd = (TBL_PC*)src;
 			char_id = sd->status.char_id;
-			if( damage )
-				md->attacked_id = src->id;
 			break;
 		}
 		case BL_HOM:
@@ -2601,8 +2676,6 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 			flag = MDLF_HOMUN;
 			if( hd->master )
 				char_id = hd->master->status.char_id;
-			if( damage )
-				md->attacked_id = src->id;
 			break;
 		}
 		case BL_MER:
@@ -2610,8 +2683,6 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 			s_mercenary_data *mer = (TBL_MER*)src;
 			if( mer->master )
 				char_id = mer->master->status.char_id;
-			if( damage )
-				md->attacked_id = src->id;
 			break;
 		}
 		case BL_PET:
@@ -2619,11 +2690,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 			struct pet_data *pd = (TBL_PET*)src;
 			flag = MDLF_PET;
 			if( pd->master )
-			{
 				char_id = pd->master->status.char_id;
-				if( damage ) //Let mobs retaliate against the pet's master [Skotlex]
-					md->attacked_id = pd->master->bl.id;
-			}
 			break;
 		}
 		case BL_MOB:
@@ -2635,13 +2702,6 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 				if( msd )
 					char_id = msd->status.char_id;
 			}
-			if( !damage )
-				break;
-			//Let players decide whether to retaliate versus the master or the mob. [Skotlex]
-			if( md2->master_id && battle_config.retaliate_to_master )
-				md->attacked_id = md2->master_id;
-			else
-				md->attacked_id = src->id;
 			break;
 		}
 		case BL_ELEM:
@@ -2649,12 +2709,10 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 			s_elemental_data *ele = (TBL_ELEM*)src;
 			if( ele->master )
 				char_id = ele->master->status.char_id;
-			if( damage )
-				md->attacked_id = src->id;
 			break;
 		}
 		default: //For all unhandled types.
-			md->attacked_id = src->id;
+			break;
 	}
 
 	//Self damage increases tap bonus
@@ -2697,11 +2755,8 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 void mob_damage(struct mob_data *md, struct block_list *src, int32 damage)
 {
 	if (src && damage > 0) { //Store total damage...
-		if ((src != &md->bl) && md->state.aggressive) //No longer aggressive, change to retaliate AI.
-			md->state.aggressive = 0;
 		//Log damage
 		mob_log_damage(md, src, static_cast<int64>(damage));
-		md->dmgtick = gettick();
 	}
 
 	if (battle_config.show_mob_info&3)
@@ -2811,6 +2866,39 @@ int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int
 	return drop_rate;
 }
 
+/**
+ * Returns the MVP player based on the monster's damage log
+ * This player has the highest value when damage dealt and damage tanked are added together
+ * @return The MVP player
+ */
+map_session_data* mob_data::get_mvp_player() {
+	// There cannot be an MVP player if the monster is not an MVP
+	if (this->get_bosstype() != BOSSTYPE_MVP)
+		return nullptr;
+
+	int64 mvp_damage = 0;
+	map_session_data* mvp_sd = nullptr;
+
+	for (const s_dmglog& entry : this->dmglog) {
+		map_session_data* sd = map_charid2sd(entry.id);
+
+		if (sd == nullptr)
+			continue; // skip players that are offline
+		if (sd->bl.m != this->bl.m)
+			continue; // skip players not on this map
+		if (pc_isdead(sd))
+			continue; // skip dead players
+
+		if (mvp_damage >= entry.dmg + entry.dmg_tanked)
+			continue;
+
+		mvp_damage = util::safe_addition_cap(entry.dmg, entry.dmg_tanked, INT64_MAX);
+		mvp_sd = sd;
+	}
+
+	return mvp_sd;
+}
+
 /*==========================================
  * Signals death of mob.
  * type&1 -> no drops, type&2 -> no exp
@@ -2819,7 +2907,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 {
 	struct status_data *status;
 	map_session_data *sd = nullptr, *tmpsd[DAMAGELOG_SIZE];
-	map_session_data *mvp_sd = nullptr, *second_sd = nullptr, *third_sd = nullptr;
+	map_session_data *first_sd = nullptr, *second_sd = nullptr, *third_sd = nullptr;
 
 	struct {
 		struct party_data *p;
@@ -2836,7 +2924,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	if( src && src->type == BL_PC ) {
 		sd = (map_session_data *)src;
-		mvp_sd = sd;
+		first_sd = sd;
 	}
 
 	if( md->guardian_data && md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
@@ -2859,8 +2947,15 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	// filter out entries not eligible for exp distribution
 	memset(tmpsd,0,sizeof(tmpsd));
 
+	// Struct that only contains entries eligible for loot distribution
+	// Also contains combined damage of the players and their slaves
+	struct s_dmg_entry {
+		map_session_data* sd;
+		int64 damage;
+	};
+	std::vector<s_dmg_entry> lootdmg;
+
 	count = 0;
-	int64 mvp_damage = 0;
 	int64 total_damage = 0;
 	for( i = 0; i < md->dmglog.size(); i++ ){
 		const s_dmglog& entry = md->dmglog[i];
@@ -2903,20 +2998,49 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				break;
 		}
 
-		if( entry.dmg > mvp_damage ){
-			third_sd = second_sd;
-			second_sd = mvp_sd;
-			mvp_sd = tsd;
-			mvp_damage = entry.dmg;
-		}
-
 		tmpsd[i] = tsd; // record as valid damage-log entry
+
+		// Gather data to determine loot priority
+		// Check if player already has an entry
+		auto it = lootdmg.begin();
+		for (; it != lootdmg.end(); ++it)
+			if (it->sd->bl.id == tsd->bl.id)
+				break;
+
+		if (it == lootdmg.end()) {
+			// No matching player found, create new entry for player
+			s_dmg_entry dmg_entry;
+			dmg_entry.sd = tsd;
+			dmg_entry.damage = entry.dmg;
+			lootdmg.push_back(dmg_entry);
+		} else {
+			// Slave damage is added to the player's damage
+			it->damage += entry.dmg;
+		}
+	}
+
+	if (!lootdmg.empty()) {
+		// Officially, the first player in the damage log gets 30% of total damage as bonus for loot priority
+		lootdmg[0].damage += (total_damage * battle_config.first_attack_loot_bonus) / 100;
+
+		// Sort list by damage now and determine top 3 damage dealers
+		std::sort(lootdmg.begin(), lootdmg.end(), [](s_dmg_entry& a, s_dmg_entry& b) {
+			return a.damage > b.damage;
+		});
+		first_sd = lootdmg[0].sd;
+		if (lootdmg.size() > 1)
+			second_sd = lootdmg[1].sd;
+		if (lootdmg.size() > 2)
+			third_sd = lootdmg[2].sd;
 	}
 
 	// determines, if the monster was killed by homunculus' damage only
 	homkillonly = (bool)( ( dmgbltypes&BL_HOM ) && !( dmgbltypes&~BL_HOM ) );
 	// determines if the monster was killed by mercenary damage only
 	merckillonly = (bool)((dmgbltypes & BL_MER) && !(dmgbltypes & ~BL_MER));
+
+	// Determine MVP (need to do it here so that it's not influenced by first attacker bonus below)
+	map_session_data* mvp_sd = md->get_mvp_player();
 
 	if(battle_config.exp_calc_type == 2 && count > 1) {	//Apply first-attacker 200% exp share bonus
 		s_dmglog& entry = md->dmglog[0];
@@ -3084,7 +3208,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	lootlist->m = md->bl.m;
 	lootlist->x = md->bl.x;
 	lootlist->y = md->bl.y;
-	lootlist->first_charid = (mvp_sd ? mvp_sd->status.char_id : 0);
+	lootlist->first_charid = (first_sd != nullptr ? first_sd->status.char_id : 0);
 	lootlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 	lootlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
@@ -3105,14 +3229,14 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		int32 drop_rate, drop_modifier = 100;
 
 #ifdef RENEWAL_DROP
-		drop_modifier = pc_level_penalty_mod( mvp_sd != nullptr ? mvp_sd : second_sd != nullptr ? second_sd : third_sd, PENALTY_DROP, nullptr, md );
+		drop_modifier = pc_level_penalty_mod( first_sd != nullptr ? first_sd : second_sd != nullptr ? second_sd : third_sd, PENALTY_DROP, nullptr, md );
 #endif
 
 		std::shared_ptr<s_item_drop_list> dlist = std::make_shared<s_item_drop_list>();
 		dlist->m = md->bl.m;
 		dlist->x = md->bl.x;
 		dlist->y = md->bl.y;
-		dlist->first_charid = (mvp_sd ? mvp_sd->status.char_id : 0);
+		dlist->first_charid = (first_sd != nullptr ? first_sd->status.char_id : 0);
 		dlist->second_charid = (second_sd ? second_sd->status.char_id : 0);
 		dlist->third_charid = (third_sd ? third_sd->status.char_id : 0);
 
@@ -3183,17 +3307,17 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 			if (rnd() % 10000 >= drop_rate)
 				continue;
 
-			if (mvp_sd && it->type == IT_PETEGG) {
-				pet_create_egg(mvp_sd, entry->nameid);
+			if (first_sd != nullptr && it->type == IT_PETEGG) {
+				pet_create_egg(first_sd, entry->nameid);
 				continue;
 			}
 
 			std::shared_ptr<s_item_drop> ditem = mob_setdropitem(entry, 1, md->mob_id);
 
 			//A Rare Drop Global Announce by Lupus
-			if (mvp_sd && entry->rate <= battle_config.rare_drop_announce) {
+			if (first_sd != nullptr && entry->rate <= battle_config.rare_drop_announce) {
 				char message[128];
-				sprintf(message, msg_txt(nullptr, 541), mvp_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate / 100);
+				sprintf(message, msg_txt(nullptr, 541), first_sd->status.name, md->name, it->ename.c_str(), (float)drop_rate / 100);
 				//MSG: "'%s' won %s's %s (chance: %0.02f%%)"
 				intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 			}
@@ -3203,7 +3327,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		}
 
 		// Ore Discovery (triggers if owner has loot priority, does not require to be the killer)
-		if (mvp_sd && pc_checkskill(mvp_sd, BS_FINDINGORE) > 0) {
+		if (first_sd != nullptr && pc_checkskill(first_sd, BS_FINDINGORE) > 0) {
 			std::shared_ptr<s_item_group_entry> entry = itemdb_group.get_random_entry(IG_ORE, 1, GROUP_ALGORITHM_DROP);
 			if (entry != nullptr) {
 				std::shared_ptr<s_mob_drop> mobdrop = std::make_shared<s_mob_drop>();
@@ -3266,7 +3390,8 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		add_timer(tick + (!battle_config.delay_battle_damage ? 500 : 0), mob_delay_item_drop, md->bl.id, 0);
 	}
 
-	if( mvp_sd && md->get_bosstype() == BOSSTYPE_MVP ){
+	// MVP Reward
+	if( mvp_sd != nullptr ){
 		t_itemid log_mvp_nameid = 0;
 		t_exp log_mvp_exp = 0;
 
@@ -3369,8 +3494,8 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	}
 
 	if (type&2 && !sd && md->mob_id == MOBID_EMPERIUM)
-		//Emperium destroyed by script. Discard mvp character. [Skotlex]
-		mvp_sd = nullptr;
+		// Emperium destroyed by script. Discard top damage dealer.
+		first_sd = nullptr;
 
 	rebirth =  ( md->sc.getSCE(SC_KAIZEL) || md->sc.getSCE(SC_ULTIMATE_S) || (md->sc.getSCE(SC_REBIRTH) && !md->state.rebirth) );
 	if( !rebirth ) { // Only trigger event on final kill
@@ -3426,17 +3551,17 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 				pc_setparam(sd, SP_KILLEDRID, md->mob_id);
 				pc_setparam(sd, SP_KILLERRID, sd->bl.id);
 				npc_event(sd,md->npc_event,0);
-			} else if( mvp_sd ) {
-				pc_setparam(mvp_sd, SP_KILLEDGID, md->bl.id);
-				pc_setparam(mvp_sd, SP_KILLEDRID, md->mob_id);
-				pc_setparam(mvp_sd, SP_KILLERRID, sd?sd->bl.id:0);
-				npc_event(mvp_sd,md->npc_event,0);
+			} else if( first_sd != nullptr ) {
+				pc_setparam(first_sd, SP_KILLEDGID, md->bl.id);
+				pc_setparam(first_sd, SP_KILLEDRID, md->mob_id);
+				pc_setparam(first_sd, SP_KILLERRID, sd?sd->bl.id:0);
+				npc_event(first_sd,md->npc_event,0);
 			} else
 				npc_event_do(md->npc_event);
-		} else if( mvp_sd && !md->state.npc_killmonster ) {
-			pc_setparam(mvp_sd, SP_KILLEDGID, md->bl.id);
-			pc_setparam(mvp_sd, SP_KILLEDRID, md->mob_id);
-			npc_script_event( *mvp_sd, NPCE_KILLNPC );
+		} else if( first_sd != nullptr && !md->state.npc_killmonster ) {
+			pc_setparam(first_sd, SP_KILLEDGID, md->bl.id);
+			pc_setparam(first_sd, SP_KILLEDRID, md->mob_id);
+			npc_script_event( *first_sd, NPCE_KILLNPC );
 		}
 	}
 
@@ -3476,7 +3601,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 	// MvP tomb [GreenBox]
 	if (battle_config.mvp_tomb_enabled && md->spawn->state.boss && map_getmapflag(md->bl.m, MF_NOTOMB) != 1)
-		mvptomb_create(md, mvp_sd ? mvp_sd->status.name : nullptr, time(nullptr));
+		mvptomb_create(md, mvp_sd != nullptr ? mvp_sd->status.name : (first_sd != nullptr ? first_sd->status.name : nullptr), time(nullptr));
 
 	if( !rebirth )
 		mob_setdelayspawn(md); //Set respawning.
@@ -4063,7 +4188,7 @@ void mobskill_delay(mob_data& md, t_tick tick)
 
 	std::vector<std::shared_ptr<s_mob_skill>>& ms = md.db->skill;
 
-	if (ms.empty())
+	if (ms.empty() || md.skill_idx >= ms.size())
 		return;
 
 	// Officially the skill delay is per skill rather than per skill db entry
@@ -4075,10 +4200,19 @@ void mobskill_delay(mob_data& md, t_tick tick)
 		// If the skill cannot be found anymore because the monster's state has changed no delay will be applied
 		int32 delay = 0;
 		for (int32 i = 0; i < ms.size(); i++) {
-			if (ms[i]->state == md.state.skillstate && ms[i]->skill_id == ms[md.skill_idx]->skill_id) {
+			if (ms[i]->skill_id == ms[md.skill_idx]->skill_id) {
+				bool match = false;
+				if (ms[i]->state == md.state.skillstate)
+					match = true;
+				else if (ms[i]->state == MSS_ANY)
+					match = true;
+				else if (ms[i]->state == MSS_ANYTARGET && md.target_id != 0 && md.state.skillstate != MSS_LOOT)
+					match = true;
 				// State and skill match, use the first delay found
-				delay = ms[i]->delay;
-				break;
+				if (match) {
+					delay = ms[i]->delay;
+					break;
+				}
 			}
 		}
 		// Apply delay found to all entries of the skill
@@ -7154,6 +7288,8 @@ void do_init_mob(void){
 	add_timer_func_list(mob_spawn_guardian_sub,"mob_spawn_guardian_sub");
 	add_timer_func_list(mob_respawn,"mob_respawn");
 	add_timer_func_list(mvptomb_delayspawn,"mvptomb_delayspawn");
+	add_timer_func_list(mob_attacked, "mob_attacked");
+	add_timer_func_list(mob_norm_attacked, "mob_norm_attacked");
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME,mob_ai_hard,0,0,MIN_MOBTHINKTIME);
 	add_timer_interval(gettick()+MIN_MOBTHINKTIME*10,mob_ai_lazy,0,0,MIN_MOBTHINKTIME*10);
 }
