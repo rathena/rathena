@@ -832,7 +832,29 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Fire
-    SplashArea: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 2
+      - Level: 10
+        Area: 2
+      - Level: 11
+        Area: 3
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -9217,7 +9239,7 @@ Body:
       IsNpc: true
     Hit: Single
     HitCount: 1
-    Duration: 30000
+    Duration1: 30000
     Status: WeaponBreaker
   - Id: 344
     Name: NPC_ARMORBRAKE
@@ -11367,7 +11389,7 @@ Body:
     Description: Flying Kick
     MaxLevel: 7
     Type: Weapon
-    TargetType: Support
+    TargetType: Attack
     DamageFlags:
       NoDamage: true
     Range: 9
@@ -16916,7 +16938,7 @@ Body:
     Hit: Single
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 17000
+    Duration1: 30000
     Requires:
       SpCost: 20
   - Id: 1011
@@ -16933,8 +16955,8 @@ Body:
     Hit: Single
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 10000
-    Duration2: 30000
+    Duration1: 30000
+    Duration2: 10000
     Requires:
       SpCost: 40
     Status: WinkCharm

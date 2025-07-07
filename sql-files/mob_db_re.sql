@@ -71,6 +71,8 @@ CREATE TABLE `mob_db_re` (
   `racegroup_edda_arunafeltz` tinyint unsigned DEFAULT NULL,
   `racegroup_lasagna` tinyint unsigned DEFAULT NULL,
   `racegroup_glast_heim_abyss` tinyint unsigned DEFAULT NULL,
+  `racegroup_destroyed_valkyrie_realm` tinyint unsigned DEFAULT NULL,
+  `racegroup_encroached_gephenia` tinyint unsigned DEFAULT NULL,
   `element` varchar(24) DEFAULT NULL,
   `element_level` tinyint unsigned DEFAULT NULL,
   `walk_speed` smallint unsigned DEFAULT NULL,

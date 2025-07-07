@@ -224,7 +224,10 @@ Body:
       Protection: true
   - Status: Confusion
     DurationLookup: NPC_WIDECONFUSE
+    Opt2:
+      Confusion: true
     Flags:
+      SendOption: true
       BossResist: true
       StopWalking: true
       SpreadEffect: true
@@ -456,11 +459,10 @@ Body:
     DurationLookup: AL_CRUCIS
     CalcFlags:
       Def: true
-    Opt2:
-      SignumCrucis: true
     Flags:
-      SendOption: true
       Debuff: true
+    Fail:
+      Signumcrucis: true
   - Status: Increaseagi
     Icon: EFST_INC_AGI
     DurationLookup: AL_INCAGI
@@ -9796,3 +9798,123 @@ Body:
       StopAttacking: true
       StopCasting: true
       BossResist: true
+  - Status: C_Buff_3
+    Icon: EFST_C_BUFF_3
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_C_BUFF_3, 1);
+      bonus bMaxHPrate, .@val1;
+      bonus bMaxSPrate, .@val1;
+  - Status: C_Buff_4
+    Icon: EFST_C_BUFF_4
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_C_BUFF_4, 1);
+      bonus bFlee, .@val1;
+      bonus bHit, .@val1;
+  - Status: C_Buff_5
+    Icon: EFST_C_BUFF_5
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus bCritical, getstatus(SC_C_BUFF_5, 1);
+      bonus bAspd, getstatus(SC_C_BUFF_5, 2);
+  - Status: C_Buff_6
+    Icon: EFST_C_BUFF_6
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_C_BUFF_6, 1);
+      bonus bAtkRate, .@val1;
+      bonus bMatkRate, .@val1;
+  - Status: Contents_15
+    Icon: EFST_CONTENTS_15
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_15, 1);
+      bonus2 bAddEle,Ele_All, .@val1;
+      bonus2 bMagicAddEle,Ele_All, .@val1;
+  - Status: Contents_16
+    Icon: EFST_CONTENTS_16
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_16, 1);
+      bonus2 bAddSize,Size_All, .@val1;
+      bonus2 bMagicAddSize,Size_All, .@val1;
+  - Status: Contents_17
+    Icon: EFST_CONTENTS_17
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_17, 1);
+      bonus2 bMagicAtkEle,Ele_All, .@val1;
+      bonus bShortAtkRate, .@val1;
+      bonus bLongAtkRate, .@val1;
+  - Status: Contents_18
+    Icon: EFST_CONTENTS_18
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_18, 1);
+      bonus bMatkRate, .@val1;
+      bonus bAtkRate, .@val1;
+  - Status: Contents_19
+    Icon: EFST_CONTENTS_19
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@val1 = getstatus(SC_CONTENTS_19, 1);
+      bonus bMaxHPrate, .@val1;
+      bonus bMaxSPrate, .@val1;
+  - Status: Contents_20
+    Icon: EFST_CONTENTS_20
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus bVariableCastrate, getstatus(SC_CONTENTS_20, 1);
+      bonus bAspd, getstatus(SC_CONTENTS_20, 2);
+  - Status: Overcoming_Crisis
+    Icon: EFST_OVERCOMING_CRISIS
+    DurationLookup: HN_OVERCOMING_CRISIS
+    CalcFlags:
+      Patk: true
+      Smatk: true
+      MaxHp: true
+    Flags:
+      NoBanishingBuster: true
+      NoDispell: true
+      NoClearance: true

@@ -224,7 +224,7 @@ DamageTaken: Rate at which the monster will recieve damage from players.
 
 ---------------------------------------
 
-GroupID: Group ID applied on the monster. It will only work on mobs if battle_config.show_mob_info is not enabled.
+GroupId: Group ID applied on the monster. It will only work on mobs if battle_config.show_mob_info is not enabled.
 
 ---------------------------------------
 

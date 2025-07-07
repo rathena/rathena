@@ -1267,18 +1267,23 @@ static int32 mob_can_changetarget(struct mob_data* md, struct block_list* target
  * Randomizes the target ID of a monster if it has the given mode
  * @param bl Unit that is going to attack
  * @param target_id Target ID to modify
+ * @return Whether a target was found (true) or not (false)
  */
-void mob_randomtarget(mob_data& md, int32& target_id) {
+bool mob_randomtarget(mob_data& md, int32& target_id) {
 	if (!status_has_mode(&md.status, MD_RANDOMTARGET))
-		return;
+		return true; // Keep current target
 
-	int32 search_size = md.status.rhw.range;
-	if (md.sc.hasSCE(SC_BLIND))
-		search_size = 1;
+	// Pick a random visible target
+	block_list* target = battle_getenemy(&md, DEFAULT_ENEMY_TYPE((&md)), md.status.rhw.range);
+	if (target == nullptr)
+		return false;
 
-	block_list* target = battle_getenemy(&md, DEFAULT_ENEMY_TYPE((&md)), search_size);
-	if (target != nullptr)
-		target_id = target->id;
+	// Check if target is in shoot range
+	if (!battle_check_range(&md, target, md.status.rhw.range))
+		return false;
+
+	target_id = target->id;
+	return true;
 }
 
 /*==========================================
@@ -2137,8 +2142,10 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	// Normal attack / berserk skill is only used when target is in range
 	if (battle_check_range(md, tbl, md->status.rhw.range))
 	{
-		// Stop and make sure there is no chase target when already in attack range
-		unit_stop_walking(md, USW_FIXPOS|USW_RELEASE_TARGET);
+		int32 stop_flag = USW_FIXPOS|USW_RELEASE_TARGET;
+
+		// Source may die due to reflect damage
+		map_freeblock_lock();
 
 		// Hiding is a special case because it prevents normal attacks but allows skill usage
 		// TODO: Some other states also have this behavior and should be investigated
@@ -2147,7 +2154,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			// Target within range and potentially able to use normal attack, engage
 			if (md->ud.target != tbl->id || md->ud.attacktimer == INVALID_TIMER)
 			{ //Only attack if no more attack delay left
-				unit_attack(md, tbl->id, 1);
+				stop_flag = unit_attack(md, tbl->id, 1);
 			}
 		}
 		else {
@@ -2155,6 +2162,13 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			// This results in the monster going into an attack state despite not attacking
 			mob_setstate(*md, MSS_BERSERK);
 		}
+
+		// Stop and make sure there is no chase target when attack was not skipped
+		if (stop_flag != USW_NONE)
+			unit_stop_walking(md, stop_flag);
+
+		map_freeblock_unlock();
+
 		//Target still in attack range, no need to chase the target
 		return true;
 	}
@@ -5389,10 +5403,10 @@ uint64 MobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		mob->damagetaken = damage;
 	}
 
-	if (this->nodeExists(node, "GroupID")) {
+	if (this->nodeExists(node, "GroupId")) {
 		uint16 group_id;
 
-		if (!this->asUInt16Rate(node, "GroupID", group_id))
+		if (!this->asUInt16Rate(node, "GroupId", group_id))
 			return 0;
 
 		mob->group_id = group_id;
@@ -5787,7 +5801,10 @@ static int32 mob_read_sqldb(void)
 	for( uint8 fi = 0; fi < ARRAYLENGTH(mob_db_name); ++fi ) {
 		// retrieve all rows from the mob database
 		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT `id`,`name_aegis`,`name_english`,`name_japanese`,`level`,`hp`,`sp`,`base_exp`,`job_exp`,`mvp_exp`,`attack`,`attack2`,`defense`,`magic_defense`,`str`,`agi`,`vit`,`int`,`dex`,`luk`,`attack_range`,`skill_range`,`chase_range`,`size`,`race`,"
-			"`racegroup_goblin`,`racegroup_kobold`,`racegroup_orc`,`racegroup_golem`,`racegroup_guardian`,`racegroup_ninja`,`racegroup_gvg`,`racegroup_battlefield`,`racegroup_treasure`,`racegroup_biolab`,`racegroup_manuk`,`racegroup_splendide`,`racegroup_scaraba`,`racegroup_ogh_atk_def`,`racegroup_ogh_hidden`,`racegroup_bio5_swordman_thief`,`racegroup_bio5_acolyte_merchant`,`racegroup_bio5_mage_archer`,`racegroup_bio5_mvp`,`racegroup_clocktower`,`racegroup_thanatos`,`racegroup_faceworm`,`racegroup_hearthunter`,`racegroup_rockridge`,`racegroup_werner_lab`,`racegroup_temple_demon`,`racegroup_illusion_vampire`,`racegroup_malangdo`,`racegroup_ep172alpha`,`racegroup_ep172beta`,`racegroup_ep172bath`,`racegroup_illusion_turtle`,`racegroup_rachel_sanctuary`,`racegroup_illusion_luanda`,`racegroup_illusion_frozen`,`racegroup_illusion_moonlight`,`racegroup_ep16_def`,`racegroup_edda_arunafeltz`,`racegroup_lasagna`,`racegroup_glast_heim_abyss`,"
+			"`racegroup_goblin`,`racegroup_kobold`,`racegroup_orc`,`racegroup_golem`,`racegroup_guardian`,`racegroup_ninja`,`racegroup_gvg`,`racegroup_battlefield`,`racegroup_treasure`,`racegroup_biolab`,`racegroup_manuk`,`racegroup_splendide`,`racegroup_scaraba`,`racegroup_ogh_atk_def`,`racegroup_ogh_hidden`,"
+			"`racegroup_bio5_swordman_thief`,`racegroup_bio5_acolyte_merchant`,`racegroup_bio5_mage_archer`,`racegroup_bio5_mvp`,`racegroup_clocktower`,`racegroup_thanatos`,`racegroup_faceworm`,`racegroup_hearthunter`,`racegroup_rockridge`,`racegroup_werner_lab`,`racegroup_temple_demon`,`racegroup_illusion_vampire`,"
+			"`racegroup_malangdo`,`racegroup_ep172alpha`,`racegroup_ep172beta`,`racegroup_ep172bath`,`racegroup_illusion_turtle`,`racegroup_rachel_sanctuary`,`racegroup_illusion_luanda`,`racegroup_illusion_frozen`,`racegroup_illusion_moonlight`,`racegroup_ep16_def`,`racegroup_edda_arunafeltz`,`racegroup_lasagna`,`racegroup_glast_heim_abyss`,"
+			"`racegroup_destroyed_valkyrie_realm`,`racegroup_encroached_gephenia`,"
 			"`element`,`element_level`,`walk_speed`,`attack_delay`,`attack_motion`,`damage_motion`,`damage_taken`,`groupid`,`title`,`ai`,`class`,"
 			"`mode_canmove`,`mode_looter`,`mode_aggressive`,`mode_assist`,`mode_castsensoridle`,`mode_norandomwalk`,`mode_nocast`,`mode_canattack`,`mode_castsensorchase`,`mode_changechase`,`mode_angry`,`mode_changetargetmelee`,`mode_changetargetchase`,`mode_targetweak`,`mode_randomtarget`,`mode_ignoremelee`,`mode_ignoremagic`,`mode_ignoreranged`,`mode_mvp`,`mode_ignoremisc`,`mode_knockbackimmune`,`mode_teleportblock`,`mode_fixeditemdrop`,`mode_detector`,`mode_statusimmune`,`mode_skillimmune`,"
 			"`mvpdrop1_item`,`mvpdrop1_rate`,`mvpdrop1_option`,`mvpdrop1_index`,`mvpdrop2_item`,`mvpdrop2_rate`,`mvpdrop2_option`,`mvpdrop2_index`,`mvpdrop3_item`,`mvpdrop3_rate`,`mvpdrop3_option`,`mvpdrop3_index`,"
