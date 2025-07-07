@@ -58,6 +58,7 @@ IgnoreFlee		- Skill ignores target's flee (Magic type always ignores)
 IgnoreDefCard	- Skill ignores target's defense cards.
 IgnoreLongCard	- Skill ignores caster's long range damage cards.
 Critical		- Skill can critical.
+SimpleDefense	- (Renewal-only) Physical damage is flatly reduced by DEF+DEF2. RES is ignored.
 
 ---------------------------------------
 
@@ -912,7 +913,7 @@ NoEnemy				- If battle_config::defunit_not_enemy is enabled, the Target is chang
 NoReiteration		- Spell cannot be stacked.
 NoFootSet			- Spell cannot be cast near/on targets.
 NoOverlap			- Spell effects do not overlap.
-PathCheck			- Only cells with a shootable path will be placed.
+PathCheck			- Only cells in a shootable path will be placed. If not set, effects apply through walls for ranged units.
 NoPc				- Spell cannot affect players.
 NoMob				- Spell cannot affect mobs.
 Skill				- Spell can affect skills.

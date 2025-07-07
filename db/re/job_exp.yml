@@ -27,7 +27,10 @@
 #   MaxWeight                Base maximum weight. (Default: 20000)
 #   HpFactor                 Exponential HP increase. Per base level: [HpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   HpIncrease               Linear HP increase. Per base level: [HpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 500)
+#   SpFactor                 Exponential SP increase. Per base level: [SpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   SpIncrease               Linear SP increase. Per base level: [SpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 100)
+#   ApFactor                 Exponential AP increase. Per base level: [ApFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+#   ApIncrease               Linear AP increase. Per base level: [ApIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
 #     Weapon                 Weapon type with associated ASPD.
 #   BonusStats:              Job level bonus stats/traits.
@@ -78,7 +81,7 @@
 
 Header:
   Type: JOB_STATS
-  Version: 2
+  Version: 3
 
 Body:
   - Jobs:
@@ -3365,7 +3368,7 @@ Body:
       Night_Watch: true
       Hyper_Novice: true
       Spirit_Handler: true
-    MaxBaseLevel: 260
+    MaxBaseLevel: 275
     BaseExp:
       - Level: 1
         Exp: 658
@@ -3886,6 +3889,36 @@ Body:
       - Level: 259
         Exp: 270217017679
       - Level: 260
+        Exp: 283727868563
+      - Level: 261
+        Exp: 297914261991
+      - Level: 262
+        Exp: 312809975091
+      - Level: 263
+        Exp: 328450473845
+      - Level: 264
+        Exp: 344872997537
+      - Level: 265
+        Exp: 353494822476
+      - Level: 266
+        Exp: 362332193038
+      - Level: 267
+        Exp: 371390497864
+      - Level: 268
+        Exp: 380675260310
+      - Level: 269
+        Exp: 390192141818
+      - Level: 270
+        Exp: 397995984654
+      - Level: 271
+        Exp: 405955904348
+      - Level: 272
+        Exp: 414075022434
+      - Level: 273
+        Exp: 422356522883
+      - Level: 274
+        Exp: 430803653341
+      - Level: 275
         Exp: 999999999999
   - Jobs:
       Dragon_Knight: true
@@ -3912,7 +3945,7 @@ Body:
       Night_Watch: true
       Hyper_Novice: true
       Spirit_Handler: true
-    MaxJobLevel: 55
+    MaxJobLevel: 60
     JobExp:
       - Level: 1
         Exp: 4700000
@@ -4023,4 +4056,14 @@ Body:
       - Level: 54
         Exp: 6559840847
       - Level: 55
-        Exp: 9999999999
+        Exp: 7543816974
+      - Level: 56
+        Exp: 8675389520
+      - Level: 57
+        Exp: 9976697948
+      - Level: 58
+        Exp: 11473202640
+      - Level: 59
+        Exp: 13194183036
+      - Level: 60
+        Exp: 99999999999

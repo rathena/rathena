@@ -43,90 +43,99 @@
 
 Header:
   Type: BARTER_DB
-  Version: 1
+  Version: 2
 
 Body:
-  - Name: barter_ep18_1
+###########################################################################
+##= Pet Groomer ( Exchange )
+###########################################################################
+  - Name: barter_Pet_Groomer
     Items:
       - Index: 0
-        Item: Gray_W_Suits
+        Item: Monster_Juice
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
+            Item: Apple
+            Amount: 2
+          - Index: 1
+            Item: Animal_Blood
+            Amount: 1
       - Index: 1
-        Item: Gray_W_Robe
+        Item: Singing_Flower
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
+            Item: Singing_Plant
+            Amount: 1
       - Index: 2
-        Item: Gray_W_Manteau
+        Item: Wild_Flower
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
+            Item: Fancy_Flower
+            Amount: 1
+          - Index: 1
+            Item: Clover
+            Amount: 1
       - Index: 3
-        Item: Gray_W_Muffler
+        Item: Book_Of_Devil
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
+            Item: Horrendous_Mouth
+            Amount: 2
+          - Index: 1
+            Item: Old_Magic_Book
+            Amount: 1
       - Index: 4
-        Item: Gray_W_Boots
+        Item: No_Recipient
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
+            Item: Old_Portrait
+            Amount: 1
       - Index: 5
-        Item: Gray_W_Shoes
+        Item: Horror_Of_Tribe
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
+            Item: Scorpion's_Tail
+            Amount: 1
+          - Index: 1
+            Item: Patriotism_Marks
+            Amount: 1
       - Index: 6
-        Item: Gray_W_Pendant
+        Item: Skull_Helm
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
+            Item: Bone_Helm
+            Amount: 1
       - Index: 7
-        Item: Gray_W_Robe
+        Item: Monster_Oxygen_Mask
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
+            Item: Oxygen_Mask
+            Amount: 1
       - Index: 8
-        Item: Gray_W_Ring
+        Item: Silk_Ribbon
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
+            Item: Ribbon
+            Amount: 1
       - Index: 9
-        Item: Gray_W_Earing
+        Item: Stellar_Hairpin
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 350
-  - Name: barter_ep18_2
-    Items:
-      - Index: 0
-        Item: GrayWolf_7_Ticket
+            Item: Star_Dust
+            Amount: 1
+      - Index: 10
+        Item: Tiny_Egg_Shell
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 1050
-  - Name: barter_ep18_3
-    Items:
-      - Index: 0
-        Item: GrayWolf_7_Ticket
+            Item: Egg_Shell
+            Amount: 1
+      - Index: 11
+        Item: Rocker_Glasses
+        Zeny: 400
         RequiredItems:
           - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 1050
-      - Index: 1
-        Item: GrayWolf_9_Ticket
-        RequiredItems:
-          - Index: 0
-            Item: Ep18_Amethyst_Fragment
-            Amount: 2250
+            Item: Zargon
+            Amount: 2
+          - Index: 1
+            Item: Ribbon
+            Amount: 1
