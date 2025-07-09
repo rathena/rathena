@@ -5041,7 +5041,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 			if( tsd->bg_id && map_getmapflag(tsd->m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_single(sd->fd,tsd);
 			clif_efst_status_change_sub(sd, bl, SELF);
-			clif_hat_effects(&sd->bl, bl, true, SELF);
+			clif_hat_effects(bl, bl, true, SELF);
 		}
 		break;
 	case BL_MER: // Devotion Effects
