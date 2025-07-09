@@ -3494,6 +3494,10 @@ void unit_dataset(struct block_list *bl)
 	ud->dmg_tick = 0;
 	ud->sx = 8;
 	ud->sy = 8;
+
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	ud->hatEffects = {};
+#endif
 }
 
 /**
@@ -4036,10 +4040,6 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			sd->qi_display.clear();
 
-#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
-			sd->hatEffects.clear();
-#endif
-
 			if (sd->achievement_data.achievements)
 				achievement_free(sd);
 
@@ -4222,6 +4222,12 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 		}
 	}
 
+	if (ud) {
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+		ud->hatEffects.clear();
+#endif
+	}
+
 	map_deliddb(bl);
 
 	if( bl->type != BL_PC ) // Players are handled by map_quit
@@ -4258,6 +4264,36 @@ static TIMER_FUNC(unit_shadowscar_timer) {
 		status_change_end( bl, SC_SHADOW_SCAR );
 
 	return 0;
+}
+
+void unit_hateffect(struct block_list* bl, int16 effectID, bool enable, bool send) {
+	struct unit_data* ud;
+	map_session_data* sd;
+
+	if (!bl || !(ud = unit_bl2ud(bl)))
+		return;
+
+	sd = BL_CAST(BL_PC, bl);
+	auto it = util::vector_get(ud->hatEffects, effectID);
+
+	if (enable) {
+		if (it != ud->hatEffects.end()) {
+			return;
+		}
+
+		ud->hatEffects.push_back(effectID);
+	}
+	else {
+		if (it == ud->hatEffects.end()) {
+			return;
+		}
+
+		util::vector_erase_if_exists(ud->hatEffects, effectID);
+	}
+
+	if (send || !enable) {
+		clif_hat_effect_single(bl, effectID, enable);
+	}
 }
 
 /**

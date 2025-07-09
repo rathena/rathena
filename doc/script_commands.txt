@@ -11211,12 +11211,17 @@ solution rather than sending the map and the monster_id.
 
 ---------------------------------------
 
-*hateffect(<Hat Effect ID>,<State>);
+*hateffect(<hat effect id>,<state>{,<target id>});
 
-This will set a Hat Effect onto the player. The state field allows you to
-enable (true) or disable (false) the effect on the player.
-The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting
-with HAT_EF_*.
+Enable or disables a Hat Effect onto the specified target unit.
+
+The Hat Effect constants can be found in 'src/map/script.hpp' starting with HAT_EF_*.
+
+Examples:
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true; // On executing player or NPC
+
+	monster "prontera",50,50,"--en--",1002,1;
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, $@mobid; // On spawned mob
 
 Requires client 2015-05-13aRagEXE or newer.
 

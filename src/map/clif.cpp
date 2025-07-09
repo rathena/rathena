@@ -1707,7 +1707,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 			if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 				clif_spiritcharm( *sd );
 			clif_efst_status_change_sub(bl, bl, AREA);
-			clif_hat_effects( *sd, *sd, AREA );
+			clif_hat_effects( bl, bl, true, AREA );
 		}
 		break;
 	case BL_MOB:
@@ -1719,6 +1719,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(md,EF_BABYBODY2,AREA);
 			if ( md->special_state.ai == AI_ABR || md->special_state.ai == AI_BIONIC )
 				clif_summon_init(*md);
+			clif_hat_effects(bl, bl, true, AREA);
 			clif_name_area(md);
 		}
 		break;
@@ -1731,6 +1732,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 				clif_specialeffect(nd,EF_BABYBODY2,AREA);
 			clif_efst_status_change_sub(bl, bl, AREA);
 			clif_progressbar_npc_area(nd);
+			clif_hat_effects(bl, bl, true, AREA);
 		}
 		break;
 	case BL_PET:
@@ -5039,7 +5041,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 			if( tsd->bg_id && map_getmapflag(tsd->m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_single(sd->fd,tsd);
 			clif_efst_status_change_sub(sd, bl, SELF);
-			clif_hat_effects( *sd, *tsd, SELF );
+			clif_hat_effects(&sd->bl, bl, true, SELF);
 		}
 		break;
 	case BL_MER: // Devotion Effects
@@ -5064,6 +5066,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
 			clif_efst_status_change_sub(sd, bl, SELF);
 			clif_progressbar_npc(nd, sd);
+			clif_hat_effects(bl, bl, true, AREA);
 		}
 		break;
 	case BL_MOB:
@@ -5073,6 +5076,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 				clif_specialeffect_single(bl,EF_GIANTBODY2,sd->fd);
 			else if(md->special_state.size==SZ_MEDIUM)
 				clif_specialeffect_single(bl,EF_BABYBODY2,sd->fd);
+			clif_hat_effects(bl, bl, true, AREA);
 #if PACKETVER >= 20120404
 			if (battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR)) {
 				// Must show hp bar to all char who already hit the mob.
@@ -21390,24 +21394,13 @@ void clif_navigateTo(map_session_data *sd, const char* mapname, uint16 x, uint16
 
 /// Send hat effects to the client.
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W } (ZC_EQUIPMENT_EFFECT)
-void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target target ){
+void clif_hat_effects(struct block_list* src, struct block_list* bl, bool enable, enum send_target target) {  
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
-	map_session_data *tsd;
-	block_list* tbl;
-
-	if( target == SELF ){
-		tsd = BL_CAST(BL_PC,&bl);
-		tbl = &sd;
-	}else{
-		tsd = &sd;
-		tbl = &bl;
-	}
-
-	if( tsd == nullptr ){
+	struct unit_data* ud;
+	
+	if (!src || !bl || !(ud = unit_bl2ud(bl)))
 		return;
-	}
-
-	if( tsd->hatEffects.empty() || map_getmapdata(tbl->m)->getMapFlag(MF_NOCOSTUME) ){
+	if (ud->hatEffects.empty() || map_getmapdata(src->m)->getMapFlag(MF_NOCOSTUME)) {
 		return;
 	}
 
@@ -21415,33 +21408,35 @@ void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target ta
 
 	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
 	p->packetLength = sizeof( *p );
-	p->aid = tsd->id;
-	p->status = 1;
+	p->aid = bl->id;
+	p->status = enable;
 
-	for( size_t i = 0; i < tsd->hatEffects.size(); i++ ){
-		p->effects[i] = tsd->hatEffects[i];
+	for( size_t i = 0; i < ud->hatEffects.size(); i++ ){
+		p->effects[i] = ud->hatEffects[i];
 
 		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->effects[0] ) );
 	}
 
-	clif_send( p, p->packetLength, tbl, target );
+	clif_send( p, p->packetLength, src, target );
 #endif
 }
 
 /// Send a single hat effect to the client.
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W } (ZC_EQUIPMENT_EFFECT)
-void clif_hat_effect_single( map_session_data& sd, uint16 effectId, bool enable ){
+void clif_hat_effect_single( struct block_list* bl, uint16 effectId, bool enable ){
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	nullpo_retv(bl);
+	
 	PACKET_ZC_EQUIPMENT_EFFECT* p = reinterpret_cast<PACKET_ZC_EQUIPMENT_EFFECT*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
 	p->packetLength = sizeof( *p );
-	p->aid = sd.id;
+	p->aid = bl->id;
 	p->status = enable;
 	p->effects[0] = effectId;
 	p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->effects[0] ) );
 
-	clif_send( p, p->packetLength, &sd, AREA );
+	clif_send( p, p->packetLength, bl, AREA );
 #endif
 }
 
