@@ -1537,6 +1537,7 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 		ap = status->ap;
 	}
 
+	// If no damage is dealt and the damage was passive
 	if (hp == 0 && sp == 0 && ap == 0 && (flag&1))
 		return 0;
 
@@ -1547,6 +1548,7 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 	if (hp && battle_config.invincible_nodamage && src && sc && sc->getSCE(SC_INVINCIBLE))
 		hp = 1;
 
+	// If the damage is not passive
 	if (!(flag&1)) {
 		if( sc ) {
 			struct status_change_entry *sce;
