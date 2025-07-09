@@ -1554,9 +1554,10 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 			for (const auto &it : status_db) {
 				sc_type type = static_cast<sc_type>(it.first);
 
-				// Wink Charm checks for damage so it doesn't end itself
+				// For non-players, Wink Charm, Voice of Siren and Deep Sleep end only when damage was dealt (e.g. Wink Charm does not end itself)
+				// For players, these status changes end even if no damage was dealt (e.g. Provoke ends them on players but not on monsters)
 				// Other status changes end even on 0 damage (e.g. Wink Charm ends Freeze)
-				if (type == SC_WINKCHARM && hp == 0)
+				if ((type == SC_WINKCHARM || type == SC_VOICEOFSIREN || type == SC_DEEPSLEEP) && target->type != BL_PC && hp == 0)
 					continue;
 
 				if (sc->getSCE(type) && it.second->flag[SCF_REMOVEONDAMAGED]) {
