@@ -11215,7 +11215,7 @@ solution rather than sending the map and the monster_id.
 
 Enable or disables a Hat Effect onto the specified target unit.
 
-The Hat Effect constants can be found in 'src/map/script.hpp' starting with HAT_EF_*.
+The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting with HAT_EF_*.
 
 Examples:
 	hateffect HAT_EF_FLUTTER_BUTTERFLY, true; // On executing player or NPC
