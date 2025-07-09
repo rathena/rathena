@@ -319,7 +319,7 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 	if (target == nullptr)
 		return 0;
 
-	int32 dmg_change;
+	int32 dmg_change = 0;
 	map_session_data* sd = nullptr;
 
 	t_tick delay = battle_calc_walkdelay(*target, damage, div_, tick);
@@ -331,7 +331,7 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 		dmg_change = status_fix_spdamage(src, target, damage, delay, skill_id);
 	else if (sd && battle_check_coma(*sd, *target, (e_battle_flag)attack_type))
 		dmg_change = status_damage(src, target, damage, 0, delay, 16, skill_id); // Coma attack
-	else
+	else if (dmg_lv > ATK_BLOCK)
 		dmg_change = status_fix_damage(src, target, damage, delay, skill_id);
 	if (attack_type && !status_isdead(*target) && additional_effects)
 		skill_additional_effect(src, target, skill_id, skill_lv, attack_type, dmg_lv, tick);
