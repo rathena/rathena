@@ -167,6 +167,7 @@ struct Script_Config {
 	const char *loadmap_event_name;
 	const char *baselvup_event_name;
 	const char *joblvup_event_name;
+	const char *identify_event_name;
 
 	// NPC related
 	const char* ontouch_event_name;
@@ -2161,6 +2162,13 @@ enum e_hat_effects : int16{
 	HAT_EF_INKPAINTING_NIGHT,
 	HAT_EF_KUNG_FU_PANDA,
 	HAT_EF_C_MGSGPH_POTARL,
+	HAT_EF_C_IGUAZU_FALLS,
+	FOOTPRINT_EF_BLOSSOM,
+	FOOTPRINT_EF_BUD,
+	FOOTPRINT_EF_BUTTERFLY_BLUE,
+	FOOTPRINT_EF_BUTTERFLY_PURPLE,
+	FOOTPRINT_EF_BUTTERFLY_YELLOW,
+
 	HAT_EF_MAX
 };
 
