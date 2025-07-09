@@ -2777,7 +2777,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 //Call when a mob has received damage.
 void mob_damage(struct mob_data *md, struct block_list *src, int32 damage)
 {
-	if (src && damage > 0) { //Store total damage...
+	if (src != nullptr) { //Store total damage...
 		//Log damage
 		mob_log_damage(md, src, static_cast<int64>(damage));
 	}

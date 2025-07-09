@@ -3521,11 +3521,11 @@ static int32 status_fix_damage( struct block_list *src, struct block_list *targe
 }
 //Define for standard SP damage attacks.
 static int32 status_fix_spdamage( struct block_list *src, struct block_list *target, int64 sp, t_tick walkdelay, uint16 skill_id ){
-	return status_damage( src, target, 0, sp, walkdelay, 0, skill_id );
+	return status_damage( src, target, 0, sp, walkdelay, 1, skill_id );
 }
 //Define for standard AP damage attacks.
 static int32 status_fix_apdamage( struct block_list *src, struct block_list *target, int64 ap, t_tick walkdelay, uint16 skill_id ){
-	return status_damage( src, target, 0, 0, ap, walkdelay, 0, skill_id );
+	return status_damage( src, target, 0, 0, ap, walkdelay, 1, skill_id );
 }
 //Define for standard HP/SP/AP damage triggers.
 static int32 status_zap( struct block_list* bl, int64 hp, int64 sp, int64 ap = 0 ){
