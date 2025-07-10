@@ -30,6 +30,7 @@ private:
 	void parse( const ryml::Tree& rootNode );
 	void parseImports( const ryml::Tree& rootNode );
 	template <typename R> bool asType( const ryml::NodeRef& node, const std::string& name, R& out );
+	template <typename R> bool asType( const ryml::NodeRef& node, const std::string& name, R& out, R defaultValue );
 
 // These should be visible/usable by the implementation provider
 protected:
@@ -45,7 +46,8 @@ protected:
 
 	// Conversion functions
 	bool asBool(const ryml::NodeRef& node, const std::string &name, bool &out);
-	bool asInt16(const ryml::NodeRef& node, const std::string& name, int16& out );
+	bool asUInt8(const ryml::NodeRef& node, const std::string& name, uint8& out);
+	bool asInt16(const ryml::NodeRef& node, const std::string& name, int16& out);
 	bool asUInt16(const ryml::NodeRef& node, const std::string& name, uint16& out);
 	bool asInt32(const ryml::NodeRef& node, const std::string &name, int32 &out);
 	bool asUInt32(const ryml::NodeRef& node, const std::string &name, uint32 &out);
@@ -56,6 +58,11 @@ protected:
 	bool asString(const ryml::NodeRef& node, const std::string &name, std::string &out);
 	bool asUInt16Rate(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum=10000);
 	bool asUInt32Rate(const ryml::NodeRef& node, const std::string& name, uint32& out, uint32 maximum=10000);
+	// Conversion with Default
+	bool asUInt8(const ryml::NodeRef& node, const std::string& name, uint8& out, uint8 defaultValue);
+	bool asUInt16(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 defaultValue);
+	bool asString(const ryml::NodeRef& node, const std::string &name, std::string &out, std::string defaultValue);
+	bool asUInt16Rate(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum, uint16 defaultValue);
 
 	void setGenerator(bool shouldLoad);
 

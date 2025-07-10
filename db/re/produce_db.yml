@@ -46,5 +46,7 @@ Header:
 
 Footer:
   Imports:
-  - Path: db/re/skill_produce_db.yml
-  - Path: db/re/skill_changematerial_db.yml
+  # - Path: db/re/skill_produce_db.yml
+  # - Path: db/re/skill_changematerial_db.yml
+  - Path: db/re/skill_produce_db_v2.yml
+  - Path: db/re/skill_changematerial_db_v2.yml
