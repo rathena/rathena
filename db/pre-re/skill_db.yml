@@ -10135,16 +10135,16 @@ Body:
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
-        Time: 3600000
+        Time: 40000
       - Level: 2
-        Time: 3600000
+        Time: 45000
       - Level: 3
-        Time: 3600000
+        Time: 50000
       - Level: 4
-        Time: 3600000
+        Time: 55000
       - Level: 5
-        Time: 3600000
-    Duration2: 3600000
+        Time: 60000
+    Duration2: 60000
     Requires:
       SpCost:
         - Level: 1

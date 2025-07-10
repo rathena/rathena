@@ -11174,7 +11174,7 @@ BUILDIN_FUNC(getexp){
 
 	pc_gainexp(sd, nullptr, base, job, 1,100);
 #ifdef RENEWAL
-	if (base && sd->hd)
+	if (base && sd->hd && static_cast<uint32>(sd->hd->homunculus.level) <= sd->status.base_level)
 		hom_gainexp(sd->hd, base * battle_config.homunculus_exp_gain / 100); // Homunculus only receive 10% of EXP
 #endif
 

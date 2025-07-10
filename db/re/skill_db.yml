@@ -1396,7 +1396,7 @@ Body:
     HitCount: 1
     CastTime: 800
     AfterCastActDelay: 1000
-    Duration1: 3600000
+    Duration1: -1
     FixedCastTime: 200
     Requires:
       HpCost: 15
@@ -1530,7 +1530,7 @@ Body:
     SplashArea: 18
     CastTime: 350
     AfterCastActDelay: 3500
-    Duration1: 3600000
+    Duration1: -1
     FixedCastTime: 150
     Requires:
       SpCost:
@@ -1566,7 +1566,7 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -1710,27 +1710,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: 3
-    Duration1:
-      - Level: 1
-        Time: 3600000
-      - Level: 2
-        Time: 3600000
-      - Level: 3
-        Time: 3600000
-      - Level: 4
-        Time: 3600000
-      - Level: 5
-        Time: 3600000
-      - Level: 6
-        Time: 3600000
-      - Level: 7
-        Time: 3600000
-      - Level: 8
-        Time: 3600000
-      - Level: 9
-        Time: 3600000
-      - Level: 10
-        Time: 3600000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -2551,7 +2531,7 @@ Body:
     SplashArea: 18
     CastTime: 3200
     AfterCastActDelay: 2000
-    Duration1: 3600000
+    Duration1: -1
     FixedCastTime: 800
     Requires:
       SpCost: 40
@@ -2569,7 +2549,7 @@ Body:
     HitCount: 1
     SplashArea: 18
     AfterCastActDelay: 2000
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost: 20
     Status: Gloria
@@ -3886,7 +3866,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -3918,7 +3898,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -3946,7 +3926,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -3997,7 +3977,7 @@ Body:
       Toggleable: true
     Hit: Single
     HitCount: 1
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost: 10
     Status: MaximizePower
@@ -5202,7 +5182,7 @@ Body:
     HitCount: 1
     SplashArea: -1
     CastTime: 1000
-    Duration1: 3600000
+    Duration1: -1
     Cooldown: 30000
     FixedCastTime: 300
     Requires:
@@ -5240,7 +5220,7 @@ Body:
       IsQuest: true
     Hit: Single
     HitCount: 1
-    Duration1: 3600000
+    Duration1: -1
     FixedCastTime: 5000
     Requires:
       SpCost: 30
@@ -7581,7 +7561,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    Duration1: 3600000
+    Duration1: -1
     FixedCastTime: 3000
     Requires:
       SpCost: 35
@@ -9689,7 +9669,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    Duration1: 3600000
+    Duration1: -1
     FixedCastTime: 700
     CastTimeFlags:
       IgnoreDex: true
@@ -10100,7 +10080,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -10223,27 +10203,7 @@ Body:
       - Level: 10
         Time: 4200
     AfterCastActDelay: 2000
-    Duration1:
-      - Level: 1
-        Time: 3600000
-      - Level: 2
-        Time: 3600000
-      - Level: 3
-        Time: 3600000
-      - Level: 4
-        Time: 3600000
-      - Level: 5
-        Time: 3600000
-      - Level: 6
-        Time: 3600000
-      - Level: 7
-        Time: 3600000
-      - Level: 8
-        Time: 3600000
-      - Level: 9
-        Time: 3600000
-      - Level: 10
-        Time: 3600000
+    Duration1: -1
     FixedCastTime:
       - Level: 1
         Time: 500
@@ -10299,7 +10259,7 @@ Body:
     Flags:
       AllowOnMado: true
     HitCount: 1
-    Duration1: 3600000
+    Duration1: -1
     Duration2: 5000
     FixedCastTime:
       - Level: 1
@@ -10391,7 +10351,7 @@ Body:
       AllowOnMado: true
     Hit: Single
     HitCount: 1
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost: 20
       State: Cart
@@ -12185,7 +12145,7 @@ Body:
     Hit: Single
     HitCount: 1
     SplashArea: -1
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost: 64
       Weapon:
@@ -12897,7 +12857,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastTime: 1600
-    Duration1: 90000
+    Duration1: -1
     FixedCastTime: 400
     CastTimeFlags:
       IgnoreDex: true
@@ -13062,7 +13022,7 @@ Body:
       AllowOnMado: true
     Hit: Single
     HitCount: 1
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost: 15
       ZenyCost:
@@ -21380,17 +21340,7 @@ Body:
       Critical: true
     Hit: Single
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 3600000
-      - Level: 2
-        Time: 3600000
-      - Level: 3
-        Time: 3600000
-      - Level: 4
-        Time: 3600000
-      - Level: 5
-        Time: 3600000
+    Duration1: -1
     FixedCastTime: 2000
     CastTimeFlags:
       IgnoreDex: true
@@ -25193,7 +25143,7 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
-    Duration1: 3600000
+    Duration1: -1
     Cooldown: 30000
     Requires:
       SpCost: 120
@@ -25408,7 +25358,7 @@ Body:
     HitCount: 1
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1: 3600000
+    Duration1: -1
     Duration2: 600000
     FixedCastTime:
       - Level: 1
@@ -25457,7 +25407,7 @@ Body:
     HitCount: 1
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1: 3600000
+    Duration1: -1
     Cooldown: 1000
     FixedCastTime: 1000
     Requires:
@@ -25497,7 +25447,7 @@ Body:
     HitCount: 1
     CastTime: 1000
     AfterCastActDelay: 1000
-    Duration1: 3600000
+    Duration1: -1
     Cooldown: 1000
     FixedCastTime: 1000
     Requires:
@@ -32408,7 +32358,7 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 500
-    Duration1: 3600000
+    Duration1: -1
     FixedCastTime: 1000
     Requires:
       SpCost:
@@ -32842,7 +32792,7 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 500
-    Duration1: 3600000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1

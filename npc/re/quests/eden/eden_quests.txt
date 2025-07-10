@@ -454,6 +454,7 @@ S_Quest1:
 		mes "Ok, may Freya bless you~!";
 		para_suv01 = 6;
 		setquest 7133;
+		warp "prt_sewb1", 130, 260;
 		close;
 	}
 	return;
@@ -527,6 +528,7 @@ S_Quest2:
 		mes "Ok, blessing you~!!";
 		para_suv01 = 17;
 		setquest 7142;
+		warp "anthell01", 36, 261;
 		close;
 	}
 	return;

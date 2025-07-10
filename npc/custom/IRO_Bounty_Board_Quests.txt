@@ -59,9 +59,7 @@ function	script	F_BBQ	{
 			getitem (checkre(0) ? 6495 : 501), 1;
 
 	} else {
-		if (BaseLevel < getarg(0))
-			mes "Your level is too low. Come back when you're stronger.";
-		else if (BaseLevel > getarg(1))
+		if (BaseLevel > getarg(1))
 			mes "Your level is too high for this quest.";
 		else {
 			mes "Kill 20 " + getmonsterinfo(.@MobIds[.@s], MOB_NAME) + ".";
@@ -289,28 +287,28 @@ OnInit:
 	.MobIds$ =  "2353,2356,2355";
 }
 
-aldebaran,190,61,4	script	Bounty Board 40-80#aldebaran	837,{
+aldebaran,188,61,4	script	Bounty Board 40-80#aldebaran	837,{
 	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
 	setarray .Levels, 40,80;
 	.MobIds$ =  "1111,1114,1368,1195";
 }
 
-aldebaran,190,61,4	script	Bounty Board 80-100#aldebaran	837,{
+aldebaran,186,61,4	script	Bounty Board 80-100#aldebaran	837,{
 	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
 	setarray .Levels, 80,100;
 	.MobIds$ =  "1193,1102,1269,1213,1216,1199";
 }
 
-aldebaran,190,61,4	script	Bounty Board 100-120#aldebaran	837,{
+aldebaran,184,61,4	script	Bounty Board 100-120#aldebaran	837,{
 	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
 	setarray .Levels, 100,120;
 	.MobIds$ =  "1194";
 }
 
-aldebaran,190,61,4	script	Bounty Board 150-175#aldebaran	837,{
+aldebaran,182,61,4	script	Bounty Board 150-175#aldebaran	837,{
 	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
 	setarray .Levels, 150,175;
