@@ -26183,234 +26183,110 @@ static bool skill_parse_row_nocastdb( char* split[], size_t columns, size_t curr
 	return true;
 }
 
-bool SkillProduceDatabase::add_itemconsumed(const ryml::NodeRef& node, std::shared_ptr<s_skill_produce_db_entry> &entry, bool isConsumed) {
-	for (const auto &it : node) {
-		if (this->nodeExists(it, "Clear")) {
-			std::string item_name;
-
-			if (!this->asString(it, "Clear", item_name))
-				return 0;
-
-			std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
-
-			if (item == nullptr) {
-				this->invalidWarning(it["Clear"], "Item %s does not exist.\n", item_name.c_str());
-				return 0;
-			}
-
-			if (entry->materials.erase(item->nameid) == 0)
-				this->invalidWarning(it["Clear"], "Item %s was not defined.\n", item_name.c_str());
-
-			continue;
-		}
-
-		std::string item_name;
-
-		if (!this->asString(it, "Item", item_name))
-			return 0;
-
-		std::shared_ptr<item_data> item = item_db.search_aegisname(item_name.c_str());
-
-		if (item == nullptr) {
-			this->invalidWarning(it["Item"], "Item %s does not exist.\n", item_name.c_str());
-			return 0;
-		}
-
-		uint16 amount;
-
-		if (!isConsumed)
-			amount = 0;
-		else {
-			if (!this->asUInt16Rate(it, "Amount", amount, MAX_AMOUNT))
-				return 0;
-		}
-
-		entry->materials[item->nameid] = amount;
-	}
-	return 1;
-}
-
 const std::string SkillProduceDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/produce_db.yml";
 }
 
-/**
- * Reads and parses an entry from the produce_db.
+/** Reads and parses an entry from the produce_db.
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
- */
+*/
 uint64 SkillProduceDatabase::parseBodyNode(const ryml::NodeRef &node) {
-	uint16 itemlv;
 
-	if (!this->asUInt16(node, "ItemLevel", itemlv))
+	if (!this->nodesExist(node, { "Product", "Group", "Consumed" }))
 		return 0;
 
-	std::shared_ptr<s_skill_produce_db> produce = this->find(itemlv);
+	std::string product_name;
+	if (!this->asString(node, "Product", product_name))
+		return 0;
+
+	std::shared_ptr<item_data> item = item_db.search_aegisname(product_name.c_str());
+	if (item == nullptr) {
+		this->invalidWarning(node["Product"], "Item %s does not exist.\n", product_name.c_str());
+		return 0;
+	}
+
+	std::shared_ptr<s_skill_produce_db> produce = this->find(item->nameid);
 	bool exists = produce != nullptr;
 
 	if (!exists) {
-		if (!this->nodesExist(node, { "Recipe" }))
-			return 0;
-
 		produce = std::make_shared<s_skill_produce_db>();
-		produce->itemlv = itemlv;
+		produce->product_id = item->nameid;
 	}
 
-	t_itemid nameid;
-	const ryml::NodeRef &subNode = node["Recipe"];
+	this->asUInt16(node, "Group", produce->group_id);
 
-	for (const auto &subit : subNode) {
-		std::string produced_name;
+	std::unordered_map<t_itemid, uint16> mats;
+	for (const auto& matsNode : node["Consumed"]) {
+		uint16 matAmount;
+		std::string matName;
+		std::shared_ptr<item_data> item;
 
-		if (this->nodeExists(subit, "Clear")) {
-			if (!this->asString(subit, "Clear", produced_name))
-				return 0;
-
-			std::shared_ptr<item_data> item = item_db.search_aegisname(produced_name.c_str());
-
-			if (item == nullptr) {
-				this->invalidWarning(subit["Clear"], "Item %s does not exist.\n", produced_name.c_str());
-				return 0;
-			}
-
-			nameid = item->nameid;
-
-			if (produce->data.erase(nameid) == 0)
-				this->invalidWarning(subit["Clear"], "Item %s was not defined.\n", produced_name.c_str());
-
-			continue;
-		}
-
-		if (!this->asString(subit, "Product", produced_name))
+		if (!this->nodesExist(matsNode, { "Item", "Amount" }))
 			return 0;
 
-		std::shared_ptr<item_data> item = item_db.search_aegisname(produced_name.c_str());
+		this->asString(matsNode, "Item",  matName);
+		this->asUInt16(matsNode, "Amount",  matAmount);
 
+		item = item_db.search_aegisname(matName.c_str());
 		if (item == nullptr) {
-			this->invalidWarning(subit["Product"], "Item %s does not exist.\n", produced_name.c_str());
+			this->invalidWarning(matsNode["Item"], "Item %s does not exist.\n", matName.c_str());
 			return 0;
 		}
 
-		nameid = item->nameid;
+		mats[item->nameid] = matAmount;
+	}
 
-		bool id_exists = produce->data.count(nameid) != 0;
-		std::shared_ptr<s_skill_produce_db_entry> entry;
+	std::string skill_name;
+	this->asString(node, "SkillName", skill_name, "");
+	produce->req_skill = !skill_name.empty() ? skill_name2id(skill_name.c_str()) : 0;
 
-		if (id_exists)
-			entry = produce->data[nameid];
-		else {
-			entry = std::make_shared<s_skill_produce_db_entry>();
-			entry->nameid = nameid;
-		}
+	this->asUInt8(node, "SkillLevel", produce->req_skill_lv, 1);
+	this->asUInt16Rate(node, "BaseRate", produce->base_rate, 1000, 1000);
 
-		entry->itemlv = itemlv;
+	if (this->nodeExists(node, "NotConsumed")) {
+		for (const auto& matsNode : node["NotConsumed"]) {
+			std::string matName;
+			std::shared_ptr<item_data> item;
 
-		if (this->nodeExists(subit, "BaseRate")) {	// note: BaseRate is only used for skill changematerial (itemlv 26)
-			uint16 baserate;
+			this->asString(matsNode, "Item",  matName);
 
-			if (!this->asUInt16Rate(subit, "BaseRate", baserate, 1000))
-				return 0;
-
-			entry->baserate = baserate;
-		} else {
-			if (!id_exists) {
-				entry->baserate = 1000;
-			}
-		}
-
-		if (this->nodeExists(subit, "Make")) {
-			const ryml::NodeRef &QuantityNode = subit["Make"];
-
-			for (const auto &Quantityit : QuantityNode) {
-				uint16 amount;
-
-				if (!this->asUInt16Rate(Quantityit, "Amount", amount, MAX_AMOUNT))
-					return 0;
-
-				uint16 rate;
-
-				if (this->nodeExists(Quantityit, "Rate")) {
-					if (!this->asUInt16(Quantityit, "Rate", rate))
-						return 0;
-
-					if (rate == 0) {
-						if (entry->qty.erase(amount) == 0)
-							this->invalidWarning(Quantityit["Rate"], "Amount %hu was not defined.\n", amount);
-						continue;
-					}
-					if (rate > 1000) {
-						this->invalidWarning(Quantityit["Rate"], "Rate %hu can't be higher than 1000, capping.\n", rate);
-						rate = 1000;
-					}
-				} else {
-					rate = 1000;
-				}
-
-				entry->qty[amount] = rate;
-			}
-		}
-
-		if (this->nodeExists(subit, "SkillName")) {
-			std::string skill_name;
-
-			if (!this->asString(subit, "SkillName", skill_name))
-				return 0;
-
-			uint16 skill_id = skill_name2id(skill_name.c_str());
-
-			if (!skill_id) {
-				this->invalidWarning(subit["SkillName"], "Invalid skill name \"%s\", skipping.\n", skill_name.c_str());
+			item = item_db.search_aegisname(matName.c_str());
+			if (item == nullptr) {
+				this->invalidWarning(matsNode["Item"], "Item %s does not exist.\n", matName.c_str());
 				return 0;
 			}
 
-			entry->req_skill = skill_id;
+			mats[item->nameid] = 0;
 		}
+	}
+	produce->materials = mats;
 
-		if (this->nodeExists(subit, "SkillLevel")) {
-			uint16 skill_lv;
+	if (this->nodeExists(node, "Make")) {
 
-			if (!this->asUInt16(subit, "SkillLevel", skill_lv))
+		std::unordered_map<uint16, uint16> qty;
+
+		for (const auto& matsNode : node["Make"]) {
+			uint16 matAmount;
+			uint16 matRate;
+
+			if (!this->nodeExists(matsNode, "Amount"))
 				return 0;
 
-			entry->req_skill_lv = static_cast<uint8>(skill_lv);
-		} else {
-			if (!id_exists) {
-				entry->req_skill_lv = 1;
-			}
+			this->asUInt16(matsNode, "Amount",  matAmount);
+			// TODO check why we have a default of 1000 even with BaseRate
+			this->asUInt16(matsNode, "Rate", matRate, 1000);
+
+			qty[matAmount] = matRate;
 		}
 
-		if (this->nodeExists(subit, "Consumed")) {
-			if (!this->add_itemconsumed(subit["Consumed"], entry, true))
-				return 0;
-		}
-
-		if (this->nodeExists(subit, "NotConsumed")) {
-			if (!this->add_itemconsumed(subit["NotConsumed"], entry, false))
-				return 0;
-		}
-
-		if (!id_exists) {
-			produce->data.insert({ nameid, entry });
-			this->total_id++;
-		}
+		produce->qty = qty;
 	}
 
 	if (!exists)
-		this->put(itemlv, produce);
+		this->put(item->nameid, produce);
 
 	return 1;
-}
-
-void SkillProduceDatabase::loadingFinished() {
-	for ( auto &produce : *this ) {
-		for ( auto &data : produce.second->data ) {
-			if (!data.second->qty.empty())
-				continue;
-			data.second->qty.insert({ 1, 1000 });
-		}
-	}
-
-	TypesafeYamlDatabase::loadingFinished();
 }
 
 const std::string SkillArrowDatabase::getDefaultLocation() {
@@ -26701,7 +26577,7 @@ static void skill_readdb(void) {
 		size_t n2 = strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1;
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
-
+		
 		if (i == 0) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
 			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
@@ -26710,13 +26586,14 @@ static void skill_readdb(void) {
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
+		// these two depend on skill_db to loaded
 		sv_readdb(dbsubpath2, "skill_nocast_db.txt"   , ',',   2,  2, -1, skill_parse_row_nocastdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_damage_db.txt"         , ',',   4,  3+SKILLDMG_MAX, -1, skill_parse_row_skilldamage, i > 0);
-
+		
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
-
+	
 	abra_db.load();
 	magic_mushroom_db.load();
 	reading_spellbook_db.load();

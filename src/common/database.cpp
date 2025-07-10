@@ -227,27 +227,35 @@ void YamlDatabase::parseImports( const ryml::Tree& rootNode ){
 	}
 }
 
-template <typename R> bool YamlDatabase::asType( const ryml::NodeRef& node, const std::string& name, R& out ){
-	if( this->nodeExists( node, name ) ){
-		const ryml::NodeRef& dataNode = node[c4::to_csubstr(name)];
-
-		if (dataNode.val_is_null()) {
-			this->invalidWarning(node, "Node \"%s\" is missing a value.\n", name.c_str());
-			return false;
-		}
-
-		try{
-			dataNode >> out;
-		}catch( std::runtime_error const& ){
-			this->invalidWarning( node, "Node \"%s\" cannot be parsed as %s.\n", name.c_str(), typeid( R ).name() );
-			return false;
-		}
-
-		return true;
-	}else{
+template <typename R> bool YamlDatabase::asType( const ryml::NodeRef& node, const std::string& name, R& out ) {
+	if( !this->nodeExists( node, name ) ) {
 		this->invalidWarning( node, "Missing node \"%s\".\n", name.c_str() );
 		return false;
 	}
+
+	const ryml::NodeRef& dataNode = node[c4::to_csubstr(name)];
+
+	if (dataNode.val_is_null()) {
+		this->invalidWarning(node, "Node \"%s\" is missing a value.\n", name.c_str());
+		return false;
+	}
+
+	try {
+		dataNode >> out;
+	} catch( std::runtime_error const& ) {
+		this->invalidWarning( node, "Node \"%s\" cannot be parsed as %s.\n", name.c_str(), typeid( R ).name() );
+		return false;
+	}
+
+	return true;
+}
+
+template <typename R> bool YamlDatabase::asType( const ryml::NodeRef& node, const std::string& name, R& out, R defaultValue ) {
+	if (!nodeExists(node, name)) {
+		out = defaultValue;
+		return true;
+	}
+	return asType<R>(node, name, out);
 }
 
 bool YamlDatabase::asBool(const ryml::NodeRef& node, const std::string &name, bool &out) {
@@ -276,12 +284,24 @@ bool YamlDatabase::asBool(const ryml::NodeRef& node, const std::string &name, bo
 	}
 }
 
+bool YamlDatabase::asUInt8(const ryml::NodeRef& node, const std::string& name, uint8& out) {
+	return asType<uint8>(node, name, out);
+}
+
+bool YamlDatabase::asUInt8(const ryml::NodeRef& node, const std::string& name, uint8& out, uint8 defaultValue) {
+	return asType<uint8>(node, name, out, defaultValue);
+}
+
 bool YamlDatabase::asInt16( const ryml::NodeRef& node, const std::string& name, int16& out ){
 	return asType<int16>( node, name, out);
 }
 
 bool YamlDatabase::asUInt16(const ryml::NodeRef& node, const std::string& name, uint16& out) {
 	return asType<uint16>(node, name, out);
+}
+
+bool YamlDatabase::asUInt16(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 defaultValue) {
+	return asType<uint16>(node, name, out, defaultValue);
 }
 
 bool YamlDatabase::asInt32(const ryml::NodeRef& node, const std::string &name, int32 &out) {
@@ -312,22 +332,34 @@ bool YamlDatabase::asString(const ryml::NodeRef& node, const std::string &name, 
 	return asType<std::string>(node, name, out);
 }
 
-bool YamlDatabase::asUInt16Rate( const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum ){
-	if( this->asUInt16( node, name, out ) ){
-		if( out > maximum ){
-			this->invalidWarning( node[c4::to_csubstr(name)], "Node \"%s\" with value %" PRIu16 " exceeds maximum of %" PRIu16 ".\n", name.c_str(), out, maximum );
+bool YamlDatabase::asString(const ryml::NodeRef& node, const std::string &name, std::string &out, std::string defaultValue) {
+	return asType<std::string>(node, name, out, defaultValue);
+}
 
-			return false;
-		}else if( out == 0 ){
-			this->invalidWarning( node[c4::to_csubstr(name)], "Node \"%s\" needs to be at least 1.\n", name.c_str() );
-
-			return false;
-		}else{
-			return true;
-		}
-	}else{
+bool YamlDatabase::asUInt16Rate(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum) {
+	if (!this->asUInt16( node, name, out )) {
 		return false;
 	}
+
+	if( out > maximum ) {
+		this->invalidWarning( node[c4::to_csubstr(name)], "Node \"%s\" with value %u exceeds maximum of %u" ".\n", name.c_str(), static_cast<uint32>(out), static_cast<uint32>(maximum) );
+
+		return false;
+	} else if( out == 0 ) {
+		this->invalidWarning( node[c4::to_csubstr(name)], "Node \"%s\" needs to be at least 1.\n", name.c_str() );
+
+		return false;
+	}
+
+	return true;
+}
+
+bool YamlDatabase::asUInt16Rate(const ryml::NodeRef& node, const std::string& name, uint16& out, uint16 maximum, uint16 defaultValue) {
+	if (!this->nodeExists(node, name)) {
+		out = defaultValue;
+		return true;
+	}
+	return asUInt16Rate(node, name, out, maximum);
 }
 
 bool YamlDatabase::asUInt32Rate( const ryml::NodeRef& node, const std::string& name, uint32& out, uint32 maximum ){

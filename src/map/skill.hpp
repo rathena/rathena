@@ -451,25 +451,38 @@ enum e_dance_overlap : int32 {
 
 /// Create Database item
 struct s_skill_produce_db_entry {
-	t_itemid nameid; /// Product ID
-	uint16 req_skill; /// Required Skill
-	uint16 req_skill_lv, /// Required Skill Level
-		itemlv; /// Item Level
-	std::unordered_map<t_itemid, uint16> materials;
+	t_itemid nameid; //FIXME compatibility
+	uint16 itemlv; //FIXME compatibility
+	uint16 baserate; //FIXME compatibility
 
-	// additional rates/quantity data for skill_changematerial 
-	uint16 baserate;
-	std::unordered_map<uint16, uint16> qty;
+	t_itemid product_id; 	/// Product ID
+	uint16 req_skill; 		/// Required Skill
+	uint8 req_skill_lv; 	/// Required Skill Level
+	std::unordered_map<t_itemid, uint16> materials; /// item_id, amount
+
+	// additional rates/quantity data for skill_changematerial
+	uint16 base_rate;
+	std::unordered_map<uint16, uint16> qty; /// amount, rate
 };
 
 struct s_skill_produce_db {
-	uint16 itemlv; /// Item Level
-	std::unordered_map<t_itemid, std::shared_ptr<s_skill_produce_db_entry>> data;	/// item, entry
+	uint16 itemlv; //FIXME compatibility
+	std::unordered_map<t_itemid, std::shared_ptr<s_skill_produce_db_entry>> data; /// item_id, entry //FIXME compatibility
+
+	t_itemid product_id; 	/// Product ID
+	uint16 group_id;		/// Group ID
+	uint16 req_skill; 		/// Required Skill
+	uint8 req_skill_lv; 	/// Required Skill Level
+	std::unordered_map<t_itemid, uint16> materials; /// item_id, amount
+
+	// additional rates/quantity data for skill_changematerial
+	uint16 base_rate;
+	std::unordered_map<uint16, uint16> qty; /// amount, rate
 };
 
 class SkillProduceDatabase : public TypesafeYamlDatabase<uint16, s_skill_produce_db> {
 private:
-	uint16 total_id = 0;
+	uint16 total_id = 0; //FIXME needed?
 
 public:
 	SkillProduceDatabase() : TypesafeYamlDatabase("PRODUCE_DB", 1) {
@@ -477,7 +490,10 @@ public:
 	}
 
 	const std::string getDefaultLocation() override;
+
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+	uint64 parseRecipesNode(const ryml::NodeRef& node, uint16 group_id);
+
 	bool addItemConsumed(const ryml::NodeRef& node, std::shared_ptr<s_skill_produce_db_entry> &entry, bool isConsumed);
 	void loadingFinished() override;
 };
