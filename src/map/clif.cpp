@@ -6292,6 +6292,9 @@ void clif_skill_estimation( map_session_data& sd, mob_data& md ){
 /// material id:
 ///     unused by the client
 void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 trigger ){
+
+	ShowInfo("PRODUCE MIX LIST skill_id=%d trigger=%d\n", skill_id, trigger);
+
 	// Avoid resending the menu
 	if( sd.menuskill_id == skill_id ){
 		return;
@@ -6306,22 +6309,20 @@ void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 tr
 	p->packetLength = sizeof( *p );
 
 	int32 count = 0;
-	for (const auto &itemlvit : skill_produce_db) {
-		for (const auto &datait : itemlvit.second->data) {
-			if (skill_can_produce_mix(&sd, datait.second->nameid, trigger, 1) != nullptr &&
-				(skill_id <= 0 || (skill_id > 0 && datait.second->req_skill == skill_id))
-				)
-			{
-				PACKET_ZC_MAKABLEITEMLIST_sub& entry = p->items[count];
+	for (const auto &recipes : skill_produce_db) {
 
-				entry.itemId = client_nameid( datait.second->nameid );
-				entry.material[0] = 0;
-				entry.material[1] = 0;
-				entry.material[2] = 0;
+		// ShowInfo("A RECIPE: recipe_id=%d\n", recipes.first);
 
-				p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
-				count++;
-			}
+		if (skill_can_produce_mix(&sd, recipes.second->product_id, trigger, 1) != nullptr && (skill_id <= 0 || (skill_id > 0 && recipes.second->req_skill == skill_id)) ) {
+			PACKET_ZC_MAKABLEITEMLIST_sub& entry = p->items[count];
+
+			entry.itemId = client_nameid( recipes.second->product_id );
+			entry.material[0] = 0;
+			entry.material[1] = 0;
+			entry.material[2] = 0;
+
+			p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
+			count++;
 		}
 	}
 
@@ -6359,19 +6360,17 @@ void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, in
 	p->makeItem = list_type;
 
 	int32 count = 0;
-	for (const auto &itemlvit : skill_produce_db) {
-		for (const auto &datait : itemlvit.second->data) {
-			if( skill_can_produce_mix( &sd, datait.second->nameid, trigger, qty ) == nullptr ){
-				continue;
-			}
-
-			PACKET_ZC_MAKINGITEM_LIST_sub& entry = p->items[count];
-
-			entry.itemId = client_nameid( datait.second->nameid );
-
-			p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
-			count++;
+	for (const auto &recipes : skill_produce_db) {
+		if( skill_can_produce_mix( &sd, recipes.second->product_id, trigger, qty ) == nullptr ){
+			continue;
 		}
+
+		PACKET_ZC_MAKINGITEM_LIST_sub& entry = p->items[count];
+
+		entry.itemId = client_nameid( recipes.second->product_id );
+
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
+		count++;
 	}
 
 	if( count > 0 || skill_id == AM_PHARMACY ){
@@ -13125,7 +13124,7 @@ void clif_parse_ProduceMix(int32 fd,map_session_data *sd){
 		return;
 	}
 
-	std::shared_ptr<s_skill_produce_db_entry> produce = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, 1);
+	std::shared_ptr<s_skill_produce_db> produce = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, 1);
 
 	if( produce != nullptr )
 		skill_produce_mix(sd,0,p->itemId,p->material[0],p->material[1],p->material[2],1,produce);
@@ -13145,6 +13144,9 @@ void clif_parse_ProduceMix(int32 fd,map_session_data *sd){
 ///     7 = MT_M_MACHINE - Unconfirmed
 ///     8 = BO_BIONIC_PHARMACY - Unconfirmed
 void clif_parse_Cooking(int32 fd,map_session_data *sd) {
+
+	ShowInfo("PARSE COOKING\n");
+
 #if PACKETVER >= 20051010
 	if( sd == nullptr ){
 		return;
@@ -13164,7 +13166,7 @@ void clif_parse_Cooking(int32 fd,map_session_data *sd) {
 		return;
 	}
 
-	std::shared_ptr<s_skill_produce_db_entry> produce = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, amount);
+	std::shared_ptr<s_skill_produce_db> produce = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, amount);
 
 	if( produce != nullptr )
 		skill_produce_mix(sd,(p->type>1?sd->menuskill_id:0),p->itemId,0,0,0,amount,produce);
@@ -19576,19 +19578,20 @@ void clif_parse_debug(int32 fd,map_session_data *sd)
  * Server populates the window with avilable elemental converter options according to player's inventory
  *------------------------------------------*/
 void clif_elementalconverter_list( map_session_data& sd ){
+
+	ShowInfo("ELEMENTAL CONVERTER LIST\n");
+
 	PACKET_ZC_MAKINGARROW_LIST* p = reinterpret_cast<PACKET_ZC_MAKINGARROW_LIST*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
 	p->packetLength = sizeof( *p );
 
 	int32 count = 0;
-	for (const auto &itemlvit : skill_produce_db) {
-		for (const auto &datait : itemlvit.second->data) {
-			if( skill_can_produce_mix( &sd, datait.second->nameid, 23, 1 ) ){
-				p->items[count].itemId = client_nameid( datait.second->nameid );
-				p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->items[0] ) );
-				count++;
-			}
+	for (const auto &recipes : skill_produce_db) {
+		if( skill_can_produce_mix( &sd, recipes.second->product_id, 23, 1 ) ){
+			p->items[count].itemId = client_nameid( recipes.second->product_id );
+			p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->items[0] ) );
+			count++;
 		}
 	}
 
