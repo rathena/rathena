@@ -450,52 +450,25 @@ enum e_dance_overlap : int32 {
 };
 
 /// Create Database item
-struct s_skill_produce_db_entry {
-	t_itemid nameid; //FIXME compatibility
-	uint16 itemlv; //FIXME compatibility
-	uint16 baserate; //FIXME compatibility
-
-	t_itemid product_id; 	/// Product ID
-	uint16 req_skill; 		/// Required Skill
-	uint8 req_skill_lv; 	/// Required Skill Level
-	std::unordered_map<t_itemid, uint16> materials; /// item_id, amount
-
-	// additional rates/quantity data for skill_changematerial
-	uint16 base_rate;
-	std::unordered_map<uint16, uint16> qty; /// amount, rate
-};
-
 struct s_skill_produce_db {
-	uint16 itemlv; //FIXME compatibility
-	std::unordered_map<t_itemid, std::shared_ptr<s_skill_produce_db_entry>> data; /// item_id, entry //FIXME compatibility
-
 	t_itemid product_id; 	/// Product ID
 	uint16 group_id;		/// Group ID
 	uint16 req_skill; 		/// Required Skill
 	uint8 req_skill_lv; 	/// Required Skill Level
-	std::unordered_map<t_itemid, uint16> materials; /// item_id, amount
+	std::unordered_map<t_itemid, uint16> materials;	/// item_id, amount
 
-	// additional rates/quantity data for skill_changematerial
-	uint16 base_rate;
-	std::unordered_map<uint16, uint16> qty; /// amount, rate
+	uint16 base_rate;		/// Base Rate for change material
+	std::unordered_map<uint16, uint16> qty;			/// amount, rate
 };
 
-class SkillProduceDatabase : public TypesafeYamlDatabase<uint16, s_skill_produce_db> {
-private:
-	uint16 total_id = 0; //FIXME needed?
-
+class SkillProduceDatabase : public TypesafeYamlDatabase<t_itemid, s_skill_produce_db> {
 public:
 	SkillProduceDatabase() : TypesafeYamlDatabase("PRODUCE_DB", 1) {
 
 	}
 
 	const std::string getDefaultLocation() override;
-
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
-	uint64 parseRecipesNode(const ryml::NodeRef& node, uint16 group_id);
-
-	bool addItemConsumed(const ryml::NodeRef& node, std::shared_ptr<s_skill_produce_db_entry> &entry, bool isConsumed);
-	void loadingFinished() override;
 };
 
 extern SkillProduceDatabase skill_produce_db;
@@ -673,8 +646,8 @@ bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md);
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int32 pos_x, int32 pos_y);
 
 // Item creation
-std::shared_ptr<s_skill_produce_db_entry> skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int trigger, int qty);
-bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int slot1, int slot2, int slot3, int qty, std::shared_ptr<s_skill_produce_db_entry> produce = nullptr );
+std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int32 trigger, int32 qty);
+bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int32 slot1, int32 slot2, int32 slot3, int32 qty, std::shared_ptr<s_skill_produce_db> produce = nullptr );
 
 bool skill_arrow_create( map_session_data *sd, t_itemid nameid);
 
