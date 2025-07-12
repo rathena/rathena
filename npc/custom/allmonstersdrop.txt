@@ -1,0 +1,46 @@
+-	script	CashShop_Coin	-1,{
+   
+    OnNPCKillEvent:
+        if(getmonsterinfo(killedrid, MOB_MVPEXP) > 0){
+            announce "Congratulations! Player, "+ strcharinfo(0) +" has killed MVP "+ getmonsterinfo( killedrid, MOB_NAME ) +" and obtained 'Some Coins' at "+ strcharinfo(3),0,0x00FF00;
+            .@item_id = F_Rand(674, 677); // Mithril_Coin, White_Gold_Coin
+            getitem .@item_id,1;
+        }
+        else
+        {
+            .@random = rand(10000);
+            .@randomCount = rand(4);
+            .@item_id = 0;
+
+            if(.@randomCount <= 0)
+                .@randomCount = 1;
+
+            if (.@random <= 25) {
+                .@item_id = 677; // White_Gold_Coin
+                getitem .@item_id,.@randomCount;
+                announce "Congratulations! "+.@randomCount+"x "+getitemname(.@item_id)+" "+ (.@random) + "/100% chance",0,0x00FF00;
+            }
+            else if (.@random <= 35) {
+                .@item_id = 674; // Mithril_Coin
+                getitem .@item_id,.@randomCount;
+                announce "Congratulations! "+.@randomCount+"x "+getitemname(.@item_id)+" "+ (.@random) + "/100% chance",0,0x00FF00;
+            }
+            else if (.@random <= 50) {
+                .@item_id = 7720; // Gold_Coin_US
+                getitem .@item_id,.@randomCount;
+                announce "Congratulations! "+.@randomCount+"x "+getitemname(.@item_id)+" "+ (.@random) + "/100% chance",0,0x00FF00;
+            }
+            else if (.@random <= 75) {
+                .@item_id = 7959; // Ancient_Gold_Coin
+                getitem .@item_id,.@randomCount;
+                announce "Congratulations! "+.@randomCount+"x "+getitemname(.@item_id)+" "+ (.@random) + "/100% chance",0,0x00FF00;
+            }
+            else if (.@random <= 100) {
+                .@item_id = 7960; // Ancient_Silver_Coin
+                getitem .@item_id,.@randomCount;
+                announce "Congratulations! "+.@randomCount+"x "+getitemname(.@item_id)+" "+ (.@random) + "/100% chance",0,0x00FF00;
+            }
+        }
+    end;
+
+}

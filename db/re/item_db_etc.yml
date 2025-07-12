@@ -105,7 +105,7 @@ Body:
     AegisName: Mithril_Coin
     Name: Mithril Coin
     Type: Etc
-    Buy: 5000
+    Sell: 200000
     Weight: 40
   - Id: 676
     AegisName: Silver_Coin_Moneybag
@@ -117,7 +117,7 @@ Body:
     AegisName: White_Gold_Coin
     Name: Platinum Coin
     Type: Etc
-    Buy: 2000
+    Sell: 1000000
     Weight: 40
   - Id: 701
     AegisName: Ora_Ora
@@ -29429,15 +29429,8 @@ Body:
     AegisName: Gold_Coin_US
     Name: Gold Coin
     Type: Etc
-    Buy: 100
+    Sell: 100000
     Weight: 10
-    Trade:
-      NoDrop: true
-      NoTrade: true
-      NoCart: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
   - Id: 7721
     AegisName: Treasure_Box_
     Name: Treasure Box
@@ -31177,11 +31170,13 @@ Body:
     Name: Bronze Coin
     Type: Etc
     Weight: 10
+    Sell: 100000
   - Id: 7916
     AegisName: Silver_Coin_
     Name: Silver Coin
     Type: Etc
     Weight: 10
+    Sell: 200000
   - Id: 7917
     AegisName: Magic_Potion
     Name: Magic Potion
@@ -31554,12 +31549,14 @@ Body:
     AegisName: Ancient_Gold_Coin
     Name: Ancient Gold Coin
     Type: Etc
+    Sell: 20000
     Trade:
       NoDrop: true
   - Id: 7960
     AegisName: Ancient_Silver_Coin
     Name: Ancient Silver Coin
     Type: Etc
+    Sell: 10000
     Trade:
       NoDrop: true
   - Id: 7961
