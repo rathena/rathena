@@ -1492,16 +1492,16 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 
 	case HT_FREEZINGTRAP:
 	case MA_FREEZINGTRAP:
-		sc_start(src,bl,SC_FREEZE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start(src, bl, SC_FREEZE, 100, skill_lv, skill_get_time2(skill_id, skill_lv), sstatus->amotion + 100);
 		break;
 
 	case HT_FLASHER:
-		sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
 		break;
 
 	case HT_LANDMINE:
 	case MA_LANDMINE:
-		sc_start(src,bl,SC_STUN,10,skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start(src, bl, SC_STUN, 10, skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
 		break;
 
 	case HT_SHOCKWAVE:
@@ -1510,7 +1510,7 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 
 	case HT_SANDMAN:
 	case MA_SANDMAN:
-		sc_start(src,bl,SC_SLEEP,(10*skill_lv+40),skill_lv,skill_get_time2(skill_id,skill_lv));
+		sc_start(src, bl, SC_SLEEP, (10 * skill_lv + 40), skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
 		break;
 
 	case TF_SPRINKLESAND:
@@ -5394,6 +5394,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id,skill_lv));
 		break;
+	case DK_DRAGONIC_PIERCE:
 	case DK_STORMSLASH:
 	case IG_IMPERIAL_CROSS:
 	case CD_EFFLIGO:
@@ -5582,42 +5583,43 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	case RG_BACKSTAP:
 		{
-			if (!check_distance_bl(src, bl, 0)) {
 #ifdef RENEWAL
-				uint8 dir = map_calc_dir(src, bl->x, bl->y);
-				int16 x, y;
+			uint8 dir = map_calc_dir(src, bl->x, bl->y);
+			int16 x, y;
 
-				if (dir > 0 && dir < 4)
-					x = -1;
-				else if (dir > 4)
-					x = 1;
-				else
-					x = 0;
+			if (dir > 0 && dir < 4)
+				x = -1;
+			else if (dir > 4)
+				x = 1;
+			else
+				x = 0;
 
-				if (dir > 2 && dir < 6)
-					y = -1;
-				else if (dir == 7 || dir < 2)
-					y = 1;
-				else
-					y = 0;
+			if (dir > 2 && dir < 6)
+				y = -1;
+			else if (dir == 7 || dir < 2)
+				y = 1;
+			else
+				y = 0;
 
-				if (battle_check_target(src, bl, BCT_ENEMY) > 0 && unit_movepos(src, bl->x + x, bl->y + y, 2, true)) { // Display movement + animation.
+			if (battle_check_target(src, bl, BCT_ENEMY) > 0 && unit_movepos(src, bl->x + x, bl->y + y, 2, true)) { // Display movement + animation.
 #else
-				uint8 dir = map_calc_dir(src, bl->x, bl->y), t_dir = unit_getdir(bl);
+			if (check_distance_bl(src, bl, 0))
+				break;
 
-				if (!map_check_dir(dir, t_dir) || bl->type == BL_SKILL) {
+			uint8 dir = map_calc_dir(src, bl->x, bl->y), t_dir = unit_getdir(bl);
+
+			if (!map_check_dir(dir, t_dir) || bl->type == BL_SKILL) {
 #endif
-					status_change_end(src, SC_HIDING);
-					dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
-					unit_setdir(bl,dir);
+				status_change_end(src, SC_HIDING);
+				dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
+				unit_setdir(bl,dir);
 #ifdef RENEWAL
-					clif_blown(src);
+				clif_blown(src);
 #endif
-					skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-				}
-				else if (sd)
-					clif_skill_fail( *sd, skill_id );
+				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 			}
+			else if (sd)
+				clif_skill_fail( *sd, skill_id );
 		}
 		break;
 
@@ -5815,6 +5817,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case IQ_THIRD_CONSECRATION:
 	case IG_OVERSLASH:
 	case IG_RADIANT_SPEAR:
+	case IG_IMPERIAL_PRESSURE:
 	case CD_ARBITRIUM_ATK:
 	case CD_PETITIO:
 	case CD_FRAMEN:
@@ -5860,6 +5863,8 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case TR_METALIC_FURY:
 	case IG_GRAND_JUDGEMENT:
 	case HN_JUPITEL_THUNDER_STORM:
+	case SH_CHUL_HO_BATTERING:
+	case SH_HYUN_ROK_SPIRIT_POWER:
 	case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 	case SOA_TALISMAN_OF_WHITE_TIGER:
 	case SOA_TALISMAN_OF_RED_PHOENIX:
@@ -5883,9 +5888,20 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 			if (skill_id == DK_SERVANT_W_DEMOL && !(tsc && tsc->getSCE(SC_SERVANT_SIGN) && tsc->getSCE(SC_SERVANT_SIGN)->val1 == src->id))
 				break;
 
-			// Deft Stab - Make sure the flag of 2 is passed on when the skill is double casted.
-			if (skill_id == ABC_DEFT_STAB && flag&2)
-				sflag |= 2;
+			switch (skill_id) {
+				case MG_FIREBALL:
+					// For players, the distance between original target and splash target determines the damage
+					if (sd != nullptr) {
+						if (block_list* orig_bl = map_id2bl(skill_area_temp[1]); orig_bl != nullptr)
+							sflag |= distance_bl(orig_bl, bl);
+					}
+					break;
+				case ABC_DEFT_STAB:
+					// Deft Stab - Make sure the flag of 2 is passed on when the skill is double casted.
+					if (flag&2)
+						sflag |= 2;
+					break;
+			}
 
 			if( flag&SD_LEVEL )
 				sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
@@ -5933,11 +5949,14 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 			switch ( skill_id ) {
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
+				case IG_IMPERIAL_PRESSURE:
 				case BO_MAYHEMIC_THORNS:
 				case DK_DRAGONIC_BREATH:
 				case DK_HACKANDSLASHER:
 				case MT_SPARK_BLASTER:
 				case HN_JUPITEL_THUNDER_STORM:
+				case SH_CHUL_HO_BATTERING:
+				case SH_HYUN_ROK_SPIRIT_POWER:
 				case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 				case SKE_SUNSET_BLAST:
 				case SKE_NOON_BLAST:
@@ -9442,31 +9461,38 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 
 	case BA_PANGVOICE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv, sc_start(src,bl,SC_CONFUSION,70,7,skill_get_time(skill_id,skill_lv)));
 #ifdef RENEWAL
-		sc_start(src, bl, SC_BLEEDING, 30, skill_lv, skill_get_time2(skill_id, skill_lv)); // TODO: Confirm success rate
+		// In Renewal it causes Confusion and Bleeding to 100% base chance
+		sc_start(src, bl, SC_CONFUSION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		sc_start(src, bl, SC_BLEEDING, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+#else
+		// In Pre-renewal it causes Confusion to 70% base chance
+		sc_start(src, bl, SC_CONFUSION, 70, skill_lv, skill_get_time(skill_id, skill_lv));
 #endif
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
 	case DC_WINKCHARM:
 		if( dstsd ) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv, sc_start(src,bl,SC_CONFUSION,10,7,skill_get_time2(skill_id,skill_lv)));
 #ifdef RENEWAL
-			sc_start(src, bl, SC_HALLUCINATION, 30, skill_lv, skill_get_time(skill_id, skill_lv)); // TODO: Confirm success rate and duration
+			// In Renewal it causes Confusion and Hallucination to 100% base chance
+			sc_start(src, bl, SC_CONFUSION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			sc_start(src, bl, SC_HALLUCINATION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
+#else
+			// In Pre-Renewal it only causes Wink Charm, if Confusion was successfully started
+			if (sc_start(src, bl, SC_CONFUSION, 10, skill_lv, skill_get_time(skill_id, skill_lv)))
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 #endif
 		} else
 		if( dstmd )
 		{
-			if( status_get_lv(src) > status_get_lv(bl)
-			&&  (tstatus->race == RC_DEMON || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM || tstatus->race == RC_ANGEL)
-			&&  !status_has_mode(tstatus,MD_STATUSIMMUNE) )
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv, sc_start2(src,bl,type,(status_get_lv(src) - status_get_lv(bl)) + 40, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
-			else
-			{
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv,false);
-				if(sd) clif_skill_fail( *sd, skill_id );
+			// For monsters it causes Wink Charm with a chance depending on the level difference
+			if (sc_start2(src, bl, type, (status_get_lv(src) - status_get_lv(bl)) + 40, skill_lv, src->id, skill_get_time2(skill_id, skill_lv))) {
+				// This triggers a 0 damage event and might make the monster switch target to caster
+				battle_damage(src, bl, 0, 1, skill_lv, 0, ATK_DEF, BF_WEAPON|BF_LONG|BF_NORMAL, true, tick, false);
 			}
 		}
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
 #ifdef RENEWAL
@@ -10934,6 +10960,12 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		// Apply the SP gain to the caster
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		status_heal(bl, 0, (skill_lv * (skill_lv + 1) / 2) * 40, 1);
+		break;
+
+	case HN_OVERCOMING_CRISIS:
+		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id,skill_lv));
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		status_percent_heal(bl, 100, 0);
 		break;
 
 	// New guild skills [Celest]
@@ -13722,6 +13754,18 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 				status_data* tstatus = status_get_status_data(*target);
 				if (!battle_check_undead(tstatus->race, tstatus->def_ele))
 					return USESKILL_FAIL_MAX;
+			}
+			break;
+		case DC_WINKCHARM:
+			switch (status_get_status_data(*target)->race) {
+				case RC_DEMON:
+				case RC_DEMIHUMAN:
+				case RC_ANGEL:
+				case RC_PLAYER_HUMAN:
+				case RC_PLAYER_DORAM:
+					break;
+				default:
+					return USESKILL_FAIL_LEVEL;
 			}
 			break;
 		case PR_LEXDIVINA:
@@ -17157,7 +17201,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_SKIDTRAP: {
 				//Knockback away from position of user during placement [Playtester]
 				skill_blown(unit,bl,skill_get_blewcount(sg->skill_id,sg->skill_lv),
-					(map_calc_dir_xy(sg->val1>>16,sg->val1&0xFFFF,bl->x,bl->y,6)+4)%8,BLOWN_NONE);
+					map_calc_dir_xy(bl->x,bl->y,sg->val1>>16,sg->val1&0xFFFF,DIR_EAST),BLOWN_NONE);
 				sg->unit_id = UNT_USED_TRAPS;
 				clif_changetraplook(unit, UNT_USED_TRAPS);
 				sg->limit=DIFF_TICK(tick,sg->tick)+1500;
@@ -19766,6 +19810,10 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 			case MC_IDENTIFY:
 				require.sp = 0;
 				break;
+			case AL_HOLYLIGHT:
+				if(sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_PRIEST)
+					require.sp *= 5;
+				break;
 			case MO_KITRANSLATION:
 				//Spiritual Bestowment only uses spirit sphere when giving it to someone
 				require.spiritball = 0;
@@ -20112,10 +20160,6 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 				req.zeny -= req.zeny*10/100;
 #endif
 			break;
-		case AL_HOLYLIGHT:
-			if(sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_PRIEST)
-				req.sp *= 5;
-			break;
 		case SL_SMA:
 		case SL_STUN:
 		case SL_STIN:
@@ -20202,6 +20246,13 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 		case SO_PSYCHIC_WAVE:
 			if( sc && (sc->getSCE(SC_HEATER_OPTION) || sc->getSCE(SC_COOLER_OPTION) || sc->getSCE(SC_CURSED_SOIL_OPTION) || sc->getSCE(SC_BLAST_OPTION)) )
 				req.sp += req.sp / 2; // 1.5x SP cost
+			break;
+		case BO_ACIDIFIED_ZONE_WATER:
+		case BO_ACIDIFIED_ZONE_GROUND:
+		case BO_ACIDIFIED_ZONE_WIND:
+		case BO_ACIDIFIED_ZONE_FIRE:
+			if (sc != nullptr && sc->hasSCE(SC_RESEARCHREPORT) && req.amount[0] > 0)
+				req.amount[0]--;
 			break;
 	}
 
@@ -22592,6 +22643,10 @@ static int32 skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 							else
 								clif_skill_poseffect( *src, group->skill_id, group->skill_lv, bl->x, bl->y, tick );
 							group->val2 = 1;
+
+							// All meteors hit 700ms after the effect starts, regardless of their interval
+							if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2)
+								group->limit = group->limit - group->interval + 700;
 						}
 					}
 					// No damage until expiration

@@ -375,6 +375,8 @@ enum e_race2 : uint8{
 	RC2_EDDA_ARUNAFELTZ,
 	RC2_LASAGNA,
 	RC2_GLAST_HEIM_ABYSS,
+	RC2_DESTROYED_VALKYRIE_REALM,
+	RC2_ENCROACHED_GEPHENIA,
 	RC2_MAX
 };
 
@@ -598,7 +600,8 @@ enum _look {
 	LOOK_RESET_COSTUMES,//Makes all headgear sprites on player vanish when activated.
 	LOOK_ROBE,
 	// LOOK_FLOOR,	// TODO : fix me!! offcial use this ?
-	LOOK_BODY2
+	LOOK_BODY2,
+	LOOK_MAX
 };
 
 enum e_mapflag : int16 {

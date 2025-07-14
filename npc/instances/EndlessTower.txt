@@ -564,7 +564,7 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,93,351,103,387,"Goblin",1122,10,.@label$;
 		areamonster .@map$,93,351,103,387,"Goblin",1123,5,.@label$;
 		areamonster .@map$,93,351,103,387,"Goblin",1124,5,.@label$;
-		areamonster .@map$,93,351,103,387,"Gobin",1125,5,.@label$;
+		areamonster .@map$,93,351,103,387,"Goblin",1125,5,.@label$;
 		areamonster .@map$,93,351,103,387,"Goblin",1126,5,.@label$;
 		break;
 	case 28:
@@ -603,7 +603,7 @@ function	script	F_Tower_Monster	{
 	case 33:
 		areamonster .@map$,181,267,191,303,"Kobold Leader",1296,1,.@label$;
 		areamonster .@map$,181,267,191,303,"Kobold",1133,15,.@label$;
-		areamonster .@map$,181,267,191,303,"Kobold_Archer",1282,15,.@label$;
+		areamonster .@map$,181,267,191,303,"Kobold Archer",1282,15,.@label$;
 		areamonster .@map$,181,267,191,303,"Kobold",1134,10,.@label$;
 		areamonster .@map$,181,267,191,303,"Kobold",1135,5,.@label$;
 		break;
@@ -725,7 +725,7 @@ function	script	F_Tower_Monster	{
 		break;
 	case 54:
 		areamonster .@map$,267,351,277,387,"Chepet",1250,10,.@label$;
-		areamonster .@map$,267,351,277,387,"Mariontte",1143,10,.@label$;
+		areamonster .@map$,267,351,277,387,"Marionette",1143,10,.@label$;
 		areamonster .@map$,267,351,277,387,"Miyabi Doll",1404,10,.@label$;
 		break;
 	case 55:
@@ -801,7 +801,7 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,267,180,277,216,"Giant Hornet",1303,2,.@label$;
 		break;
 	case 65:
-		areamonster .@map$,352,180,362,216,"Atros",1785,1,.@label$;
+		areamonster .@map$,352,180,362,216,"Atroce",1785,1,.@label$;
 		areamonster .@map$,352,180,362,216,"Galion",1783,20,.@label$;
 		break;
 	case 66:
@@ -964,7 +964,7 @@ function	script	F_Tower_Monster	{
 	case 91:
 		areamonster .@map$,9,96,19,132,"Cecil Damon",1638,10,.@label$;
 		areamonster .@map$,9,96,19,132,"Bow Master",1830,10,.@label$;
-		areamonster .@map$,9,96,19,132,"Kavac",1656,30,.@label$;
+		areamonster .@map$,9,96,19,132,"Kavach Icarus",1656,30,.@label$;
 		break;
 	case 92:
 		areamonster .@map$,93,96,103,132,"Kathryne Keyron",1639,15,.@label$;
@@ -1190,7 +1190,7 @@ function	script	F_Tower_Warp	{
 //============================================================
 1@tower,50,360,0	script	Immortal Brazier#	844,{
 	mes "- A Message is Engraved on the Brazier -";
-	mes "The one who scatters the ashes of the darkness in this place shall become one step closer to Nacht Sieger, the Hegemon King of the Darkness...";
+	mes "The one who scatters the ashes of the darkness in this place shall become one step closer to Naght Sieger, the Hegemon King of the Darkness...";
 	next;
 
 	setarray .@level$[1],"26th","51st","76th";
@@ -1769,7 +1769,7 @@ OnTouch_:
 		mes "I can smell your sweat, hear the gasps of your exhaustion in combat. Ah~ The human desire for victory always excites me.";
 		next;
 		mes "[Mysterious Voice]";
-		mes "I now allow you to come receive an audience from me. Come to me, to Nacht Sieger the Hegemon-King of the Darkness!";
+		mes "I now allow you to come receive an audience from me. Come to me, to Naght Sieger the Hegemon-King of the Darkness!";
 		close2;
 		warp instance_mapname("6@tower"),32,12;
 	}
@@ -2106,7 +2106,7 @@ OnTimer10500:
 	set .@map$, instance_mapname("6@tower");
 	mapannounce .@map$,"You'll soon know. Mine is the face of death!",bc_map,"0x00ffcc";
 	stopnpctimer;
-	monster .@map$,156,147,"Nacht Sieger",1956,1,instance_npcname("#4th Beeper")+"::OnMyMobDead";
+	monster .@map$,156,147,"Naght Sieger",1956,1,instance_npcname("#4th Beeper")+"::OnMyMobDead";
 	end;
 
 OnMyMobDead:
@@ -2120,14 +2120,14 @@ OnMyMobDead:
 		close;
 	}
 	mes "[Lost Souls]";
-	mes "It's you that have liberated us from the evil Nacht Sieger.";
+	mes "It's you that have liberated us from the evil Naght Sieger.";
 	next;
 	mes "[Lost Souls]";
 	mes "Thank you so much. Now we can escape from this cold and dark place... to heaven.";
 	next;
 	if ((countitem(13412) > 0) && (countitem(13413) > 0)) {
 		mes "[Lost Souls]";
-		mes "Hey, you have the remnants of Nacht Sieger with you.";
+		mes "Hey, you have the remnants of Naght Sieger with you.";
 		next;
 		mes "[Lost Souls]";
 		mes "They may appear to be one-handed swords, but I can put them together to make a two-handed one if you want. That's the only way I can repay you for freeing me.";
@@ -2189,7 +2189,7 @@ OnTimer5500:
 	end;
 
 OnTimer10500:
-	mapannounce instance_mapname("6@tower"),"Nacht Sieger's body has turned into dark ashes that scattered in the wind.",bc_map,"0x00ffcc";
+	mapannounce instance_mapname("6@tower"),"Naght Sieger's body has turned into dark ashes that scattered in the wind.",bc_map,"0x00ffcc";
 	stopnpctimer;
 	end;
 }
