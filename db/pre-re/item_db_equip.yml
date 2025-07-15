@@ -23635,7 +23635,7 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 90
     Script: |
-      bonus bMdef,2;
+      bonus bMdef,1;
       bonus bAgi,2;
       bonus bDex,1;
   - Id: 2751
