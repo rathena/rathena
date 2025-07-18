@@ -44,7 +44,6 @@ Header:
 Body:
   - Id: 1
     Name: Endless Tower
-    TimeLimit: 14400
     Enter:
       Map: 1@tower
       X: 50
@@ -57,7 +56,6 @@ Body:
       6@tower: true
   - Id: 2
     Name: Sealed Catacomb
-    TimeLimit: 7200
     Enter:
       Map: 1@cata
       X: 100
@@ -74,7 +72,6 @@ Body:
       2@orcs: true
   - Id: 4
     Name: Nidhoggur's Nest
-    TimeLimit: 14400
     Enter:
       Map: 1@nyd
       X: 32
@@ -83,7 +80,6 @@ Body:
       2@nyd: true
   - Id: 5
     Name: Mistwood Maze
-    TimeLimit: 7200
     Enter:
       Map: 1@mist
       X: 89
@@ -116,14 +112,12 @@ Body:
       Y: 57
   - Id: 10
     Name: Bakonawa Lake
-    TimeLimit: 7200
     Enter:
       Map: 1@ma_b
       X: 64
       Y: 51
   - Id: 11
     Name: Wolfchev's Laboratory
-    TimeLimit: 14400
     Enter:
       Map: 1@lhz
       X: 45
@@ -138,7 +132,6 @@ Body:
       2@gl_k: true
   - Id: 13
     Name: Eclage Interior
-    TimeLimit: 1200
     Enter:
       Map: 1@ecl
       X: 60
@@ -151,7 +144,6 @@ Body:
       Y: 155
   - Id: 15
     Name: Geffen Magic Tournament
-    TimeLimit: 7200
     Enter:
       Map: 1@gef
       X: 119
@@ -305,49 +297,42 @@ Body:
       Y: 24
   - Id: 38
     Name: Infinite Space
-    TimeLimit: 3600
     Enter:
       Map: 1@infi
       X: 30
       Y: 10
   - Id: 39
     Name: Regenschirm
-    TimeLimit: 7200
     Enter:
       Map: 1@rgsr
       X: 127
       Y: 38
   - Id: 40
     Name: Sealed OS
-    TimeLimit: 7200
     Enter:
       Map: 1@os_b
       X: 188
       Y: 41
   - Id: 41
     Name: OS Occupation
-    TimeLimit: 7200
     Enter:
       Map: 1@os_a
       X: 30
       Y: 352
   - Id: 42
     Name: 2nd OS Search
-    TimeLimit: 7200
     Enter:
       Map: 1@os_a
       X: 335
       Y: 34
   - Id: 43
     Name: Cor Memorial
-    TimeLimit: 7200
     Enter:
       Map: 1@cor
       X: 176
       Y: 169
   - Id: 44
     Name: Half Moon In The Daylight
-    TimeLimit: 7200
     Enter:
       Map: 1@pop1
       X: 47
@@ -357,14 +342,12 @@ Body:
       1@pop3: true
   - Id: 45
     Name: Weekend Dungeon
-    TimeLimit: 3600
     Enter:
       Map: 1@md_pay
       X: 240
       Y: 29
   - Id: 46
     Name: Friday Dungeon
-    TimeLimit: 7200
     Enter:
       Map: 1@md_gef
       X: 106
@@ -578,7 +561,6 @@ Body:
       Y: 45
   - Id: 79
     Name: Deep Forest
-    TimeLimit: 1200
     Enter:
       Map: 1@exsh
       X: 90

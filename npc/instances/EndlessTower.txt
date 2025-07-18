@@ -210,8 +210,8 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	set .@etower_timer,checkquest(60200,PLAYTIME); // 1 week
 	set .@etower_timer2,checkquest(60201,PLAYTIME); // 4 hours
 
-	if (!instance_check_party(.@party_id,2)) {
-		mes "Make or join a party with more than 1 member and try again.";
+	if (!instance_check_party(.@party_id,1)) {
+		mes "Make or join a party and try again.";
 		close;
 	}
 	switch(.@etower_timer) {

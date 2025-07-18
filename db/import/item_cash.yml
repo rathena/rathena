@@ -71,6 +71,8 @@ Body:
        Price: 100
      - Item: CD_In_Mouth
        Price: 100
+     - Item: CD_In_MouthK
+       Price: 100
      - Item: Boitata_Hat
        Price: 100
      - Item: Boitata_Armor
@@ -959,5 +961,7 @@ Body:
     Items:  
      - Item: Shadow_Mix_Recipe
        Price: 100   
+     - Item: Famous_Hat_Box
+       Price: 25
   - Tab: Other
     Items:

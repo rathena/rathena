@@ -12268,7 +12268,7 @@ Body:
         Time: 2000
       - Level: 7
         Time: 2000
-    Duration1: 1800000
+    Duration1: -1
     Duration2: 2000
     FixedCastTime:
       - Level: 1
@@ -12315,7 +12315,7 @@ Body:
     Range: 9
     Hit: Single
     HitCount: 1
-    Duration1: 350000
+    Duration1: -1
     Requires:
       SpCost: 30
     Status: Kaahi
@@ -12331,7 +12331,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastTime: 400
-    Duration1: 600000
+    Duration1: -1
     FixedCastTime: 100
     Requires:
       SpCost:
@@ -12368,21 +12368,7 @@ Body:
         Time: 2800
       - Level: 7
         Time: 2400
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 120000
-      - Level: 3
-        Time: 180000
-      - Level: 4
-        Time: 240000
-      - Level: 5
-        Time: 300000
-      - Level: 6
-        Time: 360000
-      - Level: 7
-        Time: 600000
+    Duration1: -1
     FixedCastTime:
       - Level: 1
         Time: 1200
@@ -30972,17 +30958,7 @@ Body:
         Time: 180000
       - Level: 5
         Time: 210000
-    Cooldown:
-      - Level: 1
-        Time: 90000
-      - Level: 2
-        Time: 120000
-      - Level: 3
-        Time: 150000
-      - Level: 4
-        Time: 180000
-      - Level: 5
-        Time: 210000
+    Cooldown: 3000
     FixedCastTime: 1000
     Requires:
       SpCost:
@@ -30996,7 +30972,6 @@ Body:
           Amount: 48
         - Level: 5
           Amount: 50
-      SpiritSphereCost: 2
     Status: SoulReaper
   - Id: 2608
     Name: SP_SOULREVOLVE
@@ -31045,7 +31020,7 @@ Body:
         Time: 30000
       - Level: 5
         Time: 20000
-    Duration2: 600000
+    Duration2: -1
     Requires:
       SpCost: 100
     Status: SoulCollect

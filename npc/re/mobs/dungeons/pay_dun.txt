@@ -179,9 +179,8 @@ OnKill:
 	if (.mvp_spawn == 1)
 		end;
 	.kill_count += 1;
-	if (.kill_count > 1000) {
-		if (rand(100) < 10) // !todo Confirm chance
-			donpcevent strnpcinfo(0)+"::OnBossSpawn";
+	if (.kill_count > 4) {
+		donpcevent strnpcinfo(0)+"::OnBossSpawn";
 	}
 	end;
 
@@ -204,7 +203,7 @@ OnMobDead:
 	if (.spawn || playerattached() < 1)
 		end;
 	.kill_count += 1;
-	if (.kill_count == 10) {
+	if (.kill_count == 1) {
 		.spawn = true;
 		.kill_count = 0;
 		getunitdata( killedgid, .@data );

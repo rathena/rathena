@@ -2322,11 +2322,12 @@ bool pc_set_hate_mob(map_session_data *sd, int32 pos, struct block_list *bl)
 	int32 class_;
 	if (!sd || !bl || pos < 0 || pos > 2)
 		return false;
-	if (sd->hate_mob[pos] != -1)
-	{	//Can't change hate targets.
-		clif_hate_info(sd, pos, sd->hate_mob[pos], 0); //Display current
-		return false;
-	}
+
+	// if (sd->hate_mob[pos] != -1)
+	// {	//Can't change hate targets.
+	// 	clif_hate_info(sd, pos, sd->hate_mob[pos], 0); //Display current
+	// 	return false;
+	// }
 
 	class_ = status_get_class(bl);
 	if (!pcdb_checkid(class_)) {
