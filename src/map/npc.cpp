@@ -822,8 +822,7 @@ void BarterDatabase::loadingFinished(){
 			if( map_addblock( nd ) ){
 				continue;
 			}
-			
-			status_change_init( nd );
+
 			unit_dataset( nd );
 			nd->ud.dir = barter->dir;
 
@@ -3868,7 +3867,6 @@ struct npc_data* npc_add_warp(char* name, int16 from_mapid, int16 from_x, int16 
 	if(map_addblock(nd))
 		return nullptr;
 	status_set_viewdata(nd, nd->class_);
-	status_change_init(nd);
 	unit_dataset(nd);
 	if( map_getmapdata(nd->m)->users )
 		clif_spawn(nd);
@@ -3949,7 +3947,6 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	if(map_addblock(nd)) //couldn't add on map
 		return strchr(start,'\n');
 	status_set_viewdata(nd, nd->class_);
-	status_change_init(nd);
 	unit_dataset(nd);
 	if( map_getmapdata(nd->m)->users )
 		clif_spawn(nd);
@@ -4227,7 +4224,6 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		map_addnpc(m,nd);
 		if(map_addblock(nd))
 			return strchr(start,'\n');
-		status_change_init(nd);
 		unit_dataset(nd);
 		nd->ud.dir = (uint8)dir;
 		if( nd->class_ != JT_FAKENPC ){
@@ -4459,7 +4455,6 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	if( m >= 0 )
 	{
 		map_addnpc(m, nd);
-		status_change_init(nd);
 		unit_dataset(nd);
 		nd->ud.dir = (uint8)dir;
 		npc_setcells(nd);
@@ -4637,7 +4632,6 @@ const char* npc_parse_duplicate( char* w1, char* w2, char* w3, char* w4, const c
 	//Add the npc to its location
 	if( m >= 0 ) {
 		map_addnpc(m, nd);
-		status_change_init(nd);
 		unit_dataset(nd);
 		nd->ud.dir = (uint8)dir;
 		npc_setcells(nd);
@@ -4734,7 +4728,6 @@ int32 npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		if(map_addblock(wnd))
 			return 1;
 		status_set_viewdata(wnd, wnd->class_);
-		status_change_init(wnd);
 		unit_dataset(wnd);
 		if( map_getmapdata(wnd->m)->users )
 			clif_spawn(wnd);
