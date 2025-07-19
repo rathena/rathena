@@ -24795,6 +24795,36 @@ BUILDIN_FUNC(hateffect){
 }
 
 /**
+ * Check if hat effect is enabled on player
+ * *has_hateffect(<effect_id>{,<char_id>});
+ */
+BUILDIN_FUNC(has_hateffect) {
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	map_session_data* sd;
+
+	if (!script_charid2sd(3, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	int16 effectID = script_getnum(st, 2);
+
+	if (effectID <= HAT_EF_MIN || effectID >= HAT_EF_MAX) {
+		ShowError("buildin_has_hateffect: unsupported hat effect id %d\n", effectID);
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	auto it = util::vector_get(sd->hatEffects, effectID);
+
+	if (it != sd->hatEffects.end()) {
+		script_pushint(st, 1);
+	} else {
+		script_pushint(st, 0);
+	}
+#endif
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
 * Retrieves param of current random option. Intended for random option script only.
 * getrandomoptinfo(<type>);
 * @author [secretdataz]
@@ -28406,6 +28436,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
 	BUILDIN_DEF(hateffect,"ii"),
+	BUILDIN_DEF(has_hateffect, "i?"),
 	BUILDIN_DEF(getrandomoptinfo, "i"),
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
