@@ -6306,34 +6306,38 @@ void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 tr
 
 	ShowInfo("PRODUCE MIX LIST skill_id=%d trigger=%d\n", skill_id, trigger);
 
-	// Avoid resending the menu
-	if( sd.menuskill_id == skill_id ){
-		return;
-	}
+	nullpo_retv(sd);
 
-	if (skill_id == GC_CREATENEWPOISON)
+	// Avoid resending the menu
+	if( sd.menuskill_id == skill_id )
+		return;
+
+	if (skill_id == GC_CREATENEWPOISON) //FIXME compatibility
 		skill_id = GC_RESEARCHNEWPOISON;
 
 	PACKET_ZC_MAKABLEITEMLIST* p = reinterpret_cast<PACKET_ZC_MAKABLEITEMLIST*>( packet_buffer );
 	p->packetType = HEADER_ZC_MAKABLEITEMLIST;
 	p->packetLength = sizeof( *p );
 
+	auto group_recipes = skill_produce_db.filterByGroup(trigger);
 	int32 count = 0;
-	for (const auto &recipes : skill_produce_db) {
+	for (const auto &[_, recipe] : group_recipes) {
 
-		// ShowInfo("A RECIPE: recipe_id=%d\n", recipes.first);
+		if (!skill_can_produce_mix(&sd, recipe->product_id, trigger, 1))
+			continue;
 
-		if (skill_can_produce_mix(&sd, recipes.second->product_id, trigger, 1) != nullptr && (skill_id <= 0 || (skill_id > 0 && recipes.second->req_skill == skill_id)) ) {
-			PACKET_ZC_MAKABLEITEMLIST_sub& entry = p->items[count];
+		if (skill_id > 0 && recipe->req_skill != skill_id)
+			continue;
 
-			entry.itemId = client_nameid( recipes.second->product_id );
-			entry.material[0] = 0;
-			entry.material[1] = 0;
-			entry.material[2] = 0;
+		PACKET_ZC_MAKABLEITEMLIST_sub& entry = p->items[count];
 
-			p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
-			count++;
-		}
+		entry.itemId = client_nameid( recipe->product_id );
+		entry.material[0] = 0;
+		entry.material[1] = 0;
+		entry.material[2] = 0;
+
+		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
+		count++;
 	}
 
 	p->packetLength = sizeof( struct PACKET_ZC_MAKABLEITEMLIST ) + count * sizeof( struct PACKET_ZC_MAKABLEITEMLIST_sub );

@@ -451,6 +451,7 @@ enum e_dance_overlap : int32 {
 
 /// Create Database item
 struct s_skill_produce_db {
+	uint64 id;				/// Unique ID
 	t_itemid product_id; 	/// Product ID
 	uint16 group_id;		/// Group ID
 	uint16 req_skill; 		/// Required Skill
@@ -461,14 +462,18 @@ struct s_skill_produce_db {
 	std::unordered_map<uint16, uint16> qty;			/// amount, rate
 };
 
-class SkillProduceDatabase : public TypesafeYamlDatabase<t_itemid, s_skill_produce_db> {
+class SkillProduceDatabase : public TypesafeYamlDatabase<uint64, s_skill_produce_db> {
+protected:
+	uint64 makeKey(t_itemid product_id, uint16 group_id);
 public:
-	SkillProduceDatabase() : TypesafeYamlDatabase("PRODUCE_DB", 1) {
-
-	}
+	SkillProduceDatabase() : TypesafeYamlDatabase("PRODUCE_DB", 1) {}
 
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+
+	using TypesafeYamlDatabase::find; // to avoid errors with overloading
+	std::shared_ptr<s_skill_produce_db> find( t_itemid product_id, uint16 group_id );
+	std::unordered_map<uint64, std::shared_ptr<s_skill_produce_db>> filterByGroup(uint16 group_id);
 };
 
 extern SkillProduceDatabase skill_produce_db;
@@ -646,8 +651,8 @@ bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md);
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int32 pos_x, int32 pos_y);
 
 // Item creation
-std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int32 trigger, int32 qty);
-bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int32 slot1, int32 slot2, int32 slot3, int32 qty, std::shared_ptr<s_skill_produce_db> produce = nullptr );
+std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, t_itemid nameid, uint16 trigger, int32 qty);
+bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, uint16 slot1, uint16 slot2, uint16 slot3, int32 qty, std::shared_ptr<s_skill_produce_db> produce = nullptr );
 
 bool skill_arrow_create( map_session_data *sd, t_itemid nameid);
 
