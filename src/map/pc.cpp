@@ -8482,7 +8482,7 @@ void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_
 	}
 
 	// Give EXP for Base Level
-	if (base_exp) {
+	if (base_exp && !pc_is_maxbaselv(sd)) {
 		float nextbp = (float) base_exp / (float) nextb;
 		if (nextbp > 0)
 		{
@@ -8496,9 +8496,13 @@ void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_
 		if (!pc_checkbaselevelup(sd))
 			clif_updatestatus(*sd,SP_BASEEXP);
 	}
+	else
+	{
+		base_exp = 0;
+	}
 
 	// Give EXP for Job Level
-	if (job_exp) {
+	if (job_exp && !pc_is_maxjoblv(sd)) {
 		float nextjp = (float) job_exp / (float) nextj;
 		if (nextjp > 0)
 		{
@@ -8511,6 +8515,10 @@ void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_
 
 		if (!pc_checkjoblevelup(sd))
 			clif_updatestatus(*sd,SP_JOBEXP);
+	}
+	else
+	{
+		job_exp = 0;
 	}
 
 	if (flag&1)

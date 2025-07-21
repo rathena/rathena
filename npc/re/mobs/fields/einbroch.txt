@@ -86,7 +86,7 @@ ein_fild07,0,0	monster	Red Mushroom	1085,12,120000,60000
 // ein_fild08 - Einbroch Field
 //==================================================
 ein_fild08,0,0	monster	Metaling	1613,139,5000
-ein_fild08,0,0	monster	Porcellio	1619,41,5000
+ein_fild08,0,0	monster	Porcellio	1619,90,5000
 ein_fild08,0,0	monster	Red Plant	1078,10,120000,60000
 ein_fild08,0,0	monster	Yellow Plant	1081,10,120000,60000
 ein_fild08,0,0	monster	Red Mushroom	1085,13,120000,60000

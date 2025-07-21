@@ -1,0 +1,29 @@
+
+moc_para01,25,35,4	script	Eden Vendor	90,{
+	mes "[Eden Vendor]";
+	mes "Welcome! I sell eden equipment in case it goes lost.";
+	next;
+
+	switch(select("Tier 1:Tier 2:Tier 3:Cancel")) {
+		case 1: callshop "eden_shop_tier_one", 1; end;
+		case 3: callshop "eden_shop_tier_two", 1; end;
+		case 4: callshop "eden_shop_tier_three", 1; end;
+		case 4: callshop "eden_shop_tier_four", 1; end;
+		default: mes "Come back anytime!"; end;
+	}
+    
+    close;
+}
+
+
+// Eden Tier 1
+-	shop	eden_shop_tier_one	HIDDEN_NPC,no,5583:-1,2560:-1,2456:-1,15009:-1
+
+//  Eden Tier 2
+-	shop	eden_shop_tier_two	HIDDEN_NPC,no,13050:-1,2457:-1,15010:-1
+
+// Eden Tier 3
+-	shop	eden_shop_tier_three	HIDDEN_NPC,no,2458:-1;15011:-1
+
+// Eden Tier 4
+-	shop	eden_shop_tier_three	HIDDEN_NPC,no,2473:-1

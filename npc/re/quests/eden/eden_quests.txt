@@ -1176,7 +1176,7 @@ pay_arche,41,136,3	script	Eden Member Karl#para05	904,{
 	close;
 }
 
-anthell01,29,264,5	script	Eden Member Cloud#para06	899,{
+anthell01,34,260,5	script	Eden Member Cloud#para06	899,{
 	if (para_suv01 < 17) {
 		if (callfunc("F_HasEdenGroupMark")) {
 			mes "[Cloud]";
@@ -3203,7 +3203,6 @@ glast_01,195,131,5	script	Dispatched Instructor#03	4_F_SISTER,{
 }
 
 //--80~89
-// ein_fild08,172,359,3	script	Dispatched Instructor#2nd02	4_M_4THPRIN1,{
 ein_fild08,172,359,3	script	Dispatched Instructor#04	4_M_4THPRIN1,{
 	mes "[Kiren]";
 	if (para_2nd01 < 12) {
@@ -3343,6 +3342,77 @@ ein_fild08,172,359,3	script	Dispatched Instructor#04	4_M_4THPRIN1,{
 		mes "Make things.";
 		mes "How convenient witchinya.";
 		mes "Heumnya. I'll sleep in one breath..";
+	}
+	close;
+}
+
+ein_fild04,186,37,3	script	Dispatched Instructor#04_2	4_M_4THPRIN1,{
+	mes "[Kiren]";
+	if (para_2nd01 < 12) {
+		mes "What are you looking at?";
+		mes "You want something from me?";
+		mes "Mind your own business, go away..";
+	}
+	else
+	{
+		if (para_2nd01 == 14) 
+		{
+			if (checkquest(7226,HUNTING) == 2 && checkquest(7227,HUNTING) == 2) 
+			{
+				mes "Um...";
+				mes "I'm getting it done.";
+				mes "Hmm...";
+				mes "I'm still tired to finish...";
+				next;
+				mes "[Kiren]";
+				mes "Good. Those monsters have been bothering the Einbroch workers.";
+				mes "That was great..";
+				next;
+				mes "[Kiren]";
+				mes "I have some things to report to Instructor Ur.";
+				mes "I've been watching you closely and you've done well. Go back to Ur and deliver this report.";
+				para_2nd01 = 15;
+				erasequest 7226;// Venomous hunting
+				erasequest 7227;// Teddy Bear hunting
+				setquest 7228;// Report to Instructor Ur
+				getexp 30000,30000;
+				// erasequest 7225;
+			}
+			else 
+			{
+				mes "Find the Noxious...";
+				mes "Don't try to lie to me that you've finished hunting them.";
+				next;
+				// if (isbegin_quest(7225) > 0)
+					// erasequest 7225;
+				// else {
+				mes "[Kiren]";
+				mes "Yeah, if this is okay?";
+				mes "Ugh this is difficult.";
+				mes "I'll make you feel better though.";
+				// }
+				npcskill "AL_HEAL",10,99,60;
+				percentheal 0,100;
+			}
+		}
+		else if (para_2nd01 == 15) 
+		{
+			mes "What serious?";
+			mes "Have you made your report to Instructor Ur?";
+			mes "Einbroch has commissioned work out so that means more training.";
+		}
+		else 
+		{
+			mes "I'm not a thief...";
+			mes "It's a hard living.";
+			mes "Nor is there any real ambition.";
+			next;
+			mes "[Kiren]";
+			mes "Come practitioners?";
+			mes "Make things.";
+			mes "How convenient witchinya.";
+			mes "Heumnya. I'll sleep in one breath..";
+		}
 	}
 	close;
 }

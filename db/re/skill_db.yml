@@ -2059,29 +2059,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 60000
-      - Level: 3
-        Time: 90000
-      - Level: 4
-        Time: 120000
-      - Level: 5
-        Time: 150000
-      - Level: 6
-        Time: 180000
-      - Level: 7
-        Time: 210000
-      - Level: 8
-        Time: 240000
-      - Level: 9
-        Time: 270000
-      - Level: 10
-        Time: 300000
-      - Level: 11
-        Time: 300000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -9379,17 +9357,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    Duration1:
-      - Level: 1
-        Time: 40000
-      - Level: 2
-        Time: 60000
-      - Level: 3
-        Time: 80000
-      - Level: 4
-        Time: 100000
-      - Level: 5
-        Time: 120000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -13491,7 +13459,7 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 1000
-    Duration1: 60000
+    Duration1: -1
     Requires:
       SpCost: 30
       SpiritSphereCost: 4
@@ -13506,7 +13474,7 @@ Body:
       NoDamage: true
     Hit: Single
     HitCount: 1
-    Duration1: 30000
+    Duration1: -1
     Requires:
       SpCost: 7
       SpiritSphereCost: 1
@@ -14120,6 +14088,7 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
+      Critical: true
       IgnoreFlee: true
     Range: 9
     Hit: Multi_Hit
@@ -14138,6 +14107,7 @@ Body:
     Type: Weapon
     TargetType: Attack
     DamageFlags:
+      Critical: true
       Splash: true
     Flags:
       TargetTrap: true
@@ -14382,17 +14352,7 @@ Body:
         Plagiarism: true
         Reproduce: true
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 20000
-      - Level: 2
-        Time: 30000
-      - Level: 3
-        Time: 40000
-      - Level: 4
-        Time: 50000
-      - Level: 5
-        Time: 60000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -14438,27 +14398,7 @@ Body:
       - Level: 10
         Time: 800
     AfterCastActDelay: 1000
-    Duration1:
-      - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 80000
-      - Level: 3
-        Time: 100000
-      - Level: 4
-        Time: 120000
-      - Level: 5
-        Time: 140000
-      - Level: 6
-        Time: 160000
-      - Level: 7
-        Time: 180000
-      - Level: 8
-        Time: 200000
-      - Level: 9
-        Time: 220000
-      - Level: 10
-        Time: 240000
+    Duration1: -1
     FixedCastTime:
       - Level: 1
         Time: 800
@@ -15213,17 +15153,7 @@ Body:
         Time: 1600
       - Level: 5
         Time: 800
-    Duration1:
-      - Level: 1
-        Time: 30000
-      - Level: 2
-        Time: 45000
-      - Level: 3
-        Time: 60000
-      - Level: 4
-        Time: 75000
-      - Level: 5
-        Time: 90000
+    Duration1: -1
     FixedCastTime:
       - Level: 1
         Time: 1000
@@ -18289,7 +18219,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastTime: 1000
-    Duration1: 300000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -29297,7 +29227,7 @@ Body:
       - Level: 9
         Time: 165000
       - Level: 10
-        Time: 180000
+        Time: -1
     Requires:
       SpCost: 45
       Weapon:
@@ -29462,17 +29392,7 @@ Body:
     Hit: Single
     HitCount: 1
     CastTime: 2000
-    Duration1:
-      - Level: 1
-        Time: 42000
-      - Level: 2
-        Time: 54000
-      - Level: 3
-        Time: 66000
-      - Level: 4
-        Time: 78000
-      - Level: 5
-        Time: 90000
+    Duration1: -1
     Requires:
       SpCost:
         - Level: 1
@@ -29699,18 +29619,8 @@ Body:
     HitCount: 1
     CastTime: 2000
     AfterCastActDelay: 1000
-    Duration1: 60000
-    Cooldown:
-      - Level: 1
-        Time: 100000
-      - Level: 2
-        Time: 95000
-      - Level: 3
-        Time: 90000
-      - Level: 4
-        Time: 85000
-      - Level: 5
-        Time: 80000
+    Duration1: 100000
+    Cooldown: 2000
     Requires:
       SpCost: 30
       SpiritSphereCost: -1
@@ -31693,7 +31603,7 @@ Body:
     HitCount: 1
     Element: Fire
     CastTime: 2000
-    Duration1: 300000
+    Duration1: -1
     Requires:
       SpCost: 20
       ItemCost:
@@ -31710,7 +31620,7 @@ Body:
     HitCount: 1
     Element: Water
     CastTime: 2000
-    Duration1: 300000
+    Duration1: -1
     Requires:
       SpCost: 20
       ItemCost:
@@ -31727,7 +31637,7 @@ Body:
     HitCount: 1
     Element: Wind
     CastTime: 2000
-    Duration1: 300000
+    Duration1: -1
     Requires:
       SpCost: 20
       ItemCost:
@@ -31744,7 +31654,7 @@ Body:
     HitCount: 1
     Element: Earth
     CastTime: 2000
-    Duration1: 300000
+    Duration1: -1
     Requires:
       SpCost: 20
       ItemCost:
@@ -31847,8 +31757,18 @@ Body:
       - Level: 4
         Time: 75000
       - Level: 5
-        Time: 90000
-    Cooldown: 60000
+        Time: -1
+    Cooldown:  
+      - Level: 1
+        Time: 6000
+      - Level: 2
+        Time: 4000
+      - Level: 3
+        Time: 2000
+      - Level: 4
+        Time: 1000
+      - Level: 5
+        Time: 500
     Requires:
       SpCost:
         - Level: 1
@@ -31956,7 +31876,7 @@ Body:
       - Level: 4
         Time: 150000
       - Level: 5
-        Time: 180000
+        Time: -1
     Cooldown: 20000
     Requires:
       SpCost:
@@ -48114,6 +48034,8 @@ Body:
     TargetType: Attack
     Flags:
       AlterRangeVulture: true
+    DamageFlags:
+      Critical: true
     Range: -9
     Hit: Multi_Hit
     HitCount: 2

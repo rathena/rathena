@@ -15,9 +15,9 @@
 //==================================================
 // prt_sewb1 - Prontera Culvert 
 //==================================================
-prt_sewb1,0,0	monster	Thief Bug	1051,40,5000
+prt_sewb1,0,0	monster	Thief Bug	1051,80,5000
 prt_sewb1,0,0	monster	Thief Bug Egg	1048,106,5000
-prt_sewb1,0,0	monster	Tarou	1175,13,5000
+prt_sewb1,0,0	monster	Tarou	1175,70,5000
 prt_sewb1,0,0	monster	Familiar	1005,66,5000
 
 //==================================================

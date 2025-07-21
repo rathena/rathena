@@ -5781,7 +5781,7 @@ Body:
       Bleeding: true
       Curse: true
       Confusion: true
-      Hallucination: true
+      Hallucination: false
       Silence: true
       Burning: true
       Crystalize: true
@@ -5811,7 +5811,7 @@ Body:
       Blind: true
       Curse: true
       Poison: true
-      Hallucination: true
+      Hallucination: false
       Confusion: true
       Bleeding: true
       Burning: true

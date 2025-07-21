@@ -40,8 +40,8 @@ mes "[Soul Linker]";
         case Job_Hunter:	set .@spirit, 460; break;
         case Job_Soul_Linker:   set .@spirit, 461; break;
         default:
-        if ( upper == 1 && baselevel < 70 )
-        set .@spirit, 494;
+            if ( upper == 1 && baselevel < 70 )
+            set .@spirit, 494;
     }
 
     if ( .@spirit ) {

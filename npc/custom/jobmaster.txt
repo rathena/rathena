@@ -414,70 +414,127 @@ function	Get_Job_Equip	{
 			// BaseJob of Third Cls
 			// For Normal Third, Baby Third and Transcended Third Cls
 			case Job_Knight:
-				getitem 5746,1;	break;	//	Rune Circlet [1]
+				getitem 5746,1;	
+				break;	//	Rune Circlet [1]
 			case Job_Wizard:
-				getitem 5753,1;	break;	//	Magic Stone Hat [1]
+				getitem 5753,1;	
+				break;	//	Magic Stone Hat [1]
 			case Job_Hunter:
-				getitem 5748,1;	break;	//	Sniper Goggle [1]
+				getitem 5748,1;	
+				break;	//	Sniper Goggle [1]
 			case Job_Priest:
-				getitem 5747,1;	break;	//	Mitra [1]
+				getitem 5747,1;	
+				break;	//	Mitra [1]
 			case Job_Blacksmith:
-				getitem 5749,1;	break;	//	Driver Band [1]
+				getitem 5749,1;	
+				break;	//	Driver Band [1]
 			case Job_Assassin:
-				getitem 5755,1;	break;	//	Silent Executor [1]
+				getitem 5755,1;	
+				break;	//	Silent Executor [1]
 			case Job_Crusader:
-				getitem 5757,1;	break;	//	Dip Schmidt Helm [1]
+				getitem 5757,1;	
+				break;	//	Dip Schmidt Helm [1]
 			case Job_Sage:
-				getitem 5756,1;	break;	//	Wind Whisper [1]
+				getitem 5756,1;	
+				break;	//	Wind Whisper [1]
 			case Job_Bard:
-				getitem 5751,1;	break;	//	Maestro Song's Hat [1]
+				getitem 5751,1;	
+				break;	//	Maestro Song's Hat [1]
 			case Job_Dancer:
-				getitem 5758,1;	break;	//	Dying Swan [1]
+				getitem 5758,1;	
+				break;	//	Dying Swan [1]
 			case Job_Monk:
-				getitem 5754,1;	break;	//	Blazing Soul [1]
+				getitem 5754,1;	
+				break;	//	Blazing Soul [1]
 			case Job_Alchemist:
-				getitem 5752,1;	break;	//	Midas Whisper[1]
+				getitem 5752,1;	
+				break;	//	Midas Whisper[1]
 			case Job_Rogue:
 				getitem 5750,1; 		//	Shadow Handicraft [1]
 				getitem 6121,1;			//	Makeover Brush
-				getitem 6122,1;	break;	//	Paint Brush
+				getitem 6122,1;	
+				break;	//	Paint Brush
 		}
 	} else if (.@eac&EAJL_2) {
 		// Second Class (And not Third Class)
 		switch(BaseJob) {
 			// Second Class
 			case Job_Knight:
-				getitem 1163,1;	break;	//	Claymore [0]
+				getitem 1163,1;	// Claymore [0]
+				getitem 656,7; // Awakening_Potion
+				break;	
 			case Job_Priest:
-				getitem 1522,1;	break;	//	Stunner [0]
+				getitem 1522,1;	// Stunner [0]
+				getitem 1551,1; // Bible
+				break;
 			case Job_Wizard:
-				getitem 1617,1;	break;	//	Survivor's Rod [0]
+				getitem 1617,1;	// Survivor's Rod [0]
+				getitem 505,6; // Blue_Potion
+				break;
 			case Job_Blacksmith:
-				getitem 1360,1;	break;	//	Two-Handed-Axe [1]
+				getitem 999,30; // Steel
+				getitem 1360,1;	// Two-Handed-Axe [1]
+				break;
 			case Job_Hunter:
-				getitem 1718,1;	break;	//	Hunter Bow [0]
+				getitem 1718,1;	//	Hunter Bow [0]
+				break;
 			case Job_Assassin:
-				getitem 1254,1;	break;	//	Jamadhar [0]
+				getitem 1251,1; // Jur_
+				getitem 1220,1; // Gladius_
+				break;
 			case Job_Crusader:
-				getitem 1410,1;	break;	//	Lance [0]
+				getitem 1410,1;	// Lance [0]
+				getitem 504,12; // White_Potion
+				break;
 			case Job_Monk:
-				getitem 1807,1;	break;	//	Fist [0]
+				getitem 1807,1;	// Fist [0]
+				getitem 1804,1; // Knuckle_Duster_
+				break;
 			case Job_Sage:
-				getitem 1550,1;	break;	//	Book [3]
+				getitem 1550,1;	// Book [3]
+				break;
 			case Job_Rogue:
-				getitem 1222,1;	break;	//	Damascus [1]
+				getitem 1222,1;	// Damascus [1]
+				break;	
 			case Job_Alchemist:
-				getitem 1126,1;	break;	//	Saber [2]
+				getitem 7133,1; //Slim_Potion_Create_Book
+				switch(rand(1,6)) {
+					case 1:
+						getitem 7127,1; //Alcol_Create_Book
+						break;
+					case 2:
+						getitem 7128,1; //FireBottle_Create_Book
+						break;
+					case 3:
+						getitem 7129,1; //Acid_Create_Book
+						break;
+					case 4:
+						getitem 7130,1; //Plant_Create_Book
+						break;
+					case 5:
+						getitem 7131,1; //Mine_Create_Book
+						break;
+					case 6:
+						getitem 7144,1; //Normal_Potion_Book
+						break;
+				}
+				getitem 1126,1;	// Saber [2]
+				break;
 			case Job_Bard:
-				getitem 1907,1;	break;	//	Guitar [0]
+				getitem 1907,1;	// Guitar [0]
+				break;	
 			case Job_Dancer:
-				getitem 1960,1;	break;	//	Whip [1]
+				getitem 1960,1;	// Whip [1]
+				break;
 			case Job_Super_Novice:
-				getitem 1208,1;	break;	//	Main Gauche [4]
+				getitem 1208,1;	// Main Gauche [4]
+				break;	
 			case Job_Star_Gladiator:
-				getitem 1550,1;	break;	//	Book [3]
+				getitem 1550,1;	// Book [3]
+				break;
 			case Job_Soul_Linker:
-				getitem 1617,1;	break;	//	Survivor's Rod [0]
+				getitem 1617,1; // Survivor's Rod [0]
+				break;
 		}
 	} else {
 		// Neither Second or Third Cls
@@ -485,21 +542,37 @@ function	Get_Job_Equip	{
 		switch(BaseClass) {
 			// First Class
 			case Job_Swordman:
-				getitem 1108,1;	break;	//	Blade [4]
+				getitem 13415,1; // N_Falchion
+				break;
 			case Job_Mage:
-				getitem 1602,1;	break;	//	Rod [4]
+				getitem 1639,1;	// N_Rod
+				break;
 			case Job_Archer:
-				getitem 1705,1;	break;	//	Composite Bow [4]
+				getitem 1742,1; // N_Composite_Bow
+				getitem 12004,1; // Arrow_Container
+				getitem 12009,1; // Silver_Arrow_Container
+				getitem 12008,1; // Fire_Arrow_Container
+				break;
 			case Job_Acolyte:
-				getitem 1505,1;	break;	//	Mace [4]
+				getitem 1545,1;	// N_Mace
+				break;
 			case Job_Merchant:
-				getitem 1302,1;	break;	//	Axe [4]
+				getitem 1381,1;	// N_Battle_Axe
+				break;
 			case Job_Thief:
-				getitem 1208,1;	break;	//	Main Gauche [4]
+				getitem 13041,1; // N_Main_Gauche
+				break;
 			case Job_Gunslinger:
-				getitem 13101,1; break;	//	Six Shooter [2]
+				getitem 13180,1; // Novice_Rifle
+				getitem 12149,2; // Bullet_Case
+				getitem 12151,1; // Bullet_Case_Silver
+				break;
 			case Job_Ninja:
-				getitem 13010,1; break;	//	Asura [2]
+				getitem 13010,1; //	Asura [2]
+				break;
+			case Job_Taekwon:
+				getitem 2101,1; // Guard[0]
+				break;
 		}
 	}
 	return;
@@ -523,7 +596,7 @@ OnInit:
 	.LastJob = true;					// Enforce linear class changes?
 	.SkillPointCheck = true;			// Force player to use up all skill points?
 	.Platinum = true;					// Get platinum skills automatically?
-	.GetJobEquip = false;				// Get job equipment (mostly weapons) on job change?
+	.GetJobEquip = true;				// Get job equipment (mostly weapons) on job change?
 
 	// Level Requirements
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
