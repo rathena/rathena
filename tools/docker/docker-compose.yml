@@ -3,7 +3,7 @@ version: "3.7"
 services:
     db:
         image: "mariadb:bionic"
-        container_name: "rathena_db"
+        container_name: "rathena-db"
         ports:
             - "3306:3306" # allow DB connections from host
         volumes:
@@ -16,14 +16,15 @@ services:
             MYSQL_PASSWORD: ragnarok
 
     builder:
+        profiles: [build] # prevents from running during 'up'
         image: "rathena:local"
         container_name: "rathena-builder"
         command: "/rathena/tools/docker/builder.sh"
         volumes:
             - "../..:/rathena" # mount git repo directory inside container
             - "./asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt" # load db connection
-            - "./asset/char_conf.txt:/rathena/conf/import/char_conf.txt"   #localdev login-char relation
-            - "./asset/map_conf.txt:/rathena/conf/import/map_conf.txt"     #localdev char-map relation
+            - "./asset/char_conf.txt:/rathena/conf/import/char_conf.txt"   # localdev login-char relation
+            - "./asset/map_conf.txt:/rathena/conf/import/map_conf.txt"     # localdev char-map relation
         init: true # helps with signal forwarding and process reaping
         tty: true
         stdin_open: true
@@ -42,8 +43,8 @@ services:
         volumes:
             - "../..:/rathena" # mount git repo directory inside container
             - "./asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt" # load db connection
-            - "./asset/char_conf.txt:/rathena/conf/import/char_conf.txt"   #localdev login-char relation
-            - "./asset/map_conf.txt:/rathena/conf/import/map_conf.txt"     #localdev char-map relation
+            - "./asset/char_conf.txt:/rathena/conf/import/char_conf.txt"   # localdev login-char relation
+            - "./asset/map_conf.txt:/rathena/conf/import/map_conf.txt"     # localdev char-map relation
         init: true # helps with signal forwarding and process reaping
         tty: true
         stdin_open: true
@@ -52,6 +53,7 @@ services:
             dockerfile: Dockerfile
         depends_on:
             - db
+
     char:
         image: "rathena:local"
         container_name: "rathena-char"
@@ -71,6 +73,7 @@ services:
             dockerfile: Dockerfile
         depends_on:
             - login
+
     map:
         image: "rathena:local"
         container_name: "rathena-map"
@@ -80,8 +83,8 @@ services:
         volumes:
             - "../..:/rathena" # mount git repo directory inside container
             - "./asset/inter_conf.txt:/rathena/conf/import/inter_conf.txt" # load db connection
-            - "./asset/char_conf.txt:/rathena/conf/import/char_conf.txt"   #localdev login-char relation
-            - "./asset/map_conf.txt:/rathena/conf/import/map_conf.txt"     #localdev char-map relation
+            - "./asset/char_conf.txt:/rathena/conf/import/char_conf.txt"   # localdev login-char relation
+            - "./asset/map_conf.txt:/rathena/conf/import/map_conf.txt"     # localdev char-map relation
         init: true # helps with signal forwarding and process reaping
         tty: true
         stdin_open: true
