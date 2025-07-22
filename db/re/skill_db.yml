@@ -31603,7 +31603,7 @@ Body:
     HitCount: 1
     Element: Fire
     CastTime: 2000
-    Duration1: -1
+    Duration1: 3000000
     Requires:
       SpCost: 20
       ItemCost:
@@ -31620,7 +31620,7 @@ Body:
     HitCount: 1
     Element: Water
     CastTime: 2000
-    Duration1: -1
+    Duration1: 3000000
     Requires:
       SpCost: 20
       ItemCost:
@@ -31637,7 +31637,7 @@ Body:
     HitCount: 1
     Element: Wind
     CastTime: 2000
-    Duration1: -1
+    Duration1: 3000000
     Requires:
       SpCost: 20
       ItemCost:
@@ -31654,7 +31654,7 @@ Body:
     HitCount: 1
     Element: Earth
     CastTime: 2000
-    Duration1: -1
+    Duration1: 3000000
     Requires:
       SpCost: 20
       ItemCost:
@@ -31859,12 +31859,10 @@ Body:
     Name: KG_KAGEMUSYA
     Description: Shadow Warrior
     MaxLevel: 5
-    TargetType: Support
+    TargetType: Self
     DamageFlags:
       NoDamage: true
-    Range: 7
     Hit: Single
-    HitCount: 1
     AfterCastActDelay: 1000
     Duration1:
       - Level: 1
@@ -31877,7 +31875,7 @@ Body:
         Time: 150000
       - Level: 5
         Time: -1
-    Cooldown: 20000
+    Cooldown: 500
     Requires:
       SpCost:
         - Level: 1
