@@ -2482,6 +2482,8 @@ Body:
     Drops:
       - Item: S_Monk_Shoes
         Rate: 80
+      - Item: S_Bard_Shoes
+        Rate: 80
       - Item: S_Ninja_Weapon
         Rate: 80
   - Id: 20274
@@ -2489,6 +2491,8 @@ Body:
     Name: Ancient Stone Shooter
     Drops:
       - Item: S_Assassin_Shoes
+        Rate: 80
+      - Item: S_Dancer_Shoes
         Rate: 80
       - Item: S_Taekwon_Weapon
         Rate: 80
@@ -2500,6 +2504,8 @@ Body:
         Rate: 80
       - Item: S_Priest_Armor
         Rate: 80
+      - Item: S_Gunslinger_Weapon
+        Rate: 80
   - Id: 20276
     AegisName: ILL_WOOTAN_FIGHTER
     Name: Ancient Wootan Fighter
@@ -2507,6 +2513,8 @@ Body:
       - Item: S_Wizard_Shoes
         Rate: 80
       - Item: S_Monk_Armor
+        Rate: 80
+      - Item: S_SuperNovice_Weapon
         Rate: 80
   - Id: 20270
     AegisName: ILL_TRI_JOINT
@@ -2540,6 +2548,8 @@ Body:
         Rate: 80
       - Item: S_Rogue_Armor
         Rate: 80
+      - Item: S_Ninja_Shield
+        Rate: 80
   - Id: 3802
     AegisName: ILL_SOLIDER
     Name: Ominous Solider
@@ -2548,11 +2558,15 @@ Body:
         Rate: 80
       - Item: S_Sage_Armor
         Rate: 80
+      - Item: S_Bard_Armor
+        Rate: 80
   - Id: 3803
     AegisName: ILL_HEATER
     Name: Ominous Heater
     Drops:
       - Item: S_Hunter_Armor
+        Rate: 80
+      - Item: S_Dancer_Armor
         Rate: 80
       - Item: S_DoramPhysical_Weapon
         Rate: 80
@@ -2596,8 +2610,6 @@ Body:
         Rate: 80
       - Item: S_DoramPhysical_Armor
         Rate: 80
-      - Item: S_DoramMagical_Shoes
-        Rate: 80
   - Id: 20259
     AegisName: ILL_TEDDY_BEAR_B
     Name: Blue Teddy Bear
@@ -2605,6 +2617,8 @@ Body:
       - Item: S_Archbishop_Weapon
         Rate: 80
       - Item: S_Sura_weapon
+        Rate: 80
+      - Item: S_Wanderer_Weapon
         Rate: 80
       - Item: S_DoramPhysical_Shoes
         Rate: 80
@@ -2616,13 +2630,7 @@ Body:
     Drops:
       - Item: S_Guillotine_Weapon
         Rate: 80
-      - Item: S_Ninja_Shield
-        Rate: 80
-      - Item: S_Dancer_Armor
-        Rate: 80
-      - Item: S_Bard_Armor
-        Rate: 80
-      - Item: S_Wanderer_Weapon
+      - Item: S_DoramMagical_Shoes
         Rate: 80
   - Id: 20263
     AegisName: ILL_OBSIDIAN
@@ -2630,11 +2638,71 @@ Body:
     Drops:
       - Item: S_Shadowchaser_Weapon
         Rate: 80
-      - Item: S_Bard_Shoes
+  - Id: 20525
+    AegisName: ILL_BAPHOMET_J
+    Name: Chaos Baphomet Jr.
+    Drops:
+      - Item: S_Runeknight_Shield
         Rate: 80
-      - Item: S_Dancer_Shoes
+      - Item: S_Shadowchaser_Shield
         Rate: 80
-      - Item: S_Gunslinger_Weapon
+      - Item: S_Kagerou_Armor
         Rate: 80
-      - Item: S_SuperNovice_Weapon
+  - Id: 20526
+    AegisName: ILL_SIDE_WINDER
+    Name: Chaos Side Winder
+    Drops:
+      - Item: S_Royalguard_Shield
+        Rate: 80
+      - Item: S_Warlock_Shield
+        Rate: 80
+      - Item: S_Oboro_Armor
+        Rate: 80
+  - Id: 20527
+    AegisName: ILL_HUNTER_FLY
+    Name: Chaos Hunter Fly
+    Drops:
+      - Item: S_Mechanic_Shield
+        Rate: 80
+      - Item: S_Sorcerer_Shield
+        Rate: 80
+      - Item: S_Star_Emperor_Armor
+        Rate: 80
+  - Id: 20528
+    AegisName: ILL_MANTIS
+    Name: Chaos Mantis
+    Drops:
+      - Item: S_Genetic_Shield
+        Rate: 80
+      - Item: S_Ranger_Shield
+        Rate: 80
+      - Item: S_Star_Emperor_Shoes
+        Rate: 80
+  - Id: 20530
+    AegisName: ILL_KILLER_MANTIS
+    Name: Chaos Killer Mantis
+    Drops:
+      - Item: S_Archbishop_Shield
+        Rate: 80
+      - Item: S_Minstrel_Shield
+        Rate: 80
+      - Item: S_Soul_Reaper_Armor
+        Rate: 80
+  - Id: 20531
+    AegisName: ILL_POPORING
+    Name: Chaos Poporing
+    Drops:
+      - Item: S_Sura_Shield
+        Rate: 80
+      - Item: S_Wanderer_Shield
+        Rate: 80
+      - Item: S_Soul_Reaper_Shoes
+        Rate: 80
+  - Id: 20532
+    AegisName: ILL_STEM_WORM
+    Name: Chaotic Stem Worm
+    Drops:
+      - Item: S_Guillotine_Shield
+        Rate: 80
+      - Item: S_Rebellion_Armor
         Rate: 80

@@ -98613,16 +98613,10 @@ Body:
     DamageMotion: 528
     Ai: 21
     Drops:
-      - Item: OldShell
-        Rate: 1000
       - Item: PieceOfBlackSpirit
         Rate: 600
       - Item: OldDoll
         Rate: 300
-      - Item: Runstone_Mystic
-        Rate: 100
-      - Item: Rotten_Meat
-        Rate: 2800
       - Item: Prickly_Fruit
         Rate: 200
       - Item: Elder_Branch
@@ -98715,8 +98709,6 @@ Body:
     DamageMotion: 528
     Ai: 21
     Drops:
-      - Item: OldShell
-        Rate: 1000
       - Item: PieceOfBlackSpirit
         Rate: 600
       - Item: OldDoll
@@ -98725,10 +98717,6 @@ Body:
         Rate: 50
       - Item: Doram_High_Suit
         Rate: 20
-      - Item: Rotten_Meat
-        Rate: 2800
-      - Item: Honey
-        Rate: 400
       - Item: OminousSolider_Card
         Rate: 1
         StealProtected: true
@@ -98766,17 +98754,11 @@ Body:
     DamageMotion: 528
     Ai: 21
     Drops:
-      - Item: OldShell
-        Rate: 1000
       - Item: PieceOfBlackSpirit
         Rate: 600
       - Item: OldDoll
         Rate: 300
       - Item: Flame_Heart
-        Rate: 50
-      - Item: Rotten_Meat
-        Rate: 2800
-      - Item: Royal_Jelly
         Rate: 50
       - Item: Coal
         Rate: 500
@@ -100616,8 +100598,6 @@ Body:
         Rate: 2500
       - Item: Iron
         Rate: 1000
-      - Item: Blue_Herb
-        Rate: 500
       - Item: Chonchon_Doll_HQ
         Rate: 1000
       - Item: Colorful_T_Bear_Card
@@ -101050,16 +101030,10 @@ Body:
     DamageMotion: 288
     Ai: 04
     Drops:
-      - Item: Hard_Mud
-        Rate: 1000
-      - Item: Brigan
-        Rate: 2425
       - Item: Star_Crumb
         Rate: 125
       - Item: Great_Nature
         Rate: 15
-      - Item: Elunium_Stone
-        Rate: 125
       - Item: Tablet
         Rate: 10
       - Item: Token_Of_Bigstone
@@ -101211,12 +101185,6 @@ Body:
     DamageMotion: 768
     Ai: 04
     Drops:
-      - Item: Solid_Twig
-        Rate: 2500
-      - Item: Log
-        Rate: 2500
-      - Item: Browny_Root
-        Rate: 500
       - Item: Wooden_Block
         Rate: 1000
       - Item: Oridecon_Stone
@@ -101262,18 +101230,12 @@ Body:
     DamageMotion: 576
     Ai: 05
     Drops:
-      - Item: Air_Rifle
-        Rate: 2250
-      - Item: Flexible_String
-        Rate: 1750
       - Item: Shooting_Stone
         Rate: 1000
       - Item: Hunter_Bow
         Rate: 10
       - Item: Cacao
         Rate: 750
-      - Item: Elder_Branch
-        Rate: 50
       - Item: Token_Of_Wootan
         Rate: 250
       - Item: Ancient_W_Shooter_Card
@@ -101313,16 +101275,10 @@ Body:
     DamageMotion: 480
     Ai: 04
     Drops:
-      - Item: Wootan_F_Fur
-        Rate: 1000
       - Item: Shoulder_Protection
         Rate: 2000
       - Item: Elder_Branch
         Rate: 50
-      - Item: Great_Leaf
-        Rate: 500
-      - Item: Banana
-        Rate: 500
       - Item: IllusoryStone
         Rate: 10
       - Item: Token_Of_Wootan
