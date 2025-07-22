@@ -1,6 +1,6 @@
 // File: npc/custom/cashshop_npc.txt
 
-prontera,142,196,5	script	Credit Shop	100,{
+prontera,139,125,5	script	Credit Shop	100,{
 	mes "[Credit Shop]";
 	mes "Welcome! Here you can purchase Credit Points in exchange for Zeny.";
 	mes "Each Credit Point costs 100000 Zeny.";

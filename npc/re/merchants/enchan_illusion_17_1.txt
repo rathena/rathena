@@ -220,7 +220,7 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 	case 3:
 		npctalk "Elyumina: What? If you were just going to keep me standing here like a statue, why did you even call me? You brutes!", "Elyumina#rm171_4", bc_self;
 		mes "[Rebellion]";
-		mes "Do you want an Armor Modification Module? It's 30 " + mesitemlink( 25669 ) + " and 5 " + mesitemlink( 25723 ) + ".";
+		mes "Do you want an Armor Modification Module? It's 2 " + mesitemlink( 25669 ) + " and 1 " + mesitemlink( 25723 ) + ".";
 		if (checkweight(1201,3) == 0) {
 			mes "Your bag is full. Please make some room first.";
 			close;
@@ -233,9 +233,9 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 			close;
 		}
 		disable_items;
-		if (countitem(25669) < 30 || countitem(25723) < 5) {
+		if (countitem(25669) < 2 || countitem(25723) < 1) {
 			mes "[Rebellion]";
-			mes "Each Module requires 30 Mysterious Components and 5 Cor Cores. You don't have them all. Please check.";
+			mes "Each Module requires 2 Mysterious Components and 1 Cor Cores. You don't have them all. Please check.";
 			close;
 		}
 		if (checkweight(1201,3) == 0) {
@@ -246,8 +246,8 @@ sp_cor,108,130,5	script	Rebellion#rm171_7	4_F_REBELLION3,{
 		mes "[Rebellion]";
 		mes "I gave you an Armor Modification Module.";
 		mes "If you want to refine it, the <NAVI>[Tin Can]<INFO>sp_cor,106,136,0,101,0</INFO></NAVI> next to me can take good care of you.";
-		delitem 25669,30;	// EP17_1_EVT02
-		delitem 25723,30;	// EP17_1_EVT39
+		delitem 25669,2;	// EP17_1_EVT02
+		delitem 25723,1;	// EP17_1_EVT39
 		// consumeitem 23775;	// EP17_1_SPC04
 		getgroupitem(IG_EP17_1_SPC04);
 		close;

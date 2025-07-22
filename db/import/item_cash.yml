@@ -962,6 +962,8 @@ Body:
      - Item: Shadow_Mix_Recipe
        Price: 100   
      - Item: Famous_Hat_Box
-       Price: 25
+       Price: 100
+     - Item: K_Secret_Key
+       Price: 5
   - Tab: Other
     Items:

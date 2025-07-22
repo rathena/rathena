@@ -108,7 +108,7 @@ gonryun,156,122,6	duplicate(Healer)	Healer#gon	864
 hugel,89,150,6	duplicate(Healer)	Healer#hug	864
 izlude,121,150,6	duplicate(Healer)	Healer#izl	864	//Pre-RE: (125,118)
 jawaii,250,139,4	duplicate(Healer)	Healer#jaw	864
-lighthalzen,152,100,6	duplicate(Healer)	Healer#lhz	864
+lighthalzen,150,100,6	duplicate(Healer)	Healer#lhz	864
 louyang,226,103,4	duplicate(Healer)	Healer#lou	864
 manuk,272,144,6	duplicate(Healer)	Healer#man	864
 mid_camp,203,289,6	duplicate(Healer)	Healer#mid	864

@@ -54,11 +54,6 @@ yuno_in03	mapflag	noteleport
 yuno_in04	mapflag	noteleport
 yuno_in05	mapflag	noteleport
 ein_in01	mapflag	noteleport
-lighthalzen	mapflag	noteleport
-yuno	mapflag	noteleport
-yuno_pre	mapflag	noteleport
-einbroch	mapflag	noteleport
-einbech	mapflag	noteleport
 lhz_que01	mapflag	noteleport
 lhz_cube	mapflag	noteleport
 lhz_in01	mapflag	noteleport

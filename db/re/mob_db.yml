@@ -26277,7 +26277,7 @@ Body:
       - Item: Emperium
         Rate: 1
       - Item: Oridecon
-        Rate: 40
+        Rate: 400
       - Item: Emveretarcon
         Rate: 400
       - Item: Yellow_Gemstone
@@ -26325,7 +26325,7 @@ Body:
       - Item: Coal
         Rate: 250
       - Item: Elunium
-        Rate: 25
+        Rate: 400
       - Item: Steel
         Rate: 250
       - Item: Unholy_Touch
@@ -102425,6 +102425,8 @@ Body:
         Rate: 5
       - Item: Bloody_Rune
         Rate: 800
+      - Item: EP17_1_EVT01
+        Rate: 80
       - Item: Dolor_Card
         Rate: 1
         StealProtected: true
@@ -102460,8 +102462,8 @@ Body:
     DamageMotion: 576
     Ai: 05
     Drops:
-      - Item: Tough_Scalelike_Stem
-        Rate: 2500
+      - Item: EP17_1_EVT01
+        Rate: 80
       - Item: Sticky_Poison
         Rate: 2000
       - Item: Wooden_Block
@@ -102516,6 +102518,8 @@ Body:
         Rate: 800
       - Item: Elunium_Stone
         Rate: 120
+      - Item: EP17_1_EVT01
+        Rate: 80
       - Item: Elunium
         Rate: 10
       - Item: EP17_1_EVT39
@@ -102554,8 +102558,8 @@ Body:
     DamageMotion: 432
     Ai: 04
     Drops:
-      - Item: Sticky_Mucus
-        Rate: 2500
+      - Item: EP17_1_EVT01
+        Rate: 80
       - Item: Sticky_Poison
         Rate: 2000
       - Item: Fluorescent_Liquid
@@ -102610,6 +102614,8 @@ Body:
         Rate: 800
       - Item: Tendon
         Rate: 1000
+      - Item: EP17_1_EVT01
+        Rate: 80
       - Item: EP17_1_EVT39
         Rate: 5
       - Item: Caput_Card
@@ -102652,8 +102658,8 @@ Body:
         Rate: 2000
       - Item: Tooth_Of_
         Rate: 1600
-      - Item: Tendon
-        Rate: 2000
+      - Item: EP17_1_EVT01
+        Rate: 80
       - Item: EP17_1_EVT39
         Rate: 10
       - Item: Shadowdecon_Ore

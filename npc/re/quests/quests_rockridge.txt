@@ -2386,7 +2386,7 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	4_M_CACTUSLADY,{
 			delitem 25246,5;// Juice_Package
 			completequest 16078;// Peace of the Family
 			setquest 16079;// Back for More Coyotes Tomorrow
-			getitem 25250,2;// Coin_Of_Rr
+			getitem 25250,20;// Coin_Of_Rr
 			getexp 55560,52710;
 			close;
 		}
@@ -2449,7 +2449,7 @@ rockrdg1,341,133,3	script	Mrs. Cacturon#rrrem01	4_M_CACTUSLADY,{
 		mes "This is the best I can do. I hope you'll like it. I'd like to thank you for your help on behalf of my family.";
 		erasequest 16080;// Hunting Coyotes Again
 		setquest 16079;// Back for More Coyotes Tomorrow
-		getitem 25250,2;// Coin_Of_Rr
+		getitem 25250,20;// Coin_Of_Rr
 		getexp 55560,52710;
 		close;
 	}
@@ -3087,7 +3087,7 @@ rockrdg1,262,90,7	script	Crouched Horse#rr	4_M_CACTUSMAN1,{
 		erasequest 9460;// Collecting Ore Fragments
 		setquest 9461;// Enough Ores
 		getexp 25000,20000;
-		getitem 25250,1;// Coin_Of_Rr
+		getitem 25250,10;// Coin_Of_Rr
 		if (.@count > 10) {
 			next;
 			mes "[Crouched Horse]";
@@ -3219,7 +3219,7 @@ harboro1,231,254,3	script	Exotic Merchant	1_M_MERCHANT,{
 		close;
 	}
 	delitem .@item_id[.@s],5;
-	getitem 25250,2;// Coin_Of_Rr
+	getitem 25250,20;// Coin_Of_Rr
 	getexp 20000,18000;
 	setquest 12411;// Come Back Tomorrow
 	mes "[Exotic Merchant]";
@@ -3405,7 +3405,7 @@ S_Food:
 		close;
 	}
 	delitem .@item_id, .@amount;
-	getitem 25250,1;// Coin_Of_Rr
+	getitem 25250,10;// Coin_Of_Rr
 	getexp 16000,12800;
 	erasequest getarg(0);
 	setquest 12382;// Distributing Food
@@ -3649,7 +3649,7 @@ harboro1,357,155,3	script	Steel Vigilante#1	4_M_MASKMAN,{
 		.@mob_id = 3788;
 		break;
 	}
-	getitem 25250,2;// Coin_Of_Rr
+	getitem 25250,20;// Coin_Of_Rr
 	erasequest .@quest_id;
 	setquest 12390;// Relieved for Now
 	mes "[Steel Vigilante]";
@@ -3785,7 +3785,7 @@ harboro1,357,152,3	script	Steel Vigilante#2	4_M_ACROSS,{
 		.@mob_id = 3740;
 		break;
 	}
-	getitem 25250,3;// Coin_Of_Rr
+	getitem 25250,30;// Coin_Of_Rr
 	erasequest .@quest_id;
 	setquest 12398;// You're Good
 	mes "[Steel Vigilante]";
@@ -4001,7 +4001,7 @@ harboro1,334,135,6	script	Desalination Facility Manager	4_M_YURI,{
 		close;
 	}
 	getexp 35000,27000;
-	getitem 25250,2;// Coin_Of_Rr
+	getitem 25250,20;// Coin_Of_Rr
 	for ( .@quest_id = 12405; .@quest_id <= 12409; .@quest_id++ )
 		erasequest .@quest_id;
 	setquest 12404;// Are You Not Tired?
@@ -4259,7 +4259,7 @@ harboro1,138,157,5	script	Donovan	4_M_EINMAN2,{
 		erasequest 9458;// Pipe Cleaning
 		setquest 9459;// Too Early for Pipe Cleaning
 		getexp 25000,20000;
-		getitem 25250,1;// Coin_Of_Rr
+		getitem 25250,10;// Coin_Of_Rr
 		close;
 	}
 }
@@ -4727,7 +4727,7 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		delitem 6213, countitem(6213);// Explosive_Powder
 		erasequest 14672;// Preparing for the Firework Festival
 		setquest 14673;// Time to Make Bombs
-		getitem 25250,3;// Coin_Of_Rr
+		getitem 25250,30;// Coin_Of_Rr
 		getexp 76200,70740;
 		close;
 	}
@@ -4880,7 +4880,7 @@ rockrdg2,295,328,5	script	Frail Ghast#rockdaily	4_M_COWRAIDERS2,{
 		mes "Thanks! Here, take this.";
 		erasequest 1298;// Gas! Gas!
 		setquest 1299;// Patrol Once a Day
-		getitem 25250,3;// Coin_Of_Rr
+		getitem 25250,30;// Coin_Of_Rr
 		getexp 101600,94320;
 		next;
 		mes "[Frail Ghast]";
@@ -5006,7 +5006,7 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 		mes "That Rock Ridge Coin is yours. Thank you for helping us.";
 		erasequest 1330;// Spotty's Holes
 		completequest 1322;// Found Something
-		getitem 25250,1;// Coin_Of_Rr
+		getitem 25250,10;// Coin_Of_Rr
 		setquest 1329;// Spotty in the Dreamland
 		next;
 		mes "[Mrs. McPhy]";
@@ -5031,7 +5031,7 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 		mes "Here's the Rock Ridge Coin we promised. Thank you for searching the wasteland for us.";
 		erasequest 1328;// Found Missing Items
 		erasequest 1330;// Spotty's Holes
-		getitem 25250,1;// Coin_Of_Rr
+		getitem 25250,10;// Coin_Of_Rr
 		setquest 1329;// Spotty in the Dreamland
 		next;
 		mes "[Mrs. McPhy]";
@@ -5432,7 +5432,7 @@ harboro1,344,61,5	script	Mr. McPhy#rockdaily	4W_M_02,{
 			mes "Oh, right?here's your payment I promised. Thank you.";
 			erasequest 1331;
 			setquest 1332;
-			getitem 25250,2;// Coin_Of_Rr
+			getitem 25250,20;// Coin_Of_Rr
 			getexp 14499,13863;
 			close;
 		}

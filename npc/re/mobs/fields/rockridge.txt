@@ -17,7 +17,7 @@ rockrdg1,0,0	monster	Yellow Plant	1081,4
 rockrdg1,0,0	monster	Black Mushroom	1084,8
 
 // Kiwawa Desert
-rockrdg2,0,0	monster	Buffalo Bandit Duelist	3737,20
+rockrdg2,0,0	monster	Buffalo Bandit Duelist	3737,60
 rockrdg2,0,0	monster	Bowie Buffalo Bandit	3738,60
 rockrdg2,0,0	monster	Coyote	3739,10
 rockrdg2,0,0	monster	Green Plant	1080,5
