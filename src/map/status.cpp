@@ -10911,11 +10911,9 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			}
 			break;
 		case SC_MAGICPOWER:
-#ifdef RENEWAL
 			val3 = 5 * val1; // Matk% increase
-#else
+#ifndef RENEWAL
 			val2 = 1; // Lasts 1 invocation
-			val3 = 10 * val1; // Matk% increase
 			val4 = 0; // 0 = ready to be used, 1 = activated and running
 #endif
 			break;
