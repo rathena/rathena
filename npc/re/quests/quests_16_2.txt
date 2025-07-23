@@ -3550,7 +3550,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 			mes "We will count on you again next time.";
 			erasequest 7742;// Sweeping the remnants
 			setquest 7743;// Sweeping the remnants (Standby)
-			getitem 25155,3;	// Swz_Honor_Token
+			getitem 25155,10;	// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		}
@@ -3703,7 +3703,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 			setquest 7745;		// Hiding Researcher (Standby)
 			erasequest 7760;	// Well hidden
 			erasequest 7744;	// Hiding Researcher
-			getitem 25155,3;	// Swz_Honor_Token
+			getitem 25155,10;	// Swz_Honor_Token
 			getexp 200000,200000;
 			next;
 			mes "[Tess]";
@@ -3819,7 +3819,7 @@ que_swat,161,53,3	script	Yuslan#ep162_1	4_M_GUNSLINGER3,{
 			mes "Please be with us next time!";
 			erasequest 7761;// Make Chimeras rest in peace
 			setquest 7762;// Make Chimeras rest in peace (Standby)
-			getitem 25155,3;	// Swz_Honor_Token
+			getitem 25155,10;	// Swz_Honor_Token
 			getexp 300000,300000;
 			close;
 		}
@@ -4477,7 +4477,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 			erasequest 16061;	// Fair and equitable result
 			setquest 16010;// Battle in great condition
 			getexp 400000,400000;
-			getitem 25155,3;// Swz_Honor_Token
+			getitem 25155,10;// Swz_Honor_Token
 			close3;
 		}
 		end;
@@ -7721,7 +7721,7 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 				delitem 25165,1;// High_Class_Tea
 				erasequest 11465;// Dien's High Class Tea
 				setquest 11466;// Dien's High Class Tea
-				getitem 25155,3;// Swz_Honor_Token
+				getitem 25155,10;// Swz_Honor_Token
 				getexp 150000,150000;
 				break;
 			case 1:
@@ -7735,7 +7735,7 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 				delitem 25167,1;// Old_Letter
 				erasequest 11467;// Ridsh's Old Letter
 				setquest 11468;// Ridsh's Old Letter
-				getitem 25155,3;// Swz_Honor_Token
+				getitem 25155,10;// Swz_Honor_Token
 				getexp 150000,150000;
 				break;
 			case 2:
@@ -7747,7 +7747,7 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 				mes "[Rebellion Guard leader Larcis]";
 				mes "If you bring this token to Strasse at the stairs at 10 o'clock in the corridor of the 2nd floor, you will receive something useful in return.";
 				delitem 25166,4;	// Very_Shining_Ring
-				getitem 25155,3;	// Swz_Honor_Token
+				getitem 25155,10;	// Swz_Honor_Token
 				erasequest 11469;// Cotness's Shiny Ring
 				setquest 11470;// Cotness's Shiny Ring
 				getexp 150000,150000;
@@ -9265,7 +9265,7 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 			erasequest 16053;// Ongoing old story
 			erasequest 16050;// Tribute hour
 			setquest 16049;// Quiet dawn
-			getitem 25155,3;// Swz_Honor_Token
+			getitem 25155,10;// Swz_Honor_Token
 			getexp 170000,200000;
 			close;
 		}
@@ -9925,7 +9925,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 	erasequest 16059;	// Differentiated advertising strategy
 	setquest 16058;	// Slow advertising effect
 	getexp 100000,100000;
-	getitem 25155,3;// Swz_Honor_Token
+	getitem 25155,10;// Swz_Honor_Token
 	close;
 
 OnInit:
@@ -10545,7 +10545,7 @@ S_Item:
 		completequest 16032;// Hospitality to senior
 	setquest 16034;// Sweet cookies once a day
 	getexp 200000,200000;
-	getitem 25155,3;// Swz_Honor_Token
+	getitem 25155,10;// Swz_Honor_Token
 	close;
 
 OnInit:
@@ -10756,7 +10756,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 			next;
 			completequest 16036;// Expert's keen eye
 			setquest 16040;// Collect 5 Irons
-			getitem 25155,7;// Swz_Honor_Token
+			getitem 25155,10;// Swz_Honor_Token
 			rachel_quest_16_2 = 3;
 			close;
 		}
@@ -10764,7 +10764,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 		mes "Yes. I will.";
 		mes "I have no other choice.";
 		completequest 16036;// Expert's keen eye
-		getitem 25155,7;// Swz_Honor_Token
+		getitem 25155,10;// Swz_Honor_Token
 		rachel_quest_16_2 = 3;
 		close;
 	}
@@ -10873,7 +10873,7 @@ S_Quest:
 	delitem .@item_req, .@count_req;
 	setquest 16037;// Material collection once a day
 	getexp 200000,200000;
-	getitem 25155,3;// Swz_Honor_Token
+	getitem 25155,10;// Swz_Honor_Token
 	close;
 
 OnInit:
@@ -11641,7 +11641,7 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		erasequest 14611;// Gun recycling
 		delitem 25153,3;// Broken_Gun_Wreck
 		setquest 14612;// Time for repair
-		getitem 25155,3;// Swz_Honor_Token
+		getitem 25155,10;// Swz_Honor_Token
 		getexp 200000,200000;
 		close;
 	case 2:
@@ -11914,7 +11914,7 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		erasequest 14610;// Gun recycling
 		setquest 14612;// Time for repair
 		delitem 25153,3;// Broken_Gun_Wreck
-		getitem 25155,3;// Swz_Honor_Token
+		getitem 25155,10;// Swz_Honor_Token
 		getexp 200000,200000;
 		close;
 	case 2:
@@ -12425,7 +12425,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			delitem 999,5;// Steel
 			delitem 7319,15;// Old_Steel_Plate
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Swz_Honor_Token
+			getitem 25155,10;// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		case 2:
@@ -12710,7 +12710,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			delitem 7068,10;// Burn_Tree
 			delitem 1003,3;// Coal
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Swz_Honor_Token
+			getitem 25155,10;// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		case 2:
@@ -12985,7 +12985,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			delitem 7321,10;// Fragment_Of_Crystal
 			delitem 7315,10;// Dark_Crystal_Fragment
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Swz_Honor_Token
+			getitem 25155,10;// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		}
@@ -13108,7 +13108,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			delitem 999,5;// Steel
 			delitem 7319,15;// Old_Steel_Plate
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Swz_Honor_Token
+			getitem 25155,10;// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		}
@@ -13351,7 +13351,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			delitem 7068,10;// Burn_Tree
 			delitem 1003,3;// Coal
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Swz_Honor_Token
+			getitem 25155,10;// Swz_Honor_Token
 			getexp 200000,200000;
 			close3;
 		}
@@ -13451,7 +13451,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			delitem 7321,10;// Fragment_Of_Crystal
 			delitem 7315,10;// Dark_Crystal_Fragment
 			setquest 14609;// Quiet time
-			getitem 25155,3;// Swz_Honor_Token
+			getitem 25155,10;// Swz_Honor_Token
 			getexp 0,300000;
 			close3;
 		}
@@ -14214,7 +14214,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		setquest 16020;// Daily babysitting
 		delitem 25160,1;// Borrow_Book
 		getexp 200000,200000;
-		getitem 25155,3;// Swz_Honor_Token
+		getitem 25155,10;// Swz_Honor_Token
 		close;
 	case 16025:
 		if (checkquest(.@quest_list[.@i],HUNTING) != 2 || countitem(6244) < 1) {
@@ -14233,7 +14233,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		erasequest 16025;// Service: Exploring the Mine Dungeon
 		setquest 16020;// Daily babysitting
 		getexp 200000,200000;
-		getitem 25155,3;// Swz_Honor_Token
+		getitem 25155,10;// Swz_Honor_Token
 		close;
 	case 16026:
 		if (checkquest(.@quest_list[.@i],HUNTING) != 2 || countitem(6213) < 1) {
@@ -14252,7 +14252,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		erasequest 16026;// Service: Exploring the Mine Dungeon
 		setquest 16020;// Daily babysitting
 		getexp 200000,200000;
-		getitem 25155,3;// Swz_Honor_Token
+		getitem 25155,10;// Swz_Honor_Token
 		close;
 	case 16027:
 		for ( .@i = 16027; .@quest_id <= 16031; .@quest_id++ ) {
@@ -14288,7 +14288,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		erasequest 16031;// Service: Cookies delivery
 		setquest 16020;// Daily babysitting
 		getexp 200000,200000;
-		getitem 25155,3;// Swz_Honor_Token
+		getitem 25155,10;// Swz_Honor_Token
 		close;
 	}
 	end;

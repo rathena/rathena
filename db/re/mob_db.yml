@@ -26277,7 +26277,7 @@ Body:
       - Item: Emperium
         Rate: 1
       - Item: Oridecon
-        Rate: 400
+        Rate: 2000
       - Item: Emveretarcon
         Rate: 400
       - Item: Yellow_Gemstone
@@ -26323,11 +26323,11 @@ Body:
       - Item: Crystal_Jewel
         Rate: 250
       - Item: Coal
-        Rate: 250
+        Rate: 1000
       - Item: Elunium
-        Rate: 400
+        Rate: 2000
       - Item: Steel
-        Rate: 250
+        Rate: 2000
       - Item: Unholy_Touch
         Rate: 5
       - Item: Obsidian_Card

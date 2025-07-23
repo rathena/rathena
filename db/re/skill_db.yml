@@ -32251,7 +32251,8 @@ Body:
     Hit: Single
     HitCount: 1
     AfterCastActDelay: 500
-    Duration1: -1
+    Duration1: 150000
+    Cooldown: 150000
     FixedCastTime: 1000
     Requires:
       SpCost:

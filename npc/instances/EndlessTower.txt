@@ -214,82 +214,51 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 		mes "Make or join a party and try again.";
 		close;
 	}
-	switch(.@etower_timer) {
-	case -1:
+	
+	if (.@etower_timer2 < 2 && getcharid(1) == etower_partyid) {
+		mes "If you have the dungeon generated already, you can enter it. ";
+		next;
+		switch(select("Enter the "+.@md_name$+":Reset instance:Cancel")) {
+		case 1:
+			callsub L_Enter,0,0;
+		case 2:
+			set etower_timer,0;
+			set etower_partyid,0;
+			erasequest 60200;
+			erasequest 60201;
+			end;
+		case 3:
+			close;
+		}
+	} 
+	else 
+	{
 		if (is_party_leader() == true) {
 			mes "Confirmed the party has been made. Would you like to reserve entrance to the Endless Tower?";
 			next;
-			switch(select("Generate dungeon "+.@md_name$+":Enter the dungeon:Return to Alberta:Cancel")) {
-			case 1:
-				if (instance_create(.@md_name$) < 0) {
-					mes "Party Name: "+ getpartyname(.@party_id);
-					mes "Party Leader: "+strcharinfo(0);
-					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+			switch(select("Generate dungeon "+.@md_name$+":Enter the dungeon:Reset instance:Cancel")) {
+				case 1:
+					if (instance_create(.@md_name$) < 0) {
+						mes "Party Name: "+ getpartyname(.@party_id);
+						mes "Party Leader: "+strcharinfo(0);
+						mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+						close;
+					}
+					mes "^0000ff"+.@md_name$+"^000000 - Try to reserve";
+					mes "After making a reservation, you have to talk to NPC behind and select the menu 'Enter the Dungeon' to enter the dungeon.";
 					close;
-				}
-				mes "^0000ff"+.@md_name$+"^000000 - Try to reserve";
-				mes "After making a reservation, you have to talk to NPC behind and select the menu 'Enter the Dungeon' to enter the dungeon.";
-				close;
-			case 2:
-				callsub L_Enter,0,1;
-			case 3:
-				mes "I will move you to Alberta.";
-				close2;
-				warp "alberta",223,36;
-				end;
-			case 4:
-				close;
+				case 2:
+					callsub L_Enter,0,1;
+				case 3:
+					set etower_timer,0;
+					set etower_partyid,0;
+					erasequest 60200;
+					erasequest 60201;
+					end;
+				case 4:
+					close;
 			}
 		}
-		switch(select("Enter the "+.@md_name$+":Return to Alberta:Cancel")) {
-		case 1:
-			callsub L_Enter,1,1;
-		case 2:
-			mes "I will move you to Alberta.";
-			close2;
-			warp "alberta",223,36;
-			end;
-		case 3:
-			end;
-		}
-	case 0:
-	case 1:
-		if (.@etower_timer2 < 2 && getcharid(1) == etower_partyid) {
-			mes "If you have the dungeon generated already, you can enter it. ";
-			next;
-			switch(select("Enter the "+.@md_name$+":Return to Alberta:Cancel")) {
-			case 1:
-				callsub L_Enter,0,0;
-			case 2:
-				mes "I will move you to Alberta.";
-				close2;
-				warp "alberta",223,36;
-				end;
-			case 3:
-				close;
-			}
-		} else {
-			set .@dun_lim_time,etower_timer+604800; // 1 week
-			// set .@dun_lim_time2,etower_timer+14400; // 4 hours
-			set .@dun_cur_time,gettimetick(2);
-			set .@dun_ent_t,(.@dun_lim_time - .@dun_cur_time);
-			set .@dun_h,(.@dun_ent_t / 3600);
-			set .@dun_m,(.@dun_ent_t - (.@dun_h * 3600)) / 60;
-			set .@dun_s,.@dun_ent_t - ((.@dun_h * 3600) + (.@dun_m * 60));
-
-			mes "Due to the tower's aftereffects, you cannot enter the dungeon right now, " + .@dun_h + "hours " + .@dun_m + "minutes " + .@dun_s + "seconds left to enter the next dungeon.";
-			next;
-			mes "It is dangerous here. Let me move you to Alberta.";
-			close2;
-			warp "alberta",223,36;
-			end;
-		}
-	case 2:
-		set etower_timer,0;
-		erasequest 60200;
-		erasequest 60201;
-		mes "^0000ffThe records and after effects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
-		close;
 	}
 
 L_Enter:
@@ -355,6 +324,7 @@ e_tower,1,1,2	script	#102Administrator Mode	844,{
 
 e_tower,69,117,4	script	Purification Stone#et1	406,{
 	set etower_timer,0;
+	set etower_partyid,0;
 	mes "^0000ffThe records and aftereffects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
 	close;
 
@@ -387,6 +357,7 @@ OnTimer1800000:
 e_tower,151,185,4	script	Purification Stone#et2	844,{
 	callfunc "F_GM_NPC";
 	set etower_timer,0;
+	set etower_partyid,0;
 	mes "^0000ffThe records and aftereffects related to the Endless Tower have been removed. You can generate and enter the Endless Tower again.^000000";
 	close2;
 	warp "e_tower",75,108;
