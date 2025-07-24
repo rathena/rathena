@@ -7,6 +7,9 @@
 #include <cstdlib>
 #include <set>
 #include <unordered_map>
+#include <algorithm> 
+#include <cctype>    
+#include <cstring>   
 
 #include <common/cbasetypes.hpp>
 #include <common/database.hpp>
@@ -54,6 +57,7 @@
 #include "storage.hpp"
 #include "trade.hpp"
 #include "vending.hpp"
+#include "../custom/nofx.hpp" 
 
 using namespace rathena;
 
