@@ -449,7 +449,7 @@ enum e_dance_overlap : int32 {
 	OVERLAP_COUNT, // Don't change overlap marker, just count units overlapping with skill unit (excluding itself)
 };
 
-/// Create Database item
+/// Create Database produce
 struct s_skill_produce_db {
 	uint64 id;				/// Unique ID
 	t_itemid product_id; 	/// Product ID
@@ -471,9 +471,8 @@ public:
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
-	using TypesafeYamlDatabase::find; // to avoid errors with overloading
-	std::shared_ptr<s_skill_produce_db> find( t_itemid product_id, uint16 group_id );
-	std::unordered_map<uint64, std::shared_ptr<s_skill_produce_db>> filterByGroup(uint16 group_id);
+	using TypesafeYamlDatabase::find;
+	std::shared_ptr<s_skill_produce_db> find( t_itemid product_id, uint16 group_id=0 );
 };
 
 extern SkillProduceDatabase skill_produce_db;

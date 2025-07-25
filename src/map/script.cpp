@@ -11086,7 +11086,7 @@ BUILDIN_FUNC(produce)
 	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
- *
+ * Attempt to create a food item
  *------------------------------------------*/
 BUILDIN_FUNC(cooking)
 {

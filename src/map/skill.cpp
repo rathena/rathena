@@ -22986,15 +22986,14 @@ std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, 
 	}
 
 	// if recipe requires a skill. check if player has the required skill lv [malufett]
-	uint8 skill_lv = pc_checkskill(sd, produce->req_skill);
-	if (produce->req_skill > 0 && skill_lv < produce->req_skill_lv) {
-		ShowError("REQUIRED SKILL LV ERROR: skill=%d req=%d has=%d\n", produce->req_skill, produce->req_skill_lv, skill_lv);
+	if (produce->req_skill > 0 && pc_checkskill(sd, produce->req_skill) < produce->req_skill_lv) {
+		// ShowError("REQUIRED SKILL LV ERROR: skill=%d req=%d\n", produce->req_skill, produce->req_skill_lv);
 		return nullptr;
 	}
 
 	// if triggered by skill, check if skill used is the required
 	if (produce->req_skill > 0 && sd->menuskill_id > 0 && sd->menuskill_id != produce->req_skill) {
-		ShowError("REQUIRED SKILL IS WRONG\n");
+		// ShowError("REQUIRED SKILL IS WRONG\n");
 		return nullptr;
 	}
 
@@ -23006,7 +23005,7 @@ std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, 
 
 	// Cannot carry the produced stuff
 	if (pc_checkadditem(sd, nameid, qty) == CHKADDITEM_OVERAMOUNT) {
-		ShowError("NOT ENOUGH SPACE ERROR\n");
+		// ShowError("NOT ENOUGH SPACE ERROR\n");
 		return nullptr;
 	}
 
@@ -23038,13 +23037,13 @@ std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, 
 
 		uint16 idx, amt;
 		if ((idx = pc_search_inventory(sd, mat_id)) == -1) {
-			ShowError("MAT NOT FOUND\n");
+			// ShowError("MAT NOT FOUND\n");
 			return nullptr;
 		}
 
 		amt = sd->inventory.u.items_inventory[idx].amount;
 		if (amt < req_amt) {
-			ShowError("NOT ENOUGH MATS\n");
+			// ShowError("NOT ENOUGH MATS\n");
 			return nullptr;
 		}
 	}
@@ -23053,7 +23052,6 @@ std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, 
 	return produce;
 }
 
-//FIXME items that call this function directly (holy water, etc) need fixing
 // since the can produce mix called internally do not provide the group_id, which I made required
 /** Attempt to produce an item
  * @param sd Player
@@ -23744,8 +23742,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 	return false;
 }
 
-/**
- * Attempt to create arrow by specified material
+/** Attempt to create arrow by specified material
  * @param sd Player
  * @param nameid Item ID of material
  * @return True if created, False is failed
@@ -26203,42 +26200,13 @@ static bool skill_parse_row_nocastdb( char* split[], size_t columns, size_t curr
 	return true;
 }
 
-/**
- * Default location for the produce db YAML file
+/// PRODUCE DATABASE
+
+/** Default location for the produce db YAML file
  * @return string path
  */
 const std::string SkillProduceDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/produce_db.yml";
-}
-
-/**
- * Create a unique key composed of Product and Group info
- * @param product_id Produced Item
- * @param group_id Recipe Group
- * @return Unique key
- */
-uint64 SkillProduceDatabase::makeKey(t_itemid product_id, uint16 group_id) {
-	return (static_cast<uint64>( product_id ) << 32) | static_cast<uint64>( group_id );
-}
-
-/**
- * Searches for a recipe based on the Product and Group
- * @param product_id Produced Item
- * @param group_id Recipe Group (Optional, but faster lookup if provided)
- * @return s_skill_produce_db if found or nullptr
- */
-std::shared_ptr<s_skill_produce_db> SkillProduceDatabase::find( t_itemid product_id, uint16 group_id ) {
-
-	if (group_id)
-		return this->find( this->makeKey( product_id, group_id ) );
-
-	// tries a matching key by iterating groups
-	for (uint8 gid = 1; gid < UINT8_MAX; gid++) { //FIXME find a better way to determine the number of groups
-		auto recipe = this->find( this->makeKey(product_id, gid) );
-		if (recipe) return recipe; // returns first match
-	}
-
-	return nullptr;
 }
 
 /** Reads and parses an entry from the produce_db.
@@ -26263,13 +26231,11 @@ uint64 SkillProduceDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	}
 
 	this->asUInt16(node, "Group", group_id);
-
-	uint64 key = this->makeKey(item->nameid, group_id);
-	ShowDebug("MAKE KEY pdi=%d gid=%d id=%016llx\n", item->nameid, group_id, key);
-
+	
 	std::shared_ptr<s_skill_produce_db> produce = this->find(item->nameid, group_id);
 	bool exists = produce != nullptr;
-
+	
+	uint64 key = this->makeKey(item->nameid, group_id);
 	if (!exists) {
 		produce = std::make_shared<s_skill_produce_db>();
 		produce->id = key;
@@ -26358,22 +26324,44 @@ uint64 SkillProduceDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	return 1;
 }
 
-std::unordered_map<uint64, std::shared_ptr<s_skill_produce_db>> SkillProduceDatabase::filterByGroup(uint16 group_id) {
-	std::unordered_map<uint64, std::shared_ptr<s_skill_produce_db>> result;
-
-	for (const auto &[key, recipe] : this->data)
-		if (recipe->group_id == group_id)
-			result.emplace(key, recipe);
-
-	return result;
+/**
+ * Create a unique key composed of Product and Group info
+ * @param product_id Produced Item
+ * @param group_id Recipe Group
+ * @return Unique key
+ */
+uint64 SkillProduceDatabase::makeKey(t_itemid product_id, uint16 group_id) {
+	return (static_cast<uint64>( product_id ) << 32) | static_cast<uint64>( group_id );
 }
+
+/** Searches for a recipe based on the Product and Group
+ * @param product_id Produced Item
+ * @param group_id Recipe Group (optional for faster search)
+ * @return s_skill_produce_db if found or nullptr
+ */
+std::shared_ptr<s_skill_produce_db> SkillProduceDatabase::find( t_itemid product_id, uint16 group_id ) {
+
+	// exact match
+	auto recipe = this->find( this->makeKey( product_id, group_id ) );
+	if (recipe) return recipe;
+
+	//FIXME find a better way to determine the number of groups
+	// tries a matching key by iterating groups UINT8 (0-255)
+	for (uint8 gid = 1; gid < UINT8_MAX; gid++) {
+		auto recipe = this->find( this->makeKey(product_id, gid) );
+		if (recipe) return recipe; // returns first match
+	}
+
+	return nullptr;
+}
+
+/// ARROW DATABASE
 
 const std::string SkillArrowDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/create_arrow_db.yml";
 }
 
-/**
- * Reads and parses an entry from the create_arrow_db.
+/** Reads and parses an entry from the create_arrow_db.
  * @param node: YAML node containing the entry.
  * @return count of successfully parsed rows
  */

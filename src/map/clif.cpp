@@ -4206,6 +4206,9 @@ void clif_arrow_fail( map_session_data& sd, e_action_failure type ) {
 /// Presents a list of items, that can be processed by Arrow Crafting (ZC_MAKINGARROW_LIST).
 /// 01ad <packet len>.W { <name id>.W }*
 void clif_arrow_create_list( map_session_data& sd ){
+
+	ShowInfo("CLIF ARROW CREATE LIST\n");
+
 	PACKET_ZC_MAKINGARROW_LIST* p = reinterpret_cast<PACKET_ZC_MAKINGARROW_LIST*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
@@ -6298,10 +6301,13 @@ void clif_skill_estimation( map_session_data& sd, mob_data& md ){
 }
 
 
-/// Presents a textual list of producable items.
-/// 018d <packet len>.W { <name id>.W { <material id>.W }*3 }* (ZC_MAKABLEITEMLIST)
-/// material id:
-///     unused by the client
+/** Presents a textual list of producable items.
+ *  018d <packet len>.W { <name id>.W { <material id>.W }*3 }* (ZC_MAKABLEITEMLIST)
+ *  material id: unused by the client
+ * @param sd Player data
+ * @param skill_id Skill used
+ * @param trigger Group of items
+ */
 void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 trigger ){
 
 	ShowInfo("PRODUCE MIX LIST skill_id=%d trigger=%d\n", skill_id, trigger);
@@ -6319,14 +6325,16 @@ void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 tr
 	p->packetType = HEADER_ZC_MAKABLEITEMLIST;
 	p->packetLength = sizeof( *p );
 
-	auto group_recipes = skill_produce_db.filterByGroup(trigger);
 	int32 count = 0;
-	for (const auto &[_, recipe] : group_recipes) {
+	for (const auto &[_, recipe] : skill_produce_db) {
 
-		if (!skill_can_produce_mix(&sd, recipe->product_id, trigger, 1))
+		if (recipe->group_id != trigger)
 			continue;
 
 		if (skill_id > 0 && recipe->req_skill != skill_id)
+			continue;
+
+		if (!skill_can_produce_mix(&sd, recipe->product_id, trigger, 1))
 			continue;
 
 		PACKET_ZC_MAKABLEITEMLIST_sub& entry = p->items[count];
@@ -6349,24 +6357,31 @@ void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 tr
 	}
 }
 
-
-/// Present a list of producable items.
-/// 025a <packet len>.W <mk type>.W { <name id>.W }* (ZC_MAKINGITEM_LIST)
-/// mk type:
-///     1 = cooking
-///     2 = arrow
-///     3 = elemental
-///     4 = GN_MIX_COOKING
-///     5 = GN_MAKEBOMB
-///     6 = GN_S_PHARMACY
-///     7 = MT_M_MACHINE
-///     8 = BO_BIONIC_PHARMACY
+/** Present a list of producable items.
+ * 025a <packet len>.W <mk type>.W { <name id>.W }* (ZC_MAKINGITEM_LIST)
+ * mk type:
+ * 1 = cooking
+ * 2 = arrow //FIXME
+ * 3 = elemental
+ * 4 = GN_MIX_COOKING
+ * 5 = GN_MAKEBOMB
+ * 6 = GN_S_PHARMACY
+ * 7 = MT_M_MACHINE
+ * 8 = BO_BIONIC_PHARMACY
+ * @param sd Player
+ * @param trigger Group ID
+ * @param skill_id Skill used
+ * @param qty Amount to produce
+ * @param list_type
+ */
 void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, int32 qty, int32 list_type ){
 #if PACKETVER >= 20051010
 	// Avoid resending the menu
 	if( sd.menuskill_id == skill_id ){
 		return;
 	}
+
+	ShowInfo("CLIF COOKING LIST\n");
 
 	PACKET_ZC_MAKINGITEM_LIST* p = reinterpret_cast<PACKET_ZC_MAKINGITEM_LIST*>( packet_buffer );
 
@@ -6375,14 +6390,14 @@ void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, in
 	p->makeItem = list_type;
 
 	int32 count = 0;
-	for (const auto &recipes : skill_produce_db) {
-		if( skill_can_produce_mix( &sd, recipes.second->product_id, trigger, qty ) == nullptr ){
+	for (const auto &[_, recipe] : skill_produce_db) {
+
+		if( !skill_can_produce_mix( &sd, recipe->product_id, trigger, qty ) )
 			continue;
-		}
 
 		PACKET_ZC_MAKINGITEM_LIST_sub& entry = p->items[count];
 
-		entry.itemId = client_nameid( recipes.second->product_id );
+		entry.itemId = client_nameid( recipe->product_id );
 
 		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
 		count++;
@@ -13147,6 +13162,9 @@ void clif_parse_RequestMemo(int32 fd,map_session_data *sd)
 /// Answer to pharmacy item selection dialog.
 /// 018e <name id>.W { <material id>.W }*3 (CZ_REQMAKINGITEM)
 void clif_parse_ProduceMix(int32 fd,map_session_data *sd){
+
+	ShowInfo("CLIF PARSE PRODUCE MIX\n");
+
 	if( sd == nullptr ){
 		return;
 	}
@@ -13177,25 +13195,25 @@ void clif_parse_ProduceMix(int32 fd,map_session_data *sd){
 }
 
 
-/// Answer to mixing item selection dialog.
-/// 025b <mk type>.W <name id>.W (CZ_REQ_MAKINGITEM)
-/// mk type:
-///     1 = cooking
-///     2 = arrow
-///     3 = elemental
-///     4 = GN_MIX_COOKING
-///     5 = GN_MAKEBOMB
-///     6 = GN_S_PHARMACY
-///     7 = MT_M_MACHINE - Unconfirmed
-///     8 = BO_BIONIC_PHARMACY - Unconfirmed
+/** Answer to mixing item selection dialog.
+ *  025b <mk type>.W <name id>.W (CZ_REQ_MAKINGITEM)
+ *  mk type:
+ *    1 = cooking
+ *    2 = arrow
+ *    3 = elemental
+ *    4 = GN_MIX_COOKING
+ *    5 = GN_MAKEBOMB
+ *    6 = GN_S_PHARMACY
+ *    7 = MT_M_MACHINE - Unconfirmed
+ *    8 = BO_BIONIC_PHARMACY - Unconfirmed
+ */
 void clif_parse_Cooking(int32 fd,map_session_data *sd) {
 
-	ShowInfo("PARSE COOKING\n");
+	ShowInfo("CLIF PARSE COOKING\n");
 
 #if PACKETVER >= 20051010
-	if( sd == nullptr ){
-		return;
-	}
+
+	nullpo_retr(nullptr, sd);
 
 	const PACKET_CZ_REQ_MAKINGITEM* p = reinterpret_cast<PACKET_CZ_REQ_MAKINGITEM*>( RFIFOP( fd, 0 ) );
 
