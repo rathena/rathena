@@ -24773,7 +24773,7 @@ BUILDIN_FUNC(hateffect){
 		bl = map_id2bl(script_getnum(st, 4));
 	}
 	else {
-		bl = map_id2bl(st->oid);
+		bl = map_id2bl(st->rid);
 		map_session_data* sd = BL_CAST(BL_PC, bl);
 
 		if (sd && sd->state.connect_new) {
