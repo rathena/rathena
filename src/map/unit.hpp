@@ -66,6 +66,9 @@ struct unit_data {
 	int32 group_id;
 
 	std::vector<int32> shadow_scar_timer;
+#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	std::vector<int16> hatEffects;
+#endif
 
 	// Functions and struct to calculate and store exact position at a certain tick
 	int16 getx(t_tick tick);
@@ -130,6 +133,7 @@ bool unit_run(struct block_list *bl, map_session_data *sd, enum sc_type type);
 int32 unit_calc_pos(struct block_list *bl, int32 tx, int32 ty, uint8 dir);
 TIMER_FUNC(unit_delay_walktoxy_timer);
 TIMER_FUNC(unit_delay_walktobl_timer);
+void unit_hateffect(struct block_list* bl, int16 effectID, bool enable, bool send);
 
 void unit_stop_walking_soon(struct block_list& bl, t_tick tick = gettick());
 // Causes the target object to stop moving.
