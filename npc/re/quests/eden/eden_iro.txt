@@ -24,10 +24,6 @@ moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 	mes "Hello there, adventurer.";
 	mes "I've been studying magic from all over Midgard to upgrade what I believe to be one of the greatest skills available to the acolyte class.";
 	next;
-
-	if (is_function("VIP_iRO_Acolyte"))
-		callfunc "VIP_iRO_Acolyte","[Aperture]","Prontera";
-
 	mes "[Aperture]";
 	mes "I am the one and only Acolyte that has attained the Level 10 Warp Portal skill!";
 	emotion ET_THINK, playerattached();
@@ -97,57 +93,12 @@ moc_para01,14,32,5	script	Aperture#acolytewarp	90,{
 	}
 }
 
-function	script	VIP_iRO_Acolyte	{
-	if (!vip_status(VIP_STATUS_ACTIVE)) {
-		mes getarg(0);
-		mes "But, my full powers are only available to those who have are VIPs.";
-		mes "I can still offer you a warp to "+getarg(1)+" though.";
-		next;
-		switch(select(getarg(0)+" -> 1800z:Cancel")) {
-		case 1:
-			if (Zeny < 1800) {
-				mes getarg(0);
-				mes "I'm sorry, but you don't have";
-				mes "enough zeny for the Teleport";
-				mes "Service. The fee to teleport";
-				mes "to "+getarg(1)+" is 1,800 zeny.";
-				close;
-			}
-			specialeffect2 EF_READYPORTAL;
-			specialeffect2 EF_TELEPORTATION;
-			specialeffect2 EF_PORTAL;
-			next;
-			set Zeny, Zeny - 1800;
-			if (getarg(1) == "Juno")
-				warp "yuno",158,125;
-			else
-				warp "prontera",116,72;
-			close;
-		case 2:
-			close;
-		}
-	}
-	return;
-}
-
-
 // Primo d'Buffer, VIP stat bonuses
 //============================================================
 moc_para01,26,15,3	script	Primo d'Buffer	790,{
 	mes "[Primo d'Buffer]";
 	mes "Hello adventurer, you look like you are itching to get out there and save the world!";
-	if (!vip_status(VIP_STATUS_ACTIVE)) {
-		mes "I can also tell that you haven't been blessed with '^6666ffVIP Status^000000'.";
-		next;
-		mes "[Primo d'Buffer]";
-		mes "My orders are to help out any Adventurer marked as VIP with special Buffs!";
-		mes "Currently I will give you ^ff0000+7 to all of your Stats for 30 minutes^000000 if you are VIP.";
-		next;
-		mes "[Primo d'Buffer]";
-		mes "If you would like to be VIP, you can use WarpPortal to ^FF8C42Power-UP^000000 your game account with VIP Status. Of course there are many other advantages to being VIP, like higher EXP and Drop Rates, more Storage, and special buff NPCs like me!";
-		mes "Happy Journeys!";
-		close;
-	}
+	next;
 	mes "I can also tell that you have been blessed with '^007FFFVIP Status^000000'.";
 	next;
 	mes "[Primo d'Buffer]";
@@ -179,14 +130,6 @@ moc_para01,53,30,3	script	Clearchus	470,{
 	mes "[Clearchus]";
 	mes "Our organization is 10,000 strong! Now let me see if you are registered for this service.";
 	next;
-	if (!vip_status(VIP_STATUS_ACTIVE)) {
-		mes "[Clearchus]";
-		mes "Unfortunately it appears that you are not VIP, please get VIP so that you can use this service. You can get a temporary VIP access by talking to Gramps at the Eden Group Headquarters.";
-		next;
-		mes "[Clearchus]";
-		mes "Vip is a very useful tool for adventurers to have, giving access to extra Kafra Services, discounted warps, exclusive content, and use of Primo d'Buffer. If an adventurer has full vip they even get an Exp, Drops, and storage boost!";
-		close;
-	}
 	mes "[Clearchus]";
 	mes "Your name is on the list.";
 	next;
@@ -686,11 +629,6 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 				callsub L_Exchange,5,510,20;// Blue_Herb
 				break;
 			case 16:// Token of Siegfried
-				if (vip_status(VIP_STATUS_ACTIVE) == false) {
-					mes "[Merry Badger]";
-					mes "VIP Services offers those to any user with VIP!!";
-					close;
-				}
 				// custom from here
 				.@date = gettime(DT_YYYYMMDD);
 				if (.@date <= eden_iro_token_date) {
@@ -856,10 +794,7 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 			close;
 		}
 		delitem 6495,25;
-		if (vip_status(VIP_STATUS_ACTIVE))
-			getitem 17570,1;// Sky Fortress Ticket 3 Hour Box
-		else
-			getitem 17569,1;// Sky Fortress Ticket 1 Hour Box
+		getitem 17570,1;// Sky Fortress Ticket 3 Hour Box
 		mes "[Merry Badger]";
 		mes "There you go! What else would you like?";
 		close;
@@ -1023,10 +958,6 @@ moc_para01,14,185,4	script	Normalson#ed	826,{
 // Advanced Refiner "Suhnmi" (merchants/advanced_refiner.txt)
 moc_para01,26,185,4	duplicate(Suhnbi#cash)	Suhnmi#eden	85
 
-// HD Refiner "Blacksmith Mighty Hammer" (re/merchants/hd_refiner.txt)
-// A combination of the +7~9 and +10 and up refiner, currently a placeholder.
-moc_para01,38,185,4	duplicate(MightyHammer)	Mighty Hammer#ed	826
-
 // Refiner Effect
 -	script	#eden_refine_effect	-1,{
 OnInit:
@@ -1034,7 +965,6 @@ OnInit:
 	end;
 OnTimer5000:
 	specialeffect EF_REFINEOK,AREA,"Suhnmi#eden";
-	specialeffect EF_REFINEOK,AREA,"Mighty Hammer#ed";
 	initnpctimer;
 	end;
 }

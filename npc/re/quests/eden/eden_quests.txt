@@ -1812,6 +1812,7 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 			getitem 2560,1; //Para_Team_Manteau1
 			getitem 2456,1; //Para_Team_Boots1
 			getitem 15009,1; //Para_Team_Uniform1
+			getitem 12208,1; // Battle Manual
 			next;
 			mes "[Michael]";
 			mes "Is that correct?";
@@ -1886,6 +1887,7 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 			getitem 13050,1; //P_Dagger1
 			getitem 2457,1; //Para_Team_Boots2
 			getitem 15010,1; //Para_Team_Uniform2
+			getitem 12208,1; // Battle Manual
 			if (para_suv02 == 0) {
 				mes "I don't know what weapon will suit you so, you'll get a Dagger.";
 				mes "You don't have a record of receiving any supplies";
@@ -1965,6 +1967,7 @@ moc_para01,112,96,5	script	Administrator Michael	4_M_RUSMAN1,{
 			para_suv01 = 38;
 			getitem 2458,1; //Para_Team_Boots3
 			getitem 15011,1; //Para_Team_Uniform3
+			getitem 12208,1; // Battle Manual
 			mes "[Michael]";
 			if (para_suv02 == 0) {
 				mes "You don't have a record of receiving any supplies";
@@ -2122,6 +2125,7 @@ S_Select:
 		next;
 		getitem 2457,1;	// Para_Team_Boots2
 		getitem 15010,1;// Para_Team_Uniform2
+		getitem 12208,1; // Battle Manual
 		para_suv01 = 23;
 	}
 	else {
@@ -2129,6 +2133,7 @@ S_Select:
 		next;
 		getitem 2458,1;// Para_Team_Boots3
 		getitem 15011,1;// Para_Team_Uniform3
+		getitem 12208,1; // Battle Manual
 		para_suv01 = 38;
 	}
 	getitem getarg(.@i),1;
@@ -2138,6 +2143,7 @@ S_Select:
 		mes "so, you'll receive the Eden Group Hat and Manteau aswell.";
 		getitem 5583,1;// Para_Team_Hat
 		getitem 2560,1;// Para_Team_Manteau
+		getitem 12208,1; // Battle Manual
 		if (para_suv01 == 22)
 			para_suv02 = 2;
 		else
@@ -4068,6 +4074,7 @@ moc_para01,111,83,3	script	Blacksmith Thorn#2nd10	2_M_OLDBLSMITH,{
 			getitem 2571,1;// Paradise Mantle II
 			getitem 2473,1;// Paradise Boots IV
 			getitem 15031,1;// Paradise Uniform IV
+			getitem 14156,1;// Battle Manual Box (A box containing 10 Field Manual books inside.)
 			mes "Here's your equipment.";
 			mes "I'll also give you the other gear that comes along with this set.";
 		}

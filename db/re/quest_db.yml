@@ -8185,7 +8185,7 @@ Body:
     Drops:
       - Mob: EP16_2_H_HUNTER_V
         Item: Old_Letter
-        Rate: 5000
+        Rate: 10000
   - Id: 11468
     Title: Ridsh's Old Letter
     TimeLimit: 4h
@@ -8197,7 +8197,7 @@ Body:
     Drops:
       - Mob: EP16_2_H_HUNTER_MD
         Item: Very_Shining_Ring
-        Rate: 5000
+        Rate: 10000
   - Id: 11470
     Title: Cotness's Shiny Ring
     TimeLimit: 4h
@@ -12767,6 +12767,13 @@ Body:
         Count: 10
       - Mob: EP17_2_BETA_CLEANER_B
         Count: 10
+    Drops:
+      - Mob: EP17_2_BETA_CLEANER_A
+        Item: Broken_AutoDoll_Parts
+        Rate: 5000
+      - Mob: EP17_2_BETA_CLEANER_B
+        Item: Broken_AutoDoll_Parts
+        Rate: 5000
   - Id: 17377
     Title: Between hot and cold baths - Waiting
     TimeLimit: 4h

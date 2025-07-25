@@ -53,11 +53,6 @@ function	script	F_BBQ	{
 		}
 
 		getexp .@Bexp, .@Jexp;
-
-		// Bonus-Item
-		if (.@c >= getarraysize(.@MobIds))
-			getitem (checkre(0) ? 6495 : 501), 1;
-
 	} else {
 		if (BaseLevel > getarg(1))
 			mes "Your level is too high for this quest.";
@@ -83,14 +78,14 @@ OnInit:
 OnNPCKillEvent:
 	.@kid = killedrid;
 
-	if (Target[.@kid - 1000]) {
+	if (Target[.@kid - 1000] && Target[.@kid - 1000] < 20) {
 		if (!getcharid(1)) {
 			// Solo-Charakter
 			Target[.@kid - 1000] += 1;
 			dispbottom("[ Quest Boards ]: " + (Target[.@kid - 1000] - 1) + "/20 " + getmonsterinfo(.@kid, MOB_NAME) + " slain.");
 		} else {
 			// Party
-			getmapxy(.@map1$, .@x1, .@y1, 0);
+			getmapxy(.@map1$, .@x1, .@y1, BL_PC);
 			getpartymember getcharid(1), 1;
 			getpartymember getcharid(1), 2;
 
@@ -98,7 +93,7 @@ OnNPCKillEvent:
 				if (isloggedin($@partymemberaid[.@j], $@partymembercid[.@j])) {
 					if (attachrid($@partymemberaid[.@j])) {
 						if (Target[.@kid - 1000] && HP > 0) {
-							getmapxy(.@map2$, .@x2, .@y2, 0);
+							getmapxy(.@map2$, .@x2, .@y2, BL_PC);
 							if (.@map1$ == .@map2$ && distance(.@x1, .@y1, .@x2, .@y2) < 20) {
 								Target[.@kid - 1000] += 1;
 								dispbottom("[ Quest Boards ]: " + (Target[.@kid - 1000] - 1) + "/20 " + getmonsterinfo(.@kid, MOB_NAME) + " slain.");

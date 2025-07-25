@@ -78915,7 +78915,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 70
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Oridecon
         Rate: 100
       - Item: Key_Of_Twisted_Time
@@ -79027,7 +79027,7 @@ Body:
       - Item: Moth_Dust
         Rate: 1500
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Hood_
         Rate: 8
       - Item: Neo_Punk_Card
@@ -79124,7 +79124,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 70
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Quadrille_
         Rate: 1
       - Item: Lounge_Suit
@@ -79202,7 +79202,7 @@ Body:
       - Item: Tatters_Clothes
         Rate: 2000
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Kakkung_
         Rate: 1
       - Item: Staff_Of_Soul
@@ -84533,7 +84533,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 50
       - Item: Iron_Ore
@@ -84613,7 +84613,7 @@ Body:
     Ai: 04
     Drops:
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 50
       - Item: Iron_Ore
@@ -88004,7 +88004,7 @@ Body:
       - Item: Yggdrasil_Dust
         Rate: 500
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 30
       - Item: GreenCenere_Card
@@ -88055,7 +88055,7 @@ Body:
       - Item: LargeScrap
         Rate: 50
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: RepairRobot_T_Card
         Rate: 1
         StealProtected: true
@@ -88156,7 +88156,7 @@ Body:
       - Item: OldTank
         Rate: 50
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 50
       - Item: Scr_MT_Robots_Card
@@ -93348,7 +93348,7 @@ Body:
       - Item: Fruit_Basket
         Rate: 250
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Mental_Stick
         Rate: 1
       - Item: Yggdrasilberry
@@ -97251,7 +97251,7 @@ Body:
       - Item: Wing_Of_Red_Bat
         Rate: 5000
       - Item: Short_Bat_Fur
-        Rate: 1500
+        Rate: 3500
       - Item: MattDrainliar_Card
         Rate: 1
         StealProtected: true
@@ -97294,7 +97294,7 @@ Body:
       - Item: Cardinal_Jewel_
         Rate: 50
       - Item: SuspiciousMagicCircle
-        Rate: 2000
+        Rate: 3500
       - Item: Skul_Ring_
         Rate: 5
       - Item: Poison_Herb_Rantana
@@ -97343,7 +97343,7 @@ Body:
       - Item: Cardinal_Jewel_
         Rate: 50
       - Item: SuspiciousMagicCircle
-        Rate: 300
+        Rate: 3500
       - Item: Skul_Ring
         Rate: 5
       - Item: LivingDead_Card
@@ -97388,7 +97388,7 @@ Body:
       - Item: Bradium
         Rate: 100
       - Item: SuspiciousMagicCircle
-        Rate: 400
+        Rate: 3500
       - Item: Ghoul_Leg
         Rate: 10
       - Item: Skul_Ring
@@ -97484,7 +97484,7 @@ Body:
       - Item: Mushroom_Spore
         Rate: 5000
       - Item: Shining_Spore
-        Rate: 1000
+        Rate: 10000
       - Item: Poison_Spore
         Rate: 500
       - Item: IllusoryStone
@@ -97904,7 +97904,7 @@ Body:
     Drops:
       - Item: BrokenArrow
         Index: 0
-        Rate: 2000
+        Rate: 10000
       - Item: Carnium
         Index: 1
         Rate: 10
@@ -101600,7 +101600,7 @@ Body:
       - Item: EP17_1_EVT02
         Rate: 2500
       - Item: EP17_1_EVT01
-        Rate: 100
+        Rate: 1000
       - Item: EP17_1_EVT39
         Rate: 1000
       - Item: Distorted_Iron_Plate
@@ -101841,7 +101841,7 @@ Body:
       - Item: EP17_1_EVT02
         Rate: 2500
       - Item: EP17_1_EVT01
-        Rate: 100
+        Rate: 1000
       - Item: EP17_1_EVT39
         Rate: 1000
       - Item: Apple
@@ -102141,6 +102141,8 @@ Body:
         Rate: 5
       - Item: EP17_1_EVT02
         Rate: 10
+      - Item: EP17_1_EVT01
+        Rate: 1000
       - Item: Explosive_Powder
         Rate: 30
       - Item: Bellare_Card
@@ -102190,7 +102192,7 @@ Body:
       - Item: EP17_1_EVT02
         Rate: 30
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: High_Bellare_Card
         Rate: 1
         StealProtected: true
@@ -102235,6 +102237,8 @@ Body:
         Rate: 12
       - Item: EP17_1_EVT02
         Rate: 10
+      - Item: EP17_1_EVT01
+        Rate: 1000
       - Item: Explosive_Powder
         Rate: 30
       - Item: Sanare_Card
@@ -102330,7 +102334,7 @@ Body:
       - Item: EP17_1_EVT39
         Rate: 5
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 70
       - Item: Plaga_Card
@@ -102378,7 +102382,7 @@ Body:
       - Item: EP17_1_EVT39
         Rate: 10
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 100
       - Item: Mutant_Plaga_Card
@@ -102426,7 +102430,7 @@ Body:
       - Item: Bloody_Rune
         Rate: 800
       - Item: EP17_1_EVT01
-        Rate: 80
+        Rate: 1000
       - Item: Dolor_Card
         Rate: 1
         StealProtected: true
@@ -102463,7 +102467,7 @@ Body:
     Ai: 05
     Drops:
       - Item: EP17_1_EVT01
-        Rate: 80
+        Rate: 1000
       - Item: Sticky_Poison
         Rate: 2000
       - Item: Wooden_Block
@@ -102473,7 +102477,7 @@ Body:
       - Item: Bloody_Rune
         Rate: 1600
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 90
       - Item: Mt_Dolor_Card
@@ -102519,7 +102523,7 @@ Body:
       - Item: Elunium_Stone
         Rate: 120
       - Item: EP17_1_EVT01
-        Rate: 80
+        Rate: 1000
       - Item: Elunium
         Rate: 10
       - Item: EP17_1_EVT39
@@ -102559,7 +102563,7 @@ Body:
     Ai: 04
     Drops:
       - Item: EP17_1_EVT01
-        Rate: 80
+        Rate: 1000
       - Item: Sticky_Poison
         Rate: 2000
       - Item: Fluorescent_Liquid
@@ -102571,7 +102575,7 @@ Body:
       - Item: EP17_1_EVT39
         Rate: 10
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Mt_Venenum_Card
         Rate: 1
         StealProtected: true
@@ -102615,7 +102619,7 @@ Body:
       - Item: Tendon
         Rate: 1000
       - Item: EP17_1_EVT01
-        Rate: 80
+        Rate: 1000
       - Item: EP17_1_EVT39
         Rate: 5
       - Item: Caput_Card
@@ -102659,11 +102663,11 @@ Body:
       - Item: Tooth_Of_
         Rate: 1600
       - Item: EP17_1_EVT01
-        Rate: 80
+        Rate: 1000
       - Item: EP17_1_EVT39
         Rate: 10
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 90
       - Item: Mt_Caput_Card
@@ -102712,7 +102716,7 @@ Body:
         Rate: 50
 #       RandomOptionGroup: AGW1
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Polluted_Raydric_Card
         Rate: 1
         StealProtected: true
@@ -102756,7 +102760,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 120
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Polluted_Ray_A_Card
         Rate: 1
         StealProtected: true
@@ -102808,7 +102812,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 120
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Frozen_Gargoyle_Card
         Rate: 1
         StealProtected: true
@@ -102856,7 +102860,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 120
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Polluted_Sting_Card
         Rate: 1
         StealProtected: true
@@ -102905,7 +102909,7 @@ Body:
         Rate: 50
 #       RandomOptionGroup: AGW1
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Prison_Breaker_Card
         Rate: 1
         StealProtected: true
@@ -102949,7 +102953,7 @@ Body:
       - Item: White_Herb
         Rate: 700
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Lava_Leather_Suits
         Rate: 50
         RandomOptionGroup: MAGMA3
@@ -103001,7 +103005,7 @@ Body:
       - Item: Blue_Herb
         Rate: 25
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Lava_Leather_Manteau
         Rate: 50
         RandomOptionGroup: MAGMA3
@@ -103050,7 +103054,7 @@ Body:
       - Item: Dragon_Train
         Rate: 920
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Lava_Leather_Robe
         Rate: 50
         RandomOptionGroup: MAGMA3
@@ -103099,7 +103103,7 @@ Body:
       - Item: Dragon_Train
         Rate: 820
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Lava_Leather_Armor
         Rate: 50
         RandomOptionGroup: MAGMA3
@@ -103148,7 +103152,7 @@ Body:
       - Item: Hot_Hair
         Rate: 750
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Lava_Leather_Sandle
         Rate: 50
         RandomOptionGroup: MAGMA3
@@ -103201,7 +103205,7 @@ Body:
       - Item: Magma_Essence
         Rate: 5
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Lava_Leather_Hode
         Rate: 50
         RandomOptionGroup: MAGMA3
@@ -103244,7 +103248,7 @@ Body:
       - Item: White_Herb
         Rate: 625
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Lava_Leather_Muffler
         Rate: 50
         RandomOptionGroup: MAGMA3
@@ -103305,7 +103309,7 @@ Body:
         Rate: 50
 #       RandomOptionGroup: AGM1
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Ice_Ghost_Card
         Rate: 1
         StealProtected: true
@@ -103356,7 +103360,7 @@ Body:
         Rate: 50
 #       RandomOptionGroup: AGM1
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Flame_Ghost_Card
         Rate: 1
         StealProtected: true
@@ -103396,7 +103400,7 @@ Body:
       Mvp: true
     MvpDrops:
       - Item: EP17_1_EVT01
-        Rate: 2000
+        Rate: 1000
       - Item: Bs_Making_S
         Rate: 5000
       - Item: Magic_Card_Album
@@ -103622,7 +103626,7 @@ Body:
         Rate: 50
 #       RandomOptionGroup: AGW1
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Polluted_W_Man_Card
         Rate: 1
         StealProtected: true
@@ -105078,7 +105082,7 @@ Body:
       - Item: Spawns
         Rate: 1500
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Old_Violet_Box
         Rate: 1
       - Item: Poisonous_Card
@@ -105126,7 +105130,7 @@ Body:
       - Item: Fluorescent_Liquid
         Rate: 15
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Poison_Powder
         Rate: 50
       - Item: Toxious_Card
@@ -105368,7 +105372,7 @@ Body:
       - Item: Fluorescent_Liquid
         Rate: 1250
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Ein_UNDIUM
         Rate: 300
       - Item: Jeweliant_Card
@@ -105439,7 +105443,7 @@ Body:
       - Item: Ein_DYNITE
         Rate: 100
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Ein_REDIUM
         Rate: 300
       - Item: Ein_RINDIUM
@@ -105602,7 +105606,7 @@ Body:
       - Item: Old_Pick
         Rate: 1500
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Ein_RUSTHELM
         Rate: 150
       - Item: Ein_ODIUM
@@ -108829,7 +108833,7 @@ Body:
       - Item: EP17_1_EVT02
         Rate: 30
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Ep172_1h_Sword
         Rate: 5
         RandomOptionGroup: AUTO_IMP_MELEE_2
@@ -109253,7 +109257,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Plaga3_Card
         Rate: 1
         StealProtected: true
@@ -109300,7 +109304,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Sanare3_Card
         Rate: 1
         StealProtected: true
@@ -109347,7 +109351,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Plasma_R_Card
         Rate: 1
         StealProtected: true
@@ -109394,7 +109398,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Plasma_R2_Card
         Rate: 1
         StealProtected: true
@@ -110865,7 +110869,7 @@ Body:
       - Item: Mistic_Frozen
         Rate: 50
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -110917,7 +110921,7 @@ Body:
       - Item: Rough_Wind
         Rate: 50
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Napeo_Card
@@ -110965,7 +110969,7 @@ Body:
       - Item: Great_Nature
         Rate: 50
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Zelunium
@@ -111013,7 +111017,7 @@ Body:
       - Item: Shoot
         Rate: 300
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111063,7 +111067,7 @@ Body:
       - Item: Green_Crystal_Fragment
         Rate: 2300
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111113,7 +111117,7 @@ Body:
       - Item: Blaze_Stone
         Rate: 2300
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111163,7 +111167,7 @@ Body:
       - Item: Sticky_Mucus
         Rate: 2400
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111274,7 +111278,7 @@ Body:
       - Item: Piece_Of_Darkness
         Rate: 2000
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111322,7 +111326,7 @@ Body:
       - Item: Tendon
         Rate: 2000
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Zelunium
@@ -111372,7 +111376,7 @@ Body:
       - Item: Dragon_Train
         Rate: 2000
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Zelunium
@@ -111418,7 +111422,7 @@ Body:
       - Item: Heart_Hunter_Seal
         Rate: 1500
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Long_Hair
@@ -111470,7 +111474,7 @@ Body:
       - Item: Sticky_Mucus
         Rate: 2400
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111575,7 +111579,7 @@ Body:
       - Item: Evil_Minded_Ruby
         Rate: 1575
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111627,7 +111631,7 @@ Body:
       - Item: Heavy_Chain
         Rate: 2300
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Zelunium
@@ -111677,7 +111681,7 @@ Body:
       - Item: Mr_Scream
         Rate: 20
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111727,7 +111731,7 @@ Body:
       - Item: Black_Powder
         Rate: 250
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111777,7 +111781,7 @@ Body:
       - Item: Transparent_Cloth
         Rate: 500
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111831,7 +111835,7 @@ Body:
       - Item: Blue_Moon_Stone
         Rate: 2300
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon
@@ -111935,7 +111939,7 @@ Body:
       - Item: Small_Sewing_Box
         Rate: 2100
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Zelunium
@@ -113304,7 +113308,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 120
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Ash_Toad_Card
         Rate: 1
         StealProtected: true
@@ -113347,7 +113351,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 100
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Rakehand_Card
         Rate: 1
         StealProtected: true
@@ -113390,7 +113394,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 120
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Spark_Card
         Rate: 1
         StealProtected: true
@@ -113435,7 +113439,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium
         Rate: 12
       - Item: Shadowdecon
@@ -113482,7 +113486,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 130
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Volcaring_Card
         Rate: 1
         StealProtected: true
@@ -113529,7 +113533,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 150
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Zelunium
         Rate: 12
       - Item: Shadowdecon
@@ -113589,7 +113593,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 10000
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Burning_Fang_Card
         Rate: 1
         StealProtected: true
@@ -113634,7 +113638,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 130
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Ashhopper_Card
         Rate: 1
         StealProtected: true
@@ -113677,7 +113681,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 130
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Ashring_Card
         Rate: 1
         StealProtected: true
@@ -113720,7 +113724,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 130
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Grey_Wolf_Card
         Rate: 1
         StealProtected: true
@@ -113765,7 +113769,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 130
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Tumble_Ring_Card
         Rate: 1
         StealProtected: true
@@ -113806,7 +113810,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 130
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Firewind_Kite_Card
         Rate: 1
         StealProtected: true
@@ -113847,7 +113851,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 130
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: EP18_Phantom_Wolf_Card
         Rate: 1
         StealProtected: true
@@ -114370,7 +114374,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 80
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Goat_Card
         Rate: 1
         StealProtected: true
@@ -114412,7 +114416,7 @@ Body:
       - Item: Zelunium_Ore
         Rate: 90
       - Item: Shadowdecon_Ore
-        Rate: 10000
+        Rate: 1000
       - Item: Desert_Wolf_Babe_Card
         Rate: 1
         StealProtected: true

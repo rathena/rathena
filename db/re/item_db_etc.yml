@@ -35524,9 +35524,9 @@ Body:
     Type: Etc
     Trade:
       NoDrop: true
-      NoTrade: true
+      NoTrade: false
       NoCart: true
-      NoStorage: true
+      NoStorage: false
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -35536,9 +35536,9 @@ Body:
     Type: Etc
     Trade:
       NoDrop: true
-      NoTrade: true
+      NoTrade: false
       NoCart: true
-      NoStorage: true
+      NoStorage: false
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
@@ -35548,9 +35548,9 @@ Body:
     Type: Etc
     Trade:
       NoDrop: true
-      NoTrade: true
+      NoTrade: false
       NoCart: true
-      NoStorage: true
+      NoStorage: false
       NoGuildStorage: true
       NoMail: true
       NoAuction: true

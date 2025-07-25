@@ -270,7 +270,7 @@ pay_arche,44,133,7	duplicate(dummy_cloaked_npc)	Payon Soldier#ill_moon_arch	4_M_
 pay_arche,46,135,5	duplicate(dummy_cloaked_npc)	Muyeon#ill_moon_arch	4_F_TAEKWON
 
 payon_in03,33,95,3	script	Muyeon#ill_moon_pin	4_F_TAEKWON,{
-	if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
+	if (checkweight(25271,5) == 0 || (MaxWeight - Weight) < 1000) {
 		mes "- You're carrying too many items to proceed with this quest. -";
 		close;
 	}
@@ -724,7 +724,7 @@ pay_d03_i,149,45,4	script	Scholar Chunghae#ill_moon_ind	4_F_03,{
 		completequest 7781;
 		close;
 	}
-	if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
+	if (checkweight(25271,5) == 0 || (MaxWeight - Weight) < 1000) {
 		mes "- You're carrying too many items to proceed with this quest. -";
 		close;
 	}
@@ -845,7 +845,7 @@ pay_d03_i,149,45,4	script	Scholar Chunghae#ill_moon_ind	4_F_03,{
 			mes "I hope we can find an answer to this phenomenon.";
 			erasequest 7782;
 			setquest 7783;
-			getitem 25271,1;
+			getitem 25271,5;
 			getexp 300000,300000;
 			close;
 	}
@@ -874,7 +874,7 @@ pay_d03_i,152,45,4	script	Soldier Junghee#ill_moon_ind	4_M_PAY_SOLDIER,{
 		mes "This is not good.";
 		close;
 	}
-	if (checkweight(25271,1) == 0 || (MaxWeight - Weight) < 1000) {
+	if (checkweight(25271,5) == 0 || (MaxWeight - Weight) < 1000) {
 		mes "- You're carrying too many items to proceed with this quest. -";
 		close;
 	}
@@ -887,7 +887,7 @@ pay_d03_i,152,45,4	script	Soldier Junghee#ill_moon_ind	4_M_PAY_SOLDIER,{
 		mes "Chunghae's almost done investigating this place. I'd better get ready to leave.";
 		erasequest 7784;
 		setquest 7785;
-		getitem 25271,1;
+		getitem 25271,5;
 		close;
 	}
 	if (checkquest(7786,HUNTING)  == 2) {
@@ -900,7 +900,7 @@ pay_d03_i,152,45,4	script	Soldier Junghee#ill_moon_ind	4_M_PAY_SOLDIER,{
 		mes "Thank you for helping them rest.";
 		erasequest 7786;
 		setquest 7787;
-		getitem 25271,1;
+		getitem 25271,5;
 		close;
 	}
 	mes "[ Junghee ]";
@@ -1355,7 +1355,7 @@ gef_dun01,134,224,1	script	Mojo#ilgf	2_F_MAGICMASTER,{
 		erasequest 14679;	// Curious by Nature
 		setquest 14680;		// Time to Research
 		getexp 500000,500000;
-		getitem 25271,1;// Illusion Stone
+		getitem 25271,5;// Illusion Stone
 		close;
 	}
 	mes "[Mojo]";
@@ -2108,7 +2108,7 @@ gef_d01_i,116,228,3	script	Antoine#ilgf01	4_GEFFEN_01,{
 		erasequest 14669;// Sweet Dreams
 		setquest 14670;// Time for Dreaming
 		getexp 500000,500000;
-		getitem 25271,1;// Illusion Stone
+		getitem 25271,5;// Illusion Stone
 		close;
 	}
 	mes "[Antoine]";
@@ -2389,7 +2389,7 @@ gef_d01_i,113,230,5	script	Gem#ilgf01	1_F_PRIEST,{
 		erasequest 14667;// Send the Dead Back to Earth
 		setquest 14668;// Get Some Rest
 		getexp 500000,500000;
-		getitem 25271,1;// Illusion Stone
+		getitem 25271,5;// Illusion Stone
 		close;
 	}
 	end;
@@ -3819,7 +3819,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 			erasequest 14671;// Unreliable Fake Blood
 			setquest 14674;// Time to Digest
 			getexp 500000,500000;
-			getitem 25271,1;// Illusion Stone
+			getitem 25271,5;// Illusion Stone
 			close;
 		}
 		mes "[Bomi]";
@@ -3829,13 +3829,8 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		erasequest 14671;// Unreliable Fake Blood
 		setquest 14674;// Time to Digest
 		getexp 500000,500000;
-		getitem 25271,1;// Illusion Stone
+		getitem 25271,5;// Illusion Stone
 		if (mobcount("gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead") < 1 && mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") < 1) {
-			if (.bomi_count < 30)
-				.bomi_count++;
-		}
-		next;
-		if (.bomi_count == 29) {
 			mes "[Bomi]";
 			mes "By the way, I told you about the dangers of this fake blood. Remember? It leaves toxins in my system.";
 			next;
@@ -3850,14 +3845,6 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 			mes "When I turn into a monster, I want you to stop me from hurting them. Please, help me.";
 			next;
 			mes "[Bomi]";
-			mes "Then please come back after dawn.";
-			close;
-		}
-		if (.bomi_count == 30) {
-			mes "[Bomi]";
-			mes "I ran out of the ingredients I had.";
-			next;
-			mes "[Bomi]";
 			mes "If I mix them like this and drink...";
 			specialeffect EF_PHARMACY_OK;
 			next;
@@ -3866,11 +3853,11 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 			mes "[Bomi]";
 			mes "Oh, no! There is too many toxins in my body. It's getting dangerous!";
 			if (mobcount("gef_d01_i", "ill_vampire_spawn_bomi::OnMobDead") < 1 && mobcount("gef_d01_i", "ill_vampire_spawn_dracula::OnMobDead") < 1) {
-				.bomi_count = 0;
 				donpcevent "ill_vampire_spawn_bomi::OnStart";
 			}
 			close;
 		}
+		next;
 		mes "[Bomi]";
 		mes "If I drink this toxic blood about thirty times, I might turn? oh, never mind.";
 		next;
@@ -4259,7 +4246,7 @@ gef_d01_i,185,97,5	script	King#ilgf01	4_NFBAT,{
 		erasequest 14675;// Noisy Neighbors
 		setquest 14676;// Break Time
 		getexp 500000,500000;
-		getitem 25271,1;// Illusion Stone
+		getitem 25271,5;// Illusion Stone
 		close;
 	}
 	mes "[King]";
@@ -4533,7 +4520,7 @@ gef_d01_i,191,96,3	script	Wizard#ilgf02	4_M_JOB_WIZARD,5,5,{
 		erasequest 14677;// Studying in Dim Light
 		setquest 14678;// Time to Study
 		getexp 500000,500000;
-		getitem 25271,1;// Illusion Stone
+		getitem 25271,5;// Illusion Stone
 		close;
 	}
 	end;
@@ -6296,7 +6283,7 @@ tur_d03_i,139,186,3	script	Girl#illtur01	4_F_NARIN,{
 		erasequest 16106;	// A memory that should not be forgotten 1
 		erasequest 16107;	// A memory that should not be forgotten 2
 		setquest 16108;	// A memory that should not be forgotten - Cooldown
-		getitem 25271,1;	// IllusionStone
+		getitem 25271,5;	// IllusionStone
 		getexp 1200000,1000000;
 		close2;
 		cloakonnpcself( "Archeologist Leiphen#illtur01" );
@@ -6539,7 +6526,7 @@ tur_d03_i,235,187,7	script	Susceptible Soldier#	4_M_KEEN_SOLDIER,{
 			delitem 25316,5;	// Shabby_Metal_Chip
 			erasequest 16109;	// Vain Desire
 			setquest 16110;	// Vain Desire - Cooldown
-			getitem 25271,1;	// IllusionStone
+			getitem 25271,5;	// IllusionStone
 			getexp 1200000,1000000;
 			close;
 		}
@@ -6909,7 +6896,7 @@ tur_d04_i,96,112,1	script	Fragile Woman#illtur	4_F_SLOPPY_WOMAN,{
 			erasequest 16111;	// Endless Hunger 1
 			erasequest 16112;	// Endless Hunger 2
 			setquest 16113;	// Endless Hunger - Cooldown
-			getitem 25271,1;	// IllusionStone
+			getitem 25271,5;	// IllusionStone
 			getexp 1200000,1000000;
 			close;
 		}
@@ -9443,7 +9430,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 			mes "[Jerrymon]";
 			mes "Then be careful!";
 			close2;
-			getitem 25271,2;	// IllusionStone
+			getitem 25271,5;	// IllusionStone
 			ill_underwater = 6;
 			erasequest 3411;
 			setquest 3412;
@@ -9496,7 +9483,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 		erasequest 3412;
 		if (isbegin_quest(3410) == 1)
 			erasequest 3410;
-		getitem 25271,2;	// IllusionStone
+		getitem 25271,5;	// IllusionStone
 		getexp 4441860,3109150;
 		warp "izlude",128,54;
 		end;
@@ -9635,7 +9622,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 				getexp 4441860,3109150;
 				erasequest 3413;
 				setquest 3414;
-				getitem 25271,1;	// IllusionStone
+				getitem 25271,5;	// IllusionStone
 				end;
 			case 2:
 				end;
@@ -9674,7 +9661,7 @@ iz_d04_i,127,228,4	script	Jerrymon#jerry3	1_M_01,{
 				mes "[Jerrymon]";
 				mes "I'll get back to you if I need help. Thanks!!";
 				close2;
-				getitem 25271,1;	// IllusionStone
+				getitem 25271,5;	// IllusionStone
 				getexp 4441860,3109150;
 				erasequest 3415;
 				setquest 3416;
@@ -9990,7 +9977,7 @@ iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
 			mes "[Kena]";
 			mes "If you have time, please come back tomorrow. I'll be waiting for you.";
 			close2;
-			getitem 25271,1;	// IllusionStone
+			getitem 25271,5;	// IllusionStone
 			getexp 20107500,14075250;
 			erasequest 3417;
 			setquest 3418;
@@ -10032,7 +10019,7 @@ iz_d05_i,138,186,5	script	Kena#Kena	4_M_02,{
 			mes "[Kena]";
 			mes "Please drop by tomorrow when the time is right. I'll be waiting for you.";
 			close2;
-			getitem 25271,1;	// IllusionStone
+			getitem 25271,5;	// IllusionStone
 			getexp 20107500,14075250;
 			setquest 3420;
 			erasequest 3419;
@@ -10827,7 +10814,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		mes "[Mirko]";
 		mes "Good job!";
 		mes "Then I'll take care of you tomorrow too.";
-		getitem 25271,1;	// IllusionStone
+		getitem 25271,5;	// IllusionStone
 		getexp 3181074,2404545;
 		getexp 954322,721363;
 		close;
@@ -10872,7 +10859,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		mes "[Mirko]";
 		mes "Good job!";
 		mes "Then I'll ask you again tomorrow.";
-		getitem 25271,1;	// IllusionStone
+		getitem 25271,5;	// IllusionStone
 		getexp 3151005,2395672;
 		getexp 945301,718701;
 		close;
@@ -10926,7 +10913,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 			mes "Then again, I'll take care of you tomorrow.";
 			erasequest 8735;
 			setquest 8736;
-			getitem 25271,1;	// IllusionStone
+			getitem 25271,5;	// IllusionStone
 			getexp 6483984,4821986;
 			getexp 1945195,1446595;
 			close;
@@ -10973,7 +10960,7 @@ anthell02,177,190,3	script	Mirko#1F	4_M_SAGE_A,{
 		mes "[Mirko]";
 		mes "Good job!";
 		mes "Then I'll take care of you tomorrow too.";
-		getitem 25271,1;	// IllusionStone
+		getitem 25271,5;	// IllusionStone
 		getexp 3113916,2347020;
 		getexp 934174,704106;
 		close;
@@ -11831,7 +11818,7 @@ einbroch,149,242,5	script	Coughing young man#ITB	4_M_NFMAN,3,3,{
 		mes "Why haven't you come back yet...";
 		mes "Cough Cough!!";
 		next;
-		mes "^ff0000¡Ø You can start this quest from level 150.^000000";
+		mes "^ff0000ï¿½ï¿½ You can start this quest from level 150.^000000";
 		close;
 	}
 	if (ill_teddy == 0) {
@@ -12364,7 +12351,7 @@ ein_d02_i,170,193,5	script	Steven#IBT	4W_M_02,3,3,{
 		mes "Are you feeling a little safer now?";
 		erasequest 11565;
 		setquest 11566;
-		getitem 25271,1; // IllusionStone
+		getitem 25271,5; // IllusionStone
 		getexp 1000000,900000;
 		close;
 	}
@@ -12703,7 +12690,7 @@ ein_d02_i,168,206,5	script	Gloomy Teddy Bear#ITB	4_TEDDY_BEAR_B_L,{
 			erasequest 11567;
 			erasequest 11568;
 			setquest 11569;
-			getitem 25271,1; // IllusionStone
+			getitem 25271,5; // IllusionStone
 			getexp 1300000,1000000;
 			close;
 		}
@@ -12782,7 +12769,7 @@ ein_d02_i,191,192,3	script	Porcelain Doll Craftsman#ITB	4_F_HUWOMAN,{
 		// unknown text
 		erasequest 11570;
 		setquest 11571;
-		getitem 25271,1; // IllusionStone
+		getitem 25271,5; // IllusionStone
 		getexp 1500000,1100000;
 		end;
 	}
@@ -12977,28 +12964,28 @@ prt_maze01,101,25,3	script(CLOAKED)	Silvano#1	4_M_SILVANO,{
 	}
 	if (.@quest_12470 == 2) {
 		getexp 1750000,1137500;
-		getitem 25271,1;	// IllusionStone
+		getitem 25271,5;	// IllusionStone
 		erasequest 12470;
 		mes "^0000ff[Daily] Andrea's Revenge I^000000 completed";
 		next;
 	}
 	if (.@quest_12471 == 2) {
 		getexp 1750000,1137500;
-		getitem 25271,1;	// IllusionStone
+		getitem 25271,5;	// IllusionStone
 		erasequest 12471;
 		mes "^0000ff[Daily] Andrea's Revenge II^000000 completed";
 		next;
 	}
 	if (.@quest_12472 == 2) {
 		getexp 1750000,1137500;
-		getitem 25271,1;	// IllusionStone
+		getitem 25271,5;	// IllusionStone
 		erasequest 12472;
 		mes "^0000ff[Daily] Anes' Revenge I^000000 completed";
 		next;
 	}
 	if (.@quest_12473 == 2) {
 		getexp 1750000,1137500;
-		getitem 25271,1;	// IllusionStone
+		getitem 25271,5;	// IllusionStone
 		erasequest 12473;
 		mes "^0000ff[Daily] Anes' Revenge II^000000 completed";
 		next;
