@@ -3912,6 +3912,20 @@ void clif_changemanner( map_session_data& sd ) {
 /// 00c3 <id>.L <type>.B <value>.B (ZC_SPRITE_CHANGE)
 /// 01d7 <id>.L <type>.B <value1>.W <value2>.W (ZC_SPRITE_CHANGE2)
 void clif_sprite_change( struct block_list *bl, int32 id, int32 type, int32 val, int32 val2, enum send_target target ){
+	switch( type ){
+		case LOOK_BODY2:
+#if PACKETVER < 20231220
+			if( val > JOB_SECOND_JOB_START && val < JOB_SECOND_JOB_END ){
+				val = 1;
+			}else{
+				val = 0;
+			}
+#elif PACKETVER < 20141022
+			return;
+#endif
+			break;
+	}
+
 	PACKET_ZC_SPRITE_CHANGE p = {};
 
 	p.packetType = sendLookType;
@@ -4038,13 +4052,13 @@ void clif_changelook(struct block_list *bl, int32 type, int32 val) {
 #if PACKETVER < 20150513
 				return;
 #else
-				if( val != 0 && sc != nullptr && sc->option&OPTION_COSTUME ){
- 					val = 0;
+				if( sc != nullptr && sc->option&OPTION_COSTUME ){
+ 					val = sd->status.class_;
 				}
 
  				vd->look[LOOK_BODY2] = val;
-#endif
 				break;
+#endif
 	}
 
 	// prevent leaking the presence of GM-hidden objects
@@ -22886,7 +22900,13 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 		return;
 	}
 
-#if PACKETVER >= 20180516
+#if PACKETVER >= 20231220
+	if( p->BodyStyle != 0 ){
+		// TODO: Unsupported for now => This is job specific now
+		clif_stylist_response( sd, true );
+		return;
+	}
+#elif PACKETVER >= 2018051
 	if( p->BodyStyle != 0 && ( sd->class_ & JOBL_THIRD ) != 0 && ( sd->class_ & JOBL_FOURTH ) == 0 && !clif_parse_stylist_buy_sub( sd, LOOK_BODY2, p->BodyStyle ) ){
 		clif_stylist_response( sd, true );
 		return;

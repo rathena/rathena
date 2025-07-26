@@ -27,10 +27,7 @@
 #   MaxWeight                Base maximum weight. (Default: 20000)
 #   HpFactor                 Exponential HP increase. Per base level: [HpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   HpIncrease               Linear HP increase. Per base level: [HpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 500)
-#   SpFactor                 Exponential SP increase. Per base level: [SpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   SpIncrease               Linear SP increase. Per base level: [SpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 100)
-#   ApFactor                 Exponential AP increase. Per base level: [ApFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
-#   ApIncrease               Linear AP increase. Per base level: [ApIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
 #     Weapon                 Weapon type with associated ASPD.
 #   BonusStats:              Job level bonus stats/traits.
@@ -84,36 +81,91 @@ Header:
   Type: JOB_STATS
   Version: 3
 
-Footer:
-  Imports:
-  # Load base information first
-  - Path: db/pre-re/job_stats.yml
-    Mode: Prerenewal
-  - Path: db/re/job_stats.yml
-    Mode: Renewal
-
-  # Next, populate with ASPD information
-  # If RENEWAL is defined and RENEWAL_ASPD is not defined then the pre-renewal file is loaded
-  - Path: db/pre-re/job_aspd.yml
-    Mode: Prerenewal
-  - Path: db/re/job_aspd.yml
-    Mode: Renewal
-
-  # Next, populate with experience information
-  - Path: db/pre-re/job_exp.yml
-    Mode: Prerenewal
-  - Path: db/re/job_exp.yml
-    Mode: Renewal
-
-  # Next, populate HP/SP/AP information
-  - Path: db/pre-re/job_basepoints.yml
-    Mode: Prerenewal
-  - Path: db/re/job_basepoints.yml
-    Mode: Renewal
-
-  # Next, populate outfit information
-  - Path: db/re/job_outfits.yml
-    Mode: Renewal
-
-  # Finally, import custom information
-  - Path: db/import/job_stats.yml
+Body:
+  - Jobs:
+      Rune_Knight_2nd: true
+      Warlock_2nd: true
+      Ranger_2nd: true
+      ArchBishop_2nd: true
+      Mechanic_2nd: true
+      Guillotine_Cross_2nd: true
+      Royal_Guard_2nd: true
+      Sorcerer_2nd: true
+      Minstrel_2nd: true
+      Wanderer_2nd: true
+      Sura_2nd: true
+      Genetic_2nd: true
+      Shadow_Chaser_2nd: true
+  - Jobs:
+      Rune_Knight: true
+      Rune_Knight2: true
+      Rune_Knight_T: true
+      Rune_Knight_T2: true
+    AlternateOutfits:
+      Rune_Knight_2nd: true
+  - Jobs:
+      Warlock: true
+      Warlock_T: true
+    AlternateOutfits:
+      Warlock_2nd: true
+  - Jobs:
+      Ranger: true
+      Ranger2: true
+      Ranger_T: true
+      Ranger_T2: true
+    AlternateOutfits:
+      Ranger_2nd: true
+  - Jobs:
+      Arch_Bishop: true
+      Arch_Bishop_T: true
+    AlternateOutfits:
+      ArchBishop_2nd: true
+  - Jobs:
+      Mechanic: true
+      Mechanic2: true
+      Mechanic_T: true
+      Mechanic_T2: true
+    AlternateOutfits:
+      Mechanic_2nd: true
+  - Jobs:
+      Guillotine_Cross: true
+      Guillotine_Cross_T: true
+    AlternateOutfits:
+      Guillotine_Cross_2nd: true
+  - Jobs:
+      Royal_Guard: true
+      Royal_Guard2: true
+      Royal_Guard_T: true
+      Royal_Guard_T2: true
+    AlternateOutfits:
+      Royal_Guard_2nd: true
+  - Jobs:
+      Sorcerer: true
+      Sorcerer_T: true
+    AlternateOutfits:
+      Sorcerer_2nd: true
+  - Jobs:
+      Minstrel: true
+      Minstrel_T: true
+    AlternateOutfits:
+      Minstrel_2nd: true
+  - Jobs:
+      Wanderer: true
+      Wanderer_T: true
+    AlternateOutfits:
+      Wanderer_2nd: true
+  - Jobs:
+      Sura: true
+      Sura_T: true
+    AlternateOutfits:
+      Sura_2nd: true
+  - Jobs:
+      Genetic: true
+      Genetic_T: true
+    AlternateOutfits:
+      Genetic_2nd: true
+  - Jobs:
+      Shadow_Chaser: true
+      Shadow_Chaser_T: true
+    AlternateOutfits:
+      Shadow_Chaser_2nd: true

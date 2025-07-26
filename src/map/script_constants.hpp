@@ -249,6 +249,20 @@
 
 	export_constant(JOB_SKY_EMPEROR2);
 
+	export_constant(JOB_RUNE_KNIGHT_2ND);
+	export_constant(JOB_MECHANIC_2ND);
+	export_constant(JOB_GUILLOTINE_CROSS_2ND);
+	export_constant(JOB_WARLOCK_2ND);
+	export_constant(JOB_ARCHBISHOP_2ND);
+	export_constant(JOB_RANGER_2ND);
+	export_constant(JOB_ROYAL_GUARD_2ND);
+	export_constant(JOB_GENETIC_2ND);
+	export_constant(JOB_SHADOW_CHASER_2ND);
+	export_constant(JOB_SORCERER_2ND);
+	export_constant(JOB_SURA_2ND);
+	export_constant(JOB_MINSTREL_2ND);
+	export_constant(JOB_WANDERER_2ND);
+
 	/* EA jobs */
 	export_constant2("EAJL_2_1",JOBL_2_1);
 	export_constant2("EAJL_2_2",JOBL_2_2);
