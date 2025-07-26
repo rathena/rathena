@@ -22906,7 +22906,7 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 		clif_stylist_response( sd, true );
 		return;
 	}
-#elif PACKETVER >= 2018051
+#elif PACKETVER >= 20180516
 	if( p->BodyStyle != 0 && ( sd->class_ & JOBL_THIRD ) != 0 && ( sd->class_ & JOBL_FOURTH ) == 0 && !clif_parse_stylist_buy_sub( sd, LOOK_BODY2, p->BodyStyle ) ){
 		clif_stylist_response( sd, true );
 		return;
