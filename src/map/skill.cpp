@@ -8646,7 +8646,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			uint8 ap_burn[5] = { 20, 30, 50, 60, 70 };
 
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_fix_apdamage(src, bl, ap_burn[skill_lv - 1], 0, skill_id);
+			status_zap(bl, 0, 0, ap_burn[skill_lv - 1]);
 		} else if (sd)
 			clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
 		break;
