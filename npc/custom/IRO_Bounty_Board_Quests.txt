@@ -415,14 +415,14 @@ OnInit:
 	.MobIds$ =  "1682,1657,1655,1654,1653,1656,1652";
 }
 
-lighthalzen,186,157,4	script	Bounty Board 140-160#lighthalzen	837,{
+lighthalzen,186,161,4	script	Bounty Board 140-160#lighthalzen	837,{
 	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
 	setarray .Levels, 140,160;
 	.MobIds$ =  "1639,1637,1638,1635,1634,1636,2227,2223,2226,2225,2224,2222,2221";
 }
 
-lighthalzen,188,159,4	script	Bounty Board 160-175#lighthalzen	837,{
+lighthalzen,188,161,4	script	Bounty Board 160-175#lighthalzen	837,{
 	callfunc "F_BBQ",.Levels[0], .Levels[1], .MobIds$;
 OnInit:
 	setarray .Levels, 160,175;

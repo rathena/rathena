@@ -1061,6 +1061,7 @@ OnTouch:
 	mes "Please decide what to do.";
 	switch(select("Quit:Continue")){
 		case 1:
+			warpparty "que_swat",145,60,getcharid(1);
 			close;
 			end;
 		case 2:
