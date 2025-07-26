@@ -33,6 +33,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
+#include "battle_skill_factory.hpp"
 
 using namespace rathena;
 
@@ -3270,12 +3271,13 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 #endif
 
 	if(skill_id) {
+		auto skill = BattleSkillFactory::instance().get_skill(skill_id);
+        if (skill) {
+            skill->modify_hit_rate(hitrate, src, target, skill_lv);
+            return; // Early exit - new system handled it
+        }
+
 		switch(skill_id) { //Hit skill modifiers
-			//It is proven that bonus is applied on final hitrate, not hit.
-			case SM_BASH:
-			case MS_BASH:
-				hitrate += hitrate * 5 * skill_lv / 100;
-				break;
 			case MS_MAGNUM:
 			case SM_MAGNUM:
 				hitrate += hitrate * 10 * skill_lv / 100;
@@ -4696,11 +4698,12 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 		}
 	}
 
+	auto skill = BattleSkillFactory::instance().get_skill(skill_id);
+	if (skill) {
+		return skill->calculate_skill_ratio(wd, src, target, skill_lv, skillratio);
+	}
+
 	switch(skill_id) {
-		case SM_BASH:
-		case MS_BASH:
-			skillratio += 30 * skill_lv;
-			break;
 		case SM_MAGNUM:
 		case MS_MAGNUM:
 			if(wd->miscflag == 1)
