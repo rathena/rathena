@@ -23094,7 +23094,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 	if (!skill_id) // A skill can be specified for some override cases.
 		skill_id = produce->req_skill;
 
-	else if( skill_id == GC_RESEARCHNEWPOISON ) //FIXME replace old skill
+	if( skill_id == GC_RESEARCHNEWPOISON ) //FIXME replace old skill
 		skill_id = GC_CREATENEWPOISON;
 
 	int num_required = -1; //FIXME check uses
@@ -23586,22 +23586,31 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 		}
 
 		if (skill_id == GN_CHANGEMATERIAL && tmp_item.amount) { //Success 
-			ShowInfo("Deliver Item\n");
+			ShowInfo("DELIVER ITEM CHANGEMATERIAL\n");
+
+			ShowInfo("TMP ITEM id=%d amt=%d\n", tmp_item.nameid, tmp_item.amount);
+
 			int32 j, k = 0, l;
 			bool isStackable = itemdb_isstackable(tmp_item.nameid);
 
 			for ( const auto &qtyit : produce->qty ) {
+				ShowInfo("QTY amt=%d chance=%d\n", qtyit.first, qtyit.second);
+
 				if (rnd()%1000 >= qtyit.second)
 					continue;
+
 				uint16 total_qty = qty * qtyit.first;
 				tmp_item.amount = (isStackable ? total_qty : 1);
+
 				for ( int32 i = 0; i < total_qty; i += tmp_item.amount ) {
-					enum e_additem_result flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE);
-					if (flag != ADDITEM_SUCCESS)
-						continue;
-					clif_additem(sd,0,0,flag);
-					if( battle_config.skill_drop_items_full ){
-						map_addflooritem(&tmp_item,tmp_item.amount,sd->m,sd->x,sd->y,0,0,0,4,0);
+					ShowInfo("AMT %d %d\n", i, total_qty);
+					enum e_additem_result flag;
+					if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
+						ShowInfo("FLAG %d\n", flag);
+						clif_additem(sd,0,0,flag); // notifies a failure (no visual effect)
+						if( battle_config.skill_drop_items_full ){
+							map_addflooritem(&tmp_item,tmp_item.amount,sd->m,sd->x,sd->y,0,0,0,4,0);
+						}
 					}
 				}
 				k++;
@@ -23614,6 +23623,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 				return true;
 			}
 		} else if (tmp_item.amount) { //Success
+			ShowInfo("DELIVER ITEM\n");
 			if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 				clif_additem(sd,0,0,flag);
 				if( battle_config.skill_drop_items_full ){
@@ -24065,9 +24075,16 @@ int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, u
 	return 0;
 }
 
+/** Searches for a Change Material recipe that matches with the items provided
+ * then figures out the quantity that can be produced based on the amounts.
+ * @param sd Player data
+ * @param n item_list size
+ * @param item_list List of provided items
+ * @return 1 on success. 0 on failure
+ */
 int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 
-	ShowInfo("SKILL CHANGEMATERIAL\n");
+	ShowInfo("SKILL CHANGEMATERIAL n=%d\n");
 
 	int32 k, c, qty = 0, amount;
 	t_itemid nameid;
@@ -24091,13 +24108,19 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 		if (recipe->materials.empty())
 			return 0;
 
-		p = 0;
+		// ShowInfo("CHANGEMATERIAL RECIPE FOUND recipe_id=%d\n", recipe->product_id);
+		// for (const auto& [mat_id, mat_amt] : recipe->materials)
+		// 	ShowInfo("matid=%d amt=%d\n", mat_id, mat_amt);
+
+		qty = 0;
 		do {
 			c = 0;
 			// Verification of overlap between the objects required and the list submitted.
 			for (const auto &mat : recipe->materials) {
+				// ShowInfo("MAT id=%d amt=%d\n", mat.first, mat.second);
 				for( k = 0; k < n; k++ ) {
-					int idx = item_list[k*2]-2;
+
+					int idx = item_list[k*2]-2; // 
 
 					if( idx < 0 || idx >= MAX_INVENTORY ){
 						return 0;
@@ -24105,8 +24128,12 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 
 					nameid = sd->inventory.u.items_inventory[idx].nameid;
 					amount = item_list[k*2+1];
+
+					// ShowInfo("ITEM LIST idx=%d (nameid=%d mat=%d) amt=%d qty=%d mat=%d\n", idx, nameid, mat.first, amount, qty, mat.second);
+
 					if( nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
-						clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_UNIDENTIFIED);
+						// required item is not identified
+						clif_msg_skill(*sd,GN_CHANGEMATERIAL,MSI_SKILL_FAIL_MATERIAL_IDENTITY);
 						return 0;
 					}
 					if (nameid == mat.first && (amount - p * mat.second) >= mat.second && (amount - p * mat.second) % mat.second == 0) // must be in exact amount
@@ -24117,6 +24144,9 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 		} while(n == recipe->materials.size() && c == n);
 		qty--;
 		if ( qty > 0 ) {
+
+			// ShowInfo("CHANGEMATERIAL RECIPE id=%d qty=%d\n", recipe->product_id, qty);
+
 			skill_produce_mix(sd,GN_CHANGEMATERIAL,recipe->product_id,0,0,0,qty,recipe);
 			return 1;
 		}
@@ -26232,7 +26262,7 @@ uint64 SkillProduceDatabase::parseBodyNode(const ryml::NodeRef &node) {
 
 	this->asUInt16(node, "Group", group_id);
 	
-	std::shared_ptr<s_skill_produce_db> produce = this->find(item->nameid, group_id);
+	std::shared_ptr<s_skill_produce_db> produce = this->find(item->nameid, group_id, true); // exact
 	bool exists = produce != nullptr;
 	
 	uint64 key = this->makeKey(item->nameid, group_id);
@@ -26313,14 +26343,6 @@ uint64 SkillProduceDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	if (!exists)
 		this->put(key, produce);
 
-	// ShowInfo("RECIPE: id=%016llx pid=%d gid=%d skid=%d sklv=%d\n",
-	// 	produce->id,
-	// 	produce->product_id,
-	// 	produce->group_id,
-	// 	produce->req_skill,
-	// 	produce->req_skill_lv
-	// );
-
 	return 1;
 }
 
@@ -26339,16 +26361,22 @@ uint64 SkillProduceDatabase::makeKey(t_itemid product_id, uint16 group_id) {
  * @param group_id Recipe Group (optional for faster search)
  * @return s_skill_produce_db if found or nullptr
  */
-std::shared_ptr<s_skill_produce_db> SkillProduceDatabase::find( t_itemid product_id, uint16 group_id ) {
+std::shared_ptr<s_skill_produce_db> SkillProduceDatabase::find( t_itemid product_id, uint16 group_id, bool exact ) {
 
-	// exact match
 	auto recipe = this->find( this->makeKey( product_id, group_id ) );
-	if (recipe) return recipe;
+	
+	// return regardless for exact searches
+	if (recipe || exact) {
+		ShowInfo("MATCH OR EXACT %d %d\n", recipe != nullptr, exact);
+		return recipe;
+	}
+
+	ShowInfo("FALLBACK\n");
 
 	//FIXME find a better way to determine the number of groups
 	// tries a matching key by iterating groups UINT8 (0-255)
 	for (uint8 gid = 1; gid < UINT8_MAX; gid++) {
-		auto recipe = this->find( this->makeKey(product_id, gid) );
+		auto recipe = this->find( this->makeKey( product_id, gid ) );
 		if (recipe) return recipe; // returns first match
 	}
 

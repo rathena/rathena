@@ -472,7 +472,7 @@ public:
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
 
 	using TypesafeYamlDatabase::find;
-	std::shared_ptr<s_skill_produce_db> find( t_itemid product_id, uint16 group_id=0 );
+	std::shared_ptr<s_skill_produce_db> find( t_itemid product_id, uint16 group_id=0, bool exact=false );
 };
 
 extern SkillProduceDatabase skill_produce_db;
