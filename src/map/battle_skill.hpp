@@ -11,17 +11,16 @@ class BattleSkill {
 public:
     virtual ~BattleSkill() = default;
 
-    // ========== CORE SKILL IDENTIFICATION ==========
-    virtual uint16 get_skill_id() const = 0;
+    explicit BattleSkill(e_skill skill_id) : skill_id_(static_cast<uint16_t>(skill_id)) {}
+
+    virtual uint16_t get_skill_id() const = 0;
     virtual const char* get_skill_name() const = 0;
     virtual e_battle_flag get_attack_type() const = 0; // BF_WEAPON, BF_MAGIC, BF_MISC
     
-    // ========== SKILL VALIDATION ==========
     virtual bool can_use(const block_list& source, const block_list& target) const;
     virtual bool can_hit_target(const block_list& source, const block_list& target) const;
     
-    // ========== MAJOR CALCULATION METHODS (Replacing the 3 big switch statements) ==========
-    
+    #pragma region MAJOR CALCULATION METHODS
     /**
      * Calculate base skill damage - replaces battle_calc_skill_base_damage() switch
      * Handles special base damage calculations per skill
@@ -40,7 +39,9 @@ public:
      */
     virtual int64 calculate_constant_addition(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv) const;
     
-    // ========== HIT/MISS CALCULATIONS ==========
+    #pragma endregion
+
+    #pragma region HIT/MISS CALCULATIONS
     
     /**
      * Modify hit rate for this skill - replaces hit rate switch statements
@@ -61,9 +62,10 @@ public:
      * Check for critical hit modifications
      */
     virtual bool modify_critical_check(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv) const;
+
+    #pragma endregion
     
-    // ========== ELEMENT CALCULATIONS ==========
-    
+    #pragma region ELEMENT CALCULATIONS
     /**
      * Get weapon element for this skill - replaces battle_get_weapon_element() switch cases
      */
@@ -79,8 +81,10 @@ public:
      */
     virtual int32 get_misc_element(const block_list* src, const block_list* target, uint16 skill_lv, int32 mflag) const;
     
-    // ========== RANGE AND TARGETING ==========
+    #pragma endregion
     
+    #pragma region RANGE AND TARGETING
+
     /**
      * Get range type (BF_SHORT/BF_LONG) - replaces battle_range_type() switch cases
      */
@@ -103,8 +107,9 @@ public:
      */
     virtual void apply_div_fix(Damage* wd, uint16 skill_lv) const;
     
-    // ========== STATUS EFFECTS AND BONUSES ==========
+    #pragma endregion
     
+    #pragma region STATUS EFFECTS AND BONUSES 
     /**
      * Apply status change bonuses - replaces battle_attack_sc_bonus() switch cases
      */
@@ -120,7 +125,9 @@ public:
      */
     virtual void apply_counter_effects(const block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 attack_type) const;
     
-    // ========== MASTERIES AND EQUIPMENT ==========
+    #pragma endregion
+    
+    #pragma region MASTERIES AND EQUIPMENT 
     
     /**
      * Apply weapon masteries - replaces battle_calc_attack_masteries() switch cases
@@ -132,8 +139,8 @@ public:
      */
     virtual void apply_equipment_modifiers(Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv) const;
     
-    // ========== FINAL CALCULATIONS ==========
-    
+    #pragma endregion
+        
     /**
      * Apply final attack modifiers - replaces battle_calc_weapon_final_atk_modifiers() switch cases
      */
@@ -143,8 +150,6 @@ public:
      * Handle post-defense calculations - replaces battle_calc_attack_post_defense() switch cases
      */
     virtual void apply_post_defense_modifiers(Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv) const;
-    
-    // ========== SKILL EXECUTION ==========
     
     /**
      * Execute the complete skill calculation flow
@@ -169,6 +174,8 @@ protected:
     static status_change* get_status_change(const block_list* bl);
     static bool is_player(const block_list* bl);
     static bool is_mob(const block_list* bl);
+
+    uint16_t skill_id_;
 };
 
 /**

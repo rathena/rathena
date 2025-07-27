@@ -16,9 +16,8 @@ BattleSkillFactory &BattleSkillFactory::instance()
 
 std::shared_ptr<BattleSkill> BattleSkillFactory::get_skill(uint16 skill_id) const
 {
-    std::lock_guard<std::mutex> lock(cache_mutex);
-    auto it = skill_cache.find(skill_id);
-    if (it != skill_cache.end())
+    auto it = skill_db.find(skill_id);
+    if (it != skill_db.end())
     {
         return it->second;
     }
@@ -28,14 +27,7 @@ std::shared_ptr<BattleSkill> BattleSkillFactory::get_skill(uint16 skill_id) cons
 
 bool BattleSkillFactory::has_skill(uint16 skill_id) const
 {
-    std::lock_guard<std::mutex> lock(creators_mutex);
-    return skill_creators.find(skill_id) != skill_creators.end();
-}
-
-void BattleSkillFactory::clear_cache()
-{
-    std::lock_guard<std::mutex> lock(cache_mutex);
-    skill_cache.clear();
+    return skill_db.find(skill_id) != skill_db.end();
 }
 
 void BattleSkillFactory::register_all_skills()

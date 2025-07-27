@@ -9,6 +9,12 @@
 #include <common/cbasetypes.hpp>
 #include "battle_skill.hpp"
 
+class SkillAlreadyImplementedException : public std::logic_error {
+public:
+    explicit SkillAlreadyImplementedException(const std::string &what_arg) : std::logic_error(what_arg) {};
+    explicit SkillAlreadyImplementedException(uint16_t skill_id) : std::logic_error("Skill " + std::to_string(skill_id) + " is already implemented") {};
+};
+
 /**
  * Factory class for creating and managing BattleSkill instances
  * Uses singleton pattern with thread-safe skill registration and caching
@@ -16,20 +22,7 @@
 class BattleSkillFactory
 {
 private:
-    // Skill creators - functions that create skill instances
-    std::unordered_map<uint16, std::function<std::shared_ptr<BattleSkill>()>> skill_creators;
-
-    // Skill cache - stores created instances for performance
-    mutable std::unordered_map<uint16, std::shared_ptr<BattleSkill>> skill_cache;
-
-    // Default skill for unimplemented skills
-    mutable std::shared_ptr<BattleSkill> default_skill;
-
-    // Thread safety
-    mutable std::mutex cache_mutex;
-    mutable std::mutex creators_mutex;
-
-    // Private constructor for singleton
+    std::unordered_map<uint16, std::shared_ptr<BattleSkill>> skill_db;
     BattleSkillFactory();
 
 public:
@@ -51,14 +44,14 @@ public:
     template <typename SkillType>
     void register_skill(uint16 skill_id)
     {
-        static_assert(std::is_base_of_v<BattleSkill, SkillType>,
-                      "SkillType must inherit from BattleSkill");
+        static_assert(std::is_base_of_v<BattleSkill, SkillType>, "SkillType must inherit from BattleSkill");
 
-        std::lock_guard<std::mutex> lock(creators_mutex);
-        skill_creators[skill_id] = []() -> std::shared_ptr<BattleSkill>
+        if (skill_db.find(skill_id) != skill_db.end())
         {
-            return std::make_shared<SkillType>();
-        };
+            throw SkillAlreadyImplementedException();
+        }
+
+        skill_db[skill_id] = std::make_shared<SkillType>(skill_id);
     }
 
     /**
@@ -88,11 +81,6 @@ public:
      * @return True if skill is registered
      */
     bool has_skill(uint16 skill_id) const;
-
-    /**
-     * Clear skill cache (useful for testing or memory management)
-     */
-    void clear_cache();
 
     /**
      * Register all skills in the game
