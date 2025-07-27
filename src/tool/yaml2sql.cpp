@@ -847,7 +847,7 @@ static bool mob_db_yaml2sql(const std::string &file, const std::string &table) {
 			column.append("`damage_motion`,");
 		if (appendEntry(input["DamageTaken"], value))
 			column.append("`damage_taken`,");
-		if (appendEntry(input["GroupID"], value))
+		if (appendEntry(input["GroupId"], value))
 			column.append("`groupid`,");
 		if (appendEntry(input["Title"], value, true))
 			column.append("`title`,");

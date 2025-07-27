@@ -334,8 +334,7 @@ struct s_dmglog{
 	uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 };
 
-struct mob_data {
-	struct block_list bl;
+struct mob_data : public block_list {
 	struct unit_data  ud;
 	struct view_data *vd;
 	bool vd_changed;
@@ -526,6 +525,7 @@ bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick);
 TIMER_FUNC(mob_attacked);
 TIMER_FUNC(mob_norm_attacked);
 int32 mob_target(struct mob_data *md,struct block_list *bl,int32 dist);
+bool mob_randomtarget(mob_data& md, int32& target_id);
 int32 mob_unlocktarget(struct mob_data *md, t_tick tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int32 mob_spawn(struct mob_data *md);

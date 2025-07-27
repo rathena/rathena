@@ -1426,6 +1426,19 @@ enum sc_type : int16 {
 	SC_CONTENTS_35,
 	SC_NOACTION,
 
+	SC_C_BUFF_3,
+	SC_C_BUFF_4,
+	SC_C_BUFF_5,
+	SC_C_BUFF_6,
+	SC_CONTENTS_15,
+	SC_CONTENTS_16,
+	SC_CONTENTS_17,
+	SC_CONTENTS_18,
+	SC_CONTENTS_19,
+	SC_CONTENTS_20,
+
+	SC_OVERCOMING_CRISIS,
+
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
@@ -2891,10 +2904,21 @@ enum efst_type : int16{
 	EFST_CONTENTS_32,
 	EFST_CONTENTS_33,
 	EFST_CONTENTS_34,
-	EFST_CONTENTS_35,	//1493
+	EFST_CONTENTS_35,
+	EFST_CONTENTS_36,
+	EFST_CONTENTS_37,
+	EFST_CONTENTS_38,
+	EFST_CONTENTS_39,	// 1497
 
 	EFST_C_BUFF_1 = 1509,
 	EFST_C_BUFF_2,
+	EFST_C_BUFF_3,
+	EFST_C_BUFF_4,
+	EFST_C_BUFF_5,
+	EFST_C_BUFF_6,
+	EFST_C_BUFF_7,
+	EFST_C_BUFF_8,
+	EFST_C_BUFF_9,	// 1517
 
 	EFST_CHASING = 1560,
 
@@ -2949,7 +2973,7 @@ enum e_sc_opt2 : uint16 {
 	OPT2_POISON		= 0x0001,
 	OPT2_CURSE		= 0x0002,
 	OPT2_SILENCE		= 0x0004,
-	OPT2_SIGNUMCRUCIS	= 0x0008, //Confusion
+	OPT2_CONFUSION		= 0x0008,
 	OPT2_BLIND		= 0x0010,
 	OPT2_ANGELUS		= 0x0020,
 	OPT2_BLEEDING		= 0x0040,
@@ -3126,7 +3150,7 @@ enum e_status_calc_opt : uint8 {
 };
 
 /// Flags for status_change_start and status_get_sc_def
-enum e_status_change_start_flags : int64 {
+enum e_status_change_start_flags : uint8 {
 	SCSTART_NONE       = 0x0,
 	SCSTART_NOAVOID    = 0x01, /// Cannot be avoided (it has to start)
 	SCSTART_NOTICKDEF  = 0x02, /// Tick should not be reduced (by statuses or bonuses)
@@ -3476,6 +3500,7 @@ private:
 public:
 	status_change();
 
+	bool hasSCE( enum sc_type type );
 	status_change_entry* getSCE( enum sc_type type );
 	status_change_entry* getSCE( uint32 type );
 	status_change_entry* createSCE( enum sc_type type );
@@ -3493,14 +3518,6 @@ static int32 status_damage( struct block_list *src, struct block_list *target, i
 //Define for standard HP damage attacks.
 static int32 status_fix_damage( struct block_list *src, struct block_list *target, int64 hp, t_tick walkdelay, uint16 skill_id ){
 	return status_damage( src, target, hp, 0, walkdelay, 0, skill_id );
-}
-//Define for standard SP damage attacks.
-static int32 status_fix_spdamage( struct block_list *src, struct block_list *target, int64 sp, t_tick walkdelay, uint16 skill_id ){
-	return status_damage( src, target, 0, sp, walkdelay, 0, skill_id );
-}
-//Define for standard AP damage attacks.
-static int32 status_fix_apdamage( struct block_list *src, struct block_list *target, int64 ap, t_tick walkdelay, uint16 skill_id ){
-	return status_damage( src, target, 0, 0, ap, walkdelay, 0, skill_id );
 }
 //Define for standard HP/SP/AP damage triggers.
 static int32 status_zap( struct block_list* bl, int64 hp, int64 sp, int64 ap = 0 ){
@@ -3622,16 +3639,16 @@ bool status_isdead(block_list &bl);
 int32 status_isimmune(struct block_list *bl);
 bool status_isendure(block_list& bl, t_tick tick, bool visible);
 
-t_tick status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int32 rate, t_tick tick, unsigned char flag);
-int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int32 rate,int32 val1,int32 val2,int32 val3,int32 val4,t_tick duration,unsigned char flag, int32 delay = 0);
+t_tick status_get_sc_def(block_list* src, block_list* bl, sc_type type, int32 rate, t_tick tick, uint8 flag);
+bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, uint8 flag, int32 delay = 0);
 //Short version, receives rate in 1->100 range, and does not uses a flag setting.
-static int32 sc_start(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, t_tick duration, int32 delay = 0) {
+static bool sc_start(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, t_tick duration, int32 delay = 0) {
 	return status_change_start(src, bl, type, 100 * rate, val1, 0, 0, 0, duration, SCSTART_NONE, delay);
 }
-static int32 sc_start2(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, t_tick duration, int32 delay = 0) {
+static bool sc_start2(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, t_tick duration, int32 delay = 0) {
 	return status_change_start(src, bl, type, 100 * rate, val1, val2, 0, 0, duration, SCSTART_NONE, delay);
 }
-static int32 sc_start4(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, int32 delay = 0) {
+static bool sc_start4(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, int32 delay = 0) {
 	return status_change_start(src, bl, type, 100 * rate, val1, val2, val3, val4, duration, SCSTART_NONE, delay);
 }
 int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid = INVALID_TIMER);
@@ -3642,13 +3659,13 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, status_change *sc);
 TIMER_FUNC(status_clear_lastEffect_timer);
 
-#define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_homunculus(hd, opt) status_calc_bl_(&(hd)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_mercenary(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_mob(md, opt) status_calc_bl_((md), status_db.getSCB_ALL(), opt)
+#define status_calc_pet(pd, opt) status_calc_bl_((pd), status_db.getSCB_ALL(), opt)
+#define status_calc_pc(sd, opt) status_calc_bl_((sd), status_db.getSCB_ALL(), opt)
+#define status_calc_homunculus(hd, opt) status_calc_bl_((hd), status_db.getSCB_ALL(), opt)
+#define status_calc_mercenary(md, opt) status_calc_bl_((md), status_db.getSCB_ALL(), opt)
+#define status_calc_elemental(ed, opt) status_calc_bl_((ed), status_db.getSCB_ALL(), opt)
+#define status_calc_npc(nd, opt) status_calc_bl_((nd), status_db.getSCB_ALL(), opt)
 
 bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
