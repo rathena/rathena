@@ -22,22 +22,19 @@
 # Item Produce Settings
 #
 ###########################################################################
-# - ItemLevel                  Number which determines what kind of a crafting window will pop-up.
-#   Recipe:
-#    - Product                 AegisName of the produced item.
-#      SkillName               Skill name required. (Default: null)
-#      SkillLevel              Skill level required. (Default: 1)
-#      Consumed:               List of items consumed to produce the Product.
-#        - Item                AegisName of the consumed item.
-#          Amount              Amount required.
-#          Clear               Remove the item with the given AegisName from Consumed. (Optional)
-#      NotConsumed:            List of items not consumed to produce the Product. (Default: null)
-#        - Item                AegisName of the unconsumed item.
-#          Clear               Remove the item with the given AegisName from NotConsumed. (Optional)
-#      BaseRate                Base rate (in n/10%) for Change Material (ItemLevel: 26). (Default: 1000)
-#      Make:                   List of item amounts with their individual rate produced by Change Material (ItemLevel: 26). (Default: null)
-#        - Amount              Amount of item created (unique to the list) for Change Material (ItemLevel: 26).
-#          Rate                Rate to create the Amount (in n/10%) for Change Material (ItemLevel: 26). (Default: 1000. 0 to remove on import)
+# - Product         AegisName of the produced item.
+#   Group           Number which determines what kind of a crafting window will pop-up.
+#   SkillName       Skill name required. (Default: null)
+#   SkillLevel      Skill level required. (Default: 1)
+#   Consumed:       List of items consumed to produce the Product.
+#     - Item        AegisName of the consumed item.
+#       Amount      Amount required.
+#   NotConsumed:    List of items not consumed to produce the Product. (Optional)
+#     - Item        AegisName of the unconsumed item.
+#   BaseRate        Base rate (in n/10%) for Change Material (Group: 26). (Default: 1000)
+#   Make:           List of item amounts with their individual rate produced by Change Material (Group: 26). (Optional)
+#     - Amount      Amount of item created (unique to the list) for Change Material (Group: 26).
+#       Rate        Rate to create the Amount (in n/10%) for Change Material (Group: 26). (Default: 1000)
 ###########################################################################
 
 Header:
@@ -46,7 +43,5 @@ Header:
 
 Footer:
   Imports:
-  # - Path: db/re/skill_produce_db.yml
-  # - Path: db/re/skill_changematerial_db.yml
-  - Path: db/re/skill_produce_db_v2.yml
-  - Path: db/re/skill_changematerial_db_v2.yml
+  - Path: db/re/skill_produce_db.yml
+  - Path: db/re/skill_changematerial_db.yml

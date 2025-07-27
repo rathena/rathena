@@ -22,22 +22,19 @@
 # Item Produce Settings
 #
 ###########################################################################
-# - ItemLevel                  Number which determines what kind of a crafting window will pop-up.
-#   Recipe:
-#    - Product                 AegisName of the produced item.
-#      SkillName               Skill name required. (Default: null)
-#      SkillLevel              Skill level required. (Default: 1)
-#      Consumed:               List of items consumed to produce the Product.
-#        - Item                AegisName of the consumed item.
-#          Amount              Amount required.
-#          Clear               Remove the item with the given AegisName from Consumed. (Optional)
-#      NotConsumed:            List of items not consumed to produce the Product. (Default: null)
-#        - Item                AegisName of the unconsumed item.
-#          Clear               Remove the item with the given AegisName from NotConsumed. (Optional)
-#      BaseRate                Base rate (in n/10%) for Change Material (ItemLevel: 26). (Default: 1000)
-#      Make:                   List of item amounts with their individual rate produced by Change Material (ItemLevel: 26). (Default: null)
-#        - Amount              Amount of item created (unique to the list) for Change Material (ItemLevel: 26).
-#          Rate                Rate to create the Amount (in n/10%) for Change Material (ItemLevel: 26). (Default: 1000. 0 to remove on import)
+# - Product         AegisName of the produced item.
+#   Group           Number which determines what kind of a crafting window will pop-up.
+#   SkillName       Skill name required. (Default: null)
+#   SkillLevel      Skill level required. (Default: 1)
+#   Consumed:       List of items consumed to produce the Product.
+#     - Item        AegisName of the consumed item.
+#       Amount      Amount required.
+#   NotConsumed:    List of items not consumed to produce the Product. (Optional)
+#     - Item        AegisName of the unconsumed item.
+#   BaseRate        Base rate (in n/10%) for Change Material (Group: 26). (Default: 1000)
+#   Make:           List of item amounts with their individual rate produced by Change Material (Group: 26). (Optional)
+#     - Amount      Amount of item created (unique to the list) for Change Material (Group: 26).
+#       Rate        Rate to create the Amount (in n/10%) for Change Material (Group: 26). (Default: 1000)
 ###########################################################################
 
 Header:
@@ -45,2961 +42,2659 @@ Header:
   Version: 1
 
 Body:
-  - ItemLevel: 1
-    Recipe:
-      - Product: Sword
-        SkillName: BS_SWORD
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 2
-      - Product: Falchion
-        SkillName: BS_SWORD
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 30
-      - Product: Blade
-        SkillName: BS_SWORD
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 45
-          - Item: Tooth_Of_Bat
-            Amount: 25
-      - Product: Knife
-        SkillName: BS_DAGGER
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 1
-          - Item: Jellopy
-            Amount: 10
-      - Product: Cutter
-        SkillName: BS_DAGGER
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 25
-      - Product: Main_Gauche
-        SkillName: BS_DAGGER
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 50
-      - Product: Katana
-        SkillName: BS_TWOHANDSWORD
-        SkillLevel: 1
-        Consumed:
-          - Item: Horrendous_Mouth
-            Amount: 15
-          - Item: Iron
-            Amount: 35
-      - Product: Axe
-        SkillName: BS_AXE
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 10
-      - Product: Battle_Axe
-        SkillName: BS_AXE
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 110
-      - Product: Club
-        SkillName: BS_MACE
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 3
-      - Product: Mace
-        SkillName: BS_MACE
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 30
-      - Product: Waghnakh
-        SkillName: BS_KNUCKLE
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 160
-          - Item: Scarlet_Jewel
-            Amount: 1
-      - Product: Javelin
-        SkillName: BS_SPEAR
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 3
-      - Product: Spear
-        SkillName: BS_SPEAR
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 35
-      - Product: Pike
-        SkillName: BS_SPEAR
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron
-            Amount: 70
-  - ItemLevel: 2
-    Recipe:
-      - Product: Lapier
-        SkillName: BS_SWORD
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 20
-      - Product: Scimiter
-        SkillName: BS_SWORD
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 35
-      - Product: Ring_Pommel_Saber
-        SkillName: BS_SWORD
-        SkillLevel: 2
-        Consumed:
-          - Item: Claw_Of_Wolves
-            Amount: 50
-          - Item: Steel
-            Amount: 40
-      - Product: Dirk
-        SkillName: BS_DAGGER
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 17
-      - Product: Dagger
-        SkillName: BS_DAGGER
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 30
-      - Product: Stiletto
-        SkillName: BS_DAGGER
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 40
-      - Product: Slayer
-        SkillName: BS_TWOHANDSWORD
-        SkillLevel: 2
-        Consumed:
-          - Item: Decayed_Nail
-            Amount: 20
-          - Item: Steel
-            Amount: 25
-      - Product: Bastard_Sword
-        SkillName: BS_TWOHANDSWORD
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 45
-      - Product: Hammer
-        SkillName: BS_AXE
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 30
-      - Product: Smasher
-        SkillName: BS_MACE
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 20
-      - Product: Flail
-        SkillName: BS_MACE
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 33
-      - Product: Chain
-        SkillName: BS_MACE
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 45
-      - Product: Knuckle_Duster
-        SkillName: BS_KNUCKLE
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 50
-      - Product: Hora
-        SkillName: BS_KNUCKLE
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 65
-      - Product: Guisarme
-        SkillName: BS_SPEAR
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 25
-      - Product: Glaive
-        SkillName: BS_SPEAR
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 40
-      - Product: Partizan
-        SkillName: BS_SPEAR
-        SkillLevel: 2
-        Consumed:
-          - Item: Steel
-            Amount: 55
-  - ItemLevel: 3
-    Recipe:
-      - Product: Saber
-        SkillName: BS_SWORD
-        SkillLevel: 3
-        Consumed:
-          - Item: Oridecon
-            Amount: 8
-          - Item: Steel
-            Amount: 5
-          - Item: White_Jewel
-            Amount: 1
-      - Product: Haedonggum
-        SkillName: BS_SWORD
-        SkillLevel: 3
-        Consumed:
-          - Item: Golden_Jewel
-            Amount: 1
-          - Item: Oridecon
-            Amount: 8
-          - Item: Steel
-            Amount: 10
-      - Product: Tsurugi
-        SkillName: BS_SWORD
-        SkillLevel: 3
-        Consumed:
-          - Item: Dark_Red_Jewel
-            Amount: 1
-          - Item: Oridecon
-            Amount: 8
-          - Item: Steel
-            Amount: 15
-      - Product: Flamberge
-        SkillName: BS_SWORD
-        SkillLevel: 3
-        Consumed:
-          - Item: Cardinal_Jewel_
-            Amount: 1
-          - Item: Oridecon
-            Amount: 16
-      - Product: Gladius
-        SkillName: BS_DAGGER
-        SkillLevel: 3
-        Consumed:
-          - Item: Blue_Jewel
-            Amount: 1
-          - Item: Oridecon
-            Amount: 4
-          - Item: Steel
-            Amount: 40
-      - Product: Damascus
-        SkillName: BS_DAGGER
-        SkillLevel: 3
-        Consumed:
-          - Item: Bluish_Green_Jewel
-            Amount: 1
-          - Item: Oridecon
-            Amount: 4
-          - Item: Steel
-            Amount: 60
-      - Product: Two_Hand_Sword
-        SkillName: BS_TWOHANDSWORD
-        SkillLevel: 3
-        Consumed:
-          - Item: Oridecon
-            Amount: 12
-          - Item: Steel
-            Amount: 10
-      - Product: Broad_Sword
-        SkillName: BS_TWOHANDSWORD
-        SkillLevel: 3
-        Consumed:
-          - Item: Oridecon
-            Amount: 12
-          - Item: Steel
-            Amount: 20
-      - Product: Claymore
-        SkillName: BS_TWOHANDSWORD
-        SkillLevel: 3
-        Consumed:
-          - Item: Crystal_Jewel___
-            Amount: 1
-          - Item: Oridecon
-            Amount: 16
-          - Item: Steel
-            Amount: 20
-      - Product: Buster
-        SkillName: BS_AXE
-        SkillLevel: 3
-        Consumed:
-          - Item: Orcish_Cuspid
-            Amount: 30
-          - Item: Oridecon
-            Amount: 4
-          - Item: Steel
-            Amount: 20
-      - Product: Two_Handed_Axe
-        SkillName: BS_AXE
-        SkillLevel: 3
-        Consumed:
-          - Item: Oridecon
-            Amount: 8
-          - Item: Steel
-            Amount: 10
-          - Item: Violet_Jewel
-            Amount: 1
-      - Product: Morning_Star
-        SkillName: BS_MACE
-        SkillLevel: 3
-        Consumed:
-          - Item: Crystal_Jewel
-            Amount: 1
-          - Item: Steel
-            Amount: 85
-      - Product: Sword_Mace
-        SkillName: BS_MACE
-        SkillLevel: 3
-        Consumed:
-          - Item: Sharp_Scale
-            Amount: 20
-          - Item: Steel
-            Amount: 100
-      - Product: Stunner
-        SkillName: BS_MACE
-        SkillLevel: 3
-        Consumed:
-          - Item: Steel
-            Amount: 120
-          - Item: Voucher_Of_Orcish_Hero
-            Amount: 1
-      - Product: Fist
-        SkillName: BS_KNUCKLE
-        SkillLevel: 3
-        Consumed:
-          - Item: Cardinal_Jewel
-            Amount: 10
-          - Item: Oridecon
-            Amount: 4
-      - Product: Claw
-        SkillName: BS_KNUCKLE
-        SkillLevel: 3
-        Consumed:
-          - Item: Golden_Jewel
-            Amount: 10
-          - Item: Oridecon
-            Amount: 8
-      - Product: Finger
-        SkillName: BS_KNUCKLE
-        SkillLevel: 3
-        Consumed:
-          - Item: Oridecon
-            Amount: 4
-          - Item: White_Jewel
-            Amount: 10
-      - Product: Trident
-        SkillName: BS_SPEAR
-        SkillLevel: 3
-        Consumed:
-          - Item: Oridecon
-            Amount: 8
-          - Item: Skyblue_Jewel
-            Amount: 5
-          - Item: Steel
-            Amount: 10
-      - Product: Halberd
-        SkillName: BS_SPEAR
-        SkillLevel: 3
-        Consumed:
-          - Item: Oridecon
-            Amount: 12
-          - Item: Steel
-            Amount: 10
-      - Product: Lance
-        SkillName: BS_SPEAR
-        SkillLevel: 3
-        Consumed:
-          - Item: Cardinal_Jewel
-            Amount: 3
-          - Item: Evil_Horn
-            Amount: 2
-          - Item: Oridecon
-            Amount: 12
-  - ItemLevel: 11
-    Recipe:
-      - Product: Str_Dish01
-        Consumed:
-          - Item: Cooking_Oil
-            Amount: 1
-          - Item: Grasshopper's_Leg
-            Amount: 5
-          - Item: Old_Frying_Pan
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook01
-      - Product: Int_Dish01
-        Consumed:
-          - Item: Grape
-            Amount: 3
-          - Item: Red_Potion
-            Amount: 2
-        NotConsumed:
-          - Item: Cookbook01
-      - Product: Vit_Dish01
-        Consumed:
-          - Item: Green_Herb
-            Amount: 10
-          - Item: Nipper
-            Amount: 10
-          - Item: Yellow_Potion
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook01
-      - Product: Agi_Dish01
-        Consumed:
-          - Item: Chinese_Ink
-            Amount: 1
-          - Item: Grain
-            Amount: 1
-          - Item: Spawn
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook01
-      - Product: Dex_Dish01
-        Consumed:
-          - Item: Grape
-            Amount: 2
-          - Item: Honey
-            Amount: 1
-          - Item: Red_Potion
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook01
-      - Product: Luk_Dish01
-        Consumed:
-          - Item: Cooking_Oil
-            Amount: 1
-          - Item: Old_Frying_Pan
-            Amount: 1
-          - Item: Yoyo_Tail
-            Amount: 5
-        NotConsumed:
-          - Item: Cookbook01
-  - ItemLevel: 12
-    Recipe:
-      - Product: Str_Dish02
-        Consumed:
-          - Item: Green_Herb
-            Amount: 10
-          - Item: Plain_Sauce
-            Amount: 1
-          - Item: Sticky_Webfoot
-            Amount: 20
-          - Item: Yellow_Herb
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook02
-      - Product: Vit_Dish02
-        Consumed:
-          - Item: Delicious_Fish
-            Amount: 1
-          - Item: Fin
-            Amount: 5
-          - Item: Flesh_Of_Clam
-            Amount: 10
-          - Item: Gill
-            Amount: 5
-        NotConsumed:
-          - Item: Cookbook02
-      - Product: Int_Dish02
-        Consumed:
-          - Item: Blue_Herb
-            Amount: 5
-          - Item: Red_Herb
-            Amount: 10
-          - Item: Yellow_Herb
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook02
-      - Product: Agi_Dish02
-        Consumed:
-          - Item: Carrot
-            Amount: 3
-          - Item: Grain
-            Amount: 1
-          - Item: Plain_Sauce
-            Amount: 1
-          - Item: Pumpkin_Head
-            Amount: 5
-        NotConsumed:
-          - Item: Cookbook02
-      - Product: Dex_Dish02
-        Consumed:
-          - Item: Cacao
-            Amount: 10
-          - Item: Milk
-            Amount: 1
-          - Item: Piece_Of_Cake
-            Amount: 1
-          - Item: White_Platter
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook02
-      - Product: Luk_Dish02
-        Consumed:
-          - Item: Apple_Juice
-            Amount: 3
-          - Item: Carrot_Juice
-            Amount: 2
-          - Item: Grape_Juice
-            Amount: 1
-          - Item: Orange_Juice
-            Amount: 2
-        NotConsumed:
-          - Item: Cookbook02
-  - ItemLevel: 13
-    Recipe:
-      - Product: Dex_Dish03
-        Consumed:
-          - Item: Apple
-            Amount: 5
-          - Item: Banana
-            Amount: 5
-          - Item: Orange
-            Amount: 5
-          - Item: Strawberry
-            Amount: 5
-          - Item: Yellow_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook03
-      - Product: Int_Dish03
-        Consumed:
-          - Item: Honey
-            Amount: 2
-          - Item: White_Herb
-            Amount: 10
-          - Item: Yellow_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook03
-      - Product: Str_Dish03
-        Consumed:
-          - Item: Chilli
-            Amount: 5
-          - Item: Green_Herb
-            Amount: 10
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Meat
-            Amount: 4
-          - Item: Old_Frying_Pan
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook03
-      - Product: Vit_Dish03
-        Consumed:
-          - Item: Conch
-            Amount: 10
-          - Item: Flesh_Of_Clam
-            Amount: 20
-          - Item: Honey
-            Amount: 1
-          - Item: Sweet_Sauce
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook03
-      - Product: Agi_Dish03
-        Consumed:
-          - Item: Cheese
-            Amount: 10
-          - Item: Nice_Sweet_Potato
-            Amount: 5
-          - Item: Sweet_Sauce
-            Amount: 1
-          - Item: Tentacle
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook03
-      - Product: Luk_Dish03
-        Consumed:
-          - Item: Baked_Yam
-            Amount: 1
-          - Item: Nice_Sweet_Potato
-            Amount: 10
-          - Item: Sweet_Potato
-            Amount: 10
-          - Item: Sweet_Sauce
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook03
-  - ItemLevel: 14
-    Recipe:
-      - Product: Int_Dish04
-        Consumed:
-          - Item: Alchol
-            Amount: 2
-          - Item: Grape
-            Amount: 5
-          - Item: Lemon
-            Amount: 4
-          - Item: Orange
-            Amount: 10
-          - Item: Strawberry
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook04
-      - Product: Vit_Dish04
-        Consumed:
-          - Item: Chinese_Ink
-            Amount: 20
-          - Item: Old_Frying_Pan
-            Amount: 1
-          - Item: Soft_Leaf
-            Amount: 10
-          - Item: Tentacle
-            Amount: 30
-          - Item: White_Herb
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook04
-      - Product: Str_Dish04
-        Consumed:
-          - Item: Green_Herb
-            Amount: 3
-          - Item: Lemon
-            Amount: 1
-          - Item: Meat
-            Amount: 5
-          - Item: Red_Herb
-            Amount: 3
-          - Item: Sweet_Sauce
-            Amount: 1
-          - Item: Yellow_Herb
-            Amount: 2
-        NotConsumed:
-          - Item: Cookbook04
-      - Product: Dex_Dish04
-        Consumed:
-          - Item: Bread
-            Amount: 5
-          - Item: Cheese
-            Amount: 10
-          - Item: Meat
-            Amount: 1
-          - Item: Milk
-            Amount: 15
-          - Item: Sweet_Sauce
-            Amount: 1
-          - Item: Yellow_Herb
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook04
-      - Product: Agi_Dish04
-        Consumed:
-          - Item: Carrot
-            Amount: 10
-          - Item: Grain
-            Amount: 3
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Ice_Piece
-            Amount: 10
-          - Item: Pumpkin_Head
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook04
-      - Product: Luk_Dish04
-        Consumed:
-          - Item: Delicious_Fish
-            Amount: 5
-          - Item: Lip_Of_Ancient_Fish
-            Amount: 10
-          - Item: Raccoon_Leaf
-            Amount: 10
-          - Item: Sweet_Sauce
-            Amount: 2
-          - Item: White_Herb
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook04
-  - ItemLevel: 15
-    Recipe:
-      - Product: Int_Dish05
-        Consumed:
-          - Item: Alchol
-            Amount: 2
-          - Item: Blue_Potion
-            Amount: 1
-          - Item: Fruit_Of_Mastela
-            Amount: 4
-          - Item: Lemon
-            Amount: 2
-          - Item: Yellow_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook05
-      - Product: Str_Dish05
-        Consumed:
-          - Item: Carrot
-            Amount: 3
-          - Item: Cooking_Oil
-            Amount: 1
-          - Item: Grain
-            Amount: 1
-          - Item: Honey
-            Amount: 2
-          - Item: Sweet_Potato
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook05
-      - Product: Dex_Dish05
-        Consumed:
-          - Item: Great_Leaf
-            Amount: 6
-          - Item: Leaflet_Of_Aloe
-            Amount: 3
-          - Item: Leaflet_Of_Hinal
-            Amount: 2
-          - Item: Sharp_Leaf
-            Amount: 10
-          - Item: Sweet_Sauce
-            Amount: 1
-          - Item: Yellow_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook05
-      - Product: Agi_Dish05
-        Consumed:
-          - Item: Leaflet_Of_Hinal
-            Amount: 10
-          - Item: Pot
-            Amount: 1
-          - Item: Pumpkin_Head
-            Amount: 20
-          - Item: Red_Herb
-            Amount: 10
-          - Item: Wing_Of_Red_Bat
-            Amount: 20
-        NotConsumed:
-          - Item: Cookbook05
-      - Product: Vit_Dish05
-        Consumed:
-          - Item: Bun
-            Amount: 20
-          - Item: Green_Herb
-            Amount: 20
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Red_Spice
-            Amount: 1
-          - Item: Yellow_Herb
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook05
-      - Product: Luk_Dish05
-        Consumed:
-          - Item: Cooking_Oil
-            Amount: 1
-          - Item: Great_Leaf
-            Amount: 10
-          - Item: Old_Frying_Pan
-            Amount: 2
-          - Item: Scorpion's_Tail
-            Amount: 20
-          - Item: Short_Leg
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook05
-  - ItemLevel: 16
-    Recipe:
-      - Product: Str_Dish06
-        Consumed:
-          - Item: Fruit_Of_Mastela
-            Amount: 1
-          - Item: Honey
-            Amount: 2
-          - Item: Meat
-            Amount: 10
-          - Item: Shining_Scales
-            Amount: 20
-          - Item: Yellow_Herb
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook06
-      - Product: Int_Dish06
-        Consumed:
-          - Item: Alchol
-            Amount: 1
-          - Item: Grape_Juice
-            Amount: 3
-          - Item: Mushroom
-            Amount: 3
-          - Item: Mushroom_Spore
-            Amount: 20
-          - Item: Red_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook06
-      - Product: Dex_Dish06
-        Consumed:
-          - Item: Cheese
-            Amount: 10
-          - Item: Hard_Peach
-            Amount: 20
-          - Item: Milk
-            Amount: 10
-          - Item: Orange_Juice
-            Amount: 5
-          - Item: Piece_Of_Cake
-            Amount: 10
-          - Item: Sweet_Sauce
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook06
-      - Product: Agi_Dish06
-        Consumed:
-          - Item: Chilli
-            Amount: 20
-          - Item: Lemon
-            Amount: 20
-          - Item: Prawn
-            Amount: 20
-          - Item: Sweet_Sauce
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook06
-      - Product: Vit_Dish06
-        Consumed:
-          - Item: Browny_Root
-            Amount: 20
-          - Item: Honey
-            Amount: 2
-          - Item: Mushroom
-            Amount: 1
-          - Item: Mushroom_Spore
-            Amount: 20
-          - Item: Root_Of_Maneater
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook06
-      - Product: Luk_Dish06
-        Consumed:
-          - Item: Aloe
-            Amount: 1
-          - Item: Clover
-            Amount: 10
-          - Item: Reptile_Tongue
-            Amount: 5
-          - Item: Starsand_Of_Witch
-            Amount: 10
-          - Item: Thin_N'_Long_Tongue
-            Amount: 5
-        NotConsumed:
-          - Item: Cookbook06
-  - ItemLevel: 17
-    Recipe:
-      - Product: Str_Dish07
-        Consumed:
-          - Item: Coal
-            Amount: 2
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Live_Coal
-            Amount: 1
-          - Item: Meat
-            Amount: 10
-          - Item: White_Herb
-            Amount: 10
-          - Item: Wooden_Block
-            Amount: 15
-        NotConsumed:
-          - Item: Cookbook07
-      - Product: Int_Dish07
-        Consumed:
-          - Item: Honey
-            Amount: 2
-          - Item: Leaflet_Of_Hinal
-            Amount: 10
-          - Item: Royal_Jelly
-            Amount: 4
-          - Item: White_Herb
-            Amount: 5
-          - Item: Yellow_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook07
-      - Product: Dex_Dish07
-        Consumed:
-          - Item: Amulet
-            Amount: 5
-          - Item: Bread
-            Amount: 10
-          - Item: Fruit_Of_Mastela
-            Amount: 5
-          - Item: Ment
-            Amount: 5
-          - Item: Sweet_Sauce
-            Amount: 1
-          - Item: Unripe_Apple
-            Amount: 2
-        NotConsumed:
-          - Item: Cookbook07
-      - Product: Agi_Dish07
-        Consumed:
-          - Item: Anolian_Skin
-            Amount: 10
-          - Item: Carrot
-            Amount: 10
-          - Item: Leaflet_Of_Aloe
-            Amount: 10
-          - Item: Pumpkin_Head
-            Amount: 10
-          - Item: Yellow_Herb
-            Amount: 10
-          - Item: Yellow_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook07
-      - Product: Vit_Dish07
-        Consumed:
-          - Item: Delicious_Fish
-            Amount: 2
-          - Item: Fish_Tail
-            Amount: 10
-          - Item: Leaflet_Of_Aloe
-            Amount: 5
-          - Item: Pet_Food
-            Amount: 10
-          - Item: Sweet_Sauce
-            Amount: 1
-          - Item: Wild_Boar's_Mane
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook07
-      - Product: Luk_Dish07
-        Consumed:
-          - Item: Flesh_Of_Clam
-            Amount: 10
-          - Item: Gill
-            Amount: 5
-          - Item: Meat
-            Amount: 5
-          - Item: Mushroom
-            Amount: 10
-          - Item: Scales_Shell
-            Amount: 10
-          - Item: Soft_Leaf
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook07
-  - ItemLevel: 18
-    Recipe:
-      - Product: Str_Dish08
-        Consumed:
-          - Item: Bear's_Foot
-            Amount: 20
-          - Item: Carrot
-            Amount: 10
-          - Item: Leaflet_Of_Aloe
-            Amount: 2
-          - Item: Leaflet_Of_Hinal
-            Amount: 1
-          - Item: Plain_Sauce
-            Amount: 1
-          - Item: Pumpkin_Head
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook08
-      - Product: Int_Dish08
-        Consumed:
-          - Item: Leaf_Of_Yggdrasil
-            Amount: 3
-          - Item: Leaflet_Of_Aloe
-            Amount: 10
-          - Item: Leaflet_Of_Hinal
-            Amount: 10
-          - Item: Prickly_Fruit
-            Amount: 4
-          - Item: Royal_Jelly
-            Amount: 6
-          - Item: Yellow_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook08
-      - Product: Dex_Dish08
-        Consumed:
-          - Item: Bread
-            Amount: 10
-          - Item: Cheese
-            Amount: 10
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Meat
-            Amount: 5
-          - Item: Royal_Jelly
-            Amount: 2
-          - Item: Strawberry
-            Amount: 10
-          - Item: Sweet_Sauce
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook08
-      - Product: Agi_Dish08
-        Consumed:
-          - Item: Aloebera
-            Amount: 1
-          - Item: Carrot
-            Amount: 10
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Leaflet_Of_Hinal
-            Amount: 10
-          - Item: Meat
-            Amount: 10
-          - Item: Pumpkin_Head
-            Amount: 10
-        NotConsumed:
-          - Item: Cookbook08
-      - Product: Vit_Dish08
-        Consumed:
-          - Item: Grain
-            Amount: 2
-          - Item: Leaf_Clothes
-            Amount: 20
-          - Item: Meat
-            Amount: 20
-          - Item: Plain_Sauce
-            Amount: 1
-          - Item: Pumpkin_Head
-            Amount: 10
-          - Item: Rainbow_Carrot
-            Amount: 5
-        NotConsumed:
-          - Item: Cookbook08
-      - Product: Luk_Dish08
-        Consumed:
-          - Item: Grain
-            Amount: 5
-          - Item: Leaf_Clothes
-            Amount: 10
-          - Item: Plain_Sauce
-            Amount: 1
-          - Item: Red_Spice
-            Amount: 2
-          - Item: Strawberry
-            Amount: 10
-          - Item: Yellow_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook08
-  - ItemLevel: 19
-    Recipe:
-      - Product: Str_Dish09
-        Consumed:
-          - Item: Cheese
-            Amount: 10
-          - Item: Chinese_Ink
-            Amount: 10
-          - Item: Coal
-            Amount: 2
-          - Item: Green_Herb
-            Amount: 30
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Pot
-            Amount: 1
-          - Item: Tendon
-            Amount: 40
-        NotConsumed:
-          - Item: Cookbook09
-      - Product: Int_Dish09
-        Consumed:
-          - Item: Alchol
-            Amount: 5
-          - Item: Blue_Potion
-            Amount: 2
-          - Item: Leaf_Of_Yggdrasil
-            Amount: 10
-          - Item: Leaflet_Of_Aloe
-            Amount: 10
-          - Item: Orange
-            Amount: 10
-          - Item: Royal_Jelly
-            Amount: 4
-          - Item: Yellow_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook09
-      - Product: Dex_Dish09
-        Consumed:
-          - Item: Alchol
-            Amount: 2
-          - Item: Grape_Juice
-            Amount: 5
-          - Item: Orange
-            Amount: 10
-          - Item: Red_Spice
-            Amount: 1
-          - Item: Strawberry
-            Amount: 10
-          - Item: Tropical_Banana
-            Amount: 1
-          - Item: Unripe_Apple
-            Amount: 5
-        NotConsumed:
-          - Item: Cookbook09
-      - Product: Agi_Dish09
-        Consumed:
-          - Item: Meat
-            Amount: 10
-          - Item: Plain_Sauce
-            Amount: 4
-          - Item: Red_Herb
-            Amount: 5
-          - Item: Royal_Jelly
-            Amount: 5
-          - Item: Shoot
-            Amount: 20
-          - Item: White_Herb
-            Amount: 10
-          - Item: Yellow_Herb
-            Amount: 5
-        NotConsumed:
-          - Item: Cookbook09
-      - Product: Vit_Dish09
-        Consumed:
-          - Item: Dragon's_Skin
-            Amount: 10
-          - Item: Dragon_Train
-            Amount: 20
-          - Item: Fatty_Chubby_Earthworm
-            Amount: 1
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Leaf_Of_Yggdrasil
-            Amount: 3
-          - Item: Red_Spice
-            Amount: 1
-          - Item: Royal_Jelly
-            Amount: 6
-        NotConsumed:
-          - Item: Cookbook09
-      - Product: Luk_Dish09
-        Consumed:
-          - Item: Alchol
-            Amount: 2
-          - Item: Aloebera
-            Amount: 2
-          - Item: Animal_Blood
-            Amount: 1
-          - Item: Anodyne
-            Amount: 2
-          - Item: Apple_Juice
-            Amount: 10
-          - Item: Red_Spice
-            Amount: 1
-          - Item: Royal_Jelly
-            Amount: 6
-        NotConsumed:
-          - Item: Cookbook09
-  - ItemLevel: 20
-    Recipe:
-      - Product: Str_Dish10
-        Consumed:
-          - Item: Alchol
-            Amount: 1
-          - Item: Aloebera
-            Amount: 2
-          - Item: Blue_Potion
-            Amount: 2
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Leaf_Of_Yggdrasil
-            Amount: 10
-          - Item: Pot
-            Amount: 1
-          - Item: Royal_Jelly
-            Amount: 5
-          - Item: Thin_N'_Long_Tongue
-            Amount: 20
-        NotConsumed:
-          - Item: Cookbook10
-      - Product: Int_Dish10
-        Consumed:
-          - Item: Blue_Herb
-            Amount: 10
-          - Item: Leaflet_Of_Aloe
-            Amount: 5
-          - Item: Lemon
-            Amount: 5
-          - Item: Prickly_Fruit
-            Amount: 5
-          - Item: Root_Of_Maneater
-            Amount: 10
-          - Item: Royal_Jelly
-            Amount: 5
-          - Item: Singing_Plant
-            Amount: 1
-          - Item: Yggdrasilberry
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook10
-      - Product: Dex_Dish10
-        Consumed:
-          - Item: Alchol
-            Amount: 5
-          - Item: Center_Potion
-            Amount: 3
-          - Item: Ice_Piece
-            Amount: 10
-          - Item: Illusion_Flower
-            Amount: 1
-          - Item: Prickly_Fruit
-            Amount: 2
-          - Item: Royal_Jelly
-            Amount: 4
-          - Item: Spawns
-            Amount: 10
-          - Item: Yggdrasilberry
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook10
-      - Product: Agi_Dish10
-        Consumed:
-          - Item: Aloebera
-            Amount: 2
-          - Item: Bitter_Herb
-            Amount: 3
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Leaf_Of_Yggdrasil
-            Amount: 3
-          - Item: Pot
-            Amount: 1
-          - Item: Royal_Jelly
-            Amount: 10
-          - Item: Scorpion's_Tail
-            Amount: 20
-          - Item: Scropion's_Nipper
-            Amount: 20
-        NotConsumed:
-          - Item: Cookbook10
-      - Product: Vit_Dish10
-        Consumed:
-          - Item: Amulet
-            Amount: 10
-          - Item: Anodyne
-            Amount: 2
-          - Item: Bitter_Herb
-            Amount: 2
-          - Item: Heart_Of_Mermaid
-            Amount: 10
-          - Item: Hot_Sauce
-            Amount: 2
-          - Item: Immortal_Heart
-            Amount: 20
-          - Item: Mementos
-            Amount: 10
-          - Item: Seed_Of_Yggdrasil
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook10
-      - Product: Luk_Dish10
-        Consumed:
-          - Item: Four_Leaf_Clover
-            Amount: 2
-          - Item: Fox_Tail
-            Amount: 10
-          - Item: Izidor
-            Amount: 2
-          - Item: Leaf_Of_Yggdrasil
-            Amount: 4
-          - Item: Plain_Sauce
-            Amount: 1
-          - Item: Root_Of_Maneater
-            Amount: 10
-          - Item: Sharp_Leaf
-            Amount: 10
-          - Item: Yellow_Spice
-            Amount: 1
-        NotConsumed:
-          - Item: Cookbook10
-  - ItemLevel: 21
-    Recipe:
-      - Product: Iron
-        SkillName: BS_IRON
-        SkillLevel: 1
-        Consumed:
-          - Item: Iron_Ore
-            Amount: 1
-      - Product: Steel
-        SkillName: BS_STEEL
-        SkillLevel: 1
-        Consumed:
-          - Item: Coal
-            Amount: 1
-          - Item: Iron
-            Amount: 5
-      - Product: Star_Crumb
-        SkillName: BS_ENCHANTEDSTONE
-        SkillLevel: 1
-        Consumed:
-          - Item: Sparkling_Dust
-            Amount: 10
-      - Product: Flame_Heart
-        SkillName: BS_ENCHANTEDSTONE
-        SkillLevel: 1
-        Consumed:
-          - Item: Boody_Red
-            Amount: 10
-      - Product: Mistic_Frozen
-        SkillName: BS_ENCHANTEDSTONE
-        SkillLevel: 1
-        Consumed:
-          - Item: Crystal_Blue
-            Amount: 10
-      - Product: Great_Nature
-        SkillName: BS_ENCHANTEDSTONE
-        SkillLevel: 1
-        Consumed:
-          - Item: Yellow_Live
-            Amount: 10
-      - Product: Rough_Wind
-        SkillName: BS_ENCHANTEDSTONE
-        SkillLevel: 1
-        Consumed:
-          - Item: Wind_Of_Verdure
-            Amount: 10
-  - ItemLevel: 22
-    Recipe:
-      - Product: Red_Potion
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Potion
-            Amount: 1
-          - Item: Red_Herb
-            Amount: 1
-        NotConsumed:
-          - Item: Normal_Potion_Book
-      - Product: Yellow_Potion
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Potion
-            Amount: 1
-          - Item: Yellow_Herb
-            Amount: 1
-        NotConsumed:
-          - Item: Normal_Potion_Book
-      - Product: White_Potion
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Potion
-            Amount: 1
-          - Item: White_Herb
-            Amount: 1
-        NotConsumed:
-          - Item: Normal_Potion_Book
-      - Product: Blue_Potion
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Blue_Herb
-            Amount: 1
-          - Item: Empty_Potion
-            Amount: 1
-          - Item: Scell
-            Amount: 1
-        NotConsumed:
-          - Item: Normal_Potion_Book
-      - Product: Red_Slim_Potion
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Cactus_Needle
-            Amount: 1
-          - Item: Empty_Cylinder
-            Amount: 1
-          - Item: Red_Potion
-            Amount: 1
-        NotConsumed:
-          - Item: Slim_Potion_Create_Book
-      - Product: Yellow_Slim_Potion
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Cylinder
-            Amount: 1
-          - Item: Moustache_Of_Mole
-            Amount: 1
-          - Item: Yellow_Potion
-            Amount: 1
-        NotConsumed:
-          - Item: Slim_Potion_Create_Book
-      - Product: White_Slim_Potion
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Cylinder
-            Amount: 1
-          - Item: Starsand_Of_Witch
-            Amount: 1
-          - Item: White_Potion
-            Amount: 1
-        NotConsumed:
-          - Item: Slim_Potion_Create_Book
-      - Product: Holy_Water
-        SkillName: AL_HOLYWATER
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Bottle
-            Amount: 1
-      - Product: Poison_Bottle
-        SkillName: ASC_CDP
-        SkillLevel: 1
-        Consumed:
-          - Item: Bee_Sting
-            Amount: 1
-          - Item: Berserk_Potion
-            Amount: 1
-          - Item: Cactus_Needle
-            Amount: 1
-          - Item: Empty_Bottle
-            Amount: 1
-          - Item: Karvodailnirol
-            Amount: 1
-          - Item: Poison_Spore
-            Amount: 1
-          - Item: Posionous_Canine
-            Amount: 1
-      - Product: Fire_Bottle
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Alchol
-            Amount: 1
-          - Item: Empty_Bottle
-            Amount: 1
-          - Item: Transparent_Cloth
-            Amount: 1
-        NotConsumed:
-          - Item: FireBottle_Create_Book
-      - Product: Acid_Bottle
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Bottle
-            Amount: 1
-          - Item: Immortal_Heart
-            Amount: 1
-        NotConsumed:
-          - Item: Acid_Create_Book
-      - Product: MenEater_Plant_Bottle
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Blossom_Of_Maneater
-            Amount: 2
-          - Item: Empty_Bottle
-            Amount: 1
-        NotConsumed:
-          - Item: Plant_Create_Book
-      - Product: Mini_Bottle
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Detonator
-            Amount: 1
-          - Item: Empty_Bottle
-            Amount: 1
-          - Item: Tendon
-            Amount: 1
-        NotConsumed:
-          - Item: Mine_Create_Book
-      - Product: Coating_Bottle
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Alchol
-            Amount: 1
-          - Item: Empty_Bottle
-            Amount: 1
-          - Item: Heart_Of_Mermaid
-            Amount: 1
-          - Item: Tooth_Of_
-            Amount: 1
-        NotConsumed:
-          - Item: Coating_Create_Book
-      - Product: Resist_Fire
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Potion
-            Amount: 1
-          - Item: Lizard_Scruff
-            Amount: 2
-          - Item: Red_Gemstone
-            Amount: 1
-        NotConsumed:
-          - Item: Elemental_Potion_Book
-      - Product: Resist_Water
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Blue_Gemstone
-            Amount: 1
-          - Item: Empty_Potion
-            Amount: 1
-          - Item: Heart_Of_Mermaid
-            Amount: 3
-        NotConsumed:
-          - Item: Elemental_Potion_Book
-      - Product: Resist_Earth
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Potion
-            Amount: 1
-          - Item: Large_Jellopy
-            Amount: 2
-          - Item: Yellow_Gemstone
-            Amount: 1
-        NotConsumed:
-          - Item: Elemental_Potion_Book
-      - Product: Resist_Wind
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Blue_Gemstone
-            Amount: 1
-          - Item: Empty_Potion
-            Amount: 1
-          - Item: Moth_Dust
-            Amount: 3
-        NotConsumed:
-          - Item: Elemental_Potion_Book
-      - Product: Anodyne
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Alchol
-            Amount: 1
-          - Item: Empty_Bottle
-            Amount: 1
-          - Item: Ment
-            Amount: 1
-        NotConsumed:
-          - Item: Normal_Potion_Book
-      - Product: Aloebera
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Aloe
-            Amount: 1
-          - Item: Empty_Bottle
-            Amount: 1
-          - Item: Honey
-            Amount: 1
-        NotConsumed:
-          - Item: Normal_Potion_Book
-      - Product: Alchol
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Bottle
-            Amount: 1
-          - Item: Empty_Cylinder
-            Amount: 1
-          - Item: Poison_Spore
-            Amount: 5
-          - Item: Stem
-            Amount: 5
-        NotConsumed:
-          - Item: Alcol_Create_Book
-      - Product: Germination_Breed
-        SkillName: AM_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Life_Force_Pot
-            Amount: 1
-          - Item: Seed_Of_Life
-            Amount: 1
-          - Item: Yggdrasilberry_Dew
-            Amount: 1
-        NotConsumed:
-          - Item: Normal_Potion_Book
-  - ItemLevel: 23
-    Recipe:
-      - Product: Elemental_Fire
-        SkillName: SA_CREATECON
-        SkillLevel: 1
-        Consumed:
-          - Item: Scorpion's_Tail
-            Amount: 3
-          - Item: Scroll
-            Amount: 1
-      - Product: Elemental_Water
-        SkillName: SA_CREATECON
-        SkillLevel: 1
-        Consumed:
-          - Item: Scroll
-            Amount: 1
-          - Item: Snail's_Shell
-            Amount: 3
-      - Product: Elemental_Earth
-        SkillName: SA_CREATECON
-        SkillLevel: 1
-        Consumed:
-          - Item: Horn
-            Amount: 3
-          - Item: Scroll
-            Amount: 1
-      - Product: Elemental_Wind
-        SkillName: SA_CREATECON
-        SkillLevel: 1
-        Consumed:
-          - Item: Colorful_Shell
-            Amount: 3
-          - Item: Scroll
-            Amount: 1
-  - ItemLevel: 24
-    Recipe:
-      - Product: Ansila
-        SkillName: AB_ANCILLA
-        SkillLevel: 1
-        Consumed:
-          - Item: Blue_Gemstone
-            Amount: 1
-      - Product: Runstone_Nosiege
-        SkillName: RK_RUNEMASTERY
-        SkillLevel: 8
-        Consumed:
-          - Item: Broken_Armor_Piece
-            Amount: 1
-          - Item: Elder_Branch
-            Amount: 1
-          - Item: Light_Granule
-            Amount: 1
-          - Item: Old_Magic_Circle
-            Amount: 1
-      - Product: Runstone_Rhydo
-        SkillName: RK_RUNEMASTERY
-        SkillLevel: 7
-        Consumed:
-          - Item: Elder_Branch
-            Amount: 1
-          - Item: Light_Granule
-            Amount: 1
-          - Item: Red_Gemstone
-            Amount: 1
-      - Product: Runstone_Verkana
-        SkillName: RK_RUNEMASTERY
-        SkillLevel: 9
-        Consumed:
-          - Item: Dullahan_Armor
-            Amount: 1
-          - Item: Elder_Branch
-            Amount: 1
-      - Product: Runstone_Isia
-        SkillName: RK_RUNEMASTERY
-        SkillLevel: 2
-        Consumed:
-          - Item: Burning_Heart
-            Amount: 1
-          - Item: Elder_Branch
-            Amount: 1
-      - Product: Runstone_Asir
-        SkillName: RK_RUNEMASTERY
-        SkillLevel: 5
-        Consumed:
-          - Item: Elder_Branch
-            Amount: 1
-          - Item: Light_Granule
-            Amount: 1
-          - Item: Ogre_Tooth
-            Amount: 1
-      - Product: Runstone_Urj
-        SkillName: RK_RUNEMASTERY
-        SkillLevel: 6
-        Consumed:
-          - Item: Elder_Branch
-            Amount: 1
-          - Item: Honey
-            Amount: 1
-          - Item: Slender_Snake
-            Amount: 1
-      - Product: Runstone_Turisus
-        SkillName: RK_RUNEMASTERY
-        SkillLevel: 1
-        Consumed:
-          - Item: Claw_Of_Desert_Wolf
-            Amount: 1
-          - Item: Cobold_Hair
-            Amount: 1
-          - Item: Elder_Branch
-            Amount: 1
-      - Product: Runstone_Pertz
-        SkillName: RK_RUNEMASTERY
-        SkillLevel: 3
-        Consumed:
-          - Item: Dragon_Canine
-            Amount: 1
-          - Item: Elder_Branch
-            Amount: 1
-          - Item: Light_Granule
-            Amount: 1
-          - Item: Tangled_Chain
-            Amount: 1
-      - Product: Runstone_Hagalas
-        SkillName: RK_RUNEMASTERY
-        SkillLevel: 4
-        Consumed:
-          - Item: Dragon's_Skin
-            Amount: 1
-          - Item: Elder_Branch
-            Amount: 1
-          - Item: Round_Shell
-            Amount: 1
-  - ItemLevel: 25
-    Recipe:
-      - Product: Guillotine_Antidote
-        SkillName: GC_RESEARCHNEWPOISON
-        SkillLevel: 5
-        Consumed:
-          - Item: Blue_Herb
-            Amount: 1
-          - Item: Green_Herb
-            Amount: 2
-          - Item: White_Herb
-            Amount: 1
-      - Product: Poison_Paralysis
-        SkillName: GC_RESEARCHNEWPOISON
-        SkillLevel: 1
-        Consumed:
-          - Item: Medicine_Bowl
-            Amount: 1
-          - Item: Poison_Herb_Amoena
-            Amount: 1
-          - Item: Poison_Kit
-            Amount: 1
-          - Item: Poison_Toad's_Skin
-            Amount: 20
-      - Product: Poison_Leech
-        SkillName: GC_RESEARCHNEWPOISON
-        SkillLevel: 4
-        Consumed:
-          - Item: Medicine_Bowl
-            Amount: 1
-          - Item: Poison_Herb_Nerium
-            Amount: 1
-          - Item: Poison_Herb_Scopolia
-            Amount: 1
-          - Item: Poison_Kit
-            Amount: 1
-      - Product: Poison_Oblivion
-        SkillName: GC_RESEARCHNEWPOISON
-        SkillLevel: 9
-        Consumed:
-          - Item: Heart_Of_Mermaid
-            Amount: 10
-          - Item: Izidor
-            Amount: 1
-          - Item: Medicine_Bowl
-            Amount: 1
-          - Item: Poison_Kit
-            Amount: 1
-      - Product: Poison_Contamination
-        SkillName: GC_RESEARCHNEWPOISON
-        SkillLevel: 3
-        Consumed:
-          - Item: Decayed_Nail
-            Amount: 25
-          - Item: Medicine_Bowl
-            Amount: 1
-          - Item: Poison_Herb_Seratum
-            Amount: 1
-          - Item: Poison_Kit
-            Amount: 1
-      - Product: Poison_Numb
-        SkillName: GC_RESEARCHNEWPOISON
-        SkillLevel: 8
-        Consumed:
-          - Item: Medicine_Bowl
-            Amount: 1
-          - Item: Poison_Herb_Nerium
-            Amount: 1
-          - Item: Poison_Kit
-            Amount: 1
-          - Item: Sticky_Poison
-            Amount: 10
-      - Product: Poison_Fever
-        SkillName: GC_RESEARCHNEWPOISON
-        SkillLevel: 2
-        Consumed:
-          - Item: Anolian_Skin
-            Amount: 20
-          - Item: Medicine_Bowl
-            Amount: 1
-          - Item: Poison_Herb_Rantana
-            Amount: 1
-          - Item: Poison_Kit
-            Amount: 1
-      - Product: Poison_Laughing
-        SkillName: GC_RESEARCHNEWPOISON
-        SkillLevel: 7
-        Consumed:
-          - Item: Medicine_Bowl
-            Amount: 1
-          - Item: Poison_Herb_Makulata
-            Amount: 1
-          - Item: Poison_Kit
-            Amount: 1
-          - Item: Poison_Spore
-            Amount: 10
-      - Product: Poison_Fatigue
-        SkillName: GC_RESEARCHNEWPOISON
-        SkillLevel: 6
-        Consumed:
-          - Item: Izidor
-            Amount: 1
-          - Item: Medicine_Bowl
-            Amount: 1
-          - Item: Poison_Kit
-            Amount: 1
-          - Item: Sticky_Poison
-            Amount: 10
-  - ItemLevel: 26
-    Recipe:
-      - Product: Sacred_Masque
-        BaseRate: 800
-        Make:
-          - Amount: 8
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Grasshopper's_Leg
-            Amount: 45
-          - Item: Yoyo_Tail
-            Amount: 35
-      - Product: Long_Hair
-        Make:
-          - Amount: 4
-            Rate: 800
-          - Amount: 6
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Pencil_Case
-            Amount: 40
-          - Item: Tiger's_Skin
-            Amount: 5
-      - Product: Phracon
-        BaseRate: 800
-        Make:
-          - Amount: 8
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Glass_Bead
-            Amount: 40
-          - Item: Spawn
-            Amount: 45
-      - Product: Lantern
-        BaseRate: 800
-        Make:
-          - Amount: 3
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Blossom_Of_Maneater
-            Amount: 20
-          - Item: Solid_Shell
-            Amount: 10
-      - Product: Acorn
-        BaseRate: 800
-        Make:
-          - Amount: 4
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Cactus_Needle
-            Amount: 30
-          - Item: Snail's_Shell
-            Amount: 10
-      - Product: Frozen_Heart
-        BaseRate: 800
-        Make:
-          - Amount: 6
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Moth_Dust
-            Amount: 35
-          - Item: Raccoondog_Doll
-            Amount: 25
-      - Product: Horrendous_Mouth
-        BaseRate: 800
-        Make:
-          - Amount: 9
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Dragon_Scale
-            Amount: 45
-          - Item: Stem
-            Amount: 45
-      - Product: Detrimindexta
-        BaseRate: 800
-        Make:
-          - Amount: 5
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Chrysalis
-            Amount: 40
-          - Item: Flesh_Of_Clam
-            Amount: 10
-      - Product: Detonator
-        BaseRate: 800
-        Make:
-          - Amount: 7
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Feather_Of_Birds
-            Amount: 25
-          - Item: Nose_Ring
-            Amount: 45
-      - Product: Tweezer
-        BaseRate: 800
-        Make:
-          - Amount: 4
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Monkey_Doll
-            Amount: 5
-          - Item: Worm_Peelings
-            Amount: 40
-      - Product: Petite_DiablOfs_Horn
-        Make:
-          - Amount: 1
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Resin
-            Amount: 10
-          - Item: Stone_Heart
-            Amount: 5
-      - Product: Root_Of_Maneater
-        Make:
-          - Amount: 4
-            Rate: 800
-          - Amount: 6
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Talon
-            Amount: 25
-          - Item: Tooth_Of_
-            Amount: 20
-      - Product: Conch
-        BaseRate: 800
-        Make:
-          - Amount: 3
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Gill
-            Amount: 5
-          - Item: Immortal_Heart
-            Amount: 25
-      - Product: Rotten_Scale
-        BaseRate: 800
-        Make:
-          - Amount: 7
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Shell
-            Amount: 20
-          - Item: Thin_N'_Long_Tongue
-            Amount: 50
-      - Product: Elder_Pixie's_Beard
-        Make:
-          - Amount: 8
-            Rate: 800
-          - Amount: 12
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bee_Sting
-            Amount: 35
-          - Item: Petite_DiablOfs_Wing
-            Amount: 45
-      - Product: Lizard_Scruff
-        BaseRate: 800
-        Make:
-          - Amount: 3
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Karvodailnirol
-            Amount: 15
-          - Item: Scale_Of_Snakes
-            Amount: 20
-      - Product: Emveretarcon
-        BaseRate: 800
-        Make:
-          - Amount: 4
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Grasshopper_Doll
-            Amount: 40
-          - Item: Heart_Of_Mermaid
-            Amount: 5
-      - Product: Chinese_Ink
-        BaseRate: 800
-        Make:
-          - Amount: 4
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bear's_Foot
-            Amount: 20
-          - Item: Black_Ladle
-            Amount: 25
-      - Product: Spiderweb
-        BaseRate: 800
-        Make:
-          - Amount: 8
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Fin
-            Amount: 50
-          - Item: Slender_Snake
-            Amount: 35
-      - Product: Reins
-        BaseRate: 800
-        Make:
-          - Amount: 8
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Chonchon_Doll
-            Amount: 30
-          - Item: Stuffed_Doll
-            Amount: 50
-      - Product: Wooden_Block
-        BaseRate: 800
-        Make:
-          - Amount: 2
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Rotten_Bandage
-            Amount: 10
-          - Item: Single_Cell
-            Amount: 10
-      - Product: Tentacle
-        Make:
-          - Amount: 4
-            Rate: 800
-          - Amount: 6
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Decayed_Nail
-            Amount: 40
-          - Item: Wild_Boar's_Mane
-            Amount: 5
-      - Product: Mixture
-        Make:
-          - Amount: 4
-            Rate: 800
-          - Amount: 6
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Posionous_Canine
-            Amount: 15
-          - Item: Powder_Of_Butterfly
-            Amount: 30
-      - Product: Colorful_Shell
-        Make:
-          - Amount: 9
-            Rate: 800
-          - Amount: 13
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Horn
-            Amount: 50
-          - Item: Zargon
-            Amount: 45
-      - Product: Wing_Of_Moth
-        BaseRate: 800
-        Make:
-          - Amount: 5
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Frozen_Rose
-            Amount: 20
-          - Item: Reptile_Tongue
-            Amount: 30
-      - Product: Nipper
-        Make:
-          - Amount: 6
-            Rate: 800
-          - Amount: 9
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Earthworm_Peeling
-            Amount: 40
-          - Item: Sticky_Mucus
-            Amount: 25
-      - Product: Turtle_Shell
-        BaseRate: 800
-        Make:
-          - Amount: 4
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Fluff
-            Amount: 5
-          - Item: Poring_Doll
-            Amount: 40
-      - Product: Nail_Of_Orc
-        BaseRate: 800
-        Make:
-          - Amount: 6
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Garlet
-            Amount: 10
-          - Item: Raccoon_Leaf
-            Amount: 50
-      - Product: Dragon_Canine
-        Make:
-          - Amount: 8
-            Rate: 800
-          - Amount: 12
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Osiris_Doll
-            Amount: 50
-          - Item: Sticky_Webfoot
-            Amount: 35
-      - Product: Skirt_Of_Virgin
-        BaseRate: 800
-        Make:
-          - Amount: 6
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Head_Of_Medusa
-            Amount: 35
-          - Item: Scales_Shell
-            Amount: 30
-      - Product: Dragon_Train
-        BaseRate: 800
-        Make:
-          - Amount: 6
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Sharpened_Cuspid
-            Amount: 35
-          - Item: Tooth_Of_Bat
-            Amount: 25
-      - Product: Dokkaebi_Horn
-        BaseRate: 800
-        Make:
-          - Amount: 4
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Lip_Of_Ancient_Fish
-            Amount: 25
-          - Item: Shining_Scales
-            Amount: 15
-      - Product: Grit
-        BaseRate: 800
-        Make:
-          - Amount: 8
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Crystal_Mirror
-            Amount: 35
-          - Item: Limb_Of_Mantis
-            Amount: 50
-      - Product: Sharp_Scale
-        BaseRate: 800
-        Make:
-          - Amount: 3
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Clam_Shell
-            Amount: 20
-          - Item: Horseshoe
-            Amount: 10
-      - Product: Short_Leg
-        BaseRate: 800
-        Make:
-          - Amount: 6
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Claw_Of_Wolves
-            Amount: 20
-          - Item: Scell
-            Amount: 45
-      - Product: Starsand_Of_Witch
-        BaseRate: 800
-        Make:
-          - Amount: 2
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Blue_Porcelain
-            Amount: 15
-          - Item: Insect_Feeler
-            Amount: 10
-      - Product: Fox_Tail
-        Make:
-          - Amount: 2
-            Rate: 800
-          - Amount: 3
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Animal's_Skin
-            Amount: 10
-          - Item: Rouge
-            Amount: 15
-      - Product: Cobold_Hair
-        Make:
-          - Amount: 6
-            Rate: 800
-          - Amount: 9
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Jellopy
-            Amount: 45
-          - Item: Wedding_Bouquet
-            Amount: 20
-      - Product: Jaws_Of_Ant
-        Make:
-          - Amount: 4
-            Rate: 800
-          - Amount: 6
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Spore_Doll
-            Amount: 20
-          - Item: Witherless_Rose
-            Amount: 20
-      - Product: Voucher_Of_Orcish_Hero
-        BaseRate: 800
-        Make:
-          - Amount: 5
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Nail_Of_Mole
-            Amount: 45
-          - Item: Tree_Root
-            Amount: 5
-      - Product: Sacred_Marks
-        BaseRate: 800
-        Make:
-          - Amount: 4
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Pumpkin_Head
-            Amount: 30
-          - Item: Scorpion's_Tail
-            Amount: 10
-      - Product: Alchol
-        BaseRate: 800
-        Make:
-          - Amount: 9
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Orcish_Voucher
-            Amount: 50
-          - Item: Skel_Bone
-            Amount: 40
-      - Product: Crap_Shell
-        BaseRate: 800
-        Make:
-          - Amount: 8
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Baphomet_Doll
-            Amount: 50
-          - Item: Fish_Tail
-            Amount: 30
-      - Product: Tendon
-        BaseRate: 800
-        Make:
-          - Amount: 3
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Feather
-            Amount: 5
-          - Item: Orcish_Cuspid
-            Amount: 25
-      - Product: Tiger_Footskin
-        BaseRate: 800
-        Make:
-          - Amount: 2
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Pointed_Scale
-            Amount: 5
-          - Item: White_Platter
-            Amount: 20
-      - Product: Hinalle
-        Make:
-          - Amount: 2
-            Rate: 200
-          - Amount: 4
-            Rate: 800
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bunch_Of_Flowers
-            Amount: 45
-          - Item: Moustache_Of_Mole
-            Amount: 40
-      - Product: Counteragent
-        BaseRate: 800
-        Make:
-          - Amount: 4
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Evil_Horn
-            Amount: 15
-          - Item: Mementos
-            Amount: 30
-      - Product: Tooth_Of_Ancient_Fish
-        Make:
-          - Amount: 6
-            Rate: 800
-          - Amount: 9
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bill_Of_Birds
-            Amount: 35
-          - Item: Transparent_Cloth
-            Amount: 30
-      - Product: Rat_Tail
-        Make:
-          - Amount: 7
-            Rate: 800
-          - Amount: 10
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Golden_Hair
-            Amount: 40
-          - Item: Mushroom_Spore
-            Amount: 35
-      - Product: Coal
-        BaseRate: 500
-        Make:
-          - Amount: 1
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Guard
-            Amount: 1
-      - Product: Steel
-        Make:
-          - Amount: 10
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Tsurugi
-            Amount: 1
-      - Product: Cigar
-        Make:
-          - Amount: 1
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Orcish_Axe
-            Amount: 1
-      - Product: Bone_Wand
-        BaseRate: 200
-        Make:
-          - Amount: 1
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Broken_Farming_Utensil
-            Amount: 100
-          - Item: Clattering_Skull
-            Amount: 100
-      - Product: Cigar
-        Make:
-          - Amount: 1
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Orcish_Axe
-            Amount: 1
-          - Item: Orcish_Voucher
-            Amount: 100
-      - Product: Starsand_Of_Witch
-        BaseRate: 800
-        Make:
-          - Amount: 2
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Moth_Dust
-            Amount: 100
-          - Item: Scell
-            Amount: 100
-      - Product: Soft_Feather
-        Make:
-          - Amount: 1
-            Rate: 200
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Feather
-            Amount: 30
-          - Item: Feather_Of_Birds
-            Amount: 30
-      - Product: Wind_Of_Verdure
-        Make:
-          - Amount: 1
-            Rate: 500
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Ice_Piece
-            Amount: 100
-      - Product: Crystal_Blue
-        Make:
-          - Amount: 1
-            Rate: 500
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Claw_Of_Wolves
-            Amount: 100
-      - Product: Soft_Silk_Cloth
-        Make:
-          - Amount: 2
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Transparent_Cloth
-            Amount: 10
-      - Product: Transparent_Cloth
-        Make:
-          - Amount: 5
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Soft_Silk_Cloth
-            Amount: 2
-      - Product: Boost500_To_Throw
-        Make:
-          - Amount: 1
-            Rate: 100
-          - Amount: 2
-            Rate: 250
-          - Amount: 5
-            Rate: 500
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Boost500
-            Amount: 10
-          - Item: Empty_Potion
-            Amount: 10
-          - Item: Flexible_String
-            Amount: 10
-      - Product: Full_SwingK_To_Throw
-        Make:
-          - Amount: 1
-            Rate: 100
-          - Amount: 2
-            Rate: 250
-          - Amount: 5
-            Rate: 500
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Potion
-            Amount: 10
-          - Item: Flexible_String
-            Amount: 10
-          - Item: Full_SwingK
-            Amount: 10
-      - Product: Mana_Plus_To_Throw
-        Make:
-          - Amount: 1
-            Rate: 100
-          - Amount: 2
-            Rate: 250
-          - Amount: 5
-            Rate: 500
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Potion
-            Amount: 10
-          - Item: Flexible_String
-            Amount: 10
-          - Item: Mana_Plus
-            Amount: 10
-      - Product: Cure_Free_To_Throw
-        Make:
-          - Amount: 1
-            Rate: 100
-          - Amount: 2
-            Rate: 250
-          - Amount: 5
-            Rate: 500
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Cure_Free
-            Amount: 10
-          - Item: Empty_Potion
-            Amount: 10
-          - Item: Flexible_String
-            Amount: 10
-      - Product: Stamina_Up_M_To_Throw
-        Make:
-          - Amount: 1
-            Rate: 100
-          - Amount: 2
-            Rate: 250
-          - Amount: 5
-            Rate: 500
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Potion
-            Amount: 10
-          - Item: Flexible_String
-            Amount: 10
-          - Item: Stamina_Up_M
-            Amount: 10
-      - Product: Digestive_F_To_Throw
-        Make:
-          - Amount: 1
-            Rate: 100
-          - Amount: 2
-            Rate: 250
-          - Amount: 5
-            Rate: 500
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Digestive_F
-            Amount: 10
-          - Item: Empty_Potion
-            Amount: 10
-          - Item: Flexible_String
-            Amount: 10
-      - Product: HP_Inc_PotS_To_Throw
-        Make:
-          - Amount: 10
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bottle_To_Throw
-            Amount: 10
-          - Item: HP_Increase_PotionS
-            Amount: 10
-      - Product: HP_Inc_PotM_To_Throw
-        Make:
-          - Amount: 10
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bottle_To_Throw
-            Amount: 10
-          - Item: HP_Increase_PotionM
-            Amount: 10
-      - Product: HP_Inc_PotL_To_Throw
-        Make:
-          - Amount: 10
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bottle_To_Throw
-            Amount: 10
-          - Item: HP_Increase_PotionL
-            Amount: 10
-      - Product: SP_Inc_PotS_To_Throw
-        Make:
-          - Amount: 10
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bottle_To_Throw
-            Amount: 10
-          - Item: SP_Increase_PotionS
-            Amount: 10
-      - Product: SP_Inc_PotM_To_Throw
-        Make:
-          - Amount: 10
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bottle_To_Throw
-            Amount: 10
-          - Item: SP_Increase_PotionM
-            Amount: 10
-      - Product: SP_Inc_PotL_To_Throw
-        Make:
-          - Amount: 10
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bottle_To_Throw
-            Amount: 10
-          - Item: SP_Increase_PotionL
-            Amount: 10
-      - Product: En_White_PotZ_To_Throw
-        Make:
-          - Amount: 10
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bottle_To_Throw
-            Amount: 10
-          - Item: Enrich_White_PotionZ
-            Amount: 10
-      - Product: Vitata500_To_Throw
-        Make:
-          - Amount: 10
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bottle_To_Throw
-            Amount: 10
-          - Item: Vitata500
-            Amount: 10
-      - Product: En_Cel_Juice_To_Throw
-        Make:
-          - Amount: 10
-        SkillName: GN_CHANGEMATERIAL
-        SkillLevel: 1
-        Consumed:
-          - Item: Bottle_To_Throw
-            Amount: 10
-          - Item: Enrich_Celermine_Juice
-            Amount: 10
-  - ItemLevel: 27
-    Recipe:
-      - Product: Savage_BBQ
-        SkillName: GN_MIX_COOKING
-        SkillLevel: 1
-        Consumed:
-          - Item: Black_Charcoal
-            Amount: 1
-          - Item: Cooking_Skewer
-            Amount: 1
-          - Item: Melange_Pot
-            Amount: 1
-          - Item: Savage_Meat
-            Amount: 1
-        NotConsumed:
-          - Item: Mix_Cook_Book
-      - Product: Wug_Blood_Cocktail
-        SkillName: GN_MIX_COOKING
-        SkillLevel: 1
-        Consumed:
-          - Item: Cold_Ice
-            Amount: 2
-          - Item: Melange_Pot
-            Amount: 1
-          - Item: Wolf_Blood
-            Amount: 3
-        NotConsumed:
-          - Item: Mix_Cook_Book
-      - Product: Minor_Brisket
-        SkillName: GN_MIX_COOKING
-        SkillLevel: 1
-        Consumed:
-          - Item: Beef_Head_Meat
-            Amount: 2
-          - Item: Large_Cookpot
-            Amount: 1
-          - Item: Melange_Pot
-            Amount: 1
-        NotConsumed:
-          - Item: Mix_Cook_Book
-      - Product: Siroma_Icetea
-        SkillName: GN_MIX_COOKING
-        SkillLevel: 1
-        Consumed:
-          - Item: Comodo_Tropic_Fruit
-            Amount: 1
-          - Item: Ice_Crystal
-            Amount: 2
-          - Item: Ice_Fragment
-            Amount: 3
-          - Item: Melange_Pot
-            Amount: 1
-        NotConsumed:
-          - Item: Mix_Cook_Book
-      - Product: Drocera_Herb_Stew
-        SkillName: GN_MIX_COOKING
-        SkillLevel: 1
-        Consumed:
-          - Item: Blue_Herb
-            Amount: 3
-          - Item: Drocera_Tentacle
-            Amount: 3
-          - Item: Large_Cookpot
-            Amount: 1
-          - Item: Melange_Pot
-            Amount: 1
-          - Item: Red_Herb
-            Amount: 3
-          - Item: White_Herb
-            Amount: 3
-        NotConsumed:
-          - Item: Mix_Cook_Book
-      - Product: Petti_Tail_Noodle
-        SkillName: GN_MIX_COOKING
-        SkillLevel: 1
-        Consumed:
-          - Item: Cool_Gravy
-            Amount: 1
-          - Item: Fine_Noodle
-            Amount: 1
-          - Item: Melange_Pot
-            Amount: 1
-          - Item: Petti_Tail
-            Amount: 2
-        NotConsumed:
-          - Item: Mix_Cook_Book
-  - ItemLevel: 29
-    Recipe:
-      - Product: Seed_Of_Horny_Plant
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Prickly_Fruit
-            Amount: 10
-        NotConsumed:
-          - Item: Plant_Genetic_Grow
-      - Product: Bloodsuck_Plant_Seed
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Root_Of_Maneater
-            Amount: 10
-        NotConsumed:
-          - Item: Plant_Genetic_Grow
-      - Product: Bomb_Mushroom_Spore
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Gun_Powder
-            Amount: 2
-          - Item: Mushroom_Spore
-            Amount: 10
-          - Item: Poison_Spore
-            Amount: 5
-        NotConsumed:
-          - Item: Plant_Genetic_Grow
-      - Product: HP_Increase_PotionS
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Bottle
-            Amount: 10
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: Monster's_Feed
-            Amount: 5
-          - Item: White_Herb
-            Amount: 10
-        NotConsumed:
-          - Item: Increase_Stamina_Study
-      - Product: HP_Increase_PotionM
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Bottle
-            Amount: 10
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: White_Herb
-            Amount: 10
-          - Item: Yellow_Herb
-            Amount: 10
-        NotConsumed:
-          - Item: Increase_Stamina_Study
-      - Product: HP_Increase_PotionL
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Bottle
-            Amount: 10
-          - Item: Fruit_Of_Mastela
-            Amount: 3
-          - Item: Holy_Water
-            Amount: 1
-          - Item: Hot_Sauce
-            Amount: 1
-          - Item: White_Herb
-            Amount: 15
-        NotConsumed:
-          - Item: Increase_Stamina_Study
-      - Product: SP_Increase_PotionS
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Bottle
-            Amount: 10
-          - Item: Grape
-            Amount: 10
-          - Item: Lemon
-            Amount: 10
-          - Item: Sweet_Sauce
-            Amount: 1
-        NotConsumed:
-          - Item: Vital_Drink_CB
-      - Product: SP_Increase_PotionM
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Blue_Herb
-            Amount: 10
-          - Item: Empty_Bottle
-            Amount: 10
-          - Item: Honey
-            Amount: 10
-          - Item: Sweet_Sauce
-            Amount: 1
-        NotConsumed:
-          - Item: Vital_Drink_CB
-      - Product: SP_Increase_PotionL
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Blue_Herb
-            Amount: 15
-          - Item: Empty_Bottle
-            Amount: 10
-          - Item: Royal_Jelly
-            Amount: 10
-          - Item: Sweet_Sauce
-            Amount: 1
-        NotConsumed:
-          - Item: Vital_Drink_CB
-      - Product: Enrich_White_PotionZ
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Alchol
-            Amount: 1
-          - Item: Empty_Cylinder
-            Amount: 10
-          - Item: White_Herb
-            Amount: 10
-          - Item: White_Potion
-            Amount: 20
-        NotConsumed:
-          - Item: Quality_Potion_Book
-      - Product: Vitata500
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Blue_Herb
-            Amount: 10
-          - Item: Empty_Cylinder
-            Amount: 10
-          - Item: Grape
-            Amount: 10
-          - Item: Honey
-            Amount: 10
-        NotConsumed:
-          - Item: Quality_Potion_Book
-      - Product: Enrich_Celermine_Juice
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Awakening_Potion
-            Amount: 5
-          - Item: Center_Potion
-            Amount: 5
-          - Item: Empty_Cylinder
-            Amount: 10
-          - Item: Hot_Sauce
-            Amount: 5
-        NotConsumed:
-          - Item: Quality_Potion_Book
-      - Product: Cure_Free
-        SkillName: GN_S_PHARMACY
-        SkillLevel: 1
-        Consumed:
-          - Item: Empty_Cylinder
-            Amount: 10
-          - Item: Fruit_Of_Mastela
-            Amount: 1
-          - Item: Green_Herb
-            Amount: 20
-          - Item: Leaf_Of_Yggdrasil
-            Amount: 1
-          - Item: Panacea
-            Amount: 5
-        NotConsumed:
-          - Item: Quality_Potion_Book
+- Product: Sword
+  Group: 1
+  SkillName: BS_SWORD
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 2
+- Product: Falchion
+  Group: 1
+  SkillName: BS_SWORD
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 30
+- Product: Blade
+  Group: 1
+  SkillName: BS_SWORD
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 45
+  - Item: Tooth_Of_Bat
+    Amount: 25
+- Product: Knife
+  Group: 1
+  SkillName: BS_DAGGER
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 1
+  - Item: Jellopy
+    Amount: 10
+- Product: Cutter
+  Group: 1
+  SkillName: BS_DAGGER
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 25
+- Product: Main_Gauche
+  Group: 1
+  SkillName: BS_DAGGER
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 50
+- Product: Katana
+  Group: 1
+  SkillName: BS_TWOHANDSWORD
+  SkillLevel: 1
+  Consumed:
+  - Item: Horrendous_Mouth
+    Amount: 15
+  - Item: Iron
+    Amount: 35
+- Product: Axe
+  Group: 1
+  SkillName: BS_AXE
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 10
+- Product: Battle_Axe
+  Group: 1
+  SkillName: BS_AXE
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 110
+- Product: Club
+  Group: 1
+  SkillName: BS_MACE
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 3
+- Product: Mace
+  Group: 1
+  SkillName: BS_MACE
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 30
+- Product: Waghnakh
+  Group: 1
+  SkillName: BS_KNUCKLE
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 160
+  - Item: Scarlet_Jewel
+    Amount: 1
+- Product: Javelin
+  Group: 1
+  SkillName: BS_SPEAR
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 3
+- Product: Spear
+  Group: 1
+  SkillName: BS_SPEAR
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 35
+- Product: Pike
+  Group: 1
+  SkillName: BS_SPEAR
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron
+    Amount: 70
+- Product: Lapier
+  Group: 2
+  SkillName: BS_SWORD
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 20
+- Product: Scimiter
+  Group: 2
+  SkillName: BS_SWORD
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 35
+- Product: Ring_Pommel_Saber
+  Group: 2
+  SkillName: BS_SWORD
+  SkillLevel: 2
+  Consumed:
+  - Item: Claw_Of_Wolves
+    Amount: 50
+  - Item: Steel
+    Amount: 40
+- Product: Dirk
+  Group: 2
+  SkillName: BS_DAGGER
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 17
+- Product: Dagger
+  Group: 2
+  SkillName: BS_DAGGER
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 30
+- Product: Stiletto
+  Group: 2
+  SkillName: BS_DAGGER
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 40
+- Product: Slayer
+  Group: 2
+  SkillName: BS_TWOHANDSWORD
+  SkillLevel: 2
+  Consumed:
+  - Item: Decayed_Nail
+    Amount: 20
+  - Item: Steel
+    Amount: 25
+- Product: Bastard_Sword
+  Group: 2
+  SkillName: BS_TWOHANDSWORD
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 45
+- Product: Hammer
+  Group: 2
+  SkillName: BS_AXE
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 30
+- Product: Smasher
+  Group: 2
+  SkillName: BS_MACE
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 20
+- Product: Flail
+  Group: 2
+  SkillName: BS_MACE
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 33
+- Product: Chain
+  Group: 2
+  SkillName: BS_MACE
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 45
+- Product: Knuckle_Duster
+  Group: 2
+  SkillName: BS_KNUCKLE
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 50
+- Product: Hora
+  Group: 2
+  SkillName: BS_KNUCKLE
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 65
+- Product: Guisarme
+  Group: 2
+  SkillName: BS_SPEAR
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 25
+- Product: Glaive
+  Group: 2
+  SkillName: BS_SPEAR
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 40
+- Product: Partizan
+  Group: 2
+  SkillName: BS_SPEAR
+  SkillLevel: 2
+  Consumed:
+  - Item: Steel
+    Amount: 55
+- Product: Saber
+  Group: 3
+  SkillName: BS_SWORD
+  SkillLevel: 3
+  Consumed:
+  - Item: Oridecon
+    Amount: 8
+  - Item: Steel
+    Amount: 5
+  - Item: White_Jewel
+    Amount: 1
+- Product: Haedonggum
+  Group: 3
+  SkillName: BS_SWORD
+  SkillLevel: 3
+  Consumed:
+  - Item: Golden_Jewel
+    Amount: 1
+  - Item: Oridecon
+    Amount: 8
+  - Item: Steel
+    Amount: 10
+- Product: Tsurugi
+  Group: 3
+  SkillName: BS_SWORD
+  SkillLevel: 3
+  Consumed:
+  - Item: Dark_Red_Jewel
+    Amount: 1
+  - Item: Oridecon
+    Amount: 8
+  - Item: Steel
+    Amount: 15
+- Product: Flamberge
+  Group: 3
+  SkillName: BS_SWORD
+  SkillLevel: 3
+  Consumed:
+  - Item: Cardinal_Jewel_
+    Amount: 1
+  - Item: Oridecon
+    Amount: 16
+- Product: Gladius
+  Group: 3
+  SkillName: BS_DAGGER
+  SkillLevel: 3
+  Consumed:
+  - Item: Blue_Jewel
+    Amount: 1
+  - Item: Oridecon
+    Amount: 4
+  - Item: Steel
+    Amount: 40
+- Product: Damascus
+  Group: 3
+  SkillName: BS_DAGGER
+  SkillLevel: 3
+  Consumed:
+  - Item: Bluish_Green_Jewel
+    Amount: 1
+  - Item: Oridecon
+    Amount: 4
+  - Item: Steel
+    Amount: 60
+- Product: Two_Hand_Sword
+  Group: 3
+  SkillName: BS_TWOHANDSWORD
+  SkillLevel: 3
+  Consumed:
+  - Item: Oridecon
+    Amount: 12
+  - Item: Steel
+    Amount: 10
+- Product: Broad_Sword
+  Group: 3
+  SkillName: BS_TWOHANDSWORD
+  SkillLevel: 3
+  Consumed:
+  - Item: Oridecon
+    Amount: 12
+  - Item: Steel
+    Amount: 20
+- Product: Claymore
+  Group: 3
+  SkillName: BS_TWOHANDSWORD
+  SkillLevel: 3
+  Consumed:
+  - Item: Crystal_Jewel___
+    Amount: 1
+  - Item: Oridecon
+    Amount: 16
+  - Item: Steel
+    Amount: 20
+- Product: Buster
+  Group: 3
+  SkillName: BS_AXE
+  SkillLevel: 3
+  Consumed:
+  - Item: Orcish_Cuspid
+    Amount: 30
+  - Item: Oridecon
+    Amount: 4
+  - Item: Steel
+    Amount: 20
+- Product: Two_Handed_Axe
+  Group: 3
+  SkillName: BS_AXE
+  SkillLevel: 3
+  Consumed:
+  - Item: Oridecon
+    Amount: 8
+  - Item: Steel
+    Amount: 10
+  - Item: Violet_Jewel
+    Amount: 1
+- Product: Morning_Star
+  Group: 3
+  SkillName: BS_MACE
+  SkillLevel: 3
+  Consumed:
+  - Item: Crystal_Jewel
+    Amount: 1
+  - Item: Steel
+    Amount: 85
+- Product: Sword_Mace
+  Group: 3
+  SkillName: BS_MACE
+  SkillLevel: 3
+  Consumed:
+  - Item: Sharp_Scale
+    Amount: 20
+  - Item: Steel
+    Amount: 100
+- Product: Stunner
+  Group: 3
+  SkillName: BS_MACE
+  SkillLevel: 3
+  Consumed:
+  - Item: Steel
+    Amount: 120
+  - Item: Voucher_Of_Orcish_Hero
+    Amount: 1
+- Product: Fist
+  Group: 3
+  SkillName: BS_KNUCKLE
+  SkillLevel: 3
+  Consumed:
+  - Item: Cardinal_Jewel
+    Amount: 10
+  - Item: Oridecon
+    Amount: 4
+- Product: Claw
+  Group: 3
+  SkillName: BS_KNUCKLE
+  SkillLevel: 3
+  Consumed:
+  - Item: Golden_Jewel
+    Amount: 10
+  - Item: Oridecon
+    Amount: 8
+- Product: Finger
+  Group: 3
+  SkillName: BS_KNUCKLE
+  SkillLevel: 3
+  Consumed:
+  - Item: Oridecon
+    Amount: 4
+  - Item: White_Jewel
+    Amount: 10
+- Product: Trident
+  Group: 3
+  SkillName: BS_SPEAR
+  SkillLevel: 3
+  Consumed:
+  - Item: Oridecon
+    Amount: 8
+  - Item: Skyblue_Jewel
+    Amount: 5
+  - Item: Steel
+    Amount: 10
+- Product: Halberd
+  Group: 3
+  SkillName: BS_SPEAR
+  SkillLevel: 3
+  Consumed:
+  - Item: Oridecon
+    Amount: 12
+  - Item: Steel
+    Amount: 10
+- Product: Lance
+  Group: 3
+  SkillName: BS_SPEAR
+  SkillLevel: 3
+  Consumed:
+  - Item: Cardinal_Jewel
+    Amount: 3
+  - Item: Evil_Horn
+    Amount: 2
+  - Item: Oridecon
+    Amount: 12
+- Product: Str_Dish01
+  Group: 11
+  Consumed:
+  - Item: Cooking_Oil
+    Amount: 1
+  - Item: Grasshopper's_Leg
+    Amount: 5
+  - Item: Old_Frying_Pan
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook01
+- Product: Int_Dish01
+  Group: 11
+  Consumed:
+  - Item: Grape
+    Amount: 3
+  - Item: Red_Potion
+    Amount: 2
+  NotConsumed:
+  - Item: Cookbook01
+- Product: Vit_Dish01
+  Group: 11
+  Consumed:
+  - Item: Green_Herb
+    Amount: 10
+  - Item: Nipper
+    Amount: 10
+  - Item: Yellow_Potion
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook01
+- Product: Agi_Dish01
+  Group: 11
+  Consumed:
+  - Item: Chinese_Ink
+    Amount: 1
+  - Item: Grain
+    Amount: 1
+  - Item: Spawn
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook01
+- Product: Dex_Dish01
+  Group: 11
+  Consumed:
+  - Item: Grape
+    Amount: 2
+  - Item: Honey
+    Amount: 1
+  - Item: Red_Potion
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook01
+- Product: Luk_Dish01
+  Group: 11
+  Consumed:
+  - Item: Cooking_Oil
+    Amount: 1
+  - Item: Old_Frying_Pan
+    Amount: 1
+  - Item: Yoyo_Tail
+    Amount: 5
+  NotConsumed:
+  - Item: Cookbook01
+- Product: Str_Dish02
+  Group: 12
+  Consumed:
+  - Item: Green_Herb
+    Amount: 10
+  - Item: Plain_Sauce
+    Amount: 1
+  - Item: Sticky_Webfoot
+    Amount: 20
+  - Item: Yellow_Herb
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook02
+- Product: Vit_Dish02
+  Group: 12
+  Consumed:
+  - Item: Delicious_Fish
+    Amount: 1
+  - Item: Fin
+    Amount: 5
+  - Item: Flesh_Of_Clam
+    Amount: 10
+  - Item: Gill
+    Amount: 5
+  NotConsumed:
+  - Item: Cookbook02
+- Product: Int_Dish02
+  Group: 12
+  Consumed:
+  - Item: Blue_Herb
+    Amount: 5
+  - Item: Red_Herb
+    Amount: 10
+  - Item: Yellow_Herb
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook02
+- Product: Agi_Dish02
+  Group: 12
+  Consumed:
+  - Item: Carrot
+    Amount: 3
+  - Item: Grain
+    Amount: 1
+  - Item: Plain_Sauce
+    Amount: 1
+  - Item: Pumpkin_Head
+    Amount: 5
+  NotConsumed:
+  - Item: Cookbook02
+- Product: Dex_Dish02
+  Group: 12
+  Consumed:
+  - Item: Cacao
+    Amount: 10
+  - Item: Milk
+    Amount: 1
+  - Item: Piece_Of_Cake
+    Amount: 1
+  - Item: White_Platter
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook02
+- Product: Luk_Dish02
+  Group: 12
+  Consumed:
+  - Item: Apple_Juice
+    Amount: 3
+  - Item: Carrot_Juice
+    Amount: 2
+  - Item: Grape_Juice
+    Amount: 1
+  - Item: Orange_Juice
+    Amount: 2
+  NotConsumed:
+  - Item: Cookbook02
+- Product: Dex_Dish03
+  Group: 13
+  Consumed:
+  - Item: Apple
+    Amount: 5
+  - Item: Banana
+    Amount: 5
+  - Item: Orange
+    Amount: 5
+  - Item: Strawberry
+    Amount: 5
+  - Item: Yellow_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook03
+- Product: Int_Dish03
+  Group: 13
+  Consumed:
+  - Item: Honey
+    Amount: 2
+  - Item: White_Herb
+    Amount: 10
+  - Item: Yellow_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook03
+- Product: Str_Dish03
+  Group: 13
+  Consumed:
+  - Item: Chilli
+    Amount: 5
+  - Item: Green_Herb
+    Amount: 10
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Meat
+    Amount: 4
+  - Item: Old_Frying_Pan
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook03
+- Product: Vit_Dish03
+  Group: 13
+  Consumed:
+  - Item: Conch
+    Amount: 10
+  - Item: Flesh_Of_Clam
+    Amount: 20
+  - Item: Honey
+    Amount: 1
+  - Item: Sweet_Sauce
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook03
+- Product: Agi_Dish03
+  Group: 13
+  Consumed:
+  - Item: Cheese
+    Amount: 10
+  - Item: Nice_Sweet_Potato
+    Amount: 5
+  - Item: Sweet_Sauce
+    Amount: 1
+  - Item: Tentacle
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook03
+- Product: Luk_Dish03
+  Group: 13
+  Consumed:
+  - Item: Baked_Yam
+    Amount: 1
+  - Item: Nice_Sweet_Potato
+    Amount: 10
+  - Item: Sweet_Potato
+    Amount: 10
+  - Item: Sweet_Sauce
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook03
+- Product: Int_Dish04
+  Group: 14
+  Consumed:
+  - Item: Alchol
+    Amount: 2
+  - Item: Grape
+    Amount: 5
+  - Item: Lemon
+    Amount: 4
+  - Item: Orange
+    Amount: 10
+  - Item: Strawberry
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook04
+- Product: Vit_Dish04
+  Group: 14
+  Consumed:
+  - Item: Chinese_Ink
+    Amount: 20
+  - Item: Old_Frying_Pan
+    Amount: 1
+  - Item: Soft_Leaf
+    Amount: 10
+  - Item: Tentacle
+    Amount: 30
+  - Item: White_Herb
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook04
+- Product: Str_Dish04
+  Group: 14
+  Consumed:
+  - Item: Green_Herb
+    Amount: 3
+  - Item: Lemon
+    Amount: 1
+  - Item: Meat
+    Amount: 5
+  - Item: Red_Herb
+    Amount: 3
+  - Item: Sweet_Sauce
+    Amount: 1
+  - Item: Yellow_Herb
+    Amount: 2
+  NotConsumed:
+  - Item: Cookbook04
+- Product: Dex_Dish04
+  Group: 14
+  Consumed:
+  - Item: Bread
+    Amount: 5
+  - Item: Cheese
+    Amount: 10
+  - Item: Meat
+    Amount: 1
+  - Item: Milk
+    Amount: 15
+  - Item: Sweet_Sauce
+    Amount: 1
+  - Item: Yellow_Herb
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook04
+- Product: Agi_Dish04
+  Group: 14
+  Consumed:
+  - Item: Carrot
+    Amount: 10
+  - Item: Grain
+    Amount: 3
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Ice_Piece
+    Amount: 10
+  - Item: Pumpkin_Head
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook04
+- Product: Luk_Dish04
+  Group: 14
+  Consumed:
+  - Item: Delicious_Fish
+    Amount: 5
+  - Item: Lip_Of_Ancient_Fish
+    Amount: 10
+  - Item: Raccoon_Leaf
+    Amount: 10
+  - Item: Sweet_Sauce
+    Amount: 2
+  - Item: White_Herb
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook04
+- Product: Int_Dish05
+  Group: 15
+  Consumed:
+  - Item: Alchol
+    Amount: 2
+  - Item: Blue_Potion
+    Amount: 1
+  - Item: Fruit_Of_Mastela
+    Amount: 4
+  - Item: Lemon
+    Amount: 2
+  - Item: Yellow_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook05
+- Product: Str_Dish05
+  Group: 15
+  Consumed:
+  - Item: Carrot
+    Amount: 3
+  - Item: Cooking_Oil
+    Amount: 1
+  - Item: Grain
+    Amount: 1
+  - Item: Honey
+    Amount: 2
+  - Item: Sweet_Potato
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook05
+- Product: Dex_Dish05
+  Group: 15
+  Consumed:
+  - Item: Great_Leaf
+    Amount: 6
+  - Item: Leaflet_Of_Aloe
+    Amount: 3
+  - Item: Leaflet_Of_Hinal
+    Amount: 2
+  - Item: Sharp_Leaf
+    Amount: 10
+  - Item: Sweet_Sauce
+    Amount: 1
+  - Item: Yellow_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook05
+- Product: Agi_Dish05
+  Group: 15
+  Consumed:
+  - Item: Leaflet_Of_Hinal
+    Amount: 10
+  - Item: Pot
+    Amount: 1
+  - Item: Pumpkin_Head
+    Amount: 20
+  - Item: Red_Herb
+    Amount: 10
+  - Item: Wing_Of_Red_Bat
+    Amount: 20
+  NotConsumed:
+  - Item: Cookbook05
+- Product: Vit_Dish05
+  Group: 15
+  Consumed:
+  - Item: Bun
+    Amount: 20
+  - Item: Green_Herb
+    Amount: 20
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Red_Spice
+    Amount: 1
+  - Item: Yellow_Herb
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook05
+- Product: Luk_Dish05
+  Group: 15
+  Consumed:
+  - Item: Cooking_Oil
+    Amount: 1
+  - Item: Great_Leaf
+    Amount: 10
+  - Item: Old_Frying_Pan
+    Amount: 2
+  - Item: Scorpion's_Tail
+    Amount: 20
+  - Item: Short_Leg
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook05
+- Product: Str_Dish06
+  Group: 16
+  Consumed:
+  - Item: Fruit_Of_Mastela
+    Amount: 1
+  - Item: Honey
+    Amount: 2
+  - Item: Meat
+    Amount: 10
+  - Item: Shining_Scales
+    Amount: 20
+  - Item: Yellow_Herb
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook06
+- Product: Int_Dish06
+  Group: 16
+  Consumed:
+  - Item: Alchol
+    Amount: 1
+  - Item: Grape_Juice
+    Amount: 3
+  - Item: Mushroom
+    Amount: 3
+  - Item: Mushroom_Spore
+    Amount: 20
+  - Item: Red_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook06
+- Product: Dex_Dish06
+  Group: 16
+  Consumed:
+  - Item: Cheese
+    Amount: 10
+  - Item: Hard_Peach
+    Amount: 20
+  - Item: Milk
+    Amount: 10
+  - Item: Orange_Juice
+    Amount: 5
+  - Item: Piece_Of_Cake
+    Amount: 10
+  - Item: Sweet_Sauce
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook06
+- Product: Agi_Dish06
+  Group: 16
+  Consumed:
+  - Item: Chilli
+    Amount: 20
+  - Item: Lemon
+    Amount: 20
+  - Item: Prawn
+    Amount: 20
+  - Item: Sweet_Sauce
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook06
+- Product: Vit_Dish06
+  Group: 16
+  Consumed:
+  - Item: Browny_Root
+    Amount: 20
+  - Item: Honey
+    Amount: 2
+  - Item: Mushroom
+    Amount: 1
+  - Item: Mushroom_Spore
+    Amount: 20
+  - Item: Root_Of_Maneater
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook06
+- Product: Luk_Dish06
+  Group: 16
+  Consumed:
+  - Item: Aloe
+    Amount: 1
+  - Item: Clover
+    Amount: 10
+  - Item: Reptile_Tongue
+    Amount: 5
+  - Item: Starsand_Of_Witch
+    Amount: 10
+  - Item: Thin_N'_Long_Tongue
+    Amount: 5
+  NotConsumed:
+  - Item: Cookbook06
+- Product: Str_Dish07
+  Group: 17
+  Consumed:
+  - Item: Coal
+    Amount: 2
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Live_Coal
+    Amount: 1
+  - Item: Meat
+    Amount: 10
+  - Item: White_Herb
+    Amount: 10
+  - Item: Wooden_Block
+    Amount: 15
+  NotConsumed:
+  - Item: Cookbook07
+- Product: Int_Dish07
+  Group: 17
+  Consumed:
+  - Item: Honey
+    Amount: 2
+  - Item: Leaflet_Of_Hinal
+    Amount: 10
+  - Item: Royal_Jelly
+    Amount: 4
+  - Item: White_Herb
+    Amount: 5
+  - Item: Yellow_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook07
+- Product: Dex_Dish07
+  Group: 17
+  Consumed:
+  - Item: Amulet
+    Amount: 5
+  - Item: Bread
+    Amount: 10
+  - Item: Fruit_Of_Mastela
+    Amount: 5
+  - Item: Ment
+    Amount: 5
+  - Item: Sweet_Sauce
+    Amount: 1
+  - Item: Unripe_Apple
+    Amount: 2
+  NotConsumed:
+  - Item: Cookbook07
+- Product: Agi_Dish07
+  Group: 17
+  Consumed:
+  - Item: Anolian_Skin
+    Amount: 10
+  - Item: Carrot
+    Amount: 10
+  - Item: Leaflet_Of_Aloe
+    Amount: 10
+  - Item: Pumpkin_Head
+    Amount: 10
+  - Item: Yellow_Herb
+    Amount: 10
+  - Item: Yellow_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook07
+- Product: Vit_Dish07
+  Group: 17
+  Consumed:
+  - Item: Delicious_Fish
+    Amount: 2
+  - Item: Fish_Tail
+    Amount: 10
+  - Item: Leaflet_Of_Aloe
+    Amount: 5
+  - Item: Pet_Food
+    Amount: 10
+  - Item: Sweet_Sauce
+    Amount: 1
+  - Item: Wild_Boar's_Mane
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook07
+- Product: Luk_Dish07
+  Group: 17
+  Consumed:
+  - Item: Flesh_Of_Clam
+    Amount: 10
+  - Item: Gill
+    Amount: 5
+  - Item: Meat
+    Amount: 5
+  - Item: Mushroom
+    Amount: 10
+  - Item: Scales_Shell
+    Amount: 10
+  - Item: Soft_Leaf
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook07
+- Product: Str_Dish08
+  Group: 18
+  Consumed:
+  - Item: Bear's_Foot
+    Amount: 20
+  - Item: Carrot
+    Amount: 10
+  - Item: Leaflet_Of_Aloe
+    Amount: 2
+  - Item: Leaflet_Of_Hinal
+    Amount: 1
+  - Item: Plain_Sauce
+    Amount: 1
+  - Item: Pumpkin_Head
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook08
+- Product: Int_Dish08
+  Group: 18
+  Consumed:
+  - Item: Leaf_Of_Yggdrasil
+    Amount: 3
+  - Item: Leaflet_Of_Aloe
+    Amount: 10
+  - Item: Leaflet_Of_Hinal
+    Amount: 10
+  - Item: Prickly_Fruit
+    Amount: 4
+  - Item: Royal_Jelly
+    Amount: 6
+  - Item: Yellow_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook08
+- Product: Dex_Dish08
+  Group: 18
+  Consumed:
+  - Item: Bread
+    Amount: 10
+  - Item: Cheese
+    Amount: 10
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Meat
+    Amount: 5
+  - Item: Royal_Jelly
+    Amount: 2
+  - Item: Strawberry
+    Amount: 10
+  - Item: Sweet_Sauce
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook08
+- Product: Agi_Dish08
+  Group: 18
+  Consumed:
+  - Item: Aloebera
+    Amount: 1
+  - Item: Carrot
+    Amount: 10
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Leaflet_Of_Hinal
+    Amount: 10
+  - Item: Meat
+    Amount: 10
+  - Item: Pumpkin_Head
+    Amount: 10
+  NotConsumed:
+  - Item: Cookbook08
+- Product: Vit_Dish08
+  Group: 18
+  Consumed:
+  - Item: Grain
+    Amount: 2
+  - Item: Leaf_Clothes
+    Amount: 20
+  - Item: Meat
+    Amount: 20
+  - Item: Plain_Sauce
+    Amount: 1
+  - Item: Pumpkin_Head
+    Amount: 10
+  - Item: Rainbow_Carrot
+    Amount: 5
+  NotConsumed:
+  - Item: Cookbook08
+- Product: Luk_Dish08
+  Group: 18
+  Consumed:
+  - Item: Grain
+    Amount: 5
+  - Item: Leaf_Clothes
+    Amount: 10
+  - Item: Plain_Sauce
+    Amount: 1
+  - Item: Red_Spice
+    Amount: 2
+  - Item: Strawberry
+    Amount: 10
+  - Item: Yellow_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook08
+- Product: Str_Dish09
+  Group: 19
+  Consumed:
+  - Item: Cheese
+    Amount: 10
+  - Item: Chinese_Ink
+    Amount: 10
+  - Item: Coal
+    Amount: 2
+  - Item: Green_Herb
+    Amount: 30
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Pot
+    Amount: 1
+  - Item: Tendon
+    Amount: 40
+  NotConsumed:
+  - Item: Cookbook09
+- Product: Int_Dish09
+  Group: 19
+  Consumed:
+  - Item: Alchol
+    Amount: 5
+  - Item: Blue_Potion
+    Amount: 2
+  - Item: Leaf_Of_Yggdrasil
+    Amount: 10
+  - Item: Leaflet_Of_Aloe
+    Amount: 10
+  - Item: Orange
+    Amount: 10
+  - Item: Royal_Jelly
+    Amount: 4
+  - Item: Yellow_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook09
+- Product: Dex_Dish09
+  Group: 19
+  Consumed:
+  - Item: Alchol
+    Amount: 2
+  - Item: Grape_Juice
+    Amount: 5
+  - Item: Orange
+    Amount: 10
+  - Item: Red_Spice
+    Amount: 1
+  - Item: Strawberry
+    Amount: 10
+  - Item: Tropical_Banana
+    Amount: 1
+  - Item: Unripe_Apple
+    Amount: 5
+  NotConsumed:
+  - Item: Cookbook09
+- Product: Agi_Dish09
+  Group: 19
+  Consumed:
+  - Item: Meat
+    Amount: 10
+  - Item: Plain_Sauce
+    Amount: 4
+  - Item: Red_Herb
+    Amount: 5
+  - Item: Royal_Jelly
+    Amount: 5
+  - Item: Shoot
+    Amount: 20
+  - Item: White_Herb
+    Amount: 10
+  - Item: Yellow_Herb
+    Amount: 5
+  NotConsumed:
+  - Item: Cookbook09
+- Product: Vit_Dish09
+  Group: 19
+  Consumed:
+  - Item: Dragon's_Skin
+    Amount: 10
+  - Item: Dragon_Train
+    Amount: 20
+  - Item: Fatty_Chubby_Earthworm
+    Amount: 1
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Leaf_Of_Yggdrasil
+    Amount: 3
+  - Item: Red_Spice
+    Amount: 1
+  - Item: Royal_Jelly
+    Amount: 6
+  NotConsumed:
+  - Item: Cookbook09
+- Product: Luk_Dish09
+  Group: 19
+  Consumed:
+  - Item: Alchol
+    Amount: 2
+  - Item: Aloebera
+    Amount: 2
+  - Item: Animal_Blood
+    Amount: 1
+  - Item: Anodyne
+    Amount: 2
+  - Item: Apple_Juice
+    Amount: 10
+  - Item: Red_Spice
+    Amount: 1
+  - Item: Royal_Jelly
+    Amount: 6
+  NotConsumed:
+  - Item: Cookbook09
+- Product: Str_Dish10
+  Group: 20
+  Consumed:
+  - Item: Alchol
+    Amount: 1
+  - Item: Aloebera
+    Amount: 2
+  - Item: Blue_Potion
+    Amount: 2
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Leaf_Of_Yggdrasil
+    Amount: 10
+  - Item: Pot
+    Amount: 1
+  - Item: Royal_Jelly
+    Amount: 5
+  - Item: Thin_N'_Long_Tongue
+    Amount: 20
+  NotConsumed:
+  - Item: Cookbook10
+- Product: Int_Dish10
+  Group: 20
+  Consumed:
+  - Item: Blue_Herb
+    Amount: 10
+  - Item: Leaflet_Of_Aloe
+    Amount: 5
+  - Item: Lemon
+    Amount: 5
+  - Item: Prickly_Fruit
+    Amount: 5
+  - Item: Root_Of_Maneater
+    Amount: 10
+  - Item: Royal_Jelly
+    Amount: 5
+  - Item: Singing_Plant
+    Amount: 1
+  - Item: Yggdrasilberry
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook10
+- Product: Dex_Dish10
+  Group: 20
+  Consumed:
+  - Item: Alchol
+    Amount: 5
+  - Item: Center_Potion
+    Amount: 3
+  - Item: Ice_Piece
+    Amount: 10
+  - Item: Illusion_Flower
+    Amount: 1
+  - Item: Prickly_Fruit
+    Amount: 2
+  - Item: Royal_Jelly
+    Amount: 4
+  - Item: Spawns
+    Amount: 10
+  - Item: Yggdrasilberry
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook10
+- Product: Agi_Dish10
+  Group: 20
+  Consumed:
+  - Item: Aloebera
+    Amount: 2
+  - Item: Bitter_Herb
+    Amount: 3
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Leaf_Of_Yggdrasil
+    Amount: 3
+  - Item: Pot
+    Amount: 1
+  - Item: Royal_Jelly
+    Amount: 10
+  - Item: Scorpion's_Tail
+    Amount: 20
+  - Item: Scropion's_Nipper
+    Amount: 20
+  NotConsumed:
+  - Item: Cookbook10
+- Product: Vit_Dish10
+  Group: 20
+  Consumed:
+  - Item: Amulet
+    Amount: 10
+  - Item: Anodyne
+    Amount: 2
+  - Item: Bitter_Herb
+    Amount: 2
+  - Item: Heart_Of_Mermaid
+    Amount: 10
+  - Item: Hot_Sauce
+    Amount: 2
+  - Item: Immortal_Heart
+    Amount: 20
+  - Item: Mementos
+    Amount: 10
+  - Item: Seed_Of_Yggdrasil
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook10
+- Product: Luk_Dish10
+  Group: 20
+  Consumed:
+  - Item: Four_Leaf_Clover
+    Amount: 2
+  - Item: Fox_Tail
+    Amount: 10
+  - Item: Izidor
+    Amount: 2
+  - Item: Leaf_Of_Yggdrasil
+    Amount: 4
+  - Item: Plain_Sauce
+    Amount: 1
+  - Item: Root_Of_Maneater
+    Amount: 10
+  - Item: Sharp_Leaf
+    Amount: 10
+  - Item: Yellow_Spice
+    Amount: 1
+  NotConsumed:
+  - Item: Cookbook10
+- Product: Iron
+  Group: 21
+  SkillName: BS_IRON
+  SkillLevel: 1
+  Consumed:
+  - Item: Iron_Ore
+    Amount: 1
+- Product: Steel
+  Group: 21
+  SkillName: BS_STEEL
+  SkillLevel: 1
+  Consumed:
+  - Item: Coal
+    Amount: 1
+  - Item: Iron
+    Amount: 5
+- Product: Star_Crumb
+  Group: 21
+  SkillName: BS_ENCHANTEDSTONE
+  SkillLevel: 1
+  Consumed:
+  - Item: Sparkling_Dust
+    Amount: 10
+- Product: Flame_Heart
+  Group: 21
+  SkillName: BS_ENCHANTEDSTONE
+  SkillLevel: 1
+  Consumed:
+  - Item: Boody_Red
+    Amount: 10
+- Product: Mistic_Frozen
+  Group: 21
+  SkillName: BS_ENCHANTEDSTONE
+  SkillLevel: 1
+  Consumed:
+  - Item: Crystal_Blue
+    Amount: 10
+- Product: Great_Nature
+  Group: 21
+  SkillName: BS_ENCHANTEDSTONE
+  SkillLevel: 1
+  Consumed:
+  - Item: Yellow_Live
+    Amount: 10
+- Product: Rough_Wind
+  Group: 21
+  SkillName: BS_ENCHANTEDSTONE
+  SkillLevel: 1
+  Consumed:
+  - Item: Wind_Of_Verdure
+    Amount: 10
+- Product: Red_Potion
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Potion
+    Amount: 1
+  - Item: Red_Herb
+    Amount: 1
+  NotConsumed:
+  - Item: Normal_Potion_Book
+- Product: Yellow_Potion
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Potion
+    Amount: 1
+  - Item: Yellow_Herb
+    Amount: 1
+  NotConsumed:
+  - Item: Normal_Potion_Book
+- Product: White_Potion
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Potion
+    Amount: 1
+  - Item: White_Herb
+    Amount: 1
+  NotConsumed:
+  - Item: Normal_Potion_Book
+- Product: Blue_Potion
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Blue_Herb
+    Amount: 1
+  - Item: Empty_Potion
+    Amount: 1
+  - Item: Scell
+    Amount: 1
+  NotConsumed:
+  - Item: Normal_Potion_Book
+- Product: Red_Slim_Potion
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Cactus_Needle
+    Amount: 1
+  - Item: Empty_Cylinder
+    Amount: 1
+  - Item: Red_Potion
+    Amount: 1
+  NotConsumed:
+  - Item: Slim_Potion_Create_Book
+- Product: Yellow_Slim_Potion
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Cylinder
+    Amount: 1
+  - Item: Moustache_Of_Mole
+    Amount: 1
+  - Item: Yellow_Potion
+    Amount: 1
+  NotConsumed:
+  - Item: Slim_Potion_Create_Book
+- Product: White_Slim_Potion
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Cylinder
+    Amount: 1
+  - Item: Starsand_Of_Witch
+    Amount: 1
+  - Item: White_Potion
+    Amount: 1
+  NotConsumed:
+  - Item: Slim_Potion_Create_Book
+- Product: Holy_Water
+  Group: 22
+  SkillName: AL_HOLYWATER
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Bottle
+    Amount: 1
+- Product: Poison_Bottle
+  Group: 22
+  SkillName: ASC_CDP
+  SkillLevel: 1
+  Consumed:
+  - Item: Bee_Sting
+    Amount: 1
+  - Item: Berserk_Potion
+    Amount: 1
+  - Item: Cactus_Needle
+    Amount: 1
+  - Item: Empty_Bottle
+    Amount: 1
+  - Item: Karvodailnirol
+    Amount: 1
+  - Item: Poison_Spore
+    Amount: 1
+  - Item: Posionous_Canine
+    Amount: 1
+- Product: Fire_Bottle
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Alchol
+    Amount: 1
+  - Item: Empty_Bottle
+    Amount: 1
+  - Item: Transparent_Cloth
+    Amount: 1
+  NotConsumed:
+  - Item: FireBottle_Create_Book
+- Product: Acid_Bottle
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Bottle
+    Amount: 1
+  - Item: Immortal_Heart
+    Amount: 1
+  NotConsumed:
+  - Item: Acid_Create_Book
+- Product: MenEater_Plant_Bottle
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Blossom_Of_Maneater
+    Amount: 2
+  - Item: Empty_Bottle
+    Amount: 1
+  NotConsumed:
+  - Item: Plant_Create_Book
+- Product: Mini_Bottle
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Detonator
+    Amount: 1
+  - Item: Empty_Bottle
+    Amount: 1
+  - Item: Tendon
+    Amount: 1
+  NotConsumed:
+  - Item: Mine_Create_Book
+- Product: Coating_Bottle
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Alchol
+    Amount: 1
+  - Item: Empty_Bottle
+    Amount: 1
+  - Item: Heart_Of_Mermaid
+    Amount: 1
+  - Item: Tooth_Of_
+    Amount: 1
+  NotConsumed:
+  - Item: Coating_Create_Book
+- Product: Resist_Fire
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Potion
+    Amount: 1
+  - Item: Lizard_Scruff
+    Amount: 2
+  - Item: Red_Gemstone
+    Amount: 1
+  NotConsumed:
+  - Item: Elemental_Potion_Book
+- Product: Resist_Water
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Blue_Gemstone
+    Amount: 1
+  - Item: Empty_Potion
+    Amount: 1
+  - Item: Heart_Of_Mermaid
+    Amount: 3
+  NotConsumed:
+  - Item: Elemental_Potion_Book
+- Product: Resist_Earth
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Potion
+    Amount: 1
+  - Item: Large_Jellopy
+    Amount: 2
+  - Item: Yellow_Gemstone
+    Amount: 1
+  NotConsumed:
+  - Item: Elemental_Potion_Book
+- Product: Resist_Wind
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Blue_Gemstone
+    Amount: 1
+  - Item: Empty_Potion
+    Amount: 1
+  - Item: Moth_Dust
+    Amount: 3
+  NotConsumed:
+  - Item: Elemental_Potion_Book
+- Product: Anodyne
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Alchol
+    Amount: 1
+  - Item: Empty_Bottle
+    Amount: 1
+  - Item: Ment
+    Amount: 1
+  NotConsumed:
+  - Item: Normal_Potion_Book
+- Product: Aloebera
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Aloe
+    Amount: 1
+  - Item: Empty_Bottle
+    Amount: 1
+  - Item: Honey
+    Amount: 1
+  NotConsumed:
+  - Item: Normal_Potion_Book
+- Product: Alchol
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Bottle
+    Amount: 1
+  - Item: Empty_Cylinder
+    Amount: 1
+  - Item: Poison_Spore
+    Amount: 5
+  - Item: Stem
+    Amount: 5
+  NotConsumed:
+  - Item: Alcol_Create_Book
+- Product: Germination_Breed
+  Group: 22
+  SkillName: AM_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Life_Force_Pot
+    Amount: 1
+  - Item: Seed_Of_Life
+    Amount: 1
+  - Item: Yggdrasilberry_Dew
+    Amount: 1
+  NotConsumed:
+  - Item: Normal_Potion_Book
+# - Product: Homun_F_Tablet
+#   Group: 22
+#   SkillName: AM_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Empty_Bottle
+#     Amount: 1
+#   - Item: Seed_Of_Life
+#     Amount: 1
+#   - Item: Yellow_Herb
+#     Amount: 1
+#   NotConsumed:
+#   - Item: Normal_Potion_Book
+- Product: Elemental_Fire
+  Group: 23
+  SkillName: SA_CREATECON
+  SkillLevel: 1
+  Consumed:
+  - Item: Scroll
+    Amount: 1
+  - Item: Scorpion's_Tail
+    Amount: 3
+- Product: Elemental_Water
+  Group: 23
+  SkillName: SA_CREATECON
+  SkillLevel: 1
+  Consumed:
+  - Item: Scroll
+    Amount: 1
+  - Item: Snail's_Shell
+    Amount: 3
+- Product: Elemental_Earth
+  Group: 23
+  SkillName: SA_CREATECON
+  SkillLevel: 1
+  Consumed:
+  - Item: Scroll
+    Amount: 1
+  - Item: Horn
+    Amount: 3
+- Product: Elemental_Wind
+  Group: 23
+  SkillName: SA_CREATECON
+  SkillLevel: 1
+  Consumed:
+  - Item: Scroll
+    Amount: 1
+  - Item: Colorful_Shell
+    Amount: 3
+- Product: Ansila
+  Group: 24
+  SkillName: AB_ANCILLA
+  SkillLevel: 1
+  Consumed:
+  - Item: Blue_Gemstone
+    Amount: 1
+- Product: Runstone_Nosiege
+  Group: 24
+  SkillName: RK_RUNEMASTERY
+  SkillLevel: 8
+  Consumed:
+  - Item: Broken_Armor_Piece
+    Amount: 1
+  - Item: Elder_Branch
+    Amount: 1
+  - Item: Light_Granule
+    Amount: 1
+  - Item: Old_Magic_Circle
+    Amount: 1
+- Product: Runstone_Rhydo
+  Group: 24
+  SkillName: RK_RUNEMASTERY
+  SkillLevel: 7
+  Consumed:
+  - Item: Elder_Branch
+    Amount: 1
+  - Item: Light_Granule
+    Amount: 1
+  - Item: Red_Gemstone
+    Amount: 1
+- Product: Runstone_Verkana
+  Group: 24
+  SkillName: RK_RUNEMASTERY
+  SkillLevel: 9
+  Consumed:
+  - Item: Dullahan_Armor
+    Amount: 1
+  - Item: Elder_Branch
+    Amount: 1
+- Product: Runstone_Isia
+  Group: 24
+  SkillName: RK_RUNEMASTERY
+  SkillLevel: 2
+  Consumed:
+  - Item: Burning_Heart
+    Amount: 1
+  - Item: Elder_Branch
+    Amount: 1
+- Product: Runstone_Asir
+  Group: 24
+  SkillName: RK_RUNEMASTERY
+  SkillLevel: 5
+  Consumed:
+  - Item: Elder_Branch
+    Amount: 1
+  - Item: Light_Granule
+    Amount: 1
+  - Item: Ogre_Tooth
+    Amount: 1
+- Product: Runstone_Urj
+  Group: 24
+  SkillName: RK_RUNEMASTERY
+  SkillLevel: 6
+  Consumed:
+  - Item: Elder_Branch
+    Amount: 1
+  - Item: Honey
+    Amount: 1
+  - Item: Slender_Snake
+    Amount: 1
+- Product: Runstone_Turisus
+  Group: 24
+  SkillName: RK_RUNEMASTERY
+  SkillLevel: 1
+  Consumed:
+  - Item: Claw_Of_Desert_Wolf
+    Amount: 1
+  - Item: Cobold_Hair
+    Amount: 1
+  - Item: Elder_Branch
+    Amount: 1
+- Product: Runstone_Pertz
+  Group: 24
+  SkillName: RK_RUNEMASTERY
+  SkillLevel: 3
+  Consumed:
+  - Item: Dragon_Canine
+    Amount: 1
+  - Item: Elder_Branch
+    Amount: 1
+  - Item: Light_Granule
+    Amount: 1
+  - Item: Tangled_Chain
+    Amount: 1
+- Product: Runstone_Hagalas
+  Group: 24
+  SkillName: RK_RUNEMASTERY
+  SkillLevel: 4
+  Consumed:
+  - Item: Dragon's_Skin
+    Amount: 1
+  - Item: Elder_Branch
+    Amount: 1
+  - Item: Round_Shell
+    Amount: 1
+# - Product: Runstone_Lux
+#   Group: 24
+#   SkillName: RK_RUNEMASTERY
+#   SkillLevel: 10
+#   Consumed:
+#   - Item: Gold
+#     Amount: 3
+#   - Item: Light_Granule
+#     Amount: 3
+- Product: Guillotine_Antidote
+  Group: 25
+  SkillName: GC_RESEARCHNEWPOISON
+  SkillLevel: 5
+  Consumed:
+  - Item: Blue_Herb
+    Amount: 1
+  - Item: Green_Herb
+    Amount: 2
+  - Item: White_Herb
+    Amount: 1
+- Product: Poison_Paralysis
+  Group: 25
+  SkillName: GC_RESEARCHNEWPOISON
+  SkillLevel: 1
+  Consumed:
+  - Item: Medicine_Bowl
+    Amount: 1
+  - Item: Poison_Herb_Amoena
+    Amount: 1
+  - Item: Poison_Kit
+    Amount: 1
+  - Item: Poison_Toad's_Skin
+    Amount: 20
+- Product: Poison_Leech
+  Group: 25
+  SkillName: GC_RESEARCHNEWPOISON
+  SkillLevel: 4
+  Consumed:
+  - Item: Medicine_Bowl
+    Amount: 1
+  - Item: Poison_Herb_Nerium
+    Amount: 1
+  - Item: Poison_Herb_Scopolia
+    Amount: 1
+  - Item: Poison_Kit
+    Amount: 1
+- Product: Poison_Oblivion
+  Group: 25
+  SkillName: GC_RESEARCHNEWPOISON
+  SkillLevel: 9
+  Consumed:
+  - Item: Heart_Of_Mermaid
+    Amount: 10
+  - Item: Izidor
+    Amount: 1
+  - Item: Medicine_Bowl
+    Amount: 1
+  - Item: Poison_Kit
+    Amount: 1
+- Product: Poison_Contamination
+  Group: 25
+  SkillName: GC_RESEARCHNEWPOISON
+  SkillLevel: 3
+  Consumed:
+  - Item: Decayed_Nail
+    Amount: 25
+  - Item: Medicine_Bowl
+    Amount: 1
+  - Item: Poison_Herb_Seratum
+    Amount: 1
+  - Item: Poison_Kit
+    Amount: 1
+- Product: Poison_Numb
+  Group: 25
+  SkillName: GC_RESEARCHNEWPOISON
+  SkillLevel: 8
+  Consumed:
+  - Item: Medicine_Bowl
+    Amount: 1
+  - Item: Poison_Herb_Nerium
+    Amount: 1
+  - Item: Poison_Kit
+    Amount: 1
+  - Item: Sticky_Poison
+    Amount: 10
+- Product: Poison_Fever
+  Group: 25
+  SkillName: GC_RESEARCHNEWPOISON
+  SkillLevel: 2
+  Consumed:
+  - Item: Anolian_Skin
+    Amount: 20
+  - Item: Medicine_Bowl
+    Amount: 1
+  - Item: Poison_Herb_Rantana
+    Amount: 1
+  - Item: Poison_Kit
+    Amount: 1
+- Product: Poison_Laughing
+  Group: 25
+  SkillName: GC_RESEARCHNEWPOISON
+  SkillLevel: 7
+  Consumed:
+  - Item: Medicine_Bowl
+    Amount: 1
+  - Item: Poison_Herb_Makulata
+    Amount: 1
+  - Item: Poison_Kit
+    Amount: 1
+  - Item: Poison_Spore
+    Amount: 10
+- Product: Poison_Fatigue
+  Group: 25
+  SkillName: GC_RESEARCHNEWPOISON
+  SkillLevel: 6
+  Consumed:
+  - Item: Izidor
+    Amount: 1
+  - Item: Medicine_Bowl
+    Amount: 1
+  - Item: Poison_Kit
+    Amount: 1
+  - Item: Sticky_Poison
+    Amount: 10
+- Product: Savage_BBQ
+  Group: 27
+  SkillName: GN_MIX_COOKING
+  SkillLevel: 1
+  Consumed:
+  - Item: Black_Charcoal
+    Amount: 1
+  - Item: Cooking_Skewer
+    Amount: 1
+  - Item: Melange_Pot
+    Amount: 1
+  - Item: Savage_Meat
+    Amount: 1
+  NotConsumed:
+  - Item: Mix_Cook_Book
+- Product: Wug_Blood_Cocktail
+  Group: 27
+  SkillName: GN_MIX_COOKING
+  SkillLevel: 1
+  Consumed:
+  - Item: Cold_Ice
+    Amount: 2
+  - Item: Melange_Pot
+    Amount: 1
+  - Item: Wolf_Blood
+    Amount: 3
+  NotConsumed:
+  - Item: Mix_Cook_Book
+- Product: Minor_Brisket
+  Group: 27
+  SkillName: GN_MIX_COOKING
+  SkillLevel: 1
+  Consumed:
+  - Item: Beef_Head_Meat
+    Amount: 2
+  - Item: Large_Cookpot
+    Amount: 1
+  - Item: Melange_Pot
+    Amount: 1
+  NotConsumed:
+  - Item: Mix_Cook_Book
+- Product: Siroma_Icetea
+  Group: 27
+  SkillName: GN_MIX_COOKING
+  SkillLevel: 1
+  Consumed:
+  - Item: Comodo_Tropic_Fruit
+    Amount: 1
+  - Item: Ice_Crystal
+    Amount: 2
+  - Item: Ice_Fragment
+    Amount: 3
+  - Item: Melange_Pot
+    Amount: 1
+  NotConsumed:
+  - Item: Mix_Cook_Book
+- Product: Drocera_Herb_Stew
+  Group: 27
+  SkillName: GN_MIX_COOKING
+  SkillLevel: 1
+  Consumed:
+  - Item: Blue_Herb
+    Amount: 3
+  - Item: Drocera_Tentacle
+    Amount: 3
+  - Item: Large_Cookpot
+    Amount: 1
+  - Item: Melange_Pot
+    Amount: 1
+  - Item: Red_Herb
+    Amount: 3
+  - Item: White_Herb
+    Amount: 3
+  NotConsumed:
+  - Item: Mix_Cook_Book
+- Product: Petti_Tail_Noodle
+  Group: 27
+  SkillName: GN_MIX_COOKING
+  SkillLevel: 1
+  Consumed:
+  - Item: Cool_Gravy
+    Amount: 1
+  - Item: Fine_Noodle
+    Amount: 1
+  - Item: Melange_Pot
+    Amount: 1
+  - Item: Petti_Tail
+    Amount: 2
+  NotConsumed:
+  - Item: Mix_Cook_Book
+- Product: Seed_Of_Horny_Plant
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Prickly_Fruit
+    Amount: 10
+  NotConsumed:
+  - Item: Plant_Genetic_Grow
+- Product: Bloodsuck_Plant_Seed
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Root_Of_Maneater
+    Amount: 10
+  NotConsumed:
+  - Item: Plant_Genetic_Grow
+- Product: Bomb_Mushroom_Spore
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Gun_Powder
+    Amount: 2
+  - Item: Mushroom_Spore
+    Amount: 10
+  - Item: Poison_Spore
+    Amount: 5
+  NotConsumed:
+  - Item: Plant_Genetic_Grow
+- Product: HP_Increase_PotionS
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Bottle
+    Amount: 10
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: Monster's_Feed
+    Amount: 5
+  - Item: White_Herb
+    Amount: 10
+  NotConsumed:
+  - Item: Increase_Stamina_Study
+- Product: HP_Increase_PotionM
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Bottle
+    Amount: 10
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: White_Herb
+    Amount: 10
+  - Item: Yellow_Herb
+    Amount: 10
+  NotConsumed:
+  - Item: Increase_Stamina_Study
+- Product: HP_Increase_PotionL
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Bottle
+    Amount: 10
+  - Item: Fruit_Of_Mastela
+    Amount: 3
+  - Item: Holy_Water
+    Amount: 1
+  - Item: Hot_Sauce
+    Amount: 1
+  - Item: White_Herb
+    Amount: 15
+  NotConsumed:
+  - Item: Increase_Stamina_Study
+- Product: SP_Increase_PotionS
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Bottle
+    Amount: 10
+  - Item: Grape
+    Amount: 10
+  - Item: Lemon
+    Amount: 10
+  - Item: Sweet_Sauce
+    Amount: 1
+  NotConsumed:
+  - Item: Vital_Drink_CB
+- Product: SP_Increase_PotionM
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Blue_Herb
+    Amount: 10
+  - Item: Empty_Bottle
+    Amount: 10
+  - Item: Honey
+    Amount: 10
+  - Item: Sweet_Sauce
+    Amount: 1
+  NotConsumed:
+  - Item: Vital_Drink_CB
+- Product: SP_Increase_PotionL
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Blue_Herb
+    Amount: 15
+  - Item: Empty_Bottle
+    Amount: 10
+  - Item: Royal_Jelly
+    Amount: 10
+  - Item: Sweet_Sauce
+    Amount: 1
+  NotConsumed:
+  - Item: Vital_Drink_CB
+- Product: Enrich_White_PotionZ
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Alchol
+    Amount: 1
+  - Item: Empty_Cylinder
+    Amount: 10
+  - Item: White_Herb
+    Amount: 10
+  - Item: White_Potion
+    Amount: 20
+  NotConsumed:
+  - Item: Quality_Potion_Book
+- Product: Vitata500
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Blue_Herb
+    Amount: 10
+  - Item: Empty_Cylinder
+    Amount: 10
+  - Item: Grape
+    Amount: 10
+  - Item: Honey
+    Amount: 10
+  NotConsumed:
+  - Item: Quality_Potion_Book
+- Product: Enrich_Celermine_Juice
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Awakening_Potion
+    Amount: 5
+  - Item: Center_Potion
+    Amount: 5
+  - Item: Empty_Cylinder
+    Amount: 10
+  - Item: Hot_Sauce
+    Amount: 5
+  NotConsumed:
+  - Item: Quality_Potion_Book
+- Product: Cure_Free
+  Group: 29
+  SkillName: GN_S_PHARMACY
+  SkillLevel: 1
+  Consumed:
+  - Item: Empty_Cylinder
+    Amount: 10
+  - Item: Fruit_Of_Mastela
+    Amount: 1
+  - Item: Green_Herb
+    Amount: 20
+  - Item: Leaf_Of_Yggdrasil
+    Amount: 1
+  - Item: Panacea
+    Amount: 5
+  NotConsumed:
+  - Item: Quality_Potion_Book
+# - Product: Ref_T_Potion
+#   Group: 29
+#   SkillName: GN_S_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Empty_Cylinder
+#     Amount: 10
+#   - Item: Gold
+#     Amount: 5
+#   - Item: Yggdrasilberry
+#     Amount: 10
+# - Product: Add_Atk_Potion
+#   Group: 29
+#   SkillName: GN_S_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Empty_Cylinder
+#     Amount: 10
+#   - Item: Red_Herb
+#     Amount: 45
+#   - Item: Seed_Of_Yggdrasil
+#     Amount: 5
+# - Product: Add_Matk_Potion
+#   Group: 29
+#   SkillName: GN_S_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Blue_Herb
+#     Amount: 15
+#   - Item: Empty_Cylinder
+#     Amount: 10
+#   - Item: Seed_Of_Yggdrasil
+#     Amount: 5
+# - Product: Concentrated_R_P
+#   Group: 29
+#   SkillName: GN_S_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Empty_Cylinder
+#     Amount: 10
+#   - Item: Empty_Potion
+#     Amount: 5
+#   - Item: High_RedPotion
+#     Amount: 15
+# - Product: Concentrated_B_P
+#   Group: 29
+#   SkillName: GN_S_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Empty_Cylinder
+#     Amount: 10
+#   - Item: Empty_Potion
+#     Amount: 5
+#   - Item: High_BluePotion
+#     Amount: 15
+# - Product: Concentrated_G_P
+#   Group: 29
+#   SkillName: GN_S_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Empty_Cylinder
+#     Amount: 10
+#   - Item: Empty_Potion
+#     Amount: 5
+#   - Item: High_WhitePotion
+#     Amount: 10
+#   - Item: High_YelloPotion
+#     Amount: 10
+# - Product: Novice_Potion
+#   Group: 30
+#   Consumed:
+#   - Item: Apple
+#     Amount: 1
+#   - Item: Red_Herb
+#     Amount: 2
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: N_Magnifier
+#   Group: 30
+#   Consumed:
+#   - Item: Jellopy
+#     Amount: 1
+#   - Item: Tree_Of_Archer_1
+#     Amount: 3
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: N_Fly_Wing
+#   Group: 30
+#   Consumed:
+#   - Item: Feather
+#     Amount: 2
+#   - Item: Fluff
+#     Amount: 2
+#   - Item: Jellopy
+#     Amount: 2
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: N_Cutter
+#   Group: 30
+#   Consumed:
+#   - Item: Phracon
+#     Amount: 1
+#   - Item: Shell
+#     Amount: 10
+#   - Item: Worm_Peelings
+#     Amount: 10
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: Unripe_Apple2
+#   Group: 30
+#   Consumed:
+#   - Item: Apple
+#     Amount: 1
+#   - Item: Green_Herb
+#     Amount: 1
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: Four_Leaf_Clover
+#   Group: 30
+#   Consumed:
+#   - Item: Clover
+#     Amount: 200
+#   - Item: Sticky_Mucus
+#     Amount: 200
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: Banana_Juice
+#   Group: 30
+#   Consumed:
+#   - Item: Banana
+#     Amount: 1
+#   - Item: Milk
+#     Amount: 1
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: Apple_Juice
+#   Group: 30
+#   Consumed:
+#   - Item: Apple
+#     Amount: 1
+#   - Item: Milk
+#     Amount: 1
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: Carrot_Juice
+#   Group: 30
+#   Consumed:
+#   - Item: Carrot
+#     Amount: 1
+#   - Item: Milk
+#     Amount: 1
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: Grape_Juice
+#   Group: 30
+#   Consumed:
+#   - Item: Grape
+#     Amount: 1
+#   - Item: Milk
+#     Amount: 1
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: Unripe_Apple
+#   Group: 30
+#   Consumed:
+#   - Item: Apple
+#     Amount: 10
+#   - Item: Green_Herb
+#     Amount: 20
+#   - Item: Sticky_Mucus
+#     Amount: 10
+#   NotConsumed:
+#   - Item: Novice_Combi_Book
+# - Product: Device_Capsule
+#   Group: 31
+#   SkillName: MT_M_MACHINE
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Magic_Gear_Fuel
+#     Amount: 50
+#   - Item: Oridecon_Hammer
+#     Amount: 5
+#   - Item: Portable_Furnace
+#     Amount: 5
+#   NotConsumed:
+#   - Item: Device_M_Book
+# - Product: Auto_Battle_Capsule
+#   Group: 31
+#   SkillName: MT_M_MACHINE
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Magic_Gear_Fuel
+#     Amount: 75
+#   - Item: Oridecon_Hammer
+#     Amount: 5
+#   - Item: Portable_Furnace
+#     Amount: 5
+#   NotConsumed:
+#   - Item: Device_M_Book
+# - Product: Flame_Acid_Bottle
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Acid_Bottle
+#     Amount: 5
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Boody_Red
+#     Amount: 2
+#   - Item: Fire_Bottle
+#     Amount: 5
+# - Product: Earth_Acid_Bottle
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Acid_Bottle
+#     Amount: 5
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Fire_Bottle
+#     Amount: 5
+#   - Item: Yellow_Live
+#     Amount: 2
+# - Product: Gale_Acid_Bottle
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Acid_Bottle
+#     Amount: 5
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Fire_Bottle
+#     Amount: 5
+#   - Item: Wind_Of_Verdure
+#     Amount: 2
+# - Product: Icicle_Acid_Bottle
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Acid_Bottle
+#     Amount: 5
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Crystal_Blue
+#     Amount: 2
+#   - Item: Fire_Bottle
+#     Amount: 5
+# - Product: High_Coating_Bottle
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Coating_Bottle
+#     Amount: 10
+#   - Item: Empty_Bottle
+#     Amount: 5
+# - Product: High_Plant_Bottle
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Bloodsuck_Plant_Seed
+#     Amount: 2
+#   - Item: Mandragora_Flowerpot
+#     Amount: 5
+#   - Item: MenEater_Plant_Bottle
+#     Amount: 10
+#   - Item: Seed_Of_Horny_Plant
+#     Amount: 2
+# - Product: Eye_Cleaner
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Empty_Bottle
+#     Amount: 10
+#   - Item: Green_Herb
+#     Amount: 3
+#   - Item: Holy_Water
+#     Amount: 5
+#   - Item: White_Herb
+#     Amount: 3
+# - Product: Ear_Cleaner
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Blue_Herb
+#     Amount: 2
+#   - Item: Empty_Bottle
+#     Amount: 10
+#   - Item: Green_Herb
+#     Amount: 3
+#   - Item: Holy_Water
+#     Amount: 5
+# - Product: Tonics
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Empty_Bottle
+#     Amount: 10
+#   - Item: Holy_Water
+#     Amount: 5
+#   - Item: Royal_Jelly
+#     Amount: 3
+#   - Item: Yggdrasilberry
+#     Amount: 2
+# - Product: Mini_Extinguisher
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Crystal_Blue
+#     Amount: 5
+#   - Item: Empty_Bottle
+#     Amount: 10
+#   - Item: Holy_Water
+#     Amount: 5
+#   - Item: Iron
+#     Amount: 3
+# - Product: Water_Of_Lucky
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Clover
+#     Amount: 10
+#   - Item: Empty_Bottle
+#     Amount: 10
+#   - Item: Green_Herb
+#     Amount: 3
+#   - Item: Holy_Water
+#     Amount: 5
+# - Product: Strong_Antidote
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Empty_Bottle
+#     Amount: 10
+#   - Item: Green_Herb
+#     Amount: 10
+#   - Item: Holy_Water
+#     Amount: 5
+#   - Item: Poison_Bottle
+#     Amount: 3
+# - Product: High_Energy_Chocolate
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Cacao
+#     Amount: 3
+#   - Item: Empty_Bottle
+#     Amount: 10
+#   - Item: Royal_Jelly
+#     Amount: 3
+#   - Item: Seed_Of_Yggdrasil
+#     Amount: 5
+# - Product: Refined_Holy_Water
+#   Group: 32
+#   SkillName: BO_BIONIC_PHARMACY
+#   SkillLevel: 1
+#   Consumed:
+#   - Item: Beaker
+#     Amount: 1
+#   - Item: Empty_Bottle
+#     Amount: 10
+#   - Item: Holy_Water
+#     Amount: 10
+#   - Item: Royal_Jelly
+#     Amount: 3
