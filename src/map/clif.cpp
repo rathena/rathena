@@ -435,7 +435,7 @@ static int32 clif_send_sub(struct block_list *bl, va_list ap)
 			return 0;
 		}
 		else if(src_bl->type == BL_NPC) {
-			struct npc_data *nd = (struct npc_data *)src_bl;
+			npc_data *nd = (npc_data *)src_bl;
 			if (nd && sd->chatID && (sd->chatID == nd->chat_id))
 			return 0;
 		}
@@ -443,7 +443,7 @@ static int32 clif_send_sub(struct block_list *bl, va_list ap)
 	break;
 	}
 
-	if( src_bl->type == BL_NPC && npc_is_hidden_dynamicnpc( *( (struct npc_data*)src_bl ), *sd ) ){
+	if( src_bl->type == BL_NPC && npc_is_hidden_dynamicnpc( *( (npc_data*)src_bl ), *sd ) ){
 		// Do not send anything
 		return 0;
 	}
@@ -532,11 +532,11 @@ int32 clif_send(const void* buf, int32 len, struct block_list* bl, enum send_tar
 	case CHAT:
 	case CHAT_WOS:
 		{
-			struct chat_data *cd;
+			chat_data *cd;
 			if (sd) {
-				cd = (struct chat_data*)map_id2bl(sd->chatID);
+				cd = (chat_data*)map_id2bl(sd->chatID);
 			} else if (bl->type == BL_CHAT) {
-				cd = (struct chat_data*)bl;
+				cd = (chat_data*)bl;
 			} else break;
 			if (cd == nullptr)
 				break;
@@ -862,7 +862,7 @@ void clif_charselectok(int32 id, uint8 ok)
 /// 009E <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
 /// 084B <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
 /// 0ADD <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W <show drop effect>.B <drop effect mode>.W (ZC_ITEM_FALL_ENTRY5)
-void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
+void clif_dropflooritem( flooritem_data* fitem, bool canShowEffect ){
 	nullpo_retv(fitem);
 
 	if( fitem->item.nameid == 0 ){
@@ -1114,7 +1114,7 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 	// npc option changed?
 	if( tbl && tbl->type == BL_PC && bl->type == BL_NPC ){
 		map_session_data* sd = (map_session_data*)tbl;
-		struct npc_data* nd = (struct npc_data*)bl;
+		npc_data* nd = (npc_data*)bl;
 		int32 option = (sc) ? sc->option : 0;
 
 		if( !nd->vd.dead_sit ){
@@ -1805,7 +1805,7 @@ void clif_homunculus_updatestatus(map_session_data& sd, _sp type) {
 /// Sends information about owned homunculus to the client . [orn]
 /// 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
 /// 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
-void clif_hominfo( map_session_data *sd, struct homun_data *hd, int32 flag ){
+void clif_hominfo( map_session_data *sd, homun_data *hd, int32 flag ){
 #if PACKETVER_MAIN_NUM >= 20101005 || PACKETVER_RE_NUM >= 20080827 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 	nullpo_retv( hd );
@@ -2365,7 +2365,7 @@ void clif_parse_NPCMarketClosed(int32 fd, map_session_data *sd) {
 /// 0x9d7 <packet len>.W <count>.B { <name id>.W <qty>.W <price>.L }* (ZC_NPC_MARKET_PURCHASE_RESULT)
 void clif_npc_market_purchase_ack( map_session_data& sd, e_purchase_result res, std::vector<s_npc_buy_list>& list ){
 #if PACKETVER >= 20131223
-	struct npc_data *nd = map_id2nd( sd.npc_shopid );
+	npc_data *nd = map_id2nd( sd.npc_shopid );
 
 	if( nd == nullptr ){
 		return;
@@ -5011,7 +5011,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		return;
 	}
 
-	if( bl->type == BL_NPC && npc_is_hidden_dynamicnpc( *( (struct npc_data*)bl ), *sd ) ){
+	if( bl->type == BL_NPC && npc_is_hidden_dynamicnpc( *( (npc_data*)bl ), *sd ) ){
 		// Do not send anything
 		return;
 	}
@@ -5575,8 +5575,8 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 			if(sd->vd.look[LOOK_BASE] != JT_INVISIBLE)
 				clif_clearunit_single( bl->id, CLR_OUTSIGHT, *tsd );
 			if(sd->chatID){
-				struct chat_data *cd;
-				cd=(struct chat_data*)map_id2bl(sd->chatID);
+				chat_data *cd;
+				cd=(chat_data*)map_id2bl(sd->chatID);
 				if(cd->usersd[0]==sd)
 					clif_dispchat(*cd);
 			}
@@ -6548,7 +6548,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 			}
 			break;
 		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
+			npc_data* nd = (npc_data*)bl;
 
 			sc_display = nd->sc_display;
 			sc_display_count = nd->sc_display_count;
@@ -8466,7 +8466,7 @@ void clif_spiritball( struct block_list *bl, struct block_list* target, enum sen
 			p.num = ( (map_session_data*)bl )->spiritball;
 			break;
 		case BL_HOM:
-			p.num = ( (struct homun_data*)bl )->homunculus.spiritball;
+			p.num = ( (homun_data*)bl )->homunculus.spiritball;
 			break;
 	}
 
@@ -11264,7 +11264,7 @@ void clif_parse_progressbar(int32 fd, map_session_data * sd){
 
 /// Displays cast-like progress bar on a NPC
 /// 09d1 <id>.L <color>.L <time>.L (ZC_PROGRESS_ACTOR)
-void clif_progressbar_npc( struct npc_data *nd, map_session_data* sd ){
+void clif_progressbar_npc( npc_data *nd, map_session_data* sd ){
 #if PACKETVER >= 20130821
 	unsigned char buf[14];
 
@@ -11784,7 +11784,7 @@ void clif_parse_WisMessage(int32 fd, map_session_data* sd)
 	if (target[0] && (strncasecmp(target,"NPC:",4) == 0) && (strlen(target) > 4))
 	{
 		char* str = target+4; //Skip the NPC: string part.
-		struct npc_data* npc;
+		npc_data* npc;
 		if ((npc = npc_name2id(str))) {
 			char split_data[NUM_WHISPER_VAR][CHAT_SIZE_MAX];
 			char *split;
@@ -11912,13 +11912,13 @@ void clif_parse_Broadcast(int32 fd, map_session_data* sd) {
 /// There are various variants of this packet, some of them have padding between fields.
 void clif_parse_TakeItem(int32 fd, map_session_data *sd)
 {
-	struct flooritem_data *fitem;
+	flooritem_data *fitem;
 	int32 map_object_id;
 
 	// TODO: shuffle packet
 	map_object_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 
-	fitem = (struct flooritem_data*)map_id2bl(map_object_id);
+	fitem = (flooritem_data*)map_id2bl(map_object_id);
 
 	do {
 		if (pc_isdead(sd)) {
@@ -12145,7 +12145,7 @@ void clif_parse_NpcClicked( int32 fd, map_session_data* sd ){
 			}
 #endif
 			if( bl->m != -1 ){ // the user can't click floating npcs directly (hack attempt)
-				struct npc_data* nd = (struct npc_data*)bl;
+				npc_data* nd = (npc_data*)bl;
 
 				// Progressbar is running
 				if( nd->progressbar.timeout > 0 ){
@@ -12666,7 +12666,7 @@ void clif_parse_SkillUp(int32 fd,map_session_data *sd)
 	pc_skillup(sd,RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]));
 }
 
-static void clif_parse_UseSkillToId_homun(struct homun_data *hd, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int32 target_id)
+static void clif_parse_UseSkillToId_homun(homun_data *hd, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int32 target_id)
 {
 	int32 lv;
 
@@ -12694,7 +12694,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, map_session_dat
 		unit_skilluse_id(hd, target_id, skill_id, skill_lv);
 }
 
-static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 skillmoreinfo)
+static void clif_parse_UseSkillToPos_homun(homun_data *hd, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 skillmoreinfo)
 {
 	int32 lv;
 	if( !hd )
@@ -14724,7 +14724,7 @@ void clif_parse_GMKick(int32 fd, map_session_data *sd)
 
 		case BL_NPC:
 		{
-			struct npc_data* nd = (struct npc_data *)target;
+			npc_data* nd = (npc_data *)target;
 			if( pc_can_use_command(sd, "unloadnpc", COMMAND_ATCOMMAND)) {
 				npc_unload_duplicates(nd);
 				npc_unload(nd,true);
@@ -17354,7 +17354,7 @@ void clif_cashshop_show( map_session_data& sd, npc_data& nd ){
 void clif_cashshop_ack(map_session_data* sd, int32 error)
 {
 	int32 fd, cost[2] = { 0, 0 };
-	struct npc_data *nd;
+	npc_data *nd;
 
 	nullpo_retv(sd);
 
@@ -19844,7 +19844,7 @@ void clif_snap( struct block_list *bl, int16 x, int16 y ) {
 }
 
 /// 0977 <id>.L <HP>.L <maxHP>.L (ZC_HP_INFO).
-void clif_monster_hp_bar( struct mob_data* md, int32 fd ) {
+void clif_monster_hp_bar( mob_data* md, int32 fd ) {
 #if PACKETVER >= 20120404
 	WFIFOHEAD(fd,packet_len(0x977));
 
@@ -23079,7 +23079,7 @@ void clif_parse_inventory_expansion_reject( int32 fd, map_session_data* sd ){
 #endif
 }
 
-void clif_barter_open( map_session_data& sd, struct npc_data& nd ){
+void clif_barter_open( map_session_data& sd, npc_data& nd ){
 #if PACKETVER_MAIN_NUM >= 20190116 || PACKETVER_RE_NUM >= 20190116 || PACKETVER_ZERO_NUM >= 20181226
 	if( nd.subtype != NPCTYPE_BARTER || nd.u.barter.extended || sd.state.barter_open ){
 		return;
@@ -23157,7 +23157,7 @@ void clif_parse_barter_buy( int32 fd, map_session_data* sd ){
 		return;
 	}
 
-	struct npc_data* nd = map_id2nd( sd->npc_shopid );
+	npc_data* nd = map_id2nd( sd->npc_shopid );
 
 	// Unknown shop
 	if( nd == nullptr ){
@@ -23233,7 +23233,7 @@ void clif_parse_barter_buy( int32 fd, map_session_data* sd ){
 #endif
 }
 
-void clif_barter_extended_open( map_session_data& sd, struct npc_data& nd ){
+void clif_barter_extended_open( map_session_data& sd, npc_data& nd ){
 #if PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
 	if( nd.subtype != NPCTYPE_BARTER || !nd.u.barter.extended || sd.state.barter_extended_open ){
 		return;
@@ -23327,7 +23327,7 @@ void clif_parse_barter_extended_buy( int32 fd, map_session_data* sd ){
 		return;
 	}
 
-	struct npc_data* nd = map_id2nd( sd->npc_shopid );
+	npc_data* nd = map_id2nd( sd->npc_shopid );
 
 	// Unknown shop
 	if( nd == nullptr ){
@@ -23403,7 +23403,7 @@ void clif_parse_barter_extended_buy( int32 fd, map_session_data* sd ){
 #endif
 }
 
-void clif_summon_init(struct mob_data& md) {
+void clif_summon_init(mob_data& md) {
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	struct block_list* master_bl = battle_get_master(&md);
 
@@ -23422,7 +23422,7 @@ void clif_summon_init(struct mob_data& md) {
 #endif
 }
 
-void clif_summon_hp_bar(struct mob_data& md) {
+void clif_summon_hp_bar(mob_data& md) {
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	struct block_list* master_bl = battle_get_master(&md);
 

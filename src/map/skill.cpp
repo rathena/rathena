@@ -52,7 +52,7 @@ using namespace rathena;
 #define TIMERSKILL_INTERVAL	150
 
 static struct eri *skill_timer_ers = nullptr; //For handling skill_timerskills [Skotlex]
-static DBMap* bowling_db = nullptr; // int32 mob_id -> struct mob_data*
+static DBMap* bowling_db = nullptr; // int32 mob_id -> mob_data*
 
 DBMap* skillunit_db = nullptr; // int32 id -> struct skill_unit*
 
@@ -989,7 +989,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
  * @param skill_lv: Skill level casted
  * @return true: Skill cannot be used, false: otherwise
  */
-bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
+bool skill_isNotOk_hom(homun_data *hd, uint16 skill_id, uint16 skill_lv)
 {
 	nullpo_retr(true, hd);
 
@@ -2047,7 +2047,7 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 		break;
 	case MH_EQC:
 		{
-			struct homun_data *hd = BL_CAST(BL_HOM, src);
+			homun_data *hd = BL_CAST(BL_HOM, src);
 
 			if (hd) {
 				sc_start2(src, bl, SC_STUN, 100, skill_lv, bl->id, 1000 * hd->homunculus.level / 50 + 500 * skill_lv);
@@ -3637,7 +3637,7 @@ int64 skill_attack (int32 attack_type, struct block_list* src, struct block_list
 	//! CHECKME: This check maybe breaks the battle_calc_attack, and maybe need better calculation.
 	// Adjusted to the new system [Skotlex]
 	if( src->type == BL_PET ) { // [Valaris]
-		struct pet_data *pd = (TBL_PET*)src;
+		pet_data *pd = (TBL_PET*)src;
 		if (pd->a_skill && pd->a_skill->div_ && pd->a_skill->id == skill_id) { //petskillattack2
 			if (battle_config.pet_ignore_infinite_def || !is_infinite_defense(bl,dmg.flag)) {
 				int32 element = skill_get_ele(skill_id, skill_lv);
@@ -7381,7 +7381,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		break;
 	case SJ_FLASHKICK: {
 			map_session_data *tsd = BL_CAST(BL_PC, bl);
-			struct mob_data *md = BL_CAST(BL_MOB, src), *tmd = BL_CAST(BL_MOB, bl);
+			mob_data *md = BL_CAST(BL_MOB, src), *tmd = BL_CAST(BL_MOB, bl);
 
 			// Only players and monsters can be tagged....I think??? [Rytech]
 			// Lets only allow players and monsters to use this skill for safety reasons.
@@ -7626,8 +7626,8 @@ static int32 skill_castend_song(struct block_list* src, uint16 skill_id, uint16 
 int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag)
 {
 	map_session_data *sd, *dstsd;
-	struct mob_data *md, *dstmd;
-	struct homun_data *hd;
+	mob_data *md, *dstmd;
+	homun_data *hd;
 	s_mercenary_data *mer;
 	status_change *tsc;
 	struct status_change_entry *tsce;
@@ -12723,7 +12723,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 	case KO_ZANZOU:
 		if(sd){
-			struct mob_data *md2;
+			mob_data *md2;
 
 			md2 = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(*src), MOBID_ZANZOU, "", SZ_SMALL, AI_NONE);
 			if( md2 )
@@ -12914,7 +12914,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case MH_SUMMON_LEGION: {
 		int32 summons[5] = {MOBID_S_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_LUCIOLA_VESPA, MOBID_S_LUCIOLA_VESPA};
 		int32 qty[5] =     {3   , 3   , 4   , 4   , 5};
-		struct mob_data *sum_md;
+		mob_data *sum_md;
 		int32 i_slave,c=0;
 
 		int32 maxcount = qty[skill_lv-1];
@@ -13922,7 +13922,7 @@ TIMER_FUNC( skill_keep_using ){
 TIMER_FUNC(skill_castend_id){
 	struct block_list *target, *src;
 	map_session_data *sd;
-	struct mob_data *md;
+	mob_data *md;
 	struct unit_data *ud;
 	int32 flag = 0;
 
@@ -14319,7 +14319,7 @@ TIMER_FUNC(skill_castend_pos){
 	struct block_list* src = map_id2bl(id);
 	map_session_data *sd;
 	struct unit_data *ud = unit_bl2ud(src);
-	struct mob_data *md;
+	mob_data *md;
 
 	nullpo_ret(ud);
 
@@ -14860,7 +14860,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 			int32 summons[5] = { MOBID_G_MANDRAGORA, MOBID_G_HYDRA, MOBID_G_FLORA, MOBID_G_PARASITE, MOBID_G_GEOGRAPHER };
 			int32 class_ = skill_id==AM_SPHEREMINE?MOBID_MARINE_SPHERE:summons[skill_lv-1];
 			enum mob_ai ai = (skill_id == AM_SPHEREMINE) ? AI_SPHERE : AI_FLORA;
-			struct mob_data *md;
+			mob_data *md;
 
 			// Correct info, don't change any of this! [celest]
 			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(*src), class_, "", SZ_SMALL, ai);
@@ -15127,7 +15127,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 
 	case NC_SILVERSNIPER:
 		{
-			struct mob_data *md;
+			mob_data *md;
 
 			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(*src), MOBID_SILVERSNIPER, "", SZ_SMALL, AI_NONE);
 			if( md ) {
@@ -17141,7 +17141,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 					sg->val1 -= 1; // Reduce the number of targets that can still be hit
 			} else {
 				int32 heal = skill_calc_heal(ss,bl,sg->skill_id,sg->skill_lv,true);
-				struct mob_data *md = BL_CAST(BL_MOB, bl);
+				mob_data *md = BL_CAST(BL_MOB, bl);
 
 #ifdef RENEWAL
 				if (md && md->mob_id == MOBID_EMPERIUM)
@@ -17203,7 +17203,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 				sc_start(ss,bl,SC_STOP,100,0,skill_get_time2(sg->skill_id,sg->skill_lv));
 #else
 				// In pre-renewal, if target was a monster, it will unlock target and become idle
-				struct mob_data* md = BL_CAST(BL_MOB, bl);
+				mob_data* md = BL_CAST(BL_MOB, bl);
 				if (md)
 					mob_unlocktarget(md, tick);
 #endif
@@ -17370,7 +17370,7 @@ int32 skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t
 		case UNT_APPLEIDUN: { //Apple of Idun [Skotlex]
 				int32 heal;
 #ifdef RENEWAL
-				struct mob_data *md = BL_CAST(BL_MOB, bl);
+				mob_data *md = BL_CAST(BL_MOB, bl);
 
 				if (md && md->mob_id == MOBID_EMPERIUM)
 					break;
@@ -18295,9 +18295,9 @@ static int32 skill_check_condition_mob_master_sub(struct block_list *bl, va_list
 {
 	int32 *c,src_id,mob_class,skill;
 	uint16 ai;
-	struct mob_data *md;
+	mob_data *md;
 
-	md=(struct mob_data*)bl;
+	md=(mob_data*)bl;
 	src_id=va_arg(ap,int32);
 	mob_class=va_arg(ap,int32);
 	skill=va_arg(ap,int32);
@@ -21289,12 +21289,12 @@ int32 skill_greed(struct block_list *bl, va_list ap)
 {
 	struct block_list *src;
 	map_session_data *sd = nullptr;
-	struct flooritem_data *fitem = nullptr;
+	flooritem_data *fitem = nullptr;
 
 	nullpo_ret(bl);
 	nullpo_ret(src = va_arg(ap, struct block_list *));
 
-	if(src->type == BL_PC && (sd = (map_session_data *)src) && bl->type == BL_ITEM && (fitem = (struct flooritem_data *)bl))
+	if(src->type == BL_PC && (sd = (map_session_data *)src) && bl->type == BL_ITEM && (fitem = (flooritem_data *)bl))
 		pc_takeitem(sd, fitem);
 
 	return 0;
@@ -23836,7 +23836,7 @@ void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id)
 
 void skill_magicdecoy( map_session_data& sd, t_itemid nameid ){
 	int32 x, y, i, class_, skill;
-	struct mob_data *md;
+	mob_data *md;
 
 	skill = sd.menuskill_val;
 

@@ -2773,7 +2773,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int32 l
  * @return 1 for calculated special statuses or 0 for none
  * @author [Skotlex]
  */
-int32 status_calc_mob_(struct mob_data* md, uint8 opt)
+int32 status_calc_mob_(mob_data* md, uint8 opt)
 {
 	struct status_data *status;
 	struct block_list *mbl = nullptr;
@@ -3066,7 +3066,7 @@ int32 status_calc_mob_(struct mob_data* md, uint8 opt)
  * @return 1
  * @author [Skotlex]
  */
-void status_calc_pet_(struct pet_data *pd, uint8 opt)
+void status_calc_pet_(pet_data *pd, uint8 opt)
 {
 	nullpo_retv(pd);
 
@@ -4203,7 +4203,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	pc_bonus_script(sd);
 
 	if( sd->pd ) { // Pet Bonus
-		struct pet_data *pd = sd->pd;
+		pet_data *pd = sd->pd;
 		std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 
 		if (pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script)
@@ -5046,7 +5046,7 @@ int32 status_calc_mercenary_(s_mercenary_data *md, uint8 opt)
  * @param opt: Whether it is first calc or not (0 on level up or status)
  * @return 1
  */
-int32 status_calc_homunculus_(struct homun_data *hd, uint8 opt)
+int32 status_calc_homunculus_(homun_data *hd, uint8 opt)
 {
 	struct status_data *status = &hd->base_status;
 	struct s_homunculus &hom = hd->homunculus;
@@ -5218,7 +5218,7 @@ int32 status_calc_elemental_(s_elemental_data *ed, uint8 opt)
  * @param opt: Whether it is first calc or not (what?)
  * @return 0
  */
-int32 status_calc_npc_(struct npc_data *nd, uint8 opt)
+int32 status_calc_npc_(npc_data *nd, uint8 opt)
 {
 	struct status_data *status = &nd->status;
 
@@ -5344,7 +5344,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 	}
 
 	if( bl->type == BL_HOM ) {
-		struct homun_data *hd = (TBL_HOM*)bl;
+		homun_data *hd = (TBL_HOM*)bl;
 		if( (skill = hom_checkskill(hd,HAMI_SKIN)) > 0 ) {
 			val = regen->hp*(100+5*skill)/100;
 			regen->hp = cap_value(val, 1, SHRT_MAX);
@@ -9099,7 +9099,7 @@ uint16 status_get_speed(struct block_list *bl)
 {
 	// TODO: is the statement of Skotlex still true? And would it not be better to check for dummy_status instead? [Lemongrass]
 	if(bl->type==BL_NPC)// Only BL with speed data but no status_data [Skotlex]
-		return ((struct npc_data *)bl)->speed;
+		return ((npc_data *)bl)->speed;
 	return status_get_status_data(*bl)->speed;
 }
 
@@ -9119,7 +9119,7 @@ int32 status_get_party_id(struct block_list *bl)
 				return ((TBL_PET*)bl)->master->status.party_id;
 			break;
 		case BL_MOB: {
-				struct mob_data *md=(TBL_MOB*)bl;
+				mob_data *md=(TBL_MOB*)bl;
 				if( md->master_id > 0 ) {
 					map_session_data *msd;
 					if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9166,7 +9166,7 @@ int32 status_get_guild_id(struct block_list *bl)
 		case BL_MOB:
 			{
 				map_session_data *msd;
-				struct mob_data *md = (struct mob_data *)bl;
+				mob_data *md = (mob_data *)bl;
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->guild_id;
 				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9215,7 +9215,7 @@ int32 status_get_emblem_id(struct block_list *bl)
 		case BL_MOB:
 			{
 				map_session_data *msd;
-				struct mob_data *md = (struct mob_data *)bl;
+				mob_data *md = (mob_data *)bl;
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->emblem_id;
 				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9255,9 +9255,9 @@ std::vector<e_race2> status_get_race2(struct block_list *bl)
 	nullpo_retr(std::vector<e_race2>(),bl);
 
 	if (bl->type == BL_MOB)
-		return ((struct mob_data *)bl)->db->race2;
+		return ((mob_data *)bl)->db->race2;
 	if (bl->type == BL_PET)
-		return ((struct pet_data *)bl)->db->race2;
+		return ((pet_data *)bl)->db->race2;
 	return std::vector<e_race2>();
 }
 
@@ -9498,7 +9498,7 @@ void status_set_viewdata(struct block_list *bl, int32 class_)
 	break;
 	case BL_HOM:
 		{
-			struct homun_data *hd = (struct homun_data*)bl;
+			homun_data *hd = (homun_data*)bl;
 			if (vd)
 				hd->vd = vd;
 			else
@@ -9982,7 +9982,7 @@ void status_display_add(struct block_list *bl, enum sc_type type, int32 dval1, i
 			}
 			break;
 		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
+			npc_data* nd = (npc_data*)bl;
 
 			sc_display_ptr = &nd->sc_display;
 			sc_display_count_ptr = &nd->sc_display_count;
@@ -10044,7 +10044,7 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 			}
 			break;
 		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
+			npc_data* nd = (npc_data*)bl;
 
 			sc_display_ptr = &nd->sc_display;
 			sc_display_count_ptr = &nd->sc_display_count;
@@ -13894,7 +13894,7 @@ int32 status_change_end( struct block_list* bl, enum sc_type type, int32 tid ){
 		case SC_OVERED_BOOST:
 			switch (bl->type) {
 				case BL_HOM: {
-						struct homun_data *hd = BL_CAST(BL_HOM,bl);
+						homun_data *hd = BL_CAST(BL_HOM,bl);
 
 						if( hd )
 							hd->homunculus.hunger = max(1,hd->homunculus.hunger - 50);

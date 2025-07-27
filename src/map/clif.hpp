@@ -25,12 +25,12 @@ struct s_storage;
 struct block_list;
 struct unit_data;
 class map_session_data;
-struct homun_data;
-struct pet_data;
-struct mob_data;
-struct npc_data;
-struct chat_data;
-struct flooritem_data;
+class homun_data;
+class pet_data;
+class mob_data;
+class npc_data;
+class chat_data;
+class flooritem_data;
 struct skill_unit;
 struct s_vending;
 struct party;
@@ -872,7 +872,7 @@ void clif_authok(map_session_data *sd);
 void clif_authrefuse(int32 fd, uint8 error_code);
 void clif_authfail_fd(int32 fd, int32 type);
 void clif_charselectok(int32 id, uint8 ok);
-void clif_dropflooritem(struct flooritem_data* fitem, bool canShowEffect);
+void clif_dropflooritem(flooritem_data* fitem, bool canShowEffect);
 void clif_clearflooritem( flooritem_data& fitem, map_session_data* tsd = nullptr );
 
 void clif_clearunit_single( uint32 GID, clr_type type, map_session_data& tsd );
@@ -1194,7 +1194,7 @@ void clif_mission_info(map_session_data *sd, int32 mob_id, unsigned char progres
 void clif_feel_hate_reset(map_session_data *sd);
 
 // [blackhole89]
-void clif_hominfo(map_session_data *sd, struct homun_data *hd, int32 flag);
+void clif_hominfo(map_session_data *sd, homun_data *hd, int32 flag);
 void clif_homskillinfoblock( homun_data& hd );
 void clif_homskillup( homun_data& hd, uint16 skill_id );
 void clif_hom_food( map_session_data& sd, int32 foodid, bool success );
@@ -1276,7 +1276,7 @@ void clif_party_show_picker(map_session_data * sd, struct item * item_data);
 // Progress Bar [Inkfish]
 void clif_progressbar(map_session_data * sd, unsigned long color, uint32 second);
 void clif_progressbar_abort(map_session_data * sd);
-void clif_progressbar_npc(struct npc_data *nd, map_session_data* sd);
+void clif_progressbar_npc(npc_data *nd, map_session_data* sd);
 #define clif_progressbar_npc_area(nd) clif_progressbar_npc((nd),nullptr)
 
 void clif_PartyBookingRegisterAck(map_session_data *sd, int32 flag);
@@ -1344,7 +1344,7 @@ void clif_elemental_updatestatus(map_session_data& sd, _sp type);
 void clif_spiritcharm( map_session_data& sd );
 
 void clif_snap( struct block_list *bl, int16 x, int16 y );
-void clif_monster_hp_bar( struct mob_data* md, int32 fd );
+void clif_monster_hp_bar( mob_data* md, int32 fd );
 
 // Clan System
 void clif_clan_basicinfo( map_session_data& sd );
@@ -1445,11 +1445,11 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 void clif_inventory_expansion_info( map_session_data* sd );
 
 // Barter System
-void clif_barter_open( map_session_data& sd, struct npc_data& nd );
-void clif_barter_extended_open( map_session_data& sd, struct npc_data& nd );
+void clif_barter_open( map_session_data& sd, npc_data& nd );
+void clif_barter_extended_open( map_session_data& sd, npc_data& nd );
 
-void clif_summon_init(struct mob_data& md);
-void clif_summon_hp_bar(struct mob_data& md);
+void clif_summon_init(mob_data& md);
+void clif_summon_hp_bar(mob_data& md);
 
 // Laphine System
 void clif_laphine_synthesis_open( map_session_data *sd, std::shared_ptr<s_laphine_synthesis> synthesis );

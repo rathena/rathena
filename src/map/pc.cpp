@@ -6144,7 +6144,7 @@ bool pc_dropitem(map_session_data *sd,int32 n,int32 amount)
  * @param fitem Item that will be picked
  * @return False = fail; True = success
  *------------------------------------------*/
-bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
+bool pc_takeitem(map_session_data *sd,flooritem_data *fitem)
 {
 	int32 flag = 0;
 	t_tick tick = gettick();
@@ -6750,7 +6750,7 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	t_itemid itemid;
 	double rate;
 	unsigned char flag = 0;
-	struct mob_data *md;
+	mob_data *md;
 
 	if(!sd || !bl || bl->type!=BL_MOB)
 		return false;
@@ -6858,7 +6858,7 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 int32 pc_steal_coin(map_session_data *sd,struct block_list *target)
 {
 	int32 rate, target_lv;
-	struct mob_data *md;
+	mob_data *md;
 
 	if(!sd || !target || target->type != BL_MOB)
 		return 0;
@@ -9809,7 +9809,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 	}
 
 	if(sd->status.pet_id > 0 && sd->pd) {
-		struct pet_data *pd = sd->pd;
+		pet_data *pd = sd->pd;
 		if( !mapdata->getMapFlag(MF_NOEXPPENALTY) ) {
 			pet_set_intimate(pd, pd->pet.intimate + pd->get_pet_db()->die);
 			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INTIMACY );
@@ -9881,7 +9881,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 	switch (src->type) {
 		case BL_MOB:
 		{
-			struct mob_data *md=(struct mob_data *)src;
+			mob_data *md=(mob_data *)src;
 			if(md->target_id==sd->id)
 				mob_unlocktarget(md,tick);
 			if(battle_config.mobs_level_up && md->status.hp &&
@@ -10789,9 +10789,9 @@ int32 pc_percentheal(map_session_data *sd,int32 hp,int32 sp)
 
 static int32 jobchange_killclone(struct block_list *bl, va_list ap)
 {
-	struct mob_data *md;
+	mob_data *md;
 		int32 flag;
-	md = (struct mob_data *)bl;
+	md = (mob_data *)bl;
 	nullpo_ret(md);
 	flag = va_arg(ap, int32);
 
@@ -15304,7 +15304,7 @@ void pc_show_questinfo(map_session_data *sd) {
 		return; // init was not called yet
 
 	for (int32 i = 0; i < mapdata->qi_npc.size(); i++) {
-		struct npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
+		npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
 
 		if (!nd || nd->qi_data.empty())
 			continue;

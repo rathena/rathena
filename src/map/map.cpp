@@ -107,8 +107,8 @@ struct inter_conf inter_config {};
 // DBMap declaration
 static DBMap* id_db=nullptr; /// int32 id -> struct block_list*
 static DBMap* pc_db=nullptr; /// int32 id -> map_session_data*
-static DBMap* mobid_db=nullptr; /// int32 id -> struct mob_data*
-static DBMap* bossid_db=nullptr; /// int32 id -> struct mob_data* (MVP db)
+static DBMap* mobid_db=nullptr; /// int32 id -> mob_data*
+static DBMap* bossid_db=nullptr; /// int32 id -> mob_data* (MVP db)
 static DBMap* map_db=nullptr; /// uint32 mapindex -> struct map_data*
 static DBMap* nick_db=nullptr; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
 static DBMap* charid_db=nullptr; /// uint32 char_id -> map_session_data*
@@ -1622,7 +1622,7 @@ int32 map_get_new_object_id(void)
  * Called each flooritem_lifetime ms
  *------------------------------------------*/
 TIMER_FUNC(map_clearflooritem_timer){
-	struct flooritem_data* fitem = (struct flooritem_data*)idb_get(id_db, id);
+	flooritem_data* fitem = (flooritem_data*)idb_get(id_db, id);
 
 	if (fitem == nullptr || fitem->type != BL_ITEM || (fitem->cleartimer != tid)) {
 		ShowError("map_clearflooritem_timer : error\n");
@@ -1644,7 +1644,7 @@ TIMER_FUNC(map_clearflooritem_timer){
  * clears a single bl item out of the map.
  */
 void map_clearflooritem(struct block_list *bl) {
-	struct flooritem_data* fitem = (struct flooritem_data*)bl;
+	flooritem_data* fitem = (flooritem_data*)bl;
 
 	if( fitem->cleartimer != INVALID_TIMER )
 		delete_timer(fitem->cleartimer,map_clearflooritem_timer);
@@ -1949,7 +1949,7 @@ bool map_nearby_freecell(int16 m, int16 &x, int16 &y, int32 type, int32 flag)
  *------------------------------------------*/
 int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 y, int32 first_charid, int32 second_charid, int32 third_charid, int32 flags, uint16 mob_id, bool canShowEffect, enum directions dir, int32 type)
 {
-	struct flooritem_data *fitem = nullptr;
+	flooritem_data *fitem = nullptr;
 
 	nullpo_ret(item);
 
@@ -2280,37 +2280,37 @@ map_session_data * map_id2sd(int32 id){
 	return (map_session_data*)idb_get(pc_db,id);
 }
 
-struct mob_data * map_id2md(int32 id){
+mob_data * map_id2md(int32 id){
 	if (id <= 0) return nullptr;
-	return (struct mob_data*)idb_get(mobid_db,id);
+	return (mob_data*)idb_get(mobid_db,id);
 }
 
-struct npc_data * map_id2nd(int32 id){
+npc_data * map_id2nd(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_NPC, bl);
 }
 
-struct homun_data* map_id2hd(int32 id){
+homun_data* map_id2hd(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_HOM, bl);
 }
 
-struct s_mercenary_data* map_id2mc(int32 id){
+s_mercenary_data* map_id2mc(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_MER, bl);
 }
 
-struct pet_data* map_id2pd(int32 id){
+pet_data* map_id2pd(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_PET, bl);
 }
 
-struct s_elemental_data* map_id2ed(int32 id) {
+s_elemental_data* map_id2ed(int32 id) {
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_ELEM, bl);
 }
 
-struct chat_data* map_id2cd(int32 id){
+chat_data* map_id2cd(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_CHAT, bl);
 }
@@ -2408,14 +2408,14 @@ bool map_blid_exists( int32 id ) {
 /*==========================================
  * Convex Mirror
  *------------------------------------------*/
-struct mob_data * map_getmob_boss(int16 m)
+mob_data * map_getmob_boss(int16 m)
 {
 	DBIterator* iter;
-	struct mob_data *md = nullptr;
+	mob_data *md = nullptr;
 	bool found = false;
 
 	iter = db_iterator(bossid_db);
-	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
+	for( md = (mob_data*)dbi_first(iter); dbi_exists(iter); md = (mob_data*)dbi_next(iter) )
 	{
 		if( md->m == m )
 		{
@@ -2428,10 +2428,10 @@ struct mob_data * map_getmob_boss(int16 m)
 	return (found)? md : nullptr;
 }
 
-struct mob_data * map_id2boss(int32 id)
+mob_data * map_id2boss(int32 id)
 {
 	if (id <= 0) return nullptr;
-	return (struct mob_data*)idb_get(bossid_db,id);
+	return (mob_data*)idb_get(bossid_db,id);
 }
 
 /// Applies func to all the players in the db.
@@ -2458,13 +2458,13 @@ void map_foreachpc(int32 (*func)(map_session_data* sd, va_list args), ...)
 
 /// Applies func to all the mobs in the db.
 /// Stops iterating if func returns -1.
-void map_foreachmob(int32 (*func)(struct mob_data* md, va_list args), ...)
+void map_foreachmob(int32 (*func)(mob_data* md, va_list args), ...)
 {
 	DBIterator* iter;
-	struct mob_data* md;
+	mob_data* md;
 
 	iter = db_iterator(mobid_db);
-	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
+	for( md = (mob_data*)dbi_first(iter); dbi_exists(iter); md = (mob_data*)dbi_next(iter) )
 	{
 		va_list args;
 		int32 ret;
@@ -2480,7 +2480,7 @@ void map_foreachmob(int32 (*func)(struct mob_data* md, va_list args), ...)
 
 /// Applies func to all the npcs in the db.
 /// Stops iterating if func returns -1.
-void map_foreachnpc(int32 (*func)(struct npc_data* nd, va_list args), ...)
+void map_foreachnpc(int32 (*func)(npc_data* nd, va_list args), ...)
 {
 	DBIterator* iter;
 	struct block_list* bl;
@@ -2490,7 +2490,7 @@ void map_foreachnpc(int32 (*func)(struct npc_data* nd, va_list args), ...)
 	{
 		if( bl->type == BL_NPC )
 		{
-			struct npc_data* nd = (struct npc_data*)bl;
+			npc_data* nd = (npc_data*)bl;
 			va_list args;
 			int32 ret;
 
@@ -2697,7 +2697,7 @@ bool mapit_exists(struct s_mapiterator* mapit)
 /*==========================================
  * Add npc-bl to id_db, basically register npc to map
  *------------------------------------------*/
-bool map_addnpc(int16 m,struct npc_data *nd)
+bool map_addnpc(int16 m,npc_data *nd)
 {
 	nullpo_ret(nd);
 
@@ -2860,7 +2860,7 @@ static int32 map_instancemap_clean(struct block_list *bl, va_list ap)
 			map_quit((map_session_data *) bl);
 			break;*/
 		case BL_NPC:
-			npc_unload((struct npc_data *)bl,true);
+			npc_unload((npc_data *)bl,true);
 			break;
 		case BL_MOB:
 			unit_free(bl,CLR_OUTSIGHT);
@@ -2968,7 +2968,7 @@ void map_spawnmobs(int16 m)
 
 int32 map_removemobs_sub(struct block_list *bl, va_list ap)
 {
-	struct mob_data *md = (struct mob_data *)bl;
+	mob_data *md = (mob_data *)bl;
 	nullpo_ret(md);
 
 	//When not to remove mob:
@@ -4403,7 +4403,7 @@ int32 log_sql_init(void)
 	return 0;
 }
 
-void map_remove_questinfo(int32 m, struct npc_data *nd) {
+void map_remove_questinfo(int32 m, npc_data *nd) {
 	struct map_data *mapdata = map_getmapdata(m);
 
 	nullpo_retv(nd);
@@ -4417,7 +4417,7 @@ static void map_free_questinfo(struct map_data *mapdata) {
 	nullpo_retv(mapdata);
 
 	for (const auto &it : mapdata->qi_npc) {
-		struct npc_data *nd = map_id2nd(it);
+		npc_data *nd = map_id2nd(it);
 
 		if (!nd || nd->qi_data.empty())
 			continue;
@@ -4468,7 +4468,7 @@ int32 cleanup_sub(struct block_list *bl, va_list ap)
 			map_quit((map_session_data *) bl);
 			break;
 		case BL_NPC:
-			npc_unload((struct npc_data *)bl,false);
+			npc_unload((npc_data *)bl,false);
 			break;
 		case BL_MOB:
 			unit_free(bl,CLR_OUTSIGHT);

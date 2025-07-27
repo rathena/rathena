@@ -43,7 +43,13 @@ namespace rathena{
 	}
 }
 
-struct npc_data;
+class npc_data;
+class mob_data;
+class homun_data;
+class s_mercenary_data;
+class pet_data;
+class s_elemental_data;
+class chat_data;
 struct item_data;
 struct Channel;
 
@@ -839,7 +845,7 @@ struct map_data {
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 	std::unordered_map<uint16, int32> skill_duration;
 
-	struct npc_data *npc[MAX_NPC_PER_MAP];
+	npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
 	int32 mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
 	t_tick last_macrocheck;
@@ -858,7 +864,7 @@ struct map_data {
 	uint16 hpmeter_visible;
 #ifdef MAP_GENERATOR
 	struct {
-		std::vector<const struct npc_data *> npcs;
+		std::vector<const npc_data *> npcs;
 		std::vector<const struct navi_link *> warps_into;
 		std::vector<const struct navi_link *> warps_outof;
 	} navi;
@@ -1152,7 +1158,7 @@ bool map_nearby_freecell(int16 m, int16 &x, int16 &y, int32 type, int32 flag);
 //
 int32 map_quit(map_session_data *);
 // npc
-bool map_addnpc(int16 m,struct npc_data *);
+bool map_addnpc(int16 m,npc_data *);
 
 // map item
 TIMER_FUNC(map_clearflooritem_timer);
@@ -1174,13 +1180,13 @@ const char* map_charid2nick(int32 charid);
 map_session_data* map_charid2sd(int32 charid);
 
 map_session_data * map_id2sd(int32 id);
-struct mob_data * map_id2md(int32 id);
-struct npc_data * map_id2nd(int32 id);
-struct homun_data* map_id2hd(int32 id);
-struct s_mercenary_data* map_id2mc(int32 id);
-struct pet_data* map_id2pd(int32 id);
-struct s_elemental_data* map_id2ed(int32 id);
-struct chat_data* map_id2cd(int32 id);
+mob_data * map_id2md(int32 id);
+npc_data * map_id2nd(int32 id);
+homun_data* map_id2hd(int32 id);
+s_mercenary_data* map_id2mc(int32 id);
+pet_data* map_id2pd(int32 id);
+s_elemental_data* map_id2ed(int32 id);
+chat_data* map_id2cd(int32 id);
 struct block_list * map_id2bl(int32 id);
 bool map_blid_exists( int32 id );
 
@@ -1195,18 +1201,18 @@ int32 map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);
 void map_foreachpc(int32 (*func)(map_session_data* sd, va_list args), ...);
-void map_foreachmob(int32 (*func)(struct mob_data* md, va_list args), ...);
-void map_foreachnpc(int32 (*func)(struct npc_data* nd, va_list args), ...);
+void map_foreachmob(int32 (*func)(mob_data* md, va_list args), ...);
+void map_foreachnpc(int32 (*func)(npc_data* nd, va_list args), ...);
 void map_foreachregen(int32 (*func)(struct block_list* bl, va_list args), ...);
 void map_foreachiddb(int32 (*func)(struct block_list* bl, va_list args), ...);
 map_session_data * map_nick2sd(const char* nick, bool allow_partial);
-struct mob_data * map_getmob_boss(int16 m);
-struct mob_data * map_id2boss(int32 id);
+mob_data * map_getmob_boss(int16 m);
+mob_data * map_id2boss(int32 id);
 
 // reload config file looking only for npcs
 void map_reloadnpc(bool clear);
 
-void map_remove_questinfo(int32 m, struct npc_data *nd);
+void map_remove_questinfo(int32 m, npc_data *nd);
 
 /// Bitfield of flags for the iterator.
 enum e_mapitflags
@@ -1277,15 +1283,15 @@ extern const char*MSG_CONF_NAME_THA;
 
 //Useful typedefs from jA [Skotlex]
 typedef map_session_data TBL_PC;
-typedef struct npc_data         TBL_NPC;
-typedef struct mob_data         TBL_MOB;
-typedef struct flooritem_data   TBL_ITEM;
-typedef struct chat_data        TBL_CHAT;
+typedef npc_data         TBL_NPC;
+typedef mob_data         TBL_MOB;
+typedef flooritem_data   TBL_ITEM;
+typedef chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
-typedef struct pet_data         TBL_PET;
-typedef struct homun_data       TBL_HOM;
-typedef struct s_mercenary_data   TBL_MER;
-typedef struct s_elemental_data	TBL_ELEM;
+typedef pet_data         TBL_PET;
+typedef homun_data       TBL_HOM;
+typedef s_mercenary_data   TBL_MER;
+typedef s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
 	( ((bl) == nullptr || (bl)->type != (type_)) ? static_cast<T ## type_ *>(nullptr) : static_cast<T ## type_ *>(bl) )
