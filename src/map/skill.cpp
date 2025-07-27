@@ -22972,8 +22972,6 @@ void skill_unit_move_unit_group(std::shared_ptr<s_skill_unit_group> group, int16
  */
 std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, t_itemid nameid, uint16 trigger, int32 qty) {
 
-	ShowInfo("CAN PRODUCE MIX: nameid=%d trigger=%d qty=%d\n", nameid, trigger, qty);
-
 	nullpo_retr(nullptr, sd);
 
 	if (!nameid || !item_db.exists(nameid))
@@ -22981,49 +22979,37 @@ std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, 
 
 	std::shared_ptr<s_skill_produce_db> produce = skill_produce_db.find(nameid, trigger);
 	if (produce == nullptr) {
-		ShowDebug("RECIPE NOT FOUND pid=%d gid=%d\n", nameid, trigger);
+		ShowError("skill_cam_produce_mix: Recipe not found for product_id: %d trigger: %d\n", nameid, trigger);
 		return nullptr;
 	}
 
 	// if recipe requires a skill. check if player has the required skill lv [malufett]
-	if (produce->req_skill > 0 && pc_checkskill(sd, produce->req_skill) < produce->req_skill_lv) {
-		// ShowError("REQUIRED SKILL LV ERROR: skill=%d req=%d\n", produce->req_skill, produce->req_skill_lv);
+	if (produce->req_skill > 0 && pc_checkskill(sd, produce->req_skill) < produce->req_skill_lv)
 		return nullptr;
-	}
 
 	// if triggered by skill, check if skill used is the required
-	if (produce->req_skill > 0 && sd->menuskill_id > 0 && sd->menuskill_id != produce->req_skill) {
-		// ShowError("REQUIRED SKILL IS WRONG\n");
+	if (produce->req_skill > 0 && sd->menuskill_id > 0 && sd->menuskill_id != produce->req_skill)
 		return nullptr;
-	}
 
 	//FIXME Temporary check since the produce_db specifically wants the Pharmacy skill to use
-	if (nameid == ITEMID_HOMUNCULUS_SUPPLEMENT && pc_checkskill(sd, AM_BIOETHICS) != 0) {
-		ShowError("HOMU SUPPLEMENT ERROR\n");
+	if (nameid == ITEMID_HOMUNCULUS_SUPPLEMENT && pc_checkskill(sd, AM_BIOETHICS) != 0)
 		return nullptr;
-	}
 
 	// Cannot carry the produced stuff
-	if (pc_checkadditem(sd, nameid, qty) == CHKADDITEM_OVERAMOUNT) {
-		// ShowError("NOT ENOUGH SPACE ERROR\n");
+	if (pc_checkadditem(sd, nameid, qty) == CHKADDITEM_OVERAMOUNT)
 		return nullptr;
-	}
 
+	//TODO Is this by design? These group rules could be used for organization of recipes
+	// not to enforce something
 	if (trigger > 20) { // Non-weapon, non-food item (itemlv must match)
-		if (produce->group_id != trigger) {
-			ShowError("TRIGGER ERROR > 20\n");
+		if (produce->group_id != trigger)
 			return nullptr;
-		}
 	} else if (trigger > 10) { // Food (any item level between 10 and 20 will do)
-		if (produce->group_id <= 10 || produce->group_id > 20) {
-			ShowError("TRIGGER ERROR > 10\n");
+		if (produce->group_id <= 10 || produce->group_id > 20)
 			return nullptr;
-		}
 	} else if (trigger > 0) { // Weapon (itemlv must be higher or equal)
-		if (produce->group_id < trigger) {
-			ShowError("TRIGGER ERROR > 0\n");
+		if (produce->group_id < trigger)
 			return nullptr;
-		}
 	}
 
 	// Check on player's inventory
@@ -23036,19 +23022,14 @@ std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, 
 		uint16 req_amt = max(1, qty * mat_amt);
 
 		uint16 idx, amt;
-		if ((idx = pc_search_inventory(sd, mat_id)) == -1) {
-			// ShowError("MAT NOT FOUND\n");
+		if ((idx = pc_search_inventory(sd, mat_id)) == -1)
 			return nullptr;
-		}
 
 		amt = sd->inventory.u.items_inventory[idx].amount;
-		if (amt < req_amt) {
-			// ShowError("NOT ENOUGH MATS\n");
+		if (amt < req_amt)
 			return nullptr;
-		}
 	}
 
-	ShowInfo("CAN BE PRODUCED pid=%d gid=%d\n", nameid, trigger);
 	return produce;
 }
 
@@ -23066,10 +23047,6 @@ std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, 
  */
 bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, uint16 slot1, uint16 slot2, uint16 slot3, int32 qty, std::shared_ptr<s_skill_produce_db> produce) {
 
-	ShowInfo("SKILL PRODUCE MIX: skill_id=%d product_id=%d slot1=%d slot2=%d slot3=%d qty=%d\n",
-		skill_id, nameid, slot1, slot2, slot3, qty
-	);
-
 	int i;
 
 	nullpo_ret(sd);
@@ -23085,7 +23062,6 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 	qty = max(1, qty);
 
 	if (produce == nullptr) {
-		//FIXME is called multiple times, could be improved
 		produce = skill_can_produce_mix(sd, nameid, 0, qty);
 		if( produce == nullptr )
 			return false;
@@ -23097,9 +23073,8 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 	if( skill_id == GC_RESEARCHNEWPOISON ) //FIXME replace old skill
 		skill_id = GC_CREATENEWPOISON;
 
-	int num_required = -1; //FIXME check uses
-	
-	ShowInfo("CHECK MATERIALS\n");
+	int num_required = -1;
+
 	for ( const auto &[mat_id, mat_amt] : produce->materials ) {
 
 		// should never happen since we are looking at the recipe direcly, and the player MUST have all items
@@ -23136,7 +23111,6 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 		{ ITEMID_GREAT_NATURE, ELE_EARTH },
 	};
 
-	ShowInfo("Check catalysts\n");
 	for ( const auto &it : slots ) {	// Note that qty should always be one if you are using these!
 		if (it <= 0)
 			continue;
@@ -23158,7 +23132,6 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 	int make_per = 0;
 	struct status_data *status = status_get_status_data(&sd->bl);
 	
-	ShowInfo("is_equip_type=%d\n", is_equip_type);
 	if (is_equip_type) {	// Weapon Forging - skill bonuses are straight from kRO website, other things from a jRO calculator [DracoRPG]
 
 		make_per = 5000 + ((sd->class_&JOBL_THIRD) ? 1400 : sd->status.job_level*20) + status->dex*10 + status->luk*10; // Base
@@ -23455,13 +23428,9 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 	if (sd->class_&JOBL_BABY) //if it's a Baby Class
 		make_per = (make_per * 50) / 100; //Baby penalty is 50% (bugreport:4847)
 
-	ShowInfo("MAKE CHANCE: %d\n", make_per);
-
 	make_per = max(1, make_per);
 
 	if (qty > 1 || rnd()%10000 < make_per){ //Success, or crafting multiple items.
-
-		ShowInfo("SUCCESS\n");
 
 		struct item tmp_item = {0};
 
@@ -23586,16 +23555,11 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 		}
 
 		if (skill_id == GN_CHANGEMATERIAL && tmp_item.amount) { //Success 
-			ShowInfo("DELIVER ITEM CHANGEMATERIAL\n");
-
-			ShowInfo("TMP ITEM id=%d amt=%d\n", tmp_item.nameid, tmp_item.amount);
 
 			int32 j, k = 0, l;
 			bool isStackable = itemdb_isstackable(tmp_item.nameid);
 
 			for ( const auto &qtyit : produce->qty ) {
-				ShowInfo("QTY amt=%d chance=%d\n", qtyit.first, qtyit.second);
-
 				if (rnd()%1000 >= qtyit.second)
 					continue;
 
@@ -23603,11 +23567,9 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 				tmp_item.amount = (isStackable ? total_qty : 1);
 
 				for ( int32 i = 0; i < total_qty; i += tmp_item.amount ) {
-					ShowInfo("AMT %d %d\n", i, total_qty);
 					enum e_additem_result flag;
 					if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
-						ShowInfo("FLAG %d\n", flag);
-						clif_additem(sd,0,0,flag); // notifies a failure (no visual effect)
+						clif_additem(sd,0,0,flag);
 						if( battle_config.skill_drop_items_full ){
 							map_addflooritem(&tmp_item,tmp_item.amount,sd->m,sd->x,sd->y,0,0,0,4,0);
 						}
@@ -23623,7 +23585,6 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 				return true;
 			}
 		} else if (tmp_item.amount) { //Success
-			ShowInfo("DELIVER ITEM\n");
 			if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
 				clif_additem(sd,0,0,flag);
 				if( battle_config.skill_drop_items_full ){
@@ -23663,11 +23624,9 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 	//TODO update PICKLOG
 
 	if (is_equip_type) {
-		ShowInfo("FAILED A\n");
 		clif_produceeffect(sd,1,nameid);
 		clif_misceffect( *sd, NOTIFYEFFECT_REFINE_FAILURE );
 	} else {
-		ShowInfo("FAILED B\n");
 		switch (skill_id) {
 			case ASC_CDP: //25% Damage yourself, and display same effect as failed potion.
 				status_percent_damage(nullptr, sd, -25, 0, true);
@@ -24084,8 +24043,6 @@ int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, u
  */
 int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 
-	ShowInfo("SKILL CHANGEMATERIAL n=%d\n");
-
 	int32 k, c, qty = 0, amount;
 	t_itemid nameid;
 
@@ -24108,16 +24065,11 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 		if (recipe->materials.empty())
 			return 0;
 
-		// ShowInfo("CHANGEMATERIAL RECIPE FOUND recipe_id=%d\n", recipe->product_id);
-		// for (const auto& [mat_id, mat_amt] : recipe->materials)
-		// 	ShowInfo("matid=%d amt=%d\n", mat_id, mat_amt);
-
 		qty = 0;
 		do {
 			c = 0;
 			// Verification of overlap between the objects required and the list submitted.
 			for (const auto &mat : recipe->materials) {
-				// ShowInfo("MAT id=%d amt=%d\n", mat.first, mat.second);
 				for( k = 0; k < n; k++ ) {
 
 					int idx = item_list[k*2]-2; // 
@@ -24128,9 +24080,6 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 
 					nameid = sd->inventory.u.items_inventory[idx].nameid;
 					amount = item_list[k*2+1];
-
-					// ShowInfo("ITEM LIST idx=%d (nameid=%d mat=%d) amt=%d qty=%d mat=%d\n", idx, nameid, mat.first, amount, qty, mat.second);
-
 					if( nameid > 0 && sd->inventory.u.items_inventory[idx].identify == 0 ){
 						// required item is not identified
 						clif_msg_skill(*sd,GN_CHANGEMATERIAL,MSI_SKILL_FAIL_MATERIAL_IDENTITY);
@@ -24144,9 +24093,6 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 		} while(n == recipe->materials.size() && c == n);
 		qty--;
 		if ( qty > 0 ) {
-
-			// ShowInfo("CHANGEMATERIAL RECIPE id=%d qty=%d\n", recipe->product_id, qty);
-
 			skill_produce_mix(sd,GN_CHANGEMATERIAL,recipe->product_id,0,0,0,qty,recipe);
 			return 1;
 		}
@@ -26346,8 +26292,7 @@ uint64 SkillProduceDatabase::parseBodyNode(const ryml::NodeRef &node) {
 	return 1;
 }
 
-/**
- * Create a unique key composed of Product and Group info
+/** Create a unique key composed of Product and Group info
  * @param product_id Produced Item
  * @param group_id Recipe Group
  * @return Unique key
@@ -26365,19 +26310,13 @@ std::shared_ptr<s_skill_produce_db> SkillProduceDatabase::find( t_itemid product
 
 	auto recipe = this->find( this->makeKey( product_id, group_id ) );
 	
-	// return regardless for exact searches
-	if (recipe || exact) {
-		ShowInfo("MATCH OR EXACT %d %d\n", recipe != nullptr, exact);
+	if (recipe || exact)
 		return recipe;
-	}
 
-	ShowInfo("FALLBACK\n");
-
-	//FIXME find a better way to determine the number of groups
-	// tries a matching key by iterating groups UINT8 (0-255)
+	//TODO find a better way to determine the number of groups
 	for (uint8 gid = 1; gid < UINT8_MAX; gid++) {
 		auto recipe = this->find( this->makeKey( product_id, gid ) );
-		if (recipe) return recipe; // returns first match
+		if (recipe) return recipe;
 	}
 
 	return nullptr;

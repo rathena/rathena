@@ -4207,8 +4207,6 @@ void clif_arrow_fail( map_session_data& sd, e_action_failure type ) {
 /// 01ad <packet len>.W { <name id>.W }*
 void clif_arrow_create_list( map_session_data& sd ){
 
-	ShowInfo("CLIF ARROW CREATE LIST\n");
-
 	PACKET_ZC_MAKINGARROW_LIST* p = reinterpret_cast<PACKET_ZC_MAKINGARROW_LIST*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
@@ -6310,8 +6308,6 @@ void clif_skill_estimation( map_session_data& sd, mob_data& md ){
  */
 void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 trigger ){
 
-	ShowInfo("PRODUCE MIX LIST skill_id=%d trigger=%d\n", skill_id, trigger);
-
 	nullpo_retv(sd);
 
 	// Avoid resending the menu
@@ -6361,7 +6357,7 @@ void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 tr
  * 025a <packet len>.W <mk type>.W { <name id>.W }* (ZC_MAKINGITEM_LIST)
  * mk type:
  * 1 = cooking
- * 2 = arrow //FIXME
+ * 2 = arrow
  * 3 = elemental
  * 4 = GN_MIX_COOKING
  * 5 = GN_MAKEBOMB
@@ -6380,8 +6376,6 @@ void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, in
 	if( sd.menuskill_id == skill_id ){
 		return;
 	}
-
-	ShowInfo("CLIF COOKING LIST\n");
 
 	PACKET_ZC_MAKINGITEM_LIST* p = reinterpret_cast<PACKET_ZC_MAKINGITEM_LIST*>( packet_buffer );
 
@@ -13163,11 +13157,7 @@ void clif_parse_RequestMemo(int32 fd,map_session_data *sd)
 /// 018e <name id>.W { <material id>.W }*3 (CZ_REQMAKINGITEM)
 void clif_parse_ProduceMix(int32 fd,map_session_data *sd){
 
-	ShowInfo("CLIF PARSE PRODUCE MIX\n");
-
-	if( sd == nullptr ){
-		return;
-	}
+	nullpo_retv(sd);
 
 	const PACKET_CZ_REQMAKINGITEM* p = reinterpret_cast<PACKET_CZ_REQMAKINGITEM*>( RFIFOP( fd, 0 ) );
 
@@ -13208,8 +13198,6 @@ void clif_parse_ProduceMix(int32 fd,map_session_data *sd){
  *    8 = BO_BIONIC_PHARMACY - Unconfirmed
  */
 void clif_parse_Cooking(int32 fd,map_session_data *sd) {
-
-	ShowInfo("CLIF PARSE COOKING\n");
 
 #if PACKETVER >= 20051010
 
@@ -19644,8 +19632,6 @@ void clif_parse_debug(int32 fd,map_session_data *sd)
  * Server populates the window with avilable elemental converter options according to player's inventory
  *------------------------------------------*/
 void clif_elementalconverter_list( map_session_data& sd ){
-
-	ShowInfo("ELEMENTAL CONVERTER LIST\n");
 
 	PACKET_ZC_MAKINGARROW_LIST* p = reinterpret_cast<PACKET_ZC_MAKINGARROW_LIST*>( packet_buffer );
 
