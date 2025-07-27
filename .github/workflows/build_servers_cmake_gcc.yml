@@ -1,0 +1,59 @@
+name: Build servers on Linux
+# build_servers_linux.yml
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      # Always trigger all Github Actions if an action or something CI related was changed
+      - '.github/workflows/**'
+      - 'tools/ci/**'
+      # This workflow should run when a file in a source directory has been modified.
+      - 'src/**'
+      - '3rdparty/**'
+      # This workflow should run whenever a CMake related file has been modified
+      - '**/CMakeLists.txt'
+
+jobs:
+  build:
+    # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
+    # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
+    if: "!contains(github.event.head_commit.message, 'ci-skip')"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+          os: [ubuntu-latest]
+          compiler:
+            - cxx: g++-13
+              cc: gcc-13
+            - cxx: g++-14
+              cc: gcc-14
+            - cxx: clang++-17
+              cc: clang-17
+            - cxx: clang++-18
+              cc: clang-18
+            - cxx: clang++-19
+              cc: clang-19
+            - cxx: clang++-20
+              cc: clang-20
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update & Install compilers
+        run: |
+          sudo apt update
+          sudo apt install zlib1g-dev libpcre3-dev ${{matrix.compiler.cc}} ${{matrix.compiler.cxx}}
+
+      - name: Configure CMake
+        run: CXX=${{matrix.compiler.cxx}} CC=${{matrix.compiler.cc}} cmake -B build
+
+      - name: Build
+        run: cmake --build build -j $(nproc) --target all
