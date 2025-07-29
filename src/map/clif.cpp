@@ -8148,17 +8148,15 @@ void clif_movetoattack( map_session_data& sd, block_list& bl ){
 }
 
 
-/// Notifies the client about the result of an item produce request.
-/// 018f <result>.W <name id>.W (ZC_ACK_REQMAKINGITEM)
-/// result:
-///     0 = success
-///     1 = failure
-///     2 = success (alchemist)
-///     3 = failure (alchemist)
-void clif_produceeffect(map_session_data* sd,int32 flag, t_itemid nameid){
-	if( sd == nullptr ){
-		return;
-	}
+/** Notifies the client about the result of an item produce request.
+ * 018f <result>.W <name id>.W (ZC_ACK_REQMAKINGITEM)
+ * @param sd Player data
+ * @param flag Effect success/failture (enum e_PRODUCE_EFFECT)
+ * @param nameid Produced item
+ */
+void clif_produceeffect(map_session_data* sd, int32 flag, t_itemid nameid){
+
+	nullpo_retv(sd);
 
 	clif_solved_charname( *sd, sd->status.char_id, sd->status.name );
 

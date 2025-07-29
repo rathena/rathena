@@ -23484,7 +23484,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 		//TODO update PICKLOG
 
 		if (is_equip_type) {
-			clif_produceeffect(sd,0,nameid);
+			clif_produceeffect(sd,PRODUCEEFFECT_FORGE_SUCCESS,nameid);
 			clif_misceffect( *sd, NOTIFYEFFECT_REFINE_SUCCESS );
 			if (weapon_level >= 3 && ((ele ? 1 : 0) + star_crumb) >= 3) // Fame point system [DracoRPG]
 				pc_addfame(*sd, battle_config.fame_forge); // Success to forge a lv3 weapon with 3 additional ingredients = +10 fame point
@@ -23536,13 +23536,13 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 				case AM_TWILIGHT3:
 				case ASC_CDP:
 				case GC_CREATENEWPOISON:
-					clif_produceeffect(sd,2,nameid);
+					clif_produceeffect(sd,PRODUCEEFFECT_PHARMACY_SUCCESS,nameid);
 					clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
 					break;
 				case BS_IRON:
 				case BS_STEEL:
 				case BS_ENCHANTEDSTONE:
-					clif_produceeffect(sd,0,nameid);
+					clif_produceeffect(sd,PRODUCEEFFECT_FORGE_SUCCESS,nameid);
 					clif_misceffect( *sd, NOTIFYEFFECT_REFINE_SUCCESS );
 					break;
 				default: //Those that don't require a skill?
@@ -23579,7 +23579,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 			}
 
 			if (k) {
-				clif_produceeffect(sd,6,nameid);
+				clif_produceeffect(sd,PRODUCEEFFECT_MIX_SUCCESS,nameid);
 				clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
 				clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
 				return true;
@@ -23592,27 +23592,27 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 				}
 			}
 			switch (skill_id) {
-					case RK_RUNEMASTERY:
-						clif_produceeffect(sd, 4, nameid);
-						clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
-						break;
-					case GN_MIX_COOKING:
-					case GN_MAKEBOMB:
-					case GN_S_PHARMACY:
-						clif_produceeffect(sd, 6, nameid);
-						clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
-						clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
-						break;
-					case MT_M_MACHINE:
-						clif_produceeffect(sd, 0, nameid);
-						clif_misceffect( *sd, NOTIFYEFFECT_REFINE_SUCCESS );
-						clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
-						break;
-					case BO_BIONIC_PHARMACY:
-						clif_produceeffect(sd, 2, nameid);
-						clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
-						clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
-						break;
+				case RK_RUNEMASTERY:
+					clif_produceeffect(sd, PRODUCEEFFECT_RUNE_SUCCESS, nameid);
+					clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
+					break;
+				case GN_MIX_COOKING:
+				case GN_MAKEBOMB:
+				case GN_S_PHARMACY:
+					clif_produceeffect(sd, PRODUCEEFFECT_MIX_SUCCESS, nameid);
+					clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
+					clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
+					break;
+				case MT_M_MACHINE:
+					clif_produceeffect(sd, PRODUCEEFFECT_FORGE_SUCCESS, nameid);
+					clif_misceffect( *sd, NOTIFYEFFECT_REFINE_SUCCESS );
+					clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
+					break;
+				case BO_BIONIC_PHARMACY:
+					clif_produceeffect(sd, PRODUCEEFFECT_PHARMACY_SUCCESS, nameid);
+					clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_SUCCESS );
+					clif_msg_skill( *sd, skill_id, MSI_SKILL_SUCCESS );
+					break;
 			}
 			return true;
 		}
@@ -23624,7 +23624,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 	//TODO update PICKLOG
 
 	if (is_equip_type) {
-		clif_produceeffect(sd,1,nameid);
+		clif_produceeffect(sd,PRODUCEEFFECT_FORGE_FAILURE,nameid);
 		clif_misceffect( *sd, NOTIFYEFFECT_REFINE_FAILURE );
 	} else {
 		switch (skill_id) {
@@ -23636,18 +23636,18 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 			case AM_TWILIGHT2:
 			case AM_TWILIGHT3:
 			case GC_CREATENEWPOISON:
-				clif_produceeffect(sd,3,nameid);
+				clif_produceeffect(sd,PRODUCEEFFECT_PHARMACY_FAILURE,nameid);
 				clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_FAILURE );
 				sd->potion_success_counter = 0; // Fame point system [DracoRPG]
 				break;
 			case BS_IRON:
 			case BS_STEEL:
 			case BS_ENCHANTEDSTONE:
-				clif_produceeffect(sd,1,nameid);
+				clif_produceeffect(sd,PRODUCEEFFECT_FORGE_FAILURE,nameid);
 				clif_misceffect( *sd, NOTIFYEFFECT_REFINE_FAILURE );
 				break;
 			case RK_RUNEMASTERY:
-				clif_produceeffect(sd,5,nameid);
+				clif_produceeffect(sd,PRODUCEEFFECT_RUNE_FAILURE,nameid);
 				clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_FAILURE );
 				break;
 			case GN_MIX_COOKING:
@@ -23677,7 +23677,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 							map_addflooritem(&tmp_item,tmp_item.amount,sd->m,sd->x,sd->y,0,0,0,4,0);
 						}
 					}
-					clif_produceeffect(sd,7,nameid);
+					clif_produceeffect(sd,PRODUCEEFFECT_MIX_SUCCESS,nameid);
 					clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_FAILURE );
 					clif_msg_skill( *sd, skill_id, MSI_SKILL_FAIL );
 				}
@@ -23685,17 +23685,17 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 			case GN_MAKEBOMB:
 			case GN_S_PHARMACY:
 			case GN_CHANGEMATERIAL:
-				clif_produceeffect(sd,7,nameid);
+				clif_produceeffect(sd,PRODUCEEFFECT_MIX_SUCCESS,nameid);
 				clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_FAILURE );
 				clif_msg_skill( *sd, skill_id, MSI_SKILL_FAIL );
 				break;
 			case MT_M_MACHINE:
-				clif_produceeffect(sd, 1, nameid);
+				clif_produceeffect(sd, PRODUCEEFFECT_FORGE_FAILURE, nameid);
 				clif_misceffect( *sd, NOTIFYEFFECT_REFINE_FAILURE );
 				clif_msg_skill( *sd, skill_id, MSI_SKILL_FAIL );
 				break;
 			case BO_BIONIC_PHARMACY:
-				clif_produceeffect(sd, 3, nameid);
+				clif_produceeffect(sd, PRODUCEEFFECT_PHARMACY_FAILURE, nameid);
 				clif_misceffect( *sd, NOTIFYEFFECT_PHARMACY_FAILURE );
 				clif_msg_skill( *sd, skill_id, MSI_SKILL_FAIL );
 				break;

@@ -9457,7 +9457,7 @@ BUILDIN_FUNC(repair)
 				if(num == repaircounter) {
 					sd->inventory.u.items_inventory[i].attribute = 0;
 					clif_equiplist(sd);
-					clif_produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
+					clif_produceeffect(sd, PRODUCEEFFECT_FORGE_SUCCESS, sd->inventory.u.items_inventory[i].nameid);
 					clif_misceffect( *sd, NOTIFYEFFECT_REFINE_SUCCESS );
 					break;
 				}
@@ -9482,7 +9482,7 @@ BUILDIN_FUNC(repairall)
 	{
 		if( sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].attribute == 1 && !itemdb_ishatched_egg( &sd->inventory.u.items_inventory[i] ) ){
 			sd->inventory.u.items_inventory[i].attribute = 0;
-			clif_produceeffect(sd,0,sd->inventory.u.items_inventory[i].nameid);
+			clif_produceeffect(sd,PRODUCEEFFECT_FORGE_SUCCESS,sd->inventory.u.items_inventory[i].nameid);
 			repaircounter++;
 		}
 	}
