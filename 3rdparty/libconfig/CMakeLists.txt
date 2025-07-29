@@ -28,25 +28,5 @@ set( LIBCONFIG_DEFINITIONS
 	"-DLIBCONFIG_STATIC"
 	CACHE INTERNAL "libconfig definitions" )
 
-include(CheckSymbolExists)
-if(APPLE)
-    check_symbol_exists(uselocale "xlocale.h" HAVE_USELOCALE)
-    check_symbol_exists(newlocale "xlocale.h" HAVE_NEWLOCALE)
-    check_symbol_exists(freelocale "xlocale.h" HAVE_FREELOCALE)
-else()
-    check_symbol_exists(uselocale "locale.h" HAVE_USELOCALE)
-    check_symbol_exists(newlocale "locale.h" HAVE_NEWLOCALE)
-    check_symbol_exists(freelocale "locale.h" HAVE_FREELOCALE)
-endif()
-
-if(HAVE_USELOCALE)
-    set( LIBCONFIG_DEFINITIONS "${LIBCONFIG_DEFINITIONS} -DHAVE_USELOCALE" CACHE INTERNAL "libconfig definitions" )
-endif()
-
-if(HAVE_NEWLOCALE)
-    set( LIBCONFIG_DEFINITIONS "${LIBCONFIG_DEFINITIONS} -DHAVE_NEWLOCALE" CACHE INTERNAL "libconfig definitions" )
-endif()
-
-if(HAVE_FREELOCALE)
-    set( LIBCONFIG_DEFINITIONS "${LIBCONFIG_DEFINITIONS} -DHAVE_FREELOCALE" CACHE INTERNAL "libconfig definitions" )
-endif()
+include(CheckIncludeFile)
+check_include_file(xlocale.h HAVE_XLOCALE_H)

@@ -1,5 +1,5 @@
 name: Build servers with Clang on macos
-# build_servers_clang_osx.yml
+# build_servers_cmake_osx.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
