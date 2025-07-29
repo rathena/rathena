@@ -446,37 +446,30 @@ enum e_dance_overlap : int32 {
 	OVERLAP_COUNT, // Don't change overlap marker, just count units overlapping with skill unit (excluding itself)
 };
 
-/// Create Database item
-struct s_skill_produce_db_entry {
-	t_itemid nameid; /// Product ID
-	uint16 req_skill; /// Required Skill
-	uint16 req_skill_lv, /// Required Skill Level
-		itemlv; /// Item Level
-	std::unordered_map<t_itemid, uint16> materials;
-
-	// additional rates/quantity data for skill_changematerial 
-	uint16 baserate;
-	std::unordered_map<uint16, uint16> qty;
-};
-
+/// Create Database produce
 struct s_skill_produce_db {
-	uint16 itemlv; /// Item Level
-	std::unordered_map<t_itemid, std::shared_ptr<s_skill_produce_db_entry>> data;	/// item, entry
+	uint64 id;				/// Unique ID
+	t_itemid product_id; 	/// Product ID
+	uint16 group_id;		/// Group ID
+	uint16 req_skill; 		/// Required Skill
+	uint8 req_skill_lv; 	/// Required Skill Level
+	std::unordered_map<t_itemid, uint16> materials;	/// item_id, amount
+
+	uint16 base_rate;		/// Base Rate for change material
+	std::unordered_map<uint16, uint16> qty;			/// amount, rate
 };
 
-class SkillProduceDatabase : public TypesafeYamlDatabase<uint16, s_skill_produce_db> {
-private:
-	uint16 total_id = 0;
-
+class SkillProduceDatabase : public TypesafeYamlDatabase<uint64, s_skill_produce_db> {
+protected:
+	uint64 makeKey(t_itemid product_id, uint16 group_id);
 public:
-	SkillProduceDatabase() : TypesafeYamlDatabase("PRODUCE_DB", 1) {
-
-	}
+	SkillProduceDatabase() : TypesafeYamlDatabase("PRODUCE_DB", 1) {}
 
 	const std::string getDefaultLocation() override;
 	uint64 parseBodyNode(const ryml::NodeRef& node) override;
-	bool addItemConsumed(const ryml::NodeRef& node, std::shared_ptr<s_skill_produce_db_entry> &entry, bool isConsumed);
-	void loadingFinished() override;
+
+	using TypesafeYamlDatabase::find;
+	std::shared_ptr<s_skill_produce_db> find( t_itemid product_id, uint16 group_id=0, bool exact=false );
 };
 
 extern SkillProduceDatabase skill_produce_db;
@@ -654,8 +647,8 @@ bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md);
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int32 pos_x, int32 pos_y);
 
 // Item creation
-std::shared_ptr<s_skill_produce_db_entry> skill_can_produce_mix(map_session_data *sd, t_itemid nameid, int32 trigger, int32 qty);
-bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int32 slot1, int32 slot2, int32 slot3, int32 qty, std::shared_ptr<s_skill_produce_db_entry> produce = nullptr );
+std::shared_ptr<s_skill_produce_db> skill_can_produce_mix(map_session_data *sd, t_itemid nameid, uint16 trigger, int32 qty);
+bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, uint16 slot1, uint16 slot2, uint16 slot3, int32 qty, std::shared_ptr<s_skill_produce_db> produce = nullptr );
 
 bool skill_arrow_create( map_session_data *sd, t_itemid nameid);
 
