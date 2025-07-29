@@ -1,5 +1,5 @@
 name: Build servers with Clang on macos
-# build_servers_clang.yml
+# build_servers_clang_osx.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
@@ -29,23 +29,22 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The macos-latest label currently points to macos-15.
-          os: [macos-latest]
-          # Version list can be found on https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
-          clang: ['15']
+          # The macos-latest label currently points to macos-14.
+          # macos-latest YAML-label will use macos-15 in August 2025
+          os: [macos-14, macos-15]
 
     steps:
       - uses: actions/checkout@v4
 
       - name: Update & Install packages
         # Macos runners already have most of the packages rAthena requires to build.
+        # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-Readme.md
         # https://github.com/actions/runner-images/blob/main/images/macos/macos-15-Readme.md
         run: |
           brew update
           brew install pcre
           brew install mysql
           brew install mysql-client
-          brew install cmake
 
       # Install latest CMake.
       - uses: lukka/get-cmake@latest
