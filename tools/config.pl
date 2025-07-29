@@ -4,7 +4,6 @@
 # TODO:
 # - Don't always override import/file, sed grep ?
 use lib '.';
-use warnings FATAL => 'all';
 use File::Basename;
 use DBI;
 use DBD::mysql;
