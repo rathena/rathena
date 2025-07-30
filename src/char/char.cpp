@@ -1799,8 +1799,14 @@ int32 char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p){
 	info->speed = DEFAULT_WALK_SPEED; // p->speed;
 	info->job = p->class_;
 	info->head = p->hair;
-#if PACKETVER >= 20141022
+#if PACKETVER >= 20231220
 	info->body = p->body;
+#elif PACKETVER >= 20141022
+	if( p->body > JOB_SECOND_JOB_START && p->body < JOB_SECOND_JOB_END ){
+		info->body = 1;
+	}else{
+		info->body = 0;
+	}
 #endif
 	//When the weapon is sent and your option is riding, the client crashes on login!?
 	info->weapon = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
