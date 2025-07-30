@@ -3632,7 +3632,6 @@ std::vector<e_race2> status_get_race2(struct block_list *bl);
 
 struct view_data *status_get_viewdata(struct block_list *bl);
 void status_set_viewdata(struct block_list *bl, int32 class_);
-void status_change_init(struct block_list *bl);
 status_change *status_get_sc(struct block_list *bl);
 
 bool status_isdead(block_list &bl);
