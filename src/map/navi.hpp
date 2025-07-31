@@ -13,17 +13,17 @@ struct navi_pos {
 	int32 y;
 };
 
-struct npc_data;
+class npc_data;
 
 struct navi_npc {
-	struct npc_data * npc;
+	npc_data * npc;
 	int32 id;
 	struct navi_pos pos;
 
 };
 
 struct navi_link {
-	struct npc_data * npc;
+	npc_data * npc;
 	int32 id;
 	struct navi_pos pos;
 	struct navi_pos warp_dest; // only set for warps
