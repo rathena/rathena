@@ -43,6 +43,7 @@ void BattleSkillFactory::registerAllSkills()
 void BattleSkillFactory::registerWeaponSkills()
 {
     registerSkill(SM_BASH, std::make_shared<BashSkill>());
+    registerSkill(MS_BASH, std::make_shared<MercenaryBashSkill>());
 }
 
 // Register magic skills
@@ -60,15 +61,5 @@ void BattleSkillFactory::registerMiscSkills()
 // Register passive skills
 void BattleSkillFactory::registerPassiveSkills()
 {
-    // Masteries and passive bonuses
-    // register_skill<WeaponMasterySkill>(SM_SWORD);
-    // register_skill<WeaponMasterySkill>(SM_TWOHAND);
-    // register_skill<WeaponMasterySkill>(KN_SPEARMASTERY);
-    // register_skill<WeaponMasterySkill>(AM_AXEMASTERY);
-    // register_skill<WeaponMasterySkill>(PR_MACEMASTERY);
-    // register_skill<WeaponMasterySkill>(MO_IRONHAND);
-    // register_skill<WeaponMasterySkill>(AS_KATAR);
-    // register_skill<WeaponMasterySkill>(BA_MUSICALLESSON);
-    // register_skill<WeaponMasterySkill>(DC_DANCINGLESSON);
-    // register_skill<WeaponMasterySkill>(SA_ADVANCEDBOOK);
+    // SM_SWORD, SM_TWOHAND etc
 }
