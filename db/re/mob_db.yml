@@ -5677,10 +5677,10 @@ Body:
     MvpDrops:
       - Item: Tiger's_Skin
         Rate: 5000
-      - Item: Tiger_Footskin
-        Rate: 1000
       - Item: Bs_Making_S
         Rate: 5000
+      - Item: W_King_Tiger_Doll_Hat
+        Rate: 1
     Drops:
       - Item: Fire_Brand
         Rate: 75
@@ -26416,7 +26416,7 @@ Body:
       - Item: Battered_Kettle
         Rate: 500
       - Item: Burn_Tree
-        Rate: 500
+        Rate: 4500
       - Item: Tear_Gas
         Rate: 100
       - Item: Lusty_Iron
@@ -90722,9 +90722,9 @@ Body:
     MvpDrops:
       - Item: Tiger's_Skin
         Rate: 5000
-      - Item: Tiger_Footskin
-        Rate: 1000
       - Item: Flame_Heart
+        Rate: 3000
+      - Item: W_King_Tiger_Doll_Hat
         Rate: 3000
     Drops:
       - Item: Fire_Brand

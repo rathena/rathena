@@ -3824,6 +3824,7 @@ gef_d01_i,81,135,5	script	Wizard#ilgf01	4_F_BOMI,5,5,{
 		}
 		mes "[Bomi]";
 		mes "Adventurer, thank you for bringing these to me.";
+		next;
 		delitem 25268,10;// Sticky_Blood
 		delitem 25269,10;// Mushroom_Sap
 		erasequest 14671;// Unreliable Fake Blood

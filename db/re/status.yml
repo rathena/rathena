@@ -3607,6 +3607,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+      NoRemoveOnDead: true
       SendVal3: true
   - Status: Weaponblocking
     Icon: EFST_WEAPONBLOCKING

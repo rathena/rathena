@@ -10839,7 +10839,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Hit: Single
-    AfterCastActDelay: 500
+    AfterCastActDelay: 1500
     Requires:
       SpCost: 50
   - Id: 408

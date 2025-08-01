@@ -31,12 +31,12 @@ function	script	F_BBQ	{
 	.@Menu$ = "";
 
 	for (.@i = 0; .@i < getarraysize(.@MobIds); .@i++) {
-		if (!Target[.@MobIds[.@i] - 1000])
+		if (!Target[.@MobIds[.@i]])
 			.@Menu$ += getmonsterinfo(.@MobIds[.@i], MOB_NAME) + " (Lv. " + getmonsterinfo(.@MobIds[.@i], MOB_LV) + "):";
 		else
 			.@Menu$ += ":";
 	
-		if (Target[.@MobIds[.@i] - 1000] > 20) .@c++;
+		if (Target[.@MobIds[.@i]] > 20) .@c++;
 	}
 
 	if (.@c) .@Menu$ += "^00AA00Finish Quest^000000";
@@ -44,10 +44,10 @@ function	script	F_BBQ	{
 
 	if (.@s >= getarraysize(.@MobIds)) {
 		for (.@i = 0; .@i < getarraysize(.@MobIds); .@i++) {
-			if (Target[.@MobIds[.@i] - 1000] > 20) {
+			if (Target[.@MobIds[.@i]] > 20) {
 				.@Bexp += getmonsterinfo(.@MobIds[.@i], MOB_BASEEXP)*5;
 				.@Jexp += getmonsterinfo(.@MobIds[.@i], MOB_JOBEXP)*5;
-				Target[.@MobIds[.@i] - 1000] = 0;
+				Target[.@MobIds[.@i]] = 0;
 				.@c++;
 			}
 		}
@@ -58,7 +58,7 @@ function	script	F_BBQ	{
 			mes "Your level is too high for this quest.";
 		else {
 			mes "Kill 20 " + getmonsterinfo(.@MobIds[.@s], MOB_NAME) + ".";
-			Target[.@MobIds[.@s] - 1000] = 1;
+			Target[.@MobIds[.@s]] = 1;
 		}
 	}
 
@@ -78,11 +78,11 @@ OnInit:
 OnNPCKillEvent:
 	.@kid = killedrid;
 
-	if (Target[.@kid - 1000] && Target[.@kid - 1000] < 20) {
+	if (Target[.@kid] && Target[.@kid] <= 20) {
 		if (!getcharid(1)) {
 			// Solo-Charakter
-			Target[.@kid - 1000] += 1;
-			dispbottom("[ Quest Boards ]: " + (Target[.@kid - 1000] - 1) + "/20 " + getmonsterinfo(.@kid, MOB_NAME) + " slain.");
+			Target[.@kid] += 1;
+			dispbottom("[ Quest Boards ]: " + (Target[.@kid] - 1) + "/20 " + getmonsterinfo(.@kid, MOB_NAME) + " slain.");
 		} else {
 			// Party
 			getmapxy(.@map1$, .@x1, .@y1, BL_PC);
@@ -92,11 +92,11 @@ OnNPCKillEvent:
 			for (.@j = 0; .@j < $@partymembercount; .@j++) {
 				if (isloggedin($@partymemberaid[.@j], $@partymembercid[.@j])) {
 					if (attachrid($@partymemberaid[.@j])) {
-						if (Target[.@kid - 1000] && HP > 0) {
+						if (Target[.@kid] && HP > 0) {
 							getmapxy(.@map2$, .@x2, .@y2, BL_PC);
 							if (.@map1$ == .@map2$ && distance(.@x1, .@y1, .@x2, .@y2) < 20) {
-								Target[.@kid - 1000] += 1;
-								dispbottom("[ Quest Boards ]: " + (Target[.@kid - 1000] - 1) + "/20 " + getmonsterinfo(.@kid, MOB_NAME) + " slain.");
+								Target[.@kid] += 1;
+								dispbottom("[ Quest Boards ]: " + (Target[.@kid] - 1) + "/20 " + getmonsterinfo(.@kid, MOB_NAME) + " slain.");
 							}
 						}
 					}
