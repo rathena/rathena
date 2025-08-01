@@ -2706,3 +2706,310 @@ Body:
         Rate: 80
       - Item: S_Rebellion_Armor
         Rate: 80
+  - Id: 20386
+    AegisName: MD_GH_KING_SCHMIDT_N
+    Name: Cursed King
+    Level: 110
+    Hp: 10200000
+    Attack: 1697
+    Attack2: 2788
+    Defense: 340
+    MagicDefense: 82
+    Str: 155
+    Agi: 98
+    Vit: 55
+    Int: 84
+    Dex: 146
+    Luk: 35
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 175
+    AttackMotion: 1000
+    DamageMotion: 600
+    Ai: 04
+    Class: Boss
+    Modes:
+      CastSensorIdle: true
+      Mvp: true
+  - Id: 20387
+    AegisName: MD_GH_KING_SCHMIDT_H
+    Name: Cursed King
+    Level: 175
+    Hp: 46200000
+    Attack: 3021
+    Attack2: 5021
+    Defense: 446
+    MagicDefense: 145
+    Str: 246
+    Agi: 158
+    Vit: 85
+    Int: 184
+    Dex: 288
+    Luk: 76
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 4
+    WalkSpeed: 175
+    AttackMotion: 1000
+    DamageMotion: 600
+    Ai: 04
+    Class: Boss
+    Modes:
+      CastSensorIdle: true
+      Mvp: true
+  - Id: 20388
+    AegisName: MD_GH_KHALITZBURG
+    Name: Mad Knight
+    Level: 110
+    Hp: 46350
+    BaseExp: 50
+    JobExp: 50
+    Attack: 1246
+    Attack2: 2444
+    Defense: 204
+    MagicDefense: 50
+    Str: 150
+    Agi: 90
+    Vit: 168
+    Int: 80
+    Dex: 131
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackMotion: 1000
+    DamageMotion: 396
+    Ai: 09
+    Drops:
+      - Item: Brigan
+        Rate: 500
+      - Item: Dark_Crystal_Fragment
+        Rate: 200
+      - Item: Elunium
+        Rate: 70
+      - Item: Patriotism_Marks
+        Rate: 300
+  - Id: 20389
+    AegisName: MD_GH_KHALITZBURG
+    Name: Mad Knight
+    Level: 175
+    Hp: 1140000
+    BaseExp: 50
+    JobExp: 50
+    Attack: 2446
+    Attack2: 4130
+    Defense: 408
+    MagicDefense: 91
+    Str: 240
+    Agi: 115
+    Vit: 80
+    Int: 160
+    Dex: 232
+    Luk: 90
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackMotion: 1000
+    DamageMotion: 396
+    Ai: 09
+    Drops:
+      - Item: Elunium
+        Rate: 70
+      - Item: GH_Cursed_Crystal
+        Rate: 30
+      - Item: Brigan
+        Rate: 500
+      - Item: Dark_Crystal_Fragment
+        Rate: 200
+  - Id: 20390
+    AegisName: MD_GH_WHITEKNIGHT
+    Name: Cursed Knight
+    Level: 111
+    Hp: 58650
+    Attack: 1276
+    Attack2: 2231
+    Defense: 204
+    MagicDefense: 55
+    Str: 120
+    Agi: 75
+    Vit: 155
+    Int: 80
+    Dex: 132
+    Luk: 47
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 1000
+    Ai: 09
+    Modes:
+      Detector: true
+    Drops:
+      - Item: White_Jewel
+        Rate: 500
+      - Item: Reins
+        Rate: 300
+  - Id: 20391
+    AegisName: MD_GH_WHITEKNIGHT
+    Name: Cursed Knight
+    Level: 175
+    Hp: 1380000
+    Attack: 2976
+    Attack2: 5247
+    Defense: 408
+    MagicDefense: 124
+    Str: 280
+    Agi: 90
+    Vit: 70
+    Int: 160
+    Dex: 211
+    Luk: 94
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Demihuman
+    Element: Holy
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 1000
+    AttackMotion: 500
+    DamageMotion: 1000
+    Ai: 09
+    Modes:
+      Detector: true
+    Drops:
+      - Item: White_Jewel
+        Rate: 500
+      - Item: Reins
+        Rate: 300
+      - Item: GH_Cursed_Crystal
+        Rate: 30
+  - Id: 20392
+    AegisName: MD_GH_ALICE_G
+    Name: Fallen Maid
+    Level: 110
+    Hp: 68145
+    BaseExp: 50
+    JobExp: 50
+    Attack: 800
+    Attack2: 1471
+    Defense: 103
+    MagicDefense: 70
+    Str: 95
+    Agi: 75
+    Vit: 70
+    Int: 100
+    Dex: 152
+    Luk: 80
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 502
+    AttackMotion: 899
+    DamageMotion: 480
+    Ai: 09
+    Drops:
+      - Item: Brigan
+        Rate: 500
+      - Item: Alice's_Apron
+        Rate: 20
+      - Item: Imperial_Cooking_Kits
+        Rate: 5
+  - Id: 20394
+    AegisName: MD_GH_BLOODY_KNIGHT
+    Name: Dark Guard
+    Level: 175
+    Hp: 1152000
+    BaseExp: 50
+    JobExp: 50
+    Attack: 1319
+    Attack2: 123
+    Defense: 266
+    MagicDefense: 300
+    Str: 198
+    Agi: 125
+    Vit: 60
+    Int: 123
+    Dex: 211
+    Luk: 65
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Race: Undead
+    Element: Dark
+    ElementLevel: 4
+    WalkSpeed: 200
+    AttackDelay: 828
+    AttackMotion: 528
+    DamageMotion: 192
+    Ai: 09
+    Modes:
+      Detector: true
+    Drops:
+      - Item: Brigan
+        Rate: 4850
+      - Item: GH_Cursed_Crystal
+        Rate: 100
+  - Id: 20426
+    AegisName: MD_MANHOLE3
+    Name: Cursed Flame
+    Level: 1
+    Hp: 10000
+    BaseExp: 1250
+    JobExp: 2500
+    Attack: 868
+    Attack2: 1846
+    Defense: 200
+    MagicDefense: 10
+    Dex: 500
+    AttackRange: 3
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Small
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 4
+    WalkSpeed: 1000
+    AttackDelay: 330
+    AttackMotion: 20
+    DamageMotion: 20
+    Ai: 10
+    Class: Boss
+    Modes:
+      NoRandomWalk: true
+      IgnoreMagic: true
+      IgnoreMelee: true
+      IgnoreMisc: true
+      IgnoreRanged: true

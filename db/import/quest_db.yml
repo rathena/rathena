@@ -48,3 +48,25 @@
 Header:
   Type: QUEST_DB
   Version: 3
+  
+Body:
+  - Id: 12457
+    Title: Glastheim's Fall
+  - Id: 12458
+    Title: The Orb's Origin
+  - Id: 12459
+    Title: King's Sacrifice
+    Targets:
+      - Mob: MD_GH_KING_SCHMIDT_N
+        Count: 1
+  - Id: 12460                                  
+    Title: Purification of Glastheim - Cooldown
+    TimeLimit: 4h
+  - Id: 12461                                  
+    Title: Purification of Glastheim Hard- Cooldown
+    TimeLimit: 4h
+  - Id: 12462
+    Title: King's Sacrifice
+    Targets:
+      - Mob: MD_GH_KING_SCHMIDT_H
+        Count: 1

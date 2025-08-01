@@ -40,3 +40,25 @@
 Header:
   Type: INSTANCE_DB
   Version: 2
+
+Body:
+  - Id: 62000
+    Name: Glastheim Purification
+    Enter:
+      Map: 1@gl_prq
+      X: 79
+      Y: 22
+      
+  - Id: 63000
+    Name: Glastheim Purification Hard
+    Enter:
+      Map: 1@gl_prq
+      X: 79
+      Y: 22
+      
+  - Id: 64000
+    Name: Glastheim Fall
+    Enter:
+      Map: 1@gl_prq
+      X: 299
+      Y: 18
