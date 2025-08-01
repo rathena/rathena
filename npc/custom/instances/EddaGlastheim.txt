@@ -348,34 +348,19 @@ glast_01,241,290,5	script	Oscar#gh_fall	4_ED_OSCAR,{
 				mes "I can only activate it for you adventurer. Please create a party of your own and talk to me again.";
 				close3;
 			}
+
 			.@md_name$ = "Glastheim Purification";
-			switch(instance_create(.@md_name$)){
-				case -1:
-					mes "[ Oscar ]";
-					mes "Unknown Error Has Occurred.";
-					close3;
-					
-				case -2:
-					mes "[ Oscar ]";
-					mes "I can only activate it for you adventurer. Please create a party of your own and talk to me again.";
-					close3;
-					
-				case -3:
-					mes "[ Oscar ]";
-					mes "Oh, it seems you still have an active dimensional gap.";
-					mes "Let's wait for it to fade away.";
-					close3;
-					
-				case -4:
-					mes "[ Oscar ]";
-					mes "Instance reservation is full at the moment. Try again later.";
-					close3;
-					
-				default:
-					mes "[ Oscar ]";
-					mes "We succesfully created the dimensional gap. Talk to me again to enter the dimensional gap.";
-					close3;
+
+			if (instance_create(.@md_name$) < 0) {
+				mes "Party Name: "+ getpartyname(.@party_id);
+				mes "Party Leader: "+strcharinfo(0);
+				mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+				close;
 			}
+
+			mes "[ Oscar ]";
+			mes "We succesfully created the dimensional gap. Talk to me again to enter the dimensional gap.";
+			close3;
 			
 		case 3:
 			.@party_id = getcharid(1);
@@ -384,34 +369,19 @@ glast_01,241,290,5	script	Oscar#gh_fall	4_ED_OSCAR,{
 				mes "I can only activate it for you adventurer. Please create a party of your own and talk to me again.";
 				close3;
 			}
+
 			.@md_name$ = "Glastheim Purification Hard";
-			switch(instance_create(.@md_name$)){
-				case -1:
-					mes "[ Oscar ]";
-					mes "Unknown Error Has Occurred.";
-					close3;
-					
-				case -2:
-					mes "[ Oscar ]";
-					mes "I can only activate it for you adventurer. Please create a party of your own and talk to me again.";
-					close3;
-					
-				case -3:
-					mes "[ Oscar ]";
-					mes "Oh, it seems you still have an active dimensional gap.";
-					mes "Let's wait for it to fade away.";
-					close3;
-					
-				case -4:
-					mes "[ Oscar ]";
-					mes "Instance reservation is full at the moment. Try again later.";
-					close3;
-					
-				default:
-					mes "[ Oscar ]";
-					mes "We succesfully created the dimensional gap. Talk to me again to enter the dimensional gap.";
-					close3;
-			}		
+			
+			if (instance_create(.@md_name$) < 0) {
+				mes "Party Name: "+ getpartyname(.@party_id);
+				mes "Party Leader: "+strcharinfo(0);
+				mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+				close;
+			}
+
+			mes "[ Oscar ]";
+			mes "We succesfully created the dimensional gap. Talk to me again to enter the dimensional gap.";
+			close3;	
 	}
 }
 
@@ -721,7 +691,7 @@ end;
 	end;
 
 OnInstanceInit:
-	setinstancevar("map$",instance_mapname("1@gl_prq"),instance_id(IM_GUILD));
+	set 'map$, instance_mapname("1@gl_prq",instance_id(IM_PARTY));
 	.@type$ = instance_live_info(ILI_NAME);
 	disablenpc instance_npcname("#edda_fence_0");
 	disablenpc instance_npcname("#edda_warp_0");
@@ -775,21 +745,22 @@ OnInstanceInit:
 		end;
 	}
 	if(.@type$ == "Glastheim Purification"){	
-		setinstancevar("maid",20392,instance_id(IM_GUILD));
-		setinstancevar("khalitzburg",20388,instance_id(IM_GUILD));
-		setinstancevar("knight",20390,instance_id(IM_GUILD));
-		setinstancevar("bloody",20394,instance_id(IM_GUILD));
-		setinstancevar("schmidt",20386,instance_id(IM_GUILD));
-		setinstancevar("hunt",12459,instance_id(IM_GUILD));
+		set 'maid, 20392;
+		set 'khalitzburg, 20388;
+		set 'knight, 20390;
+		set 'bloody, 20394;
+		set 'schmidt, 20386;
+		set 'hunt, 12459;
 	} else {
-		setinstancevar("mode",1,instance_id(IM_GUILD));
-		setinstancevar("maid",20392,instance_id(IM_GUILD));
-		setinstancevar("khalitzburg",20389,instance_id(IM_GUILD));
-		setinstancevar("knight",20391,instance_id(IM_GUILD));
-		setinstancevar("bloody",20394,instance_id(IM_GUILD));
-		setinstancevar("schmidt",20387,instance_id(IM_GUILD));	
-		setinstancevar("hunt",12462,instance_id(IM_GUILD));
+		set 'mode, 1;
+		set 'maid, 20392;
+		set 'khalitzburg, 20389;
+		set 'knight, 20391;
+		set 'bloody, 20394;
+		set 'schmidt, 20387;	
+		set 'hunt, 12462;
 	}
+	set 'survivor$, 0;
 	enablenpc instance_npcname("#gh_purification_ev_0");
 	enablenpc instance_npcname("Oscar#gh_purification_0");
 	enablenpc instance_npcname("#gh_purification_mob");
@@ -803,10 +774,10 @@ end;
 	end;
 	
 OnTouch:
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
-	setinstancevar("gh_fall",0,instance_id(IM_GUILD));
+	.@var = 'gh_fall;
+	set 'gh_fall, 0;
 	if(.@var == 0){
-		setinstancevar("gh_fall",1,instance_id(IM_GUILD));
+		set 'gh_fall, 1;
 		disablenpc instance_npcname(strnpcinfo(0));
 		enablenpc instance_npcname("Varmundt#gh_fall_0");
 		specialeffect EF_YELLOBODY,AREA,instance_npcname("Varmundt#gh_fall_0");
@@ -816,7 +787,7 @@ end;
 }
 
 1@gl_prq,299,30,4	script	Varmundt#gh_fall_0	4_M_BARMUND,5,4,{
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 2){
 		cutin "gl_barmund2",2;
 		mes "[ Varmundt's Illusion ]";
@@ -906,9 +877,9 @@ end;
 		mes "Wait, young king! You must not go carelessly like that!";
 		close2;
 		cutin "",255;
-		.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+		.@var = 'gh_fall;
 		if(.@var == 2){
-			setinstancevar("gh_fall",3,instance_id(IM_GUILD));
+			set 'gh_fall, 3;
 			.@mercenary = getmercinfo(8);
 			if(.@mercenary != 0){
 				if(unitexists(.@mercenary))
@@ -931,9 +902,9 @@ end;
 	
 OnTouch:
 	specialeffect EF_YELLOBODY;
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 1){
-		setinstancevar("gh_fall",2,instance_id(IM_GUILD));
+		set 'gh_fall, 2;
 		enablenpc instance_npcname("Schmidt#gh_fall_0");
 		npctalk "Stop right there, Schmidt. This is not a place for you to simply jump in at any moment.";	
 	}
@@ -948,7 +919,7 @@ end;
 }
 
 1@gl_prq,280,32,3	script	Oscar#gh_fall_0	4_ED_OSCAR,3,3,{
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 3){
 		cutin "oscar01",0;
 		mes "[ Oscar ]";
@@ -996,7 +967,7 @@ end;
 		mes "I'm moving. There are still events to witness!";
 		close2;
 		cutin "",255;
-		setinstancevar("gh_fall",4,instance_id(IM_GUILD));
+		set 'gh_fall, 4;
 		enablenpc instance_npcname("#gh_fall_ev_1");
 		for(.@i = 0; .@i < 16; .@i++)
 			enablenpc instance_npcname("Victim#gh_fall_" + .@i);	
@@ -1008,7 +979,7 @@ end;
 	close3;
 	
 OnTouch:
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 3)
 		npctalk "Oh~ Did you have a good conversation with Varmundt?";
 	if(.@var == 4)
@@ -1020,9 +991,9 @@ end;
 	end;
 	
 OnTouch:
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 4){
-		setinstancevar("gh_fall",5,instance_id(IM_GUILD));
+		set 'gh_fall, 5;
 		disablenpc instance_npcname(strnpcinfo(0));
 		disablenpc instance_npcname(strnpcinfo(0));
 		.@mercenary = getmercinfo(8);
@@ -1038,7 +1009,7 @@ end;
 }
 
 1@gl_prq,273,51,7	script	Schmidt#gh_fall_1	4_ED_SCHMIDT,{
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 5){
 		cutin "schmidt02",2;
 		mes "[ Schmidt ]";
@@ -1059,7 +1030,7 @@ end;
 		mes "I'll met you again when our path crosses.";
 		close2;
 		cutin "",255;
-		setinstancevar("gh_fall",6,instance_id(IM_GUILD));
+		set 'gh_fall, 6;
 		.@mercenary = getmercinfo(8);
 		if(.@mercenary != 0){
 			if(unitexists(.@mercenary))
@@ -1107,7 +1078,7 @@ end;
 	end;
 	
 OnTouch:
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 6){
 		.@id = atoi(replacestr(strnpcinfo(2),"gh_fall_",""));
 		unittalk getcharid(3),strcharinfo(0) + " : At the king's order. Please evacuate quickly.";
@@ -1150,7 +1121,7 @@ OnTouch:
 		setpcblock PCBLOCK_ALL,false;
 		disablenpc instance_npcname(strnpcinfo(0));
 		disablenpc instance_npcname(strnpcinfo(0));
-		setinstancevar("survivor",getinstancevar("survivor",instance_id(IM_GUILD)) + 1,instance_id(IM_GUILD));
+		set 'survivor, 'survivor + 1;
 		if(.@id >= 6){
 			getmapxy(.@map$,.@x,.@y,BL_NPC);
 			monster .@map$,.@x,.@y,"Unreasonable Person",20388,1,instance_npcname(strnpcinfo(0)) + "::OnMobDead";
@@ -1171,9 +1142,9 @@ end;
 1@gl_prq,300,193,2	duplicate(Knight Survivor#gh_fall_0)	Knight Survivor#gh_fall_7	4_F_KHALITZBURG,3,3
 
 1@gl_prq,284,217,4	script	#edda_fence_0	4_ED_FENCE,{
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 6){
-		if(getinstancevar("survivor",instance_id(IM_GUILD)) < 8){
+		if('survivor < 8){
 			cutin "schmidt02",2;
 			mes "[ Schmidt ]";
 			mes "Adventurer. There seems to be more survivors nearby. Shouldn't we find them first?";
@@ -1184,7 +1155,7 @@ end;
 		mes "The door is already worn out, so we'd better just break it down. Stand back a little, I'll take care of it.";
 		close2;
 		cutin "",255;
-		setinstancevar("gh_fall",7,instance_id(IM_GUILD));
+		set 'gh_fall, 7;
 		specialeffect EF_LORD;
 		sleep2 3000;
 		disablenpc instance_npcname(strnpcinfo(0));
@@ -1198,13 +1169,13 @@ end;
 	end;
 	
 OnTouch:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
-	warp .@map$,284,229;
+	.@map$ = 'map$;
+	instance_warpall instance_mapname(.@map$),284,229,instance_id();
 end;
 }
 
 1@gl_prq,286,247,7	script	Schmidt#gh_fall_2	4_ED_SCHMIDT,3,3,{
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 8){
 		cutin "schmidt02",2;
 		mes "[ Schmidt ]";
@@ -1218,7 +1189,7 @@ end;
 		mes "Let's continue, and hurry as much as possible.";
 		close2;
 		cutin "",255;
-		setinstancevar("gh_fall",9,instance_id(IM_GUILD));
+		set 'gh_fall, 9;
 		disablenpc instance_npcname(strnpcinfo(0));
 		mercenary_create 20385,300000;
 		end;
@@ -1226,14 +1197,14 @@ end;
 	end;
 	
 OnTouch:
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 7){
 		.@mercenary = getmercinfo(8);
 		if(.@mercenary != 0){
 			if(unitexists(.@mercenary))
 				unitkill .@mercenary;
 		}
-		setinstancevar("gh_fall",8,instance_id(IM_GUILD));
+		set 'gh_fall, 8;
 		enablenpc instance_npcname(strnpcinfo(0));
 		npctalk "Schmidt : I have a bad feeling about this.";
 	}
@@ -1241,7 +1212,7 @@ end;
 }
 
 1@gl_prq,297,294,5	script	Schmidt#gh_fall_3	4_ED_SCHMIDT,3,3,{
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 12){
 		cutin "schmidt04",0;
 		mes "[ Schmidt ]";
@@ -1292,7 +1263,7 @@ end;
 		sleep 200;
 		enablenpc instance_npcname("Oscar#gh_fall_1");
 		sleep 1000;
-		setinstancevar("gh_fall",13,instance_id(IM_GUILD));
+		set 'gh_fall, 13;
 		npctalk "Oscar : The story hasn't changed this time either.",instance_npcname("Oscar#gh_fall_1");
 		end;
 	}
@@ -1303,7 +1274,7 @@ end;
 	end;
 	
 OnTouch:
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 9){
 		.@mercenary = getmercinfo(8);
 		if(.@mercenary != 0){
@@ -1314,14 +1285,14 @@ OnTouch:
 			enablenpc instance_npcname("#gh_fall_guard_" + .@i);
 		enablenpc instance_npcname("Heinrich#gh_fall_0");
 		enablenpc instance_npcname("Schmidt#gh_fall_3");
-		setinstancevar("gh_fall",10,instance_id(IM_GUILD));
+		set 'gh_fall, 10;
 		npctalk "Schmidt : Heinrich!",instance_npcname("Schmidt#gh_fall_3");
 	}
 end;
 }
 
 1@gl_prq,301,294,3	script	Heinrich#gh_fall_0	4_M_HEINRICH,{
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 10){
 		cutin "heinrich02",2;
 		mes "[ Heinrich ]";
@@ -1375,7 +1346,7 @@ end;
 		enablenpc instance_npcname("Varmundt#gh_fall_1");
 		npctalk "Heinrich : Varmundt!";
 		npctalk "Schmidt : Master!",instance_npcname("Schmidt#gh_fall_3");
-		setinstancevar("gh_fall",11,instance_id(IM_GUILD));
+		set 'gh_fall, 11;
 		end;
 	}
 	if(.@var < 13){
@@ -1389,7 +1360,7 @@ end;
 }
 
 1@gl_prq,299,297,4	script	Varmundt#gh_fall_1	4_M_BARMUND,{
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 11){
 		cutin "gl_barmund2",2;
 		mes "[ Varmundt ]";
@@ -1414,15 +1385,15 @@ end;
 		cutin "",255;
 		disablenpc instance_npcname("Varmundt#gh_fall_1");
 		disablenpc instance_npcname("Varmundt#gh_fall_1");
-		setinstancevar("gh_fall",12,instance_id(IM_GUILD));
+		set 'gh_fall, 12;
 		end;
 	}
 	end;
 }
 
 1@gl_prq,299,297,4	script	Oscar#gh_fall_1	4_ED_OSCAR,{
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@map$ = 'map$;
+	.@var = 'gh_fall;
 	if(.@var == 13){
 		cutin "OSCAR01",2;
 		mes "[ Oscar ]";
@@ -1455,8 +1426,8 @@ end;
 		enablenpc instance_npcname("Orb#edda_fall_0");
 		enablenpc instance_npcname("Varmundt#gh_fall_2");
 		enablenpc instance_npcname("Varmundt#gh_fall_2");
-		setinstancevar("gh_fall",14,instance_id(IM_GUILD));
-		warp .@map$,52,275;
+		set 'gh_fall, 14;
+		instance_warpall instance_mapname(.@map$),52,275,instance_id();
 	}
 	end;
 }
@@ -1465,7 +1436,7 @@ end;
 	end;
 	
 OnTouch:
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 14){
 		.@v$ = instance_npcname("Varmundt#gh_fall_2");
 		.@o$ = instance_npcname("Orb#edda_fall_0");
@@ -1534,7 +1505,7 @@ OnTouch:
 		enablenpc instance_npcname("Varmundt#gh_fall_2");
 		.@v$ = instance_npcname("Varmundt#gh_fall_2");
 		sleep 3000;
-		setinstancevar("gh_fall",15,instance_id(IM_GUILD));
+		set 'gh_fall, 15;
 		specialeffect(EF_MARKING_USE_CHANGEMONSTER,.@v$);
 		end;
 	}
@@ -1543,10 +1514,10 @@ end;
 
 
 1@gl_prq,55,281,3	script	Varmundt#gh_fall_2	4_M_BARMUND,{
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	'party_id = getcharid(1);
 	if(.@var == 15){
-		.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+		.@map$ = 'map$;
 		.@o$ = instance_npcname("Orb#edda_fall_0");
 		cutin "gl_barmund2",2;
 		mes "[ Varmundt ]";
@@ -1693,9 +1664,9 @@ end;
 		mes "Don't do it! Schmidt!";
 		close2;
 		cutin "",255;
-		setinstancevar("gh_fall",16,instance_id(IM_GUILD));
-		.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
-		warp .@map$,55,280;
+		set 'gh_fall, 16;
+		.@map$ = 'map$;
+		instance_warpall instance_mapname(.@map$),55,280,instance_id();
 		donpcevent "Orb#edda_fall_0::OnEvent";
 		end;
 	}
@@ -1787,7 +1758,7 @@ end;
 		mes "Thank you for remembering. Then, this is goodbye, Master!";
 		close2;
 		cutin "",255;
-		setinstancevar("gh_fall",18,instance_id(IM_GUILD));
+		set 'gh_fall, 18;
 		donpcevent instance_npcname("Orb#edda_fall_0") + "::OnEvent02";
 		end;
 	}
@@ -1837,7 +1808,7 @@ OnEvent:
 	npctalk "Heinrich : Your majesty! How... How can this happen!",.@h$;
 	sleep 5000;
 	npctalk "Varmundt : Schmidt, you idiot!",.@v$;
-	setinstancevar("gh_fall",17,instance_id(IM_GUILD));
+	set 'gh_fall, 17;
 	specialeffect(EF_MARKING_USE_CHANGEMONSTER,.@v$);
 end;
 
@@ -1846,7 +1817,7 @@ OnEvent02:
 	.@h$ = instance_npcname("Heinrich#gh_fall_1");
 	.@v$ = instance_npcname("Varmundt#gh_fall_2");
 	.@s$ = instance_npcname("#schmidt_dummy_5");
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	specialeffect(EF_SCREEN_QUAKE,.@o$);
 	sleep 2000;
 	specialeffect(EF_EVILS_PAW,.@o$);
@@ -1915,12 +1886,12 @@ OnEvent02:
 	enablenpc instance_npcname("Oscar#gh_fall_2");
 	sleep 2000;
 	npctalk "Oscar : Woah. If I only missed even for a few second, It would have been too late.",instance_npcname("Oscar#gh_fall_2");
-	setinstancevar("gh_fall",19,instance_id(IM_GUILD));
+	set 'gh_fall, 19;
 end;
 }
 
 1@gl_prq,52,270,4	script	Oscar#gh_fall_2	4_ED_OSCAR,2,2,{
-	.@var = getinstancevar("gh_fall",instance_id(IM_GUILD));
+	.@var = 'gh_fall;
 	if(.@var == 19){
 		cutin "OSCAR01",0;
 		mes "[ Oscar ]";
@@ -2007,10 +1978,10 @@ end;
 	end;
 	
 OnTouch:
-	setinstancevar("party_id",getcharid(1),instance_id(IM_GUILD));
+	set 'party_id$, getcharid(1);
 	disablenpc instance_npcname(strnpcinfo(0));
 	disablenpc instance_npcname(strnpcinfo(0));
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	donpcevent instance_npcname("#gh_purification_mob") + "::OnSpawn00";
 	mapannounce .@map$,"Oscar : This place once used to be the kitchen.",bc_map,0xFF66FF;
 	sleep 2800;
@@ -2030,10 +2001,10 @@ end;
 	end;
 
 OnTouch:
-	.@var = getinstancevar("purification",instance_id(IM_GUILD));
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@var = 'purification;
+	.@map$ = 'map$;
 	if(.@var == 0){
-		setinstancevar("purification",1,instance_id(IM_GUILD));
+		set 'purification, 1;
 		npctalk "Oscar : This placed used to be the Knight's workplace.";
 		sleep 3000;
 		donpcevent "#gh_purification_mob::OnSpawn01";
@@ -2052,10 +2023,10 @@ end;
 	end;
 
 OnTouch:
-	.@var = getinstancevar("purification",instance_id(IM_GUILD));
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@var = 'purification;
+	.@map$ = 'map$;
 	if(.@var == 1){
-		setinstancevar("purification",2,instance_id(IM_GUILD));
+		set 'purification, 2;
 		npctalk "Oscar : This place used to be a guest area, with a lounge over there.";
 		sleep 3000;
 		donpcevent "#gh_purification_mob::OnSpawn02";
@@ -2074,10 +2045,10 @@ end;
 	end;
 
 OnTouch:
-	.@var = getinstancevar("purification",instance_id(IM_GUILD));
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@var = 'purification;
+	.@map$ = 'map$;
 	if(.@var == 2){
-		setinstancevar("purification",3,instance_id(IM_GUILD));
+		set 'purification, 3;
 		npctalk "Oscar : This place used to be a guest area, with a lounge over there.";
 		sleep 3000;
 		donpcevent "#gh_purification_mob::OnSpawn03";
@@ -2098,10 +2069,10 @@ end;
 	end;
 
 OnTouch:
-	.@var = getinstancevar("purification",instance_id(IM_GUILD));
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@var = 'purification;
+	.@map$ = 'map$;
 	if(.@var == 3){
-		setinstancevar("purification",4,instance_id(IM_GUILD));
+		set 'purification, 4;
 		npctalk "Oscar : Since the dimensional barrier is not present, you might actually get hurt or worst. Be cautious.";
 		sleep 3000;
 		npctalk "Oscar : As you can see, there are many corpses around.";
@@ -2120,8 +2091,8 @@ end;
 }
 
 1@gl_prq,52,270,4	script	Oscar#gh_purification_4	4_ED_OSCAR,3,3,{
-	.@var = getinstancevar("hunt",instance_id(IM_GUILD));
-	.@mode = getinstancevar("mode",instance_id(IM_GUILD));
+	.@var = 'hunt;
+	.@mode = 'mode;
 	cutin "oscar01",2;
 	mes "[ Oscar ]";
 	mes "Traveling to different timelines ang engaging in combat takes a lot of energy.";
@@ -2151,11 +2122,11 @@ end;
 	end;
 	
 OnSummon:
-	.@boss = getinstancevar("schmidt",instance_id(IM_GUILD));
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@boss = 'schmidt;
+	.@map$ = 'map$;
 	.@gid = monster(.@map$,52,277,"Cursed King Schmidt",.@boss,1,instance_npcname(strnpcinfo(0)) + "::OnBossKill");
-	setinstancevar("gid",.@gid,instance_id(IM_GUILD));
-	setinstancevar("boss_alive",1,instance_id(IM_GUILD));
+	set 'gid$, .@gid;
+	set 'boss_alive$, 1;
 end;
 
 OnBossKill:
@@ -2171,9 +2142,9 @@ OnSummon:
 end;
 
 OnSummonLeft:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnLeftFireDead";
-	.@gid = getinstancevar("gid",instance_id(IM_GUILD));
+	.@gid = 'gid$;
 	for(.@i = 10; .@i < 96; .@i++){
 		if(!unitexists(.@gid))
 			end;
@@ -2208,9 +2179,9 @@ OnLeftFireDead:
 end;
 
 OnSummonRight:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnRightFireDead";
-	.@gid = getinstancevar("gid",instance_id(IM_GUILD));
+	.@gid = 'gid$;
 	for(.@i = 95; .@i > 10; .@i--){
 		if(!unitexists(.@gid))
 			end;
@@ -2240,9 +2211,9 @@ OnRightFireDead:
 end;
 
 OnSummonBottom:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnBottomFireDead";
-	.@gid = getinstancevar("gid",instance_id(IM_GUILD));
+	.@gid = 'gid$;
 	for(.@i = 248; .@i < 309; .@i++){
 		if(!unitexists(.@gid))
 			end;
@@ -2278,9 +2249,9 @@ OnBottomFireDead:
 end;
 
 OnSummonTop:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnTopFireDead";
-	.@gid = getinstancevar("gid",instance_id(IM_GUILD));
+	.@gid = 'gid$;
 	for(.@i = 308; .@i > 247; .@i--){
 		if(!unitexists(.@gid))
 			end;	
@@ -2322,10 +2293,10 @@ end;
 	end;
 	
 OnSpawn00:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill00";
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnDummy";
-	.@maid = getinstancevar("maid",instance_id(IM_GUILD));
+	.@maid = 'maid;
 	setarray .@bone_xy,
 	45,35,
 	32,41,
@@ -2372,11 +2343,11 @@ end;
 
 OnMobKill00:
 	//There is 21 maids but event triggers on 20th maid kill.
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill00";
-	.@party_id = getinstancevar("party_id",instance_id(IM_GUILD));
-	setinstancevar("phase_one", getinstancevar("phase_one",instance_id(IM_GUILD)) + 1,instance_id(IM_GUILD));
-	if(getinstancevar("phase_one",instance_id(IM_GUILD)) == 20){
+	.@party_id = 'party_id$;
+	set 'phase_one, 'phase_one$ + 1;
+	if('phase_one$ == 20){
 		killmonster .@map$,.@event$;
 		enablenpc instance_npcname("Oscar#gh_purification_0");
 		mapannounce .@map$,"Oscar : The time flow in the first area has returned to normal. Let's go to the next area.",bc_map,0xFF66FF;
@@ -2386,11 +2357,11 @@ OnMobKill00:
 end;
 
 OnSpawn01:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill01";
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnDummy";
-	.@kh = getinstancevar("khalitzburg",instance_id(IM_GUILD));
-	.@bloody = getinstancevar("bloody",instance_id(IM_GUILD));
+	.@kh = 'khalitzburg;
+	.@bloody = 'bloody;
 	setarray .@bone_xy,
 	151,70,
 	161,33,
@@ -2444,11 +2415,11 @@ OnSpawn01:
 end;
 
 OnMobKill01:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill01";
-	.@party_id = getinstancevar("party_id",instance_id(IM_GUILD));
-	setinstancevar("phase_two",getinstancevar("phase_two",instance_id(IM_GUILD)) + 1,instance_id(IM_GUILD));
-	if(getinstancevar("phase_two",instance_id(IM_GUILD)) == 24){
+	.@party_id = 'party_id$;
+	set 'phase_two, 'phase_two$ + 1;
+	if('phase_two$ == 24){
 		killmonster .@map$,.@event$;
 		enablenpc instance_npcname("Oscar#gh_purification_1");
 		mapannounce .@map$,"Oscar : The time flow in the second area has returned to normal. Let's go to the next area.",bc_map,0xFF66FF;
@@ -2458,11 +2429,11 @@ OnMobKill01:
 end;
 
 OnSpawn02:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill02";
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnDummy";
-	.@knight = getinstancevar("knight",instance_id(IM_GUILD));
-	.@bloody = getinstancevar("bloody",instance_id(IM_GUILD));
+	.@knight = 'knight;
+	.@bloody = 'bloody;
 	setarray .@bone_xy,
 	136,173,
 	154,148,
@@ -2521,11 +2492,11 @@ OnSpawn02:
 end;
 
 OnMobKill02:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill02";
-	.@party_id = getinstancevar("party_id",instance_id(IM_GUILD));
-	setinstancevar("phase_three",getinstancevar("phase_three",instance_id(IM_GUILD)) + 1,instance_id(IM_GUILD));
-	if(getinstancevar("phase_three",instance_id(IM_GUILD)) == 30){
+	.@party_id = 'party_id$;
+	set 'phase_three, 'phase_three$ + 1;
+	if('phase_three$ == 30){
 		killmonster .@map$,.@event$;
 		enablenpc instance_npcname("Oscar#gh_purification_2");
 		mapannounce .@map$,"Oscar : The time flow in the third area has returned to normal. Let's go to the next area.",bc_map,0xFF66FF;
@@ -2535,11 +2506,11 @@ OnMobKill02:
 end;
 
 OnSpawn03:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill03";
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnDummy";
-	.@knight = getinstancevar("knight",instance_id(IM_GUILD));
-	.@bloody = getinstancevar("bloody",instance_id(IM_GUILD));
+	.@knight = 'knight;
+	.@bloody = 'bloody;
 	setarray .@bone_xy,
 	59,142,
 	56,177,
@@ -2585,11 +2556,11 @@ OnSpawn03:
 end;
 
 OnMobKill03:
-	.@map$ = getinstancevar("map$",instance_id(IM_GUILD));
+	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill03";
-	.@party_id = getinstancevar("party_id",instance_id(IM_GUILD));
-	setinstancevar("phase_four",getinstancevar("phase_four",instance_id(IM_GUILD)) + 1,instance_id(IM_GUILD));
-	if(getinstancevar("phase_four",instance_id(IM_GUILD)) == 15){
+	.@party_id = 'party_id$;
+	set 'phase_four, 'phase_four$ + 1;
+	if('phase_four$ == 15){
 		killmonster .@map$,.@event$;
 		enablenpc instance_npcname("Oscar#gh_purification_3");
 		enablenpc instance_npcname("#schmidt_gh_purification");
