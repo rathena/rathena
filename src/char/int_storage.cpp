@@ -351,23 +351,23 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 		return true;
 	}
 
-	stmt.BindColumn(0, SQLDT_INT32,       &item.id,           0, nullptr, nullptr);
-	stmt.BindColumn(1, SQLDT_UINT32,      &item.nameid,       0, nullptr, nullptr);
-	stmt.BindColumn(2, SQLDT_INT16,     &item.amount,       0, nullptr, nullptr);
-	stmt.BindColumn(3, SQLDT_UINT32,      &item.equip,        0, nullptr, nullptr);
-	stmt.BindColumn(4, SQLDT_CHAR,      &item.identify,     0, nullptr, nullptr);
-	stmt.BindColumn(5, SQLDT_CHAR,      &item.refine,       0, nullptr, nullptr);
-	stmt.BindColumn(6, SQLDT_CHAR,      &item.attribute,    0, nullptr, nullptr);
-	stmt.BindColumn(7, SQLDT_UINT32,      &item.expire_time,  0, nullptr, nullptr);
-	stmt.BindColumn(8, SQLDT_CHAR,      &item.bound,        0, nullptr, nullptr);
-	stmt.BindColumn(9, SQLDT_ULONGLONG, &item.unique_id,    0, nullptr, nullptr);
-	stmt.BindColumn(10, SQLDT_INT8,     &item.enchantgrade, 0, nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_INT32, &item.id);
+	stmt.BindColumn(1, SQLDT_UINT32, &item.nameid);
+	stmt.BindColumn(2, SQLDT_INT16, &item.amount);
+	stmt.BindColumn(3, SQLDT_UINT32, &item.equip);
+	stmt.BindColumn(4, SQLDT_CHAR, &item.identify);
+	stmt.BindColumn(5, SQLDT_CHAR, &item.refine);
+	stmt.BindColumn(6, SQLDT_CHAR, &item.attribute);
+	stmt.BindColumn(7, SQLDT_UINT32, &item.expire_time);
+	stmt.BindColumn(8, SQLDT_CHAR, &item.bound);
+	stmt.BindColumn(9, SQLDT_ULONGLONG, &item.unique_id);
+	stmt.BindColumn(10, SQLDT_INT8, &item.enchantgrade);
 	for( j = 0; j < MAX_SLOTS; ++j )
-		stmt.BindColumn(11+j, SQLDT_UINT32, &item.card[j], 0, nullptr, nullptr);
+		stmt.BindColumn(11+j, SQLDT_UINT32, &item.card[j]);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
-		stmt.BindColumn(11+MAX_SLOTS+j*3, SQLDT_INT16, &item.option[j].id, 0, nullptr, nullptr);
-		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_INT16, &item.option[j].value, 0, nullptr, nullptr);
-		stmt.BindColumn(13+MAX_SLOTS+j*3, SQLDT_CHAR, &item.option[j].param, 0, nullptr, nullptr);
+		stmt.BindColumn(11+MAX_SLOTS+j*3, SQLDT_INT16, &item.option[j].id);
+		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_INT16, &item.option[j].value);
+		stmt.BindColumn(13+MAX_SLOTS+j*3, SQLDT_CHAR, &item.option[j].param);
 	}
 	memset(&items, 0, sizeof(items));
 	while( SQL_SUCCESS == stmt.NextRow() )
