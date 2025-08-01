@@ -1,48 +1,49 @@
-#ifndef BASH_SKILL_HPP
-#define BASH_SKILL_HPP
+#pragma once
 
-#include "battle_skill_categories.hpp"
-#include "battle.hpp"
-#include "pc.hpp"
-#include "skill.hpp"
+#include "../../battle_skill_categories.hpp"
+#include "../../battle.hpp"
+#include "../../pc.hpp"
+#include "../../skill.hpp"
 
 class BashSkill : public WeaponSkill
 {
 public:
+    BashSkill() : WeaponSkill(SM_BASH) {}
+    
     // Core identification
-    uint16_t get_skill_id() const override
+    uint16_t getSkillId() const override
     {
         return skill_id_;
     }
 
-    const char *get_skill_name() const override
+    const char *getSkillName() const override
     {
         return skill_get_name(skill_id_);
     }
 
-    int32 calculate_skill_ratio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 base_skillratio) const override
+    int32 calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 base_skillratio) const override
     {
         return base_skillratio + 30 * skill_lv; // Base 100% + 30% per level
     }
 
-    void modify_hit_rate(int16 &hit_rate, const block_list *src, const block_list *target, uint16 skill_lv) const override
+    void modifyHitRate(int16 &hit_rate, const block_list *src, const block_list *target, uint16 skill_lv) const override
     {
         hit_rate += hit_rate * 5 * skill_lv / 100; // +5% hit per level
     }
 
-    void apply_additional_effects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const override
+    void applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const override
     {
-        map_session_data *sd = get_player_data(src);
+        map_session_data *sd = getPlayerData(src);
 
         // Stun effect only if skill level > 5 and has Fatal Blow
         if (sd && skill_lv > 5 && pc_checkskill(sd, SM_FATALBLOW) > 0)
         {
             int32 stun_chance = (skill_lv - 5) * sd->status.base_level * 10;
-            status_change_start(src, target, SC_STUN, stun_chance, skill_lv, 0, 0, 0, skill_get_time2(get_skill_id(), skill_lv), SCSTART_NONE);
+            status_change_start(src, target, SC_STUN, stun_chance, skill_lv, 0, 0, 0, skill_get_time2(getSkillId(), skill_lv), SCSTART_NONE);
         }
     }
 
-    bool can_use(const block_list &source, const block_list &target) const override
+    bool canUse(const block_list &source, const block_list &target) const override
     {
         // Bash requires a melee weapon (not bare hands)
         if (source.type == BL_PC)
@@ -70,24 +71,21 @@ public:
             }
         }
 
-        return WeaponSkill::can_use(source, target);
+        return WeaponSkill::canUse(source, target);
     }
 
-    bool can_crit() const override
+    bool canCrit() const override
     {
         return true; // Bash can critical hit
     }
 
-    bool uses_ammo() const override
+    bool usesAmmo() const override
     {
         return false; // Bash doesn't consume ammo
     }
 
-    int32 get_range_type(const block_list *src, const block_list *target,
-                         uint16 skill_lv) const override
+    int32 getRangeType(const block_list *src, const block_list *target, uint16 skill_lv) const override
     {
         return BF_SHORT; // Always short range
     }
 };
-
-#endif // BASH_SKILL_HPP

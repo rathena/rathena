@@ -1339,9 +1339,9 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 	if( dmg_lv < ATK_DEF ) // no damage, return;
 		return 0;
 
-	auto skill = BattleSkillFactory::instance().get_skill(skill_id);
+	auto skill = BattleSkillFactory::instance().getSkill(skill_id);
     if (skill) {
-        skill->apply_additional_effects(src, bl, skill_lv, tick, attack_type, dmg_lv);
+        skill->applyAdditionalEffects(src, bl, skill_lv, tick, attack_type, dmg_lv);
         return 0; // Let legacy code continue for other effects
     }
 

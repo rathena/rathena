@@ -3271,10 +3271,10 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 #endif
 
 	if(skill_id) {
-		auto skill = BattleSkillFactory::instance().get_skill(skill_id);
+		auto skill = BattleSkillFactory::instance().getSkill(skill_id);
         if (skill) {
-            skill->modify_hit_rate(hitrate, src, target, skill_lv);
-            return; // Early exit - new system handled it
+            skill->modifyHitRate(hitrate, src, target, skill_lv);
+            return (rnd() % 100) < hitrate;
         }
 
 		switch(skill_id) { //Hit skill modifiers
@@ -4698,9 +4698,9 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 		}
 	}
 
-	auto skill = BattleSkillFactory::instance().get_skill(skill_id);
+	auto skill = BattleSkillFactory::instance().getSkill(skill_id);
 	if (skill) {
-		return skill->calculate_skill_ratio(wd, src, target, skill_lv, skillratio);
+		return skill->calculateSkillRatio(wd, src, target, skill_lv, skillratio);
 	}
 
 	switch(skill_id) {

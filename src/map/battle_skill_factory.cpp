@@ -1,11 +1,13 @@
+#pragma once
+
 #include "battle_skill_factory.hpp"
 #include "battle_skill_categories.hpp"
-#include "battle_skills.hpp"
+#include "skills/battle_skills.hpp"
 #include "skill.hpp"
 
 BattleSkillFactory::BattleSkillFactory()
 {
-    register_all_skills();
+    registerAllSkills();
 }
 
 BattleSkillFactory &BattleSkillFactory::instance()
@@ -14,7 +16,7 @@ BattleSkillFactory &BattleSkillFactory::instance()
     return instance;
 }
 
-std::shared_ptr<BattleSkill> BattleSkillFactory::get_skill(uint16 skill_id) const
+std::shared_ptr<BattleSkill> BattleSkillFactory::getSkill(uint16 skill_id) const
 {
     auto it = skill_db.find(skill_id);
     if (it != skill_db.end())
@@ -25,38 +27,38 @@ std::shared_ptr<BattleSkill> BattleSkillFactory::get_skill(uint16 skill_id) cons
     return nullptr;
 }
 
-bool BattleSkillFactory::has_skill(uint16 skill_id) const
+bool BattleSkillFactory::hasSkill(uint16 skill_id) const
 {
     return skill_db.find(skill_id) != skill_db.end();
 }
 
-void BattleSkillFactory::register_all_skills()
+void BattleSkillFactory::registerAllSkills()
 {
-    register_weapon_skills();
-    register_magic_skills();
-    register_misc_skills();
-    register_passive_skills();
+    registerWeaponSkills();
+    registerMagicSkills();
+    registerMiscSkills();
+    registerPassiveSkills();
 }
 
-void BattleSkillFactory::register_weapon_skills()
+void BattleSkillFactory::registerWeaponSkills()
 {
-    register_skills<BashSkill>({SM_BASH, MS_BASH});
+    registerSkill(SM_BASH, std::make_shared<BashSkill>());
 }
 
 // Register magic skills
-void BattleSkillFactory::register_magic_skills()
+void BattleSkillFactory::registerMagicSkills()
 {
     // MG_FIREBOLT, MG_COLDBOLT etc
 }
 
 // Register misc skills
-void BattleSkillFactory::register_misc_skills()
+void BattleSkillFactory::registerMiscSkills()
 {
     // NJ_ZENYNAGE, MO_EXTREMITYFIST etc
 }
 
 // Register passive skills
-void BattleSkillFactory::register_passive_skills()
+void BattleSkillFactory::registerPassiveSkills()
 {
     // Masteries and passive bonuses
     // register_skill<WeaponMasterySkill>(SM_SWORD);
