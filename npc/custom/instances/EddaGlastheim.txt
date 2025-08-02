@@ -692,7 +692,9 @@ end;
 
 OnInstanceInit:
 	set 'map$, instance_mapname("1@gl_prq",instance_id(IM_PARTY));
+
 	.@type$ = instance_live_info(ILI_NAME);
+	
 	disablenpc instance_npcname("#edda_fence_0");
 	disablenpc instance_npcname("#edda_warp_0");
 	disablenpc instance_npcname("Orb#edda_fall_0");
@@ -714,8 +716,12 @@ OnInstanceInit:
 		disablenpc instance_npcname("Schmidt#gh_fall_" + .@i);
 		disablenpc instance_npcname("Oscar#gh_purification_" + .@i);
 	}
-	for(.@i = 0; .@i < 8; .@i++)
+
+	for(.@i = 0; .@i < 8; .@i++){
 		disablenpc instance_npcname("Knight Survivor#gh_fall_" + .@i);
+		cloakonnpc instance_npcname("Knight Survivor#gh_fall_" + .@i);
+	}	
+
 	for(.@i = 0; .@i < 16; .@i++)
 		disablenpc instance_npcname("Victim#gh_fall_" + .@i);
 	for(.@i = 0; .@i < 44; .@i++)
@@ -724,6 +730,8 @@ OnInstanceInit:
 	//= Fall of Glastheim
 	if(.@type$ == "Glastheim Fall"){
 		enablenpc instance_npcname("#gh_fall_ev_0");
+		cloakonnpc(instance_npcname("Schmidt#gh_fall_1"));
+
 		for(.@i = 0; .@i < 4; .@i++){
 			enablenpc instance_npcname("Varmundt#gh_fall_" + .@i);
 		}
@@ -741,9 +749,11 @@ OnInstanceInit:
 		}
 		for(.@i = 0; .@i < 44; .@i++){
 			enablenpc instance_npcname("#schmidt_dummy_" + .@i);
+			cloakonnpc(instance_npcname("#schmidt_dummy_" + .@i));
 		}
 		end;
 	}
+
 	if(.@type$ == "Glastheim Purification"){	
 		set 'maid, 20392;
 		set 'khalitzburg, 20388;
@@ -760,13 +770,15 @@ OnInstanceInit:
 		set 'schmidt, 20387;	
 		set 'hunt, 12462;
 	}
-	set 'survivor$, 0;
+
+	set 'survivor, 0;
+
 	enablenpc instance_npcname("#gh_purification_ev_0");
 	enablenpc instance_npcname("Oscar#gh_purification_0");
 	enablenpc instance_npcname("#gh_purification_mob");
 	enablenpc instance_npcname("#gh_purification_boss");
 	enablenpc instance_npcname("#gh_purification_fire");
-	donpcevent "#gh_purification_mob::OnSpawn00";
+	donpcevent instance_npcname("#gh_purification_mob") + "::OnSpawn00";
 end;
 }
 
@@ -880,15 +892,9 @@ end;
 		.@var = 'gh_fall;
 		if(.@var == 2){
 			set 'gh_fall, 3;
-			.@mercenary = getmercinfo(8);
-			if(.@mercenary != 0){
-				if(unitexists(.@mercenary))
-					unitkill .@mercenary;
-			}
-			disablenpc instance_npcname("Schmidt#gh_fall_0");
+			cloakonnpc instance_npcname("Schmidt#gh_fall_0");
 			disablenpc instance_npcname("Schmidt#gh_fall_0");
 			enablenpc instance_npcname("Oscar#gh_fall_0");
-			mercenary_create 20385,300000;
 		}
 		end;
 	}
@@ -915,6 +921,16 @@ end;
 	cutin "schmidt02",0;
 	mes "[ Schmidt ]";
 	mes "I'm talking to the sage. Please wait a moment...";
+		
+		// // TODO: fixme
+		// next;
+		// set 'map$, instance_mapname("1@gl_prq",instance_id(IM_PARTY));
+		// enablenpc instance_npcname("#gh_fall_ev_2");
+		// enablenpc instance_npcname("Orb#edda_fall_0");
+		// enablenpc instance_npcname("Varmundt#gh_fall_2");
+		// set 'gh_fall, 14;
+		// instance_warpall 'map$,52,275,instance_id();
+
 	close3;
 }
 
@@ -969,6 +985,8 @@ end;
 		cutin "",255;
 		set 'gh_fall, 4;
 		enablenpc instance_npcname("#gh_fall_ev_1");
+		enablenpc instance_npcname("#gh_fall_ev_1");	
+		cloakoffnpc instance_npcname("Schmidt#gh_fall_1");
 		for(.@i = 0; .@i < 16; .@i++)
 			enablenpc instance_npcname("Victim#gh_fall_" + .@i);	
 		end;
@@ -991,17 +1009,9 @@ end;
 	end;
 	
 OnTouch:
-	.@var = 'gh_fall;
-	if(.@var == 4){
+	if('gh_fall == 4){
 		set 'gh_fall, 5;
 		disablenpc instance_npcname(strnpcinfo(0));
-		disablenpc instance_npcname(strnpcinfo(0));
-		.@mercenary = getmercinfo(8);
-		if(.@mercenary != 0){
-			if(unitexists(.@mercenary))
-				unitkill .@mercenary;
-		}
-		enablenpc instance_npcname("Schmidt#gh_fall_1");
 		enablenpc instance_npcname("Schmidt#gh_fall_1");
 		npctalk "Wait. Aren't my soldiers in the front?",instance_npcname("Schmidt#gh_fall_1");
 	}
@@ -1031,17 +1041,12 @@ end;
 		close2;
 		cutin "",255;
 		set 'gh_fall, 6;
-		.@mercenary = getmercinfo(8);
-		if(.@mercenary != 0){
-			if(unitexists(.@mercenary))
-				unitkill .@mercenary;
-		}
+				
 		disablenpc instance_npcname(strnpcinfo(0));
-		enablenpc instance_npcname(strnpcinfo(0));
 		enablenpc instance_npcname("#edda_fence_0");
-		mercenary_create 20385,300000;
-		for(.@i = 0; .@i < 8; .@i++)
-			enablenpc instance_npcname("Knight Survivor#gh_fall_" + .@i);
+
+		enablenpc instance_npcname("Knight Survivor#gh_fall_0");
+		cloakoffnpc instance_npcname("Knight Survivor#gh_fall_0");
 	}
 	end;
 }
@@ -1052,9 +1057,8 @@ end;
 OnTouch:
 	specialeffect EF_VENOMDUST;
 	disablenpc instance_npcname(strnpcinfo(0));
-	disablenpc instance_npcname(strnpcinfo(0));
-	getmapxy(.@map$,.@x,.@y,BL_NPC);
-	monster .@map$,.@x,.@y,"Maggot",2467,1;
+	getmapxy('map$,.@x,.@y,BL_NPC);
+	monster 'map$,.@x,.@y,"Maggot",2467,1;
 end;
 }
 
@@ -1120,12 +1124,43 @@ OnTouch:
 		sleep2 3000;
 		setpcblock PCBLOCK_ALL,false;
 		disablenpc instance_npcname(strnpcinfo(0));
-		disablenpc instance_npcname(strnpcinfo(0));
 		set 'survivor, 'survivor + 1;
 		if(.@id >= 6){
-			getmapxy(.@map$,.@x,.@y,BL_NPC);
-			monster .@map$,.@x,.@y,"Unreasonable Person",20388,1,instance_npcname(strnpcinfo(0)) + "::OnMobDead";
+			getmapxy('map$,.@x,.@y,BL_NPC);
+			monster 'map$,.@x,.@y,"Unreasonable Person",20388,1,instance_npcname(strnpcinfo(0)) + "::OnMobDead";
 		}
+		
+		switch(.@id){
+			case 0:
+				enablenpc instance_npcname("Knight Survivor#gh_fall_1");
+				cloakoffnpc instance_npcname("Knight Survivor#gh_fall_1");
+			break;
+			case 1:
+				enablenpc instance_npcname("Knight Survivor#gh_fall_2");
+				cloakoffnpc instance_npcname("Knight Survivor#gh_fall_2");
+			break;
+			case 2:
+				enablenpc instance_npcname("Knight Survivor#gh_fall_3");
+				cloakoffnpc instance_npcname("Knight Survivor#gh_fall_3");
+			break;
+			case 3:
+				enablenpc instance_npcname("Knight Survivor#gh_fall_4");
+				cloakoffnpc instance_npcname("Knight Survivor#gh_fall_4");
+			break;
+			case 4:
+				enablenpc instance_npcname("Knight Survivor#gh_fall_5");
+				cloakoffnpc instance_npcname("Knight Survivor#gh_fall_5");
+			break;
+			case 5:
+				enablenpc instance_npcname("Knight Survivor#gh_fall_6");
+				cloakoffnpc instance_npcname("Knight Survivor#gh_fall_6");
+			break;
+			case 6:
+				enablenpc instance_npcname("Knight Survivor#gh_fall_7");
+				cloakoffnpc instance_npcname("Knight Survivor#gh_fall_7");
+			break;
+		}
+
 		end;
 	}
 	
@@ -1143,6 +1178,7 @@ end;
 
 1@gl_prq,284,217,4	script	#edda_fence_0	4_ED_FENCE,{
 	.@var = 'gh_fall;
+
 	if(.@var == 6){
 		if('survivor < 8){
 			cutin "schmidt02",2;
@@ -1160,7 +1196,6 @@ end;
 		sleep2 3000;
 		disablenpc instance_npcname(strnpcinfo(0));
 		enablenpc instance_npcname("#edda_warp_0");
-		mercenary_create 20385,300000;
 	}
 	end;
 }
@@ -1169,9 +1204,8 @@ end;
 	end;
 	
 OnTouch:
-	.@map$ = 'map$;
-	instance_warpall instance_mapname(.@map$),284,229,instance_id();
-end;
+	warp 'map$,284,229;
+	end;
 }
 
 1@gl_prq,286,247,7	script	Schmidt#gh_fall_2	4_ED_SCHMIDT,3,3,{
@@ -1191,7 +1225,6 @@ end;
 		cutin "",255;
 		set 'gh_fall, 9;
 		disablenpc instance_npcname(strnpcinfo(0));
-		mercenary_create 20385,300000;
 		end;
 	}
 	end;
@@ -1199,11 +1232,6 @@ end;
 OnTouch:
 	.@var = 'gh_fall;
 	if(.@var == 7){
-		.@mercenary = getmercinfo(8);
-		if(.@mercenary != 0){
-			if(unitexists(.@mercenary))
-				unitkill .@mercenary;
-		}
 		set 'gh_fall, 8;
 		enablenpc instance_npcname(strnpcinfo(0));
 		npctalk "Schmidt : I have a bad feeling about this.";
@@ -1258,7 +1286,6 @@ end;
 		specialeffect EF_CLOAKING,AREA,instance_npcname("Heinrich#gh_fall_0");
 		for(.@i = 0; .@i < 6; .@i++){
 			disablenpc instance_npcname("#gh_fall_guard_" + .@i);
-			disablenpc instance_npcname("#gh_fall_guard_" + .@i);
 		}
 		sleep 200;
 		enablenpc instance_npcname("Oscar#gh_fall_1");
@@ -1276,11 +1303,6 @@ end;
 OnTouch:
 	.@var = 'gh_fall;
 	if(.@var == 9){
-		.@mercenary = getmercinfo(8);
-		if(.@mercenary != 0){
-			if(unitexists(.@mercenary))
-				unitkill .@mercenary;
-		}
 		for(.@i = 0; .@i < 6; .@i++)
 			enablenpc instance_npcname("#gh_fall_guard_" + .@i);
 		enablenpc instance_npcname("Heinrich#gh_fall_0");
@@ -1384,7 +1406,6 @@ end;
 		close2;
 		cutin "",255;
 		disablenpc instance_npcname("Varmundt#gh_fall_1");
-		disablenpc instance_npcname("Varmundt#gh_fall_1");
 		set 'gh_fall, 12;
 		end;
 	}
@@ -1392,7 +1413,6 @@ end;
 }
 
 1@gl_prq,299,297,4	script	Oscar#gh_fall_1	4_ED_OSCAR,{
-	.@map$ = 'map$;
 	.@var = 'gh_fall;
 	if(.@var == 13){
 		cutin "OSCAR01",2;
@@ -1425,9 +1445,8 @@ end;
 		enablenpc instance_npcname("#gh_fall_ev_2");
 		enablenpc instance_npcname("Orb#edda_fall_0");
 		enablenpc instance_npcname("Varmundt#gh_fall_2");
-		enablenpc instance_npcname("Varmundt#gh_fall_2");
 		set 'gh_fall, 14;
-		instance_warpall instance_mapname(.@map$),52,275,instance_id();
+		instance_warpall 'map$,52,275,instance_id();
 	}
 	end;
 }
@@ -1442,7 +1461,6 @@ OnTouch:
 		.@o$ = instance_npcname("Orb#edda_fall_0");
 		.@s$ = instance_npcname("Schmidt#gh_fall_4");
 		.@h$ = instance_npcname("Heinrich#gh_fall_1");
-		disablenpc instance_npcname(strnpcinfo(0));
 		disablenpc instance_npcname(strnpcinfo(0));
 		sleep 1500;
 		npctalk "Varmundt : Please, break this time!",.@v$;
@@ -1516,8 +1534,8 @@ end;
 1@gl_prq,55,281,3	script	Varmundt#gh_fall_2	4_M_BARMUND,{
 	.@var = 'gh_fall;
 	'party_id = getcharid(1);
+	
 	if(.@var == 15){
-		.@map$ = 'map$;
 		.@o$ = instance_npcname("Orb#edda_fall_0");
 		cutin "gl_barmund2",2;
 		mes "[ Varmundt ]";
@@ -1665,9 +1683,8 @@ end;
 		close2;
 		cutin "",255;
 		set 'gh_fall, 16;
-		.@map$ = 'map$;
-		instance_warpall instance_mapname(.@map$),55,280,instance_id();
-		donpcevent "Orb#edda_fall_0::OnEvent";
+		instance_warpall 'map$,55,280,instance_id();
+		donpcevent instance_npcname("Orb#edda_fall_0") + "::OnEvent";
 		end;
 	}
 	if(.@var == 17){
@@ -1777,7 +1794,6 @@ OnEvent:
 	specialeffect EF_DQ9_CHARGE4;
 	specialeffect EF_CLOUD4;
 	disablenpc instance_npcname("Schmidt#gh_fall_4");
-	disablenpc instance_npcname("Schmidt#gh_fall_4");
 	for(.@i = 0; .@i < 44; .@i++)
 		enablenpc instance_npcname("#schmidt_dummy_" + .@i);
 	sleep 200;
@@ -1788,7 +1804,6 @@ OnEvent:
 		specialeffect("#schmidt_dummy_" + .@i,EF_CLOAKING);
 	sleep 300;
 	for(.@i = 0; .@i < 44; .@i++){
-		disablenpc instance_npcname("#schmidt_dummy_" + .@i);
 		disablenpc instance_npcname("#schmidt_dummy_" + .@i);
 	}
 	sleep 2000;
@@ -1817,12 +1832,11 @@ OnEvent02:
 	.@h$ = instance_npcname("Heinrich#gh_fall_1");
 	.@v$ = instance_npcname("Varmundt#gh_fall_2");
 	.@s$ = instance_npcname("#schmidt_dummy_5");
-	.@map$ = 'map$;
 	specialeffect(EF_SCREEN_QUAKE,.@o$);
 	sleep 2000;
 	specialeffect(EF_EVILS_PAW,.@o$);
 	specialeffect(EF_CLOUD4,.@o$);
-	mapannounce .@map$,"Schmidt's Cry : To all who remains in the castle! Run away by any means at once!",bc_map,0xFFFF00;
+	mapannounce 'map$,"Schmidt's Cry : To all who remains in the castle! Run away by any means at once!",bc_map,0xFFFF00;
 	sleep 2000;
 	specialeffect(EF_CLOUD4,.@o$);
 	specialeffect(EF_SCREEN_QUAKE,.@o$);
@@ -1830,7 +1844,7 @@ OnEvent02:
 	specialeffect(EF_SCREEN_QUAKE,.@o$);
 	sleep 2000;
 	specialeffect(EF_SCREEN_QUAKE,.@o$);
-	mapannounce .@map$,"Schmidt's Cry : This is your king!",bc_map,0xFFFF00;
+	mapannounce 'map$,"Schmidt's Cry : This is your king!",bc_map,0xFFFF00;
 	sleep 2000;
 	specialeffect(EF_SCREEN_QUAKE,.@o$);
 	sleep 2000;
@@ -1880,7 +1894,7 @@ OnEvent02:
 	sleep 2000;
 	specialeffect(EF_LORD,.@o$);
 	specialeffect(EF_SCREEN_QUAKE,.@o$);
-	warpparty .@map$,53,263,'party_id;
+	warpparty 'map$,53,263,'party_id;
 	disablenpc instance_npcname("#schmidt_dummy_5");
 	disablenpc instance_npcname("Orb#edda_fall_0");
 	enablenpc instance_npcname("Oscar#gh_fall_2");
@@ -1978,22 +1992,20 @@ end;
 	end;
 	
 OnTouch:
-	set 'party_id$, getcharid(1);
+	set 'party_id, getcharid(1);
 	disablenpc instance_npcname(strnpcinfo(0));
-	disablenpc instance_npcname(strnpcinfo(0));
-	.@map$ = 'map$;
 	donpcevent instance_npcname("#gh_purification_mob") + "::OnSpawn00";
-	mapannounce .@map$,"Oscar : This place once used to be the kitchen.",bc_map,0xFF66FF;
+	mapannounce 'map$,"Oscar : This place once used to be the kitchen.",bc_map,0xFF66FF;
 	sleep 2800;
-	mapannounce .@map$,"Oscar : Unfortunately... The maids who were preparing the meals were affected by the curse the most.",bc_map,0xFF66FF;
+	mapannounce 'map$,"Oscar : Unfortunately... The maids who were preparing the meals were affected by the curse the most.",bc_map,0xFF66FF;
 	sleep 2800;
-	mapannounce .@map$,"Oscar : The only thing we can do for them is to free them from their pain and lay them to rest.",bc_map,0xFF66FF;
+	mapannounce 'map$,"Oscar : The only thing we can do for them is to free them from their pain and lay them to rest.",bc_map,0xFF66FF;
 	sleep 2800;
-	mapannounce .@map$,"Oscar : We will still have time for the next quarters, if you purify the maids here that have been cursed.",bc_map,0xFF66FF;
+	mapannounce 'map$,"Oscar : We will still have time for the next quarters, if you purify the maids here that have been cursed.",bc_map,0xFF66FF;
 	sleep 2800;
-	mapannounce .@map$,"Oscar : This dimension's time and space is distorted making it hard to move around.",bc_map,0xFF66FF;
+	mapannounce 'map$,"Oscar : This dimension's time and space is distorted making it hard to move around.",bc_map,0xFF66FF;
 	sleep 2800;
-	mapannounce .@map$,"Oscar : Oh, I almost forgot to remind you, If you ever encountered a Flaming Thorn, try to avoid it. It's the most troublesome being in this dimension.",bc_map,0xFF66FF;
+	mapannounce 'map$,"Oscar : Oh, I almost forgot to remind you, If you ever encountered a Flaming Thorn, try to avoid it. It's the most troublesome being in this dimension.",bc_map,0xFF66FF;
 end;
 }
 
@@ -2002,12 +2014,11 @@ end;
 
 OnTouch:
 	.@var = 'purification;
-	.@map$ = 'map$;
 	if(.@var == 0){
 		set 'purification, 1;
 		npctalk "Oscar : This placed used to be the Knight's workplace.";
 		sleep 3000;
-		donpcevent "#gh_purification_mob::OnSpawn01";
+		donpcevent instance_npcname("#gh_purification_mob") + "::OnSpawn01";
 		npctalk "Oscar : Those who were resting after their work wasn't able to evacuate in time.";
 		sleep 3000;
 		npctalk "Oscar : They went insane because of the curse, just like the maids who were preparing the meals.";
@@ -2024,12 +2035,11 @@ end;
 
 OnTouch:
 	.@var = 'purification;
-	.@map$ = 'map$;
 	if(.@var == 1){
 		set 'purification, 2;
 		npctalk "Oscar : This place used to be a guest area, with a lounge over there.";
 		sleep 3000;
-		donpcevent "#gh_purification_mob::OnSpawn02";
+		donpcevent instance_npcname("#gh_purification_mob") + "::OnSpawn02";
 		npctalk "Oscar : The foods was distributed in the morning by the maids. The curse also affected the food and spread to the people who ate it.";
 		sleep 3000;
 		npctalk "Oscar : They went insane because of the curse, just like the maids who were preparing the meals.";
@@ -2046,12 +2056,11 @@ end;
 
 OnTouch:
 	.@var = 'purification;
-	.@map$ = 'map$;
 	if(.@var == 2){
 		set 'purification, 3;
 		npctalk "Oscar : This place used to be a guest area, with a lounge over there.";
 		sleep 3000;
-		donpcevent "#gh_purification_mob::OnSpawn03";
+		donpcevent instance_npcname("#gh_purification_mob") + "::OnSpawn03";
 		npctalk "Oscar : This place was where they keep literature and military information.";
 		sleep 3000;
 		npctalk "Oscar : It was mainly used and guarded by commanders.";
@@ -2070,7 +2079,6 @@ end;
 
 OnTouch:
 	.@var = 'purification;
-	.@map$ = 'map$;
 	if(.@var == 3){
 		set 'purification, 4;
 		npctalk "Oscar : Since the dimensional barrier is not present, you might actually get hurt or worst. Be cautious.";
@@ -2081,11 +2089,9 @@ OnTouch:
 		sleep 3000;
 		npctalk "Oscar : I'll gather the dimensional energy. The battle will begin, prepare yourself.";
 		disablenpc instance_npcname(strnpcinfo(0));
-		disablenpc instance_npcname(strnpcinfo(0));
 		disablenpc instance_npcname("#schmidt_gh_purification");
-		disablenpc instance_npcname("#schmidt_gh_purification");
-		donpcevent "#gh_purification_boss::OnSummon";
-		donpcevent "#gh_purification_fire::OnSummon";
+		donpcevent instance_npcname("#gh_purification_boss") + "::OnSummon";
+		donpcevent instance_npcname("#gh_purification_fire") + "::OnSummon";
 	}
 end;
 }
@@ -2123,8 +2129,7 @@ end;
 	
 OnSummon:
 	.@boss = 'schmidt;
-	.@map$ = 'map$;
-	.@gid = monster(.@map$,52,277,"Cursed King Schmidt",.@boss,1,instance_npcname(strnpcinfo(0)) + "::OnBossKill");
+	.@gid = monster('map$,52,277,"Cursed King Schmidt",.@boss,1,instance_npcname(strnpcinfo(0)) + "::OnBossKill");
 	set 'gid$, .@gid;
 	set 'boss_alive$, 1;
 end;
@@ -2142,7 +2147,6 @@ OnSummon:
 end;
 
 OnSummonLeft:
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnLeftFireDead";
 	.@gid = 'gid$;
 	for(.@i = 10; .@i < 96; .@i++){
@@ -2154,102 +2158,99 @@ OnSummonLeft:
 			donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonTop";
 			donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonBottom";
 		}
-		.@left[0] = monster(.@map$,.@i,248,"",20426,1,.@event$);
-		.@left[1] = monster(.@map$,.@i,251,"",20426,1,.@event$);
-		.@left[2] = monster(.@map$,.@i,254,"",20426,1,.@event$);
-		.@left[3] = monster(.@map$,.@i,257,"",20426,1,.@event$);
-		.@left[4] = monster(.@map$,.@i,260,"",20426,1,.@event$);
-		.@left[5] = monster(.@map$,.@i,263,"",20426,1,.@event$);
-		.@left[6] = monster(.@map$,.@i,266,"",20426,1,.@event$);
-		.@left[7] = monster(.@map$,.@i,269,"",20426,1,.@event$);
-		.@left[8] = monster(.@map$,.@i,281,"",20426,1,.@event$);
-		.@left[9] = monster(.@map$,.@i,284,"",20426,1,.@event$);
-		.@left[10] = monster(.@map$,.@i,287,"",20426,1,.@event$);
-		.@left[11] = monster(.@map$,.@i,290,"",20426,1,.@event$);
-		.@left[12] = monster(.@map$,.@i,293,"",20426,1,.@event$);
-		.@left[13] = monster(.@map$,.@i,296,"",20426,1,.@event$);
-		.@left[14] = monster(.@map$,.@i,299,"",20426,1,.@event$);
-		.@left[15] = monster(.@map$,.@i,302,"",20426,1,.@event$);
-		.@left[16] = monster(.@map$,.@i,305,"",20426,1,.@event$);
-		.@left[17] = monster(.@map$,.@i,308,"",20426,1,.@event$);
+		.@left[0] = monster('map$,.@i,248,"",20426,1,.@event$);
+		.@left[1] = monster('map$,.@i,251,"",20426,1,.@event$);
+		.@left[2] = monster('map$,.@i,254,"",20426,1,.@event$);
+		.@left[3] = monster('map$,.@i,257,"",20426,1,.@event$);
+		.@left[4] = monster('map$,.@i,260,"",20426,1,.@event$);
+		.@left[5] = monster('map$,.@i,263,"",20426,1,.@event$);
+		.@left[6] = monster('map$,.@i,266,"",20426,1,.@event$);
+		.@left[7] = monster('map$,.@i,269,"",20426,1,.@event$);
+		.@left[8] = monster('map$,.@i,281,"",20426,1,.@event$);
+		.@left[9] = monster('map$,.@i,284,"",20426,1,.@event$);
+		.@left[10] = monster('map$,.@i,287,"",20426,1,.@event$);
+		.@left[11] = monster('map$,.@i,290,"",20426,1,.@event$);
+		.@left[12] = monster('map$,.@i,293,"",20426,1,.@event$);
+		.@left[13] = monster('map$,.@i,296,"",20426,1,.@event$);
+		.@left[14] = monster('map$,.@i,299,"",20426,1,.@event$);
+		.@left[15] = monster('map$,.@i,302,"",20426,1,.@event$);
+		.@left[16] = monster('map$,.@i,305,"",20426,1,.@event$);
+		.@left[17] = monster('map$,.@i,308,"",20426,1,.@event$);
 		sleep 300;
-		killmonster .@map$,.@event$;
+		killmonster 'map$,.@event$;
 	}
 OnLeftFireDead:
 end;
 
-OnSummonRight:
-	.@map$ = 'map$;
+OnSummonRight:;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnRightFireDead";
 	.@gid = 'gid$;
 	for(.@i = 95; .@i > 10; .@i--){
 		if(!unitexists(.@gid))
 			end;
-		.@right[0] = monster(.@map$,.@i,248,"",20426,1,.@event$);
-		.@right[1] = monster(.@map$,.@i,251,"",20426,1,.@event$);
-		.@right[2] = monster(.@map$,.@i,254,"",20426,1,.@event$);
-		.@right[3] = monster(.@map$,.@i,257,"",20426,1,.@event$);
-		.@right[4] = monster(.@map$,.@i,260,"",20426,1,.@event$);
-		.@right[5] = monster(.@map$,.@i,263,"",20426,1,.@event$);
-		.@right[6] = monster(.@map$,.@i,266,"",20426,1,.@event$);
-		.@right[7] = monster(.@map$,.@i,269,"",20426,1,.@event$);
-		.@right[8] = monster(.@map$,.@i,272,"",20426,1,.@event$);
-		.@right[9] = monster(.@map$,.@i,275,"",20426,1,.@event$);
-		.@right[10] = monster(.@map$,.@i,278,"",20426,1,.@event$);
-		.@right[11] = monster(.@map$,.@i,287,"",20426,1,.@event$);
-		.@right[12] = monster(.@map$,.@i,290,"",20426,1,.@event$);
-		.@right[13] = monster(.@map$,.@i,293,"",20426,1,.@event$);
-		.@right[14] = monster(.@map$,.@i,296,"",20426,1,.@event$);
-		.@right[15] = monster(.@map$,.@i,299,"",20426,1,.@event$);
-		.@right[16] = monster(.@map$,.@i,302,"",20426,1,.@event$);
-		.@right[17] = monster(.@map$,.@i,305,"",20426,1,.@event$);
-		.@right[18] = monster(.@map$,.@i,308,"",20426,1,.@event$);
+		.@right[0] = monster('map$,.@i,248,"",20426,1,.@event$);
+		.@right[1] = monster('map$,.@i,251,"",20426,1,.@event$);
+		.@right[2] = monster('map$,.@i,254,"",20426,1,.@event$);
+		.@right[3] = monster('map$,.@i,257,"",20426,1,.@event$);
+		.@right[4] = monster('map$,.@i,260,"",20426,1,.@event$);
+		.@right[5] = monster('map$,.@i,263,"",20426,1,.@event$);
+		.@right[6] = monster('map$,.@i,266,"",20426,1,.@event$);
+		.@right[7] = monster('map$,.@i,269,"",20426,1,.@event$);
+		.@right[8] = monster('map$,.@i,272,"",20426,1,.@event$);
+		.@right[9] = monster('map$,.@i,275,"",20426,1,.@event$);
+		.@right[10] = monster('map$,.@i,278,"",20426,1,.@event$);
+		.@right[11] = monster('map$,.@i,287,"",20426,1,.@event$);
+		.@right[12] = monster('map$,.@i,290,"",20426,1,.@event$);
+		.@right[13] = monster('map$,.@i,293,"",20426,1,.@event$);
+		.@right[14] = monster('map$,.@i,296,"",20426,1,.@event$);
+		.@right[15] = monster('map$,.@i,299,"",20426,1,.@event$);
+		.@right[16] = monster('map$,.@i,302,"",20426,1,.@event$);
+		.@right[17] = monster('map$,.@i,305,"",20426,1,.@event$);
+		.@right[18] = monster('map$,.@i,308,"",20426,1,.@event$);
 		sleep 300;
-		killmonster .@map$,.@event$;
+		killmonster 'map$,.@event$;
 	}
 OnRightFireDead:	
 end;
 
 OnSummonBottom:
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnBottomFireDead";
 	.@gid = 'gid$;
 	for(.@i = 248; .@i < 309; .@i++){
 		if(!unitexists(.@gid))
 			end;
-		.@bottom[0] = monster(.@map$,12,.@i,"",20426,1,.@event$);
-		.@bottom[1] = monster(.@map$,15,.@i,"",20426,1,.@event$);
-		.@bottom[2] = monster(.@map$,18,.@i,"",20426,1,.@event$);
-		.@bottom[3] = monster(.@map$,21,.@i,"",20426,1,.@event$);
-		.@bottom[4] = monster(.@map$,24,.@i,"",20426,1,.@event$);
-		.@bottom[5] = monster(.@map$,27,.@i,"",20426,1,.@event$);
-		.@bottom[6] = monster(.@map$,30,.@i,"",20426,1,.@event$);
-		.@bottom[7] = monster(.@map$,33,.@i,"",20426,1,.@event$);
-		.@bottom[8] = monster(.@map$,36,.@i,"",20426,1,.@event$);
-		.@bottom[9] = monster(.@map$,49,.@i,"",20426,1,.@event$);
-		.@bottom[10] = monster(.@map$,52,.@i,"",20426,1,.@event$);
-		.@bottom[11] = monster(.@map$,55,.@i,"",20426,1,.@event$);
-		.@bottom[12] = monster(.@map$,58,.@i,"",20426,1,.@event$);
-		.@bottom[13] = monster(.@map$,61,.@i,"",20426,1,.@event$);
-		.@bottom[14] = monster(.@map$,64,.@i,"",20426,1,.@event$);
-		.@bottom[15] = monster(.@map$,67,.@i,"",20426,1,.@event$);
-		.@bottom[16] = monster(.@map$,70,.@i,"",20426,1,.@event$);
-		.@bottom[17] = monster(.@map$,73,.@i,"",20426,1,.@event$);
-		.@bottom[18] = monster(.@map$,76,.@i,"",20426,1,.@event$);
-		.@bottom[19] = monster(.@map$,79,.@i,"",20426,1,.@event$);
-		.@bottom[20] = monster(.@map$,82,.@i,"",20426,1,.@event$);
-		.@bottom[21] = monster(.@map$,85,.@i,"",20426,1,.@event$);
-		.@bottom[22] = monster(.@map$,88,.@i,"",20426,1,.@event$);
-		.@bottom[23] = monster(.@map$,91,.@i,"",20426,1,.@event$);
-		.@bottom[24] = monster(.@map$,94,.@i,"",20426,1,.@event$);
+		.@bottom[0] = monster('map$,12,.@i,"",20426,1,.@event$);
+		.@bottom[1] = monster('map$,15,.@i,"",20426,1,.@event$);
+		.@bottom[2] = monster('map$,18,.@i,"",20426,1,.@event$);
+		.@bottom[3] = monster('map$,21,.@i,"",20426,1,.@event$);
+		.@bottom[4] = monster('map$,24,.@i,"",20426,1,.@event$);
+		.@bottom[5] = monster('map$,27,.@i,"",20426,1,.@event$);
+		.@bottom[6] = monster('map$,30,.@i,"",20426,1,.@event$);
+		.@bottom[7] = monster('map$,33,.@i,"",20426,1,.@event$);
+		.@bottom[8] = monster('map$,36,.@i,"",20426,1,.@event$);
+		.@bottom[9] = monster('map$,49,.@i,"",20426,1,.@event$);
+		.@bottom[10] = monster('map$,52,.@i,"",20426,1,.@event$);
+		.@bottom[11] = monster('map$,55,.@i,"",20426,1,.@event$);
+		.@bottom[12] = monster('map$,58,.@i,"",20426,1,.@event$);
+		.@bottom[13] = monster('map$,61,.@i,"",20426,1,.@event$);
+		.@bottom[14] = monster('map$,64,.@i,"",20426,1,.@event$);
+		.@bottom[15] = monster('map$,67,.@i,"",20426,1,.@event$);
+		.@bottom[16] = monster('map$,70,.@i,"",20426,1,.@event$);
+		.@bottom[17] = monster('map$,73,.@i,"",20426,1,.@event$);
+		.@bottom[18] = monster('map$,76,.@i,"",20426,1,.@event$);
+		.@bottom[19] = monster('map$,79,.@i,"",20426,1,.@event$);
+		.@bottom[20] = monster('map$,82,.@i,"",20426,1,.@event$);
+		.@bottom[21] = monster('map$,85,.@i,"",20426,1,.@event$);
+		.@bottom[22] = monster('map$,88,.@i,"",20426,1,.@event$);
+		.@bottom[23] = monster('map$,91,.@i,"",20426,1,.@event$);
+		.@bottom[24] = monster('map$,94,.@i,"",20426,1,.@event$);
 		sleep 300;
-		killmonster .@map$,.@event$;
+		killmonster 'map$,.@event$;
 	}
 OnBottomFireDead:
 end;
 
 OnSummonTop:
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnTopFireDead";
 	.@gid = 'gid$;
 	for(.@i = 308; .@i > 247; .@i--){
@@ -2257,33 +2258,33 @@ OnSummonTop:
 			end;	
 		if(.@i == 260)
 			donpcevent instance_npcname(strnpcinfo(0)) + "::OnSummonLeft";
-		.@bottom[0] = monster(.@map$,13,.@i,"",20426,1,.@event$);
-		.@bottom[1] = monster(.@map$,16,.@i,"",20426,1,.@event$);
-		.@bottom[2] = monster(.@map$,19,.@i,"",20426,1,.@event$);
-		.@bottom[3] = monster(.@map$,22,.@i,"",20426,1,.@event$);
-		.@bottom[4] = monster(.@map$,25,.@i,"",20426,1,.@event$);
-		.@bottom[5] = monster(.@map$,28,.@i,"",20426,1,.@event$);
-		.@bottom[6] = monster(.@map$,31,.@i,"",20426,1,.@event$);
-		.@bottom[7] = monster(.@map$,34,.@i,"",20426,1,.@event$);
-		.@bottom[8] = monster(.@map$,37,.@i,"",20426,1,.@event$);
-		.@bottom[9] = monster(.@map$,40,.@i,"",20426,1,.@event$);
-		.@bottom[10] = monster(.@map$,43,.@i,"",20426,1,.@event$);
-		.@bottom[11] = monster(.@map$,46,.@i,"",20426,1,.@event$);
-		.@bottom[12] = monster(.@map$,49,.@i,"",20426,1,.@event$);
-		.@bottom[13] = monster(.@map$,52,.@i,"",20426,1,.@event$);
-		.@bottom[14] = monster(.@map$,55,.@i,"",20426,1,.@event$);
-		.@bottom[15] = monster(.@map$,58,.@i,"",20426,1,.@event$);
-		.@bottom[16] = monster(.@map$,70,.@i,"",20426,1,.@event$);
-		.@bottom[17] = monster(.@map$,73,.@i,"",20426,1,.@event$);
-		.@bottom[18] = monster(.@map$,76,.@i,"",20426,1,.@event$);
-		.@bottom[19] = monster(.@map$,79,.@i,"",20426,1,.@event$);
-		.@bottom[20] = monster(.@map$,82,.@i,"",20426,1,.@event$);
-		.@bottom[21] = monster(.@map$,85,.@i,"",20426,1,.@event$);
-		.@bottom[22] = monster(.@map$,88,.@i,"",20426,1,.@event$);
-		.@bottom[23] = monster(.@map$,91,.@i,"",20426,1,.@event$);
-		.@bottom[24] = monster(.@map$,94,.@i,"",20426,1,.@event$);
+		.@bottom[0] = monster('map$,13,.@i,"",20426,1,.@event$);
+		.@bottom[1] = monster('map$,16,.@i,"",20426,1,.@event$);
+		.@bottom[2] = monster('map$,19,.@i,"",20426,1,.@event$);
+		.@bottom[3] = monster('map$,22,.@i,"",20426,1,.@event$);
+		.@bottom[4] = monster('map$,25,.@i,"",20426,1,.@event$);
+		.@bottom[5] = monster('map$,28,.@i,"",20426,1,.@event$);
+		.@bottom[6] = monster('map$,31,.@i,"",20426,1,.@event$);
+		.@bottom[7] = monster('map$,34,.@i,"",20426,1,.@event$);
+		.@bottom[8] = monster('map$,37,.@i,"",20426,1,.@event$);
+		.@bottom[9] = monster('map$,40,.@i,"",20426,1,.@event$);
+		.@bottom[10] = monster('map$,43,.@i,"",20426,1,.@event$);
+		.@bottom[11] = monster('map$,46,.@i,"",20426,1,.@event$);
+		.@bottom[12] = monster('map$,49,.@i,"",20426,1,.@event$);
+		.@bottom[13] = monster('map$,52,.@i,"",20426,1,.@event$);
+		.@bottom[14] = monster('map$,55,.@i,"",20426,1,.@event$);
+		.@bottom[15] = monster('map$,58,.@i,"",20426,1,.@event$);
+		.@bottom[16] = monster('map$,70,.@i,"",20426,1,.@event$);
+		.@bottom[17] = monster('map$,73,.@i,"",20426,1,.@event$);
+		.@bottom[18] = monster('map$,76,.@i,"",20426,1,.@event$);
+		.@bottom[19] = monster('map$,79,.@i,"",20426,1,.@event$);
+		.@bottom[20] = monster('map$,82,.@i,"",20426,1,.@event$);
+		.@bottom[21] = monster('map$,85,.@i,"",20426,1,.@event$);
+		.@bottom[22] = monster('map$,88,.@i,"",20426,1,.@event$);
+		.@bottom[23] = monster('map$,91,.@i,"",20426,1,.@event$);
+		.@bottom[24] = monster('map$,94,.@i,"",20426,1,.@event$);
 		sleep 300;
-		killmonster .@map$,.@event$;
+		killmonster 'map$,.@event$;
 	}
 OnTopFireDead:
 end;
@@ -2293,7 +2294,6 @@ end;
 	end;
 	
 OnSpawn00:
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill00";
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnDummy";
 	.@maid = 'maid;
@@ -2305,8 +2305,8 @@ OnSpawn00:
 	19,62,
 	31,50;
 	for(.@i = 0; .@i < getarraysize(.@bone_xy); .@i += 2){
-		.@bone = monster(.@map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
-		.@flame = monster(.@map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
+		.@bone = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
+		.@flame = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
 		getunitdata .@bone,.@mode;
 		setunitdata .@bone,UMOB_MODE,(.@mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
 		setunitdata .@flame,UMOB_DMGIMMUNE,true;
@@ -2334,7 +2334,7 @@ OnSpawn00:
 	20,56,.@maid,
 	61,36,.@maid;
 	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 3){
-		monster .@map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,.@event$;
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,.@event$;
 		.@x++;
 		if(.@x % 4 == 0) //Spawning has intervals
 			sleep 3000;
@@ -2343,21 +2343,19 @@ end;
 
 OnMobKill00:
 	//There is 21 maids but event triggers on 20th maid kill.
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill00";
-	.@party_id = 'party_id$;
+	.@party_id = 'party_id;
 	set 'phase_one, 'phase_one$ + 1;
 	if('phase_one$ == 20){
-		killmonster .@map$,.@event$;
+		killmonster 'map$,.@event$;
 		enablenpc instance_npcname("Oscar#gh_purification_0");
-		mapannounce .@map$,"Oscar : The time flow in the first area has returned to normal. Let's go to the next area.",bc_map,0xFF66FF;
+		mapannounce 'map$,"Oscar : The time flow in the first area has returned to normal. Let's go to the next area.",bc_map,0xFF66FF;
 		sleep 3000;
-		warpparty .@map$,123,63,.@party_id;
+		warpparty 'map$,123,63,.@party_id;
 	}
 end;
 
 OnSpawn01:
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill01";
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnDummy";
 	.@kh = 'khalitzburg;
@@ -2372,8 +2370,8 @@ OnSpawn01:
 	148,56,
 	139,66;
 	for(.@i = 0; .@i < getarraysize(.@bone_xy); .@i += 2){
-		.@bone = monster(.@map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
-		.@flame = monster(.@map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
+		.@bone = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
+		.@flame = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
 		getunitdata .@bone,.@mode;
 		setunitdata .@bone,UMOB_MODE,(.@mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
 		setunitdata .@flame,UMOB_DMGIMMUNE,true;
@@ -2405,9 +2403,9 @@ OnSpawn01:
 	181,67,.@bloody;
 	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 3){
 		if(.@xy[.@i+2] == .@kh)
-			monster .@map$,.@xy[.@i],.@xy[.@i+1],"Insane Knight",.@xy[.@i+2],1,.@event$;
+			monster 'map$,.@xy[.@i],.@xy[.@i+1],"Insane Knight",.@xy[.@i+2],1,.@event$;
 		else
-			monster .@map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,.@event$;
+			monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,.@event$;
 		.@x++;
 		if(.@x % 6 == 0)
 			sleep 3000;
@@ -2415,21 +2413,19 @@ OnSpawn01:
 end;
 
 OnMobKill01:
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill01";
-	.@party_id = 'party_id$;
+	.@party_id = 'party_id;
 	set 'phase_two, 'phase_two$ + 1;
 	if('phase_two$ == 24){
-		killmonster .@map$,.@event$;
+		killmonster 'map$,.@event$;
 		enablenpc instance_npcname("Oscar#gh_purification_1");
-		mapannounce .@map$,"Oscar : The time flow in the second area has returned to normal. Let's go to the next area.",bc_map,0xFF66FF;
+		mapannounce 'map$,"Oscar : The time flow in the second area has returned to normal. Let's go to the next area.",bc_map,0xFF66FF;
 		sleep 3000;
-		warpparty .@map$,148,116,.@party_id;
+		warpparty 'map$,148,116,.@party_id;
 	}
 end;
 
 OnSpawn02:
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill02";
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnDummy";
 	.@knight = 'knight;
@@ -2446,8 +2442,8 @@ OnSpawn02:
 	149,146,
 	143,120;
 	for(.@i = 0; .@i < getarraysize(.@bone_xy); .@i += 2){
-		.@bone = monster(.@map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
-		.@flame = monster(.@map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
+		.@bone = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
+		.@flame = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
 		getunitdata .@bone,.@mode;
 		setunitdata .@bone,UMOB_MODE,(.@mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
 		setunitdata .@flame,UMOB_DMGIMMUNE,true;
@@ -2484,7 +2480,7 @@ OnSpawn02:
 	137,141,.@bloody,
 	131,141,.@bloody;
 	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 3){
-		monster .@map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,.@event$;
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,.@event$;
 		.@x++;
 		if(.@x % 10 == 0)
 			sleep 3000;
@@ -2492,21 +2488,19 @@ OnSpawn02:
 end;
 
 OnMobKill02:
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill02";
-	.@party_id = 'party_id$;
+	.@party_id = 'party_id;
 	set 'phase_three, 'phase_three$ + 1;
 	if('phase_three$ == 30){
-		killmonster .@map$,.@event$;
+		killmonster 'map$,.@event$;
 		enablenpc instance_npcname("Oscar#gh_purification_2");
-		mapannounce .@map$,"Oscar : The time flow in the third area has returned to normal. Let's go to the next area.",bc_map,0xFF66FF;
+		mapannounce 'map$,"Oscar : The time flow in the third area has returned to normal. Let's go to the next area.",bc_map,0xFF66FF;
 		sleep 3000;
-		warpparty .@map$,76,178,.@party_id;
+		warpparty 'map$,76,178,.@party_id;
 	}
 end;
 
 OnSpawn03:
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill03";
 	.@event2$ = instance_npcname(strnpcinfo(0)) + "::OnDummy";
 	.@knight = 'knight;
@@ -2525,8 +2519,8 @@ OnSpawn03:
 	46,128,
 	56,164;
 	for(.@i = 0; .@i < getarraysize(.@bone_xy); .@i += 2){
-		.@bone = monster(.@map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
-		.@flame = monster(.@map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
+		.@bone = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
+		.@flame = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
 		getunitdata .@bone,.@mode;
 		setunitdata .@bone,UMOB_MODE,(.@mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
 		setunitdata .@flame,UMOB_DMGIMMUNE,true;
@@ -2548,7 +2542,7 @@ OnSpawn03:
 	42,130,.@bloody,
 	27,130,.@bloody;
 	for(.@i = 0; .@i < getarraysize(.@xy); .@i += 3){
-		monster .@map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,.@event$;
+		monster 'map$,.@xy[.@i],.@xy[.@i+1],"--ja--",.@xy[.@i+2],1,.@event$;
 		.@x++;
 		if(.@x % 7 == 0)
 			sleep 3000;
@@ -2556,17 +2550,16 @@ OnSpawn03:
 end;
 
 OnMobKill03:
-	.@map$ = 'map$;
 	.@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill03";
-	.@party_id = 'party_id$;
+	.@party_id = 'party_id;
 	set 'phase_four, 'phase_four$ + 1;
 	if('phase_four$ == 15){
-		killmonster .@map$,.@event$;
+		killmonster 'map$,.@event$;
 		enablenpc instance_npcname("Oscar#gh_purification_3");
 		enablenpc instance_npcname("#schmidt_gh_purification");
-		mapannounce .@map$,"Oscar : That was the last room. Let's go see if King Schmidt's spirit is still roaming around.",bc_map,0xFF66FF;
+		mapannounce 'map$,"Oscar : That was the last room. Let's go see if King Schmidt's spirit is still roaming around.",bc_map,0xFF66FF;
 		sleep 3000;
-		warpparty .@map$,52,244,.@party_id;
+		warpparty 'map$,52,244,.@party_id;
 	}
 end;
 
