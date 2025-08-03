@@ -21426,6 +21426,10 @@ void clif_hat_effects( block_list& src, block_list& bl, enum send_target target 
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W } (ZC_EQUIPMENT_EFFECT)
 void clif_hat_effect_single( block_list& bl, uint16 effectId, bool enable ){
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	if( map_getmapdata( bl.m )->getMapFlag( MF_NOCOSTUME ) ){
+		return;
+	}
+
 	PACKET_ZC_EQUIPMENT_EFFECT* p = reinterpret_cast<PACKET_ZC_EQUIPMENT_EFFECT*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
