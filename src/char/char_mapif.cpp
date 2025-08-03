@@ -532,7 +532,6 @@ int32 chmapif_parse_req_saveskillcooldown(int32 fd){
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
 				Sql_ShowDebug(sql_handle);
-			StringBuf_Destroy(&buf);
 		}
 		RFIFOSKIP(fd, RFIFOW(fd, 2));
 	}
@@ -977,7 +976,6 @@ int32 chmapif_parse_save_scdata(int32 fd){
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
 				Sql_ShowDebug(sql_handle);
-			StringBuf_Destroy(&buf);
 		}
 #endif
 		RFIFOSKIP(fd, RFIFOW(fd, 2));
@@ -1371,7 +1369,6 @@ int32 chmapif_bonus_script_save(int32 fd) {
 			if (SQL_ERROR == Sql_QueryStr(sql_handle,StringBuf_Value(&buf)))
 				Sql_ShowDebug(sql_handle);
 
-			StringBuf_Destroy(&buf);
 			ShowInfo("Bonus Script saved for CID=%d. Total: %d.\n", cid, count);
 		}
 		RFIFOSKIP(fd,RFIFOW(fd,2));
