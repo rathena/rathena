@@ -38,22 +38,29 @@ struct s_mercenary_db {
 	std::unordered_map<uint16, uint16> skill;
 };
 
-struct s_mercenary_data : public block_list {
-	unit_data ud;
-	view_data *vd;
-	status_data base_status, battle_status;
-	status_change sc;
-	regen_data regen;
+class s_mercenary_data : public block_list {
+public:
 
-	std::shared_ptr<s_mercenary_db> db;
-	s_mercenary mercenary;
-	std::unordered_map<uint16, int32> scd;
+	s_mercenary_data() : block_list(BL_MER) {}
 
-	int32 masterteleport_timer;
-	map_session_data *master;
-	int32 contract_timer;
+	unit_data ud{};
+	view_data *vd{nullptr};
+	status_data base_status{};
+	status_data battle_status{};
+	status_change sc{};
+	regen_data regen{};
+
+	std::shared_ptr<s_mercenary_db> db{nullptr};
+	s_mercenary mercenary{};
+	std::unordered_map<uint16, int32> scd{};
+
+	int32 masterteleport_timer{INVALID_TIMER};
+	map_session_data *master{nullptr};
+	int32 contract_timer{INVALID_TIMER};
 
 	unsigned devotion_flag : 1;
+
+
 };
 
 struct view_data * mercenary_get_viewdata(uint16 class_);

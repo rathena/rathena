@@ -241,16 +241,13 @@ int32 elemental_data_received(s_elemental *ele, bool flag) {
 	s_elemental_data *ed;
 
 	if( !sd->ed ) {	// Initialize it after first summon.
-		sd->ed = ed = (s_elemental_data*)aCalloc(1,sizeof(s_elemental_data));
-		new (sd->ed) s_elemental_data();
-		ed->type = BL_ELEM;
+		sd->ed = ed = new s_elemental_data();
 		ed->id = npc_get_new_npc_id();
 		ed->master = sd;
 		ed->db = db;
 		memcpy(&ed->elemental, ele, sizeof(s_elemental));
 		status_set_viewdata(ed, ed->elemental.class_);
 		ed->vd->look[LOOK_HEAD_MID] = 10; // TODO: Why?
-		status_change_init(ed);
 		unit_dataset(ed);
 		ed->ud.dir = sd->ud.dir;
 

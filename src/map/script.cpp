@@ -501,7 +501,7 @@ static void script_reportsrc(struct script_state *st)
 
 	switch( bl->type ) {
 		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
+			npc_data* nd = (npc_data*)bl;
 
 			if( bl->m >= 0 )
 				ShowDebug("Source (NPC): %s at %s (%d,%d)\n", nd->name, map_mapid2mapname(bl->m), bl->x, bl->y);
@@ -3647,7 +3647,7 @@ struct script_state* script_alloc_state(struct script_code* rootscript, int32 po
 	if( st->script->instances != USHRT_MAX )
 		st->script->instances++;
 	else {
-		struct npc_data *nd = map_id2nd(oid);
+		npc_data *nd = map_id2nd(oid);
 
 		ShowError("Over 65k instances of '%s' script are being run!\n",nd ? nd->name : "unknown");
 	}
@@ -4839,8 +4839,7 @@ void do_final_script() {
 	db_destroy(st_db);
 
 	if( dummy_sd != nullptr ){
-		dummy_sd->~map_session_data();
-		aFree( dummy_sd );
+		delete dummy_sd;
 		dummy_sd = nullptr;
 	}
 }
@@ -4870,8 +4869,7 @@ void do_init_script(void) {
 	constant_db.load();
 	script_hardcoded_constants();
 
-	CREATE( dummy_sd, map_session_data, 1 );
-	new( dummy_sd ) map_session_data();
+	dummy_sd = new map_session_data();
 	dummy_sd->group_id = 99;
 	dummy_sd->fd = 0;
 }
@@ -5158,7 +5156,7 @@ BUILDIN_FUNC(menu)
 		 * menus beyond this length crash the client (see bugreport:6402)
 		 **/
 		if( StringBuf_Length(&buf) >= 2047 ) {
-			struct npc_data * nd = map_id2nd(st->oid);
+			npc_data * nd = map_id2nd(st->oid);
 			char* menu;
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
@@ -5262,7 +5260,7 @@ BUILDIN_FUNC(select)
 		 * menus beyond this length crash the client (see bugreport:6402)
 		 **/
 		if( StringBuf_Length(&buf) >= 2047 ) {
-			struct npc_data * nd = map_id2nd(st->oid);
+			npc_data * nd = map_id2nd(st->oid);
 			char* menu;
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
@@ -5340,7 +5338,7 @@ BUILDIN_FUNC(prompt)
 		 * menus beyond this length crash the client (see bugreport:6402)
 		 **/
 		if( StringBuf_Length(&buf) >= 2047 ) {
-			struct npc_data * nd = map_id2nd(st->oid);
+			npc_data * nd = map_id2nd(st->oid);
 			char* menu;
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
@@ -7011,7 +7009,7 @@ static int32 buildin_viewpointmap_sub(block_list *bl, va_list ap) {
 	id = va_arg(ap, int32);
 	color = va_arg(ap, int32);
 
-	clif_viewpoint( *reinterpret_cast<map_session_data*>( bl ), oid, type, x, y, id, color );
+	clif_viewpoint( *static_cast<map_session_data*>( bl ), oid, type, x, y, id, color );
 
 	return 0;
 }
@@ -8921,7 +8919,7 @@ BUILDIN_FUNC(getcharid)
 BUILDIN_FUNC(getnpcid)
 {
 	int32 num = script_getnum(st,2);
-	struct npc_data* nd = nullptr;
+	npc_data* nd = nullptr;
 
 	if( script_hasdata(st,3) )
 	{// unique npc name
@@ -11618,7 +11616,7 @@ BUILDIN_FUNC(donpcevent)
 	const char* event = script_getstr(st,2);
 	check_event(st, event);
 	if( !npc_event_do(event) ) {
-		struct npc_data * nd = map_id2nd(st->oid);
+		npc_data * nd = map_id2nd(st->oid);
 		ShowDebug("NPCEvent '%s' not found! (source: %s)\n",event,nd?nd->name:"Unknown");
 		script_pushint(st, 0);
 	} else
@@ -11640,7 +11638,7 @@ BUILDIN_FUNC(cmdothernpc)	// Added by RoVeRT
 	if( npc_event_do(event) ){
 		script_pushint(st, true);
 	}else{
-		struct npc_data * nd = map_id2nd(st->oid);
+		npc_data * nd = map_id2nd(st->oid);
 		ShowDebug("NPCEvent '%s' not found! (source: %s)\n", event, nd ? nd->name : "Unknown");
 		script_pushint(st, false);
 	}
@@ -11710,7 +11708,7 @@ BUILDIN_FUNC(addtimercount)
  *------------------------------------------*/
 BUILDIN_FUNC(initnpctimer)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 	int32 flag = 0;
 
 	if( script_hasdata(st,3) )
@@ -11724,12 +11722,12 @@ BUILDIN_FUNC(initnpctimer)
 			nd = npc_name2id(script_getstr(st, 2));
 		else //Flag
 		{
-			nd = (struct npc_data *)map_id2bl(st->oid);
+			nd = (npc_data *)map_id2bl(st->oid);
 			flag = script_getnum(st, 2);
 		}
 	}
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
 	if( !nd )
 		return SCRIPT_CMD_SUCCESS;
@@ -11751,7 +11749,7 @@ BUILDIN_FUNC(initnpctimer)
  *------------------------------------------*/
 BUILDIN_FUNC(startnpctimer)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 	int32 flag = 0;
 
 	if( script_hasdata(st,3) )
@@ -11765,12 +11763,12 @@ BUILDIN_FUNC(startnpctimer)
 			nd = npc_name2id(script_getstr(st, 2));
 		else //Flag
 		{
-			nd = (struct npc_data *)map_id2bl(st->oid);
+			nd = (npc_data *)map_id2bl(st->oid);
 			flag = script_getnum(st, 2);
 		}
 	}
 	else
-		nd=(struct npc_data *)map_id2bl(st->oid);
+		nd=(npc_data *)map_id2bl(st->oid);
 
 	if( !nd )
 		return SCRIPT_CMD_SUCCESS;
@@ -11789,7 +11787,7 @@ BUILDIN_FUNC(startnpctimer)
  *------------------------------------------*/
 BUILDIN_FUNC(stopnpctimer)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 	int32 flag = 0;
 
 	if( script_hasdata(st,3) )
@@ -11803,12 +11801,12 @@ BUILDIN_FUNC(stopnpctimer)
 			nd = npc_name2id(script_getstr(st, 2));
 		else //Flag
 		{
-			nd = (struct npc_data *)map_id2bl(st->oid);
+			nd = (npc_data *)map_id2bl(st->oid);
 			flag = script_getnum(st, 2);
 		}
 	}
 	else
-		nd=(struct npc_data *)map_id2bl(st->oid);
+		nd=(npc_data *)map_id2bl(st->oid);
 
 	if( !nd )
 		return SCRIPT_CMD_SUCCESS;
@@ -11823,7 +11821,7 @@ BUILDIN_FUNC(stopnpctimer)
  *------------------------------------------*/
 BUILDIN_FUNC(getnpctimer)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 	TBL_PC *sd;
 	int32 type = script_getnum(st,2);
 	t_tick val = 0;
@@ -11831,7 +11829,7 @@ BUILDIN_FUNC(getnpctimer)
 	if( script_hasdata(st,3) )
 		nd = npc_name2id(script_getstr(st,3));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
 	if( !nd || nd->type != BL_NPC )
 	{
@@ -11869,13 +11867,13 @@ BUILDIN_FUNC(getnpctimer)
 BUILDIN_FUNC(setnpctimer)
 {
 	int32 tick;
-	struct npc_data *nd;
+	npc_data *nd;
 
 	tick = script_getnum(st,2);
 	if( script_hasdata(st,3) )
 		nd = npc_name2id(script_getstr(st,3));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
 	if( !nd || nd->type != BL_NPC )
 	{
@@ -11895,7 +11893,7 @@ BUILDIN_FUNC(setnpctimer)
 BUILDIN_FUNC(attachnpctimer)
 {
 	TBL_PC *sd;
-	struct npc_data *nd = (struct npc_data *)map_id2bl(st->oid);
+	npc_data *nd = (npc_data *)map_id2bl(st->oid);
 
 	if( !nd || nd->type != BL_NPC )
 	{
@@ -11920,12 +11918,12 @@ BUILDIN_FUNC(attachnpctimer)
  *------------------------------------------*/
 BUILDIN_FUNC(detachnpctimer)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 
 	if( script_hasdata(st,2) )
 		nd = npc_name2id(script_getstr(st,2));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
 	if( !nd || nd->type != BL_NPC )
 	{
@@ -12286,7 +12284,7 @@ static int32 buildin_getareadropitem_sub(struct block_list *bl,va_list ap)
 {
 	t_itemid nameid = va_arg(ap, t_itemid);
 	uint16 *amount = (uint16 *)va_arg(ap, int32 *);
-	struct flooritem_data *drop=(struct flooritem_data *)bl;
+	flooritem_data *drop=(flooritem_data *)bl;
 
 	if(drop->item.nameid==nameid)
 		(*amount)+=drop->item.amount;
@@ -13063,7 +13061,7 @@ BUILDIN_FUNC(changecharsex)
 BUILDIN_FUNC(globalmes)
 {
 	struct block_list *bl = map_id2bl(st->oid);
-	struct npc_data *nd = (struct npc_data *)bl;
+	npc_data *nd = (npc_data *)bl;
 	const char *name=nullptr,*mes;
 
 	mes=script_getstr(st,2);
@@ -13089,7 +13087,7 @@ BUILDIN_FUNC(globalmes)
 /// waitingroom "<title>",<limit>{,"<event>"{,<trigger>{,<zeny>{,<minlvl>{,<maxlvl>}}}}};
 BUILDIN_FUNC(waitingroom)
 {
-	struct npc_data* nd;
+	npc_data* nd;
 	const char* title = script_getstr(st, 2);
 	int32 limit = script_getnum(st, 3);
 	const char* ev = script_hasdata(st,4) ? script_getstr(st,4) : "";
@@ -13098,7 +13096,7 @@ BUILDIN_FUNC(waitingroom)
 	int32 minLvl =  script_hasdata(st,7) ? script_getnum(st,7) : 1;
 	int32 maxLvl =  script_hasdata(st,8) ? script_getnum(st,8) : MAX_LEVEL;
 
-	nd = (struct npc_data *)map_id2bl(st->oid);
+	nd = (npc_data *)map_id2bl(st->oid);
 	if( nd != nullptr )
 		chat_createnpcchat(nd, title, limit, 1, trigger, ev, zeny, minLvl, maxLvl);
 
@@ -13111,11 +13109,11 @@ BUILDIN_FUNC(waitingroom)
 /// delwaitingroom;
 BUILDIN_FUNC(delwaitingroom)
 {
-	struct npc_data* nd;
+	npc_data* nd;
 	if( script_hasdata(st,2) )
 		nd = npc_name2id(script_getstr(st, 2));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 	if( nd != nullptr )
 		chat_deletenpcchat(nd);
 	return SCRIPT_CMD_SUCCESS;
@@ -13126,14 +13124,14 @@ BUILDIN_FUNC(delwaitingroom)
 /// waitingroomkick "<npc_name>", <kickusername>;
 BUILDIN_FUNC(waitingroomkick)
 {
-	struct npc_data* nd;
-	struct chat_data* cd;
+	npc_data* nd;
+	chat_data* cd;
 	const char* kickusername;
 	
 	nd = npc_name2id(script_getstr(st,2));
 	kickusername = script_getstr(st,3);
 
-	if( nd != nullptr && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != nullptr )
+	if( nd != nullptr && (cd=(chat_data *)map_id2bl(nd->chat_id)) != nullptr )
 		chat_npckickchat(cd, kickusername);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13144,17 +13142,17 @@ BUILDIN_FUNC(waitingroomkick)
 /// getwaitingroomusers "<npc_name>";
 BUILDIN_FUNC(getwaitingroomusers)
 {
-	struct npc_data* nd;
-	struct chat_data* cd;
+	npc_data* nd;
+	chat_data* cd;
 
 	int32 i, j=0;
 
 	if( script_hasdata(st,2) )
 		nd = npc_name2id(script_getstr(st, 2));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 	
-	if( nd != nullptr && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != nullptr ) {
+	if( nd != nullptr && (cd=(chat_data *)map_id2bl(nd->chat_id)) != nullptr ) {
 		for(i = 0; i < cd->users; ++i) {
 			setd_sub_num( st, nullptr, ".@waitingroom_users", j, cd->usersd[i]->status.account_id, nullptr );
 			j++;
@@ -13170,15 +13168,15 @@ BUILDIN_FUNC(getwaitingroomusers)
 /// kickwaitingroomall;
 BUILDIN_FUNC(waitingroomkickall)
 {
-	struct npc_data* nd;
-	struct chat_data* cd;
+	npc_data* nd;
+	chat_data* cd;
 
 	if( script_hasdata(st,2) )
 		nd = npc_name2id(script_getstr(st,2));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
-	if( nd != nullptr && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != nullptr )
+	if( nd != nullptr && (cd=(chat_data *)map_id2bl(nd->chat_id)) != nullptr )
 		chat_npckickall(cd);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13189,15 +13187,15 @@ BUILDIN_FUNC(waitingroomkickall)
 /// enablewaitingroomevent;
 BUILDIN_FUNC(enablewaitingroomevent)
 {
-	struct npc_data* nd;
-	struct chat_data* cd;
+	npc_data* nd;
+	chat_data* cd;
 
 	if( script_hasdata(st,2) )
 		nd = npc_name2id(script_getstr(st, 2));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
-	if( nd != nullptr && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != nullptr )
+	if( nd != nullptr && (cd=(chat_data *)map_id2bl(nd->chat_id)) != nullptr )
 		chat_enableevent(cd);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13208,15 +13206,15 @@ BUILDIN_FUNC(enablewaitingroomevent)
 /// disablewaitingroomevent;
 BUILDIN_FUNC(disablewaitingroomevent)
 {
-	struct npc_data *nd;
-	struct chat_data *cd;
+	npc_data *nd;
+	chat_data *cd;
 
 	if( script_hasdata(st,2) )
 		nd = npc_name2id(script_getstr(st, 2));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
-	if( nd != nullptr && (cd=(struct chat_data *)map_id2bl(nd->chat_id)) != nullptr )
+	if( nd != nullptr && (cd=(chat_data *)map_id2bl(nd->chat_id)) != nullptr )
 		chat_disableevent(cd);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13237,17 +13235,17 @@ BUILDIN_FUNC(disablewaitingroomevent)
 /// getwaitingroomstate(<type>) -> <info>
 BUILDIN_FUNC(getwaitingroomstate)
 {
-	struct npc_data *nd;
-	struct chat_data *cd;
+	npc_data *nd;
+	chat_data *cd;
 	int32 type;
 
 	type = script_getnum(st,2);
 	if( script_hasdata(st,3) )
 		nd = npc_name2id(script_getstr(st, 3));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
-	if( nd == nullptr || (cd=(struct chat_data *)map_id2bl(nd->chat_id)) == nullptr )
+	if( nd == nullptr || (cd=(chat_data *)map_id2bl(nd->chat_id)) == nullptr )
 	{
 		script_pushint(st, -1);
 		return SCRIPT_CMD_SUCCESS;
@@ -13288,11 +13286,11 @@ BUILDIN_FUNC(warpwaitingpc)
 	int32 i;
 	int32 n;
 	const char* map_name;
-	struct npc_data* nd;
-	struct chat_data* cd;
+	npc_data* nd;
+	chat_data* cd;
 
-	nd = (struct npc_data *)map_id2bl(st->oid);
-	if( nd == nullptr || (cd=(struct chat_data *)map_id2bl(nd->chat_id)) == nullptr )
+	nd = (npc_data *)map_id2bl(st->oid);
+	if( nd == nullptr || (cd=(chat_data *)map_id2bl(nd->chat_id)) == nullptr )
 		return SCRIPT_CMD_SUCCESS;
 
 	map_name = script_getstr(st,2);
@@ -13857,7 +13855,7 @@ static int32 buildin_maprespawnguildid_sub_pc(map_session_data* sd, va_list ap)
 
 static int32 buildin_maprespawnguildid_sub_mob(struct block_list *bl,va_list ap)
 {
-	struct mob_data *md=(struct mob_data *)bl;
+	mob_data *md=(mob_data *)bl;
 
 	if(!md->guardian_data && md->mob_id != MOBID_EMPERIUM && ( !mob_is_clone(md->mob_id) || battle_config.guild_maprespawn_clones ))
 		status_kill(bl);
@@ -14370,7 +14368,7 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 static int32 buildin_mobcount_sub(struct block_list *bl,va_list ap)	// Added by RoVeRT
 {
 	char *event=va_arg(ap,char *);
-	struct mob_data *md = ((struct mob_data *)bl);
+	mob_data *md = ((mob_data *)bl);
 	if( md->status.hp > 0 && (!event || strcmp(event,md->npc_event) == 0) )
 		return 1;
 	return SCRIPT_CMD_SUCCESS;
@@ -14686,7 +14684,7 @@ BUILDIN_FUNC(guardianinfo)
 	int32 type = script_getnum(st,4);
 
 	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
-	struct mob_data* gd;
+	mob_data* gd;
 
 	if( gc == nullptr || id < 0 || id >= MAX_GUARDIANS )
 	{
@@ -14955,7 +14953,7 @@ BUILDIN_FUNC(getequipcardid)
  *------------------------------------------*/
 BUILDIN_FUNC(petskillbonus)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 
 	if(!script_rid2sd(sd) || sd->pd == nullptr)
@@ -14991,7 +14989,7 @@ BUILDIN_FUNC(petskillbonus)
 BUILDIN_FUNC(petloot)
 {
 	int32 max;
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 
 	if(!script_rid2sd(sd) || sd->pd==nullptr)
@@ -15164,7 +15162,7 @@ BUILDIN_FUNC(undisguise)
 BUILDIN_FUNC(classchange)
 {
 	int32 _class;
-	struct npc_data* nd = nullptr;
+	npc_data* nd = nullptr;
 	TBL_PC *sd = map_id2sd(st->rid);
 	send_target target = AREA;
 
@@ -15173,7 +15171,7 @@ BUILDIN_FUNC(classchange)
 	if (script_hasdata(st, 3) && strlen(script_getstr(st,3)) > 0)
 		nd = npc_name2id(script_getstr(st, 3));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
 	if (nd == nullptr)
 		return SCRIPT_CMD_FAILURE;
@@ -15357,7 +15355,7 @@ BUILDIN_FUNC(soundeffectall)
  *------------------------------------------*/
 BUILDIN_FUNC(petrecovery)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 	int32 sc;
 
@@ -15392,7 +15390,7 @@ BUILDIN_FUNC(petrecovery)
 /// petskillattack "<skill name>",<level>,<rate>,<bonusrate>
 BUILDIN_FUNC(petskillattack)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 	int32 id = 0;
 
@@ -15425,7 +15423,7 @@ BUILDIN_FUNC(petskillattack)
 /// petskillattack2 "<skill name>",<damage>,<div>,<rate>,<bonusrate>
 BUILDIN_FUNC(petskillattack2)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 	int32 id = 0;
 
@@ -15458,7 +15456,7 @@ BUILDIN_FUNC(petskillattack2)
 /// petskillsupport "<skill name>",<level>,<delay>,<hp>,<sp>
 BUILDIN_FUNC(petskillsupport)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 	int32 id = 0;
 
@@ -15546,7 +15544,7 @@ BUILDIN_FUNC(skilleffect)
 	if (bl->type == BL_PC) {
 		/* Ensure we're standing because the following packet causes the client to virtually set the char to stand,
 		 * which leaves the server thinking it still is sitting. */
-		sd = reinterpret_cast<map_session_data*>( bl );
+		sd = static_cast<map_session_data*>( bl );
 
 		if (pc_issit(sd) && pc_setstand(sd, false)) {
 			skill_sit(sd, 0);
@@ -15683,7 +15681,7 @@ BUILDIN_FUNC(removespecialeffect)
 			}
 		}
 		else {
-			struct npc_data *nd = npc_name2id(script_getstr(st, 4));
+			npc_data *nd = npc_name2id(script_getstr(st, 4));
 			if (nd == nullptr) {
 				ShowError("buildin_%s: unknown npc %s.\n", command, script_getstr(st, 4));
 				return SCRIPT_CMD_FAILURE;
@@ -16193,14 +16191,14 @@ BUILDIN_FUNC(message)
  */
 BUILDIN_FUNC(npctalk)
 {
-	struct npc_data* nd = nullptr;
+	npc_data* nd = nullptr;
 	const char* str = script_getstr(st,2);
 	int32 color = 0xFFFFFF;
 
 	if (script_hasdata(st, 3) && strlen(script_getstr(st,3)) > 0)
 		nd = npc_name2id(script_getstr(st, 3));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
 	if (script_hasdata(st, 5))
 		color = script_getnum(st, 5);
@@ -16238,13 +16236,13 @@ BUILDIN_FUNC(npctalk)
  */
 BUILDIN_FUNC(chatmes)
 {
-	struct npc_data* nd = nullptr;
+	npc_data* nd = nullptr;
 	const char* str = script_getstr(st,2);
 
 	if (script_hasdata(st, 3))
 		nd = npc_name2id(script_getstr(st, 3));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
 	if (nd != nullptr && nd->chat_id) {
 		char message[256];
@@ -16506,7 +16504,7 @@ BUILDIN_FUNC(getmapxy)
 			break;
 		case BL_NPC:	//Get NPC Position
 			if (script_hasdata(st, 6)) {
-				struct npc_data *nd;
+				npc_data *nd;
 
 				if (script_isstring(st, 6))
 					nd = npc_name2id(script_getstr(st, 6));
@@ -16642,7 +16640,7 @@ BUILDIN_FUNC(logmes)
 	if( sd ){
 		log_npc(sd,str);
 	}else{
-		struct npc_data* nd = map_id2nd(st->oid);
+		npc_data* nd = map_id2nd(st->oid);
 
 		if( !nd ){
 			ShowError( "buildin_logmes: Invalid usage without player or npc.\n" );
@@ -17875,7 +17873,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	const char* name;
 	const char* newname = nullptr;
 	int32 class_ = JT_FAKENPC, size = -1;
-	struct npc_data* nd;
+	npc_data* nd;
 
 	name = script_getstr(st,2);
 
@@ -18176,7 +18174,7 @@ BUILDIN_FUNC(getd)
 BUILDIN_FUNC(callshop)
 {
 	TBL_PC *sd = nullptr;
-	struct npc_data *nd;
+	npc_data *nd;
 	const char *shopname;
 	int32 flag = 0;
 	if (!script_rid2sd(sd)) {
@@ -18243,7 +18241,7 @@ BUILDIN_FUNC(callshop)
 BUILDIN_FUNC(npcshopitem)
 {
 	const char* npcname = script_getstr(st, 2);
-	struct npc_data* nd = npc_name2id(npcname);
+	npc_data* nd = npc_name2id(npcname);
 	int32 n, i;
 	int32 amount;
 	uint16 offs = 2;
@@ -18304,7 +18302,7 @@ BUILDIN_FUNC(npcshopitem)
 BUILDIN_FUNC(npcshopadditem)
 {
 	const char* npcname = script_getstr(st,2);
-	struct npc_data* nd = npc_name2id(npcname);
+	npc_data* nd = npc_name2id(npcname);
 	uint16 offs = 2, amount;
 
 	if (!nd || ( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP && nd->subtype != NPCTYPE_MARKETSHOP)) { // Not found.
@@ -18396,7 +18394,7 @@ BUILDIN_FUNC(npcshopadditem)
 BUILDIN_FUNC(npcshopdelitem)
 {
 	const char* npcname = script_getstr(st,2);
-	struct npc_data* nd = npc_name2id(npcname);
+	npc_data* nd = npc_name2id(npcname);
 	int32 n, i, size;
 	uint16 amount;
 
@@ -18438,7 +18436,7 @@ BUILDIN_FUNC(npcshopdelitem)
 BUILDIN_FUNC(npcshopattach)
 {
 	const char* npcname = script_getstr(st,2);
-	struct npc_data* nd = npc_name2id(npcname);
+	npc_data* nd = npc_name2id(npcname);
 	int32 flag = 1;
 
 	if( script_hasdata(st,3) )
@@ -18450,7 +18448,7 @@ BUILDIN_FUNC(npcshopattach)
 	}
 
 	if (flag)
-		nd->master_nd = ((struct npc_data *)map_id2bl(st->oid));
+		nd->master_nd = ((npc_data *)map_id2bl(st->oid));
 	else
 		nd->master_nd = nullptr;
 
@@ -19097,7 +19095,7 @@ BUILDIN_FUNC(getunitdata)
 
 	switch(bl->type) {
 		case BL_MOB: {
-			mob_data* md = reinterpret_cast<mob_data*>( bl );
+			mob_data* md = static_cast<mob_data*>( bl );
 
 			getunitdata_sub(UMOB_SIZE, md->status.size);
 			getunitdata_sub(UMOB_LEVEL, md->level);
@@ -19159,7 +19157,7 @@ BUILDIN_FUNC(getunitdata)
 			} break;
 
 		case BL_HOM: {
-			homun_data* hd = reinterpret_cast<homun_data*>( bl );
+			homun_data* hd = static_cast<homun_data*>( bl );
 
 			getunitdata_sub(UHOM_SIZE, hd->base_status.size);
 			getunitdata_sub(UHOM_LEVEL, hd->homunculus.level);
@@ -19205,7 +19203,7 @@ BUILDIN_FUNC(getunitdata)
 			} break;
 
 		case BL_PET: {
-			pet_data* pd = reinterpret_cast<pet_data*>( bl );
+			pet_data* pd = static_cast<pet_data*>( bl );
 
 			getunitdata_sub(UPET_SIZE, pd->status.size);
 			getunitdata_sub(UPET_LEVEL, pd->pet.level);
@@ -19248,7 +19246,7 @@ BUILDIN_FUNC(getunitdata)
 			} break;
 
 		case BL_MER: {
-			s_mercenary_data* mc = reinterpret_cast<s_mercenary_data*>( bl );
+			s_mercenary_data* mc = static_cast<s_mercenary_data*>( bl );
 
 			getunitdata_sub(UMER_SIZE, mc->base_status.size);
 			getunitdata_sub(UMER_HP, mc->base_status.hp);
@@ -19291,7 +19289,7 @@ BUILDIN_FUNC(getunitdata)
 			} break;
 
 		case BL_ELEM: {
-			s_elemental_data* ed = reinterpret_cast<s_elemental_data*>( bl );
+			s_elemental_data* ed = static_cast<s_elemental_data*>( bl );
 
 			getunitdata_sub(UELE_SIZE, ed->base_status.size);
 			getunitdata_sub(UELE_HP, ed->elemental.hp);
@@ -19336,7 +19334,7 @@ BUILDIN_FUNC(getunitdata)
 			} break;
 
 		case BL_NPC: {
-			npc_data* nd = reinterpret_cast<npc_data*>( bl );
+			npc_data* nd = static_cast<npc_data*>( bl );
 
 			getunitdata_sub(UNPC_LEVEL, nd->level);
 			getunitdata_sub(UNPC_HP, nd->status.hp);
@@ -19420,7 +19418,7 @@ BUILDIN_FUNC(setunitdata)
 
 	switch (bl->type) {
 	case BL_MOB: {
-		mob_data* md = reinterpret_cast<mob_data*>( bl );
+		mob_data* md = static_cast<mob_data*>( bl );
 
 		if (!md->base_status) {
 			md->base_status = (struct status_data*)aCalloc(1, sizeof(struct status_data));
@@ -19541,7 +19539,7 @@ BUILDIN_FUNC(setunitdata)
 		} break;
 
 	case BL_HOM: {
-		homun_data* hd = reinterpret_cast<homun_data*>( bl );
+		homun_data* hd = static_cast<homun_data*>( bl );
 
 		switch (type) {
 			case UHOM_SIZE: hd->battle_status.size = hd->base_status.size = (unsigned char)value; break;
@@ -19609,7 +19607,7 @@ BUILDIN_FUNC(setunitdata)
 		} break;
 
 	case BL_PET: {
-		pet_data* pd = reinterpret_cast<pet_data*>( bl );
+		pet_data* pd = static_cast<pet_data*>( bl );
 
 		switch (type) {
 			case UPET_SIZE: pd->status.size = (unsigned char)value; break;
@@ -19660,7 +19658,7 @@ BUILDIN_FUNC(setunitdata)
 		} break;
 
 	case BL_MER: {
-		s_mercenary_data* mc = reinterpret_cast<s_mercenary_data*>( bl );
+		s_mercenary_data* mc = static_cast<s_mercenary_data*>( bl );
 
 		switch (type) {
 			case UMER_SIZE: mc->battle_status.size = mc->base_status.size = (unsigned char)value; break;
@@ -19728,7 +19726,7 @@ BUILDIN_FUNC(setunitdata)
 		} break;
 
 	case BL_ELEM: {
-		s_elemental_data* ed = reinterpret_cast<s_elemental_data*>( bl );
+		s_elemental_data* ed = static_cast<s_elemental_data*>( bl );
 
 		switch (type) {
 			case UELE_SIZE: ed->battle_status.size = ed->base_status.size = (unsigned char)value; break;
@@ -19796,7 +19794,7 @@ BUILDIN_FUNC(setunitdata)
 		} break;
 
 	case BL_NPC: {
-		npc_data* nd = reinterpret_cast<npc_data*>( bl );
+		npc_data* nd = static_cast<npc_data*>( bl );
 
 		if( nd->status.hp == 0 ){
 			status_calc_npc( nd, SCO_FIRST );
@@ -20442,7 +20440,7 @@ BUILDIN_FUNC(awake)
 {
 	DBIterator *iter;
 	struct script_state *tst;
-	struct npc_data* nd;
+	npc_data* nd;
 
 	if ((nd = npc_name2id(script_getstr(st, 2))) == nullptr) {
 		ShowError("buildin_awake: NPC \"%s\" not found\n", script_getstr(st, 2));
@@ -20489,7 +20487,7 @@ BUILDIN_FUNC(getvariableofnpc)
 {
 	struct script_data* data;
 	const char* name;
-	struct npc_data* nd;
+	npc_data* nd;
 
 	data = script_getdata(st,2);
 	if( !data_isreference(data) )
@@ -21179,7 +21177,7 @@ BUILDIN_FUNC(showevent)
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	struct npc_data *nd = map_id2nd(st->oid);
+	npc_data *nd = map_id2nd(st->oid);
 
 	if (!nd)
 		return SCRIPT_CMD_SUCCESS;
@@ -21215,8 +21213,8 @@ BUILDIN_FUNC(showevent)
  *------------------------------------------*/
 BUILDIN_FUNC(waitingroom2bg)
 {
-	struct npc_data *nd;
-	struct chat_data *cd;
+	npc_data *nd;
+	chat_data *cd;
 	const char *map_name;
 	int32 mapindex = 0, bg_id;
 	unsigned char i,c=0;
@@ -21225,9 +21223,9 @@ BUILDIN_FUNC(waitingroom2bg)
 	if( script_hasdata(st,7) )
 		nd = npc_name2id(script_getstr(st,7));
 	else
-		nd = (struct npc_data *)map_id2bl(st->oid);
+		nd = (npc_data *)map_id2bl(st->oid);
 
-	if( nd == nullptr || (cd = (struct chat_data *)map_id2bl(nd->chat_id)) == nullptr )
+	if( nd == nullptr || (cd = (chat_data *)map_id2bl(nd->chat_id)) == nullptr )
 	{
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
@@ -21275,8 +21273,8 @@ BUILDIN_FUNC(waitingroom2bg)
 BUILDIN_FUNC(waitingroom2bg_single)
 {
 	const char* map_name;
-	struct npc_data *nd;
-	struct chat_data *cd;
+	npc_data *nd;
+	chat_data *cd;
 	map_session_data *sd;
 	int32 x, y, mapindex, bg_id = script_getnum(st,2);
 	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
@@ -21307,7 +21305,7 @@ BUILDIN_FUNC(waitingroom2bg_single)
 
 	nd = npc_name2id(script_getstr(st,6));
 
-	if( nd == nullptr || (cd = (struct chat_data *)map_id2bl(nd->chat_id)) == nullptr || cd->users <= 0 )
+	if( nd == nullptr || (cd = (chat_data *)map_id2bl(nd->chat_id)) == nullptr || cd->users <= 0 )
 		return SCRIPT_CMD_SUCCESS;
 
 	if( (sd = cd->usersd[0]) == nullptr )
@@ -21452,7 +21450,7 @@ BUILDIN_FUNC(bg_monster)
 
 BUILDIN_FUNC(bg_monster_set_team)
 {
-	struct mob_data *md;
+	mob_data *md;
 	struct block_list *mbl;
 	int32 id = script_getnum(st,2),
 		bg_id = script_getnum(st,3);
@@ -21657,7 +21655,7 @@ int32 script_instancegetid(struct script_state* st, e_instance_mode mode)
 	int32 instance_id = 0;
 
 	if (mode == IM_NONE) {
-		struct npc_data *nd = map_id2nd(st->oid);
+		npc_data *nd = map_id2nd(st->oid);
 
 		if (nd && nd->instance_id > 0)
 			instance_id = nd->instance_id;
@@ -21815,7 +21813,7 @@ BUILDIN_FUNC(instance_npcname)
 {
 	const char *str;
 	int32 instance_id;
-	struct npc_data *nd;
+	npc_data *nd;
 
 	str = script_getstr(st,2);
 	if( script_hasdata(st,3) )
@@ -22451,7 +22449,7 @@ static int32 buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
  *------------------------------------------*/
 BUILDIN_FUNC(areamobuseskill)
 {
-	struct block_list center;
+	struct block_list center{BL_NUL};
 	int16 m;
 
 	if( (m = map_mapname2mapid(script_getstr(st,2))) < 0 ) {
@@ -22550,7 +22548,7 @@ BUILDIN_FUNC(progressbar)
  */
 BUILDIN_FUNC(progressbar_npc){
 	map_session_data *sd = map_id2sd(st->rid);
-	struct npc_data* nd = nullptr;
+	npc_data* nd = nullptr;
 
 	if( script_hasdata(st, 4) ){
 		const char* name = script_getstr(st, 4);
@@ -23294,7 +23292,7 @@ BUILDIN_FUNC(npcskill)
 	uint16 skill_level;
 	uint32 stat_point;
 	uint32 npc_level;
-	struct npc_data *nd;
+	npc_data *nd;
 	map_session_data *sd;
 
 	if( !script_rid2sd(sd) )
@@ -23318,7 +23316,7 @@ BUILDIN_FUNC(npcskill)
 	skill_level	= script_getnum(st, 3);
 	stat_point	= script_getnum(st, 4);
 	npc_level	= script_getnum(st, 5);
-	nd			= (struct npc_data *)map_id2bl(sd->npc_id);
+	nd			= (npc_data *)map_id2bl(sd->npc_id);
 
 	if (stat_point > battle_config.max_third_parameter) {
 		ShowError("npcskill: stat point exceeded maximum of %d.\n",battle_config.max_third_parameter );
@@ -24214,7 +24212,7 @@ BUILDIN_FUNC(mergeitem2) {
  **/
 BUILDIN_FUNC(npcshopupdate) {
 	const char* npcname = script_getstr(st, 2);
-	struct npc_data* nd = npc_name2id(npcname);
+	npc_data* nd = npc_name2id(npcname);
 	t_itemid nameid = script_getnum(st, 3);
 	int32 price = script_getnum(st, 4);
 #if PACKETVER >= 20131223
@@ -25626,7 +25624,7 @@ BUILDIN_FUNC(channel_delete) {
 
 BUILDIN_FUNC(unloadnpc) {
 	const char *name;
-	struct npc_data* nd;
+	npc_data* nd;
 
 	name = script_getstr(st, 2);
 	nd = npc_name2id(name);
@@ -25763,7 +25761,7 @@ BUILDIN_FUNC(duplicate)
  */
 BUILDIN_FUNC(duplicate_dynamic){
 	const char* old_npcname = script_getstr( st, 2 );
-	struct npc_data* nd = npc_name2id( old_npcname );
+	npc_data* nd = npc_name2id( old_npcname );
 
 	if( nd == nullptr ){
 		ShowError( "buildin_duplicate_dynamic: No such NPC '%s'.\n", old_npcname );
@@ -25778,7 +25776,7 @@ BUILDIN_FUNC(duplicate_dynamic){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct npc_data* dnd = npc_duplicate_npc_for_player( *nd, *sd );
+	npc_data* dnd = npc_duplicate_npc_for_player( *nd, *sd );
 
 	if( dnd == nullptr ){
 		script_pushstrcopy( st, "" );
@@ -26833,7 +26831,7 @@ BUILDIN_FUNC(mob_setidleevent){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct mob_data* md = (struct mob_data*)bl;
+	mob_data* md = (mob_data*)bl;
 	if (md == nullptr)
 		return SCRIPT_CMD_FAILURE;
 
