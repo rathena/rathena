@@ -21401,7 +21401,7 @@ void clif_hat_effects( block_list& src, block_list& bl, enum send_target target 
 		return;
 	}
 
-	if( ud->hatEffects.empty() || map_getmapdata(src.m)->getMapFlag(MF_NOCOSTUME) ){
+	if( ud->hatEffects.empty() || map_getmapdata(bl.m)->getMapFlag(MF_NOCOSTUME) ){
 		return;
 	}
 
