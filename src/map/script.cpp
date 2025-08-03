@@ -24757,31 +24757,46 @@ BUILDIN_FUNC(recalculatestat) {
 
 BUILDIN_FUNC(hateffect){
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	block_list* bl;
+
+	if( !script_rid2bl( 4, bl ) )
+		return SCRIPT_CMD_FAILURE;
+
 	int16 effectID = script_getnum(st,2);
 	bool enable = script_getnum(st,3) ? true : false;
 
-	// This is unecessary and annoying half the time
-	//if( effectID <= HAT_EF_MIN || effectID >= HAT_EF_MAX ){
-	//	ShowError( "buildin_hateffect: unsupported hat effect id %d\n", effectID );
-	//	return SCRIPT_CMD_FAILURE;
-	//}
-
-	struct block_list* bl;
-	bool send = true;
-
-	if (script_hasdata(st, 4)) {
-		bl = map_id2bl(script_getnum(st, 4));
+	if( effectID <= HAT_EF_MIN || effectID >= HAT_EF_MAX ){
+		ShowError( "buildin_hateffect: unsupported hat effect id %d\n", effectID );
+		return SCRIPT_CMD_FAILURE;
 	}
-	else {
-		bl = map_id2bl(st->rid);
-		map_session_data* sd = BL_CAST(BL_PC, bl);
 
-		if (sd && sd->state.connect_new) {
-			send = false;
+	unit_data* ud = unit_bl2ud( bl );
+
+	if( ud == nullptr ){
+		ShowError( "buildin_hateffect: unsupported unit type %d\n", bl->type );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	auto it = util::vector_get( ud->hatEffects, effectID );
+
+	if( enable ){
+		if( it != ud->hatEffects.end() ){
+			return SCRIPT_CMD_SUCCESS;
 		}
+
+		ud->hatEffects.push_back( effectID );
+	}else{
+		if( it == ud->hatEffects.end() ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		util::vector_erase_if_exists( ud->hatEffects, effectID );
 	}
 
-	unit_hateffect(bl, effectID, enable, send);
+	if( map_session_data* sd = BL_CAST( BL_PC, bl ); sd == nullptr || !sd->state.connect_new ){
+		clif_hat_effect_single( *bl, effectID, enable );
+	}
+
 #endif
 	return SCRIPT_CMD_SUCCESS;
 }
