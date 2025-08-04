@@ -22,19 +22,22 @@
         disablenpc instance_npcname("#edda_fence_0");
         disablenpc instance_npcname("#edda_warp_0");
         disablenpc instance_npcname("Orb#edda_fall_0");
+        disablenpc instance_npcname("#schmidt_gh_purification");
+        disablenpc instance_npcname("Oscar#gh_purification_4");
         
         for(.@i = 0; .@i < 2; .@i++)
             disablenpc instance_npcname("Heinrich#gh_fall_" + .@i);
+
         for(.@i = 0; .@i < 3; .@i++){
             disablenpc instance_npcname("Oscar#gh_fall_" + .@i);
             disablenpc instance_npcname("#gh_fall_ev_" + .@i);
         }
+
         for(.@i = 0; .@i < 4; .@i++)
             disablenpc instance_npcname("Varmundt#gh_fall_" + .@i);
       
-	    for(.@i = 0; .@i < 5; .@i++){
+	    for(.@i = 0; .@i < 5; .@i++)
             disablenpc instance_npcname("Schmidt#gh_fall_" + .@i);
-        }
 
         for(.@i = 0; .@i < 8; .@i++){
             disablenpc instance_npcname("Knight Survivor#gh_fall_" + .@i);
@@ -43,15 +46,12 @@
 
         for(.@i = 0; .@i < 16; .@i++)
             disablenpc instance_npcname("Victim#gh_fall_" + .@i);
+
         for(.@i = 0; .@i < 44; .@i++)
             disablenpc instance_npcname("#schmidt_dummy_" + .@i);
-        
+
         if(.@type$ == "Glastheim Purification")
         {	
-            disablenpc instance_npcname("Varmundt#gh_fall_3");
-            disablenpc instance_npcname("Schmidt#gh_fall_4");
-            disablenpc instance_npcname("Heinrich#gh_fall_1");
-            disablenpc instance_npcname("Oscar#gh_purification_4");
         
             set 'maid, 20392;
             set 'khalitzburg, 20388;
@@ -62,11 +62,6 @@
         } 
         else if(.@type$ == "Glastheim Purification Hard")
         {	
-            disablenpc instance_npcname("Varmundt#gh_fall_3");
-            disablenpc instance_npcname("Schmidt#gh_fall_4");
-            disablenpc instance_npcname("Heinrich#gh_fall_1");
-            disablenpc instance_npcname("Oscar#gh_purification_4");
-        
             set 'mode, 1;
             set 'maid, 20392;
             set 'khalitzburg, 20389;
@@ -74,26 +69,31 @@
             set 'bloody, 20394;
             set 'schmidt, 20387;	
             set 'hunt, 12462;
-        } else
+        } 
+        else
         {
             enablenpc instance_npcname("#gh_fall_ev_0");
-            cloakonnpc(instance_npcname("Schmidt#gh_fall_1"));
+            enablenpc instance_npcname("Varmundt#gh_fall_0");
 
-            for(.@i = 0; .@i < 4; .@i++){
-                enablenpc instance_npcname("Varmundt#gh_fall_" + .@i);
-            }
-            for(.@i = 0; .@i < 5; .@i++){
-                enablenpc instance_npcname("Schmidt#gh_fall_" + .@i);
-            }
-            for(.@i = 0; .@i < 2; .@i++){
-                enablenpc instance_npcname("Heinrich#gh_fall_" + .@i);
-            }
+            // cloakonnpc(instance_npcname("Schmidt#gh_fall_1"));
+
+            // for(.@i = 0; .@i < 4; .@i++){
+            //     enablenpc instance_npcname("Varmundt#gh_fall_" + .@i);
+            // }
+            // for(.@i = 0; .@i < 5; .@i++){
+            //     enablenpc instance_npcname("Schmidt#gh_fall_" + .@i);
+            // }
+            // for(.@i = 0; .@i < 2; .@i++){
+            //     enablenpc instance_npcname("Heinrich#gh_fall_" + .@i);
+            // }
+            // for(.@i = 0; .@i < 3; .@i++){
+            //     enablenpc instance_npcname("Oscar#gh_fall_" + .@i);
+            // }
+            
             for(.@i = 0; .@i < 6; .@i++){
                 enablenpc instance_npcname("#gh_fall_guard_" + .@i);
             }
-            for(.@i = 0; .@i < 3; .@i++){
-                enablenpc instance_npcname("Oscar#gh_fall_" + .@i);
-            }
+
             for(.@i = 0; .@i < 44; .@i++){
                 enablenpc instance_npcname("#schmidt_dummy_" + .@i);
                 cloakonnpc(instance_npcname("#schmidt_dummy_" + .@i));
@@ -120,6 +120,33 @@
             specialeffect EF_WHITEBODY,AREA,instance_npcname("Varmundt#gh_fall_0");
         }
     end;
+}
+
+1@gl_prq,299,25,0	script	Schmidt#gh_fall_0	4_ED_SCHMIDT,{
+	cutin "schmidt02",0;
+	mes "[ Schmidt ]";
+	mes "I'm talking to the sage. Please wait a moment...";
+		
+		// TODO: fixme
+		next;
+		set 'map$, instance_mapname("1@gl_prq",instance_id(IM_PARTY));
+
+		enablenpc instance_npcname("#gh_fall_ev_2");
+		enablenpc instance_npcname("Orb#edda_fall_0");
+		enablenpc instance_npcname("Varmundt#gh_fall_2");
+        
+	    for(.@i = 0; .@i < 5; .@i++)
+            disablenpc instance_npcname("Schmidt#gh_fall_" + .@i);
+
+		set 'gh_fall, 14;
+		instance_warpall 'map$,52,275,instance_id();
+
+        // enablenpc instance_npcname("#edda_fence_0");
+        // set 'gh_fall, 6;
+        // set 'survivor, 10;
+        // instance_warpall 'map$,284,215,instance_id();
+
+	close3;
 }
 
 1@gl_prq,299,30,4	script	Varmundt#gh_fall_0	4_M_BARMUND,5,4,{
@@ -237,23 +264,6 @@
             npctalk "Stop right there, Schmidt. This is not a place for you to simply jump in at any moment.";	
         }
     end;
-}
-
-1@gl_prq,299,25,0	script	Schmidt#gh_fall_0	4_ED_SCHMIDT,{
-	cutin "schmidt02",0;
-	mes "[ Schmidt ]";
-	mes "I'm talking to the sage. Please wait a moment...";
-		
-		// // TODO: fixme
-		// next;
-		// set 'map$, instance_mapname("1@gl_prq",instance_id(IM_PARTY));
-		// enablenpc instance_npcname("#gh_fall_ev_2");
-		// enablenpc instance_npcname("Orb#edda_fall_0");
-		// enablenpc instance_npcname("Varmundt#gh_fall_2");
-		// set 'gh_fall, 14;
-		// instance_warpall 'map$,52,275,instance_id();
-
-	close3;
 }
 
 1@gl_prq,280,32,3	script	Oscar#gh_fall_0	4_ED_OSCAR,3,3,{
@@ -496,6 +506,7 @@
 			mes "Adventurer. There seems to be more survivors nearby. Shouldn't we find them first?";
 			close3;
 		}
+
 		cutin "schmidt02",2;
 		mes "[ Schmidt ]";
 		mes "The door is already worn out, so we'd better just break it down. Stand back a little, I'll take care of it.";
@@ -505,7 +516,8 @@
 		specialeffect EF_LORD;
 		sleep2 3000;
 		disablenpc instance_npcname(strnpcinfo(0));
-		enablenpc instance_npcname("#edda_warp_0");
+		enablenpc instance_npcname("#edda_warp_0");    
+        enablenpc instance_npcname("Schmidt#gh_fall_2");
 	}
 	end;
 }
@@ -534,6 +546,7 @@
 		cutin "",255;
 		set 'gh_fall, 9;
 		disablenpc instance_npcname(strnpcinfo(0));
+        enablenpc instance_npcname("Schmidt#gh_fall_3");
 		end;
 	}
 	end;
@@ -610,10 +623,10 @@
 	
     OnTouch:
         if('gh_fall == 9){
-            for(.@i = 0; .@i < 6; .@i++)
+            for(.@i = 0; .@i < 6; .@i++){
                 enablenpc instance_npcname("#gh_fall_guard_" + .@i);
+            }
             enablenpc instance_npcname("Heinrich#gh_fall_0");
-            enablenpc instance_npcname("Schmidt#gh_fall_3");
             set 'gh_fall, 10;
             npctalk "Schmidt : Heinrich!",instance_npcname("Schmidt#gh_fall_3");
         }
@@ -1729,6 +1742,7 @@
         if('phase_four >= 15){ // 15
             killmonster 'map$,.@event$;
             enablenpc instance_npcname("Oscar#gh_purification_3");
+            enablenpc instance_npcname("#schmidt_gh_purification");
             mapannounce 'map$,"Oscar : That was the last room. Let's go see if King Schmidt's spirit is still roaming around.",bc_map,0xFF66FF;
             sleep 3000;
             warpparty 'map$,52,244,'party_id;
