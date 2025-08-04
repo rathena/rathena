@@ -1,0 +1,685 @@
+//===== Crazyarashi Services =====================================|
+//= Edda Glastheim                                               =|
+//===== By: ======================================================|
+//= 1.0 crazyarashi                                              =|
+//= 2.0 EnemyArea                                                =|
+//===== Current Version: =========================================|
+//= 1.0 Initial Version                                          =|
+//= 2.0 Updated and bug-fixes                                    =|
+//================================================================|
+
+glast_01,244,290,0	script	#gh_fall_ev_00	HIDDEN_WARP_NPC,3,3,{
+	end;
+	
+	OnTouch:
+		if(BaseLevel >= 130){
+			cloakoffnpc "Oscar#gh_fall", getcharid(0);
+			if(isbegin_quest(12458) == 2){
+				cloakoffnpc "OSC1198#edda_fogh",getcharid(0);
+				cloakoffnpc "OSC1127#edda_fogh",getcharid(0);
+				cloakoffnpc "OSC1052#edda_fogh",getcharid(0);
+				specialeffect EF_YELLOBODY,AREA,"OSC1198#edda_fogh";
+				specialeffect EF_YELLOBODY,AREA,"OSC1127#edda_fogh";
+				specialeffect EF_YELLOBODY,AREA,"OSC1052#edda_fogh";
+				specialeffect EF_WHITEBODY,AREA,"OSC1198#edda_fogh";
+				specialeffect EF_WHITEBODY,AREA,"OSC1127#edda_fogh";
+				specialeffect EF_WHITEBODY,AREA,"OSC1052#edda_fogh";
+			}
+		}
+	end;
+}
+
+glast_01,241,290,5	script	Oscar#gh_fall	4_ED_OSCAR,{
+	if(isbegin_quest(12457) == 0){
+		cutin "oscar02",2;
+		mes "[ Oscar ]";
+		mes "Oh! You can see me?";
+		emotion ET_BIGTHROB;
+		next;
+		select("Yes, you look normal.");
+		cutin "oscar01",2;
+		mes "[ Oscar ]";
+		mes "Huh, how many times have you been in and out of the dimensional gap?";
+		next;
+		mes "[ Oscar ]";
+		mes "Hehehe~";
+		mes "Oh! Really! You see, I can smell people who had been into other dimensions.";
+		next;
+		select("I think you're smelling yourself.");
+		cutin "oscar02",2;
+		mes "[ Oscar ]";
+		mes "It's definitely you. The people in the dimensional gap have no smell.";
+		next;
+		select("Who are you?");
+		cutin "oscar01",2;
+		mes "[ Oscar ]";
+		mes "You can call me ^0000CDOscar^000000.";
+		mes "It's a hobby of mine to collect records from people that had been in and out of the dimensional gap.";
+		next;
+		mes "[ Oscar ]";
+		mes "I was visiting my favorite time and space, I was about to leave but I was quite surprised to see you stare at me.";
+		next;
+		select("Sorry if I interrupted you.:I'm busy.");
+		mes "[ Oscar ]";
+		mes "Wait. How many times did you travel? Do you have a lot of experience? Where is the most impressive dimensional gap you've been to?";
+		next;
+		select("Please ask one question at a time.");
+		cutin "oscar05",2;
+		mes "[ Oscar ]";
+		mes "Ah... I'm sorry. It's the first time I've met someone else with dimensional travel experience other than myself.";
+		next;
+		mes "[ Oscar ]";
+		mes "I often speak with wise men like Varmundt, but even if I try to speak to him about this stuff...";
+		next;
+		select("Does Varmundt give you a hard time?");
+		cutin "oscar04",2;
+		mes "[ Oscar ]";
+		mes "Yes, I try not to get too involve.";
+		mes "I want to stay polite. I haven't talked to him much about dimensional travels.";
+		next;
+		cutin "",255;
+		mes "[ "+strcharinfo(0)+" ]";
+		mes "I don't know you well, but I know one thing for sure. You sure make some funny jokes.";
+		next;
+		cutin "oscar01",2;
+		mes "[ Oscar ]";
+		mes "That's quite normal though. It's no wonder that sages are shy when they're 500 year old.";
+		next;
+		select("Wait, what did you just say?");
+		cutin "oscar02",2;
+		mes "[ Oscar ]";
+		mes "What? That sages are very shy...?";
+		next;
+		select("No, not that...");
+		select("What about the rest?");
+		mes "[ Oscar ]";
+		mes "My thoughts are quite complex and hard to follow sometimes. Is it hot? I thought it was cold.";
+		next;
+		select("500 years old...");
+		mes "[ Oscar ]";
+		mes "Yes. Why are you suddenly like that?";
+		next;
+		select("Are you making fun of me?");
+		cutin "oscar03",2;
+		mes "[ Oscar ]";
+		mes "Yeah, I always do that! I was about to observe time and space. Wait?! Why are you lying on the floor?!";
+		next;
+		select("Can you introduce yourself again?");
+		cutin "oscar02",2;
+		mes "[ Oscar ]";
+		mes "Ah, you're an adventurer!";
+		mes strcharinfo(0) + ". Now get up, it's time to go to my favorite time and space.";
+		next;
+		mes "[ Oscar ]";
+		mes "Do you want to visit a dimensional gap you've never seen before?";
+		next;
+		select("Please show me, I'd be honored.");
+		cutin "oscar01",2;
+		mes "[ Oscar ]";
+		mes "Good. I'm going to see the Fall of Glast Heim. I'm glad that you decided to go along with me.";
+		next;
+		select("Agree with him.");
+		mes "[ Oscar ]";
+		mes "I knew you'd be happy. Then get ready and help me open the dimensional gap.";
+		setquest 12457;
+		close3;
+	}
+	
+	if(isbegin_quest(12457) == 1){
+		.@md_name$ = "Glastheim Fall";
+		.@party_id = getcharid(1);
+		getpartymember .@party_id,3;
+		if(!.@party_id || $@partymembercount != 1 || is_party_leader() == false){
+			cutin "oscar01",2;
+			mes "[ Oscar ]";
+			mes "I can only activate it for you adventurer. Please create a party of your own and talk to me again.";
+			close3;
+		}
+		cutin "oscar01",2;
+		mes "[ Oscar ]";
+		mes "Are you mentally ready? Focus your energy on my hand to follow me.";
+		emotion ET_BIGTHROB;
+		next;
+		.@s = select(((instance_id(IM_PARTY))?"":"Create a Dimensional Gap."),((instance_id(IM_PARTY))?"Enter the Dimensional Gap.":""));
+		switch(.@s){
+			case 1:
+				switch(instance_create(.@md_name$)){
+					case -1:
+						mes "[ Oscar ]";
+						mes "Unknown Error Has Occurred.";
+						close3;
+						
+					case -2:
+						mes "[ Oscar ]";
+						mes "I can only activate it for you adventurer. Please create a party of your own and talk to me again.";
+						close3;
+						
+					case -3:
+						mes "[ Oscar ]";
+						mes "Oh, it seems you still have an active dimensional gap.";
+						mes "Let's wait for it to fade away.";
+						close3;
+						
+					case -4:
+						mes "[ Oscar ]";
+						mes "Instance reservation is full at the moment. Try again later.";
+						close3;
+						
+					default:
+						mes "[ Oscar ]";
+						mes "We succesfully created the dimensional gap. Talk to me again to enter the dimensional gap.";
+						close3;
+				}
+				
+			case 2:
+				switch(instance_enter(.@md_name$)){
+					case IE_OTHER:
+						mes "An unknown error has occurred.";
+						end;
+						
+					case IE_NOINSTANCE:
+						mes "^ff0000Character doesn't have an instance reserved.^000000";
+						end;
+						
+					case IE_NOMEMBER:	
+						mes "Only registered members can enter the " + .@md_name$ + " instance.";
+						end;
+						
+					case IE_OK:
+						mapannounce "glast_01", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
+						end;
+				}			
+		}
+	}
+	
+	if(isbegin_quest(12458) == 0){
+		cutin "oscar05",2;
+		mes "[ Oscar ]";
+		mes "Unfortunately, there was no way to stop Schmidt from being swallowed by the orb.";
+		next;
+		select("Was the orb destroyed?");
+		mes "[ Oscar ]";
+		mes "Yes. After the incident, the orb was definitely stopped and there was no more sinister energy that drains the energy of the living. That's the good thing.";
+		next;
+		cutin "oscar04",2;
+		mes "[ Oscar ]";
+		mes "But stopping the orb's energy didn't stop the energy of death that covered the area.";
+		next;
+		cutin "oscar05",2;
+		mes "[ Oscar ]";
+		mes "Schmidt's memory fragment started to appear here and there.";
+		next;
+		select("So what happened to Schmidt...");
+		cutin "oscar04",2;
+		mes "[ Oscar ]";
+		mes "I looked at whether or not Schmidt's soul remained inside the orb, I couldn't find his soul, perhap he entirely disappeared.";
+		next;
+		mes "[ Oscar ]";
+		mes "However, Schmidt's commitment and beliefs were transformed into a political weakness for other rules of Midgard.";
+		next;
+		select("Why political...");
+		cutin "oscar05",2;
+		mes "[ Oscar ]";
+		mes "The rumors spread very fast, the act of throwing your own body to save the lives of others turned into the fall of the king into madness.";
+		next;
+		mes "[ Oscar ]";
+		mes "In the records, King Schmidt is mentioned as a king who became crazy and greedy for wealth.";
+		next;
+		cutin "oscar04",2;
+		mes "[ Oscar ]";
+		mes "I guess the real soul of Schmidt is alive somewhere. In my dimensional journeys, King Schmidt's thoughts fell ten of thousands of times.";
+		next;
+		mes "[ Oscar ]";
+		mes "Collecting and exploring the traces from the corpses might someday reveal what truly happened to King Schmidt's soul...";
+		next;
+		select("Why do you go so far?");
+		cutin "oscar01",2;
+		mes "[ Oscar ]";
+		mes "First of all, I want you to know this, but I don't cherish life and its preciousness the same way as other sages.";
+		next;
+		mes "[ Oscar ]";
+		mes "I don't want to believe that sacrificing yourself is a noble action.";
+		next;
+		mes "[ Oscar ]";
+		mes "I, Oscar, who controls the time and records. My mission is to go into different time and space.";
+		next;
+		select("Can I help in anyway?");
+		cutin "oscar02",2;
+		mes "[ Oscar ]";
+		mes "Hmm... Maybe there's something you can be of help with.";
+		next;
+		cutin "oscar01",2;
+		mes "[ Oscar ]";
+		mes "We can purify Schmidt's beliefs by collecting crystal and the debris. Of course, I'm collecting them by myself, but the more the better.";
+		next;
+		mes "[ Oscar ]";
+		mes "Ah. Let me introduce you to these machines in front of me. Putting the right crystals in them will reflect my will so you can trade them for enchants and other stuffs.";
+		next;
+		cloakoffnpc("OSC1198#edda_fogh",getcharid(0));
+		cloakoffnpc("OSC1127#edda_fogh",getcharid(0));
+		cloakoffnpc("OSC1052#edda_fogh",getcharid(0));
+		select("I don't know how to do that.");
+		cutin "oscar03",2;
+		mes "[ Oscar ]";
+		mes "It's called the sage's power. In any case, speak to me whenever you want. I'll open the dimension to purify his soul.";
+		setquest 12458;
+		completequest 12458;
+		close3;
+	}
+
+	cutin "oscar03",2;
+	mes "[ Oscar ]";
+	mes "Is your mind all set? Then, please put your hand on my hand and concentrate.";
+	next;
+	
+	if(checkquest(12460,PLAYTIME) > -1)
+	{
+		erasequest 12460;
+	}
+	
+	.@normal = true;
+
+	if(checkquest(12461,PLAYTIME) > -1)
+	{
+		erasequest 12461;
+	}
+
+	.@hard = true;
+
+	if(.@normal == false && .@hard == false){
+		cutin "oscar03",2;
+		mes "[ Oscar ]";
+		mes "^0000CDWe've purified enough for today.^000000 You need to rest up your body to do another dimensional travel. Come back again at dawn, adventurer.";
+		close3;	
+	}
+	switch(select("Enter",((is_party_leader() == true && .@normal == true)?"Create Glastheim Purification":""),
+		((is_party_leader() == true && BaseLevel >= 180 && .@hard == true)?"Create Glastheim Purification Hard":""))){
+		case 1:
+			if(select("Purification of Glastheim",((BaseLevel >= 180)?"^CC0000Purification of Glastheim Hard^000000":"")) == 1){
+				.@md_name$ = "Glastheim Purification";
+				.@cooldown = 12460;
+				.@hunt = 12459;
+				.@check = .@normal;
+			} else {
+				.@md_name$ = "Glastheim Purification Hard";
+				.@cooldown = 12461;
+				.@hunt = 12462;
+				.@check = .@hard;
+			}
+			if(!.@check){
+				cutin "oscar03",2;
+				mes "[ Oscar ]";
+				mes "^0000CDWe've purified enough for today.^000000 You need to rest up your body to do another dimensional travel. Come back again at dawn, adventurer.";
+				close3;
+			}
+			switch(instance_enter(.@md_name$)){
+				case IE_OTHER:
+					mes "An unknown error has occurred.";
+					close3;
+					
+				case IE_NOINSTANCE:
+					mes "^ff0000Character doesn't have an instance reserved.^000000";
+					close3;
+					
+				case IE_NOMEMBER:	
+					mes "Only registered members can enter the " + .@md_name$ + " instance.";
+					close3;
+					
+				case IE_OK:
+					mapannounce "glast_01", strcharinfo(0) + " of the party, "+ .@party_name$ +", is entering the " + .@md_name$ + ".", bc_map, "0x00FF99";
+					if(isbegin_quest(.@hunt))
+						erasequest .@hunt;
+					setquest .@hunt;
+					setquest .@cooldown;
+					end;
+			}	
+			
+		case 2:
+			.@party_id = getcharid(1);
+			if(!.@party_id){
+				mes "[ Oscar ]";
+				mes "I can only activate it for you adventurer. Please create a party of your own and talk to me again.";
+				close3;
+			}
+
+			.@md_name$ = "Glastheim Purification";
+
+			if (instance_create(.@md_name$) < 0) {
+				mes "Party Name: "+ getpartyname(.@party_id);
+				mes "Party Leader: "+strcharinfo(0);
+				mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+				close;
+			}
+
+			mes "[ Oscar ]";
+			mes "We succesfully created the dimensional gap. Talk to me again to enter the dimensional gap.";
+			close3;
+			
+		case 3:
+			.@party_id = getcharid(1);
+			if(!.@party_id){
+				mes "[ Oscar ]";
+				mes "I can only activate it for you adventurer. Please create a party of your own and talk to me again.";
+				close3;
+			}
+
+			.@md_name$ = "Glastheim Purification Hard";
+			
+			if (instance_create(.@md_name$) < 0) {
+				mes "Party Name: "+ getpartyname(.@party_id);
+				mes "Party Leader: "+strcharinfo(0);
+				mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+				close;
+			}
+
+			mes "[ Oscar ]";
+			mes "We succesfully created the dimensional gap. Talk to me again to enter the dimensional gap.";
+			close3;	
+	}
+
+	OnInit:
+		cloakonnpc(strnpcinfo(0));
+	end;
+}
+
+glast_01,241,296,5	script	OSC1198#edda_fogh	2_DROP_MACHINE,{
+	disable_items;
+	mes "[ OSC1198 ]";
+	mes "I can dismantle your unnecessary Glastheim's Fall artifact and partially return it as materials.";
+	next;
+	switch(select("Cancel:Armor:Garment:Left Accessory")){
+		case 1:
+			mes "[ OSC1198 ]";
+			mes "Wise decision. Think about it carefully.";
+			end;
+			
+		case 2:
+			.@slot = EQI_ARMOR;
+			.@equip_id = getequipid(.@slot);
+			.@bool = inarray(.equip_id,.@equip_id);
+			break;
+			
+		case 3:
+			.@slot = EQI_GARMENT;
+			.@equip_id = getequipid(.@slot);
+			.@bool = inarray(.equip_id,.@equip_id);
+			break;
+			
+		case 4:
+			.@slot = EQI_ACC_L;
+			.@equip_id = getequipid(.@slot);
+			.@bool = inarray(.insignia,.@equip_id);
+			.@stone = 25740;
+			break;
+	}
+	if(.@bool == -1){
+		mes "[ OSC1198 ]";
+		mes "Did you remove the equipment?";
+		end;
+	}
+	for(.@i = 0; .@i < 4; .@i++){
+		.@card[.@i] = getequipcardid(.@slot,.@i);
+		.@check[.@i] = .@card[.@i];
+	}
+	.@refine = getequiprefinerycnt(.@slot);
+	.@enchant_count = ((.@card[1] > 0 ? 3 : (.@card[2] > 0 ? 2 : (.@card[3] > 0 ? 1 : 0))));
+	if(!.@stone)
+		.@stone = 25739;	
+	switch(.@enchant_count){
+		case 0:
+			mes "[ OSC1198 ]";
+			mes "Your equipment must atleast have one enchant to get a partial refund.";
+			end;
+			
+		case 1:
+			if(.@stone == 25739){
+				.@min = 3;
+				.@max = 6;
+			} else {
+				.@min = 2;
+				.@max = 6;
+			}
+			break;
+			
+		case 2:
+			if(.@stone == 25739){
+				.@min = 6;
+				.@max = 10;
+			} else {
+				.@min = 4;
+				.@max = 12;
+			}
+			break;
+			
+		case 3:
+			if(.@stone == 25739){
+				.@min = 9;
+				.@max = 15;
+			} else {
+				.@min = 6;
+				.@max = 18;
+			}
+			break;					
+	}
+	mes "[ OSC1198 ]";
+	mes "Are you sure you want to dismantle the ^CC0000" + getitemname(.@equip_id) + "^000000 that you currently have equipped?";
+	next;
+	if(select("No.:Please stop!:Yes, I'm sure.") < 3){
+		mes "[ OSC1198 ]";
+		mes "Wise decision. Think about it carefully.";
+		end;
+	}
+	if(callfunc("F_IsEquipIDHack", .@slot, .@equip_id) || callfunc("F_IsEquipRefineHack", .@slot, .@refine) || callfunc("F_IsEquipCardHack", .@slot, .@check[0], .@check[1], .@check[2], .@check[3]))
+		end;
+	mes "[ OSC1198 ]";
+	mes "Dismantling the equipment...";
+	progressbar_npc "00FF00",2;
+	delequip .@slot;
+	mes "Your equipment has been succesfully processed.";
+	getitem .@stone,rand(.@min,.@max);
+	if(rand(1,100) <= .chance){
+		next;
+		.@costume_id = .drooping_id[rand(getarraysize(.drooping_id))];
+		mes "[ OSC1198 ]";
+		mes "*Pi-pi-ping*";
+		mes "It's your lucky day... I have succesfully created a memento out of the equipment that you recycled.";
+		getitem .@costume_id,1;
+	}
+	end;
+		
+	OnInit:
+		cloakonnpc(strnpcinfo(0));
+		setarray .equip_id,15388,15389;
+		setarray .insignia,32228,32229,32230,32231,32232,32233;
+		setarray .drooping_id,31631,31632,31633;
+		.chance = 3; //Chance to get a drooping costume
+		setunittitle getnpcid(0),"[Dismantle Machine]";
+	end;
+}
+
+glast_01,243,296,5	script	OSC1127#edda_fogh	2_SLOT_MACHINE,{
+	disable_items;
+	mes "[ OSC1127 ]";
+	mes "If you want to strengthen your Glastheim's Fall artifacts, then you're at the correct machine. Select the artifact that you want to enchance.";
+	next;
+	switch(select("Cancel:Armor:Garment:Left Accessory")){
+		case 1:
+			mes "[ OSC1127 ]";
+			mes "Come back again when you have decided.";
+			end;
+			
+		case 2:
+			.@part = EQI_ARMOR;
+			.@equip_id = getequipid(.@part);
+			.@bool = inarray(.equip_id,.@equip_id);
+			setarray .@requirement,25739,5,6608,10;
+			
+			break;
+			
+		case 3:
+			.@part = EQI_GARMENT;
+			.@equip_id = getequipid(.@part);
+			.@bool = inarray(.equip_id,.@equip_id);
+			setarray .@requirement,25739,5,6608,10;
+			break;
+			
+		case 4:
+			.@part = EQI_ACC_L;
+			.@equip_id = getequipid(.@part);
+			.@bool = inarray(.insignia,.@equip_id);
+			setarray .@requirement,25740,10,6755,40;
+			break;
+	}
+	if(.@bool == -1){
+		mes "[ OSC1127 ]";
+		mes "Did you remove the equipment?";
+		end;
+	}
+	.@refine = getequiprefinerycnt(.@part);
+	.@equip_name$ = getitemname(.@equip_id);
+	for(.@i = 0; .@i < 4; .@i++){
+		.@card[.@i] = getequipcardid(.@part,.@i);
+		.@check[.@i] = .@card[.@i];
+	}
+	if(.@card[1] > 0){
+		mes "[ OSC1127 ]";
+		mes "Your equipment is already enchanted to the limit.";
+		end;
+	}
+	.@slot = ((.@card[3] == 0 ? 3 : (.@card[2] == 0 ? 2 : 1)));
+	switch(.@slot){
+		case 1:
+			if(.@part == EQI_ARMOR)
+				setarray .@enchant_list,4702,4712,4722,4732,4742,4752,29302,29303,29304,29305,29306,29307,29308,29309;
+			else if(.@part == EQI_GARMENT)
+				setarray .@enchant_list,4808,4820,4821,4813,4812,4826,4817,4816,4843,4834,4835,4836,4863,4864,4865;
+			else {
+				setarray .@enchant_list,29587,29588,29589,29590,29591,29592;
+			}
+			.@word$ = "Final";
+			break;
+			
+		case 2:
+			if(.@part == EQI_ARMOR)
+				setarray .@enchant_list,4702,4703,4704,4712,4713,4714,4722,4723,4724,4732,4733,4734,4742,4743,4744,4752,4753,4754;
+			else if(.@part == EQI_GARMENT)
+				setarray .@enchant_list,4808,4820,4821,4813,4812,4826,4817,4816,4843,4834,4835,4836,4863,4864,4865;
+			else
+				setarray .@enchant_list,4821,4822,4812,4826,4843,4844,4835,4836,4864,4865;
+			.@word$ = "Second";
+			break;
+		
+		case 3:
+			if(.@part == EQI_ARMOR)
+				setarray .@enchant_list,4702,4703,4704,4712,4713,4714,4722,4723,4724,4732,4733,4734,4742,4743,4744,4752,4753,4754;
+			else if(.@part == EQI_GARMENT)
+				setarray .@enchant_list,4808,4820,4821,4813,4812,4826,4817,4816,4843,4834,4835,4836,4863,4864,4865;
+			else
+				setarray .@enchant_list,4702,4703,4704,4712,4713,4714,4722,4723,4724,4732,4733,4734,4742,4743,4744,4752,4753,4754;
+			.@word$ = "First";
+			break;
+	}
+	mes "[ OSC1127 ]";
+	mes "^0000CD" + .@equip_name$ + "^000000";
+	mes "Slot : " + .@word$ + " Enchant";
+	mes "Requirement : ";
+	for(.@i = 0; .@i < getarraysize(.@requirement); .@i += 2){
+		mes "^0000CD" + .@requirement[.@i+1] + " " + getitemname(.@requirement[.@i]) + "^000000";
+		if(countitem(.@requirement[.@i]) < .@requirement[.@i+1])
+			.@miss++;
+	}
+	next;
+	if(select("Cancel:Proceed") == 1){
+	}
+	if(.@miss){
+		mes "[ OSC1127 ]";
+		mes "You don't have enough material to proceed with the enchant.";
+		end;
+	}
+	.@enchant = .@enchant_list[rand(getarraysize(.@enchant_list))];
+	.@card[.@slot] = .@enchant;
+	for(.@i = 0; .@i < getarraysize(.@requirement); .@i += 2)
+		delitem .@requirement[.@i],.@requirement[.@i+1];
+
+	mes "[ OSC1127 ]";
+	mes "Your equipment has been successfully enchanted.";
+	specialeffect2 EF_REPAIRWEAPON;
+	delequip .@part;
+	getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
+	end;
+		
+	OnInit:
+		setarray .equip_id,15388,15389;
+		setarray .insignia,32228,32229,32230,32231,32232,32233;
+		cloakonnpc(strnpcinfo(0));
+		setunittitle getnpcid(0),"[Enchant Machine]";
+	end;
+}
+
+glast_01,245,296,5	script	OSC1052#edda_fogh	2_VENDING_MACHINE1,{
+	mes "[ OSC1052 ]";
+	mes "You have preserved what's left of Glastheim's Fall.";
+	mes "Select the item you desire to view it's information.";
+	next;
+	switch(select("Cancel:Armor:Garment:Left Accessory")){
+		case 1:
+			mes "[ OSC1052 ]";
+			mes "Come back whenever you can. Those who jump through dimensions are always welcome.";
+			end;
+			
+		case 2:
+			.@item_id = .equip_id[0];
+			setarray .@requirement,25739,5,6607,10;
+			.@item$ = " Suit[1]";
+			break;
+			
+		case 3:
+			.@item_id = .equip_id[1];
+			setarray .@requirement,25739,5,6607,10;
+			.@item$ = " Manteau[1]";
+			break;
+			
+		case 4:
+			mes "[ OSC1052 ]";
+			mes "Select the type of accessory that you desire.";
+			next;
+			setarray .@menu$,"Power","Divine Power","Hundred Lucks","Flash","Celestial";
+			.@s = select("Power:Divine Power:Hundred Lucks:Flash:Celestial") - 1;
+			.@item_id = .insignia[.@s];
+			setarray .@requirement,25740,5,6755,5;
+			.@item$ = " " + .@menu$[.@s] + " Insignia[1]";
+			break;
+	}
+	mes "[ OSC1052 ]";
+	mes "[<ITEM>King Schmidt's" + .@item$ + "<INFO>" + .@item_id + "</INFO></ITEM>]";
+	mes "Requirement : ";
+	for(.@i = 0; .@i < getarraysize(.@requirement); .@i += 2){
+		mes "^0000CD" + .@requirement[.@i+1] + " " + getitemname(.@requirement[.@i]) + "^000000";
+		if(countitem(.@requirement[.@i]) < .@requirement[.@i+1])
+			.@miss++;
+	}
+	next;
+	if(select("Cancel:Buy Equipment") == 1){
+		mes "[ OSC1052 ]";
+		mes "Come back whenever you can. Those who jump through dimensions are always welcome.";
+		end;	
+	}
+	if(.@miss){
+		mes "[ OSC1052 ]";
+		mes "You don't have enough materials to buy this equipment.";
+		end;
+	}
+	for(.@i = 0; .@i < getarraysize(.@requirement); .@i += 2)
+		delitem .@requirement[.@i],.@requirement[.@i+1];
+	mes "[ OSC1052 ]"; 
+	mes "Here's your <ITEM>King Schmidt's" + .@item$ + "<INFO>" + .@item_id + "</INFO></ITEM>";
+	getitem .@item_id,1;
+	end;
+		
+	OnInit:
+		setarray .equip_id,15388,15389;
+		setarray .insignia,32228,32229,32230,32231,32232,32233;
+		cloakonnpc(strnpcinfo(0));
+		setunittitle getnpcid(0),"[Exchange Machine]";
+	end;
+}

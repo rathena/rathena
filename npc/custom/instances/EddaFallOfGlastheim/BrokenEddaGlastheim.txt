@@ -267,29 +267,13 @@ glast_01,241,290,5	script	Oscar#gh_fall	4_ED_OSCAR,{
 	mes "Is your mind all set? Then, please put your hand on my hand and concentrate.";
 	next;
 	switch(checkquest(12460,PLAYTIME)){
-		case -1:
-			.@normal = true;
-			break;
-			
-		case 0:
-		case 1:
-			break;
-			
-		case 2:
+		default:
 			erasequest 12460;
 			.@normal = true;
 			break;
 	}
 	switch(checkquest(12461,PLAYTIME)){
-		case -1:
-			.@hard = true;
-			break;
-			
-		case 0:
-		case 1:
-			break;
-			
-		case 2:
+		default:
 			erasequest 12461;
 			.@hard = true;
 			break;
@@ -2098,7 +2082,6 @@ end;
 
 1@gl_prq,52,270,4	script	Oscar#gh_purification_4	4_ED_OSCAR,3,3,{
 	.@var = 'hunt;
-	.@mode = 'mode;
 	cutin "oscar01",2;
 	mes "[ Oscar ]";
 	mes "Traveling to different timelines ang engaging in combat takes a lot of energy.";
@@ -2109,7 +2092,7 @@ end;
 	mes "[ Oscar ]";
 	mes "Oh, I think this dimension will start to collapse. Let's get out first.";
 	if(checkquest(.@var,HUNTING) == 2){
-		if(!.@mode)
+		if(!'mode)
 			getitem 25739,9;
 		else {
 			getitem 25739,5;
@@ -2304,13 +2287,14 @@ OnSpawn00:
 	70,59,
 	19,62,
 	31,50;
+
 	for(.@i = 0; .@i < getarraysize(.@bone_xy); .@i += 2){
 		.@bone = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
 		.@flame = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
-		getunitdata .@bone,.@mode;
-		setunitdata .@bone,UMOB_MODE,(.@mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
+		setunitdata .@bone,UMOB_MODE,(MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACKIMMUNE|MD_DETECTOR);
 		setunitdata .@flame,UMOB_DMGIMMUNE,true;
 	}
+		
 	setarray .@xy,
 	20,41,.@maid,
 	70,72,.@maid,
@@ -2372,8 +2356,8 @@ OnSpawn01:
 	for(.@i = 0; .@i < getarraysize(.@bone_xy); .@i += 2){
 		.@bone = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
 		.@flame = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
-		getunitdata .@bone,.@mode;
-		setunitdata .@bone,UMOB_MODE,(.@mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
+		getunitdata .@bone,'mode;
+		setunitdata .@bone,UMOB_MODE,('mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
 		setunitdata .@flame,UMOB_DMGIMMUNE,true;
 	}
 	setarray .@xy,
@@ -2444,8 +2428,8 @@ OnSpawn02:
 	for(.@i = 0; .@i < getarraysize(.@bone_xy); .@i += 2){
 		.@bone = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
 		.@flame = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
-		getunitdata .@bone,.@mode;
-		setunitdata .@bone,UMOB_MODE,(.@mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
+		getunitdata .@bone,'mode;
+		setunitdata .@bone,UMOB_MODE,('mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
 		setunitdata .@flame,UMOB_DMGIMMUNE,true;
 	}
 	setarray .@xy,
@@ -2521,8 +2505,8 @@ OnSpawn03:
 	for(.@i = 0; .@i < getarraysize(.@bone_xy); .@i += 2){
 		.@bone = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"Flaming Thorn",1960,1,.@event2$);
 		.@flame = monster('map$,.@bone_xy[.@i],.@bone_xy[.@i+1],"",20426,1,.@event2$);
-		getunitdata .@bone,.@mode;
-		setunitdata .@bone,UMOB_MODE,(.@mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
+		getunitdata .@bone,'mode;
+		setunitdata .@bone,UMOB_MODE,('mode[UMOB_MODE]|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_KNOCKBACK_IMMUNE|MD_DETECTOR);
 		setunitdata .@flame,UMOB_DMGIMMUNE,true;
 	}
 	setarray .@xy,
