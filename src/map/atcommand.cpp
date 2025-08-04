@@ -7051,25 +7051,62 @@ ACMD_FUNC(autoloottype)
 	}
 
 	if (action < 3) { // add or remove
-		if ((strncmp(message, "healing", 3) == 0) || (atoi(message) == 0))
-			type = IT_HEALING;
-		else if ((strncmp(message, "usable", 3) == 0) || (atoi(message) == 2))
-			type = IT_USABLE;
-		else if ((strncmp(message, "etc", 3) == 0) || (atoi(message) == 3))
-			type = IT_ETC;
-		else if ((strncmp(message, "armor", 3) == 0) || (atoi(message) == 4))
+		char* ptr = nullptr;
+		int32 val = strtol( message, &ptr, 10 );
+
+		// If there was only a number in the input and no other characters
+		if( ptr != nullptr && *ptr == '\0' ){
+			switch( val ){
+				case 0:
+					type = IT_HEALING;
+					break;
+				case 2:
+					type = IT_USABLE;
+					break;
+				case 3:
+					type = IT_ETC;
+					break;
+				case 4:
+					type = IT_ARMOR;
+					break;
+				case 5:
+					type = IT_WEAPON;
+					break;
+				case 6:
+					type = IT_CARD;
+					break;
+				case 7:
+					type = IT_PETEGG;
+					break;
+				case 8:
+					type = IT_PETARMOR;
+					break;
+				case 10:
+					type = IT_AMMO;
+					break;
+				default:
+					clif_displaymessage( fd, msg_txt( sd, 1480 ) ); // Item type not found.
+					return -1;
+			}
+		}else if( strncmp( message, "armor", 3 ) == 0 ){
 			type = IT_ARMOR;
-		else if ((strncmp(message, "weapon", 3) == 0) || (atoi(message) == 5))
-			type = IT_WEAPON;
-		else if ((strncmp(message, "card", 3) == 0) || (atoi(message) == 6))
-			type = IT_CARD;
-		else if ((strncmp(message, "petegg", 4) == 0) || (atoi(message) == 7))
-			type = IT_PETEGG;
-		else if ((strncmp(message, "petarmor", 4) == 0) || (atoi(message) == 8))
-			type = IT_PETARMOR;
-		else if ((strncmp(message, "ammo", 3) == 0) || (atoi(message) == 10))
+		}else if( strncmp( message, "ammo", 3 ) == 0 ){
 			type = IT_AMMO;
-		else {
+		}else if( strncmp( message, "card", 3 ) == 0 ){
+			type = IT_CARD;
+		}else if( strncmp( message, "etc", 3 ) == 0 ){
+			type = IT_ETC;
+		}else if( strncmp( message, "healing", 3 ) == 0 ){
+			type = IT_HEALING;
+		}else if( strncmp( message, "petegg", 4 ) == 0 ){
+			type = IT_PETEGG;
+		}else if( strncmp( message, "petarmor", 4 ) == 0 ){
+			type = IT_PETARMOR;
+		}else if( strncmp( message, "usable", 3 ) == 0 ){
+			type = IT_USABLE;
+		}else if( strncmp( message, "weapon", 3 ) == 0 ){
+			type = IT_WEAPON;
+		}else{
 			clif_displaymessage(fd, msg_txt(sd,1480)); // Item type not found.
 			return -1;
 		}
