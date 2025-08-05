@@ -5462,9 +5462,6 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 		add_timer_interval(gettick()+1000, parse_console_timer, 0, 0, 1000); //start in 1s each 1sec
 	}
 
-	// warm up factory cache
-    auto& factory = BattleSkillFactory::instance();
-
 	return true;
 }
 

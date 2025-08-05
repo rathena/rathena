@@ -1,36 +1,7 @@
-#pragma once
-
 #include "battle_skill_factory.hpp"
 #include "battle_skill_categories.hpp"
 #include "skills/battle_skills.hpp"
 #include "skill.hpp"
-
-BattleSkillFactory::BattleSkillFactory()
-{
-    registerAllSkills();
-}
-
-BattleSkillFactory &BattleSkillFactory::instance()
-{
-    static BattleSkillFactory instance;
-    return instance;
-}
-
-std::shared_ptr<BattleSkill> BattleSkillFactory::getSkill(uint16 skill_id) const
-{
-    auto it = skill_db.find(skill_id);
-    if (it != skill_db.end())
-    {
-        return it->second;
-    }
-
-    return nullptr;
-}
-
-bool BattleSkillFactory::hasSkill(uint16 skill_id) const
-{
-    return skill_db.find(skill_id) != skill_db.end();
-}
 
 void BattleSkillFactory::registerAllSkills()
 {
