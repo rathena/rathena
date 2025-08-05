@@ -14436,7 +14436,7 @@ TIMER_FUNC(status_change_timer){
 				if (sc->getSCE(SC_LONGING))
 					sp*= 3;
 #endif
-				if (!status_charge(bl, 0, sp))
+				if (!status_charge(bl, 0, sp) || status->sp == 0)
 					break;
 			}
 			sc_timer_next(1000+tick);
