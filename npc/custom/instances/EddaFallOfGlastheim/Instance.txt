@@ -51,8 +51,7 @@
             disablenpc instance_npcname("#schmidt_dummy_" + .@i);
 
         if(.@type$ == "Glastheim Purification")
-        {	
-        
+        {
             set 'maid, 20392;
             set 'khalitzburg, 20388;
             set 'knight, 20390;
@@ -73,23 +72,10 @@
         else
         {
             enablenpc instance_npcname("#gh_fall_ev_0");
+            enablenpc instance_npcname("#gh_fall_ev_1");
+            enablenpc instance_npcname("#gh_fall_ev_2");
             enablenpc instance_npcname("Varmundt#gh_fall_0");
 
-            // cloakonnpc(instance_npcname("Schmidt#gh_fall_1"));
-
-            // for(.@i = 0; .@i < 4; .@i++){
-            //     enablenpc instance_npcname("Varmundt#gh_fall_" + .@i);
-            // }
-            // for(.@i = 0; .@i < 5; .@i++){
-            //     enablenpc instance_npcname("Schmidt#gh_fall_" + .@i);
-            // }
-            // for(.@i = 0; .@i < 2; .@i++){
-            //     enablenpc instance_npcname("Heinrich#gh_fall_" + .@i);
-            // }
-            // for(.@i = 0; .@i < 3; .@i++){
-            //     enablenpc instance_npcname("Oscar#gh_fall_" + .@i);
-            // }
-            
             for(.@i = 0; .@i < 6; .@i++){
                 enablenpc instance_npcname("#gh_fall_guard_" + .@i);
             }
@@ -127,19 +113,16 @@
 	mes "[ Schmidt ]";
 	mes "I'm talking to the sage. Please wait a moment...";
 		
-		// TODO: fixme
-		next;
-		set 'map$, instance_mapname("1@gl_prq",instance_id(IM_PARTY));
+		// // TODO: fixme
+		// next;
+		// set 'map$, instance_mapname("1@gl_prq",instance_id(IM_PARTY));
 
-		enablenpc instance_npcname("#gh_fall_ev_2");
-		enablenpc instance_npcname("Orb#edda_fall_0");
-		enablenpc instance_npcname("Varmundt#gh_fall_2");
+		// enablenpc instance_npcname("#gh_fall_ev_2");
+		// enablenpc instance_npcname("Orb#edda_fall_0");
+		// enablenpc instance_npcname("Varmundt#gh_fall_2");
         
-	    for(.@i = 0; .@i < 5; .@i++)
-            disablenpc instance_npcname("Schmidt#gh_fall_" + .@i);
-
-		set 'gh_fall, 14;
-		instance_warpall 'map$,52,275,instance_id();
+		// set 'gh_fall, 14;
+		// instance_warpall 'map$,55,273,instance_id();
 
         // enablenpc instance_npcname("#edda_fence_0");
         // set 'gh_fall, 6;
@@ -315,9 +298,7 @@
 		close2;
 		cutin "",255;
 		set 'gh_fall, 4;
-		enablenpc instance_npcname("#gh_fall_ev_1");
-		enablenpc instance_npcname("#gh_fall_ev_1");	
-		cloakoffnpc instance_npcname("Schmidt#gh_fall_1");
+		
 		for(.@i = 0; .@i < 16; .@i++)
 			enablenpc instance_npcname("Victim#gh_fall_" + .@i);	
 		end;
@@ -760,16 +741,15 @@
 		mes "Good decision. Once you see it, you'll want to witness it until the end.";
 		close2;
 		cutin "",255;
-		enablenpc instance_npcname("#gh_fall_ev_2");
 		enablenpc instance_npcname("Orb#edda_fall_0");
 		enablenpc instance_npcname("Varmundt#gh_fall_2");
 		set 'gh_fall, 14;
-		instance_warpall 'map$,52,275,instance_id();
+		instance_warpall 'map$,55,273,instance_id();
 	}
 	end;
 }
 
-1@gl_prq,52,275,0	script	#gh_fall_ev_2	HIDDEN_WARP_NPC,1,1,{
+1@gl_prq,55,273,0	script	#gh_fall_ev_2	HIDDEN_WARP_NPC,1,1,{
 	end;
 	
     OnTouch:
@@ -1131,8 +1111,9 @@
         .@o$ = instance_npcname(strnpcinfo(0));
         .@h$ = instance_npcname("Heinrich#gh_fall_1");
         .@v$ = instance_npcname("Varmundt#gh_fall_2");
-        enablenpc instance_npcname("#schmidt_dummy_5");
-        specialeffect(EF_WHITEBODY, AREA, .@s$);
+        enablenpc .@s$;
+        cloakoffnpc .@s$;
+
         sleep 5500;
         specialeffect(EF_MAPCHAIN, AREA, .@o$);
         sleep 1000;
@@ -1144,7 +1125,6 @@
         sleep 5000;
         npctalk "Varmundt : Schmidt, you idiot!",.@v$;
         set 'gh_fall, 17;
-        specialeffect(EF_MARKING_USE_CHANGEMONSTER, AREA, .@v$);
     end;
 
     OnEvent02:
@@ -1221,7 +1201,8 @@
 		removespecialeffect(EF_SCREEN_QUAKE, AREA,.@o$);
 		removespecialeffect(EF_CLOUD4, AREA,.@o$);
 		removespecialeffect(EF_EVILS_PAW, AREA, .@o$);
-		
+        removespecialeffect(EF_MARKING_USE_CHANGEMONSTER, AREA, .@v$);
+
         disablenpc instance_npcname("#schmidt_dummy_5");
         disablenpc instance_npcname("Orb#edda_fall_0");
         enablenpc instance_npcname("Oscar#gh_fall_2");
@@ -1524,7 +1505,7 @@
         .@event$ = instance_npcname(strnpcinfo(0)) + "::OnMobKill00";
         
         set 'phase_one, 'phase_one + 1;
-        if('phase_one >= 20){ // TODO: 20
+        if('phase_one >= 20){
             killmonster 'map$,.@event$;
             mapannounce 'map$,"Oscar : The time flow in the first area has returned to normal. Let's go to the next area.",bc_map,0xFF66FF;
             sleep 3000;
