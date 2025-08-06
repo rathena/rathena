@@ -1290,11 +1290,11 @@ int32 chmapif_bonus_script_get(int32 fd) {
 			"SELECT `script`, `tick`, `flag`, `type`, `icon` FROM `%s` WHERE `char_id` = '%d' LIMIT %d",
 			schema_config.bonus_script_db, cid, MAX_PC_BONUS_SCRIPT) ||
 			SQL_ERROR == stmt.Execute() ||
-			SQL_ERROR == stmt.BindColumn(0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), nullptr, nullptr) ||
-			SQL_ERROR == stmt.BindColumn(1, SQLDT_INT64, &tmp_bsdata.tick, 0, nullptr, nullptr) ||
-			SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT16, &tmp_bsdata.flag, 0, nullptr, nullptr) ||
-			SQL_ERROR == stmt.BindColumn(3, SQLDT_UINT8,  &tmp_bsdata.type, 0, nullptr, nullptr) ||
-			SQL_ERROR == stmt.BindColumn(4, SQLDT_INT16,  &tmp_bsdata.icon, 0, nullptr, nullptr)
+			SQL_ERROR == stmt.BindColumn(0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str)) ||
+			SQL_ERROR == stmt.BindColumn(1, SQLDT_INT64, &tmp_bsdata.tick) ||
+			SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT16, &tmp_bsdata.flag) ||
+			SQL_ERROR == stmt.BindColumn(3, SQLDT_UINT8,  &tmp_bsdata.type) ||
+			SQL_ERROR == stmt.BindColumn(4, SQLDT_INT16,  &tmp_bsdata.icon)
 			)
 		{
 			SqlStmt_ShowDebug(stmt);
