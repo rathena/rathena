@@ -83,20 +83,6 @@ Header:
 
 Body:
   - Jobs:
-      Rune_Knight_2nd: true
-      Warlock_2nd: true
-      Ranger_2nd: true
-      ArchBishop_2nd: true
-      Mechanic_2nd: true
-      Guillotine_Cross_2nd: true
-      Royal_Guard_2nd: true
-      Sorcerer_2nd: true
-      Minstrel_2nd: true
-      Wanderer_2nd: true
-      Sura_2nd: true
-      Genetic_2nd: true
-      Shadow_Chaser_2nd: true
-  - Jobs:
       Rune_Knight: true
       Rune_Knight2: true
       Rune_Knight_T: true
