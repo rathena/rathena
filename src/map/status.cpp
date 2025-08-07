@@ -14436,7 +14436,11 @@ TIMER_FUNC(status_change_timer){
 				if (sc->getSCE(SC_LONGING))
 					sp*= 3;
 #endif
-				if (!status_charge(bl, 0, sp) || status->sp == 0)
+				if (!status_charge(bl, 0, sp))
+					break;
+
+				// If no more SP left, the effect ends immediately
+				if (status->sp == 0)
 					break;
 			}
 			sc_timer_next(1000+tick);
