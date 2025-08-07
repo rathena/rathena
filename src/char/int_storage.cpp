@@ -346,7 +346,6 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 		SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		StringBuf_Destroy(&buf);
 		mapif_itembound_ack(fd,account_id,guild_id);
 		return true;
 	}
@@ -376,7 +375,6 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 
 	ShowInfo("Found '" CL_WHITE "%d" CL_RESET "' guild bound item(s) from CID = " CL_WHITE "%d" CL_RESET ", AID = %d, Guild ID = " CL_WHITE "%d" CL_RESET ".\n", count, char_id, account_id, guild_id);
 	if (!count) { //No items found - No need to continue
-		StringBuf_Destroy(&buf);
 		mapif_itembound_ack(fd,account_id,guild_id);
 		return true;
 	}
@@ -390,7 +388,6 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 		SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		StringBuf_Destroy(&buf);
 		mapif_itembound_ack(fd,account_id,guild_id);
 		return true;
 	}
@@ -434,15 +431,10 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 			SQL_ERROR == stmt.Execute() )
 		{
 			SqlStmt_ShowDebug(stmt);
-			StringBuf_Destroy(&buf);
-			StringBuf_Destroy(&buf2);
 			mapif_itembound_ack(fd,account_id,guild_id);
 			return true;
 		}
-		StringBuf_Destroy(&buf2);
 	}
-
-	StringBuf_Destroy(&buf);
 
 	char_unset_session_flag(account_id, 1);
 	return false;
