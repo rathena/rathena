@@ -1981,8 +1981,10 @@ ACMD_FUNC(bodystyle){
 		return -1;
 	}
 
-	pc_changelook( sd, LOOK_BODY2, body_style );
-	clif_displaymessage( fd, msg_txt( sd, 36 ) ); // Appearence changed.
+	if( body_style != sd->vd.look[LOOK_BODY2] ){
+		pc_changelook( sd, LOOK_BODY2, body_style );
+		clif_displaymessage( fd, msg_txt( sd, 36 ) ); // Appearence changed.
+	}
 
 	return 0;
 }
