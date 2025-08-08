@@ -5982,6 +5982,7 @@ Body:
     Icon: EFST_H_MINE
     DurationLookup: RL_H_MINE
     Flags:
+      BlEffect: true
       Debuff: true
       NoDispell: true
       NoBanishingBuster: true
