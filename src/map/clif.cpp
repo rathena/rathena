@@ -1741,7 +1741,7 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 		break;
 	}
 
-	clif_hat_effects( *bl, *bl, AREA );
+	clif_hat_effects( *bl, AREA, *bl );
 
 	return 0;
 }
@@ -5096,7 +5096,7 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		break;
 	}
 
-	clif_hat_effects( *sd, *bl, SELF );
+	clif_hat_effects( *bl, SELF, *sd );
 }
 
 //Modifies the type of damage according to target status changes [Skotlex]
@@ -21393,15 +21393,19 @@ void clif_navigateTo(map_session_data *sd, const char* mapname, uint16 x, uint16
 
 /// Send hat effects to the client.
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W } (ZC_EQUIPMENT_EFFECT)
-void clif_hat_effects( block_list& src, block_list& bl, enum send_target target ){
+void clif_hat_effects( block_list& bl, enum send_target target, block_list& tbl ){
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	if( map_getmapdata( bl.m )->getMapFlag( MF_NOCOSTUME ) ){
+		return;
+	}
+
 	unit_data* ud = unit_bl2ud( &bl );
 	
 	if( ud == nullptr ){
 		return;
 	}
 
-	if( ud->hatEffects.empty() || map_getmapdata(bl.m)->getMapFlag(MF_NOCOSTUME) ){
+	if( ud->hatEffects.empty() ){
 		return;
 	}
 
@@ -21418,7 +21422,7 @@ void clif_hat_effects( block_list& src, block_list& bl, enum send_target target 
 		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->effects[0] ) );
 	}
 
-	clif_send( p, p->packetLength, &src, target );
+	clif_send( p, p->packetLength, &tbl, target );
 #endif
 }
 
