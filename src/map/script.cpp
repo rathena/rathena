@@ -24777,20 +24777,16 @@ BUILDIN_FUNC(hateffect){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	auto it = util::vector_get( ud->hatEffects, effectID );
-
 	if( enable ){
-		if( it != ud->hatEffects.end() ){
+		if( !util::vector_exists( ud->hatEffects, effectID ) ){
 			return SCRIPT_CMD_SUCCESS;
 		}
 
 		ud->hatEffects.push_back( effectID );
 	}else{
-		if( it == ud->hatEffects.end() ){
+		if( !util::vector_erase_if_exists( ud->hatEffects, effectID ) ){
 			return SCRIPT_CMD_SUCCESS;
 		}
-
-		util::vector_erase_if_exists( ud->hatEffects, effectID );
 	}
 
 	if( map_session_data* sd = BL_CAST( BL_PC, bl ); sd == nullptr || !sd->state.connect_new ){
