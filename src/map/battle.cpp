@@ -7145,7 +7145,6 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
  */
 static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,struct block_list *target, uint16 skill_id, uint16 skill_lv)
 {
-	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 	status_data* tstatus = status_get_status_data(*target);
 	bool attack_hits = is_attack_hitting(wd, src, target, skill_id, skill_lv, false);
 
@@ -7193,8 +7192,9 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 		return;
 	}
 
-	// Triple Attack and Finger Offensive have a special property, they do not split damage on plant mode
+	// Skills have a special property, they do not split damage on plant mode
 	// In pre-renewal, it requires the monster to have exactly 100 def
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 	if (skill != nullptr && skill->inf2[INF2_MULTIHITONPLANTS] && wd->div_ < 0
 #ifndef RENEWAL
 		&& tstatus->def == 100
