@@ -560,6 +560,18 @@ enum e_clif_messages : uint16 {
 	// The mercenary has died.
 	MSI_MER_DIE = 1267,
 
+	// Memorial Dungeon, [%s] is booked
+	MSI_MDUNGEON_SUBSCRIPTION_ERROR_UNKNOWN = 1319,
+
+	// Failed to book Memorial Dungeon, [%s]
+	MSI_MDUNGEON_SUBSCRIPTION_ERROR_DUPLICATE = 1320,
+
+	// Memorial Dungeon, [%s] is already booked
+	MSI_MDUNGEON_SUBSCRIPTION_ERROR_RIGHT = 1321,
+
+	// Memorial Dungeon, [%s] is created.\n Please enter in 5 minutes
+	MSI_MDUNGEON_SUBSCRIPTION_ERROR_EXIST = 1322,
+
 	// This skill cannot be used within this area.
 	MSI_IMPOSSIBLE_SKILL_AREA = 1334,
 
@@ -1137,6 +1149,7 @@ void clif_instance_status(int32 instance_id, uint32 limit1, uint32 limit2);
 void clif_instance_changestatus(int32 instance_id, e_instance_notify type, uint32 limit);
 void clif_parse_MemorialDungeonCommand(int32 fd, map_session_data *sd);
 void clif_instance_info( map_session_data& sd );
+void clif_instance_message( map_session_data& sd, uint16 msg_id, const char* instance_name );
 
 // Custom Fonts
 void clif_font(map_session_data *sd);

@@ -2136,6 +2136,14 @@ struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO {
 DEFINE_PACKET_HEADER(ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO, 0x0b56);
 #endif  // PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
 
+struct PACKET_ZC_MEMORIAL_DUNGEON_MESSAGE {
+	int16 packetType;
+	int16 packetLength;
+	uint16 msgId;
+	char instanceName[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_MEMORIAL_DUNGEON_MESSAGE, 0x2c2);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )

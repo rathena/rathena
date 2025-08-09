@@ -25544,6 +25544,35 @@ void clif_parse_MoveFromKafraFav( int32 fd, map_session_data* sd ){
 #endif
 }
 
+/// Sends memorial dungeon message with instance name
+/// 0x02c2 <packet_length>.W <message_id>.W <instance_name>.?B (ZC_MEMORIAL_DUNGEON_MESSAGE)
+void clif_instance_message( map_session_data& sd, uint16 msg_id, const char* instance_name ) {
+#if PACKETVER >= 20070227
+	if (instance_name == nullptr) {
+		return;
+	}
+
+	PACKET_ZC_MEMORIAL_DUNGEON_MESSAGE* p = reinterpret_cast<PACKET_ZC_MEMORIAL_DUNGEON_MESSAGE*>( packet_buffer );
+
+	p->packetType = HEADER_ZC_MEMORIAL_DUNGEON_MESSAGE;
+	p->packetLength = sizeof(*p);
+	p->msgId = msg_id; // zero-based msgstringtable.txt index
+
+	size_t name_len = strlen(instance_name) + 1; // Include null terminator
+
+	// Safety check to prevent buffer overflow
+	if (p->packetLength + name_len > UINT16_MAX) {
+		ShowWarning("clif_instance_message: Instance name too long '%s' (len=%zu).\n", instance_name, name_len);
+		return;
+	}
+
+	memcpy(p->instanceName, instance_name, name_len);
+	p->packetLength += static_cast<decltype(p->packetLength)>( name_len );
+
+	clif_send(p, p->packetLength, &sd, SELF);
+#endif
+}
+
 /*==========================================
  * Main client packet processing function
  *------------------------------------------*/
