@@ -141,6 +141,7 @@ struct StringBuf
 	char *ptr_;
 	size_t max_;
 
+	StringBuf();
 	~StringBuf();
 };
 

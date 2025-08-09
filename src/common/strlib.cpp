@@ -1082,6 +1082,13 @@ void StringBuf_Clear(StringBuf* self)
 	self->ptr_ = self->buf_;
 }
 
+///  Constructs the StringBuf
+StringBuf::StringBuf(){
+	this->buf_ = nullptr;
+	this->ptr_ = nullptr;
+	this->max_ = 0;
+}
+
 /// Destroys the StringBuf
 StringBuf::~StringBuf(){
 	if( this->buf_ != nullptr ){
