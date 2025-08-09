@@ -1,14 +1,14 @@
 #pragma once
 
-#include "../../battle_skill_categories.hpp"
+#include "../battle_skill_categories.hpp"
 #include "../../battle.hpp"
 #include "../../pc.hpp"
 #include "../../skill.hpp"
 
-class BashSkill : public WeaponSkill
+class MercenaryBashSkill : public WeaponSkill
 {
 public:
-    BashSkill() : WeaponSkill(SM_BASH) {}
+    MercenaryBashSkill() : WeaponSkill(SM_BASH) {}
     
     // Core identification
     uint16_t getSkillId() const override

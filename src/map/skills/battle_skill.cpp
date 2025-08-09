@@ -1,9 +1,9 @@
 #include "battle_skill.hpp"
-#include "../common/cbasetypes.hpp"
-#include "battle.hpp"
-#include "status.hpp"
-#include "pc.hpp"
-#include "map.hpp"
+#include <common/cbasetypes.hpp>
+#include "../battle.hpp"
+#include "../status.hpp"
+#include "../pc.hpp"
+#include "../map.hpp"
 #include <bitset>
 
 // Static helper method implementations

@@ -1,8 +1,8 @@
 #pragma once
 
 #include <memory>
-#include "battle.hpp"
-#include "status.hpp"
+#include "../battle.hpp"
+#include "../status.hpp"
 
 class BattleSkill {
 public:

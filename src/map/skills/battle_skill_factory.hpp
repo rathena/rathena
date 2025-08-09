@@ -7,7 +7,7 @@
 #include <vector>
 #include <common/cbasetypes.hpp>
 #include "battle_skill.hpp"
-#include "skill.hpp"
+#include "../skill.hpp"
 
 /**
  * Factory class for creating and managing BattleSkill instances
@@ -28,10 +28,4 @@ public:
     }
 
     static void registerAllSkills();
-
-private:
-    static void registerWeaponSkills();
-    static void registerMagicSkills();
-    static void registerMiscSkills();
-    static void registerPassiveSkills();
 };
