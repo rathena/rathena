@@ -3375,6 +3375,27 @@ const char* conv_str(struct script_state* st, struct script_data* data)
 	return conv_str_(st, data, nullptr);
 }
 
+/*==========================================
+ * Get active instance name
+ *------------------------------------------*/
+const char* script_instancegetname(int32 instance_id) {
+	if (instance_id <= 0 || instance_id >= INT_MAX) {
+		return nullptr;
+	}
+	
+	std::shared_ptr<s_instance_data> im = util::umap_find(instances, instance_id);
+	if (!im) {
+		return nullptr;
+	}
+	
+	std::shared_ptr<s_instance_db> db = instance_db.find(im->id);
+	if (!db) {
+		return nullptr;
+	}
+	
+	return db->name.c_str();
+}
+
 /**
  * Converts the data to an int32
  * @param st
@@ -21706,11 +21727,13 @@ BUILDIN_FUNC(instance_create)
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
+
+	map_session_data *sd = nullptr;
+
 	if (script_hasdata(st, 4))
 		owner_id = script_getnum(st, 4);
 	else {
 		// If sd is nullptr, instance_create will return -2.
-		map_session_data *sd = nullptr;
 
 		switch(mode) {
 			case IM_NONE:
@@ -21738,7 +21761,40 @@ BUILDIN_FUNC(instance_create)
 		}
 	}
 
-	script_pushint(st, instance_create(owner_id, script_getstr(st, 2), mode));
+	const char* instance_name = script_getstr(st, 2);
+	int32 result = instance_create(owner_id, instance_name, mode);
+
+	// Handle error messages based on result code
+	if ( sd != nullptr && result < 0 ) { // If there's an error and we have session data
+		uint16 message_id;
+		int32 active_instance_id = script_instancegetid(st, mode);
+		const char* active_instance_name = script_instancegetname(active_instance_id);
+
+		switch (result) {
+			case -1: 
+				message_id = MSI_MDUNGEON_SUBSCRIPTION_ERROR_UNKNOWN; //##TODO Unknow conditions
+				break;
+			case -2: 
+				message_id = MSI_MDUNGEON_SUBSCRIPTION_ERROR_RIGHT; //##TODO Unknow conditions
+				break;
+			case -3: 
+				message_id = MSI_MDUNGEON_SUBSCRIPTION_ERROR_EXIST;
+				break;
+			case -4: 
+				message_id = MSI_MDUNGEON_SUBSCRIPTION_ERROR_DUPLICATE; //##TODO Unknow conditions
+				break;
+			default:
+				script_pushint(st, result);
+				return SCRIPT_CMD_SUCCESS;
+		}
+
+		// Send the error message to client
+		if ( sd != nullptr ) {
+			clif_instance_message(*sd, message_id, active_instance_name);
+		}
+	}
+
+	script_pushint(st, result);
 	return SCRIPT_CMD_SUCCESS;
 }
 
