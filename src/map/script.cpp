@@ -21767,16 +21767,16 @@ BUILDIN_FUNC(instance_create)
 		const char* active_instance_name = script_instancegetname(active_instance_id);
 
 		switch (result) {
-			case -1: 
+			case -1:
 				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_UNKNOWN, active_instance_name ); //##TODO Unknow conditions
 				break;
-			case -2: 
+			case -2:
 				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_RIGHT, active_instance_name ); //##TODO Unknow conditions
 				break;
-			case -3: 
+			case -3:
 				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_EXIST, active_instance_name );
 				break;
-			case -4: 
+			case -4:
 				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_DUPLICATE, active_instance_name ); //##TODO Unknow conditions
 				break;
 		}
