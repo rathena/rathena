@@ -18265,7 +18265,7 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 				if (skill_get_inf2(skill_id, INF2_ISENSEMBLE)) {
 					if (c > 0 && (tsd = map_id2sd(p_sd[0])) != nullptr) {
 #ifndef RENEWAL
-						if (sd->sc.getSCE(SC_DANCING)) {
+						if (sd->sc.hasSCE(SC_DANCING)) {
 							sd->sc.getSCE(SC_DANCING)->val4 = tsd->id;
 							sc_start4(sd, tsd, SC_DANCING, 100, skill_id, sd->sc.getSCE(SC_DANCING)->val2, *skill_lv, sd->id, skill_get_time(skill_id, *skill_lv) + 1000);
 							clif_skill_nodamage(tsd, *sd, skill_id, *skill_lv);
