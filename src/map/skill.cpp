@@ -18244,7 +18244,7 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 		return is_chorus ? MAX_PARTY : 99; //As if there were infinite partners.
 
 	if (cast_flag) {	//Execute the skill on the partners.
-		map_session_data* tsd = nullptr;
+		map_session_data* tsd;
 		switch (skill_id) {
 			case PR_BENEDICTIO:
 			case WM_GREAT_ECHO:
