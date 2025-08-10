@@ -25561,7 +25561,7 @@ void clif_instance_message( map_session_data& sd, uint16 msg_id, const char* ins
 	size_t name_len = strlen(instance_name) + 1; // Include null terminator
 
 	// Safety check to prevent buffer overflow
-	if (p->packetLength + name_len > UINT16_MAX) {
+	if (p->packetLength + name_len > std::numeric_limits<int16>::max()) {
 		ShowWarning("clif_instance_message: Instance name too long '%s' (len=%zu).\n", instance_name, name_len);
 		return;
 	}
