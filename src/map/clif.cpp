@@ -10304,6 +10304,35 @@ void clif_msg( map_session_data& sd, e_clif_messages msg_id ){
 }
 
 
+/// Display msgstringtable.txt string and fill in a valid for %s format.
+/// 0x02c2 <packet_length>.W <message_id>.W <string>.?B (ZC_FORMATSTRING_MSG)
+void clif_msg_value( map_session_data& sd, e_clif_messages msg_id, const char* str ){
+#if PACKETVER >= 20070227
+	if (str == nullptr) {
+		return;
+	}
+
+	PACKET_ZC_FORMATSTRING_MSG* p = reinterpret_cast<PACKET_ZC_FORMATSTRING_MSG*>( packet_buffer );
+
+	p->packetType = HEADER_ZC_FORMATSTRING_MSG;
+	p->packetLength = sizeof(*p);
+	p->msgId = msg_id; // zero-based msgstringtable.txt index
+
+	size_t name_len = strlen(str) + 1; // Include null terminator
+
+	// Safety check to prevent buffer overflow
+	if (p->packetLength + name_len > std::numeric_limits<int16>::max()) {
+		ShowWarning("clif_msg_value: String is too long '%s' (len=%" PRIuPTR ").\n", str, name_len);
+		return;
+	}
+
+	safestrncpy(p->str, str, name_len);
+	p->packetLength += static_cast<decltype(p->packetLength)>( name_len );
+
+	clif_send(p, p->packetLength, &sd, SELF);
+#endif
+}
+
 /// Display msgstringtable.txt string and fill in a valid for %d format.
 /// 0x7e2 <message>.W <value>.L (ZC_MSG_VALUE)
 void clif_msg_value( map_session_data& sd, e_clif_messages msg_id, int32 value ){
@@ -25541,35 +25570,6 @@ void clif_parse_MoveFromKafraFav( int32 fd, map_session_data* sd ){
 	}else if( sd->state.storage_flag == 3 ){
 		storage_storageget( sd, &sd->premiumStorage, item_index, item_amount, true );
 	}
-#endif
-}
-
-/// Sends memorial dungeon message with instance name
-/// 0x02c2 <packet_length>.W <message_id>.W <instance_name>.?B (ZC_MEMORIAL_DUNGEON_MESSAGE)
-void clif_instance_message( map_session_data& sd, uint16 msg_id, const char* instance_name ) {
-#if PACKETVER >= 20070227
-	if (instance_name == nullptr) {
-		return;
-	}
-
-	PACKET_ZC_MEMORIAL_DUNGEON_MESSAGE* p = reinterpret_cast<PACKET_ZC_MEMORIAL_DUNGEON_MESSAGE*>( packet_buffer );
-
-	p->packetType = HEADER_ZC_MEMORIAL_DUNGEON_MESSAGE;
-	p->packetLength = sizeof(*p);
-	p->msgId = msg_id; // zero-based msgstringtable.txt index
-
-	size_t name_len = strlen(instance_name) + 1; // Include null terminator
-
-	// Safety check to prevent buffer overflow
-	if (p->packetLength + name_len > std::numeric_limits<int16>::max()) {
-		ShowWarning("clif_instance_message: Instance name too long '%s' (len=%zu).\n", instance_name, name_len);
-		return;
-	}
-
-	memcpy(p->instanceName, instance_name, name_len);
-	p->packetLength += static_cast<decltype(p->packetLength)>( name_len );
-
-	clif_send(p, p->packetLength, &sd, SELF);
 #endif
 }
 

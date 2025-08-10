@@ -1149,7 +1149,6 @@ void clif_instance_status(int32 instance_id, uint32 limit1, uint32 limit2);
 void clif_instance_changestatus(int32 instance_id, e_instance_notify type, uint32 limit);
 void clif_parse_MemorialDungeonCommand(int32 fd, map_session_data *sd);
 void clif_instance_info( map_session_data& sd );
-void clif_instance_message( map_session_data& sd, uint16 msg_id, const char* instance_name );
 
 // Custom Fonts
 void clif_font(map_session_data *sd);
@@ -1221,6 +1220,7 @@ void clif_viewequip_ack( map_session_data& sd, map_session_data& tsd );
 void clif_equipcheckbox( map_session_data& sd );
 
 void clif_msg( map_session_data& sd, e_clif_messages msg_id );
+void clif_msg_value( map_session_data& sd, e_clif_messages msg_id, const char* str );
 void clif_msg_value( map_session_data& sd, e_clif_messages msg_id, int32 value );
 void clif_msg_skill( map_session_data& sd, uint16 skill_id, e_clif_messages msg_id );
 void clif_msg_color( map_session_data& sd, e_clif_messages msg_id, uint32 color );

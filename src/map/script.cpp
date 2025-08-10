@@ -3379,20 +3379,17 @@ const char* conv_str(struct script_state* st, struct script_data* data)
  * Get active instance name
  *------------------------------------------*/
 const char* script_instancegetname(int32 instance_id) {
-	if (instance_id <= 0 || instance_id >= INT_MAX) {
-		return nullptr;
-	}
-	
+
 	std::shared_ptr<s_instance_data> im = util::umap_find(instances, instance_id);
-	if (!im) {
+	if (im == nullptr) {
 		return nullptr;
 	}
-	
+
 	std::shared_ptr<s_instance_db> db = instance_db.find(im->id);
-	if (!db) {
+	if (db == nullptr) {
 		return nullptr;
 	}
-	
+
 	return db->name.c_str();
 }
 
@@ -21766,31 +21763,22 @@ BUILDIN_FUNC(instance_create)
 
 	// Handle error messages based on result code
 	if ( sd != nullptr && result < 0 ) { // If there's an error and we have session data
-		uint16 message_id;
 		int32 active_instance_id = script_instancegetid(st, mode);
 		const char* active_instance_name = script_instancegetname(active_instance_id);
 
 		switch (result) {
 			case -1: 
-				message_id = MSI_MDUNGEON_SUBSCRIPTION_ERROR_UNKNOWN; //##TODO Unknow conditions
+				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_UNKNOWN, active_instance_name ); //##TODO Unknow conditions
 				break;
 			case -2: 
-				message_id = MSI_MDUNGEON_SUBSCRIPTION_ERROR_RIGHT; //##TODO Unknow conditions
+				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_RIGHT, active_instance_name ); //##TODO Unknow conditions
 				break;
 			case -3: 
-				message_id = MSI_MDUNGEON_SUBSCRIPTION_ERROR_EXIST;
+				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_EXIST, active_instance_name );
 				break;
 			case -4: 
-				message_id = MSI_MDUNGEON_SUBSCRIPTION_ERROR_DUPLICATE; //##TODO Unknow conditions
+				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_DUPLICATE, active_instance_name ); //##TODO Unknow conditions
 				break;
-			default:
-				script_pushint(st, result);
-				return SCRIPT_CMD_SUCCESS;
-		}
-
-		// Send the error message to client
-		if ( sd != nullptr ) {
-			clif_instance_message(*sd, message_id, active_instance_name);
 		}
 	}
 
