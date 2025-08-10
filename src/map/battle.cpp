@@ -7192,7 +7192,7 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 		return;
 	}
 
-	// Skills have a special property, they do not split damage on plant mode
+	// Some skills have a special property, they do not split damage on plant mode
 	// In pre-renewal, it requires the monster to have exactly 100 def
 	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->inf2[INF2_MULTIHITONPLANTS] && wd->div_ < 0
 #ifndef RENEWAL
