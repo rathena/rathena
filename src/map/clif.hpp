@@ -572,6 +572,9 @@ enum e_clif_messages : uint16 {
 	// Memorial Dungeon, [%s] is created.\n Please enter in 5 minutes
 	MSI_MDUNGEON_SUBSCRIPTION_ERROR_EXIST = 1322,
 
+	// Failed to create Memorial Dungeon, [%s].\n Please try again.#
+	MSI_MDUNGEON_SUBSCRIPTION_CANCEL_FAIL = 1323,
+
 	// This skill cannot be used within this area.
 	MSI_IMPOSSIBLE_SKILL_AREA = 1334,
 
