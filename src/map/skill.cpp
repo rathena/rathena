@@ -10416,8 +10416,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		//val[4] if set, asks to delete the previous mode change.
 		if(md && md->skill_idx >= 0 && tsc)
 		{
-			if(md->db->skill[md->skill_idx]->val[0] > ET_BLANK && md->db->skill[md->skill_idx]->val[0] < ET_MAX)
-				clif_emotion(*bl, static_cast<emotion_type>(md->db->skill[md->skill_idx]->val[0]));
+			clif_emotion( *bl, static_cast<emotion_type>( md->db->skill[md->skill_idx]->val[0] ) );
 			if(md->db->skill[md->skill_idx]->val[4] && tsce)
 				status_change_end(bl, type);
 

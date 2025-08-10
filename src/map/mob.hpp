@@ -11,7 +11,6 @@
 #include <common/mmo.hpp> // struct item
 #include <common/timer.hpp>
 
-#include "clif.hpp" // emotion_type
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
 
@@ -204,7 +203,7 @@ struct s_mob_skill {
 	int64 cond2;
 	int16 target;
 	int32 val[5];
-	emotion_type emotion;
+	int16 emotion;
 	uint16 msg_id;
 };
 

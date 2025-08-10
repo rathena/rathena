@@ -871,8 +871,7 @@ void hom_menu(map_session_data *sd, int32 type)
 */
 int32 hom_food(map_session_data *sd, struct homun_data *hd)
 {
-	int32 i, foodID;
-	emotion_type emotion;
+	int32 i, foodID, emotion;
 
 	nullpo_retr(1,sd);
 	nullpo_retr(1,hd);
@@ -911,7 +910,7 @@ int32 hom_food(map_session_data *sd, struct homun_data *hd)
 
 	log_feeding(sd, LOG_FEED_HOMUNCULUS, foodID);
 
-	clif_emotion(*hd, emotion);
+	clif_emotion(*hd, static_cast<emotion_type>(emotion));
 	clif_send_homdata( *hd, SP_HUNGRY );
 	clif_send_homdata( *hd, SP_INTIMATE );
 	clif_hom_food( *sd, foodID, 1 );

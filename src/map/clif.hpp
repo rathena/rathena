@@ -260,9 +260,8 @@ enum broadcast_flags : uint8_t {
 	BC_DEFAULT		= BC_ALL|BC_PC|BC_YELLOW
 };
 
-enum emotion_type{
-	ET_BLANK = -1, // Not showed in the client
-	ET_SURPRISE,	// /!
+enum emotion_type {
+	ET_SURPRISE = 0,	// /!
 	ET_QUESTION,		// /?
 	ET_DELIGHT,
 	ET_THROB,

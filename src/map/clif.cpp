@@ -11545,7 +11545,7 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 		return;
 	}
 
-	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<const PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
+	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
 
 	if( p->emotion_type >= ET_MAX ){
 		return;
@@ -11582,7 +11582,7 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 			emoticon = static_cast<emotion_type>( rnd()%6+ET_DICE1 );
 		}
 
-		clif_emotion(*sd, emoticon);
+		clif_emotion( *sd, emoticon );
 	} else
 		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 1 );
 }

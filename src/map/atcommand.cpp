@@ -7479,45 +7479,29 @@ ACMD_FUNC(pettalk)
 
 	if (message[0] == '/')
 	{// pet emotion processing
-		static const std::unordered_map<std::string, emotion_type> pettalk_emo_map = {
-			{"/!", ET_SURPRISE}, {"/?", ET_QUESTION}, {"/ho", ET_DELIGHT}, {"/lv", ET_THROB},
-			{"/swt", ET_SWEAT}, {"/ic", ET_AHA}, {"/an", ET_FRET}, {"/ag", ET_ANGER},
-			{"/$", ET_MONEY}, {"/...", ET_THINK}, {"/scissors", ET_SCISSOR}, {"/rock", ET_ROCK},
-			{"/paper", ET_WRAP}, {"/korea", ET_FLAG}, {"/lv2", ET_BIGTHROB}, {"/thx", ET_THANKS},
-			{"/wah", ET_KEK}, {"/sry", ET_SORRY}, {"/heh", ET_SMILE}, {"/swt2", ET_PROFUSELY_SWEAT},
-			{"/hmm", ET_SCRATCH}, {"/no1", ET_BEST}, {"/??", ET_STARE_ABOUT}, {"/omg", ET_HUK},
-			{"/O", ET_O}, {"/X", ET_X}, {"/hlp", ET_HELP}, {"/go", ET_GO}, {"/sob", ET_CRY},
-			{"/gg", ET_KIK}, {"/kis", ET_CHUP}, {"/kis2", ET_CHUPCHUP}, {"/pif", ET_HNG},
-			{"/ok", ET_OK}, {"-?-", ET_CHAT_PROHIBIT}, {"/indonesia", ET_INDONESIA_FLAG},
-			{"/bzz", ET_STARE}, {"/rice", ET_HUNGRY}, {"/awsm", ET_COOL}, {"/meh", ET_MERONG},
-			{"/shy", ET_SHY}, {"/pat", ET_GOODBOY}, {"/mp", ET_SPTIME}, {"/slur", ET_SEXY},
-			{"/com", ET_COMEON}, {"/yawn", ET_SLEEPY}, {"/grat", ET_CONGRATULATION}, {"/hp", ET_HPTIME},
-			{"/philippines", ET_PH_FLAG}, {"/malaysia", ET_MY_FLAG}, {"/singapore", ET_SI_FLAG},
-			{"/brazil", ET_BR_FLAG}, {"/fsh", ET_SPARK}, {"/spin", ET_CONFUSE}, {"/sigh", ET_OHNO},
-			{"/dum", ET_HUM}, {"/crwd", ET_BLABLA}, {"/desp", ET_OTL}, {"/dice", ET_DICE1},
-			{"-dice2", ET_DICE2}, {"-dice3", ET_DICE3}, {"-dice4", ET_DICE4}, {"-dice5", ET_DICE5},
-			{"-dice6", ET_DICE6}, {"/india", ET_INDIA_FLAG}, {"/love", ET_LUV}, {"/russia", ET_FLAG8},
-			{"/mobile", ET_MOBILE}, {"/mail", ET_MAIL}, {"/chinese", ET_FLAG9}, {"/antenna1", ET_ANTENNA1},
-			{"/antenna2", ET_ANTENNA2}, {"/antenna3", ET_ANTENNA3}, {"/hum", ET_HUM2}, {"/abs", ET_ABS},
-			{"/oops", ET_OOPS}, {"/spit", ET_SPIT}, {"/ene", ET_ENE}, {"/panic", ET_PANIC},
-			{"/whisp", ET_WHISP}
+		const char* emo[] = {
+			"/!", "/?", "/ho", "/lv", "/swt", "/ic", "/an", "/ag", "/$", "/...",
+			"/scissors", "/rock", "/paper", "/korea", "/lv2", "/thx", "/wah", "/sry", "/heh", "/swt2",
+			"/hmm", "/no1", "/??", "/omg", "/O", "/X", "/hlp", "/go", "/sob", "/gg",
+			"/kis", "/kis2", "/pif", "/ok", "-?-", "/indonesia", "/bzz", "/rice", "/awsm", "/meh",
+			"/shy", "/pat", "/mp", "/slur", "/com", "/yawn", "/grat", "/hp", "/philippines", "/malaysia",
+			"/singapore", "/brazil", "/fsh", "/spin", "/sigh", "/dum", "/crwd", "/desp", "/dice", "-dice2",
+			"-dice3", "-dice4", "-dice5", "-dice6", "/india", "/love", "/russia", "-?-", "/mobile", "/mail",
+			"/chinese", "/antenna1", "/antenna2", "/antenna3", "/hum", "/abs", "/oops", "/spit", "/ene", "/panic",
+			"/whisp"
 		};
-		auto emo_pos = pettalk_emo_map.find(message);
-		if (emo_pos != pettalk_emo_map.end()) {
-			emotion_type emotion = emo_pos->second;
-
-			if (emotion == ET_DICE1) {
-				emotion = static_cast<emotion_type>(rnd_value<int32>(ET_DICE1, ET_DICE6));
+		int32 i;
+		ARR_FIND( 0, ARRAYLENGTH(emo), i, stricmp(message, emo[i]) == 0 );
+		if( i == ET_DICE1 ) i = rnd_value<int32>(ET_DICE1, ET_DICE6); // randomize /dice
+		if( i < ARRAYLENGTH(emo) )
+		{
+			if (sd->emotionlasttime + 1 >= time(nullptr)) { // not more than 1 per second
+					sd->emotionlasttime = time(nullptr);
+					return 0;
 			}
+			sd->emotionlasttime = time(nullptr);
 
-			time_t current_time = time(nullptr);
-
-			if (sd->emotionlasttime + 1 >= current_time) {
-				sd->emotionlasttime = current_time;
-				return 0;
-			}
-			sd->emotionlasttime = current_time;
-			clif_emotion(*pd, emotion);
+			clif_emotion(*pd, static_cast<emotion_type>(i));
 			return 0;
 		}
 	}
