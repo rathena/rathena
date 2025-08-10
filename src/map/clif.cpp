@@ -8350,19 +8350,19 @@ void clif_autospell( map_session_data& sd, uint16 skill_lv ){
 	};
 
 #ifdef RENEWAL
-	 const std::vector<s_autospell_requirement> autospell_skills = {
-		{ MG_FIREBOLT, 0 },
-		{ MG_COLDBOLT, 0 },
-		{ MG_LIGHTNINGBOLT, 0 },
-		{ MG_SOULSTRIKE, 3 },
-		{ MG_FIREBALL, 3 },
-		{ WZ_EARTHSPIKE, 6 },
-		{ MG_FROSTDIVER, 6 },
-		{ MG_THUNDERSTORM, 9 },
-		{ WZ_HEAVENDRIVE, 9 }
-	};
+	constexpr std::array<s_autospell_requirement,9> autospell_skills = {{
+	   { MG_FIREBOLT, 0 },
+	   { MG_COLDBOLT, 0 },
+	   { MG_LIGHTNINGBOLT, 0 },
+	   { MG_SOULSTRIKE, 3 },
+	   { MG_FIREBALL, 3 },
+	   { WZ_EARTHSPIKE, 6 },
+	   { MG_FROSTDIVER, 6 },
+	   { MG_THUNDERSTORM, 9 },
+	   { WZ_HEAVENDRIVE, 9 }
+	}};
 #else
-	const std::vector<s_autospell_requirement> autospell_skills = {
+	constexpr std::array<s_autospell_requirement,7> autospell_skills = {{
 		{ MG_NAPALMBEAT, 0 },
 		{ MG_COLDBOLT, 1 },
 		{ MG_FIREBOLT, 1 },
@@ -8370,7 +8370,7 @@ void clif_autospell( map_session_data& sd, uint16 skill_lv ){
 		{ MG_SOULSTRIKE, 4 },
 		{ MG_FIREBALL, 7 },
 		{ MG_FROSTDIVER, 9 },
-	};
+	}};
 #endif
 
 #if PACKETVER_MAIN_NUM >= 20181128 || PACKETVER_RE_NUM >= 20181031
