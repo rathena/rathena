@@ -1312,7 +1312,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 
 		if( skill_id ) {
 
-
 			// Trigger status effects on skills
 			for (const auto &it : sd->addeff_onskill) {
 				if (skill_id != it.skill_id || !it.rate)
@@ -1339,10 +1338,9 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 	if( dmg_lv < ATK_DEF ) // no damage, return;
 		return 0;
 
-	auto skill = skill_db.find(skill_id)->impl;
-    if (skill) {
-        skill->applyAdditionalEffects(src, bl, skill_lv, tick, attack_type, dmg_lv);
-        return 0; // Let legacy code continue for other effects
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+    if (skill != nullptr && skill->impl != nullptr) {
+        skill->impl->applyAdditionalEffects(src, bl, skill_lv, tick, attack_type, dmg_lv);
     }
 
 	switch(skill_id) {

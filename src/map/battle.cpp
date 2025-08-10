@@ -33,7 +33,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
-#include "./skills/battle_skill_factory.hpp"
+#include "./skills/battle_skill.hpp"
 
 using namespace rathena;
 
@@ -3271,10 +3271,9 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 #endif
 
 	if(skill_id) {
-		auto skill = skill_db.find(skill_id)->impl;
-        if (skill) {
-            skill->modifyHitRate(hitrate, src, target, skill_lv);
-            return (rnd() % 100) < hitrate;
+		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+        if (skill != nullptr && skill->impl != nullptr) {
+            skill->impl->modifyHitRate(hitrate, src, target, skill_lv);
         }
 
 		switch(skill_id) { //Hit skill modifiers
@@ -4698,9 +4697,9 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 		}
 	}
 
-	auto skill = skill_db.find(skill_id)->impl;
-	if (skill) {
-		return skill->calculateSkillRatio(wd, src, target, skill_lv, skillratio);
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+	if (skill != nullptr && skill->impl != nullptr) {
+		skill->impl->calculateSkillRatio(wd, src, target, skill_lv, skillratio);
 	}
 
 	switch(skill_id) {
