@@ -38,7 +38,7 @@
 #define script_hasdata(st,i) ( (st)->end > (st)->start + (i) )
 /// Returns the index of the last data in the stack
 #define script_lastdata(st) ( (st)->end - (st)->start - 1 )
-/// Pushes an int into the stack
+/// Pushes an int32 into the stack
 #define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
 /// Pushes an int64 into the stack
 #define script_pushint64( st, val ) push_val2( (st)->stack, C_INT, val, nullptr )
@@ -144,19 +144,19 @@ enum e_labelType { LABEL_NEXTLINE = 1, LABEL_START };
 class map_session_data;
 struct eri;
 
-extern int potion_flag; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
-extern int potion_hp, potion_per_hp, potion_sp, potion_per_sp;
-extern int potion_target;
-extern unsigned int *generic_ui_array;
-extern unsigned int generic_ui_array_size;
+extern int32 potion_flag; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
+extern int32 potion_hp, potion_per_hp, potion_sp, potion_per_sp;
+extern int32 potion_target;
+extern uint32 *generic_ui_array;
+extern uint32 generic_ui_array_size;
 
 struct Script_Config {
 	unsigned warn_func_mismatch_argtypes : 1;
 	unsigned warn_func_mismatch_paramnum : 1;
-	int check_cmdcount;
-	int check_gotocount;
-	int input_min_value;
-	int input_max_value;
+	int32 check_cmdcount;
+	int32 check_gotocount;
+	int32 input_min_value;
+	int32 input_max_value;
 
 	// PC related
 	const char *die_event_name;
@@ -167,6 +167,7 @@ struct Script_Config {
 	const char *loadmap_event_name;
 	const char *baselvup_event_name;
 	const char *joblvup_event_name;
+	const char *identify_event_name;
 
 	// NPC related
 	const char* ontouch_event_name;
@@ -274,9 +275,9 @@ struct reg_db {
 struct script_retinfo {
 	struct reg_db scope;        ///< scope variables
 	struct script_code* script; ///< script code
-	int pos;                    ///< script location
-	int nargs;                  ///< argument count
-	int defsp;                  ///< default stack pointer
+	int32 pos;                    ///< script location
+	int32 nargs;                  ///< argument count
+	int32 defsp;                  ///< default stack pointer
 };
 
 struct script_data {
@@ -292,16 +293,16 @@ struct script_data {
 // Moved defsp from script_state to script_stack since
 // it must be saved when script state is RERUNLINE. [Eoe / jA 1094]
 struct script_code {
-	int script_size;
+	int32 script_size;
 	unsigned char* script_buf;
 	struct reg_db local;
-	unsigned short instances;
+	uint16 instances;
 };
 
 struct script_stack {
-	int sp;                         ///< number of entries in the stack
-	int sp_max;                     ///< capacity of the stack
-	int defsp;
+	int32 sp;                         ///< number of entries in the stack
+	int32 sp_max;                     ///< capacity of the stack
+	int32 defsp;
 	struct script_data *stack_data; ///< stack
 	struct reg_db scope;            ///< scope variables
 };
@@ -314,29 +315,29 @@ enum e_script_state { RUN,STOP,END,RERUNLINE,GOTO,RETFUNC,CLOSE };
 
 struct script_state {
 	struct script_stack* stack;
-	int start,end;
-	int pos;
+	int32 start,end;
+	int32 pos;
 	enum e_script_state state;
-	int rid,oid;
+	int32 rid,oid;
 	struct script_code *script;
 	struct sleep_data {
-		int tick,timer,charid;
+		int32 tick,timer,charid;
 	} sleep;
 	//For backing up purposes
 	struct script_state *bk_st;
-	int bk_npcid;
+	int32 bk_npcid;
 	unsigned freeloop : 1;// used by buildin_freeloop
 	unsigned op2ref : 1;// used by op_2
 	unsigned npc_item_flag : 1;
 	unsigned mes_active : 1;  // Store if invoking character has a NPC dialog box open.
 	unsigned clear_cutin : 1;
 	char* funcname; // Stores the current running function name
-	unsigned int id;
+	uint32 id;
 };
 
 struct script_reg {
 	int64 index;
-	int data;
+	int32 data;
 };
 
 struct script_regstr {
@@ -345,9 +346,9 @@ struct script_regstr {
 };
 
 struct script_array {
-	unsigned int id;       ///< the first 32b of the 64b uid, aka the id
-	unsigned int size;     ///< how many members
-	unsigned int *members; ///< member list
+	uint32 id;       ///< the first 32b of the 64b uid, aka the id
+	uint32 size;     ///< how many members
+	uint32 *members; ///< member list
 };
 
 enum script_parse_options {
@@ -356,14 +357,15 @@ enum script_parse_options {
 	SCRIPT_RETURN_EMPTY_SCRIPT = 0x4// returns the script object instead of nullptr for empty scripts
 };
 
-enum monsterinfo_types {
-	MOB_NAME = 0,
+enum e_monsterinfo_types : uint8 {
+	MOB_NAME = 1,
 	MOB_LV,
 	MOB_MAXHP,
+	MOB_MAXSP,
 	MOB_BASEEXP,
 	MOB_JOBEXP,
-	MOB_ATK1,
-	MOB_ATK2,
+	MOB_ATKMIN,
+	MOB_ATKMAX,
 	MOB_DEF,
 	MOB_MDEF,
 	MOB_RES,
@@ -374,12 +376,14 @@ enum monsterinfo_types {
 	MOB_INT,
 	MOB_DEX,
 	MOB_LUK,
-	MOB_RANGE,
-	MOB_RANGE2,
-	MOB_RANGE3,
+	MOB_SPEED,
+	MOB_ATKRANGE,
+	MOB_SKILLRANGE,
+	MOB_CHASERANGE,
 	MOB_SIZE,
 	MOB_RACE,
 	MOB_ELEMENT,
+	MOB_ELEMENTLV,
 	MOB_MODE,
 	MOB_MVPEXP,
 	MOB_ID,
@@ -2128,7 +2132,43 @@ enum e_hat_effects : int16{
 	HAT_EF_C_BABY_GLOOM,
 	HAT_EF_WINTERNIGHTBELLS,
 	HAT_EF_NIGHTSKYOFRUTIE,
+	FOOTPRINT_EF_BASE,
+	FOOTPRINT_EF_STR_BASE,
+	FOOTPRINT_EF_PURPLESTAR,
+	FOOTPRINT_EF_YELLOWSTAR,
+	FOOTPRINT_EF_REDSTAR,
 	HAT_EF_RAINBOW_POISON_MASTER,
+	HAT_EF_C_ANCIENT_RUNE,
+	HAT_EF_C_DRAGON_GREEN_AURA,
+	HAT_EF_C_DRAGON_RED_AURA,
+	HAT_EF_C_DRAGON_YELLOW_AURA,
+	HAT_EF_INTERDIMENSIONAL_RIFT,
+	HAT_EF_C_CLB_SS_LL,
+	HAT_EF_VACATION,
+	HAT_EF_C_FH_LOSTWING,
+	FOOTPRINT_EF_DOGFOOT,
+	HAT_EF_C_AUSPICLOUD,
+	HAT_EF_AURA_OF_GHOST_S,
+	HAT_EF_C_ROS2024_WING_1,
+	FOOTPRINT_EF_DUMPLING,
+	FOOTPRINT_EF_PANDA_BASIC,
+	FOOTPRINT_EF_PANDA_COLOR,
+	HAT_EF_ATQUE_POENITENTIA,
+	HAT_EF_PERM_FROST_OBLIVION,
+	HAT_EF_ATQUE_POENITENTIA2,
+	HAT_EF_GUIDE_OF_DEAD_TEXT,
+	HAT_EF_MEDJED_TEXT,
+	HAT_EF_INKPAINTING_DAY,
+	HAT_EF_INKPAINTING_NIGHT,
+	HAT_EF_KUNG_FU_PANDA,
+	HAT_EF_C_MGSGPH_POTARL,
+	HAT_EF_C_IGUAZU_FALLS,
+	FOOTPRINT_EF_BLOSSOM,
+	FOOTPRINT_EF_BUD,
+	FOOTPRINT_EF_BUTTERFLY_BLUE,
+	FOOTPRINT_EF_BUTTERFLY_PURPLE,
+	FOOTPRINT_EF_BUTTERFLY_YELLOW,
+
 	HAT_EF_MAX
 };
 
@@ -2194,6 +2234,20 @@ enum e_eleminfo : uint8 {
 	ELEMINFO_CLASS,
 };
 
+/* getguildinfo script command */
+enum e_guildinfo : uint8 {
+	GUILDINFO_NAME = 1,
+	GUILDINFO_LEVEL,
+	GUILDINFO_AVERAGELEVEL,
+	GUILDINFO_ONLINECOUNT,
+	GUILDINFO_MEMBERCOUNT,
+	GUILDINFO_MAXMEMBERCOUNT,
+	GUILDINFO_EXP,
+	GUILDINFO_NEXTEXP,
+	GUILDINFO_MASTERID,
+	GUILDINFO_MASTERNAME,
+};
+
 class ConstantDatabase : public YamlDatabase {
 public:
 	ConstantDatabase() : YamlDatabase("CONSTANT_DB", 1) {
@@ -2210,30 +2264,30 @@ public:
  **/
 extern struct eri *array_ers;
 extern DBMap *st_db;
-extern unsigned int active_scripts;
-extern unsigned int next_id;
+extern uint32 active_scripts;
+extern uint32 next_id;
 extern struct eri *st_ers;
 extern struct eri *stack_ers;
 
 const char* skip_space(const char* p);
-void script_error(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
-void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
+void script_error(const char* src, const char* file, int32 start_line, const char* error_msg, const char* error_pos);
+void script_warning(const char* src, const char* file, int32 start_line, const char* error_msg, const char* error_pos);
 
 bool is_number(const char *p);
-struct script_code* parse_script_( const char *src, const char *file, int line, int options, const char* src_file, int src_line, const char* src_func );
+struct script_code* parse_script_( const char *src, const char *file, int32 line, int32 options, const char* src_file, int32 src_line, const char* src_func );
 #define parse_script( src, file, line, options ) parse_script_( ( src ), ( file ), ( line ), ( options ), ALC_MARK )
-void run_script(struct script_code *rootscript,int pos,int rid,int oid);
+void run_script(struct script_code *rootscript,int32 pos,int32 rid,int32 oid);
 
 bool set_reg_num(struct script_state* st, map_session_data* sd, int64 num, const char* name, const int64 value, struct reg_db *ref);
 bool set_reg_str(struct script_state* st, map_session_data* sd, int64 num, const char* name, const char* value, struct reg_db* ref);
 bool set_var_str(map_session_data *sd, const char* name, const char* val);
 bool clear_reg( struct script_state* st, map_session_data* sd, int64 num, const char* name, struct reg_db *ref );
 int64 conv_num64(struct script_state *st, struct script_data *data);
-int conv_num(struct script_state *st, struct script_data *data);
+int32 conv_num(struct script_state *st, struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
-void pop_stack(struct script_state* st, int start, int end);
+void pop_stack(struct script_state* st, int32 start, int32 end);
 TIMER_FUNC(run_script_timer);
-void script_stop_sleeptimers(int id);
+void script_stop_sleeptimers(int32 id);
 struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
 void script_attach_state(struct script_state* st);
 void script_detach_rid(struct script_state* st);
@@ -2242,12 +2296,12 @@ void run_script_main(struct script_state *st);
 void script_stop_scriptinstances(struct script_code *code);
 void script_free_code(struct script_code* code);
 void script_free_vars(struct DBMap *storage);
-struct script_state* script_alloc_state(struct script_code* rootscript, int pos, int rid, int oid);
+struct script_state* script_alloc_state(struct script_code* rootscript, int32 pos, int32 rid, int32 oid);
 void script_free_state(struct script_state* st);
 
 struct DBMap* script_get_label_db(void);
 struct DBMap* script_get_userfunc_db(void);
-void script_run_autobonus(const char *autobonus, map_session_data *sd, unsigned int pos);
+void script_run_autobonus(const char *autobonus, map_session_data *sd, uint32 pos);
 void script_run_petautobonus(const std::string &autobonus, map_session_data &sd);
 
 const char* script_get_constant_str(const char* prefix, int64 value);
@@ -2258,17 +2312,17 @@ void script_set_constant_(const char* name, int64 value, const char* constant_na
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(map_session_data* sd, const char* varname);
-void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int* refcache);
+void script_setarray_pc(map_session_data* sd, const char* varname, uint32 idx, int64 value, int32* refcache);
 
-int script_config_read(const char *cfgName);
+int32 script_config_read(const char *cfgName);
 void do_init_script(void);
 void do_final_script(void);
-int add_str(const char* p);
-const char* get_str(int id);
+int32 add_str(const char* p);
+const char* get_str(int32 id);
 void script_reload(void);
 
-void setd_sub_num( struct script_state* st, map_session_data* sd, const char* varname, int elem, int64 value, struct reg_db* ref );
-void setd_sub_str( struct script_state* st, map_session_data* sd, const char* varname, int elem, const char* value, struct reg_db* ref );
+void setd_sub_num( struct script_state* st, map_session_data* sd, const char* varname, int32 elem, int64 value, struct reg_db* ref );
+void setd_sub_str( struct script_state* st, map_session_data* sd, const char* varname, int32 elem, const char* value, struct reg_db* ref );
 
 /**
  * Array Handling
@@ -2276,19 +2330,19 @@ void setd_sub_str( struct script_state* st, map_session_data* sd, const char* va
 struct reg_db *script_array_src(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
 void script_array_update(struct reg_db *src, int64 num, bool empty);
 void script_array_delete(struct reg_db *src, struct script_array *sa);
-void script_array_remove_member(struct reg_db *src, struct script_array *sa, unsigned int idx);
-void script_array_add_member(struct script_array *sa, unsigned int idx);
-unsigned int script_array_size(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
-unsigned int script_array_highest_key(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
+void script_array_remove_member(struct reg_db *src, struct script_array *sa, uint32 idx);
+void script_array_add_member(struct script_array *sa, uint32 idx);
+uint32 script_array_size(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
+uint32 script_array_highest_key(struct script_state *st, map_session_data *sd, const char *name, struct reg_db *ref);
 void script_array_ensure_zero(struct script_state *st, map_session_data *sd, int64 uid, struct reg_db *ref);
-int script_free_array_db(DBKey key, DBData *data, va_list ap);
+int32 script_free_array_db(DBKey key, DBData *data, va_list ap);
 /* */
 void script_reg_destroy_single(map_session_data *sd, int64 reg, struct script_reg_state *data);
-int script_reg_destroy(DBKey key, DBData *data, va_list ap);
+int32 script_reg_destroy(DBKey key, DBData *data, va_list ap);
 /* */
-void script_generic_ui_array_expand(unsigned int plus);
-unsigned int *script_array_cpy_list(struct script_array *sa);
+void script_generic_ui_array_expand(uint32 plus);
+uint32 *script_array_cpy_list(struct script_array *sa);
 
-bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
+bool script_check_RegistryVariableLength(int32 pType, const char *val, size_t* vlen);
 
 #endif /* SCRIPT_HPP */
