@@ -11567,16 +11567,20 @@ void clif_parse_ChangeDir(int32 fd, map_session_data *sd)
 }
 
 
-/// Request to show an emotion (CZ_REQ_EMOTION).
-/// 00bf <type>.B
-/// type:
-///     @see enum emotion_type
+/// Request to show an emotion 
+/// 00bf <type>.B (CZ_REQ_EMOTION).
 void clif_parse_Emotion(int32 fd, map_session_data *sd){
 	if( sd == nullptr ){
 		return;
 	}
 
-	int32 emoticon = RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0]);
+	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
+
+	if( p->emotion_type >= ET_MAX ){
+		return;
+	}
+	
+	emotion_type emoticon = static_cast<emotion_type>( p->emotion_type );
 
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2 || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
 		if (emoticon == ET_CHAT_PROHIBIT) {// prevent use of the mute emote [Valaris]
@@ -11604,10 +11608,10 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 		}
 
 		if(battle_config.client_reshuffle_dice && emoticon>=ET_DICE1 && emoticon<=ET_DICE6) {// re-roll dice
-			emoticon = rnd()%6+ET_DICE1;
+			emoticon = static_cast<emotion_type>( rnd()%6+ET_DICE1 );
 		}
 
-		clif_emotion( *sd, static_cast<emotion_type>( emoticon ) );
+		clif_emotion( *sd, emoticon );
 	} else
 		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 1 );
 }
