@@ -11,9 +11,8 @@ public:
 
     explicit BattleSkill(e_skill skill_id) : skill_id_(static_cast<uint16_t>(skill_id)) {}
 
-    virtual uint16_t getSkillId() const = 0;
-    virtual const char *getSkillName() const = 0;
     virtual e_battle_flag getAttackType() const = 0; // BF_WEAPON, BF_MAGIC, BF_MISC
+    uint16_t getSkillId() const;
 
     /**
      * Calculate skill damage ratio - replaces battle_calc_attack_skill_ratio() switch
@@ -32,10 +31,5 @@ public:
     virtual void applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const;
 
 protected:
-    // Helper methods for common calculations
-    static map_session_data *getPlayerData(const block_list *bl);
-    static status_data *getStatusData(const block_list *bl);
-    static status_change *getStatusChange(const block_list *bl);
-
     uint16_t skill_id_;
 };

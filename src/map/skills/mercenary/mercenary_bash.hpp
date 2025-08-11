@@ -8,18 +8,7 @@
 class MercenaryBashSkill : public WeaponSkill
 {
 public:
-    MercenaryBashSkill() : WeaponSkill(SM_BASH) {}
-    
-    // Core identification
-    uint16_t getSkillId() const override
-    {
-        return skill_id_;
-    }
-
-    const char *getSkillName() const override
-    {
-        return skill_get_name(skill_id_);
-    }
+    MercenaryBashSkill() : WeaponSkill(MS_BASH) {}
 
     int32 calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 base_skillratio) const override
     {
@@ -29,17 +18,5 @@ public:
     void modifyHitRate(int16 &hit_rate, const block_list *src, const block_list *target, uint16 skill_lv) const override
     {
         hit_rate += hit_rate * 5 * skill_lv / 100; // +5% hit per level
-    }
-
-    void applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const override
-    {
-        map_session_data *sd = getPlayerData(src);
-
-        // Stun effect only if skill level > 5 and has Fatal Blow
-        if (sd && skill_lv > 5 && pc_checkskill(sd, SM_FATALBLOW) > 0)
-        {
-            int32 stun_chance = (skill_lv - 5) * sd->status.base_level * 10;
-            status_change_start(src, target, SC_STUN, stun_chance, skill_lv, 0, 0, 0, skill_get_time2(getSkillId(), skill_lv), SCSTART_NONE);
-        }
     }
 };

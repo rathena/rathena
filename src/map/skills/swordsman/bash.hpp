@@ -9,17 +9,6 @@ class BashSkill : public WeaponSkill
 {
 public:
     BashSkill() : WeaponSkill(SM_BASH) {}
-    
-    // Core identification
-    uint16_t getSkillId() const override
-    {
-        return skill_id_;
-    }
-
-    const char *getSkillName() const override
-    {
-        return skill_get_name(skill_id_);
-    }
 
     int32 calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 base_skillratio) const override
     {
@@ -33,7 +22,12 @@ public:
 
     void applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const override
     {
-        map_session_data *sd = getPlayerData(src);
+        map_session_data *sd = nullptr;
+
+        if (src && src->type == BL_PC)
+        {
+            sd = (map_session_data *)src;
+        }
 
         // Stun effect only if skill level > 5 and has Fatal Blow
         if (sd && skill_lv > 5 && pc_checkskill(sd, SM_FATALBLOW) > 0)
