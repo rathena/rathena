@@ -851,13 +851,13 @@ DEFINE_PACKET_HEADER(ZC_GUILD_CHAT, 0x17f)
 struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub {
 	uint32 accId;
 	uint32 charId;
-	int positionID;
+	int32 positionID;
 } __attribute__((packed));
 
 struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS {
-	int16 PacketType;
-	int16 PacketLength;
-	struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub members[];
+	int16 packetType;
+	int16 packetLength;
+	PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub members[];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_REQ_CHANGE_MEMBERS, 0x156);
 

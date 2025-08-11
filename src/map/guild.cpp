@@ -1497,7 +1497,7 @@ int32 guild_change_memberposition(int32 guild_id,uint32 account_id,uint32 char_i
 int32 guild_memberposition_changed(struct mmo_guild &g,int32 idx,int32 pos) {
 
 	g.member[idx].position=pos;
-	clif_guild_memberpositionchanged(g);
+	clif_guild_memberpositionchanged(g,idx);
 
 	// Update char position in client [LuzZza]
 	if(g.member[idx].sd != nullptr)
