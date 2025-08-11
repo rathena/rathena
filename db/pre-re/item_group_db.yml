@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2023 rAthena Development Team
+#   Copyright(C) 2024 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 # - Group                      Group name of the item.
 #   SubGroups:
 #     - SubGroup:              SubGroup number associated with the list of item. See doc/item_group.txt for more information.
+#       Algorithm:             Type of algorithm associated with SubGroup. (Default: SharedPool)
 #       List:                  List of item(s) for the SubGroup.
 #        - Index               Unique number that can be used to add the same Item with different data in the list.
 #          Item                AegisName of item that will be obtained from this item group.
@@ -45,12 +46,13 @@
 
 Header:
   Type: ITEM_GROUP_DB
-  Version: 3
+  Version: 4
 
 Body:
   - Group: ACCESORY
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Ring
@@ -181,6 +183,7 @@ Body:
   - Group: BLEUBOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Milk
@@ -218,6 +221,7 @@ Body:
   - Group: BLUEBOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -3288,6 +3292,7 @@ Body:
   - Group: BOMB
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Apple_Bomb
@@ -3316,6 +3321,7 @@ Body:
   - Group: BOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Old_Blue_Box
@@ -3329,6 +3335,7 @@ Body:
   - Group: CANDY
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Candy
@@ -3339,6 +3346,7 @@ Body:
   - Group: CARDALBUM
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Poring_Card
@@ -4429,6 +4437,7 @@ Body:
   - Group: CASH_FOOD
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Str_Dish10_
@@ -4451,6 +4460,7 @@ Body:
   - Group: CHERISH_BOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Dog_Cap_
@@ -4464,6 +4474,7 @@ Body:
   - Group: CHERISH_BOX_ORI
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Ragnarok_Limited_Ed
@@ -4483,6 +4494,7 @@ Body:
   - Group: COOKIEBAG
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Candy
@@ -4535,6 +4547,7 @@ Body:
   - Group: EASTER_SCROLL
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: No_Recipient
@@ -4581,6 +4594,7 @@ Body:
   - Group: EGGBOY
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Grape
@@ -4606,6 +4620,7 @@ Body:
   - Group: EGGGIRL
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Grape
@@ -4631,6 +4646,7 @@ Body:
   - Group: ELEMENT
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Scarlet_Pts
@@ -4644,73 +4660,10 @@ Body:
           - Index: 3
             Item: Lime_Green_Pts
             Rate: 1
-  - Group: FINDINGORE
-    SubGroups:
-      - SubGroup: 1
-        List:
-          - Index: 0
-            Item: Emperium
-            Rate: 3
-          - Index: 1
-            Item: Oridecon_Stone
-            Rate: 20
-          - Index: 2
-            Item: Elunium_Stone
-            Rate: 20
-          - Index: 3
-            Item: Gold
-            Rate: 2
-          - Index: 4
-            Item: Oridecon
-            Rate: 10
-          - Index: 5
-            Item: Elunium
-            Rate: 10
-          - Index: 6
-            Item: Boody_Red
-            Rate: 30
-          - Index: 7
-            Item: Crystal_Blue
-            Rate: 30
-          - Index: 8
-            Item: Wind_Of_Verdure
-            Rate: 30
-          - Index: 9
-            Item: Yellow_Live
-            Rate: 30
-          - Index: 10
-            Item: Flame_Heart
-            Rate: 15
-          - Index: 11
-            Item: Mistic_Frozen
-            Rate: 15
-          - Index: 12
-            Item: Rough_Wind
-            Rate: 15
-          - Index: 13
-            Item: Great_Nature
-            Rate: 15
-          - Index: 14
-            Item: Iron
-            Rate: 80
-          - Index: 15
-            Item: Steel
-            Rate: 50
-          - Index: 16
-            Item: Iron_Ore
-            Rate: 100
-          - Index: 17
-            Item: Coal
-            Rate: 60
-          - Index: 18
-            Item: Phracon
-            Rate: 95
-          - Index: 19
-            Item: Emveretarcon
-            Rate: 55
   - Group: FIRSTAID
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -4769,6 +4722,7 @@ Body:
   - Group: FISH
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Fish_Slice
@@ -4779,6 +4733,7 @@ Body:
   - Group: FOOD
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Royal_Jelly
@@ -4849,6 +4804,7 @@ Body:
   - Group: FOODBAG
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Apple
@@ -4985,6 +4941,7 @@ Body:
   - Group: FRUIT
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Apple
@@ -5004,6 +4961,7 @@ Body:
   - Group: GEMSTONE
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Yellow_Gemstone
@@ -5017,6 +4975,7 @@ Body:
   - Group: GIFTBOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -5231,6 +5190,7 @@ Body:
   - Group: GIFTBOXCHINA
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -6027,6 +5987,7 @@ Body:
   - Group: GIFTBOX_1
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -6241,6 +6202,7 @@ Body:
   - Group: GIFTBOX_2
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -6455,6 +6417,7 @@ Body:
   - Group: GIFTBOX_3
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -6669,6 +6632,7 @@ Body:
   - Group: GIFTBOX_4
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -6883,6 +6847,7 @@ Body:
   - Group: GREENBOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Chocolate_Drink
@@ -6920,6 +6885,7 @@ Body:
   - Group: HERB
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Herb
@@ -6933,6 +6899,7 @@ Body:
   - Group: HOMETOWNGIFT
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Korea_Rice_Cake
@@ -6961,6 +6928,7 @@ Body:
   - Group: JEWEL
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Yellow_Gemstone
@@ -7018,13 +6986,14 @@ Body:
             Rate: 3
           - Index: 18
             Item: Crystal_Jewel___
-            Rate: 27
+            Rate: 2
           - Index: 19
             Item: Glass_Bead
             Rate: 50
   - Group: JUICE
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Apple_Juice
@@ -7038,6 +7007,7 @@ Body:
   - Group: LOTTOBOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Lotto31
@@ -7072,6 +7042,7 @@ Body:
   - Group: LOUISE_COSTUME_BOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Bag
@@ -7082,6 +7053,7 @@ Body:
   - Group: MAGICCARDALBUM
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Ghostring_Card
@@ -7179,6 +7151,7 @@ Body:
   - Group: MASK
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Mr_Smile
@@ -7222,6 +7195,7 @@ Body:
   - Group: MASQUERADE
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Drooping_Nine_Tail_
@@ -7238,6 +7212,7 @@ Body:
   - Group: MASQUERADE_2
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Dress_Hat
@@ -7254,6 +7229,7 @@ Body:
   - Group: MEAT
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Meat
@@ -7264,6 +7240,7 @@ Body:
   - Group: MERCENARY
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Bow_Mercenary_Scroll1
@@ -7358,6 +7335,7 @@ Body:
   - Group: MINERAL
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Emperium
@@ -7422,6 +7400,7 @@ Body:
   - Group: OLDGIFTBOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Fallen_Leaves_
@@ -7435,6 +7414,7 @@ Body:
   - Group: ORE
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Iron_Ore
@@ -7499,6 +7479,7 @@ Body:
   - Group: PIERRE_TREASUREBOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Old_Blue_Box
@@ -7587,6 +7568,7 @@ Body:
   - Group: POISON
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Poison_Paralysis
@@ -7615,6 +7597,7 @@ Body:
   - Group: POTION
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -7631,6 +7614,7 @@ Body:
   - Group: QUIVER
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Arrow_Container
@@ -7674,6 +7658,7 @@ Body:
   - Group: RECOVERY
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Fruit_Of_Mastela
@@ -7688,7 +7673,7 @@ Body:
             Item: Red_Slim_Potion
             Rate: 10
           - Index: 4
-            Item: Resist_Fire
+            Item: Resist_Earth
             Rate: 10
           - Index: 5
             Item: Yellow_Herb
@@ -7720,6 +7705,7 @@ Body:
   - Group: REDBOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Cat_Hat
@@ -7766,6 +7752,7 @@ Body:
   - Group: REDBOX_2
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Alice_Doll
@@ -7782,6 +7769,7 @@ Body:
   - Group: RESIST
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Resist_Fire
@@ -7798,6 +7786,7 @@ Body:
   - Group: SCROLL
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Earth_Scroll_1_3
@@ -7856,6 +7845,7 @@ Body:
   - Group: TAMING
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Unripe_Apple
@@ -8010,6 +8000,7 @@ Body:
   - Group: THROWABLE
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Mysterious_Powder
@@ -8083,6 +8074,7 @@ Body:
   - Group: TOKEN_OF_SIEGFRIED
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: F_Token_Of_Siegfried
@@ -8096,6 +8088,7 @@ Body:
   - Group: TRESURE_BOX_WOE
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Old_Blue_Box
@@ -8160,6 +8153,7 @@ Body:
   - Group: VIOLETBOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Red_Potion
@@ -10933,6 +10927,7 @@ Body:
   - Group: XMAS_GIFT
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: HandMade_Chocolate
@@ -10994,6 +10989,7 @@ Body:
   - Group: YELLOWBOX
     SubGroups:
       - SubGroup: 1
+        Algorithm: Random
         List:
           - Index: 0
             Item: Elephant_Hat_
@@ -11010,6 +11006,7 @@ Body:
   - Group: MF_NOTELEPORT
     SubGroups:
       - SubGroup: 0
+        Algorithm: All
         List:
           - Index: 0
             Item: Wing_Of_Fly
@@ -11024,6 +11021,7 @@ Body:
   - Group: MF_NORETURN
     SubGroups:
       - SubGroup: 0
+        Algorithm: All
         List:
           - Index: 0
             Item: Wing_Of_Butterfly
@@ -11072,6 +11070,7 @@ Body:
   - Group: GIANT_FLY_WING
     SubGroups:
       - SubGroup: 0
+        Algorithm: All
         List:
           - Index: 0
             Item: Giant_Fly_Wing
