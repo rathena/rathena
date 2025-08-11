@@ -32,7 +32,7 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 {
 	nullpo_retv(sd);
 
-	if (map_getmapflag(sd->bl.m, MF_NOTRADE)) {
+	if (map_getmapflag(sd->m, MF_NOTRADE)) {
 		clif_displaymessage (sd->fd, msg_txt(sd,272));
 		return; //Can't trade in notrade mapflag maps.
 	}
@@ -71,14 +71,14 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
 	}
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(target_sd)) { // check if both GMs are allowed to trade
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif_displaymessage( sd->fd, msg_txt( sd, 246 ) ); // Your GM level doesn't authorize you to perform this action.
 		clif_traderesponse(*sd, TRADE_ACK_FAILED); // GM is not allowed to trade
 		return;
 	}
 
 	// Players can not request trade from far away, unless they are allowed to use @trade.
 	if (!pc_can_use_command(sd, "trade", COMMAND_ATCOMMAND) &&
-	    (sd->bl.m != target_sd->bl.m || !check_distance_bl(&sd->bl, &target_sd->bl, TRADE_DISTANCE))) {
+	    (sd->m != target_sd->m || !check_distance_bl(sd, target_sd, TRADE_DISTANCE))) {
 		clif_traderesponse(*sd, TRADE_ACK_TOOFAR);
 		return ;
 	}
@@ -105,7 +105,7 @@ void trade_traderequest(map_session_data *sd, map_session_data *target_sd)
  * Weird enough, the client should only send 3/4
  * and the server is the one that can reply 0~2
  */
-void trade_tradeack(map_session_data *sd, int type)
+void trade_tradeack(map_session_data *sd, int32 type)
 {
 	map_session_data *tsd;
 
@@ -120,7 +120,7 @@ void trade_tradeack(map_session_data *sd, int type)
 		return;
 	}
 
-	if (tsd->state.trading || tsd->trade_partner.id != sd->bl.id) {
+	if (tsd->state.trading || tsd->trade_partner.id != sd->id) {
 		clif_traderesponse(*sd, TRADE_ACK_FAILED);
 		sd->trade_partner = {0,0};
 		return; // Already trading or wrong partner.
@@ -142,7 +142,7 @@ void trade_tradeack(map_session_data *sd, int type)
 	// Players can not request trade from far away, unless they are allowed to use @trade.
 	// Check here as well since the original character could had warped.
 	if (!pc_can_use_command(sd, "trade", COMMAND_ATCOMMAND) &&
-	    (sd->bl.m != tsd->bl.m || !check_distance_bl(&sd->bl, &tsd->bl, TRADE_DISTANCE))) {
+	    (sd->m != tsd->m || !check_distance_bl(sd, tsd, TRADE_DISTANCE))) {
 		clif_traderesponse(*sd, TRADE_ACK_TOOFAR);
 		sd->trade_partner = {0,0};
 		tsd->trade_partner = {0,0};
@@ -178,11 +178,11 @@ void trade_tradeack(map_session_data *sd, int type)
  * @param sd : player to check
  * @return -1:zeny hack, 0:all fine, 1:item hack
  */
-int impossible_trade_check(map_session_data *sd)
+int32 impossible_trade_check(map_session_data *sd)
 {
 	struct item inventory[MAX_INVENTORY];
 	char message_to_gm[200];
-	int i, index;
+	int32 i, index;
 
 	nullpo_retr(1, sd);
 
@@ -244,12 +244,12 @@ int impossible_trade_check(map_session_data *sd)
  * @param tsd : player 2 trading
  * @return 0:error, 1:success
  */
-int trade_check(map_session_data *sd, map_session_data *tsd)
+int32 trade_check(map_session_data *sd, map_session_data *tsd)
 {
 	struct item inventory[MAX_INVENTORY];
 	struct item inventory2[MAX_INVENTORY];
 	struct item_data *data;
-	int trade_i, i, n;
+	int32 trade_i, i, n;
 
 	// check zeny value against hackers (Zeny was already checked on time of adding, but you never know when you lost some zeny since then.
 	if(sd->deal.zeny > sd->status.zeny || (tsd->status.zeny > MAX_ZENY - sd->deal.zeny))
@@ -263,7 +263,7 @@ int trade_check(map_session_data *sd, map_session_data *tsd)
 
 	// check free slot in both inventory
 	for(trade_i = 0; trade_i < 10; trade_i++) {
-		short amount;
+		int16 amount;
 
 		amount = sd->deal.item[trade_i].amount;
 
@@ -348,12 +348,12 @@ int trade_check(map_session_data *sd, map_session_data *tsd)
  * @param index : index of item in inventory
  * @param amount : amount of item to add from index
  */
-void trade_tradeadditem(map_session_data *sd, short index, short amount)
+void trade_tradeadditem(map_session_data *sd, int16 index, int16 amount)
 {
 	map_session_data *target_sd;
 	struct item *item;
-	int trade_i, trade_weight;
-	int src_lv, dst_lv;
+	int32 trade_i, trade_weight;
+	int32 src_lv, dst_lv;
 
 	nullpo_retv(sd);
 
@@ -403,7 +403,7 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
 	}
 
 	if( item->equipSwitch ){
-		clif_msg(sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST);
+		clif_msg( *sd, MSI_SWAP_EQUIPITEM_UNREGISTER_FIRST );
 		return;
 	}
 
@@ -413,7 +413,24 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
 	// Locate a trade position
 	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
 	if( trade_i == 10 ) { // No space left
-		// clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERWEIGHT); // We do not know if the server respond with this or not since the official client prevents this case client-side.
+		// The client does not allow to add more than 10 items, and will show an error message.
+		return;
+	}
+
+	char add_item = pc_checkadditem(target_sd, item->nameid, amount);
+	// Fail to add the item if is stackable and adding the traded amount will exceed the maximum
+	if (add_item == CHKADDITEM_OVERAMOUNT) {
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_EACHITEM_OVERCOUNT);
+		return;
+	}
+
+	// Determines whether the item should be counted when checking for inventory space.
+	// If the 'trade_count_stackable' config is enabled, the item will be counted separately even if the recipient already has it.
+	bool count_stackable = (battle_config.trade_count_stackable == 1) || (add_item != CHKADDITEM_EXIST);
+
+	// Fail to add the item if the inventory will be full
+	if (count_stackable && pc_inventoryblank(target_sd) < sd->deal.inventory_space + 1) {
+		clif_tradeitemok(*sd, index, EXITEM_ADD_FAILED_OVERCOUNT);
 		return;
 	}
 
@@ -437,6 +454,9 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
 
 	sd->deal.weight += trade_weight;
 
+	if (count_stackable)
+		sd->deal.inventory_space++;
+
 	clif_tradeitemok(*sd, index, EXITEM_ADD_SUCCEED); // Return the index as it was received
 	clif_tradeadditem(sd, target_sd, index+2, amount);
 }
@@ -448,7 +468,7 @@ void trade_tradeadditem(map_session_data *sd, short index, short amount)
  * @param sd : Player who's adding zeny
  * @param amount : zeny amount
  */
-void trade_tradeaddzeny(map_session_data* sd, int amount)
+void trade_tradeaddzeny(map_session_data* sd, int32 amount)
 {
 	map_session_data* target_sd;
 
@@ -500,7 +520,7 @@ void trade_tradeok(map_session_data *sd)
 void trade_tradecancel(map_session_data *sd)
 {
 	map_session_data *target_sd;
-	int trade_i;
+	int32 trade_i;
 
 	nullpo_retv(sd);
 
@@ -566,7 +586,7 @@ void trade_tradecancel(map_session_data *sd)
 void trade_tradecommit(map_session_data *sd)
 {
 	map_session_data *tsd;
-	int trade_i;
+	int32 trade_i;
 
 	nullpo_retv(sd);
 
@@ -604,7 +624,7 @@ void trade_tradecommit(map_session_data *sd)
 
 	// trade is accepted and correct.
 	for( trade_i = 0; trade_i < 10; trade_i++ ) {
-		int n;
+		int32 n;
 		unsigned char flag = 0;
 
 		if (sd->deal.item[trade_i].amount) {

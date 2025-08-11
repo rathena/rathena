@@ -82,7 +82,6 @@ enum item_itemid : t_itemid
 	ITEMID_PHRACON						= 1010,
 	ITEMID_EMVERETARCON					= 1011,
 	ITEMID_TRAP							= 1065,
-	ITEMID_ANGRA_MANYU					= 1599,
 	ITEMID_PAINT_BRUSH					= 6122,
 	ITEMID_MAGIC_GEAR_FUEL				= 6146,
 	ITEMID_NEW_INSURANCE				= 6413,
@@ -240,7 +239,6 @@ enum e_random_item_group {
 	IG_CARDALBUM,
 	IG_GIFTBOX,
 	IG_SCROLLBOX,
-	IG_FINDINGORE,
 	IG_COOKIEBAG,
 	IG_FIRSTAID,
 	IG_HERB,
@@ -697,7 +695,7 @@ enum e_random_item_group {
 	IG_LASTANGEL_LUCKYSCROLL,
 	IG_VALKYRIE_LUCKY_SCROLL,
 	IG_SPLASH_RAINBOW_LUCKY_SCROLL,
-	IG_SHAPESHIFTER_COSTUME,
+	IG_COSTAMA_EGG22,
 	IG_JULY_LUCKY_SCROLL,
 	IG_COSTAMA_EGG23,
 	IG_COSTAMA_EGG28,
@@ -2843,8 +2841,285 @@ enum e_random_item_group {
 	IG_COSTUMEMILEPACK_35_1,
 	IG_COSTUMEMILEPACK_35_2,
 	IG_COSTUMEMILEPACK_35_3,
+	IG_2024ROS_BOX_1ST,
+	IG_2024ROS_BOX_2ND,
+	IG_2024ROS_BOX_3RD,
+	IG_2024ROS_BOX_4TH,
+	IG_2024ROS_BOX_5TH,
+	IG_AEGIS_103234,
+	IG_2024SPORTS_BOX,
+	IG_22TH_PRESENT_BOX,
+	IG_AEGIS_103316,
+	IG_SVIP_GIFT_22THANIV,
+	IG_VVIP_GIFT_22THANIV,
+	IG_VIP_GIFT_22THANIV,
+	IG_LI_NYANGVINE_BOX1_36,
+	IG_LI_NYANGVINE_BOX2_36,
+	IG_LI_NYANGVINE_BOX3_36,
+	IG_2024_SUMMER_PACK_1,
+	IG_2024_SUMMER_PACK_2,
+	IG_2024_SUMMER_PACK_3,
+	IG_2024_SUMMER_PACK_4,
+	IG_LI_A_HD_CARNIUMBOX,
+	IG_LI_A_HD_BRADIUMBOX,
+	IG_22TH_PACKAGE_1,
+	IG_22TH_PACKAGE_2,
+	IG_22TH_PACKAGE_3,
+	IG_22TH_PACKAGE_4,
+	IG_CLB_SS_NYANG_PACK,
+	IG_CLB_SS_REFINE1_PACK,
+	IG_CLB_SS_REFINE2_PACK,
+	IG_CLB_SS_EXP_PACK,
+	IG_RT_EP17_DOUBT_A,
+	IG_RT_EP17_DOUBT_3,
+	IG_RT_EP17_DOUBT_C,
+	IG_RT_EP17_AUTO_A,
+	IG_RT_EP17_AUTO_C,
+	IG_RT_EP17_SECRET_A,
+	IG_RT_EP17_SECRET_C,
+	IG_RT_EP17_MUTANT_A,
+	IG_RT_EP17_MUTANT_C,
+	IG_RT_EP17_MIGUEL_A,
+	IG_RT_EP17_MIGUEL_C,
+	IG_RT_EP17_MIGUEL_2,
+	IG_RT_EP17_OVERLOAD_A,
+	IG_RT_EP17_OVERLOAD_C,
+	IG_RT_EP17_OVERLOAD_3,
+	IG_RT_EP17_BATH_A,
+	IG_RT_EP17_BATH_C,
+	IG_RT_EP17_GARDEN_A,
+	IG_RT_EP17_GARDEN_C,
+	IG_RT_EP17_GARDEN_3,
+	IG_RT_EP17_GARDEN_5,
+	IG_RT_EP17_GREEN_A,
+	IG_RT_EP17_GREEN_C,
+	IG_RT_EP17_GREEN_2,
+	IG_RT_EP17_GREEN_4,
+	IG_RT_EP17_WING_A,
+	IG_RT_EP17_WING_C,
+	IG_RT_EP17_WING_2,
+	IG_RT_EP17_WING_4,
+	IG_RT_EP17_HARMFUL_A,
+	IG_RT_EP17_HARMFUL_C,
+	IG_RT_EP17_HARMFUL_2,
+	IG_RT_EP17_HARMFUL_4,
+	IG_RT_EP17_BOSS_A,
+	IG_RT_EP17_BOSS_C,
+	IG_RT_EP17_BOSS_3,
+	IG_RT_EP17_BOSS_5,
+	IG_RT_EP17_MALFUN_A,
+	IG_RT_EP17_MALFUN_C,
+	IG_RT_EP17_MALFUN_3,
+	IG_RT_EP18_ARMOR_A,
+	IG_RT_EP18_ARMOR_C,
+	IG_RT_EP18_MELEE_A,
+	IG_RT_EP18_MAGIC_C,
+	IG_RT_EP18_MELEE_C,
+	IG_RT_EP18_MAGIC_A,
+	IG_RT_EP18_RANGE_A,
+	IG_RT_EP18_RANGE_C,
+	IG_RT_EP18_FIELD_A,
+	IG_RT_EP18_FIELD_C,
+	IG_RT_EP18_FIELD_3,
+	IG_RT_EP18_LAVA_A,
+	IG_RT_EP18_LAVA_C,
+	IG_RT_EP18_LAVA_2,
+	IG_RT_EP18_TOTAL_A,
+	IG_RT_EP18_TOTAL_C,
+	IG_RT_EP18_TOTAL_3,
+	IG_RT_EP18_TOTAL_6,
+	IG_RT_EP18_FANG_A,
+	IG_RT_EP18_FANG_C,
+	IG_RT_EP18_DEMI_A,
+	IG_RT_EP18_DEMI_C,
+	IG_RT_EP18_DEMI_2,
+	IG_YOR_CARD_P_BOX,
+	IG_EP21_COSTUME_BOX1,
+	IG_EP21_COSTUME_BOX2,
+	IG_AEGIS_103537,
+	IG_AEGIS_103582,
+	IG_AEGIS_103617,
+	IG_IFIRIT_PROMOTION_PACK,
+	IG_AEGIS_103622,
+	IG_AEGIS_103623,
+	IG_AEGIS_103624,
+	IG_AEGIS_103625,
+	IG_AEGIS_103626,
+	IG_AEGIS_103627,
+	IG_C_CHARSLOT_OPEN_BOX,
+	IG_COSTUMEMILEPACK_36_1,
+	IG_COSTUMEMILEPACK_36_2,
+	IG_COSTUMEMILEPACK_36_3,
+	IG_NYANGVINE_SPECIAL_PACK1,
+	IG_NYANGVINE_SPECIAL_PACK2,
+	IG_NYANGVINE_SPECIAL_PACK3,
+	IG_LI_NYANGVINE_BOX1_37,
+	IG_LI_NYANGVINE_BOX2_37,
+	IG_LI_NYANGVINE_BOX3_37,
+	IG_JANUARYGIFTBOX,
+	IG_FEBRUARYGIFTBOX,
+	IG_MARCHGIFTBOX,
+	IG_MAYGIFTBOX,
+	IG_JUNEGIFTBOX,
+	IG_JULYGIFTBOX,
+	IG_AUGUSTGIFTBOX,
+	IG_OCTOBERGIFTBOX,
+	IG_DECEMBERGIFTBOX,
+	IG_2024GOLDPCBOX,
+	IG_E_CARD_PACK,
+	IG_TRUE_HUNTING_SET,
+	IG_REGIA_HUNTING_SET,
+	IG_MYSTERIOUS_FRUIT_BOX,
+	IG_ZONDA_SUPPORT_PACKAGE,
+	IG_AEGIS_103871,
+	IG_AEGIS_103872,
+	IG_IFRIT_SCROLL,
+	IG_IF_COSTUME_SCROLL,
+	IG_AEGIS_103891,
+	IG_AEGIS_103909,
+	IG_AEGIS_103991,
+	IG_NEWSERVER_PACKAGE_1,
+	IG_NEWSERVER_PACKAGE_2,
+	IG_NEWSERVER_PACKAGE_3,
+	IG_NEWSERVER_GROWTHPACK1,
+	IG_NEWSERVER_GROWTHPACK2,
+	IG_NEWSERVER_REFINEPACK1,
+	IG_NEWSERVER_REFINEPACK2,
+	IG_NEWSERVER_NYANGVINEPACK,
+	IG_COSTUMEMILEPACK_37_1,
+	IG_COSTUMEMILEPACK_37_2,
+	IG_COSTUMEMILEPACK_37_3,
+	IG_IF_COSTUME_BOX,
+	IG_IF_ALMIGHTY100_BOX,
+	IG_IF_ALMIGHTY_BOX,
+	IG_IF_REFINE_ORE_BOX_SET,
+	IG_IF_REFINE_ORE_BOX,
+	IG_IF_HD_REFINE_ORE_BOX,
+	IG_IF_HD_ELUNIUM_BOX,
+	IG_IF_HD_ORIDECON_BOX,
+	IG_IF_INFINITY_10_BOX,
+	IG_IF_INFINITY_BOX,
+	IG_IF_UNLIMITED_10_BOX,
+	IG_IF_UNLIMITED_BOX,
+	IG_EYPGT_COSTUME_BOX1,
+	IG_EYPGT_COSTUME_BOX2,
+	IG_EYPGT_COSTUME_BOX3,
+	IG_IF_SPEED_BOOSTER_10_BOX,
+	IG_IF_SPEED_BOOSTER_BOX,
+	IG_IF_FORCE_BOOSTER_10_BOX,
+	IG_IF_FORCE_BOOSTER_BOX,
+	IG_IF_3_LIFE_POTION_10PACK,
+	IG_IF_3_LIFE_POTION_PACK,
+	IG_IF_HD_HIGH_REFINE_BOX,
+	IG_IF_HD_CARNIUM_BOX,
+	IG_IF_HD_BRADIUM_BOX,
+	IG_IF_LIMITPOWERBOOSTER100,
+	IG_IF_LIMITPOWERBOOSTER,
+	IG_CLB_KP_PACK1,
+	IG_CLB_KP_PACK2,
+	IG_2025_COSTUME_BOX1,
+	IG_2025_COSTUME_BOX2,
+	IG_IF_CLB_KP_PACK1,
+	IG_IF_CLB_KP_PACK2,
+	IG_IF_2025_COSTUME_BOX1,
+	IG_IF_2025_COSTUME_BOX2,
+	IG_LI_NYANGVINE_BOX1_38,
+	IG_LI_NYANGVINE_BOX2_38,
+	IG_LI_NYANGVINE_BOX3_38,
+	IG_MD_FRAGMENT_BOX_BL,
+	IG_MD_FRAGMENT_BOX_YL,
+	IG_MD_FRAGMENT_BOX_GR,
+	IG_MD_FRAGMENT_BOX_BK,
+	IG_CH1_MD_REWARD_1,
+	IG_CH1_MD_REWARD_2,
+	IG_CH1_MD_REWARD_3,
+	IG_CH1_MD_REWARD_4,
+	IG_COMP_AID_BUFF_BOX_,
+	IG_COSTUMEMILEPACK_38_1,
+	IG_COSTUMEMILEPACK_38_2,
+	IG_COSTUMEMILEPACK_38_3,
+	IG_HANMAC_COLLABO_1,
+	IG_HANMAC_COLLABO_2,
+	IG_AEGIS_104386,
+	IG_RT_EP19_SNOWFLOWER_A,
+	IG_RT_EP19_SNOWFLOWER_C,
+	IG_RT_EP19_GLACIER_A,
+	IG_RT_EP19_GLACIER_C,
+	IG_RT_EP19_GLACIER_3,
+	IG_RT_EP19_GLACIER_5,
+	IG_RT_EP19_ULRALI_A,
+	IG_RT_EP19_ULRALI_C,
+	IG_RT_EP19_JUNCEA_A,
+	IG_RT_EP19_JUNCEA_C,
+	IG_RT_EP19_SNOWFIELD_A,
+	IG_RT_EP19_SNOWFIELD_C,
+	IG_RT_EP19_SNOWFIELD_2,
+	IG_RT_EP19_FAMILY_A,
+	IG_RT_EP19_FAMILY_C,
+	IG_RT_EP19_FAMILY_2,
+	IG_RT_EP19_IRRITATION_A,
+	IG_RT_EP19_IRRITATION_C,
+	IG_RT_EP19_BASEMENT_A,
+	IG_RT_EP19_BASEMENT_C,
+	IG_RT_EP19_RGAN_A,
+	IG_RT_EP19_RGAN_C,
+	IG_RT_EP19_RGAN_2,
+	IG_RT_EP19_RABRE_A,
+	IG_RT_EP19_RABRE_C,
+	IG_RT_EP19_RABRE_3,
+	IG_RT_EP20_GLACIER_A,
+	IG_RT_EP20_GLACIER_C,
+	IG_RT_EP20_SANCTUARY_A,
+	IG_RT_EP20_SANCTUARY_C,
+	IG_RT_EP20_SANCTUARY_2,
+	IG_RT_EP20_PREDATOR_A,
+	IG_RT_EP20_PREDATOR_C,
+	IG_RT_EP20_GUARDIAN_A,
+	IG_RT_EP20_GUARDIAN_C,
+	IG_RT_EP20_GUARDIAN_3,
+	IG_RT_EP20_SANGEL_A,
+	IG_RT_EP20_SANGEL_C,
+	IG_RT_EP20_SANGEL_2,
+	IG_RT_EP20_DAY_A,
+	IG_RT_EP20_DAY_C,
+	IG_RT_EP20_RETIRE_A,
+	IG_RT_EP20_RETIRE_C,
+	IG_RT_EP20_RETIRE_2,
+	IG_RT_EP20_RETIRE_4,
+	IG_RT_EP20_ROOTS_A,
+	IG_RT_EP20_ROOTS_C,
+	IG_RT_EP20_ROOTS_3,
+	IG_RT_EP20_ROOTS_5,
+	IG_AEGIS_104501,
+	IG_HANMAC_COLLABO_1S,
+	IG_HANMAC_COLLABO_2S,
+	IG_LI_A_HD_ELUNIUM_BOX2,
+	IG_LI_A_HD_ORIDECON_BOX2,
+	IG_LI_A_ELUNIUM_BOX2,
+	IG_LI_A_ORIDECON_BOX2,
+	IG_LI_NYANGVINE_BOX1_39,
+	IG_LI_NYANGVINE_BOX2_39,
+	IG_LI_NYANGVINE_BOX3_39,
+	IG_MYSTERIOUS_EGG,
+	IG_OLD_EQUIPMENT_BOX,
+	IG_SIEGE_KIT_BOX,
+	IG_WEAPON_BOX_SPEAR,
+	IG_WEAPON_BOX_MACE,
+	IG_WEAPON_BOX_DAGGER,
+	IG_WEAPON_BOX_AXE,
+	IG_WEAPON_BOX_BOW,
+	IG_WEAPON_BOX_SWORD,
+	IG_WEAPON_BOX_FIST,
+	IG_WEAPON_BOX_BOOK,
+	IG_WEAPON_BOX_GUITAR,
+	IG_WEAPON_BOX_WHIP,
+	IG_WEAPON_BOX_WAND,
+	IG_PET_TICKET_BOX,
+	IG_BRILLIANT_HAT_BOX,
+	IG_CHEST_OF_DEATH,
+	IG_SHADOW_CUBE_SAK,
 
-	IG_MAX,
+	IG_MAX
 };
 
 /// Enum for bound/sell restricted selling
@@ -2892,6 +3167,15 @@ enum e_delay_consume : uint8 {
 	DELAYCONSUME_NONE = 0x0,
 	DELAYCONSUME_TEMP = 0x1, // Items that are not consumed immediately upon double-click
 	DELAYCONSUME_NOCONSUME = 0x2, // Items that are not removed upon double-click
+};
+
+/// Enum for different ways to search an item group
+enum e_group_algorithm_type : uint8 {
+	GROUP_ALGORITHM_USEDB, // Use algorithm defined in the database for the sub group (All, Random or SharedPool).
+	GROUP_ALGORITHM_DROP, // Pick one item from the group and use rate as drop rate, on fail, do not return any item.
+	GROUP_ALGORITHM_ALL, // All items have an equal chance to be returned. Using getgroupitem will return all items in the group.
+	GROUP_ALGORITHM_RANDOM, // Always return an item from the group, rate determines which item is more likely to be returned.
+	GROUP_ALGORITHM_SHAREDPOOL, // Rate is the amount of items in the group, return a random item and remove it from the group.
 };
 
 /// Item combo struct
@@ -3003,6 +3287,8 @@ struct s_item_group_entry
 {
 	t_itemid nameid; /// Item ID
 	uint16 rate;
+	uint16 adj_rate; /// Rate adjusted by the battle_config.item_group_rate
+	uint16 given; /// Amount of times this item has already been given out
 	uint16 duration, /// Duration if item as rental item (in minutes)
 		amount; /// Amount of item will be obtained
 	bool isAnnounced, /// Broadcast if player get this item
@@ -3019,9 +3305,9 @@ struct s_item_group_entry
 struct s_item_group_random
 {
 	uint32 total_rate;
+	uint32 total_given; /// Amount of times an item from this group has been given out
+	e_group_algorithm_type algorithm;
 	std::unordered_map<uint32, std::shared_ptr<s_item_group_entry>> data; /// index, s_item_group_entry
-
-	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup();
 };
 
 /// Struct of item group that will be used for db
@@ -3034,9 +3320,9 @@ struct s_item_group_db
 /// Struct of Roulette db
 struct s_roulette_db {
 	t_itemid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
-	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
-	int *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
-	int items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
+	uint16 *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
+	int32 *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
+	int32 items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
 };
 extern struct s_roulette_db rd;
 
@@ -3050,7 +3336,7 @@ struct item_data
 	uint32 value_sell;
 	item_types type;
 	uint8 subtype;
-	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
+	int32 maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
 	uint8 sex;
 	uint32 equip;
 	uint32 weight;
@@ -3073,8 +3359,8 @@ struct item_data
 	uint64 class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
 	uint16 class_upper; //Specifies if the class-type can equip it (See e_item_job)
 	struct {
-		int chance;
-		int id;
+		int32 chance;
+		int32 id;
 	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
 	struct script_code *script;	//Default script for everything.
 	struct script_code *equip_script;	//Script executed once when equipping.
@@ -3105,7 +3391,7 @@ struct item_data
 		uint16 override;
 		bool sitting;
 	} item_usage;
-	short gm_lv_trade_override;	//GM-level to override trade_restriction
+	int16 gm_lv_trade_override;	//GM-level to override trade_restriction
 	std::vector<std::shared_ptr<s_item_combo>> combos;
 	struct {
 		uint32 duration;
@@ -3132,7 +3418,7 @@ struct item_data
 	}
 
 	bool isStackable();
-	int inventorySlotNeeded(int quantity);
+	int32 inventorySlotNeeded(int32 quantity);
 };
 
 class ItemDatabase : public TypesafeCachedYamlDatabase<t_itemid, item_data> {
@@ -3172,13 +3458,14 @@ public:
 	std::string create_item_link(struct item& item);
 	std::string create_item_link( std::shared_ptr<item_data>& data );
 	std::string create_item_link_for_mes( std::shared_ptr<item_data>& data, bool use_brackets, const char* name );
+	std::string create_item_icon_for_mes( std::shared_ptr<item_data>& data, const char* name );
 };
 
 extern ItemDatabase item_db;
 
 class ItemGroupDatabase : public TypesafeCachedYamlDatabase<uint16, s_item_group_db> {
 public:
-	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 3, 1) {
+	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 4, 1) {
 
 	}
 
@@ -3189,11 +3476,11 @@ public:
 	// Additional
 	bool item_exists(uint16 group_id, t_itemid nameid);
 	int16 item_exists_pc(map_session_data *sd, uint16 group_id);
-	t_itemid get_random_item_id(uint16 group_id, uint8 sub_group);
-	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group);
+	std::shared_ptr<s_item_group_entry> get_random_entry(uint16 group_id, uint8 sub_group, e_group_algorithm_type algorithm = GROUP_ALGORITHM_USEDB);
 	uint8 pc_get_itemgroup( uint16 group_id, bool identify, map_session_data& sd );
 
 private:
+	std::shared_ptr<s_item_group_entry> get_random_itemsubgroup(std::shared_ptr<s_item_group_random> random, e_group_algorithm_type algorithm = GROUP_ALGORITHM_USEDB);
 	void pc_get_itemgroup_sub( map_session_data& sd, bool identify, std::shared_ptr<s_item_group_entry> data );
 };
 
@@ -3412,16 +3699,16 @@ const char *itemdb_typename_ammo (e_ammo_type ammo);
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
 //Item trade restrictions [Skotlex]
-bool itemdb_isdropable_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_cantrade_sub(struct item_data *itd, int gmlv, int gmlv2);
-bool itemdb_canpartnertrade_sub(struct item_data *itd, int gmlv, int gmlv2);
-bool itemdb_cansell_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_cancartstore_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canstore_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canguildstore_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canmail_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_canauction_sub(struct item_data *itd, int gmlv, int unused);
-bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int));
+bool itemdb_isdropable_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_cantrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
+bool itemdb_canpartnertrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
+bool itemdb_cansell_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_cancartstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canguildstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canmail_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_canauction_sub(struct item_data *itd, int32 gmlv, int32 unused);
+bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int32, int32));
 bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)

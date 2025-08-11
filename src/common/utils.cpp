@@ -40,14 +40,14 @@ void WriteDump(FILE* fp, const void* buffer, size_t length)
 
 		if( (i%16) == 15 )
 		{
-			fprintf(fp, "%03X %s  %s\n", (unsigned int)(i/16), hex, ascii);
+			fprintf(fp, "%03X %s  %s\n", (uint32)(i/16), hex, ascii);
 		}
 	}
 
 	if( (i%16) != 0 )
 	{
 		ascii[i%16] = 0;
-		fprintf(fp, "%03X %-48s  %-16s\n", (unsigned int)(i/16), hex, ascii);
+		fprintf(fp, "%03X %-48s  %-16s\n", (uint32)(i/16), hex, ascii);
 	}
 }
 
@@ -150,7 +150,7 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
  *         2 = File
  *         3 = File but doesn't exist
  */
-int check_filepath(const char* filepath)
+int32 check_filepath(const char* filepath)
 {
 	DWORD Attribute;
 
@@ -179,7 +179,7 @@ int check_filepath(const char* filepath)
  *         2 = File
  *         3 = Neither a file or directory
  */
-int check_filepath(const char* filepath)
+int32 check_filepath(const char* filepath)
 {
 	struct stat s;
 
@@ -264,7 +264,7 @@ bool exists(const char* filename)
 	return !access(filename, F_OK);
 }
 
-uint8 GetByte(uint32 val, int idx)
+uint8 GetByte(uint32 val, int32 idx)
 {
 	switch( idx )
 	{
@@ -280,7 +280,7 @@ uint8 GetByte(uint32 val, int idx)
 	}
 }
 
-uint16 GetWord(uint32 val, int idx)
+uint16 GetWord(uint32 val, int32 idx)
 {
 	switch( idx )
 	{
@@ -359,7 +359,7 @@ float GetFloat(const unsigned char* buf)
 }
 
 /// calculates the value of A / B, in percent (rounded down)
-unsigned int get_percentage(const unsigned int A, const unsigned int B)
+uint32 get_percentage(const uint32 A, const uint32 B)
 {
 	double result;
 
@@ -377,7 +377,7 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B)
 		return UINT_MAX;
 	}
 
-	return (unsigned int)floor(result);
+	return (uint32)floor(result);
 }
 
 uint32 get_percentage_exp(const uint64 a, const uint64 b)

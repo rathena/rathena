@@ -42,6 +42,8 @@
 #   ClientAttackMotion      Client attack speed. (Default: AttackMotion)
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
+#   GroupId                 Monster group ID. (Default: 0)
+#   Title                   Monster title. (Default: None)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)
 #   Class                   Aegis monster class. (Default: Normal)
 #   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)

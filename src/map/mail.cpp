@@ -23,7 +23,7 @@ using namespace rathena;
 
 void mail_clear(map_session_data *sd)
 {
-	int i;
+	int32 i;
 
 	for( i = 0; i < MAIL_MAX_ITEM; i++ ){
 		sd->mail.item[i].nameid = 0;
@@ -36,9 +36,9 @@ void mail_clear(map_session_data *sd)
 	return;
 }
 
-int mail_removeitem(map_session_data *sd, short flag, int idx, int amount)
+int32 mail_removeitem(map_session_data *sd, int16 flag, int32 idx, int32 amount)
 {
-	int i;
+	int32 i;
 
 	nullpo_ret(sd);
 
@@ -159,7 +159,7 @@ bool mail_removezeny( map_session_data *sd, bool flag ){
 * @param amount : amout of zeny or number of item
 * @return see enum mail_attach_result in mail.hpp
 */
-enum mail_attach_result mail_setitem(map_session_data *sd, short idx, uint32 amount) {
+enum mail_attach_result mail_setitem(map_session_data *sd, int16 idx, uint32 amount) {
 	if( pc_istrading(sd) )
 		return MAIL_ATTACH_ERROR;
 
@@ -179,9 +179,9 @@ enum mail_attach_result mail_setitem(map_session_data *sd, short idx, uint32 amo
 		// clif_updatestatus(*sd, SP_ZENY);
 		return MAIL_ATTACH_SUCCESS;
 	} else { // Item Transfer
-		int i;
+		int32 i;
 #if PACKETVER >= 20150513
-		int j, total = 0;
+		int32 j, total = 0;
 #endif
 
 		idx -= 2;
@@ -282,13 +282,13 @@ enum mail_attach_result mail_setitem(map_session_data *sd, short idx, uint32 amo
 
 bool mail_setattachment(map_session_data *sd, struct mail_message *msg)
 {
-	int i, amount;
+	int32 i, amount;
 
 	nullpo_retr(false,sd);
 	nullpo_retr(false,msg);
 
 	for( i = 0, amount = 0; i < MAIL_MAX_ITEM; i++ ){
-		int index = sd->mail.item[i].index;
+		int32 index = sd->mail.item[i].index;
 
 		if( sd->mail.item[i].nameid == 0 || sd->mail.item[i].amount == 0 ){
 			memset(&msg->item[i], 0x00, sizeof(struct item));
@@ -329,8 +329,8 @@ bool mail_setattachment(map_session_data *sd, struct mail_message *msg)
 	return true;
 }
 
-void mail_getattachment(map_session_data* sd, struct mail_message* msg, int zeny, struct item* item){
-	int i;
+void mail_getattachment(map_session_data* sd, struct mail_message* msg, int32 zeny, struct item* item){
+	int32 i;
 	bool item_received = false;
 
 	for( i = 0; i < MAIL_MAX_ITEM; i++ ){
@@ -399,7 +399,7 @@ void mail_getattachment(map_session_data* sd, struct mail_message* msg, int zeny
 	}
 }
 
-int mail_openmail(map_session_data *sd)
+int32 mail_openmail(map_session_data *sd)
 {
 	nullpo_ret(sd);
 
@@ -412,7 +412,7 @@ int mail_openmail(map_session_data *sd)
 }
 
 void mail_deliveryfail(map_session_data *sd, struct mail_message *msg){
-	int i, zeny = 0;
+	int32 i, zeny = 0;
 
 	nullpo_retv(sd);
 	nullpo_retv(msg);
@@ -436,13 +436,13 @@ void mail_deliveryfail(map_session_data *sd, struct mail_message *msg){
 bool mail_invalid_operation(map_session_data *sd)
 {
 #if PACKETVER < 20150513
-	if( !map_getmapflag(sd->bl.m, MF_TOWN) && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
+	if( !map_getmapflag(sd->m, MF_TOWN) && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
 	{
 		ShowWarning("clif_parse_Mail: char '%s' trying to do invalid mail operations.\n", sd->status.name);
 		return true;
 	}
 #else
-	if( map_getmapflag( sd->bl.m, MF_NORODEX ) ){
+	if( map_getmapflag( sd->m, MF_NORODEX ) ){
 		clif_displaymessage( sd->fd, msg_txt( sd, 796 ) ); // You cannot use RODEX on this map.
 		return true;
 	}
@@ -459,7 +459,7 @@ bool mail_invalid_operation(map_session_data *sd)
 * @param body_msg Mail message
 * @param body_len Message's length
 */
-void mail_send(map_session_data *sd, const char *dest_name, const char *title, const char *body_msg, int body_len) {
+void mail_send(map_session_data *sd, const char *dest_name, const char *title, const char *body_msg, int32 body_len) {
 	struct mail_message msg;
 
 	nullpo_retv(sd);
@@ -481,7 +481,7 @@ void mail_send(map_session_data *sd, const char *dest_name, const char *title, c
 			clif_Mail_send(sd, WRITE_MAIL_FAILED_CNT);
 			return;
 		}else{
-			sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.getSCE(SC_DAILYSENDMAILCNT)->val2 + 1, INFINITE_TICK );
+			sc_start2(sd, sd, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.getSCE(SC_DAILYSENDMAILCNT)->val2 + 1, INFINITE_TICK);
 		}
 	}
 
@@ -489,7 +489,7 @@ void mail_send(map_session_data *sd, const char *dest_name, const char *title, c
 		body_len = MAIL_BODY_LENGTH;
 
 	if( !mail_setattachment(sd, &msg) ) { // Invalid Append condition
-		int i;
+		int32 i;
 
 		clif_Mail_send(sd, WRITE_MAIL_FAILED); // fail
 		for( i = 0; i < MAIL_MAX_ITEM; i++ ){
@@ -524,12 +524,12 @@ void mail_send(map_session_data *sd, const char *dest_name, const char *title, c
 }
 
 void mail_refresh_remaining_amount( map_session_data* sd ){
-	int doy = date_get_dayofyear();
+	int32 doy = date_get_dayofyear();
 
 	nullpo_retv(sd);
 
 	// If it was not yet started or it was started on another day
 	if( sd->sc.getSCE(SC_DAILYSENDMAILCNT) == nullptr || sd->sc.getSCE(SC_DAILYSENDMAILCNT)->val1 != doy ){
-		sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, doy, 0, INFINITE_TICK );
+		sc_start2( sd, sd, SC_DAILYSENDMAILCNT, 100, doy, 0, INFINITE_TICK );
 	}
 }
