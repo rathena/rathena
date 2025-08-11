@@ -8954,7 +8954,7 @@ void clif_guild_memberpositionchanged(const struct mmo_guild &g){
 		c++;
 	}
 
-	clif_send(p,p->PacketLength,&sd->bl,GUILD);
+	clif_send(p,p->PacketLength,sd,GUILD);
 }
 
 
