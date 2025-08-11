@@ -16,9 +16,8 @@ public:
 
     /**
      * Calculate skill damage ratio - replaces battle_calc_attack_skill_ratio() switch
-     * Returns percentage modifier (100 = normal damage, 200 = double damage, etc.)
      */
-    virtual int32 calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 base_skillratio) const;
+    virtual void calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const;
 
     /**
      * Modify hit rate for this skill - replaces hit rate switch statements

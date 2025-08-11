@@ -10,9 +10,9 @@ class MercenaryBashSkill : public WeaponSkill
 public:
     MercenaryBashSkill() : WeaponSkill(MS_BASH) {}
 
-    int32 calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 base_skillratio) const override
+    void calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const override
     {
-        return base_skillratio + 30 * skill_lv; // Base 100% + 30% per level
+        base_skillratio += 30 * skill_lv; // Base 100% + 30% per level
     }
 
     void modifyHitRate(int16 &hit_rate, const block_list *src, const block_list *target, uint16 skill_lv) const override
