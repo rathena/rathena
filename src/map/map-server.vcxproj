@@ -239,6 +239,13 @@
     <ClInclude Include="trade.hpp" />
     <ClInclude Include="unit.hpp" />
     <ClInclude Include="vending.hpp" />
+    <ClInclude Include="skills/battle_skill_categories.hpp" />
+    <ClInclude Include="skills/battle_skill_factory.hpp" />
+    <ClInclude Include="skills/battle_skill.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
+    <ClInclude Include="skills/swordsman/bash.hpp" />
+    <ClInclude Include="skills/swordsman/swordsman.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="achievement.cpp" />
@@ -285,6 +292,8 @@
     <ClCompile Include="trade.cpp" />
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="vending.cpp" />
+    <ClCompile Include="skills/battle_skill_factory.cpp" />
+    <ClCompile Include="skills/battle_skill.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
