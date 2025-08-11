@@ -829,22 +829,22 @@ DEFINE_PACKET_HEADER(ZC_CARTOFF, 0x12b)
 
 struct PACKET_ZC_ACK_GUILD_MENUINTERFACE {
 	int16 packetType;
-	int menuFlag;
+	int32 menuFlag;
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_GUILD_MENUINTERFACE, 0x014e)
 
 struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub {
-	int positionID;
-	int mode;
-	int ranking;
-	int payRate;
+	int32 positionID;
+	int32 mode;
+	int32 ranking;
+	int32 payRate;
 	char posName[NAME_LENGTH];
 } __attribute__((packed));
 
 struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO {
-	int16 PacketType;
-	int16 PacketLength;
-	struct PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub posInfo[];
+	int16 packetType;
+	int16 packetLength;
+	PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub posInfo[];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_ACK_CHANGE_GUILD_POSITIONINFO, 0x174);
 

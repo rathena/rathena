@@ -8904,32 +8904,32 @@ static void clif_guild_positioninfolist(map_session_data& sd){
 ///     &0x10 = allow expel
 /// ranking:
 ///     TODO
-void clif_guild_positionchanged(const struct mmo_guild &g){
-	map_session_data *sd = guild_getavailablesd(g);
+void clif_guild_positionchanged(const struct mmo_guild &g,int32 idx)
+{
+	// FIXME: This packet is intended to update the clients after a
+	// commit of position info changes, not sending one packet per
+	// position.
+	map_session_data* sd = guild_getavailablesd(g);
 
-	if( sd == nullptr )
+	if( sd == nullptr ){
 		return;
+	}
 
 	PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO* p = reinterpret_cast<PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO*>( packet_buffer );
 
-	p->PacketType = HEADER_ZC_ACK_CHANGE_GUILD_POSITIONINFO;
-	p->PacketLength = sizeof(*p);
+	p->packetType = HEADER_ZC_ACK_CHANGE_GUILD_POSITIONINFO;
+	p->packetLength = sizeof(*p);
 
-	int c = 0;
+	PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub& info = p->posInfo[0];
 
-	for(const guild_position& gp : g.position){
-		PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub& info = p->posInfo[c];
+	info.positionID = idx;
+	info.mode = g.position[idx].mode;
+	info.ranking = idx;
+	info.payRate = g.position[idx].exp_mode;
+	safestrncpy(info.posName, g.position[idx].name, sizeof(info.posName));
+	p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(info));
 
-		info.positionID = c;
-		info.mode = gp.mode;
-		info.ranking = c;
-		info.payRate = gp.exp_mode;
-		safestrncpy(info.posName, gp.name, sizeof(info.posName));
-		p->PacketLength += static_cast<decltype(p->PacketLength)>(sizeof(info));
-		c++;
-	}
-
-	clif_send(p,p->PacketLength,&sd->bl,GUILD);
+	clif_send(p,p->packetLength,sd,GUILD);
 }
 
 

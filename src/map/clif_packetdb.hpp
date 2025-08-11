@@ -165,7 +165,6 @@
 	parseable_packet(0x016e,186,clif_parse_GuildChangeNotice,2,6,66);
 	parseable_packet(0x0170,14,clif_parse_GuildRequestAlliance,2,6,10);
 	parseable_packet(0x0172,10,clif_parse_GuildReplyAlliance,2,6);
-	packet(0x0174,-1);
 	packet(0x0175,6);
 	packet(0x0176,106);
 	packet(0x0177,-1);
