@@ -8637,7 +8637,7 @@ void clif_guild_memberlogin_notice(const struct mmo_guild &g,int32 idx,int32 onl
 		p.hairStyle = static_cast<decltype(p.hairStyle)>(sd->status.hair);
 		p.hairColor = static_cast<decltype(p.hairColor)>(sd->status.hair_color);
 #endif
-		clif_send(&p,sizeof(p),&sd->bl,GUILD_WOS);
+		clif_send(&p,sizeof(p),sd,GUILD_WOS);
 	}
 	else if( ( sd = guild_getavailablesd(g) ) != nullptr )
 	{
@@ -8646,7 +8646,7 @@ void clif_guild_memberlogin_notice(const struct mmo_guild &g,int32 idx,int32 onl
 		p.hairStyle = 0;
 		p.hairColor = 0;
 #endif
-		clif_send(&p,sizeof(p),&sd->bl,GUILD);
+		clif_send(&p,sizeof(p),sd,GUILD);
 	}
 }
 
