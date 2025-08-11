@@ -10314,22 +10314,22 @@ void clif_msg_value( map_session_data& sd, e_clif_messages msg_id, const char* s
 
 	PACKET_ZC_FORMATSTRING_MSG* p = reinterpret_cast<PACKET_ZC_FORMATSTRING_MSG*>( packet_buffer );
 
-	p->packetType = HEADER_ZC_FORMATSTRING_MSG;
-	p->packetLength = sizeof(*p);
-	p->msgId = msg_id; // zero-based msgstringtable.txt index
+	p->PacketType = HEADER_ZC_FORMATSTRING_MSG;
+	p->PacketLength = sizeof(*p);
+	p->MessageId = msg_id; // zero-based msgstringtable.txt index
 
 	size_t name_len = strlen(str) + 1; // Include null terminator
 
 	// Safety check to prevent buffer overflow
-	if (p->packetLength + name_len > std::numeric_limits<int16>::max()) {
+	if (p->PacketType + name_len > std::numeric_limits<int16>::max()) {
 		ShowWarning("clif_msg_value: String is too long '%s' (len=%" PRIuPTR ").\n", str, name_len);
 		return;
 	}
 
-	safestrncpy(p->str, str, name_len);
-	p->packetLength += static_cast<decltype(p->packetLength)>( name_len );
+	safestrncpy(p->MessageString, str, name_len);
+	p->PacketLength += static_cast<decltype(p->PacketLength)>( name_len );
 
-	clif_send(p, p->packetLength, &sd, SELF);
+	clif_send(p, p->PacketLength, &sd, SELF);
 #endif
 }
 

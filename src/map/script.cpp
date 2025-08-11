@@ -3379,7 +3379,6 @@ const char* conv_str(struct script_state* st, struct script_data* data)
  * Get active instance name
  *------------------------------------------*/
 const char* script_instancegetname(int32 instance_id) {
-
 	std::shared_ptr<s_instance_data> im = util::umap_find(instances, instance_id);
 	if (im == nullptr) {
 		return nullptr;
