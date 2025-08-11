@@ -8619,29 +8619,29 @@ void clif_guild_belonginfo( map_session_data& sd ){
 /// status:
 ///     0 = offline
 ///     1 = online
-void clif_guild_memberlogin_notice(const struct mmo_guild &g,int32 idx,int32 online){
-
+void clif_guild_memberlogin_notice(const struct mmo_guild &g,int32 idx,int32 flag)
+{
 	map_session_data* sd;
 	
-	PACKET_ZC_UPDATE_CHARSTAT p{};
+	PACKET_ZC_UPDATE_CHARSTAT p = {};
 
 	p.packetType = HEADER_ZC_UPDATE_CHARSTAT;
 	p.aid = g.member[idx].account_id;
 	p.cid = g.member[idx].char_id;
-	p.status = static_cast<decltype(p.status)>(online);
+	p.status = flag;
 
 	if( ( sd = g.member[idx].sd ) != nullptr )
 	{
-#if (PACKETVER)
-		p.gender = static_cast<decltype(p.gender)>(sd->status.sex);
-		p.hairStyle = static_cast<decltype(p.hairStyle)>(sd->status.hair);
-		p.hairColor = static_cast<decltype(p.hairColor)>(sd->status.hair_color);
+#if defined(PACKETVER)
+		p.gender = sd->status.sex;
+		p.hairStyle = sd->status.hair;
+		p.hairColor = sd->status.hair_color;
 #endif
 		clif_send(&p,sizeof(p),sd,GUILD_WOS);
 	}
 	else if( ( sd = guild_getavailablesd(g) ) != nullptr )
 	{
-#if (PACKETVER)
+#if defined(PACKETVER)
 		p.gender = 0;
 		p.hairStyle = 0;
 		p.hairColor = 0;

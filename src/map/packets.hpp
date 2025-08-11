@@ -848,7 +848,8 @@ struct PACKET_ZC_GUILD_CHAT {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_GUILD_CHAT, 0x17f)
 
-#if (PACKETVER) // no idea when it changed
+// TODO: no idea when it changed
+#if defined(PACKETVER)
 struct PACKET_ZC_UPDATE_CHARSTAT {
 	uint16 packetType;
 	uint32 aid;
