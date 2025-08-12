@@ -3373,11 +3373,31 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		}
 
 		if( mapdrops != nullptr ){
+			// Calculate drop rate bonus for map drops (similar to mob_getdroprate function)
+			int32 drop_rate_bonus = 100;
+
+			if ( first_sd != nullptr ) {
+				// Add class and race specific bonuses
+				drop_rate_bonus += first_sd->indexed_bonus.dropaddclass[md->status.class_] + first_sd->indexed_bonus.dropaddclass[CLASS_ALL];
+				drop_rate_bonus += first_sd->indexed_bonus.dropaddrace[md->status.race] + first_sd->indexed_bonus.dropaddrace[RC_ALL];
+
+				if ( first_sd->sc.getSCE(SC_ITEMBOOST) )
+					drop_rate_bonus += first_sd->sc.getSCE(SC_ITEMBOOST)->val1;
+				if ( first_sd->sc.getSCE(SC_PERIOD_RECEIVEITEM_2ND) )
+					drop_rate_bonus += first_sd->sc.getSCE(SC_PERIOD_RECEIVEITEM_2ND)->val1;
+
+				// Increase map drop rate for VIP.
+				if ( pc_isvip(first_sd) )
+					drop_rate_bonus += battle_config.vip_drop_increase;
+			}
+
 			// Process map wide drops
 			for( const auto& it : mapdrops->globals ){
-				if( rnd_chance( it.second->rate, 100000u ) ){
+				uint32 final_rate = (int32)(0.5 + it.second->rate * drop_rate_bonus / 100.);
+
+				if( rnd_chance( final_rate, 100000u ) ){
 					// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
-					int32 map_drops_rate = max(1, (it.second->rate / 10));
+					int32 map_drops_rate = max(1, (final_rate / 10));
 					std::shared_ptr<s_item_drop> ditem = mob_setdropitem( it.second, 1, md->mob_id );
 					mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
 				}
@@ -3388,9 +3408,11 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 			if( specific != mapdrops->specific.end() ){
 				for( const auto& it : specific->second ){
-					if( rnd_chance( it.second->rate, 100000u ) ){
+					uint32 final_rate = (int32)(0.5 + it.second->rate * drop_rate_bonus / 100.);
+
+					if( rnd_chance( final_rate, 100000u ) ){
 						// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
-						int32 map_drops_rate = max(1, (it.second->rate / 10));
+						int32 map_drops_rate = max(1, (final_rate / 10));
 						std::shared_ptr<s_item_drop> ditem = mob_setdropitem( it.second, 1, md->mob_id );
 						mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
 					}
