@@ -863,6 +863,28 @@ struct PACKET_ZC_GUILD_CHAT {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(ZC_GUILD_CHAT, 0x17f)
 
+// TODO: no idea when it changed
+#if defined(PACKETVER)
+struct PACKET_ZC_UPDATE_CHARSTAT {
+	uint16 packetType;
+	uint32 aid;
+	uint32 cid;
+	uint32 status;
+	uint16 gender;
+	uint16 hairStyle;
+	uint16 hairColor;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_UPDATE_CHARSTAT, 0x01f2)
+#else
+struct PACKET_ZC_UPDATE_CHARSTAT {
+	uint16 packetType;
+	uint32 aid;
+	uint32 cid;
+	uint32 status;
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_UPDATE_CHARSTAT, 0x016d)
+#endif
+
 struct PACKET_ZC_STATUS {
 	int16 packetType;
 	uint16 point;
