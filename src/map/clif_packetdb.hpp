@@ -147,7 +147,6 @@
 	parseable_packet(0x0153,-1,clif_parse_GuildChangeEmblem,2,4);
 	packet(0x0154,-1);
 	parseable_packet( HEADER_CZ_REQ_CHANGE_MEMBERPOS, -1, clif_parse_GuildChangeMemberPosition, 0 );
-	packet(0x0156,-1);
 	packet(0x0157,6);
 	packet(0x0158,-1);
 	parseable_packet( HEADER_CZ_REQ_LEAVE_GUILD, sizeof( PACKET_CZ_REQ_LEAVE_GUILD ), clif_parse_GuildLeave, 0 );
@@ -161,11 +160,9 @@
 	parseable_packet( HEADER_CZ_REQ_JOIN_GUILD, sizeof( PACKET_CZ_REQ_JOIN_GUILD ), clif_parse_GuildInvite, 0 );
 	parseable_packet( HEADER_CZ_JOIN_GUILD, sizeof( PACKET_CZ_JOIN_GUILD ), clif_parse_GuildReplyInvite, 0 );
 	packet(0x016c,43);
-	packet(0x016d,14);
 	parseable_packet(0x016e,186,clif_parse_GuildChangeNotice,2,6,66);
 	parseable_packet(0x0170,14,clif_parse_GuildRequestAlliance,2,6,10);
 	parseable_packet(0x0172,10,clif_parse_GuildReplyAlliance,2,6);
-	packet(0x0174,-1);
 	packet(0x0175,6);
 	packet(0x0176,106);
 	packet(0x0177,-1);
@@ -250,7 +247,6 @@
 	parseable_packet(0x01ed,2,clif_parse_NoviceExplosionSpirits,0);
 	packet(0x01f0,-1);
 	packet(0x01f1,-1);
-	packet(0x01f2,20);
 	packet(0x01f3,10);
 	packet(0x01f6,34);
 	parseable_packet( HEADER_CZ_JOIN_BABY, sizeof( PACKET_CZ_JOIN_BABY ), clif_parse_Adopt_reply, 0 );
