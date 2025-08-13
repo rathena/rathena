@@ -5886,7 +5886,11 @@ void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 ds
 	p.y = dst_y;
 	p.skillId = skill_id;
 	p.delayTime = casttime;
-	p.element = property;
+	if( property > ELE_NONE && property < ELE_ALL ){
+		p.element = property;
+	}else{
+		p.element = ELE_NEUTRAL;
+	}
 
 #if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
 	p.disposable = false;
