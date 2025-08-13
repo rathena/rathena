@@ -225,11 +225,10 @@ static void grf_decode(unsigned char* buf, size_t len, char entry_type, size_t e
 	{// fully encrypted
 		int32 digits;
 		int32 cycle;
-		int32 i;
 
 		// compute number of digits of the entry length
 		digits = 1;
-		for( i = 10; i <= entry_len; i *= 10 )
+		for( size_t i = 10; i <= entry_len; i *= 10 )
 			++digits;
 
 		// choose size of gap between two encrypted blocks
@@ -652,7 +651,7 @@ static int32 grfio_entryread(const char* grfname, int32 gentry)
 		rSize = getlong(eheader);	// Read Size
 		eSize = getlong(eheader+4);	// Extend Size
 
-		if( (long)rSize > grf_size-sftell(fp) ) {
+		if( rSize > grf_size-sftell(fp) ) {
 			fclose(fp);
 			ShowError("Illegal data format: GRF compress entry size\n");
 			return 4;
