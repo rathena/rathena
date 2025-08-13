@@ -7284,28 +7284,36 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	case RL_H_MINE:
 		if (!(flag&1)) {
-			// Direct attack
-			if (!sd || !sd->flicker) {
-				if (skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag))
-					status_change_start(src, bl, SC_H_MINE, 10000, skill_id, 0, 0, 0, skill_get_time(skill_id,skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
-				break;
-			}
 			// Triggered by RL_FLICKER
-			if (sd && sd->flicker) {
-				// Splash damage around it!
-				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
-					src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
-				flag |= 1; // Don't consume requirement
-				if (tsc &&tsc->getSCE(SC_H_MINE) && tsc->getSCE(SC_H_MINE)->val2 == src->id) {
-					status_change_end(bl, SC_H_MINE);
-					sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id,skill_lv));
+			if( sd != nullptr && sd->flicker ){
+				// Don't consume requirement and mark recursion
+				flag |= 1;
+
+				// Only if the target has a sticky bomb on it
+				if( tsc != nullptr && tsc->hasSCE( skill_get_sc( skill_id ) ) && tsc->getSCE( skill_get_sc( skill_id ) )->val2 == src->id ){
+					// Splash damage around it!
+					map_foreachinrange( skill_area_sub, bl, skill_get_splash( skill_id, skill_lv ), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id );
+
+					// Remove the sticky bomb
+					status_change_end( bl, skill_get_sc( skill_id ) );
+
+					// Apply burning
+					sc_start4( src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2( skill_id, skill_lv ) );
+				}else{
+					// No damage for (possible) targets without a sticky bomb on it
+					break;
+				}
+			}else{
+				// Direct attack
+				if( skill_attack( skill_get_type( skill_id ), src, src, bl, skill_id, skill_lv, tick, flag ) != 0 ){
+					// Add a sticky bomb to the target
+					status_change_start( src, bl, skill_get_sc( skill_id ), 10000, skill_id, 0, 0, 0, skill_get_time( skill_id, skill_lv ), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF );
 				}
 			}
+		}else{
+			// Deal splash damage
+			skill_attack( skill_get_type( skill_id ), src, src, bl, skill_id, skill_lv, tick, flag );
 		}
-		else
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		if (sd && sd->flicker)
-			flag |= 1; // Don't consume requirement
 		break;
 
 	case RL_QD_SHOT:
