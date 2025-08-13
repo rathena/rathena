@@ -885,6 +885,19 @@ struct PACKET_ZC_UPDATE_CHARSTAT {
 DEFINE_PACKET_HEADER(ZC_UPDATE_CHARSTAT, 0x016d)
 #endif
 
+struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub {
+	uint32 accId;
+	uint32 charId;
+	int32 positionID;
+} __attribute__((packed));
+
+struct PACKET_ZC_ACK_REQ_CHANGE_MEMBERS {
+	int16 packetType;
+	int16 packetLength;
+	PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub members[];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER(ZC_ACK_REQ_CHANGE_MEMBERS, 0x156);
+
 struct PACKET_ZC_STATUS {
 	int16 packetType;
 	uint16 point;

@@ -130,7 +130,6 @@
 	parseable_packet(0x0130,6,clif_parse_VendingListReq,2);
 	parseable_packet( HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC, -1, clif_parse_PurchaseReq, 0 );
 	packet(0x0138,3);
-	packet(0x013e,24);
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);
 	parseable_packet( HEADER_CZ_MOVETO_MAP, sizeof( PACKET_CZ_MOVETO_MAP ), clif_parse_MapMove, 0 );
 	parseable_packet( HEADER_CZ_INPUT_EDITDLG, sizeof( PACKET_CZ_INPUT_EDITDLG ), clif_parse_NpcAmountInput, 0 );
@@ -147,7 +146,6 @@
 	parseable_packet(0x0153,-1,clif_parse_GuildChangeEmblem,2,4);
 	packet(0x0154,-1);
 	parseable_packet( HEADER_CZ_REQ_CHANGE_MEMBERPOS, -1, clif_parse_GuildChangeMemberPosition, 0 );
-	packet(0x0156,-1);
 	packet(0x0157,6);
 	packet(0x0158,-1);
 	parseable_packet( HEADER_CZ_REQ_LEAVE_GUILD, sizeof( PACKET_CZ_REQ_LEAVE_GUILD ), clif_parse_GuildLeave, 0 );
@@ -1295,11 +1293,6 @@
 	packet(0x07f7,-1);
 	packet(0x07f8,-1);
 	packet(0x07f9,-1);
-#endif
-
-// 2009-11-24aRagexeRE
-#if PACKETVER >= 20091124
-	packet(0x07fb,25);
 #endif
 
 // 2009-12-01aRagexeRE
