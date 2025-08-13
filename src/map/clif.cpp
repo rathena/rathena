@@ -5873,7 +5873,7 @@ void clif_skill_scale( struct block_list *bl, int32 src_id, int32 x, int32 y, ui
 ///     0 = yellow chat text "[src name] will use skill [skill name]."
 ///     1 = no text
 void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 dst_y, uint16 skill_id, uint16 skill_lv, e_element property, int32 casttime){
-	PACKET_ZC_USESKILL_ACK p{};
+	PACKET_ZC_USESKILL_ACK p = {};
 
 	p.packetType = HEADER_ZC_USESKILL_ACK;
 	p.srcId = src.id;
@@ -5886,14 +5886,7 @@ void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 ds
 	p.y = dst_y;
 	p.skillId = skill_id;
 	p.delayTime = casttime;
-
-
-	// Avoid sending unknown element
-	if(property >= ELE_NEUTRAL && property <= ELE_UNDEAD){
-		p.element = static_cast<decltype(p.element)>(property);
-	}else{
-		p.element = ELE_NEUTRAL;
-	}
+	p.element = property;
 
 #if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
 	p.disposable = false;
