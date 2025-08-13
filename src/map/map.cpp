@@ -52,6 +52,7 @@
 #include "quest.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
+#include "./skills/battle_skill_factory.hpp"
 
 using namespace rathena;
 using namespace rathena::server_map;

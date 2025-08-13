@@ -45,6 +45,7 @@
 #include "script.hpp"
 #include "status.hpp"
 #include "unit.hpp"
+#include "./skills/battle_skill_factory.hpp"
 
 using namespace rathena;
 
@@ -1310,6 +1311,7 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 		}
 
 		if( skill_id ) {
+
 			// Trigger status effects on skills
 			for (const auto &it : sd->addeff_onskill) {
 				if (skill_id != it.skill_id || !it.rate)
@@ -1335,6 +1337,11 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 
 	if( dmg_lv < ATK_DEF ) // no damage, return;
 		return 0;
+
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+    if (skill != nullptr && skill->impl != nullptr) {
+        skill->impl->applyAdditionalEffects(src, bl, skill_lv, tick, attack_type, dmg_lv);
+    }
 
 	switch(skill_id) {
 		case 0:
@@ -1400,14 +1407,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 				}
 			}
 			break;
-
-	case SM_BASH:
-		if( sd && skill_lv > 5 && pc_checkskill(sd,SM_FATALBLOW)>0 ){
-			//BaseChance gets multiplied with BaseLevel/50.0; 500/50 simplifies to 10 [Playtester]
-			status_change_start(src,bl,SC_STUN,(skill_lv-5)*sd->status.base_level*10,
-				skill_lv,0,0,0,skill_get_time2(skill_id,skill_lv),SCSTART_NONE);
-		}
-		break;
 
 	case MER_CRASH:
 		sc_start(src,bl,SC_STUN,(6*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -26007,6 +26006,7 @@ void SkillDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
+	BattleSkillFactory::registerAllSkills();
 }
 
 /**
