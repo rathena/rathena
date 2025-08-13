@@ -27,7 +27,10 @@
 #   MaxWeight                Base maximum weight. (Default: 20000)
 #   HpFactor                 Exponential HP increase. Per base level: [HpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   HpIncrease               Linear HP increase. Per base level: [HpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 500)
+#   SpFactor                 Exponential SP increase. Per base level: [SpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   SpIncrease               Linear SP increase. Per base level: [SpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 100)
+#   ApFactor                 Exponential AP increase. Per base level: [ApFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+#   ApIncrease               Linear AP increase. Per base level: [ApIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
 #     Weapon                 Weapon type with associated ASPD.
 #   BonusStats:              Job level bonus stats/traits.
@@ -78,7 +81,7 @@
 
 Header:
   Type: JOB_STATS
-  Version: 2
+  Version: 3
 
 Body:
   - Jobs:
@@ -98,6 +101,8 @@ Body:
         Int: 1
   - Jobs:
       Swordman: true
+      Swordman_High: true
+      Baby_Swordman: true
     MaxWeight: 28000
     HpFactor: 70
     SpIncrease: 200
@@ -140,6 +145,8 @@ Body:
         Str: 1
   - Jobs:
       Mage: true
+      Mage_High: true
+      Baby_Mage: true
     MaxWeight: 22000
     HpFactor: 30
     SpIncrease: 600
@@ -182,6 +189,8 @@ Body:
         Int: 1
   - Jobs:
       Archer: true
+      Archer_High: true
+      Baby_Archer: true
     MaxWeight: 26000
     HpFactor: 50
     SpIncrease: 200
@@ -224,6 +233,8 @@ Body:
         Dex: 1
   - Jobs:
       Acolyte: true
+      Acolyte_High: true
+      Baby_Acolyte: true
     MaxWeight: 24000
     HpFactor: 40
     SpIncrease: 500
@@ -266,6 +277,8 @@ Body:
         Luk: 1
   - Jobs:
       Merchant: true
+      Merchant_High: true
+      Baby_Merchant: true
     MaxWeight: 28000
     HpFactor: 40
     SpIncrease: 300
@@ -308,6 +321,8 @@ Body:
         Dex: 1
   - Jobs:
       Thief: true
+      Thief_High: true
+      Baby_Thief: true
     MaxWeight: 24000
     HpFactor: 50
     SpIncrease: 200
@@ -351,6 +366,8 @@ Body:
   - Jobs:
       Knight: true
       Knight2: true
+      Baby_Knight: true
+      Baby_Knight2: true
     MaxWeight: 28000
     HpFactor: 150
     SpIncrease: 300
@@ -417,6 +434,7 @@ Body:
         Dex: 1
   - Jobs:
       Priest: true
+      Baby_Priest: true
     MaxWeight: 26000
     HpFactor: 75
     SpIncrease: 800
@@ -483,6 +501,7 @@ Body:
         Luk: 1
   - Jobs:
       Wizard: true
+      Baby_Wizard: true
     MaxWeight: 24000
     HpFactor: 55
     SpIncrease: 900
@@ -549,6 +568,7 @@ Body:
         Int: 1
   - Jobs:
       Blacksmith: true
+      Baby_Blacksmith: true
     MaxWeight: 30000
     HpFactor: 90
     SpIncrease: 400
@@ -615,6 +635,7 @@ Body:
         Vit: 1
   - Jobs:
       Hunter: true
+      Baby_Hunter: true
     MaxWeight: 27000
     HpFactor: 85
     SpIncrease: 400
@@ -681,6 +702,7 @@ Body:
         Dex: 1
   - Jobs:
       Assassin: true
+      Baby_Assassin: true
     MaxWeight: 24000
     HpFactor: 110
     SpIncrease: 400
@@ -748,6 +770,8 @@ Body:
   - Jobs:
       Crusader: true
       Crusader2: true
+      Baby_Crusader: true
+      Baby_Crusader2: true
     MaxWeight: 28000
     HpFactor: 110
     HpIncrease: 700
@@ -815,6 +839,7 @@ Body:
         Vit: 1
   - Jobs:
       Monk: true
+      Baby_Monk: true
     MaxWeight: 26000
     HpFactor: 90
     HpIncrease: 650
@@ -882,6 +907,7 @@ Body:
         Str: 1
   - Jobs:
       Sage: true
+      Baby_Sage: true
     MaxWeight: 24000
     HpFactor: 75
     SpIncrease: 700
@@ -948,6 +974,7 @@ Body:
         Int: 1
   - Jobs:
       Rogue: true
+      Baby_Rogue: true
     MaxWeight: 24000
     HpFactor: 85
     SpIncrease: 500
@@ -1014,6 +1041,7 @@ Body:
         Dex: 1
   - Jobs:
       Alchemist: true
+      Baby_Alchemist: true
     MaxWeight: 30000
     HpFactor: 90
     SpIncrease: 400
@@ -1080,6 +1108,7 @@ Body:
         Agi: 1
   - Jobs:
       Bard: true
+      Baby_Bard: true
     MaxWeight: 27000
     HpFactor: 75
     HpIncrease: 300
@@ -1147,6 +1176,7 @@ Body:
         Dex: 1
   - Jobs:
       Dancer: true
+      Baby_Dancer: true
     MaxWeight: 27000
     HpFactor: 75
     HpIncrease: 300
@@ -1402,258 +1432,6 @@ Body:
         Str: 1
       - Level: 9
         Int: 1
-  - Jobs:
-      Swordman_High: true
-    MaxWeight: 28000
-    HpFactor: 70
-    SpIncrease: 200
-    BonusStats:
-      - Level: 2
-        Str: 1
-      - Level: 6
-        Vit: 1
-      - Level: 10
-        Dex: 1
-      - Level: 14
-        Str: 1
-      - Level: 18
-        Vit: 1
-      - Level: 22
-        Dex: 1
-      - Level: 26
-        Luk: 1
-      - Level: 30
-        Agi: 1
-      - Level: 33
-        Str: 1
-      - Level: 36
-        Dex: 1
-      - Level: 38
-        Vit: 1
-      - Level: 40
-        Str: 1
-      - Level: 42
-        Vit: 1
-      - Level: 44
-        Luk: 1
-      - Level: 46
-        Agi: 1
-      - Level: 47
-        Str: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Str: 1
-  - Jobs:
-      Mage_High: true
-    MaxWeight: 22000
-    HpFactor: 30
-    SpIncrease: 600
-    BonusStats:
-      - Level: 2
-        Int: 1
-      - Level: 6
-        Dex: 1
-      - Level: 10
-        Dex: 1
-      - Level: 14
-        Int: 1
-      - Level: 18
-        Agi: 1
-      - Level: 22
-        Int: 1
-      - Level: 26
-        Agi: 1
-      - Level: 30
-        Luk: 1
-      - Level: 33
-        Int: 1
-      - Level: 36
-        Dex: 1
-      - Level: 38
-        Int: 1
-      - Level: 40
-        Agi: 1
-      - Level: 42
-        Luk: 1
-      - Level: 44
-        Int: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
-        Agi: 1
-      - Level: 49
-        Luk: 1
-      - Level: 50
-        Int: 1
-  - Jobs:
-      Archer_High: true
-    MaxWeight: 26000
-    HpFactor: 50
-    SpIncrease: 200
-    BonusStats:
-      - Level: 2
-        Dex: 1
-      - Level: 6
-        Str: 1
-      - Level: 10
-        Int: 1
-      - Level: 14
-        Dex: 1
-      - Level: 18
-        Dex: 1
-      - Level: 22
-        Luk: 1
-      - Level: 26
-        Agi: 1
-      - Level: 30
-        Dex: 1
-      - Level: 33
-        Agi: 1
-      - Level: 36
-        Dex: 1
-      - Level: 38
-        Str: 1
-      - Level: 40
-        Str: 1
-      - Level: 42
-        Dex: 1
-      - Level: 44
-        Luk: 1
-      - Level: 46
-        Vit: 1
-      - Level: 47
-        Int: 1
-      - Level: 49
-        Agi: 1
-      - Level: 50
-        Dex: 1
-  - Jobs:
-      Acolyte_High: true
-    MaxWeight: 24000
-    HpFactor: 40
-    SpIncrease: 500
-    BonusStats:
-      - Level: 2
-        Luk: 1
-      - Level: 6
-        Vit: 1
-      - Level: 10
-        Int: 1
-      - Level: 14
-        Dex: 1
-      - Level: 18
-        Luk: 1
-      - Level: 22
-        Agi: 1
-      - Level: 26
-        Str: 1
-      - Level: 30
-        Vit: 1
-      - Level: 33
-        Int: 1
-      - Level: 36
-        Dex: 1
-      - Level: 38
-        Luk: 1
-      - Level: 40
-        Agi: 1
-      - Level: 42
-        Str: 1
-      - Level: 44
-        Vit: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
-        Dex: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Luk: 1
-  - Jobs:
-      Merchant_High: true
-    MaxWeight: 28000
-    HpFactor: 40
-    SpIncrease: 300
-    BonusStats:
-      - Level: 2
-        Vit: 1
-      - Level: 6
-        Dex: 1
-      - Level: 10
-        Str: 1
-      - Level: 14
-        Dex: 1
-      - Level: 18
-        Vit: 1
-      - Level: 22
-        Str: 1
-      - Level: 26
-        Int: 1
-      - Level: 30
-        Vit: 1
-      - Level: 33
-        Agi: 1
-      - Level: 36
-        Luk: 1
-      - Level: 38
-        Dex: 1
-      - Level: 40
-        Str: 1
-      - Level: 42
-        Dex: 1
-      - Level: 44
-        Str: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
-        Vit: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Dex: 1
-  - Jobs:
-      Thief_High: true
-    MaxWeight: 24000
-    HpFactor: 50
-    SpIncrease: 200
-    BonusStats:
-      - Level: 2
-        Agi: 1
-      - Level: 6
-        Str: 1
-      - Level: 10
-        Dex: 1
-      - Level: 14
-        Vit: 1
-      - Level: 18
-        Int: 1
-      - Level: 22
-        Dex: 1
-      - Level: 26
-        Luk: 1
-      - Level: 30
-        Str: 1
-      - Level: 33
-        Agi: 1
-      - Level: 36
-        Agi: 1
-      - Level: 38
-        Str: 1
-      - Level: 40
-        Luk: 1
-      - Level: 42
-        Dex: 1
-      - Level: 44
-        Vit: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
-        Str: 1
-      - Level: 49
-        Dex: 1
-      - Level: 50
-        Agi: 1
   - Jobs:
       Lord_Knight: true
       Lord_Knight2: true
@@ -2910,1122 +2688,6 @@ Body:
         Agi: 1
   - Jobs:
       Baby: true
-  - Jobs:
-      Baby_Swordman: true
-    MaxWeight: 28000
-    HpFactor: 70
-    SpIncrease: 200
-    BonusStats:
-      - Level: 2
-        Str: 1
-      - Level: 6
-        Vit: 1
-      - Level: 10
-        Dex: 1
-      - Level: 14
-        Str: 1
-      - Level: 18
-        Vit: 1
-      - Level: 22
-        Dex: 1
-      - Level: 26
-        Luk: 1
-      - Level: 30
-        Agi: 1
-      - Level: 33
-        Str: 1
-      - Level: 36
-        Dex: 1
-      - Level: 38
-        Vit: 1
-      - Level: 40
-        Str: 1
-      - Level: 42
-        Vit: 1
-      - Level: 44
-        Luk: 1
-      - Level: 46
-        Agi: 1
-      - Level: 47
-        Str: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Str: 1
-  - Jobs:
-      Baby_Mage: true
-    MaxWeight: 22000
-    HpFactor: 30
-    SpIncrease: 600
-    BonusStats:
-      - Level: 2
-        Int: 1
-      - Level: 6
-        Dex: 1
-      - Level: 10
-        Dex: 1
-      - Level: 14
-        Int: 1
-      - Level: 18
-        Agi: 1
-      - Level: 22
-        Int: 1
-      - Level: 26
-        Agi: 1
-      - Level: 30
-        Luk: 1
-      - Level: 33
-        Int: 1
-      - Level: 36
-        Dex: 1
-      - Level: 38
-        Int: 1
-      - Level: 40
-        Agi: 1
-      - Level: 42
-        Luk: 1
-      - Level: 44
-        Int: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
-        Agi: 1
-      - Level: 49
-        Luk: 1
-      - Level: 50
-        Int: 1
-  - Jobs:
-      Baby_Archer: true
-    MaxWeight: 26000
-    HpFactor: 50
-    SpIncrease: 200
-    BonusStats:
-      - Level: 2
-        Dex: 1
-      - Level: 6
-        Str: 1
-      - Level: 10
-        Int: 1
-      - Level: 14
-        Dex: 1
-      - Level: 18
-        Dex: 1
-      - Level: 22
-        Luk: 1
-      - Level: 26
-        Agi: 1
-      - Level: 30
-        Dex: 1
-      - Level: 33
-        Agi: 1
-      - Level: 36
-        Dex: 1
-      - Level: 38
-        Str: 1
-      - Level: 40
-        Str: 1
-      - Level: 42
-        Dex: 1
-      - Level: 44
-        Luk: 1
-      - Level: 46
-        Vit: 1
-      - Level: 47
-        Int: 1
-      - Level: 49
-        Agi: 1
-      - Level: 50
-        Dex: 1
-  - Jobs:
-      Baby_Acolyte: true
-    MaxWeight: 24000
-    HpFactor: 40
-    SpIncrease: 500
-    BonusStats:
-      - Level: 2
-        Luk: 1
-      - Level: 6
-        Vit: 1
-      - Level: 10
-        Int: 1
-      - Level: 14
-        Dex: 1
-      - Level: 18
-        Luk: 1
-      - Level: 22
-        Agi: 1
-      - Level: 26
-        Str: 1
-      - Level: 30
-        Vit: 1
-      - Level: 33
-        Int: 1
-      - Level: 36
-        Dex: 1
-      - Level: 38
-        Luk: 1
-      - Level: 40
-        Agi: 1
-      - Level: 42
-        Str: 1
-      - Level: 44
-        Vit: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
-        Dex: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Luk: 1
-  - Jobs:
-      Baby_Merchant: true
-    MaxWeight: 28000
-    HpFactor: 40
-    SpIncrease: 300
-    BonusStats:
-      - Level: 2
-        Vit: 1
-      - Level: 6
-        Dex: 1
-      - Level: 10
-        Str: 1
-      - Level: 14
-        Dex: 1
-      - Level: 18
-        Vit: 1
-      - Level: 22
-        Str: 1
-      - Level: 26
-        Int: 1
-      - Level: 30
-        Vit: 1
-      - Level: 36
-        Luk: 1
-      - Level: 38
-        Dex: 1
-      - Level: 40
-        Str: 1
-      - Level: 41
-        Agi: 1
-      - Level: 42
-        Dex: 1
-      - Level: 44
-        Str: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
-        Vit: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Dex: 1
-  - Jobs:
-      Baby_Thief: true
-    MaxWeight: 24000
-    HpFactor: 50
-    SpIncrease: 200
-    BonusStats:
-      - Level: 2
-        Agi: 1
-      - Level: 6
-        Str: 1
-      - Level: 10
-        Dex: 1
-      - Level: 14
-        Vit: 1
-      - Level: 18
-        Int: 1
-      - Level: 22
-        Dex: 1
-      - Level: 26
-        Luk: 1
-      - Level: 30
-        Str: 1
-      - Level: 33
-        Agi: 1
-      - Level: 36
-        Str: 1
-      - Level: 38
-        Agi: 1
-      - Level: 40
-        Luk: 1
-      - Level: 42
-        Dex: 1
-      - Level: 44
-        Vit: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
-        Str: 1
-      - Level: 49
-        Dex: 1
-      - Level: 50
-        Agi: 1
-  - Jobs:
-      Baby_Knight: true
-      Baby_Knight2: true
-    MaxWeight: 28000
-    HpFactor: 150
-    SpIncrease: 300
-    BonusStats:
-      - Level: 1
-        Vit: 1
-      - Level: 3
-        Vit: 1
-      - Level: 4
-        Str: 1
-      - Level: 5
-        Luk: 1
-      - Level: 8
-        Vit: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
-        Dex: 1
-      - Level: 12
-        Vit: 1
-      - Level: 13
-        Agi: 1
-      - Level: 15
-        Str: 1
-      - Level: 17
-        Vit: 1
-      - Level: 18
-        Vit: 1
-      - Level: 19
-        Dex: 1
-      - Level: 20
-        Luk: 1
-      - Level: 21
-        Str: 1
-      - Level: 23
-        Vit: 1
-      - Level: 27
-        Str: 1
-      - Level: 28
-        Luk: 1
-      - Level: 29
-        Vit: 1
-      - Level: 31
-        Dex: 1
-      - Level: 33
-        Str: 1
-      - Level: 36
-        Vit: 1
-      - Level: 37
-        Luk: 1
-      - Level: 38
-        Agi: 1
-      - Level: 40
-        Dex: 1
-      - Level: 43
-        Vit: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Dex: 1
-      - Level: 49
-        Dex: 1
-  - Jobs:
-      Baby_Priest: true
-    MaxWeight: 26000
-    HpFactor: 75
-    SpIncrease: 800
-    BonusStats:
-      - Level: 1
-        Luk: 1
-      - Level: 3
-        Luk: 1
-      - Level: 4
-        Str: 1
-      - Level: 6
-        Agi: 1
-      - Level: 7
-        Vit: 1
-      - Level: 8
-        Int: 1
-      - Level: 9
-        Int: 1
-      - Level: 10
-        Luk: 1
-      - Level: 11
-        Str: 1
-      - Level: 14
-        Vit: 1
-      - Level: 15
-        Dex: 1
-      - Level: 17
-        Str: 1
-      - Level: 20
-        Dex: 1
-      - Level: 21
-        Luk: 1
-      - Level: 22
-        Int: 1
-      - Level: 25
-        Dex: 1
-      - Level: 27
-        Str: 1
-      - Level: 29
-        Agi: 1
-      - Level: 31
-        Luk: 1
-      - Level: 32
-        Dex: 1
-      - Level: 34
-        Vit: 1
-      - Level: 35
-        Str: 1
-      - Level: 36
-        Vit: 1
-      - Level: 37
-        Agi: 1
-      - Level: 39
-        Luk: 1
-      - Level: 42
-        Int: 1
-      - Level: 43
-        Int: 1
-      - Level: 45
-        Vit: 1
-      - Level: 48
-        Agi: 1
-      - Level: 50
-        Luk: 1
-  - Jobs:
-      Baby_Wizard: true
-    MaxWeight: 24000
-    HpFactor: 55
-    SpIncrease: 900
-    BonusStats:
-      - Level: 1
-        Int: 1
-      - Level: 2
-        Dex: 1
-      - Level: 4
-        Int: 1
-      - Level: 5
-        Dex: 1
-      - Level: 6
-        Agi: 1
-      - Level: 9
-        Int: 1
-      - Level: 10
-        Agi: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Dex: 1
-      - Level: 15
-        Luk: 1
-      - Level: 18
-        Int: 1
-      - Level: 22
-        Int: 1
-      - Level: 24
-        Agi: 1
-      - Level: 26
-        Dex: 1
-      - Level: 29
-        Int: 1
-      - Level: 31
-        Int: 1
-      - Level: 32
-        Dex: 1
-      - Level: 33
-        Int: 1
-      - Level: 34
-        Agi: 1
-      - Level: 36
-        Luk: 1
-      - Level: 38
-        Vit: 1
-      - Level: 39
-        Dex: 1
-      - Level: 40
-        Int: 1
-      - Level: 41
-        Agi: 1
-      - Level: 43
-        Agi: 1
-      - Level: 45
-        Int: 1
-      - Level: 46
-        Agi: 1
-      - Level: 47
-        Agi: 1
-      - Level: 48
-        Int: 1
-      - Level: 50
-        Int: 1
-  - Jobs:
-      Baby_Blacksmith: true
-    MaxWeight: 30000
-    HpFactor: 90
-    SpIncrease: 400
-    BonusStats:
-      - Level: 1
-        Dex: 1
-      - Level: 3
-        Str: 1
-      - Level: 4
-        Dex: 1
-      - Level: 5
-        Dex: 1
-      - Level: 7
-        Vit: 1
-      - Level: 8
-        Str: 1
-      - Level: 10
-        Dex: 1
-      - Level: 11
-        Luk: 1
-      - Level: 12
-        Dex: 1
-      - Level: 13
-        Vit: 1
-      - Level: 16
-        Str: 1
-      - Level: 19
-        Dex: 1
-      - Level: 20
-        Vit: 1
-      - Level: 21
-        Int: 1
-      - Level: 23
-        Str: 1
-      - Level: 26
-        Dex: 1
-      - Level: 28
-        Dex: 1
-      - Level: 29
-        Agi: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Vit: 1
-      - Level: 34
-        Int: 1
-      - Level: 36
-        Dex: 1
-      - Level: 37
-        Vit: 1
-      - Level: 38
-        Agi: 1
-      - Level: 39
-        Dex: 1
-      - Level: 40
-        Dex: 1
-      - Level: 44
-        Str: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
-        Dex: 1
-      - Level: 49
-        Vit: 1
-  - Jobs:
-      Baby_Hunter: true
-    MaxWeight: 27000
-    HpFactor: 85
-    SpIncrease: 400
-    BonusStats:
-      - Level: 1
-        Dex: 1
-      - Level: 3
-        Int: 1
-      - Level: 4
-        Dex: 1
-      - Level: 5
-        Str: 1
-      - Level: 7
-        Luk: 1
-      - Level: 8
-        Dex: 1
-      - Level: 10
-        Str: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Agi: 1
-      - Level: 14
-        Dex: 1
-      - Level: 15
-        Luk: 1
-      - Level: 17
-        Vit: 1
-      - Level: 19
-        Agi: 1
-      - Level: 20
-        Agi: 1
-      - Level: 21
-        Dex: 1
-      - Level: 22
-        Vit: 1
-      - Level: 27
-        Dex: 1
-      - Level: 29
-        Luk: 1
-      - Level: 31
-        Agi: 1
-      - Level: 33
-        Dex: 1
-      - Level: 34
-        Int: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Agi: 1
-      - Level: 41
-        Int: 1
-      - Level: 42
-        Luk: 1
-      - Level: 43
-        Dex: 1
-      - Level: 44
-        Str: 1
-      - Level: 46
-        Int: 1
-      - Level: 47
-        Agi: 1
-      - Level: 49
-        Dex: 1
-  - Jobs:
-      Baby_Assassin: true
-    MaxWeight: 24000
-    HpFactor: 110
-    SpIncrease: 400
-    BonusStats:
-      - Level: 1
-        Agi: 1
-      - Level: 2
-        Agi: 1
-      - Level: 3
-        Agi: 1
-      - Level: 4
-        Int: 1
-      - Level: 6
-        Vit: 1
-      - Level: 8
-        Vit: 1
-      - Level: 9
-        Dex: 1
-      - Level: 11
-        Str: 1
-      - Level: 14
-        Int: 1
-      - Level: 15
-        Agi: 1
-      - Level: 16
-        Agi: 1
-      - Level: 17
-        Agi: 1
-      - Level: 18
-        Agi: 1
-      - Level: 19
-        Agi: 1
-      - Level: 20
-        Agi: 1
-      - Level: 21
-        Agi: 1
-      - Level: 24
-        Dex: 1
-      - Level: 25
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 30
-        Dex: 1
-      - Level: 31
-        Dex: 1
-      - Level: 32
-        Str: 1
-      - Level: 38
-        Int: 1
-      - Level: 40
-        Dex: 1
-      - Level: 41
-        Dex: 1
-      - Level: 42
-        Int: 1
-      - Level: 45
-        Str: 1
-      - Level: 46
-        Dex: 1
-      - Level: 48
-        Str: 1
-      - Level: 50
-        Dex: 1
-  - Jobs:
-      Baby_Crusader: true
-      Baby_Crusader2: true
-    MaxWeight: 28000
-    HpFactor: 110
-    HpIncrease: 700
-    SpIncrease: 470
-    BonusStats:
-      - Level: 1
-        Luk: 1
-      - Level: 2
-        Luk: 1
-      - Level: 3
-        Luk: 1
-      - Level: 4
-        Luk: 1
-      - Level: 5
-        Luk: 1
-      - Level: 7
-        Str: 1
-      - Level: 9
-        Int: 1
-      - Level: 11
-        Str: 1
-      - Level: 12
-        Vit: 1
-      - Level: 14
-        Dex: 1
-      - Level: 15
-        Vit: 1
-      - Level: 17
-        Str: 1
-      - Level: 20
-        Int: 1
-      - Level: 21
-        Int: 1
-      - Level: 22
-        Vit: 1
-      - Level: 23
-        Str: 1
-      - Level: 25
-        Str: 1
-      - Level: 28
-        Dex: 1
-      - Level: 30
-        Agi: 1
-      - Level: 32
-        Str: 1
-      - Level: 34
-        Dex: 1
-      - Level: 35
-        Int: 1
-      - Level: 36
-        Agi: 1
-      - Level: 38
-        Int: 1
-      - Level: 40
-        Vit: 1
-      - Level: 41
-        Vit: 1
-      - Level: 44
-        Int: 1
-      - Level: 46
-        Vit: 1
-      - Level: 48
-        Str: 1
-      - Level: 50
-        Vit: 1
-  - Jobs:
-      Baby_Monk: true
-    MaxWeight: 26000
-    HpFactor: 90
-    HpIncrease: 650
-    SpIncrease: 470
-    BonusStats:
-      - Level: 1
-        Str: 1
-      - Level: 2
-        Str: 1
-      - Level: 4
-        Dex: 1
-      - Level: 5
-        Agi: 1
-      - Level: 7
-        Vit: 1
-      - Level: 10
-        Agi: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Str: 1
-      - Level: 15
-        Luk: 1
-      - Level: 16
-        Int: 1
-      - Level: 18
-        Agi: 1
-      - Level: 20
-        Vit: 1
-      - Level: 21
-        Agi: 1
-      - Level: 22
-        Dex: 1
-      - Level: 23
-        Agi: 1
-      - Level: 25
-        Vit: 1
-      - Level: 26
-        Str: 1
-      - Level: 27
-        Str: 1
-      - Level: 30
-        Dex: 1
-      - Level: 32
-        Luk: 1
-      - Level: 33
-        Vit: 1
-      - Level: 35
-        Agi: 1
-      - Level: 38
-        Int: 1
-      - Level: 40
-        Luk: 1
-      - Level: 41
-        Vit: 1
-      - Level: 43
-        Dex: 1
-      - Level: 44
-        Agi: 1
-      - Level: 46
-        Vit: 1
-      - Level: 49
-        Str: 1
-      - Level: 50
-        Str: 1
-  - Jobs:
-      Baby_Sage: true
-    MaxWeight: 24000
-    HpFactor: 75
-    SpIncrease: 700
-    BonusStats:
-      - Level: 1
-        Int: 1
-      - Level: 3
-        Agi: 1
-      - Level: 4
-        Vit: 1
-      - Level: 6
-        Agi: 1
-      - Level: 8
-        Int: 1
-      - Level: 11
-        Vit: 1
-      - Level: 13
-        Agi: 1
-      - Level: 15
-        Int: 1
-      - Level: 17
-        Luk: 1
-      - Level: 18
-        Vit: 1
-      - Level: 20
-        Dex: 1
-      - Level: 22
-        Agi: 1
-      - Level: 24
-        Int: 1
-      - Level: 25
-        Dex: 1
-      - Level: 27
-        Dex: 1
-      - Level: 30
-        Int: 1
-      - Level: 32
-        Dex: 1
-      - Level: 33
-        Agi: 1
-      - Level: 35
-        Luk: 1
-      - Level: 37
-        Int: 1
-      - Level: 38
-        Int: 1
-      - Level: 39
-        Dex: 1
-      - Level: 40
-        Luk: 1
-      - Level: 42
-        Str: 1
-      - Level: 44
-        Str: 1
-      - Level: 45
-        Int: 1
-      - Level: 46
-        Str: 1
-      - Level: 47
-        Str: 1
-      - Level: 48
-        Str: 1
-      - Level: 50
-        Int: 1
-  - Jobs:
-      Baby_Rogue: true
-    MaxWeight: 24000
-    HpFactor: 85
-    SpIncrease: 500
-    BonusStats:
-      - Level: 1
-        Agi: 1
-      - Level: 2
-        Vit: 1
-      - Level: 3
-        Dex: 1
-      - Level: 5
-        Str: 1
-      - Level: 6
-        Vit: 1
-      - Level: 7
-        Agi: 1
-      - Level: 9
-        Vit: 1
-      - Level: 11
-        Dex: 1
-      - Level: 14
-        Vit: 1
-      - Level: 15
-        Vit: 1
-      - Level: 16
-        Agi: 1
-      - Level: 18
-        Dex: 1
-      - Level: 20
-        Dex: 1
-      - Level: 23
-        Agi: 1
-      - Level: 25
-        Str: 1
-      - Level: 26
-        Vit: 1
-      - Level: 27
-        Str: 1
-      - Level: 29
-        Agi: 1
-      - Level: 30
-        Str: 1
-      - Level: 33
-        Dex: 1
-      - Level: 34
-        Dex: 1
-      - Level: 36
-        Str: 1
-      - Level: 38
-        Int: 1
-      - Level: 39
-        Agi: 1
-      - Level: 42
-        Str: 1
-      - Level: 43
-        Int: 1
-      - Level: 45
-        Agi: 1
-      - Level: 47
-        Int: 1
-      - Level: 48
-        Int: 1
-      - Level: 50
-        Dex: 1
-  - Jobs:
-      Baby_Alchemist: true
-    MaxWeight: 30000
-    HpFactor: 90
-    SpIncrease: 400
-    BonusStats:
-      - Level: 1
-        Int: 1
-      - Level: 2
-        Dex: 1
-      - Level: 3
-        Dex: 1
-      - Level: 6
-        Str: 1
-      - Level: 8
-        Dex: 1
-      - Level: 9
-        Int: 1
-      - Level: 11
-        Agi: 1
-      - Level: 13
-        Dex: 1
-      - Level: 14
-        Agi: 1
-      - Level: 15
-        Str: 1
-      - Level: 17
-        Int: 1
-      - Level: 19
-        Dex: 1
-      - Level: 20
-        Vit: 1
-      - Level: 21
-        Dex: 1
-      - Level: 23
-        Int: 1
-      - Level: 24
-        Int: 1
-      - Level: 25
-        Dex: 1
-      - Level: 26
-        Str: 1
-      - Level: 28
-        Dex: 1
-      - Level: 29
-        Int: 1
-      - Level: 31
-        Vit: 1
-      - Level: 32
-        Dex: 1
-      - Level: 34
-        Str: 1
-      - Level: 36
-        Vit: 1
-      - Level: 38
-        Int: 1
-      - Level: 40
-        Agi: 1
-      - Level: 43
-        Str: 1
-      - Level: 45
-        Agi: 1
-      - Level: 49
-        Agi: 1
-      - Level: 50
-        Agi: 1
-  - Jobs:
-      Baby_Bard: true
-    MaxWeight: 27000
-    HpFactor: 75
-    HpIncrease: 300
-    SpIncrease: 600
-    BonusStats:
-      - Level: 1
-        Dex: 1
-      - Level: 2
-        Agi: 1
-      - Level: 3
-        Str: 1
-      - Level: 5
-        Int: 1
-      - Level: 6
-        Luk: 1
-      - Level: 7
-        Dex: 1
-      - Level: 9
-        Luk: 1
-      - Level: 10
-        Agi: 1
-      - Level: 11
-        Agi: 1
-      - Level: 13
-        Int: 1
-      - Level: 15
-        Dex: 1
-      - Level: 16
-        Dex: 1
-      - Level: 17
-        Vit: 1
-      - Level: 19
-        Dex: 1
-      - Level: 20
-        Luk: 1
-      - Level: 21
-        Int: 1
-      - Level: 24
-        Agi: 1
-      - Level: 28
-        Str: 1
-      - Level: 30
-        Agi: 1
-      - Level: 32
-        Dex: 1
-      - Level: 33
-        Vit: 1
-      - Level: 35
-        Agi: 1
-      - Level: 38
-        Dex: 1
-      - Level: 40
-        Int: 1
-      - Level: 41
-        Luk: 1
-      - Level: 43
-        Vit: 1
-      - Level: 46
-        Dex: 1
-      - Level: 47
-        Int: 1
-      - Level: 48
-        Agi: 1
-      - Level: 50
-        Dex: 1
-  - Jobs:
-      Baby_Dancer: true
-    MaxWeight: 27000
-    HpFactor: 75
-    HpIncrease: 300
-    SpIncrease: 600
-    BonusStats:
-      - Level: 1
-        Luk: 1
-      - Level: 2
-        Agi: 1
-      - Level: 3
-        Str: 1
-      - Level: 5
-        Int: 1
-      - Level: 6
-        Dex: 1
-      - Level: 7
-        Luk: 1
-      - Level: 9
-        Dex: 1
-      - Level: 10
-        Agi: 1
-      - Level: 11
-        Agi: 1
-      - Level: 13
-        Int: 1
-      - Level: 15
-        Luk: 1
-      - Level: 16
-        Dex: 1
-      - Level: 17
-        Vit: 1
-      - Level: 19
-        Luk: 1
-      - Level: 20
-        Dex: 1
-      - Level: 21
-        Int: 1
-      - Level: 24
-        Agi: 1
-      - Level: 28
-        Str: 1
-      - Level: 30
-        Agi: 1
-      - Level: 32
-        Luk: 1
-      - Level: 33
-        Vit: 1
-      - Level: 35
-        Agi: 1
-      - Level: 38
-        Luk: 1
-      - Level: 40
-        Int: 1
-      - Level: 41
-        Dex: 1
-      - Level: 43
-        Vit: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
-        Int: 1
-      - Level: 48
-        Agi: 1
-      - Level: 50
-        Luk: 1
   - Jobs:
       Super_Baby: true
     BonusStats:
