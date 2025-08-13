@@ -14,17 +14,41 @@
 #include "strlib.hpp"
 #include "utils.hpp"
 
+size_t sftell( FILE* fp ){
+#if defined(__64BIT__)
+	#if defined(WIN32)
+		return _ftelli64( fp );
+	#else
+		return ftello( fp );
+	#endif
+#else
+	return ftell( fp );
+#endif
+}
+
+int32 sfseek( FILE* fp, size_t offset, int32 origin ){
+#if defined(__64BIT__)
+	#if defined(WIN32)
+		return _fseeki64( fp, offset, origin );
+	#else
+		return fseeko( fp, offset, origin );
+	#endif
+#else
+	return fseek( fp, offset, origin );
+#endif
+}
+
 //----------------------------
 //	file entry table struct
 //----------------------------
 typedef struct _FILELIST {
-	int32		srclen;				// compressed size
-	int32		srclen_aligned;
-	int32		declen;				// original size
-	int32		srcpos;				// position of entry in grf
+	size_t		srclen;				// compressed size
+	size_t		srclen_aligned;
+	size_t		declen;				// original size
+	size_t		srcpos;				// position of entry in grf
 	int32		next;				// index of next filelist entry with same hash (-1: end of entry chain)
 	char	type;
-	char	fn[128-4*5];		// file name
+	char	fn[256-4*5];		// file name
 	char*	fnd;				// if the file was cloned, contains name of original file
 	char	gentry;				// read grf file select
 } FILELIST;
@@ -195,7 +219,7 @@ static void grf_decode_full(unsigned char* buf, size_t len, int32 cycle)
 /// @param len length of the data
 /// @param entry_type flags associated with the data
 /// @param entry_len true (unaligned) length of the data
-static void grf_decode(unsigned char* buf, size_t len, char entry_type, int32 entry_len)
+static void grf_decode(unsigned char* buf, size_t len, char entry_type, size_t entry_len)
 {
 	if( entry_type & FILELIST_TYPE_ENCRYPT_MIXED )
 	{// fully encrypted
@@ -244,7 +268,30 @@ unsigned long grfio_crc32(const unsigned char* buf, uint32 len)
 /// zlib uncompress
 int32 decode_zip(void* dest, unsigned long* destLen, const void* source, unsigned long sourceLen)
 {
-	return uncompress((Bytef*)dest, destLen, (const Bytef*)source, sourceLen);
+	int32 ret = uncompress((Bytef*)dest, destLen, (const Bytef*)source, sourceLen);
+
+	switch( ret ){
+		case Z_OK:
+			break;
+
+		case Z_BUF_ERROR:
+			ShowError( "Zlib uncompress error: Destination buffer may be too small.\n" );
+			break;
+
+		case Z_MEM_ERROR:
+			ShowError( "Zlib uncompress error: Not enough RAM available.\n" );
+			break;
+
+		case Z_DATA_ERROR:
+			ShowError( "Zlib uncompress error: Compressed data was corrupted.\n" );
+			break;
+
+		default:
+			ShowError( "Zlib uncompress error: %s (%d)\n", zError( ret ), ret );
+			break;
+	}
+
+	return ret;
 }
 
 
@@ -397,9 +444,9 @@ void* grfio_reads(const char* fname, size_t* size)
 
 		in = fopen(lfname, "rb");
 		if( in != nullptr ) {
-			fseek(in,0,SEEK_END);
-			size_t declen = ftell(in);
-			fseek(in,0,SEEK_SET);
+			sfseek(in,0,SEEK_END);
+			size_t declen = sftell(in);
+			sfseek(in,0,SEEK_SET);
 			buf2 = (unsigned char *)aMalloc(declen+1);  // +1 for resnametable zero-termination
 			if(fread(buf2, 1, declen, in) != declen) ShowError("An error occured in fread grfio_reads, fname=%s \n",fname);
 			fclose(in);
@@ -422,7 +469,7 @@ void* grfio_reads(const char* fname, size_t* size)
 		if( in != nullptr ) {
 			size_t fsize = entry->srclen_aligned;
 			unsigned char *buf = (unsigned char *)aMalloc(fsize);
-			fseek(in, entry->srcpos, 0);
+			sfseek(in, entry->srcpos, 0);
 			if(fread(buf, 1, fsize, in) != fsize) ShowError("An error occured in fread in grfio_reads, grfname=%s\n",grfname);
 			fclose(in);
 
@@ -431,8 +478,8 @@ void* grfio_reads(const char* fname, size_t* size)
 			{// file
 				uLongf len;
 				grf_decode(buf, fsize, entry->type, entry->srclen);
-				len = entry->declen;
-				decode_zip(buf2, &len, buf, entry->srclen);
+				len = static_cast<decltype(len)>(entry->declen);
+				decode_zip(buf2, &len, buf, static_cast<unsigned long>(entry->srclen));
 				if (len != (uLong)entry->declen) {
 					ShowError("decode_zip size mismatch err: %d != %d\n", (int32)len, entry->declen);
 					aFree(buf);
@@ -526,7 +573,6 @@ static bool isFullEncrypt(const char* fname)
 /// @param gentry index of the grf file name in the gentry_table
 static int32 grfio_entryread(const char* grfname, int32 gentry)
 {
-	long grf_size;
 	unsigned char grf_header[0x2e];
 	int32 entry,entrys,ofs,grf_version;
 	unsigned char *grf_filelist;
@@ -538,12 +584,12 @@ static int32 grfio_entryread(const char* grfname, int32 gentry)
 	} else
 		ShowInfo("GRF data file found: '%s'\n",grfname);
 
-	fseek(fp,0,SEEK_END);
-	grf_size = ftell(fp);
-	fseek(fp,0,SEEK_SET);
+	sfseek(fp,0,SEEK_END);
+	size_t grf_size = sftell(fp);
+	sfseek(fp,0,SEEK_SET);
 
 	if(fread(grf_header,1,0x2e,fp) != 0x2e) { ShowError("Couldn't read all grf_header element of %s \n", grfname); }
-	if( strcmp((const char*)grf_header,"Master of Magic") != 0 || fseek(fp,getlong(grf_header+0x1e),SEEK_CUR) != 0 ) {
+	if( ( strcmp((const char*)grf_header,"Master of Magic") != 0 && strcmp((const char*)grf_header,"Event Horizon") != 0 ) || sfseek(fp,getlong(grf_header+0x1e),SEEK_CUR) != 0 ) {
 		fclose(fp);
 		ShowError("GRF %s read error\n", grfname);
 		ShowError("GRF possibly over 2GB in size.\n");
@@ -553,7 +599,7 @@ static int32 grfio_entryread(const char* grfname, int32 gentry)
 	grf_version = getlong(grf_header+0x2a) >> 8;
 
 	if( grf_version == 0x01 ) {// ****** Grf version 01xx ******
-		size_t list_size = grf_size - ftell(fp);
+		size_t list_size = grf_size - sftell(fp);
 		grf_filelist = (unsigned char *) aMalloc(list_size);
 		if(fread(grf_filelist,1,list_size,fp) != list_size) { ShowError("Couldn't read all grf_filelist element of %s \n", grfname); }
 		fclose(fp);
@@ -606,7 +652,7 @@ static int32 grfio_entryread(const char* grfname, int32 gentry)
 		rSize = getlong(eheader);	// Read Size
 		eSize = getlong(eheader+4);	// Extend Size
 
-		if( (long)rSize > grf_size-ftell(fp) ) {
+		if( (long)rSize > grf_size-sftell(fp) ) {
 			fclose(fp);
 			ShowError("Illegal data format: GRF compress entry size\n");
 			return 4;
@@ -655,6 +701,8 @@ static int32 grfio_entryread(const char* grfname, int32 gentry)
 		}
 
 		aFree(grf_filelist);
+	//} else if( grf_version == 0x03 ) {// ****** Grf version 03xx ******
+		// TODO:
 	} else {// ****** Grf Other version ******
 		fclose(fp);
 		ShowError("GRF version %04x not supported\n",getlong(grf_header+0x2a));
