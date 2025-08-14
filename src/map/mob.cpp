@@ -3375,9 +3375,18 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		if( mapdrops != nullptr ){
 			// Process map wide drops
 			for( const auto& it : mapdrops->globals ){
-				if( rnd_chance( it.second->rate, 100000u ) ){
+				uint32 final_rate;
+
+				if ( battle_config.enable_bonus_map_drops ) {
+					int32 drop_rate = mob_getdroprate(first_sd, md->db, it.second->rate, 100, md);
+					final_rate = (uint32)((int64)drop_rate * 100000 / 10000);
+				} else {
+					final_rate = it.second->rate;
+				}
+
+				if( rnd_chance( final_rate, 100000u ) ){
 					// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
-					int32 map_drops_rate = max(1, (it.second->rate / 10));
+					int32 map_drops_rate = max(1, (final_rate / 10));
 					std::shared_ptr<s_item_drop> ditem = mob_setdropitem( it.second, 1, md->mob_id );
 					mob_item_drop( md, dlist, ditem, 0, map_drops_rate, homkillonly || merckillonly );
 				}
@@ -3388,7 +3397,16 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 
 			if( specific != mapdrops->specific.end() ){
 				for( const auto& it : specific->second ){
-					if( rnd_chance( it.second->rate, 100000u ) ){
+					uint32 final_rate;
+
+					if ( battle_config.enable_bonus_map_drops ) {
+						int32 drop_rate = mob_getdroprate(first_sd, md->db, it.second->rate, 100, md);
+						final_rate = (uint32)((int64)drop_rate * 100000 / 10000);
+					} else {
+						final_rate = it.second->rate;
+					}
+
+					if( rnd_chance( final_rate, 100000u ) ){
 						// 'Cheat' for autoloot command: rate is changed from n/100000 to n/10000
 						int32 map_drops_rate = max(1, (it.second->rate / 10));
 						std::shared_ptr<s_item_drop> ditem = mob_setdropitem( it.second, 1, md->mob_id );

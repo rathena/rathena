@@ -780,6 +780,7 @@ struct Battle_Config
 	int32 open_box_weight_rate;
 	int32 major_overweight_rate;
 	int32 trade_count_stackable;
+	int32 enable_bonus_map_drops;
 
 #include <custom/battle_config_struct.inc>
 };
