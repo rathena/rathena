@@ -6508,9 +6508,9 @@ ACMD_FUNC(displayskillcast)
 	}
 
 	if ( target_type == 1)
-		clif_skillcasting(sd, sd->id, 0, sd->x, sd->y, skill_id, skill_lv, 0, cast_time);
+		clif_skillcasting(*sd, nullptr, sd->x, sd->y, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), cast_time);
 	else
-		clif_skillcasting(sd, sd->id, sd->id, 0, 0, skill_id, skill_lv, 0, cast_time);
+		clif_skillcasting(*sd, sd, 0, 0, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), cast_time);
 
 	return 0;
 }

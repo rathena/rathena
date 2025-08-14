@@ -5859,6 +5859,7 @@ void clif_skill_scale( struct block_list *bl, int32 src_id, int32 x, int32 y, ui
 /// Notifies clients in area, that an object is about to use a skill.
 /// 013e <src id>.L <dst id>.L <x>.W <y>.W <skill id>.W <property>.L <delaytime>.L (ZC_USESKILL_ACK)
 /// 07fb <src id>.L <dst id>.L <x>.W <y>.W <skill id>.W <property>.L <delaytime>.L <is disposable>.B (ZC_USESKILL_ACK2)
+/// 0b1a <src id>.L <dst id>.L <x>.W <y>.W <skill id>.W <property>.L <delaytime>.L <is disposable>.B <attackMT>.L (ZC_USESKILL_ACK3)
 /// property:
 ///     0 = Yellow cast aura
 ///     1 = Water elemental cast aura
@@ -5871,36 +5872,43 @@ void clif_skill_scale( struct block_list *bl, int32 src_id, int32 x, int32 y, ui
 /// is disposable:
 ///     0 = yellow chat text "[src name] will use skill [skill name]."
 ///     1 = no text
-void clif_skillcasting(struct block_list* bl, int32 src_id, int32 dst_id, int32 dst_x, int32 dst_y, uint16 skill_id, uint16 skill_lv, int32 property, int32 casttime)
-{
-#if PACKETVER < 20091124
-	const int32 cmd = 0x13e;
-#else
-	const int32 cmd = 0x7fb;
-#endif
-	unsigned char buf[32];
+void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 dst_y, uint16 skill_id, uint16 skill_lv, e_element property, int32 casttime){
+	PACKET_ZC_USESKILL_ACK p = {};
 
-	WBUFW(buf,0) = cmd;
-	WBUFL(buf,2) = src_id;
-	WBUFL(buf,6) = dst_id;
-	WBUFW(buf,10) = dst_x;
-	WBUFW(buf,12) = dst_y;
-	WBUFW(buf,14) = skill_id;
-	WBUFL(buf,16) = property<0?0:property; //Avoid sending negatives as element [Skotlex]
-	WBUFL(buf,20) = casttime;
-#if PACKETVER >= 20091124
-	WBUFB(buf,24) = 0;  // isDisposable
+	p.packetType = HEADER_ZC_USESKILL_ACK;
+	p.srcId = src.id;
+	if( dst != nullptr ){
+		p.dstId = dst->id;
+	}else{
+		p.dstId = 0;
+	}
+	p.x = dst_x;
+	p.y = dst_y;
+	p.skillId = skill_id;
+	p.delayTime = casttime;
+	if( property > ELE_NONE && property < ELE_ALL ){
+		p.element = property;
+	}else{
+		p.element = ELE_NEUTRAL;
+	}
+
+#if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
+	p.disposable = false;
+#endif
+#if PACKETVER_MAIN_NUM >= 20181212 || PACKETVER_RE_NUM >= 20181212 || PACKETVER_ZERO_NUM >= 20190130
+	p.attackMT = 0;
 #endif
 
-	if (disguised(bl)) {
-		clif_send(buf,packet_len(cmd), bl, AREA_WOS);
-		WBUFL(buf,2) = disguised_bl_id( src_id );
-		clif_send(buf,packet_len(cmd), bl, SELF);
+	if (disguised(&src)) {
+		clif_send(&p,sizeof(p), &src, AREA_WOS);
+
+		p.srcId = disguised_bl_id( src.id );
+		clif_send(&p,sizeof(p), &src, SELF);
 	} else
-		clif_send(buf,packet_len(cmd), bl, AREA);
+		clif_send(&p,sizeof(p), &src, AREA);
 
 	if( skill_get_inf2( skill_id, INF2_SHOWSCALE ) ){
-		clif_skill_scale( bl, src_id, bl->x, bl->y, skill_id, skill_lv, casttime );
+		clif_skill_scale( &src, src.id, src.x, src.y, skill_id, skill_lv, casttime );
 	}
 }
 
