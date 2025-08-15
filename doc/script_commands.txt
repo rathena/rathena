@@ -11222,6 +11222,14 @@ Requires client 2015-05-13aRagEXE or newer.
 
 ---------------------------------------
 
+*has_hateffect <Hat Effect ID>{,<char_id>};
+
+Returns 1 if the player already has the hat effect enabled, and 0 otherwise.
+
+Requires client 2015-05-13aRagEXE or newer.
+
+---------------------------------------
+
 *getrandomoptinfo(<type>);
 
 Returns value of an attribute of current random option.
