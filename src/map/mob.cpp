@@ -224,6 +224,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	if(map_addblock(nd))
 		return;
 	status_set_viewdata(nd, nd->class_);
+	status_change_init(nd);
 	unit_dataset(nd);
 
 	mvptomb_setdelayspawn(nd);
@@ -491,6 +492,7 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 	md->centerX = data->x;
 	md->centerY = data->y;
 	status_set_viewdata(md, md->mob_id);
+	status_change_init(md);
 	unit_dataset(md);
 
 	map_addiddb(md);
@@ -2775,7 +2777,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 //Call when a mob has received damage.
 void mob_damage(struct mob_data *md, struct block_list *src, int32 damage)
 {
-	if (src != nullptr) { //Store total damage...
+	if (src && damage > 0) { //Store total damage...
 		//Log damage
 		mob_log_damage(md, src, static_cast<int64>(damage));
 	}

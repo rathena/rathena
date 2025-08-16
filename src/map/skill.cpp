@@ -8500,7 +8500,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			uint8 ap_burn[5] = { 20, 30, 50, 60, 70 };
 
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_zap(bl, 0, 0, ap_burn[skill_lv - 1]);
+			status_fix_apdamage(src, bl, ap_burn[skill_lv - 1], 0, skill_id);
 		} else if (sd)
 			clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
 		break;
@@ -10314,7 +10314,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			// This skill creates fake casting state where a monster moves while showing a cast bar
 			int32 tricktime = MOB_SKILL_INTERVAL * 3;
 			md->trickcasting = tick + tricktime;
-			clif_skillcasting(*src, src, 0, 0, skill_id, skill_lv, ELE_FIRE, tricktime + MOB_SKILL_INTERVAL / 2);
+			clif_skillcasting(src, src->id, src->id, 0, 0, skill_id, skill_lv, ELE_FIRE, tricktime + MOB_SKILL_INTERVAL / 2);
 			// Monster cannot be stopped while moving
 			md->state.can_escape = 1;
 			// Move up to 8 cells
@@ -10660,11 +10660,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 	case BD_ENCORE:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (sd != nullptr) {
+		if(sd)
 			unit_skilluse_id(src,src->id,sd->skill_id_dance,sd->skill_lv_dance);
-			// Need to remove remembered skill to prevent permanent halving of SP cost
-			sd->skill_id_old = 0;
-		}
 		break;
 
 	case TR_RETROSPECTION:
@@ -18253,16 +18250,13 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 				if( is_chorus )
 					break;//Chorus skills are not to be parsed as ensembles
 				if (skill_get_inf2(skill_id, INF2_ISENSEMBLE)) {
-					if (c > 0 && (tsd = map_id2sd(p_sd[0])) != nullptr) {
-#ifndef RENEWAL
-						if (sd->sc.hasSCE(SC_DANCING)) {
-							sd->sc.getSCE(SC_DANCING)->val4 = tsd->id;
-							sc_start4(sd, tsd, SC_DANCING, 100, skill_id, sd->sc.getSCE(SC_DANCING)->val2, *skill_lv, sd->id, skill_get_time(skill_id, *skill_lv) + 1000);
-							clif_skill_nodamage(tsd, *sd, skill_id, *skill_lv);
-							tsd->skill_id_dance = skill_id;
-							tsd->skill_lv_dance = *skill_lv;
-						}
-#else
+					if (c > 0 && sd->sc.getSCE(SC_DANCING) && (tsd = map_id2sd(p_sd[0])) != nullptr) {
+						sd->sc.getSCE(SC_DANCING)->val4 = tsd->id;
+						sc_start4(sd,tsd,SC_DANCING,100,skill_id,sd->sc.getSCE(SC_DANCING)->val2,*skill_lv,sd->id,skill_get_time(skill_id,*skill_lv)+1000);
+						clif_skill_nodamage(tsd, *sd, skill_id, *skill_lv);
+						tsd->skill_id_dance = skill_id;
+						tsd->skill_lv_dance = *skill_lv;
+#ifdef RENEWAL
 						sc_start(sd, sd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
 						sc_start(sd, tsd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
 #endif
@@ -19801,8 +19795,6 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 		switch( skill_id ) {
 			case CG_TAROTCARD: // TarotCard will consume sp in skill_cast_nodamage_id [Inkfish]
 			case MC_IDENTIFY:
-			case BD_ADAPTATION:
-			case BD_ENCORE:
 				require.sp = 0;
 				break;
 			case AL_HOLYLIGHT:
