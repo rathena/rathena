@@ -978,7 +978,6 @@ StringBuf* _StringBuf_Malloc(const char *file, int32 line, const char *func)
 {
 	StringBuf* self;
 	self = (StringBuf *)aCalloc2(1, sizeof(StringBuf), file, line, func);
-	new (self) StringBuf();
 	_StringBuf_Init(file, line, func, self);
 	return self;
 }
@@ -1082,31 +1081,17 @@ void StringBuf_Clear(StringBuf* self)
 	self->ptr_ = self->buf_;
 }
 
-///  Constructs the StringBuf
-StringBuf::StringBuf(){
-	this->buf_ = nullptr;
-	this->ptr_ = nullptr;
-	this->max_ = 0;
-}
-
 /// Destroys the StringBuf
-StringBuf::~StringBuf(){
-	if( this->buf_ != nullptr ){
-		aFree( this->buf_ );
-		this->buf_ = nullptr;
-	}
-	
-	this->ptr_ = nullptr;
-	this->max_ = 0;
+void StringBuf_Destroy(StringBuf* self)
+{
+	aFree(self->buf_);
+	self->ptr_ = self->buf_ = 0;
+	self->max_ = 0;
 }
 
 // Frees a StringBuf returned by StringBuf_Malloc
 void StringBuf_Free(StringBuf* self)
 {
-	if( self == nullptr ){
-		return;
-	}
-
-	self->~StringBuf();
+	StringBuf_Destroy(self);
 	aFree(self);
 }
