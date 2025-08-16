@@ -377,7 +377,6 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 		md->db = db;
 		memcpy(&md->mercenary, merc, sizeof(s_mercenary));
 		status_set_viewdata(md, md->mercenary.class_);
-		status_change_init(md);
 		unit_dataset(md);
 		md->ud.dir = sd->ud.dir;
 

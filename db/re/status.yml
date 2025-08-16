@@ -4152,6 +4152,7 @@ Body:
       BlEffect: true
       DisplayPc: true
       StopAttacking: true
+      RemoveOnDamaged: true
     MinDuration: 10000
     EndOnStart:
       Deepsleep: true
@@ -7464,8 +7465,6 @@ Body:
       Reuse_Limit_Luxanima: true
   - Status: Ensemblefatigue
     Icon: EFST_ENSEMBLEFATIGUE
-    States:
-      NoCast: true
     CalcFlags:
       Speed: true
       Aspd: true

@@ -33,12 +33,12 @@ struct quest *mapif_quests_fromsql( uint32 char_id, size_t& count ){
 	if( SQL_ERROR == stmt.Prepare("SELECT `quest_id`, `state`, `time`, `count1`, `count2`, `count3` FROM `%s` WHERE `char_id`=? ", schema_config.quest_db)
 	||	SQL_ERROR == stmt.BindParam(0, SQLDT_INT32, &char_id, 0)
 	||	SQL_ERROR == stmt.Execute()
-	||	SQL_ERROR == stmt.BindColumn(0, SQLDT_INT32,  &tmp_quest.quest_id, 0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn(1, SQLDT_INT32,  &tmp_quest.state,    0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT32, &tmp_quest.time,     0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn(3, SQLDT_INT32,  &tmp_quest.count[0], 0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn(4, SQLDT_INT32,  &tmp_quest.count[1], 0, nullptr, nullptr)
-	||	SQL_ERROR == stmt.BindColumn(5, SQLDT_INT32,  &tmp_quest.count[2], 0, nullptr, nullptr)
+	||	SQL_ERROR == stmt.BindColumn(0, SQLDT_INT32, &tmp_quest.quest_id)
+	||	SQL_ERROR == stmt.BindColumn(1, SQLDT_INT32, &tmp_quest.state)
+	||	SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT32, &tmp_quest.time)
+	||	SQL_ERROR == stmt.BindColumn(3, SQLDT_INT32, &tmp_quest.count[0])
+	||	SQL_ERROR == stmt.BindColumn(4, SQLDT_INT32, &tmp_quest.count[1])
+	||	SQL_ERROR == stmt.BindColumn(5, SQLDT_INT32, &tmp_quest.count[2])
 	) {
 		SqlStmt_ShowDebug(stmt);
 		count = 0;

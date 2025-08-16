@@ -79,17 +79,17 @@ bool party_booking_read( std::string& world_name, std::vector<s_party_booking_en
 	if( SQL_SUCCESS != stmt.Prepare( query.c_str() )
 		|| SQL_SUCCESS != stmt.BindParam( 0, SQLDT_STRING, (void*)world_name_escaped, strlen( world_name_escaped ) )
 		|| SQL_SUCCESS != stmt.Execute()
-		|| SQL_SUCCESS != stmt.BindColumn( 0, SQLDT_UINT32, &entry.account_id, 0, nullptr, nullptr )
-		|| SQL_SUCCESS != stmt.BindColumn( 1, SQLDT_UINT32, &entry.char_id, 0, nullptr, nullptr )
-		|| SQL_SUCCESS != stmt.BindColumn( 2, SQLDT_STRING, (void*)char_name, sizeof( char_name ), nullptr, nullptr )
-		|| SQL_SUCCESS != stmt.BindColumn( 3, SQLDT_UINT16, &entry.purpose, 0, nullptr, nullptr )
-		|| SQL_SUCCESS != stmt.BindColumn( 4, SQLDT_UINT8, &entry.assist, 0, nullptr, nullptr )
-		|| SQL_SUCCESS != stmt.BindColumn( 5, SQLDT_UINT8, &entry.damagedealer, 0, nullptr, nullptr )
-		|| SQL_SUCCESS != stmt.BindColumn( 6, SQLDT_UINT8, &entry.healer, 0, nullptr, nullptr )
-		|| SQL_SUCCESS != stmt.BindColumn( 7, SQLDT_UINT8, &entry.tanker, 0, nullptr, nullptr )
-		|| SQL_SUCCESS != stmt.BindColumn( 8, SQLDT_UINT16, &entry.minimum_level, 0, nullptr, nullptr )
-		|| SQL_SUCCESS != stmt.BindColumn( 9, SQLDT_UINT16, &entry.maximum_level, 0, nullptr, nullptr )
-		|| SQL_SUCCESS != stmt.BindColumn( 10, SQLDT_STRING, (void*)comment, sizeof( comment ), nullptr, nullptr )
+		|| SQL_SUCCESS != stmt.BindColumn( 0, SQLDT_UINT32, &entry.account_id )
+		|| SQL_SUCCESS != stmt.BindColumn( 1, SQLDT_UINT32, &entry.char_id )
+		|| SQL_SUCCESS != stmt.BindColumn( 2, SQLDT_STRING, (void*)char_name, sizeof( char_name ) )
+		|| SQL_SUCCESS != stmt.BindColumn( 3, SQLDT_UINT16, &entry.purpose )
+		|| SQL_SUCCESS != stmt.BindColumn( 4, SQLDT_UINT8, &entry.assist )
+		|| SQL_SUCCESS != stmt.BindColumn( 5, SQLDT_UINT8, &entry.damagedealer )
+		|| SQL_SUCCESS != stmt.BindColumn( 6, SQLDT_UINT8, &entry.healer )
+		|| SQL_SUCCESS != stmt.BindColumn( 7, SQLDT_UINT8, &entry.tanker )
+		|| SQL_SUCCESS != stmt.BindColumn( 8, SQLDT_UINT16, &entry.minimum_level )
+		|| SQL_SUCCESS != stmt.BindColumn( 9, SQLDT_UINT16, &entry.maximum_level )
+		|| SQL_SUCCESS != stmt.BindColumn( 10, SQLDT_STRING, (void*)comment, sizeof( comment ) )
 	){
 		SqlStmt_ShowDebug( stmt );
 		sl.unlock();
@@ -223,7 +223,6 @@ HANDLER_FUNC(partybooking_add){
 	if( SQL_ERROR == Sql_QueryStr( mhandle, StringBuf_Value( &buf ) ) ){
 		Sql_ShowDebug( mhandle );
 
-		StringBuf_Destroy( &buf );
 		msl.unlock();
 		res.status = HTTP_BAD_REQUEST;
 		res.set_content( "Error", "text/plain" );
@@ -231,7 +230,6 @@ HANDLER_FUNC(partybooking_add){
 		return;
 	}
 
-	StringBuf_Destroy( &buf );
 	msl.unlock();
 
 	res.set_content( "{ \"Type\": 1 }", "application/json" );

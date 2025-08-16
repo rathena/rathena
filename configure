@@ -5867,6 +5867,14 @@ rm -f core conftest.err conftest.$ac_objext conftest.$ac_ext
 # Check for libraries and header files.
 #
 
+#
+# getaddrinfo - used to retrive ips from name
+#
+ac_fn_cxx_check_func "$LINENO" "getaddrinfo" "ac_cv_func_getaddrinfo"
+if test "x$ac_cv_func_getaddrinfo" = xyes; then :
+  CPPFLAGS="$CPPFLAGS -DHAVE_GETADDRINFO"
+fi
+
 
 #
 # setrlimit - used to set the socket limit

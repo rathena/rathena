@@ -489,9 +489,9 @@ int32 chlogif_parse_ackchangesex(int32 fd)
 				SqlStmt_ShowDebug(stmt);
 			}
 
-			stmt.BindColumn(0, SQLDT_INT32,   &char_id,  0, nullptr, nullptr);
-			stmt.BindColumn(1, SQLDT_INT16, &class_,   0, nullptr, nullptr);
-			stmt.BindColumn(2, SQLDT_INT32,   &guild_id, 0, nullptr, nullptr);
+			stmt.BindColumn(0, SQLDT_INT32, &char_id);
+			stmt.BindColumn(1, SQLDT_INT16, &class_);
+			stmt.BindColumn(2, SQLDT_INT32, &guild_id);
 
 			for (i = 0; i < MAX_CHARS && SQL_SUCCESS == stmt.NextRow(); ++i) {
 				chlogif_parse_change_sex_sub(sex, acc, char_id, class_, guild_id);

@@ -63,7 +63,7 @@
 	parseable_packet(0x00b9,6,clif_parse_NpcNextClicked,2);
 	packet(0x00ba,2);
 	parseable_packet(0x00bb,5,clif_parse_StatusUp,2,4);
-	parseable_packet(0x00bf,3,clif_parse_Emotion,2);
+	parseable_packet( HEADER_CZ_REQ_EMOTION, sizeof(  PACKET_CZ_REQ_EMOTION ), clif_parse_Emotion, 0 );
 	parseable_packet(0x00c1,2,clif_parse_HowManyConnections,0);
 	packet(0x00c3,8);
 	parseable_packet( HEADER_CZ_ACK_SELECT_DEALTYPE, sizeof( PACKET_CZ_ACK_SELECT_DEALTYPE ), clif_parse_NpcBuySellSelected, 0 );
@@ -130,7 +130,6 @@
 	parseable_packet(0x0130,6,clif_parse_VendingListReq,2);
 	parseable_packet( HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC, -1, clif_parse_PurchaseReq, 0 );
 	packet(0x0138,3);
-	packet(0x013e,24);
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);
 	parseable_packet( HEADER_CZ_MOVETO_MAP, sizeof( PACKET_CZ_MOVETO_MAP ), clif_parse_MapMove, 0 );
 	parseable_packet( HEADER_CZ_INPUT_EDITDLG, sizeof( PACKET_CZ_INPUT_EDITDLG ), clif_parse_NpcAmountInput, 0 );
@@ -147,7 +146,6 @@
 	parseable_packet(0x0153,-1,clif_parse_GuildChangeEmblem,2,4);
 	packet(0x0154,-1);
 	parseable_packet( HEADER_CZ_REQ_CHANGE_MEMBERPOS, -1, clif_parse_GuildChangeMemberPosition, 0 );
-	packet(0x0156,-1);
 	packet(0x0157,6);
 	packet(0x0158,-1);
 	parseable_packet( HEADER_CZ_REQ_LEAVE_GUILD, sizeof( PACKET_CZ_REQ_LEAVE_GUILD ), clif_parse_GuildLeave, 0 );
@@ -161,11 +159,9 @@
 	parseable_packet( HEADER_CZ_REQ_JOIN_GUILD, sizeof( PACKET_CZ_REQ_JOIN_GUILD ), clif_parse_GuildInvite, 0 );
 	parseable_packet( HEADER_CZ_JOIN_GUILD, sizeof( PACKET_CZ_JOIN_GUILD ), clif_parse_GuildReplyInvite, 0 );
 	packet(0x016c,43);
-	packet(0x016d,14);
 	parseable_packet(0x016e,186,clif_parse_GuildChangeNotice,2,6,66);
 	parseable_packet(0x0170,14,clif_parse_GuildRequestAlliance,2,6,10);
 	parseable_packet(0x0172,10,clif_parse_GuildReplyAlliance,2,6);
-	packet(0x0174,-1);
 	packet(0x0175,6);
 	packet(0x0176,106);
 	packet(0x0177,-1);
@@ -250,7 +246,6 @@
 	parseable_packet(0x01ed,2,clif_parse_NoviceExplosionSpirits,0);
 	packet(0x01f0,-1);
 	packet(0x01f1,-1);
-	packet(0x01f2,20);
 	packet(0x01f3,10);
 	packet(0x01f6,34);
 	parseable_packet( HEADER_CZ_JOIN_BABY, sizeof( PACKET_CZ_JOIN_BABY ), clif_parse_Adopt_reply, 0 );
@@ -1298,11 +1293,6 @@
 	packet(0x07f7,-1);
 	packet(0x07f8,-1);
 	packet(0x07f9,-1);
-#endif
-
-// 2009-11-24aRagexeRE
-#if PACKETVER >= 20091124
-	packet(0x07fb,25);
 #endif
 
 // 2009-12-01aRagexeRE
