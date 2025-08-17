@@ -239,10 +239,12 @@
     <ClInclude Include="trade.hpp" />
     <ClInclude Include="unit.hpp" />
     <ClInclude Include="vending.hpp" />
-    <ClInclude Include="skills/skill_factory.hpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="skills/battle_skill.hpp" />
-    <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
+    <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
+    <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/swordsman/bash.hpp" />
     <ClInclude Include="skills/swordsman/skill_factory_swordsman.hpp" />
   </ItemGroup>
@@ -291,8 +293,14 @@
     <ClCompile Include="trade.cpp" />
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="vending.cpp" />
-    <ClCompile Include="skills/skill_factory.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClCompile Include="skills/battle_skill.cpp" />
+    <ClCompile Include="skills/mercenary/mercenary_bash.cpp" />
+    <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp" />
+    <ClCompile Include="skills/swordsman/bash.cpp" />
+    <ClCompile Include="skills/swordsman/skill_factory_swordsman.cpp" />
+    <ClCompile Include="skills/skill_factory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

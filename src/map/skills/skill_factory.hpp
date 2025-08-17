@@ -9,10 +9,10 @@
 class SkillFactory
 {
 public:
-    // Destructor
-    ~SkillFactory() = default;
+	// Destructor
+	~SkillFactory() = default;
 
-    inline static void registerSkill(const e_skill skill_id, const std::shared_ptr<Skill>& skill);
-    static void registerAllSkills();
-    static void registerSkills();
+	static void registerSkill(const e_skill skill_id, const std::shared_ptr<Skill>& skill);
+	static void registerAllSkills();
+	static void registerSkills();
 };
