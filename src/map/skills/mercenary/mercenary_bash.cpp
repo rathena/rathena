@@ -1,3 +1,6 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #include "mercenary_bash.hpp"
 
 SkillMercenaryBash::SkillMercenaryBash() : Skill( MS_BASH ){

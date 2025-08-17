@@ -1,3 +1,6 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #include "battle_skill.hpp"
 #include <common/cbasetypes.hpp>
 #include "../battle.hpp"
