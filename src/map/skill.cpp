@@ -45,7 +45,7 @@
 #include "script.hpp"
 #include "status.hpp"
 #include "unit.hpp"
-#include "./skills/battle_skill_factory.hpp"
+#include "./skills/skill_factory.hpp"
 
 using namespace rathena;
 
@@ -26005,7 +26005,7 @@ void SkillDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
-	BattleSkillFactory::registerAllSkills();
+	SkillFactory::registerAllSkills();
 }
 
 /**

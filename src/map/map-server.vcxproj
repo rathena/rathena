@@ -240,7 +240,7 @@
     <ClInclude Include="unit.hpp" />
     <ClInclude Include="vending.hpp" />
     <ClInclude Include="skills/battle_skill_categories.hpp" />
-    <ClInclude Include="skills/battle_skill_factory.hpp" />
+    <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/skill.hpp" />
     <ClInclude Include="skills/mercenary/mercenary.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />

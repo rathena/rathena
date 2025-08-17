@@ -6,12 +6,13 @@
 /**
  * Factory class for creating and managing Skill instances
  */
-class BattleSkillFactory
+class SkillFactory
 {
 public:
     // Destructor
-    ~BattleSkillFactory() = default;
+    ~SkillFactory() = default;
 
-    static void registerSkill(const e_skill skill_id, const std::shared_ptr<Skill>& skill);
+    inline static void registerSkill(const e_skill skill_id, const std::shared_ptr<Skill>& skill);
     static void registerAllSkills();
+    static void registerSkills();
 };

@@ -303,7 +303,7 @@
     <ClInclude Include="skills/battle_skill_categories.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
-    <ClInclude Include="skills/battle_skill_factory.hpp">
+    <ClInclude Include="skills/skill_factory.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
     <ClInclude Include="skills/skill.hpp">
