@@ -7465,8 +7465,6 @@ Body:
       Reuse_Limit_Luxanima: true
   - Status: Ensemblefatigue
     Icon: EFST_ENSEMBLEFATIGUE
-    States:
-      NoCast: true
     CalcFlags:
       Speed: true
       Aspd: true
