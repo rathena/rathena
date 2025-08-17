@@ -241,8 +241,6 @@ void log_pick(int32 id, int16 m, e_log_pick_type type, int32 amount, struct item
 
 		if (SQL_SUCCESS != stmt.PrepareStr(StringBuf_Value(&buf)) || SQL_SUCCESS != stmt.Execute())
 			SqlStmt_ShowDebug(stmt);
-
-		StringBuf_Destroy(&buf);
 	}
 	else
 	{
