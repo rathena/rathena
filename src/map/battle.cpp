@@ -444,6 +444,10 @@ int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, st
 		}
 
 		damage = 0;
+		// This is a quick fix to make devotion protect from cast cancel and autocasts
+		// TODO: This currently also prevents "status change when hit", but shouldn't
+		if (dmg_lv == ATK_DEF)
+			dmg_lv = ATK_BLOCK;
 	}
 
 	// The client refuses to display animations slower than 1x speed
