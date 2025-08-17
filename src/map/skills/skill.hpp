@@ -4,15 +4,13 @@
 #include "../battle.hpp"
 #include "../status.hpp"
 
-class BattleSkill
+class Skill
 {
 public:
-    virtual ~BattleSkill() = default;
+    explicit Skill(e_skill skill_id);
+    virtual ~Skill() = default;
 
-    explicit BattleSkill(e_skill skill_id) : skill_id_(static_cast<uint16_t>(skill_id)) {}
-
-    virtual e_battle_flag getAttackType() const = 0; // BF_WEAPON, BF_MAGIC, BF_MISC
-    uint16_t getSkillId() const;
+    uint16 getSkillId() const;
 
     /**
      * Calculate skill damage ratio - replaces battle_calc_attack_skill_ratio() switch
@@ -30,5 +28,5 @@ public:
     virtual void applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const;
 
 protected:
-    uint16_t skill_id_;
+    uint16 skill_id_;
 };

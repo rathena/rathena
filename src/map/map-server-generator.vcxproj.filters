@@ -306,7 +306,7 @@
     <ClInclude Include="skills/battle_skill_factory.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
-    <ClInclude Include="skills/battle_skill.hpp">
+    <ClInclude Include="skills/skill.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
     <ClInclude Include="skills/mercenary/mercenary.hpp">
@@ -326,7 +326,7 @@
     <ClCompile Include="skills/battle_skill_factory.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
-    <ClCompile Include="skills/battle_skill.cpp">
+    <ClCompile Include="skills/skill.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
   </ItemGroup>

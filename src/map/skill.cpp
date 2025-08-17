@@ -1311,7 +1311,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 		}
 
 		if( skill_id ) {
-
 			// Trigger status effects on skills
 			for (const auto &it : sd->addeff_onskill) {
 				if (skill_id != it.skill_id || !it.rate)

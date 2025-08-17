@@ -1,17 +1,10 @@
 #pragma once
 
-#include <memory>
-#include <unordered_map>
-#include <functional>
-#include <mutex>
-#include <vector>
-#include <common/cbasetypes.hpp>
-#include "battle_skill.hpp"
+#include "skill.hpp"
 #include "../skill.hpp"
 
 /**
- * Factory class for creating and managing BattleSkill instances
- * Uses singleton pattern with thread-safe skill registration and caching
+ * Factory class for creating and managing Skill instances
  */
 class BattleSkillFactory
 {
@@ -19,6 +12,6 @@ public:
     // Destructor
     ~BattleSkillFactory() = default;
 
-    static void registerSkill(uint16 skill_id, const std::shared_ptr<BattleSkill>& skill);
+    static void registerSkill(const e_skill skill_id, const std::shared_ptr<Skill>& skill);
     static void registerAllSkills();
 };

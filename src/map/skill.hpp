@@ -27,7 +27,7 @@ struct skill_unit;
 struct s_skill_unit_group;
 struct status_change_entry;
 class status_change;
-class BattleSkill;
+class Skill;
 
 #define MAX_SKILL_PRODUCE_DB	300 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
@@ -309,7 +309,7 @@ struct s_skill_db {
 	uint16 improvisedsong_rate;
 	sc_type sc;									///< Default SC for skill
 
-	std::shared_ptr<BattleSkill> impl;
+	std::shared_ptr<const Skill> impl;
 };
 
 class SkillDatabase : public TypesafeCachedYamlDatabase <uint16, s_skill_db> {

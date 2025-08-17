@@ -33,7 +33,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
-#include "./skills/battle_skill.hpp"
+#include "./skills/skill.hpp"
 
 using namespace rathena;
 

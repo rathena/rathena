@@ -1,19 +1,19 @@
-#include <common/showmsg.hpp>
-
 #include "battle_skill_factory.hpp"
+
+#include <common/showmsg.hpp>
 #include "./swordsman/swordsman.hpp"
 #include "./mercenary/mercenary.hpp"
 
-void BattleSkillFactory::registerSkill(uint16 skill_id, const std::shared_ptr<BattleSkill> &skill)
+void BattleSkillFactory::registerSkill(const e_skill skill_id, const std::shared_ptr<Skill> &skill)
 {
     std::shared_ptr<s_skill_db> skill_entry = skill_db.find(skill_id);
-    if (skill_entry)
+    if (skill_entry != nullptr)
     {
         skill_entry->impl = skill;
     }
     else
     {
-        ShowError("registerSkill: could not find s_skill_db with %d", skill_id);
+        ShowError("registerSkill: skill ID %hu not found in skill DB", skill_id);
     }
 }
 

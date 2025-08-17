@@ -8,6 +8,6 @@ class Swordsman
 public:
     static void register_skills()
     {
-        BattleSkillFactory::registerSkill(SM_BASH, std::make_shared<BashSkill>());
+        BattleSkillFactory::registerSkill(SM_BASH, std::make_shared<SkillBash>());
     }
 };

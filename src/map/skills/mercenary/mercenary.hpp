@@ -8,6 +8,6 @@ class Mercenary
 public:
     static void register_skills()
     {
-        BattleSkillFactory::registerSkill(MS_BASH, std::make_shared<MercenaryBashSkill>());
+        BattleSkillFactory::registerSkill(MS_BASH, std::make_shared<SkillMercenaryBash>());
     }
 };
