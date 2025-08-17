@@ -4,6 +4,7 @@
 #pragma once
 
 #include "battle_skill.hpp"
+
 #include "../skill.hpp"
 
 /**

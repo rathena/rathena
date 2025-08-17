@@ -3,6 +3,9 @@
 
 #include "bash.hpp"
 
+#include "../../pc.hpp"
+#include "../../status.hpp"
+
 SkillBash::SkillBash() : Skill(SM_BASH) {
 }
 

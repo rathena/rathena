@@ -2,11 +2,6 @@
 // For more information, see LICENCE in the main folder
 
 #include "battle_skill.hpp"
-#include <common/cbasetypes.hpp>
-#include "../battle.hpp"
-#include "../status.hpp"
-#include "../pc.hpp"
-#include "../map.hpp"
 
 Skill::Skill(e_skill skill_id){
 	this->skill_id_ = skill_id;
