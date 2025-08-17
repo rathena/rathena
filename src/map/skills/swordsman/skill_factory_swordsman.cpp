@@ -5,6 +5,6 @@
 
 #include "bash.hpp"
 
-void SkillFactorySwordsman::registerSkills(){
+void SkillFactorySwordsman::registerSkills() {
 	registerSkill(SM_BASH, std::make_shared<SkillBash>());
 }

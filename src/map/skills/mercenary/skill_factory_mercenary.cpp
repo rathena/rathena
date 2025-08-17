@@ -5,6 +5,6 @@
 
 #include "mercenary_bash.hpp"
 
-void SkillFactoryMercenary::registerSkills(){
+void SkillFactoryMercenary::registerSkills() {
 	registerSkill(MS_BASH, std::make_shared<SkillMercenaryBash>());
 }
