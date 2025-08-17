@@ -5,11 +5,12 @@
 #include "../pc.hpp"
 #include "../map.hpp"
 
-Skill::Skill(e_skill skill_id) : skill_id_(static_cast<uint16>(skill_id))
+Skill::Skill(e_skill skill_id)
 {
+	this->skill_id_ = skill_id;
 }
 
-uint16 Skill::getSkillId() const
+e_skill Skill::getSkillId() const
 {
     return skill_id_;
 }
