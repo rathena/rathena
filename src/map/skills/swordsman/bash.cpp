@@ -9,6 +9,7 @@ void SkillBash::calculateSkillRatio(const Damage* wd, const block_list* src, con
 }
 
 void SkillBash::modifyHitRate(int16& hit_rate, const block_list* src, const block_list* target, uint16 skill_lv) const {
+	// It is proven that bonus is applied on final hitrate, not hit.
 	// +5% hit per level
 	hit_rate += hit_rate * 5 * skill_lv / 100;
 }

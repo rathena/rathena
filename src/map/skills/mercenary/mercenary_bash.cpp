@@ -4,6 +4,7 @@ SkillMercenaryBash::SkillMercenaryBash() : Skill( MS_BASH ){
 }
 
 void SkillMercenaryBash::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio) const {
+	// It is proven that bonus is applied on final hitrate, not hit.
 	// Base 100% + 30% per level
 	base_skillratio += 30 * skill_lv;
 }
