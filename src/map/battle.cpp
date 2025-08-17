@@ -3272,9 +3272,9 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 
 	if(skill_id) {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-        if (skill != nullptr && skill->impl != nullptr) {
-            skill->impl->modifyHitRate(hitrate, src, target, skill_lv);
-        }
+		if (skill != nullptr && skill->impl != nullptr) {
+			skill->impl->modifyHitRate(hitrate, src, target, skill_lv);
+		}
 
 		switch(skill_id) { //Hit skill modifiers
 			case MS_MAGNUM:

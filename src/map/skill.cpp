@@ -1338,9 +1338,9 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 		return 0;
 
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-    if (skill != nullptr && skill->impl != nullptr) {
-        skill->impl->applyAdditionalEffects(src, bl, skill_lv, tick, attack_type, dmg_lv);
-    }
+	if (skill != nullptr && skill->impl != nullptr) {
+		skill->impl->applyAdditionalEffects(src, bl, skill_lv, tick, attack_type, dmg_lv);
+	}
 
 	switch(skill_id) {
 		case 0:
