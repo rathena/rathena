@@ -300,16 +300,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="skills/battle_skill_categories.hpp">
-      <Filter>Header Files\Skills</Filter>
-    </ClInclude>
     <ClInclude Include="skills/skill_factory.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
     <ClInclude Include="skills/skill.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenary.hpp">
+    <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp">
@@ -318,12 +315,12 @@
     <ClInclude Include="skills/swordsman/bash.hpp">
       <Filter>Header Files\Skills\Swordsman</Filter>
     </ClInclude>
-    <ClInclude Include="skills/swordsman/swordsman.hpp">
+    <ClInclude Include="skills/swordsman/skill_factory_swordsman.hpp">
       <Filter>Header Files\Skills\Swordsman</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="skills/battle_skill_factory.cpp">
+    <ClCompile Include="skills/skill_factory.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
     <ClCompile Include="skills/skill.cpp">
