@@ -240,7 +240,7 @@
     <ClInclude Include="unit.hpp" />
     <ClInclude Include="vending.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
-    <ClInclude Include="skills/skill.hpp" />
+    <ClInclude Include="skills/battle_skill.hpp" />
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
     <ClInclude Include="skills/swordsman/bash.hpp" />
@@ -292,7 +292,7 @@
     <ClCompile Include="unit.cpp" />
     <ClCompile Include="vending.cpp" />
     <ClCompile Include="skills/skill_factory.cpp" />
-    <ClCompile Include="skills/skill.cpp" />
+    <ClCompile Include="skills/battle_skill.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

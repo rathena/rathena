@@ -1,4 +1,4 @@
-#include "skill.hpp"
+#include "battle_skill.hpp"
 #include <common/cbasetypes.hpp>
 #include "../battle.hpp"
 #include "../status.hpp"
