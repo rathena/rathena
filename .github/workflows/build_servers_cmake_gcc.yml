@@ -30,19 +30,7 @@ jobs:
     strategy:
       matrix:
           os: [ubuntu-latest]
-          compiler:
-            - cxx: g++-13
-              cc: gcc-13
-            - cxx: g++-14
-              cc: gcc-14
-            - cxx: clang++-17
-              cc: clang-17
-            - cxx: clang++-18
-              cc: clang-18
-            - cxx: clang++-19
-              cc: clang-19
-            - cxx: clang++-20
-              cc: clang-20
+          gcc: ['9', '10', '11', '12', '13', '14']
 
     steps:
       - uses: actions/checkout@v4
@@ -50,10 +38,10 @@ jobs:
       - name: Update & Install compilers
         run: |
           sudo apt update
-          sudo apt install zlib1g-dev libpcre3-dev ${{matrix.compiler.cc}} ${{matrix.compiler.cxx}}
+          sudo apt install zlib1g-dev libpcre3-dev gcc-${{matrix.gcc}} g++-${{matrix.gcc}}
 
       - name: Configure CMake
-        run: CXX=${{matrix.compiler.cxx}} CC=${{matrix.compiler.cc}} cmake -B build
+        run: CXX=g++-${{matrix.gcc}} CC=gcc-${{matrix.gcc}} cmake -B build
 
       - name: Build
         run: cmake --build build -j $(nproc) --target all

@@ -45,7 +45,7 @@ jobs:
           platform: x64
 
       - name: Configure CMake
-        run: CXX=${{matrix.compiler.cxx}} CC=${{matrix.compiler.cc}} cmake -B build
+        run: CXX=clang++-${{matrix.clang}} CC=clang-${{matrix.clang}} cmake -B build
 
       - name: Build
         run: cmake --build build -j $(nproc) --target all
