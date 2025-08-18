@@ -5,6 +5,6 @@
 
 #include "bash.hpp"
 
-void SkillFactorySwordsman::registerSkills() {
-	registerSkill(SM_BASH, std::make_unique<SkillBash>());
+void SkillFactorySwordsman::registerSkills(SkillDatabase& db) {
+	registerSkill(db, SM_BASH, std::make_unique<SkillBash>());
 }

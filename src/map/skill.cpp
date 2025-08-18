@@ -26005,7 +26005,7 @@ void SkillDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
-	SkillFactory::registerAllSkills();
+	SkillFactory::registerAllSkills(*this);
 }
 
 /**

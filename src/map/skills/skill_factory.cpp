@@ -8,8 +8,8 @@
 #include "./mercenary/skill_factory_mercenary.hpp"
 #include "./swordsman/skill_factory_swordsman.hpp"
 
-void SkillFactory::registerSkill(const e_skill skill_id, std::unique_ptr<const SkillImpl> skill) {
-	std::shared_ptr<s_skill_db> skill_entry = skill_db.find(skill_id);
+void SkillFactory::registerSkill(SkillDatabase& db, const e_skill skill_id, std::unique_ptr<const SkillImpl> skill) {
+	std::shared_ptr<s_skill_db> skill_entry = db.find(skill_id);
 
 	if (skill_entry != nullptr) {
 		skill_entry->impl = std::move(skill);
@@ -18,7 +18,7 @@ void SkillFactory::registerSkill(const e_skill skill_id, std::unique_ptr<const S
 	}
 }
 
-void SkillFactory::registerAllSkills(){
-	SkillFactoryMercenary::registerSkills();
-	SkillFactorySwordsman::registerSkills();
+void SkillFactory::registerAllSkills(SkillDatabase& db) {
+	SkillFactoryMercenary::registerSkills(db);
+	SkillFactorySwordsman::registerSkills(db);
 }

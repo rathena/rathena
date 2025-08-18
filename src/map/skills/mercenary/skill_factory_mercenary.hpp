@@ -8,5 +8,5 @@
 class SkillFactoryMercenary : SkillFactory
 {
 public:
-	static void registerSkills();
+	static void registerSkills(SkillDatabase& db);
 };

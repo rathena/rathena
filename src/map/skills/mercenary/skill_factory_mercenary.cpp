@@ -5,6 +5,6 @@
 
 #include "mercenary_bash.hpp"
 
-void SkillFactoryMercenary::registerSkills() {
-	registerSkill(MS_BASH, std::make_unique<SkillMercenaryBash>());
+void SkillFactoryMercenary::registerSkills(SkillDatabase& db) {
+	registerSkill(db, MS_BASH, std::make_unique<SkillMercenaryBash>());
 }
