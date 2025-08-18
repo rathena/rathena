@@ -337,7 +337,7 @@ namespace rathena {
 		**/
 		std::string base62_encode( uint32 val );
 
-		template <typename T> class Singleton{
+		template <typename InstanceClass, typename InterfaceClass = InstanceClass> class Singleton{
 			protected:
 				Singleton(){
 				}
@@ -346,8 +346,8 @@ namespace rathena {
 				}
 
 			public:
-				static T& getInstance(){
-					static T instance;
+				static std::shared_ptr<InterfaceClass> getInstance(){
+					static std::shared_ptr<InterfaceClass> instance = std::make_shared<InstanceClass>();
 
 					return instance;
 				}

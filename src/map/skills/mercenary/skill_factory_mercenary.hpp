@@ -5,7 +5,7 @@
 
 #include "../skill_factory.hpp"
 
-class SkillFactoryMercenary : public SkillFactory<SkillFactoryMercenary> {
+class SkillFactoryMercenary : public SkillFactory, public rathena::util::Singleton<SkillFactoryMercenary, SkillFactory> {
 public:
-	std::unique_ptr<const SkillImpl> create(const e_skill skill_id) const override;
+	virtual std::unique_ptr<const SkillImpl> create(const e_skill skill_id) const override;
 };
