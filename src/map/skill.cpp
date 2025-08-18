@@ -5247,12 +5247,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	map_freeblock_lock();
 
-	auto skill = skill_db.find(skill_id);
-	bool handled = false;
-	if (skill && skill->impl) {
-		handled = skill->impl->castendDamageId(src, bl, skill_lv, tick, flag);
-	}
-
 	switch(skill_id) {
 	case MER_CRASH:
 	case MC_MAMMONITE:
@@ -7502,14 +7496,17 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		break;
 
 	default:
-		if (!handled) {
-			ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skill_id);
-			clif_skill_damage( *src, *bl, tick, status_get_amotion(src), tstatus->dmotion,
-				0, abs(skill_get_num(skill_id, skill_lv)),
-				skill_id, skill_lv, skill_get_hit(skill_id) );
-			map_freeblock_unlock();
-			return 1;
+		if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+			skill->impl->castendDamageId(src, bl, skill_lv, tick, flag);
+			break;
 		}
+
+		ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skill_id);
+		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), tstatus->dmotion,
+			0, abs(skill_get_num(skill_id, skill_lv)),
+			skill_id, skill_lv, skill_get_hit(skill_id) );
+		map_freeblock_unlock();
+		return 1;
 	}
 
 	if( sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER) ) //Should only remove after the skill has been casted.
