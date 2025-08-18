@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <locale>
+#include <iostream>
 #include <map>
 #include <memory>
 #include <string>
@@ -337,23 +338,22 @@ namespace rathena {
 		**/
 		std::string base62_encode( uint32 val );
 
-		template <typename InstanceClass, typename InterfaceClass = InstanceClass> class Singleton{
-			protected:
-				Singleton(){
+		template <typename InstanceClass, typename InterfaceClass = InstanceClass> class Singleton {
+		protected:
+			Singleton() = default;
+			~Singleton() = default;
+
+		public:
+			static std::shared_ptr<InterfaceClass> getInstance() {
+				static std::shared_ptr<InterfaceClass> instance_{nullptr};
+				if (!instance_) {
+					instance_ = std::make_shared<InstanceClass>();
 				}
+				return instance_;
+			}
 
-				~Singleton(){
-				}
-
-			public:
-				static std::shared_ptr<InterfaceClass> getInstance(){
-					static std::shared_ptr<InterfaceClass> instance = std::make_shared<InstanceClass>();
-
-					return instance;
-				}
-
-				Singleton(const Singleton &) = delete;
-				Singleton& operator=(const Singleton &) = delete;
+			Singleton(const Singleton &) = delete;
+			Singleton& operator=(const Singleton &) = delete;
 		};
 	}
 }
