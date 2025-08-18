@@ -1,4 +1,4 @@
-name: Build servers on Linux
+name: Build servers with CMake and Clang on Linux
 # build_servers_linux.yml
 
 concurrency:
@@ -31,9 +31,9 @@ jobs:
       matrix:
           # The ubuntu-latest label currently points to ubuntu-24.04.
           # Available: ubuntu-24.04, ubuntu-22.04
-          os: [ubuntu-latest]
+          os: [ubuntu-22.04]
           # Version list can be found on https://github.com/marketplace/actions/install-clang
-          clang: ['17','18','19','20']
+          clang: ['13','14','15','16','17','18','19','20']
 
     steps:
       - uses: actions/checkout@v4

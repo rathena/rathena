@@ -1,4 +1,4 @@
-name: Build servers on Windows
+name: Build servers with CMake on Windows
 # build_servers_windows.yml
 
 concurrency:

@@ -1,4 +1,4 @@
-name: Build servers on Linux
+name: Build servers with CMake and GCC on Linux
 # build_servers_linux.yml
 
 concurrency:
