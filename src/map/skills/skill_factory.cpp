@@ -8,7 +8,7 @@
 #include "./mercenary/skill_factory_mercenary.hpp"
 #include "./swordsman/skill_factory_swordsman.hpp"
 
-void SkillFactory::registerSkill(const e_skill skill_id, const std::shared_ptr<Skill>& skill){
+void SkillFactory::registerSkill(const e_skill skill_id, const std::shared_ptr<SkillImpl>& skill) {
 	std::shared_ptr<s_skill_db> skill_entry = skill_db.find(skill_id);
 
 	if (skill_entry != nullptr){

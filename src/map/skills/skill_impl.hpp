@@ -5,11 +5,11 @@
 
 #include "../battle.hpp"
 
-class Skill
+class SkillImpl
 {
 public:
-	explicit Skill(e_skill skill_id);
-	virtual ~Skill() = default;
+	explicit SkillImpl(e_skill skill_id);
+	virtual ~SkillImpl() = default;
 
 	e_skill getSkillId() const;
 

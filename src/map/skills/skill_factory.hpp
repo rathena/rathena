@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "battle_skill.hpp"
+#include "skill_impl.hpp"
 
 #include "../skill.hpp"
 
@@ -16,7 +16,6 @@ public:
 	// Destructor
 	~SkillFactory() = default;
 
-	static void registerSkill(const e_skill skill_id, const std::shared_ptr<Skill>& skill);
+	static void registerSkill(const e_skill skill_id, const std::shared_ptr<SkillImpl>& skill);
 	static void registerAllSkills();
-	static void registerSkills();
 };
