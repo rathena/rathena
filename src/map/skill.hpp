@@ -309,7 +309,7 @@ struct s_skill_db {
 	uint16 improvisedsong_rate;
 	sc_type sc;									///< Default SC for skill
 
-	std::shared_ptr<const SkillImpl> impl;
+	std::unique_ptr<const SkillImpl> impl;
 };
 
 class SkillDatabase : public TypesafeCachedYamlDatabase <uint16, s_skill_db> {

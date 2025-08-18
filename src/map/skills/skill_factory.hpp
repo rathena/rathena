@@ -16,6 +16,6 @@ public:
 	// Destructor
 	~SkillFactory() = default;
 
-	static void registerSkill(const e_skill skill_id, const std::shared_ptr<SkillImpl>& skill);
+	static void registerSkill(const e_skill skill_id, std::unique_ptr<const SkillImpl> skill);
 	static void registerAllSkills();
 };

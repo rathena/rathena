@@ -6,5 +6,5 @@
 #include "bash.hpp"
 
 void SkillFactorySwordsman::registerSkills() {
-	registerSkill(SM_BASH, std::make_shared<SkillBash>());
+	registerSkill(SM_BASH, std::make_unique<SkillBash>());
 }
