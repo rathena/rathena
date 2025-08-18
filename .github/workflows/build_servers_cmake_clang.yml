@@ -48,4 +48,4 @@ jobs:
         run: CXX=clang++-${{matrix.clang}} CC=clang-${{matrix.clang}} cmake -B build
 
       - name: Build
-        run: cmake --build build -j $(nproc) --target all
+        run: cmake --build build --target all
