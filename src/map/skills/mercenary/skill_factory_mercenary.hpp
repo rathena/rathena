@@ -5,7 +5,7 @@
 
 #include "../skill_factory.hpp"
 
-class SkillFactoryMercenary : SkillFactory {
+class SkillFactoryMercenary : public SkillFactory<SkillFactoryMercenary> {
 public:
-	static void registerSkills(SkillDatabase& db);
+	std::unique_ptr<const SkillImpl> create(const e_skill skill_id) const override;
 };

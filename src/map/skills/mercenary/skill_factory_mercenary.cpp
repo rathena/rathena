@@ -5,6 +5,12 @@
 
 #include "mercenary_bash.hpp"
 
-void SkillFactoryMercenary::registerSkills(SkillDatabase& db) {
-	registerSkill(db, MS_BASH, std::make_unique<SkillMercenaryBash>());
+std::unique_ptr<const SkillImpl> SkillFactoryMercenary::create(const e_skill skill_id) const {
+	switch( skill_id ){
+		case MS_BASH:
+			return std::make_unique<SkillMercenaryBash>();
+
+		default:
+			return nullptr;
+	}
 }

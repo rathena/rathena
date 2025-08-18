@@ -5,16 +5,22 @@
 
 #include "skill_impl.hpp"
 
+#include <common/utilities.hpp>
+
 #include "../skill.hpp"
 
 /**
  * Factory class for creating and managing Skill instances
  */
-class SkillFactory {
+template <typename T> class SkillFactory : public rathena::util::Singleton<T>{
 public:
 	// Destructor
 	~SkillFactory() = default;
 
-	static void registerSkill(SkillDatabase& db, const e_skill skill_id, std::unique_ptr<const SkillImpl> skill);
-	static void registerAllSkills(SkillDatabase& db);
+	virtual std::unique_ptr<const SkillImpl> create( const e_skill skill_id ) const = 0;
+};
+
+class SkillFactoryImpl : public SkillFactory<SkillFactoryImpl>{
+public:
+	std::unique_ptr<const SkillImpl> create(const e_skill skill_id) const override;
 };

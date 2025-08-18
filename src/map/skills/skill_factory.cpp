@@ -8,17 +8,14 @@
 #include "./mercenary/skill_factory_mercenary.hpp"
 #include "./swordsman/skill_factory_swordsman.hpp"
 
-void SkillFactory::registerSkill(SkillDatabase& db, const e_skill skill_id, std::unique_ptr<const SkillImpl> skill) {
-	std::shared_ptr<s_skill_db> skill_entry = db.find(skill_id);
-
-	if (skill_entry != nullptr) {
-		skill_entry->impl = std::move(skill);
-	} else {
-		ShowError("registerSkill: skill ID %hu not found in skill DB", skill_id);
+std::unique_ptr<const SkillImpl> SkillFactoryImpl::create( const e_skill skill_id ) const {
+	if( std::unique_ptr<const SkillImpl> impl = SkillFactoryMercenary::getInstance().create( skill_id ); impl != nullptr ){
+		return impl;
 	}
-}
 
-void SkillFactory::registerAllSkills(SkillDatabase& db) {
-	SkillFactoryMercenary::registerSkills(db);
-	SkillFactorySwordsman::registerSkills(db);
+	if( std::unique_ptr<const SkillImpl> impl = SkillFactorySwordsman::getInstance().create( skill_id ); impl != nullptr ){
+		return impl;
+	}
+
+	return nullptr;
 }

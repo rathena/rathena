@@ -336,6 +336,25 @@ namespace rathena {
 		* @return Base62 string
 		**/
 		std::string base62_encode( uint32 val );
+
+		template <typename T> class Singleton{
+			protected:
+				Singleton(){
+				}
+
+				~Singleton(){
+				}
+
+			public:
+				static T& getInstance(){
+					static T instance;
+
+					return instance;
+				}
+
+				Singleton(const Singleton &) = delete;
+				Singleton& operator=(const Singleton &) = delete;
+		};
 	}
 }
 

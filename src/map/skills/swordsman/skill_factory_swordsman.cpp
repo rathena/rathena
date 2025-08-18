@@ -5,6 +5,12 @@
 
 #include "bash.hpp"
 
-void SkillFactorySwordsman::registerSkills(SkillDatabase& db) {
-	registerSkill(db, SM_BASH, std::make_unique<SkillBash>());
+std::unique_ptr<const SkillImpl> SkillFactorySwordsman::create(const e_skill skill_id) const {
+	switch( skill_id ){
+		case SM_BASH:
+			return std::make_unique<SkillBash>();
+
+		default:
+			return nullptr;
+	}
 }

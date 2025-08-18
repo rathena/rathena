@@ -26008,7 +26008,14 @@ void SkillDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
-	SkillFactory::registerAllSkills(*this);
+
+	for( auto& it : *this ){
+		std::unique_ptr<const SkillImpl> impl = SkillFactoryImpl::getInstance().create( static_cast<e_skill>( it.first ) );
+
+		if( impl != nullptr ){
+			it.second->impl = std::move( impl );
+		}
+	}
 }
 
 /**
