@@ -344,11 +344,9 @@ namespace rathena {
 
 		public:
 			static std::shared_ptr<InterfaceClass> getInstance() {
-				static std::shared_ptr<InterfaceClass> instance_{nullptr};
-				if (!instance_) {
-					instance_ = std::make_shared<InstanceClass>();
-				}
-				return instance_;
+				static std::shared_ptr<InterfaceClass> instance = std::make_shared<InstanceClass>();
+
+				return instance;
 			}
 
 			Singleton(const Singleton &) = delete;
