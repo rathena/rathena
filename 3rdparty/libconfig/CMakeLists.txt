@@ -25,3 +25,10 @@ if(WIN32)
 	)
 	set_target_properties(libconfig PROPERTIES FOLDER "3rdparty")
 endif()
+
+include(CheckIncludeFile)
+check_include_file(xlocale.h HAVE_LOCALE_H)
+
+if(HAVE_LOCALE_H)
+	target_compile_definitions(libconfig PUBLIC "-DHAVE_XLOCALE_H")
+endif()
