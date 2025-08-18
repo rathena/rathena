@@ -303,6 +303,9 @@
     <ClInclude Include="skills/skill_impl.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
+    <ClInclude Include="skills/weapon_skill_impl.hpp">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
@@ -321,6 +324,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="skills/skill_impl.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/weapon_skill_impl.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
