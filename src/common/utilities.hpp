@@ -6,7 +6,6 @@
 
 #include <algorithm>
 #include <locale>
-#include <iostream>
 #include <map>
 #include <memory>
 #include <string>

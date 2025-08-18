@@ -10,8 +10,8 @@
 #include "./swordsman/skill_factory_swordsman.hpp"
 
 SkillFactoryImpl::SkillFactoryImpl() : factories_{
-	SkillFactoryMercenary::getInstance(),
-	SkillFactorySwordsman::getInstance()
+	std::make_shared<SkillFactoryMercenary>(),
+	std::make_shared<SkillFactorySwordsman>()
 } {}
 
 std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id) const {
