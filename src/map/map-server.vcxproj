@@ -241,7 +241,7 @@
     <ClInclude Include="vending.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="skills/battle_skill.hpp" />
+    <ClInclude Include="skills/skill_impl.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
@@ -295,7 +295,7 @@
     <ClCompile Include="vending.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="skills/battle_skill.cpp" />
+    <ClCompile Include="skills/skill_impl.cpp" />
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp" />
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp" />
     <ClCompile Include="skills/swordsman/bash.cpp" />
