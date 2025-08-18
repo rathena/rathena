@@ -10,8 +10,7 @@
 /**
  * Factory class for creating and managing Skill instances
  */
-class SkillFactory
-{
+class SkillFactory {
 public:
 	// Destructor
 	~SkillFactory() = default;

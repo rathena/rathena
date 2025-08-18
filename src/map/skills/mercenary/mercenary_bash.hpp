@@ -3,12 +3,11 @@
 
 #pragma once
 
-#include "../skill_impl.hpp"
+#include "../weapon_skill_impl.hpp"
 
 #include "../../battle.hpp"
 
-class SkillMercenaryBash : public SkillImpl
-{
+class SkillMercenaryBash : public WeaponSkillImpl {
 public:
 	SkillMercenaryBash();
 

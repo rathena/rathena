@@ -5,13 +5,18 @@
 
 #include "../battle.hpp"
 
-class SkillImpl
-{
+class SkillImpl {
 public:
 	explicit SkillImpl(e_skill skill_id);
 	virtual ~SkillImpl() = default;
 
 	e_skill getSkillId() const;
+
+	/**
+	 * Effect of the skill - replaces switch statements in skill_castend_damage_id
+	 * Returns true if handled, false if not
+	 */
+	virtual bool castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const;
 
 	/**
 	 * Calculate skill damage ratio - replaces battle_calc_attack_skill_ratio() switch

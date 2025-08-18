@@ -5,8 +5,7 @@
 
 #include "../skill_factory.hpp"
 
-class SkillFactoryMercenary : SkillFactory
-{
+class SkillFactoryMercenary : SkillFactory {
 public:
 	static void registerSkills(SkillDatabase& db);
 };
