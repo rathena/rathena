@@ -21,9 +21,5 @@ public:
 
 class SkillFactoryImpl : public SkillFactory, public rathena::util::Singleton<SkillFactoryImpl, SkillFactory> {
 public:
-	SkillFactoryImpl();
 	virtual std::unique_ptr<const SkillImpl> create(const e_skill skill_id) const override;
-
-private:
-	std::vector<std::shared_ptr<SkillFactory>> factories_{};
 };
