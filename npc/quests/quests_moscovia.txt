@@ -10655,15 +10655,15 @@ mosk_dun02,57,220,0	script	House Ghost Jar#rus43	HIDDEN_NPC,{
 			cutin "",255;
 			switch( .@rucard_game01 ) {
 			case 1:
-				cutin "í¬ë§ì¹´ë“œ",4; // Poring Card
+				cutin "Æ÷¸µÄ«µå",4; // Poring Card
 				.@win_string$ = "You are good. Can you do it next time?";
 				break;
 			case 2:
-				cutin "ì—”ì ¤ë§ì¹´ë“œ",4; // Angeling Card
+				cutin "¿£Á©¸µÄ«µå",4; // Angeling Card
 				.@win_string$ = "You are pretty good at this. Ok, but can you do it again?";
 				break;
 			case 3:
-				cutin "ê³ ìŠ¤íŠ¸ë§ì¹´ë“œ",4; // Ghostring Card
+				cutin "°í½ºÆ®¸µÄ«µå",4; // Ghostring Card
 				.@win_string$ = "You are pretty good at this. Ok, but can you do it again?";
 				break;
 			}
