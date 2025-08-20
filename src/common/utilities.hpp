@@ -336,6 +336,22 @@ namespace rathena {
 		* @return Base62 string
 		**/
 		std::string base62_encode( uint32 val );
+
+		template <typename InstanceClass, typename InterfaceClass = InstanceClass> class Singleton {
+		protected:
+			Singleton() = default;
+			~Singleton() = default;
+
+		public:
+			static std::shared_ptr<InterfaceClass> getInstance() {
+				static std::shared_ptr<InterfaceClass> instance = std::make_shared<InstanceClass>();
+
+				return instance;
+			}
+
+			Singleton(const Singleton &) = delete;
+			Singleton& operator=(const Singleton &) = delete;
+		};
 	}
 }
 
