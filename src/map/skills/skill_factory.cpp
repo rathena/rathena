@@ -8,6 +8,7 @@
 
 #include "./acolyte/skill_factory_acolyte.hpp"
 #include "./archer/skill_factory_archer.hpp"
+#include "./custom/skill_factory_custom.hpp"
 #include "./gunslinger/skill_factory_gunslinger.hpp"
 #include "./mage/skill_factory_mage.hpp"
 #include "./mercenary/skill_factory_mercenary.hpp"
@@ -20,6 +21,9 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id) const {
 	static const std::vector<std::shared_ptr<SkillFactory>> factories = {
+		// Custom Skills (Always first to allow overwriting skills)
+		std::make_shared<SkillFactoryCustom>(),
+		// Normal Skills
 		std::make_shared<SkillFactoryAcolyte>(),
 		std::make_shared<SkillFactoryArcher>(),
 		std::make_shared<SkillFactoryGunslinger>(),

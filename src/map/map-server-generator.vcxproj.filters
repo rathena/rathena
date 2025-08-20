@@ -14,6 +14,9 @@
     <Filter Include="Source Files\Skills\Archer">
       <UniqueIdentifier>{7ae0b4f4-b535-4f44-b925-f503e8c33a0a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Skills\Custom">
+      <UniqueIdentifier>{607a6bff-94f6-4e8c-bc7a-2189dfd4c1ab}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Skills\Gunslinger">
       <UniqueIdentifier>{129a9804-44ab-4d14-b769-ca170935d84e}</UniqueIdentifier>
     </Filter>
@@ -53,6 +56,9 @@
     </Filter>
     <Filter Include="Header Files\Skills\Archer">
       <UniqueIdentifier>{04327150-e9d3-4847-a575-c81b9ee0e11c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Custom">
+      <UniqueIdentifier>{38c2586b-7a8c-4f30-92aa-f53fc17ee519}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Skills\Gunslinger">
       <UniqueIdentifier>{8ff19f85-a0c3-4705-a6e3-3aa79f9b3b5a}</UniqueIdentifier>
@@ -360,6 +366,9 @@
     <ClInclude Include="skills/archer/skill_factory_archer.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/custom/skill_factory_custom.hpp">
+      <Filter>Header Files\Skills\Custom</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -409,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="skills/archer/skill_factory_archer.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/custom/skill_factory_custom.cpp">
+      <Filter>Source Files\Skills\Custom</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
