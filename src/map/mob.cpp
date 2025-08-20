@@ -5681,6 +5681,10 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 		node["DamageMotion"] << str[index];
 	if (!str[++index].empty())
 		node["DamageTaken"] << str[index];
+	if (!str[++index].empty())
+		node["GroupId"] << str[index];
+	if (!str[++index].empty())
+		node["Title"] << str[index];	
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "06") != 0)
 		node["Ai"] << str[index];
 	if (!str[++index].empty() && strcmp(str[index].c_str(), "Normal") != 0)
