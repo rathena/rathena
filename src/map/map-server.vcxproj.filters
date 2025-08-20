@@ -5,9 +5,27 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Source Files\Skills">
+      <UniqueIdentifier>{8849eb34-b7f7-4023-ad0e-44db8c718e56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Mercenary">
+      <UniqueIdentifier>{ea34154e-db44-4bd1-8f33-db8bcd2a2fb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Swordsman">
+      <UniqueIdentifier>{ec4cace4-35e2-4269-b6e5-8a22cb4e317e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Skills">
+      <UniqueIdentifier>{09f35c48-a96f-4e32-a5fc-19ca82a6b44f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Mercenary">
+      <UniqueIdentifier>{773b3079-684c-4af8-8e4b-5297efb2690a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Swordsman">
+      <UniqueIdentifier>{86666c04-bad9-43da-9f31-aefe3dcf13f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -279,6 +297,52 @@
     </ClCompile>
     <ClCompile Include="vending.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="skills/skill_impl.hpp">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/weapon_skill_impl.hpp">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp">
+      <Filter>Header Files\Skills\Mercenary</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mercenary/mercenary_bash.hpp">
+      <Filter>Header Files\Skills\Mercenary</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/skill_factory.hpp">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordsman/bash.hpp">
+      <Filter>Header Files\Skills\Swordsman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordsman/skill_factory_swordsman.hpp">
+      <Filter>Header Files\Skills\Swordsman</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="skills/skill_impl.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/weapon_skill_impl.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
+      <Filter>Source Files\Skills\Mercenary</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_bash.cpp">
+      <Filter>Source Files\Skills\Mercenary</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/skill_factory.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordsman/bash.cpp">
+      <Filter>Source Files\Skills\Swordsman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordsman/skill_factory_swordsman.cpp">
+      <Filter>Source Files\Skills\Swordsman</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
