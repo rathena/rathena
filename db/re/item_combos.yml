@@ -39475,14 +39475,14 @@ Body:
   - Combos:
       - Combo:
           - Gloom_Under_Night_Card    # 4408
-          - SST_Prime_TH    # 450287
+          - Robe_of_Devotee    # 450287
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus2 bSubSkill,"NPC_RAYOFGENESIS",5*.@r;
   - Combos:
       - Combo:
           - Sealed_Gloom_Card_J    # 300332
-          - SST_Prime_TH    # 450287
+          - Robe_of_Devotee    # 450287
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
       bonus2 bSubSkill,"NPC_RAYOFGENESIS",2*.@r;

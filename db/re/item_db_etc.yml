@@ -53726,7 +53726,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 300489
-    AegisName: S_Est_Card
+    AegisName: S_Lookie_Card
     Name: Rebellion Lookie Card
     Type: Card
     Weight: 10
@@ -53757,7 +53757,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
   - Id: 300491
-    AegisName: S_Lookie_Card
+    AegisName: S_Est_Card
     Name: Rebellion Est Loveroy Card
     Type: Card
     Weight: 10

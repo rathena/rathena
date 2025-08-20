@@ -46660,7 +46660,7 @@ Body:
             Item: S_Lookie_Card
             Rate: 85
           - Index: 38
-            Item: S_Lookie_Card
+            Item: S_Est_Card
             Rate: 85
           - Index: 39
             Item: S_Gony_Card
@@ -52581,7 +52581,7 @@ Body:
             Item: C_Charm_Of_Mistic_Froze
             Rate: 50
           - Index: 2
-            Item: C_Showy_High_Cap 
+            Item: C_Showy_High_Cap
             Rate: 50
           - Index: 3
             Item: C_Brother_Keen_Eye
@@ -118002,7 +118002,7 @@ Body:
             Item: S_Lookie_Card
             Rate: 5
           - Index: 17
-            Item: S_Lookie_Card
+            Item: S_Est_Card
             Rate: 5
           - Index: 18
             Item: S_Gony_Card
