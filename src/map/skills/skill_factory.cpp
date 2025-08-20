@@ -6,13 +6,31 @@
 #include <memory>
 #include <vector>
 
+#include "./acolyte/skill_factory_acolyte.hpp"
+#include "./archer/skill_factory_archer.hpp"
+#include "./gunslinger/skill_factory_gunslinger.hpp"
+#include "./mage/skill_factory_mage.hpp"
 #include "./mercenary/skill_factory_mercenary.hpp"
+#include "./merchant/skill_factory_merchant.hpp"
+#include "./ninja/skill_factory_ninja.hpp"
+#include "./novice/skill_factory_novice.hpp"
+#include "./summoner/skill_factory_summoner.hpp"
 #include "./swordman/skill_factory_swordman.hpp"
+#include "./thief/skill_factory_thief.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id) const {
 	static const std::vector<std::shared_ptr<SkillFactory>> factories = {
+		std::make_shared<SkillFactoryAcolyte>(),
+		std::make_shared<SkillFactoryArcher>(),
+		std::make_shared<SkillFactoryGunslinger>(),
+		std::make_shared<SkillFactoryMage>(),
 		std::make_shared<SkillFactoryMercenary>(),
-		std::make_shared<SkillFactorySwordman>()
+		std::make_shared<SkillFactoryMerchant>(),
+		std::make_shared<SkillFactoryNinja>(),
+		std::make_shared<SkillFactoryNovice>(),
+		std::make_shared<SkillFactorySummoner>(),
+		std::make_shared<SkillFactorySwordman>(),
+		std::make_shared<SkillFactoryThief>(),
 	};
 
 	for (const std::shared_ptr<SkillFactory>& factory : factories) {
