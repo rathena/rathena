@@ -11,7 +11,7 @@
     <Filter Include="Source Files\Skills\Mercenary">
       <UniqueIdentifier>{ea34154e-db44-4bd1-8f33-db8bcd2a2fb0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Skills\Swordsman">
+    <Filter Include="Source Files\Skills\Swordman">
       <UniqueIdentifier>{ec4cace4-35e2-4269-b6e5-8a22cb4e317e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
@@ -24,7 +24,7 @@
     <Filter Include="Header Files\Skills\Mercenary">
       <UniqueIdentifier>{773b3079-684c-4af8-8e4b-5297efb2690a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Skills\Swordsman">
+    <Filter Include="Header Files\Skills\Swordman">
       <UniqueIdentifier>{86666c04-bad9-43da-9f31-aefe3dcf13f5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -315,11 +315,11 @@
     <ClInclude Include="skills/skill_factory.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
-    <ClInclude Include="skills/swordsman/bash.hpp">
-      <Filter>Header Files\Skills\Swordsman</Filter>
+    <ClInclude Include="skills/swordman/bash.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
-    <ClInclude Include="skills/swordsman/skill_factory_swordsman.hpp">
-      <Filter>Header Files\Skills\Swordsman</Filter>
+    <ClInclude Include="skills/swordman/skill_factory_swordman.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -338,11 +338,11 @@
     <ClCompile Include="skills/skill_factory.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
-    <ClCompile Include="skills/swordsman/bash.cpp">
-      <Filter>Source Files\Skills\Swordsman</Filter>
+    <ClCompile Include="skills/swordman/bash.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
-    <ClCompile Include="skills/swordsman/skill_factory_swordsman.cpp">
-      <Filter>Source Files\Skills\Swordsman</Filter>
+    <ClCompile Include="skills/swordman/skill_factory_swordman.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

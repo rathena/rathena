@@ -246,8 +246,8 @@
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
-    <ClInclude Include="skills/swordsman/bash.hpp" />
-    <ClInclude Include="skills/swordsman/skill_factory_swordsman.hpp" />
+    <ClInclude Include="skills/swordman/bash.hpp" />
+    <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="achievement.cpp" />
@@ -300,8 +300,8 @@
     <ClCompile Include="skills/weapon_skill_impl.cpp" />
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp" />
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp" />
-    <ClCompile Include="skills/swordsman/bash.cpp" />
-    <ClCompile Include="skills/swordsman/skill_factory_swordsman.cpp" />
+    <ClCompile Include="skills/swordman/bash.cpp" />
+    <ClCompile Include="skills/swordman/skill_factory_swordman.cpp" />
     <ClCompile Include="skills/skill_factory.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

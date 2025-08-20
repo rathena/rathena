@@ -7,12 +7,12 @@
 #include <vector>
 
 #include "./mercenary/skill_factory_mercenary.hpp"
-#include "./swordsman/skill_factory_swordsman.hpp"
+#include "./swordman/skill_factory_swordman.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id) const {
 	static const std::vector<std::shared_ptr<SkillFactory>> factories = {
 		std::make_shared<SkillFactoryMercenary>(),
-		std::make_shared<SkillFactorySwordsman>()
+		std::make_shared<SkillFactorySwordman>()
 	};
 
 	for (const std::shared_ptr<SkillFactory>& factory : factories) {
