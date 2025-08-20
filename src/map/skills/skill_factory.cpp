@@ -13,6 +13,7 @@
 #include "./mage/skill_factory_mage.hpp"
 #include "./mercenary/skill_factory_mercenary.hpp"
 #include "./merchant/skill_factory_merchant.hpp"
+#include "./npc/skill_factory_npc.hpp"
 #include "./ninja/skill_factory_ninja.hpp"
 #include "./novice/skill_factory_novice.hpp"
 #include "./summoner/skill_factory_summoner.hpp"
@@ -31,6 +32,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id
 		std::make_shared<SkillFactoryMercenary>(),
 		std::make_shared<SkillFactoryMerchant>(),
 		std::make_shared<SkillFactoryNinja>(),
+		std::make_shared<SkillFactoryNpc>(),
 		std::make_shared<SkillFactoryNovice>(),
 		std::make_shared<SkillFactorySummoner>(),
 		std::make_shared<SkillFactorySwordman>(),

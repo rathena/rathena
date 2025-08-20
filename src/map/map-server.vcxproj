@@ -251,6 +251,7 @@
     <ClInclude Include="skills/merchant/skill_factory_merchant.hpp" />
     <ClInclude Include="skills/ninja/skill_factory_ninja.hpp" />
     <ClInclude Include="skills/novice/skill_factory_novice.hpp" />
+    <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/skill_impl.hpp" />
     <ClInclude Include="skills/summoner/skill_factory_summoner.hpp" />
@@ -316,6 +317,7 @@
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp" />
     <ClCompile Include="skills/novice/skill_factory_novice.cpp" />
+    <ClCompile Include="skills/npc/skill_factory_npc.cpp" />
     <ClCompile Include="skills/skill_factory.cpp" />
     <ClCompile Include="skills/skill_impl.cpp" />
     <ClCompile Include="skills/summoner/skill_factory_summoner.cpp" />

@@ -35,6 +35,9 @@
     <Filter Include="Source Files\Skills\Novice">
       <UniqueIdentifier>{7b445a57-6621-4de5-8ff2-99b06c745cb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Skills\Npc">
+      <UniqueIdentifier>{242ebf78-1994-488e-b1aa-d6aa09e48d0d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Skills\Summoner">
       <UniqueIdentifier>{1aab87a2-9226-480f-937d-309a89a02358}</UniqueIdentifier>
     </Filter>
@@ -77,6 +80,9 @@
     </Filter>
     <Filter Include="Header Files\Skills\Novice">
       <UniqueIdentifier>{3a033f23-439b-45c2-8d2e-748334bedf07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Npc">
+      <UniqueIdentifier>{18eed79b-2523-4ca0-ba97-a3f2c27d9efe}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Skills\Summoner">
       <UniqueIdentifier>{021a5c3f-56ab-45a9-a02a-f4e73e582bdc}</UniqueIdentifier>
@@ -390,6 +396,9 @@
     <ClInclude Include="skills/novice/skill_factory_novice.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/skill_factory_npc.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/skill_factory.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
@@ -442,6 +451,9 @@
     </ClCompile>
     <ClCompile Include="skills/novice/skill_factory_novice.cpp">
       <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/skill_factory_npc.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/skill_factory.cpp">
       <Filter>Source Files\Skills</Filter>
