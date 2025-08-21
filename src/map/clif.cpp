@@ -1707,7 +1707,6 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 			if (sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0)
 				clif_spiritcharm( *sd );
 			clif_efst_status_change_sub(bl, bl, AREA);
-			clif_hat_effects( *sd, *sd, AREA );
 		}
 		break;
 	case BL_MOB:
@@ -1741,6 +1740,9 @@ int32 clif_spawn( struct block_list *bl, bool walking ){
 		}
 		break;
 	}
+
+	clif_hat_effects( *bl, AREA, *bl );
+
 	return 0;
 }
 
@@ -5039,7 +5041,6 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 			if( tsd->bg_id && map_getmapflag(tsd->m, MF_BATTLEGROUND) )
 				clif_sendbgemblem_single(sd->fd,tsd);
 			clif_efst_status_change_sub(sd, bl, SELF);
-			clif_hat_effects( *sd, *tsd, SELF );
 		}
 		break;
 	case BL_MER: // Devotion Effects
@@ -5094,6 +5095,8 @@ void clif_getareachar_unit( map_session_data* sd,struct block_list *bl ){
 		}
 		break;
 	}
+
+	clif_hat_effects( *bl, SELF, *sd );
 }
 
 //Modifies the type of damage according to target status changes [Skotlex]
@@ -5859,6 +5862,7 @@ void clif_skill_scale( struct block_list *bl, int32 src_id, int32 x, int32 y, ui
 /// Notifies clients in area, that an object is about to use a skill.
 /// 013e <src id>.L <dst id>.L <x>.W <y>.W <skill id>.W <property>.L <delaytime>.L (ZC_USESKILL_ACK)
 /// 07fb <src id>.L <dst id>.L <x>.W <y>.W <skill id>.W <property>.L <delaytime>.L <is disposable>.B (ZC_USESKILL_ACK2)
+/// 0b1a <src id>.L <dst id>.L <x>.W <y>.W <skill id>.W <property>.L <delaytime>.L <is disposable>.B <attackMT>.L (ZC_USESKILL_ACK3)
 /// property:
 ///     0 = Yellow cast aura
 ///     1 = Water elemental cast aura
@@ -5871,36 +5875,43 @@ void clif_skill_scale( struct block_list *bl, int32 src_id, int32 x, int32 y, ui
 /// is disposable:
 ///     0 = yellow chat text "[src name] will use skill [skill name]."
 ///     1 = no text
-void clif_skillcasting(struct block_list* bl, int32 src_id, int32 dst_id, int32 dst_x, int32 dst_y, uint16 skill_id, uint16 skill_lv, int32 property, int32 casttime)
-{
-#if PACKETVER < 20091124
-	const int32 cmd = 0x13e;
-#else
-	const int32 cmd = 0x7fb;
-#endif
-	unsigned char buf[32];
+void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 dst_y, uint16 skill_id, uint16 skill_lv, e_element property, int32 casttime){
+	PACKET_ZC_USESKILL_ACK p = {};
 
-	WBUFW(buf,0) = cmd;
-	WBUFL(buf,2) = src_id;
-	WBUFL(buf,6) = dst_id;
-	WBUFW(buf,10) = dst_x;
-	WBUFW(buf,12) = dst_y;
-	WBUFW(buf,14) = skill_id;
-	WBUFL(buf,16) = property<0?0:property; //Avoid sending negatives as element [Skotlex]
-	WBUFL(buf,20) = casttime;
-#if PACKETVER >= 20091124
-	WBUFB(buf,24) = 0;  // isDisposable
+	p.packetType = HEADER_ZC_USESKILL_ACK;
+	p.srcId = src.id;
+	if( dst != nullptr ){
+		p.dstId = dst->id;
+	}else{
+		p.dstId = 0;
+	}
+	p.x = dst_x;
+	p.y = dst_y;
+	p.skillId = skill_id;
+	p.delayTime = casttime;
+	if( property > ELE_NONE && property < ELE_ALL ){
+		p.element = property;
+	}else{
+		p.element = ELE_NEUTRAL;
+	}
+
+#if PACKETVER_MAIN_NUM >= 20091124 || PACKETVER_RE_NUM >= 20091124 || defined(PACKETVER_ZERO)
+	p.disposable = false;
+#endif
+#if PACKETVER_MAIN_NUM >= 20181212 || PACKETVER_RE_NUM >= 20181212 || PACKETVER_ZERO_NUM >= 20190130
+	p.attackMT = 0;
 #endif
 
-	if (disguised(bl)) {
-		clif_send(buf,packet_len(cmd), bl, AREA_WOS);
-		WBUFL(buf,2) = disguised_bl_id( src_id );
-		clif_send(buf,packet_len(cmd), bl, SELF);
+	if (disguised(&src)) {
+		clif_send(&p,sizeof(p), &src, AREA_WOS);
+
+		p.srcId = disguised_bl_id( src.id );
+		clif_send(&p,sizeof(p), &src, SELF);
 	} else
-		clif_send(buf,packet_len(cmd), bl, AREA);
+		clif_send(&p,sizeof(p), &src, AREA);
 
 	if( skill_get_inf2( skill_id, INF2_SHOWSCALE ) ){
-		clif_skill_scale( bl, src_id, bl->x, bl->y, skill_id, skill_lv, casttime );
+		clif_skill_scale( &src, src.id, src.x, src.y, skill_id, skill_lv, casttime );
 	}
 }
 
@@ -8621,27 +8632,32 @@ void clif_guild_belonginfo( map_session_data& sd ){
 ///     1 = online
 void clif_guild_memberlogin_notice(const struct mmo_guild &g,int32 idx,int32 flag)
 {
-	unsigned char buf[64];
 	map_session_data* sd;
+	
+	PACKET_ZC_UPDATE_CHARSTAT p = {};
 
-	WBUFW(buf, 0)=0x1f2;
-	WBUFL(buf, 2)=g.member[idx].account_id;
-	WBUFL(buf, 6)=g.member[idx].char_id;
-	WBUFL(buf,10)=flag;
+	p.packetType = HEADER_ZC_UPDATE_CHARSTAT;
+	p.aid = g.member[idx].account_id;
+	p.cid = g.member[idx].char_id;
+	p.status = flag;
 
 	if( ( sd = g.member[idx].sd ) != nullptr )
 	{
-		WBUFW(buf,14) = sd->status.sex;
-		WBUFW(buf,16) = sd->status.hair;
-		WBUFW(buf,18) = sd->status.hair_color;
-		clif_send(buf,packet_len(0x1f2),sd,GUILD_WOS);
+#if defined(PACKETVER)
+		p.gender = sd->status.sex;
+		p.hairStyle = sd->status.hair;
+		p.hairColor = sd->status.hair_color;
+#endif
+		clif_send(&p,sizeof(p),sd,GUILD_WOS);
 	}
 	else if( ( sd = guild_getavailablesd(g) ) != nullptr )
 	{
-		WBUFW(buf,14) = 0;
-		WBUFW(buf,16) = 0;
-		WBUFW(buf,18) = 0;
-		clif_send(buf,packet_len(0x1f2),sd,GUILD);
+#if defined(PACKETVER)
+		p.gender = 0;
+		p.hairStyle = 0;
+		p.hairColor = 0;
+#endif
+		clif_send(&p,sizeof(p),sd,GUILD);
 	}
 }
 
@@ -8909,20 +8925,27 @@ void clif_guild_positionchanged(const struct mmo_guild &g,int32 idx)
 	// FIXME: This packet is intended to update the clients after a
 	// commit of position info changes, not sending one packet per
 	// position.
-	map_session_data *sd;
-	unsigned char buf[128];
+	map_session_data* sd = guild_getavailablesd(g);
 
-	WBUFW(buf, 0)=0x174;
-	WBUFW(buf, 2)=44;  // packet len
-	// GUILD_REG_POSITION_INFO{
-	WBUFL(buf, 4)=idx;
-	WBUFL(buf, 8)=g.position[idx].mode;
-	WBUFL(buf,12)=idx;
-	WBUFL(buf,16)=g.position[idx].exp_mode;
-	safestrncpy(WBUFCP(buf,20),g.position[idx].name,NAME_LENGTH);
-	// }*
-	if( (sd=guild_getavailablesd(g))!=nullptr )
-		clif_send(buf,WBUFW(buf,2),sd,GUILD);
+	if( sd == nullptr ){
+		return;
+	}
+
+	PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO* p = reinterpret_cast<PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO*>( packet_buffer );
+
+	p->packetType = HEADER_ZC_ACK_CHANGE_GUILD_POSITIONINFO;
+	p->packetLength = sizeof(*p);
+
+	PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub& info = p->posInfo[0];
+
+	info.positionID = idx;
+	info.mode = g.position[idx].mode;
+	info.ranking = idx;
+	info.payRate = g.position[idx].exp_mode;
+	safestrncpy(info.posName, g.position[idx].name, sizeof(info.posName));
+	p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(info));
+
+	clif_send(p,p->packetLength,sd,GUILD);
 }
 
 
@@ -8933,18 +8956,25 @@ void clif_guild_memberpositionchanged(const struct mmo_guild &g, int32 idx)
 	// FIXME: This packet is intended to update the clients after a
 	// commit of member position assignment changes, not sending one
 	// packet per position.
-	map_session_data *sd;
-	unsigned char buf[64];
+	map_session_data *sd = guild_getavailablesd(g);
 
-	WBUFW(buf, 0)=0x156;
-	WBUFW(buf, 2)=16;  // packet len
-	// MEMBER_POSITION_INFO{
-	WBUFL(buf, 4)=g.member[idx].account_id;
-	WBUFL(buf, 8)=g.member[idx].char_id;
-	WBUFL(buf,12)=g.member[idx].position;
-	// }*
-	if( (sd=guild_getavailablesd(g))!=nullptr )
-		clif_send(buf,WBUFW(buf,2),sd,GUILD);
+	if(sd == nullptr){
+		return;
+	}
+
+	PACKET_ZC_ACK_REQ_CHANGE_MEMBERS* p = reinterpret_cast<PACKET_ZC_ACK_REQ_CHANGE_MEMBERS*>( packet_buffer );
+
+	p->packetType = HEADER_ZC_ACK_REQ_CHANGE_MEMBERS;
+	p->packetLength = sizeof(*p);
+
+	PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub& member = p->members[0];
+
+	member.accId = g.member[idx].account_id;
+	member.charId = g.member[idx].char_id;
+	member.positionID = g.member[idx].position;
+	p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(member));
+
+	clif_send(p,p->packetLength,sd,GUILD);
 }
 
 
@@ -11538,16 +11568,20 @@ void clif_parse_ChangeDir(int32 fd, map_session_data *sd)
 }
 
 
-/// Request to show an emotion (CZ_REQ_EMOTION).
-/// 00bf <type>.B
-/// type:
-///     @see enum emotion_type
+/// Request to show an emotion 
+/// 00bf <type>.B (CZ_REQ_EMOTION).
 void clif_parse_Emotion(int32 fd, map_session_data *sd){
 	if( sd == nullptr ){
 		return;
 	}
 
-	int32 emoticon = RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0]);
+	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
+
+	if( p->emotion_type >= ET_MAX ){
+		return;
+	}
+	
+	emotion_type emoticon = static_cast<emotion_type>( p->emotion_type );
 
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2 || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
 		if (emoticon == ET_CHAT_PROHIBIT) {// prevent use of the mute emote [Valaris]
@@ -11575,10 +11609,10 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 		}
 
 		if(battle_config.client_reshuffle_dice && emoticon>=ET_DICE1 && emoticon<=ET_DICE6) {// re-roll dice
-			emoticon = rnd()%6+ET_DICE1;
+			emoticon = static_cast<emotion_type>( rnd()%6+ET_DICE1 );
 		}
 
-		clif_emotion( *sd, static_cast<emotion_type>( emoticon ) );
+		clif_emotion( *sd, emoticon );
 	} else
 		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 1 );
 }
@@ -14866,7 +14900,6 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 		StringBuf_Init(&command);
 		StringBuf_Printf(&command, "%czeny %d", atcommand_symbol, INT_MAX);
 		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
-		StringBuf_Destroy(&command);
 		return;
 	}
 
@@ -14884,7 +14917,6 @@ void clif_parse_GM_Item_Monster(int32 fd, map_session_data *sd)
 				StringBuf_Printf(&command, "%citem %u 20", atcommand_symbol, id->nameid);
 		}
 		is_atcommand(fd, sd, StringBuf_Value(&command), 1);
-		StringBuf_Destroy(&command);
 		return;
 	}
 
@@ -21399,24 +21431,19 @@ void clif_navigateTo(map_session_data *sd, const char* mapname, uint16 x, uint16
 
 /// Send hat effects to the client.
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W } (ZC_EQUIPMENT_EFFECT)
-void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target target ){
+void clif_hat_effects( block_list& bl, enum send_target target, block_list& tbl ){
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
-	map_session_data *tsd;
-	block_list* tbl;
-
-	if( target == SELF ){
-		tsd = BL_CAST(BL_PC,&bl);
-		tbl = &sd;
-	}else{
-		tsd = &sd;
-		tbl = &bl;
-	}
-
-	if( tsd == nullptr ){
+	if( map_getmapdata( bl.m )->getMapFlag( MF_NOCOSTUME ) ){
 		return;
 	}
 
-	if( tsd->hatEffects.empty() || map_getmapdata(tbl->m)->getMapFlag(MF_NOCOSTUME) ){
+	unit_data* ud = unit_bl2ud( &bl );
+	
+	if( ud == nullptr ){
+		return;
+	}
+
+	if( ud->hatEffects.empty() ){
 		return;
 	}
 
@@ -21424,33 +21451,37 @@ void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target ta
 
 	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
 	p->packetLength = sizeof( *p );
-	p->aid = tsd->id;
+	p->aid = bl.id;
 	p->status = 1;
 
-	for( size_t i = 0; i < tsd->hatEffects.size(); i++ ){
-		p->effects[i] = tsd->hatEffects[i];
+	for( size_t i = 0; i < ud->hatEffects.size(); i++ ){
+		p->effects[i] = ud->hatEffects[i];
 
 		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->effects[0] ) );
 	}
 
-	clif_send( p, p->packetLength, tbl, target );
+	clif_send( p, p->packetLength, &tbl, target );
 #endif
 }
 
 /// Send a single hat effect to the client.
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W } (ZC_EQUIPMENT_EFFECT)
-void clif_hat_effect_single( map_session_data& sd, uint16 effectId, bool enable ){
+void clif_hat_effect_single( block_list& bl, uint16 effectId, bool enable ){
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	if( map_getmapdata( bl.m )->getMapFlag( MF_NOCOSTUME ) ){
+		return;
+	}
+
 	PACKET_ZC_EQUIPMENT_EFFECT* p = reinterpret_cast<PACKET_ZC_EQUIPMENT_EFFECT*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_EQUIPMENT_EFFECT;
 	p->packetLength = sizeof( *p );
-	p->aid = sd.id;
+	p->aid = bl.id;
 	p->status = enable;
 	p->effects[0] = effectId;
 	p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->effects[0] ) );
 
-	clif_send( p, p->packetLength, &sd, AREA );
+	clif_send( p, p->packetLength, &bl, AREA );
 #endif
 }
 

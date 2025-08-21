@@ -33,6 +33,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
+#include "./skills/skill_impl.hpp"
 
 using namespace rathena;
 
@@ -444,6 +445,10 @@ int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, st
 		}
 
 		damage = 0;
+		// This is a quick fix to make devotion protect from cast cancel and autocasts
+		// TODO: This currently also prevents "status change when hit", but shouldn't
+		if (dmg_lv == ATK_DEF)
+			dmg_lv = ATK_BLOCK;
 	}
 
 	// The client refuses to display animations slower than 1x speed
@@ -3270,12 +3275,12 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 #endif
 
 	if(skill_id) {
+		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+		if (skill != nullptr && skill->impl != nullptr) {
+			skill->impl->modifyHitRate(hitrate, src, target, skill_lv);
+		}
+
 		switch(skill_id) { //Hit skill modifiers
-			//It is proven that bonus is applied on final hitrate, not hit.
-			case SM_BASH:
-			case MS_BASH:
-				hitrate += hitrate * 5 * skill_lv / 100;
-				break;
 			case MS_MAGNUM:
 			case SM_MAGNUM:
 				hitrate += hitrate * 10 * skill_lv / 100;
@@ -4696,11 +4701,12 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 		}
 	}
 
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+	if (skill != nullptr && skill->impl != nullptr) {
+		skill->impl->calculateSkillRatio(wd, src, target, skill_lv, skillratio);
+	}
+
 	switch(skill_id) {
-		case SM_BASH:
-		case MS_BASH:
-			skillratio += 30 * skill_lv;
-			break;
 		case SM_MAGNUM:
 		case MS_MAGNUM:
 			if(wd->miscflag == 1)
@@ -8627,7 +8633,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						RE_LVL_DMOD(100);
 						break;
 					case LG_RAYOFGENESIS:
-						skillratio += -100 + 350 * skill_lv + sstatus->int_; // !TODO: What's the INT bonus?
+						skillratio += -100 + 350 * skill_lv;
+						skillratio += sstatus->int_ * 3;
 						RE_LVL_DMOD(100);
 						break;
 					case NPC_RAYOFGENESIS:
@@ -9725,8 +9732,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				if(!sd || !(skill = pc_checkskill(sd,HT_STEELCROW)))
 					skill = 0;
 #ifdef RENEWAL
-				md.damage = (sstatus->dex / 10 + sstatus->agi / 2 + skill * 3 + 40) * 2;
-				RE_LVL_MDMOD(100);
+				md.damage = skill_lv * 20 + skill * 6 + ((sstatus->agi / 2) *2) + ((sstatus->dex / 10) *2);
 #else
 				md.damage = (sstatus->dex / 10 + sstatus->int_ / 2 + skill * 3 + 40) * 2;
 				if(mflag > 1) //Autocasted Blitz

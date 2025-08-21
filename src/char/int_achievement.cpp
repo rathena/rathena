@@ -48,16 +48,15 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int32 *count)
 	||  SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		StringBuf_Destroy(&buf);
 		*count = 0;
 		return nullptr;
 	}
 
-	stmt.BindColumn(0, SQLDT_INT32,  &tmp_achieve.achievement_id, 0, nullptr, nullptr);
-	stmt.BindColumn(1, SQLDT_INT32,  &tmp_achieve.completed, 0, nullptr, nullptr);
-	stmt.BindColumn(2, SQLDT_INT32,  &tmp_achieve.rewarded, 0, nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_INT32, &tmp_achieve.achievement_id);
+	stmt.BindColumn(1, SQLDT_INT32, &tmp_achieve.completed);
+	stmt.BindColumn(2, SQLDT_INT32, &tmp_achieve.rewarded);
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		stmt.BindColumn(3 + i, SQLDT_INT32, &tmp_achieve.count[i], 0, nullptr, nullptr);
+		stmt.BindColumn(3 + i, SQLDT_INT32, &tmp_achieve.count[i]);
 
 	*count = (int32)stmt.NumRows();
 	if (*count > 0) {
@@ -75,8 +74,6 @@ struct achievement *mapif_achievements_fromsql(uint32 char_id, int32 *count)
 			achievelog = (struct achievement *)aRealloc(achievelog, sizeof(struct achievement) * i);
 		}
 	}
-
-	StringBuf_Destroy(&buf);
 
 	ShowInfo("achievement load complete from DB - id: %d (total: %d)\n", char_id, *count);
 
@@ -139,11 +136,8 @@ bool mapif_achievement_add(uint32 char_id, struct achievement* ad)
 
 	if (SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf))) {
 		Sql_ShowDebug(sql_handle);
-		StringBuf_Destroy(&buf);
 		return false;
 	}
-
-	StringBuf_Destroy(&buf);
 
 	return true;
 }
@@ -177,11 +171,8 @@ bool mapif_achievement_update(uint32 char_id, struct achievement* ad)
 
 	if (SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf))) {
 		Sql_ShowDebug(sql_handle);
-		StringBuf_Destroy(&buf);
 		return false;
 	}
-
-	StringBuf_Destroy(&buf);
 
 	return true;
 }

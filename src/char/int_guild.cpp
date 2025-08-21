@@ -226,7 +226,6 @@ int32 inter_guild_tosql( mmo_guild &g, int32 flag ){
 		StringBuf_Printf(&buf, " WHERE `guild_id`=%d", g.guild_id);
 		if( SQL_ERROR == Sql_Query(sql_handle, "%s", StringBuf_Value(&buf)) )
 			Sql_ShowDebug(sql_handle);
-		StringBuf_Destroy(&buf);
 	}
 
 	if (flag&GS_MEMBER)
@@ -580,7 +579,6 @@ int32 inter_guildcastle_tosql( std::shared_ptr<struct guild_castle> gc ){
 	else if(charserv_config.save_log)
 		ShowInfo("Saved guild castle (%d)\n", gc->castle_id);
 
-	StringBuf_Destroy(&buf);
 	return 0;
 }
 
@@ -604,10 +602,8 @@ std::shared_ptr<struct guild_castle> inter_guildcastle_fromsql( int32 castle_id 
 	StringBuf_Printf(&buf, " FROM `%s` WHERE `castle_id`='%d'", schema_config.guild_castle_db, castle_id);
 	if (SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf))) {
 		Sql_ShowDebug(sql_handle);
-		StringBuf_Destroy(&buf);
 		return nullptr;
 	}
-	StringBuf_Destroy(&buf);
 
 	gc = std::make_shared<struct guild_castle>();
 

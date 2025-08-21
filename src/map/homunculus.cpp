@@ -1069,7 +1069,6 @@ void hom_alloc(map_session_data *sd, struct s_homunculus *hom)
 	hd->exp_next = homun_exp_db.get_nextexp(hd->homunculus.level);
 
 	status_set_viewdata(hd, hd->homunculus.class_);
-	status_change_init(hd);
 	unit_dataset(hd);
 	hd->ud.dir = sd->ud.dir;
 
