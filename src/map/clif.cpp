@@ -1036,6 +1036,72 @@ static int32 clif_setlevel(struct block_list* bl) {
 }
 
 /*==========================================
+ * Gets guild ID for emblem display purposes only
+ *------------------------------------------*/
+static int32 clif_get_guild_id_for_emblem(struct block_list *bl) {
+	nullpo_ret(bl);
+	switch (bl->type) {
+		case BL_PC:
+			if (battle_config.show_guild_emblem & BL_PC)
+				return ((TBL_PC*)bl)->status.guild_id;
+			break;
+		case BL_PET:
+			if ((battle_config.show_guild_emblem & BL_PET) && ((TBL_PET*)bl)->master)
+				return ((TBL_PET*)bl)->master->status.guild_id;
+			break;
+		case BL_HOM:
+			if ((battle_config.show_guild_emblem & BL_HOM) && ((TBL_HOM*)bl)->master)
+				return ((TBL_HOM*)bl)->master->status.guild_id;
+			break;
+		case BL_MER:
+			if ((battle_config.show_guild_emblem & BL_MER) && ((TBL_MER*)bl)->master)
+				return ((TBL_MER*)bl)->master->status.guild_id;
+			break;
+		case BL_ELEM:
+			if ((battle_config.show_guild_emblem & BL_ELEM) && ((TBL_ELEM*)bl)->master)
+				return ((TBL_ELEM*)bl)->master->status.guild_id;
+			break;
+		default:
+			// For MOB, NPC, SKILL etc., use the original function
+			return status_get_guild_id(bl);
+	}
+	return 0;
+}
+
+/*==========================================
+ * Gets emblem ID for emblem display purposes only
+ *------------------------------------------*/
+static int32 clif_get_emblem_id_for_emblem(struct block_list *bl) {
+	nullpo_ret(bl);
+	switch (bl->type) {
+		case BL_PC:
+			if (battle_config.show_guild_emblem & BL_PC)
+				return ((TBL_PC*)bl)->guild_emblem_id;
+			break;
+		case BL_PET:
+			if ((battle_config.show_guild_emblem & BL_PET) && ((TBL_PET*)bl)->master)
+				return ((TBL_PET*)bl)->master->guild_emblem_id;
+			break;
+		case BL_HOM:
+			if ((battle_config.show_guild_emblem & BL_HOM) && ((TBL_HOM*)bl)->master)
+				return ((TBL_HOM*)bl)->master->guild_emblem_id;
+			break;
+		case BL_MER:
+			if ((battle_config.show_guild_emblem & BL_MER) && ((TBL_MER*)bl)->master)
+				return ((TBL_MER*)bl)->master->guild_emblem_id;
+			break;
+		case BL_ELEM:
+			if ((battle_config.show_guild_emblem & BL_ELEM) && ((TBL_ELEM*)bl)->master)
+				return ((TBL_ELEM*)bl)->master->guild_emblem_id;
+			break;
+		default:
+			// For MOB, NPC, SKILL etc., use the original function
+			return status_get_emblem_id(bl);
+	}
+	return 0;
+}
+
+/*==========================================
  * Prepares 'unit standing/spawning' packet
  *------------------------------------------*/
 static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target target, struct block_list* tbl ){
@@ -1044,7 +1110,7 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 	map_session_data* sd = BL_CAST( BL_PC, bl );
 	status_change* sc = status_get_sc( bl );
 	struct view_data* vd = status_get_viewdata( bl );
-	int32 g_id = status_get_guild_id( bl );
+	int32 g_id = clif_get_guild_id_for_emblem( bl );
 
 #if PACKETVER < 20091103
 	if( !pcdb_checkid( vd->look[LOOK_BASE] ) ){
@@ -1077,7 +1143,7 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 		p.bodypalette = vd->look[LOOK_CLOTHES_COLOR];
 		p.headDir = ( sd )? sd->head_dir : 0;
 		p.GUID = g_id;
-		p.GEmblemVer = status_get_emblem_id( bl );
+		p.GEmblemVer = clif_get_emblem_id_for_emblem( bl );
 		p.honor = ( sd ) ? sd->status.manner : 0;
 		p.virtue = ( sc ) ? sc->opt3 : 0;
 		p.isPKModeON = ( sd && sd->status.karma ) ? 1 : 0;
@@ -1149,7 +1215,7 @@ static void clif_set_unit_idle( struct block_list* bl, bool walking, send_target
 	p.robe = vd->look[LOOK_ROBE];
 #endif
 	p.GUID = g_id;
-	p.GEmblemVer = status_get_emblem_id( bl );
+	p.GEmblemVer = clif_get_emblem_id_for_emblem( bl );
 	p.honor = (sd) ? sd->status.manner : 0;
 	p.virtue = (sc) ? sc->opt3 : 0;
 	p.isPKModeON = (sd && sd->status.karma) ? 1 : 0;
@@ -1209,7 +1275,7 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 	map_session_data* sd = BL_CAST( BL_PC, bl );
 	status_change* sc = status_get_sc( bl );
 	struct view_data* vd = status_get_viewdata( bl );
-	int32 g_id = status_get_guild_id( bl );
+	int32 g_id = clif_get_guild_id_for_emblem( bl );
 
 #if PACKETVER < 20091103
 	if( !pcdb_checkid( vd->look[LOOK_BASE] ) ){
@@ -1291,7 +1357,7 @@ static void clif_spawn_unit( struct block_list *bl, enum send_target target ){
 	p.robe = vd->look[LOOK_ROBE];
 #endif
 	p.GUID = g_id;
-	p.GEmblemVer = status_get_emblem_id( bl );
+	p.GEmblemVer = clif_get_emblem_id_for_emblem( bl );
 	p.honor = (sd) ? sd->status.manner : 0;
 	p.virtue = (sc) ? sc->opt3 : 0;
 	p.isPKModeON = (sd && sd->status.karma) ? 1 : 0;
@@ -1392,8 +1458,8 @@ static void clif_set_unit_walking( struct block_list& bl, map_session_data* tsd,
 #if PACKETVER >= 20101124
 	p.robe = vd->look[LOOK_ROBE];
 #endif
-	p.GUID = status_get_guild_id( &bl );
-	p.GEmblemVer = status_get_emblem_id( &bl );
+	p.GUID = clif_get_guild_id_for_emblem( &bl );
+	p.GEmblemVer = clif_get_emblem_id_for_emblem( &bl );
 	p.honor = (sd) ? sd->status.manner : 0;
 	p.virtue = (sc) ? sc->opt3 : 0;
 	p.isPKModeON = (sd && sd->status.karma) ? 1 : 0;
@@ -9004,8 +9070,8 @@ void clif_guild_emblem_area(struct block_list* bl)
 	PACKET_ZC_CHANGE_GUILD p{};
 
 	p.packetType = HEADER_ZC_CHANGE_GUILD;
-	p.guild_id = status_get_guild_id(bl);
-	p.emblem_id = status_get_emblem_id(bl);
+	p.guild_id = clif_get_guild_id_for_emblem(bl);
+	p.emblem_id = clif_get_emblem_id_for_emblem(bl);
 	p.AID = bl->id;
 
 	clif_send(&p, sizeof(p), bl, AREA);
