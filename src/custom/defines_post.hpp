@@ -9,6 +9,6 @@
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
 
-
+#undef DETAILED_LOADING_OUTPUT
 
 #endif /* CONFIG_CUSTOM_DEFINES_POST_HPP */

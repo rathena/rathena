@@ -106,7 +106,6 @@ int32 mail_savemessage(struct mail_message* msg)
 	||  SQL_SUCCESS != stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		StringBuf_Destroy(&buf);
 		Sql_QueryStr( sql_handle, "ROLLBACK" );
 		return msg->id = 0;
 	} else
@@ -150,8 +149,6 @@ int32 mail_savemessage(struct mail_message* msg)
 		msg->id = 0;
 		Sql_QueryStr( sql_handle, "ROLLBACK" );
 	}
-
-	StringBuf_Destroy(&buf);
 
 	if( msg->id && SQL_ERROR == Sql_QueryStr( sql_handle, "COMMIT" ) ){
 		Sql_ShowDebug( sql_handle );
@@ -215,14 +212,13 @@ bool mail_loadmessage(int32 mail_id, struct mail_message* msg)
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) ){
 		Sql_ShowDebug(sql_handle);
 		Sql_FreeResult(sql_handle);
-		StringBuf_Destroy(&buf);
 		return false;
 	}
 
 	memset(msg->item, 0, sizeof(struct item) * MAIL_MAX_ITEM);
 
 	for( i = 0; i < MAIL_MAX_ITEM && SQL_SUCCESS == Sql_NextRow(sql_handle); i++ ){
-		Sql_GetData(sql_handle,0, &data, nullptr); msg->item[i].amount = (short)atoi(data);
+		Sql_GetData(sql_handle,0, &data, nullptr); msg->item[i].amount = (int16)atoi(data);
 		Sql_GetData(sql_handle,1, &data, nullptr); msg->item[i].nameid = strtoul(data, nullptr, 10);
 		Sql_GetData(sql_handle,2, &data, nullptr); msg->item[i].refine = atoi(data);
 		Sql_GetData(sql_handle,3, &data, nullptr); msg->item[i].attribute = atoi(data);
@@ -243,7 +239,6 @@ bool mail_loadmessage(int32 mail_id, struct mail_message* msg)
 		}
 	}
 
-	StringBuf_Destroy(&buf);
 	Sql_FreeResult(sql_handle);
 
 	return true;

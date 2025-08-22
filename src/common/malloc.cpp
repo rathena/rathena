@@ -228,7 +228,7 @@ static size_t hash2size( uint16 hash )
 void* _mmalloc(size_t size, const char *file, int32 line, const char *func )
 {
 	struct block *block;
-	short size_hash = size2hash( size );
+	int16 size_hash = size2hash( size );
 	struct unit_head *head;
 
 	if( static_cast<long>( size ) < 0 || size == 0 ){

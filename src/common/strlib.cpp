@@ -890,7 +890,7 @@ bool sv_readdb( const char* directory, const char* filename, char delim, size_t 
 	size_t entries = 0;
 	char** fields; // buffer for fields ([0] is reserved)
 	char path[1024], *line;
-	const short colsize=512;
+	const int16 colsize=512;
 
 	snprintf(path, sizeof(path), "%s/%s", directory, filename);
 
@@ -932,17 +932,17 @@ bool sv_readdb( const char* directory, const char* filename, char delim, size_t 
 
 		if( columns < mincols )
 		{
-			ShowError("sv_readdb: Insufficient columns in line %d of \"%s\" (found %d, need at least %d).\n", lines, path, columns, mincols);
+			ShowError("sv_readdb: Insufficient columns in line %d of \"%s\" (found %" PRIuPTR ", need at least %" PRIuPTR ").\n", lines, path, columns, mincols);
 			continue; // not enough columns
 		}
 		if( columns > maxcols )
 		{
-			ShowError("sv_readdb: Too many columns in line %d of \"%s\" (found %d, maximum is %d).\n", lines, path, columns, maxcols );
+			ShowError("sv_readdb: Too many columns in line %d of \"%s\" (found %" PRIuPTR ", maximum is %" PRIuPTR ").\n", lines, path, columns, maxcols );
 			continue; // too many columns
 		}
 		if( entries == maxrows )
 		{
-			ShowError("sv_readdb: Reached the maximum allowed number of entries (%d) when parsing file \"%s\".\n", maxrows, path);
+			ShowError("sv_readdb: Reached the maximum allowed number of entries (%" PRIuPTR ") when parsing file \"%s\".\n", maxrows, path);
 			break;
 		}
 
@@ -962,7 +962,7 @@ bool sv_readdb( const char* directory, const char* filename, char delim, size_t 
 	aFree(fields);
 	aFree(line);
 	fclose(fp);
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, path);
+	ShowStatus("Done reading '" CL_WHITE "%" PRIuPTR CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, path);
 
 	return true;
 }
@@ -978,6 +978,7 @@ StringBuf* _StringBuf_Malloc(const char *file, int32 line, const char *func)
 {
 	StringBuf* self;
 	self = (StringBuf *)aCalloc2(1, sizeof(StringBuf), file, line, func);
+	new (self) StringBuf();
 	_StringBuf_Init(file, line, func, self);
 	return self;
 }
@@ -1081,17 +1082,31 @@ void StringBuf_Clear(StringBuf* self)
 	self->ptr_ = self->buf_;
 }
 
+///  Constructs the StringBuf
+StringBuf::StringBuf(){
+	this->buf_ = nullptr;
+	this->ptr_ = nullptr;
+	this->max_ = 0;
+}
+
 /// Destroys the StringBuf
-void StringBuf_Destroy(StringBuf* self)
-{
-	aFree(self->buf_);
-	self->ptr_ = self->buf_ = 0;
-	self->max_ = 0;
+StringBuf::~StringBuf(){
+	if( this->buf_ != nullptr ){
+		aFree( this->buf_ );
+		this->buf_ = nullptr;
+	}
+	
+	this->ptr_ = nullptr;
+	this->max_ = 0;
 }
 
 // Frees a StringBuf returned by StringBuf_Malloc
 void StringBuf_Free(StringBuf* self)
 {
-	StringBuf_Destroy(self);
+	if( self == nullptr ){
+		return;
+	}
+
+	self->~StringBuf();
 	aFree(self);
 }
