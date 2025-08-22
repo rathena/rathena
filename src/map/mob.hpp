@@ -277,6 +277,8 @@ struct s_mob_db {
 	uint32 option;
 	std::vector<std::shared_ptr<s_mob_skill>> skill;
 	uint16 damagetaken;
+	int32 group_id;
+	std::string title;
 
 	e_mob_bosstype get_bosstype();
 	s_mob_db();
@@ -287,7 +289,7 @@ private:
 	bool parseDropNode( std::string nodeName, const ryml::NodeRef& node, uint8 max, std::vector<std::shared_ptr<s_mob_drop>>& drops );
 
 public:
-	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 4, 1) {
+	MobDatabase() : TypesafeCachedYamlDatabase("MOB_DB", 5, 1) {
 
 	}
 
@@ -332,8 +334,7 @@ struct s_dmglog{
 	uint32 flag : 2; //0: Normal. 1: Homunc exp. 2: Pet exp
 };
 
-struct mob_data {
-	struct block_list bl;
+struct mob_data : public block_list {
 	struct unit_data  ud;
 	struct view_data *vd;
 	bool vd_changed;
@@ -373,7 +374,7 @@ struct mob_data {
 	int32 areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	int32 bg_id; // BattleGround System
 
-	t_tick next_walktime,next_thinktime,last_linktime,last_pcneartime,dmgtick,last_canmove,last_skillcheck;
+	t_tick next_walktime,next_thinktime,last_linktime,last_pcneartime,last_canmove,last_skillcheck;
 	t_tick trickcasting; // Special state where you show a fake castbar while moving
 	int16 move_fail_count;
 	int16 lootitem_count;
@@ -398,6 +399,7 @@ struct mob_data {
 	uint16 damagetaken;
 
 	e_mob_bosstype get_bosstype();
+	map_session_data* get_mvp_player();
 };
 
 class MobAvailDatabase : public YamlDatabase {
@@ -520,7 +522,10 @@ int32 mob_randomwalk(struct mob_data *md,t_tick tick);
 int32 mob_warpchase(struct mob_data *md, struct block_list *target);
 void mob_setstate(mob_data& md, MobSkillState skillstate);
 bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick);
+TIMER_FUNC(mob_attacked);
+TIMER_FUNC(mob_norm_attacked);
 int32 mob_target(struct mob_data *md,struct block_list *bl,int32 dist);
+bool mob_randomtarget(mob_data& md, int32& target_id);
 int32 mob_unlocktarget(struct mob_data *md, t_tick tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int32 mob_spawn(struct mob_data *md);
@@ -567,7 +572,7 @@ void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn);
 const std::vector<spawn_info> mob_get_spawns(uint16 mob_id);
 bool mob_has_spawn(uint16 mob_id);
 
-int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int32 base_rate, int32 drop_modifier, mob_data* md = nullptr);
+int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int32 base_rate, int32 drop_modifier, mob_data* md = nullptr, int32 factor = 1);
 
 // MvP Tomb System
 int32 mvptomb_setdelayspawn(struct npc_data *nd);

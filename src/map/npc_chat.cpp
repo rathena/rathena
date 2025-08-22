@@ -387,7 +387,7 @@ int32 npc_chat_sub(struct block_list* bl, va_list ap)
 				}
 				
 				// run the npc script
-				run_script(nd->u.scr.script,lst[i].pos,sd->bl.id,nd->bl.id);
+				run_script(nd->u.scr.script,lst[i].pos,sd->id,nd->id);
 				return 0;
 			}
 		}

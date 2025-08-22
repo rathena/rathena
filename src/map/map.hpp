@@ -375,6 +375,8 @@ enum e_race2 : uint8{
 	RC2_EDDA_ARUNAFELTZ,
 	RC2_LASAGNA,
 	RC2_GLAST_HEIM_ABYSS,
+	RC2_DESTROYED_VALKYRIE_REALM,
+	RC2_ENCROACHED_GEPHENIA,
 	RC2_MAX
 };
 
@@ -478,8 +480,7 @@ struct spawn_data {
 	char filepath[256];
 };
 
-struct flooritem_data {
-	struct block_list bl;
+struct flooritem_data : public block_list {
 	unsigned char subx,suby;
 	int32 cleartimer;
 	int32 first_get_charid,second_get_charid,third_get_charid;
@@ -581,7 +582,7 @@ enum _sp {
 	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE, SP_MAGIC_SUBSIZE, SP_CRIT_DEF_RATE, // 2093-2097
 	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN, SP_ADD_ITEM_SPHEAL_RATE, SP_ADD_ITEMGROUP_SPHEAL_RATE, // 2098-2101
 	SP_WEAPON_SUBSIZE, SP_ABSORB_DMG_MAXHP2, // 2102-2103
-	SP_SP_IGNORE_RES_RACE_RATE, SP_SP_IGNORE_MRES_RACE_RATE, SP_EMATK_HIDDEN, // 2104-2106
+	SP_SP_IGNORE_RES_RACE_RATE, SP_SP_IGNORE_MRES_RACE_RATE, SP_EMATK_HIDDEN, SP_SKILL_RATIO // 2104-2107
 };
 
 enum _look {
@@ -599,7 +600,8 @@ enum _look {
 	LOOK_RESET_COSTUMES,//Makes all headgear sprites on player vanish when activated.
 	LOOK_ROBE,
 	// LOOK_FLOOR,	// TODO : fix me!! offcial use this ?
-	LOOK_BODY2
+	LOOK_BODY2,
+	LOOK_MAX
 };
 
 enum e_mapflag : int16 {
@@ -1279,7 +1281,7 @@ typedef struct s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
-	( ((bl) == (struct block_list*)nullptr || (bl)->type != (type_)) ? (T ## type_ *)nullptr : (T ## type_ *)(bl) )
+	( ((bl) == nullptr || (bl)->type != (type_)) ? static_cast<T ## type_ *>(nullptr) : static_cast<T ## type_ *>(bl) )
 
 extern int32 db_use_sqldbs;
 

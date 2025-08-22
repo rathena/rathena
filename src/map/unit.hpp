@@ -43,6 +43,8 @@ struct unit_data {
 	t_tick attackabletime;
 	t_tick canact_tick;
 	t_tick canmove_tick;
+	t_tick endure_tick; // Time until which unit cannot be stopped
+	t_tick dmg_tick; // Last time the unit was damaged by a source
 	bool immune_attack; ///< Whether the unit is immune to attacks
 	uint8 dir;
 	unsigned char target_count;
@@ -64,6 +66,7 @@ struct unit_data {
 	int32 group_id;
 
 	std::vector<int32> shadow_scar_timer;
+	std::vector<int16> hatEffects;
 
 	// Functions and struct to calculate and store exact position at a certain tick
 	int16 getx(t_tick tick);
@@ -81,19 +84,7 @@ private:
 };
 
 struct view_data {
-	uint16 class_;
-	t_itemid
-		weapon,
-		shield, //Or left-hand weapon.
-		robe,
-		head_top,
-		head_mid,
-		head_bottom;
-	uint16
-		hair_style,
-		hair_color,
-		cloth_color,
-		body_style;
+	int32 look[LOOK_MAX];
 	char sex;
 	unsigned dead_sit : 2; // 0: Standing, 1: Dead, 2: Sitting
 };
@@ -149,7 +140,7 @@ int32 unit_is_walking(struct block_list *bl);
 
 // Delay functions
 void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event);
-int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type);
+int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32 type, uint16 skill_id = 0);
 
 t_tick unit_get_walkpath_time(struct block_list& bl);
 t_tick unit_escape(struct block_list *bl, struct block_list *target, int16 dist, uint8 flag = 0);

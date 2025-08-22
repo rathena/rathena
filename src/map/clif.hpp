@@ -55,6 +55,8 @@ enum e_hom_state2 : uint8;
 enum _sp;
 enum e_searchstore_failure : uint16;
 
+#define DMGVAL_IGNORE -30000
+
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xCFF,
@@ -718,7 +720,9 @@ enum e_config_type : uint32 {
 	CONFIG_OPEN_EQUIPMENT_WINDOW = 0,
 	CONFIG_CALL,
 	CONFIG_PET_AUTOFEED,
-	CONFIG_HOMUNCULUS_AUTOFEED
+	CONFIG_HOMUNCULUS_AUTOFEED,
+	// CONFIG_UNKNOWN,
+	CONFIG_DISABLE_SHOWCOSTUMES = 5
 };
 
 enum e_memorial_dungeon_command : uint16 {
@@ -905,7 +909,7 @@ void clif_delitem( map_session_data& sd, int32 index, int32 amount, int16 reason
 void clif_update_hp(map_session_data &sd);
 void clif_updatestatus( map_session_data& sd, _sp type );
 void clif_changemanner( map_session_data& sd );
-int32 clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int32 div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
+void clif_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int16 div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
 void clif_takeitem(block_list& src, block_list& dst);
 void clif_sitting(block_list& bl);
 void clif_standing(block_list& bl);
@@ -975,11 +979,11 @@ void clif_skillinfo( map_session_data& sd, uint16 skill_id, int32 inf = INF_PASS
 void clif_addskill(map_session_data& sd, uint16 skill_id);
 void clif_deleteskill(map_session_data& sd, uint16 skill_id, bool skip_infoblock = false);
 
-void clif_skillcasting(struct block_list* bl, int32 src_id, int32 dst_id, int32 dst_x, int32 dst_y, uint16 skill_id, uint16 skill_lv, int32 property, int32 casttime);
+void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 dst_y, uint16 skill_id, uint16 skill_lv, e_element property, int32 casttime);
 void clif_skillcastcancel( block_list& bl );
 void clif_skill_fail( map_session_data& sd, uint16 skill_id, enum useskill_fail_cause cause = USESKILL_FAIL_LEVEL, int32 btype = 0, t_itemid itemId = 0 );
 void clif_skill_cooldown( map_session_data &sd, uint16 skill_id, t_tick tick );
-int32 clif_skill_damage( block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int32 div, uint16 skill_id, uint16 skill_lv, e_damage_type type );
+void clif_skill_damage(block_list& src, block_list& dst, t_tick tick, int32 sdelay, int32 ddelay, int64 sdamage, int16 div, uint16 skill_id, uint16 skill_lv, e_damage_type type);
 //int32 clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick,int32 sdelay,int32 ddelay,int32 damage,int32 div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 bool clif_skill_nodamage( block_list* src, block_list& dst, uint16 skill_id, int32 heal, bool success = true );
 void clif_skill_poseffect( block_list& bl, uint16 skill_id, uint16 skill_lv, uint16 x, uint16 y, t_tick tick );
@@ -1038,8 +1042,8 @@ void clif_item_repair_list( map_session_data& sd, map_session_data& dstsd, uint1
 void clif_item_repaireffect( map_session_data& sd, int32 idx, bool failure );
 void clif_item_damaged( map_session_data& sd, uint16 position );
 void clif_item_refine_list( map_session_data& sd );
-void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target target );
-void clif_hat_effect_single( map_session_data& sd, uint16 effectId, bool enable );
+void clif_hat_effects( block_list& bl, enum send_target target, block_list& tbl );
+void clif_hat_effect_single( block_list& bl, uint16 effectId, bool enable );
 
 void clif_item_skill(map_session_data *sd,uint16 skill_id,uint16 skill_lv);
 
@@ -1181,8 +1185,6 @@ void clif_GM_silence( map_session_data& sd, map_session_data& tsd, bool muted );
 
 void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag);
 #define clif_disp_overhead(bl, mes) clif_disp_overhead_(bl, mes, AREA)
-
-void clif_get_weapon_view(map_session_data* sd, t_itemid *rhand, t_itemid *lhand);
 
 void clif_party_xy_remove(map_session_data *sd); //Fix for minimap [Kevin]
 void clif_gospel_info( map_session_data& sd, int32 type );

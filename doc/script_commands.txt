@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20220308
+//= 20250517
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -1017,6 +1017,13 @@ This special label triggers when a player steps in a map marked with the
 mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 every time a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
+
+OnPCIdentifyEvent:
+
+This special label triggers when a player successfully identifies an item.
+It is invoked each time the player uses an identifying action (such as using a Magnifier or MC_IDENTIFY).
+The temporary variable '@identify_idx' contains the index number of the item that was
+identified in the list, allowing scripts to determine which item was identified by the player.
 
 OnWhisperGlobal:
 
@@ -3103,31 +3110,128 @@ and return the info set by TYPE argument.
 It will return -1 if there is no such item or "" if the aegis item name is requested.
 
 Valid types are:
-	ITEMINFO_BUY             (0)   -  Buy Price
-	ITEMINFO_SELL            (1)   -  Sell Price
-	ITEMINFO_TYPE            (2)   -  Type
-	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		                        if = 0, then monsters don't drop it at all (rare or a quest item)
-		                        if = 10000, then this item is sold in NPC shops only
-	ITEMINFO_GENDER          (4)   -  Gender
-	ITEMINFO_LOCATIONS       (5)   -  Location(s)
-	ITEMINFO_WEIGHT          (6)   -  Weight
-	ITEMINFO_ATTACK          (7)   -  ATK
-	ITEMINFO_DEFENSE         (8)   -  DEF
-	ITEMINFO_RANGE           (9)   -  Range
-	ITEMINFO_SLOT           (10)   -  Slot
-	ITEMINFO_VIEW           (11)   -  View
-	ITEMINFO_EQUIPLEVELMIN  (12)   -  equipment LV
-	ITEMINFO_WEAPONLEVEL    (13)   -  weapon LV
-	ITEMINFO_ALIASNAME      (14)   -  AliasName
-	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
-	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
-	ITEMINFO_ID             (17)   -  item ID
-	ITEMINFO_AEGISNAME      (18)   -  aegis item name
-	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
-	ITEMINFO_SUBTYPE        (20)   -  Subtype
+	ITEMINFO_BUY              -  Buy Price
+	ITEMINFO_SELL             -  Sell Price
+	ITEMINFO_TYPE             -  Type
+	ITEMINFO_MAXCHANCE        -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
+		                         if = 0, then monsters don't drop it at all (rare or a quest item)
+		                         if = 10000, then this item is sold in NPC shops only
+	ITEMINFO_GENDER           -  Gender
+	ITEMINFO_LOCATIONS        -  Location(s)
+	ITEMINFO_WEIGHT           -  Weight
+	ITEMINFO_ATTACK           -  ATK
+	ITEMINFO_DEFENSE          -  DEF
+	ITEMINFO_RANGE            -  Range
+	ITEMINFO_SLOT             -  Slot
+	ITEMINFO_VIEW             -  View
+	ITEMINFO_EQUIPLEVELMIN    -  equipment LV
+	ITEMINFO_WEAPONLEVEL      -  weapon LV
+	ITEMINFO_ALIASNAME        -  AliasName
+	ITEMINFO_EQUIPLEVELMAX    -  equipment LV Max
+	ITEMINFO_MAGICATTACK      -  matk if RENEWAL is defined
+	ITEMINFO_ID               -  item ID
+	ITEMINFO_AEGISNAME        -  aegis item name
+	ITEMINFO_ARMORLEVEL       -  armor LV
+	ITEMINFO_SUBTYPE          -  Subtype
 
 See the sample in 'doc/sample/getiteminfo.txt'.
+
+Returned values and their constants (constant = value),
+one can use either the value or the constants for your checks:
+
+	ITEMINFO_TYPE:
+		IT_HEALING
+		IT_UNKNOWN
+		IT_USABLE
+		IT_ETC
+		IT_ARMOR
+		IT_WEAPON
+		IT_CARD
+		IT_PETEGG
+		IT_PETARMOR
+		IT_UNKNOWN2
+		IT_AMMO
+		IT_DELAYCONSUME
+		IT_SHADOWGEAR
+		IT_CASH
+		
+	ITEMINFO_SUBTYPE:
+		Weapons
+			W_FIST //Bare hands
+			W_DAGGER
+			W_1HSWORD
+			W_2HSWORD
+			W_1HSPEAR
+			W_2HSPEAR
+			W_1HAXE
+			W_2HAXE
+			W_MACE
+			W_2HMACE
+			W_STAFF
+			W_BOW
+			W_KNUCKLE
+			W_MUSICAL
+			W_WHIP
+			W_BOOK
+			W_KATAR
+			W_REVOLVER
+			W_RIFLE
+			W_GATLING
+			W_SHOTGUN
+			W_GRENADE
+			W_HUUMA
+			W_2HSTAFF
+			W_DOUBLE_DD // 2 daggers
+			W_DOUBLE_SS // 2 swords
+			W_DOUBLE_AA // 2 axes
+			W_DOUBLE_DS // dagger + sword
+			W_DOUBLE_DA // dagger + axe
+			W_DOUBLE_SA // sword + axe
+		
+		Ammo
+			AMMO_NONE
+			AMMO_ARROW
+			AMMO_DAGGER
+			AMMO_BULLET
+			AMMO_SHELL
+			AMMO_GRENADE
+			AMMO_SHURIKEN
+			AMMO_KUNAI
+			AMMO_CANNONBALL
+			AMMO_THROWWEAPON
+		
+	ITEMINFO_GENDER:
+		SEX_FEMALE
+		SEX_MALE
+		SEX_BOTH
+		
+	ITEMINFO_LOCATIONS:
+		EQP_HEAD_LOW
+		EQP_HEAD_MID
+		EQP_HEAD_TOP
+		EQP_HAND_R
+		EQP_HAND_L
+		EQP_ARMOR
+		EQP_SHOES
+		EQP_GARMENT
+		EQP_ACC_R
+		EQP_ACC_L
+		EQP_COSTUME_HEAD_TOP
+		EQP_COSTUME_HEAD_MID
+		EQP_COSTUME_HEAD_LOW
+		EQP_COSTUME_GARMENT
+		EQP_COSTUME_FLOOR
+		EQP_AMMO
+		EQP_SHADOW_ARMOR
+		EQP_SHADOW_WEAPON
+		EQP_SHADOW_SHIELD
+		EQP_SHADOW_SHOES
+		EQP_SHADOW_ACC_R
+		EQP_SHADOW_ACC_L
+		
+		// Combined
+		EQP_ACC_RL (EQP_ACC_R + EQP_ACC_L)
+		EQP_SHADOW_ACC_RL (EQP_SHADOW_ACC_R + EQP_SHADOW_ACC_L)
 
 ---------------------------------------
 
@@ -3258,6 +3362,13 @@ Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 Returns the map name of the given map ID. Returns an empty string if given
 map ID doesn't exist.
+
+---------------------------------------
+
+*mapname2id(<"map name">)
+
+Returns the map ID of the given map name or -1 if the given
+map name doesn't exist or is on another map-server.
 
 ---------------------------------------
 
@@ -11100,12 +11211,22 @@ solution rather than sending the map and the monster_id.
 
 ---------------------------------------
 
-*hateffect(<Hat Effect ID>,<State>);
+*hateffect(<hat effect id>,<state>{,<target id>});
 
-This will set a Hat Effect onto the player. The state field allows you to
-enable (true) or disable (false) the effect on the player.
-The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting
-with HAT_EF_*.
+Sets a Hat Effect onto the unit specified by <target id>. If no ID is specified,
+the attached unit will be used.
+<state> can be true to enable or false to disable.
+
+The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting with HAT_EF_*.
+
+Examples:
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true; // Enables the hat effect on attached player
+
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, getcharid(3); // Enables the hat effect on attached player
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, getnpcid(0); // Enables the hat effect on invoking NPC
+
+	monster "prontera",50,50,"--en--",1002,1;
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, $@mobid; // Enables the hat effect on a spawned mob
 
 Requires client 2015-05-13aRagEXE or newer.
 
@@ -11232,6 +11353,7 @@ Examples:
 ---------------------------------------
 
 *mesitemicon(<item_id>{,<display_name>});
+*mesitemicon(<"item_name">{,<display_name>});
 
 Generates an itemicon string for an item and can be used with NPC's mes command.
 The NPC message will show the item's icon which will be clickable and opens the
@@ -11243,6 +11365,7 @@ However if you provide a <display_name>, this name will be displayed instead.
 Examples:
 
 	mes mesitemicon( 1201 ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
+	mes mesitemicon( "Knife" ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 
 ========================
 |14.- Channel commands.|
