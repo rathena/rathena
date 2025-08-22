@@ -21468,6 +21468,8 @@ void clif_hat_effects( block_list& bl, enum send_target target, block_list& tbl 
 /// 0A3B <Length>.W <AID>.L <Status>.B { <HatEffectId>.W } (ZC_EQUIPMENT_EFFECT)
 void clif_hat_effect_single( block_list& bl, uint16 effectId, bool enable ){
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
+	struct map_data* mdata = map_getmapdata(bl.m);
+	if (!mdata) return; // or handle gracefully
 	if( map_getmapdata( bl.m )->getMapFlag( MF_NOCOSTUME ) ){
 		return;
 	}
