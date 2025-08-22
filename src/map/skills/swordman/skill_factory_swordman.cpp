@@ -17,7 +17,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 		case SM_BASH:
 			return std::make_unique<SkillBash>();
 		case SM_ENDURE:
-			return std::make_unique<SkillAutoBerserk>();
+			return std::make_unique<SkillEndure>();
 		case SM_MAGNUM:
 			return std::make_unique<SkillMagnumBreak>();
 		case SM_PROVOKE:
