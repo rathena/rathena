@@ -1195,13 +1195,7 @@ struct s_skill_unit_layout *skill_get_unit_layout(uint16 skill_id, uint16 skill_
 	return &skill_unit_layout[0]; // default 1x1 layout
 }
 
-/** Stores temporary values.
- * Common usages:
- * [0] holds number of targets in area
- * [1] holds the id of the original target
- * [2] counts how many targets have been processed. counter is added in skill_area_sub if the foreach function flag is: flag&(SD_SPLASH|SD_PREAMBLE)
- */
-static int32 skill_area_temp[8];
+int32 skill_area_temp[8];
 
 /*==========================================
  * Add effect to skill when hit succesfully target

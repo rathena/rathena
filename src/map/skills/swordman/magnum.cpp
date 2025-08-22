@@ -40,7 +40,7 @@ void SkillMagnumBreak::castendDamageId(block_list *src, block_list *target, uint
 void SkillMagnumBreak::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
 	// Passive Magnum, should had been casted on yourself.
-	int32 skill_area_temp[8];
+
 	skill_area_temp[1] = 0;
 	map_foreachinshootrange(skill_area_sub, src, skill_get_splash(getSkillId(), skill_lv), BL_SKILL | BL_CHAR,
 							src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);

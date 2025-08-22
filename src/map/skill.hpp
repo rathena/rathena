@@ -643,6 +643,14 @@ int32 skill_castend_damage_id( struct block_list* src, struct block_list *bl,uin
 int32 skill_castend_pos2( struct block_list *src, int32 x,int32 y,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag);
 int32 skill_area_sub(struct block_list *bl, va_list ap);
 
+/** Stores temporary values.
+ * Common usages:
+ * [0] holds number of targets in area
+ * [1] holds the id of the original target
+ * [2] counts how many targets have been processed. counter is added in skill_area_sub if the foreach function flag is: flag&(SD_SPLASH|SD_PREAMBLE)
+ */
+extern int32 skill_area_temp[8];
+
 bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick);
 void skill_blockpc_clear(map_session_data &sd);
 TIMER_FUNC(skill_blockpc_end);
