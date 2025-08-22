@@ -107,8 +107,11 @@ SC_ENCPOISON	(EFST_ENCHANTPOISON)
 	val1:
 
 SC_POISONREACT	(EFST_POISONREACT)
-	desc: Increase ATK by (100+30*Skill Lv))%; Counter physical attack with Envenoms skill
-	val1:
+	desc: Blocks poison attacks; Increases damage by (30*Skill Lv)% after block; Counters non-poison attacks with Envenom 5 autocast
+	val1: Skill level
+	val2: Number of Envenom autocasts
+	val3: Chance to autocast Envenom on hit / Poison chance after block
+	val4: 0=Poison Block Mode; 1=Damage Boost Mode
 
 SC_QUAGMIRE	(EFST_QUAGMIRE)
 	desc: Removes Increase AGI, Twhohand Quicken, Wind Walk, Adrenaline Rush, Attention Concentrate, Cart Boost, True Sight, Magnetic Field & Onehand Quicken skill effect; Movement Speed -50; Decrease AGI & DEX by (10*Skill Lv) but can't below 75% for players and 50% for mobs
@@ -665,9 +668,10 @@ SC_SIGHTBLASTER	()
 	desc:
 	val1:
 
-SC_WINKCHARM	()
-	desc:
-	val1:
+SC_WINKCHARM	(EFST_DC_WINKCHARM)
+	desc: Can't cast spells. Can't attack the charmer. Only works on non-players.
+	val1: Skill level
+	val2: ID of the charmer
 
 SC_CLOSECONFINE	(EFST_RG_CCONFINE_M)
 	desc: Flee bonus and counter for confined enemies

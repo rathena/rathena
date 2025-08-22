@@ -4,8 +4,10 @@
 #ifndef RANDOM_HPP
 #define RANDOM_HPP
 
-#include <type_traits>
+#include <algorithm>
 #include <random>
+#include <type_traits>
+#include <vector>
 
 #include "cbasetypes.hpp"
 
@@ -46,6 +48,11 @@ typename std::enable_if<std::is_integral<T>::value, bool>::type rnd_chance(T cha
 template <typename T>
 typename std::enable_if<std::is_integral<T>::value, bool>::type rnd_chance_official(T chance, T base) {
 	return rnd_value<T>(0, 20000)%base < chance;
+}
+
+template <typename T>
+void rnd_vector_order( std::vector<T>& vec ){
+	std::shuffle( std::begin( vec ), std::end( vec ), generator );
 }
 
 #endif /* RANDOM_HPP */
