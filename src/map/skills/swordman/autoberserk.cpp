@@ -12,13 +12,15 @@ SkillAutoBerserk::SkillAutoBerserk() : WeaponSkillImpl(SM_AUTOBERSERK)
 
 void SkillAutoBerserk::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
+	e_skill skillId = getSkillId();
+	sc_type type = skill_get_sc(skillId);
 	status_change *tsc = status_get_sc(bl);
-	status_change_entry *tsce = (tsc && skill_get_sc(getSkillId()) != SC_NONE) ? tsc->getSCE(skill_get_sc(getSkillId())) : nullptr;
+	status_change_entry *tsce = (tsc) ? tsc->getSCE(type) : nullptr;
 
 	int32 i;
 	if (tsce)
-		i = status_change_end(bl, skill_get_sc(getSkillId()));
+		i = status_change_end(bl, type);
 	else
-		i = sc_start(src, bl, skill_get_sc(getSkillId()), 100, skill_lv, 60000);
-	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, i);
+		i = sc_start(src, bl, type, 100, skill_lv, 60000);
+	clif_skill_nodamage(src, *bl, skillId, skill_lv, i);
 }
