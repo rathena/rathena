@@ -4720,11 +4720,9 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 		case HT_POWER:
 			skillratio += -50 + 8 * sstatus->str;
 			break;
-		case AC_DOUBLE:
 		case MA_DOUBLE:
 			skillratio += 10 * (skill_lv - 1);
 			break;
-		case AC_SHOWER:
 		case MA_SHOWER:
 #ifdef RENEWAL
 			skillratio += 50 + 10 * skill_lv;
@@ -4732,7 +4730,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += -25 + 5 * skill_lv;
 #endif
 			break;
-		case AC_CHARGEARROW:
 		case MA_CHARGEARROW:
 			skillratio += 50;
 			break;
