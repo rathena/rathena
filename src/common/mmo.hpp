@@ -884,8 +884,6 @@ enum e_guild_skill {
 	GD_MAX,
 };
 
-#define MAX_SKILL_ID GD_MAX
-
 //These mark the ID of the jobs, as expected by the client. [Skotlex]
 enum e_job {
 	JOB_NOVICE,
