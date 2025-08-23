@@ -8149,7 +8149,7 @@ Body:
             Level: 3
           - Name: NW_MAGAZINE_FOR_ONE
             Level: 3
-          - Name: NW_WILD_SHOT
+          - Name: NW_WILD_FIRE
             Level: 3
   - Job: Hyper_Novice
     Inherit:
