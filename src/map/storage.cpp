@@ -633,8 +633,6 @@ void storage_guild_log( map_session_data* sd, struct item* item, int16 amount ){
 
 	if (SQL_SUCCESS != stmt.PrepareStr(StringBuf_Value(&buf)) || SQL_SUCCESS != stmt.Execute())
 		SqlStmt_ShowDebug(stmt);
-
-	StringBuf_Destroy(&buf);
 }
 
 enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::vector<struct guild_log_entry>& log, uint32 max ){
@@ -660,7 +658,6 @@ enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::
 		SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		StringBuf_Destroy(&buf);
 
 		return GUILDSTORAGE_LOG_FAILED;
 	}
@@ -668,26 +665,26 @@ enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::
 	struct guild_log_entry entry;
 
 	// General data
-	stmt.BindColumn(0, SQLDT_UINT32,      &entry.id,               0, nullptr, nullptr);
-	stmt.BindColumn(1, SQLDT_STRING,    &entry.time, sizeof(entry.time), nullptr, nullptr);
-	stmt.BindColumn(2, SQLDT_STRING,    &entry.name, sizeof(entry.name), nullptr, nullptr);
-	stmt.BindColumn(3, SQLDT_INT16,     &entry.amount,           0, nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_UINT32, &entry.id);
+	stmt.BindColumn(1, SQLDT_STRING, &entry.time, sizeof(entry.time));
+	stmt.BindColumn(2, SQLDT_STRING, &entry.name, sizeof(entry.name));
+	stmt.BindColumn(3, SQLDT_INT16, &entry.amount);
 
 	// Item data
-	stmt.BindColumn(4, SQLDT_UINT32,      &entry.item.nameid,      0, nullptr, nullptr);
-	stmt.BindColumn(5, SQLDT_CHAR,      &entry.item.identify,    0, nullptr, nullptr);
-	stmt.BindColumn(6, SQLDT_CHAR,      &entry.item.refine,      0, nullptr, nullptr);
-	stmt.BindColumn(7, SQLDT_CHAR,      &entry.item.attribute,   0, nullptr, nullptr);
-	stmt.BindColumn(8, SQLDT_UINT32,      &entry.item.expire_time, 0, nullptr, nullptr);
-	stmt.BindColumn(9, SQLDT_UINT32,      &entry.item.bound,       0, nullptr, nullptr);
-	stmt.BindColumn(10, SQLDT_UINT64,   &entry.item.unique_id,   0, nullptr, nullptr);
-	stmt.BindColumn(11, SQLDT_INT8,     &entry.item.enchantgrade,0, nullptr, nullptr);
+	stmt.BindColumn(4, SQLDT_UINT32, &entry.item.nameid);
+	stmt.BindColumn(5, SQLDT_CHAR, &entry.item.identify);
+	stmt.BindColumn(6, SQLDT_CHAR, &entry.item.refine);
+	stmt.BindColumn(7, SQLDT_CHAR, &entry.item.attribute);
+	stmt.BindColumn(8, SQLDT_UINT32, &entry.item.expire_time);
+	stmt.BindColumn(9, SQLDT_UINT32, &entry.item.bound);
+	stmt.BindColumn(10, SQLDT_UINT64, &entry.item.unique_id);
+	stmt.BindColumn(11, SQLDT_INT8, &entry.item.enchantgrade);
 	for( j = 0; j < MAX_SLOTS; ++j )
-		stmt.BindColumn(12+j, SQLDT_UINT32, &entry.item.card[j], 0, nullptr, nullptr);
+		stmt.BindColumn(12+j, SQLDT_UINT32, &entry.item.card[j]);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
-		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_INT16, &entry.item.option[j].id, 0, nullptr, nullptr);
-		stmt.BindColumn(12+MAX_SLOTS+j*3+1, SQLDT_INT16, &entry.item.option[j].value, 0, nullptr, nullptr);
-		stmt.BindColumn(12+MAX_SLOTS+j*3+2, SQLDT_CHAR, &entry.item.option[j].param, 0, nullptr, nullptr);
+		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_INT16, &entry.item.option[j].id);
+		stmt.BindColumn(12+MAX_SLOTS+j*3+1, SQLDT_INT16, &entry.item.option[j].value);
+		stmt.BindColumn(12+MAX_SLOTS+j*3+2, SQLDT_CHAR, &entry.item.option[j].param);
 	}
 
 	log.reserve(max);
@@ -697,7 +694,6 @@ enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::
 	}
 
 	Sql_FreeResult(mmysql_handle);
-	StringBuf_Destroy(&buf);
 
 	if( log.empty() ){
 		return GUILDSTORAGE_LOG_EMPTY;

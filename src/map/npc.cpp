@@ -821,7 +821,6 @@ void BarterDatabase::loadingFinished(){
 			if( map_addblock( nd ) ){
 				continue;
 			}
-			
 			unit_dataset( nd );
 			nd->ud.dir = barter->dir;
 

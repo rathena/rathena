@@ -8295,7 +8295,7 @@ static int16 status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 			bonus -= sc->getSCE(SC_DONTFORGETME)->val2 / 10;
 #ifdef RENEWAL
 		if (sc->getSCE(SC_ENSEMBLEFATIGUE))
-			bonus -= sc->getSCE(SC_ENSEMBLEFATIGUE)->val2 / 10;
+			bonus -= sc->getSCE(SC_ENSEMBLEFATIGUE)->val2;
 #else
 		if (sc->getSCE(SC_LONGING))
 			bonus -= sc->getSCE(SC_LONGING)->val2 / 10;
@@ -14437,6 +14437,10 @@ TIMER_FUNC(status_change_timer){
 					sp*= 3;
 #endif
 				if (!status_charge(bl, 0, sp))
+					break;
+
+				// If no more SP left, the effect ends immediately
+				if (status->sp == 0)
 					break;
 			}
 			sc_timer_next(1000+tick);

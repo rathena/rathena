@@ -2170,7 +2170,6 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 		sd->status.option &= ~OPTION_INVISIBLE;
 	}
 
-
 	sd->sc.option = sd->status.option; //This is the actual option used in battle.
 
 	unit_dataset(sd);
@@ -2279,10 +2278,6 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 
 	// Initialize BG queue
 	sd->bg_queue_id = 0;
-
-#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
-	sd->hatEffects = {};
-#endif
 
 	// Check EXP overflow, since in previous revision EXP on Max Level can be more than 'official' Max EXP
 	if (pc_is_maxbaselv(sd) && sd->status.base_exp > MAX_LEVEL_BASE_EXP) {
@@ -15443,7 +15438,7 @@ void pc_set_costume_view(map_session_data *sd) {
 		sd->status.robe = id->look;
 
 	// Costumes check
-	if (!map_getmapflag(sd->m, MF_NOCOSTUME)) {
+	if (!map_getmapflag(sd->m, MF_NOCOSTUME) && !sd->status.disable_showcostumes) {
 		if ((i = sd->equip_index[EQI_COSTUME_HEAD_LOW]) != -1 && (id = sd->inventory_data[i])) {
 			if (!(id->equip&(EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_TOP)))
 				sd->status.head_bottom = id->look;

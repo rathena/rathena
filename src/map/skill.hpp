@@ -27,6 +27,7 @@ struct skill_unit;
 struct s_skill_unit_group;
 struct status_change_entry;
 class status_change;
+class SkillImpl;
 
 #define MAX_SKILL_PRODUCE_DB	300 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
@@ -307,6 +308,8 @@ struct s_skill_db {
 	int32 abra_probability[MAX_SKILL_LEVEL];
 	uint16 improvisedsong_rate;
 	sc_type sc;									///< Default SC for skill
+
+	std::unique_ptr<const SkillImpl> impl;
 };
 
 class SkillDatabase : public TypesafeCachedYamlDatabase <uint16, s_skill_db> {

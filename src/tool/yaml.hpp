@@ -57,6 +57,7 @@
 #include <map/script.hpp>
 #include <map/skill.hpp>
 #include <map/storage.hpp>
+#include <map/skills/skill_impl.hpp>
 
 using namespace rathena;
 
