@@ -1,5 +1,4 @@
 name: Build servers with CMake and GCC on Linux
-# build_servers_linux.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}

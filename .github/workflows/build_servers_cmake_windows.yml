@@ -1,5 +1,4 @@
 name: Build servers with CMake on Windows
-# build_servers_windows.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}

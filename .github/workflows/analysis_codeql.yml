@@ -1,5 +1,4 @@
-name: Analyse servers with CodeQL
-# analysis_codeql.yml
+name: Analyze servers with CodeQL
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}

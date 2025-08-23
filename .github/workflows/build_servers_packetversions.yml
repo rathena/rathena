@@ -1,5 +1,4 @@
 name: Build servers with different packet versions
-# build_servers_packetversions.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}

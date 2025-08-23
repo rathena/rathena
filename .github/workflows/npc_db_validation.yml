@@ -1,5 +1,4 @@
 name: Validate NPC Scripts and DB Changes
-# npc_db_validation.yml
 
 # For NPC and DB validation we only need two builds: one of Renewal and one for Pre-Renewal checks.
 # NPC scripts and database files are not platform dependent, so we can achieve this validation using only a simple linux setup.

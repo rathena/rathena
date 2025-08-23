@@ -1,5 +1,4 @@
 name: Build servers in Pre-Renewal and Renewal
-# build_servers_modes.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}

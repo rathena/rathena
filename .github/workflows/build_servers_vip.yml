@@ -1,5 +1,4 @@
 name: Build servers in VIP mode
-# build_servers_vip.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
