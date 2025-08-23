@@ -3,13 +3,27 @@
 
 #include "skill_factory_archer.hpp"
 
+#include "chargearrow.hpp"
+#include "concentration.hpp"
+#include "double.hpp"
+#include "makingarrow.hpp"
+#include "shower.hpp"
+
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
-#if 0
 	switch( skill_id ){
+		case AC_CHARGEARROW:
+			return std::make_unique<SkillChargeArrow>();
+		case AC_CONCENTRATION:
+			return std::make_unique<SkillConcentration>();
+		case AC_DOUBLE:
+			return std::make_unique<SkillDouble>();
+		case AC_MAKINGARROW:
+			return std::make_unique<SkillMakingArrow>();
+		case AC_SHOWER:
+			return std::make_unique<SkillShower>();
 		default:
 			return nullptr;
 	}
-#endif
 
 	return nullptr;
 }
