@@ -24746,9 +24746,9 @@ BUILDIN_FUNC(recalculatestat) {
 
 BUILDIN_FUNC(hateffect){
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
-	map_session_data* sd;
+	block_list* bl;
 
-	if( !script_rid2sd(sd) )
+	if( !script_rid2bl( 4, bl ) )
 		return SCRIPT_CMD_FAILURE;
 
 	int16 effectID = script_getnum(st,2);
@@ -24759,24 +24759,27 @@ BUILDIN_FUNC(hateffect){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	auto it = util::vector_get( sd->hatEffects, effectID );
+	unit_data* ud = unit_bl2ud( bl );
 
-	if( enable ){
-		if( it != sd->hatEffects.end() ){
-			return SCRIPT_CMD_SUCCESS;
-		}
-
-		sd->hatEffects.push_back( effectID );
-	}else{
-		if( it == sd->hatEffects.end() ){
-			return SCRIPT_CMD_SUCCESS;
-		}
-
-		util::vector_erase_if_exists( sd->hatEffects, effectID );
+	if( ud == nullptr ){
+		ShowError( "buildin_hateffect: unsupported unit type %d\n", bl->type );
+		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( !sd->state.connect_new ){
-		clif_hat_effect_single( *sd, effectID, enable );
+	if( enable ){
+		if( util::vector_exists( ud->hatEffects, effectID ) ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		ud->hatEffects.push_back( effectID );
+	}else{
+		if( !util::vector_erase_if_exists( ud->hatEffects, effectID ) ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
+	if( map_session_data* sd = BL_CAST( BL_PC, bl ); sd == nullptr || !sd->state.connect_new ){
+		clif_hat_effect_single( *bl, effectID, enable );
 	}
 
 #endif
@@ -28394,7 +28397,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(adopt,"vv"),
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
-	BUILDIN_DEF(hateffect,"ii"),
+	BUILDIN_DEF(hateffect,"ii?"),
 	BUILDIN_DEF(getrandomoptinfo, "i"),
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),

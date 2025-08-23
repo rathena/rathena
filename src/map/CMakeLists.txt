@@ -41,6 +41,16 @@ set(MAP_SOURCES
 	"trade.cpp"
 	"unit.cpp"
 	"vending.cpp"
+
+	"skills/skill_factory.cpp"
+	"skills/skill_impl.cpp"
+	"skills/weapon_skill_impl.cpp"
+
+	"skills/swordsman/bash.cpp"
+	"skills/swordsman/skill_factory_swordsman.cpp"
+
+	"skills/mercenary/mercenary_bash.cpp"
+	"skills/mercenary/skill_factory_mercenary.cpp"
 )
 
 set(MAP_HEADERS
@@ -91,6 +101,16 @@ set(MAP_HEADERS
 	"trade.hpp"
 	"unit.hpp"
 	"vending.hpp"
+
+	"skills/skill_factory.hpp"
+	"skills/skill_impl.hpp"
+	"skills/weapon_skill_impl.hpp"
+
+	"skills/swordsman/bash.hpp"
+	"skills/swordsman/skill_factory_swordsman.hpp"
+
+	"skills/mercenary/mercenary_bash.hpp"
+	"skills/mercenary/skill_factory_mercenary.hpp"
 )
 
 add_executable(map-server)
