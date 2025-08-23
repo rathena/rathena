@@ -40,15 +40,15 @@ void SkillMagnumBreak::castendDamageId(block_list *src, block_list *target, uint
 void SkillMagnumBreak::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
 	// Passive Magnum, should had been casted on yourself.
-
 	skill_area_temp[1] = 0;
-	map_foreachinshootrange(skill_area_sub, src, skill_get_splash(getSkillId(), skill_lv), BL_SKILL | BL_CHAR,
-							src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
-	clif_skill_nodamage(src, *src, getSkillId(), skill_lv);
+	e_skill skillId = getSkillId();
+	map_foreachinshootrange(skill_area_sub, src, skill_get_splash(skillId, skill_lv), BL_SKILL | BL_CHAR,
+							src, skillId, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
+	clif_skill_nodamage(src, *src, skillId, skill_lv);
 	// Initiate 20% of your damage becomes fire element.
 #ifdef RENEWAL
-	sc_start4(src, src, SC_SUB_WEAPONPROPERTY, 100, ELE_FIRE, 20, getSkillId(), 0, skill_get_time2(getSkillId(), skill_lv));
+	sc_start4(src, src, SC_SUB_WEAPONPROPERTY, 100, ELE_FIRE, 20, skillId, 0, skill_get_time2(skillId, skill_lv));
 #else
-	sc_start4(src, src, SC_WATK_ELEMENT, 100, ELE_FIRE, 20, 0, 0, skill_get_time2(getSkillId(), skill_lv));
+	sc_start4(src, src, SC_WATK_ELEMENT, 100, ELE_FIRE, 20, 0, 0, skill_get_time2(skillId, skill_lv));
 #endif
 }
