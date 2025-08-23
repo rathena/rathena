@@ -4005,7 +4005,7 @@ int64 skill_attack (int32 attack_type, struct block_list* src, struct block_list
 			break;
 	}
 
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	if (bl->type == BL_PC && skill_id && skill_db.find(skill_id)->copyable.option && //Only copy skill that copyable [Cydh]
 		dmg.flag&BF_SKILL && dmg.damage+dmg.damage2 > 0 && damage < status_get_hp(bl)) //Cannot copy skills if the blow will kill you. [Skotlex]
@@ -4170,8 +4170,6 @@ int64 skill_attack (int32 attack_type, struct block_list* src, struct block_list
 				break;
 		}
 	}
-
-	map_freeblock_unlock();
 
 	if ((flag&0x1000000) && rmdamage)
 		return 0; //Should return 0 when damage was reflected
@@ -5245,7 +5243,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	status_data* tstatus = status_get_status_data(*bl);
 
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	switch(skill_id) {
 	case MER_CRASH:
@@ -6131,7 +6129,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 			if (skill_id == RA_ARROWSTORM)
 				status_change_end(src, SC_CAMOUFLAGE);
 			if( skill_id == AS_SPLASHER ) {
-				map_freeblock_unlock(); // Don't consume a second gemstone.
+				// Don't consume a second gemstone.
 				return 0;
 			}
 		}
@@ -7392,7 +7390,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				// Can't tag a player that was already tagged from another source.
 				if (sd)
 					clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-				map_freeblock_unlock();
 				return 1;
 			}
 
@@ -7404,7 +7401,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 					ARR_FIND(0, MAX_STELLAR_MARKS, i, sd->stellar_mark[i] == 0);
 					if (i == MAX_STELLAR_MARKS) { // Max number of targets tagged. Fail the skill.
 						clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-						map_freeblock_unlock();
 						return 1;
 					}
 				}
@@ -7505,14 +7501,13 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), tstatus->dmotion,
 			0, abs(skill_get_num(skill_id, skill_lv)),
 			skill_id, skill_lv, skill_get_hit(skill_id) );
-		map_freeblock_unlock();
 		return 1;
 	}
 
 	if( sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER) ) //Should only remove after the skill has been casted.
 		status_change_end(src,SC_CURSEDCIRCLE_ATKER);
 
-	map_freeblock_unlock();
+	freeLock.unlock();
 
 	if( sd && !(flag&1) )
 	{// ensure that the skill last-cast tick is recorded
@@ -7718,7 +7713,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		battle_attr_fix(nullptr, nullptr, 100, i, tstatus->def_ele, tstatus->ele_lv) <= 0)
 		return 1; //Skills that cause an status should be blocked if the target element blocks its element.
 
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 	switch(skill_id)
 	{
 	case HLIF_HEAL:	//[orn]
@@ -8048,7 +8043,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if(sd && dstsd){ //Check they are not another crusader [Skotlex]
 			if ((dstsd->class_&MAPID_UPPERMASK) == MAPID_CRUSADER) {
 				clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock();
 				return 1;
 			}
 		}
@@ -8061,7 +8055,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			if( (sd && dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER && dstsd->status.sex == sd->status.sex) || (tsc && (tsc->getSCE(SC_CURSE) || tsc->getSCE(SC_QUAGMIRE))) )
 			{// Cannot cast on another bard/dancer-type class of the same gender as caster, or targets under Curse/Quagmire
 				clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock();
 				return 1;
 			}
 
@@ -8085,7 +8078,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 					if( sd )
 						clif_skill_fail( *sd, skill_id );
 
-					map_freeblock_unlock();
 					return 1;
 				}
 			}
@@ -8506,7 +8498,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case BO_ADVANCE_PROTECTION:
 		if( sd && ( !dstsd || pc_checkequip( dstsd, EQP_SHADOW_GEAR ) < 0 ) ){
 			clif_skill_fail( *sd, skill_id );
-			map_freeblock_unlock(); // Don't consume item requirements
+			// Don't consume item requirements
 			return 0;
 		}
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) ) );
@@ -8690,7 +8682,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case SM_SELFPROVOKE:
 	case MER_PROVOKE:
 		if( status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele) ) {
-			map_freeblock_unlock();
 			return 1;
 		}
 		// Official chance is 70% + 3%*skill_lv + srcBaseLevel% - tarBaseLevel%
@@ -8698,7 +8689,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		{
 			if( sd )
 				clif_skill_fail( *sd, skill_id );
-			map_freeblock_unlock();
 			return 0;
 		}
 		clif_skill_nodamage(src, *bl, skill_id == SM_SELFPROVOKE ? SM_PROVOKE : skill_id, skill_lv, i != 0);
@@ -8735,7 +8725,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			{
 				if( sd )
 					clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock();
 				return 1;
 			}
 
@@ -8750,7 +8739,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 					if( i == count )
 					{ // No free slots, skill Fail
 						clif_skill_fail( *sd, skill_id );
-						map_freeblock_unlock();
 						return 1;
 					}
 				}
@@ -8779,7 +8767,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				if (dstsd->sc.getSCE(type) && dstsd->sc.getSCE(type)->val2 != src->id) { // Fail if a player is in unity with another source.
 					if (sd)
 						clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-					map_freeblock_unlock();
 					return 1;
 				}
 
@@ -8791,7 +8778,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 						ARR_FIND(0, count, i, sd->united_soul[i] == 0);
 						if(i == count) { // No more free slots? Fail the skill.
 							clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-							map_freeblock_unlock();
 							return 1;
 						}
 					}
@@ -8818,7 +8804,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if (tsc && tsc->getSCE(type) && tsc->getSCE(type)->val1 != src->id) {
 			if (sd)
 				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-			map_freeblock_unlock();
 			return 1;
 		}
 
@@ -8832,7 +8817,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				ARR_FIND(0, count, i, sd->servant_sign[i] == 0);
 				if (i == count) { // Max number of targets marked. Fail the skill.
 					clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-					map_freeblock_unlock();
 					return 1;
 				}
 
@@ -8878,7 +8862,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		} else {
 			if(sd)
 				clif_skill_fail( *sd, skill_id );
-			map_freeblock_unlock();
 			return 0;
 		}
 		break;
@@ -9084,7 +9067,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				if (lv > battle_config.attack_machine_level_difference) {
 					if (sd)
 						clif_skill_fail( *sd, skill_id );
-					map_freeblock_unlock();
 					return 0;
 				}
 			}
@@ -9099,7 +9081,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 		if (!sd->ed || !(sd->ed->elemental.class_ >= ELEMENTALID_DILUVIO && sd->ed->elemental.class_ <= ELEMENTALID_SERPENS)) {
 			clif_skill_fail( *sd, skill_id );
-			map_freeblock_unlock();
 			return 0;
 		}
 
@@ -9228,7 +9209,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			src, skill_id, skill_lv, tick, flag|i,
 			skill_castend_damage_id);
 		if(map_addblock(src)) {
-			map_freeblock_unlock();
 			return 1;
 		}
 		// Won't display the damage, but drop items and give exp
@@ -9335,7 +9315,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if( tsce )
 		{
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,status_change_end(bl, type));
-			map_freeblock_unlock();
 			return 0;
 		}
 
@@ -9389,7 +9368,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if (tsce)
 		{
 			clif_skill_nodamage(src,*bl,skill_id,-1,status_change_end(bl, type)); //Hide skill-scream animation.
-			map_freeblock_unlock();
 			return 0;
 		}
 		clif_skill_nodamage(src,*bl,skill_id,-1,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
@@ -9398,7 +9376,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if (tsce)
 		{
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,status_change_end(bl, type));
-			map_freeblock_unlock();
 			return 0;
 		}
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,0));
@@ -9418,7 +9395,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				clif_skill_nodamage(src,*bl,skill_id,( skill_id == LG_FORCEOFVANGUARD || skill_id == RA_CAMOUFLAGE ) ? skill_lv : -1,i);
 			else if( sd )
 				clif_skill_fail( *sd, skill_id );
-			map_freeblock_unlock();
 			return 0;
 		}
 		i = sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -9566,7 +9542,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				// Level 6-10 doesn't consume a red gem if it fails [celest]
 				if (skill_lv > 5)
 				{ // not to consume items
-					map_freeblock_unlock();
 					return 0;
 				}
 			}
@@ -9696,7 +9671,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if(sd) {
 			clif_item_identify_list(sd);
 			if( sd->menuskill_id != MC_IDENTIFY ) {// failed, dont consume anything
-				map_freeblock_unlock();
 				return 1;
 			}
 			else { // consume sp only if succeeded
@@ -9859,7 +9833,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		{
 			int32 j,hp = 0,sp = 0;
 			if( dstmd && dstmd->mob_id == MOBID_EMPERIUM ) {
-				map_freeblock_unlock();
 				return 1;
 			}
 			if( sd ) {
@@ -9869,18 +9842,15 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				j = pc_search_inventory(sd, require.itemid[x]);
 				if (j < 0 || require.itemid[x] <= 0) {
 					clif_skill_fail( *sd, skill_id );
-					map_freeblock_unlock();
 					return 1;
 				}
 				if (sd->inventory_data[j] == nullptr || sd->inventory.u.items_inventory[j].amount < require.amount[x]) {
 					clif_skill_fail( *sd, skill_id );
-					map_freeblock_unlock();
 					return 1;
 				}
 				if( skill_id == AM_BERSERKPITCHER ) {
 					if( dstsd && dstsd->status.base_level < (uint32)sd->inventory_data[j]->elv ) {
 						clif_skill_fail( *sd, skill_id );
-						map_freeblock_unlock();
 						return 1;
 					}
 				}
@@ -10000,7 +9970,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 			if( sd && ( bl->type != BL_PC || ( dstsd && pc_checkequip(dstsd,equip[skill_id - AM_CP_WEAPON]) < 0 ) ) ){
 				clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock(); // Don't consume item requirements
 				return 0;
 			}
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,
@@ -10503,7 +10472,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 					&& (!m_sd || !check_distance_bl(sd, m_sd, AREA_SIZE)))
 			) {
 				clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock();
 				return 0;
 			}
 			status_change_start(src,bl,SC_STUN,10000,skill_lv,0,0,0,skill_get_time2(skill_id,skill_lv),SCSTART_NORATEDEF);
@@ -10519,7 +10487,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 			if (!p_sd && !c_sd) { // Fail if no family members are found
 				clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock();
 				return 1;
 			}
 
@@ -10539,7 +10506,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 			if (!p_sd && !c_sd && !dstsd) { // Fail if no family members are found
 				clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock();
 				return 1;
 			}
 			if (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND)) { // No reviving in WoE grounds!
@@ -10570,7 +10536,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 			if (!f_sd && !m_sd && !dstsd) { // Fail if no family members are found
 				clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock();
 				return 1;
 			}
 			if (flag&1) { // Buff can only be given to parents in 7x7 AoE around baby
@@ -10700,8 +10665,9 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			|| tstatus-> hp > tstatus->max_hp*3/4
 #endif
 				) {
-			if (sd) clif_skill_fail( *sd, skill_id );
-			map_freeblock_unlock();
+			if (sd) {
+				clif_skill_fail( *sd, skill_id );
+			}
 			return 1;
 		}
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
@@ -10711,14 +10677,12 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case PF_MINDBREAKER:
 		{
 			if(status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele)) {
-				map_freeblock_unlock();
 				return 1;
 			}
 
 			if (tsce)
 			{	//HelloKitty2 (?) explained that this silently fails when target is
 				//already inflicted. [Skotlex]
-				map_freeblock_unlock();
 				return 1;
 			}
 
@@ -10727,7 +10691,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				sc_start(src,bl,type,55+5*skill_lv,skill_lv,skill_get_time(skill_id,skill_lv))))
 			{
 				if (sd) clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock();
 				return 0;
 			}
 
@@ -10822,7 +10785,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			}
 			if( sd && !s ){
 				clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock(); // Don't consume item requirements
+				// Don't consume item requirements
 				return 0;
 			}
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
@@ -10851,7 +10814,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			int32 card = -1;
 			if (tsc && tsc->getSCE(SC_TAROTCARD)) {
 				//Target currently has the SUN tarot card effect and is immune to any other effect
-				map_freeblock_unlock();
 				return 0;
 			}
 			if( rnd() % 100 > skill_lv * 8 ||
@@ -10862,7 +10824,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				if( sd )
 					clif_skill_fail( *sd, skill_id );
 
-				map_freeblock_unlock();
 				return 0;
 			}
 			status_zap(src,0,skill_get_sp(skill_id,skill_lv)); // consume sp only if succeeded [Inkfish]
@@ -11849,7 +11810,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case RA_WUGDASH:
 		if( tsce ) {
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,status_change_end(bl, type));
-			map_freeblock_unlock();
 			return 0;
 		}
 		if( sd && pc_isridingwug(sd) ) {
@@ -12065,7 +12025,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				if( bl->type == BL_MOB )
 					mob_unlocktarget((TBL_MOB*)bl,gettick());
 				clif_bladestop( *src, bl->id, true );
-				map_freeblock_unlock();
 				return 1;
 			}
 		} else {
@@ -12087,7 +12046,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				if( bl->type == BL_MOB )
 					mob_unlocktarget((TBL_MOB*)bl,gettick());
 				clif_bladestop( *src, bl->id, true );
-				map_freeblock_unlock();
 				return 1;
 			}
 		} else {
@@ -12387,7 +12345,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			if(!mapindex)
 			{ //Given map not found?
 				clif_skill_fail( *sd, skill_id );
-				map_freeblock_unlock();
 				return 0;
 			}
 
@@ -12931,7 +12888,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		int32 maxcount = qty[skill_lv-1];
 		i_slave = map_foreachinmap(skill_check_condition_mob_master_sub ,hd->m, BL_MOB, hd->id, summons[skill_lv-1], skill_id, &c);
 		if(c >= maxcount) {
-			map_freeblock_unlock();
 			return 0; //max qty already spawned
 		}
 
@@ -13030,7 +12986,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if (tsce) {
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			status_change_end(bl, type);
-			map_freeblock_unlock();
 			return 0;
 		}
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
@@ -13680,7 +13635,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 		ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n", skill ? skill->name : "UNKNOWN", skill_id);
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		map_freeblock_unlock();
 		return 1;
 		}
 	}
@@ -13710,7 +13664,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			skill_consume_requirement(sd,skill_id,skill_lv,2);
 	}
 
-	map_freeblock_unlock();
 	return 0;
 }
 
@@ -14231,7 +14184,7 @@ TIMER_FUNC(skill_castend_id){
 			ShowInfo("Type %d, ID %d skill castend id [id =%d, lv=%d, target ID %d]\n",
 				src->type, src->id, ud->skill_id, ud->skill_lv, target->id);
 
-		map_freeblock_lock();
+		FreeBlockLock freeLock;
 
 		if (skill_get_casttype(ud->skill_id) == CAST_NODAMAGE)
 			skill_castend_nodamage_id(src,target,ud->skill_id,ud->skill_lv,tick,flag);
@@ -14265,7 +14218,6 @@ TIMER_FUNC(skill_castend_id){
 			else ud->skill_id = 0; //mobs can't clear this one as it is used for skill condition 'afterskill'
 			ud->skill_lv = ud->skilltarget = 0;
 		}
-		map_freeblock_unlock();
 		return 1;
 	} while(0);
 
@@ -14439,7 +14391,7 @@ TIMER_FUNC(skill_castend_pos){
 			unit_set_walkdelay(src, tick, skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
 		else
 			unit_set_walkdelay(src, tick, battle_config.default_walk_delay + skill_get_walkdelay(ud->skill_id, ud->skill_lv), 1);
-		map_freeblock_lock();
+		FreeBlockLock freeLock;
 		skill_castend_pos2(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv,tick,0);
 
 		if (ud->skill_id != RA_CAMOUFLAGE)
@@ -14454,7 +14406,6 @@ TIMER_FUNC(skill_castend_pos){
 			ud->skill_lv = ud->skillx = ud->skilly = 0;
 		}
 
-		map_freeblock_unlock();
 		return 1;
 	} while(0);
 
@@ -22707,11 +22658,9 @@ static int32 skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
  * Executes on all skill units every SKILLUNITTIMER_INTERVAL miliseconds.
  *------------------------------------------*/
 TIMER_FUNC(skill_unit_timer){
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	skillunit_db->foreach(skillunit_db, skill_unit_timer_sub, tick);
-
-	map_freeblock_unlock();
 	return 0;
 }
 

@@ -121,7 +121,7 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 		int32 stop_flag = USW_FIXPOS|USW_RELEASE_TARGET;
 
 		// Source may die due to reflect damage
-		map_freeblock_lock();
+		FreeBlockLock freeLock;
 
 		if (ud->state.attack_continue)
 			stop_flag = unit_attack(&bl, tbl->id, ud->state.attack_continue);
@@ -130,10 +130,8 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 		if (stop_flag != USW_NONE) {
 			// We need to make sure the walkpath is cleared here so a monster doesn't continue walking in case it unlocked its target
 			unit_stop_walking(&bl, stop_flag|USW_FORCE_STOP);
-			map_freeblock_unlock();
 			return true;
 		}
-		map_freeblock_unlock();
 	}
 	// Cancel chase
 	else if (tbl == nullptr || (fullcheck && !status_check_visibility(&bl, tbl, (bl.type == BL_MOB)))) {
@@ -2964,7 +2962,7 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 	}
 
 	// Source may die due to reflect damage
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	if(DIFF_TICK(ud->attackabletime, gettick()) > 0) // Do attack next time it is possible. [Skotlex]
 		ud->attacktimer=add_timer(ud->attackabletime,unit_attack_timer,src->id,0);
@@ -2980,7 +2978,6 @@ int32 unit_attack(struct block_list *src,int32 target_id,int32 continuous)
 	if (md != nullptr)
 		mob_setstate(*md, MSS_BERSERK);
 
-	map_freeblock_unlock();
 	return stop_flag;
 }
 
@@ -3284,7 +3281,7 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 	if (tid == INVALID_TIMER && sd)
 		clif_fixpos( *src );
 
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	if( DIFF_TICK(ud->attackabletime,tick) <= 0 ) {
 		if (battle_config.attack_direction_change && (src->type&battle_config.attack_direction_change))
@@ -3302,7 +3299,6 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 		}
 
 		if (src->type == BL_PET && pet_attackskill((TBL_PET*)src, target->id)) {
-			map_freeblock_unlock();
 			return 1;
 		}
 
@@ -3316,7 +3312,6 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 		 * We should stop here otherwise timer keeps on and this happens endlessly
 		 */
 		if (ud->attacktarget_lv == ATK_NONE) {
-			map_freeblock_unlock();
 			return 1;
 		}
 
@@ -3341,7 +3336,6 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 	if( sd && battle_config.prevent_logout_trigger&PLT_ATTACK )
 		sd->canlog_tick = gettick();
 
-	map_freeblock_unlock();
 	return 1;
 }
 
@@ -3590,7 +3584,7 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 	if(bl->prev == nullptr)
 		return 0; // Already removed?
 
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	if (ud->walktimer != INVALID_TIMER)
 		unit_stop_walking(bl,USW_RELEASE_TARGET);
@@ -3756,7 +3750,6 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
-				map_freeblock_unlock();
 
 				return 0;
 			}
@@ -3772,7 +3765,6 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
-				map_freeblock_unlock();
 
 				return 0;
 			}
@@ -3787,7 +3779,6 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
-				map_freeblock_unlock();
 
 				return 0;
 			}
@@ -3802,7 +3793,6 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 				clif_clearunit_area( *bl, clrtype );
 				map_delblock(bl);
 				unit_free(bl,CLR_OUTSIGHT);
-				map_freeblock_unlock();
 
 				return 0;
 			}
@@ -3837,8 +3827,6 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 			map_delblock(bl);
 			break;
 	}
-
-	map_freeblock_unlock();
 
 	return 1;
 }
@@ -3927,7 +3915,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 	nullpo_ret(ud);
 
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	if( bl->prev )	// Players are supposed to logout with a "warp" effect.
 		unit_remove_map(bl, clrtype);
@@ -4227,8 +4215,6 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 	if( bl->type != BL_PC ) // Players are handled by map_quit
 		map_freeblock(bl);
-
-	map_freeblock_unlock();
 
 	return 0;
 }
