@@ -260,7 +260,6 @@
     <ClInclude Include="skills/swordman/magnum.hpp" />
     <ClInclude Include="skills/swordman/provoke.hpp" />
     <ClInclude Include="skills/swordman/selfprovoke.hpp" />
-    <ClInclude Include="skills/swordman/bash.hpp" />
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
     <ClInclude Include="skills/thief/skill_factory_thief.hpp" />
     <ClInclude Include="skills/weapon_skill_impl.hpp" />
@@ -331,7 +330,6 @@
     <ClCompile Include="skills/swordman/magnum.cpp" />
     <ClCompile Include="skills/swordman/provoke.cpp" />
     <ClCompile Include="skills/swordman/selfprovoke.cpp" />
-    <ClCompile Include="skills/swordman/bash.cpp" />
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp" />
     <ClCompile Include="skills/thief/skill_factory_thief.cpp" />
     <ClCompile Include="skills/weapon_skill_impl.cpp" />
