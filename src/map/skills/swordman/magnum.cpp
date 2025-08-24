@@ -4,9 +4,11 @@
 #include "magnum.hpp"
 
 #include "../../clif.hpp"
+#include "../../map.hpp"
+#include "../../pc.hpp"
+#include "../../skill.hpp"
 #include "../../status.hpp"
 #include "../../unit.hpp"
-#include "../../skill.hpp"
 
 SkillMagnumBreak::SkillMagnumBreak() : SkillImpl(SM_MAGNUM)
 {
@@ -29,11 +31,13 @@ void SkillMagnumBreak::modifyHitRate(int16 &hit_rate, const block_list *src, con
 
 void SkillMagnumBreak::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const
 {
+	map_session_data* sd = BL_CAST( BL_PC, src );
+
 	if (flag & 1)
 	{
 		// For players, damage depends on distance, so add it to flag if it is > 1
 		// Cannot hit hidden targets
-		skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION | (sd?distance_bl(src, bl):0));
+		skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION | (sd?distance_bl(src, target):0));
 	}
 }
 
