@@ -330,9 +330,6 @@
     <ClInclude Include="skills/swordman/bash.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
-    <ClInclude Include="skills/swordman/endure.hpp">
-      <Filter>Header Files\Skills\Swordman</Filter>
-    </ClInclude>
     <ClInclude Include="skills/swordman/magnum.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -399,9 +396,6 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/bash.cpp">
-      <Filter>Source Files\Skills\Swordman</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/swordman/endure.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/magnum.cpp">
