@@ -28,15 +28,15 @@ void SkillProvokeSelf::castendNoDamageId(block_list *src, block_list *bl, uint16
 	}
 
 	int32 rate = 100;
-	int32 i = sc_start(src, bl, type, rate, skill_lv, skill_get_time(skillId, skill_lv));
-	if (!i)
+	int32 success = sc_start(src, bl, type, rate, skill_lv, skill_get_time(skillId, skill_lv));
+	if (!success)
 	{
 		if (sd)
 			clif_skill_fail(*sd, skillId);
 		map_freeblock_unlock();
 		return;
 	}
-	clif_skill_nodamage(src, *bl, SM_PROVOKE, skill_lv, i != 0);
+	clif_skill_nodamage(src, *bl, SM_PROVOKE, skill_lv, success != 0);
 	unit_skillcastcancel(bl, 2);
 
 	if (dstmd)

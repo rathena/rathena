@@ -28,15 +28,15 @@ void SkillProvoke::castendNoDamageId(block_list *src, block_list *bl, uint16 ski
 	}
 	// Official chance is 70% + 3%*skill_lv + srcBaseLevel% - tarBaseLevel%
 	int32 rate = 70 + 3 * skill_lv + status_get_lv(src) - status_get_lv(bl);
-	int32 i = sc_start(src, bl, type, 70 + 3 * skill_lv + status_get_lv(src) - status_get_lv(bl), skill_lv, skill_get_time(skillId, skill_lv));
-	if (!i)
+	int32 success = sc_start(src, bl, type, 70 + 3 * skill_lv + status_get_lv(src) - status_get_lv(bl), skill_lv, skill_get_time(skillId, skill_lv));
+	if (!success)
 	{
 		if (sd)
 			clif_skill_fail(*sd, skillId);
 		map_freeblock_unlock();
 		return;
 	}
-	clif_skill_nodamage(src, *bl, skillId, skill_lv, i != 0);
+	clif_skill_nodamage(src, *bl, skillId, skill_lv, success != 0);
 	unit_skillcastcancel(bl, 2);
 
 	if (dstmd)

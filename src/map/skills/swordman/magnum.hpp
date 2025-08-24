@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 #include "../../battle.hpp"
 
-class SkillMagnumBreak : public WeaponSkillImpl
+class SkillMagnumBreak : public SkillImpl
 {
 public:
 	SkillMagnumBreak();

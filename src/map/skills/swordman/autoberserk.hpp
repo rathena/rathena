@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 #include "../../battle.hpp"
 
-class SkillAutoBerserk : public WeaponSkillImpl
+class SkillAutoBerserk : public SkillImpl
 {
 public:
 	SkillAutoBerserk();

@@ -8,7 +8,7 @@
 #include "../../unit.hpp"
 #include "../../skill.hpp"
 
-SkillMagnumBreak::SkillMagnumBreak() : WeaponSkillImpl(SM_MAGNUM)
+SkillMagnumBreak::SkillMagnumBreak() : SkillImpl(SM_MAGNUM)
 {
 }
 

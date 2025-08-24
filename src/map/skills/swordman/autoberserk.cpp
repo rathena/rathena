@@ -6,7 +6,7 @@
 #include "../../clif.hpp"
 #include "../../status.hpp"
 
-SkillAutoBerserk::SkillAutoBerserk() : WeaponSkillImpl(SM_AUTOBERSERK)
+SkillAutoBerserk::SkillAutoBerserk() : SkillImpl(SM_AUTOBERSERK)
 {
 }
 
