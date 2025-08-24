@@ -408,7 +408,19 @@
     <ClInclude Include="skills/summoner/skill_factory_summoner.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/autoberserk.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/bash.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/magnum.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/provoke.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/selfprovoke.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp">
@@ -418,6 +430,9 @@
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/weapon_skill_impl.hpp">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/status_skill_impl.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
   </ItemGroup>
@@ -464,7 +479,19 @@
     <ClCompile Include="skills/summoner/skill_factory_summoner.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/autoberserk.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/bash.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/magnum.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/provoke.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/selfprovoke.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp">
@@ -474,6 +501,9 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/weapon_skill_impl.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/status_skill_impl.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
   </ItemGroup>
