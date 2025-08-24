@@ -331,7 +331,7 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 
 	if (src)
 		sd = BL_CAST(BL_PC, src);
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 	if (sd && battle_check_coma(*sd, *target, (e_battle_flag)attack_type))
 		dmg_change = status_damage(src, target, damage, 0, delay, 16, skill_id); // Coma attack
 	else if (dmg_lv > ATK_BLOCK)
@@ -361,7 +361,6 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 			add_timer(tick + delay, mob_attacked, target->id, src->id);
 		}
 	}
-	map_freeblock_unlock();
 	return dmg_change;
 }
 
@@ -10421,7 +10420,7 @@ int32 battle_damage_area(struct block_list *bl, va_list ap) {
 	if (status_bl_has_mode(bl, MD_SKILLIMMUNE) || status_get_class(bl) == MOBID_EMPERIUM)
 		return 0;
 	if( bl != src && battle_check_target(src,bl,BCT_ENEMY) > 0 ) {
-		map_freeblock_lock();
+		FreeBlockLock freeLock;
 		if( src->type == BL_PC )
 			battle_drain((TBL_PC*)src, bl, damage, damage, status_get_race(bl), status_get_class_(bl));
 		if( amotion )
@@ -10430,7 +10429,6 @@ int32 battle_damage_area(struct block_list *bl, va_list ap) {
 			battle_fix_damage(src,bl,damage,0,LG_REFLECTDAMAGE);
 		clif_damage(*bl,*bl,tick,amotion,dmotion,damage,1,DMG_ENDURE,0,false);
 		skill_additional_effect(src, bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
-		map_freeblock_unlock();
 	}
 
 	return 0;
@@ -10779,7 +10777,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	if( !(tsc && tsc->getSCE(SC_DEVOTION)) && !vellum_damage && skill_check_shadowform(target, damage, wd.div_) ) {
 		if( !status_isdead(*target) )
@@ -10908,7 +10906,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 					if( type != CAST_GROUND ){
 						clif_skill_fail( *sd, r_skill );
-						map_freeblock_unlock();
 						return wd.dmg_lv;
 					}
 				}
@@ -11119,7 +11116,6 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	if (sd && tsc && wd.flag&BF_LONG && tsc->getSCE(SC_WINDSIGN) && rand()%100 < tsc->getSCE(SC_WINDSIGN)->val2)
 		status_heal(src, 0, 0, 1, 0);
 
-	map_freeblock_unlock();
 	return wd.dmg_lv;
 }
 
