@@ -6331,7 +6331,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		skill_unitsetting(src, skill_id, skill_lv, bl->x, bl->y, 0);
 		break;
 
-	case SM_MAGNUM:
 	case MS_MAGNUM:
 		if( flag&1 ) {
 			// For players, damage depends on distance, so add it to flag if it is > 1

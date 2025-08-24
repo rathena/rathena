@@ -15,8 +15,7 @@ SkillProvokeSelf::SkillProvokeSelf() : SkillImpl(SM_SELFPROVOKE)
 
 void SkillProvokeSelf::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
-	e_skill skillId = getSkillId();
-	sc_type type = skill_get_sc(skillId);
+	sc_type type = skill_get_sc(getSkillId());
 	status_data *tstatus = status_get_status_data(*bl);
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	mob_data *dstmd = BL_CAST(BL_MOB, bl);
@@ -27,12 +26,11 @@ void SkillProvokeSelf::castendNoDamageId(block_list *src, block_list *bl, uint16
 		return;
 	}
 
-	int32 rate = 100;
-	int32 success = sc_start(src, bl, type, rate, skill_lv, skill_get_time(skillId, skill_lv));
+	int32 success = sc_start(src, bl, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 	if (!success)
 	{
 		if (sd)
-			clif_skill_fail(*sd, skillId);
+			clif_skill_fail(*sd, getSkillId());
 		map_freeblock_unlock();
 		return;
 	}
@@ -42,7 +40,7 @@ void SkillProvokeSelf::castendNoDamageId(block_list *src, block_list *bl, uint16
 	if (dstmd)
 	{
 		dstmd->state.provoke_flag = src->id;
-		mob_target(dstmd, src, skill_get_range2(src, skillId, skill_lv, true));
+		mob_target(dstmd, src, skill_get_range2(src, getSkillId(), skill_lv, true));
 	}
 	// Provoke can cause Coma even though it's a nodamage skill
 	if (sd && battle_check_coma(*sd, *bl, BF_MISC))

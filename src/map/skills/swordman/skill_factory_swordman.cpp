@@ -5,10 +5,10 @@
 
 #include "autoberserk.hpp"
 #include "bash.hpp"
-#include "endure.hpp"
 #include "magnum.hpp"
 #include "provoke.hpp"
 #include "selfprovoke.hpp"
+#include "../status_skill_impl.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -17,7 +17,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 		case SM_BASH:
 			return std::make_unique<SkillBash>();
 		case SM_ENDURE:
-			return std::make_unique<SkillEndure>();
+			return std::make_unique<StatusSkillImpl>(SM_ENDURE);
 		case SM_MAGNUM:
 			return std::make_unique<SkillMagnumBreak>();
 		case SM_PROVOKE:
