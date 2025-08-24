@@ -432,6 +432,9 @@
     <ClInclude Include="skills/weapon_skill_impl.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
+    <ClInclude Include="skills/status_skill_impl.hpp">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp">
@@ -498,6 +501,9 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/weapon_skill_impl.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/status_skill_impl.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
   </ItemGroup>
