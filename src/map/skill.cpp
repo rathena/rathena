@@ -13678,6 +13678,12 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+
+		if( skill != nullptr && skill->impl != nullptr ){
+			skill->impl->castendNoDamageId( src, bl, skill_lv, tick, flag );
+			break;
+		}
+
 		ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n", skill ? skill->name : "UNKNOWN", skill_id);
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		map_freeblock_unlock();
