@@ -57,6 +57,15 @@ struct s_instance_map {
 	int16 m, src_m;
 };
 
+struct s_instance_warp {
+	int32 instance_id;
+	int16 map_id;
+	int16 x, y;
+
+	s_instance_warp(int32 inst_id, int16 m_id, int16 pos_x, int16 pos_y)
+		: instance_id(inst_id), map_id(m_id), x(pos_x), y(pos_y) { }
+};
+
 /// Instance data
 struct s_instance_data {
 	int32 id; ///< Instance DB ID
@@ -122,7 +131,8 @@ void instance_getsd(int32 instance_id, map_session_data *&sd, enum send_target *
 int32 instance_create(int32 owner_id, const char *name, e_instance_mode mode);
 bool instance_destroy(int32 instance_id);
 void instance_destroy_command(map_session_data *sd);
-e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, int16 x, int16 y);
+e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, int16 x, int16 y, bool do_warp = true);
+e_instance_enter instance_warp(map_session_data *sd);
 bool instance_reqinfo(map_session_data *sd, int32 instance_id);
 bool instance_addusers(int32 instance_id);
 bool instance_delusers(int32 instance_id);

@@ -21777,20 +21777,20 @@ BUILDIN_FUNC(instance_destroy)
 BUILDIN_FUNC(instance_enter)
 {
 	map_session_data *sd = nullptr;
-	int32 x = script_hasdata(st,3) ? script_getnum(st, 3) : -1;
-	int32 y = script_hasdata(st,4) ? script_getnum(st, 4) : -1;
+	bool do_warp = script_hasdata(st, 3) ? (script_getnum(st, 3) != 0) : true; // Default true
+	int32 x = script_hasdata(st, 4) ? script_getnum(st, 4) : -1;
+	int32 y = script_hasdata(st, 5) ? script_getnum(st, 5) : -1;
 	int32 instance_id;
 
-	if (script_hasdata(st, 6))
-		instance_id = script_getnum(st, 6);
+	if (script_hasdata(st, 7))
+		instance_id = script_getnum(st, 7);
 	else
 		instance_id = script_instancegetid(st, IM_PARTY);
 
-	if (!script_charid2sd(5,sd))
+	if (!script_charid2sd(6, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	script_pushint(st, instance_enter(sd, instance_id, script_getstr(st, 2), x, y));
-
+	script_pushint(st, instance_enter(sd, instance_id, script_getstr(st, 2), x, y, do_warp));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -27754,6 +27754,21 @@ BUILDIN_FUNC(mesitemicon){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*==========================================
+ * Execute pending instance warp
+ * instance_warp({<char_id>});
+ *------------------------------------------*/
+BUILDIN_FUNC(instance_warp)
+{
+	map_session_data *sd = nullptr;
+
+	if (!script_charid2sd(2, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	script_pushint(st, instance_warp(sd));
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include <custom/script.inc>
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -28299,7 +28314,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_create,"s??"),
 	BUILDIN_DEF(instance_destroy,"?"),
 	BUILDIN_DEF(instance_id,"?"),
-	BUILDIN_DEF(instance_enter,"s????"),
+	BUILDIN_DEF(instance_enter,"s?????"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
 	BUILDIN_DEF(instance_warpall,"sii??"),
@@ -28310,6 +28325,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_info,"si?"),
 	BUILDIN_DEF(instance_live_info,"i?"),
 	BUILDIN_DEF(instance_list, "s?"),
+	BUILDIN_DEF(instance_warp, "?"),
 	/**
 	 * 3rd-related
 	 **/

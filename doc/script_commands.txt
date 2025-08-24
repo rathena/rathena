@@ -9924,7 +9924,7 @@ This will also trigger the "OnInstanceDestroy" label in all NPCs inside the inst
 
 ---------------------------------------
 
-*instance_enter("<instance name>",{<x>,<y>,<char_id>,<instance id>});
+*instance_enter("<instance name>",{<do_warp>,<x>,<y>,<char_id>,<instance id>});
 
 Warps the attached player to the specified <instance id>. If no ID is specified,
 the IM_PARTY instance the invoking player is attached to is used.
@@ -10137,6 +10137,40 @@ Examples:
 	for ( .@i = 0; .@i < .@size; ++.@i )
 		mes instance_mapname("prontera", .@instance_list[.@i]);
 	//the output would be a list of all prontera copies that are active in the server.
+
+---------------------------------------
+
+*instance_warp({<char_id>});
+
+Warps all players in the <instance id> to <map name> to the given coordinates.
+If no ID is specified, The player id attached to the NPC will be used.
+If that fails, the script will come to a halt.
+
+Examples:
+	// This script example will have the player chat with an NPC before being warped to an instance.
+	switch ( instance_enter(.@md_name$, false)) {
+		case IE_OTHER:
+		case IE_NOINSTANCE:
+			mes "[Sierra]";
+			mes "If the party leader does not select a mode, all party members will be unable to perform actions.";
+			mes "Please select a mode again and enter the record after receiving either the quests 'Combat Path' or 'Exploration Path'.";
+			close;
+		case IE_NOMEMBER:
+			mes "Only registered members can enter the " + .@md_name$ + " instance.";
+			close3;
+		case IE_OK:
+			mes "[Sierra]";
+			mes "Connected to mode " + .@mode$ + "Successful."
+			next;
+			mes "[Niner]";
+			mes "Good! Finally, check the connection stability…";
+			mes "All right, done! Now, let's begin analyzing the Virtual Record! ";
+			mes " ";
+			mes "^FF0000 Monster manipulation that doesn't meet internal criteria, such as capturing a monster, is not considered a normal operation. Please note this. ^000000 ";
+			next;
+			instance_warp; // being warp after next;
+			close;
+	}
 
 ---------------------------------------
 

@@ -17,6 +17,7 @@
 #include "battleground.hpp"
 #include "buyingstore.hpp" // struct s_buyingstore
 #include "clif.hpp" //e_wip_block
+#include "instance.hpp" // instance data
 #include "itemdb.hpp" // MAX_ITEMGROUP
 #include "map.hpp" // RC_ALL
 #include "mob.hpp" //e_size
@@ -946,6 +947,8 @@ public:
 	std::vector<uint32> party_booking_requests;
 
 	void update_look( _look look );
+
+	std::shared_ptr<s_instance_warp> instance_warp;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table
