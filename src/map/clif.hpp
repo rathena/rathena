@@ -720,7 +720,9 @@ enum e_config_type : uint32 {
 	CONFIG_OPEN_EQUIPMENT_WINDOW = 0,
 	CONFIG_CALL,
 	CONFIG_PET_AUTOFEED,
-	CONFIG_HOMUNCULUS_AUTOFEED
+	CONFIG_HOMUNCULUS_AUTOFEED,
+	// CONFIG_UNKNOWN,
+	CONFIG_DISABLE_SHOWCOSTUMES = 5
 };
 
 enum e_memorial_dungeon_command : uint16 {
@@ -977,7 +979,7 @@ void clif_skillinfo( map_session_data& sd, uint16 skill_id, int32 inf = INF_PASS
 void clif_addskill(map_session_data& sd, uint16 skill_id);
 void clif_deleteskill(map_session_data& sd, uint16 skill_id, bool skip_infoblock = false);
 
-void clif_skillcasting(struct block_list* bl, int32 src_id, int32 dst_id, int32 dst_x, int32 dst_y, uint16 skill_id, uint16 skill_lv, int32 property, int32 casttime);
+void clif_skillcasting(block_list& src, block_list* dst, uint16 dst_x, uint16 dst_y, uint16 skill_id, uint16 skill_lv, e_element property, int32 casttime);
 void clif_skillcastcancel( block_list& bl );
 void clif_skill_fail( map_session_data& sd, uint16 skill_id, enum useskill_fail_cause cause = USESKILL_FAIL_LEVEL, int32 btype = 0, t_itemid itemId = 0 );
 void clif_skill_cooldown( map_session_data &sd, uint16 skill_id, t_tick tick );
@@ -1040,8 +1042,8 @@ void clif_item_repair_list( map_session_data& sd, map_session_data& dstsd, uint1
 void clif_item_repaireffect( map_session_data& sd, int32 idx, bool failure );
 void clif_item_damaged( map_session_data& sd, uint16 position );
 void clif_item_refine_list( map_session_data& sd );
-void clif_hat_effects( map_session_data& sd, block_list& bl, enum send_target target );
-void clif_hat_effect_single( map_session_data& sd, uint16 effectId, bool enable );
+void clif_hat_effects( block_list& bl, enum send_target target, block_list& tbl );
+void clif_hat_effect_single( block_list& bl, uint16 effectId, bool enable );
 
 void clif_item_skill(map_session_data *sd,uint16 skill_id,uint16 skill_lv);
 

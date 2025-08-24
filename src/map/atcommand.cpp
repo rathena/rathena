@@ -853,7 +853,6 @@ ACMD_FUNC(who) {
 			StringBuf_Printf(&buf, msg_txt(sd,56), count, mapdata->name); // %d players found in map '%s'.
 	}
 	clif_displaymessage(fd, StringBuf_Value(&buf));
-	StringBuf_Destroy(&buf);
 	return 0;
 }
 
@@ -1843,7 +1842,6 @@ ACMD_FUNC(help){
 
 		if (has_aliases)
 			clif_displaymessage(fd, StringBuf_Value(&buf));
-		StringBuf_Destroy(&buf);
 	}
 
 	// Display help contents
@@ -3809,7 +3807,8 @@ ACMD_FUNC(questskill)
 
 		return -1;
 	}
-	if (skill_id >= MAX_SKILL_ID) {
+
+	if( !skill_db.exists( skill_id ) ){
 		clif_displaymessage(fd, msg_txt(sd,198)); // This skill number doesn't exist.
 		return -1;
 	}
@@ -6510,9 +6509,9 @@ ACMD_FUNC(displayskillcast)
 	}
 
 	if ( target_type == 1)
-		clif_skillcasting(sd, sd->id, 0, sd->x, sd->y, skill_id, skill_lv, 0, cast_time);
+		clif_skillcasting(*sd, nullptr, sd->x, sd->y, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), cast_time);
 	else
-		clif_skillcasting(sd, sd->id, sd->id, 0, 0, skill_id, skill_lv, 0, cast_time);
+		clif_skillcasting(*sd, sd, 0, 0, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), cast_time);
 
 	return 0;
 }
@@ -9743,8 +9742,6 @@ ACMD_FUNC(itemlist)
 		StringBuf_Printf(&buf, msg_txt(sd,1354), counter, count, location); // %d item(s) found in %d %s slots.
 
 	clif_displaymessage(fd, StringBuf_Value(&buf));
-
-	StringBuf_Destroy(&buf);
 
 	return 0;
 }

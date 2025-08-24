@@ -2457,7 +2457,6 @@ void script_error(const char* src, const char* file, int32 start_line, const cha
 	script_errorwarning_sub(&buf, src, file, start_line, error_msg_cur, error_pos_cur);
 
 	ShowError("%s", StringBuf_Value(&buf));
-	StringBuf_Destroy(&buf);
 }
 
 void script_warning(const char* src, const char* file, int32 start_line, const char* error_msg_cur, const char* error_pos_cur) {
@@ -2468,7 +2467,6 @@ void script_warning(const char* src, const char* file, int32 start_line, const c
 	script_errorwarning_sub(&buf, src, file, start_line, error_msg_cur, error_pos_cur);
 
 	ShowWarning("%s", StringBuf_Value(&buf));
-	StringBuf_Destroy(&buf);
 }
 
 /*==========================================
@@ -5136,7 +5134,6 @@ BUILDIN_FUNC(menu)
 			data = script_getdata(st, i+1);
 			if( !data_islabel(data) )
 			{// not a label
-				StringBuf_Destroy(&buf);
 				ShowError("buildin_menu: Argument #%d (from 1) is not a label or label not found.\n", i);
 				script_reportdata(data);
 				st->state = END;
@@ -5167,8 +5164,6 @@ BUILDIN_FUNC(menu)
 			aFree(menu);
 		} else
 			clif_scriptmenu( *sd, st->oid, StringBuf_Value( &buf ) );
-
-		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff )
 		{// client supports only up to 254 entries; 0 is not used and 255 is reserved for cancel; excess entries are displayed but cause 'uint8' overflow
@@ -5271,7 +5266,6 @@ BUILDIN_FUNC(select)
 			aFree(menu);
 		} else
 			clif_scriptmenu( *sd, st->oid, StringBuf_Value( &buf ) );
-		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff ) {
 			ShowWarning("buildin_select: Too many options specified (current=%d, max=254).\n", sd->npc_menu);
@@ -5349,7 +5343,6 @@ BUILDIN_FUNC(prompt)
 			aFree(menu);
 		} else
 			clif_scriptmenu( *sd, st->oid, StringBuf_Value( &buf ) );
-		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff )
 		{
@@ -17485,7 +17478,6 @@ BUILDIN_FUNC(sprintf)
 			ShowError("buildin_sprintf: Not enough arguments passed!\n");
 			if(buf) aFree(buf);
 			if(buf2) aFree(buf2);
-			StringBuf_Destroy(&final_buf);
 			script_pushconststr(st,"");
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -17525,7 +17517,6 @@ BUILDIN_FUNC(sprintf)
 			ShowError("buildin_sprintf: Unknown argument type!\n");
 			if(buf) aFree(buf);
 			if(buf2) aFree(buf2);
-			StringBuf_Destroy(&final_buf);
 			script_pushconststr(st,"");
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -17547,7 +17538,6 @@ BUILDIN_FUNC(sprintf)
 
 	if(buf) aFree(buf);
 	if(buf2) aFree(buf2);
-	StringBuf_Destroy(&final_buf);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -17803,7 +17793,7 @@ BUILDIN_FUNC(replacestr)
 		StringBuf_AppendStr(&output, &(input[i]));
 
 	script_pushstrcopy(st, StringBuf_Value(&output));
-	StringBuf_Destroy(&output);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20242,7 +20232,6 @@ BUILDIN_FUNC(unittalk)
 		StringBuf_Init(&sbuf);
 		StringBuf_Printf(&sbuf, "%s", message);
 		clif_disp_overhead_(bl, StringBuf_Value(&sbuf), target);
-		StringBuf_Destroy(&sbuf);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -24757,9 +24746,9 @@ BUILDIN_FUNC(recalculatestat) {
 
 BUILDIN_FUNC(hateffect){
 #if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
-	map_session_data* sd;
+	block_list* bl;
 
-	if( !script_rid2sd(sd) )
+	if( !script_rid2bl( 4, bl ) )
 		return SCRIPT_CMD_FAILURE;
 
 	int16 effectID = script_getnum(st,2);
@@ -24770,24 +24759,27 @@ BUILDIN_FUNC(hateffect){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	auto it = util::vector_get( sd->hatEffects, effectID );
+	unit_data* ud = unit_bl2ud( bl );
 
-	if( enable ){
-		if( it != sd->hatEffects.end() ){
-			return SCRIPT_CMD_SUCCESS;
-		}
-
-		sd->hatEffects.push_back( effectID );
-	}else{
-		if( it == sd->hatEffects.end() ){
-			return SCRIPT_CMD_SUCCESS;
-		}
-
-		util::vector_erase_if_exists( sd->hatEffects, effectID );
+	if( ud == nullptr ){
+		ShowError( "buildin_hateffect: unsupported unit type %d\n", bl->type );
+		return SCRIPT_CMD_FAILURE;
 	}
 
-	if( !sd->state.connect_new ){
-		clif_hat_effect_single( *sd, effectID, enable );
+	if( enable ){
+		if( util::vector_exists( ud->hatEffects, effectID ) ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+
+		ud->hatEffects.push_back( effectID );
+	}else{
+		if( !util::vector_erase_if_exists( ud->hatEffects, effectID ) ){
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
+	if( map_session_data* sd = BL_CAST( BL_PC, bl ); sd == nullptr || !sd->state.connect_new ){
+		clif_hat_effect_single( *bl, effectID, enable );
 	}
 
 #endif
@@ -28405,7 +28397,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(adopt,"vv"),
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
-	BUILDIN_DEF(hateffect,"ii"),
+	BUILDIN_DEF(hateffect,"ii?"),
 	BUILDIN_DEF(getrandomoptinfo, "i"),
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),

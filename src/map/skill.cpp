@@ -45,6 +45,7 @@
 #include "script.hpp"
 #include "status.hpp"
 #include "unit.hpp"
+#include "./skills/skill_factory.hpp"
 
 using namespace rathena;
 
@@ -1336,6 +1337,11 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 	if( dmg_lv < ATK_DEF ) // no damage, return;
 		return 0;
 
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+	if (skill != nullptr && skill->impl != nullptr) {
+		skill->impl->applyAdditionalEffects(src, bl, skill_lv, tick, attack_type, dmg_lv);
+	}
+
 	switch(skill_id) {
 		case 0:
 			{ // Normal attacks (no skill used)
@@ -1400,14 +1406,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 				}
 			}
 			break;
-
-	case SM_BASH:
-		if( sd && skill_lv > 5 && pc_checkskill(sd,SM_FATALBLOW)>0 ){
-			//BaseChance gets multiplied with BaseLevel/50.0; 500/50 simplifies to 10 [Playtester]
-			status_change_start(src,bl,SC_STUN,(skill_lv-5)*sd->status.base_level*10,
-				skill_lv,0,0,0,skill_get_time2(skill_id,skill_lv),SCSTART_NONE);
-		}
-		break;
 
 	case MER_CRASH:
 		sc_start(src,bl,SC_STUN,(6*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -5251,8 +5249,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	switch(skill_id) {
 	case MER_CRASH:
-	case SM_BASH:
-	case MS_BASH:
 	case MC_MAMMONITE:
 	case TF_DOUBLE:
 	case AC_DOUBLE:
@@ -7499,6 +7495,11 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		break;
 
 	default:
+		if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+			skill->impl->castendDamageId(src, bl, skill_lv, tick, flag);
+			break;
+		}
+
 		ShowWarning("skill_castend_damage_id: Unknown skill used:%d\n",skill_id);
 		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), tstatus->dmotion,
 			0, abs(skill_get_num(skill_id, skill_lv)),
@@ -10324,7 +10325,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			// This skill creates fake casting state where a monster moves while showing a cast bar
 			int32 tricktime = MOB_SKILL_INTERVAL * 3;
 			md->trickcasting = tick + tricktime;
-			clif_skillcasting(src, src->id, src->id, 0, 0, skill_id, skill_lv, ELE_FIRE, tricktime + MOB_SKILL_INTERVAL / 2);
+			clif_skillcasting(*src, src, 0, 0, skill_id, skill_lv, ELE_FIRE, tricktime + MOB_SKILL_INTERVAL / 2);
 			// Monster cannot be stopped while moving
 			md->state.can_escape = 1;
 			// Move up to 8 cells
@@ -10670,8 +10671,11 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 	case BD_ENCORE:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if(sd)
+		if (sd != nullptr) {
 			unit_skilluse_id(src,src->id,sd->skill_id_dance,sd->skill_lv_dance);
+			// Need to remove remembered skill to prevent permanent halving of SP cost
+			sd->skill_id_old = 0;
+		}
 		break;
 
 	case TR_RETROSPECTION:
@@ -13665,6 +13669,12 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+
+		if( skill != nullptr && skill->impl != nullptr ){
+			skill->impl->castendNoDamageId( src, bl, skill_lv, tick, flag );
+			break;
+		}
+
 		ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n", skill ? skill->name : "UNKNOWN", skill_id);
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		map_freeblock_unlock();
@@ -18254,13 +18264,16 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 				if( is_chorus )
 					break;//Chorus skills are not to be parsed as ensembles
 				if (skill_get_inf2(skill_id, INF2_ISENSEMBLE)) {
-					if (c > 0 && sd->sc.getSCE(SC_DANCING) && (tsd = map_id2sd(p_sd[0])) != nullptr) {
-						sd->sc.getSCE(SC_DANCING)->val4 = tsd->id;
-						sc_start4(sd,tsd,SC_DANCING,100,skill_id,sd->sc.getSCE(SC_DANCING)->val2,*skill_lv,sd->id,skill_get_time(skill_id,*skill_lv)+1000);
-						clif_skill_nodamage(tsd, *sd, skill_id, *skill_lv);
-						tsd->skill_id_dance = skill_id;
-						tsd->skill_lv_dance = *skill_lv;
-#ifdef RENEWAL
+					if (c > 0 && (tsd = map_id2sd(p_sd[0])) != nullptr) {
+#ifndef RENEWAL
+						if (sd->sc.hasSCE(SC_DANCING)) {
+							sd->sc.getSCE(SC_DANCING)->val4 = tsd->id;
+							sc_start4(sd, tsd, SC_DANCING, 100, skill_id, sd->sc.getSCE(SC_DANCING)->val2, *skill_lv, sd->id, skill_get_time(skill_id, *skill_lv) + 1000);
+							clif_skill_nodamage(tsd, *sd, skill_id, *skill_lv);
+							tsd->skill_id_dance = skill_id;
+							tsd->skill_lv_dance = *skill_lv;
+						}
+#else
 						sc_start(sd, sd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
 						sc_start(sd, tsd, SC_ENSEMBLEFATIGUE, 100, 1, skill_get_time(CG_SPECIALSINGER, *skill_lv));
 #endif
@@ -18557,7 +18570,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 
 	// perform skill-group checks
 	if(skill_id != WM_GREAT_ECHO && inf2[INF2_ISCHORUS]) {
-		if (skill_check_pc_partner(&sd, skill_id, &skill_lv, AREA_SIZE, 0) < 1) {
+		if (skill_check_pc_partner(&sd, skill_id, &skill_lv, AREA_SIZE, 0) < 1 && !(sc != nullptr && sc->hasSCE(SC_KVASIR_SONATA))) {
 			clif_skill_fail( sd, skill_id );
 			return false;
 		}
@@ -19799,6 +19812,8 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 		switch( skill_id ) {
 			case CG_TAROTCARD: // TarotCard will consume sp in skill_cast_nodamage_id [Inkfish]
 			case MC_IDENTIFY:
+			case BD_ADAPTATION:
+			case BD_ENCORE:
 				require.sp = 0;
 				break;
 			case AL_HOLYLIGHT:
@@ -25990,6 +26005,14 @@ void SkillDatabase::loadingFinished(){
 	}
 
 	TypesafeCachedYamlDatabase::loadingFinished();
+
+	for( auto& it : *this ){
+		std::unique_ptr<const SkillImpl> impl = SkillFactoryImpl::getInstance()->create( static_cast<e_skill>( it.first ) );
+
+		if( impl != nullptr ){
+			it.second->impl = std::move( impl );
+		}
+	}
 }
 
 /**

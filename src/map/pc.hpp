@@ -929,10 +929,6 @@ public:
 
 	int16 setlook_head_top, setlook_head_mid, setlook_head_bottom, setlook_robe; ///< Stores 'setlook' script command values.
 
-#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
-	std::vector<int16> hatEffects;
-#endif
-
 	struct{
 		int32 tid;
 		uint16 skill_id;

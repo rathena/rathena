@@ -612,6 +612,7 @@ struct mmo_charstatus {
 #endif
 	bool show_equip, disable_call;
 	bool disable_partyinvite;
+	bool disable_showcostumes;
 	int16 rename;
 
 	time_t delete_date;
@@ -882,8 +883,6 @@ enum e_guild_skill {
 	GD_EMERGENCY_MOVE,
 	GD_MAX,
 };
-
-#define MAX_SKILL_ID GD_MAX
 
 //These mark the ID of the jobs, as expected by the client. [Skotlex]
 enum e_job {
