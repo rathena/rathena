@@ -15,7 +15,7 @@
 
 //fwd declaration
 class map_session_data;
-struct mob_data;
+class mob_data;
 struct block_list;
 enum e_damage_type : uint8;
 
