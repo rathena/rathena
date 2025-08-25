@@ -16,11 +16,11 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		case AC_CONCENTRATION:
 			return std::make_unique<SkillConcentration>();
 		case AC_DOUBLE:
-			return std::make_unique<SkillDouble>();
+			return std::make_unique<SkillDoubleStrafe>();
 		case AC_MAKINGARROW:
 			return std::make_unique<SkillMakingArrow>();
 		case AC_SHOWER:
-			return std::make_unique<SkillShower>();
+			return std::make_unique<SkillArrowShower>();
 		default:
 			return nullptr;
 	}

@@ -5251,7 +5251,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case MER_CRASH:
 	case MC_MAMMONITE:
 	case TF_DOUBLE:
-	case AC_DOUBLE:
 	case MA_DOUBLE:
 	case AS_SONICBLOW:
 	case KN_PIERCE:
@@ -5259,7 +5258,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case KN_SPEARBOOMERANG:
 	case TF_POISON:
 	case TF_SPRINKLESAND:
-	case AC_CHARGEARROW:
 	case MA_CHARGEARROW:
 	case RG_INTIMIDATE:
 	case AM_ACIDTERROR:
