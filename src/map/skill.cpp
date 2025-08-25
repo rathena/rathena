@@ -5708,7 +5708,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		[[fallthrough]];
 	case AS_SPLASHER:
 	case HT_BLITZBEAT:
-	case AC_SHOWER:
 	case MA_SHOWER:
 	case MG_NAPALMBEAT:
 	case MG_FIREBALL:
