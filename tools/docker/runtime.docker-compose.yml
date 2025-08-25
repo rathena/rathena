@@ -1,0 +1,99 @@
+version: "3.7"
+x-common-environment: &common-environment
+    RATHENA_INTER_LOGIN_SERVER_IP: db
+    RATHENA_INTER_IPBAN_DB_IP: db
+    RATHENA_INTER_CHAR_SERVER_IP: db
+    RATHENA_INTER_MAP_SERVER_IP: db
+    RATHENA_INTER_LOG_DB_IP: db
+    RATHENA_CHAR_LOGIN_IP: login
+    RATHENA_CHAR_CHAR_IP: 127.0.0.1
+    RATHENA_MAP_CHAR_IP: char
+    RATHENA_MAP_MAP_IP: 127.0.0.1
+services:
+    db:
+        image: "mariadb:bionic"
+        restart: always
+        volumes:
+            - "rathenadb:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: ragnarok
+            MYSQL_DATABASE: ragnarok
+            MYSQL_USER: ragnarok
+            MYSQL_PASSWORD: ragnarok
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
+    migration:
+        image: "rathena/rathena-flyway:${version:-nightly}"
+        command: "-user=ragnarok -password=ragnarok -url=jdbc:mysql://db:3306/ragnarok migrate"
+        depends_on:
+            - db
+        restart: on-failure
+        deploy:
+            mode: replicated
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+    login:
+        image: "rathena/${mod:-rathena-renewal-vip}:${version:-nightly}"
+        command: "./login-server"
+        restart: always
+        ports:
+            - "6900:6900"
+        environment:
+            <<: *common-environment
+        depends_on:
+            db:
+                condition: service_started
+            migration:
+                condition: service_completed_successfully
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
+    char:
+        image: "rathena/${mod:-rathena-renewal-vip}:${version:-nightly}"
+        command: "./char-server"
+        restart: always
+        ports:
+            - "6121:6121"
+        environment:
+            <<: *common-environment
+        depends_on:
+            db:
+                condition: service_started
+            migration:
+                condition: service_completed_successfully
+            login:
+                condition: service_started
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
+    map:
+        image: "rathena/${mod:-rathena-renewal-vip}:${version:-nightly}"
+        command: "./map-server"
+        restart: always
+        ports:
+            - "5121:5121"
+        environment:
+            <<: *common-environment
+        depends_on:
+            db:
+                condition: service_started
+            migration:
+                condition: service_completed_successfully
+            char:
+                condition: service_started
+        deploy:
+            mode: replicated
+            replicas: 1
+            placement:
+                constraints: [node.role == manager]
+
+volumes:
+    rathenadb:
