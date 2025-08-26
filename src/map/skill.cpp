@@ -895,7 +895,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
 			return false; // gonna be checked in 'skill_castend_nodamage_id'
 		case WE_CALLPARTNER:
 		case WE_CALLPARENT:
-		case WE_CALLBABY:
+
 			if (mapdata->getMapFlag(MF_NOMEMO)) {
 				clif_skill_teleportmessage( sd, NOTIFY_MAPINFO_CANT_MEMO );
 				return true;
@@ -9312,7 +9312,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 
 	case BS_MAXIMIZE:
-	case NV_TRICKDEAD:
+
 	case CR_DEFENDER:
 	case ML_DEFENDER:
 	case CR_AUTOGUARD:
@@ -9573,10 +9573,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		}
 		break;
 
-	case NV_FIRSTAID:
-		clif_skill_nodamage(src,*bl,skill_id,5);
-		status_heal(bl,5,0,0);
-		break;
+
 
 	case AL_CURE:
 		if(status_isimmune(bl)) {
@@ -14031,7 +14028,7 @@ TIMER_FUNC(skill_castend_id){
 					}
 				}
 				break;
-			case WE_CALLBABY:
+		
 				if (sd) {
 					map_session_data *c_sd = pc_get_child(sd);
 
@@ -16221,9 +16218,7 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list *src, ui
 		 	val2 = sd->status.mother;
 		}
 		break;
-	case WE_CALLBABY:
-		if (sd) val1 = sd->status.child;
-		break;
+
 	case NJ_KAENSIN:
 		skill_clear_group(src, 1); //Delete previous Kaensins/Suitons
 		val2 = (skill_lv+1)/2 + 4;
