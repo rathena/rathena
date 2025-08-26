@@ -8210,7 +8210,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if (!battle_check_undead(tstatus->race, tstatus->def_ele) && tstatus->race != RC_DEMON)
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
-	case AL_INCAGI:
 	case MER_INCAGI:
 	case MER_BLESSING:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
@@ -9720,19 +9719,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case NPC_EXPULSION:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
-		break;
-
-	case AL_HOLYWATER:
-		if(sd) {
-			if (skill_produce_mix(sd, skill_id, ITEMID_HOLY_WATER, 0, 0, 0, 1, -1)) {
-				struct skill_unit* su;
-				if ((su = map_find_skill_unit_oncell(bl, bl->x, bl->y, NJ_SUITON, nullptr, 0)) != nullptr)
-					skill_delunit(su);
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			}
-			else
-				clif_skill_fail( *sd, skill_id );
-		}
 		break;
 
 	case TF_PICKSTONE:
