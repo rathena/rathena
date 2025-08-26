@@ -242,6 +242,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
+    <ClInclude Include="skills/acolyte/angelus.hpp" />
+    <ClInclude Include="skills/acolyte/blessing.hpp" />
+    <ClInclude Include="skills/acolyte/crucis.hpp" />
+    <ClInclude Include="skills/acolyte/cure.hpp" />
+    <ClInclude Include="skills/acolyte/decagi.hpp" />
+    <ClInclude Include="skills/acolyte/heal.hpp" />
+    <ClInclude Include="skills/acolyte/holylight.hpp" />
+    <ClInclude Include="skills/acolyte/holywater.hpp" />
+    <ClInclude Include="skills/acolyte/incagi.hpp" />
+    <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/archer/chargearrow.hpp" />
     <ClInclude Include="skills/archer/concentration.hpp" />
     <ClInclude Include="skills/archer/double.hpp" />
@@ -318,6 +328,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
+    <ClCompile Include="skills/acolyte/angelus.cpp" />
+    <ClCompile Include="skills/acolyte/blessing.cpp" />
+    <ClCompile Include="skills/acolyte/crucis.cpp" />
+    <ClCompile Include="skills/acolyte/cure.cpp" />
+    <ClCompile Include="skills/acolyte/decagi.cpp" />
+    <ClCompile Include="skills/acolyte/heal.cpp" />
+    <ClCompile Include="skills/acolyte/holylight.cpp" />
+    <ClCompile Include="skills/acolyte/holywater.cpp" />
+    <ClCompile Include="skills/acolyte/incagi.cpp" />
+    <ClCompile Include="skills/acolyte/ruwach.cpp" />
     <ClCompile Include="skills/archer/chargearrow.cpp" />
     <ClCompile Include="skills/archer/concentration.cpp" />
     <ClCompile Include="skills/archer/double.cpp" />

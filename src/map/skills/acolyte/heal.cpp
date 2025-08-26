@@ -3,8 +3,8 @@
 
 #include "heal.hpp"
 
-#include "../../status.hpp"
-#include "../../clif.hpp"
+#include "../../mob.hpp"
+#include "../../pc.hpp"
 
 SkillHeal::SkillHeal() : SkillImpl(AL_HEAL)
 {
@@ -12,7 +12,13 @@ SkillHeal::SkillHeal() : SkillImpl(AL_HEAL)
 
 void SkillHeal::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
-	int32 heal = skill_calc_heal(src, bl, skill_id, skill_lv, true);
+	status_change *tsc = status_get_sc(bl);
+	map_session_data *sd = BL_CAST(BL_PC, src);
+	map_session_data *dstsd = nullptr;
+	status_data* sstatus = status_get_status_data(*src);
+	struct mob_data *dstmd = BL_CAST(BL_MOB, bl);
+
+	int32 heal = skill_calc_heal(src, bl, getSkillId(), skill_lv, true);
 
 	if (status_isimmune(bl) || (dstmd && (status_get_class(bl) == MOBID_EMPERIUM || status_get_class_(bl) == CLASS_BATTLEFIELD)))
 		heal = 0;
@@ -32,12 +38,14 @@ void SkillHeal::castendNoDamageId(struct block_list *src, struct block_list *bl,
 			}
 		}
 		else if (tsc->getSCE(SC_BERSERK) || tsc->getSCE(SC_SATURDAYNIGHTFEVER))
+		{
 			heal = 0; // Needed so that it actually displays 0 when healing.
+		}
 	}
-	if (skill_id == AL_HEAL)
-		status_change_end(bl, SC_BITESCAR);
-	clif_skill_nodamage(src, *bl, skill_id, heal);
-	if (tsc && tsc->getSCE(SC_AKAITSUKI) && heal && skill_id != HLIF_HEAL)
+
+	status_change_end(bl, SC_BITESCAR);
+	clif_skill_nodamage(src, *bl, getSkillId(), heal);
+	if (tsc && tsc->getSCE(SC_AKAITSUKI) && heal && getSkillId() != HLIF_HEAL)
 		heal = ~heal + 1;
 	t_exp heal_get_jobexp = status_heal(bl, heal, 0, 0);
 
@@ -52,5 +60,5 @@ void SkillHeal::castendNoDamageId(struct block_list *src, struct block_list *bl,
 
 void SkillHeal::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const
 {
-	skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
+	skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag);
 }

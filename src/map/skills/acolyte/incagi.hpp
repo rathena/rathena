@@ -5,9 +5,9 @@
 
 #include "../../battle.hpp"
 
-class SkillAL_INCAGI : public SkillImpl {
+class SkillIncreaseAgi : public SkillImpl {
 public:
-	SkillAL_INCAGI();
+	SkillIncreaseAgi();
 	
 	void castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const override;
 };

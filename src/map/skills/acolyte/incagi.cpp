@@ -3,36 +3,28 @@
 
 #include "incagi.hpp"
 
-#include "../../status.hpp"
-#include "../../clif.hpp"
+#include "../../pc.hpp"
 
-SkillAL_INCAGI::SkillAL_INCAGI() : SkillImpl(AL_INCAGI)
+SkillIncreaseAgi::SkillIncreaseAgi() : SkillImpl(AL_INCAGI)
 {
 }
 
-void SkillAL_INCAGI::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillIncreaseAgi::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
-	struct map_session_data *sd = nullptr, *dstsd = nullptr;
-	struct status_change *tsc = nullptr;
-	enum sc_type type = skill_get_sc(skill_id);
+	map_session_data *sd = BL_CAST(BL_PC, src);
+	map_session_data *dstsd = BL_CAST(BL_PC, bl);
+	status_change *tsc = status_get_sc(bl);
+	enum sc_type type = skill_get_sc(getSkillId());
+	status_data *tstatus = status_get_status_data(*bl);
 
-	if (src->type == BL_PC)
-		sd = (TBL_PC *)src;
-
-	if (bl->type == BL_PC)
-	{
-		dstsd = (TBL_PC *)bl;
-		tsc = &((TBL_PC *)bl)->sc;
-	}
-	else if (bl->type == BL_MOB)
-		tsc = &((TBL_MOB *)bl)->sc;
-
-	clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv);
 	if (dstsd != nullptr && tsc && tsc->getSCE(SC_CHANGEUNDEAD))
 	{
 		if (tstatus->hp > 1)
-			skill_attack(BF_MISC, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
+		{
+			skill_attack(BF_MISC, src, src, bl, getSkillId(), skill_lv, tick, flag);
+		}
+		return;
 	}
-	sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+	sc_start(src, bl, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 }
