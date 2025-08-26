@@ -1,13 +1,16 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #include "heal.hpp"
 
 #include "../../status.hpp"
 #include "../../clif.hpp"
 
-SkillAL_HEAL::SkillAL_HEAL() : SkillImpl(AL_HEAL)
+SkillHeal::SkillHeal() : SkillImpl(AL_HEAL)
 {
 }
 
-void SkillAL_HEAL::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillHeal::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
 	int32 heal = skill_calc_heal(src, bl, skill_id, skill_lv, true);
 
@@ -47,7 +50,7 @@ void SkillAL_HEAL::castendNoDamageId(struct block_list *src, struct block_list *
 	}
 }
 
-void SkillAL_HEAL::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillHeal::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const
 {
 	skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
 }
