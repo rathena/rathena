@@ -326,7 +326,6 @@
     <ClCompile Include="skills/thief/skill_factory_thief.cpp" />
     <ClCompile Include="skills/weapon_skill_impl.cpp" />
     <ClCompile Include="skills/novice/basic.cpp" />
-    <ClCompile Include="skills/novice/callbaby.cpp" />
     <ClCompile Include="skills/novice/firstaid.cpp" />
     <ClCompile Include="skills/novice/trickdead.cpp" />
   </ItemGroup>
