@@ -1,7 +1,5 @@
 #pragma once
 
-#include "grammar.h"
-
 #ifndef libconfig_yyHEADER_H
 #define libconfig_yyHEADER_H 1
 #define libconfig_yyIN_HEADER 1
