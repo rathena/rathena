@@ -41,7 +41,6 @@ class MapServer : public Core{
 };
 }
 
-
 struct npc_data;
 struct item_data;
 struct Channel;

@@ -23,5 +23,4 @@ class YamlUpgradeTool : public Core{
 };
 }
 
-
 #endif /* YAMLUPGRADE_HPP */

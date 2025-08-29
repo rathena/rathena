@@ -31,7 +31,6 @@ class LoginServer : public Core {
 };
 }
 
-
 /// supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
 #define PASSWORDENC 3
 

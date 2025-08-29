@@ -23,7 +23,6 @@ class Csv2YamlTool : public Core{
 };
 }
 
-
 // Required constant and structure definitions
 #define MAX_GUILD_SKILL_REQUIRE 5
 #define MAX_SKILL_ITEM_REQUIRE	10
