@@ -46654,22 +46654,22 @@ Body:
             Item: Lian_Shoes
             Rate: 100
           - Index: 36
-            Item: aegis_300487
+            Item: S_Elena_Card
             Rate: 85
           - Index: 37
-            Item: aegis_300489
+            Item: S_Lookie_Card
             Rate: 85
           - Index: 38
-            Item: aegis_300491
+            Item: S_Est_Card
             Rate: 85
           - Index: 39
-            Item: aegis_300493
+            Item: S_Gony_Card
             Rate: 85
           - Index: 40
-            Item: aegis_300495
+            Item: S_Tes_Card
             Rate: 85
           - Index: 41
-            Item: aegis_300497
+            Item: S_Leizi_Card
             Rate: 85
           - Index: 42
             Item: S_Nihil_Card
@@ -46708,48 +46708,48 @@ Body:
             Item: S_Helmut_Card
             Rate: 85
           - Index: 54
-            Item: aegis_300422
+            Item: S_Catherine_Card
             Rate: 85
           - Index: 55
-            Item: aegis_300424
+            Item: S_Friedrich_Card
             Rate: 85
           - Index: 56
-            Item: aegis_300426
+            Item: S_Crux_Card
             Rate: 85
           - Index: 57
-            Item: aegis_300486
+            Item: Elena_Card
             Rate: 250
             Amount: 3
           - Index: 58
-            Item: aegis_300488
+            Item: Lookie_Card
             Rate: 250
             Amount: 3
           - Index: 59
-            Item: aegis_300490
+            Item: Est_Card
             Rate: 250
             Amount: 3
           - Index: 60
-            Item: aegis_300492
+            Item: Gony_Card
             Rate: 250
             Amount: 3
           - Index: 61
-            Item: aegis_300494
+            Item: Tes_Card
             Rate: 250
             Amount: 3
           - Index: 62
-            Item: aegis_300496
+            Item: Leizi_Card
             Rate: 250
             Amount: 3
           - Index: 63
-            Item: aegis_300421
+            Item: Catherine_Card
             Rate: 250
             Amount: 3
           - Index: 64
-            Item: aegis_300423
+            Item: Friedrich_Card
             Rate: 250
             Amount: 3
           - Index: 65
-            Item: aegis_300425
+            Item: Crux_Card
             Rate: 250
             Amount: 3
           - Index: 66
@@ -52581,7 +52581,7 @@ Body:
             Item: C_Charm_Of_Mistic_Froze
             Rate: 50
           - Index: 2
-            Item: aegis_19868
+            Item: C_Showy_High_Cap
             Rate: 50
           - Index: 3
             Item: C_Brother_Keen_Eye
@@ -82272,23 +82272,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 50
             Amount: 3
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 20
             Amount: 4
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 15
             Amount: 5
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 10
             Amount: 6
           - Index: 4
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 5
             Amount: 7
   - Group: BOOSTER_PACK_10
@@ -93384,31 +93384,31 @@ Body:
             Item: True_Hunting_Opt_B
             Rate: 265
           - Index: 18
-            Item: aegis_300486
+            Item: Elena_Card
             Rate: 560
           - Index: 19
-            Item: aegis_300488
+            Item: Lookie_Card
             Rate: 560
           - Index: 20
-            Item: aegis_300490
+            Item: Est_Card
             Rate: 560
           - Index: 21
-            Item: aegis_300492
+            Item: Gony_Card
             Rate: 560
           - Index: 22
-            Item: aegis_300494
+            Item: Tes_Card
             Rate: 560
           - Index: 23
-            Item: aegis_300496
+            Item: Leizi_Card
             Rate: 560
           - Index: 24
-            Item: aegis_300421
+            Item: Catherine_Card
             Rate: 350
           - Index: 25
-            Item: aegis_300423
+            Item: Friedrich_Card
             Rate: 350
           - Index: 26
-            Item: aegis_300425
+            Item: Crux_Card
             Rate: 350
           - Index: 27
             Item: Meyer_Card
@@ -94972,7 +94972,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 12
           - Index: 2
-            Item: aegis_101416
+            Item: Enchant_Stone_Box27
             Amount: 3
   - Group: COSTUMEMILEPACK_27_2
     SubGroups:
@@ -94986,7 +94986,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 25
           - Index: 2
-            Item: aegis_101416
+            Item: Enchant_Stone_Box27
             Amount: 5
   - Group: COSTUMEMILEPACK_27_3
     SubGroups:
@@ -95000,7 +95000,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 50
           - Index: 2
-            Item: aegis_101416
+            Item: Enchant_Stone_Box27
             Amount: 10
   - Group: P_BOOSTER230_GIFT
     SubGroups:
@@ -95370,7 +95370,7 @@ Body:
             Item: Nyangvine_Fruit
             Amount: 100
           - Index: 1
-            Item: aegis_101675
+            Item: Enchant_Stone_Box28
             Amount: 2
           - Index: 2
             Item: Comp_Bubble_Gum
@@ -95387,7 +95387,7 @@ Body:
             Item: Battle_Manual100
             Amount: 2
           - Index: 2
-            Item: aegis_101675
+            Item: Enchant_Stone_Box28
             Amount: 5
   - Group: LI_NYANGVINE_BOX3_28
     SubGroups:
@@ -95404,7 +95404,7 @@ Body:
             Item: Battle_Manual100
             Amount: 5
           - Index: 3
-            Item: aegis_101675
+            Item: Enchant_Stone_Box28
             Amount: 10
   - Group: EVT_20TH_WHITEGOLD
     SubGroups:
@@ -96466,7 +96466,7 @@ Body:
             Item: VR_Candy_Pile
             Rate: 312
           - Index: 28
-            Item: aegis_1000998
+            Item: VR_White_Handkerchief
             Rate: 312
           - Index: 29
             Item: VR_Stress_Jelly
@@ -96475,7 +96475,7 @@ Body:
             Item: VR_Creatura_Doll
             Rate: 312
           - Index: 31
-            Item: aegis_1001071
+            Item: VR_Niflheim_Note
             Rate: 312
   - Group: LI_NYANGVINE_BOX1_29
     SubGroups:
@@ -96486,7 +96486,7 @@ Body:
             Item: Nyangvine_Fruit
             Amount: 100
           - Index: 1
-            Item: aegis_101876
+            Item: Enchant_Stone_Box29
             Amount: 2
           - Index: 2
             Item: Comp_Bubble_Gum
@@ -96503,7 +96503,7 @@ Body:
             Item: Battle_Manual100
             Amount: 2
           - Index: 2
-            Item: aegis_101876
+            Item: Enchant_Stone_Box29
             Amount: 5
   - Group: LI_NYANGVINE_BOX3_29
     SubGroups:
@@ -96520,7 +96520,7 @@ Body:
             Item: Battle_Manual100
             Amount: 5
           - Index: 3
-            Item: aegis_101876
+            Item: Enchant_Stone_Box29
             Amount: 10
   - Group: EXP_WEAPON_BOX
     SubGroups:
@@ -96634,7 +96634,7 @@ Body:
             Item: Cvt_Physical_Wing
             Rate: 10
           - Index: 2
-            Item: aegis_480197
+            Item: Cvt_Critical_Wing
             Rate: 10
   - Group: TEMPLE_RUNE_BOX5
     SubGroups:
@@ -96699,7 +96699,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 12
           - Index: 2
-            Item: aegis_101876
+            Item: Enchant_Stone_Box29
             Amount: 3
   - Group: COSTUMEMILEPACK_29_2
     SubGroups:
@@ -96713,7 +96713,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 25
           - Index: 2
-            Item: aegis_101876
+            Item: Enchant_Stone_Box29
             Amount: 5
   - Group: COSTUMEMILEPACK_29_3
     SubGroups:
@@ -96727,7 +96727,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 50
           - Index: 2
-            Item: aegis_101876
+            Item: Enchant_Stone_Box29
             Amount: 10
   - Group: S_BEARERS_CUBE
     SubGroups:
@@ -97081,7 +97081,7 @@ Body:
             Item: Nyangvine_Fruit
             Amount: 100
           - Index: 1
-            Item: aegis_102193
+            Item: Enchant_Stone_Box30
             Amount: 2
           - Index: 2
             Item: Comp_Bubble_Gum
@@ -97098,7 +97098,7 @@ Body:
             Item: Battle_Manual100
             Amount: 2
           - Index: 2
-            Item: aegis_102193
+            Item: Enchant_Stone_Box30
             Amount: 5
   - Group: LI_NYANGVINE_BOX3_30
     SubGroups:
@@ -97115,7 +97115,7 @@ Body:
             Item: Battle_Manual100
             Amount: 5
           - Index: 3
-            Item: aegis_102193
+            Item: Enchant_Stone_Box30
             Amount: 10
   - Group: COSTUMEMILEPACK_30_1
     SubGroups:
@@ -97129,7 +97129,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 12
           - Index: 2
-            Item: aegis_102193
+            Item: Enchant_Stone_Box30
             Amount: 3
   - Group: COSTUMEMILEPACK_30_2
     SubGroups:
@@ -97143,7 +97143,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 25
           - Index: 2
-            Item: aegis_102193
+            Item: Enchant_Stone_Box30
             Amount: 5
   - Group: COSTUMEMILEPACK_30_3
     SubGroups:
@@ -97157,7 +97157,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 50
           - Index: 2
-            Item: aegis_102193
+            Item: Enchant_Stone_Box30
             Amount: 10
   - Group: VIP_GIFT
     SubGroups:
@@ -97207,7 +97207,7 @@ Body:
           - Index: 3
             Item: C_Lop_Bunny_Cloak
           - Index: 4
-            Item: aegis_102193
+            Item: Enchant_Stone_Box30
             Amount: 10
   - Group: KR_B_SPECIAL04
     SubGroups:
@@ -97225,7 +97225,7 @@ Body:
             Item: Nyangvine_Fruit
             Amount: 100
           - Index: 1
-            Item: aegis_102332
+            Item: Enchant_Stone_Box31
             Amount: 2
           - Index: 2
             Item: Comp_Bubble_Gum
@@ -97242,7 +97242,7 @@ Body:
             Item: Battle_Manual100
             Amount: 2
           - Index: 2
-            Item: aegis_102332
+            Item: Enchant_Stone_Box31
             Amount: 5
   - Group: LI_NYANGVINE_BOX3_31
     SubGroups:
@@ -97259,7 +97259,7 @@ Body:
             Item: Battle_Manual100
             Amount: 5
           - Index: 3
-            Item: aegis_102332
+            Item: Enchant_Stone_Box31
             Amount: 10
   - Group: STONE_ROBE3_BOX
     SubGroups:
@@ -97358,7 +97358,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 12
           - Index: 2
-            Item: aegis_102332
+            Item: Enchant_Stone_Box31
             Amount: 3
   - Group: COSTUMEMILEPACK_31_2
     SubGroups:
@@ -97372,7 +97372,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 25
           - Index: 2
-            Item: aegis_102332
+            Item: Enchant_Stone_Box31
             Amount: 5
   - Group: COSTUMEMILEPACK_31_3
     SubGroups:
@@ -97386,7 +97386,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 50
           - Index: 2
-            Item: aegis_102332
+            Item: Enchant_Stone_Box31
             Amount: 10
   - Group: CATPAW_1DAY_BOX
     SubGroups:
@@ -97414,7 +97414,7 @@ Body:
             Item: Nyangvine_Fruit
             Amount: 100
           - Index: 1
-            Item: aegis_102441
+            Item: Enchant_Stone_Box32
             Amount: 2
           - Index: 2
             Item: Comp_Bubble_Gum
@@ -97431,7 +97431,7 @@ Body:
             Item: Battle_Manual100
             Amount: 2
           - Index: 2
-            Item: aegis_102441
+            Item: Enchant_Stone_Box32
             Amount: 5
   - Group: LI_NYANGVINE_BOX3_32
     SubGroups:
@@ -97448,7 +97448,7 @@ Body:
             Item: Battle_Manual100
             Amount: 5
           - Index: 3
-            Item: aegis_102441
+            Item: Enchant_Stone_Box32
             Amount: 10
   - Group: 21TH_PRESENT_BOX
     SubGroups:
@@ -97472,7 +97472,7 @@ Body:
           - Index: 2
             Item: C_Sailor_Cap
           - Index: 3
-            Item: aegis_102441
+            Item: Enchant_Stone_Box32
             Amount: 10
   - Group: SEASON_EVT_REWARD_8
     SubGroups:
@@ -97517,7 +97517,7 @@ Body:
             Item: Melody_Card_191
             Rate: 5
           - Index: 11
-            Item: aegis_1001376
+            Item: Varmundt_Cotton_Doll
             Rate: 5
           - Index: 12
             Item: South_Pork_Ricebowl
@@ -97630,7 +97630,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 12
           - Index: 2
-            Item: aegis_102441
+            Item: Enchant_Stone_Box32
             Amount: 3
   - Group: COSTUMEMILEPACK_32_2
     SubGroups:
@@ -97644,7 +97644,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 25
           - Index: 2
-            Item: aegis_102441
+            Item: Enchant_Stone_Box32
             Amount: 5
   - Group: COSTUMEMILEPACK_32_3
     SubGroups:
@@ -97658,7 +97658,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 50
           - Index: 2
-            Item: aegis_102441
+            Item: Enchant_Stone_Box32
             Amount: 10
   - Group: SCHMIDT_ANTIQUITY
     SubGroups:
@@ -97666,15 +97666,15 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 3
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 4
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 5
           - Index: 3
@@ -97903,19 +97903,19 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 500
             Amount: 4
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 500
             Amount: 5
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 500
             Amount: 6
           - Index: 3
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 500
             Amount: 7
           - Index: 4
@@ -98102,15 +98102,15 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 3
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 4
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 5
           - Index: 3
@@ -98427,19 +98427,19 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 4
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 5
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 6
           - Index: 3
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 7
           - Index: 4
@@ -98776,23 +98776,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 4
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 5
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 6
           - Index: 3
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 7
           - Index: 4
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 8
           - Index: 5
@@ -99221,23 +99221,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 8
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 9
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 10
           - Index: 3
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 11
           - Index: 4
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 12
           - Index: 5
@@ -99666,23 +99666,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 3
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 4
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 5
           - Index: 3
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 6
           - Index: 4
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 600
             Amount: 7
           - Index: 5
@@ -100871,19 +100871,19 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 5
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 6
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 7
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 8
           - Index: 4
@@ -101925,19 +101925,19 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 5
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 6
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 7
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 8
           - Index: 4
@@ -102147,15 +102147,15 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1300
             Amount: 3
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1300
             Amount: 4
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1300
             Amount: 5
           - Index: 3
@@ -102294,15 +102294,15 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 3
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 4
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 5
           - Index: 3
@@ -102493,15 +102493,15 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 3
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 4
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 5
           - Index: 3
@@ -102842,15 +102842,15 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 3
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 4
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 5
           - Index: 3
@@ -103020,15 +103020,15 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 3
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 4
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 5
           - Index: 3
@@ -103746,19 +103746,19 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 4
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 5
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 6
           - Index: 3
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 1000
             Amount: 7
           - Index: 4
@@ -104619,23 +104619,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 3
           - Index: 1
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 4
           - Index: 2
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 5
           - Index: 3
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 6
           - Index: 4
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 7
           - Index: 5
@@ -105176,23 +105176,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 800
             Amount: 8
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 800
             Amount: 9
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 800
             Amount: 10
           - Index: 3
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 800
             Amount: 11
           - Index: 4
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Rate: 800
             Amount: 12
           - Index: 5
@@ -107715,23 +107715,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 6
           - Index: 1
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 7
           - Index: 2
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 8
           - Index: 3
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 9
           - Index: 4
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 10
           - Index: 5
@@ -108470,23 +108470,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 4
           - Index: 1
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 5
           - Index: 2
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 6
           - Index: 3
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 7
           - Index: 4
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 8
           - Index: 5
@@ -108817,19 +108817,19 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 1000
             Amount: 7
           - Index: 1
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 1000
             Amount: 8
           - Index: 2
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 1000
             Amount: 9
           - Index: 3
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 1000
             Amount: 10
           - Index: 4
@@ -109928,15 +109928,15 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 3
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 4
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 5
           - Index: 3
@@ -110202,19 +110202,19 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 4
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 5
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 6
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 7
           - Index: 4
@@ -110581,23 +110581,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 7
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 8
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 9
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 10
           - Index: 4
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 500
             Amount: 11
           - Index: 5
@@ -110906,23 +110906,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 4
           - Index: 1
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 5
           - Index: 2
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 6
           - Index: 3
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 7
           - Index: 4
-            Item: aegis_1001479
+            Item: Black_Dia
             Rate: 800
             Amount: 8
           - Index: 5
@@ -111100,7 +111100,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_480245
+            Item: JP_EV17
   - Group: T_GARDEN_EV_1
     SubGroups:
       - SubGroup: 0
@@ -111167,7 +111167,7 @@ Body:
             Item: Nyangvine_Fruit
             Amount: 100
           - Index: 1
-            Item: aegis_102605
+            Item: Enchant_Stone_Box33
             Amount: 2
           - Index: 2
             Item: Comp_Bubble_Gum
@@ -111184,7 +111184,7 @@ Body:
             Item: Battle_Manual100
             Amount: 2
           - Index: 2
-            Item: aegis_102605
+            Item: Enchant_Stone_Box33
             Amount: 5
   - Group: LI_NYANGVINE_BOX3_33
     SubGroups:
@@ -111201,7 +111201,7 @@ Body:
             Item: Battle_Manual100
             Amount: 5
           - Index: 3
-            Item: aegis_102605
+            Item: Enchant_Stone_Box33
             Amount: 10
   - Group: LI_NYANG_CINNA_BOX1_33
     SubGroups:
@@ -111212,7 +111212,7 @@ Body:
             Item: Nyangvine_Fruit
             Amount: 100
           - Index: 1
-            Item: aegis_102605
+            Item: Enchant_Stone_Box33
             Amount: 2
           - Index: 2
             Item: Comp_Bubble_Gum
@@ -111231,7 +111231,7 @@ Body:
             Item: Battle_Manual100
             Amount: 2
           - Index: 2
-            Item: aegis_102605
+            Item: Enchant_Stone_Box33
             Amount: 5
           - Index: 3
             Item: Cinnamon_Pack2
@@ -111250,7 +111250,7 @@ Body:
             Item: Battle_Manual100
             Amount: 5
           - Index: 3
-            Item: aegis_102605
+            Item: Enchant_Stone_Box33
             Amount: 10
           - Index: 4
             Item: Cinnamon_Pack3
@@ -111427,7 +111427,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001480
+            Item: Brown_Dia
             Amount: 15
   - Group: COSTUMEMILEPACK_33_1
     SubGroups:
@@ -111441,7 +111441,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 12
           - Index: 2
-            Item: aegis_102605
+            Item: Enchant_Stone_Box33
             Amount: 3
   - Group: COSTUMEMILEPACK_33_2
     SubGroups:
@@ -111455,7 +111455,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 25
           - Index: 2
-            Item: aegis_102605
+            Item: Enchant_Stone_Box33
             Amount: 5
   - Group: COSTUMEMILEPACK_33_3
     SubGroups:
@@ -111469,7 +111469,7 @@ Body:
             Item: Evt_Cos_Coin
             Amount: 50
           - Index: 2
-            Item: aegis_102605
+            Item: Enchant_Stone_Box33
             Amount: 10
   - Group: 2023_XMAX_PACK_1
     SubGroups:
@@ -111549,7 +111549,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001479
+            Item: Black_Dia
             Amount: 3
   - Group: LI_NYANGVINE_BOX1_34
     SubGroups:
@@ -113227,15 +113227,15 @@ Body:
             Rate: 1
             Announced: true
           - Index: 13
-            Item: aegis_1001604
+            Item: DragonknightStone_Robe
             Rate: 1
             Announced: true
           - Index: 14
-            Item: aegis_1001603
+            Item: ImperialguardStone_Robe
             Rate: 1
             Announced: true
           - Index: 15
-            Item: aegis_1001605
+            Item: NightwatchStone_Robe
             Rate: 1
             Announced: true
           - Index: 16
@@ -114371,19 +114371,19 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 800
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 800
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 800
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 800
           - Index: 4
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 800
           - Index: 5
             Item: Gaebolg_Armor
@@ -114658,19 +114658,19 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 800
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 800
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 800
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 800
           - Index: 4
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 800
           - Index: 5
             Item: Gaebolg_Armor
@@ -115478,7 +115478,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_480393
+            Item: C_Loli_Ruri_Moon_B
             Amount: 1
           - Index: 1
             Item: C_2024ROS_Hat_1st
@@ -116234,7 +116234,7 @@ Body:
           - Index: 0
             Item: Blacksmith_Blessing
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP17_AUTO_A
     SubGroups:
       - SubGroup: 0
@@ -116253,7 +116253,7 @@ Body:
           - Index: 0
             Item: Blacksmith_Blessing
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP17_SECRET_A
     SubGroups:
       - SubGroup: 0
@@ -116280,7 +116280,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 2
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
   - Group: RT_EP17_MUTANT_A
     SubGroups:
       - SubGroup: 0
@@ -116301,7 +116301,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 150
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP17_MIGUEL_A
     SubGroups:
@@ -116329,7 +116329,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 3
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
   - Group: RT_EP17_MIGUEL_2
     SubGroups:
       - SubGroup: 0
@@ -116339,7 +116339,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 100
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 3
           - Index: 2
             Item: R_Ep17_Album
@@ -116370,7 +116370,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 2
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
   - Group: RT_EP17_OVERLOAD_3
     SubGroups:
       - SubGroup: 0
@@ -116383,7 +116383,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 100
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP17_BATH_A
     SubGroups:
@@ -116405,7 +116405,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 150
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP17_GARDEN_A
     SubGroups:
@@ -116433,7 +116433,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 4
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
   - Group: RT_EP17_GARDEN_3
     SubGroups:
       - SubGroup: 0
@@ -116443,7 +116443,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 200
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP17_GARDEN_5
     SubGroups:
@@ -116455,7 +116455,7 @@ Body:
           - Index: 1
             Item: Perfect_Rune
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP17_GREEN_A
     SubGroups:
@@ -116483,7 +116483,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 2
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
   - Group: RT_EP17_GREEN_2
     SubGroups:
       - SubGroup: 0
@@ -116493,7 +116493,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 150
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP17_GREEN_4
     SubGroups:
@@ -116505,7 +116505,7 @@ Body:
           - Index: 1
             Item: Perfect_Rune
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP17_WING_A
     SubGroups:
@@ -116534,7 +116534,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
           - Index: 1
             Item: Imperfect_Rune
             Amount: 80
@@ -116547,7 +116547,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 120
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP17_HARMFUL_A
     SubGroups:
       - SubGroup: 0
@@ -116578,7 +116578,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 80
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP17_HARMFUL_4
     SubGroups:
       - SubGroup: 0
@@ -116588,7 +116588,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 120
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP17_BOSS_A
     SubGroups:
       - SubGroup: 0
@@ -116612,7 +116612,7 @@ Body:
             Item: Perfect_Rune
             Amount: 8
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Amount: 5
           - Index: 3
             Item: R_Ep178_boss
@@ -116632,7 +116632,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 3
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
   - Group: RT_EP17_BOSS_5
     SubGroups:
       - SubGroup: 0
@@ -116648,7 +116648,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 5
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
             Amount: 5
   - Group: RT_EP17_MALFUN_A
     SubGroups:
@@ -116676,7 +116676,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 2
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
   - Group: RT_EP17_MALFUN_3
     SubGroups:
       - SubGroup: 0
@@ -116686,7 +116686,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 150
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 3
   - Group: RT_EP18_ARMOR_A
     SubGroups:
@@ -116706,7 +116706,7 @@ Body:
           - Index: 0
             Item: Blacksmith_Blessing
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP18_MELEE_A
     SubGroups:
       - SubGroup: 0
@@ -116725,7 +116725,7 @@ Body:
           - Index: 0
             Item: Blacksmith_Blessing
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP18_MELEE_C
     SubGroups:
       - SubGroup: 0
@@ -116734,7 +116734,7 @@ Body:
           - Index: 0
             Item: Blacksmith_Blessing
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP18_MAGIC_A
     SubGroups:
       - SubGroup: 0
@@ -116763,7 +116763,7 @@ Body:
           - Index: 0
             Item: Blacksmith_Blessing
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP18_FIELD_A
     SubGroups:
       - SubGroup: 0
@@ -116784,7 +116784,7 @@ Body:
           - Index: 1
             Item: Perfect_Rune
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP18_FIELD_3
     SubGroups:
       - SubGroup: 0
@@ -116794,7 +116794,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 120
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP18_LAVA_A
     SubGroups:
       - SubGroup: 0
@@ -116814,14 +116814,14 @@ Body:
             Item: Imperfect_Rune
             Amount: 120
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP18_LAVA_2
     SubGroups:
       - SubGroup: 0
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
           - Index: 1
             Item: Imperfect_Rune
             Amount: 80
@@ -116847,7 +116847,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 150
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 3
   - Group: RT_EP18_TOTAL_3
     SubGroups:
@@ -116861,7 +116861,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 2
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP18_TOTAL_6
     SubGroups:
       - SubGroup: 0
@@ -116870,7 +116870,7 @@ Body:
           - Index: 0
             Item: Perfect_Rune
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP18_FANG_A
     SubGroups:
       - SubGroup: 0
@@ -116892,7 +116892,7 @@ Body:
           - Index: 1
             Item: Perfect_Rune
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Amount: 3
   - Group: RT_EP18_DEMI_A
     SubGroups:
@@ -116917,7 +116917,7 @@ Body:
             Item: Perfect_Rune
             Amount: 2
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Amount: 5
           - Index: 3
             Item: R_Ep178_boss
@@ -116936,7 +116936,7 @@ Body:
             Item: R_Ep17_Album
             Amount: 2
           - Index: 3
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 5
   - Group: YOR_CARD_P_BOX
     SubGroups:
@@ -117025,23 +117025,23 @@ Body:
         Algorithm: Random
         List:
           - Index: 0
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 12
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 13
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 14
           - Index: 3
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 15
           - Index: 4
-            Item: aegis_1001480
+            Item: Brown_Dia
             Rate: 1000
             Amount: 16
           - Index: 5
@@ -117263,13 +117263,13 @@ Body:
             Item: HNoviceStone_Robe
             Rate: 10
           - Index: 23
-            Item: aegis_1001604
+            Item: DragonknightStone_Robe
             Rate: 10
           - Index: 24
-            Item: aegis_1001603
+            Item: ImperialguardStone_Robe
             Rate: 10
           - Index: 25
-            Item: aegis_1001605
+            Item: NightwatchStone_Robe
             Rate: 10
           - Index: 26
             Item: BioloStone_Robe
@@ -117987,31 +117987,31 @@ Body:
             Item: S_Helmut_Card
             Rate: 5
           - Index: 12
-            Item: aegis_300422
+            Item: S_Catherine_Card
             Rate: 5
           - Index: 13
-            Item: aegis_300424
+            Item: S_Friedrich_Card
             Rate: 5
           - Index: 14
-            Item: aegis_300426
+            Item: S_Crux_Card
             Rate: 5
           - Index: 15
-            Item: aegis_300487
+            Item: S_Elena_Card
             Rate: 5
           - Index: 16
-            Item: aegis_300489
+            Item: S_Lookie_Card
             Rate: 5
           - Index: 17
-            Item: aegis_300491
+            Item: S_Est_Card
             Rate: 5
           - Index: 18
-            Item: aegis_300493
+            Item: S_Gony_Card
             Rate: 5
           - Index: 19
-            Item: aegis_300495
+            Item: S_Tes_Card
             Rate: 5
           - Index: 20
-            Item: aegis_300497
+            Item: S_Leizi_Card
             Rate: 5
           - Index: 21
             Item: aegis_300606
@@ -118063,31 +118063,31 @@ Body:
             Item: Helmut_Card
             Rate: 405
           - Index: 37
-            Item: aegis_300421
+            Item: Catherine_Card
             Rate: 405
           - Index: 38
-            Item: aegis_300423
+            Item: Friedrich_Card
             Rate: 405
           - Index: 39
-            Item: aegis_300425
+            Item: Crux_Card
             Rate: 405
           - Index: 40
-            Item: aegis_300486
+            Item: Elena_Card
             Rate: 405
           - Index: 41
-            Item: aegis_300488
+            Item: Lookie_Card
             Rate: 405
           - Index: 42
-            Item: aegis_300490
+            Item: Est_Card
             Rate: 405
           - Index: 43
-            Item: aegis_300492
+            Item: Gony_Card
             Rate: 405
           - Index: 44
-            Item: aegis_300494
+            Item: Tes_Card
             Rate: 405
           - Index: 45
-            Item: aegis_300496
+            Item: Leizi_Card
             Rate: 405
           - Index: 46
             Item: aegis_300603
@@ -120641,7 +120641,7 @@ Body:
           - Index: 0
             Item: Blacksmith_Blessing
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP19_GLACIER_A
     SubGroups:
@@ -120661,7 +120661,7 @@ Body:
           - Index: 0
             Item: Blacksmith_Blessing
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP19_GLACIER_3
     SubGroups:
@@ -120678,7 +120678,7 @@ Body:
           - Index: 0
             Item: Blacksmith_Blessing
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP19_ULRALI_A
     SubGroups:
       - SubGroup: 0
@@ -120701,7 +120701,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 150
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Amount: 5
   - Group: RT_EP19_JUNCEA_A
     SubGroups:
@@ -120724,7 +120724,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 250
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Amount: 5
   - Group: RT_EP19_SNOWFIELD_A
     SubGroups:
@@ -120747,7 +120747,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 90
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP19_SNOWFIELD_2
     SubGroups:
@@ -120755,7 +120755,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
           - Index: 1
             Item: Imperfect_Rune
             Amount: 90
@@ -120780,7 +120780,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 120
           - Index: 2
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP19_FAMILY_2
     SubGroups:
@@ -120788,7 +120788,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
           - Index: 1
             Item: Imperfect_Rune
             Amount: 80
@@ -120811,7 +120811,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 100
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP19_BASEMENT_A
     SubGroups:
@@ -120829,7 +120829,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
           - Index: 1
             Item: Perfect_Rune
@@ -120849,7 +120849,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 3
           - Index: 1
             Item: Imperfect_Rune
@@ -120862,7 +120862,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
           - Index: 1
             Item: Imperfect_Rune
@@ -120883,7 +120883,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
           - Index: 1
             Item: Imperfect_Rune
@@ -120897,7 +120897,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
           - Index: 1
             Item: Imperfect_Rune
@@ -120920,7 +120920,7 @@ Body:
           - Index: 0
             Item: Blacksmith_Blessing
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP20_SANCTUARY_A
     SubGroups:
@@ -120944,7 +120944,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 250
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Amount: 5
   - Group: RT_EP20_SANCTUARY_2
     SubGroups:
@@ -120955,7 +120955,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 150
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
   - Group: RT_EP20_PREDATOR_A
     SubGroups:
       - SubGroup: 0
@@ -120978,7 +120978,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 200
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Amount: 5
   - Group: RT_EP20_GUARDIAN_A
     SubGroups:
@@ -120999,7 +120999,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 120
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: RT_EP20_GUARDIAN_3
     SubGroups:
@@ -121007,7 +121007,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
           - Index: 1
             Item: Imperfect_Rune
             Amount: 80
@@ -121033,7 +121033,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 220
           - Index: 2
-            Item: aegis_1001480
+            Item: Brown_Dia
             Amount: 5
   - Group: RT_EP20_SANGEL_2
     SubGroups:
@@ -121044,7 +121044,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 150
           - Index: 1
-            Item: aegis_1001480
+            Item: Brown_Dia
   - Group: RT_EP20_DAY_A
     SubGroups:
       - SubGroup: 0
@@ -121061,7 +121061,7 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
           - Index: 1
             Item: Imperfect_Rune
@@ -121085,7 +121085,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 120
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
           - Index: 2
             Item: Blacksmith_Blessing
@@ -121098,7 +121098,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 70
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP20_RETIRE_4
     SubGroups:
       - SubGroup: 0
@@ -121108,7 +121108,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 100
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP20_ROOTS_A
     SubGroups:
       - SubGroup: 0
@@ -121128,7 +121128,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 120
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
           - Index: 2
             Item: Blacksmith_Blessing
@@ -121141,7 +121141,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 70
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
   - Group: RT_EP20_ROOTS_5
     SubGroups:
       - SubGroup: 0
@@ -121151,7 +121151,7 @@ Body:
             Item: Imperfect_Rune
             Amount: 100
           - Index: 1
-            Item: aegis_1001478
+            Item: Cubic_Dia
             Amount: 2
   - Group: AEGIS_104501
     SubGroups:
