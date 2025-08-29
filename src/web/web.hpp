@@ -15,21 +15,19 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
-namespace rathena{
-	namespace server_web{
-		class WebServer : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
-				void handle_main( t_tick next ) override;
-				void finalize() override;
-				void handle_crash() override;
+namespace rathena::server_web {
+class WebServer : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
+		void handle_main( t_tick next ) override;
+		void finalize() override;
+		void handle_crash() override;
 
-			public:
-				WebServer() : Core( e_core_type::WEB ){
+	public:
+		WebServer() : Core( e_core_type::WEB ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 #ifndef SQL_BUFFER_SIZE
