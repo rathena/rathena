@@ -1447,7 +1447,7 @@ int32 party_foreachsamemap(int32 (*func)(struct block_list*,va_list),map_session
 		list[blockcount++]=psd;
 	}
 
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	for(i = 0; i < blockcount; i++) {
 		va_list ap;
@@ -1455,8 +1455,6 @@ int32 party_foreachsamemap(int32 (*func)(struct block_list*,va_list),map_session
 		total += func(list[i], ap);
 		va_end(ap);
 	}
-
-	map_freeblock_unlock();
 
 	return total;
 }

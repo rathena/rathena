@@ -2143,7 +2143,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		int32 stop_flag = USW_FIXPOS|USW_RELEASE_TARGET;
 
 		// Source may die due to reflect damage
-		map_freeblock_lock();
+		FreeBlockLock freeLock;
 
 		// Hiding is a special case because it prevents normal attacks but allows skill usage
 		// TODO: Some other states also have this behavior and should be investigated
@@ -2164,8 +2164,6 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		// Stop and make sure there is no chase target when attack was not skipped
 		if (stop_flag != USW_NONE)
 			unit_stop_walking(md, stop_flag);
-
-		map_freeblock_unlock();
 
 		//Target still in attack range, no need to chase the target
 		return true;
@@ -2962,7 +2960,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 		md->status.hp = 0;
 	}
 
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	memset(pt,0,sizeof(pt));
 
@@ -3616,7 +3614,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	if( md->can_summon )
 		mob_deleteslave(md);
 
-	map_freeblock_unlock();
+	freeLock.unlock();
 
 	if( !rebirth ) {
 
@@ -4379,7 +4377,8 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 
 		if (!flag)
 			continue; //Skill requisite failed to be fulfilled.
-
+		
+		FreeBlockLock freeLock;
 		//Execute skill
 		if (skill_get_casttype(ms[i]->skill_id) == CAST_GROUND)
 		{	//Ground skill.
@@ -4427,11 +4426,9 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 				map_search_freecell(md, md->m, &x, &y, j, j, 3);
 			}
 			md->skill_idx = i;
-			map_freeblock_lock();
 			if (!battle_check_range(md, bl, skill_get_range2(md, ms[i]->skill_id, ms[i]->skill_lv, true)) ||
 				!unit_skilluse_pos2(md, x, y, ms[i]->skill_id, ms[i]->skill_lv, ms[i]->casttime, ms[i]->cancel))
 			{
-				map_freeblock_unlock();
 				if (battle_config.mob_ai & 0x1000)
 					continue;
 				else
@@ -4478,11 +4475,9 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 			}
 
 			md->skill_idx = i;
-			map_freeblock_lock();
 			if (!battle_check_range(md, bl, skill_get_range2(md, ms[i]->skill_id, ms[i]->skill_lv, true)) ||
 				!unit_skilluse_id2(md, bl->id, ms[i]->skill_id, ms[i]->skill_lv, ms[i]->casttime, ms[i]->cancel))
 			{
-				map_freeblock_unlock();
 				if (battle_config.mob_ai & 0x1000)
 					continue;
 				else
@@ -4493,7 +4488,6 @@ bool mobskill_use(struct mob_data *md, t_tick tick, int32 event, int64 damage)
 		if ( ms[i]->msg_id ){ //Display color message [SnakeDrak]
 			mob_chat_display_message(*md, ms[i]->msg_id);
 		}
-		map_freeblock_unlock();
 		return true;
 	}
 	//No skill was used.
