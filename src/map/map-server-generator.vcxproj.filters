@@ -8,11 +8,44 @@
     <Filter Include="Source Files\Skills">
       <UniqueIdentifier>{8849eb34-b7f7-4023-ad0e-44db8c718e56}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Skills\Acolyte">
+      <UniqueIdentifier>{402d7219-d595-4316-978c-27474817efa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Archer">
+      <UniqueIdentifier>{7ae0b4f4-b535-4f44-b925-f503e8c33a0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Custom">
+      <UniqueIdentifier>{607a6bff-94f6-4e8c-bc7a-2189dfd4c1ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Gunslinger">
+      <UniqueIdentifier>{129a9804-44ab-4d14-b769-ca170935d84e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Mage">
+      <UniqueIdentifier>{3612b198-b428-4041-870d-c0e3aec08184}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Skills\Mercenary">
       <UniqueIdentifier>{ea34154e-db44-4bd1-8f33-db8bcd2a2fb0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Skills\Swordsman">
+    <Filter Include="Source Files\Skills\Merchant">
+      <UniqueIdentifier>{e141d0d5-f146-4214-9ba3-3ef50321c506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Ninja">
+      <UniqueIdentifier>{5a04434d-fd05-46d0-894b-7b85f2b2549e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Novice">
+      <UniqueIdentifier>{7b445a57-6621-4de5-8ff2-99b06c745cb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Npc">
+      <UniqueIdentifier>{242ebf78-1994-488e-b1aa-d6aa09e48d0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Summoner">
+      <UniqueIdentifier>{1aab87a2-9226-480f-937d-309a89a02358}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Swordman">
       <UniqueIdentifier>{ec4cace4-35e2-4269-b6e5-8a22cb4e317e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Thief">
+      <UniqueIdentifier>{ec1cd5d4-9622-4bfa-a4ca-0f5e8e0a3952}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
@@ -21,11 +54,44 @@
     <Filter Include="Header Files\Skills">
       <UniqueIdentifier>{09f35c48-a96f-4e32-a5fc-19ca82a6b44f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Skills\Acolyte">
+      <UniqueIdentifier>{7800fb8f-e54f-4877-8972-cecac396737b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Archer">
+      <UniqueIdentifier>{04327150-e9d3-4847-a575-c81b9ee0e11c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Custom">
+      <UniqueIdentifier>{38c2586b-7a8c-4f30-92aa-f53fc17ee519}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Gunslinger">
+      <UniqueIdentifier>{8ff19f85-a0c3-4705-a6e3-3aa79f9b3b5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Mage">
+      <UniqueIdentifier>{52aa6b4e-d378-48b4-86e5-c2ae706afb8b}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Header Files\Skills\Mercenary">
       <UniqueIdentifier>{773b3079-684c-4af8-8e4b-5297efb2690a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Skills\Swordsman">
+    <Filter Include="Header Files\Skills\Merchant">
+      <UniqueIdentifier>{1f8c1cef-ee5a-4866-94ef-6e475485a526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Ninja">
+      <UniqueIdentifier>{3e870328-462a-44c5-ad69-8e081cf34cd9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Novice">
+      <UniqueIdentifier>{3a033f23-439b-45c2-8d2e-748334bedf07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Npc">
+      <UniqueIdentifier>{18eed79b-2523-4ca0-ba97-a3f2c27d9efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Summoner">
+      <UniqueIdentifier>{021a5c3f-56ab-45a9-a02a-f4e73e582bdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Swordman">
       <UniqueIdentifier>{86666c04-bad9-43da-9f31-aefe3dcf13f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Thief">
+      <UniqueIdentifier>{75ea360f-fa15-4ce6-8b57-ecd1d5ad1bd0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -300,49 +366,145 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="skills/skill_impl.hpp">
-      <Filter>Header Files\Skills</Filter>
+    <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
-    <ClInclude Include="skills/weapon_skill_impl.hpp">
-      <Filter>Header Files\Skills</Filter>
+    <ClInclude Include="skills/archer/skill_factory_archer.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp">
-      <Filter>Header Files\Skills\Mercenary</Filter>
+    <ClInclude Include="skills/custom/skill_factory_custom.hpp">
+      <Filter>Header Files\Skills\Custom</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/skill_factory_mage.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp">
+      <Filter>Header Files\Skills\Mercenary</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/skill_factory_merchant.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/skill_factory_ninja.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/skill_factory_novice.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/skill_factory_npc.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/skill_factory.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
-    <ClInclude Include="skills/swordsman/bash.hpp">
-      <Filter>Header Files\Skills\Swordsman</Filter>
+    <ClInclude Include="skills/skill_impl.hpp">
+      <Filter>Header Files\Skills</Filter>
     </ClInclude>
-    <ClInclude Include="skills/swordsman/skill_factory_swordsman.hpp">
-      <Filter>Header Files\Skills\Swordsman</Filter>
+    <ClInclude Include="skills/summoner/skill_factory_summoner.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/autoberserk.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/bash.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/magnum.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/provoke.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/selfprovoke.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/skill_factory_swordman.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/skill_factory_thief.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/weapon_skill_impl.hpp">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/status_skill_impl.hpp">
+      <Filter>Header Files\Skills</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="skills/skill_impl.cpp">
-      <Filter>Source Files\Skills</Filter>
+    <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
-    <ClCompile Include="skills/weapon_skill_impl.cpp">
-      <Filter>Source Files\Skills</Filter>
+    <ClCompile Include="skills/archer/skill_factory_archer.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
-      <Filter>Source Files\Skills\Mercenary</Filter>
+    <ClCompile Include="skills/custom/skill_factory_custom.cpp">
+      <Filter>Source Files\Skills\Custom</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/skill_factory_mage.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
+      <Filter>Source Files\Skills\Mercenary</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/skill_factory_merchant.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/skill_factory_ninja.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/skill_factory_novice.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/skill_factory_npc.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/skill_factory.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
-    <ClCompile Include="skills/swordsman/bash.cpp">
-      <Filter>Source Files\Skills\Swordsman</Filter>
+    <ClCompile Include="skills/skill_impl.cpp">
+      <Filter>Source Files\Skills</Filter>
     </ClCompile>
-    <ClCompile Include="skills/swordsman/skill_factory_swordsman.cpp">
-      <Filter>Source Files\Skills\Swordsman</Filter>
+    <ClCompile Include="skills/summoner/skill_factory_summoner.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/autoberserk.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/bash.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/magnum.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/provoke.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/selfprovoke.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/skill_factory_swordman.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/skill_factory_thief.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/weapon_skill_impl.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/status_skill_impl.cpp">
+      <Filter>Source Files\Skills</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

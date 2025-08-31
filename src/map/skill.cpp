@@ -1202,7 +1202,7 @@ struct s_skill_unit_layout *skill_get_unit_layout(uint16 skill_id, uint16 skill_
  * [1] holds the id of the original target
  * [2] counts how many targets have been processed. counter is added in skill_area_sub if the foreach function flag is: flag&(SD_SPLASH|SD_PREAMBLE)
  */
-static int32 skill_area_temp[8];
+int32 skill_area_temp[8];
 
 /*==========================================
  * Add effect to skill when hit succesfully target
@@ -6327,7 +6327,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		skill_unitsetting(src, skill_id, skill_lv, bl->x, bl->y, 0);
 		break;
 
-	case SM_MAGNUM:
 	case MS_MAGNUM:
 		if( flag&1 ) {
 			// For players, damage depends on distance, so add it to flag if it is > 1
@@ -8200,7 +8199,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 	//Passive Magnum, should had been casted on yourself.
-	case SM_MAGNUM:
 	case MS_MAGNUM:
 		skill_area_temp[1] = 0;
 		map_foreachinshootrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_SKILL|BL_CHAR,
@@ -8619,10 +8617,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		}
 		break;
 */
-	case SM_ENDURE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
 
 	case AS_ENCHANTPOISON:
 		if( sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) ) ){
@@ -8686,8 +8680,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		}
 		break;
 
-	case SM_PROVOKE:
-	case SM_SELFPROVOKE:
 	case MER_PROVOKE:
 		if( status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele) ) {
 			map_freeblock_unlock();
@@ -9375,7 +9367,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		} else
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
-	case SM_AUTOBERSERK:
 	case MER_AUTOBERSERK:
 		if( tsce )
 			i = status_change_end(bl, type);
@@ -13678,6 +13669,12 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	default: {
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+
+		if( skill != nullptr && skill->impl != nullptr ){
+			skill->impl->castendNoDamageId( src, bl, skill_lv, tick, flag );
+			break;
+		}
+
 		ShowWarning("skill_castend_nodamage_id: missing code case for skill %s(%d)\n", skill ? skill->name : "UNKNOWN", skill_id);
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		map_freeblock_unlock();
