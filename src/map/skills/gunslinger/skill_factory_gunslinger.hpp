@@ -5,7 +5,7 @@
 
 #include "../skill_factory.hpp"
 
-class SkillFactorySwordsman : public SkillFactory {
+class SkillFactoryGunslinger : public SkillFactory {
 public:
 	virtual std::unique_ptr<const SkillImpl> create(const e_skill skill_id) const override;
 };

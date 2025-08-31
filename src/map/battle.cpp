@@ -3281,7 +3281,6 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 
 		switch(skill_id) { //Hit skill modifiers
 			case MS_MAGNUM:
-			case SM_MAGNUM:
 				hitrate += hitrate * 10 * skill_lv / 100;
 				break;
 			case KN_AUTOCOUNTER:
@@ -4706,7 +4705,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 	}
 
 	switch(skill_id) {
-		case SM_MAGNUM:
 		case MS_MAGNUM:
 			if(wd->miscflag == 1)
 				skillratio += 20 * skill_lv; //Inner 3x3 circle takes 100%+20%*level damage [Playtester]

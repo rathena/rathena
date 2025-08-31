@@ -3486,7 +3486,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
-    SplashArea: 3
+    SplashArea: 2
     CopyFlags:
       Skill:
         Plagiarism: true

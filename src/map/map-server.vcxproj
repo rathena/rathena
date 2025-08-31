@@ -241,13 +241,29 @@
     <ClInclude Include="vending.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="skills/skill_impl.hpp" />
-    <ClInclude Include="skills/weapon_skill_impl.hpp" />
+    <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
+    <ClInclude Include="skills/archer/skill_factory_archer.hpp" />
+    <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
+    <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp" />
+    <ClInclude Include="skills/mage/skill_factory_mage.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
+    <ClInclude Include="skills/merchant/skill_factory_merchant.hpp" />
+    <ClInclude Include="skills/ninja/skill_factory_ninja.hpp" />
+    <ClInclude Include="skills/novice/skill_factory_novice.hpp" />
+    <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
-    <ClInclude Include="skills/swordsman/bash.hpp" />
-    <ClInclude Include="skills/swordsman/skill_factory_swordsman.hpp" />
+    <ClInclude Include="skills/skill_impl.hpp" />
+    <ClInclude Include="skills/summoner/skill_factory_summoner.hpp" />
+    <ClInclude Include="skills/swordman/autoberserk.hpp" />
+    <ClInclude Include="skills/swordman/bash.hpp" />
+    <ClInclude Include="skills/swordman/magnum.hpp" />
+    <ClInclude Include="skills/swordman/provoke.hpp" />
+    <ClInclude Include="skills/swordman/selfprovoke.hpp" />
+    <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
+    <ClInclude Include="skills/thief/skill_factory_thief.hpp" />
+    <ClInclude Include="skills/weapon_skill_impl.hpp" />
+    <ClInclude Include="skills/status_skill_impl.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="achievement.cpp" />
@@ -296,13 +312,29 @@
     <ClCompile Include="vending.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="skills/skill_impl.cpp" />
-    <ClCompile Include="skills/weapon_skill_impl.cpp" />
+    <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
+    <ClCompile Include="skills/archer/skill_factory_archer.cpp" />
+    <ClCompile Include="skills/custom/skill_factory_custom.cpp" />
+    <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp" />
+    <ClCompile Include="skills/mage/skill_factory_mage.cpp" />
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp" />
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp" />
-    <ClCompile Include="skills/swordsman/bash.cpp" />
-    <ClCompile Include="skills/swordsman/skill_factory_swordsman.cpp" />
+    <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
+    <ClCompile Include="skills/ninja/skill_factory_ninja.cpp" />
+    <ClCompile Include="skills/novice/skill_factory_novice.cpp" />
+    <ClCompile Include="skills/npc/skill_factory_npc.cpp" />
     <ClCompile Include="skills/skill_factory.cpp" />
+    <ClCompile Include="skills/skill_impl.cpp" />
+    <ClCompile Include="skills/summoner/skill_factory_summoner.cpp" />
+    <ClCompile Include="skills/swordman/autoberserk.cpp" />
+    <ClCompile Include="skills/swordman/bash.cpp" />
+    <ClCompile Include="skills/swordman/magnum.cpp" />
+    <ClCompile Include="skills/swordman/provoke.cpp" />
+    <ClCompile Include="skills/swordman/selfprovoke.cpp" />
+    <ClCompile Include="skills/swordman/skill_factory_swordman.cpp" />
+    <ClCompile Include="skills/thief/skill_factory_thief.cpp" />
+    <ClCompile Include="skills/weapon_skill_impl.cpp" />
+    <ClCompile Include="skills/status_skill_impl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
