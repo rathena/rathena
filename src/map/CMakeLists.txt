@@ -45,12 +45,39 @@ set(MAP_SOURCES
 	"skills/skill_factory.cpp"
 	"skills/skill_impl.cpp"
 	"skills/weapon_skill_impl.cpp"
+	"skills/status_skill_impl.cpp"
 
-	"skills/swordsman/bash.cpp"
-	"skills/swordsman/skill_factory_swordsman.cpp"
+	"skills/acolyte/skill_factory_acolyte.cpp"
+
+	"skills/archer/skill_factory_archer.cpp"
+
+	"skills/custom/skill_factory_custom.cpp"
+
+	"skills/gunslinger/skill_factory_gunslinger.cpp"
+
+	"skills/mage/skill_factory_mage.cpp"
 
 	"skills/mercenary/mercenary_bash.cpp"
 	"skills/mercenary/skill_factory_mercenary.cpp"
+
+	"skills/merchant/skill_factory_merchant.cpp"
+
+	"skills/ninja/skill_factory_ninja.cpp"
+	
+	"skills/novice/skill_factory_novice.cpp"
+	
+	"skills/npc/skill_factory_npc.cpp"
+	
+	"skills/summoner/skill_factory_summoner.cpp"
+
+	"skills/swordman/autoberserk.cpp"
+	"skills/swordman/bash.cpp"
+	"skills/swordman/magnum.cpp"
+	"skills/swordman/provoke.cpp"
+	"skills/swordman/selfprovoke.cpp"
+	"skills/swordman/skill_factory_swordman.cpp"
+	
+	"skills/thief/skill_factory_thief.cpp"
 )
 
 set(MAP_HEADERS
@@ -105,12 +132,39 @@ set(MAP_HEADERS
 	"skills/skill_factory.hpp"
 	"skills/skill_impl.hpp"
 	"skills/weapon_skill_impl.hpp"
+	"skills/status_skill_impl.hpp"
 
-	"skills/swordsman/bash.hpp"
-	"skills/swordsman/skill_factory_swordsman.hpp"
+	"skills/acolyte/skill_factory_acolyte.hpp"
+
+	"skills/archer/skill_factory_archer.hpp"
+
+	"skills/custom/skill_factory_custom.hpp"
+
+	"skills/gunslinger/skill_factory_gunslinger.hpp"
+
+	"skills/mage/skill_factory_mage.hpp"
 
 	"skills/mercenary/mercenary_bash.hpp"
 	"skills/mercenary/skill_factory_mercenary.hpp"
+
+	"skills/merchant/skill_factory_merchant.hpp"
+
+	"skills/ninja/skill_factory_ninja.hpp"
+	
+	"skills/novice/skill_factory_novice.hpp"
+	
+	"skills/npc/skill_factory_npc.hpp"
+	
+	"skills/summoner/skill_factory_summoner.hpp"
+
+	"skills/swordman/autoberserk.hpp"
+	"skills/swordman/bash.hpp"
+	"skills/swordman/magnum.hpp"
+	"skills/swordman/provoke.hpp"
+	"skills/swordman/selfprovoke.hpp"
+	"skills/swordman/skill_factory_swordman.hpp"
+	
+	"skills/thief/skill_factory_thief.hpp"
 )
 
 add_executable(map-server)
