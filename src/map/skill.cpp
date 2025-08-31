@@ -7496,7 +7496,12 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	default:
 		if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
-			skill->impl->castendDamageId(src, bl, skill_lv, tick, flag);
+			try {
+				skill->impl->castendDamageId(src, bl, skill_lv, tick, flag);
+			} catch (const SkillImplException& e) {
+				ShowWarning(e.what());
+				return 1;
+			}
 			break;
 		}
 
@@ -13671,7 +13676,12 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
 		if( skill != nullptr && skill->impl != nullptr ){
-			skill->impl->castendNoDamageId( src, bl, skill_lv, tick, flag );
+			try {
+				skill->impl->castendNoDamageId( src, bl, skill_lv, tick, flag );
+			} catch(const SkillImplException& e) {
+				ShowWarning(e.what());
+				return 1;
+			}
 			break;
 		}
 
