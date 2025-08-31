@@ -56,14 +56,11 @@ endif()
 #
 if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_CURRENT_BINARY_DIR)
     message(FATAL_ERROR
-        "Do not use the source directory to build your files, instead delete CMakeCache.txt, create a separate folder and build there.\n"
-        "Example: (build in subdir 'build' and copy to src dir)\n"
+        "Do not use the source directory to build your files, use a different directory.\n"
+        "Example: (build in subdir 'build')\n"
         "  rm -f CMakeCache.txt\n"
-        "  mkdir build\n"
-        "  cd build\n"
-        "  cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo ..\n"
-        "  cmake --build .\n"
-        "  cd ..\n"
+        "  cmake -B build\n"
+        "  cmake --build build\n"
         "  ./athena-start.sh start\n")
 endif()
 

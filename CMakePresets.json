@@ -1,5 +1,5 @@
 {
-  "version": 6,
+  "version": 4,
   "configurePresets": [
     {
       "name": "base",
