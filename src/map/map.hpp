@@ -1090,7 +1090,7 @@ inline bool map_flag_gvg2_no_te(int16 m) {
 // RAII class for locking freeblock
 class FreeBlockLock {
 public:
-	FreeBlockLock(bool startLocked = true);
+	explicit FreeBlockLock(bool startLocked = true);
 	~FreeBlockLock();
 
 	void lock();

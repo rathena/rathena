@@ -352,13 +352,17 @@ FreeBlockLock::FreeBlockLock(bool startLocked) {
 }
 
 FreeBlockLock::~FreeBlockLock() {
-	unlock();
+	if (locked) {
+		unlock();
+	}
 }
 
 void FreeBlockLock::lock() {
 	if (!locked) {
 		map_freeblock_lock();
 		locked = true;
+	} else {
+		ShowWarning("FreeBlockLock is already locked.\n");
 	}
 }
 
@@ -366,6 +370,8 @@ void FreeBlockLock::unlock() {
 	if (locked) {
 		map_freeblock_unlock();
 		locked = false;
+	} else {
+		ShowWarning("FreeBlockLock is not locked.\n");
 	}
 }
 

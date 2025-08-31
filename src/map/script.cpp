@@ -11490,7 +11490,6 @@ BUILDIN_FUNC(killmonster)
 		}
 	}
 
-	FreeBlockLock freeLock;
 	map_foreachinmap(buildin_killmonster_sub_strip, m, BL_MOB, event ,allflag);
 	return SCRIPT_CMD_SUCCESS;
 }
