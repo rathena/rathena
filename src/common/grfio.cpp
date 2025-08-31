@@ -570,147 +570,400 @@ static bool isFullEncrypt(const char* fname)
 
 /// Loads all entries in the specified grf file into the filelist.
 /// @param gentry index of the grf file name in the gentry_table
-static int32 grfio_entryread(const char* grfname, int32 gentry)
-{
-	unsigned char grf_header[0x2e];
-	int32 entry,entrys,ofs,grf_version;
-	unsigned char *grf_filelist;
+static bool grfio_entryread( const char* grfname, int32 gentry ){
+#pragma warning( push )
+#pragma warning( disable : 4200 )
+
+// NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
+	#pragma pack( push, 1 )
+#endif
+
+	struct grf_header{
+		char signature[16];
+		char key[14];
+		union{
+			struct{
+				uint32 offset;
+				int32 seed;
+			} __attribute__((packed)) v1;
+			struct{
+				uint32 offset;
+				int32 unused;
+			} __attribute__((packed)) v2;
+			struct{
+				int64 offset;
+			} __attribute__((packed)) v3;
+		} __attribute__((packed)) u;
+		int32 count;
+		int32 version;
+	} __attribute__((packed));
+
+	struct grf_filetable_header_v2{
+		uint32 compressed;
+		uint32 uncompressed;
+	} __attribute__((packed));
+
+	struct grf_filetable_header_v3{
+		uint32 compressed1;
+		uint32 compressed2;
+		uint32 uncompressed;
+	} __attribute__((packed));
+
+	struct grf_file_entry_name_v1{
+		uint32 length;
+		uint16 unknown;
+		unsigned char data[];
+	} __attribute__((packed));
+
+	struct grf_file_entry_v1{
+		uint32 length;
+		uint32 length_aligned;
+		uint32 decompressed;
+		int8 type;
+		uint32 offset;
+	} __attribute__((packed));
+
+	struct grf_file_entry_v2{
+		uint32 length;
+		uint32 length_aligned;
+		uint32 decompressed;
+		int8 type;
+		uint32 offset;
+	} __attribute__((packed));
+
+	struct grf_file_entry_v3{
+		uint32 length;
+		uint32 length_aligned;
+		uint32 decompressed;
+		int8 type;
+		int64 offset;
+	} __attribute__((packed));
+
+// NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
+#if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
+	#pragma pack( pop )
+#endif
 
 	FILE* fp = fopen(grfname, "rb");
 	if( fp == nullptr ) {
-		ShowWarning("GRF data file not found: '%s'\n",grfname);
-		return 1;	// 1:not found error
-	} else
-		ShowInfo("GRF data file found: '%s'\n",grfname);
+		ShowWarning( "grfio_entryread: GRF data file not found: '%s'\n", grfname );
+		return false;
+	}
+
+	ShowInfo( "grfio_entryread: GRF data file found: '%s'\n", grfname );
 
 	sfseek(fp,0,SEEK_END);
 	size_t grf_size = sftell(fp);
 	sfseek(fp,0,SEEK_SET);
 
-	if(fread(grf_header,1,0x2e,fp) != 0x2e) { ShowError("Couldn't read all grf_header element of %s \n", grfname); }
-	if( ( strcmp((const char*)grf_header,"Master of Magic") != 0 && strcmp((const char*)grf_header,"Event Horizon") != 0 ) || sfseek(fp,getlong(grf_header+0x1e),SEEK_CUR) != 0 ) {
-		fclose(fp);
-		ShowError("GRF %s read error\n", grfname);
-		ShowError("GRF possibly over 2GB in size.\n");
-		return 2;	// 2:file format error
+	grf_header grf_header;
+
+	if( fread( &grf_header, 1, sizeof( grf_header ), fp ) != sizeof( grf_header ) ){
+		fclose( fp );
+		ShowError( "grfio_entryread: Couldn't read header\n" );
+		return false;
 	}
 
-	grf_version = getlong(grf_header+0x2a) >> 8;
+	int32 grf_version = grf_header.version >> 8;
 
 	if( grf_version == 0x01 ) {// ****** Grf version 01xx ******
-		size_t list_size = grf_size - sftell(fp);
-		grf_filelist = (unsigned char *) aMalloc(list_size);
-		if(fread(grf_filelist,1,list_size,fp) != list_size) { ShowError("Couldn't read all grf_filelist element of %s \n", grfname); }
-		fclose(fp);
+		if( strncmp( grf_header.signature, "Master of Magic", sizeof( grf_header.signature ) ) != 0 ){
+			ShowError( "grfio_entryread: Signature mismatch\n" );
+			fclose( fp );
+			return false;
+		}
 
-		entrys = getlong(grf_header+0x26) - getlong(grf_header+0x22) - 7;
+		if( sfseek( fp, grf_header.u.v1.offset + sizeof( grf_header ), SEEK_SET ) != 0 ){
+			ShowError( "grfio_entryread: Couldn't jump to the filetable offset\n" );
+			fclose( fp );
+			return false;
+		}
+
+		size_t list_size = grf_size - sftell(fp);
+
+		unsigned char* filetable = reinterpret_cast<unsigned char*>( aMalloc( list_size ) );
+
+		if( filetable == nullptr ){
+			ShowError( "grfio_entryread: Not enough RAM for the filetable\n" );
+			fclose( fp );
+			return false;
+		}
+
+		if( fread( filetable, 1, list_size, fp ) != list_size ){
+			ShowError( "grfio_entryread: Couldn't read the filetable\n" );
+			aFree( filetable );
+			fclose( fp );
+			return false;
+		}
+
+		fclose( fp );
+
+		size_t entrys = grf_header.count - grf_header.u.v1.seed - 7;
 
 		// Get an entry
-		for( entry = 0, ofs = 0; entry < entrys; ++entry ) {
+		for( size_t entry = 0, ofs = 0; entry < entrys; ++entry ){
 			FILELIST aentry;
 
-			int32 ofs2 = ofs+getlong(grf_filelist+ofs)+4;
-			unsigned char type = grf_filelist[ofs2+12];
-			if( type & FILELIST_TYPE_FILE ) {
-				char* fname = decode_filename(grf_filelist+ofs+6, grf_filelist[ofs]-6);
-				int32 srclen = getlong(grf_filelist+ofs2+0) - getlong(grf_filelist+ofs2+8) - 715;
+			// Cannot be const, because of file name decryption
+			grf_file_entry_name_v1* fnentry = reinterpret_cast<grf_file_entry_name_v1*>( filetable + ofs );
+
+			// They did not take alignment into account, therefore only part of the structure is taken into account
+			size_t ofs2 = ofs + fnentry->length + sizeof( fnentry->length );
+
+			const grf_file_entry_v1* fentry = reinterpret_cast<grf_file_entry_v1*>( filetable + ofs2 );
+
+			if( fentry->type&FILELIST_TYPE_FILE ){
+				char* fname = decode_filename( fnentry->data, fnentry->length - sizeof( *fnentry ) );
 
 				if( strlen(fname) > sizeof(aentry.fn) - 1 ) {
-					ShowFatalError("GRF file name %s is too long\n", fname);
-					aFree(grf_filelist);
-					exit(EXIT_FAILURE);
+					ShowError( "grfio_entryread: File name '%s' is too long\n", fname );
+					aFree( filetable );
+					return false;
 				}
 
-				type |= ( isFullEncrypt(fname) ) ? FILELIST_TYPE_ENCRYPT_MIXED : FILELIST_TYPE_ENCRYPT_HEADER;
-
-				aentry.srclen         = srclen;
-				aentry.srclen_aligned = getlong(grf_filelist+ofs2+4)-37579;
-				aentry.declen         = getlong(grf_filelist+ofs2+8);
-				aentry.srcpos         = getlong(grf_filelist+ofs2+13)+0x2e;
-				aentry.type           = type;
-				safestrncpy(aentry.fn, fname, sizeof(aentry.fn));
-				aentry.fnd			  = nullptr;
+				aentry.srclen = fentry->length - fentry->decompressed - 715;
+				aentry.srclen_aligned = fentry->length_aligned - 37579;
+				aentry.declen = fentry->decompressed;
+				aentry.srcpos = fentry->offset + sizeof( grf_header );
+				if( isFullEncrypt( fname ) ){
+					aentry.type = FILELIST_TYPE_FILE | FILELIST_TYPE_ENCRYPT_MIXED;
+				}else{
+					aentry.type = FILELIST_TYPE_FILE | FILELIST_TYPE_ENCRYPT_HEADER;
+				}
+				safestrncpy( aentry.fn, fname, sizeof( aentry.fn ) );
+				aentry.fnd = nullptr;
 #ifdef	GRFIO_LOCAL
-				aentry.gentry         = -(gentry+1);	// As Flag for making it a negative number carrying out the first time LocalFileCheck
+				// As Flag for making it a negative number carrying out the first time LocalFileCheck
+				aentry.gentry = -( gentry + 1 );
 #else
-				aentry.gentry         = gentry+1;		// With no first time LocalFileCheck
+				// With no first time LocalFileCheck
+				aentry.gentry = gentry + 1;
 #endif
-				filelist_modify(&aentry);
+				filelist_modify( &aentry );
 			}
 
-			ofs = ofs2 + 17;
+			ofs = ofs2 + sizeof( *fentry );
 		}
 
-		aFree(grf_filelist);
+		aFree( filetable );
 	} else if( grf_version == 0x02 ) {// ****** Grf version 02xx ******
-		unsigned char eheader[8];
-		unsigned char *rBuf;
-		uLongf rSize, eSize;
-
-		if(fread(eheader,1,8,fp) != 8) ShowError("An error occured in fread while reading eheader buffer\n");
-		rSize = getlong(eheader);	// Read Size
-		eSize = getlong(eheader+4);	// Extend Size
-
-		if( rSize > grf_size-sftell(fp) ) {
-			fclose(fp);
-			ShowError("Illegal data format: GRF compress entry size\n");
-			return 4;
+		if( strncmp( grf_header.signature, "Master of Magic", sizeof( grf_header.signature ) ) != 0 ){
+			ShowError( "grfio_entryread: Signature mismatch\n" );
+			fclose( fp );
+			return false;
 		}
 
-		rBuf = (unsigned char *)aMalloc(rSize);	// Get a Read Size
-		grf_filelist = (unsigned char *)aMalloc(eSize);	// Get a Extend Size
-		if(fread(rBuf,1,rSize,fp) != rSize) ShowError("An error occured in fread \n");
-		fclose(fp);
-		decode_zip(grf_filelist, &eSize, rBuf, rSize);	// Decode function
-		aFree(rBuf);
+		if( sfseek( fp, grf_header.u.v2.offset + sizeof( grf_header ), SEEK_SET ) != 0 ){
+			ShowError( "grfio_entryread: Couldn't jump to the filetable offset\n" );
+			fclose( fp );
+			return false;
+		}
 
-		entrys = getlong(grf_header+0x26) - 7;
+		grf_filetable_header_v2 filetable_header;
+
+		if( fread( &filetable_header, 1, sizeof( filetable_header ), fp ) != sizeof( filetable_header ) ){
+			ShowError( "grfio_entryread: Couldn't read the filetable header\n" );
+			fclose( fp );
+			return false;
+		}
+
+		uLongf compressed_size = filetable_header.compressed;
+		uLongf uncompressed_size = filetable_header.uncompressed + 4;
+
+		if( compressed_size > grf_size - sftell( fp ) ){
+			ShowError( "grfio_entryread: The compressed filetable exceeded the file length\n" );
+			fclose( fp );
+			return false;
+		}
+
+		unsigned char* compressed_filetable = reinterpret_cast<unsigned char*>( aMalloc( compressed_size ) );
+
+		if( compressed_filetable == nullptr ){
+			ShowError( "grfio_entryread: Not enough RAM for the compressed filetable\n" );
+			fclose( fp );
+			return false;
+		}
+
+		if( fread( compressed_filetable, 1, compressed_size, fp ) != compressed_size ){
+			ShowError( "grfio_entryread: Couldn't read the compressed filetable\n" );
+			aFree( compressed_filetable );
+			fclose( fp );
+			return false;
+		}
+
+		fclose( fp );
+
+		unsigned char* filetable = reinterpret_cast<unsigned char*>( aMalloc( uncompressed_size ) );
+
+		if( filetable == nullptr ){
+			ShowError( "grfio_entryread: Not enough RAM for the uncompressed filetable\n" );
+			aFree( compressed_filetable );
+			return false;
+		}
+
+		if( decode_zip( filetable, &uncompressed_size, compressed_filetable, compressed_size ) != Z_OK ){
+			aFree( compressed_filetable );
+			aFree( filetable );
+			// Error was already printed in decode_zip
+			return false;
+		}
+
+		aFree( compressed_filetable );
+
+		size_t entrys = grf_header.count - 7;
 
 		// Get an entry
-		for( entry = 0, ofs = 0; entry < entrys; ++entry ) {
+		for( size_t entry = 0, ofs = 0; entry < entrys; ++entry ){
 			FILELIST aentry;
 
-			char* fname = (char*)(grf_filelist+ofs);
-			int32 ofs2 = ofs + (int32)strlen(fname)+1;
-			int32 type = grf_filelist[ofs2+12];
+			char* fname = reinterpret_cast<char*>( filetable + ofs );
+			size_t ofs2 = ofs + strlen( fname ) + 1;
 
-			if( strlen(fname) > sizeof(aentry.fn)-1 ) {
-				ShowFatalError("GRF file name %s is too long\n", fname);
-				aFree(grf_filelist);
-				exit(EXIT_FAILURE);
+			if( strlen( fname ) > sizeof( aentry.fn ) - 1 ){
+				ShowError( "grfio_entryread: File name '%s' is too long\n", fname );
+				aFree( filetable );
+				return false;
 			}
+			
+			const grf_file_entry_v2* fentry = reinterpret_cast<grf_file_entry_v2*>( filetable + ofs2 );
 
-			if( type & FILELIST_TYPE_FILE ) {// file
-				aentry.srclen         = getlong(grf_filelist+ofs2+0);
-				aentry.srclen_aligned = getlong(grf_filelist+ofs2+4);
-				aentry.declen         = getlong(grf_filelist+ofs2+8);
-				aentry.srcpos         = getlong(grf_filelist+ofs2+13)+0x2e;
-				aentry.type           = type;
-				safestrncpy(aentry.fn, fname, sizeof(aentry.fn));
-				aentry.fnd			  = nullptr;
+			if( fentry->type&FILELIST_TYPE_FILE ){
+				aentry.srclen = fentry->length;
+				aentry.srclen_aligned = fentry->length_aligned;
+				aentry.declen = fentry->decompressed;
+				aentry.srcpos = fentry->offset + sizeof( grf_header );
+				aentry.type = fentry->type;
+				safestrncpy( aentry.fn, fname, sizeof( aentry.fn ) );
+				aentry.fnd = nullptr;
 #ifdef	GRFIO_LOCAL
-				aentry.gentry         = -(gentry+1);	// As Flag for making it a negative number carrying out the first time LocalFileCheck
+				// As Flag for making it a negative number carrying out the first time LocalFileCheck
+				aentry.gentry = -( gentry + 1 );
 #else
-				aentry.gentry         = gentry+1;		// With no first time LocalFileCheck
+				// With no first time LocalFileCheck
+				aentry.gentry = gentry + 1;
 #endif
-				filelist_modify(&aentry);
+				filelist_modify( &aentry );
 			}
 
-			ofs = ofs2 + 17;
+			ofs = ofs2 + sizeof( *fentry );
 		}
 
-		aFree(grf_filelist);
-	//} else if( grf_version == 0x03 ) {// ****** Grf version 03xx ******
-		// TODO:
+		aFree( filetable );
+	} else if( grf_version == 0x03 ) {// ****** Grf version 03xx ******
+		if( strncmp( grf_header.signature, "Event Horizon", sizeof( grf_header.signature ) ) != 0 ){
+			ShowError( "grfio_entryread: Signature mismatch\n" );
+			fclose( fp );
+			return false;
+		}
+
+		if( sfseek( fp, grf_header.u.v3.offset + sizeof( grf_header ), SEEK_SET ) != 0 ){
+			ShowError( "grfio_entryread: Couldn't jump to the filetable offset\n" );
+			fclose( fp );
+			return false;
+		}
+
+		grf_filetable_header_v3 filetable_header;
+
+		if( fread( &filetable_header, 1, sizeof( filetable_header ), fp ) != sizeof( filetable_header ) ){
+			ShowError( "grfio_entryread: Couldn't read the filetable header\n" );
+			fclose( fp );
+			return false;
+		}
+
+		uLongf compressed_size = filetable_header.compressed2;
+		uLongf uncompressed_size = filetable_header.uncompressed + 8;
+
+		if( compressed_size > grf_size - sftell( fp ) ){
+			ShowError( "grfio_entryread: The compressed filetable exceeded the file length\n" );
+			fclose( fp );
+			return false;
+		}
+
+		unsigned char* compressed_filetable = reinterpret_cast<unsigned char*>( aMalloc( compressed_size ) );
+
+		if( compressed_filetable == nullptr ){
+			ShowError( "grfio_entryread: Not enough RAM for the compressed filetable\n" );
+			fclose( fp );
+			return false;
+		}
+
+		if( fread( compressed_filetable, 1, compressed_size, fp ) != compressed_size ){
+			ShowError( "grfio_entryread: Couldn't read the compressed filetable\n" );
+			aFree( compressed_filetable );
+			fclose( fp );
+			return false;
+		}
+
+		fclose( fp );
+
+		unsigned char* filetable = reinterpret_cast<unsigned char*>( aMalloc( uncompressed_size ) );
+
+		if( filetable == nullptr ){
+			ShowError( "grfio_entryread: Not enough RAM for the uncompressed filetable\n" );
+			aFree( compressed_filetable );
+			return false;
+		}
+
+		if( decode_zip( filetable, &uncompressed_size, compressed_filetable, compressed_size ) != Z_OK ){
+			aFree( compressed_filetable );
+			aFree( filetable );
+			// Error was already printed in decode_zip
+			return false;
+		}
+
+		aFree( compressed_filetable );
+
+		size_t entrys = grf_header.count - 7;
+
+		// Get an entry
+		for( size_t entry = 0, ofs = 0; entry < entrys; ++entry ){
+			FILELIST aentry;
+
+			char* fname = reinterpret_cast<char*>( filetable + ofs );
+			size_t ofs2 = ofs + strlen( fname ) + 1;
+
+			if( strlen( fname ) > sizeof( aentry.fn ) - 1 ){
+				ShowFatalError( "grfio_entryread: File name '%s' is too long\n", fname );
+				aFree( filetable );
+				return false;
+			}
+			
+			const grf_file_entry_v3* fentry = reinterpret_cast<grf_file_entry_v3*>( filetable + ofs2 );
+
+			if( fentry->type&FILELIST_TYPE_FILE ){
+				aentry.srclen = fentry->length;
+				aentry.srclen_aligned = fentry->length_aligned;
+				aentry.declen = fentry->decompressed;
+				aentry.srcpos = fentry->offset + sizeof( grf_header );
+				aentry.type = fentry->type;
+				safestrncpy( aentry.fn, fname, sizeof( aentry.fn ) );
+				aentry.fnd = nullptr;
+#ifdef	GRFIO_LOCAL
+				// As Flag for making it a negative number carrying out the first time LocalFileCheck
+				aentry.gentry = -( gentry + 1 );
+#else
+				// With no first time LocalFileCheck
+				aentry.gentry = gentry + 1;
+#endif
+				filelist_modify( &aentry );
+			}
+
+			ofs = ofs2 + sizeof( *fentry );
+		}
+
+		aFree( filetable );
 	} else {// ****** Grf Other version ******
 		fclose(fp);
-		ShowError("GRF version %04x not supported\n",getlong(grf_header+0x2a));
-		return 4;
+		ShowError( "GRF version %04x not supported\n", grf_header.version );
+		return false;
 	}
 
 	filelist_compact();	// Unnecessary area release of filelist
 
-	return 0;	// 0:no error
+	return true;
+
+#pragma warning( pop )
 }
 
 
@@ -809,7 +1062,7 @@ static void grfio_resourcecheck(void)
 
 
 /// Reads a grf file and adds it to the list.
-static int32 grfio_add(const char* fname)
+static bool grfio_add(const char* fname)
 {
 	if( gentry_entrys >= gentry_maxentry )
 	{
@@ -877,8 +1130,9 @@ void grfio_init(const char* fname)
 			// Entry table reading
 			if( strcmp(w1, "grf") == 0 ) // GRF file
 			{
-				if( grfio_add(w2) == 0 )
+				if( grfio_add( w2 ) ){
 					++grf_num;
+				}
 			}
 			else if( strcmp(w1,"data_dir") == 0 ) // Data directory
 			{
