@@ -6336,8 +6336,7 @@ void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 tr
 		count++;
 	}
 
-	p->packetLength = sizeof( struct PACKET_ZC_MAKABLEITEMLIST ) + count * sizeof( struct PACKET_ZC_MAKABLEITEMLIST_sub );
-	clif_send( p, p->packetLength, &sd->bl, SELF );
+	clif_send( p, p->packetLength, &sd, SELF );
 
 	if( count > 0 ){
 		sd.menuskill_id = skill_id;
@@ -6390,8 +6389,7 @@ void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, in
 	}
 
 	if( count > 0 || skill_id == AM_PHARMACY ){
-		p->packetLength = sizeof( struct PACKET_ZC_MAKINGITEM_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGITEM_LIST_sub );
-		clif_send( p, p->packetLength, &sd->bl, SELF );
+		clif_send( p, p->packetLength, &sd, SELF );
 
 		sd.menuskill_id = skill_id;
 		sd.menuskill_val = trigger;

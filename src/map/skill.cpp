@@ -9797,8 +9797,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 	case ASC_CDP:
 		if(sd) {
-			if(skill_produce_mix(sd, skill_id, ITEMID_POISON_BOTTLE, 0, 0, 0, 1, -1)) //Produce a Poison Bottle.
-				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			if(skill_produce_mix(sd, skill_id, ITEMID_POISON_BOTTLE, 0, 0, 0, 1, nullptr)) //Produce a Poison Bottle.
+				clif_skill_nodamage(src,*bl,skill_id,skill_lv,1);
 			else
 				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_STUFF_INSUFFICIENT );
 		}
@@ -9987,16 +9987,16 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		if (sd) {
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 			//Prepare 200 White Potions.
-			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_POTION, 0, 0, 0, 200, -1))
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_POTION, 0, 0, 0, 200, nullptr))
+				clif_skill_fail(*sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
 	case AM_TWILIGHT2:
 		if (sd) {
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 			//Prepare 200 Slim White Potions.
-			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_SLIM_POTION, 0, 0, 0, 200, -1))
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_SLIM_POTION, 0, 0, 0, 200, nullptr))
+				clif_skill_fail(*sd,skill_id,USESKILL_FAIL_LEVEL,0);
 		}
 		break;
 	case AM_TWILIGHT3:
@@ -10018,10 +10018,10 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				clif_skill_fail( *sd, skill_id );
 				break;
 			}
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100, alcohol_idx-1);
-			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50, acid_idx-1);
-			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50, fire_idx-1);
+			clif_skill_nodamage(src,*bl,skill_id,skill_lv,1);
+			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100, produce_alcohol);
+			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50, produce_acid);
+			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50, produce_fire);
 		}
 		break;
 	case SA_DISPELL:
@@ -11478,8 +11478,8 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 
 	case AB_ANCILLA:
 		if( sd ) {
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			skill_produce_mix(sd, skill_id, ITEMID_ANCILLA, 0, 0, 0, 1, -1);
+			clif_skill_nodamage(src,*bl,skill_id,skill_lv,1);
+			skill_produce_mix(sd, skill_id, ITEMID_ANCILLA, 0, 0, 0, 1, nullptr);
 		}
 		break;
 
@@ -23122,7 +23122,7 @@ bool skill_produce_mix(map_session_data *sd, uint16 skill_id, t_itemid nameid, u
 	bool is_equip_type = (itemdb_isequip(nameid) && skill_id != GN_CHANGEMATERIAL && skill_id != GN_MAKEBOMB);
 	int weapon_level = (is_equip_type && itemdb_type(nameid) == IT_WEAPON) ? itemdb_wlv(nameid) : 0;
 	int make_per = 0;
-	struct status_data *status = status_get_status_data(&sd->bl);
+	struct status_data *status = status_get_status_data(*sd);
 	
 	if (is_equip_type) {	// Weapon Forging - skill bonuses are straight from kRO website, other things from a jRO calculator [DracoRPG]
 
@@ -24077,7 +24077,7 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 						clif_msg_skill(*sd,GN_CHANGEMATERIAL,MSI_SKILL_FAIL_MATERIAL_IDENTITY);
 						return 0;
 					}
-					if (nameid == mat.first && (amount - p * mat.second) >= mat.second && (amount - p * mat.second) % mat.second == 0) // must be in exact amount
+					if (nameid == mat.first && (amount - qty * mat.second) >= mat.second && (amount - qty * mat.second) % mat.second == 0) // must be in exact amount
 						c++; // match
 				}
 			}
@@ -24090,8 +24090,8 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 		}
 	}
 
-	if( p == 0)
-		clif_msg_skill(sd,GN_CHANGEMATERIAL,ITEM_CANT_COMBINE);
+	if( qty == 0)
+		clif_msg_skill(*sd,GN_CHANGEMATERIAL,MSI_SKILL_RECIPE_NOTEXIST);
 
 	return 0;
 }
@@ -26459,62 +26459,6 @@ uint64 AbraDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		this->put(skill_id, abra);
 
 	return 1;
-}
-
-/** Reads change material db
- * Structure: ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
- */
-static bool skill_parse_row_changematerialdb(char* split[], int columns, int current)
-{
-	uint16 id = atoi(split[0]);
-	t_itemid nameid = strtoul(split[1], nullptr, 10);
-	short rate = atoi(split[2]);
-	bool found = false;
-	int x, y;
-
-	if (id >= MAX_SKILL_CHANGEMATERIAL_DB) {
-		ShowError("skill_parse_row_changematerialdb: Maximum amount of entries reached (%d), increase MAX_SKILL_CHANGEMATERIAL_DB\n",MAX_SKILL_CHANGEMATERIAL_DB);
-		return false;
-	}
-
-	// Clear previous data, for importing support
-	if (skill_changematerial_db[id].nameid > 0) {
-		found = true;
-		memset(&skill_changematerial_db[id], 0, sizeof(skill_changematerial_db[id]));
-	}
-
-	// Import just for clearing/disabling from original data
-	// NOTE: If import for disabling, better disable list from produce_db instead of here, or creation just failed with deleting requirements.
-	if (nameid == 0) {
-		memset(&skill_changematerial_db[id], 0, sizeof(skill_changematerial_db[id]));
-		//ShowInfo("skill_parse_row_changematerialdb: Change Material list with ID %d removed from list.\n", id);
-		return true;
-	}
-
-	// Entry must be exists in skill_produce_db and with required skill GN_CHANGEMATERIAL
-	for (x = 0; x < MAX_SKILL_PRODUCE_DB; x++) {
-		if (skill_produce_db[x].nameid == nameid)
-			if( skill_produce_db[x].req_skill == GN_CHANGEMATERIAL )
-				break;
-	}
-
-	if (x >= MAX_SKILL_PRODUCE_DB) {
-		ShowError("skill_parse_row_changematerialdb: Not supported item ID (%u) for Change Material. \n", nameid);
-		return false;
-	}
-
-	skill_changematerial_db[id].nameid = nameid;
-	skill_changematerial_db[id].rate = rate;
-
-	for (x = 3, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_SKILL_CHANGEMATERIAL_SET; x += 2, y++) {
-		skill_changematerial_db[id].qty[y] = atoi(split[x]);
-		skill_changematerial_db[id].qty_rate[y] = atoi(split[x+1]);
-	}
-
-	if (!found)
-		skill_changematerial_count++;
-
-	return true;
 }
 
 /**
