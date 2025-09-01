@@ -229,7 +229,6 @@ target_link_libraries(common PUBLIC
 	${ZLIB_LIBRARIES}
 )
 
-
 if(ENABLE_PROFILER STREQUAL "gprof")
 	target_compile_options(common PUBLIC "-pg")
 	target_link_libraries(common PUBLIC "-pg")
