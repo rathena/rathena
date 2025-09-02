@@ -58,8 +58,8 @@
 using namespace rathena;
 using namespace rathena::server_core;
 
-namespace rathena {
-	namespace tool_yaml2sql {
+namespace rathena{
+	namespace tool_yaml2sql{
 		class Yaml2SqlTool : public Core{
 			protected:
 				bool initialize( int32 argc, char* argv[] ) override;
