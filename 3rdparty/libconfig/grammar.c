@@ -91,10 +91,12 @@
 
 #include <malloc.h>
 #endif
-#include "grammar.h"
 #include "parsectx.h"
 #include "scanctx.h"
-#include "scanner.h"
+
+/* these delcarations are provided to suppress compiler warnings */
+extern int libconfig_yylex();
+extern int libconfig_yyget_lineno();
 
 static const char *err_array_elem_type = "mismatched element type in array";
 static const char *err_duplicate_setting = "duplicate setting name";

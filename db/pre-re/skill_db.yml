@@ -8267,15 +8267,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 40
+          Amount: 38
         - Level: 2
-          Amount: 45
+          Amount: 41
         - Level: 3
-          Amount: 50
+          Amount: 44
         - Level: 4
-          Amount: 55
+          Amount: 47
         - Level: 5
-          Amount: 60
+          Amount: 50
       Weapon:
         Musical: true
         Whip: true
