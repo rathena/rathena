@@ -853,7 +853,6 @@ ACMD_FUNC(who) {
 			StringBuf_Printf(&buf, msg_txt(sd,56), count, mapdata->name); // %d players found in map '%s'.
 	}
 	clif_displaymessage(fd, StringBuf_Value(&buf));
-	StringBuf_Destroy(&buf);
 	return 0;
 }
 
@@ -1843,7 +1842,6 @@ ACMD_FUNC(help){
 
 		if (has_aliases)
 			clif_displaymessage(fd, StringBuf_Value(&buf));
-		StringBuf_Destroy(&buf);
 	}
 
 	// Display help contents
@@ -2647,7 +2645,7 @@ ACMD_FUNC(produce)
 			((star*5) << 8) + attribute:0;
 		tmp_item.card[2] = GetWord(sd->status.char_id, 0);
 		tmp_item.card[3] = GetWord(sd->status.char_id, 1);
-		clif_produceeffect(sd, PRODUCEEFFECT_FORGE_SUCCESS, item_id);
+		clif_produceeffect(sd, 0, item_id);
 		clif_misceffect(*sd, NOTIFYEFFECT_REFINE_SUCCESS);
 
 		if ((flag = pc_additem(sd, &tmp_item, 1, LOG_TYPE_COMMAND)))
@@ -5125,7 +5123,7 @@ ACMD_FUNC(repairall)
 	for (i = 0; i < MAX_INVENTORY; i++) {
 		if (sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].attribute == 1 && !itemdb_ishatched_egg(&sd->inventory.u.items_inventory[i])) {
 			sd->inventory.u.items_inventory[i].attribute = 0;
-			clif_produceeffect(sd, PRODUCEEFFECT_FORGE_SUCCESS, sd->inventory.u.items_inventory[i].nameid);
+			clif_produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
 			count++;
 		}
 	}
@@ -6511,9 +6509,9 @@ ACMD_FUNC(displayskillcast)
 	}
 
 	if ( target_type == 1)
-		clif_skillcasting(sd, sd->id, 0, sd->x, sd->y, skill_id, skill_lv, 0, cast_time);
+		clif_skillcasting(*sd, nullptr, sd->x, sd->y, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), cast_time);
 	else
-		clif_skillcasting(sd, sd->id, sd->id, 0, 0, skill_id, skill_lv, 0, cast_time);
+		clif_skillcasting(*sd, sd, 0, 0, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), cast_time);
 
 	return 0;
 }
@@ -9744,8 +9742,6 @@ ACMD_FUNC(itemlist)
 		StringBuf_Printf(&buf, msg_txt(sd,1354), counter, count, location); // %d item(s) found in %d %s slots.
 
 	clif_displaymessage(fd, StringBuf_Value(&buf));
-
-	StringBuf_Destroy(&buf);
 
 	return 0;
 }

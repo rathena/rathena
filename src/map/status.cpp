@@ -1537,7 +1537,8 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 		ap = status->ap;
 	}
 
-	if (!hp && !sp && !ap)
+	// If no damage is dealt and the damage was passive
+	if (hp == 0 && sp == 0 && ap == 0 && (flag&1))
 		return 0;
 
 	if( !status->hp )
@@ -1547,12 +1548,19 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 	if (hp && battle_config.invincible_nodamage && src && sc && sc->getSCE(SC_INVINCIBLE))
 		hp = 1;
 
-	if( hp && !(flag&1) ) {
+	// If the damage is not passive
+	if (!(flag&1)) {
 		if( sc ) {
 			struct status_change_entry *sce;
 
 			for (const auto &it : status_db) {
 				sc_type type = static_cast<sc_type>(it.first);
+
+				// For non-players, Wink Charm, Voice of Siren and Deep Sleep end only when damage was dealt (e.g. Wink Charm does not end itself)
+				// For players, these status changes end even if no damage was dealt (e.g. Provoke ends them on players but not on monsters)
+				// Other status changes end even on 0 damage (e.g. Wink Charm ends Freeze)
+				if ((type == SC_WINKCHARM || type == SC_VOICEOFSIREN || type == SC_DEEPSLEEP) && target->type != BL_PC && hp == 0)
+					continue;
 
 				if (sc->getSCE(type) && it.second->flag[SCF_REMOVEONDAMAGED]) {
 					// A status change that gets broken by damage should still be considered when calculating if a status change can be applied or not (for the same attack).
@@ -8287,7 +8295,7 @@ static int16 status_calc_aspd(struct block_list *bl, status_change *sc, bool fix
 			bonus -= sc->getSCE(SC_DONTFORGETME)->val2 / 10;
 #ifdef RENEWAL
 		if (sc->getSCE(SC_ENSEMBLEFATIGUE))
-			bonus -= sc->getSCE(SC_ENSEMBLEFATIGUE)->val2 / 10;
+			bonus -= sc->getSCE(SC_ENSEMBLEFATIGUE)->val2;
 #else
 		if (sc->getSCE(SC_LONGING))
 			bonus -= sc->getSCE(SC_LONGING)->val2 / 10;
@@ -9535,17 +9543,6 @@ status_change *status_get_sc(struct block_list *bl)
 		case BL_ELEM: return &((TBL_ELEM*)bl)->sc;
 	}
 	return nullptr;
-}
-
-/**
- * Initiate (memset) the status change data of an object
- * @param bl: Object whose sc data to memset [PC|MOB|HOM|MER|ELEM|NPC]
- */
-void status_change_init(struct block_list *bl)
-{
-	status_change *sc = status_get_sc(bl);
-	nullpo_retv(sc);
-	new (sc) status_change();
 }
 
 /*========================================== [Playtester]
@@ -10903,11 +10900,9 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			}
 			break;
 		case SC_MAGICPOWER:
-#ifdef RENEWAL
 			val3 = 5 * val1; // Matk% increase
-#else
+#ifndef RENEWAL
 			val2 = 1; // Lasts 1 invocation
-			val3 = 10 * val1; // Matk% increase
 			val4 = 0; // 0 = ready to be used, 1 = activated and running
 #endif
 			break;
@@ -11643,8 +11638,14 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			val3 = 5*val1; // Def2 reduction
 			break;
 		case SC_PROVOKE:
-			val2 = 2+3*val1; // Atk increase
-			val3 = 5+5*val1; // Def reduction.
+			if (src->type != BL_PC && val1 == 10) {
+				val2 = 0; // 0% Atk increase
+				val3 = 100; // 100% Def reduction
+			}
+			else {
+				val2 = 2 + 3 * val1; // Atk increase
+				val3 = 5 + 5 * val1; // Def reduction
+			}
 			// val4 signals autoprovoke.
 			break;
 		case SC_AVOID:
@@ -14436,6 +14437,10 @@ TIMER_FUNC(status_change_timer){
 					sp*= 3;
 #endif
 				if (!status_charge(bl, 0, sp))
+					break;
+
+				// If no more SP left, the effect ends immediately
+				if (status->sp == 0)
 					break;
 			}
 			sc_timer_next(1000+tick);

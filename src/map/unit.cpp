@@ -2481,7 +2481,7 @@ int32 unit_skilluse_id2(struct block_list *src, int32 target_id, uint16 skill_id
 #endif
 
 	// In official this is triggered even if no cast time.
-	clif_skillcasting(src, src->id, target_id, 0,0, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
+	clif_skillcasting(*src, target, 0,0, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), casttime);
 
 	if (sd != nullptr && target->type == BL_MOB
 #ifndef RENEWAL
@@ -2753,7 +2753,7 @@ int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, 
 #endif
 
 	// In official this is triggered even if no cast time.
-	clif_skillcasting(src, src->id, 0, skill_x, skill_y, skill_id, skill_lv, skill_get_ele(skill_id, skill_lv), casttime);
+	clif_skillcasting(*src, nullptr, skill_x, skill_y, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), casttime);
 
 	if( casttime > 0 ) {
 		ud->skilltimer = add_timer( tick+casttime, skill_castend_pos, src->id, 0 );
