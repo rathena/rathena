@@ -45,6 +45,7 @@ jobs:
           brew install pcre
           brew install mysql
           brew install mysql-client
+
       # Install latest CMake.
       - uses: lukka/get-cmake@latest
 
@@ -55,6 +56,7 @@ jobs:
         run: |
           cd cbuild
           cmake ..
+
       - name: Command - make
         run: |
           cd cbuild

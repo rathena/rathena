@@ -8267,15 +8267,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 38
+          Amount: 40
         - Level: 2
-          Amount: 41
+          Amount: 45
         - Level: 3
-          Amount: 44
-        - Level: 4
-          Amount: 47
-        - Level: 5
           Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
       Weapon:
         Musical: true
         Whip: true
@@ -13004,7 +13004,7 @@ Body:
       - Level: 5
         Area: 5
     CastTime: 3000
-    AfterCastActDelay: 2000
+    AfterCastActDelay: 5000
     Requires:
       SpCost: 40
       ItemCost:
@@ -13034,7 +13034,17 @@ Body:
     HitCount: 1
     Element: Earth
     CastTime: 5000
-    AfterCastActDelay: 2000
+    AfterCastActDelay:
+      - Level: 1
+        Time: 5000
+      - Level: 2
+        Time: 6000
+      - Level: 3
+        Time: 7000
+      - Level: 4
+        Time: 8000
+      - Level: 5
+        Time: 9000
     Duration1:
       - Level: 1
         Time: 5000

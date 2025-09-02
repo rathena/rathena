@@ -117,7 +117,7 @@ include( TestBigEndian )
 #
 set( PACKETVER CACHE STRING "Sets the PACKETVER define of the servers. (see src/common/mmo.h)" )
 if( PACKETVER )
-	list( APPEND GLOBAL_DEFINITIONS  PACKETVER=${PACKETVER} )
+	set_property( CACHE GLOBAL_DEFINITIONS PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DPACKETVER=${PACKETVER}" )
 endif()
 
 
@@ -274,6 +274,9 @@ if(NOT APPLE)
 	endif()
 else()
 	message( STATUS "Check for monotonic clock - no" )
+    # macOS-specific behavior, assuming clock_gettime is available
+    set(HAVE_MONOTONIC_CLOCK TRUE)
+    set_property(CACHE GLOBAL_DEFINITIONS PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_MONOTONIC_CLOCK")
 endif()
 
 #
