@@ -237,7 +237,7 @@ namespace rathena {
 		 * @param vector: Vector to erase value from
 		 * @param value: Value to remove
 		 */
-		template <typename K, typename V> void vector_erase_if_exists(std::vector<K> &vector, V value) {
+		template <typename K, typename V> bool vector_erase_if_exists(std::vector<K> &vector, V value) {
 			auto it = std::find(vector.begin(), vector.end(), value);
 
 			if (it != vector.end()) {
@@ -246,6 +246,10 @@ namespace rathena {
 					vector.shrink_to_fit();
 				} else
 					vector.erase(it);
+
+				return true;
+			}else{
+				return false;
 			}
 		}
 
@@ -336,6 +340,22 @@ namespace rathena {
 		* @return Base62 string
 		**/
 		std::string base62_encode( uint32 val );
+
+		template <typename InstanceClass, typename InterfaceClass = InstanceClass> class Singleton {
+		protected:
+			Singleton() = default;
+			~Singleton() = default;
+
+		public:
+			static std::shared_ptr<InterfaceClass> getInstance() {
+				static std::shared_ptr<InterfaceClass> instance = std::make_shared<InstanceClass>();
+
+				return instance;
+			}
+
+			Singleton(const Singleton &) = delete;
+			Singleton& operator=(const Singleton &) = delete;
+		};
 	}
 }
 
