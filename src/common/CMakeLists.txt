@@ -72,6 +72,7 @@ target_include_directories(minicore PUBLIC
 	${COMMON_ADDITIONALL_HPP} # needed by Windows
 )
 
+
 target_compile_definitions(minicore PRIVATE "-DMINICORE" ${LIBCONFIG_DEFINITIONS})
 
 #
