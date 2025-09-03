@@ -380,12 +380,16 @@ struct s_qi_display {
 
 class map_session_data : public block_list {
 public:
-	struct unit_data ud;
-	struct view_data vd;
-	struct status_data base_status, battle_status;
-	status_change sc;
-	struct regen_data regen;
-	struct regen_data_sub sregen, ssregen;
+	map_session_data() : block_list(BL_PC) {
+		memset(&state, 0, sizeof(state));
+	}
+
+	struct unit_data ud{};
+	struct view_data vd{};
+	struct status_data base_status{}, battle_status{};
+	status_change sc{};
+	struct regen_data regen{};
+	struct regen_data_sub sregen{}, ssregen{};
 	//NOTE: When deciding to add a flag to state or special_state, take into consideration that state is preserved in
 	//status_calc_pc, while special_state is recalculated in each call. [Skotlex]
 	struct s_state {
@@ -477,8 +481,8 @@ public:
 	uint32 login_id1, login_id2;
 	uint64 class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
 	int32 group_id;
-	std::shared_ptr<s_player_group> group;
-	std::bitset<PC_PERM_MAX> permissions; // group permissions have to be copied, because they might be adjusted by atcommand addperm
+	std::shared_ptr<s_player_group> group{nullptr};
+	std::bitset<PC_PERM_MAX> permissions{}; // group permissions have to be copied, because they might be adjusted by atcommand addperm
 	int32 count_rewarp; //count how many time we being rewarped
 
 	int32 langtype;
@@ -489,9 +493,9 @@ public:
 	struct s_storage inventory;
 	struct s_storage cart;
 
-	struct item_data* inventory_data[MAX_INVENTORY]; // direct pointers to itemdb entries (faster than doing item_id lookups)
-	int16 equip_index[EQI_MAX];
-	int16 equip_switch_index[EQI_MAX];
+	struct item_data* inventory_data[MAX_INVENTORY] = {}; // direct pointers to itemdb entries (faster than doing item_id lookups)
+	int16 equip_index[EQI_MAX] = {};
+	int16 equip_switch_index[EQI_MAX] = {};
 	uint32 weight,max_weight,add_max_weight;
 	int32 cart_weight,cart_num,cart_weight_max;
 	int32 fd;
@@ -499,8 +503,8 @@ public:
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
 	int32 npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
-	std::vector<int32> npc_id_dynamic;
-	std::vector<int32> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
+	std::vector<int32> npc_id_dynamic{};
+	std::vector<int32> areanpc{}, npc_ontouch_{};	///< Array of OnTouch and OnTouch_ NPC ID
 	int32 npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int32 npc_menu; // internal variable, used in npc menu handling
 	int32 npc_amount;
@@ -532,7 +536,7 @@ public:
 	uint16 skill_id_dance,skill_lv_dance;
 	uint16 skill_id_song, skill_lv_song;
 	int16 cook_mastery; // range: [0,1999] [Inkfish]
-	std::unordered_map<uint16, int32> scd; // Skill Cooldown
+	std::unordered_map<uint16, int32> scd{}; // Skill Cooldown
 	uint16 cloneskill_idx, ///Stores index of copied skill by Intimidate/Plagiarism
 		reproduceskill_idx; ///Stores index of copied skill by Reproduce
 	int32 menuskill_id, menuskill_val, menuskill_val2;
@@ -749,8 +753,8 @@ public:
 
 	struct s_search_store_info searchstore;
 
-	struct pet_data *pd;
-	struct homun_data *hd;	// [blackhole89]
+	pet_data *pd;
+	homun_data *hd;	// [blackhole89]
 	s_mercenary_data *md;
 	s_elemental_data *ed;
 
@@ -1461,7 +1465,7 @@ void pc_putitemtocart(map_session_data *sd,int32 idx,int32 amount);
 bool pc_getitemfromcart(map_session_data *sd,int32 idx,int32 amount);
 int32 pc_cartitem_amount(map_session_data *sd,int32 idx,int32 amount);
 
-bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem);
+bool pc_takeitem(map_session_data *sd,flooritem_data *fitem);
 bool pc_dropitem(map_session_data *sd,int32 n,int32 amount);
 
 bool pc_isequipped(map_session_data *sd, t_itemid nameid);
