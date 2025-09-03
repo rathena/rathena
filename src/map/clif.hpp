@@ -862,6 +862,17 @@ enum e_changestate_pet : uint8 {
 	CHANGESTATEPET_UPDATE_EGG = 6,
 };
 
+enum e_PRODUCE_EFFECT : uint8 {
+	PRODUCEEFFECT_FORGE_SUCCESS = 0,
+	PRODUCEEFFECT_FORGE_FAILURE,
+	PRODUCEEFFECT_PHARMACY_SUCCESS,
+	PRODUCEEFFECT_PHARMACY_FAILURE,
+	PRODUCEEFFECT_RUNE_SUCCESS,
+	PRODUCEEFFECT_RUNE_FAILURE,
+	PRODUCEEFFECT_MIX_SUCCESS, // ??
+	PRODUCEEFFECT_MIX_FAILURE, // ??
+};
+
 int32 clif_setip(const char* ip);
 void clif_setbindip(const char* ip);
 void clif_setport(uint16 port);
@@ -994,7 +1005,7 @@ void clif_skill_teleportmessage( map_session_data& sd, e_notify_mapinfo_result r
 void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 trigger );
 void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, int32 qty, int32 list_type );
 
-void clif_produceeffect(map_session_data* sd,int32 flag, t_itemid nameid);
+void clif_produceeffect(map_session_data* sd, int32 flag, t_itemid nameid);
 
 void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible);
 void clif_skill_delunit( skill_unit& unit );

@@ -1,0 +1,47 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2023 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Produce Database
+###########################################################################
+#
+# Item Produce Settings
+#
+###########################################################################
+# - Product         AegisName of the produced item.
+#   Group           Number which determines what kind of a crafting window will pop-up.
+#   SkillName       Skill name required. (Default: null)
+#   SkillLevel      Skill level required. (Default: 1)
+#   Consumed:       List of items consumed to produce the Product.
+#     - Item        AegisName of the consumed item.
+#       Amount      Amount required.
+#   NotConsumed:    List of items not consumed to produce the Product. (Optional)
+#     - Item        AegisName of the unconsumed item.
+#   BaseRate        Base rate (in n/10%) for Change Material (Group: 26). (Default: 1000)
+#   Make:           List of item amounts with their individual rate produced by Change Material (Group: 26). (Optional)
+#     - Amount      Amount of item created (unique to the list) for Change Material (Group: 26).
+#       Rate        Rate to create the Amount (in n/10%) for Change Material (Group: 26). (Default: 1000)
+###########################################################################
+
+Header:
+  Type: PRODUCE_DB
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/re/skill_produce_db.yml
+  - Path: db/re/skill_changematerial_db.yml

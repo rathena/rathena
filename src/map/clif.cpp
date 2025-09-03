@@ -6298,37 +6298,43 @@ void clif_skill_estimation( map_session_data& sd, mob_data& md ){
 }
 
 
-/// Presents a textual list of producable items.
-/// 018d <packet len>.W { <name id>.W { <material id>.W }*3 }* (ZC_MAKABLEITEMLIST)
-/// material id:
-///     unused by the client
+/** Presents a textual list of producable items.
+ *  018d <packet len>.W { <name id>.W { <material id>.W }*3 }* (ZC_MAKABLEITEMLIST)
+ *  material id: unused by the client
+ * @param sd Player data
+ * @param skill_id Skill used
+ * @param trigger Group of items
+ */
 void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 trigger ){
-	// Avoid resending the menu
-	if( sd.menuskill_id == skill_id ){
-		return;
-	}
 
-	if (skill_id == GC_CREATENEWPOISON)
+	nullpo_retv(sd);
+
+	// Avoid resending the menu
+	if( sd.menuskill_id == skill_id )
+		return;
+
+	if (skill_id == GC_CREATENEWPOISON) //FIXME compatibility
 		skill_id = GC_RESEARCHNEWPOISON;
 
 	PACKET_ZC_MAKABLEITEMLIST* p = reinterpret_cast<PACKET_ZC_MAKABLEITEMLIST*>( packet_buffer );
-
 	p->packetType = HEADER_ZC_MAKABLEITEMLIST;
 	p->packetLength = sizeof( *p );
 
 	int32 count = 0;
-	for( int32 i = 0; i < MAX_SKILL_PRODUCE_DB; i++ ){
-		if( !skill_can_produce_mix( &sd, skill_produce_db[i].nameid, trigger, 1 ) ){
-			continue;
-		}
+	for (const auto &[_, recipe] : skill_produce_db) {
 
-		if( skill_id > 0 && skill_produce_db[i].req_skill != skill_id ){
+		if (recipe->group_id != trigger)
 			continue;
-		}
+
+		if (skill_id > 0 && recipe->req_skill != skill_id)
+			continue;
+
+		if (!skill_can_produce_mix(&sd, recipe->product_id, trigger, 1))
+			continue;
 
 		PACKET_ZC_MAKABLEITEMLIST_sub& entry = p->items[count];
 
-		entry.itemId = client_nameid( skill_produce_db[i].nameid );
+		entry.itemId = client_nameid( recipe->product_id );
 		entry.material[0] = 0;
 		entry.material[1] = 0;
 		entry.material[2] = 0;
@@ -6345,18 +6351,23 @@ void clif_skill_produce_mix_list( map_session_data& sd, int32 skill_id, int32 tr
 	}
 }
 
-
-/// Present a list of producable items.
-/// 025a <packet len>.W <mk type>.W { <name id>.W }* (ZC_MAKINGITEM_LIST)
-/// mk type:
-///     1 = cooking
-///     2 = arrow
-///     3 = elemental
-///     4 = GN_MIX_COOKING
-///     5 = GN_MAKEBOMB
-///     6 = GN_S_PHARMACY
-///     7 = MT_M_MACHINE
-///     8 = BO_BIONIC_PHARMACY
+/** Present a list of producable items.
+ * 025a <packet len>.W <mk type>.W { <name id>.W }* (ZC_MAKINGITEM_LIST)
+ * mk type:
+ * 1 = cooking
+ * 2 = arrow
+ * 3 = elemental
+ * 4 = GN_MIX_COOKING
+ * 5 = GN_MAKEBOMB
+ * 6 = GN_S_PHARMACY
+ * 7 = MT_M_MACHINE
+ * 8 = BO_BIONIC_PHARMACY
+ * @param sd Player
+ * @param trigger Group ID
+ * @param skill_id Skill used
+ * @param qty Amount to produce
+ * @param list_type
+ */
 void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, int32 qty, int32 list_type ){
 #if PACKETVER >= 20051010
 	// Avoid resending the menu
@@ -6371,14 +6382,14 @@ void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, in
 	p->makeItem = list_type;
 
 	int32 count = 0;
-	for( int32 i = 0; i < MAX_SKILL_PRODUCE_DB; i++ ){
-		if( !skill_can_produce_mix( &sd, skill_produce_db[i].nameid, trigger, qty ) ){
+	for (const auto &[_, recipe] : skill_produce_db) {
+
+		if( !skill_can_produce_mix( &sd, recipe->product_id, trigger, qty ) )
 			continue;
-		}
 
 		PACKET_ZC_MAKINGITEM_LIST_sub& entry = p->items[count];
 
-		entry.itemId = client_nameid( skill_produce_db[i].nameid );
+		entry.itemId = client_nameid( recipe->product_id );
 
 		p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( entry ) );
 		count++;
@@ -6396,7 +6407,8 @@ void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, in
 #if PACKETVER >= 20090922
 		clif_msg_skill( sd, skill_id, MSI_SKILL_INVENTORY_KINDCNT_OVER );
 #else
-		clif_send( p, p->packetLength, &sd, SELF );
+			p->packetLength = sizeof( struct PACKET_ZC_MAKINGITEM_LIST ) + count * sizeof( struct PACKET_ZC_MAKINGITEM_LIST_sub );
+			clif_send( p, p->packetLength, &sd->bl, SELF );
 #endif
 	}
 #endif
@@ -8133,17 +8145,15 @@ void clif_movetoattack( map_session_data& sd, block_list& bl ){
 }
 
 
-/// Notifies the client about the result of an item produce request.
-/// 018f <result>.W <name id>.W (ZC_ACK_REQMAKINGITEM)
-/// result:
-///     0 = success
-///     1 = failure
-///     2 = success (alchemist)
-///     3 = failure (alchemist)
-void clif_produceeffect(map_session_data* sd,int32 flag, t_itemid nameid){
-	if( sd == nullptr ){
-		return;
-	}
+/** Notifies the client about the result of an item produce request.
+ * 018f <result>.W <name id>.W (ZC_ACK_REQMAKINGITEM)
+ * @param sd Player data
+ * @param flag Effect success/failture (enum e_PRODUCE_EFFECT)
+ * @param nameid Produced item
+ */
+void clif_produceeffect(map_session_data* sd, int32 flag, t_itemid nameid){
+
+	nullpo_retv(sd);
 
 	clif_solved_charname( *sd, sd->status.char_id, sd->status.name );
 
@@ -8632,32 +8642,27 @@ void clif_guild_belonginfo( map_session_data& sd ){
 ///     1 = online
 void clif_guild_memberlogin_notice(const struct mmo_guild &g,int32 idx,int32 flag)
 {
+	unsigned char buf[64];
 	map_session_data* sd;
-	
-	PACKET_ZC_UPDATE_CHARSTAT p = {};
 
-	p.packetType = HEADER_ZC_UPDATE_CHARSTAT;
-	p.aid = g.member[idx].account_id;
-	p.cid = g.member[idx].char_id;
-	p.status = flag;
+	WBUFW(buf, 0)=0x1f2;
+	WBUFL(buf, 2)=g.member[idx].account_id;
+	WBUFL(buf, 6)=g.member[idx].char_id;
+	WBUFL(buf,10)=flag;
 
 	if( ( sd = g.member[idx].sd ) != nullptr )
 	{
-#if defined(PACKETVER)
-		p.gender = sd->status.sex;
-		p.hairStyle = sd->status.hair;
-		p.hairColor = sd->status.hair_color;
-#endif
-		clif_send(&p,sizeof(p),sd,GUILD_WOS);
+		WBUFW(buf,14) = sd->status.sex;
+		WBUFW(buf,16) = sd->status.hair;
+		WBUFW(buf,18) = sd->status.hair_color;
+		clif_send(buf,packet_len(0x1f2),sd,GUILD_WOS);
 	}
 	else if( ( sd = guild_getavailablesd(g) ) != nullptr )
 	{
-#if defined(PACKETVER)
-		p.gender = 0;
-		p.hairStyle = 0;
-		p.hairColor = 0;
-#endif
-		clif_send(&p,sizeof(p),sd,GUILD);
+		WBUFW(buf,14) = 0;
+		WBUFW(buf,16) = 0;
+		WBUFW(buf,18) = 0;
+		clif_send(buf,packet_len(0x1f2),sd,GUILD);
 	}
 }
 
@@ -8925,27 +8930,20 @@ void clif_guild_positionchanged(const struct mmo_guild &g,int32 idx)
 	// FIXME: This packet is intended to update the clients after a
 	// commit of position info changes, not sending one packet per
 	// position.
-	map_session_data* sd = guild_getavailablesd(g);
+	map_session_data *sd;
+	unsigned char buf[128];
 
-	if( sd == nullptr ){
-		return;
-	}
-
-	PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO* p = reinterpret_cast<PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO*>( packet_buffer );
-
-	p->packetType = HEADER_ZC_ACK_CHANGE_GUILD_POSITIONINFO;
-	p->packetLength = sizeof(*p);
-
-	PACKET_ZC_ACK_CHANGE_GUILD_POSITIONINFO_sub& info = p->posInfo[0];
-
-	info.positionID = idx;
-	info.mode = g.position[idx].mode;
-	info.ranking = idx;
-	info.payRate = g.position[idx].exp_mode;
-	safestrncpy(info.posName, g.position[idx].name, sizeof(info.posName));
-	p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(info));
-
-	clif_send(p,p->packetLength,sd,GUILD);
+	WBUFW(buf, 0)=0x174;
+	WBUFW(buf, 2)=44;  // packet len
+	// GUILD_REG_POSITION_INFO{
+	WBUFL(buf, 4)=idx;
+	WBUFL(buf, 8)=g.position[idx].mode;
+	WBUFL(buf,12)=idx;
+	WBUFL(buf,16)=g.position[idx].exp_mode;
+	safestrncpy(WBUFCP(buf,20),g.position[idx].name,NAME_LENGTH);
+	// }*
+	if( (sd=guild_getavailablesd(g))!=nullptr )
+		clif_send(buf,WBUFW(buf,2),sd,GUILD);
 }
 
 
@@ -8956,25 +8954,18 @@ void clif_guild_memberpositionchanged(const struct mmo_guild &g, int32 idx)
 	// FIXME: This packet is intended to update the clients after a
 	// commit of member position assignment changes, not sending one
 	// packet per position.
-	map_session_data *sd = guild_getavailablesd(g);
+	map_session_data *sd;
+	unsigned char buf[64];
 
-	if(sd == nullptr){
-		return;
-	}
-
-	PACKET_ZC_ACK_REQ_CHANGE_MEMBERS* p = reinterpret_cast<PACKET_ZC_ACK_REQ_CHANGE_MEMBERS*>( packet_buffer );
-
-	p->packetType = HEADER_ZC_ACK_REQ_CHANGE_MEMBERS;
-	p->packetLength = sizeof(*p);
-
-	PACKET_ZC_ACK_REQ_CHANGE_MEMBERS_sub& member = p->members[0];
-
-	member.accId = g.member[idx].account_id;
-	member.charId = g.member[idx].char_id;
-	member.positionID = g.member[idx].position;
-	p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(member));
-
-	clif_send(p,p->packetLength,sd,GUILD);
+	WBUFW(buf, 0)=0x156;
+	WBUFW(buf, 2)=16;  // packet len
+	// MEMBER_POSITION_INFO{
+	WBUFL(buf, 4)=g.member[idx].account_id;
+	WBUFL(buf, 8)=g.member[idx].char_id;
+	WBUFL(buf,12)=g.member[idx].position;
+	// }*
+	if( (sd=guild_getavailablesd(g))!=nullptr )
+		clif_send(buf,WBUFW(buf,2),sd,GUILD);
 }
 
 
@@ -10982,11 +10973,6 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 			}
 		}
 #endif
-
-#if PACKETVER >= 20230419
-		clif_configuration( sd, CONFIG_DISABLE_SHOWCOSTUMES, sd->status.disable_showcostumes );
-#endif
-
 		clif_reputation_list( *sd );
 
 		if (sd->guild && battle_config.guild_notice_changemap == 1){
@@ -11568,20 +11554,16 @@ void clif_parse_ChangeDir(int32 fd, map_session_data *sd)
 }
 
 
-/// Request to show an emotion 
-/// 00bf <type>.B (CZ_REQ_EMOTION).
+/// Request to show an emotion (CZ_REQ_EMOTION).
+/// 00bf <type>.B
+/// type:
+///     @see enum emotion_type
 void clif_parse_Emotion(int32 fd, map_session_data *sd){
 	if( sd == nullptr ){
 		return;
 	}
 
-	const PACKET_CZ_REQ_EMOTION* p = reinterpret_cast<PACKET_CZ_REQ_EMOTION*>( RFIFOP( fd, 0 ) );
-
-	if( p->emotion_type >= ET_MAX ){
-		return;
-	}
-	
-	emotion_type emoticon = static_cast<emotion_type>( p->emotion_type );
+	int32 emoticon = RFIFOB(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 
 	if (battle_config.basic_skill_check == 0 || pc_checkskill(sd, NV_BASIC) >= 2 || pc_checkskill(sd, SU_BASIC_SKILL) >= 1) {
 		if (emoticon == ET_CHAT_PROHIBIT) {// prevent use of the mute emote [Valaris]
@@ -11609,10 +11591,10 @@ void clif_parse_Emotion(int32 fd, map_session_data *sd){
 		}
 
 		if(battle_config.client_reshuffle_dice && emoticon>=ET_DICE1 && emoticon<=ET_DICE6) {// re-roll dice
-			emoticon = static_cast<emotion_type>( rnd()%6+ET_DICE1 );
+			emoticon = rnd()%6+ET_DICE1;
 		}
 
-		clif_emotion( *sd, emoticon );
+		clif_emotion( *sd, static_cast<emotion_type>( emoticon ) );
 	} else
 		clif_skill_fail( *sd, 1, USESKILL_FAIL_LEVEL, 1 );
 }
@@ -13141,9 +13123,8 @@ void clif_parse_RequestMemo(int32 fd,map_session_data *sd)
 /// Answer to pharmacy item selection dialog.
 /// 018e <name id>.W { <material id>.W }*3 (CZ_REQMAKINGITEM)
 void clif_parse_ProduceMix(int32 fd,map_session_data *sd){
-	if( sd == nullptr ){
-		return;
-	}
+
+	nullpo_retv(sd);
 
 	const PACKET_CZ_REQMAKINGITEM* p = reinterpret_cast<PACKET_CZ_REQMAKINGITEM*>( RFIFOP( fd, 0 ) );
 
@@ -13163,35 +13144,36 @@ void clif_parse_ProduceMix(int32 fd,map_session_data *sd){
 		return;
 	}
 
-	int32 produce_idx;
+	std::shared_ptr<s_skill_produce_db> produce = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, 1);
 
-	if( (produce_idx = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, 1)) )
-		skill_produce_mix(sd,0,p->itemId,p->material[0],p->material[1],p->material[2],1,produce_idx-1);
+	if( produce != nullptr )
+		skill_produce_mix(sd,0,p->itemId,p->material[0],p->material[1],p->material[2],1,produce);
 	clif_menuskill_clear(sd);
 }
 
 
-/// Answer to mixing item selection dialog.
-/// 025b <mk type>.W <name id>.W (CZ_REQ_MAKINGITEM)
-/// mk type:
-///     1 = cooking
-///     2 = arrow
-///     3 = elemental
-///     4 = GN_MIX_COOKING
-///     5 = GN_MAKEBOMB
-///     6 = GN_S_PHARMACY
-///     7 = MT_M_MACHINE - Unconfirmed
-///     8 = BO_BIONIC_PHARMACY - Unconfirmed
+/** Answer to mixing item selection dialog.
+ *  025b <mk type>.W <name id>.W (CZ_REQ_MAKINGITEM)
+ *  mk type:
+ *    1 = cooking
+ *    2 = arrow
+ *    3 = elemental
+ *    4 = GN_MIX_COOKING
+ *    5 = GN_MAKEBOMB
+ *    6 = GN_S_PHARMACY
+ *    7 = MT_M_MACHINE - Unconfirmed
+ *    8 = BO_BIONIC_PHARMACY - Unconfirmed
+ */
 void clif_parse_Cooking(int32 fd,map_session_data *sd) {
+
 #if PACKETVER >= 20051010
-	if( sd == nullptr ){
-		return;
-	}
+
+	nullpo_retr(nullptr, sd);
 
 	const PACKET_CZ_REQ_MAKINGITEM* p = reinterpret_cast<PACKET_CZ_REQ_MAKINGITEM*>( RFIFOP( fd, 0 ) );
 
-	int32 amount = sd->menuskill_val2 ? sd->menuskill_val2 : 1;
-	int16 food_idx = -1;
+	int amount = sd->menuskill_val2 ? sd->menuskill_val2 : 1;
+	short food_idx = -1;
 
 	if( p->type == 6 && sd->menuskill_id != GN_MIX_COOKING && sd->menuskill_id != GN_S_PHARMACY )
 		return;
@@ -13202,8 +13184,11 @@ void clif_parse_Cooking(int32 fd,map_session_data *sd) {
 		clif_menuskill_clear(sd);
 		return;
 	}
-	if( (food_idx = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, amount)) )
-		skill_produce_mix(sd,(p->type>1?sd->menuskill_id:0),p->itemId,0,0,0,amount,food_idx-1);
+
+	std::shared_ptr<s_skill_produce_db> produce = skill_can_produce_mix(sd,p->itemId,sd->menuskill_val, amount);
+
+	if( produce != nullptr )
+		skill_produce_mix(sd,(p->type>1?sd->menuskill_id:0),p->itemId,0,0,0,amount,produce);
 	clif_menuskill_clear(sd);
 #endif
 }
@@ -13419,7 +13404,7 @@ void clif_parse_SelectArrow(int32 fd,map_session_data *sd) {
 			skill_arrow_create(sd,p->itemId);
 			break;
 		case SA_CREATECON:
-			skill_produce_mix(sd,SA_CREATECON,p->itemId,0,0,0,1,-1);
+			skill_produce_mix(sd,SA_CREATECON,p->itemId,0,0,0,1, nullptr);
 			break;
 		case GC_POISONINGWEAPON:
 			skill_poisoningweapon(*sd,p->itemId);
@@ -17685,10 +17670,6 @@ void clif_parse_configuration( int32 fd, map_session_data* sd ){
 
 			sd->hd->homunculus.autofeed = flag;
 			break;
-		case CONFIG_DISABLE_SHOWCOSTUMES:
-			sd->status.disable_showcostumes = flag;
-			pc_set_costume_view(sd);
-			break;
 		default:
 			ShowWarning( "clif_parse_configuration: received unknown configuration type '%d'...\n", type );
 			return;
@@ -19614,15 +19595,16 @@ void clif_parse_debug(int32 fd,map_session_data *sd)
  * Server populates the window with avilable elemental converter options according to player's inventory
  *------------------------------------------*/
 void clif_elementalconverter_list( map_session_data& sd ){
+
 	PACKET_ZC_MAKINGARROW_LIST* p = reinterpret_cast<PACKET_ZC_MAKINGARROW_LIST*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_MAKINGARROW_LIST;
 	p->packetLength = sizeof( *p );
 
 	int32 count = 0;
-	for( int32 i = 0; i < MAX_SKILL_PRODUCE_DB; i++ ){
-		if( skill_can_produce_mix( &sd, skill_produce_db[i].nameid, 23, 1 ) ){
-			p->items[count].itemId = client_nameid( skill_produce_db[i].nameid );
+	for (const auto &recipes : skill_produce_db) {
+		if( skill_can_produce_mix( &sd, recipes.second->product_id, 23, 1 ) ){
+			p->items[count].itemId = client_nameid( recipes.second->product_id );
 			p->packetLength += static_cast<decltype(p->packetLength)>( sizeof( p->items[0] ) );
 			count++;
 		}
