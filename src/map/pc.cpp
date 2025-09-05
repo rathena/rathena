@@ -1349,7 +1349,13 @@ void pc_makesavestatus(map_session_data *sd) {
 		sd->status.clothes_color = 0;
 
 	if(!battle_config.save_body_style)
+	{ // 2023-12-20 CLIENT bodystylefix
+#if PACKETVER >= 20231220 // 2023-12-20 CLIENT bodystylefix
+		sd->status.body = sd->status.class_; // 2023-12-20 CLIENT bodystylefix
+#else // 2023-12-20 CLIENT bodystylefix
 		sd->status.body = 0;
+#endif // 2023-12-20 CLIENT bodystylefix
+	} // 2023-12-20 CLIENT bodystylefix
 
 	//Only copy the Cart/Peco/Falcon options, the rest are handled via
 	//status change load/saving. [Skotlex]
@@ -1634,7 +1640,7 @@ bool pc_isequipped(map_session_data *sd, t_itemid nameid)
 			continue;
 		if( pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index) )
 			continue;
-		if( !sd->inventory_data[index] ) 
+		if( !sd->inventory_data[index] )
 			continue;
 		if( sd->inventory_data[index]->nameid == nameid )
 			return true;
@@ -2273,7 +2279,7 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->status.cashshop_sent = false;
 
 	sd->last_addeditem_index = -1;
-	
+
 	sd->bonus_script.head = nullptr;
 	sd->bonus_script.count = 0;
 
@@ -2642,7 +2648,7 @@ void pc_calc_skilltree(map_session_data *sd)
 	// Removes Taekwon Ranker skill bonus
 	if ((sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON) {
 		std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(JOB_TAEKWON);
-	
+
 		if (tree != nullptr && !tree->skills.empty()) {
 			for (const auto &it : tree->skills) {
 				uint16 sk_idx = skill_get_index(it.first);
@@ -3496,7 +3502,7 @@ TIMER_FUNC(pc_endautobonus){
 			break;
 		}
 	}
-	
+
 	status_calc_pc(sd,SCO_FORCE);
 	return 0;
 }
@@ -4357,7 +4363,7 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_LONG_HP_GAIN_VALUE:
 			if (sd->state.lr_flag == LR_FLAG_NONE)
 				sd->bonus.long_hp_gain_value += val;
-			break;		
+			break;
 		case SP_MAGIC_SP_GAIN_VALUE:
 			if (sd->state.lr_flag == LR_FLAG_NONE)
 				sd->bonus.magic_sp_gain_value += val;
@@ -4711,7 +4717,7 @@ void pc_bonus2(map_session_data *sd,int32 type,int32 type2,int32 val)
 			ShowWarning("pc_bonus2: SP_SKILL_HEAL: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
-		
+
 		pc_bonus_itembonus(sd->skillheal, type2, val, false);
 		break;
 	case SP_SKILL_HEAL2: // bonus2 bSkillHeal2,sk,n;
@@ -4721,7 +4727,7 @@ void pc_bonus2(map_session_data *sd,int32 type,int32 type2,int32 val)
 			ShowWarning("pc_bonus2: SP_SKILL_HEAL2: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
-		
+
 		pc_bonus_itembonus(sd->skillheal2, type2, val, false);
 		break;
 	case SP_ADD_SKILL_BLOW: // bonus2 bAddSkillBlow,sk,n;
@@ -4731,7 +4737,7 @@ void pc_bonus2(map_session_data *sd,int32 type,int32 type2,int32 val)
 			ShowWarning("pc_bonus2: SP_ADD_SKILL_BLOW: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
-		
+
 		pc_bonus_itembonus(sd->skillblown, type2, val, false);
 		break;
 	case SP_HP_LOSS_RATE: // bonus2 bHPLossRate,n,t;
@@ -4921,7 +4927,7 @@ void pc_bonus2(map_session_data *sd,int32 type,int32 type2,int32 val)
 			ShowWarning("pc_bonus2: SP_SKILL_USE_SP_RATE: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
-		
+
 		pc_bonus_itembonus(sd->skillusesprate, type2, val, true);
 		break;
 	case SP_SKILL_DELAY:
@@ -5096,7 +5102,7 @@ void pc_bonus2(map_session_data *sd,int32 type,int32 type2,int32 val)
 	default:
 		if (current_equip_combo_pos > 0) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in a combo with item #%u\n", type, type2, val, sd->inventory_data[pc_checkequip( sd, current_equip_combo_pos )]->nameid);
-		} 
+		}
 		else if (current_equip_card_id > 0 || current_equip_item_index > 0) {
 			ShowWarning("pc_bonus2: unknown bonus type %d %d %d in item #%u\n", type, type2, val, current_equip_card_id ? current_equip_card_id : sd->inventory_data[current_equip_item_index]->nameid);
 		}
@@ -5358,7 +5364,7 @@ void pc_bonus5(map_session_data *sd,int32 type,int32 type2,int32 type3,int32 typ
 		if (sd->state.lr_flag != LR_FLAG_ARROW)
 			pc_bonus_autospell_onskill(sd->autospell3, type2, type3, type4, type5, current_equip_card_id, val & AUTOSPELL_FORCE_ALL);
 		break;
- 
+
 	case SP_ADDEFF_ONSKILL: // bonus5 bAddEffOnSkill,sk,eff,n,y,t;
 		PC_BONUS_CHK_SC(type3,SP_ADDEFF_ONSKILL);
 		if( sd->state.lr_flag != LR_FLAG_ARROW )
@@ -5513,7 +5519,7 @@ bool pc_skill_plagiarism(map_session_data &sd, uint16 skill_id, uint16 skill_lv)
 bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type)
 {
 	uint16 idx;
-	if (type == 1) 
+	if (type == 1)
 		idx = sd.cloneskill_idx;
 	else if (type == 2)
 		idx = sd.reproduceskill_idx;
@@ -5528,7 +5534,7 @@ bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type)
 		sd.status.skill[idx].lv = 0;
 		sd.status.skill[idx].flag = SKILL_FLAG_PERMANENT;
 		clif_deleteskill(sd, skill_id);
-		
+
 		if (type == 1) {
 			sd.cloneskill_idx = 0;
 			pc_setglobalreg(&sd, add_str(SKILL_VAR_PLAGIARISM), 0);
@@ -5540,7 +5546,7 @@ bool pc_skill_plagiarism_reset(map_session_data &sd, uint8 type)
 			pc_setglobalreg(&sd, add_str(SKILL_VAR_REPRODUCE_LV), 0);
 		}
 	}
-	
+
 	return true;
 }
 
@@ -6381,10 +6387,10 @@ bool pc_isUseitem(map_session_data *sd,int32 n)
 	//Not equipable by class. [Skotlex]
 	if (!pc_job_can_use_item(sd,item))
 		return false;
-	
+
 	if (sd->sc.cant.consume)
 		return false;
-	
+
 	if (!pc_isItemClass(sd,item))
 		return false;
 
@@ -6862,8 +6868,8 @@ int32 pc_steal_coin(map_session_data *sd,struct block_list *target)
 	md = (TBL_MOB*)target;
 	target_lv = status_get_lv(target);
 
-	if (md->state.steal_coin_flag || md->sc.getSCE(SC_STONE) || md->sc.getSCE(SC_FREEZE) || md->sc.getSCE(SC_HANDICAPSTATE_FROSTBITE) || 
-		md->sc.getSCE(SC_HANDICAPSTATE_SWOONING) || md->sc.getSCE(SC_HANDICAPSTATE_LIGHTNINGSTRIKE) || md->sc.getSCE(SC_HANDICAPSTATE_CRYSTALLIZATION) || 
+	if (md->state.steal_coin_flag || md->sc.getSCE(SC_STONE) || md->sc.getSCE(SC_FREEZE) || md->sc.getSCE(SC_HANDICAPSTATE_FROSTBITE) ||
+		md->sc.getSCE(SC_HANDICAPSTATE_SWOONING) || md->sc.getSCE(SC_HANDICAPSTATE_LIGHTNINGSTRIKE) || md->sc.getSCE(SC_HANDICAPSTATE_CRYSTALLIZATION) ||
 		status_bl_has_mode(target,MD_STATUSIMMUNE) || util::vector_exists(status_get_race2(md), RC2_TREASURE))
 		return 0;
 
@@ -7060,7 +7066,7 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 			x = rnd()%(mapdata->xs-2)+1;
 			y = rnd()%(mapdata->ys-2)+1;
 			c++;
-			
+
 			if(c > (mapdata->xs * mapdata->ys)*3){ //force out
 				ShowError("pc_setpos: couldn't found a valid coordinates for player '%s' (%d:%d) on (%s), preventing warp\n", sd->status.name, sd->status.account_id, sd->status.char_id, mapindex_id2name(mapindex));
 				return SETPOS_OK; //preventing warp
@@ -7142,14 +7148,14 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 	if(npc_check_areanpc(1,m,x,y,0)){
 		sd->count_rewarp++;
 	}
-	else 
+	else
 		sd->count_rewarp = 0;
 
 	if (sd->state.vending)
 		vending_update(*sd);
 	if (sd->state.buyingstore)
 		buyingstore_update(*sd);
-	
+
 	return SETPOS_OK;
 }
 
@@ -7413,7 +7419,7 @@ static void pc_checkallowskill(map_session_data *sd)
 			if (sd->sc.getSCE(status) && !pc_check_weapontype(sd, skill_get_weapontype(it.second->skill_id)))
 				status_change_end(sd, status);
 		}
-		if (flag[SCF_REQUIRENOWEAPON]) { 
+		if (flag[SCF_REQUIRENOWEAPON]) {
 			if (sd->sc.getSCE(status) && sd->status.weapon)
 				status_change_end( sd, status );
 		}
@@ -8430,7 +8436,7 @@ void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_
 
 		if (!battle_config.pvp_exp && map_getmapflag(sd->m, MF_PVP))  // [MouseJstr]
 			return; // no exp on pvp maps
-	
+
 		if (sd->status.guild_id>0)
 			base_exp -= guild_payexp(sd,base_exp);
 	}
@@ -9987,7 +9993,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 				base_penalty = u64min(sd->status.base_exp, base_penalty);
 			}
 		}
-		else 
+		else
 			base_penalty = 0;
 
 		if ((battle_config.death_penalty_maxlv&2 || !pc_is_maxjoblv(sd)) && job_penalty > 0) {
@@ -10550,7 +10556,7 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 	case SP_CHARMOVE:
 		sd->status.character_moves = val;
 		return true;
-	case SP_CHARRENAME:	
+	case SP_CHARRENAME:
 		sd->status.rename = val;
 		return true;
 	case SP_CHARFONT:
@@ -10873,7 +10879,11 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 
 	// Reset body style to 0 before changing job to avoid
 	// errors since not every job has a alternate outfit.
+#if PACKETVER >= 20231220 // 2023-12-20 CLIENT bodystylefix
+	sd->status.body = job; // 2023-12-20 CLIENT bodystylefix
+#else // 2023-12-20 CLIENT bodystylefix
 	sd->status.body = 0;
+#endif // 2023-12-20 CLIENT bodystylefix
 	clif_changelook(sd,LOOK_BODY2,0);
 
 	sd->status.class_ = job;
@@ -11020,7 +11030,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	achievement_update_objective(sd, AG_JOB_CHANGE, 2, sd->status.base_level, job);
 	if( sd->status.party_id ){
 		struct party_data* p;
-		
+
 		if( ( p = party_search( sd->status.party_id ) ) != nullptr ){
 			ARR_FIND(0, MAX_PARTY, i, p->party.member[i].char_id == sd->status.char_id);
 
@@ -12598,7 +12608,7 @@ void pc_checkitem(map_session_data *sd) {
 			continue;
 		if( it->equipSwitch&~pc_equippoint(sd,i) ||
 			( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(sd->inventory_data[i], sd->m) ) ){
-			
+
 			for( int32 j = 0; j < EQI_MAX; j++ ){
 				if( sd->equip_switch_index[j] == i ){
 					sd->equip_switch_index[j] = -1;
@@ -13447,7 +13457,7 @@ uint64 SkillTreeDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 			std::shared_ptr<s_skill_tree_entry> entry;
 			bool skill_exists = tree->skills.count(skill_id) > 0;
-				
+
 			if (skill_exists)
 				entry = tree->skills[skill_id];
 			else
@@ -13551,7 +13561,7 @@ uint64 SkillTreeDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						this->invalidWarning(it["MaxLevel"], "Required skill %s's level %hu exceeds the skill's max level %hu. Capping skill level.\n", skill_name.c_str(), lv_req, lv_req_max);
 						lv_req = lv_req_max;
 					}
-					
+
 					if (lv_req == 0) {
 						if (entry->need.erase(skill_id_req) == 0)
 							this->invalidWarning(Requiresit["Name"], "Failed to erase %s, the skill doesn't exist in for job %s, skipping.\n", skill_name_req.c_str(), job_name.c_str());
@@ -14510,7 +14520,7 @@ void pc_readdb(void) {
 		"/" DBIMPORT,
 		//add other path here
 	};
-		
+
 	//reset
 	job_db.clear(); // job_info table
 
@@ -14804,7 +14814,7 @@ TIMER_FUNC(pc_global_expiration_timer){
   return 0;
 }
 
-void pc_expire_check(map_session_data *sd) {  
+void pc_expire_check(map_session_data *sd) {
 	/* ongoing timer */
 	if( sd->expiration_tid != INVALID_TIMER )
 		return;
@@ -14869,10 +14879,10 @@ enum e_BANKING_WITHDRAW_ACK pc_bank_withdraw(map_session_data *sd, int32 money) 
 		clif_messagecolor(sd,color_table[COLOR_RED],msg_txt(sd,1495),false,SELF); //You can't withdraw that much money
 		return BWA_UNKNOWN_ERROR;
 	}
-	
+
 	if( pc_getzeny(sd,money, LOG_TYPE_BANK) )
 		return BWA_NO_MONEY;
-	
+
 	sd->bank_vault -= money;
 	pc_setreg2(sd, BANK_VAULT_VAR, sd->bank_vault);
 	if( save_settings&CHARSAVE_BANK )
@@ -14972,7 +14982,7 @@ struct s_bonus_script_entry *pc_bonus_script_add(map_session_data *sd, const cha
 
 	if (!sd)
 		return nullptr;
-	
+
 	if (!(script = parse_script(script_str, "bonus_script", 0, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
 		ShowError("pc_bonus_script_add: Failed to parse script '%s' (CID:%d).\n", script_str, sd->status.char_id);
 		return nullptr;
@@ -15171,7 +15181,7 @@ int16 pc_maxaspd(map_session_data *sd) {
 
 	return (( sd->class_&JOBL_THIRD) ? battle_config.max_third_aspd : (
 			((sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_extended_aspd : (
-			(sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.max_summoner_aspd : 
+			(sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.max_summoner_aspd :
 			battle_config.max_aspd ));
 }
 
@@ -15723,7 +15733,7 @@ void pc_macro_captcha_register_upload(map_session_data &sd, uint16 upload_size, 
 		captcha_db.put(index, sd.captcha_upload.cd);
 		sd.captcha_upload.cd = nullptr;
 		sd.captcha_upload.upload_size = 0;
-		
+
 		// TODO: write YAML and BMP file?
 	}
 }
