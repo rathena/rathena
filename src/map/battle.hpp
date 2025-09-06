@@ -242,6 +242,7 @@ struct Battle_Config
 	int32 emergency_call;
 	int32 guild_aura;
 	int32 pc_invincible_time;
+	int32 pc_invincible_time_gvg;
 
 	int32 pet_catch_rate;
 	int32 pet_rename;
