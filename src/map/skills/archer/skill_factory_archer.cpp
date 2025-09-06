@@ -5,7 +5,7 @@
 
 #include "chargearrow.hpp"
 #include "concentration.hpp"
-#include "double.hpp"
+#include "doublestrafe.hpp"
 #include "makingarrow.hpp"
 #include "shower.hpp"
 

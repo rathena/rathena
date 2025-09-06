@@ -375,7 +375,7 @@
     <ClInclude Include="skills/archer/concentration.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
-    <ClInclude Include="skills/archer/double.hpp">
+    <ClInclude Include="skills/archer/doublestrafe.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/makingarrow.hpp">
@@ -461,7 +461,7 @@
     <ClCompile Include="skills/archer/concentration.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
-    <ClCompile Include="skills/archer/double.cpp">
+    <ClCompile Include="skills/archer/doublestrafe.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/makingarrow.cpp">
