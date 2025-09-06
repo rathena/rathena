@@ -83,15 +83,11 @@ int32 cnslif_parse(const char* buf)
 			char_config_read(CHAR_CONF_NAME, false);
 		}
 	}
-	else if( strcmpi("ers_report", type) == 0 ){
-		ers_report();
-	}
 	else if( strcmpi("help", type) == 0 ){
 		ShowInfo("Available commands:\n");
 		ShowInfo("\t server:shutdown => Stops the server.\n");
 		ShowInfo("\t server:alive => Checks if the server is running.\n");
 		ShowInfo("\t server:reloadconf => Reload config file: \"%s\"\n", CHAR_CONF_NAME);
-		ShowInfo("\t ers_report => Displays database usage.\n");
 	}
 
 	return 0;

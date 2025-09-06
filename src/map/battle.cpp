@@ -38,7 +38,25 @@
 using namespace rathena;
 
 struct Battle_Config battle_config;
-static struct eri *delay_damage_ers; //For battle delay damage structures.
+
+/// Damage Delayed Structure
+struct delay_damage {
+	int32 src_id;
+	int32 target_id;
+	int64 damage;
+	int16 div_;
+	uint16 distance;
+	uint16 skill_lv;
+	uint16 skill_id;
+	enum damage_lv dmg_lv;
+	uint16 attack_type;
+	bool additional_effects;
+	enum bl_type src_type;
+	bool isspdamage;
+	bool is_norm_attacked;
+};
+
+static ERS<delay_damage> delay_damage_ers("battle.cpp::delay_damage_ers"); //For battle delay damage structures.
 
 #ifndef MAX_ENEMY_SEARCH_COUNT
 	#define MAX_ENEMY_SEARCH_COUNT 30
@@ -365,23 +383,6 @@ int32 battle_damage(struct block_list *src, struct block_list *target, int64 dam
 	return dmg_change;
 }
 
-/// Damage Delayed Structure
-struct delay_damage {
-	int32 src_id;
-	int32 target_id;
-	int64 damage;
-	int16 div_;
-	uint16 distance;
-	uint16 skill_lv;
-	uint16 skill_id;
-	enum damage_lv dmg_lv;
-	uint16 attack_type;
-	bool additional_effects;
-	enum bl_type src_type;
-	bool isspdamage;
-	bool is_norm_attacked;
-};
-
 TIMER_FUNC(battle_delay_damage_sub){
 	struct delay_damage *dat = (struct delay_damage *)data;
 
@@ -408,7 +409,7 @@ TIMER_FUNC(battle_delay_damage_sub){
 			status_calc_pc(sd, SCO_FORCE);
 		}
 	}
-	ers_free(delay_damage_ers, dat);
+	delay_damage_ers.free(dat);
 	return 0;
 }
 
@@ -469,7 +470,7 @@ int32 battle_delay_damage(t_tick tick, int32 amotion, struct block_list *src, st
 		battle_damage(src, target, damage, div_, skill_lv, skill_id, dmg_lv, attack_type, additional_effects, gettick(), isspdamage);
 		return 0;
 	}
-	dat = ers_alloc(delay_damage_ers, struct delay_damage);
+	dat = delay_damage_ers.alloc();
 	dat->src_id = src->id;
 	dat->target_id = target->id;
 	dat->skill_id = skill_id;
@@ -12591,7 +12592,6 @@ int32 battle_config_read(const char* cfgName)
  *--------------------------*/
 void do_init_battle(void)
 {
-	delay_damage_ers = ers_new(sizeof(struct delay_damage),"battle.cpp::delay_damage_ers",ERS_OPT_CLEAR);
 	add_timer_func_list(battle_delay_damage_sub, "battle_delay_damage_sub");
 }
 
@@ -12600,5 +12600,4 @@ void do_init_battle(void)
  *------------------*/
 void do_final_battle(void)
 {
-	ers_destroy(delay_damage_ers);
 }

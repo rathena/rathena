@@ -68,13 +68,16 @@ using namespace rathena;
 const int64 SCRIPT_INT_MIN = INT64_MIN;
 const int64 SCRIPT_INT_MAX = INT64_MAX;
 
-struct eri *array_ers;
+ERS<script_array> array_ers("script.cpp:array_ers");
 DBMap *st_db;
 uint32 active_scripts;
 uint32 next_id;
-struct eri *st_ers;
-struct eri *stack_ers;
+ERS<script_state> st_ers("script.cpp:st_ers", 10);
+ERS<script_stack> stack_ers("script.cpp:stack_ers", 10);
 static map_session_data* dummy_sd;
+
+extern ERS<script_reg_num> num_reg_ers;
+extern ERS<script_reg_str> str_reg_ers;
 
 static bool script_rid2sd_( struct script_state *st, map_session_data** sd, const char *func );
 
@@ -2975,7 +2978,7 @@ int32 script_free_array_db(DBKey key, DBData *data, va_list ap)
 {
 	struct script_array *sa = static_cast<script_array *>(db_data2ptr(data));
 	aFree(sa->members);
-	ers_free(array_ers, sa);
+	array_ers.free(sa);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -2986,7 +2989,7 @@ void script_array_delete(struct reg_db *src, struct script_array *sa)
 {
 	aFree(sa->members);
 	idb_remove(src->arrays, sa->id);
-	ers_free(array_ers, sa);
+	array_ers.free(sa);
 }
 
 /**
@@ -3115,7 +3118,7 @@ void script_array_update(struct reg_db *src, int64 num, bool empty)
 			// we do nothing if its empty, no point in modifying array data for a new empty member
 		}
 	} else if ( !empty ) { // we only move to create if not empty
-		sa = ers_alloc(array_ers, struct script_array);
+		sa = array_ers.alloc();
 		sa->id = id;
 		sa->members = nullptr;
 		sa->size = 0;
@@ -3626,8 +3629,8 @@ struct script_state* script_alloc_state(struct script_code* rootscript, int32 po
 {
 	struct script_state* st;
 
-	st = ers_alloc(st_ers, struct script_state);
-	st->stack = ers_alloc(stack_ers, struct script_stack);
+	st = st_ers.alloc();
+	st->stack = stack_ers.alloc();
 	st->stack->sp = 0;
 	st->stack->sp_max = 64;
 	CREATE(st->stack->stack_data, struct script_data, st->stack->sp_max);
@@ -3689,7 +3692,7 @@ void script_free_state(struct script_state* st)
 				st->stack->scope.arrays->destroy(st->stack->scope.arrays, script_free_array_db);
 			pop_stack(st, 0, st->stack->sp);
 			aFree(st->stack->stack_data);
-			ers_free(stack_ers, st->stack);
+			stack_ers.free(st->stack);
 			st->stack = nullptr;
 		}
 		if (st->script && st->script->instances != USHRT_MAX && --st->script->instances == 0) {
@@ -3705,7 +3708,7 @@ void script_free_state(struct script_state* st)
 		st->pos = -1;
 
 		idb_remove(st_db, st->id);
-		ers_free(st_ers, st);
+		st_ers.free(st);
 		if (--active_scripts == 0)
 			next_id = 0;
 	}
@@ -4701,9 +4704,9 @@ int32 script_reg_destroy(DBKey key, DBData *data, va_list ap)
 		if( p->value )
 			aFree(p->value);
 
-		ers_free(str_reg_ers,p);
+		str_reg_ers.free(p);
 	} else {
-		ers_free(num_reg_ers,(struct script_reg_num*)src);
+		num_reg_ers.free(reinterpret_cast<struct script_reg_num*>(src));
 	}
 
 	return 0;
@@ -4722,9 +4725,9 @@ void script_reg_destroy_single(map_session_data *sd, int64 reg, struct script_re
 		if( p->value )
 			aFree(p->value);
 
-		ers_free(str_reg_ers,p);
+		str_reg_ers.free(p);
 	} else {
-		ers_free(num_reg_ers,(struct script_reg_num*)data);
+		num_reg_ers.free(reinterpret_cast<struct script_reg_num*>(data));
 	}
 }
 
@@ -4811,7 +4814,6 @@ void do_final_script() {
 	userfunc_db->destroy(userfunc_db, db_script_free_code_sub);
 	autobonus_db->destroy(autobonus_db, db_script_free_code_sub);
 
-	ers_destroy(array_ers);
 	if (generic_ui_array)
 		aFree(generic_ui_array);
 
@@ -4832,8 +4834,6 @@ void do_final_script() {
 	if( atcmd_binding_count != 0 )
 		aFree(atcmd_binding);
 
-	ers_destroy(st_ers);
-	ers_destroy(stack_ers);
 	db_destroy(st_db);
 
 	if( dummy_sd != nullptr ){
@@ -4851,14 +4851,7 @@ void do_init_script(void) {
 	scriptlabel_db = strdb_alloc(DB_OPT_DUP_KEY,50);
 	autobonus_db = strdb_alloc(DB_OPT_DUP_KEY,0);
 
-	st_ers = ers_new(sizeof(struct script_state), "script.cpp::st_ers", ERS_CACHE_OPTIONS);
-	stack_ers = ers_new(sizeof(struct script_stack), "script.cpp::script_stack", ERS_OPT_FLEX_CHUNK);
-	array_ers = ers_new(sizeof(struct script_array), "script.cpp:array_ers", ERS_CLEAN_OPTIONS);
-
 	add_timer_func_list( run_script_timer, "run_script_timer" );
-
-	ers_chunk_size(st_ers, 10);
-	ers_chunk_size(stack_ers, 10);
 
 	active_scripts = 0;
 	next_id = 0;
