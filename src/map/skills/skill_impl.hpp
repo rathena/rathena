@@ -40,3 +40,9 @@ public:
 protected:
 	e_skill skill_id_;
 };
+
+
+class SkillImplException : public std::runtime_error {
+public:
+	using std::runtime_error::runtime_error;
+};
