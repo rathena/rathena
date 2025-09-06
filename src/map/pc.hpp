@@ -948,14 +948,6 @@ public:
 	void update_look( _look look );
 };
 
-extern struct eri *pc_sc_display_ers; /// Player's SC display table
-
-/**
- * ERS for the bulk of pc vars
- **/
-extern struct eri *num_reg_ers;
-extern struct eri *str_reg_ers;
-
 /* Global Expiration Timer ID */
 extern int32 pc_expiration_tid;
 

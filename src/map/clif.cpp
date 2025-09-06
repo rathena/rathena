@@ -76,7 +76,7 @@ static inline int32 client_exp(t_exp exp) {
 #endif
 
 /* for clif_clearunit_delayed */
-static struct eri *delay_clearunit_ers;
+static ERS<block_list> delay_clearunit_ers("clif.cpp::delay_clearunit_ers");
 
 struct s_packet_db packet_db[MAX_PACKET_DB + 1];
 unsigned long color_table[COLOR_MAX];
@@ -991,14 +991,14 @@ static TIMER_FUNC(clif_clearunit_delayed_sub){
 
 	if( bl != nullptr ){
 		clif_clearunit_area( *bl, (clr_type)id );
-		ers_free( delay_clearunit_ers, bl );
+		delay_clearunit_ers.free(bl);
 	}
 
 	return 0;
 }
 void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick)
 {
-	struct block_list *tbl = ers_alloc(delay_clearunit_ers, struct block_list);
+	struct block_list *tbl = delay_clearunit_ers.alloc();
 	tbl->next = nullptr;
 	tbl->prev = nullptr;
 	tbl->id = bl->id;
@@ -25807,10 +25807,7 @@ void do_init_clif(void) {
 		add_timer_interval( gettick() + battle_config.ping_timer_interval * 1000, clif_ping_timer, 0, 0, battle_config.ping_timer_interval * 1000 );	
 	}
 #endif
-
-	delay_clearunit_ers = ers_new(sizeof(struct block_list),"clif.cpp::delay_clearunit_ers",ERS_OPT_CLEAR);
 }
 
 void do_final_clif(void) {
-	ers_destroy(delay_clearunit_ers);
 }

@@ -239,9 +239,6 @@ struct npc_data : public block_list {
 	bool is_invisible;
 };
 
-struct eri;
-extern struct eri *npc_sc_display_ers;
-
 #define START_NPC_NUM 110000000
 
 enum e_job_types

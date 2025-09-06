@@ -84,9 +84,9 @@ SkillTreeDatabase skill_tree_db;
 int32 day_timer_tid = INVALID_TIMER;
 int32 night_timer_tid = INVALID_TIMER;
 
-struct eri *pc_sc_display_ers = nullptr;
-struct eri *num_reg_ers;
-struct eri *str_reg_ers;
+ERS<sc_display_entry> pc_sc_display_ers("pc.cpp:pc_sc_display_ers", 150);
+ERS<script_reg_num> num_reg_ers("pc.cpp:num_reg_ers", 300);
+ERS<script_reg_str> str_reg_ers("pc.cpp:str_reg_ers", 50);
 int32 pc_expiration_tid = INVALID_TIMER;
 
 struct fame_list smith_fame_list[MAX_FAME_LIST];
@@ -11378,7 +11378,7 @@ bool pc_setregstr(map_session_data* sd, int64 reg, const char* str)
 	nullpo_retr(false, sd);
 
 	if( str[0] ) {
-		p = ers_alloc(str_reg_ers, struct script_reg_str);
+		p = str_reg_ers.alloc();
 
 		p->value = aStrdup(str);
 		p->flag.type = 1;
@@ -11387,7 +11387,7 @@ bool pc_setregstr(map_session_data* sd, int64 reg, const char* str)
 			p = (struct script_reg_str *)db_data2ptr(&prev);
 			if( p->value )
 				aFree(p->value);
-			ers_free(str_reg_ers, p);
+			str_reg_ers.free(p);
 		} else {
 			if( index )
 				script_array_update(&sd->regs, reg, false);
@@ -11397,7 +11397,7 @@ bool pc_setregstr(map_session_data* sd, int64 reg, const char* str)
 			p = (struct script_reg_str *)db_data2ptr(&prev);
 			if( p->value )
 				aFree(p->value);
-			ers_free(str_reg_ers, p);
+			str_reg_ers.free(p);
 			if( index )
 				script_array_update(&sd->regs, reg, true);
 		}
@@ -11487,7 +11487,7 @@ bool pc_setregistry(map_session_data *sd, int64 reg, int64 val)
 		if( index )
 			script_array_update(&sd->regs, reg, false);
 
-		p = ers_alloc(num_reg_ers, struct script_reg_num);
+		p = num_reg_ers.alloc();
 
 		p->value = val;
 		if (!reg_load)
@@ -11495,7 +11495,7 @@ bool pc_setregistry(map_session_data *sd, int64 reg, int64 val)
 
 		if (sd->regs.vars->put(sd->regs.vars, db_i642key(reg), db_ptr2data(p), &prev)) {
 			p = (struct script_reg_num *)db_data2ptr(&prev);
-			ers_free(num_reg_ers, p);
+			num_reg_ers.free(p);
 		}
 	}
 
@@ -11551,7 +11551,7 @@ bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val)
 		if( index )
 			script_array_update(&sd->regs, reg, false);
 
-		p = ers_alloc(str_reg_ers, struct script_reg_str);
+		p = str_reg_ers.alloc();
 
 		p->value = aStrdup(val);
 		if( !reg_load )
@@ -11562,7 +11562,7 @@ bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val)
 			p = (struct script_reg_str *)db_data2ptr(&prev);
 			if( p->value )
 				aFree(p->value);
-			ers_free(str_reg_ers, p);
+			str_reg_ers.free(p);
 		}
 	}
 
@@ -16018,10 +16018,6 @@ void do_final_pc(void) {
 	db_destroy(itemcd_db);
 	do_final_pc_groups();
 
-	ers_destroy(pc_sc_display_ers);
-	ers_destroy(num_reg_ers);
-	ers_destroy(str_reg_ers);
-
 	attendance_db.clear();
 	reputation_db.clear();
 #ifdef MAP_GENERATOR
@@ -16076,12 +16072,4 @@ void do_init_pc(void) {
 	}
 
 	do_init_pc_groups();
-
-	pc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "pc.cpp:pc_sc_display_ers", ERS_OPT_FLEX_CHUNK);
-	num_reg_ers = ers_new(sizeof(struct script_reg_num), "pc.cpp:num_reg_ers", (ERSOptions)(ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK));
-	str_reg_ers = ers_new(sizeof(struct script_reg_str), "pc.cpp:str_reg_ers", (ERSOptions)(ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK));
-
-	ers_chunk_size(pc_sc_display_ers, 150);
-	ers_chunk_size(num_reg_ers, 300);
-	ers_chunk_size(str_reg_ers, 50);
 }
