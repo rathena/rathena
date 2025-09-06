@@ -55,7 +55,7 @@ struct guild_expcache {
 	int32 guild_id, account_id, char_id;
 	t_exp exp;
 };
-static struct eri *expcache_ers; //For handling of guild exp payment.
+static ERS<guild_expcache> expcache_ers("guild.cpp::expcache_ers"); //For handling of guild exp payment.
 
 struct s_guild_skill_requirement{
 	uint16 id;
@@ -630,7 +630,7 @@ int32 guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 	auto g = guild_search(c->guild_id);
 
 	if (!g || (i = guild_getindex(g->guild, c->account_id, c->char_id)) < 0) {
-		ers_free(expcache_ers, c);
+		expcache_ers.free(c);
 		return 0;
 	}
 
@@ -640,7 +640,7 @@ int32 guild_payexp_timer_sub(DBKey key, DBData *data, va_list ap) {
 		GMI_EXP,&g->guild.member[i].exp,sizeof(g->guild.member[i].exp));
 	c->exp=0;
 
-	ers_free(expcache_ers, c);
+	expcache_ers.free(c);
 	return 0;
 }
 
@@ -1667,7 +1667,7 @@ static DBData create_expcache(DBKey key, va_list args) {
 	struct guild_expcache *c;
 	map_session_data *sd = va_arg(args, map_session_data*);
 
-	c = ers_alloc(expcache_ers, struct guild_expcache);
+	c = expcache_ers.alloc();
 	c->guild_id = sd->status.guild_id;
 	c->account_id = sd->status.account_id;
 	c->char_id = sd->status.char_id;
@@ -2707,7 +2707,7 @@ static int32 eventlist_db_final(DBKey key, DBData *data, va_list ap) {
  * @see DBApply
  */
 static int32 guild_expcache_db_final(DBKey key, DBData *data, va_list ap) {
-	ers_free(expcache_ers, db_data2ptr(data));
+	expcache_ers.free(reinterpret_cast<guild_expcache*>(db_data2ptr(data)));
 	return 0;
 }
 
@@ -2725,7 +2725,6 @@ void guild_flags_clear(void) {
 void do_init_guild(void) {
 	guild_expcache_db  = idb_alloc(DB_OPT_BASE);
 	guild_infoevent_db = idb_alloc(DB_OPT_BASE);
-	expcache_ers = ers_new(sizeof(struct guild_expcache),"guild.cpp::expcache_ers",ERS_OPT_NONE);
 
 	guild_flags_count = 0;
 
@@ -2749,7 +2748,6 @@ void do_final_guild(void) {
 	castle_db.clear();
 	guild_expcache_db->destroy(guild_expcache_db,guild_expcache_db_final);
 	guild_infoevent_db->destroy(guild_infoevent_db,eventlist_db_final);
-	ers_destroy(expcache_ers);
 
 	aFree(guild_flags);/* never empty; created on boot */
 }

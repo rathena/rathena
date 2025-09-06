@@ -4084,15 +4084,11 @@ int32 parse_console(const char* buf){
 			global_core->signal_shutdown();
 		}
 	}
-	else if( strcmpi("ers_report", type) == 0 ){
-		ers_report();
-	}
 	else if( strcmpi("help", type) == 0 ) {
 		ShowInfo("Available commands:\n");
 		ShowInfo("\t admin:@<atcommand> => Uses an atcommand. Do NOT use commands requiring an attached player.\n");
 		ShowInfo("\t admin:map:<map> <x> <y> => Changes the map from which console commands are executed.\n");
 		ShowInfo("\t server:shutdown => Stops the server.\n");
-		ShowInfo("\t ers_report => Displays database usage.\n");
 	}
 
 	return 0;

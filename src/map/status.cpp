@@ -38,6 +38,9 @@
 
 using namespace rathena;
 
+extern ERS<sc_display_entry> npc_sc_display_ers;
+extern ERS<sc_display_entry> pc_sc_display_ers;
+
 // Regen related flags.
 enum e_regen {
 	RGN_NONE = 0x00,
@@ -9962,7 +9965,7 @@ t_tick status_get_sc_def(block_list *src, block_list *bl, sc_type type, int32 ra
  * Author: Ind
  */
 void status_display_add(struct block_list *bl, enum sc_type type, int32 dval1, int32 dval2, int32 dval3) {
-	struct eri *eri;
+	ERS<sc_display_entry> *eri;
 	struct sc_display_entry **sc_display;
 	struct sc_display_entry ***sc_display_ptr;
 	struct sc_display_entry *entry;
@@ -9978,7 +9981,7 @@ void status_display_add(struct block_list *bl, enum sc_type type, int32 dval1, i
 
 			sc_display_ptr = &sd->sc_display;
 			sc_display_count_ptr = &sd->sc_display_count;
-			eri = pc_sc_display_ers;
+			eri = &pc_sc_display_ers;
 			}
 			break;
 		case BL_NPC: {
@@ -9986,7 +9989,7 @@ void status_display_add(struct block_list *bl, enum sc_type type, int32 dval1, i
 
 			sc_display_ptr = &nd->sc_display;
 			sc_display_count_ptr = &nd->sc_display_count;
-			eri = npc_sc_display_ers;
+			eri = &npc_sc_display_ers;
 			}
 			break;
 		default:
@@ -10005,7 +10008,7 @@ void status_display_add(struct block_list *bl, enum sc_type type, int32 dval1, i
 		return;
 	}
 
-	entry = ers_alloc(eri, struct sc_display_entry);
+	entry = eri->alloc();
 
 	entry->type = type;
 	entry->val1 = dval1;
@@ -10025,7 +10028,7 @@ void status_display_add(struct block_list *bl, enum sc_type type, int32 dval1, i
  * Author: Ind
  */
 void status_display_remove(struct block_list *bl, enum sc_type type) {
-	struct eri *eri;
+	ERS<sc_display_entry> *eri;
 	struct sc_display_entry **sc_display;
 	struct sc_display_entry ***sc_display_ptr;
 	int32 i;
@@ -10040,7 +10043,7 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 
 			sc_display_ptr = &sd->sc_display;
 			sc_display_count_ptr = &sd->sc_display_count;
-			eri = pc_sc_display_ers;
+			eri = &pc_sc_display_ers;
 			}
 			break;
 		case BL_NPC: {
@@ -10048,7 +10051,7 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 
 			sc_display_ptr = &nd->sc_display;
 			sc_display_count_ptr = &nd->sc_display_count;
-			eri = npc_sc_display_ers;
+			eri = &npc_sc_display_ers;
 			}
 			break;
 		default:
@@ -10063,7 +10066,7 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
 	if( i != sc_display_count ) {
 		int32 cursor;
 
-		ers_free(eri, sc_display[i]);
+		eri->free(sc_display[i]);
 		sc_display[i] = nullptr;
 
 		/* The all-mighty compact-o-matic */

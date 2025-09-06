@@ -142,7 +142,6 @@ enum script_cmd_result {
 enum e_labelType { LABEL_NEXTLINE = 1, LABEL_START };
 
 class map_session_data;
-struct eri;
 
 extern int32 potion_flag; //For use on Alchemist improved potions/Potion Pitcher. [Skotlex]
 extern int32 potion_hp, potion_per_hp, potion_sp, potion_per_sp;
@@ -2262,12 +2261,9 @@ public:
 /**
  * used to generate quick script_array entries
  **/
-extern struct eri *array_ers;
 extern DBMap *st_db;
 extern uint32 active_scripts;
 extern uint32 next_id;
-extern struct eri *st_ers;
-extern struct eri *stack_ers;
 
 const char* skip_space(const char* p);
 void script_error(const char* src, const char* file, int32 start_line, const char* error_msg, const char* error_pos);

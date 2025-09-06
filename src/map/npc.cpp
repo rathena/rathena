@@ -50,7 +50,7 @@ static int32 npc_mob=0;
 static int32 npc_delay_mob=0;
 static int32 npc_cache_mob=0;
 
-struct eri *npc_sc_display_ers;
+ERS<sc_display_entry> npc_sc_display_ers("npc.cpp::npc_sc_display_ers");
 
 // Market Shop
 #if PACKETVER >= 20131223
@@ -95,7 +95,13 @@ struct event_data {
 	int32 pos;
 };
 
-static struct eri *timer_event_ers; //For the npc timer data. [Skotlex]
+struct timer_event_data {
+	int32 rid; //Attached player for this timer.
+	int32 next; //timer index (starts with 0, then goes up to nd->u.scr.timeramount)
+	int32 time; //holds total time elapsed for the script from when timer was started to when last time the event triggered.
+};
+
+static ERS<timer_event_data> timer_event_ers("npc.cpp::timer_event_ers"); //For the npc timer data. [Skotlex]
 
 /* hello */
 static char *npc_last_path;
@@ -1455,12 +1461,6 @@ int32 npc_timerevent_export(struct npc_data *nd, int32 i)
 	return 0;
 }
 
-struct timer_event_data {
-	int32 rid; //Attached player for this timer.
-	int32 next; //timer index (starts with 0, then goes up to nd->u.scr.timeramount)
-	int32 time; //holds total time elapsed for the script from when timer was started to when last time the event triggered.
-};
-
 /*==========================================
  * triger 'OnTimerXXXX' events
  *------------------------------------------*/
@@ -1482,7 +1482,7 @@ TIMER_FUNC(npc_timerevent){
 	if( ted->rid && !(sd = map_id2sd(ted->rid)) )
 	{
 		ShowError("npc_timerevent: Attached player not found.\n");
-		ers_free(timer_event_ers, ted);
+		timer_event_ers.free(ted);
 		return 0;
 	}
 
@@ -1518,7 +1518,7 @@ TIMER_FUNC(npc_timerevent){
 		else
 			nd->u.scr.timerid = INVALID_TIMER;
 
-		ers_free(timer_event_ers, ted);
+		timer_event_ers.free(ted);
 	}
 
 	// Run the script
@@ -1567,7 +1567,7 @@ int32 npc_timerevent_start(struct npc_data* nd, int32 rid)
 		t_tick next;
 		struct timer_event_data *ted;
 		// Arrange for the next event
-		ted = ers_alloc(timer_event_ers, struct timer_event_data);
+		ted = timer_event_ers.alloc();
 		ted->next = j; // Set event index
 		ted->time = nd->u.scr.timer_event[j].timer;
 		next = nd->u.scr.timer_event[j].timer - nd->u.scr.timer;
@@ -1617,7 +1617,7 @@ int32 npc_timerevent_stop(struct npc_data* nd)
 
 		td = get_timer(*tid);
 		if( td && td->data )
-			ers_free(timer_event_ers, (void*)td->data);
+			timer_event_ers.free(reinterpret_cast<timer_event_data*>(td->data));
 		delete_timer(*tid,npc_timerevent);
 		*tid = INVALID_TIMER;
 	}
@@ -1691,7 +1691,7 @@ void npc_timerevent_quit(map_session_data* sd)
 			nd->u.scr.timertick = old_tick;
 		}
 	}
-	ers_free(timer_event_ers, ted);
+	timer_event_ers.free(ted);
 }
 
 /*==========================================
@@ -3526,7 +3526,7 @@ int32 npc_unload(struct npc_data* nd, bool single) {
 					continue;
 
 				if( td && td->data )
-					ers_free(timer_event_ers, (void*)td->data);
+					timer_event_ers.free(reinterpret_cast<timer_event_data*>(td->data));
 				delete_timer(sd->npc_timer_id, npc_timerevent);
 				sd->npc_timer_id = INVALID_TIMER;
 			}
@@ -3537,7 +3537,7 @@ int32 npc_unload(struct npc_data* nd, bool single) {
 			const struct TimerData *td;
 			td = get_timer(nd->u.scr.timerid);
 			if (td && td->data)
-				ers_free(timer_event_ers, (void*)td->data);
+				timer_event_ers.free(reinterpret_cast<timer_event_data*>(td->data));
 			delete_timer(nd->u.scr.timerid, npc_timerevent);
 		}
 		if (nd->u.scr.timer_event)
@@ -3559,7 +3559,7 @@ int32 npc_unload(struct npc_data* nd, bool single) {
 			unsigned char i;
 
 			for( i = 0; i < nd->sc_display_count; i++ )
-				ers_free(npc_sc_display_ers, nd->sc_display[i]);
+				npc_sc_display_ers.free(nd->sc_display[i]);
 			nd->sc_display_count = 0;
 			aFree(nd->sc_display);
 			nd->sc_display = nullptr;
@@ -6259,8 +6259,6 @@ void do_final_npc(void) {
 #endif
 	stylist_db.clear();
 	barter_db.clear();
-	ers_destroy(timer_event_ers);
-	ers_destroy(npc_sc_display_ers);
 	npc_src_files.clear();
 }
 
@@ -6324,9 +6322,6 @@ void do_init_npc(void){
 	NPCMarketDB = strdb_alloc(DB_OPT_BASE, NPC_NAME_LENGTH+1);
 	npc_market_fromsql();
 #endif
-
-	timer_event_ers = ers_new(sizeof(struct timer_event_data),"npc.cpp::timer_event_ers",ERS_OPT_NONE);
-	npc_sc_display_ers = ers_new(sizeof(struct sc_display_entry), "npc.cpp:npc_sc_display_ers", ERS_OPT_NONE);
 
 	npc_loadsrcfiles();
 

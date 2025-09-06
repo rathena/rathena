@@ -52,7 +52,7 @@ using namespace rathena;
 #define SKILLUNITTIMER_INTERVAL	100
 #define TIMERSKILL_INTERVAL	150
 
-static struct eri *skill_timer_ers = nullptr; //For handling skill_timerskills [Skotlex]
+static ERS<struct skill_timerskill> skill_timer_ers("skill.cpp::skill_timer_ers", 150); //For handling skill_timerskills [Skotlex]
 static DBMap* bowling_db = nullptr; // int32 mob_id -> struct mob_data*
 
 DBMap* skillunit_db = nullptr; // int32 id -> struct skill_unit*
@@ -4876,7 +4876,7 @@ static TIMER_FUNC(skill_timerskill){
 		}
 	} while (0);
 	//Free skl now that it is no longer needed.
-	ers_free(skill_timer_ers, skl);
+	skill_timer_ers.free(skl);
 	return 0;
 }
 
@@ -4896,7 +4896,7 @@ int32 skill_addtimerskill (struct block_list *src, t_tick tick, int32 target, in
 	ARR_FIND( 0, MAX_SKILLTIMERSKILL, i, ud->skilltimerskill[i] == 0 );
 	if( i == MAX_SKILLTIMERSKILL ) return 1;
 
-	ud->skilltimerskill[i] = ers_alloc(skill_timer_ers, struct skill_timerskill);
+	ud->skilltimerskill[i] = skill_timer_ers.alloc();
 	ud->skilltimerskill[i]->timer = add_timer(tick, skill_timerskill, src->id, i);
 	ud->skilltimerskill[i]->src_id = src->id;
 	ud->skilltimerskill[i]->target_id = target;
@@ -4937,7 +4937,7 @@ int32 skill_cleartimerskill (struct block_list *src)
 					continue;
 			}
 			delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
-			ers_free(skill_timer_ers, ud->skilltimerskill[i]);
+			skill_timer_ers.free(ud->skilltimerskill[i]);
 			ud->skilltimerskill[i]=nullptr;
 		}
 	}
@@ -6230,7 +6230,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 						}
 
 						delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
-						ers_free(skill_timer_ers, ud->skilltimerskill[i]);
+						skill_timer_ers.free(ud->skilltimerskill[i]);
 						ud->skilltimerskill[i] = nullptr;
 					}
 
@@ -15595,7 +15595,7 @@ int32 skill_castend_pos2(struct block_list* src, int32 x, int32 y, uint16 skill_
 					}
 						
 					delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
-					ers_free(skill_timer_ers, ud->skilltimerskill[i]);
+					skill_timer_ers.free(ud->skilltimerskill[i]);
 					ud->skilltimerskill[i] = nullptr;
 				}
 
@@ -26587,9 +26587,6 @@ void do_init_skill(void)
 	skillunit_db = idb_alloc(DB_OPT_BASE);
 	skillusave_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	bowling_db = idb_alloc(DB_OPT_BASE);
-	skill_timer_ers  = ers_new(sizeof(struct skill_timerskill),"skill.cpp::skill_timer_ers",ERS_CACHE_OPTIONS);
-
-	ers_chunk_size(skill_timer_ers, 150);
 
 	add_timer_func_list(skill_unit_timer,"skill_unit_timer");
 	add_timer_func_list(skill_castend_id,"skill_castend_id");
@@ -26612,5 +26609,4 @@ void do_final_skill(void)
 	db_destroy(skillunit_db);
 	db_destroy(skillusave_db);
 	db_destroy(bowling_db);
-	ers_destroy(skill_timer_ers);
 }

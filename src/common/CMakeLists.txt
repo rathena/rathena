@@ -111,7 +111,6 @@ set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/database.cpp"
 	"${COMMON_SOURCE_DIR}/db.cpp"
 	"${COMMON_SOURCE_DIR}/des.cpp"
-	"${COMMON_SOURCE_DIR}/ers.cpp"
 	"${COMMON_SOURCE_DIR}/grfio.cpp"
 	"${COMMON_SOURCE_DIR}/malloc.cpp"
 	"${COMMON_SOURCE_DIR}/mapindex.cpp"
