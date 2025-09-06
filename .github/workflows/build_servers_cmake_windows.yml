@@ -1,5 +1,4 @@
-name: Build servers with CMake
-# build_servers_cmake.yml
+name: Build servers with CMake on Windows
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
@@ -29,25 +28,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The ubuntu-latest label currently points to ubuntu-24.04.
-          # Available: ubuntu-24.04, ubuntu-22.04
-          os: [ubuntu-latest]
+          os: [windows-latest]
 
     steps:
       - uses: actions/checkout@v4
 
-      # Install latest CMake.
-      - uses: lukka/get-cmake@latest
+      - name: Configure CMake
+        run: cmake -B build
 
-      - name: Create build directory
-        run: mkdir cbuild
-
-      - name: Create Unix Makefiles
-        run: |
-          cd cbuild
-          cmake -G "Unix Makefiles" ..
-
-      - name: Command - make
-        run: |
-          cd cbuild
-          make
+      - name: Build
+        # Execute the build.  You can specify a specific target with "--target <NAME>"
+        run: cmake --build build -j $NUMBER_OF_PROCESSORS --target ALL_BUILD
