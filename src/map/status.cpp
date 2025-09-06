@@ -1630,10 +1630,6 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 	}
 
 	if (sc && hp && status->hp) {
-		if (sc->getSCE(SC_AUTOBERSERK) &&
-			(!sc->getSCE(SC_PROVOKE) || !sc->getSCE(SC_PROVOKE)->val4) &&
-			status->hp < status->max_hp / 4)
-			sc_start4(src,target,SC_PROVOKE,100,10,0,0,1,0);
 		if (sc->getSCE(SC_BERSERK) && status->hp <= 100)
 			status_change_end(target, SC_BERSERK);
 		if( sc->getSCE(SC_RAISINGDRAGON) && status->hp <= 1000 )
@@ -1861,14 +1857,6 @@ int32 status_heal(struct block_list *bl,int64 hhp,int64 hsp, int64 hap, int32 fl
 	status->hp += hp;
 	status->sp += sp;
 	status->ap += ap;
-
-	if(hp && sc &&
-		sc->getSCE(SC_AUTOBERSERK) &&
-		sc->getSCE(SC_PROVOKE) &&
-		sc->getSCE(SC_PROVOKE)->val4==1 &&
-		status->hp >= status->max_hp / 4
-	)	// End auto berserk.
-		status_change_end(bl, SC_PROVOKE);
 
 	// Send HP update to client
 	switch(bl->type) {
@@ -10848,9 +10836,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				tick = INFINITE_TICK;
 			break;
 		case SC_AUTOBERSERK:
-			if (status->hp < status->max_hp / 4 &&
-				(!sc->getSCE(SC_PROVOKE) || sc->getSCE(SC_PROVOKE)->val4==0))
-					sc_start4(src,bl,SC_PROVOKE,100,10,0,0,1,60000);
+			tick_time = 100; // Check to start/end provoke every interval
 			tick = INFINITE_TICK;
 			break;
 		case SC_SIGNUMCRUCIS:
@@ -11638,7 +11624,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			val3 = 5*val1; // Def2 reduction
 			break;
 		case SC_PROVOKE:
-			if (src->type != BL_PC && val1 == 10) {
+			if (src != nullptr && src->type != BL_PC && val1 == 10) {
 				val2 = 0; // 0% Atk increase
 				val3 = 100; // 100% Def reduction
 			}
@@ -14201,12 +14187,20 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 
-	case SC_PROVOKE:
-		if(sce->val4) { // Auto-provoke (it is ended in status_heal)
-			sc_timer_next(1000*60+tick);
-			return 0;
+	case SC_AUTOBERSERK:
+		if (sc->hasSCE(SC_PROVOKE) && sc->getSCE(SC_PROVOKE)->val4 == 1) {
+			// End infinite provoke granted by auto berserk
+			if (status->hp > status->max_hp / 4)
+				status_change_end(bl, SC_PROVOKE);
 		}
-		break;
+		else {
+			// Start infinite provoke granted by auto berserk
+			if (status->hp <= status->max_hp / 4)
+				sc_start4(bl, bl, SC_PROVOKE, 100, 10, 0, 0, 1, INFINITE_TICK);
+		}
+		// Repeat check every interval
+		sc_timer_next(100 + tick);
+		return 0;
 
 	case SC_STONE:
 		if (sce->val4 >= 0 && status->hp > status->max_hp / 4)

@@ -19836,6 +19836,7 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 		switch( skill_id ) {
 			case CG_TAROTCARD: // TarotCard will consume sp in skill_cast_nodamage_id [Inkfish]
 			case MC_IDENTIFY:
+			case SM_AUTOBERSERK:
 			case BD_ADAPTATION:
 			case BD_ENCORE:
 				require.sp = 0;
