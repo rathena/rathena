@@ -5251,7 +5251,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case MER_CRASH:
 	case MC_MAMMONITE:
 	case TF_DOUBLE:
-	case AC_DOUBLE:
 	case MA_DOUBLE:
 	case AS_SONICBLOW:
 	case KN_PIERCE:
@@ -5259,7 +5258,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case KN_SPEARBOOMERANG:
 	case TF_POISON:
 	case TF_SPRINKLESAND:
-	case AC_CHARGEARROW:
 	case MA_CHARGEARROW:
 	case RG_INTIMIDATE:
 	case AM_ACIDTERROR:
@@ -5709,7 +5707,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		[[fallthrough]];
 	case AS_SPLASHER:
 	case HT_BLITZBEAT:
-	case AC_SHOWER:
 	case MA_SHOWER:
 	case MG_NAPALMBEAT:
 	case MG_FIREBALL:
@@ -8683,17 +8680,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		}
 		break;
 
-	case AC_CONCENTRATION:
-		{
-			int32 splash = skill_get_splash(skill_id, skill_lv);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-			skill_reveal_trap_inarea(src, splash, src->x, src->y);
-			map_foreachinallrange( status_change_timer_sub, src,
-				splash, BL_CHAR, src, nullptr, type, tick);
-		}
-		break;
-
 	case MER_PROVOKE:
 		if( status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele) ) {
 			map_freeblock_unlock();
@@ -8919,13 +8905,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		}
 		if (i) status_heal(src, 0, i, 3);
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,i != 0);
-		break;
-
-	case AC_MAKINGARROW:
-		if( sd != nullptr ){
-			clif_arrow_create_list( *sd );
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
 		break;
 
 	case AM_PHARMACY:
