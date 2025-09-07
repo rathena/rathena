@@ -1,22 +1,22 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Kafras (Cities/Dungeons/Fields)
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Joseph
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= Argument settings for callfunc "F_Kafra":
 //=  arg(0): 0 - Default Kafra message
 //=          1 - Niflhiem Kafra message
 //=          2 - Guild Kafra message
-//=  arg(1): 1 - Disable teleport menu 
+//=  arg(1): 1 - Disable teleport menu
 //=  arg(2): 1 - Disable info menu
 //=  arg(3): Cost of Storage service
 //=  arg(4): Cost of Rent a Pushcart service
-//===== Additional Comments: ================================= 
-//= 0.x Previous Authors: 
+//===== Additional Comments: =================================
+//= 0.x Previous Authors:
 //=     - L0ne_W0lf, Daegaladh
 //= 1.0 Merged and cleaned up Kafras. [Euphy]
 //= 1.1 Added Dewata Kafra. [Lemongrass]
@@ -27,7 +27,7 @@
 //= 1.5 Added Glastheim Kafra [Ridley8819]
 //= 1.6 Added Lutie [Lemongrass]
 //= 1.7 Added Rock Ridge Kafra. [Capuche]
-//============================================================ 
+//============================================================
 
 // Dewata
 //============================================================
@@ -84,7 +84,7 @@ malaya,71,79,4	script	Kafra Employee::kaf_malaya1	4_MAL_KAFRA,{
 
 malaya,234,204,4	script	Kafra Employee::kaf_malaya2	4_MAL_KAFRA,{
 	callfunc "F_Kafra",0,3,2,500,700;
-	savepoint "malaya",281,212,1,1;
+	savepoint "malaya",240,196,1,1;
 	callfunc "F_KafEnd",0,1,"in Port Malaya";
 }
 
@@ -102,6 +102,6 @@ harboro1,291,207,5	script	Kafra Employee::kaf_rock	4_F_KAFRA1,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSet";
 	callfunc "F_Kafra",0,8,2,500,0;
-	savepoint "harboro1",355,207,1,1;
+	savepoint "harboro1",294,198,1,1;
 	callfunc "F_KafEnd",2,0,0;
 }

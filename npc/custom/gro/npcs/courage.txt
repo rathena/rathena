@@ -1,0 +1,177 @@
+//===== eAthena Script =======================================
+//= Dog Advanced
+//===== By: ==================================================
+//= whocares
+//===== Current Version: =====================================
+//= 1.3
+//===== Compatible With: =====================================
+//= Any eAthena Version
+//===== Description: =========================================
+//= Free heal
+//===== Additional Comments: =================================
+// 1.1 Redid whole thing with a single script - whocares
+// 2.2 Added some type of statusheals - Disiesel
+// 2.3 Namechange - Mieu
+// 2.4 Added an Add/Subtract option for GMs - Hudelf 4/4/06
+//============================================================
+
+-	script	Courage::dog	81,{
+
+	if (getgmlevel()>=90) goto L_gmmenu;
+	if (HP==MaxHP && SP==MaxSP) goto L_noheal;
+
+	set @minprice,50;
+	set @increment,10;
+	set @base,BaseLevel;
+	set @cost,@minprice+(@base*@increment);
+
+	if (Zeny < @cost) goto L_nozeny;
+
+	mes "[Courage]";
+	mes "I can heal you, but it'll cost you " +@cost+ " zeny to do so.";
+	mes "Do you still want me to heal you?";
+	next;
+	menu "Yes",-,"No",L_end;
+	set Zeny,Zeny-@cost;
+	set $healerfund,$healerfund+@cost;
+	percentheal 100,100;
+	end;
+
+L_gmmenu:
+	mes "[Courage]";
+	mes "Current balance: ^0000FF" +$healerfund+ "^000000.";
+	mes "What would you like to do?";
+	next;
+	menu "Nothing.",L_end,"Retrieve Fund/Reset to 0",-,"Increase/Decrease Funds",L_addsub,"Undo last Fund reset",L_undo;
+
+	mes "[Courage]";
+	mes "Are you sure? This will set your zeny to the Fund, reset the Fund to zero, and overwrite last month's Fund total.";
+	next;
+	menu "No, I changed my mind.",L_end,"Yes, go ahead",-;
+
+	if ($healerfund==0) goto L_empty;
+	set Zeny,$healerfund;
+	set $lasthealfund,$healerfund;
+	set $buhealfund,$healerfund;
+	set $healerfund,0;
+	mes "[Courage]";
+	mes "Reset successful.";
+	close;
+
+L_addsub:
+	mes "[Courage]";
+	mes "Would you like to add or subtract money?";
+	next;
+	menu "Add",L_add,"Subtract",L_sub,"Cancel",L_gmmenu;
+
+	L_add:
+		mes "[Courage]";
+		mes "Current balance: ^0000FF" +$healerfund+ "^000000.";
+		mes "How much would you like to add?";
+		next;
+		input @change;
+		mes "[Courage]";
+		mes "This will change the amount from ^0000FF" +$healerfund+ "^000000 to ^FF0000" +($healerfund+@change)+ "^000000.";
+		mes "Is this okay?";
+		next;
+		menu "Yes",-,"No, cancel it",L_gmmenu;
+		set $healerfund,$healerfund+@change;
+		mes "[Courage]";
+		mes "Action completed.";
+		next;
+		goto L_gmmenu;
+
+	L_sub:
+		mes "[Courage]";
+		mes "Current balance: ^0000FF" +$healerfund+ "^000000.";
+		mes "How much would you like to subtract?";
+		next;
+		input @change;
+		mes "[Courage]";
+		mes "This will change the amount from ^0000FF" +$healerfund+ "^000000 to ^FF0000" +($healerfund-@change)+ "^000000.";
+		mes "Is this okay?";
+		next;
+		menu "Yes",-,"No, cancel it",L_gmmenu;
+		set $healerfund,$healerfund-@change;
+		mes "[Courage]";
+		mes "Action completed.";
+		next;
+		goto L_gmmenu;
+
+L_undo:
+	mes "[Courage]";
+	mes "Fund before reset: ^0000FF" +$buhealfund+ ".^000000";
+	mes "Current balance: ^0000FF" +$healerfund+ "^000000.";
+	mes "Would you like to undo the last Fund reset?";
+	next;
+	menu "No",L_end,"Yes",-;
+
+	set $healerfund,$buhealfund;
+	mes "[Courage]";
+	mes "Undo successful.";
+	close;
+
+L_noheal:
+	//mes "[Courage]";
+	//mes "You don't need my help.";
+	//mes "You're already fully healed.";
+	//close;
+	end;
+
+L_nozeny:
+	mes "[Courage]";
+	mes "Sorry, you don't have enough zeny to cover the costs.";
+	close;
+
+L_empty:
+	mes "[Courage]";
+	mes "The Fund is empty, you may not reset it.";
+	close;
+
+L_end:
+	mes "[Courage]";
+	mes "Alright, come again!";
+	close;
+}
+
+morocc.gat,173,101,5	duplicate(dog)	Courage#Courage01	81
+geffen.gat,128,63,5	duplicate(dog)	Courage#Courage02	81
+alberta.gat,39,240,5	duplicate(dog)	Courage#Courage03	81
+aldebaran.gat,148,114,5	duplicate(dog)	Courage#Courage04	81
+izlude.gat,124,148,5	duplicate(dog)	Courage#Courage05	81
+xmas.gat,143,136,5	duplicate(dog)	Courage#Courage06	81
+comodo.gat,186,162,5	duplicate(dog)	Courage#Courage07	81
+amatsu.gat,104,163,5	duplicate(dog)	Courage#Courage08	81
+gonryun.gat,151,118,5	duplicate(dog)	Courage#Courage09	81
+lighthalzen.gat,164,114,5	duplicate(dog)	Courage#Courage10	81
+ayothaya.gat,221,179,5	duplicate(dog)	Courage#Courage11	81
+prontera.gat,160,187,5	duplicate(dog)	Courage#Courage12	81
+einbroch.gat,55,204,5	duplicate(dog)	Courage#Courage13	81
+jawaii.gat,253,129,5	duplicate(dog)	Courage#Courage14	81
+umbala.gat,95,161,5	duplicate(dog)	Courage#Courage15	81
+//niflheim.gat,199,183,5	duplicate(dog)	Courage#Courage16	81
+yuno.gat,153,191,5	duplicate(dog)	Courage#Courage17	81
+payon.gat,186,104,5	duplicate(dog)	Courage#Courage18	81
+louyang.gat,228,104,5	duplicate(dog)	Courage#Courage19	81
+hugel.gat,101,145,5	duplicate(dog)	Courage#Courage20	81
+einbech.gat,166,126,3	duplicate(dog)	Courage#Courage21	81
+
+rachel.gat,129,119,5	duplicate(dog)	Courage#Courage22	81
+moscovia.gat,230,199,5	duplicate(dog)	Courage#Courage23	81
+veins.gat,209,117,5	duplicate(dog)	Courage#Courage24	81
+mid_camp.gat,201,290,5	duplicate(dog)	Courage#Courage25	81
+manuk.gat,269,143,5	duplicate(dog)	Courage#Courage26	81
+splendide.gat,200,153,5	duplicate(dog)	Courage#Courage27	81
+brasilis.gat,193,222,5	duplicate(dog)	Courage#Courage29	81
+dicastes01.gat,186,197,5	duplicate(dog)	Courage#Courage30	81
+mora.gat,61,139,5	duplicate(dog)	Courage#Courage31	81
+dewata.gat,206,169,5	duplicate(dog)	Courage#Courage32	81
+malangdo.gat,130,121,5	duplicate(dog)	Courage#Courage33	81
+malaya.gat,238,216,5	duplicate(dog)	Courage#Courage34	81
+ecl_in01.gat,44,60,5	duplicate(dog)	Courage#Courage35	81
+lasagna.gat,198,179,5	duplicate(dog)	Courage#Courage36	81
+
+prt_fild05.gat,288,219,5	duplicate(dog)	Courage#Courage37	81
+alb2trea.gat,63,63,5,	duplicate(dog)	Courage#Courage38	81
+pay_arche,40,126,5	duplicate(dog)	Courage#Courage39	81
+moc_ruins,82,155,5	duplicate(dog)	Courage#Courage40	81

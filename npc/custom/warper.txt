@@ -1,6 +1,6 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Warper
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= A complete - but very condensed - warper script.
 //===== Additional Comments: =================================
 //= 1.0 Initial script By [Euphy].
@@ -111,7 +111,7 @@ function Pick {
 }
 function Restrict {
 	.@type$ = getarg(0);
-	
+
 	if (.@type$ == "Brasilis") {
 		// If the official warper to Brasilis is enabled, meaning is either
 		// Renewal mode or Pre-renewal Brasilis is enabled, we lift the restriction
@@ -150,7 +150,7 @@ menu	"Prontera",T1, "Alberta",T2, "Aldebaran",T3, "Amatsu",T4, "Ayothaya",T5,
 T1: Go("prontera",155,183);
 T2: Go("alberta",28,234);
 T3: Go("aldebaran",140,131);
-T4: Go("amatsu",198,84);
+T4: Go("amatsu",115,154);
 T5: Go("ayothaya",208,166);
 T6: Restrict("Brasilis");
 	Go("brasilis",196,217);
@@ -159,7 +159,7 @@ T8: Restrict("RE");
 	Go("dewata",200,180);
 T9: Restrict("RE");
 	Go("ecl_in01",48,53);
-T10: Go("einbech",63,35);
+T10: Go("einbech",176,129);
 T11: Go("einbroch",64,200);
 T12: Restrict("RE");
 	 Go("dicastes01",198,187);
@@ -169,7 +169,7 @@ T15: Restrict("RE");
 	 Go("icecastle",185,212);
 T16: Go("izlude",128,(checkre(3)?146:114));
 T17: Go("jawaii",251,132);
-T18: Go("yuno",157,51);
+T18: Go("yuno",157,186);
 T19: Go("gonryun",160,120);
 T20: Restrict("RE");
 	 Go("lasagna",193,182);
@@ -269,7 +269,7 @@ F16: setarray @c[2],220,227;
 	 Disp("Kunlun Field",1,1); Pick("gon_fild");
 F17: Restrict("RE");
 	 setarray @c[2],344,371,20,98;
-	 Disp("Lasagna Field",1,2); Pick("lasa_fild");	 
+	 Disp("Lasagna Field",1,2); Pick("lasa_fild");
 F18: setarray @c[2],240,179,185,235,240,226;
 	 Disp("Lighthalzen Field",1,3); Pick("lhz_fild");
 F19: setarray @c[2],229,187;
@@ -526,7 +526,7 @@ C8: Restrict("RE");
 	setarray @c[2],134,65,240,128,153,137,111,240,208,240;
 	Disp("Gloria 1:Gloria 2:Gloria 3:Gloria 4:Gloria 5");
 	Pick("","te_prt_gld","te_prt_gld","te_prt_gld","te_prt_gld","te_prt_gld");
-	
+
 // --------------------------------------------------
 	Guild_Dungeons:
 // --------------------------------------------------
@@ -609,14 +609,14 @@ I20: Restrict("RE");
 	Special:
 // --------------------------------------------------
 menu	"Auction Hall",S1, "Battlegrounds",S2, "Casino",S3, "Dimensional Rift",S4,
-		"Eden Group Headquarters",S5, "Kunlun Arena",S6, "Izlude Arena",S7, 
+		"Eden Group Headquarters",S5, "Kunlun Arena",S6, "Izlude Arena",S7,
 		"Monster Race Arena",S8, "Para Market",S9, "Turbo Track",S10;
 
 S1: Go("auction_01",22,68);
 S2: Go("bat_room",154,150);
 S3: Go("cmd_in02",179,129);
 S4: Restrict("RE");
-	Go("dali",113,82);	
+	Go("dali",113,82);
 S5: Restrict("RE");
 	Go("moc_para01",31,14);
 S6: Go("gon_test",48,10);
@@ -638,15 +638,15 @@ OnNaviGenerate:
 	naviregisterwarp("Warper > Prontera", "prontera", 155, 183);
 	naviregisterwarp("Warper > Alberta", "alberta", 28, 234);
 	naviregisterwarp("Warper > Al De Baran", "aldebaran", 140, 131);
-	naviregisterwarp("Warper > Amatsu", "amatsu", 198, 84);
+	naviregisterwarp("Warper > Amatsu", "amatsu", 115, 154);
 	naviregisterwarp("Warper > Ayothaya", "ayothaya", 208, 166);
-	naviregisterwarp("Warper > Einbech", "einbech",63,35);
+	naviregisterwarp("Warper > Einbech", "einbech",176,129);
 	naviregisterwarp("Warper > Einbroch", "einbroch",64,200);
 	naviregisterwarp("Warper > Geffen", "geffen",119,59);
 	naviregisterwarp("Warper > Hugel", "hugel",96,145);
 	naviregisterwarp("Warper > Izlude", "izlude",128,(checkre(3)?146:114));
 	naviregisterwarp("Warper > Jawaii", "jawaii",251,132);
-	naviregisterwarp("Warper > Juno", "yuno",157,51);
+	naviregisterwarp("Warper > Juno", "yuno",157,186);
 	naviregisterwarp("Warper > Kunlun", "gonryun",160,120);
 	naviregisterwarp("Warper > Lighthalzen", "lighthalzen",158,92);
 	naviregisterwarp("Warper > Luoyang", "louyang",217,100);
@@ -963,7 +963,7 @@ OnNaviGenerate:
 		naviregisterwarp("Warper > Amatsu Dungeon 2", "ama_dun02", 34, 41);
 		naviregisterwarp("Warper > Amatsu Dungeon 3", "ama_dun03", 119, 14);
 	}
-	
+
 	naviregisterwarp("Warper > Anthell 1", "anthell01", 35, 262);
 	if (!.OnlyFirstDun) {
 		naviregisterwarp("Warper > Anthell 2", "anthell02", 168, 170);
@@ -1339,20 +1339,20 @@ OnInit:
 alb2trea,57,70,6	duplicate(Warper)	Warper#tre	811
 alberta,28,240,4	duplicate(Warper)	Warper#alb	811
 aldebaran,145,118,4	duplicate(Warper)	Warper#alde	811
-amatsu,203,87,4	duplicate(Warper)	Warper#ama	811
+amatsu,124,162,4	duplicate(Warper)	Warper#ama	811
 ayothaya,209,169,6	duplicate(Warper)	Warper#ayo	811
 comodo,194,158,4	duplicate(Warper)	Warper#com	811
-einbech,59,38,6	duplicate(Warper)	Warper#einbe	811
+einbech,172,135,6	duplicate(Warper)	Warper#einbe	811
 einbroch,69,202,4	duplicate(Warper)	Warper#einbr	811
 gef_fild10,71,339,4	duplicate(Warper)	Warper#orc	811
 geffen,124,72,4	duplicate(Warper)	Warper#gef	811
 glast_01,372,308,4	duplicate(Warper)	Warper#glh	811
-gonryun,162,122,4	duplicate(Warper)	Warper#gon	811
+gonryun,156,123,4	duplicate(Warper)	Warper#gon	811
 hugel,101,151,4	duplicate(Warper)	Warper#hug	811
 izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	811
-izlude,134,150,4	duplicate(Warper)	Warper#izl	811	//Pre-RE: (132,120)
+izlude,121,151,4	duplicate(Warper)	Warper#izl	811	//Pre-RE: (132,120)
 jawaii,253,138,4	duplicate(Warper)	Warper#jaw	811
-lighthalzen,162,102,4	duplicate(Warper)	Warper#lhz	811
+lighthalzen,153,114,4	duplicate(Warper)	Warper#lhz	811
 louyang,208,103,6	duplicate(Warper)	Warper#lou	811
 manuk,274,146,6	duplicate(Warper)	Warper#man	811
 mid_camp,216,288,4	duplicate(Warper)	Warper#mid	811
@@ -1372,7 +1372,7 @@ thor_camp,249,76,4	duplicate(Warper)	Warper#thor	811
 umbala,106,150,3	duplicate(Warper)	Warper#umb	811
 veins,214,123,4	duplicate(Warper)	Warper#ve	811
 xmas,150,136,6	duplicate(Warper)	Warper#xmas	811
-yuno,162,47,4	duplicate(Warper)	Warper#yuno	811
+yuno,162,191,4	duplicate(Warper)	Warper#yuno	811
 
 // --------------------------------------------------
 //	Duplicates (Renewal):
