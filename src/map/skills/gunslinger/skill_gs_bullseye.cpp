@@ -1,0 +1,24 @@
+#include "skill_gs_bullseye.hpp"
+
+SkillGS_BULLSEYE::SkillGS_BULLSEYE() : WeaponSkillImpl(GS_BULLSEYE) {
+}
+
+void SkillGS_BULLSEYE::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio) const {
+	const struct status_data *tstatus = status_get_status_data(*target);
+	
+	// Only works well against brute/demihumans non bosses.
+	if ((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM) && !status_has_mode(tstatus, MD_STATUSIMMUNE))
+		base_skillratio += 400;
+}
+
+void SkillGS_BULLSEYE::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	skill_attack(BF_WEAPON, src, src, target, GS_BULLSEYE, skill_lv, tick, flag);
+}
+
+void SkillGS_BULLSEYE::applyAdditionalEffects(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
+	const struct status_data *tstatus = status_get_status_data(*target);
+	
+	// 0.1% coma rate.
+	if (tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM)
+		status_change_start(src, target, SC_COMA, 10, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
+}
