@@ -129,7 +129,7 @@ bonus bAtk,n;      			ATK + n (unofficial)
 bonus bAtk2,n;     			ATK2 + n
 bonus bAtkRate,n;  			ATK + n% that won't interfere with Damage modifier and SC_EDP (renewal mode only)
 bonus bWeaponAtkRate,n; 	Weapon ATK + n%
-bonus bNormalAtkRate,n;		Normal ATK + n% (renewal, the damage bonus doesn't increase critical damage)
+bonus bNormalAtkRate,n;		Normal ATK + n% (renewal mode only, the damage bonus doesn't increase critical damage)
 bonus bMatk,n;     			Magical attack power + n
 bonus bMatk2,n;     		Magical attack power + n (not visible in status window)
 bonus bMatkRate,n; 			Magical attack power + n%
