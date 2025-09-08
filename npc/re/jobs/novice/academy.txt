@@ -4248,11 +4248,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients- ^0000cd1 Clover, 1 Green Herb, 1 Red Herb^000000.";
 				next;
-				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
+				cutin "ï¿½ç³ªÆ½Ä«ï¿½ï¿½.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Clover and the Red Herb are dropped by Lunatic or Fabre monsters wandering everywhere on the field outside Izlude.";
 				next;
-				cutin "ÆÄºê¸£Ä«µå.bmp", 3;
+				cutin "ï¿½Äºê¸£Ä«ï¿½ï¿½.bmp", 3;
 				mes "[Eclaire]";
 				mes "Green Herbs are dropped by Fabres.";
 				next;
@@ -4274,11 +4274,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Apple & 2 Carrots^000000.";
 				next;
-				cutin "Æ÷¸µÄ«µå.bmp", 3;
+				cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Apples are dropped by Porings bouncing around the field outside of Izlude.";
 				next;
-				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
+				cutin "ï¿½ç³ªÆ½Ä«ï¿½ï¿½.bmp", 3;
 				mes "[Eclaire]";
 				mes "Carrots are given by Lunatics.";
 				next;
@@ -4300,15 +4300,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Jellopy, 1 Fluff, 1 Feather^000000.";
 				next;
-				cutin "Æ÷¸µÄ«µå.bmp", 3;
+				cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Jellopy are dropped by Porings bouncing around the field of Izlude.";
 				next;
-				cutin "ÆÄºê¸£Ä«µå.bmp", 3;
+				cutin "ï¿½Äºê¸£Ä«ï¿½ï¿½.bmp", 3;
 				mes "[Eclaire]";
 				mes "Fluff can be received from Fabre or Lunatic.";
 				next;
-				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
+				cutin "ï¿½ç³ªÆ½Ä«ï¿½ï¿½.bmp", 3;
 				mes "[Mille Feuille]";
 				mes "Feathers are dropped by Lunatics or Fabres.";
 				next;
@@ -4330,11 +4330,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are-^0000cd 1 Apple & 1 Clover^000000.";
 				next;
-				cutin "Æ÷¸µÄ«µå.bmp", 3;
+				cutin "ï¿½ï¿½ï¿½ï¿½Ä«ï¿½ï¿½.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Apple can be found in Porings in the field outside of Izlude.";
 				next;
-				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
+				cutin "ï¿½ç³ªÆ½Ä«ï¿½ï¿½.bmp", 3;
 				mes "[Eclaire]";
 				mes "Clovers are dropped by Lunatics or Fabre in the field outside Izlude.";
 				next;
@@ -12809,7 +12809,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "This item cannot be refined.";
 		close;
 	}
-	// if (!getequipisidentify(.@part)) {// getequipisidentify command removed 
+	// if (!getequipisidentify(.@part)) {// getequipisidentify command removed
 		// mes "[Refining Machine Wagjak]";
 		// mes "^FF0000- error number 5555 -^000000";
 		// mes "This item has not yet been identified.";
@@ -14254,11 +14254,11 @@ new_1-1,53,114,3	script	Training Instructor#1a	4_F_03,{
 	end;
 }
 
-new_1-2,100,29,4	duplicate(Training Instructor#1a)	Training Instructor#1b	4_F_03
-new_1-2,100,105,3	duplicate(Training Instructor#1a)	Training Instructor#1c	4_F_03
-new_1-2,161,182,5	duplicate(Training Instructor#1a)	Training Instructor#1d	4_F_03
-new_1-2,33,172,4	duplicate(Training Instructor#1a)	Training Instructor#1e	4_F_03
-new_1-4,100,29,1	duplicate(Training Instructor#1a)	Training Instructor#1f	4_F_03
+//new_1-2,100,29,4	duplicate(Training Instructor#1a)	Training Instructor#1b	4_F_03
+//new_1-2,100,105,3	duplicate(Training Instructor#1a)	Training Instructor#1c	4_F_03
+//new_1-2,161,182,5	duplicate(Training Instructor#1a)	Training Instructor#1d	4_F_03
+//new_1-2,33,172,4	duplicate(Training Instructor#1a)	Training Instructor#1e	4_F_03
+//new_1-4,100,29,1	duplicate(Training Instructor#1a)	Training Instructor#1f	4_F_03
 new_2-1,53,114,3	duplicate(Training Instructor#1a)	Training Instructor#2a	4_F_03
 new_2-2,100,29,4	duplicate(Training Instructor#1a)	Training Instructor#2b	4_F_03
 new_2-2,100,105,3	duplicate(Training Instructor#1a)	Training Instructor#2c	4_F_03
