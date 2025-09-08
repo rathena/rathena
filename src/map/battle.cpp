@@ -8005,6 +8005,12 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		if (tsd && tsd->bonus.crit_def_rate != 0)
 			ATK_ADDRATE(wd.damage, wd.damage2, -tsd->bonus.crit_def_rate);
 	}
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+		sd != nullptr
+		&& !(wd.type == DMG_CRITICAL || wd.type == DMG_MULTI_HIT_CRITICAL)
+		&& !(skill != nullptr && skill->inf2[INF2_IGNORENORMALATKBONUS])) {
+		ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.normal_atk_rate);
+	}
 #endif
 
 	switch (skill_id) {
@@ -8138,13 +8144,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	battle_absorb_damage(target, &wd);
 
 	battle_do_reflect(BF_WEAPON,&wd, src, target, skill_id, skill_lv); //WIP [lighta]
-
-	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-		sd != nullptr
-		&& !(wd.type == DMG_CRITICAL || wd.type == DMG_MULTI_HIT_CRITICAL)
-		&& !(skill != nullptr && skill->inf2[INF2_IGNORENORMALATKBONUS])) {
-		ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.normal_atk_rate);
-	}
 
 	return wd;
 }
