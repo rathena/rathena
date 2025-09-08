@@ -79,7 +79,6 @@ public:
     void free(T* obj) { delete obj; }
 
     void setChunkSize(uint32) {}
-    void set_chunk_size(uint32 n) { setChunkSize(n); }
     std::size_t entry_size() const { return sizeof(T); }
     void finalize() {}
 
@@ -109,7 +108,6 @@ public:
     }
 
     void setChunkSize(uint32 n) { if (n > 0) chunkSize_ = n; }
-    void set_chunk_size(uint32 n) { setChunkSize(n); }
     std::size_t entry_size() const { return sizeof(T); }
 
     void finalize() {
