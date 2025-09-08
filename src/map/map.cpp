@@ -4976,6 +4976,16 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			}
 			mapdata->setMapFlag(mapflag, status);
 			break;
+		case MF_INVINCIBLE_TIME:
+			if (status) {
+				nullpo_retr(false, args);
+
+				// TODO: do we really want a default value? and one that is different from the default value of the battle conf?
+				// Default is 5 seconds.
+				mapdata->setMapFlag(mapflag, (args->flag_val <= 0) ? 5000 : args->flag_val);
+			} else
+				mapdata->setMapFlag(mapflag, false);
+			break;
 		default:
 			mapdata->setMapFlag(mapflag, status);
 			break;

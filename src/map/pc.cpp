@@ -834,11 +834,11 @@ static TIMER_FUNC(pc_invincible_timer){
 void pc_setinvincibletimer(map_session_data* sd) {
 	nullpo_retv(sd);
 
-	int32 val;
-	struct map_data* mapdata = map_getmapdata(sd->m);
+	t_tick val;
+	map_data* mapdata = map_getmapdata(sd->m);
 
-	if (mapdata_flag_gvg(mapdata))
-		val = battle_config.pc_invincible_time_gvg;
+	if (mapdata != nullptr && mapdata->getMapFlag(MF_INVINCIBLE_TIME) > 0)
+		val = mapdata->getMapFlag(MF_INVINCIBLE_TIME);
 	else
 		val = battle_config.pc_invincible_time;
 
