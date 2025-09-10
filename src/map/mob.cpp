@@ -3614,6 +3614,7 @@ int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type)
 	if( md->can_summon )
 		mob_deleteslave(md);
 
+	// TODO: Check if this is called to early. md is still used below.
 	freeLock.unlock();
 
 	if( !rebirth ) {

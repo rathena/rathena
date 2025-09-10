@@ -7506,6 +7506,7 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	if( sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER) ) //Should only remove after the skill has been casted.
 		status_change_end(src,SC_CURSEDCIRCLE_ATKER);
 
+	// TODO: Check if this unlock call is too early. Compare with skill_castend_nodamage_id, there it seems to be called correctly via deconstructor.
 	freeLock.unlock();
 
 	if( sd && !(flag&1) )

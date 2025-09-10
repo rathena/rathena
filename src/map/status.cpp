@@ -14148,7 +14148,7 @@ TIMER_FUNC(status_change_timer){
 		sce->timer = add_timer(t, status_change_timer, bl->id, data);
 	};
 	
-	FreeBlockLock freeLock{false};
+	FreeBlockLock freeLock(false);
 
 	switch(type) {
 	case SC_MAXIMIZEPOWER:
