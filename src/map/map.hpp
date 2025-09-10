@@ -1085,6 +1085,22 @@ inline bool map_flag_gvg2_no_te(int16 m) {
 	return mapdata_flag_gvg2_no_te(mapdata);
 }
 
+// RAII class for locking freeblock
+class FreeBlockLock {
+public:
+	explicit FreeBlockLock(bool startLocked = true);
+	~FreeBlockLock();
+
+	void lock();
+	void unlock();
+
+	FreeBlockLock(const FreeBlockLock&) = delete;
+	FreeBlockLock& operator=(const FreeBlockLock&) = delete;
+private:
+	bool locked;
+};
+
+
 extern char motd_txt[];
 extern char charhelp_txt[];
 extern char channel_conf[];
