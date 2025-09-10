@@ -1048,7 +1048,7 @@ bool instance_destroy(int32 instance_id)
  * @param y: Y coordinate
  * @return e_instance_enter value
  */
-e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, int16 x, int16 y)
+e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const char *name, int16 x, int16 y, bool do_warp)
 {
 	nullpo_retr(IE_OTHER, sd);
 	
@@ -1131,8 +1131,34 @@ e_instance_enter instance_enter(map_session_data *sd, int32 instance_id, const c
 	if ((m = instance_mapid(db->enter.map, instance_id)) < 0)
 		return IE_OTHER;
 
-	if (pc_setpos(sd, map_id2index(m), x, y, CLR_OUTSIGHT))
+	if (do_warp) {
+		if (pc_setpos(sd, map_id2index(m), x, y, CLR_OUTSIGHT))
+			return IE_OTHER;
+	} else {
+		sd->instance_warp = std::make_shared<s_instance_warp>(instance_id, m, x, y);
+	}
+
+	return IE_OK;
+}
+
+/*==========================================
+ * Execute stored instance warp
+ * @param sd: Player to warp
+ * @return e_instance_enter value
+ *------------------------------------------*/
+e_instance_enter instance_warp(map_session_data *sd)
+{
+	nullpo_retr(IE_OTHER, sd);
+
+	if (!sd->instance_warp || sd->instance_warp->map_id <= 0)
 		return IE_OTHER;
+
+	if (pc_setpos(sd, map_id2index(sd->instance_warp->map_id), 
+				sd->instance_warp->x, sd->instance_warp->y, CLR_OUTSIGHT))
+		return IE_OTHER;
+
+	// Clear warp data after successful warp
+	sd->instance_warp.reset();
 
 	return IE_OK;
 }
