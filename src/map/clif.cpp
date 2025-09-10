@@ -10743,7 +10743,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 
 	struct map_data *mapdata = map_getmapdata(sd->m);
 
-	pc_setinvincibletimer(sd);
+	pc_setinvincibletimer( *sd );
 
 	if( mapdata->users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->m);
