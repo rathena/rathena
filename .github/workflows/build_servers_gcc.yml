@@ -1,5 +1,4 @@
 name: Build servers with GCC
-# build_servers_gcc.yml
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
