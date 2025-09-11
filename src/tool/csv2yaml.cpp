@@ -156,6 +156,16 @@ static void skilltree_txt_data(const std::string &modePath, const std::string &f
 		sv_readdb(modePath.c_str(), "skill_tree.txt", ',', 3 + MAX_PC_SKILL_REQUIRE * 2, 5 + MAX_PC_SKILL_REQUIRE * 2, -1, pc_readdb_skilltree, false);
 }
 
+// Produce database data to memory
+static void produce_txt_data(const std::string &modePath, const std::string &fixedPath) {
+	skill_produce.clear();
+
+	if (fileExists(modePath + "/produce_db.txt"))
+		sv_readdb(modePath.c_str(), "produce_db.txt", ',', 5, 5 + 2 * MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, false);
+	if (fileExists(fixedPath + "/skill_changematerial_db.txt"))
+		sv_readdb(fixedPath.c_str(), "skill_changematerial_db.txt", ',', 5, 5 + 2 * MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, false);
+}
+
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
@@ -563,13 +573,28 @@ bool Csv2YamlTool::initialize( int32 argc, char* argv[] ){
 	})) {
 		return 0;
 	}
-	
+	produce_txt_data(path_db_mode, path_db);
+	if (!process("PRODUCE_DB", 1, { path_db_mode }, "produce_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return skill_producedb_yaml();
+	})) {
+		return 0;
+	}
+
+	produce_txt_data(path_db_import, path_db_import);
+	if (!process("PRODUCE_DB", 1, { path_db_import }, "produce_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return skill_producedb_yaml();
+	})) {
+		return 0;
+	}
+
+	// TODO: add implementations ;-)
+
 	homunculus_txt_data(path_db_import, path_db_import);
 	if (!process("HOMUNCULUS_DB", 1, { path_db_import }, "homunculus_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 50, 50, MAX_HOMUNCULUS_CLASS, read_homunculusdb, false);
 	})) {
-		return 0;
-	}
+	return 0;
+}
 
 	// TODO: add implementations ;-)
 
@@ -5274,6 +5299,169 @@ static bool read_homunculusdb( char* str[], size_t columns, size_t current ){
 
 	body << YAML::EndMap;
 
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_producedb(char* split[], size_t columns, size_t current) {
+	t_itemid nameid = static_cast<t_itemid>(strtoul(split[1], nullptr, 10));
+
+	if (nameid == 0) {
+		ShowError("skill_parse_row_producedb: Removing an item for this DB must be done manually. Skipping.\n");
+		return false;
+	}
+
+	std::string *item_name = util::umap_find(aegis_itemnames, nameid);
+
+	if (!item_name) {
+		ShowError("skill_parse_row_producedb: Invalid item %u.\n", nameid);
+		return false;
+	}
+
+	uint16 skill_id = static_cast<uint16>(strtoul(split[3], nullptr, 10));
+	std::string* skill_name = util::umap_find( aegis_skillnames, skill_id );
+
+	if (skill_id != 0 && skill_name == nullptr) {
+		ShowError( "Skill name for skill id %hu is not known.\n", skill_id );
+		return false;
+	}
+
+	s_skill_produce_db_csv entry = {};
+
+	uint32 skill_lv = strtoul(split[4], nullptr, 10);
+	uint32 itemlv = strtoul(split[2], nullptr, 10);
+
+	entry.produced_name = *item_name;
+	if (skill_name != nullptr) {
+		entry.req_skill_name = *skill_name;
+		entry.req_skill_lv = skill_lv;
+	}
+
+	for (size_t x = 5; x+1 < columns && split[x] && split[x+1]; x += 2) {
+		nameid = static_cast<t_itemid>(strtoul(split[x], nullptr, 10));
+		item_name = util::umap_find(aegis_itemnames, nameid);
+
+		if (!item_name) {
+			ShowError("skill_parse_row_producedb: Invalid item %u.\n", nameid);
+			return false;
+		}
+
+		uint32 amount = strtoul(split[x+1], nullptr, 10);
+		if (amount == 0)
+			entry.item_notconsumed.push_back(*item_name);
+		else
+			entry.item_consumed[ *item_name ] = amount;
+	}
+
+	const auto &exists = skill_produce.find(itemlv);
+
+	if (exists != skill_produce.end())
+		exists->second.push_back(entry);
+	else {
+		std::vector<s_skill_produce_db_csv> produce;
+
+		produce.push_back(entry);
+		skill_produce.insert({ itemlv, produce });
+	}
+
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_changematerialdb(char* split[], size_t columns, size_t current)
+{
+	t_itemid nameid = static_cast<t_itemid>(strtoul(split[1], nullptr, 10));
+
+	// Import just for clearing/disabling from original data
+	// NOTE: If import for disabling, better disable list from produce_db instead of here, or creation just failed with deleting requirements.
+	if (nameid == 0) {
+		ShowError("skill_parse_row_changematerialdb: Removing an item for this DB must be done manually. Skipping.\n");
+		return false;
+	}
+
+	std::string *produced_name = util::umap_find(aegis_itemnames, nameid);
+
+	if (!produced_name) {
+		ShowError("skill_parse_row_changematerialdb: Invalid item %u.\n", nameid);
+		return false;
+	}
+
+	s_skill_changematerial_db_csv item = {};
+
+	item.baserate = static_cast<uint16>(strtoul(split[2], nullptr, 10));
+	for (size_t x = 3; x+1 < columns && split[x] && split[x+1]; x += 2) {
+		item.qty.insert({ static_cast<uint16>(strtoul(split[x], nullptr, 10)), static_cast<uint16>(strtoul(split[x+1], nullptr, 10)) });
+	}
+
+	skill_changematerial_db.insert({ *produced_name, item });
+
+	return true;
+}
+
+static bool skill_producedb_yaml(void) {
+	for (const auto &produceit : skill_produce) {
+		body << YAML::BeginMap;
+		body << YAML::Key << "ItemLevel" << YAML::Value << produceit.first;
+		body << YAML::Key << "Recipe";
+		body << YAML::BeginSeq;
+
+		for (const auto &it : produceit.second) {
+			body << YAML::BeginMap;
+			body << YAML::Key << "Product" << YAML::Value << it.produced_name;
+
+			// additional lines from skill_changematerial_db (which uses ItemLV 26)
+			if (produceit.first == 26) {
+				s_skill_changematerial_db_csv* changematerial = util::umap_find( skill_changematerial_db, it.produced_name );
+				if (changematerial != nullptr) {
+					if (changematerial->baserate != 1000)
+						body << YAML::Key << "BaseRate" << YAML::Value << changematerial->baserate;
+					if (!changematerial->qty.empty()) {
+						body << YAML::Key << "Make";
+						body << YAML::BeginSeq;
+						for (const auto &qit : changematerial->qty) {
+							body << YAML::BeginMap;
+							body << YAML::Key << "Amount" << YAML::Value << qit.first;
+							if (qit.second != 1000)
+								body << YAML::Key << "Rate" << YAML::Value << qit.second;
+							body << YAML::EndMap;
+						}
+						body << YAML::EndSeq;
+					}
+				}
+			}
+
+			if (it.req_skill_lv > 0) {
+				body << YAML::Key << "SkillName" << YAML::Value << it.req_skill_name;
+				body << YAML::Key << "SkillLevel" << YAML::Value << it.req_skill_lv;
+			}
+
+			if (!it.item_consumed.empty()) {
+				body << YAML::Key << "Consumed";
+				body << YAML::BeginSeq;
+				for (const auto &itemit : it.item_consumed) {
+					body << YAML::BeginMap;
+					body << YAML::Key << "Item" << YAML::Value << itemit.first;
+					body << YAML::Key << "Amount" << YAML::Value << itemit.second;
+					body << YAML::EndMap;
+				}
+				body << YAML::EndSeq;
+			}
+
+			if (!it.item_notconsumed.empty()) {
+				body << YAML::Key << "NotConsumed";
+				body << YAML::BeginSeq;
+				for (const auto &itemit : it.item_notconsumed) {
+					body << YAML::BeginMap;
+					body << YAML::Key << "Item" << YAML::Value << itemit;
+					body << YAML::EndMap;
+				}
+				body << YAML::EndSeq;
+			}
+			body << YAML::EndMap;
+		}
+		body << YAML::EndSeq;
+		body << YAML::EndMap;
+	}
 	return true;
 }
 

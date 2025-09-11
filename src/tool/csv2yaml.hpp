@@ -40,6 +40,10 @@ class Csv2YamlTool : public Core{
 ///Maximum amount of items a combo may require
 #define MAX_ITEMS_PER_COMBO 6
 #define MAX_HOM_SKILL_REQUIRE 5
+#define MAX_SKILL_CHANGEMATERIAL_DB 75
+#define MAX_SKILL_CHANGEMATERIAL_SET 3
+#define MAX_SKILL_PRODUCE_DB	300 /// Max Produce DB
+#define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 
 struct s_skill_tree_entry_csv {
 	std::string skill_name;
@@ -62,6 +66,23 @@ std::unordered_map<uint16, s_skill_copyable> skill_copyable;
 std::unordered_map<uint16, s_skill_db> skill_nearnpc;
 
 std::unordered_map<int32, std::vector<s_homun_skill_tree_entry>> hom_skill_tree;
+
+struct s_skill_produce_db_csv {
+	std::string produced_name,
+		req_skill_name;
+	uint32 req_skill_lv,
+		itemlv;
+	std::map<std::string, uint32> item_consumed;
+	std::vector<std::string> item_notconsumed;
+};
+
+std::map<uint32, std::vector<s_skill_produce_db_csv>> skill_produce;
+
+struct s_skill_changematerial_db_csv {
+	uint16 baserate;
+	std::map<uint16, uint16> qty;
+};
+std::unordered_map<std::string, s_skill_changematerial_db_csv> skill_changematerial_db;
 
 static uint32 level_penalty[3][CLASS_MAX][MAX_LEVEL * 2 + 1];
 
@@ -534,5 +555,9 @@ static bool itemdb_read_combos(const char* file);
 static bool cashshop_parse_dbrow( char* fields[], size_t columns, size_t current );
 static bool read_homunculus_skilldb( char* split[], size_t columns, size_t current );
 static bool read_homunculusdb( char* str[], size_t columns, size_t current );
+static bool skill_parse_row_producedb(char* fields[], size_t columns, size_t current);
+static bool skill_producedb_yaml();
+static bool skill_parse_row_producedb(char *split[], size_t columns, size_t current);
+static bool skill_parse_row_changematerialdb(char* fields[], size_t columns, size_t current);
 
 #endif /* CSV2YAML_HPP */
