@@ -18,13 +18,17 @@ RAPIDYAML_INCLUDE = -I../../3rdparty/rapidyaml/src -I../../3rdparty/rapidyaml/ex
 NLOHMANN_H = $(shell find ../../3rdparty/json/include/nlohmann/ -type f -name "*.hpp")
 NLOHMANN_INCLUDE = -I../../3rdparty/json/include
 
-MAP_OBJ = $(shell ls *.cpp | sed -e "s/\.cpp/\.o/g")
+# Create object directories for subdirectories
+MAP_OBJ_DIRS = $(sort $(dir $(MAP_DIR_OBJ)))
+MAP_GEN_OBJ_DIRS = $(sort $(dir $(MAP_GEN_DIR_OBJ)))
+MAP_H = $(shell find ../ -type f -name "*.hpp") \
+	$(shell ls ../config/*.hpp) \
+	../custom/battle_config_struct.inc
+
+MAP_OBJ = $(shell find . -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" -e "s/^\.\///")
 #MAP_OBJ += $(shell ls *.c | sed -e "s/\.c/\.o/g")
 MAP_DIR_OBJ = $(MAP_OBJ:%=obj/%)
 MAP_GEN_DIR_OBJ = $(MAP_OBJ:%=obj-gen/%)
-MAP_H = $(shell ls ../map/*.hpp) \
-	$(shell ls ../config/*.hpp) \
-	../custom/battle_config_struct.inc
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
@@ -74,13 +78,22 @@ needs_mysql:
 
 # object directories
 
-obj:
+obj: $(MAP_OBJ_DIRS)
 	@echo "	MKDIR	obj"
-	@-mkdir obj
+	@-mkdir -p obj
 
-obj-gen:
+obj-gen: $(MAP_GEN_OBJ_DIRS)
 	@echo "	MDIR	obj-gen"
-	@-mkdir obj-gen
+	@-mkdir -p obj-gen
+
+# Create subdirectories
+$(MAP_OBJ_DIRS):
+	@echo "	MKDIR	$@"
+	@-mkdir -p $@
+
+$(MAP_GEN_OBJ_DIRS):
+	@echo "	MKDIR	$@"
+	@-mkdir -p $@
 
 # executables
 

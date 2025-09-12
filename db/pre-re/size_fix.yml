@@ -36,3 +36,5 @@ Body:
   - Weapon: Knuckle
     Medium: 75
     Large: 50
+  - Weapon: Whip
+    Large: 50

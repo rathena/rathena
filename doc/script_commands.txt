@@ -1,9 +1,9 @@
-﻿//===== rAthena Documentation================================
+//===== rAthena Documentation================================
 //= rAthena Script Commands
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20220308
+//= 20250517
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -1018,6 +1018,13 @@ mapflag for it to work is because, otherwise, it'd be server-wide and trigger
 every time a player would change maps. Imagine the server load with 1,000 players
 (oh the pain...)
 
+OnPCIdentifyEvent:
+
+This special label triggers when a player successfully identifies an item.
+It is invoked each time the player uses an identifying action (such as using a Magnifier or MC_IDENTIFY).
+The temporary variable '@identify_idx' contains the index number of the item that was
+identified in the list, allowing scripts to determine which item was identified by the player.
+
 OnWhisperGlobal:
 
 This special label triggers when a player whispers the NPC, and will run with the
@@ -1187,6 +1194,11 @@ The following sample will open a preview window for Red Potion:
 	mes "Did you ever consume a <ITEM>Red Potion<INFO>501</INFO></ITEM>?";
 
 NOTE: Be aware that item links are broken in some 2015 clients.
+
+In 2023 the syntax ^i[Item ID] was introduced to display an item icon inside a NPC dialog.
+We created a script command "mesitemicon" that allows you to create the correct syntax
+depending on your configured packet version. We recommend that you use this script command
+instead of hardcoding the other syntax. For more details see the documentation for "mesitemicon".
 
 URLs
 ----
@@ -3098,31 +3110,128 @@ and return the info set by TYPE argument.
 It will return -1 if there is no such item or "" if the aegis item name is requested.
 
 Valid types are:
-	ITEMINFO_BUY             (0)   -  Buy Price
-	ITEMINFO_SELL            (1)   -  Sell Price
-	ITEMINFO_TYPE            (2)   -  Type
-	ITEMINFO_MAXCHANCE       (3)   -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
-		                        if = 0, then monsters don't drop it at all (rare or a quest item)
-		                        if = 10000, then this item is sold in NPC shops only
-	ITEMINFO_GENDER          (4)   -  Gender
-	ITEMINFO_LOCATIONS       (5)   -  Location(s)
-	ITEMINFO_WEIGHT          (6)   -  Weight
-	ITEMINFO_ATTACK          (7)   -  ATK
-	ITEMINFO_DEFENSE         (8)   -  DEF
-	ITEMINFO_RANGE           (9)   -  Range
-	ITEMINFO_SLOT           (10)   -  Slot
-	ITEMINFO_VIEW           (11)   -  View
-	ITEMINFO_EQUIPLEVELMIN  (12)   -  equipment LV
-	ITEMINFO_WEAPONLEVEL    (13)   -  weapon LV
-	ITEMINFO_ALIASNAME      (14)   -  AliasName
-	ITEMINFO_EQUIPLEVELMAX  (15)   -  equipment LV Max
-	ITEMINFO_MAGICATTACK    (16)   -  matk if RENEWAL is defined
-	ITEMINFO_ID             (17)   -  item ID
-	ITEMINFO_AEGISNAME      (18)   -  aegis item name
-	ITEMINFO_ARMORLEVEL     (19)   -  armor LV
-	ITEMINFO_SUBTYPE        (20)   -  Subtype
+	ITEMINFO_BUY              -  Buy Price
+	ITEMINFO_SELL             -  Sell Price
+	ITEMINFO_TYPE             -  Type
+	ITEMINFO_MAXCHANCE        -  maxchance (max drop chance of this item, e.g. 1 = 0.01%)
+		                         if = 0, then monsters don't drop it at all (rare or a quest item)
+		                         if = 10000, then this item is sold in NPC shops only
+	ITEMINFO_GENDER           -  Gender
+	ITEMINFO_LOCATIONS        -  Location(s)
+	ITEMINFO_WEIGHT           -  Weight
+	ITEMINFO_ATTACK           -  ATK
+	ITEMINFO_DEFENSE          -  DEF
+	ITEMINFO_RANGE            -  Range
+	ITEMINFO_SLOT             -  Slot
+	ITEMINFO_VIEW             -  View
+	ITEMINFO_EQUIPLEVELMIN    -  equipment LV
+	ITEMINFO_WEAPONLEVEL      -  weapon LV
+	ITEMINFO_ALIASNAME        -  AliasName
+	ITEMINFO_EQUIPLEVELMAX    -  equipment LV Max
+	ITEMINFO_MAGICATTACK      -  matk if RENEWAL is defined
+	ITEMINFO_ID               -  item ID
+	ITEMINFO_AEGISNAME        -  aegis item name
+	ITEMINFO_ARMORLEVEL       -  armor LV
+	ITEMINFO_SUBTYPE          -  Subtype
 
 See the sample in 'doc/sample/getiteminfo.txt'.
+
+Returned values and their constants (constant = value),
+one can use either the value or the constants for your checks:
+
+	ITEMINFO_TYPE:
+		IT_HEALING
+		IT_UNKNOWN
+		IT_USABLE
+		IT_ETC
+		IT_ARMOR
+		IT_WEAPON
+		IT_CARD
+		IT_PETEGG
+		IT_PETARMOR
+		IT_UNKNOWN2
+		IT_AMMO
+		IT_DELAYCONSUME
+		IT_SHADOWGEAR
+		IT_CASH
+		
+	ITEMINFO_SUBTYPE:
+		Weapons
+			W_FIST //Bare hands
+			W_DAGGER
+			W_1HSWORD
+			W_2HSWORD
+			W_1HSPEAR
+			W_2HSPEAR
+			W_1HAXE
+			W_2HAXE
+			W_MACE
+			W_2HMACE
+			W_STAFF
+			W_BOW
+			W_KNUCKLE
+			W_MUSICAL
+			W_WHIP
+			W_BOOK
+			W_KATAR
+			W_REVOLVER
+			W_RIFLE
+			W_GATLING
+			W_SHOTGUN
+			W_GRENADE
+			W_HUUMA
+			W_2HSTAFF
+			W_DOUBLE_DD // 2 daggers
+			W_DOUBLE_SS // 2 swords
+			W_DOUBLE_AA // 2 axes
+			W_DOUBLE_DS // dagger + sword
+			W_DOUBLE_DA // dagger + axe
+			W_DOUBLE_SA // sword + axe
+		
+		Ammo
+			AMMO_NONE
+			AMMO_ARROW
+			AMMO_DAGGER
+			AMMO_BULLET
+			AMMO_SHELL
+			AMMO_GRENADE
+			AMMO_SHURIKEN
+			AMMO_KUNAI
+			AMMO_CANNONBALL
+			AMMO_THROWWEAPON
+		
+	ITEMINFO_GENDER:
+		SEX_FEMALE
+		SEX_MALE
+		SEX_BOTH
+		
+	ITEMINFO_LOCATIONS:
+		EQP_HEAD_LOW
+		EQP_HEAD_MID
+		EQP_HEAD_TOP
+		EQP_HAND_R
+		EQP_HAND_L
+		EQP_ARMOR
+		EQP_SHOES
+		EQP_GARMENT
+		EQP_ACC_R
+		EQP_ACC_L
+		EQP_COSTUME_HEAD_TOP
+		EQP_COSTUME_HEAD_MID
+		EQP_COSTUME_HEAD_LOW
+		EQP_COSTUME_GARMENT
+		EQP_COSTUME_FLOOR
+		EQP_AMMO
+		EQP_SHADOW_ARMOR
+		EQP_SHADOW_WEAPON
+		EQP_SHADOW_SHIELD
+		EQP_SHADOW_SHOES
+		EQP_SHADOW_ACC_R
+		EQP_SHADOW_ACC_L
+		
+		// Combined
+		EQP_ACC_RL (EQP_ACC_R + EQP_ACC_L)
+		EQP_SHADOW_ACC_RL (EQP_SHADOW_ACC_R + EQP_SHADOW_ACC_L)
 
 ---------------------------------------
 
@@ -3253,6 +3362,13 @@ Notice that NPC objects disabled with 'disablenpc' will still be located.
 
 Returns the map name of the given map ID. Returns an empty string if given
 map ID doesn't exist.
+
+---------------------------------------
+
+*mapname2id(<"map name">)
+
+Returns the map ID of the given map name or -1 if the given
+map name doesn't exist or is on another map-server.
 
 ---------------------------------------
 
@@ -3507,6 +3623,36 @@ guild specified by the ID. 0 if the character is not a guild master of any guild
 
 ---------------------------------------
 
+*getguildinfo(<guild ID>, <type>);
+
+This function will look up and return the request type of guild information.
+
+Types:
+	GUILDINFO_NAME              - Guild's Name
+	GUILDINFO_LEVEL             - Guild's Level
+	GUILDINFO_AVERAGELEVEL      - Guild's Average Level
+	GUILDINFO_ONLINECOUNT       - Guild's Online Member Count
+	GUILDINFO_MEMBERCOUNT       - Guild's Current Member Count
+	GUILDINFO_MAXMEMBERCOUNT    - Guild's Max Member Count
+	GUILDINFO_EXP               - Guild's Current EXP
+	GUILDINFO_NEXTEXP           - Guild's Required EXP to Level
+	GUILDINFO_MASTERID          - Guild Master Character ID
+	GUILDINFO_MASTERNAME        - Guild Master Name
+
+Note: Make sure to use the requestguildinfo script command to load the guild data from the char-server.
+Example Case ( Newly formed guild ):
+
+.@gid = 1234;
+
+getguildinfo( .@gid, GUILDINFO_LEVEL ); //Returns 0
+
+requestguildinfo( .@gid );
+getguildinfo( .@gid, GUILDINFO_LEVEL ); //Returns current guild level
+
+See the sample in 'doc/sample/getguildinfo.txt'.
+
+---------------------------------------
+
 *is_guild_leader({<guild ID>})
 
 This command will return true if the player attached to the script is the leader
@@ -3678,32 +3824,34 @@ It will return -1 if there is no such monster (or the type value is invalid),
 or "null" if you requested the monster's name.
 
 Valid types are:
-	MOB_NAME - monster's japanese name, if there is no such monster "null" is returned
-	MOB_LV - monster's level
-	MOB_MAXHP - monster's maximum hp
-	MOB_BASEEXP - monster's base experience
-	MOB_JOBEXP - monster's job experience
-	MOB_ATK1 - monster's atk
-	MOB_ATK2 - monster's atk2
-	MOB_DEF - monster's def
-	MOB_MDEF - monster's mdef
-	MOB_RES - monster's res
-	MOB_MRES - monster's mres
-	MOB_STR - monster's str
-	MOB_AGI - monster's agi
-	MOB_VIT - monster's vit
-	MOB_INT - monster's int
-	MOB_DEX - monster's dex
-	MOB_LUK - monster's luk
-	MOB_RANGE - monster's range
-	MOB_RANGE2 - monster's range2
-	MOB_RANGE3 - monster's range3
-	MOB_SIZE - monster's size
-	MOB_RACE - monster's race
-	MOB_ELEMENT - monster's element(doesn't return the element level, only the element ID)
-	MOB_MODE - monster's mode
-	MOB_MVPEXP - monster's mvp experience
-	MOB_ID - monster's ID
+	MOB_NAME          - monster's japanese name
+	MOB_LV            - monster's level
+	MOB_MAXHP         - monster's maximum hp
+	MOB_BASEEXP       - monster's base experience
+	MOB_JOBEXP        - monster's job experience
+	MOB_ATKMIN        - monster's minimum atk
+	MOB_ATKMAX        - monster's maximum atk
+	MOB_DEF           - monster's def
+	MOB_MDEF          - monster's mdef
+	MOB_RES           - monster's res
+	MOB_MRES          - monster's mres
+	MOB_STR           - monster's str
+	MOB_AGI           - monster's agi
+	MOB_VIT           - monster's vit
+	MOB_INT           - monster's int
+	MOB_DEX           - monster's dex
+	MOB_LUK           - monster's luk
+	MOB_SPEED         - monster's speed
+	MOB_ATKRANGE      - monster's attack range
+	MOB_SKILLRANGE    - monster's skill cast range
+	MOB_CHASERANGE    - monster's chase range
+	MOB_SIZE          - monster's size
+	MOB_RACE          - monster's race
+	MOB_ELEMENT       - monster's element
+	MOB_ELEMENTLV     - monster's element level
+	MOB_MODE          - monster's mode
+	MOB_MVPEXP        - monster's mvp experience
+	MOB_ID            - monster's ID
 
 For more details, see the sample in 'doc/sample/getmonsterinfo.txt'.
 
@@ -4765,6 +4913,12 @@ wall), the character is pushed only up to the obstacle.
 
 ---------------------------------------
 
+*kick({<char_id>});
+
+This command kicks the attached character (or character provided by <char_id>) from the map server, just like @kick.
+
+---------------------------------------
+
 *recalculatestat;
 
 This command will force a stat recalculation for the attached player.
@@ -5389,7 +5543,11 @@ example, for a random pet lure:
 getitem groupranditem(IG_Taming),1;
 
 'sub_group' is used to get the available random items of item group from specified random
-group. 0 for 'must' item group, and random item group is 1 until 5 (MAX_ITEMGROUP_RANDGROUP+1).
+group. If 'sub_group' is not defined the value will be 1. Make sure the group has defined a
+sub group with the given value.
+The algorithm specified in the sub group determines how the item is picked.
+If the sub group algorithm is "All", then a random item in the group will be returned with
+each item having the same chance of being picked.
 
 More info, see doc/item_group.txt.
 
@@ -5397,14 +5555,13 @@ More info, see doc/item_group.txt.
 
 *getrandgroupitem <group_id>{,<quantity>{,<sub_group>{,<identify>{,<char_id>}}}};
 
-Similar to the above example, this command allows players to obtain the specified
+Similar to "groupranditem", this command allows players to obtain the specified
 quantity of a random item from the group "<group id>". The different groups and
 their group number are specified in db/(pre-)re/item_group_db.yml
 
 If 'quantity' is not defined or 0, it will uses defined amount from Item Group list.
 
-If 'sub_group' is not defined the value will be 1 (since random group is 1 ~ 5, and 0 is
-'must' item group).
+Sub groups and their algorithm work the same way as explained for "groupranditem".
 
 For item with type IT_WEAPON, IT_ARMOR, IT_PETARMOR, and IT_SHADOWGEAR will be given
 as unidentified item (as defined by itemdb_isidentified in src/map/itemdb.cpp) except
@@ -5423,6 +5580,9 @@ item group & sub_group.
 For item with type IT_WEAPON, IT_ARMOR, IT_PETARMOR, and IT_SHADOWGEAR will be given
 as unidentified item (as defined by itemdb_isidentified in src/map/itemdb.cpp) except
 if 'identify' is defined with value 1.
+
+For each sub group defined for the item group, items will be given out according to
+their corresponding algorithm.
 
 More info, see doc/item_group.txt.
 
@@ -5756,7 +5916,7 @@ window, to avoid any disruption when both windows overlap.
 
 ---------------------------------------
 
-*openstorage2 <storage_id>,<mode>{,<account_id>};
+*openstorage2 <storage_id>{,<mode>{,<account_id>}};
 
 Just like the 'openstorage' command, except this command can open additional storages
 by the specified <storage_id>. For <storage_id>, please read the conf/inter_server.yml
@@ -5766,13 +5926,14 @@ Values for <mode> are:
 	STOR_MODE_NONE : Player only can read the storage entries.
 	STOR_MODE_GET  : Player can get items from the storage.
 	STOR_MODE_PUT  : Player can put items in the storage.
+	STOR_MODE_ALL  : Player can get and put items in the storage. (default)
 
 Example:
 	if (vip_status(VIP_STATUS_ACTIVE)) {
 		mes "I will open your Premium storage.";
 		mes "Thank you for using our service.";
 		close2;
-		openstorage2 1,STOR_MODE_GET|STOR_MODE_PUT;
+		openstorage2 1;
 	} else {
 		mes "Sorry, your Premium status is expired.";
 		mes "Storage will be opened but you can't put any item into it.";
@@ -6859,24 +7020,6 @@ Using this the normal/old way means labels don't trigger when a player didn't
 attack/kill a monster. This is because it breaks compatibility with older scripts if
 forced to use the new method. However, if you wish to use the new label type with this
 command, simply use 1 for type. Any other number won't be recognized.
-
----------------------------------------
-
-*strmobinfo(<type>,<monster id>);
-
-This function will return information about a monster record in the database, as
-per 'db/(pre-)re/mob_db.yml'. Type is the kind of information returned. Valid types are:
-It will return 0 if there is no such monster (or the type value is invalid),
-or an empty string if you requested the monster's name.
-
- 1 - 'english name' field in the database, a string.
- 2 - 'japanese name' field in the database, a string.
-     All other returned values are numbers:
- 3 - Level.
- 4 - Maximum HP.
- 5 - Maximum SP.
- 6 - Experience reward.
- 7 - Job experience reward.
 
 ---------------------------------------
 
@@ -10428,19 +10571,25 @@ This is still usable outside item scripts.
 
 ---------------------------------------
 
-*pet <pet id>;
-*catchpet <pet id>;
+*pet {<item_id>{,flag}};
+*catchpet {<item_id>{,flag}};
 
-This command is used in all the item scripts for taming items. Running this
-command will make the pet catching cursor appear on the client connected to the
-invoking character, usable on the monsters with the specified pet ID number. It
-will still work outside an item script.
-If the <pet id> is PET_CATCH_UNIVERSAL the item will attempt to catch the targeted
-monster as long as it is in the pet database and does not have the MD_STATUS_IMMUNE
-monster mode.
-If the <pet id> is PET_CATCH_UNIVERSAL_ITEM the item will attempt to catch the targeted
-monster as long as it is in the pet database and the targeted monster requires the lure
-item used.
+This command is used in all the item scripts for taming items.
+Running this command will make the pet catching cursor appear on the client of the invoking character
+and the player can then attempt to catch a monster.
+
+If the item ID is not specified, the command will use the item ID from the invoking item script.
+It will also work outside of an item script, if the item ID is provided.
+
+The following constants can be used as <flag> parameter:
+
+	PET_CATCH_NORMAL:				Will attempt to catch the targeted monster as long as it is in the pet database and
+									the taming item corresponds with the required taming item in the pet database.
+									This is the default if <flag> is not specified.
+	PET_CATCH_UNIVERSAL_NO_BOSS:	Will attempt to catch the targeted monster as long as it is in the pet database and
+									does not have the MD_STATUS_IMMUNE monster mode.
+	PET_CATCH_UNIVERSAL_ALL:		Will attempt to catch the targeted monster as long as it is in the pet database.
+
 See 'doc/mob_db_mode_list.txt' for more information about monster modes.
 
 A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.yml'.
@@ -11018,17 +11167,14 @@ The command returns 1 upon success, and these values upon failure:
 
 ---------------------------------------
 
-*opendressroom(<flag>{,<char_id>});
+*opendressroom({<char_id>});
 
 This will open the Dress Room window on the client connected to the invoking character.
 
 	mes "Close this window to open the Dress Room window.";
 	close2;
-	opendressroom(1);
+	opendressroom();
 	end;
-
-Valid flag are:
- 1 - Open the Dress Room window
 
 ---------------------------------------
 
@@ -11065,12 +11211,22 @@ solution rather than sending the map and the monster_id.
 
 ---------------------------------------
 
-*hateffect(<Hat Effect ID>,<State>);
+*hateffect(<hat effect id>,<state>{,<target id>});
 
-This will set a Hat Effect onto the player. The state field allows you to
-enable (true) or disable (false) the effect on the player.
-The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting
-with HAT_EF_*.
+Sets a Hat Effect onto the unit specified by <target id>. If no ID is specified,
+the attached unit will be used.
+<state> can be true to enable or false to disable.
+
+The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting with HAT_EF_*.
+
+Examples:
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true; // Enables the hat effect on attached player
+
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, getcharid(3); // Enables the hat effect on attached player
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, getnpcid(0); // Enables the hat effect on invoking NPC
+
+	monster "prontera",50,50,"--en--",1002,1;
+	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, $@mobid; // Enables the hat effect on a spawned mob
 
 Requires client 2015-05-13aRagEXE or newer.
 
@@ -11177,6 +11333,7 @@ client (and server) supports the Item Random Options feature (PACKETVER >= 20150
 ---------------------------------------
 
 *mesitemlink(<item_id>{,<use_brackets>{,<display_name>});
+*mesitemlink(<"item_name">{,<use_brackets>{,<display_name>});
 
 Generates an itemlink string for an item and can be used with NPC's mes command.
 The NPC message will show the item's name which will be clickable and opens the
@@ -11188,9 +11345,27 @@ but in some cases it might be necessary to overwrite the <display_name> with som
 Examples:
 
 	mes mesitemlink( 1201 ); // Will display "[Knife]" and will be clickable. If clicked it opens the description for Knife [3]
+	mes mesitemlink( "Knife" ); // Will display "[Knife]" and will be clickable. If clicked it opens the description for Knife [3]
 	mes "Bring me a " + mesitemlink( 1201 ) + "."; // Will display "Bring me a [Knife]." and "[Knife]" will be clickable.
 	mes "Bring me a " + mesitemlink( 1201, false ) + "."; // Will display "Bring me a Knife." and "Knife" will be clickable.
 	mes "Bring me a " + mesitemlink( 1201, true, "Super cutting knife" ) + "."; // Will display "Bring me a [Super cutting knife]." and "[Super cutting knife]" will be clickable.
+
+---------------------------------------
+
+*mesitemicon(<item_id>{,<display_name>});
+*mesitemicon(<"item_name">{,<display_name>});
+
+Generates an itemicon string for an item and can be used with NPC's mes command.
+The NPC message will show the item's icon which will be clickable and opens the
+item description client side.
+
+If the feature is disabled, by default the database name of the item will be used.
+However if you provide a <display_name>, this name will be displayed instead.
+
+Examples:
+
+	mes mesitemicon( 1201 ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
+	mes mesitemicon( "Knife" ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 
 ========================
 |14.- Channel commands.|

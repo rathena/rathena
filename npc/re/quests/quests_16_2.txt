@@ -11388,7 +11388,7 @@ rebel_in,100,40,4	script	Butterfly Merchant#rebel_in	4_M_ORIENT02,{
 rebel_in,99,51,3	script	Imperial Operator#ext162	4_M_REPAIR,{
 	mes "[Imperial Operator]";
 	mes "Hello.";
-	mes "We have ^4d4dffImperial^000000 equipment that can be exchanged for " + mesitemlink( 6919, false ) + ".";
+	mes "We have ^4d4dffImperial^000000 equipment that can be exchanged for " + mesitemlink( 25155, false ) + ".";
 	mes "I will guide you to exchange items according to your job.";
 	close2;
 	switch( eaclass() & EAJ_THIRDMASK ) {

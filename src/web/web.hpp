@@ -15,21 +15,19 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
-namespace rathena{
-	namespace server_web{
-		class WebServer : public Core{
-			protected:
-				bool initialize( int argc, char* argv[] ) override;
-				void handle_main( t_tick next ) override;
-				void finalize() override;
-				void handle_crash() override;
+namespace rathena::server_web {
+class WebServer : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
+		void handle_main( t_tick next ) override;
+		void finalize() override;
+		void handle_crash() override;
 
-			public:
-				WebServer() : Core( e_core_type::WEB ){
+	public:
+		WebServer() : Core( e_core_type::WEB ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 #ifndef SQL_BUFFER_SIZE
@@ -47,7 +45,7 @@ struct Web_Config {
 };
 
 struct Inter_Config {
-	int emblem_transparency_limit;					// Emblem transparency limit
+	int32 emblem_transparency_limit;					// Emblem transparency limit
 	bool emblem_woe_change;							// allow emblem change during woe
 };
 
@@ -72,8 +70,8 @@ extern char partybookings_table[32];
 #define msg_config_read(cfgName) web_msg_config_read(cfgName)
 #define msg_txt(msg_number) web_msg_txt(msg_number)
 #define do_final_msg() web_do_final_msg()
-int web_msg_config_read(char *cfgName);
-const char* web_msg_txt(int msg_number);
+int32 web_msg_config_read(char *cfgName);
+const char* web_msg_txt(int32 msg_number);
 void web_do_final_msg(void);
 bool web_config_read(const char* cfgName, bool normal);
 

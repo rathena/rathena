@@ -65,7 +65,7 @@ Body:
     CaptureRate: 2000
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bLuk,2;
         bonus bCritical,1;
@@ -80,7 +80,7 @@ Body:
     CaptureRate: 1500
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bHit,3;
         bonus bAtk,3;
@@ -95,7 +95,7 @@ Body:
     CaptureRate: 1000
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bLuk,2;
         bonus2 bSubEle,Ele_Poison,10;
@@ -111,7 +111,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bCritical,2;
         bonus bAtk,2;
@@ -126,7 +126,7 @@ Body:
     CaptureRate: 2000
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bStr,1;
         bonus bAtk,5;
@@ -141,7 +141,7 @@ Body:
     CaptureRate: 1500
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bAgi,1;
         bonus bFlee,2;
@@ -156,7 +156,7 @@ Body:
     CaptureRate: 1000
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bFlee,6;
         bonus bAgi,-1;
@@ -171,7 +171,7 @@ Body:
     CaptureRate: 500
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bFlee,-5;
         bonus bFlee2,2;
@@ -187,7 +187,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bVit,1;
         bonus bMaxHP,50;
@@ -203,7 +203,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bInt,1;
         bonus bMaxSP,50;
@@ -219,7 +219,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bHPrecovRate,5;
         bonus bMaxHP,25;
@@ -235,7 +235,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bHit,5;
         bonus bAtk,-2;
@@ -251,7 +251,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bStr,1;
         bonus bInt,1;
@@ -266,7 +266,7 @@ Body:
     CaptureRate: 1000
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMaxHP,150;
         bonus bMaxSP,-10;
@@ -281,7 +281,7 @@ Body:
     CaptureRate: 1000
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bAgi,1;
         bonus bFlee2,1;
@@ -296,7 +296,7 @@ Body:
     CaptureRate: 1000
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bCritical,3;
         bonus bLuk,-1;
@@ -311,7 +311,7 @@ Body:
     CaptureRate: 500
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bAtk,10;
         bonus bDef,-3;
@@ -327,7 +327,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bInt,1;
         bonus bDef,1;
@@ -343,7 +343,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMatkRate,1;
         bonus bAtkRate,-1;
@@ -359,7 +359,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bStr,1;
         bonus bDex,1;
@@ -375,7 +375,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMatkRate,-1;
         bonus bAtkRate,1;
@@ -391,7 +391,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bDef,-2;
         bonus bMdef,-2;
@@ -408,7 +408,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMatkRate,1;
         bonus bAtkRate,1;
@@ -426,7 +426,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bDef,1;
         bonus bMdef,1;
@@ -442,7 +442,7 @@ Body:
     CaptureRate: 500
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bVit,1;
         bonus2 bResEff,Eff_Stun,100;
@@ -457,7 +457,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bAddRace,RC_Demihuman,2;
         bonus2 bMagicAddRace,RC_DemiHuman,2;
@@ -474,7 +474,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMdef,1;
         bonus2 bSubRace,RC_DemiHuman,1;
@@ -488,7 +488,7 @@ Body:
     CaptureRate: 2000
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bSubEle,Ele_Neutral,1;
         bonus bMaxHPrate,-1;
@@ -503,7 +503,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMaxHP,30;
         bonus2 bSubEle,Ele_Water,1;
@@ -518,12 +518,30 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bDef,1;
         bonus2 bSubRace,RC_DemiHuman,1;
         bonus2 bSubRace,RC_Player_Human,1;
       }
+# On official pre-renewal servers, only CHUNG_E (1519) was tameable.
+# Uncomment the following lines to enable CHUNG_E_ (1631) too.
+#  - Mob: CHUNG_E_
+#    TameItem: Tantanmen
+#    EggItem: Chung_E_Egg
+#    FoodItem: Bun_
+#    Fullness: 3
+#    IntimacyFed: 50
+#    CaptureRate: 2000
+#    SpecialPerformance: false
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#
+#      if( .@i >= PET_INTIMATE_LOYAL ){
+#        bonus bDef,1;
+#        bonus2 bSubRace,RC_DemiHuman,1;
+#        bonus2 bSubRace,RC_Player_Human,1;
+#      }
   - Mob: ECLIPSE_P
     EggItem: Spring_Rabbit_Egg
     FoodItem: Bok_Choy
@@ -581,7 +599,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bAgi,3;
         bonus bDex,1;
@@ -604,7 +622,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMaxHP,100;
         bonus bFlee,-5;
@@ -620,7 +638,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bSPrecovRate,3;
       }
@@ -635,7 +653,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bVit,1;
         bonus2 bResEff,Eff_Stone,500;
@@ -651,7 +669,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bFlee,7;
         bonus bDef,-3;
@@ -667,7 +685,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bAddRace,RC_DemiHuman,3;
         bonus2 bAddRace,RC_Player_Human,3;
@@ -683,7 +701,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bHpDrainRate,50,5;
       }
@@ -698,7 +716,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMaxSPRate,3;
       }
@@ -713,7 +731,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bResEff,Eff_Sleep,10000;
       }
@@ -728,7 +746,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bAgi,2;
       }
@@ -743,7 +761,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bInt,1;
         bonus bCastrate,-3;
@@ -759,7 +777,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMaxSP,30;
         bonus bSPrecovRate,5;
@@ -775,7 +793,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bSubEle,Ele_Fire,3;
       }
@@ -790,7 +808,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bCritAtkRate,5;
       }
@@ -805,7 +823,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMaxHPRate,3;
         bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10;
@@ -821,7 +839,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMaxSP,10;
       }
@@ -836,7 +854,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bSubRace,RC_Brute,3;
         bonus2 bSubRace,RC_Player_Doram,3;
@@ -861,7 +879,7 @@ Body:
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
-      
+
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bSubEle,Ele_Fire,2;
         bonus2 bAddEle,Ele_Fire,2;

@@ -4216,49 +4216,6 @@ struct PACKET_ZC_BROADCAST_ITEMREFINING_RESULT {
 DEFINE_PACKET_HEADER(ZC_BROADCAST_ITEMREFINING_RESULT, 0x0ada);
 #endif
 
-struct PACKET_ZC_ACK_RANKING_name {
-	char name[NAME_LENGTH];
-} __attribute__((packed));
-
-struct PACKET_ZC_ACK_RANKING_points {
-	uint32 points;
-} __attribute__((packed));
-
-#if PACKETVER_MAIN_NUM >= 20190731 || PACKETVER_RE_NUM >= 20190703 || PACKETVER_ZERO_NUM >= 20190724
-struct PACKET_ZC_ACK_RANKING_sub {
-	char name[NAME_LENGTH];
-	uint32 points;
-} __attribute__((packed));
-
-struct PACKET_ZC_ACK_RANKING {
-	int16 packetType;
-	int16 rankType;
-	uint32 chars[10];
-	uint32 points[10];
-	uint32 myPoints;
-} __attribute__((packed));
-DEFINE_PACKET_HEADER(ZC_ACK_RANKING, 0x0af6);
-#elif PACKETVER_MAIN_NUM >= 20130605 || PACKETVER_RE_NUM >= 20130529 || defined(PACKETVER_ZERO)
-struct PACKET_ZC_ACK_RANKING_sub {
-	struct PACKET_ZC_ACK_RANKING_name names[10];
-	struct PACKET_ZC_ACK_RANKING_points points[10];
-} __attribute__((packed));
-
-struct PACKET_ZC_ACK_RANKING {
-	int16 packetType;
-	int16 rankType;
-	struct PACKET_ZC_ACK_RANKING_sub ranks;
-	uint32 myPoints;
-} __attribute__((packed));
-
-DEFINE_PACKET_HEADER(ZC_ACK_RANKING, 0x097d);
-#else
-struct PACKET_ZC_ACK_RANKING_sub {
-	struct PACKET_ZC_ACK_RANKING_name names[10];
-	struct PACKET_ZC_ACK_RANKING_points points[10];
-} __attribute__((packed));
-#endif
-
 struct PACKET_ZC_STATUS_CHANGE_ACK {
 	int16 packetType;
 	uint16 sp;
@@ -4326,7 +4283,7 @@ DEFINE_PACKET_HEADER(ZC_SKILLINFO_LIST, 0x010f);
 struct PACKET_ZC_SKILLINFO_UPDATE2 {
 	int16 packetType;
 	uint16 id;
-	int inf;
+	int32 inf;
 	uint16 level;
 	uint16 sp;
 	uint16 range2;
@@ -4338,7 +4295,7 @@ DEFINE_PACKET_HEADER(ZC_SKILLINFO_UPDATE2, 0x0b33);
 struct PACKET_ZC_SKILLINFO_UPDATE2 {
 	int16 packetType;
 	uint16 id;
-	int inf;
+	int32 inf;
 	uint16 level;
 	uint16 sp;
 	uint16 range2;
@@ -4551,82 +4508,6 @@ struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE {
 } __attribute__((packed));
 DEFINE_PACKET_HEADER(CZ_NPC_EXPANDED_BARTER_MARKET_CLOSE, 0x0b58);
 #endif
-
-#if PACKETVER_MAIN_NUM >= 20210203 || PACKETVER_RE_NUM >= 20211103 || PACKETVER_ZERO_NUM >= 20221024
-struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 {
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-	uint32 nameid;
-#else
-	uint16 nameid;
-#endif
-	uint16 refine_level;
-	uint32 amount;
-	uint16 type;
-} __attribute__((packed));
-
-struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub {
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-	uint32 nameid;
-#else
-	uint16 nameid;
-#endif
-	uint16 type;
-	uint32 amount;
-	uint32 weight;
-	uint32 index;
-	uint32 zeny;
-	uint16 viewSprite;
-	uint32 location;
-	uint32 currency_count;
-	// Workaround: this should be currencies[], but compilers do not support multiple layers of incomplete types. See error C2233
-	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 currencies[1];
-} __attribute__((packed));
-
-struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO {
-	int16 packetType;
-	int16 packetLength;
-	int32 items_count;
-	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub items[];
-} __attribute__((packed));
-
-DEFINE_PACKET_HEADER(ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO, 0x0b79);
-#elif PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
-struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 {
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-	uint32 nameid;
-#else
-	uint16 nameid;
-#endif
-	uint16 refine_level;
-	uint32 amount;
-	uint16 type;
-} __attribute__((packed));
-
-struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub {
-#if PACKETVER_MAIN_NUM >= 20181121 || PACKETVER_RE_NUM >= 20180704 || PACKETVER_ZERO_NUM >= 20181114
-	uint32 nameid;
-#else
-	uint16 nameid;
-#endif
-	uint16 type;
-	uint32 amount;
-	uint32 weight;
-	uint32 index;
-	uint32 zeny;
-	uint32 currency_count;
-	// Workaround: this should be currencies[], but compilers do not support multiple layers of incomplete types. See error C2233
-	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub2 currencies[1];
-} __attribute__((packed));
-
-struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO {
-	int16 packetType;
-	int16 packetLength;
-	int32 items_count;
-	struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO_sub items[];
-} __attribute__((packed));
-
-DEFINE_PACKET_HEADER(ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO, 0x0b56);
-#endif  // PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
 
 #if PACKETVER_MAIN_NUM >= 20190904 || PACKETVER_RE_NUM >= 20190904 || PACKETVER_ZERO_NUM >= 20190828
 struct PACKET_CZ_NPC_EXPANDED_BARTER_MARKET_PURCHASE_sub {
