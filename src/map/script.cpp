@@ -24785,6 +24785,39 @@ BUILDIN_FUNC(hateffect){
 }
 
 /**
+ * Check if hat effect is enabled on a unit
+ * *has_hateffect(<effect_id>{,<GID>});
+ */
+BUILDIN_FUNC(has_hateffect) {
+	block_list* bl;
+
+	if( !script_rid2bl( 3, bl ) ){
+		script_pushint( st, false );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	unit_data* ud = unit_bl2ud( bl );
+
+	if( ud == nullptr ){
+		ShowError( "buildin_has_hateffect: unsupported unit type %d\n", bl->type );
+		script_pushint( st, false );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int16 effectID = script_getnum(st, 2);
+
+	if (effectID <= HAT_EF_MIN || effectID >= HAT_EF_MAX) {
+		ShowError( "buildin_has_hateffect: unsupported hat effect id %hd\n", effectID );
+		script_pushint( st, false );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint( st, util::vector_exists( ud->hatEffects, effectID ) );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
 * Retrieves param of current random option. Intended for random option script only.
 * getrandomoptinfo(<type>);
 * @author [secretdataz]
@@ -28396,6 +28429,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getexp2,"ii?"),
 	BUILDIN_DEF(recalculatestat,""),
 	BUILDIN_DEF(hateffect,"ii?"),
+	BUILDIN_DEF(has_hateffect, "i?"),
 	BUILDIN_DEF(getrandomoptinfo, "i"),
 	BUILDIN_DEF(getequiprandomoption, "iii?"),
 	BUILDIN_DEF(setrandomoption,"iiiii?"),
