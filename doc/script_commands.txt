@@ -11232,6 +11232,13 @@ Requires client 2015-05-13aRagEXE or newer.
 
 ---------------------------------------
 
+*has_hateffect(<hat effect id>{,<GID>});
+
+Returns true if the unit <GID> already has the hat effect enabled, and false otherwise.
+If no GID is specified, the attached unit will be used.
+
+---------------------------------------
+
 *getrandomoptinfo(<type>);
 
 Returns value of an attribute of current random option.
