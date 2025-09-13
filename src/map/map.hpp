@@ -1298,6 +1298,9 @@ typedef struct s_elemental_data	TBL_ELEM;
 #define BL_CAST(type_, bl) \
 	( ((bl) == nullptr || (bl)->type != (type_)) ? static_cast<T ## type_ *>(nullptr) : static_cast<T ## type_ *>(bl) )
 
+#define BL_CAST_CONST(type_, bl) \
+	( ((bl) == nullptr || (bl)->type != (type_)) ? static_cast<const T ## type_ *>(nullptr) : static_cast<const T ## type_ *>(bl) )
+
 extern int32 db_use_sqldbs;
 
 #ifndef ONLY_CONSTANTS

@@ -5247,7 +5247,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	switch(skill_id) {
 	case MER_CRASH:
-	case MC_MAMMONITE:
 	case TF_DOUBLE:
 	case MA_DOUBLE:
 	case AS_SONICBLOW:
@@ -5699,7 +5698,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	//Splash attack skills.
 	case AS_GRIMTOOTH:
-	case MC_CARTREVOLUTION:
 	case NPC_SPLASHATTACK:
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 		[[fallthrough]];
@@ -8659,17 +8657,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 				skill_get_time(skill_id,skill_lv)));
 		break;
 
-	case MC_CHANGECART:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-
-	case MC_CARTDECORATE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if( sd ) {
-			clif_SelectCart(sd);
-		}
-		break;
-
 	case TK_MISSION:
 		if (sd) {
 			if (sd->mission_mobid && (sd->mission_count || rnd()%100)) { //Cannot change target when already have one
@@ -9672,47 +9659,10 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			clif_item_repair_list( *sd, *dstsd, skill_lv );
 		break;
 
-	case MC_IDENTIFY:
-		if(sd) {
-			clif_item_identify_list(sd);
-			if( sd->menuskill_id != MC_IDENTIFY ) {// failed, dont consume anything
-				return 1;
-			}
-			else { // consume sp only if succeeded
-				struct s_skill_condition req = skill_get_requirement(sd,skill_id,skill_lv);
-				status_zap(src,0,req.sp);
-			}
-		}
-		break;
-
 	// Weapon Refining [Celest]
 	case WS_WEAPONREFINE:
 		if( sd != nullptr ){
 			clif_item_refine_list( *sd );
-		}
-		break;
-
-	case MC_VENDING:
-		if(sd)
-		{	//Prevent vending of GMs with unnecessary Level to trade/drop. [Skotlex]
-			if ( !pc_can_give_items(sd) )
-				clif_skill_fail( *sd, skill_id );
-			else {
-				sd->state.prevend = 1;
-				sd->state.workinprogress = WIP_DISABLE_ALL;
-				sd->vend_skill_lv = skill_lv;
-				ARR_FIND(0, MAX_CART, i, sd->cart.u.items_cart[i].nameid && sd->cart.u.items_cart[i].id == 0);
-				if (i < MAX_CART) {
-					// Save the cart before opening the vending UI
-					sd->state.pending_vending_ui = true;
-					intif_storage_save(sd, &sd->cart);
-				}
-				else{
-					// Instantly open the vending UI
-					sd->state.pending_vending_ui = false;
-					clif_openvendingreq( *sd, 2+skill_lv );
-				}
-			}
 		}
 		break;
 
