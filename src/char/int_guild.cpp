@@ -544,6 +544,7 @@ uint16 inter_guild_storagemax(int32 guild_id)
 {
 #ifdef OFFICIAL_GUILD_STORAGE
 	auto g = inter_guild_fromsql( guild_id );
+	uint16 level = guild_checkskill(g, GD_GUILD_STORAGE);
 	uint16 max = 0;
 
 	if( g == nullptr ){
@@ -551,9 +552,8 @@ uint16 inter_guild_storagemax(int32 guild_id)
 		return 0;
 	}
 
-	max = guild_checkskill(g, GD_GUILD_STORAGE);
-	if (max)
-		max *= 100;
+	if (level)
+		max = 100 + level * 100; // Level 1..5 => 200..600
 
 	return max;
 #else
