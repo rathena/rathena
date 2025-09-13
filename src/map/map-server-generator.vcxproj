@@ -325,11 +325,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
-    <ClCompile Include="skills/archer/chargearrow.cpp" />
-    <ClCompile Include="skills/archer/concentration.cpp" />
-    <ClCompile Include="skills/archer/double.cpp" />
-    <ClCompile Include="skills/archer/makingarrow.cpp" />
-    <ClCompile Include="skills/archer/shower.cpp" />
     <ClCompile Include="skills/archer/arrowshower.cpp" />
     <ClCompile Include="skills/archer/chargearrow.cpp" />
     <ClCompile Include="skills/archer/concentration.cpp" />
