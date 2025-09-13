@@ -1,6 +1,7 @@
 autom4te.cache/
 
 #Global
+.cache
 .idea
 .vscode
 .Apple*
