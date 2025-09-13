@@ -26,21 +26,19 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
-namespace rathena{
-	namespace server_map{
-		class MapServer : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
-				void finalize() override;
-				void handle_crash() override;
-				void handle_shutdown() override;
+namespace rathena::server_map {
+class MapServer : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
+		void finalize() override;
+		void handle_crash() override;
+		void handle_shutdown() override;
 
-			public:
-				MapServer() : Core( e_core_type::MAP ){
+	public:
+		MapServer() : Core( e_core_type::MAP ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 struct npc_data;
@@ -687,6 +685,7 @@ enum e_mapflag : int16 {
 	MF_NOBANK,
 	MF_SPECIALPOPUP,
 	MF_NOMACROCHECKER,
+	MF_INVINCIBLE_TIME,
 	MF_MAX
 };
 
@@ -1086,6 +1085,22 @@ inline bool map_flag_gvg2_no_te(int16 m) {
 
 	return mapdata_flag_gvg2_no_te(mapdata);
 }
+
+// RAII class for locking freeblock
+class FreeBlockLock {
+public:
+	explicit FreeBlockLock(bool startLocked = true);
+	~FreeBlockLock();
+
+	void lock();
+	void unlock();
+
+	FreeBlockLock(const FreeBlockLock&) = delete;
+	FreeBlockLock& operator=(const FreeBlockLock&) = delete;
+private:
+	bool locked;
+};
+
 
 extern char motd_txt[];
 extern char charhelp_txt[];
