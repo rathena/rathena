@@ -86,10 +86,10 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 	if( bl == nullptr) return nullptr;
 	switch(bl->type){
 	case BL_PC: return &((map_session_data*)bl)->ud;
-	case BL_MOB: return &((struct mob_data*)bl)->ud;
-	case BL_PET: return &((struct pet_data*)bl)->ud;
-	case BL_NPC: return &((struct npc_data*)bl)->ud;
-	case BL_HOM: return &((struct homun_data*)bl)->ud;
+	case BL_MOB: return &((mob_data*)bl)->ud;
+	case BL_PET: return &((pet_data*)bl)->ud;
+	case BL_NPC: return &((npc_data*)bl)->ud;
+	case BL_HOM: return &((homun_data*)bl)->ud;
 	case BL_MER: return &((s_mercenary_data*)bl)->ud;
 	case BL_ELEM: return &((s_elemental_data*)bl)->ud;
 	default : return nullptr;
@@ -137,7 +137,7 @@ bool unit_update_chase(block_list& bl, t_tick tick, bool fullcheck) {
 	else if (tbl == nullptr || (fullcheck && !status_check_visibility(&bl, tbl, (bl.type == BL_MOB)))) {
 		// Looted items will have no tbl but target ID is still set, that's why we need to check for the ID here
 		if (ud->target_to != 0 && bl.type == BL_MOB) {
-			mob_data& md = reinterpret_cast<mob_data&>(bl);
+			mob_data& md = static_cast<mob_data&>(bl);
 			if (tbl != nullptr) {
 				int32 warp = mob_warpchase(&md, tbl);
 				// Do warp chase
@@ -184,13 +184,13 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 		// We need to send the reply to the client even if already at the target cell
 		// This allows the client to synchronize the position correctly
 		if (sendMove && bl.type == BL_PC)
-			clif_walkok(reinterpret_cast<map_session_data&>(bl));
+			clif_walkok(static_cast<map_session_data&>(bl));
 		return false;
 	}
 
 	// Monsters first check for a chase skill and if they didn't use one if their target is in range each cell after checking for a chase skill
 	if (bl.type == BL_MOB) {
-		mob_data& md = reinterpret_cast<mob_data&>(bl);
+		mob_data& md = static_cast<mob_data&>(bl);
 		// Walk skills are triggered regardless of target due to the idle-walk mob state.
 		// But avoid triggering when already reached the end of the walkpath.
 		// Monsters use walk/chase skills every second, but we only get here every "speed" ms
@@ -237,7 +237,7 @@ bool unit_walktoxy_nextcell(block_list& bl, bool sendMove, t_tick tick) {
 	if (sendMove || DIFF_TICK(tick, ud->dmg_tick) < MOVE_REFRESH_TIME) {
 		clif_move(*ud);
 		if (bl.type == BL_PC)
-			clif_walkok(reinterpret_cast<map_session_data&>(bl));
+			clif_walkok(static_cast<map_session_data&>(bl));
 	}
 	return true;
 }
@@ -306,7 +306,7 @@ int32 unit_walktoxy_sub(struct block_list *bl)
 	// Set mobstate here already as chase skills can be used on the first frame of movement
 	// If we don't set it now the monster will always move a full cell before checking
 	else if (bl->type == BL_MOB && ud->state.attack_continue) {
-		mob_data& md = reinterpret_cast<mob_data&>(*bl);
+		mob_data& md = static_cast<mob_data&>(*bl);
 		mob_setstate(md, MSS_RUSH);
 	}
 
@@ -493,10 +493,10 @@ TIMER_FUNC(unit_step_timer){
 
 int32 unit_walktoxy_ontouch(struct block_list *bl, va_list ap)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 
 	nullpo_ret(bl);
-	nullpo_ret(nd = va_arg(ap,struct npc_data *));
+	nullpo_ret(nd = va_arg(ap,npc_data *));
 
 	switch( bl->type ) {
 	case BL_PC:
@@ -509,7 +509,7 @@ int32 unit_walktoxy_ontouch(struct block_list *bl, va_list ap)
 
 		// Remove NPCs that are no longer within the OnTouch area
 		for (size_t i = 0; i < sd->areanpc.size(); i++) {
-			struct npc_data *nd = map_id2nd(sd->areanpc[i]);
+			npc_data *nd = map_id2nd(sd->areanpc[i]);
 
 			if (!nd || nd->subtype != NPCTYPE_SCRIPT || !(nd->m == bl->m && bl->x >= nd->x - nd->u.scr.xs && bl->x <= nd->x + nd->u.scr.xs && bl->y >= nd->y - nd->u.scr.ys && bl->y <= nd->y + nd->u.scr.ys))
 				rathena::util::erase_at(sd->areanpc, i);
@@ -661,7 +661,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 
 			// Check if the unit was killed
 			if( status_isdead(*bl) ){
-				struct mob_data* md = BL_CAST(BL_MOB, bl);
+				mob_data* md = BL_CAST(BL_MOB, bl);
 
 				if( md && !md->spawn ){
 					unit_free(bl, CLR_OUTSIGHT);
@@ -986,7 +986,7 @@ int32 unit_walktobl(struct block_list *bl, struct block_list *tbl, int32 range, 
 
 		// New target, make sure a monster is still in chase state
 		if (bl->type == BL_MOB && ud->state.attack_continue) {
-			mob_data& md = reinterpret_cast<mob_data&>(*bl);
+			mob_data& md = static_cast<mob_data&>(*bl);
 			mob_setstate(md, MSS_RUSH);
 		}
 
@@ -1485,14 +1485,14 @@ int32 unit_warp(struct block_list *bl,int16 m,int16 x,int16 y,clr_type type)
 	switch (bl->type) {
 		case BL_NPC:
 		{
-			TBL_NPC* nd = reinterpret_cast<npc_data*>(bl);
+			TBL_NPC* nd = static_cast<npc_data*>(bl);
 			map_addnpc(m, nd);
 			npc_setcells(nd);
 			break;
 		}
 		case BL_MOB:
 		{
-			TBL_MOB* md = reinterpret_cast<mob_data*>(bl);
+			TBL_MOB* md = static_cast<mob_data*>(bl);
 			// If slaves are set to stick with their master they should drop target if recalled at range
 			if (battle_config.slave_stick_with_master && md->target_id != 0) {
 				block_list* tbl = map_id2bl(md->target_id);
@@ -1821,7 +1821,7 @@ bool unit_can_move(struct block_list *bl) {
 
 	// Icewall walk block special trapped monster mode
 	if(bl->type == BL_MOB) {
-		struct mob_data *md = BL_CAST(BL_MOB, bl);
+		mob_data *md = BL_CAST(BL_MOB, bl);
 		if(md && ((status_has_mode(&md->status,MD_STATUSIMMUNE) && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
 			|| (!status_has_mode(&md->status,MD_STATUSIMMUNE) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
 			md->walktoxy_fail_count = 1; //Make sure rudeattacked skills are invoked
@@ -1877,7 +1877,7 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 			switch (event) {
 				case DELAY_EVENT_CASTBEGIN_ID:
 				case DELAY_EVENT_CASTBEGIN_POS:
-					if (reinterpret_cast<map_session_data*>(&bl)->skillitem == ud->skill_id) {
+					if (static_cast<map_session_data*>(&bl)->skillitem == ud->skill_id) {
 						// Skills used from items don't seem to give any attack or act delay
 						return;
 					}
@@ -1889,7 +1889,7 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 					attack_delay = status_get_adelay(&bl);
 					// A fixed delay is added here which is equal to the minimum attack motion you can get
 					// This ensures that at max ASPD attackabletime and canact_tick are equal
-					act_delay = status_get_amotion(&bl) + (pc_maxaspd(reinterpret_cast<map_session_data*>(&bl)) / AMOTION_DIVIDER_PC);
+					act_delay = status_get_amotion(&bl) + (pc_maxaspd(static_cast<map_session_data*>(&bl)) / AMOTION_DIVIDER_PC);
 					break;
 			}
 			break;
@@ -1907,7 +1907,7 @@ void unit_set_attackdelay(block_list& bl, t_tick tick, e_delay_event event)
 					break;
 			}
 			// Set monster-specific delays (inactive AI time, monster skill delays)
-			mob_set_delay(reinterpret_cast<mob_data&>(bl), tick, event);
+			mob_set_delay(static_cast<mob_data&>(bl), tick, event);
 			break;
 		case BL_HOM:
 			switch (event) {
@@ -2012,7 +2012,7 @@ int32 unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int32
 			return 0;
 	} else {
 		if (bl->type == BL_MOB) {
-			mob_data& md = *reinterpret_cast<mob_data*>(bl);
+			mob_data& md = *static_cast<mob_data*>(bl);
 
 			// Mob needs to escape, don't stop it
 			if (md.state.can_escape == 1)
@@ -2603,7 +2603,7 @@ int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, 
 	map_session_data *sd = nullptr;
 	struct unit_data *ud = nullptr;
 	status_change *sc;
-	struct block_list bl;
+	struct block_list bl{BL_NUL};
 	t_tick tick = gettick();
 	int32 range;
 
@@ -2660,7 +2660,6 @@ int32 unit_skilluse_pos2( struct block_list *src, int16 skill_x, int16 skill_y, 
 	}
 
 	// Check range and obstacle
-	bl.type = BL_NUL;
 	bl.m = src->m;
 	bl.x = skill_x;
 	bl.y = skill_y;
@@ -2879,9 +2878,9 @@ int32 unit_unattackable(struct block_list *bl)
 	}
 
 	if(bl->type == BL_MOB)
-		mob_unlocktarget((struct mob_data*)bl, gettick());
+		mob_unlocktarget((mob_data*)bl, gettick());
 	else if(bl->type == BL_PET)
-		pet_unlocktarget((struct pet_data*)bl);
+		pet_unlocktarget((pet_data*)bl);
 
 	return 0;
 }
@@ -3185,7 +3184,7 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 	struct block_list *target;
 	struct unit_data *ud;
 	map_session_data *sd = nullptr;
-	struct mob_data *md = nullptr;
+	mob_data *md = nullptr;
 	int32 range;
 
 	if( (ud = unit_bl2ud(src)) == nullptr )
@@ -3455,7 +3454,7 @@ int32 unit_skillcastcancel(struct block_list *bl, char type)
 	unit_set_attackdelay(*bl, tick, DELAY_EVENT_CASTCANCEL);
 
 	if (bl->type == BL_MOB) {
-		mob_data& md = reinterpret_cast<mob_data&>(*bl);
+		mob_data& md = static_cast<mob_data&>(*bl);
 		md.skill_idx = -1;
 	}
 
@@ -3556,7 +3555,7 @@ void unit_changetarget_sub(unit_data& ud, block_list& target) {
 		return;
 
 	if (ud.bl->type == BL_MOB)
-		reinterpret_cast<mob_data*>(ud.bl)->target_id = target.id;
+		static_cast<mob_data*>(ud.bl)->target_id = target.id;
 	if (ud.target_to > 0)
 		ud.target_to = target.id;
 	if (ud.skilltarget > 0)
@@ -3728,7 +3727,7 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 			break;
 		}
 		case BL_MOB: {
-			struct mob_data *md = (struct mob_data*)bl;
+			mob_data *md = (mob_data*)bl;
 
 			// Drop previous target mob_slave_keep_target: no.
 			if (!battle_config.mob_slave_keep_target)
@@ -3743,7 +3742,7 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 			break;
 		}
 		case BL_PET: {
-			struct pet_data *pd = (struct pet_data*)bl;
+			pet_data *pd = (pet_data*)bl;
 
 			if( pd->pet.intimate <= PET_INTIMATE_NONE && !(pd->master && !pd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
@@ -3756,7 +3755,7 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 			break;
 		}
 		case BL_HOM: {
-			struct homun_data *hd = (struct homun_data *)bl;
+			homun_data *hd = (homun_data *)bl;
 
 			ud->canact_tick = ud->canmove_tick; // It appears HOM do reset the can-act tick.
 
@@ -3990,7 +3989,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			if( !sd->npc_id_dynamic.empty() ){
 				for (const auto &it : sd->npc_id_dynamic) {
-					struct npc_data* nd = map_id2nd( it );
+					npc_data* nd = map_id2nd( it );
 
 					if( nd != nullptr ){
 						// Erase the owner first to prevent loops from npc_unload
@@ -4037,7 +4036,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_PET: {
-			struct pet_data *pd = (struct pet_data*)bl;
+			pet_data *pd = (pet_data*)bl;
 			map_session_data *sd = pd->master;
 
 			pet_delautobonus(*sd, pd->autobonus, false);
@@ -4065,7 +4064,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_MOB: {
-			struct mob_data *md = (struct mob_data*)bl;
+			mob_data *md = (mob_data*)bl;
 
 			mob_free_dynamic_viewdata( md );
 
@@ -4097,8 +4096,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 						gc->temp_guardians[i] = 0;
 				}
 
-				md->guardian_data->~guardian_data();
-				aFree(md->guardian_data);
+				delete (md->guardian_data);
 				md->guardian_data = nullptr;
 			}
 
@@ -4130,7 +4128,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 		}
 		case BL_HOM:
 		{
-			struct homun_data *hd = (TBL_HOM*)bl;
+			homun_data *hd = (TBL_HOM*)bl;
 			map_session_data *sd = hd->master;
 
 			hom_hungry_timer_delete(hd);

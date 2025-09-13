@@ -366,10 +366,8 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 	s_mercenary_data *md;
 
 	if( !sd->md ) {
-		sd->md = md = (s_mercenary_data*)aCalloc(1,sizeof(s_mercenary_data));
-		new (sd->md) s_mercenary_data();
+		sd->md = md = new s_mercenary_data();
 
-		md->type = BL_MER;
 		md->id = npc_get_new_npc_id();
 		md->devotion_flag = 0;
 
