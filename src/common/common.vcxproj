@@ -52,7 +52,6 @@
     <ClCompile Include="database.cpp" />
     <ClCompile Include="db.cpp" />
     <ClCompile Include="des.cpp" />
-    <ClCompile Include="ers.cpp" />
     <ClCompile Include="grfio.cpp" />
     <ClCompile Include="malloc.cpp" />
     <ClCompile Include="mapindex.cpp" />

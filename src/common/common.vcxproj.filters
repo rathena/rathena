@@ -106,9 +106,6 @@
     <ClCompile Include="des.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ers.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="grfio.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

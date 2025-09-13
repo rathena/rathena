@@ -35,7 +35,7 @@
 
 static TIMER_FUNC(check_connect_char_server);
 
-static struct eri *auth_db_ers; //For reutilizing player login structures.
+static ERS<auth_node> auth_db_ers("chrif.cpp::auth_db_ers"); //For reutilizing player login structures.
 static DBMap* auth_db; // int32 id -> struct auth_node*
 static bool char_init_done = false; //server already initialized? Used for InterInitOnce and vending loadings
 
@@ -156,7 +156,7 @@ bool chrif_auth_delete(uint32 account_id, uint32 char_id, enum sd_state state) {
 			aFree(node->sd);
 		}
 
-		ers_free(auth_db_ers, node);
+		auth_db_ers.free(node);
 		idb_remove(auth_db,account_id);
 
 		return true;
@@ -171,7 +171,7 @@ static bool chrif_sd_to_auth(TBL_PC* sd, enum sd_state state) {
 	if ( chrif_search(sd->status.account_id) )
 		return false; //Already exists?
 
-	node = ers_alloc(auth_db_ers, struct auth_node);
+	node = auth_db_ers.alloc();
 
 	memset(node, 0, sizeof(struct auth_node));
 
@@ -1913,7 +1913,7 @@ int32 auth_db_final(DBKey key, DBData *data, va_list ap) {
 		aFree(node->sd);
 	}
 
-	ers_free(auth_db_ers, node);
+	auth_db_ers.free(node);
 
 	return 0;
 }
@@ -1929,8 +1929,6 @@ void do_final_chrif(void) {
 	}
 
 	auth_db->destroy(auth_db, auth_db_final);
-
-	ers_destroy(auth_db_ers);
 }
 
 /*==========================================
@@ -1955,7 +1953,6 @@ void do_init_chrif(void) {
 	}
 
 	auth_db = idb_alloc(DB_OPT_BASE);
-	auth_db_ers = ers_new(sizeof(struct auth_node),"chrif.cpp::auth_db_ers",ERS_OPT_NONE);
 
 	add_timer_func_list(check_connect_char_server, "check_connect_char_server");
 	add_timer_func_list(auth_db_cleanup, "auth_db_cleanup");
