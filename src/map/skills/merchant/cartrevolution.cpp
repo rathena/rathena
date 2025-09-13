@@ -26,8 +26,6 @@ void SkillCartRevolution::modifyHitRate(int16 &hit_rate, const block_list *src, 
 
 void SkillCartRevolution::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
-	// Fall through to splash attack implementation
-	// This would normally be handled by the engine to call the splash attack logic
-	// For now, we'll just call the basic attack
+
 	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 }
