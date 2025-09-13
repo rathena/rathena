@@ -44578,6 +44578,130 @@ Body:
       Ammo:
         Bullet: true
       AmmoAmount: 5
+  - Id: 5502
+    Name: SKE_SKY_SUN
+    Description: Sky Sun
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 1
+    Hit: Multi_Hit
+    HitCount: -5
+    GiveAp: 2
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 3
+    AfterCastActDelay: 500
+    Cooldown: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 72
+        - Level: 2
+          Amount: 76
+        - Level: 3
+          Amount: 80
+        - Level: 4
+          Amount: 84
+        - Level: 5
+          Amount: 88
+      Status:
+        Sky_Enchant: true
+  - Id: 5503
+    Name: SKE_SKY_MOON
+    Description: Sky Moon
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: -3
+    GiveAp: 2
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 3
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 4
+    CastCancel: true
+    CastTime: 1000
+    AfterCastActDelay: 300
+    Cooldown: 1000
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 56
+        - Level: 2
+          Amount: 59
+        - Level: 3
+          Amount: 62
+        - Level: 4
+          Amount: 65
+        - Level: 5
+          Amount: 68
+      Status:
+        Sky_Enchant: true
+  - Id: 5504
+    Name: SKE_STAR_LIGHT_KICK
+    Description: Star Light Kick
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: -7
+    GiveAp: 2
+    Element: Weapon
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    AfterCastActDelay: 300
+    Cooldown: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 52
+        - Level: 2
+          Amount: 57
+        - Level: 3
+          Amount: 62
+        - Level: 4
+          Amount: 67
+        - Level: 5
+          Amount: 72
+      Status:
+        Sky_Enchant: true
   - Id: 5506
     Name: SH_CHUL_HO_BATTERING
     Description: Chulho Battering

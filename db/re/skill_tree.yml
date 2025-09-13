@@ -8445,6 +8445,33 @@ Body:
         Requires:
           - Name: SKE_SKY_MASTERY
             Level: 5
+      - Name: SKE_SKY_SUN
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_NOON_BLAST
+            Level: 3
+          - Name: SKE_SUNSET_BLAST
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
+      - Name: SKE_SKY_MOON
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_MIDNIGHT_KICK
+            Level: 3
+          - Name: SKE_DAWN_BREAK
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
+      - Name: SKE_STAR_LIGHT_KICK
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_STAR_BURST
+            Level: 3
+          - Name: SKE_STAR_CANNON
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
   - Job: Sky_Emperor2
     Inherit:
       Novice: true

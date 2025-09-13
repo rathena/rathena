@@ -5868,6 +5868,9 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case SKE_SUNSET_BLAST:
 	case SKE_NOON_BLAST:
 	case SS_KINRYUUHOU:
+	case SKE_SKY_SUN:
+	case SKE_SKY_MOON:
+	case SKE_STAR_LIGHT_KICK:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
 			int32 heal = 0;
@@ -5942,6 +5945,20 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				status_change_end(src, SC_USE_SKILL_SP_SPA);
 
 			switch ( skill_id ) {
+				case SKE_STAR_LIGHT_KICK: {
+					uint8 dir = DIR_NORTHEAST;
+					if (bl->x != src->x || bl->y != src->y)
+						dir = map_calc_dir(bl, src->x, src->y);	// dir based on target as we move player based on target location
+					if (skill_check_unit_movepos(0, src, bl->x + dirx[dir], bl->y + diry[dir], 1, 1)) {
+						clif_skill_nodamage(src,*bl,skill_id,skill_lv,1);
+						clif_blown(src);
+						skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+					} else {
+						if (sd != nullptr)
+							clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
+					}
+					break;
+				}
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
 				case IG_IMPERIAL_PRESSURE:
@@ -5955,6 +5972,8 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 				case SKE_SUNSET_BLAST:
 				case SKE_NOON_BLAST:
+				case SKE_SKY_SUN:
+				case SKE_SKY_MOON:
 					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 					break;
 #ifdef RENEWAL
@@ -8979,6 +8998,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case SKE_DAWN_BREAK:
 	case SKE_RISING_MOON:
 	case SKE_MIDNIGHT_KICK:
+	case SKE_SKY_SUN:
 	{
 		int32 starget = BL_CHAR|BL_SKILL;
 
