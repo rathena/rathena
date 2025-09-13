@@ -1,6 +1,7 @@
 autom4te.cache/
 
 #Global
+.idea
 .vscode
 .Apple*
 .DS_Store

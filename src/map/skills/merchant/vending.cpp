@@ -1,9 +1,15 @@
-#include "skill_mc_vending.hpp"
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-SkillMC_VENDING::SkillMC_VENDING() : SkillImpl(MC_VENDING) {
+#include "vending.hpp"
+
+#include "map/intif.hpp"
+#include "map/pc.hpp"
+
+SkillVending::SkillVending() : SkillImpl(MC_VENDING) {
 }
 
-int32 SkillMC_VENDING::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillVending::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	if (sd) {
 		// Prevent vending of GMs with unnecessary Level to trade/drop. [Skotlex]
 		if (!pc_can_give_items(sd))
@@ -24,5 +30,4 @@ int32 SkillMC_VENDING::castendNoDamageId(struct block_list *src, struct block_li
 			}
 		}
 	}
-	return 1; // Success
 }
