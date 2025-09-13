@@ -323,8 +323,8 @@ int32 map_type(const struct map_data * m) {
 		return std::find_if(m->navi.warps_outof.begin(), m->navi.warps_outof.end(), [&link](const navi_link* link2) {
 			// find if any two warps in a map cannot be reached
 			return !navi_path_search(nullptr, &link->pos, &link2->pos, CELL_CHKNOREACH);
-		}) != m->navi.warps_into.end();
-	}) != m->navi.warps_into.end())
+		}) != m->navi.warps_outof.end();
+	}) != m->navi.warps_outof.end())
 		segmented = true;
 	
 	if (m->moblist[0] != nullptr) {
