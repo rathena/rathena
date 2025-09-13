@@ -641,6 +641,7 @@ public:
 		int32 critical_def,double_rate;
 		int32 short_attack_atk_rate; // Short range atk rate, not weapon based.
 		int32 long_attack_atk_rate; //Long range atk rate, not weapon based. [Skotlex]
+		int32 normal_atk_rate;
 		int32 near_attack_def_rate,long_attack_def_rate,magic_def_rate,misc_def_rate;
 		int32 ignore_mdef_ele;
 		int32 ignore_mdef_race;
