@@ -21,6 +21,10 @@ void SkillImpl::castendDamageId(block_list* src, block_list* target, uint16 skil
 	// no-op
 }
 
+void SkillImpl::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32 flag) const {
+	// no-op
+}
+
 void SkillImpl::calculateSkillRatio(const Damage*, const block_list*, const block_list*, uint16, int32&) const {
 	// no-op
 }
@@ -60,6 +64,16 @@ void SkillImplRecursiveDamageSplash::castendDamageId(block_list* src, block_list
 
 		this->splashSearch(src, target, skill_lv, tick, flag);
 	}
+}
+
+void SkillImplRecursiveDamageSplash::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32 flag) const {
+	// Cast center might be relevant later (e.g. for knockback direction)
+	skill_area_temp[4] = x;
+	skill_area_temp[5] = y;
+
+	int16 size = this->getSplashSearchSize(skill_lv);
+
+	map_foreachinarea(skill_area_sub, src->m, x - size, y - size, x + size, y + size, this->getSplashTarget(src), src, this->getSkillId(), skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
 }
 
 int16 SkillImplRecursiveDamageSplash::getSearchSize(uint16 skill_lv) const {
