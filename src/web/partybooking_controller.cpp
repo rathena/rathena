@@ -252,11 +252,15 @@ HANDLER_FUNC(partybooking_delete){
 		return;
 	}
 
+	char world_name_escaped[WORLD_NAME_LENGTH * 2 + 1];
+
+	Sql_EscapeString( nullptr, world_name_escaped, world_name.c_str() );
+
 	SQLLock sl( MAP_SQL_LOCK );
 	sl.lock();
 	auto handle = sl.getHandle();
 
-	if( SQL_ERROR == Sql_Query( handle, "DELETE FROM `%s` WHERE `world_name` = '%s' AND `account_id` = '%d'", partybookings_table, world_name.c_str(), account_id ) ){
+	if( SQL_ERROR == Sql_Query( handle, "DELETE FROM `%s` WHERE `world_name` = '%s' AND `account_id` = '%d'", partybookings_table, world_name_escaped, account_id ) ){
 		Sql_ShowDebug( handle );
 
 		sl.unlock();
