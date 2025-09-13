@@ -2693,6 +2693,7 @@ static int32 battle_range_type(struct block_list *src, struct block_list *target
 		case MT_RUSH_QUAKE: // 9 cell cast range.
 		case MT_RUSH_STRIKE: // 7 cell cast range.
 		case ABC_UNLUCKY_RUSH: // 7 cell cast range.
+		case ABC_CHASING_BREAK: // 7 cell cast range.
 		case MH_THE_ONE_FIGHTER_RISES: // 7 cell cast range.
 		//case ABC_DEFT_STAB: // 2 cell cast range???
 		case NPC_MAXPAIN_ATK:
@@ -6176,6 +6177,8 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			break;
 		case ABC_UNLUCKY_RUSH:
 			skillratio += -100 + 100 + 300 * skill_lv + 5 * sstatus->pow;
+			if (sc != nullptr && sc->hasSCE(SC_CHASING))
+				skillratio += 2500 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_CHAIN_REACTION_SHOT:
@@ -6186,6 +6189,8 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 		case ABC_CHAIN_REACTION_SHOT_ATK:
 			skillratio += -100 + 800 + 2550 * skill_lv;
 			skillratio += 15 * sstatus->con;
+			if (sc != nullptr && sc->hasSCE(SC_CHASING))
+				skillratio += 700 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case ABC_DEFT_STAB:
@@ -6704,6 +6709,25 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			skillratio += -100 + 400 + 200 * skill_lv;
 			skillratio += skill_lv * 5 * pc_checkskill( sd, SKE_SKY_MASTERY );
 			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case ABC_HIT_AND_SLIDING:
+			skillratio += -100 + 3500 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case ABC_CHASING_BREAK:
+			skillratio += -100 + 1550 + 450 * skill_lv;
+			skillratio += 5 * sstatus->pow;
+			if (sc != nullptr && sc->hasSCE(SC_CHASING))
+				skillratio += 200 + 50 * skill_lv;
+			RE_LVL_DMOD(100);
+			break;
+		case ABC_CHASING_SHOT:
+			skillratio += -100 + 1500 + 700 * skill_lv;
+			skillratio += 5 * sstatus->con;
+			if (sc != nullptr && sc->hasSCE(SC_CHASING))
+				skillratio += 250 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 	}
@@ -7679,6 +7703,18 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 			case BO_MAYHEMIC_THORNS:
 				if (sc && sc->getSCE(SC_RESEARCHREPORT))
 					wd.div_ = 4;
+				break;
+			case ABC_CHASING_BREAK:
+				if (sc != nullptr && sc->hasSCE(SC_CHASING))
+					wd.div_ = 7;
+				break;
+			case ABC_CHASING_SHOT:
+				if (sc != nullptr && sc->hasSCE(SC_CHASING))
+					wd.div_ = 3;
+				break;
+			case ABC_HIT_AND_SLIDING:
+				if (sd != nullptr && sd->status.weapon == W_BOW)
+					wd.flag |= BF_LONG;
 				break;
 			case HN_DOUBLEBOWLINGBASH:
 				if (wd.miscflag > 1)

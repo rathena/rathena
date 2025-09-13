@@ -2223,6 +2223,9 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 	case MT_RUSH_QUAKE:
 		sc_start( src, bl, SC_RUSH_QUAKE1, 100, skill_lv, skill_get_time( skill_id, skill_lv ) );
 		break;
+	case ABC_HIT_AND_SLIDING:
+		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		break;
 	case HN_SHIELD_CHAIN_RUSH:
 	case HN_JACK_FROST_NOVA:
 	case HN_GROUND_GRAVITATION:
@@ -5829,6 +5832,8 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case ABC_ABYSS_DAGGER:
 	case ABC_CHAIN_REACTION_SHOT:
 	case ABC_DEFT_STAB:
+	case ABC_CHASING_BREAK:
+	case ABC_CHASING_SHOT:
 	case WH_GALESTORM:
 	case BO_ACIDIFIED_ZONE_WATER:
 	case BO_ACIDIFIED_ZONE_GROUND:
@@ -6032,6 +6037,18 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 					if (sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 5)
 						splash_size = 2;// Gives the aftershock hit a 5x5 splash AoE.
 					break;
+				case ABC_CHASING_SHOT:
+				case ABC_CHASING_BREAK: {
+					uint8 dir = DIR_NORTHEAST;
+
+					if (bl->x != src->x || bl->y != src->y)
+						dir = map_calc_dir(bl, src->x, src->y);
+
+					if (skill_check_unit_movepos(0, src, bl->x + dirx[dir], bl->y + diry[dir], 1, 1))
+						clif_blown(src);
+					clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
+					break;
+				}
 				case AG_ROCK_DOWN:
 				case IQ_FIRST_BRAND:
 				case IQ_SECOND_FLAME:
@@ -7086,6 +7103,29 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 			clif_blown(src);
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
+
+	case ABC_HIT_AND_SLIDING: {
+		uint8 dir = DIR_NORTHEAST;
+
+		// Total backslide = skill level + distance between player and target
+		int32 total_backslide = skill_lv + distance_bl(src, bl);
+
+		if (bl->x != src->x || bl->y != src->y)
+			dir = map_calc_dir(bl, src->x, src->y);
+
+		if (skill_check_unit_movepos(0, src, bl->x + dirx[dir] * total_backslide, bl->y + diry[dir] * total_backslide, 1, 1)) {
+			clif_blown(src);
+			unit_setdir(src, map_calc_dir(src, bl->x, bl->y)); // Set the player's direction to face the target
+			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
+		} else { //Is this the right behavior? [Haydrich]
+			if (sd != nullptr)
+				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
+		}
+
+		// Trigger skill animation
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
+		break;
+	}
 
 	case SR_KNUCKLEARROW:
 		// Holds current direction of bl/target to src/attacker before the src is moved to bl location
