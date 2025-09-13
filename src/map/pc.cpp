@@ -831,12 +831,21 @@ static TIMER_FUNC(pc_invincible_timer){
 	return 0;
 }
 
-void pc_setinvincibletimer(map_session_data* sd, int32 val) {
-	nullpo_retv(sd);
+void pc_setinvincibletimer(map_session_data& sd) {
+	t_tick val;
+	map_data* mapdata = map_getmapdata(sd.m);
 
-	if( sd->invincible_timer != INVALID_TIMER )
-		delete_timer(sd->invincible_timer,pc_invincible_timer);
-	sd->invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd->id,0);
+	if (mapdata != nullptr && mapdata->getMapFlag(MF_INVINCIBLE_TIME) > 0)
+		val = mapdata->getMapFlag(MF_INVINCIBLE_TIME);
+	else
+		val = battle_config.pc_invincible_time;
+
+	if (val <= 0)
+		return;
+
+	if( sd.invincible_timer != INVALID_TIMER )
+		delete_timer(sd.invincible_timer,pc_invincible_timer);
+	sd.invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd.id,0);
 }
 
 void pc_delinvincibletimer(map_session_data* sd)
@@ -9751,8 +9760,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 			pc_setrestartvalue(sd,1);
 			status_percent_heal(sd, 100, 100);
 			clif_resurrection( *sd );
-			if(battle_config.pc_invincible_time)
-				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+			pc_setinvincibletimer( *sd );
 			sc_start(sd,sd,SC_STEELBODY,100,5,skill_get_time(MO_STEELBODY,5));
 			if(mapdata_flag_gvg2(mapdata))
 				pc_respawn_timer(INVALID_TIMER, gettick(), sd->id, 0);
@@ -10113,8 +10121,7 @@ void pc_revive(map_session_data *sd,uint32 hp, uint32 sp, uint32 ap) {
 	if(ap) clif_updatestatus(*sd,SP_AP);
 
 	pc_setstand(sd, true);
-	if(battle_config.pc_invincible_time > 0)
-		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+	pc_setinvincibletimer( *sd );
 
 	if (sd->state.gmaster_flag && sd->guild) {
 		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild->guild,GD_LEADERSHIP));

@@ -3,11 +3,11 @@
 
 #include "skill_factory_archer.hpp"
 
+#include "arrowshower.hpp"
 #include "chargearrow.hpp"
 #include "concentration.hpp"
-#include "double.hpp"
+#include "doublestrafe.hpp"
 #include "makingarrow.hpp"
-#include "shower.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
 	switch( skill_id ){

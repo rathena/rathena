@@ -1659,7 +1659,7 @@ extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 void pc_set_bg_queue_timer(map_session_data *sd);
 void pc_delete_bg_queue_timer(map_session_data *sd);
 
-void pc_setinvincibletimer(map_session_data* sd, int32 val);
+void pc_setinvincibletimer(map_session_data& sd);
 void pc_delinvincibletimer(map_session_data* sd);
 
 void pc_addspiritball(map_session_data *sd,int32 interval,int32 max);
