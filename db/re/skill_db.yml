@@ -45513,7 +45513,17 @@ Body:
     Element: Weapon
     GiveAp: 2
     Duration1: 60000
-    Cooldown: 1500
+    Cooldown:
+      - Level: 1
+        Time: 3000
+      - Level: 2
+        Time: 2500
+      - Level: 3
+        Time: 2000
+      - Level: 4
+        Time: 1500
+      - Level: 5
+        Time: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -45591,6 +45601,7 @@ Body:
     Element: Weapon
     GiveAp: 2
     AfterCastActDelay: 500
+    Casttime: 1000
     Cooldown: 750
     FixedCastTime: 1000
     Requires:
