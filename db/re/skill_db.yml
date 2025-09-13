@@ -45427,7 +45427,8 @@ Body:
         Area: 3
     Element: Weapon
     GiveAp: 2
-    Cooldown: 1500
+    AfterCastActDelay: 1000
+    Cooldown: 700
     Requires:
       SpCost:
         - Level: 1
@@ -45465,8 +45466,9 @@ Body:
         Area: 3
     Element: Weapon
     GiveAp: 2
-    Cooldown: 1500
-    FixedCastTime: 300 #TODO: confirm fixed cast time
+    AfterCastActDelay: 500
+    Cooldown: 750
+    FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
