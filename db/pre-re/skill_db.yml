@@ -3486,7 +3486,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
-    SplashArea: 3
+    SplashArea: 2
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -8267,15 +8267,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 38
+          Amount: 40
         - Level: 2
-          Amount: 41
+          Amount: 45
         - Level: 3
-          Amount: 44
-        - Level: 4
-          Amount: 47
-        - Level: 5
           Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
       Weapon:
         Musical: true
         Whip: true
