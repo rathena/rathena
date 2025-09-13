@@ -369,6 +369,21 @@
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/arrowshower.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/chargearrow.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/concentration.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/doublestrafe.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/makingarrow.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/skill_factory_archer.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -439,6 +454,21 @@
   <ItemGroup>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/arrowshower.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/chargearrow.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/concentration.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/doublestrafe.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/makingarrow.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/skill_factory_archer.cpp">
       <Filter>Source Files\Skills\Archer</Filter>

@@ -242,6 +242,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
+    <ClInclude Include="skills/archer/arrowshower.hpp" />
+    <ClInclude Include="skills/archer/chargearrow.hpp" />
+    <ClInclude Include="skills/archer/concentration.hpp" />
+    <ClInclude Include="skills/archer/doublestrafe.hpp" />
+    <ClInclude Include="skills/archer/makingarrow.hpp" />
     <ClInclude Include="skills/archer/skill_factory_archer.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
     <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp" />
@@ -313,6 +318,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
+    <ClCompile Include="skills/archer/arrowshower.cpp" />
+    <ClCompile Include="skills/archer/chargearrow.cpp" />
+    <ClCompile Include="skills/archer/concentration.cpp" />
+    <ClCompile Include="skills/archer/doublestrafe.cpp" />
+    <ClCompile Include="skills/archer/makingarrow.cpp" />
     <ClCompile Include="skills/archer/skill_factory_archer.cpp" />
     <ClCompile Include="skills/custom/skill_factory_custom.cpp" />
     <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp" />
