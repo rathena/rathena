@@ -26,21 +26,19 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
-namespace rathena{
-	namespace server_map{
-		class MapServer : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
-				void finalize() override;
-				void handle_crash() override;
-				void handle_shutdown() override;
+namespace rathena::server_map {
+class MapServer : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
+		void finalize() override;
+		void handle_crash() override;
+		void handle_shutdown() override;
 
-			public:
-				MapServer() : Core( e_core_type::MAP ){
+	public:
+		MapServer() : Core( e_core_type::MAP ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 struct npc_data;

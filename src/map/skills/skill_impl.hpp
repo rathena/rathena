@@ -40,3 +40,20 @@ public:
 protected:
 	e_skill skill_id_;
 };
+
+class SkillImplRecursiveDamageSplash : public SkillImpl{
+public:
+	explicit SkillImplRecursiveDamageSplash(e_skill skill_id);
+
+	virtual void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const override;
+
+	virtual int16 getSearchSize(uint16 skill_lv) const;
+
+	virtual int16 getSplashSearchSize(uint16 skill_lv) const;
+
+	virtual int32 getSplashTarget(block_list* src) const;
+
+	virtual void splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const;
+
+	virtual int64 splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const;
+};

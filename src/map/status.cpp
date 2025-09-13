@@ -7799,7 +7799,7 @@ static defType status_calc_def(struct block_list *bl, status_change *sc, int32 d
 		def /= 2;
 	if(sc->getSCE(SC_FREEZE))
 		def /= 2;
-	if(sc->getSCE(SC_POISON) || sc->getSCE(SC_DPOISON) && bl->type != BL_PC)
+	if((sc->hasSCE(SC_POISON) || sc->hasSCE(SC_DPOISON)) && bl->type != BL_PC)
 		def = def * 75 / 100; //Should round down
 	if(sc->getSCE(SC_SIGNUMCRUCIS))
 		def -= def * sc->getSCE(SC_SIGNUMCRUCIS)->val2/100;
