@@ -4924,6 +4924,7 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 				mapdata->setMapFlag(mapflag, false);
 			break;
 		case MF_SPECIALPOPUP:
+		case MF_INVINCIBLE_TIME:
 			if (status) {
 				nullpo_retr(false, args);
 

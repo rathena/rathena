@@ -10743,12 +10743,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 
 	struct map_data *mapdata = map_getmapdata(sd->m);
 
-	if(battle_config.pc_invincible_time > 0) {
-		if(mapdata_flag_gvg(mapdata))
-			pc_setinvincibletimer(sd,battle_config.pc_invincible_time<<1);
-		else
-			pc_setinvincibletimer(sd,battle_config.pc_invincible_time);
-	}
+	pc_setinvincibletimer( *sd );
 
 	if( mapdata->users++ == 0 && battle_config.dynamic_mobs )
 		map_spawnmobs(sd->m);
@@ -11115,7 +11110,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	}
 
 	// Trigger skill effects if you appear standing on them
-	if(!battle_config.pc_invincible_time)
+	if(sd->invincible_timer == INVALID_TIMER)
 		skill_unit_move(sd,gettick(),1);
 
 	pc_show_questinfo_reinit(sd);

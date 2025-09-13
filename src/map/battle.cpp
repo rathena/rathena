@@ -2698,6 +2698,7 @@ static int32 battle_range_type(struct block_list *src, struct block_list *target
 		//case ABC_DEFT_STAB: // 2 cell cast range???
 		case NPC_MAXPAIN_ATK:
 		case SS_SHIMIRU: // 11 cell cast range.
+		case SKE_STAR_LIGHT_KICK: // 7 cell cast range.
 			return BF_SHORT;
 		case CD_PETITIO: { // Skill range is 2 but damage is melee with books and ranged with mace.
 			map_session_data *sd = BL_CAST(BL_PC, src);
@@ -6694,6 +6695,24 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			RE_LVL_DMOD(100);
 			if (wd->miscflag & SKILL_ALTDMG_FLAG)
 				skillratio = skillratio * 3 / 10;
+			break;
+		case SKE_SKY_SUN:
+			skillratio += -100 + 1500 * skill_lv;
+			skillratio += skill_lv * 7 * pc_checkskill( sd, SKE_SKY_MASTERY );
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case SKE_SKY_MOON:
+			skillratio += -100 + 1200 + 450 * skill_lv;
+			skillratio += skill_lv * 9 * pc_checkskill( sd, SKE_SKY_MASTERY );
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
+			break;
+		case SKE_STAR_LIGHT_KICK:
+			skillratio += -100 + 400 + 200 * skill_lv;
+			skillratio += skill_lv * 5 * pc_checkskill( sd, SKE_SKY_MASTERY );
+			skillratio += 5 * sstatus->pow;
+			RE_LVL_DMOD(100);
 			break;
 		case ABC_HIT_AND_SLIDING:
 			skillratio += -100 + 3500 * skill_lv;
@@ -11755,7 +11774,7 @@ static const struct _battle_data {
 	{ "basic_skill_check",                  &battle_config.basic_skill_check,               1,      0,      1,              },
 	{ "guild_emperium_check",               &battle_config.guild_emperium_check,            1,      0,      1,              },
 	{ "guild_exp_limit",                    &battle_config.guild_exp_limit,                 50,     0,      99,             },
-	{ "player_invincible_time",             &battle_config.pc_invincible_time,              5000,   0,      INT_MAX,        },
+	{ "player_invincible_time",             &battle_config.pc_invincible_time,              3000,   0,      INT_MAX,        },
 	{ "pet_catch_rate",                     &battle_config.pet_catch_rate,                  100,    0,      INT_MAX,        },
 	{ "pet_rename",                         &battle_config.pet_rename,                      0,      0,      1,              },
 	{ "pet_friendly_rate",                  &battle_config.pet_friendly_rate,               100,    0,      INT_MAX,        },
