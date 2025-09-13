@@ -242,11 +242,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
-    <ClInclude Include="skills/archer/chargearrow.hpp" />
-    <ClInclude Include="skills/archer/concentration.hpp" />
-    <ClInclude Include="skills/archer/double.hpp" />
-    <ClInclude Include="skills/archer/makingarrow.hpp" />
-    <ClInclude Include="skills/archer/shower.hpp" />
     <ClInclude Include="skills/archer/arrowshower.hpp" />
     <ClInclude Include="skills/archer/chargearrow.hpp" />
     <ClInclude Include="skills/archer/concentration.hpp" />
