@@ -1102,11 +1102,12 @@ struct s_job_info {
 		uint32 zone;
 		uint8 group_lv;
 	} noenter_map;
+	std::vector<uint16> alternate_outfits;
 };
 
 class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
 public:
-	JobDatabase() : TypesafeCachedYamlDatabase( "JOB_STATS", 3, 2 ){
+	JobDatabase() : TypesafeCachedYamlDatabase( "JOB_STATS", 4, 2 ){
 
 	}
 
