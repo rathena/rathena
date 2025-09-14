@@ -45,7 +45,7 @@ void SkillHeal::castendNoDamageId(struct block_list *src, struct block_list *bl,
 
 	status_change_end(bl, SC_BITESCAR);
 	clif_skill_nodamage(src, *bl, getSkillId(), heal);
-	if (tsc && tsc->getSCE(SC_AKAITSUKI) && heal && getSkillId() != HLIF_HEAL)
+	if (tsc && tsc->getSCE(SC_AKAITSUKI) && heal)
 		heal = ~heal + 1;
 	t_exp heal_get_jobexp = status_heal(bl, heal, 0, 0);
 
