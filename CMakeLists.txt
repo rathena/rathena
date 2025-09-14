@@ -22,20 +22,13 @@
 #####################################################################
 
 
-#cmake_minimum_required( VERSION 2.8.4 )
-# Functional changes from 2.8.3 to 2.8.4:
-#   string(SUBSTRING) works with length -1 as "rest of string"
-#   changes to some CPack generators
-#   CYGWIN no longer defines WIN32
-#   CMP0017: Prefer files from the CMake module directory when including from there.
-# Update to 3.1 for CMAKE_CXX_STANDARD cross support definition
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
-cmake_minimum_required( VERSION 3.1 )
+cmake_minimum_required( VERSION 3.13 )
 project( rAthena )
 if( CYGWIN )
 	unset( WIN32 )
 endif()
-set(CMAKE_CXX_STANDARD 11) # C++11...
+set(CMAKE_CXX_STANDARD 17) # C++17...
 set(CMAKE_CXX_STANDARD_REQUIRED ON) #...is required...
 #set(CMAKE_CXX_EXTENSIONS OFF) #...without compiler extensions like gnu++11
 
@@ -55,6 +48,17 @@ set(CMAKE_C_CREATE_SHARED_LIBRARY)
 set(CMAKE_CXX_CREATE_SHARED_LIBRARY)
 set(CMAKE_DEBUG_POSTFIX "d")
 set(CMAKE_RELEASE_POSTFIX "r")
+
+# Set a default build type if none was specified
+set(default_build_type "Release")
+if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
+  message(STATUS "Setting build type to '${default_build_type}' as none was specified.")
+  set(CMAKE_BUILD_TYPE "${default_build_type}" CACHE
+      STRING "Choose the type of build." FORCE)
+  # Set the possible values of build type for cmake-gui
+  set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS
+    "Debug" "Release" "MinSizeRel" "RelWithDebInfo")
+endif()
 
 #
 # Prevent building in the source directory by default
@@ -113,7 +117,7 @@ include( TestBigEndian )
 #
 set( PACKETVER CACHE STRING "Sets the PACKETVER define of the servers. (see src/common/mmo.h)" )
 if( PACKETVER )
-	list( APPEND GLOBAL_DEFINITIONS  PACKETVER=${PACKETVER} )
+	set_property( CACHE GLOBAL_DEFINITIONS PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DPACKETVER=${PACKETVER}" )
 endif()
 
 
@@ -195,33 +199,50 @@ message( STATUS "Detecting dynamic loading library (dl) - done" )
 endif()
 
 
-#
-# networking library (Solaris/MinGW)
-#
-if( NOT MSVC )
-message( STATUS "Detecting networking library (socket/nsl/ws2_32)" )
-#set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
-#find_function_library( bind FUNCTION_BIND_LIBRARIES socket ws2_32 )
-#if( FUNCTION_BIND_LIBRARIES )
-#	message( STATUS "Adding global library: ${FUNCTION_BIND_LIBRARIES}" )
-#	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_BIND_LIBRARIES} )
-#endif()
-set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
-find_function_library( gethostbyname FUNCTION_GETHOSTBYNAME_LIBRARIES nsl )
-if( FUNCTION_GETHOSTBYNAME_LIBRARIES )
-	message( STATUS "Adding global library: ${FUNCTION_GETHOSTBYNAME_LIBRARIES}" )
-	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_GETHOSTBYNAME_LIBRARIES} )
-endif()
-message( STATUS "Detecting networking library (socket/nsl/ws2_32) - done" )
+# Check for getaddrinfo (modern networking API)
+check_function_exists(getaddrinfo HAVE_GETADDRINFO)
+if(HAVE_GETADDRINFO)
+    message(STATUS "Found getaddrinfo()")
+	add_definitions(-DHAVE_GETADDRINFO)
+else()
+    message(STATUS "getaddrinfo() not found, checking for legacy gethostbyname()")
+	#(Solaris/MinGW)
+	if( NOT MSVC )
+		message( STATUS "Detecting networking library (socket/nsl/ws2_32)" )
+		#set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
+		#find_function_library( bind FUNCTION_BIND_LIBRARIES socket ws2_32 )
+		#if( FUNCTION_BIND_LIBRARIES )
+		#	message( STATUS "Adding global library: ${FUNCTION_BIND_LIBRARIES}" )
+		#	set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_BIND_LIBRARIES} )
+		#endif()
+		set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} )
+		find_function_library( gethostbyname FUNCTION_GETHOSTBYNAME_LIBRARIES nsl )
+		if( FUNCTION_GETHOSTBYNAME_LIBRARIES )
+			message( STATUS "Adding global library: ${FUNCTION_GETHOSTBYNAME_LIBRARIES}" )
+			set_property( CACHE GLOBAL_LIBRARIES  PROPERTY VALUE ${GLOBAL_LIBRARIES} ${FUNCTION_GETHOSTBYNAME_LIBRARIES} )
+			set(HAVE_GETHOSTBYNAME TRUE CACHE INTERNAL "gethostbyname is available")
+		endif()
+		message( STATUS "Detecting networking library (socket/nsl/ws2_32) - done" )
+	else()
+		check_function_exists(gethostbyname HAVE_GETHOSTBYNAME)
+	endif()
+	if(HAVE_GETHOSTBYNAME)
+		message(STATUS "Found gethostbyname()")
+		add_definitions(-DHAVE_GETHOSTBYNAME)
+	endif()
 endif()
 
+#
+# enable web server?
+#
+option( ENABLE_WEB_SERVER "Build web-server (default=ON)" ON )
 
 #
 # Test for big endian
 #
 TEST_BIG_ENDIAN( BIG_ENDIAN )
 if( NOT DEFINED BIG_ENDIAN )
-	message( WARNING "unable to determine endianess, only LITTLE ENDIAN is supported" )
+	message( WARNING "unable to determine endianness, only LITTLE ENDIAN is supported" )
 elseif( BIG_ENDIAN )
 	message( FATAL_ERROR "bigendian is not supported" )
 endif()
@@ -237,20 +258,26 @@ endif()
 # checked but some systems define them even when they do not support it
 # (ref. bugreport:1003).
 #
-message( STATUS "Check for monotonic clock" )
-find_library( RT_LIBRARY rt )# (optional, rt on Debian)
-mark_as_advanced( RT_LIBRARY )
-set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
-file( READ "${CMAKE_SOURCE_DIR}/3rdparty/cmake/tests/HAVE_MONOTONIC_CLOCK.c" _SOURCE )
-CHECK_C_SOURCE_RUNS( "${_SOURCE}" HAVE_MONOTONIC_CLOCK )
-if( HAVE_MONOTONIC_CLOCK )
-	message( STATUS "Check for monotonic clock - yes" )
-	set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
-	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_MONOTONIC_CLOCK" )
+if(NOT APPLE)
+	message( STATUS "Check for monotonic clock" )
+	find_library( RT_LIBRARY rt )# (optional, rt on Debian)
+	mark_as_advanced( RT_LIBRARY )
+	set( CMAKE_REQUIRED_LIBRARIES ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
+	file( READ "${CMAKE_SOURCE_DIR}/3rdparty/cmake/tests/HAVE_MONOTONIC_CLOCK.c" _SOURCE )
+	CHECK_C_SOURCE_RUNS( "${_SOURCE}" HAVE_MONOTONIC_CLOCK )
+	if( HAVE_MONOTONIC_CLOCK )
+		message( STATUS "Check for monotonic clock - yes" )
+		set_property( CACHE GLOBAL_LIBRARIES    PROPERTY VALUE ${GLOBAL_LIBRARIES} ${RT_LIBRARY} )
+		set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_MONOTONIC_CLOCK" )
+	else()
+		message( STATUS "Check for monotonic clock - yes" )
+	endif()
 else()
 	message( STATUS "Check for monotonic clock - no" )
+    # macOS-specific behavior, assuming clock_gettime is available
+    set(HAVE_MONOTONIC_CLOCK TRUE)
+    set_property(CACHE GLOBAL_DEFINITIONS PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DHAVE_MONOTONIC_CLOCK")
 endif()
-
 
 #
 # Test if function exists:
@@ -291,6 +318,17 @@ option( ENABLE_EXTRA_DEBUG_CODE "enable extra debug code (default=OFF)" OFF )
 if( ENABLE_EXTRA_DEBUG_CODE )
 	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DDEBUG" )
 	message( STATUS "Enabled extra DEBUG code" )
+endif()
+
+
+#
+# Enable EPOLL (default=OFF)
+# Only for Linux
+#
+option( ENABLE_EXTRA_SOCKET_POLL "enable SOCKET_EPOLL (default=OFF)" OFF )
+if( ENABLE_EXTRA_SOCKET_POLL )
+	set_property( CACHE GLOBAL_DEFINITIONS  PROPERTY VALUE "${GLOBAL_DEFINITIONS} -DSOCKET_EPOLL" )
+	message( STATUS "Enabled SOCKET_EPOLL" )
 endif()
 
 
@@ -482,18 +520,24 @@ set( DEVELOPMENT_DIRECTORIES
 	)
 set( RUNTIME_FILES
 	"${CMAKE_CURRENT_SOURCE_DIR}/athena-start"
-	"${CMAKE_CURRENT_SOURCE_DIR}/charserv.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/dbghelp.dll"
-	"${CMAKE_CURRENT_SOURCE_DIR}/libmysql.dll"
 	"${CMAKE_CURRENT_SOURCE_DIR}/LICENSE"
-	"${CMAKE_CURRENT_SOURCE_DIR}/logserv.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/mapserv.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/pcre3.dll"
-	"${CMAKE_CURRENT_SOURCE_DIR}/README.txt"
-	"${CMAKE_CURRENT_SOURCE_DIR}/runserver.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/serv.bat"
-	"${CMAKE_CURRENT_SOURCE_DIR}/zlib1.dll"
+	"${CMAKE_CURRENT_SOURCE_DIR}/README.md"
 	)
+if (WIN32)
+	set (RUNTIME_FILES 
+		${RUNTIME_FILES}
+		"${CMAKE_CURRENT_SOURCE_DIR}/dbghelp.dll"
+		"${CMAKE_CURRENT_SOURCE_DIR}/libmysql.dll"
+		"${CMAKE_CURRENT_SOURCE_DIR}/pcre3.dll"
+		"${CMAKE_CURRENT_SOURCE_DIR}/zlib1.dll"
+		"${CMAKE_CURRENT_SOURCE_DIR}/tools/charserv.bat"
+		"${CMAKE_CURRENT_SOURCE_DIR}/tools/logserv.bat"
+		"${CMAKE_CURRENT_SOURCE_DIR}/tools/mapserv.bat"
+		"${CMAKE_CURRENT_SOURCE_DIR}/tools/runserver.bat"
+		"${CMAKE_CURRENT_SOURCE_DIR}/tools/serv.bat"
+	)
+endif(WIN32)
+
 set( RUNTIME_DIRECTORIES
 	"conf"
 	"db"

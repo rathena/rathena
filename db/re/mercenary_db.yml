@@ -1,0 +1,679 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Mercenary Database
+###########################################################################
+#
+# Mercenary Settings
+#
+###########################################################################
+# - Id                      Mercenary ID.
+#   AegisName               Server name to reference the mercenary in scripts and lookups, should use no spaces.
+#   Name                    Name in English.
+#   Level                   Level. (Default: 1)
+#   Hp                      Total HP. (Default: 1)
+#   Sp                      Total SP. (Default: 1)
+#   Attack                  Minimum attack. (Default: 0)
+#   Attack2                 Maximum attack. (Default: 0)
+#   Defense                 Physical defense of the mercenary, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicDefense            Magic defense of the mercenary, reduces magical skill damage. (Default: 0)
+#   Str                     Strength which affects attack. (Default: 1)
+#   Agi                     Agility which affects flee. (Default: 1)
+#   Vit                     Vitality which affects defense. (Default: 1)
+#   Int                     Intelligence which affects magic attack. (Default: 1)
+#   Dex                     Dexterity which affects hit rate. (Default: 1)
+#   Luk                     Luck which affects perfect dodge/lucky flee/perfect flee/lucky dodge rate. (Default: 1)
+#   AttackRange             Attack range. (Default: 0)
+#   SkillRange              Skill cast range. (Default: 0)
+#   ChaseRange              Chase range. (Default: 0)
+#   Size                    Size. (Default: Small)
+#   Race                    Race. (Default: Formless)
+#   Element                 Element. (Default: Neutral)
+#   ElementLevel            Level of element. (Default: 1)
+#   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
+#   AttackDelay             Attack speed. (Default: 4000)
+#   AttackMotion            Attack animation speed. (Default: 2000)
+#   DamageMotion            Damage animation speed. (Default: 0)
+#   Skills:                 List of mercenary skills. (Optional)
+#     - Name                Skill name.
+#       MaxLevel            Max skill level.
+###########################################################################
+
+Header:
+  Type: MERCENARY_DB
+  Version: 1
+
+Body:
+  - Id: 2213
+    AegisName: M_WANDER_MAN
+    Name: Wander Man
+    Level: 81
+    Hp: 8614
+    Sp: 220
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 20
+    Str: 80
+    Agi: 110
+    Vit: 63
+    Int: 51
+    Dex: 85
+    Luk: 90
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 672
+    AttackMotion: 500
+    DamageMotion: 192
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 10
+      - Name: MS_PARRYING
+        MaxLevel: 4
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+      - Name: MS_BOWLINGBASH
+        MaxLevel: 5
+  - Id: 2214
+    AegisName: M_WICKED_NYMPH
+    Name: Wicked Nymph
+    Level: 85
+    Hp: 6157
+    Sp: 256
+    Attack: 420
+    Attack2: 620
+    Defense: 30
+    MagicDefense: 45
+    Str: 40
+    Agi: 50
+    Vit: 40
+    Int: 92
+    Dex: 60
+    Luk: 110
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 637
+    AttackMotion: 1008
+    DamageMotion: 360
+    Skills:
+      - Name: MER_LEXDIVINA
+        MaxLevel: 3
+      - Name: MER_BLESSING
+        MaxLevel: 5
+      - Name: MER_TENDER
+        MaxLevel: 1
+      - Name: MER_MAGNIFICAT
+        MaxLevel: 1
+  - Id: 2215
+    AegisName: M_KASA
+    Name: Kasa
+    Level: 83
+    Hp: 9815
+    Sp: 234
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 60
+    Str: 85
+    Agi: 90
+    Vit: 71
+    Int: 43
+    Dex: 85
+    Luk: 105
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 150
+    AttackDelay: 800
+    AttackMotion: 600
+    DamageMotion: 288
+    Skills:
+      - Name: MER_CRASH
+        MaxLevel: 5
+      - Name: MS_MAGNUM
+        MaxLevel: 5
+      - Name: MER_REGAIN
+        MaxLevel: 1
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+  - Id: 2216
+    AegisName: M_SALAMANDER
+    Name: Salamander
+    Level: 87
+    Hp: 9517
+    Sp: 260
+    Attack: 900
+    Attack2: 1100
+    Defense: 60
+    MagicDefense: 68
+    Str: 90
+    Agi: 80
+    Vit: 65
+    Int: 45
+    Dex: 87
+    Luk: 95
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Large
+    Element: Fire
+    ElementLevel: 3
+    WalkSpeed: 160
+    AttackDelay: 140
+    AttackMotion: 384
+    DamageMotion: 288
+    Skills:
+      - Name: MS_BASH
+        MaxLevel: 5
+      - Name: ML_BRANDISH
+        MaxLevel: 5
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+      - Name: MER_BENEDICTION
+        MaxLevel: 1
+  - Id: 2217
+    AegisName: M_TEDDY_BEAR
+    Name: Teddy Bear
+    Level: 85
+    Hp: 14493
+    Sp: 243
+    Attack: 600
+    Attack2: 800
+    Defense: 100
+    MagicDefense: 70
+    Str: 60
+    Agi: 20
+    Vit: 85
+    Int: 50
+    Dex: 75
+    Luk: 130
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 512
+    AttackMotion: 780
+    DamageMotion: 504
+    Skills:
+      - Name: ML_DEVOTION
+        MaxLevel: 3
+      - Name: MER_REGAIN
+        MaxLevel: 1
+      - Name: ML_DEFENDER
+        MaxLevel: 1
+      - Name: MER_SCAPEGOAT
+        MaxLevel: 1
+  - Id: 2325
+    AegisName: M_BAPHOMET_
+    Name: Baphomet
+    Level: 57
+    Hp: 7510
+    Sp: 204
+    Attack: 810
+    Attack2: 955
+    Defense: 70
+    MagicDefense: 40
+    Str: 52
+    Agi: 60
+    Vit: 36
+    Int: 17
+    Dex: 57
+    Luk: 25
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Demon
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 868
+    AttackMotion: 480
+    DamageMotion: 120
+    Skills:
+      - Name: MS_BASH
+        MaxLevel: 5
+      - Name: MER_QUICKEN
+        MaxLevel: 10
+  - Id: 2326
+    AegisName: M_GALAPAGO
+    Name: Galapago
+    Level: 45
+    Hp: 7513
+    Sp: 201
+    Attack: 760
+    Attack2: 915
+    Defense: 70
+    MagicDefense: 40
+    Str: 30
+    Agi: 28
+    Vit: 29
+    Int: 18
+    Dex: 30
+    Luk: 16
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Brute
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 165
+    AttackDelay: 1430
+    AttackMotion: 1080
+    DamageMotion: 1080
+    Skills:
+      - Name: MER_BLESSING
+        MaxLevel: 5
+  - Id: 2342
+    AegisName: MER_DIABOLIC
+    Name: Diabolic
+    Level: 83
+    Hp: 9815
+    Sp: 234
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 60
+    Str: 85
+    Agi: 90
+    Vit: 71
+    Int: 43
+    Dex: 85
+    Luk: 105
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1080
+    AttackMotion: 780
+    DamageMotion: 180
+    Skills:
+      - Name: MER_CRASH
+        MaxLevel: 5
+      - Name: MS_MAGNUM
+        MaxLevel: 5
+      - Name: MER_REGAIN
+        MaxLevel: 1
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+  - Id: 2344
+    AegisName: MER_WISH_MAIDEN
+    Name: Wish Maiden
+    Level: 83
+    Hp: 9815
+    Sp: 234
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 60
+    Str: 85
+    Agi: 90
+    Vit: 71
+    Int: 43
+    Dex: 85
+    Luk: 105
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1080
+    AttackMotion: 780
+    DamageMotion: 180
+  - Id: 2345
+    AegisName: MER_ZHERLTHSH
+    Name: Zherlthsh
+    Level: 83
+    Hp: 9815
+    Sp: 234
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 60
+    Str: 85
+    Agi: 90
+    Vit: 71
+    Int: 43
+    Dex: 85
+    Luk: 105
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1080
+    AttackMotion: 780
+    DamageMotion: 180
+    Skills:
+      - Name: MER_CRASH
+        MaxLevel: 5
+      - Name: MS_MAGNUM
+        MaxLevel: 5
+      - Name: MER_REGAIN
+        MaxLevel: 1
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+  - Id: 2346
+    AegisName: MER_KTULLANUX
+    Name: Ktullanux
+    Level: 83
+    Hp: 9815
+    Sp: 234
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 60
+    Str: 85
+    Agi: 90
+    Vit: 71
+    Int: 43
+    Dex: 85
+    Luk: 105
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1080
+    AttackMotion: 780
+    DamageMotion: 180
+  - Id: 2347
+    AegisName: MER_EDDGA
+    Name: Eddga
+    Level: 83
+    Hp: 9815
+    Sp: 234
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 60
+    Str: 85
+    Agi: 90
+    Vit: 71
+    Int: 43
+    Dex: 85
+    Luk: 105
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1080
+    AttackMotion: 780
+    DamageMotion: 180
+    Skills:
+      - Name: MER_CRASH
+        MaxLevel: 5
+      - Name: MS_MAGNUM
+        MaxLevel: 5
+      - Name: MER_REGAIN
+        MaxLevel: 1
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+  - Id: 2348
+    AegisName: MER_CIVIL_SERVANT
+    Name: Civil Servant
+    Level: 83
+    Hp: 9815
+    Sp: 234
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 60
+    Str: 85
+    Agi: 90
+    Vit: 71
+    Int: 43
+    Dex: 85
+    Luk: 105
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1080
+    AttackMotion: 780
+    DamageMotion: 180
+  - Id: 2349
+    AegisName: MER_LOLI_RURI
+    Name: Loli Ruri
+    Level: 83
+    Hp: 9815
+    Sp: 234
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 60
+    Str: 85
+    Agi: 90
+    Vit: 71
+    Int: 43
+    Dex: 85
+    Luk: 105
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1080
+    AttackMotion: 780
+    DamageMotion: 180
+  - Id: 2350
+    AegisName: MER_SEDORA
+    Name: Sedora
+    Level: 83
+    Hp: 9815
+    Sp: 234
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 60
+    Str: 85
+    Agi: 90
+    Vit: 71
+    Int: 43
+    Dex: 85
+    Luk: 105
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1080
+    AttackMotion: 780
+    DamageMotion: 180
+  - Id: 2351
+    AegisName: MER_CHEPET
+    Name: Chepet
+    Level: 83
+    Hp: 9815
+    Sp: 234
+    Attack: 1100
+    Attack2: 1300
+    Defense: 60
+    MagicDefense: 60
+    Str: 85
+    Agi: 90
+    Vit: 71
+    Int: 43
+    Dex: 85
+    Luk: 105
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Demon
+    Element: Dark
+    ElementLevel: 2
+    WalkSpeed: 150
+    AttackDelay: 1080
+    AttackMotion: 780
+    DamageMotion: 180
+  - Id: 2378
+    AegisName: MER_ANTLER_SCARABA
+    Name: Antler Scaraba
+    Level: 136
+    Hp: 30000
+    Attack: 1418
+    Attack2: 1828
+    Defense: 155
+    MagicDefense: 102
+    Str: 23
+    Agi: 99
+    Vit: 59
+    Int: 129
+    Dex: 137
+    Luk: 45
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Insect
+    Element: Earth
+    ElementLevel: 2
+    WalkSpeed: 200
+    AttackDelay: 504
+    AttackMotion: 624
+    DamageMotion: 360
+  - Id: 2937
+    AegisName: M_LOKI
+    Name: Loki's Shadow
+    Level: 145
+    Hp: 1215600
+    Attack: 1835
+    Attack2: 2279
+    Defense: 15
+    MagicDefense: 89
+    Str: 76
+    Agi: 66
+    Vit: 90
+    Int: 55
+    Dex: 189
+    Luk: 22
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 175
+    AttackDelay: 800
+    AttackMotion: 750
+    DamageMotion: 300
+    Skills:
+      - Name: MER_INVINCIBLEOFF2
+        MaxLevel: 1
+  - Id: 3569
+    AegisName: POPE_MD_H_MERC_NORMAL
+    Name: Official Pope
+    Level: 120
+    Hp: 120000
+    Sp: 200
+    Attack: 123
+    Defense: 999
+    MagicDefense: 105
+    Str: 2
+    Vit: 400
+    Int: 10
+    Dex: 110
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 750
+    DamageMotion: 384
+    Skills:
+      - Name: MER_MAGNIFICAT
+        MaxLevel: 1
+      - Name: MER_DECAGI
+        MaxLevel: 1
+      - Name: MER_TENDER
+        MaxLevel: 1
+      - Name: MER_BLESSING
+        MaxLevel: 3
+  - Id: 3570
+    AegisName: POPE_MD_H_MERC_CASUAL
+    Name: Casual Pope
+    Level: 120
+    Hp: 120000
+    Sp: 200
+    Attack: 123
+    Defense: 999
+    MagicDefense: 105
+    Str: 2
+    Vit: 400
+    Int: 10
+    Dex: 110
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 750
+    DamageMotion: 384
+    Skills:
+      - Name: MER_MAGNIFICAT
+        MaxLevel: 1
+      - Name: MER_DECAGI
+        MaxLevel: 1
+      - Name: MER_TENDER
+        MaxLevel: 1
+      - Name: MER_BLESSING
+        MaxLevel: 3

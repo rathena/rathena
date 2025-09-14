@@ -1,0 +1,61 @@
+name: Build servers with GCC
+# build_servers_gcc.yml
+
+concurrency:
+  group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/master' }}
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      # Always trigger all Github Actions if an action or something CI related was changed
+      - '.github/workflows/**'
+      - 'tools/ci/**'
+      # This workflow should run when a file in a source directory has been modified.
+      - 'src/**'
+      - '3rdparty/**'
+
+jobs:
+  build:
+    # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
+    # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
+    if: "!contains(github.event.head_commit.message, 'ci-skip')"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+          # The ubuntu-latest label currently points to ubuntu-24.04.
+          # Available: ubuntu-24.04, ubuntu-22.04
+          os: [ubuntu-latest]
+          # Older versions of GCC are not available via unaltered aptitude repo lists.
+          gcc: ['9', '10', '11', '12']
+          # GCC 13 was removed from 22.04, include it as a separate job
+          include:
+            - os: ubuntu-24.04
+              gcc: 13
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update & Install packages
+        # Ubuntu runners already have most of the packages rAthena requires to build.
+        # https://github.com/actions/virtual-environments/blob/main/images/linux/Ubuntu2004-Readme.md
+        run: |
+          sudo apt update
+          sudo apt install zlib1g-dev libpcre3-dev gcc-${{ matrix.gcc }} g++-${{ matrix.gcc }}
+
+      - name: Command - configure
+        env:
+            CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }}'
+        # -Werror: to treat all warnings as errors
+        # -Wno-error=builtin-declaration-mismatch: otherwise ./configure checks fail
+        run: ./configure $CONFIGURE_FLAGS --enable-buildbot=yes CXXFLAGS='-Werror -Wno-error=builtin-declaration-mismatch'
+      
+      - name: Command - make clean
+        run: make clean
+
+      - name: Command - make all
+        run: make all

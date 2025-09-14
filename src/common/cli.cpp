@@ -3,14 +3,14 @@
 
 #include "cli.hpp"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 #ifdef WIN32
 	#include <conio.h>
 #else
-	#include <sys/poll.h>
+	#include <poll.h>
 #endif
 
 #include "cbasetypes.hpp"
@@ -18,22 +18,23 @@
 #include "showmsg.hpp"
 #include "timer.hpp"
 
+using namespace rathena::server_core;
+
 //map confs
-const char* MAP_CONF_NAME;
-const char* INTER_CONF_NAME;
-const char* LOG_CONF_NAME;
-const char* BATTLE_CONF_FILENAME;
-const char* ATCOMMAND_CONF_FILENAME;
-const char* SCRIPT_CONF_NAME;
-const char* GRF_PATH_FILENAME;
+const char* MAP_CONF_NAME = "conf/map_athena.conf";
+const char* INTER_CONF_NAME = "conf/inter_athena.conf";
+const char* LOG_CONF_NAME = "conf/log_athena.conf";
+const char* BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
+const char* SCRIPT_CONF_NAME = "conf/script_athena.conf";
+const char* GRF_PATH_FILENAME = "conf/grf-files.txt";
 //char confs
-const char* CHAR_CONF_NAME;
-const char* SQL_CONF_NAME;
+const char* CHAR_CONF_NAME = "conf/char_athena.conf";
 //login confs
-const char* LOGIN_CONF_NAME;
+const char* LOGIN_CONF_NAME = "conf/login_athena.conf";
+const char *LOGIN_MSG_CONF_NAME = "conf/msg_conf/login_msg.conf";
 //common conf (used by multiple serv)
-const char* LAN_CONF_NAME; //char-login
-const char* MSG_CONF_NAME_EN; //all
+const char* LAN_CONF_NAME = "conf/subnet_athena.conf"; //char-login
+const char* MSG_CONF_NAME_EN = "conf/msg_conf/char_msg.conf"; //all
 
 /**
  * Function to check if the specified option has an argument following it.
@@ -44,7 +45,7 @@ const char* MSG_CONF_NAME_EN; //all
  *   false : no other args found, and throw a warning
  *   true : something following us
  */
-bool opt_has_next_value(const char* option, int i, int argc){
+bool opt_has_next_value(const char* option, int32 i, int32 argc){
 	if (i >= argc - 1) {
 		ShowWarning("Missing value for option '%s'.\n", option);
 		return false;
@@ -84,10 +85,14 @@ void display_versionscreen(bool do_exit)
  * @param argv: arguments values (from main)
  * @return true or exit on failure
  */
-int cli_get_options(int argc, char ** argv) {
-	int i = 0;
+int32 cli_get_options(int32 argc, char ** argv) {
+	int32 i = 0;
 	for (i = 1; i < argc; i++) {
 		const char* arg = argv[i];
+
+		// to temporarily support mapgenerator options
+		if (!arg)
+			continue;
 
 		if (arg[0] != '-' && (arg[0] != '/' || arg[1] == '-')) {// -, -- and /
 			ShowError("Unknown option '%s'.\n", argv[i]);
@@ -107,14 +112,12 @@ int cli_get_options(int argc, char ** argv) {
 					MSG_CONF_NAME_EN = argv[++i];
 			}
 			else if (strcmp(arg, "run-once") == 0) { // close the map-server as soon as its done.. for testing [Celest]
-				runflag = CORE_ST_STOP;
-			}
-			else if (SERVER_TYPE & (ATHENA_SERVER_LOGIN | ATHENA_SERVER_CHAR)) { //login or char
+				global_core->set_run_once( true );
+			}else if( global_core->get_type() == e_core_type::LOGIN || global_core->get_type() == e_core_type::CHARACTER ){
 				if (strcmp(arg, "lan-config") == 0) {
 					if (opt_has_next_value(arg, i, argc))
 						LAN_CONF_NAME = argv[++i];
-				}
-				else if (SERVER_TYPE == ATHENA_SERVER_LOGIN) { //login
+				}else if( global_core->get_type() == e_core_type::LOGIN ){
 					if (strcmp(arg, "login-config") == 0) {
 						if (opt_has_next_value(arg, i, argc))
 							LOGIN_CONF_NAME = argv[++i];
@@ -123,8 +126,7 @@ int cli_get_options(int argc, char ** argv) {
 						ShowError("Unknown option '%s'.\n", argv[i]);
 						exit(EXIT_FAILURE);
 					}
-				}
-				else if (SERVER_TYPE == ATHENA_SERVER_CHAR) { //char
+				}else if( global_core->get_type() == e_core_type::CHARACTER ){
 					if (strcmp(arg, "char-config") == 0) {
 						if (opt_has_next_value(arg, i, argc))
 							CHAR_CONF_NAME = argv[++i];
@@ -138,8 +140,7 @@ int cli_get_options(int argc, char ** argv) {
 						exit(EXIT_FAILURE);
 					}
 				}
-			}
-			else if (SERVER_TYPE == ATHENA_SERVER_MAP) { //map
+			}else if( global_core->get_type() == e_core_type::MAP ){
 				if (strcmp(arg, "map-config") == 0) {
 					if (opt_has_next_value(arg, i, argc))
 						MAP_CONF_NAME = argv[++i];
@@ -147,10 +148,6 @@ int cli_get_options(int argc, char ** argv) {
 				else if (strcmp(arg, "battle-config") == 0) {
 					if (opt_has_next_value(arg, i, argc))
 						BATTLE_CONF_FILENAME = argv[++i];
-				}
-				else if (strcmp(arg, "atcommand-config") == 0) {
-					if (opt_has_next_value(arg, i, argc))
-						ATCOMMAND_CONF_FILENAME = argv[++i];
 				}
 				else if (strcmp(arg, "script-config") == 0) {
 					if (opt_has_next_value(arg, i, argc))
@@ -221,7 +218,7 @@ TIMER_FUNC(parse_console_timer){
 	memset(buf,0,MAX_CONSOLE_IN); //clear out buf
 
 	if(cli_hasevent()){
-		if(fgets(buf, MAX_CONSOLE_IN, stdin)==NULL)
+		if(fgets(buf, MAX_CONSOLE_IN, stdin)==nullptr)
 			return -1;
 		else if(strlen(buf)>MIN_CONSOLE_IN)
 			parse_console(buf);

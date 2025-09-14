@@ -1,0 +1,1117 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2025 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Package Database
+###########################################################################
+#
+# Item Package Settings
+#
+###########################################################################
+# - Item                       Item that triggers Item Package Selection.
+#   Groups:                    Groups that can be selected.
+#     - Group                  Group ID that can be selected (has to match the client's LUA file).
+#       Items:                 Items that will be given out.
+#         - Item               Item that will be given out.
+#           Amount             Amount of the item. (Default: 1)
+#                              To remove an item via import set amount to 0.
+#           RentalHours        Rental time in hours. (Default: 0)
+#           Refine             Refine level of the item. (Default: 0)
+#           RandomOptionGroup  Name of the random option group that will be applied. (Default: none)
+###########################################################################
+
+Header:
+  Type: ITEM_PACKAGE_DB
+  Version: 1
+
+Body:
+  - Item: Select_Example1
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Cotton_Shirt
+            Refine: 7
+#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: Shoes
+            Refine: 5
+#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: Muffler
+            Refine: 3
+#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: Event_Pierrot_Nose
+            RentalHours: 24
+#            RandomOptionGroup: TODO <insert random option group name>
+      - Group: 1
+        Items:
+          - Item: Red_Potion
+            Amount: 100
+          - Item: Orange_Potion
+            Amount: 50
+          - Item: White_Potion
+            Amount: 10
+      - Group: 2
+        Items:
+          - Item: Jellopy
+            Amount: 10
+          - Item: Hinalle
+          - Item: Yellow_Gemstone
+            Amount: 3
+          - Item: Azure_Jewel
+          - Item: Spore_Doll
+            Amount: 2
+  - Item: Select_Example2
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Knife
+            Refine: 4
+#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: Cotton_Shirt
+            Refine: 4
+#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: Red_Potion
+            Amount: 100
+          - Item: Ring
+            RentalHours: 24
+#            RandomOptionGroup: TODO <insert random option group name>
+      - Group: 1
+        Items:
+          - Item: Tsurugi
+            Refine: 5
+#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: Padded_Armor
+            Refine: 5
+#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: Yellow_Potion
+            Amount: 50
+      - Group: 2
+        Items:
+          - Item: Sword
+            Refine: 20
+#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: Guard
+            RentalHours: 168
+            Refine: 5
+#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: White_Herb
+            Amount: 100
+      - Group: 3
+        Items:
+          - Item: Fabre_Card
+          - Item: Pupa_Card
+          - Item: Drops_Card
+          - Item: Poring__Card
+          - Item: Lunatic_Card
+          - Item: Pecopeco_Egg_Card
+          - Item: Picky_Card
+          - Item: Chonchon_Card
+          - Item: Wilow_Card
+          - Item: Picky__Card
+          - Item: Thief_Bug_Egg_Card
+          - Item: Andre_Egg_Card
+          - Item: Roda_Frog_Card
+          - Item: Condor_Card
+          - Item: Thief_Bug_Card
+          - Item: Savage_Babe_Card
+          - Item: Andre_Larva_Card
+          - Item: Hornet_Card
+          - Item: Farmiliar_Card
+          - Item: Rocker_Card
+      - Group: 4
+        Items:
+          - Item: Poring_Card
+      - Group: 5
+        Items:
+          - Item: LI_Nyangvine_Box3_26
+            Amount: 5
+      - Group: 6
+        Items:
+          - Item: C_Hair_Of_The_Strong
+#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: C_Imp_Hat
+#            RandomOptionGroup: TODO <insert random option group name>
+      - Group: 7
+        Items:
+          - Item: C_Classical_Fhat
+      - Group: 8
+        Items:
+          - Item: Wing_Of_Fly
+            Amount: 3
+            RentalHours: 24
+          - Item: Wing_Of_Butterfly
+            Amount: 5
+            RentalHours: 168
+          - Item: Old_Blue_Box
+            RentalHours: 1
+      - Group: 9
+        Items:
+          - Item: Red_Potion
+            Amount: 3
+            RentalHours: 1
+      - Group: 10
+        Items:
+          - Item: Guard_
+      - Group: 11
+        Items:
+          - Item: Orange_Potion
+            Amount: 800
+  - Item: Minus_Status_Box_
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Minus_Str
+            Amount: 6
+      - Group: 1
+        Items:
+          - Item: Minus_Agi
+            Amount: 6
+      - Group: 2
+        Items:
+          - Item: Minus_Vit
+            Amount: 6
+      - Group: 3
+        Items:
+          - Item: Minus_Int
+            Amount: 6
+      - Group: 4
+        Items:
+          - Item: Minus_Dex
+            Amount: 6
+      - Group: 5
+        Items:
+          - Item: Minus_Luk
+            Amount: 6
+      - Group: 6
+        Items:
+          - Item: Minus_Str
+          - Item: Minus_Agi
+          - Item: Minus_Vit
+          - Item: Minus_Int
+          - Item: Minus_Dex
+          - Item: Minus_Luk
+  - Item: Alchemist_Box_
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Fire_Bottle
+            Amount: 50
+      - Group: 1
+        Items:
+          - Item: Acid_Bottle
+            Amount: 50
+      - Group: 2
+        Items:
+          - Item: MenEater_Plant_Bottle
+            Amount: 50
+      - Group: 3
+        Items:
+          - Item: Coating_Bottle
+            Amount: 50
+      - Group: 4
+        Items:
+          - Item: Mini_Bottle
+            Amount: 50
+  - Item: FullPene_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: FullPene_Earring_Box
+      - Group: 1
+        Items:
+          - Item: FullPene_Pendant_Box
+      - Group: 2
+        Items:
+          - Item: FullPene_Armor_Box
+      - Group: 3
+        Items:
+          - Item: FullPene_Shoes_Box
+  - Item: FullTemp_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: FullTemp_Earring_Box
+      - Group: 1
+        Items:
+          - Item: FullTemp_Pendant_Box
+      - Group: 2
+        Items:
+          - Item: FullTemp_Armor_Box
+      - Group: 3
+        Items:
+          - Item: FullTemp_Shoes_Box
+  - Item: Durable_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Durable_Weapon_Box
+      - Group: 1
+        Items:
+          - Item: Durable_Shield_Box
+  - Item: Clever_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Clever_Weapon_Box
+      - Group: 1
+        Items:
+          - Item: Clever_Shield_Box
+  - Item: OS_Helm_Box_
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Ignis_CapK
+      - Group: 1
+        Items:
+          - Item: Phantom_Cap
+      - Group: 2
+        Items:
+          - Item: Stripe_Hat
+      - Group: 3
+        Items:
+          - Item: Clock_Casket_RD
+      - Group: 4
+        Items:
+          - Item: Large_Sorcerer_Crown
+      - Group: 5
+        Items:
+          - Item: Scorpio_Diadem_K
+      - Group: 6
+        Items:
+          - Item: Sagittarius_DiademK
+  - Item: Shadow_R_M_Box_
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Class_Sha_R_M_Melee
+      - Group: 1
+        Items:
+          - Item: Class_Sha_R_M_Magic
+      - Group: 2
+        Items:
+          - Item: Skill_Sha_R_M_Melee
+      - Group: 3
+        Items:
+          - Item: Skill_Sha_R_M_Magic
+  - Item: Metal_W_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Metal_Two_Hand_Sword
+            Refine: 7
+      - Group: 1
+        Items:
+          - Item: Metal_Lance
+            Refine: 7
+      - Group: 2
+        Items:
+          - Item: Metal_Mace
+            Refine: 7
+      - Group: 3
+        Items:
+          - Item: Metal_Two_Handed_Axe
+            Refine: 7
+      - Group: 4
+        Items:
+          - Item: Metal_Dagger
+            Refine: 7
+      - Group: 5
+        Items:
+          - Item: Metal_Book
+            Refine: 7
+      - Group: 6
+        Items:
+          - Item: Metal_Staff
+            Refine: 7
+      - Group: 7
+        Items:
+          - Item: Metal_Katar
+            Refine: 7
+      - Group: 8
+        Items:
+          - Item: Metal_Bow
+            Refine: 7
+      - Group: 9
+        Items:
+          - Item: Metal_Revolver
+            Refine: 7
+      - Group: 10
+        Items:
+          - Item: Metal_Foxtail
+            Refine: 7
+  - Item: Memento_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Booster_Mask_A
+      - Group: 1
+        Items:
+          - Item: Booster_Mask_B
+      - Group: 2
+        Items:
+          - Item: Booster_Mask_C
+  - Item: P_Memento_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Booster_Scarf_A
+      - Group: 1
+        Items:
+          - Item: Booster_Scarf_B
+      - Group: 2
+        Items:
+          - Item: Booster_Scarf_C
+  - Item: Booster_Hat_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Pretty_Rabbit_Hood_E
+      - Group: 1
+        Items:
+          - Item: C_Black_Cat_Hood_kr
+      - Group: 2
+        Items:
+          - Item: C_Squirrel_Ear_Hat_Kr
+      - Group: 3
+        Items:
+          - Item: C_Black_Moon_Cat_kr
+  - Item: Booster_Back_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_School_Bag_RD_E
+      - Group: 1
+        Items:
+          - Item: C_School_Bag_BL
+      - Group: 2
+        Items:
+          - Item: C_School_Bag_BU
+      - Group: 3
+        Items:
+          - Item: C_School_Bag_PU
+  - Item: Special_Coin_Pack
+    Groups:
+      - Group: 0
+        Items:
+          - Item: EP17_1_EVT39
+            Amount: 3
+          - Item: EP17_1_EVT02
+            Amount: 18
+      - Group: 1
+        Items:
+          - Item: BarMealTicket
+            Amount: 20
+      - Group: 2
+        Items:
+          - Item: Ep18_Amethyst_Fragment
+            Amount: 20
+      - Group: 3
+        Items:
+          - Item: Ep19_Snow_Flower
+            Amount: 20
+  - Item: Boost_Armor_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Atker_Plate
+          - Item: Atker_Manteau
+          - Item: Atker_Greave
+          - Item: Atker_Ring
+          - Item: Boost_Up_1
+            Amount: 3
+      - Group: 1
+        Items:
+          - Item: Ran_Suits
+          - Item: Ran_Manteau
+          - Item: Ran_Boots
+          - Item: Ran_Brooch
+          - Item: Boost_Up_1
+            Amount: 3
+      - Group: 2
+        Items:
+          - Item: Ele_Robe
+          - Item: Ele_Muffler
+          - Item: Ele_Shoes
+          - Item: Ele_Earing
+          - Item: Boost_Up_1
+            Amount: 3
+      - Group: 3
+        Items:
+          - Item: Defn_Robe
+          - Item: Defn_Muffler
+          - Item: Defn_Shoes
+          - Item: Defn_Earing
+          - Item: Boost_Up_1
+            Amount: 3
+  - Item: AllMighty_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: AllMighty_Earring_Box
+      - Group: 1
+        Items:
+          - Item: AllMighty_Pendant_Box
+  - Item: TrueGem_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: TrueGem_Earring_Box
+      - Group: 1
+        Items:
+          - Item: TrueGem_Pendant_Box
+      - Group: 2
+        Items:
+          - Item: TrueGem_Shoes_Box
+      - Group: 3
+        Items:
+          - Item: TrueGem_Armor_Box
+  - Item: PerfectSize_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: PerfectSize_Weapon_Box
+      - Group: 1
+        Items:
+          - Item: PerfectSize_Armor_Box
+  - Item: Mammoth_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Mammoth_Earring_Box
+      - Group: 1
+        Items:
+          - Item: Mammoth_Pendant_Box
+      - Group: 2
+        Items:
+          - Item: Mammoth_Armor_Box
+      - Group: 3
+        Items:
+          - Item: Mammoth_Shoes_Box
+  - Item: SpellCaster_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: SpellCaster_Earring_Box
+      - Group: 1
+        Items:
+          - Item: SpellCaster_Pendant_Box
+      - Group: 2
+        Items:
+          - Item: SpellCaster_Armor_Box
+      - Group: 3
+        Items:
+          - Item: SpellCaster_Shoes_Box
+  - Item: Absorb_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Absorb_Weapon_Box
+      - Group: 1
+        Items:
+          - Item: Absorb_Shield_Box
+  - Item: R_Bearers_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: R_Bearers_Earring_Box
+      - Group: 1
+        Items:
+          - Item: R_Bearers_Pendant_Box
+      - Group: 2
+        Items:
+          - Item: R_Bearers_Armor_Box
+      - Group: 3
+        Items:
+          - Item: R_Bearers_Shoes_Box
+  - Item: Hasty_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Hasty_Weapon_Box
+      - Group: 1
+        Items:
+          - Item: Hasty_Shield_Box
+  - Item: MAutoSpell_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: MAutoSpell_Earring_Box
+      - Group: 1
+        Items:
+          - Item: MAutoSpell_Pendant_Box
+      - Group: 2
+        Items:
+          - Item: MAutoSpell_Armor_Box
+      - Group: 3
+        Items:
+          - Item: MAutoSpell_Shoes_Box
+  - Item: Infinity_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Infinity_Weapon_Box
+      - Group: 1
+        Items:
+          - Item: Infinity_Shield_Box
+  - Item: EXP_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: EXP_Weapon_Box
+      - Group: 1
+        Items:
+          - Item: EXP_Shield_Box
+  - Item: M_Blitz_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: M_Blitz_Weapon_Box
+      - Group: 1
+        Items:
+          - Item: M_Blitz_Shield_Box
+  - Item: GoodnEvil_Circlet_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: GoodnEvil_Circlet_NW
+      - Group: 1
+        Items:
+          - Item: GoodnEvil_Circlet_NW2
+      - Group: 2
+        Items:
+          - Item: GoodnEvil_Circlet_NW3
+      - Group: 3
+        Items:
+          - Item: GoodnEvil_Circlet_NW4
+      - Group: 4
+        Items:
+          - Item: GoodnEvil_Circlet_NW5
+  - Item: Hero_Weapon_Up_S_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Hero_Weapon_Up_Box_1
+      - Group: 1
+        Items:
+          - Item: Hero_Weapon_Up_Box_2
+      - Group: 2
+        Items:
+          - Item: Hero_Weapon_Up_Box_3
+      - Group: 3
+        Items:
+          - Item: Hero_Weapon_Up_Box_4
+      - Group: 4
+        Items:
+          - Item: Hero_Weapon_Up_Box_5
+      - Group: 5
+        Items:
+          - Item: Hero_Weapon_Up_Box_6
+  - Item: Hero_Weapon_Hammer_S
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Hero_Weapon_Hammer_1
+      - Group: 1
+        Items:
+          - Item: Hero_Weapon_Hammer_2
+      - Group: 2
+        Items:
+          - Item: Hero_Weapon_Hammer_3
+      - Group: 3
+        Items:
+          - Item: Hero_Weapon_Hammer_4
+      - Group: 4
+        Items:
+          - Item: Hero_Weapon_Hammer_5
+      - Group: 5
+        Items:
+          - Item: Hero_Weapon_Hammer_6
+  - Item: 12_Refine_Cube
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Bio_Weapon_Refine_Cube
+      - Group: 1
+        Items:
+          - Item: Old_Refine_Cube
+      - Group: 2
+        Items:
+          - Item: Geffen_Refine_Cube
+  - Item: 11_Refine_Cube
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Bio_Helm_Refine_Cube
+      - Group: 1
+        Items:
+          - Item: Circlet_Refine_Cube
+      - Group: 2
+        Items:
+          - Item: Auto_Armor_Refine_Cube
+      - Group: 3
+        Items:
+          - Item: Racecap_Refine_Cube
+      - Group: 4
+        Items:
+          - Item: OS_Weapon_Refine_Cube
+      - Group: 5
+        Items:
+          - Item: Temporal_Refine_Cube
+  - Item: Hero_Weapon_S_Box_1
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Royal_Bow_K
+            Refine: 11
+      - Group: 1
+        Items:
+          - Item: Shadow_Staff_K
+            Refine: 11
+      - Group: 2
+        Items:
+          - Item: Iron_Nail_K
+            Refine: 11
+      - Group: 3
+        Items:
+          - Item: Blue_Crystal_Staff
+            Refine: 11
+      - Group: 4
+        Items:
+          - Item: Freezing_Rod
+            Refine: 11
+      - Group: 5
+        Items:
+          - Item: Ancient_Hero_Boots
+            Refine: 11
+  - Item: Hero_Weapon_S_Box_2
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Sword_Of_Bluefire
+            Refine: 11
+      - Group: 1
+        Items:
+          - Item: Iron_Staff
+            Refine: 11
+      - Group: 2
+        Items:
+          - Item: Oriental_Sword
+            Refine: 11
+      - Group: 3
+        Items:
+          - Item: Fog_Dew_Sword
+            Refine: 11
+      - Group: 4
+        Items:
+          - Item: Sharp_Wind_Sword
+            Refine: 11
+      - Group: 5
+        Items:
+          - Item: Humma_Clear
+            Refine: 11
+  - Item: Hero_Weapon_S_Box_3
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Narcis_Bow
+            Refine: 11
+      - Group: 1
+        Items:
+          - Item: Magic_Sword
+            Refine: 11
+      - Group: 2
+        Items:
+          - Item: Avenger
+            Refine: 11
+      - Group: 3
+        Items:
+          - Item: Undine_Spear_K
+            Refine: 11
+      - Group: 4
+        Items:
+          - Item: Demon_Hunting_Bible_K
+            Refine: 11
+      - Group: 5
+        Items:
+          - Item: Shiver_Katar_K
+            Refine: 11
+  - Item: Hero_Weapon_S_Box_4
+    Groups:
+      - Group: 0
+        Items:
+          - Item: OneSkyOneSun
+            Refine: 11
+      - Group: 1
+        Items:
+          - Item: SoulWeight
+            Refine: 11
+      - Group: 2
+        Items:
+          - Item: MeawFoxtail
+            Refine: 11
+      - Group: 3
+        Items:
+          - Item: Freedom_Stick
+            Refine: 11
+      - Group: 4
+        Items:
+          - Item: Blessed_Knife
+            Refine: 11
+  - Item: Hero_Weapon_S_Box_5
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Dragonic_Slayer
+            Refine: 11
+      - Group: 1
+        Items:
+          - Item: Light_Blade
+            Refine: 11
+      - Group: 2
+        Items:
+          - Item: Slate_Sword
+            Refine: 11
+      - Group: 3
+        Items:
+          - Item: Trumpet_Shell_K
+            Refine: 11
+      - Group: 4
+        Items:
+          - Item: Barb_Wire_K
+            Refine: 11
+      - Group: 5
+        Items:
+          - Item: Meteor_Striker
+            Refine: 11
+  - Item: Hero_Weapon_S_Box_6
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Saint_Hall
+            Refine: 11
+      - Group: 1
+        Items:
+          - Item: Ray_Knuckle
+            Refine: 11
+      - Group: 2
+        Items:
+          - Item: Blade_Katar
+            Refine: 11
+      - Group: 3
+        Items:
+          - Item: Fatalist
+            Refine: 11
+      - Group: 4
+        Items:
+          - Item: Scalet_Dragon_L_Bow
+            Refine: 11
+  - Item: Hero_Weapon_S_Box_7
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Crimson_Rose
+            Refine: 11
+      - Group: 1
+        Items:
+          - Item: Master_Soul_Rifle
+            Refine: 11
+      - Group: 2
+        Items:
+          - Item: Demon_S_Shot
+            Refine: 11
+      - Group: 3
+        Items:
+          - Item: Golden_L_Launcher
+            Refine: 11
+      - Group: 4
+        Items:
+          - Item: The_Black_Gatling
+            Refine: 11
+  - Item: 2023_Spring_Select
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Lop_Bunny_Cloak
+      - Group: 1
+        Items:
+          - Item: C_Heart_Chiffon_Rabbit
+      - Group: 2
+        Items:
+          - Item: C_Teaparty_Wonderland
+      - Group: 3
+        Items:
+          - Item: C_Chocolat_Rabbit_Hair
+  - Item: RO_Concert_Scroll2
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Headset_OST
+      - Group: 1
+        Items:
+          - Item: C_Music_Decoration
+      - Group: 2
+        Items:
+          - Item: C_Whistle
+  - Item: 21th_Costume_Select
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Ocean_Color_Long
+      - Group: 1
+        Items:
+          - Item: C_Aqua_Fin_Decoration
+      - Group: 2
+        Items:
+          - Item: C_Sailor_Cap
+  - Item: Cinnamon_Costume_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Cinnamon2
+      - Group: 1
+        Items:
+          - Item: C_Cinnamon
+      - Group: 2
+        Items:
+          - Item: C_JP_EV16
+      - Group: 3
+        Items:
+          - Item: C_JP_EV17
+  - Item: IsgardCrown_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Glacier_Helm_1
+      - Group: 1
+        Items:
+          - Item: Glacier_Helm_2
+      - Group: 2
+        Items:
+          - Item: Glacier_Helm_3
+  - Item: AceCard_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Heart_Ace_Melee
+      - Group: 1
+        Items:
+          - Item: Spade_Ace_Melee
+      - Group: 2
+        Items:
+          - Item: Diamond_Ace_Range
+      - Group: 3
+        Items:
+          - Item: Clover_Ace_Defense
+  - Item: Loki_Coin_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Loki_Coin
+            Amount: 10
+      - Group: 1
+        Items:
+          - Item: Loki_Coin_2
+            Amount: 10
+      - Group: 2
+        Items:
+          - Item: Loki_Coin_3
+            Amount: 10
+      - Group: 3
+        Items:
+          - Item: Loki_Coin_4
+            Amount: 10
+  - Item: Loki_Advice_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Loki_Advice
+            Amount: 10
+      - Group: 1
+        Items:
+          - Item: Loki_Advice_2
+            Amount: 10
+      - Group: 2
+        Items:
+          - Item: Loki_Advice_3
+            Amount: 10
+      - Group: 3
+        Items:
+          - Item: Loki_Advice_4
+            Amount: 10
+  - Item: 2023_Xmas_Costume
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_SnowmanHat
+      - Group: 1
+        Items:
+          - Item: C_WinterNightBells
+      - Group: 2
+        Items:
+          - Item: C_SantaTeddyBear
+  - Item: 10AllMighty_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: S_AllMighty_Earring
+            Refine: 10
+      - Group: 1
+        Items:
+          - Item: S_AllMighty_Pendant
+            Refine: 10
+  - Item: Sonic_Costume_Pack
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Super_Sonic_Mini
+      - Group: 1
+        Items:
+          - Item: C_Chaos_Emerald
+  - Item: Summer_Select_Box1
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Gold_Paeonia
+      - Group: 1
+        Items:
+          - Item: C_Red_Paeonia
+  - Item: Summer_Select_Box2
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Buoyant_Parasol_B
+      - Group: 1
+        Items:
+          - Item: C_Buoyant_Parasol_R
+  - Item: Summer_Select_Box3
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Blue_Sunbed
+      - Group: 1
+        Items:
+          - Item: C_Green_Sunbed
+  - Item: Summer_Select_Box4
+    Groups:
+      - Group: 0
+        Items:
+          - Item: PurpleStar_Foot_Robe
+          - Item: C_Summer_Beach
+      - Group: 1
+        Items:
+          - Item: YellowStar_Foot_Robe
+          - Item: C_Summer_Beach
+  - Item: CLB_SS_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_CLB_SS_DF
+      - Group: 1
+        Items:
+          - Item: C_CLB_SS_EA
+      - Group: 2
+        Items:
+          - Item: C_CLB_SS_LL
+      - Group: 3
+        Items:
+          - Item: C_CLB_SS_LT
+  - Item: Enriched_Refine_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Enriched_Elunium
+            Amount: 100
+      - Group: 1
+        Items:
+          - Item: Enriched_Oridecon
+            Amount: 100
+  - Item: Henriched_Refine_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: HD_Elunium
+            Amount: 26
+      - Group: 1
+        Items:
+          - Item: HD_Oridecon
+            Amount: 26
+  - Item: Calender_Costume_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_berry_Prince_Crown
+      - Group: 1
+        Items:
+          - Item: C_Loki_Nidhogg_Hat
+      - Group: 2
+        Items:
+          - Item: C_Firinto_Scarf
+  - Item: C_CLB_KP_Select_Box1
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_CLB_KP_DC
+      - Group: 1
+        Items:
+          - Item: C_CLB_KP_DMS
+  - Item: C_CLB_KP_Select_Box2
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_CLB_KP_SF
+      - Group: 1
+        Items:
+          - Item: C_CLB_KP_Ta
+  - Item: InkPainting_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_InkPainting_Day
+      - Group: 1
+        Items:
+          - Item: C_InkPainting_Night
+  - Item: Panda_Foot_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: aegis_1001908
+      - Group: 1
+        Items:
+          - Item: aegis_1001909
+  - Item: Eypgt_Costume_Select1
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Guide_Of_Dead_Cap
+      - Group: 1
+        Items:
+          - Item: C_Wedjat
+  - Item: Eypgt_Costume_Select2
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Libra_Of_Judgement
+      - Group: 1
+        Items:
+          - Item: C_Libra_Wing
+  - Item: Eypgt_Costume_Select3
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Medjed_Text
+      - Group: 1
+        Items:
+          - Item: C_Guide_Of_Dead_Text

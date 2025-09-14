@@ -81,7 +81,7 @@ malaya,276,55,4	script	Optamara Crew#malaya	100,{
 		mes "[Optamara Crew]";
 		mes "Great! Let's leave now for Alberta!!";
 		close2;
-		warp "alberta",239,68;
+		warp "alberta",192,217;
 		end;
 	case 2:
 		mes "[Optamara Crew]";
@@ -150,10 +150,10 @@ OnInit:
 		donpcevent "Unidentified Creature#"+.@npc$[.@i]+"::"+((.@i == .@rand)?"OnEnable":"OnDisable");
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnBingx2:
 	switch(atoi(strnpcinfo(2))) {
@@ -196,10 +196,10 @@ ma_scene01,195,92,4	duplicate(Unidentified Creature#i)	Unidentified Creature#09	
 -	script	Unidentified Creature#j	-1,{
 	end;
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 OnDisable:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 OnBingx2:
 	switch(atoi(strnpcinfo(2))) {
@@ -221,7 +221,7 @@ OnBingx2:
 OnTouch_:
 	set .@i, atoi(strnpcinfo(2));
 	if (.@i%4 == 2) {
-		if (getcharid(0) == getpartyleader(getcharid(1),2))
+		if (is_party_leader() == true)
 			set .@pass,1;
 	} else if (.@i%4 == 3) {
 		if (checkquest(4229,PLAYTIME) > -1 && checkquest(9223,PLAYTIME) > -1 && checkquest(12278,PLAYTIME) > -1)

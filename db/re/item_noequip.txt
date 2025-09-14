@@ -19,6 +19,7 @@
 // 1024 - restricted in zone 6
 // 2048 - restricted in zone 7
 // 4096 - restricted in zone 8
+// 8192 - restricted in zone 9
 //
 // Passing negative value as flag will unset the flag instead.
 //
@@ -64,6 +65,60 @@
 11549,1		// Woe_Blue_Potion
 11547,1		// Woe_Violet_Potion
 12600,1		// Treasure_Box_Scroll
+
+// Lesser Guild Member's Gear
+2052,1     // Woe_T_Staff1_Z
+1329,1     // Woe_One_Hand_Axe1_Z
+28751,1     // Woe_Knife1_Z
+32103,1    // Woe_Instrument1_Z
+26210,1    // Woe_Whip1_Z
+26019,1    // Woe_T_Lance1_Z
+16085,1    // Woe_Club_1_Z
+26147,1    // Woe_Wand1_Z
+28036,1    // Woe_Katar1_Z
+26146,1    // Woe_Healstaff1_Z
+21044,1    // Woe_Twohand_Sword1_Z
+28133,1    // Woe_Twohand_Axe1_Z
+32015,1    // Woe_Onehand_Spear1_Z
+18175,1    // Woe_Bow1_Z
+13490,1    // Woe_Onehand_Sword1_Z
+650000,1    // Woe_Huuma1_Z
+1859,1    // Woe_Pist1_Z
+22148,1    // Siege_Greave_1Tier
+15216,1    // Siege_Robe_1Tier
+20865,1    // Siege_Muffler_1Tier
+20864,1    // Siege_Manteau_1Tier
+22147,1    // Siege_Boots_1Tier
+22146,1    // Siege_Shoes_1Tier
+15217,1    // Siege_Suits_1Tier
+15218,1    // Siege_Plate_1Tier
+
+// Intermediate Guild Member's Gear
+520001,1    // Woe_One_Hand_Axe2_Z
+570003,1    // Woe_Instrument2_Z
+580003,1    // Woe_Whip2_Z
+510005,1    // Woe_Knife2_Z
+630001,1    // Woe_T_Lance2_Z
+590004,1    // Woe_Club_2_Z
+550005,1    // Woe_Wand2_Z
+610004,1    // Woe_Katar2_Z
+550004,1    // Woe_Healstaff2_Z
+600005,1    // Woe_Twohand_Sword2_Z
+620001,1    // Woe_Twohand_Axe2_Z
+640001,1    // Woe_T_Staff2_Z
+530001,1    // Woe_Onehand_Spear2_Z
+650001,1    // Woe_Huuma2_Z
+500006,1    // Woe_Onehand_Sword2_Z
+560003,1    // Woe_Pist2_Z
+700005,1    // Woe_Bow2_Z
+450012,1    // Siege_Robe_2Tier
+470011,1    // Siege_Shoes_2Tier
+450014,1    // Siege_Plate_2Tier
+450013,1    // Siege_Suits_2Tier
+470012,1    // Siege_Boots_2Tier
+480007,1    // Siege_Muffler_2Tier
+480008,1    // Siege_Manteau_2Tier
+470013,1    // Siege_Greave_2Tier
 
 //----------------------------------------------------------------------------
 // PVP
@@ -126,6 +181,7 @@
 13416,16	// Krieger_Onehand_Sword1
 13417,16	// Krieger_Onehand_Sword2
 13418,16	// Krieger_Onehand_Sword3
+28918,16	// Shield_of_Chaos
 
 // Vellum Gear
 1293,16		// Velum_Jamadhar
@@ -207,6 +263,60 @@
 12600,16	// Treasure_Box_Scroll
 14590,16	// Pty_Assumptio_Scroll
 
+// Lesser Guild Member's Gear
+2052,16     // Woe_T_Staff1_Z
+1329,16     // Woe_One_Hand_Axe1_Z
+28751,16     // Woe_Knife1_Z
+32103,16    // Woe_Instrument1_Z
+26210,16    // Woe_Whip1_Z
+26019,16    // Woe_T_Lance1_Z
+16085,16    // Woe_Club_1_Z
+26147,16    // Woe_Wand1_Z
+28036,16    // Woe_Katar1_Z
+26146,16    // Woe_Healstaff1_Z
+21044,16    // Woe_Twohand_Sword1_Z
+28133,16    // Woe_Twohand_Axe1_Z
+32015,16    // Woe_Onehand_Spear1_Z
+18175,16    // Woe_Bow1_Z
+13490,16    // Woe_Onehand_Sword1_Z
+650000,16    // Woe_Huuma1_Z
+1859,16    // Woe_Pist1_Z
+22148,16    // Siege_Greave_1Tier
+15216,16    // Siege_Robe_1Tier
+20865,16    // Siege_Muffler_1Tier
+20864,16    // Siege_Manteau_1Tier
+22147,16    // Siege_Boots_1Tier
+22146,16    // Siege_Shoes_1Tier
+15217,16    // Siege_Suits_1Tier
+15218,16    // Siege_Plate_1Tier
+
+// Intermediate Guild Member's Gear
+520001,16    // Woe_One_Hand_Axe2_Z
+570003,16    // Woe_Instrument2_Z
+580003,16    // Woe_Whip2_Z
+510005,16    // Woe_Knife2_Z
+630001,16    // Woe_T_Lance2_Z
+590004,16    // Woe_Club_2_Z
+550005,16    // Woe_Wand2_Z
+610004,16    // Woe_Katar2_Z
+550004,16    // Woe_Healstaff2_Z
+600005,16    // Woe_Twohand_Sword2_Z
+620001,16    // Woe_Twohand_Axe2_Z
+640001,16    // Woe_T_Staff2_Z
+530001,16    // Woe_Onehand_Spear2_Z
+650001,16    // Woe_Huuma2_Z
+500006,16    // Woe_Onehand_Sword2_Z
+560003,16    // Woe_Pist2_Z
+700005,16    // Woe_Bow2_Z
+450012,16    // Siege_Robe_2Tier
+470011,16    // Siege_Shoes_2Tier
+450014,16    // Siege_Plate_2Tier
+450013,16    // Siege_Suits_2Tier
+470012,16    // Siege_Boots_2Tier
+480007,16    // Siege_Muffler_2Tier
+480008,16    // Siege_Manteau_2Tier
+470013,16    // Siege_Greave_2Tier
+
 //----------------------------------------------------------------------------
 // Zone 1 - Aldebaran Turbo Track
 //----------------------------------------------------------------------------
@@ -239,45 +349,45 @@
 //----------------------------------------------------------------------------
 // WoE:TE Items - Only can be used in WoE:TE Castles (All except &16)
 //----------------------------------------------------------------------------
-1299,8175	// TE_Woe_Katar
-1319,8175	// TE_Woe_Axe
-1399,8175	// TE_Woe_Two_Handed_Axe
-1437,8175	// TE_Woe_Pike
-1495,8175	// TE_Woe_Lance
-1591,8175	// TE_Woe_Book
-1667,8175	// TE_Woe_Staff
-1834,8175	// TE_Woe_Fist
-1932,8175	// TE_Woe_Guitar
-1987,8175	// TE_Woe_Rope
-2019,8175	// TE_Woe_Two_Hand_Staff
-2178,8175	// TE_Woe_Buckler
-2179,8175	// TE_Woe_Shield
-2180,8175	// TE_Woe_Magic_Guard
-2496,8175	// TE_Woe_Shoes
-2497,8175	// TE_Woe_Boots
-2498,8175	// TE_Woe_Magic_Sandal
-2944,8175	// TE_Ring_Of_Protection
-2945,8175	// TE_Ring_Of_Rage
-2946,8175	// TE_Ring_Of_Defiance
-11557,8175	// TE_White_Potion
-11558,8175	// TE_White_Slim_Potion
-13083,8175	// TE_Woe_Knife
-13117,8175	// TE_Woe_Pistol
-13184,8175	// TE_Woe_Rifle
-13185,8175	// TE_Woe_Gatling
-13186,8175	// TE_Woe_Shotgun
-13187,8175	// TE_Woe_Grenade
-13317,8175	// TE_Woe_Huuma
-13439,8175	// TE_Woe_Sword
-15062,8175	// TE_Woe_Coat
-15063,8175	// TE_Woe_Chain_Mail
-15064,8175	// TE_Woe_Mage_Coat
-16025,8175	// TE_Woe_Mace
-18118,8175	// TE_Woe_Bow
-18732,8175	// TE_Woe_Cap
-18733,8175	// TE_Woe_Bone_Helm
-18734,8175	// TE_Woe_Magic_Eyes
-20702,8175	// TE_Woe_Muffler
-20703,8175	// TE_Woe_Manteau
-20704,8175	// TE_Woe_Magic_Manteau
-21006,8175	// TE_Woe_Two_Hand_Sword
+1299,16367	// TE_Woe_Katar
+1319,16367	// TE_Woe_Axe
+1399,16367	// TE_Woe_Two_Handed_Axe
+1437,16367	// TE_Woe_Pike
+1495,16367	// TE_Woe_Lance
+1591,16367	// TE_Woe_Book
+1667,16367	// TE_Woe_Staff
+1834,16367	// TE_Woe_Fist
+1932,16367	// TE_Woe_Guitar
+1987,16367	// TE_Woe_Rope
+2019,16367	// TE_Woe_Two_Hand_Staff
+2178,16367	// TE_Woe_Buckler
+2179,16367	// TE_Woe_Shield
+2180,16367	// TE_Woe_Magic_Guard
+2496,16367	// TE_Woe_Shoes
+2497,16367	// TE_Woe_Boots
+2498,16367	// TE_Woe_Magic_Sandal
+2944,16367	// TE_Ring_Of_Protection
+2945,16367	// TE_Ring_Of_Rage
+2946,16367	// TE_Ring_Of_Defiance
+11557,16367	// TE_White_Potion
+11558,16367	// TE_White_Slim_Potion
+13083,16367	// TE_Woe_Knife
+13117,16367	// TE_Woe_Pistol
+13184,16367	// TE_Woe_Rifle
+13185,16367	// TE_Woe_Gatling
+13186,16367	// TE_Woe_Shotgun
+13187,16367	// TE_Woe_Grenade
+13317,16367	// TE_Woe_Huuma
+13439,16367	// TE_Woe_Sword
+15062,16367	// TE_Woe_Coat
+15063,16367	// TE_Woe_Chain_Mail
+15064,16367	// TE_Woe_Mage_Coat
+16025,16367	// TE_Woe_Mace
+18118,16367	// TE_Woe_Bow
+18732,16367	// TE_Woe_Cap
+18733,16367	// TE_Woe_Bone_Helm
+18734,16367	// TE_Woe_Magic_Eyes
+20702,16367	// TE_Woe_Muffler
+20703,16367	// TE_Woe_Manteau
+20704,16367	// TE_Woe_Magic_Manteau
+21006,16367	// TE_Woe_Two_Hand_Sword

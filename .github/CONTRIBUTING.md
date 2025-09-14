@@ -7,6 +7,7 @@ Table of Contents
   * [Reporting Bugs](#reporting-bugs)
   * [Suggesting Enhancements](#suggesting-enhancements)
   * [Issue Labels](#issue-labels)
+  * [Local Development Environment](#local-development-environment)
   * [Become a Team Member](#become-a-team-member)
 
 Reporting Bugs
@@ -64,7 +65,7 @@ Suggesting Enhancements
 
 1. Make sure you have a [GitHub account](https://github.com/signup/free).
 2. Next, you will need to [fork rAthena](https://help.github.com/articles/fork-a-repo/#fork-an-example-repository) to your account.
-3. Before making changes, make sure you [create a new branch](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) for your working tree.
+3. Before making changes, make sure you [create a new branch](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) for your working tree. Never use your **master** branch! :bangbang:
 4. After completing your changes, commit and push it to your branch.
 5. Now you are ready to [create a Pull Request](https://help.github.com/articles/creating-a-pull-request/) for rAthena!
   * Upon creating the Pull Request, make sure you follow our [template](https://github.com/rathena/rathena/blob/master/.github/PULL_REQUEST_TEMPLATE.md) and provide the required information.
@@ -160,6 +161,13 @@ For the most part you as a user will have no reason to worry about the **Milesto
 [search-rathena-label-typeenhancement]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Aenhancement
 [search-rathena-label-typemaintenance]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Amaintenance
 [search-rathena-label-typequestion]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Aquestion
+
+Local Development Environment
+-----------------------------
+
+Developers can get up and running quickly with a Dockerized development environment that installs all dependencies needed to run and develop on rAthena.
+See [Docker documentation](https://github.com/rathena/rathena/blob/master/tools/docker/README.md) for details
+
 
 Become a Team Member
 --------------------

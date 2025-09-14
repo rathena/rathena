@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= $ephiroth
 //===== Current Version: =====================================
-//= 1.9
+//= 2.0
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Additional Comments: =================================
@@ -17,15 +17,16 @@
 //= 1.7 Corrected MVP spawn variance. [Gepard]
 //= 1.8 Updated to Renewal Spawns. [Kisuka]
 //= 1.9 Renewal spawn update.
+//= 2.0 Correct Spawn by Navigation's mob data. [attackjom]
 //============================================================
 
 //==================================================
 // ve_fild01 - Veins Field
 //==================================================
-ve_fild01,0,0	monster	Galion	1783,35,5000
-ve_fild01,0,0	monster	Stapo	1784,20,5000
-ve_fild01,0,0	monster	Drosera	1781,20,5000
-ve_fild01,0,0	monster	Muscipular	1780,20,5000
+ve_fild01,0,0	monster	Galion	1783,60,5000
+ve_fild01,0,0	monster	Stapo	1784,34,5000
+ve_fild01,0,0	monster	Drosera	1781,34,5000
+ve_fild01,0,0	monster	Muscipular	1780,34,5000
 ve_fild01,0,0,0,0	boss_monster	Atroce	1785,1,10800000,600000,0
 ve_fild01,0,0	monster	Red Plant	1078,10,5000
 ve_fild01,0,0	monster	Yellow Plant	1081,10,5000
@@ -35,9 +36,9 @@ ve_fild01,270,80,20,7	monster	Shining Plant	1083,1,960000
 //==================================================
 // ve_fild02 - Veins Field
 //==================================================
-ve_fild02,0,0	monster	Drosera	1781,130,5000
-ve_fild02,0,0	monster	Muscipular	1780,20,5000
-ve_fild02,0,0	monster	Galion	1783,10,5000
+ve_fild02,0,0	monster	Drosera	1781,177,5000
+ve_fild02,0,0	monster	Muscipular	1780,27,5000
+ve_fild02,0,0	monster	Galion	1783,13,5000
 ve_fild02,120,55,50,50	boss_monster	Atroce	1785,1,21600000,600000,0
 ve_fild02,0,0	monster	Red Plant	1078,10,10000
 ve_fild02,0,0	monster	Yellow Plant	1081,10,10000
@@ -45,18 +46,18 @@ ve_fild02,0,0	monster	Yellow Plant	1081,10,10000
 //==================================================
 // ve_fild03 - Veins Field
 //==================================================
-ve_fild03,0,0	monster	Magmaring	1836,130,5000
-ve_fild03,0,0	monster	Muscipular	1780,35,5000
-ve_fild03,0,0	monster	Drosera	1781,35,5000
+ve_fild03,0,0	monster	Magmaring	1836,141,5000
+ve_fild03,0,0	monster	Muscipular	1780,38,5000
+ve_fild03,0,0	monster	Drosera	1781,38,5000
 ve_fild03,200,212,114,60	monster	Red Plant	1078,10,10000
 ve_fild03,0,0	monster	Yellow Plant	1081,10,10000
 
 //==================================================
 // ve_fild04 - Veins Field 
 //==================================================
-ve_fild04,0,0	monster	Muscipular	1780,100,5000
-ve_fild04,0,0	monster	Drosera	1781,50,5000
-ve_fild04,0,0	monster	Galion	1783,20,5000
+ve_fild04,0,0	monster	Muscipular	1780,110,5000
+ve_fild04,0,0	monster	Drosera	1781,55,5000
+ve_fild04,0,0	monster	Galion	1783,22,5000
 ve_fild04,0,0	monster	Yellow Plant	1081,10,10000
 ve_fild04,288,273,4,4	monster	Blue Plant	1079,3,660000
 
@@ -72,7 +73,7 @@ ve_fild04,288,273,4,4	monster	Blue Plant	1079,3,660000
 //==================================================
 // ve_fild07 - Veins Field
 //==================================================
-ve_fild07,0,0	monster	Stapo	1784,100,5000
-ve_fild07,0,0	monster	Drosera	1781,50,5000
-ve_fild07,0,0	monster	Muscipular	1780,30,5000
+ve_fild07,0,0	monster	Stapo	1784,128,5000
+ve_fild07,0,0	monster	Drosera	1781,64,5000
+ve_fild07,0,0	monster	Muscipular	1780,38,5000
 ve_fild07,0,0	monster	White Plant	1082,10,600000

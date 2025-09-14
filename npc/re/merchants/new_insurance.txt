@@ -1,0 +1,109 @@
+//===== rAthena Script =======================================
+//= Insurance Exchanger
+//===== Description: =========================================
+//= Exchange items for New_Insurance item.
+//===== Changelogs: ==========================================
+//= 1.0 Initial release. [Balfear]
+//============================================================
+
+prontera,82,108,5	script	Heart Merchant#life01	4_M_NFDEADMAN2,5,5,{
+	.@old_item = 12209;
+	.@new_item = 6413;
+	.@old_item_name$ = getitemname(.@old_item);
+	.@new_item_name$ = getitemname(.@new_item);
+
+	if (!checkweight(1201,1) || (MaxWeight - Weight) < 500) {
+		mes "You can't proceed with the conversation because you have a large quantity of items.";
+		mes "Please organize your items and try again.";
+		close;
+	}
+	mes "[Heart Merchant]";
+	mes "Hello! I see you are an adventurer who gives your heart to traveling, uses a boat to sail across the continent, and enjoys the thrill of danger!";
+	next;
+	if(!countitem(.@old_item)){
+		mes "[Heart Merchant]";
+		mes "Do you have any " + mesitemlink( .@old_item ) + " in your storage?";
+		next;
+		mes "[Heart Merchant]";
+		mes "If you bring me a " + .@old_item_name$ + ", I'll exchange it to " + mesitemlink( .@new_item ) + ". What do you think? Do you have any idea what this item is?";
+	} else {
+		mes "[Heart Merchant]";
+		mes "Have you ever thought about replacing your " + mesitemlink( .@old_item ) + " to something better? For example... " + mesitemlink( .@new_item ) + ". What do you think?";
+	}
+	next;
+	switch(select("What is it?",(countitem(.@old_item)?"Exchange it please!":""),"I'm not interested")) {
+	case 1:
+		mes "[Heart Merchant]";
+		mes mesitemlink( .@old_item ) + " is an item that prevents you from losing experience on death once within the 30 minutes duration after use.";
+		next;
+		mes "[Heart Merchant]";
+		mes "But a lot of people are sad about the time limit, right? So I looked into it and prepared the " + mesitemlink( .@new_item ) + ".";
+		next;
+		mes "[Heart Merchant]";
+		mes mesitemlink( .@new_item ) + " is an item that will prevent the loss of experience on death once by just having it ^EE0000regardless of the duration^000000. Of course, after death, the "+.@new_item_name$+" is consumed.";
+		next;
+		select("Why are you exchanging it?");
+		mes "[Heart Merchant]";
+		mes "Are you curious about that? I'm a merchant. Buying and selling things is my fate, whether it's related to one's life or death. Do you think I'm going to miss this opportunity to make money? I make money, and the living get a leeway from the pain of death. Isn't that a good deal?";
+		next;
+		mes "[Heart Merchant]";
+		mes "The exchange rate is 5 " + mesitemlink( .@old_item ) + " for 1 " + mesitemlink( .@new_item ) + ". Do you have any questions?";
+		next;
+		mes "[Heart Merchant]";
+		mes "Hm~ What do you think? Isn't it a fair trade? Do you want to always worry about time? It's a must-have for adventurers who enjoy breathtaking adventures.";
+		close;
+		
+	case 2:	
+		mes "[Heart Merchant]";
+		mes "Yeah, yeah. Good decision. It's better to exchange it for a better one, isn't it?";
+		next;
+		mes "[Heart Merchant]";
+		mes "I can exchange your ^0000cd5 "+.@old_item_name$+" to 1 "+.@new_item_name$+".";
+		next;
+		mes "[Heart Merchant]";
+		mes "However, ^EE0000[Not for sale] " + .@old_item_name$ + " is not eligible for exchange^000000, so it is useless to bring it here and ask for it to be exchanged.";
+		next;
+		mes "[Heart Merchant]";
+		mes "Shall we exchange it now?";
+		next;
+		if (select("Exchange it please!:I don't want to exchange it.") == 2)
+			break;
+		mes "[Heart Merchant]";
+		mes "How many do you want to exchange? ^0000cdYou can exchange up to 10 "+.@new_item_name$+" at a time^000000.";
+		next;
+		input .@amount;
+		if (.@amount == 0) {
+			mes "[Heart Merchant]";
+			mes "Hm? Are you not interested? This is a great product, and it's really good for someone like you. But if you don't want to protect your live, I won't force you either.";
+			close;
+		}
+		if (.@amount > 10) {
+			mes "[Heart Merchant]";
+			mes "Like I said, ^0000cdyou can only exchange up to 10^000000 at a time. Check the quantity again.";
+			close;
+		}
+		if (countitem(.@old_item) < (.@amount*5)) {
+			mes "[Heart Merchant]";
+			mes "Um, excuse me but... you don't have enough " +.@old_item_name$+ ", no? It's 5 " + mesitemlink( .@old_item ) + " for 1 " + mesitemlink( .@new_item ) + ". Please check the quantity.";
+			close;
+		}
+		mes "[Heart Merchant]";
+		mes "Now, with this, I've exchanged your ^0000cd" + .@old_item_name$ + "^000000 for the ^EE0000" + .@new_item_name$ + "^000000!! That was a good deal, wasn't it? The next time you get your hands on a "+.@old_item_name$+", come see me again!";
+		delitem .@old_item,.@amount*5;
+		getitem .@new_item,.@amount;
+		close;
+	case 3:
+		break;
+	}
+	mes "[Heart Merchant]";
+	mes "This is a great deal! Adventurer, it's a must-have item for people like you who ventures in dangerous places!";
+	next;
+	mes "[Heart Merchant]";
+	mes "If you become interested in it, be sure to come back for the exchange. Okay?";
+	close;
+	
+OnTouch:
+	if(countitem(12209))
+		npctalk "You have something good. Would you like to replace your " + getitemname(12209) + " with a better one?", "", bc_self;
+	end;
+}

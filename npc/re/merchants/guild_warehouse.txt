@@ -1,0 +1,111 @@
+//===== rAthena Script =======================================
+//= Guild Warehouse Manager
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Gives players access to their guild storage and log.
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Lemongrass]
+//============================================================
+
+-	script	GuildWarehouse	-1,{
+	mes "[Warehouse Manager]";
+	mes "How are you? We are specialized in guild warehouses. This is our ^0000cdstory^000000:";
+	mes "Why can't guild members share a storage? We started off with that simple question.";
+	next;
+	mes "[Warehouse Manager]";
+	mes "You can open the warehouse for 1000 Zeny or look up the usage history of the guild.";
+	mes "How can I help you?";
+	next;
+	if( select( "Open guild warehouse:View warehouse usage history" ) == 1 ){
+		.@guildid = getcharid( 2 );
+
+		if( .@guildid == 0 ){
+			mes "[Warehouse Manager]";
+			mes "The guild storage is only available for guild members.";
+			close;
+		}
+
+		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 || !guild_has_permission( GUILD_PERM_STORAGE ) ){
+			mes "[Warehouse Manager]";
+			mes "It seems that it is not yet possible for your guild to use the guild warehouse or you do not have access permissions for the warehouse.";
+			mes "Please come back after checking the guild skill and the permission to access the warehouse.";
+			close;
+		}
+
+		if( Zeny < 1000 ){
+			mes "[Warehouse Manager]";
+			mes "I am afraid you do not have enough money to settle the fee.";
+			mes "The fee is 1000 Zeny.";
+			close;
+		}
+
+		mes "[Warehouse Manager]";
+		mes "I will open the guild storage for you then. Have a memorable time!";
+		close2;
+
+		if( Zeny < 1000 ){
+			// Cheat prevention
+			end;
+		}
+
+		if( guildopenstorage() == GSTORAGE_OPEN ){
+			Zeny -= 1000;
+			end;
+		}else{
+			mes "[Warehouse Manager]";
+			mes "I am afraid someone else is using the warehouse right now.";
+			mes "Please try again after a while.";
+			close;
+		}
+	}else{
+		.@guildid = getcharid( 2 );
+
+		if( .@guildid == 0 ){
+			mes "[Warehouse Manager]";
+			mes "The guild storage is only available for guild members.";
+			close;
+		}
+
+		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 || !guild_has_permission( GUILD_PERM_STORAGE ) ){
+			mes "[Warehouse Manager]";
+			mes "It seems that it is not yet possible for your guild to use the guild warehouse or you do not have access permissions for the warehouse.";
+			mes "Please come back after checking the guild skill and the permission to access the warehouse.";
+			close;
+		}
+
+		mes "[Warehouse Manager]";
+		mes "I will show you the usage history of the warehouse. Usage history will be retained for up to 3 months.";
+		mes "Have a memorable time!";
+		close2;
+		guildopenstorage_log();
+		end;
+	}
+}
+
+alberta,114,65,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#alberta	896
+aldebaran,146,122,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#aldebaran	896
+amatsu,100,156,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#amatsu	896
+ayothaya,203,173,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#ayothaya	896
+brasilis,204,227,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#brasilis	896
+comodo,204,153,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#comodo	896
+dewata,196,193,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#dewata	896
+einbech,182,124,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#einbech	896
+einbroch,238,203,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#einbroch	896
+geffen,128,68,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#geffen	896
+gonryun,164,127,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#gonryun	896
+harboro1,288,212,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#harboro1	896
+hugel,91,158,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#hugel	896
+izlude,133,149,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#izlude	896
+lighthalzen,162,102,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#lighthalzen	896
+louyang,210,111,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#louyang	896
+malaya,238,206,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#malaya	896
+morocc,168,107,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#morocc	896
+moscovia,211,200,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#moscovia	896
+niflheim,200,184,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#niflheim	896
+payon,180,106,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#payon	896
+prontera,150,191,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#prontera	896
+rachel,123,145,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#rachel	896
+umbala,106,160,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#umbala	896
+veins,205,130,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#veins	896
+xmas,155,140,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#xmas	896
+yuno,176,187,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#yuno	896

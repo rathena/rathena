@@ -4,7 +4,7 @@
 #ifndef MERCENARY_HPP
 #define MERCENARY_HPP
 
-#include "../common/cbasetypes.hpp"
+#include <common/cbasetypes.hpp>
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
@@ -19,7 +19,7 @@ enum e_MercGuildType {
 	SWORD_MERC_GUILD,
 };
 
-enum MERID {
+enum e_MERID {
 	MERID_MER_ARCHER01 = 6017,
 	MERID_MER_ARCHER10 = 6026,
 	MERID_MER_LANCER01,
@@ -29,65 +29,66 @@ enum MERID {
 };
 
 struct s_mercenary_db {
-	int class_;
-	char sprite[NAME_LENGTH], name[NAME_LENGTH];
-	unsigned short lv;
-	short range2, range3;
-	struct status_data status;
-	struct view_data vd;
-	struct {
-		unsigned short id, lv;
-	} skill[MAX_MERCSKILL];
+	int32 class_;
+	std::string sprite, name;
+	uint16 lv;
+	uint16 range2, range3;
+	status_data status;
+	view_data vd;
+	std::unordered_map<uint16, uint16> skill;
 };
 
-struct mercenary_data {
-	struct block_list bl;
-	struct unit_data ud;
-	struct view_data *vd;
-	struct status_data base_status, battle_status;
-	struct status_change sc;
-	struct regen_data regen;
+struct s_mercenary_data : public block_list {
+	unit_data ud;
+	view_data *vd;
+	status_data base_status, battle_status;
+	status_change sc;
+	regen_data regen;
 
-	struct s_mercenary_db *db;
-	struct s_mercenary mercenary;
-	char blockskill[MAX_SKILL];
+	std::shared_ptr<s_mercenary_db> db;
+	s_mercenary mercenary;
+	std::unordered_map<uint16, int32> scd;
 
-	int masterteleport_timer;
-	struct map_session_data *master;
-	int contract_timer;
+	int32 masterteleport_timer;
+	map_session_data *master;
+	int32 contract_timer;
 
 	unsigned devotion_flag : 1;
 };
 
-struct s_mercenary_db *mercenary_db(uint16 class_);
 struct view_data * mercenary_get_viewdata(uint16 class_);
 
-bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime);
-bool mercenary_recv_data(struct s_mercenary *merc, bool flag);
-void mercenary_save(struct mercenary_data *md);
+class MercenaryDatabase : public TypesafeYamlDatabase<int32, s_mercenary_db> {
+public:
+	MercenaryDatabase() : TypesafeYamlDatabase("MERCENARY_DB", 1) {
 
-void mercenary_heal(struct mercenary_data *md, int hp, int sp);
-bool mercenary_dead(struct mercenary_data *md);
+	}
 
-int mercenary_delete(struct mercenary_data *md, int reply);
-void mercenary_contract_stop(struct mercenary_data *md);
+	const std::string getDefaultLocation() override;
+	uint64 parseBodyNode(const ryml::NodeRef& node) override;
+};
 
-int mercenary_get_lifetime(struct mercenary_data *md);
-enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md);
-int mercenary_get_faith(struct mercenary_data *md);
-void mercenary_set_faith(struct mercenary_data *md, int value);
-int mercenary_get_calls(struct mercenary_data *md);
-void mercenary_set_calls(struct mercenary_data *md, int value);
-void mercenary_kills(struct mercenary_data *md);
+extern MercenaryDatabase mercenary_db;
 
-int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id);
-short mercenary_skill_get_index(uint16 skill_id);
+bool mercenary_create(map_session_data *sd, uint16 class_, uint32 lifetime);
+bool mercenary_recv_data(s_mercenary *merc, bool flag);
+void mercenary_save(s_mercenary_data *md);
 
-/**
- * atcommand.c required
- **/
-void mercenary_readdb(void);
-void mercenary_read_skilldb(void);
+void mercenary_heal(s_mercenary_data *md, int32 hp, int32 sp);
+bool mercenary_dead(s_mercenary_data *md);
+
+int32 mercenary_delete(s_mercenary_data *md, int32 reply);
+void mercenary_contract_stop(s_mercenary_data *md);
+
+t_tick mercenary_get_lifetime(s_mercenary_data *md);
+e_MercGuildType mercenary_get_guild(s_mercenary_data *md);
+int32 mercenary_get_faith(s_mercenary_data *md);
+void mercenary_set_faith(s_mercenary_data *md, int32 value);
+int32 mercenary_get_calls(s_mercenary_data *md);
+void mercenary_set_calls(s_mercenary_data *md, int32 value);
+void mercenary_kills(s_mercenary_data *md);
+
+uint16 mercenary_checkskill(s_mercenary_data *md, uint16 skill_id);
 
 void do_init_mercenary(void);
 void do_final_mercenary(void);

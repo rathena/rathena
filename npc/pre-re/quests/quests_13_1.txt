@@ -18,3 +18,4 @@ prt_castle,121,51,3	duplicate(Alliance Manager#prt_)	Alliance Manager#prt	4_M_CR
 prt_castle,117,51,5	duplicate(Member of Alliance#prt_)	Member of Alliance#prt	4_M_SAGE_A
 prt_castle,83,67,5	duplicate(Recruiter for the Brave_)	Recruiter for the Brave	4_M_MANAGER
 prt_castle,88,165,3	duplicate(Laur_)	Laur	1_M_LIBRARYMASTER
+mid_camp,264,263,4	duplicate(Diego#ep13bs_)	Diego#ep13bs	4_M_RACHMAN1

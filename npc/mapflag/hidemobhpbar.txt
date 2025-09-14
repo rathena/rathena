@@ -6,7 +6,9 @@
 //= 1.0 First Version. [Lemongrass]
 //============================================================
 
-// PvP ========================
+//============================================================
+// PvP Arenas
+//============================================================
 pvp_y_1-1	mapflag	hidemobhpbar
 pvp_y_1-2	mapflag	hidemobhpbar
 pvp_y_1-3	mapflag	hidemobhpbar
@@ -89,19 +91,25 @@ pvp_n_8-4	mapflag	hidemobhpbar
 pvp_n_8-5	mapflag	hidemobhpbar
 pvp_2vs2	mapflag	hidemobhpbar
 
-// Aldebaran Turbo Track =======
+//============================================================
+// Aldebaran Turbo Track
+//============================================================
 turbo_e_4	mapflag	hidemobhpbar
 turbo_e_8	mapflag	hidemobhpbar
 turbo_e_16	mapflag	hidemobhpbar
 
-// GvG Arenas =================
+//============================================================
+// GvG Arenas
+//============================================================
 guild_vs1	mapflag	hidemobhpbar
 guild_vs2	mapflag	hidemobhpbar
 guild_vs3	mapflag	hidemobhpbar
 guild_vs4	mapflag	hidemobhpbar
 guild_vs5	mapflag	hidemobhpbar
 
-// Guild Castles ==============
+//============================================================
+// WoE:FE Castles
+//============================================================
 aldeg_cas01	mapflag	hidemobhpbar
 aldeg_cas02	mapflag	hidemobhpbar
 aldeg_cas03	mapflag	hidemobhpbar
@@ -122,6 +130,10 @@ prtg_cas02	mapflag	hidemobhpbar
 prtg_cas03	mapflag	hidemobhpbar
 prtg_cas04	mapflag	hidemobhpbar
 prtg_cas05	mapflag	hidemobhpbar
+
+//============================================================
+// WoE:SE Castles
+//============================================================
 schg_cas01	mapflag	hidemobhpbar
 schg_cas02	mapflag	hidemobhpbar
 schg_cas03	mapflag	hidemobhpbar
@@ -133,18 +145,24 @@ arug_cas03	mapflag	hidemobhpbar
 arug_cas04	mapflag	hidemobhpbar
 arug_cas05	mapflag	hidemobhpbar
 
-// Novice Guild Castles =======
+//============================================================
+// WoE:Novice Castles
+//============================================================
 //n_castle	mapflag	hidemobhpbar
 nguild_alde	mapflag	hidemobhpbar
 nguild_gef	mapflag	hidemobhpbar
 nguild_pay	mapflag	hidemobhpbar
 nguild_prt	mapflag	hidemobhpbar
 
-// Guild Dungeons =============
+//============================================================
+// Guild Dungeons
+//============================================================
 arug_dun01	mapflag	hidemobhpbar
 schg_dun01	mapflag	hidemobhpbar
 
-// Battlegrounds ==============
+//============================================================
+// Battlegrounds
+//============================================================
 bat_c01	mapflag	hidemobhpbar
 bat_c02	mapflag	hidemobhpbar
 bat_c03	mapflag	hidemobhpbar
@@ -153,7 +171,9 @@ bat_b02	mapflag	hidemobhpbar
 bat_a01	mapflag	hidemobhpbar
 bat_a02	mapflag	hidemobhpbar
 
-// RWC Maps ===============
+//============================================================
+// RWC
+//============================================================
 2009rwc_01	mapflag	hidemobhpbar
 2009rwc_02	mapflag	hidemobhpbar
 2009rwc_03	mapflag	hidemobhpbar

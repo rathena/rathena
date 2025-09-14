@@ -1,28 +1,42 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <string>
 #ifndef _WIN32
 #include <unistd.h>
 #endif
 #include <vector>
 
-#include "../common/core.hpp"
-#include "../common/grfio.hpp"
-#include "../common/malloc.hpp"
-#include "../common/mmo.hpp"
-#include "../common/showmsg.hpp"
-#include "../common/utils.hpp"
+#include <common/core.hpp>
+#include <common/grfio.hpp>
+#include <common/malloc.hpp>
+#include <common/mmo.hpp>
+#include <common/showmsg.hpp>
+#include <common/utils.hpp>
 
-#define NO_WATER 1000000
+using namespace rathena::server_core;
+
+namespace rathena::tool_mapcache {
+class MapcacheTool : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
+
+	public:
+		MapcacheTool() : Core( e_core_type::TOOL ){
+
+		}
+};
+}
+
+using namespace rathena::tool_mapcache;
 
 std::string grf_list_file = "conf/grf-files.txt";
 std::string map_list_file = "map_index.txt";
 std::string map_cache_file;
-int rebuild = 0;
+int32 rebuild = 0;
 
 FILE *map_cache_fp;
 
@@ -51,29 +65,24 @@ struct map_info {
 
 
 // Reads a map from GRF's GAT and RSW files
-int read_map(char *name, struct map_data *m)
+int32 read_map(char *name, struct map_data *m)
 {
 	char filename[256];
-	unsigned char *gat, *rsw;
-	int water_height;
+	unsigned char *gat;
+	int32 water_height;
 	size_t xy, off, num_cells;
 
 	// Open map GAT
 	sprintf(filename,"data\\%s.gat", name);
-	gat = (unsigned char *)grfio_read(filename);
-	if (gat == NULL)
+	gat = (unsigned char *)grfio_reads(filename);
+	if (gat == nullptr)
 		return 0;
 
 	// Open map RSW
 	sprintf(filename,"data\\%s.rsw", name);
-	rsw = (unsigned char *)grfio_read(filename);
 
 	// Read water height
-	if (rsw) {
-		water_height = (int)GetFloat(rsw+166);
-		aFree(rsw);
-	} else
-		water_height = NO_WATER;
+	water_height = grfio_read_rsw_water_level( filename );
 
 	// Read map size and allocate needed memory
 	m->xs = (int16)GetULong(gat+6);
@@ -95,7 +104,7 @@ int read_map(char *name, struct map_data *m)
 		uint32 type   = GetULong( gat + off + 16 );
 		off += 20;
 
-		if (type == 0 && water_height != NO_WATER && height > water_height)
+		if (type == 0 && water_height != RSW_NO_WATER && height > water_height)
 			type = 3; // Cell is 0 (walkable) but under water level, set to 3 (walkable water)
 
 		m->cells[xy] = (unsigned char)type;
@@ -121,7 +130,7 @@ void cache_map(char *name, struct map_data *m)
 
 	// Fill the map header
 	if (strlen(name) > MAP_NAME_LENGTH) // It does not hurt to warn that there are maps with name longer than allowed.
-		ShowWarning ("Map name '%s' size '%d' is too long. Truncating to '%d'.\n", name, strlen(name), MAP_NAME_LENGTH);
+		ShowWarning ("Map name '%s' size '%" PRIuPTR "' is too long. Truncating to '%d'.\n", name, strlen(name), MAP_NAME_LENGTH);
 	strncpy(info.name, name, MAP_NAME_LENGTH);
 	info.xs = MakeShortLE(m->xs);
 	info.ys = MakeShortLE(m->ys);
@@ -141,9 +150,9 @@ void cache_map(char *name, struct map_data *m)
 }
 
 // Checks whether a map is already is the cache
-int find_map(char *name)
+int32 find_map(char *name)
 {
-	int i;
+	int32 i;
 	struct map_info info;
 
 	fseek(map_cache_fp, sizeof(struct main_header), SEEK_SET);
@@ -174,9 +183,9 @@ char *remove_extension(char *mapname)
 }
 
 // Processes command-line arguments
-void process_args(int argc, char *argv[])
+void process_args(int32 argc, char *argv[])
 {
-	for(int i = 0; i < argc; i++) {
+	for(int32 i = 0; i < argc; i++) {
 		if(strcmp(argv[i], "-grf") == 0) {
 			if(++i < argc)
 				grf_list_file = argv[i];
@@ -192,8 +201,7 @@ void process_args(int argc, char *argv[])
 
 }
 
-int do_init(int argc, char** argv)
-{
+bool MapcacheTool::initialize( int32 argc, char* argv[] ){
 	/* setup pre-defined, #define-dependant */
 	map_cache_file = std::string(db_path) + "/" + std::string(DBPATH) + "map_cache.dat";
 
@@ -207,7 +215,7 @@ int do_init(int argc, char** argv)
 	ShowStatus("Opening map cache: %s\n", map_cache_file.c_str());
 	if(!rebuild) {
 		map_cache_fp = fopen(map_cache_file.c_str(), "rb");
-		if(map_cache_fp == NULL) {
+		if(map_cache_fp == nullptr) {
 			ShowNotice("Existing map cache not found, forcing rebuild mode\n");
 			rebuild = 1;
 		} else
@@ -217,9 +225,9 @@ int do_init(int argc, char** argv)
 		map_cache_fp = fopen(map_cache_file.c_str(), "w+b");
 	else
 		map_cache_fp = fopen(map_cache_file.c_str(), "r+b");
-	if(map_cache_fp == NULL) {
+	if(map_cache_fp == nullptr) {
 		ShowError("Failure when opening map cache file %s\n", map_cache_file.c_str());
-		exit(EXIT_FAILURE);
+		return false;
 	}
 
 	// Open the map list
@@ -231,9 +239,9 @@ int do_init(int argc, char** argv)
 
 		ShowStatus("Opening map list: %s\n", filename.c_str());
 		list = fopen(filename.c_str(), "r");
-		if (list == NULL) {
+		if (list == nullptr) {
 			ShowError("Failure when opening maps list file %s\n", filename.c_str());
-			exit(EXIT_FAILURE);
+			return false;
 		}
 
 		// Initialize the main header
@@ -292,9 +300,9 @@ int do_init(int argc, char** argv)
 
 	ShowInfo("%d maps now in cache\n", header.map_count);
 
-	return 0;
+	return true;
 }
 
-void do_final(void)
-{
+int32 main( int32 argc, char *argv[] ){
+	return main_core<MapcacheTool>( argc, argv );
 }

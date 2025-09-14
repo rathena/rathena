@@ -1,0 +1,585 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Instance Database
+###########################################################################
+#
+# Instance Settings
+#
+###########################################################################
+# - Id                Instance ID.
+#   Name              Instance Name.
+#   TimeLimit         Total lifetime of instance in seconds. Use 0 to define infinite time. (Default: 3600)
+#   IdleTimeOut       Time before an idle instance is destroyed in seconds. Use 0 to define infinite idle time. (Default: 300)
+#   NoNpc             Prevent copying NPCs from the source map. (Default: false)
+#   NoMapFlag         Prevent copying Mapflags from the source map. (Default: false)
+#   Destroyable       Toggles the ability to destroy the instance using instance 'Destroy' button. (Default: true)
+#                     Note: the button is displayed based on parties. For any mode, it requires the party leader to be the instance owner to destroy it.
+#   Enter:            Instance entrance coordinates.
+#     Map             Map Name where players start.
+#     X               X Coordinate where players start.
+#     Y               Y Coordinate where players start.
+#   AdditionalMaps:   List of maps that are part of an instance. (Optional)
+###########################################################################
+
+Header:
+  Type: INSTANCE_DB
+  Version: 2
+
+Body:
+  - Id: 1
+    Name: Endless Tower
+    TimeLimit: 14400
+    Enter:
+      Map: 1@tower
+      X: 50
+      Y: 355
+    AdditionalMaps:
+      2@tower: true
+      3@tower: true
+      4@tower: true
+      5@tower: true
+      6@tower: true
+  - Id: 2
+    Name: Sealed Catacomb
+    TimeLimit: 7200
+    Enter:
+      Map: 1@cata
+      X: 100
+      Y: 224
+    AdditionalMaps:
+      2@cata: true
+  - Id: 3
+    Name: Orc's Memory
+    Enter:
+      Map: 1@orcs
+      X: 179
+      Y: 15
+    AdditionalMaps:
+      2@orcs: true
+  - Id: 4
+    Name: Nidhoggur's Nest
+    TimeLimit: 14400
+    Enter:
+      Map: 1@nyd
+      X: 32
+      Y: 36
+    AdditionalMaps:
+      2@nyd: true
+  - Id: 5
+    Name: Mistwood Maze
+    TimeLimit: 7200
+    Enter:
+      Map: 1@mist
+      X: 89
+      Y: 29
+  - Id: 6
+    Name: Culvert
+    Enter:
+      Map: 1@pump
+      X: 63
+      Y: 98
+    AdditionalMaps:
+      2@pump: true
+  - Id: 7
+    Name: Octopus Cave
+    Enter:
+      Map: 1@cash
+      X: 199
+      Y: 99
+  - Id: 8
+    Name: Bangungot Hospital 2F
+    Enter:
+      Map: 1@ma_h
+      X: 40
+      Y: 157
+  - Id: 9
+    Name: Buwaya Cave
+    Enter:
+      Map: 1@ma_c
+      X: 35
+      Y: 57
+  - Id: 10
+    Name: Bakonawa Lake
+    TimeLimit: 7200
+    Enter:
+      Map: 1@ma_b
+      X: 64
+      Y: 51
+  - Id: 11
+    Name: Wolfchev's Laboratory
+    TimeLimit: 14400
+    Enter:
+      Map: 1@lhz
+      X: 45
+      Y: 148
+  - Id: 12
+    Name: Old Glast Heim
+    Enter:
+      Map: 1@gl_k
+      X: 150
+      Y: 20
+    AdditionalMaps:
+      2@gl_k: true
+  - Id: 13
+    Name: Eclage Interior
+    TimeLimit: 1200
+    Enter:
+      Map: 1@ecl
+      X: 60
+      Y: 50
+  - Id: 14
+    Name: Sara's Memories
+    Enter:
+      Map: 1@sara
+      X: 250
+      Y: 155
+  - Id: 15
+    Name: Geffen Magic Tournament
+    TimeLimit: 7200
+    Enter:
+      Map: 1@gef
+      X: 119
+      Y: 209
+    AdditionalMaps:
+      1@gef_in: true
+      1@ge_st: true
+  - Id: 16
+    Name: Horror Toy Factory
+    Enter:
+      Map: 1@xm_d
+      X: 111
+      Y: 22
+  - Id: 17
+    Name: Faceworm's Nest
+    Enter:
+      Map: 1@face
+      X: 112
+      Y: 370
+  - Id: 18
+    Name: Ghost Palace
+    Enter:
+      Map: 1@spa
+      X: 42
+      Y: 196
+  - Id: 19
+    Name: Devil's Tower
+    Enter:
+      Map: 1@tnm1
+      X: 50
+      Y: 104
+    AdditionalMaps:
+      1@tnm2: true
+      1@tnm3: true
+  - Id: 20
+    Name: Assault on the Airship
+    Enter:
+      Map: 1@air1
+      X: 244
+      Y: 73
+    AdditionalMaps:
+      1@air2: true
+  - Id: 21
+    Name: Fenrir and Sarah
+    Enter:
+      Map: 1@glast
+      X: 367
+      Y: 304
+  - Id: 22
+    Name: Wave Mode - Forest
+    Enter:
+      Map: 1@def01
+      X: 50
+      Y: 21
+  - Id: 23
+    Name: Wave Mode - Sky
+    Enter:
+      Map: 1@def02
+      X: 29
+      Y: 35
+  - Id: 24
+    Name: Nightmarish Jitterbug
+    Enter:
+      Map: 1@jtb
+      X: 16
+      Y: 17
+  - Id: 25
+    Name: Isle of Bios
+    Enter:
+      Map: 1@dth1
+      X: 17
+      Y: 93
+    AdditionalMaps:
+      1@dth2: true
+      1@dth3: true
+  - Id: 26
+    Name: Morse's Cave
+    Enter:
+      Map: 1@rev
+      X: 26
+      Y: 181
+  - Id: 27
+    Name: Temple of the Demon God
+    Enter:
+      Map: 1@eom
+      X: 101
+      Y: 16
+  - Id: 28
+    Name: Central Laboratory
+    Enter:
+      Map: 1@lab
+      X: 120
+      Y: 30
+  - Id: 29
+    Name: Last room
+    Enter:
+      Map: 1@uns
+      X: 145
+      Y: 35
+  - Id: 30
+    Name: Charleston in Distress
+    Enter:
+      Map: 1@mcd
+      X: 127
+      Y: 282
+  - Id: 31
+    Name: Ritual of Blessing
+    Enter:
+      Map: 2@mir
+      X: 101
+      Y: 12
+  - Id: 32
+    Name: Room of Consciousness
+    Enter:
+      Map: 1@mir
+      X: 101
+      Y: 10
+  - Id: 33
+    Name: Sky Fortress Invasion
+    Enter:
+      Map: 1@sthb
+      X: 54
+      Y: 67
+    AdditionalMaps:
+      1@sthc: true
+      1@sthd: true
+  - Id: 34
+    Name: Heart Hunter War Base 1
+    Enter:
+      Map: 1@swat
+      X: 35
+      Y: 65
+  - Id: 35
+    Name: Heart Hunter War Base 2
+    Enter:
+      Map: 1@swat
+      X: 73
+      Y: 118
+# There is officially only one (buggy) instance 'Werner Laboratory central room'
+  - Id: 36
+    Name: Werner Laboratory central room#1
+    Enter:
+      Map: 1@slw
+      X: 187
+      Y: 24
+  - Id: 37
+    Name: Werner Laboratory central room#2
+    Enter:
+      Map: 1@slw
+      X: 187
+      Y: 24
+  - Id: 38
+    Name: Infinite Space
+    TimeLimit: 3600
+    Enter:
+      Map: 1@infi
+      X: 30
+      Y: 10
+  - Id: 39
+    Name: Regenschirm
+    TimeLimit: 7200
+    Enter:
+      Map: 1@rgsr
+      X: 127
+      Y: 38
+  - Id: 40
+    Name: Sealed OS
+    TimeLimit: 7200
+    Enter:
+      Map: 1@os_b
+      X: 188
+      Y: 41
+  - Id: 41
+    Name: OS Occupation
+    TimeLimit: 7200
+    Enter:
+      Map: 1@os_a
+      X: 30
+      Y: 352
+  - Id: 42
+    Name: 2nd OS Search
+    TimeLimit: 7200
+    Enter:
+      Map: 1@os_a
+      X: 335
+      Y: 34
+  - Id: 43
+    Name: Cor Memorial
+    TimeLimit: 7200
+    Enter:
+      Map: 1@cor
+      X: 176
+      Y: 169
+  - Id: 44
+    Name: Half Moon In The Daylight
+    TimeLimit: 7200
+    Enter:
+      Map: 1@pop1
+      X: 47
+      Y: 133
+    AdditionalMaps:
+      1@pop2: true
+      1@pop3: true
+  - Id: 45
+    Name: Weekend Dungeon
+    TimeLimit: 3600
+    Enter:
+      Map: 1@md_pay
+      X: 240
+      Y: 29
+  - Id: 46
+    Name: Friday Dungeon
+    TimeLimit: 7200
+    Enter:
+      Map: 1@md_gef
+      X: 106
+      Y: 129
+  - Id: 47
+    Name: Poring Village
+    Enter:
+      Map: 1@begi
+      X: 100
+      Y: 22
+  - Id: 49
+    Name: Old Glast Heim (Challenge Mode)
+    Enter:
+      Map: 1@gl_he
+      X: 150
+      Y: 28
+  - Id: 50
+    Name: Old Glast Heim (Beginner)
+    Enter:
+      Map: 1@gl_k2
+      X: 150
+      Y: 20
+  - Id: 51
+    Name: Fall of Glast Heim (Normal)
+    Enter:
+      Map: 1@gl_prq
+      X: 299
+      Y: 19
+  - Id: 52
+    Name: Fall of Glast Heim (Advanced)
+    Enter:
+      Map: 1@gl_prq
+      X: 79
+      Y: 22
+  - Id: 53
+    Name: Twilight Garden
+    Enter:
+      Map: 1@bamn
+      X: 100
+      Y: 320
+    AdditionalMaps:
+       1@bamq: true
+  - Id: 54
+    Name: Hey! Sweety
+    Enter:
+      Map: 1@bamq
+      X: 16
+      Y: 39
+    AdditionalMaps:
+       1@bamn: true
+  - Id: 55
+    Name: Farm Lost in Time
+    Enter:
+      Map: 1@lost
+      X: 161
+      Y: 42
+  - Id: 56
+    Name: Water Garden
+    Enter:
+      Map: 1@ghg
+      X: 64
+      Y: 69
+  - Id: 57
+    Name: Water Garden Hard
+    Enter:
+      Map: 1@ghg
+      X: 64
+      Y: 69
+  - Id: 58
+    Name: Hidden Flower Garden
+    Enter:
+      Map: 1@herbs
+      X: 51
+      Y: 273
+  - Id: 59
+    Name: Security Area 1
+    Enter:
+      Map: 1@herbs
+      X: 45
+      Y: 208
+  - Id: 60
+    Name: Security Area 2
+    Enter:
+      Map: 1@herbs
+      X: 59
+      Y: 214
+  - Id: 61
+    Name: Sunken Tower
+    Enter:
+      Map: 1@ch_u
+      X: 13
+      Y: 59
+  - Id: 62
+    Name: Constellation Tower
+    Enter:
+      Map: 1@ch_t
+      X: 48
+      Y: 183
+    AdditionalMaps:
+       2@ch_t: true
+       3@ch_t: true
+  - Id: 63
+    Name: Tomb of Remorse
+    Enter:
+      Map: 1@spa2
+      X: 51
+      Y: 197
+  - Id: 64
+    Name: Geffen Night Arena
+    Enter:
+      Map: 1@ge_sn
+      X: 89
+      Y: 48
+  - Id: 65
+    Name: Airship Crash
+    Enter:
+      Map: 1@mjo1
+      X: 219
+      Y: 379
+    AdditionalMaps:
+      1@mjo2: true
+  - Id: 66
+    Name: Thanatos Tower
+    Enter:
+      Map: 1@thts
+      X: 74
+      Y: 371
+    AdditionalMaps:
+      2@thts: true
+      3@thts: true
+      4@thts: true
+      5@thts: true
+      6@thts: true
+      7@thts: true
+      8@thts: true
+  - Id: 67
+    Name: Oz Labyrinth
+    Enter:
+      Map: 1@oz
+      X: 284
+      Y: 167
+  - Id: 68
+    Name: Thor Military Base
+    Enter:
+      Map: 1@tcamp
+      X: 103
+      Y: 237
+  - Id: 69
+    Name: Wolves Gathering Place
+    Enter:
+      Map: 1@nyr
+      X: 194
+      Y: 30
+    AdditionalMaps:
+      2@nyr: true
+  - Id: 70
+    Name: Sanctuary Purification
+    Enter:
+      Map: 1@nyr
+      X: 194
+      Y: 30
+    AdditionalMaps:
+      2@nyr: true
+  - Id: 71
+    Name: High Priest's Villa
+    Enter:
+      Map: 1@adv
+      X: 123
+      Y: 17
+  - Id: 72
+    Name: Villa of Deception
+    Enter:
+      Map: 1@advs
+      X: 111
+      Y: 19
+  - Id: 73
+    Name: Villa of Deception Advanced
+    Enter:
+      Map: 1@advs
+      X: 111
+      Y: 19
+  - Id: 74
+    Name: Bagot Laboratory
+    Enter:
+      Map: 1@jorlab
+      X: 57
+      Y: 45
+  - Id: 75
+    Name: Confused Snake's Nest
+    Enter:
+      Map: 1@jorchs
+      X: 272
+      Y: 20
+  - Id: 76
+    Name: Iwin Patrol
+    Enter:
+      Map: 1@iwp
+      X: 380
+      Y: 229
+  - Id: 77
+    Name: Airship Destruction
+    Enter:
+      Map: 1@whl
+      X: 32
+      Y: 53
+  - Id: 78
+    Name: Simulation Battle
+    Enter:
+      Map: 1@jorlab
+      X: 57
+      Y: 45
+  - Id: 79
+    Name: Deep Forest
+    TimeLimit: 1200
+    Enter:
+      Map: 1@exsh
+      X: 90
+      Y: 35

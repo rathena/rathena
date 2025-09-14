@@ -99,7 +99,7 @@ mal_in01,172,28,2	script	Albo#mal	561,{
 			case 2: callsub L_GiveQuest,.@i,12262,12272,"Deep Sea Sword Fish";
 			case 3: callsub L_GiveQuest,.@i,12263,12272,"Deep Sea Strouf";
 			case 4: callsub L_GiveQuest,.@i,12264,12272,"Deep Sea Anolian";
-			case 5: callsub L_GiveQuest,.@i,12265,12272,"Deep Sea Obeanue";
+			case 5: callsub L_GiveQuest,.@i,12265,12272,"Deep Sea Obeaune";
 			case 6: callsub L_GiveQuest,.@i,12266,12272,"Deep Sea Kapha";
 		}
 	case 3: // General Culvert Weekly Service
@@ -377,7 +377,7 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 		set in_canal_n,1;
 		close;
 	}
-	if (countitem(6436) == 0) {
+	if (rentalcountitem(6436) == 0) {
 		mes "[Missing, the Cleaner]";
 		mes "You don't look like you have Seagod Protection. I can't open door at the moment!";
 		close;
@@ -392,7 +392,7 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 	}
 	set .@playtime, checkquest(12254,PLAYTIME);
 	if (.@playtime == -1) {
-		if (getcharid(0) == getpartyleader(.@party_id,2)) {
+		if (is_party_leader() == true) {
 			mes "[Missing, the Cleaner]";
 			mes "Ummm? What's up? Tell me the password if you're the leader!";
 			next;
@@ -455,7 +455,7 @@ L_Enter:
 // Instance: Common Scripts
 //============================================================
 1@pump,63,100,4	script	Missing, the Cleaner#0	545,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Missing, the Cleaner]";
 		mes "I am trying to have a conversation with your leader now. Please don't disturb and wait!";
 		close;
@@ -546,7 +546,7 @@ function	script	F_mal_missing	{
 	mes "[Missing, the Cleaner]";
 	mes "I don't care if you get help from your friends or not. I want you to clean up all culverts! Don't forget! I will watch you and give you instructions. Just do what I said!!";
 	next;
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Missing, the Cleaner]";
 		mes "Once your leader finishes preparing, it will begin, so get your hearts ready for it!!";
 		close;
@@ -575,7 +575,7 @@ function	script	F_mal_missing	{
 	mes "[Missing, the Cleaner]";
 	mes "I see seaweed everywhere because you're wiggling! All the culverts will be blocked with seaweed!";
 	next;
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Missing, the Cleaner]";
 		mes "Once your leader finishes preparing, settlement will be decided so get your hearts ready for it!!";
 		close;
@@ -597,12 +597,12 @@ function	script	F_mal_missing	{
 		disablenpc instance_npcname("Culvert Entrance#"+.@i$);
 		disablenpc instance_npcname("Missing, the Cleaner#"+.@i$+"o");
 		donpcevent instance_npcname("Monster Hole#"+.@i$)+"::OnClear";
-		disablenpc instance_npcname(strnpcinfo(0));
+		disablenpc();
 		close;
 	}
 	close;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 
@@ -712,13 +712,13 @@ OnClear:
 1@pump,36,111,4	script	#Culvert_n1	844,14,14,{ //temporary workaround for ALL_SAMEMAP
 	progressbar "0xFFFF00",10;
 	stopnpctimer;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	set .@label$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
 	set .@map$, instance_mapname("1@pump");
 	set .@index, atoi(charat(strnpcinfo(2),9));
@@ -737,7 +737,7 @@ OnEnable:
 	areamonster .@map$,.@c[0],.@c[1],.@c[2],.@c[3],"Ancient Kukre",2179,rand(1,3),.@label$;
 	areamonster .@map$,.@c[0],.@c[1],.@c[2],.@c[3],"Abysmal Cornutus",2177,rand(1,3),.@label$;
 	specialeffect EF_MAPPILLAR2,ALL_SAMEMAP; //currently broken
-	getmapxy(.@map$,.@x,.@y,UNITTYPE_NPC);
+	getmapxy(.@map$,.@x,.@y,BL_NPC);
 	getpartymember 'party_id,2;
 	copyarray .@partymemberaid[0],$@partymemberaid[0],$@partymembercount;
 	for(set .@i,0; .@i<$@partymembercount; set .@i,.@i+1) {
@@ -758,7 +758,7 @@ OnClear:
 OnTimer49500:	//OnTimer50000 clashes with the timer in "Missing, the Cleaner#h".
 	donpcevent instance_npcname("Missing, the Cleaner#n")+"::OnAddSeaweed";
 	donpcevent instance_npcname(strnpcinfo(0))+"::OnClear";
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnTouch:
 	specialeffect EF_MAPPILLAR2;
@@ -773,10 +773,10 @@ OnTouch:
 1@pump,1,1,4	script	Boss Creation#n	-1,{
 	end;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	initnpctimer;
 	end;
 OnTimer100:
@@ -875,7 +875,7 @@ OnMyMobDead:
 	mes "If Tomas closes this down, we will lose our jobs!";
 	close;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 }
 
@@ -972,13 +972,13 @@ OnTimer425000:
 2@pump,53,114,4	script	#Culvert_h1	844,14,14,{ //temporary workaround for ALL_SAMEMAP
 	progressbar "0xFFFF00",15;
 	stopnpctimer;
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnInstanceInit:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	set .@label$, instance_npcname(strnpcinfo(0))+"::OnMyMobDead";
 	set .@map$, instance_mapname("2@pump");
 	set .@index, atoi(substr(strnpcinfo(2),9,getstrlen(strnpcinfo(2))-1));
@@ -1012,7 +1012,7 @@ OnClear:
 OnTimer39500:	//OnTimer40000 clashes with the timer in "Missing, the Cleaner#h".
 	donpcevent instance_npcname("Missing, the Cleaner#h")+"::OnAddSeaweed";
 	donpcevent instance_npcname(strnpcinfo(0))+"::OnClear";
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnTouch:
 	specialeffect EF_MAPPILLAR2;

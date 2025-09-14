@@ -18,41 +18,52 @@ We want to add our own custom achievement that can be given to a player via an N
 
 #### /db/import/achievement_db.yml
 
-
-    Achievements:
-      - ID: 280000
-        Group: "AG_GOAL_ACHIEVE"
-        Name: "Emperio"
-        Reward:
-          TitleID: 1035
-        Score: 50
-      - ID: 280001
-        Group: "AG_GOAL_ACHIEVE"
-        Name: "Staff"
-        Reward:
-          TitleID: 1036
-        Score: 50
+```yml
+    - Id: 280000
+      Group: None
+      Name: Emperio
+      Reward:
+        TitleId: 1035
+      Score: 50
+    - Id: 280001
+      Group: None
+      Name: Staff
+      Reward:
+        TitleId: 1036
+      Score: 50
+```
 
 
 ### Instances
 ---
 We want to add our own customized Housing Instance.
 
-#### /db/import/instance_db.txt
+#### /db/import/instance_db.yml
 
-    // ID,Name,LimitTime,IdleTimeOut,EnterMap,EnterX,EnterY,Map2,Map3,...,Map255
-    35,Home,3600,900,1@home,24,6,2@home,3@home
+```yml
+    - Id: 35
+      Name: Home
+      IdleTimeOut: 900
+      Enter:
+        Map: 1@home
+        X: 24
+        Y: 6
+      AdditionalMaps:
+        - Map: 2@home
+        - Map: 3@home
+```
 
 
 ### Mob Alias
 ---
-We want to give a custom mob a Novice player sprite.
+We want to make Porings look like Baphomet.
 
-#### /db/import/mob_avail.txt
+#### /db/import/mob_avail.yml
 
-    // Structure of Database:
-    // MobID,SpriteID{,Equipment}
-    3850,0
+```yml
+    - Mob: PORING
+      Sprite: BAPHOMET
+```
 
 
 ### Custom Maps
@@ -61,45 +72,71 @@ We want to add our own custom maps. For this we need to add our map names to `im
 
 #### /db/import/map_index.txt
 
+```
     1@home	1250
     2@home
     3@home
     ev_has
     shops
     prt_pvp
+```
 
 
 ### Item Trade Restrictions
 ---
 We want to ensure that specific items cannot be traded, sold, dropped, placed in storage, etc.
 
-#### /db/import/item_trade.txt
+#### /db/import/item_db.yml
 
-    // Legend for 'TradeMask' field (bitmask):
-    // 1   - item can't be dropped
-    // 2   - item can't be traded (nor vended)
-    // 4   - wedded partner can override restriction 2
-    // 8   - item can't be sold to npcs
-    // 16  - item can't be placed in the cart
-    // 32  - item can't be placed in the storage
-    // 64  - item can't be placed in the guild storage
-    // 128 - item can't be attached to mail
-    // 256 - item can't be auctioned
-    // Full outright value = 511
-    34000,511,100	// Old Green Box
-    34001,511,100	// House Keys
-    34002,511,100	// Reputation Journal
+```yml
+    - Id: 34000 # Old Green Box
+      Trade:
+        NoDrop: true
+        NoTrade: true
+        TradePartner: true
+        NoSell: true
+        NoCart: true
+        NoStorage: true
+        NoGuildStorage: true
+        NoMail: true
+        NoAuction: true
+    - Id: 34001 # House Keys
+      Trade:
+        NoDrop: true
+        NoTrade: true
+        TradePartner: true
+        NoSell: true
+        NoCart: true
+        NoStorage: true
+        NoGuildStorage: true
+        NoMail: true
+        NoAuction: true
+    - Id: 34002 # Reputation Journal
+      Trade:
+        NoDrop: true
+        NoTrade: true
+        TradePartner: true
+        NoSell: true
+        NoCart: true
+        NoStorage: true
+        NoGuildStorage: true
+        NoMail: true
+        NoAuction: true
+```
 
 
 ### Custom Quests
 ---
 We want to add our own custom quests to the quest_db.
 
-#### /db/import/quest_db.txt
+#### /db/import/quest_db.yml
 
-    // Quest ID,Time Limit,Target1,Val1,Target2,Val2,Target3,Val3,MobID1,NameID1,Rate1,MobID2,NameID2,Rate2,MobID3,NameID3,Rate3,Quest Title
-    89001,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Reputation Quest"
-    89002,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Reputation Quest"
+```yml
+    - Id: 89001
+      Title: "Reputation Quest"
+    - Id: 89002
+      Title: "Reputation Quest"
+```
 
 
 

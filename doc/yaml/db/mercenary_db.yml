@@ -1,0 +1,38 @@
+###########################################################################
+# Mercenary Database
+###########################################################################
+#
+# Mercenary Settings
+#
+###########################################################################
+# - Id                      Mercenary ID.
+#   AegisName               Server name to reference the mercenary in scripts and lookups, should use no spaces.
+#   Name                    Name in English.
+#   Level                   Level. (Default: 1)
+#   Hp                      Total HP. (Default: 1)
+#   Sp                      Total SP. (Default: 1)
+#   Attack                  Minimum attack. (Default: 0)
+#   Attack2                 Maximum attack. (Default: 0)
+#   Defense                 Physical defense of the mercenary, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicDefense            Magic defense of the mercenary, reduces magical skill damage. (Default: 0)
+#   Str                     Strength which affects attack. (Default: 1)
+#   Agi                     Agility which affects flee. (Default: 1)
+#   Vit                     Vitality which affects defense. (Default: 1)
+#   Int                     Intelligence which affects magic attack. (Default: 1)
+#   Dex                     Dexterity which affects hit rate. (Default: 1)
+#   Luk                     Luck which affects perfect dodge/lucky flee/perfect flee/lucky dodge rate. (Default: 1)
+#   AttackRange             Attack range. (Default: 0)
+#   SkillRange              Skill cast range. (Default: 0)
+#   ChaseRange              Chase range. (Default: 0)
+#   Size                    Size. (Default: Small)
+#   Race                    Race. (Default: Formless)
+#   Element                 Element. (Default: Neutral)
+#   ElementLevel            Level of element. (Default: 1)
+#   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
+#   AttackDelay             Attack speed. (Default: 4000)
+#   AttackMotion            Attack animation speed. (Default: 2000)
+#   DamageMotion            Damage animation speed. (Default: 0)
+#   Skills:                 List of mercenary skills. (Optional)
+#     - Name                Skill name.
+#       MaxLevel            Max skill level.
+###########################################################################

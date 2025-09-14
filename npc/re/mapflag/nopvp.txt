@@ -1,19 +1,21 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable Player versus Player mode.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Prevents PvP mode on a map.
 //===== Additional Comments: ================================= 
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.2 Added Para Market maps [mazvi]
 //============================================================
 
-// Instances ===================
+//============================================================
+// Paradise Market
+//============================================================
+paramk	mapflag	pvp	off
+
+//============================================================
+// Instances
+//============================================================
 1@mist	mapflag	pvp	off
 1@cash	mapflag	pvp	off
 1@pump	mapflag	pvp	off
@@ -29,11 +31,15 @@
 1@def02	mapflag	pvp	off
 1@def03	mapflag	pvp	off
 
-// Heroes' Trail - Part 1 ========
+//============================================================
+// Heroes' Trail - Part 1
+//============================================================
 1@face	mapflag	pvp	off
 1@sara	mapflag	pvp	off
 
-// Heroes' Trail - Part 2 ========
+//============================================================
+// Heroes' Trail - Part 2
+//============================================================
 1@ge_st	mapflag	pvp	off
 1@gef	mapflag	pvp	off
 1@gef_in	mapflag	pvp	off
@@ -42,33 +48,43 @@
 1@tnm2	mapflag	pvp	off
 1@tnm3	mapflag	pvp	off
 
+//============================================================
 // Horror Toy Factory Memorial Dungeon
+//============================================================
 1@xm_d	mapflag	pvp	off
 
-// Heroes' Trail - Part 3 ========
+//============================================================
+// Heroes' Trail - Part 3
+//============================================================
 1@glast	mapflag	pvp	off
 1@air1	mapflag	pvp	off
 1@air2	mapflag	pvp	off
 
-// Decisive Battle - Part 1 ======
+//============================================================
+// Decisive Battle - Part 1
+//============================================================
 1@dth1	mapflag	pvp	off
 1@dth2	mapflag	pvp	off
 1@dth3	mapflag	pvp	off
 1@rev	mapflag	pvp	off
 
-// Decisive Battle - Part 2 ======
+//============================================================
+// Decisive Battle - Part 2
+//============================================================
 1@eom	mapflag	pvp	off
 1@jtb	mapflag	pvp	off
 
+//============================================================
 // Episode 15 - Phantasmagorica
+//============================================================
 1@lab	mapflag	pvp	off
 1@uns	mapflag	pvp	off
 1@mcd	mapflag	pvp	off
 
-// Cities ========================
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
 moc_para01	mapflag	pvp	off
-brasilis	mapflag	pvp	off
-bra_in01	mapflag	pvp	off
 dicastes01	mapflag	pvp	off
 dicastes02	mapflag	pvp	off
 dic_in01	mapflag	pvp	off
@@ -103,3 +119,9 @@ ecl_in04	mapflag	pvp	off
 ecl_hub01	mapflag	pvp	off
 que_avan01	mapflag	pvp	off
 dali	mapflag	pvp	off
+wolfvill	mapflag	pvp	off
+
+//============================================================
+// Cash Mall
+//============================================================
+itemmall	mapflag	pvp	off

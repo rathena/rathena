@@ -1,0 +1,67 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2022 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Barter Database
+###########################################################################
+#
+# Barter Settings
+#
+###########################################################################
+#  - Name               NPC name.
+#    Map                Map name. (Default: not on a map)
+#    X                  Map x coordinate. (Default: 0)
+#    Y                  Map y coordinate. (Default: 0)
+#    Direction          Direction the NPC is looking. (Default: North)
+#    Sprite             Sprite name of the NPC. (Default: FakeNpc)
+#    Items:             List of sold items.
+#      - Index          Index of the item inside the shop. (0-...)
+#                       Maximum index depends on client.
+#        Item           Aegis name of the item.
+#        Stock          Amount of item in stock. 0 means unlimited. (Default: 0)
+#        Zeny           Cost of them item in Zeny. (Default: 0)
+#        Refine         Refine level of the item. (Default: 0)
+#        RequiredItems: List of required items (Optional)
+#          - Index      Index of the required item. (0-4)
+#            Item       Aegis name of required item.
+#            Amount     Amount of required item. (Default: 1)
+#            Refine     Refine level of required item. (Default: 0)
+###########################################################################
+
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Footer:
+  Imports:
+  - Path: npc/re/merchants/barters/cashmall.yml
+  - Path: npc/re/merchants/barters/enchan_illusion_dungeons.yml
+  - Path: npc/re/merchants/barters/enchantgrade.yml
+  - Path: npc/re/merchants/barters/Extended_Ammunition.yml
+  - Path: npc/re/merchants/barters/garden_of_time.yml
+  - Path: npc/re/merchants/barters/Gemstone_Bagger.yml
+  - Path: npc/re/merchants/barters/mysterious_cookie_shop.yml
+  - Path: npc/re/merchants/barters/quests_16_1.yml
+  - Path: npc/re/merchants/barters/quests_16_2.yml
+  - Path: npc/re/merchants/barters/quests_17_1.yml
+  - Path: npc/re/merchants/barters/quests_17_2.yml
+  - Path: npc/re/merchants/barters/quests_18.yml
+  - Path: npc/re/merchants/barters/quests_exp_175.yml
+  - Path: npc/re/merchants/barters/refine.yml
+  - Path: npc/re/merchants/barters/rgsr_in.yml
+  - Path: npc/re/merchants/barters/Pet_Groomer.yml
+

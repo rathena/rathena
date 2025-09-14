@@ -1,0 +1,14 @@
+###########################################################################
+# Script Constant Database
+###########################################################################
+#
+# Script Constant Settings
+#
+###########################################################################
+# - Name             Unique name for the constant. Must not have same name as script commands, functions, or variables.
+#   Value            Value assigned to the constant. This value cannot be changed during the runtime of the server.
+#   Parameter        Specifies whether the identifier is a parameter. (Default: false)
+#                    Note: Parameters are special in that they retrieve certain runtime values depending on the specified ID
+#                    in field Value. Depending on the implementation values assigned by scripts the parameters will affect
+#                    runtime values, such as Zeny, as well (see pc_readparam/pc_setparam).
+###########################################################################

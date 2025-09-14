@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Morroc Warp Script
+//= Morocc Warp Script
 //===== By: ==================================================
 //= Athena (1.0)
 //= Nana (1.2)
@@ -8,12 +8,12 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Warp Points for Morroc and Assassin Guild
+//= Warp Points for Morocc and Assassin Guild
 //===== Additional Comments: =================================
 //= 1.3 Updated warps for episode 12.1 [L0ne_W0lf]
 //============================================================
 
-//= Morroc City ==============================================
+//= Morocc City ==============================================
 morocc,160,17,0	warp	moc001	2,2,moc_fild12,159,378
 //morocc,160,183,0	warp	moc002	2,1,moc_castle,94,181
 morocc,160,297,0	warp	moc003	2,2,moc_fild07,198,25
@@ -68,14 +68,14 @@ morocc_in,86,117,0	warp	moc23-1	3,1,morocc_in,86,98
 morocc_in,93,123,0	warp	moc11	1,3,morocc_in,109,123
 morocc_in,93,95,0	warp	moc10	1,3,morocc_in,109,95
 
-//= Morroc Ruins ============================================
+//= Morocc Ruins ============================================
 moc_ruins,159,39,0	warp	moc02-2	2,4,morocc,30,290
 //moc_ruins,161,40,0	warp	moc02-2	2,4,morocc,26,293
 //moc_ruins,157,37,0	warp	moc02-3	5,2,morocc,26,293
 moc_ruins,54,161,0	warp	moc006	2,3,moc_pryd01,192,9
 moc_ruins,71,16,0	warp	moc007	8,2,moc_fild19,71,167
 
-//= Morroc Castle ===========================================
+//= Morocc Castle ===========================================
 //moc_castle,94,183,0	warp	mocc001	2,1,morocc,160,185
 //moc_castle,107,163,0	warp	mocc01	2,3,moc_castle,124,163
 //moc_castle,120,163,0	warp	mocc01-1	2,3,moc_castle,103,163

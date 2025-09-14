@@ -1,0 +1,20 @@
+//===== rAthena Script ======================================= 
+//= Amicitia dungeon warps script
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+amicitia1,248,244,0	warp2	#wami1	2,2,ein_fild08,152,95
+
+amicitia1,149,19,0	script	#wami2	WARPNPC,2,2,{
+	end;
+OnTouch:
+	if (BaseLevel < 230) {
+		mes " - No entry below level 230! - ";
+		close;
+	}
+	warp "amicitia2",146,274;
+	end;
+}
+
+amicitia2,146,281,0	warp2	#wami3	2,2,amicitia1,149,27

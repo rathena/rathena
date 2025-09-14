@@ -1,0 +1,12 @@
+###########################################################################
+# Guild Castles Database
+###########################################################################
+#
+# Guild Castles Settings
+#
+###########################################################################
+# - Id                Unique ID of the castle.
+#   Map               Map name to be considered as the castle map.
+#   Name              Name of the castle (used by scripts and guardian name tags).
+#   Npc               NPC unique name to invoke ::OnGuildBreak on, when a occupied castle is abandoned during guild break.
+###########################################################################

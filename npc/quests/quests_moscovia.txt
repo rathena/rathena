@@ -301,7 +301,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 			next;
 			mes "[Mr. Ibanoff]";
 			mes "When I adventured around";
-			mes "Rune Midgarts, maybe it was";
+			mes "Rune-Midgarts, maybe it was";
 			mes "well before you were born.";
 			mes "Ah... I miss those days...";
 			next;
@@ -636,7 +636,8 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 		mes "back to the island, I want to go";
 		mes "together with you! Eh? Hahaha!";
 		mos_whale_edq = 16;
-		changequest 18111,18112;
+		if (isbegin_quest(18111))
+			changequest 18111,18112;
 		close;
 	} else if (mos_whale_edq < 18) {
 		mes "[Mr. Ibanoff]";
@@ -674,7 +675,8 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 			mes "[Mr. Ibanoff]";
 			mes "Again, let's get the ship ready and sail before the sun sets!";
 			mos_whale_edq = 19;
-			changequest 18113,18114;
+			if (isbegin_quest(18113))
+				changequest 18113,18114;
 			close;
 		}
 		mes "[Mr. Ibanoff]";
@@ -1460,7 +1462,8 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	4_M_GUSLIMAN,{
 			delitem 7106,20; //Goat's_Horn
 			delitem 7065,10; //Sea_Otter_Leather
 			mos_whale_edq = 34;
-			changequest 18117,18118;
+			if (isbegin_quest(18117))
+				changequest 18117,18118;
 			mes "[Aged Stranger]";
 			mes "Wait for a moment until I make the";
 			mes "instrument successfully.";
@@ -1523,7 +1526,8 @@ mosk_fild01,86,104,3	script	Aged Stranger#npc	4_M_GUSLIMAN,{
 			mes "island. Everything is going to be";
 			mes "well.";
 			next;
-			changequest 18118,18119;
+			if (isbegin_quest(18118))
+				changequest 18118,18119;
 		}
 		callsub S_AS_2,1;
 	} else if (mos_whale_edq == 36) {
@@ -2138,7 +2142,8 @@ mosk_in,131,92,3	script	Csar Alexsay III#npc	4_M_RUSKING,7,7,{
 		mes "You have a heavy responsibility.";
 		mes "Bring evidence of this whale island to me, to provide me with some relief. Now go.";
 		mos_whale_edq = 18;
-		changequest 18112,18113;
+		if (isbegin_quest(18112))
+			changequest 18112,18113;
 		close;
 	} else if (mos_whale_edq > 17 && mos_whale_edq < 35) {
 		mes "[Csar Alexsay III]";
@@ -2683,17 +2688,27 @@ OnTouch:
 
 -	script	Baehideun#main	-1,{
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnEnable:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	.@c = charat(strnpcinfo(0),9);
-	switch (.@c) {
-		case 1: setarray .@m, 89,112,1551,85,110,1579; break;// G_MARSE, G_HYDRA
-		case 2: setarray .@m, 89,112,1425,80,110,1254,83,114,1254,85,110,1425; break;// G_OBEAUNE, RAGGLER
-		case 3: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;// G_MERMAN, G_KAPHA
-		case 4: setarray .@m, 85,111,1069,89,112,1543,90,106,1543; break;// SWORD_FISH, G_KAPHA
+	if (checkre(0)) {
+		switch (.@c) {
+			case 1: setarray .@m, 89,112,1551,85,110,1579; break;// G_MARSE, G_HYDRA
+			case 2: setarray .@m, 89,112,1425,80,110,1254,83,114,1254,85,110,1425; break;// G_OBEAUNE, RAGGLER
+			case 3: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;// G_MERMAN, G_KAPHA
+			case 4: setarray .@m, 85,111,1069,89,112,1543,90,106,1543; break;// SWORD_FISH, G_KAPHA
+		}
+	}
+	else {
+		switch (.@c) {
+			case 1: setarray .@m, 89,112,1425,85,110,1425; break;// G_OBEAUNE, G_OBEAUNE
+			case 2: setarray .@m, 89,112,1425,80,110,1426,83,114,1426,85,110,1425; break;// G_OBEAUNE, G_MARC
+			case 3:
+			case 4: setarray .@m, 85,111,1451,89,112,1543,90,106,1543; break;// G_MERMAN, G_KAPHA
+		}
 	}
 	for (.@i = 0; .@i < getarraysize(.@m); .@i += 3)
 		monster "mosk_ship",.@m[.@i],.@m[.@i+1],"Sea Monster",.@m[.@i+2],1,strnpcinfo(0)+"::OnMyMobDead";
@@ -2705,7 +2720,7 @@ OnTimer300000:
 OnDisable:
 	$@mos1_edq = 0;
 	stopnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnMyMobDead:
@@ -3376,7 +3391,6 @@ mosk_in,135,191,5	script	Landlord#mos	4_F_RUSWOMAN3,{
 				mes "Please have a rest, young adventurer.";
 			}
 			else {
-				mes "[Landlord]";
 				mes "Please be comfortable.";
 			}
 			break;
@@ -6353,7 +6367,7 @@ mosk_fild02,198,252,3	script	Sage#rus01	4_M_SAGE_C,{
 		next;
 		select("Show him a Poring Card");
 		mes "["+ strcharinfo(0) +"]";
-		mes "This is a card of one of the monsters that inhabit the Rune Midgard continent.";
+		mes "This is a card of one of the monsters that inhabit the Midgard continent.";
 		next;
 		if (!countitem(4001)) {
 			mes "[Sage]";
@@ -7089,16 +7103,21 @@ mosk_dun01,45,259,0	script	Wall#rus04	HIDDEN_NPC,{
 
 OnInit:
 	$@rus_req02 = 0;
+	end;
+
 OnEnable:
 	enablenpc "Wall#rus04";
 	end;
 
+OnDisable:
+	disablenpc "Wall#rus04";
+	end;
+
 OnMyMobDead:
+	donpcevent "Koshei#rus47::OnDisable";
 	$@rus_req02 = 0;
 	// stopnpctimer;
 	announce "Koshei, the Immortal : Keeeek, you, cursed human.. I'll never give up!!! We'll see who's smiling in the end!!!",bc_map,0xCE3131;
-OnDisable:
-	disablenpc "Wall#rus04";
 	end;
 }
 
@@ -7147,14 +7166,14 @@ OnTimer300000:
 
 OnEnable:
 	initnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 
 OnTimer120000:
 OnDisable:
 	stopnpctimer;
 OnInit:
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 }
 mosk_dun01,50,256,3	duplicate(mos_rus#main)	Gray Wolf#rus05	4_RUS_DWOLF
@@ -8256,13 +8275,13 @@ mosk_fild02,157,233,0	script	Shepherdess#rus10	1_F_04,{
 
 OnDisable:
 	initnpctimer;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnTimer60000:
 OnEnable:
 	stopnpctimer;
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	end;
 }
 mosk_fild02,151,188,0	duplicate(PTree#rusmain)	Pointed Tree#rus11	HIDDEN_NPC
@@ -8341,7 +8360,7 @@ moscovia,166,145,1	script	Worried Mother#rus19	4_F_RUSWOMAN3,{
 			mes "You must have something to protect yourself from Lusalka. '^0000ffHoly Water^000000' will protect you from Lusalka'a gaze.";
 			next;
 			mes "[Worried Mother]";
-			mes "And Lusalka is noctournal. You should be able to find here from ^ff00005 pm to 6 am PST^000000.";
+			mes "And Lusalka is nocturnal. You should be able to find her from ^ff00005 pm to 6 am PST^000000.";
 			next;
 			mes "[Worried Mother]";
 			mes "Don't forget. You have to bring '^0000ffHoly Water^000000' with you, and find her from ^ff00005 pm to 6 am PST^000000.";
@@ -8359,7 +8378,7 @@ moscovia,166,145,1	script	Worried Mother#rus19	4_F_RUSWOMAN3,{
 			mes "You must have something to protect yourself from Lusalka. '^0000ffHoly Water^000000' will protect you from Lusalka'a gaze.";
 			next;
 			mes "[Worried Mother]";
-			mes "And Lusalka is noctournal. You should be able to find here from ^ff00005 pm to 6 am PST^000000.";
+			mes "And Lusalka is nocturnal. You should be able to find her from ^ff00005 pm to 6 am PST^000000.";
 			next;
 			mes "[Worried Mother]";
 			mes "Don't forget. You have to bring '^0000ffHoly Water^000000' with you, and find her from ^ff00005 pm to 6 am PST^000000.";
@@ -8418,7 +8437,7 @@ OnTouch_:
 		}
 	} else if (rhea_rus_hair > 2 && rhea_rus_hair < 7) {
 		mes "[Lusalka's Voice]";
-		mes "His name is 'Igor'.. He has gone to the capital of Rune Midgarts. Give him my golden earrings.";
+		mes "His name is 'Igor'.. He has gone to the capital of Rune-Midgarts. Give him my golden earrings.";
 		next;
 		mes "[Lusalka's Voice]";
 		mes "And please, tell him to stop suffering and to be happy. This is my request.";
@@ -8511,11 +8530,11 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "If so, you came here from another continent, not Moscovia...?";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				mes "I'm from Rune Midgarts.";
+				mes "I'm from Rune-Midgarts.";
 				next;
 				mes "[Lusalka]";
 				mes "...Rune... Midgarts...";
-				mes "A few days ago, my lover left for Rune Midgarts.. Can you find him for me? I want to talk with him...";
+				mes "A few days ago, my lover left for Rune-Midgarts.. Can you find him for me? I want to talk with him...";
 				next;
 				mes "[Lusalka]";
 				mes "...I don't know why but, I can't remember how I became Lusalka. When I woke up, I was lying down on the bottom of the river.";
@@ -8530,7 +8549,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "I suffered seeing him grieve, but wasn't able to meet him. Ordinary people are killed immediately when they see Lusalka's stare...";
 				next;
 				mes "[Lusalka]";
-				mes "I saw him coming to the marsh everyday and heard him mourning. And his assurance to go to Rune Midgarts.";
+				mes "I saw him coming to the marsh everyday and heard him mourning. And his assurance to go to Rune-Midgarts.";
 				next;
 				mes "[Lusalka]";
 				mes "Adventurer, can you find him for me? I can't leave this marsh. Please, find him for me?";
@@ -8548,11 +8567,11 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "Where can I find him?";
 				next;
 				mes "[Lusalka]";
-				mes "The night when he left, he said that he would go to the capital of Rune Midgarts. I am not sure if he is still there...";
+				mes "The night when he left, he said that he would go to the capital of Rune-Midgarts. I am not sure if he is still there...";
 				next;
 				if(select("Ok, I will do it:I don't think I can do it...") == 2) {
 					mes "["+ strcharinfo(0) +"]";
-					mes "Rune Midgarts is large! I don't think I can do it.";
+					mes "Rune-Midgarts is large! I don't think I can do it.";
 					next;
 					mes "["+ strcharinfo(0) +"]";
 					mes "There's nothing we can do. Just give it up.";
@@ -8575,7 +8594,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				close;
 			} else if (rhea_rus_hair > 2 && rhea_rus_hair < 7) {
 				mes "[Lusalka]";
-				mes "His name is 'Igor'.. He has gone to the capital of Rune Midgarts. Give him my golden earrings.";
+				mes "His name is 'Igor'.. He has gone to the capital of Rune-Midgarts. Give him my golden earrings.";
 				next;
 				mes "[Lusalka]";
 				mes "And please, tell him to stop suffering and to be happy. This is my request.";
@@ -8699,7 +8718,7 @@ OnInit:
 prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 	if (rhea_rus_main < 8) {
 		mes "[A Wanderer from a strange land]";
-		mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+		mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune-Midgarts Kingdom!";
 		next;
 		mes "[A Wanderer from a strange land]";
 		mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
@@ -8707,7 +8726,7 @@ prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 	} else if (rhea_rus_main == 8) {
 		if (rhea_rus_hair < 3) {
 			mes "[A Wanderer from a strange land]";
-			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune-Midgarts Kingdom!";
 			next;
 			mes "[A Wanderer from a strange land]";
 			mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
@@ -8719,7 +8738,7 @@ prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 				close;
 			}
 			mes "[A Wanderer from a strange land]";
-			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune-Midgarts Kingdom!";
 			next;
 			mes "[A Wanderer from a strange land]";
 			mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
@@ -8798,22 +8817,22 @@ prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 }
 
 //----------------------------------------------------------------------------
-// Morroc Villager (Lusalka's Hair)
+// Morocc Villager (Lusalka's Hair)
 //----------------------------------------------------------------------------
-morocc,165,82,0	script	Morroc Villager#rus25	1_M_02,{
+morocc,165,82,0	script	Morocc Villager#rus25	1_M_02,{
 	if (rhea_rus_main < 8) {
-		mes "[Morroc Villager]";
+		mes "[Morocc Villager]";
 		mes "Huh, more and more adventurers are settling here recently, so it's hard to tell who is a villager or an adventurer.";
 		next;
-		mes "[Morroc Villager]";
+		mes "[Morocc Villager]";
 		mes "But natives, like me, can tell the difference.";
 		close;
 	} else if (rhea_rus_main == 8) {
 		if (rhea_rus_hair < 4) {
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Huh, more and more adventurers are settling here recently, so it's hard to tell who is a villager or an adventurer.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "But natives, like me, can tell the difference.";
 			close;
 		} else if (rhea_rus_hair == 4) {
@@ -8822,49 +8841,49 @@ morocc,165,82,0	script	Morroc Villager#rus25	1_M_02,{
 				mes "...Hmm, did I forget to wear something...?";
 				close;
 			}
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Huh, more and more adventurers are settling here recently, so it's hard to tell who is a villager or an adventurer.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "But natives, like me, can tell the difference.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "As I was saying, I like this village. The desert is hot and Kafra staff is even hotter!!! *hack* *cough*!!";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Ah, but don't get me wrong! I'm not coughing because of the Kafra Staffers. It's uhh the heat, it's getting to me... ya...";
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "................................";
 			mes "The hell you talking about..? I'm looking for someone.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "I see so many adventurers around here, how can I remember everybody? Got any descriptions of this someone..? Or traits..? anything to help me remember.";
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Hmm... I don't know how he looks like but he is from a land called Moscovia.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Ah, are you talking about a guy that's always sad and dresses funny? I figured his accent wasn't from around here...";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "He was here a coupla days ago but he left to see the Pyramid. I never saw him after that. I said it would be dangerous but he went anyways.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Yep that's gotta be who you're looking for. I can see his gloomy face right now... that poor sad man.";
 			rhea_rus_hair = 5;
 			// changequest 8151,8152;
 			close;
 		} else if (rhea_rus_hair > 4 && rhea_rus_hair < 7) {
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "He was here a coupla days ago but he left to see the Pyramid. I never saw him after that. I said it would be dangerous but he went anyways.";
 			next;
-			mes "[Morroc Villager]";
+			mes "[Morocc Villager]";
 			mes "Yep that's gotta be who you're looking for. I can see his gloomy face right now... that poor sad man.";
 			close;
 		}
 	}
-	mes "[Morroc Villager]";
+	mes "[Morocc Villager]";
 	mes "Many travellers in the village and I feel fun to see them. Even though I am here, I feel like that I travel all around the world?";
 	close;
 }
@@ -9921,7 +9940,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 					mes "I don't understand you. What do you want? Kehehehehe.";
 					close;
 				} else if (.@input > 100) {
-					mes "I said no more then 100 at a time. Kehehehehe.";
+					mes "I said no more than 100 at a time. Kehehehehe.";
 					next;
 				} else break;
 			}
@@ -10012,7 +10031,7 @@ OnTouch_:
 				specialeffect EF_TELEPORTATION2;
 				next;
 				mes "- You cast the spell in a hurry and the cow is surronded by the light and disappears !! -";
-				disablenpc strnpcinfo(0);
+				disablenpc();
 				enablenpc "Cow#rus3"+ .@other_npc[0];
 				next;
 			} else {
@@ -10022,7 +10041,7 @@ OnTouch_:
 				emotion ET_THINK;
 				next;
 				mes "- The cow, seems to gibe at you, looks at you quickly and runs to bushes !! -";
-				disablenpc strnpcinfo(0);
+				disablenpc();
 				if (rand(2))
 					enablenpc "Cow#rus3"+ .@other_npc[0];
 				else
@@ -10034,7 +10053,7 @@ OnTouch_:
 			mes "Akkkk?! Eh!? The s-spell...";
 			next;
 			mes "- You hesitate, the cow, seems to gibe at you, passes by you and runs to bushes !! -";
-			disablenpc strnpcinfo(0);
+			disablenpc();
 			if (rand(2))
 				enablenpc "Cow#rus3"+ .@other_npc[0];
 			else

@@ -250,7 +250,7 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 		mes "[Maroll Battle Recruiter]";
 		mes "May the war god bless you.";
 		close2;
-		getmapxy(.@mapname$,.@x,.@y,UNITTYPE_NPC);
+		getmapxy(.@mapname$,.@x,.@y,BL_NPC);
 		if (.@mapname$ == "prontera")
 			set bat_return,1;
 		else if (.@mapname$ == "moc_ruins")
@@ -389,7 +389,7 @@ bat_room,160,150,3	script	Erundek	109,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Erundek]";

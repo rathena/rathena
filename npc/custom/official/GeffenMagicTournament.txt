@@ -260,7 +260,7 @@ L_Shield:
 				case 3: goto L_Menu; break;
 			}
 			mes .@n$;
-			mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+			mes mesitemlink( .@item, false );
 			mes "Price is "+.@cost+" coins";
 			mes "Do you wish to exchange your coins?";
 			next;
@@ -303,7 +303,7 @@ L_Ring:
 						break;
 				}
 			mes .@n$;
-			mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+			mes mesitemlink( .@item, false );
 			mes "Price is "+.@cost+" coins";
 			mes "Do you wish to exchange your coins?";
 			next;
@@ -345,7 +345,7 @@ L_Armor:
 						break;
 				}
 			mes .@n$;
-			mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+			mes mesitemlink( .@item, false );
 			mes "Price is "+.@cost+" coins";
 			mes "Do you wish to exchange your coins?";
 			next;
@@ -625,7 +625,7 @@ dali,100,147,3	script	Dimensional Device#gefma	PORTAL,{
 			getpartymember(getcharid(1),0);
 			set .@GPPartySize,$@partymembercount;
 			
-			if( !getcharid(1) || getcharid(3) != getpartyleader( getcharid(1),1 ) || .@GPPartySize > 1) {
+			if( !getcharid(1) || is_party_leader() == false || .@GPPartySize > 1) {
 				mes .@n$;
 				mes "This is a solo instance. Please form a solo party before continuing.";
 				end;
@@ -711,7 +711,7 @@ dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
 						erasequest .@i;
 					}
 				}
-				
+		if (checkquest(9315) != -1)
 			changequest 9315,9316;
 	}
 	
@@ -730,14 +730,14 @@ dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
 						erasequest .@i;
 					}
 				}
-				
+		if (checkquest(9315) != -1)
 			changequest 9315,9316;
 	}
 	
 		getpartymember(getcharid(1),0);
 		set .@GPPartySize,$@partymembercount;
 		
-		if( !getcharid(1) || getcharid(3) != getpartyleader( getcharid(1),1 ) || .@GPPartySize > 1) {
+		if( !getcharid(1) || is_party_leader() == false || .@GPPartySize > 1) {
 			mes .@n$;
 			mes "This is a solo instance. Please form a solo party before continuing.";
 			end;
@@ -757,7 +757,7 @@ dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
 				end;
 			}
 			
-		if (getcharid(0) == getpartyleader(.@party_id,2)){
+		if (is_party_leader() == true){
 			mes .@n$; 
 			mes "Did you know? A long time ago there was a Magic Tournament in Geffen.";
 			next;
@@ -853,10 +853,10 @@ OnTouch:
 
 OnInstanceInit:
 OnDisable:
-	disablenpc instance_npcname(strnpcinfo(0));
+	disablenpc();
 	end;
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	end;
 }
 
@@ -913,7 +913,7 @@ OnInstanceInit:
 
 OnInstanceInit:
 OnEnable:
-	enablenpc instance_npcname(strnpcinfo(0));
+	enablenpc();
 	end;
 }
 
@@ -1380,7 +1380,8 @@ OnTouch_:
 		cutin "acamaster_a.bmp", 255;
 		hideonnpc "Geffen Academy Master";
 		'GMT_1QUE = 11;
-		changequest 9294,9295;
+		if (checkquest(9294) != -1)
+			changequest 9294,9295;
 		donpcevent instance_npcname("Geffen Academy Master")+"::OnStart";
 		'charname$ = strcharinfo(0);
 		'sex = Sex;
@@ -1436,7 +1437,7 @@ OnInstanceInit:
 				"Geffen Festivities.";
 				close2;
 				cutin "",255;
-				getitem 6671,20;
+				getitem 6671,'reward[getarraysize('reward[0]) - 1];
 				warp instance_mapname("1@gef"), 120,35;
 				end;
 			case 2:
@@ -1539,7 +1540,8 @@ end;
 OnStart:
 	if ( 'GMT_1QUE != 11 ){
 		attachrid('gmt_account_id);
-		changequest 9283 + 'GMT_1QUE, 9284 +'GMT_1QUE;
+		if (checkquest(9283 + 'GMT_1QUE) != -1)
+			changequest 9283 + 'GMT_1QUE, 9284 +'GMT_1QUE;
 		detachrid;
 	}
 
@@ -1690,7 +1692,7 @@ OnStart:
 			sleep 3000;
 			npctalk "The darling of this year's tournament!";
 			sleep 3000;
-			npctalk "Rune-Midgard newest star, "+'charname$+"!";
+			npctalk "Rune-Midgarts newest star, "+'charname$+"!";
 			sleep 2000;
 			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
 			sleep 2000;
@@ -1702,7 +1704,7 @@ OnStart:
 			sleep 1000;
 			npctalk "Slow as a turtle, fast as a hare!";
 			sleep 3000;
-			npctalk "The maniac of Rune Midgard! Ifodes!";
+			npctalk "The maniac of Rune-Midgarts! Ifodes!";
 			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
 			end;
 		case 19:
@@ -1740,7 +1742,7 @@ OnStart:
 			sleep 1000;
 			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
 			sleep 1000;
-			npctalk "Seductress of Rune Midgard...";
+			npctalk "Seductress of Rune-Midgarts...";
 			sleep 500;
 			donpcevent instance_npcname("Odoric#1")+"::OnActivate";
 			sleep 500;
@@ -1822,7 +1824,7 @@ OnStart:
 			sleep 1000;
 			npctalk "Oh! This match is going to be exciting!",instance_npcname("Chaos#a2");
 			sleep 2000;
-			npctalk "Is there any Wizard stronger in all of Rune-Midgard?!";
+			npctalk "Is there any Wizard stronger in all of Rune-Midgarts?!";
 			sleep 3000;
 			npctalk "The Blue Wizard! Fenris Fenrir~!!";
 			end;
@@ -1942,74 +1944,76 @@ OnStart:
 	switch ('GMT_1QUE) {
 		case 11:
 			hideonnpc instance_npcname("Arhi#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2549,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2549,1,.@label$);
 			break;
 		case 12:
 			hideonnpc instance_npcname("Dio Anemos#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2550,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2550,1,.@label$);
 			break;
 		case 13:
 			if ('GMTQuest == 1) {
 				hideonnpc instance_npcname("Geffen Gangster#n1");
-				'BossID = monster(.@map$,114,50,"--ja--",2553,1,.@label$);
+				monster(.@map$,114,50,"--ja--",2553,1,.@label$);
 			} else if ('GMTQuest == 2) {
 				hideonnpc instance_npcname("Geffen Bully#n1");
-				'BossID = monster(.@map$,114,50,"--ja--",2552,1,.@label$);
+				monster(.@map$,114,50,"--ja--",2552,1,.@label$);
 			} else {
 				hideonnpc instance_npcname("Geffen Shoplifter#n1");
-				'BossID = monster(.@map$,114,50,"--ja--",2551,1,.@label$);
+				monster(.@map$,114,50,"--ja--",2551,1,.@label$);
 			}
 			break;
 		case 14:
 			hideonnpc instance_npcname("Faymont#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2554,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2554,1,.@label$);
 			break;
 		case 15:
 			hideonnpc instance_npcname("Ordre#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2555,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2555,1,.@label$);
 			break;
 		case 16:
 			hideonnpc instance_npcname("Blut Hase#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2556,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2556,1,.@label$);
 			break;
 		case 17:
 			hideonnpc instance_npcname("Kuro Akuma#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2557,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2557,1,.@label$);
 			break;
 		case 18:
 			hideonnpc instance_npcname("Ifodes#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2558,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2558,1,.@label$);
 			break;
 		case 19:
 			hideonnpc instance_npcname("Licheniyes#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2559,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2559,1,.@label$);
 			break;
 		case 20:
 			hideonnpc instance_npcname("Odoric#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2560,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2560,1,.@label$);
 			break;
 		case 21:
 			hideonnpc instance_npcname("Ju#1");
-			'BossID = monster(.@map$,114,50,"--ja--",2561,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2561,1,.@label$);
 			break;
 		case 22:
 			if ('half) {
 				hideonnpc instance_npcname("Dwigh#1");
-				'BossID = monster(.@map$,114,50,"--ja--",2562,1,.@label$);
+				monster(.@map$,114,50,"--ja--",2562,1,.@label$);
 			}
 			else {
 				hideonnpc instance_npcname("Fay Kanavian#1");
-				'BossID = monster(.@map$,114,50,"--ja--",2563,1,.@label$);
+				monster(.@map$,114,50,"--ja--",2563,1,.@label$);
 				donpcevent instance_npcname("#GMTHomun")+"::OnSummon";
 			}
 			
 			break;
 		case 23:
 			hideonnpc instance_npcname("Fenrir#f");
-			'BossID = monster(.@map$,114,50,"--ja--",2564,1,.@label$);
+			monster(.@map$,114,50,"--ja--",2564,1,.@label$);
+			'BossID = $@mobid[0];
 			donpcevent instance_npcname("Geffen Academy Master")+"::OnTalk3";
 			end;
 	}
+	'BossID = $@mobid[0];
 		
 	donpcevent instance_npcname("Geffen Academy Master")+"::OnTalk1";
 	end;
@@ -2087,7 +2091,8 @@ OnTimeout2:
 	mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: Time's up! The judges will decide the victor for this round!",bc_blue;	
 	
 	setcell instance_mapname("1@ge_st"), 50, 50, 50, 50, cell_walkable, 1;
-	unitwarp 'BossID, instance_mapname("1@ge_st"), 50, 50;
+	if (unitexists('BossID))
+		unitwarp 'BossID, instance_mapname("1@ge_st"), 50, 50;
 	killmonster instance_mapname("1@ge_st"), instance_npcname("#GMTcontroller")+"::OnTimeout";
 	'BossID = 0;
 	
@@ -2229,7 +2234,8 @@ end;
 
 OnSummon:
 	initnpctimer;
-	'HomID = monster (instance_mapname("1@ge_st"), 114,50,"--ja--",2565,1, instance_npcname("#GMTHomun")+"::OnHomDead");
+	monster (instance_mapname("1@ge_st"), 114,50,"--ja--",2565,1, instance_npcname("#GMTHomun")+"::OnHomDead");
+	'HomID = $@mobid[0];
 	end;
 
 OnTimer10000:
@@ -2241,20 +2247,23 @@ OnTimer10000:
 	
 	initnpctimer;
 	
-	if ('HomID != 0) {
+	if (unitexists('HomID) && unitexists('BossID)) {
 		getunitdata 'BossID,.@bossdata;
 		getunitdata 'HomID,.@homdata;
 			if (distance(.@bossdata[6],.@bossdata[7],.@homdata[6],.@homdata[7]) > 10) {
 				unittalk 'BossID,"Alphonse, come!";
 				sleep 500;
-				unitwarp 'HomID, instance_mapname("1@ge_st"),.@bossdata[6],.@bossdata[7];
+				if (unitexists('HomID))
+					unitwarp 'HomID, instance_mapname("1@ge_st"),.@bossdata[6],.@bossdata[7];
 			}
 	}
 	else {
 		if (mobcount(instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomJR")) { end; }
-		getunitdata 'BossID,.@bossdata;
-		unittalk 'BossID, "Alphonse, I'll revive you!";
-		areamonster instance_mapname("1@ge_st"),.@bossdata[6]-2,.@bossdata[7]-2,.@bossdata[6]+2,.@bossdata[7]+2,"--ja--",2566,3,instance_npcname("#GMTHomun")+"::OnHomJR";
+		if (unitexists('BossID)) {
+			getunitdata 'BossID,.@bossdata;
+			unittalk 'BossID, "Alphonse, I'll revive you!";
+			areamonster instance_mapname("1@ge_st"),.@bossdata[6]-2,.@bossdata[7]-2,.@bossdata[6]+2,.@bossdata[7]+2,"--ja--",2566,3,instance_npcname("#GMTHomun")+"::OnHomJR";
+		}
 	}
 	end;
 
@@ -2529,7 +2538,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Yahoo!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -2586,7 +2595,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Time to get ready for my next match.";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -2641,7 +2650,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Hu hu hu hu hu...";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 }
 
@@ -2693,7 +2702,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Never show your face in Geffen again!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -2748,7 +2757,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "You should go home~ Bye~!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 }
 
@@ -2805,7 +2814,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "No matter, I'll just prepare for the next match.";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 }
 
@@ -2864,7 +2873,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I'm ready for the next match!!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 }
 
@@ -2924,7 +2933,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Ha ha ha ha ha~!!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 }
 
@@ -2978,7 +2987,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Now, I shall prepare for my next match~!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3031,7 +3040,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "Wahahaha~!!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3087,7 +3096,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I'm so giddy to find out who I'm up against next!~";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3144,7 +3153,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I need to get ready for my next match now~";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3200,7 +3209,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "The real game is battle!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3268,7 +3277,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I have just one more match to win!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3335,7 +3344,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I will defeat her and win this tournament!";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }
@@ -3417,7 +3426,8 @@ OnTalk2:
     npctalk "However, next time, I won't lose!";
     sleep2 2000;
     cutin "", 255;
-    changequest 9307,9308;
+	if (checkquest(9307) != -1)
+		changequest 9307,9308;
     warp instance_mapname("1@ge_st"), 109,50;
 	donpcevent instance_npcname("#win")+"::OnEnable";
 	movenpc instance_npcname("#gefmagic_warp02"),120,213;
@@ -3434,7 +3444,7 @@ OnVictory:
 	sleep 3000;
 	npctalk "I have to go... My friends are waiting for me.";
 	sleep 5000;
-	instance_warpall instance_mapname("1@gef"),120,61;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
 	end;
 	
 }

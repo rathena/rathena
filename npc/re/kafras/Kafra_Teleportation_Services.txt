@@ -1,0 +1,341 @@
+//===== rAthena Script ======================================= 
+//= Kafra Teleportation Services
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [JohnnyPlayy]
+//===== Description: ========================================= 
+// Texts from this script were translated according to KRO
+//============================================================
+
+function	script	F_KafTeleDoram	{
+	.@menu_choice = getarg(0);
+
+	cutin "kafra_do01", 2;
+	mes "[Kafra Employee]";
+	mes "Welcome.";
+	mes "The Kafra services are always on your side.";
+	mes "Please choose your destination.";
+	next;
+	switch(.@menu_choice) {
+	case 1: // Alberta
+		switch( select( "Southeast Field of Payon", "Sunken Ship", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "Southeast Field of Payon", 250,13 );
+			warp "pay_fild06",199,152;
+			end;
+		case 2:
+			callsub( S_Zone, "Sunken Ship", 50,3 );
+			warp "alb2trea",55,63;
+			end;
+		case 3:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	case 2: // Aldebaran
+		switch( select( "Aldebaran Border", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "Aldebaran Border", 50,3 );
+			warp "yuno_fild01",194,150;
+			end;
+		case 2:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	case 3: // Einbroch
+		switch( select( "West Field of the Abyss Valley", "North Field of Lighthalzen", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "West Field of the Abyss Valley", 600,30 );
+			warp "ein_fild06",199,152;
+			end;
+		case 2:
+			callsub( S_Zone, "North Field of Lighthalzen", 1400,70 );
+			warp "lhz_fild01",244,130;
+			end;
+		case 3:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	case 4: // Geffen
+		switch( select( "Geffen Tower Underground Entrance", "North Field of Mount Mjolnir", "Orc Village", "Glast Heim Entrance", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "Geffen Tower Underground Entrance", 300,15 );
+			warp "gef_tower",153,46;
+			end;
+		case 2:
+			callsub( S_Zone, "North Field of Mount Mjolnir", 150,8 );
+			warp "mjolnir_02",172,195;
+			end;
+		case 3:
+			callsub( S_Zone, "Orc Village", 100,5 );
+			warp "gef_fild10",150,301;
+			end;
+		case 4:
+			callsub( S_Zone, "Glast Heim Entrance", 6666,444 );
+			warp "gef_fild06",34,270;
+			end;
+		case 5:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	case 5: // Lighthalzen
+		switch( select( "North Field of Lighthalzen", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "North Field of Lighthalzen", 200,10 );
+			warp "lhz_fild01",244,130;
+			end;
+		case 2:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	case 6: // Morocc
+		switch( select( "Morocc Ruins Pyramid", "Sograt Desert Sphinx", "Southeast Morocc Field", "Comodo Beaches", "Kingdom of the Dead", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "Morocc Ruins Pyramid", 50,3 );
+			warp "moc_ruins",100,140;
+			end;
+		case 2:
+			callsub( S_Zone, "Sograt Desert Sphinx", 50,3 );
+			warp "moc_fild19",132,100;
+			end;
+		case 3:
+			callsub( S_Zone, "Southeast Morocc Field", 100,5 );
+			warp "moc_fild11",267,100;
+			end;
+		case 4:
+			callsub( S_Zone, "Comodo Beaches", 250,13 );
+			warp "cmd_fild02",89,83;
+			end;
+		case 5:
+			callsub( S_Zone, "Kingdom of the Dead", 12121,666 );
+			warp "niflheim",220,141;
+			end;
+		case 6:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	case 7: // Payon
+		switch( select( "Archer's Village", "Southeast Payon Field", "Prontera South Field", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "Archer's Village", 50,3 );
+			warp "pay_arche",69,130;
+			end;
+		case 2:
+			callsub( S_Zone, "Southeast Payon Field", 100,5 );
+			warp "pay_fild10",203,331;
+			end;
+		case 3:
+			callsub( S_Zone, "Prontera South Field", 150,8 );
+			warp "moc_fild02",109,144;
+			end;
+		case 4:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	case 8: // Prontera
+		switch( select( "Southwestern Prontera Field", "Prontera North Field", "Byalan Island", "Prontera South Field", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "Southwestern Prontera Field", 100,5 );
+			warp "prt_fild07",250,257;
+			end;
+		case 2:
+			callsub( S_Zone, "Prontera North Field", 150,8 );
+			warp "prt_fild01",194,123;
+			end;
+		case 3:
+			callsub( S_Zone, "Byalan Island", 150,8 );
+			warp "izlu2dun",63,129;
+			end;
+		case 4:
+			callsub( S_Zone, "Prontera South Field", 150,8 );
+			warp "moc_fild02",109,144;
+			end;
+		case 5:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	case 9: // Rachel
+		switch( select( "Southern Ice Cave Field", "Thor Volcano East Field", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "Southern Ice Cave Field", 600,30 );
+			warp "ra_fild04",214,220;
+			end;
+		case 2:
+			callsub( S_Zone, "Thor Volcano East Field", 600,30 );
+			warp "ve_fild04",198,174;
+			end;
+		case 3:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	case 10: // Veins
+		switch( select( "Thor Volcano East Field", "South Veins Field", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "Thor Volcano East Field", 400,20 );
+			warp "ra_fild04",198,174;
+			end;
+		case 2:
+			callsub( S_Zone, "South Veins Field", 200,10 );
+			warp "ve_fild07",85,255;
+			end;
+		case 3:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	case 11: // Yuno
+		switch( select( "West Field of the Abyss Valley", "Phantasmagorika Excavation of the Abyss Valley", "Magma Dungeon Juno Plateau", "West Field of Abyss Lake", "Cancel.") ) {
+		case 1:
+			callsub( S_Zone, "West Field of the Abyss Valley", 400,20 );
+			warp "ein_fild06",199,152;
+			end;
+		case 2:
+			callsub( S_Zone, "Phantasmagorika Excavation of the Abyss Valley", 400,20 );
+			warp "yuno_fild07",225,145;
+			end;
+		case 3:
+			callsub( S_Zone, "Magma Dungeon Juno Plateau", 400,20 );
+			warp "yuno_fild03",201,152;
+			end;
+		case 4:
+			callsub( S_Zone, "West Field of Abyss Lake", 800,40 );
+			warp "hu_fild04",186,78;
+			end;
+		case 5:
+			callfunc( "F_KafEnd",0,0 );
+		}
+	}
+
+S_Zone:
+	.@zeny_req = getarg(1);
+	.@item_req = getarg(2);
+
+	mes "[Kafra Employee]";
+	mes getarg(0) + " is available for ^ff0000" + .@zeny_req + " Zenys^000000 or ^ff0000" + .@item_req + " Malang Sp Can^000000.";
+	next;
+	switch( select( .@zeny_req + " Zeny", .@item_req + " Malang Sp Can", "Cancel" ) ) {
+	case 1:
+		if (Zeny < .@zeny_req)
+			break;
+		Zeny -= .@zeny_req;
+		return;
+	case 2:
+		if (countitem(12636) < .@item_req)
+			break;
+		delitem 12636,.@item_req; // Malang_Sp_Can
+		return;
+	case 3:
+		mes "[Kafra Employee]";
+		mes "Can you tell me about other areas of service?";
+		close3;
+	}
+	mes "[Kafra Employee]";
+	mes "Sir! You do not have enough value that we are asking for.";
+	mes "Please check back again.";
+	close3;
+}
+
+moc_para01,35,23,3	script	Kafra Teleportation#eden	4_F_DRKAFRA01,{
+	cutin "kafra_do01", 2;
+	mes "[Kafra Employee]";
+	mes "Welcome.";
+	mes "The Kafra services are always on your side.";
+	next;
+	mes "[Kafra Employee]";
+	mes "To reward adventurer support, the Kafra Corporation in cooperation with the Eden Group provides free services for ^ff0000Beginner Adventurers Below Level 39^000000.";
+	next;
+	if (BaseLevel > 40) {
+		mes "[Kafra Employee]";
+		mes "We do not offer free teleportation services for adventurers ^ff0000above level 40^000000.";
+		mes "Search for Kafra Teleportation services in the city.";
+		close3;
+	}
+	mes "[Kafra Employee]";
+	mes "Please choose your destination.";
+	next;
+	switch( select( "Prontera West Field", "Prontera Southwestern Field", "Prontera Lake Field", "Payon Dungeon Entrance", "Southwest Izlude Field", "Cancel.") ) {
+	case 1:
+		mes "[Kafra Employee]";
+		mes "Prontera Field :";
+		mes "The Prontera West Field is a mountainous field that you can also access the ^ff0000Prontera Sewer^000000.";
+		mes "^ff0000Hornets^000000 live there, so novice adventurers should beware!";
+		next;
+		callsub( S_Zone );
+		warp "prt_fild05",276,241;
+		end;
+	case 2:
+		mes "[Kafra Employee]";
+		mes "Prontera Field :";
+		mes "Southwestern Prontera Field is a place where ^ff0000Rockers^000000 live.";
+		next;
+		callsub( S_Zone );
+		warp "prt_fild07",250,257;
+		end;
+	case 3:
+		mes "[Kafra Employee]";
+		mes "Prontera Field :";
+		mes "Prontera Lake Field is a place where the ^ff0000Ambernites^000000 live.";
+		next;
+		callsub( S_Zone );
+		warp "prt_fild04",204,109;
+		end;
+	case 4:
+		mes "[Kafra Employee]";
+		mes "Archer's Village :";
+		mes "Payon's Cave is a scary place with lots of ^ff0000Zombies^000000 and ^ff0000Skeletons^000000.";
+		next;
+		callsub( S_Zone );
+		warp "pay_arche",69,130;
+		end;
+	case 5:
+		mes "[Kafra Employee]";
+		mes "Sograt Desert :";
+		mes "Southwest of Prontera and Southwest of Izlude, this place is full of ^ff0000Mukas^000000 and ^ff0000Peco Pecos^000000.";
+		next;
+		callsub( S_Zone );
+		warp "moc_fild01",232,250;
+		end;
+	case 6:
+		callfunc( "F_KafEnd",0,0 );
+	}
+S_Zone:
+	switch( select( "I wish to go.", "I want to stay." ) ) {
+	case 1:
+		return;
+	case 2:
+		mes "[Kafra Employee]";
+		mes "Want to check out our other services?";
+		close3;
+	}	
+}
+
+alberta,33,239,5	script	Kafra Teleportation#alberta	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",1;
+}
+
+aldebaran,136,122,5	script	Kafra Teleportation#aldebaran	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",2;
+}
+
+einbroch,246,205,5	script	Kafra Teleportation#einbroch	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",3;
+}
+
+geffen,115,66,5	script	Kafra Teleportation#geffen	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",4;
+}
+
+lighthalzen,167,103,5	script	Kafra Teleportation#lighthalzen	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",5;
+}
+
+morocc,155,257,6	script	Kafra Teleportation#morocc	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",6;
+}
+
+payon,176,104,5	script	Kafra Teleportation#payon	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",7;
+}
+
+prontera,143,87,5	script	Kafra Teleportation#prontera	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",8;
+}
+
+rachel,116,139,5	script	Kafra Teleportation#rachel	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",9;
+}
+
+veins,196,133,5	script	Kafra Teleportation#veins	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",10;
+}
+
+yuno,143,184,5	script	Kafra Teleportation#yuno	4_F_DRKAFRA01,{
+	callfunc "F_KafTeleDoram",11;
+}

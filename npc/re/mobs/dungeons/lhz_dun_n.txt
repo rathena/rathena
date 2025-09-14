@@ -1,0 +1,107 @@
+//===== rAthena Script =======================================
+//= Nightmare Biolabs
+//===== Description: =========================================
+//= Nightmare Biolabs Monster Spawn Script.
+//===== Additional Comments: =================================
+//= 1.0 First version. Boss and slaves spawn are assumptions
+//		based on lhz_dun.txt monsters spawn. [Capuche]
+//= 1.1 Changed MvP spawn based on the amount of
+//		monsters killed. [Capuche]
+//============================================================
+
+lhz_dun_n,0,0	monster	Eremes Guille	3208,20,5000,0,"lhz_dun_n::OnRegularDead3208"
+lhz_dun_n,0,0	monster	Magaleta Sorin	3209,10,5000,0,"lhz_dun_n::OnRegularDead3209"
+lhz_dun_n,0,0	monster	Catherine Cheiron	3210,15,5000,0,"lhz_dun_n::OnRegularDead3210"
+lhz_dun_n,0,0	monster	Shecil Damon	3211,20,5000,0,"lhz_dun_n::OnRegularDead3211"
+lhz_dun_n,0,0	monster	Harword Alt-Eisen	3212,10,5000,0,"lhz_dun_n::OnRegularDead3212"
+lhz_dun_n,0,0	monster	Seyren Windsor	3213,10,5000,0,"lhz_dun_n::OnRegularDead3213"
+
+lhz_dun_n,0,0	monster	Randel Lawrence	3226,10,5000,0,"lhz_dun_n::OnRegularDead3226"
+lhz_dun_n,0,0	monster	Flamel Emule	3227,10,5000,0,"lhz_dun_n::OnRegularDead3227"
+lhz_dun_n,0,0	monster	Celia Alde	3228,15,5000,0,"lhz_dun_n::OnRegularDead3228"
+lhz_dun_n,0,0	monster	Chen Liu	3229,15,5000,0,"lhz_dun_n::OnRegularDead3229"
+lhz_dun_n,0,0	monster	Gertie Wie	3230,15,5000,0,"lhz_dun_n::OnRegularDead3230"
+lhz_dun_n,0,0	monster	Alphoccio Basil	3231,10,5000,0,"lhz_dun_n::OnRegularDead3231"
+lhz_dun_n,0,0	monster	Trentini	3232,10,5000,0,"lhz_dun_n::OnRegularDead3232"
+
+lhz_dun_n,0,0,0	script	lhz_dun_n	-1,{
+	end;
+OnRegularDead3208: callsub( S_Regular, 3208 );
+OnRegularDead3209: callsub( S_Regular, 3209 );
+OnRegularDead3210: callsub( S_Regular, 3210 );
+OnRegularDead3211: callsub( S_Regular, 3211 );
+OnRegularDead3212: callsub( S_Regular, 3212 );
+OnRegularDead3213: callsub( S_Regular, 3213 );
+
+OnRegularDead3226: callsub( S_Regular, 3226 );
+OnRegularDead3227: callsub( S_Regular, 3227 );
+OnRegularDead3228: callsub( S_Regular, 3228 );
+OnRegularDead3229: callsub( S_Regular, 3229 );
+OnRegularDead3230: callsub( S_Regular, 3230 );
+OnRegularDead3231: callsub( S_Regular, 3231 );
+OnRegularDead3232: callsub( S_Regular, 3232 );
+
+S_Regular:
+	.@mob_id = getarg(0);
+	if (.lhz_dun_n[.@mob_id] < 110 && .lhz_dun_n_boss == 0) {
+		.lhz_dun_n[.@mob_id]++;
+		if (.lhz_dun_n[.@mob_id] == 110) {
+			.@mini_boss = .@mob_id + 6 + (.@mob_id > 3219);	// mini boss version ID: regular ID +6 for non-transcendent, +7 for others
+			monster "lhz_dun_n",0,0,"--en--",.@mini_boss,1, "lhz_dun_n::OnMiniDead" + .@mini_boss;
+		}
+	}
+	end;
+
+OnMiniDead3214: callsub( S_Mini, 3214 );
+OnMiniDead3215: callsub( S_Mini, 3215 );
+OnMiniDead3216: callsub( S_Mini, 3216 );
+OnMiniDead3217: callsub( S_Mini, 3217 );
+OnMiniDead3218: callsub( S_Mini, 3218 );
+OnMiniDead3219: callsub( S_Mini, 3219 );
+
+OnMiniDead3233: callsub( S_Mini, 3233 );
+OnMiniDead3234: callsub( S_Mini, 3234 );
+OnMiniDead3235: callsub( S_Mini, 3235 );
+OnMiniDead3236: callsub( S_Mini, 3236 );
+OnMiniDead3237: callsub( S_Mini, 3237 );
+OnMiniDead3238: callsub( S_Mini, 3238 );
+OnMiniDead3239: callsub( S_Mini, 3239 );
+
+S_Mini:
+	.@mob_id = getarg(0);
+	if (.lhz_dun_n[.@mob_id] < 4 && .lhz_dun_n_boss == 0) {
+		.lhz_dun_n[.@mob_id]++;
+		.@regular = .@mob_id - 6 - (.@mob_id > 3219);
+		if (.lhz_dun_n[.@mob_id] < 4)
+			.lhz_dun_n[.@regular] = 0;	// note: mini boss version can re-spawn when the count of mini boss dead is reached? (currently they don't)
+		else {
+			setarray .@mini_boss_list[0], 3214,3215,3216,3217,3218,3219,3233,3234,3235,3236,3237,3238,3239;
+			for ( .@i = 0; .@i < 13; ++.@i ) {	
+				if (.lhz_dun_n[.@mini_boss_list[.@i]] < 4)
+					end;
+			}
+			// MvP monster seems to only spawn at 12 o'clock
+			monster "lhz_dun_n",140,230,"--en--", F_Rand(3220,3221,3222,3223,3224,3225,3240,3241,3242,3243,3244,3245,3246),1, "lhz_dun_n::OnMyMVPDead";
+			mapannounce "lhz_dun_n", "Voice of Reaper: It's been a while.", bc_map;	// unknown message
+			.lhz_dun_n_boss = 1;
+			deletearray .lhz_dun_n;
+		}
+	}
+	end;
+OnMyMVPDead:
+	initnpctimer;
+	.lhz_dun_n_delay = 0;
+	killmonster "lhz_dun_n", "lhz_dun_n::OnMyMVPDead";
+	mapannounce "lhz_dun_n", "Voice of Reaper: See you soon.", bc_map, "0x00FF00";
+	end;
+OnTimer60000:
+	.lhz_dun_n_delay++;
+	if (.lhz_dun_n_delay < 100) // unknown delay (currently 100 mins)
+		initnpctimer;
+	else {
+		stopnpctimer;
+		.lhz_dun_n_delay = 0;
+		.lhz_dun_n_boss = 0;
+	}
+	end;
+}

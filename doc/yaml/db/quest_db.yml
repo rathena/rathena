@@ -1,0 +1,29 @@
+###########################################################################
+# Quest Database
+###########################################################################
+#
+# Quest Settings
+#
+###########################################################################
+# - Id                     Quest ID.
+#   Title                  Quest title.
+#   TimeLimit              Amount of time before the quest expires. (Default: 0)
+#   Targets:               Quest objective target. (Default: null)
+#     - Mob                Name of monster to kill.
+#       Count              Amount of monsters to kill. Set to 0 to skip the target on import.
+#       Id                 Unique target index for the quest Id. Requires a positive number.
+#       Race               Monster race target. (Default: All)
+#       Size               Monster size target. (Default: All)
+#       Element            Monster element target. (Default: All)
+#       MinLevel           Minimum monster level target. If not supplied but MaxLevel defined, MinLevel is 1. Set to 0 to ignore MinLevel on import. (Default: 0)
+#       MaxLevel           Maximum monster level target. Set to 0 to ignore MaxLevel on import. (Default: 0)
+#       Location           Map name where kills are counted. (Default: All)
+#       MapName            Displayed map name in quest UI. (Default: empty string)
+#       MapMobTargets      List of monster names. Only names in the list will increase the kill counter. Only active when Id is used. (Default: all monsters)
+#         <name>: <bool>   Monster name and whether the monster is added or removed from the list.
+#   Drops:                 Quest item drop targets. (Default: null)
+#     - Mob                Monster to kill. 0 will apply to all monsters. (Default: 0)
+#       Item               Item to drop.
+#       Count              Amount of items that will drop. Non-stackable items default to 1. (Default: 1)
+#       Rate               Item drop rate. (10000 = 100%)
+###########################################################################

@@ -1,0 +1,94 @@
+//===== rAthena Script ======================================= 
+//= Zonda Teleportation Services
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [JohnnyPlayy]
+//===== Description: ========================================= 
+// Texts from this script were translated according to KRO
+//============================================================
+
+-	script	ZondaTeleportationServices	HIDDEN_NPC,{
+	cutin "zonda_do01", 2;
+	mes "[Zonda Employee]";
+	mes "Welcome.";
+	mes "Our team is always working to exceed your expectations regarding quality of service.";
+	mes "Please choose your destination.";
+	next;
+	switch( select( "North Bifrost", "Eclage", "Splendide", "Midgard Expedition Camp", "Manuk", "Outskirts of Kamidal Mountain", "Cancel.") ) {
+	case 1:
+		callsub( S_Zone, "North Bifrost", 17000,850, 7213 ); // Teleport value not confirmed
+		warp "bif_fild02",160,230; // Unverified Coordinates
+		end;
+	case 2:
+		callsub( S_Zone, "Eclage", 17000,850, 11311 );
+		warp "eclage",111,39;
+		end;
+	case 3:
+		callsub( S_Zone, "Splendide", 17000,850, 10078 );
+		warp "splendide",171,115;
+		end;
+	case 4:
+		callsub( S_Zone, "Midgard Expedition Camp", 19000,950, 10078 );
+		warp "mid_camp",210,288;
+		end;
+	case 5:
+		callsub( S_Zone, "Manuk", 22000,1100, 10078 );
+		warp "manuk",263,177;
+		end;
+	case 6:
+		callsub( S_Zone, "Outskirts of Kamidal Mountain", 24000,1200, 7184 );
+		warp "dic_fild01",188,187;
+		end;
+	case 7:
+		mes "[Zonda Employee]";
+		mes "We are always striving to ensure the best services for our customers.";
+		mes "Thank you for using our services.";
+		close3;
+	}
+
+S_Zone:
+	.@zeny_req = getarg(1);
+	.@item_req = getarg(2);
+	.@quest_req = getarg(3);
+	
+	if (isbegin_quest(.@quest_req) == 0) {
+		mes "[Zonda Employee]";
+		//mes getarg(0);
+		mes "You must complete the access mission to teleport to " + getarg(0) + " before using our Teleportation services.";
+		close3;
+	}
+	mes "[Zonda Employee]";
+	mes getarg(0) + " is available for ^ff0000" + .@zeny_req + " Zenys^000000 or ^ff0000" + .@item_req + " Malang Sp Can^000000.";
+	next;
+	switch( select( .@zeny_req + " Zeny", .@item_req + " Malang Sp Can", "Cancel" ) ) {
+	case 1:
+		if (Zeny < .@zeny_req)
+			break;
+		Zeny -= .@zeny_req;
+		return;
+	case 2:
+		if (countitem(12636) < .@item_req)
+			break;
+		delitem 12636,.@item_req; // Malang_Sp_Can
+		return;
+	case 3:
+		mes "[Zonda Employee]";
+		mes "Can you tell me about other areas of service?";
+		close3;
+	}
+	mes "[Zonda Employee]";
+	mes "Sir! You do not have enough value that we are asking for.";
+	mes "Please check back again.";
+	close3;
+}
+
+alberta,35,239,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#alberta	4_M_DRZONDA01
+aldebaran,138,122,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#aldebaran	4_M_DRZONDA01
+einbroch,248,205,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#einbroch	4_M_DRZONDA01
+geffen,117,66,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#geffen	4_M_DRZONDA01
+lighthalzen,169,103,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#lighthalzen	4_M_DRZONDA01
+morocc,157,257,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#morocc	4_M_DRZONDA01
+payon,178,104,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#payon	4_M_DRZONDA01
+prontera,145,87,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#prontera	4_M_DRZONDA01
+rachel,118,139,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#rachel	4_M_DRZONDA01
+veins,198,133,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#veins	4_M_DRZONDA01
+yuno,145,184,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#yuno	4_M_DRZONDA01

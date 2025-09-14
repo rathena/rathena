@@ -1,0 +1,1438 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2021 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Mercenary Database
+###########################################################################
+#
+# Mercenary Settings
+#
+###########################################################################
+# - Id                      Mercenary ID.
+#   AegisName               Server name to reference the mercenary in scripts and lookups, should use no spaces.
+#   Name                    Name in English.
+#   Level                   Level. (Default: 1)
+#   Hp                      Total HP. (Default: 1)
+#   Sp                      Total SP. (Default: 1)
+#   Attack                  Minimum attack. (Default: 0)
+#   Attack2                 Maximum attack. (Default: 0)
+#   Defense                 Physical defense of the mercenary, reduces melee and ranged physical attack/skill damage. (Default: 0)
+#   MagicDefense            Magic defense of the mercenary, reduces magical skill damage. (Default: 0)
+#   Str                     Strength which affects attack. (Default: 1)
+#   Agi                     Agility which affects flee. (Default: 1)
+#   Vit                     Vitality which affects defense. (Default: 1)
+#   Int                     Intelligence which affects magic attack. (Default: 1)
+#   Dex                     Dexterity which affects hit rate. (Default: 1)
+#   Luk                     Luck which affects perfect dodge/lucky flee/perfect flee/lucky dodge rate. (Default: 1)
+#   AttackRange             Attack range. (Default: 0)
+#   SkillRange              Skill cast range. (Default: 0)
+#   ChaseRange              Chase range. (Default: 0)
+#   Size                    Size. (Default: Small)
+#   Race                    Race. (Default: Formless)
+#   Element                 Element. (Default: Neutral)
+#   ElementLevel            Level of element. (Default: 1)
+#   WalkSpeed               Walk speed. (Default: DEFAULT_WALK_SPEED)
+#   AttackDelay             Attack speed. (Default: 4000)
+#   AttackMotion            Attack animation speed. (Default: 2000)
+#   DamageMotion            Damage animation speed. (Default: 0)
+#   Skills:                 List of mercenary skills. (Optional)
+#     - Name                Skill name.
+#       MaxLevel            Max skill level.
+###########################################################################
+
+Header:
+  Type: MERCENARY_DB
+  Version: 1
+
+Body:
+  - Id: 1191
+    AegisName: MIMIC
+    Name: Mimic
+    Level: 51
+    Hp: 6120
+    Sp: 187
+    Attack: 150
+    Attack2: 900
+    Defense: 10
+    MagicDefense: 40
+    Str: 44
+    Agi: 121
+    Int: 60
+    Dex: 75
+    Luk: 110
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 972
+    AttackMotion: 500
+    DamageMotion: 288
+    Skills:
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+      - Name: ML_AUTOGUARD
+        MaxLevel: 5
+      - Name: MS_BASH
+        MaxLevel: 5
+  - Id: 1506
+    AegisName: DISGUISE
+    Name: Disguise
+    Level: 55
+    Hp: 7543
+    Sp: 180
+    Attack: 279
+    Attack2: 546
+    Defense: 18
+    MagicDefense: 29
+    Str: 0
+    Agi: 72
+    Vit: 45
+    Int: 35
+    Dex: 48
+    Luk: 65
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 147
+    AttackDelay: 516
+    AttackMotion: 768
+    DamageMotion: 384
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 2
+      - Name: MER_CRASH
+        MaxLevel: 5
+      - Name: MER_LEXDIVINA
+        MaxLevel: 3
+  - Id: 1275
+    AegisName: ALICE
+    Name: Alice
+    Level: 62
+    Hp: 10000
+    Sp: 221
+    Attack: 550
+    Attack2: 700
+    Defense: 5
+    MagicDefense: 5
+    Str: 64
+    Agi: 64
+    Vit: 42
+    Int: 85
+    Dex: 100
+    Luk: 130
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 502
+    AttackMotion: 2304
+    DamageMotion: 480
+    Skills:
+      - Name: MER_PROVOKE
+        MaxLevel: 5
+      - Name: MS_MAGNUM
+        MaxLevel: 5
+      - Name: ML_BRANDISH
+        MaxLevel: 5
+      - Name: MER_REGAIN
+        MaxLevel: 1
+  - Id: 1965
+    AegisName: M_WILD_ROSE
+    Name: Wild Rose
+    Level: 38
+    Hp: 2980
+    Sp: 130
+    Attack: 315
+    Attack2: 360
+    MagicDefense: 15
+    Str: 65
+    Agi: 85
+    Vit: 15
+    Int: 35
+    Dex: 65
+    Luk: 80
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Brute
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 964
+    AttackMotion: 864
+    DamageMotion: 288
+    Skills:
+      - Name: MS_BASH
+        MaxLevel: 5
+  - Id: 1966
+    AegisName: M_DOPPELGANGER
+    Name: Doppelganger
+    Level: 72
+    Hp: 7800
+    Sp: 200
+    Attack: 1340
+    Attack2: 1590
+    Defense: 60
+    MagicDefense: 35
+    Str: 88
+    Agi: 90
+    Vit: 30
+    Int: 35
+    Dex: 125
+    Luk: 65
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Dark
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 480
+    AttackMotion: 480
+    DamageMotion: 288
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 5
+      - Name: MS_BASH
+        MaxLevel: 5
+      - Name: ML_DEVOTION
+        MaxLevel: 3
+  - Id: 1967
+    AegisName: M_YGNIZEM
+    Name: Egnigem Cenia
+    Level: 58
+    Hp: 11200
+    Sp: 320
+    Attack: 823
+    Attack2: 1212
+    Defense: 35
+    MagicDefense: 8
+    Str: 60
+    Agi: 35
+    Vit: 52
+    Int: 18
+    Dex: 79
+    Luk: 20
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Fire
+    ElementLevel: 2
+    WalkSpeed: 145
+    AttackDelay: 576
+    AttackMotion: 432
+    DamageMotion: 288
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 5
+      - Name: MS_BASH
+        MaxLevel: 5
+      - Name: ML_DEVOTION
+        MaxLevel: 3
+  - Id: 2000
+    AegisName: M_GAMEMASTER
+    Name: Male Game Master
+    Level: 50
+    Hp: 7000
+    Sp: 250
+    Attack: 100
+    Attack2: 50
+    Defense: 6
+    MagicDefense: 17
+    Agi: 109
+    Int: 60
+    Dex: 215
+    Luk: 111
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_REGAIN
+        MaxLevel: 1
+      - Name: MER_TENDER
+        MaxLevel: 1
+      - Name: MER_KYRIE
+        MaxLevel: 5
+      - Name: MER_BLESSING
+        MaxLevel: 5
+      - Name: MER_INCAGI
+        MaxLevel: 5
+  - Id: 2001
+    AegisName: F_GAMEMASTER
+    Name: Female Game Master
+    Level: 50
+    Hp: 7000
+    Sp: 250
+    Attack: 100
+    Attack2: 50
+    Defense: 6
+    MagicDefense: 17
+    Agi: 109
+    Int: 60
+    Dex: 215
+    Luk: 111
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_REGAIN
+        MaxLevel: 1
+      - Name: MER_TENDER
+        MaxLevel: 1
+      - Name: MER_KYRIE
+        MaxLevel: 5
+      - Name: MER_BLESSING
+        MaxLevel: 5
+      - Name: MER_INCAGI
+        MaxLevel: 5
+  - Id: 2034
+    AegisName: M_DESERT_WOLF_B
+    Name: Baby Desert Wolf
+    Level: 9
+    Hp: 164
+    Sp: 15
+    Attack: 500
+    Attack2: 600
+    Agi: 9
+    Vit: 9
+    Int: 5
+    Dex: 40
+    Luk: 40
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Race: Brute
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 100
+    AttackDelay: 1600
+    AttackMotion: 900
+    DamageMotion: 240
+  - Id: 2037
+    AegisName: VALKYRIE_A
+    Name: Valkyrie Randgris
+    Level: 90
+    Hp: 5000
+    Sp: 15
+    Attack: 10
+    Attack2: 160
+    Defense: 10
+    MagicDefense: 20
+    Agi: 20
+    Vit: 40
+    Int: 0
+    Dex: 20
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+  - Id: 2038
+    AegisName: VALKYRIE_B
+    Name: Valkyrie Randgris
+    Level: 90
+    Hp: 10000
+    Sp: 15
+    Attack: 300
+    Attack2: 450
+    Defense: 10
+    MagicDefense: 40
+    Agi: 20
+    Vit: 80
+    Int: 0
+    Dex: 80
+    Luk: 20
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Angel
+    Element: Holy
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 576
+    AttackMotion: 576
+    DamageMotion: 480
+  - Id: 2058
+    AegisName: M_MIMIC
+    Name: Mimic
+    Level: 51
+    Hp: 6120
+    Sp: 182
+    Attack: 800
+    Attack2: 950
+    Defense: 10
+    MagicDefense: 40
+    Str: 44
+    Agi: 121
+    Int: 60
+    Dex: 75
+    Luk: 110
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 100
+    AttackDelay: 972
+    AttackMotion: 500
+    DamageMotion: 288
+    Skills:
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+      - Name: ML_AUTOGUARD
+        MaxLevel: 5
+      - Name: MS_BASH
+        MaxLevel: 5
+  - Id: 2059
+    AegisName: M_DISGUISE
+    Name: Disguise
+    Level: 55
+    Hp: 7543
+    Sp: 180
+    Attack: 526
+    Attack2: 693
+    Defense: 18
+    MagicDefense: 29
+    Str: 0
+    Agi: 72
+    Vit: 45
+    Int: 35
+    Dex: 48
+    Luk: 65
+    AttackRange: 2
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demon
+    Element: Earth
+    ElementLevel: 4
+    WalkSpeed: 147
+    AttackDelay: 516
+    AttackMotion: 768
+    DamageMotion: 384
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 2
+      - Name: MER_CRASH
+        MaxLevel: 5
+      - Name: MER_LEXDIVINA
+        MaxLevel: 3
+  - Id: 2060
+    AegisName: M_ALICE
+    Name: Alice
+    Level: 62
+    Hp: 10000
+    Sp: 221
+    Attack: 700
+    Attack2: 850
+    Defense: 5
+    MagicDefense: 5
+    Str: 64
+    Agi: 64
+    Vit: 42
+    Int: 85
+    Dex: 100
+    Luk: 130
+    AttackRange: 1
+    SkillRange: 10
+    ChaseRange: 12
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 3
+    WalkSpeed: 200
+    AttackDelay: 502
+    AttackMotion: 1999
+    DamageMotion: 480
+    Skills:
+      - Name: MER_PROVOKE
+        MaxLevel: 5
+      - Name: MS_MAGNUM
+        MaxLevel: 5
+      - Name: ML_BRANDISH
+        MaxLevel: 5
+      - Name: MER_REGAIN
+        MaxLevel: 1
+  - Id: 6017
+    AegisName: MER_ARCHER01
+    Name: Mina
+    Level: 20
+    Hp: 256
+    Sp: 200
+    Attack: 170
+    Attack2: 85
+    Defense: 7
+    MagicDefense: 5
+    Agi: 16
+    Vit: 5
+    Dex: 28
+    Luk: 8
+    AttackRange: 10
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 700
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MA_DOUBLE
+        MaxLevel: 2
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+  - Id: 6018
+    AegisName: MER_ARCHER02
+    Name: Dororu
+    Level: 30
+    Hp: 457
+    Sp: 70
+    Attack: 228
+    Attack2: 114
+    Defense: 11
+    MagicDefense: 7
+    Agi: 18
+    Vit: 8
+    Dex: 40
+    Luk: 11
+    AttackRange: 10
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 700
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MA_SHOWER
+        MaxLevel: 2
+      - Name: MER_SIGHT
+        MaxLevel: 1
+  - Id: 6019
+    AegisName: MER_ARCHER03
+    Name: Nami
+    Level: 40
+    Hp: 732
+    Sp: 93
+    Attack: 260
+    Attack2: 130
+    Defense: 15
+    MagicDefense: 9
+    Str: 3
+    Agi: 21
+    Vit: 12
+    Int: 4
+    Dex: 52
+    Luk: 17
+    AttackRange: 10
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 700
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MA_CHARGEARROW
+        MaxLevel: 1
+      - Name: MER_QUICKEN
+        MaxLevel: 1
+  - Id: 6020
+    AegisName: MER_ARCHER04
+    Name: Elfin
+    Level: 50
+    Hp: 1092
+    Sp: 116
+    Attack: 310
+    Attack2: 155
+    Defense: 18
+    MagicDefense: 11
+    Str: 5
+    Agi: 33
+    Vit: 17
+    Int: 6
+    Dex: 60
+    Luk: 23
+    AttackRange: 10
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 575
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_ESTIMATION
+        MaxLevel: 1
+      - Name: MER_MAGNIFICAT
+        MaxLevel: 1
+      - Name: MER_TENDER
+        MaxLevel: 1
+  - Id: 6021
+    AegisName: MER_ARCHER05
+    Name: Clara
+    Level: 60
+    Hp: 2212
+    Sp: 280
+    Attack: 360
+    Attack2: 180
+    Defense: 20
+    MagicDefense: 13
+    Str: 5
+    Agi: 41
+    Vit: 17
+    Int: 12
+    Dex: 75
+    Luk: 30
+    AttackRange: 10
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 575
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MA_DOUBLE
+        MaxLevel: 5
+      - Name: MER_PROVOKE
+        MaxLevel: 1
+      - Name: MA_REMOVETRAP
+        MaxLevel: 1
+  - Id: 6022
+    AegisName: MER_ARCHER06
+    Name: Dali
+    Level: 70
+    Hp: 3098
+    Sp: 353
+    Attack: 424
+    Attack2: 212
+    Defense: 21
+    MagicDefense: 15
+    Str: 11
+    Agi: 46
+    Vit: 24
+    Int: 22
+    Dex: 83
+    Luk: 37
+    AttackRange: 10
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 575
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MA_DOUBLE
+        MaxLevel: 7
+      - Name: MA_SKIDTRAP
+        MaxLevel: 3
+      - Name: MER_DECAGI
+        MaxLevel: 1
+  - Id: 6023
+    AegisName: MER_ARCHER07
+    Name: Karaya
+    Level: 80
+    Hp: 4051
+    Sp: 415
+    Attack: 468
+    Attack2: 234
+    Defense: 22
+    MagicDefense: 16
+    Str: 14
+    Agi: 55
+    Vit: 27
+    Int: 26
+    Dex: 91
+    Luk: 44
+    AttackRange: 10
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MA_SHOWER
+        MaxLevel: 10
+      - Name: MER_MENTALCURE
+        MaxLevel: 1
+      - Name: MA_FREEZINGTRAP
+        MaxLevel: 2
+  - Id: 6024
+    AegisName: MER_ARCHER08
+    Name: Hiyori
+    Level: 90
+    Hp: 5039
+    Sp: 469
+    Attack: 482
+    Attack2: 241
+    Defense: 24
+    MagicDefense: 18
+    Str: 19
+    Agi: 65
+    Vit: 27
+    Int: 27
+    Dex: 103
+    Luk: 49
+    AttackRange: 10
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 2
+      - Name: MER_PROVOKE
+        MaxLevel: 3
+      - Name: MA_SANDMAN
+        MaxLevel: 3
+  - Id: 6025
+    AegisName: MER_ARCHER09
+    Name: Kero
+    Level: 95
+    Hp: 5572
+    Sp: 499
+    Attack: 500
+    Attack2: 250
+    Defense: 25
+    MagicDefense: 20
+    Str: 20
+    Agi: 71
+    Vit: 27
+    Int: 28
+    Dex: 110
+    Luk: 51
+    AttackRange: 10
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MA_DOUBLE
+        MaxLevel: 10
+      - Name: MA_CHARGEARROW
+        MaxLevel: 1
+      - Name: MA_LANDMINE
+        MaxLevel: 5
+  - Id: 6026
+    AegisName: MER_ARCHER10
+    Name: Sukye
+    Level: 99
+    Hp: 7381
+    Sp: 642
+    Attack: 816
+    Attack2: 308
+    Defense: 49
+    MagicDefense: 49
+    Str: 21
+    Agi: 83
+    Vit: 27
+    Int: 28
+    Dex: 123
+    Luk: 52
+    AttackRange: 10
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MA_CHARGEARROW
+        MaxLevel: 1
+      - Name: MA_SHARPSHOOTING
+        MaxLevel: 5
+      - Name: MER_QUICKEN
+        MaxLevel: 5
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+  - Id: 6027
+    AegisName: MER_LANCER01
+    Name: Rodin
+    Level: 22
+    Hp: 2071
+    Sp: 100
+    Attack: 168
+    Attack2: 84
+    Defense: 30
+    MagicDefense: 1
+    Str: 27
+    Vit: 4
+    Dex: 30
+    Luk: 2
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 700
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: ML_PIERCE
+        MaxLevel: 1
+      - Name: MER_REGAIN
+        MaxLevel: 1
+  - Id: 6028
+    AegisName: MER_LANCER02
+    Name: Lancer
+    Level: 34
+    Hp: 2523
+    Sp: 131
+    Attack: 208
+    Attack2: 104
+    Defense: 33
+    MagicDefense: 1
+    Str: 37
+    Vit: 4
+    Dex: 37
+    Luk: 4
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 700
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: ML_BRANDISH
+        MaxLevel: 2
+      - Name: MER_LEXDIVINA
+        MaxLevel: 1
+  - Id: 6029
+    AegisName: MER_LANCER03
+    Name: Nathan
+    Level: 41
+    Hp: 3397
+    Sp: 161
+    Attack: 248
+    Attack2: 124
+    Defense: 36
+    MagicDefense: 5
+    Str: 45
+    Vit: 22
+    Dex: 40
+    Luk: 6
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 700
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: ML_PIERCE
+        MaxLevel: 2
+      - Name: ML_DEVOTION
+        MaxLevel: 1
+      - Name: MER_RECUPERATE
+        MaxLevel: 1
+  - Id: 6030
+    AegisName: MER_LANCER04
+    Name: Roan
+    Level: 55
+    Hp: 4580
+    Sp: 191
+    Attack: 300
+    Attack2: 150
+    Defense: 39
+    MagicDefense: 5
+    Str: 55
+    Agi: 2
+    Vit: 35
+    Dex: 50
+    Luk: 8
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 575
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: ML_DEFENDER
+        MaxLevel: 1
+      - Name: MER_CRASH
+        MaxLevel: 4
+  - Id: 6031
+    AegisName: MER_LANCER05
+    Name: Orizaro
+    Level: 60
+    Hp: 5899
+    Sp: 221
+    Attack: 350
+    Attack2: 160
+    Defense: 42
+    MagicDefense: 10
+    Str: 65
+    Agi: 2
+    Vit: 39
+    Dex: 60
+    Luk: 10
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 575
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: ML_PIERCE
+        MaxLevel: 5
+      - Name: ML_AUTOGUARD
+        MaxLevel: 3
+  - Id: 6032
+    AegisName: MER_LANCER06
+    Name: Thyla
+    Level: 72
+    Hp: 7874
+    Sp: 252
+    Attack: 370
+    Attack2: 185
+    Defense: 46
+    MagicDefense: 10
+    Str: 75
+    Agi: 3
+    Vit: 15
+    Int: 77
+    Dex: 61
+    Luk: 12
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 575
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 2
+      - Name: ML_BRANDISH
+        MaxLevel: 5
+  - Id: 6033
+    AegisName: MER_LANCER07
+    Name: Ben
+    Level: 81
+    Hp: 10260
+    Sp: 330
+    Attack: 380
+    Attack2: 190
+    Defense: 50
+    MagicDefense: 15
+    Str: 85
+    Agi: 3
+    Vit: 63
+    Int: 20
+    Dex: 61
+    Luk: 14
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: ML_DEVOTION
+        MaxLevel: 1
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+  - Id: 6034
+    AegisName: MER_LANCER08
+    Name: Pinaka
+    Level: 90
+    Hp: 13167
+    Sp: 366
+    Attack: 400
+    Attack2: 200
+    Defense: 55
+    MagicDefense: 20
+    Str: 95
+    Agi: 20
+    Vit: 74
+    Int: 20
+    Dex: 63
+    Luk: 16
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_SCAPEGOAT
+        MaxLevel: 1
+      - Name: ML_PIERCE
+        MaxLevel: 10
+      - Name: MER_PROVOKE
+        MaxLevel: 5
+  - Id: 6035
+    AegisName: MER_LANCER09
+    Name: Kuhlmann
+    Level: 95
+    Hp: 14648
+    Sp: 398
+    Attack: 440
+    Attack2: 220
+    Defense: 60
+    MagicDefense: 25
+    Str: 100
+    Agi: 25
+    Vit: 77
+    Int: 25
+    Dex: 63
+    Luk: 18
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: ML_BRANDISH
+        MaxLevel: 10
+      - Name: ML_AUTOGUARD
+        MaxLevel: 7
+      - Name: ML_DEFENDER
+        MaxLevel: 3
+  - Id: 6036
+    AegisName: MER_LANCER10
+    Name: Roux
+    Level: 99
+    Hp: 18000
+    Sp: 413
+    Attack: 700
+    Attack2: 250
+    Defense: 70
+    MagicDefense: 30
+    Str: 120
+    Agi: 30
+    Vit: 90
+    Int: 30
+    Dex: 70
+    Luk: 30
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 5
+      - Name: ML_AUTOGUARD
+        MaxLevel: 10
+      - Name: ML_DEVOTION
+        MaxLevel: 3
+      - Name: ML_SPIRALPIERCE
+        MaxLevel: 5
+  - Id: 6037
+    AegisName: MER_SWORDMAN01
+    Name: David
+    Level: 20
+    Hp: 502
+    Sp: 70
+    Attack: 174
+    Attack2: 87
+    Defense: 26
+    Str: 21
+    Agi: 27
+    Vit: 5
+    Dex: 30
+    Luk: 3
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 700
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MS_BASH
+        MaxLevel: 1
+      - Name: MER_DECAGI
+        MaxLevel: 1
+  - Id: 6038
+    AegisName: MER_SWORDMAN02
+    Name: Ellen
+    Level: 30
+    Hp: 979
+    Sp: 99
+    Attack: 258
+    Attack2: 129
+    Defense: 31
+    Str: 26
+    Agi: 38
+    Vit: 6
+    Dex: 35
+    Luk: 3
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 700
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_PROVOKE
+        MaxLevel: 5
+      - Name: MS_MAGNUM
+        MaxLevel: 3
+  - Id: 6039
+    AegisName: MER_SWORDMAN03
+    Name: Luise
+    Level: 40
+    Hp: 1555
+    Sp: 134
+    Attack: 326
+    Attack2: 163
+    Defense: 36
+    MagicDefense: 3
+    Str: 31
+    Agi: 45
+    Vit: 7
+    Int: 6
+    Dex: 40
+    Luk: 6
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 700
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 1
+      - Name: MER_BENEDICTION
+        MaxLevel: 1
+  - Id: 6040
+    AegisName: MER_SWORDMAN04
+    Name: Frank
+    Level: 50
+    Hp: 2397
+    Sp: 162
+    Attack: 382
+    Attack2: 191
+    Defense: 39
+    MagicDefense: 5
+    Str: 37
+    Agi: 59
+    Vit: 8
+    Int: 6
+    Dex: 40
+    Luk: 6
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 575
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_CRASH
+        MaxLevel: 1
+      - Name: MS_MAGNUM
+        MaxLevel: 5
+  - Id: 6041
+    AegisName: MER_SWORDMAN05
+    Name: Ryan
+    Level: 60
+    Hp: 3387
+    Sp: 195
+    Attack: 406
+    Attack2: 203
+    Defense: 42
+    MagicDefense: 7
+    Str: 48
+    Agi: 68
+    Vit: 9
+    Int: 6
+    Dex: 45
+    Luk: 9
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 575
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MS_BASH
+        MaxLevel: 5
+      - Name: MER_CRASH
+        MaxLevel: 4
+      - Name: MER_BENEDICTION
+        MaxLevel: 1
+  - Id: 6042
+    AegisName: MER_SWORDMAN06
+    Name: Paolo
+    Level: 70
+    Hp: 4495
+    Sp: 241
+    Attack: 436
+    Attack2: 218
+    Defense: 45
+    MagicDefense: 12
+    Str: 53
+    Agi: 79
+    Vit: 10
+    Int: 12
+    Dex: 50
+    Luk: 9
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 575
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 5
+      - Name: MER_ESTIMATION
+        MaxLevel: 1
+      - Name: MER_DECAGI
+        MaxLevel: 3
+  - Id: 6043
+    AegisName: MER_SWORDMAN07
+    Name: Jens
+    Level: 80
+    Hp: 5889
+    Sp: 279
+    Attack: 468
+    Attack2: 234
+    Defense: 47
+    MagicDefense: 15
+    Str: 59
+    Agi: 88
+    Vit: 11
+    Int: 12
+    Dex: 55
+    Luk: 12
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MS_BASH
+        MaxLevel: 10
+      - Name: MER_AUTOBERSERK
+        MaxLevel: 1
+      - Name: MER_SCAPEGOAT
+        MaxLevel: 1
+  - Id: 6044
+    AegisName: MER_SWORDMAN08
+    Name: Thierry
+    Level: 90
+    Hp: 7520
+    Sp: 325
+    Attack: 500
+    Attack2: 250
+    Defense: 49
+    MagicDefense: 18
+    Str: 70
+    Agi: 95
+    Vit: 12
+    Int: 18
+    Dex: 60
+    Luk: 15
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 10
+      - Name: MS_BOWLINGBASH
+        MaxLevel: 5
+      - Name: MER_COMPRESS
+        MaxLevel: 1
+      - Name: MS_PARRYING
+        MaxLevel: 4
+  - Id: 6045
+    AegisName: MER_SWORDMAN09
+    Name: Steven
+    Level: 95
+    Hp: 9052
+    Sp: 348
+    Attack: 524
+    Attack2: 262
+    Defense: 51
+    MagicDefense: 22
+    Str: 80
+    Agi: 95
+    Vit: 18
+    Int: 18
+    Dex: 60
+    Luk: 15
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MS_BOWLINGBASH
+        MaxLevel: 8
+      - Name: MER_CRASH
+        MaxLevel: 3
+      - Name: MS_REFLECTSHIELD
+        MaxLevel: 5
+  - Id: 6046
+    AegisName: MER_SWORDMAN10
+    Name: Wayne
+    Level: 99
+    Hp: 12355
+    Sp: 451
+    Attack: 760
+    Attack2: 280
+    Defense: 64
+    MagicDefense: 30
+    Str: 99
+    Agi: 105
+    Vit: 30
+    Int: 30
+    Dex: 60
+    Luk: 30
+    AttackRange: 2
+    SkillRange: 10
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 150
+    AttackDelay: 450
+    AttackMotion: 432
+    DamageMotion: 300
+    Skills:
+      - Name: MER_QUICKEN
+        MaxLevel: 10
+      - Name: MS_BOWLINGBASH
+        MaxLevel: 10
+      - Name: MS_BASH
+        MaxLevel: 10
+      - Name: MS_BERSERK
+        MaxLevel: 1
+
+Footer:
+  Imports:
+  - Path: db/pre-re/mercenary_db.yml
+    Mode: Prerenewal
+  - Path: db/re/mercenary_db.yml
+    Mode: Renewal
+  - Path: db/import/mercenary_db.yml

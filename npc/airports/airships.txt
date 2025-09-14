@@ -24,11 +24,11 @@ airplane,243,73,0	script	#AirshipWarp-1	45,1,1,{
 OnInit:
 OnHide:
 	specialeffect EF_BASH;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 
 OnUnhide:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	specialeffect EF_SUMMONSLAVE;
 	end;
 
@@ -339,7 +339,7 @@ airplane,80,71,2	script	Zerta#01airplane	834,{
 	mes "I am currently on a";
 	mes "sacred journey, offering";
 	mes "prayer for the sake of the";
-	mes "Rune-Midgard continent.";
+	mes "Midgard continent.";
 	close;
 }
 
@@ -670,11 +670,11 @@ OnTouch_:
 OnInit:
 OnHide:
 	specialeffect EF_BASH;
-	disablenpc strnpcinfo(0);
+	disablenpc();
 	end;
 	
 OnUnhide:
-	enablenpc strnpcinfo(0);
+	enablenpc();
 	specialeffect EF_SUMMONSLAVE;
 	end;
 }
@@ -823,7 +823,7 @@ airplane_01,50,66,5	script	Apple Merchant#air01	86,{
 		mes "- Currently you're carrying -";
 		mes "- too many items with you. -";
 		mes "- Please try again -";
-		mes "- after you loose some weight. -";
+		mes "- after you lose some weight. -";
 		close;
 	}
 	mes "[Meltz]";
@@ -1152,7 +1152,7 @@ airplane_01,32,61,4	script	Nils#ein	49,1,1,{
 		input .@save2$;
 		set .@end_time, gettimetick(1);
 		set .@total_time, .@total_time + (.@start_time - .@end_time);
-		set .@tasoo, (.@letters[.@wordtest] / .@total_time) * 6;
+		set .@tasoo, (.@letters[.@wordtest] / ( .@total_time > 0 ?  .@total_time : 1)) * 6;
 		if ((.@save1$ == .@word1$[.@wordtest]) && (.@save2$ == .@word2$[.@wordtest])) {
 			mes "[Nils]";
 			mes "Your record is ^ff0000" + .@total_time + " seconds^000000 and";

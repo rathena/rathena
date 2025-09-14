@@ -1,11 +1,5 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable teleportation.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.8
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Disables all means of teleportation within a map.
 //= Script commands 'warp', 'areawarp', 'warpchar',
@@ -20,21 +14,21 @@
 //= 1.8 Renewal split. [Euphy]
 //============================================================
 
-// Cities ========================
+//============================================================
+// Municipality (Cities/Towns/Villages)
+//============================================================
 ayo_in01	mapflag	noteleport
 ayo_in02	mapflag	noteleport
 alb_ship	mapflag	noteleport
 alberta_in	mapflag	noteleport
 aldeba_in	mapflag	noteleport
-ama_dun01	mapflag	noteleport
 ama_in01	mapflag	noteleport
 ama_in02	mapflag	noteleport
 ama_test	mapflag	noteleport
 cmd_in01	mapflag	noteleport
 cmd_in02	mapflag	noteleport
-gef_dun03	mapflag	noteleport
-gef_tower	mapflag	noteleport
 geffen_in	mapflag	noteleport
+gef_tower	mapflag	noteleport
 gon_test	mapflag	noteleport
 gon_in	mapflag	noteleport
 in_orcs01	mapflag	noteleport
@@ -45,6 +39,77 @@ lou_in02	mapflag	noteleport
 moc_castle	mapflag	noteleport
 morocc_in	mapflag	noteleport
 mosk_in	mapflag	noteleport
+nif_in	mapflag	noteleport
+payon_in01	mapflag	noteleport
+payon_in02	mapflag	noteleport
+payon_in03	mapflag	noteleport
+prt_castle	mapflag	noteleport
+prt_church	mapflag	noteleport
+prt_in	mapflag	noteleport
+um_in	mapflag	noteleport
+xmas_in	mapflag	noteleport
+yuno_in01	mapflag	noteleport
+yuno_in02	mapflag	noteleport
+yuno_in03	mapflag	noteleport
+yuno_in04	mapflag	noteleport
+yuno_in05	mapflag	noteleport
+ein_in01	mapflag	noteleport
+lighthalzen	mapflag	noteleport
+yuno	mapflag	noteleport
+yuno_pre	mapflag	noteleport
+einbroch	mapflag	noteleport
+einbech	mapflag	noteleport
+lhz_que01	mapflag	noteleport
+lhz_cube	mapflag	noteleport
+lhz_in01	mapflag	noteleport
+lhz_in02	mapflag	noteleport
+lhz_in03	mapflag	noteleport
+jupe_area1	mapflag	noteleport
+jupe_area2	mapflag	noteleport
+jupe_ele	mapflag	noteleport
+jupe_ele_r	mapflag	noteleport
+jupe_gate	mapflag	noteleport
+hu_in01	mapflag	noteleport
+auction_01	mapflag	noteleport
+auction_02	mapflag	noteleport
+ra_in01	mapflag	noteleport
+ra_temin	mapflag	noteleport
+ra_temsky	mapflag	noteleport
+kh_mansion	mapflag	noteleport
+kh_rossi	mapflag	noteleport
+kh_school	mapflag	noteleport
+kh_vila	mapflag	noteleport
+ve_in	mapflag	noteleport
+ve_in02	mapflag	noteleport
+thor_camp	mapflag	noteleport
+
+//============================================================
+// Dungeons
+//============================================================
+ama_dun01	mapflag	noteleport
+gef_dun03	mapflag	noteleport
+tha_t07	mapflag	noteleport
+tha_t08	mapflag	noteleport
+tha_t09	mapflag	noteleport
+tha_t10	mapflag	noteleport
+tha_t11	mapflag	noteleport
+tha_t12	mapflag	noteleport
+thana_step	mapflag	noteleport
+kh_dun01	mapflag	noteleport
+nyd_dun02	mapflag	noteleport
+
+//============================================================
+// Airport
+//============================================================
+airport	mapflag	noteleport
+airplane	mapflag	noteleport
+airplane_01	mapflag	noteleport
+y_airport	mapflag	noteleport
+lhz_airport	mapflag	noteleport
+
+//============================================================
+// Novice Starter Zone
+//============================================================
 new_zone01	mapflag	noteleport
 new_zone02	mapflag	noteleport
 new_zone03	mapflag	noteleport
@@ -69,79 +134,20 @@ new_5-1	mapflag	noteleport
 new_5-2	mapflag	noteleport
 new_5-3	mapflag	noteleport
 new_5-4	mapflag	noteleport
-nif_in	mapflag	noteleport
-payon_in01	mapflag	noteleport
-payon_in02	mapflag	noteleport
-payon_in03	mapflag	noteleport
-prt_are_in	mapflag	noteleport
-prt_are01	mapflag	noteleport
-prt_castle	mapflag	noteleport
-prt_church	mapflag	noteleport
-prt_in	mapflag	noteleport
-um_in	mapflag	noteleport
-xmas_in	mapflag	noteleport
-yuno_in01	mapflag	noteleport
-yuno_in02	mapflag	noteleport
-yuno_in03	mapflag	noteleport
-yuno_in04	mapflag	noteleport
-yuno_in05	mapflag	noteleport
-que_sign01	mapflag	noteleport
-que_sign02	mapflag	noteleport
-ein_in01	mapflag	noteleport
-airport	mapflag	noteleport
-airplane	mapflag	noteleport
-airplane_01	mapflag	noteleport
-// New areas
-lighthalzen	mapflag	noteleport
-yuno	mapflag	noteleport
-yuno_pre	mapflag	noteleport
-y_airport	mapflag	noteleport
-lhz_airport	mapflag	noteleport
-einbroch	mapflag	noteleport
-einbech	mapflag	noteleport
-lhz_que01	mapflag	noteleport
-lhz_cube	mapflag	noteleport
-lhz_in01	mapflag	noteleport
-lhz_in02	mapflag	noteleport
-lhz_in03	mapflag	noteleport
-jupe_area1	mapflag	noteleport
-jupe_area2	mapflag	noteleport
-jupe_ele	mapflag	noteleport
-jupe_ele_r	mapflag	noteleport
-jupe_gate	mapflag	noteleport
-tha_t07	mapflag	noteleport
-tha_t08	mapflag	noteleport
-tha_t09	mapflag	noteleport
-tha_t10	mapflag	noteleport
-tha_t11	mapflag	noteleport
-tha_t12	mapflag	noteleport
-thana_step	mapflag	noteleport
-hu_in01	mapflag	noteleport
-auction_01	mapflag	noteleport
-auction_02	mapflag	noteleport
-ra_in01	mapflag	noteleport
-ra_temin	mapflag	noteleport
-ra_temsky	mapflag	noteleport
-kh_mansion	mapflag	noteleport
-kh_rossi	mapflag	noteleport
-kh_school	mapflag	noteleport
-kh_vila	mapflag	noteleport
-kh_dun01	mapflag	noteleport
-ve_in	mapflag	noteleport
-ve_in02	mapflag	noteleport
-thor_camp	mapflag	noteleport
 
-// Job Quests ====================
+//============================================================
+// Job Quests
+//============================================================
 job_sword1	mapflag	noteleport
 job_thief1	mapflag	noteleport
-// 2-1 -----------------------
+// 2-1 Classes
 job_knt	mapflag	noteleport
 job_prist	mapflag	noteleport
 job_wiz	mapflag	noteleport
 job_hunte	mapflag	noteleport
 in_hunter	mapflag	noteleport
 in_moc_16	mapflag	noteleport
-// 2-2 --------------------
+// 2-2 Classes
 alde_alche	mapflag	noteleport
 job_cru	mapflag	noteleport
 job_duncer	mapflag	noteleport
@@ -154,7 +160,9 @@ job_star	mapflag	noteleport
 job_soul	mapflag	noteleport
 que_ng	mapflag	noteleport
 
-// Special Quests Places =========
+//============================================================
+// Quest Places
+//============================================================
 que_ba	mapflag	noteleport
 que_god01	mapflag	noteleport
 que_god02	mapflag	noteleport
@@ -170,8 +178,12 @@ que_job01	mapflag	noteleport
 que_job02	mapflag	noteleport
 que_job03	mapflag	noteleport
 cave	mapflag	noteleport
+que_sign01	mapflag	noteleport
+que_sign02	mapflag	noteleport
 
-// Guild Castles =================
+//============================================================
+// WoE:FE Castles
+//============================================================
 aldeg_cas01	mapflag	noteleport
 aldeg_cas02	mapflag	noteleport
 aldeg_cas03	mapflag	noteleport
@@ -192,6 +204,10 @@ prtg_cas02	mapflag	noteleport
 prtg_cas03	mapflag	noteleport
 prtg_cas04	mapflag	noteleport
 prtg_cas05	mapflag	noteleport
+
+//============================================================
+// WoE:SE Castles
+//============================================================
 schg_cas01	mapflag	noteleport
 schg_cas02	mapflag	noteleport
 schg_cas03	mapflag	noteleport
@@ -202,19 +218,27 @@ arug_cas02	mapflag	noteleport
 arug_cas03	mapflag	noteleport
 arug_cas04	mapflag	noteleport
 arug_cas05	mapflag	noteleport
+
+//============================================================
+// WoE:Novice Castles
+//============================================================
 nguild_alde	mapflag	noteleport
 nguild_gef	mapflag	noteleport
 nguild_pay	mapflag	noteleport
 nguild_prt	mapflag	noteleport
 
-// GvG Arenas ===================
+//============================================================
+// GvG Arenas
+//============================================================
 guild_vs1	mapflag	noteleport
 guild_vs2	mapflag	noteleport
 guild_vs3	mapflag	noteleport
 guild_vs4	mapflag	noteleport
 guild_vs5	mapflag	noteleport
 
-// Arenas =====================
+//============================================================
+// Arenas
+//============================================================
 arena_room	mapflag	noteleport
 force_1-1	mapflag	noteleport
 force_2-1	mapflag	noteleport
@@ -225,8 +249,12 @@ force_1-2	mapflag	noteleport
 force_1-3	mapflag	noteleport
 sec_in01	mapflag	noteleport
 sec_in02	mapflag	noteleport
+prt_are_in	mapflag	noteleport
+prt_are01	mapflag	noteleport
 
-// PvP Arenas=======================
+//============================================================
+// PvP Arenas
+//============================================================
 pvp_y_room	mapflag	noteleport
 pvp_y_1-1	mapflag	noteleport
 pvp_y_1-2	mapflag	noteleport
@@ -311,7 +339,9 @@ pvp_n_8-4	mapflag	noteleport
 pvp_n_8-5	mapflag	noteleport
 pvp_2vs2	mapflag	noteleport
 
-//Aldebaran Turbo Track ==========
+//============================================================
+// Aldebaran Turbo Track
+//============================================================
 turbo_room	mapflag	noteleport
 turbo_n_1	mapflag	noteleport
 turbo_n_4	mapflag	noteleport
@@ -321,16 +351,22 @@ turbo_e_4	mapflag	noteleport
 turbo_e_8	mapflag	noteleport
 turbo_e_16	mapflag	noteleport
 
-//Monster Races ================
+//============================================================
+// Monster Races
+//============================================================
 p_track01	mapflag	noteleport
 p_track02	mapflag	noteleport
 
-// Poring War ====================
+//============================================================
+// Poring War
+//============================================================
 poring_w01	mapflag	noteleport
 poring_w02	mapflag	noteleport
 poring_w02	mapflag	monster_noteleport
 
-//Vision of Okolnir ==============
+//============================================================
+// Vision of Okolnir
+//============================================================
 que_qsch01	mapflag	noteleport
 que_qsch01	mapflag	monster_noteleport
 que_qsch02	mapflag	noteleport
@@ -352,13 +388,17 @@ que_qaru04	mapflag	monster_noteleport
 que_qaru05	mapflag	noteleport
 que_qaru05	mapflag	monster_noteleport
 
-//Sealed Shrine ==================
+//============================================================
+// Sealed Shrine
+//============================================================
 1@cata	mapflag	noteleport
 1@cata	mapflag	monster_noteleport
 2@cata	mapflag	noteleport
 2@cata	mapflag	monster_noteleport
 
-//Endless Tower ==================
+//============================================================
+// Endless Tower
+//============================================================
 e_tower	mapflag	noteleport
 1@tower	mapflag	noteleport
 1@tower	mapflag	monster_noteleport
@@ -373,7 +413,9 @@ e_tower	mapflag	noteleport
 6@tower	mapflag	noteleport
 6@tower	mapflag	monster_noteleport
 
-// Battle Grounds ==============
+//============================================================
+// Battlegrounds
+//============================================================
 bat_c01	mapflag	noteleport
 bat_c02	mapflag	noteleport
 bat_c03	mapflag	noteleport
@@ -383,7 +425,9 @@ bat_b02	mapflag	noteleport
 bat_a01	mapflag	noteleport
 bat_a02	mapflag	noteleport
 
-// Episode 13 ====================
+//============================================================
+// Episode 13.2
+//============================================================
 mid_campin	mapflag	noteleport
 moc_fild22b	mapflag	noteleport
 que_dan01	mapflag	noteleport
@@ -394,22 +438,30 @@ man_in01	mapflag	noteleport
 spl_in01	mapflag	noteleport
 spl_in02	mapflag	noteleport
 
-//Orc's Memory ===================
+//============================================================
+// Brasilis
+//============================================================
+bra_in01	mapflag	noteleport
+
+//============================================================
+// Orc's Memory
+//============================================================
 1@orcs	mapflag	noteleport
 1@orcs	mapflag	monster_noteleport
 2@orcs	mapflag	noteleport
 2@orcs	mapflag	monster_noteleport
 
-// Yggdrasil Dungeon =============
-nyd_dun02	mapflag	noteleport
-
-// Nidhoggr's Instance ===========
+//============================================================
+// Nidhoggr's Instance
+//============================================================
 1@nyd	mapflag	noteleport
 1@nyd	mapflag	monster_noteleport
 2@nyd	mapflag	noteleport
 2@nyd	mapflag	monster_noteleport
 
-// RWC Maps ===============
+//============================================================
+// RWC
+//============================================================
 2009rwc_01	mapflag	noteleport
 2009rwc_02	mapflag	noteleport
 2009rwc_03	mapflag	noteleport
@@ -428,4 +480,7 @@ nyd_dun02	mapflag	noteleport
 2012rwc_07	mapflag	noteleport
 2012rwc_08	mapflag	noteleport
 
+//============================================================
+// Events
+//============================================================
 //evt_zombie	mapflag	noteleport

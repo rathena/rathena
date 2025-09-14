@@ -24,3 +24,5 @@ prt_cas,19,98,7	duplicate(Alliance Manager#prt_)	Alliance Manager#prt	4_M_CRU_OL
 prt_cas,23,104,5	duplicate(Member of Alliance#prt_)	Member of Alliance#prt	4_M_SAGE_A
 prt_cas,207,165,5	duplicate(Recruiter for the Brave_)	Recruiter for the Brave	4_M_MANAGER
 prt_cas,108,265,5	duplicate(Laur_)	Laur	1_M_LIBRARYMASTER
+
+mid_camp,266,263,4	duplicate(Diego#ep13bs_)	Diego#ep13bs	4_M_RACHMAN1

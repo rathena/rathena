@@ -66,7 +66,7 @@ dewata,229,49,6	script	Alberta Sailor#dewata	536,{
 		mes "your trip to ^8B4513Dewata^000000 Island.";
 		mes "Please come again!";
 		close2;
-		warp "alberta",210,198;
+		warp "alberta",192,215;
 		end;
 	case 2:
 		mes "[Alberta Sailor]";
@@ -191,7 +191,7 @@ dewata,114,243,6	script	Lazy Young Man#dew	536,1,1,{
 			mes "[Lazy Young Man]";
 			mes "Really? For me?? I'll give you this in return... Thanks... Hehe~";
 			delitem 11534,1; //Coco_Juice
-			getrandgroupitem(IG_GiftBox),1;
+			getgroupitem(IG_GiftBox);
 			close;
 		case 2:
 			mes "[Lazy Young Man]";
@@ -366,7 +366,7 @@ dewata,95,203,6	script	Travel Guide#dew	536,{
 	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Guide]";
-	mes "Even in modern times Borobudur temple is a pilgimage site for many monks worshiping the Buddha. It's also a major tourist attraction, as you can imagine.";
+	mes "Even in modern times Borobudur temple is a pilgrimage site for many monks worshiping the Buddha. It's also a major tourist attraction, as you can imagine.";
 	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Guide]";
@@ -875,7 +875,7 @@ OnTouch:
 	emotion ET_PROFUSELY_SWEAT;
 	next;
 	mes "[Daddy]";
-	mes "She's gotten lost in Louyang, Amatsu, Moscovia, Brasilis, Kunlun,";
+	mes "She's gotten lost in Luoyang, Amatsu, Moscovia, Brasilis, Kunlun,";
 	mes "and in Ayothaya...";
 	emotion ET_PROFUSELY_SWEAT;
 	next;

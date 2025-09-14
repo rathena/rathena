@@ -311,7 +311,7 @@ mjolnir_02,186,193,4	script	Middle-Aged Man#magum1	57,{
 			mes "As for our younger brother,";
 			mes "Huey, I haven't heard from";
 			mes "him in a while. I think he's";
-			mes "travelling around in Morroc?";
+			mes "travelling around in Morocc?";
 			close;
 		}
 		else if (dmdswrd_Q >= 40 && dmdswrd_Q <= 44) {
@@ -660,7 +660,7 @@ payon,248,159,1	script	Old Man#magum1	120,{
 			mes "[Morf]";
 			mes "Huey's been traveling";
 			mes "around, but last I heard, he";
-			mes "was in Morroc. If you can";
+			mes "was in Morocc. If you can";
 			mes "find him, he can complete";
 			mes "this pentagram for you. Well,";
 			mes "care now, and good luck.";
@@ -748,7 +748,7 @@ payon,248,159,1	script	Old Man#magum1	120,{
 		mes "If you really want to";
 		mes "finish that pentagram,";
 		mes "then find my youngest";
-		mes "brother Huey in Morroc.";
+		mes "brother Huey in Morocc.";
 		mes "He should help you out.";
 		mes "I mean, if I did, then he will!";
 		close;
@@ -1028,7 +1028,7 @@ morocc,248,159,4	script	Young Man#magum1	86,{
 		mes "[Huey]";
 		mes "You know, I've traveled";
 		mes "to all sorts of places, but";
-		mes "the heat here in Morroc";
+		mes "the heat here in Morocc";
 		mes "is the worst I've ever";
 		mes "experienced! It's so humid";
 		mes "and uncomfortable here...";

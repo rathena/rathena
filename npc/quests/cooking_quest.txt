@@ -61,7 +61,7 @@
 			mes "cooking when Novices";
 			mes "like yourself are running";
 			mes "around here like children.";
-			close;
+			close3;
 		}
 		cutin "orleans_1",0;
 		mes "[Charles Orleans]";
@@ -86,7 +86,7 @@
 			emotion ET_FRET;
 			mes "[Charles Orleans]";
 			mes "Monsieur, why you look";
-			mes "at me so? Is it the Morroc";
+			mes "at me so? Is it the Morocc";
 			mes "silk shirt I am wearing, my";
 			mes "hair styled by Madam Veronica,";
 			mes "or my brand name muffler";
@@ -1057,7 +1057,7 @@
 		mes "sort of trouble. It makes me";
 		mes "me laugh whenever anyone";
 		mes "suggests that he is hiding";
-		mes "in the Schwaltzvalt Republic...";
+		mes "in the Schwarzwald Republic...";
 		next;
 		emotion ET_GO;
 		mes "[Charles Orleans]";
@@ -2063,8 +2063,8 @@ L_End:
 
 S_SellSets:
 	.@item_id = getarg(0);
-	.@item_cost = getiteminfo(.@item_id,0);
-	.@item_weight = getiteminfo(.@item_id,6);
+	.@item_cost = getiteminfo(.@item_id, ITEMINFO_BUY);
+	.@item_weight = getiteminfo(.@item_id, ITEMINFO_WEIGHT);
 	mes "[Madeleine Chu]";
 	mes "How many "+ (.@item_id == 12125 ? "Outdoor":"Indoor");
 	mes "Cooking Kits would";

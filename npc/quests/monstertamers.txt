@@ -189,7 +189,7 @@ alberta_in,173,76,4	script	Monster Tamer#alb	125,{
 
 aldeba_in,168,175,4	script	Monster Tamer#alde	125,{
 	mes "[YuU]";
-	mes "You must be looking for monster items! In making monster items, there is no monster tamer in Rune Midgard that's better than me.";
+	mes "You must be looking for monster items! In making monster items, there is no monster tamer in Rune-Midgarts that's better than me.";
 	next;
 	mes "[YuU]";
 	mes "I can make all sorts of neat things for your Cute Pet monster.";

@@ -1409,12 +1409,12 @@ prt_in,170,14,0	script	Customer#Bachewcca	89,{
 	switch(select("Jawaii?:Let's go to Jawaii~!:Cancel.")) {
 	case 1:
 		mes "[Helper]";
-		mes "There is an island far, far away from the Rune-Midgard continent.";
+		mes "There is an island far, far away from the Midgard continent.";
 		mes "It is a very quiet and beautiful island resort that only opens";
 		mes "its doors to couples.";
 		next;
 		mes "[Helper]";
-		mes "This is an exclusive travel offer to the special honeymoon resort for Rune-Midgard's citizens. The price, 100,000 zeny, may be expensive, but you really get what you pay for.";
+		mes "This is an exclusive travel offer to the special honeymoon resort for Midgard's citizens. The price, 100,000 zeny, may be expensive, but you really get what you pay for.";
 		next;
 		mes "[Helper]";
 		mes "I guarantee you that some of";

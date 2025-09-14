@@ -71,7 +71,7 @@ amatsu,207,89,3	script	Amatsu Guide#ama	758,{
 	
 amatsu,251,283,4	script	Guide Man#2ama	767,{
 	mes "[Guide Man]";
-	mes "Welcome, tourist from Rune-Midgard.";
+	mes "Welcome, tourist from Midgard.";
 	mes "I'm the guide of";
 	mes "our beautiful town, Amatsu.";
 	next;

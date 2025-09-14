@@ -1,7 +1,7 @@
-/autom4te.cache/output.0
-/autom4te.cache/requests
-/autom4te.cache/traces.0
+autom4te.cache/
+
 #Global
+.vscode
 .Apple*
 .DS_Store
 .clang_complete
@@ -29,6 +29,7 @@ Thumbs.db
 *.a
 *.vcxproj.user
 /char-server
+/csv2yaml
 /config.log
 /config.status
 /core
@@ -38,16 +39,27 @@ Thumbs.db
 /Makefile
 /Makefile.cache
 /map-server
+/map-server-generator
 /mapcache
 /nbproject
+/web-server
+/yaml2sql
+/yamlupgrade
 
 # /3rdparty/libconfig/
 /3rdparty/libconfig/Makefile
 /3rdparty/libconfig/*.o
 /3rdparty/libconfig/obj
 
+# /3rdparty/rapidyaml/
+/3rdparty/rapidyaml/Makefile
+
 # /3rdparty/yaml-cpp/
 /3rdparty/yaml-cpp/Makefile
+
+# /3rdparty/httplib/
+/3rdparty/httplib/Makefile
+/3rdparty/httplib/obj
 
 # /db/
 /db/import
@@ -71,7 +83,7 @@ Thumbs.db
 /src/common/Makefile
 /src/common/obj_all
 /src/common/obj_sql
-/src/common/svnversion.h
+/src/common/version.hpp
 
 # /src/custom/
 /src/custom
@@ -83,7 +95,11 @@ Thumbs.db
 # /src/map/
 /src/map/Makefile
 /src/map/obj_sql
-/src/map/pcre.h
+/src/map/pcre.hpp
+
+# /src/web
+/src/web/Makefile
+/src/web/obj
 
 # /src/tool/
 /src/tool/Makefile
@@ -100,6 +116,7 @@ Thumbs.db
 .vs
 *.VC.db
 *.VC.opendb
+*.slnLaunch.user
 
 /.idea/.name
 /.idea/misc.xml
@@ -112,13 +129,24 @@ Thumbs.db
 
 # bat tools
 /charserv.bat
+/csv2yaml.bat
 /logserv.bat
 /mapcache.bat
 /mapserv.bat
 /runserver.bat
 /serv.bat
+/webserv.bat
+/yaml2sql.bat
+/yamlupgrade.bat
+/navigenerator.bat
 
 # dlls
 /libmysql.dll
 /pcre8.dll
 /zlib.dll
+
+# CMakeFiles
+/CMakeFiles/
+
+# generated files
+generated

@@ -4,6 +4,10 @@
 #ifndef SOCKET_HPP
 #define SOCKET_HPP
 
+#include <ctime>
+
+#include <config/core.hpp>
+
 #ifdef WIN32
 	#include "winapi.hpp"
 	typedef long in_addr_t;
@@ -12,15 +16,24 @@
 	#include <sys/socket.h>
 	#include <netinet/in.h>
 #endif
-#include <time.h>
 
 #include "cbasetypes.hpp"
+#include "malloc.hpp"
+#include "timer.hpp" // t_tick
+
+#ifndef MAXCONN
+	#define MAXCONN FD_SETSIZE
+#endif
 
 #define FIFOSIZE_SERVERLINK 256*1024
 
 // socket I/O macros
-#define RFIFOHEAD(fd)
-#define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
+#define WFIFOHEAD( fd, size ) \
+	do{ \
+		if( ( fd ) && session[( fd )]->wdata_size + ( size ) > session[( fd )]->max_wdata ){ \
+			_realloc_writefifo( ( fd ), ( size ), ALC_MARK ); \
+		} \
+	}while( false )
 #define RFIFOP(fd,pos) (session[fd]->rdata + session[fd]->rdata_pos + (pos))
 #define WFIFOP(fd,pos) (session[fd]->wdata + session[fd]->wdata_size + (pos))
 
@@ -32,6 +45,8 @@
 #define WFIFOW(fd,pos) (*(uint16*)WFIFOP(fd,pos))
 #define RFIFOL(fd,pos) (*(uint32*)RFIFOP(fd,pos))
 #define WFIFOL(fd,pos) (*(uint32*)WFIFOP(fd,pos))
+#define RFIFOF(fd,pos) (*(float*)RFIFOP(fd,pos))
+#define WFIFOF(fd,pos) (*(float*)WFIFOP(fd,pos))
 #define RFIFOQ(fd,pos) (*(uint64*)RFIFOP(fd,pos))
 #define WFIFOQ(fd,pos) (*(uint64*)WFIFOP(fd,pos))
 #define RFIFOSPACE(fd) (session[fd]->max_rdata - session[fd]->rdata_size)
@@ -70,9 +85,9 @@
 
 
 // Struct declaration
-typedef int (*RecvFunc)(int fd);
-typedef int (*SendFunc)(int fd);
-typedef int (*ParseFunc)(int fd);
+typedef int32 (*RecvFunc)(int32 fd);
+typedef int32 (*SendFunc)(int32 fd);
+typedef int32 (*ParseFunc)(int32 fd);
 
 struct socket_data
 {
@@ -89,6 +104,7 @@ struct socket_data
 	size_t rdata_size, wdata_size;
 	size_t rdata_pos;
 	time_t rdata_tick; // time of last recv (for detecting timeouts); zero when timeout is disabled
+	time_t wdata_tick; // time of last send (for detecting timeouts);
 
 	RecvFunc func_recv;
 	SendFunc func_send;
@@ -100,43 +116,45 @@ struct socket_data
 
 // Data prototype declaration
 
-extern struct socket_data* session[FD_SETSIZE];
+extern struct socket_data* session[MAXCONN];
 
-extern int fd_max;
+extern int32 fd_max;
 
 extern time_t last_tick;
 extern time_t stall_time;
 
 //////////////////////////////////
 // some checking on sockets
-extern bool session_isValid(int fd);
-extern bool session_isActive(int fd);
+extern bool session_isValid(int32 fd);
+extern bool session_isActive(int32 fd);
 //////////////////////////////////
 
 // Function prototype declaration
 
-int make_listen_bind(uint32 ip, uint16 port);
-int make_connection(uint32 ip, uint16 port, bool silent, int timeout);
-int realloc_fifo(int fd, unsigned int rfifo_size, unsigned int wfifo_size);
-int realloc_writefifo(int fd, size_t addition);
-int WFIFOSET(int fd, size_t len);
-int RFIFOSKIP(int fd, size_t len);
+int32 make_listen_bind(uint32 ip, uint16 port);
+int32 make_connection(uint32 ip, uint16 port, bool silent, int32 timeout);
+#define realloc_fifo( fd, rfifo_size, wfifo_size ) _realloc_fifo( ( fd ), ( rfifo_size ), ( wfifo_size ), ALC_MARK )
+#define realloc_writefifo( fd, addition ) _realloc_writefifo( ( fd ), ( addition ), ALC_MARK )
+int32 _realloc_fifo( int32 fd, uint32 rfifo_size, uint32 wfifo_size, const char* file, int32 line, const char* func );
+int32 _realloc_writefifo( int32 fd, size_t addition, const char* file, int32 line, const char* func );
+int32 WFIFOSET(int32 fd, size_t len);
+int32 RFIFOSKIP(int32 fd, size_t len);
 
-int do_sockets(int next);
-void do_close(int fd);
+int32 do_sockets(t_tick next);
+void do_close(int32 fd);
 void socket_init(void);
 void socket_final(void);
 
-extern void flush_fifo(int fd);
+extern void flush_fifo(int32 fd);
 extern void flush_fifos(void);
-extern void set_nonblocking(int fd, unsigned long yes);
+extern void set_nonblocking(int32 fd, unsigned long yes);
 
 void set_defaultparse(ParseFunc defaultparse);
 
 
 /// Server operation request
 enum chrif_req_op {
-	// Char-server <-> login-server oepration
+	// Char-server <-> login-server operation
 	CHRIF_OP_LOGIN_BLOCK = 1,
 	CHRIF_OP_LOGIN_BAN,
 	CHRIF_OP_LOGIN_UNBLOCK,
@@ -159,12 +177,12 @@ uint32 str2ip(const char* ip_str);
 #define MAKEIP(a,b,c,d) (uint32)( ( ( (a)&0xFF ) << 24 ) | ( ( (b)&0xFF ) << 16 ) | ( ( (c)&0xFF ) << 8 ) | ( ( (d)&0xFF ) << 0 ) )
 uint16 ntows(uint16 netshort);
 
-int socket_getips(uint32* ips, int max);
+int32 socket_getips(uint32* ips, int32 max);
 
 extern uint32 addr_[16];   // ip addresses of local host (host byte order)
-extern int naddr_;   // # of ip addresses
+extern int32 naddr_;   // # of ip addresses
 
-void set_eof(int fd);
+void set_eof(int32 fd);
 
 /// Use a shortlist of sockets instead of iterating all sessions for sockets
 /// that have data to send or need eof handling.
@@ -176,9 +194,39 @@ void set_eof(int fd);
 #ifdef SEND_SHORTLIST
 // Add a fd to the shortlist so that it'll be recognized as a fd that needs
 // sending done on it.
-void send_shortlist_add_fd(int fd);
+void send_shortlist_add_fd(int32 fd);
 // Do pending network sends (and eof handling) from the shortlist.
 void send_shortlist_do_sends();
 #endif
+
+// Reuseable global packet buffer to prevent too many allocations
+// Take socket.cpp::socket_max_client_packet into consideration
+extern int8 packet_buffer[UINT16_MAX];
+
+template <typename P>
+bool socket_send( int32 fd, P& packet ){
+	if( !session_isActive( fd ) ){
+		return false;
+	}
+
+	WFIFOHEAD( fd, sizeof( P ) );
+	memcpy( WFIFOP( fd, 0 ), &packet, sizeof( P ) );
+	WFIFOSET( fd, sizeof( P ) );
+
+	return true;
+}
+
+template <typename P>
+bool socket_send( int32 fd, P* packet ){
+	if( !session_isActive( fd ) ){
+		return false;
+	}
+
+	WFIFOHEAD( fd, packet->packetLength );
+	memcpy( WFIFOP( fd, 0 ), packet, packet->packetLength );
+	WFIFOSET( fd, packet->packetLength );
+
+	return true;
+}
 
 #endif /* SOCKET_HPP */

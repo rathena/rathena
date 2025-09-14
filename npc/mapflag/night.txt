@@ -1,11 +1,5 @@
 //===== rAthena Script =======================================
 //= Mapflag: Night mode.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Enables night mode effects.
 //===== Additional Comments: ================================= 
@@ -243,7 +237,9 @@ ve_fild05	mapflag	nightenabled
 ve_fild06	mapflag	nightenabled
 ve_fild07	mapflag	nightenabled
 
-//Episode 12 ====================
+//============================================================
+// Episode 12
+//============================================================
 poring_c01	mapflag	nightenabled
 poring_c02	mapflag	nightenabled
 nameless_i	mapflag	nightenabled
@@ -271,15 +267,21 @@ que_qaru03	mapflag	nightenabled
 que_qaru04	mapflag	nightenabled
 que_qaru05	mapflag	nightenabled
 
-// Battle Grounds ==============
+//============================================================
+// Battlegrounds
+//============================================================
 bat_c01	mapflag	nightenabled
 bat_c02	mapflag	nightenabled
 bat_c03	mapflag	nightenabled
 
-//Endless Tower ==================
+//============================================================
+// Endless Tower
+//============================================================
 e_tower	mapflag	nightenabled
 
-// Episode 13 ====================
+//============================================================
+// Episode 13
+//============================================================
 mid_camp	mapflag	nightenabled
 man_fild01	mapflag	nightenabled
 man_fild03	mapflag	nightenabled
@@ -296,4 +298,13 @@ man_fild02	mapflag	nightenabled
 splendide	mapflag	nightenabled
 spl_fild01	mapflag	nightenabled
 
+//============================================================
+// Brasilis
+//============================================================
+brasilis	mapflag	nightenabled
+bra_fild01	mapflag	nightenabled
+
+//============================================================
+// Events
+//============================================================
 //evt_zombie	mapflag	nightenabled

@@ -4,6 +4,9 @@
 #ifndef WINAPI_HPP
 #define WINAPI_HPP
 
+#include <config/core.hpp>
+
+#ifdef DEPRECATED_WINDOWS_SUPPORT
 #ifndef NTDDI_VERSION
 	#define NTDDI_VERSION 	0x05000000 // Windows 2000
 #endif
@@ -19,6 +22,9 @@
 #ifndef _WIN32_WINNT_VISTA
 	#define _WIN32_WINNT_VISTA 0x0600 // Windows Vista
 #endif
+#else
+#include <sdkddkver.h>
+#endif
 
 #define STRICT
 #define WIN32_LEAN_AND_MEAN
@@ -31,6 +37,7 @@
 #define NONLS
 #define NOMEMMGR
 #define NOMETAFILE
+#define NOMINMAX
 #define NOOPENFILE
 #define NOSERVICE
 #define NOSOUND
@@ -46,6 +53,8 @@
 #include <Ws2tcpip.h>
 #include <Mswsock.h>
 #include <MMSystem.h>
+
+#undef NOMINMAX
 
 #include "cbasetypes.hpp"
 

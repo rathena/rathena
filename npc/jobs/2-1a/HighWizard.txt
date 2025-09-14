@@ -41,7 +41,7 @@ valkyrie,44,47,5	script	High Wizard#Valkyrie	735,{
 	else if (ADVJOB == Job_High_Wizard && Class == Job_Mage_High && JobLevel > 39) {
 		mes "[High Wizard]";
 		mes "It is time.";
-		mes "And Rune-Midgard has";
+		mes "And Midgard has";
 		mes "need of those who can";
 		mes "wield the strongest of magic...";
 		next;

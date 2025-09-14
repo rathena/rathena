@@ -629,7 +629,7 @@ moc_para01,17,77,5	script	Aigu#1	4_F_IU,{
 					next;
 					if (select( "Begin to search.", "Cancel." ) == 1) {
 						mes "[Aigu]";
-						mes "Thanatos tower is north of the Schwartzvalt Republic! It is not far from Juno or Hugel.";
+						mes "Thanatos tower is north of the Schwarzwald Republic! It is not far from Juno or Hugel.";
 						callsub S_Quest,13115,13107;// Thanatos Tower Search
 					}
 				}

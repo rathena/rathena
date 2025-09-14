@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Guild dungeon event, Schwaltzvalt.
+//= Guild dungeon event, Schwarzwald.
 //===== By: ================================================== 
 //= L0ne_W0lf
 //===== Current Version: ===================================== 
@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
-//= Guild dungeon event, Schwaltzvalt. Retrieve Morestone's
+//= Guild dungeon event, Schwarzwald. Retrieve Morestone's
 //= pickaxe from Kublin.
 //===== Additional Comments: =================================
 //= 1.0 First version
@@ -81,7 +81,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 				mes "I am Morestone and I collect rare gems.";
 				next;
 				mes "[Morestone]";
-				mes "In my travels, I was told that there were alot of gems in Valfreyja and Nidhoggur, so I came down here.";
+				mes "In my travels, I was told that there were a lot of gems in Valfreyja and Nidhoggur, so I came down here.";
 				mes "But here, the soil is very hard to dig into. Fortunately, my ^3131FFPickaxe^000000 never lets me down!";
 				next;
 				select("Pickaxe!");
@@ -95,7 +95,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 				next;
 				select("Something strange??");
 				mes "[Morestone]";
-				mes "No, but it was worth quite alot.";
+				mes "No, but it was worth quite a lot.";
 				mes "But we did not have much time to celebrate. Suddenly, a monster appeared that stole my pickaxe.";
 				mes "His name was^3131FFKublin^000000!";
 				next;
@@ -214,7 +214,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 					mes "I am Morestone and I collect rare gems.";
 					next;
 					mes "[Morestone]";
-					mes "In my travels, I was told that there were alot of gems in Valfreyja and Nidhoggur, so I came down here.";
+					mes "In my travels, I was told that there were a lot of gems in Valfreyja and Nidhoggur, so I came down here.";
 					mes "But here, the soil is very hard to dig into. Fortunately, my ^3131FFPickaxe^000000 never lets me down!";
 					next;
 					select("Pickaxe!");
@@ -228,7 +228,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 					next;
 					select("Something strange??");
 					mes "[Morestone]";
-					mes "No, but it was worth quite alot.";
+					mes "No, but it was worth quite a lot.";
 					mes "But we did not have much time to celebrate. Suddenly, a monster appeared that stole my pickaxe.";
 					mes "His name was^3131FFKublin^000000!";
 					next;
@@ -357,7 +357,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 					mes "I am Morestone and I collect rare gems.";
 					next;
 					mes "[Morestone]";
-					mes "In my travels, I was told that there were alot of gems in Valfreyja and Nidhoggur, so I came down here.";
+					mes "In my travels, I was told that there were a lot of gems in Valfreyja and Nidhoggur, so I came down here.";
 					mes "But here, the soil is very hard to dig into. Fortunately, my ^3131FFPickaxe^000000 never lets me down!";
 					next;
 					select("Pickaxe!");
@@ -371,7 +371,7 @@ schg_dun01,194,148,5	script	Dwarf#sch_gd	826,{
 					next;
 					select("Something strange??");
 					mes "[Morestone]";
-					mes "No, but it was worth quite alot.";
+					mes "No, but it was worth quite a lot.";
 					mes "But we did not have much time to celebrate. Suddenly, a monster appeared that stole my pickaxe.";
 					mes "His name was^3131FFKublin^000000!";
 					next;
@@ -503,7 +503,7 @@ schg_que01,100,81,3	script	Pierrot Pier#sch_gd	715,{
 		mes "- and come back later. -";
 		close;
 	}
-	if (strcharinfo(0) == getguildmaster(getcharid(2))) {
+	if (is_guild_leader() == true) {
 		if ($@gdeventv_s2 == 0) {
 			set .@que_2143,checkquest(2143,PLAYTIME);
 			if (.@que_2143 == -1) {

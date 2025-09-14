@@ -198,7 +198,7 @@ prt_fild08,175,374,3	script	Bard#brising	51,{
 					next;
 					mes "[Nelliorde]";
 					cutin "god_nelluad02",2;
-					mes "I'm talking about the Assassin Guild. Supposedly, it's hidden behind a sandstorm in the Morroc Desert!";
+					mes "I'm talking about the Assassin Guild. Supposedly, it's hidden behind a sandstorm in the Morocc Desert!";
 					if (Class == Job_Assassin || Class == Job_Assassin_Cross) {
 						mes "But you should know what I am talking about! So when are you gonna take me to the guild, eh?";
 					}
@@ -266,7 +266,7 @@ prt_fild08,175,374,3	script	Bard#brising	51,{
 				mes "you this time...? Ah yes, I've got it. Let me tell you about one of my own adventures. It was a pretty amazing experience.";
 				next;
 				mes "[Nelliorde]";
-				mes "I went to Morroc, the city of the desert. On my way there, I became exhausted from the heat. Luckily, I found a hole beneath the shadows and climbed in to rest.";
+				mes "I went to Morocc, the city of the desert. On my way there, I became exhausted from the heat. Luckily, I found a hole beneath the shadows and climbed in to rest.";
 				next;
 				mes "[Nelliorde]";
 				mes "Oh my God...";
@@ -295,7 +295,7 @@ prt_fild08,175,374,3	script	Bard#brising	51,{
 				next;
 				cutin "god_nelluad01",2;
 				mes "[Nelliorde]";
-				mes "Anyway, the fortress of Sandaruman is on the way to Paros Lighthouse. I remember Serutero, a guy I met in south Morroc, telling me about its scenic beauty.";
+				mes "Anyway, the fortress of Sandaruman is on the way to Paros Lighthouse. I remember Serutero, a guy I met in south Morocc, telling me about its scenic beauty.";
 				next;
 				mes "[Nelliorde]";
 				mes "I was so excited";
@@ -472,7 +472,7 @@ prt_fild08,175,374,3	script	Bard#brising	51,{
 					mes "you this time...? Ah yes, I've got it. Let me tell you about one of my own adventures. It was a pretty amazing experience.";
 					next;
 					mes "[Nelliorde]";
-					mes "I went to Morroc, the city of the desert. On my way there, I became exhausted from the heat. Luckily, I found a hole beneath the shadows and climbed in to rest.";
+					mes "I went to Morocc, the city of the desert. On my way there, I became exhausted from the heat. Luckily, I found a hole beneath the shadows and climbed in to rest.";
 					next;
 					mes "[Nelliorde]";
 					mes "Oh my God...";
@@ -502,7 +502,7 @@ prt_fild08,175,374,3	script	Bard#brising	51,{
 					next;
 					cutin "god_nelluad01",2;
 					mes "[Nelliorde]";
-					mes "Anyway, the fortress of Sandaruman is on the way to Paros Lighthouse. I remember Serutero, a guy I met in south Morroc, telling me about its scenic beauty.";
+					mes "Anyway, the fortress of Sandaruman is on the way to Paros Lighthouse. I remember Serutero, a guy I met in south Morocc, telling me about its scenic beauty.";
 					next;
 					mes "[Nelliorde]";
 					mes "I was so excited";
@@ -726,7 +726,7 @@ prt_fild08,175,374,3	script	Bard#brising	51,{
 				mes "to see in the desert.";
 				next;
 				mes "[Nelliorde]";
-				mes "I'm talking about the Assassin Guild. Supposedly, it's hidden behind a sandstorm in the Morroc";
+				mes "I'm talking about the Assassin Guild. Supposedly, it's hidden behind a sandstorm in the Morocc";
 				if ((Class == Job_Assassin) || (Class == Job_Assassin_Cross)) {
 					mes "Desert! But you should know what I am talking about! So when are you gonna take me to the guild, eh?";
 				}
@@ -1194,7 +1194,7 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 				mes "I hope we'll be";
 				mes "able to learn what";
 				mes "the goddess Freya has";
-				mes "left behind in Rune-Midgard...";
+				mes "left behind in Midgard...";
 				set god_brising,40;
 				close;
 			case 2:
@@ -1213,7 +1213,7 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 				mes "I hope we'll be";
 				mes "able to learn what";
 				mes "the goddess Freya has";
-				mes "left behind in Rune-Midgard...";
+				mes "left behind in Midgard...";
 				set god_brising,40;
 				close;
 			}

@@ -192,7 +192,7 @@
 
 //--------------------LEVEL 4-----------
 
-//-- Morroc Fruit Wine <-- 10 Strawberry, 4 Lemon, 10 Orange, 2 Alcohol, 5 Grape
+//-- Morocc Fruit Wine <-- 10 Strawberry, 4 Lemon, 10 Orange, 2 Alcohol, 5 Grape
 70,12049,14,0,0,7475,0,578,10,568,4,582,10,970,2,514,5
 //-- Seasoned Jellyfish <-- 30 Tentacle, 10 White Herb, 10 Soft Blade Grass, 1 Old Frying Pan, 20 Squid Ink
 71,12054,14,0,0,7475,0,962,30,509,10,7194,10,7031,1,1024,20
@@ -315,9 +315,9 @@
 //-- Mystic Frozen <-- BS_ENCHANTSTONE & 10 Crystal Blue
 116,995,21,96,1,991,10
 //-- Rough Wind <-- BS_ENCHANTSTONE & 10 Wind of Verdure
-117,997,21,96,1,993,10
+117,996,21,96,1,992,10
 //-- Great Nature <-- BS_ENCHANTSTONE & 10 Green Live
-118,996,21,96,1,992,10
+118,997,21,96,1,993,10
 //----------------------------------------------
 
 //==============================================
@@ -618,15 +618,15 @@
 
 //---- Create Bomb --- ItemLV=28 ---------------
 //-- Apple Bomb <-- GN_MAKEBOMB Lv1, Apple Bomb CB, 1 Apple, 1 Scell, 1 Detonator, 1 Gun Powder
-246,13260,28,2496,1,6279,0,512,1,911,1,1051,1,6244,1
+//246,13260,28,2496,1,6279,0,512,1,911,1,1051,1,6244,1
 //-- Coconut Bomb <-- GN_MAKEBOMB Lv1, Coconut Bomb CB, 1 Detonator, 1 Coconut Fruit, 2 Gun Powder
-247,13261,28,2496,1,6281,0,1051,1,6263,1,6244,2
+//247,13261,28,2496,1,6281,0,1051,1,6263,1,6244,2
 //-- Melon Bomb <-- GN_MAKEBOMB Lv1, Melon Bomb CB, 1 Sticky Mucus, 1 Detonator, 2 Gun Powder, 1 Melon
-248,13262,28,2496,1,6282,0,938,1,1051,1,6244,2,6264,1
+//248,13262,28,2496,1,6282,0,938,1,1051,1,6244,2,6264,1
 //-- Pineapple Bomb <-- GN_MAKEBOMB Lv1, Pinepple Bomb CB, 1 Cactus Needle, 1 Detonator, 3 Gun Powder, 1 Pineapple
-249,13263,28,2496,1,6280,0,952,1,1051,1,6244,3,6265,1
+//249,13263,28,2496,1,6280,0,952,1,1051,1,6244,3,6265,1
 //-- Banana Bomb <-- GN_MAKEBOMB Lv1, Banana Bomb CB, 1 Banana, 1 Detonator, 4 Gun Powder, 1 Mould Powder
-250,13264,28,2496,1,6283,0,513,1,1051,1,6244,4,7001,1
+//250,13264,28,2496,1,6283,0,513,1,1051,1,6244,4,7001,1
 
 //---- Special Pharmacy --- ItemLV=29 ----------
 //-- Seed Of Horny Plant <-- GN_S_PHARMACY Lv1, Plant Genetic Grow, 10 Prickly Fruit

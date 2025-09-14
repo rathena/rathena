@@ -29,7 +29,7 @@
 //=	- Small corrections to the prontera Inns.
 //=	- Removed the Cancel dialog.
 //= 1.6 More fixes, changed progression of "Rest"ing.
-//=	- Corrected Morroc NPCs. [L0ne_W0lf]
+//=	- Corrected Morocc NPCs. [L0ne_W0lf]
 //= 1.7 Corrected Payon NPC. [L0ne_W0lf] 
 //= 1.8 Corrected Geffen NPC. [L0ne_W0lf] 
 //= 1.9 Added the Inn for Al De baran. [L0ne_W0lf]
@@ -41,7 +41,7 @@
 //= 2.4 Fixed Inn Employee#Ahlma warping to same destination as save point, bugreport: 191.
 //= 2.5 Added Moskovia Gostinitsa (Inn) from jA
 //= 2.6 Updated Alberta inn to official. [L0ne_W0lf]
-//= 2.7 Removed Morroc Inns as per episode 12.1. [L0ne_W0lf]
+//= 2.7 Removed Morocc Inns as per episode 12.1. [L0ne_W0lf]
 //= 2.8 Removed Moscovia Inn; Its in quests/quest_moscovia.txt [Kisuka]
 //= 2.9 Added switch menus, updated to match AEGIS scripts. [Kisuka]
 //= 2.9a Added 'npcskill' command. [Euphy]
@@ -88,13 +88,13 @@ payon_in01,132,62,5	script	Inn Employee#Ahee	53,{
 /*
 morocc_in,147,141,3	script	Inn Employee#Hasna	53,{
 
-	callfunc "F_InnMaid","[Employee Hasna]","Morroc Inn","morocc_in",142,140;
+	callfunc "F_InnMaid","[Employee Hasna]","Morocc Inn","morocc_in",142,140;
 	warp "morocc_in",173,135; end;
 }
 // South --------------------------------
 morocc_in,80,100,5	script	Inn Employee#Manar	53,{
 
-	callfunc "F_InnMaid","[Employee Manar]","Morroc Inn","morocc_in",78,95;
+	callfunc "F_InnMaid","[Employee Manar]","Morocc Inn","morocc_in",78,95;
 	warp "morocc_in",79,123; end;
 }
 */
@@ -201,6 +201,117 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 		mes "Please come again.";
 		close;
 	}
+}
+
+//======================== Brasilis =================================
+bra_in01,27,24,3	script	Hotel Keeper#bra1	478,{
+	mes "[Hotel Keeper]";
+	mes "Welcome to the beautiful Brasilis Hotel.";
+	next;
+	switch(select("Save:Rest -5000 zeny:Cancel")) {
+	case 1:
+		mes "[Hotel Keeper]";
+		mes "Do you want to save here at the Brasilis Hotel?";
+		next;
+		switch(select("No thank you.:Absolutely.")) {
+		case 1:
+			mes "[Hotel Keeper]";
+			mes "Ok then, enjoy your stay.";
+			close;
+		case 2:
+			mes "[Hotel Keeper]";
+			mes "Your respawn has been saved here at the hotel. I hope that you enjoy your stay here in Brasilis.";
+			savepoint "bra_in01",144,69,1,1;
+			close;
+		}
+		end;
+	case 2:
+		if (Zeny > 4999) {
+			mes "[Hotel Keeper]";
+			mes "I will show you a great room.";
+			close2;
+			if (Zeny < 5000)
+				end;
+			Zeny -= 5000;
+			percentheal 100,100;
+			warp "bra_in01",144,69;
+			end;
+		}
+		mes "[Hotel Keeper]";
+		mes "I'm sorry, but the service charge is 5,000 zeny per night.";
+	case 3:
+		close;
+	}
+}
+
+//======================== Einbroch =================================
+ein_in01,206,224,3	script	Hotel Employee#ein	855,{
+	mes "[Hotel Employee]";
+	mes "Good day, welcome to the";
+	mes "Einbroch Hotel. The staff is";
+	mes "always striving to accommodate";
+	mes "our guests with the highest";
+	mes "standards in cleanliness,";
+	mes "service and convenience~";
+	next;
+	if (kain_ticket == 5) {
+		mes "[Hotel Employee]";
+		mes "Are you looking";
+		mes "for Mr. Defru Ark?";
+		mes "Oh right, he did mention";
+		mes "waiting for some package";
+		mes "from the Airport. Now let";
+		mes "me pull up that information...";
+		next;
+		mes "[Hotel Employee]";
+		mes "Ah, here we are.";
+		mes "Mr. Defru Ark is";
+		mes "staying in Room 201.";
+		next;
+	}
+	else {
+		switch(select("Save:Take Rest - 5,000 zeny:Cancel")) {
+		case 1:
+			mes "[Hotel Employee]";
+			mes "Your Respawn Point";
+			mes "has been saved here";
+			mes "in the Einbroch Hotel.";
+			mes "Thank you, and please";
+			mes "come again.";
+			close2;
+			savepoint "ein_in01",200,224,1,1;
+			end;
+		case 2:
+			if (Zeny > 4999) {
+				mes "[Hotel Employee]";
+				mes "Thank you.";
+				mes "Please enjoy";
+				mes "your rest~";
+				close2;
+				set Zeny, Zeny-5000;
+				percentheal 100,100;
+				warp "ein_in01",272,167;
+				end;
+			}
+			else {
+				mes "[Hotel Employee]";
+				mes "I'm sorry, but the";
+				mes "accommodation fee is";
+				mes "5,000 zeny. Next time,";
+				mes "please make sure that you";
+				mes "bring enough zeny, okay?";
+				close;
+			}
+		case 3:
+			mes "[Hotel Employee]";
+			mes "Thank you and";
+			mes "please come again~";
+			close;
+		}
+	}
+	mes "[Hotel Employee]";
+	mes "Have a good day.";
+	close;
 }
 
 //======================= Inn Function ==============================

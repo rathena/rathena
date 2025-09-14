@@ -1,0 +1,44 @@
+
+RAPIDYAML_OBJ = $(shell find * -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g")
+RAPIDYAML_DIR_OBJ = $(RAPIDYAML_OBJ:%=obj/%)
+RAPIDYAML_H =  $(shell find * -type f -name "*.h*")
+RAPIDYAML_AR = obj/ryml.a
+
+CXXFLAG =-std=c++11
+INC=-Isrc -Iext/c4core/src
+
+@SET_MAKE@
+
+#####################################################################
+.PHONY : all clean help rapidyaml
+
+all: rapidyaml
+
+clean:
+	@echo "	CLEAN	rapidyaml"
+	@rm -rf obj *.o
+
+help:
+	@echo "possible targets are 'all' 'clean' 'help'"
+	@echo "'rapidyaml' - build $(RAPIDYAML_AR)
+	@echo "'all'       - builds $(RAPIDYAML_DIR_OBJ)"
+	@echo "'clean'     - deletes $(RAPIDYAML_DIR_OBJ)"
+	@echo "'help'      - outputs this message"
+
+#####################################################################
+
+obj:
+	@echo "	MKDIR	obj/src/c4/yml"
+	@echo "	MKDIR	obj/ext/c4core/src/c4"
+	@mkdir -p obj/src/c4/yml
+	@mkdir -p obj/ext/c4core/src/c4
+
+obj/%.o: %.cpp $(RAPIDYAML_H)
+	@echo "	CXX	$<"
+	@@CXX@ $(CXXFLAG) @CFLAGS_AR@ @CPPFLAGS@ -g $(INC) -c $(OUTPUT_OPTION) $<
+
+rapidyaml: obj $(RAPIDYAML_DIR_OBJ) $(RAPIDYAML_AR)
+
+$(RAPIDYAML_AR): $(RAPIDYAML_DIR_OBJ)
+	@echo "	AR	$@"
+	@@AR@ rcs obj/ryml.a $(RAPIDYAML_DIR_OBJ)
