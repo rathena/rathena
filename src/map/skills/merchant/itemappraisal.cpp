@@ -15,13 +15,15 @@ void SkillItemAppraisal::castendNoDamageId(block_list *src, block_list *target, 
 
 	if (sd) {
 		clif_item_identify_list(sd);
-		if (sd->menuskill_id != MC_IDENTIFY) {
+		if (sd->menuskill_id != getSkillId()) {
 			// failed, dont consume anything
-			map_freeblock_unlock();
+			// TODO: check & fix
+			return;
 		} else {
 			// consume sp only if succeeded
-			s_skill_condition req = skill_get_requirement(sd, MC_IDENTIFY, skill_lv);
+			s_skill_condition req = skill_get_requirement(sd, getSkillId(), skill_lv);
 			status_zap(src, 0, req.sp);
+			// TODO: check if necessary or base code could be used
 		}
 	}
 }

@@ -4792,13 +4792,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 		case TF_SPRINKLESAND:
 			skillratio += 30;
 			break;
-		case MC_CARTREVOLUTION:
-			skillratio += 50;
-			if(sd && sd->cart_weight)
-				skillratio += 100 * sd->cart_weight / sd->cart_weight_max; // +1% every 1% weight
-			else if (!sd)
-				skillratio += 100; //Max damage for non players.
-			break;
 		case NPC_PIERCINGATT:
 			skillratio += -25; //75% base damage
 			break;

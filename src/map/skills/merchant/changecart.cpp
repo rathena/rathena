@@ -9,5 +9,5 @@ SkillChangeCart::SkillChangeCart() : SkillImpl(MC_CHANGECART) {
 }
 
 void SkillChangeCart::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	clif_skill_nodamage(src, *target, MC_CHANGECART, skill_lv);
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 }

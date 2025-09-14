@@ -3,13 +3,13 @@
 
 #pragma once
 
-#include "../weapon_skill_impl.hpp"
+#include "../status_skill_impl.hpp"
 
-#include "../../battle.hpp"
-
-class SkillCrazyUproar : public SkillImpl {
+class SkillCrazyUproar : public StatusSkillImpl {
 public:
-    SkillCrazyUproar();
+   SkillCrazyUproar();
 
+#ifdef RENEWAL
     void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const override;
+#endif
 };

@@ -5,8 +5,6 @@
 
 #include "../skill_impl.hpp"
 
-#include "../../battle.hpp"
-
 class SkillDecorateCart : public SkillImpl {
 public:
 	SkillDecorateCart();
