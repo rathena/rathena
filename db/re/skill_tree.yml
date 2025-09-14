@@ -7504,6 +7504,21 @@ Body:
             Level: 3
           - Name: ABC_DAGGER_AND_BOW_M
             Level: 5
+      - Name: ABC_HIT_AND_SLIDING
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 3
+      - Name: ABC_CHASING_BREAK
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_HIT_AND_SLIDING
+            Level: 3
+      - Name: ABC_CHASING_SHOT
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_HIT_AND_SLIDING
+            Level: 3
   - Job: Elemental_Master
     Inherit:
       Novice: true
