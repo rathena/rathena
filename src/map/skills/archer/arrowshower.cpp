@@ -16,7 +16,7 @@ void SkillArrowShower::calculateSkillRatio(const Damage* wd, const block_list* s
 #endif
 }
 
-void SkillArrowShower::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillArrowShower::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	status_change_end(src, SC_CAMOUFLAGE);
 
 	SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
