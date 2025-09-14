@@ -9,7 +9,7 @@
 #include "itemappraisal.hpp"
 #include "crazyuproar.hpp"
 #include "mammonite.hpp"
-#include "vending.hpp"
+#include "skill_vending.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skill_id) const {
     switch (skill_id) {

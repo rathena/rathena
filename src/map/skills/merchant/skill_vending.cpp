@@ -1,7 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "vending.hpp"
+#include "skill_vending.hpp"
 
 #include "map/intif.hpp"
 #include "map/pc.hpp"
