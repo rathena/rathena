@@ -18,9 +18,11 @@
 #define MAX_SUGGESTIONS 10
 
 /// Comment to disable the official walk path
-/// The official walkpath disables users from taking non-clear walk paths,
-/// e.g. if they want to get around an obstacle they have to walk around it,
-/// while with OFFICIAL_WALKPATH disabled if they click to walk around a obstacle the server will do it automatically
+/// The official walkpath disables ranged units from taking non-clear walk paths to attack a target,
+/// e.g. if they need to get around an obstacle to attack, players will have to click to walk around it
+/// before attacking and monsters will just drop target once they get in attack range and can't attack.
+/// If disabled, the server automatically makes sure units find a position to attack from by moving closer.
+/// Disabling this also stops skills from failing when the target has walked behind an obstacle during cast.
 #define OFFICIAL_WALKPATH
 
 /// Uncomment to enable the Cell Stack Limit mod.

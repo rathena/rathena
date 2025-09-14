@@ -6720,6 +6720,11 @@ Body:
             Level: 5
           - Name: DK_TWOHANDDEF
             Level: 10
+      - Name: DK_DRAGONIC_PIERCE
+        MaxLevel: 5
+        Requires:
+          - Name: DK_HACKANDSLASHER
+            Level: 7
   - Job: Meister
     Inherit:
       Novice: true
@@ -7019,6 +7024,13 @@ Body:
         Requires:
           - Name: AG_RAIN_OF_CRYSTAL
             Level: 1
+      - Name: AG_ENERGY_CONVERSION
+        MaxLevel: 5
+        Requires:
+          - Name: WL_RECOGNIZEDSPELL
+            Level: 2
+          - Name: AG_CLIMAX
+            Level: 1
   - Job: Cardinal
     Inherit:
       Novice: true
@@ -7201,6 +7213,13 @@ Body:
         Requires:
           - Name: WH_SOLIDTRAP
             Level: 1
+      - Name: WH_WILD_WALK
+        MaxLevel: 5
+        Requires:
+          - Name: WH_NATUREFRIENDLY
+            Level: 3
+          - Name: WH_HAWKRUSH
+            Level: 3
   - Job: Imperial_Guard
     Inherit:
       Novice: true
@@ -7290,6 +7309,13 @@ Body:
           - Name: IG_OVERSLASH
             Level: 3
           - Name: IG_SHIELD_SHOOTING
+            Level: 3
+      - Name: IG_IMPERIAL_PRESSURE
+        MaxLevel: 5
+        Requires:
+          - Name: IG_SPEAR_SWORD_M
+            Level: 7
+          - Name: IG_GUARD_STANCE
             Level: 3
   - Job: Biolo
     Inherit:
@@ -7478,6 +7504,21 @@ Body:
             Level: 3
           - Name: ABC_DAGGER_AND_BOW_M
             Level: 5
+      - Name: ABC_HIT_AND_SLIDING
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 3
+      - Name: ABC_CHASING_BREAK
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_HIT_AND_SLIDING
+            Level: 3
+      - Name: ABC_CHASING_SHOT
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_HIT_AND_SLIDING
+            Level: 3
   - Job: Elemental_Master
     Inherit:
       Novice: true
@@ -7719,6 +7760,11 @@ Body:
         Requires:
           - Name: IQ_JUDGE
             Level: 1
+      - Name: IQ_BLAZING_FLAME_BLAST
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_MASSIVE_F_BLASTER
+            Level: 7
   - Job: Troubadour
     Inherit:
       Novice: true
@@ -8122,6 +8168,24 @@ Body:
             Level: 5
           - Name: NW_GRENADES_DROPPING
             Level: 3
+      - Name: NW_WILD_SHOT
+        MaxLevel: 5
+        Requires:
+          - Name: NW_ONLY_ONE_BULLET
+            Level: 3
+          - Name: NW_SPIRAL_SHOOTING
+            Level: 3
+          - Name: NW_MAGAZINE_FOR_ONE
+            Level: 3
+      - Name: NW_MIDNIGHT_FALLEN
+        MaxLevel: 5
+        Requires:
+          - Name: NW_THE_VIGILANTE_AT_NIGHT
+            Level: 3
+          - Name: NW_MAGAZINE_FOR_ONE
+            Level: 3
+          - Name: NW_WILD_FIRE
+            Level: 3
   - Job: Hyper_Novice
     Inherit:
       Novice: true
@@ -8207,6 +8271,13 @@ Body:
           - Name: HN_GROUND_GRAVITATION
             Level: 5
           - Name: HN_NAPALM_VULCAN_STRIKE
+            Level: 5
+      - Name: HN_OVERCOMING_CRISIS
+        MaxLevel: 5
+        Requires:
+          - Name: HN_SELFSTUDY_TATICS
+            Level: 5
+          - Name: HN_SELFSTUDY_SOCERY
             Level: 5
   - Job: Spirit_Handler
     Inherit:
@@ -8313,6 +8384,20 @@ Body:
             Level: 1
           - Name: SH_MYSTICAL_CREATURE_MASTERY
             Level: 10
+      - Name: SH_CHUL_HO_BATTERING
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 5
+      - Name: SH_HYUN_ROK_SPIRIT_POWER
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HYUN_ROKS_BREEZE
+            Level: 5
   - Job: Sky_Emperor
     Inherit:
       Novice: true
@@ -8395,6 +8480,33 @@ Body:
         Requires:
           - Name: SKE_SKY_MASTERY
             Level: 5
+      - Name: SKE_SKY_SUN
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_NOON_BLAST
+            Level: 3
+          - Name: SKE_SUNSET_BLAST
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
+      - Name: SKE_SKY_MOON
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_MIDNIGHT_KICK
+            Level: 3
+          - Name: SKE_DAWN_BREAK
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
+      - Name: SKE_STAR_LIGHT_KICK
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_STAR_BURST
+            Level: 3
+          - Name: SKE_STAR_CANNON
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
   - Job: Sky_Emperor2
     Inherit:
       Novice: true
@@ -8402,3 +8514,209 @@ Body:
       Star_Gladiator: true
       Star_Emperor: true
       Sky_Emperor: true
+  - Job: Shinkiro
+    Inherit:
+      Novice: true
+      Ninja: true
+      Kagerou: true
+    Tree:
+      - Name: SS_SHINKIROU
+        MaxLevel: 1
+      - Name: SS_SEKIENHOU
+        MaxLevel: 10
+      - Name: SS_SHIMIRU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIWAIKYOKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KAGEGARI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_REIKETSUHOU
+        MaxLevel: 10
+      - Name: SS_TOKEDASU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIKAITEN
+        MaxLevel: 5
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_FUUMASHOUAKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_KAGENOMAI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGEGARI
+            Level: 3
+      - Name: SS_RAIDENPOU
+        MaxLevel: 10
+      - Name: SS_AKUMUKESU
+        MaxLevel: 1
+      - Name: SS_KUNAIKUSSETSU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+      - Name: SS_FUUMAKOUCHIKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_FUUMASHOUAKU
+            Level: 5
+      - Name: SS_KAGEGISSEN
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGENOMAI
+            Level: 5
+      - Name: SS_KINRYUUHOU
+        MaxLevel: 10
+      - Name: SS_HITOUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 5
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+          - Name: SS_KUNAIKUSSETSU
+            Level: 5
+      - Name: SS_KAGEAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KAGEGISSEN
+            Level: 7
+      - Name: SS_ANTENPOU
+        MaxLevel: 10
+      - Name: SS_ANKOKURYUUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_SEKIENHOU
+            Level: 5
+          - Name: SS_REIKETSUHOU
+            Level: 5
+          - Name: SS_RAIDENPOU
+            Level: 5
+          - Name: SS_KINRYUUHOU
+            Level: 5
+          - Name: SS_ANTENPOU
+            Level: 5
+  - Job: Shiranui
+    Inherit:
+      Novice: true
+      Ninja: true
+      Oboro: true
+    Tree:
+      - Name: SS_SHINKIROU
+        MaxLevel: 1
+      - Name: SS_SEKIENHOU
+        MaxLevel: 10
+      - Name: SS_SHIMIRU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIWAIKYOKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KAGEGARI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_REIKETSUHOU
+        MaxLevel: 10
+      - Name: SS_TOKEDASU
+        MaxLevel: 5
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+      - Name: SS_KUNAIKAITEN
+        MaxLevel: 5
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_FUUMASHOUAKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 3
+      - Name: SS_KAGENOMAI
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGEGARI
+            Level: 3
+      - Name: SS_RAIDENPOU
+        MaxLevel: 10
+      - Name: SS_AKUMUKESU
+        MaxLevel: 1
+      - Name: SS_KUNAIKUSSETSU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+      - Name: SS_FUUMAKOUCHIKU
+        MaxLevel: 10
+        Requires:
+          - Name: SS_FUUMASHOUAKU
+            Level: 5
+      - Name: SS_KAGEGISSEN
+        MaxLevel: 10
+        Requires:
+          - Name: SS_KAGENOMAI
+            Level: 5
+      - Name: SS_KINRYUUHOU
+        MaxLevel: 10
+      - Name: SS_HITOUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KUNAIWAIKYOKU
+            Level: 5
+          - Name: SS_KUNAIKAITEN
+            Level: 5
+          - Name: SS_KUNAIKUSSETSU
+            Level: 5
+      - Name: SS_KAGEAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_KAGEGISSEN
+            Level: 7
+      - Name: SS_ANTENPOU
+        MaxLevel: 10
+      - Name: SS_ANKOKURYUUAKUMU
+        MaxLevel: 1
+        Requires:
+          - Name: SS_SHINKIROU
+            Level: 1
+          - Name: SS_SEKIENHOU
+            Level: 5
+          - Name: SS_REIKETSUHOU
+            Level: 5
+          - Name: SS_RAIDENPOU
+            Level: 5
+          - Name: SS_KINRYUUHOU
+            Level: 5
+          - Name: SS_ANTENPOU
+            Level: 5

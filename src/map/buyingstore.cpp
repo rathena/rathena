@@ -78,13 +78,13 @@ int8 buyingstore_setup(map_session_data* sd, unsigned char slots){
 		return 2;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
+	if( map_getmapflag(sd->m, MF_NOBUYINGSTORE) )
 	{// custom: no buyingstore maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
-	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
+	if( map_getcell(sd->m, sd->x, sd->y, CELL_CHKNOBUYINGSTORE) )
 	{// custom: no buyingstore cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
@@ -145,13 +145,13 @@ int8 buyingstore_create( map_session_data* sd, int32 zenylimit, unsigned char re
 		return 2;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_NOBUYINGSTORE) )
+	if( map_getmapflag(sd->m, MF_NOBUYINGSTORE) )
 	{// custom: no buyingstore maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
 	}
 
-	if( map_getcell(sd->bl.m, sd->bl.x, sd->bl.y, CELL_CHKNOBUYINGSTORE) )
+	if( map_getcell(sd->m, sd->x, sd->y, CELL_CHKNOBUYINGSTORE) )
 	{// custom: no buyingstore cells
 		clif_displaymessage(sd->fd, msg_txt(sd,204)); // "You can't open a shop on this cell."
 		return 4;
@@ -215,7 +215,7 @@ int8 buyingstore_create( map_session_data* sd, int32 zenylimit, unsigned char re
 		return 5;
 	}
 
-	if( (sd->max_weight*90)/100 < weight )
+	if( pc_getpercentweight(*sd, weight) >= battle_config.major_overweight_rate )
 	{// not able to carry all wanted items without getting overweight (90%)
 		sd->buyingstore.slots = 0;
 		clif_buyingstore_open_failed(sd, BUYINGSTORE_CREATE_OVERWEIGHT, weight);
@@ -233,7 +233,7 @@ int8 buyingstore_create( map_session_data* sd, int32 zenylimit, unsigned char re
 
 	if( Sql_Query( mmysql_handle, "INSERT INTO `%s`(`id`, `account_id`, `char_id`, `sex`, `map`, `x`, `y`, `title`, `limit`, `autotrade`, `body_direction`, `head_direction`, `sit`) "
 		"VALUES( %d, %d, %d, '%c', '%s', %d, %d, '%s', %d, %d, '%d', '%d', '%d' );",
-		buyingstores_table, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map_getmapdata(sd->bl.m)->name, sd->bl.x, sd->bl.y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ){
+		buyingstores_table, sd->buyer_id, sd->status.account_id, sd->status.char_id, sd->status.sex == 0 ? 'F' : 'M', map_getmapdata(sd->m)->name, sd->x, sd->y, message_sql, sd->buyingstore.zenylimit, sd->state.autotrade, at ? at->dir : sd->ud.dir, at ? at->head_dir : sd->head_dir, at ? at->sit : pc_issit(sd) ) != SQL_SUCCESS ){
 		Sql_ShowDebug(mmysql_handle);
 	}
 
@@ -246,7 +246,6 @@ int8 buyingstore_create( map_session_data* sd, int32 zenylimit, unsigned char re
 	}
 	if (SQL_ERROR == Sql_QueryStr(mmysql_handle, StringBuf_Value(&buf)))
 		Sql_ShowDebug(mmysql_handle);
-	StringBuf_Destroy(&buf);
 
 	clif_buyingstore_myitemlist( *sd );
 	clif_buyingstore_entry( *sd );
@@ -307,7 +306,7 @@ void buyingstore_open(map_session_data* sd, uint32 account_id)
 		return;
 	}
 
-	if( !searchstore_queryremote(*sd, account_id) && ( sd->bl.m != pl_sd->bl.m || !check_distance_bl(&sd->bl, &pl_sd->bl, AREA_SIZE) ) )
+	if( !searchstore_queryremote(*sd, account_id) && ( sd->m != pl_sd->m || !check_distance_bl(sd, pl_sd, AREA_SIZE) ) )
 	{// out of view range
 		return;
 	}
@@ -354,7 +353,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, uint32 buyer_id
 		return;
 	}
 
-	if( !searchstore_queryremote(*sd, account_id) && ( sd->bl.m != pl_sd->bl.m || !check_distance_bl(&sd->bl, &pl_sd->bl, AREA_SIZE) ) )
+	if( !searchstore_queryremote(*sd, account_id) && ( sd->m != pl_sd->m || !check_distance_bl(sd, pl_sd, AREA_SIZE) ) )
 	{// out of view range
 		clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, 0);
 		return;
@@ -627,18 +626,18 @@ void buyingstore_reopen( map_session_data* sd ){
 		{
 			// Make buyer look perfect
 			pc_setdir(sd, at->dir, at->head_dir);
-			clif_changed_dir(sd->bl, AREA_WOS);
+			clif_changed_dir(*sd, AREA_WOS);
 			if( at->sit ) {
 				pc_setsit(sd);
 				skill_sit(sd, 1);
-				clif_sitting(sd->bl);
+				clif_sitting(*sd);
 			}
 
 			// Immediate save
 			chrif_save(sd, CSAVE_AUTOTRADE);
 
 			ShowInfo("Buyingstore loaded for '" CL_WHITE "%s" CL_RESET "' with '" CL_WHITE "%d" CL_RESET "' items at " CL_WHITE "%s (%d,%d)" CL_RESET "\n",
-				sd->status.name, at->count, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
+				sd->status.name, at->count, mapindex_id2name(sd->mapindex), sd->x, sd->y);
 		}
 		aFree(data);
 	}
@@ -805,7 +804,7 @@ static int32 buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap) {
 void buyingstore_update(map_session_data &sd)
 {
 	if (Sql_Query(mmysql_handle, "UPDATE `%s` SET `map` = '%s', `x` = '%d', `y` = '%d', `body_direction` = '%d', `head_direction` = '%d', `sit` = '%d', `autotrade` = '%d' WHERE `id` = '%d'",
-		buyingstores_table, map_getmapdata(sd.bl.m)->name, sd.bl.x, sd.bl.y, sd.ud.dir, sd.head_dir, pc_issit(&sd), sd.state.autotrade,
+		buyingstores_table, map_getmapdata(sd.m)->name, sd.x, sd.y, sd.ud.dir, sd.head_dir, pc_issit(&sd), sd.state.autotrade,
 		sd.buyer_id
 	) != SQL_SUCCESS) {
 		Sql_ShowDebug(mmysql_handle);

@@ -12,6 +12,7 @@ static bool upgrade_status_db(std::string file, const uint32 source_version);
 static bool upgrade_map_drops_db(std::string file, const uint32 source_version);
 static bool upgrade_enchantgrade_db( std::string file, const uint32 source_version );
 static bool upgrade_item_group_db( std::string file, const uint32 source_version );
+static bool upgrade_skill_db( std::string file, const uint32 source_version );
 
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
@@ -147,6 +148,12 @@ bool YamlUpgradeTool::initialize( int32 argc, char* argv[] ){
 	}
 	if( !process( "ITEM_GROUP_DB", 4, root_paths, "item_group_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
 		return upgrade_item_group_db( path + name_ext, source_version );
+		} ) ){
+		return false;
+	}
+
+	if( !process( "SKILL_DB", 4, root_paths, "skill_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
+		return upgrade_skill_db( path + name_ext, source_version );
 		} ) ){
 		return false;
 	}
@@ -524,6 +531,33 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 	return true;
 }
 
+static bool upgrade_skill_db( std::string file, const uint32 source_version ){
+	size_t entries = 0;
+
+	for( auto input : inNode["Body"] ){
+		// If under version 4
+		if( source_version < 4 ){
+			if( input["CastCancel"].IsDefined() ){
+				// If CastCancel was true (new default value)
+				if( input["CastCancel"].as<bool>() ){
+					// Remove it
+					input.remove( "CastCancel" );
+				}
+			}else{
+				if( input["CastTime"].IsDefined() || input["FixedCastTime"].IsDefined() ){
+					input.force_insert( "CastCancel", false );
+				}
+			}
+		}
+
+		body << input;
+		entries++;
+	}
+
+	ShowStatus( "Done converting/upgrading '" CL_WHITE "%zu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str() );
+
+	return true;
+}
 
 int32 main( int32 argc, char *argv[] ){
 	return main_core<YamlUpgradeTool>( argc, argv );

@@ -77,9 +77,9 @@ HANDLER_FUNC(emblem_download) {
 	}
 
 
-	if (SQL_SUCCESS != stmt.BindColumn( 0, SQLDT_UINT32, &version, sizeof(version), nullptr, nullptr)
-		|| SQL_SUCCESS != stmt.BindColumn( 1, SQLDT_STRING, &filetype, sizeof(filetype), nullptr, nullptr)
-		|| SQL_SUCCESS != stmt.BindColumn( 2, SQLDT_BLOB, &blob, MAX_EMBLEM_SIZE, &emblem_size, nullptr)
+	if (SQL_SUCCESS != stmt.BindColumn( 0, SQLDT_UINT32, &version, sizeof(version))
+		|| SQL_SUCCESS != stmt.BindColumn( 1, SQLDT_STRING, &filetype, sizeof(filetype))
+		|| SQL_SUCCESS != stmt.BindColumn( 2, SQLDT_BLOB, &blob, MAX_EMBLEM_SIZE, &emblem_size)
 		|| SQL_SUCCESS != stmt.NextRow()
 	) {
 		SqlStmt_ShowDebug(stmt);
@@ -241,7 +241,7 @@ HANDLER_FUNC(emblem_upload) {
 	uint32 version = START_VERSION;
 
 	if (stmt.NumRows() > 0) {
-		if (SQL_SUCCESS != stmt.BindColumn(0, SQLDT_UINT32, &version, sizeof(version), nullptr, nullptr)
+		if (SQL_SUCCESS != stmt.BindColumn(0, SQLDT_UINT32, &version, sizeof(version))
 			|| SQL_SUCCESS != stmt.NextRow()
 		) {
 			SqlStmt_ShowDebug(stmt);

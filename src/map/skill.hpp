@@ -27,6 +27,7 @@ struct skill_unit;
 struct s_skill_unit_group;
 struct status_change_entry;
 class status_change;
+class SkillImpl;
 
 #define MAX_SKILL_PRODUCE_DB	300 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
@@ -43,6 +44,8 @@ class status_change;
 #define SKILL_ALTDMG_FLAG 0x10
 /// Make skill ignore requirement consumption [Muh]
 #define SKILL_NOCONSUME_REQ 0x20
+/// Make skill consume ammo, but not the unit [Muh]
+#define UNIT_NOCONSUME_AMMO 0x40
 
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
@@ -305,6 +308,8 @@ struct s_skill_db {
 	int32 abra_probability[MAX_SKILL_LEVEL];
 	uint16 improvisedsong_rate;
 	sc_type sc;									///< Default SC for skill
+
+	std::unique_ptr<const SkillImpl> impl;
 };
 
 class SkillDatabase : public TypesafeCachedYamlDatabase <uint16, s_skill_db> {
@@ -317,7 +322,7 @@ private:
 	template<typename T, size_t S> bool parseNode(const std::string& nodeName, const std::string& subNodeName, const ryml::NodeRef& node, T(&arr)[S]);
 
 public:
-	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 3, 1) {
+	SkillDatabase() : TypesafeCachedYamlDatabase("SKILL_DB", 4) {
 		this->clear();
 	}
 
@@ -354,19 +359,18 @@ struct skill_timerskill {
 	int32 src_id;
 	int32 target_id;
 	int32 map;
-	short x,y;
+	int16 x,y;
 	uint16 skill_id,skill_lv;
 	int32 type; // a BF_ type (NOTE: some places use this as general-purpose storage...)
 	int32 flag;
 };
 
 /// Skill unit
-struct skill_unit {
-	struct block_list bl;
+struct skill_unit : public block_list {
 	std::shared_ptr<s_skill_unit_group> group; /// Skill group reference
 	t_tick limit;
 	int32 val1, val2;
-	short range;
+	int16 range;
 	bool alive;
 	bool hidden;
 };
@@ -402,7 +406,7 @@ struct s_skill_unit_group {
 
 	~s_skill_unit_group() {
 		if (this->unit)
-			map_freeblock(&this->unit->bl); // schedules deallocation of whole array (HACK)
+			map_freeblock(this->unit); // schedules deallocation of whole array (HACK)
 	}
 };
 
@@ -438,6 +442,13 @@ enum e_skill_blown	{
 	BLOWN_MD_KNOCKBACK_IMMUNE	= 0x08, // If target is MD_KNOCKBACK_IMMUNE
 	BLOWN_TARGET_NO_KNOCKBACK	= 0x10, // If target has 'special_state.no_knockback'
 	BLOWN_TARGET_BASILICA		= 0x20, // If target is in Basilica area
+};
+
+// Enum for skill_dance_overlap flag parameter
+enum e_dance_overlap : int32 {
+	OVERLAP_REMOVE = 0, // Skill unit is about to be removed, remove overlap marker from overlapping units on the cell if applicable
+	OVERLAP_SET, // Skill unit was placed, add overlap marker to overlapping units on the cell
+	OVERLAP_COUNT, // Don't change overlap marker, just count units overlapping with skill unit (excluding itself)
 };
 
 /// Create Database item
@@ -561,13 +572,13 @@ int32 skill_addtimerskill(struct block_list *src,t_tick tick,int32 target,int32 
 // Results? Added
 int32 skill_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int32 attack_type,enum damage_lv dmg_lv,t_tick tick);
 int32 skill_counter_additional_effect( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,int32 attack_type,t_tick tick);
-short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, enum e_skill_blown flag);
+int16 skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, enum e_skill_blown flag);
 int32 skill_break_equip(struct block_list *src,struct block_list *bl, uint16 where, int32 rate, int32 flag);
 int32 skill_strip_equip(struct block_list *src,struct block_list *bl, uint16 where, int32 rate, int32 lv, int32 time);
 // Skills unit
 std::shared_ptr<s_skill_unit_group> skill_id2group(int32 group_id);
 std::shared_ptr<s_skill_unit_group> skill_unitsetting(struct block_list* src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 flag);
-struct skill_unit *skill_initunit (std::shared_ptr<s_skill_unit_group> group, int32 idx, int32 x, int32 y, int32 val1, int32 val2, bool hidden);
+skill_unit* skill_initunit(std::shared_ptr<s_skill_unit_group> group, int32 idx, int32 x, int32 y, int32 val1, int32 val2, bool hidden, int32 range, t_tick limit);
 int32 skill_delunit(struct skill_unit *unit);
 std::shared_ptr<s_skill_unit_group> skill_initunitgroup(struct block_list* src, int32 count, uint16 skill_id, uint16 skill_lv, int32 unit_id, t_tick limit, int32 interval);
 int32 skill_delunitgroup_(std::shared_ptr<s_skill_unit_group> group, const char* file, int32 line, const char* func);
@@ -595,7 +606,7 @@ int32 skill_check_bl_sc(struct block_list *target, va_list ap);
 bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uint16 skill_lv );
 bool skill_check_condition_castend( map_session_data& sd, uint16 skill_id, uint16 skill_lv );
 int32 skill_check_condition_char_sub (struct block_list *bl, va_list ap);
-void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
+void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 skill_lv, int16 type);
 struct s_skill_condition skill_get_requirement(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 bool skill_disable_check(status_change &sc, uint16 skill_id);
 bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 skill_id, uint16 skill_lv, enum bl_type type, bool display_failure);
@@ -624,8 +635,8 @@ bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md);
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int32 pos_x, int32 pos_y);
 
 // Item creation
-short skill_can_produce_mix( map_session_data *sd, t_itemid nameid, int32 trigger, int32 qty);
-bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int32 slot1, int32 slot2, int32 slot3, int32 qty, short produce_idx );
+int16 skill_can_produce_mix( map_session_data *sd, t_itemid nameid, int32 trigger, int32 qty);
+bool skill_produce_mix( map_session_data *sd, uint16 skill_id, t_itemid nameid, int32 slot1, int32 slot2, int32 slot3, int32 qty, int16 produce_idx );
 
 bool skill_arrow_create( map_session_data *sd, t_itemid nameid);
 
@@ -633,6 +644,8 @@ bool skill_arrow_create( map_session_data *sd, t_itemid nameid);
 int32 skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag );
 int32 skill_castend_damage_id( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag );
 int32 skill_castend_pos2( struct block_list *src, int32 x,int32 y,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag);
+int32 skill_area_sub(struct block_list *bl, va_list ap);
+extern int32 skill_area_temp[8];
 
 bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick);
 void skill_blockpc_clear(map_session_data &sd);
@@ -2347,7 +2360,6 @@ enum e_skill {
 
 	NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING,
 	NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN,
-	SS_FUUMAKOUCHIKU_BLASTING,
 
 	SS_FOUR_CHARM = 5499,
 	NW_WILD_SHOT,
@@ -2732,8 +2744,8 @@ enum e_skill_unit_id : uint16 {
 	UNT_SHINKIROU, // Mirage
 	UNT_JACK_FROST_NOVA,
 	UNT_GROUND_GRAVITATION,
-
-	UNT_KUNAIWAIKYOKU = 298, // Kunai - Distortion
+	UNT_KUNAIKAITEN, // Shows Nothing
+	UNT_KUNAIWAIKYOKU, // Kunai - Distortion
 
 	UNT_STAR_BURST = 2409,
 

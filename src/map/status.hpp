@@ -36,6 +36,36 @@ class status_change;
 #	define MAX_REFINE 10
 #endif
 
+/**
+ * Minimum ASPD (maximum delay between attacks)
+ * Default value of 8000 effectively results in a minimum ASPD of -200 for players
+ */
+#ifndef MIN_ASPD
+	#define MIN_ASPD 8000
+#endif
+
+/**
+ * Maximum ASPD for non-players (minimum delay between attacks)
+ * This is applied after ASPD adjustments, so a monster can theoretically be naturally faster than this
+ * Officially no buff can reduce the delay below 100ms
+ * This is also the default value for monsters if AttackMotion and AttackDelay are not defined
+ * The maximum ASPD for players is defined in player.conf
+ */
+#ifndef MAX_ASPD_NOPC
+	#define MAX_ASPD_NOPC 100
+#endif
+
+// DO NOT MODIFY THESE!
+// The amotion divider defines the relation between amotion and adelay
+// For players amotion is half of adelay
+#define AMOTION_DIVIDER_PC 2
+// For monsters, homunculus, mercenaries and elementals, amotion and adelay are equal or independent
+#define AMOTION_DIVIDER_NOPC 1
+// Value for amotion that is represented as 0 ASPD on the client
+#define AMOTION_ZERO_ASPD 2000
+// Value that represents by how much each ASPD point reduces amotion
+#define AMOTION_INTERVAL 10
+
 /// Refine type
 enum e_refine_type : uint16{
 	REFINE_TYPE_ARMOR = 0,
@@ -1001,7 +1031,7 @@ enum sc_type : int16 {
 	SC_WEAPONBLOCK_ON,
 	SC_SPORE_EXPLOSION,
 	SC_ADAPTATION,
-	SC_BASILICA_CELL, // Used in renewal mode for cell_basilica only
+	SC_BASILICA_CELL, // Deprecated
 
 	SC_ENTRY_QUEUE_APPLY_DELAY,
 	SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT,
@@ -1384,12 +1414,39 @@ enum sc_type : int16 {
 	SC_DAWN_MOON,
 	SC_STAR_BURST,
 	SC_SKY_ENCHANT,
+	SC_WILD_WALK,
+
+	// Shinkiro/Shiranui
+	SC_SHADOW_CLOCK,
+	SC_SHINKIROU_CALL,
+	SC_NIGHTMARE,
+	SC_SBUNSHIN,
+
+	SC_CONTENTS_34,
+	SC_CONTENTS_35,
+	SC_NOACTION,
+
+	SC_C_BUFF_3,
+	SC_C_BUFF_4,
+	SC_C_BUFF_5,
+	SC_C_BUFF_6,
+	SC_CONTENTS_15,
+	SC_CONTENTS_16,
+	SC_CONTENTS_17,
+	SC_CONTENTS_18,
+	SC_CONTENTS_19,
+	SC_CONTENTS_20,
+
+	SC_OVERCOMING_CRISIS,
+
+	// Level 275 New Skills
+	SC_CHASING,
 
 	SC_MAX, //Automatically updated max, used in for's to check we are within bounds.
 };
 
 /// Official status change ids, used to display status icons on the client.
-enum efst_type : short{
+enum efst_type : int16{
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_ENUM)
 	EFST_BLANK = -1,
@@ -2848,10 +2905,23 @@ enum efst_type : short{
 	EFST_CONTENTS_30,
 	EFST_CONTENTS_31,
 	EFST_CONTENTS_32,
-	EFST_CONTENTS_33,	//1491
+	EFST_CONTENTS_33,
+	EFST_CONTENTS_34,
+	EFST_CONTENTS_35,
+	EFST_CONTENTS_36,
+	EFST_CONTENTS_37,
+	EFST_CONTENTS_38,
+	EFST_CONTENTS_39,	// 1497
 
 	EFST_C_BUFF_1 = 1509,
 	EFST_C_BUFF_2,
+	EFST_C_BUFF_3,
+	EFST_C_BUFF_4,
+	EFST_C_BUFF_5,
+	EFST_C_BUFF_6,
+	EFST_C_BUFF_7,
+	EFST_C_BUFF_8,
+	EFST_C_BUFF_9,	// 1517
 
 	EFST_CHASING = 1560,
 
@@ -2878,10 +2948,10 @@ enum e_joint_break : uint8 {
 	BREAK_FLAGS = BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
 };
 
-extern short current_equip_item_index;
+extern int16 current_equip_item_index;
 extern uint32 current_equip_combo_pos;
 extern int32 current_equip_card_id;
-extern short current_equip_opt_index;
+extern int16 current_equip_opt_index;
 
 //Status change option definitions (options are what makes status changes visible to chars
 //who were not on your field of sight when it happened)
@@ -2906,7 +2976,7 @@ enum e_sc_opt2 : uint16 {
 	OPT2_POISON		= 0x0001,
 	OPT2_CURSE		= 0x0002,
 	OPT2_SILENCE		= 0x0004,
-	OPT2_SIGNUMCRUCIS	= 0x0008, //Confusion
+	OPT2_CONFUSION		= 0x0008,
 	OPT2_BLIND		= 0x0010,
 	OPT2_ANGELUS		= 0x0020,
 	OPT2_BLEEDING		= 0x0040,
@@ -3083,7 +3153,7 @@ enum e_status_calc_opt : uint8 {
 };
 
 /// Flags for status_change_start and status_get_sc_def
-enum e_status_change_start_flags : int64 {
+enum e_status_change_start_flags : uint8 {
 	SCSTART_NONE       = 0x0,
 	SCSTART_NOAVOID    = 0x01, /// Cannot be avoided (it has to start)
 	SCSTART_NOTICKDEF  = 0x02, /// Tick should not be reduced (by statuses or bonuses)
@@ -3296,12 +3366,12 @@ struct status_data {
 	uint32 max_hp;
 	uint32 max_sp;
 	uint32 max_ap;
-	short
+	int16
 		str, agi, vit, int_, dex, luk,
 		pow, sta, wis, spl, con, crt,
 		eatk;
+	int32 batk;
 	uint16
-		batk,
 #ifdef RENEWAL
 		watk,
 		watk2,
@@ -3310,7 +3380,7 @@ struct status_data {
 		speed,
 		amotion, clientamotion, adelay, dmotion;
 	int32 mode;
-	short
+	int16
 		hit, flee, cri, flee2,
 		def2, mdef2,
 #ifdef RENEWAL_ASPD
@@ -3371,7 +3441,7 @@ struct regen_data {
 	struct {
 		unsigned walk:1; //Can you regen even when walking?
 		unsigned gc:1;	//Tags when you should have double regen due to GVG castle
-		unsigned overweight :2; //overweight state (1: 50%, 2: 90%)
+		bool overweight; //overweight state
 		unsigned block :2; //Block regen flag (1: Hp, 2: Sp)
 	} state;
 
@@ -3389,6 +3459,9 @@ struct sc_display_entry {
 struct status_change_entry {
 	int32 timer;
 	int32 val1,val2,val3,val4;
+
+	status_change_entry();
+	~status_change_entry();
 };
 
 ///Status change
@@ -3398,26 +3471,25 @@ public:
 	uint32 opt3;// skill state (bitfield)
 	uint16 opt1;// body state
 	uint16 opt2;// health state (bitfield)
-	unsigned char count;
 	sc_type lastEffect; // Used to check for stacking damageable SC on the same attack
 	int32 lastEffectTimer; // Timer for lastEffect
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
 	struct {
-		uint8 move;
-		uint8 pickup;
-		uint8 drop;
-		uint8 cast;
-		uint8 chat;
-		uint8 equip;
-		uint8 unequip;
-		uint8 consume;
-		uint8 attack;
-		uint8 warp;
-		uint8 deathpenalty;
-		uint8 interact;
+		bool move;
+		bool pickup;
+		bool drop;
+		bool cast;
+		bool chat;
+		bool equip;
+		bool unequip;
+		bool consume;
+		bool attack;
+		bool warp;
+		bool deathpenalty;
+		bool interact;
 	} cant;/* status change state flags */
 	//int32 sg_id; //ID of the previous Storm gust that hit you
-	short comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
+	int16 comet_x, comet_y; // Point where src casted Comet - required to calculate damage from this point
 /**
  * The Storm Gust counter was dropped in renewal
  **/
@@ -3425,18 +3497,21 @@ public:
 	unsigned char sg_counter; //Storm gust counter (previous hits from storm gust)
 #endif
 private:
-	struct status_change_entry *data[SC_MAX];
-	std::pair<enum sc_type, struct status_change_entry *> lastStatus; // last-fetched status
+	std::unordered_map<enum sc_type, status_change_entry> data;
+	std::pair<enum sc_type, status_change_entry*> lastStatus; // last-fetched status
 
 public:
 	status_change();
 
-	status_change_entry * getSCE(enum sc_type type);
-	status_change_entry * getSCE(uint32 type);
-	status_change_entry * createSCE(enum sc_type type);
+	bool hasSCE( enum sc_type type );
+	status_change_entry* getSCE( enum sc_type type );
+	status_change_entry* getSCE( uint32 type );
+	status_change_entry* createSCE( enum sc_type type );
 	void deleteSCE(enum sc_type type);
-	void clearSCE(enum sc_type type);
 	bool empty();
+	size_t size();
+	std::unordered_map<enum sc_type, status_change_entry>::const_iterator begin();
+	std::unordered_map<enum sc_type, status_change_entry>::const_iterator end();
 };
 #ifndef ONLY_CONSTANTS
 int32 status_damage( struct block_list *src, struct block_list *target, int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int32 flag, uint16 skill_id );
@@ -3446,14 +3521,6 @@ static int32 status_damage( struct block_list *src, struct block_list *target, i
 //Define for standard HP damage attacks.
 static int32 status_fix_damage( struct block_list *src, struct block_list *target, int64 hp, t_tick walkdelay, uint16 skill_id ){
 	return status_damage( src, target, hp, 0, walkdelay, 0, skill_id );
-}
-//Define for standard SP damage attacks.
-static int32 status_fix_spdamage( struct block_list *src, struct block_list *target, int64 sp, t_tick walkdelay, uint16 skill_id ){
-	return status_damage( src, target, 0, sp, walkdelay, 0, skill_id );
-}
-//Define for standard AP damage attacks.
-static int32 status_fix_apdamage( struct block_list *src, struct block_list *target, int64 ap, t_tick walkdelay, uint16 skill_id ){
-	return status_damage( src, target, 0, 0, ap, walkdelay, 0, skill_id );
 }
 //Define for standard HP/SP/AP damage triggers.
 static int32 status_zap( struct block_list* bl, int64 hp, int64 sp, int64 ap = 0 ){
@@ -3568,22 +3635,22 @@ std::vector<e_race2> status_get_race2(struct block_list *bl);
 
 struct view_data *status_get_viewdata(struct block_list *bl);
 void status_set_viewdata(struct block_list *bl, int32 class_);
-void status_change_init(struct block_list *bl);
 status_change *status_get_sc(struct block_list *bl);
 
 bool status_isdead(block_list &bl);
 int32 status_isimmune(struct block_list *bl);
+bool status_isendure(block_list& bl, t_tick tick, bool visible);
 
-t_tick status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int32 rate, t_tick tick, unsigned char flag);
-int32 status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int32 rate,int32 val1,int32 val2,int32 val3,int32 val4,t_tick duration,unsigned char flag, int32 delay = 0);
+t_tick status_get_sc_def(block_list* src, block_list* bl, sc_type type, int32 rate, t_tick tick, uint8 flag);
+bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, uint8 flag, int32 delay = 0);
 //Short version, receives rate in 1->100 range, and does not uses a flag setting.
-static int32 sc_start(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, t_tick duration, int32 delay = 0) {
+static bool sc_start(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, t_tick duration, int32 delay = 0) {
 	return status_change_start(src, bl, type, 100 * rate, val1, 0, 0, 0, duration, SCSTART_NONE, delay);
 }
-static int32 sc_start2(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, t_tick duration, int32 delay = 0) {
+static bool sc_start2(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, t_tick duration, int32 delay = 0) {
 	return status_change_start(src, bl, type, 100 * rate, val1, val2, 0, 0, duration, SCSTART_NONE, delay);
 }
-static int32 sc_start4(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, int32 delay = 0) {
+static bool sc_start4(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, int32 delay = 0) {
 	return status_change_start(src, bl, type, 100 * rate, val1, val2, val3, val4, duration, SCSTART_NONE, delay);
 }
 int32 status_change_end(struct block_list* bl, enum sc_type type, int32 tid = INVALID_TIMER);
@@ -3594,13 +3661,13 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, status_change *sc);
 TIMER_FUNC(status_clear_lastEffect_timer);
 
-#define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_homunculus(hd, opt) status_calc_bl_(&(hd)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_mercenary(md, opt) status_calc_bl_(&(md)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_elemental(ed, opt) status_calc_bl_(&(ed)->bl, status_db.getSCB_ALL(), opt)
-#define status_calc_npc(nd, opt) status_calc_bl_(&(nd)->bl, status_db.getSCB_ALL(), opt)
+#define status_calc_mob(md, opt) status_calc_bl_((md), status_db.getSCB_ALL(), opt)
+#define status_calc_pet(pd, opt) status_calc_bl_((pd), status_db.getSCB_ALL(), opt)
+#define status_calc_pc(sd, opt) status_calc_bl_((sd), status_db.getSCB_ALL(), opt)
+#define status_calc_homunculus(hd, opt) status_calc_bl_((hd), status_db.getSCB_ALL(), opt)
+#define status_calc_mercenary(md, opt) status_calc_bl_((md), status_db.getSCB_ALL(), opt)
+#define status_calc_elemental(ed, opt) status_calc_bl_((ed), status_db.getSCB_ALL(), opt)
+#define status_calc_npc(nd, opt) status_calc_bl_((nd), status_db.getSCB_ALL(), opt)
 
 bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
@@ -3632,7 +3699,7 @@ void status_calc_state(struct block_list *bl, status_change *sc, std::bitset<SCS
 void status_calc_slave_mode(mob_data& md);
 
 bool status_check_skilluse(struct block_list *src, struct block_list *target, uint16 skill_id, int32 flag);
-int32 status_check_visibility(struct block_list *src, struct block_list *target);
+bool status_check_visibility(block_list* src, block_list* target, bool checkblind);
 
 int32 status_change_spread(block_list *src, block_list *bl);
 
