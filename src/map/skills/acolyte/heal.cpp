@@ -10,7 +10,7 @@ SkillHeal::SkillHeal() : SkillImpl(AL_HEAL)
 {
 }
 
-void SkillHeal::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillHeal::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
 	status_change *tsc = status_get_sc(bl);
 	map_session_data *sd = BL_CAST(BL_PC, src);

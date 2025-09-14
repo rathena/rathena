@@ -3,14 +3,14 @@
 
 #include "decagi.hpp"
 
-#include "../../status.hpp"
 #include "../../clif.hpp"
+#include "../../status.hpp"
 
 SkillDecreaseAgi::SkillDecreaseAgi() : SkillImpl(AL_DECAGI)
 {
 }
 
-void SkillDecreaseAgi::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillDecreaseAgi::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
 	sc_type type = skill_get_sc(getSkillId());
 	status_data *sstatus = status_get_status_data(*src);

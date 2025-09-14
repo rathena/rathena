@@ -4,14 +4,14 @@
 #include "crucis.hpp"
 
 
-#include "../../pc.hpp"
 #include "../../map.hpp"
+#include "../../pc.hpp"
 
 SkillCrucis::SkillCrucis() : SkillImpl(AL_CRUCIS)
 {
 }
 
-void SkillCrucis::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillCrucis::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
 	sc_type type = skill_get_sc(getSkillId());
 
