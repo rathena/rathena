@@ -17,13 +17,8 @@ void SkillItemAppraisal::castendNoDamageId(block_list *src, block_list *target, 
 		clif_item_identify_list(sd);
 		if (sd->menuskill_id != getSkillId()) {
 			// failed, dont consume anything
-			// TODO: check & fix
+			flag |= SKILL_NOCONSUME_REQ;
 			return;
-		} else {
-			// consume sp only if succeeded
-			s_skill_condition req = skill_get_requirement(sd, getSkillId(), skill_lv);
-			status_zap(src, 0, req.sp);
-			// TODO: check if necessary or base code could be used
 		}
 	}
 }
