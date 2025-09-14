@@ -7504,6 +7504,28 @@ Body:
             Level: 3
           - Name: ABC_DAGGER_AND_BOW_M
             Level: 5
+      - Name: ABC_HIT_AND_SLIDING
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 3
+      - Name: ABC_CHASING_BREAK
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_HIT_AND_SLIDING
+            Level: 3
+      - Name: ABC_CHASING_SHOT
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_HIT_AND_SLIDING
+            Level: 3
+      - Name: ABC_ABYSS_FLAME
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_MAGIC_SWORD_M
+            Level: 5
+          - Name: ABC_FROM_THE_ABYSS
+            Level: 3
   - Job: Elemental_Master
     Inherit:
       Novice: true
@@ -7730,6 +7752,11 @@ Body:
         Requires:
           - Name: IQ_JUDGE
             Level: 1
+      - Name: IQ_BLAZING_FLAME_BLAST
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_MASSIVE_F_BLASTER
+            Level: 7
   - Job: Troubadour
     Inherit:
       Novice: true
@@ -8133,6 +8160,24 @@ Body:
             Level: 5
           - Name: NW_GRENADES_DROPPING
             Level: 3
+      - Name: NW_WILD_SHOT
+        MaxLevel: 5
+        Requires:
+          - Name: NW_ONLY_ONE_BULLET
+            Level: 3
+          - Name: NW_SPIRAL_SHOOTING
+            Level: 3
+          - Name: NW_MAGAZINE_FOR_ONE
+            Level: 3
+      - Name: NW_MIDNIGHT_FALLEN
+        MaxLevel: 5
+        Requires:
+          - Name: NW_THE_VIGILANTE_AT_NIGHT
+            Level: 3
+          - Name: NW_MAGAZINE_FOR_ONE
+            Level: 3
+          - Name: NW_WILD_FIRE
+            Level: 3
   - Job: Hyper_Novice
     Inherit:
       Novice: true
@@ -8427,6 +8472,33 @@ Body:
         Requires:
           - Name: SKE_SKY_MASTERY
             Level: 5
+      - Name: SKE_SKY_SUN
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_NOON_BLAST
+            Level: 3
+          - Name: SKE_SUNSET_BLAST
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
+      - Name: SKE_SKY_MOON
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_MIDNIGHT_KICK
+            Level: 3
+          - Name: SKE_DAWN_BREAK
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
+      - Name: SKE_STAR_LIGHT_KICK
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_STAR_BURST
+            Level: 3
+          - Name: SKE_STAR_CANNON
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
   - Job: Sky_Emperor2
     Inherit:
       Novice: true

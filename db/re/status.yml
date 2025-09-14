@@ -3076,7 +3076,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnStart:
-      Intfood: true
+      Dexfood: true
     Script: |
       bonus bDex, getstatus(SC_FOOD_DEX_CASH, 1);
   - Status: Food_Int_Cash
@@ -3088,7 +3088,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnStart:
-      Dexfood: true
+      Intfood: true
     Script: |
       bonus bInt, getstatus(SC_FOOD_INT_CASH, 1);
   - Status: Food_Luk_Cash
@@ -9916,4 +9916,12 @@ Body:
     Flags:
       NoBanishingBuster: true
       NoDispell: true
+      NoClearance: true
+  - Status: Chasing
+    Icon: EFST_CHASING
+    DurationLookup: ABC_HIT_AND_SLIDING
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
       NoClearance: true

@@ -1405,7 +1405,7 @@ int32 pc_equippoint_sub(map_session_data *sd, struct item_data* id);
 void pc_setinventorydata( map_session_data& sd );
 
 int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
-uint8 pc_checkskill(map_session_data *sd,uint16 skill_id);
+uint8 pc_checkskill(const map_session_data *sd,uint16 skill_id);
 e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id);
 uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type);
 uint8 pc_checkskill_imperial_guard(map_session_data *sd, int16 flag);
@@ -1659,7 +1659,7 @@ extern const struct sg_data sg_info[MAX_PC_FEELHATE];
 void pc_set_bg_queue_timer(map_session_data *sd);
 void pc_delete_bg_queue_timer(map_session_data *sd);
 
-void pc_setinvincibletimer(map_session_data* sd, int32 val);
+void pc_setinvincibletimer(map_session_data& sd);
 void pc_delinvincibletimer(map_session_data* sd);
 
 void pc_addspiritball(map_session_data *sd,int32 interval,int32 max);

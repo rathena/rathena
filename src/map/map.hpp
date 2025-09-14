@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cstdarg>
 #include <string>
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 
@@ -685,6 +686,7 @@ enum e_mapflag : int16 {
 	MF_NOBANK,
 	MF_SPECIALPOPUP,
 	MF_NOMACROCHECKER,
+	MF_INVINCIBLE_TIME,
 	MF_MAX
 };
 
@@ -1085,6 +1087,22 @@ inline bool map_flag_gvg2_no_te(int16 m) {
 	return mapdata_flag_gvg2_no_te(mapdata);
 }
 
+// RAII class for locking freeblock
+class FreeBlockLock {
+public:
+	explicit FreeBlockLock(bool startLocked = true);
+	~FreeBlockLock();
+
+	void lock();
+	void unlock();
+
+	FreeBlockLock(const FreeBlockLock&) = delete;
+	FreeBlockLock& operator=(const FreeBlockLock&) = delete;
+private:
+	bool locked;
+};
+
+
 extern char motd_txt[];
 extern char charhelp_txt[];
 extern char channel_conf[];
@@ -1279,7 +1297,13 @@ typedef struct s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
-	( ((bl) == nullptr || (bl)->type != (type_)) ? static_cast<T ## type_ *>(nullptr) : static_cast<T ## type_ *>(bl) )
+	( ((bl) == nullptr || (bl)->type != (type_)) \
+	? nullptr \
+	: static_cast< typename std::conditional< \
+		std::is_const<std::remove_pointer_t<decltype(bl)>>::value, \
+		const T##type_*, \
+		T##type_* \
+	>::type >(bl) )
 
 extern int32 db_use_sqldbs;
 
