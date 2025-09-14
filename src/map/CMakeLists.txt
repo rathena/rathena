@@ -75,7 +75,14 @@ set(MAP_SOURCES
 	"skills/mercenary/mercenary_bash.cpp"
 	"skills/mercenary/skill_factory_mercenary.cpp"
 
+	"skills/merchant/cartrevolution.cpp"
+	"skills/merchant/changecart.cpp"
+	"skills/merchant/crazyuproar.cpp"
+	"skills/merchant/decoratecart.cpp"
+	"skills/merchant/itemappraisal.cpp"
+	"skills/merchant/mammonite.cpp"
 	"skills/merchant/skill_factory_merchant.cpp"
+	"skills/merchant/skill_vending.cpp"
 
 	"skills/ninja/skill_factory_ninja.cpp"
 	
@@ -177,7 +184,14 @@ set(MAP_HEADERS
 	"skills/mercenary/mercenary_bash.hpp"
 	"skills/mercenary/skill_factory_mercenary.hpp"
 
+	"skills/merchant/cartrevolution.hpp"
+	"skills/merchant/changecart.hpp"
+	"skills/merchant/crazyuproar.hpp"
+	"skills/merchant/decoratecart.hpp"
+	"skills/merchant/itemappraisal.hpp"
+	"skills/merchant/mammonite.hpp"
 	"skills/merchant/skill_factory_merchant.hpp"
+	"skills/merchant/skill_vending.hpp"
 
 	"skills/ninja/skill_factory_ninja.hpp"
 	
