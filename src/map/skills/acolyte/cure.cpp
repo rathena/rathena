@@ -3,8 +3,8 @@
 
 #include "cure.hpp"
 
-#include "../../clifhpp"
-#include "../../status..hpp"
+#include "../../clif.hpp"
+#include "../../status.hpp"
 
 SkillCure::SkillCure() : SkillImpl(AL_CURE)
 {
