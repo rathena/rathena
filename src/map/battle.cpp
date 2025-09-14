@@ -9102,7 +9102,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += pc_checkskill(sd, TR_STAGE_MANNER) * 25; // !TODO: check Stage Manner ratio
 						skillratio += 5 * sstatus->spl;	// !TODO: check SPL ratio
 
-						if (sc != nullptr && sc->getSCE(SC_MYSTIC_SYMPHONY) != nullptr)
+						if (sc != nullptr && sc->hasSCE(SC_MYSTIC_SYMPHONY))
 							skillratio += 200 + 1000 * skill_lv;
 
 						RE_LVL_DMOD(100);
