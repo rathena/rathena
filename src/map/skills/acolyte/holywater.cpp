@@ -17,8 +17,7 @@ void SkillHolyWater::castendNoDamageId(struct block_list *src, struct block_list
 	{
 		if (skill_produce_mix(sd, getSkillId(), ITEMID_HOLY_WATER, 0, 0, 0, 1, -1))
 		{
-			struct skill_unit *su;
-			if ((su = map_find_skill_unit_oncell(bl, bl->x, bl->y, NJ_SUITON, nullptr, 0)) != nullptr)
+			if (skill_unit* su = map_find_skill_unit_oncell(bl, bl->x, bl->y, NJ_SUITON, nullptr, 0); su != nullptr)
 				skill_delunit(su);
 			clif_skill_nodamage(src, *bl, getSkillId(), skill_lv);
 		}
