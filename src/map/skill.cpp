@@ -19281,7 +19281,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			}
 			break;
 		case EM_PSYCHIC_STREAM:
-			if (sc != nullptr && sc->getSCE(SC_ENERGYCOAT) != nullptr) {
+			if (sc != nullptr && sc->hasSCE(SC_ENERGYCOAT)) {
 				clif_skill_fail(sd, skill_id, USESKILL_FAIL);
 				return false;
 			}
