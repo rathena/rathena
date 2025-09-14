@@ -15652,7 +15652,7 @@ void clif_parse_HomMoveToMaster(int32 fd, map_session_data *sd){
 	else
 		return;
 
-	unit_calc_pos(bl, sd->x, sd->y, sd->ud.dir);
+	unit_calc_pos(bl, sd->x, sd->y);
 	ud = unit_bl2ud(bl);
 	unit_walktoxy(bl, ud->to_x, ud->to_y, 4);
 }

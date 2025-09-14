@@ -383,7 +383,7 @@ bool mercenary_recv_data(s_mercenary *merc, bool flag)
 		md->m = sd->m;
 		md->x = sd->x;
 		md->y = sd->y;
-		unit_calc_pos(md, sd->x, sd->y, sd->ud.dir);
+		unit_calc_pos(md, sd->x, sd->y);
 		md->x = md->ud.to_x;
 		md->y = md->ud.to_y;
 

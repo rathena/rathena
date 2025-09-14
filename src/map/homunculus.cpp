@@ -1076,7 +1076,7 @@ void hom_alloc(map_session_data *sd, struct s_homunculus *hom)
 	hd->m = sd->m;
 	hd->x = sd->x;
 	hd->y = sd->y;
-	unit_calc_pos(hd, sd->x, sd->y, sd->ud.dir);
+	unit_calc_pos(hd, sd->x, sd->y);
 	hd->x = hd->ud.to_x;
 	hd->y = hd->ud.to_y;
 

@@ -256,7 +256,7 @@ int32 elemental_data_received(s_elemental *ele, bool flag) {
 		ed->m = sd->m;
 		ed->x = sd->x;
 		ed->y = sd->y;
-		unit_calc_pos(ed, sd->x, sd->y, sd->ud.dir);
+		unit_calc_pos(ed, sd->x, sd->y);
 		ed->x = ed->ud.to_x;
 		ed->y = ed->ud.to_y;
 

@@ -128,7 +128,7 @@ int32 unit_walktoxy(struct block_list *bl, int16 x, int16 y, unsigned char flag)
 int32 unit_walktobl(struct block_list *bl, struct block_list *target, int32 range, unsigned char flag);
 void unit_run_hit(struct block_list *bl, status_change *sc, map_session_data *sd, enum sc_type type);
 bool unit_run(struct block_list *bl, map_session_data *sd, enum sc_type type);
-int32 unit_calc_pos(struct block_list *bl, int32 tx, int32 ty, uint8 dir);
+int32 unit_calc_pos(struct block_list *bl, int32 tx, int32 ty);
 TIMER_FUNC(unit_delay_walktoxy_timer);
 TIMER_FUNC(unit_delay_walktobl_timer);
 
