@@ -1,4 +1,7 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #include "skill_tk_power.hpp"
 
-SkillTK_POWER::SkillTK_POWER() : WeaponSkillImpl(TK_POWER) {
+SkillPower::SkillPower() : WeaponSkillImpl(TK_POWER) {
 }

@@ -1,12 +1,15 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #pragma once
 
 #include "../skill_impl.hpp"
 
-#include "../../battle.hpp"
+#include "map/battle.hpp"
 
-class SkillTK_READYCOUNTER : public SkillImpl {
+class SkillReadycounter : public SkillImpl {
 public:
-	SkillTK_READYCOUNTER();
+	SkillReadycounter();
 
 	void castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const override;
 };

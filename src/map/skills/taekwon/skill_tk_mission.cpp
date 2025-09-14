@@ -1,13 +1,17 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
 #include "skill_tk_mission.hpp"
 
-SkillTK_MISSION::SkillTK_MISSION() : SkillImpl(TK_MISSION) {
+SkillMission::SkillMission() : SkillImpl(TK_MISSION) {
 }
 
-void SkillTK_MISSION::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillMission::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
-	
+
 	if (sd) {
-		if (sd->mission_mobid && (sd->mission_count || rnd() % 100)) { // Cannot change target when already have one
+		if (sd->mission_mobid && (sd->mission_count || rnd() % 100)) {
+			// Cannot change target when already have one
 			clif_mission_info(sd, sd->mission_mobid, sd->mission_count);
 			clif_skill_fail(*sd, this->skill_id);
 			return;
