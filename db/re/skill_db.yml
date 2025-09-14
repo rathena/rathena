@@ -45501,6 +45501,123 @@ Body:
           Amount: 76
       Status:
         Mystery_Powder: true
+  - Id: 6512
+    Name: ABC_HIT_AND_SLIDING
+    Description: Hit And Sliding
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    Range: 2
+    Hit: Multi_Hit
+    HitCount: -5
+    Element: Weapon
+    GiveAp: 2
+    Duration1: 60000
+    Cooldown:
+      - Level: 1
+        Time: 3000
+      - Level: 2
+        Time: 2500
+      - Level: 3
+        Time: 2000
+      - Level: 4
+        Time: 1500
+      - Level: 5
+        Time: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 43
+        - Level: 2
+          Amount: 46
+        - Level: 3
+          Amount: 49
+        - Level: 4
+          Amount: 52
+        - Level: 5
+          Amount: 55
+    Status: Chasing
+  - Id: 6513
+    Name: ABC_CHASING_BREAK
+    Description: Chasing Break
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 5
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    Element: Weapon
+    GiveAp: 2
+    AfterCastActDelay: 1000
+    Cooldown: 700
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 62
+        - Level: 2
+          Amount: 66
+        - Level: 3
+          Amount: 70
+        - Level: 4
+          Amount: 74
+        - Level: 5
+          Amount: 78
+  - Id: 6514
+    Name: ABC_CHASING_SHOT
+    Description: Chasing Shot
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    Element: Weapon
+    GiveAp: 2
+    AfterCastActDelay: 500
+    Casttime: 1000
+    Cooldown: 750
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 85
+        - Level: 2
+          Amount: 90
+        - Level: 3
+          Amount: 95
+        - Level: 4
+          Amount: 100
+        - Level: 5
+          Amount: 105
+      Weapon:
+        Bow: true
   - Id: 6516
     Name: AG_ENERGY_CONVERSION
     Description: Energy Conversion
@@ -45577,6 +45694,38 @@ Body:
         - Level: 5
           Amount: 78
     Status: WeaponBlock_On
+  - Id: 6519
+    Name: IQ_BLAZING_FLAME_BLAST
+    Description: Blazing Flame Blast
+    MaxLevel: 5
+    Type: Weapon
+    TargetType: Attack
+    DamageFlags:
+      Critical: true
+    Range: 7
+    Hit: Multi_Hit
+    HitCount: -7
+    Element: Weapon
+    GiveAp: 2
+    CastCancel: true
+    CastTime: 500
+    AfterCastActDelay: 1000
+    Cooldown: 700
+    FixedCastTime: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 54
+        - Level: 2
+          Amount: 58
+        - Level: 3
+          Amount: 62
+        - Level: 4
+          Amount: 66
+        - Level: 5
+          Amount: 68
+      Status:
+        Explosionspirits: true
   - Id: 6520
     Name: WH_WILD_WALK
     Description: Wild Walk
