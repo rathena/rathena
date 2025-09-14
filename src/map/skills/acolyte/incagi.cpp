@@ -11,7 +11,6 @@ SkillIncreaseAgi::SkillIncreaseAgi() : SkillImpl(AL_INCAGI)
 
 void SkillIncreaseAgi::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
-	map_session_data *sd = BL_CAST(BL_PC, src);
 	map_session_data *dstsd = BL_CAST(BL_PC, bl);
 	status_change *tsc = status_get_sc(bl);
 	enum sc_type type = skill_get_sc(getSkillId());
