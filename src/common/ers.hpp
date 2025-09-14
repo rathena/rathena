@@ -127,7 +127,7 @@ typedef struct eri {
 	void (*destroy)(struct eri *self);
 
 	/* */
-	void (*chunk_size) (struct eri *self, unsigned int new_size);
+	void (*chunk_size) (struct eri *self, uint32 new_size);
 } ERS;
 
 #ifdef DISABLE_ERS
