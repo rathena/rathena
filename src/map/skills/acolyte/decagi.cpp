@@ -12,7 +12,6 @@ SkillDecreaseAgi::SkillDecreaseAgi() : SkillImpl(AL_DECAGI)
 
 void SkillDecreaseAgi::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
-	status_change *tsc = status_get_sc(bl);
 	sc_type type = skill_get_sc(getSkillId());
 	status_data *sstatus = status_get_status_data(*src);
 
