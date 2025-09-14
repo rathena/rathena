@@ -16,7 +16,6 @@ void SkillBlessing::castendNoDamageId(struct block_list *src, struct block_list 
 	map_session_data *dstsd = BL_CAST(BL_PC, bl);
 	status_change *tsc = status_get_sc(bl);
 	sc_type type = skill_get_sc(getSkillId());
-	status_data* tstatus = status_get_status_data(*bl);
 
 	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv);
 	if (dstsd != nullptr && tsc && tsc->getSCE(SC_CHANGEUNDEAD))
