@@ -20,6 +20,7 @@ void SkillBlessing::castendNoDamageId(struct block_list *src, struct block_list 
 	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv);
 	if (dstsd != nullptr && tsc && tsc->getSCE(SC_CHANGEUNDEAD))
 	{
+		status_data* tstatus = status_get_status_data(*bl);
 		if (tstatus->hp > 1)
 			skill_attack(BF_MISC, src, src, bl, getSkillId(), skill_lv, tick, flag);
 		return;
