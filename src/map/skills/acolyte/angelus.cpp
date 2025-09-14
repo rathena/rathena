@@ -17,6 +17,7 @@ void SkillAngelus::castendNoDamageId(struct block_list *src, struct block_list *
 
 	if (sd == nullptr || sd->status.party_id == 0 || (flag & 1))
 	{
+		sc_type type = skill_get_sc(getSkillId());
 
 		// Animations don't play when outside visible range
 		if (check_distance_bl(src, bl, AREA_SIZE))
