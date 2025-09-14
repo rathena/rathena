@@ -644,6 +644,8 @@ bool skill_arrow_create( map_session_data *sd, t_itemid nameid);
 int32 skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag );
 int32 skill_castend_damage_id( struct block_list* src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag );
 int32 skill_castend_pos2( struct block_list *src, int32 x,int32 y,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag);
+int32 skill_area_sub(struct block_list *bl, va_list ap);
+extern int32 skill_area_temp[8];
 
 bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick);
 void skill_blockpc_clear(map_session_data &sd);

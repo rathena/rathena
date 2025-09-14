@@ -89,7 +89,7 @@ typedef uint32 t_itemid;
 #endif
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1634 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1639 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed (other than NPC)
 #define DEFAULT_NPC_WALK_SPEED 200 ///Default NPC walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
@@ -883,8 +883,6 @@ enum e_guild_skill {
 	GD_EMERGENCY_MOVE,
 	GD_MAX,
 };
-
-#define MAX_SKILL_ID GD_MAX
 
 //These mark the ID of the jobs, as expected by the client. [Skotlex]
 enum e_job {

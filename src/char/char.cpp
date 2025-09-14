@@ -1167,7 +1167,7 @@ int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_
 		tmp_skill.flag = SKILL_FLAG_PERMANENT;
 
 	for( i = 0; skill_count < MAX_SKILL && SQL_SUCCESS == stmt.NextRow(); i++ ) {
-		if( tmp_skill.id > 0 && tmp_skill.id < MAX_SKILL_ID ) {
+		if( tmp_skill.id > 0 ) {
 			memcpy(&p->skill[i], &tmp_skill, sizeof(tmp_skill));
 			skill_count++;
 		}
