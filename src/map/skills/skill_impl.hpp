@@ -15,17 +15,17 @@ public:
 	/**
 	 * Effect of the skill - replaces switch statements in skill_castend_nodamage_id
 	 */
-	virtual void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const;
+	virtual void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const;
 
 	/**
 	 * Effect of the skill - replaces switch statements in skill_castend_damage_id
 	 */
-	virtual void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const;
+	virtual void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const;
 
 	/**
 	 * Effect of the skill - replaces switch statements in skill_castend_pos2
 	 */
-	virtual void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32 flag) const;
+	virtual void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const;
 
 	/**
 	 * Calculate skill damage ratio - replaces battle_calc_attack_skill_ratio() switch
@@ -50,9 +50,9 @@ class SkillImplRecursiveDamageSplash : public SkillImpl{
 public:
 	explicit SkillImplRecursiveDamageSplash(e_skill skill_id);
 
-	virtual void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const override;
+	virtual void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 
-	virtual void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32 flag) const override;
+	virtual void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override;
 
 	virtual int16 getSearchSize(uint16 skill_lv) const;
 

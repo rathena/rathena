@@ -5252,7 +5252,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	switch(skill_id) {
 	case MER_CRASH:
-	case MC_MAMMONITE:
 	case TF_DOUBLE:
 	case MA_DOUBLE:
 	case AS_SONICBLOW:
@@ -5705,7 +5704,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 
 	//Splash attack skills.
 	case AS_GRIMTOOTH:
-	case MC_CARTREVOLUTION:
 	case NPC_SPLASHATTACK:
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 		[[fallthrough]];
@@ -8322,9 +8320,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case MER_QUICKEN:
 	case CR_SPEARQUICKEN:
 	case AS_POISONREACT:
-#ifndef RENEWAL
-	case MC_LOUD:
-#endif
 	case MG_ENERGYCOAT:
 	case MO_EXPLOSIONSPIRITS:
 	case MO_STEELBODY:
@@ -8693,17 +8688,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start4(src,bl,type,100,skill_lv,0,0,skill_get_time2(skill_id,skill_lv),
 				skill_get_time(skill_id,skill_lv)));
-		break;
-
-	case MC_CHANGECART:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-
-	case MC_CARTDECORATE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if( sd ) {
-			clif_SelectCart(sd);
-		}
 		break;
 
 	case TK_MISSION:
@@ -9282,9 +9266,7 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		else if (sd)
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
 		break;
-#ifdef RENEWAL
-	case MC_LOUD:
-#endif
+
 	case SN_WINDWALK:
 	case CASH_BLESSING:
 	case CASH_INCAGI:
@@ -9695,47 +9677,10 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			clif_item_repair_list( *sd, *dstsd, skill_lv );
 		break;
 
-	case MC_IDENTIFY:
-		if(sd) {
-			clif_item_identify_list(sd);
-			if( sd->menuskill_id != MC_IDENTIFY ) {// failed, dont consume anything
-				return 1;
-			}
-			else { // consume sp only if succeeded
-				struct s_skill_condition req = skill_get_requirement(sd,skill_id,skill_lv);
-				status_zap(src,0,req.sp);
-			}
-		}
-		break;
-
 	// Weapon Refining [Celest]
 	case WS_WEAPONREFINE:
 		if( sd != nullptr ){
 			clif_item_refine_list( *sd );
-		}
-		break;
-
-	case MC_VENDING:
-		if(sd)
-		{	//Prevent vending of GMs with unnecessary Level to trade/drop. [Skotlex]
-			if ( !pc_can_give_items(sd) )
-				clif_skill_fail( *sd, skill_id );
-			else {
-				sd->state.prevend = 1;
-				sd->state.workinprogress = WIP_DISABLE_ALL;
-				sd->vend_skill_lv = skill_lv;
-				ARR_FIND(0, MAX_CART, i, sd->cart.u.items_cart[i].nameid && sd->cart.u.items_cart[i].id == 0);
-				if (i < MAX_CART) {
-					// Save the cart before opening the vending UI
-					sd->state.pending_vending_ui = true;
-					intif_storage_save(sd, &sd->cart);
-				}
-				else{
-					// Instantly open the vending UI
-					sd->state.pending_vending_ui = false;
-					clif_openvendingreq( *sd, 2+skill_lv );
-				}
-			}
 		}
 		break;
 
@@ -19874,6 +19819,13 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 	}
 
 	if( type&2 ) {
+		switch (skill_id) {
+			case MC_IDENTIFY:
+				if (require.hp || require.sp || require.ap)
+					skill_consume_hpspap(sd, skill_id, require.hp, require.sp, require.ap);
+				break;
+		}
+
 		status_change *sc = &sd->sc;
 		int32 n,i;
 

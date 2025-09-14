@@ -11,7 +11,7 @@ SkillAngelus::SkillAngelus() : SkillImpl(AL_ANGELUS)
 {
 }
 
-void SkillAngelus::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillAngelus::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const
 {
 	map_session_data *sd = BL_CAST(BL_PC, src);
 
