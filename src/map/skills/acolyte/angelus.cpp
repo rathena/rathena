@@ -14,7 +14,6 @@ SkillAngelus::SkillAngelus() : SkillImpl(AL_ANGELUS)
 void SkillAngelus::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
 	map_session_data *sd = BL_CAST(BL_PC, src);
-	sc_type type = skill_get_sc(getSkillId());
 	status_change* sc = status_get_sc(src);
 
 	if (sd == nullptr || sd->status.party_id == 0 || (flag & 1))
