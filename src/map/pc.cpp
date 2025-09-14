@@ -7296,7 +7296,7 @@ int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_l
 /*==========================================
  * Return player sd skill_lv learned for given skill
  *------------------------------------------*/
-uint8 pc_checkskill(map_session_data *sd, uint16 skill_id)
+uint8 pc_checkskill(const map_session_data *sd, uint16 skill_id)
 {
 	uint16 idx = 0;
 	if (sd == nullptr)
