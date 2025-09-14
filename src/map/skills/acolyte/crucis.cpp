@@ -13,7 +13,6 @@ SkillCrucis::SkillCrucis() : SkillImpl(AL_CRUCIS)
 
 void SkillCrucis::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
 {
-	map_session_data *sd = BL_CAST(BL_PC, src);
 	sc_type type = skill_get_sc(getSkillId());
 
 	if (flag & 1)
