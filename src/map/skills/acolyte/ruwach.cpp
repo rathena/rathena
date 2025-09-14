@@ -10,7 +10,7 @@ SkillRuwach::SkillRuwach() : SkillImpl(AL_RUWACH)
 {
 }
 
-void SkillRuwach::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillRuwach::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const
 {
 	sc_type type = skill_get_sc(getSkillId());
 
