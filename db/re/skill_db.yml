@@ -45702,6 +45702,8 @@ Body:
     TargetType: Attack
     DamageFlags:
       Splash: true
+    #Flags:
+      #MultiHitOnPlants: true
     Range: 9
     Hit: Multi_Hit
     HitCount: -5
