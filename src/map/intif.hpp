@@ -24,7 +24,7 @@ class map_session_data;
 int32 intif_parse(int32 fd);
 
 int32 intif_broadcast( const char* mes, size_t len, int32 type );
-int32 intif_broadcast2( const char* mes, size_t len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY );
+int32 intif_broadcast2( const char* mes, size_t len, unsigned long fontColor, int16 fontType, int16 fontSize, int16 fontAlign, int16 fontY );
 int32 intif_broadcast_obtain_special_item(map_session_data *sd, t_itemid nameid, uint32 sourceid, unsigned char type);
 int32 intif_broadcast_obtain_special_item_npc(map_session_data *sd, t_itemid nameid);
 int32 intif_main_message(map_session_data* sd, const char* message);
@@ -72,7 +72,7 @@ int32 intif_guild_castle_datasave(int32 castle_id, int32 index, int32 value);
 void intif_itembound_guild_retrieve(uint32 char_id, uint32 account_id, int32 guild_id);
 #endif
 
-int32 intif_create_pet(uint32 account_id, uint32 char_id, short pet_type, short pet_lv, t_itemid pet_egg_id, t_itemid pet_equip, short intimate, short hungry, char rename_flag, char incubate, const char *pet_name);
+int32 intif_create_pet(uint32 account_id, uint32 char_id, int16 pet_type, int16 pet_lv, t_itemid pet_egg_id, t_itemid pet_equip, int16 intimate, int16 hungry, char rename_flag, char incubate, const char *pet_name);
 int32 intif_request_petdata(uint32 account_id, uint32 char_id, int32 pet_id);
 int32 intif_save_petdata(uint32 account_id, struct s_pet *p);
 int32 intif_delete_petdata(int32 pet_id);
@@ -104,7 +104,7 @@ int32 intif_Mail_return(uint32 char_id, int32 mail_id);
 int32 intif_Mail_send(uint32 account_id, struct mail_message *msg);
 bool intif_mail_checkreceiver(map_session_data* sd, char* name);
 // AUCTION SYSTEM
-int32 intif_Auction_requestlist(uint32 char_id, short type, int32 price, const char* searchtext, short page);
+int32 intif_Auction_requestlist(uint32 char_id, int16 type, int32 price, const char* searchtext, int16 page);
 int32 intif_Auction_register(struct auction_data *auction);
 int32 intif_Auction_cancel(uint32 char_id, uint32 auction_id);
 int32 intif_Auction_close(uint32 char_id, uint32 auction_id);

@@ -11,18 +11,16 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
-namespace rathena{
-	namespace tool_csv2yaml{
-		class Csv2YamlTool : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
+namespace rathena::tool_csv2yaml {
+class Csv2YamlTool : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
 
-			public:
-				Csv2YamlTool() : Core( e_core_type::TOOL ){
+	public:
+		Csv2YamlTool() : Core( e_core_type::TOOL ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 // Required constant and structure definitions
@@ -170,7 +168,7 @@ struct s_mercenary_skill_csv {
 
 std::unordered_map<uint16, std::vector<s_mercenary_skill_csv>> mercenary_skill_tree;
 
-static std::map<std::string, int> um_mapid2jobname {
+static std::map<std::string, int32> um_mapid2jobname {
 	{ "Novice", JOB_NOVICE }, // Novice and Super Novice share the same value
 	{ "SuperNovice", JOB_NOVICE },
 	{ "Swordman", JOB_SWORDMAN },

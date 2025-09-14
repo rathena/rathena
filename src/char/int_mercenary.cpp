@@ -94,7 +94,8 @@ bool mapif_mercenary_save(struct s_mercenary* merc)
 	// Save skill cooldowns
 	SqlStmt stmt{ *sql_handle };
 
-	if (SQL_ERROR == stmt.Prepare("INSERT INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id)) {
+	if( SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `mer_id` = '%d'", schema_config.skillcooldown_mercenary_db, merc->mercenary_id )
+	 || SQL_ERROR == stmt.Prepare( "INSERT INTO `%s` (`mer_id`, `skill`, `tick`) VALUES (%d, ?, ?)", schema_config.skillcooldown_mercenary_db, merc->mercenary_id ) ){
 		SqlStmt_ShowDebug(stmt);
 		return false;
 	}
@@ -178,19 +179,13 @@ bool mapif_mercenary_load(int32 merc_id, uint32 char_id, struct s_mercenary *mer
 	}
 	Sql_FreeResult(sql_handle);
 
-	// Clear the data once loaded.
-	if (count > 0) {
-		if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `mer_id`='%d'", schema_config.skillcooldown_mercenary_db, merc_id))
-			Sql_ShowDebug(sql_handle);
-	}
-
 	return true;
 }
 
 bool mapif_mercenary_delete(int32 merc_id)
 {
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `mer_id` = '%d'", schema_config.mercenary_db, merc_id) )
-	{
+	if( SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `mer_id` = '%d'", schema_config.skillcooldown_mercenary_db, merc_id )
+	 || SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `mer_id` = '%d'", schema_config.mercenary_db, merc_id ) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}

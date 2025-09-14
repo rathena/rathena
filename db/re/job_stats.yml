@@ -27,7 +27,10 @@
 #   MaxWeight                Base maximum weight. (Default: 20000)
 #   HpFactor                 Exponential HP increase. Per base level: [HpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   HpIncrease               Linear HP increase. Per base level: [HpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 500)
+#   SpFactor                 Exponential SP increase. Per base level: [SpFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   SpIncrease               Linear SP increase. Per base level: [SpIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 100)
+#   ApFactor                 Exponential AP increase. Per base level: [ApFactor * BaseLv / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
+#   ApIncrease               Linear AP increase. Per base level: [ApIncrease / 100]. Used when macro HP_SP_TABLES is disabled. (Default: 0)
 #   BaseASPD:                Base ASPD for each weapon type. (Default: 2000)
 #     Weapon                 Weapon type with associated ASPD.
 #   BonusStats:              Job level bonus stats/traits.
@@ -78,7 +81,7 @@
 
 Header:
   Type: JOB_STATS
-  Version: 2
+  Version: 3
 
 Body:
   - Jobs:
@@ -5029,7 +5032,7 @@ Body:
   - Jobs:
       Dragon_Knight: true
       Dragon_Knight2: true
-    MaxWeight: 35000
+    MaxWeight: 45000
     HpFactor: 150
     SpIncrease: 300
     BonusStats:
@@ -5170,7 +5173,7 @@ Body:
   - Jobs:
       Meister: true
       Meister2: true
-    MaxWeight: 38000
+    MaxWeight: 48000
     HpFactor: 90
     SpIncrease: 400
     BonusStats:
@@ -5315,7 +5318,7 @@ Body:
         Pow: 1
   - Jobs:
       Shadow_Cross: true
-    MaxWeight: 32000
+    MaxWeight: 42000
     HpFactor: 110
     SpIncrease: 400
     BonusStats:
@@ -5460,7 +5463,7 @@ Body:
         Crt: 1
   - Jobs:
       Arch_Mage: true
-    MaxWeight: 30000
+    MaxWeight: 40000
     HpFactor: 55
     SpIncrease: 900
     BonusStats:
@@ -5605,7 +5608,7 @@ Body:
         Spl: 1
   - Jobs:
       Cardinal: true
-    MaxWeight: 30000
+    MaxWeight: 40000
     HpFactor: 75
     SpIncrease: 800
     BonusStats:
@@ -5752,7 +5755,7 @@ Body:
   - Jobs:
       Windhawk: true
       Windhawk2: true
-    MaxWeight: 32000
+    MaxWeight: 42000
     HpFactor: 85
     SpIncrease: 400
     BonusStats:
@@ -5898,7 +5901,7 @@ Body:
   - Jobs:
       Imperial_Guard: true
       Imperial_Guard2: true
-    MaxWeight: 35000
+    MaxWeight: 45000
     HpFactor: 110
     HpIncrease: 700
     SpIncrease: 400
@@ -6044,7 +6047,7 @@ Body:
         Spl: 1
   - Jobs:
       Biolo: true
-    MaxWeight: 32000
+    MaxWeight: 42000
     HpFactor: 90
     SpIncrease: 900
     BonusStats:
@@ -6189,7 +6192,7 @@ Body:
         Pow: 1
   - Jobs:
       Abyss_Chaser: true
-    MaxWeight: 28000
+    MaxWeight: 42000
     HpFactor: 85
     SpIncrease: 400
     BonusStats:
@@ -6334,7 +6337,7 @@ Body:
         Pow: 1
   - Jobs:
       Elemental_Master: true
-    MaxWeight: 30000
+    MaxWeight: 40000
     HpFactor: 75
     SpIncrease: 900
     BonusStats:
@@ -6480,7 +6483,7 @@ Body:
         Con: 1
   - Jobs:
       Inquisitor: true
-    MaxWeight: 30000
+    MaxWeight: 42000
     HpFactor: 90
     HpIncrease: 650
     SpIncrease: 400
@@ -6625,7 +6628,7 @@ Body:
         Con: 1
   - Jobs:
       Troubadour: true
-    MaxWeight: 32000
+    MaxWeight: 42000
     HpFactor: 75
     HpIncrease: 300
     SpIncrease: 400
@@ -6770,7 +6773,7 @@ Body:
         Pow: 1
   - Jobs:
       Trouvere: true
-    MaxWeight: 32000
+    MaxWeight: 42000
     HpFactor: 75
     HpIncrease: 300
     SpIncrease: 400

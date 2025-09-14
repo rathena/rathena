@@ -36,7 +36,7 @@ void mail_clear(map_session_data *sd)
 	return;
 }
 
-int32 mail_removeitem(map_session_data *sd, short flag, int32 idx, int32 amount)
+int32 mail_removeitem(map_session_data *sd, int16 flag, int32 idx, int32 amount)
 {
 	int32 i;
 
@@ -159,7 +159,7 @@ bool mail_removezeny( map_session_data *sd, bool flag ){
 * @param amount : amout of zeny or number of item
 * @return see enum mail_attach_result in mail.hpp
 */
-enum mail_attach_result mail_setitem(map_session_data *sd, short idx, uint32 amount) {
+enum mail_attach_result mail_setitem(map_session_data *sd, int16 idx, uint32 amount) {
 	if( pc_istrading(sd) )
 		return MAIL_ATTACH_ERROR;
 
@@ -436,13 +436,13 @@ void mail_deliveryfail(map_session_data *sd, struct mail_message *msg){
 bool mail_invalid_operation(map_session_data *sd)
 {
 #if PACKETVER < 20150513
-	if( !map_getmapflag(sd->bl.m, MF_TOWN) && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
+	if( !map_getmapflag(sd->m, MF_TOWN) && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
 	{
 		ShowWarning("clif_parse_Mail: char '%s' trying to do invalid mail operations.\n", sd->status.name);
 		return true;
 	}
 #else
-	if( map_getmapflag( sd->bl.m, MF_NORODEX ) ){
+	if( map_getmapflag( sd->m, MF_NORODEX ) ){
 		clif_displaymessage( sd->fd, msg_txt( sd, 796 ) ); // You cannot use RODEX on this map.
 		return true;
 	}
@@ -481,7 +481,7 @@ void mail_send(map_session_data *sd, const char *dest_name, const char *title, c
 			clif_Mail_send(sd, WRITE_MAIL_FAILED_CNT);
 			return;
 		}else{
-			sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.getSCE(SC_DAILYSENDMAILCNT)->val2 + 1, INFINITE_TICK );
+			sc_start2(sd, sd, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.getSCE(SC_DAILYSENDMAILCNT)->val2 + 1, INFINITE_TICK);
 		}
 	}
 
@@ -530,6 +530,6 @@ void mail_refresh_remaining_amount( map_session_data* sd ){
 
 	// If it was not yet started or it was started on another day
 	if( sd->sc.getSCE(SC_DAILYSENDMAILCNT) == nullptr || sd->sc.getSCE(SC_DAILYSENDMAILCNT)->val1 != doy ){
-		sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, doy, 0, INFINITE_TICK );
+		sc_start2( sd, sd, SC_DAILYSENDMAILCNT, 100, doy, 0, INFINITE_TICK );
 	}
 }

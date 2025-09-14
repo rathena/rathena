@@ -17,20 +17,18 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
-namespace rathena{
-	namespace server_login{
-		class LoginServer : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
-				void finalize() override;
-				void handle_shutdown() override;
+namespace rathena::server_login {
+class LoginServer : public Core {
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
+		void finalize() override;
+		void handle_shutdown() override;
 
-			public:
-				LoginServer() : Core( e_core_type::LOGIN ){
+	public:
+		LoginServer() : Core( e_core_type::LOGIN ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 /// supported encryption types: 1- passwordencrypt, 2- passwordencrypt2, 3- both
@@ -143,6 +141,9 @@ struct online_login_data {
 	uint32 account_id;
 	int32 waiting_disconnect;
 	int32 char_server;
+#ifdef VIP_ENABLE
+	int32 vip_timeout_tid;
+#endif
 };
 
 /// Auth database

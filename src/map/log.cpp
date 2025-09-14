@@ -241,8 +241,6 @@ void log_pick(int32 id, int16 m, e_log_pick_type type, int32 amount, struct item
 
 		if (SQL_SUCCESS != stmt.PrepareStr(StringBuf_Value(&buf)) || SQL_SUCCESS != stmt.Execute())
 			SqlStmt_ShowDebug(stmt);
-
-		StringBuf_Destroy(&buf);
 	}
 	else
 	{
@@ -263,7 +261,7 @@ void log_pick(int32 id, int16 m, e_log_pick_type type, int32 amount, struct item
 void log_pick_pc(map_session_data* sd, e_log_pick_type type, int32 amount, struct item* itm)
 {
 	nullpo_retv(sd);
-	log_pick(sd->status.char_id, sd->bl.m, type, amount, itm);
+	log_pick(sd->status.char_id, sd->m, type, amount, itm);
 }
 
 
@@ -271,7 +269,7 @@ void log_pick_pc(map_session_data* sd, e_log_pick_type type, int32 amount, struc
 void log_pick_mob(struct mob_data* md, e_log_pick_type type, int32 amount, struct item* itm)
 {
 	nullpo_retv(md);
-	log_pick(md->mob_id, md->bl.m, type, amount, itm);
+	log_pick(md->mob_id, md->m, type, amount, itm);
 }
 
 /// logs zeny transactions
@@ -387,7 +385,7 @@ void log_npc( struct npc_data* nd, const char* message ){
 	{
 		SqlStmt stmt{ *logmysql_handle };
 
-		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`npc_date`, `char_name`, `map`, `mes`) VALUES (NOW(), ?, '%s', ?)", log_config.log_npc, map_mapid2mapname(nd->bl.m) )
+		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`npc_date`, `char_name`, `map`, `mes`) VALUES (NOW(), ?, '%s', ?)", log_config.log_npc, map_mapid2mapname(nd->m) )
 		||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, nd->name, strnlen(nd->name, NAME_LENGTH))
 		||  SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
 		||  SQL_SUCCESS != stmt.Execute() )
@@ -554,7 +552,7 @@ void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid)
 
 	if (log_config.sql_logs) {
 		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%" PRIu32 "', '%" PRIu32 "', '%hu', '%c', '%" PRIu32 "', '%u', '%s', '%hu', '%hu' )",
-			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y))
+			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->x, sd->y))
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -568,7 +566,7 @@ void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid)
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp, "%s - %s[%d]\t%d\t%d(%c)\t%d\t%u\t%s\t%hu,%hu\n", timestring, sd->status.name, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
+		fprintf(logfp, "%s - %s[%d]\t%d\t%d(%c)\t%d\t%u\t%s\t%hu,%hu\n", timestring, sd->status.name, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->x, sd->y);
 		fclose(logfp);
 	}
 }

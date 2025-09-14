@@ -211,7 +211,10 @@ Body:
       Silence: true
   - Status: Confusion
     DurationLookup: NPC_WIDECONFUSE
+    Opt2:
+      Confusion: true
     Flags:
+      SendOption: true
       BossResist: true
       StopWalking: true
     Fail:
@@ -319,7 +322,6 @@ Body:
     Icon: EFST_HIDING
     DurationLookup: TF_HIDING
     States:
-      NoMove: true
       NoMoveCond: true
       NoPickItem: true
       NoConsumeItem: true
@@ -435,11 +437,10 @@ Body:
     DurationLookup: AL_CRUCIS
     CalcFlags:
       Def: true
-    Opt2:
-      SignumCrucis: true
     Flags:
-      SendOption: true
       Debuff: true
+    Fail:
+      Signumcrucis: true
   - Status: Increaseagi
     Icon: EFST_INC_AGI
     DurationLookup: AL_INCAGI
@@ -482,6 +483,8 @@ Body:
   - Status: Slowpoison
     Icon: EFST_SLOWPOISON
     DurationLookup: PR_SLOWPOISON
+    CalcFlags:
+      Regen: true
     Flags:
       NoClearance: true
       RemoveOnHermode: true
@@ -662,6 +665,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
+    EndOnStart:
+      Weight90: true
   - Status: Weight90
     Icon: EFST_WEIGHTOVER90
     Flags:
@@ -673,6 +678,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
       NoForcedEnd: true
+    EndOnStart:
+      Weight50: true
   - Status: Aspdpotion0
     Icon: EFST_ATTHASTE_POTION1
     CalcFlags:
@@ -777,9 +784,6 @@ Body:
   - Status: Barrier
     Icon: EFST_BARRIER
     DurationLookup: NPC_BARRIER
-    CalcFlags:
-      Mdef: true
-      Def: true
     Flags:
       RemoveOnHermode: true
   - Status: Stripweapon
@@ -1144,13 +1148,9 @@ Body:
       bonus2 bSubEle,Ele_Wind, getstatus(SC_ARMOR_ELEMENT_WATER, 4);
   - Status: Nochat
     States:
-      NoPickItem: true
       NoPickItemCond: true
-      NoDropItem: true
       NoDropItemCond: true
-      NoChat: true
       NoChatCond: true
-      NoConsumeItem: true
       NoConsumeItemCond: true
     Flags:
       NoRemoveOnDead: true
@@ -1174,6 +1174,7 @@ Body:
     Flags:
       NoSave: true
       RequireWeapon: true
+      RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
   - Status: Parrying
     Icon: EFST_PARRYING
@@ -1196,6 +1197,7 @@ Body:
       Quicken: true
     Flags:
       NoSave: true
+      RemoveOnUnequip: true
       RemoveOnHermode: true
   - Status: Tensionrelax
     Icon: EFST_TENSIONRELAX
@@ -1231,7 +1233,6 @@ Body:
     Icon: EFST_GOSPEL
     DurationLookup: PA_GOSPEL
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Speed: true
@@ -1252,7 +1253,6 @@ Body:
   - Status: Basilica
     DurationLookup: HP_BASILICA
     States:
-      NoMove: true
       NoMoveCond: true
       NoAttack: true
     Flags:
@@ -1677,9 +1677,7 @@ Body:
     Icon: EFST_GRAVITATION
     DurationLookup: HW_GRAVITATION
     States:
-      NoMove: true
       NoMoveCond: true
-      NoConsumeItem: true
       NoConsumeItemCond: true
     CalcFlags:
       Aspd: true
@@ -1705,6 +1703,9 @@ Body:
     CalcFlags:
       Speed: true
       Aspd: true
+    States:
+      NoMoveCond: true
+      NoAttackCond: true
   - Status: Hermode
     Icon: EFST_HERMODE
     DurationLookup: CG_HERMODE
@@ -1728,6 +1729,8 @@ Body:
   - Status: Winkcharm
     Icon: EFST_DC_WINKCHARM
     DurationLookup: DC_WINKCHARM
+    States:
+      NoCastCond: true
     Flags:
       RemoveOnDamaged: true
       Debuff: true
@@ -1767,8 +1770,8 @@ Body:
     Icon: EFST_BDPLAYING
     DurationLookup: BD_ENCORE
     States:
-      NoMove: true
       NoMoveCond: true
+      NoAttackCond: true
     CalcFlags:
       Speed: true
       Regen: true
@@ -1780,6 +1783,7 @@ Body:
       RemoveOnChangeMap: true
       RequireWeapon: true
       OverlapIgnoreLevel: true
+      StopAttacking: true
     EndOnEnd:
       Longing: true
   - Status: Elementalchange
@@ -2330,8 +2334,6 @@ Body:
     CalcFlags:
       Def2: true
       MDef2: true
-      Speed: true
-      Aspd: true
     Opt3:
       SteelBody: true
     Flags:
@@ -2963,7 +2965,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnStart:
-      Intfood: true
+      Dexfood: true
     Script: |
       bonus bDex, getstatus(SC_FOOD_DEX_CASH, 1);
   - Status: Food_Int_Cash
@@ -2975,7 +2977,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnStart:
-      Dexfood: true
+      Intfood: true
     Script: |
       bonus bInt, getstatus(SC_FOOD_INT_CASH, 1);
   - Status: Food_Luk_Cash
@@ -2993,7 +2995,6 @@ Body:
   - Status: Fear
     DurationLookup: RK_WINDCUTTER
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Flee: true
@@ -3356,7 +3357,6 @@ Body:
     Icon: EFST_CAMOUFLAGE
     DurationLookup: RA_CAMOUFLAGE
     States:
-      NoMove: true
       NoMoveCond: true
     CalcFlags:
       Speed: true
@@ -3690,8 +3690,7 @@ Body:
   - Status: Oblivioncurse
     Icon: EFST_OBLIVIONCURSE
     States:
-      NoCast: true
-      Nocastcond: true
+      NoCastCond: true
     CalcFlags:
       Regen: true
     Flags:
@@ -3836,9 +3835,7 @@ Body:
     Icon: EFST_COLD
     DurationLookup: SO_DIAMONDDUST
     States:
-      NoMove: true
       NoMoveCond: true
-      NoCast: true
       NoCastCond: true
       NoConsumeItem: true
       NoAttack: true
@@ -3996,6 +3993,7 @@ Body:
       BlEffect: true
       DisplayPc: true
       StopAttacking: true
+      RemoveOnDamaged: true
     MinDuration: 10000
     EndOnStart:
       Deepsleep: true
@@ -6481,15 +6479,6 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-  - Status: Basilica_Cell
-    States:
-      NoCast: true
-    Flags:
-      NoDispell: true
-      NoBanishingBuster: true
-      NoClearance: true
-      NoClearbuff: true
-      RemoveOnChangeMap: true
   - Status: Entry_Queue_Apply_Delay
     Icon: EFST_ENTRY_QUEUE_APPLY_DELAY
     Flags:
@@ -6834,3 +6823,22 @@ Body:
     Script: |
       bonus bAspdRate, getstatus(SC_ACARAJE, 1);
       bonus bHit, getstatus(SC_ACARAJE, 2);
+  - Status: Noaction
+    Icon: EFST_NOACTION
+    DurationLookup: TK_TURNKICK
+    States:
+      NoMove: true
+      NoPickItem: true
+      NoCast: true
+      NoAttack: true
+      NoInteract: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      StopAttacking: true
+      StopCasting: true
+      BossResist: true
