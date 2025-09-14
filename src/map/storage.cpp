@@ -563,8 +563,12 @@ char storage_guild_storageopen(map_session_data* sd)
 		return GSTORAGE_NO_GUILD;
 
 #ifdef OFFICIAL_GUILD_STORAGE
-	if (!guild_checkskill(sd->guild->guild, GD_GUILD_STORAGE))
+	uint16 level = guild_checkskill(sd->guild->guild, GD_GUILD_STORAGE);
+
+	if (level == 0)
 		return GSTORAGE_NO_STORAGE; // Can't open storage if the guild has not learned the skill
+
+	uint16 max = 100 + level * 100; // Lv1..5 => 200..600
 #endif
 
 	if (sd->state.storage_flag == 2)
@@ -586,7 +590,7 @@ char storage_guild_storageopen(map_session_data* sd)
 
 	if((gstor = guild2storage2(sd->status.guild_id)) == nullptr
 #ifdef OFFICIAL_GUILD_STORAGE
-		|| (gstor->max_amount != guild_checkskill(sd->guild->guild, GD_GUILD_STORAGE) * 100)
+		|| (gstor->max_amount != max)
 #endif
 	) {
 		intif_request_guild_storage(sd->status.account_id,sd->status.guild_id);

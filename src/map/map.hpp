@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <cstdarg>
 #include <string>
+#include <type_traits>
 #include <unordered_map>
 #include <vector>
 
@@ -1296,7 +1297,13 @@ typedef struct s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
-	( ((bl) == nullptr || (bl)->type != (type_)) ? static_cast<T ## type_ *>(nullptr) : static_cast<T ## type_ *>(bl) )
+	( ((bl) == nullptr || (bl)->type != (type_)) \
+	? nullptr \
+	: static_cast< typename std::conditional< \
+		std::is_const<std::remove_pointer_t<decltype(bl)>>::value, \
+		const T##type_*, \
+		T##type_* \
+	>::type >(bl) )
 
 extern int32 db_use_sqldbs;
 
