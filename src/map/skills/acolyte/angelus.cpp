@@ -25,15 +25,6 @@ void SkillAngelus::castendNoDamageId(struct block_list *src, struct block_list *
 		if (check_distance_bl(src, bl, AREA_SIZE))
 			clif_skill_nodamage(bl, *bl, getSkillId(), skill_lv);
 
-		if (getSkillId() == SOA_SOUL_OF_HEAVEN_AND_EARTH)
-		{
-			status_percent_heal(bl, 0, 100);
-
-			if (src != bl && sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr)
-			{
-				status_heal(bl, 0, 0, 3 * skill_lv, 0);
-			}
-		}
 
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 	}
