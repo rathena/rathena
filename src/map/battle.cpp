@@ -9064,7 +9064,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case CD_DIVINUS_FLOS:
 						skillratio += -100 + 4000 * skill_lv;
 						skillratio += 70 * pc_checkskill(sd,CD_FIDUS_ANIMUS);
-						skillratio += 5 * sstatus->spl;	// !TODO: unknown ratio
+						skillratio += 10 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_DESTRUCTIVE_HURRICANE_CLIMAX:
