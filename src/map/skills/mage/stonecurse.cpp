@@ -1,19 +1,22 @@
-#include "skill_mg_stonecurse.hpp"
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-SkillMG_STONECURSE::SkillMG_STONECURSE() : SkillImpl(MG_STONECURSE) {
+#include "stonecurse.hpp"
+
+SkillStoneCurse::SkillStoneCurse() : SkillImpl(MG_STONECURSE) {
 }
 
-void SkillMG_STONECURSE::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillStoneCurse::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_data *tstatus = status_get_status_data(*target);
 	struct status_change *tsc = status_get_sc(*target);
-	
+
 	if (status_has_mode(tstatus, MD_STATUSIMMUNE)) {
 		if (sd)
 			clif_skill_fail(*sd, getSkillId());
 		return;
 	}
-	
+
 	if (status_isimmune(target) || !tsc)
 		return;
 
@@ -24,7 +27,8 @@ void SkillMG_STONECURSE::castendNoDamageId(block_list* src, block_list* target, 
 
 	// Except for players, the skill animation shows even if the status change doesn't start
 	// Players get a skill has failed message instead
-	if (sc_start2(src, target, SC_STONE, (skill_lv * 4 + 20) + brate, skill_lv, src->id, skill_get_time2(getSkillId(), skill_lv), skill_get_time(getSkillId(), skill_lv)) || sd == nullptr)
+	if (sc_start2(src, target, SC_STONE, (skill_lv * 4 + 20) + brate, skill_lv, src->id, skill_get_time2(getSkillId(), skill_lv),
+	              skill_get_time(getSkillId(), skill_lv)) || sd == nullptr)
 		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	else {
 		clif_skill_fail(*sd, getSkillId());
