@@ -1,13 +1,16 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "skill_tk_readyturn.hpp"
+#include "tk_readyturn.hpp"
 
-SkillReadyturn::SkillReadyturn() : SkillImpl(TK_READYTURN) {
+#include "map/clif.hpp"
+#include "map/status.hpp"
+
+SkillReadyTurn::SkillReadyTurn() : SkillImpl(TK_READYTURN) {
 }
 
-void SkillReadyturn::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const {
-	struct status_change_entry *tsce = status_get_sc(bl)->getSCE(SC_READYTURN);
+void SkillReadyTurn::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
+	status_change_entry *tsce = status_get_sc(bl)->getSCE(SC_READYTURN);
 
 	if (tsce) {
 		clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, status_change_end(bl, SC_READYTURN));

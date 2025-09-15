@@ -15,7 +15,6 @@
 #include "tk_readyturn.hpp"
 #include "tk_run.hpp"
 #include "tk_sevenwind.hpp"
-#include "tk_sptime.hpp"
 #include "tk_stormkick.hpp"
 #include "tk_turnkick.hpp"
 
@@ -26,31 +25,29 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 		case TK_DODGE:
 			return std::make_unique<SkillDodge>();
 		case TK_DOWNKICK:
-			return std::make_unique<SkillDownkick>();
+			return std::make_unique<SkillDownKick>();
 		case TK_HIGHJUMP:
-			return std::make_unique<SkillHighjump>();
+			return std::make_unique<SkillHighJump>();
 		case TK_JUMPKICK:
-			return std::make_unique<SkillJumpkick>();
+			return std::make_unique<SkillJumpKick>();
 		case TK_MISSION:
 			return std::make_unique<SkillMission>();
 		case TK_READYCOUNTER:
-			return std::make_unique<SkillReadycounter>();
+			return std::make_unique<SkillReadyCounter>();
 		case TK_READYDOWN:
-			return std::make_unique<SkillReadydown>();
+			return std::make_unique<SkillReadyDown>();
 		case TK_READYSTORM:
-			return std::make_unique<SkillReadystorm>();
+			return std::make_unique<SkillReadyStorm>();
 		case TK_READYTURN:
-			return std::make_unique<SkillReadyturn>();
+			return std::make_unique<SkillReadyTurn>();
 		case TK_RUN:
 			return std::make_unique<SkillRun>();
 		case TK_SEVENWIND:
-			return std::make_unique<SkillSevenwind>();
-		case TK_SPTIME:
-			return std::make_unique<SkillSptime>();
+			return std::make_unique<SkillSevenWind>();
 		case TK_STORMKICK:
-			return std::make_unique<SkillStormkick>();
+			return std::make_unique<SkillStormKick>();
 		case TK_TURNKICK:
-			return std::make_unique<SkillTurnkick>();
+			return std::make_unique<SkillTurnKick>();
 
 		default:
 			return nullptr;

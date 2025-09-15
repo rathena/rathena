@@ -7,9 +7,9 @@
 
 #include "map/battle.hpp"
 
-class SkillHighjump : public SkillImpl {
+class SkillHighJump : public SkillImpl {
 public:
-	SkillHighjump();
+	SkillHighJump();
 
 	void castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const override;
 };

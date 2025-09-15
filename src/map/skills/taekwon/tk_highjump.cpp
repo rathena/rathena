@@ -1,15 +1,15 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "skill_tk_highjump.hpp"
+#include "tk_highjump.hpp"
 
 #include "map/clif.hpp"
 #include "map/unit.hpp"
 
-SkillHighjump::SkillHighjump() : SkillImpl(TK_HIGHJUMP) {
+SkillHighJump::SkillHighJump() : SkillImpl(TK_HIGHJUMP) {
 }
 
-void SkillHighjump::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
+void SkillHighJump::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	int32 x, y, dir = unit_getdir(src);
 	map_data *mapdata = map_getmapdata(src->m);
 

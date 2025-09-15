@@ -7,9 +7,9 @@
 
 #include "map/battle.hpp"
 
-class SkillReadystorm : public SkillImpl {
+class SkillReadyStorm : public SkillImpl {
 public:
-	SkillReadystorm();
+	SkillReadyStorm();
 
-	void castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const override;
+	void castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const override;
 };

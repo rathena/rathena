@@ -1,16 +1,18 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "skill_tk_stormkick.hpp"
+#include "tk_stormkick.hpp"
 
-SkillStormkick::SkillStormkick() : WeaponSkillImpl(TK_STORMKICK) {
+#include "map/clif.hpp"
+
+SkillStormKick::SkillStormKick() : WeaponSkillImpl(TK_STORMKICK) {
 }
 
-void SkillStormkick::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
+void SkillStormKick::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
 	base_skillratio += 60 + 20 * skill_lv;
 }
 
-void SkillStormkick::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillStormKick::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	skill_area_temp[1] = 0;
 	map_foreachinshootrange(skill_attack_area, src,

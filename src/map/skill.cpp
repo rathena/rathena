@@ -5283,7 +5283,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case WS_CARTTERMINATION:	// Cart Termination
 	case AS_VENOMKNIFE:
 	case HT_PHANTASMIC:
-	case TK_COUNTER:
 	case GS_CHAINACTION:
 	case GS_TRIPLEACTION:
 #ifndef RENEWAL
@@ -5445,14 +5444,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 				skill_castend_damage_id);
 		} else
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-
-	case TK_STORMKICK: // Taekwon kicks [Dralnu]
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		skill_area_temp[1] = 0;
-		map_foreachinshootrange(skill_attack_area, src,
-			skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
-			BF_WEAPON, src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
 		break;
 
 	case KN_CHARGEATK:
@@ -8182,23 +8173,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_get_ele(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)));
 		break;
 
-	case TK_SEVENWIND:
-		switch(skill_get_ele(skill_id,skill_lv)) {
-			case ELE_EARTH : type = SC_EARTHWEAPON;  break;
-			case ELE_WIND  : type = SC_WINDWEAPON;   break;
-			case ELE_WATER : type = SC_WATERWEAPON;  break;
-			case ELE_FIRE  : type = SC_FIREWEAPON;   break;
-			case ELE_GHOST : type = SC_GHOSTWEAPON;  break;
-			case ELE_DARK  : type = SC_SHADOWWEAPON; break;
-			case ELE_HOLY  : type = SC_ASPERSIO;     break;
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-
-		sc_start(src,bl,SC_SEVENWIND,100,skill_lv,skill_get_time(skill_id,skill_lv));
-
-		break;
-
 	case NPC_MOVE_COORDINATE:
 		{
 			int16 px = bl->x, py = bl->y;
@@ -9284,10 +9258,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case ML_DEFENDER:
 	case CR_AUTOGUARD:
 	case ML_AUTOGUARD:
-	case TK_READYSTORM:
-	case TK_READYDOWN:
-	case TK_READYTURN:
-	case TK_READYCOUNTER:
 	case CR_SHRINK:
 	case SG_FUSION:
 	case GS_GATLINGFEVER:
@@ -9356,16 +9326,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 			return 0;
 		}
 		clif_skill_nodamage(src,*bl,skill_id,-1,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-	case TK_RUN:
-		if (tsce)
-		{
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,status_change_end(bl, type));
-			return 0;
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,0));
-		if (sd) // If the client receives a skill-use packet inmediately before a walkok packet, it will discard the walk packet! [Skotlex]
-			clif_walkok(*sd); // So aegis has to resend the walk ok.
 		break;
 
 	case AS_CLOAKING:

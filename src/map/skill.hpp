@@ -664,6 +664,7 @@ TIMER_FUNC(skill_blockmerc_end);
 
 // Skill action, (return dmg,heal)
 int64 skill_attack( int32 attack_type, struct block_list* src, struct block_list *dsrc,struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag );
+int32 skill_attack_area(struct block_list *bl,va_list ap);
 
 void skill_reload(void);
 

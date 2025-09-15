@@ -1,17 +1,17 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "skill_tk_jumpkick.hpp"
+#include "tk_jumpkick.hpp"
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 #include "map/unit.hpp"
 
-SkillJumpkick::SkillJumpkick() : WeaponSkillImpl(TK_JUMPKICK) {
+SkillJumpKick::SkillJumpKick() : WeaponSkillImpl(TK_JUMPKICK) {
 }
 
-void SkillJumpkick::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
+void SkillJumpKick::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
 	status_change *sc = status_get_sc(src);
 	// Different damage formulas depending on damage trigger
 	if (sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == getSkillId())
@@ -24,7 +24,7 @@ void SkillJumpkick::calculateSkillRatio(const Damage *wd, const block_list *src,
 		base_skillratio += -70 + 10 * skill_lv;
 }
 
-void SkillJumpkick::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
+void SkillJumpKick::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
 	status_change *tsc = status_get_sc(target);
 	map_session_data *dstsd = BL_CAST(BL_PC, target);
 
@@ -46,7 +46,7 @@ void SkillJumpkick::applyAdditionalEffects(block_list *src, block_list *target, 
 	}
 }
 
-void SkillJumpkick::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const {
+void SkillJumpKick::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data *sd = BL_CAST(BL_PC, src);
 
 	/* Check if the target is an enemy; if not, skill should fail so the character doesn't unit_movepos (exploitable) */

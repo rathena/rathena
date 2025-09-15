@@ -5070,9 +5070,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list
 			else if (!sd)
 				skillratio += 80000 / i - 100;
 			break;
-		case TK_STORMKICK:
-			skillratio += 60 + 20 * skill_lv;
-			break;
 		case GS_TRIPLEACTION:
 			skillratio += 50 * skill_lv;
 			break;
