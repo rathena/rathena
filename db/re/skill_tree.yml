@@ -7526,6 +7526,13 @@ Body:
         Requires:
           - Name: ABC_HIT_AND_SLIDING
             Level: 3
+      - Name: ABC_ABYSS_FLAME
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_MAGIC_SWORD_M
+            Level: 5
+          - Name: ABC_FROM_THE_ABYSS
+            Level: 3
   - Job: Elemental_Master
     Inherit:
       Novice: true
@@ -7652,6 +7659,21 @@ Body:
         MaxLevel: 5
         Requires:
           - Name: EM_ELEMENTAL_SPIRIT_M
+            Level: 3
+      - Name: EM_PSYCHIC_STREAM
+        MaxLevel: 5
+        Requires:
+          - Name: EM_MAGIC_BOOK_M
+            Level: 5
+          - Name: EM_DIAMOND_STORM
+            Level: 3
+          - Name: EM_CONFLAGRATION
+            Level: 3
+          - Name: EM_LIGHTNING_LAND
+            Level: 3
+          - Name: EM_TERRA_DRIVE
+            Level: 3
+          - Name: EM_VENOM_SWAMP
             Level: 3
   - Job: Inquisitor
     Inherit:
@@ -7841,6 +7863,11 @@ Body:
         Requires:
           - Name: TR_AIN_RHAPSODY
             Level: 1
+      - Name: TR_RHYTHMICAL_WAVE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_METALIC_FURY
+            Level: 3
   - Job: Trouvere
     Inherit:
       Novice: true
@@ -7925,6 +7952,11 @@ Body:
         Requires:
           - Name: TR_AIN_RHAPSODY
             Level: 1
+      - Name: TR_RHYTHMICAL_WAVE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_METALIC_FURY
+            Level: 3
   - Job: Windhawk2
     Inherit:
       Novice: true

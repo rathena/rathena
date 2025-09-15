@@ -45694,6 +45694,109 @@ Body:
         - Level: 5
           Amount: 78
     Status: WeaponBlock_On
+  - Id: 6515
+    Name: ABC_ABYSS_FLAME
+    Description: Abyss Flame
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      NoDamage: true
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 3
+    Element: Fire
+    GiveAp: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    CastTime: 3000
+    AfterCastActDelay: 1000
+    Cooldown: 700
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 82
+        - Level: 2
+          Amount: 86
+        - Level: 3
+          Amount: 90
+        - Level: 4
+          Amount: 94
+        - Level: 5
+          Amount: 98
+  - Id: 6517
+    Name: EM_PSYCHIC_STREAM
+    Description: Psychic Stream
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Neutral
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay:
+      - Level: 1
+        Time: 1500
+      - Level: 2
+        Time: 1250
+      - Level: 3
+        Time: 1000
+      - Level: 4
+        Time: 750
+      - Level: 5
+        Time: 500
+    Cooldown:
+      - Level: 1
+        Time: 12500
+      - Level: 2
+        Time: 10000
+      - Level: 3
+        Time: 7500
+      - Level: 4
+        Time: 5000
+      - Level: 5
+        Time: 2500
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 77
+        - Level: 2
+          Amount: 84
+        - Level: 3
+          Amount: 91
+        - Level: 4
+          Amount: 98
+        - Level: 5
+          Amount: 105
+      ApCost: 5
   - Id: 6518
     Name: CD_DIVINUS_FLOS
     Description: Divinus Flos
@@ -45802,6 +45905,76 @@ Body:
       ApCost: 5
       State: Falcon
     Status: Wild_Walk
+  - Id: 6521
+    Name: TR_RHYTHMICAL_WAVE
+    Description: Rhythmical Wave
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 5
+    GiveAp: 3
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 4
+    CastCancel: true
+    Casttime: 2000
+    AfterCastActDelay: 1000
+    Cooldown: 400
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 56
+        - Level: 2
+          Amount: 62
+        - Level: 3
+          Amount: 68
+        - Level: 4
+          Amount: 74
+        - Level: 5
+          Amount: 80
+      Weapon:
+        Musical: true
+        Whip: true
+      Ammo:
+        Arrow: true
+      AmmoAmount: 1
+  - Id: 6522
+    Name: ABC_ABYSS_FLAME_ATK
+    Description: Abyss Flame Attack
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Fire
+    GiveAp: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
   - Id: 8001
     Name: HLIF_HEAL
     Description: Healing Touch

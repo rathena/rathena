@@ -3562,7 +3562,7 @@ status_data* status_get_status_data(block_list& bl);
 struct status_data *status_get_base_status(struct block_list *bl);
 const char* status_get_name( block_list& bl );
 int32 status_get_class(struct block_list *bl);
-int32 status_get_lv(struct block_list *bl);
+int32 status_get_lv(const block_list *bl);
 #define status_get_range(bl) status_get_status_data(*bl)->rhw.range
 #define status_get_hp(bl) status_get_status_data(*bl)->hp
 #define status_get_max_hp(bl) status_get_status_data(*bl)->max_hp
@@ -3635,7 +3635,7 @@ std::vector<e_race2> status_get_race2(struct block_list *bl);
 
 struct view_data *status_get_viewdata(struct block_list *bl);
 void status_set_viewdata(struct block_list *bl, int32 class_);
-status_change *status_get_sc(struct block_list *bl);
+status_change* status_get_sc(const block_list* bl);
 
 bool status_isdead(block_list &bl);
 int32 status_isimmune(struct block_list *bl);
