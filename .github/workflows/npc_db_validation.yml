@@ -77,8 +77,8 @@ jobs:
       - name: Command - make import
         run: make import
 
-      - name: Command - make yaml2sql
-        run: make yaml2sql
+      - name: Command - make tools
+        run: make tools
 
       - name: Run Once - yaml2sql
         run: ./yaml2sql
