@@ -9201,6 +9201,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						if (ed)
 							skillratio += skillratio * status_get_lv(ed->master) / 100;
 						break;
+					case EM_PSYCHIC_STREAM:
+						skillratio += -100 + 1000 + 3500 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
+						break;
 					case NPC_RAINOFMETEOR:
 						skillratio += 350;	// unknown ratio
 						break;

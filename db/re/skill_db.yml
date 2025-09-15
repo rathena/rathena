@@ -45736,6 +45736,67 @@ Body:
           Amount: 94
         - Level: 5
           Amount: 98
+  - Id: 6517
+    Name: EM_PSYCHIC_STREAM
+    Description: Psychic Stream
+    MaxLevel: 5
+    Type: Magic
+    TargetType: Attack
+    DamageFlags:
+      Splash: true
+    Range: 9
+    Hit: Multi_Hit
+    HitCount: 5
+    Element: Neutral
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 3
+      - Level: 5
+        Area: 3
+    CastCancel: true
+    CastTime: 2000
+    AfterCastActDelay:
+      - Level: 1
+        Time: 1500
+      - Level: 2
+        Time: 1250
+      - Level: 3
+        Time: 1000
+      - Level: 4
+        Time: 750
+      - Level: 5
+        Time: 500
+    Cooldown:
+      - Level: 1
+        Time: 12500
+      - Level: 2
+        Time: 10000
+      - Level: 3
+        Time: 7500
+      - Level: 4
+        Time: 5000
+      - Level: 5
+        Time: 2500
+    FixedCastTime: 1500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 77
+        - Level: 2
+          Amount: 84
+        - Level: 3
+          Amount: 91
+        - Level: 4
+          Amount: 98
+        - Level: 5
+          Amount: 105
+      ApCost: 5
   - Id: 6519
     Name: IQ_BLAZING_FLAME_BLAST
     Description: Blazing Flame Blast

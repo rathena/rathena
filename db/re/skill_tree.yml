@@ -7653,6 +7653,21 @@ Body:
         Requires:
           - Name: EM_ELEMENTAL_SPIRIT_M
             Level: 3
+      - Name: EM_PSYCHIC_STREAM
+        MaxLevel: 5
+        Requires:
+          - Name: EM_MAGIC_BOOK_M
+            Level: 5
+          - Name: EM_DIAMOND_STORM
+            Level: 3
+          - Name: EM_CONFLAGRATION
+            Level: 3
+          - Name: EM_LIGHTNING_LAND
+            Level: 3
+          - Name: EM_TERRA_DRIVE
+            Level: 3
+          - Name: EM_VENOM_SWAMP
+            Level: 3
   - Job: Inquisitor
     Inherit:
       Novice: true
