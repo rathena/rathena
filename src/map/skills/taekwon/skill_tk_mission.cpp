@@ -13,20 +13,20 @@ void SkillMission::castendNoDamageId(struct block_list *src, struct block_list *
 		if (sd->mission_mobid && (sd->mission_count || rnd() % 100)) {
 			// Cannot change target when already have one
 			clif_mission_info(sd, sd->mission_mobid, sd->mission_count);
-			clif_skill_fail(*sd, this->skill_id);
+			clif_skill_fail(*sd, getSkillId());
 			return;
 		}
 
 		int32 id = mob_get_random_id(MOBG_TAEKWON_MISSION, RMF_NONE, 0);
 
 		if (!id) {
-			clif_skill_fail(*sd, this->skill_id);
+			clif_skill_fail(*sd, getSkillId());
 			return;
 		}
 		sd->mission_mobid = id;
 		sd->mission_count = 0;
 		pc_setglobalreg(sd, add_str(TKMISSIONID_VAR), id);
 		clif_mission_info(sd, id, 0);
-		clif_skill_nodamage(src, *bl, this->skill_id, skill_lv);
+		clif_skill_nodamage(src, *bl, getSkillId(), skill_lv);
 	}
 }

@@ -11,9 +11,9 @@ void SkillStormkick::calculateSkillRatio(const Damage *wd, const block_list *src
 }
 
 void SkillStormkick::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	clif_skill_nodamage(src, *target, this->skill_id, skill_lv);
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	skill_area_temp[1] = 0;
 	map_foreachinshootrange(skill_attack_area, src,
-	                        skill_get_splash(this->skill_id, skill_lv), BL_CHAR | BL_SKILL,
-	                        BF_WEAPON, src, src, this->skill_id, skill_lv, tick, flag, BCT_ENEMY);
+	                        skill_get_splash(getSkillId(), skill_lv), BL_CHAR | BL_SKILL,
+	                        BF_WEAPON, src, src, getSkillId(), skill_lv, tick, flag, BCT_ENEMY);
 }

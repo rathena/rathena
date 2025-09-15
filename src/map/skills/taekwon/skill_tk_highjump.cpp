@@ -3,16 +3,18 @@
 
 #include "skill_tk_highjump.hpp"
 
+#include "map/clif.hpp"
+#include "map/unit.hpp"
+
 SkillHighjump::SkillHighjump() : SkillImpl(TK_HIGHJUMP) {
 }
 
-void SkillHighjump::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillHighjump::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	int32 x, y, dir = unit_getdir(src);
-	struct map_data *mapdata = map_getmapdata(src->m);
+	map_data *mapdata = map_getmapdata(src->m);
 
 	// Fails on noteleport maps, except for GvG and BG maps [Skotlex]
-	if (mapdata->getMapFlag(MF_NOTELEPORT) &&
-	    !(mapdata->getMapFlag(MF_BATTLEGROUND) || map_flag_gvg2(mapdata))) {
+	if (mapdata->getMapFlag(MF_NOTELEPORT) && !(mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg(mapdata))) {
 		clif_skill_nodamage(src, *bl, TK_HIGHJUMP, skill_lv);
 		return;
 	} else if (dir % 2) {

@@ -1758,10 +1758,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 		skill_break_equip(src,bl, EQP_WEAPON|EQP_ARMOR, 100*skill_lv, BCT_ENEMY);
 		break;
 
-	case TK_DOWNKICK:
-		sc_start(src,bl,SC_STUN,3333,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
 	case TK_JUMPKICK:
 		// debuff the following statuses
 		if( dstsd && dstsd->class_ != MAPID_SOUL_LINKER && !tsc->getSCE(SC_PRESERVE) ) {
@@ -1778,14 +1774,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 			status_change_end(bl, SC_SOULSHADOW);
 			status_change_end(bl, SC_SOULFALCON);
 			status_change_end(bl, SC_SOULFAIRY);
-		}
-		break;
-	case TK_TURNKICK:
-		// Note: attack_type is passed as BF_WEAPON for the actual target, BF_MISC for the splash-affected mobs.
-		if (attack_type&BF_MISC) {
-			sc_start(src, bl, SC_STUN, 200, skill_lv, skill_get_time(skill_id, skill_lv));
-			clif_specialeffect(bl, EF_SPINEDBODY, AREA);
-			sc_start(src, bl, SC_NOACTION, 100, 1, skill_get_time2(skill_id, skill_lv));
 		}
 		break;
 	case MO_BALKYOUNG: //Note: attack_type is passed as BF_WEAPON for the actual target, BF_MISC for the splash-affected mobs.
@@ -5313,7 +5301,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 	case WS_CARTTERMINATION:	// Cart Termination
 	case AS_VENOMKNIFE:
 	case HT_PHANTASMIC:
-	case TK_DOWNKICK:
 	case TK_COUNTER:
 	case GS_CHAINACTION:
 	case GS_TRIPLEACTION:
@@ -6513,7 +6500,6 @@ int32 skill_castend_damage_id (struct block_list* src, struct block_list *bl, ui
 		}
 		break;
 
-	case TK_TURNKICK:
 	case MO_BALKYOUNG: //Active part of the attack. Skill-attack [Skotlex]
 	{
 		skill_area_temp[1] = bl->id; //NOTE: This is used in skill_castend_nodamage_id to avoid affecting the target.
@@ -8898,7 +8884,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		}
 		break;
 
-	case TK_TURNKICK:
 	case MO_BALKYOUNG: //Passive part of the attack. Splash knock-back+stun. [Skotlex]
 		if (skill_area_temp[1] != bl->id) {
 			skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),-1,BLOWN_NONE);
@@ -9324,7 +9309,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 	case TK_READYDOWN:
 	case TK_READYTURN:
 	case TK_READYCOUNTER:
-	case TK_DODGE:
 	case CR_SHRINK:
 	case SG_FUSION:
 	case GS_GATLINGFEVER:
@@ -10052,37 +10036,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 #else
 			clif_slide(*bl, bl->x, bl->y); //Show the casting animation on pre-re
 #endif
-		}
-		break;
-
-	case TK_HIGHJUMP:
-		{
-			int32 x,y, dir = unit_getdir(src);
-			struct map_data *mapdata = &map[src->m];
-
-			//Fails on noteleport maps, except for GvG and BG maps [Skotlex]
-			if( mapdata->getMapFlag(MF_NOTELEPORT) &&
-				!(mapdata->getMapFlag(MF_BATTLEGROUND) || mapdata_flag_gvg2(mapdata) )
-			) {
-				clif_skill_nodamage(src, *bl, TK_HIGHJUMP, skill_lv);
-				break;
-			} else if(dir%2) {
-				//Diagonal
-				x = src->x + dirx[dir]*(skill_lv*4)/3;
-				y = src->y + diry[dir]*(skill_lv*4)/3;
-			} else {
-				x = src->x + dirx[dir]*skill_lv*2;
-				y = src->y + diry[dir]*skill_lv*2;
-			}
-
-			int32 x1 = x + dirx[dir];
-			int32 y1 = y + diry[dir];
-
-			clif_skill_nodamage(src,*bl,TK_HIGHJUMP,skill_lv);
-			if( !map_count_oncell(src->m,x,y,BL_PC|BL_NPC|BL_MOB,0) && map_getcell(src->m,x,y,CELL_CHKREACH) &&
-				!map_count_oncell(src->m,x1,y1,BL_PC|BL_NPC|BL_MOB,0) && map_getcell(src->m,x1,y1,CELL_CHKREACH) &&
-				unit_movepos(src, x, y, 1, 0))
-				clif_blown(src);
 		}
 		break;
 

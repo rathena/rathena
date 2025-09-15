@@ -10,9 +10,9 @@ void SkillReadycounter::castendNoDamageId(struct block_list *src, struct block_l
 	struct status_change_entry *tsce = status_get_sc(bl)->getSCE(SC_READYCOUNTER);
 
 	if (tsce) {
-		clif_skill_nodamage(src, *bl, this->skill_id, skill_lv, status_change_end(bl, SC_READYCOUNTER));
+		clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, status_change_end(bl, SC_READYCOUNTER));
 		return;
 	}
 
-	clif_skill_nodamage(src, *bl, this->skill_id, skill_lv, sc_start(src, bl, SC_READYCOUNTER, 100, skill_lv, skill_get_time(this->skill_id, skill_lv)));
+	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, sc_start(src, bl, SC_READYCOUNTER, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)));
 }
