@@ -9519,8 +9519,7 @@ void status_set_viewdata(struct block_list *bl, int32 class_)
  * @param bl: Object whose sc data to get [PC|MOB|HOM|MER|ELEM|NPC]
  * @return status change data structure bl->sc
  */
-status_change *status_get_sc(struct block_list *bl)
-{
+status_change* status_get_sc(const block_list* bl){
 	if( bl )
 	switch (bl->type) {
 		case BL_PC:  return &((TBL_PC*)bl)->sc;
