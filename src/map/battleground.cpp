@@ -679,7 +679,7 @@ int32 bg_create(uint16 mapindex, s_battleground_team* team)
  * @param bl: Object
  * @return Battleground ID
  */
-int32 bg_team_get_id(struct block_list *bl)
+int32 bg_team_get_id(block_list *bl)
 {
 	nullpo_ret(bl);
 
