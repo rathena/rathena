@@ -52,4 +52,4 @@ jobs:
         run: cmake -B build
 
       - name: Build
-        run: cmake --build build -j $(nproc) --target all
+        run: cmake --build build -j2 --target all
