@@ -2371,7 +2371,7 @@ struct s_mercenary_data* map_id2mc(int32 id){
 	return BL_CAST(BL_MER, bl);
 }
 
-struct pet_data* map_id2pd(int32 id){
+pet_data* map_id2pd(int32 id){
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_PET, bl);
 }

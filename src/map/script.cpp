@@ -14946,7 +14946,7 @@ BUILDIN_FUNC(getequipcardid)
  *------------------------------------------*/
 BUILDIN_FUNC(petskillbonus)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 
 	if(!script_rid2sd(sd) || sd->pd == nullptr)
@@ -14982,7 +14982,7 @@ BUILDIN_FUNC(petskillbonus)
 BUILDIN_FUNC(petloot)
 {
 	int32 max;
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 
 	if(!script_rid2sd(sd) || sd->pd==nullptr)
@@ -15348,7 +15348,7 @@ BUILDIN_FUNC(soundeffectall)
  *------------------------------------------*/
 BUILDIN_FUNC(petrecovery)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 	int32 sc;
 
@@ -15383,7 +15383,7 @@ BUILDIN_FUNC(petrecovery)
 /// petskillattack "<skill name>",<level>,<rate>,<bonusrate>
 BUILDIN_FUNC(petskillattack)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 	int32 id = 0;
 
@@ -15416,7 +15416,7 @@ BUILDIN_FUNC(petskillattack)
 /// petskillattack2 "<skill name>",<damage>,<div>,<rate>,<bonusrate>
 BUILDIN_FUNC(petskillattack2)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 	int32 id = 0;
 
@@ -15449,7 +15449,7 @@ BUILDIN_FUNC(petskillattack2)
 /// petskillsupport "<skill name>",<level>,<delay>,<hp>,<sp>
 BUILDIN_FUNC(petskillsupport)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	TBL_PC *sd;
 	int32 id = 0;
 

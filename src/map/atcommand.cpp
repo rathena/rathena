@@ -3249,7 +3249,7 @@ ACMD_FUNC(hatch) {
  *------------------------------------------*/
 ACMD_FUNC(petfriendly) {
 	int32 friendly;
-	struct pet_data *pd;
+	pet_data *pd;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (friendly = atoi(message)) < 0) {
@@ -3286,7 +3286,7 @@ ACMD_FUNC(petfriendly) {
 ACMD_FUNC(pethungry)
 {
 	int32 hungry;
-	struct pet_data *pd;
+	pet_data *pd;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (hungry = atoi(message)) < 0) {
@@ -3320,7 +3320,7 @@ ACMD_FUNC(pethungry)
  *------------------------------------------*/
 ACMD_FUNC(petrename)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	nullpo_retr(-1, sd);
 	if (!sd->status.pet_id || !sd->pd) {
 		clif_displaymessage(fd, msg_txt(sd,184)); // Sorry, but you have no pet.
@@ -7454,7 +7454,7 @@ ACMD_FUNC(npctalk)
 ACMD_FUNC(pettalk)
 {
 	char mes[100],temp[CHAT_SIZE_MAX];
-	struct pet_data *pd;
+	pet_data *pd;
 
 	nullpo_retr(-1, sd);
 
