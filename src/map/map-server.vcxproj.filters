@@ -501,55 +501,55 @@
     <ClInclude Include="skills/taekwon/skill_factory_taekwon.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_counter.hpp">
+    <ClInclude Include="skills/taekwon/counter.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_dodge.hpp">
+    <ClInclude Include="skills/taekwon/dodge.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_downkick.hpp">
+    <ClInclude Include="skills/taekwon/downkick.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_highjump.hpp">
+    <ClInclude Include="skills/taekwon/highjump.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_hptime.hpp">
+    <ClInclude Include="skills/taekwon/hptime.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_jumpkick.hpp">
+    <ClInclude Include="skills/taekwon/jumpkick.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_mission.hpp">
+    <ClInclude Include="skills/taekwon/mission.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_power.hpp">
+    <ClInclude Include="skills/taekwon/power.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_readycounter.hpp">
+    <ClInclude Include="skills/taekwon/readycounter.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_readydown.hpp">
+    <ClInclude Include="skills/taekwon/readydown.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_readystorm.hpp">
+    <ClInclude Include="skills/taekwon/readystorm.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_readyturn.hpp">
+    <ClInclude Include="skills/taekwon/readyturn.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_run.hpp">
+    <ClInclude Include="skills/taekwon/run.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_sevenwind.hpp">
+    <ClInclude Include="skills/taekwon/sevenwind.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_sptime.hpp">
+    <ClInclude Include="skills/taekwon/sptime.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_stormkick.hpp">
+    <ClInclude Include="skills/taekwon/stormkick.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_tk_turnkick.hpp">
+    <ClInclude Include="skills/taekwon/turnkick.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/skill_factory_thief.hpp">
@@ -692,55 +692,55 @@
     <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_counter.cpp">
+    <ClCompile Include="skills/taekwon/counter.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_dodge.cpp">
+    <ClCompile Include="skills/taekwon/dodge.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_downkick.cpp">
+    <ClCompile Include="skills/taekwon/downkick.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_highjump.cpp">
+    <ClCompile Include="skills/taekwon/highjump.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_hptime.cpp">
+    <ClCompile Include="skills/taekwon/hptime.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_jumpkick.cpp">
+    <ClCompile Include="skills/taekwon/jumpkick.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_mission.cpp">
+    <ClCompile Include="skills/taekwon/mission.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_power.cpp">
+    <ClCompile Include="skills/taekwon/power.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_readycounter.cpp">
+    <ClCompile Include="skills/taekwon/readycounter.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_readydown.cpp">
+    <ClCompile Include="skills/taekwon/readydown.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_readystorm.cpp">
+    <ClCompile Include="skills/taekwon/readystorm.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_readyturn.cpp">
+    <ClCompile Include="skills/taekwon/readyturn.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_run.cpp">
+    <ClCompile Include="skills/taekwon/run.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_sevenwind.cpp">
+    <ClCompile Include="skills/taekwon/sevenwind.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_sptime.cpp">
+    <ClCompile Include="skills/taekwon/sptime.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_stormkick.cpp">
+    <ClCompile Include="skills/taekwon/stormkick.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_tk_turnkick.cpp">
+    <ClCompile Include="skills/taekwon/turnkick.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/skill_factory_thief.cpp">
