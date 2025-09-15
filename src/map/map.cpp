@@ -111,16 +111,18 @@ struct charid2nick {
 	std::set<int32> charids; // charid list of requests of notification on this nick
 };
 
-// DBMap declaration
+// unordered_map declaration
 std::unordered_map<int32, block_list*> id_db; /// int32 id -> struct block_list*
 std::unordered_map<int32, map_session_data*> pc_db; /// int32 id -> map_session_data*
 std::unordered_map<int32, mob_data*> mobid_db; /// int32 id -> struct mob_data*
 std::unordered_map<int32, mob_data*> bossid_db; /// int32 id -> struct mob_data* (MVP db)
-static DBMap* map_db=nullptr; /// uint32 mapindex -> struct map_data*
+// Split map database into two typed containers
+std::unordered_map<uint32, map_data*> map_db_local;   /// uint32 mapindex -> struct map_data* (local maps)
+std::unordered_map<uint32, map_data_other_server*> map_db_remote; /// uint32 mapindex -> struct map_data_other_server* (remote maps)
 std::unordered_map<uint32, charid2nick> nick_db; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
 std::unordered_map<uint32, map_session_data*> charid_db; /// uint32 char_id -> map_session_data*
 std::unordered_map<int32, block_list*> regen_db; /// int32 id -> struct block_list* (status_natural_heal processing)
-static DBMap* map_msg_db=nullptr;
+std::unordered_map<int32, std::vector<std::string>> map_msg_db; /// lang -> messages
 
 static int32 map_users=0;
 
@@ -2454,7 +2456,7 @@ map_session_data * map_nick2sd(const char *nick, bool allow_partial)
 }
 
 /*==========================================
- * Looksup id_db DBMap and returns BL pointer of 'id' or nullptr if not found
+ * Looksup id_db and returns BL pointer of 'id' or nullptr if not found
  *------------------------------------------*/
 struct block_list * map_id2bl(int32 id) {
 	auto it = id_db.find(id);
@@ -3164,7 +3166,11 @@ int16 map_mapindex2mapid(uint16 mapindex)
 	if (!mapindex)
 		return -1;
 
-	md = (struct map_data*)uidb_get(map_db,(uint32)mapindex);
+	{
+		auto it = map_db_local.find((uint32)mapindex);
+		if (it != map_db_local.end())
+			md = it->second;
+	}
 	if(md==nullptr || md->cell==nullptr)
 		return -1;
 	return md->m;
@@ -3175,10 +3181,12 @@ int16 map_mapindex2mapid(uint16 mapindex)
  *------------------------------------------*/
 int32 map_mapname2ipport(uint16 name, uint32* ip, uint16* port)
 {
-	struct map_data_other_server *mdos;
+	map_data_other_server* mdos = nullptr;
+	auto it = map_db_remote.find((uint32)name);
+	if (it != map_db_remote.end())
+		mdos = it->second;
 
-	mdos = (struct map_data_other_server*)uidb_get(map_db,(uint32)name);
-	if(mdos==nullptr || mdos->cell) //If gat isn't null, this is a local map.
+	if(mdos==nullptr || mdos->cell) //If cell isn't null, this is a local map.
 		return -1;
 	*ip=mdos->ip;
 	*port=mdos->port;
@@ -3466,11 +3474,11 @@ void map_setgatcell(int16 m, int16 x, int16 y, int32 gat)
 /*==========================================
  * Invisible Walls
  *------------------------------------------*/
-static DBMap* iwall_db;
+static std::unordered_map<std::string, iwall_data> iwall_db;
 
 bool map_iwall_exist(const char* wall_name)
 {
-	return strdb_exists(iwall_db, wall_name);
+	return iwall_db.find(wall_name) != iwall_db.end();
 }
 
 void map_iwall_nextxy(int16 x, int16 y, int8 dir, int32 pos, int16 *x1, int16 *y1)
@@ -3492,27 +3500,26 @@ void map_iwall_nextxy(int16 x, int16 y, int8 dir, int32 pos, int16 *x1, int16 *y
 
 bool map_iwall_set(int16 m, int16 x, int16 y, int32 size, int8 dir, bool shootable, const char* wall_name)
 {
-	struct iwall_data *iwall;
+	struct iwall_data iwall = {};
 	int32 i;
 	int16 x1 = 0, y1 = 0;
 
 	if( size < 1 || !wall_name )
 		return false;
 
-	if( (iwall = (struct iwall_data *)strdb_get(iwall_db, wall_name)) != nullptr )
+	if( map_iwall_exist(wall_name) )
 		return false; // Already Exists
 
 	if( map_getcell(m, x, y, CELL_CHKNOREACH) )
 		return false; // Starting cell problem
 
-	CREATE(iwall, struct iwall_data, 1);
-	iwall->m = m;
-	iwall->x = x;
-	iwall->y = y;
-	iwall->size = size;
-	iwall->dir = dir;
-	iwall->shootable = shootable;
-	safestrncpy(iwall->wall_name, wall_name, sizeof(iwall->wall_name));
+	iwall.m = m;
+	iwall.x = x;
+	iwall.y = y;
+	iwall.size = size;
+	iwall.dir = dir;
+	iwall.shootable = shootable;
+	safestrncpy(iwall.wall_name, wall_name, sizeof(iwall.wall_name));
 
 	for( i = 0; i < size; i++ )
 	{
@@ -3527,69 +3534,70 @@ bool map_iwall_set(int16 m, int16 x, int16 y, int32 size, int8 dir, bool shootab
 		clif_changemapcell( m, x1, y1, map_getcell( m, x1, y1, CELL_GETTYPE ) );
 	}
 
-	iwall->size = i;
+	iwall.size = i;
 
-	strdb_put(iwall_db, iwall->wall_name, iwall);
+	iwall_db.emplace(iwall.wall_name, iwall);
 	map_getmapdata(m)->iwall_num++;
 
 	return true;
 }
 
 void map_iwall_get(map_session_data *sd) {
-	struct iwall_data *iwall;
-	DBIterator* iter;
 	int16 x1, y1;
 	int32 i;
 
 	if( map_getmapdata(sd->m)->iwall_num < 1 )
 		return;
 
-	iter = db_iterator(iwall_db);
-	for( iwall = (struct iwall_data *)dbi_first(iter); dbi_exists(iter); iwall = (struct iwall_data *)dbi_next(iter) ) {
-		if( iwall->m != sd->m )
+	for (auto& [_, iwall] : iwall_db)
+	{
+		if( iwall.m != sd->m )
 			continue;
 
-		for( i = 0; i < iwall->size; i++ ) {
-			map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
-			clif_changemapcell( iwall->m, x1, y1, map_getcell( iwall->m, x1, y1, CELL_GETTYPE ), SELF, sd );
+		for( i = 0; i < iwall.size; i++ ) {
+			map_iwall_nextxy(iwall.x, iwall.y, iwall.dir, i, &x1, &y1);
+			clif_changemapcell( iwall.m, x1, y1, map_getcell( iwall.m, x1, y1, CELL_GETTYPE ), SELF, sd );
 		}
 	}
-	dbi_destroy(iter);
 }
 
 bool map_iwall_remove(const char *wall_name)
 {
-	struct iwall_data *iwall;
 	int16 i, x1, y1;
 
-	if( (iwall = (struct iwall_data *)strdb_get(iwall_db, wall_name)) == nullptr )
+	if( !map_iwall_exist(wall_name) )
 		return false; // Nothing to do
 
-	for( i = 0; i < iwall->size; i++ ) {
-		map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
+	struct iwall_data& iwall = iwall_db[wall_name];
 
-		map_setcell(iwall->m, x1, y1, CELL_SHOOTABLE, true);
-		map_setcell(iwall->m, x1, y1, CELL_WALKABLE, true);
+	for( i = 0; i < iwall.size; i++ ) {
+		map_iwall_nextxy(iwall.x, iwall.y, iwall.dir, i, &x1, &y1);
 
-		clif_changemapcell( iwall->m, x1, y1, map_getcell( iwall->m, x1, y1, CELL_GETTYPE ) );
+		map_setcell(iwall.m, x1, y1, CELL_SHOOTABLE, true);
+		map_setcell(iwall.m, x1, y1, CELL_WALKABLE, true);
+
+		clif_changemapcell( iwall.m, x1, y1, map_getcell( iwall.m, x1, y1, CELL_GETTYPE ) );
 	}
 
-	map_getmapdata(iwall->m)->iwall_num--;
-	strdb_remove(iwall_db, iwall->wall_name);
+	map_getmapdata(iwall.m)->iwall_num--;
+	iwall_db.erase(wall_name);
 	return true;
 }
 
 /**
  * @see DBCreateData
  */
-static DBData create_map_data_other_server(DBKey key, va_list args)
+// helper to ensure a remote map_data_other_server exists in remote DB
+static map_data_other_server* ensure_remote_map(uint16 mapindex)
 {
-	struct map_data_other_server *mdos;
-	uint16 mapindex = (uint16)key.ui;
-	mdos=(struct map_data_other_server *)aCalloc(1,sizeof(struct map_data_other_server));
-	mdos->index = mapindex;
-	memcpy(mdos->name, mapindex_id2name(mapindex), MAP_NAME_LENGTH);
-	return db_ptr2data(mdos);
+    auto it = map_db_remote.find((uint32)mapindex);
+    if (it != map_db_remote.end())
+        return it->second;
+    auto* mdos = (struct map_data_other_server *)aCalloc(1,sizeof(struct map_data_other_server));
+    mdos->index = mapindex;
+    memcpy(mdos->name, mapindex_id2name(mapindex), MAP_NAME_LENGTH);
+    map_db_remote.emplace((uint32)mapindex, mdos);
+    return mdos;
 }
 
 /*==========================================
@@ -3597,11 +3605,9 @@ static DBData create_map_data_other_server(DBKey key, va_list args)
  *------------------------------------------*/
 int32 map_setipport(uint16 mapindex, uint32 ip, uint16 port)
 {
-	struct map_data_other_server *mdos;
+	struct map_data_other_server *mdos = ensure_remote_map(mapindex);
 
-	mdos= (struct map_data_other_server *)uidb_ensure(map_db,(uint32)mapindex, create_map_data_other_server);
-
-	if(mdos->cell) //Local map,Do nothing. Give priority to our own local maps over ones from another server. [Skotlex]
+	if(mdos->cell) // Local map, do nothing. Prefer local maps.
 		return 0;
 	if(ip == clif_getip() && port == clif_getport()) {
 		//That's odd, we received info that we are the ones with this map, but... we don't have it.
@@ -3617,19 +3623,14 @@ int32 map_setipport(uint16 mapindex, uint32 ip, uint16 port)
  * Delete all the other maps server management
  * @see DBApply
  */
-int32 map_eraseallipport_sub(DBKey key, DBData *data, va_list va)
-{
-	struct map_data_other_server *mdos = (struct map_data_other_server *)db_data2ptr(data);
-	if(mdos->cell == nullptr) {
-		db_remove(map_db,key);
-		aFree(mdos);
-	}
-	return 0;
-}
-
 int32 map_eraseallipport(void)
 {
-	map_db->foreach(map_db,map_eraseallipport_sub);
+	for (auto &kv : map_db_remote) {
+		map_data_other_server* mdos = kv.second;
+		if (mdos)
+			aFree(mdos);
+	}
+	map_db_remote.clear();
 	return 1;
 }
 
@@ -3638,15 +3639,15 @@ int32 map_eraseallipport(void)
  *------------------------------------------*/
 int32 map_eraseipport(uint16 mapindex, uint32 ip, uint16 port)
 {
-	struct map_data_other_server *mdos;
-
-	mdos = (struct map_data_other_server*)uidb_get(map_db,(uint32)mapindex);
-	if(!mdos || mdos->cell) //Map either does not exists or is a local map.
+	auto it = map_db_remote.find((uint32)mapindex);
+	if (it == map_db_remote.end())
 		return 0;
-
+	map_data_other_server* mdos = it->second;
+	if(mdos->cell) // Local map
+		return 0;
 	if(mdos->ip==ip && mdos->port == port) {
-		uidb_remove(map_db,(uint32)mapindex);
 		aFree(mdos);
+		map_db_remote.erase(it);
 		return 1;
 	}
 	return 0;
@@ -3915,12 +3916,12 @@ int32 map_readgat (struct map_data* m)
  *--------------------------------------*/
 void map_addmap2db(struct map_data *m)
 {
-	uidb_put(map_db, (uint32)m->index, m);
+	map_db_local[(uint32)m->index] = m;
 }
 
 void map_removemapdb(struct map_data *m)
 {
-	uidb_remove(map_db, (uint32)m->index);
+	map_db_local.erase((uint32)m->index);
 }
 
 /*======================================
@@ -3999,7 +4000,7 @@ int32 map_readallmaps (void)
 
 		mapdata->index = idx;
 
-		if (uidb_get(map_db,(uint32)mapdata->index) != nullptr) {
+		if (map_db_local.find((uint32)mapdata->index) != map_db_local.end()) {
 			ShowWarning("Map %s already loaded!" CL_CLL "\n", mapdata->name);
 			if (mapdata->cell) {
 				aFree(mapdata->cell);
@@ -4503,17 +4504,6 @@ static void map_free_questinfo(struct map_data *mapdata) {
 	}
 
 	mapdata->qi_npc.clear();
-}
-
-/**
- * @see DBApply
- */
-int32 map_db_final(DBKey key, DBData *data, va_list ap)
-{
-	struct map_data_other_server *mdos = (struct map_data_other_server *)db_data2ptr(data);
-	if(mdos && mdos->cell == nullptr)
-		aFree(mdos);
-	return 0;
 }
 
 static int32 cleanup_sub(struct block_list *bl, va_list ap = nullptr)
@@ -5025,8 +5015,18 @@ void MapServer::finalize(){
 	}
 	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map_num);
 
-	for (const auto[_, bl] : id_db) {
-		cleanup_sub(bl);
+	// Avoid iterator invalidation: snapshot remaining BLs before cleanup
+	{
+		std::vector<block_list*> remaining;
+		remaining.reserve(id_db.size());
+		for (const auto &kv : id_db) {
+			if (kv.second)
+				remaining.push_back(kv.second);
+		}
+		for (auto *bl : remaining) {
+			cleanup_sub(bl);
+		}
+		id_db.clear();
 	}
 	chrif_char_reset_offline();
 	chrif_flush_fifo();
@@ -5052,7 +5052,6 @@ void MapServer::finalize(){
 	do_final_homunculus();
 	do_final_mercenary();
 	do_final_mob(false);
-	do_final_msg();
 	do_final_skill();
 	do_final_status();
 	do_final_unit();
@@ -5065,7 +5064,12 @@ void MapServer::finalize(){
 	do_final_buyingstore();
 	do_final_path();
 
-	map_db->destroy(map_db, map_db_final);
+	// Free remote map metadata
+	for (auto &kv : map_db_remote) {
+		if (kv.second)
+			aFree(kv.second);
+	}
+	map_db_remote.clear();
 
 	for (int32 i = 0; i < map_num; i++) {
 		struct map_data *mapdata = map_getmapdata(i);
@@ -5085,8 +5089,6 @@ void MapServer::finalize(){
 	mapindex_final();
 	if(enable_grf)
 		grfio_final();
-
-	iwall_db->destroy(iwall_db, nullptr);
 
 	map_sql_close();
 
@@ -5149,13 +5151,6 @@ void display_helpscreen(bool do_exit)
 /*======================================================
  * Message System
  *------------------------------------------------------*/
-struct msg_data {
-	char* msg[MAP_MAX_MSG];
-};
-struct msg_data *map_lang2msgdb(uint8 lang){
-	return (struct msg_data*)idb_get(map_msg_db, lang);
-}
-
 void map_do_init_msg(void){
 	int32 test=0, i=0, size;
 	const char * listelang[] = {
@@ -5171,7 +5166,6 @@ void map_do_init_msg(void){
 		MSG_CONF_NAME_THA
 	};
 
-	map_msg_db = idb_alloc(DB_OPT_BASE);
 	size = ARRAYLENGTH(listelang); //avoid recalc
 	while(test!=-1 && size>i){ //for all enable lang +(English default)
 		test = msg_checklangtype(i,false);
@@ -5179,51 +5173,35 @@ void map_do_init_msg(void){
 		i++;
 	}
 }
-void map_do_final_msg(void){
-	DBIterator *iter = db_iterator(map_msg_db);
-	struct msg_data *mdb;
-
-	for (mdb = (struct msg_data *)dbi_first(iter); dbi_exists(iter); mdb = (struct msg_data *)dbi_next(iter)) {
-		_do_final_msg(MAP_MAX_MSG,mdb->msg);
-		aFree(mdb);
-	}
-	dbi_destroy(iter);
-	map_msg_db->destroy(map_msg_db, nullptr);
-}
 void map_msg_reload(void){
-	map_do_final_msg(); //clear data
-	map_do_init_msg();
+    map_msg_db.clear();
+    map_do_init_msg();
 }
 int32 map_msg_config_read(const char *cfgName, int32 lang){
-	struct msg_data *mdb;
-
-	if( (mdb = map_lang2msgdb(lang)) == nullptr )
-		CREATE(mdb, struct msg_data, 1);
-	else
-		idb_remove(map_msg_db, lang);
-	idb_put(map_msg_db, lang, mdb);
-
-	if(_msg_config_read(cfgName,MAP_MAX_MSG,mdb->msg)!=0){ //an error occur
-		idb_remove(map_msg_db, lang); //@TRYME
-		aFree(mdb);
-	}
-	return 0;
+    // Read messages for given language into vector
+	map_msg_db[lang].resize(MAP_MAX_MSG);
+	
+    if (_msg_config_read(cfgName, MAP_MAX_MSG, map_msg_db[lang]) != 0) { // error occurred
+        map_msg_db.erase(lang);
+    }
+    return 0;
 }
 const char* map_msg_txt(map_session_data *sd, int32 msg_number){
-	struct msg_data *mdb;
-	uint8 lang = 0; //default
-	if(sd && sd->langtype) lang = sd->langtype;
+    uint8 lang = 0; // default language
+    if (sd && sd->langtype) lang = sd->langtype;
 
-	if( (mdb = map_lang2msgdb(lang)) != nullptr){
-		const char *tmp = _msg_txt(msg_number,MAP_MAX_MSG,mdb->msg);
-		if(strcmp(tmp,"??")) //to verify result
-			return tmp;
-		ShowDebug("Message #%d not found for langtype %d.\n",msg_number,lang);
-	}
-	ShowDebug("Selected langtype %d not loaded, trying fallback...\n",lang);
-	if(lang != 0 && (mdb = map_lang2msgdb(0)) != nullptr) //fallback
-		return _msg_txt(msg_number,MAP_MAX_MSG,mdb->msg);
-	return "??";
+    auto it = map_msg_db.find(lang);
+    if (it != map_msg_db.end()) {
+        const char* tmp = _msg_txt(msg_number, MAP_MAX_MSG, it->second);
+        if (strcmp(tmp, "??")) // found valid entry
+            return tmp;
+        ShowDebug("Message #%d not found for langtype %d.\n", msg_number, lang);
+    }
+    ShowDebug("Selected langtype %d not loaded, trying fallback...\n", lang);
+    auto it0 = map_msg_db.find(0);
+    if (lang != 0 && it0 != map_msg_db.end()) // fallback to English
+        return _msg_txt(msg_number, MAP_MAX_MSG, it0->second);
+    return "??";
 }
 
 /**
@@ -5374,9 +5352,6 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	script_config_read(SCRIPT_CONF_NAME);
 	inter_config_read(INTER_CONF_NAME);
 	log_config_read(LOG_CONF_NAME);
-
-	map_db = uidb_alloc(DB_OPT_BASE);
-	iwall_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1); // [Zephyrus] Invisible Walls
 
 	map_sql_init();
 	if (log_config.sql_logs)

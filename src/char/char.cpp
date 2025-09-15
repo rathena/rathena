@@ -60,7 +60,7 @@ struct fame_list chemist_fame_list[MAX_FAME_LIST];
 struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 
 #define CHAR_MAX_MSG 300	//max number of msg_conf
-static char* msg_table[CHAR_MAX_MSG]; // Login Server messages_conf
+static std::vector<std::string> msg_table; // Login Server messages_conf
 
 // check for exit signal
 // 0 is saving complete
@@ -3118,13 +3118,12 @@ void char_config_adjust() {
  * Message conf function
  */
 int32 char_msg_config_read(const char *cfgName){
+	msg_table.resize(CHAR_MAX_MSG);
+	
 	return _msg_config_read(cfgName,CHAR_MAX_MSG,msg_table);
 }
 const char* char_msg_txt(int32 msg_number){
 	return _msg_txt(msg_number,CHAR_MAX_MSG,msg_table);
-}
-void char_do_final_msg(void){
-	_do_final_msg(CHAR_MAX_MSG,msg_table);
 }
 
 void CharacterServer::finalize(){
@@ -3137,7 +3136,6 @@ void CharacterServer::finalize(){
 
 	flush_fifos();
 
-	do_final_msg();
 	do_final_chmapif();
 	do_final_chlogif();
 

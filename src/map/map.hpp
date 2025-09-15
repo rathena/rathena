@@ -13,7 +13,6 @@
 
 #include <common/cbasetypes.hpp>
 #include <common/core.hpp> // CORE_ST_LAST
-#include <common/db.hpp>
 #include <common/mapindex.hpp>
 #include <common/mmo.hpp>
 #include <common/msg_conf.hpp>
@@ -49,10 +48,8 @@ struct Channel;
 struct map_data *map_getmapdata(int16 m);
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
-#define do_final_msg() map_do_final_msg()
 int32 map_msg_config_read(const char *cfgName,int32 lang);
 const char* map_msg_txt(map_session_data *sd,int32 msg_number);
-void map_do_final_msg(void);
 void map_msg_reload(void);
 
 #define MAX_NPC_PER_MAP 512

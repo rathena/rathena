@@ -6,6 +6,9 @@
 
 #include <config/core.hpp>
 
+#include <vector>
+#include <string>
+
 enum lang_types {
 	LANG_RUS = 0x01,
 	LANG_SPN = 0x02,
@@ -27,11 +30,9 @@ enum lang_types {
 #endif
 
 //read msg in table
-const char* _msg_txt(int32 msg_number,int32 size, char ** msg_table);
+const char* _msg_txt(int32 msg_number,int32 size, const std::vector<std::string>& msg_table);
 //store msg from txtfile into msg_table
-int32 _msg_config_read(const char* cfgName,int32 size, char ** msg_table);
-//clear msg_table
-void _do_final_msg(int32 size, char ** msg_table);
+int32 _msg_config_read(const char* cfgName,int32 size, std::vector<std::string>& msg_table);
 //Lookups
 int32 msg_langstr2langtype(char * langtype);
 const char* msg_langtype2langstr(int32 langtype);

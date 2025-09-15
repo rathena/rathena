@@ -15,11 +15,11 @@
  * Return the message string of the specified number by [Yor]
  * (read in table msg_table, with specified lenght table in size)
  */
-const char* _msg_txt(int32 msg_number,int32 size, char ** msg_table)
+const char* _msg_txt(int32 msg_number,int32 size, const std::vector<std::string>& msg_table)
 {
 	if (msg_number >= 0 && msg_number < size &&
-		msg_table[msg_number] != nullptr && msg_table[msg_number][0] != '\0')
-	return msg_table[msg_number];
+		!msg_table[msg_number].empty())
+		return msg_table[msg_number].c_str();
 
 	return "??";
 }
@@ -28,20 +28,16 @@ const char* _msg_txt(int32 msg_number,int32 size, char ** msg_table)
 /*
  * Read txt file and store them into msg_table
  */
-int32 _msg_config_read(const char* cfgName,int32 size, char ** msg_table)
+int32 _msg_config_read(const char* cfgName,int32 size, std::vector<std::string>& msg_table)
 {
 	uint16 msg_number, msg_count = 0, line_num = 0;
 	char line[1024], w1[8], w2[512];
 	FILE *fp;
-	static int32 called = 1;
 
 	if ((fp = fopen(cfgName, "r")) == nullptr) {
 		ShowError("Messages file not found: %s\n", cfgName);
 		return -1;
 	}
-
-	if ((--called) == 0)
-		memset(msg_table, 0, sizeof (msg_table[0]) * size);
 
 	while (fgets(line, sizeof (line), fp)) {
 		line_num++;
@@ -55,11 +51,9 @@ int32 _msg_config_read(const char* cfgName,int32 size, char ** msg_table)
 		else {
 			msg_number = atoi(w1);
 			if (msg_number >= 0 && msg_number < size) {
-				if (msg_table[msg_number] != nullptr)
-					aFree(msg_table[msg_number]);
-				size_t len = strnlen(w2,sizeof(w2)) + 1;
-				msg_table[msg_number] = (char *) aMalloc(len * sizeof (char));
-				safestrncpy(msg_table[msg_number], w2, len);
+				if (!msg_table[msg_number].empty())
+					msg_table[msg_number].clear();
+				msg_table[msg_number] = w2;
 				msg_count++;
 			}
 			else
@@ -71,15 +65,6 @@ int32 _msg_config_read(const char* cfgName,int32 size, char ** msg_table)
 	ShowInfo("Done reading " CL_WHITE "'%d'" CL_RESET " messages in " CL_WHITE "'%s'" CL_RESET ".\n",msg_count,cfgName);
 
 	return 0;
-}
-
-/*
- * Destroy msg_table (freeup mem)
- */
-void _do_final_msg(int32 size, char ** msg_table){
-	int32 i;
-	for (i = 0; i < size; i++)
-		aFree(msg_table[i]);
 }
 
 /*

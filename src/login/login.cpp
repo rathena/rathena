@@ -35,7 +35,7 @@ using namespace rathena;
 using namespace rathena::server_login;
 
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
-static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
+static std::vector<std::string> msg_table;	/// Login Server messages_conf
 
 //definition of exported var declared in header
 struct mmo_char_server ch_server[MAX_SERVERS];	/// char server data
@@ -515,16 +515,13 @@ int32 lan_subnetcheck(uint32 ip) {
 
 /// Msg_conf tayloring
 int32 login_msg_config_read(const char *cfgName){
+	msg_table.resize(LOGIN_MAX_MSG);
+	
 	return _msg_config_read(cfgName,LOGIN_MAX_MSG,msg_table);
 }
 const char* login_msg_txt(int32 msg_number){
 	return _msg_txt(msg_number,LOGIN_MAX_MSG,msg_table);
 }
-void login_do_final_msg(void){
-	_do_final_msg(LOGIN_MAX_MSG,msg_table);
-}
-
-
 
 
 /// Set and read Configurations
@@ -818,7 +815,6 @@ void LoginServer::finalize(){
 	if( login_config.log_login )
 		loginlog_final();
 
-	do_final_msg();
 	ipban_final();
 	do_final_loginclif();
 	do_final_logincnslif();

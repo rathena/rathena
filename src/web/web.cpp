@@ -38,7 +38,7 @@ using namespace rathena::server_core;
 using namespace rathena::server_web;
 
 #define WEB_MAX_MSG 30				/// Max number predefined in msg_conf
-static char* msg_table[WEB_MAX_MSG];	/// Web Server messages_conf
+static std::vector<std::string> msg_table;	/// Web Server messages_conf
 
 struct Web_Config web_config {};
 struct Inter_Config inter_config {};
@@ -93,13 +93,12 @@ std::thread svr_thr;
 
 /// Msg_conf tayloring
 int32 web_msg_config_read(char *cfgName){
+	msg_table.resize(WEB_MAX_MSG);
+	
 	return _msg_config_read(cfgName,WEB_MAX_MSG,msg_table);
 }
 const char* web_msg_txt(int32 msg_number){
 	return _msg_txt(msg_number,WEB_MAX_MSG,msg_table);
-}
-void web_do_final_msg(void){
-	_do_final_msg(WEB_MAX_MSG,msg_table);
 }
 /// Set and read Configurations
 
@@ -373,7 +372,6 @@ void WebServer::finalize(){
 	svr_thr.join();
 	web_sql_close();
 #endif
-	do_final_msg();
 	ShowStatus("Finished.\n");
 }
 

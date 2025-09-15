@@ -338,10 +338,8 @@ void char_set_session_flag_(int32 account_id, int32 val, bool set);
 
 #define msg_config_read(cfgName) char_msg_config_read(cfgName)
 #define msg_txt(msg_number) char_msg_txt(msg_number)
-#define do_final_msg() char_do_final_msg()
 int32 char_msg_config_read(const char *cfgName);
 const char* char_msg_txt(int32 msg_number);
-void char_do_final_msg(void);
 bool char_config_read(const char* cfgName, bool normal);
 
 #endif /* CHAR_HPP */

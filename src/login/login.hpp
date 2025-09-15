@@ -130,10 +130,8 @@ extern struct Login_Config login_config;
 
 #define msg_config_read(cfgName) login_msg_config_read(cfgName)
 #define msg_txt(msg_number) login_msg_txt(msg_number)
-#define do_final_msg() login_do_final_msg()
 int32 login_msg_config_read(const char *cfgName);
 const char* login_msg_txt(int32 msg_number);
-void login_do_final_msg(void);
 bool login_config_read(const char* cfgName, bool normal);
 
 /// Online User Database [Wizputer]
