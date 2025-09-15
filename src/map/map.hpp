@@ -44,6 +44,7 @@ class MapServer : public Core{
 
 struct npc_data;
 struct item_data;
+struct s_elemental_data;
 struct Channel;
 
 struct map_data *map_getmapdata(int16 m);
@@ -1188,7 +1189,7 @@ struct npc_data * map_id2nd(int32 id);
 struct homun_data* map_id2hd(int32 id);
 struct s_mercenary_data* map_id2mc(int32 id);
 struct pet_data* map_id2pd(int32 id);
-struct s_elemental_data* map_id2ed(int32 id);
+s_elemental_data* map_id2ed(int32 id);
 struct chat_data* map_id2cd(int32 id);
 struct block_list * map_id2bl(int32 id);
 bool map_blid_exists( int32 id );
@@ -1294,7 +1295,7 @@ typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
 typedef struct s_mercenary_data   TBL_MER;
-typedef struct s_elemental_data	TBL_ELEM;
+typedef s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
 	( ((bl) == nullptr || (bl)->type != (type_)) \

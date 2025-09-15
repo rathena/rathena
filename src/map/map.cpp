@@ -2376,7 +2376,7 @@ struct pet_data* map_id2pd(int32 id){
 	return BL_CAST(BL_PET, bl);
 }
 
-struct s_elemental_data* map_id2ed(int32 id) {
+s_elemental_data* map_id2ed(int32 id) {
 	struct block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_ELEM, bl);
 }
