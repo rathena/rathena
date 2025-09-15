@@ -1176,10 +1176,10 @@ void map_data_copyall(void);
 void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
 
 // player to map session
-void map_addnickdb(int32 charid, const char* nick);
-void map_delnickdb(int32 charid, const char* nick);
-void map_reqnickdb(map_session_data* sd,int32 charid);
-const char* map_charid2nick(int32 charid);
+void map_addnickdb(uint32 charid, const char* nick);
+void map_delnickdb(uint32 charid, const char* nick);
+void map_reqnickdb(map_session_data* sd,uint32 charid);
+const char* map_charid2nick(uint32 charid);
 map_session_data* map_charid2sd(int32 charid);
 
 map_session_data * map_id2sd(int32 id);

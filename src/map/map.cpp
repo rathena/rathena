@@ -5,6 +5,7 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <set>
 
 #include <config/core.hpp>
 
@@ -104,13 +105,18 @@ Sql* logmysql_handle;
 // inter config
 struct inter_conf inter_config {};
 
+struct charid2nick {
+	char nick[NAME_LENGTH];
+	std::set<int32> charids; // charid list of requests of notification on this nick
+};
+
 // DBMap declaration
 static DBMap* id_db=nullptr; /// int32 id -> struct block_list*
 static DBMap* pc_db=nullptr; /// int32 id -> map_session_data*
 static DBMap* mobid_db=nullptr; /// int32 id -> struct mob_data*
 static DBMap* bossid_db=nullptr; /// int32 id -> struct mob_data* (MVP db)
 static DBMap* map_db=nullptr; /// uint32 mapindex -> struct map_data*
-static DBMap* nick_db=nullptr; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
+std::unordered_map<uint32, charid2nick> nick_db; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
 static DBMap* charid_db=nullptr; /// uint32 char_id -> map_session_data*
 static DBMap* regen_db=nullptr; /// int32 id -> struct block_list* (status_natural_heal processing)
 static DBMap* map_msg_db=nullptr;
@@ -142,15 +148,6 @@ bool agit_flag = false;
 bool agit2_flag = false;
 bool agit3_flag = false;
 int32 night_flag = 0; // 0=day, 1=night [Yor]
-
-struct charid_request {
-	struct charid_request* next;
-	int32 charid;// who want to be notified of the nick
-};
-struct charid2nick {
-	char nick[NAME_LENGTH];
-	struct charid_request* requests;// requests of notification on this nick
-};
 
 // This is the main header found at the very beginning of the map cache
 struct map_cache_main_header {
@@ -2098,58 +2095,50 @@ static DBData create_charid2nick(DBKey key, va_list args)
 
 /// Adds(or replaces) the nick of charid to nick_db and fulfils pending requests.
 /// Does nothing if the character is online.
-void map_addnickdb(int32 charid, const char* nick)
+void map_addnickdb(uint32 charid, const char* nick)
 {
-	struct charid2nick* p;
-	
 	if( map_charid2sd(charid) )
 		return;// already online
 
-	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
-	safestrncpy(p->nick, nick, sizeof(p->nick));
+	struct charid2nick& p = nick_db[charid];
+	safestrncpy(p.nick, nick, sizeof(p.nick));
 
-	while( p->requests ) {
-		map_session_data* sd;
-		struct charid_request* req;
-		req = p->requests;
-		p->requests = req->next;
-		sd = map_charid2sd(req->charid);
-		if( sd != nullptr )
-			clif_solved_charname( *sd, charid, p->nick );
-		aFree(req);
+	for (auto it = p.charids.begin(); it != p.charids.end();) {
+		map_session_data* sd = map_charid2sd(*it);
+
+		if (sd != nullptr)
+			clif_solved_charname(*sd, charid, p.nick);
+
+		it = p.charids.erase(it);
 	}
 }
 
 /// Removes the nick of charid from nick_db.
 /// Sends name to all pending requests on charid.
-void map_delnickdb(int32 charid, const char* name)
+void map_delnickdb(uint32 charid, const char* name)
 {
-	struct charid2nick* p;
-	DBData data;
-
-	if (!nick_db->remove(nick_db, db_i2key(charid), &data) || (p = (struct charid2nick*)db_data2ptr(&data)) == nullptr)
+	if (!rathena::util::umap_exists(nick_db, charid))
 		return;
 
-	while( p->requests ) {
-		struct charid_request* req;
-		map_session_data* sd;
-		req = p->requests;
-		p->requests = req->next;
-		sd = map_charid2sd(req->charid);
-		if( sd != nullptr )
-			clif_solved_charname( *sd, charid, name );
-		aFree(req);
+	auto p_it = nick_db.find(charid);
+
+	for (auto it = p_it->second.charids.begin(); it != p_it->second.charids.end();) {
+		map_session_data* sd = map_charid2sd(*it);
+
+		if (sd != nullptr)
+			clif_solved_charname(*sd, charid, p_it->second.nick);
+
+		it = p_it->second.charids.erase(it);
 	}
-	aFree(p);
+
+	nick_db.erase(p_it);
 }
 
 /// Notifies sd of the nick of charid.
 /// Uses the name in the character if online.
 /// Uses the name in nick_db if offline.
-void map_reqnickdb(map_session_data * sd, int32 charid)
+void map_reqnickdb(map_session_data * sd, uint32 charid)
 {
-	struct charid2nick* p;
-	struct charid_request* req;
 	map_session_data* tsd;
 
 	nullpo_retv(sd);
@@ -2161,16 +2150,13 @@ void map_reqnickdb(map_session_data * sd, int32 charid)
 		return;
 	}
 
-	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
-	if( *p->nick )
-	{
-		clif_solved_charname( *sd, charid, p->nick );
+	auto& p = nick_db[charid];
+
+	if( *p.nick ) {
+		clif_solved_charname( *sd, charid, p.nick );
 		return;
 	}
-	// not in cache, request it
-	CREATE(req, struct charid_request, 1);
-	req->next = p->requests;
-	p->requests = req;
+	p.charids.insert(sd->status.char_id);
 	chrif_searchcharid(charid);
 }
 
@@ -2387,18 +2373,17 @@ struct chat_data* map_id2cd(int32 id){
 }
 
 /// Returns the nick of the target charid or nullptr if unknown (requests the nick to the char server).
-const char* map_charid2nick(int32 charid)
+const char* map_charid2nick(uint32 charid)
 {
-	struct charid2nick *p;
 	map_session_data* sd;
 
 	sd = map_charid2sd(charid);
 	if( sd )
 		return sd->status.name;// character is online, return it's name
 
-	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
-	if( *p->nick )
-		return p->nick;// name in nick_db
+	charid2nick& p = nick_db[charid];
+	if( *p.nick )
+		return p.nick;// name in nick_db
 
 	chrif_searchcharid(charid);// request the name
 	return nullptr;
@@ -4510,26 +4495,6 @@ int32 map_db_final(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-/**
- * @see DBApply
- */
-int32 nick_db_final(DBKey key, DBData *data, va_list args)
-{
-	struct charid2nick* p = (struct charid2nick*)db_data2ptr(data);
-	struct charid_request* req;
-
-	if( p == nullptr )
-		return 0;
-	while( p->requests )
-	{
-		req = p->requests;
-		p->requests = req->next;
-		aFree(req);
-	}
-	aFree(p);
-	return 0;
-}
-
 int32 cleanup_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
@@ -5110,7 +5075,6 @@ void MapServer::finalize(){
 	pc_db->destroy(pc_db, nullptr);
 	mobid_db->destroy(mobid_db, nullptr);
 	bossid_db->destroy(bossid_db, nullptr);
-	nick_db->destroy(nick_db, nick_db_final);
 	charid_db->destroy(charid_db, nullptr);
 	iwall_db->destroy(iwall_db, nullptr);
 	regen_db->destroy(regen_db, nullptr);
@@ -5407,7 +5371,6 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	mobid_db = idb_alloc(DB_OPT_BASE);	//Added to lower the load of the lazy mob ai. [Skotlex]
 	bossid_db = idb_alloc(DB_OPT_BASE); // Used for Convex Mirror quick MVP search
 	map_db = uidb_alloc(DB_OPT_BASE);
-	nick_db = idb_alloc(DB_OPT_BASE);
 	charid_db = uidb_alloc(DB_OPT_BASE);
 	regen_db = idb_alloc(DB_OPT_BASE); // efficient status_natural_heal processing
 	iwall_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1); // [Zephyrus] Invisible Walls
