@@ -1857,7 +1857,7 @@ static int32 pet_ai_sub_hard(struct pet_data *pd, map_session_data *sd, t_tick t
 
 			return 0;
 		} else {
-			struct flooritem_data *fitem = (struct flooritem_data *)target;
+			flooritem_data *fitem = (flooritem_data *)target;
 
 			if(pd->loot->count < pd->loot->max) {
 				memcpy(&pd->loot->item[pd->loot->count++],&fitem->item,sizeof(pd->loot->item[0]));
@@ -1915,7 +1915,7 @@ static TIMER_FUNC(pet_ai_hard){
 static int32 pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
 {
 	struct pet_data* pd;
-	struct flooritem_data *fitem = (struct flooritem_data *)bl;
+	flooritem_data *fitem = (flooritem_data *)bl;
 	struct block_list **target;
 	int32 sd_charid = 0;
 

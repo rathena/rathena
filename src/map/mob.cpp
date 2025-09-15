@@ -2072,7 +2072,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 	//Target exists, attack or loot as applicable.
 	if (tbl->type == BL_ITEM)
 	{	//Loot time.
-		struct flooritem_data *fitem;
+		flooritem_data *fitem;
 		int32 loot_range = 0;
 		if (md->ud.walktimer != INVALID_TIMER) {
 			// Ready to loot
@@ -2107,7 +2107,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 		if (md->ud.attacktimer != INVALID_TIMER)
 			return true; //Busy attacking?
 
-		fitem = (struct flooritem_data *)tbl;
+		fitem = (flooritem_data *)tbl;
 		//Logs items, taken by (L)ooter Mobs [Lupus]
 		log_pick_mob(md, LOG_TYPE_LOOT, fitem->item.amount, &fitem->item);
 

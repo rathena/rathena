@@ -1691,7 +1691,7 @@ int32 map_get_new_object_id(void)
  * Called each flooritem_lifetime ms
  *------------------------------------------*/
 TIMER_FUNC(map_clearflooritem_timer){
-	struct flooritem_data* fitem = (struct flooritem_data*)idb_get(id_db, id);
+	flooritem_data* fitem = (flooritem_data*)idb_get(id_db, id);
 
 	if (fitem == nullptr || fitem->type != BL_ITEM || (fitem->cleartimer != tid)) {
 		ShowError("map_clearflooritem_timer : error\n");
@@ -1713,7 +1713,7 @@ TIMER_FUNC(map_clearflooritem_timer){
  * clears a single bl item out of the map.
  */
 void map_clearflooritem(struct block_list *bl) {
-	struct flooritem_data* fitem = (struct flooritem_data*)bl;
+	flooritem_data* fitem = (flooritem_data*)bl;
 
 	if( fitem->cleartimer != INVALID_TIMER )
 		delete_timer(fitem->cleartimer,map_clearflooritem_timer);
@@ -2018,7 +2018,7 @@ bool map_nearby_freecell(int16 m, int16 &x, int16 &y, int32 type, int32 flag)
  *------------------------------------------*/
 int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 y, int32 first_charid, int32 second_charid, int32 third_charid, int32 flags, uint16 mob_id, bool canShowEffect, enum directions dir, int32 type)
 {
-	struct flooritem_data *fitem = nullptr;
+	flooritem_data *fitem = nullptr;
 
 	nullpo_ret(item);
 
@@ -2038,7 +2038,7 @@ int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 
 		}
 	}
 
-	CREATE(fitem, struct flooritem_data, 1);
+	CREATE(fitem, flooritem_data, 1);
 	fitem->type=BL_ITEM;
 	fitem->prev = fitem->next = nullptr;
 	fitem->m=m;

@@ -21295,12 +21295,12 @@ int32 skill_greed(struct block_list *bl, va_list ap)
 {
 	struct block_list *src;
 	map_session_data *sd = nullptr;
-	struct flooritem_data *fitem = nullptr;
+	flooritem_data *fitem = nullptr;
 
 	nullpo_ret(bl);
 	nullpo_ret(src = va_arg(ap, struct block_list *));
 
-	if(src->type == BL_PC && (sd = (map_session_data *)src) && bl->type == BL_ITEM && (fitem = (struct flooritem_data *)bl))
+	if(src->type == BL_PC && (sd = (map_session_data *)src) && bl->type == BL_ITEM && (fitem = (flooritem_data *)bl))
 		pc_takeitem(sd, fitem);
 
 	return 0;

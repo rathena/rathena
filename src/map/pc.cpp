@@ -6149,7 +6149,7 @@ bool pc_dropitem(map_session_data *sd,int32 n,int32 amount)
  * @param fitem Item that will be picked
  * @return False = fail; True = success
  *------------------------------------------*/
-bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
+bool pc_takeitem(map_session_data *sd,flooritem_data *fitem)
 {
 	int32 flag = 0;
 	t_tick tick = gettick();
