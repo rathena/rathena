@@ -2761,7 +2761,7 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int32 l
  * @return 1 for calculated special statuses or 0 for none
  * @author [Skotlex]
  */
-int32 status_calc_mob_(struct mob_data* md, uint8 opt)
+int32 status_calc_mob_(mob_data* md, uint8 opt)
 {
 	struct status_data *status;
 	struct block_list *mbl = nullptr;
@@ -9107,7 +9107,7 @@ int32 status_get_party_id(struct block_list *bl)
 				return ((TBL_PET*)bl)->master->status.party_id;
 			break;
 		case BL_MOB: {
-				struct mob_data *md=(TBL_MOB*)bl;
+				mob_data *md=(TBL_MOB*)bl;
 				if( md->master_id > 0 ) {
 					map_session_data *msd;
 					if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9154,7 +9154,7 @@ int32 status_get_guild_id(struct block_list *bl)
 		case BL_MOB:
 			{
 				map_session_data *msd;
-				struct mob_data *md = (struct mob_data *)bl;
+				mob_data *md = (mob_data *)bl;
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->guild_id;
 				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9203,7 +9203,7 @@ int32 status_get_emblem_id(struct block_list *bl)
 		case BL_MOB:
 			{
 				map_session_data *msd;
-				struct mob_data *md = (struct mob_data *)bl;
+				mob_data *md = (mob_data *)bl;
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->emblem_id;
 				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9243,7 +9243,7 @@ std::vector<e_race2> status_get_race2(struct block_list *bl)
 	nullpo_retr(std::vector<e_race2>(),bl);
 
 	if (bl->type == BL_MOB)
-		return ((struct mob_data *)bl)->db->race2;
+		return ((mob_data *)bl)->db->race2;
 	if (bl->type == BL_PET)
 		return ((struct pet_data *)bl)->db->race2;
 	return std::vector<e_race2>();

@@ -16,7 +16,7 @@ void SkillHeal::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_
 	map_session_data *sd = BL_CAST(BL_PC, src);
 	map_session_data *dstsd = nullptr;
 	status_data* sstatus = status_get_status_data(*src);
-	struct mob_data *dstmd = BL_CAST(BL_MOB, bl);
+	mob_data *dstmd = BL_CAST(BL_MOB, bl);
 
 	int32 heal = skill_calc_heal(src, bl, getSkillId(), skill_lv, true);
 

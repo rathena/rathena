@@ -107,8 +107,8 @@ struct inter_conf inter_config {};
 // DBMap declaration
 static DBMap* id_db=nullptr; /// int32 id -> struct block_list*
 static DBMap* pc_db=nullptr; /// int32 id -> map_session_data*
-static DBMap* mobid_db=nullptr; /// int32 id -> struct mob_data*
-static DBMap* bossid_db=nullptr; /// int32 id -> struct mob_data* (MVP db)
+static DBMap* mobid_db=nullptr; /// int32 id -> mob_data*
+static DBMap* bossid_db=nullptr; /// int32 id -> mob_data* (MVP db)
 static DBMap* map_db=nullptr; /// uint32 mapindex -> struct map_data*
 static DBMap* nick_db=nullptr; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
 static DBMap* charid_db=nullptr; /// uint32 char_id -> map_session_data*
@@ -2351,9 +2351,9 @@ map_session_data * map_id2sd(int32 id){
 	return (map_session_data*)idb_get(pc_db,id);
 }
 
-struct mob_data * map_id2md(int32 id){
+mob_data * map_id2md(int32 id){
 	if (id <= 0) return nullptr;
-	return (struct mob_data*)idb_get(mobid_db,id);
+	return (mob_data*)idb_get(mobid_db,id);
 }
 
 struct npc_data * map_id2nd(int32 id){
@@ -2479,14 +2479,14 @@ bool map_blid_exists( int32 id ) {
 /*==========================================
  * Convex Mirror
  *------------------------------------------*/
-struct mob_data * map_getmob_boss(int16 m)
+mob_data * map_getmob_boss(int16 m)
 {
 	DBIterator* iter;
-	struct mob_data *md = nullptr;
+	mob_data *md = nullptr;
 	bool found = false;
 
 	iter = db_iterator(bossid_db);
-	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
+	for( md = (mob_data*)dbi_first(iter); dbi_exists(iter); md = (mob_data*)dbi_next(iter) )
 	{
 		if( md->m == m )
 		{
@@ -2499,10 +2499,10 @@ struct mob_data * map_getmob_boss(int16 m)
 	return (found)? md : nullptr;
 }
 
-struct mob_data * map_id2boss(int32 id)
+mob_data * map_id2boss(int32 id)
 {
 	if (id <= 0) return nullptr;
-	return (struct mob_data*)idb_get(bossid_db,id);
+	return (mob_data*)idb_get(bossid_db,id);
 }
 
 /// Applies func to all the players in the db.
@@ -2529,13 +2529,13 @@ void map_foreachpc(int32 (*func)(map_session_data* sd, va_list args), ...)
 
 /// Applies func to all the mobs in the db.
 /// Stops iterating if func returns -1.
-void map_foreachmob(int32 (*func)(struct mob_data* md, va_list args), ...)
+void map_foreachmob(int32 (*func)(mob_data* md, va_list args), ...)
 {
 	DBIterator* iter;
-	struct mob_data* md;
+	mob_data* md;
 
 	iter = db_iterator(mobid_db);
-	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
+	for( md = (mob_data*)dbi_first(iter); dbi_exists(iter); md = (mob_data*)dbi_next(iter) )
 	{
 		va_list args;
 		int32 ret;
@@ -3039,7 +3039,7 @@ void map_spawnmobs(int16 m)
 
 int32 map_removemobs_sub(struct block_list *bl, va_list ap)
 {
-	struct mob_data *md = (struct mob_data *)bl;
+	mob_data *md = (mob_data *)bl;
 	nullpo_ret(md);
 
 	//When not to remove mob:

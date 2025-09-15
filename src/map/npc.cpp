@@ -1991,7 +1991,7 @@ int32 npc_touch_area_allnpc(map_session_data* sd, int16 m, int16 x, int16 y)
 
 // OnTouch NPC or Warp for Mobs
 // Return 1 if Warped
-int32 npc_touch_areanpc2(struct mob_data *md)
+int32 npc_touch_areanpc2(mob_data *md)
 {
 	int32 i, x = md->x, y = md->y, id;
 	char eventname[EVENT_NAME_LENGTH];
@@ -5198,7 +5198,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 
 	for( i = mob->active; i < mob->num; ++i )
 	{
-		struct mob_data* md = mob_spawn_dataset(mob);
+		mob_data* md = mob_spawn_dataset(mob);
 		md->spawn = mob;
 		// Determine center cell for each mob in the spawn line
 		if (battle_config.randomize_center_cell) {

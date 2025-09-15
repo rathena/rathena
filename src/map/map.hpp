@@ -42,6 +42,7 @@ class MapServer : public Core{
 };
 }
 
+struct mob_data;
 struct npc_data;
 struct item_data;
 struct Channel;
@@ -1183,7 +1184,7 @@ const char* map_charid2nick(int32 charid);
 map_session_data* map_charid2sd(int32 charid);
 
 map_session_data * map_id2sd(int32 id);
-struct mob_data * map_id2md(int32 id);
+mob_data * map_id2md(int32 id);
 struct npc_data * map_id2nd(int32 id);
 struct homun_data* map_id2hd(int32 id);
 struct s_mercenary_data* map_id2mc(int32 id);
@@ -1204,13 +1205,13 @@ int32 map_eraseallipport(void);
 void map_addiddb(struct block_list *);
 void map_deliddb(struct block_list *bl);
 void map_foreachpc(int32 (*func)(map_session_data* sd, va_list args), ...);
-void map_foreachmob(int32 (*func)(struct mob_data* md, va_list args), ...);
+void map_foreachmob(int32 (*func)(mob_data* md, va_list args), ...);
 void map_foreachnpc(int32 (*func)(struct npc_data* nd, va_list args), ...);
 void map_foreachregen(int32 (*func)(struct block_list* bl, va_list args), ...);
 void map_foreachiddb(int32 (*func)(struct block_list* bl, va_list args), ...);
 map_session_data * map_nick2sd(const char* nick, bool allow_partial);
-struct mob_data * map_getmob_boss(int16 m);
-struct mob_data * map_id2boss(int32 id);
+mob_data * map_getmob_boss(int16 m);
+mob_data * map_id2boss(int32 id);
 
 // reload config file looking only for npcs
 void map_reloadnpc(bool clear);
@@ -1287,7 +1288,7 @@ extern const char*MSG_CONF_NAME_THA;
 //Useful typedefs from jA [Skotlex]
 typedef map_session_data TBL_PC;
 typedef struct npc_data         TBL_NPC;
-typedef struct mob_data         TBL_MOB;
+typedef mob_data         TBL_MOB;
 typedef struct flooritem_data   TBL_ITEM;
 typedef struct chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
