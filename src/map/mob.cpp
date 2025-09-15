@@ -2691,7 +2691,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 		}
 		case BL_HOM:
 		{
-			struct homun_data *hd = (TBL_HOM*)src;
+			homun_data *hd = (TBL_HOM*)src;
 			flag = MDLF_HOMUN;
 			if( hd->master )
 				char_id = hd->master->status.char_id;

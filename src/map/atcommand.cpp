@@ -8403,7 +8403,7 @@ ACMD_FUNC(homtalk)
  *------------------------------------------*/
 ACMD_FUNC(hominfo)
 {
-	struct homun_data *hd;
+	homun_data *hd;
 	nullpo_retr(-1, sd);
 
 	if ( !hom_is_active(sd->hd) ) {
@@ -8438,7 +8438,7 @@ ACMD_FUNC(hominfo)
 
 ACMD_FUNC(homstats)
 {
-	struct homun_data *hd;
+	homun_data *hd;
 	std::shared_ptr<s_homunculus_db> db;
 	struct s_homunculus *hom;
 	int32 lv, min, max, evo;

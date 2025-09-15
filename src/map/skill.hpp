@@ -629,7 +629,7 @@ int8 skill_isCopyable(map_session_data *sd, uint16 skill_id);
 
 // Abnormal status
 bool skill_isNotOk( uint16 skill_id, map_session_data& sd );
-bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv);
+bool skill_isNotOk_hom(homun_data *hd, uint16 skill_id, uint16 skill_lv);
 bool skill_isNotOk_mercenary( uint16 skill_id, s_mercenary_data& md);
 
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int32 pos_x, int32 pos_y);

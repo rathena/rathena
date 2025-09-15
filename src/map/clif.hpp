@@ -1196,7 +1196,7 @@ void clif_mission_info(map_session_data *sd, int32 mob_id, unsigned char progres
 void clif_feel_hate_reset(map_session_data *sd);
 
 // [blackhole89]
-void clif_hominfo(map_session_data *sd, struct homun_data *hd, int32 flag);
+void clif_hominfo(map_session_data *sd, homun_data *hd, int32 flag);
 void clif_homskillinfoblock( homun_data& hd );
 void clif_homskillup( homun_data& hd, uint16 skill_id );
 void clif_hom_food( map_session_data& sd, int32 foodid, bool success );
