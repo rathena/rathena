@@ -498,9 +498,6 @@
     <ClInclude Include="skills/thief/detoxify.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
-    <ClInclude Include="skills/thief/doubleattack.hpp">
-      <Filter>Header Files\Skills\Thief</Filter>
-    </ClInclude>
     <ClInclude Include="skills/thief/envenom.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -508,9 +505,6 @@
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/hiding.hpp">
-      <Filter>Header Files\Skills\Thief</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/thief/improvedodge.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/sandattack.hpp">
@@ -665,9 +659,6 @@
     <ClCompile Include="skills/thief/detoxify.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/doubleattack.cpp">
-      <Filter>Source Files\Skills\Thief</Filter>
-    </ClCompile>
     <ClCompile Include="skills/thief/envenom.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
@@ -675,9 +666,6 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/hiding.cpp">
-      <Filter>Source Files\Skills\Thief</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/thief/improvedodge.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/sandattack.cpp">

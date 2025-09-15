@@ -4,11 +4,9 @@
 #include "skill_factory_thief.hpp"
 #include "backslide.hpp"
 #include "detoxify.hpp"
-#include "doubleattack.hpp"
 #include "envenom.hpp"
 #include "findstone.hpp"
 #include "hiding.hpp"
-#include "improvedodge.hpp"
 #include "sandattack.hpp"
 #include "steal.hpp"
 #include "stonefling.hpp"
@@ -20,15 +18,13 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 		case TF_DETOXIFY:
 			return std::make_unique<SkillDetoxify>();
 		case TF_DOUBLE:
-			return std::make_unique<SkillDoubleAttack>();
+			return std::make_unique<WeaponSkillImpl>(TF_DOUBLE);
 		case TF_POISON:
 			return std::make_unique<SkillEnvenom>();
 		case TF_PICKSTONE:
 			return std::make_unique<SkillFindStone>();
 		case TF_HIDING:
 			return std::make_unique<SkillHiding>();
-		case TF_MISS:
-			return std::make_unique<SkillImproveDodge>();
 		case TF_SPRINKLESAND:
 			return std::make_unique<SkillSandAttack>();
 		case TF_STEAL:

@@ -285,11 +285,9 @@
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
     <ClInclude Include="skills/thief/backslide.hpp" />
     <ClInclude Include="skills/thief/detoxify.hpp" />
-    <ClInclude Include="skills/thief/doubleattack.hpp" />
     <ClInclude Include="skills/thief/envenom.hpp" />
     <ClInclude Include="skills/thief/findstone.hpp" />
     <ClInclude Include="skills/thief/hiding.hpp" />
-    <ClInclude Include="skills/thief/improvedodge.hpp" />
     <ClInclude Include="skills/thief/sandattack.hpp" />
     <ClInclude Include="skills/thief/skill_factory_thief.hpp" />
     <ClInclude Include="skills/thief/steal.hpp" />
@@ -388,11 +386,9 @@
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp" />
     <ClCompile Include="skills/thief/backslide.cpp" />
     <ClCompile Include="skills/thief/detoxify.cpp" />
-    <ClCompile Include="skills/thief/doubleattack.cpp" />
     <ClCompile Include="skills/thief/envenom.cpp" />
     <ClCompile Include="skills/thief/findstone.cpp" />
     <ClCompile Include="skills/thief/hiding.cpp" />
-    <ClCompile Include="skills/thief/improvedodge.cpp" />
     <ClCompile Include="skills/thief/sandattack.cpp" />
     <ClCompile Include="skills/thief/skill_factory_thief.cpp" />
     <ClCompile Include="skills/thief/steal.cpp" />
