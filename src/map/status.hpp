@@ -3635,7 +3635,7 @@ std::vector<e_race2> status_get_race2(block_list *bl);
 
 struct view_data *status_get_viewdata(block_list *bl);
 void status_set_viewdata(block_list *bl, int32 class_);
-status_change *status_get_sc(block_list *bl);
+status_change* status_get_sc(const block_list* bl);
 
 bool status_isdead(block_list &bl);
 int32 status_isimmune(block_list *bl);

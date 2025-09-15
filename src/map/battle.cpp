@@ -3335,7 +3335,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case RK_SONICWAVE:
 				hitrate += hitrate * 3 * skill_lv / 100; // !TODO: Confirm the hitrate bonus
 				break;
-			case MC_CARTREVOLUTION:
 			case GN_CART_TORNADO:
 			case GN_CARTCANNON:
 				if (sd && pc_checkskill(sd, GN_REMODELING_CART))
@@ -3702,6 +3701,7 @@ int32 battle_get_magic_element(block_list* src, block_list* target, uint16 skill
 		case WM_REVERBERATION:
 		case TR_METALIC_FURY:
 		case TR_SOUNDBLEND:
+		case TR_RHYTHMICAL_WAVE:
 			if (sd)
 				element = sd->bonus.arrow_ele;
 			break;
@@ -4713,9 +4713,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			else
 				skillratio += 10 * skill_lv; //Outer 5x5 circle takes 100%+10%*level damage [Playtester]
 			break;
-		case MC_MAMMONITE:
-			skillratio += 50 * skill_lv;
-			break;
 		case HT_POWER:
 			skillratio += -50 + 8 * sstatus->str;
 			break;
@@ -4795,13 +4792,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			break;
 		case TF_SPRINKLESAND:
 			skillratio += 30;
-			break;
-		case MC_CARTREVOLUTION:
-			skillratio += 50;
-			if(sd && sd->cart_weight)
-				skillratio += 100 * sd->cart_weight / sd->cart_weight_max; // +1% every 1% weight
-			else if (!sd)
-				skillratio += 100; //Max damage for non players.
 			break;
 		case NPC_PIERCINGATT:
 			skillratio += -25; //75% base damage
@@ -9108,6 +9098,16 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 								skillratio += skillratio * 50 / 100;
 						}
 						break;
+					case TR_RHYTHMICAL_WAVE:
+						skillratio += -100 + 250 + 3650 * skill_lv;
+						skillratio += pc_checkskill(sd, TR_STAGE_MANNER) * 25; // !TODO: check Stage Manner ratio
+						skillratio += 5 * sstatus->spl;	// !TODO: check SPL ratio
+
+						if (sc != nullptr && sc->hasSCE(SC_MYSTIC_SYMPHONY))
+							skillratio += 200 + 1000 * skill_lv;
+
+						RE_LVL_DMOD(100);
+						break;
 					case EM_DIAMOND_STORM:
 						skillratio += -100 + 500 + 2400 * skill_lv;
 						skillratio += 5 * sstatus->spl;
@@ -9200,6 +9200,11 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += -100 + 700;
 						if (ed)
 							skillratio += skillratio * status_get_lv(ed->master) / 100;
+						break;
+					case EM_PSYCHIC_STREAM:
+						skillratio += -100 + 1000 + 3500 * skill_lv;
+						skillratio += 5 * sstatus->spl;
+						RE_LVL_DMOD(100);
 						break;
 					case NPC_RAINOFMETEOR:
 						skillratio += 350;	// unknown ratio
