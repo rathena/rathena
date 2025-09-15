@@ -6755,7 +6755,7 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 	t_itemid itemid;
 	double rate;
 	unsigned char flag = 0;
-	struct mob_data *md;
+	mob_data *md;
 
 	if(!sd || !bl || bl->type!=BL_MOB)
 		return false;
@@ -6863,7 +6863,7 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 int32 pc_steal_coin(map_session_data *sd,struct block_list *target)
 {
 	int32 rate, target_lv;
-	struct mob_data *md;
+	mob_data *md;
 
 	if(!sd || !target || target->type != BL_MOB)
 		return 0;
@@ -9885,7 +9885,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 	switch (src->type) {
 		case BL_MOB:
 		{
-			struct mob_data *md=(struct mob_data *)src;
+			mob_data *md=(mob_data *)src;
 			if(md->target_id==sd->id)
 				mob_unlocktarget(md,tick);
 			if(battle_config.mobs_level_up && md->status.hp &&
@@ -10792,9 +10792,9 @@ int32 pc_percentheal(map_session_data *sd,int32 hp,int32 sp)
 
 static int32 jobchange_killclone(struct block_list *bl, va_list ap)
 {
-	struct mob_data *md;
+	mob_data *md;
 		int32 flag;
-	md = (struct mob_data *)bl;
+	md = (mob_data *)bl;
 	nullpo_ret(md);
 	flag = va_arg(ap, int32);
 

@@ -2401,7 +2401,7 @@ int32 guild_castledatasave(int32 castle_id, int32 index, int32 value) {
 		int32 i;
 		gc->guild_id = value;
 		for (i = 0; i < MAX_GUARDIANS; i++){
-			struct mob_data *gd;
+			mob_data *gd;
 			if (gc->guardian[i].visible && (gd = map_id2md(gc->guardian[i].id)) != nullptr)
 				mob_guardian_guildchange(gd);
 		}
@@ -2414,7 +2414,7 @@ int32 guild_castledatasave(int32 castle_id, int32 index, int32 value) {
 		int32 i;
 		gc->defense = value;
 		for (i = 0; i < MAX_GUARDIANS; i++){
-			struct mob_data *gd;
+			mob_data *gd;
 			if (gc->guardian[i].visible && (gd = map_id2md(gc->guardian[i].id)) != nullptr)
 				status_calc_mob(gd, SCO_NONE);
 		}

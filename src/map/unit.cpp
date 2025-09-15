@@ -86,7 +86,7 @@ struct unit_data* unit_bl2ud(struct block_list *bl)
 	if( bl == nullptr) return nullptr;
 	switch(bl->type){
 	case BL_PC: return &((map_session_data*)bl)->ud;
-	case BL_MOB: return &((struct mob_data*)bl)->ud;
+	case BL_MOB: return &((mob_data*)bl)->ud;
 	case BL_PET: return &((struct pet_data*)bl)->ud;
 	case BL_NPC: return &((struct npc_data*)bl)->ud;
 	case BL_HOM: return &((struct homun_data*)bl)->ud;
@@ -661,7 +661,7 @@ static TIMER_FUNC(unit_walktoxy_timer)
 
 			// Check if the unit was killed
 			if( status_isdead(*bl) ){
-				struct mob_data* md = BL_CAST(BL_MOB, bl);
+				mob_data* md = BL_CAST(BL_MOB, bl);
 
 				if( md && !md->spawn ){
 					unit_free(bl, CLR_OUTSIGHT);
@@ -1821,7 +1821,7 @@ bool unit_can_move(struct block_list *bl) {
 
 	// Icewall walk block special trapped monster mode
 	if(bl->type == BL_MOB) {
-		struct mob_data *md = BL_CAST(BL_MOB, bl);
+		mob_data *md = BL_CAST(BL_MOB, bl);
 		if(md && ((status_has_mode(&md->status,MD_STATUSIMMUNE) && battle_config.boss_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL))
 			|| (!status_has_mode(&md->status,MD_STATUSIMMUNE) && battle_config.mob_icewall_walk_block == 1 && map_getcell(bl->m,bl->x,bl->y,CELL_CHKICEWALL)))) {
 			md->walktoxy_fail_count = 1; //Make sure rudeattacked skills are invoked
@@ -2879,7 +2879,7 @@ int32 unit_unattackable(struct block_list *bl)
 	}
 
 	if(bl->type == BL_MOB)
-		mob_unlocktarget((struct mob_data*)bl, gettick());
+		mob_unlocktarget((mob_data*)bl, gettick());
 	else if(bl->type == BL_PET)
 		pet_unlocktarget((struct pet_data*)bl);
 
@@ -3185,7 +3185,7 @@ static int32 unit_attack_timer_sub(struct block_list* src, int32 tid, t_tick tic
 	struct block_list *target;
 	struct unit_data *ud;
 	map_session_data *sd = nullptr;
-	struct mob_data *md = nullptr;
+	mob_data *md = nullptr;
 	int32 range;
 
 	if( (ud = unit_bl2ud(src)) == nullptr )
@@ -3728,7 +3728,7 @@ int32 unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file
 			break;
 		}
 		case BL_MOB: {
-			struct mob_data *md = (struct mob_data*)bl;
+			mob_data *md = (mob_data*)bl;
 
 			// Drop previous target mob_slave_keep_target: no.
 			if (!battle_config.mob_slave_keep_target)
@@ -4065,7 +4065,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_MOB: {
-			struct mob_data *md = (struct mob_data*)bl;
+			mob_data *md = (mob_data*)bl;
 
 			mob_free_dynamic_viewdata( md );
 
