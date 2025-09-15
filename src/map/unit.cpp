@@ -75,6 +75,8 @@ static TIMER_FUNC(unit_attack_timer);
 static TIMER_FUNC(unit_walktoxy_timer);
 int32 unit_unattackable(struct block_list *bl);
 
+extern ERS<sc_display_entry> pc_sc_display_ers;
+
 /**
  * Get the unit_data related to the bl
  * @param bl : Object to get the unit_data from
@@ -4010,7 +4012,7 @@ int32 unit_free(struct block_list *bl, clr_type clrtype)
 
 			if( sd->sc_display_count ) { /* [Ind] */
 				for( i = 0; i < sd->sc_display_count; i++ )
-					ers_free(pc_sc_display_ers, sd->sc_display[i]);
+					pc_sc_display_ers.free(sd->sc_display[i]);
 
 				sd->sc_display_count = 0;
 				aFree(sd->sc_display);

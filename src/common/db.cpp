@@ -192,7 +192,7 @@ typedef struct DBMap_impl {
 	uint32 free_max;
 	uint32 free_lock;
 	// Other
-	ERS *nodes;
+	ERS<struct dbn> nodes;
 	DBComparator cmp;
 	DBHasher hash;
 	DBReleaser release;
@@ -203,6 +203,8 @@ typedef struct DBMap_impl {
 	uint32 item_count;
 	uint16 maxlen;
 	unsigned global_lock : 1;
+
+	DBMap_impl() : nodes("DBMap_impl::nodes") {}
 } DBMap_impl;
 
 /**
@@ -335,8 +337,8 @@ static struct db_stats {
 #endif /* !defined(DB_ENABLE_STATS) */
 
 /* [Ind/Hercules] */
-struct eri *db_iterator_ers;
-struct eri *db_alloc_ers;
+static ERS<DBIterator_impl> db_iterator_ers("db.cpp::db_iterator_ers", 10);
+static ERS<DBMap_impl> db_alloc_ers("db.cpp::db_alloc_ers", 50);
 
 /*****************************************************************************\
  *  (2) Section of private functions used by the database system.            *
@@ -831,7 +833,7 @@ static void db_free_unlock(DBMap_impl* db)
 		db_rebalance_erase(db->free_list[i].node, db->free_list[i].root);
 		db_dup_key_free(db, db->free_list[i].node->key);
 		DB_COUNTSTAT(db_node_free);
-		ers_free(db->nodes, db->free_list[i].node);
+		db->nodes.free(db->free_list[i].node);
 	}
 	db->free_count = 0;
 }
@@ -1475,7 +1477,7 @@ void dbit_obj_destroy(DBIterator* self)
 	// unlock the database
 	db_free_unlock(it->db);
 	// free iterator
-	ers_free(db_iterator_ers,self);
+	db_iterator_ers.free(reinterpret_cast<DBIterator_impl*>(self));
 }
 
 /**
@@ -1493,7 +1495,7 @@ static DBIterator* db_obj_iterator(DBMap* self)
 	DBIterator_impl* it;
 
 	DB_COUNTSTAT(db_iterator);
-	it = ers_alloc(db_iterator_ers, struct DBIterator_impl);
+	it = db_iterator_ers.alloc();
 	/* Interface of the iterator **/
 	it->vtable.first   = dbit_obj_first;
 	it->vtable.last    = dbit_obj_last;
@@ -1773,7 +1775,7 @@ static DBData* db_obj_vensure(DBMap* self, DBKey key, DBCreateData create, va_li
 				return nullptr;
 		}
 		DB_COUNTSTAT(db_node_alloc);
-		node = ers_alloc(db->nodes, struct dbn);
+		node = db->nodes.alloc();
 		node->left = nullptr;
 		node->right = nullptr;
 		node->deleted = 0;
@@ -1912,7 +1914,7 @@ static int32 db_obj_put(DBMap* self, DBKey key, DBData data, DBData *out_data)
 	// allocate a new node if necessary
 	if (node == nullptr) {
 		DB_COUNTSTAT(db_node_alloc);
-		node = ers_alloc(db->nodes, struct dbn);
+		node = db->nodes.alloc();
 		node->left = nullptr;
 		node->right = nullptr;
 		node->deleted = 0;
@@ -2148,7 +2150,7 @@ static int32 db_obj_vclear(DBMap* self, DBApply func, va_list args)
 				else
 					parent->right = nullptr;
 			}
-			ers_free(db->nodes, node);
+			db->nodes.free(node);
 			node = parent;
 		}
 		db->ht[i] = nullptr;
@@ -2236,9 +2238,8 @@ static int32 db_obj_vdestroy(DBMap* self, DBApply func, va_list args)
 	aFree(db->free_list);
 	db->free_list = nullptr;
 	db->free_max = 0;
-	ers_destroy(db->nodes);
 	db_free_unlock(db);
-	ers_free(db_alloc_ers, db);
+	db_alloc_ers.free(db);
 	return sum;
 }
 
@@ -2535,7 +2536,7 @@ DBMap* db_alloc(const char *file, const char *func, int32 line, DBType type, DBO
 		case DB_UINT64: DB_COUNTSTAT(db_uint64_alloc); break;
 	}
 #endif /* DB_ENABLE_STATS */
-	db = ers_alloc(db_alloc_ers, struct DBMap_impl);
+	db = db_alloc_ers.alloc();
 
 	options = db_fix_options(type, options);
 	/* Interface of the database */
@@ -2567,7 +2568,6 @@ DBMap* db_alloc(const char *file, const char *func, int32 line, DBType type, DBO
 	db->free_lock = 0;
 	/* Other */
 	snprintf(ers_name, 50, "db_alloc:nodes:%s:%s:%d",func,file,line);
-	db->nodes = ers_new(sizeof(struct dbn),ers_name,ERS_DBN_OPTIONS);
 	db->cmp = db_default_cmp(type);
 	db->hash = db_default_hash(type);
 	db->release = db_default_release(type, options);
@@ -2791,10 +2791,6 @@ int64 db_data2i64(DBData *data)
  * @see #db_final(void)
  */
 void db_init(void) {
-	db_iterator_ers = ers_new(sizeof(struct DBIterator_impl),"db.cpp::db_iterator_ers",ERS_CACHE_OPTIONS);
-	db_alloc_ers = ers_new(sizeof(struct DBMap_impl),"db.cpp::db_alloc_ers",ERS_CACHE_OPTIONS);
-	ers_chunk_size(db_alloc_ers, 50);
-	ers_chunk_size(db_iterator_ers, 10);
 	DB_COUNTSTAT(db_init);
 }
 
@@ -2897,8 +2893,6 @@ void db_final(void)
 			stats.db_data2ui,         stats.db_data2ptr,
 			stats.db_init,            stats.db_final);
 #endif /* DB_ENABLE_STATS */
-	ers_destroy(db_iterator_ers);
-	ers_destroy(db_alloc_ers);
 }
 
 // Link DB System - jAthena

@@ -17,7 +17,7 @@
 #include "map.hpp" // mmysql_handle
 #include "script.hpp"
 
-static struct eri *mapreg_ers;
+static ERS<mapreg_save> mapreg_ers("mapreg.cpp::mapreg_ers");
 
 bool skip_insert = false;
 
@@ -77,7 +77,7 @@ bool mapreg_setreg(int64 uid, int64 val)
 			if (i)
 				script_array_update(&regs, uid, false);
 
-			m = ers_alloc(mapreg_ers, struct mapreg_save);
+			m = mapreg_ers.alloc();
 
 			m->u.i = val;
 			m->uid = uid;
@@ -96,7 +96,7 @@ bool mapreg_setreg(int64 uid, int64 val)
 		if (i)
 			script_array_update(&regs, uid, true);
 		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
-			ers_free(mapreg_ers, m);
+			mapreg_ers.free(m);
 		}
 		i64db_remove(regs.vars, uid);
 
@@ -137,7 +137,7 @@ bool mapreg_setregstr(int64 uid, const char* str)
 		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
 			if (m->u.str != nullptr)
 				aFree(m->u.str);
-			ers_free(mapreg_ers, m);
+			mapreg_ers.free(m);
 		}
 		i64db_remove(regs.vars, uid);
 	} else {
@@ -153,7 +153,7 @@ bool mapreg_setregstr(int64 uid, const char* str)
 			if (i)
 				script_array_update(&regs, uid, false);
 
-			m = ers_alloc(mapreg_ers, struct mapreg_save);
+			m = mapreg_ers.alloc();
 
 			m->uid = uid;
 			m->u.str = aStrdup(str);
@@ -284,7 +284,7 @@ int32 mapreg_destroyreg(DBKey key, DBData *data, va_list ap)
 		if (m->u.str)
 			aFree(m->u.str);
 	}
-	ers_free(mapreg_ers, m);
+	mapreg_ers.free(m);
 
 	return 0;
 }
@@ -318,8 +318,6 @@ void mapreg_final(void)
 
 	regs.vars->destroy(regs.vars, mapreg_destroyreg);
 
-	ers_destroy(mapreg_ers);
-
 	if (regs.arrays)
 		regs.arrays->destroy(regs.arrays, script_free_array_db);
 }
@@ -330,7 +328,6 @@ void mapreg_final(void)
 void mapreg_init(void)
 {
 	regs.vars = i64db_alloc(DB_OPT_BASE);
-	mapreg_ers = ers_new(sizeof(struct mapreg_save), "mapreg.cpp:mapreg_ers", ERS_OPT_CLEAN);
 
 	skip_insert = false;
 	regs.arrays = nullptr;

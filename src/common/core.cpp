@@ -404,7 +404,6 @@ int32 Core::start( int32 argc, char **argv ){
 	timer_final();
 	socket_final();
 	db_final();
-	ers_final();
 #endif
 
 	malloc_final();
