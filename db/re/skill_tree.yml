@@ -7519,6 +7519,13 @@ Body:
         Requires:
           - Name: ABC_HIT_AND_SLIDING
             Level: 3
+      - Name: ABC_ABYSS_FLAME
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_MAGIC_SWORD_M
+            Level: 5
+          - Name: ABC_FROM_THE_ABYSS
+            Level: 3
   - Job: Elemental_Master
     Inherit:
       Novice: true
@@ -7849,6 +7856,11 @@ Body:
         Requires:
           - Name: TR_AIN_RHAPSODY
             Level: 1
+      - Name: TR_RHYTHMICAL_WAVE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_METALIC_FURY
+            Level: 3
   - Job: Trouvere
     Inherit:
       Novice: true
@@ -7933,6 +7945,11 @@ Body:
         Requires:
           - Name: TR_AIN_RHAPSODY
             Level: 1
+      - Name: TR_RHYTHMICAL_WAVE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_METALIC_FURY
+            Level: 3
   - Job: Windhawk2
     Inherit:
       Novice: true
