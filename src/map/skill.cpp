@@ -1758,24 +1758,6 @@ int32 skill_additional_effect( struct block_list* src, struct block_list *bl, ui
 		skill_break_equip(src,bl, EQP_WEAPON|EQP_ARMOR, 100*skill_lv, BCT_ENEMY);
 		break;
 
-	case TK_JUMPKICK:
-		// debuff the following statuses
-		if( dstsd && dstsd->class_ != MAPID_SOUL_LINKER && !tsc->getSCE(SC_PRESERVE) ) {
-			status_change_end(bl, SC_SPIRIT);
-			status_change_end(bl, SC_ADRENALINE2);
-			status_change_end(bl, SC_KAITE);
-			status_change_end(bl, SC_KAAHI);
-			status_change_end(bl, SC_ONEHAND);
-			status_change_end(bl, SC_ASPDPOTION2);
-			// New soul links confirmed to not dispell with this skill
-			// but thats likely a bug since soul links can't stack and
-			// soul cutter skill works on them. So ill add this here for now. [Rytech]
-			status_change_end(bl, SC_SOULGOLEM);
-			status_change_end(bl, SC_SOULSHADOW);
-			status_change_end(bl, SC_SOULFALCON);
-			status_change_end(bl, SC_SOULFAIRY);
-		}
-		break;
 	case MO_BALKYOUNG: //Note: attack_type is passed as BF_WEAPON for the actual target, BF_MISC for the splash-affected mobs.
 		if(attack_type&BF_MISC) //70% base stun chance...
 			sc_start(src,bl,SC_STUN,70,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -8279,7 +8261,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		break;
 
 	case MH_BLAZING_AND_FURIOUS:
-	case TK_JUMPKICK:
 		/* Check if the target is an enemy; if not, skill should fail so the character doesn't unit_movepos (exploitable) */
 		if( battle_check_target(src, bl, BCT_ENEMY) > 0 ) {
 			if( unit_movepos(src, bl->x, bl->y, 2, 1) ) {
@@ -8694,28 +8675,6 @@ int32 skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, 
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start4(src,bl,type,100,skill_lv,0,0,skill_get_time2(skill_id,skill_lv),
 				skill_get_time(skill_id,skill_lv)));
-		break;
-
-	case TK_MISSION:
-		if (sd) {
-			if (sd->mission_mobid && (sd->mission_count || rnd()%100)) { //Cannot change target when already have one
-				clif_mission_info(sd, sd->mission_mobid, sd->mission_count);
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-
-			int32 id = mob_get_random_id(MOBG_TAEKWON_MISSION, RMF_NONE, 0);
-
-			if (!id) {
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			sd->mission_mobid = id;
-			sd->mission_count = 0;
-			pc_setglobalreg(sd, add_str(TKMISSIONID_VAR), id);
-			clif_mission_info(sd, id, 0);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
 		break;
 
 	case MER_PROVOKE:

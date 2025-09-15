@@ -3,7 +3,10 @@
 
 #include "skill_tk_jumpkick.hpp"
 
+#include "map/clif.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
+#include "map/unit.hpp"
 
 SkillJumpkick::SkillJumpkick() : WeaponSkillImpl(TK_JUMPKICK) {
 }
@@ -22,8 +25,8 @@ void SkillJumpkick::calculateSkillRatio(const Damage *wd, const block_list *src,
 }
 
 void SkillJumpkick::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
-	struct status_change *tsc = status_get_sc(target);
-	struct map_session_data *dstsd = BL_CAST(BL_PC, target);
+	status_change *tsc = status_get_sc(target);
+	map_session_data *dstsd = BL_CAST(BL_PC, target);
 
 	// debuff the following statuses
 	if (dstsd && dstsd->class_ != MAPID_SOUL_LINKER && !tsc->getSCE(SC_PRESERVE)) {
@@ -43,12 +46,8 @@ void SkillJumpkick::applyAdditionalEffects(block_list *src, block_list *target, 
 	}
 }
 
-void SkillJumpkick::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
-}
-
-void SkillJumpkick::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const {
-	struct map_session_data *sd = BL_CAST(BL_PC, src);
+void SkillJumpkick::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const {
+	map_session_data *sd = BL_CAST(BL_PC, src);
 
 	/* Check if the target is an enemy; if not, skill should fail so the character doesn't unit_movepos (exploitable) */
 	if (battle_check_target(src, bl, BCT_ENEMY) > 0) {

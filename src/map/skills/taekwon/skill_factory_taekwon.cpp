@@ -3,23 +3,21 @@
 
 #include "skill_factory_taekwon.hpp"
 
-#include "skill_tk_counter.hpp"
-#include "skill_tk_dodge.hpp"
-#include "skill_tk_downkick.hpp"
-#include "skill_tk_highjump.hpp"
-#include "skill_tk_hptime.hpp"
-#include "skill_tk_jumpkick.hpp"
-#include "skill_tk_mission.hpp"
-#include "skill_tk_power.hpp"
-#include "skill_tk_readycounter.hpp"
-#include "skill_tk_readydown.hpp"
-#include "skill_tk_readystorm.hpp"
-#include "skill_tk_readyturn.hpp"
-#include "skill_tk_run.hpp"
-#include "skill_tk_sevenwind.hpp"
-#include "skill_tk_sptime.hpp"
-#include "skill_tk_stormkick.hpp"
-#include "skill_tk_turnkick.hpp"
+#include "tk_counter.hpp"
+#include "tk_dodge.hpp"
+#include "tk_downkick.hpp"
+#include "tk_highjump.hpp"
+#include "tk_jumpkick.hpp"
+#include "tk_mission.hpp"
+#include "tk_readycounter.hpp"
+#include "tk_readydown.hpp"
+#include "tk_readystorm.hpp"
+#include "tk_readyturn.hpp"
+#include "tk_run.hpp"
+#include "tk_sevenwind.hpp"
+#include "tk_sptime.hpp"
+#include "tk_stormkick.hpp"
+#include "tk_turnkick.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -31,14 +29,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<SkillDownkick>();
 		case TK_HIGHJUMP:
 			return std::make_unique<SkillHighjump>();
-		case TK_HPTIME:
-			return std::make_unique<SkillHptime>();
 		case TK_JUMPKICK:
 			return std::make_unique<SkillJumpkick>();
 		case TK_MISSION:
 			return std::make_unique<SkillMission>();
-		case TK_POWER:
-			return std::make_unique<SkillPower>();
 		case TK_READYCOUNTER:
 			return std::make_unique<SkillReadycounter>();
 		case TK_READYDOWN:

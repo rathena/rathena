@@ -3,11 +3,15 @@
 
 #include "skill_tk_mission.hpp"
 
+#include "map/clif.hpp"
+#include "map/mob.hpp"
+#include "map/pc.hpp"
+
 SkillMission::SkillMission() : SkillImpl(TK_MISSION) {
 }
 
-void SkillMission::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const {
-	struct map_session_data *sd = BL_CAST(BL_PC, src);
+void SkillMission::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const {
+	map_session_data *sd = BL_CAST(BL_PC, src);
 
 	if (sd) {
 		if (sd->mission_mobid && (sd->mission_count || rnd() % 100)) {
