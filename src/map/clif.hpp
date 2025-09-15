@@ -1278,7 +1278,7 @@ void clif_party_show_picker(map_session_data * sd, struct item * item_data);
 // Progress Bar [Inkfish]
 void clif_progressbar(map_session_data * sd, unsigned long color, uint32 second);
 void clif_progressbar_abort(map_session_data * sd);
-void clif_progressbar_npc(struct npc_data *nd, map_session_data* sd);
+void clif_progressbar_npc(npc_data *nd, map_session_data* sd);
 #define clif_progressbar_npc_area(nd) clif_progressbar_npc((nd),nullptr)
 
 void clif_PartyBookingRegisterAck(map_session_data *sd, int32 flag);
@@ -1447,8 +1447,8 @@ void clif_parse_skill_toid( map_session_data* sd, uint16 skill_id, uint16 skill_
 void clif_inventory_expansion_info( map_session_data* sd );
 
 // Barter System
-void clif_barter_open( map_session_data& sd, struct npc_data& nd );
-void clif_barter_extended_open( map_session_data& sd, struct npc_data& nd );
+void clif_barter_open( map_session_data& sd, npc_data& nd );
+void clif_barter_extended_open( map_session_data& sd, npc_data& nd );
 
 void clif_summon_init(struct mob_data& md);
 void clif_summon_hp_bar(struct mob_data& md);

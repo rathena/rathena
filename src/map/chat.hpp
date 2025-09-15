@@ -34,8 +34,8 @@ int32 chat_changechatowner(map_session_data* sd, const char* nextownername);
 int32 chat_changechatstatus(map_session_data* sd, const char* title, const char* pass, int32 limit, bool pub);
 int32 chat_kickchat(map_session_data* sd, const char* kickusername);
 
-int32 chat_createnpcchat(struct npc_data* nd, const char* title, int32 limit, bool pub, int32 trigger, const char* ev, int32 zeny, int32 minLvl, int32 maxLvl);
-int32 chat_deletenpcchat(struct npc_data* nd);
+int32 chat_createnpcchat(npc_data* nd, const char* title, int32 limit, bool pub, int32 trigger, const char* ev, int32 zeny, int32 minLvl, int32 maxLvl);
+int32 chat_deletenpcchat(npc_data* nd);
 int32 chat_enableevent(struct chat_data* cd);
 int32 chat_disableevent(struct chat_data* cd);
 int32 chat_npckickall(struct chat_data* cd);

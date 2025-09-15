@@ -148,7 +148,7 @@ bool mob_is_spotted(struct mob_data *md) {
  * Tomb spawn time calculations
  * @param nd: NPC data
  */
-int32 mvptomb_setdelayspawn(struct npc_data *nd) {
+int32 mvptomb_setdelayspawn(npc_data *nd) {
 	if (nd->u.tomb.spawn_timer != INVALID_TIMER)
 		delete_timer(nd->u.tomb.spawn_timer, mvptomb_delayspawn);
 	nd->u.tomb.spawn_timer = add_timer(gettick() + battle_config.mvp_tomb_delay, mvptomb_delayspawn, nd->id, 0);
@@ -163,7 +163,7 @@ int32 mvptomb_setdelayspawn(struct npc_data *nd) {
  * @param data: Used for add_timer_func_list
  */
 TIMER_FUNC(mvptomb_delayspawn){
-	struct npc_data *nd = BL_CAST(BL_NPC, map_id2bl(id));
+	npc_data *nd = BL_CAST(BL_NPC, map_id2bl(id));
 
 	if (nd) {
 		if (nd->u.tomb.spawn_timer != tid) {
@@ -185,12 +185,12 @@ TIMER_FUNC(mvptomb_delayspawn){
  */
 void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 
 	if ( md->tomb_nid )
 		mvptomb_destroy(md);
 
-	CREATE(nd, struct npc_data, 1);
+	CREATE(nd, npc_data, 1);
 	new (nd) npc_data();
 
 	nd->id = md->tomb_nid = npc_get_new_npc_id();
@@ -234,7 +234,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
  * @param md: Mob data
  */
 void mvptomb_destroy(struct mob_data *md) {
-	struct npc_data *nd;
+	npc_data *nd;
 
 	if ( (nd = map_id2nd(md->tomb_nid)) ) {
 		int32 i;
@@ -7306,7 +7306,7 @@ static int32 mob_reload_sub( struct mob_data *md, va_list args ){
  * @param args: va_list of arguments
  * @return 0
  */
-static int32 mob_reload_sub_npc( struct npc_data *nd, va_list args ){
+static int32 mob_reload_sub_npc( npc_data *nd, va_list args ){
 	// If the view data points to a mob
 	if( mobdb_checkid(nd->class_) ){
 		struct view_data *vd = mob_get_viewdata(nd->class_);

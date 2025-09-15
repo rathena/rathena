@@ -575,7 +575,7 @@ bool mob_has_spawn(uint16 mob_id);
 int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int32 base_rate, int32 drop_modifier, mob_data* md = nullptr, int32 factor = 1);
 
 // MvP Tomb System
-int32 mvptomb_setdelayspawn(struct npc_data *nd);
+int32 mvptomb_setdelayspawn(npc_data *nd);
 TIMER_FUNC(mvptomb_delayspawn);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);

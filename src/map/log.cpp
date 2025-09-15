@@ -375,7 +375,7 @@ void log_atcommand(map_session_data* sd, const char* message)
 }
 
 /// logs messages passed to script command 'logmes'
-void log_npc( struct npc_data* nd, const char* message ){
+void log_npc( npc_data* nd, const char* message ){
 	nullpo_retv(nd);
 
 	if( !log_config.npc )
