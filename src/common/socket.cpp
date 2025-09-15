@@ -1635,7 +1635,6 @@ bool session_isActive(int32 fd)
 	return ( session_isValid(fd) && !session[fd]->flag.eof );
 }
 
-#ifdef HAVE_GETADDRINFO
 uint32_t host2ip(const char* hostname)
 {
     struct addrinfo hints, *res;
@@ -1655,14 +1654,6 @@ uint32_t host2ip(const char* hostname)
 
     return ip;
 }
-#else
-// Resolves hostname into a numeric ip.
-uint32 host2ip(const char* hostname)
-{
-	struct hostent* h = gethostbyname(hostname);
-	return (h != nullptr) ? ntohl(*(uint32*)h->h_addr) : 0;
-}
-#endif
 
 // Converts a numeric ip into a dot-formatted string.
 // Result is placed either into a user-provided buffer or a static system buffer.

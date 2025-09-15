@@ -1,4 +1,4 @@
-name: Build servers with Clang
+name: Build servers with CMake and GCC on Linux
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
@@ -17,6 +17,8 @@ on:
       # This workflow should run when a file in a source directory has been modified.
       - 'src/**'
       - '3rdparty/**'
+      # This workflow should run whenever a CMake related file has been modified
+      - '**/CMakeLists.txt'
 
 jobs:
   build:
@@ -26,28 +28,19 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-          # The ubuntu-latest label currently points to ubuntu-24.04.
-          # Available: ubuntu-24.04, ubuntu-22.04
-          os: [ubuntu-22.04]
-          # Version list can be found on https://github.com/marketplace/actions/install-clang
-          clang: ['13','14','15','16','17','18','19','20']
+          os: [ubuntu-latest]
+          gcc: ['9', '10', '11', '12', '13', '14']
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Clang
-        uses: egor-tensin/setup-clang@v1
-        with:
-          version: ${{ matrix.clang }}
-          platform: x64
+      - name: Update & Install compilers
+        run: |
+          sudo apt update
+          sudo apt install zlib1g-dev libpcre3-dev gcc-${{matrix.gcc}} g++-${{matrix.gcc}}
 
-      - name: Command - configure
-        env:
-            CONFIGURE_FLAGS: 'CC=clang-${{ matrix.clang }} CXX=clang++-${{ matrix.clang }} --enable-buildbot=yes'
-        run: ./configure $CONFIGURE_FLAGS
+      - name: Configure CMake
+        run: CXX=g++-${{matrix.gcc}} CC=gcc-${{matrix.gcc}} cmake -B build
 
-      - name: Command - make clean
-        run: make clean
-
-      - name: Command - make all
-        run: make all
+      - name: Build
+        run: cmake --build build -j $(nproc) --target all
