@@ -42,6 +42,7 @@ class MapServer : public Core{
 };
 }
 
+struct chat_data;
 struct npc_data;
 struct item_data;
 struct Channel;
@@ -1189,7 +1190,7 @@ struct homun_data* map_id2hd(int32 id);
 struct s_mercenary_data* map_id2mc(int32 id);
 struct pet_data* map_id2pd(int32 id);
 struct s_elemental_data* map_id2ed(int32 id);
-struct chat_data* map_id2cd(int32 id);
+chat_data* map_id2cd(int32 id);
 struct block_list * map_id2bl(int32 id);
 bool map_blid_exists( int32 id );
 
@@ -1289,7 +1290,7 @@ typedef map_session_data TBL_PC;
 typedef struct npc_data         TBL_NPC;
 typedef struct mob_data         TBL_MOB;
 typedef struct flooritem_data   TBL_ITEM;
-typedef struct chat_data        TBL_CHAT;
+typedef chat_data        TBL_CHAT;
 typedef struct skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;

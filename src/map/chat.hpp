@@ -7,7 +7,6 @@
 #include "map.hpp" // struct block_list, CHATROOM_TITLE_SIZE
 
 class map_session_data;
-struct chat_data;
 
 #define MAX_CHAT_USERS 20
 
@@ -36,10 +35,10 @@ int32 chat_kickchat(map_session_data* sd, const char* kickusername);
 
 int32 chat_createnpcchat(struct npc_data* nd, const char* title, int32 limit, bool pub, int32 trigger, const char* ev, int32 zeny, int32 minLvl, int32 maxLvl);
 int32 chat_deletenpcchat(struct npc_data* nd);
-int32 chat_enableevent(struct chat_data* cd);
-int32 chat_disableevent(struct chat_data* cd);
-int32 chat_npckickall(struct chat_data* cd);
+int32 chat_enableevent(chat_data* cd);
+int32 chat_disableevent(chat_data* cd);
+int32 chat_npckickall(chat_data* cd);
 
-int32 chat_npckickchat(struct chat_data* cd, const char* kickusername);
+int32 chat_npckickchat(chat_data* cd, const char* kickusername);
 
 #endif /* CHAT_HPP */

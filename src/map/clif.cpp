@@ -532,11 +532,11 @@ int32 clif_send(const void* buf, int32 len, struct block_list* bl, enum send_tar
 	case CHAT:
 	case CHAT_WOS:
 		{
-			struct chat_data *cd;
+			chat_data *cd;
 			if (sd) {
-				cd = (struct chat_data*)map_id2bl(sd->chatID);
+				cd = (chat_data*)map_id2bl(sd->chatID);
 			} else if (bl->type == BL_CHAT) {
-				cd = (struct chat_data*)bl;
+				cd = (chat_data*)bl;
 			} else break;
 			if (cd == nullptr)
 				break;
@@ -5578,8 +5578,8 @@ int32 clif_outsight(struct block_list *bl,va_list ap)
 			if(sd->vd.look[LOOK_BASE] != JT_INVISIBLE)
 				clif_clearunit_single( bl->id, CLR_OUTSIGHT, *tsd );
 			if(sd->chatID){
-				struct chat_data *cd;
-				cd=(struct chat_data*)map_id2bl(sd->chatID);
+				chat_data *cd;
+				cd=(chat_data*)map_id2bl(sd->chatID);
 				if(cd->usersd[0]==sd)
 					clif_dispchat(*cd);
 			}
