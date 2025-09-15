@@ -699,10 +699,10 @@ int32 map_count_oncell(int16 m, int16 x, int16 y, int32 type, int32 flag)
  * Looks for a skill unit on a given cell
  * flag&1: runs battle_check_target check based on unit->group->target_flag
  */
-struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,int16 y,uint16 skill_id,struct skill_unit* out_unit, int32 flag) {
+skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,int16 y,uint16 skill_id,skill_unit* out_unit, int32 flag) {
 	int16 bx,by;
 	struct block_list *bl;
-	struct skill_unit *unit;
+	skill_unit *unit;
 	struct map_data *mapdata = map_getmapdata(target->m);
 
 	if (x < 0 || y < 0 || (x >= mapdata->xs) || (y >= mapdata->ys))
@@ -716,7 +716,7 @@ struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,
 		if (bl->x != x || bl->y != y || bl->type != BL_SKILL)
 			continue;
 
-		unit = (struct skill_unit *) bl;
+		unit = (skill_unit *) bl;
 		if( unit == out_unit || !unit->alive || !unit->group || unit->group->skill_id != skill_id )
 			continue;
 		if( !(flag&1) || battle_check_target(unit,target,unit->group->target_flag) > 0 )
@@ -2940,7 +2940,7 @@ static int32 map_instancemap_clean(struct block_list *bl, va_list ap)
 			map_clearflooritem(bl);
 			break;
 		case BL_SKILL:
-			skill_delunit((struct skill_unit *) bl);
+			skill_delunit((skill_unit *) bl);
 			break;
 	}
 
@@ -4551,7 +4551,7 @@ int32 cleanup_sub(struct block_list *bl, va_list ap)
 			map_clearflooritem(bl);
 			break;
 		case BL_SKILL:
-			skill_delunit((struct skill_unit *) bl);
+			skill_delunit((skill_unit *) bl);
 			break;
 	}
 

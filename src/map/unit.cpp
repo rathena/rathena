@@ -1297,7 +1297,7 @@ int32 unit_blown(struct block_list* bl, int32 dx, int32 dy, int32 count, enum e_
 {
 	if(count) {
 		map_session_data* sd;
-		struct skill_unit* su = nullptr;
+		skill_unit* su = nullptr;
 		int32 nx, ny, result;
 
 		sd = BL_CAST(BL_PC, bl);
@@ -1397,7 +1397,7 @@ enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 			}
 			break;
 		case BL_SKILL: {
-				struct skill_unit* su = (struct skill_unit *)bl;
+				skill_unit* su = (skill_unit *)bl;
 				// Trap cannot be knocked back
 				if (su && su->group && skill_get_unit_flag(su->group->skill_id, UF_NOKNOCKBACK))
 					return UB_TARGET_TRAP;

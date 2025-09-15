@@ -1513,7 +1513,7 @@ int32 status_damage(struct block_list *src,struct block_list *target,int64 dhp, 
 
 	if (target->type == BL_SKILL) {
 		if (!src || src->type&battle_config.can_damage_skill)
-			return (int32)skill_unit_ondamaged((struct skill_unit *)target, hp);
+			return (int32)skill_unit_ondamaged((skill_unit *)target, hp);
 		return 0;
 	}
 
@@ -15046,7 +15046,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_CREATINGSTAR:
 		if (--(sce->val4) >= 0) { // Needed to check who the caster is and what AoE is giving the status.
 			struct block_list *star_caster = map_id2bl(sce->val2);
-			struct skill_unit *star_aoe = (struct skill_unit *)map_id2bl(sce->val3);
+			skill_unit *star_aoe = (skill_unit *)map_id2bl(sce->val3);
 
 			if (star_caster == nullptr || status_isdead(*star_caster) || star_caster->m != bl->m || star_aoe == nullptr)
 				break;
@@ -15256,9 +15256,9 @@ int32 status_change_timer_sub(struct block_list* bl, va_list ap)
 			status_check_skilluse(src, bl, WZ_SIGHTBLASTER, 2))
 		{
 			if (sce) {
-				struct skill_unit *su = nullptr; 
+				skill_unit *su = nullptr; 
 				if(bl->type == BL_SKILL)
-					su = (struct skill_unit *)bl;
+					su = (skill_unit *)bl;
 				if (skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,sce->val1,tick,0x1000000)
 					&& (!su || !su->group || !skill_get_inf2(su->group->skill_id, INF2_ISTRAP))) { // The hit is not counted if it's against a trap
 					sce->val2 = 0; // This signals it to end.

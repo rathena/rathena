@@ -43,6 +43,7 @@ class MapServer : public Core{
 }
 
 struct npc_data;
+struct skill_unit;
 struct item_data;
 struct Channel;
 
@@ -1152,7 +1153,7 @@ int32 map_foreachindir(int32 (*func)(struct block_list*,va_list), int16 m, int16
 int32 map_foreachinmap(int32 (*func)(struct block_list*,va_list), int16 m, int32 type, ...);
 //blocklist nb in one cell
 int32 map_count_oncell(int16 m,int16 x,int16 y,int32 type,int32 flag);
-struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int16 x,int16 y,uint16 skill_id,struct skill_unit *, int32 flag);
+skill_unit *map_find_skill_unit_oncell(struct block_list *,int16 x,int16 y,uint16 skill_id,skill_unit *, int32 flag);
 // search and creation
 int32 map_get_new_object_id(void);
 int32 map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int32 flag, int32 tries = 50);
@@ -1290,7 +1291,7 @@ typedef struct npc_data         TBL_NPC;
 typedef struct mob_data         TBL_MOB;
 typedef struct flooritem_data   TBL_ITEM;
 typedef struct chat_data        TBL_CHAT;
-typedef struct skill_unit       TBL_SKILL;
+typedef skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
 typedef struct s_mercenary_data   TBL_MER;
