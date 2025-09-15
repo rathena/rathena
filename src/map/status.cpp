@@ -8973,7 +8973,7 @@ int32 status_get_class(struct block_list *bl)
  * @param bl: Object whose base level to get [PC|MOB|PET|HOM|MER|NPC|ELEM]
  * @return base level or 1 if any other bl->type than noted above
  */
-int32 status_get_lv(struct block_list *bl)
+int32 status_get_lv(const block_list *bl)
 {
 	nullpo_ret(bl);
 	switch (bl->type) {
@@ -9519,8 +9519,7 @@ void status_set_viewdata(struct block_list *bl, int32 class_)
  * @param bl: Object whose sc data to get [PC|MOB|HOM|MER|ELEM|NPC]
  * @return status change data structure bl->sc
  */
-status_change *status_get_sc(struct block_list *bl)
-{
+status_change* status_get_sc(const block_list* bl){
 	if( bl )
 	switch (bl->type) {
 		case BL_PC:  return &((TBL_PC*)bl)->sc;

@@ -264,6 +264,13 @@
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
     <ClInclude Include="skills/merchant/skill_factory_merchant.hpp" />
+    <ClInclude Include="skills/merchant/cartrevolution.hpp" />
+    <ClInclude Include="skills/merchant/changecart.hpp" />
+    <ClInclude Include="skills/merchant/crazyuproar.hpp" />
+    <ClInclude Include="skills/merchant/decoratecart.hpp" />
+    <ClInclude Include="skills/merchant/itemappraisal.hpp" />
+    <ClInclude Include="skills/merchant/mammonite.hpp" />
+    <ClInclude Include="skills/merchant/skill_vending.hpp" />
     <ClInclude Include="skills/ninja/skill_factory_ninja.hpp" />
     <ClInclude Include="skills/novice/skill_factory_novice.hpp" />
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
@@ -360,6 +367,13 @@
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp" />
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp" />
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
+    <ClCompile Include="skills/merchant/cartrevolution.cpp" />
+    <ClCompile Include="skills/merchant/changecart.cpp" />
+    <ClCompile Include="skills/merchant/crazyuproar.cpp" />
+    <ClCompile Include="skills/merchant/decoratecart.cpp" />
+    <ClCompile Include="skills/merchant/itemappraisal.cpp" />
+    <ClCompile Include="skills/merchant/mammonite.cpp" />
+    <ClCompile Include="skills/merchant/skill_vending.cpp" />
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp" />
     <ClCompile Include="skills/novice/skill_factory_novice.cpp" />
     <ClCompile Include="skills/npc/skill_factory_npc.cpp" />
