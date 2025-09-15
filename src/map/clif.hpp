@@ -996,7 +996,7 @@ void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, in
 
 void clif_produceeffect(map_session_data* sd,int32 flag, t_itemid nameid);
 
-void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible);
+void clif_getareachar_skillunit(struct block_list *bl, skill_unit *unit, enum send_target target, bool visible);
 void clif_skill_delunit( skill_unit& unit );
 void clif_skillunit_update( block_list& bl);
 

@@ -60,7 +60,7 @@ uint16 battle_getcurrentskill(struct block_list *bl)
 	struct unit_data *ud;
 
 	if( bl->type == BL_SKILL ) {
-		struct skill_unit *su = (struct skill_unit*)bl;
+		skill_unit *su = (skill_unit*)bl;
 		return (su && su->group?su->group->skill_id:0);
 	}
 
@@ -567,7 +567,7 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 
 	if( target && target->type == BL_SKILL ) {
 		if( atk_elem == ELE_FIRE && battle_getcurrentskill(target) == GN_WALLOFTHORN ) {
-			struct skill_unit *su = (struct skill_unit*)target;
+			skill_unit *su = (skill_unit*)target;
 			std::shared_ptr<s_skill_unit_group> sg;
 			struct block_list *src2;
 
@@ -11489,7 +11489,7 @@ int32 battle_check_target( struct block_list *src, struct block_list *target,int
 			}
 			break;
 		case BL_SKILL: {
-				struct skill_unit *su = (struct skill_unit *)src;
+				skill_unit *su = (skill_unit *)src;
 				status_change* sc = status_get_sc(target);
 				if (!su || !su->group)
 					return 0;

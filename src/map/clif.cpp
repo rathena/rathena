@@ -5387,7 +5387,7 @@ static void clif_graffiti( skill_unit& unit, send_target target, block_list& bl 
 /// 08c7 <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.B <range>.W <visible>.B (ZC_SKILL_ENTRY3)
 /// 099f <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.W <visible>.B (ZC_SKILL_ENTRY4)
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
-void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible) {
+void clif_getareachar_skillunit(struct block_list *bl, skill_unit *unit, enum send_target target, bool visible) {
 	int32 header = 0, unit_id = 0, pos = 0, fd = 0, len = -1;
 	unsigned char buf[128];
 
