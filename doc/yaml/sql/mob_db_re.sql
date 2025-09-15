@@ -82,7 +82,7 @@ CREATE TABLE `mob_db_re` (
   `damage_taken` smallint(6) unsigned DEFAULT NULL,
   `groupid` smallint(6) unsigned DEFAULT NULL,
   `title` text DEFAULT NULL,
-  `ai` varchar(2) DEFAULT NULL,
+  `ai` varchar(50) DEFAULT NULL,
   `class` varchar(50) DEFAULT NULL,
   `mode_canmove` tinyint(1) unsigned DEFAULT NULL,
   `mode_looter` tinyint(1) unsigned DEFAULT NULL,
