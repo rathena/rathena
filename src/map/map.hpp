@@ -1180,7 +1180,7 @@ void map_addnickdb(uint32 charid, const char* nick);
 void map_delnickdb(uint32 charid, const char* nick);
 void map_reqnickdb(map_session_data* sd,uint32 charid);
 const char* map_charid2nick(uint32 charid);
-map_session_data* map_charid2sd(int32 charid);
+map_session_data* map_charid2sd(uint32 charid);
 
 map_session_data * map_id2sd(int32 id);
 struct mob_data * map_id2md(int32 id);
@@ -1241,8 +1241,6 @@ int32 map_check_dir(int32 s_dir,int32 t_dir);
 uint8 map_calc_dir(struct block_list *src,int16 x,int16 y);
 uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir);
 int32 map_random_dir(struct block_list *bl, int16 *x, int16 *y); // [Skotlex]
-
-int32 cleanup_sub(struct block_list *bl, va_list ap);
 
 int32 map_delmap(char* mapname);
 void map_flags_init(void);

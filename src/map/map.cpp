@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <cmath>
 #include <set>
+#include <memory>
 
 #include <config/core.hpp>
 
@@ -111,14 +112,14 @@ struct charid2nick {
 };
 
 // DBMap declaration
-static DBMap* id_db=nullptr; /// int32 id -> struct block_list*
-static DBMap* pc_db=nullptr; /// int32 id -> map_session_data*
-static DBMap* mobid_db=nullptr; /// int32 id -> struct mob_data*
-static DBMap* bossid_db=nullptr; /// int32 id -> struct mob_data* (MVP db)
+std::unordered_map<int32, block_list*> id_db; /// int32 id -> struct block_list*
+std::unordered_map<int32, map_session_data*> pc_db; /// int32 id -> map_session_data*
+std::unordered_map<int32, mob_data*> mobid_db; /// int32 id -> struct mob_data*
+std::unordered_map<int32, mob_data*> bossid_db; /// int32 id -> struct mob_data* (MVP db)
 static DBMap* map_db=nullptr; /// uint32 mapindex -> struct map_data*
 std::unordered_map<uint32, charid2nick> nick_db; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
-static DBMap* charid_db=nullptr; /// uint32 char_id -> map_session_data*
-static DBMap* regen_db=nullptr; /// int32 id -> struct block_list* (status_natural_heal processing)
+std::unordered_map<uint32, map_session_data*> charid_db; /// uint32 char_id -> map_session_data*
+std::unordered_map<int32, block_list*> regen_db; /// int32 id -> struct block_list* (status_natural_heal processing)
 static DBMap* map_msg_db=nullptr;
 
 static int32 map_users=0;
@@ -222,7 +223,7 @@ int32 map_getusers(void)
  *------------------------------------------*/
 int32 map_usercount(void)
 {
-	return pc_db->size(pc_db);
+	return pc_db.size();
 }
 
 void map_destroyblock( block_list* bl ){
@@ -1666,7 +1667,7 @@ int32 map_get_new_object_id(void)
 		if( i == MAX_FLOORITEM )
 			i = MIN_FLOORITEM;
 
-		if( !idb_exists(id_db, i) )
+		if( !rathena::util::umap_exists(id_db, i) )
 			break;
 
 		++i;
@@ -1688,13 +1689,12 @@ int32 map_get_new_object_id(void)
  * Called each flooritem_lifetime ms
  *------------------------------------------*/
 TIMER_FUNC(map_clearflooritem_timer){
-	struct flooritem_data* fitem = (struct flooritem_data*)idb_get(id_db, id);
-
-	if (fitem == nullptr || fitem->type != BL_ITEM || (fitem->cleartimer != tid)) {
+	if (!rathena::util::umap_exists(id_db, id) || id_db[id] == nullptr || id_db[id]->type != BL_ITEM || (reinterpret_cast<struct flooritem_data*>(id_db[id]))->cleartimer != tid) {
 		ShowError("map_clearflooritem_timer : error\n");
 		return 1;
 	}
 
+	struct flooritem_data* fitem = reinterpret_cast<struct flooritem_data*>(id_db[id]);
 
 	if (pet_db_search(fitem->item.nameid, PET_EGG))
 		intif_delete_petdata(MakeDWord(fitem->item.card[1], fitem->item.card[2]));
@@ -2170,22 +2170,22 @@ void map_addiddb(struct block_list *bl)
 	if( bl->type == BL_PC )
 	{
 		TBL_PC* sd = (TBL_PC*)bl;
-		idb_put(pc_db,sd->id,sd);
-		uidb_put(charid_db,sd->status.char_id,sd);
+		pc_db.emplace(sd->id, sd);
+		charid_db.emplace(sd->status.char_id, sd);
 	}
 	else if( bl->type == BL_MOB )
 	{
 		TBL_MOB* md = (TBL_MOB*)bl;
-		idb_put(mobid_db,bl->id,bl);
+		mobid_db.emplace(bl->id, md);
 
 		if( md->state.boss )
-			idb_put(bossid_db, bl->id, bl);
+			bossid_db.emplace(bl->id, md);
 	}
 
 	if( bl->type & BL_REGEN )
-		idb_put(regen_db, bl->id, bl);
+		regen_db.emplace(bl->id, bl);
 
-	idb_put(id_db,bl->id,bl);
+	id_db.emplace(bl->id, bl);
 }
 
 /*==========================================
@@ -2198,19 +2198,19 @@ void map_deliddb(struct block_list *bl)
 	if( bl->type == BL_PC )
 	{
 		TBL_PC* sd = (TBL_PC*)bl;
-		idb_remove(pc_db,sd->id);
-		uidb_remove(charid_db,sd->status.char_id);
+		pc_db.erase(sd->id);
+		charid_db.erase(sd->status.char_id);
 	}
 	else if( bl->type == BL_MOB )
 	{
-		idb_remove(mobid_db,bl->id);
-		idb_remove(bossid_db,bl->id);
+		mobid_db.erase(bl->id);
+		bossid_db.erase(bl->id);
 	}
 
 	if( bl->type & BL_REGEN )
-		idb_remove(regen_db,bl->id);
+		regen_db.erase(bl->id);
 
-	idb_remove(id_db,bl->id);
+	id_db.erase(bl->id);
 }
 
 /*==========================================
@@ -2333,13 +2333,17 @@ int32 map_quit(map_session_data *sd) {
  * Lookup, id to session (player,mob,npc,homon,merc..)
  *------------------------------------------*/
 map_session_data * map_id2sd(int32 id){
-	if (id <= 0) return nullptr;
-	return (map_session_data*)idb_get(pc_db,id);
+	if (!rathena::util::umap_exists(pc_db, id))
+		return nullptr;
+
+	return pc_db[id];
 }
 
 struct mob_data * map_id2md(int32 id){
-	if (id <= 0) return nullptr;
-	return (struct mob_data*)idb_get(mobid_db,id);
+	if (!rathena::util::umap_exists(mobid_db, id))
+		return nullptr;
+
+	return mobid_db[id];
 }
 
 struct npc_data * map_id2nd(int32 id){
@@ -2390,9 +2394,11 @@ const char* map_charid2nick(uint32 charid)
 }
 
 /// Returns the map_session_data of the charid or nullptr if the char is not online.
-map_session_data* map_charid2sd(int32 charid)
+map_session_data* map_charid2sd(uint32 charid)
 {
-	return (map_session_data*)uidb_get(charid_db, charid);
+	if (!rathena::util::umap_exists(charid_db, charid))
+		return nullptr;
+	return charid_db[charid];
 }
 
 /*==========================================
@@ -2451,14 +2457,15 @@ map_session_data * map_nick2sd(const char *nick, bool allow_partial)
  * Looksup id_db DBMap and returns BL pointer of 'id' or nullptr if not found
  *------------------------------------------*/
 struct block_list * map_id2bl(int32 id) {
-	return (struct block_list*)idb_get(id_db,id);
+	auto it = id_db.find(id);
+	return it != id_db.end() ? it->second : nullptr;
 }
 
 /**
  * Same as map_id2bl except it only checks for its existence
  **/
 bool map_blid_exists( int32 id ) {
-	return (idb_exists(id_db,id));
+	return (id_db.find(id) != id_db.end());
 }
 
 /*==========================================
@@ -2466,39 +2473,35 @@ bool map_blid_exists( int32 id ) {
  *------------------------------------------*/
 struct mob_data * map_getmob_boss(int16 m)
 {
-	DBIterator* iter;
 	struct mob_data *md = nullptr;
 	bool found = false;
 
-	iter = db_iterator(bossid_db);
-	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
+	for(auto [_, md_] : bossid_db)
 	{
-		if( md->m == m )
+		if( md_->m == m )
 		{
 			found = true;
+			md = md_;
 			break;
 		}
 	}
-	dbi_destroy(iter);
 
 	return (found)? md : nullptr;
 }
 
 struct mob_data * map_id2boss(int32 id)
 {
-	if (id <= 0) return nullptr;
-	return (struct mob_data*)idb_get(bossid_db,id);
+	if (!rathena::util::umap_exists(bossid_db, id))
+		return nullptr;
+
+	return bossid_db[id];
 }
 
 /// Applies func to all the players in the db.
 /// Stops iterating if func returns -1.
 void map_foreachpc(int32 (*func)(map_session_data* sd, va_list args), ...)
 {
-	DBIterator* iter;
-	map_session_data* sd;
-
-	iter = db_iterator(pc_db);
-	for( sd = (map_session_data*)dbi_first(iter); dbi_exists(iter); sd = (map_session_data*)dbi_next(iter) )
+	for(auto [_, sd] : pc_db)
 	{
 		va_list args;
 		int32 ret;
@@ -2509,18 +2512,13 @@ void map_foreachpc(int32 (*func)(map_session_data* sd, va_list args), ...)
 		if( ret == -1 )
 			break;// stop iterating
 	}
-	dbi_destroy(iter);
 }
 
 /// Applies func to all the mobs in the db.
 /// Stops iterating if func returns -1.
 void map_foreachmob(int32 (*func)(struct mob_data* md, va_list args), ...)
 {
-	DBIterator* iter;
-	struct mob_data* md;
-
-	iter = db_iterator(mobid_db);
-	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
+	for( auto [_, md] : mobid_db )
 	{
 		va_list args;
 		int32 ret;
@@ -2531,18 +2529,13 @@ void map_foreachmob(int32 (*func)(struct mob_data* md, va_list args), ...)
 		if( ret == -1 )
 			break;// stop iterating
 	}
-	dbi_destroy(iter);
 }
 
 /// Applies func to all the npcs in the db.
 /// Stops iterating if func returns -1.
 void map_foreachnpc(int32 (*func)(struct npc_data* nd, va_list args), ...)
 {
-	DBIterator* iter;
-	struct block_list* bl;
-
-	iter = db_iterator(id_db);
-	for( bl = (struct block_list*)dbi_first(iter); dbi_exists(iter); bl = (struct block_list*)dbi_next(iter) )
+	for(auto [_, bl] : id_db)
 	{
 		if( bl->type == BL_NPC )
 		{
@@ -2557,18 +2550,13 @@ void map_foreachnpc(int32 (*func)(struct npc_data* nd, va_list args), ...)
 				break;// stop iterating
 		}
 	}
-	dbi_destroy(iter);
 }
 
 /// Applies func to everything in the db.
 /// Stops iterating if func returns -1.
 void map_foreachregen(int32 (*func)(struct block_list* bl, va_list args), ...)
 {
-	DBIterator* iter;
-	struct block_list* bl;
-
-	iter = db_iterator(regen_db);
-	for( bl = (struct block_list*)dbi_first(iter); dbi_exists(iter); bl = (struct block_list*)dbi_next(iter) )
+	for( auto [_, bl] : regen_db )
 	{
 		va_list args;
 		int32 ret;
@@ -2579,18 +2567,13 @@ void map_foreachregen(int32 (*func)(struct block_list* bl, va_list args), ...)
 		if( ret == -1 )
 			break;// stop iterating
 	}
-	dbi_destroy(iter);
 }
 
 /// Applies func to everything in the db.
 /// Stops iterating if func returns -1.
 void map_foreachiddb(int32 (*func)(struct block_list* bl, va_list args), ...)
 {
-	DBIterator* iter;
-	struct block_list* bl;
-
-	iter = db_iterator(id_db);
-	for( bl = (struct block_list*)dbi_first(iter); dbi_exists(iter); bl = (struct block_list*)dbi_next(iter) )
+	for( auto [_, bl] : id_db )
 	{
 		va_list args;
 		int32 ret;
@@ -2601,16 +2584,40 @@ void map_foreachiddb(int32 (*func)(struct block_list* bl, va_list args), ...)
 		if( ret == -1 )
 			break;// stop iterating
 	}
-	dbi_destroy(iter);
 }
 
 /// Iterator.
 /// Can filter by bl type.
 struct s_mapiterator
 {
-	enum e_mapitflags flags;// flags for special behaviour
-	enum bl_type types;// what bl types to return
-	DBIterator* dbi;// database iterator
+    enum e_mapitflags flags; // flags for special behaviour
+    enum bl_type types;      // what bl types to return
+
+    struct IIter {
+        virtual ~IIter() = default;
+        virtual void reset() = 0;                 // set to begin
+        virtual block_list* get() = 0;            // current element or nullptr if end
+        virtual void advance() = 0;               // ++
+        virtual bool at_end() const = 0;          // true if end
+    };
+
+    template <typename MapT>
+    struct UmapIter final : IIter {
+        MapT* map;
+        typename MapT::iterator it;
+        typename MapT::iterator it_end;
+        explicit UmapIter(MapT* m) : map(m) { reset(); }
+        void reset() override { it = map->begin(); it_end = map->end(); }
+        block_list* get() override {
+            if (it == it_end) return nullptr;
+            // value_type is pointer to a derived of block_list in our use cases
+            return static_cast<block_list*>(it->second);
+        }
+        void advance() override { if (it != it_end) ++it; }
+        bool at_end() const override { return it == it_end; }
+    };
+
+    std::unique_ptr<IIter> p; // type-erased iterator over the chosen container
 };
 
 /// Returns true if the block_list matches the description in the iterator.
@@ -2633,15 +2640,19 @@ struct s_mapiterator
 /// @return Iterator
 struct s_mapiterator* mapit_alloc(enum e_mapitflags flags, enum bl_type types)
 {
-	struct s_mapiterator* mapit;
+    auto* mapit = new s_mapiterator();
+    mapit->flags = flags;
+    mapit->types = types;
 
-	CREATE(mapit, struct s_mapiterator, 1);
-	mapit->flags = flags;
-	mapit->types = types;
-	if( types == BL_PC )       mapit->dbi = db_iterator(pc_db);
-	else if( types == BL_MOB ) mapit->dbi = db_iterator(mobid_db);
-	else                       mapit->dbi = db_iterator(id_db);
-	return mapit;
+    if (types == BL_PC) {
+        mapit->p = std::make_unique<s_mapiterator::UmapIter<std::unordered_map<int32, map_session_data*>>>(&pc_db);
+    } else if (types == BL_MOB) {
+        mapit->p = std::make_unique<s_mapiterator::UmapIter<std::unordered_map<int32, mob_data*>>>(&mobid_db);
+    } else {
+        mapit->p = std::make_unique<s_mapiterator::UmapIter<std::unordered_map<int32, block_list*>>>(&id_db);
+    }
+
+    return mapit;
 }
 
 /// Frees the iterator.
@@ -2650,9 +2661,7 @@ struct s_mapiterator* mapit_alloc(enum e_mapitflags flags, enum bl_type types)
 void mapit_free(struct s_mapiterator* mapit)
 {
 	nullpo_retv(mapit);
-
-	dbi_destroy(mapit->dbi);
-	aFree(mapit);
+    delete mapit;
 }
 
 /// Returns the first block_list that matches the description.
@@ -2662,16 +2671,15 @@ void mapit_free(struct s_mapiterator* mapit)
 /// @return first block_list or nullptr
 struct block_list* mapit_first(struct s_mapiterator* mapit)
 {
-	struct block_list* bl;
-
-	nullpo_retr(nullptr,mapit);
-
-	for( bl = (struct block_list*)dbi_first(mapit->dbi); bl != nullptr; bl = (struct block_list*)dbi_next(mapit->dbi) )
-	{
-		if( MAPIT_MATCHES(mapit,bl) )
-			break;// found match
-	}
-	return bl;
+    nullpo_retr(nullptr, mapit);
+    mapit->p->reset();
+    while (!mapit->p->at_end()) {
+        block_list* bl = mapit->p->get();
+        if (bl && MAPIT_MATCHES(mapit, bl))
+            return bl;
+        mapit->p->advance();
+    }
+    return nullptr;
 }
 
 /// Returns the last block_list that matches the description.
@@ -2681,16 +2689,27 @@ struct block_list* mapit_first(struct s_mapiterator* mapit)
 /// @return last block_list or nullptr
 struct block_list* mapit_last(struct s_mapiterator* mapit)
 {
-	struct block_list* bl;
-
-	nullpo_retr(nullptr,mapit);
-
-	for( bl = (struct block_list*)dbi_last(mapit->dbi); bl != nullptr; bl = (struct block_list*)dbi_prev(mapit->dbi) )
-	{
-		if( MAPIT_MATCHES(mapit,bl) )
-			break;// found match
-	}
-	return bl;
+    nullpo_retr(nullptr, mapit);
+    // unordered_map has no reverse iteration guarantee; scan forward and keep the last match
+    block_list* last = nullptr;
+    mapit->p->reset();
+    while (!mapit->p->at_end()) {
+        block_list* bl = mapit->p->get();
+        if (bl && MAPIT_MATCHES(mapit, bl))
+            last = bl;
+        mapit->p->advance();
+    }
+    if (!last)
+        return nullptr;
+    // Move internal cursor to the position where `last` resides
+    mapit->p->reset();
+    while (!mapit->p->at_end()) {
+        block_list* bl = mapit->p->get();
+        if (bl == last)
+            return bl;
+        mapit->p->advance();
+    }
+    return nullptr;
 }
 
 /// Returns the next block_list that matches the description.
@@ -2700,20 +2719,17 @@ struct block_list* mapit_last(struct s_mapiterator* mapit)
 /// @return next block_list or nullptr
 struct block_list* mapit_next(struct s_mapiterator* mapit)
 {
-	struct block_list* bl;
-
-	nullpo_retr(nullptr,mapit);
-
-	for( ; ; )
-	{
-		bl = (struct block_list*)dbi_next(mapit->dbi);
-		if( bl == nullptr )
-			break;// end
-		if( MAPIT_MATCHES(mapit,bl) )
-			break;// found a match
-		// try next
-	}
-	return bl;
+    nullpo_retr(nullptr, mapit);
+    if (mapit->p->at_end())
+        return nullptr;
+    mapit->p->advance();
+    while (!mapit->p->at_end()) {
+        block_list* bl = mapit->p->get();
+        if (bl && MAPIT_MATCHES(mapit, bl))
+            return bl;
+        mapit->p->advance();
+    }
+    return nullptr;
 }
 
 /// Returns the previous block_list that matches the description.
@@ -2723,20 +2739,24 @@ struct block_list* mapit_next(struct s_mapiterator* mapit)
 /// @return previous block_list or nullptr
 struct block_list* mapit_prev(struct s_mapiterator* mapit)
 {
-	struct block_list* bl;
-
-	nullpo_retr(nullptr,mapit);
-
-	for( ; ; )
-	{
-		bl = (struct block_list*)dbi_prev(mapit->dbi);
-		if( bl == nullptr )
-			break;// end
-		if( MAPIT_MATCHES(mapit,bl) )
-			break;// found a match
-		// try prev
-	}
-	return bl;
+    nullpo_retr(nullptr, mapit);
+    // Scan forward to find the previous match before the current element
+    block_list* current = nullptr;
+    block_list* prev = nullptr;
+    // Determine current element (after first/next, p already points to it)
+    current = mapit->p->get();
+    mapit->p->reset();
+    while (!mapit->p->at_end()) {
+        block_list* bl = mapit->p->get();
+        if (bl == current) {
+            // 停在 current 前的位置，回傳 prev
+            return prev;
+        }
+        if (bl && MAPIT_MATCHES(mapit, bl))
+            prev = bl;
+        mapit->p->advance();
+    }
+    return nullptr;
 }
 
 /// Returns true if the current block_list exists in the database.
@@ -2747,7 +2767,8 @@ bool mapit_exists(struct s_mapiterator* mapit)
 {
 	nullpo_retr(false,mapit);
 
-	return dbi_exists(mapit->dbi);
+    // Iterator not at end means there is a current element
+    return !mapit->p->at_end();
 }
 
 /*==========================================
@@ -2806,7 +2827,7 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 		}
 	}
 	mapdata->npc_num++;
-	idb_put(id_db,nd->id,nd);
+	id_db[nd->id] = nd;
 	return true;
 }
 
@@ -4495,7 +4516,7 @@ int32 map_db_final(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-int32 cleanup_sub(struct block_list *bl, va_list ap)
+static int32 cleanup_sub(struct block_list *bl, va_list ap = nullptr)
 {
 	nullpo_ret(bl);
 
@@ -4972,14 +4993,6 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 	return true;
 }
 
-/**
- * @see DBApply
- */
-static int32 cleanup_db_sub(DBKey key, DBData *data, va_list va)
-{
-	return cleanup_sub((struct block_list *)db_data2ptr(data), va);
-}
-
 /*==========================================
  * map destructor
  *------------------------------------------*/
@@ -5012,7 +5025,9 @@ void MapServer::finalize(){
 	}
 	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map_num);
 
-	id_db->foreach(id_db,cleanup_db_sub);
+	for (const auto[_, bl] : id_db) {
+		cleanup_sub(bl);
+	}
 	chrif_char_reset_offline();
 	chrif_flush_fifo();
 
@@ -5071,13 +5086,7 @@ void MapServer::finalize(){
 	if(enable_grf)
 		grfio_final();
 
-	id_db->destroy(id_db, nullptr);
-	pc_db->destroy(pc_db, nullptr);
-	mobid_db->destroy(mobid_db, nullptr);
-	bossid_db->destroy(bossid_db, nullptr);
-	charid_db->destroy(charid_db, nullptr);
 	iwall_db->destroy(iwall_db, nullptr);
-	regen_db->destroy(regen_db, nullptr);
 
 	map_sql_close();
 
@@ -5105,8 +5114,8 @@ void MapServer::handle_crash(){
 	run = 1;
 	if (!chrif_isconnected())
 	{
-		if (pc_db->size(pc_db))
-			ShowFatalError("Server has crashed without a connection to the char-server, %u characters can't be saved!\n", pc_db->size(pc_db));
+		if (pc_db.size())
+			ShowFatalError("Server has crashed without a connection to the char-server, %u characters can't be saved!\n", pc_db.size());
 		return;
 	}
 	ShowError("Server received crash signal! Attempting to save all online characters!\n");
@@ -5366,13 +5375,7 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	inter_config_read(INTER_CONF_NAME);
 	log_config_read(LOG_CONF_NAME);
 
-	id_db = idb_alloc(DB_OPT_BASE);
-	pc_db = idb_alloc(DB_OPT_BASE);	//Added for reliable map_id2sd() use. [Skotlex]
-	mobid_db = idb_alloc(DB_OPT_BASE);	//Added to lower the load of the lazy mob ai. [Skotlex]
-	bossid_db = idb_alloc(DB_OPT_BASE); // Used for Convex Mirror quick MVP search
 	map_db = uidb_alloc(DB_OPT_BASE);
-	charid_db = uidb_alloc(DB_OPT_BASE);
-	regen_db = idb_alloc(DB_OPT_BASE); // efficient status_natural_heal processing
 	iwall_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1); // [Zephyrus] Invisible Walls
 
 	map_sql_init();
