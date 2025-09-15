@@ -175,3 +175,5 @@ CREATE TABLE `mob_db2_re` (
   PRIMARY KEY (`id`),
   UNIQUE KEY (`name_aegis`)
 ) ENGINE=MyISAM;
+
+-- Has to be converted via yaml2sql

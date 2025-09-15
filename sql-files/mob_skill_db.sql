@@ -80,3 +80,6 @@ CREATE TABLE IF NOT EXISTS `mob_skill_db` (
 #	-1: added for all boss types.
 #	-2: added for all normal types.
 #	-3: added for all mobs.
+
+-- Has to be converted via yaml2sql
+

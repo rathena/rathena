@@ -108,3 +108,5 @@ CREATE TABLE `item_db2` (
   PRIMARY KEY (`id`),
   UNIQUE INDEX `UniqueAegisName` (`name_aegis`)
 ) ENGINE=MyISAM;
+
+-- Has to be converted via yaml2sql
