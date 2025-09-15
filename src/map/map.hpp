@@ -46,6 +46,7 @@ struct mob_data;
 struct npc_data;
 struct skill_unit;
 struct item_data;
+struct s_mercenary_data;
 struct Channel;
 
 struct map_data *map_getmapdata(int16 m);
@@ -1188,7 +1189,7 @@ map_session_data * map_id2sd(int32 id);
 mob_data * map_id2md(int32 id);
 struct npc_data * map_id2nd(int32 id);
 struct homun_data* map_id2hd(int32 id);
-struct s_mercenary_data* map_id2mc(int32 id);
+s_mercenary_data* map_id2mc(int32 id);
 struct pet_data* map_id2pd(int32 id);
 struct s_elemental_data* map_id2ed(int32 id);
 struct chat_data* map_id2cd(int32 id);
@@ -1295,7 +1296,7 @@ typedef struct chat_data        TBL_CHAT;
 typedef skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;
 typedef struct homun_data       TBL_HOM;
-typedef struct s_mercenary_data   TBL_MER;
+typedef s_mercenary_data   TBL_MER;
 typedef struct s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
