@@ -996,7 +996,7 @@ void clif_cooking_list( map_session_data& sd, int32 trigger, uint16 skill_id, in
 
 void clif_produceeffect(map_session_data* sd,int32 flag, t_itemid nameid);
 
-void clif_getareachar_skillunit(block_list *bl, struct skill_unit *unit, enum send_target target, bool visible);
+void clif_getareachar_skillunit(block_list *bl, skill_unit *unit, enum send_target target, bool visible);
 void clif_skill_delunit( skill_unit& unit );
 void clif_skillunit_update( block_list& bl);
 
@@ -1346,7 +1346,7 @@ void clif_elemental_updatestatus(map_session_data& sd, _sp type);
 void clif_spiritcharm( map_session_data& sd );
 
 void clif_snap( block_list *bl, int16 x, int16 y );
-void clif_monster_hp_bar( struct mob_data* md, int32 fd );
+void clif_monster_hp_bar( mob_data* md, int32 fd );
 
 // Clan System
 void clif_clan_basicinfo( map_session_data& sd );
@@ -1450,8 +1450,8 @@ void clif_inventory_expansion_info( map_session_data* sd );
 void clif_barter_open( map_session_data& sd, struct npc_data& nd );
 void clif_barter_extended_open( map_session_data& sd, struct npc_data& nd );
 
-void clif_summon_init(struct mob_data& md);
-void clif_summon_hp_bar(struct mob_data& md);
+void clif_summon_init(mob_data& md);
+void clif_summon_hp_bar(mob_data& md);
 
 // Laphine System
 void clif_laphine_synthesis_open( map_session_data *sd, std::shared_ptr<s_laphine_synthesis> synthesis );

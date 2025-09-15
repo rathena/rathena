@@ -5387,7 +5387,7 @@ static void clif_graffiti( skill_unit& unit, send_target target, block_list& bl 
 /// 08c7 <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.B <range>.W <visible>.B (ZC_SKILL_ENTRY3)
 /// 099f <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.W <visible>.B (ZC_SKILL_ENTRY4)
 /// 09ca <lenght>.W <id> L <creator id>.L <x>.W <y>.W <unit id>.L <range>.B <visible>.B <skill level>.B (ZC_SKILL_ENTRY5)
-void clif_getareachar_skillunit(block_list *bl, struct skill_unit *unit, enum send_target target, bool visible) {
+void clif_getareachar_skillunit(block_list *bl, skill_unit *unit, enum send_target target, bool visible) {
 	int32 header = 0, unit_id = 0, pos = 0, fd = 0, len = -1;
 	unsigned char buf[128];
 
@@ -19883,7 +19883,7 @@ void clif_snap( block_list *bl, int16 x, int16 y ) {
 }
 
 /// 0977 <id>.L <HP>.L <maxHP>.L (ZC_HP_INFO).
-void clif_monster_hp_bar( struct mob_data* md, int32 fd ) {
+void clif_monster_hp_bar( mob_data* md, int32 fd ) {
 #if PACKETVER >= 20120404
 	WFIFOHEAD(fd,packet_len(0x977));
 
@@ -23441,7 +23441,7 @@ void clif_parse_barter_extended_buy( int32 fd, map_session_data* sd ){
 #endif
 }
 
-void clif_summon_init(struct mob_data& md) {
+void clif_summon_init(mob_data& md) {
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	block_list* master_bl = battle_get_master(&md);
 
@@ -23460,7 +23460,7 @@ void clif_summon_init(struct mob_data& md) {
 #endif
 }
 
-void clif_summon_hp_bar(struct mob_data& md) {
+void clif_summon_hp_bar(mob_data& md) {
 #if PACKETVER_MAIN_NUM >= 20200916 || PACKETVER_RE_NUM >= 20200724
 	block_list* master_bl = battle_get_master(&md);
 

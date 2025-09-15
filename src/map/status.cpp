@@ -1513,7 +1513,7 @@ int32 status_damage(block_list *src,block_list *target,int64 dhp, int64 dsp, int
 
 	if (target->type == BL_SKILL) {
 		if (!src || src->type&battle_config.can_damage_skill)
-			return (int32)skill_unit_ondamaged((struct skill_unit *)target, hp);
+			return (int32)skill_unit_ondamaged((skill_unit *)target, hp);
 		return 0;
 	}
 
@@ -2761,7 +2761,7 @@ void status_calc_misc(block_list *bl, struct status_data *status, int32 level)
  * @return 1 for calculated special statuses or 0 for none
  * @author [Skotlex]
  */
-int32 status_calc_mob_(struct mob_data* md, uint8 opt)
+int32 status_calc_mob_(mob_data* md, uint8 opt)
 {
 	struct status_data *status;
 	block_list *mbl = nullptr;
@@ -8973,7 +8973,7 @@ int32 status_get_class(block_list *bl)
  * @param bl: Object whose base level to get [PC|MOB|PET|HOM|MER|NPC|ELEM]
  * @return base level or 1 if any other bl->type than noted above
  */
-int32 status_get_lv(block_list *bl)
+int32 status_get_lv(const block_list *bl)
 {
 	nullpo_ret(bl);
 	switch (bl->type) {
@@ -9107,7 +9107,7 @@ int32 status_get_party_id(block_list *bl)
 				return ((TBL_PET*)bl)->master->status.party_id;
 			break;
 		case BL_MOB: {
-				struct mob_data *md=(TBL_MOB*)bl;
+				mob_data *md=(TBL_MOB*)bl;
 				if( md->master_id > 0 ) {
 					map_session_data *msd;
 					if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9154,7 +9154,7 @@ int32 status_get_guild_id(block_list *bl)
 		case BL_MOB:
 			{
 				map_session_data *msd;
-				struct mob_data *md = (struct mob_data *)bl;
+				mob_data *md = (mob_data *)bl;
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->guild_id;
 				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9203,7 +9203,7 @@ int32 status_get_emblem_id(block_list *bl)
 		case BL_MOB:
 			{
 				map_session_data *msd;
-				struct mob_data *md = (struct mob_data *)bl;
+				mob_data *md = (mob_data *)bl;
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->emblem_id;
 				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9243,7 +9243,7 @@ std::vector<e_race2> status_get_race2(block_list *bl)
 	nullpo_retr(std::vector<e_race2>(),bl);
 
 	if (bl->type == BL_MOB)
-		return ((struct mob_data *)bl)->db->race2;
+		return ((mob_data *)bl)->db->race2;
 	if (bl->type == BL_PET)
 		return ((struct pet_data *)bl)->db->race2;
 	return std::vector<e_race2>();
@@ -15045,7 +15045,7 @@ TIMER_FUNC(status_change_timer){
 	case SC_CREATINGSTAR:
 		if (--(sce->val4) >= 0) { // Needed to check who the caster is and what AoE is giving the status.
 			block_list *star_caster = map_id2bl(sce->val2);
-			struct skill_unit *star_aoe = (struct skill_unit *)map_id2bl(sce->val3);
+			skill_unit *star_aoe = (skill_unit *)map_id2bl(sce->val3);
 
 			if (star_caster == nullptr || status_isdead(*star_caster) || star_caster->m != bl->m || star_aoe == nullptr)
 				break;
@@ -15255,9 +15255,9 @@ int32 status_change_timer_sub(block_list* bl, va_list ap)
 			status_check_skilluse(src, bl, WZ_SIGHTBLASTER, 2))
 		{
 			if (sce) {
-				struct skill_unit *su = nullptr; 
+				skill_unit *su = nullptr; 
 				if(bl->type == BL_SKILL)
-					su = (struct skill_unit *)bl;
+					su = (skill_unit *)bl;
 				if (skill_attack(BF_MAGIC,src,src,bl,WZ_SIGHTBLASTER,sce->val1,tick,0x1000000)
 					&& (!su || !su->group || !skill_get_inf2(su->group->skill_id, INF2_ISTRAP))) { // The hit is not counted if it's against a trap
 					sce->val2 = 0; // This signals it to end.

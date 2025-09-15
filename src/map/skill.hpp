@@ -23,7 +23,6 @@ enum e_battle_flag : uint16;
 enum e_battle_check_target : uint32;
 class map_session_data;
 struct homun_data;
-struct skill_unit;
 struct s_skill_unit_group;
 struct status_change_entry;
 class status_change;
@@ -397,7 +396,7 @@ struct s_skill_unit_group {
 	int32 unit_count, /// Number of unit at this group
 		alive_count; /// Number of alive unit
 	t_itemid item_id; /// Store item used.
-	struct skill_unit *unit; /// Skill Unit
+	skill_unit *unit; /// Skill Unit
 	struct {
 		unsigned ammo_consume : 1; // Need to consume ammo
 		unsigned song_dance : 2; //0x1 Song/Dance, 0x2 Ensemble
@@ -579,18 +578,18 @@ int32 skill_strip_equip(block_list *src,block_list *bl, uint16 where, int32 rate
 std::shared_ptr<s_skill_unit_group> skill_id2group(int32 group_id);
 std::shared_ptr<s_skill_unit_group> skill_unitsetting(block_list* src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 flag);
 skill_unit* skill_initunit(std::shared_ptr<s_skill_unit_group> group, int32 idx, int32 x, int32 y, int32 val1, int32 val2, bool hidden, int32 range, t_tick limit);
-int32 skill_delunit(struct skill_unit *unit);
+int32 skill_delunit(skill_unit *unit);
 std::shared_ptr<s_skill_unit_group> skill_initunitgroup(block_list* src, int32 count, uint16 skill_id, uint16 skill_lv, int32 unit_id, t_tick limit, int32 interval);
 int32 skill_delunitgroup_(std::shared_ptr<s_skill_unit_group> group, const char* file, int32 line, const char* func);
 #define skill_delunitgroup(group) skill_delunitgroup_(group,__FILE__,__LINE__,__func__)
 void skill_clear_unitgroup(block_list *src);
 int32 skill_clear_group(block_list *bl, uint8 flag);
-void ext_skill_unit_onplace(struct skill_unit *unit, block_list *bl, t_tick tick);
-int64 skill_unit_ondamaged(struct skill_unit *unit,int64 damage);
+void ext_skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick);
+int64 skill_unit_ondamaged(skill_unit *unit,int64 damage);
 
 // Skill unit visibility [Cydh]
-void skill_getareachar_skillunit_visibilty(struct skill_unit *su, enum send_target target);
-void skill_getareachar_skillunit_visibilty_single(struct skill_unit *su, block_list *bl);
+void skill_getareachar_skillunit_visibilty(skill_unit *su, enum send_target target);
+void skill_getareachar_skillunit_visibilty_single(skill_unit *su, block_list *bl);
 
 int32 skill_castfix(block_list *bl, uint16 skill_id, uint16 skill_lv);
 int32 skill_castfix_sc(block_list *bl, double time, uint8 flag);

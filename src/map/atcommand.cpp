@@ -2390,10 +2390,10 @@ ACMD_FUNC(monster)
  *------------------------------------------*/
 static int32 atkillmonster_sub(block_list *bl, va_list ap)
 {
-	struct mob_data *md;
+	mob_data *md;
 	int32 flag;
 
-	nullpo_ret(md=(struct mob_data *)bl);
+	nullpo_ret(md=(mob_data *)bl);
 	flag = va_arg(ap, int32);
 
 	if (md->guardian_data)
@@ -7579,7 +7579,7 @@ ACMD_FUNC(summon)
 	char name[NAME_LENGTH];
 	int32 mob_id = 0;
 	int32 duration = 0;
-	struct mob_data *md;
+	mob_data *md;
 	t_tick tick=gettick();
 
 	nullpo_retr(-1, sd);

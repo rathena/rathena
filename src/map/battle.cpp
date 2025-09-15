@@ -60,7 +60,7 @@ uint16 battle_getcurrentskill(block_list *bl)
 	struct unit_data *ud;
 
 	if( bl->type == BL_SKILL ) {
-		struct skill_unit *su = (struct skill_unit*)bl;
+		skill_unit *su = (skill_unit*)bl;
 		return (su && su->group?su->group->skill_id:0);
 	}
 
@@ -137,7 +137,7 @@ int32 battle_gettarget(block_list* bl)
 
 	switch (bl->type) {
 		case BL_PC:  return ((map_session_data*)bl)->ud.target;
-		case BL_MOB: return ((struct mob_data*)bl)->target_id;
+		case BL_MOB: return ((mob_data*)bl)->target_id;
 		case BL_PET: return ((struct pet_data*)bl)->target_id;
 		case BL_HOM: return ((struct homun_data*)bl)->ud.target;
 		case BL_MER: return ((s_mercenary_data*)bl)->ud.target;
@@ -567,7 +567,7 @@ int64 battle_attr_fix(block_list *src, block_list *target, int64 damage,int32 at
 
 	if( target && target->type == BL_SKILL ) {
 		if( atk_elem == ELE_FIRE && battle_getcurrentskill(target) == GN_WALLOFTHORN ) {
-			struct skill_unit *su = (struct skill_unit*)target;
+			skill_unit *su = (skill_unit*)target;
 			std::shared_ptr<s_skill_unit_group> sg;
 			block_list *src2;
 
@@ -2066,7 +2066,7 @@ int64 battle_calc_damage(block_list *src,block_list *bl,struct Damage *d,int64 d
  */
 bool battle_can_hit_bg_target(block_list *src, block_list *bl, uint16 skill_id, int32 flag)
 {
-	struct mob_data* md = BL_CAST(BL_MOB, bl);
+	mob_data* md = BL_CAST(BL_MOB, bl);
 	struct unit_data *ud = unit_bl2ud(bl);
 
 	if (ud && ud->immune_attack)
@@ -2136,7 +2136,7 @@ int64 battle_calc_bg_damage(block_list *src, block_list *bl, int64 damage, uint1
  */
 bool battle_can_hit_gvg_target(block_list *src,block_list *bl,uint16 skill_id,int32 flag)
 {
-	struct mob_data* md = BL_CAST(BL_MOB, bl);
+	mob_data* md = BL_CAST(BL_MOB, bl);
 	struct unit_data *ud = unit_bl2ud(bl);
 	int32 class_ = status_get_class(bl);
 
@@ -2145,7 +2145,7 @@ bool battle_can_hit_gvg_target(block_list *src,block_list *bl,uint16 skill_id,in
 	if(md && (md->guardian_data || md->special_state.ai == AI_GUILD)) {
 		if ((status_bl_has_mode(bl,MD_SKILLIMMUNE) || (class_ == MOBID_EMPERIUM && !skill_get_inf2(skill_id, INF2_TARGETEMPERIUM))) && flag&BF_SKILL) //Skill immunity.
 			return false;
-		if( src->type != BL_MOB || mob_is_clone( ((struct mob_data*)src)->mob_id ) ){
+		if( src->type != BL_MOB || mob_is_clone( ((mob_data*)src)->mob_id ) ){
 			auto g = src->type == BL_PC ? ((TBL_PC *)src)->guild : guild_search(status_get_guild_id(src));
 
 			if (class_ == MOBID_EMPERIUM && (!g || guild_checkskill(g->guild, GD_APPROVAL) <= 0 ))
@@ -11368,7 +11368,7 @@ int32 battle_check_target( block_list *src, block_list *target,int32 flag)
 			break;
 		case BL_MOB:
 		{
-			struct mob_data *md = ((TBL_MOB*)target);
+			mob_data *md = ((TBL_MOB*)target);
 
 			if (ud && ud->immune_attack)
 				return 0;
@@ -11468,7 +11468,7 @@ int32 battle_check_target( block_list *src, block_list *target,int32 flag)
 		}
 		case BL_MOB:
 		{
-			struct mob_data *md = BL_CAST(BL_MOB, t_bl);
+			mob_data *md = BL_CAST(BL_MOB, t_bl);
 
 			if( md->guardian_data && md->guardian_data->guild_id && !mapdata_flag_gvg(mapdata) )
 				return 0; // Disable guardians/emperiums owned by Guilds on non-woe times.
@@ -11489,7 +11489,7 @@ int32 battle_check_target( block_list *src, block_list *target,int32 flag)
 			}
 			break;
 		case BL_SKILL: {
-				struct skill_unit *su = (struct skill_unit *)src;
+				skill_unit *su = (skill_unit *)src;
 				status_change* sc = status_get_sc(target);
 				if (!su || !su->group)
 					return 0;
@@ -11543,7 +11543,7 @@ int32 battle_check_target( block_list *src, block_list *target,int32 flag)
 		}
 		case BL_MOB:
 		{
-			struct mob_data *md = BL_CAST(BL_MOB, s_bl);
+			mob_data *md = BL_CAST(BL_MOB, s_bl);
 			if( md->guardian_data && md->guardian_data->guild_id && !mapdata_flag_gvg(mapdata) )
 				return 0; // Disable guardians/emperium owned by Guilds on non-woe times.
 

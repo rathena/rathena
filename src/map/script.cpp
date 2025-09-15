@@ -13848,7 +13848,7 @@ static int32 buildin_maprespawnguildid_sub_pc(map_session_data* sd, va_list ap)
 
 static int32 buildin_maprespawnguildid_sub_mob(block_list *bl,va_list ap)
 {
-	struct mob_data *md=(struct mob_data *)bl;
+	mob_data *md=(mob_data *)bl;
 
 	if(!md->guardian_data && md->mob_id != MOBID_EMPERIUM && ( !mob_is_clone(md->mob_id) || battle_config.guild_maprespawn_clones ))
 		status_kill(bl);
@@ -14361,7 +14361,7 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 static int32 buildin_mobcount_sub(block_list *bl,va_list ap)	// Added by RoVeRT
 {
 	char *event=va_arg(ap,char *);
-	struct mob_data *md = ((struct mob_data *)bl);
+	mob_data *md = ((mob_data *)bl);
 	if( md->status.hp > 0 && (!event || strcmp(event,md->npc_event) == 0) )
 		return 1;
 	return SCRIPT_CMD_SUCCESS;
@@ -14677,7 +14677,7 @@ BUILDIN_FUNC(guardianinfo)
 	int32 type = script_getnum(st,4);
 
 	std::shared_ptr<guild_castle> gc = castle_db.mapname2gc(mapname);
-	struct mob_data* gd;
+	mob_data* gd;
 
 	if( gc == nullptr || id < 0 || id >= MAX_GUARDIANS )
 	{
@@ -21439,7 +21439,7 @@ BUILDIN_FUNC(bg_monster)
 
 BUILDIN_FUNC(bg_monster_set_team)
 {
-	struct mob_data *md;
+	mob_data *md;
 	block_list *mbl;
 	int32 id = script_getnum(st,2),
 		bg_id = script_getnum(st,3);
@@ -26856,7 +26856,7 @@ BUILDIN_FUNC(mob_setidleevent){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct mob_data* md = (struct mob_data*)bl;
+	mob_data* md = (mob_data*)bl;
 	if (md == nullptr)
 		return SCRIPT_CMD_FAILURE;
 

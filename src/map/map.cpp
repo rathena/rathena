@@ -107,8 +107,8 @@ struct inter_conf inter_config {};
 // DBMap declaration
 static DBMap* id_db=nullptr; /// int32 id -> block_list*
 static DBMap* pc_db=nullptr; /// int32 id -> map_session_data*
-static DBMap* mobid_db=nullptr; /// int32 id -> struct mob_data*
-static DBMap* bossid_db=nullptr; /// int32 id -> struct mob_data* (MVP db)
+static DBMap* mobid_db=nullptr; /// int32 id -> mob_data*
+static DBMap* bossid_db=nullptr; /// int32 id -> mob_data* (MVP db)
 static DBMap* map_db=nullptr; /// uint32 mapindex -> struct map_data*
 static DBMap* nick_db=nullptr; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
 static DBMap* charid_db=nullptr; /// uint32 char_id -> map_session_data*
@@ -699,10 +699,10 @@ int32 map_count_oncell(int16 m, int16 x, int16 y, int32 type, int32 flag)
  * Looks for a skill unit on a given cell
  * flag&1: runs battle_check_target check based on unit->group->target_flag
  */
-struct skill_unit* map_find_skill_unit_oncell(block_list* target,int16 x,int16 y,uint16 skill_id,struct skill_unit* out_unit, int32 flag) {
+skill_unit* map_find_skill_unit_oncell(block_list* target,int16 x,int16 y,uint16 skill_id,skill_unit* out_unit, int32 flag) {
 	int16 bx,by;
 	block_list *bl;
-	struct skill_unit *unit;
+	skill_unit *unit;
 	struct map_data *mapdata = map_getmapdata(target->m);
 
 	if (x < 0 || y < 0 || (x >= mapdata->xs) || (y >= mapdata->ys))
@@ -716,7 +716,7 @@ struct skill_unit* map_find_skill_unit_oncell(block_list* target,int16 x,int16 y
 		if (bl->x != x || bl->y != y || bl->type != BL_SKILL)
 			continue;
 
-		unit = (struct skill_unit *) bl;
+		unit = (skill_unit *) bl;
 		if( unit == out_unit || !unit->alive || !unit->group || unit->group->skill_id != skill_id )
 			continue;
 		if( !(flag&1) || battle_check_target(unit,target,unit->group->target_flag) > 0 )
@@ -2351,9 +2351,9 @@ map_session_data * map_id2sd(int32 id){
 	return (map_session_data*)idb_get(pc_db,id);
 }
 
-struct mob_data * map_id2md(int32 id){
+mob_data * map_id2md(int32 id){
 	if (id <= 0) return nullptr;
-	return (struct mob_data*)idb_get(mobid_db,id);
+	return (mob_data*)idb_get(mobid_db,id);
 }
 
 struct npc_data * map_id2nd(int32 id){
@@ -2366,7 +2366,7 @@ struct homun_data* map_id2hd(int32 id){
 	return BL_CAST(BL_HOM, bl);
 }
 
-struct s_mercenary_data* map_id2mc(int32 id){
+s_mercenary_data* map_id2mc(int32 id){
 	block_list* bl = map_id2bl(id);
 	return BL_CAST(BL_MER, bl);
 }
@@ -2479,14 +2479,14 @@ bool map_blid_exists( int32 id ) {
 /*==========================================
  * Convex Mirror
  *------------------------------------------*/
-struct mob_data * map_getmob_boss(int16 m)
+mob_data * map_getmob_boss(int16 m)
 {
 	DBIterator* iter;
-	struct mob_data *md = nullptr;
+	mob_data *md = nullptr;
 	bool found = false;
 
 	iter = db_iterator(bossid_db);
-	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
+	for( md = (mob_data*)dbi_first(iter); dbi_exists(iter); md = (mob_data*)dbi_next(iter) )
 	{
 		if( md->m == m )
 		{
@@ -2499,10 +2499,10 @@ struct mob_data * map_getmob_boss(int16 m)
 	return (found)? md : nullptr;
 }
 
-struct mob_data * map_id2boss(int32 id)
+mob_data * map_id2boss(int32 id)
 {
 	if (id <= 0) return nullptr;
-	return (struct mob_data*)idb_get(bossid_db,id);
+	return (mob_data*)idb_get(bossid_db,id);
 }
 
 /// Applies func to all the players in the db.
@@ -2529,13 +2529,13 @@ void map_foreachpc(int32 (*func)(map_session_data* sd, va_list args), ...)
 
 /// Applies func to all the mobs in the db.
 /// Stops iterating if func returns -1.
-void map_foreachmob(int32 (*func)(struct mob_data* md, va_list args), ...)
+void map_foreachmob(int32 (*func)(mob_data* md, va_list args), ...)
 {
 	DBIterator* iter;
-	struct mob_data* md;
+	mob_data* md;
 
 	iter = db_iterator(mobid_db);
-	for( md = (struct mob_data*)dbi_first(iter); dbi_exists(iter); md = (struct mob_data*)dbi_next(iter) )
+	for( md = (mob_data*)dbi_first(iter); dbi_exists(iter); md = (mob_data*)dbi_next(iter) )
 	{
 		va_list args;
 		int32 ret;
@@ -2940,7 +2940,7 @@ static int32 map_instancemap_clean(block_list *bl, va_list ap)
 			map_clearflooritem(bl);
 			break;
 		case BL_SKILL:
-			skill_delunit((struct skill_unit *) bl);
+			skill_delunit((skill_unit *) bl);
 			break;
 	}
 
@@ -3039,7 +3039,7 @@ void map_spawnmobs(int16 m)
 
 int32 map_removemobs_sub(block_list *bl, va_list ap)
 {
-	struct mob_data *md = (struct mob_data *)bl;
+	mob_data *md = (mob_data *)bl;
 	nullpo_ret(md);
 
 	//When not to remove mob:
@@ -4551,7 +4551,7 @@ int32 cleanup_sub(block_list *bl, va_list ap)
 			map_clearflooritem(bl);
 			break;
 		case BL_SKILL:
-			skill_delunit((struct skill_unit *) bl);
+			skill_delunit((skill_unit *) bl);
 			break;
 	}
 

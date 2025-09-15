@@ -3562,7 +3562,7 @@ status_data* status_get_status_data(block_list& bl);
 struct status_data *status_get_base_status(block_list *bl);
 const char* status_get_name( block_list& bl );
 int32 status_get_class(block_list *bl);
-int32 status_get_lv(block_list *bl);
+int32 status_get_lv(const block_list *bl);
 #define status_get_range(bl) status_get_status_data(*bl)->rhw.range
 #define status_get_hp(bl) status_get_status_data(*bl)->hp
 #define status_get_max_hp(bl) status_get_status_data(*bl)->max_hp
@@ -3672,7 +3672,7 @@ TIMER_FUNC(status_clear_lastEffect_timer);
 bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
 void status_calc_bl_(block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt = SCO_NONE);
-int32 status_calc_mob_(struct mob_data* md, uint8 opt);
+int32 status_calc_mob_(mob_data* md, uint8 opt);
 void status_calc_pet_(struct pet_data* pd, uint8 opt);
 int32 status_calc_pc_(map_session_data* sd, uint8 opt);
 int32 status_calc_homunculus_(struct homun_data *hd, uint8 opt);

@@ -206,7 +206,7 @@ struct npc_data : public block_list {
 			uint16 mapindex; // destination map
 		} warp;
 		struct {
-			struct mob_data *md;
+			mob_data *md;
 			time_t kill_time;
 			char killer_name[NAME_LENGTH];
 			int32 spawn_timer;
@@ -1608,7 +1608,7 @@ int32 npc_event_dequeue(map_session_data* sd,bool free_script_stack=true);
 int32 npc_event(map_session_data* sd, const char* eventname, int32 ontouch);
 int32 npc_touch_areanpc(map_session_data* sd, int16 m, int16 x, int16 y, struct npc_data* nd);
 int32 npc_touch_area_allnpc(map_session_data* sd, int16 m, int16 x, int16 y);
-int32 npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
+int32 npc_touch_areanpc2(mob_data *md); // [Skotlex]
 int32 npc_check_areanpc(int32 flag, int16 m, int16 x, int16 y, int16 range);
 int32 npc_touchnext_areanpc(map_session_data* sd,bool leavemap);
 int32 npc_click(map_session_data* sd, struct npc_data* nd);
