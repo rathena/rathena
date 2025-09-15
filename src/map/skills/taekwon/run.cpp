@@ -1,7 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "tk_run.hpp"
+#include "run.hpp"
 
 #include "map/pc.hpp"
 #include "map/status.hpp"
