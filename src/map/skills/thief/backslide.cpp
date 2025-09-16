@@ -25,8 +25,8 @@ void SkillBackSlide::castendNoDamageId(block_list *src, block_list *bl, uint16 s
 	if (blew_count > 0)
 		clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
 #else
-	int16 blew_count = skill_blown(src, bl, skill_get_blewcount(skill_id, skill_lv), unit_getdir(bl), BLOWN_IGNORE_NO_KNOCKBACK);
-	clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+	int16 blew_count = skill_blown(src, bl, skill_get_blewcount(getSkillId(), skill_lv), unit_getdir(bl), BLOWN_IGNORE_NO_KNOCKBACK);
+	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv);
 	clif_slide(*bl, bl->x, bl->y); //Show the casting animation on pre-re
 #endif
 }
