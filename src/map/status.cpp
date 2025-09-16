@@ -5206,7 +5206,7 @@ int32 status_calc_elemental_(s_elemental_data *ed, uint8 opt)
  * @param opt: Whether it is first calc or not (what?)
  * @return 0
  */
-int32 status_calc_npc_(struct npc_data *nd, uint8 opt)
+int32 status_calc_npc_(npc_data *nd, uint8 opt)
 {
 	struct status_data *status = &nd->status;
 
@@ -9087,7 +9087,7 @@ uint16 status_get_speed(block_list *bl)
 {
 	// TODO: is the statement of Skotlex still true? And would it not be better to check for dummy_status instead? [Lemongrass]
 	if(bl->type==BL_NPC)// Only BL with speed data but no status_data [Skotlex]
-		return ((struct npc_data *)bl)->speed;
+		return ((npc_data *)bl)->speed;
 	return status_get_status_data(*bl)->speed;
 }
 
@@ -9969,7 +9969,7 @@ void status_display_add(block_list *bl, enum sc_type type, int32 dval1, int32 dv
 			}
 			break;
 		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
+			npc_data* nd = (npc_data*)bl;
 
 			sc_display_ptr = &nd->sc_display;
 			sc_display_count_ptr = &nd->sc_display_count;
@@ -10031,7 +10031,7 @@ void status_display_remove(block_list *bl, enum sc_type type) {
 			}
 			break;
 		case BL_NPC: {
-			struct npc_data* nd = (struct npc_data*)bl;
+			npc_data* nd = (npc_data*)bl;
 
 			sc_display_ptr = &nd->sc_display;
 			sc_display_count_ptr = &nd->sc_display_count;

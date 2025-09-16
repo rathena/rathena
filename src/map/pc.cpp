@@ -15307,7 +15307,7 @@ void pc_show_questinfo(map_session_data *sd) {
 		return; // init was not called yet
 
 	for (int32 i = 0; i < mapdata->qi_npc.size(); i++) {
-		struct npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
+		npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
 
 		if (!nd || nd->qi_data.empty())
 			continue;

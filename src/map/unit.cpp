@@ -88,7 +88,7 @@ struct unit_data* unit_bl2ud(block_list *bl)
 	case BL_PC: return &((map_session_data*)bl)->ud;
 	case BL_MOB: return &((mob_data*)bl)->ud;
 	case BL_PET: return &((struct pet_data*)bl)->ud;
-	case BL_NPC: return &((struct npc_data*)bl)->ud;
+	case BL_NPC: return &((npc_data*)bl)->ud;
 	case BL_HOM: return &((struct homun_data*)bl)->ud;
 	case BL_MER: return &((s_mercenary_data*)bl)->ud;
 	case BL_ELEM: return &((s_elemental_data*)bl)->ud;
@@ -493,10 +493,10 @@ TIMER_FUNC(unit_step_timer){
 
 int32 unit_walktoxy_ontouch(block_list *bl, va_list ap)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 
 	nullpo_ret(bl);
-	nullpo_ret(nd = va_arg(ap,struct npc_data *));
+	nullpo_ret(nd = va_arg(ap,npc_data *));
 
 	switch( bl->type ) {
 	case BL_PC:
@@ -509,7 +509,7 @@ int32 unit_walktoxy_ontouch(block_list *bl, va_list ap)
 
 		// Remove NPCs that are no longer within the OnTouch area
 		for (size_t i = 0; i < sd->areanpc.size(); i++) {
-			struct npc_data *nd = map_id2nd(sd->areanpc[i]);
+			npc_data *nd = map_id2nd(sd->areanpc[i]);
 
 			if (!nd || nd->subtype != NPCTYPE_SCRIPT || !(nd->m == bl->m && bl->x >= nd->x - nd->u.scr.xs && bl->x <= nd->x + nd->u.scr.xs && bl->y >= nd->y - nd->u.scr.ys && bl->y <= nd->y + nd->u.scr.ys))
 				rathena::util::erase_at(sd->areanpc, i);
@@ -3990,7 +3990,7 @@ int32 unit_free(block_list *bl, clr_type clrtype)
 
 			if( !sd->npc_id_dynamic.empty() ){
 				for (const auto &it : sd->npc_id_dynamic) {
-					struct npc_data* nd = map_id2nd( it );
+					npc_data* nd = map_id2nd( it );
 
 					if( nd != nullptr ){
 						// Erase the owner first to prevent loops from npc_unload

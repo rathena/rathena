@@ -398,7 +398,7 @@ int32 chat_kickchat(map_session_data* sd, const char* kickusername)
  * @param maxLvl : maximum level to enter
  * @return 0
  */
-int32 chat_createnpcchat(struct npc_data* nd, const char* title, int32 limit, bool pub, int32 trigger, const char* ev, int32 zeny, int32 minLvl, int32 maxLvl)
+int32 chat_createnpcchat(npc_data* nd, const char* title, int32 limit, bool pub, int32 trigger, const char* ev, int32 zeny, int32 minLvl, int32 maxLvl)
 {
 	struct chat_data* cd;
 
@@ -428,7 +428,7 @@ int32 chat_createnpcchat(struct npc_data* nd, const char* title, int32 limit, bo
  * Removes a chat room for a NPC.
  * @param nd : NPC requesting
  */
-int32 chat_deletenpcchat(struct npc_data* nd)
+int32 chat_deletenpcchat(npc_data* nd)
 {
 	struct chat_data *cd;
 
