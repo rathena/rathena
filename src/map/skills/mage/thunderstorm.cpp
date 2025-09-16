@@ -15,4 +15,3 @@ void SkillThunderStorm::calculateSkillRatio(Damage *wd, const block_list *src, c
 	base_skillratio -= 20;
 #endif
 }
-

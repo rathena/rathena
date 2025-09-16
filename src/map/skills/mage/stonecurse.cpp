@@ -33,7 +33,7 @@ void SkillStoneCurse::castendNoDamageId(block_list *src, block_list *target, uin
 	// Except for players, the skill animation shows even if the status change doesn't start
 	// Players get a skill has failed message instead
 	int success = sc_start2(src, target, type, (skill_lv * 4 + 20) + brate, skill_lv, src->id, skill_get_time2(getSkillId(), skill_lv),
-				  skill_get_time(getSkillId(), skill_lv));
+	                        skill_get_time(getSkillId(), skill_lv));
 	if (success || sd == nullptr)
 		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	else {

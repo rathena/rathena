@@ -3,16 +3,18 @@
 
 #include "skill_factory_mage.hpp"
 
+#include "coldbolt.hpp"
+#include "energycoat.hpp"
+#include "fireball.hpp"
+#include "firebolt.hpp"
+#include "firewall.hpp"
+#include "frostdiver.hpp"
+#include "napalmbeat.hpp"
+#include "lightningbolt.hpp"
 #include "sight.hpp"
 #include "soulstrike.hpp"
 #include "stonecurse.hpp"
-#include "lightningbolt.hpp"
-#include "napalmbeat.hpp"
-#include "firebolt.hpp"
-#include "frostdiver.hpp"
-#include "energycoat.hpp"
-#include "fireball.hpp"
-#include "coldbolt.hpp"
+#include "thunderstorm.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -26,6 +28,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillLightningBolt>();
 		case MG_NAPALMBEAT:
 			return std::make_unique<SkillNapalmBeat>();
+		case MG_FIREWALL:
+			return std::make_unique<SkillFireWall>();
 		case MG_FIREBOLT:
 			return std::make_unique<SkillFireBolt>();
 		case MG_FROSTDIVER:
@@ -36,6 +40,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillFireBall>();
 		case MG_COLDBOLT:
 			return std::make_unique<SkillColdBolt>();
+		case MG_THUNDERSTORM:
+			return std::make_unique<SkillThunderStorm>();
 		default:
 			return nullptr;
 	}
