@@ -25,7 +25,7 @@ void SkillImpl::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, 
 	// no-op
 }
 
-void SkillImpl::calculateSkillRatio(Damage *, const block_list*, const block_list*, uint16, int32&, int32 mflag) const {
+void SkillImpl::calculateSkillRatio(Damage *, block_list *, block_list *, uint16, int32&, int32 mflag) const {
 	// no-op
 }
 

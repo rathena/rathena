@@ -9,7 +9,7 @@
 SkillLightningBolt::SkillLightningBolt() : SkillImpl(MG_LIGHTNINGBOLT) {
 }
 
-void SkillImpl::calculateSkillRatio(Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
+void SkillLightningBolt::calculateSkillRatio(Damage *wd, block_list *src, block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 	status_change *sc = status_get_sc(src);
 
 	if (sc) {
