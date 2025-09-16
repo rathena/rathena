@@ -5,6 +5,7 @@
 
 #include "map/status.hpp"
 #include "map/clif.hpp"
+#include "map/status.hpp"
 
 SkillDetoxify::SkillDetoxify() : SkillImpl(TF_DETOXIFY) {
 }
