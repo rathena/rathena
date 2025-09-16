@@ -6,6 +6,7 @@
 #include "map/status.hpp"
 #include "map/clif.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillEnvenom::SkillEnvenom() : WeaponSkillImpl(TF_POISON) {
 }
