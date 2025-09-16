@@ -5817,6 +5817,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case CD_ARBITRIUM_ATK:
 	case CD_PETITIO:
 	case CD_FRAMEN:
+	case CD_DIVINUS_FLOS:
 	case SHC_DANCING_KNIFE:
 	case SHC_SAVAGE_IMPACT:
 	case SHC_IMPACT_CRATER:
@@ -6083,6 +6084,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case IG_RADIANT_SPEAR:
 				case CD_PETITIO:
 				case CD_FRAMEN:
+				case CD_DIVINUS_FLOS:
 				case MT_POWERFUL_SWING:
 				case MT_ENERGY_CANNONADE:
 				case BO_DUST_EXPLOSION:
