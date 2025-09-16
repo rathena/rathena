@@ -3,7 +3,6 @@
 
 #include "hiding.hpp"
 
-#include "map/status.hpp"
 #include "map/clif.hpp"
 
 SkillHiding::SkillHiding() : SkillImpl(TF_HIDING) {
