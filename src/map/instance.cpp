@@ -541,12 +541,12 @@ bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int32 instan
 /**
  * Run the OnInstanceInit events for duplicated NPCs
  */
-static int32 instance_npcinit(struct block_list *bl, va_list ap)
+static int32 instance_npcinit(block_list *bl, va_list ap)
 {
-	struct npc_data* nd;
+	npc_data* nd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, nd = (struct npc_data *)bl);
+	nullpo_retr(0, nd = (npc_data *)bl);
 
 	return npc_instanceinit(nd);
 }
@@ -554,12 +554,12 @@ static int32 instance_npcinit(struct block_list *bl, va_list ap)
 /**
  * Run the OnInstanceDestroy events for duplicated NPCs
  */
-static int32 instance_npcdestroy(struct block_list *bl, va_list ap)
+static int32 instance_npcdestroy(block_list *bl, va_list ap)
 {
-	struct npc_data* nd;
+	npc_data* nd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, nd = (struct npc_data *)bl);
+	nullpo_retr(0, nd = (npc_data *)bl);
 
 	return npc_instancedestroy(nd);
 }
@@ -567,12 +567,12 @@ static int32 instance_npcdestroy(struct block_list *bl, va_list ap)
 /**
  * Update instance with new NPC
  */
-static int32 instance_addnpc_sub(struct block_list *bl, va_list ap)
+static int32 instance_addnpc_sub(block_list *bl, va_list ap)
 {
-	struct npc_data* nd;
+	npc_data* nd;
 
 	nullpo_retr(0, bl);
-	nullpo_retr(0, nd = (struct npc_data *)bl);
+	nullpo_retr(0, nd = (npc_data *)bl);
 
 	return npc_duplicate4instance(nd, va_arg(ap, int32));
 }
