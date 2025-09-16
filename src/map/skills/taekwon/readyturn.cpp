@@ -9,7 +9,7 @@
 SkillReadyTurn::SkillReadyTurn() : SkillImpl(TK_READYTURN) {
 }
 
-void SkillReadyTurn::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
+void SkillReadyTurn::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	status_change_entry *tsce = status_get_sc(bl)->getSCE(SC_READYTURN);
 
 	if (tsce) {

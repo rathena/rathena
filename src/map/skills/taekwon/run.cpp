@@ -9,7 +9,7 @@
 SkillRun::SkillRun() : SkillImpl(TK_RUN) {
 }
 
-void SkillRun::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
+void SkillRun::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	sc_type type = skill_get_sc(getSkillId());
 	status_change_entry *tsce = status_get_sc(bl)->getSCE(SC_RUN);
 	map_session_data *sd = BL_CAST(BL_PC, src);

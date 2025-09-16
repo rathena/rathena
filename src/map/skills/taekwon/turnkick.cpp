@@ -31,7 +31,7 @@ void SkillTurnKick::castendDamageId(block_list *src, block_list *target, uint16 
 		                      skill_castend_nodamage_id);
 }
 
-void SkillTurnKick::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
+void SkillTurnKick::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	if (skill_area_temp[1] != bl->id) {
 		skill_blown(src, bl, skill_get_blewcount(getSkillId(), skill_lv), -1, BLOWN_NONE);
 		skill_additional_effect(src, bl, getSkillId(), skill_lv, BF_MISC, ATK_DEF, tick); // Use Misc rather than weapon to signal passive pushback

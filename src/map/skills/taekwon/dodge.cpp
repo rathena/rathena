@@ -9,7 +9,7 @@
 SkillDodge::SkillDodge() : SkillImpl(TK_DODGE) {
 }
 
-void SkillDodge::castendNoDamageId(struct block_list *src, struct block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
+void SkillDodge::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	sc_type type = skill_get_sc(getSkillId());
 	status_change *tsc = status_get_sc(target);
 

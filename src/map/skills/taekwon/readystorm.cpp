@@ -9,7 +9,7 @@
 SkillReadyStorm::SkillReadyStorm() : SkillImpl(TK_READYSTORM) {
 }
 
-void SkillReadyStorm::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
+void SkillReadyStorm::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	status_change_entry *tsce = status_get_sc(bl)->getSCE(SC_READYSTORM);
 
 	if (tsce) {

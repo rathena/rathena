@@ -46,7 +46,7 @@ void SkillJumpKick::applyAdditionalEffects(block_list *src, block_list *target, 
 	}
 }
 
-void SkillJumpKick::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const {
+void SkillJumpKick::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	map_session_data *sd = BL_CAST(BL_PC, src);
 
 	/* Check if the target is an enemy; if not, skill should fail so the character doesn't unit_movepos (exploitable) */
