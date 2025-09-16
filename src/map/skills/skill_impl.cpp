@@ -13,15 +13,15 @@ e_skill SkillImpl::getSkillId() const {
 	return skill_id_;
 }
 
-void SkillImpl::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillImpl::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	// no-op
 }
 
-void SkillImpl::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillImpl::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	// no-op
 }
 
-void SkillImpl::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillImpl::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	// no-op
 }
 
@@ -40,7 +40,7 @@ void SkillImpl::applyAdditionalEffects(block_list*, block_list*, uint16, t_tick,
 SkillImplRecursiveDamageSplash::SkillImplRecursiveDamageSplash(e_skill skill_id) : SkillImpl(skill_id){
 }
 
-void SkillImplRecursiveDamageSplash::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillImplRecursiveDamageSplash::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	status_change* tsc = status_get_sc(target);
 
 	if (flag & 1){
@@ -66,7 +66,7 @@ void SkillImplRecursiveDamageSplash::castendDamageId(block_list* src, block_list
 	}
 }
 
-void SkillImplRecursiveDamageSplash::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillImplRecursiveDamageSplash::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	// Cast center might be relevant later (e.g. for knockback direction)
 	skill_area_temp[4] = x;
 	skill_area_temp[5] = y;

@@ -1076,7 +1076,7 @@ Body:
       Swordman = 144: Moving HP Recovery, 145: Attack Weak Point, 146: Auto Berserk
       Acolyte = 156: Holy Light
       Thief = 149: Throw Sand, 150: Back Sliding, 151: Take Stone, 152: Throw Stone
-      Merchant = 153: Cart Revolution, 154: Change Cart, 155: Crazy Uproar, 2535: Open Buying Store
+      Merchant = 153: Cart Revolution, 154: Change Cart, 155: Crazy Uproar, 2535: Open Buying Store, 2544: Decorate Cart
       Magician = 157: Energy Coat
       Hunter = 1009: Phantasmic Arrow
       Bard = 1010: Pang Voice

@@ -29,7 +29,7 @@ void SkillMagnumBreak::modifyHitRate(int16 &hit_rate, const block_list *src, con
 	hit_rate += hit_rate * 10 * skill_lv / 100;
 }
 
-void SkillMagnumBreak::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillMagnumBreak::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const
 {
 	map_session_data* sd = BL_CAST( BL_PC, src );
 
@@ -41,7 +41,7 @@ void SkillMagnumBreak::castendDamageId(block_list *src, block_list *target, uint
 	}
 }
 
-void SkillMagnumBreak::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillMagnumBreak::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const
 {
 	// Passive Magnum, should had been casted on yourself.
 	skill_area_temp[1] = 0;
