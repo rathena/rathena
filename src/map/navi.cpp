@@ -374,7 +374,7 @@ void write_warp(std::ostream& os, const struct navi_link &nl) {
 	os << "},\n";
 }
 
-void write_npc(std::ostream &os, const struct npc_data *nd) {
+void write_npc(std::ostream &os, const npc_data *nd) {
 	if (nd == nullptr) {
 		ShowError("Unable to find NPC ID for NPC '%s'. Skipping...\n", nd->exname);
 		return;
@@ -447,7 +447,7 @@ void write_object_lists() {
 
 		// Warps/NPCs
 		for (int32 npcidx = 0; npcidx < m->npc_num; npcidx++) {
-			struct npc_data *nd = m->npc[npcidx];
+			npc_data *nd = m->npc[npcidx];
 
 			if (nd == nullptr)
 				continue;
@@ -524,7 +524,7 @@ void write_map_header(std::ostream &os, const struct map_data * m) {
 		For every warp into the map (warp)
 			Find a path from nd to warp
 */
-void write_npc_distance(std::ostream &os, const struct npc_data * nd, const struct map_data * msrc) {
+void write_npc_distance(std::ostream &os, const npc_data * nd, const struct map_data * msrc) {
 	os << "\t\t{ " << nd->navi.id << ", -- (" << nd->name << " " << msrc->name << ", " << nd->navi.pos.x << ", " << nd->navi.pos.y << ")\n";
 	for (const auto warp : msrc->navi.warps_into) {
 		struct navi_walkpath_data wpd = {0};
