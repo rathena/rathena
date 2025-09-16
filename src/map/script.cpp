@@ -12277,7 +12277,7 @@ static int32 buildin_getareadropitem_sub(block_list *bl,va_list ap)
 {
 	t_itemid nameid = va_arg(ap, t_itemid);
 	uint16 *amount = (uint16 *)va_arg(ap, int32 *);
-	struct flooritem_data *drop=(struct flooritem_data *)bl;
+	flooritem_data *drop=(flooritem_data *)bl;
 
 	if(drop->item.nameid==nameid)
 		(*amount)+=drop->item.amount;

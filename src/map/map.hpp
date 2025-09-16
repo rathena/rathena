@@ -1292,7 +1292,7 @@ extern const char*MSG_CONF_NAME_THA;
 typedef map_session_data TBL_PC;
 typedef npc_data         TBL_NPC;
 typedef mob_data         TBL_MOB;
-typedef struct flooritem_data   TBL_ITEM;
+typedef flooritem_data   TBL_ITEM;
 typedef chat_data        TBL_CHAT;
 typedef skill_unit       TBL_SKILL;
 typedef struct pet_data         TBL_PET;

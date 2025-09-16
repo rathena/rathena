@@ -874,7 +874,7 @@ void clif_authok(map_session_data *sd);
 void clif_authrefuse(int32 fd, uint8 error_code);
 void clif_authfail_fd(int32 fd, int32 type);
 void clif_charselectok(int32 id, uint8 ok);
-void clif_dropflooritem(struct flooritem_data* fitem, bool canShowEffect);
+void clif_dropflooritem(flooritem_data* fitem, bool canShowEffect);
 void clif_clearflooritem( flooritem_data& fitem, map_session_data* tsd = nullptr );
 
 void clif_clearunit_single( uint32 GID, clr_type type, map_session_data& tsd );
