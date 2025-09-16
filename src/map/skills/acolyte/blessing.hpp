@@ -9,5 +9,5 @@ class SkillBlessing : public SkillImpl {
 public:
 	SkillBlessing();
 	
-	void castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const override;
+	void castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };

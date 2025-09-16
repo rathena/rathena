@@ -906,7 +906,7 @@ struct view_data* npc_get_viewdata(int32 class_) {
 	return nullptr;
 }
 
-int32 npc_isnear_sub(struct block_list* bl, va_list args) {
+int32 npc_isnear_sub(block_list* bl, va_list args) {
     npc_data *nd = (npc_data*)bl;
 
     if (nd->sc.option&OPTION_HIDE)
@@ -937,7 +937,7 @@ int32 npc_isnear_sub(struct block_list* bl, va_list args) {
 	return 1;
 }
 
-bool npc_isnear(struct block_list * bl) {
+bool npc_isnear(block_list * bl) {
 
     if( battle_config.min_npc_vendchat_distance > 0 &&
             map_foreachinallrange(npc_isnear_sub,bl, battle_config.min_npc_vendchat_distance, BL_NPC, 0) )
@@ -984,7 +984,7 @@ int32 npc_touch_areanpc(map_session_data* sd, int16 m, int16 x, int16 y, npc_dat
 /*==========================================
  * Sub-function of npc_enable, runs OnTouch event when enabled
  *------------------------------------------*/
-int32 npc_enable_sub(struct block_list *bl, va_list ap)
+int32 npc_enable_sub(block_list *bl, va_list ap)
 {
 	npc_data *nd;
 
@@ -1011,7 +1011,7 @@ bool npc_is_hidden_dynamicnpc( npc_data& nd, map_session_data& tsd ){
 	return nd.dynamicnpc.owner_char_id != 0 && nd.dynamicnpc.owner_char_id != tsd.status.char_id;
 }
 
-static int32 npc_cloaked_sub(struct block_list *bl, va_list ap)
+static int32 npc_cloaked_sub(block_list *bl, va_list ap)
 {
 	map_session_data* sd;
 
@@ -1822,7 +1822,7 @@ int32 npc_event(map_session_data* sd, const char* eventname, int32 ontouch)
 /*==========================================
  * Sub chk then execute area event type
  *------------------------------------------*/
-int32 npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
+int32 npc_touch_areanpc_sub(block_list *bl, va_list ap)
 {
 	map_session_data *sd;
 	int32 pc_id;
@@ -1991,7 +1991,7 @@ int32 npc_touch_area_allnpc(map_session_data* sd, int16 m, int16 x, int16 y)
 
 // OnTouch NPC or Warp for Mobs
 // Return 1 if Warped
-int32 npc_touch_areanpc2(struct mob_data *md)
+int32 npc_touch_areanpc2(mob_data *md)
 {
 	int32 i, x = md->x, y = md->y, id;
 	char eventname[EVENT_NAME_LENGTH];
@@ -2137,7 +2137,7 @@ int32 npc_check_areanpc(int32 flag, int16 m, int16 x, int16 y, int16 range)
  * Chk if player not too far to access the npc.
  * Returns npc_data (success) or nullptr (fail).
  *------------------------------------------*/
-npc_data* npc_checknear(map_session_data* sd, struct block_list* bl)
+npc_data* npc_checknear(map_session_data* sd, block_list* bl)
 {
 	npc_data *nd;
 
@@ -2287,7 +2287,7 @@ int32 npc_click(map_session_data* sd, npc_data* nd)
  *
  *------------------------------------------*/
 bool npc_scriptcont(map_session_data* sd, int32 id, bool closing){
-	struct block_list *target = map_id2bl(id);
+	block_list *target = map_id2bl(id);
 	npc_data* nd = BL_CAST( BL_NPC, target );
 
 	nullpo_retr(true, sd);
@@ -3511,13 +3511,13 @@ int32 npc_unload(npc_data* nd, bool single) {
 		aFree(nd->u.shop.shop_item);
 	else if( nd->subtype == NPCTYPE_SCRIPT ) {
 		struct s_mapiterator* iter;
-		struct block_list* bl;
+		block_list* bl;
 
 		if( single )
 			ev_db->foreach(ev_db,npc_unload_ev,nd->exname); //Clean up all events related
 
 		iter = mapit_geteachpc();
-		for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) ) {
+		for( bl = (block_list*)mapit_first(iter); mapit_exists(iter); bl = (block_list*)mapit_next(iter) ) {
 			map_session_data *sd = ((TBL_PC*)bl);
 			if( sd && sd->npc_timer_id != INVALID_TIMER ) {
 				const struct TimerData *td = get_timer(sd->npc_timer_id);
@@ -4997,7 +4997,7 @@ void npc_setcells(npc_data* nd)
 	}
 }
 
-int32 npc_unsetcells_sub(struct block_list* bl, va_list ap)
+int32 npc_unsetcells_sub(block_list* bl, va_list ap)
 {
 	npc_data *nd = (npc_data*)bl;
 	int32 id =  va_arg(ap,int32);
@@ -5198,7 +5198,7 @@ void npc_parse_mob2(struct spawn_data* mob)
 
 	for( i = mob->active; i < mob->num; ++i )
 	{
-		struct mob_data* md = mob_spawn_dataset(mob);
+		mob_data* md = mob_spawn_dataset(mob);
 		md->spawn = mob;
 		// Determine center cell for each mob in the spawn line
 		if (battle_config.randomize_center_cell) {
@@ -6055,7 +6055,7 @@ void npc_clear_pathlist(void) {
 int32 npc_reload(void) {
 	int32 npc_new_min = npc_id;
 	struct s_mapiterator* iter;
-	struct block_list* bl;
+	block_list* bl;
 
 	/* clear guild flag cache */
 	guild_flags_clear();
@@ -6074,7 +6074,7 @@ int32 npc_reload(void) {
 #endif
 
 	iter = mapit_geteachiddb();
-	for( bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter) ) {
+	for( bl = (block_list*)mapit_first(iter); mapit_exists(iter); bl = (block_list*)mapit_next(iter) ) {
 		switch(bl->type) {
 		case BL_NPC:
 			if( bl->id != fake_nd->id )// don't remove fake_nd

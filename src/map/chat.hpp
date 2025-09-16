@@ -4,7 +4,7 @@
 #ifndef CHAT_HPP
 #define CHAT_HPP
 
-#include "map.hpp" // struct block_list, CHATROOM_TITLE_SIZE
+#include "map.hpp" // block_list, CHATROOM_TITLE_SIZE
 
 class map_session_data;
 struct chat_data;
@@ -22,7 +22,7 @@ struct chat_data : public block_list {
 	uint32 minLvl;					 // minimum base level to join
 	uint32 maxLvl;					 // maximum base level allowed to join
 	map_session_data* usersd[MAX_CHAT_USERS];
-	struct block_list* owner;
+	block_list* owner;
 	char npc_event[EVENT_NAME_LENGTH];
 	DBMap* kick_list;				//DBMap of users who were kicked from this chat
 };

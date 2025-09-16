@@ -199,7 +199,7 @@ bool duel_invite(const size_t did, map_session_data* sd, map_session_data* targe
 	clif_disp_message(sd, output, strlen(output), DUEL_WOS);
 	// "Blue -- Player %s invites you to PVP duel (@accept/@reject) --"
 	sprintf(output, msg_txt(sd,374), sd->status.name);
-	clif_broadcast((struct block_list *)target_sd, output, strlen(output)+1, BC_BLUE, SELF);
+	clif_broadcast((block_list *)target_sd, output, strlen(output)+1, BC_BLUE, SELF);
 	return true;
 }
 

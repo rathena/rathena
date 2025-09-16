@@ -12,7 +12,7 @@
 #include <config/core.hpp>
 
 #include "clif.hpp" //
-#include "map.hpp" // struct block_list
+#include "map.hpp" // block_list
 #include "status.hpp" // struct status_change
 #include "unit.hpp" // struct unit_data
 #include "navi.hpp" // navi stuff
@@ -206,7 +206,7 @@ struct npc_data : public block_list {
 			uint16 mapindex; // destination map
 		} warp;
 		struct {
-			struct mob_data *md;
+			mob_data *md;
 			time_t kill_time;
 			char killer_name[NAME_LENGTH];
 			int32 spawn_timer;
@@ -1603,17 +1603,17 @@ enum npce_event : uint8 {
 };
 
 struct view_data* npc_get_viewdata(int32 class_);
-int32 npc_chat_sub(struct block_list* bl, va_list ap);
+int32 npc_chat_sub(block_list* bl, va_list ap);
 int32 npc_event_dequeue(map_session_data* sd,bool free_script_stack=true);
 int32 npc_event(map_session_data* sd, const char* eventname, int32 ontouch);
 int32 npc_touch_areanpc(map_session_data* sd, int16 m, int16 x, int16 y, npc_data* nd);
 int32 npc_touch_area_allnpc(map_session_data* sd, int16 m, int16 x, int16 y);
-int32 npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
+int32 npc_touch_areanpc2(mob_data *md); // [Skotlex]
 int32 npc_check_areanpc(int32 flag, int16 m, int16 x, int16 y, int16 range);
 int32 npc_touchnext_areanpc(map_session_data* sd,bool leavemap);
 int32 npc_click(map_session_data* sd, npc_data* nd);
 bool npc_scriptcont(map_session_data* sd, int32 id, bool closing);
-npc_data* npc_checknear(map_session_data* sd, struct block_list* bl);
+npc_data* npc_checknear(map_session_data* sd, block_list* bl);
 int32 npc_buysellsel(map_session_data* sd, int32 id, int32 type);
 e_purchase_result npc_buylist(map_session_data* sd, std::vector<s_npc_buy_list>& item_list);
 static int32 npc_buylist_sub(map_session_data* sd, std::vector<s_npc_buy_list>& item_list, npc_data* nd);
@@ -1636,8 +1636,8 @@ bool npc_enable_target(npc_data& nd, uint32 char_id, e_npcv_status flag);
 void npc_setdisplayname(npc_data* nd, const char* newname);
 void npc_setclass(npc_data* nd, int16 class_);
 npc_data* npc_name2id(const char* name);
-int32 npc_isnear_sub(struct block_list* bl, va_list args);
-bool npc_isnear(struct block_list * bl);
+int32 npc_isnear_sub(block_list* bl, va_list args);
+bool npc_isnear(block_list * bl);
 
 int32 npc_get_new_npc_id(void);
 
