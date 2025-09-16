@@ -908,13 +908,7 @@ uint64 InterServerDatabase::parseBodyNode( const ryml::NodeRef& node ){
 	bool existing = storage_table != nullptr;
 
 	if( !existing ){
-		if( !this->nodeExists( node, "Name" ) ){
-			this->invalidWarning( node, "Node \"Name\" is missing.\n" );
-			return 0;
-		}
-
-		if( !this->nodeExists( node, "Table" ) ){
-			this->invalidWarning( node, "Node \"Table\" is missing.\n" );
+		if( !this->nodesExist( node, { "Name", "Table" } ) ){
 			return 0;
 		}
 
