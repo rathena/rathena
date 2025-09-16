@@ -3,11 +3,13 @@
 
 #include "desperado.hpp"
 
+#include "map/status.hpp"
+
 SkillDesperado::SkillDesperado() : WeaponSkillImpl(GS_DESPERADO) {
 }
 
-void SkillDesperado::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
-	const struct status_change *sc = status_get_sc(*src);
+void SkillDesperado::calculateSkillRatio(Damage *wd, block_list *src, block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
+	status_change *sc = status_get_sc(src);
 
 	base_skillratio += 50 * (skill_lv - 1);
 	if (sc && sc->getSCE(SC_FALLEN_ANGEL))

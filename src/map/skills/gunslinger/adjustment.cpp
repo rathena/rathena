@@ -3,12 +3,13 @@
 
 #include "adjustment.hpp"
 
-SkillAdjustment::SkillAdjustment() : WeaponSkillImpl(GS_ADJUSTMENT) {
+#include "map/clif.hpp"
+#include "map/status.hpp"
+
+SkillAdjustment::SkillAdjustment() : SkillImpl(GS_ADJUSTMENT) {
 }
 
-void SkillAdjustment::castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag) const {
-	// This is from skill_castend_nodamage_id.cpp
-	// Note: GS_ADJUSTMENT was in a case fallthrough with GS_INCREASING
-	// The actual implementation would be in the base WeaponSkillImpl class
-	// We're just removing the case from the switch statement
+void SkillAdjustment::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
+	sc_type type = skill_get_sc(getSkillId());
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv, sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)));
 }

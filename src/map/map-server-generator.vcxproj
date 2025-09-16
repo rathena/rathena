@@ -262,7 +262,6 @@
     <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp" />
     <ClInclude Include="skills/gunslinger/adjustment.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
-    <ClInclude Include="skills/gunslinger/chainaction.hpp" />
     <ClInclude Include="skills/gunslinger/cracker.hpp" />
     <ClInclude Include="skills/gunslinger/desperado.hpp" />
     <ClInclude Include="skills/gunslinger/disarm.hpp" />
@@ -277,8 +276,6 @@
     <ClInclude Include="skills/gunslinger/magicalbullet.hpp" />
     <ClInclude Include="skills/gunslinger/piercingshot.hpp" />
     <ClInclude Include="skills/gunslinger/rapidshower.hpp" />
-    <ClInclude Include="skills/gunslinger/singleaction.hpp" />
-    <ClInclude Include="skills/gunslinger/snakeeye.hpp" />
     <ClInclude Include="skills/gunslinger/spreadattack.hpp" />
     <ClInclude Include="skills/gunslinger/tracking.hpp" />
     <ClInclude Include="skills/gunslinger/tripleaction.hpp" />
@@ -377,7 +374,6 @@
     <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp" />
     <ClCompile Include="skills/gunslinger/adjustment.cpp" />
     <ClCompile Include="skills/gunslinger/bullseye.cpp" />
-    <ClCompile Include="skills/gunslinger/chainaction.cpp" />
     <ClCompile Include="skills/gunslinger/cracker.cpp" />
     <ClCompile Include="skills/gunslinger/desperado.cpp" />
     <ClCompile Include="skills/gunslinger/disarm.cpp" />
@@ -392,8 +388,6 @@
     <ClCompile Include="skills/gunslinger/magicalbullet.cpp" />
     <ClCompile Include="skills/gunslinger/piercingshot.cpp" />
     <ClCompile Include="skills/gunslinger/rapidshower.cpp" />
-    <ClCompile Include="skills/gunslinger/singleaction.cpp" />
-    <ClCompile Include="skills/gunslinger/snakeeye.cpp" />
     <ClCompile Include="skills/gunslinger/spreadattack.cpp" />
     <ClCompile Include="skills/gunslinger/tracking.cpp" />
     <ClCompile Include="skills/gunslinger/tripleaction.cpp" />

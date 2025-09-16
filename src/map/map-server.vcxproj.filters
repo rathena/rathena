@@ -429,9 +429,6 @@
     <ClInclude Include="skills/gunslinger/bullseye.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
-    <ClInclude Include="skills/gunslinger/chainaction.hpp">
-      <Filter>Header Files\Skills\Gunslinger</Filter>
-    </ClInclude>
     <ClInclude Include="skills/gunslinger/cracker.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -472,12 +469,6 @@
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
     <ClInclude Include="skills/gunslinger/rapidshower.hpp">
-      <Filter>Header Files\Skills\Gunslinger</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/gunslinger/singleaction.hpp">
-      <Filter>Header Files\Skills\Gunslinger</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/gunslinger/snakeeye.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
     <ClInclude Include="skills/gunslinger/spreadattack.hpp">
@@ -632,9 +623,6 @@
     <ClCompile Include="skills/gunslinger/bullseye.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
-    <ClCompile Include="skills/gunslinger/chainaction.cpp">
-      <Filter>Source Files\Skills\Gunslinger</Filter>
-    </ClCompile>
     <ClCompile Include="skills/gunslinger/cracker.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
@@ -675,12 +663,6 @@
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/rapidshower.cpp">
-      <Filter>Source Files\Skills\Gunslinger</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/gunslinger/singleaction.cpp">
-      <Filter>Source Files\Skills\Gunslinger</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/gunslinger/snakeeye.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/spreadattack.cpp">

@@ -3,15 +3,13 @@
 
 #pragma once
 
-#include "../skill_impl.hpp"
+#include "map/skills/weapon_skill_impl.hpp"
 
-#include "../../battle.hpp"
+#include "map/battle.hpp"
 
-class SkillFling : public SkillImpl {
+class SkillFling : public WeaponSkillImpl {
 public:
 	SkillFling();
-
-	void castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const override;
 
 	void applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const override;
 };
