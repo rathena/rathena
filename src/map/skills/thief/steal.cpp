@@ -8,7 +8,7 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillSteal::SkillSteal() : WeaponSkillImpl(TF_STEAL) {
+SkillSteal::SkillSteal() : SkillImpl(TF_STEAL) {
 }
 
 void SkillSteal::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
