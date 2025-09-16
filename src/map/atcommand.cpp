@@ -2388,7 +2388,7 @@ ACMD_FUNC(monster)
 /*==========================================
  *
  *------------------------------------------*/
-static int32 atkillmonster_sub(struct block_list *bl, va_list ap)
+static int32 atkillmonster_sub(block_list *bl, va_list ap)
 {
 	mob_data *md;
 	int32 flag;
@@ -6409,7 +6409,7 @@ ACMD_FUNC(skillid) {
 ACMD_FUNC(useskill)
 {
 	map_session_data* pl_sd = nullptr;
-	struct block_list *bl;
+	block_list *bl;
 	uint16 skill_id;
 	uint16 skill_lv;
 	nullpo_retr(-1, sd);
@@ -7377,7 +7377,7 @@ ACMD_FUNC(mobsearch)
  * @cleanmap - cleans items on the ground
  * @cleanarea - cleans items on the ground within an specified area
  *------------------------------------------*/
-static int32 atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
+static int32 atcommand_cleanfloor_sub(block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 	map_clearflooritem(bl);
@@ -8711,7 +8711,7 @@ ACMD_FUNC(version)
 /*==========================================
  * @mutearea by MouseJstr
  *------------------------------------------*/
-static int32 atcommand_mutearea_sub(struct block_list *bl,va_list ap)
+static int32 atcommand_mutearea_sub(block_list *bl,va_list ap)
 {
 
 	int32 time, id;
