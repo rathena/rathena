@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillSteal : public WeaponSkillImpl {
+class SkillSteal : public SkillImpl {
 public:
 	SkillSteal();
 
