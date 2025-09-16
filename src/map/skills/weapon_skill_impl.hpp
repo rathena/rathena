@@ -9,5 +9,5 @@ class WeaponSkillImpl : public SkillImpl {
 public:
 	WeaponSkillImpl(e_skill skill_id);
 
-	virtual void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const override;
+	virtual void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };

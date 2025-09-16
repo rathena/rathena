@@ -726,7 +726,7 @@ int32 quest_delete(map_session_data *sd, int32 quest_id)
  *   int32 Mob Size
  *   int32 Mob Element
  */
-int32 quest_update_objective_sub(struct block_list *bl, va_list ap)
+int32 quest_update_objective_sub(block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 
@@ -740,7 +740,7 @@ int32 quest_update_objective_sub(struct block_list *bl, va_list ap)
 	if( sd->status.party_id != va_arg(ap, int32))
 		return 0;
 
-	quest_update_objective(sd, va_arg(ap, struct mob_data*));
+	quest_update_objective(sd, va_arg(ap, mob_data*));
 
 	return 1;
 }
@@ -754,7 +754,7 @@ int32 quest_update_objective_sub(struct block_list *bl, va_list ap)
  * @param mob_size: Monster Size
  * @param mob_element: Monster Element
  */
-void quest_update_objective(map_session_data *sd, struct mob_data* md)
+void quest_update_objective(map_session_data *sd, mob_data* md)
 {
 	nullpo_retv(sd);
 
