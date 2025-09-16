@@ -7140,6 +7140,13 @@ Body:
             Level: 10
           - Name: CD_FIDUS_ANIMUS
             Level: 5
+      - Name: CD_DIVINUS_FLOS
+        MaxLevel: 5
+        Requires:
+          - Name: AB_ADORAMUS
+            Level: 5
+          - Name: CD_FRAMEN
+            Level: 5
   - Job: Windhawk
     Inherit:
       Novice: true
