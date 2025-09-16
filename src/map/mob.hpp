@@ -501,10 +501,10 @@ std::shared_ptr<s_mob_db> mobdb_search_aegisname( const char* str );
 uint16 mobdb_searchname_array(const char *str, uint16 * out, uint16 size);
 int32 mobdb_checkid(const int32 id);
 struct view_data* mob_get_viewdata(int32 mob_id);
-void mob_set_dynamic_viewdata( struct mob_data* md );
-void mob_free_dynamic_viewdata( struct mob_data* md );
+void mob_set_dynamic_viewdata( mob_data* md );
+void mob_free_dynamic_viewdata( mob_data* md );
 
-struct mob_data *mob_once_spawn_sub(struct block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int32 mob_id, const char *event, uint32 size, enum mob_ai ai);
+mob_data *mob_once_spawn_sub(block_list *bl, int16 m, int16 x, int16 y, const char *mobname, int32 mob_id, const char *event, uint32 size, enum mob_ai ai);
 
 int32 mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y,
 	const char* mobname, int32 mob_id, int32 amount, const char* event, uint32 size, enum mob_ai ai);
@@ -512,59 +512,59 @@ int32 mob_once_spawn(map_session_data* sd, int16 m, int16 x, int16 y,
 int32 mob_once_spawn_area(map_session_data* sd, int16 m,
 	int16 x0, int16 y0, int16 x1, int16 y1, const char* mobname, int32 mob_id, int32 amount, const char* event, uint32 size, enum mob_ai ai);
 
-bool mob_ksprotected (struct block_list *src, struct block_list *target);
+bool mob_ksprotected (block_list *src, block_list *target);
 
 int32 mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobname, int32 mob_id, const char* event, int32 guardian, bool has_index);	// Spawning Guardians [Valaris]
 int32 mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, int32 mob_id, const char* event, uint32 bg_id);
-int32 mob_guardian_guildchange(struct mob_data *md); //Change Guardian's ownership. [Skotlex]
+int32 mob_guardian_guildchange(mob_data *md); //Change Guardian's ownership. [Skotlex]
 
-int32 mob_randomwalk(struct mob_data *md,t_tick tick);
-int32 mob_warpchase(struct mob_data *md, struct block_list *target);
+int32 mob_randomwalk(mob_data *md,t_tick tick);
+int32 mob_warpchase(mob_data *md, block_list *target);
 void mob_setstate(mob_data& md, MobSkillState skillstate);
 bool mob_ai_sub_hard_attacktimer(mob_data &md, t_tick tick);
 TIMER_FUNC(mob_attacked);
 TIMER_FUNC(mob_norm_attacked);
-int32 mob_target(struct mob_data *md,struct block_list *bl,int32 dist);
+int32 mob_target(mob_data *md,block_list *bl,int32 dist);
 bool mob_randomtarget(mob_data& md, int32& target_id);
-int32 mob_unlocktarget(struct mob_data *md, t_tick tick);
-struct mob_data* mob_spawn_dataset(struct spawn_data *data);
-int32 mob_spawn(struct mob_data *md);
+int32 mob_unlocktarget(mob_data *md, t_tick tick);
+mob_data* mob_spawn_dataset(struct spawn_data *data);
+int32 mob_spawn(mob_data *md);
 TIMER_FUNC(mob_delayspawn);
-int32 mob_setdelayspawn(struct mob_data *md);
+int32 mob_setdelayspawn(mob_data *md);
 int32 mob_parse_dataset(struct spawn_data *data);
 void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_tanked = 0);
-void mob_damage(struct mob_data *md, struct block_list *src, int32 damage);
-int32 mob_dead(struct mob_data *md, struct block_list *src, int32 type);
-void mob_revive(struct mob_data *md, uint32 hp);
-void mob_heal(struct mob_data *md,uint32 heal);
+void mob_damage(mob_data *md, block_list *src, int32 damage);
+int32 mob_dead(mob_data *md, block_list *src, int32 type);
+void mob_revive(mob_data *md, uint32 hp);
+void mob_heal(mob_data *md,uint32 heal);
 
 void mob_clear_spawninfo();
 void do_init_mob(void);
 void do_final_mob(bool is_reload);
 
 TIMER_FUNC(mob_timer_delete);
-int32 mob_deleteslave(struct mob_data *md);
+int32 mob_deleteslave(mob_data *md);
 
 int32 mob_random_class (int32 *value, size_t count);
 int32 mob_get_random_id(int32 type, enum e_random_monster_flags flag, int32 lv);
-int32 mob_class_change(struct mob_data *md,int32 mob_id);
-int32 mob_warpslave(struct block_list *bl, int32 range);
-int32 mob_linksearch(struct block_list *bl,va_list ap);
+int32 mob_class_change(mob_data *md,int32 mob_id);
+int32 mob_warpslave(block_list *bl, int32 range);
+int32 mob_linksearch(block_list *bl,va_list ap);
 
 bool mob_chat_display_message (mob_data &md, uint16 msg_id);
 void mobskill_delay(mob_data& md, t_tick tick);
-bool mobskill_use(struct mob_data *md,t_tick tick,int32 event, int64 damage = 0);
-int32 mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int32 flag, int64 damage = 0);
+bool mobskill_use(mob_data *md,t_tick tick,int32 event, int64 damage = 0);
+int32 mobskill_event(mob_data *md,block_list *src,t_tick tick, int32 flag, int64 damage = 0);
 void mob_set_delay(mob_data& md, t_tick tick, e_delay_event event);
-int32 mob_summonslave(struct mob_data *md2,int32 *value,int32 amount,uint16 skill_id);
-int32 mob_countslave(struct block_list *bl);
-int32 mob_count_sub(struct block_list *bl, va_list ap);
+int32 mob_summonslave(mob_data *md2,int32 *value,int32 amount,uint16 skill_id);
+int32 mob_countslave(block_list *bl);
+int32 mob_count_sub(block_list *bl, va_list ap);
 int32 mob_removeslaves(block_list* bl);
 
 int32 mob_is_clone(int32 mob_id);
 
 int32 mob_clone_spawn(map_session_data *sd, int16 m, int16 x, int16 y, const char *event, int32 master_id, enum e_mode mode, int32 flag, uint32 duration);
-int32 mob_clone_delete(struct mob_data *md);
+int32 mob_clone_delete(mob_data *md);
 
 void mob_reload_itemmob_data(void);
 void mob_reload(void);
@@ -572,13 +572,13 @@ void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn);
 const std::vector<spawn_info> mob_get_spawns(uint16 mob_id);
 bool mob_has_spawn(uint16 mob_id);
 
-int32 mob_getdroprate(struct block_list *src, std::shared_ptr<s_mob_db> mob, int32 base_rate, int32 drop_modifier, mob_data* md = nullptr, int32 factor = 1);
+int32 mob_getdroprate(block_list *src, std::shared_ptr<s_mob_db> mob, int32 base_rate, int32 drop_modifier, mob_data* md = nullptr, int32 factor = 1);
 
 // MvP Tomb System
-int32 mvptomb_setdelayspawn(struct npc_data *nd);
+int32 mvptomb_setdelayspawn(npc_data *nd);
 TIMER_FUNC(mvptomb_delayspawn);
-void mvptomb_create(struct mob_data *md, char *killer, time_t time);
-void mvptomb_destroy(struct mob_data *md);
+void mvptomb_create(mob_data *md, char *killer, time_t time);
+void mvptomb_destroy(mob_data *md);
 
 void mob_setdropitem_option( item& itm, const std::shared_ptr<s_mob_drop>& mobdrop );
 

@@ -13,7 +13,7 @@ SkillProvoke::SkillProvoke() : SkillImpl(SM_PROVOKE)
 {
 }
 
-void SkillProvoke::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillProvoke::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const
 {
 	sc_type type = skill_get_sc(getSkillId());
 	status_data *tstatus = status_get_status_data(*bl);
