@@ -49,6 +49,7 @@ struct npc_data;
 struct pet_data;
 struct skill_unit;
 struct item_data;
+struct s_elemental_data;
 struct s_mercenary_data;
 struct Channel;
 
@@ -1194,7 +1195,7 @@ npc_data * map_id2nd(int32 id);
 homun_data* map_id2hd(int32 id);
 s_mercenary_data* map_id2mc(int32 id);
 pet_data* map_id2pd(int32 id);
-struct s_elemental_data* map_id2ed(int32 id);
+s_elemental_data* map_id2ed(int32 id);
 chat_data* map_id2cd(int32 id);
 block_list * map_id2bl(int32 id);
 bool map_blid_exists( int32 id );
@@ -1300,7 +1301,7 @@ typedef skill_unit       TBL_SKILL;
 typedef pet_data         TBL_PET;
 typedef homun_data       TBL_HOM;
 typedef s_mercenary_data   TBL_MER;
-typedef struct s_elemental_data	TBL_ELEM;
+typedef s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
 	( ((bl) == nullptr || (bl)->type != (type_)) \
