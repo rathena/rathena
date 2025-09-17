@@ -513,16 +513,10 @@
     <ClInclude Include="skills/taekwon/highjump.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/hptime.hpp">
-      <Filter>Header Files\Skills\Taekwon</Filter>
-    </ClInclude>
     <ClInclude Include="skills/taekwon/jumpkick.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/mission.hpp">
-      <Filter>Header Files\Skills\Taekwon</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/taekwon/power.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/readycounter.hpp">
@@ -541,9 +535,6 @@
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/sevenwind.hpp">
-      <Filter>Header Files\Skills\Taekwon</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/taekwon/sptime.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/stormkick.hpp">
@@ -704,16 +695,10 @@
     <ClCompile Include="skills/taekwon/highjump.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/hptime.cpp">
-      <Filter>Source Files\Skills\Taekwon</Filter>
-    </ClCompile>
     <ClCompile Include="skills/taekwon/jumpkick.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/mission.cpp">
-      <Filter>Source Files\Skills\Taekwon</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/taekwon/power.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/readycounter.cpp">
@@ -732,9 +717,6 @@
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/sevenwind.cpp">
-      <Filter>Source Files\Skills\Taekwon</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/taekwon/sptime.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/stormkick.cpp">
