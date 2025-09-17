@@ -1418,11 +1418,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start2(src, bl, SC_POISON, 100, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));
 		break;
 
-	case TF_POISON:
-		if (!sc_start2(src, bl, SC_POISON, (4 * skill_lv + 10), skill_lv, src->id, skill_get_time2(skill_id, skill_lv)) && sd)
-			clif_skill_fail( *sd, skill_id );
-		break;
-
 	case AS_SONICBLOW:
 	case HN_MEGA_SONIC_BLOW:
 		if (!map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND) && sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_ASSASIN)
@@ -1511,22 +1506,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case HT_SANDMAN:
 	case MA_SANDMAN:
 		sc_start(src, bl, SC_SLEEP, (10 * skill_lv + 40), skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
-		break;
-
-	case TF_SPRINKLESAND:
-		sc_start(src,bl,SC_BLIND,(sd!=nullptr)?20:15,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
-	case TF_THROWSTONE:
-		if (sd != nullptr) {
-			// Only blind if used by player and stun failed
-			if (!sc_start(src, bl, SC_STUN, 3, skill_lv, skill_get_time(skill_id, skill_lv)))
-				sc_start(src, bl, SC_BLIND, 3, skill_lv, skill_get_time2(skill_id, skill_lv));
-		}
-		else {
-			// 5% stun chance and no blind chance when used by monsters
-			sc_start(src, bl, SC_STUN, 5, skill_lv, skill_get_time(skill_id, skill_lv));
-		}
 		break;
 
 	case NPC_DARKCROSS:
@@ -5252,14 +5231,11 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 	switch(skill_id) {
 	case MER_CRASH:
-	case TF_DOUBLE:
 	case MA_DOUBLE:
 	case AS_SONICBLOW:
 	case KN_PIERCE:
 	case ML_PIERCE:
 	case KN_SPEARBOOMERANG:
-	case TF_POISON:
-	case TF_SPRINKLESAND:
 	case MA_CHARGEARROW:
 	case RG_INTIMIDATE:
 	case AM_ACIDTERROR:
@@ -6682,7 +6658,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case PA_PRESSURE:
 	case CR_ACIDDEMONSTRATION:
 #endif
-	case TF_THROWSTONE:
 	case NPC_SMOKING:
 	case GS_FLING:
 	case NJ_ZENYNAGE:
@@ -9406,7 +9381,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			i = sc_start(src,bl,type,100,skill_lv,60000);
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,i);
 		break;
-	case TF_HIDING:
 	case ST_CHASEWALK:
 	case KO_YAMIKUMO:
 		if (tsce)
@@ -9539,15 +9513,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 #endif
 
-	case TF_STEAL:
-		if(sd) {
-			if(pc_steal_item(sd,bl,skill_lv))
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			else
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-		}
-		break;
-
 	case RG_STEALCOIN:
 		if(sd) {
 			if(pc_steal_coin(sd,bl))
@@ -9595,12 +9560,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case NV_FIRSTAID:
 		clif_skill_nodamage(src,*bl,skill_id,5);
 		status_heal(bl,5,0,0);
-		break;
-
-	case TF_DETOXIFY:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		status_change_end(bl, SC_POISON);
-		status_change_end(bl, SC_DPOISON);
 		break;
 
 	case PR_STRECOVERY:
@@ -9752,29 +9711,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
 
-	case TF_PICKSTONE:
-		if(sd) {
-			unsigned char eflag;
-			struct item item_tmp;
-			block_list tbl;
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			memset(&item_tmp,0,sizeof(item_tmp));
-			memset(&tbl,0,sizeof(tbl)); // [MouseJstr]
-			item_tmp.nameid = ITEMID_STONE;
-			item_tmp.identify = 1;
-			tbl.id = 0;
-			// Commented because of duplicate animation [Lemongrass]
-			// At the moment this displays the pickup animation a second time
-			// If this is required in older clients, we need to add a version check here
-			//clif_takeitem(*sd,tbl);
-			eflag = pc_additem(sd,&item_tmp,1,LOG_TYPE_PRODUCE);
-			if(eflag) {
-				clif_additem(sd,0,0,eflag);
-				if (battle_config.skill_drop_items_full)
-					map_addflooritem(&item_tmp,1,sd->m,sd->x,sd->y,0,0,0,4,0);
-			}
-		}
-		break;
 	case ASC_CDP:
 		if(sd) {
 			if(skill_produce_mix(sd, skill_id, ITEMID_POISON_BOTTLE, 0, 0, 0, 1, -1)) //Produce a Poison Bottle.
@@ -10054,27 +9990,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		map_foreachinallrange(skill_area_sub, bl, i, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag|1,
 			skill_castend_damage_id);
-		break;
-
-	case TF_BACKSLIDING: //This is the correct implementation as per packet logging information. [Skotlex]
-		{
-			// Backsliding makes you immune to being stopped for 200ms, but only if you don't have the endure effect yet
-			if (unit_data* ud = unit_bl2ud(bl); ud != nullptr && !status_isendure(*bl, tick, true))
-				ud->endure_tick = tick + 200;
-
-			int16 blew_count = skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),unit_getdir(bl),(enum e_skill_blown)(BLOWN_IGNORE_NO_KNOCKBACK
-#ifdef RENEWAL
-			|BLOWN_DONT_SEND_PACKET
-#endif
-			));
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-#ifdef RENEWAL
-			if(blew_count > 0)
-				clif_blown(src); // Always blow, otherwise it shows a casting animation. [Lemongrass]
-#else
-			clif_slide(*bl, bl->x, bl->y); //Show the casting animation on pre-re
-#endif
-		}
 		break;
 
 	case TK_HIGHJUMP:

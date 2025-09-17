@@ -4791,9 +4791,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += skillratio / 10;
 #endif
 			break;
-		case TF_SPRINKLESAND:
-			skillratio += 30;
-			break;
 		case NPC_PIERCINGATT:
 			skillratio += -25; //75% base damage
 			break;
