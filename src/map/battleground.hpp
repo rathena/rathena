@@ -12,6 +12,8 @@
 #include <common/database.hpp>
 #include <common/mmo.hpp> // struct party
 
+struct block_list;
+
 #define MAX_BG_MEMBERS 30
 
 struct s_battleground_member_data {
@@ -129,7 +131,7 @@ extern std::vector<std::shared_ptr<s_battleground_queue>> bg_queues;
 std::shared_ptr<s_battleground_type> bg_search_name(const char *name);
 std::shared_ptr<s_battleground_queue> bg_search_queue(int32 queue_id);
 void bg_send_dot_remove(map_session_data *sd);
-int32 bg_team_get_id(struct block_list *bl);
+int32 bg_team_get_id(block_list *bl);
 map_session_data *bg_getavailablesd(s_battleground_data *bg);
 
 bool bg_queue_reservation(const char *name, bool state, bool ended);

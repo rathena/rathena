@@ -716,7 +716,7 @@ int32 pet_attackskill(pet_data *pd, int32 target_id)
 
 	if (rnd_chance((pd->a_skill->rate +pd->pet.intimate*pd->a_skill->bonusrate/1000), 100)) { // Skotlex: Use pet's skill
 		int32 inf;
-		struct block_list *bl;
+		block_list *bl;
 
 		bl = map_id2bl(target_id);
 
@@ -744,7 +744,7 @@ int32 pet_attackskill(pet_data *pd, int32 target_id)
  * @param type: pet's attack rate type
  * @return 0
  */
-int32 pet_target_check(pet_data *pd,struct block_list *bl,int32 type)
+int32 pet_target_check(pet_data *pd,block_list *bl,int32 type)
 {
 	nullpo_ret(pd);
 
@@ -1411,7 +1411,7 @@ bool pet_get_egg(uint32 account_id, int16 pet_class, int32 pet_id ) {
 }
 
 static int32 pet_unequipitem(map_session_data *sd, pet_data *pd);
-static int32 pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap);
+static int32 pet_ai_sub_hard_lootsearch(block_list *bl,va_list ap);
 
 /**
  * Pet menu options.
@@ -1752,7 +1752,7 @@ static int32 pet_randomwalk(pet_data *pd,t_tick tick)
  */
 static int32 pet_ai_sub_hard(pet_data *pd, map_session_data *sd, t_tick tick)
 {
-	struct block_list *target = nullptr;
+	block_list *target = nullptr;
 
 	if(pd->prev == nullptr || sd == nullptr || sd->prev == nullptr)
 		return 0;
@@ -1857,7 +1857,7 @@ static int32 pet_ai_sub_hard(pet_data *pd, map_session_data *sd, t_tick tick)
 
 			return 0;
 		} else {
-			struct flooritem_data *fitem = (struct flooritem_data *)target;
+			flooritem_data *fitem = (flooritem_data *)target;
 
 			if(pd->loot->count < pd->loot->max) {
 				memcpy(&pd->loot->item[pd->loot->count++],&fitem->item,sizeof(pd->loot->item[0]));
@@ -1912,15 +1912,15 @@ static TIMER_FUNC(pet_ai_hard){
  *   target : item
  * @return 1:success, 0:failure
  */
-static int32 pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap)
+static int32 pet_ai_sub_hard_lootsearch(block_list *bl,va_list ap)
 {
 	pet_data* pd;
-	struct flooritem_data *fitem = (struct flooritem_data *)bl;
-	struct block_list **target;
+	flooritem_data *fitem = (flooritem_data *)bl;
+	block_list **target;
 	int32 sd_charid = 0;
 
 	pd = va_arg(ap,pet_data *);
-	target = va_arg(ap,struct block_list**);
+	target = va_arg(ap,block_list**);
 
 	sd_charid = fitem->first_get_charid;
 
