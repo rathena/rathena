@@ -5,6 +5,8 @@
 
 #include <cstdlib>
 #include <cmath>
+#include <unordered_map>
+#include <vector>
 
 #include <config/core.hpp>
 
@@ -112,7 +114,7 @@ static DBMap* bossid_db=nullptr; /// int32 id -> mob_data* (MVP db)
 static DBMap* map_db=nullptr; /// uint32 mapindex -> struct map_data*
 static DBMap* nick_db=nullptr; /// uint32 char_id -> struct charid2nick* (requested names of offline characters)
 static DBMap* charid_db=nullptr; /// uint32 char_id -> map_session_data*
-static DBMap* regen_db=nullptr; /// int32 id -> block_list* (status_natural_heal processing)
+static std::unordered_map<int32, block_list*> regen_db; /// int32 id -> block_list* (status_natural_heal processing)
 static DBMap* map_msg_db=nullptr;
 
 static int32 map_users=0;
@@ -2197,7 +2199,7 @@ void map_addiddb(block_list *bl)
 	}
 
 	if( bl->type & BL_REGEN )
-		idb_put(regen_db, bl->id, bl);
+		regen_db[bl->id] = bl;
 
 	idb_put(id_db,bl->id,bl);
 }
@@ -2222,7 +2224,7 @@ void map_deliddb(block_list *bl)
 	}
 
 	if( bl->type & BL_REGEN )
-		idb_remove(regen_db,bl->id);
+		regen_db.erase(bl->id);
 
 	idb_remove(id_db,bl->id);
 }
@@ -2579,22 +2581,26 @@ void map_foreachnpc(int32 (*func)(npc_data* nd, va_list args), ...)
 /// Stops iterating if func returns -1.
 void map_foreachregen(int32 (*func)(block_list* bl, va_list args), ...)
 {
-	DBIterator* iter;
-	block_list* bl;
+    // Snapshot keys to avoid iterator invalidation from erase/insert during callback.
+    std::vector<int32> keys;
+    keys.reserve(regen_db.size());
+    for (const auto &entry : regen_db) keys.push_back(entry.first);
 
-	iter = db_iterator(regen_db);
-	for( bl = (block_list*)dbi_first(iter); dbi_exists(iter); bl = (block_list*)dbi_next(iter) )
-	{
-		va_list args;
-		int32 ret;
+    for (int32 id : keys) {
+        auto it = regen_db.find(id);
+        if (it == regen_db.end())
+            continue; // might have been removed during previous callbacks
 
-		va_start(args, func);
-		ret = func(bl, args);
-		va_end(args);
-		if( ret == -1 )
-			break;// stop iterating
-	}
-	dbi_destroy(iter);
+        block_list* bl = it->second;
+        va_list args;
+        int32 ret;
+
+        va_start(args, func);
+        ret = func(bl, args);
+        va_end(args);
+        if (ret == -1)
+            break; // stop iterating
+    }
 }
 
 /// Applies func to everything in the db.
@@ -5113,7 +5119,7 @@ void MapServer::finalize(){
 	nick_db->destroy(nick_db, nick_db_final);
 	charid_db->destroy(charid_db, nullptr);
 	iwall_db->destroy(iwall_db, nullptr);
-	regen_db->destroy(regen_db, nullptr);
+
 
 	map_sql_close();
 
@@ -5409,7 +5415,7 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	map_db = uidb_alloc(DB_OPT_BASE);
 	nick_db = idb_alloc(DB_OPT_BASE);
 	charid_db = uidb_alloc(DB_OPT_BASE);
-	regen_db = idb_alloc(DB_OPT_BASE); // efficient status_natural_heal processing
+
 	iwall_db = strdb_alloc(DB_OPT_RELEASE_DATA,2*NAME_LENGTH+2+1); // [Zephyrus] Invisible Walls
 
 	map_sql_init();
