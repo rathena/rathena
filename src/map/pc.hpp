@@ -749,8 +749,8 @@ public:
 
 	struct s_search_store_info searchstore;
 
-	struct pet_data *pd;
-	struct homun_data *hd;	// [blackhole89]
+	pet_data *pd;
+	homun_data *hd;	// [blackhole89]
 	s_mercenary_data *md;
 	s_elemental_data *ed;
 
@@ -1461,7 +1461,7 @@ void pc_putitemtocart(map_session_data *sd,int32 idx,int32 amount);
 bool pc_getitemfromcart(map_session_data *sd,int32 idx,int32 amount);
 int32 pc_cartitem_amount(map_session_data *sd,int32 idx,int32 amount);
 
-bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem);
+bool pc_takeitem(map_session_data *sd,flooritem_data *fitem);
 bool pc_dropitem(map_session_data *sd,int32 n,int32 amount);
 
 bool pc_isequipped(map_session_data *sd, t_itemid nameid);

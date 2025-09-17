@@ -3673,12 +3673,12 @@ bool status_calc_weight(map_session_data *sd, enum e_status_calc_weight_opt flag
 bool status_calc_cart_weight(map_session_data *sd, enum e_status_calc_weight_opt flag);
 void status_calc_bl_(block_list *bl, std::bitset<SCB_MAX> flag, uint8 opt = SCO_NONE);
 int32 status_calc_mob_(mob_data* md, uint8 opt);
-void status_calc_pet_(struct pet_data* pd, uint8 opt);
+void status_calc_pet_(pet_data* pd, uint8 opt);
 int32 status_calc_pc_(map_session_data* sd, uint8 opt);
-int32 status_calc_homunculus_(struct homun_data *hd, uint8 opt);
+int32 status_calc_homunculus_(homun_data *hd, uint8 opt);
 int32 status_calc_mercenary_(s_mercenary_data *md, uint8 opt);
 int32 status_calc_elemental_(s_elemental_data *ed, uint8 opt);
-int32 status_calc_npc_(struct npc_data *nd, uint8 opt);
+int32 status_calc_npc_(npc_data *nd, uint8 opt);
 
 static void status_calc_bl(block_list *bl, std::vector<e_scb_flag> flags) {
 	static std::bitset<SCB_MAX> temp;

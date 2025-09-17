@@ -148,7 +148,7 @@ bool mob_is_spotted(mob_data *md) {
  * Tomb spawn time calculations
  * @param nd: NPC data
  */
-int32 mvptomb_setdelayspawn(struct npc_data *nd) {
+int32 mvptomb_setdelayspawn(npc_data *nd) {
 	if (nd->u.tomb.spawn_timer != INVALID_TIMER)
 		delete_timer(nd->u.tomb.spawn_timer, mvptomb_delayspawn);
 	nd->u.tomb.spawn_timer = add_timer(gettick() + battle_config.mvp_tomb_delay, mvptomb_delayspawn, nd->id, 0);
@@ -163,7 +163,7 @@ int32 mvptomb_setdelayspawn(struct npc_data *nd) {
  * @param data: Used for add_timer_func_list
  */
 TIMER_FUNC(mvptomb_delayspawn){
-	struct npc_data *nd = BL_CAST(BL_NPC, map_id2bl(id));
+	npc_data *nd = BL_CAST(BL_NPC, map_id2bl(id));
 
 	if (nd) {
 		if (nd->u.tomb.spawn_timer != tid) {
@@ -185,12 +185,12 @@ TIMER_FUNC(mvptomb_delayspawn){
  */
 void mvptomb_create(mob_data *md, char *killer, time_t time)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 
 	if ( md->tomb_nid )
 		mvptomb_destroy(md);
 
-	CREATE(nd, struct npc_data, 1);
+	CREATE(nd, npc_data, 1);
 	new (nd) npc_data();
 
 	nd->id = md->tomb_nid = npc_get_new_npc_id();
@@ -234,7 +234,7 @@ void mvptomb_create(mob_data *md, char *killer, time_t time)
  * @param md: Mob data
  */
 void mvptomb_destroy(mob_data *md) {
-	struct npc_data *nd;
+	npc_data *nd;
 
 	if ( (nd = map_id2nd(md->tomb_nid)) ) {
 		int32 i;
@@ -2072,7 +2072,7 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 	//Target exists, attack or loot as applicable.
 	if (tbl->type == BL_ITEM)
 	{	//Loot time.
-		struct flooritem_data *fitem;
+		flooritem_data *fitem;
 		int32 loot_range = 0;
 		if (md->ud.walktimer != INVALID_TIMER) {
 			// Ready to loot
@@ -2107,7 +2107,7 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 		if (md->ud.attacktimer != INVALID_TIMER)
 			return true; //Busy attacking?
 
-		fitem = (struct flooritem_data *)tbl;
+		fitem = (flooritem_data *)tbl;
 		//Logs items, taken by (L)ooter Mobs [Lupus]
 		log_pick_mob(md, LOG_TYPE_LOOT, fitem->item.amount, &fitem->item);
 
@@ -2267,7 +2267,7 @@ void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_nor
 	{
 		case BL_PET:
 		{
-			struct pet_data& pd = *reinterpret_cast<pet_data*>(src);
+			pet_data& pd = *reinterpret_cast<pet_data*>(src);
 			if (pd.master)
 			{
 				// Let mobs retaliate against the pet's master
@@ -2691,7 +2691,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 		}
 		case BL_HOM:
 		{
-			struct homun_data *hd = (TBL_HOM*)src;
+			homun_data *hd = (TBL_HOM*)src;
 			flag = MDLF_HOMUN;
 			if( hd->master )
 				char_id = hd->master->status.char_id;
@@ -2706,7 +2706,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 		}
 		case BL_PET:
 		{
-			struct pet_data *pd = (TBL_PET*)src;
+			pet_data *pd = (TBL_PET*)src;
 			flag = MDLF_PET;
 			if( pd->master )
 				char_id = pd->master->status.char_id;
@@ -7306,7 +7306,7 @@ static int32 mob_reload_sub( mob_data *md, va_list args ){
  * @param args: va_list of arguments
  * @return 0
  */
-static int32 mob_reload_sub_npc( struct npc_data *nd, va_list args ){
+static int32 mob_reload_sub_npc( npc_data *nd, va_list args ){
 	// If the view data points to a mob
 	if( mobdb_checkid(nd->class_) ){
 		struct view_data *vd = mob_get_viewdata(nd->class_);

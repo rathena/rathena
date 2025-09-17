@@ -87,9 +87,9 @@ struct unit_data* unit_bl2ud(block_list *bl)
 	switch(bl->type){
 	case BL_PC: return &((map_session_data*)bl)->ud;
 	case BL_MOB: return &((mob_data*)bl)->ud;
-	case BL_PET: return &((struct pet_data*)bl)->ud;
-	case BL_NPC: return &((struct npc_data*)bl)->ud;
-	case BL_HOM: return &((struct homun_data*)bl)->ud;
+	case BL_PET: return &((pet_data*)bl)->ud;
+	case BL_NPC: return &((npc_data*)bl)->ud;
+	case BL_HOM: return &((homun_data*)bl)->ud;
 	case BL_MER: return &((s_mercenary_data*)bl)->ud;
 	case BL_ELEM: return &((s_elemental_data*)bl)->ud;
 	default : return nullptr;
@@ -493,10 +493,10 @@ TIMER_FUNC(unit_step_timer){
 
 int32 unit_walktoxy_ontouch(block_list *bl, va_list ap)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 
 	nullpo_ret(bl);
-	nullpo_ret(nd = va_arg(ap,struct npc_data *));
+	nullpo_ret(nd = va_arg(ap,npc_data *));
 
 	switch( bl->type ) {
 	case BL_PC:
@@ -509,7 +509,7 @@ int32 unit_walktoxy_ontouch(block_list *bl, va_list ap)
 
 		// Remove NPCs that are no longer within the OnTouch area
 		for (size_t i = 0; i < sd->areanpc.size(); i++) {
-			struct npc_data *nd = map_id2nd(sd->areanpc[i]);
+			npc_data *nd = map_id2nd(sd->areanpc[i]);
 
 			if (!nd || nd->subtype != NPCTYPE_SCRIPT || !(nd->m == bl->m && bl->x >= nd->x - nd->u.scr.xs && bl->x <= nd->x + nd->u.scr.xs && bl->y >= nd->y - nd->u.scr.ys && bl->y <= nd->y + nd->u.scr.ys))
 				rathena::util::erase_at(sd->areanpc, i);
@@ -2881,7 +2881,7 @@ int32 unit_unattackable(block_list *bl)
 	if(bl->type == BL_MOB)
 		mob_unlocktarget((mob_data*)bl, gettick());
 	else if(bl->type == BL_PET)
-		pet_unlocktarget((struct pet_data*)bl);
+		pet_unlocktarget((pet_data*)bl);
 
 	return 0;
 }
@@ -3743,7 +3743,7 @@ int32 unit_remove_map_(block_list *bl, clr_type clrtype, const char* file, int32
 			break;
 		}
 		case BL_PET: {
-			struct pet_data *pd = (struct pet_data*)bl;
+			pet_data *pd = (pet_data*)bl;
 
 			if( pd->pet.intimate <= PET_INTIMATE_NONE && !(pd->master && !pd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
@@ -3756,7 +3756,7 @@ int32 unit_remove_map_(block_list *bl, clr_type clrtype, const char* file, int32
 			break;
 		}
 		case BL_HOM: {
-			struct homun_data *hd = (struct homun_data *)bl;
+			homun_data *hd = (homun_data *)bl;
 
 			ud->canact_tick = ud->canmove_tick; // It appears HOM do reset the can-act tick.
 
@@ -3990,7 +3990,7 @@ int32 unit_free(block_list *bl, clr_type clrtype)
 
 			if( !sd->npc_id_dynamic.empty() ){
 				for (const auto &it : sd->npc_id_dynamic) {
-					struct npc_data* nd = map_id2nd( it );
+					npc_data* nd = map_id2nd( it );
 
 					if( nd != nullptr ){
 						// Erase the owner first to prevent loops from npc_unload
@@ -4037,7 +4037,7 @@ int32 unit_free(block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_PET: {
-			struct pet_data *pd = (struct pet_data*)bl;
+			pet_data *pd = (pet_data*)bl;
 			map_session_data *sd = pd->master;
 
 			pet_delautobonus(*sd, pd->autobonus, false);
@@ -4130,7 +4130,7 @@ int32 unit_free(block_list *bl, clr_type clrtype)
 		}
 		case BL_HOM:
 		{
-			struct homun_data *hd = (TBL_HOM*)bl;
+			homun_data *hd = (TBL_HOM*)bl;
 			map_session_data *sd = hd->master;
 
 			hom_hungry_timer_delete(hd);

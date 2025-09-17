@@ -298,7 +298,15 @@
     <ClInclude Include="skills/taekwon/sevenwind.hpp" />
     <ClInclude Include="skills/taekwon/stormkick.hpp" />
     <ClInclude Include="skills/taekwon/turnkick.hpp" />
+    <ClInclude Include="skills/thief/backslide.hpp" />
+    <ClInclude Include="skills/thief/detoxify.hpp" />
+    <ClInclude Include="skills/thief/envenom.hpp" />
+    <ClInclude Include="skills/thief/findstone.hpp" />
+    <ClInclude Include="skills/thief/hiding.hpp" />
+    <ClInclude Include="skills/thief/sandattack.hpp" />
     <ClInclude Include="skills/thief/skill_factory_thief.hpp" />
+    <ClInclude Include="skills/thief/steal.hpp" />
+    <ClInclude Include="skills/thief/stonefling.hpp" />
     <ClInclude Include="skills/weapon_skill_impl.hpp" />
     <ClInclude Include="skills/status_skill_impl.hpp" />
   </ItemGroup>
@@ -406,7 +414,15 @@
     <ClCompile Include="skills/taekwon/sevenwind.cpp" />
     <ClCompile Include="skills/taekwon/stormkick.cpp" />
     <ClCompile Include="skills/taekwon/turnkick.cpp" />
+    <ClCompile Include="skills/thief/backslide.cpp" />
+    <ClCompile Include="skills/thief/detoxify.cpp" />
+    <ClCompile Include="skills/thief/envenom.cpp" />
+    <ClCompile Include="skills/thief/findstone.cpp" />
+    <ClCompile Include="skills/thief/hiding.cpp" />
+    <ClCompile Include="skills/thief/sandattack.cpp" />
     <ClCompile Include="skills/thief/skill_factory_thief.cpp" />
+    <ClCompile Include="skills/thief/steal.cpp" />
+    <ClCompile Include="skills/thief/stonefling.cpp" />
     <ClCompile Include="skills/weapon_skill_impl.cpp" />
     <ClCompile Include="skills/status_skill_impl.cpp" />
   </ItemGroup>
