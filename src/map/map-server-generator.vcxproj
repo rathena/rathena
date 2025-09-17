@@ -267,10 +267,8 @@
     <ClInclude Include="skills/mage/firebolt.hpp" />
     <ClInclude Include="skills/mage/firewall.hpp" />
     <ClInclude Include="skills/mage/frostdiver.hpp" />
-    <ClInclude Include="skills/mage/increasesprecovery.hpp" />
     <ClInclude Include="skills/mage/lightningbolt.hpp" />
     <ClInclude Include="skills/mage/napalmbeat.hpp" />
-    <ClInclude Include="skills/mage/safetywall.hpp" />
     <ClInclude Include="skills/mage/sight.hpp" />
     <ClInclude Include="skills/mage/soulstrike.hpp" />
     <ClInclude Include="skills/mage/stonecurse.hpp" />
@@ -382,10 +380,8 @@
     <ClCompile Include="skills/mage/firebolt.cpp" />
     <ClCompile Include="skills/mage/firewall.cpp" />
     <ClCompile Include="skills/mage/frostdiver.cpp" />
-    <ClCompile Include="skills/mage/increasesprecovery.cpp" />
     <ClCompile Include="skills/mage/lightningbolt.cpp" />
     <ClCompile Include="skills/mage/napalmbeat.cpp" />
-    <ClCompile Include="skills/mage/safetywall.cpp" />
     <ClCompile Include="skills/mage/sight.cpp" />
     <ClCompile Include="skills/mage/soulstrike.cpp" />
     <ClCompile Include="skills/mage/stonecurse.cpp" />

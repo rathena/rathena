@@ -444,16 +444,10 @@
     <ClInclude Include="skills/mage/frostdiver.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/increasesprecovery.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
     <ClInclude Include="skills/mage/lightningbolt.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/napalmbeat.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/safetywall.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/sight.hpp">
@@ -645,9 +639,6 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/frostdiver.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/increasesprecovery.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/lightningbolt.cpp">
