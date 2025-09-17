@@ -3424,6 +3424,26 @@ bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const cha
 	return true;
 }
 
+static uint32 pc_autobonus_collect_equipped_positions(const map_session_data &sd)
+{
+	uint32 equip_pos_idx = 0;
+
+	for (uint8 j = 0; j < EQI_MAX; j++) {
+		if (sd.equip_index[j] >= 0)
+			equip_pos_idx |= sd.inventory.u.items_inventory[sd.equip_index[j]].equip;
+	}
+
+	return equip_pos_idx;
+}
+
+static bool pc_autobonus_has_required_equipment(const map_session_data &sd, const s_autobonus &autobonus, uint32 equip_pos_idx)
+{
+	if (autobonus.pos == 0)
+		return true;
+
+	return (equip_pos_idx & autobonus.pos) == autobonus.pos;
+}
+
 /**
  * Remove an autobonus from player
  * @param sd: Player data
@@ -3431,34 +3451,36 @@ bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const cha
  * @param restore: Run script on clearing or not
  */
 void pc_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> &bonus, bool restore){
-	std::vector<std::shared_ptr<s_autobonus>>::iterator it = bonus.begin();
+	uint32 equip_pos_idx = restore ? pc_autobonus_collect_equipped_positions(sd) : 0;
+	auto it = bonus.begin();
 
 	while( it != bonus.end() ){
 		std::shared_ptr<s_autobonus> b = *it;
 
-		if( b->active != INVALID_TIMER && restore && b->bonus_script != nullptr ){
-			uint32 equip_pos_idx = 0;
-
-			// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
-			for (uint8 j = 0; j < EQI_MAX; j++) {
-				if (sd.equip_index[j] >= 0)
-					equip_pos_idx |= sd.inventory.u.items_inventory[sd.equip_index[j]].equip;
-			}
-
-			if( ( equip_pos_idx&b->pos ) == b->pos ){
-				script_run_autobonus(b->bonus_script, &sd, b->pos);
-			}else{
-				// Not all required items equipped anymore
-				restore = false;
-			}
-		}
-
-		if( restore ){
-			it++;
+		if (b == nullptr) {
+			it = bonus.erase(it);
 			continue;
 		}
 
-		it = bonus.erase(it);
+		bool keep_entry = restore;
+		if (keep_entry && b->active != INVALID_TIMER && b->bonus_script != nullptr) {
+			if (pc_autobonus_has_required_equipment(sd, *b, equip_pos_idx)) {
+				script_run_autobonus(b->bonus_script, &sd, b->pos);
+			} else {
+				keep_entry = false;
+			}
+		}
+
+		if (!keep_entry) {
+			if (b->active != INVALID_TIMER) {
+				delete_timer(b->active, pc_endautobonus);
+				b->active = INVALID_TIMER;
+			}
+			it = bonus.erase(it);
+			continue;
+		}
+
+		++it;
 	}
 }
 
@@ -3469,24 +3491,22 @@ void pc_delautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobon
  */
 void pc_exeautobonus(map_session_data &sd, std::vector<std::shared_ptr<s_autobonus>> *bonus, std::shared_ptr<s_autobonus> autobonus)
 {
-	if (autobonus->active != INVALID_TIMER)
+	if (autobonus->active != INVALID_TIMER) {
 		delete_timer(autobonus->active, pc_endautobonus);
-
-	if( autobonus->other_script )
-	{
-		int32 j;
-		uint32 equip_pos_idx = 0;
-		//Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
-		for(j = 0; j < EQI_MAX; j++) {
-			if(sd.equip_index[j] >= 0)
-				equip_pos_idx |= sd.inventory.u.items_inventory[sd.equip_index[j]].equip;
-		}
-		if((equip_pos_idx&autobonus->pos) == autobonus->pos)
-			script_run_autobonus(autobonus->other_script,&sd,autobonus->pos);
+		autobonus->active = INVALID_TIMER;
 	}
 
-	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd.id, (intptr_t)bonus);
-	status_calc_pc(&sd,SCO_FORCE);
+	uint32 equip_pos_idx = pc_autobonus_collect_equipped_positions(sd);
+	bool has_required_equipment = pc_autobonus_has_required_equipment(sd, *autobonus, equip_pos_idx);
+
+	if (!has_required_equipment)
+		return;
+
+	if (autobonus->other_script && has_required_equipment)
+		script_run_autobonus(autobonus->other_script, &sd, autobonus->pos);
+
+	autobonus->active = add_timer(gettick() + autobonus->duration, pc_endautobonus, sd.id, (intptr_t)bonus);
+	status_calc_pc(&sd, SCO_FORCE);
 }
 
 /**
@@ -3499,13 +3519,17 @@ TIMER_FUNC(pc_endautobonus){
 	nullpo_ret(sd);
 	nullpo_ret(bonus);
 
-	for( std::shared_ptr<s_autobonus> autobonus : *bonus ){
-		if( autobonus->active == tid ){
+	for (auto it = bonus->begin(); it != bonus->end(); ++it) {
+		std::shared_ptr<s_autobonus> autobonus = *it;
+
+		if (autobonus->active == tid) {
 			autobonus->active = INVALID_TIMER;
+			if (!pc_autobonus_has_required_equipment(*sd, *autobonus, pc_autobonus_collect_equipped_positions(*sd)))
+				bonus->erase(it);
 			break;
 		}
 	}
-	
+
 	status_calc_pc(sd,SCO_FORCE);
 	return 0;
 }
@@ -12250,14 +12274,17 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 }
 
 static void pc_deleteautobonus( std::vector<std::shared_ptr<s_autobonus>>& bonus, int32 position ){
-	std::vector<std::shared_ptr<s_autobonus>>::iterator it = bonus.begin();
-
-	while( it != bonus.end() ){
+	for (auto it = bonus.begin(); it != bonus.end();) {
 		std::shared_ptr<s_autobonus> b = *it;
 
-		if( ( b->pos & position ) != b->pos ){
-			it++;
+		if (b == nullptr || (b->pos & position) == 0) {
+			++it;
 			continue;
+		}
+
+		if (b->active != INVALID_TIMER) {
+			delete_timer(b->active, pc_endautobonus);
+			b->active = INVALID_TIMER;
 		}
 
 		it = bonus.erase( it );
