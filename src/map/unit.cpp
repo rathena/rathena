@@ -89,7 +89,7 @@ struct unit_data* unit_bl2ud(block_list *bl)
 	case BL_MOB: return &((mob_data*)bl)->ud;
 	case BL_PET: return &((struct pet_data*)bl)->ud;
 	case BL_NPC: return &((npc_data*)bl)->ud;
-	case BL_HOM: return &((struct homun_data*)bl)->ud;
+	case BL_HOM: return &((homun_data*)bl)->ud;
 	case BL_MER: return &((s_mercenary_data*)bl)->ud;
 	case BL_ELEM: return &((s_elemental_data*)bl)->ud;
 	default : return nullptr;
@@ -3756,7 +3756,7 @@ int32 unit_remove_map_(block_list *bl, clr_type clrtype, const char* file, int32
 			break;
 		}
 		case BL_HOM: {
-			struct homun_data *hd = (struct homun_data *)bl;
+			homun_data *hd = (homun_data *)bl;
 
 			ud->canact_tick = ud->canmove_tick; // It appears HOM do reset the can-act tick.
 
@@ -4130,7 +4130,7 @@ int32 unit_free(block_list *bl, clr_type clrtype)
 		}
 		case BL_HOM:
 		{
-			struct homun_data *hd = (TBL_HOM*)bl;
+			homun_data *hd = (TBL_HOM*)bl;
 			map_session_data *sd = hd->master;
 
 			hom_hungry_timer_delete(hd);

@@ -874,7 +874,7 @@ void clif_authok(map_session_data *sd);
 void clif_authrefuse(int32 fd, uint8 error_code);
 void clif_authfail_fd(int32 fd, int32 type);
 void clif_charselectok(int32 id, uint8 ok);
-void clif_dropflooritem(struct flooritem_data* fitem, bool canShowEffect);
+void clif_dropflooritem(flooritem_data* fitem, bool canShowEffect);
 void clif_clearflooritem( flooritem_data& fitem, map_session_data* tsd = nullptr );
 
 void clif_clearunit_single( uint32 GID, clr_type type, map_session_data& tsd );
@@ -1196,7 +1196,7 @@ void clif_mission_info(map_session_data *sd, int32 mob_id, unsigned char progres
 void clif_feel_hate_reset(map_session_data *sd);
 
 // [blackhole89]
-void clif_hominfo(map_session_data *sd, struct homun_data *hd, int32 flag);
+void clif_hominfo(map_session_data *sd, homun_data *hd, int32 flag);
 void clif_homskillinfoblock( homun_data& hd );
 void clif_homskillup( homun_data& hd, uint16 skill_id );
 void clif_hom_food( map_session_data& sd, int32 foodid, bool success );
