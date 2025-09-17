@@ -862,7 +862,7 @@ void clif_charselectok(int32 id, uint8 ok)
 /// 009E <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
 /// 084B <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
 /// 0ADD <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W <show drop effect>.B <drop effect mode>.W (ZC_ITEM_FALL_ENTRY5)
-void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
+void clif_dropflooritem( flooritem_data* fitem, bool canShowEffect ){
 	nullpo_retv(fitem);
 
 	if( fitem->item.nameid == 0 ){
@@ -1806,7 +1806,7 @@ void clif_homunculus_updatestatus(map_session_data& sd, _sp type) {
 /// Sends information about owned homunculus to the client . [orn]
 /// 022e <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.W <max hp>.W <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W	(ZC_PROPERTY_HOMUN)
 /// 09f7 <name>.24B <modified>.B <level>.W <hunger>.W <intimacy>.W <equip id>.W <atk>.W <matk>.W <hit>.W <crit>.W <def>.W <mdef>.W <flee>.W <aspd>.W <hp>.L <max hp>.L <sp>.W <max sp>.W <exp>.L <max exp>.L <skill points>.W <atk range>.W (ZC_PROPERTY_HOMUN_2)
-void clif_hominfo( map_session_data *sd, struct homun_data *hd, int32 flag ){
+void clif_hominfo( map_session_data *sd, homun_data *hd, int32 flag ){
 #if PACKETVER_MAIN_NUM >= 20101005 || PACKETVER_RE_NUM >= 20080827 || defined(PACKETVER_ZERO)
 	nullpo_retv( sd );
 	nullpo_retv( hd );
@@ -8478,7 +8478,7 @@ void clif_spiritball( block_list *bl, block_list* target, enum send_target send_
 			p.num = ( (map_session_data*)bl )->spiritball;
 			break;
 		case BL_HOM:
-			p.num = ( (struct homun_data*)bl )->homunculus.spiritball;
+			p.num = ( (homun_data*)bl )->homunculus.spiritball;
 			break;
 	}
 
@@ -11948,13 +11948,13 @@ void clif_parse_Broadcast(int32 fd, map_session_data* sd) {
 /// There are various variants of this packet, some of them have padding between fields.
 void clif_parse_TakeItem(int32 fd, map_session_data *sd)
 {
-	struct flooritem_data *fitem;
+	flooritem_data *fitem;
 	int32 map_object_id;
 
 	// TODO: shuffle packet
 	map_object_id = RFIFOL(fd,packet_db[RFIFOW(fd,0)].pos[0]);
 
-	fitem = (struct flooritem_data*)map_id2bl(map_object_id);
+	fitem = (flooritem_data*)map_id2bl(map_object_id);
 
 	do {
 		if (pc_isdead(sd)) {
@@ -12702,7 +12702,7 @@ void clif_parse_SkillUp(int32 fd,map_session_data *sd)
 	pc_skillup(sd,RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]));
 }
 
-static void clif_parse_UseSkillToId_homun(struct homun_data *hd, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int32 target_id)
+static void clif_parse_UseSkillToId_homun(homun_data *hd, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int32 target_id)
 {
 	int32 lv;
 
@@ -12730,7 +12730,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, map_session_dat
 		unit_skilluse_id(hd, target_id, skill_id, skill_lv);
 }
 
-static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 skillmoreinfo)
+static void clif_parse_UseSkillToPos_homun(homun_data *hd, map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 skillmoreinfo)
 {
 	int32 lv;
 	if( !hd )

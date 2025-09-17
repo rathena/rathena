@@ -5034,7 +5034,7 @@ int32 status_calc_mercenary_(s_mercenary_data *md, uint8 opt)
  * @param opt: Whether it is first calc or not (0 on level up or status)
  * @return 1
  */
-int32 status_calc_homunculus_(struct homun_data *hd, uint8 opt)
+int32 status_calc_homunculus_(homun_data *hd, uint8 opt)
 {
 	struct status_data *status = &hd->base_status;
 	struct s_homunculus &hom = hd->homunculus;
@@ -5332,7 +5332,7 @@ void status_calc_regen(block_list *bl, struct status_data *status, struct regen_
 	}
 
 	if( bl->type == BL_HOM ) {
-		struct homun_data *hd = (TBL_HOM*)bl;
+		homun_data *hd = (TBL_HOM*)bl;
 		if( (skill = hom_checkskill(hd,HAMI_SKIN)) > 0 ) {
 			val = regen->hp*(100+5*skill)/100;
 			regen->hp = cap_value(val, 1, SHRT_MAX);
@@ -9486,7 +9486,7 @@ void status_set_viewdata(block_list *bl, int32 class_)
 	break;
 	case BL_HOM:
 		{
-			struct homun_data *hd = (struct homun_data*)bl;
+			homun_data *hd = (homun_data*)bl;
 			if (vd)
 				hd->vd = vd;
 			else
@@ -13879,7 +13879,7 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 		case SC_OVERED_BOOST:
 			switch (bl->type) {
 				case BL_HOM: {
-						struct homun_data *hd = BL_CAST(BL_HOM,bl);
+						homun_data *hd = BL_CAST(BL_HOM,bl);
 
 						if( hd )
 							hd->homunculus.hunger = max(1,hd->homunculus.hunger - 50);
