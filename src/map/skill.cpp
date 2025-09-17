@@ -992,7 +992,7 @@ bool skill_isNotOk( uint16 skill_id, map_session_data& sd ){
  * @param skill_lv: Skill level casted
  * @return true: Skill cannot be used, false: otherwise
  */
-bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
+bool skill_isNotOk_hom(homun_data *hd, uint16 skill_id, uint16 skill_lv)
 {
 	nullpo_retr(true, hd);
 
@@ -2047,7 +2047,7 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		break;
 	case MH_EQC:
 		{
-			struct homun_data *hd = BL_CAST(BL_HOM, src);
+			homun_data *hd = BL_CAST(BL_HOM, src);
 
 			if (hd) {
 				sc_start2(src, bl, SC_STUN, 100, skill_lv, bl->id, 1000 * hd->homunculus.level / 50 + 500 * skill_lv);
@@ -7724,7 +7724,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 {
 	map_session_data *sd, *dstsd;
 	mob_data *md, *dstmd;
-	struct homun_data *hd;
+	homun_data *hd;
 	s_mercenary_data *mer;
 	status_change *tsc;
 	struct status_change_entry *tsce;

@@ -139,7 +139,7 @@ int32 battle_gettarget(block_list* bl)
 		case BL_PC:  return ((map_session_data*)bl)->ud.target;
 		case BL_MOB: return ((mob_data*)bl)->target_id;
 		case BL_PET: return ((struct pet_data*)bl)->target_id;
-		case BL_HOM: return ((struct homun_data*)bl)->ud.target;
+		case BL_HOM: return ((homun_data*)bl)->ud.target;
 		case BL_MER: return ((s_mercenary_data*)bl)->ud.target;
 		case BL_ELEM: return ((s_elemental_data*)bl)->ud.target;
 	}
@@ -4551,7 +4551,7 @@ static void battle_calc_multi_attack(struct Damage* wd, block_list *src,block_li
 				wd->div_ = wd->div_ * -1;// needs more info
 			break;
 		case MH_BLAZING_AND_FURIOUS: {
-			struct homun_data *hd = BL_CAST(BL_HOM, src);
+			homun_data *hd = BL_CAST(BL_HOM, src);
 			if (hd) {
 				wd->div_ = hd->homunculus.spiritball;
 				hom_delspiritball(hd, MAX_SPIRITBALL, 1);
