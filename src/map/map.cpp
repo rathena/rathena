@@ -146,8 +146,16 @@ bool agit3_flag = false;
 int32 night_flag = 0; // 0=day, 1=night [Yor]
 
 struct charid2nick {
-	std::string nick;             // cached nickname for offline char
+	std::string nick; // cached nickname for offline char
 	std::set<uint32> charid_list; // pending requester char_ids waiting for resolution
+	void notify_and_clear() {
+		for (uint32 requester_id : charid_list) {
+			if (map_session_data* sd = map_charid2sd(requester_id); sd != nullptr) {
+				clif_solved_charname(*sd, requester_id, nick.c_str());
+			}
+		}
+		charid_list.clear();
+	}
 };
 
 // uint32 char_id -> charid2nick (requested names of offline characters)
@@ -2089,28 +2097,21 @@ int32 map_addflooritem(struct item *item, int32 amount, int16 m, int16 x, int16 
 
 /// Adds(or replaces) the nick of charid to nick_db and fulfils pending requests.
 /// Does nothing if the character is online.
-void map_addnickdb(int32 charid, const char* nick)
+void map_addnickdb(uint32 charid, const char* nick)
 {
 	if( map_charid2sd(charid) )
 		return; // already online
 
-	auto &entry = nick_db[static_cast<uint32>(charid)];
-	entry.nick.assign(nick ? nick : "");
-
-	if (!entry.charid_list.empty()) {
-		for (uint32 requester_id : entry.charid_list) {
-			if (map_session_data* sd = map_charid2sd((int32)requester_id); sd != nullptr)
-				clif_solved_charname(*sd, charid, entry.nick.c_str());
-		}
-		entry.charid_list.clear();
-	}
+	auto &entry = nick_db[charid];
+	entry.nick = nick;
+	entry.notify_and_clear();
 }
 
 /// Removes the nick of charid from nick_db.
 /// Sends name to all pending requests on charid.
-void map_delnickdb(int32 charid, const char* name)
+void map_delnickdb(uint32 charid, const char* name)
 {
-	auto it = nick_db.find(static_cast<uint32>(charid));
+	auto it = nick_db.find(charid);
 	if (it == nick_db.end())
 		return;
 
@@ -2128,7 +2129,7 @@ void map_delnickdb(int32 charid, const char* name)
 /// Notifies sd of the nick of charid.
 /// Uses the name in the character if online.
 /// Uses the name in nick_db if offline.
-void map_reqnickdb(map_session_data * sd, int32 charid)
+void map_reqnickdb(map_session_data * sd, uint32 charid)
 {
 	map_session_data* tsd;
 
@@ -2141,13 +2142,13 @@ void map_reqnickdb(map_session_data * sd, int32 charid)
 		return;
 	}
 
-	auto &entry = nick_db[static_cast<uint32>(charid)];
+	auto &entry = nick_db[charid];
 	if (!entry.nick.empty()) {
 		clif_solved_charname(*sd, charid, entry.nick.c_str());
 		return;
 	}
 	// not in cache, request it and subscribe
-	entry.charid_list.insert((uint32)sd->status.char_id);
+	entry.charid_list.insert(sd->status.char_id);
 	chrif_searchcharid(charid);
 }
 
@@ -2364,13 +2365,12 @@ chat_data* map_id2cd(int32 id){
 }
 
 /// Returns the nick of the target charid or nullptr if unknown (requests the nick to the char server).
-const char* map_charid2nick(int32 charid)
+const char* map_charid2nick(uint32 charid)
 {
-	map_session_data* sd = map_charid2sd(charid);
-	if( sd )
+	if(map_session_data* sd = map_charid2sd(charid); sd != nullptr)
 		return sd->status.name; // character is online, return its name
 
-	auto it = nick_db.find(static_cast<uint32>(charid));
+	auto it = nick_db.find(charid);
 	if (it != nick_db.end() && !it->second.nick.empty())
 		return it->second.nick.c_str(); // name in nick_db
 
