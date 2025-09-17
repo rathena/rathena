@@ -2267,7 +2267,7 @@ void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_nor
 	{
 		case BL_PET:
 		{
-			struct pet_data& pd = *reinterpret_cast<pet_data*>(src);
+			pet_data& pd = *reinterpret_cast<pet_data*>(src);
 			if (pd.master)
 			{
 				// Let mobs retaliate against the pet's master
@@ -2706,7 +2706,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 		}
 		case BL_PET:
 		{
-			struct pet_data *pd = (TBL_PET*)src;
+			pet_data *pd = (TBL_PET*)src;
 			flag = MDLF_PET;
 			if( pd->master )
 				char_id = pd->master->status.char_id;

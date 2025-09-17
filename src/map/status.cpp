@@ -3054,7 +3054,7 @@ int32 status_calc_mob_(mob_data* md, uint8 opt)
  * @return 1
  * @author [Skotlex]
  */
-void status_calc_pet_(struct pet_data *pd, uint8 opt)
+void status_calc_pet_(pet_data *pd, uint8 opt)
 {
 	nullpo_retv(pd);
 
@@ -4191,7 +4191,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	pc_bonus_script(sd);
 
 	if( sd->pd ) { // Pet Bonus
-		struct pet_data *pd = sd->pd;
+		pet_data *pd = sd->pd;
 		std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 
 		if (pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script)
@@ -9245,7 +9245,7 @@ std::vector<e_race2> status_get_race2(block_list *bl)
 	if (bl->type == BL_MOB)
 		return ((mob_data *)bl)->db->race2;
 	if (bl->type == BL_PET)
-		return ((struct pet_data *)bl)->db->race2;
+		return ((pet_data *)bl)->db->race2;
 	return std::vector<e_race2>();
 }
 

@@ -749,7 +749,7 @@ public:
 
 	struct s_search_store_info searchstore;
 
-	struct pet_data *pd;
+	pet_data *pd;
 	homun_data *hd;	// [blackhole89]
 	s_mercenary_data *md;
 	s_elemental_data *ed;

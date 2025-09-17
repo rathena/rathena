@@ -138,7 +138,7 @@ int32 battle_gettarget(block_list* bl)
 	switch (bl->type) {
 		case BL_PC:  return ((map_session_data*)bl)->ud.target;
 		case BL_MOB: return ((mob_data*)bl)->target_id;
-		case BL_PET: return ((struct pet_data*)bl)->target_id;
+		case BL_PET: return ((pet_data*)bl)->target_id;
 		case BL_HOM: return ((homun_data*)bl)->ud.target;
 		case BL_MER: return ((s_mercenary_data*)bl)->ud.target;
 		case BL_ELEM: return ((s_elemental_data*)bl)->ud.target;

@@ -87,7 +87,7 @@ struct unit_data* unit_bl2ud(block_list *bl)
 	switch(bl->type){
 	case BL_PC: return &((map_session_data*)bl)->ud;
 	case BL_MOB: return &((mob_data*)bl)->ud;
-	case BL_PET: return &((struct pet_data*)bl)->ud;
+	case BL_PET: return &((pet_data*)bl)->ud;
 	case BL_NPC: return &((npc_data*)bl)->ud;
 	case BL_HOM: return &((homun_data*)bl)->ud;
 	case BL_MER: return &((s_mercenary_data*)bl)->ud;
@@ -2881,7 +2881,7 @@ int32 unit_unattackable(block_list *bl)
 	if(bl->type == BL_MOB)
 		mob_unlocktarget((mob_data*)bl, gettick());
 	else if(bl->type == BL_PET)
-		pet_unlocktarget((struct pet_data*)bl);
+		pet_unlocktarget((pet_data*)bl);
 
 	return 0;
 }
@@ -3743,7 +3743,7 @@ int32 unit_remove_map_(block_list *bl, clr_type clrtype, const char* file, int32
 			break;
 		}
 		case BL_PET: {
-			struct pet_data *pd = (struct pet_data*)bl;
+			pet_data *pd = (pet_data*)bl;
 
 			if( pd->pet.intimate <= PET_INTIMATE_NONE && !(pd->master && !pd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
@@ -4037,7 +4037,7 @@ int32 unit_free(block_list *bl, clr_type clrtype)
 			break;
 		}
 		case BL_PET: {
-			struct pet_data *pd = (struct pet_data*)bl;
+			pet_data *pd = (pet_data*)bl;
 			map_session_data *sd = pd->master;
 
 			pet_delautobonus(*sd, pd->autobonus, false);
