@@ -17,5 +17,6 @@ if [ "${runBuild}" -eq "1" ]; then
     ./configure $BUILDER_CONFIGURE
   fi
 
-  make clean server;
+  make clean;
+  make -j$(nproc) server;
 fi
