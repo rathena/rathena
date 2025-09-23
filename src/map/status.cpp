@@ -5714,8 +5714,8 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 							break;
 						}
 #endif
-						restriction = true;
 					}
+					restriction = true;
 					break;
 
 				case SC_LONGING:
