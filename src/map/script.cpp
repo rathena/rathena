@@ -27171,7 +27171,7 @@ BUILDIN_FUNC(getjobexp_ratio){
 		job_level = sd->status.job_level;
 	}
 
-	t_exp class_exp = job_db.get_baseExp( sd->status.class_, job_level );
+	t_exp class_exp = job_db.get_jobExp( sd->status.class_, job_level );
 
 	if( class_exp <= 0 ){
 		ShowError( "getjobexp_ratio: No job experience defined for class %s at job level %d.\n", job_name( sd->status.class_ ), job_level );
