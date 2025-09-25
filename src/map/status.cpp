@@ -5707,15 +5707,9 @@ void status_calc_state( block_list& bl, status_change& sc, std::shared_ptr<s_sta
 			// Check the specific conditions
 			switch( type ){
 				case SC_DANCING:
-					if( sce.val4 != 0 ){
-#ifndef RENEWAL
-						// In Pre-Renewal you can attack when SC_LONGING is active
-						if( sc.getSCE( SC_LONGING ) != nullptr ){
-							break;
-						}
-#endif
+					// Normal songs prevent attacks; Ensembles prevent attacks as long Longing is not active
+					if (sce.val4 == 0 || !sc.hasSCE(SC_LONGING))
 						restriction = true;
-					}
 					break;
 
 				case SC_LONGING:
