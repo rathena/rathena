@@ -249,8 +249,7 @@ int32 elemental_data_received(s_elemental *ele, bool flag) {
 		ed->db = db;
 		memcpy(&ed->elemental, ele, sizeof(s_elemental));
 		status_set_viewdata(ed, ed->elemental.class_);
-		ed->vd->head_mid = 10; // Why?
-		status_change_init(ed);
+		ed->vd->look[LOOK_HEAD_MID] = 10; // TODO: Why?
 		unit_dataset(ed);
 		ed->ud.dir = sd->ud.dir;
 
@@ -550,7 +549,7 @@ static int32 elemental_ai_sub_timer(s_elemental_data *ed, map_session_data *sd, 
 	if( DIFF_TICK(tick,ed->last_spdrain_time) >= 10000 ){// Drain SP every 10 seconds
 		int32 sp = 5;
 
-		switch(ed->vd->class_){
+		switch(ed->vd->look[LOOK_BASE]){
 			case ELEMENTALID_AGNI_M:	case ELEMENTALID_AQUA_M:
 			case ELEMENTALID_VENTUS_M:	case ELEMENTALID_TERA_M:
 				sp = 8;
@@ -691,7 +690,7 @@ uint64 ElementalDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		elemental = std::make_shared<s_elemental_db>();
 		elemental->class_ = id;
-		elemental->vd.class_ = id;
+		elemental->vd.look[LOOK_BASE] = id;
 	}
 
 	if (this->nodeExists(node, "AegisName")) {

@@ -832,7 +832,29 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Fire
-    SplashArea: 2
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 2
+      - Level: 10
+        Area: 2
+      - Level: 11
+        Area: 3
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -3067,7 +3089,7 @@ Body:
       - Level: 10
         Area: 3
       - Level: 11
-        Area: 14
+        Area: 16
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -3115,6 +3137,8 @@ Body:
         Time: 6000
       - Level: 10
         Time: 7000
+      - Level: 11
+        Time: 10000
     Duration2: 5000
     Requires:
       SpCost:
@@ -3462,7 +3486,7 @@ Body:
     Hit: Single
     HitCount: 1
     Element: Water
-    SplashArea: 3
+    SplashArea: 2
     CopyFlags:
       Skill:
         Plagiarism: true
@@ -8243,15 +8267,15 @@ Body:
     Requires:
       SpCost:
         - Level: 1
-          Amount: 38
+          Amount: 40
         - Level: 2
-          Amount: 41
+          Amount: 45
         - Level: 3
-          Amount: 44
-        - Level: 4
-          Amount: 47
-        - Level: 5
           Amount: 50
+        - Level: 4
+          Amount: 55
+        - Level: 5
+          Amount: 60
       Weapon:
         Musical: true
         Whip: true
@@ -9215,7 +9239,7 @@ Body:
       IsNpc: true
     Hit: Single
     HitCount: 1
-    Duration: 30000
+    Duration1: 30000
     Status: WeaponBreaker
   - Id: 344
     Name: NPC_ARMORBRAKE
@@ -11365,7 +11389,7 @@ Body:
     Description: Flying Kick
     MaxLevel: 7
     Type: Weapon
-    TargetType: Support
+    TargetType: Attack
     DamageFlags:
       NoDamage: true
     Range: 9
@@ -12980,7 +13004,7 @@ Body:
       - Level: 5
         Area: 5
     CastTime: 3000
-    AfterCastActDelay: 2000
+    AfterCastActDelay: 5000
     Requires:
       SpCost: 40
       ItemCost:
@@ -13010,7 +13034,17 @@ Body:
     HitCount: 1
     Element: Earth
     CastTime: 5000
-    AfterCastActDelay: 2000
+    AfterCastActDelay:
+      - Level: 1
+        Time: 5000
+      - Level: 2
+        Time: 6000
+      - Level: 3
+        Time: 7000
+      - Level: 4
+        Time: 8000
+      - Level: 5
+        Time: 9000
     Duration1:
       - Level: 1
         Time: 5000
@@ -16914,7 +16948,7 @@ Body:
     Hit: Single
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 17000
+    Duration1: 30000
     Requires:
       SpCost: 20
   - Id: 1011
@@ -16931,8 +16965,8 @@ Body:
     Hit: Single
     CastTime: 1000
     AfterCastActDelay: 2000
-    Duration1: 10000
-    Duration2: 17000
+    Duration1: 30000
+    Duration2: 10000
     Requires:
       SpCost: 40
     Status: WinkCharm

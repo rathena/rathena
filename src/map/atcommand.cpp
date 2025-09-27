@@ -674,7 +674,7 @@ ACMD_FUNC(where)
  *------------------------------------------*/
 ACMD_FUNC(jumpto)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 
 	nullpo_retr(-1, sd);
 
@@ -758,8 +758,8 @@ ACMD_FUNC(jump)
  * various info.
  *------------------------------------------*/
 ACMD_FUNC(who) {
-	map_session_data* pl_sd = nullptr;;
-	struct s_mapiterator *iter = nullptr;	
+	map_session_data* pl_sd = nullptr;
+	struct s_mapiterator *iter = nullptr;
 	char player_name[NAME_LENGTH] = "";
 	int32 count = 0;
 	int32 level = 0;
@@ -853,7 +853,6 @@ ACMD_FUNC(who) {
 			StringBuf_Printf(&buf, msg_txt(sd,56), count, mapdata->name); // %d players found in map '%s'.
 	}
 	clif_displaymessage(fd, StringBuf_Value(&buf));
-	StringBuf_Destroy(&buf);
 	return 0;
 }
 
@@ -1140,7 +1139,7 @@ ACMD_FUNC(hide)
 		map_foreachinmovearea(clif_insight, sd, AREA_SIZE, sd->x, sd->y, BL_ALL, sd);
 	} else {
 		sd->sc.option |= OPTION_INVISIBLE;
-		sd->vd.class_ = JT_INVISIBLE;
+		sd->vd.look[LOOK_BASE] = JT_INVISIBLE;
 		clif_displaymessage(fd, msg_txt(sd,11)); // Invisible: On
 
 		// decrement the number of pvp players on the map
@@ -1843,7 +1842,6 @@ ACMD_FUNC(help){
 
 		if (has_aliases)
 			clif_displaymessage(fd, StringBuf_Value(&buf));
-		StringBuf_Destroy(&buf);
 	}
 
 	// Display help contents
@@ -2390,12 +2388,12 @@ ACMD_FUNC(monster)
 /*==========================================
  *
  *------------------------------------------*/
-static int32 atkillmonster_sub(struct block_list *bl, va_list ap)
+static int32 atkillmonster_sub(block_list *bl, va_list ap)
 {
-	struct mob_data *md;
+	mob_data *md;
 	int32 flag;
 
-	nullpo_ret(md=(struct mob_data *)bl);
+	nullpo_ret(md=(mob_data *)bl);
 	flag = va_arg(ap, int32);
 
 	if (md->guardian_data)
@@ -3251,7 +3249,7 @@ ACMD_FUNC(hatch) {
  *------------------------------------------*/
 ACMD_FUNC(petfriendly) {
 	int32 friendly;
-	struct pet_data *pd;
+	pet_data *pd;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (friendly = atoi(message)) < 0) {
@@ -3288,7 +3286,7 @@ ACMD_FUNC(petfriendly) {
 ACMD_FUNC(pethungry)
 {
 	int32 hungry;
-	struct pet_data *pd;
+	pet_data *pd;
 	nullpo_retr(-1, sd);
 
 	if (!message || !*message || (hungry = atoi(message)) < 0) {
@@ -3322,7 +3320,7 @@ ACMD_FUNC(pethungry)
  *------------------------------------------*/
 ACMD_FUNC(petrename)
 {
-	struct pet_data *pd;
+	pet_data *pd;
 	nullpo_retr(-1, sd);
 	if (!sd->status.pet_id || !sd->pd) {
 		clif_displaymessage(fd, msg_txt(sd,184)); // Sorry, but you have no pet.
@@ -3346,7 +3344,7 @@ ACMD_FUNC(petrename)
  *
  *------------------------------------------*/
 ACMD_FUNC(recall) {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 
 	nullpo_retr(-1, sd);
 
@@ -3809,7 +3807,8 @@ ACMD_FUNC(questskill)
 
 		return -1;
 	}
-	if (skill_id >= MAX_SKILL_ID) {
+
+	if( !skill_db.exists( skill_id ) ){
 		clif_displaymessage(fd, msg_txt(sd,198)); // This skill number doesn't exist.
 		return -1;
 	}
@@ -4580,7 +4579,7 @@ ACMD_FUNC(partysharelvl) {
 ACMD_FUNC(mapinfo) {
 	map_session_data* pl_sd;
 	struct s_mapiterator* iter;
-	struct chat_data *cd = nullptr;
+	chat_data *cd = nullptr;
 	char direction[12];
 	int32 i, m_id, chat_num = 0, list = 0, vend_num = 0;
 	uint16 m_index;
@@ -4621,7 +4620,7 @@ ACMD_FUNC(mapinfo) {
 		if( pl_sd->mapindex == m_index ) {
 			if( pl_sd->state.vending )
 				vend_num++;
-			else if( (cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) != nullptr && cd->usersd[0] == pl_sd )
+			else if( (cd = (chat_data*)map_id2bl(pl_sd->chatID)) != nullptr && cd->usersd[0] == pl_sd )
 				chat_num++;
 		}
 	}
@@ -4858,7 +4857,7 @@ ACMD_FUNC(mapinfo) {
 		clif_displaymessage(fd, msg_txt(sd,482)); // ----- NPCs in Map -----
 		for (i = 0; i < mapdata->npc_num;)
 		{
-			struct npc_data *nd = mapdata->npc[i];
+			npc_data *nd = mapdata->npc[i];
 			switch(nd->ud.dir) {
 			case DIR_NORTH:		strcpy(direction, msg_txt(sd,491)); break; // North
 			case DIR_NORTHWEST:	strcpy(direction, msg_txt(sd,492)); break; // North West
@@ -4884,7 +4883,7 @@ ACMD_FUNC(mapinfo) {
 		iter = mapit_getallusers();
 		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
 		{
-			if ((cd = (struct chat_data*)map_id2bl(pl_sd->chatID)) != nullptr &&
+			if ((cd = (chat_data*)map_id2bl(pl_sd->chatID)) != nullptr &&
 			    pl_sd->mapindex == m_index &&
 			    cd->usersd[0] == pl_sd)
 			{
@@ -5178,7 +5177,7 @@ ACMD_FUNC(nuke)
 ACMD_FUNC(tonpc)
 {
 	char npcname[NPC_NAME_LENGTH];
-	struct npc_data *nd;
+	npc_data *nd;
 
 	nullpo_retr(-1, sd);
 
@@ -5280,7 +5279,7 @@ ACMD_FUNC(loadnpc)
 
 ACMD_FUNC(unloadnpc)
 {
-	struct npc_data *nd;
+	npc_data *nd;
 	char NPCname[NPC_NAME_LENGTH];
 	nullpo_retr(-1, sd);
 
@@ -5524,7 +5523,7 @@ ACMD_FUNC(unjail)
 }
 
 ACMD_FUNC(jailfor) {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	char * modif_p;
 	int32 jailtime = 0;
 
@@ -5643,7 +5642,7 @@ ACMD_FUNC(disguise)
 	}	else	{ //Acquired a Name
 		if ((id = mobdb_searchname(message)) == 0)
 		{
-			struct npc_data* nd = npc_name2id(message);
+			npc_data* nd = npc_name2id(message);
 			if (nd != nullptr)
 				id = nd->class_;
 		}
@@ -5725,7 +5724,7 @@ ACMD_FUNC(disguiseguild)
 			id = 0;
 	} else {
 		if( (id = mobdb_searchname(monster)) == 0 ) {
-			struct npc_data* nd = npc_name2id(monster);
+			npc_data* nd = npc_name2id(monster);
 			if( nd != nullptr )
 				id = nd->class_;
 		}
@@ -6015,7 +6014,7 @@ ACMD_FUNC(skilloff)
 ACMD_FUNC(npcmove)
 {
 	int16 x = 0, y = 0;
-	struct npc_data *nd = 0;
+	npc_data *nd = 0;
 	char npc_name[NPC_NAME_LENGTH];
 
 	nullpo_retr(-1, sd);
@@ -6051,7 +6050,7 @@ ACMD_FUNC(addwarp)
 	char mapname[MAP_NAME_LENGTH_EXT], warpname[NPC_NAME_LENGTH];
 	int16 x,y;
 	uint16 m;
-	struct npc_data* nd;
+	npc_data* nd;
 
 	nullpo_retr(-1, sd);
 	memset(warpname, '\0', sizeof(warpname));
@@ -6084,7 +6083,7 @@ ACMD_FUNC(addwarp)
  *------------------------------------------*/
 ACMD_FUNC(follow)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -6409,8 +6408,8 @@ ACMD_FUNC(skillid) {
  *------------------------------------------*/
 ACMD_FUNC(useskill)
 {
-	map_session_data* pl_sd = nullptr;;
-	struct block_list *bl;
+	map_session_data* pl_sd = nullptr;
+	block_list *bl;
 	uint16 skill_id;
 	uint16 skill_lv;
 	nullpo_retr(-1, sd);
@@ -6510,9 +6509,9 @@ ACMD_FUNC(displayskillcast)
 	}
 
 	if ( target_type == 1)
-		clif_skillcasting(sd, sd->id, 0, sd->x, sd->y, skill_id, skill_lv, 0, cast_time);
+		clif_skillcasting(*sd, nullptr, sd->x, sd->y, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), cast_time);
 	else
-		clif_skillcasting(sd, sd->id, sd->id, 0, 0, skill_id, skill_lv, 0, cast_time);
+		clif_skillcasting(*sd, sd, 0, 0, skill_id, skill_lv, static_cast<e_element>(skill_get_ele(skill_id, skill_lv)), cast_time);
 
 	return 0;
 }
@@ -6546,7 +6545,7 @@ ACMD_FUNC(displayskillunit)
  *------------------------------------------*/
 ACMD_FUNC(skilltree)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	uint16 skill_id;
 	nullpo_retr(-1, sd);
 
@@ -6618,7 +6617,7 @@ void getring (map_session_data* sd)
  *------------------------------------------*/
 ACMD_FUNC(marry)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 
 	nullpo_retr(-1, sd);
 
@@ -7378,7 +7377,7 @@ ACMD_FUNC(mobsearch)
  * @cleanmap - cleans items on the ground
  * @cleanarea - cleans items on the ground within an specified area
  *------------------------------------------*/
-static int32 atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
+static int32 atcommand_cleanfloor_sub(block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
 	map_clearflooritem(bl);
@@ -7418,7 +7417,7 @@ ACMD_FUNC(cleanarea)
 ACMD_FUNC(npctalk)
 {
 	char name[NPC_NAME_LENGTH],mes[100],temp[CHAT_SIZE_MAX];
-	struct npc_data *nd;
+	npc_data *nd;
 	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
 	unsigned long color=0;
 
@@ -7455,7 +7454,7 @@ ACMD_FUNC(npctalk)
 ACMD_FUNC(pettalk)
 {
 	char mes[100],temp[CHAT_SIZE_MAX];
-	struct pet_data *pd;
+	pet_data *pd;
 
 	nullpo_retr(-1, sd);
 
@@ -7580,7 +7579,7 @@ ACMD_FUNC(summon)
 	char name[NAME_LENGTH];
 	int32 mob_id = 0;
 	int32 duration = 0;
-	struct mob_data *md;
+	mob_data *md;
 	t_tick tick=gettick();
 
 	nullpo_retr(-1, sd);
@@ -7654,7 +7653,7 @@ ACMD_FUNC(adjgroup)
  *------------------------------------------*/
 ACMD_FUNC(trade)
 {
-    map_session_data* pl_sd = nullptr;;
+    map_session_data* pl_sd = nullptr;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -7708,7 +7707,7 @@ ACMD_FUNC(setbattleflag)
  *------------------------------------------*/
 ACMD_FUNC(unmute)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	nullpo_retr(-1, sd);
 
 	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
@@ -7806,7 +7805,7 @@ ACMD_FUNC(changecharsex)
  *------------------------------------------------*/
 ACMD_FUNC(mute)
 {
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	int32 manner;
 	nullpo_retr(-1, sd);
 
@@ -8404,7 +8403,7 @@ ACMD_FUNC(homtalk)
  *------------------------------------------*/
 ACMD_FUNC(hominfo)
 {
-	struct homun_data *hd;
+	homun_data *hd;
 	nullpo_retr(-1, sd);
 
 	if ( !hom_is_active(sd->hd) ) {
@@ -8439,7 +8438,7 @@ ACMD_FUNC(hominfo)
 
 ACMD_FUNC(homstats)
 {
-	struct homun_data *hd;
+	homun_data *hd;
 	std::shared_ptr<s_homunculus_db> db;
 	struct s_homunculus *hom;
 	int32 lv, min, max, evo;
@@ -8464,42 +8463,42 @@ ACMD_FUNC(homstats)
 
 	evo = (hom->class_ == db->evo_class);
 	min = db->base.HP +lv*db->gmin.HP +(evo?db->emin.HP:0);
-	max = db->base.HP +lv*db->gmax.HP +(evo?db->emax.HP:0);;
+	max = db->base.HP +lv*db->gmax.HP +(evo?db->emax.HP:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1267), hom->max_hp, min, max); // Max HP: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.SP +lv*db->gmin.SP +(evo?db->emin.SP:0);
-	max = db->base.SP +lv*db->gmax.SP +(evo?db->emax.SP:0);;
+	max = db->base.SP +lv*db->gmax.SP +(evo?db->emax.SP:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1268), hom->max_sp, min, max); // Max SP: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.str +lv*(db->gmin.str/10) +(evo?db->emin.str:0);
-	max = db->base.str +lv*(db->gmax.str/10) +(evo?db->emax.str:0);;
+	max = db->base.str +lv*(db->gmax.str/10) +(evo?db->emax.str:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1269), hom->str/10, min, max); // Str: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.agi +lv*(db->gmin.agi/10) +(evo?db->emin.agi:0);
-	max = db->base.agi +lv*(db->gmax.agi/10) +(evo?db->emax.agi:0);;
+	max = db->base.agi +lv*(db->gmax.agi/10) +(evo?db->emax.agi:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1270), hom->agi/10, min, max); // Agi: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.vit +lv*(db->gmin.vit/10) +(evo?db->emin.vit:0);
-	max = db->base.vit +lv*(db->gmax.vit/10) +(evo?db->emax.vit:0);;
+	max = db->base.vit +lv*(db->gmax.vit/10) +(evo?db->emax.vit:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1271), hom->vit/10, min, max); // Vit: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.int_ +lv*(db->gmin.int_/10) +(evo?db->emin.int_:0);
-	max = db->base.int_ +lv*(db->gmax.int_/10) +(evo?db->emax.int_:0);;
+	max = db->base.int_ +lv*(db->gmax.int_/10) +(evo?db->emax.int_:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1272), hom->int_/10, min, max); // Int: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.dex +lv*(db->gmin.dex/10) +(evo?db->emin.dex:0);
-	max = db->base.dex +lv*(db->gmax.dex/10) +(evo?db->emax.dex:0);;
+	max = db->base.dex +lv*(db->gmax.dex/10) +(evo?db->emax.dex:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1273), hom->dex/10, min, max); // Dex: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
 	min = db->base.luk +lv*(db->gmin.luk/10) +(evo?db->emin.luk:0);
-	max = db->base.luk +lv*(db->gmax.luk/10) +(evo?db->emax.luk:0);;
+	max = db->base.luk +lv*(db->gmax.luk/10) +(evo?db->emax.luk:0);
 	snprintf(atcmd_output, sizeof(atcmd_output) ,msg_txt(sd,1274), hom->luk/10, min, max); // Luk: %d (%d~%d)
 	clif_displaymessage(fd, atcmd_output);
 
@@ -8712,7 +8711,7 @@ ACMD_FUNC(version)
 /*==========================================
  * @mutearea by MouseJstr
  *------------------------------------------*/
-static int32 atcommand_mutearea_sub(struct block_list *bl,va_list ap)
+static int32 atcommand_mutearea_sub(block_list *bl,va_list ap)
 {
 
 	int32 time, id;
@@ -9744,8 +9743,6 @@ ACMD_FUNC(itemlist)
 
 	clif_displaymessage(fd, StringBuf_Value(&buf));
 
-	StringBuf_Destroy(&buf);
-
 	return 0;
 }
 
@@ -10543,7 +10540,7 @@ ACMD_FUNC(langtype)
 
 ACMD_FUNC(vip) {
 #ifdef VIP_ENABLE
-	map_session_data* pl_sd = nullptr;;
+	map_session_data* pl_sd = nullptr;
 	char * modif_p;
 	int32 vipdifftime = 0;
 	time_t now=time(nullptr);

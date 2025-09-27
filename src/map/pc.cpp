@@ -620,6 +620,68 @@ void PenaltyDatabase::loadingFinished(){
 
 PenaltyDatabase penalty_db;
 
+void map_session_data::update_look( _look look ){
+	int32 val = this->vd.look[look];
+
+	switch( look ){
+		case LOOK_WEAPON:
+			if( this->sc.option&OPTION_COSTUME ){
+				val = 0;
+				break;
+			}else{
+				enum equip_index eqi = EQI_HAND_R;
+
+				if( this->equip_index[eqi] >= 0 && this->inventory_data[this->equip_index[eqi]] != nullptr ){
+					const item_data& id = *this->inventory_data[this->equip_index[eqi]];
+
+					if( id.view_id != 0 ){
+						val = id.view_id;
+					}else{
+						val = id.nameid;
+					}
+				}else{
+					// Nothing equipped
+					val = 0;
+				}
+			}
+			break;
+
+		case LOOK_SHIELD:
+			if( this->sc.option&OPTION_COSTUME ){
+				val = 0;
+				break;
+			}else{
+				enum equip_index eqi = EQI_HAND_L;
+
+				if( this->equip_index[eqi] >= 0 && this->inventory_data[this->equip_index[eqi]] != nullptr ){
+					if( this->equip_index[eqi] == this->equip_index[EQI_HAND_R] ){
+						// 2-handed weapons or 2-handed shields are only sent on LOOK_WEAPON
+						val = 0;
+						break;
+					}
+
+					const item_data& id = *this->inventory_data[this->equip_index[eqi]];
+
+					if( id.view_id != 0 ){
+						val = id.view_id;
+					}else{
+						val = id.nameid;
+					}
+				}else{
+					// Nothing equipped
+					val = 0;
+				}
+			}
+			break;
+
+		default:
+			// Do nothing
+			return;
+	}
+
+	this->vd.look[look] = val;
+}
+
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
 
@@ -769,12 +831,21 @@ static TIMER_FUNC(pc_invincible_timer){
 	return 0;
 }
 
-void pc_setinvincibletimer(map_session_data* sd, int32 val) {
-	nullpo_retv(sd);
+void pc_setinvincibletimer(map_session_data& sd) {
+	t_tick val;
+	map_data* mapdata = map_getmapdata(sd.m);
 
-	if( sd->invincible_timer != INVALID_TIMER )
-		delete_timer(sd->invincible_timer,pc_invincible_timer);
-	sd->invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd->id,0);
+	if (mapdata != nullptr && mapdata->getMapFlag(MF_INVINCIBLE_TIME) > 0)
+		val = mapdata->getMapFlag(MF_INVINCIBLE_TIME);
+	else
+		val = battle_config.pc_invincible_time;
+
+	if (val <= 0)
+		return;
+
+	if( sd.invincible_timer != INVALID_TIMER )
+		delete_timer(sd.invincible_timer,pc_invincible_timer);
+	sd.invincible_timer = add_timer(gettick()+val,pc_invincible_timer,sd.id,0);
 }
 
 void pc_delinvincibletimer(map_session_data* sd)
@@ -2109,8 +2180,6 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 		sd->status.option &= ~OPTION_INVISIBLE;
 	}
 
-	status_change_init(sd);
-
 	sd->sc.option = sd->status.option; //This is the actual option used in battle.
 
 	unit_dataset(sd);
@@ -2220,10 +2289,6 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	// Initialize BG queue
 	sd->bg_queue_id = 0;
 
-#if PACKETVER_MAIN_NUM >= 20150507 || PACKETVER_RE_NUM >= 20150429 || defined(PACKETVER_ZERO)
-	sd->hatEffects = {};
-#endif
-
 	// Check EXP overflow, since in previous revision EXP on Max Level can be more than 'official' Max EXP
 	if (pc_is_maxbaselv(sd) && sd->status.base_exp > MAX_LEVEL_BASE_EXP) {
 		sd->status.base_exp = MAX_LEVEL_BASE_EXP;
@@ -2255,7 +2320,7 @@ void pc_authfail(map_session_data *sd)
  * @param bl : target bl
  * @return false:failed, true:success
  */
-bool pc_set_hate_mob(map_session_data *sd, int32 pos, struct block_list *bl)
+bool pc_set_hate_mob(map_session_data *sd, int32 pos, block_list *bl)
 {
 	int32 class_;
 	if (!sd || !bl || pos < 0 || pos > 2)
@@ -2430,7 +2495,8 @@ void pc_reg_received(map_session_data *sd)
 		clif_parse_LoadEndAck(sd->fd, sd);
 
 		if( pc_isinvisible( sd ) ){
-			sd->vd.class_ = JT_INVISIBLE;
+			// TODO: use setlook instead?
+			sd->vd.look[LOOK_BASE] = JT_INVISIBLE;
 			clif_displaymessage( sd->fd, msg_txt( sd, 11 ) ); // Invisible: On
 			// decrement the number of pvp players on the map
 			map_getmapdata( sd->m )->users_pvp--;
@@ -5885,7 +5951,7 @@ int16 pc_search_inventory(map_session_data *sd, t_itemid nameid) {
  *   6 = ?
  *   7 = stack limitation
  */
-enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 amount,e_log_pick_type log_type) {
+enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 amount,e_log_pick_type log_type, bool favorite) {
 	struct item_data *id;
 	int16 i;
 	uint32 w;
@@ -5944,15 +6010,14 @@ enum e_additem_result pc_additem(map_session_data *sd,struct item *item,int32 am
 		}
 
 		memcpy(&sd->inventory.u.items_inventory[i], item, sizeof(sd->inventory.u.items_inventory[0]));
-		// clear equip and favorite fields first, just in case
+		// clear equip and equip switch fields first, just in case
 		if( item->equip )
 			sd->inventory.u.items_inventory[i].equip = 0;
-		if( item->favorite != 0 )
-			sd->inventory.u.items_inventory[i].favorite = 0;
 		if( item->equipSwitch )
 			sd->inventory.u.items_inventory[i].equipSwitch = 0;
 
 		sd->inventory.u.items_inventory[i].amount = amount;
+		sd->inventory.u.items_inventory[i].favorite = favorite;
 		sd->inventory_data[i] = id;
 		sd->last_addeditem_index = i;
 
@@ -6084,7 +6149,7 @@ bool pc_dropitem(map_session_data *sd,int32 n,int32 amount)
  * @param fitem Item that will be picked
  * @return False = fail; True = success
  *------------------------------------------*/
-bool pc_takeitem(map_session_data *sd,struct flooritem_data *fitem)
+bool pc_takeitem(map_session_data *sd,flooritem_data *fitem)
 {
 	int32 flag = 0;
 	t_tick tick = gettick();
@@ -6658,7 +6723,7 @@ int32 pc_bound_chk(TBL_PC *sd,enum bound_type type,int32 *idxlist)
 /*==========================================
  *  Display item stolen msg to player sd
  *------------------------------------------*/
-int32 pc_show_steal(struct block_list *bl,va_list ap)
+int32 pc_show_steal(block_list *bl,va_list ap)
 {
 	map_session_data *sd;
 	t_itemid itemid;
@@ -6685,12 +6750,12 @@ int32 pc_show_steal(struct block_list *bl,va_list ap)
  * @param skill_lv: Level of skill used
  * @return True on success or false otherwise
  */
-bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
+bool pc_steal_item(map_session_data *sd,block_list *bl, uint16 skill_lv)
 {
 	t_itemid itemid;
 	double rate;
 	unsigned char flag = 0;
-	struct mob_data *md;
+	mob_data *md;
 
 	if(!sd || !bl || bl->type!=BL_MOB)
 		return false;
@@ -6795,10 +6860,10 @@ bool pc_steal_item(map_session_data *sd,struct block_list *bl, uint16 skill_lv)
  *	0 = fail
  *	1 = success
  *------------------------------------------*/
-int32 pc_steal_coin(map_session_data *sd,struct block_list *target)
+int32 pc_steal_coin(map_session_data *sd,block_list *target)
 {
 	int32 rate, target_lv;
-	struct mob_data *md;
+	mob_data *md;
 
 	if(!sd || !target || target->type != BL_MOB)
 		return 0;
@@ -7231,7 +7296,7 @@ int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_l
 /*==========================================
  * Return player sd skill_lv learned for given skill
  *------------------------------------------*/
-uint8 pc_checkskill(map_session_data *sd, uint16 skill_id)
+uint8 pc_checkskill(const map_session_data *sd, uint16 skill_id)
 {
 	uint16 idx = 0;
 	if (sd == nullptr)
@@ -8085,7 +8150,7 @@ const char* job_name(int32 class_)
  *----------------------------------------------------*/
 TIMER_FUNC(pc_follow_timer){
 	map_session_data *sd;
-	struct block_list *tbl;
+	block_list *tbl;
 
 	sd = map_id2sd(id);
 	nullpo_ret(sd);
@@ -8140,7 +8205,7 @@ int32 pc_stop_following (map_session_data *sd)
 
 int32 pc_follow(map_session_data *sd,int32 target_id)
 {
-	struct block_list *bl = map_id2bl(target_id);
+	block_list *bl = map_id2bl(target_id);
 	if (bl == nullptr /*|| bl->type != BL_PC*/)
 		return 1;
 	if (sd->followtimer != INVALID_TIMER)
@@ -8274,7 +8339,7 @@ int32 pc_checkjoblevelup(map_session_data *sd)
 * @param job_exp Job EXP before peronal bonuses
 * @param src Block list that affecting the exp calculation
 */
-static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, struct block_list *src)
+static void pc_calcexp(map_session_data *sd, t_exp *base_exp, t_exp *job_exp, block_list *src)
 {
 	int32 bonus = 0, vip_bonus_base = 0, vip_bonus_job = 0;
 
@@ -8360,7 +8425,7 @@ void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, 
  * @param exp_flag 1: Quest EXP; 2: Param Exp (Ignore Guild EXP tax, EXP adjustments)
  * @return
  **/
-void pc_gainexp(map_session_data *sd, struct block_list *src, t_exp base_exp, t_exp job_exp, uint8 exp_flag)
+void pc_gainexp(map_session_data *sd, block_list *src, t_exp base_exp, t_exp job_exp, uint8 exp_flag)
 {
 	t_exp nextb = 0, nextj = 0;
 	uint8 flag = 0; ///< 1: Base EXP given, 2: Job EXP given, 4: Max Base level, 8: Max Job Level
@@ -9590,7 +9655,7 @@ static TIMER_FUNC(pc_respawn_timer){
 /*==========================================
  * Invoked when a player has received damage
  *------------------------------------------*/
-void pc_damage(map_session_data *sd,struct block_list *src,uint32 hp, uint32 sp, uint32 ap)
+void pc_damage(map_session_data *sd,block_list *src,uint32 hp, uint32 sp, uint32 ap)
 {
 	if (ap) clif_updatestatus(*sd,SP_AP);
 	if (sp) clif_updatestatus(*sd,SP_SP);
@@ -9679,7 +9744,7 @@ void pc_close_npc(map_session_data *sd,int32 flag)
 /*==========================================
  * Invoked when a player has negative current hp
  *------------------------------------------*/
-int32 pc_dead(map_session_data *sd,struct block_list *src)
+int32 pc_dead(map_session_data *sd,block_list *src)
 {
 	int32 i=0,k=0;
 	t_tick tick = gettick();
@@ -9695,8 +9760,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 			pc_setrestartvalue(sd,1);
 			status_percent_heal(sd, 100, 100);
 			clif_resurrection( *sd );
-			if(battle_config.pc_invincible_time)
-				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+			pc_setinvincibletimer( *sd );
 			sc_start(sd,sd,SC_STEELBODY,100,5,skill_get_time(MO_STEELBODY,5));
 			if(mapdata_flag_gvg2(mapdata))
 				pc_respawn_timer(INVALID_TIMER, gettick(), sd->id, 0);
@@ -9749,7 +9813,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 	}
 
 	if(sd->status.pet_id > 0 && sd->pd) {
-		struct pet_data *pd = sd->pd;
+		pet_data *pd = sd->pd;
 		if( !mapdata->getMapFlag(MF_NOEXPPENALTY) ) {
 			pet_set_intimate(pd, pd->pet.intimate + pd->get_pet_db()->die);
 			clif_send_petdata( sd, *sd->pd, CHANGESTATEPET_INTIMACY );
@@ -9821,7 +9885,7 @@ int32 pc_dead(map_session_data *sd,struct block_list *src)
 	switch (src->type) {
 		case BL_MOB:
 		{
-			struct mob_data *md=(struct mob_data *)src;
+			mob_data *md=(mob_data *)src;
 			if(md->target_id==sd->id)
 				mob_unlocktarget(md,tick);
 			if(battle_config.mobs_level_up && md->status.hp &&
@@ -10057,8 +10121,7 @@ void pc_revive(map_session_data *sd,uint32 hp, uint32 sp, uint32 ap) {
 	if(ap) clif_updatestatus(*sd,SP_AP);
 
 	pc_setstand(sd, true);
-	if(battle_config.pc_invincible_time > 0)
-		pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
+	pc_setinvincibletimer( *sd );
 
 	if (sd->state.gmaster_flag && sd->guild) {
 		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild->guild,GD_LEADERSHIP));
@@ -10727,11 +10790,11 @@ int32 pc_percentheal(map_session_data *sd,int32 hp,int32 sp)
 	return 0;
 }
 
-static int32 jobchange_killclone(struct block_list *bl, va_list ap)
+static int32 jobchange_killclone(block_list *bl, va_list ap)
 {
-	struct mob_data *md;
+	mob_data *md;
 		int32 flag;
-	md = (struct mob_data *)bl;
+	md = (mob_data *)bl;
 	nullpo_ret(md);
 	flag = va_arg(ap, int32);
 
@@ -10895,15 +10958,15 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		pc_disguise(sd, 0);
 
 	status_set_viewdata(sd, job);
-	clif_changelook(sd,LOOK_BASE,sd->vd.class_); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
+	clif_changelook(sd,LOOK_BASE,sd->vd.look[LOOK_BASE]); // move sprite update to prevent client crashes with incompatible equipment [Valaris]
 #if PACKETVER >= 20151001
-	clif_changelook(sd, LOOK_HAIR, sd->vd.hair_style); // Update player's head (only matters when switching to or from Doram)
+	clif_changelook(sd, LOOK_HAIR, sd->vd.look[LOOK_HAIR]); // Update player's head (only matters when switching to or from Doram)
 #endif
-	if(sd->vd.cloth_color)
-		clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
+	if(sd->vd.look[LOOK_CLOTHES_COLOR])
+		clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.look[LOOK_CLOTHES_COLOR]);
 	/*
 	if(sd->vd.body_style)
-		clif_changelook(sd,LOOK_BODY2,sd->vd.body_style);
+		clif_changelook(sd,LOOK_BODY2,sd->vd.look[LOOK_BODY2]);
 	*/
 	//Update skill tree.
 	pc_calc_skilltree(sd);
@@ -11139,16 +11202,16 @@ void pc_setoption(map_session_data *sd,int32 type, int32 subtype)
 
 	if (new_look < 0) { //Restore normal look.
 		status_set_viewdata(sd, sd->status.class_);
-		new_look = sd->vd.class_;
+		new_look = sd->vd.look[LOOK_BASE];
 	}
 
 	// Stop attacking on new view change (to prevent wedding/santa attacks).
 	unit_stop_attack( sd );
 	clif_changelook(sd,LOOK_BASE,new_look);
-	if (sd->vd.cloth_color)
-		clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
-	if( sd->vd.body_style )
-		clif_changelook(sd,LOOK_BODY2,sd->vd.body_style);
+	if (sd->vd.look[LOOK_CLOTHES_COLOR])
+		clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.look[LOOK_CLOTHES_COLOR]);
+	if( sd->vd.look[LOOK_BODY2] )
+		clif_changelook(sd,LOOK_BODY2,sd->vd.look[LOOK_BODY2]);
 	clif_skillinfoblock(sd); // Skill list needs to be updated after base change.
 }
 
@@ -12635,7 +12698,7 @@ void pc_check_available_item(map_session_data *sd, uint8 type)
 /*==========================================
  * Update PVP rank for sd1 in cmp to sd2
  *------------------------------------------*/
-static int32 pc_calc_pvprank_sub(struct block_list *bl,va_list ap)
+static int32 pc_calc_pvprank_sub(block_list *bl,va_list ap)
 {
 	map_session_data *sd1,*sd2;
 
@@ -14835,7 +14898,7 @@ void pc_crimson_marker_clear(map_session_data *sd) {
 		return;
 
 	for (i = 0; i < MAX_SKILL_CRIMSON_MARKER; i++) {
-		struct block_list *bl = nullptr;
+		block_list *bl = nullptr;
 		if (sd->c_marker[i] && (bl = map_id2bl(sd->c_marker[i])))
 			status_change_end(bl,SC_C_MARKER);
 		sd->c_marker[i] = 0;
@@ -15244,7 +15307,7 @@ void pc_show_questinfo(map_session_data *sd) {
 		return; // init was not called yet
 
 	for (int32 i = 0; i < mapdata->qi_npc.size(); i++) {
-		struct npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
+		npc_data *nd = map_id2nd(mapdata->qi_npc[i]);
 
 		if (!nd || nd->qi_data.empty())
 			continue;
@@ -15383,7 +15446,7 @@ void pc_set_costume_view(map_session_data *sd) {
 		sd->status.robe = id->look;
 
 	// Costumes check
-	if (!map_getmapflag(sd->m, MF_NOCOSTUME)) {
+	if (!map_getmapflag(sd->m, MF_NOCOSTUME) && !sd->status.disable_showcostumes) {
 		if ((i = sd->equip_index[EQI_COSTUME_HEAD_LOW]) != -1 && (id = sd->inventory_data[i])) {
 			if (!(id->equip&(EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_TOP)))
 				sd->status.head_bottom = id->look;
