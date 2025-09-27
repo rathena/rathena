@@ -59,7 +59,7 @@
 #   ClientAttackMotion      Client attack speed. (Default: AttackMotion)
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
-#   GroupID                 Monster group ID. (Default: 0)
+#   GroupId                 Monster group ID. (Default: 0)
 #   Title                   Monster title. (Default: None)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)
 #   Class                   Aegis monster class. (Default: Normal)
@@ -33710,7 +33710,7 @@ Body:
     AttackDelay: 76
     AttackMotion: 384
     DamageMotion: 288
-    Ai: 21
+    Ai: 26
     Class: Boss
     Drops:
       - Item: Broken_Armor_Piece
@@ -34009,7 +34009,7 @@ Body:
     AttackMotion: 432
     ClientAttackMotion: 360
     DamageMotion: 360
-    Ai: 20
+    Ai: 26
     Modes:
       Detector: true
     Drops:
@@ -35140,7 +35140,7 @@ Body:
     AttackMotion: 576
     ClientAttackMotion: 336
     DamageMotion: 420
-    Ai: 21
+    Ai: 26
     Drops:
       - Item: Clattering_Skull
         Rate: 3000
@@ -35454,7 +35454,7 @@ Body:
     AttackMotion: 576
     ClientAttackMotion: 252
     DamageMotion: 480
-    Ai: 21
+    Ai: 26
     Class: Boss
   - Id: 1873
     AegisName: BEELZEBUB
@@ -38268,7 +38268,7 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 420
     DamageMotion: 576
-    Ai: 10
+    Ai: 27
     Class: Boss
   - Id: 1959
     AegisName: G_ENTWEIHEN_H
@@ -38295,7 +38295,7 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 420
     DamageMotion: 576
-    Ai: 10
+    Ai: 27
     Class: Boss
   - Id: 1960
     AegisName: G_ENTWEIHEN_M
@@ -38322,7 +38322,7 @@ Body:
     AttackMotion: 288
     ClientAttackMotion: 420
     DamageMotion: 576
-    Ai: 10
+    Ai: 27
     Class: Boss
   - Id: 1961
     AegisName: G_ENTWEIHEN_S

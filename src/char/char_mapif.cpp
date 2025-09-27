@@ -532,7 +532,6 @@ int32 chmapif_parse_req_saveskillcooldown(int32 fd){
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
 				Sql_ShowDebug(sql_handle);
-			StringBuf_Destroy(&buf);
 		}
 		RFIFOSKIP(fd, RFIFOW(fd, 2));
 	}
@@ -977,7 +976,6 @@ int32 chmapif_parse_save_scdata(int32 fd){
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
 				Sql_ShowDebug(sql_handle);
-			StringBuf_Destroy(&buf);
 		}
 #endif
 		RFIFOSKIP(fd, RFIFOW(fd, 2));
@@ -1290,11 +1288,11 @@ int32 chmapif_bonus_script_get(int32 fd) {
 			"SELECT `script`, `tick`, `flag`, `type`, `icon` FROM `%s` WHERE `char_id` = '%d' LIMIT %d",
 			schema_config.bonus_script_db, cid, MAX_PC_BONUS_SCRIPT) ||
 			SQL_ERROR == stmt.Execute() ||
-			SQL_ERROR == stmt.BindColumn(0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), nullptr, nullptr) ||
-			SQL_ERROR == stmt.BindColumn(1, SQLDT_INT64, &tmp_bsdata.tick, 0, nullptr, nullptr) ||
-			SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT16, &tmp_bsdata.flag, 0, nullptr, nullptr) ||
-			SQL_ERROR == stmt.BindColumn(3, SQLDT_UINT8,  &tmp_bsdata.type, 0, nullptr, nullptr) ||
-			SQL_ERROR == stmt.BindColumn(4, SQLDT_INT16,  &tmp_bsdata.icon, 0, nullptr, nullptr)
+			SQL_ERROR == stmt.BindColumn(0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str)) ||
+			SQL_ERROR == stmt.BindColumn(1, SQLDT_INT64, &tmp_bsdata.tick) ||
+			SQL_ERROR == stmt.BindColumn(2, SQLDT_UINT16, &tmp_bsdata.flag) ||
+			SQL_ERROR == stmt.BindColumn(3, SQLDT_UINT8,  &tmp_bsdata.type) ||
+			SQL_ERROR == stmt.BindColumn(4, SQLDT_INT16,  &tmp_bsdata.icon)
 			)
 		{
 			SqlStmt_ShowDebug(stmt);
@@ -1371,7 +1369,6 @@ int32 chmapif_bonus_script_save(int32 fd) {
 			if (SQL_ERROR == Sql_QueryStr(sql_handle,StringBuf_Value(&buf)))
 				Sql_ShowDebug(sql_handle);
 
-			StringBuf_Destroy(&buf);
 			ShowInfo("Bonus Script saved for CID=%d. Total: %d.\n", cid, count);
 		}
 		RFIFOSKIP(fd,RFIFOW(fd,2));
