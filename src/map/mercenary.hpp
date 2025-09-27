@@ -38,8 +38,7 @@ struct s_mercenary_db {
 	std::unordered_map<uint16, uint16> skill;
 };
 
-struct s_mercenary_data {
-	block_list bl;
+struct s_mercenary_data : public block_list {
 	unit_data ud;
 	view_data *vd;
 	status_data base_status, battle_status;
