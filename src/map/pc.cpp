@@ -10915,7 +10915,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		}
 	}
 
-	// Update increase cost indicator (vE5li)
+	// Update increase cost indicator
 	clif_updatestatus(*sd,SP_USTR);
 	clif_updatestatus(*sd,SP_UAGI);
 	clif_updatestatus(*sd,SP_UVIT);
