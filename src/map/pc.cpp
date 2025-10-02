@@ -10915,6 +10915,14 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		}
 	}
 
+	// Update increase cost indicator
+	clif_updatestatus(*sd,SP_USTR);
+	clif_updatestatus(*sd,SP_UAGI);
+	clif_updatestatus(*sd,SP_UVIT);
+	clif_updatestatus(*sd,SP_UINT);
+	clif_updatestatus(*sd,SP_UDEX);
+	clif_updatestatus(*sd,SP_ULUK);
+
 	// Give or reduce trait status points
 	if ((b_class & JOBL_FOURTH) && !(previous_class & JOBL_FOURTH)) {// Change to a 4th job.
 		sd->status.trait_point += battle_config.trait_points_job_change;
