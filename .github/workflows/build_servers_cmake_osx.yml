@@ -1,5 +1,4 @@
-name: Build servers with Clang on macos
-# build_servers_cmake_osx.yml
+name: Build servers with CMake and Clang on macos
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
@@ -49,15 +48,8 @@ jobs:
       # Install latest CMake.
       - uses: lukka/get-cmake@latest
 
-      - name: Create build directory
-        run: mkdir cbuild
+      - name: Configure CMake
+        run: cmake -B build
 
-      - name: Create Unix Makefiles
-        run: |
-          cd cbuild
-          cmake ..
-
-      - name: Command - make
-        run: |
-          cd cbuild
-          make
+      - name: Build
+        run: cmake --build build -j2 --target all
