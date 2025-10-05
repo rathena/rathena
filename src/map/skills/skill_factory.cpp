@@ -19,6 +19,7 @@
 #include "./summoner/skill_factory_summoner.hpp"
 #include "./swordman/skill_factory_swordman.hpp"
 #include "./thief/skill_factory_thief.hpp"
+#include "taekwon/skill_factory_taekwon.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id) const {
 	static const std::vector<std::shared_ptr<SkillFactory>> factories = {
@@ -36,6 +37,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id
 		std::make_shared<SkillFactoryNovice>(),
 		std::make_shared<SkillFactorySummoner>(),
 		std::make_shared<SkillFactorySwordman>(),
+		std::make_shared<SkillFactoryTaekwon>(),
 		std::make_shared<SkillFactoryThief>(),
 	};
 
