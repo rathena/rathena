@@ -9248,8 +9248,11 @@ BUILDIN_FUNC(strnpcinfo)
 	TBL_NPC* nd;
 	int32 num;
 	char *buf,*name=nullptr;
-
-	nd = map_id2nd(st->oid);
+	if(script_hasdata(st,3)){
+		int32 id = script_getnum(st,3);
+		nd = map_id2nd(id);
+	}else
+		nd = map_id2nd(st->oid);
 	if (!nd) {
 		script_pushconststr(st, "");
 		return SCRIPT_CMD_SUCCESS;
@@ -27920,7 +27923,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildmasterid,"i"),
 	BUILDIN_DEF(getguildinfo,"ii"),
 	BUILDIN_DEF(strcharinfo,"i?"),
-	BUILDIN_DEF(strnpcinfo,"i"),
+	BUILDIN_DEF(strnpcinfo,"i?"),
 	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
 	BUILDIN_DEF(getequipname,"i?"),
