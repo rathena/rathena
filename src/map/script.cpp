@@ -9242,6 +9242,7 @@ BUILDIN_FUNC(strcharinfo)
  *	2 : #str
  *	3 : ::str
  *	4 : map name
+ *	5 : NPC file path
  *------------------------------------------*/
 BUILDIN_FUNC(strnpcinfo)
 {
@@ -9281,6 +9282,9 @@ BUILDIN_FUNC(strnpcinfo)
 		case 4: // map name
 			if (nd->m >= 0)
 				name = aStrdup(map_getmapdata(nd->m)->name);
+			break;
+		case 5: // NPC file path
+			name = aStrdup(nd->path);
 			break;
 	}
 

@@ -2465,6 +2465,7 @@ Whatever it returns is determined by type.
  2 - The hidden part of the NPC's display name
  3 - The NPC's unique name (::name)
  4 - The name of the map the NPC is in.
+ 5 - The path of the NPC file
 
 ---------------------------------------
 
