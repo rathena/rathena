@@ -2186,6 +2186,9 @@ void run_tomb(map_session_data* sd, npc_data* nd)
 	char buffer[200];
 	char time[10];
 
+	// Attach player to NPC to prevent movement/actions  
+	sd->npc_id = nd->id;  
+
 	strftime(time, sizeof(time), "%H:%M", localtime(&nd->u.tomb.kill_time));
 
 	// TODO: Find exact color?
@@ -2330,8 +2333,12 @@ bool npc_scriptcont(map_session_data* sd, int32 id, bool closing){
 	if( sd->progressbar.npc_id && DIFF_TICK(sd->progressbar.timeout,gettick()) > 0 )
 		return true;
 
-	if( sd->st == nullptr ){
-		return true;
+	if( sd->st == nullptr ){  
+		// Handle tomb NPCs that don't have script states  
+		if( closing && sd->npc_id == id ){  
+			sd->npc_id = 0;  
+		}  
+		return true;  
 	}
 
 	if( closing ){
