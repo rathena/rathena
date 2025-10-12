@@ -2398,41 +2398,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		}
 	}
 
-	// Check for player and pet autobonuses when attacking
-	if (sd != nullptr) {
-		// Player
-		if (!sd->autobonus.empty()) {
-			for (auto &it : sd->autobonus) {
-				if (it == nullptr)
-					continue;
-				if (rnd_value(0, 1000) >= it->rate)
-					continue;
-				if (!(((it->atk_type) & attack_type) & BF_WEAPONMASK &&
-					  ((it->atk_type) & attack_type) & BF_RANGEMASK &&
-					  ((it->atk_type) & attack_type) & BF_SKILLMASK))
-					continue; // one or more trigger conditions were not fulfilled
-
-				pc_exeautobonus(*sd, &sd->autobonus, it);
-			}
-		}
-
-		// Pet
-		if (sd->pd != nullptr && !sd->pd->autobonus.empty()) {
-			for (auto &it : sd->pd->autobonus) {
-				if (it == nullptr)
-					continue;
-				if (rnd_value(0, 1000) >= it->rate)
-					continue;
-				if (!(((it->atk_type) & attack_type) & BF_WEAPONMASK &&
-					  ((it->atk_type) & attack_type) & BF_RANGEMASK &&
-					  ((it->atk_type) & attack_type) & BF_SKILLMASK))
-					continue; // one or more trigger conditions were not fulfilled
-
-				pet_exeautobonus(*sd, &sd->pd->autobonus, it);
-			}
-		}
-	}
-
 	//Polymorph
 	if(sd && sd->bonus.classchange && attack_type&BF_WEAPON &&
 		dstmd && !status_has_mode(tstatus,MD_STATUSIMMUNE) &&
@@ -2753,6 +2718,41 @@ int32 skill_counter_additional_effect (block_list* src, block_list *bl, uint16 s
 					if ( battle_config.display_status_timers && dstsd )
 						clif_status_change(bl, EFST_POSTDELAY, 1, delay, 0, 0, 0);
 				}
+			}
+		}
+	}
+
+	// Check for player and pet autobonuses when attacking
+	if (sd != nullptr) {
+		// Player
+		if (!sd->autobonus.empty()) {
+			for (auto& it : sd->autobonus) {
+				if (it == nullptr)
+					continue;
+				if (rnd_value(0, 1000) >= it->rate)
+					continue;
+				if (!(((it->atk_type) & attack_type) & BF_WEAPONMASK &&
+					((it->atk_type) & attack_type) & BF_RANGEMASK &&
+					((it->atk_type) & attack_type) & BF_SKILLMASK))
+					continue; // one or more trigger conditions were not fulfilled
+
+				pc_exeautobonus(*sd, &sd->autobonus, it);
+			}
+		}
+
+		// Pet
+		if (sd->pd != nullptr && !sd->pd->autobonus.empty()) {
+			for (auto& it : sd->pd->autobonus) {
+				if (it == nullptr)
+					continue;
+				if (rnd_value(0, 1000) >= it->rate)
+					continue;
+				if (!(((it->atk_type) & attack_type) & BF_WEAPONMASK &&
+					((it->atk_type) & attack_type) & BF_RANGEMASK &&
+					((it->atk_type) & attack_type) & BF_SKILLMASK))
+					continue; // one or more trigger conditions were not fulfilled
+
+				pet_exeautobonus(*sd, &sd->pd->autobonus, it);
 			}
 		}
 	}
