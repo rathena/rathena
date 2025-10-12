@@ -283,7 +283,6 @@
     <ClInclude Include="skills/swordman/provoke.hpp" />
     <ClInclude Include="skills/swordman/selfprovoke.hpp" />
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
-    <ClInclude Include="skills/taekwon/skill_factory_taekwon.hpp" />
     <ClInclude Include="skills/taekwon/counter.hpp" />
     <ClInclude Include="skills/taekwon/dodge.hpp" />
     <ClInclude Include="skills/taekwon/downkick.hpp" />
