@@ -3940,7 +3940,7 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		case SP_SPA:
 		case SP_SHA:
 			if (dmg.div_ < 2)
-				type = DMG_SPLASH;
+				dmg_type = DMG_SPLASH;
 			if (!(flag&SD_ANIMATION))
 				clif_skill_nodamage(dsrc, *bl, skill_id, skill_lv);
 			[[fallthrough]];
