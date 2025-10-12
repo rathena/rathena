@@ -498,9 +498,6 @@
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/skill_factory_taekwon.hpp">
-      <Filter>Header Files\Skills\Taekwon</Filter>
-    </ClInclude>
     <ClInclude Include="skills/taekwon/counter.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
@@ -535,6 +532,9 @@
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/sevenwind.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/skill_factory_taekwon.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/stormkick.hpp">
@@ -704,9 +704,6 @@
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp">
-      <Filter>Source Files\Skills\Taekwon</Filter>
-    </ClCompile>
     <ClCompile Include="skills/taekwon/counter.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
@@ -741,6 +738,9 @@
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/sevenwind.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/stormkick.cpp">

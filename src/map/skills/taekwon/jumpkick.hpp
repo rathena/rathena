@@ -3,11 +3,11 @@
 
 #pragma once
 
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 #include "map/battle.hpp"
 
-class SkillJumpKick : public WeaponSkillImpl {
+class SkillJumpKick : public SkillImpl {
 public:
 	SkillJumpKick();
 

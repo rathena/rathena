@@ -295,6 +295,7 @@
     <ClInclude Include="skills/taekwon/readyturn.hpp" />
     <ClInclude Include="skills/taekwon/run.hpp" />
     <ClInclude Include="skills/taekwon/sevenwind.hpp" />
+    <ClInclude Include="skills/taekwon/skill_factory_taekwon.hpp" />
     <ClInclude Include="skills/taekwon/stormkick.hpp" />
     <ClInclude Include="skills/taekwon/turnkick.hpp" />
     <ClInclude Include="skills/thief/backslide.hpp" />
@@ -398,7 +399,6 @@
     <ClCompile Include="skills/swordman/provoke.cpp" />
     <ClCompile Include="skills/swordman/selfprovoke.cpp" />
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp" />
-    <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp" />
     <ClCompile Include="skills/taekwon/counter.cpp" />
     <ClCompile Include="skills/taekwon/dodge.cpp" />
     <ClCompile Include="skills/taekwon/downkick.cpp" />
@@ -411,6 +411,7 @@
     <ClCompile Include="skills/taekwon/readyturn.cpp" />
     <ClCompile Include="skills/taekwon/run.cpp" />
     <ClCompile Include="skills/taekwon/sevenwind.cpp" />
+    <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp" />
     <ClCompile Include="skills/taekwon/stormkick.cpp" />
     <ClCompile Include="skills/taekwon/turnkick.cpp" />
     <ClCompile Include="skills/thief/backslide.cpp" />

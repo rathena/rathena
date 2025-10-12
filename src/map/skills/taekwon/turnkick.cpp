@@ -23,7 +23,7 @@ void SkillTurnKick::applyAdditionalEffects(block_list *src, block_list *target, 
 }
 
 void SkillTurnKick::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
-	skill_area_temp[1] = target->id; // NOTE: This is used in skill_castend_nodamage_id to avoid affecting the target.
+	// Note: This is used in skill_castend_nodamage_id to avoid affecting the target.
 	if (skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag))
 		map_foreachinallrange(skill_area_sub, target,
 		                      skill_get_splash(getSkillId(), skill_lv), BL_MOB,
@@ -32,6 +32,7 @@ void SkillTurnKick::castendDamageId(block_list *src, block_list *target, uint16 
 }
 
 void SkillTurnKick::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
+	// Passive part of the attack. Splash knock-back+stun.
 	if (skill_area_temp[1] != bl->id) {
 		skill_blown(src, bl, skill_get_blewcount(getSkillId(), skill_lv), -1, BLOWN_NONE);
 		skill_additional_effect(src, bl, getSkillId(), skill_lv, BF_MISC, ATK_DEF, tick); // Use Misc rather than weapon to signal passive pushback

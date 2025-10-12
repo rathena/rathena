@@ -8,7 +8,7 @@
 #include "map/status.hpp"
 #include "map/unit.hpp"
 
-SkillJumpKick::SkillJumpKick() : WeaponSkillImpl(TK_JUMPKICK) {
+SkillJumpKick::SkillJumpKick() : SkillImpl(TK_JUMPKICK) {
 }
 
 void SkillJumpKick::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
