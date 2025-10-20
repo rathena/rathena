@@ -5530,11 +5530,11 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus2 bAddDefMonster,1285,-50;
-      bonus2 bAddDefMonster,1286,-50;
-      bonus2 bAddDefMonster,1287,-50;
-      bonus2 bAddDefMonster,1899,-50;
-      bonus2 bAddDefMonster,1900,-50;
+      bonus2 bAddDefMonster,1285,50;
+      bonus2 bAddDefMonster,1286,50;
+      bonus2 bAddDefMonster,1287,50;
+      bonus2 bAddDefMonster,1899,50;
+      bonus2 bAddDefMonster,1900,50;
   - Id: 4232
     AegisName: Wild_Ginseng_Card
     Name: Hermit Plant Card
