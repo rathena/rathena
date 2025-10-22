@@ -40998,7 +40998,6 @@ Body:
       Head_Mid: true
     ArmorLevel: 1
     EquipLevelMin: 20
-    Refineable: true
     View: 779
   - Id: 18656
     AegisName: Wit_Pumpkin_Hat
