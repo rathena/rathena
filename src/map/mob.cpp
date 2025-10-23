@@ -3063,7 +3063,11 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	merckillonly = (bool)((dmgbltypes & BL_MER) && !(dmgbltypes & ~BL_MER));
 
 	// Determine MVP (need to do it here so that it's not influenced by first attacker bonus below)
-	map_session_data* mvp_sd = md->get_mvp_player();
+	map_session_data* mvp_sd;
+	if (battle_config.mvp_to_loot_priority)
+		mvp_sd = first_sd;
+	else
+		mvp_sd = md->get_mvp_player();
 
 	if(battle_config.exp_calc_type == 2 && count > 1) {	//Apply first-attacker 200% exp share bonus
 		s_dmglog& entry = md->dmglog[0];
