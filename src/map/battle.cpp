@@ -7254,9 +7254,9 @@ static void battle_calc_attack_plant(struct Damage* wd, block_list *src,block_li
 		return;
 	}
 
-	// Triple Attack and Finger Offensive have a special property, they do not split damage on plant mode
+	// Some skills have a special property, they do not split damage on plant mode
 	// In pre-renewal, it requires the monster to have exactly 100 def
-	if ((skill_id == MO_TRIPLEATTACK || skill_id == MO_FINGEROFFENSIVE) && wd->div_ < 0
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->inf2[INF2_MULTIHITONPLANTS] && wd->div_ < 0
 #ifndef RENEWAL
 		&& tstatus->def == 100
 #endif
