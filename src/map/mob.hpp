@@ -399,7 +399,7 @@ struct mob_data : public block_list {
 	uint16 damagetaken;
 
 	e_mob_bosstype get_bosstype();
-	map_session_data* get_mvp_player();
+	map_session_data* get_mvp_player(map_session_data* first_sd);
 };
 
 class MobAvailDatabase : public YamlDatabase {
