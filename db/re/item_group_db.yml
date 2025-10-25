@@ -116921,7 +116921,6 @@ Body:
             Amount: 5
           - Index: 3
             Item: R_Ep178_boss
-            Amount: 1718
   - Group: RT_EP18_DEMI_2
     SubGroups:
       - SubGroup: 0

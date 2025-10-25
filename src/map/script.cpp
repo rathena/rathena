@@ -9242,14 +9242,18 @@ BUILDIN_FUNC(strcharinfo)
  *	2 : #str
  *	3 : ::str
  *	4 : map name
+ *	5 : NPC file path
  *------------------------------------------*/
 BUILDIN_FUNC(strnpcinfo)
 {
 	TBL_NPC* nd;
 	int32 num;
 	char *buf,*name=nullptr;
-
-	nd = map_id2nd(st->oid);
+	if(script_hasdata(st,3)){
+		int32 id = script_getnum(st,3);
+		nd = map_id2nd(id);
+	}else
+		nd = map_id2nd(st->oid);
 	if (!nd) {
 		script_pushconststr(st, "");
 		return SCRIPT_CMD_SUCCESS;
@@ -9278,6 +9282,9 @@ BUILDIN_FUNC(strnpcinfo)
 		case 4: // map name
 			if (nd->m >= 0)
 				name = aStrdup(map_getmapdata(nd->m)->name);
+			break;
+		case 5: // NPC file path
+			name = aStrdup(nd->path);
 			break;
 	}
 
@@ -27171,7 +27178,7 @@ BUILDIN_FUNC(getjobexp_ratio){
 		job_level = sd->status.job_level;
 	}
 
-	t_exp class_exp = job_db.get_baseExp( sd->status.class_, job_level );
+	t_exp class_exp = job_db.get_jobExp( sd->status.class_, job_level );
 
 	if( class_exp <= 0 ){
 		ShowError( "getjobexp_ratio: No job experience defined for class %s at job level %d.\n", job_name( sd->status.class_ ), job_level );
@@ -27920,7 +27927,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildmasterid,"i"),
 	BUILDIN_DEF(getguildinfo,"ii"),
 	BUILDIN_DEF(strcharinfo,"i?"),
-	BUILDIN_DEF(strnpcinfo,"i"),
+	BUILDIN_DEF(strnpcinfo,"i?"),
 	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
 	BUILDIN_DEF(getequipname,"i?"),

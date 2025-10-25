@@ -16715,7 +16715,17 @@ void clif_mail_removeitem( map_session_data* sd, bool success, int32 index, int3
 			break;
 		}
 
-		total += sd->mail.item[i].amount * ( sd->inventory_data[sd->mail.item[i].index]->weight / 10 );
+		if( sd->mail.item[i].index < 0 || sd->mail.item[i].index >= MAX_INVENTORY ){
+			continue;
+		}
+
+		item_data* id = sd->inventory_data[sd->mail.item[i].index];
+
+		if( id == nullptr ){
+			continue;
+		}
+
+		total += sd->mail.item[i].amount * ( id->weight / 10 );
 	}
 
 	p.weight = total;
