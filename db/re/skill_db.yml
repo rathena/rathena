@@ -44483,6 +44483,23 @@ Body:
     Name: NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN
     Description: The Vigilante At Night Gun Shotgun
     MaxLevel: 5
+  - Id: 5499
+    Name: SS_FOUR_CHARM
+    Description: Four Colors Charm
+    MaxLevel: 1
+    Type: Magic
+    TargetType: Self
+    DamageFlags:
+      NoDamage: true
+    Range: 1
+    Hit: Single
+    HitCount: 1
+    CastCancel: true
+    Duration1: 300000
+    Cooldown: 3000
+    Requires:
+      SpCost: 90
+      ApCost: 20
   - Id: 5500
     Name: NW_WILD_SHOT
     Description: Wild Shot

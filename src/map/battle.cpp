@@ -9407,18 +9407,33 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += -100 + 850 + 1250 * skill_lv;
 						skillratio += 70 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
 						skillratio += 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->hasSCE( SC_FIRE_CHARM_POWER ) ){
+							skillratio += 8500;
+						}
+
 						RE_LVL_DMOD(100);
 						break;
 					case SS_REIKETSUHOU:
 						skillratio += -100 + 250 + 550 * skill_lv;
 						skillratio += 40 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
 						skillratio += 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->hasSCE( SC_WATER_CHARM_POWER ) ){
+							skillratio += 7000;
+						}
+
 						RE_LVL_DMOD(100);
 						break;
 					case SS_KINRYUUHOU:
 						skillratio += -100 + 300 + 400 * skill_lv;
 						skillratio += 15 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
 						skillratio += 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->hasSCE( SC_GROUND_CHARM_POWER ) ){
+							skillratio += 5500;
+						}
+
 						RE_LVL_DMOD(100);
 						break;
 					case SS_ANKOKURYUUAKUMU:
@@ -9430,6 +9445,11 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += -100 + 600 + 1300 * skill_lv;
 						skillratio += 70 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
 						skillratio += 5 * sstatus->spl;
+
+						if( sc != nullptr && sc->hasSCE( SC_WIND_CHARM_POWER ) ){
+							skillratio += 8500;
+						}
+
 						RE_LVL_DMOD(100);
 						break;
 					case SS_ANTENPOU:
