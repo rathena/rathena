@@ -5647,61 +5647,61 @@ int32 clif_insight(struct block_list *bl,va_list ap)
 }
 
 
-/// Updates whole skill tree (ZC_SKILLINFO_LIST).
-/// 010f <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B }*
-/// 0b32 <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <level2>.B }*
-void clif_skillinfoblock(map_session_data &sd){
+/// Updates whole skill tree.
+/// 010f <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B }* (ZC_SKILLINFO_LIST)
+/// 0b32 <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <level2>.B }* (ZC_SKILLINFO_LIST3)
+void clif_skillinfoblock(map_session_data& sd){
+	int32 i, c, id;
 
 	if (!session_isActive(sd.fd))
 		return;
 
-	PACKET_ZC_SKILLINFO_LIST *p = reinterpret_cast<PACKET_ZC_SKILLINFO_LIST*>( packet_buffer );
+	PACKET_ZC_SKILLINFO_LIST* p = reinterpret_cast<PACKET_ZC_SKILLINFO_LIST*>( packet_buffer );
 
 	p->packetType = HEADER_ZC_SKILLINFO_LIST;
 	p->packetLength = sizeof(*p);
 
 	bool haveCallPartnerSkill = false;
-	unsigned int c = 0;
-	std::vector<uint16> remaining_skills; // workaround for bugreport:5348
 
-	for ( const s_skill& skill : sd.status.skill ){
+	for ( i = 0, c = 0; i < MAX_SKILL; i++)
+	{
+		if( (id = sd.status.skill[i].id) != 0 )
+		{			
+			// skip WE_CALLPARTNER and send it in special way
+			if (id == WE_CALLPARTNER) {
+				haveCallPartnerSkill = true;
+				continue;
+			}
 
-		if( skill.id == 0 )
-			continue;
-			
-		// skip WE_CALLPARTNER and send it in special way
-		if (skill.id == WE_CALLPARTNER) {
-			haveCallPartnerSkill = true;
-			continue;
-		}
+			const s_skill& skill = sd.status.skill[i];
+			SKILLDATA& data = p->skills[c];
 
-		if (p->packetLength + sizeof(SKILLDATA) > 8192){
-			remaining_skills.push_back(skill.id); // workaround for bugreport:5348
-			continue;
-		}
+			// workaround for bugreport:5348
+			if( ( p->packetLength + sizeof( data ) ) > 8192 ){
+				break;
+			}
 
-		SKILLDATA& data = p->skills[c];
-
-		data.id = skill.id;
-		data.inf = skill_get_inf(skill.id);
-		data.level = skill.lv;
+			data.id = skill.id;
+			data.inf = skill_get_inf(skill.id);
+			data.level = skill.lv;
 
 #if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
-		data.level2 = skill.lv;
+			data.level2 = skill.lv;
 #else
-		safestrncpy(data.name, skill_get_name(skill.id), NAME_LENGTH);
+			safestrncpy(data.name, skill_get_name(skill.id), sizeof(data.name));
 #endif
 
-		data.sp = static_cast<decltype(data.sp)>( skill_get_sp(skill.id,skill.lv) );
-		data.range2 = static_cast<decltype(data.range2)>( skill_get_range2(&sd, skill.id, skill.lv, false) );
+			data.sp = skill_get_sp(skill.id,skill.lv);
+			data.range2 = skill_get_range2(&sd, skill.id, skill.lv, false);
 
-		if(skill.flag == SKILL_FLAG_PERMANENT && skill.lv < skill_tree_get_max(skill.id, sd.status.class_))
-			data.upFlag = 1;
-		else
-			data.upFlag = 0;
+			if(skill.flag == SKILL_FLAG_PERMANENT && skill.lv < skill_tree_get_max(skill.id, sd.status.class_))
+				data.upFlag = 1;
+			else
+				data.upFlag = 0;
 
-		p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(data));
-		c++;
+			p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(data));
+			c++;
+		}
 	}
 
 	clif_send(p,p->packetLength,&sd,SELF);
@@ -5709,14 +5709,16 @@ void clif_skillinfoblock(map_session_data &sd){
 	// adoption fix
 	if (haveCallPartnerSkill) {
 		clif_addskill(sd, WE_CALLPARTNER);
-		clif_skillinfo(sd, WE_CALLPARTNER, 0);
+		clif_skillinfo( sd, WE_CALLPARTNER );
 	}
 
 	// workaround for bugreport:5348; send the remaining skills one by one to bypass packet size limit
-	if(!remaining_skills.empty()) {
-		for(uint16 skill_remaining : remaining_skills){
-			clif_addskill(sd, skill_remaining);
-			clif_skillinfo(sd, skill_remaining, 0);
+	for ( ; i < MAX_SKILL; i++)
+	{
+		if( (id = sd.status.skill[i].id) != 0 && ( id != WE_CALLPARTNER || !haveCallPartnerSkill ) )
+		{
+			clif_addskill(sd, id);
+			clif_skillinfo( sd, id );
 		}
 	}
 }
