@@ -21,20 +21,20 @@
 using namespace rathena::server_core;
 
 //map confs
-const char* MAP_CONF_NAME;
-const char* INTER_CONF_NAME;
-const char* LOG_CONF_NAME;
-const char* BATTLE_CONF_FILENAME;
-const char* SCRIPT_CONF_NAME;
-const char* GRF_PATH_FILENAME;
+const char* MAP_CONF_NAME = "conf/map_athena.conf";
+const char* INTER_CONF_NAME = "conf/inter_athena.conf";
+const char* LOG_CONF_NAME = "conf/log_athena.conf";
+const char* BATTLE_CONF_FILENAME = "conf/battle_athena.conf";
+const char* SCRIPT_CONF_NAME = "conf/script_athena.conf";
+const char* GRF_PATH_FILENAME = "conf/grf-files.txt";
 //char confs
-const char* CHAR_CONF_NAME;
-const char* SQL_CONF_NAME;
+const char* CHAR_CONF_NAME = "conf/char_athena.conf";
 //login confs
-const char* LOGIN_CONF_NAME;
+const char* LOGIN_CONF_NAME = "conf/login_athena.conf";
+const char *LOGIN_MSG_CONF_NAME = "conf/msg_conf/login_msg.conf";
 //common conf (used by multiple serv)
-const char* LAN_CONF_NAME; //char-login
-const char* MSG_CONF_NAME_EN; //all
+const char* LAN_CONF_NAME = "conf/subnet_athena.conf"; //char-login
+const char* MSG_CONF_NAME_EN = "conf/msg_conf/char_msg.conf"; //all
 
 /**
  * Function to check if the specified option has an argument following it.
@@ -45,7 +45,7 @@ const char* MSG_CONF_NAME_EN; //all
  *   false : no other args found, and throw a warning
  *   true : something following us
  */
-bool opt_has_next_value(const char* option, int i, int argc){
+bool opt_has_next_value(const char* option, int32 i, int32 argc){
 	if (i >= argc - 1) {
 		ShowWarning("Missing value for option '%s'.\n", option);
 		return false;
@@ -85,8 +85,8 @@ void display_versionscreen(bool do_exit)
  * @param argv: arguments values (from main)
  * @return true or exit on failure
  */
-int cli_get_options(int argc, char ** argv) {
-	int i = 0;
+int32 cli_get_options(int32 argc, char ** argv) {
+	int32 i = 0;
 	for (i = 1; i < argc; i++) {
 		const char* arg = argv[i];
 

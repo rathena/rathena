@@ -68,7 +68,7 @@ static bool searchstore_hasstore(map_session_data& sd, e_searchstore_searchtype 
  * @param type : type of search to conduct
  * @return : store ID
  */
-static int searchstore_getstoreid(map_session_data& sd, e_searchstore_searchtype type)
+static int32 searchstore_getstoreid(map_session_data& sd, e_searchstore_searchtype type)
 {
 	switch( type ) {
 		case SEARCHTYPE_VENDING:      return sd.vender_id;
@@ -112,9 +112,9 @@ bool searchstore_open(map_session_data& sd, uint16 uses, e_searchstore_effecttyp
  * @param cardlist : list with stored cards (cards attached to items)
  * @param card_count : amount of items in cardlist
  */
-void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, unsigned int min_price, unsigned int max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, unsigned int item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, unsigned int card_count)
+void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, uint32 min_price, uint32 max_price, const struct PACKET_CZ_SEARCH_STORE_INFO_item* itemlist, uint32 item_count, const struct PACKET_CZ_SEARCH_STORE_INFO_item* cardlist, uint32 card_count)
 {
-	unsigned int i;
+	uint32 i;
 	map_session_data* pl_sd;
 	struct DBIterator *iter;
 	struct s_search_store_search s;
@@ -125,7 +125,7 @@ void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, unsi
 		return;
 
 	if( ( store_searchall = searchstore_getsearchallfunc(type) ) == nullptr ) {
-		ShowError("searchstore_query: Unknown search type %u (account_id=%d).\n", type, sd.bl.id);
+		ShowError("searchstore_query: Unknown search type %u (account_id=%d).\n", type, sd.id);
 		return;
 	}
 
@@ -189,7 +189,7 @@ void searchstore_query(map_session_data& sd, e_searchstore_searchtype type, unsi
 			continue;
 
 		// Skip stores that are not in the map defined by the search
-		if (sd.searchstore.mapid != 0 && pl_sd->bl.m != sd.searchstore.mapid) {
+		if (sd.searchstore.mapid != 0 && pl_sd->m != sd.searchstore.mapid) {
 			continue;
 		}
 
@@ -281,9 +281,9 @@ void searchstore_close(map_session_data& sd)
  * @param store_id : store ID created by client
  * @param nameid : item being searched
  */
-void searchstore_click(map_session_data& sd, uint32 account_id, int store_id, t_itemid nameid)
+void searchstore_click(map_session_data& sd, uint32 account_id, int32 store_id, t_itemid nameid)
 {
-	unsigned int i;
+	uint32 i;
 	map_session_data* pl_sd;
 	searchstore_search_t store_search;
 
@@ -294,7 +294,7 @@ void searchstore_click(map_session_data& sd, uint32 account_id, int store_id, t_
 
 	ARR_FIND( 0, sd.searchstore.items.size(), i, sd.searchstore.items[i]->store_id == store_id && sd.searchstore.items[i]->account_id == account_id && sd.searchstore.items[i]->nameid == nameid );
 	if( i == sd.searchstore.items.size() ) { // no such result, crafted
-		ShowWarning("searchstore_click: Received request with item %u of account %d, which is not part of current result set (account_id=%d, char_id=%d).\n", nameid, account_id, sd.bl.id, sd.status.char_id);
+		ShowWarning("searchstore_click: Received request with item %u of account %d, which is not part of current result set (account_id=%d, char_id=%d).\n", nameid, account_id, sd.id, sd.status.char_id);
 		clif_search_store_info_failed(sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
 		return;
 	}
@@ -319,10 +319,10 @@ void searchstore_click(map_session_data& sd, uint32 account_id, int store_id, t_
 	switch( sd.searchstore.effect ) {
 		case SEARCHSTORE_EFFECT_NORMAL:
 			// display coords
-			if( sd.bl.m != pl_sd->bl.m ) // not on same map, wipe previous marker
+			if( sd.m != pl_sd->m ) // not on same map, wipe previous marker
 				clif_search_store_info_click_ack(sd, -1, -1);
 			else
-				clif_search_store_info_click_ack(sd, pl_sd->bl.x, pl_sd->bl.y);
+				clif_search_store_info_click_ack(sd, pl_sd->x, pl_sd->y);
 			break;
 		case SEARCHSTORE_EFFECT_REMOTE:
 			// open remotely
@@ -336,7 +336,7 @@ void searchstore_click(map_session_data& sd, uint32 account_id, int store_id, t_
 			break;
 		default:
 			// unknown
-			ShowError("searchstore_click: Unknown search store effect %u (account_id=%d).\n", sd.searchstore.effect, sd.bl.id);
+			ShowError("searchstore_click: Unknown search store effect %u (account_id=%d).\n", sd.searchstore.effect, sd.id);
 	}
 }
 

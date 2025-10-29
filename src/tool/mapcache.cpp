@@ -19,18 +19,16 @@
 
 using namespace rathena::server_core;
 
-namespace rathena{
-	namespace tool_mapcache{
-		class MapcacheTool : public Core{
-			protected:
-				bool initialize( int argc, char* argv[] ) override;
+namespace rathena::tool_mapcache {
+class MapcacheTool : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
 
-			public:
-				MapcacheTool() : Core( e_core_type::TOOL ){
+	public:
+		MapcacheTool() : Core( e_core_type::TOOL ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 using namespace rathena::tool_mapcache;
@@ -38,7 +36,7 @@ using namespace rathena::tool_mapcache;
 std::string grf_list_file = "conf/grf-files.txt";
 std::string map_list_file = "map_index.txt";
 std::string map_cache_file;
-int rebuild = 0;
+int32 rebuild = 0;
 
 FILE *map_cache_fp;
 
@@ -67,11 +65,11 @@ struct map_info {
 
 
 // Reads a map from GRF's GAT and RSW files
-int read_map(char *name, struct map_data *m)
+int32 read_map(char *name, struct map_data *m)
 {
 	char filename[256];
 	unsigned char *gat;
-	int water_height;
+	int32 water_height;
 	size_t xy, off, num_cells;
 
 	// Open map GAT
@@ -152,9 +150,9 @@ void cache_map(char *name, struct map_data *m)
 }
 
 // Checks whether a map is already is the cache
-int find_map(char *name)
+int32 find_map(char *name)
 {
-	int i;
+	int32 i;
 	struct map_info info;
 
 	fseek(map_cache_fp, sizeof(struct main_header), SEEK_SET);
@@ -185,9 +183,9 @@ char *remove_extension(char *mapname)
 }
 
 // Processes command-line arguments
-void process_args(int argc, char *argv[])
+void process_args(int32 argc, char *argv[])
 {
-	for(int i = 0; i < argc; i++) {
+	for(int32 i = 0; i < argc; i++) {
 		if(strcmp(argv[i], "-grf") == 0) {
 			if(++i < argc)
 				grf_list_file = argv[i];
@@ -203,7 +201,7 @@ void process_args(int argc, char *argv[])
 
 }
 
-bool MapcacheTool::initialize( int argc, char* argv[] ){
+bool MapcacheTool::initialize( int32 argc, char* argv[] ){
 	/* setup pre-defined, #define-dependant */
 	map_cache_file = std::string(db_path) + "/" + std::string(DBPATH) + "map_cache.dat";
 
@@ -305,6 +303,6 @@ bool MapcacheTool::initialize( int argc, char* argv[] ){
 	return true;
 }
 
-int main( int argc, char *argv[] ){
+int32 main( int32 argc, char *argv[] ){
 	return main_core<MapcacheTool>( argc, argv );
 }

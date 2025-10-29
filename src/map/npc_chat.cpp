@@ -12,7 +12,7 @@
 #include <common/strlib.hpp>
 #include <common/timer.hpp>
 
-#include "mob.hpp" // struct mob_data
+#include "mob.hpp" // mob_data
 #include "pc.hpp" // map_session_data
 
 /**
@@ -110,7 +110,7 @@ void finalize_pcrematch_entry(struct pcrematch_entry* e)
 /**
  * Lookup (and possibly create) a new set of patterns by the set id
  */
-static struct pcrematch_set* lookup_pcreset(struct npc_data* nd, int64 setid) 
+static struct pcrematch_set* lookup_pcreset(npc_data* nd, int64 setid) 
 {
 	struct pcrematch_set *pcreset;
 	struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
@@ -151,7 +151,7 @@ static struct pcrematch_set* lookup_pcreset(struct npc_data* nd, int64 setid)
  *
  * if the setid does not exist, this will silently return
  */
-static void activate_pcreset(struct npc_data* nd, int64 setid)
+static void activate_pcreset(npc_data* nd, int64 setid)
 {
 	struct pcrematch_set *pcreset;
 	struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
@@ -184,7 +184,7 @@ static void activate_pcreset(struct npc_data* nd, int64 setid)
  *
  * if the setid does not exist, this will silently return
  */
-static void deactivate_pcreset(struct npc_data* nd, int64 setid)
+static void deactivate_pcreset(npc_data* nd, int64 setid)
 {
 	struct pcrematch_set *pcreset;
 	struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
@@ -220,9 +220,9 @@ static void deactivate_pcreset(struct npc_data* nd, int64 setid)
 /**
  * delete a set of patterns.
  */
-static void delete_pcreset(struct npc_data* nd, int64 setid)
+static void delete_pcreset(npc_data* nd, int64 setid)
 {
-	int active = 1;
+	int32 active = 1;
 	struct pcrematch_set *pcreset;
 	struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
 	if (npcParse == nullptr) 
@@ -300,10 +300,10 @@ static struct pcrematch_entry* create_pcrematch_entry(struct pcrematch_set* set)
 /**
  * define/compile a new pattern
  */
-void npc_chat_def_pattern(struct npc_data* nd, int64 setid, const char* pattern, const char* label)
+void npc_chat_def_pattern(npc_data* nd, int64 setid, const char* pattern, const char* label)
 {
 	const char *err;
-	int erroff;
+	int32 erroff;
 	
 	struct pcrematch_set * s = lookup_pcreset(nd, setid);
 	struct pcrematch_entry *e = create_pcrematch_entry(s);
@@ -319,7 +319,7 @@ void npc_chat_def_pattern(struct npc_data* nd, int64 setid, const char* pattern,
  *
  * this could be more efficent but.. how often do you do this?
  */
-void npc_chat_finalize(struct npc_data* nd)
+void npc_chat_finalize(npc_data* nd)
 {
 	struct npc_parse *npcParse = (struct npc_parse *) nd->chatdb;
 	if (npcParse == nullptr)
@@ -338,12 +338,12 @@ void npc_chat_finalize(struct npc_data* nd)
 /**
  * Handler called whenever a global message is spoken in a NPC's area
  */
-int npc_chat_sub(struct block_list* bl, va_list ap)
+int32 npc_chat_sub(block_list* bl, va_list ap)
 {
-	struct npc_data* nd = (struct npc_data *) bl;
+	npc_data* nd = (npc_data *) bl;
 	struct npc_parse* npcParse = (struct npc_parse *) nd->chatdb;
 	char* msg;
-	int len, i;
+	int32 len, i;
 	map_session_data* sd;
 	struct npc_label_list* lst;
 	struct pcrematch_set* pcreset;
@@ -354,7 +354,7 @@ int npc_chat_sub(struct block_list* bl, va_list ap)
 		return 0;
 	
 	msg = va_arg(ap,char*);
-	len = va_arg(ap,int);
+	len = va_arg(ap,int32);
 	sd = va_arg(ap,map_session_data *);
 	
 	// iterate across all active sets
@@ -363,10 +363,10 @@ int npc_chat_sub(struct block_list* bl, va_list ap)
 		// interate across all patterns in that set
 		for (e = pcreset->head; e != nullptr; e = e->next)
 		{
-			int offsets[2*10 + 10]; // 1/3 reserved for temp space requred by pcre_exec
+			int32 offsets[2*10 + 10]; // 1/3 reserved for temp space requred by pcre_exec
 			
 			// perform pattern match
-			int r = pcre_exec(e->pcre_, e->pcre_extra_, msg, len, 0, 0, offsets, ARRAYLENGTH(offsets));
+			int32 r = pcre_exec(e->pcre_, e->pcre_extra_, msg, len, 0, 0, offsets, ARRAYLENGTH(offsets));
 			if (r > 0)
 			{
 				// save out the matched strings
@@ -387,7 +387,7 @@ int npc_chat_sub(struct block_list* bl, va_list ap)
 				}
 				
 				// run the npc script
-				run_script(nd->u.scr.script,lst[i].pos,sd->bl.id,nd->bl.id);
+				run_script(nd->u.scr.script,lst[i].pos,sd->id,nd->id);
 				return 0;
 			}
 		}
@@ -398,42 +398,42 @@ int npc_chat_sub(struct block_list* bl, va_list ap)
 
 // Various script builtins used to support these functions
 
-int buildin_defpattern(struct script_state* st)
+int32 buildin_defpattern(struct script_state* st)
 {
 	int64 setid = conv_num64(st,& (st->stack->stack_data[st->start+2]));
 	const char* pattern = conv_str(st,& (st->stack->stack_data[st->start+3]));
 	const char* label = conv_str(st,& (st->stack->stack_data[st->start+4]));
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	npc_data* nd = (npc_data *)map_id2bl(st->oid);
 	
 	npc_chat_def_pattern(nd, setid, pattern, label);
 	
 	return 0;
 }
 
-int buildin_activatepset(struct script_state* st)
+int32 buildin_activatepset(struct script_state* st)
 {
 	int64 setid = conv_num64(st,& (st->stack->stack_data[st->start+2]));
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	npc_data* nd = (npc_data *)map_id2bl(st->oid);
 	
 	activate_pcreset(nd, setid);
 	
 	return 0;
 }
 
-int buildin_deactivatepset(struct script_state* st)
+int32 buildin_deactivatepset(struct script_state* st)
 {
 	int64 setid = conv_num64(st,& (st->stack->stack_data[st->start+2]));
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	npc_data* nd = (npc_data *)map_id2bl(st->oid);
 	
 	deactivate_pcreset(nd, setid);
 	
 	return 0;
 }
 
-int buildin_deletepset(struct script_state* st)
+int32 buildin_deletepset(struct script_state* st)
 {
 	int64 setid = conv_num64(st,& (st->stack->stack_data[st->start+2]));
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	npc_data* nd = (npc_data *)map_id2bl(st->oid);
 	
 	delete_pcreset(nd, setid);
 	
