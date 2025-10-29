@@ -24,7 +24,8 @@ Follow the next steps only if `conf/inter_athena.conf::use_sql_db` is set to yes
 2. Then run the yaml2sql tool and convert all required YML files to SQL.<br/>
    The files will be converted into the /sql-files/ directory.<br/>
    Note: The files are not shipped by default anymore and have to be converted initially.
-3. After the conversion has finished the following tables have to be imported into your main schema.<br/>
+3. Convert the mob skill database with /tools/convert_sql.pl
+4. After the conversion has finished the following tables have to be imported into your main schema.<br/>
    Note: Not all files have to be imported, only the ones that apply to the same mode as the server being ran.
 
 * __Pre-Renewal:__
