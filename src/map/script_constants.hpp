@@ -536,6 +536,7 @@
 	export_constant(MF_NOBANK);
 	export_constant(MF_SPECIALPOPUP);
 	export_constant(MF_NOMACROCHECKER);
+	export_constant(MF_INVINCIBLE_TIME);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -1998,6 +1999,11 @@
 	export_constant(SC_CONTENTS_19);
 	export_constant(SC_CONTENTS_20);
 	export_constant(SC_OVERCOMING_CRISIS);
+	export_constant(SC_CHASING);
+	export_constant(SC_FIRE_CHARM_POWER);
+	export_constant(SC_WATER_CHARM_POWER);
+	export_constant(SC_WIND_CHARM_POWER);
+	export_constant(SC_GROUND_CHARM_POWER);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)

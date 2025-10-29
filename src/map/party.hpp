@@ -92,12 +92,12 @@ int32 party_send_message(map_session_data *sd,const char *mes, size_t len);
 int32 party_recv_message( int32 party_id, uint32 account_id, const char *mes, size_t len );
 int32 party_skill_check(map_session_data *sd, int32 party_id, uint16 skill_id, uint16 skill_lv);
 int32 party_send_xy_clear(struct party_data *p);
-void party_exp_share(struct party_data *p,struct block_list *src,t_exp base_exp,t_exp job_exp,int32 zeny);
+void party_exp_share(struct party_data *p,block_list *src,t_exp base_exp,t_exp job_exp,int32 zeny);
 int32 party_share_loot(struct party_data* p, map_session_data* sd, struct item* item, int32 first_charid);
 int32 party_send_dot_remove(map_session_data *sd);
-int32 party_sub_count(struct block_list *bl, va_list ap);
-int32 party_sub_count_class(struct block_list *bl, va_list ap);
-int32 party_foreachsamemap(int32 (*func)(struct block_list *,va_list),map_session_data *sd,int32 range,...);
+int32 party_sub_count(block_list *bl, va_list ap);
+int32 party_sub_count_class(block_list *bl, va_list ap);
+int32 party_foreachsamemap(int32 (*func)(block_list *,va_list),map_session_data *sd,int32 range,...);
 
 /*==========================================
  * Party Booking in KRO [Spiria]

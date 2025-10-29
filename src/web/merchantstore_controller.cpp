@@ -143,7 +143,7 @@ HANDLER_FUNC(merchantstore_load) {
 
 	char databuf[SQL_BUFFER_SIZE] = { 0 };
 
-	if (SQL_SUCCESS != stmt.BindColumn(0, SQLDT_STRING, &databuf, sizeof(databuf), nullptr, nullptr)
+	if (SQL_SUCCESS != stmt.BindColumn(0, SQLDT_STRING, &databuf, sizeof(databuf))
 		|| SQL_SUCCESS != stmt.NextRow()
 	) {
 		SqlStmt_ShowDebug(stmt);
