@@ -9925,3 +9925,35 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Fire_Charm_Power
+    Icon: EFST_FIRE_CHARM_POWER
+    DurationLookup: SS_FOUR_CHARM
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Water_Charm_Power
+    Icon: EFST_WATER_CHARM_POWER
+    DurationLookup: SS_FOUR_CHARM
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Wind_Charm_Power
+    Icon: EFST_WIND_CHARM_POWER
+    DurationLookup: SS_FOUR_CHARM
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Ground_Charm_Power
+    Icon: EFST_GROUND_CHARM_POWER
+    DurationLookup: SS_FOUR_CHARM
+    Flags:
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
