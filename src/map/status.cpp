@@ -9468,6 +9468,7 @@ void status_set_viewdata(block_list *bl, int32 class_)
 			else if (pcdb_checkid(class_)) {
 				memset(&nd->vd, 0, sizeof(struct view_data));
 				nd->vd.look[LOOK_BASE] = class_;
+				nd->vd.look[LOOK_BODY2] = class_;
 				nd->vd.look[LOOK_HAIR] = cap_value(nd->vd.look[LOOK_HAIR], MIN_HAIR_STYLE, MAX_HAIR_STYLE);
 			} else {
 				ShowError("status_set_viewdata (NPC): Invalid view data %d\n", class_);
