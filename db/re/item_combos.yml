@@ -215,7 +215,7 @@ Body:
           - Battle_Hook_    # 1440
           - Tournament_Shield    # 2133
     Script: |
-      bonus bAtkRate,4;
+      bonus2 bAddClass,Class_All,4;
       bonus bDef,2;
       if (Class == 4008 || Class == 4054 || Class == 4060 || Class == 4252) {
          bonus bAspdRate,-5;
