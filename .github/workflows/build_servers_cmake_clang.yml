@@ -1,4 +1,4 @@
-name: Build servers with Clang
+name: Build servers with CMake and Clang on Linux
 
 concurrency:
   group: ${{ github.repository }}-${{ github.workflow }}-${{ github.ref }}
@@ -17,6 +17,8 @@ on:
       # This workflow should run when a file in a source directory has been modified.
       - 'src/**'
       - '3rdparty/**'
+      # This workflow should run whenever a CMake related file has been modified
+      - '**/CMakeLists.txt'
 
 jobs:
   build:
@@ -41,13 +43,8 @@ jobs:
           version: ${{ matrix.clang }}
           platform: x64
 
-      - name: Command - configure
-        env:
-            CONFIGURE_FLAGS: 'CC=clang-${{ matrix.clang }} CXX=clang++-${{ matrix.clang }} --enable-buildbot=yes'
-        run: ./configure $CONFIGURE_FLAGS
+      - name: Configure CMake
+        run: CXX=clang++-${{matrix.clang}} CC=clang-${{matrix.clang}} cmake -B build
 
-      - name: Command - make clean
-        run: make clean
-
-      - name: Command - make all
-        run: make all
+      - name: Build
+        run: cmake --build build --target all
