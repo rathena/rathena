@@ -9436,6 +9436,7 @@ void status_set_viewdata(block_list *bl, int32 class_)
 				mob_set_dynamic_viewdata( md );
 
 				md->vd->look[LOOK_BASE] = class_;
+				md->vd->look[LOOK_BODY2] = class_;
 				md->vd->look[LOOK_HAIR] = cap_value(md->vd->look[LOOK_HAIR], MIN_HAIR_STYLE, MAX_HAIR_STYLE);
 				md->vd->look[LOOK_HAIR_COLOR] = cap_value(md->vd->look[LOOK_HAIR_COLOR], MIN_HAIR_COLOR, MAX_HAIR_COLOR);
 			}else
