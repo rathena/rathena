@@ -6437,6 +6437,13 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 			return 0;
 		}
 	}
+
+	// Temporary fix to prevent "Unable to restore stack! Double continuation warning"
+    if (sd->state.menu_or_input) {
+        clif_msg(*sd, MSI_BUSY);
+        return 0;
+    }
+
 	item = sd->inventory.u.items_inventory[n];
 	id = sd->inventory_data[n];
 
