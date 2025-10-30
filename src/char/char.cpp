@@ -550,11 +550,18 @@ int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, en
 			tablename = schema_config.cart_db;
 			selectoption = "char_id";
 			break;
-		case TABLE_STORAGE:
-			printname = inter_premiumStorage_getPrintableName(stor_id);
-			tablename = inter_premiumStorage_getTableName(stor_id);
+		case TABLE_STORAGE: {
+			std::shared_ptr<s_storage_table> storage_info = interServerDb.find( stor_id );
+
+			if( storage_info == nullptr ){
+				ShowError( "Invalid storage with id %d\n", id );
+				return 1;
+			}
+
+			printname = storage_info->name;
+			tablename = storage_info->table;
 			selectoption = "account_id";
-			break;
+			} break;
 		case TABLE_GUILD_STORAGE:
 			printname = "Guild Storage";
 			tablename = schema_config.guild_storage_db;
@@ -763,13 +770,20 @@ bool char_memitemdata_from_sql(struct s_storage* p, int32 max, int32 id, enum st
 			storage = p->u.items_cart;
 			max2 = MAX_CART;
 			break;
-		case TABLE_STORAGE:
-			printname = "Storage";
-			tablename = inter_premiumStorage_getTableName(stor_id);
+		case TABLE_STORAGE: {
+			std::shared_ptr<s_storage_table> storage_info = interServerDb.find( stor_id );
+
+			if( storage_info == nullptr ){
+				ShowError( "Invalid storage with id %d\n", id );
+				return false;
+			}
+
+			printname = storage_info->name;
+			tablename = storage_info->table;
 			selectoption = "account_id";
 			storage = p->u.items_storage;
-			max2 = inter_premiumStorage_getMax(p->stor_id);
-			break;
+			max2 = storage_info->max_num;
+			} break;
 		case TABLE_GUILD_STORAGE:
 			printname = "Guild Storage";
 			tablename = schema_config.guild_storage_db;
