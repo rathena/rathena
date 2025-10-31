@@ -19168,8 +19168,8 @@ Body:
                bonus2 bSkillCooldown,"NC_PILEBUNKER",-1000;
             }
          }
-         bonus2 bSkillAtk,NC_BOOSTKNUCKLE,.@bonus1;
-         bonus2 bSkillAtk,NC_VULCANARM,.@bonus2;
+         bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",.@bonus1;
+         bonus2 bSkillAtk,"NC_VULCANARM",.@bonus2;
          bonus bAspdRate,.@aspd;
       }
   - Combos:
@@ -40749,7 +40749,7 @@ Body:
           - Kings_Bless    # 28713
     Script: |
       bonus bAspdRate,5;
-      bonus2 bSkillAtk,GC_CROSSIMPACT,10;
+      bonus2 bSkillAtk,"GC_CROSSIMPACT",10;
   - Combos:
       - Combo:
           - Cursed_Devils_Mail    # 15173
