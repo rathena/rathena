@@ -1635,12 +1635,34 @@ bool session_isActive(int32 fd)
 	return ( session_isValid(fd) && !session[fd]->flag.eof );
 }
 
+#ifdef HAVE_GETADDRINFO
+uint32_t host2ip(const char* hostname)
+{
+    struct addrinfo hints, *res;
+    memset(&hints, 0, sizeof(hints));
+    hints.ai_family = AF_INET;  // IPv4 address
+    hints.ai_socktype = SOCK_STREAM;
+
+    int32 err = getaddrinfo(hostname, nullptr, &hints, &res);
+    if (err != 0 || res == nullptr)
+    {
+        return 0;  // Return 0 if there's an error resolving the hostname
+    }
+
+    struct sockaddr_in* sockaddr_in = reinterpret_cast<struct sockaddr_in *>(res->ai_addr);
+    uint32_t ip = ntohl(sockaddr_in->sin_addr.s_addr);
+    freeaddrinfo(res);  // Don't forget to free the memory used by getaddrinfo
+
+    return ip;
+}
+#else
 // Resolves hostname into a numeric ip.
 uint32 host2ip(const char* hostname)
 {
 	struct hostent* h = gethostbyname(hostname);
 	return (h != nullptr) ? ntohl(*(uint32*)h->h_addr) : 0;
 }
+#endif
 
 // Converts a numeric ip into a dot-formatted string.
 // Result is placed either into a user-provided buffer or a static system buffer.

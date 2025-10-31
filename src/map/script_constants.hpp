@@ -249,6 +249,20 @@
 
 	export_constant(JOB_SKY_EMPEROR2);
 
+	export_constant(JOB_RUNE_KNIGHT_2ND);
+	export_constant(JOB_MECHANIC_2ND);
+	export_constant(JOB_GUILLOTINE_CROSS_2ND);
+	export_constant(JOB_WARLOCK_2ND);
+	export_constant(JOB_ARCHBISHOP_2ND);
+	export_constant(JOB_RANGER_2ND);
+	export_constant(JOB_ROYAL_GUARD_2ND);
+	export_constant(JOB_GENETIC_2ND);
+	export_constant(JOB_SHADOW_CHASER_2ND);
+	export_constant(JOB_SORCERER_2ND);
+	export_constant(JOB_SURA_2ND);
+	export_constant(JOB_MINSTREL_2ND);
+	export_constant(JOB_WANDERER_2ND);
+
 	/* EA jobs */
 	export_constant2("EAJL_2_1",JOBL_2_1);
 	export_constant2("EAJL_2_2",JOBL_2_2);
@@ -522,6 +536,7 @@
 	export_constant(MF_NOBANK);
 	export_constant(MF_SPECIALPOPUP);
 	export_constant(MF_NOMACROCHECKER);
+	export_constant(MF_INVINCIBLE_TIME);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -1984,6 +1999,11 @@
 	export_constant(SC_CONTENTS_19);
 	export_constant(SC_CONTENTS_20);
 	export_constant(SC_OVERCOMING_CRISIS);
+	export_constant(SC_CHASING);
+	export_constant(SC_FIRE_CHARM_POWER);
+	export_constant(SC_WATER_CHARM_POWER);
+	export_constant(SC_WIND_CHARM_POWER);
+	export_constant(SC_GROUND_CHARM_POWER);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)

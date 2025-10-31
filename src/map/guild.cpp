@@ -196,7 +196,7 @@ TIMER_FUNC(guild_payexp_timer);
 static TIMER_FUNC(guild_send_xy_timer);
 
 /* guild flags cache */
-struct npc_data **guild_flags;
+npc_data **guild_flags;
 uint16 guild_flags_count;
 
 /**
@@ -2401,7 +2401,7 @@ int32 guild_castledatasave(int32 castle_id, int32 index, int32 value) {
 		int32 i;
 		gc->guild_id = value;
 		for (i = 0; i < MAX_GUARDIANS; i++){
-			struct mob_data *gd;
+			mob_data *gd;
 			if (gc->guardian[i].visible && (gd = map_id2md(gc->guardian[i].id)) != nullptr)
 				mob_guardian_guildchange(gd);
 		}
@@ -2414,7 +2414,7 @@ int32 guild_castledatasave(int32 castle_id, int32 index, int32 value) {
 		int32 i;
 		gc->defense = value;
 		for (i = 0; i < MAX_GUARDIANS; i++){
-			struct mob_data *gd;
+			mob_data *gd;
 			if (gc->guardian[i].visible && (gd = map_id2md(gc->guardian[i].id)) != nullptr)
 				status_calc_mob(gd, SCO_NONE);
 		}
@@ -2647,7 +2647,7 @@ bool guild_has_permission( map_session_data& sd, enum e_guild_permission permiss
 	return ( sd.guild->guild.position[position].mode & permission ) != 0;
 }
 
-void guild_flag_add(struct npc_data *nd) {
+void guild_flag_add(npc_data *nd) {
 	int32 i;
 
 	/* check */
@@ -2659,12 +2659,12 @@ void guild_flag_add(struct npc_data *nd) {
 
 	i = guild_flags_count;/* save the current slot */
 	/* add */
-	RECREATE(guild_flags,struct npc_data*,++guild_flags_count);
+	RECREATE(guild_flags,npc_data*,++guild_flags_count);
 	/* save */
 	guild_flags[i] = nd;
 }
 
-void guild_flag_remove(struct npc_data *nd) {
+void guild_flag_remove(npc_data *nd) {
 	int32 i, cursor;
 	if( guild_flags_count == 0 )
 		return;
@@ -2682,7 +2682,7 @@ void guild_flag_remove(struct npc_data *nd) {
 			continue;
 
 		if( cursor != i ) {
-			memmove(&guild_flags[cursor], &guild_flags[i], sizeof(struct npc_data*));
+			memmove(&guild_flags[cursor], &guild_flags[i], sizeof(npc_data*));
 		}
 
 		cursor++;

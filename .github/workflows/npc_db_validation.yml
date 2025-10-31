@@ -61,9 +61,6 @@ jobs:
       - name: Start MySQL
         run: sudo systemctl start mysql.service
 
-      - name: Setup Database and import table data
-        run: ./tools/ci/sql.sh
-          
       - name: Command - configure
         env:
             CONFIGURE_FLAGS: 'CC=gcc-${{ matrix.gcc }} CXX=g++-${{ matrix.gcc }} --enable-prere=${{ env.PRERE }} --enable-buildbot=yes'
@@ -79,6 +76,15 @@ jobs:
       # Create import directories
       - name: Command - make import
         run: make import
+
+      - name: Command - make tools
+        run: make tools
+
+      - name: Run Once - yaml2sql
+        run: ./yaml2sql
+
+      - name: Setup Database and import table data
+        run: ./tools/ci/sql.sh
 
       - name: Command - make map
         run: make map

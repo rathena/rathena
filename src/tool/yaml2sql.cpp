@@ -55,21 +55,24 @@
 #include <map/skill.hpp>
 #include <map/storage.hpp>
 
+#if defined(BUILDBOT)
+	// Force buildbot to always convert all files
+	#define CONVERT_ALL
+#endif
+
 using namespace rathena;
 using namespace rathena::server_core;
 
-namespace rathena{
-	namespace tool_yaml2sql{
-		class Yaml2SqlTool : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
+namespace rathena::tool_yaml2sql {
+class Yaml2SqlTool : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
 
-			public:
-				Yaml2SqlTool() : Core( e_core_type::TOOL ){
+	public:
+		Yaml2SqlTool() : Core( e_core_type::TOOL ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 using namespace rathena::tool_yaml2sql;

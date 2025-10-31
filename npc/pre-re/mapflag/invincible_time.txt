@@ -1,0 +1,45 @@
+//===== rAthena Script =======================================
+//= Mapflag: invincible time map setting.
+//===== Description: ========================================= 
+//= Sets the invincible time for when a player loads onto a map.
+//===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Playtester]
+//============================================================
+
+//============================================================
+// WoE:FE Castles
+//============================================================
+aldeg_cas01	mapflag	invincible_time	10000
+aldeg_cas02	mapflag	invincible_time	10000
+aldeg_cas03	mapflag	invincible_time	10000
+aldeg_cas04	mapflag	invincible_time	10000
+aldeg_cas05	mapflag	invincible_time	10000
+gefg_cas01	mapflag	invincible_time	10000
+gefg_cas02	mapflag	invincible_time	10000
+gefg_cas03	mapflag	invincible_time	10000
+gefg_cas04	mapflag	invincible_time	10000
+gefg_cas05	mapflag	invincible_time	10000
+payg_cas01	mapflag	invincible_time	10000
+payg_cas02	mapflag	invincible_time	10000
+payg_cas03	mapflag	invincible_time	10000
+payg_cas04	mapflag	invincible_time	10000
+payg_cas05	mapflag	invincible_time	10000
+prtg_cas01	mapflag	invincible_time	10000
+prtg_cas02	mapflag	invincible_time	10000
+prtg_cas03	mapflag	invincible_time	10000
+prtg_cas04	mapflag	invincible_time	10000
+prtg_cas05	mapflag	invincible_time	10000
+
+//============================================================
+// WoE:SE Castles
+//============================================================
+schg_cas01	mapflag	invincible_time	10000
+schg_cas02	mapflag	invincible_time	10000
+schg_cas03	mapflag	invincible_time	10000
+schg_cas04	mapflag	invincible_time	10000
+schg_cas05	mapflag	invincible_time	10000
+arug_cas01	mapflag	invincible_time	10000
+arug_cas02	mapflag	invincible_time	10000
+arug_cas03	mapflag	invincible_time	10000
+arug_cas04	mapflag	invincible_time	10000
+arug_cas05	mapflag	invincible_time	10000

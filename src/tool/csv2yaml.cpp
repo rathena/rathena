@@ -1248,7 +1248,7 @@ static bool skill_parse_row_castdb( char* split[], size_t columns, size_t curren
 	skill_split_atoi(split[7], (int32 *)entry.fixed_cast);
 #endif
 
-	skill_cast.insert({ atoi(split[0]), entry });
+	skill_cast.insert({atoi(split[0]), std::move(entry)});
 
 	return true;
 }
@@ -1262,7 +1262,7 @@ static bool skill_parse_row_castnodexdb( char* split[], size_t columns, size_t c
 	if (split[2]) // optional column
 		entry.delaynodex = atoi(split[2]);
 
-	skill_castnodex.insert({ atoi(split[0]), entry });
+	skill_castnodex.insert({atoi(split[0]), std::move(entry)});
 
 	return true;
 }
@@ -1280,7 +1280,7 @@ static bool skill_parse_row_unitdb( char* split[], size_t columns, size_t curren
 	entry.target_str = trim(split[6]);
 	entry.unit_flag_csv = strtol(split[7], nullptr, 16);
 
-	skill_unit.insert({ atoi(split[0]), entry });
+	skill_unit.insert({atoi(split[0]), std::move(entry)});
 
 	return true;
 }
@@ -1338,7 +1338,7 @@ static bool skill_parse_row_nonearnpcrangedb( char* split[], size_t column, size
 	entry.unit_nonearnpc_range = max(atoi(split[1]), 0);
 	entry.unit_nonearnpc_type = (atoi(split[2])) ? cap_value(atoi(split[2]), 1, 15) : 15;
 
-	skill_nearnpc.insert({ skill_id, entry });
+	skill_nearnpc.insert({skill_id, std::move(entry)});
 
 	return true;
 }

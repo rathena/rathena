@@ -408,7 +408,6 @@ int8 vending_openvending( map_session_data& sd, const char* message, const uint8
 	}
 	if (SQL_ERROR == Sql_QueryStr(mmysql_handle, StringBuf_Value(&buf)))
 		Sql_ShowDebug(mmysql_handle);
-	StringBuf_Destroy(&buf);
 
 	clif_openvending( sd );
 	clif_showvendingboard( sd );

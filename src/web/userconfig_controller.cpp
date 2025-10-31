@@ -50,7 +50,7 @@ HANDLER_FUNC(userconfig_save) {
 
 	if (stmt.NumRows() > 0) {
 		char databuf[SQL_BUFFER_SIZE];
-		if (SQL_SUCCESS != stmt.BindColumn(0, SQLDT_STRING, &databuf, sizeof(databuf), nullptr, nullptr)
+		if (SQL_SUCCESS != stmt.BindColumn(0, SQLDT_STRING, &databuf, sizeof(databuf))
 			|| SQL_SUCCESS != stmt.NextRow()
 		) {
 			SqlStmt_ShowDebug(stmt);
@@ -145,7 +145,7 @@ HANDLER_FUNC(userconfig_load) {
 
 	char databuf[SQL_BUFFER_SIZE];
 
-	if (SQL_SUCCESS != stmt.BindColumn(0, SQLDT_STRING, &databuf, sizeof(databuf), nullptr, nullptr)
+	if (SQL_SUCCESS != stmt.BindColumn(0, SQLDT_STRING, &databuf, sizeof(databuf))
 		|| SQL_SUCCESS != stmt.NextRow()
 	) {
 		SqlStmt_ShowDebug(stmt);

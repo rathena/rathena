@@ -21,6 +21,7 @@ If it can't determine a trend it will fill with the last level defined.
 -------------------------------------------------------------------------------
 Skill | rAthena Lv | Explanation
 -------------------------------------------------------------------------------
+6,SM_PROVOKE          |10| Reduces DEF by 100%. No ATK bonus.
 7,SM_MAGNUM           |25| 9x9 AoE. 600% damage at all ranges.
 15,MG_FROSTDIVER      |40| 500% damage. 100% base chance.
 17,MG_FIREBALL        |43| 7x7 AoE. 1000% damage. (In pre-re, level is 93.)

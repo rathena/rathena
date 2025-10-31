@@ -76,15 +76,33 @@ int32 chclif_parse_moveCharSlot( int32 fd, struct char_session_data* sd){
 	//Cnt = RFIFOW(fd,6); //how many time we have left to change (client.. lol we don't trust him)
 	RFIFOSKIP(fd,8);
 
-	// Have we changed to often or is it disabled?
+	// Bounds check
+	if( from >= MAX_CHARS ){
+		chclif_moveCharSlotReply( fd, sd, from, 1 );
+		return 1;
+	}
+
+	// Have we changed too often or is it disabled?
 	if( (charserv_config.charmove_config.char_move_enabled)==0
 	|| ( (charserv_config.charmove_config.char_moves_unlimited)==0 && sd->char_moves[from] <= 0 ) ){
 		chclif_moveCharSlotReply( fd, sd, from, 1 );
 		return 1;
 	}
 
-	// We don't even have a character on the chosen slot?
-	if( sd->found_char[from] <= 0 || to >= sd->char_slots ){
+	// Check if there is a character on this slot
+	if( sd->found_char[from] <= 0 ){
+		chclif_moveCharSlotReply( fd, sd, from, 1 );
+		return 1;
+	}
+
+	// Bounds check
+	if( to >= MAX_CHARS ){
+		chclif_moveCharSlotReply( fd, sd, from, 1 );
+		return 1;
+	}
+
+	// Check maximum allowed char slot for this account
+	if( to >= sd->char_slots ){
 		chclif_moveCharSlotReply( fd, sd, from, 1 );
 		return 1;
 	}

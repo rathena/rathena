@@ -19,51 +19,6 @@
 #include "int_guild.hpp"
 
 /**
- * Get max storage amount
- * @param id: Storage ID
- * @return Max amount
- */
-int32 inter_premiumStorage_getMax(uint8 id) {
-	std::shared_ptr<s_storage_table> storage = interServerDb.find( id );
-
-	if( storage != nullptr ){
-		return storage->max_num;
-	}
-
-	return MAX_STORAGE;
-}
-
-/**
- * Get table name of storage
- * @param id: Storage ID
- * @return Table name
- */
-const char *inter_premiumStorage_getTableName(uint8 id) {
-	std::shared_ptr<s_storage_table> storage = interServerDb.find( id );
-
-	if( storage != nullptr ){
-		return storage->table;
-	}
-
-	return schema_config.storage_db;
-}
-
-/**
- * Get printable name of storage
- * @param id: Storage ID
- * @return printable name
- */
-const char *inter_premiumStorage_getPrintableName(uint8 id) {
-	std::shared_ptr<s_storage_table> storage = interServerDb.find( id );
-
-	if( storage != nullptr ){
-		return storage->name;
-	}
-
-	return "Storage";
-}
-
-/**
  * Save inventory entries to SQL
  * @param char_id: Character ID to save
  * @param p: Inventory entries
@@ -346,28 +301,27 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 		SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		StringBuf_Destroy(&buf);
 		mapif_itembound_ack(fd,account_id,guild_id);
 		return true;
 	}
 
-	stmt.BindColumn(0, SQLDT_INT32,       &item.id,           0, nullptr, nullptr);
-	stmt.BindColumn(1, SQLDT_UINT32,      &item.nameid,       0, nullptr, nullptr);
-	stmt.BindColumn(2, SQLDT_INT16,     &item.amount,       0, nullptr, nullptr);
-	stmt.BindColumn(3, SQLDT_UINT32,      &item.equip,        0, nullptr, nullptr);
-	stmt.BindColumn(4, SQLDT_CHAR,      &item.identify,     0, nullptr, nullptr);
-	stmt.BindColumn(5, SQLDT_CHAR,      &item.refine,       0, nullptr, nullptr);
-	stmt.BindColumn(6, SQLDT_CHAR,      &item.attribute,    0, nullptr, nullptr);
-	stmt.BindColumn(7, SQLDT_UINT32,      &item.expire_time,  0, nullptr, nullptr);
-	stmt.BindColumn(8, SQLDT_CHAR,      &item.bound,        0, nullptr, nullptr);
-	stmt.BindColumn(9, SQLDT_ULONGLONG, &item.unique_id,    0, nullptr, nullptr);
-	stmt.BindColumn(10, SQLDT_INT8,     &item.enchantgrade, 0, nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_INT32, &item.id);
+	stmt.BindColumn(1, SQLDT_UINT32, &item.nameid);
+	stmt.BindColumn(2, SQLDT_INT16, &item.amount);
+	stmt.BindColumn(3, SQLDT_UINT32, &item.equip);
+	stmt.BindColumn(4, SQLDT_CHAR, &item.identify);
+	stmt.BindColumn(5, SQLDT_CHAR, &item.refine);
+	stmt.BindColumn(6, SQLDT_CHAR, &item.attribute);
+	stmt.BindColumn(7, SQLDT_UINT32, &item.expire_time);
+	stmt.BindColumn(8, SQLDT_CHAR, &item.bound);
+	stmt.BindColumn(9, SQLDT_ULONGLONG, &item.unique_id);
+	stmt.BindColumn(10, SQLDT_INT8, &item.enchantgrade);
 	for( j = 0; j < MAX_SLOTS; ++j )
-		stmt.BindColumn(11+j, SQLDT_UINT32, &item.card[j], 0, nullptr, nullptr);
+		stmt.BindColumn(11+j, SQLDT_UINT32, &item.card[j]);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
-		stmt.BindColumn(11+MAX_SLOTS+j*3, SQLDT_INT16, &item.option[j].id, 0, nullptr, nullptr);
-		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_INT16, &item.option[j].value, 0, nullptr, nullptr);
-		stmt.BindColumn(13+MAX_SLOTS+j*3, SQLDT_CHAR, &item.option[j].param, 0, nullptr, nullptr);
+		stmt.BindColumn(11+MAX_SLOTS+j*3, SQLDT_INT16, &item.option[j].id);
+		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_INT16, &item.option[j].value);
+		stmt.BindColumn(13+MAX_SLOTS+j*3, SQLDT_CHAR, &item.option[j].param);
 	}
 	memset(&items, 0, sizeof(items));
 	while( SQL_SUCCESS == stmt.NextRow() )
@@ -376,7 +330,6 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 
 	ShowInfo("Found '" CL_WHITE "%d" CL_RESET "' guild bound item(s) from CID = " CL_WHITE "%d" CL_RESET ", AID = %d, Guild ID = " CL_WHITE "%d" CL_RESET ".\n", count, char_id, account_id, guild_id);
 	if (!count) { //No items found - No need to continue
-		StringBuf_Destroy(&buf);
 		mapif_itembound_ack(fd,account_id,guild_id);
 		return true;
 	}
@@ -390,7 +343,6 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 		SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		StringBuf_Destroy(&buf);
 		mapif_itembound_ack(fd,account_id,guild_id);
 		return true;
 	}
@@ -434,15 +386,10 @@ bool mapif_parse_itembound_retrieve(int32 fd)
 			SQL_ERROR == stmt.Execute() )
 		{
 			SqlStmt_ShowDebug(stmt);
-			StringBuf_Destroy(&buf);
-			StringBuf_Destroy(&buf2);
 			mapif_itembound_ack(fd,account_id,guild_id);
 			return true;
 		}
-		StringBuf_Destroy(&buf2);
 	}
-
-	StringBuf_Destroy(&buf);
 
 	char_unset_session_flag(account_id, 1);
 	return false;
@@ -519,15 +466,12 @@ bool mapif_parse_StorageLoad(int32 fd) {
 	switch (type) {
 		case TABLE_INVENTORY: res = inventory_fromsql(cid, &stor); break;
 		case TABLE_STORAGE:
-			if( !interServerDb.exists( stor_id ) ){
-				ShowError( "Invalid storage with id %d\n", stor_id );
-				return false;
-			}
-
 			res = storage_fromsql(aid, &stor);
 			break;
 		case TABLE_CART:      res = cart_fromsql(cid, &stor);      break;
-		default: return false;
+		default:
+			res = false;
+			break;
 	}
 
 	mode = RFIFOB(fd, 12);
@@ -546,6 +490,7 @@ bool mapif_parse_StorageLoad(int32 fd) {
 bool mapif_parse_StorageSave(int32 fd) {
 	int32 aid, cid, type;
 	struct s_storage stor;
+	bool res = false;
 
 	type = RFIFOB(fd, 4);
 	aid = RFIFOL(fd, 5);
@@ -556,20 +501,21 @@ bool mapif_parse_StorageSave(int32 fd) {
 
 	//ShowInfo("Saving storage data for AID=%d.\n", aid);
 	switch(type){
-		case TABLE_INVENTORY:	inventory_tosql(cid, &stor); break;
-		case TABLE_STORAGE:
-			if( !interServerDb.exists( stor.stor_id ) ){
-				ShowError( "Invalid storage with id %d\n", stor.stor_id );
-				return false;
-			}
-
-			storage_tosql(aid, &stor);
+		case TABLE_INVENTORY:
+			res = inventory_tosql(cid, &stor) == 0;
 			break;
-		case TABLE_CART:	cart_tosql(cid, &stor); break;
-		default: return false;
+		case TABLE_STORAGE:
+			res = storage_tosql(aid, &stor) == 0;
+			break;
+		case TABLE_CART:
+			res = cart_tosql(cid, &stor) == 0;
+			break;
+		default:
+			res = false;
+			break;
 	}
-	mapif_storage_saved(fd, aid, cid, true, type, stor.stor_id);
-	return false;
+	mapif_storage_saved(fd, aid, cid, res, type, stor.stor_id);
+	return true;
 }
 
 

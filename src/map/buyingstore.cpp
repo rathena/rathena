@@ -246,7 +246,6 @@ int8 buyingstore_create( map_session_data* sd, int32 zenylimit, unsigned char re
 	}
 	if (SQL_ERROR == Sql_QueryStr(mmysql_handle, StringBuf_Value(&buf)))
 		Sql_ShowDebug(mmysql_handle);
-	StringBuf_Destroy(&buf);
 
 	clif_buyingstore_myitemlist( *sd );
 	clif_buyingstore_entry( *sd );
