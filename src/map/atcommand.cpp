@@ -1971,9 +1971,9 @@ ACMD_FUNC(bodystyle){
 	if (!strcasecmp(message, "off")) {
 		if (sd->vd.look[LOOK_BODY2] != sd->status.class_) {
 			pc_changelook(sd, LOOK_BODY2, sd->status.class_);
-			clif_displaymessage(fd, "Apperance changed to default.");
+			clif_displaymessage( fd, msg_txt( sd, 1539 ) ); // Apperance changed to default.
 		} else {
-			clif_displaymessage(fd, "Appearance is already set to default.");
+			clif_displaymessage( fd, msg_txt( sd, 1540 ) ); // Appearance is already set to default.
 		}
 
 		return 0;
