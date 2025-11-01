@@ -1967,6 +1967,18 @@ ACMD_FUNC(bodystyle){
 		return -1;
 	}
 
+	// Handle the 'off' alias to revert to the default bodystyle [Gidz]
+	if (!strcasecmp(message, "off")) {
+		if (sd->vd.look[LOOK_BODY2] != sd->status.class_) {
+			pc_changelook(sd, LOOK_BODY2, sd->status.class_);
+			clif_displaymessage(fd, "Apperance changed to default.");
+		} else {
+			clif_displaymessage(fd, "Appearance is already set to default.");
+		}
+
+		return 0;
+	}
+
 	uint16 body_style = 0;
 
 	if( message == nullptr || !*message || sscanf( message, "%hu", &body_style ) < 1 ){
