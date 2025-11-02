@@ -22933,10 +22933,11 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 	if( sd == nullptr ){
 		return;
 	}
+
 #if PACKETVER >= 20231220
 	const PACKET_CZ_REQ_STYLE_CHANGE3* p = reinterpret_cast<PACKET_CZ_REQ_STYLE_CHANGE3*>(RFIFOP(fd, 0));
 
-	for (int i = 0; i < p->count; i++) {
+	for (int32 i = 0; i < p->count; i++) {
 		if (p->data[i].value == 0)
 			continue;
 
@@ -22976,8 +22977,7 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 	}
 
 	clif_stylist_response(sd, false);
-#else
-#if PACKETVER >= 20151104
+#elif PACKETVER >= 20151104
 #if PACKETVER >= 20180516
 	const PACKET_CZ_REQ_STYLE_CHANGE2* p = reinterpret_cast<PACKET_CZ_REQ_STYLE_CHANGE2*>( RFIFOP( fd, 0 ) );
 #else
@@ -23027,7 +23027,6 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 #endif
 
 	clif_stylist_response( sd, false );
-#endif
 #endif
 }
 
