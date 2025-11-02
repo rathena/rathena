@@ -22881,6 +22881,10 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 		}
 	}
 
+	if (!entry->required_jobs.empty() && !util::vector_exists(entry->required_jobs, sd->status.class_)) {
+		return false;
+	}
+
 	if( inventoryIndex >= 0 && pc_delitem( sd, inventoryIndex, 1, 0, 0, LOG_TYPE_OTHER ) != 0 ){
 		return false;
 	}
@@ -22890,15 +22894,10 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 	}
 
 	switch( look ){
-		case LOOK_BODY2:
-#if PACKETVER >= 20231220
-			if (!entry->required_jobs.empty() && !util::vector_exists(entry->required_jobs, sd->status.class_)) {
-				return false;
-			}
-#endif
 		case LOOK_HAIR:
 		case LOOK_HAIR_COLOR:
 		case LOOK_CLOTHES_COLOR:
+		case LOOK_BODY2:
 			pc_changelook( sd, look, entry->value );
 			break;
 		case LOOK_HEAD_BOTTOM:
