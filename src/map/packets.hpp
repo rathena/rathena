@@ -2193,6 +2193,20 @@ struct PACKET_ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO {
 DEFINE_PACKET_HEADER(ZC_NPC_EXPANDED_BARTER_MARKET_ITEMINFO, 0x0b56);
 #endif  // PACKETVER_MAIN_NUM >= 20191120 || PACKETVER_RE_NUM >= 20191106 || PACKETVER_ZERO_NUM >= 20191127
 
+struct CZ_REQ_STYLE_CHANGE3_sub{
+	int32 action;
+	int32 value;
+} __attribute__((packed));
+
+struct PACKET_CZ_REQ_STYLE_CHANGE3{
+	int16 packetType;
+	int16 packetLength;
+	int16 count;
+	struct CZ_REQ_STYLE_CHANGE3_sub data[];
+} __attribute__((packed));
+
+DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE3, 0x0bf7);
+
 // NetBSD 5 and Solaris don't like pragma pack but accept the packed attribute
 #if !defined( sun ) && ( !defined( __NETBSD__ ) || __NetBSD_Version__ >= 600000000 )
 	#pragma pack( pop )
@@ -2245,7 +2259,6 @@ DEFINE_PACKET_HEADER(ZC_WARPLIST, 0xabe)
 DEFINE_PACKET_HEADER(ZC_WARPLIST, 0x11c)
 #endif
 DEFINE_PACKET_HEADER(ZC_MSG_COLOR, 0x9cd);
-DEFINE_PACKET_HEADER(CZ_REQ_STYLE_CHANGE3, 0x0bf7)
 
 
 const int16 MAX_INVENTORY_ITEM_PACKET_NORMAL = ( ( INT16_MAX - ( sizeof( struct packet_itemlist_normal ) - ( sizeof( struct NORMALITEM_INFO ) * MAX_ITEMLIST) ) ) / sizeof( struct NORMALITEM_INFO ) );
