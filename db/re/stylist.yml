@@ -34,7 +34,7 @@
 #           Price            Required zeny. (Default: 0)
 #           RequiredItem     Required item. (Default: None)
 #           RequiredItemBox  Required item box. (Default: None)
-#       RequiredJobs:        Required jobs list. (Used for bodystyle for packetver >= 20231220)
+#       RequiredJobs:        Required jobs list. (Default: None)
 #           Job_Constant     Required job.
 ###########################################################################
 
