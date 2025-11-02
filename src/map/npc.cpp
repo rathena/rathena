@@ -355,8 +355,7 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			entry->value = value;
 		}
 
-#if PACKETVER >= 20231220
-		if (constant == LOOK_BODY2 && this->nodeExists(node, "RequiredJobs")) {
+		if (this->nodeExists(node, "RequiredJobs")) {
 			const ryml::NodeRef& jobNode = optionNode["RequiredJobs"];
 
 			for (const auto& jobit : jobNode) {
@@ -373,7 +372,6 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				entry->required_jobs.push_back(job_id);
 			}
 		}
-#endif
 
 		if( this->nodeExists( optionNode, "CostsHuman" ) ) {
 			if( !this->parseCostNode( entry, false, optionNode["CostsHuman"] ) ){
