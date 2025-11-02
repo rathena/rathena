@@ -363,14 +363,33 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				std::string jobName;
 				c4::from_chars(jobit.key(), &jobName);
 				std::string job_name_constant = "JOB_" + jobName;
-				int64 job_id;
+				int64 job_id_constant;
 
-				if (!script_get_constant(job_name_constant.c_str(), &job_id)) {
+				if (!script_get_constant(job_name_constant.c_str(), &job_id_constant)) {
 					this->invalidWarning(optionNode["RequiredJobs"], "Job %s does not exist.\n", jobName.c_str());
 					return 0;
 				}
 
-				entry->required_jobs.push_back(job_id);
+				bool active;
+
+				if (!this->asBool(jobNode, jobName, active))
+					return 0;
+
+				uint16 job_id = static_cast<decltype(job_id)>( job_id_constant );
+
+				if( active ){
+					if( util::vector_exists( entry->required_jobs, job_id ) ){
+						this->invalidWarning( jobit, "Job \"%s\" is already required. Please check your data.\n", jobName.c_str() );
+						return false;
+					}else{
+						entry->required_jobs.push_back( job_id );
+					}
+				}else{
+					if( !util::vector_erase_if_exists( entry->required_jobs, job_id ) ){
+						this->invalidWarning( jobit, "Job \"%s\" is not required. Please check your data.\n", jobName.c_str() );
+						return false;
+					}
+				}
 			}
 		}
 
