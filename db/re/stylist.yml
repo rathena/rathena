@@ -34,7 +34,7 @@
 #           Price            Required zeny. (Default: 0)
 #           RequiredItem     Required item. (Default: None)
 #           RequiredItemBox  Required item box. (Default: None)
-#       RequiredJob:         Required jobs list. (Used for bodystyle for packetver >= 20231220)
+#       RequiredJobs:        Required jobs list. (Used for bodystyle for packetver >= 20231220)
 #           Job_Constant     Required job.
 ###########################################################################
 
@@ -419,669 +419,669 @@ Body:
     Options:
       - Index: 1
         Value: 4252
-        RequiredJob:
+        RequiredJobs:
             Dragon_Knight: True
       - Index: 2
         Value: 4060
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Dragon_Knight: True
       - Index: 3
         Value: 4332
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Dragon_Knight: True
       - Index: 4
         Value: 4253
-        RequiredJob:
+        RequiredJobs:
             Meister: True
       - Index: 5
         Value: 4064
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Meister: True
       - Index: 6
         Value: 4333
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Meister: True
       - Index: 7
         Value: 4254
-        RequiredJob:
+        RequiredJobs:
             Shadow_Cross: True
       - Index: 8
         Value: 4065
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Shadow_Cross: True
       - Index: 9
         Value: 4334
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Shadow_Cross: True
       - Index: 10
         Value: 4255
-        RequiredJob:
+        RequiredJobs:
             Arch_Mage: True
       - Index: 11
         Value: 4061
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Arch_Mage: True
       - Index: 12
         Value: 4335
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Arch_Mage: True
       - Index: 13
         Value: 4256
-        RequiredJob:
+        RequiredJobs:
             Cardinal: True
       - Index: 14
         Value: 4063
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Cardinal: True
       - Index: 15
         Value: 4336
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Cardinal: True
       - Index: 16
         Value: 4257
-        RequiredJob:
+        RequiredJobs:
             Windhawk: True
       - Index: 17
         Value: 4062
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Windhawk: True
       - Index: 18
         Value: 4337
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Windhawk: True
       - Index: 19
         Value: 4258
-        RequiredJob:
+        RequiredJobs:
             Imperial_Guard: True
       - Index: 20
         Value: 4073
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Imperial_Guard: True
       - Index: 21
         Value: 4338
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Imperial_Guard: True
       - Index: 22
         Value: 4259
-        RequiredJob:
+        RequiredJobs:
             Biolo: True
       - Index: 23
         Value: 4078
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Biolo: True
       - Index: 24
         Value: 4339
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Biolo: True
       - Index: 25
         Value: 4260
-        RequiredJob:
+        RequiredJobs:
             Abyss_Chaser: True
       - Index: 26
         Value: 4079
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Abyss_Chaser: True
       - Index: 27
         Value: 4340
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Abyss_Chaser: True
       - Index: 28
         Value: 4261
-        RequiredJob:
+        RequiredJobs:
             Elemental_Master: True
       - Index: 29
         Value: 4074
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Elemental_Master: True
       - Index: 30
         Value: 4341
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Elemental_Master: True
       - Index: 31
         Value: 4262
-        RequiredJob:
+        RequiredJobs:
             Inquisitor: True
       - Index: 32
         Value: 4077
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Inquisitor: True
       - Index: 33
         Value: 4342
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Inquisitor: True
       - Index: 34
         Value: 4263
-        RequiredJob:
+        RequiredJobs:
             Troubadour: True
       - Index: 35
         Value: 4075
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Troubadour: True
       - Index: 36
         Value: 4343
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Troubadour: True
       - Index: 37
         Value: 4264
-        RequiredJob:
+        RequiredJobs:
             Trouvere: True
       - Index: 38
         Value: 4076
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Trouvere: True
       - Index: 39
         Value: 4344
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Trouvere: True
       - Index: 40
         Value: 4060
-        RequiredJob:
+        RequiredJobs:
             Rune_Knight_T: True
       - Index: 41
         Value: 4332
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Rune_Knight_T: True
       - Index: 42
         Value: 4054
-        RequiredJob:
+        RequiredJobs:
             Rune_Knight: True
       - Index: 43
         Value: 4332
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Rune_Knight: True
       - Index: 44
         Value: 4096
-        RequiredJob:
+        RequiredJobs:
             Baby_Rune_Knight: True
       - Index: 45
         Value: 4332
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Rune_Knight: True
       - Index: 46
         Value: 4064
-        RequiredJob:
+        RequiredJobs:
             Mechanic_T: True
       - Index: 47
         Value: 4333
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Mechanic_T: True
       - Index: 48
         Value: 4058
-        RequiredJob:
+        RequiredJobs:
             Mechanic: True
       - Index: 49
         Value: 4333
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Mechanic: True
       - Index: 50
         Value: 4100
-        RequiredJob:
+        RequiredJobs:
             Baby_Mechanic: True
       - Index: 51
         Value: 4333
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Mechanic: True
       - Index: 52
         Value: 4065
-        RequiredJob:
+        RequiredJobs:
             Guillotine_Cross_T: True
       - Index: 53
         Value: 4334
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Guillotine_Cross_T: True
       - Index: 54
         Value: 4059
-        RequiredJob:
+        RequiredJobs:
             Guillotine_Cross: True
       - Index: 55
         Value: 4334
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Guillotine_Cross: True
       - Index: 56
         Value: 4101
-        RequiredJob:
+        RequiredJobs:
             Baby_Guillotine_Cross: True
       - Index: 57
         Value: 4334
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Guillotine_Cross: True
       - Index: 58
         Value: 4061
-        RequiredJob:
+        RequiredJobs:
             Warlock_T: True
       - Index: 59
         Value: 4335
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Warlock_T: True
       - Index: 60
         Value: 4055
-        RequiredJob:
+        RequiredJobs:
             Warlock: True
       - Index: 61
         Value: 4335
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Warlock: True
       - Index: 62
         Value: 4097
-        RequiredJob:
+        RequiredJobs:
             Baby_Warlock: True
       - Index: 63
         Value: 4335
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Warlock: True
       - Index: 64
         Value: 4063
-        RequiredJob:
+        RequiredJobs:
             Arch_Bishop_T: True
       - Index: 65
         Value: 4336
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Arch_Bishop_T: True
       - Index: 66
         Value: 4057
-        RequiredJob:
+        RequiredJobs:
             Arch_Bishop: True
       - Index: 67
         Value: 4336
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Arch_Bishop: True
       - Index: 68
         Value: 4099
-        RequiredJob:
+        RequiredJobs:
             Baby_Arch_Bishop: True
       - Index: 69
         Value: 4336
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Arch_Bishop: True
       - Index: 70
         Value: 4062
-        RequiredJob:
+        RequiredJobs:
             Ranger_T: True
       - Index: 71
         Value: 4337
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Ranger_T: True
       - Index: 72
         Value: 4056
-        RequiredJob:
+        RequiredJobs:
             Ranger: True
       - Index: 73
         Value: 4337
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Ranger: True
       - Index: 74
         Value: 4098
-        RequiredJob:
+        RequiredJobs:
             Baby_Ranger: True
       - Index: 75
         Value: 4337
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Ranger: True
       - Index: 76
         Value: 4073
-        RequiredJob:
+        RequiredJobs:
             Royal_Guard_T: True
       - Index: 77
         Value: 4338
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Royal_Guard_T: True
       - Index: 78
         Value: 4066
-        RequiredJob:
+        RequiredJobs:
             Royal_Guard: True
       - Index: 79
         Value: 4338
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Royal_Guard: True
       - Index: 80
         Value: 4102
-        RequiredJob:
+        RequiredJobs:
             Baby_Royal_Guard: True
       - Index: 81
         Value: 4338
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Royal_Guard: True
       - Index: 82
         Value: 4078
-        RequiredJob:
+        RequiredJobs:
             Genetic_T: True
       - Index: 83
         Value: 4339
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Genetic_T: True
       - Index: 84
         Value: 4071
-        RequiredJob:
+        RequiredJobs:
             Genetic: True
       - Index: 85
         Value: 4339
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Genetic: True
       - Index: 86
         Value: 4107
-        RequiredJob:
+        RequiredJobs:
             Baby_Genetic: True
       - Index: 87
         Value: 4339
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Genetic: True
       - Index: 88
         Value: 4079
-        RequiredJob:
+        RequiredJobs:
             Shadow_Chaser_T: True
       - Index: 89
         Value: 4340
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Shadow_Chaser_T: True
       - Index: 90
         Value: 4072
-        RequiredJob:
+        RequiredJobs:
             Shadow_Chaser: True
       - Index: 91
         Value: 4340
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Shadow_Chaser: True
       - Index: 92
         Value: 4108
-        RequiredJob:
+        RequiredJobs:
             Baby_Shadow_Chaser: True
       - Index: 93
         Value: 4340
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Shadow_Chaser: True
       - Index: 94
         Value: 4074
-        RequiredJob:
+        RequiredJobs:
             Sorcerer_T: True
       - Index: 95
         Value: 4341
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Sorcerer_T: True
       - Index: 96
         Value: 4067
-        RequiredJob:
+        RequiredJobs:
             Sorcerer: True
       - Index: 97
         Value: 4341
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Sorcerer: True
       - Index: 98
         Value: 4103
-        RequiredJob:
+        RequiredJobs:
             Baby_Sorcerer: True
       - Index: 99
         Value: 4341
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Sorcerer: True
       - Index: 100
         Value: 4077
-        RequiredJob:
+        RequiredJobs:
             Sura_T: True
       - Index: 101
         Value: 4342
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Sura_T: True
       - Index: 102
         Value: 4070
-        RequiredJob:
+        RequiredJobs:
             Sura: True
       - Index: 103
         Value: 4342
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Sura: True
       - Index: 104
         Value: 4106
-        RequiredJob:
+        RequiredJobs:
             Baby_Sura: True
       - Index: 105
         Value: 4342
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Sura: True
       - Index: 106
         Value: 4075
-        RequiredJob:
+        RequiredJobs:
             Minstrel_T: True
       - Index: 107
         Value: 4343
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Minstrel_T: True
       - Index: 108
         Value: 4068
-        RequiredJob:
+        RequiredJobs:
             Minstrel: True
       - Index: 109
         Value: 4343
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Minstrel: True
       - Index: 110
         Value: 4104
-        RequiredJob:
+        RequiredJobs:
             Baby_Minstrel: True
       - Index: 111
         Value: 4343
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Minstrel: True
       - Index: 112
         Value: 4076
-        RequiredJob:
+        RequiredJobs:
             Wanderer_T: True
       - Index: 113
         Value: 4344
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Wanderer_T: True
       - Index: 114
         Value: 4069
-        RequiredJob:
+        RequiredJobs:
             Wanderer: True
       - Index: 115
         Value: 4344
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Wanderer: True
       - Index: 116
         Value: 4105
-        RequiredJob:
+        RequiredJobs:
             Baby_Wanderer: True
       - Index: 117
         Value: 4344
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Baby_Wanderer: True
       - Index: 118
         Value: 4302
-        RequiredJob:
+        RequiredJobs:
             Sky_Emperor: True
       - Index: 119
         Value: 4239
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Sky_Emperor: True
       - Index: 120
         Value: 4303
-        RequiredJob:
+        RequiredJobs:
             Soul_Ascetic: True
       - Index: 121
         Value: 4240
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Soul_Ascetic: True
       - Index: 122
         Value: 4304
-        RequiredJob:
+        RequiredJobs:
             Shinkiro: True
       - Index: 123
         Value: 4211
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Shinkiro: True
       - Index: 124
         Value: 4305
-        RequiredJob:
+        RequiredJobs:
             Shiranui: True
       - Index: 125
         Value: 4212
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Shiranui: True
       - Index: 126
         Value: 4306
-        RequiredJob:
+        RequiredJobs:
             Night_Watch: True
       - Index: 127
         Value: 4215
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Night_Watch: True
       - Index: 128
         Value: 4307
-        RequiredJob:
+        RequiredJobs:
             Hyper_Novice: True
       - Index: 129
         Value: 4190
         CostsHuman:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Hyper_Novice: True
       - Index: 130
         Value: 4308
-        RequiredJob:
+        RequiredJobs:
             Spirit_Handler: True
       - Index: 131
         Value: 4218
         CostsDoram:
             RequiredItem: Costume_Ticket
-        RequiredJob:
+        RequiredJobs:
             Spirit_Handler: True

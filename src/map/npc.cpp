@@ -356,8 +356,8 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 		}
 
 #if PACKETVER >= 20231220
-		if (constant == LOOK_BODY2 && this->nodeExists(node, "RequiredJob")) {
-			const ryml::NodeRef& jobNode = optionNode["RequiredJob"];
+		if (constant == LOOK_BODY2 && this->nodeExists(node, "RequiredJobs")) {
+			const ryml::NodeRef& jobNode = optionNode["RequiredJobs"];
 
 			for (const auto& jobit : jobNode) {
 				std::string jobName;
@@ -366,11 +366,11 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 				int64 job_id;
 
 				if (!script_get_constant(job_name_constant.c_str(), &job_id)) {
-					this->invalidWarning(optionNode["RequiredJob"], "Job %s does not exist.\n", jobName.c_str());
+					this->invalidWarning(optionNode["RequiredJobs"], "Job %s does not exist.\n", jobName.c_str());
 					return 0;
 				}
 
-				entry->required_job.push_back(job_id);
+				entry->required_jobs.push_back(job_id);
 			}
 		}
 #endif

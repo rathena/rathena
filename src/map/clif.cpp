@@ -22892,8 +22892,8 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 	switch( look ){
 		case LOOK_BODY2:
 #if PACKETVER >= 20231220
-			if (!entry->required_job.empty()) {
-				if (std::find(entry->required_job.begin(), entry->required_job.end(), sd->status.class_) == entry->required_job.end()) {
+			if (!entry->required_jobs.empty()) {
+				if (std::find(entry->required_jobs.begin(), entry->required_jobs.end(), sd->status.class_) == entry->required_jobs.end()) {
 					return false;
 				}
 			}

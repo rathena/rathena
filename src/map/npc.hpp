@@ -58,7 +58,7 @@ struct s_stylist_entry{
 	uint32 value;
 	std::shared_ptr<s_stylist_costs> human;
 	std::shared_ptr<s_stylist_costs> doram;
-	std::vector<uint16> required_job;
+	std::vector<uint16> required_jobs;
 };
 
 struct s_stylist_list{
