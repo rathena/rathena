@@ -25,7 +25,7 @@
 # - Look                     Look that will be changed.
 #   Options                  Possible options to select from.
 #     - Index                Client side index of the option.
-#       Value                Value of the look (can also be an item name).
+#       Value                Value of the look (can also be an item name or job constant).
 #       CostsHuman:          Costs for human players.
 #           Price            Required zeny. (Default: 0)
 #           RequiredItem     Required item. (Default: None)
