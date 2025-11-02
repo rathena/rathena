@@ -44074,7 +44074,7 @@ Body:
           - Boina_Sustenida_BR    # 400476
     Script: |
       bonus2 bSkillUseSPrate,"WM_SEVERE_RAINSTORM",10;
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5*getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",5*getequiprefinerycnt(EQI_HAND_R);
   - Combos:
       - Combo:
           - Gigantic_Bow    # 18122
@@ -44290,7 +44290,7 @@ Body:
           - Comp_Record_Archer_TH    # 490401
     Script: |
       bonus2 bAddSize,Size_All,15;
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",30;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",30;
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1500;
   - Combos:
       - Combo:
@@ -44950,7 +44950,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
       bonus bLongAtkRate,15;
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10*(.@r/2);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",10*(.@r/2);
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",10*(.@r/2);
   - Combos:
       - Combo:
@@ -45900,8 +45900,9 @@ Body:
           - Time_Thief_Earring    # 490258
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10*(.@r/2);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",10*(.@r/2);
       bonus2 bSkillAtk,"SC_TRIANGLESHOT",10*(.@r/2);
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",5*(.@r/3);
       bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",5*(.@r/3);
       if (.@r>=12) {
          skill "WM_SEVERE_RAINSTORM",5;
@@ -45941,7 +45942,7 @@ Body:
       bonus2 bMagicAtkEle,Ele_Earth,8;
       bonus2 bMagicAtkEle,Ele_Wind,8;
       bonus2 bSkillAtk,"AG_ROCK_DOWN",4*(.@r/2);
-      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",10*(.@r/3);
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",10*(.@r/3);
       bonus2 bSkillAtk,"WL_EARTHSTRAIN",10*(.@r/3);
   - Combos:
       - Combo:
@@ -46661,6 +46662,7 @@ Body:
       bonus2 bAddEle,Ele_All,20;
       bonus bCritical,5;
       bonus2 bSkillAtk,"ABC_FRENZY_SHOT",40;
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",20;
       bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",20;
   - Combos:
       - Combo:
@@ -47525,6 +47527,7 @@ Body:
           - Vivatus_F_C_Bow    # 700033
     Script: |
       bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",25;
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",25;
       bonus2 bSkillAtk,"ABC_FRENZY_SHOT",25;
       bonus2 bSubRace,RC_Player_Human,40;
       bonus2 bSubRace,RC_Player_Doram,40;
@@ -47547,6 +47550,7 @@ Body:
           - Vivatus_F_T_Staff    # 640021
     Script: |
       bonus2 bSkillAtk,"AG_CRIMSON_ARROW",25;
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",25;
       bonus2 bSkillAtk,"AG_FROZEN_SLASH",25;
       bonus2 bSkillAtk,"AG_STORM_CANNON",25;
       bonus2 bSkillAtk,"AG_ROCK_DOWN",25;
@@ -47608,6 +47612,7 @@ Body:
           - Vivatus_F_Wand    # 550029
     Script: |
       bonus2 bSkillAtk,"CD_ARBITRIUM",25;
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",25;
       bonus2 bSkillAtk,"CD_PNEUMATICUS_PROCELLA",25;
       bonus2 bSkillAtk,"CD_FRAMEN",25;
       bonus2 bSubRace,RC_Player_Human,10;
@@ -48142,6 +48147,7 @@ Body:
       bonus bAspd,1;
       bonus2 bSkillAtk,"SJ_FLASHKICK",5*(.@r/3);
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",5*(.@r/3);
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",5*(.@r/3);
   - Combos:
       - Combo:
           - Hunter_Bow_IL    # 18174
@@ -50337,7 +50343,7 @@ Body:
     Script: |
       bonus bLongAtkRate,8;
       if (getequiprefinerycnt(EQI_HAND_R)>=11)
-         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",(readparam(bAgi)+readparam(bDex))/12;
+         bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",(readparam(bAgi)+readparam(bDex))/12;
   - Combos:
       - Combo:
           - Unknown_Hero_Ring_WM    # 490521
@@ -50704,7 +50710,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bAtkRate,3*(.@r/3);
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10*(.@r/3);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",10*(.@r/3);
   - Combos:
       - Combo:
           - Toy_Ring_TH    # 490390
@@ -50800,6 +50806,7 @@ Body:
       bonus bHit,30;
       bonus bAspd,1;
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",5*(.@r/3);
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",5*(.@r/3);
       bonus2 bSkillAtk,"SJ_FLASHKICK",5*(.@r/3);
   - Combos:
       - Combo:
@@ -53494,6 +53501,7 @@ Body:
       skill "AL_BLESSING",10;
       bonus bDelayrate,-20;
       bonus2 bSkillAtk,"AG_CRIMSON_ARROW",BaseLevel/10;
+      bonus2 bSkillAtk,"AG_CRIMSON_ARROW_ATK",BaseLevel/10;
       bonus2 bSkillAtk,"AG_FROZEN_SLASH",BaseLevel/10;
       bonus2 bSkillAtk,"AG_STORM_CANNON",BaseLevel/10;
       bonus2 bSkillAtk,"AG_ROCK_DOWN",BaseLevel/10;
@@ -53505,6 +53513,7 @@ Body:
       skill "AL_BLESSING",10;
       bonus bDelayrate,-20;
       bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",BaseLevel/10;
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",BaseLevel/10;
       bonus2 bSkillAtk,"ABC_FRENZY_SHOT",BaseLevel/10;
   - Combos:
       - Combo:
@@ -53556,6 +53565,7 @@ Body:
       skill "AL_BLESSING",10;
       bonus bDelayrate,-20;
       bonus2 bSkillAtk,"CD_ARBITRIUM",BaseLevel/10;
+      bonus2 bSkillAtk,"CD_ARBITRIUM_ATK",BaseLevel/10;
       bonus2 bSkillAtk,"CD_PNEUMATICUS_PROCELLA",BaseLevel/10;
       bonus2 bSkillAtk,"CD_FRAMEN",BaseLevel/10;
   - Combos:
@@ -53587,6 +53597,7 @@ Body:
       bonus bDelayrate,-20;
       bonus2 bSkillAtk,"TR_RHYTHMSHOOTING",BaseLevel/10;
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM",BaseLevel/10;
+      bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",BaseLevel/10;
   - Combos:
       - Combo:
           - S_Circlet_Of_Time_RL    # 19488
@@ -54639,7 +54650,7 @@ Body:
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus2 bSkillUseSP,"WM_SEVERE_RAINSTORM",60;
       bonus2 bAddRace,RC_All,4*(.@r/2);
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",10*(.@r/2);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",10*(.@r/2);
   - Combos:
       - Combo:
           - Old_Mitra    # 18972
@@ -54965,7 +54976,7 @@ Body:
       bonus bLongAtkRate,5*.@r;
       bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",5*.@r;
       bonus2 bSkillAtk,"GN_CARTCANNON",5*.@r;
-      bonus2 bSkillAtk,"GN_CRAZYWEED",5*.@r;
+      bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",5*.@r;
   - Combos:
       - Combo:
           - Gertie_Memory    # 29603
@@ -55055,7 +55066,7 @@ Body:
       .@r = getequiprefinerycnt(EQI_GARMENT)/3;
       bonus bVariableCastrate,-10*.@r;
       bonus2 bMagicAtkEle,Ele_Neutral,5*.@r;
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5*.@r;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",5*.@r;
       bonus2 bSkillAtk,"WM_METALICSOUND",5*.@r;
       bonus2 bSkillAtk,"WM_REVERBERATION",5*.@r;
   - Combos:
@@ -55216,7 +55227,7 @@ Body:
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
       bonus bDelayrate,-5;
       bonus2 bSkillAtk,"WL_JACKFROST",10*(.@r/2);
-      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",10*(.@r/2);
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",10*(.@r/2);
       bonus2 bMagicAddSize,Size_All,4*(.@r/3);
       if (.@r>=11) {
          bonus2 bSkillCooldown,"WL_JACKFROST",-2500;
@@ -55252,7 +55263,7 @@ Body:
     Script: |
       bonus bDelayrate,-10;
       bonus bAspdRate,10;
-      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",10*(getequiprefinerycnt(EQI_HEAD_TOP)/2);
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",10*(getequiprefinerycnt(EQI_HEAD_TOP)/2);
   - Combos:
       - Combo:
           - T_Gem_Int_TH3    # 313354
@@ -55273,7 +55284,7 @@ Body:
           - Comp_ICC_Ring_TH    # 490604
     Script: |
       bonus4 bAutoSpellOnSkill,"WL_CHAINLIGHTNING","WL_CHAINLIGHTNING",5,350;
-      bonus2 bSkillAtk,"WL_CHAINLIGHTNING",70;
+      bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",70;
   - Combos:
       - Combo:
           - Old_Rune_Circlet    # 18971
@@ -55354,7 +55365,7 @@ Body:
           - Old_Dying_Swan    # 18981
           - Old_DetachmentsRing_TH    # 490613
     Script: |
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",60;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",60;
   - Combos:
       - Combo:
           - Astraea_Helm_LT    # 400699
@@ -57367,7 +57378,7 @@ Body:
           - WK_Mantle_Magic_TH    # 480500
     Script: |
       if ((getequiprefinerycnt(EQI_HEAD_TOP) + getequiprefinerycnt(EQI_GARMENT)) >= 21) {
-         bonus2 bSkillAtk,"WL_CHAINLIGHTNING",50;
+         bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",50;
          bonus2 bSkillAtk,"WL_JACKFROST",50;
       }
   - Combos:
@@ -57448,8 +57459,10 @@ Body:
           - S_Circlet_Of_Time_SJ    # 19486
           - WK_Mantle_Melee_TH    # 480498
     Script: |
-      if ((getequiprefinerycnt(EQI_HEAD_TOP) + getequiprefinerycnt(EQI_GARMENT)) >= 21)
-         bonus2 bSkillAtk,"SJ_FALLINGSTAR",50;
+      if ((getequiprefinerycnt(EQI_HEAD_TOP) + getequiprefinerycnt(EQI_GARMENT)) >= 21) {
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",50;
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",50;
+      }
   - Combos:
       - Combo:
           - S_Circlet_Of_Time_NV    # 19491
@@ -58328,7 +58341,7 @@ Body:
           - Emerald_Ring_LT    # 490526
     Script: |
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000;
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",20;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",20;
       bonus2 bSkillAtk,"TR_METALIC_FURY",20;
   - Combos:
       - Combo:
@@ -59645,7 +59658,8 @@ Body:
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus bAspdRate,10;
          bonus2 bSkillAtk,"WZ_METEOR",5*(.@r/2);
-         bonus2 bSkillAtk,"AB_DUPLELIGHT",5*(.@r/2);
+         bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",5*(.@r/2);
+         bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",5*(.@r/2);
       }
   - Combos:
       - Combo:
@@ -59802,7 +59816,7 @@ Body:
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_R);
       bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000;
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",5*(.@r/2);
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",5*(.@r/2);
       bonus2 bSkillAtk,"CG_ARROWVULCAN",5*(.@r/2);
   - Combos:
       - Combo:
@@ -60306,7 +60320,7 @@ Body:
       .@sum = getequiprefinerycnt(EQI_HAND_R)+getequiprefinerycnt(EQI_SHOES);
       bonus2 bAddRace,RC_All,15;
       bonus2 bSkillAtk,"GN_HELLS_PLANT",3*.@r;
-      bonus2 bSkillAtk,"GN_CRAZYWEED",3*.@r;
+      bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",3*.@r;
       if (.@sum>=18) {
          bonus2 bVariableCastrate,"GN_CRAZYWEED",-100;
          if (.@sum>=22) {
