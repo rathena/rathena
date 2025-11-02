@@ -1968,7 +1968,8 @@ ACMD_FUNC(bodystyle){
 	}
 
 	if( message == nullptr || !*message ){
-		clif_displaymessage( fd, msg_txt( sd, 739 ) ); // Please enter a body style (usage: @bodystyle <job ID>).
+		clif_displaymessage( fd, msg_txt( sd, 739 ) ); // Please enter a body style (usage: @bodystyle <job ID>)
+		clif_displaymessage( fd, msg_txt( sd, 1541 ) ); // Or @bodystyle <off> to restore default job bodystyle.
 		return -1;
 	}
 
@@ -1987,7 +1988,8 @@ ACMD_FUNC(bodystyle){
 	uint16 body_style = 0;
 
 	if( sscanf( message, "%hu", &body_style ) < 1 ){
-		clif_displaymessage( fd, msg_txt( sd, 739 ) ); // Please enter a body style (usage: @bodystyle <job ID>).
+		clif_displaymessage( fd, msg_txt( sd, 739 ) ); // Please enter a body style (usage: @bodystyle <job ID>)
+		clif_displaymessage( fd, msg_txt( sd, 1541 ) ); // Or @bodystyle <off> to restore default job bodystyle.
 		return -1;
 	}
 
