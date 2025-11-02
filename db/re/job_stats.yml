@@ -77,11 +77,12 @@
 #   BaseAp:                  Base AP per base level.
 #     - Level                Base level.
 #       Ap                   Base AP.
+#   AlternateOutfits:        Alternate Jobs outfits. (Default: empty)
 ###########################################################################
 
 Header:
   Type: JOB_STATS
-  Version: 3
+  Version: 4
 
 Body:
   - Jobs:
@@ -5032,7 +5033,7 @@ Body:
   - Jobs:
       Dragon_Knight: true
       Dragon_Knight2: true
-    MaxWeight: 35000
+    MaxWeight: 45000
     HpFactor: 150
     SpIncrease: 300
     BonusStats:
@@ -5173,7 +5174,7 @@ Body:
   - Jobs:
       Meister: true
       Meister2: true
-    MaxWeight: 38000
+    MaxWeight: 48000
     HpFactor: 90
     SpIncrease: 400
     BonusStats:
@@ -5318,7 +5319,7 @@ Body:
         Pow: 1
   - Jobs:
       Shadow_Cross: true
-    MaxWeight: 32000
+    MaxWeight: 42000
     HpFactor: 110
     SpIncrease: 400
     BonusStats:
@@ -5463,7 +5464,7 @@ Body:
         Crt: 1
   - Jobs:
       Arch_Mage: true
-    MaxWeight: 30000
+    MaxWeight: 40000
     HpFactor: 55
     SpIncrease: 900
     BonusStats:
@@ -5608,7 +5609,7 @@ Body:
         Spl: 1
   - Jobs:
       Cardinal: true
-    MaxWeight: 30000
+    MaxWeight: 40000
     HpFactor: 75
     SpIncrease: 800
     BonusStats:
@@ -5755,7 +5756,7 @@ Body:
   - Jobs:
       Windhawk: true
       Windhawk2: true
-    MaxWeight: 32000
+    MaxWeight: 42000
     HpFactor: 85
     SpIncrease: 400
     BonusStats:
@@ -5901,7 +5902,7 @@ Body:
   - Jobs:
       Imperial_Guard: true
       Imperial_Guard2: true
-    MaxWeight: 35000
+    MaxWeight: 45000
     HpFactor: 110
     HpIncrease: 700
     SpIncrease: 400
@@ -6047,7 +6048,7 @@ Body:
         Spl: 1
   - Jobs:
       Biolo: true
-    MaxWeight: 32000
+    MaxWeight: 42000
     HpFactor: 90
     SpIncrease: 900
     BonusStats:
@@ -6192,7 +6193,7 @@ Body:
         Pow: 1
   - Jobs:
       Abyss_Chaser: true
-    MaxWeight: 28000
+    MaxWeight: 42000
     HpFactor: 85
     SpIncrease: 400
     BonusStats:
@@ -6337,7 +6338,7 @@ Body:
         Pow: 1
   - Jobs:
       Elemental_Master: true
-    MaxWeight: 30000
+    MaxWeight: 40000
     HpFactor: 75
     SpIncrease: 900
     BonusStats:
@@ -6483,7 +6484,7 @@ Body:
         Con: 1
   - Jobs:
       Inquisitor: true
-    MaxWeight: 30000
+    MaxWeight: 42000
     HpFactor: 90
     HpIncrease: 650
     SpIncrease: 400
@@ -6628,7 +6629,7 @@ Body:
         Con: 1
   - Jobs:
       Troubadour: true
-    MaxWeight: 32000
+    MaxWeight: 42000
     HpFactor: 75
     HpIncrease: 300
     SpIncrease: 400
@@ -6773,7 +6774,7 @@ Body:
         Pow: 1
   - Jobs:
       Trouvere: true
-    MaxWeight: 32000
+    MaxWeight: 42000
     HpFactor: 75
     HpIncrease: 300
     SpIncrease: 400

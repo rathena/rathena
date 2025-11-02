@@ -967,6 +967,10 @@ AC_COMPILE_IFELSE(
 # Check for libraries and header files.
 #
 
+#
+# getaddrinfo - used to retrive ips from name
+#
+AC_CHECK_FUNC([getaddrinfo],[CPPFLAGS="$CPPFLAGS -DHAVE_GETADDRINFO"])
 
 #
 # setrlimit - used to set the socket limit
