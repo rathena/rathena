@@ -1967,7 +1967,12 @@ ACMD_FUNC(bodystyle){
 		return -1;
 	}
 
-	// Handle the 'off' alias to revert to the default bodystyle [Gidz]
+	if( message == nullptr || !*message ){
+		clif_displaymessage( fd, msg_txt( sd, 739 ) ); // Please enter a body style (usage: @bodystyle <job ID>).
+		return -1;
+	}
+
+	// Handle the 'off' alias to revert to the default bodystyle
 	if (!strcasecmp(message, "off")) {
 		if (sd->vd.look[LOOK_BODY2] != sd->status.class_) {
 			pc_changelook(sd, LOOK_BODY2, sd->status.class_);
@@ -1981,7 +1986,7 @@ ACMD_FUNC(bodystyle){
 
 	uint16 body_style = 0;
 
-	if( message == nullptr || !*message || sscanf( message, "%hu", &body_style ) < 1 ){
+	if( sscanf( message, "%hu", &body_style ) < 1 ){
 		clif_displaymessage( fd, msg_txt( sd, 739 ) ); // Please enter a body style (usage: @bodystyle <job ID>).
 		return -1;
 	}
