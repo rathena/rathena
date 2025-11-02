@@ -71,7 +71,7 @@ private:
 	bool parseCostNode( std::shared_ptr<s_stylist_entry> entry, bool doram, const ryml::NodeRef& node );
 
 public:
-	StylistDatabase() : TypesafeYamlDatabase( "STYLIST_DB", 2 ){
+	StylistDatabase() : TypesafeYamlDatabase( "STYLIST_DB", 2, 1 ){
 
 	}
 
