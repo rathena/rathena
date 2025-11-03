@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `buyingstores` (
 
 CREATE TABLE IF NOT EXISTS `cart_inventory` (
   `id` int(11) NOT NULL auto_increment,
-  `char_id` int(11) NOT NULL default '0',
+  `char_id` int(11) unsigned NOT NULL default '0',
   `nameid` int(10) unsigned NOT NULL default '0',
   `amount` int(11) NOT NULL default '0',
   `equip` int(11) unsigned NOT NULL default '0',
@@ -329,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `id` bigint(20) unsigned NOT NULL auto_increment,
   `time` datetime NOT NULL,
   `char_msg` varchar(255) NOT NULL default 'char select',
-  `account_id` int(11) NOT NULL default '0',
+  `account_id` int(11) unsigned NOT NULL default '0',
   `char_num` tinyint(4) NOT NULL default '0',
   `name` varchar(23) NOT NULL default '',
   `str` int(11) unsigned NOT NULL default '0',
@@ -398,7 +398,7 @@ INSERT INTO `clan_alliance` VALUES ('4', '1', '2', 'Arcwand Clan');
 
 CREATE TABLE IF NOT EXISTS `elemental` (
   `ele_id` int(11) unsigned NOT NULL auto_increment,
-  `char_id` int(11) NOT NULL,
+  `char_id` int(11) unsigned NOT NULL,
   `class` mediumint(9) unsigned NOT NULL default '0',
   `mode` int(11) unsigned NOT NULL default '1',
   `hp` int(11) unsigned NOT NULL default '0',
@@ -422,8 +422,8 @@ CREATE TABLE IF NOT EXISTS `elemental` (
 --
 
 CREATE TABLE IF NOT EXISTS `friends` (
-  `char_id` int(11) NOT NULL default '0',
-  `friend_id` int(11) NOT NULL default '0',
+  `char_id` int(11) unsigned NOT NULL default '0',
+  `friend_id` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY (`char_id`, `friend_id`)
 ) ENGINE=MyISAM;
 
@@ -658,7 +658,7 @@ CREATE TABLE IF NOT EXISTS `guild_storage_log` (
 
 CREATE TABLE IF NOT EXISTS `homunculus` (
   `homun_id` int(11) NOT NULL auto_increment,
-  `char_id` int(11) NOT NULL,
+  `char_id` int(11) unsigned NOT NULL,
   `class` mediumint(9) unsigned NOT NULL default '0',
   `prev_class` mediumint(9) NOT NULL default '0',
   `name` varchar(24) NOT NULL default '',
@@ -689,7 +689,7 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
 --
 
 CREATE TABLE IF NOT EXISTS `hotkey` (
-  `char_id` INT(11) NOT NULL,
+  `char_id` INT(11) unsigned NOT NULL,
   `hotkey` TINYINT(2) unsigned NOT NULL,
   `type` TINYINT(1) unsigned NOT NULL default '0',
   `itemskill_id` INT(11) unsigned NOT NULL default '0',
@@ -898,7 +898,7 @@ CREATE TABLE IF NOT EXISTS `memo` (
 
 CREATE TABLE IF NOT EXISTS `mercenary` (
   `mer_id` int(11) unsigned NOT NULL auto_increment,
-  `char_id` int(11) NOT NULL,
+  `char_id` int(11) unsigned NOT NULL,
   `class` mediumint(9) unsigned NOT NULL default '0',
   `hp` int(11) unsigned NOT NULL default '0',
   `sp` int(11) unsigned NOT NULL default '0',
@@ -912,8 +912,8 @@ CREATE TABLE IF NOT EXISTS `mercenary` (
 --
 
 CREATE TABLE IF NOT EXISTS `mercenary_owner` (
-  `char_id` int(11) NOT NULL,
-  `merc_id` int(11) NOT NULL default '0',
+  `char_id` int(11) unsigned NOT NULL,
+  `merc_id` int(11) unsigned NOT NULL default '0',
   `arch_calls` int(11) NOT NULL default '0',
   `arch_faith` int(11) NOT NULL default '0',
   `spear_calls` int(11) NOT NULL default '0',
@@ -1073,7 +1073,7 @@ CREATE TABLE IF NOT EXISTS `skillcooldown_homunculus` (
 --
 
 CREATE TABLE IF NOT EXISTS `skillcooldown_mercenary` (
-  `mer_id` int(11) NOT NULL,
+  `mer_id` int(11) unsigned NOT NULL,
   `skill` smallint(11) unsigned NOT NULL DEFAULT '0',
   `tick` bigint(20) NOT NULL,
   PRIMARY KEY (`mer_id`,`skill`)

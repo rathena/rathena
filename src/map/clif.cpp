@@ -3914,6 +3914,20 @@ void clif_changemanner( map_session_data& sd ) {
 /// 00c3 <id>.L <type>.B <value>.B (ZC_SPRITE_CHANGE)
 /// 01d7 <id>.L <type>.B <value1>.W <value2>.W (ZC_SPRITE_CHANGE2)
 void clif_sprite_change( block_list *bl, int32 id, int32 type, int32 val, int32 val2, enum send_target target ){
+	switch( type ){
+		case LOOK_BODY2:
+#if PACKETVER < 20231220
+			if( val > JOB_SECOND_JOB_START && val < JOB_SECOND_JOB_END ){
+				val = 1;
+			}else{
+				val = 0;
+			}
+#elif PACKETVER < 20141022
+			return;
+#endif
+			break;
+	}
+
 	PACKET_ZC_SPRITE_CHANGE p = {};
 
 	p.packetType = sendLookType;
@@ -4040,13 +4054,13 @@ void clif_changelook(block_list *bl, int32 type, int32 val) {
 #if PACKETVER < 20150513
 				return;
 #else
-				if( val != 0 && sc != nullptr && sc->option&OPTION_COSTUME ){
- 					val = 0;
+				if( sc != nullptr && sc->option&OPTION_COSTUME ){
+ 					val = sd->status.class_;
 				}
 
  				vd->look[LOOK_BODY2] = val;
-#endif
 				break;
+#endif
 	}
 
 	// prevent leaking the presence of GM-hidden objects
@@ -5650,64 +5664,78 @@ int32 clif_insight(block_list *bl,va_list ap)
 }
 
 
-/// Updates whole skill tree (ZC_SKILLINFO_LIST).
-/// 010f <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B }*
-void clif_skillinfoblock(map_session_data *sd)
-{
-	int32 fd;
-	int32 i,len,id;
+/// Updates whole skill tree.
+/// 010f <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <skill name>.24B <upgradable>.B }* (ZC_SKILLINFO_LIST)
+/// 0b32 <packet len>.W { <skill id>.W <type>.L <level>.W <sp cost>.W <attack range>.W <upgradable>.B <level2>.B }* (ZC_SKILLINFO_LIST3)
+void clif_skillinfoblock(map_session_data& sd){
+	int32 i, c, id;
 
-	nullpo_retv(sd);
-
-	fd = sd->fd;
-	if (!session_isActive(fd))
+	if (!session_isActive(sd.fd))
 		return;
 
-	WFIFOHEAD(fd, MAX_SKILL * 37 + 4);
-	WFIFOW(fd,0) = 0x10f;
+	PACKET_ZC_SKILLINFO_LIST* p = reinterpret_cast<PACKET_ZC_SKILLINFO_LIST*>( packet_buffer );
+
+	p->packetType = HEADER_ZC_SKILLINFO_LIST;
+	p->packetLength = sizeof(*p);
+
 	bool haveCallPartnerSkill = false;
-	for ( i = 0, len = 4; i < MAX_SKILL; i++)
+
+	for ( i = 0, c = 0; i < MAX_SKILL; i++)
 	{
-		if( (id = sd->status.skill[i].id) != 0 )
-		{
-			// workaround for bugreport:5348
-			if (len + 37 > 8192)
-				break;
-			
+		if( (id = sd.status.skill[i].id) != 0 )
+		{			
 			// skip WE_CALLPARTNER and send it in special way
 			if (id == WE_CALLPARTNER) {
 				haveCallPartnerSkill = true;
 				continue;
 			}
-			WFIFOW(fd,len)   = id;
-			WFIFOL(fd,len+2) = skill_get_inf(id);
-			WFIFOW(fd,len+6) = sd->status.skill[i].lv;
-			WFIFOW(fd,len+8) = skill_get_sp(id,sd->status.skill[i].lv);
-			WFIFOW(fd,len+10)= skill_get_range2(sd,id,sd->status.skill[i].lv,false);
-			safestrncpy(WFIFOCP(fd,len+12), skill_get_name(id), NAME_LENGTH);
-			if(sd->status.skill[i].flag == SKILL_FLAG_PERMANENT)
-				WFIFOB(fd,len+36) = (sd->status.skill[i].lv < skill_tree_get_max(id, sd->status.class_))? 1:0;
+
+			const s_skill& skill = sd.status.skill[i];
+			SKILLDATA& data = p->skills[c];
+
+			// workaround for bugreport:5348
+			if( ( p->packetLength + sizeof( data ) ) > 8192 ){
+				break;
+			}
+
+			data.id = skill.id;
+			data.inf = skill_get_inf(skill.id);
+			data.level = skill.lv;
+
+#if PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
+			data.level2 = skill.lv;
+#else
+			safestrncpy(data.name, skill_get_name(skill.id), sizeof(data.name));
+#endif
+
+			data.sp = skill_get_sp(skill.id,skill.lv);
+			data.range2 = skill_get_range2(&sd, skill.id, skill.lv, false);
+
+			if(skill.flag == SKILL_FLAG_PERMANENT && skill.lv < skill_tree_get_max(skill.id, sd.status.class_))
+				data.upFlag = 1;
 			else
-				WFIFOB(fd,len+36) = 0;
-			len += 37;
+				data.upFlag = 0;
+
+			p->packetLength += static_cast<decltype(p->packetLength)>(sizeof(data));
+			c++;
 		}
 	}
-	WFIFOW(fd,2)=len;
-	WFIFOSET(fd,len);
+
+	clif_send(p,p->packetLength,&sd,SELF);
 
 	// adoption fix
 	if (haveCallPartnerSkill) {
-		clif_addskill(*sd, WE_CALLPARTNER);
-		clif_skillinfo( *sd, WE_CALLPARTNER );
+		clif_addskill(sd, WE_CALLPARTNER);
+		clif_skillinfo( sd, WE_CALLPARTNER );
 	}
 
 	// workaround for bugreport:5348; send the remaining skills one by one to bypass packet size limit
 	for ( ; i < MAX_SKILL; i++)
 	{
-		if( (id = sd->status.skill[i].id) != 0 && ( id != WE_CALLPARTNER || !haveCallPartnerSkill ) )
+		if( (id = sd.status.skill[i].id) != 0 && ( id != WE_CALLPARTNER || !haveCallPartnerSkill ) )
 		{
-			clif_addskill(*sd, id);
-			clif_skillinfo( *sd, id );
+			clif_addskill(sd, id);
+			clif_skillinfo( sd, id );
 		}
 	}
 }
@@ -5770,7 +5798,7 @@ void clif_deleteskill(map_session_data& sd, uint16 skill_id, bool skip_infoblock
 #if PACKETVER_MAIN_NUM >= 20190807 || PACKETVER_RE_NUM >= 20190807 || PACKETVER_ZERO_NUM >= 20190918
 	if (!skip_infoblock)
 #endif
-		clif_skillinfoblock(&sd);
+		clif_skillinfoblock(sd);
 }
 
 /// Updates a skill in the skill tree.
@@ -10847,7 +10875,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 	if(sd->state.connect_new) {
 		int32 lv;
 		guild_notice = true;
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 		clif_hotkeys_send(sd,0);
 #if PACKETVER_MAIN_NUM >= 20190522 || PACKETVER_RE_NUM >= 20190508 || PACKETVER_ZERO_NUM >= 20190605
 		clif_hotkeys_send(sd,1);
@@ -22931,7 +22959,13 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 		return;
 	}
 
-#if PACKETVER >= 20180516
+#if PACKETVER >= 20231220
+	if( p->BodyStyle != 0 ){
+		// TODO: Unsupported for now => This is job specific now
+		clif_stylist_response( sd, true );
+		return;
+	}
+#elif PACKETVER >= 20180516
 	if( p->BodyStyle != 0 && ( sd->class_ & JOBL_THIRD ) != 0 && ( sd->class_ & JOBL_FOURTH ) == 0 && !clif_parse_stylist_buy_sub( sd, LOOK_BODY2, p->BodyStyle ) ){
 		clif_stylist_response( sd, true );
 		return;

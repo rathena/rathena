@@ -26455,7 +26455,7 @@ void skill_reload (void) {
 
 	for( map_session_data *sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) ) {
 		pc_validate_skill(sd);
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 	}
 	mapit_free(iter);
 }

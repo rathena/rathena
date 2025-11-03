@@ -973,7 +973,7 @@ int32 clif_outsight(block_list *bl,va_list ap);	// map_forallinmovearea callback
 
 void clif_class_change( block_list& bl, int32 class_, enum send_target target = AREA, map_session_data* sd = nullptr );
 
-void clif_skillinfoblock(map_session_data *sd);
+void clif_skillinfoblock(map_session_data& sd);
 void clif_skillup( map_session_data& sd, uint16 skill_id, uint16 lv, uint16 range, bool upgradable );
 void clif_skillinfo( map_session_data& sd, uint16 skill_id, int32 inf = INF_PASSIVE_SKILL );
 void clif_addskill(map_session_data& sd, uint16 skill_id);

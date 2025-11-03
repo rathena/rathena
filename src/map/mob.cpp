@@ -2892,12 +2892,17 @@ int32 mob_getdroprate(block_list *src, std::shared_ptr<s_mob_db> mob, int32 base
 /**
  * Returns the MVP player based on the monster's damage log
  * This player has the highest value when damage dealt and damage tanked are added together
+ * @param first_sd: Player with loot priority (for custom legacy behavior)
  * @return The MVP player
  */
-map_session_data* mob_data::get_mvp_player() {
+map_session_data* mob_data::get_mvp_player(map_session_data* first_sd) {
 	// There cannot be an MVP player if the monster is not an MVP
 	if (this->get_bosstype() != BOSSTYPE_MVP)
 		return nullptr;
+
+	// Skip MVP player determination and return the player with loot priority instead
+	if (battle_config.mvp_to_loot_priority)
+		return first_sd;
 
 	int64 mvp_damage = 0;
 	map_session_data* mvp_sd = nullptr;
@@ -3063,7 +3068,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	merckillonly = (bool)((dmgbltypes & BL_MER) && !(dmgbltypes & ~BL_MER));
 
 	// Determine MVP (need to do it here so that it's not influenced by first attacker bonus below)
-	map_session_data* mvp_sd = md->get_mvp_player();
+	map_session_data* mvp_sd = md->get_mvp_player(first_sd);
 
 	if(battle_config.exp_calc_type == 2 && count > 1) {	//Apply first-attacker 200% exp share bonus
 		s_dmglog& entry = md->dmglog[0];

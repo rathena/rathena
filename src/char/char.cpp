@@ -550,11 +550,18 @@ int32 char_memitemdata_to_sql(const struct item items[], int32 max, int32 id, en
 			tablename = schema_config.cart_db;
 			selectoption = "char_id";
 			break;
-		case TABLE_STORAGE:
-			printname = inter_premiumStorage_getPrintableName(stor_id);
-			tablename = inter_premiumStorage_getTableName(stor_id);
+		case TABLE_STORAGE: {
+			std::shared_ptr<s_storage_table> storage_info = interServerDb.find( stor_id );
+
+			if( storage_info == nullptr ){
+				ShowError( "Invalid storage with id %d\n", id );
+				return 1;
+			}
+
+			printname = storage_info->name;
+			tablename = storage_info->table;
 			selectoption = "account_id";
-			break;
+			} break;
 		case TABLE_GUILD_STORAGE:
 			printname = "Guild Storage";
 			tablename = schema_config.guild_storage_db;
@@ -763,13 +770,20 @@ bool char_memitemdata_from_sql(struct s_storage* p, int32 max, int32 id, enum st
 			storage = p->u.items_cart;
 			max2 = MAX_CART;
 			break;
-		case TABLE_STORAGE:
-			printname = "Storage";
-			tablename = inter_premiumStorage_getTableName(stor_id);
+		case TABLE_STORAGE: {
+			std::shared_ptr<s_storage_table> storage_info = interServerDb.find( stor_id );
+
+			if( storage_info == nullptr ){
+				ShowError( "Invalid storage with id %d\n", id );
+				return false;
+			}
+
+			printname = storage_info->name;
+			tablename = storage_info->table;
 			selectoption = "account_id";
 			storage = p->u.items_storage;
-			max2 = inter_premiumStorage_getMax(p->stor_id);
-			break;
+			max2 = storage_info->max_num;
+			} break;
 		case TABLE_GUILD_STORAGE:
 			printname = "Guild Storage";
 			tablename = schema_config.guild_storage_db;
@@ -1490,11 +1504,11 @@ int32 char_make_new_char( struct char_session_data* sd, char* name_, int32 str, 
 
 	//Insert the new char entry to the database
 	if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` (`account_id`, `char_num`, `name`, `class`, `zeny`, `status_point`, `str`, `agi`, `vit`, `int`, `dex`, `luk`, `max_hp`, `hp`,"
-		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`, `sex`, `last_instanceid`) VALUES ("
-		"'%d', '%d', '%s', '%d', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%c', '0')",
+		"`max_sp`, `sp`, `hair`, `hair_color`, `last_map`, `last_x`, `last_y`, `save_map`, `save_x`, `save_y`, `sex`, `last_instanceid`, `body`) VALUES ("
+		"'%d', '%d', '%s', '%d', '%d',  '%d', '%d', '%d', '%d', '%d', '%d', '%d', '%u', '%u', '%u', '%u', '%d', '%d', '%s', '%d', '%d', '%s', '%d', '%d', '%c', '0', '%d')",
 		schema_config.char_db, sd->account_id , slot, esc_name, start_job, charserv_config.start_zeny, status_points, str, agi, vit, int_, dex, luk,
 		(40 * (100 + vit)/100) , (40 * (100 + vit)/100 ),  (11 * (100 + int_)/100), (11 * (100 + int_)/100), hair_style, hair_color,
-		tmp_start_point[start_point_idx].map, tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, tmp_start_point[start_point_idx].map, tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, sex ) )
+		tmp_start_point[start_point_idx].map, tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, tmp_start_point[start_point_idx].map, tmp_start_point[start_point_idx].x, tmp_start_point[start_point_idx].y, sex, start_job ) )
 	{
 		Sql_ShowDebug(sql_handle);
 		return -2; //No, stop the procedure!
@@ -1795,8 +1809,14 @@ int32 char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p){
 	info->speed = DEFAULT_WALK_SPEED; // p->speed;
 	info->job = p->class_;
 	info->head = p->hair;
-#if PACKETVER >= 20141022
+#if PACKETVER >= 20231220
 	info->body = p->body;
+#elif PACKETVER >= 20141022
+	if( p->body > JOB_SECOND_JOB_START && p->body < JOB_SECOND_JOB_END ){
+		info->body = 1;
+	}else{
+		info->body = 0;
+	}
 #endif
 	//When the weapon is sent and your option is riding, the client crashes on login!?
 	info->weapon = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
