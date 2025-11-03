@@ -47472,7 +47472,8 @@ Body:
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
          bonus bAspdRate,10;
          bonus2 bAddEff,Eff_Stun,1000;
-         bonus2 bSkillAtk,"SJ_FALLINGSTAR",50;
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",50;
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",50;
       }
   - Id: 29719
     AegisName: SoulR_Enchant_1
@@ -68368,16 +68369,20 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"SJ_FLASHKICK",15;
-      bonus2 bSkillAtk,"SJ_FALLINGSTAR",15;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
       if (.@r>=7) {
         bonus2 bSkillAtk,"SJ_FLASHKICK",15;
-        bonus2 bSkillAtk,"SJ_FALLINGSTAR",15;
+        bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+        bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
         if (.@r>=9) {
           bonus2 bSkillAtk,"SJ_FLASHKICK",15;
-          bonus2 bSkillAtk,"SJ_FALLINGSTAR",15;
+          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
           if (.@r>=11) {
             bonus2 bSkillAtk,"SJ_FLASHKICK",15;
-            bonus2 bSkillAtk,"SJ_FALLINGSTAR",15;
+            bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+            bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
             bonus2 bSkillAtk,"SKE_STAR_CANNON",15;
           }
         }
@@ -69516,13 +69521,16 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"SJ_FLASHKICK",20+10*(.@r/3);
-      bonus2 bSkillAtk,"SJ_FALLINGSTAR",20+10*(.@r/3);
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",20+10*(.@r/3);
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",20+10*(.@r/3);
       if (.@r>=9) {
         bonus2 bSkillAtk,"SJ_FLASHKICK",20;
-        bonus2 bSkillAtk,"SJ_FALLINGSTAR",20;
+        bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",20;
+        bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",20;
         if (.@r>=11) {
           bonus2 bSkillAtk,"SJ_FLASHKICK",20;
-          bonus2 bSkillAtk,"SJ_FALLINGSTAR",20;
+          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",20;
+          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",20;
         }
       }
   - Id: 311247
@@ -69900,9 +69908,9 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"DK_SERVANTWEAPON",10+5*(.@r/4);
+      bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",10+5*(.@r/4);
       if (.@r>=9) {
-        bonus2 bSkillAtk,"DK_SERVANTWEAPON",10;
+        bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",10;
       }
   - Id: 311273
     AegisName: Glacier_F_Orb_82
@@ -70057,8 +70065,10 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",10+5*(.@r/4);
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",10+5*(.@r/4);
       if (.@r>=9) {
         bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",10;
+        bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",10;
       }
   - Id: 311287
     AegisName: Glacier_F_Orb_95
@@ -81505,7 +81515,8 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SJ_FALLINGSTAR",BaseLevel/10;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",BaseLevel/10;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",BaseLevel/10;
   - Id: 312830
     AegisName: aegis_312830
     Name: Latent Awakening (Spirit of Savage II)
@@ -84737,7 +84748,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",BaseLevel/3;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",BaseLevel/3;
   - Id: 313298
     AegisName: aegis_313298
     Name: Latent Awakening (Arms Cannon II)
@@ -85015,7 +85026,9 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"AB_DUPLELIGHT",2*getskilllv("HP_BASILICA");
+      .@a = 2*getskilllv("HP_BASILICA");
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",.@a;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",.@a;
       bonus4 bAutoSpellOnSkill,"SR_HOWLINGOFLION","CH_SOULCOLLECT",1,1000;
   - Id: 313339
     AegisName: aegis_313339
