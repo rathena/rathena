@@ -356,7 +356,7 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			entry->value = value;
 		}
 
-		if (this->nodeExists(node, "RequiredJobs")) {
+		if (this->nodeExists(optionNode, "RequiredJobs")) {
 			const ryml::NodeRef& jobNode = optionNode["RequiredJobs"];
 
 			for (const auto& jobit : jobNode) {
