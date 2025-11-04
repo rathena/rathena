@@ -1968,8 +1968,10 @@ ACMD_FUNC(bodystyle){
 	}
 
 	if( message == nullptr || !*message ){
-		clif_displaymessage( fd, msg_txt( sd, 739 ) ); // Please enter a body style (usage: @bodystyle <job ID>)
-		clif_displaymessage( fd, msg_txt( sd, 1541 ) ); // Or @bodystyle <off> to restore default job body style.
+		if( const char* help = atcommand_help_string( command ); help != nullptr ){
+			clif_displaymessage( fd, help );
+		}
+
 		return -1;
 	}
 
