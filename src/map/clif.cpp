@@ -22838,6 +22838,10 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 		return false;
 	}
 
+	if( !entry->required_jobs.empty() && !util::vector_exists( entry->required_jobs, sd->status.class_ ) ){
+		return false;
+	}
+
 	std::shared_ptr<s_stylist_costs> costs;
 
 	if( ( sd->class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
@@ -22846,51 +22850,45 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 		costs = entry->human;
 	}
 
-	if( costs == nullptr ){
-		return false;
-	}
+	if( costs != nullptr ){
+		if( sd->status.zeny < costs->price ){
+			return false;
+		}
 
-	if( sd->status.zeny < costs->price ){
-		return false;
-	}
+		int16 inventoryIndex = -1;
 
-	int16 inventoryIndex = -1;
+		if( costs->requiredItem != 0 ){
+			inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
 
-	if( costs->requiredItem != 0 ){
-		inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
+			if( inventoryIndex < 0 ){
+				// No other option
+				if( costs->requiredItemBox == 0 ){
+					return false;
+				}
 
-		if( inventoryIndex < 0 ){
-			// No other option
-			if( costs->requiredItemBox == 0 ){
-				return false;
+				// Check if the box that contains the item is in the inventory
+				inventoryIndex = pc_search_inventory( sd, costs->requiredItemBox );
+
+				// The box containing the item also does not exist
+				if( inventoryIndex < 0 ){
+					return false;
+				}
 			}
+		}else if( costs->requiredItemBox != 0 ){
+			inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
 
-			// Check if the box that contains the item is in the inventory
-			inventoryIndex = pc_search_inventory( sd, costs->requiredItemBox );
-
-			// The box containing the item also does not exist
 			if( inventoryIndex < 0 ){
 				return false;
 			}
 		}
-	}else if( costs->requiredItemBox != 0 ){
-		inventoryIndex = pc_search_inventory( sd, costs->requiredItem );
 
-		if( inventoryIndex < 0 ){
+		if( inventoryIndex >= 0 && pc_delitem( sd, inventoryIndex, 1, 0, 0, LOG_TYPE_OTHER ) != 0 ){
 			return false;
 		}
-	}
 
-	if (!entry->required_jobs.empty() && !util::vector_exists(entry->required_jobs, sd->status.class_)) {
-		return false;
-	}
-
-	if( inventoryIndex >= 0 && pc_delitem( sd, inventoryIndex, 1, 0, 0, LOG_TYPE_OTHER ) != 0 ){
-		return false;
-	}
-
-	if( costs->price > 0 && pc_payzeny( sd, costs->price, LOG_TYPE_OTHER ) != 0 ){
-		return false;
+		if( costs->price > 0 && pc_payzeny( sd, costs->price, LOG_TYPE_OTHER ) != 0 ){
+			return false;
+		}
 	}
 
 	switch( look ){
