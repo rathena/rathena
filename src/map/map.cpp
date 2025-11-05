@@ -49,6 +49,7 @@
 #include "path.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
+#include "player_statistics.hpp" // player statistics tracking
 #include "quest.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
@@ -2326,6 +2327,15 @@ int32 map_quit(map_session_data *sd) {
 	pc_clean_skilltree(sd);
 	pc_crimson_marker_clear(sd);
 	pc_macro_detector_disconnect(*sd);
+
+	// Track logout and save player statistics
+	if (sd->statistics) {
+		player_statistics_track_logout(sd);
+		player_statistics_save(sd->statistics, true); // Force save on logout
+		player_statistics_free(sd->statistics);
+		sd->statistics = nullptr;
+	}
+
 	chrif_save(sd, CSAVE_QUIT|CSAVE_INVENTORY|CSAVE_CART);
 	unit_free_pc(sd);
 	return 0;

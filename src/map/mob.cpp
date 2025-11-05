@@ -39,6 +39,7 @@
 #include "path.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
+#include "player_statistics.hpp" // player statistics tracking
 #include "quest.hpp"
 
 using namespace rathena;
@@ -2953,6 +2954,11 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	if( src && src->type == BL_PC ) {
 		sd = (map_session_data *)src;
 		first_sd = sd;
+
+		// Track monster kill for player statistics
+		if (sd->statistics) {
+			player_statistics_track_mob_kill(sd, md);
+		}
 	}
 
 	if( md->guardian_data && md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )

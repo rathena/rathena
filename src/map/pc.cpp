@@ -55,6 +55,7 @@
 #include "party.hpp" // party_search()
 #include "pc_groups.hpp"
 #include "pet.hpp" // pet_unlocktarget()
+#include "player_statistics.hpp" // player statistics tracking
 #include "quest.hpp"
 #include "skill.hpp" // skill_isCopyable()
 #include "script.hpp" // struct script_reg, struct script_regstr
@@ -2512,6 +2513,15 @@ void pc_reg_received(map_session_data *sd)
 
 			clif_changeoption( sd );
 		}
+	}
+
+	// Load player statistics and track login
+	sd->statistics = player_statistics_load(sd->status.char_id);
+	if (!sd->statistics) {
+		sd->statistics = player_statistics_create(sd->status.char_id, sd->status.account_id);
+	}
+	if (sd->statistics) {
+		player_statistics_track_login(sd);
 	}
 
 	channel_autojoin(sd);
@@ -6219,6 +6229,11 @@ bool pc_takeitem(map_session_data *sd,flooritem_data *fitem)
 		return true;
 	}
 
+	// Track item pickup for player statistics
+	if (sd->statistics) {
+		player_statistics_track_item_pickup(sd, &fitem->item, fitem->item.amount, fitem->mob_id != 0);
+	}
+
 	//Display pickup animation.
 	unit_stop_attack( sd );
 	clif_takeitem(*sd, *fitem);
@@ -6535,6 +6550,17 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 
 		// Reattach the player to it, so that the limitations of that script kick back in
 		script_attach_state( previous_st );
+	}
+
+	// Track item usage for player statistics
+	if (sd->statistics && id) {
+		e_item_usage_type item_type = ITEM_USE_OTHER;
+		if (id->type == IT_HEALING) {
+			item_type = ITEM_USE_HEALING;
+		} else if (id->type == IT_USABLE || id->type == IT_DELAYCONSUME) {
+			item_type = ITEM_USE_BUFF;
+		}
+		player_statistics_track_item_use(sd, &item, item_type);
 	}
 
 	potion_flag = 0;
@@ -9776,6 +9802,11 @@ int32 pc_dead(map_session_data *sd,block_list *src)
 	int32 i=0,k=0;
 	t_tick tick = gettick();
 	struct map_data *mapdata = map_getmapdata(sd->m);
+
+	// Track player death for statistics
+	if (sd->statistics) {
+		player_statistics_track_death(sd);
+	}
 
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
 	// Super Novices have no kill or die functions attached when saved by their angel
