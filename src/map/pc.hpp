@@ -819,6 +819,9 @@ public:
 		struct achievement *achievements; ///< Achievement log entries
 	} achievement_data;
 
+	// Player statistics system
+	struct player_statistics *statistics; ///< Player activity statistics
+
 	// Title system
 	std::vector<int32> titles;
 
