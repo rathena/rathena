@@ -35,6 +35,7 @@
 #include "path.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
+#include "player_statistics.hpp" // player statistics tracking
 #include "storage.hpp"
 #include "trade.hpp"
 
@@ -906,6 +907,11 @@ int32 unit_walktoxy( block_list *bl, int16 x, int16 y, unsigned char flag)
 			unit_check_start_teleport_timer(sd->hd);
 		if (sd->pd != nullptr)
 			unit_check_start_teleport_timer(sd->pd);
+
+		// Track movement for player statistics
+		if (sd->statistics) {
+			player_statistics_track_movement(sd, bl->x, bl->y, x, y);
+		}
 	}
 
 	return unit_walktoxy_sub(bl);

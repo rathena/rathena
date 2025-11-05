@@ -42,6 +42,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
+#include "player_statistics.hpp" // player statistics tracking
 #include "script.hpp"
 #include "status.hpp"
 #include "unit.hpp"
@@ -5229,6 +5230,11 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 	FreeBlockLock freeLock;
 
+	// Track offensive skill usage for player statistics
+	if (sd && sd->statistics) {
+		player_statistics_track_skill_use(sd, skill_id, skill_lv, SKILL_USE_OFFENSIVE);
+	}
+
 	switch(skill_id) {
 	case MER_CRASH:
 	case MA_DOUBLE:
@@ -7790,6 +7796,12 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		return 1; //Skills that cause an status should be blocked if the target element blocks its element.
 
 	FreeBlockLock freeLock;
+
+	// Track support skill usage for player statistics
+	if (sd && sd->statistics) {
+		player_statistics_track_skill_use(sd, skill_id, skill_lv, SKILL_USE_SUPPORT);
+	}
+
 	switch(skill_id)
 	{
 	case HLIF_HEAL:	//[orn]
@@ -9697,10 +9709,19 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 			if( sd->state.autocast || ( (sd->skillitem == AL_TELEPORT || battle_config.skip_teleport_lv1_menu) && skill_lv == 1 ) || skill_lv == 3 )
 			{
-				if( skill_lv == 1 )
+				if( skill_lv == 1 ) {
 					pc_randomwarp(sd,CLR_TELEPORT);
-				else
+					// Track teleport for player statistics
+					if (sd->statistics) {
+						player_statistics_track_teleport(sd, TELEPORT_SKILL);
+					}
+				} else {
 					pc_setpos( sd, mapindex_name2id( sd->status.save_point.map ), sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT );
+					// Track teleport for player statistics
+					if (sd->statistics) {
+						player_statistics_track_teleport(sd, TELEPORT_SKILL);
+					}
+				}
 				break;
 			}
 

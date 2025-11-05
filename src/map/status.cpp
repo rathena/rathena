@@ -34,6 +34,7 @@
 #include "pc.hpp"
 #include "pc_groups.hpp"
 #include "pet.hpp"
+#include "player_statistics.hpp" // player statistics tracking
 #include "script.hpp"
 
 using namespace rathena;
@@ -1860,9 +1861,16 @@ int32 status_heal(block_list *bl,int64 hhp,int64 hsp, int64 hap, int32 flag)
 
 	// Send HP update to client
 	switch(bl->type) {
-	case BL_PC:
-		pc_heal(reinterpret_cast<map_session_data*>(bl), hp, sp, ap, flag);
+	case BL_PC: {
+		map_session_data* sd = reinterpret_cast<map_session_data*>(bl);
+		pc_heal(sd, hp, sp, ap, flag);
+
+		// Track healing for player statistics
+		if (sd->statistics && (hp > 0 || sp > 0)) {
+			player_statistics_track_heal(sd, hp, sp);
+		}
 		break;
+	}
 	case BL_MOB:
 		mob_heal(reinterpret_cast<mob_data*>(bl), hp);
 		break;
