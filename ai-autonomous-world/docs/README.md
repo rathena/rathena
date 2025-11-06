@@ -1,0 +1,234 @@
+# AI-Driven Autonomous World System for rAthena
+
+## Overview
+
+This project transforms the rAthena MMORPG emulator into a **living, breathing world** with AI-driven NPCs and adaptive systems that simulate real-world complexity and emergent behavior. Unlike traditional MMORPGs with scripted NPCs and predetermined events, this system creates a dynamic world where:
+
+- **NPCs have individual consciousness** with unique personalities, memories, goals, and emotions
+- **The world evolves autonomously** through economic, political, environmental, and social systems
+- **Emergent behavior** creates unpredictable but coherent narratives
+- **Player actions have lasting impact** on a world that remembers and adapts
+
+## Key Features
+
+### 🧠 Autonomous NPC Consciousness
+- Individual personalities based on psychological models (Big Five + custom traits)
+- Dynamic moral alignment that evolves based on experiences
+- Episodic, semantic, and procedural memory systems
+- Goal-oriented behavior with hierarchy of needs
+- Emotional responses and mood management
+- Relationship formation and social dynamics
+
+### 🌍 Adaptive World Systems
+- **Dynamic Economy**: Supply/demand, price fluctuations, trade networks, economic cycles
+- **Political Systems**: Factions, alliances, conflicts, territory control, leadership changes
+- **Environmental Systems**: Weather, seasons, natural disasters, resource management
+- **Quest Generation**: Dynamic quests based on actual world state and NPC needs
+- **Cultural Evolution**: Beliefs, norms, art, and social movements that change over time
+
+### 🔧 Technical Excellence
+- **Non-invasive Architecture**: Minimal modifications to rAthena core
+- **Multi-LLM Support**: Azure OpenAI (default), OpenAI, DeepSeek, Gemini, Ollama, Claude
+- **Scalable Design**: Support for hundreds to thousands of autonomous NPCs
+- **High Performance**: Caching, batching, and optimization strategies
+- **Production Ready**: Kubernetes deployment, monitoring, logging
+
+## Architecture
+
+### System Layers
+
+1. **rAthena Game Server** - Existing MMORPG server with custom NPC scripts
+2. **Bridge Layer** - REST API extension connecting rAthena to AI services
+3. **AI Service Layer** - Python-based autonomous agent orchestration (CrewAI + Memori SDK)
+4. **State Management** - DragonflyDB for shared state and caching
+5. **LLM Providers** - Abstracted interface to multiple AI providers
+
+### High-Level Flow
+
+```
+Player → rAthena → Bridge API → AI Service (CrewAI + Memori) → LLM Provider
+                        ↓                    ↓
+                  DragonflyDB ←──────────────┘
+```
+
+For detailed architecture, see [ARCHITECTURE.md](./ARCHITECTURE.md)
+
+## World Concept
+
+### NPC Consciousness Example
+
+**Marcus the Merchant**
+- **Personality**: Ambitious (high), Cunning (high), Empathy (low)
+- **Current Goal**: Become wealthy and influential
+- **Recent Memory**: "Player helped me when I was robbed - I owe them"
+- **Emotional State**: Anxious (worried about competition)
+- **Moral Alignment**: Neutral → Selfish (evolving)
+
+**Autonomous Behavior:**
+1. Notices wheat shortage due to drought
+2. Decides to hoard wheat (driven by ambition and low empathy)
+3. Sells at inflated prices (profit-seeking)
+4. Other merchants form alliance against him (social consequence)
+5. Reputation drops, customers avoid him (economic consequence)
+6. Learns lesson, adjusts behavior (character development)
+
+### Emergent World Events
+
+**Example: The Goblin Peace Treaty**
+- Drought affects both humans and goblins
+- Increased goblin raids due to food scarcity
+- Empathetic NPC proposes peace talks (individual initiative)
+- Player helps facilitate negotiations (player agency)
+- Treaty succeeds despite opposition from both sides
+- Cultural fusion emerges over time (long-term evolution)
+
+**No scripting required** - all emerged from NPC decisions and world systems!
+
+For detailed world concept, see [WORLD_CONCEPT_DESIGN.md](./WORLD_CONCEPT_DESIGN.md)
+
+## Technology Stack
+
+### Core Technologies
+- **rAthena**: C++ MMORPG server (minimal modifications)
+- **Bridge Layer**: C++ REST API extension
+- **AI Service**: Python 3.11+ with FastAPI
+- **Agent Framework**: CrewAI (multi-agent orchestration)
+- **Memory SDK**: Memori SDK (context and memory management)
+- **State Management**: DragonflyDB (Redis-compatible, high-performance)
+- **LLM Providers**: Azure OpenAI Foundry (default), OpenAI, DeepSeek, Gemini, Ollama, Claude
+
+### Infrastructure
+- **Containerization**: Docker, Docker Compose
+- **Orchestration**: Kubernetes (production)
+- **Monitoring**: Prometheus + Grafana
+- **Logging**: ELK Stack
+- **CI/CD**: GitHub Actions
+
+## Getting Started
+
+### Prerequisites
+- rAthena server (located at `/home/lot399/ai-mmorpg-world/rathena-AI-world/`)
+- Python 3.11+
+- Docker and Docker Compose
+- Azure OpenAI account (or other LLM provider)
+
+### Installation
+
+1. **Install Python Dependencies**
+```bash
+pip install crewai memorisdk fastapi uvicorn redis-py
+```
+
+2. **Set Up DragonflyDB**
+```bash
+docker run -d -p 6379:6379 docker.dragonflydb.io/dragonflydb/dragonfly
+```
+
+3. **Configure LLM Provider**
+```bash
+export AZURE_OPENAI_ENDPOINT="your-endpoint"
+export AZURE_OPENAI_KEY="your-key"
+export AZURE_OPENAI_DEPLOYMENT="gpt-4"
+```
+
+4. **Build Bridge Layer**
+```bash
+cd rathena-AI-world
+# Add bridge extension to web server
+# Build rAthena with bridge extension
+```
+
+5. **Start AI Service**
+```bash
+cd ai-service
+python main.py
+```
+
+### Development Roadmap
+
+**Phase 1: Foundation** (Weeks 1-2)
+- [ ] Set up development environment
+- [ ] Implement Bridge Layer basic structure
+- [ ] Implement AI Service skeleton with FastAPI
+- [ ] Set up DragonflyDB integration
+
+**Phase 2: Core Systems** (Weeks 3-6)
+- [ ] Implement LLM Provider abstraction
+- [ ] Integrate CrewAI for agent orchestration
+- [ ] Integrate Memori SDK for memory management
+- [ ] Implement basic NPC consciousness model
+
+**Phase 3: World Systems** (Weeks 7-10)
+- [ ] Implement economy system
+- [ ] Implement politics/faction system
+- [ ] Implement environment system
+- [ ] Implement quest generation system
+
+**Phase 4: Integration & Testing** (Weeks 11-12)
+- [ ] End-to-end integration testing
+- [ ] Performance testing and optimization
+- [ ] Load testing with 100+ NPCs
+- [ ] Bug fixes and refinements
+
+**Phase 5: Deployment** (Weeks 13-14)
+- [ ] Production deployment setup
+- [ ] Monitoring and alerting setup
+- [ ] Documentation and training
+- [ ] Initial world bootstrap
+
+## Performance Considerations
+
+### Estimated Capacity
+- **1000 NPCs**: 100 decisions/second
+- **LLM Calls**: ~5 calls/second (with 50% cache hit + batching)
+- **Latency**: ~500ms per decision (acceptable for MMORPG)
+- **Infrastructure**: 66 CPU cores, 136GB RAM (recommended for 1000 NPCs)
+
+### Optimization Strategies
+- **Caching**: LLM responses, NPC decisions, world state
+- **Batching**: Multiple NPC decisions in single LLM call
+- **Tiering**: Cheap models for simple decisions, advanced models for complex ones
+- **Event-Driven**: Decisions triggered by significant events, not just timers
+- **Proximity-Based**: NPCs near players decide more frequently
+
+## Documentation
+
+- **[ARCHITECTURE.md](./ARCHITECTURE.md)** - Detailed technical architecture
+- **[WORLD_CONCEPT_DESIGN.md](./WORLD_CONCEPT_DESIGN.md)** - World design and NPC consciousness model
+- **[API_REFERENCE.md](./API_REFERENCE.md)** - Bridge API and AI Service API documentation (TBD)
+- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Production deployment guide (TBD)
+
+## Contributing
+
+This is a complex system that requires expertise in:
+- C++ (rAthena modifications)
+- Python (AI service development)
+- AI/ML (LLM integration, agent design)
+- Game design (world systems, NPC behavior)
+- DevOps (deployment, monitoring)
+
+Contributions are welcome! Please read the contributing guidelines (TBD).
+
+## License
+
+This project extends rAthena, which is licensed under GNU GPL. See [LICENSE](../rathena-AI-world/LICENSE) for details.
+
+## Acknowledgments
+
+- **rAthena Team** - For the excellent MMORPG emulator
+- **CrewAI** - For the multi-agent orchestration framework
+- **Memori SDK** - For memory and context management
+- **DragonflyDB** - For high-performance state management
+
+## Contact
+
+For questions, suggestions, or collaboration:
+- Open an issue on GitHub
+- Join our Discord (TBD)
+- Email: (TBD)
+
+---
+
+**Status**: Architecture and Design Phase  
+**Version**: 1.0  
+**Last Updated**: 2024-01-15

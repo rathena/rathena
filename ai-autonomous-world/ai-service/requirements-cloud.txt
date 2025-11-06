@@ -1,0 +1,68 @@
+# Cloud-Optimized Requirements (No Local LLM Models)
+# This version excludes PyTorch, sentence-transformers, and other heavy ML libraries
+# Uses cloud-based LLM APIs only (OpenAI, Anthropic, Google, DeepSeek, etc.)
+
+# Core Web Framework
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+pydantic-settings==2.6.1
+
+# AI Orchestration (CrewAI without heavy dependencies)
+crewai==0.86.0
+crewai-tools==0.17.0
+
+# Memory Management (Memori SDK from GitHub)
+git+https://github.com/GibsonAI/memori.git
+
+# LLM Provider SDKs (Cloud-based only)
+openai==1.57.2
+anthropic==0.39.0
+google-generativeai==0.8.3
+azure-identity==1.19.0
+
+# Database and Caching
+redis==5.2.0
+redis-om==0.3.3
+
+# HTTP Clients
+httpx>=0.27.0,<0.28.0
+aiohttp==3.11.10
+requests==2.32.3
+
+# Environment and Configuration
+python-dotenv==1.0.1
+pyyaml==6.0.2
+
+# Logging
+loguru==0.7.3
+
+# Monitoring
+prometheus-client==0.21.0
+
+# Async and Concurrency
+asyncio==3.4.3
+aiofiles==24.1.0
+
+# Utilities
+python-dateutil==2.9.0.post0
+pytz==2024.2
+tenacity==9.0.0
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+pytest-cov==6.0.0
+respx==0.21.1
+
+# Code Quality
+black==24.10.0
+flake8==7.1.1
+mypy==1.13.0
+isort==5.13.2
+
+# Type Stubs
+types-redis==4.6.0.20241004
+types-requests==2.32.0.20241016
+types-PyYAML==6.0.12.20240917
+

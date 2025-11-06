@@ -1,0 +1,156 @@
+//===== rAthena Script =======================================
+//= AI-Enabled NPC Example
+//===== Description: =========================================
+//= Example NPC demonstrating AI autonomous behavior
+//= Uses Bridge Layer to communicate with AI Service
+//===== Author: ==============================================
+//= AI Autonomous World System
+//============================================================
+
+// AI-Enabled Merchant NPC
+prontera,150,180,4	script	AI Merchant#ai001	4_M_MERCHANT,{
+	
+	// Get player information
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+	.@player_class$ = jobname(Class);
+	.@player_level = BaseLevel;
+	
+	// Build interaction request
+	.@npc_id$ = "ai_merchant_001";
+	.@interaction_type$ = "talk";
+	.@message$ = "";
+	
+	// Get current map and position
+	.@map$ = strcharinfo(3);
+	.@x = getmapxy(.@map$, .@x, .@y, 0);
+	
+	// Get time and weather
+	.@time_of_day$ = "day";  // Could be enhanced with actual time system
+	.@weather$ = "clear";
+	
+	// Build JSON request for player interaction
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"" + .@npc_id$ + "\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"" + .@interaction_type$ + "\",";
+	.@json$ += "\"message\":\"" + .@message$ + "\",";
+	.@json$ += "\"timestamp\":\"" + gettimestr("%Y-%m-%dT%H:%M:%S", 21) + "\",";
+	.@json$ += "\"context\":{";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
+	.@json$ += "\"player_level\":" + .@player_level + ",";
+	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "},";
+	.@json$ += "\"time_of_day\":\"" + .@time_of_day$ + "\",";
+	.@json$ += "\"weather\":\"" + .@weather$ + "\"";
+	.@json$ += "}";
+	.@json$ += "}";
+	
+	// Call AI Service via Bridge Layer
+	// Note: This requires httplib support in rAthena
+	// For now, show fallback dialogue
+	
+	mes "[AI Merchant]";
+	mes "Greetings, " + .@player_name$ + "!";
+	mes "I am an AI-enabled merchant.";
+	mes "My behavior is driven by";
+	mes "artificial intelligence!";
+	next;
+	
+	mes "[AI Merchant]";
+	mes "What would you like to do?";
+	next;
+	
+	switch(select("Talk:Trade:Quest:Leave")) {
+		case 1:  // Talk
+			callsub L_AITalk;
+			break;
+		case 2:  // Trade
+			callsub L_AITrade;
+			break;
+		case 3:  // Quest
+			callsub L_AIQuest;
+			break;
+		case 4:  // Leave
+			mes "[AI Merchant]";
+			mes "Farewell, adventurer!";
+			close;
+	}
+	end;
+
+L_AITalk:
+	mes "[AI Merchant]";
+	mes "I've traveled far and wide,";
+	mes "collecting rare items and";
+	mes "stories from distant lands.";
+	next;
+	
+	mes "[AI Merchant]";
+	mes "The AI system allows me to";
+	mes "remember our conversations";
+	mes "and adapt my behavior based";
+	mes "on world events!";
+	return;
+
+L_AITrade:
+	mes "[AI Merchant]";
+	mes "Welcome to my shop!";
+	mes "I offer special items that";
+	mes "change based on market";
+	mes "conditions and world state.";
+	next;
+	
+	// In full implementation, this would query AI service
+	// for dynamic pricing and inventory
+	mes "[AI Merchant]";
+	mes "Shop functionality will be";
+	mes "fully integrated with the";
+	mes "AI economic system soon!";
+	return;
+
+L_AIQuest:
+	mes "[AI Merchant]";
+	mes "I have a task for you!";
+	mes "The AI system has determined";
+	mes "that you would be perfect for";
+	mes "this quest.";
+	next;
+	
+	mes "[AI Merchant]";
+	mes "Quest system integration";
+	mes "coming soon! The AI will";
+	mes "generate dynamic quests based";
+	mes "on your level and preferences.";
+	return;
+
+OnInit:
+	// Register NPC with AI Service on server start
+	.npc_id$ = "ai_merchant_001";
+	.npc_name$ = "AI Merchant";
+	.npc_class$ = "merchant";
+	.npc_level = 50;
+	
+	// Build registration JSON
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"" + .npc_id$ + "\",";
+	.@reg_json$ += "\"name\":\"" + .npc_name$ + "\",";
+	.@reg_json$ += "\"npc_class\":\"" + .npc_class$ + "\",";
+	.@reg_json$ += "\"level\":" + .npc_level + ",";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":150,\"y\":180},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.7,";
+	.@reg_json$ += "\"conscientiousness\":0.8,";
+	.@reg_json$ += "\"extraversion\":0.6,";
+	.@reg_json$ += "\"agreeableness\":0.9,";
+	.@reg_json$ += "\"neuroticism\":0.3,";
+	.@reg_json$ += "\"moral_alignment\":\"lawful_good\"";
+	.@reg_json$ += "}";
+	.@reg_json$ += "}";
+	
+	// In full implementation, this would call:
+	// httppost("http://localhost:8888/ai/npc/register", .@reg_json$);
+	
+	debugmes "[AI World] NPC " + .npc_id$ + " initialized (AI registration pending)";
+	end;
+}
+

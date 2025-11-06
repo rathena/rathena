@@ -152,3 +152,39 @@ Thumbs.db
 
 # generated files
 generated
+
+# ============================================================================
+# AI Autonomous World System
+# ============================================================================
+# Python virtual environment
+/ai-autonomous-world/venv/
+/ai-autonomous-world/env/
+/ai-autonomous-world/.venv/
+
+# Environment files (keep .example files)
+/ai-autonomous-world/ai-service/.env
+/ai-autonomous-world/ai-service/config.yaml
+/ai-autonomous-world/ai-service/config.yml
+
+# Python cache
+/ai-autonomous-world/**/__pycache__/
+/ai-autonomous-world/**/*.pyc
+/ai-autonomous-world/**/*.pyo
+/ai-autonomous-world/**/*.pyd
+
+# Logs
+/ai-autonomous-world/ai-service/logs/*.log
+/ai-autonomous-world/logs/*.log
+
+# Testing
+/ai-autonomous-world/.pytest_cache/
+/ai-autonomous-world/.coverage
+/ai-autonomous-world/htmlcov/
+
+# IDE
+/ai-autonomous-world/.vscode/
+/ai-autonomous-world/.idea/
+
+# Temporary files
+/ai-autonomous-world/**/*.tmp
+/ai-autonomous-world/**/*.temp
