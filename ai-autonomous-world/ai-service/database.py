@@ -159,6 +159,78 @@ class Database:
             logger.error(f"Error popping event: {e}")
             return None
 
+    async def store_quest(self, quest_id: str, quest_data: dict):
+        """Store quest data"""
+        try:
+            import json
+            key = f"quest:{quest_id}"
+            quest_json = json.dumps(quest_data)
+            await self.client.set(key, quest_json)
+
+            # Add to quest index
+            await self.client.sadd("quests:all", quest_id)
+
+            # Add to NPC's quest list
+            npc_id = quest_data.get("giver_npc_id")
+            if npc_id:
+                await self.client.sadd(f"quests:npc:{npc_id}", quest_id)
+
+            logger.debug(f"Stored quest {quest_id}")
+        except Exception as e:
+            logger.error(f"Error storing quest {quest_id}: {e}")
+            raise
+
+    async def get_quest(self, quest_id: str) -> Optional[dict]:
+        """Get quest data by ID"""
+        try:
+            import json
+            key = f"quest:{quest_id}"
+            quest_json = await self.client.get(key)
+            if quest_json:
+                return json.loads(quest_json)
+            return None
+        except Exception as e:
+            logger.error(f"Error getting quest {quest_id}: {e}")
+            return None
+
+    async def get_npc_quests(self, npc_id: str) -> list:
+        """Get all quests for an NPC"""
+        try:
+            import json
+            quest_ids = await self.client.smembers(f"quests:npc:{npc_id}")
+            quests = []
+            for quest_id in quest_ids:
+                quest_data = await self.get_quest(quest_id)
+                if quest_data:
+                    quests.append(quest_data)
+            return quests
+        except Exception as e:
+            logger.error(f"Error getting NPC quests for {npc_id}: {e}")
+            return []
+
+    async def delete_quest(self, quest_id: str):
+        """Delete a quest"""
+        try:
+            # Get quest data first to remove from NPC index
+            quest_data = await self.get_quest(quest_id)
+
+            # Delete quest
+            key = f"quest:{quest_id}"
+            await self.client.delete(key)
+
+            # Remove from indexes
+            await self.client.srem("quests:all", quest_id)
+
+            if quest_data:
+                npc_id = quest_data.get("giver_npc_id")
+                if npc_id:
+                    await self.client.srem(f"quests:npc:{npc_id}", quest_id)
+
+            logger.debug(f"Deleted quest {quest_id}")
+        except Exception as e:
+            logger.error(f"Error deleting quest {quest_id}: {e}")
+            raise
+
 
 # Global database instance
 db = Database()

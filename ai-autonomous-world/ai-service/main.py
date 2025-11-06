@@ -18,6 +18,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 from ai_service.config import settings
 from ai_service.database import db
 from ai_service.routers import npc_router, world_router, player_router
+from ai_service.routers.quest import router as quest_router
 
 
 # Configure logging
@@ -158,6 +159,7 @@ async def root():
 app.include_router(npc_router)
 app.include_router(world_router)
 app.include_router(player_router)
+app.include_router(quest_router)
 
 
 # Run server

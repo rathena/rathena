@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  # DragonflyDB - Redis-compatible in-memory database
+  dragonfly:
+    image: docker.dragonflydb.io/dragonflydb/dragonfly:latest
+    container_name: ai-world-dragonfly
+    ports:
+      - "6379:6379"
+    volumes:
+      - dragonfly-data:/data
+    command: >
+      dragonfly
+      --port 6379
+      --maxmemory 2gb
+      --save_schedule "*:*"
+      --dir /data
+      --dbfilename dump.rdb
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - ai-world-network
+
+  # AI Service - FastAPI application
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: ai-world-service
+    ports:
+      - "8000:8000"
+    environment:
+      - REDIS_HOST=dragonfly
+      - REDIS_PORT=6379
+      - LOG_LEVEL=INFO
+      - ENVIRONMENT=production
+    env_file:
+      - ./ai-service/.env
+    volumes:
+      - ./ai-service:/app
+      - ./ai-service/logs:/app/logs
+    depends_on:
+      dragonfly:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    restart: unless-stopped
+    networks:
+      - ai-world-network
+
+  # rAthena Map Server (optional - if running in Docker)
+  # Uncomment if you want to run rAthena in Docker
+  # rathena-map:
+  #   build:
+  #     context: ../
+  #     dockerfile: Dockerfile.rathena
+  #   container_name: rathena-map-server
+  #   ports:
+  #     - "5121:5121"  # Map server
+  #     - "8080:8080"  # Web server (Bridge Layer)
+  #   environment:
+  #     - AI_SERVICE_URL=http://ai-service:8000
+  #   volumes:
+  #     - ../conf:/rathena/conf
+  #     - ../db:/rathena/db
+  #     - ../npc:/rathena/npc
+  #   depends_on:
+  #     ai-service:
+  #       condition: service_healthy
+  #   restart: unless-stopped
+  #   networks:
+  #     - ai-world-network
+
+volumes:
+  dragonfly-data:
+    driver: local
+
+networks:
+  ai-world-network:
+    driver: bridge
+
