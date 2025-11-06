@@ -3,12 +3,19 @@ Azure OpenAI LLM Provider implementation
 Supports Azure OpenAI Foundry with Azure-specific endpoint, API version, and deployment
 """
 
-from typing import Optional, Dict, Any, List
-from openai import AzureOpenAI, AsyncAzureOpenAI
-from loguru import logger
+import asyncio
+import json
 import re
+from typing import Optional, Dict, Any, List
+from openai import AzureOpenAI, AsyncAzureOpenAI, APIError, APITimeoutError, RateLimitError
+from loguru import logger
 
 from ..base import BaseLLMProvider, LLMResponse
+
+try:
+    from ai_service.config import settings
+except ModuleNotFoundError:
+    from config import settings
 
 
 class AzureOpenAIProvider(BaseLLMProvider):
@@ -37,15 +44,21 @@ class AzureOpenAIProvider(BaseLLMProvider):
         self.api_version = api_version
         self.deployment = deployment
         
-        # Initialize Azure OpenAI client
+        # Initialize Azure OpenAI client with timeout (use config or settings defaults)
+        self.timeout = config.get("timeout", settings.llm_timeout)
+        self.max_retries = config.get("max_retries", settings.llm_max_retries)
+
         self.client = AsyncAzureOpenAI(
             api_key=api_key,
             azure_endpoint=self.endpoint,
-            api_version=self.api_version
+            api_version=self.api_version,
+            timeout=self.timeout,
+            max_retries=self.max_retries
         )
-        
+
         logger.info(f"Azure OpenAI provider initialized with deployment: {self.deployment}, API version: {self.api_version}")
         logger.debug(f"Azure endpoint: {self.endpoint}")
+        logger.debug(f"Timeout: {self.timeout}s, Max retries: {self.max_retries}")
     
     def _validate_and_fix_endpoint(self, endpoint: str) -> str:
         """
@@ -99,6 +112,48 @@ class AzureOpenAIProvider(BaseLLMProvider):
             logger.error(f"Azure OpenAI generation error: {e}")
             raise
     
+    async def _retry_with_backoff(self, func, *args, **kwargs):
+        """Retry function with exponential backoff"""
+        last_error = None
+
+        for attempt in range(1, self.max_retries + 1):
+            try:
+                return await func(*args, **kwargs)
+            except RateLimitError as e:
+                last_error = e
+                if attempt < self.max_retries:
+                    wait_time = min(2 ** attempt, 60)  # Cap at 60 seconds
+                    logger.warning(f"Rate limit hit, retrying in {wait_time}s (attempt {attempt}/{self.max_retries})")
+                    await asyncio.sleep(wait_time)
+                else:
+                    logger.error(f"Rate limit exceeded after {self.max_retries} attempts")
+                    raise
+            except APITimeoutError as e:
+                last_error = e
+                if attempt < self.max_retries:
+                    wait_time = min(2 ** attempt, 30)
+                    logger.warning(f"API timeout, retrying in {wait_time}s (attempt {attempt}/{self.max_retries})")
+                    await asyncio.sleep(wait_time)
+                else:
+                    logger.error(f"API timeout after {self.max_retries} attempts")
+                    raise
+            except APIError as e:
+                # Don't retry on client errors (4xx)
+                if hasattr(e, 'status_code') and 400 <= e.status_code < 500:
+                    logger.error(f"Client error (non-retryable): {e}")
+                    raise
+
+                last_error = e
+                if attempt < self.max_retries:
+                    wait_time = min(2 ** attempt, 30)
+                    logger.warning(f"API error, retrying in {wait_time}s (attempt {attempt}/{self.max_retries})")
+                    await asyncio.sleep(wait_time)
+                else:
+                    logger.error(f"API error after {self.max_retries} attempts")
+                    raise
+
+        raise last_error
+
     async def generate_chat(
         self,
         messages: List[Dict[str, str]],
@@ -106,20 +161,23 @@ class AzureOpenAIProvider(BaseLLMProvider):
         max_tokens: Optional[int] = None,
         **kwargs
     ) -> LLMResponse:
-        """Generate chat completion using Azure OpenAI"""
+        """Generate chat completion using Azure OpenAI with retry logic"""
         try:
             temp = temperature if temperature is not None else self.get_default_temperature()
             max_tok = max_tokens if max_tokens is not None else self.get_default_max_tokens()
-            
+
             logger.debug(f"Azure OpenAI chat request: deployment={self.deployment}, {len(messages)} messages, temp={temp}, max_tokens={max_tok}")
-            
-            response = await self.client.chat.completions.create(
-                model=self.deployment,  # Azure uses deployment name instead of model
-                messages=messages,
-                temperature=temp,
-                max_tokens=max_tok,
-                **kwargs
-            )
+
+            async def _make_request():
+                return await self.client.chat.completions.create(
+                    model=self.deployment,  # Azure uses deployment name instead of model
+                    messages=messages,
+                    temperature=temp,
+                    max_tokens=max_tok,
+                    **kwargs
+                )
+
+            response = await self._retry_with_backoff(_make_request)
             
             content = response.choices[0].message.content
             tokens_used = response.usage.total_tokens if response.usage else None
@@ -157,26 +215,32 @@ class AzureOpenAIProvider(BaseLLMProvider):
                 messages.append({"role": "system", "content": system_prompt})
             messages.append({"role": "user", "content": prompt})
 
-            # Use function calling for structured output
-            functions = [{
-                "name": "structured_response",
-                "description": "Generate structured response",
-                "parameters": schema
+            # Use tools API for structured output (replaces deprecated function calling)
+            tools = [{
+                "type": "function",
+                "function": {
+                    "name": "structured_response",
+                    "description": "Generate structured response",
+                    "parameters": schema
+                }
             }]
 
             logger.debug(f"Azure OpenAI structured request: deployment={self.deployment}")
 
-            response = await self.client.chat.completions.create(
-                model=self.deployment,
-                messages=messages,
-                functions=functions,
-                function_call={"name": "structured_response"},
-                **kwargs
-            )
+            async def _make_request():
+                return await self.client.chat.completions.create(
+                    model=self.deployment,
+                    messages=messages,
+                    tools=tools,
+                    tool_choice={"type": "function", "function": {"name": "structured_response"}},
+                    **kwargs
+                )
 
-            import json
-            function_args = response.choices[0].message.function_call.arguments
-            result = json.loads(function_args)
+            response = await self._retry_with_backoff(_make_request)
+
+            # Extract result from tool call
+            tool_call = response.choices[0].message.tool_calls[0]
+            result = json.loads(tool_call.function.arguments)
 
             logger.debug(f"Azure OpenAI structured response generated successfully")
             return result

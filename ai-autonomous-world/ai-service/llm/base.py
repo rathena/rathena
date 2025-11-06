@@ -55,8 +55,8 @@ class BaseLLMProvider(ABC):
         Returns:
             LLMResponse with generated text
         """
-        pass
-    
+        raise NotImplementedError("Subclass must implement generate() method")
+
     @abstractmethod
     async def generate_chat(
         self,
@@ -67,18 +67,18 @@ class BaseLLMProvider(ABC):
     ) -> LLMResponse:
         """
         Generate chat completion from message history
-        
+
         Args:
             messages: List of message dicts with 'role' and 'content'
             temperature: Sampling temperature (0.0 to 1.0)
             max_tokens: Maximum tokens to generate
             **kwargs: Additional provider-specific parameters
-            
+
         Returns:
             LLMResponse with generated text
         """
-        pass
-    
+        raise NotImplementedError("Subclass must implement generate_chat() method")
+
     @abstractmethod
     async def generate_structured(
         self,
@@ -89,17 +89,17 @@ class BaseLLMProvider(ABC):
     ) -> Dict[str, Any]:
         """
         Generate structured output matching schema
-        
+
         Args:
             prompt: User prompt
             schema: JSON schema for output structure
             system_prompt: Optional system prompt
             **kwargs: Additional provider-specific parameters
-            
+
         Returns:
             Structured data matching schema
         """
-        pass
+        raise NotImplementedError("Subclass must implement generate_structured() method")
     
     def get_default_temperature(self) -> float:
         """Get default temperature for this provider"""

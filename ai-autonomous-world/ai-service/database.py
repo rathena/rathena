@@ -2,12 +2,17 @@
 DragonflyDB / Redis connection management
 """
 
+import asyncio
+import json
 import redis.asyncio as aioredis
 from redis.asyncio import ConnectionPool
 from typing import Optional
 from loguru import logger
 
-from .config import settings
+try:
+    from .config import settings
+except ImportError:
+    from config import settings
 
 
 class Database:
@@ -17,37 +22,63 @@ class Database:
         self.pool: Optional[ConnectionPool] = None
         self.client: Optional[aioredis.Redis] = None
         
-    async def connect(self):
-        """Establish connection to DragonflyDB / Redis"""
-        try:
-            logger.info(f"Connecting to Redis at {settings.redis_host}:{settings.redis_port}")
-            
-            # Create connection pool
-            self.pool = ConnectionPool(
-                host=settings.redis_host,
-                port=settings.redis_port,
-                db=settings.redis_db,
-                password=settings.redis_password,
-                max_connections=settings.redis_max_connections,
-                decode_responses=True,
-                encoding="utf-8",
-            )
-            
-            # Create Redis client
-            self.client = aioredis.Redis(connection_pool=self.pool)
-            
-            # Test connection
-            await self.client.ping()
-            logger.info("Successfully connected to Redis/DragonflyDB")
-            
-            # Log database info
-            info = await self.client.info()
-            logger.info(f"Redis version: {info.get('redis_version', 'unknown')}")
-            logger.info(f"Connected clients: {info.get('connected_clients', 0)}")
-            
-        except Exception as e:
-            logger.error(f"Failed to connect to Redis: {e}")
-            raise
+    async def connect(self, max_retries: int = None, retry_delay: float = None):
+        """
+        Establish connection to DragonflyDB / Redis with retry logic
+
+        Args:
+            max_retries: Maximum number of connection attempts (defaults to settings value)
+            retry_delay: Initial delay between retries in seconds (defaults to settings value)
+        """
+        # Use configuration defaults if not specified
+        if max_retries is None:
+            max_retries = settings.db_connection_max_retries
+        if retry_delay is None:
+            retry_delay = settings.db_connection_retry_delay
+
+        last_error = None
+
+        for attempt in range(1, max_retries + 1):
+            try:
+                logger.info(f"Connecting to Redis at {settings.redis_host}:{settings.redis_port} (attempt {attempt}/{max_retries})")
+
+                # Create connection pool
+                self.pool = ConnectionPool(
+                    host=settings.redis_host,
+                    port=settings.redis_port,
+                    db=settings.redis_db,
+                    password=settings.redis_password,
+                    max_connections=settings.redis_max_connections,
+                    decode_responses=False,  # Changed to False to support binary data
+                    encoding="utf-8",
+                )
+
+                # Create Redis client
+                self.client = aioredis.Redis(connection_pool=self.pool)
+
+                # Test connection
+                await self.client.ping()
+                logger.info("✓ Successfully connected to Redis/DragonflyDB")
+
+                # Log database info
+                info = await self.client.info()
+                logger.info(f"Redis version: {info.get('redis_version', 'unknown')}")
+                logger.info(f"Connected clients: {info.get('connected_clients', 0)}")
+
+                return  # Success - exit retry loop
+
+            except Exception as e:
+                last_error = e
+                logger.warning(f"Connection attempt {attempt}/{max_retries} failed: {e}")
+
+                if attempt < max_retries:
+                    # Exponential backoff
+                    wait_time = retry_delay * (2 ** (attempt - 1))
+                    logger.info(f"Retrying in {wait_time:.1f} seconds...")
+                    await asyncio.sleep(wait_time)
+                else:
+                    logger.error(f"Failed to connect to Redis after {max_retries} attempts")
+                    raise ConnectionError(f"Could not connect to Redis: {last_error}") from last_error
     
     async def disconnect(self):
         """Close connection to DragonflyDB / Redis"""
@@ -136,14 +167,13 @@ class Database:
         """Push event to event queue (sorted set by priority)"""
         try:
             key = "events:queue"
-            import json
             event_json = json.dumps(event_data)
             await self.client.zadd(key, {event_json: priority})
             logger.debug(f"Pushed event {event_id} to queue with priority {priority}")
         except Exception as e:
             logger.error(f"Error pushing event {event_id}: {e}")
             raise
-    
+
     async def pop_event(self) -> Optional[dict]:
         """Pop highest priority event from queue"""
         try:
@@ -151,8 +181,10 @@ class Database:
             # Get highest priority event (lowest score)
             result = await self.client.zpopmin(key, count=1)
             if result:
-                import json
                 event_json, priority = result[0]
+                # Decode if bytes
+                if isinstance(event_json, bytes):
+                    event_json = event_json.decode('utf-8')
                 return json.loads(event_json)
             return None
         except Exception as e:
@@ -162,7 +194,6 @@ class Database:
     async def store_quest(self, quest_id: str, quest_data: dict):
         """Store quest data"""
         try:
-            import json
             key = f"quest:{quest_id}"
             quest_json = json.dumps(quest_data)
             await self.client.set(key, quest_json)
@@ -183,10 +214,12 @@ class Database:
     async def get_quest(self, quest_id: str) -> Optional[dict]:
         """Get quest data by ID"""
         try:
-            import json
             key = f"quest:{quest_id}"
             quest_json = await self.client.get(key)
             if quest_json:
+                # Decode if bytes
+                if isinstance(quest_json, bytes):
+                    quest_json = quest_json.decode('utf-8')
                 return json.loads(quest_json)
             return None
         except Exception as e:

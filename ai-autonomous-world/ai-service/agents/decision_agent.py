@@ -10,8 +10,10 @@ import json
 from crewai import Agent
 try:
     from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from ai_service.config import settings
 except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from config import settings
 
 
 class DecisionAgent(BaseAIAgent):
@@ -242,7 +244,7 @@ Respond with a JSON object containing:
         response_text = await self._generate_with_llm(
             prompt=user_prompt,
             system_message=system_message,
-            temperature=0.6  # Moderate temperature for balanced decisions
+            temperature=settings.decision_temperature
         )
 
         # Parse JSON response

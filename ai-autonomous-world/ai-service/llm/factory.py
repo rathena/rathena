@@ -14,7 +14,7 @@ from .providers.google_provider import GoogleProvider
 
 class LLMProviderFactory:
     """Factory for creating LLM provider instances"""
-    
+
     _providers = {
         "openai": OpenAIProvider,
         "azure_openai": AzureOpenAIProvider,
@@ -22,36 +22,37 @@ class LLMProviderFactory:
         "google": GoogleProvider,
         "gemini": GoogleProvider,  # Alias
     }
+
+    def __init__(self):
+        """Initialize factory with instance-specific cache"""
+        self._instances: Dict[str, BaseLLMProvider] = {}
     
-    _instances: Dict[str, BaseLLMProvider] = {}
-    
-    @classmethod
     def create_provider(
-        cls,
+        self,
         provider_name: str,
         config: Dict[str, Any]
     ) -> BaseLLMProvider:
         """
         Create LLM provider instance
-        
+
         Args:
             provider_name: Name of provider (openai, anthropic, google)
             config: Provider configuration
-            
+
         Returns:
             LLM provider instance
-            
+
         Raises:
             ValueError: If provider name is not supported
         """
         provider_name = provider_name.lower()
-        
-        if provider_name not in cls._providers:
-            available = ", ".join(cls._providers.keys())
+
+        if provider_name not in self._providers:
+            available = ", ".join(self._providers.keys())
             raise ValueError(f"Unknown provider: {provider_name}. Available: {available}")
-        
-        provider_class = cls._providers[provider_name]
-        
+
+        provider_class = self._providers[provider_name]
+
         try:
             provider = provider_class(config)
             logger.info(f"Created {provider_name} provider")
@@ -59,20 +60,19 @@ class LLMProviderFactory:
         except Exception as e:
             logger.error(f"Failed to create {provider_name} provider: {e}")
             raise
-    
-    @classmethod
+
     def get_or_create_provider(
-        cls,
+        self,
         provider_name: str,
         config: Dict[str, Any]
     ) -> BaseLLMProvider:
         """
         Get existing provider instance or create new one
-        
+
         Args:
             provider_name: Name of provider
             config: Provider configuration
-            
+
         Returns:
             LLM provider instance (cached)
         """
@@ -113,8 +113,10 @@ def get_llm_provider(
     # Build config from settings if not provided
     if config is None:
         config = {}
-        
+
         if provider_name == "openai":
+            if not settings.openai_api_key:
+                raise ValueError("OpenAI API key is required but not configured. Set OPENAI_API_KEY environment variable.")
             config = {
                 "api_key": settings.openai_api_key,
                 "model": settings.openai_model,
@@ -122,6 +124,10 @@ def get_llm_provider(
                 "max_tokens": settings.openai_max_tokens,
             }
         elif provider_name == "azure_openai":
+            if not settings.azure_openai_api_key:
+                raise ValueError("Azure OpenAI API key is required but not configured. Set AZURE_OPENAI_API_KEY environment variable.")
+            if not settings.azure_openai_endpoint:
+                raise ValueError("Azure OpenAI endpoint is required but not configured. Set AZURE_OPENAI_ENDPOINT environment variable.")
             config = {
                 "api_key": settings.azure_openai_api_key,
                 "endpoint": settings.azure_openai_endpoint,
@@ -131,6 +137,8 @@ def get_llm_provider(
                 "max_tokens": settings.openai_max_tokens,  # Reuse OpenAI max_tokens setting
             }
         elif provider_name == "anthropic":
+            if not settings.anthropic_api_key:
+                raise ValueError("Anthropic API key is required but not configured. Set ANTHROPIC_API_KEY environment variable.")
             config = {
                 "api_key": settings.anthropic_api_key,
                 "model": settings.anthropic_model,
@@ -138,12 +146,18 @@ def get_llm_provider(
                 "max_tokens": settings.anthropic_max_tokens,
             }
         elif provider_name in ["google", "gemini"]:
+            if not settings.google_api_key:
+                raise ValueError("Google API key is required but not configured. Set GOOGLE_API_KEY environment variable.")
             config = {
                 "api_key": settings.google_api_key,
                 "model": settings.google_model,
                 "temperature": settings.google_temperature,
                 "max_tokens": settings.google_max_tokens,
             }
-    
+
+    # Validate API key is present in config
+    if "api_key" in config and not config["api_key"]:
+        raise ValueError(f"API key for provider '{provider_name}' is empty or None")
+
     return LLMProviderFactory.get_or_create_provider(provider_name, config)
 

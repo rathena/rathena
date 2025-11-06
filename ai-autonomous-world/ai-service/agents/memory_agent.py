@@ -8,7 +8,10 @@ from datetime import datetime
 from loguru import logger
 
 from crewai import Agent
-from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+try:
+    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+except ModuleNotFoundError:
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 
 try:
     # Memori is used in _store_with_memori and _retrieve_with_memori methods

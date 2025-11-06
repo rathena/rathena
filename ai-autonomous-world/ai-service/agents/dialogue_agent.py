@@ -7,7 +7,12 @@ from typing import Dict, Any
 from loguru import logger
 
 from crewai import Agent
-from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+try:
+    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from ai_service.config import settings
+except ModuleNotFoundError:
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from config import settings
 
 
 class DialogueAgent(BaseAIAgent):
@@ -182,6 +187,15 @@ class DialogueAgent(BaseAIAgent):
     ) -> str:
         """Generate dialogue using LLM"""
 
+        # Validate inputs
+        if not player_message or not isinstance(player_message, str):
+            logger.warning(f"Invalid player message: {player_message}")
+            return f"I didn't quite catch that, {player_name}."
+
+        if len(player_message) > settings.max_player_message_length:
+            logger.warning(f"Player message too long ({len(player_message)} chars), truncating")
+            player_message = player_message[:settings.max_player_message_length] + "..."
+
         system_message = f"""You are {npc_name}, an NPC in a medieval fantasy MMORPG world.
 
 {personality}
@@ -199,13 +213,29 @@ Interaction type: {interaction_type}
 
 Respond as {npc_name} would, considering your personality and the situation."""
 
-        dialogue = await self._generate_with_llm(
-            prompt=user_prompt,
-            system_message=system_message,
-            temperature=0.8  # Higher temperature for more creative dialogue
-        )
+        try:
+            dialogue = await self._generate_with_llm(
+                prompt=user_prompt,
+                system_message=system_message,
+                temperature=settings.dialogue_temperature
+            )
 
-        return dialogue.strip()
+            if not dialogue or len(dialogue.strip()) == 0:
+                logger.warning("LLM returned empty dialogue, using fallback")
+                return f"Greetings, {player_name}. How may I assist you?"
+
+            return dialogue.strip()
+
+        except Exception as e:
+            logger.error(f"LLM dialogue generation failed: {e}")
+            # Return fallback dialogue based on interaction type
+            fallback_responses = {
+                "talk": f"Greetings, {player_name}. How may I assist you?",
+                "trade": f"Welcome to my shop, {player_name}. What can I get for you?",
+                "quest": f"Ah, {player_name}! I may have a task for you.",
+                "default": f"Hello, {player_name}."
+            }
+            return fallback_responses.get(interaction_type, fallback_responses["default"])
 
     def _determine_emotion(self, context: AgentContext) -> str:
         """Determine NPC emotion based on personality and context"""

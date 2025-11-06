@@ -9,11 +9,18 @@ import random
 from datetime import datetime, timedelta
 
 from crewai import Agent
-from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-from ai_service.models.economy import (
-    MarketItem, EconomicState, MarketTrend, ItemCategory,
-    EconomicEvent, TradeRecommendation
-)
+try:
+    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from ai_service.models.economy import (
+        MarketItem, EconomicState, MarketTrend, ItemCategory,
+        EconomicEvent, TradeRecommendation
+    )
+except ModuleNotFoundError:
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from models.economy import (
+        MarketItem, EconomicState, MarketTrend, ItemCategory,
+        EconomicEvent, TradeRecommendation
+    )
 
 
 class EconomyAgent(BaseAIAgent):

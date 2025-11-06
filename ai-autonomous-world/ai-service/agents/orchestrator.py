@@ -7,11 +7,18 @@ from typing import Dict, Any, List, Optional
 from loguru import logger
 
 from crewai import Crew, Process
-from ai_service.agents.base_agent import AgentContext
-from ai_service.agents.dialogue_agent import DialogueAgent
-from ai_service.agents.decision_agent import DecisionAgent
-from ai_service.agents.memory_agent import MemoryAgent
-from ai_service.agents.world_agent import WorldAgent
+try:
+    from ai_service.agents.base_agent import AgentContext
+    from ai_service.agents.dialogue_agent import DialogueAgent
+    from ai_service.agents.decision_agent import DecisionAgent
+    from ai_service.agents.memory_agent import MemoryAgent
+    from ai_service.agents.world_agent import WorldAgent
+except ModuleNotFoundError:
+    from agents.base_agent import AgentContext
+    from agents.dialogue_agent import DialogueAgent
+    from agents.decision_agent import DecisionAgent
+    from agents.memory_agent import MemoryAgent
+    from agents.world_agent import WorldAgent
 
 
 class AgentOrchestrator:
@@ -96,28 +103,45 @@ class AgentOrchestrator:
             memory_context["operation"] = "retrieve"
             memory_context["player_id"] = npc_context.current_state.get("player_id")
             memory_context["query"] = player_message
-            
-            memory_response = await self.memory_agent.process(
-                AgentContext(
-                    npc_id=npc_context.npc_id,
-                    npc_name=npc_context.npc_name,
-                    personality=npc_context.personality,
-                    current_state=memory_context,
-                    world_state=npc_context.world_state,
-                    recent_events=npc_context.recent_events
+
+            try:
+                memory_response = await self.memory_agent.process(
+                    AgentContext(
+                        npc_id=npc_context.npc_id,
+                        npc_name=npc_context.npc_name,
+                        personality=npc_context.personality,
+                        current_state=memory_context,
+                        world_state=npc_context.world_state,
+                        recent_events=npc_context.recent_events
+                    )
                 )
-            )
+            except Exception as e:
+                logger.error(f"Memory retrieval failed for NPC {npc_context.npc_id}: {e}")
+                # Create empty memory response to continue
+                memory_response = AgentResponse(
+                    success=False,
+                    data={},
+                    metadata={"error": str(e)}
+                )
             
             # Step 2: Generate dialogue with memory context
             dialogue_context = npc_context.current_state.copy()
             dialogue_context["player_message"] = player_message
             dialogue_context["interaction_type"] = interaction_type
-            
+
             if memory_response.success:
                 npc_context.memory_context = memory_response.data
-            
-            dialogue_response = await self.dialogue_agent.process(npc_context)
-            
+
+            try:
+                dialogue_response = await self.dialogue_agent.process(npc_context)
+            except Exception as e:
+                logger.error(f"Dialogue generation failed for NPC {npc_context.npc_id}: {e}")
+                return AgentResponse(
+                    success=False,
+                    data={"error": "Failed to generate dialogue"},
+                    metadata={"error_details": str(e)}
+                )
+
             # Step 3: Store this interaction as a memory
             if dialogue_response.success:
                 store_context = {
@@ -131,17 +155,20 @@ class AgentOrchestrator:
                         "emotional_valence": 0.5 if dialogue_response.data.get("emotion") == "friendly" else 0.0
                     }
                 }
-                
-                await self.memory_agent.process(
-                    AgentContext(
-                        npc_id=npc_context.npc_id,
-                        npc_name=npc_context.npc_name,
-                        personality=npc_context.personality,
-                        current_state=store_context,
-                        world_state=npc_context.world_state,
-                        recent_events=npc_context.recent_events
+
+                try:
+                    await self.memory_agent.process(
+                        AgentContext(
+                            npc_id=npc_context.npc_id,
+                            npc_name=npc_context.npc_name,
+                            personality=npc_context.personality,
+                            current_state=store_context,
+                            world_state=npc_context.world_state,
+                            recent_events=npc_context.recent_events
+                        )
                     )
-                )
+                except Exception as e:
+                    logger.warning(f"Failed to store interaction memory for NPC {npc_context.npc_id}: {e}")
             
             # Step 4: Update relationship
             relationship_change = 1 if dialogue_response.success else 0

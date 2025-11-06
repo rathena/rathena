@@ -3,7 +3,7 @@ Chat Command Interface Router
 Handles free-form text input via chat commands
 """
 
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from loguru import logger
 from datetime import datetime, timedelta
 from typing import Dict, Optional
@@ -16,11 +16,9 @@ from ..models.player import (
     InteractionContext
 )
 from ..routers.player import handle_player_interaction
+from ..database import db
 
 router = APIRouter(prefix="/ai/chat", tags=["chat"])
-
-# Rate limiting storage (in production, use Redis)
-_rate_limit_storage: Dict[str, datetime] = {}
 
 
 class ChatCommandRequest(BaseModel):
@@ -45,11 +43,52 @@ class ChatCommandResponse(BaseModel):
     error: Optional[str] = Field(None, description="Error message if failed")
 
 
+async def check_rate_limit(player_id: str, npc_id: str, database) -> Optional[int]:
+    """
+    Check rate limit using DragonflyDB
+
+    Returns:
+        None if allowed, or remaining seconds if rate limited
+    """
+    if not settings.freeform_text_rate_limit_enabled:
+        return None
+
+    rate_limit_key = f"rate_limit:chat:{player_id}:{npc_id}"
+
+    try:
+        # Get last interaction time from Redis
+        last_time_str = await db.redis.get(rate_limit_key)
+
+        if last_time_str:
+            last_time = datetime.fromisoformat(last_time_str.decode() if isinstance(last_time_str, bytes) else last_time_str)
+            cooldown = timedelta(seconds=settings.chat_command_cooldown)
+
+            if datetime.utcnow() - last_time < cooldown:
+                remaining = (last_time + cooldown - datetime.utcnow()).total_seconds()
+                return int(remaining)
+
+        # Update rate limit with TTL
+        await db.redis.setex(
+            rate_limit_key,
+            settings.chat_command_cooldown,
+            datetime.utcnow().isoformat()
+        )
+
+        return None
+
+    except Exception as e:
+        logger.error(f"Rate limit check failed: {e}")
+        # Fail open - allow request if rate limit check fails
+        return None
+
+
 @router.post("/command", response_model=ChatCommandResponse)
-async def handle_chat_command(request: ChatCommandRequest):
+async def handle_chat_command(
+    request: ChatCommandRequest
+):
     """
     Handle chat command interaction
-    
+
     Processes free-form text input from players via chat commands
     and returns AI-generated NPC responses.
     """
@@ -61,10 +100,10 @@ async def handle_chat_command(request: ChatCommandRequest):
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Chat command interface is currently disabled"
             )
-        
+
         logger.info(f"Chat command: Player {request.player_id} -> NPC {request.npc_id}")
         logger.debug(f"Message: {request.message}")
-        
+
         # Validate message length
         if len(request.message) > settings.chat_command_max_length:
             logger.warning(f"Message too long: {len(request.message)} chars")
@@ -72,32 +111,22 @@ async def handle_chat_command(request: ChatCommandRequest):
                 success=False,
                 error=f"Message too long. Maximum {settings.chat_command_max_length} characters."
             )
-        
+
         if len(request.message) == 0:
             logger.warning("Empty message received")
             return ChatCommandResponse(
                 success=False,
                 error="Message cannot be empty."
             )
-        
-        # Check rate limiting
-        if settings.freeform_text_rate_limit_enabled:
-            rate_limit_key = f"{request.player_id}:{request.npc_id}"
-            
-            if rate_limit_key in _rate_limit_storage:
-                last_interaction = _rate_limit_storage[rate_limit_key]
-                cooldown = timedelta(seconds=settings.chat_command_cooldown)
-                
-                if datetime.utcnow() - last_interaction < cooldown:
-                    remaining = (last_interaction + cooldown - datetime.utcnow()).total_seconds()
-                    logger.warning(f"Rate limit exceeded for {rate_limit_key}")
-                    return ChatCommandResponse(
-                        success=False,
-                        error=f"Please wait {int(remaining)} seconds before sending another message."
-                    )
-            
-            # Update rate limit
-            _rate_limit_storage[rate_limit_key] = datetime.utcnow()
+
+        # Check rate limiting using DragonflyDB
+        remaining = await check_rate_limit(request.player_id, request.npc_id, db)
+        if remaining is not None:
+            logger.warning(f"Rate limit exceeded for player {request.player_id}")
+            return ChatCommandResponse(
+                success=False,
+                error=f"Please wait {remaining} seconds before sending another message."
+            )
         
         # Build interaction context
         context = InteractionContext(

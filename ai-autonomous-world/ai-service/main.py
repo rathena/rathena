@@ -67,10 +67,16 @@ async def lifespan(app: FastAPI):
     try:
         await db.connect()
         logger.info("Database connection established")
-    except Exception as e:
-        logger.error(f"Failed to connect to database: {e}")
+    except ConnectionError as e:
+        logger.error(f"Database connection failed: {e}")
         raise
-    
+    except TimeoutError as e:
+        logger.error(f"Database connection timeout: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected database error: {e}", exc_info=True)
+        raise
+
     # Initialize GPU manager
     try:
         from ai_service.utils import initialize_gpu
@@ -79,8 +85,12 @@ async def lifespan(app: FastAPI):
             logger.info(f"GPU acceleration enabled: {gpu_manager.get_info().device_name}")
         else:
             logger.info("GPU acceleration disabled or unavailable")
+    except ImportError as e:
+        logger.warning(f"GPU dependencies not available: {e}")
+    except RuntimeError as e:
+        logger.warning(f"GPU runtime error: {e}")
     except Exception as e:
-        logger.warning(f"GPU manager initialization failed: {e}")
+        logger.warning(f"GPU manager initialization failed: {e}", exc_info=True)
 
     # Initialize LLM provider (test connection)
     try:
@@ -88,8 +98,15 @@ async def lifespan(app: FastAPI):
         llm = get_llm_provider()
         logger.info(f"LLM provider initialized: {settings.default_llm_provider}")
         logger.debug(f"LLM provider type: {type(llm).__name__}")
+    except ValueError as e:
+        logger.error(f"LLM provider configuration error: {e}")
+        raise
+    except ImportError as e:
+        logger.error(f"LLM provider dependencies missing: {e}")
+        raise
     except Exception as e:
-        logger.warning(f"LLM provider initialization failed: {e}")
+        logger.error(f"LLM provider initialization failed: {e}", exc_info=True)
+        raise
 
     logger.info("AI Service startup complete")
     
@@ -102,8 +119,10 @@ async def lifespan(app: FastAPI):
     try:
         await db.disconnect()
         logger.info("Database connection closed")
+    except ConnectionError as e:
+        logger.error(f"Database disconnection error: {e}")
     except Exception as e:
-        logger.error(f"Error closing database connection: {e}")
+        logger.error(f"Unexpected error during database shutdown: {e}", exc_info=True)
     
     logger.info("AI Service shutdown complete")
 
@@ -144,15 +163,48 @@ async def global_exception_handler(request: Request, exc: Exception):
 # Health check endpoint
 @app.get("/health", tags=["health"])
 async def health_check():
-    """Health check endpoint"""
-    db_healthy = await db.health_check()
-    
+    """
+    Lightweight health check endpoint
+
+    Returns basic service status without expensive operations.
+    For detailed health check, use /health/detailed
+    """
+    return {
+        "status": "healthy",
+        "service": settings.service_name,
+        "version": "1.0.0",
+        "timestamp": logger._core.handlers[0]._sink._stream.name if hasattr(logger, '_core') else "N/A"
+    }
+
+
+@app.get("/health/detailed", tags=["health"])
+async def detailed_health_check():
+    """
+    Detailed health check with database and service checks
+
+    This endpoint performs actual connectivity tests and should be used
+    for monitoring/alerting, not for load balancer health checks.
+    """
+    db_healthy = False
+    db_error = None
+
+    try:
+        db_healthy = await db.health_check()
+    except Exception as e:
+        db_error = str(e)
+        logger.warning(f"Database health check failed: {e}")
+
     return {
         "status": "healthy" if db_healthy else "degraded",
         "service": settings.service_name,
         "version": "1.0.0",
         "environment": settings.environment,
-        "database": "connected" if db_healthy else "disconnected",
+        "database": {
+            "status": "connected" if db_healthy else "disconnected",
+            "error": db_error
+        },
+        "gpu_enabled": settings.gpu_enabled,
+        "llm_provider": settings.default_llm_provider
     }
 
 

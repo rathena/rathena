@@ -3,10 +3,11 @@ Configuration management for AI Service
 Loads settings from YAML config file and environment variables
 """
 
+import re
 from pathlib import Path
-from typing import Optional, Dict, Any
+from typing import Optional, Dict, Any, List
 from pydantic_settings import BaseSettings
-from pydantic import Field
+from pydantic import Field, field_validator
 import yaml
 from loguru import logger
 
@@ -54,7 +55,24 @@ class Settings(BaseSettings):
     azure_openai_endpoint: Optional[str] = Field(default=None, env="AZURE_OPENAI_ENDPOINT")
     azure_openai_deployment: str = Field(default="gpt-4", env="AZURE_OPENAI_DEPLOYMENT")
     azure_openai_api_version: str = Field(default="2024-02-15-preview", env="AZURE_OPENAI_API_VERSION")
-    
+
+    @field_validator('azure_openai_endpoint')
+    @classmethod
+    def validate_azure_endpoint(cls, v: Optional[str]) -> Optional[str]:
+        """Validate Azure OpenAI endpoint format"""
+        if v is None:
+            return v
+
+        # Azure OpenAI endpoint format: https://{resource}.openai.azure.com/
+        pattern = r'^https://[a-zA-Z0-9-]+\.openai\.azure\.com/?$'
+        if not re.match(pattern, v):
+            raise ValueError(
+                f"Invalid Azure OpenAI endpoint format: {v}. "
+                "Expected format: https://{{resource}}.openai.azure.com/"
+            )
+
+        return v.rstrip('/')  # Remove trailing slash for consistency
+
     # CrewAI Configuration
     crewai_verbose: bool = Field(default=True, env="CREWAI_VERBOSE")
     crewai_max_iterations: int = Field(default=15, env="CREWAI_MAX_ITERATIONS")
@@ -65,7 +83,11 @@ class Settings(BaseSettings):
     
     # API Security
     api_key: Optional[str] = Field(default=None, env="API_KEY")
-    cors_origins: list = Field(default=["*"], env="CORS_ORIGINS")
+    cors_origins: List[str] = Field(
+        default=["http://localhost:8888", "http://127.0.0.1:8888"],
+        env="CORS_ORIGINS",
+        description="CORS allowed origins - restrict to known domains for security"
+    )
     
     # Logging Configuration
     log_level: str = Field(default="INFO", env="LOG_LEVEL")
@@ -141,6 +163,47 @@ class Settings(BaseSettings):
     gpu_use_faiss_gpu: bool = Field(default=True, env="GPU_USE_FAISS_GPU")  # Use FAISS-GPU for vector search
     gpu_use_vllm: bool = Field(default=False, env="GPU_USE_VLLM")  # Use vLLM for LLM inference acceleration
     gpu_use_tensorrt: bool = Field(default=False, env="GPU_USE_TENSORRT")  # Use TensorRT-LLM for inference
+
+    # Action Validation Configuration
+    max_movement_distance: int = Field(default=50, env="MAX_MOVEMENT_DISTANCE", description="Maximum cells NPC can move in single action")
+    max_map_size: int = Field(default=1000, env="MAX_MAP_SIZE", description="Maximum map size (width/height)")
+    max_npc_level: int = Field(default=999, env="MAX_NPC_LEVEL", description="Maximum NPC level")
+    max_npc_name_length: int = Field(default=100, env="MAX_NPC_NAME_LENGTH", description="Maximum NPC name length")
+
+    # LLM Generation Configuration
+    dialogue_temperature: float = Field(default=0.8, env="DIALOGUE_TEMPERATURE", description="Temperature for dialogue generation")
+    decision_temperature: float = Field(default=0.6, env="DECISION_TEMPERATURE", description="Temperature for decision making")
+    max_player_message_length: int = Field(default=500, env="MAX_PLAYER_MESSAGE_LENGTH", description="Maximum player message length")
+
+    # Retry and Timeout Configuration
+    llm_timeout: float = Field(default=60.0, env="LLM_TIMEOUT", description="LLM API timeout in seconds")
+    llm_max_retries: int = Field(default=3, env="LLM_MAX_RETRIES", description="Maximum LLM API retry attempts")
+    db_connection_max_retries: int = Field(default=5, env="DB_CONNECTION_MAX_RETRIES", description="Maximum database connection retries")
+    db_connection_retry_delay: float = Field(default=1.0, env="DB_CONNECTION_RETRY_DELAY", description="Initial database retry delay in seconds")
+
+    @field_validator('gpu_memory_fraction')
+    @classmethod
+    def validate_gpu_memory_fraction(cls, v: float) -> float:
+        """Validate GPU memory fraction is between 0.0 and 1.0"""
+        if not 0.0 <= v <= 1.0:
+            raise ValueError(f"gpu_memory_fraction must be between 0.0 and 1.0, got {v}")
+        return v
+
+    @field_validator('gpu_batch_size', 'gpu_max_context_length', 'gpu_num_threads', 'gpu_prefetch_batches')
+    @classmethod
+    def validate_positive_int(cls, v: int, info) -> int:
+        """Validate positive integer values"""
+        if v <= 0:
+            raise ValueError(f"{info.field_name} must be positive, got {v}")
+        return v
+
+    @field_validator('npc_movement_personality_influence')
+    @classmethod
+    def validate_personality_influence(cls, v: float) -> float:
+        """Validate personality influence is between 0.0 and 1.0"""
+        if not 0.0 <= v <= 1.0:
+            raise ValueError(f"npc_movement_personality_influence must be between 0.0 and 1.0, got {v}")
+        return v
 
     class Config:
         env_file = ".env"

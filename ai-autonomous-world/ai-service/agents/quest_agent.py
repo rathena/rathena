@@ -9,11 +9,18 @@ import random
 from datetime import datetime
 
 from crewai import Agent
-from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-from ai_service.models.quest import (
-    Quest, QuestType, QuestDifficulty, QuestStatus,
-    QuestObjective, QuestReward, QuestRequirements
-)
+try:
+    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from ai_service.models.quest import (
+        Quest, QuestType, QuestDifficulty, QuestStatus,
+        QuestObjective, QuestReward, QuestRequirements
+    )
+except ModuleNotFoundError:
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from models.quest import (
+        Quest, QuestType, QuestDifficulty, QuestStatus,
+        QuestObjective, QuestReward, QuestRequirements
+    )
 
 
 class QuestAgent(BaseAIAgent):

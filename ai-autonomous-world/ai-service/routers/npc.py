@@ -17,6 +17,7 @@ try:
         NPCAction,
     )
     from ..database import db
+    from ..config import settings
 except ImportError:
     from models.npc import (
         NPCRegisterRequest,
@@ -27,6 +28,7 @@ except ImportError:
         NPCAction,
     )
     from database import db
+    from config import settings
 
 router = APIRouter(prefix="/ai/npc", tags=["npc"])
 
@@ -35,15 +37,49 @@ router = APIRouter(prefix="/ai/npc", tags=["npc"])
 async def register_npc(request: NPCRegisterRequest):
     """
     Register an NPC with the AI service
-    
+
     Creates an AI agent for the NPC and stores initial state in database.
     """
     try:
+        # Validate NPC ID
+        if not request.npc_id or not isinstance(request.npc_id, str):
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid NPC ID: must be a non-empty string"
+            )
+
+        # Validate name
+        if not request.name or len(request.name) > settings.max_npc_name_length:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid NPC name: must be 1-{settings.max_npc_name_length} characters"
+            )
+
+        # Validate level
+        if request.level < 1 or request.level > settings.max_npc_level:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid NPC level: must be between 1 and {settings.max_npc_level}"
+            )
+
+        # Validate position coordinates
+        if request.position.x < 0 or request.position.y < 0:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Invalid position: coordinates must be non-negative"
+            )
+
+        if request.position.x > settings.max_map_size or request.position.y > settings.max_map_size:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid position: coordinates exceed maximum map size ({settings.max_map_size}x{settings.max_map_size})"
+            )
+
         logger.info(f"Registering NPC: {request.npc_id} ({request.name})")
-        
+
         # Generate agent ID
         agent_id = f"agent_{request.npc_id}_{uuid.uuid4().hex[:8]}"
-        
+
         # Prepare NPC state
         npc_state = {
             "npc_id": request.npc_id,
@@ -224,10 +260,53 @@ async def execute_npc_action(npc_id: str, action: NPCAction):
     """
     Execute an NPC action and translate it to Bridge Layer commands
 
+    Validates action parameters before execution.
+
     This endpoint is called by the Bridge Layer to get executable commands
     for an NPC action decided by the AI.
     """
     try:
+        # Validate action type
+        valid_action_types = ["move", "talk", "emote", "idle", "attack", "trade", "cast_skill"]
+        if action.action_type not in valid_action_types:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid action type: {action.action_type}. Must be one of {valid_action_types}"
+            )
+
+        # Validate movement actions
+        if action.action_type == "move":
+            action_data = action.action_data or {}
+            target_x = action_data.get("target_x")
+            target_y = action_data.get("target_y")
+
+            if target_x is None or target_y is None:
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail="Move action requires target_x and target_y coordinates"
+                )
+
+            # Validate coordinates are within reasonable bounds
+            if not (0 <= target_x <= settings.max_map_size and 0 <= target_y <= settings.max_map_size):
+                raise HTTPException(
+                    status_code=status.HTTP_400_BAD_REQUEST,
+                    detail=f"Invalid coordinates: ({target_x}, {target_y}). Must be within 0-{settings.max_map_size} range"
+                )
+
+            # Validate movement distance if current position is available
+            npc_state = await db.get_npc_state(npc_id)
+            if npc_state:
+                current_x = int(npc_state.get("x", 0))
+                current_y = int(npc_state.get("y", 0))
+                distance = abs(target_x - current_x) + abs(target_y - current_y)
+
+                # Limit maximum movement distance per action (prevent teleporting)
+                if distance > settings.max_movement_distance:
+                    raise HTTPException(
+                        status_code=status.HTTP_400_BAD_REQUEST,
+                        detail=f"Movement distance ({distance}) exceeds maximum ({settings.max_movement_distance})"
+                    )
+
         logger.info(f"Executing action for NPC {npc_id}: {action.action_type}")
 
         from ..utils.bridge_commands import translate_action_to_bridge_command
@@ -244,6 +323,8 @@ async def execute_npc_action(npc_id: str, action: NPCAction):
             "message": "Action translated to bridge command successfully"
         }
 
+    except HTTPException:
+        raise
     except Exception as e:
         logger.error(f"Error executing action for NPC {npc_id}: {e}")
         raise HTTPException(

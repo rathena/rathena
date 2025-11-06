@@ -83,14 +83,27 @@ class GPUPathfinding:
     ) -> List[List[Position]]:
         """CPU fallback for batch pathfinding"""
         from .pathfinding import Pathfinder
-        
-        pathfinder = Pathfinder(walkable_grid=walkable_grid)
+
+        # Convert numpy array to dict format if needed
+        walkable_map = None
+        if walkable_grid is not None:
+            walkable_map = {}
+            if isinstance(walkable_grid, np.ndarray):
+                # Convert 2D numpy array to dict mapping (x, y) -> bool
+                height, width = walkable_grid.shape
+                for y in range(height):
+                    for x in range(width):
+                        walkable_map[(x, y)] = bool(walkable_grid[y, x])
+            elif isinstance(walkable_grid, dict):
+                walkable_map = walkable_grid
+
+        pathfinder = Pathfinder(walkable_map=walkable_map)
         paths = []
-        
+
         for start, goal in zip(starts, goals):
             path = pathfinder.astar(start, goal)
             paths.append(path)
-        
+
         logger.debug(f"Computed {len(paths)} paths on CPU")
         return paths
     

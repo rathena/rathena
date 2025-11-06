@@ -81,9 +81,41 @@ OnNPCChat:
 	
 	// Check proximity if required
 	if (.require_proximity) {
-		// TODO: Implement proximity check
-		// This requires NPC position lookup which may need additional implementation
-		// For now, we'll skip proximity check
+		// Get NPC position using getnpcinfo
+		.@npc_name$ = .@npc_id$;  // Assuming NPC ID is the NPC name
+
+		// Get NPC coordinates
+		.@npc_x = getnpcinfo(NPC_MAP_X, .@npc_name$);
+		.@npc_y = getnpcinfo(NPC_MAP_Y, .@npc_name$);
+		.@npc_map$ = getnpcinfo(NPC_MAP, .@npc_name$);
+
+		// Check if NPC exists
+		if (.@npc_x == -1 || .@npc_y == -1) {
+			dispbottom "[AI Chat] Error: NPC '" + .@npc_id$ + "' not found.";
+			end;
+		}
+
+		// Get player position
+		.@player_map$ = strcharinfo(3);
+		.@player_x = 0;
+		.@player_y = 0;
+		getmapxy(.@player_map$, .@player_x, .@player_y, UNITTYPE_PC);
+
+		// Check if on same map
+		if (.@player_map$ != .@npc_map$) {
+			dispbottom "[AI Chat] You must be on the same map as " + .@npc_id$ + " to chat.";
+			end;
+		}
+
+		// Calculate distance (Manhattan distance for simplicity)
+		.@distance = abs(.@player_x - .@npc_x) + abs(.@player_y - .@npc_y);
+
+		// Check if within range
+		if (.@distance > .max_distance) {
+			dispbottom "[AI Chat] You are too far from " + .@npc_id$ + ". Please move closer.";
+			dispbottom "[AI Chat] Distance: " + .@distance + " cells (max: " + .max_distance + " cells)";
+			end;
+		}
 	}
 	
 	// Log interaction if enabled
@@ -126,18 +158,42 @@ OnNPCChat:
 	.@json$ += "}";
 	
 	// Call AI Service via Bridge Layer
-	// NOTE: This requires HTTP support in rAthena
-	// For now, show a placeholder message
-	
 	dispbottom "[AI Chat] Sending message to " + .@npc_id$ + "...";
-	
-	// TODO: Implement actual HTTP request when rAthena supports it
-	// .@response$ = httppost(.bridge_url$ + "/ai/player/interaction", .@json$);
-	
-	// Placeholder response
-	dispbottom "[AI Chat] Feature requires HTTP support in rAthena.";
-	dispbottom "[AI Chat] Your message: " + .@message$;
-	dispbottom "[AI Chat] This will be sent to the AI service when HTTP support is available.";
+
+	// Attempt HTTP request if available
+	// Note: rAthena may not have built-in HTTP support
+	// This implementation assumes a custom HTTP plugin or external bridge
+
+	if (function_exists("httppost")) {
+		// Use httppost if available (requires plugin)
+		.@response$ = httppost(.bridge_url$ + "/ai/chat/command", .@json$, "Content-Type: application/json");
+
+		// Parse response (simplified - assumes JSON response)
+		if (.@response$ != "") {
+			// Extract NPC response from JSON
+			// This is a simplified parser - production should use proper JSON parsing
+			.@npc_response$ = extract_json_field(.@response$, "npc_response");
+			.@emotion$ = extract_json_field(.@response$, "emotion");
+
+			if (.@npc_response$ != "") {
+				dispbottom "[" + .@npc_id$ + "] " + .@npc_response$;
+
+				// Show emotion if available
+				if (.@emotion$ != "")
+					dispbottom "[AI Chat] *" + .@emotion$ + "*";
+			} else {
+				dispbottom "[AI Chat] No response from NPC.";
+			}
+		} else {
+			dispbottom "[AI Chat] Error: Empty response from AI service.";
+		}
+	} else {
+		// Fallback: Use external bridge script
+		// This requires a custom implementation or plugin
+		dispbottom "[AI Chat] HTTP support not available.";
+		dispbottom "[AI Chat] Please configure HTTP plugin or external bridge.";
+		dispbottom "[AI Chat] Your message: " + .@message$;
+	}
 	
 	end;
 
@@ -151,6 +207,29 @@ function	escape_json	{
 	.@str$ = replacestr(.@str$, "\r", "\\r");
 	.@str$ = replacestr(.@str$, "\t", "\\t");
 	return .@str$;
+}
+
+// Helper function to extract JSON field value (simplified parser)
+function	extract_json_field	{
+	.@json$ = getarg(0);
+	.@field$ = getarg(1);
+
+	// Find field in JSON string
+	.@search$ = "\"" + .@field$ + "\":\"";
+	.@pos = instr(.@json$, .@search$);
+
+	if (.@pos == -1)
+		return "";
+
+	// Extract value between quotes
+	.@start = .@pos + getstrlen(.@search$);
+	.@end = instr(.@json$, "\"", .@start);
+
+	if (.@end == -1)
+		return "";
+
+	.@value$ = substr(.@json$, .@start, .@end - .@start);
+	return .@value$;
 }
 }
 
