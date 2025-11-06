@@ -89,13 +89,14 @@ For detailed world concept, see [WORLD_CONCEPT_DESIGN.md](./WORLD_CONCEPT_DESIGN
 ## Technology Stack
 
 ### Core Technologies
-- **rAthena**: C++ MMORPG server (minimal modifications)
-- **Bridge Layer**: C++ REST API extension
-- **AI Service**: Python 3.11+ with FastAPI
-- **Agent Framework**: CrewAI (multi-agent orchestration)
-- **Memory SDK**: Memori SDK (context and memory management)
-- **State Management**: DragonflyDB (Redis-compatible, high-performance)
-- **LLM Providers**: Azure OpenAI Foundry (default), OpenAI, DeepSeek, Gemini, Ollama, Claude
+- **rAthena**: C++ MMORPG server (minimal modifications planned)
+- **Bridge Layer**: C++ REST API extension (planned, not yet implemented)
+- **AI Service**: Python 3.11+ with FastAPI (✅ implemented)
+- **Agent Framework**: CrewAI (multi-agent orchestration) (✅ implemented)
+- **Memory SDK**: Memori SDK (optional, using DragonflyDB fallback)
+- **State Management**: DragonflyDB (Redis-compatible, high-performance) (✅ implemented)
+- **LLM Providers**: Azure OpenAI (default), OpenAI, Anthropic, Google Gemini (✅ implemented)
+  - Note: DeepSeek and Ollama mentioned in config but not fully implemented as providers
 
 ### Infrastructure
 - **Containerization**: Docker, Docker Compose
@@ -116,64 +117,77 @@ For detailed world concept, see [WORLD_CONCEPT_DESIGN.md](./WORLD_CONCEPT_DESIGN
 
 1. **Install Python Dependencies**
 ```bash
-pip install crewai memorisdk fastapi uvicorn redis-py
+cd ai-autonomous-world/ai-service
+# For full installation
+pip install -r requirements.txt
+# Or for minimal installation
+pip install -r requirements-minimal.txt
 ```
 
 2. **Set Up DragonflyDB**
 ```bash
-docker run -d -p 6379:6379 docker.dragonflydb.io/dragonflydb/dragonfly
+docker run -d --name dragonfly -p 6379:6379 docker.dragonflydb.io/dragonflydb/dragonfly
 ```
 
 3. **Configure LLM Provider**
+Create a `.env` file in the `ai-service` directory:
 ```bash
-export AZURE_OPENAI_ENDPOINT="your-endpoint"
-export AZURE_OPENAI_KEY="your-key"
-export AZURE_OPENAI_DEPLOYMENT="gpt-4"
+cd ai-service
+cp .env.example .env
+# Edit .env with your API keys
 ```
 
-4. **Build Bridge Layer**
+Example configuration:
 ```bash
-cd rathena-AI-world
-# Add bridge extension to web server
-# Build rAthena with bridge extension
+DEFAULT_LLM_PROVIDER=azure_openai
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+AZURE_OPENAI_API_KEY=your-key
+AZURE_OPENAI_DEPLOYMENT=gpt-4
 ```
 
-5. **Start AI Service**
+4. **Start AI Service**
 ```bash
 cd ai-service
 python main.py
 ```
 
-### Development Roadmap
+The service will start on `http://localhost:8000` by default.
 
-**Phase 1: Foundation** (Weeks 1-2)
-- [ ] Set up development environment
-- [ ] Implement Bridge Layer basic structure
-- [ ] Implement AI Service skeleton with FastAPI
-- [ ] Set up DragonflyDB integration
+**Note**: Bridge Layer integration with rAthena is not yet implemented. The AI service currently runs as a standalone FastAPI application.
 
-**Phase 2: Core Systems** (Weeks 3-6)
-- [ ] Implement LLM Provider abstraction
-- [ ] Integrate CrewAI for agent orchestration
-- [ ] Integrate Memori SDK for memory management
-- [ ] Implement basic NPC consciousness model
+### Development Status
 
-**Phase 3: World Systems** (Weeks 7-10)
-- [ ] Implement economy system
-- [ ] Implement politics/faction system
-- [ ] Implement environment system
-- [ ] Implement quest generation system
+**Phase 1: Foundation** ✅ COMPLETE
+- [x] Set up development environment
+- [x] Implement AI Service with FastAPI
+- [x] Set up DragonflyDB integration
+- [ ] Implement Bridge Layer basic structure (pending)
 
-**Phase 4: Integration & Testing** (Weeks 11-12)
-- [ ] End-to-end integration testing
+**Phase 2: Core Systems** ✅ MOSTLY COMPLETE
+- [x] Implement LLM Provider abstraction (OpenAI, Azure OpenAI, Anthropic, Google)
+- [x] Integrate CrewAI for agent orchestration
+- [x] Implement basic NPC consciousness model
+- [x] Implement AI agents (Dialogue, Decision, Memory, World, Quest, Economy)
+- [ ] Integrate Memori SDK for memory management (using DragonflyDB fallback)
+
+**Phase 3: World Systems** 🚧 IN PROGRESS
+- [x] Implement economy models
+- [x] Implement faction models
+- [x] Implement quest generation system
+- [ ] Implement politics/faction system (models only)
+- [ ] Implement environment system (pending)
+
+**Phase 4: Integration & Testing** 🚧 IN PROGRESS
+- [x] Unit tests for core components
+- [x] Integration tests
+- [ ] End-to-end integration with rAthena (pending Bridge Layer)
 - [ ] Performance testing and optimization
 - [ ] Load testing with 100+ NPCs
-- [ ] Bug fixes and refinements
 
-**Phase 5: Deployment** (Weeks 13-14)
+**Phase 5: Deployment** ⏳ PENDING
 - [ ] Production deployment setup
 - [ ] Monitoring and alerting setup
-- [ ] Documentation and training
+- [ ] Documentation (in progress)
 - [ ] Initial world bootstrap
 
 ## Performance Considerations
@@ -193,10 +207,16 @@ python main.py
 
 ## Documentation
 
+- **[INDEX.md](./INDEX.md)** - Complete documentation index
 - **[ARCHITECTURE.md](./ARCHITECTURE.md)** - Detailed technical architecture
 - **[WORLD_CONCEPT_DESIGN.md](./WORLD_CONCEPT_DESIGN.md)** - World design and NPC consciousness model
-- **[API_REFERENCE.md](./API_REFERENCE.md)** - Bridge API and AI Service API documentation (TBD)
-- **[DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md)** - Production deployment guide (TBD)
+- **[QUICK_START.md](./QUICK_START.md)** - Quick start guide
+- **[CONFIGURATION.md](./CONFIGURATION.md)** - Configuration options
+- **[FREE_FORM_TEXT_INPUT.md](./FREE_FORM_TEXT_INPUT.md)** - Free-form text input guide
+- **[GPU_ACCELERATION.md](./GPU_ACCELERATION.md)** - GPU acceleration guide
+- **[GPU_INSTALLATION.md](./GPU_INSTALLATION.md)** - GPU installation guide
+- **API_REFERENCE.md** - API documentation (TBD)
+- **DEPLOYMENT_GUIDE.md** - Production deployment guide (TBD)
 
 ## Contributing
 
@@ -217,8 +237,8 @@ This project extends rAthena, which is licensed under GNU GPL. See [LICENSE](../
 
 - **rAthena Team** - For the excellent MMORPG emulator
 - **CrewAI** - For the multi-agent orchestration framework
-- **Memori SDK** - For memory and context management
 - **DragonflyDB** - For high-performance state management
+- **OpenAI, Anthropic, Google** - For LLM APIs
 
 ## Contact
 
@@ -229,6 +249,6 @@ For questions, suggestions, or collaboration:
 
 ---
 
-**Status**: Architecture and Design Phase  
-**Version**: 1.0  
-**Last Updated**: 2024-01-15
+**Status**: Core Implementation Phase (AI Service functional, Bridge Layer pending)
+**Version**: 1.0
+**Last Updated**: 2025-11-06

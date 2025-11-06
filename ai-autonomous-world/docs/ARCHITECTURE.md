@@ -69,8 +69,8 @@ The system consists of five major layers:
 │         │                                                        │
 │  ┌──────▼───────────────────────────────────────────────────┐  │
 │  │         LLM Provider Abstraction Layer                   │  │
-│  │  - Azure OpenAI Foundry (Default)                        │  │
-│  │  - OpenAI, DeepSeek, Gemini, Ollama, Claude             │  │
+│  │  - Azure OpenAI (Default)                                │  │
+│  │  - OpenAI, Anthropic (Claude), Google (Gemini)          │  │
 │  └──────┬───────────────────────────────────────────────────┘  │
 └─────────┼──────────────────────────────────────────────────────┘
           │ Read/Write Operations
@@ -251,12 +251,14 @@ class LLMProvider(ABC):
 ```
 
 **Implementations:**
-- AzureOpenAIProvider (Default)
-- OpenAIProvider
-- DeepSeekProvider
-- GeminiProvider
-- OllamaProvider (Local)
-- ClaudeProvider
+- AzureOpenAIProvider (Default) - ✅ Implemented
+- OpenAIProvider - ✅ Implemented
+- AnthropicProvider (Claude) - ✅ Implemented
+- GoogleProvider (Gemini) - ✅ Implemented
+
+**Not Implemented:**
+- DeepSeekProvider (mentioned in config but no provider implementation)
+- OllamaProvider (package installed but no provider implementation)
 
 **Configuration:**
 ```yaml
@@ -265,15 +267,18 @@ llm:
   providers:
     azure_openai:
       endpoint: ${AZURE_OPENAI_ENDPOINT}
-      api_key: ${AZURE_OPENAI_KEY}
+      api_key: ${AZURE_OPENAI_API_KEY}
       deployment: gpt-4
       embedding_deployment: text-embedding-ada-002
     openai:
       api_key: ${OPENAI_API_KEY}
       model: gpt-4-turbo
-    ollama:
-      endpoint: http://localhost:11434
-      model: llama3
+    anthropic:
+      api_key: ${ANTHROPIC_API_KEY}
+      model: claude-3-5-sonnet-20241022
+    google:
+      api_key: ${GOOGLE_API_KEY}
+      model: gemini-1.5-pro
 ```
 
 **Provider Selection Strategy:**
@@ -561,7 +566,7 @@ POST /ai/player/interaction
 │  │  (Docker)    │  │   (Local)    │  │  (Docker)    │      │
 │  └──────────────┘  └──────────────┘  └──────────────┘      │
 │                                                               │
-│  LLM Provider: Ollama (local) or Azure OpenAI (cloud)       │
+│  LLM Provider: Azure OpenAI (default) or OpenAI/Anthropic/Google │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -650,7 +655,6 @@ POST /ai/player/interaction
   - openai (OpenAI, Azure OpenAI)
   - anthropic (Claude)
   - google-generativeai (Gemini)
-  - ollama (local models)
 
 ### State Management
 - **Database**: DragonflyDB (latest)

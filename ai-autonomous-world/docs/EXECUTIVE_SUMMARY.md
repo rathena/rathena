@@ -51,17 +51,18 @@ Instead of scripted events:
 
 ### Multi-Layer Architecture
 1. **rAthena Game Server**: Existing MMORPG server with custom NPC scripts
-2. **Bridge Layer**: REST API extension for communication
-3. **AI Service Layer**: Python-based agent orchestration (CrewAI + Memori SDK)
-4. **State Management**: DragonflyDB for shared state and caching
-5. **LLM Providers**: Abstracted interface supporting multiple providers
+2. **Bridge Layer**: REST API extension for communication (⏳ planned)
+3. **AI Service Layer**: Python-based agent orchestration (CrewAI) (✅ implemented)
+4. **State Management**: DragonflyDB for shared state and caching (✅ implemented)
+5. **LLM Providers**: Abstracted interface supporting multiple providers (✅ implemented)
 
 ### Technology Stack
-- **Agent Framework**: CrewAI for multi-agent orchestration
-- **Memory Management**: Memori SDK for context and memory
-- **State Storage**: DragonflyDB (high-performance Redis alternative)
-- **LLM Support**: Azure OpenAI (default), OpenAI, DeepSeek, Gemini, Ollama, Claude
-- **Infrastructure**: Docker, Kubernetes, Prometheus, Grafana, ELK Stack
+- **Agent Framework**: CrewAI for multi-agent orchestration (✅ implemented)
+- **Memory Management**: DragonflyDB (Memori SDK optional, using fallback) (✅ implemented)
+- **State Storage**: DragonflyDB (high-performance Redis alternative) (✅ implemented)
+- **LLM Support**: Azure OpenAI (default), OpenAI, Anthropic (Claude), Google (Gemini) (✅ implemented)
+  - Note: DeepSeek and Ollama mentioned in config but not fully implemented as providers
+- **Infrastructure**: Docker, Kubernetes, Prometheus, Grafana, ELK Stack (⏳ planned)
 
 ## Key Features
 
@@ -122,7 +123,7 @@ A gold rush causes inflation, food shortages, and starvation. The king's poor ec
 - **Caching**: 50%+ reduction in LLM calls
 - **Batching**: 10x reduction in API requests
 - **Tiering**: 70% cost savings using cheaper models for simple tasks
-- **Local Models**: Ollama for development and non-critical tasks
+- **Provider Flexibility**: Support for multiple LLM providers (Azure OpenAI, OpenAI, Anthropic, Google)
 
 ## Implementation Roadmap
 
@@ -132,11 +133,11 @@ A gold rush causes inflation, food shortages, and starvation. The king's poor ec
 - AI Service skeleton
 - DragonflyDB integration
 
-### Phase 2: Core Systems (Weeks 3-6)
-- LLM Provider abstraction
-- CrewAI integration
-- Memori SDK integration
-- Basic NPC consciousness model
+### Phase 2: Core Systems (Weeks 3-6) - ✅ MOSTLY COMPLETE
+- ✅ LLM Provider abstraction (OpenAI, Azure OpenAI, Anthropic, Google)
+- ✅ CrewAI integration
+- ✅ Basic NPC consciousness model
+- ⏳ Memori SDK integration (using DragonflyDB fallback)
 
 ### Phase 3: World Systems (Weeks 7-10)
 - Economy system
@@ -199,7 +200,7 @@ A gold rush causes inflation, food shortages, and starvation. The king's poor ec
 
 ## Conclusion
 
-This AI-driven autonomous world system represents a paradigm shift in MMORPG design. By combining cutting-edge AI technologies (CrewAI, Memori SDK, LLMs) with a thoughtful architecture that respects the existing rAthena codebase, we can create a truly living world that evolves, surprises, and engages players in ways traditional MMORPGs cannot.
+This AI-driven autonomous world system represents a paradigm shift in MMORPG design. By combining cutting-edge AI technologies (CrewAI, LLMs, DragonflyDB) with a thoughtful architecture that respects the existing rAthena codebase, we can create a truly living world that evolves, surprises, and engages players in ways traditional MMORPGs cannot.
 
 The system is:
 - **Technically Feasible**: Proven technologies, clear architecture
