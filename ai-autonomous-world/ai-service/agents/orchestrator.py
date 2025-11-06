@@ -6,12 +6,12 @@ Manages agent collaboration and task delegation
 from typing import Dict, Any, List, Optional
 from loguru import logger
 
-from crewai import Crew, Task, Process
-from agents.base_agent import AgentContext, AgentResponse
-from agents.dialogue_agent import DialogueAgent
-from agents.decision_agent import DecisionAgent
-from agents.memory_agent import MemoryAgent
-from agents.world_agent import WorldAgent
+from crewai import Crew, Process
+from ai_service.agents.base_agent import AgentContext
+from ai_service.agents.dialogue_agent import DialogueAgent
+from ai_service.agents.decision_agent import DecisionAgent
+from ai_service.agents.memory_agent import MemoryAgent
+from ai_service.agents.world_agent import WorldAgent
 
 
 class AgentOrchestrator:

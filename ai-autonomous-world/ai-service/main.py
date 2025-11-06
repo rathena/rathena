@@ -75,6 +75,7 @@ async def lifespan(app: FastAPI):
         from ai_service.llm import get_llm_provider
         llm = get_llm_provider()
         logger.info(f"LLM provider initialized: {settings.default_llm_provider}")
+        logger.debug(f"LLM provider type: {type(llm).__name__}")
     except Exception as e:
         logger.warning(f"LLM provider initialization failed: {e}")
     

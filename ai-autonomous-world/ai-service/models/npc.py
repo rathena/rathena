@@ -78,5 +78,25 @@ class NPCActionResponse(BaseModel):
     action: Optional[NPCAction] = Field(None, description="Next action to execute")
     state_update: Optional[Dict[str, Any]] = Field(None, description="NPC state updates")
     message: Optional[str] = Field(None, description="Status message")
+
+
+class NPCMovementCapabilities(BaseModel):
+    """NPC movement capabilities and restrictions"""
+    can_move: bool = Field(True, description="Whether NPC can move autonomously")
+    has_walking_animation: bool = Field(True, description="Whether NPC sprite has walking animation")
+    movement_speed: float = Field(1.0, ge=0.1, le=5.0, description="Movement speed multiplier")
+    max_wander_distance: int = Field(10, ge=1, le=50, description="Maximum wander distance from spawn")
+    patrol_route: Optional[List[NPCPosition]] = Field(None, description="Predefined patrol route")
+    home_position: Optional[NPCPosition] = Field(None, description="Home/spawn position for return behavior")
+
+
+class MovementActionData(BaseModel):
+    """Data for movement actions"""
+    movement_type: str = Field(..., description="Movement type: wander/patrol/goal_directed/social/retreat/return_home/exploration")
+    target_position: Optional[NPCPosition] = Field(None, description="Target position to move to")
+    target_entity_id: Optional[str] = Field(None, description="Target entity ID for social movement")
+    movement_reason: Optional[str] = Field(None, description="Reason for movement decision")
+    path: Optional[List[NPCPosition]] = Field(None, description="Calculated path (if pathfinding used)")
+    duration_estimate: Optional[float] = Field(None, description="Estimated movement duration in seconds")
     timestamp: datetime = Field(default_factory=datetime.utcnow, description="Response timestamp")
 

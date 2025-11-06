@@ -3,12 +3,15 @@ Decision Agent - Makes decisions for NPC actions and behaviors
 Determines what NPCs should do based on context, personality, and goals
 """
 
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 from loguru import logger
 import json
 
 from crewai import Agent
-from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+try:
+    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+except ModuleNotFoundError:
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 
 
 class DecisionAgent(BaseAIAgent):
@@ -76,7 +79,7 @@ class DecisionAgent(BaseAIAgent):
             )
             
             # Parse and validate decision
-            action_data = self._parse_decision(decision, available_actions)
+            action_data = self._parse_decision(decision, available_actions, context)
             
             logger.info(f"Decision made for {context.npc_id}: {action_data.get('action_type')}")
             
@@ -110,15 +113,39 @@ class DecisionAgent(BaseAIAgent):
     
     def _get_available_actions(self, context: AgentContext) -> List[Dict[str, Any]]:
         """Get list of available actions for NPC"""
+        from ai_service.utils.movement_utils import can_npc_move, get_movement_capabilities
+
         npc_class = context.current_state.get("npc_class", "generic")
-        
+        sprite_id = context.current_state.get("sprite_id")
+
+        # Get movement capabilities
+        movement_caps = get_movement_capabilities(context.current_state)
+        can_move = can_npc_move(
+            npc_id=context.npc_id,
+            npc_class=npc_class,
+            sprite_id=sprite_id,
+            movement_capabilities=movement_caps
+        )
+
         # Base actions available to all NPCs
         base_actions = [
             {"type": "idle", "description": "Stand idle and observe surroundings"},
-            {"type": "wander", "description": "Walk around the area"},
             {"type": "emote", "description": "Perform an emote or gesture"}
         ]
-        
+
+        # Add movement actions if NPC can move
+        if can_move:
+            movement_actions = [
+                {"type": "wander", "description": "Walk around the area randomly"},
+                {"type": "exploration", "description": "Explore nearby areas"},
+                {"type": "return_home", "description": "Return to home/spawn position"},
+            ]
+            base_actions.extend(movement_actions)
+
+            logger.debug(f"NPC {context.npc_id}: Movement actions enabled")
+        else:
+            logger.debug(f"NPC {context.npc_id}: Movement actions disabled")
+
         # Class-specific actions
         class_actions = {
             "merchant": [
@@ -127,19 +154,21 @@ class DecisionAgent(BaseAIAgent):
                 {"type": "check_prices", "description": "Check market prices"}
             ],
             "guard": [
-                {"type": "patrol", "description": "Patrol assigned area"},
+                {"type": "patrol", "description": "Patrol assigned area"} if can_move else None,
                 {"type": "watch", "description": "Watch for threats"},
                 {"type": "challenge", "description": "Challenge suspicious individuals"}
             ],
             "quest_giver": [
-                {"type": "seek_adventurers", "description": "Look for capable adventurers"},
+                {"type": "seek_adventurers", "description": "Look for capable adventurers"} if can_move else None,
                 {"type": "review_quests", "description": "Review available quests"},
                 {"type": "update_board", "description": "Update quest board"}
             ]
         }
-        
-        actions = base_actions + class_actions.get(npc_class, [])
-        
+
+        # Filter out None actions and add class-specific actions
+        class_specific = [a for a in class_actions.get(npc_class, []) if a is not None]
+        actions = base_actions + class_specific
+
         return actions
     
     def _build_decision_context(self, context: AgentContext) -> str:
@@ -241,7 +270,8 @@ Respond with a JSON object containing:
     def _parse_decision(
         self,
         decision: Dict[str, Any],
-        available_actions: List[Dict[str, Any]]
+        available_actions: List[Dict[str, Any]],
+        context: Optional[AgentContext] = None
     ) -> Dict[str, Any]:
         """Parse and validate decision"""
         action_type = decision.get("action_type", "idle")
@@ -254,21 +284,110 @@ Respond with a JSON object containing:
 
         return {
             "action_type": action_type,
-            "action_data": self._get_action_data(action_type),
+            "action_data": self._get_action_data(action_type, context),
             "priority": decision.get("priority", 5),
             "reasoning": decision.get("reasoning", "No reasoning provided")
         }
 
-    def _get_action_data(self, action_type: str) -> Dict[str, Any]:
-        """Get default data for action type"""
+    def _get_action_data(self, action_type: str, context: Optional[AgentContext] = None) -> Dict[str, Any]:
+        """Get default data for action type, including movement-specific data"""
+        import random
+        from ai_service.utils.movement_utils import get_movement_capabilities
+
+        # Non-movement action defaults
         action_data_defaults = {
             "idle": {"duration": 5},
-            "wander": {"radius": 5, "duration": 10},
             "emote": {"emote_type": "wave"},
             "advertise": {"message": "Come see my wares!"},
-            "patrol": {"route": "default", "speed": "walk"},
             "watch": {"direction": "forward", "duration": 10}
         }
 
+        # Movement action types
+        movement_actions = ["wander", "patrol", "exploration", "return_home", "goal_directed", "social", "retreat"]
+
+        if action_type in movement_actions and context:
+            return self._generate_movement_action_data(action_type, context)
+
         return action_data_defaults.get(action_type, {})
+
+    def _generate_movement_action_data(self, movement_type: str, context: AgentContext) -> Dict[str, Any]:
+        """Generate movement-specific action data"""
+        import random
+        from ai_service.utils.movement_utils import get_movement_capabilities
+        from ai_service.models.npc import NPCPosition
+
+        movement_caps = get_movement_capabilities(context.current_state)
+        current_location = context.current_state.get("location", {})
+        current_map = current_location.get("map", "prontera")
+        current_x = int(current_location.get("x", 150))
+        current_y = int(current_location.get("y", 150))
+
+        if movement_type == "wander":
+            # Random wander within max distance
+            max_dist = min(movement_caps.max_wander_distance, 10)
+            offset_x = random.randint(-max_dist, max_dist)
+            offset_y = random.randint(-max_dist, max_dist)
+
+            return {
+                "movement_type": "wander",
+                "target_position": {
+                    "map": current_map,
+                    "x": current_x + offset_x,
+                    "y": current_y + offset_y
+                },
+                "movement_reason": "Random wandering behavior"
+            }
+
+        elif movement_type == "patrol":
+            # Patrol along predefined route or circular pattern
+            if movement_caps.patrol_route:
+                # Use predefined patrol route
+                return {
+                    "movement_type": "patrol",
+                    "patrol_route": [pos.dict() for pos in movement_caps.patrol_route],
+                    "movement_reason": "Following patrol route"
+                }
+            else:
+                # Generate simple circular patrol
+                patrol_radius = 5
+                return {
+                    "movement_type": "patrol",
+                    "target_position": {
+                        "map": current_map,
+                        "x": current_x + patrol_radius,
+                        "y": current_y
+                    },
+                    "movement_reason": "Circular patrol pattern"
+                }
+
+        elif movement_type == "return_home":
+            # Return to home/spawn position
+            if movement_caps.home_position:
+                return {
+                    "movement_type": "return_home",
+                    "target_position": movement_caps.home_position.dict(),
+                    "movement_reason": "Returning to home position"
+                }
+            else:
+                # No home position, stay idle
+                return {"movement_type": "idle", "duration": 5}
+
+        elif movement_type == "exploration":
+            # Explore nearby area
+            explore_dist = min(movement_caps.max_wander_distance, 15)
+            offset_x = random.randint(-explore_dist, explore_dist)
+            offset_y = random.randint(-explore_dist, explore_dist)
+
+            return {
+                "movement_type": "exploration",
+                "target_position": {
+                    "map": current_map,
+                    "x": current_x + offset_x,
+                    "y": current_y + offset_y
+                },
+                "movement_reason": "Exploring nearby area"
+            }
+
+        # Default fallback
+        return {"movement_type": movement_type, "duration": 5}
 

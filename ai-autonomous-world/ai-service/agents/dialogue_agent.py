@@ -3,11 +3,11 @@ Dialogue Agent - Generates personality-driven NPC dialogue
 Handles conversation generation based on context, personality, and memory
 """
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 from loguru import logger
 
 from crewai import Agent
-from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 
 
 class DialogueAgent(BaseAIAgent):

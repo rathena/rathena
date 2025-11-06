@@ -7,6 +7,7 @@ from loguru import logger
 
 from .base import BaseLLMProvider
 from .providers.openai_provider import OpenAIProvider
+from .providers.azure_openai_provider import AzureOpenAIProvider
 from .providers.anthropic_provider import AnthropicProvider
 from .providers.google_provider import GoogleProvider
 
@@ -16,6 +17,7 @@ class LLMProviderFactory:
     
     _providers = {
         "openai": OpenAIProvider,
+        "azure_openai": AzureOpenAIProvider,
         "anthropic": AnthropicProvider,
         "google": GoogleProvider,
         "gemini": GoogleProvider,  # Alias
@@ -118,6 +120,15 @@ def get_llm_provider(
                 "model": settings.openai_model,
                 "temperature": settings.openai_temperature,
                 "max_tokens": settings.openai_max_tokens,
+            }
+        elif provider_name == "azure_openai":
+            config = {
+                "api_key": settings.azure_openai_api_key,
+                "endpoint": settings.azure_openai_endpoint,
+                "deployment": settings.azure_openai_deployment,
+                "api_version": settings.azure_openai_api_version,
+                "temperature": settings.openai_temperature,  # Reuse OpenAI temperature setting
+                "max_tokens": settings.openai_max_tokens,  # Reuse OpenAI max_tokens setting
             }
         elif provider_name == "anthropic":
             config = {

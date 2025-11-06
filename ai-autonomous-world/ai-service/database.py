@@ -196,7 +196,6 @@ class Database:
     async def get_npc_quests(self, npc_id: str) -> list:
         """Get all quests for an NPC"""
         try:
-            import json
             quest_ids = await self.client.smembers(f"quests:npc:{npc_id}")
             quests = []
             for quest_id in quest_ids:

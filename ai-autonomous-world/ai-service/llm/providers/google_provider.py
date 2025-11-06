@@ -88,15 +88,17 @@ class GoogleProvider(BaseLLMProvider):
             # Convert messages to Gemini format
             chat_history = []
             system_instruction = None
-            
+
             for msg in messages:
                 if msg["role"] == "system":
                     system_instruction = msg["content"]
+                    # Log system instruction for debugging
+                    logger.debug(f"System instruction set: {system_instruction[:100]}...")
                 elif msg["role"] == "user":
                     chat_history.append({"role": "user", "parts": [msg["content"]]})
                 elif msg["role"] == "assistant":
                     chat_history.append({"role": "model", "parts": [msg["content"]]})
-            
+
             logger.debug(f"Google Gemini chat request: {len(chat_history)} messages")
             
             # Create chat session

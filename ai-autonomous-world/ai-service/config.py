@@ -3,7 +3,6 @@ Configuration management for AI Service
 Loads settings from YAML config file and environment variables
 """
 
-import os
 from pathlib import Path
 from typing import Optional, Dict, Any
 from pydantic_settings import BaseSettings
@@ -30,7 +29,7 @@ class Settings(BaseSettings):
     redis_max_connections: int = Field(default=50, env="REDIS_MAX_CONNECTIONS")
     
     # LLM Provider Configuration
-    default_llm_provider: str = Field(default="openai", env="DEFAULT_LLM_PROVIDER")
+    default_llm_provider: str = Field(default="azure_openai", env="DEFAULT_LLM_PROVIDER")
     
     # OpenAI Configuration
     openai_api_key: Optional[str] = Field(default=None, env="OPENAI_API_KEY")
@@ -75,7 +74,14 @@ class Settings(BaseSettings):
     # Performance Configuration
     max_concurrent_requests: int = Field(default=100, env="MAX_CONCURRENT_REQUESTS")
     request_timeout: int = Field(default=300, env="REQUEST_TIMEOUT")
-    
+
+    # NPC Movement Configuration
+    npc_movement_enabled: bool = Field(default=True, env="NPC_MOVEMENT_ENABLED")
+    npc_movement_update_interval: int = Field(default=5, env="NPC_MOVEMENT_UPDATE_INTERVAL")  # seconds
+    npc_movement_max_distance: int = Field(default=10, env="NPC_MOVEMENT_MAX_DISTANCE")  # cells
+    npc_movement_personality_influence: float = Field(default=0.7, env="NPC_MOVEMENT_PERSONALITY_INFLUENCE")  # 0.0-1.0
+    npc_movement_require_walking_sprite: bool = Field(default=True, env="NPC_MOVEMENT_REQUIRE_WALKING_SPRITE")
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"

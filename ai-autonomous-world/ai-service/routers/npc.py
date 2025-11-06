@@ -7,15 +7,26 @@ from loguru import logger
 import uuid
 from datetime import datetime
 
-from ..models.npc import (
-    NPCRegisterRequest,
-    NPCRegisterResponse,
-    NPCEventRequest,
-    NPCEventResponse,
-    NPCActionResponse,
-    NPCAction,
-)
-from ..database import db
+try:
+    from ..models.npc import (
+        NPCRegisterRequest,
+        NPCRegisterResponse,
+        NPCEventRequest,
+        NPCEventResponse,
+        NPCActionResponse,
+        NPCAction,
+    )
+    from ..database import db
+except ImportError:
+    from models.npc import (
+        NPCRegisterRequest,
+        NPCRegisterResponse,
+        NPCEventRequest,
+        NPCEventResponse,
+        NPCActionResponse,
+        NPCAction,
+    )
+    from database import db
 
 router = APIRouter(prefix="/ai/npc", tags=["npc"])
 
@@ -133,46 +144,110 @@ async def send_npc_event(request: NPCEventRequest):
 @router.get("/{npc_id}/action", response_model=NPCActionResponse)
 async def get_npc_action(npc_id: str):
     """
-    Get the next action for an NPC
-    
-    Returns the next action the NPC should execute based on its current state and goals.
+    Get the next action for an NPC using AI Decision Agent
+
+    Returns the next action the NPC should execute based on its current state, personality, and goals.
     """
     try:
         logger.info(f"Getting action for NPC {npc_id}")
-        
+
         # Get NPC state
         npc_state = await db.get_npc_state(npc_id)
-        
+
         if not npc_state:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND,
                 detail=f"NPC {npc_id} not found"
             )
-        
-        # For now, return a simple idle action
-        # In full implementation, this would query the NPC agent for decision
-        action = NPCAction(
-            action_type="idle",
-            action_data={"duration": 5},
-            priority=1,
-            execution_params={}
+
+        # Get orchestrator and request action decision
+        from ..agents.orchestrator import get_orchestrator
+        from ..agents.base_agent import AgentContext
+        from ..models.npc import NPCPersonality
+
+        # Build agent context
+        personality_data = npc_state.get("personality", {})
+        personality = NPCPersonality(**personality_data) if personality_data else NPCPersonality()
+
+        agent_context = AgentContext(
+            npc_id=npc_id,
+            npc_name=npc_state.get("name", "Unknown"),
+            personality=personality,
+            current_state=npc_state,
+            recent_events=npc_state.get("recent_events", [])
         )
-        
-        logger.info(f"Returning action for NPC {npc_id}: {action.action_type}")
-        
+
+        # Get orchestrator and request action decision
+        orchestrator = get_orchestrator()
+        result = await orchestrator.handle_npc_action_decision(agent_context)
+
+        # Extract action from result
+        action_data = result.get("action", {})
+
+        action = NPCAction(
+            action_type=action_data.get("action_type", "idle"),
+            action_data=action_data.get("action_data", {"duration": 5}),
+            priority=action_data.get("priority", 1),
+            execution_params=action_data.get("execution_params", {})
+        )
+
+        logger.info(f"AI decision for NPC {npc_id}: {action.action_type}")
+
         return NPCActionResponse(
             npc_id=npc_id,
             action=action,
-            state_update=None,
-            message="Action retrieved successfully"
+            state_update=result.get("state_update"),
+            message="Action retrieved successfully from AI Decision Agent"
         )
-        
+
     except HTTPException:
         raise
     except Exception as e:
         logger.error(f"Error getting action for NPC {npc_id}: {e}")
+        # Fallback to idle action on error
+        logger.warning(f"Falling back to idle action for NPC {npc_id}")
+        return NPCActionResponse(
+            npc_id=npc_id,
+            action=NPCAction(
+                action_type="idle",
+                action_data={"duration": 5},
+                priority=1,
+                execution_params={}
+            ),
+            state_update=None,
+            message=f"Fallback action due to error: {str(e)}"
+        )
+
+
+@router.post("/{npc_id}/execute-action")
+async def execute_npc_action(npc_id: str, action: NPCAction):
+    """
+    Execute an NPC action and translate it to Bridge Layer commands
+
+    This endpoint is called by the Bridge Layer to get executable commands
+    for an NPC action decided by the AI.
+    """
+    try:
+        logger.info(f"Executing action for NPC {npc_id}: {action.action_type}")
+
+        from ..utils.bridge_commands import translate_action_to_bridge_command
+
+        # Translate action to bridge command
+        bridge_command = translate_action_to_bridge_command(action, npc_id)
+
+        logger.info(f"Bridge command for NPC {npc_id}: {bridge_command.get('command_type')}")
+
+        return {
+            "npc_id": npc_id,
+            "command": bridge_command,
+            "status": "ready_for_execution",
+            "message": "Action translated to bridge command successfully"
+        }
+
+    except Exception as e:
+        logger.error(f"Error executing action for NPC {npc_id}: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to get NPC action: {str(e)}"
+            detail=f"Failed to execute NPC action: {str(e)}"
         )
 

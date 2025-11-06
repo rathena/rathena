@@ -9,8 +9,11 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from loguru import logger
 
-from crewai import Agent, Task
-from models.npc import NPCPersonality
+from crewai import Agent
+try:
+    from ai_service.models.npc import NPCPersonality
+except ModuleNotFoundError:
+    from models.npc import NPCPersonality
 
 
 @dataclass

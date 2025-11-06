@@ -16,6 +16,14 @@ from ..database import db
 from ..llm import get_llm_provider
 from ..agents.base_agent import AgentContext
 from ..agents.orchestrator import AgentOrchestrator
+from ..config import settings
+
+try:
+    from memori import Memori
+    MEMORI_AVAILABLE = True
+except ImportError:
+    logger.warning("Memori SDK not available")
+    MEMORI_AVAILABLE = False
 
 router = APIRouter(prefix="/ai/player", tags=["player"])
 
@@ -35,10 +43,41 @@ def get_orchestrator() -> AgentOrchestrator:
             "world_agent": {"verbose": False},
             "verbose": False
         }
+
+        # Initialize Memori client if available and enabled
+        memori_client = None
+        if MEMORI_AVAILABLE and settings.memori_enabled:
+            try:
+                # Determine database connection string
+                # Use Redis/DragonflyDB connection for Memori storage
+                db_connect = f"redis://{settings.redis_host}:{settings.redis_port}/{settings.redis_db}"
+                if settings.redis_password:
+                    db_connect = f"redis://:{settings.redis_password}@{settings.redis_host}:{settings.redis_port}/{settings.redis_db}"
+
+                # Initialize Memori client
+                memori_client = Memori(
+                    database_connect=db_connect,
+                    api_key=settings.memori_api_key or settings.openai_api_key,  # Use OpenAI key as fallback
+                    user_id="ai_service",  # Service-level user ID
+                    session_id="npc_memories",  # Session for NPC memories
+                    verbose=settings.debug,
+                    schema_init=True  # Initialize database schema
+                )
+                logger.info("Memori client initialized successfully")
+            except Exception as e:
+                logger.error(f"Failed to initialize Memori client: {e}")
+                logger.info("Continuing without Memori SDK - will use DragonflyDB fallback")
+                memori_client = None
+        else:
+            if not MEMORI_AVAILABLE:
+                logger.info("Memori SDK not available - using DragonflyDB fallback")
+            elif not settings.memori_enabled:
+                logger.info("Memori SDK disabled in configuration - using DragonflyDB fallback")
+
         _orchestrator = AgentOrchestrator(
             llm_provider=llm,
             config=config,
-            memori_client=None  # TODO: Initialize Memori client if available
+            memori_client=memori_client
         )
         logger.info("Agent Orchestrator initialized for player interactions")
     return _orchestrator
@@ -135,9 +174,7 @@ async def handle_player_interaction(request: PlayerInteractionRequest):
             npc_state_update=npc_state,
             relationship_change=relationship_change.get("change", 0)
         )
-            relationship_change={request.player_id: 1}
-        )
-        
+
     except HTTPException:
         raise
     except Exception as e:

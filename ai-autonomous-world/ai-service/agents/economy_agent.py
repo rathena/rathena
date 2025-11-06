@@ -6,12 +6,11 @@ from typing import Dict, Any, List, Optional
 from loguru import logger
 import json
 import random
-import math
 from datetime import datetime, timedelta
 
 from crewai import Agent
-from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-from models.economy import (
+from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+from ai_service.models.economy import (
     MarketItem, EconomicState, MarketTrend, ItemCategory,
     EconomicEvent, TradeRecommendation
 )
@@ -321,6 +320,9 @@ Make it interesting and impactful!"""
 
         for item_data in items[:5]:  # Top 5 items
             item = MarketItem(**item_data)
+
+            # Log player level for context (used for future recommendation filtering)
+            logger.debug(f"Generating trade recommendations for player level {player_level}")
 
             # Simple recommendation logic
             if item.trend == MarketTrend.FALLING and item.current_price < item.base_price * 0.8:

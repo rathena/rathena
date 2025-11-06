@@ -2,15 +2,15 @@
 Quest Agent - Generates dynamic quests based on world state and NPC personality
 """
 
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, Optional
 from loguru import logger
 import json
 import random
-from datetime import datetime, timedelta
+from datetime import datetime
 
 from crewai import Agent
-from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-from models.quest import (
+from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+from ai_service.models.quest import (
     Quest, QuestType, QuestDifficulty, QuestStatus,
     QuestObjective, QuestReward, QuestRequirements
 )

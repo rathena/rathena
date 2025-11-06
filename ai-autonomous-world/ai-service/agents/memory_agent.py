@@ -4,14 +4,15 @@ Handles storage, retrieval, and contextualization of NPC memories
 """
 
 from typing import Dict, Any, List, Optional
-from datetime import datetime, timedelta
+from datetime import datetime
 from loguru import logger
 
 from crewai import Agent
-from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 
 try:
-    from memori import Memori, Memory
+    # Memori is used in _store_with_memori and _retrieve_with_memori methods
+    from memori import Memori  # noqa: F401
     MEMORI_AVAILABLE = True
 except ImportError:
     logger.warning("Memori SDK not available, memory features will be limited")
@@ -197,21 +198,43 @@ class MemoryAgent(BaseAIAgent):
 
     async def _store_with_memori(self, memory_entry: Dict[str, Any]) -> str:
         """Store memory using Memori SDK"""
-        # This is a placeholder for actual Memori SDK integration
-        # The actual implementation would use the Memori client
-        logger.info("Storing memory with Memori SDK (placeholder)")
+        logger.info(f"Storing memory with Memori SDK for NPC {memory_entry['npc_id']}")
 
-        # Generate memory ID
-        memory_id = f"mem_{memory_entry['npc_id']}_{int(datetime.utcnow().timestamp())}"
+        try:
+            # Generate memory ID
+            memory_id = f"mem_{memory_entry['npc_id']}_{int(datetime.utcnow().timestamp())}"
 
-        # TODO: Actual Memori SDK integration
-        # memory = Memory(
-        #     content=memory_entry['content'],
-        #     metadata=memory_entry
-        # )
-        # await self.memori_client.store(memory)
+            # Prepare memory content
+            content = memory_entry.get('content', '')
 
-        return memory_id
+            # Prepare metadata for Memori SDK
+            metadata = {
+                'memory_id': memory_id,
+                'npc_id': memory_entry.get('npc_id'),
+                'player_id': memory_entry.get('player_id'),
+                'memory_type': memory_entry.get('memory_type', 'interaction'),
+                'importance': memory_entry.get('importance', 0.5),
+                'emotional_valence': memory_entry.get('emotional_valence', 0.0),
+                'timestamp': memory_entry.get('timestamp', datetime.utcnow().isoformat()),
+                'location': memory_entry.get('location'),
+                'tags': memory_entry.get('tags', [])
+            }
+
+            # Store using Memori SDK
+            # The add() method returns a memory_id
+            stored_id = self.memori_client.add(
+                text=content,
+                metadata=metadata
+            )
+
+            logger.info(f"Memory stored successfully with Memori SDK: {stored_id}")
+            return stored_id
+
+        except Exception as e:
+            logger.error(f"Failed to store memory with Memori SDK: {e}")
+            # Fallback to database storage
+            logger.info("Falling back to database storage")
+            return await self._store_in_db(memory_entry)
 
     async def _store_in_db(self, memory_entry: Dict[str, Any]) -> str:
         """Store memory in DragonflyDB as fallback"""
@@ -238,17 +261,53 @@ class MemoryAgent(BaseAIAgent):
         limit: int
     ) -> List[Dict[str, Any]]:
         """Retrieve memories using Memori SDK"""
-        logger.info("Retrieving memories with Memori SDK (placeholder)")
+        logger.info(f"Retrieving memories with Memori SDK for NPC {npc_id}, query: {query}")
 
-        # TODO: Actual Memori SDK integration
-        # memories = await self.memori_client.search(
-        #     query=query,
-        #     filters={"npc_id": npc_id, "player_id": player_id},
-        #     limit=limit
-        # )
+        try:
+            # Build search query that includes NPC context
+            search_query = f"NPC {npc_id}: {query}"
+            if player_id:
+                search_query += f" player {player_id}"
 
-        # Fallback to database
-        return await self._retrieve_from_db(npc_id, player_id, limit)
+            # Search using Memori SDK
+            # The search() method returns a list of memory dictionaries
+            raw_memories = self.memori_client.search(
+                query=search_query,
+                limit=limit
+            )
+
+            # Transform Memori SDK results to our expected format
+            memories = []
+            for mem in raw_memories:
+                # Extract metadata from Memori SDK result
+                metadata = mem.get('metadata', {})
+
+                # Filter by NPC ID if metadata contains it
+                if metadata.get('npc_id') == npc_id:
+                    # Filter by player ID if specified
+                    if player_id is None or metadata.get('player_id') == player_id:
+                        memory_entry = {
+                            'memory_id': metadata.get('memory_id', mem.get('memory_id')),
+                            'npc_id': metadata.get('npc_id'),
+                            'player_id': metadata.get('player_id'),
+                            'content': mem.get('searchable_content', mem.get('summary', '')),
+                            'memory_type': metadata.get('memory_type', 'interaction'),
+                            'importance': metadata.get('importance', 0.5),
+                            'emotional_valence': metadata.get('emotional_valence', 0.0),
+                            'timestamp': metadata.get('timestamp', mem.get('created_at')),
+                            'location': metadata.get('location'),
+                            'tags': metadata.get('tags', [])
+                        }
+                        memories.append(memory_entry)
+
+            logger.info(f"Retrieved {len(memories)} memories from Memori SDK")
+            return memories
+
+        except Exception as e:
+            logger.error(f"Failed to retrieve memories with Memori SDK: {e}")
+            # Fallback to database
+            logger.info("Falling back to database retrieval")
+            return await self._retrieve_from_db(npc_id, player_id, limit)
 
     async def _retrieve_from_db(
         self,

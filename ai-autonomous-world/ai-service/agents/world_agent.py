@@ -8,7 +8,10 @@ from loguru import logger
 import json
 
 from crewai import Agent
-from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+try:
+    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+except ModuleNotFoundError:
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 
 
 class WorldAgent(BaseAIAgent):
@@ -148,7 +151,10 @@ class WorldAgent(BaseAIAgent):
         """Analyze political conditions"""
         faction_relations = politics_state.get("faction_relations", {})
         conflict_level = politics_state.get("conflict_level", 0)
-        
+
+        # Log faction relations for monitoring
+        logger.debug(f"Analyzing politics with {len(faction_relations)} faction relations")
+
         # Determine political stability
         if conflict_level < 0.2:
             status = "peaceful"
@@ -318,4 +324,93 @@ Generate an appropriate world event. Respond with JSON only."""
                 "affected_areas": ["unknown"],
                 "duration": "short"
             }
+
+    async def get_map_info(self, map_name: str) -> Dict[str, Any]:
+        """
+        Get map information for pathfinding and movement decisions
+
+        Args:
+            map_name: Name of the map
+
+        Returns:
+            Map information including boundaries and walkable areas
+        """
+        logger.debug(f"Getting map info for: {map_name}")
+
+        # Default map boundaries (these would ideally come from rAthena server)
+        # For now, use common map sizes
+        map_boundaries = {
+            "prontera": {"width": 300, "height": 300},
+            "geffen": {"width": 200, "height": 200},
+            "morocc": {"width": 300, "height": 300},
+            "payon": {"width": 200, "height": 200},
+            "alberta": {"width": 200, "height": 200},
+            "izlude": {"width": 200, "height": 200},
+        }
+
+        boundaries = map_boundaries.get(map_name, {"width": 200, "height": 200})
+
+        return {
+            "map_name": map_name,
+            "width": boundaries["width"],
+            "height": boundaries["height"],
+            "walkable": True,  # Simplified - would need actual walkability data
+            "safe_zone": True  # Simplified - would need actual zone data
+        }
+
+    async def validate_movement_target(
+        self,
+        current_map: str,
+        current_x: int,
+        current_y: int,
+        target_map: str,
+        target_x: int,
+        target_y: int
+    ) -> Dict[str, Any]:
+        """
+        Validate if a movement target is reachable
+
+        Args:
+            current_map: Current map name
+            current_x: Current X coordinate
+            current_y: Current Y coordinate
+            target_map: Target map name
+            target_x: Target X coordinate
+            target_y: Target Y coordinate
+
+        Returns:
+            Validation result with reachable flag and adjusted coordinates
+        """
+        logger.debug(f"Validating movement from {current_map}({current_x},{current_y}) to {target_map}({target_x},{target_y})")
+
+        # Check if maps are the same
+        if current_map != target_map:
+            logger.warning(f"Cross-map movement not supported: {current_map} -> {target_map}")
+            return {
+                "reachable": False,
+                "reason": "Cross-map movement not supported",
+                "adjusted_target": None
+            }
+
+        # Get map boundaries
+        map_info = await self.get_map_info(target_map)
+
+        # Clamp coordinates to map boundaries
+        adjusted_x = max(0, min(target_x, map_info["width"] - 1))
+        adjusted_y = max(0, min(target_y, map_info["height"] - 1))
+
+        # Check if adjustment was needed
+        if adjusted_x != target_x or adjusted_y != target_y:
+            logger.info(f"Target coordinates adjusted: ({target_x},{target_y}) -> ({adjusted_x},{adjusted_y})")
+
+        return {
+            "reachable": True,
+            "reason": "Target is reachable",
+            "adjusted_target": {
+                "map": target_map,
+                "x": adjusted_x,
+                "y": adjusted_y
+            },
+            "distance": abs(target_x - current_x) + abs(target_y - current_y)  # Manhattan distance
+        }
 

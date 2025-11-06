@@ -5,11 +5,10 @@ Quest API endpoints for dynamic quest generation and management
 from fastapi import APIRouter, HTTPException, status
 from loguru import logger
 from datetime import datetime
-from typing import List, Optional
 
 from ..models.quest import (
     Quest, QuestGenerationRequest, QuestGenerationResponse,
-    QuestProgressUpdate, QuestCompletionRequest, QuestStatus
+    QuestProgressUpdate, QuestStatus
 )
 from ..models.npc import NPCPersonality
 from ..database import db
