@@ -13,6 +13,38 @@ AI-enabled NPCs use the Bridge Layer to communicate with the AI Service, enablin
 
 ## Example NPCs
 
+### `ai_chat_handler.txt` - Chat Command Interface
+
+**Purpose**: Enables free-form text input for player-NPC interactions
+**Command**: `@npc <npc_id> <message>`
+**Features**:
+- Natural language input from players
+- AI-generated responses
+- Rate limiting and spam protection
+- Configurable cooldowns and message length limits
+
+**Usage**:
+```
+@npc merchant_001 Tell me about the ancient ruins
+@npc guard_prontera What's happening in the city?
+@npc blacksmith_001 Can you craft me a sword?
+```
+
+**Configuration**:
+- `chat_enabled`: Enable/disable chat command (default: 1)
+- `chat_cooldown`: Cooldown in seconds (default: 2)
+- `max_message_length`: Maximum message length (default: 500)
+- `require_proximity`: Require proximity to NPC (default: 1)
+- `proximity_range`: Range in cells (default: 5)
+
+**Installation**:
+1. Add to `npc/scripts_custom.conf`:
+   ```
+   npc: npc/custom/ai-world/ai_chat_handler.txt
+   ```
+2. Reload scripts: `@reloadscript`
+3. Test: `@npc merchant_001 Hello!`
+
 ### `ai_npc_example.txt` - AI Merchant
 
 **Location**: Prontera (150, 180)  

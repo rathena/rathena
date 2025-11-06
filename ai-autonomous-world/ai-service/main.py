@@ -19,6 +19,7 @@ from ai_service.config import settings
 from ai_service.database import db
 from ai_service.routers import npc_router, world_router, player_router
 from ai_service.routers.quest import router as quest_router
+from ai_service.routers.chat_command import router as chat_command_router
 
 
 # Configure logging
@@ -70,6 +71,17 @@ async def lifespan(app: FastAPI):
         logger.error(f"Failed to connect to database: {e}")
         raise
     
+    # Initialize GPU manager
+    try:
+        from ai_service.utils import initialize_gpu
+        gpu_manager = initialize_gpu(settings)
+        if gpu_manager.is_available():
+            logger.info(f"GPU acceleration enabled: {gpu_manager.get_info().device_name}")
+        else:
+            logger.info("GPU acceleration disabled or unavailable")
+    except Exception as e:
+        logger.warning(f"GPU manager initialization failed: {e}")
+
     # Initialize LLM provider (test connection)
     try:
         from ai_service.llm import get_llm_provider
@@ -78,7 +90,7 @@ async def lifespan(app: FastAPI):
         logger.debug(f"LLM provider type: {type(llm).__name__}")
     except Exception as e:
         logger.warning(f"LLM provider initialization failed: {e}")
-    
+
     logger.info("AI Service startup complete")
     
     yield
@@ -161,6 +173,7 @@ app.include_router(npc_router)
 app.include_router(world_router)
 app.include_router(player_router)
 app.include_router(quest_router)
+app.include_router(chat_command_router)
 
 
 # Run server

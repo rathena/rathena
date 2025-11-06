@@ -1,0 +1,79 @@
+# GPU Acceleration Dependencies
+# Install these for GPU-accelerated AI operations
+
+# ============================================================================
+# NVIDIA CUDA Support (Linux/Windows)
+# ============================================================================
+# Install PyTorch with CUDA 11.8 support:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+
+# FAISS-GPU for vector similarity search
+faiss-gpu>=1.7.4
+
+# Optional: vLLM for high-throughput LLM inference (Linux only)
+# vllm>=0.2.0
+
+# Optional: CuPy for GPU-accelerated NumPy operations
+# cupy-cuda11x>=12.0.0
+
+# ============================================================================
+# Apple Silicon (MPS) Support (macOS)
+# ============================================================================
+# PyTorch with MPS support (included in standard PyTorch):
+# pip install torch torchvision torchaudio
+
+# FAISS CPU version (GPU not available on macOS)
+# faiss-cpu>=1.7.4
+
+# ============================================================================
+# AMD ROCm Support (Linux)
+# ============================================================================
+# Install PyTorch with ROCm support:
+# pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.4.2
+
+# ============================================================================
+# Common Dependencies
+# ============================================================================
+
+# NumPy for array operations
+numpy>=1.24.0
+
+# Loguru for logging
+loguru>=0.7.0
+
+# ============================================================================
+# Installation Instructions
+# ============================================================================
+#
+# 1. For NVIDIA CUDA (Linux/Windows):
+#    pip install -r requirements-gpu.txt
+#    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+#
+# 2. For Apple Silicon (macOS):
+#    pip install torch torchvision torchaudio
+#    pip install faiss-cpu
+#
+# 3. For AMD ROCm (Linux):
+#    pip install -r requirements-gpu.txt
+#    pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.4.2
+#
+# 4. Verify installation:
+#    python -c "import torch; print(f'CUDA: {torch.cuda.is_available()}')"
+#    python -c "import torch; print(f'MPS: {torch.backends.mps.is_available()}')"
+#    python -c "import faiss; print(f'FAISS: {faiss.__version__}')"
+#
+# ============================================================================
+# Optional High-Performance Libraries
+# ============================================================================
+#
+# vLLM (Linux only, requires CUDA):
+#   pip install vllm
+#
+# CuPy (CUDA only):
+#   pip install cupy-cuda11x
+#
+# TensorRT-LLM (Advanced, requires manual setup):
+#   See: https://github.com/NVIDIA/TensorRT-LLM
+#
+# ============================================================================
+

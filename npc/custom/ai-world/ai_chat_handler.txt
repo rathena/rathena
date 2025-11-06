@@ -1,0 +1,156 @@
+//===== rAthena Script =======================================
+//= AI Chat Command Handler
+//===== Description: =========================================
+//= Handles free-form text input for AI-powered NPC interactions
+//= Players can use @npc command to send natural language messages
+//= to NPCs and receive AI-generated responses
+//===== Author: ==============================================
+//= AI Autonomous World System
+//===== Version: =============================================
+//= 1.0 - Initial implementation
+//============================================================
+
+-	script	AI_Chat_Handler	FAKE_NPC,{
+OnInit:
+	// Bind @npc command to this script
+	// Syntax: @npc <npc_id> <message>
+	// Example: @npc merchant_001 Tell me about the ancient ruins
+	bindatcmd("npc", "AI_Chat_Handler::OnNPCChat", 0, 99);
+	
+	// Configuration
+	.chat_enabled = 1;  // 1 = enabled, 0 = disabled
+	.chat_cooldown = 2;  // Cooldown in seconds
+	.max_message_length = 500;  // Maximum message length
+	.require_proximity = 1;  // 1 = require proximity, 0 = allow from anywhere
+	.proximity_range = 5;  // Range in cells
+	.log_interactions = 1;  // 1 = log all interactions, 0 = no logging
+	
+	// Bridge Layer URL
+	.bridge_url$ = "http://localhost:8888";
+	
+	debugmes "[AI Chat Handler] Initialized - @npc command registered";
+	end;
+
+OnNPCChat:
+	// Check if chat is enabled
+	if (!.chat_enabled) {
+		dispbottom "[AI Chat] Chat command is currently disabled.";
+		end;
+	}
+	
+	// Get command arguments
+	// Format: @npc <npc_id> <message>
+	.@args$ = implode(.@atcmd_parameters$, " ");
+	
+	// Parse NPC ID and message
+	.@space_pos = instr(.@args$, " ");
+	
+	if (.@space_pos == -1) {
+		dispbottom "[AI Chat] Usage: @npc <npc_id> <message>";
+		dispbottom "[AI Chat] Example: @npc merchant_001 Tell me about the ancient ruins";
+		end;
+	}
+	
+	.@npc_id$ = substr(.@args$, 0, .@space_pos - 1);
+	.@message$ = substr(.@args$, .@space_pos + 1, getstrlen(.@args$) - 1);
+	
+	// Validate message length
+	if (getstrlen(.@message$) > .max_message_length) {
+		dispbottom "[AI Chat] Message too long. Maximum " + .max_message_length + " characters.";
+		end;
+	}
+	
+	if (getstrlen(.@message$) == 0) {
+		dispbottom "[AI Chat] Please enter a message.";
+		end;
+	}
+	
+	// Check cooldown
+	.@player_id = getcharid(0);
+	.@last_chat_time = getd("$ai_chat_cooldown_" + .@player_id);
+	.@current_time = gettimetick(2);
+	
+	if (.@current_time - .@last_chat_time < .chat_cooldown) {
+		.@remaining = .chat_cooldown - (.@current_time - .@last_chat_time);
+		dispbottom "[AI Chat] Please wait " + .@remaining + " seconds before sending another message.";
+		end;
+	}
+	
+	// Update cooldown
+	setd("$ai_chat_cooldown_" + .@player_id, .@current_time);
+	
+	// Check proximity if required
+	if (.require_proximity) {
+		// TODO: Implement proximity check
+		// This requires NPC position lookup which may need additional implementation
+		// For now, we'll skip proximity check
+	}
+	
+	// Log interaction if enabled
+	if (.log_interactions) {
+		debugmes "[AI Chat] Player " + strcharinfo(0) + " -> NPC " + .@npc_id$ + ": " + .@message$;
+	}
+	
+	// Build JSON request
+	.@player_name$ = strcharinfo(0);
+	.@player_level = BaseLevel;
+	.@player_class$ = jobname(Class);
+	.@map$ = strcharinfo(3);
+	.@x = getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+	
+	// Get time of day (simplified)
+	.@hour = gettime(GETTIME_HOUR);
+	if (.@hour >= 6 && .@hour < 12)
+		.@time_of_day$ = "morning";
+	else if (.@hour >= 12 && .@hour < 18)
+		.@time_of_day$ = "afternoon";
+	else if (.@hour >= 18 && .@hour < 22)
+		.@time_of_day$ = "evening";
+	else
+		.@time_of_day$ = "night";
+	
+	// Build JSON (simplified - in production, use proper JSON library)
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"" + .@npc_id$ + "\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"talk\",";
+	.@json$ += "\"message\":\"" + escape_json(.@message$) + "\",";
+	.@json$ += "\"context\":{";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"player_level\":" + .@player_level + ",";
+	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
+	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "},";
+	.@json$ += "\"time_of_day\":\"" + .@time_of_day$ + "\",";
+	.@json$ += "\"weather\":\"clear\"";
+	.@json$ += "}";
+	.@json$ += "}";
+	
+	// Call AI Service via Bridge Layer
+	// NOTE: This requires HTTP support in rAthena
+	// For now, show a placeholder message
+	
+	dispbottom "[AI Chat] Sending message to " + .@npc_id$ + "...";
+	
+	// TODO: Implement actual HTTP request when rAthena supports it
+	// .@response$ = httppost(.bridge_url$ + "/ai/player/interaction", .@json$);
+	
+	// Placeholder response
+	dispbottom "[AI Chat] Feature requires HTTP support in rAthena.";
+	dispbottom "[AI Chat] Your message: " + .@message$;
+	dispbottom "[AI Chat] This will be sent to the AI service when HTTP support is available.";
+	
+	end;
+
+// Helper function to escape JSON strings
+function	escape_json	{
+	.@str$ = getarg(0);
+	// Replace special characters
+	.@str$ = replacestr(.@str$, "\\", "\\\\");
+	.@str$ = replacestr(.@str$, "\"", "\\\"");
+	.@str$ = replacestr(.@str$, "\n", "\\n");
+	.@str$ = replacestr(.@str$, "\r", "\\r");
+	.@str$ = replacestr(.@str$, "\t", "\\t");
+	return .@str$;
+}
+}
+

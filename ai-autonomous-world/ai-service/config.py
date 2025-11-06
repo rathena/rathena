@@ -82,6 +82,66 @@ class Settings(BaseSettings):
     npc_movement_personality_influence: float = Field(default=0.7, env="NPC_MOVEMENT_PERSONALITY_INFLUENCE")  # 0.0-1.0
     npc_movement_require_walking_sprite: bool = Field(default=True, env="NPC_MOVEMENT_REQUIRE_WALKING_SPRITE")
 
+    # Advanced Movement Features
+    npc_movement_map_data_integration: bool = Field(default=False, env="NPC_MOVEMENT_MAP_DATA_INTEGRATION")
+    npc_movement_pathfinding_enabled: bool = Field(default=False, env="NPC_MOVEMENT_PATHFINDING_ENABLED")
+    npc_movement_pathfinding_algorithm: str = Field(default="astar", env="NPC_MOVEMENT_PATHFINDING_ALGORITHM")  # astar, dijkstra
+    npc_movement_social_enabled: bool = Field(default=False, env="NPC_MOVEMENT_SOCIAL_ENABLED")
+    npc_movement_social_follow_distance: int = Field(default=3, env="NPC_MOVEMENT_SOCIAL_FOLLOW_DISTANCE")  # cells
+    npc_movement_goal_directed_enabled: bool = Field(default=False, env="NPC_MOVEMENT_GOAL_DIRECTED_ENABLED")
+    npc_movement_dynamic_patrol_enabled: bool = Field(default=False, env="NPC_MOVEMENT_DYNAMIC_PATROL_ENABLED")
+    npc_movement_animation_sync_enabled: bool = Field(default=False, env="NPC_MOVEMENT_ANIMATION_SYNC_ENABLED")
+    npc_movement_collision_avoidance_enabled: bool = Field(default=False, env="NPC_MOVEMENT_COLLISION_AVOIDANCE_ENABLED")
+    npc_movement_collision_detection_radius: int = Field(default=2, env="NPC_MOVEMENT_COLLISION_DETECTION_RADIUS")  # cells
+    npc_movement_time_based_enabled: bool = Field(default=False, env="NPC_MOVEMENT_TIME_BASED_ENABLED")
+
+    # Free-Form Text Input Configuration
+    freeform_text_enabled: bool = Field(default=True, env="FREEFORM_TEXT_ENABLED")
+    freeform_text_mode: str = Field(default="chat_command", env="FREEFORM_TEXT_MODE")  # chat_command, client_ui, web_interface
+    freeform_text_max_length: int = Field(default=500, env="FREEFORM_TEXT_MAX_LENGTH")  # characters
+    freeform_text_rate_limit_enabled: bool = Field(default=True, env="FREEFORM_TEXT_RATE_LIMIT_ENABLED")
+    freeform_text_rate_limit_messages: int = Field(default=10, env="FREEFORM_TEXT_RATE_LIMIT_MESSAGES")  # messages per minute
+    freeform_text_profanity_filter_enabled: bool = Field(default=False, env="FREEFORM_TEXT_PROFANITY_FILTER_ENABLED")
+    freeform_text_response_timeout: int = Field(default=30, env="FREEFORM_TEXT_RESPONSE_TIMEOUT")  # seconds
+    freeform_text_fallback_mode: str = Field(default="show_error", env="FREEFORM_TEXT_FALLBACK_MODE")  # show_error, use_buttons, use_cached
+
+    # Chat Command Interface Configuration
+    chat_command_enabled: bool = Field(default=True, env="CHAT_COMMAND_ENABLED")
+    chat_command_prefix: str = Field(default="@npc", env="CHAT_COMMAND_PREFIX")
+    chat_command_fallback_mode: str = Field(default="show_error", env="CHAT_COMMAND_FALLBACK_MODE")  # show_error, use_buttons, use_cached
+    chat_command_max_length: int = Field(default=500, env="CHAT_COMMAND_MAX_LENGTH")  # characters
+    chat_command_cooldown: int = Field(default=2, env="CHAT_COMMAND_COOLDOWN")  # seconds
+    chat_command_require_npc_proximity: bool = Field(default=True, env="CHAT_COMMAND_REQUIRE_NPC_PROXIMITY")
+    chat_command_proximity_range: int = Field(default=5, env="CHAT_COMMAND_PROXIMITY_RANGE")  # cells
+    chat_command_log_all_interactions: bool = Field(default=True, env="CHAT_COMMAND_LOG_ALL_INTERACTIONS")
+
+    # GPU Acceleration Configuration
+    gpu_enabled: bool = Field(default=False, env="GPU_ENABLED")  # Master switch for GPU acceleration
+    gpu_device: str = Field(default="auto", env="GPU_DEVICE")  # cuda, mps, rocm, auto
+    gpu_memory_fraction: float = Field(default=0.8, env="GPU_MEMORY_FRACTION")  # 0.0-1.0, max GPU memory usage
+    gpu_allow_growth: bool = Field(default=True, env="GPU_ALLOW_GROWTH")  # Dynamic GPU memory allocation
+    gpu_fallback_to_cpu: bool = Field(default=True, env="GPU_FALLBACK_TO_CPU")  # Fallback to CPU if GPU unavailable
+    gpu_log_memory_usage: bool = Field(default=True, env="GPU_LOG_MEMORY_USAGE")  # Log GPU memory usage
+
+    # GPU Feature Flags
+    llm_use_gpu: bool = Field(default=True, env="LLM_USE_GPU")  # Enable GPU for LLM inference (when gpu_enabled=True)
+    pathfinding_use_gpu: bool = Field(default=False, env="PATHFINDING_USE_GPU")  # Enable GPU for pathfinding (experimental)
+    vector_search_use_gpu: bool = Field(default=True, env="VECTOR_SEARCH_USE_GPU")  # Enable GPU for vector operations
+    batch_processing_use_gpu: bool = Field(default=True, env="BATCH_PROCESSING_USE_GPU")  # Enable GPU for batch operations
+
+    # GPU Performance Tuning
+    gpu_batch_size: int = Field(default=32, env="GPU_BATCH_SIZE")  # Batch size for GPU operations
+    gpu_max_context_length: int = Field(default=4096, env="GPU_MAX_CONTEXT_LENGTH")  # Max context length for GPU inference
+    gpu_num_threads: int = Field(default=4, env="GPU_NUM_THREADS")  # Number of CPU threads for GPU operations
+    gpu_prefetch_batches: int = Field(default=2, env="GPU_PREFETCH_BATCHES")  # Number of batches to prefetch
+
+    # GPU Library Configuration
+    gpu_use_pytorch: bool = Field(default=True, env="GPU_USE_PYTORCH")  # Use PyTorch for GPU operations
+    gpu_use_cupy: bool = Field(default=False, env="GPU_USE_CUPY")  # Use CuPy for NumPy-like GPU operations
+    gpu_use_faiss_gpu: bool = Field(default=True, env="GPU_USE_FAISS_GPU")  # Use FAISS-GPU for vector search
+    gpu_use_vllm: bool = Field(default=False, env="GPU_USE_VLLM")  # Use vLLM for LLM inference acceleration
+    gpu_use_tensorrt: bool = Field(default=False, env="GPU_USE_TENSORRT")  # Use TensorRT-LLM for inference
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
@@ -145,7 +205,46 @@ def get_settings(config_path: Optional[str] = None) -> Settings:
     logger.info(f"Environment: {settings.environment}, Debug: {settings.debug}")
     logger.info(f"Default LLM Provider: {settings.default_llm_provider}")
     logger.info(f"Redis: {settings.redis_host}:{settings.redis_port}")
-    
+
+    # Log NPC Movement Configuration
+    logger.info(f"NPC Movement: Enabled={settings.npc_movement_enabled}")
+    if settings.npc_movement_enabled:
+        logger.info(f"  - Update Interval: {settings.npc_movement_update_interval}s")
+        logger.info(f"  - Max Distance: {settings.npc_movement_max_distance} cells")
+        logger.info(f"  - Advanced Features: Pathfinding={settings.npc_movement_pathfinding_enabled}, "
+                   f"Social={settings.npc_movement_social_enabled}, "
+                   f"Collision={settings.npc_movement_collision_avoidance_enabled}")
+
+    # Log Free-Form Text Input Configuration
+    logger.info(f"Free-Form Text Input: Enabled={settings.freeform_text_enabled}")
+    if settings.freeform_text_enabled:
+        logger.info(f"  - Mode: {settings.freeform_text_mode}")
+        logger.info(f"  - Max Length: {settings.freeform_text_max_length} chars")
+        logger.info(f"  - Rate Limiting: {settings.freeform_text_rate_limit_enabled}")
+        logger.info(f"  - Response Timeout: {settings.freeform_text_response_timeout}s")
+
+    # Log Chat Command Configuration
+    logger.info(f"Chat Command Interface: Enabled={settings.chat_command_enabled}")
+    if settings.chat_command_enabled:
+        logger.info(f"  - Prefix: {settings.chat_command_prefix}")
+        logger.info(f"  - Cooldown: {settings.chat_command_cooldown}s")
+        logger.info(f"  - Proximity Required: {settings.chat_command_require_npc_proximity}")
+
+    # Log GPU Configuration
+    logger.info(f"GPU Acceleration: Enabled={settings.gpu_enabled}")
+    if settings.gpu_enabled:
+        logger.info(f"  - Device: {settings.gpu_device}")
+        logger.info(f"  - Memory Fraction: {settings.gpu_memory_fraction}")
+        logger.info(f"  - Allow Growth: {settings.gpu_allow_growth}")
+        logger.info(f"  - Fallback to CPU: {settings.gpu_fallback_to_cpu}")
+        logger.info(f"  - Features: LLM={settings.llm_use_gpu}, "
+                   f"Vector={settings.vector_search_use_gpu}, "
+                   f"Pathfinding={settings.pathfinding_use_gpu}")
+        logger.info(f"  - Batch Size: {settings.gpu_batch_size}")
+        logger.info(f"  - Libraries: PyTorch={settings.gpu_use_pytorch}, "
+                   f"FAISS-GPU={settings.gpu_use_faiss_gpu}, "
+                   f"vLLM={settings.gpu_use_vllm}")
+
     return settings
 
 

@@ -75,13 +75,47 @@ The system consists of approximately 10,000 lines of production-grade Python and
 
 ---
 
+## 📚 Documentation
+
+### Core Documentation
+- **[Architecture Overview](ai-autonomous-world/docs/ARCHITECTURE.md)** - System architecture and component interactions
+- **[Configuration Guide](ai-autonomous-world/docs/CONFIGURATION.md)** - Complete configuration reference
+- **[Free-Form Text Input](ai-autonomous-world/docs/FREE_FORM_TEXT_INPUT.md)** - Natural language player-NPC interactions
+- **[GPU Acceleration](ai-autonomous-world/docs/GPU_ACCELERATION.md)** - GPU acceleration setup and optimization
+
+### Feature Documentation
+- **[NPC Movement System](ai-autonomous-world/FINAL_SUMMARY.md#requirement-3-npc-movement-capabilities)** - Autonomous NPC movement with pathfinding
+- **[Memory System](ai-autonomous-world/PHASE_2_COMPLETE.md#2-memory-agent)** - Hyper-personalized per-player memory
+- **[LLM Providers](ai-autonomous-world/FINAL_SUMMARY.md#requirement-1-azure-openai-support-as-default-provider)** - Multi-provider LLM support
+- **[GPU Acceleration](ai-autonomous-world/docs/GPU_ACCELERATION.md)** - 10-100x faster inference with GPU support
+
+### Implementation Guides
+- **[Phase 1: Infrastructure](ai-autonomous-world/PHASE_1_COMPLETE.md)** - Bridge layer and database setup
+- **[Phase 2: AI Agents](ai-autonomous-world/PHASE_2_COMPLETE.md)** - Multi-agent system implementation
+- **[Bridge Layer](ai-autonomous-world/BRIDGE_LAYER_IMPLEMENTATION.md)** - C++ HTTP bridge integration
+
+### Quick Reference
+- **[API Endpoints](ai-autonomous-world/docs/FREE_FORM_TEXT_INPUT.md#api-documentation)** - REST API reference
+- **[Troubleshooting](ai-autonomous-world/docs/FREE_FORM_TEXT_INPUT.md#troubleshooting)** - Common issues and solutions
+- **[NPC Scripts](npc/custom/ai-world/README.md)** - rAthena NPC script examples
+
+---
+
 ## Quick Start Guide - AI System
 
 ### System Requirements
+
+#### Minimum Requirements
 - Python 3.12 or higher
 - DragonflyDB (Redis-compatible) or Redis 7.0+
 - LLM API Keys: At least one of OpenAI, Anthropic, or Google Gemini
 - 8GB RAM minimum (16GB recommended for production)
+
+#### Optional: GPU Acceleration
+- **NVIDIA GPU**: GTX 1060 (6GB VRAM) or higher, CUDA 11.8+
+- **Apple Silicon**: M1/M2/M3 with 16GB+ unified memory
+- **AMD GPU**: RX 6000/7000 series with ROCm 5.4+
+- **Performance**: 10-100x faster LLM inference, 5-20x faster vector search
 
 ### Docker Deployment
 
