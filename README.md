@@ -75,6 +75,27 @@ The system consists of approximately 10,000 lines of production-grade Python and
 
 ---
 
+## 🔗 Related Projects
+
+### WARP P2P Client
+
+The **[WARP-p2p-client](https://github.com/iskandarsulaili/WARP-p2p-client)** is the C++ WebRTC client implementation that connects to the rathena-AI-world P2P coordinator service. It enables hybrid P2P architecture where players can host game zones while maintaining centralized AI NPCs and authentication.
+
+**Key Features**:
+- WebRTC-based P2P connections for zone hosting
+- Automatic host discovery and selection
+- Secure communication with encryption
+- Graceful fallback to main server
+- Performance monitoring and host validation
+
+**Integration**: The WARP client connects to the P2P coordinator service (`rathena-AI-world/p2p-coordinator`) via WebSocket signaling at `/api/signaling/ws`. See [P2P_INTEGRATION_ANALYSIS.md](../P2P_INTEGRATION_ANALYSIS.md) for detailed integration requirements.
+
+**Architecture**: Hybrid P2P model where:
+- **Centralized**: AI NPCs, authentication, anti-cheat, critical game logic
+- **P2P**: Zone-based player interactions, reducing server load and latency
+
+---
+
 ## 📚 Documentation
 
 ### Core Documentation

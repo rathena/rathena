@@ -253,7 +253,22 @@ AI_SERVICE_URL=http://localhost:8000
 
 ### WARP P2P Client
 
-The WARP P2P client (Qt5 C++ application) connects to the P2P Coordinator for session management and WebRTC signaling.
+The **[WARP-p2p-client](https://github.com/iskandarsulaili/WARP-p2p-client)** is a C++ WebRTC client that connects to this P2P Coordinator for session management and WebRTC signaling.
+
+**Connection Details**:
+- **WebSocket Endpoint**: `ws://localhost:8001/api/signaling/ws` (development)
+- **Production Endpoint**: `wss://coordinator.yourdomain.com/api/signaling/ws`
+- **Protocol**: WebSocket-based signaling with JSON messages
+- **Message Types**: `join`, `leave`, `offer`, `answer`, `ice-candidate`
+
+**Integration Requirements**:
+The WARP client requires WebSocket support and specific message handling to work with this coordinator. See the [P2P Integration Analysis](../../P2P_INTEGRATION_ANALYSIS.md) for detailed compatibility assessment and required modifications.
+
+**Configuration**:
+```ini
+[P2P_HOSTS]
+0=ws://localhost:8001/api/signaling/ws
+```
 
 ---
 
