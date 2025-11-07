@@ -96,7 +96,7 @@ ai-autonomous-world/
 
 1. **Activate the virtual environment:**
    ```bash
-   cd /home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world
+   cd <workspace>/rathena-AI-world/ai-autonomous-world
    source venv/bin/activate
    ```
 

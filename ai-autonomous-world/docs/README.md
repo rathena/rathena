@@ -107,7 +107,7 @@ For detailed world concept, see [WORLD_CONCEPT_DESIGN.md](./WORLD_CONCEPT_DESIGN
 ## Getting Started
 
 ### Prerequisites
-- rAthena server (located at `/home/lot399/ai-mmorpg-world/rathena-AI-world/`)
+- rAthena server (located at `<workspace>/rathena-AI-world/`)
 - Python 3.11+
 - PostgreSQL 17 (native installation)
 - DragonflyDB (native installation)

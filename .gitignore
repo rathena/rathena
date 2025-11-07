@@ -188,3 +188,38 @@ generated
 # Temporary files
 /ai-autonomous-world/**/*.tmp
 /ai-autonomous-world/**/*.temp
+
+# ============================================================================
+# P2P Coordinator Service
+# ============================================================================
+# Python virtual environment
+/p2p-coordinator/venv/
+/p2p-coordinator/env/
+/p2p-coordinator/.venv/
+
+# Environment files (keep .example files)
+/p2p-coordinator/.env
+/p2p-coordinator/coordinator-service/.env
+
+# Python cache
+/p2p-coordinator/**/__pycache__/
+/p2p-coordinator/**/*.pyc
+/p2p-coordinator/**/*.pyo
+/p2p-coordinator/**/*.pyd
+
+# Logs
+/p2p-coordinator/coordinator-service/logs/*.log
+/p2p-coordinator/logs/*.log
+
+# Testing
+/p2p-coordinator/.pytest_cache/
+/p2p-coordinator/.coverage
+/p2p-coordinator/htmlcov/
+
+# IDE
+/p2p-coordinator/.vscode/
+/p2p-coordinator/.idea/
+
+# Temporary files
+/p2p-coordinator/**/*.tmp
+/p2p-coordinator/**/*.temp

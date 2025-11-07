@@ -20,6 +20,12 @@ from ai_service.database import db, postgres_db
 from ai_service.routers import npc_router, world_router, player_router
 from ai_service.routers.quest import router as quest_router
 from ai_service.routers.chat_command import router as chat_command_router
+from ai_service.routers.batch import router as batch_router
+from ai_service.middleware import (
+    APIKeyMiddleware,
+    RateLimitMiddleware,
+    RequestSizeLimitMiddleware,
+)
 
 
 # Configure logging
@@ -193,6 +199,27 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Add security and performance middleware
+logger.info("Configuring middleware...")
+
+# Request size limit (first to reject large requests early)
+app.add_middleware(RequestSizeLimitMiddleware)
+logger.info(f"✓ Request size limit: {settings.max_request_size} bytes")
+
+# Rate limiting (second to prevent abuse)
+if settings.rate_limit_enabled:
+    app.add_middleware(RateLimitMiddleware)
+    logger.info(f"✓ Rate limiting: {settings.rate_limit_requests} requests per {settings.rate_limit_period}s")
+else:
+    logger.warning("⚠ Rate limiting disabled")
+
+# API key authentication (third to validate access)
+if settings.api_key_required and settings.api_key:
+    app.add_middleware(APIKeyMiddleware)
+    logger.info(f"✓ API key authentication enabled (header: {settings.api_key_header})")
+else:
+    logger.warning("⚠ API key authentication disabled")
+
 
 # Exception handlers
 @app.exception_handler(Exception)
@@ -271,6 +298,9 @@ app.include_router(world_router)
 app.include_router(player_router)
 app.include_router(quest_router)
 app.include_router(chat_command_router)
+app.include_router(batch_router)
+
+logger.info("✓ All routers registered")
 
 
 # Run server

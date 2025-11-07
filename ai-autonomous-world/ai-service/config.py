@@ -104,11 +104,21 @@ class Settings(BaseSettings):
     
     # API Security
     api_key: Optional[str] = Field(default=None, env="API_KEY")
+    api_key_header: str = Field(default="X-API-Key", env="API_KEY_HEADER")
+    api_key_required: bool = Field(default=False, env="API_KEY_REQUIRED")
     cors_origins: List[str] = Field(
         default=["http://localhost:8888", "http://127.0.0.1:8888"],
         env="CORS_ORIGINS",
         description="CORS allowed origins - restrict to known domains for security"
     )
+
+    # Rate Limiting
+    rate_limit_enabled: bool = Field(default=True, env="RATE_LIMIT_ENABLED")
+    rate_limit_requests: int = Field(default=100, env="RATE_LIMIT_REQUESTS")
+    rate_limit_period: int = Field(default=60, env="RATE_LIMIT_PERIOD")  # seconds
+
+    # Request Size Limits
+    max_request_size: int = Field(default=10485760, env="MAX_REQUEST_SIZE")  # 10MB in bytes
     
     # Logging Configuration
     log_level: str = Field(default="INFO", env="LOG_LEVEL")

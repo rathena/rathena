@@ -46,6 +46,10 @@ faiss-cpu==1.9.0.post1
 loguru==0.7.3
 prometheus-client==0.21.0
 
+# Rate Limiting and Security
+slowapi==0.1.9
+python-multipart==0.0.18
+
 # Async and Concurrency
 asyncio==3.4.3
 aiofiles==24.1.0

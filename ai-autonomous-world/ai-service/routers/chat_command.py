@@ -158,9 +158,18 @@ async def handle_chat_command(
             # Extract response text
             npc_text = interaction_response.response.data.get("text", "...")
             npc_emotion = interaction_response.response.emotion
-            
+
+            # Cache successful response for fallback (TTL: 1 hour)
+            try:
+                from ai_service.database import db
+                cache_key = f"chat_fallback:{request.npc_id}:{request.player_id}"
+                await db.client.setex(cache_key, 3600, npc_text)
+                logger.debug(f"Cached response for NPC {request.npc_id}")
+            except Exception as cache_error:
+                logger.warning(f"Failed to cache response: {cache_error}")
+
             logger.info(f"Chat command successful: {request.npc_id} responded")
-            
+
             return ChatCommandResponse(
                 success=True,
                 npc_response=npc_text,
@@ -177,11 +186,32 @@ async def handle_chat_command(
                     error=f"AI service error: {e.detail}"
                 )
             elif settings.chat_command_fallback_mode == "use_cached":
-                # TODO: Implement cached response fallback
-                return ChatCommandResponse(
-                    success=False,
-                    error="AI service unavailable. Cached responses not yet implemented."
-                )
+                # Implement cached response fallback using DragonflyDB
+                try:
+                    from ai_service.database import db
+                    cache_key = f"chat_fallback:{request.npc_id}:{request.player_id}"
+                    cached_response = await db.client.get(cache_key)
+
+                    if cached_response:
+                        logger.info(f"Using cached fallback response for NPC {request.npc_id}")
+                        return ChatCommandResponse(
+                            success=True,
+                            response_text=cached_response.decode('utf-8') if isinstance(cached_response, bytes) else cached_response,
+                            npc_id=request.npc_id,
+                            player_id=request.player_id
+                        )
+                    else:
+                        logger.warning(f"No cached response available for NPC {request.npc_id}")
+                        return ChatCommandResponse(
+                            success=False,
+                            error="AI service unavailable and no cached response available."
+                        )
+                except Exception as cache_error:
+                    logger.error(f"Error retrieving cached response: {cache_error}")
+                    return ChatCommandResponse(
+                        success=False,
+                        error="AI service unavailable. Please try again later."
+                    )
             else:
                 return ChatCommandResponse(
                     success=False,

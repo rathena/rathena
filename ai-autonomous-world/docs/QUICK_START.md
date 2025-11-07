@@ -18,7 +18,7 @@ Use the automated installation script for a complete, one-command setup:
 
 ```bash
 # Navigate to the AI autonomous world system
-cd /home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world
+cd <workspace>/rathena-AI-world/ai-autonomous-world
 
 # Run the installation script
 ./install.sh
@@ -70,7 +70,7 @@ If you prefer manual installation or need to customize the setup, follow these s
 
 ```bash
 # Navigate to the AI autonomous world system
-cd /home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world
+cd <workspace>/rathena-AI-world/ai-autonomous-world
 
 # Verify directory structure
 ls -la

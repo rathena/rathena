@@ -146,29 +146,29 @@ class Database:
 
         for attempt in range(1, max_retries + 1):
             try:
-                logger.info(f"Connecting to Redis at {settings.redis_host}:{settings.redis_port} (attempt {attempt}/{max_retries})")
+                logger.info(f"Connecting to DragonflyDB at {settings.redis_host}:{settings.redis_port} (attempt {attempt}/{max_retries})")
 
-                # Create connection pool
+                # Create connection pool for DragonflyDB (Redis-compatible)
                 self.pool = ConnectionPool(
                     host=settings.redis_host,
                     port=settings.redis_port,
                     db=settings.redis_db,
                     password=settings.redis_password,
                     max_connections=settings.redis_max_connections,
-                    decode_responses=False,  # Changed to False to support binary data
+                    decode_responses=False,  # False to support binary data
                     encoding="utf-8",
                 )
 
-                # Create Redis client
+                # Create DragonflyDB client (using Redis protocol)
                 self.client = aioredis.Redis(connection_pool=self.pool)
 
                 # Test connection
                 await self.client.ping()
-                logger.info("✓ Successfully connected to Redis/DragonflyDB")
+                logger.info("✓ Successfully connected to DragonflyDB")
 
                 # Log database info
                 info = await self.client.info()
-                logger.info(f"Redis version: {info.get('redis_version', 'unknown')}")
+                logger.info(f"DragonflyDB version: {info.get('redis_version', 'unknown')}")
                 logger.info(f"Connected clients: {info.get('connected_clients', 0)}")
 
                 return  # Success - exit retry loop
@@ -183,21 +183,21 @@ class Database:
                     logger.info(f"Retrying in {wait_time:.1f} seconds...")
                     await asyncio.sleep(wait_time)
                 else:
-                    logger.error(f"Failed to connect to Redis after {max_retries} attempts")
-                    raise ConnectionError(f"Could not connect to Redis: {last_error}") from last_error
+                    logger.error(f"Failed to connect to DragonflyDB after {max_retries} attempts")
+                    raise ConnectionError(f"Could not connect to DragonflyDB: {last_error}") from last_error
     
     async def disconnect(self):
-        """Close connection to DragonflyDB / Redis"""
+        """Close connection to DragonflyDB"""
         try:
             if self.client:
                 await self.client.close()
-                logger.info("Disconnected from Redis/DragonflyDB")
-            
+                logger.info("Disconnected from DragonflyDB")
+
             if self.pool:
                 await self.pool.disconnect()
-                
+
         except Exception as e:
-            logger.error(f"Error disconnecting from Redis: {e}")
+            logger.error(f"Error disconnecting from DragonflyDB: {e}")
     
     async def get_client(self) -> aioredis.Redis:
         """Get Redis client instance"""
