@@ -6,12 +6,15 @@ Represents a P2P host that can serve game zones to players.
 
 import enum
 from datetime import datetime
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from sqlalchemy import String, Integer, Float, Boolean, DateTime, Enum, JSON, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 from models.base import Base
+
+if TYPE_CHECKING:
+    from models.session import P2PSession  # noqa: F401
 
 
 class HostStatus(str, enum.Enum):

@@ -1,11 +1,25 @@
-<img src="doc/logo.png" align="right" height="90" />
+<img src="doc/rathena staff power abuse.png" align="right" height="90" />
 
 # rAthena AI World - AI-Driven MMORPG Server with Autonomous NPCs
 
-[![Production Ready](https://img.shields.io/badge/status-production%20ready-brightgreen.svg)](ai-autonomous-world/FINAL_SUMMARY.md)
-[![AI Agents](https://img.shields.io/badge/AI%20agents-6%20specialized-blue.svg)](ai-autonomous-world/PHASE_2_COMPLETE.md)
-[![LLM Providers](https://img.shields.io/badge/LLM%20providers-3%20(OpenAI%2C%20Anthropic%2C%20Google)-orange.svg)](ai-autonomous-world/ai-service/llm/)
+[![Production Ready](https://img.shields.io/badge/status-production%20ready-brightgreen.svg)](ai-autonomous-world/README.md)
+[![AI Agents](https://img.shields.io/badge/AI%20agents-6%20specialized-blue.svg)](ai-autonomous-world/README.md#-current-status)
+[![LLM Providers](https://img.shields.io/badge/LLM%20providers-5%20(Azure%2C%20OpenAI%2C%20Anthropic%2C%20Google%2C%20DeepSeek)-orange.svg)](ai-autonomous-world/ai-service/llm/)
 ![GitHub](https://img.shields.io/github/license/rathena/rathena.svg)
+
+---
+
+## Motivation
+
+This project was born from a frustration with arbitrary moderation practices in the rAthena community. After being banned from the rAthena Discord server without solid justification—simply because a staff member decided they didn't like me—I realized the importance of creating an independent, community-driven alternative.
+
+**This fork represents:**
+- **Freedom from arbitrary authority**: No single person should have unchecked power to silence contributors
+- **Technical innovation**: Pushing rAthena beyond its traditional boundaries with cutting-edge AI integration
+- **Community empowerment**: Building a space where ideas and code matter more than personal preferences
+- **Open collaboration**: Welcoming all developers regardless of past conflicts with other communities
+
+If you've ever felt silenced, dismissed, or unfairly treated by those in positions of power, this project is for you. Let's build something better together.
 
 ---
 
@@ -105,15 +119,15 @@ The **[WARP-p2p-client](https://github.com/iskandarsulaili/WARP-p2p-client)** is
 - **[GPU Acceleration](ai-autonomous-world/docs/GPU_ACCELERATION.md)** - GPU acceleration setup and optimization
 
 ### Feature Documentation
-- **[NPC Movement System](ai-autonomous-world/FINAL_SUMMARY.md#requirement-3-npc-movement-capabilities)** - Autonomous NPC movement with pathfinding
-- **[Memory System](ai-autonomous-world/PHASE_2_COMPLETE.md#2-memory-agent)** - Hyper-personalized per-player memory
-- **[LLM Providers](ai-autonomous-world/FINAL_SUMMARY.md#requirement-1-azure-openai-support-as-default-provider)** - Multi-provider LLM support
+- **[NPC Movement System](ai-autonomous-world/README.md#-current-status)** - Autonomous NPC movement with pathfinding
+- **[Memory System](ai-autonomous-world/README.md#-current-status)** - Hyper-personalized per-player memory with PostgreSQL and DragonflyDB
+- **[LLM Providers](ai-autonomous-world/ai-service/llm/)** - Multi-provider LLM support (Azure OpenAI, OpenAI, Anthropic, Google, DeepSeek)
 - **[GPU Acceleration](ai-autonomous-world/docs/GPU_ACCELERATION.md)** - 10-100x faster inference with GPU support
 
 ### Implementation Guides
-- **[Phase 1: Infrastructure](ai-autonomous-world/PHASE_1_COMPLETE.md)** - Bridge layer and database setup
-- **[Phase 2: AI Agents](ai-autonomous-world/PHASE_2_COMPLETE.md)** - Multi-agent system implementation
-- **[Bridge Layer](ai-autonomous-world/BRIDGE_LAYER_IMPLEMENTATION.md)** - C++ HTTP bridge integration
+- **[Installation Guide](ai-autonomous-world/INSTALL.md)** - Complete installation instructions
+- **[Quick Start](ai-autonomous-world/README.md#-quick-start)** - Get started quickly
+- **[Architecture Overview](ai-autonomous-world/docs/ARCHITECTURE.md)** - System architecture and design
 
 ### Quick Reference
 - **[API Endpoints](ai-autonomous-world/docs/FREE_FORM_TEXT_INPUT.md#api-documentation)** - REST API reference
@@ -172,10 +186,10 @@ python main.py
 
 ### Documentation Resources
 
-- [FINAL_SUMMARY.md](ai-autonomous-world/FINAL_SUMMARY.md) - Complete AI system overview
-- [DEPLOYMENT_GUIDE.md](ai-autonomous-world/DEPLOYMENT_GUIDE.md) - Detailed deployment instructions
+- [README.md](ai-autonomous-world/README.md) - Complete AI system overview
+- [INSTALL.md](ai-autonomous-world/INSTALL.md) - Detailed installation instructions
 - [ARCHITECTURE.md](ai-autonomous-world/docs/ARCHITECTURE.md) - System architecture details
-- [PHASE_2_COMPLETE.md](ai-autonomous-world/PHASE_2_COMPLETE.md) - Agent system documentation
+- [Documentation Index](ai-autonomous-world/docs/INDEX.md) - Complete documentation index
 
 ### API Documentation
 
@@ -308,7 +322,7 @@ Database | [MySQL Workbench 5 or newer](http://www.mysql.com/downloads/workbench
 
 ### AI System Installation
 
-Complete setup guide: [ai-autonomous-world/DEPLOYMENT_GUIDE.md](ai-autonomous-world/DEPLOYMENT_GUIDE.md)
+Complete setup guide: [ai-autonomous-world/INSTALL.md](ai-autonomous-world/INSTALL.md)
 
 Docker installation:
 ```bash
@@ -364,7 +378,7 @@ Bridge Layer compilation errors:
 make clean && make server
 ```
 
-Complete troubleshooting guide: [ai-autonomous-world/DEPLOYMENT_GUIDE.md](ai-autonomous-world/DEPLOYMENT_GUIDE.md)
+Complete troubleshooting guide: [ai-autonomous-world/INSTALL.md](ai-autonomous-world/INSTALL.md)
 
 ### rAthena Base Server Troubleshooting
 
@@ -376,11 +390,11 @@ For rAthena server startup issues, check console output for error messages. Most
 
 ### AI System Documentation
 
-- [FINAL_SUMMARY.md](ai-autonomous-world/FINAL_SUMMARY.md) - Complete project overview and statistics
-- [DEPLOYMENT_GUIDE.md](ai-autonomous-world/DEPLOYMENT_GUIDE.md) - Comprehensive deployment instructions
+- [README.md](ai-autonomous-world/README.md) - Complete project overview
+- [INSTALL.md](ai-autonomous-world/INSTALL.md) - Comprehensive installation instructions
 - [ARCHITECTURE.md](ai-autonomous-world/docs/ARCHITECTURE.md) - System architecture and design
-- [PHASE_2_COMPLETE.md](ai-autonomous-world/PHASE_2_COMPLETE.md) - Agent system details
-- [TESTING_GUIDE.md](ai-autonomous-world/TESTING_GUIDE.md) - Testing procedures
+- [Documentation Index](ai-autonomous-world/docs/INDEX.md) - Complete documentation index
+- [Configuration Guide](ai-autonomous-world/docs/CONFIGURATION.md) - Configuration options
 - API Documentation: `http://localhost:8000/docs` (when AI Service is running)
 
 ### rAthena Base Server Documentation
@@ -433,7 +447,7 @@ Copyright (c) rAthena Development Team - Licensed under [GNU General Public Lice
 ## Getting Started
 
 1. Clone this repository
-2. Set up the AI system: Follow [ai-autonomous-world/DEPLOYMENT_GUIDE.md](ai-autonomous-world/DEPLOYMENT_GUIDE.md)
+2. Set up the AI system: Follow [ai-autonomous-world/INSTALL.md](ai-autonomous-world/INSTALL.md)
 3. Install rAthena base: Follow standard rAthena installation guides above
 4. Configure LLM API keys in `ai-autonomous-world/ai-service/.env`
 5. Launch the server

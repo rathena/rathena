@@ -3,7 +3,7 @@ Batch Processing Router for AI Service
 Handles batch operations for improved performance
 """
 
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from fastapi import APIRouter, HTTPException, status
 from pydantic import BaseModel, Field
 from loguru import logger

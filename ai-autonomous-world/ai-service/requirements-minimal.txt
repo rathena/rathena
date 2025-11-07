@@ -1,0 +1,66 @@
+# Minimal requirements for AI service (without heavy ML dependencies)
+# Core dependencies
+setuptools>=65.0.0
+
+# Core Web Framework
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+pydantic==2.10.3
+pydantic-settings==2.6.1
+
+# AI Agent Frameworks (lightweight)
+crewai==0.86.0
+crewai-tools==0.17.0
+
+# LLM Providers (API clients only, no local models)
+openai==1.57.2
+anthropic==0.39.0
+google-generativeai==0.8.3
+azure-identity==1.19.0
+
+# Database and Caching
+redis==5.2.0
+sqlalchemy==2.0.36
+psycopg2-binary==2.9.10
+
+# HTTP Clients
+httpx>=0.27.0,<0.28.0
+aiohttp==3.11.10
+requests==2.32.3
+
+# Environment and Configuration
+python-dotenv==1.0.1
+pyyaml==6.0.2
+
+# Logging and Monitoring
+loguru==0.7.3
+prometheus-client==0.21.0
+
+# Rate Limiting and Security
+slowapi==0.1.9
+python-multipart==0.0.18
+
+# Async and Concurrency
+aiofiles==24.1.0
+
+# Utilities
+python-dateutil==2.9.0.post0
+pytz==2024.2
+tenacity==9.0.0
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+pytest-cov==6.0.0
+respx==0.21.1
+
+# Development
+black==24.10.0
+flake8==7.1.1
+mypy==1.13.0
+isort==5.13.2
+
+# Type Stubs
+types-redis==4.6.0.20241004
+types-requests==2.32.0.20241016
+types-PyYAML==6.0.12.20240917

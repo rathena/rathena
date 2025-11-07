@@ -7,6 +7,15 @@ import numpy as np
 from typing import List, Tuple, Optional, Any
 from loguru import logger
 
+# Try to import faiss (optional dependency for GPU acceleration)
+try:
+    import faiss
+    FAISS_AVAILABLE = True
+except ImportError:
+    FAISS_AVAILABLE = False
+    faiss = None  # type: ignore
+    logger.warning("FAISS not available. GPU vector search will be disabled.")
+
 
 class GPUVectorSearch:
     """
@@ -46,9 +55,12 @@ class GPUVectorSearch:
     
     def _initialize_gpu_resources(self) -> None:
         """Initialize FAISS GPU resources"""
+        if not FAISS_AVAILABLE or faiss is None:
+            logger.error("FAISS not available for GPU resources")
+            self.use_gpu = False
+            return
+
         try:
-            import faiss
-            
             # Create GPU resources
             self.gpu_resources = faiss.StandardGpuResources()
             
