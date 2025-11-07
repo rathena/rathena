@@ -1,5 +1,3 @@
-<img src="doc/rathena staff power abuse.png" align="right" height="90" />
-
 # rAthena AI World - AI-Driven MMORPG Server with Autonomous NPCs
 
 [![Production Ready](https://img.shields.io/badge/status-production%20ready-brightgreen.svg)](ai-autonomous-world/README.md)
@@ -12,6 +10,14 @@
 ## Motivation
 
 This project was born from a frustration with arbitrary moderation practices in the rAthena community. After being banned from the rAthena Discord server without solid justification—simply because a staff member decided they didn't like me—I realized the importance of creating an independent, community-driven alternative.
+
+<div align="center">
+  <img src="doc/rathena staff power abuse.png" width="700" alt="Evidence of rAthena staff power abuse - arbitrary ban without justification" />
+  <br>
+  <em><strong>Evidence of arbitrary moderation:</strong> Banned from rAthena Discord without solid justification</em>
+</div>
+
+<br>
 
 **This fork represents:**
 - **Freedom from arbitrary authority**: No single person should have unchecked power to silence contributors
@@ -131,6 +137,34 @@ The **[WARP-p2p-client](https://github.com/iskandarsulaili/WARP-p2p-client)** is
 **Architecture**: Hybrid P2P model where:
 - **Centralized**: AI NPCs, authentication, anti-cheat, critical game logic
 - **P2P**: Zone-based player interactions, reducing server load and latency
+
+---
+
+## 💬 Community & Support
+
+### rAthena AI World Community
+
+We maintain an independent, welcoming community free from arbitrary moderation:
+
+- **GitHub Issues**: [Report bugs and request features](https://github.com/iskandarsulaili/ai-mmorpg-world/issues)
+- **GitHub Discussions**: [Ask questions and share ideas](https://github.com/iskandarsulaili/ai-mmorpg-world/discussions)
+- **Pull Requests**: Contributions are always welcome! See [How to Contribute](#6-how-to-contribute)
+
+### Getting Help
+
+- **AI System Issues**: Check [ai-autonomous-world/INSTALL.md](ai-autonomous-world/INSTALL.md) and [Troubleshooting](#4-troubleshooting)
+- **Documentation**: Browse our comprehensive [documentation](#-documentation)
+- **Quick Questions**: Use GitHub Discussions for community support
+
+### Why We're Independent
+
+This project was created to provide a space free from arbitrary authority and unfair moderation practices. We believe in:
+- **Open collaboration** without fear of unjust bans
+- **Merit-based contributions** where code and ideas matter most
+- **Transparent governance** with clear, fair community guidelines
+- **Inclusive environment** welcoming all developers regardless of past conflicts
+
+Everyone is welcome here, especially those who have felt silenced or dismissed elsewhere.
 
 ---
 
@@ -265,8 +299,10 @@ rAthena AI World extends the base rAthena server with an AI-driven autonomous wo
 
 ### rAthena Resources
 
-[Forum](https://rathena.org/board)|[Discord](https://rathena.org/discord)|[Wiki](https://github.com/rathena/rathena/wiki)|[FluxCP](https://github.com/rathena/FluxCP)|[Crowdfunding](https://rathena.org/board/crowdfunding/)|[Fork and Pull Request Q&A](https://rathena.org/board/topic/86913-pull-request-qa/)
---------|--------|--------|--------|--------|--------
+[Forum](https://rathena.org/board)|[Wiki](https://github.com/rathena/rathena/wiki)|[FluxCP](https://github.com/rathena/FluxCP)|[Crowdfunding](https://rathena.org/board/crowdfunding/)|[Fork and Pull Request Q&A](https://rathena.org/board/topic/86913-pull-request-qa/)
+--------|--------|--------|--------|--------
+
+> **Note**: We maintain independence from the original rAthena community channels. For support with the AI World system, please use GitHub Issues or Discussions on this repository.
 
 ---
 
