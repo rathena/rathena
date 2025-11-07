@@ -65,8 +65,7 @@ redis_max_connections: int = 50
 ### Default Provider
 
 ```python
-# Default LLM provider: azure_openai, openai, anthropic, google
-# Note: deepseek and ollama are mentioned in config but not fully implemented as providers
+# Default LLM provider: azure_openai, openai, deepseek, anthropic, google
 default_llm_provider: str = "azure_openai"
 ```
 

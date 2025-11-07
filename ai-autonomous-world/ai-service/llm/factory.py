@@ -10,6 +10,7 @@ from .providers.openai_provider import OpenAIProvider
 from .providers.azure_openai_provider import AzureOpenAIProvider
 from .providers.anthropic_provider import AnthropicProvider
 from .providers.google_provider import GoogleProvider
+from .providers.deepseek_provider import DeepSeekProvider
 
 
 class LLMProviderFactory:
@@ -21,6 +22,7 @@ class LLMProviderFactory:
         "anthropic": AnthropicProvider,
         "google": GoogleProvider,
         "gemini": GoogleProvider,  # Alias
+        "deepseek": DeepSeekProvider,
     }
 
     def __init__(self):
@@ -153,6 +155,16 @@ def get_llm_provider(
                 "model": settings.google_model,
                 "temperature": settings.google_temperature,
                 "max_tokens": settings.google_max_tokens,
+            }
+        elif provider_name == "deepseek":
+            if not settings.deepseek_api_key:
+                raise ValueError("DeepSeek API key is required but not configured. Set DEEPSEEK_API_KEY environment variable.")
+            config = {
+                "api_key": settings.deepseek_api_key,
+                "base_url": settings.deepseek_base_url,
+                "model": settings.deepseek_model,
+                "temperature": settings.deepseek_temperature,
+                "max_tokens": settings.deepseek_max_tokens,
             }
 
     # Validate API key is present in config

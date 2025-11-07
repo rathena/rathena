@@ -1,5 +1,7 @@
 """
-DragonflyDB / Redis connection management
+Database connection management for AI Service
+- DragonflyDB/Redis: High-speed caching and real-time state
+- PostgreSQL: Persistent memory storage for Memori SDK
 """
 
 import asyncio
@@ -13,6 +15,110 @@ try:
     from .config import settings
 except ImportError:
     from config import settings
+
+
+class PostgreSQLManager:
+    """PostgreSQL database connection manager for persistent memory storage"""
+
+    def __init__(self):
+        self.engine = None
+        self.session_factory = None
+        self._initialized = False
+
+    async def connect(self, max_retries: int = None, retry_delay: float = None):
+        """
+        Establish connection to PostgreSQL with retry logic
+
+        Args:
+            max_retries: Maximum number of connection attempts (defaults to settings value)
+            retry_delay: Initial delay between retries in seconds (defaults to settings value)
+        """
+        # Use configuration defaults if not specified
+        if max_retries is None:
+            max_retries = settings.db_connection_max_retries
+        if retry_delay is None:
+            retry_delay = settings.db_connection_retry_delay
+
+        last_error = None
+
+        for attempt in range(1, max_retries + 1):
+            try:
+                logger.info(f"Connecting to PostgreSQL at {settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db} (attempt {attempt}/{max_retries})")
+
+                # Import SQLAlchemy here to avoid import errors if not installed
+                from sqlalchemy import create_engine, text
+                from sqlalchemy.orm import sessionmaker
+                from sqlalchemy.pool import QueuePool
+
+                # Create engine with connection pooling
+                self.engine = create_engine(
+                    settings.postgres_connection_string,
+                    poolclass=QueuePool,
+                    pool_size=settings.postgres_pool_size,
+                    max_overflow=settings.postgres_max_overflow,
+                    pool_pre_ping=True,  # Verify connections before using
+                    echo=settings.postgres_echo_sql,
+                )
+
+                # Test connection
+                with self.engine.connect() as conn:
+                    result = conn.execute(text("SELECT version()"))
+                    version = result.scalar()
+                    logger.info(f"✓ Successfully connected to PostgreSQL")
+                    logger.info(f"PostgreSQL version: {version}")
+
+                # Create session factory
+                self.session_factory = sessionmaker(bind=self.engine)
+                self._initialized = True
+
+                return  # Success - exit retry loop
+
+            except Exception as e:
+                last_error = e
+                logger.warning(f"PostgreSQL connection attempt {attempt}/{max_retries} failed: {e}")
+
+                if attempt < max_retries:
+                    # Exponential backoff
+                    wait_time = retry_delay * (2 ** (attempt - 1))
+                    logger.info(f"Retrying in {wait_time:.1f} seconds...")
+                    await asyncio.sleep(wait_time)
+                else:
+                    logger.error(f"Failed to connect to PostgreSQL after {max_retries} attempts")
+                    raise ConnectionError(f"Could not connect to PostgreSQL: {last_error}") from last_error
+
+    async def disconnect(self):
+        """Close connection to PostgreSQL"""
+        try:
+            if self.engine:
+                self.engine.dispose()
+                logger.info("Disconnected from PostgreSQL")
+                self._initialized = False
+        except Exception as e:
+            logger.error(f"Error disconnecting from PostgreSQL: {e}")
+
+    def get_session(self):
+        """Get a new database session"""
+        if not self._initialized or not self.session_factory:
+            raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
+        return self.session_factory()
+
+    async def health_check(self) -> bool:
+        """Check if PostgreSQL connection is healthy"""
+        try:
+            if not self.engine:
+                return False
+
+            from sqlalchemy import text
+            with self.engine.connect() as conn:
+                conn.execute(text("SELECT 1"))
+            return True
+        except Exception as e:
+            logger.error(f"PostgreSQL health check failed: {e}")
+            return False
+
+    def get_connection_string(self) -> str:
+        """Get the PostgreSQL connection string (for Memori SDK)"""
+        return settings.postgres_connection_string
 
 
 class Database:
@@ -264,6 +370,7 @@ class Database:
             raise
 
 
-# Global database instance
-db = Database()
+# Global database instances
+db = Database()  # DragonflyDB/Redis for caching and real-time state
+postgres_db = PostgreSQLManager()  # PostgreSQL for persistent memory storage
 

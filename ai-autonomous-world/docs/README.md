@@ -28,10 +28,10 @@ This project transforms the rAthena MMORPG emulator into a **living, breathing w
 
 ### 🔧 Technical Excellence
 - **Non-invasive Architecture**: Minimal modifications to rAthena core
-- **Multi-LLM Support**: Azure OpenAI (default), OpenAI, DeepSeek, Gemini, Ollama, Claude
+- **Multi-LLM Support**: Azure OpenAI (default), OpenAI, DeepSeek, Anthropic Claude, Google Gemini
 - **Scalable Design**: Support for hundreds to thousands of autonomous NPCs
 - **High Performance**: Caching, batching, and optimization strategies
-- **Production Ready**: Kubernetes deployment, monitoring, logging
+- **Production Ready**: Native deployment with PostgreSQL 17 and DragonflyDB
 
 ## Architecture
 
@@ -93,52 +93,76 @@ For detailed world concept, see [WORLD_CONCEPT_DESIGN.md](./WORLD_CONCEPT_DESIGN
 - **Bridge Layer**: C++ REST API extension (planned, not yet implemented)
 - **AI Service**: Python 3.11+ with FastAPI (✅ implemented)
 - **Agent Framework**: CrewAI (multi-agent orchestration) (✅ implemented)
-- **Memory SDK**: Memori SDK (optional, using DragonflyDB fallback)
+- **Memory SDK**: Memori SDK with PostgreSQL backend (✅ implemented)
 - **State Management**: DragonflyDB (Redis-compatible, high-performance) (✅ implemented)
-- **LLM Providers**: Azure OpenAI (default), OpenAI, Anthropic, Google Gemini (✅ implemented)
-  - Note: DeepSeek and Ollama mentioned in config but not fully implemented as providers
+- **LLM Providers**: Azure OpenAI (default), OpenAI, DeepSeek, Anthropic Claude, Google Gemini (✅ implemented)
 
 ### Infrastructure
-- **Containerization**: Docker, Docker Compose
-- **Orchestration**: Kubernetes (production)
-- **Monitoring**: Prometheus + Grafana
-- **Logging**: ELK Stack
-- **CI/CD**: GitHub Actions
+- **Deployment**: Native installation (PostgreSQL 17, DragonflyDB)
+- **Orchestration**: Kubernetes (production, ⏳ planned)
+- **Monitoring**: Prometheus + Grafana (⏳ planned)
+- **Logging**: ELK Stack (⏳ planned)
+- **CI/CD**: GitHub Actions (⏳ planned)
 
 ## Getting Started
 
 ### Prerequisites
 - rAthena server (located at `/home/lot399/ai-mmorpg-world/rathena-AI-world/`)
 - Python 3.11+
-- Docker and Docker Compose
+- PostgreSQL 17 (native installation)
+- DragonflyDB (native installation)
 - Azure OpenAI account (or other LLM provider)
 
 ### Installation
 
-1. **Install Python Dependencies**
+1. **Install PostgreSQL 17**
+```bash
+# Ubuntu/Debian
+sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+sudo apt install -y postgresql-17 postgresql-contrib-17
+
+# Create database and user
+sudo -u postgres psql -c "CREATE DATABASE ai_world_memory;"
+sudo -u postgres psql -c "CREATE USER ai_world_user WITH PASSWORD 'ai_world_pass_2025';"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ai_world_memory TO ai_world_user;"
+```
+
+2. **Install DragonflyDB**
+```bash
+# Ubuntu/Debian
+curl -fsSL https://www.dragonflydb.io/install.sh | bash
+sudo systemctl start dragonfly
+sudo systemctl enable dragonfly
+```
+
+3. **Install Python Dependencies**
 ```bash
 cd ai-autonomous-world/ai-service
-# For full installation
 pip install -r requirements.txt
-# Or for minimal installation
-pip install -r requirements-minimal.txt
 ```
 
-2. **Set Up DragonflyDB**
-```bash
-docker run -d --name dragonfly -p 6379:6379 docker.dragonflydb.io/dragonflydb/dragonfly
-```
-
-3. **Configure LLM Provider**
+4. **Configure LLM Provider**
 Create a `.env` file in the `ai-service` directory:
 ```bash
 cd ai-service
 cp .env.example .env
-# Edit .env with your API keys
+# Edit .env with your API keys and database settings
 ```
 
 Example configuration:
 ```bash
+# PostgreSQL (persistent memory)
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=ai_world_memory
+POSTGRES_USER=ai_world_user
+POSTGRES_PASSWORD=ai_world_pass_2025
+
+# DragonflyDB (caching)
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# LLM Provider
 DEFAULT_LLM_PROVIDER=azure_openai
 AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
 AZURE_OPENAI_API_KEY=your-key
@@ -163,8 +187,8 @@ The service will start on `http://localhost:8000` by default.
 - [x] Set up DragonflyDB integration
 - [ ] Implement Bridge Layer basic structure (pending)
 
-**Phase 2: Core Systems** ✅ MOSTLY COMPLETE
-- [x] Implement LLM Provider abstraction (OpenAI, Azure OpenAI, Anthropic, Google)
+**Phase 2: Core Systems** ✅ COMPLETE
+- [x] Implement LLM Provider abstraction (OpenAI, Azure OpenAI, DeepSeek, Anthropic, Google)
 - [x] Integrate CrewAI for agent orchestration
 - [x] Implement basic NPC consciousness model
 - [x] Implement AI agents (Dialogue, Decision, Memory, World, Quest, Economy)

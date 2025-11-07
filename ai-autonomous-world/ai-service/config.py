@@ -22,12 +22,26 @@ class Settings(BaseSettings):
     environment: str = Field(default="development", env="ENVIRONMENT")
     debug: bool = Field(default=True, env="DEBUG")
     
-    # DragonflyDB Configuration
+    # DragonflyDB Configuration (for caching and real-time state)
     redis_host: str = Field(default="127.0.0.1", env="REDIS_HOST")
     redis_port: int = Field(default=6379, env="REDIS_PORT")
     redis_db: int = Field(default=0, env="REDIS_DB")
     redis_password: Optional[str] = Field(default=None, env="REDIS_PASSWORD")
     redis_max_connections: int = Field(default=50, env="REDIS_MAX_CONNECTIONS")
+
+    # PostgreSQL Configuration (for persistent memory storage via Memori SDK)
+    postgres_host: str = Field(default="localhost", env="POSTGRES_HOST")
+    postgres_port: int = Field(default=5432, env="POSTGRES_PORT")
+    postgres_db: str = Field(default="ai_world_memory", env="POSTGRES_DB")
+    postgres_user: str = Field(default="ai_world_user", env="POSTGRES_USER")
+    postgres_password: str = Field(default="ai_world_pass_2025", env="POSTGRES_PASSWORD")
+    postgres_pool_size: int = Field(default=10, env="POSTGRES_POOL_SIZE")
+    postgres_max_overflow: int = Field(default=20, env="POSTGRES_MAX_OVERFLOW")
+    postgres_echo_sql: bool = Field(default=False, env="POSTGRES_ECHO_SQL")
+
+    # Database connection retry configuration
+    db_connection_max_retries: int = Field(default=5, env="DB_CONNECTION_MAX_RETRIES")
+    db_connection_retry_delay: float = Field(default=2.0, env="DB_CONNECTION_RETRY_DELAY")
     
     # LLM Provider Configuration
     default_llm_provider: str = Field(default="azure_openai", env="DEFAULT_LLM_PROVIDER")
@@ -49,7 +63,14 @@ class Settings(BaseSettings):
     google_model: str = Field(default="gemini-pro", env="GOOGLE_MODEL")
     google_temperature: float = Field(default=0.7, env="GOOGLE_TEMPERATURE")
     google_max_tokens: int = Field(default=2000, env="GOOGLE_MAX_TOKENS")
-    
+
+    # DeepSeek Configuration
+    deepseek_api_key: Optional[str] = Field(default=None, env="DEEPSEEK_API_KEY")
+    deepseek_base_url: str = Field(default="https://api.deepseek.com", env="DEEPSEEK_BASE_URL")
+    deepseek_model: str = Field(default="deepseek-chat", env="DEEPSEEK_MODEL")
+    deepseek_temperature: float = Field(default=0.7, env="DEEPSEEK_TEMPERATURE")
+    deepseek_max_tokens: int = Field(default=2000, env="DEEPSEEK_MAX_TOKENS")
+
     # Azure OpenAI Configuration
     azure_openai_api_key: Optional[str] = Field(default=None, env="AZURE_OPENAI_API_KEY")
     azure_openai_endpoint: Optional[str] = Field(default=None, env="AZURE_OPENAI_ENDPOINT")
@@ -205,6 +226,20 @@ class Settings(BaseSettings):
             raise ValueError(f"npc_movement_personality_influence must be between 0.0 and 1.0, got {v}")
         return v
 
+    @property
+    def postgres_connection_string(self) -> str:
+        """
+        Get PostgreSQL connection string for SQLAlchemy
+
+        Returns:
+            PostgreSQL connection string in format:
+            postgresql+psycopg2://user:password@host:port/database
+        """
+        return (
+            f"postgresql+psycopg2://{self.postgres_user}:{self.postgres_password}"
+            f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
+        )
+
     class Config:
         env_file = ".env"
         env_file_encoding = "utf-8"
@@ -267,7 +302,8 @@ def get_settings(config_path: Optional[str] = None) -> Settings:
     logger.info(f"Settings loaded: {settings.service_name} on {settings.service_host}:{settings.service_port}")
     logger.info(f"Environment: {settings.environment}, Debug: {settings.debug}")
     logger.info(f"Default LLM Provider: {settings.default_llm_provider}")
-    logger.info(f"Redis: {settings.redis_host}:{settings.redis_port}")
+    logger.info(f"DragonflyDB (cache): {settings.redis_host}:{settings.redis_port}")
+    logger.info(f"PostgreSQL (persistent memory): {settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}")
 
     # Log NPC Movement Configuration
     logger.info(f"NPC Movement: Enabled={settings.npc_movement_enabled}")

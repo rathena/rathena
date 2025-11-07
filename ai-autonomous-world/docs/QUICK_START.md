@@ -5,7 +5,8 @@ This guide will help you get the AI-driven autonomous world system up and runnin
 ## Prerequisites
 
 - Linux/macOS (Windows with WSL2)
-- Docker and Docker Compose installed
+- PostgreSQL 17 installed natively
+- DragonflyDB installed natively (or Redis-compatible alternative)
 - Python 3.11 or higher
 - Git
 - At least 8GB RAM available
@@ -39,25 +40,45 @@ pip install -r ai-service/requirements.txt
 # Use minimal installation if disk space is limited
 ```
 
-## Step 3: Set Up DragonflyDB
+## Step 3: Set Up PostgreSQL 17
 
 ```bash
-# Start DragonflyDB using Docker
-docker run -d \
-  --name dragonfly \
-  -p 6379:6379 \
-  -v dragonfly-data:/data \
-  docker.dragonflydb.io/dragonflydb/dragonfly
+# Install PostgreSQL 17 (Ubuntu/Debian)
+sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+sudo apt install -y postgresql-17 postgresql-contrib-17
 
-# Verify it's running
-docker ps | grep dragonfly
+# Create database and user
+sudo -u postgres psql -c "CREATE DATABASE ai_world_memory;"
+sudo -u postgres psql -c "CREATE USER ai_world_user WITH PASSWORD 'ai_world_pass_2025';"
+sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ai_world_memory TO ai_world_user;"
+sudo -u postgres psql -d ai_world_memory -c "GRANT ALL ON SCHEMA public TO ai_world_user;"
+
+# Install PostgreSQL extensions
+sudo -u postgres psql -d ai_world_memory -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;"
+sudo -u postgres psql -d ai_world_memory -c "CREATE EXTENSION IF NOT EXISTS vector;"
+sudo -u postgres psql -d ai_world_memory -c "CREATE EXTENSION IF NOT EXISTS age CASCADE;"
+
+# Verify installation
+sudo -u postgres psql -d ai_world_memory -c "\dx"
+```
+
+## Step 4: Set Up DragonflyDB
+
+```bash
+# Install DragonflyDB (native installation)
+# For Ubuntu/Debian:
+curl -fsSL https://www.dragonflydb.io/install.sh | bash
+
+# Start DragonflyDB service
+sudo systemctl start dragonfly
+sudo systemctl enable dragonfly
 
 # Test connection
 redis-cli ping
 # Should return: PONG
 ```
 
-## Step 4: Configure Environment
+## Step 5: Configure Environment
 
 Create `.env` file in the ai-service directory:
 
@@ -84,10 +105,20 @@ SERVICE_PORT=8000
 ENVIRONMENT=development
 DEBUG=true
 
-# DragonflyDB/Redis Configuration
+# DragonflyDB/Redis Configuration (for caching and real-time state)
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
 REDIS_DB=0
+REDIS_MAX_CONNECTIONS=50
+
+# PostgreSQL Configuration (for persistent memory storage)
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=ai_world_memory
+POSTGRES_USER=ai_world_user
+POSTGRES_PASSWORD=ai_world_pass_2025
+POSTGRES_POOL_SIZE=10
+POSTGRES_MAX_OVERFLOW=20
 
 # LLM Provider Configuration
 DEFAULT_LLM_PROVIDER=azure_openai
@@ -111,7 +142,7 @@ OPENAI_API_KEY=your-api-key-here
 OPENAI_MODEL=gpt-4
 ```
 
-## Step 5: Verify AI Service Structure
+## Step 6: Verify AI Service Structure
 
 The AI service is already implemented with the following structure:
 
@@ -158,7 +189,7 @@ ai-service/
 
 No need to create files - they already exist!
 
-## Step 6: Test AI Service
+## Step 7: Test AI Service
 
 ```bash
 # Make sure you're in the ai-service directory
@@ -207,7 +238,7 @@ Expected output from root endpoint:
 }
 ```
 
-## Step 7: Example NPC Integration (Future)
+## Step 8: Example NPC Integration (Future)
 
 **Note**: NPC integration with rAthena requires the Bridge Layer, which is not yet implemented.
 
@@ -259,7 +290,7 @@ OnTimer30000:
 
 **Current Status**: The AI service is ready to handle NPC interactions via API, but the Bridge Layer to connect rAthena to the AI service is not yet implemented.
 
-## Step 8: Test AI Service API
+## Step 9: Test AI Service API
 
 Since the Bridge Layer is not yet implemented, you can test the AI service directly via its API:
 
@@ -304,7 +335,7 @@ curl -X POST http://localhost:8000/api/chat/command \
 tail -f ai-service/logs/ai-service.log
 ```
 
-## Step 9: Next Steps
+## Step 10: Next Steps
 
 Now that your environment is set up:
 
@@ -326,25 +357,38 @@ Now that your environment is set up:
 ## Development Workflow
 
 ```bash
-# Terminal 1: DragonflyDB
-docker logs -f dragonfly
-
-# Terminal 2: AI Service
+# Terminal 1: AI Service
 cd ai-service
 source ../venv/bin/activate
 python main.py
 
-# Terminal 3: Testing/Development
+# Terminal 2: Testing/Development
 # Use curl or browser to test API endpoints
 curl http://localhost:8000/docs
 
-# Terminal 4: rAthena (when Bridge Layer is ready)
+# Terminal 3: rAthena (when Bridge Layer is ready)
 # cd rathena-AI-world
 # ./athena-start start
-# Use this for testing API calls, running scripts, etc.
+
+# Optional monitoring terminals:
+# PostgreSQL logs: sudo tail -f /var/log/postgresql/postgresql-17-main.log
+# DragonflyDB logs: sudo journalctl -u dragonfly -f
+# AI Service logs: tail -f ai-service/logs/ai-service.log
 ```
 
 ## Troubleshooting
+
+### PostgreSQL connection issues
+```bash
+# Check PostgreSQL status
+sudo systemctl status postgresql@17-main
+
+# Restart PostgreSQL
+sudo systemctl restart postgresql@17-main
+
+# Test connection
+psql -h localhost -U ai_world_user -d ai_world_memory
+```
 
 ### DragonflyDB won't start
 ```bash
@@ -355,7 +399,10 @@ lsof -i :6379
 sudo systemctl stop redis
 
 # Restart DragonflyDB
-docker restart dragonfly
+sudo systemctl restart dragonfly
+
+# Check DragonflyDB status
+sudo systemctl status dragonfly
 ```
 
 ### AI Service won't start

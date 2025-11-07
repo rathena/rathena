@@ -561,10 +561,10 @@ POST /ai/player/interaction
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Developer Machine                         │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   rAthena    │  │  AI Service  │  │ DragonflyDB  │      │
-│  │  (Docker)    │  │   (Local)    │  │  (Docker)    │      │
-│  └──────────────┘  └──────────────┘  └──────────────┘      │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
+│  │   rAthena    │  │  AI Service  │  │ PostgreSQL   │  │ DragonflyDB  │      │
+│  │   (Native)   │  │   (Native)   │  │   (Native)   │  │   (Native)   │      │
+│  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘      │
 │                                                               │
 │  LLM Provider: Azure OpenAI (default) or OpenAI/Anthropic/Google │
 └─────────────────────────────────────────────────────────────┘
@@ -662,9 +662,9 @@ POST /ai/player/interaction
 - **Vector Search**: DragonflyDB native vector support
 
 ### DevOps
-- **Containerization**: Docker, Docker Compose
-- **Orchestration**: Kubernetes (production)
-- **Monitoring**: Prometheus + Grafana
+- **Deployment**: Native installation (PostgreSQL 17, DragonflyDB)
+- **Orchestration**: Kubernetes (production, ⏳ planned)
+- **Monitoring**: Prometheus + Grafana (⏳ planned)
 - **Logging**: ELK Stack (Elasticsearch, Logstash, Kibana)
 - **Tracing**: OpenTelemetry
 

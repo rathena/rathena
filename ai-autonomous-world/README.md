@@ -87,9 +87,10 @@ ai-autonomous-world/
 ### Prerequisites
 
 - Python 3.11 or higher
-- DragonflyDB (Redis-compatible in-memory database)
+- PostgreSQL 17 (for persistent memory storage)
+- DragonflyDB (Redis-compatible in-memory database for caching)
 - rAthena server (located in parent directory)
-- LLM API access (Azure OpenAI, OpenAI, Ollama, etc.)
+- LLM API access (Azure OpenAI, OpenAI, DeepSeek, Anthropic Claude, Google Gemini)
 
 ### Installation
 
@@ -198,8 +199,9 @@ pytest tests/
 - Core dependencies installed
 - FastAPI application with health checks
 - Configuration management (config.py + .env support)
-- DragonflyDB/Redis integration
-- LLM provider abstraction (OpenAI, Azure OpenAI, Anthropic, Google)
+- PostgreSQL 17 integration with Memori SDK
+- DragonflyDB/Redis integration for caching
+- LLM provider abstraction (Azure OpenAI, OpenAI, DeepSeek, Anthropic Claude, Google Gemini)
 - AI agents (Dialogue, Decision, Memory, World, Quest, Economy)
 - Agent orchestration with CrewAI
 - API routers (NPC, Player, World, Quest, Chat Command)

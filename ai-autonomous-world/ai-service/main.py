@@ -16,7 +16,7 @@ import uvicorn
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from ai_service.config import settings
-from ai_service.database import db
+from ai_service.database import db, postgres_db
 from ai_service.routers import npc_router, world_router, player_router
 from ai_service.routers.quest import router as quest_router
 from ai_service.routers.chat_command import router as chat_command_router
@@ -63,18 +63,32 @@ async def lifespan(app: FastAPI):
     logger.info(f"Debug mode: {settings.debug}")
     logger.info("=" * 80)
     
-    # Connect to database
+    # Connect to DragonflyDB (cache and real-time state)
     try:
         await db.connect()
-        logger.info("Database connection established")
+        logger.info("✓ DragonflyDB connection established")
     except ConnectionError as e:
-        logger.error(f"Database connection failed: {e}")
+        logger.error(f"DragonflyDB connection failed: {e}")
         raise
     except TimeoutError as e:
-        logger.error(f"Database connection timeout: {e}")
+        logger.error(f"DragonflyDB connection timeout: {e}")
         raise
     except Exception as e:
-        logger.error(f"Unexpected database error: {e}", exc_info=True)
+        logger.error(f"Unexpected DragonflyDB error: {e}", exc_info=True)
+        raise
+
+    # Connect to PostgreSQL (persistent memory storage)
+    try:
+        await postgres_db.connect()
+        logger.info("✓ PostgreSQL connection established")
+    except ConnectionError as e:
+        logger.error(f"PostgreSQL connection failed: {e}")
+        raise
+    except TimeoutError as e:
+        logger.error(f"PostgreSQL connection timeout: {e}")
+        raise
+    except Exception as e:
+        logger.error(f"Unexpected PostgreSQL error: {e}", exc_info=True)
         raise
 
     # Initialize GPU manager
@@ -91,6 +105,22 @@ async def lifespan(app: FastAPI):
         logger.warning(f"GPU runtime error: {e}")
     except Exception as e:
         logger.warning(f"GPU manager initialization failed: {e}", exc_info=True)
+
+    # Initialize Memori SDK with PostgreSQL backend
+    try:
+        from ai_service.memory.memori_manager import initialize_memori
+        memori_mgr = initialize_memori(
+            connection_string=settings.postgres_connection_string,
+            namespace="ai_world"
+        )
+        if memori_mgr.is_available():
+            logger.info("✓ Memori SDK initialized with PostgreSQL backend")
+        else:
+            logger.warning("⚠ Memori SDK not available - using DragonflyDB fallback for memory")
+    except ImportError as e:
+        logger.warning(f"Memori SDK dependencies not available: {e}")
+    except Exception as e:
+        logger.warning(f"Memori SDK initialization failed: {e}", exc_info=True)
 
     # Initialize LLM provider (test connection)
     try:
@@ -114,16 +144,31 @@ async def lifespan(app: FastAPI):
     
     # Shutdown
     logger.info("Shutting down AI Service")
-    
-    # Disconnect from database
+
+    # Shutdown Memori SDK
+    try:
+        from ai_service.memory.memori_manager import get_memori_manager
+        memori_mgr = get_memori_manager()
+        if memori_mgr:
+            memori_mgr.shutdown()
+            logger.info("✓ Memori SDK shutdown complete")
+    except Exception as e:
+        logger.error(f"Memori SDK shutdown error: {e}", exc_info=True)
+
+    # Disconnect from PostgreSQL
+    try:
+        await postgres_db.disconnect()
+        logger.info("✓ PostgreSQL connection closed")
+    except Exception as e:
+        logger.error(f"PostgreSQL disconnection error: {e}", exc_info=True)
+
+    # Disconnect from DragonflyDB
     try:
         await db.disconnect()
-        logger.info("Database connection closed")
-    except ConnectionError as e:
-        logger.error(f"Database disconnection error: {e}")
+        logger.info("✓ DragonflyDB connection closed")
     except Exception as e:
-        logger.error(f"Unexpected error during database shutdown: {e}", exc_info=True)
-    
+        logger.error(f"DragonflyDB disconnection error: {e}", exc_info=True)
+
     logger.info("AI Service shutdown complete")
 
 

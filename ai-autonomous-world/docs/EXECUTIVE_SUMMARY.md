@@ -58,11 +58,10 @@ Instead of scripted events:
 
 ### Technology Stack
 - **Agent Framework**: CrewAI for multi-agent orchestration (✅ implemented)
-- **Memory Management**: DragonflyDB (Memori SDK optional, using fallback) (✅ implemented)
-- **State Storage**: DragonflyDB (high-performance Redis alternative) (✅ implemented)
-- **LLM Support**: Azure OpenAI (default), OpenAI, Anthropic (Claude), Google (Gemini) (✅ implemented)
-  - Note: DeepSeek and Ollama mentioned in config but not fully implemented as providers
-- **Infrastructure**: Docker, Kubernetes, Prometheus, Grafana, ELK Stack (⏳ planned)
+- **Memory Management**: Memori SDK with PostgreSQL 17 backend (✅ implemented)
+- **State Storage**: DragonflyDB (high-performance Redis alternative for caching) (✅ implemented)
+- **LLM Support**: Azure OpenAI (default), OpenAI, DeepSeek, Anthropic (Claude), Google (Gemini) (✅ implemented)
+- **Infrastructure**: Native deployment (PostgreSQL 17, DragonflyDB) (✅ implemented)
 
 ## Key Features
 
@@ -123,7 +122,7 @@ A gold rush causes inflation, food shortages, and starvation. The king's poor ec
 - **Caching**: 50%+ reduction in LLM calls
 - **Batching**: 10x reduction in API requests
 - **Tiering**: 70% cost savings using cheaper models for simple tasks
-- **Provider Flexibility**: Support for multiple LLM providers (Azure OpenAI, OpenAI, Anthropic, Google)
+- **Provider Flexibility**: Support for multiple LLM providers (Azure OpenAI, OpenAI, DeepSeek, Anthropic, Google)
 
 ## Implementation Roadmap
 
@@ -133,8 +132,8 @@ A gold rush causes inflation, food shortages, and starvation. The king's poor ec
 - AI Service skeleton
 - DragonflyDB integration
 
-### Phase 2: Core Systems (Weeks 3-6) - ✅ MOSTLY COMPLETE
-- ✅ LLM Provider abstraction (OpenAI, Azure OpenAI, Anthropic, Google)
+### Phase 2: Core Systems (Weeks 3-6) - ✅ COMPLETE
+- ✅ LLM Provider abstraction (Azure OpenAI, OpenAI, DeepSeek, Anthropic, Google)
 - ✅ CrewAI integration
 - ✅ Basic NPC consciousness model
 - ⏳ Memori SDK integration (using DragonflyDB fallback)
