@@ -13248,7 +13248,14 @@ BUILDIN_FUNC(getwaitingroomstate)
 
 	if( nd == nullptr || (cd=(chat_data *)map_id2bl(nd->chat_id)) == nullptr )
 	{
-		script_pushint(st, -1);
+		switch(type){
+			case 4:
+			case 5:
+			case 16:
+				script_pushconststr(st,"");
+				break;
+			default: script_pushint(st,-1);break;
+		}
 		return SCRIPT_CMD_SUCCESS;
 	}
 
