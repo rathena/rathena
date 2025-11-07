@@ -1,0 +1,302 @@
+# AI Service Configuration Example
+# Copy this file to config/ai-service-config.yaml and customize
+
+# Service Configuration
+service:
+  name: "rAthena AI Service"
+  version: "1.0.0"
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  reload: false  # Set to true for development
+  log_level: "INFO"
+
+# LLM Provider Configuration
+llm:
+  # Default provider to use
+  default_provider: "azure_openai"
+  
+  # Fallback chain (tried in order if primary fails)
+  fallback_chain:
+    - "azure_openai"
+    - "openai"
+    - "ollama"
+  
+  # Provider-specific configurations
+  providers:
+    azure_openai:
+      enabled: true
+      endpoint: "${AZURE_OPENAI_ENDPOINT}"
+      api_key: "${AZURE_OPENAI_KEY}"
+      api_version: "2024-02-15-preview"
+      deployment: "gpt-4"
+      embedding_deployment: "text-embedding-ada-002"
+      max_tokens: 2000
+      temperature: 0.7
+      timeout: 30
+      max_retries: 3
+    
+    openai:
+      enabled: true
+      api_key: "${OPENAI_API_KEY}"
+      model: "gpt-4-turbo"
+      embedding_model: "text-embedding-3-small"
+      max_tokens: 2000
+      temperature: 0.7
+      timeout: 30
+      max_retries: 3
+    
+    deepseek:
+      enabled: false
+      api_key: "${DEEPSEEK_API_KEY}"
+      base_url: "https://api.deepseek.com/v1"
+      model: "deepseek-chat"
+      max_tokens: 2000
+      temperature: 0.7
+    
+    gemini:
+      enabled: false
+      api_key: "${GOOGLE_API_KEY}"
+      model: "gemini-pro"
+      max_tokens: 2000
+      temperature: 0.7
+    
+    ollama:
+      enabled: true
+      endpoint: "http://localhost:11434"
+      model: "llama3"
+      embedding_model: "nomic-embed-text"
+      max_tokens: 2000
+      temperature: 0.7
+      timeout: 60
+    
+    claude:
+      enabled: false
+      api_key: "${ANTHROPIC_API_KEY}"
+      model: "claude-3-opus-20240229"
+      max_tokens: 2000
+      temperature: 0.7
+
+  # LLM call optimization
+  optimization:
+    # Cache LLM responses
+    enable_cache: true
+    cache_ttl: 3600  # 1 hour
+    
+    # Batch multiple requests
+    enable_batching: true
+    batch_size: 10
+    batch_timeout: 1.0  # seconds
+    
+    # Rate limiting
+    max_concurrent_calls: 10
+    rate_limit_per_minute: 100
+    
+    # Model tiering (use cheaper models for simple tasks)
+    enable_tiering: true
+    simple_task_model: "gpt-3.5-turbo"
+    complex_task_model: "gpt-4"
+
+# DragonflyDB Configuration
+dragonfly:
+  host: "localhost"
+  port: 6379
+  db: 0
+  password: null
+  max_connections: 50
+  socket_timeout: 5
+  socket_connect_timeout: 5
+  retry_on_timeout: true
+  health_check_interval: 30
+
+# CrewAI Configuration
+crewai:
+  # Agent configuration
+  agents:
+    # NPC agents
+    npc:
+      max_agents: 1000
+      decision_interval: 10  # seconds
+      memory_window: 100  # number of recent memories to consider
+      
+    # World system agents
+    world:
+      economy:
+        enabled: true
+        update_interval: 60  # seconds
+      politics:
+        enabled: true
+        update_interval: 120
+      environment:
+        enabled: true
+        update_interval: 300
+      quest:
+        enabled: true
+        update_interval: 30
+  
+  # Task configuration
+  tasks:
+    max_concurrent: 50
+    timeout: 30  # seconds
+    retry_attempts: 3
+
+# Memori SDK Configuration
+memori:
+  # Memory storage
+  storage:
+    backend: "dragonfly"
+    compression: true
+    
+  # Memory types
+  episodic:
+    max_memories: 1000
+    decay_rate: 0.01  # per day
+    importance_threshold: 0.3
+    
+  semantic:
+    max_memories: 500
+    update_frequency: "daily"
+    
+  procedural:
+    max_skills: 100
+    learning_rate: 0.1
+  
+  # Relationship graphs
+  relationships:
+    max_relationships: 200
+    decay_rate: 0.005  # per day
+    update_on_interaction: true
+  
+  # Vector search
+  vector_search:
+    enabled: true
+    dimension: 1536  # for text-embedding-ada-002
+    similarity_metric: "cosine"
+    top_k: 10
+
+# NPC Configuration
+npc:
+  # Personality generation
+  personality:
+    use_big_five: true
+    custom_traits:
+      - "ambition"
+      - "courage"
+      - "compassion"
+      - "cunning"
+      - "loyalty"
+    distribution: "normal"  # normal, uniform, custom
+  
+  # Moral alignment
+  moral_alignment:
+    dimensions:
+      - "altruism_selfishness"
+      - "lawful_chaotic"
+      - "honest_deceptive"
+    evolution_rate: 0.01  # how quickly alignment can change
+    
+  # Goals and motivations
+  goals:
+    max_concurrent_goals: 5
+    goal_types:
+      - "survival"
+      - "security"
+      - "social"
+      - "esteem"
+      - "self_actualization"
+    
+  # Emotions
+  emotions:
+    base_emotions:
+      - "joy"
+      - "sadness"
+      - "anger"
+      - "fear"
+      - "surprise"
+      - "disgust"
+    decay_rate: 0.1  # per minute
+    contagion_factor: 0.3
+
+# World Systems Configuration
+world:
+  # Economy
+  economy:
+    initial_prices: "config/initial_prices.yaml"
+    supply_demand_elasticity: 0.5
+    inflation_rate: 0.02  # annual
+    trade_tax: 0.05
+    
+  # Politics
+  politics:
+    initial_factions: "config/initial_factions.yaml"
+    alliance_stability: 0.7
+    war_threshold: -50  # relationship score
+    peace_threshold: 50
+    
+  # Environment
+  environment:
+    day_length: 1440  # minutes (24 hours)
+    season_length: 30  # days
+    weather_change_probability: 0.1
+    disaster_probability: 0.01
+    
+  # Quests
+  quests:
+    generation_frequency: 300  # seconds
+    max_active_quests: 100
+    difficulty_scaling: true
+    reward_scaling: true
+
+# Bridge API Configuration
+bridge:
+  url: "http://localhost:8080"
+  api_key: "${BRIDGE_API_KEY}"
+  timeout: 10
+  retry_attempts: 3
+  
+  # Endpoints
+  endpoints:
+    npc_register: "/ai/npc/register"
+    npc_event: "/ai/npc/event"
+    npc_action: "/ai/npc/{id}/action"
+    world_state: "/ai/world/state"
+    player_interaction: "/ai/player/interaction"
+
+# Performance Configuration
+performance:
+  # Caching
+  cache:
+    enabled: true
+    backend: "dragonfly"
+    default_ttl: 300
+    
+  # Async processing
+  async:
+    max_workers: 10
+    queue_size: 1000
+    
+  # Monitoring
+  monitoring:
+    enabled: true
+    metrics_port: 9090
+    health_check_interval: 30
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  format: "json"  # json or text
+  output:
+    - type: "file"
+      path: "logs/ai-service.log"
+      rotation: "daily"
+      retention: 30  # days
+    - type: "console"
+      colorize: true
+  
+  # Component-specific log levels
+  components:
+    crewai: "INFO"
+    memori: "INFO"
+    llm: "DEBUG"
+    bridge: "INFO"
+    world: "INFO"

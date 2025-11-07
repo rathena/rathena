@@ -1,0 +1,173 @@
+# AI Autonomous World System - .gitignore
+# This file is specific to the AI system and doesn't interfere with parent rAthena repository
+
+# ============================================================================
+# Python Virtual Environment
+# ============================================================================
+venv/
+env/
+ENV/
+.venv/
+.env/
+
+# ============================================================================
+# Environment Configuration Files
+# ============================================================================
+.env
+.env.local
+.env.*.local
+*.env
+# Keep example files
+!.env.example
+!*.env.example
+
+# ============================================================================
+# Python Cache and Compiled Files
+# ============================================================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# ============================================================================
+# Log Files
+# ============================================================================
+logs/*.log
+*.log
+*.log.*
+ai-service/logs/*.log
+# Keep logs directory structure
+!logs/.gitkeep
+!ai-service/logs/.gitkeep
+
+# ============================================================================
+# IDE and Editor Files
+# ============================================================================
+# VSCode
+.vscode/
+*.code-workspace
+
+# PyCharm / IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.*.sw?
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================================================
+# OS-Specific Files
+# ============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+.Trash-*
+
+# ============================================================================
+# Testing and Coverage
+# ============================================================================
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# ============================================================================
+# Build Artifacts
+# ============================================================================
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ============================================================================
+# Temporary Files
+# ============================================================================
+*.tmp
+*.temp
+temp/
+tmp/
+.cache/
+
+# ============================================================================
+# Database Files (if any local DBs are used for testing)
+# ============================================================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ============================================================================
+# Generated Configuration Files
+# ============================================================================
+# Keep only .example versions
+ai-service/config/*.yaml
+ai-service/config/*.yml
+ai-service/config/*.json
+!ai-service/config/*.example.yaml
+!ai-service/config/*.example.yml
+!ai-service/config/*.example.json
+
+# ============================================================================
+# Model and Data Files (if any local models are downloaded)
+# ============================================================================
+models/*.bin
+models/*.pt
+models/*.pth
+models/*.onnx
+data/cache/
+data/temp/
+
+# ============================================================================
+# Jupyter Notebooks
+# ============================================================================
+.ipynb_checkpoints/
+*.ipynb
+
+# ============================================================================
+# MyPy Type Checking
+# ============================================================================
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# ============================================================================
+# Profiling Data
+# ============================================================================
+*.prof
+*.lprof
+

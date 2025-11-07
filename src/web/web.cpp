@@ -25,6 +25,7 @@
 #include <common/utils.hpp>
 #include <config/core.hpp>
 
+#include "ai_bridge_controller.hpp"
 #include "charconfig_controller.hpp"
 #include "emblem_controller.hpp"
 #include "http.hpp"
@@ -446,6 +447,10 @@ bool WebServer::initialize( int32 argc, char* argv[] ){
 	ShowStatus("Starting server...\n");
 
 	http_server = std::make_shared<httplib::Server>();
+
+	// Initialize AI Bridge
+	AIBridge::initialize();
+
 	// set up routes
 	http_server->Post("/charconfig/load", charconfig_load);
 	http_server->Post("/charconfig/save", charconfig_save);
@@ -461,6 +466,14 @@ bool WebServer::initialize( int32 argc, char* argv[] ){
 	http_server->Post("/party/search", partybooking_search);
 	http_server->Post("/userconfig/load", userconfig_load);
 	http_server->Post("/userconfig/save", userconfig_save);
+
+	// AI Bridge routes
+	http_server->Post("/ai/npc/register", ai_npc_register);
+	http_server->Post("/ai/npc/event", ai_npc_event);
+	http_server->Get("/ai/npc/:id/action", ai_npc_action);
+	http_server->Post("/ai/world/state", ai_world_state_update);
+	http_server->Get("/ai/world/state", ai_world_state_get);
+	http_server->Post("/ai/player/interaction", ai_player_interaction);
 
 	// set up logger
 	http_server->set_logger(logger);

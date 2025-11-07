@@ -1,0 +1,62 @@
+# AI Service Configuration (YAML format)
+# Copy this file to config.yaml and customize as needed
+
+service:
+  name: "AI Autonomous World Service"
+  host: "0.0.0.0"
+  port: 8000
+  environment: "development"
+  debug: true
+
+database:
+  # DragonflyDB Configuration (Redis-compatible protocol)
+  dragonfly:
+    host: "127.0.0.1"
+    port: 6379
+    db: 0
+    password: ""
+    max_connections: 50
+
+llm:
+  default_provider: "openai"
+  
+  openai:
+    api_key: "${OPENAI_API_KEY}"
+    model: "gpt-4"
+    temperature: 0.7
+    max_tokens: 2000
+  
+  anthropic:
+    api_key: "${ANTHROPIC_API_KEY}"
+    model: "claude-3-sonnet-20240229"
+    temperature: 0.7
+    max_tokens: 2000
+  
+  google:
+    api_key: "${GOOGLE_API_KEY}"
+    model: "gemini-pro"
+    temperature: 0.7
+    max_tokens: 2000
+
+crewai:
+  verbose: true
+  max_iterations: 10
+
+memori:
+  enabled: false
+  api_key: "${MEMORI_API_KEY}"
+
+security:
+  api_key: "${API_KEY}"
+  cors_origins:
+    - "http://localhost:8888"
+    - "http://127.0.0.1:8888"
+
+logging:
+  level: "INFO"
+  file: "logs/ai-service.log"
+
+performance:
+  max_concurrent_requests: 100
+  request_timeout: 30
+
