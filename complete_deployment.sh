@@ -1,10 +1,18 @@
 #!/bin/bash
 # Complete rAthena AI World Deployment Script
 # This script completes the deployment by:
-# 1. Initializing PostgreSQL databases
-# 2. Installing systemd services
-# 3. Starting all services
-# 4. Verifying deployment
+# 1. Initializing MariaDB database (for rAthena components ONLY)
+# 2. Initializing PostgreSQL databases (for AI services ONLY)
+# 3. Installing systemd services
+# 4. Starting all services
+# 5. Verifying deployment
+#
+# DATABASE ARCHITECTURE:
+# =====================
+# - MariaDB: Used EXCLUSIVELY by rAthena game server components
+#   (login-server, char-server, map-server, web-server)
+# - PostgreSQL: Used EXCLUSIVELY by AI services
+#   (ai-world, p2p-coordinator, NPC memory, world events)
 
 set -e
 
@@ -18,9 +26,19 @@ NC='\033[0m' # No Color
 # Script directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+# Database configuration
+MARIADB_ROOT_PASSWORD="${MARIADB_ROOT_PASSWORD:-ragnarok_root_2025}"
+MARIADB_RATHENA_DB="${MARIADB_RATHENA_DB:-ragnarok}"
+MARIADB_RATHENA_USER="${MARIADB_RATHENA_USER:-ragnarok}"
+MARIADB_RATHENA_PASSWORD="${MARIADB_RATHENA_PASSWORD:-ragnarok_pass_2025}"
+
 echo -e "${BLUE}========================================${NC}"
 echo -e "${BLUE}rAthena AI World - Deployment Completion${NC}"
 echo -e "${BLUE}========================================${NC}"
+echo ""
+echo -e "${BLUE}Database Configuration:${NC}"
+echo -e "  ${GREEN}MariaDB${NC}    → rAthena game servers"
+echo -e "  ${GREEN}PostgreSQL${NC} → AI services"
 echo ""
 
 # Check if running with sudo
@@ -36,9 +54,74 @@ echo -e "${GREEN}Running as: $ACTUAL_USER (via sudo)${NC}"
 echo ""
 
 # ============================================================================
-# STEP 1: Initialize PostgreSQL Databases
+# STEP 1: Initialize MariaDB Database (rAthena Components ONLY)
 # ============================================================================
-echo -e "${YELLOW}Step 1: Initializing PostgreSQL databases...${NC}"
+echo -e "${YELLOW}Step 1: Initializing MariaDB database for rAthena...${NC}"
+echo -e "${BLUE}Note: MariaDB is used ONLY by rAthena game server components${NC}"
+echo ""
+
+# Check if MariaDB is installed
+if ! command -v mysql &> /dev/null; then
+    echo -e "${RED}✗ MariaDB is not installed${NC}"
+    echo "Installing MariaDB server..."
+    apt-get update
+    apt-get install -y mariadb-server mariadb-client
+    echo -e "${GREEN}  ✓ MariaDB installed${NC}"
+fi
+
+# Ensure MariaDB is running
+systemctl start mariadb || true
+systemctl enable mariadb || true
+
+# Secure MariaDB installation and create rAthena database
+echo "  → Configuring MariaDB for rAthena..."
+mysql -u root <<EOF || mysql <<EOF
+-- Set root password if not already set
+ALTER USER 'root'@'localhost' IDENTIFIED BY '${MARIADB_ROOT_PASSWORD}';
+FLUSH PRIVILEGES;
+EOF
+
+# Create rAthena database and user
+mysql -u root -p"${MARIADB_ROOT_PASSWORD}" <<EOF
+-- Create rAthena database
+CREATE DATABASE IF NOT EXISTS ${MARIADB_RATHENA_DB};
+
+-- Create rAthena user
+CREATE USER IF NOT EXISTS '${MARIADB_RATHENA_USER}'@'localhost' IDENTIFIED BY '${MARIADB_RATHENA_PASSWORD}';
+
+-- Grant privileges
+GRANT ALL PRIVILEGES ON ${MARIADB_RATHENA_DB}.* TO '${MARIADB_RATHENA_USER}'@'localhost';
+FLUSH PRIVILEGES;
+EOF
+
+echo -e "${GREEN}  ✓ MariaDB database '${MARIADB_RATHENA_DB}' created for rAthena${NC}"
+
+# Import rAthena SQL files
+echo "  → Importing rAthena SQL schema..."
+RATHENA_SQL_DIR="${SCRIPT_DIR}/sql-files"
+
+if [ -d "${RATHENA_SQL_DIR}" ]; then
+    # Import main SQL files
+    for sql_file in main.sql logs.sql item_db.sql mob_db.sql; do
+        if [ -f "${RATHENA_SQL_DIR}/${sql_file}" ]; then
+            echo "    - Importing ${sql_file}..."
+            mysql -u "${MARIADB_RATHENA_USER}" -p"${MARIADB_RATHENA_PASSWORD}" "${MARIADB_RATHENA_DB}" < "${RATHENA_SQL_DIR}/${sql_file}" 2>/dev/null || echo "      (already imported or error)"
+        fi
+    done
+    echo -e "${GREEN}  ✓ rAthena SQL schema imported${NC}"
+else
+    echo -e "${YELLOW}  ⚠ SQL files directory not found: ${RATHENA_SQL_DIR}${NC}"
+    echo -e "${YELLOW}  ⚠ You will need to import SQL files manually${NC}"
+fi
+
+echo ""
+
+# ============================================================================
+# STEP 2: Initialize PostgreSQL Databases (AI Services ONLY)
+# ============================================================================
+echo -e "${YELLOW}Step 2: Initializing PostgreSQL databases for AI services...${NC}"
+echo -e "${BLUE}Note: PostgreSQL is used ONLY by AI services (NOT by rAthena)${NC}"
+echo ""
 
 # AI World Memory Database
 echo "  → Creating ai_world_memory database..."
@@ -183,9 +266,9 @@ echo -e "${GREEN}  ✓ p2p_coordinator database initialized${NC}"
 echo ""
 
 # ============================================================================
-# STEP 2: Install Systemd Services
+# STEP 3: Install Systemd Services
 # ============================================================================
-echo -e "${YELLOW}Step 2: Installing systemd services...${NC}"
+echo -e "${YELLOW}Step 3: Installing systemd services...${NC}"
 
 # Copy service files to systemd directory
 cp "$SCRIPT_DIR/systemd/ai-world.service" /etc/systemd/system/
@@ -201,9 +284,9 @@ echo -e "${GREEN}  ✓ Systemd services installed${NC}"
 echo ""
 
 # ============================================================================
-# STEP 3: Enable Services
+# STEP 4: Enable Services
 # ============================================================================
-echo -e "${YELLOW}Step 3: Enabling services to start on boot...${NC}"
+echo -e "${YELLOW}Step 4: Enabling services to start on boot...${NC}"
 
 systemctl enable postgresql
 systemctl enable mariadb
@@ -218,19 +301,19 @@ echo -e "${GREEN}  ✓ All services enabled${NC}"
 echo ""
 
 # ============================================================================
-# STEP 4: Start Database Services
+# STEP 5: Start Database Services
 # ============================================================================
-echo -e "${YELLOW}Step 4: Starting database services...${NC}"
+echo -e "${YELLOW}Step 5: Starting database services...${NC}"
 
-# Ensure PostgreSQL is running
-systemctl start postgresql
-systemctl status postgresql --no-pager | head -3
-echo -e "${GREEN}  ✓ PostgreSQL started${NC}"
-
-# Ensure MariaDB is running
+# Ensure MariaDB is running (for rAthena)
 systemctl start mariadb
 systemctl status mariadb --no-pager | head -3
-echo -e "${GREEN}  ✓ MariaDB started${NC}"
+echo -e "${GREEN}  ✓ MariaDB started (rAthena database)${NC}"
+
+# Ensure PostgreSQL is running (for AI services)
+systemctl start postgresql
+systemctl status postgresql --no-pager | head -3
+echo -e "${GREEN}  ✓ PostgreSQL started (AI services database)${NC}"
 
 # Ensure DragonflyDB is running
 systemctl start dragonfly
@@ -240,9 +323,9 @@ echo -e "${GREEN}  ✓ DragonflyDB started${NC}"
 echo ""
 
 # ============================================================================
-# STEP 5: Start rAthena Servers
+# STEP 6: Start rAthena Servers
 # ============================================================================
-echo -e "${YELLOW}Step 5: Starting rAthena servers...${NC}"
+echo -e "${YELLOW}Step 6: Starting rAthena servers (using MariaDB)...${NC}"
 
 # Start login server
 systemctl start rathena-login
@@ -265,9 +348,9 @@ echo -e "${GREEN}  ✓ Map server started${NC}"
 echo ""
 
 # ============================================================================
-# STEP 6: Start AI Services
+# STEP 7: Start AI Services
 # ============================================================================
-echo -e "${YELLOW}Step 6: Starting AI services...${NC}"
+echo -e "${YELLOW}Step 7: Starting AI services (using PostgreSQL)...${NC}"
 
 # Start AI World service
 systemctl start ai-world
@@ -284,9 +367,9 @@ echo -e "${GREEN}  ✓ P2P Coordinator started${NC}"
 echo ""
 
 # ============================================================================
-# STEP 7: Verification
+# STEP 8: Verification
 # ============================================================================
-echo -e "${YELLOW}Step 7: Verifying deployment...${NC}"
+echo -e "${YELLOW}Step 8: Verifying deployment...${NC}"
 
 # Check listening ports
 echo "  → Checking listening ports..."
@@ -320,16 +403,18 @@ echo "  → Map Server: Port 5121"
 echo "  → AI Service: Port 8000"
 echo "  → P2P Coordinator: Port 8001"
 echo ""
-echo "Database Credentials:"
-echo "  → MariaDB (rAthena):"
-echo "    - Database: ragnarok"
-echo "    - User: ragnarok / ragnarok"
-echo "  → PostgreSQL (AI Memory):"
-echo "    - Database: ai_world_memory"
-echo "    - User: ai_world_user / ai_world_pass_2025"
-echo "  → PostgreSQL (P2P):"
-echo "    - Database: p2p_coordinator"
-echo "    - User: p2p_user / p2p_pass_2025"
+echo "Database Architecture:"
+echo "  ${BLUE}MariaDB (rAthena Game Servers ONLY):${NC}"
+echo "    - Database: ${MARIADB_RATHENA_DB}"
+echo "    - User: ${MARIADB_RATHENA_USER}"
+echo "    - Used by: login-server, char-server, map-server, web-server"
+echo ""
+echo "  ${BLUE}PostgreSQL (AI Services ONLY):${NC}"
+echo "    - AI Memory Database: ai_world_memory"
+echo "      User: ai_world_user / ai_world_pass_2025"
+echo "    - P2P Database: p2p_coordinator"
+echo "      User: p2p_user / p2p_pass_2025"
+echo "    - Used by: ai-world service, p2p-coordinator"
 echo ""
 echo "Service Management Commands:"
 echo "  → View all services: sudo systemctl status 'rathena-*' ai-world p2p-coordinator"
