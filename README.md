@@ -47,6 +47,24 @@ The system consists of approximately 10,000 lines of production-grade Python and
 
 ---
 
+## 📚 Quick Start & Deployment Guides
+
+### For Server Administrators
+
+**[Ubuntu Server 24.04 Deployment Guide](UBUNTU_SERVER_DEPLOYMENT_GUIDE.md)** - Complete step-by-step guide for deploying the entire rAthena AI World backend system on Ubuntu Server 24.04, including:
+- PostgreSQL 17 with pgvector, TimescaleDB, and Apache AGE
+- DragonflyDB installation and configuration
+- rAthena core server setup
+- AI autonomous world service deployment
+- P2P coordinator service setup
+- Verification, troubleshooting, and maintenance
+
+### For Players/Clients
+
+**[Windows WARP P2P Client Setup Guide](../WARP-p2p-client/WINDOWS_CLIENT_SETUP_GUIDE.md)** - Beginner-friendly guide for setting up the WARP P2P client on Windows to connect to the rAthena AI World server with P2P hosting capabilities.
+
+---
+
 ## AI Autonomous World System Components
 
 ### Multi-Agent AI System
