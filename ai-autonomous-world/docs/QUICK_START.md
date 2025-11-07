@@ -4,13 +4,67 @@ This guide will help you get the AI-driven autonomous world system up and runnin
 
 ## Prerequisites
 
-- Linux/macOS (Windows with WSL2)
-- PostgreSQL 17 installed natively
-- DragonflyDB installed natively (or Redis-compatible alternative)
-- Python 3.11 or higher
-- Git
+- Ubuntu 24.04 LTS (recommended) or compatible Linux distribution
+- Sudo access
+- Internet connection
 - At least 8GB RAM available
-- Azure OpenAI account (or Ollama for local testing)
+- At least one LLM provider API key (Azure OpenAI, OpenAI, DeepSeek, Anthropic, or Google)
+
+## Installation Methods
+
+### Method 1: Automated Installation (Recommended)
+
+Use the automated installation script for a complete, one-command setup:
+
+```bash
+# Navigate to the AI autonomous world system
+cd /home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world
+
+# Run the installation script
+./install.sh
+
+# Or preview what will be installed without making changes
+./install.sh --dry-run
+
+# Or skip components that are already installed
+./install.sh --skip-postgres --skip-dragonfly
+```
+
+The installation script will:
+- ✅ Install PostgreSQL 17 with required extensions (TimescaleDB, Apache AGE, pgvector)
+- ✅ Install DragonflyDB natively
+- ✅ Create PostgreSQL database and user
+- ✅ Set up Python virtual environment
+- ✅ Install all Python dependencies
+- ✅ Create `.env` configuration file
+- ✅ Verify the installation
+
+**After installation completes**, edit the `.env` file to add your LLM API keys:
+
+```bash
+cd ai-service
+nano .env  # or use your preferred editor
+
+# Add at least one of these:
+# AZURE_OPENAI_API_KEY=your_key_here
+# OPENAI_API_KEY=your_key_here
+# DEEPSEEK_API_KEY=your_key_here
+# ANTHROPIC_API_KEY=your_key_here
+# GOOGLE_API_KEY=your_key_here
+```
+
+Then start the service:
+
+```bash
+source ../venv/bin/activate
+python main.py
+```
+
+---
+
+### Method 2: Manual Installation
+
+If you prefer manual installation or need to customize the setup, follow these steps:
 
 ## Step 1: Navigate to AI System Directory
 

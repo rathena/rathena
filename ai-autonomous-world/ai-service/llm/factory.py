@@ -25,9 +25,12 @@ class LLMProviderFactory:
         "deepseek": DeepSeekProvider,
     }
 
+    # Class-level cache for provider instances
+    _instances: Dict[str, BaseLLMProvider] = {}
+
     def __init__(self):
-        """Initialize factory with instance-specific cache"""
-        self._instances: Dict[str, BaseLLMProvider] = {}
+        """Initialize factory"""
+        pass
     
     def create_provider(
         self,
@@ -63,8 +66,9 @@ class LLMProviderFactory:
             logger.error(f"Failed to create {provider_name} provider: {e}")
             raise
 
+    @classmethod
     def get_or_create_provider(
-        self,
+        cls,
         provider_name: str,
         config: Dict[str, Any]
     ) -> BaseLLMProvider:
@@ -79,12 +83,14 @@ class LLMProviderFactory:
             LLM provider instance (cached)
         """
         provider_name = provider_name.lower()
-        
+
         if provider_name not in cls._instances:
-            cls._instances[provider_name] = cls.create_provider(provider_name, config)
-        
+            # Create instance of factory to call instance method
+            factory = cls()
+            cls._instances[provider_name] = factory.create_provider(provider_name, config)
+
         return cls._instances[provider_name]
-    
+
     @classmethod
     def clear_cache(cls):
         """Clear cached provider instances"""
