@@ -10,6 +10,7 @@ autom4te.cache/
 .local.vimrc
 .ycm_extra_conf.py*
 Thumbs.db
+*.service
 
 # /
 /*_fifo
@@ -223,3 +224,13 @@ generated
 # Temporary files
 /p2p-coordinator/**/*.tmp
 /p2p-coordinator/**/*.temp
+
+# ============================================================================
+# Deployment Files with Sensitive Credentials
+# ============================================================================
+# These files contain actual credentials and should not be committed
+DEPLOYMENT_SUCCESS.md
+**/DEPLOYMENT_SUCCESS.md
+
+# Keep example/template versions only
+!DEPLOYMENT_SUCCESS.example.md

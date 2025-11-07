@@ -59,6 +59,12 @@ The system consists of approximately 10,000 lines of production-grade Python and
 - P2P coordinator service setup
 - Verification, troubleshooting, and maintenance
 
+**[Server Management Guide](SERVER_MANAGEMENT.md)** - Quick reference for managing your deployed server:
+- Start/Stop/Restart commands for all services
+- Status checking and monitoring
+- Log viewing and troubleshooting
+- Common scenarios and one-command solutions
+
 ### For Players/Clients
 
 **[Windows WARP P2P Client Setup Guide](../WARP-p2p-client/WINDOWS_CLIENT_SETUP_GUIDE.md)** - Beginner-friendly guide for setting up the WARP P2P client on Windows to connect to the rAthena AI World server with P2P hosting capabilities.
