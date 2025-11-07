@@ -6,12 +6,16 @@ Represents an active P2P session between a host and players in a zone.
 
 import enum
 from datetime import datetime
-from typing import Optional
+from typing import Optional, TYPE_CHECKING
 from sqlalchemy import String, Integer, Float, Boolean, DateTime, Enum, JSON, Text, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
 from models.base import Base
+
+if TYPE_CHECKING:
+    from models.host import Host  # noqa: F401
+    from models.zone import Zone  # noqa: F401
 
 
 class SessionStatus(str, enum.Enum):
