@@ -416,5 +416,3 @@ Copyright (c) rAthena Development Team - Licensed under [GNU General Public Lice
 3. Install rAthena base: Follow standard rAthena installation guides above
 4. Configure LLM API keys in `ai-autonomous-world/ai-service/.env`
 5. Launch the server
-
-Documentation available in `ai-autonomous-world/` directory and the rAthena [wiki](https://github.com/rathena/rathena/wiki).
