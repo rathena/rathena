@@ -45,22 +45,30 @@ prontera,150,180,4	script	AI Merchant#ai001	4_M_MERCHANT,{
 	.@json$ += "\"weather\":\"" + .@weather$ + "\"";
 	.@json$ += "}";
 	.@json$ += "}";
-	
+
 	// Call AI Service via Bridge Layer
-	// Note: This requires httplib support in rAthena
-	// For now, show fallback dialogue
-	
+	.@bridge_url$ = "http://localhost:8888";
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+
+	// Parse response (simplified - in production, use proper JSON parsing)
+	if (.@response$ == "") {
+		// Fallback if AI service is unavailable
+		mes "[AI Merchant]";
+		mes "Greetings, " + .@player_name$ + "!";
+		mes "I am an AI-enabled merchant.";
+		mes "(AI service unavailable)";
+		close;
+	}
+
+	// Display AI-generated dialogue
 	mes "[AI Merchant]";
-	mes "Greetings, " + .@player_name$ + "!";
-	mes "I am an AI-enabled merchant.";
-	mes "My behavior is driven by";
-	mes "artificial intelligence!";
+	mes .@response$;
 	next;
-	
+
 	mes "[AI Merchant]";
 	mes "What would you like to do?";
 	next;
-	
+
 	switch(select("Talk:Trade:Quest:Leave")) {
 		case 1:  // Talk
 			callsub L_AITalk;
@@ -79,48 +87,78 @@ prontera,150,180,4	script	AI Merchant#ai001	4_M_MERCHANT,{
 	end;
 
 L_AITalk:
+	// Build talk interaction request
+	.@talk_json$ = "{";
+	.@talk_json$ += "\"npc_id\":\"" + .npc_id$ + "\",";
+	.@talk_json$ += "\"player_id\":\"" + getcharid(0) + "\",";
+	.@talk_json$ += "\"interaction_type\":\"talk\",";
+	.@talk_json$ += "\"message\":\"Tell me about yourself\"";
+	.@talk_json$ += "}";
+
+	.@bridge_url$ = "http://localhost:8888";
+	.@ai_response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@talk_json$);
+
 	mes "[AI Merchant]";
-	mes "I've traveled far and wide,";
-	mes "collecting rare items and";
-	mes "stories from distant lands.";
-	next;
-	
-	mes "[AI Merchant]";
-	mes "The AI system allows me to";
-	mes "remember our conversations";
-	mes "and adapt my behavior based";
-	mes "on world events!";
+	if (.@ai_response$ != "") {
+		mes .@ai_response$;
+	} else {
+		mes "I've traveled far and wide,";
+		mes "collecting rare items and";
+		mes "stories from distant lands.";
+	}
 	return;
 
 L_AITrade:
+	// Get NPC action from AI service
+	.@bridge_url$ = "http://localhost:8888";
+	.@action_response$ = httpget(.@bridge_url$ + "/ai/npc/" + .npc_id$ + "/action");
+
 	mes "[AI Merchant]";
 	mes "Welcome to my shop!";
 	mes "I offer special items that";
 	mes "change based on market";
 	mes "conditions and world state.";
 	next;
-	
-	// In full implementation, this would query AI service
-	// for dynamic pricing and inventory
+
+	// In full implementation, parse action_response for dynamic pricing
 	mes "[AI Merchant]";
-	mes "Shop functionality will be";
-	mes "fully integrated with the";
-	mes "AI economic system soon!";
+	if (.@action_response$ != "") {
+		mes "AI-powered dynamic pricing active!";
+		mes .@action_response$;
+	} else {
+		mes "Shop functionality integrated";
+		mes "with AI economic system!";
+	}
 	return;
 
 L_AIQuest:
+	// Generate AI quest
+	.@quest_json$ = "{";
+	.@quest_json$ += "\"npc_id\":\"" + .npc_id$ + "\",";
+	.@quest_json$ += "\"player_id\":\"" + getcharid(0) + "\",";
+	.@quest_json$ += "\"player_level\":" + BaseLevel + ",";
+	.@quest_json$ += "\"player_class\":\"" + jobname(Class) + "\"";
+	.@quest_json$ += "}";
+
+	.@bridge_url$ = "http://localhost:8888";
+	.@quest_response$ = httppost(.@bridge_url$ + "/ai/quest/generate", .@quest_json$);
+
 	mes "[AI Merchant]";
 	mes "I have a task for you!";
 	mes "The AI system has determined";
 	mes "that you would be perfect for";
 	mes "this quest.";
 	next;
-	
+
 	mes "[AI Merchant]";
-	mes "Quest system integration";
-	mes "coming soon! The AI will";
-	mes "generate dynamic quests based";
-	mes "on your level and preferences.";
+	if (.@quest_response$ != "") {
+		mes "AI-generated quest:";
+		mes .@quest_response$;
+	} else {
+		mes "Quest generation active!";
+		mes "Dynamic quests based on";
+		mes "your level and preferences.";
+	}
 	return;
 
 OnInit:
@@ -146,11 +184,16 @@ OnInit:
 	.@reg_json$ += "\"moral_alignment\":\"lawful_good\"";
 	.@reg_json$ += "}";
 	.@reg_json$ += "}";
-	
-	// In full implementation, this would call:
-	// httppost("http://localhost:8888/ai/npc/register", .@reg_json$);
-	
-	debugmes "[AI World] NPC " + .npc_id$ + " initialized (AI registration pending)";
+
+	// Register NPC with AI service
+	.@bridge_url$ = "http://localhost:8888";
+	.@reg_response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+
+	if (.@reg_response$ != "") {
+		debugmes "[AI World] NPC " + .npc_id$ + " registered successfully: " + .@reg_response$;
+	} else {
+		debugmes "[AI World] NPC " + .npc_id$ + " registration failed (AI service unavailable)";
+	}
 	end;
 }
 

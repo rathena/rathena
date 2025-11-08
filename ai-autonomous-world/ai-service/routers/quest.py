@@ -5,6 +5,7 @@ Quest API endpoints for dynamic quest generation and management
 from fastapi import APIRouter, HTTPException, status
 from loguru import logger
 from datetime import datetime
+from typing import Dict, Any, Optional
 
 from ..models.quest import (
     Quest, QuestGenerationRequest, QuestGenerationResponse,
@@ -204,5 +205,92 @@ async def update_quest_progress(update: QuestProgressUpdate):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
+        )
+
+
+@router.post("/{quest_id}/complete")
+async def complete_quest(quest_id: str, completion_data: Optional[Dict[str, Any]] = None):
+    """
+    Mark a quest as complete
+
+    Completes the quest, triggers rewards, and updates quest state.
+    Optionally accepts completion_data with reward information.
+    """
+    try:
+        logger.info(f"Completing quest: {quest_id}")
+
+        # Get quest
+        quest_data = await db.get_quest(quest_id)
+
+        if not quest_data:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Quest {quest_id} not found"
+            )
+
+        quest = Quest(**quest_data)
+
+        # Check if quest is already completed
+        if quest.status == "completed":
+            logger.warning(f"Quest {quest_id} is already completed")
+            return {
+                "quest_id": quest_id,
+                "status": "already_completed",
+                "message": "Quest was already completed",
+                "completed_at": quest_data.get("completed_at"),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+        # Check if all objectives are completed
+        all_objectives_complete = all(obj.completed for obj in quest.objectives)
+
+        if not all_objectives_complete:
+            incomplete_objectives = [
+                obj.objective_id for obj in quest.objectives if not obj.completed
+            ]
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Cannot complete quest: objectives not finished: {incomplete_objectives}"
+            )
+
+        # Update quest status
+        quest.status = "completed"
+        completed_at = datetime.utcnow().isoformat()
+
+        # Prepare completion data
+        completion_info = {
+            "status": "completed",
+            "completed_at": completed_at,
+            "completion_data": completion_data or {}
+        }
+
+        # Update quest in database
+        await db.update_quest(quest_id, completion_info)
+
+        # Calculate and prepare rewards
+        rewards = {
+            "experience": quest_data.get("rewards", {}).get("experience", 0),
+            "gold": quest_data.get("rewards", {}).get("gold", 0),
+            "items": quest_data.get("rewards", {}).get("items", []),
+            "reputation": quest_data.get("rewards", {}).get("reputation", {})
+        }
+
+        logger.info(f"Quest {quest_id} completed successfully")
+        return {
+            "quest_id": quest_id,
+            "status": "completed",
+            "message": "Quest completed successfully",
+            "completed_at": completed_at,
+            "rewards": rewards,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error completing quest {quest_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to complete quest: {str(e)}"
         )
 

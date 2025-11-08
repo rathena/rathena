@@ -9,3 +9,7 @@
  **/
 
 //BUILDIN_DEF(example,""),
+
+// HTTP Functions for AI Integration
+BUILDIN_DEF(httppost,"ss"),  // httppost("<url>", "<json_body>")
+BUILDIN_DEF(httpget,"s"),    // httpget("<url>")

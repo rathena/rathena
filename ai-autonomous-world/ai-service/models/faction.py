@@ -3,7 +3,7 @@ Faction system data models
 """
 
 from pydantic import BaseModel, Field
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 from datetime import datetime
 from enum import Enum
 
@@ -53,7 +53,7 @@ class Faction(BaseModel):
     leader_name: Optional[str] = None
     
     # Territory
-    capital_location: Dict[str, any] = Field(default_factory=dict)
+    capital_location: Dict[str, Any] = Field(default_factory=dict)
     controlled_areas: List[str] = Field(default_factory=list)
     
     # Resources
@@ -84,7 +84,7 @@ class PlayerReputation(BaseModel):
     tier: ReputationTier = ReputationTier.NEUTRAL
     
     # History
-    reputation_history: List[Dict[str, any]] = Field(default_factory=list)
+    reputation_history: List[Dict[str, Any]] = Field(default_factory=list)
     
     # Rewards unlocked
     unlocked_rewards: List[str] = Field(default_factory=list)
@@ -133,7 +133,7 @@ class FactionConflict(BaseModel):
     faction_b_score: int = 0
     
     # Objectives
-    objectives: List[Dict[str, any]] = Field(default_factory=list)
+    objectives: List[Dict[str, Any]] = Field(default_factory=list)
     
     started_at: datetime = Field(default_factory=datetime.utcnow)
     ends_at: Optional[datetime] = None

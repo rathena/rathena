@@ -297,11 +297,6 @@ rAthena is a collaborative software development project for creating a massively
 
 rAthena AI World extends the base rAthena server with an AI-driven autonomous world system for enhanced NPC behavior and emergent gameplay.
 
-### rAthena Resources
-
-[Forum](https://rathena.org/board)|[Wiki](https://github.com/rathena/rathena/wiki)|[FluxCP](https://github.com/rathena/FluxCP)|[Crowdfunding](https://rathena.org/board/crowdfunding/)|[Fork and Pull Request Q&A](https://rathena.org/board/topic/86913-pull-request-qa/)
---------|--------|--------|--------|--------
-
 > **Note**: We maintain independence from the original rAthena community channels. For support with the AI World system, please use GitHub Issues or Discussions on this repository.
 
 ---

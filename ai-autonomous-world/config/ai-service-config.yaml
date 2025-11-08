@@ -1,0 +1,278 @@
+# ============================================================================
+# AI Autonomous World Service - Configuration
+# ============================================================================
+# This file configures the AI service including LLM providers, databases,
+# and autonomous feature settings.
+#
+# IMPORTANT: Replace placeholder API keys with your actual keys before
+# deploying to production.
+# ============================================================================
+
+# Service Configuration
+service:
+  name: "ai-service"
+  host: "0.0.0.0"
+  port: 8000
+  environment: "development"  # Options: development, staging, production
+  debug: true
+  log_level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+# ============================================================================
+# LLM Provider Configuration
+# ============================================================================
+# Configure your preferred LLM providers. The service supports multiple
+# providers and will use the default_provider unless specified per request.
+#
+# Supported Providers:
+# - azure_openai: Azure OpenAI Service (recommended for enterprise)
+# - openai: OpenAI API
+# - deepseek: DeepSeek API
+# - google_gemini: Google Gemini API
+# - anthropic: Anthropic Claude API
+# - ollama: Local Ollama instance (no API key required)
+# ============================================================================
+
+llm:
+  default_provider: "azure_openai"  # Default LLM provider to use
+  
+  # Azure OpenAI Configuration (Recommended for Production)
+  azure_openai:
+    enabled: true
+    api_key: "YOUR_AZURE_OPENAI_API_KEY_HERE"  # Replace with your Azure OpenAI API key
+    endpoint: "https://your-resource.openai.azure.com/"  # Replace with your Azure endpoint
+    api_version: "2024-02-15-preview"
+    deployment_name: "gpt-4"  # Your deployment name
+    model: "gpt-4"
+    temperature: 0.7
+    max_tokens: 2000
+    timeout: 30
+  
+  # OpenAI Configuration
+  openai:
+    enabled: false
+    api_key: "YOUR_OPENAI_API_KEY_HERE"  # Replace with your OpenAI API key
+    model: "gpt-4-turbo-preview"
+    temperature: 0.7
+    max_tokens: 2000
+    timeout: 30
+  
+  # DeepSeek Configuration
+  deepseek:
+    enabled: false
+    api_key: "YOUR_DEEPSEEK_API_KEY_HERE"  # Replace with your DeepSeek API key
+    base_url: "https://api.deepseek.com/v1"
+    model: "deepseek-chat"
+    temperature: 0.7
+    max_tokens: 2000
+    timeout: 30
+  
+  # Google Gemini Configuration
+  google_gemini:
+    enabled: false
+    api_key: "YOUR_GOOGLE_API_KEY_HERE"  # Replace with your Google API key
+    model: "gemini-pro"
+    temperature: 0.7
+    max_tokens: 2000
+    timeout: 30
+  
+  # Anthropic Claude Configuration
+  anthropic:
+    enabled: false
+    api_key: "YOUR_ANTHROPIC_API_KEY_HERE"  # Replace with your Anthropic API key
+    model: "claude-3-opus-20240229"
+    temperature: 0.7
+    max_tokens: 2000
+    timeout: 30
+  
+  # Ollama Configuration (Local, No API Key Required)
+  ollama:
+    enabled: false
+    base_url: "http://localhost:11434"
+    model: "llama2"
+    temperature: 0.7
+    timeout: 60
+
+# ============================================================================
+# Database Configuration
+# ============================================================================
+
+# DragonflyDB (Redis-compatible) - High-speed caching and Pub/Sub
+dragonfly:
+  host: "localhost"
+  port: 6379
+  db: 0
+  password: null  # Set if authentication is enabled
+  max_connections: 50
+  socket_timeout: 5
+  socket_connect_timeout: 5
+
+# PostgreSQL - Persistent memory storage (requires Memori SDK)
+postgres:
+  host: "localhost"
+  port: 5432
+  database: "ai_world_memory"
+  user: "postgres"
+  password: "YOUR_POSTGRES_PASSWORD_HERE"  # Replace with your PostgreSQL password
+  min_connections: 5
+  max_connections: 20
+  
+  # Required PostgreSQL Extensions:
+  # - pgvector: Vector similarity search
+  # - timescaledb: Time-series data
+  # - age: Graph database capabilities
+  #
+  # Installation (requires sudo):
+  # sudo apt-get install postgresql-17 postgresql-17-pgvector
+  # sudo apt-get install timescaledb-2-postgresql-17
+  # Follow Apache AGE installation guide for your PostgreSQL version
+
+# ============================================================================
+# Autonomous Features Configuration
+# ============================================================================
+
+autonomous_features:
+  # NPC Movement System
+  npc_movement:
+    enabled: true
+    mode: "event_driven"  # Options: event_driven, fixed_interval
+    update_interval: 60  # seconds (for fixed_interval mode)
+    idle_timeout: 60  # seconds (for event_driven mode)
+    chain_movement: true
+    adaptive_behavior: true
+    max_distance: 10  # cells
+
+  # Economic Simulation
+  economic_simulation:
+    enabled: true
+    mode: "daily"  # Options: hourly, daily, weekly
+    update_interval: 86400  # seconds
+    adaptive_pricing: true
+    learning_enabled: true
+    inflation_enabled: true
+    supply_demand_enabled: true
+    events_enabled: true
+
+  # Shop Restocking
+  shop_restocking:
+    enabled: true
+    mode: "npc_driven"  # Options: npc_driven, scheduled
+    check_interval: 86400  # seconds
+    npc_learning: true
+    default_restock_interval: 3600  # seconds
+
+  # Faction System
+  faction_system:
+    enabled: true
+    reputation_decay: true
+    decay_interval: 604800  # seconds (7 days)
+    dynamic_relationships: true
+
+  # Agent Learning
+  agent_learning:
+    enabled: true
+    memory_retention_days: 30
+    decision_logging: true
+    context_window: 10
+
+  # NPC-to-NPC Interactions
+  npc_interactions:
+    enabled: true
+    interaction_range: 5  # cells
+    relationship_tracking: true
+    information_sharing: true
+    proximity_check_interval: 30  # seconds
+    relationship_decay_rate: 0.01  # per day
+
+  # Instant Response System
+  instant_response:
+    enabled: true
+    instant_events:
+      - "combat"
+      - "urgent_quest"
+      - "special_event"
+      - "player_death"
+      - "boss_spawn"
+    max_concurrent: 10
+
+  # Universal Consciousness
+  universal_consciousness:
+    enabled: true
+    reasoning_depth: "deep"  # Options: shallow, medium, deep
+    history_days: 7
+    future_planning: true
+    planning_steps: 3
+    reasoning_chain_logging: true
+    world_consciousness: true
+
+  # LLM Optimization
+  llm_optimization:
+    mode: "balanced"  # Options: fast, balanced, quality
+    decision_cache:
+      enabled: true
+      ttl: 3600  # seconds
+      similarity_threshold: 0.85
+    decision_batching:
+      enabled: true
+      batch_size: 5
+      batch_timeout: 2.0  # seconds
+    pre_filtering: true
+    rule_based_decisions: true
+    complexity_threshold: 0.5
+
+# ============================================================================
+# Free-Form Text Input Configuration
+# ============================================================================
+
+free_form_input:
+  enabled: true
+  mode: "chat_command"  # Options: chat_command, npc_dialogue
+  max_length: 500  # characters
+  rate_limiting: true
+  response_timeout: 30  # seconds
+
+# Chat Command Interface
+chat_command:
+  enabled: true
+  prefix: "@npc"
+  cooldown: 2  # seconds
+  proximity_required: true
+
+# ============================================================================
+# Performance & Optimization
+# ============================================================================
+
+performance:
+  # GPU Acceleration (requires FAISS)
+  gpu_acceleration:
+    enabled: false  # Set to true if GPU and FAISS are available
+    device: "cuda:0"
+
+  # HTTP Connection Pooling
+  http_pooling:
+    enabled: true
+    max_connections: 100
+    timeout: 30
+
+  # Redis Caching
+  redis_caching:
+    enabled: true
+    default_ttl: 300  # seconds
+    max_cache_size: 10000  # items
+
+  # Batch Processing
+  batch_processing:
+    enabled: true
+    default_batch_size: 10
+    max_wait_time: 1.0  # seconds
+
+# ============================================================================
+# Logging Configuration
+# ============================================================================
+
+logging:
+  level: "INFO"
+  format: "json"  # Options: json, text
+  rotation: "10 MB"  # Rotate when log file reaches this size
+  retention: "7 days"  # Keep logs for this duration
+  compression: "gz"  # Compress rotated logs
+

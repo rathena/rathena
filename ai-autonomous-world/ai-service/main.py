@@ -21,6 +21,8 @@ from ai_service.routers import npc_router, world_router, player_router
 from ai_service.routers.quest import router as quest_router
 from ai_service.routers.chat_command import router as chat_command_router
 from ai_service.routers.batch import router as batch_router
+from ai_service.routers.economy import router as economy_router
+from ai_service.routers.faction import router as faction_router
 from ai_service.middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
@@ -50,9 +52,10 @@ def setup_logging():
         settings.log_file,
         format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
         level=settings.log_level,
-        rotation="100 MB",
-        retention="30 days",
-        compression="zip",
+        rotation="10 MB",  # Rotate at 10MB to prevent disk space issues
+        retention="7 days",  # Keep logs for 7 days
+        compression="gz",  # Compress rotated logs
+        enqueue=True,  # Async logging to prevent blocking
     )
     
     logger.info("Logging configured")
@@ -144,12 +147,98 @@ async def lifespan(app: FastAPI):
         logger.error(f"LLM provider initialization failed: {e}", exc_info=True)
         raise
 
+    # Start background task scheduler for autonomous features
+    try:
+        from ai_service.scheduler import autonomous_scheduler
+        autonomous_scheduler.start()
+        logger.info("✓ Autonomous task scheduler started")
+    except ImportError as e:
+        logger.warning(f"Scheduler dependencies not available: {e}")
+    except Exception as e:
+        logger.error(f"Scheduler initialization failed: {e}", exc_info=True)
+        # Don't raise - scheduler is optional
+
+    # Initialize NPC Relationship Manager
+    try:
+        from ai_service.tasks.npc_relationships import npc_relationship_manager
+        await npc_relationship_manager.initialize()
+        await npc_relationship_manager.start_background_tasks()
+        logger.info("✓ NPC Relationship Manager started")
+    except ImportError as e:
+        logger.warning(f"NPC Relationship Manager dependencies not available: {e}")
+    except Exception as e:
+        logger.error(f"NPC Relationship Manager initialization failed: {e}", exc_info=True)
+
+    # Initialize Instant Response System
+    try:
+        from ai_service.tasks.instant_response import instant_response_manager
+        await instant_response_manager.start()
+        logger.info("✓ Instant Response System started")
+    except ImportError as e:
+        logger.warning(f"Instant Response System dependencies not available: {e}")
+    except Exception as e:
+        logger.error(f"Instant Response System initialization failed: {e}", exc_info=True)
+
+    # Initialize Universal Consciousness Engine
+    try:
+        from ai_service.agents.universal_consciousness import universal_consciousness
+        await universal_consciousness.initialize()
+        logger.info("✓ Universal Consciousness Engine initialized")
+    except ImportError as e:
+        logger.warning(f"Universal Consciousness Engine dependencies not available: {e}")
+    except Exception as e:
+        logger.error(f"Universal Consciousness Engine initialization failed: {e}", exc_info=True)
+
+    # Initialize Decision Optimizer
+    try:
+        from ai_service.agents.decision_optimizer import decision_optimizer
+        await decision_optimizer.initialize()
+        logger.info("✓ Decision Optimizer initialized")
+    except ImportError as e:
+        logger.warning(f"Decision Optimizer dependencies not available: {e}")
+    except Exception as e:
+        logger.error(f"Decision Optimizer initialization failed: {e}", exc_info=True)
+
     logger.info("AI Service startup complete")
-    
+    logger.info("=" * 80)
+    logger.info("ADVANCED AUTONOMOUS FEATURES ENABLED:")
+    logger.info(f"  • NPC-to-NPC Interactions: {settings.npc_to_npc_interactions_enabled}")
+    logger.info(f"  • Instant Response System: {settings.instant_response_enabled}")
+    logger.info(f"  • Universal Consciousness: {settings.universal_consciousness_enabled}")
+    logger.info(f"  • Reasoning Depth: {settings.reasoning_depth}")
+    logger.info(f"  • LLM Optimization Mode: {settings.llm_optimization_mode}")
+    logger.info(f"  • Decision Caching: {settings.decision_cache_enabled}")
+    logger.info(f"  • Decision Batching: {settings.decision_batch_enabled}")
+    logger.info("=" * 80)
+
     yield
     
     # Shutdown
     logger.info("Shutting down AI Service")
+
+    # Stop Instant Response System
+    try:
+        from ai_service.tasks.instant_response import instant_response_manager
+        await instant_response_manager.stop()
+        logger.info("✓ Instant Response System stopped")
+    except Exception as e:
+        logger.error(f"Instant Response System shutdown error: {e}", exc_info=True)
+
+    # Stop NPC Relationship Manager
+    try:
+        from ai_service.tasks.npc_relationships import npc_relationship_manager
+        await npc_relationship_manager.stop_background_tasks()
+        logger.info("✓ NPC Relationship Manager stopped")
+    except Exception as e:
+        logger.error(f"NPC Relationship Manager shutdown error: {e}", exc_info=True)
+
+    # Stop background task scheduler
+    try:
+        from ai_service.scheduler import autonomous_scheduler
+        autonomous_scheduler.stop()
+        logger.info("✓ Autonomous task scheduler stopped")
+    except Exception as e:
+        logger.error(f"Scheduler shutdown error: {e}", exc_info=True)
 
     # Shutdown Memori SDK
     try:
@@ -241,11 +330,12 @@ async def health_check():
     Returns basic service status without expensive operations.
     For detailed health check, use /health/detailed
     """
+    from datetime import datetime
     return {
         "status": "healthy",
         "service": settings.service_name,
         "version": "1.0.0",
-        "timestamp": logger._core.handlers[0]._sink._stream.name if hasattr(logger, '_core') else "N/A"
+        "timestamp": datetime.utcnow().isoformat()
     }
 
 
@@ -299,8 +389,10 @@ app.include_router(player_router)
 app.include_router(quest_router)
 app.include_router(chat_command_router)
 app.include_router(batch_router)
+app.include_router(economy_router)
+app.include_router(faction_router)
 
-logger.info("✓ All routers registered")
+logger.info("✓ All routers registered (8 routers)")
 
 
 # Run server

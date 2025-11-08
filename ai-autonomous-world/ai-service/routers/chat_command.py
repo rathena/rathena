@@ -240,3 +240,82 @@ async def get_chat_command_status():
         "rate_limiting": settings.freeform_text_rate_limit_enabled
     }
 
+
+@router.get("/history")
+async def get_chat_history(
+    player_id: Optional[str] = None,
+    npc_id: Optional[str] = None,
+    limit: int = 20,
+    offset: int = 0
+):
+    """
+    Get chat command history
+
+    Retrieves chat interaction history from DragonflyDB/PostgreSQL.
+    Can filter by player_id and/or npc_id.
+    Supports pagination with limit and offset.
+    """
+    try:
+        logger.info(f"Getting chat history (player={player_id}, npc={npc_id}, limit={limit}, offset={offset})")
+
+        # Validate parameters
+        if limit > 100:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Limit cannot exceed 100"
+            )
+
+        # Build cache key for DragonflyDB
+        cache_key = f"chat_history:{player_id or 'all'}:{npc_id or 'all'}:{limit}:{offset}"
+
+        # Try to get from cache first
+        try:
+            cached_history = await db.get(cache_key)
+            if cached_history:
+                logger.debug(f"Retrieved chat history from cache")
+                return {
+                    "history": cached_history,
+                    "count": len(cached_history),
+                    "limit": limit,
+                    "offset": offset,
+                    "source": "cache",
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+        except Exception as cache_error:
+            logger.warning(f"Cache retrieval failed: {cache_error}")
+
+        # Get from database (PostgreSQL)
+        history = await db.get_chat_history(
+            player_id=player_id,
+            npc_id=npc_id,
+            limit=limit,
+            offset=offset
+        )
+
+        # Cache the result for 5 minutes
+        try:
+            await db.set(cache_key, history, expire_seconds=300)
+        except Exception as cache_error:
+            logger.warning(f"Cache storage failed: {cache_error}")
+
+        logger.info(f"Retrieved {len(history)} chat history entries")
+        return {
+            "history": history,
+            "count": len(history),
+            "limit": limit,
+            "offset": offset,
+            "player_id": player_id,
+            "npc_id": npc_id,
+            "source": "database",
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error getting chat history: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get chat history: {str(e)}"
+        )
+

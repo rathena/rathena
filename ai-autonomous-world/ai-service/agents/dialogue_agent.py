@@ -1,6 +1,7 @@
 """
 Dialogue Agent - Generates personality-driven NPC dialogue
 Handles conversation generation based on context, personality, and memory
+Phase 8A: Added Redis caching for frequently requested dialogues
 """
 
 from typing import Dict, Any
@@ -10,9 +11,11 @@ from crewai import Agent
 try:
     from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
     from ai_service.config import settings
+    from ai_service.utils.cache import cache_response
 except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
     from config import settings
+    from utils.cache import cache_response
 
 
 class DialogueAgent(BaseAIAgent):
@@ -175,6 +178,7 @@ class DialogueAgent(BaseAIAgent):
         
         return ". ".join(memory_parts) if memory_parts else "This is a new interaction."
 
+    @cache_response('dialogue', ttl=300)  # Phase 8A: Cache dialogue for 5 minutes
     async def _generate_dialogue(
         self,
         npc_name: str,
@@ -185,7 +189,10 @@ class DialogueAgent(BaseAIAgent):
         player_message: str,
         interaction_type: str
     ) -> str:
-        """Generate dialogue using LLM"""
+        """
+        Generate dialogue using LLM
+        Phase 8A: Cached responses for frequently asked questions/interactions
+        """
 
         # Validate inputs
         if not player_message or not isinstance(player_message, str):

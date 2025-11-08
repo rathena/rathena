@@ -17,3 +17,6 @@
 //	script_pushint(st,1);
 //	return 0;
 //}
+
+// Include HTTP script functions for AI integration
+#include "script_http.cpp"

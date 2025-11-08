@@ -6,6 +6,7 @@ from fastapi import APIRouter, HTTPException, status
 from loguru import logger
 import uuid
 from datetime import datetime
+from typing import Dict, Any, Optional
 
 try:
     from ..models.npc import (
@@ -330,5 +331,294 @@ async def execute_npc_action(npc_id: str, action: NPCAction):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Failed to execute NPC action: {str(e)}"
+        )
+
+
+@router.get("/{npc_id}/state")
+async def get_npc_state(npc_id: str):
+    """
+    Get current state of an NPC
+
+    Returns NPC's current position, mood, activity, and other state information.
+    State is cached in DragonflyDB for fast access.
+    """
+    try:
+        logger.info(f"Getting state for NPC: {npc_id}")
+
+        # Try to get from cache first (DragonflyDB)
+        cached_state = await db.get_npc_state(npc_id)
+
+        if cached_state:
+            logger.debug(f"Retrieved NPC state from cache for {npc_id}")
+            return {
+                "npc_id": npc_id,
+                "state": cached_state,
+                "source": "cache",
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+        # If not in cache, get from persistent storage (PostgreSQL)
+        npc_data = await db.get_npc(npc_id)
+
+        if not npc_data:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"NPC {npc_id} not found"
+            )
+
+        # Extract state information
+        state = {
+            "position": npc_data.get("position", {}),
+            "mood": npc_data.get("mood", "neutral"),
+            "activity": npc_data.get("current_activity", "idle"),
+            "health": npc_data.get("health", 100),
+            "energy": npc_data.get("energy", 100),
+            "last_updated": npc_data.get("last_updated", datetime.utcnow().isoformat())
+        }
+
+        # Cache the state for future requests
+        await db.set_npc_state(npc_id, state, expire_seconds=300)  # 5 minute cache
+
+        logger.info(f"Retrieved NPC state from database for {npc_id}")
+        return {
+            "npc_id": npc_id,
+            "state": state,
+            "source": "database",
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error getting state for NPC {npc_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get NPC state: {str(e)}"
+        )
+
+
+@router.put("/{npc_id}/state")
+async def update_npc_state(npc_id: str, state_update: Dict[str, Any]):
+    """
+    Update NPC state
+
+    Updates NPC's position, mood, activity, or other state fields.
+    Updates both cache (DragonflyDB) and persistent storage (PostgreSQL).
+    """
+    try:
+        logger.info(f"Updating state for NPC: {npc_id}")
+
+        # Verify NPC exists
+        npc_data = await db.get_npc(npc_id)
+
+        if not npc_data:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"NPC {npc_id} not found"
+            )
+
+        # Get current state
+        current_state = await db.get_npc_state(npc_id) or {}
+
+        # Merge updates
+        updated_state = {**current_state, **state_update}
+        updated_state["last_updated"] = datetime.utcnow().isoformat()
+
+        # Update cache (DragonflyDB)
+        await db.set_npc_state(npc_id, updated_state, expire_seconds=300)
+
+        # Update persistent storage (PostgreSQL)
+        await db.update_npc(npc_id, {"state": updated_state})
+
+        logger.info(f"Successfully updated state for NPC {npc_id}")
+        return {
+            "npc_id": npc_id,
+            "state": updated_state,
+            "status": "success",
+            "message": "NPC state updated successfully",
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error updating state for NPC {npc_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to update NPC state: {str(e)}"
+        )
+
+
+@router.delete("/{npc_id}")
+async def delete_npc(npc_id: str):
+    """
+    Delete an NPC and all associated data
+
+    Removes NPC from both cache (DragonflyDB) and persistent storage (PostgreSQL).
+    Also cleans up associated memories, relationships, and agent data.
+    """
+    try:
+        logger.info(f"Deleting NPC: {npc_id}")
+
+        # Verify NPC exists
+        npc_data = await db.get_npc(npc_id)
+
+        if not npc_data:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"NPC {npc_id} not found"
+            )
+
+        # Delete from cache (DragonflyDB)
+        await db.delete_npc_state(npc_id)
+
+        # Delete from persistent storage (PostgreSQL)
+        # This should cascade delete memories, relationships, etc.
+        await db.delete_npc(npc_id)
+
+        logger.info(f"Successfully deleted NPC {npc_id}")
+        return {
+            "npc_id": npc_id,
+            "status": "success",
+            "message": f"NPC {npc_id} deleted successfully",
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error deleting NPC {npc_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to delete NPC: {str(e)}"
+        )
+
+
+@router.get("/{npc_id}/memory")
+async def get_npc_memory(
+    npc_id: str,
+    memory_type: Optional[str] = None,
+    limit: int = 10,
+    offset: int = 0
+):
+    """
+    Get NPC memories
+
+    Retrieves memories from Memori SDK / PostgreSQL.
+    Can filter by memory type (episodic, semantic, procedural).
+    Supports pagination with limit and offset.
+    """
+    try:
+        logger.info(f"Getting memories for NPC: {npc_id} (type={memory_type}, limit={limit}, offset={offset})")
+
+        # Verify NPC exists
+        npc_data = await db.get_npc(npc_id)
+
+        if not npc_data:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"NPC {npc_id} not found"
+            )
+
+        # Get memories from database (PostgreSQL with pgvector)
+        memories = await db.get_npc_memories(
+            npc_id=npc_id,
+            memory_type=memory_type,
+            limit=limit,
+            offset=offset
+        )
+
+        logger.info(f"Retrieved {len(memories)} memories for NPC {npc_id}")
+        return {
+            "npc_id": npc_id,
+            "memories": memories,
+            "count": len(memories),
+            "limit": limit,
+            "offset": offset,
+            "memory_type": memory_type,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error getting memories for NPC {npc_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get NPC memories: {str(e)}"
+        )
+
+
+@router.post("/{npc_id}/memory")
+async def add_npc_memory(npc_id: str, memory_data: Dict[str, Any]):
+    """
+    Add a memory to NPC
+
+    Stores memory in Memori SDK / PostgreSQL with vector embedding.
+    Memory types: episodic (events), semantic (facts), procedural (skills).
+    """
+    try:
+        logger.info(f"Adding memory for NPC: {npc_id}")
+
+        # Verify NPC exists
+        npc_data = await db.get_npc(npc_id)
+
+        if not npc_data:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"NPC {npc_id} not found"
+            )
+
+        # Validate memory data
+        if "content" not in memory_data:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="Memory must contain 'content' field"
+            )
+
+        # Set default memory type if not provided
+        memory_type = memory_data.get("memory_type", "episodic")
+
+        if memory_type not in ["episodic", "semantic", "procedural"]:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Invalid memory_type: {memory_type}. Must be episodic, semantic, or procedural"
+            )
+
+        # Generate memory ID
+        memory_id = str(uuid.uuid4())
+
+        # Prepare memory record
+        memory_record = {
+            "memory_id": memory_id,
+            "npc_id": npc_id,
+            "memory_type": memory_type,
+            "content": memory_data["content"],
+            "importance": memory_data.get("importance", 0.5),
+            "emotional_valence": memory_data.get("emotional_valence", 0.0),
+            "metadata": memory_data.get("metadata", {}),
+            "created_at": datetime.utcnow().isoformat()
+        }
+
+        # Store memory in database (PostgreSQL with pgvector for embeddings)
+        await db.add_npc_memory(npc_id, memory_record)
+
+        logger.info(f"Successfully added memory {memory_id} for NPC {npc_id}")
+        return {
+            "npc_id": npc_id,
+            "memory_id": memory_id,
+            "status": "success",
+            "message": "Memory added successfully",
+            "memory": memory_record,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error adding memory for NPC {npc_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to add NPC memory: {str(e)}"
         )
 
