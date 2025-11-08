@@ -6197,6 +6197,36 @@ BUILDIN_FUNC(copyarray);
 /// Sets the value of a variable.
 /// The value is converted to the type of the variable.
 ///
+/**
+ * ai_chat_start("<npc_name>")
+ * Prepares player for AI dialogue text input
+ * Sets the ai_dialogue_mode flag and stores NPC name for AI service routing
+ */
+BUILDIN_FUNC(ai_chat_start)
+{
+	const char* npc_name = script_getstr(st, 2);
+	map_session_data* sd = script_rid2sd(st);
+
+	if (!sd) {
+		ShowError("script:ai_chat_start: No player attached\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!npc_name || strlen(npc_name) == 0) {
+		ShowError("script:ai_chat_start: Invalid NPC name\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	// Set AI dialogue mode
+	sd->state.ai_dialogue_mode = 1;
+	safestrncpy(sd->ai_npc_name, npc_name, sizeof(sd->ai_npc_name));
+
+	ShowDebug("AI Dialogue: Enabled for %s (char_id=%u, npc=%s)\n",
+	          sd->status.name, sd->status.char_id, npc_name);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /// set(<variable>,<value>{,<charid>})
 BUILDIN_FUNC(setr)
 {
@@ -27863,6 +27893,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(jobchange,"i??"),
 	BUILDIN_DEF(jobname,"i"),
 	BUILDIN_DEF(input,"r??"),
+	BUILDIN_DEF(ai_chat_start,"s"),
 	BUILDIN_DEF(warp,"sii?"),
 	BUILDIN_DEF2(warp, "warpchar", "sii?"),
 	BUILDIN_DEF(areawarp,"siiiisii??"),

@@ -1,0 +1,89 @@
+//===== rAthena Script =======================================
+//= AI Merchant Example - Hybrid Dialogue System
+//===== Description: =========================================
+//= Example NPC demonstrating the hybrid AI dialogue system
+//= Players can use traditional menu buttons OR type free-form questions
+//= This is a production-ready template for AI-enabled NPCs
+//===== Author: ==============================================
+//= rAthena AI World Team
+//============================================================
+
+prontera,150,150,4	script	AI Merchant#example	4_M_ALCHE_A,{
+	// Display greeting
+	mes "[AI Merchant]";
+	mes "Hello! I'm an AI-powered merchant.";
+	mes "You can ask me anything by typing your own question!";
+	next;
+	
+	// Main menu loop
+	while(1) {
+		mes "[AI Merchant]";
+		mes "How can I help you today?";
+		next;
+		
+		// Hybrid menu: Traditional options + AI text input
+		switch(select(
+			"What items do you sell?",
+			"Tell me about quests",
+			"What's the best equipment for my level?",
+			"Type your own question ⌨️",
+			"End conversation"
+		)) {
+			case 1:
+				// Traditional scripted response
+				mes "[AI Merchant]";
+				mes "I sell various potions, weapons, and armor!";
+				mes "Check out my shop for the latest items.";
+				next;
+				break;
+				
+			case 2:
+				// Traditional scripted response
+				mes "[AI Merchant]";
+				mes "I know about many quests in the area.";
+				mes "The Eden Group has great quests for beginners!";
+				next;
+				break;
+				
+			case 3:
+				// Traditional scripted response
+				mes "[AI Merchant]";
+				mes "For your level (" + BaseLevel + "), I recommend:";
+				if (BaseLevel < 30) {
+					mes "- Novice equipment from the Eden Group";
+					mes "- Basic potions for healing";
+				} else if (BaseLevel < 60) {
+					mes "- Intermediate weapons and armor";
+					mes "- Status recovery items";
+				} else {
+					mes "- Advanced equipment from dungeons";
+					mes "- Elemental weapons for specific monsters";
+				}
+				next;
+				break;
+				
+			case 4:
+				// AI-powered free-form text input
+				mes "[AI Merchant]";
+				mes "Go ahead, ask me anything!";
+				mes "^0000FF(Type your question below)^000000";
+				next;
+				
+				// Enable AI dialogue mode and trigger text input
+				ai_chat_start("ai_merchant");
+				input .@dummy$;
+				
+				// Response will be sent asynchronously by the AI system
+				// The player will see "Let me think about that..." 
+				// followed by the AI-generated response
+				close;
+				
+			case 5:
+				// End conversation
+				mes "[AI Merchant]";
+				mes "Come back anytime!";
+				close;
+		}
+	}
+}
+

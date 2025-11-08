@@ -161,7 +161,6 @@ async def handle_chat_command(
 
             # Cache successful response for fallback (TTL: 1 hour)
             try:
-                from ai_service.database import db
                 cache_key = f"chat_fallback:{request.npc_id}:{request.player_id}"
                 await db.client.setex(cache_key, 3600, npc_text)
                 logger.debug(f"Cached response for NPC {request.npc_id}")
@@ -188,7 +187,6 @@ async def handle_chat_command(
             elif settings.chat_command_fallback_mode == "use_cached":
                 # Implement cached response fallback using DragonflyDB
                 try:
-                    from ai_service.database import db
                     cache_key = f"chat_fallback:{request.npc_id}:{request.player_id}"
                     cached_response = await db.client.get(cache_key)
 

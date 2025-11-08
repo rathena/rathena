@@ -39,7 +39,9 @@ debug: bool = True
 
 ---
 
-## Database Configuration (DragonflyDB/Redis)
+## Database Configuration
+
+### DragonflyDB/Redis (High-Speed Caching)
 
 ```python
 # Redis host
@@ -56,6 +58,50 @@ redis_password: Optional[str] = None
 
 # Maximum connections
 redis_max_connections: int = 50
+```
+
+### PostgreSQL 17 (Persistent Storage)
+
+```python
+# PostgreSQL host
+postgres_host: str = "localhost"
+
+# PostgreSQL port
+postgres_port: int = 5432
+
+# Database name
+postgres_db: str = "ai_world_memory"
+
+# Database user
+postgres_user: str = "ai_world_user"
+
+# Database password
+postgres_password: str = "ai_world_pass_2025"
+
+# Connection pool size
+postgres_pool_size: int = 10
+
+# Maximum overflow connections
+postgres_max_overflow: int = 20
+
+# Echo SQL queries (debug mode)
+postgres_echo_sql: bool = False
+
+# Connection retry configuration
+db_connection_max_retries: int = 5
+db_connection_retry_delay: float = 2.0
+```
+
+**Required PostgreSQL Extensions:**
+- pgvector - Vector similarity search
+- TimescaleDB - Time-series data
+- Apache AGE - Graph database capabilities
+
+**Database Migrations:**
+Run migrations after PostgreSQL setup:
+```bash
+cd ai-service
+PGPASSWORD=ai_world_pass_2025 psql -h localhost -U ai_world_user -d ai_world_memory -f migrations/001_create_factions_table.sql
 ```
 
 ---
@@ -257,22 +303,57 @@ chat_command_log_all_interactions: bool = True
 
 ## Environment Variables
 
-Override any setting using environment variables:
+Override any setting using environment variables. See `ai-service/.env.example` for complete list.
 
 ```bash
 # Service
 export SERVICE_NAME="ai-service"
 export SERVICE_HOST="0.0.0.0"
 export SERVICE_PORT=8000
+export SERVICE_ENV="development"
+export LOG_LEVEL="DEBUG"
 
-# Database
+# DragonflyDB/Redis
 export REDIS_HOST="127.0.0.1"
 export REDIS_PORT=6379
+export REDIS_PASSWORD=""
+export REDIS_DB=0
+export REDIS_MAX_CONNECTIONS=50
+
+# PostgreSQL
+export POSTGRES_HOST="localhost"
+export POSTGRES_PORT=5432
+export POSTGRES_DB="ai_world_memory"
+export POSTGRES_USER="ai_world_user"
+export POSTGRES_PASSWORD="ai_world_pass_2025"
+export POSTGRES_POOL_SIZE=10
+export POSTGRES_MAX_OVERFLOW=20
+export POSTGRES_ECHO_SQL=false
 
 # LLM Provider
-export DEFAULT_LLM_PROVIDER="azure_openai"
+export PRIMARY_LLM_PROVIDER="azure_openai"
+
+# Azure OpenAI (Recommended)
 export AZURE_OPENAI_API_KEY="your-key"
 export AZURE_OPENAI_ENDPOINT="https://your-resource.openai.azure.com"
+export AZURE_OPENAI_API_VERSION="2024-02-15-preview"
+export AZURE_OPENAI_DEPLOYMENT_NAME="gpt-4"
+
+# OpenAI (Alternative)
+export OPENAI_API_KEY="your-key"
+export OPENAI_MODEL="gpt-4-turbo-preview"
+
+# Anthropic Claude
+export ANTHROPIC_API_KEY="your-key"
+export CLAUDE_MODEL="claude-3-opus-20240229"
+
+# Google Gemini
+export GOOGLE_API_KEY="your-key"
+export GEMINI_MODEL="gemini-pro"
+
+# DeepSeek
+export DEEPSEEK_API_KEY="your-key"
+export DEEPSEEK_MODEL="deepseek-chat"
 
 # Movement
 export NPC_MOVEMENT_ENABLED=true
@@ -281,6 +362,11 @@ export NPC_MOVEMENT_PATHFINDING_ENABLED=true
 # Free-Form Text
 export FREEFORM_TEXT_ENABLED=true
 export CHAT_COMMAND_PREFIX="@talk"
+
+# Rate Limiting
+export RATE_LIMIT_ENABLED=true
+export RATE_LIMIT_REQUESTS=100
+export RATE_LIMIT_PERIOD=60
 ```
 
 ---

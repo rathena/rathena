@@ -43,15 +43,42 @@ class DialogueAgent(BaseAIAgent):
     
     def _create_crew_agent(self) -> Agent:
         """Create CrewAI agent for dialogue generation"""
+        # Import CrewAI's LLM class
+        from crewai import LLM
+        import os
+
+        # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
+        # CrewAI uses litellm under the hood which supports Azure via environment variables
+        try:
+            from config import settings
+
+            # Set Azure OpenAI environment variables for litellm
+            os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key
+            os.environ["AZURE_API_BASE"] = settings.azure_openai_endpoint
+            os.environ["AZURE_API_VERSION"] = settings.azure_openai_api_version
+
+            # Use litellm format: azure/<deployment_name>
+            llm = LLM(
+                model=f"azure/{settings.azure_openai_deployment}",
+                temperature=0.7,
+                max_tokens=2000
+            )
+            logger.info(f"Created Azure OpenAI LLM with deployment: {settings.azure_openai_deployment}")
+        except Exception as e:
+            logger.error(f"Failed to create Azure LLM: {e}")
+            # Don't fall back to provider - raise the error so we can fix it
+            raise
+
         return Agent(
             role="NPC Dialogue Specialist",
             goal="Generate authentic, personality-driven dialogue for NPCs that feels natural and engaging",
-            backstory="""You are an expert in character dialogue and storytelling. You understand how to 
-            create unique voices for different characters based on their personality traits, background, 
-            and current emotional state. You excel at making NPCs feel alive and memorable through their 
+            backstory="""You are an expert in character dialogue and storytelling. You understand how to
+            create unique voices for different characters based on their personality traits, background,
+            and current emotional state. You excel at making NPCs feel alive and memorable through their
             speech patterns, word choices, and conversational style.""",
             verbose=self.config.get("verbose", False),
-            allow_delegation=False
+            allow_delegation=False,
+            llm=llm
         )
     
     async def process(self, context: AgentContext) -> AgentResponse:

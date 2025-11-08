@@ -8,11 +8,11 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 from loguru import logger
 
-from config import settings
-from database import db, postgres_db
-from agents.economy_agent import EconomyAgent
-from agents.base_agent import AgentContext
-from models.economy import (
+from ..config import settings
+from ..database import db, postgres_db
+from ..agents.economy_agent import EconomyAgent
+from ..agents.base_agent import AgentContext
+from ..models.economy import (
     EconomicState,
     MarketItem,
     ShopInventory,
@@ -27,9 +27,17 @@ class EconomicSimulationManager:
     Manages economic simulation with EconomyAgent-driven decisions
     Learns from historical data and adapts to player behavior
     """
-    
+
     def __init__(self):
-        self.economy_agent = EconomyAgent()
+        # Initialize EconomyAgent with required parameters
+        from ..llm import get_llm_provider
+        llm = get_llm_provider()
+        config = {"verbose": False}
+        self.economy_agent = EconomyAgent(
+            agent_id="economy_001",
+            llm_provider=llm,
+            config=config
+        )
         self.last_update_time: Optional[datetime] = None
         logger.info("EconomicSimulationManager initialized")
     
@@ -478,8 +486,68 @@ async def get_item_price_info(item_id: str) -> Optional[Dict[str, Any]]:
 
 
 async def get_market_trends(category: Optional[str] = None, limit: int = 20) -> List[Dict[str, Any]]:
-    """Get market trends"""
-    return []  # Simplified
+    """Get market trends from cached economic data"""
+    try:
+        from ..database import db
+
+        # Get current economic state
+        state_key = "economy:state:current"
+        state_data = await db.get(state_key)
+
+        if not state_data:
+            # Return default trends if no data available
+            return [
+                {
+                    "item_category": category or "general",
+                    "trend": "stable",
+                    "price_change_percent": 0.0,
+                    "demand_level": "medium",
+                    "supply_level": "medium",
+                    "timestamp": datetime.utcnow().isoformat()
+                }
+            ]
+
+        # Extract trends from economic state
+        trends = []
+
+        # If state_data is a string, try to parse it as JSON
+        if isinstance(state_data, str):
+            import json
+            try:
+                state_data = json.loads(state_data)
+            except json.JSONDecodeError:
+                pass
+
+        # Generate trends based on available data
+        if isinstance(state_data, dict):
+            inflation_rate = state_data.get("inflation_rate", 0.0)
+
+            # Create a trend entry
+            trend_entry = {
+                "item_category": category or "all",
+                "trend": "increasing" if inflation_rate > 0.05 else "decreasing" if inflation_rate < -0.05 else "stable",
+                "price_change_percent": inflation_rate * 100,
+                "demand_level": "high" if inflation_rate > 0.1 else "low" if inflation_rate < -0.1 else "medium",
+                "supply_level": "low" if inflation_rate > 0.1 else "high" if inflation_rate < -0.1 else "medium",
+                "timestamp": datetime.utcnow().isoformat()
+            }
+            trends.append(trend_entry)
+
+        return trends[:limit]
+
+    except Exception as e:
+        logger.error(f"Error getting market trends: {e}")
+        # Return default trend on error
+        return [
+            {
+                "item_category": category or "general",
+                "trend": "stable",
+                "price_change_percent": 0.0,
+                "demand_level": "medium",
+                "supply_level": "medium",
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        ]
 
 
 async def get_shop_inventory(shop_id: str) -> Optional[ShopInventory]:

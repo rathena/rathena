@@ -116,6 +116,112 @@ class PostgreSQLManager:
             logger.error(f"PostgreSQL health check failed: {e}")
             return False
 
+    async def fetch_one(self, query: str, *args):
+        """
+        Execute a query and fetch one result
+
+        Args:
+            query: SQL query with $1, $2, etc. placeholders
+            *args: Query parameters
+
+        Returns:
+            Row object or None
+        """
+        if not self.engine:
+            raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
+
+        try:
+            from sqlalchemy import text
+
+            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
+            converted_query = query
+            params = {}
+            for i, arg in enumerate(args, 1):
+                placeholder = f"${i}"
+                param_name = f"param{i}"
+                converted_query = converted_query.replace(placeholder, f":{param_name}")
+                params[param_name] = arg
+
+            with self.engine.connect() as conn:
+                result = conn.execute(text(converted_query), params)
+                row = result.fetchone()
+                if row:
+                    # Convert Row to dict
+                    return dict(row._mapping)
+                return None
+        except Exception as e:
+            logger.error(f"Error executing fetch_one query: {e}")
+            raise
+
+    async def fetch_all(self, query: str, *args):
+        """
+        Execute a query and fetch all results
+
+        Args:
+            query: SQL query with $1, $2, etc. placeholders
+            *args: Query parameters
+
+        Returns:
+            List of row objects
+        """
+        if not self.engine:
+            raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
+
+        try:
+            from sqlalchemy import text
+
+            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
+            converted_query = query
+            params = {}
+            for i, arg in enumerate(args, 1):
+                placeholder = f"${i}"
+                param_name = f"param{i}"
+                converted_query = converted_query.replace(placeholder, f":{param_name}")
+                params[param_name] = arg
+
+            with self.engine.connect() as conn:
+                result = conn.execute(text(converted_query), params)
+                rows = result.fetchall()
+                # Convert Rows to dicts
+                return [dict(row._mapping) for row in rows]
+        except Exception as e:
+            logger.error(f"Error executing fetch_all query: {e}")
+            raise
+
+    async def execute(self, query: str, *args):
+        """
+        Execute a query without returning results (INSERT, UPDATE, DELETE)
+
+        Args:
+            query: SQL query with $1, $2, etc. placeholders
+            *args: Query parameters
+
+        Returns:
+            Number of affected rows
+        """
+        if not self.engine:
+            raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
+
+        try:
+            from sqlalchemy import text
+
+            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
+            converted_query = query
+            params = {}
+            for i, arg in enumerate(args, 1):
+                placeholder = f"${i}"
+                param_name = f"param{i}"
+                converted_query = converted_query.replace(placeholder, f":{param_name}")
+                params[param_name] = arg
+
+            with self.engine.connect() as conn:
+                result = conn.execute(text(converted_query), params)
+                conn.commit()
+                return result.rowcount
+        except Exception as e:
+            logger.error(f"Error executing query: {e}")
+            raise
+
     def get_connection_string(self) -> str:
         """Get the PostgreSQL connection string (for Memori SDK)"""
         return settings.postgres_connection_string
@@ -123,10 +229,15 @@ class PostgreSQLManager:
 
 class Database:
     """DragonflyDB / Redis database connection manager"""
-    
+
     def __init__(self):
         self.pool: Optional[ConnectionPool] = None
         self.client: Optional[aioredis.Redis] = None
+
+    @property
+    def redis(self):
+        """Alias for client to maintain compatibility with code that uses db.redis"""
+        return self.client
         
     async def connect(self, max_retries: int = None, retry_delay: float = None):
         """
@@ -215,7 +326,78 @@ class Database:
         except Exception as e:
             logger.error(f"Database health check failed: {e}")
             return False
-    
+
+    # Generic Cache Operations
+    async def get(self, key: str):
+        """Get value from cache"""
+        try:
+            value = await self.client.get(key)
+            if value:
+                # Try to decode as JSON
+                if isinstance(value, bytes):
+                    value = value.decode('utf-8')
+                try:
+                    return json.loads(value)
+                except (json.JSONDecodeError, TypeError):
+                    return value
+            return None
+        except Exception as e:
+            logger.error(f"Error getting key {key}: {e}")
+            return None
+
+    async def set(self, key: str, value, expire: int = None):
+        """Set value in cache with optional expiration"""
+        try:
+            # Serialize value as JSON if it's a dict or list
+            if isinstance(value, (dict, list)):
+                from datetime import datetime
+                # Handle datetime objects in serialization
+                def json_serial(obj):
+                    if isinstance(obj, datetime):
+                        return obj.isoformat()
+                    raise TypeError(f"Type {type(obj)} not serializable")
+
+                value = json.dumps(value, default=json_serial)
+
+            if expire:
+                await self.client.setex(key, expire, value)
+            else:
+                await self.client.set(key, value)
+
+            logger.debug(f"Set key {key} with expire={expire}")
+        except Exception as e:
+            logger.error(f"Error setting key {key}: {e}")
+            raise
+
+    async def delete(self, key: str):
+        """Delete key from cache"""
+        try:
+            await self.client.delete(key)
+            logger.debug(f"Deleted key {key}")
+        except Exception as e:
+            logger.error(f"Error deleting key {key}: {e}")
+            raise
+
+    async def setex(self, key: str, expire: int, value):
+        """Set value with expiration time (Redis-compatible method)"""
+        try:
+            # Serialize value as JSON if it's a dict or list
+            if isinstance(value, (dict, list)):
+                from datetime import datetime
+                # Handle datetime objects in serialization
+                def json_serial(obj):
+                    if isinstance(obj, datetime):
+                        return obj.isoformat()
+                    raise TypeError(f"Type {type(obj)} not serializable")
+
+                value = json.dumps(value, default=json_serial)
+
+            await self.client.setex(key, expire, value)
+            logger.debug(f"Set key {key} with expire={expire}s")
+        except Exception as e:
+            logger.error(f"Error setting key {key} with expiration: {e}")
+            raise
+
     # NPC State Operations
     async def set_npc_state(self, npc_id: str, state_data: dict):
         """Set NPC state in database"""

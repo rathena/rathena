@@ -4,8 +4,13 @@
 # This file configures the AI service including LLM providers, databases,
 # and autonomous feature settings.
 #
-# IMPORTANT: Replace placeholder API keys with your actual keys before
-# deploying to production.
+# ⚠️  SECURITY WARNING ⚠️
+# DO NOT commit API keys or passwords to version control!
+# All sensitive values use ${ENVIRONMENT_VARIABLE} placeholders.
+# Set actual values in the .env file located at:
+#   ai-autonomous-world/ai_service/.env
+#
+# The .env file should be in .gitignore and never committed.
 # ============================================================================
 
 # Service Configuration
@@ -36,85 +41,93 @@ llm:
   default_provider: "azure_openai"  # Default LLM provider to use
   
   # Azure OpenAI Configuration (Recommended for Production)
+  # IMPORTANT: Set your actual API key in the .env file, NOT here!
+  # This file may be committed to version control.
   azure_openai:
-    enabled: true
-    api_key: "YOUR_AZURE_OPENAI_API_KEY_HERE"  # Replace with your Azure OpenAI API key
-    endpoint: "https://your-resource.openai.azure.com/"  # Replace with your Azure endpoint
-    api_version: "2024-02-15-preview"
-    deployment_name: "gpt-4"  # Your deployment name
-    model: "gpt-4"
-    temperature: 0.7
-    max_tokens: 2000
-    timeout: 30
+    enabled: "${AZURE_OPENAI_ENABLED:-true}"
+    api_key: "${AZURE_OPENAI_API_KEY}"
+    endpoint: "${AZURE_OPENAI_ENDPOINT}"
+    api_version: "${AZURE_OPENAI_API_VERSION:-2024-02-15-preview}"
+    deployment_name: "${AZURE_OPENAI_DEPLOYMENT_NAME}"
+    model: "${AZURE_OPENAI_MODEL:-gpt-4}"
+    temperature: "${AZURE_OPENAI_TEMPERATURE:-0.7}"
+    max_tokens: "${AZURE_OPENAI_MAX_TOKENS:-2000}"
+    timeout: "${AZURE_OPENAI_TIMEOUT:-30}"
   
   # OpenAI Configuration
+  # IMPORTANT: Set your actual API key in the .env file, NOT here!
   openai:
-    enabled: false
-    api_key: "YOUR_OPENAI_API_KEY_HERE"  # Replace with your OpenAI API key
-    model: "gpt-4-turbo-preview"
-    temperature: 0.7
-    max_tokens: 2000
-    timeout: 30
-  
+    enabled: "${OPENAI_ENABLED:-false}"
+    api_key: "${OPENAI_API_KEY}"
+    model: "${OPENAI_MODEL:-gpt-4-turbo-preview}"
+    temperature: "${OPENAI_TEMPERATURE:-0.7}"
+    max_tokens: "${OPENAI_MAX_TOKENS:-2000}"
+    timeout: "${OPENAI_TIMEOUT:-30}"
+
   # DeepSeek Configuration
+  # IMPORTANT: Set your actual API key in the .env file, NOT here!
   deepseek:
-    enabled: false
-    api_key: "YOUR_DEEPSEEK_API_KEY_HERE"  # Replace with your DeepSeek API key
-    base_url: "https://api.deepseek.com/v1"
-    model: "deepseek-chat"
-    temperature: 0.7
-    max_tokens: 2000
-    timeout: 30
-  
+    enabled: "${DEEPSEEK_ENABLED:-false}"
+    api_key: "${DEEPSEEK_API_KEY}"
+    base_url: "${DEEPSEEK_BASE_URL:-https://api.deepseek.com/v1}"
+    model: "${DEEPSEEK_MODEL:-deepseek-chat}"
+    temperature: "${DEEPSEEK_TEMPERATURE:-0.7}"
+    max_tokens: "${DEEPSEEK_MAX_TOKENS:-2000}"
+    timeout: "${DEEPSEEK_TIMEOUT:-30}"
+
   # Google Gemini Configuration
+  # IMPORTANT: Set your actual API key in the .env file, NOT here!
   google_gemini:
-    enabled: false
-    api_key: "YOUR_GOOGLE_API_KEY_HERE"  # Replace with your Google API key
-    model: "gemini-pro"
-    temperature: 0.7
-    max_tokens: 2000
-    timeout: 30
-  
+    enabled: "${GOOGLE_GEMINI_ENABLED:-false}"
+    api_key: "${GOOGLE_API_KEY}"
+    model: "${GOOGLE_GEMINI_MODEL:-gemini-pro}"
+    temperature: "${GOOGLE_GEMINI_TEMPERATURE:-0.7}"
+    max_tokens: "${GOOGLE_GEMINI_MAX_TOKENS:-2000}"
+    timeout: "${GOOGLE_GEMINI_TIMEOUT:-30}"
+
   # Anthropic Claude Configuration
+  # IMPORTANT: Set your actual API key in the .env file, NOT here!
   anthropic:
-    enabled: false
-    api_key: "YOUR_ANTHROPIC_API_KEY_HERE"  # Replace with your Anthropic API key
-    model: "claude-3-opus-20240229"
-    temperature: 0.7
-    max_tokens: 2000
-    timeout: 30
-  
+    enabled: "${ANTHROPIC_ENABLED:-false}"
+    api_key: "${ANTHROPIC_API_KEY}"
+    model: "${ANTHROPIC_MODEL:-claude-3-opus-20240229}"
+    temperature: "${ANTHROPIC_TEMPERATURE:-0.7}"
+    max_tokens: "${ANTHROPIC_MAX_TOKENS:-2000}"
+    timeout: "${ANTHROPIC_TIMEOUT:-30}"
+
   # Ollama Configuration (Local, No API Key Required)
   ollama:
-    enabled: false
-    base_url: "http://localhost:11434"
-    model: "llama2"
-    temperature: 0.7
-    timeout: 60
+    enabled: "${OLLAMA_ENABLED:-false}"
+    base_url: "${OLLAMA_BASE_URL:-http://localhost:11434}"
+    model: "${OLLAMA_MODEL:-llama2}"
+    temperature: "${OLLAMA_TEMPERATURE:-0.7}"
+    timeout: "${OLLAMA_TIMEOUT:-60}"
 
 # ============================================================================
 # Database Configuration
 # ============================================================================
 
 # DragonflyDB (Redis-compatible) - High-speed caching and Pub/Sub
+# IMPORTANT: Set password in .env file if authentication is enabled
 dragonfly:
-  host: "localhost"
-  port: 6379
-  db: 0
-  password: null  # Set if authentication is enabled
-  max_connections: 50
-  socket_timeout: 5
-  socket_connect_timeout: 5
+  host: "${DRAGONFLY_HOST:-localhost}"
+  port: "${DRAGONFLY_PORT:-6379}"
+  db: "${DRAGONFLY_DB:-0}"
+  password: "${DRAGONFLY_PASSWORD:-}"  # Set in .env if authentication enabled
+  max_connections: "${DRAGONFLY_MAX_CONNECTIONS:-50}"
+  socket_timeout: "${DRAGONFLY_SOCKET_TIMEOUT:-5}"
+  socket_connect_timeout: "${DRAGONFLY_SOCKET_CONNECT_TIMEOUT:-5}"
 
 # PostgreSQL - Persistent memory storage (requires Memori SDK)
+# IMPORTANT: Set your actual password in the .env file, NOT here!
 postgres:
-  host: "localhost"
-  port: 5432
-  database: "ai_world_memory"
-  user: "postgres"
-  password: "YOUR_POSTGRES_PASSWORD_HERE"  # Replace with your PostgreSQL password
-  min_connections: 5
-  max_connections: 20
+  host: "${POSTGRES_HOST:-localhost}"
+  port: "${POSTGRES_PORT:-5432}"
+  database: "${POSTGRES_DB:-ai_world_memory}"
+  user: "${POSTGRES_USER:-postgres}"
+  password: "${POSTGRES_PASSWORD}"
+  min_connections: "${POSTGRES_MIN_CONNECTIONS:-5}"
+  max_connections: "${POSTGRES_MAX_CONNECTIONS:-20}"
   
   # Required PostgreSQL Extensions:
   # - pgvector: Vector similarity search

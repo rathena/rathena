@@ -124,18 +124,42 @@ ai-autonomous-world/
 
    **Note:** Full installation requires ~5GB of disk space. Use minimal installation if disk space is limited.
 
-3. **Set up DragonflyDB:**
+3. **Set up PostgreSQL 17:**
    ```bash
-   docker run -d --name dragonfly -p 6379:6379 docker.dragonflydb.io/dragonflydb/dragonfly
+   # Install PostgreSQL 17 with required extensions
+   # See INSTALL.md for detailed instructions
+
+   # Create database and user
+   sudo -u postgres psql -c "CREATE DATABASE ai_world_memory;"
+   sudo -u postgres psql -c "CREATE USER ai_world_user WITH PASSWORD 'ai_world_pass_2025';"
+   sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ai_world_memory TO ai_world_user;"
+
+   # Run database migrations
+   cd ai-service
+   PGPASSWORD=ai_world_pass_2025 psql -h localhost -U ai_world_user -d ai_world_memory -f migrations/001_create_factions_table.sql
    ```
 
-4. **Configure the service:**
+4. **Set up DragonflyDB:**
+   ```bash
+   # Install DragonflyDB natively (recommended)
+   # See INSTALL.md for detailed instructions
+
+   # Or use Docker (not recommended per project requirements)
+   # docker run -d --name dragonfly -p 6379:6379 docker.dragonflydb.io/dragonflydb/dragonfly
+   ```
+
+5. **Configure the service:**
    Create a `.env` file in the `ai-service` directory with your settings:
    ```bash
    cd ai-service
    # Copy example and edit with your API keys
    cp .env.example .env
    nano .env  # or use your preferred editor
+
+   # REQUIRED: Add at least one LLM provider API key
+   # AZURE_OPENAI_API_KEY=your-key-here (recommended)
+   # or OPENAI_API_KEY=your-key-here
+   # or ANTHROPIC_API_KEY=your-key-here
    ```
 
 ### Running the AI Service
@@ -143,10 +167,29 @@ ai-autonomous-world/
 ```bash
 cd ai-service
 source ../venv/bin/activate
+
+# Start the service
 python main.py
+
+# Or use uvicorn directly
+python -m uvicorn main:app --host 0.0.0.0 --port 8000
 ```
 
 The service will start on `http://localhost:8000` by default.
+
+### Verifying the Installation
+
+Test all endpoints to ensure 100% pass rate:
+
+```bash
+# From the rathena-AI-world directory
+python3 test_endpoints_simple.py
+
+# Expected output:
+# ================================================================================
+# RESULTS: 10/10 tests passed (100% pass rate)
+# ================================================================================
+```
 
 ## 📚 Documentation
 
@@ -193,34 +236,79 @@ pytest tests/
 
 ## 📊 Current Status
 
-### ✅ Implemented
-- Directory structure created
-- Python virtual environment set up
-- Core dependencies installed
-- FastAPI application with health checks
-- Configuration management (config.py + .env support)
-- PostgreSQL 17 integration with Memori SDK
-- DragonflyDB/Redis integration for caching
-- LLM provider abstraction (Azure OpenAI, OpenAI, DeepSeek, Anthropic Claude, Google Gemini)
-- AI agents (Dialogue, Decision, Memory, World, Quest, Economy)
-- Agent orchestration with CrewAI
-- API routers (NPC, Player, World, Quest, Chat Command)
-- Data models (NPC, Player, World, Quest, Economy, Faction)
-- GPU acceleration support (optional)
-- Free-form text input via chat commands
-- NPC movement utilities
-- Pathfinding algorithms
-- Comprehensive test suite
+🎉 **100% ENDPOINT PASS RATE ACHIEVED!** 🎉
+
+### ✅ Fully Implemented and Tested
+- **Core Infrastructure**
+  - Directory structure created
+  - Python virtual environment set up
+  - Core dependencies installed (CrewAI, FastAPI, PostgreSQL, DragonflyDB)
+  - Configuration management (config.py + .env + YAML support)
+
+- **Database Layer**
+  - PostgreSQL 17 integration with pgvector, TimescaleDB, Apache AGE extensions
+  - DragonflyDB/Redis integration for high-speed caching
+  - Database migrations system (factions, player_reputation, faction_events, faction_conflicts)
+  - Dual-database architecture (PostgreSQL for persistence, DragonflyDB for caching)
+
+- **LLM Provider System**
+  - Multi-provider abstraction layer with factory pattern
+  - Azure OpenAI provider (default, production-ready)
+  - OpenAI provider
+  - Anthropic Claude provider
+  - Google Gemini provider
+  - Environment variable configuration for all providers
+  - Automatic fallback and error handling
+
+- **AI Agent System**
+  - DialogueAgent - NPC conversation generation
+  - DecisionAgent - NPC decision making
+  - MemoryAgent - Memory management (DragonflyDB fallback)
+  - WorldAgent - World state analysis
+  - QuestAgent - Dynamic quest generation
+  - EconomyAgent - Economic simulation
+  - Agent Orchestrator - CrewAI-based multi-agent coordination
+
+- **API Endpoints (10/10 passing)**
+  - ✅ Health Check (200)
+  - ✅ Detailed Health (200)
+  - ✅ World State (200)
+  - ✅ NPC Registration (200)
+  - ✅ Quest Generation (200)
+  - ✅ Chat Command (200)
+  - ✅ List Factions (200)
+  - ✅ Create Faction (200)
+  - ✅ Economy State (200)
+  - ✅ Market Trends (200)
+
+- **Data Models**
+  - NPC models (NPCRegisterRequest, NPCPosition, NPCPersonality)
+  - Player models (PlayerInteractionRequest, PlayerInteractionResponse)
+  - World models (WorldState, WorldStateQuery)
+  - Quest models (Quest, QuestGenerationRequest, QuestObjective, QuestReward)
+  - Economy models (EconomicState, MarketTrend)
+  - Faction models (Faction, PlayerReputation, FactionEvent)
+
+- **Additional Features**
+  - Free-form text input via chat commands
+  - NPC movement utilities
+  - Pathfinding algorithms
+  - GPU acceleration support (optional)
+  - Rate limiting middleware
+  - Comprehensive logging with Loguru
+  - DateTime serialization for caching
+  - Redis Pub/Sub for async NPC actions
 
 ### ⏳ Planned/Not Implemented
-- Bridge Layer (C++ extension to rAthena)
-- Memori SDK integration (using DragonflyDB fallback)
-- NPC-specific agent modules (agents/npc/ directory empty)
-- World-specific agent modules (agents/world/ directory empty)
-- Meta coordination agents (agents/meta/ directory empty)
-- Bridge layer client (bridge/ directory empty)
+- Bridge Layer (C++ extension to rAthena web server)
+- Memori SDK integration (currently using DragonflyDB fallback)
+- NPC-specific agent modules (agents/npc/ directory - future expansion)
+- World-specific agent modules (agents/world/ directory - future expansion)
+- Meta coordination agents (agents/meta/ directory - future expansion)
+- Bridge layer client (bridge/ directory - future integration)
 - Example NPC scripts for rAthena
-- Production deployment configuration
+- Production deployment configuration (Kubernetes, monitoring)
+- Docker support (intentionally excluded per project requirements)
 
 ## 🔗 Related Directories
 

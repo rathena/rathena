@@ -24,6 +24,9 @@
 #include <common/utils.hpp>
 
 #include "achievement.hpp"
+#include "ai_dialogue_queue.hpp"
+#include "ai_dialogue_state.hpp"
+#include "ai_dialogue_worker.hpp"
 #include "atcommand.hpp"
 #include "battle.hpp"
 #include "battleground.hpp"
@@ -114,6 +117,12 @@ static DBMap* nick_db=nullptr; /// uint32 char_id -> struct charid2nick* (reques
 static DBMap* charid_db=nullptr; /// uint32 char_id -> map_session_data*
 static DBMap* regen_db=nullptr; /// int32 id -> block_list* (status_natural_heal processing)
 static DBMap* map_msg_db=nullptr;
+
+// AI Dialogue System
+static AIDialogueQueue* ai_dialogue_queue = nullptr;
+static AIDialogueWorker* ai_dialogue_worker = nullptr;
+static AIDialogueStateManager* ai_dialogue_state = nullptr;
+static bool ai_dialogue_enabled = true; // Can be configured
 
 static int32 map_users=0;
 
@@ -3052,6 +3061,64 @@ int32 map_removemobs_sub(block_list *bl, va_list ap)
 	return 1;
 }
 
+/**
+ * AI Dialogue Response Timer
+ * Checks response queue and sends AI responses to players
+ * Called every 100ms
+ */
+TIMER_FUNC(ai_dialogue_check_responses){
+	if (!ai_dialogue_enabled || !ai_dialogue_queue || !ai_dialogue_state) {
+		return 0;
+	}
+
+	// Process all available responses
+	while (true) {
+		AIDialogueResponse resp;
+		if (!ai_dialogue_queue->pop_response(resp)) {
+			break; // No more responses
+		}
+
+		// Find player
+		map_session_data* sd = map_charid2sd(resp.char_id);
+		if (!sd) {
+			ShowDebug("AI Dialogue: Response for offline player (char_id=%u)\n", resp.char_id);
+			ai_dialogue_state->mark_request_completed(resp.char_id);
+			continue;
+		}
+
+		// Mark request completed
+		ai_dialogue_state->mark_request_completed(resp.char_id);
+
+		if (resp.success) {
+			// Display AI response
+			clif_scriptmes(*sd, resp.npc_id, resp.npc_response.c_str());
+			clif_scriptclose(*sd, resp.npc_id);
+
+			t_tick latency = resp.response_time - resp.request_time;
+			ShowDebug("AI Dialogue: Delivered response to char_id=%u (latency: %llums)\n",
+			          resp.char_id, latency);
+		} else {
+			// Display error message
+			ai_dialogue_state->mark_request_failed(resp.char_id);
+			clif_scriptmes(*sd, resp.npc_id, "I'm having trouble responding right now. Please try again later.");
+			clif_scriptclose(*sd, resp.npc_id);
+
+			ShowWarning("AI Dialogue: Failed response for char_id=%u: %s\n",
+			            resp.char_id, resp.error_message.c_str());
+		}
+	}
+
+	// Periodic cleanup of old player states (every 5 minutes)
+	static t_tick last_cleanup = 0;
+	t_tick current_time = gettick();
+	if (current_time - last_cleanup > 300000) { // 5 minutes
+		ai_dialogue_state->cleanup_old_states();
+		last_cleanup = current_time;
+	}
+
+	return 0;
+}
+
 TIMER_FUNC(map_removemobs_timer){
 	int32 count;
 	const int16 m = id;
@@ -5010,6 +5077,22 @@ void MapServer::finalize(){
 	ShowStatus("Terminating...\n");
 	channel_config.closing = true;
 
+	// Shutdown AI Dialogue System first
+	if (ai_dialogue_enabled && ai_dialogue_worker) {
+		ShowStatus("Shutting down AI Dialogue System...\n");
+		ai_dialogue_worker->stop();
+		delete ai_dialogue_worker;
+		ai_dialogue_worker = nullptr;
+
+		delete ai_dialogue_state;
+		ai_dialogue_state = nullptr;
+
+		delete ai_dialogue_queue;
+		ai_dialogue_queue = nullptr;
+
+		ShowStatus("AI Dialogue System: Shutdown complete\n");
+	}
+
 	//Ladies and babies first.
 	struct s_mapiterator* iter = mapit_getallusers();
 	for( map_session_data* sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
@@ -5412,7 +5495,40 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 
 	add_timer_func_list(map_clearflooritem_timer, "map_clearflooritem_timer");
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
-	
+	add_timer_func_list(ai_dialogue_check_responses, "ai_dialogue_check_responses");
+
+	// Initialize AI Dialogue System
+	if (ai_dialogue_enabled) {
+		ShowStatus("Initializing AI Dialogue System...\n");
+
+		// Create queue
+		ai_dialogue_queue = new AIDialogueQueue();
+
+		// Create state manager
+		ai_dialogue_state = new AIDialogueStateManager();
+		ai_dialogue_state->set_cooldown(5000); // 5 seconds
+		ai_dialogue_state->set_rate_limit(10, 60000); // 10 requests per minute
+
+		// Create worker configuration
+		AIDialogueWorkerConfig worker_config;
+		worker_config.bridge_url = "127.0.0.1";
+		worker_config.bridge_port = 8888;
+		worker_config.num_threads = 4;
+		worker_config.request_timeout_ms = 30000; // 30 seconds
+		worker_config.max_retries = 2;
+		worker_config.retry_delay_ms = 1000; // 1 second
+		worker_config.debug_logging = false;
+
+		// Create and start worker
+		ai_dialogue_worker = new AIDialogueWorker(ai_dialogue_queue, worker_config);
+		ai_dialogue_worker->start();
+
+		// Start response check timer (every 100ms)
+		add_timer_interval(gettick() + 100, ai_dialogue_check_responses, 0, 0, 100);
+
+		ShowStatus("AI Dialogue System: Initialized successfully\n");
+	}
+
 	map_do_init_msg();
 	do_init_path();
 	do_init_atcommand();

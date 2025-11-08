@@ -155,14 +155,67 @@ OnTouch:
 - Periodic sync of world state (economy, player positions, etc.)
 - Real-time sync of critical events
 
-**API Endpoints:**
+**API Endpoints (All Implemented and Tested - 100% Pass Rate):**
+
+**Health & Monitoring:**
+```
+GET  /health                   - Basic health check
+GET  /health/detailed          - Detailed health with database status
+```
+
+**NPC Management:**
 ```
 POST /ai/npc/register          - Register NPC with AI service
-POST /ai/npc/event             - Send game event to AI service
-GET  /ai/npc/{id}/action       - Get next action for NPC
-POST /ai/world/state           - Update world state
-GET  /ai/world/state           - Get current world state
+  Request: {npc_id, name, npc_class, level, position, personality?, faction_id?}
+  Response: {status, agent_id, npc_id, message}
+```
+
+**Player Interactions:**
+```
 POST /ai/player/interaction    - Handle player-NPC interaction
+  Request: {player_id, npc_id, interaction_type, context}
+  Response: {dialogue, emotion, actions, relationship_change}
+```
+
+**Chat Commands:**
+```
+POST /ai/chat/command          - Free-form text chat with NPCs
+  Request: {player_id, npc_id, message}
+  Response: {response, npc_id, timestamp}
+```
+
+**World State:**
+```
+GET  /ai/world/state           - Get current world state
+  Query: ?scope=all|economy|politics|environment
+  Response: {npcs, factions, economy, politics, environment, timestamp}
+```
+
+**Quest System:**
+```
+POST /ai/quest/generate        - Generate dynamic quest
+  Request: {npc_id, npc_name, npc_class, player_level, player_class}
+  Response: {success, quest{quest_id, title, description, objectives, rewards}}
+```
+
+**Faction System:**
+```
+GET  /ai/faction/list          - List all factions
+  Response: {factions[], count, timestamp}
+
+POST /ai/faction/create        - Create new faction
+  Request: {faction_id, name, description?, alignment?}
+  Response: {faction_id, name, created_at}
+```
+
+**Economy System:**
+```
+GET  /ai/economy/state         - Get economic state
+  Response: {inflation_rate, trade_volume, market_activity, timestamp}
+
+GET  /ai/economy/trends        - Get market trends
+  Query: ?category=<category>&limit=<limit>
+  Response: [{item_category, trend, price_change_percent, demand_level, supply_level}]
 ```
 
 ### 3. AI Service Layer
@@ -287,15 +340,26 @@ llm:
 - Cost-based routing (cheap models for simple tasks)
 - Latency-based routing (local models for real-time needs)
 
-### 5. State Management Layer (DragonflyDB)
+### 5. State Management Layer (DragonflyDB + PostgreSQL)
 
-**Why DragonflyDB over Redis:**
+**Dual-Database Architecture:**
+
+**DragonflyDB (High-Speed Caching):**
 - Better performance for high-throughput scenarios
 - Lower memory footprint
 - Better multi-threading support
 - Redis-compatible API
+- Used for: NPC state caching, LLM response caching, real-time event queues
 
-**Data Structures:**
+**PostgreSQL 17 (Persistent Storage):**
+- Long-term memory storage
+- Relationship graphs
+- Faction system data
+- Quest history
+- Economic history
+- Required extensions: pgvector, TimescaleDB, Apache AGE
+
+**DragonflyDB Data Structures:**
 
 #### NPC State
 ```
@@ -384,6 +448,82 @@ Fields:
 - NPC decisions cached for similar contexts (TTL: 5 minutes)
 - World state cached with invalidation on updates
 - Memory retrieval results cached per query
+
+#### PostgreSQL Schema
+
+**Factions Table:**
+```sql
+CREATE TABLE factions (
+    faction_id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    alignment VARCHAR(50) DEFAULT 'neutral',  -- good, evil, neutral
+    relationships JSONB DEFAULT '{}',  -- {faction_id: relationship_score}
+    controlled_areas JSONB DEFAULT '[]',  -- [{map, x, y, radius}]
+    npc_members JSONB DEFAULT '[]',  -- [npc_id1, npc_id2, ...]
+    goals JSONB DEFAULT '[]',  -- [goal1, goal2, ...]
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_factions_alignment ON factions(alignment);
+CREATE INDEX idx_factions_relationships ON factions USING GIN(relationships);
+```
+
+**Player Reputation Table:**
+```sql
+CREATE TABLE player_reputation (
+    id SERIAL PRIMARY KEY,
+    player_id VARCHAR(255) NOT NULL,
+    faction_id VARCHAR(255) NOT NULL REFERENCES factions(faction_id) ON DELETE CASCADE,
+    reputation INTEGER DEFAULT 0,  -- -100 to 100
+    last_interaction TIMESTAMP,
+    interaction_count INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(player_id, faction_id)
+);
+CREATE INDEX idx_player_reputation_player ON player_reputation(player_id);
+CREATE INDEX idx_player_reputation_faction ON player_reputation(faction_id);
+```
+
+**Faction Events Table:**
+```sql
+CREATE TABLE faction_events (
+    id SERIAL PRIMARY KEY,
+    event_type VARCHAR(100) NOT NULL,  -- alliance, conflict, trade, etc.
+    involved_factions JSONB NOT NULL,  -- [faction_id1, faction_id2, ...]
+    description TEXT,
+    reputation_changes JSONB DEFAULT '{}',  -- {faction_id: change}
+    relationship_changes JSONB DEFAULT '{}',  -- {faction_pair: change}
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_faction_events_type ON faction_events(event_type);
+CREATE INDEX idx_faction_events_created ON faction_events(created_at);
+```
+
+**Faction Conflicts Table:**
+```sql
+CREATE TABLE faction_conflicts (
+    id SERIAL PRIMARY KEY,
+    faction_id_1 VARCHAR(255) NOT NULL REFERENCES factions(faction_id) ON DELETE CASCADE,
+    faction_id_2 VARCHAR(255) NOT NULL REFERENCES factions(faction_id) ON DELETE CASCADE,
+    conflict_type VARCHAR(100) NOT NULL,  -- war, rivalry, competition
+    intensity INTEGER DEFAULT 50,  -- 0-100
+    objectives JSONB DEFAULT '[]',  -- [{objective, status}]
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ended_at TIMESTAMP,
+    status VARCHAR(50) DEFAULT 'active'  -- active, resolved, escalated
+);
+CREATE INDEX idx_faction_conflicts_status ON faction_conflicts(status);
+CREATE INDEX idx_faction_conflicts_factions ON faction_conflicts(faction_id_1, faction_id_2);
+```
+
+**Database Migrations:**
+All migrations are located in `ai-service/migrations/` directory.
+Run migrations with:
+```bash
+PGPASSWORD=ai_world_pass_2025 psql -h localhost -U ai_world_user -d ai_world_memory -f ai-service/migrations/001_create_factions_table.sql
+```
 
 ## Data Flow and Communication Protocols
 
@@ -558,17 +698,28 @@ POST /ai/player/interaction
 
 ### Development Environment
 
+**All components run natively (no Docker per project requirements):**
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Developer Machine                         │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   rAthena    │  │  AI Service  │  │ PostgreSQL   │  │ DragonflyDB  │      │
-│  │   (Native)   │  │   (Native)   │  │   (Native)   │  │   (Native)   │      │
+│  │   rAthena    │  │  AI Service  │  │ PostgreSQL17 │  │ DragonflyDB  │      │
+│  │   (Native)   │  │   (Python)   │  │   (Native)   │  │   (Native)   │      │
+│  │   C++ Build  │  │   FastAPI    │  │  +pgvector   │  │ Redis-compat │      │
+│  │              │  │   +CrewAI    │  │  +TimescaleDB│  │              │      │
 │  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘      │
 │                                                               │
-│  LLM Provider: Azure OpenAI (default) or OpenAI/Anthropic/Google │
+│  LLM Provider: Azure OpenAI (default) or OpenAI/Anthropic/Google/DeepSeek │
+│  Status: 100% Endpoint Pass Rate (10/10 tests passing)       │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+**Installation:**
+- PostgreSQL 17: Native installation with apt/yum
+- DragonflyDB: Native binary installation
+- AI Service: Python 3.11+ virtual environment
+- rAthena: Standard CMake build process
 
 ### Production Environment
 
@@ -662,11 +813,14 @@ POST /ai/player/interaction
 - **Vector Search**: DragonflyDB native vector support
 
 ### DevOps
-- **Deployment**: Native installation (PostgreSQL 17, DragonflyDB)
+- **Deployment**: Native installation (no Docker per project requirements)
+  - PostgreSQL 17 with pgvector, TimescaleDB, Apache AGE
+  - DragonflyDB native binary
+  - Python 3.11+ virtual environment
 - **Orchestration**: Kubernetes (production, ⏳ planned)
 - **Monitoring**: Prometheus + Grafana (⏳ planned)
-- **Logging**: ELK Stack (Elasticsearch, Logstash, Kibana)
-- **Tracing**: OpenTelemetry
+- **Logging**: Loguru (implemented), ELK Stack (⏳ planned)
+- **Tracing**: OpenTelemetry (⏳ planned)
 
 ### Development Tools
 - **Version Control**: Git

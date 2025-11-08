@@ -9,8 +9,8 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime
 from loguru import logger
 
-from config import settings
-from models.economy import (
+from ..config import settings
+from ..models.economy import (
     EconomicState,
     MarketItem,
     ShopInventory,
@@ -68,13 +68,13 @@ async def get_economic_state():
     Returns overall economic indicators, inflation rate, market trends
     """
     try:
-        from tasks.economy import get_current_economic_state
-        
+        from ..tasks.economy import get_current_economic_state
+
         state = await get_current_economic_state()
-        
+
         logger.info("Economic state retrieved")
         return state
-    
+
     except Exception as e:
         logger.error(f"Error getting economic state: {e}", exc_info=True)
         raise HTTPException(
@@ -98,7 +98,7 @@ async def trigger_economic_update():
                 detail="Economic simulation is disabled"
             )
         
-        from tasks.economy import update_economic_simulation
+        from ..tasks.economy import update_economic_simulation
         
         result = await update_economic_simulation()
         
@@ -132,7 +132,7 @@ async def update_item_price(request: PriceUpdateRequest):
     EconomyAgent will learn from this price change and its effects
     """
     try:
-        from tasks.economy import update_item_price_with_learning
+        from ..tasks.economy import update_item_price_with_learning
         
         result = await update_item_price_with_learning(
             item_id=request.item_id,
@@ -161,8 +161,8 @@ async def update_item_price(request: PriceUpdateRequest):
 async def get_item_price(item_id: str):
     """Get current price and price history for an item"""
     try:
-        from tasks.economy import get_item_price_info
-        
+        from ..tasks.economy import get_item_price_info
+
         price_info = await get_item_price_info(item_id)
         
         if not price_info:
@@ -195,7 +195,7 @@ async def analyze_market(request: MarketAnalysisRequest):
     EconomyAgent analyzes market trends, supply/demand, and provides recommendations
     """
     try:
-        from tasks.economy import analyze_market_with_agent
+        from ..tasks.economy import analyze_market_with_agent
 
         analysis = await analyze_market_with_agent(
             item_ids=request.item_ids,
@@ -221,7 +221,7 @@ async def get_market_trends(
 ):
     """Get current market trends"""
     try:
-        from tasks.economy import get_market_trends
+        from ..tasks.economy import get_market_trends
 
         trends = await get_market_trends(category=category, limit=limit)
 
@@ -247,7 +247,7 @@ async def get_market_trends(
 async def get_shop_inventory(shop_id: str):
     """Get shop inventory"""
     try:
-        from tasks.economy import get_shop_inventory
+        from ..tasks.economy import get_shop_inventory
 
         inventory = await get_shop_inventory(shop_id)
 
@@ -284,7 +284,7 @@ async def restock_shop(shop_id: str, request: ShopRestockRequest):
                 detail="Shop restocking is disabled"
             )
 
-        from tasks.shop_restock import restock_shop_with_npc_decision
+        from ..tasks.shop_restock import restock_shop_with_npc_decision
 
         result = await restock_shop_with_npc_decision(
             shop_id=shop_id,
@@ -322,7 +322,7 @@ async def get_economic_events(
 ):
     """Get economic events (market crashes, booms, shortages, etc.)"""
     try:
-        from tasks.economy import get_economic_events
+        from ..tasks.economy import get_economic_events
 
         events = await get_economic_events(active_only=active_only, limit=limit)
 
@@ -352,7 +352,7 @@ async def trigger_economic_event(
     Event types: market_crash, market_boom, shortage, surplus, inflation_spike
     """
     try:
-        from tasks.economy import trigger_economic_event
+        from ..tasks.economy import trigger_economic_event
 
         event = await trigger_economic_event(
             event_type=event_type,

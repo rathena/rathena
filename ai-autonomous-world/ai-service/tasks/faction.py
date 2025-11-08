@@ -8,9 +8,9 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 from loguru import logger
 
-from config import settings
-from database import db, postgres_db
-from models.faction import Faction, PlayerReputation, RelationshipStatus
+from ..config import settings
+from ..database import db, postgres_db
+from ..models.faction import Faction, PlayerReputation, RelationshipStatus
 
 
 class FactionManager:

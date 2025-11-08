@@ -21,56 +21,125 @@
 ## LLM Provider Setup
 
 ### Azure OpenAI (Recommended for Production)
+
+**IMPORTANT: Never commit API keys to version control!**
+
 1. Create an Azure OpenAI resource in Azure Portal
 2. Deploy a model (e.g., GPT-4)
 3. Get your API key and endpoint from Azure Portal
-4. Update the configuration:
-   ```yaml
-   llm:
-     default_provider: "azure_openai"
-     azure_openai:
-       enabled: true
-       api_key: "your-actual-key"
-       endpoint: "https://your-resource.openai.azure.com/"
-       deployment_name: "your-deployment-name"
+4. **Set your credentials in the `.env` file** (located at `ai-autonomous-world/ai_service/.env`):
+   ```bash
+   # Azure OpenAI Configuration
+   AZURE_OPENAI_API_KEY=your-actual-api-key-here
+   AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+   AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4.1-nano
+   AZURE_OPENAI_API_VERSION=2024-02-15-preview
    ```
+5. The YAML config file uses placeholders that reference these environment variables
+6. **Never edit the YAML file to add your API key** - it may be committed to Git
 
 ### OpenAI
 1. Sign up at https://platform.openai.com/
 2. Create an API key
-3. Update the configuration:
-   ```yaml
-   llm:
-     default_provider: "openai"
-     openai:
-       enabled: true
-       api_key: "sk-..."
+3. **Set your credentials in the `.env` file**:
+   ```bash
+   # OpenAI Configuration
+   PRIMARY_LLM_PROVIDER=openai
+   OPENAI_API_KEY=sk-your-actual-api-key-here
+   OPENAI_MODEL=gpt-4-turbo-preview
+   OPENAI_TEMPERATURE=0.7
+   OPENAI_MAX_TOKENS=2000
+   OPENAI_TIMEOUT=30
+   OPENAI_ENABLED=true
    ```
 
-### DeepSeek
+### DeepSeek (Cost-Effective Alternative)
 1. Sign up at https://platform.deepseek.com/
 2. Create an API key
-3. Update the configuration:
-   ```yaml
-   llm:
-     default_provider: "deepseek"
-     deepseek:
-       enabled: true
-       api_key: "your-deepseek-key"
+3. **Set your credentials in the `.env` file**:
+   ```bash
+   # DeepSeek Configuration
+   PRIMARY_LLM_PROVIDER=deepseek
+   DEEPSEEK_API_KEY=sk-your-actual-api-key-here
+   DEEPSEEK_BASE_URL=https://api.deepseek.com/v1
+   DEEPSEEK_MODEL=deepseek-chat
+   DEEPSEEK_TEMPERATURE=0.7
+   DEEPSEEK_MAX_TOKENS=2000
+   DEEPSEEK_TIMEOUT=30
+   DEEPSEEK_ENABLED=true
    ```
 
 ### Ollama (Local, Free)
 1. Install Ollama: https://ollama.ai/
 2. Pull a model: `ollama pull llama2`
-3. Update the configuration:
-   ```yaml
-   llm:
-     default_provider: "ollama"
-     ollama:
-       enabled: true
-       base_url: "http://localhost:11434"
-       model: "llama2"
+3. **Set your configuration in the `.env` file**:
+   ```bash
+   # Ollama Configuration (Local)
+   PRIMARY_LLM_PROVIDER=ollama
+   OLLAMA_BASE_URL=http://localhost:11434
+   OLLAMA_MODEL=llama2
+   OLLAMA_TEMPERATURE=0.7
+   OLLAMA_TIMEOUT=60
+   OLLAMA_ENABLED=true
    ```
+
+### Google Gemini
+1. Sign up at https://ai.google.dev/
+2. Create an API key
+3. **Set your credentials in the `.env` file**:
+   ```bash
+   # Google Gemini Configuration
+   PRIMARY_LLM_PROVIDER=google_gemini
+   GOOGLE_API_KEY=your-actual-api-key-here
+   GOOGLE_GEMINI_MODEL=gemini-pro
+   GOOGLE_GEMINI_TEMPERATURE=0.7
+   GOOGLE_GEMINI_MAX_TOKENS=2000
+   GOOGLE_GEMINI_TIMEOUT=30
+   GOOGLE_GEMINI_ENABLED=true
+   ```
+
+### Anthropic Claude
+1. Sign up at https://console.anthropic.com/
+2. Create an API key
+3. **Set your credentials in the `.env` file**:
+   ```bash
+   # Anthropic Claude Configuration
+   PRIMARY_LLM_PROVIDER=anthropic
+   ANTHROPIC_API_KEY=sk-ant-your-actual-api-key-here
+   ANTHROPIC_MODEL=claude-3-opus-20240229
+   ANTHROPIC_TEMPERATURE=0.7
+   ANTHROPIC_MAX_TOKENS=2000
+   ANTHROPIC_TIMEOUT=30
+   ANTHROPIC_ENABLED=true
+   ```
+
+## Database Configuration
+
+### DragonflyDB (Redis-compatible)
+**Set your configuration in the `.env` file**:
+```bash
+# DragonflyDB Configuration
+DRAGONFLY_HOST=localhost
+DRAGONFLY_PORT=6379
+DRAGONFLY_DB=0
+DRAGONFLY_PASSWORD=  # Leave empty if no authentication
+DRAGONFLY_MAX_CONNECTIONS=50
+DRAGONFLY_SOCKET_TIMEOUT=5
+DRAGONFLY_SOCKET_CONNECT_TIMEOUT=5
+```
+
+### PostgreSQL
+**Set your configuration in the `.env` file**:
+```bash
+# PostgreSQL Configuration
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=ai_world_memory
+POSTGRES_USER=ai_world_user
+POSTGRES_PASSWORD=your-secure-password-here
+POSTGRES_MIN_CONNECTIONS=5
+POSTGRES_MAX_CONNECTIONS=20
+```
 
 ## PostgreSQL Setup
 

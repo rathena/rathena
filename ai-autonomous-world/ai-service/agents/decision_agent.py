@@ -41,15 +41,40 @@ class DecisionAgent(BaseAIAgent):
     
     def _create_crew_agent(self) -> Agent:
         """Create CrewAI agent for decision-making"""
+        # Import CrewAI's LLM class
+        from crewai import LLM
+        import os
+
+        # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
+        try:
+            from config import settings
+
+            # Set Azure OpenAI environment variables for litellm
+            os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key
+            os.environ["AZURE_API_BASE"] = settings.azure_openai_endpoint
+            os.environ["AZURE_API_VERSION"] = settings.azure_openai_api_version
+
+            # Use litellm format: azure/<deployment_name>
+            llm = LLM(
+                model=f"azure/{settings.azure_openai_deployment}",
+                temperature=0.7,
+                max_tokens=2000
+            )
+            logger.info(f"Created Azure OpenAI LLM with deployment: {settings.azure_openai_deployment}")
+        except Exception as e:
+            logger.error(f"Failed to create Azure LLM: {e}")
+            raise
+
         return Agent(
             role="NPC Decision Strategist",
             goal="Make intelligent, personality-consistent decisions for NPCs that create engaging gameplay",
-            backstory="""You are an expert in behavioral psychology and game AI. You understand how to 
-            make NPCs behave in ways that feel authentic and purposeful. You consider personality traits, 
-            current goals, environmental factors, and past experiences when making decisions. You excel at 
+            backstory="""You are an expert in behavioral psychology and game AI. You understand how to
+            make NPCs behave in ways that feel authentic and purposeful. You consider personality traits,
+            current goals, environmental factors, and past experiences when making decisions. You excel at
             creating believable NPC behavior that enhances player immersion.""",
             verbose=self.config.get("verbose", False),
-            allow_delegation=False
+            allow_delegation=False,
+            llm=llm
         )
     
     async def process(self, context: AgentContext) -> AgentResponse:

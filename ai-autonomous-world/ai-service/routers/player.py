@@ -113,7 +113,7 @@ async def handle_player_interaction(request: PlayerInteractionRequest):
         )
 
         # Get world state
-        world_state = await db.get_world_state()
+        world_state = await db.get_world_state("global") or {}
 
         # Build agent context
         agent_context = AgentContext(
@@ -167,12 +167,20 @@ async def handle_player_interaction(request: PlayerInteractionRequest):
 
         logger.info(f"Interaction completed: {request.npc_id} <-> {request.player_id}")
 
+        # Format relationship_change as dict (faction_id -> change value)
+        # If relationship_change is already a dict, use it; otherwise create proper format
+        if isinstance(relationship_change, dict) and relationship_change:
+            formatted_relationship_change = relationship_change
+        else:
+            # Default: no relationship change
+            formatted_relationship_change = {}
+
         return PlayerInteractionResponse(
             npc_id=request.npc_id,
             player_id=request.player_id,
             response=npc_response,
             npc_state_update=npc_state,
-            relationship_change=relationship_change.get("change", 0)
+            relationship_change=formatted_relationship_change
         )
 
     except HTTPException:

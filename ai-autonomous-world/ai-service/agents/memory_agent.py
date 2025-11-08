@@ -59,15 +59,40 @@ class MemoryAgent(BaseAIAgent):
     
     def _create_crew_agent(self) -> Agent:
         """Create CrewAI agent for memory management"""
+        # Import CrewAI's LLM class
+        from crewai import LLM
+        import os
+
+        # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
+        try:
+            from config import settings
+
+            # Set Azure OpenAI environment variables for litellm
+            os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key
+            os.environ["AZURE_API_BASE"] = settings.azure_openai_endpoint
+            os.environ["AZURE_API_VERSION"] = settings.azure_openai_api_version
+
+            # Use litellm format: azure/<deployment_name>
+            llm = LLM(
+                model=f"azure/{settings.azure_openai_deployment}",
+                temperature=0.7,
+                max_tokens=2000
+            )
+            logger.info(f"Created Azure OpenAI LLM with deployment: {settings.azure_openai_deployment}")
+        except Exception as e:
+            logger.error(f"Failed to create Azure LLM: {e}")
+            raise
+
         return Agent(
             role="NPC Memory Curator",
             goal="Manage NPC memories to create consistent, evolving character experiences",
-            backstory="""You are an expert in memory and cognition. You understand what experiences 
-            are significant and worth remembering, how memories fade over time, and how past experiences 
-            shape current behavior. You excel at helping NPCs maintain consistent personalities while 
+            backstory="""You are an expert in memory and cognition. You understand what experiences
+            are significant and worth remembering, how memories fade over time, and how past experiences
+            shape current behavior. You excel at helping NPCs maintain consistent personalities while
             allowing them to grow and change based on their experiences.""",
             verbose=self.config.get("verbose", False),
-            allow_delegation=False
+            allow_delegation=False,
+            llm=llm
         )
     
     async def process(self, context: AgentContext) -> AgentResponse:
