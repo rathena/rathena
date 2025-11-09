@@ -69,6 +69,40 @@ class TestRateLimitMiddleware:
     """Test rate limit middleware"""
 
     @pytest.mark.asyncio
+    async def test_rate_limit_disabled(self, mock_database):
+        """Test rate limit middleware when disabled"""
+        from config import settings
+
+        # Temporarily disable rate limiting
+        original_value = settings.rate_limit_enabled
+        settings.rate_limit_enabled = False
+
+        app = FastAPI()
+        app.add_middleware(RateLimitMiddleware)
+
+        @app.get("/test")
+        async def test_endpoint():
+            return {"status": "ok"}
+
+        client = TestClient(app)
+
+        try:
+            # Should not check rate limit when disabled
+            response = client.get("/test")
+            assert response.status_code == 200
+            assert response.json() == {"status": "ok"}
+
+            # Database should not be called
+            mock_database.get.assert_not_called()
+        finally:
+            # Restore original value
+            settings.rate_limit_enabled = original_value
+
+
+class TestRateLimitMiddlewareEnabled:
+    """Test rate limit middleware"""
+
+    @pytest.mark.asyncio
     async def test_rate_limit_not_exceeded(self, mock_database):
         """Test request within rate limit passes through"""
         # Mock rate limit check to return False (not limited)
