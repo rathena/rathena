@@ -67,9 +67,9 @@ class WebRTCConfig(BaseSettings):
     """WebRTC configuration for P2P connections"""
     
     stun_server: str = Field(default="stun:stun.l.google.com:19302", alias="STUN_SERVER")
-    turn_server: str = Field(default="turn:turn.example.com:3478", alias="TURN_SERVER")
-    turn_username: str = Field(default="turnuser", alias="TURN_USERNAME")
-    turn_password: str = Field(default="turnpass", alias="TURN_PASSWORD")
+    turn_server: str = Field(default="", alias="TURN_SERVER", description="TURN server URL (optional, leave empty if not using TURN)")
+    turn_username: str = Field(default="", alias="TURN_USERNAME", description="TURN username (required if using TURN)")
+    turn_password: str = Field(default="", alias="TURN_PASSWORD", description="TURN password (required if using TURN)")
     
     model_config = SettingsConfigDict(
         env_file="../.env",
@@ -153,9 +153,19 @@ class MonitoringConfig(BaseSettings):
 class SecurityConfig(BaseSettings):
     """Security configuration"""
 
+    # API Key Settings
     api_key_header: str = Field(default="X-API-Key", alias="API_KEY_HEADER")
-    coordinator_api_key: str = Field(default="your-coordinator-api-key-here", alias="COORDINATOR_API_KEY")
-    cors_origins: str = Field(default="http://localhost:3000,http://localhost:8000", alias="CORS_ORIGINS")
+    coordinator_api_key: str = Field(..., alias="COORDINATOR_API_KEY", description="REQUIRED: Coordinator API key (set via environment variable)")
+    api_key_validation_enabled: bool = Field(default=True, alias="API_KEY_VALIDATION_ENABLED")
+
+    # CORS Settings
+    cors_origins: str = Field(default="http://localhost:3000,http://localhost:8000,http://localhost:8001", alias="CORS_ORIGINS")
+
+    # JWT Settings
+    jwt_secret_key: str = Field(..., alias="JWT_SECRET_KEY", description="REQUIRED: JWT secret key (set via environment variable)")
+    jwt_algorithm: str = Field(default="HS256", alias="JWT_ALGORITHM")
+    jwt_expiration_seconds: int = Field(default=3600, alias="JWT_EXPIRATION_SECONDS")  # 1 hour
+    jwt_validation_enabled: bool = Field(default=True, alias="JWT_VALIDATION_ENABLED")
 
     @property
     def cors_origins_list(self) -> List[str]:
@@ -191,9 +201,46 @@ class Settings(BaseSettings):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        # Validate security settings in production
+        if self.service.env == "production":
+            self._validate_production_security()
+
         logger.info(f"Configuration loaded for environment: {self.service.env}")
         logger.info(f"P2P enabled: {self.p2p_features.enable_p2p}")
         logger.info(f"Enabled zones: {self.p2p_features.enabled_zones_list}")
+
+    def _validate_production_security(self):
+        """Validate that security settings are properly configured for production"""
+        errors = []
+
+        # Check JWT secret key
+        if not self.security.jwt_secret_key or len(self.security.jwt_secret_key) < 32:
+            errors.append("JWT_SECRET_KEY must be at least 32 characters long")
+
+        if "CHANGE_THIS" in self.security.jwt_secret_key.upper() or \
+           "your-secret" in self.security.jwt_secret_key.lower():
+            errors.append("JWT_SECRET_KEY must be changed from default value")
+
+        # Check coordinator API key
+        if not self.security.coordinator_api_key or len(self.security.coordinator_api_key) < 32:
+            errors.append("COORDINATOR_API_KEY must be at least 32 characters long")
+
+        if "CHANGE_THIS" in self.security.coordinator_api_key.upper() or \
+           "your-coordinator" in self.security.coordinator_api_key.lower():
+            errors.append("COORDINATOR_API_KEY must be changed from default value")
+
+        # Check that validation is enabled
+        if not self.security.api_key_validation_enabled:
+            logger.warning("API key validation is disabled in production - this is insecure!")
+
+        if not self.security.jwt_validation_enabled:
+            logger.warning("JWT validation is disabled in production - this is insecure!")
+
+        if errors:
+            error_msg = "Production security validation failed:\n" + "\n".join(f"  - {e}" for e in errors)
+            logger.error(error_msg)
+            raise ValueError(error_msg)
 
 
 # Global settings instance

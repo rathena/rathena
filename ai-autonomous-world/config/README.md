@@ -20,20 +20,29 @@
 
 ## LLM Provider Setup
 
-### Azure OpenAI (Recommended for Production)
+### Azure OpenAI (Primary Provider - Production Ready)
 
 **IMPORTANT: Never commit API keys to version control!**
 
+**Example Configuration:**
+```bash
+AZURE_OPENAI_API_KEY=your-azure-openai-api-key-here
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4
+AZURE_OPENAI_API_VERSION=2024-08-01-preview
+```
+
+**To Use Your Own Azure OpenAI:**
 1. Create an Azure OpenAI resource in Azure Portal
 2. Deploy a model (e.g., GPT-4)
 3. Get your API key and endpoint from Azure Portal
-4. **Set your credentials in the `.env` file** (located at `ai-autonomous-world/ai_service/.env`):
+4. **Update credentials in the `.env` file** (located at `ai-autonomous-world/ai-service/.env`):
    ```bash
    # Azure OpenAI Configuration
    AZURE_OPENAI_API_KEY=your-actual-api-key-here
    AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
-   AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4.1-nano
-   AZURE_OPENAI_API_VERSION=2024-02-15-preview
+   AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4
+   AZURE_OPENAI_API_VERSION=2024-08-01-preview
    ```
 5. The YAML config file uses placeholders that reference these environment variables
 6. **Never edit the YAML file to add your API key** - it may be committed to Git

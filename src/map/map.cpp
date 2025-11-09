@@ -118,11 +118,11 @@ static DBMap* charid_db=nullptr; /// uint32 char_id -> map_session_data*
 static DBMap* regen_db=nullptr; /// int32 id -> block_list* (status_natural_heal processing)
 static DBMap* map_msg_db=nullptr;
 
-// AI Dialogue System
-static AIDialogueQueue* ai_dialogue_queue = nullptr;
-static AIDialogueWorker* ai_dialogue_worker = nullptr;
-static AIDialogueStateManager* ai_dialogue_state = nullptr;
-static bool ai_dialogue_enabled = true; // Can be configured
+// AI Dialogue System (global - accessible from clif.cpp)
+AIDialogueQueue* ai_dialogue_queue = nullptr;
+static AIDialogueWorker* ai_dialogue_worker = nullptr;  // Keep static - only used in map.cpp
+AIDialogueStateManager* ai_dialogue_state = nullptr;
+bool ai_dialogue_enabled = true; // Can be configured
 
 static int32 map_users=0;
 

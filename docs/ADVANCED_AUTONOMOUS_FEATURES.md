@@ -4,14 +4,60 @@
 
 This document describes the advanced autonomous features implemented in the AI Autonomous World system, including NPC-to-NPC interactions, instant response system, universal consciousness, and advanced LLM optimization.
 
+## 🚀 Quick Start
+
+### 1. Enable Advanced Features
+
+Add to your `.env` file in `ai-autonomous-world/ai-service/`:
+
+```env
+# Enable all advanced features
+NPC_TO_NPC_INTERACTIONS_ENABLED=true
+INSTANT_RESPONSE_ENABLED=true
+UNIVERSAL_CONSCIOUSNESS_ENABLED=true
+LLM_OPTIMIZATION_MODE=balanced
+
+# NPC Interactions
+NPC_INTERACTION_RANGE=5
+NPC_PROXIMITY_CHECK_INTERVAL=30
+
+# Reasoning
+REASONING_DEPTH=deep
+FUTURE_PLANNING_ENABLED=true
+
+# Optimization
+DECISION_CACHE_ENABLED=true
+DECISION_BATCH_ENABLED=true
+```
+
+### 2. Restart AI Service
+
+```bash
+cd ai-autonomous-world/ai-service
+pkill -f "uvicorn main:app"
+uvicorn main:app --host 0.0.0.0 --port 8000 &
+```
+
+### 3. Run Tests
+
+```bash
+cd rathena-AI-world
+python test_advanced_autonomous_features.py
+```
+
+---
+
 ## Table of Contents
 
-1. [NPC-to-NPC Interactions](#npc-to-npc-interactions)
-2. [Instant Response System](#instant-response-system)
-3. [Universal Consciousness](#universal-consciousness)
-4. [Advanced LLM Optimization](#advanced-llm-optimization)
-5. [Configuration](#configuration)
-6. [Performance Metrics](#performance-metrics)
+1. [Quick Start](#-quick-start)
+2. [NPC-to-NPC Interactions](#npc-to-npc-interactions)
+3. [Instant Response System](#instant-response-system)
+4. [Universal Consciousness](#universal-consciousness)
+5. [Advanced LLM Optimization](#advanced-llm-optimization)
+6. [Recommended Production Settings](#recommended-production-settings)
+7. [Configuration Reference](#configuration-reference)
+8. [Performance Metrics](#performance-metrics)
+9. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -561,6 +607,80 @@ RULE_BASED_DECISIONS_ENABLED=true
 
 ---
 
+## Recommended Production Settings
+
+### High-Performance Configuration
+
+For production environments with high player counts:
+
+```env
+# NPC Movement - Event-Driven (Optimal)
+NPC_MOVEMENT_ENABLED=true
+NPC_MOVEMENT_MODE=event_driven
+NPC_MOVEMENT_IDLE_TIMEOUT=60
+NPC_ADAPTIVE_BEHAVIOR=true
+
+# Economic Simulation - Daily Updates
+ECONOMY_ENABLED=true
+ECONOMY_UPDATE_MODE=daily
+ECONOMY_ADAPTIVE_PRICING=true
+ECONOMY_LEARNING_ENABLED=true
+
+# Shop Restocking - NPC-Driven
+SHOP_RESTOCK_ENABLED=true
+SHOP_RESTOCK_MODE=npc_driven
+SHOP_RESTOCK_CHECK_INTERVAL=86400
+SHOP_NPC_LEARNING_ENABLED=true
+
+# Faction System
+FACTION_ENABLED=true
+FACTION_REPUTATION_DECAY_ENABLED=true
+FACTION_DYNAMIC_RELATIONSHIPS=true
+
+# Advanced Features
+NPC_TO_NPC_INTERACTIONS_ENABLED=true
+INSTANT_RESPONSE_ENABLED=true
+UNIVERSAL_CONSCIOUSNESS_ENABLED=true
+LLM_OPTIMIZATION_MODE=balanced
+
+# Performance Tuning
+DECISION_CACHE_ENABLED=true
+DECISION_BATCH_ENABLED=true
+MAX_WORKERS=8
+LLM_CACHE_ENABLED=true
+LLM_CACHE_TTL=3600
+```
+
+### Development/Testing Configuration
+
+For development and testing environments:
+
+```env
+# Enable all features for testing
+NPC_MOVEMENT_ENABLED=true
+NPC_MOVEMENT_MODE=scheduled
+NPC_MOVEMENT_INTERVAL=300
+
+ECONOMY_ENABLED=true
+ECONOMY_UPDATE_MODE=hourly
+
+SHOP_RESTOCK_ENABLED=true
+SHOP_RESTOCK_MODE=scheduled
+SHOP_RESTOCK_INTERVAL=3600
+
+# Advanced features with verbose logging
+NPC_TO_NPC_INTERACTIONS_ENABLED=true
+INSTANT_RESPONSE_ENABLED=true
+UNIVERSAL_CONSCIOUSNESS_ENABLED=true
+LLM_OPTIMIZATION_MODE=quality
+
+# Debug settings
+LOG_LEVEL=DEBUG
+VERBOSE_LOGGING=true
+```
+
+---
+
 ## Testing
 
 Run the comprehensive test suite:
@@ -576,6 +696,54 @@ Tests include:
 3. Universal consciousness deep reasoning
 4. Decision optimizer 4-tier system
 5. Integration test of all systems
+
+---
+
+## Troubleshooting
+
+### NPCs Not Interacting
+
+**Problem:** NPCs are not detecting or interacting with each other
+
+**Solutions:**
+1. Verify `NPC_TO_NPC_INTERACTIONS_ENABLED=true` in `.env`
+2. Check `NPC_INTERACTION_RANGE` is appropriate for your map size
+3. Ensure NPCs are within range (check logs for proximity detection)
+4. Verify database tables exist: `npc_relationships`, `npc_interactions`, `shared_information`
+
+### Slow Response Times
+
+**Problem:** AI responses are taking too long
+
+**Solutions:**
+1. Enable decision caching: `DECISION_CACHE_ENABLED=true`
+2. Use balanced optimization mode: `LLM_OPTIMIZATION_MODE=balanced`
+3. Enable instant response system: `INSTANT_RESPONSE_ENABLED=true`
+4. Increase worker threads: `MAX_WORKERS=8` or higher
+5. Enable LLM caching: `LLM_CACHE_ENABLED=true`
+
+### High LLM Costs
+
+**Problem:** LLM API costs are too high
+
+**Solutions:**
+1. Use cost-optimized mode: `LLM_OPTIMIZATION_MODE=cost`
+2. Enable aggressive caching: `LLM_CACHE_TTL=7200`
+3. Reduce reasoning depth: `REASONING_DEPTH=shallow`
+4. Disable future planning: `FUTURE_PLANNING_ENABLED=false`
+5. Consider using DeepSeek provider (lower cost)
+
+### Memory Usage Issues
+
+**Problem:** System is using too much memory
+
+**Solutions:**
+1. Reduce cache TTL: `LLM_CACHE_TTL=1800`
+2. Limit worker threads: `MAX_WORKERS=4`
+3. Disable universal consciousness: `UNIVERSAL_CONSCIOUSNESS_ENABLED=false`
+4. Use event-driven NPC movement: `NPC_MOVEMENT_MODE=event_driven`
+
+---
 
 ---
 

@@ -179,6 +179,16 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"Instant Response System initialization failed: {e}", exc_info=True)
 
+    # Initialize Environment System
+    try:
+        from ai_service.tasks.environment import initialize_environment
+        await initialize_environment()
+        logger.info("✓ Environment System initialized")
+    except ImportError as e:
+        logger.warning(f"Environment System dependencies not available: {e}")
+    except Exception as e:
+        logger.error(f"Environment System initialization failed: {e}", exc_info=True)
+
     # Initialize Universal Consciousness Engine
     try:
         from ai_service.agents.universal_consciousness import universal_consciousness

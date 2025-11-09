@@ -6205,9 +6205,9 @@ BUILDIN_FUNC(copyarray);
 BUILDIN_FUNC(ai_chat_start)
 {
 	const char* npc_name = script_getstr(st, 2);
-	map_session_data* sd = script_rid2sd(st);
+	map_session_data* sd;
 
-	if (!sd) {
+	if (!script_rid2sd(sd)) {
 		ShowError("script:ai_chat_start: No player attached\n");
 		return SCRIPT_CMD_FAILURE;
 	}

@@ -22,55 +22,76 @@ class TestDatabase:
     async def test_connect_success(self, mock_settings):
         """Test successful database connection"""
         db = Database()
-        
-        with patch('database.aioredis.from_url') as mock_from_url:
-            mock_client = AsyncMock()
-            mock_from_url.return_value = mock_client
-            
-            await db.connect(max_retries=1, retry_delay=0.1)
-            
-            assert db.client is not None
-            mock_from_url.assert_called_once()
-    
+
+        with patch('database.ConnectionPool') as mock_pool_class:
+            with patch('database.aioredis.Redis') as mock_redis_class:
+                mock_pool = MagicMock()
+                mock_pool_class.return_value = mock_pool
+
+                mock_client = AsyncMock()
+                mock_client.ping = AsyncMock()
+                mock_client.info = AsyncMock(return_value={'redis_version': '7.0.0', 'connected_clients': 1})
+                mock_redis_class.return_value = mock_client
+
+                await db.connect(max_retries=1, retry_delay=0.1)
+
+                assert db.client is not None
+                mock_pool_class.assert_called_once()
+                mock_redis_class.assert_called_once()
+
     @pytest.mark.asyncio
     async def test_connect_retry_logic(self):
         """Test connection retry with exponential backoff"""
         db = Database()
-        
-        with patch('database.aioredis.from_url') as mock_from_url:
-            # Fail first 2 attempts, succeed on 3rd
-            mock_from_url.side_effect = [
-                ConnectionError("Connection failed"),
-                ConnectionError("Connection failed"),
-                AsyncMock()
-            ]
-            
-            await db.connect(max_retries=3, retry_delay=0.1)
-            
-            assert db.client is not None
-            assert mock_from_url.call_count == 3
-    
+
+        with patch('database.ConnectionPool') as mock_pool_class:
+            with patch('database.aioredis.Redis') as mock_redis_class:
+                mock_pool = MagicMock()
+                mock_pool_class.return_value = mock_pool
+
+                # Fail first 2 attempts, succeed on 3rd
+                mock_client_fail = AsyncMock()
+                mock_client_fail.ping = AsyncMock(side_effect=ConnectionError("Connection failed"))
+
+                mock_client_success = AsyncMock()
+                mock_client_success.ping = AsyncMock()
+                mock_client_success.info = AsyncMock(return_value={'redis_version': '7.0.0', 'connected_clients': 1})
+
+                mock_redis_class.side_effect = [mock_client_fail, mock_client_fail, mock_client_success]
+
+                await db.connect(max_retries=3, retry_delay=0.1)
+
+                assert db.client is not None
+                assert mock_redis_class.call_count == 3
+
     @pytest.mark.asyncio
     async def test_connect_max_retries_exceeded(self):
         """Test connection fails after max retries"""
         db = Database()
-        
-        with patch('database.aioredis.from_url') as mock_from_url:
-            mock_from_url.side_effect = ConnectionError("Connection failed")
-            
-            with pytest.raises(ConnectionError):
-                await db.connect(max_retries=2, retry_delay=0.1)
-    
+
+        with patch('database.ConnectionPool') as mock_pool_class:
+            with patch('database.aioredis.Redis') as mock_redis_class:
+                mock_pool = MagicMock()
+                mock_pool_class.return_value = mock_pool
+
+                mock_client = AsyncMock()
+                mock_client.ping = AsyncMock(side_effect=ConnectionError("Connection failed"))
+                mock_redis_class.return_value = mock_client
+
+                with pytest.raises(ConnectionError):
+                    await db.connect(max_retries=2, retry_delay=0.1)
+
     @pytest.mark.asyncio
     async def test_disconnect(self):
         """Test database disconnect"""
         db = Database()
         db.client = AsyncMock()
-        
+        db.pool = AsyncMock()
+
         await db.disconnect()
-        
+
         db.client.close.assert_called_once()
-        db.client.wait_closed.assert_called_once()
+        db.pool.disconnect.assert_called_once()
     
     @pytest.mark.asyncio
     async def test_get_npc_state(self, mock_database):
@@ -178,43 +199,55 @@ class TestDatabase:
         
         # Create quest
         await db.create_quest(quest_data)
-        mock_database.client.hset.assert_called()
-        
+        # store_quest uses set, not hset
+        mock_database.client.set.assert_called()
+
         # Get quest
-        mock_database.client.hgetall.return_value = {
-            b"quest_id": b"quest_001",
-            b"title": b"Test Quest"
-        }
+        mock_database.client.get.return_value = b'{"quest_id": "quest_001", "title": "Test Quest"}'
         quest = await db.get_quest("quest_001")
         assert quest is not None
-        
+        assert quest["quest_id"] == "quest_001"
+
         # Delete quest
+        mock_database.client.get.return_value = b'{"quest_id": "quest_001", "giver_npc_id": "npc_001"}'
         await db.delete_quest("quest_001")
         mock_database.client.delete.assert_called()
 
 
 class TestDatabaseErrorHandling:
     """Test database error handling"""
-    
+
     @pytest.mark.asyncio
     async def test_connection_error_handling(self):
         """Test connection error is properly handled"""
         db = Database()
-        
-        with patch('database.aioredis.from_url') as mock_from_url:
-            mock_from_url.side_effect = ConnectionError("Network error")
-            
-            with pytest.raises(ConnectionError):
-                await db.connect(max_retries=1, retry_delay=0.1)
-    
+
+        with patch('database.ConnectionPool') as mock_pool_class:
+            with patch('database.aioredis.Redis') as mock_redis_class:
+                mock_pool = MagicMock()
+                mock_pool_class.return_value = mock_pool
+
+                mock_client = AsyncMock()
+                mock_client.ping = AsyncMock(side_effect=ConnectionError("Network error"))
+                mock_redis_class.return_value = mock_client
+
+                with pytest.raises(ConnectionError):
+                    await db.connect(max_retries=1, retry_delay=0.1)
+
     @pytest.mark.asyncio
     async def test_timeout_error_handling(self):
         """Test timeout error is properly handled"""
         db = Database()
-        
-        with patch('database.aioredis.from_url') as mock_from_url:
-            mock_from_url.side_effect = TimeoutError("Connection timeout")
-            
-            with pytest.raises(TimeoutError):
-                await db.connect(max_retries=1, retry_delay=0.1)
+
+        with patch('database.ConnectionPool') as mock_pool_class:
+            with patch('database.aioredis.Redis') as mock_redis_class:
+                mock_pool = MagicMock()
+                mock_pool_class.return_value = mock_pool
+
+                mock_client = AsyncMock()
+                mock_client.ping = AsyncMock(side_effect=TimeoutError("Connection timeout"))
+                mock_redis_class.return_value = mock_client
+
+                with pytest.raises(ConnectionError):  # Our code wraps all errors in ConnectionError
+                    await db.connect(max_retries=1, retry_delay=0.1)
 

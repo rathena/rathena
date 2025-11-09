@@ -5,7 +5,7 @@ Loads settings from YAML config file and environment variables
 
 import re
 from pathlib import Path
-from typing import Optional, Dict, Any, List
+from typing import Optional, Dict, Any, List, Union
 from pydantic_settings import BaseSettings
 from pydantic import Field, field_validator
 import yaml
@@ -110,11 +110,21 @@ class Settings(BaseSettings):
     api_key: Optional[str] = Field(default=None, env="API_KEY")
     api_key_header: str = Field(default="X-API-Key", env="API_KEY_HEADER")
     api_key_required: bool = Field(default=False, env="API_KEY_REQUIRED")
-    cors_origins: List[str] = Field(
+    cors_origins: Union[List[str], str] = Field(
         default=["http://localhost:8888", "http://127.0.0.1:8888"],
         env="CORS_ORIGINS",
         description="CORS allowed origins - restrict to known domains for security"
     )
+
+    @field_validator('cors_origins', mode='before')
+    @classmethod
+    def parse_cors_origins(cls, v):
+        """Parse CORS origins from comma-separated string or list"""
+        if isinstance(v, str):
+            if not v or v.strip() == '':
+                return ["http://localhost:8888", "http://127.0.0.1:8888"]
+            return [origin.strip() for origin in v.split(',') if origin.strip()]
+        return v
 
     # Rate Limiting
     rate_limit_enabled: bool = Field(default=True, env="RATE_LIMIT_ENABLED")
@@ -288,6 +298,99 @@ class Settings(BaseSettings):
         default=True,
         env="FACTION_DYNAMIC_RELATIONSHIPS",
         description="Faction relationships change based on player/NPC actions"
+    )
+
+    # Environment System Configuration
+    environment_enabled: bool = Field(default=True, env="ENVIRONMENT_ENABLED")
+    environment_update_mode: str = Field(
+        default="fixed_interval",
+        env="ENVIRONMENT_UPDATE_MODE",
+        description="Environment update mode: 'fixed_interval' (periodic), 'real_time' (continuous), 'disabled'"
+    )
+    environment_update_interval: int = Field(
+        default=300,
+        env="ENVIRONMENT_UPDATE_INTERVAL",
+        description="Interval in seconds for environment updates (default 300 = 5 minutes)"
+    )
+
+    # Weather System Configuration
+    weather_enabled: bool = Field(default=True, env="WEATHER_ENABLED")
+    weather_change_probability: float = Field(
+        default=0.1,
+        env="WEATHER_CHANGE_PROBABILITY",
+        description="Probability of weather change per update cycle (0.0-1.0)"
+    )
+    weather_types: List[str] = Field(
+        default=["clear", "sunny", "cloudy", "rainy", "stormy", "snowy", "foggy"],
+        env="WEATHER_TYPES",
+        description="Available weather types"
+    )
+
+    # Time of Day Cycle Configuration
+    time_of_day_enabled: bool = Field(default=True, env="TIME_OF_DAY_ENABLED")
+    time_of_day_cycle_duration: int = Field(
+        default=1440,
+        env="TIME_OF_DAY_CYCLE_DURATION",
+        description="Duration of full day cycle in minutes (default 1440 = 24 hours real-time)"
+    )
+    time_of_day_phases: List[str] = Field(
+        default=["dawn", "day", "dusk", "night"],
+        env="TIME_OF_DAY_PHASES",
+        description="Time of day phases"
+    )
+
+    # Season System Configuration
+    season_enabled: bool = Field(default=True, env="SEASON_ENABLED")
+    season_length_days: int = Field(
+        default=30,
+        env="SEASON_LENGTH_DAYS",
+        description="Length of each season in game days (default 30 days)"
+    )
+    season_types: List[str] = Field(
+        default=["spring", "summer", "autumn", "winter"],
+        env="SEASON_TYPES",
+        description="Available seasons"
+    )
+
+    # Disaster System Configuration
+    disaster_enabled: bool = Field(default=True, env="DISASTER_ENABLED")
+    disaster_probability: float = Field(
+        default=0.01,
+        env="DISASTER_PROBABILITY",
+        description="Probability of disaster occurrence per update cycle (0.0-1.0)"
+    )
+    disaster_types: List[str] = Field(
+        default=["earthquake", "flood", "drought", "plague", "wildfire", "meteor"],
+        env="DISASTER_TYPES",
+        description="Available disaster types"
+    )
+    disaster_duration_min: int = Field(
+        default=300,
+        env="DISASTER_DURATION_MIN",
+        description="Minimum disaster duration in seconds (default 300 = 5 minutes)"
+    )
+    disaster_duration_max: int = Field(
+        default=3600,
+        env="DISASTER_DURATION_MAX",
+        description="Maximum disaster duration in seconds (default 3600 = 1 hour)"
+    )
+
+    # Resource Availability Configuration
+    resource_availability_enabled: bool = Field(default=True, env="RESOURCE_AVAILABILITY_ENABLED")
+    resource_types: List[str] = Field(
+        default=["wood", "stone", "ore", "herbs", "fish", "crops"],
+        env="RESOURCE_TYPES",
+        description="Available resource types"
+    )
+    resource_regeneration_rate: float = Field(
+        default=0.05,
+        env="RESOURCE_REGENERATION_RATE",
+        description="Resource regeneration rate per update cycle (0.0-1.0)"
+    )
+    resource_depletion_rate: float = Field(
+        default=0.02,
+        env="RESOURCE_DEPLETION_RATE",
+        description="Resource depletion rate from harvesting (0.0-1.0)"
     )
 
     # Agent Learning and Memory Configuration
@@ -477,6 +580,22 @@ class Settings(BaseSettings):
     llm_max_retries: int = Field(default=3, env="LLM_MAX_RETRIES", description="Maximum LLM API retry attempts")
     db_connection_max_retries: int = Field(default=5, env="DB_CONNECTION_MAX_RETRIES", description="Maximum database connection retries")
     db_connection_retry_delay: float = Field(default=1.0, env="DB_CONNECTION_RETRY_DELAY", description="Initial database retry delay in seconds")
+
+    @field_validator('service_port', 'redis_port', 'postgres_port', 'rathena_bridge_port')
+    @classmethod
+    def validate_port(cls, v: int, info) -> int:
+        """Validate port numbers are in valid range (1-65535)"""
+        if not 1 <= v <= 65535:
+            raise ValueError(f"{info.field_name} must be between 1 and 65535, got {v}")
+        return v
+
+    @field_validator('redis_db')
+    @classmethod
+    def validate_redis_db(cls, v: int) -> int:
+        """Validate Redis DB number is non-negative"""
+        if v < 0:
+            raise ValueError(f"redis_db must be non-negative, got {v}")
+        return v
 
     @field_validator('gpu_memory_fraction')
     @classmethod

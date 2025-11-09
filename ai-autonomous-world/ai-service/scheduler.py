@@ -49,7 +49,10 @@ class AutonomousScheduler:
         
         # Register Faction System tasks
         self._register_faction_tasks()
-        
+
+        # Register Environment System tasks
+        self._register_environment_tasks()
+
         # Start the scheduler
         self.scheduler.start()
         self.is_running = True
@@ -238,6 +241,55 @@ class AutonomousScheduler:
         else:
             logger.info("Faction System: Reputation Decay DISABLED")
 
+    def _register_environment_tasks(self):
+        """Register environment system tasks based on configuration"""
+        if not settings.environment_enabled:
+            logger.info("Environment System: DISABLED (skipping scheduler registration)")
+            return
+
+        mode = settings.environment_update_mode
+
+        if mode == "disabled":
+            logger.info("Environment System: Mode=disabled (skipping scheduler registration)")
+
+        elif mode == "fixed_interval":
+            # Fixed interval mode - periodic environment updates
+            interval = settings.environment_update_interval
+            logger.info(f"Environment System: Mode=fixed_interval, Interval={interval}s")
+
+            job = self.scheduler.add_job(
+                self._update_environment,
+                trigger=IntervalTrigger(seconds=interval),
+                id="environment_update",
+                name="Environment System (Fixed Interval)",
+                max_instances=1,
+                coalesce=True
+            )
+            self.jobs["environment"] = job
+            logger.info(f"  ✓ Registered job: {job.name}")
+            logger.info(f"  ℹ Updates: weather, time of day, seasons, disasters, resources")
+
+        elif mode == "real_time":
+            # Real-time mode - continuous updates (very frequent)
+            logger.info(f"Environment System: Mode=real_time (continuous updates)")
+
+            # Use shorter interval for real-time feel (e.g., every 30 seconds)
+            interval = 30
+
+            job = self.scheduler.add_job(
+                self._update_environment,
+                trigger=IntervalTrigger(seconds=interval),
+                id="environment_realtime",
+                name="Environment System (Real-Time)",
+                max_instances=1,
+                coalesce=True
+            )
+            self.jobs["environment_realtime"] = job
+            logger.info(f"  ✓ Registered job: {job.name} (interval: {interval}s)")
+
+        else:
+            logger.error(f"Invalid environment_update_mode: {mode}")
+
     # ========================================================================
     # Task Implementation Methods (to be implemented in tasks/ modules)
     # ========================================================================
@@ -301,6 +353,16 @@ class AutonomousScheduler:
             logger.warning("Faction reputation task not implemented yet")
         except Exception as e:
             logger.error(f"Error updating faction reputation: {e}", exc_info=True)
+
+    async def _update_environment(self):
+        """Update environment system (weather, time, seasons, disasters, resources)"""
+        try:
+            from tasks.environment import update_environment_cycle
+            await update_environment_cycle()
+        except ImportError:
+            logger.warning("Environment update task not implemented yet")
+        except Exception as e:
+            logger.error(f"Error updating environment: {e}", exc_info=True)
 
 
 # Global scheduler instance

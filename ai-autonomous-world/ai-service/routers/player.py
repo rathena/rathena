@@ -6,17 +6,17 @@ from fastapi import APIRouter, HTTPException, status
 from loguru import logger
 from datetime import datetime
 
-from ..models.player import (
+from models.player import (
     PlayerInteractionRequest,
     PlayerInteractionResponse,
     NPCResponse,
 )
-from ..models.npc import NPCPersonality
-from ..database import db
-from ..llm import get_llm_provider
-from ..agents.base_agent import AgentContext
-from ..agents.orchestrator import AgentOrchestrator
-from ..config import settings
+from models.npc import NPCPersonality
+from database import db
+from llm import get_llm_provider
+from agents.base_agent import AgentContext
+from agents.orchestrator import AgentOrchestrator
+from config import settings
 
 try:
     from memori import Memori

@@ -4,6 +4,8 @@
 
 This document provides comprehensive configuration options for the AI Autonomous World system.
 
+**Last Updated:** 2025-11-08
+
 ---
 
 ## Configuration File
@@ -97,16 +99,25 @@ db_connection_retry_delay: float = 2.0
 - TimescaleDB - Time-series data
 - Apache AGE - Graph database capabilities
 
-**Database Migrations:**
-Run migrations after PostgreSQL setup:
+**Database Schema:**
+- **18 tables total** (7 AI-specific + 11 rAthena integration)
+- Automated setup via `setup-database.sh` script
+- All tables created and indexed automatically
+
+**Database Setup:**
 ```bash
-cd ai-service
-PGPASSWORD=ai_world_pass_2025 psql -h localhost -U ai_world_user -d ai_world_memory -f migrations/001_create_factions_table.sql
+# Use the automated setup script (recommended)
+cd /ai-mmorpg-world/rathena-AI-world
+./setup-database.sh
 ```
 
 ---
 
 ## LLM Provider Configuration
+
+**Important:** All LLM provider configurations are loaded from YAML files in `config/` directory.
+These YAML files use environment variable placeholders in the format `${VARIABLE_NAME}`.
+Actual values must be set in the `.env` file.
 
 ### Default Provider
 
@@ -115,20 +126,41 @@ PGPASSWORD=ai_world_pass_2025 psql -h localhost -U ai_world_user -d ai_world_mem
 default_llm_provider: str = "azure_openai"
 ```
 
-### Azure OpenAI (Default)
+**5 Providers Configured:**
+1. Azure OpenAI (Primary, Production)
+2. OpenAI (Fallback)
+3. Anthropic Claude (Alternative)
+4. Google Gemini (Alternative)
+5. DeepSeek (Alternative)
+
+### Azure OpenAI (Primary - Production Ready)
+
+**Example Configuration:**
+```bash
+AZURE_OPENAI_API_KEY=your-azure-openai-api-key-here
+AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4
+AZURE_OPENAI_API_VERSION=2024-08-01-preview
+AZURE_OPENAI_EMBEDDING_DEPLOYMENT=text-embedding-ada-002
+```
+
+**Configuration File:** `config/llm/azure_openai.yaml`
 
 ```python
-# Azure OpenAI API key
-azure_openai_api_key: str = "your-api-key"
+# Azure OpenAI API key (REQUIRED)
+azure_openai_api_key: str = "${AZURE_OPENAI_API_KEY}"
 
-# Azure OpenAI endpoint
-azure_openai_endpoint: str = "https://your-resource.openai.azure.com"
+# Azure OpenAI endpoint (REQUIRED)
+azure_openai_endpoint: str = "${AZURE_OPENAI_ENDPOINT}"
 
-# Deployment name
-azure_openai_deployment: str = "gpt-4"
+# Deployment name (REQUIRED)
+azure_openai_deployment: str = "${AZURE_OPENAI_DEPLOYMENT_NAME}"
 
 # API version
-azure_openai_api_version: str = "2024-02-15-preview"
+azure_openai_api_version: str = "${AZURE_OPENAI_API_VERSION}"
+
+# Embedding deployment (for vector search)
+azure_openai_embedding_deployment: str = "${AZURE_OPENAI_EMBEDDING_DEPLOYMENT}"
 ```
 
 ### OpenAI
@@ -149,12 +181,18 @@ openai_max_tokens: int = 2000
 
 ### Anthropic Claude
 
+**Current Configuration:**
+```bash
+ANTHROPIC_API_KEY=<configured>
+ANTHROPIC_MODEL=claude-3-5-sonnet-20241022
+```
+
 ```python
 # Anthropic API key
 anthropic_api_key: str = "your-api-key"
 
 # Model name
-anthropic_model: str = "claude-3-sonnet-20240229"
+anthropic_model: str = "claude-3-5-sonnet-20241022"
 
 # Temperature
 anthropic_temperature: float = 0.7

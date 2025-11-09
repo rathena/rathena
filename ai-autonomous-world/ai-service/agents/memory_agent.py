@@ -14,12 +14,15 @@ except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 
 try:
-    # Memori is used in _store_with_memori and _retrieve_with_memori methods
     from memori import Memori  # noqa: F401
     MEMORI_AVAILABLE = True
-except ImportError:
-    logger.warning("Memori SDK not available, memory features will be limited")
-    MEMORI_AVAILABLE = False
+except ImportError as e:
+    error_msg = (
+        "Memori SDK is REQUIRED but not installed. "
+        "Install with: pip install git+https://github.com/GibsonAI/memori.git"
+    )
+    logger.error(error_msg)
+    raise ImportError(error_msg) from e
 
 
 class MemoryAgent(BaseAIAgent):
@@ -39,23 +42,35 @@ class MemoryAgent(BaseAIAgent):
         agent_id: str,
         llm_provider: Any,
         config: Dict[str, Any],
-        memori_client: Optional[Any] = None
+        memori_client: Any
     ):
-        """Initialize Memory Agent"""
+        """
+        Initialize Memory Agent
+
+        Args:
+            agent_id: Unique identifier for this agent
+            llm_provider: LLM provider instance
+            config: Agent configuration
+            memori_client: Memori SDK client instance (REQUIRED)
+
+        Raises:
+            ValueError: If memori_client is None (required dependency)
+        """
         super().__init__(
             agent_id=agent_id,
             agent_type="memory",
             llm_provider=llm_provider,
             config=config
         )
-        
+
+        if memori_client is None:
+            raise ValueError(
+                "Memori client is REQUIRED for Memory Agent. "
+                "Ensure Memori SDK is properly initialized."
+            )
+
         self.memori_client = memori_client
-        self.use_memori = MEMORI_AVAILABLE and memori_client is not None
-        
-        if self.use_memori:
-            logger.info(f"Memory Agent {agent_id} initialized with Memori SDK")
-        else:
-            logger.info(f"Memory Agent {agent_id} initialized with basic memory (Memori SDK not available)")
+        logger.info(f"Memory Agent {agent_id} initialized with Memori SDK (REQUIRED)")
     
     def _create_crew_agent(self) -> Agent:
         """Create CrewAI agent for memory management"""
@@ -152,14 +167,9 @@ class MemoryAgent(BaseAIAgent):
             "emotional_valence": memory_data.get("emotional_valence", 0)  # -1 to 1
         }
         
-        if self.use_memori:
-            # Store using Memori SDK
-            memory_id = await self._store_with_memori(memory_entry)
-            logger.info(f"Memory stored with Memori SDK: {memory_id}")
-        else:
-            # Store in DragonflyDB as fallback
-            memory_id = await self._store_in_db(memory_entry)
-            logger.info(f"Memory stored in database: {memory_id}")
+        # Store using Memori SDK (REQUIRED - no fallback)
+        memory_id = await self._store_with_memori(memory_entry)
+        logger.info(f"Memory stored with Memori SDK: {memory_id}")
         
         return {
             "memory_id": memory_id,
@@ -173,19 +183,13 @@ class MemoryAgent(BaseAIAgent):
         player_id = context.current_state.get("player_id")
         limit = context.current_state.get("limit", 5)
         
-        if self.use_memori:
-            memories = await self._retrieve_with_memori(
-                npc_id=context.npc_id,
-                query=query,
-                player_id=player_id,
-                limit=limit
-            )
-        else:
-            memories = await self._retrieve_from_db(
-                npc_id=context.npc_id,
-                player_id=player_id,
-                limit=limit
-            )
+        # Retrieve using Memori SDK (REQUIRED - no fallback)
+        memories = await self._retrieve_with_memori(
+            npc_id=context.npc_id,
+            query=query,
+            player_id=player_id,
+            limit=limit
+        )
         
         # Summarize memories for context
         summary = await self._summarize_memories(memories)
@@ -259,27 +263,9 @@ class MemoryAgent(BaseAIAgent):
             return stored_id
 
         except Exception as e:
-            logger.error(f"Failed to store memory with Memori SDK: {e}")
-            # Fallback to database storage
-            logger.info("Falling back to database storage")
-            return await self._store_in_db(memory_entry)
-
-    async def _store_in_db(self, memory_entry: Dict[str, Any]) -> str:
-        """Store memory in DragonflyDB as fallback"""
-        from database import db
-        import json
-
-        memory_id = f"mem_{memory_entry['npc_id']}_{int(datetime.utcnow().timestamp())}"
-        memory_key = f"memory:{memory_entry['npc_id']}:{memory_id}"
-
-        await db.redis.set(memory_key, json.dumps(memory_entry))
-
-        # Add to sorted set for time-based retrieval
-        memories_set = f"memories:{memory_entry['npc_id']}"
-        timestamp = datetime.utcnow().timestamp()
-        await db.redis.zadd(memories_set, {memory_id: timestamp})
-
-        return memory_id
+            error_msg = f"CRITICAL: Failed to store memory with Memori SDK (required): {e}"
+            logger.error(error_msg, exc_info=True)
+            raise RuntimeError(error_msg) from e
 
     async def _retrieve_with_memori(
         self,
@@ -332,39 +318,9 @@ class MemoryAgent(BaseAIAgent):
             return memories
 
         except Exception as e:
-            logger.error(f"Failed to retrieve memories with Memori SDK: {e}")
-            # Fallback to database
-            logger.info("Falling back to database retrieval")
-            return await self._retrieve_from_db(npc_id, player_id, limit)
-
-    async def _retrieve_from_db(
-        self,
-        npc_id: str,
-        player_id: Optional[str],
-        limit: int
-    ) -> List[Dict[str, Any]]:
-        """Retrieve memories from DragonflyDB"""
-        from database import db
-        import json
-
-        memories_set = f"memories:{npc_id}"
-
-        # Get most recent memory IDs
-        memory_ids = await db.redis.zrevrange(memories_set, 0, limit - 1)
-
-        memories = []
-        for memory_id in memory_ids:
-            memory_key = f"memory:{npc_id}:{memory_id}"
-            memory_data = await db.redis.get(memory_key)
-
-            if memory_data:
-                memory = json.loads(memory_data)
-
-                # Filter by player_id if specified
-                if player_id is None or player_id in memory.get("participants", []):
-                    memories.append(memory)
-
-        return memories[:limit]
+            error_msg = f"CRITICAL: Failed to retrieve memories with Memori SDK (required): {e}"
+            logger.error(error_msg, exc_info=True)
+            raise RuntimeError(error_msg) from e
 
     async def _summarize_memories(self, memories: List[Dict[str, Any]]) -> str:
         """Summarize memories for context"""

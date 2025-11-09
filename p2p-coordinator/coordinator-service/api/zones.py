@@ -8,14 +8,21 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import SQLAlchemyError
 from loguru import logger
 
 from database import get_db_session
 from services.zone_manager import ZoneManagerService
 from models.zone import ZoneStatus
+from exceptions import (
+    DatabaseException,
+    ZoneNotFoundException,
+    ZoneConfigurationException,
+    ValidationException,
+)
 
 
-router = APIRouter(prefix="/api/zones", tags=["zones"])
+router = APIRouter(prefix="/api/v1/zones", tags=["zones"])
 zone_service = ZoneManagerService()
 
 
@@ -93,11 +100,29 @@ async def create_zone(
         
         return zone
     
-    except Exception as e:
-        logger.error(f"Failed to create zone: {e}")
+    except ValidationException as e:
+        logger.warning(f"Invalid zone creation data: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )
+    except SQLAlchemyError as e:
+        logger.error(f"Database error during zone creation: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to create zone: {str(e)}",
+            detail="Database error occurred",
+        )
+    except ZoneConfigurationException as e:
+        logger.error(f"Zone configuration error: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error during zone creation: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred",
         )
 
 
@@ -152,11 +177,17 @@ async def get_all_zones(
     
     except HTTPException:
         raise
-    except Exception as e:
-        logger.error(f"Failed to get zones: {e}")
+    except SQLAlchemyError as e:
+        logger.error(f"Database error while fetching zones: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to get zones: {str(e)}",
+            detail="Database error occurred",
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error while fetching zones: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred",
         )
 
 
@@ -196,11 +227,23 @@ async def enable_p2p_for_zone(
 
     except HTTPException:
         raise
-    except Exception as e:
-        logger.error(f"Failed to enable P2P for zone: {e}")
+    except ZoneNotFoundException as e:
+        logger.warning(f"Zone not found during P2P enable: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e),
+        )
+    except SQLAlchemyError as e:
+        logger.error(f"Database error while enabling P2P for zone: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to enable P2P for zone: {str(e)}",
+            detail="Database error occurred",
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error while enabling P2P for zone: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred",
         )
 
 
@@ -214,20 +257,27 @@ async def disable_p2p_for_zone(
         zone = await zone_service.disable_p2p_for_zone(session, zone_id)
 
         if not zone:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Zone not found: {zone_id}",
-            )
+            raise ZoneNotFoundException(f"Zone not found: {zone_id}")
 
         return zone
 
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Failed to disable P2P for zone: {e}")
+    except ZoneNotFoundException as e:
+        logger.warning(f"Zone not found during P2P disable: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e),
+        )
+    except SQLAlchemyError as e:
+        logger.error(f"Database error while disabling P2P for zone: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to disable P2P for zone: {str(e)}",
+            detail="Database error occurred",
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error while disabling P2P for zone: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred",
         )
 
 

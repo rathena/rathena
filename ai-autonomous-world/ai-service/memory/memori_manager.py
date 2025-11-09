@@ -10,11 +10,13 @@ try:
     from memori import Memori
     from memori.database.connectors import PostgreSQLConnector
     MEMORI_AVAILABLE = True
-except ImportError:
-    logger.warning("Memori SDK not available. Install with: pip install git+https://github.com/GibsonAI/memori.git")
-    MEMORI_AVAILABLE = False
-    Memori = None
-    PostgreSQLConnector = None
+except ImportError as e:
+    error_msg = (
+        "Memori SDK is REQUIRED but not installed. "
+        "Install with: pip install git+https://github.com/GibsonAI/memori.git"
+    )
+    logger.error(error_msg)
+    raise ImportError(error_msg) from e
 
 
 class MemoriManager:
@@ -30,33 +32,35 @@ class MemoriManager:
     def __init__(self, connection_string: str, namespace: str = "ai_world"):
         """
         Initialize Memori Manager
-        
+
         Args:
             connection_string: PostgreSQL connection string (postgresql+psycopg2://...)
             namespace: Namespace for memory isolation (default: "ai_world")
+
+        Raises:
+            ImportError: If Memori SDK is not available (required dependency)
         """
+        if not MEMORI_AVAILABLE:
+            raise ImportError(
+                "Memori SDK is REQUIRED but not available. "
+                "Install with: pip install git+https://github.com/GibsonAI/memori.git"
+            )
+
         self.connection_string = connection_string
         self.namespace = namespace
         self.memori_client: Optional[Memori] = None
         self._initialized = False
-        
-        if not MEMORI_AVAILABLE:
-            logger.error("Memori SDK is not available. Memory features will be disabled.")
     
-    def initialize(self) -> bool:
+    def initialize(self):
         """
         Initialize Memori SDK with PostgreSQL backend
-        
-        Returns:
-            bool: True if initialization successful, False otherwise
+
+        Raises:
+            RuntimeError: If initialization fails (required for operation)
         """
-        if not MEMORI_AVAILABLE:
-            logger.error("Cannot initialize Memori: SDK not available")
-            return False
-        
         try:
             logger.info(f"Initializing Memori SDK with PostgreSQL backend (namespace: {self.namespace})")
-            
+
             # Initialize Memori with PostgreSQL connector
             self.memori_client = Memori(
                 database_connect=self.connection_string,
@@ -65,37 +69,39 @@ class MemoriManager:
                 conscious_ingest=True,  # Store important decisions and preferences
                 verbose=False,  # Disable verbose logging (we use loguru)
             )
-            
+
             self._initialized = True
             logger.info("✓ Memori SDK initialized successfully with PostgreSQL backend")
-            
+
             # Log database info
             logger.info(f"Memori namespace: {self.namespace}")
             logger.info(f"Memori auto-ingest: enabled")
             logger.info(f"Memori conscious-ingest: enabled")
-            
-            return True
-            
+
         except Exception as e:
-            logger.error(f"Failed to initialize Memori SDK: {e}", exc_info=True)
-            self._initialized = False
-            return False
+            error_msg = f"CRITICAL: Failed to initialize Memori SDK (required dependency): {e}"
+            logger.error(error_msg, exc_info=True)
+            raise RuntimeError(error_msg) from e
     
-    def get_client(self) -> Optional[Memori]:
+    def get_client(self) -> Memori:
         """
         Get Memori client instance
-        
+
         Returns:
-            Memori client or None if not initialized
+            Memori client instance
+
+        Raises:
+            RuntimeError: If Memori is not initialized
         """
-        if not self._initialized:
-            logger.warning("Memori client requested but not initialized")
-            return None
+        if not self._initialized or self.memori_client is None:
+            raise RuntimeError(
+                "Memori client is not initialized. Call initialize() first."
+            )
         return self.memori_client
-    
+
     def is_available(self) -> bool:
-        """Check if Memori SDK is available and initialized"""
-        return MEMORI_AVAILABLE and self._initialized
+        """Check if Memori SDK is initialized and ready"""
+        return self._initialized and self.memori_client is not None
     
     def shutdown(self):
         """Shutdown Memori client"""
@@ -120,23 +126,24 @@ def get_memori_manager() -> Optional[MemoriManager]:
 def initialize_memori(connection_string: str, namespace: str = "ai_world") -> MemoriManager:
     """
     Initialize global Memori manager
-    
+
     Args:
         connection_string: PostgreSQL connection string
         namespace: Namespace for memory isolation
-        
+
     Returns:
         MemoriManager instance
+
+    Raises:
+        ImportError: If Memori SDK is not available
+        RuntimeError: If initialization fails
     """
     global memori_manager
-    
-    logger.info("Initializing global Memori manager")
+
+    logger.info("Initializing global Memori manager (REQUIRED)")
     memori_manager = MemoriManager(connection_string, namespace)
-    
-    if memori_manager.initialize():
-        logger.info("✓ Global Memori manager initialized successfully")
-    else:
-        logger.warning("⚠ Memori manager initialization failed - memory features will be limited")
-    
+    memori_manager.initialize()  # Will raise RuntimeError if fails
+    logger.info("✓ Global Memori manager initialized successfully")
+
     return memori_manager
 

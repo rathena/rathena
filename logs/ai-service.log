@@ -1,0 +1,25 @@
+2025-11-08 15:00:43 | INFO     | main:setup_logging:61 - Logging configured
+2025-11-08 15:00:43 | INFO     | main:<module>:292 - Configuring middleware...
+2025-11-08 15:00:43 | INFO     | main:<module>:296 - ✓ Request size limit: 10485760 bytes
+2025-11-08 15:00:43 | INFO     | main:<module>:301 - ✓ Rate limiting: 100 requests per 60s
+2025-11-08 15:00:43 | WARNING  | main:<module>:310 - ⚠ API key authentication disabled
+2025-11-08 15:00:43 | INFO     | main:<module>:395 - ✓ All routers registered (8 routers)
+2025-11-08 15:00:48 | INFO     | llm.base:__init__:34 - Initializing AzureOpenAIProvider
+2025-11-08 15:00:48 | INFO     | llm.providers.azure_openai_provider:__init__:59 - Azure OpenAI provider initialized with deployment: gpt-4, API version: 2024-02-15-preview
+2025-11-08 15:00:48 | INFO     | agents.base_agent:__init__:73 - Initializing dialogue agent: test_dialogue
+2025-11-08 15:00:48 | ERROR    | agents.dialogue_agent:_create_crew_agent:68 - Failed to create Azure LLM: str expected, not NoneType
+2025-11-08 15:00:48 | INFO     | agents.base_agent:__init__:73 - Initializing decision agent: test_decision
+2025-11-08 15:00:48 | ERROR    | agents.decision_agent:_create_crew_agent:65 - Failed to create Azure LLM: str expected, not NoneType
+2025-11-08 15:00:48 | INFO     | llm.base:__init__:34 - Initializing OpenAIProvider
+2025-11-08 15:00:48 | INFO     | llm.providers.openai_provider:__init__:24 - OpenAI provider initialized with model: gpt-4
+2025-11-08 15:00:48 | INFO     | llm.factory:create_provider:63 - Created openai provider
+2025-11-08 15:00:48 | INFO     | llm.base:__init__:34 - Initializing AzureOpenAIProvider
+2025-11-08 15:00:49 | INFO     | llm.providers.azure_openai_provider:__init__:59 - Azure OpenAI provider initialized with deployment: gpt-4, API version: 2024-02-15-preview
+2025-11-08 15:00:49 | INFO     | llm.factory:create_provider:63 - Created azure_openai provider
+2025-11-08 15:00:49 | ERROR    | ai_service.middleware.rate_limit:dispatch:101 - Rate limit check failed: 'NoneType' object has no attribute 'get'
+2025-11-08 15:00:49 | WARNING  | main:detailed_health_check:357 - Database health check failed: object MagicMock can't be used in 'await' expression
+2025-11-08 15:00:49 | ERROR    | ai_service.middleware.rate_limit:dispatch:101 - Rate limit check failed: 'NoneType' object has no attribute 'get'
+2025-11-08 15:00:49 | ERROR    | ai_service.middleware.rate_limit:dispatch:101 - Rate limit check failed: 'NoneType' object has no attribute 'get'
+2025-11-08 15:00:49 | ERROR    | ai_service.routers.npc:register_npc:122 - Error registering NPC : 400: Invalid NPC ID: must be a non-empty string
+2025-11-08 15:00:49 | ERROR    | ai_service.middleware.rate_limit:dispatch:101 - Rate limit check failed: 'NoneType' object has no attribute 'get'
+2025-11-08 15:00:49 | ERROR    | ai_service.routers.npc:register_npc:122 - Error registering NPC test_npc: 400: Invalid position: coordinates must be non-negative

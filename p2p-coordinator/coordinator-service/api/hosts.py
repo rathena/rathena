@@ -8,14 +8,21 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, Field
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.exc import SQLAlchemyError
 from loguru import logger
 
 from database import get_db_session
 from services.host_registry import HostRegistryService
 from models.host import HostStatus
+from exceptions import (
+    DatabaseException,
+    HostNotFoundException,
+    HostRegistrationException,
+    ValidationException,
+)
 
 
-router = APIRouter(prefix="/api/hosts", tags=["hosts"])
+router = APIRouter(prefix="/api/v1/hosts", tags=["hosts"])
 host_service = HostRegistryService()
 
 
@@ -97,14 +104,32 @@ async def register_host(
             network_speed_mbps=request.network_speed_mbps,
             ice_servers=request.ice_servers,
         )
-        
+
         return host
-    
-    except Exception as e:
+
+    except ValidationException as e:
+        logger.warning(f"Invalid host registration data: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e),
+        )
+    except SQLAlchemyError as e:
+        logger.error(f"Database error during host registration: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Database error occurred",
+        )
+    except HostRegistrationException as e:
         logger.error(f"Failed to register host: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to register host: {str(e)}",
+            detail=str(e),
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error during host registration: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred",
         )
 
 
@@ -199,11 +224,17 @@ async def get_all_hosts(
 
     except HTTPException:
         raise
-    except Exception as e:
-        logger.error(f"Failed to get hosts: {e}")
+    except SQLAlchemyError as e:
+        logger.error(f"Database error while fetching hosts: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to get hosts: {str(e)}",
+            detail="Database error occurred",
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error while fetching hosts: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred",
         )
 
 
@@ -261,11 +292,17 @@ async def get_best_host(
 
     except HTTPException:
         raise
-    except Exception as e:
-        logger.error(f"Failed to get best host: {e}")
+    except SQLAlchemyError as e:
+        logger.error(f"Database error while selecting best host: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to get best host: {str(e)}",
+            detail="Database error occurred",
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error while selecting best host: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred",
         )
 
 
@@ -279,19 +316,26 @@ async def unregister_host(
         success = await host_service.unregister_host(session, host_id)
 
         if not success:
-            raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail=f"Host not found: {host_id}",
-            )
+            raise HostNotFoundException(f"Host not found: {host_id}")
 
         return None
 
-    except HTTPException:
-        raise
-    except Exception as e:
-        logger.error(f"Failed to unregister host: {e}")
+    except HostNotFoundException as e:
+        logger.warning(f"Host not found during unregister: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e),
+        )
+    except SQLAlchemyError as e:
+        logger.error(f"Database error while unregistering host: {e}")
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Failed to unregister host: {str(e)}",
+            detail="Database error occurred",
+        )
+    except Exception as e:
+        logger.error(f"Unexpected error while unregistering host: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="An unexpected error occurred",
         )
 

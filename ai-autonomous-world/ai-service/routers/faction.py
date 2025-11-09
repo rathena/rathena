@@ -57,7 +57,7 @@ async def create_faction(request: FactionCreateRequest):
                 detail="Faction system is disabled"
             )
         
-        from ..tasks.faction import create_faction
+        from tasks.faction import create_faction
 
         faction = await create_faction(
             faction_id=request.faction_id,
@@ -85,7 +85,7 @@ async def create_faction(request: FactionCreateRequest):
 async def list_factions():
     """List all factions"""
     try:
-        from ..tasks.faction import list_all_factions
+        from tasks.faction import list_all_factions
 
         factions = await list_all_factions()
 
@@ -107,7 +107,7 @@ async def list_factions():
 async def get_faction(faction_id: str):
     """Get faction information"""
     try:
-        from ..tasks.faction import get_faction_info
+        from tasks.faction import get_faction_info
 
         faction = await get_faction_info(faction_id)
 
@@ -143,7 +143,7 @@ async def update_reputation(request: ReputationUpdateRequest):
                 detail="Faction system is disabled"
             )
         
-        from ..tasks.faction import update_player_reputation
+        from tasks.faction import update_player_reputation
         
         result = await update_player_reputation(
             player_id=request.player_id,
@@ -175,7 +175,7 @@ async def update_reputation(request: ReputationUpdateRequest):
 async def get_player_reputations(player_id: str):
     """Get player's reputation with all factions"""
     try:
-        from ..tasks.faction import get_player_all_reputations
+        from tasks.faction import get_player_all_reputations
         
         reputations = await get_player_all_reputations(player_id)
         
@@ -197,7 +197,7 @@ async def get_player_reputations(player_id: str):
 async def get_player_faction_reputation(player_id: str, faction_id: str):
     """Get player's reputation with specific faction"""
     try:
-        from ..tasks.faction import get_player_faction_reputation
+        from tasks.faction import get_player_faction_reputation
 
         reputation = await get_player_faction_reputation(player_id, faction_id)
 
@@ -230,7 +230,7 @@ async def update_faction_relationship(request: FactionRelationshipRequest):
                 detail="Dynamic faction relationships are disabled"
             )
 
-        from ..tasks.faction import update_faction_relationship
+        from tasks.faction import update_faction_relationship
 
         result = await update_faction_relationship(
             faction_id_1=request.faction_id_1,
@@ -261,7 +261,7 @@ async def update_faction_relationship(request: FactionRelationshipRequest):
 async def get_faction_relationship(faction_id_1: str, faction_id_2: str):
     """Get relationship between two factions"""
     try:
-        from ..tasks.faction import get_faction_relationship
+        from tasks.faction import get_faction_relationship
 
         relationship = await get_faction_relationship(faction_id_1, faction_id_2)
 
@@ -284,7 +284,7 @@ async def get_faction_relationship(faction_id_1: str, faction_id_2: str):
 async def get_all_faction_relationships(faction_id: str):
     """Get all relationships for a faction"""
     try:
-        from ..tasks.faction import get_all_faction_relationships
+        from tasks.faction import get_all_faction_relationships
 
         relationships = await get_all_faction_relationships(faction_id)
 

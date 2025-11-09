@@ -1,0 +1,365 @@
+/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:208: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.12.3, pytest-8.3.4, pluggy-1.6.0
+rootdir: /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service
+configfile: pytest.ini
+plugins: anyio-4.11.0, langsmith-0.3.45, cov-7.0.0, Faker-37.12.0, asyncio-0.24.0, mock-3.15.1
+asyncio: mode=Mode.AUTO, default_loop_scope=None
+collected 123 items
+
+tests/test_config.py [32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[33m                  [ 27%][0m
+tests/test_database.py [32m.[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[32m.[0m[32m.[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31m                                    [ 39%][0m
+tests/test_environment.py [32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[31m [ 76%]
+[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[31m                                                              [ 85%][0m
+tests/test_llm_providers.py [31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31m                                   [ 93%][0m
+tests/test_performance.py [32m.[0m[31mF[0m[32m.[0m[32m.[0m[32m.[0m[31mF[0m[31mF[0m[31mF[0m[31m                                       [100%][0m
+
+=================================== FAILURES ===================================
+[31m[1m______________________ TestDatabase.test_connect_success _______________________[0m
+[1m[31m/usr/lib/python3.12/unittest/mock.py[0m:923: in assert_called_once
+    [0m[94mraise[39;49;00m [96mAssertionError[39;49;00m(msg)[90m[39;49;00m
+[1m[31mE   AssertionError: Expected 'from_url' to have been called once. Called 0 times.[0m
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:33: in test_connect_success
+    [0mmock_from_url.assert_called_once()[90m[39;49;00m
+[1m[31mE   AssertionError: Expected 'from_url' to have been called once. Called 0 times.[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:28.171 | INFO     | database:connect:260 - Connecting to DragonflyDB at localhost:6379 (attempt 1/1)
+2025-11-09 07:21:28.176 | INFO     | database:connect:278 - ✓ Successfully connected to DragonflyDB
+2025-11-09 07:21:28.187 | INFO     | database:connect:282 - DragonflyDB version: 7.4.0
+2025-11-09 07:21:28.187 | INFO     | database:connect:283 - Connected clients: 64
+[31m[1m____________________ TestDatabase.test_connect_retry_logic _____________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:51: in test_connect_retry_logic
+    [0m[94massert[39;49;00m mock_from_url.call_count == [94m3[39;49;00m[90m[39;49;00m
+[1m[31mE   AssertionError: assert 0 == 3[0m
+[1m[31mE    +  where 0 = <MagicMock name='from_url' id='133224772133056'>.call_count[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:28.506 | INFO     | database:connect:260 - Connecting to DragonflyDB at localhost:6379 (attempt 1/3)
+2025-11-09 07:21:28.508 | INFO     | database:connect:278 - ✓ Successfully connected to DragonflyDB
+2025-11-09 07:21:28.517 | INFO     | database:connect:282 - DragonflyDB version: 7.4.0
+2025-11-09 07:21:28.517 | INFO     | database:connect:283 - Connected clients: 65
+[31m[1m________________ TestDatabase.test_connect_max_retries_exceeded ________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:61: in test_connect_max_retries_exceeded
+    [0m[94mwith[39;49;00m pytest.raises([96mConnectionError[39;49;00m):[90m[39;49;00m
+[1m[31mE   Failed: DID NOT RAISE <class 'ConnectionError'>[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:28.534 | INFO     | database:connect:260 - Connecting to DragonflyDB at localhost:6379 (attempt 1/2)
+2025-11-09 07:21:28.536 | INFO     | database:connect:278 - ✓ Successfully connected to DragonflyDB
+2025-11-09 07:21:28.543 | INFO     | database:connect:282 - DragonflyDB version: 7.4.0
+2025-11-09 07:21:28.543 | INFO     | database:connect:283 - Connected clients: 66
+[31m[1m_________________________ TestDatabase.test_disconnect _________________________[0m
+[1m[31m/usr/lib/python3.12/unittest/mock.py[0m:923: in assert_called_once
+    [0m[94mraise[39;49;00m [96mAssertionError[39;49;00m(msg)[90m[39;49;00m
+[1m[31mE   AssertionError: Expected 'wait_closed' to have been called once. Called 0 times.[0m
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:73: in test_disconnect
+    [0mdb.client.wait_closed.assert_called_once()[90m[39;49;00m
+[1m[31mE   AssertionError: Expected 'wait_closed' to have been called once. Called 0 times.[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:28.561 | INFO     | database:disconnect:305 - Disconnected from DragonflyDB
+[31m[1m_____________________ TestDatabase.test_get_player_memory ______________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:119: in test_get_player_memory
+    [0mmemories = [94mawait[39;49;00m db.get_player_memory([33m"[39;49;00m[33mplayer_001[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mnpc_001[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE   AttributeError: 'Database' object has no attribute 'get_player_memory'[0m
+[31m[1m_____________________ TestDatabase.test_add_player_memory ______________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:136: in test_add_player_memory
+    [0m[94mawait[39;49;00m db.add_player_memory([33m"[39;49;00m[33mplayer_001[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mnpc_001[39;49;00m[33m"[39;49;00m, memory)[90m[39;49;00m
+[1m[31mE   AttributeError: 'Database' object has no attribute 'add_player_memory'[0m
+[31m[1m______________________ TestDatabase.test_rate_limit_check ______________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:148: in test_rate_limit_check
+    [0mis_limited = [94mawait[39;49;00m db.check_rate_limit([33m"[39;49;00m[33mplayer_001[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33maction_type[39;49;00m[33m"[39;49;00m, [94m60[39;49;00m)[90m[39;49;00m
+[1m[31mE   AttributeError: 'Database' object has no attribute 'check_rate_limit'[0m
+[31m[1m_______________________ TestDatabase.test_set_rate_limit _______________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:163: in test_set_rate_limit
+    [0m[94mawait[39;49;00m db.set_rate_limit([33m"[39;49;00m[33mplayer_001[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33maction_type[39;49;00m[33m"[39;49;00m, [94m60[39;49;00m)[90m[39;49;00m
+[1m[31mE   AttributeError: 'Database' object has no attribute 'set_rate_limit'[0m
+[31m[1m______________________ TestDatabase.test_quest_operations ______________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:180: in test_quest_operations
+    [0m[94mawait[39;49;00m db.create_quest(quest_data)[90m[39;49;00m
+[1m[31mE   AttributeError: 'Database' object has no attribute 'create_quest'. Did you mean: 'delete_quest'?[0m
+[31m[1m___________ TestDatabaseErrorHandling.test_connection_error_handling ___________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:207: in test_connection_error_handling
+    [0m[94mwith[39;49;00m pytest.raises([96mConnectionError[39;49;00m):[90m[39;49;00m
+[1m[31mE   Failed: DID NOT RAISE <class 'ConnectionError'>[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:28.805 | INFO     | database:connect:260 - Connecting to DragonflyDB at localhost:6379 (attempt 1/1)
+2025-11-09 07:21:28.808 | INFO     | database:connect:278 - ✓ Successfully connected to DragonflyDB
+2025-11-09 07:21:28.815 | INFO     | database:connect:282 - DragonflyDB version: 7.4.0
+2025-11-09 07:21:28.816 | INFO     | database:connect:283 - Connected clients: 65
+[31m[1m____________ TestDatabaseErrorHandling.test_timeout_error_handling _____________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:218: in test_timeout_error_handling
+    [0m[94mwith[39;49;00m pytest.raises([96mTimeoutError[39;49;00m):[90m[39;49;00m
+[1m[31mE   Failed: DID NOT RAISE <class 'TimeoutError'>[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:28.831 | INFO     | database:connect:260 - Connecting to DragonflyDB at localhost:6379 (attempt 1/1)
+2025-11-09 07:21:28.833 | INFO     | database:connect:278 - ✓ Successfully connected to DragonflyDB
+2025-11-09 07:21:28.838 | INFO     | database:connect:282 - DragonflyDB version: 7.4.0
+2025-11-09 07:21:28.838 | INFO     | database:connect:283 - Connected clients: 66
+[31m[1m___________ TestLLMProviderFactory.test_factory_get_provider_openai ____________[0m
+[1m[31m/usr/lib/python3.12/unittest/mock.py[0m:955: in assert_called_once_with
+    [0m[94mraise[39;49;00m [96mAssertionError[39;49;00m(msg)[90m[39;49;00m
+[1m[31mE   AssertionError: Expected 'OpenAIProvider' to be called once. Called 0 times.[0m
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:29: in test_factory_get_provider_openai
+    [0mmock_provider.assert_called_once_with(config)[90m[39;49;00m
+[1m[31mE   AssertionError: Expected 'OpenAIProvider' to be called once. Called 0 times.[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:29.275 | INFO     | llm.base:__init__:34 - Initializing OpenAIProvider
+2025-11-09 07:21:29.321 | INFO     | llm.providers.openai_provider:__init__:24 - OpenAI provider initialized with model: gpt-4
+2025-11-09 07:21:29.321 | INFO     | llm.factory:create_provider:63 - Created openai provider
+[31m[1m____________ TestLLMProviderFactory.test_factory_get_provider_azure ____________[0m
+[1m[31m/usr/lib/python3.12/unittest/mock.py[0m:955: in assert_called_once_with
+    [0m[94mraise[39;49;00m [96mAssertionError[39;49;00m(msg)[90m[39;49;00m
+[1m[31mE   AssertionError: Expected 'AzureOpenAIProvider' to be called once. Called 0 times.[0m
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:47: in test_factory_get_provider_azure
+    [0mmock_provider.assert_called_once_with(config)[90m[39;49;00m
+[1m[31mE   AssertionError: Expected 'AzureOpenAIProvider' to be called once. Called 0 times.[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:29.536 | INFO     | llm.base:__init__:34 - Initializing AzureOpenAIProvider
+2025-11-09 07:21:29.579 | INFO     | llm.providers.azure_openai_provider:__init__:59 - Azure OpenAI provider initialized with deployment: gpt-4, API version: 2024-02-15-preview
+2025-11-09 07:21:29.579 | DEBUG    | llm.providers.azure_openai_provider:__init__:60 - Azure endpoint: https://test.openai.azure.com
+2025-11-09 07:21:29.579 | DEBUG    | llm.providers.azure_openai_provider:__init__:61 - Timeout: 30.0s, Max retries: 3
+2025-11-09 07:21:29.579 | INFO     | llm.factory:create_provider:63 - Created azure_openai provider
+[31m[1m____________ TestLLMProviderFactory.test_factory_api_key_validation ____________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:56: in test_factory_api_key_validation
+    [0m[94mwith[39;49;00m pytest.raises([96mValueError[39;49;00m, match=[33m"[39;49;00m[33mAPI key.*empty[39;49;00m[33m"[39;49;00m):[90m[39;49;00m
+[1m[31mE   Failed: DID NOT RAISE <class 'ValueError'>[0m
+[31m[1m_________________ TestLLMProviderFactory.test_factory_caching __________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:77: in test_factory_caching
+    [0m[94massert[39;49;00m mock_provider.call_count == [94m1[39;49;00m  [90m# Only called once[39;49;00m[90m[39;49;00m
+[1m[31mE   AssertionError: assert 0 == 1[0m
+[1m[31mE    +  where 0 = <MagicMock name='OpenAIProvider' id='133224761780096'>.call_count[0m
+[31m[1m___________ TestLLMProviderFactory.test_factory_unsupported_provider ___________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:82: in test_factory_unsupported_provider
+    [0mLLMProviderFactory.get_or_create_provider([33m"[39;49;00m[33minvalid_provider[39;49;00m[33m"[39;49;00m, {})[90m[39;49;00m
+[1m[31mllm/factory.py[0m:90: in get_or_create_provider
+    [0m[96mcls[39;49;00m._instances[provider_name] = factory.create_provider(provider_name, config)[90m[39;49;00m
+[1m[31mllm/factory.py[0m:57: in create_provider
+    [0m[94mraise[39;49;00m [96mValueError[39;49;00m([33mf[39;49;00m[33m"[39;49;00m[33mUnknown provider: [39;49;00m[33m{[39;49;00mprovider_name[33m}[39;49;00m[33m. Available: [39;49;00m[33m{[39;49;00mavailable[33m}[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE   ValueError: Unknown provider: invalid_provider. Available: openai, azure_openai, anthropic, google, gemini, deepseek[0m
+
+[33mDuring handling of the above exception, another exception occurred:[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:81: in test_factory_unsupported_provider
+    [0m[94mwith[39;49;00m pytest.raises([96mValueError[39;49;00m, match=[33m"[39;49;00m[33mUnsupported LLM provider[39;49;00m[33m"[39;49;00m):[90m[39;49;00m
+[1m[31mE   AssertionError: Regex pattern did not match.[0m
+[1m[31mE    Regex: 'Unsupported LLM provider'[0m
+[1m[31mE    Input: 'Unknown provider: invalid_provider. Available: openai, azure_openai, anthropic, google, gemini, deepseek'[0m
+[31m[1m___________ TestBaseLLMProvider.test_base_provider_abstract_methods ____________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:90: in test_base_provider_abstract_methods
+    [0mprovider = BaseLLMProvider({[33m"[39;49;00m[33mapi_key[39;49;00m[33m"[39;49;00m: [33m"[39;49;00m[33mtest[39;49;00m[33m"[39;49;00m})[90m[39;49;00m
+[1m[31mE   TypeError: Can't instantiate abstract class BaseLLMProvider without an implementation for abstract methods 'generate', 'generate_chat', 'generate_structured'[0m
+[31m[1m__________ TestAzureOpenAIProvider.test_azure_provider_initialization __________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:119: in test_azure_provider_initialization
+    [0m[94massert[39;49;00m provider.endpoint == [33m"[39;49;00m[33mhttps://test.openai.azure.com/[39;49;00m[33m"[39;49;00m[90m[39;49;00m
+[1m[31mE   AssertionError: assert 'https://test...nai.azure.com' == 'https://test...ai.azure.com/'[0m
+[1m[31mE     [0m
+[1m[31mE     - https://test.openai.azure.com/[0m
+[1m[31mE     ?                              -[0m
+[1m[31mE     + https://test.openai.azure.com[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:29.866 | INFO     | llm.base:__init__:34 - Initializing AzureOpenAIProvider
+2025-11-09 07:21:29.906 | INFO     | llm.providers.azure_openai_provider:__init__:59 - Azure OpenAI provider initialized with deployment: gpt-4, API version: 2024-02-15-preview
+2025-11-09 07:21:29.907 | DEBUG    | llm.providers.azure_openai_provider:__init__:60 - Azure endpoint: https://test.openai.azure.com
+2025-11-09 07:21:29.907 | DEBUG    | llm.providers.azure_openai_provider:__init__:61 - Timeout: 30.0s, Max retries: 3
+[31m[1m_____________ TestAzureOpenAIProvider.test_azure_provider_generate _____________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:144: in test_azure_provider_generate
+    [0mresponse = [94mawait[39;49;00m provider.generate([33m"[39;49;00m[33mTest prompt[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mllm/providers/azure_openai_provider.py[0m:105: in generate
+    [0m[94mreturn[39;49;00m [94mawait[39;49;00m [96mself[39;49;00m.generate_chat([90m[39;49;00m
+[1m[31mllm/providers/azure_openai_provider.py[0m:180: in generate_chat
+    [0mresponse = [94mawait[39;49;00m [96mself[39;49;00m._retry_with_backoff(_make_request)[90m[39;49;00m
+[1m[31mllm/providers/azure_openai_provider.py[0m:121: in _retry_with_backoff
+    [0m[94mreturn[39;49;00m [94mawait[39;49;00m func(*args, **kwargs)[90m[39;49;00m
+[1m[31mllm/providers/azure_openai_provider.py[0m:172: in _make_request
+    [0m[94mreturn[39;49;00m [94mawait[39;49;00m [96mself[39;49;00m.client.chat.completions.create([90m[39;49;00m
+[1m[31mE   TypeError: object MagicMock can't be used in 'await' expression[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:29.923 | INFO     | llm.base:__init__:34 - Initializing AzureOpenAIProvider
+2025-11-09 07:21:29.963 | INFO     | llm.providers.azure_openai_provider:__init__:59 - Azure OpenAI provider initialized with deployment: gpt-4, API version: 2024-02-15-preview
+2025-11-09 07:21:29.963 | DEBUG    | llm.providers.azure_openai_provider:__init__:60 - Azure endpoint: https://test.openai.azure.com
+2025-11-09 07:21:29.963 | DEBUG    | llm.providers.azure_openai_provider:__init__:61 - Timeout: 30.0s, Max retries: 3
+2025-11-09 07:21:29.964 | DEBUG    | llm.providers.azure_openai_provider:generate_chat:169 - Azure OpenAI chat request: deployment=gpt-4, 1 messages, temp=0.7, max_tokens=2000
+2025-11-09 07:21:29.965 | ERROR    | llm.providers.azure_openai_provider:generate_chat:201 - Azure OpenAI chat generation error: object MagicMock can't be used in 'await' expression
+2025-11-09 07:21:29.965 | ERROR    | llm.providers.azure_openai_provider:generate:112 - Azure OpenAI generation error: object MagicMock can't be used in 'await' expression
+[31m[1m___________ TestAzureOpenAIProvider.test_azure_provider_retry_logic ____________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:178: in test_azure_provider_retry_logic
+    [0mresponse = [94mawait[39;49;00m provider.generate([33m"[39;49;00m[33mTest prompt[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mllm/providers/azure_openai_provider.py[0m:105: in generate
+    [0m[94mreturn[39;49;00m [94mawait[39;49;00m [96mself[39;49;00m.generate_chat([90m[39;49;00m
+[1m[31mllm/providers/azure_openai_provider.py[0m:180: in generate_chat
+    [0mresponse = [94mawait[39;49;00m [96mself[39;49;00m._retry_with_backoff(_make_request)[90m[39;49;00m
+[1m[31mllm/providers/azure_openai_provider.py[0m:121: in _retry_with_backoff
+    [0m[94mreturn[39;49;00m [94mawait[39;49;00m func(*args, **kwargs)[90m[39;49;00m
+[1m[31mllm/providers/azure_openai_provider.py[0m:172: in _make_request
+    [0m[94mreturn[39;49;00m [94mawait[39;49;00m [96mself[39;49;00m.client.chat.completions.create([90m[39;49;00m
+[1m[31mE   TypeError: object MagicMock can't be used in 'await' expression[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:30.009 | INFO     | llm.base:__init__:34 - Initializing AzureOpenAIProvider
+2025-11-09 07:21:30.049 | INFO     | llm.providers.azure_openai_provider:__init__:59 - Azure OpenAI provider initialized with deployment: gpt-4, API version: 2024-02-15-preview
+2025-11-09 07:21:30.049 | DEBUG    | llm.providers.azure_openai_provider:__init__:60 - Azure endpoint: https://test.openai.azure.com
+2025-11-09 07:21:30.049 | DEBUG    | llm.providers.azure_openai_provider:__init__:61 - Timeout: 30.0s, Max retries: 3
+2025-11-09 07:21:30.054 | DEBUG    | llm.providers.azure_openai_provider:generate_chat:169 - Azure OpenAI chat request: deployment=gpt-4, 1 messages, temp=0.7, max_tokens=2000
+2025-11-09 07:21:30.055 | WARNING  | llm.providers.azure_openai_provider:_retry_with_backoff:126 - Rate limit hit, retrying in 2s (attempt 1/3)
+2025-11-09 07:21:32.057 | WARNING  | llm.providers.azure_openai_provider:_retry_with_backoff:126 - Rate limit hit, retrying in 4s (attempt 2/3)
+2025-11-09 07:21:36.061 | ERROR    | llm.providers.azure_openai_provider:generate_chat:201 - Azure OpenAI chat generation error: object MagicMock can't be used in 'await' expression
+2025-11-09 07:21:36.062 | ERROR    | llm.providers.azure_openai_provider:generate:112 - Azure OpenAI generation error: object MagicMock can't be used in 'await' expression
+[31m[1m____________ TestAzureOpenAIProvider.test_azure_provider_tools_api _____________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:215: in test_azure_provider_tools_api
+    [0mresponse = [94mawait[39;49;00m provider.generate_with_tools([33m"[39;49;00m[33mTest prompt[39;49;00m[33m"[39;49;00m, tools)[90m[39;49;00m
+[1m[31mE   AttributeError: 'AzureOpenAIProvider' object has no attribute 'generate_with_tools'[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:36.108 | INFO     | llm.base:__init__:34 - Initializing AzureOpenAIProvider
+2025-11-09 07:21:36.148 | INFO     | llm.providers.azure_openai_provider:__init__:59 - Azure OpenAI provider initialized with deployment: gpt-4, API version: 2024-02-15-preview
+2025-11-09 07:21:36.148 | DEBUG    | llm.providers.azure_openai_provider:__init__:60 - Azure endpoint: https://test.openai.azure.com
+2025-11-09 07:21:36.148 | DEBUG    | llm.providers.azure_openai_provider:__init__:61 - Timeout: 30.0s, Max retries: 3
+[31m[1m__________ TestDatabasePerformance.test_memory_retrieval_performance ___________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_performance.py[0m:59: in test_memory_retrieval_performance
+    [0mresult = [94mawait[39;49;00m db.get_player_memory([33m"[39;49;00m[33mplayer_001[39;49;00m[33m"[39;49;00m, [33m"[39;49;00m[33mnpc_001[39;49;00m[33m"[39;49;00m)[90m[39;49;00m
+[1m[31mE   AttributeError: 'Database' object has no attribute 'get_player_memory'[0m
+[31m[1m_____________ TestAgentPerformance.test_dialogue_agent_performance _____________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_performance.py[0m:171: in test_dialogue_agent_performance
+    [0m[94massert[39;49;00m response.success [95mis[39;49;00m [94mTrue[39;49;00m[90m[39;49;00m
+[1m[31mE   assert False is True[0m
+[1m[31mE    +  where False = AgentResponse(agent_type='dialogue', success=False, data={'error': "'dict' object has no attribute 'openness'"}, confi... 'dict' object has no attribute 'openness'", metadata={}, timestamp=datetime.datetime(2025, 11, 8, 23, 21, 41, 399693)).success[0m
+----------------------------- Captured stderr call -----------------------------
+2025-11-09 07:21:41.395 | WARNING  | utils.gpu_vector_search:<module>:17 - FAISS not available. GPU vector search will be disabled.
+2025-11-09 07:21:41.397 | INFO     | agents.base_agent:__init__:73 - Initializing dialogue agent: dialogue_001
+2025-11-09 07:21:41.397 | INFO     | agents.dialogue_agent:_create_crew_agent:66 - Created Azure OpenAI LLM with deployment: gpt-4
+2025-11-09 07:21:41.398 | INFO     | agents.dialogue_agent:__init__:42 - Dialogue Agent dialogue_001 initialized
+2025-11-09 07:21:41.399 | INFO     | agents.dialogue_agent:process:95 - Dialogue Agent processing for NPC: test_npc
+2025-11-09 07:21:41.399 | ERROR    | agents.dialogue_agent:process:150 - Dialogue generation failed for test_npc: 'dict' object has no attribute 'openness'
+[31m[1m______________ TestAgentPerformance.test_orchestrator_performance ______________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_performance.py[0m:180: in test_orchestrator_performance
+    [0morchestrator = AgentOrchestrator(llm_provider=mock_llm_provider)[90m[39;49;00m
+[1m[31mE   TypeError: AgentOrchestrator.__init__() missing 1 required positional argument: 'config'[0m
+[31m[1m___________ TestEndToEndPerformance.test_player_interaction_latency ____________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_performance.py[0m:223: in test_player_interaction_latency
+    [0morchestrator = AgentOrchestrator(llm_provider=mock_llm_provider)[90m[39;49;00m
+[1m[31mE   TypeError: AgentOrchestrator.__init__() missing 1 required positional argument: 'config'[0m
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.3-final-0 ________________
+
+Name                                     Stmts   Miss  Cover   Missing
+----------------------------------------------------------------------
+__init__.py                                  1      0   100%
+agents/__init__.py                           2      0   100%
+agents/base_agent.py                        75     30    60%   86, 99, 115-158, 177-186
+agents/decision_agent.py                   136    117    14%   13, 33-40, 45-68, 90-129, 143-199, 203-223, 236-291, 304-312, 321-338, 342-419
+agents/decision_optimizer.py               162    162     0%   6-396
+agents/dialogue_agent.py                   120     80    33%   13-14, 67-70, 106-137, 161-180, 184-206, 225-272, 276-290, 294-303
+agents/economy_agent.py                    160    160     0%   5-438
+agents/memory_agent.py                     120     99    18%   19-25, 59-73, 78-101, 123-147, 157-174, 182-197, 205-224, 233-268, 278-323, 327-340
+agents/orchestrator.py                     102     85    17%   12-15, 49-79, 98-200, 220-255, 277-338, 356-378
+agents/quest_agent.py                      117    117     0%   5-422
+agents/universal_consciousness.py          198    198     0%   7-522
+agents/world_agent.py                      166    144    13%   32-39, 44-67, 89-113, 123-146, 150-167, 177-197, 206-224, 234-253, 257-291, 295-300, 310-345, 363-378, 409-431
+config.py                                  413      0   100%
+database.py                                350    273    22%   37-87, 91-97, 101-103, 107-117, 130-154, 167-189, 202-223, 227, 240, 252, 254, 287-298, 308-311, 315-317, 321-328, 333-346, 350-370, 374-379, 383-399, 408-410, 418-420, 424-430, 435-441, 445-451, 456-463, 467-480, 484-500, 504-515, 519-529, 533-552
+llm/__init__.py                              3      0   100%
+llm/base.py                                 39     10    74%   58, 80, 102, 114, 123-132
+llm/factory.py                              68     35    49%   65-67, 97-98, 115-180
+llm/gpu_wrapper.py                          64     64     0%   6-172
+llm/providers/__init__.py                    5      0   100%
+llm/providers/anthropic_provider.py         60     51    15%   16-24, 35-66, 76-114, 124-146
+llm/providers/azure_openai_provider.py     121     50    59%   34, 36, 38, 40, 80, 85-86, 102, 129-130, 132-139, 142-155, 182-188, 212-250
+llm/providers/deepseek_provider.py          59     48    19%   17-32, 43-59, 69-97, 108-134, 138, 142
+llm/providers/google_provider.py            71     62    13%   16-25, 36-74, 84-133, 143-165
+llm/providers/openai_provider.py            51     36    29%   20, 35-49, 59-89, 99-126
+main.py                                    237    237     0%   5-410
+middleware/__init__.py                       4      4     0%   5-9
+middleware/auth.py                          25     25     0%   5-70
+middleware/rate_limit.py                    38     38     0%   5-104
+middleware/request_size.py                  18     18     0%   5-47
+models/__init__.py                           4      0   100%
+models/economy.py                           99     99     0%   5-144
+models/faction.py                           98     98     0%   5-163
+models/npc.py                               67      0   100%
+models/npc_relationship.py                  75     75     0%   6-149
+models/player.py                            32      0   100%
+models/quest.py                            100    100     0%   5-157
+models/world.py                             38      0   100%
+routers/__init__.py                          4      4     0%   5-9
+routers/batch.py                            77     77     0%   6-183
+routers/chat_command.py                    126    126     0%   6-315
+routers/economy.py                         138    138     0%   6-372
+routers/faction.py                         118    118     0%   6-299
+routers/npc.py                             200    200     0%   5-620
+routers/player.py                           69     69     0%   5-190
+routers/pubsub_bridge.py                    55     55     0%   7-158
+routers/quest.py                           110    110     0%   5-292
+routers/world.py                            85     85     0%   5-221
+scheduler.py                               191    191     0%   6-369
+tasks/__init__.py                            0      0   100%
+tasks/economy.py                           220    220     0%   6-571
+tasks/environment.py                       233      1    99%   198
+tasks/faction.py                           205    205     0%   6-461
+tasks/instant_response.py                  110    110     0%   6-211
+tasks/npc_movement.py                      256    256     0%   7-609
+tasks/npc_relationships.py                 240    240     0%   6-657
+tasks/shop_restock.py                      210    210     0%   6-491
+test_remediation.py                        155    155     0%   7-234
+tests/__init__.py                            0      0   100%
+tests/conftest.py                           62     13    79%   89, 107, 119, 132-135, 149-158
+tests/locustfile.py                         76     76     0%   7-222
+tests/performance/__init__.py                0      0   100%
+tests/performance/locustfile.py             56     56     0%   16-171
+tests/performance/test_benchmarks.py        94     94     0%   9-183
+tests/performance/test_npc_load.py         198    198     0%   12-337
+tests/test_agents.py                        83     83     0%   5-238
+tests/test_config.py                       180      3    98%   61-63, 74
+tests/test_database.py                     115     15    87%   121-122, 138, 149-155, 165, 181-193
+tests/test_environment.py                  486      5    99%   175, 730, 834, 863, 890
+tests/test_integration.py                   98     98     0%   6-196
+tests/test_llm_providers.py                100     15    85%   92-99, 120-121, 146-147, 180-181, 218-220
+tests/test_performance.py                  111     26    77%   61-65, 172, 182-207, 225-257
+tests/test_routers.py                       84     84     0%   5-220
+utils/__init__.py                           37     22    41%   11-14, 19-20, 32-38, 43-47, 52-53, 58-59
+utils/advanced_movement.py                 124     87    30%   47-48, 65-88, 107-125, 141-142, 161-173, 194-218, 227, 248-271, 280-287, 296-305, 314-324, 334, 351-379
+utils/batch_processor.py                    69     69     0%   7-179
+utils/bridge_commands.py                    43     32    26%   26-38, 57-75, 103-107, 126-146, 166-170
+utils/cache.py                              67     50    25%   30-37, 57-91, 109-116, 129-141, 151-161
+utils/decorators.py                         78     78     0%   5-171
+utils/gpu_manager.py                       213    180    15%   44-60, 64-80, 89-124, 128-152, 156-181, 185-247, 251-280, 284-301, 310, 319, 328, 332-341, 345-353, 362-380, 399-402, 416-417
+utils/gpu_pathfinding.py                    76     64    16%   33-46, 65-76, 85-108, 122-148, 163-170, 174-183, 187-201
+utils/gpu_vector_search.py                  88     71    19%   13, 38-54, 58-80, 90-120, 129-145, 162-183, 187-189, 198-201
+utils/map_data.py                           66     55    17%   30-36, 48-88, 102-124, 133-138, 147, 168-172
+utils/movement_utils.py                     54     42    22%   11, 82-115, 131-157
+utils/pathfinding.py                       127     97    24%   19, 22, 26, 30, 44, 47, 63-64, 78-81, 93-105, 119-181, 195-246, 258-267, 288-294, 303-304
+utils/pubsub.py                             48     48     0%   7-187
+----------------------------------------------------------------------
+TOTAL                                     9133   6746    26%
+[36m[1m=========================== short test summary info ============================[0m
+[31mFAILED[0m tests/test_database.py::[1mTestDatabase::test_connect_success[0m - AssertionError: Expected 'from_url' to have been called once. Called 0 times.
+[31mFAILED[0m tests/test_database.py::[1mTestDatabase::test_connect_retry_logic[0m - AssertionError: assert 0 == 3
+[31mFAILED[0m tests/test_database.py::[1mTestDatabase::test_connect_max_retries_exceeded[0m - Failed: DID NOT RAISE <class 'ConnectionError'>
+[31mFAILED[0m tests/test_database.py::[1mTestDatabase::test_disconnect[0m - AssertionError: Expected 'wait_closed' to have been called once. Called 0 t...
+[31mFAILED[0m tests/test_database.py::[1mTestDatabase::test_get_player_memory[0m - AttributeError: 'Database' object has no attribute 'get_player_memory'
+[31mFAILED[0m tests/test_database.py::[1mTestDatabase::test_add_player_memory[0m - AttributeError: 'Database' object has no attribute 'add_player_memory'
+[31mFAILED[0m tests/test_database.py::[1mTestDatabase::test_rate_limit_check[0m - AttributeError: 'Database' object has no attribute 'check_rate_limit'
+[31mFAILED[0m tests/test_database.py::[1mTestDatabase::test_set_rate_limit[0m - AttributeError: 'Database' object has no attribute 'set_rate_limit'
+[31mFAILED[0m tests/test_database.py::[1mTestDatabase::test_quest_operations[0m - AttributeError: 'Database' object has no attribute 'create_quest'. Did you ...
+[31mFAILED[0m tests/test_database.py::[1mTestDatabaseErrorHandling::test_connection_error_handling[0m - Failed: DID NOT RAISE <class 'ConnectionError'>
+[31mFAILED[0m tests/test_database.py::[1mTestDatabaseErrorHandling::test_timeout_error_handling[0m - Failed: DID NOT RAISE <class 'TimeoutError'>
+[31mFAILED[0m tests/test_llm_providers.py::[1mTestLLMProviderFactory::test_factory_get_provider_openai[0m - AssertionError: Expected 'OpenAIProvider' to be called once. Called 0 times.
+[31mFAILED[0m tests/test_llm_providers.py::[1mTestLLMProviderFactory::test_factory_get_provider_azure[0m - AssertionError: Expected 'AzureOpenAIProvider' to be called once. Called 0 ...
+[31mFAILED[0m tests/test_llm_providers.py::[1mTestLLMProviderFactory::test_factory_api_key_validation[0m - Failed: DID NOT RAISE <class 'ValueError'>
+[31mFAILED[0m tests/test_llm_providers.py::[1mTestLLMProviderFactory::test_factory_caching[0m - AssertionError: assert 0 == 1
+[31mFAILED[0m tests/test_llm_providers.py::[1mTestLLMProviderFactory::test_factory_unsupported_provider[0m - AssertionError: Regex pattern did not match.
+[31mFAILED[0m tests/test_llm_providers.py::[1mTestBaseLLMProvider::test_base_provider_abstract_methods[0m - TypeError: Can't instantiate abstract class BaseLLMProvider without an impl...
+[31mFAILED[0m tests/test_llm_providers.py::[1mTestAzureOpenAIProvider::test_azure_provider_initialization[0m - AssertionError: assert 'https://test...nai.azure.com' == 'https://test...ai...
+[31mFAILED[0m tests/test_llm_providers.py::[1mTestAzureOpenAIProvider::test_azure_provider_generate[0m - TypeError: object MagicMock can't be used in 'await' expression
+[31mFAILED[0m tests/test_llm_providers.py::[1mTestAzureOpenAIProvider::test_azure_provider_retry_logic[0m - TypeError: object MagicMock can't be used in 'await' expression
+[31mFAILED[0m tests/test_llm_providers.py::[1mTestAzureOpenAIProvider::test_azure_provider_tools_api[0m - AttributeError: 'AzureOpenAIProvider' object has no attribute 'generate_wit...
+[31mFAILED[0m tests/test_performance.py::[1mTestDatabasePerformance::test_memory_retrieval_performance[0m - AttributeError: 'Database' object has no attribute 'get_player_memory'
+[31mFAILED[0m tests/test_performance.py::[1mTestAgentPerformance::test_dialogue_agent_performance[0m - assert False is True
+[31mFAILED[0m tests/test_performance.py::[1mTestAgentPerformance::test_orchestrator_performance[0m - TypeError: AgentOrchestrator.__init__() missing 1 required positional argum...
+[31mFAILED[0m tests/test_performance.py::[1mTestEndToEndPerformance::test_player_interaction_latency[0m - TypeError: AgentOrchestrator.__init__() missing 1 required positional argum...
+[31m================= [31m[1m25 failed[0m, [32m98 passed[0m, [33m359 warnings[0m[31m in 25.85s[0m[31m =================[0m

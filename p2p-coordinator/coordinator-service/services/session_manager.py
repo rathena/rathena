@@ -5,7 +5,7 @@ Manages P2P session lifecycle including creation, monitoring, and termination.
 """
 
 from typing import Optional, List
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from sqlalchemy import select, update, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import attributes
@@ -102,59 +102,59 @@ class SessionManagerService:
             await db.rollback()
             return None
     
-    async def activate_session(self, db: AsyncSession, session_id: int) -> bool:
+    async def activate_session(self, db: AsyncSession, session_id: str) -> bool:
         """
         Activate a pending session
-        
+
         Args:
             db: Database session
-            session_id: Session ID
-            
+            session_id: Session ID (UUID string)
+
         Returns:
             True if activated, False otherwise
         """
         try:
             result = await db.execute(
-                select(P2PSession).where(P2PSession.id == session_id)
+                select(P2PSession).where(P2PSession.session_id == session_id)
             )
             session = result.scalar_one_or_none()
-            
+
             if not session:
                 logger.error(f"Session not found: {session_id}")
                 return False
-            
+
             if session.status != SessionStatus.PENDING:
                 logger.warning(f"Session {session_id} is not pending: {session.status}")
                 return False
-            
+
             session.status = SessionStatus.ACTIVE
-            session.started_at = datetime.utcnow()
-            
+            session.started_at = datetime.now(timezone.utc)
+
             await db.commit()
             logger.info(f"Activated P2P session {session_id}")
-            
+
             return True
-        
+
         except Exception as e:
             logger.error(f"Failed to activate session {session_id}: {e}")
             await db.rollback()
             return False
     
-    async def end_session(self, db: AsyncSession, session_id: int, reason: str = "normal") -> bool:
+    async def end_session(self, db: AsyncSession, session_id: str, reason: str = "normal") -> bool:
         """
         End an active session
-        
+
         Args:
             db: Database session
-            session_id: Session ID
+            session_id: Session ID (UUID string)
             reason: Reason for ending (normal, timeout, error, etc.)
-            
+
         Returns:
             True if ended, False otherwise
         """
         try:
             result = await db.execute(
-                select(P2PSession).where(P2PSession.id == session_id)
+                select(P2PSession).where(P2PSession.session_id == session_id)
             )
             session = result.scalar_one_or_none()
 
@@ -163,7 +163,7 @@ class SessionManagerService:
                 return False
 
             session.status = SessionStatus.ENDED
-            session.ended_at = datetime.utcnow()
+            session.ended_at = datetime.now(timezone.utc)
 
             # duration_seconds is a property, no need to set it
 
@@ -177,20 +177,20 @@ class SessionManagerService:
             await db.rollback()
             return False
 
-    async def get_session(self, db: AsyncSession, session_id: int) -> Optional[P2PSession]:
+    async def get_session(self, db: AsyncSession, session_id: str) -> Optional[P2PSession]:
         """
         Get session by ID
 
         Args:
             db: Database session
-            session_id: Session ID
+            session_id: Session ID (UUID string)
 
         Returns:
             P2PSession or None
         """
         try:
             result = await db.execute(
-                select(P2PSession).where(P2PSession.id == session_id)
+                select(P2PSession).where(P2PSession.session_id == session_id)
             )
             return result.scalar_one_or_none()
         except Exception as e:
@@ -203,16 +203,28 @@ class SessionManagerService:
 
         Args:
             db: Database session
-            host_id: Host identifier
+            host_id: Host identifier (string)
 
         Returns:
             List of active P2PSessions
         """
         try:
+            # First, get the host's integer ID from the string host_id
+            from models.host import Host
+            host_result = await db.execute(
+                select(Host).where(Host.host_id == host_id)
+            )
+            host = host_result.scalar_one_or_none()
+
+            if not host:
+                logger.warning(f"Host not found: {host_id}")
+                return []
+
+            # Now query sessions using the integer host ID
             result = await db.execute(
                 select(P2PSession).where(
                     and_(
-                        P2PSession.host_id == host_id,
+                        P2PSession.host_id == host.id,
                         P2PSession.status == SessionStatus.ACTIVE,
                     )
                 )
@@ -230,16 +242,28 @@ class SessionManagerService:
 
         Args:
             db: Database session
-            zone_id: Zone identifier
+            zone_id: Zone identifier (string)
 
         Returns:
             List of active P2PSessions
         """
         try:
+            # First, get the zone's integer ID from the string zone_id
+            from models.zone import Zone
+            zone_result = await db.execute(
+                select(Zone).where(Zone.zone_id == zone_id)
+            )
+            zone = zone_result.scalar_one_or_none()
+
+            if not zone:
+                logger.warning(f"Zone not found: {zone_id}")
+                return []
+
+            # Now query sessions using the integer zone ID
             result = await db.execute(
                 select(P2PSession).where(
                     and_(
-                        P2PSession.zone_id == zone_id,
+                        P2PSession.zone_id == zone.id,
                         P2PSession.status == SessionStatus.ACTIVE,
                     )
                 )
@@ -387,7 +411,7 @@ class SessionManagerService:
             Number of sessions cleaned up
         """
         try:
-            cutoff_time = datetime.utcnow() - timedelta(minutes=timeout_minutes)
+            cutoff_time = datetime.now(timezone.utc) - timedelta(minutes=timeout_minutes)
 
             # Find stale sessions
             result = await db.execute(
@@ -403,7 +427,7 @@ class SessionManagerService:
             count = 0
             for session in stale_sessions:
                 session.status = SessionStatus.FAILED
-                session.ended_at = datetime.utcnow()
+                session.ended_at = datetime.now(timezone.utc)
                 count += 1
 
             await db.commit()

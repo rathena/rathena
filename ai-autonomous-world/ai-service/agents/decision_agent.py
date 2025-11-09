@@ -140,7 +140,7 @@ class DecisionAgent(BaseAIAgent):
     
     def _get_available_actions(self, context: AgentContext) -> List[Dict[str, Any]]:
         """Get list of available actions for NPC"""
-        from ai_service.utils.movement_utils import can_npc_move, get_movement_capabilities
+        from utils.movement_utils import can_npc_move, get_movement_capabilities
 
         npc_class = context.current_state.get("npc_class", "generic")
         sprite_id = context.current_state.get("sprite_id")
@@ -319,7 +319,7 @@ Respond with a JSON object containing:
     def _get_action_data(self, action_type: str, context: Optional[AgentContext] = None) -> Dict[str, Any]:
         """Get default data for action type, including movement-specific data"""
         import random
-        from ai_service.utils.movement_utils import get_movement_capabilities
+        from utils.movement_utils import get_movement_capabilities
 
         # Non-movement action defaults
         action_data_defaults = {
@@ -340,8 +340,8 @@ Respond with a JSON object containing:
     def _generate_movement_action_data(self, movement_type: str, context: AgentContext) -> Dict[str, Any]:
         """Generate movement-specific action data"""
         import random
-        from ai_service.utils.movement_utils import get_movement_capabilities
-        from ai_service.models.npc import NPCPosition
+        from utils.movement_utils import get_movement_capabilities
+        from models.npc import NPCPosition
 
         movement_caps = get_movement_capabilities(context.current_state)
         current_location = context.current_state.get("location", {})

@@ -86,18 +86,23 @@ def mock_llm_provider():
 @pytest.fixture
 def sample_npc_data():
     """Sample NPC data for testing"""
+    from models.npc import NPCPersonality
+
     return {
         "npc_id": "test_npc_001",
         "name": "Test Merchant",
         "level": 50,
         "npc_class": "merchant",
         "position": {"map": "prontera", "x": 150, "y": 180},
-        "personality": {
-            "traits": ["friendly", "helpful", "greedy"],
-            "background": "A merchant who loves gold",
-            "goals": ["Make profit", "Help adventurers"],
-            "speech_style": "Cheerful and enthusiastic"
-        }
+        "personality": NPCPersonality(
+            openness=0.7,
+            conscientiousness=0.6,
+            extraversion=0.8,
+            agreeableness=0.9,
+            neuroticism=0.3,
+            moral_alignment="neutral_good",
+            quirks=["loves gold", "helpful to adventurers"]
+        )
     }
 
 
@@ -131,13 +136,25 @@ async def mock_agent_context(sample_npc_data, sample_player_data):
     """Mock agent context for testing"""
     from agents.base_agent import AgentContext
     from datetime import datetime
-    
+
     return AgentContext(
         npc_id=sample_npc_data["npc_id"],
         npc_name=sample_npc_data["name"],
         personality=sample_npc_data["personality"],
-        current_state={"health": 100, "mood": "happy"},
-        world_state={"economy": "stable", "politics": "peaceful"},
+        current_state={
+            "health": 100,
+            "mood": "happy",
+            "location": {"map": "prontera", "x": 150, "y": 180},
+            "time_of_day": "day",
+            "weather": "clear",
+            "player_message": "Hello",
+            "player_name": "TestPlayer",
+            "interaction_type": "talk"
+        },
+        world_state={
+            "economy": {"description": "stable", "inflation": 0.02},
+            "politics": {"description": "peaceful", "stability": 0.9}
+        },
         recent_events=["Player greeted NPC", "NPC sold item"],
         timestamp=datetime.utcnow()
     )
@@ -148,12 +165,50 @@ def mock_fastapi_app():
     """Mock FastAPI app for testing"""
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
-    
+
     app = FastAPI()
-    
+
     @app.get("/health")
     async def health():
         return {"status": "healthy"}
-    
+
     return TestClient(app)
+
+
+@pytest.fixture(autouse=True)
+def mock_database_client():
+    """Mock database client for all tests"""
+    from unittest.mock import patch, AsyncMock, MagicMock
+
+    # Create mock Redis client
+    mock_client = MagicMock()
+    mock_client.get = AsyncMock(return_value=None)
+    mock_client.set = AsyncMock(return_value=True)
+    mock_client.setex = AsyncMock(return_value=True)
+    mock_client.hset = AsyncMock(return_value=True)
+    mock_client.hget = AsyncMock(return_value=None)
+    mock_client.incr = AsyncMock(return_value=1)
+    mock_client.expire = AsyncMock(return_value=True)
+    mock_client.delete = AsyncMock(return_value=1)
+    mock_client.ping = AsyncMock(return_value=True)
+    mock_client.ttl = AsyncMock(return_value=-1)
+
+    # Create patches for all modules that import db
+    patches = [
+        patch('database.db.client', mock_client),
+        patch('middleware.rate_limit.db.client', mock_client),
+        patch('routers.npc.db.client', mock_client),
+        patch('routers.player.db.client', mock_client),
+        patch('routers.chat_command.db.client', mock_client),
+    ]
+
+    # Start all patches
+    for p in patches:
+        p.start()
+
+    yield mock_client
+
+    # Stop all patches
+    for p in patches:
+        p.stop()
 

@@ -1,9 +1,44 @@
-# Ubuntu Server 24.04 - rAthena AI World Backend Deployment Guide
+# rAthena AI World - Production Deployment Guide
 
-**Version**: 1.0  
-**Date**: 2025-11-07  
-**Target**: Ubuntu Server 24.04 LTS  
+**Version**: 1.0
+**Date**: 2025-11-07
+**Target**: Ubuntu Server 20.04+, Debian 11+, CentOS 8+
 **Difficulty**: Beginner-Friendly
+
+---
+
+## 🚀 Quick Start (10 Minutes)
+
+For experienced users who want to get up and running quickly:
+
+### Prerequisites
+- Ubuntu 20.04+, Debian 11+, or CentOS 8+
+- At least one LLM provider API key (Azure OpenAI, OpenAI, Anthropic, Google, or DeepSeek)
+- 4GB RAM minimum, 8GB recommended
+- Root/sudo access
+
+### Quick Installation
+
+```bash
+cd rathena-AI-world
+
+# Run the automated installation script
+chmod +x install-native.sh
+sudo ./install-native.sh
+
+# Configure API keys
+nano .env
+# Add at least ONE LLM provider API key
+
+# Start services
+./start-services.sh
+
+# Verify installation
+curl http://localhost:8000/health
+python3 tests/comprehensive_e2e_test.py
+```
+
+**For detailed step-by-step instructions, continue reading below.**
 
 ---
 
@@ -19,8 +54,10 @@
 8. [Step 6: P2P Coordinator Setup](#step-6-p2p-coordinator-setup)
 9. [Step 7: Starting All Services](#step-7-starting-all-services)
 10. [Step 8: Verification & Testing](#step-8-verification--testing)
-11. [Troubleshooting](#troubleshooting)
-12. [Maintenance & Monitoring](#maintenance--monitoring)
+11. [Service Management](#service-management)
+12. [Troubleshooting](#troubleshooting)
+13. [Maintenance & Monitoring](#maintenance--monitoring)
+14. [Security Considerations](#security-considerations)
 
 ---
 
@@ -1008,6 +1045,198 @@ sudo systemctl start p2p-coordinator
 sudo systemctl status ai-service
 sudo systemctl status p2p-coordinator
 ```
+
+---
+
+## Service Management
+
+### Starting Services
+
+**Option A: Using systemd (Production)**
+```bash
+# Start all services
+sudo systemctl start rathena-login
+sudo systemctl start rathena-char
+sudo systemctl start rathena-map
+sudo systemctl start ai-service
+sudo systemctl start p2p-coordinator
+
+# Enable auto-start on boot
+sudo systemctl enable rathena-login
+sudo systemctl enable rathena-char
+sudo systemctl enable rathena-map
+sudo systemctl enable ai-service
+sudo systemctl enable p2p-coordinator
+```
+
+**Option B: Using screen sessions (Development)**
+```bash
+# Start all services in screen sessions
+./start-services.sh
+
+# View logs
+screen -r ai-service    # Ctrl+A, D to detach
+screen -r rathena-map   # Ctrl+A, D to detach
+
+# Stop services
+./stop-services.sh
+```
+
+### Stopping Services
+
+```bash
+# Stop all services
+sudo systemctl stop rathena-login
+sudo systemctl stop rathena-char
+sudo systemctl stop rathena-map
+sudo systemctl stop ai-service
+sudo systemctl stop p2p-coordinator
+```
+
+### Restarting Services
+
+```bash
+# Restart a specific service
+sudo systemctl restart ai-service
+
+# Restart all services
+sudo systemctl restart rathena-login rathena-char rathena-map ai-service p2p-coordinator
+```
+
+### Viewing Logs
+
+```bash
+# View service logs
+sudo journalctl -u ai-service -f
+sudo journalctl -u p2p-coordinator -f
+sudo journalctl -u rathena-map -f
+
+# View application logs
+tail -f ~/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/logs/ai-service.log
+tail -f ~/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/logs/coordinator.log
+tail -f ~/ai-mmorpg-world/rathena-AI-world/log/map-server.log
+```
+
+---
+
+## Security Considerations
+
+### 🔐 Default Credentials
+
+**⚠️ CRITICAL SECURITY WARNING:**
+
+The system is deployed with default credentials. **You MUST change these immediately in production:**
+
+#### PostgreSQL (AI Memory)
+```
+Host: 127.0.0.1
+Port: 5432
+Database: ai_world_memory
+User: ai_world_user
+Password: ai_world_pass_2025  ⚠️ CHANGE THIS!
+```
+
+#### MariaDB (rAthena Core)
+```
+Host: 127.0.0.1
+Port: 3306
+Database: ragnarok
+User: ragnarok
+Password: ragnarok  ⚠️ CHANGE THIS!
+```
+
+#### DragonflyDB (Redis)
+```
+Host: 127.0.0.1
+Port: 6379
+Password: (none by default)  ⚠️ SET A PASSWORD!
+```
+
+### Changing Default Passwords
+
+**PostgreSQL:**
+```bash
+sudo -u postgres psql
+ALTER USER ai_world_user WITH PASSWORD 'your_new_secure_password';
+\q
+
+# Update .env file
+nano ~/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/.env
+# Change POSTGRES_PASSWORD=your_new_secure_password
+```
+
+**MariaDB:**
+```bash
+mysql -u root -p
+ALTER USER 'ragnarok'@'localhost' IDENTIFIED BY 'your_new_secure_password';
+FLUSH PRIVILEGES;
+EXIT;
+
+# Update rAthena config
+nano ~/ai-mmorpg-world/rathena-AI-world/conf/inter_athena.conf
+# Update login_server_pw, char_server_pw, map_server_pw
+```
+
+**DragonflyDB:**
+```bash
+# Edit DragonflyDB config
+sudo nano /etc/dragonfly/dragonfly.conf
+# Add: requirepass your_secure_password
+
+# Restart DragonflyDB
+sudo systemctl restart dragonfly
+
+# Update .env file
+nano ~/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/.env
+# Change REDIS_PASSWORD=your_secure_password
+```
+
+### Firewall Configuration
+
+```bash
+# Allow only necessary ports
+sudo ufw allow 22/tcp      # SSH
+sudo ufw allow 6900/tcp    # rAthena login
+sudo ufw allow 6121/tcp    # rAthena char
+sudo ufw allow 5121/tcp    # rAthena map
+sudo ufw allow 8000/tcp    # AI service (restrict to internal network in production)
+sudo ufw allow 8001/tcp    # P2P coordinator (restrict to internal network in production)
+
+# Block database ports from external access
+sudo ufw deny 5432/tcp     # PostgreSQL
+sudo ufw deny 3306/tcp     # MariaDB
+sudo ufw deny 6379/tcp     # DragonflyDB
+
+# Enable firewall
+sudo ufw enable
+```
+
+### File Permissions
+
+```bash
+# Restrict access to sensitive files
+chmod 600 ~/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/.env
+chmod 600 ~/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/.env
+chmod 600 ~/ai-mmorpg-world/rathena-AI-world/conf/inter_athena.conf
+```
+
+### API Key Security
+
+- **Never commit `.env` files to version control**
+- **Use environment-specific `.env` files** (`.env.production`, `.env.development`)
+- **Rotate API keys regularly** (every 90 days recommended)
+- **Use separate API keys for development and production**
+- **Monitor API usage** for unusual activity
+
+### Network Security
+
+- **Use HTTPS/TLS** for all external API endpoints
+- **Implement rate limiting** on public-facing endpoints
+- **Use VPN or private network** for database access
+- **Enable database SSL/TLS** connections
+- **Implement IP whitelisting** for administrative access
+
+---
 
 ---
 

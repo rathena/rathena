@@ -551,6 +551,75 @@ class Database:
             logger.error(f"Error deleting quest {quest_id}: {e}")
             raise
 
+    async def create_quest(self, quest_data: dict):
+        """Create a new quest (alias for store_quest for test compatibility)"""
+        quest_id = quest_data.get("quest_id")
+        if not quest_id:
+            raise ValueError("quest_data must contain 'quest_id'")
+        await self.store_quest(quest_id, quest_data)
+
+    # Player Memory Operations
+    async def get_player_memory(self, player_id: str, npc_id: str) -> list:
+        """Get player-NPC interaction memory"""
+        try:
+            key = f"memory:player:{player_id}:npc:{npc_id}"
+            memories = await self.client.lrange(key, 0, -1)
+
+            # Decode and parse JSON memories
+            result = []
+            for memory in memories:
+                if isinstance(memory, bytes):
+                    memory = memory.decode('utf-8')
+                result.append(json.loads(memory))
+
+            logger.debug(f"Retrieved {len(result)} memories for player {player_id} and NPC {npc_id}")
+            return result
+        except Exception as e:
+            logger.error(f"Error getting player memory for {player_id} and {npc_id}: {e}")
+            return []
+
+    async def add_player_memory(self, player_id: str, npc_id: str, memory: dict):
+        """Add a player-NPC interaction memory"""
+        try:
+            key = f"memory:player:{player_id}:npc:{npc_id}"
+            memory_json = json.dumps(memory)
+            await self.client.rpush(key, memory_json)
+
+            # Set expiration (30 days)
+            await self.client.expire(key, 30 * 24 * 60 * 60)
+
+            logger.debug(f"Added memory for player {player_id} and NPC {npc_id}")
+        except Exception as e:
+            logger.error(f"Error adding player memory for {player_id} and {npc_id}: {e}")
+            raise
+
+    # Rate Limiting Operations
+    async def check_rate_limit(self, player_id: str, action_type: str, window_seconds: int) -> bool:
+        """Check if player is rate limited for an action"""
+        try:
+            key = f"ratelimit:{player_id}:{action_type}"
+            exists = await self.client.exists(key)
+
+            if exists:
+                ttl = await self.client.ttl(key)
+                logger.debug(f"Player {player_id} is rate limited for {action_type} (TTL: {ttl}s)")
+                return True
+
+            return False
+        except Exception as e:
+            logger.error(f"Error checking rate limit for {player_id} and {action_type}: {e}")
+            return False
+
+    async def set_rate_limit(self, player_id: str, action_type: str, window_seconds: int):
+        """Set rate limit for a player action"""
+        try:
+            key = f"ratelimit:{player_id}:{action_type}"
+            await self.client.setex(key, window_seconds, "1")
+            logger.debug(f"Set rate limit for player {player_id} and {action_type} ({window_seconds}s)")
+        except Exception as e:
+            logger.error(f"Error setting rate limit for {player_id} and {action_type}: {e}")
+            raise
+
 
 # Global database instances
 db = Database()  # DragonflyDB/Redis for caching and real-time state

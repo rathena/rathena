@@ -5,10 +5,11 @@ Provides monitoring and metrics endpoints for the P2P coordinator service.
 """
 
 from typing import Dict, Any
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Response
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 from loguru import logger
+import time
 
 from database import get_db_session, db_manager
 from models.host import Host, HostStatus
@@ -16,7 +17,7 @@ from models.zone import Zone, ZoneStatus
 from models.session import P2PSession, SessionStatus
 
 
-router = APIRouter(prefix="/api/monitoring", tags=["monitoring"])
+router = APIRouter(prefix="/api/v1/monitoring", tags=["monitoring"])
 
 
 @router.get("/dashboard")
@@ -156,3 +157,133 @@ async def get_host_stats(
         logger.error(f"Failed to fetch host stats: {e}")
         return {"error": str(e)}
 
+
+@router.get("/metrics")
+async def get_prometheus_metrics(
+    db: AsyncSession = Depends(get_db_session),
+) -> Response:
+    """
+    Get Prometheus-compatible metrics
+
+    Returns metrics in Prometheus text exposition format:
+    https://prometheus.io/docs/instrumenting/exposition_formats/
+    """
+    try:
+        metrics_lines = []
+
+        # Host metrics
+        host_count_result = await db.execute(select(func.count(Host.id)))
+        total_hosts = host_count_result.scalar() or 0
+
+        online_hosts_result = await db.execute(
+            select(func.count(Host.id)).where(Host.status == HostStatus.ONLINE)
+        )
+        online_hosts = online_hosts_result.scalar() or 0
+
+        avg_quality_result = await db.execute(
+            select(func.avg(Host.quality_score)).where(Host.status == HostStatus.ONLINE)
+        )
+        avg_quality = float(avg_quality_result.scalar() or 0.0)
+
+        metrics_lines.extend([
+            '# HELP p2p_hosts_total Total number of registered hosts',
+            '# TYPE p2p_hosts_total gauge',
+            f'p2p_hosts_total {total_hosts}',
+            '',
+            '# HELP p2p_hosts_online Number of online hosts',
+            '# TYPE p2p_hosts_online gauge',
+            f'p2p_hosts_online {online_hosts}',
+            '',
+            '# HELP p2p_host_quality_score_avg Average quality score of online hosts',
+            '# TYPE p2p_host_quality_score_avg gauge',
+            f'p2p_host_quality_score_avg {avg_quality:.2f}',
+            '',
+        ])
+
+        # Zone metrics
+        zone_count_result = await db.execute(select(func.count(Zone.id)))
+        total_zones = zone_count_result.scalar() or 0
+
+        enabled_zones_result = await db.execute(
+            select(func.count(Zone.id)).where(Zone.p2p_enabled == True)
+        )
+        p2p_enabled_zones = enabled_zones_result.scalar() or 0
+
+        metrics_lines.extend([
+            '# HELP p2p_zones_total Total number of zones',
+            '# TYPE p2p_zones_total gauge',
+            f'p2p_zones_total {total_zones}',
+            '',
+            '# HELP p2p_zones_enabled Number of P2P-enabled zones',
+            '# TYPE p2p_zones_enabled gauge',
+            f'p2p_zones_enabled {p2p_enabled_zones}',
+            '',
+        ])
+
+        # Session metrics
+        session_count_result = await db.execute(select(func.count(P2PSession.id)))
+        total_sessions = session_count_result.scalar() or 0
+
+        active_sessions_result = await db.execute(
+            select(func.count(P2PSession.id)).where(P2PSession.status == SessionStatus.ACTIVE)
+        )
+        active_sessions = active_sessions_result.scalar() or 0
+
+        total_players_result = await db.execute(
+            select(func.sum(P2PSession.current_players)).where(P2PSession.status == SessionStatus.ACTIVE)
+        )
+        total_players = int(total_players_result.scalar() or 0)
+
+        avg_latency_result = await db.execute(
+            select(func.avg(P2PSession.average_latency_ms)).where(P2PSession.status == SessionStatus.ACTIVE)
+        )
+        avg_latency = float(avg_latency_result.scalar() or 0.0)
+
+        metrics_lines.extend([
+            '# HELP p2p_sessions_total Total number of sessions',
+            '# TYPE p2p_sessions_total gauge',
+            f'p2p_sessions_total {total_sessions}',
+            '',
+            '# HELP p2p_sessions_active Number of active sessions',
+            '# TYPE p2p_sessions_active gauge',
+            f'p2p_sessions_active {active_sessions}',
+            '',
+            '# HELP p2p_players_total Total number of players in active sessions',
+            '# TYPE p2p_players_total gauge',
+            f'p2p_players_total {total_players}',
+            '',
+            '# HELP p2p_session_latency_ms_avg Average session latency in milliseconds',
+            '# TYPE p2p_session_latency_ms_avg gauge',
+            f'p2p_session_latency_ms_avg {avg_latency:.2f}',
+            '',
+        ])
+
+        # System uptime (placeholder - would need to track actual start time)
+        metrics_lines.extend([
+            '# HELP p2p_coordinator_up Coordinator service is up',
+            '# TYPE p2p_coordinator_up gauge',
+            'p2p_coordinator_up 1',
+            '',
+        ])
+
+        # Join all metrics with newlines
+        metrics_text = '\n'.join(metrics_lines)
+
+        logger.debug("Prometheus metrics generated successfully")
+
+        return Response(
+            content=metrics_text,
+            media_type="text/plain; version=0.0.4; charset=utf-8"
+        )
+
+    except Exception as e:
+        logger.error(f"Failed to generate Prometheus metrics: {e}")
+        error_metrics = [
+            '# HELP p2p_coordinator_up Coordinator service is up',
+            '# TYPE p2p_coordinator_up gauge',
+            'p2p_coordinator_up 0',
+        ]
+        return Response(
+            content='\n'.join(error_metrics),
+            media_type="text/plain; version=0.0.4; charset=utf-8"
+        )

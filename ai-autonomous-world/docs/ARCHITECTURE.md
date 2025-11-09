@@ -4,9 +4,9 @@
 
 This document outlines the architecture for transforming rAthena MMORPG into a living, breathing world with AI-driven NPCs and adaptive systems. The design prioritizes:
 
-- **Non-invasive extension architecture** - Minimal modifications to rAthena core
+- **Non-invasive extension architecture** - Custom HTTP script commands (`httpget`, `httppost`) with no core modifications
 - **Scalability** - Support for hundreds to thousands of autonomous NPCs
-- **Flexibility** - Provider-agnostic LLM integration with Azure OpenAI Foundry as default
+- **Flexibility** - Provider-agnostic LLM integration with **Azure OpenAI as primary provider**
 - **Emergent behavior** - Real-world complexity simulation without artificial constraints
 - **Maintainability** - Clean separation of concerns and extensible design
 
@@ -90,14 +90,21 @@ The system consists of five major layers:
 
 ### 1. rAthena Game Server Layer
 
-**Modifications Required:**
-- Minimal - only custom NPC scripts in `/npc/custom/ai-world/`
-- No core C++ code changes required
-- Leverage existing event system (OnInit, OnTimer, OnTouch, etc.)
+**Modifications Implemented:**
+- Custom HTTP script commands in `src/custom/script_http.cpp`
+  - `httpget("<url>")` - GET requests to AI service
+  - `httppost("<url>", "<json_body>")` - POST requests with JSON payload
+  - Connection pooling for performance (`std::map` with `std::mutex`)
+  - Thread-safe implementation
+  - 5s connection timeout, 30s read timeout
+  - HTTP keep-alive enabled
+- Custom NPC scripts in `/npc/custom/ai-world/` (planned)
+- No core C++ code changes - all extensions in `/src/custom/`
 
 **Components:**
-- **AI-Enabled NPC Scripts**: Custom scripts that hook into AI service
-- **Event Dispatchers**: Scripts that send game events to Bridge Layer
+- **HTTP Script Commands**: Production-grade HTTP client for NPC-AI communication
+- **AI-Enabled NPC Scripts**: Custom scripts that hook into AI service (planned)
+- **Event Dispatchers**: Scripts that send game events to AI service via HTTP
 - **Action Receivers**: Scripts that execute AI-decided actions
 
 **Example NPC Script Structure:**
@@ -221,34 +228,65 @@ GET  /ai/economy/trends        - Get market trends
 ### 3. AI Service Layer
 
 **Technology Stack:**
-- **Language**: Python 3.11+
-- **Framework**: FastAPI (NOT Express.js as per rules)
-- **Agent Orchestration**: CrewAI
-- **Memory Management**: Memori SDK
-- **Async Processing**: asyncio, Celery for background tasks
+- **Language**: Python 3.12.3
+- **Framework**: FastAPI 0.115.12 (NOT Express.js as per rules)
+- **ASGI Server**: uvicorn 0.34.0
+- **Agent Orchestration**: CrewAI 0.86.0
+- **Memory Management**: Memori SDK 0.1.19
+- **Database**: PostgreSQL 17.6 with pgvector
+- **Cache**: DragonflyDB 7.4.0 (Redis-compatible)
+- **LLM**: Azure OpenAI (primary), 4 fallback providers
+- **Async Processing**: asyncio, background tasks
+- **Testing**: pytest 7.4.4 (32/32 tests passing)
 
 **Architecture:**
 
 #### CrewAI Multi-Agent Orchestrator
 
-**Agent Types:**
+**Implemented Agent Types (6 agents):**
 
-1. **NPC Consciousness Agents** (One per autonomous NPC)
-   - Individual personality and decision-making
-   - Memory and learning capabilities
-   - Goal-oriented behavior
-   - Social interaction processing
+1. **DialogueAgent** - NPC conversation generation
+   - Generates contextual, personality-driven dialogue
+   - Uses Azure OpenAI gpt-4 by default
+   - Temperature: 0.8 for creative responses
+   - Integrates with NPC personality traits
 
-2. **World System Agents** (Singleton or few instances)
-   - Economy Agent: Manages supply/demand, pricing, trade
-   - Politics Agent: Manages factions, alliances, conflicts
-   - Environment Agent: Weather, seasons, natural events
-   - Quest Agent: Dynamic quest generation
+2. **DecisionAgent** - NPC decision making
+   - Evaluates options and makes decisions
+   - Temperature: 0.6 for more deterministic choices
+   - Considers goals, personality, and context
+   - Outputs structured action plans
 
-3. **Meta Agents** (Orchestration)
-   - Event Coordinator: Routes events to appropriate agents
-   - Coherence Monitor: Ensures world consistency
-   - Performance Optimizer: Manages LLM call frequency
+3. **MemoryAgent** - Memory management
+   - Integrates with Memori SDK for long-term memory
+   - Vector similarity search for relevant memories
+   - Stores in PostgreSQL with pgvector
+   - Caches in DragonflyDB for fast retrieval
+
+4. **WorldAgent** - World state analysis
+   - Analyzes world state changes
+   - Determines impact on NPCs
+   - Generates world events
+   - Tracks economic and political trends
+
+5. **QuestAgent** - Dynamic quest generation
+   - Creates contextual quests based on NPC and player state
+   - Generates objectives, rewards, and narratives
+   - Adapts to player level and class
+   - Integrates with faction system
+
+6. **EconomyAgent** - Economic simulation
+   - Manages supply/demand dynamics
+   - Tracks market trends
+   - Simulates inflation and trade
+   - Provides economic state to other agents
+
+**Orchestrator:**
+- **Agent Orchestrator** - CrewAI-based multi-agent coordination
+  - Routes requests to appropriate agents
+  - Manages agent communication
+  - Handles error recovery and fallbacks
+  - Optimizes LLM usage
 
 **Agent Communication Flow:**
 ```
@@ -286,6 +324,30 @@ Game Event → Event Coordinator → Relevant Agents → Decision → Action Que
 ### 4. LLM Provider Abstraction Layer
 
 **Design Pattern**: Strategy Pattern with Factory
+
+**Implemented Providers (5):**
+1. **Azure OpenAI** (Primary, Production)
+   - Endpoint: Configured via `AZURE_OPENAI_ENDPOINT` environment variable
+   - Model: `gpt-4`
+   - API Version: `2024-08-01-preview`
+   - Timeout: 30s (configurable)
+   - Max Retries: 3
+
+2. **OpenAI** (Fallback)
+   - Model: `gpt-4-turbo-preview`
+   - API Key configured in .env
+
+3. **Anthropic Claude** (Alternative)
+   - Model: `claude-3-5-sonnet-20241022`
+   - API Key configured in .env
+
+4. **Google Gemini** (Alternative)
+   - Model: `gemini-1.5-pro`
+   - API Key configured in .env
+
+5. **DeepSeek** (Alternative)
+   - Model: `deepseek-chat`
+   - API Key configured in .env
 
 **Interface:**
 ```python
@@ -449,19 +511,43 @@ Fields:
 - World state cached with invalidation on updates
 - Memory retrieval results cached per query
 
-#### PostgreSQL Schema
+#### PostgreSQL Schema (18 Tables)
 
-**Factions Table:**
+**Current Implementation: 18 tables in PostgreSQL 17.6**
+
+**AI-Specific Tables (7):**
+1. `factions` - Faction data and relationships
+2. `player_reputation` - Player-faction reputation tracking
+3. `faction_events` - Historical faction events
+4. `faction_conflicts` - Active and historical conflicts
+5. `npc_memories` - NPC long-term memories (Memori SDK)
+6. `npc_relationships` - NPC-to-NPC relationships
+7. `world_events` - World-wide events and history
+
+**rAthena Integration Tables (11):**
+8. `npc_agents` - NPC-to-AI agent mapping
+9. `npc_state` - NPC current state and goals
+10. `player_interactions` - Player-NPC interaction history
+11. `quest_history` - Dynamic quest tracking
+12. `economy_history` - Economic data over time
+13. `dialogue_cache` - Cached dialogue responses
+14. `decision_cache` - Cached NPC decisions
+15. `event_queue` - Pending events for processing
+16. `action_history` - NPC action history
+17. `memory_vectors` - Vector embeddings for memory search
+18. `system_config` - System configuration and state
+
+**Example: Factions Table**
 ```sql
 CREATE TABLE factions (
     faction_id VARCHAR(255) PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
-    alignment VARCHAR(50) DEFAULT 'neutral',  -- good, evil, neutral
-    relationships JSONB DEFAULT '{}',  -- {faction_id: relationship_score}
-    controlled_areas JSONB DEFAULT '[]',  -- [{map, x, y, radius}]
-    npc_members JSONB DEFAULT '[]',  -- [npc_id1, npc_id2, ...]
-    goals JSONB DEFAULT '[]',  -- [goal1, goal2, ...]
+    alignment VARCHAR(50) DEFAULT 'neutral',
+    relationships JSONB DEFAULT '{}',
+    controlled_areas JSONB DEFAULT '[]',
+    npc_members JSONB DEFAULT '[]',
+    goals JSONB DEFAULT '[]',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
