@@ -23,6 +23,8 @@ from ai_service.routers.chat_command import router as chat_command_router
 from ai_service.routers.batch import router as batch_router
 from ai_service.routers.economy import router as economy_router
 from ai_service.routers.faction import router as faction_router
+from ai_service.routers.npc_spawning import router as npc_spawning_router
+from ai_service.routers.world_bootstrap import router as world_bootstrap_router
 from ai_service.middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
@@ -401,8 +403,10 @@ app.include_router(chat_command_router)
 app.include_router(batch_router)
 app.include_router(economy_router)
 app.include_router(faction_router)
+app.include_router(npc_spawning_router)
+app.include_router(world_bootstrap_router)
 
-logger.info("✓ All routers registered (8 routers)")
+logger.info("✓ All routers registered (10 routers)")
 
 
 # Run server

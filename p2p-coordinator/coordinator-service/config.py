@@ -12,8 +12,8 @@ from loguru import logger
 
 class ServiceConfig(BaseSettings):
     """Service-level configuration"""
-    
-    host: str = Field(default="0.0.0.0", alias="P2P_SERVICE_HOST")
+
+    host: str = Field(default="192.168.0.100", alias="P2P_SERVICE_HOST")
     port: int = Field(default=8001, alias="P2P_SERVICE_PORT")
     env: str = Field(default="development", alias="P2P_SERVICE_ENV")
     name: str = Field(default="p2p-coordinator", alias="P2P_SERVICE_NAME")
@@ -31,13 +31,13 @@ class DatabaseConfig(BaseSettings):
     """Database configuration for PostgreSQL and DragonflyDB (Redis-compatible)"""
 
     # DragonflyDB Configuration (Redis-compatible protocol)
-    redis_host: str = Field(default="localhost", alias="REDIS_HOST")
+    redis_host: str = Field(default="192.168.0.100", alias="REDIS_HOST")
     redis_port: int = Field(default=6379, alias="REDIS_PORT")
     redis_db: int = Field(default=1, alias="REDIS_DB")
     redis_password: str = Field(default="", alias="REDIS_PASSWORD")
 
     # PostgreSQL Configuration
-    postgres_host: str = Field(default="localhost", alias="POSTGRES_HOST")
+    postgres_host: str = Field(default="192.168.0.100", alias="POSTGRES_HOST")
     postgres_port: int = Field(default=5432, alias="POSTGRES_PORT")
     postgres_db: str = Field(default="p2p_coordinator", alias="POSTGRES_DB")
     postgres_user: str = Field(default="p2p_user", alias="POSTGRES_USER")
@@ -122,7 +122,7 @@ class P2PFeaturesConfig(BaseSettings):
 class AIServiceConfig(BaseSettings):
     """AI Service integration configuration"""
 
-    ai_service_url: str = Field(default="http://localhost:8000", alias="AI_SERVICE_URL")
+    ai_service_url: str = Field(default="http://192.168.0.100:8000", alias="AI_SERVICE_URL")
     ai_service_api_key: str = Field(default="your-api-key-here", alias="AI_SERVICE_API_KEY")
     ai_service_enabled: bool = Field(default=True, alias="AI_SERVICE_ENABLED")
 
@@ -159,7 +159,7 @@ class SecurityConfig(BaseSettings):
     api_key_validation_enabled: bool = Field(default=True, alias="API_KEY_VALIDATION_ENABLED")
 
     # CORS Settings
-    cors_origins: str = Field(default="http://localhost:3000,http://localhost:8000,http://localhost:8001", alias="CORS_ORIGINS")
+    cors_origins: str = Field(default="http://192.168.0.100:3000,http://192.168.0.100:8000,http://192.168.0.100:8001,http://localhost:3000,http://localhost:8000,http://localhost:8001", alias="CORS_ORIGINS")
 
     # JWT Settings
     jwt_secret_key: str = Field(..., alias="JWT_SECRET_KEY", description="REQUIRED: JWT secret key (set via environment variable)")

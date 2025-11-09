@@ -17,24 +17,24 @@ class Settings(BaseSettings):
     
     # Service Configuration
     service_name: str = Field(default="ai-service", env="SERVICE_NAME")
-    service_host: str = Field(default="0.0.0.0", env="SERVICE_HOST")
+    service_host: str = Field(default="192.168.0.100", env="SERVICE_HOST")
     service_port: int = Field(default=8000, env="SERVICE_PORT")
     environment: str = Field(default="development", env="ENVIRONMENT")
     debug: bool = Field(default=True, env="DEBUG")
 
     # rAthena Bridge Configuration (for pushing commands back to game server)
-    rathena_bridge_host: str = Field(default="127.0.0.1", env="RATHENA_BRIDGE_HOST")
+    rathena_bridge_host: str = Field(default="192.168.0.100", env="RATHENA_BRIDGE_HOST")
     rathena_bridge_port: int = Field(default=8888, env="RATHENA_BRIDGE_PORT")
 
     # DragonflyDB Configuration (for caching and real-time state)
-    redis_host: str = Field(default="127.0.0.1", env="REDIS_HOST")
+    redis_host: str = Field(default="192.168.0.100", env="REDIS_HOST")
     redis_port: int = Field(default=6379, env="REDIS_PORT")
     redis_db: int = Field(default=0, env="REDIS_DB")
     redis_password: Optional[str] = Field(default=None, env="REDIS_PASSWORD")
     redis_max_connections: int = Field(default=50, env="REDIS_MAX_CONNECTIONS")
 
     # PostgreSQL Configuration (for persistent memory storage via Memori SDK)
-    postgres_host: str = Field(default="localhost", env="POSTGRES_HOST")
+    postgres_host: str = Field(default="192.168.0.100", env="POSTGRES_HOST")
     postgres_port: int = Field(default=5432, env="POSTGRES_PORT")
     postgres_db: str = Field(default="ai_world_memory", env="POSTGRES_DB")
     postgres_user: str = Field(default="ai_world_user", env="POSTGRES_USER")
@@ -111,7 +111,7 @@ class Settings(BaseSettings):
     api_key_header: str = Field(default="X-API-Key", env="API_KEY_HEADER")
     api_key_required: bool = Field(default=False, env="API_KEY_REQUIRED")
     cors_origins: Union[List[str], str] = Field(
-        default=["http://localhost:8888", "http://127.0.0.1:8888"],
+        default=["http://192.168.0.100:8888", "http://localhost:8888", "http://127.0.0.1:8888"],
         env="CORS_ORIGINS",
         description="CORS allowed origins - restrict to known domains for security"
     )
@@ -122,7 +122,7 @@ class Settings(BaseSettings):
         """Parse CORS origins from comma-separated string or list"""
         if isinstance(v, str):
             if not v or v.strip() == '':
-                return ["http://localhost:8888", "http://127.0.0.1:8888"]
+                return ["http://192.168.0.100:8888", "http://localhost:8888", "http://127.0.0.1:8888"]
             return [origin.strip() for origin in v.split(',') if origin.strip()]
         return v
 

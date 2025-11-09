@@ -1,0 +1,430 @@
+//===== rAthena Script =======================================
+//= AI-Enabled NPCs for Prontera
+//===== Description: =========================================
+//= Diverse AI NPCs with unique personalities for testing
+//= Each NPC has distinct personality traits and behaviors
+//===== Author: ==============================================
+//= AI Autonomous World System
+//============================================================
+
+//============================================================
+// 1. Cheerful Adventurous Explorer (High Openness, High Extraversion)
+//============================================================
+prontera,155,185,4	script	Lyra the Explorer#ai002	4_F_NOVICE,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+	
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_explorer_002\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"talk\",";
+	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "}";
+	
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+	
+	mes "[Lyra the Explorer]";
+	if (.@response$ != "") {
+		mes .@response$;
+	} else {
+		mes "Oh! A fellow adventurer!";
+		mes "I've just returned from the";
+		mes "most AMAZING expedition!";
+		mes "Want to hear about it?";
+	}
+	close;
+
+OnInit:
+	.npc_id$ = "ai_explorer_002";
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_explorer_002\",";
+	.@reg_json$ += "\"name\":\"Lyra the Explorer\",";
+	.@reg_json$ += "\"npc_class\":\"explorer\",";
+	.@reg_json$ += "\"level\":35,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":155,\"y\":185},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.95,";
+	.@reg_json$ += "\"conscientiousness\":0.4,";
+	.@reg_json$ += "\"extraversion\":0.9,";
+	.@reg_json$ += "\"agreeableness\":0.8,";
+	.@reg_json$ += "\"neuroticism\":0.2,";
+	.@reg_json$ += "\"moral_alignment\":\"chaotic_good\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[\"Explore new areas\",\"Meet new people\",\"Find rare treasures\"]";
+	.@reg_json$ += "}";
+	
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Lyra the Explorer registered: " + .@response$;
+	end;
+}
+
+//============================================================
+// 2. Grumpy Suspicious Guard (Low Agreeableness, High Neuroticism)
+//============================================================
+prontera,145,175,4	script	Guard Thorne#ai003	4_M_JOB_KNIGHT1,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+	
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_guard_003\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"talk\",";
+	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "}";
+	
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+	
+	mes "[Guard Thorne]";
+	if (.@response$ != "") {
+		mes .@response$;
+	} else {
+		mes "*eyes you suspiciously*";
+		mes "What do you want?";
+		mes "I'm watching you...";
+	}
+	close;
+
+OnInit:
+	.npc_id$ = "ai_guard_003";
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_guard_003\",";
+	.@reg_json$ += "\"name\":\"Guard Thorne\",";
+	.@reg_json$ += "\"npc_class\":\"guard\",";
+	.@reg_json$ += "\"level\":60,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":145,\"y\":175},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.2,";
+	.@reg_json$ += "\"conscientiousness\":0.9,";
+	.@reg_json$ += "\"extraversion\":0.3,";
+	.@reg_json$ += "\"agreeableness\":0.25,";
+	.@reg_json$ += "\"neuroticism\":0.85,";
+	.@reg_json$ += "\"moral_alignment\":\"lawful_neutral\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[\"Maintain order\",\"Catch criminals\",\"Protect citizens\"]";
+	.@reg_json$ += "}";
+	
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Guard Thorne registered: " + .@response$;
+	end;
+}
+
+//============================================================
+// 3. Wise Scholarly Librarian (High Conscientiousness, High Openness)
+//============================================================
+prontera,160,190,4	script	Scholar Elara#ai004	4_F_SAGE_B,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+	
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_scholar_004\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"talk\",";
+	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "}";
+	
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+	
+	mes "[Scholar Elara]";
+	if (.@response$ != "") {
+		mes .@response$;
+	} else {
+		mes "Greetings, seeker of knowledge.";
+		mes "The pursuit of wisdom is";
+		mes "the noblest of endeavors.";
+		mes "How may I assist you?";
+	}
+	close;
+
+OnInit:
+	.npc_id$ = "ai_scholar_004";
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_scholar_004\",";
+	.@reg_json$ += "\"name\":\"Scholar Elara\",";
+	.@reg_json$ += "\"npc_class\":\"scholar\",";
+	.@reg_json$ += "\"level\":70,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":160,\"y\":190},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.9,";
+	.@reg_json$ += "\"conscientiousness\":0.95,";
+	.@reg_json$ += "\"extraversion\":0.5,";
+	.@reg_json$ += "\"agreeableness\":0.7,";
+	.@reg_json$ += "\"neuroticism\":0.3,";
+	.@reg_json$ += "\"moral_alignment\":\"lawful_good\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[\"Preserve knowledge\",\"Teach others\",\"Research ancient texts\"]";
+	.@reg_json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Scholar Elara registered: " + .@response$;
+	end;
+}
+
+//============================================================
+// 4. Cunning Ambitious Merchant (Low Agreeableness, High Conscientiousness)
+//============================================================
+prontera,140,185,4	script	Merchant Marcus#ai005	4_M_ORIENT02,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_merchant_005\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"talk\",";
+	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+
+	mes "[Merchant Marcus]";
+	if (.@response$ != "") {
+		mes .@response$;
+	} else {
+		mes "Ah, a customer!";
+		mes "I have the finest goods";
+		mes "at the most... competitive prices.";
+		mes "What's your budget?";
+	}
+	close;
+
+OnInit:
+	.npc_id$ = "ai_merchant_005";
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_merchant_005\",";
+	.@reg_json$ += "\"name\":\"Merchant Marcus\",";
+	.@reg_json$ += "\"npc_class\":\"merchant\",";
+	.@reg_json$ += "\"level\":45,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":140,\"y\":185},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.6,";
+	.@reg_json$ += "\"conscientiousness\":0.85,";
+	.@reg_json$ += "\"extraversion\":0.7,";
+	.@reg_json$ += "\"agreeableness\":0.3,";
+	.@reg_json$ += "\"neuroticism\":0.4,";
+	.@reg_json$ += "\"moral_alignment\":\"neutral_evil\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[\"Maximize profit\",\"Build wealth\",\"Expand business\"]";
+	.@reg_json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Merchant Marcus registered: " + .@response$;
+	end;
+}
+
+//============================================================
+// 5. Shy Anxious Healer (High Neuroticism, High Agreeableness)
+//============================================================
+prontera,165,180,4	script	Healer Mira#ai006	4_F_SISTER,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_healer_006\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"talk\",";
+	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+
+	mes "[Healer Mira]";
+	if (.@response$ != "") {
+		mes .@response$;
+	} else {
+		mes "*nervously fidgets*";
+		mes "O-oh! Hello...";
+		mes "Are you hurt? I can help...";
+		mes "if you need me to...";
+	}
+	close;
+
+OnInit:
+	.npc_id$ = "ai_healer_006";
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_healer_006\",";
+	.@reg_json$ += "\"name\":\"Healer Mira\",";
+	.@reg_json$ += "\"npc_class\":\"healer\",";
+	.@reg_json$ += "\"level\":40,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":165,\"y\":180},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.5,";
+	.@reg_json$ += "\"conscientiousness\":0.7,";
+	.@reg_json$ += "\"extraversion\":0.2,";
+	.@reg_json$ += "\"agreeableness\":0.95,";
+	.@reg_json$ += "\"neuroticism\":0.9,";
+	.@reg_json$ += "\"moral_alignment\":\"neutral_good\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[\"Help the wounded\",\"Avoid conflict\",\"Find peace\"]";
+	.@reg_json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Healer Mira registered: " + .@response$;
+	end;
+}
+
+//============================================================
+// 6. Charismatic Bard (High Extraversion, High Openness)
+//============================================================
+prontera,150,195,4	script	Bard Finn#ai007	4_M_BARD,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_bard_007\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"talk\",";
+	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+
+	mes "[Bard Finn]";
+	if (.@response$ != "") {
+		mes .@response$;
+	} else {
+		mes "*strums lute cheerfully*";
+		mes "Ah! A new face in the crowd!";
+		mes "Care to hear a tale of";
+		mes "adventure and glory?";
+	}
+	close;
+
+OnInit:
+	.npc_id$ = "ai_bard_007";
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_bard_007\",";
+	.@reg_json$ += "\"name\":\"Bard Finn\",";
+	.@reg_json$ += "\"npc_class\":\"bard\",";
+	.@reg_json$ += "\"level\":38,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":150,\"y\":195},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.92,";
+	.@reg_json$ += "\"conscientiousness\":0.4,";
+	.@reg_json$ += "\"extraversion\":0.95,";
+	.@reg_json$ += "\"agreeableness\":0.75,";
+	.@reg_json$ += "\"neuroticism\":0.25,";
+	.@reg_json$ += "\"moral_alignment\":\"chaotic_good\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[\"Entertain crowds\",\"Collect stories\",\"Spread joy\"]";
+	.@reg_json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Bard Finn registered: " + .@response$;
+	end;
+}
+
+//============================================================
+// 7. Stoic Blacksmith (High Conscientiousness, Low Extraversion)
+//============================================================
+prontera,135,190,4	script	Blacksmith Grom#ai008	4_M_DWARF,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_blacksmith_008\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"talk\",";
+	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+
+	mes "[Blacksmith Grom]";
+	if (.@response$ != "") {
+		mes .@response$;
+	} else {
+		mes "*continues hammering*";
+		mes "...What?";
+		mes "I'm busy. Make it quick.";
+	}
+	close;
+
+OnInit:
+	.npc_id$ = "ai_blacksmith_008";
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_blacksmith_008\",";
+	.@reg_json$ += "\"name\":\"Blacksmith Grom\",";
+	.@reg_json$ += "\"npc_class\":\"blacksmith\",";
+	.@reg_json$ += "\"level\":55,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":135,\"y\":190},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.3,";
+	.@reg_json$ += "\"conscientiousness\":0.98,";
+	.@reg_json$ += "\"extraversion\":0.15,";
+	.@reg_json$ += "\"agreeableness\":0.5,";
+	.@reg_json$ += "\"neuroticism\":0.2,";
+	.@reg_json$ += "\"moral_alignment\":\"lawful_neutral\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[\"Perfect craft\",\"Maintain quality\",\"Work in peace\"]";
+	.@reg_json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Blacksmith Grom registered: " + .@response$;
+	end;
+}
+
+//============================================================
+// 8. Mysterious Fortune Teller (High Openness, Neutral Alignment)
+//============================================================
+prontera,170,175,4	script	Seer Zara#ai009	4_F_ZONDAGIRL,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_seer_009\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"talk\",";
+	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+
+	mes "[Seer Zara]";
+	if (.@response$ != "") {
+		mes .@response$;
+	} else {
+		mes "*gazes into crystal ball*";
+		mes "I have been expecting you...";
+		mes "The threads of fate have";
+		mes "brought you to me.";
+	}
+	close;
+
+OnInit:
+	.npc_id$ = "ai_seer_009";
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_seer_009\",";
+	.@reg_json$ += "\"name\":\"Seer Zara\",";
+	.@reg_json$ += "\"npc_class\":\"fortune_teller\",";
+	.@reg_json$ += "\"level\":50,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":170,\"y\":175},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.98,";
+	.@reg_json$ += "\"conscientiousness\":0.6,";
+	.@reg_json$ += "\"extraversion\":0.5,";
+	.@reg_json$ += "\"agreeableness\":0.6,";
+	.@reg_json$ += "\"neuroticism\":0.5,";
+	.@reg_json$ += "\"moral_alignment\":\"true_neutral\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[\"Understand fate\",\"Guide seekers\",\"Uncover mysteries\"]";
+	.@reg_json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Seer Zara registered: " + .@response$;
+	end;
+}
