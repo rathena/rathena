@@ -13252,7 +13252,7 @@ BUILDIN_FUNC(getwaitingroomstate)
 			case 4:
 			case 5:
 			case 16:
-				script_pushconststr(st,"");
+				script_pushconststr(st,"null");
 				break;
 			default: script_pushint(st,-1);break;
 		}
