@@ -1,0 +1,227 @@
+//===== rAthena Script =======================================
+//= Interactive AI-Enabled NPCs for Prontera
+//===== Description: =========================================
+//= AI NPCs with conversational dialogue system
+//= Players can choose quick responses or type custom messages
+//= NPCs remember conversation context
+//===== Author: ==============================================
+//= AI Autonomous World System
+//============================================================
+
+//============================================================
+// 1. Lyra the Explorer - Interactive Conversation
+//============================================================
+prontera,155,185,4	script	Lyra the Explorer#ai002	4_F_NOVICE,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+	.@bridge_url$ = "http://192.168.0.100:8000";
+
+	// Initial greeting (no message)
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_explorer_002\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"message\":\"\"";
+	.@json$ += "}";
+
+	.@greeting$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+
+	mes "[Lyra the Explorer]";
+	if (.@greeting$ != "" && .@greeting$ != "...") {
+		mes .@greeting$;
+	} else {
+		mes "Oh! A fellow adventurer!";
+		mes "I've just returned from the";
+		mes "most AMAZING expedition!";
+	}
+	next;
+
+	// Conversation loop
+	while(1) {
+		.@choice = select(
+			"Tell me about your adventures!",
+			"Any treasure hunting tips?",
+			"Where should I explore next?",
+			"Type my own message...",
+			"Goodbye"
+		);
+
+		// Handle choice
+		if (.@choice == 1) {
+			.@message$ = "Tell me about your adventures!";
+		} else if (.@choice == 2) {
+			.@message$ = "Any treasure hunting tips?";
+		} else if (.@choice == 3) {
+			.@message$ = "Where should I explore next?";
+		} else if (.@choice == 4) {
+			// Custom message input
+			mes "[Lyra the Explorer]";
+			mes "What would you like to say?";
+			mes "(Max 255 characters)";
+			input .@message$;
+			
+			if (.@message$ == "") {
+				mes "[Lyra the Explorer]";
+				mes "Hmm, did you want to say something?";
+				next;
+				continue;
+			}
+		} else {
+			// Goodbye
+			mes "[Lyra the Explorer]";
+			mes "Safe travels, friend!";
+			mes "May your adventures be grand!";
+			close;
+		}
+
+		// Send message to AI
+		.@json$ = "{";
+		.@json$ += "\"npc_id\":\"ai_explorer_002\",";
+		.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+		.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+		.@json$ += "\"message\":\"" + .@message$ + "\"";
+		.@json$ += "}";
+
+		.@response$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+
+		// Display response
+		mes "[Lyra the Explorer]";
+		if (.@response$ != "" && .@response$ != "...") {
+			mes .@response$;
+		} else {
+			mes "That's fascinating!";
+			mes "Tell me more!";
+		}
+		next;
+	}
+
+OnInit:
+	.npc_id$ = "ai_explorer_002";
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_explorer_002\",";
+	.@reg_json$ += "\"name\":\"Lyra the Explorer\",";
+	.@reg_json$ += "\"npc_class\":\"explorer\",";
+	.@reg_json$ += "\"level\":35,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":155,\"y\":185},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.95,";
+	.@reg_json$ += "\"conscientiousness\":0.4,";
+	.@reg_json$ += "\"extraversion\":0.9,";
+	.@reg_json$ += "\"agreeableness\":0.8,";
+	.@reg_json$ += "\"neuroticism\":0.2,";
+	.@reg_json$ += "\"moral_alignment\":\"chaotic_good\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[\"Explore new areas\",\"Meet new people\",\"Find rare treasures\"]";
+	.@reg_json$ += "}";
+	
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Lyra the Explorer registered: " + .@response$;
+	end;
+}
+
+//============================================================
+// 2. Guard Thorne - Interactive Conversation
+//============================================================
+prontera,145,175,4	script	Guard Thorne#ai003	4_M_JOB_KNIGHT1,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+	.@bridge_url$ = "http://192.168.0.100:8000";
+
+	// Initial greeting
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_guard_003\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"message\":\"\"";
+	.@json$ += "}";
+
+	.@greeting$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+
+	mes "[Guard Thorne]";
+	if (.@greeting$ != "" && .@greeting$ != "...") {
+		mes .@greeting$;
+	} else {
+		mes "*eyes you suspiciously*";
+		mes "What do you want?";
+	}
+	next;
+
+	// Conversation loop
+	while(1) {
+		.@choice = select(
+			"Is the city safe?",
+			"Any suspicious activity lately?",
+			"What's your duty here?",
+			"Type my own message...",
+			"I'll be going now"
+		);
+
+		if (.@choice == 1) {
+			.@message$ = "Is the city safe?";
+		} else if (.@choice == 2) {
+			.@message$ = "Any suspicious activity lately?";
+		} else if (.@choice == 3) {
+			.@message$ = "What's your duty here?";
+		} else if (.@choice == 4) {
+			mes "[Guard Thorne]";
+			mes "Speak. But make it quick.";
+			input .@message$;
+
+			if (.@message$ == "") {
+				mes "[Guard Thorne]";
+				mes "*glares*";
+				mes "Don't waste my time.";
+				next;
+				continue;
+			}
+		} else {
+			mes "[Guard Thorne]";
+			mes "Stay out of trouble.";
+			close;
+		}
+
+		// Send to AI
+		.@json$ = "{";
+		.@json$ += "\"npc_id\":\"ai_guard_003\",";
+		.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+		.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+		.@json$ += "\"message\":\"" + .@message$ + "\"";
+		.@json$ += "}";
+
+		.@response$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+
+		mes "[Guard Thorne]";
+		if (.@response$ != "" && .@response$ != "...") {
+			mes .@response$;
+		} else {
+			mes "Hmph.";
+		}
+		next;
+	}
+
+OnInit:
+	.npc_id$ = "ai_guard_003";
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_guard_003\",";
+	.@reg_json$ += "\"name\":\"Guard Thorne\",";
+	.@reg_json$ += "\"npc_class\":\"guard\",";
+	.@reg_json$ += "\"level\":60,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":145,\"y\":175},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.2,";
+	.@reg_json$ += "\"conscientiousness\":0.9,";
+	.@reg_json$ += "\"extraversion\":0.3,";
+	.@reg_json$ += "\"agreeableness\":0.25,";
+	.@reg_json$ += "\"neuroticism\":0.85,";
+	.@reg_json$ += "\"moral_alignment\":\"lawful_neutral\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[\"Maintain order\",\"Catch criminals\",\"Protect citizens\"]";
+	.@reg_json$ += "}";
+
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Guard Thorne registered: " + .@response$;
+	end;
+}
+

@@ -13,19 +13,19 @@
 prontera,155,185,4	script	Lyra the Explorer#ai002	4_F_NOVICE,{
 	.@player_id = getcharid(0);
 	.@player_name$ = strcharinfo(0);
-	
+
 	.@json$ = "{";
 	.@json$ += "\"npc_id\":\"ai_explorer_002\",";
 	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
 	.@json$ += "\"interaction_type\":\"talk\",";
 	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
 	.@json$ += "}";
-	
+
 	.@bridge_url$ = "http://192.168.0.100:8000";
-	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
-	
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
+
 	mes "[Lyra the Explorer]";
-	if (.@response$ != "") {
+	if (.@response$ != "" && .@response$ != "...") {
 		mes .@response$;
 	} else {
 		mes "Oh! A fellow adventurer!";
@@ -66,19 +66,29 @@ OnInit:
 prontera,145,175,4	script	Guard Thorne#ai003	4_M_JOB_KNIGHT1,{
 	.@player_id = getcharid(0);
 	.@player_name$ = strcharinfo(0);
-	
+	.@player_level = BaseLevel;
+	.@player_class$ = jobname(Class);
+	.@map$ = strcharinfo(3);
+	.@x = 0;
+	.@y = 0;
+
 	.@json$ = "{";
 	.@json$ += "\"npc_id\":\"ai_guard_003\",";
 	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
 	.@json$ += "\"interaction_type\":\"talk\",";
-	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "\"context\":{";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"player_level\":" + .@player_level + ",";
+	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
+	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "}";
 	.@json$ += "}";
-	
+	.@json$ += "}";
+
 	.@bridge_url$ = "http://192.168.0.100:8000";
-	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
-	
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
+
 	mes "[Guard Thorne]";
-	if (.@response$ != "") {
+	if (.@response$ != "" && .@response$ != "...") {
 		mes .@response$;
 	} else {
 		mes "*eyes you suspiciously*";
@@ -118,19 +128,29 @@ OnInit:
 prontera,160,190,4	script	Scholar Elara#ai004	4_F_SAGE_B,{
 	.@player_id = getcharid(0);
 	.@player_name$ = strcharinfo(0);
-	
+	.@player_level = BaseLevel;
+	.@player_class$ = jobname(Class);
+	.@map$ = strcharinfo(3);
+	.@x = 0;
+	.@y = 0;
+
 	.@json$ = "{";
 	.@json$ += "\"npc_id\":\"ai_scholar_004\",";
 	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
 	.@json$ += "\"interaction_type\":\"talk\",";
-	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "\"context\":{";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"player_level\":" + .@player_level + ",";
+	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
+	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "}";
 	.@json$ += "}";
-	
+	.@json$ += "}";
+
 	.@bridge_url$ = "http://192.168.0.100:8000";
-	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
-	
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
+
 	mes "[Scholar Elara]";
-	if (.@response$ != "") {
+	if (.@response$ != "" && .@response$ != "...") {
 		mes .@response$;
 	} else {
 		mes "Greetings, seeker of knowledge.";
@@ -171,19 +191,29 @@ OnInit:
 prontera,140,185,4	script	Merchant Marcus#ai005	4_M_ORIENT02,{
 	.@player_id = getcharid(0);
 	.@player_name$ = strcharinfo(0);
+	.@player_level = BaseLevel;
+	.@player_class$ = jobname(Class);
+	.@map$ = strcharinfo(3);
+	.@x = 0;
+	.@y = 0;
 
 	.@json$ = "{";
 	.@json$ += "\"npc_id\":\"ai_merchant_005\",";
 	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
 	.@json$ += "\"interaction_type\":\"talk\",";
-	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "\"context\":{";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"player_level\":" + .@player_level + ",";
+	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
+	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "}";
+	.@json$ += "}";
 	.@json$ += "}";
 
 	.@bridge_url$ = "http://192.168.0.100:8000";
-	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Merchant Marcus]";
-	if (.@response$ != "") {
+	if (.@response$ != "" && .@response$ != "...") {
 		mes .@response$;
 	} else {
 		mes "Ah, a customer!";
@@ -224,19 +254,29 @@ OnInit:
 prontera,165,180,4	script	Healer Mira#ai006	4_F_SISTER,{
 	.@player_id = getcharid(0);
 	.@player_name$ = strcharinfo(0);
+	.@player_level = BaseLevel;
+	.@player_class$ = jobname(Class);
+	.@map$ = strcharinfo(3);
+	.@x = 0;
+	.@y = 0;
 
 	.@json$ = "{";
 	.@json$ += "\"npc_id\":\"ai_healer_006\",";
 	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
 	.@json$ += "\"interaction_type\":\"talk\",";
-	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "\"context\":{";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"player_level\":" + .@player_level + ",";
+	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
+	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "}";
+	.@json$ += "}";
 	.@json$ += "}";
 
 	.@bridge_url$ = "http://192.168.0.100:8000";
-	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Healer Mira]";
-	if (.@response$ != "") {
+	if (.@response$ != "" && .@response$ != "...") {
 		mes .@response$;
 	} else {
 		mes "*nervously fidgets*";
@@ -277,19 +317,29 @@ OnInit:
 prontera,150,195,4	script	Bard Finn#ai007	4_M_BARD,{
 	.@player_id = getcharid(0);
 	.@player_name$ = strcharinfo(0);
+	.@player_level = BaseLevel;
+	.@player_class$ = jobname(Class);
+	.@map$ = strcharinfo(3);
+	.@x = 0;
+	.@y = 0;
 
 	.@json$ = "{";
 	.@json$ += "\"npc_id\":\"ai_bard_007\",";
 	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
 	.@json$ += "\"interaction_type\":\"talk\",";
-	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "\"context\":{";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"player_level\":" + .@player_level + ",";
+	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
+	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "}";
+	.@json$ += "}";
 	.@json$ += "}";
 
 	.@bridge_url$ = "http://192.168.0.100:8000";
-	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Bard Finn]";
-	if (.@response$ != "") {
+	if (.@response$ != "" && .@response$ != "...") {
 		mes .@response$;
 	} else {
 		mes "*strums lute cheerfully*";
@@ -330,19 +380,29 @@ OnInit:
 prontera,135,190,4	script	Blacksmith Grom#ai008	4_M_DWARF,{
 	.@player_id = getcharid(0);
 	.@player_name$ = strcharinfo(0);
+	.@player_level = BaseLevel;
+	.@player_class$ = jobname(Class);
+	.@map$ = strcharinfo(3);
+	.@x = 0;
+	.@y = 0;
 
 	.@json$ = "{";
 	.@json$ += "\"npc_id\":\"ai_blacksmith_008\",";
 	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
 	.@json$ += "\"interaction_type\":\"talk\",";
-	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "\"context\":{";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"player_level\":" + .@player_level + ",";
+	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
+	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "}";
+	.@json$ += "}";
 	.@json$ += "}";
 
 	.@bridge_url$ = "http://192.168.0.100:8000";
-	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Blacksmith Grom]";
-	if (.@response$ != "") {
+	if (.@response$ != "" && .@response$ != "...") {
 		mes .@response$;
 	} else {
 		mes "*continues hammering*";
@@ -382,19 +442,29 @@ OnInit:
 prontera,170,175,4	script	Seer Zara#ai009	4_F_ZONDAGIRL,{
 	.@player_id = getcharid(0);
 	.@player_name$ = strcharinfo(0);
+	.@player_level = BaseLevel;
+	.@player_class$ = jobname(Class);
+	.@map$ = strcharinfo(3);
+	.@x = 0;
+	.@y = 0;
 
 	.@json$ = "{";
 	.@json$ += "\"npc_id\":\"ai_seer_009\",";
 	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
 	.@json$ += "\"interaction_type\":\"talk\",";
-	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
+	.@json$ += "\"context\":{";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"player_level\":" + .@player_level + ",";
+	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
+	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "}";
+	.@json$ += "}";
 	.@json$ += "}";
 
 	.@bridge_url$ = "http://192.168.0.100:8000";
-	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction", .@json$);
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Seer Zara]";
-	if (.@response$ != "") {
+	if (.@response$ != "" && .@response$ != "...") {
 		mes .@response$;
 	} else {
 		mes "*gazes into crystal ball*";

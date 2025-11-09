@@ -10,9 +10,9 @@ from pydantic import BaseModel, Field
 class InteractionContext(BaseModel):
     """Context for player-NPC interaction"""
     player_name: str = Field(..., description="Player name")
-    player_level: int = Field(..., description="Player level")
-    player_class: str = Field(..., description="Player class")
-    location: Dict[str, Any] = Field(..., description="Location data (map, x, y)")
+    player_level: Optional[int] = Field(1, description="Player level")
+    player_class: Optional[str] = Field("Novice", description="Player class")
+    location: Optional[Dict[str, Any]] = Field(default_factory=lambda: {"map": "prontera", "x": 0, "y": 0}, description="Location data (map, x, y)")
     time_of_day: str = Field("day", description="Time of day")
     weather: str = Field("clear", description="Weather condition")
     nearby_npcs: Optional[List[str]] = Field(default_factory=list, description="Nearby NPC IDs")

@@ -412,9 +412,25 @@ class Database:
     async def get_npc_state(self, npc_id: str) -> Optional[dict]:
         """Get NPC state from database"""
         try:
+            # Ensure client is connected
+            if not self.client:
+                logger.warning(f"Database client not connected, attempting to connect...")
+                await self.connect()
+
             key = f"npc:{npc_id}"
             state = await self.client.hgetall(key)
-            return state if state else None
+
+            if not state:
+                return None
+
+            # Decode bytes to strings
+            decoded_state = {}
+            for k, v in state.items():
+                key_str = k.decode('utf-8') if isinstance(k, bytes) else k
+                val_str = v.decode('utf-8') if isinstance(v, bytes) else v
+                decoded_state[key_str] = val_str
+
+            return decoded_state
         except Exception as e:
             logger.error(f"Error getting NPC state for {npc_id}: {e}")
             return None
@@ -618,6 +634,66 @@ class Database:
             logger.debug(f"Set rate limit for player {player_id} and {action_type} ({window_seconds}s)")
         except Exception as e:
             logger.error(f"Error setting rate limit for {player_id} and {action_type}: {e}")
+            raise
+
+    # Conversation History Management
+    async def get_conversation_history(self, conversation_key: str, max_messages: int = 20):
+        """
+        Get conversation history for a player-NPC interaction
+
+        Args:
+            conversation_key: Key in format "conversation:{npc_id}:{player_id}"
+            max_messages: Maximum number of messages to retrieve (default: 20)
+
+        Returns:
+            List of conversation messages, or empty list if no history
+        """
+        try:
+            history_json = await self.client.get(conversation_key)
+            if history_json:
+                if isinstance(history_json, bytes):
+                    history_json = history_json.decode('utf-8')
+                history = json.loads(history_json)
+                # Return last N messages
+                return history[-max_messages:] if len(history) > max_messages else history
+            return []
+        except Exception as e:
+            logger.error(f"Error getting conversation history for {conversation_key}: {e}")
+            return []
+
+    async def save_conversation_history(self, conversation_key: str, history: list, ttl: int = 600):
+        """
+        Save conversation history for a player-NPC interaction
+
+        Args:
+            conversation_key: Key in format "conversation:{npc_id}:{player_id}"
+            history: List of conversation messages
+            ttl: Time to live in seconds (default: 600 = 10 minutes)
+        """
+        try:
+            # Keep only last 50 messages to prevent unbounded growth
+            if len(history) > 50:
+                history = history[-50:]
+
+            history_json = json.dumps(history)
+            await self.client.setex(conversation_key, ttl, history_json)
+            logger.debug(f"Saved conversation history for {conversation_key} ({len(history)} messages, TTL: {ttl}s)")
+        except Exception as e:
+            logger.error(f"Error saving conversation history for {conversation_key}: {e}")
+            raise
+
+    async def clear_conversation_history(self, conversation_key: str):
+        """
+        Clear conversation history for a player-NPC interaction
+
+        Args:
+            conversation_key: Key in format "conversation:{npc_id}:{player_id}"
+        """
+        try:
+            await self.client.delete(conversation_key)
+            logger.debug(f"Cleared conversation history for {conversation_key}")
+        except Exception as e:
+            logger.error(f"Error clearing conversation history for {conversation_key}: {e}")
             raise
 
 
