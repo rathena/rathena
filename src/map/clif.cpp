@@ -5032,13 +5032,10 @@ void clif_getareachar_unit( map_session_data* sd,block_list *bl ){
 	}
 
 	// Prevents visual bug where monster shadows appear when entering view range
-	if (battle_config.hide_cloaked_units) {  
-		if (status_change* sc = status_get_sc(bl);  sc != nullptr && sc->option & (OPTION_HIDE | OPTION_CLOAK | OPTION_CHASEWALK | OPTION_INVISIBLE)) {  
-			// Check if this unit type's bit is set in the config  
-			if (battle_config.hide_cloaked_units & bl->type) {  
-				return; // Hide this unit type  
-			}  
-		}  
+	if (battle_config.hide_cloaked_units & bl->type) {
+		if (status_change* sc = status_get_sc(bl); sc != nullptr && sc->option & (OPTION_HIDE | OPTION_CLOAK | OPTION_CHASEWALK | OPTION_INVISIBLE)) {
+			return; // Hide this unit type
+		}
 	}
 
 	ud = unit_bl2ud(bl);
