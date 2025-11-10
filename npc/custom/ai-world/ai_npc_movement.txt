@@ -115,14 +115,19 @@ OnMovementLoop:
 				if (.@y_end < 0) .@y_end = strpos(.@response$, ",", .@y_start);
 				.@y_str$ = substr(.@response$, .@y_start, .@y_end - 1);
 				.@target_y = atoi(.@y_str$);
-				
-				// Execute movement using custom npcwalk command
-				.@move_result = npcwalk(.@npc_name$, .@target_x, .@target_y);
-				
-				if (.@move_result) {
-					debugmes "[AI Movement] " + .@npc_name$ + " moving to (" + .@target_x + ", " + .@target_y + ")";
+
+				// Validate walkability before attempting movement
+				if (!checkcell(.@current_map$, .@target_x, .@target_y, CELL_CHKPASS)) {
+					debugmes "[AI Movement] Target (" + .@target_x + ", " + .@target_y + ") is not walkable for " + .@npc_name$;
 				} else {
-					debugmes "[AI Movement] Failed to move " + .@npc_name$ + " to (" + .@target_x + ", " + .@target_y + ")";
+					// Execute movement using custom npcwalk command
+					.@move_result = npcwalk(.@npc_name$, .@target_x, .@target_y);
+
+					if (.@move_result) {
+						debugmes "[AI Movement] " + .@npc_name$ + " moving to (" + .@target_x + ", " + .@target_y + ")";
+					} else {
+						debugmes "[AI Movement] Failed to move " + .@npc_name$ + " to (" + .@target_x + ", " + .@target_y + ")";
+					}
 				}
 			}
 		} else {
@@ -209,13 +214,21 @@ OnAggressiveMovementLoop:
 				.@y_str$ = substr(.@response$, .@y_start, .@y_end - 1);
 				.@target_y = atoi(.@y_str$);
 
-				// Execute movement using custom npcwalk command
-				.@move_result = npcwalk(.@npc_name$, .@target_x, .@target_y);
+				// Validate walkability before attempting movement
+				// Use "prontera" as default map for now (all test NPCs are in Prontera)
+				.@map$ = "prontera";
 
-				if (.@move_result) {
-					debugmes "[AI Movement] [AGGRESSIVE] " + .@npc_name$ + " moving to (" + .@target_x + ", " + .@target_y + ")";
+				if (!checkcell(.@map$, .@target_x, .@target_y, CELL_CHKPASS)) {
+					debugmes "[AI Movement] [AGGRESSIVE] Target (" + .@target_x + ", " + .@target_y + ") is not walkable for " + .@npc_name$;
 				} else {
-					debugmes "[AI Movement] [AGGRESSIVE] Failed to move " + .@npc_name$ + " to (" + .@target_x + ", " + .@target_y + ")";
+					// Execute movement using custom npcwalk command
+					.@move_result = npcwalk(.@npc_name$, .@target_x, .@target_y);
+
+					if (.@move_result) {
+						debugmes "[AI Movement] [AGGRESSIVE] " + .@npc_name$ + " moving to (" + .@target_x + ", " + .@target_y + ")";
+					} else {
+						debugmes "[AI Movement] [AGGRESSIVE] Failed to move " + .@npc_name$ + " to (" + .@target_x + ", " + .@target_y + ")";
+					}
 				}
 			}
 		} else {

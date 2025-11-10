@@ -15,6 +15,13 @@ from ..agents.decision_agent import DecisionAgent, AgentContext
 from ..models.npc import NPCPersonality
 from ..llm.factory import get_llm_provider
 from ..config import settings
+from ..utils.walkability import (
+    is_position_walkable,
+    find_nearest_walkable_position,
+    get_walkable_positions_in_radius
+)
+import json
+import re
 
 logger = logging.getLogger(__name__)
 
@@ -157,6 +164,13 @@ CRITICAL RULES:
 3. Distance from spawn ({spawn_x}, {spawn_y}) MUST be ≤ {radius} tiles
 4. Distance from current position ({current_x}, {current_y}) should be {min_distance}-{max_distance} tiles
 5. Move {movement_probability * 100}% of the time (be VERY aggressive)
+6. AVOID the fountain area (145-161, 175-191) - it's not walkable!
+
+WALKABLE AREAS TO PREFER:
+- North of fountain: X: {min_x}-{max_x}, Y: 192-{max_y}
+- South of fountain: X: {min_x}-{max_x}, Y: {min_y}-174
+- East of fountain: X: 162-{max_x}, Y: {min_y}-{max_y}
+- West of fountain: X: {min_x}-144, Y: {min_y}-{max_y}
 
 EXAMPLE VALID TARGETS (for spawn at {spawn_x}, {spawn_y} with radius {radius}):
 - ({spawn_x + 5}, {spawn_y + 5}) - 7.1 tiles from spawn ✓
@@ -283,22 +297,53 @@ Respond in JSON format:
                         logger.warning(f"Target position ({target_x}, {target_y}) exceeds radius {validation_radius} for NPC {request.npc_id} (distance: {distance_from_spawn:.1f}, spawn: {validation_spawn_x},{validation_spawn_y})")
                         should_move = False
                     else:
-                        # For aggressive movement, validate minimum distance
-                        if is_aggressive:
-                            current_x = request.current_position["x"]
-                            current_y = request.current_position["y"]
-                            distance_from_current = ((target_x - current_x) ** 2 + (target_y - current_y) ** 2) ** 0.5
+                        # Check walkability before proceeding
+                        map_name = request.current_position.get("map", "prontera")
+                        if not is_position_walkable(map_name, target_x, target_y):
+                            logger.warning(f"Target position ({target_x}, {target_y}) is not walkable on {map_name} for NPC {request.npc_id}")
 
-                            if distance_from_current < min_distance:
-                                logger.info(f"Aggressive movement: target too close ({distance_from_current:.1f} < {min_distance}), rejecting")
+                            # Try to find a nearby walkable position
+                            alternative = find_nearest_walkable_position(map_name, target_x, target_y, max_search_radius=3)
+                            if alternative:
+                                target_x, target_y = alternative
+                                logger.info(f"Found alternative walkable position ({target_x}, {target_y}) for NPC {request.npc_id}")
+                            else:
+                                logger.warning(f"No walkable alternative found near ({target_x}, {target_y}) for NPC {request.npc_id}")
                                 should_move = False
+
+                        # If still valid, proceed with movement validation
+                        if should_move:
+                            # For aggressive movement, validate minimum distance
+                            if is_aggressive:
+                                current_x = request.current_position["x"]
+                                current_y = request.current_position["y"]
+                                distance_from_current = ((target_x - current_x) ** 2 + (target_y - current_y) ** 2) ** 0.5
+
+                                if distance_from_current < min_distance:
+                                    logger.info(f"Aggressive movement: target too close ({distance_from_current:.1f} < {min_distance}), rejecting")
+                                    should_move = False
+                                else:
+                                    target_position = {"x": int(target_x), "y": int(target_y)}
+                                    logger.info(f"Aggressive movement: moving {distance_from_current:.1f} tiles from ({current_x},{current_y}) to ({target_x},{target_y})")
                             else:
                                 target_position = {"x": int(target_x), "y": int(target_y)}
-                                logger.info(f"Aggressive movement: moving {distance_from_current:.1f} tiles from ({current_x},{current_y}) to ({target_x},{target_y})")
-                        else:
-                            target_position = {"x": int(target_x), "y": int(target_y)}
                 else:
-                    target_position = {"x": int(target_x), "y": int(target_y)}
+                    # For non-radius-restricted movement, still check walkability
+                    map_name = request.current_position.get("map", "prontera")
+                    if not is_position_walkable(map_name, target_x, target_y):
+                        logger.warning(f"Target position ({target_x}, {target_y}) is not walkable on {map_name} for NPC {request.npc_id}")
+
+                        # Try to find a nearby walkable position
+                        alternative = find_nearest_walkable_position(map_name, target_x, target_y, max_search_radius=3)
+                        if alternative:
+                            target_x, target_y = alternative
+                            logger.info(f"Found alternative walkable position ({target_x}, {target_y}) for NPC {request.npc_id}")
+                            target_position = {"x": int(target_x), "y": int(target_y)}
+                        else:
+                            logger.warning(f"No walkable alternative found near ({target_x}, {target_y}) for NPC {request.npc_id}")
+                            should_move = False
+                    else:
+                        target_position = {"x": int(target_x), "y": int(target_y)}
 
         return MovementDecisionResponse(
             success=True,
