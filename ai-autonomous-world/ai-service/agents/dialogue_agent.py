@@ -17,7 +17,7 @@ try:
     )
 except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-    from config import settings
+    from ai_service.config import settings
     from utils.cache import cache_response
     from models.information import (
         InformationItem, filter_information_by_relationship
@@ -56,7 +56,7 @@ class DialogueAgent(BaseAIAgent):
         # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
         # CrewAI uses litellm under the hood which supports Azure via environment variables
         try:
-            from config import settings
+            from ai_service.config import settings
 
             # Set Azure OpenAI environment variables for litellm
             os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key

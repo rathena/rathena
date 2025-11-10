@@ -71,7 +71,7 @@ class TestRateLimitMiddleware:
     @pytest.mark.asyncio
     async def test_rate_limit_disabled(self, mock_database):
         """Test rate limit middleware when disabled"""
-        from config import settings
+        from ai_service.config import settings
 
         # Temporarily disable rate limiting
         original_value = settings.rate_limit_enabled
@@ -123,7 +123,7 @@ class TestRateLimitMiddlewareEnabled:
 
     def test_rate_limit_disabled(self):
         """Test rate limiting when disabled in settings"""
-        from config import settings
+        from ai_service.config import settings
 
         app = FastAPI()
         app.add_middleware(RateLimitMiddleware)
@@ -179,7 +179,7 @@ class TestRateLimitMiddlewareEnabled:
     @pytest.mark.asyncio
     async def test_rate_limit_exceeded(self, mock_database):
         """Test rate limit exceeded returns 429"""
-        from config import settings
+        from ai_service.config import settings
 
         # Mock rate limit exceeded (count >= limit)
         mock_database.get.return_value = str(settings.rate_limit_requests)
@@ -202,7 +202,7 @@ class TestRateLimitMiddlewareEnabled:
     @pytest.mark.asyncio
     async def test_rate_limit_increment(self, mock_database):
         """Test rate limit counter increments"""
-        from config import settings
+        from ai_service.config import settings
 
         # Mock existing counter below limit
         mock_database.get.return_value = "5"

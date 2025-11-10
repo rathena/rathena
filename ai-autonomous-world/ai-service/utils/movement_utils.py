@@ -11,7 +11,7 @@ try:
     from ai_service.config import settings
 except ModuleNotFoundError:
     from models.npc import NPCMovementCapabilities, NPCPosition
-    from config import settings
+    from ai_service.config import settings
 
 
 # Known NPC sprite IDs that support walking animations

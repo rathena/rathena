@@ -14,7 +14,7 @@ from loguru import logger
 try:
     from .config import settings
 except ImportError:
-    from config import settings
+    from ai_service.config import settings
 
 
 class PostgreSQLManager:

@@ -46,7 +46,7 @@ class WorldAgent(BaseAIAgent):
 
         # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
         try:
-            from config import settings
+            from ai_service.config import settings
 
             # Set Azure OpenAI environment variables for litellm
             os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key

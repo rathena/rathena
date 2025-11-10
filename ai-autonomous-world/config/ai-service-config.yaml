@@ -334,7 +334,7 @@ npcs:
       spawn_x: 155
       spawn_y: 185
 
-  # Test NPC for Movement System Verification
+  # Test NPC for Movement System Verification - AGGRESSIVE MOVEMENT
   test_merchant_001:
     name: "WanderingMerchant"
     class: "merchant"
@@ -343,15 +343,19 @@ npcs:
       x: 150
       y: 180
     personality:
-      openness: 0.85  # High openness - curious explorer
-      conscientiousness: 0.6
-      extraversion: 0.75  # Friendly and talkative
+      openness: 0.98  # MAXIMUM openness - extremely curious and restless
+      conscientiousness: 0.3  # Low conscientiousness - impulsive, doesn't stick to routines
+      extraversion: 0.95  # MAXIMUM extraversion - constantly seeking stimulation
       agreeableness: 0.8
-      neuroticism: 0.2  # Low anxiety, confident
+      neuroticism: 0.1  # MINIMUM anxiety - fearless, adventurous
     movement:
       mode: "radius_restricted"  # Restricted to small area for easy observation
       radius: 10  # Small radius for visual verification
       spawn_x: 150
       spawn_y: 180
-    description: "Test NPC for autonomous movement system verification. Should wander within 10 tiles of spawn point."
+      aggressive: true  # Flag for aggressive movement behavior
+      movement_probability: 0.95  # 95% chance to move when checked
+      min_distance: 5  # Minimum distance to move (tiles)
+      max_distance: 10  # Maximum distance to move (tiles)
+    description: "Test NPC for autonomous movement system verification. AGGRESSIVE MOVEMENT: Moves every 2 seconds with high probability and large distances within 10-tile radius."
 

@@ -15,7 +15,7 @@ from ..base import BaseLLMProvider, LLMResponse
 try:
     from ai_service.config import settings
 except ModuleNotFoundError:
-    from config import settings
+    from ai_service.config import settings
 
 
 class AzureOpenAIProvider(BaseLLMProvider):
