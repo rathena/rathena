@@ -8,10 +8,6 @@ pydantic-settings==2.6.1
 crewai==0.86.0
 crewai-tools==0.17.0
 
-# Memory Management
-# Memori SDK - Open-Source Memory Engine for LLMs and AI Agents
-git+https://github.com/GibsonAI/memori.git
-
 # LLM Providers
 openai==1.57.2
 anthropic==0.39.0

@@ -7,6 +7,11 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime
 from enum import Enum
 
+try:
+    from ai_service.models.quest_trigger import QuestTrigger
+except ImportError:
+    from models.quest_trigger import QuestTrigger
+
 
 class QuestType(str, Enum):
     """Types of quests"""
@@ -111,7 +116,29 @@ class Quest(BaseModel):
     # Dynamic generation metadata
     generated_by_ai: bool = False
     generation_context: Dict[str, Any] = Field(default_factory=dict)
-    
+
+    # Quest triggers and sequences
+    triggers: List[QuestTrigger] = Field(
+        default_factory=list,
+        description="Triggers that can activate this quest"
+    )
+    is_secret_quest: bool = Field(
+        default=False,
+        description="Whether this is a hidden/secret quest"
+    )
+    prerequisite_quests: List[str] = Field(
+        default_factory=list,
+        description="Quest IDs that must be completed before this quest"
+    )
+    next_in_sequence: Optional[str] = Field(
+        None,
+        description="Next quest ID in sequence (for quest chains)"
+    )
+    relationship_unlock_threshold: Optional[float] = Field(
+        None,
+        description="Minimum relationship level to unlock (-100 to 100)"
+    )
+
     # Repeatable
     repeatable: bool = False
     cooldown: Optional[int] = None  # Seconds before can repeat

@@ -15,11 +15,19 @@ try:
         Quest, QuestType, QuestDifficulty, QuestStatus,
         QuestObjective, QuestReward, QuestRequirements
     )
+    from ai_service.models.quest_trigger import (
+        QuestTrigger, TriggerType, RelationshipTrigger, GiftTrigger,
+        SequenceTrigger, RealTimeTrigger, ScheduledTrigger
+    )
 except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
     from models.quest import (
         Quest, QuestType, QuestDifficulty, QuestStatus,
         QuestObjective, QuestReward, QuestRequirements
+    )
+    from models.quest_trigger import (
+        QuestTrigger, TriggerType, RelationshipTrigger, GiftTrigger,
+        SequenceTrigger, RealTimeTrigger, ScheduledTrigger
     )
 
 
@@ -416,8 +424,157 @@ Make it engaging and contextual!"""
             generation_context={
                 "world_state": context.world_state,
                 "npc_personality": context.personality.dict() if context.personality else {}
-            }
+            },
+            triggers=[],  # Will be added by add_triggers_to_quest
+            is_secret_quest=False,
+            prerequisite_quests=[],
+            next_in_sequence=None,
+            relationship_unlock_threshold=None
         )
+
+        return quest
+
+    def add_triggers_to_quest(
+        self,
+        quest: Quest,
+        trigger_config: Dict[str, Any]
+    ) -> Quest:
+        """
+        Add triggers to a quest based on configuration
+
+        Args:
+            quest: The quest to add triggers to
+            trigger_config: Configuration for triggers
+
+        Returns:
+            Quest with triggers added
+        """
+        triggers = []
+
+        # Relationship trigger
+        if trigger_config.get("relationship_threshold"):
+            trigger = QuestTrigger(
+                trigger_id=f"{quest.quest_id}_relationship",
+                trigger_type=TriggerType.RELATIONSHIP,
+                relationship=RelationshipTrigger(
+                    relationship_level_min=trigger_config["relationship_threshold"]
+                ),
+                description=f"Requires relationship level {trigger_config['relationship_threshold']}",
+                priority=8
+            )
+            triggers.append(trigger)
+            quest.relationship_unlock_threshold = trigger_config["relationship_threshold"]
+
+        # Gift trigger
+        if trigger_config.get("gift_required"):
+            gift_cfg = trigger_config["gift_required"]
+            trigger = QuestTrigger(
+                trigger_id=f"{quest.quest_id}_gift",
+                trigger_type=TriggerType.GIFT,
+                gift=GiftTrigger(
+                    total_gifts_min=gift_cfg.get("total_gifts_min"),
+                    specific_item_received=gift_cfg.get("specific_item_id"),
+                    gift_category_received=gift_cfg.get("category")
+                ),
+                description="Triggered by gift-giving",
+                priority=7
+            )
+            triggers.append(trigger)
+
+        # Sequence trigger (prerequisite quests)
+        if trigger_config.get("prerequisite_quests"):
+            trigger = QuestTrigger(
+                trigger_id=f"{quest.quest_id}_sequence",
+                trigger_type=TriggerType.SEQUENCE,
+                sequence=SequenceTrigger(
+                    prerequisite_quests=trigger_config["prerequisite_quests"],
+                    all_required=trigger_config.get("all_prerequisites_required", True)
+                ),
+                description="Requires prerequisite quests",
+                priority=9
+            )
+            triggers.append(trigger)
+            quest.prerequisite_quests = trigger_config["prerequisite_quests"]
+
+        # Time-based trigger
+        if trigger_config.get("real_time"):
+            rt_cfg = trigger_config["real_time"]
+            trigger = QuestTrigger(
+                trigger_id=f"{quest.quest_id}_realtime",
+                trigger_type=TriggerType.REAL_TIME,
+                real_time=RealTimeTrigger(
+                    start_date=rt_cfg.get("start_date"),
+                    end_date=rt_cfg.get("end_date"),
+                    days_of_week=rt_cfg.get("days_of_week"),
+                    hours=rt_cfg.get("hours")
+                ),
+                description="Time-based trigger",
+                priority=5
+            )
+            triggers.append(trigger)
+
+        # Scheduled (in-game time) trigger
+        if trigger_config.get("scheduled"):
+            sch_cfg = trigger_config["scheduled"]
+            trigger = QuestTrigger(
+                trigger_id=f"{quest.quest_id}_scheduled",
+                trigger_type=TriggerType.SCHEDULED,
+                scheduled=ScheduledTrigger(
+                    game_time_start=sch_cfg.get("game_time_start"),
+                    game_time_end=sch_cfg.get("game_time_end"),
+                    game_day=sch_cfg.get("game_day"),
+                    season=sch_cfg.get("season")
+                ),
+                description="In-game time trigger",
+                priority=6
+            )
+            triggers.append(trigger)
+
+        # Mark as secret quest if it has triggers
+        if triggers:
+            quest.is_secret_quest = trigger_config.get("is_secret", True)
+
+        quest.triggers = triggers
+        return quest
+
+    async def generate_secret_quest(
+        self,
+        context: AgentContext,
+        relationship_threshold: float = 50.0,
+        prerequisite_quests: Optional[list] = None
+    ) -> Quest:
+        """
+        Generate a secret quest with relationship and sequence triggers
+
+        Args:
+            context: Agent context
+            relationship_threshold: Minimum relationship level to unlock
+            prerequisite_quests: List of prerequisite quest IDs
+
+        Returns:
+            Secret quest with triggers
+        """
+        # Generate base quest
+        response = await self.process(context)
+        quest_data = response.data.get("quest")
+
+        if not quest_data:
+            raise ValueError("Failed to generate base quest")
+
+        quest = Quest(**quest_data)
+
+        # Add triggers
+        trigger_config = {
+            "relationship_threshold": relationship_threshold,
+            "is_secret": True
+        }
+
+        if prerequisite_quests:
+            trigger_config["prerequisite_quests"] = prerequisite_quests
+
+        quest = self.add_triggers_to_quest(quest, trigger_config)
+
+        logger.info(f"Generated secret quest: {quest.quest_id} with {len(quest.triggers)} triggers")
 
         return quest
 

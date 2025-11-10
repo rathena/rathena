@@ -23,9 +23,11 @@ from ai_service.routers.chat_command import router as chat_command_router
 from ai_service.routers.batch import router as batch_router
 from ai_service.routers.economy import router as economy_router
 from ai_service.routers.faction import router as faction_router
+from ai_service.routers.gift import router as gift_router
 from ai_service.routers.npc_spawning import router as npc_spawning_router
 from ai_service.routers.world_bootstrap import router as world_bootstrap_router
 from ai_service.routers.npc_movement import router as npc_movement_router
+from ai_service.routers.mvp import router as mvp_router
 from ai_service.middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
@@ -269,16 +271,6 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"Scheduler shutdown error: {e}", exc_info=True)
 
-    # Shutdown Memori SDK
-    try:
-        from ai_service.memory.memori_manager import get_memori_manager
-        memori_mgr = get_memori_manager()
-        if memori_mgr:
-            memori_mgr.shutdown()
-            logger.info("✓ Memori SDK shutdown complete")
-    except Exception as e:
-        logger.error(f"Memori SDK shutdown error: {e}", exc_info=True)
-
     # Disconnect from PostgreSQL
     try:
         await postgres_db.disconnect()
@@ -420,11 +412,13 @@ app.include_router(chat_command_router)
 app.include_router(batch_router)
 app.include_router(economy_router)
 app.include_router(faction_router)
+app.include_router(gift_router)
 app.include_router(npc_spawning_router)
 app.include_router(world_bootstrap_router)
 app.include_router(npc_movement_router)
+app.include_router(mvp_router)
 
-logger.info("✓ All routers registered (11 routers)")
+logger.info("✓ All routers registered (13 routers)")
 
 
 # Run server

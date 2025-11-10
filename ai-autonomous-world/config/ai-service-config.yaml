@@ -359,3 +359,28 @@ npcs:
       max_distance: 10  # Maximum distance to move (tiles)
     description: "Test NPC for autonomous movement system verification. AGGRESSIVE MOVEMENT: Moves every 2 seconds with high probability and large distances within 10-tile radius."
 
+  # Comprehensive AI NPC - Aria the Wandering Sage
+  ai_master_001:
+    name: "Aria the Wandering Sage"
+    class: "sage"
+    spawn_location:
+      map: "prontera"
+      x: 150
+      y: 180
+    personality:
+      openness: 0.92  # Very open to new experiences and ideas
+      conscientiousness: 0.85  # Highly organized and thoughtful
+      extraversion: 0.65  # Moderately social, enjoys meaningful conversations
+      agreeableness: 0.80  # Very friendly and cooperative
+      neuroticism: 0.30  # Emotionally stable and calm
+    moral_alignment: "neutral_good"
+    movement:
+      mode: "radius_restricted"
+      radius: 15
+      spawn_x: 150
+      spawn_y: 180
+      movement_probability: 0.4  # Moderate wandering
+      min_distance: 3
+      max_distance: 8
+    description: "Comprehensive AI NPC combining all features: gift-giving, quest system, relationship tracking, dynamic dialogue, and autonomous movement. Serves as the primary demonstration of the AI autonomous world system."
+
