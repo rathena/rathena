@@ -14,7 +14,7 @@ This directory contains the complete AI-driven autonomous world system for the r
 - **Performance Testing** - Locust + pytest benchmarks - 100% complete ✅
 - **Load Testing** - 100+ NPC concurrent testing - 100% complete ✅
 - **E2E Integration** - Bridge Layer + NPC scripts - 100% complete ✅
-- **Memori SDK** - PostgreSQL backend required (no fallback) ✅
+- **OpenMemory SDK** - PostgreSQL backend with persistent memory ✅
 - **Native Installation** - No Docker required
 - **Production Ready** - All services running stably
 - **HTTP Script Commands** - `httpget()` and `httppost()` with connection pooling
@@ -36,7 +36,7 @@ ai-autonomous-world/
 │   │   ├── npc/            # NPC agent modules (empty - future)
 │   │   ├── world/          # World system agents (empty - future)
 │   │   └── meta/           # Meta coordination agents (empty - future)
-│   ├── memory/              # Memory management (empty - using DragonflyDB fallback)
+│   ├── memory/              # Memory management (OpenMemory SDK integration)
 │   ├── llm/                 # LLM provider abstraction
 │   │   ├── providers/      # Provider implementations
 │   │   │   ├── openai_provider.py

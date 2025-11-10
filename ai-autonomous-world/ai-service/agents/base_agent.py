@@ -180,7 +180,7 @@ class BaseAIAgent(ABC):
                 system_prompt=system_message,  # Fixed: use system_prompt instead of system_message
                 temperature=temperature
             )
-            return response.text
+            return response.content  # Fixed: use content instead of text
         except Exception as e:
             logger.error(f"LLM generation failed in {self.agent_type} agent: {e}")
             raise

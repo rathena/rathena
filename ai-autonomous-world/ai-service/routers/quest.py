@@ -7,15 +7,15 @@ from loguru import logger
 from datetime import datetime
 from typing import Dict, Any, Optional
 
-from models.quest import (
+from ai_service.models.quest import (
     Quest, QuestGenerationRequest, QuestGenerationResponse,
     QuestProgressUpdate, QuestStatus
 )
-from models.npc import NPCPersonality
-from database import db
-from llm import get_llm_provider
-from agents.base_agent import AgentContext
-from agents.quest_agent import QuestAgent
+from ai_service.models.npc import NPCPersonality
+from ai_service.database import db
+from ai_service.llm import get_llm_provider
+from ai_service.agents.base_agent import AgentContext
+from ai_service.agents.quest_agent import QuestAgent
 
 router = APIRouter(prefix="/ai/quest", tags=["quest"])
 

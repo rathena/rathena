@@ -40,43 +40,44 @@ class AgentOrchestrator:
     ):
         """
         Initialize Agent Orchestrator
-        
+
         Args:
             llm_provider: LLM provider instance
             config: Configuration dictionary
-            memori_client: Optional Memori SDK client
+            memori_client: Deprecated parameter (kept for backward compatibility)
+
+        Note:
+            Memory storage now uses OpenMemory SDK (initialized globally in main.py)
         """
         self.llm_provider = llm_provider
         self.config = config
-        self.memori_client = memori_client
-        
+
         # Initialize agents
         self.dialogue_agent = DialogueAgent(
             agent_id="dialogue_001",
             llm_provider=llm_provider,
             config=config.get("dialogue_agent", {})
         )
-        
+
         self.decision_agent = DecisionAgent(
             agent_id="decision_001",
             llm_provider=llm_provider,
             config=config.get("decision_agent", {})
         )
-        
+
         self.memory_agent = MemoryAgent(
             agent_id="memory_001",
             llm_provider=llm_provider,
-            config=config.get("memory_agent", {}),
-            memori_client=memori_client
+            config=config.get("memory_agent", {})
         )
-        
+
         self.world_agent = WorldAgent(
             agent_id="world_001",
             llm_provider=llm_provider,
             config=config.get("world_agent", {})
         )
-        
-        logger.info("Agent Orchestrator initialized with 4 specialized agents")
+
+        logger.info("Agent Orchestrator initialized with 4 specialized agents (using OpenMemory SDK)")
     
     async def handle_player_interaction(
         self,
@@ -129,11 +130,19 @@ class AgentOrchestrator:
             dialogue_context["player_message"] = player_message
             dialogue_context["interaction_type"] = interaction_type
 
-            if memory_response.success:
-                npc_context.memory_context = memory_response.data
+            # Create new context with memory and dialogue data
+            dialogue_agent_context = AgentContext(
+                npc_id=npc_context.npc_id,
+                npc_name=npc_context.npc_name,
+                personality=npc_context.personality,
+                current_state=dialogue_context,
+                world_state=npc_context.world_state,
+                recent_events=npc_context.recent_events,
+                memory_context=memory_response.data if memory_response.success else None
+            )
 
             try:
-                dialogue_response = await self.dialogue_agent.process(npc_context)
+                dialogue_response = await self.dialogue_agent.process(dialogue_agent_context)
             except Exception as e:
                 logger.error(f"Dialogue generation failed for NPC {npc_context.npc_id}: {e}")
                 return AgentResponse(

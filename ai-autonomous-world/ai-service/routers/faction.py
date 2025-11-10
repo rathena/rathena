@@ -9,8 +9,8 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime
 from loguru import logger
 
-from config import settings
-from models.faction import Faction, PlayerReputation, RelationshipStatus
+from ai_service.config import settings
+from ai_service.models.faction import Faction, PlayerReputation, RelationshipStatus
 
 
 router = APIRouter(prefix="/ai/faction", tags=["faction"])

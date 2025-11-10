@@ -105,11 +105,20 @@ class DecisionAgent(BaseAIAgent):
                 recent_events=context.recent_events
             )
             
+            # Ensure decision is a dict
+            if not isinstance(decision, dict):
+                logger.warning(f"Decision is not a dict (type: {type(decision)}), using fallback")
+                decision = {
+                    "action_type": "idle",
+                    "reasoning": "Fallback due to invalid decision format",
+                    "priority": 1
+                }
+
             # Parse and validate decision
             action_data = self._parse_decision(decision, available_actions, context)
-            
+
             logger.info(f"Decision made for {context.npc_id}: {action_data.get('action_type')}")
-            
+
             return AgentResponse(
                 agent_type=self.agent_type,
                 success=True,
@@ -340,7 +349,7 @@ Respond with a JSON object containing:
     def _generate_movement_action_data(self, movement_type: str, context: AgentContext) -> Dict[str, Any]:
         """Generate movement-specific action data"""
         import random
-        from utils.movement_utils import get_movement_capabilities
+        from utils.movement_utils import get_movement_capabilities, is_position_within_boundary, calculate_distance
         from models.npc import NPCPosition
 
         movement_caps = get_movement_capabilities(context.current_state)
@@ -350,20 +359,45 @@ Respond with a JSON object containing:
         current_y = int(current_location.get("y", 150))
 
         if movement_type == "wander":
-            # Random wander within max distance
+            # Random wander within max distance and movement boundaries
             max_dist = min(movement_caps.max_wander_distance, 10)
-            offset_x = random.randint(-max_dist, max_dist)
-            offset_y = random.randint(-max_dist, max_dist)
 
-            return {
-                "movement_type": "wander",
-                "target_position": {
+            # For radius-restricted mode, limit wander distance to stay within radius
+            if movement_caps.movement_mode == "radius_restricted" and movement_caps.spawn_point:
+                spawn_pos = {
+                    "map": movement_caps.spawn_point.map,
+                    "x": movement_caps.spawn_point.x,
+                    "y": movement_caps.spawn_point.y
+                }
+                current_pos = {"map": current_map, "x": current_x, "y": current_y}
+                current_distance = calculate_distance(spawn_pos, current_pos)
+
+                # Limit max_dist to stay within radius
+                remaining_radius = movement_caps.movement_radius - current_distance
+                max_dist = min(max_dist, max(1, int(remaining_radius)))
+
+            # Try to generate valid position within boundaries (max 10 attempts)
+            for attempt in range(10):
+                offset_x = random.randint(-max_dist, max_dist)
+                offset_y = random.randint(-max_dist, max_dist)
+
+                target_position = {
                     "map": current_map,
                     "x": current_x + offset_x,
                     "y": current_y + offset_y
-                },
-                "movement_reason": "Random wandering behavior"
-            }
+                }
+
+                # Check if position is within boundaries
+                if is_position_within_boundary(target_position, movement_caps, context.npc_id):
+                    return {
+                        "movement_type": "wander",
+                        "target_position": target_position,
+                        "movement_reason": "Random wandering behavior"
+                    }
+
+            # If no valid position found, stay idle
+            logger.warning(f"NPC {context.npc_id}: Could not find valid wander position within boundaries")
+            return {"movement_type": "idle", "duration": 5}
 
         elif movement_type == "patrol":
             # Patrol along predefined route or circular pattern
@@ -400,20 +434,43 @@ Respond with a JSON object containing:
                 return {"movement_type": "idle", "duration": 5}
 
         elif movement_type == "exploration":
-            # Explore nearby area
+            # Explore nearby area within boundaries
             explore_dist = min(movement_caps.max_wander_distance, 15)
-            offset_x = random.randint(-explore_dist, explore_dist)
-            offset_y = random.randint(-explore_dist, explore_dist)
 
-            return {
-                "movement_type": "exploration",
-                "target_position": {
+            # For radius-restricted mode, limit exploration distance
+            if movement_caps.movement_mode == "radius_restricted" and movement_caps.spawn_point:
+                spawn_pos = {
+                    "map": movement_caps.spawn_point.map,
+                    "x": movement_caps.spawn_point.x,
+                    "y": movement_caps.spawn_point.y
+                }
+                current_pos = {"map": current_map, "x": current_x, "y": current_y}
+                current_distance = calculate_distance(spawn_pos, current_pos)
+
+                remaining_radius = movement_caps.movement_radius - current_distance
+                explore_dist = min(explore_dist, max(1, int(remaining_radius)))
+
+            # Try to generate valid exploration position (max 10 attempts)
+            for attempt in range(10):
+                offset_x = random.randint(-explore_dist, explore_dist)
+                offset_y = random.randint(-explore_dist, explore_dist)
+
+                target_position = {
                     "map": current_map,
                     "x": current_x + offset_x,
                     "y": current_y + offset_y
-                },
-                "movement_reason": "Exploring nearby area"
-            }
+                }
+
+                if is_position_within_boundary(target_position, movement_caps, context.npc_id):
+                    return {
+                        "movement_type": "exploration",
+                        "target_position": target_position,
+                        "movement_reason": "Exploring nearby area"
+                    }
+
+            # If no valid position found, stay idle
+            logger.warning(f"NPC {context.npc_id}: Could not find valid exploration position within boundaries")
+            return {"movement_type": "idle", "duration": 5}
 
         # Default fallback
         return {"movement_type": movement_type, "duration": 5}

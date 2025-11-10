@@ -25,12 +25,19 @@ from ai_service.routers.economy import router as economy_router
 from ai_service.routers.faction import router as faction_router
 from ai_service.routers.npc_spawning import router as npc_spawning_router
 from ai_service.routers.world_bootstrap import router as world_bootstrap_router
+from ai_service.routers.npc_movement import router as npc_movement_router
 from ai_service.middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
     RequestSizeLimitMiddleware,
 )
 
+# Global instances
+_openmemory_manager = None
+
+def get_openmemory_manager():
+    """Get the global OpenMemory manager instance"""
+    return _openmemory_manager
 
 # Configure logging
 def setup_logging():
@@ -117,21 +124,31 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"GPU manager initialization failed: {e}", exc_info=True)
 
-    # Initialize Memori SDK with PostgreSQL backend
+    # Initialize OpenMemory SDK with PostgreSQL backend
+    global _openmemory_manager
     try:
-        from ai_service.memory.memori_manager import initialize_memori
-        memori_mgr = initialize_memori(
-            connection_string=settings.postgres_connection_string,
-            namespace="ai_world"
+        from ai_service.memory.openmemory_manager import initialize_openmemory
+        logger.info("Initializing OpenMemory SDK...")
+
+        # Get OpenMemory backend URL from environment or use default
+        openmemory_url = settings.openmemory_url if hasattr(settings, 'openmemory_url') else "http://localhost:8080"
+        openmemory_key = settings.openmemory_api_key if hasattr(settings, 'openmemory_api_key') else ""
+
+        _openmemory_manager = initialize_openmemory(
+            base_url=openmemory_url,
+            api_key=openmemory_key
         )
-        if memori_mgr.is_available():
-            logger.info("✓ Memori SDK initialized with PostgreSQL backend")
+
+        if _openmemory_manager and _openmemory_manager.is_available():
+            logger.info("✓ OpenMemory SDK initialized with PostgreSQL backend")
         else:
-            logger.warning("⚠ Memori SDK not available - using DragonflyDB fallback for memory")
+            logger.warning("⚠ OpenMemory SDK not available - using DragonflyDB fallback for memory")
     except ImportError as e:
-        logger.warning(f"Memori SDK dependencies not available: {e}")
+        logger.warning(f"OpenMemory SDK dependencies not available: {e}")
+        logger.info("Using DragonflyDB for conversation history (10-minute TTL)")
     except Exception as e:
-        logger.warning(f"Memori SDK initialization failed: {e}", exc_info=True)
+        logger.error(f"OpenMemory SDK initialization failed: {e}", exc_info=True)
+        logger.info("Using DragonflyDB for conversation history (10-minute TTL)")
 
     # Initialize LLM provider (test connection)
     try:
@@ -405,8 +422,9 @@ app.include_router(economy_router)
 app.include_router(faction_router)
 app.include_router(npc_spawning_router)
 app.include_router(world_bootstrap_router)
+app.include_router(npc_movement_router)
 
-logger.info("✓ All routers registered (10 routers)")
+logger.info("✓ All routers registered (11 routers)")
 
 
 # Run server

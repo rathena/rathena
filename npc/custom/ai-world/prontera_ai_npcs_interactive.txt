@@ -54,17 +54,70 @@ prontera,155,185,4	script	Lyra the Explorer#ai002	4_F_NOVICE,{
 		} else if (.@choice == 3) {
 			.@message$ = "Where should I explore next?";
 		} else if (.@choice == 4) {
-			// Custom message input
+			// Enter free-form chat mode (Type my own message...)
 			mes "[Lyra the Explorer]";
-			mes "What would you like to say?";
-			mes "(Max 255 characters)";
-			input .@message$;
-			
-			if (.@message$ == "") {
+			mes "Great! Let's have a real conversation.";
+			mes "Type your messages freely.";
+			mes "Say 'goodbye' or 'bye' when you want to end our chat.";
+			next;
+
+			// Free-form chat loop
+			while(1) {
 				mes "[Lyra the Explorer]";
-				mes "Hmm, did you want to say something?";
+				mes "What would you like to say?";
+				input .@message$;
+
+				if (.@message$ == "") {
+					mes "[Lyra the Explorer]";
+					mes "Did you want to say something?";
+					next;
+					continue;
+				}
+
+				// Check if player wants to end conversation
+				// Check for goodbye keywords (case-insensitive using compare function)
+				if (
+					compare(.@message$, "bye") ||
+					compare(.@message$, "goodbye") ||
+					compare(.@message$, "farewell")
+				) {
+					// Send goodbye message to AI
+					.@json$ = "{";
+					.@json$ += "\"npc_id\":\"ai_explorer_002\",";
+					.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+					.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+					.@json$ += "\"message\":\"" + .@message$ + "\"";
+					.@json$ += "}";
+
+					.@response$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+
+					mes "[Lyra the Explorer]";
+					if (.@response$ != "" && .@response$ != "...") {
+						mes .@response$;
+					} else {
+						mes "Safe travels, friend!";
+					}
+					close;
+				}
+
+				// Send message to AI
+				.@json$ = "{";
+				.@json$ += "\"npc_id\":\"ai_explorer_002\",";
+				.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+				.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+				.@json$ += "\"message\":\"" + .@message$ + "\"";
+				.@json$ += "}";
+
+				.@response$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+
+				// Display response
+				mes "[Lyra the Explorer]";
+				if (.@response$ != "" && .@response$ != "...") {
+					mes .@response$;
+				} else {
+					mes "I'm not sure what to say about that.";
+				}
 				next;
-				continue;
 			}
 		} else {
 			// Goodbye
@@ -74,7 +127,7 @@ prontera,155,185,4	script	Lyra the Explorer#ai002	4_F_NOVICE,{
 			close;
 		}
 
-		// Send message to AI
+		// Send message to AI (for menu selections)
 		.@json$ = "{";
 		.@json$ += "\"npc_id\":\"ai_explorer_002\",";
 		.@json$ += "\"player_id\":\"" + .@player_id + "\",";
@@ -164,16 +217,71 @@ prontera,145,175,4	script	Guard Thorne#ai003	4_M_JOB_KNIGHT1,{
 		} else if (.@choice == 3) {
 			.@message$ = "What's your duty here?";
 		} else if (.@choice == 4) {
+			// Enter free-form chat mode (Type my own message...)
 			mes "[Guard Thorne]";
-			mes "Speak. But make it quick.";
-			input .@message$;
+			mes "Fine. Speak freely.";
+			mes "But don't waste my time.";
+			mes "Say 'goodbye' when you're done.";
+			next;
 
-			if (.@message$ == "") {
+			// Free-form chat loop
+			while(1) {
 				mes "[Guard Thorne]";
-				mes "*glares*";
-				mes "Don't waste my time.";
+				mes "What is it?";
+				input .@message$;
+
+				if (.@message$ == "") {
+					mes "[Guard Thorne]";
+					mes "*glares*";
+					mes "Don't waste my time.";
+					next;
+					continue;
+				}
+
+				// Check if player wants to end conversation
+				// Check for goodbye keywords (case-insensitive using compare function)
+				if (
+					compare(.@message$, "bye") ||
+					compare(.@message$, "goodbye") ||
+					compare(.@message$, "farewell")
+				) {
+					// Send goodbye message to AI
+					.@json$ = "{";
+					.@json$ += "\"npc_id\":\"ai_guard_003\",";
+					.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+					.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+					.@json$ += "\"message\":\"" + .@message$ + "\"";
+					.@json$ += "}";
+
+					.@response$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+
+					mes "[Guard Thorne]";
+					if (.@response$ != "" && .@response$ != "...") {
+						mes .@response$;
+					} else {
+						mes "Move along then.";
+					}
+					close;
+				}
+
+				// Send message to AI
+				.@json$ = "{";
+				.@json$ += "\"npc_id\":\"ai_guard_003\",";
+				.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+				.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+				.@json$ += "\"message\":\"" + .@message$ + "\"";
+				.@json$ += "}";
+
+				.@response$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+
+				// Display response
+				mes "[Guard Thorne]";
+				if (.@response$ != "" && .@response$ != "...") {
+					mes .@response$;
+				} else {
+					mes "I don't have time for this.";
+				}
 				next;
-				continue;
 			}
 		} else {
 			mes "[Guard Thorne]";

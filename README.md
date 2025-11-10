@@ -42,6 +42,27 @@ rAthena AI World is an enhanced fork of rAthena MMORPG server that integrates mu
 - **Faction System**: Dynamic reputation systems with seven faction types and eight reputation tiers
 - **Autonomous World State**: NPCs make independent decisions and react to world events, creating emergent storylines
 
+## ⚠️ EXPERIMENTAL FEATURES DISCLAIMER
+
+**This project contains experimental AI features that are actively under development.**
+
+While the core rAthena server and AI autonomous world system are production-ready, the following newly implemented features are **experimental** and should be considered **beta quality**:
+
+- **NPC Social Intelligence & Information Sharing System** (NEW)
+- **Configurable NPC Movement Boundaries** (NEW)
+
+**What to expect during testing:**
+- 🐛 **Bugs and edge cases** - These features have passed initial testing but may exhibit unexpected behavior in production scenarios
+- 🔧 **Ongoing refinement** - Implementation details may change based on testing feedback and performance analysis
+- 📊 **Performance variations** - System behavior may vary under different load conditions
+- 🔄 **Breaking changes possible** - Configuration formats and APIs may evolve as we refine the implementation
+
+**We encourage testing and feedback!** Please report any issues, unexpected behavior, or suggestions via [GitHub Issues](https://github.com/iskandarsulaili/rathena-AI-world/issues).
+
+**For production deployments:** Consider thoroughly testing these features in a development environment before enabling them on live servers.
+
+---
+
 ### Technical Architecture
 
 The system consists of approximately 10,000 lines of production-grade Python and C++ code implementing:
@@ -171,6 +192,118 @@ The P2P Coordinator Service is a FastAPI-based WebSocket signaling server that m
 - **Context-Aware Dialogue**: Historical conversation data influences future dialogue generation
 - **Memori SDK Integration**: Advanced memory management with DragonflyDB fallback storage
 
+### 🆕 NPC Social Intelligence & Information Sharing System
+
+**Status**: ⚠️ Experimental (Beta Quality)
+
+NPCs now intelligently decide what information to share with players based on trust, relationship level, and personality traits, creating more realistic and dynamic social interactions.
+
+#### Information Sensitivity Levels
+
+NPCs categorize information into four sensitivity levels, each requiring different relationship thresholds:
+
+- **PUBLIC** (Threshold: 0) - General information available to anyone
+- **PRIVATE** (Threshold: 5) - Personal information shared with acquaintances
+- **SECRET** (Threshold: 8) - Sensitive information shared only with trusted friends
+- **CONFIDENTIAL** (Threshold: 10) - Highly sensitive information shared only with closest allies
+
+#### Personality-Based Sharing Modifiers
+
+NPC personality traits dynamically adjust information sharing thresholds:
+
+- **High Agreeableness** (>0.7): -1 threshold modifier (shares more easily, friendly and open)
+- **Low Agreeableness** (<0.3): +1 threshold modifier (shares less easily, guarded and suspicious)
+- **High Neuroticism** (>0.7): +1 threshold modifier (more cautious, anxious about sharing)
+- **Low Neuroticism** (<0.3): -1 threshold modifier (less cautious, confident in sharing)
+- **High Openness** (>0.7): -1 threshold modifier (more willing to share, curious and expressive)
+
+**Example**: An NPC with high agreeableness (0.8), low neuroticism (0.2), and high openness (0.95) would have a -3 total adjustment, making them very open to sharing information even with players they've just met.
+
+#### Relationship-Based Information Filtering
+
+- NPCs evaluate player relationship level before sharing information
+- Information is filtered in real-time during dialogue generation
+- Players must build trust over time to access more sensitive information
+- Different NPCs with different personalities share information at different rates
+
+#### Information Sharing History
+
+- All information sharing events are stored in OpenMemory SDK
+- Tracks what specific information has been shared with each player
+- Prevents repetitive information sharing
+- Enables NPCs to reference past shared information in future conversations
+
+#### Example Behavior
+
+**Lyra the Explorer** (Friendly, Open Personality):
+- Agreeableness: 0.80, Neuroticism: 0.20, Openness: 0.95
+- Threshold Adjustment: -3 (very open to sharing)
+- At relationship level 0: Shares PUBLIC information
+- At relationship level 6: Shares PUBLIC, PRIVATE, and most SECRET information
+- Response style: Warm, engaging, hints at deeper secrets
+
+**Guard Thorne** (Cautious, Guarded Personality):
+- Agreeableness: 0.25, Neuroticism: 0.85, Openness: 0.20
+- Threshold Adjustment: +2 (very restrictive)
+- At relationship level 0: Shares nothing (even PUBLIC requires relationship 2)
+- At relationship level 1: Still shares nothing
+- Response style: Professional, guarded, emphasizes discretion
+
+### 🆕 Configurable NPC Movement Boundaries
+
+**Status**: ⚠️ Experimental (Beta Quality)
+
+NPCs can now be configured with different movement restrictions, allowing for more realistic and controlled autonomous behavior.
+
+#### Movement Modes
+
+- **Global** - NPCs can move freely across all maps without restrictions
+- **Map-Restricted** - NPCs stay within their current map, cannot cross map boundaries
+- **Radius-Restricted** - NPCs stay within a defined tile radius from their spawn point
+- **Disabled** - NPCs remain stationary at their spawn location
+
+#### Per-NPC Configuration
+
+Each NPC can be individually configured with:
+- **Movement Mode**: One of the four modes above
+- **Movement Radius**: Tile radius for radius-restricted mode (0-100 tiles)
+- **Spawn Point**: Reference point for radius calculations (map, x, y coordinates)
+
+#### Boundary Validation
+
+- All movement decisions are validated before execution
+- NPCs attempting to move outside boundaries are blocked
+- Detailed logging of boundary violations for debugging
+- Graceful fallback to idle behavior when no valid movement position exists
+
+#### DecisionAgent Integration
+
+- Movement decisions respect configured boundaries
+- Wander and exploration behaviors stay within allowed areas
+- Automatic radius adjustment based on current distance from spawn
+- Maximum 10 attempts to find valid position before falling back to idle
+
+#### Example Configurations
+
+**Guard Thorne** (Patrol Guard):
+- Movement Mode: `radius_restricted`
+- Movement Radius: `7 tiles`
+- Spawn Point: `prontera (145, 175)`
+- Behavior: Patrols a small area around the guard post
+
+**Lyra the Explorer** (Stationary NPC):
+- Movement Mode: `disabled`
+- Movement Radius: `0 tiles`
+- Spawn Point: `prontera (155, 185)`
+- Behavior: Remains at fixed location for player interactions
+
+#### Technical Implementation
+
+- Boundary validation occurs at two levels: decision generation and movement execution
+- Euclidean distance calculation for radius checks
+- Infinite distance for cross-map movement in restricted modes
+- Integration with existing NPCMovementManager and event-driven movement system
+
 ---
 
 ## 🔗 Related Projects
@@ -228,8 +361,8 @@ The **[WARP-p2p-client](https://github.com/iskandarsulaili/WARP-p2p-client)** is
 
 We maintain an independent, welcoming community free from arbitrary moderation:
 
-- **GitHub Issues**: [Report bugs and request features](https://github.com/iskandarsulaili/ai-mmorpg-world/issues)
-- **GitHub Discussions**: [Ask questions and share ideas](https://github.com/iskandarsulaili/ai-mmorpg-world/discussions)
+- **GitHub Issues**: [Report bugs and request features](https://github.com/iskandarsulaili/rathena-AI-world/issues)
+- **GitHub Discussions**: [Ask questions and share ideas](https://github.com/iskandarsulaili/rathena-AI-world/discussions)
 - **Pull Requests**: Contributions are always welcome! See [How to Contribute](#6-how-to-contribute)
 
 ### Getting Help

@@ -10,8 +10,8 @@ from typing import Dict, List, Optional, Tuple, Any
 from loguru import logger
 import uuid
 
-from config import settings
-from database import get_dragonfly_client, get_postgres_pool
+from ai_service.config import settings
+from database import db, postgres_db
 from models.npc_relationship import (
     NPCRelationship,
     NPCInteraction,
@@ -24,16 +24,16 @@ from models.npc_relationship import (
 
 class NPCRelationshipManager:
     """Manages NPC-to-NPC relationships and interactions"""
-    
+
     def __init__(self):
-        self.dragonfly = get_dragonfly_client()
-        self.postgres_pool = None
+        self.db = db  # DragonflyDB/Redis client
+        self.postgres_db = postgres_db  # PostgreSQL manager
         self._proximity_check_task = None
         self._relationship_decay_task = None
-    
+
     async def initialize(self):
         """Initialize the relationship manager"""
-        self.postgres_pool = await get_postgres_pool()
+        # Database connections are already initialized in main.py
         logger.info("✓ NPC Relationship Manager initialized")
     
     async def start_background_tasks(self):

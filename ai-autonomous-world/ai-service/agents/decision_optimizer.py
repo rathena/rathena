@@ -11,7 +11,7 @@ from typing import Dict, List, Any, Optional, Tuple
 from pydantic import BaseModel, Field
 from loguru import logger
 
-from config import settings
+from ai_service.config import settings
 from database import get_dragonfly_client, get_postgres_pool
 from agents.base_agent import AgentContext, AgentDecision
 

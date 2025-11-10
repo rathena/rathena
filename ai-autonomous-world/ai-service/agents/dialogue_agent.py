@@ -4,7 +4,7 @@ Handles conversation generation based on context, personality, and memory
 Phase 8A: Added Redis caching for frequently requested dialogues
 """
 
-from typing import Dict, Any
+from typing import Dict, Any, List
 from loguru import logger
 
 from crewai import Agent
@@ -12,10 +12,16 @@ try:
     from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
     from ai_service.config import settings
     from ai_service.utils.cache import cache_response
+    from ai_service.models.information import (
+        InformationItem, filter_information_by_relationship
+    )
 except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
     from config import settings
     from utils.cache import cache_response
+    from models.information import (
+        InformationItem, filter_information_by_relationship
+    )
 
 
 class DialogueAgent(BaseAIAgent):
@@ -107,31 +113,43 @@ class DialogueAgent(BaseAIAgent):
             
             # Build memory context
             memory_info = self._build_memory_info(context)
-            
+
+            # Build information context (social intelligence)
+            information_info, shared_items = self._build_information_context(context)
+
             # Generate dialogue
             dialogue = await self._generate_dialogue(
                 npc_name=context.npc_name,
                 personality=personality_desc,
                 context_info=context_info,
                 memory_info=memory_info,
+                information_info=information_info,
                 player_name=player_name,
                 player_message=player_message,
                 interaction_type=interaction_type
             )
-            
+
+            # Store information sharing history in OpenMemory
+            if shared_items:
+                await self._store_information_sharing_history(
+                    context=context,
+                    shared_items=shared_items,
+                    player_name=player_name
+                )
+
             # Determine emotion based on personality and context
             emotion = self._determine_emotion(context)
-            
+
             # Suggest next actions
             next_actions = self._suggest_next_actions(interaction_type)
-            
+
             response_data = {
                 "text": dialogue,
                 "speaker": context.npc_name,
                 "emotion": emotion,
                 "next_actions": next_actions
             }
-            
+
             logger.info(f"Dialogue generated successfully for {context.npc_id}")
             
             return AgentResponse(
@@ -205,6 +223,118 @@ class DialogueAgent(BaseAIAgent):
         
         return ". ".join(memory_parts) if memory_parts else "This is a new interaction."
 
+    def _build_information_context(self, context: AgentContext) -> tuple[str, list]:
+        """
+        Build information context based on relationship level and personality
+
+        This implements the social intelligence system where NPCs decide what
+        information to share based on their relationship with the player.
+
+        Returns:
+            tuple: (information_context_string, list_of_shared_items)
+        """
+        # Get relationship level from context
+        relationship_level = context.current_state.get("relationship_level", 0)
+        player_id = context.current_state.get("player_id")
+
+        # Get NPC information items from current state
+        information_items_data = context.current_state.get("information_items", [])
+
+        if not information_items_data:
+            return "", []
+
+        # Convert dict to InformationItem objects
+        information_items = [
+            InformationItem.from_dict(item) for item in information_items_data
+        ]
+
+        # Filter information based on relationship level and personality
+        available_items = filter_information_by_relationship(
+            information_items=information_items,
+            relationship_level=relationship_level,
+            agreeableness=context.personality.agreeableness,
+            neuroticism=context.personality.neuroticism,
+            openness=context.personality.openness
+        )
+
+        if not available_items:
+            return "", []
+
+        # Build information context string
+        info_parts = []
+        info_parts.append(f"\nYour relationship with this player: Level {relationship_level}/10")
+        info_parts.append("\nAvailable information you can share:")
+
+        for item in available_items:
+            info_parts.append(f"- [{item.sensitivity.value.upper()}] {item.content}")
+
+        # Add warning about restricted information
+        restricted_count = len(information_items) - len(available_items)
+        if restricted_count > 0:
+            info_parts.append(
+                f"\nYou have {restricted_count} piece(s) of information that you should NOT share "
+                f"with this player yet (relationship level too low)."
+            )
+
+        return "\n".join(info_parts), available_items
+
+    async def _store_information_sharing_history(
+        self,
+        context: AgentContext,
+        shared_items: list,
+        player_name: str
+    ) -> None:
+        """
+        Store information sharing history in OpenMemory
+
+        This tracks what information has been shared with each player,
+        enabling NPCs to reference past conversations and avoid repetition.
+        """
+        try:
+            from main import get_openmemory_manager
+            openmemory_manager = get_openmemory_manager()
+
+            if not openmemory_manager or not openmemory_manager.is_available():
+                logger.warning("OpenMemory manager not available, skipping information sharing history")
+                return
+
+            player_id = context.current_state.get("player_id")
+            relationship_level = context.current_state.get("relationship_level", 0)
+
+            # Create sharing event content
+            shared_content_list = [f"{item.sensitivity.value.upper()}: {item.content}" for item in shared_items]
+            content = (
+                f"{context.npc_name} shared {len(shared_items)} piece(s) of information with {player_name}:\n"
+                + "\n".join(f"- {item}" for item in shared_content_list)
+            )
+
+            # Get OpenMemory client and store
+            client = openmemory_manager.get_client()
+            client.add(
+                content=content,
+                tags=["information_sharing", "social_intelligence", context.npc_id, player_id],
+                metadata={
+                    "npc_id": context.npc_id,
+                    "npc_name": context.npc_name,
+                    "player_id": player_id,
+                    "player_name": player_name,
+                    "relationship_level": relationship_level,
+                    "items_shared": len(shared_items),
+                    "sensitivity_levels": [item.sensitivity.value for item in shared_items],
+                    "event_type": "information_sharing"
+                },
+                salience=0.7,  # High salience for tracking what was shared
+                user_id=player_id
+            )
+
+            logger.info(
+                f"Stored information sharing history: {context.npc_name} shared "
+                f"{len(shared_items)} items with {player_name} (relationship level {relationship_level})"
+            )
+
+        except Exception as e:
+            logger.error(f"Error storing information sharing history: {e}")
+
     @cache_response('dialogue', ttl=300)  # Phase 8A: Cache dialogue for 5 minutes
     async def _generate_dialogue(
         self,
@@ -212,6 +342,7 @@ class DialogueAgent(BaseAIAgent):
         personality: str,
         context_info: str,
         memory_info: str,
+        information_info: str,
         player_name: str,
         player_message: str,
         interaction_type: str
@@ -238,8 +369,12 @@ Current situation: {context_info}
 
 Memory: {memory_info}
 
+{information_info}
+
 Generate a natural, in-character response to the player. Keep responses concise (2-3 sentences max).
-Stay true to your personality and the context. Do not break character or mention game mechanics."""
+Stay true to your personality and the context. Do not break character or mention game mechanics.
+
+IMPORTANT: Only share information that is marked as available above. Do NOT share information that you're told not to share."""
 
         user_prompt = f"""Player ({player_name}) says: "{player_message}"
 

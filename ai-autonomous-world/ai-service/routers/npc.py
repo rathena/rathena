@@ -5,6 +5,7 @@ NPC API endpoints
 from fastapi import APIRouter, HTTPException, status
 from loguru import logger
 import uuid
+import json
 from datetime import datetime
 from typing import Dict, Any, Optional
 
@@ -19,6 +20,7 @@ try:
     )
     from ..database import db
     from ..config import settings
+    from ..models.npc_information_defaults import get_default_information
 except ImportError:
     from models.npc import (
         NPCRegisterRequest,
@@ -30,6 +32,7 @@ except ImportError:
     )
     from database import db
     from config import settings
+    from models.npc_information_defaults import get_default_information
 
 router = APIRouter(prefix="/ai/npc", tags=["npc"])
 
@@ -105,7 +108,12 @@ async def register_npc(request: NPCRegisterRequest):
                 "neuroticism": str(request.personality.neuroticism),
                 "moral_alignment": request.personality.moral_alignment,
             })
-        
+
+        # Add default information items for social intelligence
+        information_items = get_default_information(request.npc_class, request.name)
+        npc_state["information_items"] = json.dumps([item.to_dict() for item in information_items])
+        logger.info(f"Added {len(information_items)} default information items for {request.name}")
+
         # Store in database
         await db.set_npc_state(request.npc_id, npc_state)
         

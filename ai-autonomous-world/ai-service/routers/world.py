@@ -7,7 +7,7 @@ from loguru import logger
 from typing import Optional
 from datetime import datetime
 
-from models.world import (
+from ai_service.models.world import (
     WorldStateUpdateRequest,
     WorldStateUpdateResponse,
     WorldStateQueryResponse,
@@ -15,7 +15,7 @@ from models.world import (
     PoliticsState,
     EnvironmentState,
 )
-from database import db
+from ai_service.database import db
 
 router = APIRouter(prefix="/ai/world", tags=["world"])
 

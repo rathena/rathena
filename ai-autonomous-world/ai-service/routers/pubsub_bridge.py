@@ -7,7 +7,7 @@ Alternative to C++ Redis subscriber (no external dependencies required)
 from fastapi import APIRouter, HTTPException
 from typing import List, Dict, Any, Optional
 from loguru import logger
-from database import db
+from ai_service.database import db
 import json
 
 router = APIRouter(prefix="/pubsub", tags=["pubsub"])

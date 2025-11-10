@@ -1,0 +1,70 @@
+//===== rAthena Script =======================================
+//= AI-Driven Test NPC: Wandering Merchant
+//===== Description: =========================================
+//= Test NPC for autonomous movement system verification
+//= - Simple name without #suffix to test naming flexibility
+//= - Radius-restricted movement (10 tiles) for easy observation
+//= - Basic dialogue interaction
+//= - High openness personality (curious explorer)
+//============================================================
+
+//============================================================
+// Wandering Merchant - Test NPC for Movement System
+//============================================================
+prontera,150,180,4	script	WanderingMerchant	4_M_ORIENT02,{
+	// Get player information
+	.@player_name$ = strcharinfo(0);
+	.@player_id = getcharid(3);
+	
+	// Build JSON request for AI service
+	.@json$ = "{" +
+		"\"npc_id\":\"test_merchant_001\"," +
+		"\"npc_name\":\"WanderingMerchant\"," +
+		"\"npc_class\":\"merchant\"," +
+		"\"player_id\":" + .@player_id + "," +
+		"\"player_name\":\"" + .@player_name$ + "\"," +
+		"\"message\":\"Hello!\"," +
+		"\"context\":\"greeting\"" +
+	"}";
+	
+	// Call AI service for dialogue
+	.@response$ = httppost("http://192.168.0.100:8000/ai/player/interaction/simple", .@json$);
+	
+	// Parse response - extract dialogue text
+	// Response format: {"dialogue":{"text":"...","emotion":"..."},...}
+	
+	// Find the dialogue text between quotes
+	.@start = strpos(.@response$, "\"text\":\"", 0);
+	if (.@start >= 0) {
+		.@start = .@start + 8; // Skip past "text":"
+		.@end = strpos(.@response$, "\"", .@start);
+		if (.@end > .@start) {
+			.@dialogue$ = substr(.@response$, .@start, .@end - 1);
+			
+			// Display dialogue to player
+			mes "[Wandering Merchant]";
+			mes .@dialogue$;
+			next;
+			
+			mes "[Wandering Merchant]";
+			mes "I'm a test NPC for the autonomous movement system.";
+			mes "Watch me wander around within 10 tiles of my spawn point!";
+			close;
+		} else {
+			// Fallback if parsing fails
+			mes "[Wandering Merchant]";
+			mes "Greetings, traveler! I'm testing the AI movement system.";
+			mes "You should see me wandering around this area!";
+			close;
+		}
+	} else {
+		// Fallback if no response
+		mes "[Wandering Merchant]";
+		mes "Hello there! I'm a wandering merchant.";
+		mes "I move around autonomously using AI decisions!";
+		close;
+	}
+	
+	end;
+}
+

@@ -423,12 +423,34 @@ class Database:
             if not state:
                 return None
 
-            # Decode bytes to strings
+            # Decode bytes to strings and parse JSON fields
             decoded_state = {}
+            json_fields = ['location', 'spawn_position', 'information_items']  # Fields that contain JSON
+
             for k, v in state.items():
                 key_str = k.decode('utf-8') if isinstance(k, bytes) else k
                 val_str = v.decode('utf-8') if isinstance(v, bytes) else v
-                decoded_state[key_str] = val_str
+
+                # Try to parse JSON fields
+                if key_str in json_fields:
+                    try:
+                        decoded_state[key_str] = json.loads(val_str)
+                    except (json.JSONDecodeError, TypeError):
+                        decoded_state[key_str] = val_str
+                else:
+                    # Try to convert numeric fields
+                    if key_str in ['level', 'movement_radius', 'x', 'y']:
+                        try:
+                            decoded_state[key_str] = int(val_str)
+                        except (ValueError, TypeError):
+                            decoded_state[key_str] = val_str
+                    elif key_str in ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']:
+                        try:
+                            decoded_state[key_str] = float(val_str)
+                        except (ValueError, TypeError):
+                            decoded_state[key_str] = val_str
+                    else:
+                        decoded_state[key_str] = val_str
 
             return decoded_state
         except Exception as e:

@@ -3,28 +3,31 @@ Player interaction API endpoints
 """
 
 from fastapi import APIRouter, HTTPException, status, Request
+from fastapi.responses import PlainTextResponse
 from loguru import logger
 from datetime import datetime
 from typing import Dict, Any
+import json
 
-from models.player import (
+from ai_service.models.player import (
     PlayerInteractionRequest,
     PlayerInteractionResponse,
     NPCResponse,
 )
-from models.npc import NPCPersonality
-from database import db
-from llm import get_llm_provider
-from agents.base_agent import AgentContext
-from agents.orchestrator import AgentOrchestrator
-from config import settings
+from ai_service.models.npc import NPCPersonality
+from ai_service.database import db
+from ai_service.llm import get_llm_provider
+from ai_service.agents.base_agent import AgentContext
+from ai_service.agents.orchestrator import AgentOrchestrator
+from ai_service.config import settings
+from ai_service.memory.openmemory_manager import get_openmemory_manager
 
 try:
-    from memori import Memori
-    MEMORI_AVAILABLE = True
+    from openmemory import OpenMemory
+    OPENMEMORY_AVAILABLE = True
 except ImportError:
-    logger.warning("Memori SDK not available")
-    MEMORI_AVAILABLE = False
+    logger.warning("OpenMemory SDK not available")
+    OPENMEMORY_AVAILABLE = False
 
 router = APIRouter(prefix="/ai/player", tags=["player"])
 
@@ -32,7 +35,7 @@ router = APIRouter(prefix="/ai/player", tags=["player"])
 _orchestrator = None
 
 
-@router.post("/interaction/simple")
+@router.post("/interaction/simple", response_class=PlainTextResponse)
 async def handle_simple_interaction(request: Request):
     """
     Simplified player-NPC interaction endpoint that returns plain text dialogue
@@ -62,35 +65,89 @@ async def handle_simple_interaction(request: Request):
         # Get orchestrator
         orchestrator = get_orchestrator()
 
-        # Create context with flexible data
-        context = AgentContext(
-            npc_id=npc_id,
-            player_id=player_id,
-            interaction_type=interaction_type,
-            context=context_data,
-            npc_state=npc_state
+        # Build personality from NPC state
+        personality = NPCPersonality(
+            openness=float(npc_state.get("openness", 0.5)),
+            conscientiousness=float(npc_state.get("conscientiousness", 0.5)),
+            extraversion=float(npc_state.get("extraversion", 0.5)),
+            agreeableness=float(npc_state.get("agreeableness", 0.5)),
+            neuroticism=float(npc_state.get("neuroticism", 0.5)),
+            moral_alignment=npc_state.get("moral_alignment", "neutral")
         )
 
-        # Process interaction
-        result = await orchestrator.process_interaction(context)
+        # Get world state
+        world_state = await db.get_world_state("global") or {}
+
+        # Get relationship level
+        relationship_key = f"relationship:{npc_id}:{player_id}"
+        relationship_level = await db.redis.get(relationship_key)
+        relationship_level = int(relationship_level) if relationship_level else 0
+
+        # Parse information items (stored as JSON string in Redis)
+        information_items_str = npc_state.get("information_items", "[]")
+        try:
+            information_items = json.loads(information_items_str) if isinstance(information_items_str, str) else information_items_str
+        except json.JSONDecodeError:
+            logger.warning(f"Failed to parse information_items for NPC {npc_id}, using empty list")
+            information_items = []
+
+        # Create proper AgentContext
+        context = AgentContext(
+            npc_id=npc_id,
+            npc_name=npc_state.get("name", "Unknown"),
+            personality=personality,
+            current_state={
+                "npc_class": npc_state.get("class", "generic"),
+                "player_id": player_id,
+                "player_name": context_data.get("player_name", "Adventurer"),
+                "interaction_type": interaction_type,
+                "location": context_data.get("location", {}),
+                "time_of_day": context_data.get("time_of_day", "day"),
+                "weather": context_data.get("weather", "clear"),
+                "relationship_level": relationship_level,
+                "information_items": information_items
+            },
+            world_state=world_state,
+            recent_events=[]
+        )
+
+        # Process interaction using handle_player_interaction
+        result = await orchestrator.handle_player_interaction(
+            npc_context=context,
+            player_message=context_data.get("player_message", ""),
+            interaction_type=interaction_type
+        )
 
         # Extract dialogue message from response
-        if result and "response" in result:
-            response_data = result["response"]
-            if isinstance(response_data, dict) and "data" in response_data:
-                data = response_data["data"]
-                if isinstance(data, dict) and "message" in data:
-                    return data["message"]
+        response_text = "..."
+        if result and "dialogue" in result:
+            dialogue_data = result["dialogue"]
+            if isinstance(dialogue_data, dict) and "text" in dialogue_data:
+                response_text = dialogue_data["text"]
 
-        # Fallback response
-        return "..."
+        # Trigger NPC movement after interaction ends (event-driven movement)
+        try:
+            from tasks.npc_movement import trigger_movement_on_interaction_end
+            interaction_context = {
+                "interaction_type": interaction_type,
+                "player_name": context.get("player_name", "Adventurer"),
+                "player_message": context.get("player_message", "")
+            }
+            # Fire and forget - don't wait for movement to complete
+            import asyncio
+            asyncio.create_task(trigger_movement_on_interaction_end(npc_id, player_id, interaction_context))
+            logger.debug(f"Triggered movement decision for NPC {npc_id} after simple interaction")
+        except Exception as e:
+            logger.warning(f"Failed to trigger movement for NPC {npc_id}: {e}")
+
+        return response_text
 
     except Exception as e:
         logger.error(f"Error in simple interaction: {e}", exc_info=True)
         return "..."
 
 
-@router.post("/chat")
+@router.post("/chat", response_class=PlainTextResponse)
 async def handle_chat_interaction(request: Request):
     """
     Chat-based player-NPC interaction with conversation history
@@ -163,9 +220,7 @@ async def handle_chat_interaction(request: Request):
                 elif role == "npc":
                     conversation_context += f"{npc_name}: {msg_text}\n"
 
-        # Create personality description
-        personality_desc = f"{npc_name} is a {npc_class}"
-
+        # Extract personality traits for LLM prompt
         def get_float(d, key, default=0.5):
             val = d.get(key, default)
             if isinstance(val, bytes):
@@ -176,88 +231,190 @@ async def handle_chat_interaction(request: Request):
                 return default
 
         openness = get_float(npc_state, "openness", 0.5)
+        conscientiousness = get_float(npc_state, "conscientiousness", 0.5)
         extraversion = get_float(npc_state, "extraversion", 0.5)
+        agreeableness = get_float(npc_state, "agreeableness", 0.5)
+        neuroticism = get_float(npc_state, "neuroticism", 0.5)
 
+        moral_alignment = get_str(npc_state, "moral_alignment", "neutral")
+        background = get_str(npc_state, "background", f"a {npc_class} in Prontera")
+
+        # Build personality description for system prompt
+        personality_traits = []
         if openness > 0.7:
-            personality_desc += ", curious and adventurous"
+            personality_traits.append("curious, adventurous, and open to new experiences")
         elif openness < 0.3:
-            personality_desc += ", traditional and cautious"
+            personality_traits.append("traditional, cautious, and prefers familiar routines")
+        else:
+            personality_traits.append("balanced between tradition and novelty")
+
+        if conscientiousness > 0.7:
+            personality_traits.append("organized, responsible, and detail-oriented")
+        elif conscientiousness < 0.3:
+            personality_traits.append("spontaneous, flexible, and carefree")
 
         if extraversion > 0.7:
-            personality_desc += ", outgoing and energetic"
+            personality_traits.append("outgoing, energetic, and talkative")
         elif extraversion < 0.3:
-            personality_desc += ", reserved and quiet"
+            personality_traits.append("reserved, quiet, and introspective")
 
-        # Generate simple response based on NPC personality
-        # TODO: Replace with actual LLM integration once Azure OpenAI is configured
+        if agreeableness > 0.7:
+            personality_traits.append("friendly, compassionate, and cooperative")
+        elif agreeableness < 0.3:
+            personality_traits.append("direct, competitive, and skeptical")
 
-        # Simple response logic based on message content
-        message_lower = message.lower()
+        if neuroticism > 0.7:
+            personality_traits.append("anxious, sensitive, and emotionally reactive")
+        elif neuroticism < 0.3:
+            personality_traits.append("calm, stable, and emotionally resilient")
 
-        # Check for goodbye first (most specific)
-        if "bye" in message_lower or "goodbye" in message_lower or "farewell" in message_lower:
-            if npc_class == "explorer":
-                response_text = "Safe travels, friend! May your adventures be grand and your treasures plentiful!"
-            elif npc_class == "guard":
-                response_text = "Move along then. Stay out of trouble."
+        personality_desc = ", ".join(personality_traits) if personality_traits else "balanced personality"
+
+        # Generate AI response using LLM
+        try:
+            # Get LLM provider
+            llm = get_llm_provider()
+
+            # Retrieve relevant memories from OpenMemory SDK (if available)
+            memory_context = ""
+            openmemory_mgr = get_openmemory_manager()
+            logger.debug(f"Memory retrieval: manager={openmemory_mgr}, available={openmemory_mgr.is_available() if openmemory_mgr else False}, message={bool(message)}")
+            if openmemory_mgr and openmemory_mgr.is_available() and message:
+                try:
+                    logger.debug("Attempting to retrieve memories from OpenMemory...")
+                    openmemory_client = openmemory_mgr.get_client()
+
+                    # Retrieve all memories for this player and filter by relevance
+                    # Note: OpenMemory's vector search with synthetic embeddings is unreliable,
+                    # so we use all() method and filter in Python
+                    logger.debug(f"Retrieving memories for player_{player_id}")
+
+                    # Get all memories for this player (using all() method)
+                    all_memories_result = openmemory_client.all(limit=50)
+                    all_memories = all_memories_result.get("items", [])
+
+                    # Filter by user_id
+                    player_memories = [
+                        mem for mem in all_memories
+                        if mem.get("user_id") == f"player_{player_id}"
+                    ]
+                    logger.debug(f"Found {len(player_memories)} total memories for player_{player_id}")
+
+                    # Simple keyword-based relevance filtering
+                    # Extract keywords from the message
+                    message_lower = message.lower()
+                    keywords = set(message_lower.split())
+
+                    # Score memories by keyword overlap
+                    scored_memories = []
+                    for mem in player_memories:
+                        content = mem.get("content", "").lower()
+                        # Count keyword matches
+                        matches = sum(1 for keyword in keywords if keyword in content)
+                        if matches > 0:
+                            scored_memories.append((matches, mem))
+
+                    # Sort by score (descending) and take top 3
+                    scored_memories.sort(reverse=True, key=lambda x: x[0])
+                    relevant_memories = [mem for score, mem in scored_memories[:3]]
+
+                    logger.debug(f"Found {len(relevant_memories)} relevant memories after keyword filtering")
+
+                    if relevant_memories:
+                        memory_context = "\n\nRelevant past interactions:\n"
+                        for mem in relevant_memories:
+                            mem_content = mem.get("content", "")
+                            mem_sector = mem.get("primary_sector", "unknown")
+                            mem_score = mem.get("score", 0.0)
+                            if mem_content:
+                                memory_context += f"- [{mem_sector}] {mem_content} (relevance: {mem_score:.2f})\n"
+                        logger.info(f"✓ Retrieved {len(relevant_memories)} relevant memories from OpenMemory for context")
+                    else:
+                        logger.info("No relevant memories found in OpenMemory")
+                except Exception as e:
+                    logger.error(f"Failed to retrieve memories from OpenMemory: {e}", exc_info=True)
+
+            # Build system prompt with NPC personality and context
+            system_prompt = f"""You are {npc_name}, a {npc_class} in the world of Ragnarok Online.
+
+Background: {background}
+
+Personality Traits (Big Five Model):
+- Openness: {openness:.2f} ({personality_desc})
+- Conscientiousness: {conscientiousness:.2f}
+- Extraversion: {extraversion:.2f}
+- Agreeableness: {agreeableness:.2f}
+- Neuroticism: {neuroticism:.2f}
+
+Moral Alignment: {moral_alignment}
+
+You are having a conversation with {player_name}, an adventurer. Stay in character and respond naturally based on your personality traits and background. Keep responses concise (2-4 sentences) and conversational. Use your personality to guide your tone and word choice.
+
+If the player says goodbye, respond warmly and wish them well in a way that fits your personality.{memory_context}"""
+
+            # Build conversation messages for LLM
+            messages = []
+
+            # Add system prompt as first message
+            messages.append({"role": "system", "content": system_prompt})
+
+            # Add recent conversation history for context
+            if history and len(history) > 1:  # More than just the current message
+                recent_history = history[-6:-1]  # Last 5 messages before current
+                for msg in recent_history:
+                    role = msg.get("role", "unknown")
+                    msg_text = msg.get("message", "")
+                    if role == "player":
+                        messages.append({"role": "user", "content": msg_text})
+                    elif role == "npc":
+                        messages.append({"role": "assistant", "content": msg_text})
+
+            # Add current player message
+            if message:
+                messages.append({"role": "user", "content": message})
             else:
-                response_text = "Farewell, traveler. Come back anytime!"
+                # Initial greeting if no message
+                messages.append({"role": "user", "content": f"*{player_name} approaches you*"})
 
-        # Check for greetings
-        elif "hello" in message_lower or "hi" in message_lower or "greet" in message_lower:
-            if npc_class == "explorer":
-                response_text = f"Greetings, {player_name}! I'm {npc_name}, and I've just returned from the most amazing expedition! Have you ever ventured beyond the city walls?"
-            elif npc_class == "guard":
-                response_text = f"Halt! State your business, {player_name}. I'm {npc_name}, and I keep watch over this city. What brings you here?"
+            # Generate response using LLM
+            logger.info(f"Generating LLM response for {npc_name} to player message: {message[:50] if message else '(initial greeting)'}...")
+            llm_response = await llm.generate_chat(
+                messages=messages,
+                temperature=0.8,  # Higher temperature for more creative/varied responses
+                max_tokens=150  # Keep responses concise
+            )
+
+            response_text = llm_response.content.strip()
+            logger.info(f"LLM generated response ({llm_response.tokens_used} tokens): {response_text[:100]}...")
+
+        except Exception as e:
+            logger.error(f"LLM generation failed: {e}", exc_info=True)
+            logger.warning("Falling back to rule-based response")
+
+            # Fallback to simple rule-based response if LLM fails
+            message_lower = message.lower() if message else ""
+
+            if "bye" in message_lower or "goodbye" in message_lower or "farewell" in message_lower:
+                if npc_class == "explorer":
+                    response_text = "Safe travels, friend! May your adventures be grand!"
+                elif npc_class == "guard":
+                    response_text = "Move along then. Stay safe out there."
+                else:
+                    response_text = "Farewell, traveler. Come back anytime!"
+            elif not message or "hello" in message_lower or "hi" in message_lower:
+                if npc_class == "explorer":
+                    response_text = f"Greetings, {player_name}! I'm {npc_name}. What brings you here?"
+                elif npc_class == "guard":
+                    response_text = f"Halt! State your business, {player_name}."
+                else:
+                    response_text = f"Hello, {player_name}! How can I help you?"
             else:
-                response_text = f"Hello, {player_name}! I'm {npc_name}. How can I help you today?"
-
-        # Check for location/where questions (before "explore" to avoid false matches)
-        elif ("where" in message_lower and ("go" in message_lower or "explore" in message_lower or "next" in message_lower)) or "location" in message_lower:
-            if npc_class == "explorer":
-                response_text = "If you're looking for adventure, I'd recommend the Culvert sewers for beginners, or if you're feeling brave, try the Orc Dungeon! Just be careful - those orcs are tougher than they look."
-            else:
-                response_text = f"We're currently in Prontera, the capital city. It's a bustling place with many opportunities for adventurers like yourself!"
-
-        # Check for tips/advice
-        elif "tip" in message_lower or "advice" in message_lower:
-            if npc_class == "explorer":
-                response_text = "My best tip? Always bring plenty of healing potions, and never underestimate a monster's strength. Oh, and make friends with the local merchants - they often have valuable information!"
-            elif npc_class == "guard":
-                response_text = "Stay alert, keep your weapon ready, and never trust strangers too quickly. The world can be dangerous for the unprepared."
-            else:
-                response_text = "I'd say the best advice is to be prepared for anything. This world is full of surprises!"
-
-        # Check for adventure/exploration talk
-        elif "adventure" in message_lower or "explore" in message_lower or "expedition" in message_lower:
-            if npc_class == "explorer":
-                response_text = "Oh, you want to hear about my adventures? Well, just last week I discovered an ancient ruin in the Sograt Desert! The treasures there were magnificent, though the monsters were quite fierce."
-            else:
-                response_text = "Adventures, you say? I'm not much of an adventurer myself, but I've heard tales of brave souls exploring dangerous dungeons."
-
-        else:
-            # Default responses based on personality
-            if extraversion > 0.7:
-                responses = [
-                    "That's fascinating! Tell me more about that!",
-                    "Oh, I love talking about these things! What else would you like to know?",
-                    "Interesting perspective! I hadn't thought of it that way before."
-                ]
-            elif extraversion < 0.3:
-                responses = [
-                    "I see. That's... interesting.",
-                    "Hmm. I'll have to think about that.",
-                    "Perhaps. I'm not sure what to say about that."
-                ]
-            else:
-                responses = [
-                    "That's an interesting point. What made you think of that?",
-                    "I understand. Is there anything else you'd like to discuss?",
-                    "Fair enough. What else is on your mind?"
-                ]
-
-            import random
-            response_text = random.choice(responses)
+                if extraversion > 0.7:
+                    response_text = "That's fascinating! Tell me more!"
+                elif extraversion < 0.3:
+                    response_text = "I see. That's... interesting."
+                else:
+                    response_text = "That's an interesting point. What else is on your mind?"
 
         # Add NPC response to history
         history.append({
@@ -267,13 +424,77 @@ async def handle_chat_interaction(request: Request):
             "timestamp": datetime.utcnow().isoformat()
         })
 
-        # Save conversation history (10 minute TTL)
+        # Save conversation history (10 minute TTL in DragonflyDB)
         await db.save_conversation_history(conversation_key, history, ttl=600)
+
+        # Store conversation in OpenMemory SDK for long-term persistent memory
+        openmemory_mgr = get_openmemory_manager()
+        logger.debug(f"OpenMemory manager: {openmemory_mgr}, available: {openmemory_mgr.is_available() if openmemory_mgr else False}")
+        if openmemory_mgr and openmemory_mgr.is_available() and message:
+            try:
+                logger.debug("Attempting to store conversation in OpenMemory...")
+                openmemory_client = openmemory_mgr.get_client()
+
+                # Store the full conversation exchange
+                # Store the full conversation exchange with rich context
+                conversation_text = (
+                    f"Conversation between {player_name} and {npc_name} ({npc_class}):\n"
+                    f"{player_name}: {message}\n"
+                    f"{npc_name}: {response_text}"
+                )
+
+                # Add metadata for better retrieval and classification
+                metadata = {
+                    "npc_id": npc_id,
+                    "npc_name": npc_name,
+                    "npc_class": npc_class,
+                    "player_id": player_id,
+                    "player_name": player_name,
+                    "timestamp": datetime.utcnow().isoformat(),
+                    "conversation_type": "player_npc_chat",
+                    "sector": "episodic"  # Suggest episodic sector for conversation memories
+                }
+
+                # Store in OpenMemory (persistent PostgreSQL storage)
+                # Use user_id for multi-user isolation
+                # Higher salience (0.8) for important player-NPC interactions
+                result = openmemory_client.add(
+                    content=conversation_text,
+                    tags=["conversation", "npc_interaction", npc_class, player_name, npc_name],
+                    metadata=metadata,
+                    salience=0.8,  # High importance for player-NPC conversations
+                    user_id=f"player_{player_id}"
+                )
+
+                memory_id = result.get("id", "unknown")
+                primary_sector = result.get("primary_sector", "unknown")
+                logger.info(f"✓ Stored conversation in OpenMemory (memory_id: {memory_id[:8]}..., sector: {primary_sector})")
+
+            except Exception as e:
+                logger.error(f"Failed to store conversation in OpenMemory: {e}", exc_info=True)
+
+        logger.info(f"NPC {npc_name} response: {response_text[:100]}...")
+
+        # Trigger NPC movement after interaction ends (event-driven movement)
+        try:
+            from tasks.npc_movement import trigger_movement_on_interaction_end
+            interaction_context = {
+                "interaction_type": "chat",
+                "player_name": player_name,
+                "message": message
+            }
+            # Fire and forget - don't wait for movement to complete
+            import asyncio
+            asyncio.create_task(trigger_movement_on_interaction_end(npc_id, str(player_id), interaction_context))
+            logger.debug(f"Triggered movement decision for NPC {npc_id} after chat interaction")
+        except Exception as e:
+            logger.warning(f"Failed to trigger movement for NPC {npc_id}: {e}")
 
         return response_text
 
     except Exception as e:
         logger.error(f"Error in chat interaction: {e}", exc_info=True)
+        # Return a simple fallback message
         return "I'm having trouble understanding right now. Could you try again?"
 
 
@@ -290,35 +511,11 @@ def get_orchestrator() -> AgentOrchestrator:
             "verbose": False
         }
 
-        # Initialize Memori client if available and enabled
+        # Note: Memori SDK has been replaced with OpenMemory SDK
+        # OpenMemory is initialized globally in main.py and accessed via get_openmemory_manager()
+        # The orchestrator no longer needs a memori_client parameter
         memori_client = None
-        if MEMORI_AVAILABLE and settings.memori_enabled:
-            try:
-                # Determine database connection string
-                # Use Redis/DragonflyDB connection for Memori storage
-                db_connect = f"redis://{settings.redis_host}:{settings.redis_port}/{settings.redis_db}"
-                if settings.redis_password:
-                    db_connect = f"redis://:{settings.redis_password}@{settings.redis_host}:{settings.redis_port}/{settings.redis_db}"
-
-                # Initialize Memori client
-                memori_client = Memori(
-                    database_connect=db_connect,
-                    api_key=settings.memori_api_key or settings.openai_api_key,  # Use OpenAI key as fallback
-                    user_id="ai_service",  # Service-level user ID
-                    session_id="npc_memories",  # Session for NPC memories
-                    verbose=settings.debug,
-                    schema_init=True  # Initialize database schema
-                )
-                logger.info("Memori client initialized successfully")
-            except Exception as e:
-                logger.error(f"Failed to initialize Memori client: {e}")
-                logger.info("Continuing without Memori SDK - will use DragonflyDB fallback")
-                memori_client = None
-        else:
-            if not MEMORI_AVAILABLE:
-                logger.info("Memori SDK not available - using DragonflyDB fallback")
-            elif not settings.memori_enabled:
-                logger.info("Memori SDK disabled in configuration - using DragonflyDB fallback")
+        logger.info("Using OpenMemory SDK for persistent memory (initialized globally)")
 
         _orchestrator = AgentOrchestrator(
             llm_provider=llm,

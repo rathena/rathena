@@ -289,3 +289,69 @@ logging:
   retention: "7 days"  # Keep logs for this duration
   compression: "gz"  # Compress rotated logs
 
+# ============================================================================
+# NPC Configuration
+# ============================================================================
+# Individual NPC configurations including personality traits and movement settings
+
+npcs:
+  # Existing NPCs
+  ai_guard_003:
+    name: "Guard Thorne"
+    class: "guard"
+    spawn_location:
+      map: "prontera"
+      x: 145
+      y: 175
+    personality:
+      openness: 0.3
+      conscientiousness: 0.8
+      extraversion: 0.4
+      agreeableness: 0.6
+      neuroticism: 0.3
+    movement:
+      mode: "radius_restricted"  # Options: disabled, global, map_restricted, radius_restricted
+      radius: 15
+      spawn_x: 145
+      spawn_y: 175
+
+  ai_explorer_002:
+    name: "Lyra the Explorer"
+    class: "explorer"
+    spawn_location:
+      map: "prontera"
+      x: 155
+      y: 185
+    personality:
+      openness: 0.9
+      conscientiousness: 0.5
+      extraversion: 0.8
+      agreeableness: 0.7
+      neuroticism: 0.4
+    movement:
+      mode: "radius_restricted"
+      radius: 20
+      spawn_x: 155
+      spawn_y: 185
+
+  # Test NPC for Movement System Verification
+  test_merchant_001:
+    name: "WanderingMerchant"
+    class: "merchant"
+    spawn_location:
+      map: "prontera"
+      x: 150
+      y: 180
+    personality:
+      openness: 0.85  # High openness - curious explorer
+      conscientiousness: 0.6
+      extraversion: 0.75  # Friendly and talkative
+      agreeableness: 0.8
+      neuroticism: 0.2  # Low anxiety, confident
+    movement:
+      mode: "radius_restricted"  # Restricted to small area for easy observation
+      radius: 10  # Small radius for visual verification
+      spawn_x: 150
+      spawn_y: 180
+    description: "Test NPC for autonomous movement system verification. Should wander within 10 tiles of spawn point."
+

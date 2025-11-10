@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 from loguru import logger
 
-from config import settings
+from ai_service.config import settings
 from database import db, postgres_db
 from agents.decision_agent import DecisionAgent
 from agents.base_agent import AgentContext
@@ -17,7 +17,8 @@ from utils.bridge_commands import translate_action_to_bridge_command
 from utils.pubsub import get_pubsub_manager  # Phase 8B: Pub/Sub for async actions
 from models.npc import NPCAction
 from tasks.instant_response import instant_response_manager, EventPriority
-from tasks.npc_relationships import npc_relationship_manager
+# Note: npc_relationships import disabled due to database import issues
+# from tasks.npc_relationships import npc_relationship_manager
 
 
 class NPCMovementManager:
@@ -25,11 +26,24 @@ class NPCMovementManager:
     Manages NPC movement with agent-driven decision making
     Supports both event-driven and fixed-interval modes
     """
-    
+
     def __init__(self):
-        self.decision_agent = DecisionAgent()
+        # DecisionAgent will be initialized lazily when needed
+        self._decision_agent = None
         self.last_movement_times: Dict[str, datetime] = {}
         logger.info("NPCMovementManager initialized")
+
+    def _get_decision_agent(self) -> DecisionAgent:
+        """Get or create DecisionAgent instance"""
+        if self._decision_agent is None:
+            from llm.factory import get_llm_provider
+            llm = get_llm_provider()
+            self._decision_agent = DecisionAgent(
+                agent_id="movement_decision_001",
+                llm_provider=llm,
+                config={"verbose": False}
+            )
+        return self._decision_agent
     
     async def trigger_movement_on_interaction_end(self, npc_id: str, player_id: str, interaction_context: Dict[str, Any]):
         """
@@ -60,7 +74,7 @@ class NPCMovementManager:
             )
             
             # Agent decides if and where to move
-            decision = await self.decision_agent.process(context)
+            decision = await self._get_decision_agent().process(context)
             
             if decision.success and decision.data.get('should_move', False):
                 # Execute movement
@@ -117,7 +131,7 @@ class NPCMovementManager:
             priority = EventPriority.HIGH if interaction_context.get("important", False) else EventPriority.NORMAL
 
             async def movement_handler(event_data):
-                decision = await self.decision_agent.process(context)
+                decision = await self._get_decision_agent().process(context)
                 if decision.success and decision.data.get('should_move', False):
                     await self._execute_movement(npc_id, decision.data)
                     await self._store_movement_decision(npc_id, decision.data, context)
@@ -172,7 +186,7 @@ class NPCMovementManager:
                 )
                 
                 # Agent decides if idle NPC should move
-                decision = await self.decision_agent.process(context)
+                decision = await self._get_decision_agent().process(context)
                 
                 if decision.success and decision.data.get('should_move', False):
                     await self._execute_movement(npc_id, decision.data)
@@ -210,7 +224,7 @@ class NPCMovementManager:
                 )
                 
                 # Agent decides movement
-                decision = await self.decision_agent.process(context)
+                decision = await self._get_decision_agent().process(context)
                 
                 if decision.success and decision.data.get('should_move', False):
                     await self._execute_movement(npc_id, decision.data)
@@ -229,23 +243,13 @@ class NPCMovementManager:
     async def _get_npc_data(self, npc_id: str) -> Optional[Dict[str, Any]]:
         """Get NPC data from cache or database"""
         try:
-            # Try cache first (DragonflyDB)
-            npc_key = f"npc:{npc_id}"
-            npc_data = await db.get(npc_key)
+            # Get NPC state from DragonflyDB (stored as hash)
+            npc_data = await db.get_npc_state(npc_id)
 
             if npc_data:
                 return npc_data
 
-            # Fallback to PostgreSQL
-            query = "SELECT * FROM npcs WHERE npc_id = $1"
-            result = await postgres_db.fetch_one(query, npc_id)
-
-            if result:
-                npc_data = dict(result)
-                # Cache for 5 minutes
-                await db.set(npc_key, npc_data, expire=300)
-                return npc_data
-
+            logger.warning(f"NPC {npc_id} not found in DragonflyDB")
             return None
 
         except Exception as e:
@@ -326,18 +330,31 @@ class NPCMovementManager:
         # Get world state
         world_state = await self._get_world_state(npc_data.get('map_name', 'prontera'))
 
+        # Build personality object from NPC data
+        from models.npc import NPCPersonality
+        personality = NPCPersonality(
+            openness=npc_data.get('openness', 0.5),
+            conscientiousness=npc_data.get('conscientiousness', 0.5),
+            extraversion=npc_data.get('extraversion', 0.5),
+            agreeableness=npc_data.get('agreeableness', 0.5),
+            neuroticism=npc_data.get('neuroticism', 0.5)
+        )
+
+        # Build current state with movement-specific data
+        current_state = {
+            **npc_data,
+            'trigger_type': trigger_type,
+            'trigger_data': trigger_data,
+            'movement_history': movement_history,
+            'nearby_entities': nearby_entities
+        }
+
         context = AgentContext(
             npc_id=npc_id,
             npc_name=npc_data.get('name', 'Unknown'),
-            npc_personality=npc_data.get('personality', {}),
-            current_state=npc_data.get('state', {}),
-            world_state=world_state,
-            trigger_type=trigger_type,
-            trigger_data=trigger_data,
-            movement_history=movement_history,
-            nearby_entities=nearby_entities,
-            learning_enabled=settings.agent_learning_enabled,
-            adaptive_behavior=settings.npc_adaptive_behavior
+            personality=personality,
+            current_state=current_state,
+            world_state=world_state
         )
 
         return context
@@ -440,11 +457,36 @@ class NPCMovementManager:
     async def _execute_movement(self, npc_id: str, decision_data: Dict[str, Any]):
         """Execute NPC movement based on agent decision"""
         try:
+            from utils.movement_utils import is_position_within_boundary, get_movement_capabilities
+
+            # Get target position from decision
+            target_position = decision_data.get('target_position')
+            if not target_position:
+                logger.warning(f"NPC {npc_id}: No target position in movement decision, skipping")
+                return
+
+            # Get NPC state to check movement boundaries
+            npc_state = await self._get_npc_state(npc_id)
+            if not npc_state:
+                logger.warning(f"NPC {npc_id}: Could not retrieve state for boundary check, skipping movement")
+                return
+
+            # Get movement capabilities with boundary settings
+            movement_caps = get_movement_capabilities(npc_state)
+
+            # Validate position is within boundaries
+            if not is_position_within_boundary(target_position, movement_caps, npc_id):
+                logger.info(
+                    f"NPC {npc_id}: Target position {target_position} is outside movement boundaries "
+                    f"(mode: {movement_caps.movement_mode}, radius: {movement_caps.movement_radius}), movement blocked"
+                )
+                return
+
             # Create NPC action from decision
             action = NPCAction(
                 action_type=decision_data.get('action_type', 'wander'),
-                target_x=decision_data.get('target_x'),
-                target_y=decision_data.get('target_y'),
+                target_x=target_position.get('x'),
+                target_y=target_position.get('y'),
                 parameters=decision_data.get('parameters', {})
             )
 

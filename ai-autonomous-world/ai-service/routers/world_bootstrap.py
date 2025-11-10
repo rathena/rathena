@@ -10,8 +10,8 @@ from datetime import datetime
 import random
 
 from pydantic import BaseModel, Field
-from routers.npc_spawning import spawn_bulk_npcs, BulkSpawnRequest
-from database import db, postgres_db
+from ai_service.routers.npc_spawning import spawn_bulk_npcs, BulkSpawnRequest
+from ai_service.database import db, postgres_db
 
 router = APIRouter(prefix="/ai/world/bootstrap", tags=["world-bootstrap"])
 

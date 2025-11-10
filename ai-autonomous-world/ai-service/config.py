@@ -33,7 +33,7 @@ class Settings(BaseSettings):
     redis_password: Optional[str] = Field(default=None, env="REDIS_PASSWORD")
     redis_max_connections: int = Field(default=50, env="REDIS_MAX_CONNECTIONS")
 
-    # PostgreSQL Configuration (for persistent memory storage via Memori SDK)
+    # PostgreSQL Configuration (for persistent memory storage via OpenMemory SDK)
     postgres_host: str = Field(default="192.168.0.100", env="POSTGRES_HOST")
     postgres_port: int = Field(default=5432, env="POSTGRES_PORT")
     postgres_db: str = Field(default="ai_world_memory", env="POSTGRES_DB")
@@ -42,6 +42,10 @@ class Settings(BaseSettings):
     postgres_pool_size: int = Field(default=10, env="POSTGRES_POOL_SIZE")
     postgres_max_overflow: int = Field(default=20, env="POSTGRES_MAX_OVERFLOW")
     postgres_echo_sql: bool = Field(default=False, env="POSTGRES_ECHO_SQL")
+
+    # OpenMemory Configuration (for long-term persistent memory)
+    openmemory_url: str = Field(default="http://localhost:8081", env="OPENMEMORY_URL")
+    openmemory_api_key: str = Field(default="", env="OPENMEMORY_API_KEY")
 
     # Database connection retry configuration
     db_connection_max_retries: int = Field(default=5, env="DB_CONNECTION_MAX_RETRIES")

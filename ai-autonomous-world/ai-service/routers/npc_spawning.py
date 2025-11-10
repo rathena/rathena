@@ -11,8 +11,8 @@ import random
 import uuid
 
 from pydantic import BaseModel, Field
-from models.npc import NPCRegisterRequest, NPCPosition, NPCPersonality
-from database import db
+from ai_service.models.npc import NPCRegisterRequest, NPCPosition, NPCPersonality
+from ai_service.database import db
 
 router = APIRouter(prefix="/ai/npc/spawn", tags=["npc-spawning"])
 

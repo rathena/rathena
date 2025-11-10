@@ -41,16 +41,16 @@ OnNPCChat:
 	// Get command arguments
 	// Format: @npc <npc_id> <message>
 	.@args$ = implode(.@atcmd_parameters$, " ");
-	
-	// Parse NPC ID and message
-	.@space_pos = instr(.@args$, " ");
-	
+
+	// Parse NPC ID and message using strpos (PHP-style string position function)
+	.@space_pos = strpos(.@args$, " ", 0);
+
 	if (.@space_pos == -1) {
 		dispbottom "[AI Chat] Usage: @npc <npc_id> <message>";
 		dispbottom "[AI Chat] Example: @npc merchant_001 Tell me about the ancient ruins";
 		end;
 	}
-	
+
 	.@npc_id$ = substr(.@args$, 0, .@space_pos - 1);
 	.@message$ = substr(.@args$, .@space_pos + 1, getstrlen(.@args$) - 1);
 	
