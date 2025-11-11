@@ -7,7 +7,7 @@ from loguru import logger
 from datetime import datetime
 from typing import Dict, Any
 
-from ai_service.database import db
+from database import db
 
 router = APIRouter(prefix="/ai/relationship", tags=["relationship"])
 

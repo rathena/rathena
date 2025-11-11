@@ -10,12 +10,12 @@ from pydantic import BaseModel
 from typing import Optional, Dict, Any
 import logging
 
-from ..database import db
-from ..agents.decision_agent import DecisionAgent, AgentContext
-from ..models.npc import NPCPersonality
-from ..llm.factory import get_llm_provider
-from ..config import settings
-from ..utils.walkability import (
+from database import db
+from agents.decision_agent import DecisionAgent, AgentContext
+from models.npc import NPCPersonality
+from llm.factory import get_llm_provider
+from config import settings
+from utils.walkability import (
     is_position_walkable,
     find_nearest_walkable_position,
     get_walkable_positions_in_radius
