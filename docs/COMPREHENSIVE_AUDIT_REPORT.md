@@ -61,7 +61,7 @@ setarray .npc_names$[0], "Guard Thorne#ai003", "Lyra the Explorer#ai002";
 
 #### Storage Architecture
 **Dual-Storage Approach:**
-1. **DragonflyDB (Redis)** - Fast access for real-time gameplay
+1. **DragonflyDB 1.12.1** - Fast access for real-time gameplay
    - Key: `relationship:{npc_id}:{player_id}`
    - Value: Integer (-100 to 100)
    - Use: Quick lookups during player interactions

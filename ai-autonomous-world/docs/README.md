@@ -39,7 +39,7 @@ This project transforms the rAthena MMORPG emulator into a **living, breathing w
 
 1. **rAthena Game Server** - Existing MMORPG server with custom NPC scripts
 2. **Bridge Layer** - REST API extension connecting rAthena to AI services
-3. **AI Service Layer** - Python-based autonomous agent orchestration (CrewAI + Memori SDK)
+3. **AI Service Layer** - Python-based autonomous agent orchestration (CrewAI + OpenMemory)
 4. **State Management** - DragonflyDB for shared state and caching
 5. **LLM Providers** - Abstracted interface to multiple AI providers
 
@@ -93,7 +93,7 @@ For detailed world concept, see [WORLD_CONCEPT_DESIGN.md](./WORLD_CONCEPT_DESIGN
 - **Bridge Layer**: C++ REST API extension (planned, not yet implemented)
 - **AI Service**: Python 3.11+ with FastAPI (✅ implemented)
 - **Agent Framework**: CrewAI (multi-agent orchestration) (✅ implemented)
-- **Memory SDK**: Memori SDK with PostgreSQL backend (✅ implemented)
+- **Memory SDK**: OpenMemory with PostgreSQL backend (✅ implemented)
 - **State Management**: DragonflyDB (Redis-compatible, high-performance) (✅ implemented)
 - **LLM Providers**: Azure OpenAI (default), OpenAI, DeepSeek, Anthropic Claude, Google Gemini (✅ implemented)
 
@@ -192,7 +192,7 @@ The service will start on `http://localhost:8000` by default.
 - [x] Integrate CrewAI for agent orchestration
 - [x] Implement basic NPC consciousness model
 - [x] Implement AI agents (Dialogue, Decision, Memory, World, Quest, Economy)
-- [ ] Integrate Memori SDK for memory management (using DragonflyDB fallback)
+- [ ] Integrate OpenMemory for memory management (using DragonflyDB fallback)
 
 **Phase 3: World Systems** 🚧 IN PROGRESS
 - [x] Implement economy models

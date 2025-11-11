@@ -74,7 +74,7 @@ ai-autonomous-world/
 │   ├── logs/                # Application logs
 │   ├── main.py              # FastAPI application entry point
 │   ├── config.py            # Configuration management
-│   ├── database.py          # DragonflyDB/Redis client
+│   ├── database.py          # DragonflyDB client
 │   ├── requirements.txt     # Full Python dependencies
 │   ├── requirements-minimal.txt  # Minimal dependencies
 │   ├── requirements-cloud.txt    # Cloud deployment dependencies
@@ -105,7 +105,7 @@ ai-autonomous-world/
 
 - Python 3.11 or higher (tested with Python 3.12.3)
 - PostgreSQL 17.6 (for persistent memory storage - 18 tables)
-- DragonflyDB 7.4.0 (Redis-compatible in-memory database for caching)
+- DragonflyDB 1.12.1 (Redis-compatible in-memory database for caching)
 - rAthena server with custom HTTP script commands (located in parent directory)
 - **Azure OpenAI API access** (recommended) or alternative LLM provider
   - Azure OpenAI (primary, production-ready)
@@ -312,7 +312,7 @@ python3 -m pytest tests/ -v
 - **Database Layer**
   - PostgreSQL 17.6 with 18 tables (7 AI-specific + 11 rAthena integration)
   - DragonflyDB 7.4.0 for high-speed caching
-  - Memori SDK integration for long-term memory
+  - OpenMemory integration for long-term memory
   - Dual-database architecture (PostgreSQL for persistence, DragonflyDB for caching)
   - Connection pooling and retry logic
 
@@ -330,7 +330,7 @@ python3 -m pytest tests/ -v
 - **AI Agent System (6 agents)**
   - **DialogueAgent** - NPC conversation generation
   - **DecisionAgent** - NPC decision making
-  - **MemoryAgent** - Memory management with Memori SDK
+  - **MemoryAgent** - Memory management with OpenMemory
   - **WorldAgent** - World state analysis
   - **QuestAgent** - Dynamic quest generation
   - **EconomyAgent** - Economic simulation
@@ -399,7 +399,7 @@ python3 -m pytest tests/ -v
   - Production-ready integration workflow
 
 ### ✅ Recently Completed (100% Functional)
-- **Memori SDK Full Integration** - PostgreSQL backend required (no DragonflyDB fallback)
+- **OpenMemory Full Integration** - PostgreSQL backend required (no DragonflyDB fallback)
 - **Environment System** - Complete weather, time, season, disaster, and resource systems
 - **Performance Testing** - Comprehensive load testing and benchmarking infrastructure
 - **E2E Integration Documentation** - Complete workflow and troubleshooting guide

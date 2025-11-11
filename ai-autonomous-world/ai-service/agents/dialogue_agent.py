@@ -8,20 +8,12 @@ from typing import Dict, Any, List
 from loguru import logger
 
 from crewai import Agent
-try:
-    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-    from ai_service.config import settings
-    from ai_service.utils.cache import cache_response
-    from ai_service.models.information import (
-        InformationItem, filter_information_by_relationship
-    )
-except ModuleNotFoundError:
-    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-    from ai_service.config import settings
-    from utils.cache import cache_response
-    from models.information import (
-        InformationItem, filter_information_by_relationship
-    )
+from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+from config import settings
+from utils.cache import cache_response
+from models.information import (
+    InformationItem, filter_information_by_relationship
+)
 
 
 class DialogueAgent(BaseAIAgent):

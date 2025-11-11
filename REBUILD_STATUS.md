@@ -45,7 +45,7 @@ Successfully rebuilt the rAthena server with both P2P coordinator and AI autonom
 4. **P2P Coordinator** ✅
    - Screen session: `p2p-coordinator`
    - URL: http://localhost:8001
-   - Health: Connected to PostgreSQL and Redis
+   - Health: Connected to PostgreSQL and DragonflyDB
    - Status: Healthy
 
 5. **AI Autonomous World Service** ✅
@@ -69,7 +69,7 @@ Successfully rebuilt the rAthena server with both P2P coordinator and AI autonom
 All services are properly connected and communicating:
 
 - ✅ P2P Coordinator → PostgreSQL: Connected
-- ✅ P2P Coordinator → Redis/DragonflyDB: Connected
+- ✅ P2P Coordinator → DragonflyDB: Connected
 - ✅ AI Service → DragonflyDB: Connected
 - ✅ P2P Coordinator API: Responding
 - ✅ AI Service API: Responding

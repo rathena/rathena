@@ -13,9 +13,9 @@ from loguru import logger
 from ..base import BaseLLMProvider, LLMResponse
 
 try:
-    from ai_service.config import settings
+    from config import settings
 except ModuleNotFoundError:
-    from ai_service.config import settings
+    from config import settings
 
 
 class AzureOpenAIProvider(BaseLLMProvider):

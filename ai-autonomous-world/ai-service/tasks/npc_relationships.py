@@ -87,7 +87,7 @@ class NPCRelationshipManager:
         """Check for NPCs in proximity and trigger interactions"""
         try:
             # Get all active NPCs from cache
-            npc_keys = await self.dragonfly.keys("npc:*:state")
+            npc_keys = await self.db.keys("npc:*:state")
             
             if len(npc_keys) < 2:
                 return  # Need at least 2 NPCs
@@ -96,7 +96,7 @@ class NPCRelationshipManager:
             npc_positions = {}
             for key in npc_keys:
                 npc_id = key.decode().split(":")[1]
-                state_data = await self.dragonfly.get(key)
+                state_data = await self.db.get(key)
                 if state_data:
                     state = json.loads(state_data)
                     if "position" in state:
@@ -395,7 +395,7 @@ class NPCRelationshipManager:
 
         # Try cache first
         cache_key = f"npc_relationship:{npc_ids[0]}:{npc_ids[1]}"
-        cached = await self.dragonfly.get(cache_key)
+        cached = await self.db.get(cache_key)
         if cached:
             return NPCRelationship(**json.loads(cached))
 
@@ -412,7 +412,7 @@ class NPCRelationshipManager:
                 if row:
                     relationship = NPCRelationship(**dict(row))
                     # Cache for 5 minutes
-                    await self.dragonfly.setex(
+                    await self.db.setex(
                         cache_key,
                         300,
                         json.dumps(relationship.model_dump(), default=str)
@@ -479,7 +479,7 @@ class NPCRelationshipManager:
 
         # Update cache
         cache_key = f"npc_relationship:{npc_ids[0]}:{npc_ids[1]}"
-        await self.dragonfly.setex(
+        await self.db.setex(
             cache_key,
             300,
             json.dumps(relationship.model_dump(), default=str)
@@ -515,14 +515,14 @@ class NPCRelationshipManager:
 
     async def _get_npc_state(self, npc_id: str) -> Dict[str, Any]:
         """Get NPC state from cache"""
-        state_data = await self.dragonfly.get(f"npc:{npc_id}:state")
+        state_data = await self.db.get(f"npc:{npc_id}:state")
         if state_data:
             return json.loads(state_data)
         return {}
 
     async def _get_world_state(self) -> Dict[str, Any]:
         """Get current world state"""
-        world_data = await self.dragonfly.get("world:state")
+        world_data = await self.db.get("world:state")
         if world_data:
             return json.loads(world_data)
         return {"time": "day", "weather": "clear", "player_count": 0}

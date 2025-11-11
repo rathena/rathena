@@ -63,7 +63,7 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO $DB_USER;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO $DB_USER;
 EOF
 
-echo "Step 6: Creating Memori SDK tables..."
+echo "Step 6: Creating OpenMemory tables..."
 $PSQL_CMD -U postgres -d $DB_NAME <<'EOF'
 -- NPC memories table
 CREATE TABLE IF NOT EXISTS npc_memories (

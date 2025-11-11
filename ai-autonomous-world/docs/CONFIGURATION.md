@@ -43,7 +43,7 @@ debug: bool = True
 
 ## Database Configuration
 
-### DragonflyDB/Redis (High-Speed Caching)
+### DragonflyDB (High-Speed Caching)
 
 ```python
 # Redis host
@@ -351,7 +351,7 @@ export SERVICE_PORT=8000
 export SERVICE_ENV="development"
 export LOG_LEVEL="DEBUG"
 
-# DragonflyDB/Redis
+# DragonflyDB
 export REDIS_HOST="127.0.0.1"
 export REDIS_PORT=6379
 export REDIS_PASSWORD=""

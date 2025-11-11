@@ -15,23 +15,21 @@ import uvicorn
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from ai_service.config import settings
-from ai_service.database import db, postgres_db
-from ai_service.routers import npc_router, world_router, player_router
-from ai_service.routers.quest import router as quest_router
-from ai_service.routers.chat_command import router as chat_command_router
-from ai_service.routers.batch import router as batch_router
-from ai_service.routers.economy import router as economy_router
-from ai_service.routers.faction import router as faction_router
-from ai_service.routers.gift import router as gift_router
-from ai_service.routers.gift import router as gift_router
-from ai_service.routers.npc_spawning import router as npc_spawning_router
-from ai_service.routers.world_bootstrap import router as world_bootstrap_router
-from ai_service.routers.npc_movement import router as npc_movement_router
-from ai_service.routers.mvp import router as mvp_router
-from ai_service.routers.relationship import router as relationship_router
-from ai_service.routers.mvp import router as mvp_router
-from ai_service.middleware import (
+from config import settings
+from database import db, postgres_db
+from routers import npc_router, world_router, player_router
+from routers.quest import router as quest_router
+from routers.chat_command import router as chat_command_router
+from routers.batch import router as batch_router
+from routers.economy import router as economy_router
+from routers.faction import router as faction_router
+from routers.gift import router as gift_router
+from routers.npc_spawning import router as npc_spawning_router
+from routers.world_bootstrap import router as world_bootstrap_router
+from routers.npc_movement import router as npc_movement_router
+from routers.mvp import router as mvp_router
+from routers.relationship import router as relationship_router
+from middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
     RequestSizeLimitMiddleware,
@@ -116,7 +114,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize GPU manager
     try:
-        from ai_service.utils import initialize_gpu
+        from utils import initialize_gpu
         gpu_manager = initialize_gpu(settings)
         if gpu_manager.is_available():
             logger.info(f"GPU acceleration enabled: {gpu_manager.get_info().device_name}")

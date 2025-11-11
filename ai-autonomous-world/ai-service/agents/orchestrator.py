@@ -3,384 +3,218 @@ Agent Orchestrator - Coordinates multiple agents using CrewAI
 Manages agent collaboration and task delegation
 """
 
+from datetime import datetime
 from typing import Dict, Any, List, Optional
 from loguru import logger
 
 from crewai import Crew, Process
-try:
-    from ai_service.agents.base_agent import AgentContext, AgentResponse
-    from ai_service.agents.dialogue_agent import DialogueAgent
-    from ai_service.agents.decision_agent import DecisionAgent
-    from ai_service.agents.memory_agent import MemoryAgent
-    from ai_service.agents.world_agent import WorldAgent
-except ModuleNotFoundError:
-    from agents.base_agent import AgentContext, AgentResponse
-    from agents.dialogue_agent import DialogueAgent
-    from agents.decision_agent import DecisionAgent
-    from agents.memory_agent import MemoryAgent
-    from agents.world_agent import WorldAgent
+from agents.base_agent import AgentContext, AgentResponse
+from agents.dialogue_agent import DialogueAgent
+from agents.decision_agent import DecisionAgent
+from agents.memory_agent import MemoryAgent
+from agents.world_agent import WorldAgent
 
 
 class AgentOrchestrator:
     """
-    Orchestrates multiple AI agents to handle complex NPC behaviors
-    
-    Uses CrewAI to coordinate:
-    - Dialogue Agent: Generates NPC dialogue
-    - Decision Agent: Makes action decisions
-    - Memory Agent: Manages long-term memory
-    - World Agent: Analyzes world state
+    Orchestrates multiple AI agents to handle complex NPC interactions
+    Uses CrewAI for agent coordination and task management
     """
-    
+
     def __init__(
         self,
-        llm_provider: Any,
-        config: Dict[str, Any]
+        config: Dict[str, Any],
+        npc_context: Optional[Dict[str, Any]] = None
     ):
         """
-        Initialize Agent Orchestrator
-
+        Initialize the orchestrator with configuration and optional NPC context
+        
         Args:
-            llm_provider: LLM provider instance
-            config: Configuration dictionary
-
-        Note:
-            Memory storage now uses OpenMemory SDK (initialized globally in main.py)
+            config: Configuration dictionary with agent settings
+            npc_context: Optional NPC context for initial state
         """
-        self.llm_provider = llm_provider
         self.config = config
-
+        self.npc_context = npc_context or {}
+        
         # Initialize agents
-        self.dialogue_agent = DialogueAgent(
-            agent_id="dialogue_001",
-            llm_provider=llm_provider,
-            config=config.get("dialogue_agent", {})
-        )
+        self.dialogue_agent = DialogueAgent(config.get("dialogue", {}))
+        self.decision_agent = DecisionAgent(config.get("decision", {}))
+        self.memory_agent = MemoryAgent(config.get("memory", {}))
+        self.world_agent = WorldAgent(config.get("world", {}))
+        
+        logger.info("AgentOrchestrator initialized with {} agents", 4)
 
-        self.decision_agent = DecisionAgent(
-            agent_id="decision_001",
-            llm_provider=llm_provider,
-            config=config.get("decision_agent", {})
-        )
-
-        self.memory_agent = MemoryAgent(
-            agent_id="memory_001",
-            llm_provider=llm_provider,
-            config=config.get("memory_agent", {})
-        )
-
-        self.world_agent = WorldAgent(
-            agent_id="world_001",
-            llm_provider=llm_provider,
-            config=config.get("world_agent", {})
-        )
-
-        logger.info("Agent Orchestrator initialized with 4 specialized agents (using OpenMemory SDK)")
-    
     async def handle_player_interaction(
         self,
-        npc_context: AgentContext,
-        player_message: str,
-        interaction_type: str = "talk"
-    ) -> Dict[str, Any]:
+        player_input: str,
+        npc_context: Dict[str, Any],
+        player_context: Dict[str, Any]
+    ) -> AgentResponse:
         """
-        Handle player-NPC interaction using multiple agents
+        Handle player interaction by coordinating multiple agents
         
         Args:
-            npc_context: Context for the NPC
-            player_message: Message from player
-            interaction_type: Type of interaction
+            player_input: Player's input text
+            npc_context: NPC's current state and context
+            player_context: Player's information and history
             
         Returns:
-            Complete interaction response
+            AgentResponse containing the generated response
         """
-        logger.info(f"Orchestrating player interaction for NPC: {npc_context.npc_id}")
-        
         try:
-            # Step 1: Retrieve relevant memories
+            # Update context with current interaction
             memory_context = npc_context.current_state.copy()
-            memory_context["operation"] = "retrieve"
-            memory_context["player_id"] = npc_context.current_state.get("player_id")
-            memory_context["query"] = player_message
-
+            memory_context.update({
+                "player_input": player_input,
+                "timestamp": datetime.now().isoformat(),
+                "player_info": player_context
+            })
+            
+            # Store interaction in memory
             try:
-                memory_response = await self.memory_agent.process(
-                    AgentContext(
-                        npc_id=npc_context.npc_id,
-                        npc_name=npc_context.npc_name,
-                        personality=npc_context.personality,
-                        current_state=memory_context,
-                        world_state=npc_context.world_state,
-                        recent_events=npc_context.recent_events
-                    )
-                )
+                await self.memory_agent.store_interaction(memory_context)
             except Exception as e:
-                logger.error(f"Memory retrieval failed for NPC {npc_context.npc_id}: {e}")
-                # Create empty memory response to continue
-                memory_response = AgentResponse(
-                    success=False,
-                    data={},
-                    metadata={"error": str(e)}
-                )
+                logger.warning("Failed to store interaction in memory: {}", e)
             
-            # Step 2: Generate dialogue with memory context
-            dialogue_context = npc_context.current_state.copy()
-            dialogue_context["player_message"] = player_message
-            dialogue_context["interaction_type"] = interaction_type
-
-            # Create new context with memory and dialogue data
-            dialogue_agent_context = AgentContext(
-                npc_id=npc_context.npc_id,
-                npc_name=npc_context.npc_name,
-                personality=npc_context.personality,
-                current_state=dialogue_context,
-                world_state=npc_context.world_state,
-                recent_events=npc_context.recent_events,
-                memory_context=memory_response.data if memory_response.success else None
-            )
-
+            # Create crew for dialogue generation
+            crew = self.create_crew_for_task("dialogue")
+            
+            # Execute the crew to generate response
             try:
-                dialogue_response = await self.dialogue_agent.process(dialogue_agent_context)
+                result = await crew.kickoff(inputs={
+                    "player_input": player_input,
+                    "npc_context": npc_context,
+                    "player_context": player_context
+                })
+                
+                response = AgentResponse(
+                    text=result.get("response", "I'm not sure how to respond to that."),
+                    emotional_state=result.get("emotional_state", "neutral"),
+                    actions=result.get("actions", []),
+                    metadata=result.get("metadata", {})
+                )
+                
+                return response
+                
             except Exception as e:
-                logger.error(f"Dialogue generation failed for NPC {npc_context.npc_id}: {e}")
-                return AgentResponse(
-                    success=False,
-                    data={"error": "Failed to generate dialogue"},
-                    metadata={"error_details": str(e)}
+                logger.error("Crew execution failed: {}", e)
+                # Fallback to direct dialogue agent
+                return await self.dialogue_agent.generate_response(
+                    player_input, npc_context, player_context
                 )
-
-            # Step 3: Store this interaction as a memory
-            if dialogue_response.success:
-                store_context = {
-                    "operation": "store",
-                    "memory_data": {
-                        "type": "interaction",
-                        "content": f"Player said: '{player_message}'. I responded: '{dialogue_response.data.get('text', '')}'",
-                        "participants": [npc_context.current_state.get("player_id", "unknown")],
-                        "location": npc_context.current_state.get("location", {}),
-                        "importance": 5,
-                        "emotional_valence": 0.5 if dialogue_response.data.get("emotion") == "friendly" else 0.0
-                    }
-                }
-
-                try:
-                    await self.memory_agent.process(
-                        AgentContext(
-                            npc_id=npc_context.npc_id,
-                            npc_name=npc_context.npc_name,
-                            personality=npc_context.personality,
-                            current_state=store_context,
-                            world_state=npc_context.world_state,
-                            recent_events=npc_context.recent_events
-                        )
-                    )
-                except Exception as e:
-                    logger.warning(f"Failed to store interaction memory for NPC {npc_context.npc_id}: {e}")
-            
-            # Step 4: Update relationship
-            relationship_change = 1 if dialogue_response.success else 0
-            relationship_context = {
-                "operation": "update_relationship",
-                "player_id": npc_context.current_state.get("player_id"),
-                "relationship_change": relationship_change
-            }
-            
-            relationship_response = await self.memory_agent.process(
-                AgentContext(
-                    npc_id=npc_context.npc_id,
-                    npc_name=npc_context.npc_name,
-                    personality=npc_context.personality,
-                    current_state=relationship_context,
-                    world_state=npc_context.world_state,
-                    recent_events=npc_context.recent_events
-                )
-            )
-            
-            return {
-                "dialogue": dialogue_response.data if dialogue_response.success else {"text": "..."},
-                "relationship_change": relationship_response.data if relationship_response.success else {},
-                "memory_stored": True
-            }
-            
+                
         except Exception as e:
-            logger.error(f"Orchestration failed for player interaction: {e}")
-            return {
-                "dialogue": {"text": "I'm not sure what to say...", "emotion": "confused"},
-                "relationship_change": {},
-                "memory_stored": False,
-                "error": str(e)
-            }
+            logger.error("Error in player interaction handling: {}", e)
+            return AgentResponse(
+                text="I'm having trouble processing that right now. Could you try again?",
+                emotional_state="confused",
+                actions=[],
+                metadata={"error": str(e)}
+            )
 
     async def handle_npc_action_decision(
         self,
-        npc_context: AgentContext
+        world_state: Dict[str, Any],
+        npc_context: Dict[str, Any]
     ) -> Dict[str, Any]:
         """
-        Determine next action for NPC using Decision and World agents
-
+        Make decisions about NPC actions based on world state
+        
         Args:
-            npc_context: Context for the NPC
-
+            world_state: Current state of the game world
+            npc_context: NPC's current state and context
+            
         Returns:
-            Action decision
+            Dictionary containing decided actions and their parameters
         """
-        logger.info(f"Orchestrating action decision for NPC: {npc_context.npc_id}")
-
         try:
-            # Step 1: Analyze world state impact
-            world_context = npc_context.current_state.copy()
-            world_context["operation"] = "impact"
-            world_context["npc_class"] = npc_context.current_state.get("npc_class", "generic")
-
-            world_response = await self.world_agent.process(
-                AgentContext(
-                    npc_id=npc_context.npc_id,
-                    npc_name=npc_context.npc_name,
-                    personality=npc_context.personality,
-                    current_state=world_context,
-                    world_state=npc_context.world_state,
-                    recent_events=npc_context.recent_events
-                )
-            )
-
-            # Step 2: Make decision considering world impact
-            if world_response.success and world_response.data.get("affected"):
-                # Add world impact to context
-                npc_context.current_state["world_impact"] = world_response.data
-                npc_context.current_state["mood_modifier"] = world_response.data.get("mood_modifier", 0.0)
-
-            decision_response = await self.decision_agent.process(npc_context)
-
-            return {
-                "action": decision_response.data if decision_response.success else {"action_type": "idle"},
-                "world_impact": world_response.data if world_response.success else {},
-                "confidence": decision_response.confidence
-            }
-
+            # Create crew for decision making
+            crew = self.create_crew_for_task("decision")
+            
+            result = await crew.kickoff(inputs={
+                "world_state": world_state,
+                "npc_context": npc_context
+            })
+            
+            return result.get("actions", {})
+            
         except Exception as e:
-            logger.error(f"Orchestration failed for action decision: {e}")
-            return {
-                "action": {"action_type": "idle", "action_data": {}, "priority": 1},
-                "world_impact": {},
-                "confidence": 0.5,
-                "error": str(e)
-            }
+            logger.error("Error in NPC action decision: {}", e)
+            return {"move": "stay", "interact": False}
 
     async def process_world_event(
         self,
+        event_type: str,
         event_data: Dict[str, Any],
-        affected_npcs: List[str]
+        affected_npcs: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
         """
-        Process a world event and determine NPC reactions
-
+        Process world events and coordinate NPC responses
+        
         Args:
-            event_data: Event information
-            affected_npcs: List of NPC IDs affected by event
-
+            event_type: Type of world event
+            event_data: Event-specific data
+            affected_npcs: List of NPCs affected by the event
+            
         Returns:
-            Event processing results
+            Dictionary with NPC responses and world changes
         """
-        logger.info(f"Processing world event: {event_data.get('type', 'unknown')}")
-
         try:
-            # Analyze event using World Agent
-            world_context = {
-                "operation": "analyze",
-                "event": event_data
-            }
-
-            # Create minimal context for world analysis
-            analysis_context = AgentContext(
-                npc_id="world_system",
-                npc_name="World System",
-                personality=None,
-                current_state=world_context,
-                world_state=event_data.get("world_state", {}),
-                recent_events=[event_data]
-            )
-
-            world_response = await self.world_agent.process(analysis_context)
-
-            # Store event in memory for affected NPCs
-            npc_reactions = []
-            for npc_id in affected_npcs:
-                memory_context = {
-                    "operation": "store",
-                    "memory_data": {
-                        "type": "world_event",
-                        "content": event_data.get("description", "A world event occurred"),
-                        "participants": [],
-                        "location": {},
-                        "importance": event_data.get("severity", 5),
-                        "emotional_valence": -0.5 if event_data.get("severity", 5) > 7 else 0.0
-                    }
-                }
-
-                # Store memory for this NPC
-                npc_memory_context = AgentContext(
-                    npc_id=npc_id,
-                    npc_name=f"NPC_{npc_id}",
-                    personality=None,
-                    current_state=memory_context,
-                    world_state={},
-                    recent_events=[]
-                )
-
-                memory_response = await self.memory_agent.process(npc_memory_context)
-                npc_reactions.append({
-                    "npc_id": npc_id,
-                    "memory_stored": memory_response.success
-                })
-
-            return {
-                "event_analyzed": world_response.success,
-                "analysis": world_response.data if world_response.success else {},
-                "npc_reactions": npc_reactions,
-                "affected_count": len(affected_npcs)
-            }
-
+            # Create crew for world event processing
+            crew = self.create_crew_for_task("world_event")
+            
+            result = await crew.kickoff(inputs={
+                "event_type": event_type,
+                "event_data": event_data,
+                "affected_npcs": affected_npcs
+            })
+            
+            return result
+            
         except Exception as e:
-            logger.error(f"World event processing failed: {e}")
-            return {
-                "event_analyzed": False,
-                "analysis": {},
-                "npc_reactions": [],
-                "affected_count": 0,
-                "error": str(e)
-            }
+            logger.error("Error processing world event: {}", e)
+            return {"responses": {}, "world_changes": {}}
 
     def create_crew_for_task(self, task_type: str) -> Crew:
         """
-        Create a CrewAI Crew for specific task type
-
+        Create a CrewAI crew for a specific task type
+        
         Args:
-            task_type: Type of task (dialogue, decision, complex)
-
+            task_type: Type of task ("dialogue", "decision", "world_event")
+            
         Returns:
             Configured Crew instance
         """
-        if task_type == "dialogue":
-            agents = [self.dialogue_agent.crew_agent, self.memory_agent.crew_agent]
-        elif task_type == "decision":
-            agents = [self.decision_agent.crew_agent, self.world_agent.crew_agent]
-        elif task_type == "complex":
-            agents = [
-                self.dialogue_agent.crew_agent,
-                self.decision_agent.crew_agent,
-                self.memory_agent.crew_agent,
-                self.world_agent.crew_agent
-            ]
-        else:
-            agents = [self.dialogue_agent.crew_agent]
-
-        crew = Crew(
-            agents=agents,
+        # Base tasks configuration
+        tasks_config = {
+            "dialogue": {
+                "description": "Generate appropriate dialogue response for NPC",
+                "expected_output": "Natural language response with emotional context"
+            },
+            "decision": {
+                "description": "Decide NPC actions based on world state",
+                "expected_output": "Action decisions with parameters"
+            },
+            "world_event": {
+                "description": "Process world events and coordinate NPC responses",
+                "expected_output": "NPC responses and world state changes"
+            }
+        }
+        
+        config = tasks_config.get(task_type, tasks_config["dialogue"])
+        
+        return Crew(
+            agents=[
+                self.dialogue_agent.get_crew_agent(),
+                self.decision_agent.get_crew_agent(),
+                self.memory_agent.get_crew_agent(),
+                self.world_agent.get_crew_agent()
+            ],
+            tasks=[{
+                "description": config["description"],
+                "expected_output": config["expected_output"],
+                "agent": self.dialogue_agent.get_crew_agent()
+            }],
             process=Process.sequential,
-            verbose=self.config.get("verbose", False)
+            verbose=True
         )
-
-        logger.info(f"Created crew for task type: {task_type} with {len(agents)} agents")
-
-        return crew
-

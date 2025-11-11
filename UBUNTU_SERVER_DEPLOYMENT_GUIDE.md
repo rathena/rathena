@@ -69,7 +69,7 @@ This guide will walk you through deploying the complete rAthena AI World system 
 - **AI Autonomous World Service** (Python/FastAPI) - AI-driven NPCs and world systems
 - **P2P Coordinator Service** (Python/FastAPI) - Peer-to-peer session management
 - **PostgreSQL 17** - Long-term memory storage with pgvector, TimescaleDB, Apache AGE
-- **DragonflyDB** - High-speed Redis-compatible cache
+- **DragonflyDB 1.12.1** - High-speed Redis-compatible cache
 
 **Estimated Time**: 2-3 hours  
 **Skill Level**: Basic Linux command-line knowledge required
@@ -302,7 +302,7 @@ psql -h localhost -U ai_world_user -d ai_world_memory -c "\dx"
 
 ## Step 3: DragonflyDB Installation
 
-DragonflyDB is a high-performance Redis-compatible in-memory database.
+DragonflyDB 1.12.1 is a high-performance Redis-compatible in-memory database.
 
 ### 3.1 Install DragonflyDB
 
@@ -1145,7 +1145,7 @@ User: ragnarok
 Password: ragnarok  ⚠️ CHANGE THIS!
 ```
 
-#### DragonflyDB (Redis)
+#### DragonflyDB 1.12.1
 ```
 Host: 127.0.0.1
 Port: 6379

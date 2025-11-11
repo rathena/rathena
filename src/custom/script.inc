@@ -1,25 +1,10 @@
-// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
-// For more information, see LICENCE in the main folder
+// Custom Script Command Definitions
+// This file defines the custom script commands for AI integration
 
-/**
- * Custom Script Commands
- * Place the body of custom script commands in this file.
- * Format:
- *	BUILDIN_FUNC(command_name)
- *	{
- *		<code>;
- *	}
- **/
+// HTTP Commands
+BUILDIN_DEF(httppost, "ss"),
+BUILDIN_DEF(httpget, "s"),
 
-//BUILDIN_FUNC(example)
-//{
-//	ShowInfo("buildin_example: It works!\n");
-//	script_pushint(st,1);
-//	return 0;
-//}
-
-// Include HTTP script functions for AI integration
-#include "script_http.cpp"
-
-// Include NPC movement script functions for AI-driven NPCs
-#include "script_npc_movement.cpp"
+// NPC Movement Commands  
+BUILDIN_DEF(npcwalk, "sii"),
+BUILDIN_DEF(npcwalkid, "iii")

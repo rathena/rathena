@@ -120,7 +120,7 @@ Response displayed in dialogue window
 
 ### Conversation History
 
-- **Storage**: DragonflyDB (Redis-compatible)
+- **Storage**: DragonflyDB 1.12.1 (Redis-compatible)
 - **Key Format**: `conversation:{npc_id}:{player_id}`
 - **TTL**: 600 seconds (10 minutes)
 - **Max Messages**: 50 (automatically trimmed)

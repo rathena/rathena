@@ -61,7 +61,7 @@ The system consists of five major layers:
 │  └──────┬───────────────────────────────────────────────────┘  │
 │         │                                                        │
 │  ┌──────▼───────────────────────────────────────────────────┐  │
-│  │         Memori SDK (Memory & Context Management)         │  │
+│  │         OpenMemory (Memory & Context Management)         │  │
 │  │  - NPC Memories & Personalities                          │  │
 │  │  - World State & History                                 │  │
 │  │  - Relationship Graphs                                   │  │
@@ -232,9 +232,9 @@ GET  /ai/economy/trends        - Get market trends
 - **Framework**: FastAPI 0.115.12 (NOT Express.js as per rules)
 - **ASGI Server**: uvicorn 0.34.0
 - **Agent Orchestration**: CrewAI 0.86.0
-- **Memory Management**: Memori SDK 0.1.19
+- **Memory Management**: OpenMemory (latest)
 - **Database**: PostgreSQL 17.6 with pgvector
-- **Cache**: DragonflyDB 7.4.0 (Redis-compatible)
+- **Cache**: DragonflyDB 1.12.1 (Redis-compatible)
 - **LLM**: Azure OpenAI (primary), 4 fallback providers
 - **Async Processing**: asyncio, background tasks
 - **Testing**: pytest 7.4.4 (32/32 tests passing)
@@ -258,7 +258,7 @@ GET  /ai/economy/trends        - Get market trends
    - Outputs structured action plans
 
 3. **MemoryAgent** - Memory management
-   - Integrates with Memori SDK for long-term memory
+   - Integrates with OpenMemory for long-term memory
    - Vector similarity search for relevant memories
    - Stores in PostgreSQL with pgvector
    - Caches in DragonflyDB for fast retrieval
@@ -293,7 +293,7 @@ GET  /ai/economy/trends        - Get market trends
 Game Event → Event Coordinator → Relevant Agents → Decision → Action Queue → Bridge Layer
 ```
 
-#### Memori SDK Integration
+#### OpenMemory Integration
 
 **Memory Structures:**
 
@@ -410,7 +410,7 @@ llm:
 - Better performance for high-throughput scenarios
 - Lower memory footprint
 - Better multi-threading support
-- Redis-compatible API
+- Redis-compatible API (DragonflyDB 1.12.1)
 - Used for: NPC state caching, LLM response caching, real-time event queues
 
 **PostgreSQL 17 (Persistent Storage):**
@@ -520,7 +520,7 @@ Fields:
 2. `player_reputation` - Player-faction reputation tracking
 3. `faction_events` - Historical faction events
 4. `faction_conflicts` - Active and historical conflicts
-5. `npc_memories` - NPC long-term memories (Memori SDK)
+5. `npc_memories` - NPC long-term memories (OpenMemory)
 6. `npc_relationships` - NPC-to-NPC relationships
 7. `world_events` - World-wide events and history
 
@@ -628,7 +628,7 @@ PGPASSWORD=ai_world_pass_2025 psql -h localhost -U ai_world_user -d ai_world_mem
    - Routes to appropriate NPC Agent
 6. NPC Agent (CrewAI):
    - Retrieves NPC state and memories from DragonflyDB
-   - Retrieves relevant memories via Memori SDK
+   - Retrieves relevant memories via OpenMemory
    - Constructs prompt with context
    - Calls LLM Provider for decision
    - Updates NPC state and memories
@@ -706,7 +706,7 @@ POST /ai/player/interaction
 #### AI Service ↔ DragonflyDB
 
 **Protocol**: Redis Protocol (RESP)
-**Client**: redis-py with async support
+**Client**: redis-py with async support (DragonflyDB 1.12.1)
 
 **Operations:**
 - GET/SET for simple state
@@ -885,7 +885,7 @@ POST /ai/player/interaction
 - **Language**: Python 3.11+
 - **Web Framework**: FastAPI 0.109+
 - **Agent Framework**: CrewAI (latest)
-- **Memory SDK**: Memori SDK (latest)
+- **Memory SDK**: OpenMemory (latest)
 - **Async**: asyncio, aiohttp
 - **Task Queue**: Celery + Redis (for background tasks)
 - **LLM Libraries**:
@@ -894,7 +894,7 @@ POST /ai/player/interaction
   - google-generativeai (Gemini)
 
 ### State Management
-- **Database**: DragonflyDB (latest)
+- **Database**: DragonflyDB 1.12.1
 - **Client**: redis-py with async support
 - **Vector Search**: DragonflyDB native vector support
 
@@ -925,7 +925,7 @@ POST /ai/player/interaction
 2. **Phase 2: Core Systems** (Weeks 3-6)
    - Implement LLM Provider abstraction
    - Integrate CrewAI for agent orchestration
-   - Integrate Memori SDK for memory management
+   - Integrate OpenMemory for memory management
    - Implement basic NPC consciousness model
 
 3. **Phase 3: World Systems** (Weeks 7-10)

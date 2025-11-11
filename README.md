@@ -69,7 +69,7 @@ While the core rAthena server and AI autonomous world system are production-read
 The system consists of approximately 10,000 lines of production-grade Python and C++ code implementing:
 
 - **6 Specialized AI Agents**: Dialogue, Decision, Memory, World, Quest, and Economy agents orchestrated via CrewAI framework
-- **Long-term Memory Management**: Memori SDK integration with DragonflyDB fallback for persistent NPC memories and relationship tracking
+- **Long-term Memory Management**: OpenMemory integration with DragonflyDB fallback for persistent NPC memories and relationship tracking
 - **Multi-Provider LLM Support**: OpenAI GPT-4, Anthropic Claude-3, and Google Gemini integration
 - **Production-Grade Implementation**: Comprehensive error handling, verbose logging, async/await operations, and type-safe Pydantic models
 
@@ -104,7 +104,7 @@ This section provides comprehensive dependency information and installation inst
   - Database: `ragnarok`
   - User: `ragnarok`
 
-- **DragonflyDB** or **Redis 7.0+** (for caching and state management)
+- **DragonflyDB 1.12.1** (for caching and state management)
   - Redis-compatible interface on port 6379
 
 #### 2. Programming Languages & Runtimes
@@ -217,7 +217,7 @@ The installation script provides:
 #### Manual Installation Steps
 
 1. **Install PostgreSQL 17 with extensions**
-2. **Install DragonflyDB or Redis**
+2. **Install DragonflyDB 1.12.1**
 3. **Set up Python virtual environment**
 4. **Install Python dependencies**
 5. **Configure environment variables**
@@ -236,7 +236,7 @@ POSTGRES_PASSWORD=your_secure_password
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 
-# DragonflyDB/Redis Configuration
+# DragonflyDB Configuration
 REDIS_HOST=localhost
 REDIS_PORT=6379
 
@@ -334,8 +334,8 @@ The P2P Coordinator Service is a FastAPI-based WebSocket signaling server that m
 
 ### 🎉 New Features in Version 2.0.0
 
-- **Redis State Management**: Persistent signaling state for horizontal scaling
-- **Rate Limiting**: Token bucket algorithm with Redis backend (API: 100/60s, WebSocket: 1000/60s, Auth: 10/60s)
+- **DragonflyDB State Management**: Persistent signaling state for horizontal scaling
+- **Rate Limiting**: Token bucket algorithm with DragonflyDB backend (API: 100/60s, WebSocket: 1000/60极, Auth: 10/60s)
 - **Session Health Monitoring**: Automatic monitoring and cleanup of inactive sessions every 30 seconds
 - **NPC State Broadcasting**: Fetches NPC state from AI service every 5 seconds and broadcasts to active sessions
 - **Prometheus Metrics**: Full metrics endpoint with text exposition format
@@ -353,9 +353,9 @@ The P2P Coordinator Service is a FastAPI-based WebSocket signaling server that m
 - ✅ Session health monitoring with auto-cleanup
 - ✅ NPC state broadcasting to all active sessions
 - ✅ Prometheus metrics for monitoring
-- ✅ Redis state management for horizontal scaling
+- ✅ DragonflyDB state management for horizontal scaling
 - ✅ PostgreSQL 17 with composite indexes
-- ✅ DragonflyDB (Redis-compatible) for caching
+- ✅ DragonflyDB 1.12.1 (Redis-compatible) for caching
 
 ### API Endpoints
 
@@ -416,7 +416,7 @@ The P2P Coordinator Service is a FastAPI-based WebSocket signaling server that m
 - **Persistent Memory Storage**: NPC memories retained across server sessions
 - **Relationship Tracking System**: Interaction history affects NPC perception and behavior
 - **Context-Aware Dialogue**: Historical conversation data influences future dialogue generation
-- **Memori SDK Integration**: Advanced memory management with DragonflyDB fallback storage
+- **OpenMemory Integration**: Advanced memory management with DragonflyDB fallback storage
 
 ### 🆕 NPC Social Intelligence & Information Sharing System
 
@@ -641,7 +641,7 @@ Everyone is welcome here, especially those who have felt silenced or dismissed e
 
 #### Minimum Requirements
 - Python 3.12 or higher
-- DragonflyDB (Redis-compatible) or Redis 7.0+
+- DragonflyDB 1.12.1 (Redis-compatible)
 - LLM API Keys: At least one of OpenAI, Anthropic, or Google Gemini
 - 8GB RAM minimum (16GB recommended for production)
 
@@ -709,7 +709,7 @@ AI Service Layer (Python/FastAPI)
     ├── API Routers
     └── LLM Providers
          ↓
-State Management (DragonflyDB/Redis)
+State Management (DragonflyDB)
          ↓
 LLM Provider Layer (OpenAI/Anthropic/Google)
 ```
@@ -752,7 +752,7 @@ Disk Space | 5 GB | 10 GB
 Application | Version | Purpose
 ------|------|------
 Python | 3.12+ | AI Service runtime
-DragonflyDB | Latest | State management (Redis-compatible)
+DragonflyDB | 1.12.1 | State management (Redis-compatible)
 
 ### LLM Provider API Keys
 At least one LLM provider API key is required:
@@ -761,7 +761,7 @@ At least one LLM provider API key is required:
 - Google (Gemini-Pro)
 
 Optional:
-- Memori SDK API key for enhanced memory management
+- OpenMemory API key for enhanced memory management
 
 ### Python Dependencies
 Python dependencies are managed via `requirements-cloud.txt` in the `ai-autonomous-world/ai-service/` directory. The system is cloud-optimized (3.5GB footprint) and does not require local LLM models.
@@ -902,7 +902,7 @@ Copyright (c) rAthena Development Team - Licensed under [GNU General Public Lice
 
 ### AI Autonomous World System
 - Architecture & Implementation: Multi-agent AI system with CrewAI orchestration
-- Technologies: Python 3.12, FastAPI, CrewAI, Memori SDK, DragonflyDB, OpenAI, Anthropic, Google Gemini
+- Technologies: Python 3.12, FastAPI, CrewAI, OpenMemory, DragonflyDB, OpenAI, Anthropic, Google Gemini
 - Codebase: Approximately 10,000 lines of production-grade Python and C++
 - Status: Production-ready with comprehensive testing
 

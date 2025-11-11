@@ -25,7 +25,7 @@ redis-cli -p 6379 ping  # DragonflyDB (PONG)
 
 ✅ **Already Installed and Running:**
 - PostgreSQL 17 (active)
-- DragonflyDB/Redis (running on port 6379)
+- DragonflyDB 1.12.1 (running on port 6379)
 - rAthena built successfully (all 4 servers)
 - LLM provider credentials configured in `.env` (Azure OpenAI, OpenAI, Anthropic, Google, or DeepSeek)
 
@@ -352,11 +352,11 @@ systemctl status postgresql
 PGPASSWORD='ai_world_pass_2025' psql -h localhost -U ai_world_user -d ai_world_memory -c "SELECT 1;"
 ```
 
-### Issue: Redis connection failed
+### Issue: DragonflyDB connection failed
 **Solution:** Verify DragonflyDB is running
 ```bash
 redis-cli ping
-# Should return: PONG
+# Should return: PONG (DragonflyDB is Redis-compatible)
 ```
 
 ### Issue: HTTP script commands not working

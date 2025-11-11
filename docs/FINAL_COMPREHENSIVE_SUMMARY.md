@@ -303,7 +303,7 @@ Verify autonomous movement system works end-to-end with visual confirmation capa
 ┌─────────────────────────────────────────────────────────────┐
 │                    Storage Layer                            │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
-│  │ DragonflyDB  │  │ PostgreSQL   │  │ Memori SDK   │     │
+│  │ DragonflyDB  │  │ PostgreSQL   │  │ OpenMemory   │     │
 │  │ (Real-time)  │  │ (Persistent) │  │ (Memory)     │     │
 │  └──────────────┘  └──────────────┘  └──────────────┘     │
 └─────────────────────────────────────────────────────────────┘

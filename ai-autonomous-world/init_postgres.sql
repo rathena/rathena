@@ -1,4 +1,4 @@
--- Initialize PostgreSQL database for AI World Memory (Memori SDK)
+-- Initialize PostgreSQL database for AI World Memory (OpenMemory)
 -- This script creates the database, user, and required extensions
 
 -- Create user if not exists
@@ -36,7 +36,7 @@ GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO ai_world_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON TABLES TO ai_world_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO ai_world_user;
 
--- Create Memori SDK tables
+-- Create OpenMemory tables
 CREATE TABLE IF NOT EXISTS npc_memories (
     id BIGSERIAL PRIMARY KEY,
     npc_id INTEGER NOT NULL,

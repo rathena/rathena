@@ -9,18 +9,18 @@ from datetime import datetime
 from typing import Dict, Any
 import json
 
-from ai_service.models.player import (
+from models.player import (
     PlayerInteractionRequest,
     PlayerInteractionResponse,
     NPCResponse,
 )
-from ai_service.models.npc import NPCPersonality
-from ai_service.database import db
-from ai_service.llm import get_llm_provider
-from ai_service.agents.base_agent import AgentContext
-from ai_service.agents.orchestrator import AgentOrchestrator
-from ai_service.config import settings
-from ai_service.memory.openmemory_manager import get_openmemory_manager
+from models.npc import NPCPersonality
+from database import db
+from llm import get_llm_provider
+from agents.base_agent import AgentContext
+from agents.orchestrator import AgentOrchestrator
+from config import settings
+from memory.openmemory_manager import get_openmemory_manager
 
 try:
     from openmemory import OpenMemory

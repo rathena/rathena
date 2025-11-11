@@ -74,7 +74,7 @@ cd /ai-mmorpg-world/rathena-AI-world
 # AI Service:        ✓ HEALTHY (port 8000)
 # rAthena Servers:   ✓ 3/3 RUNNING (login, char, map)
 # PostgreSQL:        ✓ CONNECTED (18 tables)
-# DragonflyDB:       ✓ CONNECTED (Redis cache)
+# DragonflyDB:       ✓ CONNECTED (DragonflyDB cache)
 ```
 
 ---
@@ -184,7 +184,7 @@ SERVICE_PORT=8000
 ENVIRONMENT=development
 DEBUG=true
 
-# DragonflyDB/Redis Configuration (for caching and real-time state)
+# DragonflyDB Configuration (for caching and real-time state)
 REDIS_HOST=127.0.0.1
 REDIS_PORT=6379
 REDIS_DB=0
@@ -480,7 +480,7 @@ Now that your environment is set up:
 - ✅ AI Agents (Dialogue, Decision, Memory, World, Quest, Economy)
 - ✅ API Endpoints (NPC, Player, World, Quest, Chat Command)
 - ⏳ Bridge Layer (not yet implemented)
-- ⏳ Memori SDK integration (using DragonflyDB fallback)
+- ⏳ OpenMemory integration (using DragonflyDB fallback)
 
 ## Development Workflow
 
@@ -558,7 +558,7 @@ pip list | grep -E "(crewai|memorisdk|fastapi)"
 
 - [FastAPI Documentation](https://fastapi.tiangolo.com/)
 - [CrewAI Documentation](https://docs.crewai.com/)
-- [Memori SDK Documentation](https://github.com/kingjulio8238/memori)
+- [OpenMemory Documentation](https://github.com/iskandarsulaili/AI-MMORPG-OpenMemory)
 - [DragonflyDB Documentation](https://www.dragonflydb.io/docs)
 - [rAthena Documentation](https://github.com/rathena/rathena/wiki)
 

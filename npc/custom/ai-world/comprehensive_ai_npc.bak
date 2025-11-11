@@ -1,10 +1,10 @@
+
 //===== rAthena Script =======================================
 //= Comprehensive AI-Enabled NPC - Aria the Wandering Sage
 //===== Description: =========================================
-//= Advanced AI NPC demonstrating hybrid approach:
-//= - HTTP AI integration for intelligent conversations
-//= - Local Rathena scripting for core features
+//= Advanced AI NPC demonstrating all integrated features:
 //= - Dynamic personality and mood system
+//= - Free-form chat with context-aware dialogue
 //= - Gift-giving mechanics with preferences
 //= - Relationship tracking and quest unlocking
 //= - Economic awareness and market conditions
@@ -18,7 +18,7 @@
 
 //============================================================
 // Aria the Wandering Sage - Comprehensive AI NPC
-// Hybrid approach: HTTP for AI responses, local for other features
+// Combines features from all example NPCs with advanced integration
 //============================================================
 prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
 	.@player_id = getcharid(0);
@@ -28,10 +28,7 @@ prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
 	.@map$ = strcharinfo(3);
 	.@x = getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
 	
-	// Store last interaction time
-	setd "last_interaction_" + .@player_id, gettimestr("%Y-%m-%d %H:%M", 9), .@player_id;
-	
-	// Build comprehensive context for AI service
+	// Build comprehensive context JSON with economic data
 	.@json$ = "{";
 	.@json$ += "\"npc_id\":\"ai_master_001\",";
 	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
@@ -44,10 +41,10 @@ prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
 	.@json$ += "\"time_of_day\":\"" + gettime(DT_HOUR) + ":" + gettime(DT_MINUTE) + "\",";
 	.@json$ += "\"weather\":\"clear\",";
 	
-	// Use local variables for relationship tracking
-	.@last_interaction = getvar("last_interaction_" + .@player_id, .@player_id);
-	.@gifts_received = getvar("gifts_received_" + .@player_id, .@player_id);
-	.@relationship = getvar("relationship_" + .@player_id, .@player_id);
+	// Use default values for relationship tracking (rAthena getvar limitation)
+	.@last_interaction = "never";
+	.@gifts_received = 0;
+	.@relationship = 0;
 	
 	.@json$ += "\"last_interaction\":\"" + .@last_interaction + "\",";
 	.@json$ += "\"gifts_received\":" + .@gifts_received + ",";
@@ -55,8 +52,7 @@ prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
 	.@json$ += "}";
 	.@json$ += "}";
 	
-	// Call AI service via HTTP POST
-	.@bridge_url$ = "http://localhost:8888";
+	.@bridge_url$ = "http://192.168.0.100:8000";
 	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 	
 	mes "[Aria the Wandering Sage]";
@@ -93,6 +89,9 @@ prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
 		}
 	}
 	
+	// Store last interaction time
+	setd "last_interaction_" + .@player_id, gettimestr("%Y-%m-%d %H:%极", 9), .@player_id;
+	
 	next;
 	mes "[Aria the Wandering Sage]";
 	mes "How may I assist your journey today?";
@@ -106,7 +105,7 @@ prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
 	
 L_Conversation:
 	// Enhanced conversation system with free-form chat
-	.@bridge_url$ = "http://localhost:8888";
+	.@bridge_url$ = "http://192.168.0.100:8000";
 	
 	// Initial greeting for conversation mode
 	.@json$ = "{";
@@ -164,12 +163,12 @@ L_Conversation:
 					continue;
 				}
 				
-				// Check for goodbye keywords using strpos instead of compare
+				// Check for goodbye keywords
 				if (
-					strpos(.@message$, "bye") != -1 ||
-					strpos(.@message$, "goodbye") != -1 ||
-					strpos(.@message$, "farewell") != -1 ||
-					strpos(.@message$, "see you later") != -1
+					compare(.@message$, "bye") ||
+					compare(.@message$, "goodbye") ||
+					compare(.@message$, "farewell") ||
+					compare(.@message$, "see you later")
 				) {
 					// Send goodbye message
 					.@json$ = "{";
@@ -194,7 +193,7 @@ L_Conversation:
 				// Send message to AI
 				.@json$ = "{";
 				.@json$ += "\"npc_id\":\"ai_master_001\",";
-				.@json$ += "\"playerid\":\"" + .@player_id + "\",";
+				.@json$ += "\"player_id\":\"" + .@player_id + "\",";
 				.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
 				.@json$ += "\"message\":\"" + .@message$ + "\"";
 				.@json$ += "}";
@@ -239,7 +238,7 @@ L_Conversation:
 	}
 	
 L_Gift:
-	// Enhanced gift system with local implementation
+	// Enhanced gift system with proper API integration
 	mes "[Aria the Wandering Sage]";
 	mes "A gift? How thoughtful of you!";
 	mes "I appreciate gestures of kindness and sharing.";
@@ -256,7 +255,7 @@ L_Gift:
 	mes "- Fine teas and writing instruments";
 	next;
 	
-	// Check gift history using local variables
+	// Check gift history
 	.@gift_count = getvar("gifts_received_" + .@player_id, .@player_id);
 	if (.@gift_count > 0) {
 		mes "[Aria the Wandering Sage]";
@@ -274,7 +273,7 @@ L_Quest:
 	.@quest_json$ += "\"npc_id\":\"ai_master_001\",";
 	.@quest_json$ += "\"player_id\":\"" + .@player_id + "\",";
 	.@quest_json$ += "\"relationship_level\":" + .@relationship_level + ",";
-	.@quest_json$ += "\"gifts_received\":" + getvar("gifts_received_" + .@player_id, .player_id);
+	.@quest_json$ += "\极gifts_received\":" + getvar("gifts_received_" + .@player_id, .@player_id);
 	.@quest_json$ += "}";
 	
 	.@quest_response$ = httppost(.@bridge_url$ + "/ai/quest/available", .@quest_json$);
@@ -428,7 +427,7 @@ OnInit:
 	.@reg_json$ += "]";
 	.@reg_json$ += "}";
 	
-	.@bridge_url$ = "http://localhost:8888";
+	.@bridge_url$ = "http://192.168.0.100:8000";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Aria the Wandering Sage registered: " + .@response$;
 	
@@ -502,42 +501,25 @@ OnTimer60000:
 		.@gift_json$ += "\"item_id\":" + .@item_id;
 		.@gift_json$ += "}";
 		
-		.@bridge_url$ = "http://localhost:8888";
+		.@bridge_url$ = "http://192.168.0.100:8000";
 		.@response$ = httppost(.@bridge_url$ + "/ai/gift/give", .@gift_json$);
 		
 		if (.@response$ != "" && .@response$ != "{}") {
-			// Parse response for success and reaction
-			.@success = 1; // Assume success for now
+			// Parse response (simplified for rAthena compatibility)
+			.@success = 1; // Assume success for now, would need proper JSON parsing
 			.@reaction$ = "Thank you for the thoughtful present!";
-			
-			// Determine reaction based on item type
-			if (.@item_id >= 7000 && .@item_id <= 7100) {
-				.@reaction$ = "An ancient tome! You understand my love for knowledge!";
-				.@rel_change = 8;
-			} else if (.@item_id >= 8000 && .@item_id <= 8100) {
-				.@reaction$ = "A rare artifact! This will aid my research greatly!";
-				.@rel_change = 10;
-			} else if (.@item_id >= 6000 && .@item_id <= 6100) {
-				.@reaction$ = "Exquisite flowers! Their beauty brightens my day!";
-				.@rel_change = 6;
-			} else if (.@item_id == 501 || .@item_id == 502 || .@item_id == 503) {
-				.@reaction$ = "This... is not quite to my taste, but I appreciate the gesture.";
-				.@rel_change = 1;
-			} else {
-				.@reaction$ = "Thank you for this gift!";
-				.@rel_change = 3;
-			}
 			
 			if (.@success) {
 				// Remove item from player
 				delitem .@item_id, 1;
 				
-				// Update gift count locally
+				// Update gift count
 				set .@temp_var_name$, "gifts_received_" + .@player_id;
 				.@current_gifts = getvar(.@temp_var_name$);
 				set getvar(.@temp_var_name$), .@current_gifts + 1;
 				
-				// Update relationship locally
+				// Update relationship (simplified)
+				.@rel_change = 5; // Default relationship increase
 				set .@temp_var_name$, "relationship_" + .@player_id;
 				.@current_rel = getvar(.@temp_var_name$);
 				set getvar(.@temp_var_name$), .@current_rel + .@rel_change;

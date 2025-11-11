@@ -118,7 +118,7 @@ dragonfly:
   socket_timeout: "${DRAGONFLY_SOCKET_TIMEOUT:-5}"
   socket_connect_timeout: "${DRAGONFLY_SOCKET_CONNECT_TIMEOUT:-5}"
 
-# PostgreSQL - Persistent memory storage (requires Memori SDK)
+# PostgreSQL - Persistent memory storage (requires OpenMemory)
 # IMPORTANT: Set your actual password in the .env file, NOT here!
 postgres:
   host: "${POSTGRES_HOST:-localhost}"
