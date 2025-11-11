@@ -24,11 +24,13 @@ from ai_service.routers.batch import router as batch_router
 from ai_service.routers.economy import router as economy_router
 from ai_service.routers.faction import router as faction_router
 from ai_service.routers.gift import router as gift_router
+from ai_service.routers.gift import router as gift_router
 from ai_service.routers.npc_spawning import router as npc_spawning_router
 from ai_service.routers.world_bootstrap import router as world_bootstrap_router
 from ai_service.routers.npc_movement import router as npc_movement_router
 from ai_service.routers.mvp import router as mvp_router
 from ai_service.routers.relationship import router as relationship_router
+from ai_service.routers.mvp import router as mvp_router
 from ai_service.middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
@@ -403,11 +405,13 @@ app.include_router(batch_router)
 app.include_router(economy_router)
 app.include_router(faction_router)
 app.include_router(gift_router)
+app.include_router(gift_router)
 app.include_router(npc_spawning_router)
 app.include_router(world_bootstrap_router)
 app.include_router(npc_movement_router)
 app.include_router(mvp_router)
 app.include_router(relationship_router)
+app.include_router(mvp_router)
 
 logger.info("✓ All routers registered (14 routers)")
 

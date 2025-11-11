@@ -1,266 +1,199 @@
-// ============================================================================
-// Aria the Comprehensive AI NPC
-// Merged from ai_integration_utils.txt, aria_wandering_sage.txt, and test integration concepts
-// Features: Advanced AI interaction, sophisticated wandering, and robust integration
-// ============================================================================
+//===== rAthena Script =======================================
+//= Comprehensive AI-Enabled NPC
+//===== Description: =========================================
+//= Advanced AI NPC demonstrating all features:
+//= - Dynamic personality and mood system
+//= - Gift-giving mechanics with preferences
+//= - Relationship tracking and quest unlocking
+//= - Multi-trigger quest system
+//= - Walking animations and movement
+//= - Context-aware interactions
+//===== Author: ==============================================
+//= AI Autonomous World System
+//============================================================
 
-prontera,155,185,4	script	Aria the Comprehensive Sage#ai001	4_F_NOVICE,{
-	// Initialize NPC
-	OnInit:
-		.npc_id$ = "aria_comprehensive_sage_001";
-		.npc_name$ = "Aria the Comprehensive Sage";
-		.npc_class$ = "scholar";
-		.npc_level = 75;
-		.personality$ = "{\"openness\": 0.9, \"conscientiousness\": 0极, \"extraversion\": 0.6, \"agreeableness\": 0.8, \"neuroticism\": 0.3, \"moral_alignment\": \"neutral_good\"}";
-		
-		// Register with AI service
-		callfunc("AI_Register_NPC", .npc_id$, .npc_name$, .npc_class$, .npc_level, .personality$);
-	end;
-
-	// Main interaction - OnTouch event for player interaction
-	OnTouch:
-		// Signal movement script that interaction is starting
-		donpcevent "Aria_Comprehensive_Movement::OnInteractStart";
-		
-		mes "[" + .npc_name$ + "]";
-		mes "^FFA500Greetings, traveler!^000000";
-		mes "I am Aria, a comprehensive sage who seeks knowledge and wisdom.";
-		mes "How may I assist you on your journey?";
-		
-		// Get player info
-		.@player_id = getcharid(0);
-		.@player_name$ = strcharinfo(0);
-		.@player_level = BaseLevel;
-		.@player_class$ = Class;
-		
-		// Main interaction loop with state management
-		while(1) {
-			.@menu$ = "^FFA500" + .npc_name$ + "^000000";
-			.@极menu$ = .@menu$ + "^0000FF----------------------------------^000000";
-			.@menu$ = .@menu$ + ":Tell me about yourself";
-			.@menu$ = .@menu$ + ":What quests do you have?";
-			.@menu$ = .@menu$ + ":I'd like to give you a gift";
-			.@menu$ = .@menu$ + ":Check our relationship";
-			.@menu极$ = .@menu$ + ":Goodbye";
-			
-			.@choice = select(.@menu$);
-			
-			switch(.@choice) {
-				case 1: // Tell me about yourself
-					mes "[" + .npc_name$ + "]";
-					mes "I am a scholar who travels the world seeking ancient knowledge.";
-					mes "I've studied in the great libraries of Geffen and the mystical";
-					mes "academies of Juno. My passion is uncovering lost histories and";
-					mes "helping adventurers who seek wisdom.";
-					mes "";
-					mes "^FFA500I particularly enjoy books, rare artifacts, and items";
-					mes "that hold historical significance.^000000";
-					break;
-					
-				case 2: // Quests
-					callfunc("AI_Show_Quest_Menu", .npc_id$, .@player_id, .@player_level, .@player_class$, .npc_name$, .npc_class$);
-					break;
-					
-				case 3: // Give Gift
-					mes "[" + .npc_name$ + "]";
-					mes "How thoughtful of you! I appreciate gifts that expand";
-					mes "knowledge or have historical significance.";
-					mes "";
-					mes "^FFA500Books, rare artifacts, and ancient items are my favorites.^000000";
-					next;
-					callfunc("AI_Show_Gift_Menu", .npc_id$, .@player_id);
-					break;
-					
-				case 4: // Check Relationship
-					mes "[" + .npc_name$ + "]";
-					mes "Let me see how our relationship stands...";
-					next;
-					callfunc("AI_Check_Relationship", .npc_id$, .@player_id);
-					next;
-					
-					// Additional relationship-based dialogue
-					.@response$ = callfunc("AI_HTTP_Request", AI_Integration_Utils.AI_SERVICE_URL$ + "/ai/relationship/check", "POST", 
-						"{\"npc_id\": \"" + .npc_id$ + "\", \"player_id\": \"" + .@player_id + "\"}", 
-						AI_Integration_Utils.AI_SERVICE_TIMEOUT);
-					
-					.@level = atoi(callfunc("AI_Parse_JSON", .极@response$, "relationship_level"));
-					
-					if (.@level >= 80) {
-						mes "[" + .npc_name$ + "]";
-						mes "^00FF00You've become a trusted friend and valued companion!^000000";
-						mes "I would trust you with my most precious research.";
-					} else if (.@level >= 60) {
-						mes "[" + .npc_name$ + "]";
-						mes "^00FF00We've developed a strong friendship!^000000";
-						mes "Your company is always welcome on my journeys.";
-					} else if (.@level >= 40) {
-						mes "[" + .npc_name$ + "]";
-						mes "^00FF00We're becoming good friends!^000000";
-						mes "I enjoy our conversations greatly.";
-					} else if (.@level >= 20) {
-						mes "[" + .npc_name$ + "]";
-						mes "We're getting to know each other better.";
-						mes "Keep visiting and we'll become good friends!";
-					}
-					break;
-					
-				case 5: // Goodbye
-					mes "[" + .npc_name$ + "]";
-					mes "Farewell, " + .@player_name$ + "!";
-					mes "May wisdom guide your path.";
-					mes "";
-					mes "^FFA500Remember: Knowledge is the greatest treasure.^000000";
-					
-					// Signal movement script that interaction is ending
-					donpcevent "Aria_Comprehensive_Movement::OnInteractEnd";
-					close;
-			}
-		}
-}
-
-// ============================================================================
-// Autonomous Movement System with Purposeful Wandering
-// ============================================================================
-
--	script	Aria_Comprehensive_Movement	-1,{
-	OnInit:
-		// Register with movement system
-		.npc_id$ = "aria_comprehensive_sage_001";
-		.npc_name$ = "Aria the Comprehensive Sage";
-		.map$ = "prontera";
-		.wander_range = 10;
-		.move_interval = 30000; // 30 seconds
-		.is_interacting = 0; // State management flag
-		
-		// Points of interest for purposeful wandering
-		setarray .points_of_interest_x[0], 150, 160, 170, 140, 180;
-		setarray .points_of_interest_y[0], 180, 190, 185, 175, 195;
-		.poi_count = 5;
-		.current_poi = 0;
-		
-		// Initial position
-		.x = 155;
-		.y = 185;
-		
-		// Start the movement timer
-		initnpctimer;
-	end;
+//============================================================
+// Aria the Wandering Sage - Comprehensive AI NPC
+// Combines features from all example NPCs
+//============================================================
+prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
+	.@player_id = getcharid(0);
+	.@player_name$ = strcharinfo(0);
+	.@player_level = BaseLevel;
+	.@player_class$ = jobname(Class);
+	.@map$ = strcharinfo(3);
+	.@x = getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
 	
-	OnTimer30000:
-		// Skip movement if currently interacting with player
-		if (.is_interacting) {
-			initnpctimer;
-			end;
-		}
-		
-		// Autonomous movement logic with purpose
-		if (rand(100) < 70) { // 70% chance to move
-			// Purposeful wandering: visit points of interest
-			if (rand(100) < 60) {
-				// Move to next point of interest
-				.@new_x = .points_of_interest_x[.current_poi];
-				.@new_y = .points_of_interest_y[.current_poi];
-				.current_poi = (.current_poi + 1) % .poi_count;
-			} else {
-				// Random wandering within range
-				.@new_x = .x + rand(.wander_range * 2) - .wander_range;
-				.@new_y = .y + rand(.wander_range * 2) - .wander_range;
-			}
-			
-			// Clamp to map boundaries
-			.@new_x = max(50, min(250, .@new_x));
-			.@new_y = max(50, min(250, .@new_y));
-			
-			// Move NPC
-			moveto .map$, .@new_x, .@new_y;
-			.x = .@new_x;
-			.y = .@new_y;
-			
-			// Update AI service with new position
-			.@position_json$ = "{\"map\": \"" + .map$ + "\", \"x\": " + .x + ", \"y\": " + .y + "}";
-			callfunc("AI_HTTP_Request", AI_Integration_Utils.AI_SERVICE_URL$ + "/ai/npc/" + .npc_id$ + "/position", "POST", .@position_json$, 2000);
-		}
-		initnpctimer;
-	end;
+	// Build comprehensive context JSON
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_master_001\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"interaction_type\":\"talk\",";
+	.@json$ += "\"context\":{";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"player_level\":" + .@player_level + ",";
+	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
+	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "},";
+	.@json$ += "\"time_of_day\":\"" + gettime(DT_HOUR) + ":" + gettime(DT_MINUTE) + "\",";
+	.@json$ += "\"weather\":\"clear\"";
+	.@json$ += "}";
+	.@json$ += "}";
 	
-	// Interaction state management
-	OnInteractStart:
-		.is_interacting = 1;
-		end;
-		
-	OnInteractEnd:
-		.is_interacting = 0;
-		initnpctimer;
-		end;
-}
-
-// ============================================================================
-// Relationship-based Quest Triggers
-// ============================================================================
-
-// Special quest that unlocks at high relationship levels
-prontera,156,186,4	script	Aria_Special_Quest#ai001	-1,{
-	OnInit:
-		.quest_id$ = "aria_special_001";
-		.required_relationship = 75;
-		.npc_id$ = "aria_comprehensive_sage_001";
-	end;
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 	
-	OnTouch:
-		// Check relationship level
-		.@player极id = getcharid(0);
-		.@response$ = callfunc("AI_HTTP_Request", AI_Integration_Utils.A极I_SERVICE_URL$ + "/ai/relationship/check", "POST", 
-			"{\"npc_id\": \"" + .npc_id$ + "\", \"player_id\": \"" + .@player_id + "\"}", 
-			AI_Integration_Utils.AI_SERVICE_TIMEOUT);
-		
-		.@level = atoi(callfunc("AI_Parse_JSON", .@response$, "relationship_level"));
-		
-		if (.@level >= .required_relationship) {
-			mes "[Secret Quest]";
-			mes "^FF00FFYou have proven yourself worthy, " + strcharinfo(0) + "!^000000";
-			mes "";
-			mes "Aria trusts you with her most precious research - the";
-			mes "Ancient Tome of Prontera. She needs your help to recover";
-			mes "it from the ruins where it was lost.";
-			mes "";
-			mes "^FFFF00Reward: Ancient Knowledge and rare artifacts^极000000";
-			
-			.@accept = select(":Accept this quest:Decline");
-			
-			if (.@accept == 1) {
-				// Generate the special quest
-				.@quest_response$ = callfunc("AI_Generate_Quest", .npc_id$, "Aria the Comprehensive Sage", "scholar", BaseLevel, Class);
-				mes "Quest accepted! Check your quest log.";
-			}
+	mes "[Aria the Wandering Sage]";
+	if (.@response$ != "" && .@response$ != "...") {
+		mes .@response$;
+	} else {
+		// Fallback dialogue based on time of day
+		.@hour = gettime(DT_HOUR);
+		if (.@hour >= 6 && .@hour < 12) {
+			mes "Good morning, " + .@player_name$ + ".";
+			mes "The dawn brings new opportunities";
+			mes "for those who seek them.";
+		} else if (.@hour >= 12 && .@hour < 18) {
+			mes "Greetings, traveler.";
+			mes "The afternoon sun illuminates";
+			mes "many paths. Which will you choose?";
 		} else {
-			mes "[Ancient Tome]";
-			mes "The tome is sealed with powerful magic.";
-			mes "Only those with Aria's complete trust may access it.";
-			mes "";
-			mes "^FF0000Relationship required: " + .required_relationship + "/100^000000";
-			mes "Your current relationship: " + .@level + "/100";
+			mes "The evening finds you well, I hope.";
+			mes "As darkness falls, mysteries";
+			mes "reveal themselves to the wise.";
 		}
-		close;
 	}
-}
+	
+	next;
+	mes "[Aria the Wandering Sage]";
+	mes "How may I assist you today?";
+	menu
+		"Tell me about yourself",L_About,
+		"I'd like to give you a gift",L_Gift,
+		"Do you have any quests?",L_Quest,
+		"Check our relationship",L_Relationship,
+		"Nevermind",L_Close;
+	
+L_About:
+	mes "[Aria the Wandering Sage]";
+	mes "I am a wanderer of many lands,";
+	mes "a seeker of knowledge and wisdom.";
+	mes "I've studied ancient texts, explored";
+	mes "forgotten ruins, and learned from";
+	mes "countless cultures.";
+	next;
+	mes "[Aria the Wandering Sage]";
+	mes "My journey has taught me that";
+	mes "true wisdom comes not from books,";
+	mes "but from understanding people";
+	mes "and the world around us.";
+	close;
+	
+L_Gift:
+	mes "[Aria the Wandering Sage]";
+	mes "A gift? How thoughtful of you!";
+	mes "I appreciate gestures of kindness.";
+	next;
+	mes "[Aria the Wandering Sage]";
+	mes "^FF0000[Gift System]^000000";
+	mes "To give a gift, use the command:";
+	mes "^0000FF@gift <item_id>^000000";
+	mes " ";
+	mes "I particularly enjoy:";
+	mes "- Books and scrolls";
+	mes "- Rare artifacts";
+	mes "- Flowers and herbs";
+	close;
+	
+L_Quest:
+	// Check for available quests via API
+	.@quest_json$ = "{";
+	.@quest_json$ += "\"npc_id\":\"ai_master_001\",";
+	.@quest_json$ += "\"player_id\":\"" + .@player_id + "\"";
+	.@quest_json$ += "}";
+	
+	.@quest_response$ = httppost(.@bridge_url$ + "/ai/quest/available", .@quest_json$);
+	
+	mes "[Aria the Wandering Sage]";
+	if (.@quest_response$ != "" && .@quest_response$ != "[]") {
+		mes "Ah, I do have some tasks";
+		mes "that could use your assistance.";
+		mes " ";
+		mes "^0000FF" + .@quest_response$ + "^000000";
+	} else {
+		mes "I have no quests for you at";
+		mes "the moment. Perhaps as we";
+		mes "grow closer, I'll have tasks";
+		mes "that require your unique skills.";
+		next;
+		mes "[Aria the Wandering Sage]";
+		mes "^777777Hint: Build our relationship";
+		mes "through conversation and gifts";
+		mes "to unlock special quests!^000000";
+	}
+	close;
+	
+L_Relationship:
+	// Check relationship level via API
+	.@rel_json$ = "{";
+	.@rel_json$ += "\"npc_id\":\"ai_master_001\",";
+	.@rel_json$ += "\"player_id\":\"" + .@player_id + "\"";
+	.@rel_json$ += "}";
+	
+	.@rel_response$ = httppost(.@bridge_url$ + "/ai/relationship/check", .@rel_json$);
+	
+	mes "[Aria the Wandering Sage]";
+	mes "Our relationship status:";
+	mes "^0000FF" + .@rel_response$ + "^000000";
+	close;
+	
+L_Close:
+	mes "[Aria the Wandering Sage]";
+	mes "May wisdom guide your path.";
+	close;
 
-// ============================================================================
-// Error Handling and Robust Integration Features
-// ============================================================================
+OnInit:
+	.npc_id$ = "ai_master_001";
+	
+	// Register NPC with comprehensive personality
+	.@reg_json$ = "{";
+	.@reg_json$ += "\"npc_id\":\"ai_master_001\",";
+	.@reg_json$ += "\"name\":\"Aria the Wandering Sage\",";
+	.@reg_json$ += "\"npc_class\":\"sage\",";
+	.@reg_json$ += "\"level\":75,";
+	.@reg_json$ += "\"position\":{\"map\":\"prontera\",\"x\":150,\"y\":180},";
+	.@reg_json$ += "\"personality\":{";
+	.@reg_json$ += "\"openness\":0.92,";
+	.@reg_json$ += "\"conscientiousness\":0.85,";
+	.@reg_json$ += "\"extraversion\":0.65,";
+	.@reg_json$ += "\"agreeableness\":0.80,";
+	.@reg_json$ += "\"neuroticism\":0.30,";
+	.@reg_json$ += "\"moral_alignment\":\"neutral_good\"";
+	.@reg_json$ += "},";
+	.@reg_json$ += "\"initial_goals\":[";
+	.@reg_json$ += "\"Share knowledge with worthy seekers\",";
+	.@reg_json$ += "\"Uncover ancient mysteries\",";
+	.@reg_json$ += "\"Build meaningful relationships\",";
+	.@reg_json$ += "\"Guide adventurers on their path\"";
+	.@reg_json$ += "]";
+	.@reg_json$ += "}";
+	
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
+	debugmes "[AI World] Aria the Wandering Sage registered: " + .@response$;
+	
+	// Enable walking/wandering behavior
+	npcwalkto 155, 185;
 
-// Health check and fallback system
--	script	Aria_Service_Health_Check	-1,{
-	OnInit:
-		.@url$ = AI_Integration_Utils.AI_SERVICE_URL$ + "/health";
-		.@response$ = callfunc("AI_HTTP_Request", .@url$, "GET", "", 2000);
-		
-		if (.@response$ == "TIMEOUT" || .@response$ == "ERROR") {
-			debugmes "AI Service is offline - Aria will use fallback dialogue";
-			// Set fallback mode flag
-			$@aria_fallback_mode = 1;
-		} else {
-			debugmes "AI Service is online: " + .@response$;
-			$@aria_fallback_mode = 0;
-		}
+	// Start autonomous movement timer
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	// Random movement every 60 seconds
+	.@rand_x = 145 + rand(15);
+	.@rand_y = 175 + rand(15);
+	npcwalkto .@rand_x, .@rand_y;
+	initnpctimer;
 	end;
 }
+
