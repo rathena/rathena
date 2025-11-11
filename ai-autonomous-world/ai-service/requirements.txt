@@ -8,10 +8,6 @@ pydantic-settings==2.6.1
 crewai==0.86.0
 crewai-tools==0.17.0
 
-# Memory Management
-# Memori SDK - Open-Source Memory Engine for LLMs and AI Agents
-git+https://github.com/GibsonAI/memori.git
-
 # LLM Providers
 openai==1.57.2
 anthropic==0.39.0
@@ -45,6 +41,9 @@ faiss-cpu==1.9.0.post1
 # Logging and Monitoring
 loguru==0.7.3
 prometheus-client==0.21.0
+
+# Background Task Scheduling
+apscheduler==3.10.4
 
 # Rate Limiting and Security
 slowapi==0.1.9

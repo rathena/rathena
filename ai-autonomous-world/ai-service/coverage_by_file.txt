@@ -1,0 +1,90 @@
+tasks/__init__.py                            0      0   100%
+tests/__init__.py                            0      0   100%
+tests/performance/__init__.py                0      0   100%
+tests/test_config.py [32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[33m                  [ 27%][0m
+tests/test_database.py [32m.[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[32m.[0m[32m.[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31m                                    [ 39%][0m
+tests/test_llm_providers.py [31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31mF[0m[31m                                   [ 93%][0m
+tests/test_performance.py [32m.[0m[31mF[0m[32m.[0m[32m.[0m[32m.[0m[31mF[0m[31mF[0m[31mF[0m[31m                                       [100%][0m
+__init__.py                                  1      0   100%
+agents/__init__.py                           2      0   100%
+llm/__init__.py                              3      0   100%
+middleware/__init__.py                       4      4     0%   5-9
+models/__init__.py                           4      0   100%
+routers/__init__.py                          4      4     0%   5-9
+llm/providers/__init__.py                    5      0   100%
+middleware/request_size.py                  18     18     0%   5-47
+middleware/auth.py                          25     25     0%   5-70
+models/player.py                            32      0   100%
+utils/__init__.py                           37     22    41%   11-14, 19-20, 32-38, 43-47, 52-53, 58-59
+middleware/rate_limit.py                    38     38     0%   5-104
+models/world.py                             38      0   100%
+llm/base.py                                 39     10    74%   58, 80, 102, 114, 123-132
+utils/bridge_commands.py                    43     32    26%   26-38, 57-75, 103-107, 126-146, 166-170
+utils/pubsub.py                             48     48     0%   7-187
+llm/providers/openai_provider.py            51     36    29%   20, 35-49, 59-89, 99-126
+utils/movement_utils.py                     54     42    22%   11, 82-115, 131-157
+routers/pubsub_bridge.py                    55     55     0%   7-158
+tests/performance/locustfile.py             56     56     0%   16-171
+llm/providers/deepseek_provider.py          59     48    19%   17-32, 43-59, 69-97, 108-134, 138, 142
+llm/providers/anthropic_provider.py         60     51    15%   16-24, 35-66, 76-114, 124-146
+tests/conftest.py                           62     13    79%   89, 107, 119, 132-135, 149-158
+llm/gpu_wrapper.py                          64     64     0%   6-172
+utils/map_data.py                           66     55    17%   30-36, 48-88, 102-124, 133-138, 147, 168-172
+models/npc.py                               67      0   100%
+utils/cache.py                              67     50    25%   30-37, 57-91, 109-116, 129-141, 151-161
+llm/factory.py                              68     35    49%   65-67, 97-98, 115-180
+routers/player.py                           69     69     0%   5-190
+utils/batch_processor.py                    69     69     0%   7-179
+llm/providers/google_provider.py            71     62    13%   16-25, 36-74, 84-133, 143-165
+agents/base_agent.py                        75     30    60%   86, 99, 115-158, 177-186
+models/npc_relationship.py                  75     75     0%   6-149
+tests/locustfile.py                         76     76     0%   7-222
+tests/test_environment.py [32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[31m [ 76%]
+utils/gpu_pathfinding.py                    76     64    16%   33-46, 65-76, 85-108, 122-148, 163-170, 174-183, 187-201
+routers/batch.py                            77     77     0%   6-183
+utils/decorators.py                         78     78     0%   5-171
+tests/test_agents.py                        83     83     0%   5-238
+tests/test_routers.py                       84     84     0%   5-220
+routers/world.py                            85     85     0%   5-221
+utils/gpu_vector_search.py                  88     71    19%   13, 38-54, 58-80, 90-120, 129-145, 162-183, 187-189, 198-201
+tests/performance/test_benchmarks.py        94     94     0%   9-183
+models/faction.py                           98     98     0%   5-163
+tests/test_integration.py                   98     98     0%   6-196
+models/economy.py                           99     99     0%   5-144
+models/quest.py                            100    100     0%   5-157
+tests/test_llm_providers.py                100     15    85%   92-99, 120-121, 146-147, 180-181, 218-220
+agents/orchestrator.py                     102     85    17%   12-15, 49-79, 98-200, 220-255, 277-338, 356-378
+routers/quest.py                           110    110     0%   5-292
+tasks/instant_response.py                  110    110     0%   6-211
+tests/test_performance.py                  111     26    77%   61-65, 172, 182-207, 225-257
+tests/test_database.py                     115     15    87%   121-122, 138, 149-155, 165, 181-193
+agents/quest_agent.py                      117    117     0%   5-422
+routers/faction.py                         118    118     0%   6-299
+agents/dialogue_agent.py                   120     80    33%   13-14, 67-70, 106-137, 161-180, 184-206, 225-272, 276-290, 294-303
+agents/memory_agent.py                     120     99    18%   19-25, 59-73, 78-101, 123-147, 157-174, 182-197, 205-224, 233-268, 278-323, 327-340
+llm/providers/azure_openai_provider.py     121     50    59%   34, 36, 38, 40, 80, 85-86, 102, 129-130, 132-139, 142-155, 182-188, 212-250
+utils/advanced_movement.py                 124     87    30%   47-48, 65-88, 107-125, 141-142, 161-173, 194-218, 227, 248-271, 280-287, 296-305, 314-324, 334, 351-379
+routers/chat_command.py                    126    126     0%   6-315
+utils/pathfinding.py                       127     97    24%   19, 22, 26, 30, 44, 47, 63-64, 78-81, 93-105, 119-181, 195-246, 258-267, 288-294, 303-304
+agents/decision_agent.py                   136    117    14%   13, 33-40, 45-68, 90-129, 143-199, 203-223, 236-291, 304-312, 321-338, 342-419
+routers/economy.py                         138    138     0%   6-372
+test_remediation.py                        155    155     0%   7-234
+agents/economy_agent.py                    160    160     0%   5-438
+agents/decision_optimizer.py               162    162     0%   6-396
+agents/world_agent.py                      166    144    13%   32-39, 44-67, 89-113, 123-146, 150-167, 177-197, 206-224, 234-253, 257-291, 295-300, 310-345, 363-378, 409-431
+tests/test_config.py                       180      3    98%   61-63, 74
+scheduler.py                               191    191     0%   6-369
+agents/universal_consciousness.py          198    198     0%   7-522
+tests/performance/test_npc_load.py         198    198     0%   12-337
+routers/npc.py                             200    200     0%   5-620
+tasks/faction.py                           205    205     0%   6-461
+tasks/shop_restock.py                      210    210     0%   6-491
+utils/gpu_manager.py                       213    180    15%   44-60, 64-80, 89-124, 128-152, 156-181, 185-247, 251-280, 284-301, 310, 319, 328, 332-341, 345-353, 362-380, 399-402, 416-417
+tasks/economy.py                           220    220     0%   6-571
+tasks/environment.py                       233      1    99%   198
+main.py                                    237    237     0%   5-410
+tasks/npc_relationships.py                 240    240     0%   6-657
+tasks/npc_movement.py                      256    256     0%   7-609
+database.py                                350    273    22%   37-87, 91-97, 101-103, 107-117, 130-154, 167-189, 202-223, 227, 240, 252, 254, 287-298, 308-311, 315-317, 321-328, 333-346, 350-370, 374-379, 383-399, 408-410, 418-420, 424-430, 435-441, 445-451, 456-463, 467-480, 484-500, 504-515, 519-529, 533-552
+config.py                                  413      0   100%
+tests/test_environment.py                  486      5    99%   175, 730, 834, 863, 890

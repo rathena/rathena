@@ -4,9 +4,9 @@
 
 This document outlines the architecture for transforming rAthena MMORPG into a living, breathing world with AI-driven NPCs and adaptive systems. The design prioritizes:
 
-- **Non-invasive extension architecture** - Minimal modifications to rAthena core
+- **Non-invasive extension architecture** - Custom HTTP script commands (`httpget`, `httppost`) with no core modifications
 - **Scalability** - Support for hundreds to thousands of autonomous NPCs
-- **Flexibility** - Provider-agnostic LLM integration with Azure OpenAI Foundry as default
+- **Flexibility** - Provider-agnostic LLM integration with **Azure OpenAI as primary provider**
 - **Emergent behavior** - Real-world complexity simulation without artificial constraints
 - **Maintainability** - Clean separation of concerns and extensible design
 
@@ -90,14 +90,21 @@ The system consists of five major layers:
 
 ### 1. rAthena Game Server Layer
 
-**Modifications Required:**
-- Minimal - only custom NPC scripts in `/npc/custom/ai-world/`
-- No core C++ code changes required
-- Leverage existing event system (OnInit, OnTimer, OnTouch, etc.)
+**Modifications Implemented:**
+- Custom HTTP script commands in `src/custom/script_http.cpp`
+  - `httpget("<url>")` - GET requests to AI service
+  - `httppost("<url>", "<json_body>")` - POST requests with JSON payload
+  - Connection pooling for performance (`std::map` with `std::mutex`)
+  - Thread-safe implementation
+  - 5s connection timeout, 30s read timeout
+  - HTTP keep-alive enabled
+- Custom NPC scripts in `/npc/custom/ai-world/` (planned)
+- No core C++ code changes - all extensions in `/src/custom/`
 
 **Components:**
-- **AI-Enabled NPC Scripts**: Custom scripts that hook into AI service
-- **Event Dispatchers**: Scripts that send game events to Bridge Layer
+- **HTTP Script Commands**: Production-grade HTTP client for NPC-AI communication
+- **AI-Enabled NPC Scripts**: Custom scripts that hook into AI service (planned)
+- **Event Dispatchers**: Scripts that send game events to AI service via HTTP
 - **Action Receivers**: Scripts that execute AI-decided actions
 
 **Example NPC Script Structure:**
@@ -155,47 +162,131 @@ OnTouch:
 - Periodic sync of world state (economy, player positions, etc.)
 - Real-time sync of critical events
 
-**API Endpoints:**
+**API Endpoints (All Implemented and Tested - 100% Pass Rate):**
+
+**Health & Monitoring:**
+```
+GET  /health                   - Basic health check
+GET  /health/detailed          - Detailed health with database status
+```
+
+**NPC Management:**
 ```
 POST /ai/npc/register          - Register NPC with AI service
-POST /ai/npc/event             - Send game event to AI service
-GET  /ai/npc/{id}/action       - Get next action for NPC
-POST /ai/world/state           - Update world state
-GET  /ai/world/state           - Get current world state
+  Request: {npc_id, name, npc_class, level, position, personality?, faction_id?}
+  Response: {status, agent_id, npc_id, message}
+```
+
+**Player Interactions:**
+```
 POST /ai/player/interaction    - Handle player-NPC interaction
+  Request: {player_id, npc_id, interaction_type, context}
+  Response: {dialogue, emotion, actions, relationship_change}
+```
+
+**Chat Commands:**
+```
+POST /ai/chat/command          - Free-form text chat with NPCs
+  Request: {player_id, npc_id, message}
+  Response: {response, npc_id, timestamp}
+```
+
+**World State:**
+```
+GET  /ai/world/state           - Get current world state
+  Query: ?scope=all|economy|politics|environment
+  Response: {npcs, factions, economy, politics, environment, timestamp}
+```
+
+**Quest System:**
+```
+POST /ai/quest/generate        - Generate dynamic quest
+  Request: {npc_id, npc_name, npc_class, player_level, player_class}
+  Response: {success, quest{quest_id, title, description, objectives, rewards}}
+```
+
+**Faction System:**
+```
+GET  /ai/faction/list          - List all factions
+  Response: {factions[], count, timestamp}
+
+POST /ai/faction/create        - Create new faction
+  Request: {faction_id, name, description?, alignment?}
+  Response: {faction_id, name, created_at}
+```
+
+**Economy System:**
+```
+GET  /ai/economy/state         - Get economic state
+  Response: {inflation_rate, trade_volume, market_activity, timestamp}
+
+GET  /ai/economy/trends        - Get market trends
+  Query: ?category=<category>&limit=<limit>
+  Response: [{item_category, trend, price_change_percent, demand_level, supply_level}]
 ```
 
 ### 3. AI Service Layer
 
 **Technology Stack:**
-- **Language**: Python 3.11+
-- **Framework**: FastAPI (NOT Express.js as per rules)
-- **Agent Orchestration**: CrewAI
-- **Memory Management**: Memori SDK
-- **Async Processing**: asyncio, Celery for background tasks
+- **Language**: Python 3.12.3
+- **Framework**: FastAPI 0.115.12 (NOT Express.js as per rules)
+- **ASGI Server**: uvicorn 0.34.0
+- **Agent Orchestration**: CrewAI 0.86.0
+- **Memory Management**: Memori SDK 0.1.19
+- **Database**: PostgreSQL 17.6 with pgvector
+- **Cache**: DragonflyDB 7.4.0 (Redis-compatible)
+- **LLM**: Azure OpenAI (primary), 4 fallback providers
+- **Async Processing**: asyncio, background tasks
+- **Testing**: pytest 7.4.4 (32/32 tests passing)
 
 **Architecture:**
 
 #### CrewAI Multi-Agent Orchestrator
 
-**Agent Types:**
+**Implemented Agent Types (6 agents):**
 
-1. **NPC Consciousness Agents** (One per autonomous NPC)
-   - Individual personality and decision-making
-   - Memory and learning capabilities
-   - Goal-oriented behavior
-   - Social interaction processing
+1. **DialogueAgent** - NPC conversation generation
+   - Generates contextual, personality-driven dialogue
+   - Uses Azure OpenAI gpt-4 by default
+   - Temperature: 0.8 for creative responses
+   - Integrates with NPC personality traits
 
-2. **World System Agents** (Singleton or few instances)
-   - Economy Agent: Manages supply/demand, pricing, trade
-   - Politics Agent: Manages factions, alliances, conflicts
-   - Environment Agent: Weather, seasons, natural events
-   - Quest Agent: Dynamic quest generation
+2. **DecisionAgent** - NPC decision making
+   - Evaluates options and makes decisions
+   - Temperature: 0.6 for more deterministic choices
+   - Considers goals, personality, and context
+   - Outputs structured action plans
 
-3. **Meta Agents** (Orchestration)
-   - Event Coordinator: Routes events to appropriate agents
-   - Coherence Monitor: Ensures world consistency
-   - Performance Optimizer: Manages LLM call frequency
+3. **MemoryAgent** - Memory management
+   - Integrates with Memori SDK for long-term memory
+   - Vector similarity search for relevant memories
+   - Stores in PostgreSQL with pgvector
+   - Caches in DragonflyDB for fast retrieval
+
+4. **WorldAgent** - World state analysis
+   - Analyzes world state changes
+   - Determines impact on NPCs
+   - Generates world events
+   - Tracks economic and political trends
+
+5. **QuestAgent** - Dynamic quest generation
+   - Creates contextual quests based on NPC and player state
+   - Generates objectives, rewards, and narratives
+   - Adapts to player level and class
+   - Integrates with faction system
+
+6. **EconomyAgent** - Economic simulation
+   - Manages supply/demand dynamics
+   - Tracks market trends
+   - Simulates inflation and trade
+   - Provides economic state to other agents
+
+**Orchestrator:**
+- **Agent Orchestrator** - CrewAI-based multi-agent coordination
+  - Routes requests to appropriate agents
+  - Manages agent communication
+  - Handles error recovery and fallbacks
+  - Optimizes LLM usage
 
 **Agent Communication Flow:**
 ```
@@ -233,6 +324,30 @@ Game Event → Event Coordinator → Relevant Agents → Decision → Action Que
 ### 4. LLM Provider Abstraction Layer
 
 **Design Pattern**: Strategy Pattern with Factory
+
+**Implemented Providers (5):**
+1. **Azure OpenAI** (Primary, Production)
+   - Endpoint: Configured via `AZURE_OPENAI_ENDPOINT` environment variable
+   - Model: `gpt-4`
+   - API Version: `2024-08-01-preview`
+   - Timeout: 30s (configurable)
+   - Max Retries: 3
+
+2. **OpenAI** (Fallback)
+   - Model: `gpt-4-turbo-preview`
+   - API Key configured in .env
+
+3. **Anthropic Claude** (Alternative)
+   - Model: `claude-3-5-sonnet-20241022`
+   - API Key configured in .env
+
+4. **Google Gemini** (Alternative)
+   - Model: `gemini-1.5-pro`
+   - API Key configured in .env
+
+5. **DeepSeek** (Alternative)
+   - Model: `deepseek-chat`
+   - API Key configured in .env
 
 **Interface:**
 ```python
@@ -287,15 +402,26 @@ llm:
 - Cost-based routing (cheap models for simple tasks)
 - Latency-based routing (local models for real-time needs)
 
-### 5. State Management Layer (DragonflyDB)
+### 5. State Management Layer (DragonflyDB + PostgreSQL)
 
-**Why DragonflyDB over Redis:**
+**Dual-Database Architecture:**
+
+**DragonflyDB (High-Speed Caching):**
 - Better performance for high-throughput scenarios
 - Lower memory footprint
 - Better multi-threading support
 - Redis-compatible API
+- Used for: NPC state caching, LLM response caching, real-time event queues
 
-**Data Structures:**
+**PostgreSQL 17 (Persistent Storage):**
+- Long-term memory storage
+- Relationship graphs
+- Faction system data
+- Quest history
+- Economic history
+- Required extensions: pgvector, TimescaleDB, Apache AGE
+
+**DragonflyDB Data Structures:**
 
 #### NPC State
 ```
@@ -384,6 +510,106 @@ Fields:
 - NPC decisions cached for similar contexts (TTL: 5 minutes)
 - World state cached with invalidation on updates
 - Memory retrieval results cached per query
+
+#### PostgreSQL Schema (18 Tables)
+
+**Current Implementation: 18 tables in PostgreSQL 17.6**
+
+**AI-Specific Tables (7):**
+1. `factions` - Faction data and relationships
+2. `player_reputation` - Player-faction reputation tracking
+3. `faction_events` - Historical faction events
+4. `faction_conflicts` - Active and historical conflicts
+5. `npc_memories` - NPC long-term memories (Memori SDK)
+6. `npc_relationships` - NPC-to-NPC relationships
+7. `world_events` - World-wide events and history
+
+**rAthena Integration Tables (11):**
+8. `npc_agents` - NPC-to-AI agent mapping
+9. `npc_state` - NPC current state and goals
+10. `player_interactions` - Player-NPC interaction history
+11. `quest_history` - Dynamic quest tracking
+12. `economy_history` - Economic data over time
+13. `dialogue_cache` - Cached dialogue responses
+14. `decision_cache` - Cached NPC decisions
+15. `event_queue` - Pending events for processing
+16. `action_history` - NPC action history
+17. `memory_vectors` - Vector embeddings for memory search
+18. `system_config` - System configuration and state
+
+**Example: Factions Table**
+```sql
+CREATE TABLE factions (
+    faction_id VARCHAR(255) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    alignment VARCHAR(50) DEFAULT 'neutral',
+    relationships JSONB DEFAULT '{}',
+    controlled_areas JSONB DEFAULT '[]',
+    npc_members JSONB DEFAULT '[]',
+    goals JSONB DEFAULT '[]',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_factions_alignment ON factions(alignment);
+CREATE INDEX idx_factions_relationships ON factions USING GIN(relationships);
+```
+
+**Player Reputation Table:**
+```sql
+CREATE TABLE player_reputation (
+    id SERIAL PRIMARY KEY,
+    player_id VARCHAR(255) NOT NULL,
+    faction_id VARCHAR(255) NOT NULL REFERENCES factions(faction_id) ON DELETE CASCADE,
+    reputation INTEGER DEFAULT 0,  -- -100 to 100
+    last_interaction TIMESTAMP,
+    interaction_count INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE(player_id, faction_id)
+);
+CREATE INDEX idx_player_reputation_player ON player_reputation(player_id);
+CREATE INDEX idx_player_reputation_faction ON player_reputation(faction_id);
+```
+
+**Faction Events Table:**
+```sql
+CREATE TABLE faction_events (
+    id SERIAL PRIMARY KEY,
+    event_type VARCHAR(100) NOT NULL,  -- alliance, conflict, trade, etc.
+    involved_factions JSONB NOT NULL,  -- [faction_id1, faction_id2, ...]
+    description TEXT,
+    reputation_changes JSONB DEFAULT '{}',  -- {faction_id: change}
+    relationship_changes JSONB DEFAULT '{}',  -- {faction_pair: change}
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE INDEX idx_faction_events_type ON faction_events(event_type);
+CREATE INDEX idx_faction_events_created ON faction_events(created_at);
+```
+
+**Faction Conflicts Table:**
+```sql
+CREATE TABLE faction_conflicts (
+    id SERIAL PRIMARY KEY,
+    faction_id_1 VARCHAR(255) NOT NULL REFERENCES factions(faction_id) ON DELETE CASCADE,
+    faction_id_2 VARCHAR(255) NOT NULL REFERENCES factions(faction_id) ON DELETE CASCADE,
+    conflict_type VARCHAR(100) NOT NULL,  -- war, rivalry, competition
+    intensity INTEGER DEFAULT 50,  -- 0-100
+    objectives JSONB DEFAULT '[]',  -- [{objective, status}]
+    started_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ended_at TIMESTAMP,
+    status VARCHAR(50) DEFAULT 'active'  -- active, resolved, escalated
+);
+CREATE INDEX idx_faction_conflicts_status ON faction_conflicts(status);
+CREATE INDEX idx_faction_conflicts_factions ON faction_conflicts(faction_id_1, faction_id_2);
+```
+
+**Database Migrations:**
+All migrations are located in `ai-service/migrations/` directory.
+Run migrations with:
+```bash
+PGPASSWORD=ai_world_pass_2025 psql -h localhost -U ai_world_user -d ai_world_memory -f ai-service/migrations/001_create_factions_table.sql
+```
 
 ## Data Flow and Communication Protocols
 
@@ -558,17 +784,28 @@ POST /ai/player/interaction
 
 ### Development Environment
 
+**All components run natively (no Docker per project requirements):**
+
 ```
 ┌─────────────────────────────────────────────────────────────┐
 │                    Developer Machine                         │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
-│  │   rAthena    │  │  AI Service  │  │ PostgreSQL   │  │ DragonflyDB  │      │
-│  │   (Native)   │  │   (Native)   │  │   (Native)   │  │   (Native)   │      │
+│  │   rAthena    │  │  AI Service  │  │ PostgreSQL17 │  │ DragonflyDB  │      │
+│  │   (Native)   │  │   (Python)   │  │   (Native)   │  │   (Native)   │      │
+│  │   C++ Build  │  │   FastAPI    │  │  +pgvector   │  │ Redis-compat │      │
+│  │              │  │   +CrewAI    │  │  +TimescaleDB│  │              │      │
 │  └──────────────┘  └──────────────┘  └──────────────┘  └──────────────┘      │
 │                                                               │
-│  LLM Provider: Azure OpenAI (default) or OpenAI/Anthropic/Google │
+│  LLM Provider: Azure OpenAI (default) or OpenAI/Anthropic/Google/DeepSeek │
+│  Status: 100% Endpoint Pass Rate (10/10 tests passing)       │
 └─────────────────────────────────────────────────────────────┘
 ```
+
+**Installation:**
+- PostgreSQL 17: Native installation with apt/yum
+- DragonflyDB: Native binary installation
+- AI Service: Python 3.11+ virtual environment
+- rAthena: Standard CMake build process
 
 ### Production Environment
 
@@ -662,11 +899,14 @@ POST /ai/player/interaction
 - **Vector Search**: DragonflyDB native vector support
 
 ### DevOps
-- **Deployment**: Native installation (PostgreSQL 17, DragonflyDB)
+- **Deployment**: Native installation (no Docker per project requirements)
+  - PostgreSQL 17 with pgvector, TimescaleDB, Apache AGE
+  - DragonflyDB native binary
+  - Python 3.11+ virtual environment
 - **Orchestration**: Kubernetes (production, ⏳ planned)
 - **Monitoring**: Prometheus + Grafana (⏳ planned)
-- **Logging**: ELK Stack (Elasticsearch, Logstash, Kibana)
-- **Tracing**: OpenTelemetry
+- **Logging**: Loguru (implemented), ELK Stack (⏳ planned)
+- **Tracing**: OpenTelemetry (⏳ planned)
 
 ### Development Tools
 - **Version Control**: Git

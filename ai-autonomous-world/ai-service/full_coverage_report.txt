@@ -1,0 +1,325 @@
+/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:208: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.12.3, pytest-8.3.4, pluggy-1.6.0 -- /home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/bin/python3
+cachedir: .pytest_cache
+rootdir: /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service
+configfile: pytest.ini
+plugins: anyio-4.11.0, langsmith-0.3.45, cov-7.0.0, Faker-37.12.0, asyncio-0.24.0, mock-3.15.1
+asyncio: mode=Mode.AUTO, default_loop_scope=None
+[1mcollecting ... [0mcollected 24 items / 6 errors
+
+==================================== ERRORS ====================================
+[31m[1m____________________ ERROR collecting tests/test_agents.py _____________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:490: in __call__
+    [0mfield_value = [96mself[39;49;00m.prepare_field_value(field_name, field, field_value, value_is_complex)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:120: in prepare_field_value
+    [0m[94mraise[39;49;00m e[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:117: in prepare_field_value
+    [0mvalue = [96mself[39;49;00m.decode_complex_value(field_name, field, value)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:186: in decode_complex_value
+    [0m[94mreturn[39;49;00m json.loads(value)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/__init__.py[0m:346: in loads
+    [0m[94mreturn[39;49;00m _default_decoder.decode(s)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:337: in decode
+    [0mobj, end = [96mself[39;49;00m.raw_decode(s, idx=_w(s, [94m0[39;49;00m).end())[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:355: in raw_decode
+    [0m[94mraise[39;49;00m JSONDecodeError([33m"[39;49;00m[33mExpecting value[39;49;00m[33m"[39;49;00m, s, err.value) [94mfrom[39;49;00m[90m [39;49;00m[94mNone[39;49;00m[90m[39;49;00m
+[1m[31mE   json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)[0m
+
+[33mThe above exception was the direct cause of the following exception:[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py[0m:667: in _patched_collect
+    [0mmodule = collector.obj[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:284: in obj
+    [0m[96mself[39;49;00m._obj = obj = [96mself[39;49;00m._getobj()[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:546: in _getobj
+    [0m[94mreturn[39;49;00m importtestmodule([96mself[39;49;00m.path, [96mself[39;49;00m.config)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:493: in importtestmodule
+    [0mmod = import_path([90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/pathlib.py[0m:587: in import_path
+    [0mimportlib.import_module(module_name)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/importlib/__init__.py[0m:90: in import_module
+    [0m[94mreturn[39;49;00m _bootstrap._gcd_import(name[level:], package, level)[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1387: in _gcd_import
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1360: in _find_and_load
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1331: in _find_and_load_unlocked
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:935: in _load_unlocked
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py[0m:184: in exec_module
+    [0mexec(co, module.[91m__dict__[39;49;00m)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_agents.py[0m:9: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96magents[39;49;00m[04m[96m.[39;49;00m[04m[96mdialogue_agent[39;49;00m[90m [39;49;00m[94mimport[39;49;00m DialogueAgent[90m[39;49;00m
+[1m[31magents/dialogue_agent.py[0m:17: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96mconfig[39;49;00m[90m [39;49;00m[94mimport[39;49;00m settings[90m[39;49;00m
+[1m[31mconfig.py[0m:874: in <module>
+    [0msettings = get_settings()[90m[39;49;00m
+[1m[31mconfig.py[0m:739: in get_settings
+    [0msettings = Settings(**yaml_config)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:189: in __init__
+    [0m**__pydantic_self__._settings_build_values([90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:424: in _settings_build_values
+    [0msource_state = source()[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:492: in __call__
+    [0m[94mraise[39;49;00m SettingsError([90m[39;49;00m
+[1m[31mE   pydantic_settings.exceptions.SettingsError: error parsing value for field "cors_origins" from source "EnvSettingsSource"[0m
+------------------------------- Captured stderr --------------------------------
+2025-11-09 05:13:09.878 | INFO     | config:load_yaml_config:712 - Loaded configuration from /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/config/ai-service-config.yaml
+[31m[1m____________________ ERROR collecting tests/test_config.py _____________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:490: in __call__
+    [0mfield_value = [96mself[39;49;00m.prepare_field_value(field_name, field, field_value, value_is_complex)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:120: in prepare_field_value
+    [0m[94mraise[39;49;00m e[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:117: in prepare_field_value
+    [0mvalue = [96mself[39;49;00m.decode_complex_value(field_name, field, value)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:186: in decode_complex_value
+    [0m[94mreturn[39;49;00m json.loads(value)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/__init__.py[0m:346: in loads
+    [0m[94mreturn[39;49;00m _default_decoder.decode(s)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:337: in decode
+    [0mobj, end = [96mself[39;49;00m.raw_decode(s, idx=_w(s, [94m0[39;49;00m).end())[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:355: in raw_decode
+    [0m[94mraise[39;49;00m JSONDecodeError([33m"[39;49;00m[33mExpecting value[39;49;00m[33m"[39;49;00m, s, err.value) [94mfrom[39;49;00m[90m [39;49;00m[94mNone[39;49;00m[90m[39;49;00m
+[1m[31mE   json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)[0m
+
+[33mThe above exception was the direct cause of the following exception:[0m
+[1m[31mtests/test_config.py[0m:7: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96mconfig[39;49;00m[90m [39;49;00m[94mimport[39;49;00m Settings[90m[39;49;00m
+[1m[31mconfig.py[0m:874: in <module>
+    [0msettings = get_settings()[90m[39;49;00m
+[1m[31mconfig.py[0m:739: in get_settings
+    [0msettings = Settings(**yaml_config)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:189: in __init__
+    [0m**__pydantic_self__._settings_build_values([90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:424: in _settings_build_values
+    [0msource_state = source()[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:492: in __call__
+    [0m[94mraise[39;49;00m SettingsError([90m[39;49;00m
+[1m[31mE   pydantic_settings.exceptions.SettingsError: error parsing value for field "cors_origins" from source "EnvSettingsSource"[0m
+------------------------------- Captured stderr --------------------------------
+2025-11-09 05:13:10.930 | INFO     | config:load_yaml_config:712 - Loaded configuration from /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/config/ai-service-config.yaml
+[31m[1m___________________ ERROR collecting tests/test_database.py ____________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:490: in __call__
+    [0mfield_value = [96mself[39;49;00m.prepare_field_value(field_name, field, field_value, value_is_complex)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:120: in prepare_field_value
+    [0m[94mraise[39;49;00m e[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:117: in prepare_field_value
+    [0mvalue = [96mself[39;49;00m.decode_complex_value(field_name, field, value)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:186: in decode_complex_value
+    [0m[94mreturn[39;49;00m json.loads(value)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/__init__.py[0m:346: in loads
+    [0m[94mreturn[39;49;00m _default_decoder.decode(s)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:337: in decode
+    [0mobj, end = [96mself[39;49;00m.raw_decode(s, idx=_w(s, [94m0[39;49;00m).end())[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:355: in raw_decode
+    [0m[94mraise[39;49;00m JSONDecodeError([33m"[39;49;00m[33mExpecting value[39;49;00m[33m"[39;49;00m, s, err.value) [94mfrom[39;49;00m[90m [39;49;00m[94mNone[39;49;00m[90m[39;49;00m
+[1m[31mE   json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)[0m
+
+[33mThe above exception was the direct cause of the following exception:[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py[0m:667: in _patched_collect
+    [0mmodule = collector.obj[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:284: in obj
+    [0m[96mself[39;49;00m._obj = obj = [96mself[39;49;00m._getobj()[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:546: in _getobj
+    [0m[94mreturn[39;49;00m importtestmodule([96mself[39;49;00m.path, [96mself[39;49;00m.config)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:493: in importtestmodule
+    [0mmod = import_path([90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/pathlib.py[0m:587: in import_path
+    [0mimportlib.import_module(module_name)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/importlib/__init__.py[0m:90: in import_module
+    [0m[94mreturn[39;49;00m _bootstrap._gcd_import(name[level:], package, level)[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1387: in _gcd_import
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1360: in _find_and_load
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1331: in _find_and_load_unlocked
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:935: in _load_unlocked
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py[0m:184: in exec_module
+    [0mexec(co, module.[91m__dict__[39;49;00m)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_database.py[0m:8: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96mdatabase[39;49;00m[90m [39;49;00m[94mimport[39;49;00m Database[90m[39;49;00m
+[1m[31mdatabase.py[0m:17: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96mconfig[39;49;00m[90m [39;49;00m[94mimport[39;49;00m settings[90m[39;49;00m
+[1m[31mconfig.py[0m:874: in <module>
+    [0msettings = get_settings()[90m[39;49;00m
+[1m[31mconfig.py[0m:739: in get_settings
+    [0msettings = Settings(**yaml_config)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:189: in __init__
+    [0m**__pydantic_self__._settings_build_values([90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:424: in _settings_build_values
+    [0msource_state = source()[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:492: in __call__
+    [0m[94mraise[39;49;00m SettingsError([90m[39;49;00m
+[1m[31mE   pydantic_settings.exceptions.SettingsError: error parsing value for field "cors_origins" from source "EnvSettingsSource"[0m
+------------------------------- Captured stderr --------------------------------
+2025-11-09 05:13:11.370 | INFO     | config:load_yaml_config:712 - Loaded configuration from /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/config/ai-service-config.yaml
+[31m[1m__________________ ERROR collecting tests/test_environment.py __________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:490: in __call__
+    [0mfield_value = [96mself[39;49;00m.prepare_field_value(field_name, field, field_value, value_is_complex)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:120: in prepare_field_value
+    [0m[94mraise[39;49;00m e[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:117: in prepare_field_value
+    [0mvalue = [96mself[39;49;00m.decode_complex_value(field_name, field, value)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:186: in decode_complex_value
+    [0m[94mreturn[39;49;00m json.loads(value)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/__init__.py[0m:346: in loads
+    [0m[94mreturn[39;49;00m _default_decoder.decode(s)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:337: in decode
+    [0mobj, end = [96mself[39;49;00m.raw_decode(s, idx=_w(s, [94m0[39;49;00m).end())[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:355: in raw_decode
+    [0m[94mraise[39;49;00m JSONDecodeError([33m"[39;49;00m[33mExpecting value[39;49;00m[33m"[39;49;00m, s, err.value) [94mfrom[39;49;00m[90m [39;49;00m[94mNone[39;49;00m[90m[39;49;00m
+[1m[31mE   json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)[0m
+
+[33mThe above exception was the direct cause of the following exception:[0m
+[1m[31mtests/test_environment.py[0m:12: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96mtasks[39;49;00m[04m[96m.[39;49;00m[04m[96menvironment[39;49;00m[90m [39;49;00m[94mimport[39;49;00m ([90m[39;49;00m
+[1m[31mtasks/environment.py[0m:13: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96mconfig[39;49;00m[90m [39;49;00m[94mimport[39;49;00m settings[90m[39;49;00m
+[1m[31mconfig.py[0m:874: in <module>
+    [0msettings = get_settings()[90m[39;49;00m
+[1m[31mconfig.py[0m:739: in get_settings
+    [0msettings = Settings(**yaml_config)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:189: in __init__
+    [0m**__pydantic_self__._settings_build_values([90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:424: in _settings_build_values
+    [0msource_state = source()[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:492: in __call__
+    [0m[94mraise[39;49;00m SettingsError([90m[39;49;00m
+[1m[31mE   pydantic_settings.exceptions.SettingsError: error parsing value for field "cors_origins" from source "EnvSettingsSource"[0m
+------------------------------- Captured stderr --------------------------------
+2025-11-09 05:13:12.041 | INFO     | config:load_yaml_config:712 - Loaded configuration from /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/config/ai-service-config.yaml
+[31m[1m_________________ ERROR collecting tests/test_llm_providers.py _________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:490: in __call__
+    [0mfield_value = [96mself[39;49;00m.prepare_field_value(field_name, field, field_value, value_is_complex)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:120: in prepare_field_value
+    [0m[94mraise[39;49;00m e[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:117: in prepare_field_value
+    [0mvalue = [96mself[39;49;00m.decode_complex_value(field_name, field, value)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:186: in decode_complex_value
+    [0m[94mreturn[39;49;00m json.loads(value)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/__init__.py[0m:346: in loads
+    [0m[94mreturn[39;49;00m _default_decoder.decode(s)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:337: in decode
+    [0mobj, end = [96mself[39;49;00m.raw_decode(s, idx=_w(s, [94m0[39;49;00m).end())[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:355: in raw_decode
+    [0m[94mraise[39;49;00m JSONDecodeError([33m"[39;49;00m[33mExpecting value[39;49;00m[33m"[39;49;00m, s, err.value) [94mfrom[39;49;00m[90m [39;49;00m[94mNone[39;49;00m[90m[39;49;00m
+[1m[31mE   json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)[0m
+
+[33mThe above exception was the direct cause of the following exception:[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py[0m:667: in _patched_collect
+    [0mmodule = collector.obj[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:284: in obj
+    [0m[96mself[39;49;00m._obj = obj = [96mself[39;49;00m._getobj()[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:546: in _getobj
+    [0m[94mreturn[39;49;00m importtestmodule([96mself[39;49;00m.path, [96mself[39;49;00m.config)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:493: in importtestmodule
+    [0mmod = import_path([90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/pathlib.py[0m:587: in import_path
+    [0mimportlib.import_module(module_name)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/importlib/__init__.py[0m:90: in import_module
+    [0m[94mreturn[39;49;00m _bootstrap._gcd_import(name[level:], package, level)[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1387: in _gcd_import
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1360: in _find_and_load
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1331: in _find_and_load_unlocked
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:935: in _load_unlocked
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py[0m:184: in exec_module
+    [0mexec(co, module.[91m__dict__[39;49;00m)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_llm_providers.py[0m:7: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96mllm[39;49;00m[04m[96m.[39;49;00m[04m[96mfactory[39;49;00m[90m [39;49;00m[94mimport[39;49;00m LLMProviderFactory[90m[39;49;00m
+[1m[31mllm/__init__.py[0m:6: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96m.[39;49;00m[04m[96mfactory[39;49;00m[90m [39;49;00m[94mimport[39;49;00m LLMProviderFactory, get_llm_provider[90m[39;49;00m
+[1m[31mllm/factory.py[0m:9: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96m.[39;49;00m[04m[96mproviders[39;49;00m[04m[96m.[39;49;00m[04m[96mopenai_provider[39;49;00m[90m [39;49;00m[94mimport[39;49;00m OpenAIProvider[90m[39;49;00m
+[1m[31mllm/providers/__init__.py[0m:6: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96m.[39;49;00m[04m[96mazure_openai_provider[39;49;00m[90m [39;49;00m[94mimport[39;49;00m AzureOpenAIProvider[90m[39;49;00m
+[1m[31mllm/providers/azure_openai_provider.py[0m:18: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96mconfig[39;49;00m[90m [39;49;00m[94mimport[39;49;00m settings[90m[39;49;00m
+[1m[31mconfig.py[0m:874: in <module>
+    [0msettings = get_settings()[90m[39;49;00m
+[1m[31mconfig.py[0m:739: in get_settings
+    [0msettings = Settings(**yaml_config)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:189: in __init__
+    [0m**__pydantic_self__._settings_build_values([90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:424: in _settings_build_values
+    [0msource_state = source()[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:492: in __call__
+    [0m[94mraise[39;49;00m SettingsError([90m[39;49;00m
+[1m[31mE   pydantic_settings.exceptions.SettingsError: error parsing value for field "cors_origins" from source "EnvSettingsSource"[0m
+------------------------------- Captured stderr --------------------------------
+2025-11-09 05:13:12.483 | INFO     | config:load_yaml_config:712 - Loaded configuration from /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/config/ai-service-config.yaml
+[31m[1m____________________ ERROR collecting tests/test_routers.py ____________________[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:490: in __call__
+    [0mfield_value = [96mself[39;49;00m.prepare_field_value(field_name, field, field_value, value_is_complex)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:120: in prepare_field_value
+    [0m[94mraise[39;49;00m e[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/providers/env.py[0m:117: in prepare_field_value
+    [0mvalue = [96mself[39;49;00m.decode_complex_value(field_name, field, value)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:186: in decode_complex_value
+    [0m[94mreturn[39;49;00m json.loads(value)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/__init__.py[0m:346: in loads
+    [0m[94mreturn[39;49;00m _default_decoder.decode(s)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:337: in decode
+    [0mobj, end = [96mself[39;49;00m.raw_decode(s, idx=_w(s, [94m0[39;49;00m).end())[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/json/decoder.py[0m:355: in raw_decode
+    [0m[94mraise[39;49;00m JSONDecodeError([33m"[39;49;00m[33mExpecting value[39;49;00m[33m"[39;49;00m, s, err.value) [94mfrom[39;49;00m[90m [39;49;00m[94mNone[39;49;00m[90m[39;49;00m
+[1m[31mE   json.decoder.JSONDecodeError: Expecting value: line 1 column 1 (char 0)[0m
+
+[33mThe above exception was the direct cause of the following exception:[0m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py[0m:667: in _patched_collect
+    [0mmodule = collector.obj[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:284: in obj
+    [0m[96mself[39;49;00m._obj = obj = [96mself[39;49;00m._getobj()[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:546: in _getobj
+    [0m[94mreturn[39;49;00m importtestmodule([96mself[39;49;00m.path, [96mself[39;49;00m.config)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/python.py[0m:493: in importtestmodule
+    [0mmod = import_path([90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/pathlib.py[0m:587: in import_path
+    [0mimportlib.import_module(module_name)[90m[39;49;00m
+[1m[31m/usr/lib/python3.12/importlib/__init__.py[0m:90: in import_module
+    [0m[94mreturn[39;49;00m _bootstrap._gcd_import(name[level:], package, level)[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1387: in _gcd_import
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1360: in _find_and_load
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:1331: in _find_and_load_unlocked
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m<frozen importlib._bootstrap>[0m:935: in _load_unlocked
+    [0m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[04m[91m?[39;49;00m[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/_pytest/assertion/rewrite.py[0m:184: in exec_module
+    [0mexec(co, module.[91m__dict__[39;49;00m)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_routers.py[0m:8: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96mmain[39;49;00m[90m [39;49;00m[94mimport[39;49;00m app[90m[39;49;00m
+[1m[31mmain.py[0m:18: in <module>
+    [0m[94mfrom[39;49;00m[90m [39;49;00m[04m[96mai_service[39;49;00m[04m[96m.[39;49;00m[04m[96mconfig[39;49;00m[90m [39;49;00m[94mimport[39;49;00m settings[90m[39;49;00m
+[1m[31m../ai_service/config.py[0m:874: in <module>
+    [0msettings = get_settings()[90m[39;49;00m
+[1m[31m../ai_service/config.py[0m:739: in get_settings
+    [0msettings = Settings(**yaml_config)[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:189: in __init__
+    [0m**__pydantic_self__._settings_build_values([90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/main.py[0m:424: in _settings_build_values
+    [0msource_state = source()[90m[39;49;00m
+[1m[31m/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pydantic_settings/sources/base.py[0m:492: in __call__
+    [0m[94mraise[39;49;00m SettingsError([90m[39;49;00m
+[1m[31mE   pydantic_settings.exceptions.SettingsError: error parsing value for field "cors_origins" from source "EnvSettingsSource"[0m
+------------------------------- Captured stderr --------------------------------
+2025-11-09 05:13:14.110 | INFO     | ai_service.config:load_yaml_config:712 - Loaded configuration from /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/config/ai-service-config.yaml
+[36m[1m=========================== short test summary info ============================[0m
+[31mERROR[0m tests/test_agents.py - pydantic_settings.exceptions.SettingsError: error parsing value for field "...
+[31mERROR[0m tests/test_config.py - pydantic_settings.exceptions.SettingsError: error parsing value for field "...
+[31mERROR[0m tests/test_database.py - pydantic_settings.exceptions.SettingsError: error parsing value for field "...
+[31mERROR[0m tests/test_environment.py - pydantic_settings.exceptions.SettingsError: error parsing value for field "...
+[31mERROR[0m tests/test_llm_providers.py - pydantic_settings.exceptions.SettingsError: error parsing value for field "...
+[31mERROR[0m tests/test_routers.py - pydantic_settings.exceptions.SettingsError: error parsing value for field "...
+!!!!!!!!!!!!!!!!!!! Interrupted: 6 errors during collection !!!!!!!!!!!!!!!!!!!!
+[31m====================== [33m1176 warnings[0m, [31m[1m6 errors[0m[31m in 12.43s[0m[31m =======================[0m

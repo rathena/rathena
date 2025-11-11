@@ -6,6 +6,15 @@
 # This script automates the complete installation of the AI autonomous world system
 # including PostgreSQL 17, DragonflyDB, Python dependencies, and configuration.
 #
+# IMPORTANT - DATABASE ARCHITECTURE:
+# ==================================
+# This script installs PostgreSQL for AI SERVICES ONLY.
+# - PostgreSQL: Used EXCLUSIVELY by AI services (ai-world, p2p-coordinator, NPC memory)
+# - MariaDB: Used EXCLUSIVELY by rAthena game servers (installed separately)
+#
+# DO NOT use PostgreSQL for rAthena components!
+# DO NOT use MariaDB for AI services!
+#
 # Usage:
 #   ./install.sh              # Full installation
 #   ./install.sh --dry-run    # Show what would be installed without installing
@@ -137,13 +146,16 @@ check_prerequisites() {
 # ============================================================================
 
 install_postgresql() {
-    print_header "Installing PostgreSQL 17"
-    
+    print_header "Installing PostgreSQL 17 (for AI Services ONLY)"
+
+    log_info "PostgreSQL will be used EXCLUSIVELY for AI services"
+    log_info "rAthena game servers use MariaDB (installed separately)"
+
     if ${DRY_RUN}; then
         log_info "[DRY RUN] Would install PostgreSQL 17"
         return 0
     fi
-    
+
     # Check if PostgreSQL 17 is already installed
     if command -v psql &> /dev/null; then
         PG_VERSION=$(psql --version | grep -oP '\d+' | head -1)
@@ -153,7 +165,7 @@ install_postgresql() {
         fi
     fi
 
-    log "Installing PostgreSQL 17..."
+    log "Installing PostgreSQL 17 for AI services..."
 
     # Install PostgreSQL APT repository
     sudo /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y || {
@@ -198,7 +210,10 @@ install_postgresql_extensions() {
 }
 
 setup_postgresql_database() {
-    print_header "Setting Up PostgreSQL Database"
+    print_header "Setting Up PostgreSQL Database (for AI Services)"
+
+    log_info "Creating database: ${POSTGRES_DB}"
+    log_info "This database is for AI services ONLY (not for rAthena)"
 
     if ${DRY_RUN}; then
         log_info "[DRY RUN] Would create database and user"
@@ -215,22 +230,22 @@ setup_postgresql_database() {
         fi
     fi
 
-    log "Creating database '${POSTGRES_DB}'..."
+    log "Creating AI services database '${POSTGRES_DB}'..."
     sudo -u postgres psql -c "CREATE DATABASE ${POSTGRES_DB};" 2>/dev/null || log_info "Database already exists"
 
-    log "Creating user '${POSTGRES_USER}'..."
+    log "Creating AI services user '${POSTGRES_USER}'..."
     sudo -u postgres psql -c "CREATE USER ${POSTGRES_USER} WITH PASSWORD '${POSTGRES_PASSWORD}';" 2>/dev/null || log_info "User already exists"
 
     log "Granting privileges..."
     sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE ${POSTGRES_DB} TO ${POSTGRES_USER};"
 
     # Enable extensions
-    log "Enabling PostgreSQL extensions..."
+    log "Enabling PostgreSQL extensions for AI services..."
     sudo -u postgres psql -d "${POSTGRES_DB}" -c "CREATE EXTENSION IF NOT EXISTS timescaledb CASCADE;" 2>/dev/null || log_info "TimescaleDB not available"
     sudo -u postgres psql -d "${POSTGRES_DB}" -c "CREATE EXTENSION IF NOT EXISTS vector CASCADE;" 2>/dev/null || log_info "pgvector not available"
     sudo -u postgres psql -d "${POSTGRES_DB}" -c "CREATE EXTENSION IF NOT EXISTS age CASCADE;" 2>/dev/null || log_info "Apache AGE not available"
 
-    log "✓ PostgreSQL database configured"
+    log "✓ PostgreSQL database configured for AI services"
 }
 
 install_dragonfly() {

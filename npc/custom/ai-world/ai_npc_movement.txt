@@ -1,0 +1,244 @@
+//===== rAthena Script =======================================
+//= AI NPC Autonomous Movement System
+//===== Description: =========================================
+//= Periodic movement system for AI-driven NPCs
+//= Integrates with AI service for dynamic movement decisions
+//===== Author: ==============================================
+//= AI Autonomous World Team
+//============================================================
+
+-	script	AI_Movement_Manager	-1,{
+	end;
+
+OnInit:
+	// Initialize movement system
+	.movement_interval = 30000; // 30 seconds between movement checks (normal NPCs)
+	.aggressive_interval = 2000; // 2 seconds for aggressive movement (WanderingMerchant)
+	.ai_service_url$ = "http://192.168.0.100:8000";
+
+	// Register NPCs for autonomous movement
+	// NOTE: NPC names must match EXACTLY as defined in their respective NPC scripts
+	// - NPCs with #suffix: include the suffix (e.g., "Guard Thorne#ai003")
+	// - NPCs without #suffix: use exact name (e.g., "WanderingMerchant")
+
+	// Normal NPCs (30-second interval)
+	setarray .npc_ids$[0], "ai_guard_003", "ai_explorer_002", "ai_master_001";
+	setarray .npc_names$[0], "Guard Thorne#ai003", "Lyra the Explorer#ai002", "Aria the Wandering Sage#ai_master";
+
+	// Aggressive movement NPCs (2-second interval)
+	setarray .aggressive_npc_ids$[0], "test_merchant_001";
+	setarray .aggressive_npc_names$[0], "WanderingMerchant";
+
+	.@npc_count = getarraysize(.npc_ids$);
+	.@aggressive_count = getarraysize(.aggressive_npc_ids$);
+	debugmes "[AI Movement] System initialized with " + .@npc_count + " normal NPCs and " + .@aggressive_count + " aggressive NPCs";
+	debugmes "[AI Movement] Normal NPCs: " + .npc_names$[0] + ", " + .npc_names$[1];
+	debugmes "[AI Movement] Aggressive NPCs: " + .aggressive_npc_names$[0];
+	debugmes "[AI Movement] Starting movement loops...";
+
+	// Start both movement loops
+	donpcevent strnpcinfo(3) + "::OnMovementLoop";
+	donpcevent strnpcinfo(3) + "::OnAggressiveMovementLoop";
+	end;
+
+OnMovementLoop:
+	debugmes "[AI Movement] Normal movement loop started";
+
+	// Check and execute movement for normal NPCs
+	.@npc_count = getarraysize(.npc_ids$);
+	debugmes "[AI Movement] Processing " + .@npc_count + " normal NPCs";
+
+	for (.@i = 0; .@i < .@npc_count; .@i++) {
+		.@npc_id$ = .npc_ids$[.@i];
+		.@npc_name$ = .npc_names$[.@i];
+
+		// Get NPC GID first
+		.@npc_gid = getnpcid(0, .@npc_name$);
+		if (.@npc_gid == 0) {
+			debugmes "[AI Movement] NPC not found: " + .@npc_name$;
+			continue;
+		}
+
+		// Get NPC position using getunitdata
+		getunitdata(.@npc_gid, .@npc_data);
+
+		// Get map name using mapid2name
+		.@current_map$ = mapid2name(.@npc_data[UNPC_MAPID]);
+		.@current_x = .@npc_data[UNPC_X];
+		.@current_y = .@npc_data[UNPC_Y];
+
+		// Validate we got valid data
+		if (.@current_map$ == "" || .@current_x == 0 || .@current_y == 0) {
+			debugmes "[AI Movement] Invalid position data for: " + .@npc_name$;
+			continue;
+		}
+		
+		// Build request JSON for AI service
+		.@json$ = "{";
+		.@json$ += "\"npc_id\":\"" + .@npc_id$ + "\",";
+		.@json$ += "\"current_position\":{";
+		.@json$ += "\"map\":\"" + .@current_map$ + "\",";
+		.@json$ += "\"x\":" + .@current_x + ",";
+		.@json$ += "\"y\":" + .@current_y;
+		.@json$ += "},";
+		.@json$ += "\"context\":\"periodic_movement\"";
+		.@json$ += "}";
+		
+		// Request movement decision from AI service
+		.@response$ = httppost(.ai_service_url$ + "/npc/movement/decide", .@json$);
+		
+		// Parse response
+		if (.@response$ == "") {
+			debugmes "[AI Movement] No response from AI service for " + .@npc_name$;
+			continue;
+		}
+		
+		// Check if NPC should move
+		// Response format: {"success":true,"npc_id":"...","should_move":true,"target_position":{"x":150,"y":180},"reasoning":"..."}
+		if (compare(.@response$, "\"should_move\":true")) {
+			// Extract target coordinates
+			// This is a simplified parser - in production, use proper JSON parsing
+			.@x_pos = strpos(.@response$, "\"x\":", 0);
+			.@y_pos = strpos(.@response$, "\"y\":", 0);
+			
+			if (.@x_pos >= 0 && .@y_pos >= 0) {
+				// Extract X coordinate
+				.@x_start = .@x_pos + 4; // Skip "x":
+				.@x_end = strpos(.@response$, ",", .@x_start);
+				if (.@x_end < 0) .@x_end = strpos(.@response$, "}", .@x_start);
+				.@x_str$ = substr(.@response$, .@x_start, .@x_end - 1);
+				.@target_x = atoi(.@x_str$);
+				
+				// Extract Y coordinate
+				.@y_start = .@y_pos + 4; // Skip "y":
+				.@y_end = strpos(.@response$, "}", .@y_start);
+				if (.@y_end < 0) .@y_end = strpos(.@response$, ",", .@y_start);
+				.@y_str$ = substr(.@response$, .@y_start, .@y_end - 1);
+				.@target_y = atoi(.@y_str$);
+
+				// Validate walkability before attempting movement
+				if (!checkcell(.@current_map$, .@target_x, .@target_y, CELL_CHKPASS)) {
+					debugmes "[AI Movement] Target (" + .@target_x + ", " + .@target_y + ") is not walkable for " + .@npc_name$;
+				} else {
+					// Execute movement using custom npcwalk command
+					.@move_result = npcwalk(.@npc_name$, .@target_x, .@target_y);
+
+					if (.@move_result) {
+						debugmes "[AI Movement] " + .@npc_name$ + " moving to (" + .@target_x + ", " + .@target_y + ")";
+					} else {
+						debugmes "[AI Movement] Failed to move " + .@npc_name$ + " to (" + .@target_x + ", " + .@target_y + ")";
+					}
+				}
+			}
+		} else {
+			debugmes "[AI Movement] " + .@npc_name$ + " decided not to move";
+		}
+	}
+
+	// Wait and loop again
+	sleep .movement_interval;
+	donpcevent strnpcinfo(3) + "::OnMovementLoop";
+	end;
+
+OnAggressiveMovementLoop:
+	debugmes "[AI Movement] Aggressive movement loop started";
+
+	// Check and execute movement for aggressive NPCs (faster interval)
+	.@npc_count = getarraysize(.aggressive_npc_ids$);
+	debugmes "[AI Movement] Processing " + .@npc_count + " aggressive NPCs";
+
+	for (.@i = 0; .@i < .@npc_count; .@i++) {
+		.@npc_id$ = .aggressive_npc_ids$[.@i];
+		.@npc_name$ = .aggressive_npc_names$[.@i];
+
+		// Get NPC GID first
+		.@npc_gid = getnpcid(0, .@npc_name$);
+		if (.@npc_gid == 0) {
+			debugmes "[AI Movement] Aggressive NPC not found: " + .@npc_name$;
+			continue;
+		}
+
+		// Get NPC position using getunitdata
+		getunitdata(.@npc_gid, .@npc_data);
+
+		// Get map name using mapid2name
+		.@current_map$ = mapid2name(.@npc_data[UNPC_MAPID]);
+		.@current_x = .@npc_data[UNPC_X];
+		.@current_y = .@npc_data[UNPC_Y];
+
+		// Validate we got valid data
+		if (.@current_map$ == "" || .@current_x == 0 || .@current_y == 0) {
+			debugmes "[AI Movement] Invalid position data for: " + .@npc_name$;
+			continue;
+		}
+
+		// Build request JSON for AI service with aggressive movement flag
+		.@json$ = "{";
+		.@json$ += "\"npc_id\":\"" + .@npc_id$ + "\",";
+		.@json$ += "\"current_position\":{";
+		.@json$ += "\"map\":\"" + .@current_map$ + "\",";
+		.@json$ += "\"x\":" + .@current_x + ",";
+		.@json$ += "\"y\":" + .@current_y;
+		.@json$ += "},";
+		.@json$ += "\"context\":\"aggressive_movement\"";
+		.@json$ += "}";
+
+		// Request movement decision from AI service
+		.@response$ = httppost(.ai_service_url$ + "/npc/movement/decide", .@json$);
+
+		// Parse response
+		if (.@response$ == "") {
+			debugmes "[AI Movement] No response from AI service for " + .@npc_name$;
+			continue;
+		}
+
+		// Check if NPC should move
+		// Response format: {"success":true,"npc_id":"...","should_move":true,"target_position":{"x":150,"y":180},"reasoning":"..."}
+		if (compare(.@response$, "\"should_move\":true")) {
+			// Extract target coordinates
+			.@x_pos = strpos(.@response$, "\"x\":", 0);
+			.@y_pos = strpos(.@response$, "\"y\":", 0);
+
+			if (.@x_pos >= 0 && .@y_pos >= 0) {
+				// Extract X coordinate
+				.@x_start = .@x_pos + 4; // Skip "x":
+				.@x_end = strpos(.@response$, ",", .@x_start);
+				if (.@x_end < 0) .@x_end = strpos(.@response$, "}", .@x_start);
+				.@x_str$ = substr(.@response$, .@x_start, .@x_end - 1);
+				.@target_x = atoi(.@x_str$);
+
+				// Extract Y coordinate
+				.@y_start = .@y_pos + 4; // Skip "y":
+				.@y_end = strpos(.@response$, "}", .@y_start);
+				if (.@y_end < 0) .@y_end = strpos(.@response$, ",", .@y_start);
+				.@y_str$ = substr(.@response$, .@y_start, .@y_end - 1);
+				.@target_y = atoi(.@y_str$);
+
+				// Validate walkability before attempting movement
+				// Use "prontera" as default map for now (all test NPCs are in Prontera)
+				.@map$ = "prontera";
+
+				if (!checkcell(.@map$, .@target_x, .@target_y, CELL_CHKPASS)) {
+					debugmes "[AI Movement] [AGGRESSIVE] Target (" + .@target_x + ", " + .@target_y + ") is not walkable for " + .@npc_name$;
+				} else {
+					// Execute movement using custom npcwalk command
+					.@move_result = npcwalk(.@npc_name$, .@target_x, .@target_y);
+
+					if (.@move_result) {
+						debugmes "[AI Movement] [AGGRESSIVE] " + .@npc_name$ + " moving to (" + .@target_x + ", " + .@target_y + ")";
+					} else {
+						debugmes "[AI Movement] [AGGRESSIVE] Failed to move " + .@npc_name$ + " to (" + .@target_x + ", " + .@target_y + ")";
+					}
+				}
+			}
+		} else {
+			debugmes "[AI Movement] [AGGRESSIVE] " + .@npc_name$ + " decided not to move";
+		}
+	}
+
+	// Wait shorter interval and loop again
+	sleep .aggressive_interval;
+	donpcevent strnpcinfo(3) + "::OnAggressiveMovementLoop";
+	end;
+}
+

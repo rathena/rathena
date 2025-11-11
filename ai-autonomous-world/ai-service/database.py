@@ -1,7 +1,7 @@
 """
 Database connection management for AI Service
 - DragonflyDB/Redis: High-speed caching and real-time state
-- PostgreSQL: Persistent memory storage for Memori SDK
+- PostgreSQL: Persistent memory storage for OpenMemory SDK
 """
 
 import asyncio
@@ -14,7 +14,7 @@ from loguru import logger
 try:
     from .config import settings
 except ImportError:
-    from config import settings
+    from ai_service.config import settings
 
 
 class PostgreSQLManager:
@@ -116,17 +116,128 @@ class PostgreSQLManager:
             logger.error(f"PostgreSQL health check failed: {e}")
             return False
 
+    async def fetch_one(self, query: str, *args):
+        """
+        Execute a query and fetch one result
+
+        Args:
+            query: SQL query with $1, $2, etc. placeholders
+            *args: Query parameters
+
+        Returns:
+            Row object or None
+        """
+        if not self.engine:
+            raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
+
+        try:
+            from sqlalchemy import text
+
+            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
+            converted_query = query
+            params = {}
+            for i, arg in enumerate(args, 1):
+                placeholder = f"${i}"
+                param_name = f"param{i}"
+                converted_query = converted_query.replace(placeholder, f":{param_name}")
+                params[param_name] = arg
+
+            with self.engine.connect() as conn:
+                result = conn.execute(text(converted_query), params)
+                row = result.fetchone()
+                if row:
+                    # Convert Row to dict
+                    return dict(row._mapping)
+                return None
+        except Exception as e:
+            logger.error(f"Error executing fetch_one query: {e}")
+            raise
+
+    async def fetch_all(self, query: str, *args):
+        """
+        Execute a query and fetch all results
+
+        Args:
+            query: SQL query with $1, $2, etc. placeholders
+            *args: Query parameters
+
+        Returns:
+            List of row objects
+        """
+        if not self.engine:
+            raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
+
+        try:
+            from sqlalchemy import text
+
+            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
+            converted_query = query
+            params = {}
+            for i, arg in enumerate(args, 1):
+                placeholder = f"${i}"
+                param_name = f"param{i}"
+                converted_query = converted_query.replace(placeholder, f":{param_name}")
+                params[param_name] = arg
+
+            with self.engine.connect() as conn:
+                result = conn.execute(text(converted_query), params)
+                rows = result.fetchall()
+                # Convert Rows to dicts
+                return [dict(row._mapping) for row in rows]
+        except Exception as e:
+            logger.error(f"Error executing fetch_all query: {e}")
+            raise
+
+    async def execute(self, query: str, *args):
+        """
+        Execute a query without returning results (INSERT, UPDATE, DELETE)
+
+        Args:
+            query: SQL query with $1, $2, etc. placeholders
+            *args: Query parameters
+
+        Returns:
+            Number of affected rows
+        """
+        if not self.engine:
+            raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
+
+        try:
+            from sqlalchemy import text
+
+            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
+            converted_query = query
+            params = {}
+            for i, arg in enumerate(args, 1):
+                placeholder = f"${i}"
+                param_name = f"param{i}"
+                converted_query = converted_query.replace(placeholder, f":{param_name}")
+                params[param_name] = arg
+
+            with self.engine.connect() as conn:
+                result = conn.execute(text(converted_query), params)
+                conn.commit()
+                return result.rowcount
+        except Exception as e:
+            logger.error(f"Error executing query: {e}")
+            raise
+
     def get_connection_string(self) -> str:
-        """Get the PostgreSQL connection string (for Memori SDK)"""
+        """Get the PostgreSQL connection string (for OpenMemory SDK)"""
         return settings.postgres_connection_string
 
 
 class Database:
     """DragonflyDB / Redis database connection manager"""
-    
+
     def __init__(self):
         self.pool: Optional[ConnectionPool] = None
         self.client: Optional[aioredis.Redis] = None
+
+    @property
+    def redis(self):
+        """Alias for client to maintain compatibility with code that uses db.redis"""
+        return self.client
         
     async def connect(self, max_retries: int = None, retry_delay: float = None):
         """
@@ -215,7 +326,78 @@ class Database:
         except Exception as e:
             logger.error(f"Database health check failed: {e}")
             return False
-    
+
+    # Generic Cache Operations
+    async def get(self, key: str):
+        """Get value from cache"""
+        try:
+            value = await self.client.get(key)
+            if value:
+                # Try to decode as JSON
+                if isinstance(value, bytes):
+                    value = value.decode('utf-8')
+                try:
+                    return json.loads(value)
+                except (json.JSONDecodeError, TypeError):
+                    return value
+            return None
+        except Exception as e:
+            logger.error(f"Error getting key {key}: {e}")
+            return None
+
+    async def set(self, key: str, value, expire: int = None):
+        """Set value in cache with optional expiration"""
+        try:
+            # Serialize value as JSON if it's a dict or list
+            if isinstance(value, (dict, list)):
+                from datetime import datetime
+                # Handle datetime objects in serialization
+                def json_serial(obj):
+                    if isinstance(obj, datetime):
+                        return obj.isoformat()
+                    raise TypeError(f"Type {type(obj)} not serializable")
+
+                value = json.dumps(value, default=json_serial)
+
+            if expire:
+                await self.client.setex(key, expire, value)
+            else:
+                await self.client.set(key, value)
+
+            logger.debug(f"Set key {key} with expire={expire}")
+        except Exception as e:
+            logger.error(f"Error setting key {key}: {e}")
+            raise
+
+    async def delete(self, key: str):
+        """Delete key from cache"""
+        try:
+            await self.client.delete(key)
+            logger.debug(f"Deleted key {key}")
+        except Exception as e:
+            logger.error(f"Error deleting key {key}: {e}")
+            raise
+
+    async def setex(self, key: str, expire: int, value):
+        """Set value with expiration time (Redis-compatible method)"""
+        try:
+            # Serialize value as JSON if it's a dict or list
+            if isinstance(value, (dict, list)):
+                from datetime import datetime
+                # Handle datetime objects in serialization
+                def json_serial(obj):
+                    if isinstance(obj, datetime):
+                        return obj.isoformat()
+                    raise TypeError(f"Type {type(obj)} not serializable")
+
+                value = json.dumps(value, default=json_serial)
+
+            await self.client.setex(key, expire, value)
+            logger.debug(f"Set key {key} with expire={expire}s")
+        except Exception as e:
+            logger.error(f"Error setting key {key} with expiration: {e}")
+            raise
+
     # NPC State Operations
     async def set_npc_state(self, npc_id: str, state_data: dict):
         """Set NPC state in database"""
@@ -230,9 +412,47 @@ class Database:
     async def get_npc_state(self, npc_id: str) -> Optional[dict]:
         """Get NPC state from database"""
         try:
+            # Ensure client is connected
+            if not self.client:
+                logger.warning(f"Database client not connected, attempting to connect...")
+                await self.connect()
+
             key = f"npc:{npc_id}"
             state = await self.client.hgetall(key)
-            return state if state else None
+
+            if not state:
+                return None
+
+            # Decode bytes to strings and parse JSON fields
+            decoded_state = {}
+            json_fields = ['location', 'spawn_position', 'information_items']  # Fields that contain JSON
+
+            for k, v in state.items():
+                key_str = k.decode('utf-8') if isinstance(k, bytes) else k
+                val_str = v.decode('utf-8') if isinstance(v, bytes) else v
+
+                # Try to parse JSON fields
+                if key_str in json_fields:
+                    try:
+                        decoded_state[key_str] = json.loads(val_str)
+                    except (json.JSONDecodeError, TypeError):
+                        decoded_state[key_str] = val_str
+                else:
+                    # Try to convert numeric fields
+                    if key_str in ['level', 'movement_radius', 'x', 'y']:
+                        try:
+                            decoded_state[key_str] = int(val_str)
+                        except (ValueError, TypeError):
+                            decoded_state[key_str] = val_str
+                    elif key_str in ['openness', 'conscientiousness', 'extraversion', 'agreeableness', 'neuroticism']:
+                        try:
+                            decoded_state[key_str] = float(val_str)
+                        except (ValueError, TypeError):
+                            decoded_state[key_str] = val_str
+                    else:
+                        decoded_state[key_str] = val_str
+
+            return decoded_state
         except Exception as e:
             logger.error(f"Error getting NPC state for {npc_id}: {e}")
             return None
@@ -369,8 +589,147 @@ class Database:
             logger.error(f"Error deleting quest {quest_id}: {e}")
             raise
 
+    async def create_quest(self, quest_data: dict):
+        """Create a new quest (alias for store_quest for test compatibility)"""
+        quest_id = quest_data.get("quest_id")
+        if not quest_id:
+            raise ValueError("quest_data must contain 'quest_id'")
+        await self.store_quest(quest_id, quest_data)
+
+    # Player Memory Operations
+    async def get_player_memory(self, player_id: str, npc_id: str) -> list:
+        """Get player-NPC interaction memory"""
+        try:
+            key = f"memory:player:{player_id}:npc:{npc_id}"
+            memories = await self.client.lrange(key, 0, -1)
+
+            # Decode and parse JSON memories
+            result = []
+            for memory in memories:
+                if isinstance(memory, bytes):
+                    memory = memory.decode('utf-8')
+                result.append(json.loads(memory))
+
+            logger.debug(f"Retrieved {len(result)} memories for player {player_id} and NPC {npc_id}")
+            return result
+        except Exception as e:
+            logger.error(f"Error getting player memory for {player_id} and {npc_id}: {e}")
+            return []
+
+    async def add_player_memory(self, player_id: str, npc_id: str, memory: dict):
+        """Add a player-NPC interaction memory"""
+        try:
+            key = f"memory:player:{player_id}:npc:{npc_id}"
+            memory_json = json.dumps(memory)
+            await self.client.rpush(key, memory_json)
+
+            # Set expiration (30 days)
+            await self.client.expire(key, 30 * 24 * 60 * 60)
+
+            logger.debug(f"Added memory for player {player_id} and NPC {npc_id}")
+        except Exception as e:
+            logger.error(f"Error adding player memory for {player_id} and {npc_id}: {e}")
+            raise
+
+    # Rate Limiting Operations
+    async def check_rate_limit(self, player_id: str, action_type: str, window_seconds: int) -> bool:
+        """Check if player is rate limited for an action"""
+        try:
+            key = f"ratelimit:{player_id}:{action_type}"
+            exists = await self.client.exists(key)
+
+            if exists:
+                ttl = await self.client.ttl(key)
+                logger.debug(f"Player {player_id} is rate limited for {action_type} (TTL: {ttl}s)")
+                return True
+
+            return False
+        except Exception as e:
+            logger.error(f"Error checking rate limit for {player_id} and {action_type}: {e}")
+            return False
+
+    async def set_rate_limit(self, player_id: str, action_type: str, window_seconds: int):
+        """Set rate limit for a player action"""
+        try:
+            key = f"ratelimit:{player_id}:{action_type}"
+            await self.client.setex(key, window_seconds, "1")
+            logger.debug(f"Set rate limit for player {player_id} and {action_type} ({window_seconds}s)")
+        except Exception as e:
+            logger.error(f"Error setting rate limit for {player_id} and {action_type}: {e}")
+            raise
+
+    # Conversation History Management
+    async def get_conversation_history(self, conversation_key: str, max_messages: int = 20):
+        """
+        Get conversation history for a player-NPC interaction
+
+        Args:
+            conversation_key: Key in format "conversation:{npc_id}:{player_id}"
+            max_messages: Maximum number of messages to retrieve (default: 20)
+
+        Returns:
+            List of conversation messages, or empty list if no history
+        """
+        try:
+            history_json = await self.client.get(conversation_key)
+            if history_json:
+                if isinstance(history_json, bytes):
+                    history_json = history_json.decode('utf-8')
+                history = json.loads(history_json)
+                # Return last N messages
+                return history[-max_messages:] if len(history) > max_messages else history
+            return []
+        except Exception as e:
+            logger.error(f"Error getting conversation history for {conversation_key}: {e}")
+            return []
+
+    async def save_conversation_history(self, conversation_key: str, history: list, ttl: int = 600):
+        """
+        Save conversation history for a player-NPC interaction
+
+        Args:
+            conversation_key: Key in format "conversation:{npc_id}:{player_id}"
+            history: List of conversation messages
+            ttl: Time to live in seconds (default: 600 = 10 minutes)
+        """
+        try:
+            # Keep only last 50 messages to prevent unbounded growth
+            if len(history) > 50:
+                history = history[-50:]
+
+            history_json = json.dumps(history)
+            await self.client.setex(conversation_key, ttl, history_json)
+            logger.debug(f"Saved conversation history for {conversation_key} ({len(history)} messages, TTL: {ttl}s)")
+        except Exception as e:
+            logger.error(f"Error saving conversation history for {conversation_key}: {e}")
+            raise
+
+    async def clear_conversation_history(self, conversation_key: str):
+        """
+        Clear conversation history for a player-NPC interaction
+
+        Args:
+            conversation_key: Key in format "conversation:{npc_id}:{player_id}"
+        """
+        try:
+            await self.client.delete(conversation_key)
+            logger.debug(f"Cleared conversation history for {conversation_key}")
+        except Exception as e:
+            logger.error(f"Error clearing conversation history for {conversation_key}: {e}")
+            raise
 
 # Global database instances
 db = Database()  # DragonflyDB/Redis for caching and real-time state
 postgres_db = PostgreSQLManager()  # PostgreSQL for persistent memory storage
+
+
+# Utility functions for accessing database instances
+def get_dragonfly_client():
+    """Get the global DragonflyDB instance"""
+    return db
+
+
+def get_postgres_pool():
+    """Get the global PostgreSQL manager instance"""
+    return postgres_db
 

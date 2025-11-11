@@ -88,6 +88,10 @@ class NPCMovementCapabilities(BaseModel):
     max_wander_distance: int = Field(10, ge=1, le=50, description="Maximum wander distance from spawn")
     patrol_route: Optional[List[NPCPosition]] = Field(None, description="Predefined patrol route")
     home_position: Optional[NPCPosition] = Field(None, description="Home/spawn position for return behavior")
+    # Movement boundary configuration
+    movement_mode: str = Field("radius_restricted", description="Movement mode: global, map_restricted, radius_restricted, disabled")
+    movement_radius: int = Field(10, ge=0, le=100, description="Movement radius in tiles from spawn point (for radius_restricted mode, 0 for disabled)")
+    spawn_point: Optional[NPCPosition] = Field(None, description="Spawn point for radius calculation")
 
 
 class MovementActionData(BaseModel):

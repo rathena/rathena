@@ -76,7 +76,7 @@ obj:
 
 web-server: obj $(WEB_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) $(HTTPLIB_AR)
 	@echo "	LD	@OWEB@@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OWEB@@EXEEXT@ $(WEB_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) $(HTTPLIB_AR) @LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OWEB@@EXEEXT@ $(WEB_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) $(HTTPLIB_AR) @LIBS@ @MYSQL_LIBS@ -L/usr/lib/x86_64-linux-gnu -lhiredis
 
 # web object files
 

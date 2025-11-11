@@ -5,15 +5,65 @@ WebSocket endpoints for WebRTC signaling.
 """
 
 from typing import Optional
-from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Query
+from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Query, Depends
 from loguru import logger
 import json
+import jwt
 
 from services.signaling import SignalingService
+from config import settings
+from database import db_manager
 
 
-router = APIRouter(prefix="/api/signaling", tags=["signaling"])
-signaling_service = SignalingService()
+router = APIRouter(prefix="/api/v1/signaling", tags=["signaling"])
+
+# Global signaling service instance (will be initialized on startup)
+signaling_service: Optional[SignalingService] = None
+
+
+async def initialize_signaling_service():
+    """Initialize signaling service with Redis client"""
+    global signaling_service
+    redis = await db_manager.get_redis()
+    signaling_service = SignalingService(redis)
+    logger.info("Signaling service initialized with Redis backend")
+
+
+def validate_jwt_token(token: Optional[str]) -> Optional[dict]:
+    """
+    Validate JWT token (optional validation)
+
+    Args:
+        token: JWT token to validate
+
+    Returns:
+        Decoded token payload if valid, None if invalid or validation disabled
+    """
+    # If JWT validation is disabled, skip validation
+    if not settings.security.jwt_validation_enabled:
+        logger.debug("JWT validation is disabled, skipping token validation")
+        return None
+
+    # If no token provided, return None (graceful degradation)
+    if not token:
+        logger.debug("No JWT token provided")
+        return None
+
+    try:
+        # Decode and validate token
+        payload = jwt.decode(
+            token,
+            settings.security.jwt_secret_key,
+            algorithms=[settings.security.jwt_algorithm]
+        )
+        logger.debug(f"JWT token validated for player_id: {payload.get('player_id')}")
+        return payload
+    except jwt.ExpiredSignatureError:
+        logger.warning("JWT token has expired")
+        return None
+    except jwt.InvalidTokenError as e:
+        logger.warning(f"Invalid JWT token: {e}")
+        return None
 
 
 @router.websocket("/ws")
@@ -21,23 +71,42 @@ async def websocket_endpoint(
     websocket: WebSocket,
     peer_id: str = Query(..., description="Unique peer identifier"),
     session_id: Optional[str] = Query(None, description="Session identifier to join"),
+    token: Optional[str] = Query(None, description="JWT token for authentication (optional)"),
 ):
     """
     WebSocket endpoint for WebRTC signaling
-    
+
     Query parameters:
     - peer_id: Unique identifier for this peer (required)
     - session_id: Session to join (optional, can join later via message)
-    
+    - token: JWT token for authentication (optional, only validated if JWT_VALIDATION_ENABLED=true)
+
     Message types:
     - join: Join a session
     - leave: Leave current session
     - offer: Send WebRTC offer to another peer
     - answer: Send WebRTC answer to another peer
     - ice-candidate: Send ICE candidate to another peer
+
+    **NOTE**: JWT authentication is OPTIONAL. If JWT_VALIDATION_ENABLED is false (default),
+    tokens are not validated and connections are accepted without authentication.
     """
     await websocket.accept()
     logger.info(f"WebSocket connection accepted for peer: {peer_id}")
+
+    # Validate JWT token if provided and validation is enabled
+    token_payload = validate_jwt_token(token)
+    if settings.security.jwt_validation_enabled and token and not token_payload:
+        logger.warning(f"Invalid or expired JWT token for peer: {peer_id}")
+        await websocket.send_json({
+            "type": "error",
+            "message": "Invalid or expired authentication token"
+        })
+        await websocket.close(code=1008, reason="Invalid authentication token")
+        return
+
+    if token_payload:
+        logger.info(f"Peer {peer_id} authenticated as player_id: {token_payload.get('player_id')}")
     
     try:
         # Register peer

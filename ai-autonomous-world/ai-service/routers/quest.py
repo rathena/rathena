@@ -5,16 +5,17 @@ Quest API endpoints for dynamic quest generation and management
 from fastapi import APIRouter, HTTPException, status
 from loguru import logger
 from datetime import datetime
+from typing import Dict, Any, Optional
 
-from ..models.quest import (
+from ai_service.models.quest import (
     Quest, QuestGenerationRequest, QuestGenerationResponse,
     QuestProgressUpdate, QuestStatus
 )
-from ..models.npc import NPCPersonality
-from ..database import db
-from ..llm import get_llm_provider
-from ..agents.base_agent import AgentContext
-from ..agents.quest_agent import QuestAgent
+from ai_service.models.npc import NPCPersonality
+from ai_service.database import db
+from ai_service.llm import get_llm_provider
+from ai_service.agents.base_agent import AgentContext
+from ai_service.agents.quest_agent import QuestAgent
 
 router = APIRouter(prefix="/ai/quest", tags=["quest"])
 
@@ -204,5 +205,163 @@ async def update_quest_progress(update: QuestProgressUpdate):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=str(e)
+        )
+
+
+@router.post("/{quest_id}/complete")
+async def complete_quest(quest_id: str, completion_data: Optional[Dict[str, Any]] = None):
+    """
+    Mark a quest as complete
+
+    Completes the quest, triggers rewards, and updates quest state.
+    Optionally accepts completion_data with reward information.
+    """
+    try:
+        logger.info(f"Completing quest: {quest_id}")
+
+        # Get quest
+        quest_data = await db.get_quest(quest_id)
+
+        if not quest_data:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"Quest {quest_id} not found"
+            )
+
+        quest = Quest(**quest_data)
+
+        # Check if quest is already completed
+        if quest.status == "completed":
+            logger.warning(f"Quest {quest_id} is already completed")
+            return {
+                "quest_id": quest_id,
+                "status": "already_completed",
+                "message": "Quest was already completed",
+                "completed_at": quest_data.get("completed_at"),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+
+        # Check if all objectives are completed
+        all_objectives_complete = all(obj.completed for obj in quest.objectives)
+
+        if not all_objectives_complete:
+            incomplete_objectives = [
+                obj.objective_id for obj in quest.objectives if not obj.completed
+            ]
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Cannot complete quest: objectives not finished: {incomplete_objectives}"
+            )
+
+        # Update quest status
+        quest.status = "completed"
+        completed_at = datetime.utcnow().isoformat()
+
+        # Prepare completion data
+        completion_info = {
+            "status": "completed",
+            "completed_at": completed_at,
+            "completion_data": completion_data or {}
+        }
+
+        # Update quest in database
+        await db.update_quest(quest_id, completion_info)
+
+        # Calculate and prepare rewards
+        rewards = {
+            "experience": quest_data.get("rewards", {}).get("experience", 0),
+            "gold": quest_data.get("rewards", {}).get("gold", 0),
+            "items": quest_data.get("rewards", {}).get("items", []),
+            "reputation": quest_data.get("rewards", {}).get("reputation", {})
+        }
+
+        logger.info(f"Quest {quest_id} completed successfully")
+        return {
+            "quest_id": quest_id,
+            "status": "completed",
+            "message": "Quest completed successfully",
+            "completed_at": completed_at,
+            "rewards": rewards,
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error completing quest {quest_id}: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to complete quest: {str(e)}"
+        )
+
+
+@router.post("/available")
+async def get_available_quests(request: Dict[str, Any]):
+    """
+    Get available quests for a player from an NPC
+
+    Request body should contain:
+    - npc_id: NPC identifier
+    - player_id: Player identifier
+    - player_level: Player level (optional)
+    """
+    try:
+        npc_id = request.get("npc_id")
+        player_id = request.get("player_id")
+
+        if not npc_id or not player_id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="npc_id and player_id are required"
+            )
+
+        logger.info(f"Getting available quests for player {player_id} from NPC {npc_id}")
+
+        # Get all quests for this NPC
+        quest_key_pattern = f"quest:{npc_id}:*"
+        quest_keys = []
+
+        # Scan for quest keys
+        cursor = 0
+        while True:
+            cursor, keys = await db.redis.scan(cursor, match=quest_key_pattern, count=100)
+            quest_keys.extend(keys)
+            if cursor == 0:
+                break
+
+        available_quests = []
+
+        for quest_key in quest_keys:
+            quest_data = await db.redis.get(quest_key)
+            if quest_data:
+                try:
+                    import json
+                    quest = json.loads(quest_data) if isinstance(quest_data, (str, bytes)) else quest_data
+
+                    # Check if quest is available (not completed, not in progress)
+                    quest_status = quest.get("status", "available")
+                    if quest_status == "available":
+                        available_quests.append(quest)
+                except Exception as e:
+                    logger.warning(f"Failed to parse quest data for {quest_key}: {e}")
+                    continue
+
+        logger.info(f"Found {len(available_quests)} available quests for player {player_id}")
+
+        return {
+            "npc_id": npc_id,
+            "player_id": player_id,
+            "quests": available_quests,
+            "count": len(available_quests),
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error getting available quests: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get available quests: {str(e)}"
         )
 

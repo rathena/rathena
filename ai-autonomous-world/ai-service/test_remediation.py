@@ -39,7 +39,7 @@ def test(name: str):
 
 @test("Critical #1: CORS security - no wildcard origins")
 def test_cors_security():
-    from config import settings
+    from ai_service.config import settings
     assert "*" not in settings.cors_origins, "CORS wildcard still present"
     assert len(settings.cors_origins) > 0, "CORS origins not configured"
 
@@ -122,7 +122,7 @@ def test_specific_exceptions_main():
 
 @test("High #10: Azure endpoint validation")
 def test_azure_endpoint_validation():
-    from config import Settings
+    from ai_service.config import Settings
     import inspect
     source = inspect.getsource(Settings)
     assert "field_validator" in source, "Field validators not implemented"
@@ -131,7 +131,7 @@ def test_azure_endpoint_validation():
 
 @test("High #11: GPU config numeric validation")
 def test_gpu_config_validation():
-    from config import settings
+    from ai_service.config import settings
     # Test that GPU config values are within valid ranges
     if hasattr(settings, 'gpu_batch_size'):
         assert settings.gpu_batch_size > 0, "Invalid GPU batch size"
@@ -188,7 +188,7 @@ def test_movement_validation():
 
 @test("High #18: Configuration values for hardcoded items")
 def test_configuration_values():
-    from config import settings
+    from ai_service.config import settings
     assert hasattr(settings, 'max_movement_distance'), "max_movement_distance not in config"
     assert hasattr(settings, 'dialogue_temperature'), "dialogue_temperature not in config"
     assert hasattr(settings, 'llm_timeout'), "llm_timeout not in config"

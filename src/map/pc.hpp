@@ -459,6 +459,7 @@ public:
 		bool roulette_open;
 		t_itemid item_reform;
 		uint64 item_enchant_index;
+		uint32 ai_dialogue_mode : 1; // AI dialogue text input mode
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -506,6 +507,7 @@ public:
 	int32 npc_amount;
 	struct script_state *st;
 	char npc_str[CHATBOX_SIZE]; // for passing npc input box text to script engine
+	char ai_npc_name[50]; // AI NPC identifier for dialogue requests
 	int32 npc_timer_id; //For player attached npc timers. [Skotlex]
 	uint32 chatID;
 	time_t idletime;

@@ -104,15 +104,15 @@ def get_llm_provider(
 ) -> BaseLLMProvider:
     """
     Get LLM provider instance
-    
+
     Args:
         provider_name: Name of provider. If None, uses default from settings.
         config: Provider configuration. If None, uses settings.
-        
+
     Returns:
         LLM provider instance
     """
-    from ..config import settings
+    from ai_service.config import settings
     
     # Use default provider if not specified
     if provider_name is None:

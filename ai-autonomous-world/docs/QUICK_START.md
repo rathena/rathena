@@ -8,56 +8,73 @@ This guide will help you get the AI-driven autonomous world system up and runnin
 - Sudo access
 - Internet connection
 - At least 8GB RAM available
-- At least one LLM provider API key (Azure OpenAI, OpenAI, DeepSeek, Anthropic, or Google)
+- Python 3.12.3 (installed)
+- PostgreSQL 17.6 (will be installed via script)
+- DragonflyDB 7.4.0 (will be installed via script)
+- At least one LLM provider API key (Azure OpenAI recommended, or OpenAI, DeepSeek, Anthropic, Google)
 
 ## Installation Methods
 
 ### Method 1: Automated Installation (Recommended)
 
-Use the automated installation script for a complete, one-command setup:
+Use the automated installation scripts for a complete setup:
 
 ```bash
-# Navigate to the AI autonomous world system
-cd <workspace>/rathena-AI-world/ai-autonomous-world
+# Navigate to the rAthena AI world root
+cd /ai-mmorpg-world/rathena-AI-world
 
-# Run the installation script
-./install.sh
+# Step 1: Install native dependencies (PostgreSQL, DragonflyDB, Python packages)
+./install-native.sh
 
-# Or preview what will be installed without making changes
-./install.sh --dry-run
+# Step 2: Set up database (requires sudo password)
+./setup-database.sh
 
-# Or skip components that are already installed
-./install.sh --skip-postgres --skip-dragonfly
+# Step 3: Start all services
+./start-services.sh
 ```
 
-The installation script will:
-- ✅ Install PostgreSQL 17 with required extensions (TimescaleDB, Apache AGE, pgvector)
-- ✅ Install DragonflyDB natively
+The installation scripts will:
+- ✅ Install PostgreSQL 17.6 with required extensions (pgvector, TimescaleDB, Apache AGE)
+- ✅ Install DragonflyDB 7.4.0 natively
 - ✅ Create PostgreSQL database and user
+- ✅ Initialize 18 database tables (7 AI-specific + 11 rAthena integration)
 - ✅ Set up Python virtual environment
 - ✅ Install all Python dependencies
-- ✅ Create `.env` configuration file
+- ✅ Create `.env` configuration file (if not exists)
+- ✅ Build custom rAthena servers with HTTP script commands
 - ✅ Verify the installation
 
-**After installation completes**, edit the `.env` file to add your LLM API keys:
+**After installation completes**, verify your LLM API keys in the `.env` file:
 
 ```bash
-cd ai-service
+cd ai-autonomous-world/ai-service
 nano .env  # or use your preferred editor
 
-# Add at least one of these:
-# AZURE_OPENAI_API_KEY=your_key_here
+# Configure your Azure OpenAI credentials (primary provider):
+# AZURE_OPENAI_API_KEY=your-azure-openai-api-key-here
+# AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
+# AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4
+# AZURE_OPENAI_API_VERSION=2024-08-01-preview
+
+# Optional: Add additional providers for fallback:
 # OPENAI_API_KEY=your_key_here
-# DEEPSEEK_API_KEY=your_key_here
 # ANTHROPIC_API_KEY=your_key_here
 # GOOGLE_API_KEY=your_key_here
+# DEEPSEEK_API_KEY=your_key_here
 ```
 
-Then start the service:
+Then verify all services are running:
 
 ```bash
-source ../venv/bin/activate
-python main.py
+# Check system status
+cd /ai-mmorpg-world/rathena-AI-world
+./check_system_status.sh
+
+# Expected output:
+# AI Service:        ✓ HEALTHY (port 8000)
+# rAthena Servers:   ✓ 3/3 RUNNING (login, char, map)
+# PostgreSQL:        ✓ CONNECTED (18 tables)
+# DragonflyDB:       ✓ CONNECTED (Redis cache)
 ```
 
 ---
@@ -114,6 +131,14 @@ sudo -u postgres psql -d ai_world_memory -c "CREATE EXTENSION IF NOT EXISTS age 
 
 # Verify installation
 sudo -u postgres psql -d ai_world_memory -c "\dx"
+
+# Run database migrations
+cd ai-service
+PGPASSWORD=ai_world_pass_2025 psql -h localhost -U ai_world_user -d ai_world_memory -f migrations/001_create_factions_table.sql
+
+# Verify tables were created
+PGPASSWORD=ai_world_pass_2025 psql -h localhost -U ai_world_user -d ai_world_memory -c "\dt"
+# Should show: factions, player_reputation, faction_events, faction_conflicts
 ```
 
 ## Step 4: Set Up DragonflyDB
@@ -177,11 +202,11 @@ POSTGRES_MAX_OVERFLOW=20
 # LLM Provider Configuration
 DEFAULT_LLM_PROVIDER=azure_openai
 
-# Azure OpenAI Configuration
-AZURE_OPENAI_API_KEY=your-api-key-here
+# Azure OpenAI Configuration (Primary Provider - Production Ready)
+AZURE_OPENAI_API_KEY=<configured>
 AZURE_OPENAI_ENDPOINT=https://your-resource.openai.azure.com
-AZURE_OPENAI_DEPLOYMENT=gpt-4
-AZURE_OPENAI_API_VERSION=2024-02-15-preview
+AZURE_OPENAI_DEPLOYMENT_NAME=gpt-4
+AZURE_OPENAI_API_VERSION=2024-08-01-preview
 
 # Logging
 LOG_LEVEL=INFO
@@ -245,29 +270,37 @@ No need to create files - they already exist!
 
 ## Step 7: Test AI Service
 
+### Run Unit Tests (100% Pass Rate)
+
 ```bash
-# Make sure you're in the ai-service directory
-cd ai-service
+# Navigate to ai-service directory
+cd ai-autonomous-world/ai-service
 
 # Activate virtual environment
 source ../venv/bin/activate
 
-# Start the AI service
-python main.py
+# Run all unit tests
+python3 -m pytest tests/test_config.py tests/test_integration.py -v
+
+# Expected output:
+# 32 passed, 348 warnings in 5.83s
 ```
 
-You should see output like:
-```
-2025-11-06 10:00:00 | INFO     | ai_service.config:get_settings:267 - Settings loaded: ai-service on 0.0.0.0:8000
-2025-11-06 10:00:00 | INFO     | ai_service.main:lifespan:69 - Database connection established
-2025-11-06 10:00:00 | INFO     | ai_service.main:lifespan:99 - LLM provider initialized: azure_openai
-INFO:     Started server process [12345]
-INFO:     Waiting for application startup.
-INFO:     Application startup complete.
-INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+### Run E2E Tests (100% Pass Rate)
+
+```bash
+# Navigate to rathena-AI-world directory
+cd /ai-mmorpg-world/rathena-AI-world
+
+# Run comprehensive E2E tests
+python3 tests/comprehensive_e2e_test.py
+
+# Expected output:
+# Total: 5 | Passed: 5 | Failed: 0 | Success Rate: 100.0%
 ```
 
-In another terminal, test the service:
+### Test AI Service Endpoints
+
 ```bash
 # Test root endpoint
 curl http://localhost:8000/
@@ -291,6 +324,47 @@ Expected output from root endpoint:
   "docs": "/docs"
 }
 ```
+
+### Comprehensive Endpoint Testing
+
+Run the comprehensive test suite to verify all endpoints (100% pass rate expected):
+
+```bash
+# From the rathena-AI-world directory (not ai-service)
+cd /path/to/rathena-AI-world
+
+# Run the endpoint test suite
+python3 test_endpoints_simple.py
+```
+
+Expected output:
+```
+================================================================================
+ENDPOINT TESTS
+================================================================================
+
+✅ Health Check: 200
+✅ Detailed Health: 200
+✅ World State: 200
+✅ NPC Registration: 200
+✅ Quest Generate: 200
+✅ Chat Command: 200
+✅ List Factions: 200
+✅ Create Faction: 200
+✅ Economy State: 200
+✅ Market Trends: 200
+
+================================================================================
+RESULTS: 10/10 tests passed (100% pass rate)
+================================================================================
+```
+
+If any tests fail, check:
+1. AI service is running on port 8000
+2. PostgreSQL is running and migrations are applied
+3. DragonflyDB is running on port 6379
+4. LLM provider API key is configured in .env
+5. All required environment variables are set
 
 ## Step 8: Example NPC Integration (Future)
 

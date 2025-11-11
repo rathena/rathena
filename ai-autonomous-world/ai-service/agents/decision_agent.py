@@ -13,7 +13,7 @@ try:
     from ai_service.config import settings
 except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-    from config import settings
+    from ai_service.config import settings
 
 
 class DecisionAgent(BaseAIAgent):
@@ -41,15 +41,40 @@ class DecisionAgent(BaseAIAgent):
     
     def _create_crew_agent(self) -> Agent:
         """Create CrewAI agent for decision-making"""
+        # Import CrewAI's LLM class
+        from crewai import LLM
+        import os
+
+        # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
+        try:
+            from ai_service.config import settings
+
+            # Set Azure OpenAI environment variables for litellm
+            os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key
+            os.environ["AZURE_API_BASE"] = settings.azure_openai_endpoint
+            os.environ["AZURE_API_VERSION"] = settings.azure_openai_api_version
+
+            # Use litellm format: azure/<deployment_name>
+            llm = LLM(
+                model=f"azure/{settings.azure_openai_deployment}",
+                temperature=0.7,
+                max_tokens=2000
+            )
+            logger.info(f"Created Azure OpenAI LLM with deployment: {settings.azure_openai_deployment}")
+        except Exception as e:
+            logger.error(f"Failed to create Azure LLM: {e}")
+            raise
+
         return Agent(
             role="NPC Decision Strategist",
             goal="Make intelligent, personality-consistent decisions for NPCs that create engaging gameplay",
-            backstory="""You are an expert in behavioral psychology and game AI. You understand how to 
-            make NPCs behave in ways that feel authentic and purposeful. You consider personality traits, 
-            current goals, environmental factors, and past experiences when making decisions. You excel at 
+            backstory="""You are an expert in behavioral psychology and game AI. You understand how to
+            make NPCs behave in ways that feel authentic and purposeful. You consider personality traits,
+            current goals, environmental factors, and past experiences when making decisions. You excel at
             creating believable NPC behavior that enhances player immersion.""",
             verbose=self.config.get("verbose", False),
-            allow_delegation=False
+            allow_delegation=False,
+            llm=llm
         )
     
     async def process(self, context: AgentContext) -> AgentResponse:
@@ -80,11 +105,20 @@ class DecisionAgent(BaseAIAgent):
                 recent_events=context.recent_events
             )
             
+            # Ensure decision is a dict
+            if not isinstance(decision, dict):
+                logger.warning(f"Decision is not a dict (type: {type(decision)}), using fallback")
+                decision = {
+                    "action_type": "idle",
+                    "reasoning": "Fallback due to invalid decision format",
+                    "priority": 1
+                }
+
             # Parse and validate decision
             action_data = self._parse_decision(decision, available_actions, context)
-            
+
             logger.info(f"Decision made for {context.npc_id}: {action_data.get('action_type')}")
-            
+
             return AgentResponse(
                 agent_type=self.agent_type,
                 success=True,
@@ -115,7 +149,7 @@ class DecisionAgent(BaseAIAgent):
     
     def _get_available_actions(self, context: AgentContext) -> List[Dict[str, Any]]:
         """Get list of available actions for NPC"""
-        from ai_service.utils.movement_utils import can_npc_move, get_movement_capabilities
+        from utils.movement_utils import can_npc_move, get_movement_capabilities
 
         npc_class = context.current_state.get("npc_class", "generic")
         sprite_id = context.current_state.get("sprite_id")
@@ -294,7 +328,7 @@ Respond with a JSON object containing:
     def _get_action_data(self, action_type: str, context: Optional[AgentContext] = None) -> Dict[str, Any]:
         """Get default data for action type, including movement-specific data"""
         import random
-        from ai_service.utils.movement_utils import get_movement_capabilities
+        from utils.movement_utils import get_movement_capabilities
 
         # Non-movement action defaults
         action_data_defaults = {
@@ -315,8 +349,8 @@ Respond with a JSON object containing:
     def _generate_movement_action_data(self, movement_type: str, context: AgentContext) -> Dict[str, Any]:
         """Generate movement-specific action data"""
         import random
-        from ai_service.utils.movement_utils import get_movement_capabilities
-        from ai_service.models.npc import NPCPosition
+        from utils.movement_utils import get_movement_capabilities, is_position_within_boundary, calculate_distance
+        from models.npc import NPCPosition
 
         movement_caps = get_movement_capabilities(context.current_state)
         current_location = context.current_state.get("location", {})
@@ -325,20 +359,45 @@ Respond with a JSON object containing:
         current_y = int(current_location.get("y", 150))
 
         if movement_type == "wander":
-            # Random wander within max distance
+            # Random wander within max distance and movement boundaries
             max_dist = min(movement_caps.max_wander_distance, 10)
-            offset_x = random.randint(-max_dist, max_dist)
-            offset_y = random.randint(-max_dist, max_dist)
 
-            return {
-                "movement_type": "wander",
-                "target_position": {
+            # For radius-restricted mode, limit wander distance to stay within radius
+            if movement_caps.movement_mode == "radius_restricted" and movement_caps.spawn_point:
+                spawn_pos = {
+                    "map": movement_caps.spawn_point.map,
+                    "x": movement_caps.spawn_point.x,
+                    "y": movement_caps.spawn_point.y
+                }
+                current_pos = {"map": current_map, "x": current_x, "y": current_y}
+                current_distance = calculate_distance(spawn_pos, current_pos)
+
+                # Limit max_dist to stay within radius
+                remaining_radius = movement_caps.movement_radius - current_distance
+                max_dist = min(max_dist, max(1, int(remaining_radius)))
+
+            # Try to generate valid position within boundaries (max 10 attempts)
+            for attempt in range(10):
+                offset_x = random.randint(-max_dist, max_dist)
+                offset_y = random.randint(-max_dist, max_dist)
+
+                target_position = {
                     "map": current_map,
                     "x": current_x + offset_x,
                     "y": current_y + offset_y
-                },
-                "movement_reason": "Random wandering behavior"
-            }
+                }
+
+                # Check if position is within boundaries
+                if is_position_within_boundary(target_position, movement_caps, context.npc_id):
+                    return {
+                        "movement_type": "wander",
+                        "target_position": target_position,
+                        "movement_reason": "Random wandering behavior"
+                    }
+
+            # If no valid position found, stay idle
+            logger.warning(f"NPC {context.npc_id}: Could not find valid wander position within boundaries")
+            return {"movement_type": "idle", "duration": 5}
 
         elif movement_type == "patrol":
             # Patrol along predefined route or circular pattern
@@ -375,20 +434,43 @@ Respond with a JSON object containing:
                 return {"movement_type": "idle", "duration": 5}
 
         elif movement_type == "exploration":
-            # Explore nearby area
+            # Explore nearby area within boundaries
             explore_dist = min(movement_caps.max_wander_distance, 15)
-            offset_x = random.randint(-explore_dist, explore_dist)
-            offset_y = random.randint(-explore_dist, explore_dist)
 
-            return {
-                "movement_type": "exploration",
-                "target_position": {
+            # For radius-restricted mode, limit exploration distance
+            if movement_caps.movement_mode == "radius_restricted" and movement_caps.spawn_point:
+                spawn_pos = {
+                    "map": movement_caps.spawn_point.map,
+                    "x": movement_caps.spawn_point.x,
+                    "y": movement_caps.spawn_point.y
+                }
+                current_pos = {"map": current_map, "x": current_x, "y": current_y}
+                current_distance = calculate_distance(spawn_pos, current_pos)
+
+                remaining_radius = movement_caps.movement_radius - current_distance
+                explore_dist = min(explore_dist, max(1, int(remaining_radius)))
+
+            # Try to generate valid exploration position (max 10 attempts)
+            for attempt in range(10):
+                offset_x = random.randint(-explore_dist, explore_dist)
+                offset_y = random.randint(-explore_dist, explore_dist)
+
+                target_position = {
                     "map": current_map,
                     "x": current_x + offset_x,
                     "y": current_y + offset_y
-                },
-                "movement_reason": "Exploring nearby area"
-            }
+                }
+
+                if is_position_within_boundary(target_position, movement_caps, context.npc_id):
+                    return {
+                        "movement_type": "exploration",
+                        "target_position": target_position,
+                        "movement_reason": "Exploring nearby area"
+                    }
+
+            # If no valid position found, stay idle
+            logger.warning(f"NPC {context.npc_id}: Could not find valid exploration position within boundaries")
+            return {"movement_type": "idle", "duration": 5}
 
         # Default fallback
         return {"movement_type": movement_type, "duration": 5}

@@ -12,8 +12,8 @@ from loguru import logger
 
 class ServiceConfig(BaseSettings):
     """Service-level configuration"""
-    
-    host: str = Field(default="0.0.0.0", alias="P2P_SERVICE_HOST")
+
+    host: str = Field(default="192.168.0.100", alias="P2P_SERVICE_HOST")
     port: int = Field(default=8001, alias="P2P_SERVICE_PORT")
     env: str = Field(default="development", alias="P2P_SERVICE_ENV")
     name: str = Field(default="p2p-coordinator", alias="P2P_SERVICE_NAME")
@@ -31,13 +31,13 @@ class DatabaseConfig(BaseSettings):
     """Database configuration for PostgreSQL and DragonflyDB (Redis-compatible)"""
 
     # DragonflyDB Configuration (Redis-compatible protocol)
-    redis_host: str = Field(default="localhost", alias="REDIS_HOST")
+    redis_host: str = Field(default="192.168.0.100", alias="REDIS_HOST")
     redis_port: int = Field(default=6379, alias="REDIS_PORT")
     redis_db: int = Field(default=1, alias="REDIS_DB")
     redis_password: str = Field(default="", alias="REDIS_PASSWORD")
 
     # PostgreSQL Configuration
-    postgres_host: str = Field(default="localhost", alias="POSTGRES_HOST")
+    postgres_host: str = Field(default="192.168.0.100", alias="POSTGRES_HOST")
     postgres_port: int = Field(default=5432, alias="POSTGRES_PORT")
     postgres_db: str = Field(default="p2p_coordinator", alias="POSTGRES_DB")
     postgres_user: str = Field(default="p2p_user", alias="POSTGRES_USER")
@@ -67,9 +67,9 @@ class WebRTCConfig(BaseSettings):
     """WebRTC configuration for P2P connections"""
     
     stun_server: str = Field(default="stun:stun.l.google.com:19302", alias="STUN_SERVER")
-    turn_server: str = Field(default="turn:turn.example.com:3478", alias="TURN_SERVER")
-    turn_username: str = Field(default="turnuser", alias="TURN_USERNAME")
-    turn_password: str = Field(default="turnpass", alias="TURN_PASSWORD")
+    turn_server: str = Field(default="", alias="TURN_SERVER", description="TURN server URL (optional, leave empty if not using TURN)")
+    turn_username: str = Field(default="", alias="TURN_USERNAME", description="TURN username (required if using TURN)")
+    turn_password: str = Field(default="", alias="TURN_PASSWORD", description="TURN password (required if using TURN)")
     
     model_config = SettingsConfigDict(
         env_file="../.env",
@@ -122,7 +122,7 @@ class P2PFeaturesConfig(BaseSettings):
 class AIServiceConfig(BaseSettings):
     """AI Service integration configuration"""
 
-    ai_service_url: str = Field(default="http://localhost:8000", alias="AI_SERVICE_URL")
+    ai_service_url: str = Field(default="http://192.168.0.100:8000", alias="AI_SERVICE_URL")
     ai_service_api_key: str = Field(default="your-api-key-here", alias="AI_SERVICE_API_KEY")
     ai_service_enabled: bool = Field(default=True, alias="AI_SERVICE_ENABLED")
 
@@ -153,9 +153,19 @@ class MonitoringConfig(BaseSettings):
 class SecurityConfig(BaseSettings):
     """Security configuration"""
 
+    # API Key Settings
     api_key_header: str = Field(default="X-API-Key", alias="API_KEY_HEADER")
-    coordinator_api_key: str = Field(default="your-coordinator-api-key-here", alias="COORDINATOR_API_KEY")
-    cors_origins: str = Field(default="http://localhost:3000,http://localhost:8000", alias="CORS_ORIGINS")
+    coordinator_api_key: str = Field(..., alias="COORDINATOR_API_KEY", description="REQUIRED: Coordinator API key (set via environment variable)")
+    api_key_validation_enabled: bool = Field(default=True, alias="API_KEY_VALIDATION_ENABLED")
+
+    # CORS Settings
+    cors_origins: str = Field(default="http://192.168.0.100:3000,http://192.168.0.100:8000,http://192.168.0.100:8001,http://localhost:3000,http://localhost:8000,http://localhost:8001", alias="CORS_ORIGINS")
+
+    # JWT Settings
+    jwt_secret_key: str = Field(..., alias="JWT_SECRET_KEY", description="REQUIRED: JWT secret key (set via environment variable)")
+    jwt_algorithm: str = Field(default="HS256", alias="JWT_ALGORITHM")
+    jwt_expiration_seconds: int = Field(default=3600, alias="JWT_EXPIRATION_SECONDS")  # 1 hour
+    jwt_validation_enabled: bool = Field(default=True, alias="JWT_VALIDATION_ENABLED")
 
     @property
     def cors_origins_list(self) -> List[str]:
@@ -191,9 +201,46 @@ class Settings(BaseSettings):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+
+        # Validate security settings in production
+        if self.service.env == "production":
+            self._validate_production_security()
+
         logger.info(f"Configuration loaded for environment: {self.service.env}")
         logger.info(f"P2P enabled: {self.p2p_features.enable_p2p}")
         logger.info(f"Enabled zones: {self.p2p_features.enabled_zones_list}")
+
+    def _validate_production_security(self):
+        """Validate that security settings are properly configured for production"""
+        errors = []
+
+        # Check JWT secret key
+        if not self.security.jwt_secret_key or len(self.security.jwt_secret_key) < 32:
+            errors.append("JWT_SECRET_KEY must be at least 32 characters long")
+
+        if "CHANGE_THIS" in self.security.jwt_secret_key.upper() or \
+           "your-secret" in self.security.jwt_secret_key.lower():
+            errors.append("JWT_SECRET_KEY must be changed from default value")
+
+        # Check coordinator API key
+        if not self.security.coordinator_api_key or len(self.security.coordinator_api_key) < 32:
+            errors.append("COORDINATOR_API_KEY must be at least 32 characters long")
+
+        if "CHANGE_THIS" in self.security.coordinator_api_key.upper() or \
+           "your-coordinator" in self.security.coordinator_api_key.lower():
+            errors.append("COORDINATOR_API_KEY must be changed from default value")
+
+        # Check that validation is enabled
+        if not self.security.api_key_validation_enabled:
+            logger.warning("API key validation is disabled in production - this is insecure!")
+
+        if not self.security.jwt_validation_enabled:
+            logger.warning("JWT validation is disabled in production - this is insecure!")
+
+        if errors:
+            error_msg = "Production security validation failed:\n" + "\n".join(f"  - {e}" for e in errors)
+            logger.error(error_msg)
+            raise ValueError(error_msg)
 
 
 # Global settings instance

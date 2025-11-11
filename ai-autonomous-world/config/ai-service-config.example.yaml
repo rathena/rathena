@@ -140,40 +140,6 @@ crewai:
     timeout: 30  # seconds
     retry_attempts: 3
 
-# Memori SDK Configuration
-memori:
-  # Memory storage
-  storage:
-    backend: "dragonfly"
-    compression: true
-    
-  # Memory types
-  episodic:
-    max_memories: 1000
-    decay_rate: 0.01  # per day
-    importance_threshold: 0.3
-    
-  semantic:
-    max_memories: 500
-    update_frequency: "daily"
-    
-  procedural:
-    max_skills: 100
-    learning_rate: 0.1
-  
-  # Relationship graphs
-  relationships:
-    max_relationships: 200
-    decay_rate: 0.005  # per day
-    update_on_interaction: true
-  
-  # Vector search
-  vector_search:
-    enabled: true
-    dimension: 1536  # for text-embedding-ada-002
-    similarity_metric: "cosine"
-    top_k: 10
-
 # NPC Configuration
 npc:
   # Personality generation

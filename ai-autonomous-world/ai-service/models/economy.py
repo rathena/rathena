@@ -3,7 +3,7 @@ Economic system data models
 """
 
 from pydantic import BaseModel, Field
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Any
 from datetime import datetime
 from enum import Enum
 
@@ -36,7 +36,7 @@ class MarketItem(BaseModel):
     supply: int = 0  # Available quantity
     demand: int = 0  # Demand level
     trend: MarketTrend = MarketTrend.STABLE
-    price_history: List[Dict[str, any]] = Field(default_factory=list)  # [{timestamp, price}]
+    price_history: List[Dict[str, Any]] = Field(default_factory=list)  # [{timestamp, price}]
     last_updated: datetime = Field(default_factory=datetime.utcnow)
 
 
@@ -92,7 +92,7 @@ class MarketAnalysisResponse(BaseModel):
     """Market analysis response"""
     success: bool
     economic_state: Optional[EconomicState] = None
-    item_analyses: List[Dict[str, any]] = Field(default_factory=list)
+    item_analyses: List[Dict[str, Any]] = Field(default_factory=list)
     recommendations: List[str] = Field(default_factory=list)
     reasoning: Optional[str] = None
 
@@ -127,7 +127,7 @@ class ShopInventory(BaseModel):
     """NPC shop inventory"""
     shop_id: str
     npc_id: str
-    items: List[Dict[str, any]] = Field(default_factory=list)  # [{item_id, quantity, price}]
+    items: List[Dict[str, Any]] = Field(default_factory=list)  # [{item_id, quantity, price}]
     last_restock: datetime = Field(default_factory=datetime.utcnow)
     restock_interval: int = 3600  # Seconds
     pricing_strategy: str = "market_based"  # "fixed", "market_based", "dynamic"

@@ -17,3 +17,9 @@
 //	script_pushint(st,1);
 //	return 0;
 //}
+
+// Include HTTP script functions for AI integration
+#include "script_http.cpp"
+
+// Include NPC movement script functions for AI-driven NPCs
+#include "script_npc_movement.cpp"

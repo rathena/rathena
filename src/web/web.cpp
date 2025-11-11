@@ -32,6 +32,7 @@
 #include "merchantstore_controller.hpp"
 #include "partybooking_controller.hpp"
 #include "userconfig_controller.hpp"
+#include "redis_subscriber.hpp"  // Phase 8B: Redis Pub/Sub for async NPC actions
 
 
 using namespace rathena;
@@ -44,6 +45,7 @@ static char* msg_table[WEB_MAX_MSG];	/// Web Server messages_conf
 struct Web_Config web_config {};
 struct Inter_Config inter_config {};
 std::shared_ptr<httplib::Server> http_server;
+RedisSubscriber* redis_subscriber = nullptr;  // Phase 8B: Redis Pub/Sub subscriber
 
 std::string login_server_ip = "127.0.0.1";
 uint16 login_server_port = 3306;
@@ -153,6 +155,9 @@ bool web_config_read(const char* cfgName, bool normal) {
 			web_config_read(w2, normal);
 		else if (!strcmpi(w1, "allow_gifs"))
 			web_config.allow_gifs = config_switch(w2) == 1;
+		else
+			// Try AI Bridge configuration
+			AIBridge::read_config(w1, w2);
 	}
 	fclose(fp);
 	ShowInfo("Finished reading %s.\n", cfgName);
@@ -370,6 +375,14 @@ int32 web_sql_close(void)
 void WebServer::finalize(){
 	ShowStatus("Terminating...\n");
 #ifdef WEB_SERVER_ENABLE
+	// Phase 8B: Stop Redis subscriber
+	if (redis_subscriber) {
+		ShowStatus("Stopping Redis Pub/Sub subscriber...\n");
+		redis_subscriber->stop();
+		delete redis_subscriber;
+		redis_subscriber = nullptr;
+	}
+
 	http_server->stop();
 	svr_thr.join();
 	web_sql_close();
@@ -467,13 +480,49 @@ bool WebServer::initialize( int32 argc, char* argv[] ){
 	http_server->Post("/userconfig/load", userconfig_load);
 	http_server->Post("/userconfig/save", userconfig_save);
 
-	// AI Bridge routes
+	// AI Bridge routes - NPC Management
 	http_server->Post("/ai/npc/register", ai_npc_register);
 	http_server->Post("/ai/npc/event", ai_npc_event);
 	http_server->Get("/ai/npc/:id/action", ai_npc_action);
+	http_server->Post("/ai/npc/:id/execute-action", ai_npc_execute_action);
+	http_server->Get("/ai/npc/:id/state", ai_npc_state_get);
+	http_server->Put("/ai/npc/:id/state", ai_npc_state_update);
+	http_server->Delete("/ai/npc/:id", ai_npc_delete);
+	http_server->Get("/ai/npc/:id/memory", ai_npc_memory_get);
+	http_server->Post("/ai/npc/:id/memory", ai_npc_memory_add);
+
+	// AI Bridge routes - Player Interaction
+	http_server->Post("/ai/player/interaction", ai_player_interaction);
+
+	// AI Bridge routes - World State
 	http_server->Post("/ai/world/state", ai_world_state_update);
 	http_server->Get("/ai/world/state", ai_world_state_get);
-	http_server->Post("/ai/player/interaction", ai_player_interaction);
+
+	// AI Bridge routes - Quest System
+	http_server->Post("/ai/quest/generate", ai_quest_generate);
+	http_server->Post("/ai/quest/progress", ai_quest_progress);  // Fixed: quest_id in body, not path
+	http_server->Get("/ai/quest/:id", ai_quest_get);
+	http_server->Post("/ai/quest/:id/complete", ai_quest_complete);
+
+	// AI Bridge routes - Chat Commands
+	http_server->Post("/ai/chat/command", ai_chat_command);
+	http_server->Get("/ai/chat/status", ai_chat_status);
+	http_server->Get("/ai/chat/history", ai_chat_history);
+
+	// AI Bridge routes - Batch Operations
+	http_server->Post("/api/batch/npcs/update", ai_batch_npcs_update);
+	http_server->Post("/api/batch/players/interact", ai_batch_interactions);  // Fixed: correct path
+
+	// AI Bridge routes - Economy System
+	http_server->Get("/ai/economy/state", ai_economy_state);
+	http_server->Post("/ai/economy/price/update", ai_economy_price_update);
+	http_server->Post("/ai/economy/market/analyze", ai_economy_market_analyze);
+
+	// AI Bridge routes - Faction System
+	http_server->Get("/ai/faction/list", ai_faction_list);
+	http_server->Post("/ai/faction/create", ai_faction_create);
+	http_server->Post("/ai/faction/reputation/update", ai_faction_reputation_update);
+	http_server->Get("/ai/faction/reputation/:player_id", ai_faction_reputation_get);
 
 	// set up logger
 	http_server->set_logger(logger);
@@ -499,6 +548,20 @@ bool WebServer::initialize( int32 argc, char* argv[] ){
 	}
 
 	ShowStatus("The web-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", web_config.web_port);
+
+	// Phase 8B: Initialize Redis Pub/Sub subscriber for async NPC actions
+	ShowStatus("Initializing Redis Pub/Sub subscriber...\n");
+	redis_subscriber = new RedisSubscriber("127.0.0.1", 6379);
+
+	if (redis_subscriber->start()) {
+		redis_subscriber->subscribe_all_npcs();
+		ShowStatus("Redis Pub/Sub subscriber " CL_GREEN "started" CL_RESET " (listening for NPC actions).\n");
+	} else {
+		ShowWarning("Redis Pub/Sub subscriber failed to start. Async NPC actions will not work.\n");
+		delete redis_subscriber;
+		redis_subscriber = nullptr;
+	}
+
 	return true;
 #endif
 }

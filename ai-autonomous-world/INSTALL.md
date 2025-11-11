@@ -2,6 +2,28 @@
 
 This document provides detailed information about the automated installation script for the AI Autonomous World System.
 
+## ⚠️ IMPORTANT: Database Architecture
+
+**This installation script sets up PostgreSQL for AI services ONLY.**
+
+### Database Separation
+
+The system uses TWO separate database systems:
+
+1. **MariaDB** (installed separately via `complete_deployment.sh`)
+   - Used EXCLUSIVELY by rAthena game server components
+   - Components: login-server, char-server, map-server, web-server
+   - Database: `ragnarok`
+   - User: `ragnarok`
+
+2. **PostgreSQL** (installed by this script)
+   - Used EXCLUSIVELY by AI services
+   - Components: ai-world service, p2p-coordinator, NPC memory system
+   - Database: `ai_world_memory`
+   - User: `ai_world_user`
+
+**DO NOT mix these databases!** Each system is optimized for its specific use case.
+
 ## Quick Start
 
 ```bash
@@ -16,12 +38,13 @@ cd rathena-AI-world/ai-autonomous-world
 
 ### ✅ What Gets Installed
 
-1. **PostgreSQL 17**
+1. **PostgreSQL 17 (for AI Services ONLY)**
    - Official PostgreSQL APT repository
    - PostgreSQL 17 server and contrib packages
    - Extensions: TimescaleDB, Apache AGE, pgvector
    - Database: `ai_world_memory`
    - User: `ai_world_user` (with configurable password)
+   - **Note**: This is NOT used by rAthena game servers
 
 2. **DragonflyDB**
    - Latest stable version via official installation script

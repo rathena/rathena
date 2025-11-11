@@ -165,22 +165,22 @@ class BaseAIAgent(ABC):
     ) -> str:
         """
         Generate text using the LLM provider
-        
+
         Args:
             prompt: User prompt
             system_message: Optional system message
             temperature: Generation temperature
-            
+
         Returns:
             Generated text
         """
         try:
             response = await self.llm_provider.generate(
                 prompt=prompt,
-                system_message=system_message,
+                system_prompt=system_message,  # Fixed: use system_prompt instead of system_message
                 temperature=temperature
             )
-            return response.text
+            return response.content  # Fixed: use content instead of text
         except Exception as e:
             logger.error(f"LLM generation failed in {self.agent_type} agent: {e}")
             raise

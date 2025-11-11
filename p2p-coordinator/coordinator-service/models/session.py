@@ -5,9 +5,9 @@ Represents an active P2P session between a host and players in a zone.
 """
 
 import enum
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, TYPE_CHECKING
-from sqlalchemy import String, Integer, Float, Boolean, DateTime, Enum, JSON, Text, ForeignKey
+from sqlalchemy import String, Integer, Float, Boolean, DateTime, Enum, JSON, Text, ForeignKey, Index
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
@@ -30,12 +30,24 @@ class SessionStatus(str, enum.Enum):
 class P2PSession(Base):
     """
     P2P Session Model
-    
+
     Represents an active P2P session where a host is serving a zone to players.
     Tracks session state, performance metrics, and player connections.
     """
-    
+
     __tablename__ = "p2p_sessions"
+
+    # Composite indexes for common query patterns
+    __table_args__ = (
+        # Index for finding active sessions by zone
+        Index('idx_zone_status', 'zone_id', 'status'),
+        # Index for finding sessions by host and status
+        Index('idx_host_status', 'host_id', 'status'),
+        # Index for finding active sessions with available capacity
+        Index('idx_zone_status_capacity', 'zone_id', 'status', 'current_players'),
+        # Index for session cleanup queries (ended sessions)
+        Index('idx_status_ended_at', 'status', 'ended_at'),
+    )
     
     # Primary Key
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
@@ -136,8 +148,8 @@ class P2PSession(Base):
         """Calculate session duration in seconds"""
         if not self.started_at:
             return None
-        
-        end_time = self.ended_at if self.ended_at else datetime.utcnow()
+
+        end_time = self.ended_at if self.ended_at else datetime.now(timezone.utc)
         duration = end_time - self.started_at
         return duration.total_seconds()
     

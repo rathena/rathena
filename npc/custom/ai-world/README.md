@@ -47,8 +47,8 @@ AI-enabled NPCs use the Bridge Layer to communicate with the AI Service, enablin
 
 ### `ai_npc_example.txt` - AI Merchant
 
-**Location**: Prontera (150, 180)  
-**NPC ID**: `ai_merchant_001`  
+**Location**: Prontera (150, 180)
+**NPC ID**: `ai_merchant_001`
 **Personality**: Lawful Good, friendly merchant
 
 **Features**:
@@ -61,6 +61,35 @@ AI-enabled NPCs use the Bridge Layer to communicate with the AI Service, enablin
 - **Talk**: Engage in AI-driven conversation
 - **Trade**: Access dynamic shop (future)
 - **Quest**: Receive AI-generated quests (future)
+
+### `prontera_ai_npcs.txt` - 8 Diverse AI NPCs ⭐ NEW!
+
+**Purpose**: Showcase diverse personalities and behaviors for testing
+
+**NPCs Included**:
+1. **Lyra the Explorer** (155,185) - Cheerful adventurer (Chaotic Good)
+2. **Guard Thorne** (145,175) - Grumpy suspicious guard (Lawful Neutral)
+3. **Scholar Elara** (160,190) - Wise librarian (Lawful Good)
+4. **Merchant Marcus** (140,185) - Cunning businessman (Neutral Evil)
+5. **Healer Mira** (165,180) - Shy anxious healer (Neutral Good)
+6. **Bard Finn** (150,195) - Charismatic entertainer (Chaotic Good)
+7. **Blacksmith Grom** (135,190) - Stoic craftsman (Lawful Neutral)
+8. **Seer Zara** (170,175) - Mysterious fortune teller (True Neutral)
+
+**Personality Diversity**:
+- High Openness: Lyra (0.95), Zara (0.98), Finn (0.92)
+- High Conscientiousness: Grom (0.98), Elara (0.95), Marcus (0.85)
+- High Extraversion: Finn (0.95), Lyra (0.9)
+- Low Extraversion: Grom (0.15), Mira (0.2)
+- High Agreeableness: Mira (0.95), Lyra (0.8)
+- Low Agreeableness: Thorne (0.25), Marcus (0.3)
+- High Neuroticism: Mira (0.9), Thorne (0.85)
+- Low Neuroticism: Lyra (0.2), Grom (0.2)
+
+**Installation**:
+```
+npc: npc/custom/ai-world/prontera_ai_npcs.txt
+```
 
 ## NPC Registration Flow
 

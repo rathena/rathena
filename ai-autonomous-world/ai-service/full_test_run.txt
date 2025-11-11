@@ -1,0 +1,217 @@
+/home/lot399/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/venv/lib/python3.12/site-packages/pytest_asyncio/plugin.py:208: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+[1m============================= test session starts ==============================[0m
+platform linux -- Python 3.12.3, pytest-8.3.4, pluggy-1.6.0
+rootdir: /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service
+configfile: pytest.ini
+plugins: anyio-4.11.0, langsmith-0.3.45, cov-7.0.0, Faker-37.12.0, asyncio-0.24.0, mock-3.15.1
+asyncio: mode=Mode.AUTO, default_loop_scope=None
+collected 139 items / 2 errors
+
+==================================== ERRORS ====================================
+[31m[1m____________________ ERROR collecting tests/test_agents.py _____________________[0m
+[31mImportError while importing test module '/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_agents.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+agents/orchestrator.py:11: in <module>
+    from ai_service.agents.base_agent import AgentContext, AgentResponse
+E   ModuleNotFoundError: No module named 'ai_service'
+
+During handling of the above exception, another exception occurred:
+agents/memory_agent.py:17: in <module>
+    from memori import Memori  # noqa: F401
+E   ModuleNotFoundError: No module named 'memori'
+
+The above exception was the direct cause of the following exception:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_agents.py:11: in <module>
+    from agents.orchestrator import AgentOrchestrator
+agents/orchestrator.py:20: in <module>
+    from agents.memory_agent import MemoryAgent
+agents/memory_agent.py:25: in <module>
+    raise ImportError(error_msg) from e
+E   ImportError: Memori SDK is REQUIRED but not installed. Install with: pip install git+https://github.com/GibsonAI/memori.git[0m
+------------------------------- Captured stderr --------------------------------
+2025-11-09 07:19:44.852 | INFO     | config:load_yaml_config:722 - Loaded configuration from /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/config/ai-service-config.yaml
+2025-11-09 07:19:44.967 | INFO     | config:get_settings:751 - Settings loaded: ai-service on 0.0.0.0:8000
+2025-11-09 07:19:44.967 | INFO     | config:get_settings:752 - Environment: development, Debug: True
+2025-11-09 07:19:44.967 | INFO     | config:get_settings:753 - Default LLM Provider: azure_openai
+2025-11-09 07:19:44.967 | INFO     | config:get_settings:754 - DragonflyDB (cache): localhost:6379
+2025-11-09 07:19:44.967 | INFO     | config:get_settings:755 - PostgreSQL (persistent memory): localhost:5432/ai_world_memory
+2025-11-09 07:19:44.967 | INFO     | config:get_settings:758 - ================================================================================
+2025-11-09 07:19:44.967 | INFO     | config:get_settings:759 - AUTONOMOUS FEATURES CONFIGURATION
+2025-11-09 07:19:44.967 | INFO     | config:get_settings:760 - ================================================================================
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:763 - NPC Movement: Enabled=True
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:765 -   - Mode: event_driven
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:766 -   - Update Interval: 60s (for fixed_interval mode)
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:767 -   - Idle Timeout: 60s (for event_driven mode)
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:768 -   - Chain Movement: True
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:769 -   - Adaptive Behavior: True
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:770 -   - Max Distance: 10 cells
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:771 -   - Advanced Features: Pathfinding=False, Social=False, Collision=False
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:776 - Economic Simulation: Enabled=True
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:778 -   - Mode: daily
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:779 -   - Update Interval: 86400s
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:780 -   - Adaptive Pricing: True
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:781 -   - Learning Enabled: True
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:782 -   - Features: Inflation=True, Supply/Demand=True, Events=True
+2025-11-09 07:19:44.968 | INFO     | config:get_settings:787 - Shop Restocking: Enabled=True
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:789 -   - Mode: npc_driven
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:790 -   - Check Interval: 86400s
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:791 -   - NPC Learning: True
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:792 -   - Default Restock Interval: 3600s
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:795 - Faction System: Enabled=True
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:797 -   - Reputation Decay: True
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:798 -   - Decay Interval: 604800s
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:799 -   - Dynamic Relationships: True
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:802 - Agent Learning: Enabled=True
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:804 -   - Memory Retention: 30 days
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:805 -   - Decision Logging: True
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:806 -   - Context Window: 10 decisions
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:809 - NPC-to-NPC Interactions: Enabled=True
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:811 -   - Interaction Range: 5 cells
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:812 -   - Relationship Tracking: True
+2025-11-09 07:19:44.969 | INFO     | config:get_settings:813 -   - Information Sharing: True
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:814 -   - Proximity Check Interval: 30s
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:815 -   - Relationship Decay Rate: 0.01/day
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:818 - Instant Response System: Enabled=True
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:820 -   - Instant Events: combat, urgent_quest, special_event, player_death, boss_spawn
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:821 -   - Max Concurrent: 10
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:824 - Universal Consciousness: Enabled=True
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:826 -   - Reasoning Depth: deep
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:827 -   - History Days: 7
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:828 -   - Future Planning: True
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:830 -     - Planning Steps: 3
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:831 -   - Reasoning Chain Logging: True
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:832 -   - World Consciousness: True
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:835 - LLM Optimization Mode: balanced
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:836 -   - Decision Cache: True
+2025-11-09 07:19:44.970 | INFO     | config:get_settings:838 -     - Cache TTL: 3600s
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:839 -     - Similarity Threshold: 0.85
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:840 -   - Decision Batching: True
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:842 -     - Batch Size: 5
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:843 -     - Batch Timeout: 2.0s
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:844 -   - Pre-filtering: True
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:845 -   - Rule-Based Decisions: True
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:846 -   - Complexity Threshold: 0.5
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:848 - ================================================================================
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:851 - Free-Form Text Input: Enabled=True
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:853 -   - Mode: chat_command
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:854 -   - Max Length: 500 chars
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:855 -   - Rate Limiting: True
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:856 -   - Response Timeout: 30s
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:859 - Chat Command Interface: Enabled=True
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:861 -   - Prefix: @npc
+2025-11-09 07:19:44.971 | INFO     | config:get_settings:862 -   - Cooldown: 2s
+2025-11-09 07:19:44.972 | INFO     | config:get_settings:863 -   - Proximity Required: True
+2025-11-09 07:19:44.972 | INFO     | config:get_settings:866 - GPU Acceleration: Enabled=False
+2025-11-09 07:19:44.982 | WARNING  | utils.gpu_vector_search:<module>:17 - FAISS not available. GPU vector search will be disabled.
+2025-11-09 07:19:45.175 | ERROR    | agents.memory_agent:<module>:24 - Memori SDK is REQUIRED but not installed. Install with: pip install git+https://github.com/GibsonAI/memori.git
+[31m[1m____________________ ERROR collecting tests/test_routers.py ____________________[0m
+[31mImportError while importing test module '/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_routers.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../ai_service/agents/memory_agent.py:17: in <module>
+    from memori import Memori  # noqa: F401
+E   ModuleNotFoundError: No module named 'memori'
+
+The above exception was the direct cause of the following exception:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+/home/lot399/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/tests/test_routers.py:8: in <module>
+    from main import app
+main.py:20: in <module>
+    from ai_service.routers import npc_router, world_router, player_router
+../ai_service/routers/__init__.py:7: in <module>
+    from .player import router as player_router
+../ai_service/routers/player.py:18: in <module>
+    from ..agents.orchestrator import AgentOrchestrator
+../ai_service/agents/orchestrator.py:14: in <module>
+    from ai_service.agents.memory_agent import MemoryAgent
+../ai_service/agents/memory_agent.py:25: in <module>
+    raise ImportError(error_msg) from e
+E   ImportError: Memori SDK is REQUIRED but not installed. Install with: pip install git+https://github.com/GibsonAI/memori.git[0m
+------------------------------- Captured stderr --------------------------------
+2025-11-09 07:19:49.324 | INFO     | ai_service.config:load_yaml_config:722 - Loaded configuration from /ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/config/ai-service-config.yaml
+2025-11-09 07:19:49.437 | INFO     | ai_service.config:get_settings:751 - Settings loaded: ai-service on 0.0.0.0:8000
+2025-11-09 07:19:49.437 | INFO     | ai_service.config:get_settings:752 - Environment: development, Debug: True
+2025-11-09 07:19:49.437 | INFO     | ai_service.config:get_settings:753 - Default LLM Provider: azure_openai
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:754 - DragonflyDB (cache): localhost:6379
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:755 - PostgreSQL (persistent memory): localhost:5432/ai_world_memory
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:758 - ================================================================================
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:759 - AUTONOMOUS FEATURES CONFIGURATION
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:760 - ================================================================================
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:763 - NPC Movement: Enabled=True
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:765 -   - Mode: event_driven
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:766 -   - Update Interval: 60s (for fixed_interval mode)
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:767 -   - Idle Timeout: 60s (for event_driven mode)
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:768 -   - Chain Movement: True
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:769 -   - Adaptive Behavior: True
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:770 -   - Max Distance: 10 cells
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:771 -   - Advanced Features: Pathfinding=False, Social=False, Collision=False
+2025-11-09 07:19:49.438 | INFO     | ai_service.config:get_settings:776 - Economic Simulation: Enabled=True
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:778 -   - Mode: daily
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:779 -   - Update Interval: 86400s
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:780 -   - Adaptive Pricing: True
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:781 -   - Learning Enabled: True
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:782 -   - Features: Inflation=True, Supply/Demand=True, Events=True
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:787 - Shop Restocking: Enabled=True
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:789 -   - Mode: npc_driven
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:790 -   - Check Interval: 86400s
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:791 -   - NPC Learning: True
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:792 -   - Default Restock Interval: 3600s
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:795 - Faction System: Enabled=True
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:797 -   - Reputation Decay: True
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:798 -   - Decay Interval: 604800s
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:799 -   - Dynamic Relationships: True
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:802 - Agent Learning: Enabled=True
+2025-11-09 07:19:49.439 | INFO     | ai_service.config:get_settings:804 -   - Memory Retention: 30 days
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:805 -   - Decision Logging: True
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:806 -   - Context Window: 10 decisions
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:809 - NPC-to-NPC Interactions: Enabled=True
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:811 -   - Interaction Range: 5 cells
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:812 -   - Relationship Tracking: True
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:813 -   - Information Sharing: True
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:814 -   - Proximity Check Interval: 30s
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:815 -   - Relationship Decay Rate: 0.01/day
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:818 - Instant Response System: Enabled=True
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:820 -   - Instant Events: combat, urgent_quest, special_event, player_death, boss_spawn
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:821 -   - Max Concurrent: 10
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:824 - Universal Consciousness: Enabled=True
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:826 -   - Reasoning Depth: deep
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:827 -   - History Days: 7
+2025-11-09 07:19:49.440 | INFO     | ai_service.config:get_settings:828 -   - Future Planning: True
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:830 -     - Planning Steps: 3
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:831 -   - Reasoning Chain Logging: True
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:832 -   - World Consciousness: True
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:835 - LLM Optimization Mode: balanced
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:836 -   - Decision Cache: True
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:838 -     - Cache TTL: 3600s
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:839 -     - Similarity Threshold: 0.85
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:840 -   - Decision Batching: True
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:842 -     - Batch Size: 5
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:843 -     - Batch Timeout: 2.0s
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:844 -   - Pre-filtering: True
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:845 -   - Rule-Based Decisions: True
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:846 -   - Complexity Threshold: 0.5
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:848 - ================================================================================
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:851 - Free-Form Text Input: Enabled=True
+2025-11-09 07:19:49.441 | INFO     | ai_service.config:get_settings:853 -   - Mode: chat_command
+2025-11-09 07:19:49.442 | INFO     | ai_service.config:get_settings:854 -   - Max Length: 500 chars
+2025-11-09 07:19:49.442 | INFO     | ai_service.config:get_settings:855 -   - Rate Limiting: True
+2025-11-09 07:19:49.442 | INFO     | ai_service.config:get_settings:856 -   - Response Timeout: 30s
+2025-11-09 07:19:49.442 | INFO     | ai_service.config:get_settings:859 - Chat Command Interface: Enabled=True
+2025-11-09 07:19:49.442 | INFO     | ai_service.config:get_settings:861 -   - Prefix: @npc
+2025-11-09 07:19:49.442 | INFO     | ai_service.config:get_settings:862 -   - Cooldown: 2s
+2025-11-09 07:19:49.442 | INFO     | ai_service.config:get_settings:863 -   - Proximity Required: True
+2025-11-09 07:19:49.442 | INFO     | ai_service.config:get_settings:866 - GPU Acceleration: Enabled=False
+2025-11-09 07:19:49.603 | WARNING  | ai_service.utils.gpu_vector_search:<module>:17 - FAISS not available. GPU vector search will be disabled.
+2025-11-09 07:19:49.606 | ERROR    | ai_service.agents.memory_agent:<module>:24 - Memori SDK is REQUIRED but not installed. Install with: pip install git+https://github.com/GibsonAI/memori.git
+[36m[1m=========================== short test summary info ============================[0m
+[31mERROR[0m tests/test_agents.py
+[31mERROR[0m tests/test_routers.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+[31m======================= [33m397 warnings[0m, [31m[1m2 errors[0m[31m in 12.44s[0m[31m =======================[0m

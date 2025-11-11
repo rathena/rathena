@@ -15,7 +15,7 @@ from services.session_manager import SessionManagerService
 from models.session import SessionStatus
 
 
-router = APIRouter(prefix="/api/sessions", tags=["sessions"])
+router = APIRouter(prefix="/api/v1/sessions", tags=["sessions"])
 session_service = SessionManagerService()
 
 

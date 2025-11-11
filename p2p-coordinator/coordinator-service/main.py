@@ -16,6 +16,7 @@ from loguru import logger
 
 from config import settings
 from database import db_manager
+from api.auth import router as auth_router
 from api.hosts import router as hosts_router
 from api.zones import router as zones_router
 from api.signaling import router as signaling_router
@@ -23,6 +24,8 @@ from api.sessions import router as sessions_router
 from api.monitoring import router as monitoring_router
 from services.ai_integration import ai_service_client
 from services.background_tasks import background_tasks
+from middleware.api_key import api_key_middleware
+from middleware.rate_limit import RateLimitMiddleware
 
 
 # Configure logging
@@ -61,6 +64,11 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     try:
         # Initialize database connections
         await db_manager.initialize()
+
+        # Initialize signaling service with Redis
+        from api.signaling import initialize_signaling_service
+        await initialize_signaling_service()
+        logger.info("✅ Signaling service initialized")
 
         # Initialize AI service client if enabled
         if settings.ai_service.ai_service_enabled:
@@ -109,7 +117,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Add rate limiting middleware
+app.add_middleware(RateLimitMiddleware)
+
+# Add API key validation middleware (optional, disabled by default)
+app.middleware("http")(api_key_middleware)
+
 # Include API routers
+app.include_router(auth_router)
 app.include_router(hosts_router)
 app.include_router(zones_router)
 app.include_router(signaling_router)

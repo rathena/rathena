@@ -26,6 +26,8 @@
 #include <common/utils.hpp>
 
 #include "achievement.hpp"
+#include "ai_dialogue_queue.hpp"
+#include "ai_dialogue_state.hpp"
 #include "atcommand.hpp"
 #include "battle.hpp"
 #include "battleground.hpp"
@@ -58,6 +60,11 @@
 #include "storage.hpp"
 #include "unit.hpp"
 #include "vending.hpp"
+
+// External AI Dialogue System references
+extern AIDialogueQueue* ai_dialogue_queue;
+extern AIDialogueStateManager* ai_dialogue_state;
+extern bool ai_dialogue_enabled;
 
 using namespace rathena;
 
@@ -13368,6 +13375,75 @@ void clif_parse_NpcStringInput(int32 fd, map_session_data* sd){
 		sd->idletime = last_tick;
 	}
 
+	// Check if this is an AI dialogue request
+	if (ai_dialogue_enabled && sd->state.ai_dialogue_mode && ai_dialogue_queue && ai_dialogue_state) {
+		// Validate player can make request
+		if (!ai_dialogue_state->can_make_request(sd->status.char_id)) {
+			int32 remaining_cooldown = ai_dialogue_state->get_remaining_cooldown(sd->status.char_id);
+			if (remaining_cooldown > 0) {
+				char msg[128];
+				snprintf(msg, sizeof(msg), "Please wait %d seconds before asking another question.",
+				         (remaining_cooldown / 1000) + 1);
+				clif_scriptmes(*sd, p->GID, msg);
+			} else {
+				clif_scriptmes(*sd, p->GID, "You're asking too many questions. Please slow down.");
+			}
+			clif_scriptclose(*sd, p->GID);
+			sd->state.ai_dialogue_mode = 0;
+			return;
+		}
+
+		// Validate message length
+		size_t input_len = strlen(sd->npc_str);
+		if (input_len == 0) {
+			clif_scriptmes(*sd, p->GID, "Please enter a message.");
+			clif_scriptclose(*sd, p->GID);
+			sd->state.ai_dialogue_mode = 0;
+			return;
+		}
+
+		if (input_len > 500) {
+			clif_scriptmes(*sd, p->GID, "Your message is too long. Please keep it under 500 characters.");
+			clif_scriptclose(*sd, p->GID);
+			sd->state.ai_dialogue_mode = 0;
+			return;
+		}
+
+		// Create AI dialogue request
+		AIDialogueRequest req;
+		req.account_id = sd->status.account_id;
+		req.char_id = sd->status.char_id;
+		req.npc_id = p->GID;
+		req.npc_name = sd->ai_npc_name;
+		req.player_message = sd->npc_str;
+		req.request_time = gettick();
+		req.retry_count = 0;
+
+		// Queue the request
+		if (ai_dialogue_queue->push_request(req)) {
+			ai_dialogue_state->mark_request_sent(sd->status.char_id, p->GID);
+
+			// Show "thinking" message
+			clif_scriptmes(*sd, p->GID, "Let me think about that...");
+
+			ShowInfo("AI Dialogue: Queued request from %s (char_id=%u, npc=%s)\n",
+			         sd->status.name, sd->status.char_id, sd->ai_npc_name);
+		} else {
+			// Queue full
+			clif_scriptmes(*sd, p->GID, "I'm a bit overwhelmed right now. Please try again in a moment.");
+			clif_scriptclose(*sd, p->GID);
+
+			ShowWarning("AI Dialogue: Queue full, dropping request from char_id=%u\n", sd->status.char_id);
+		}
+
+		// Clear AI dialogue mode
+		sd->state.ai_dialogue_mode = 0;
+
+		// Don't continue to script - response will be sent asynchronously
+		return;
+	}
+
+	// Traditional NPC script handling
 	npc_scriptcont( sd, p->GID, false );
 }
 

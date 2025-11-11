@@ -42,6 +42,27 @@ rAthena AI World is an enhanced fork of rAthena MMORPG server that integrates mu
 - **Faction System**: Dynamic reputation systems with seven faction types and eight reputation tiers
 - **Autonomous World State**: NPCs make independent decisions and react to world events, creating emergent storylines
 
+## ⚠️ EXPERIMENTAL FEATURES DISCLAIMER
+
+**This project contains experimental AI features that are actively under development.**
+
+While the core rAthena server and AI autonomous world system are production-ready, the following newly implemented features are **experimental** and should be considered **beta quality**:
+
+- **NPC Social Intelligence & Information Sharing System** (NEW)
+- **Configurable NPC Movement Boundaries** (NEW)
+
+**What to expect during testing:**
+- 🐛 **Bugs and edge cases** - These features have passed initial testing but may exhibit unexpected behavior in production scenarios
+- 🔧 **Ongoing refinement** - Implementation details may change based on testing feedback and performance analysis
+- 📊 **Performance variations** - System behavior may vary under different load conditions
+- 🔄 **Breaking changes possible** - Configuration formats and APIs may evolve as we refine the implementation
+
+**We encourage testing and feedback!** Please report any issues, unexpected behavior, or suggestions via [GitHub Issues](https://github.com/iskandarsulaili/rathena-AI-world/issues).
+
+**For production deployments:** Consider thoroughly testing these features in a development environment before enabling them on live servers.
+
+---
+
 ### Technical Architecture
 
 The system consists of approximately 10,000 lines of production-grade Python and C++ code implementing:
@@ -74,6 +95,60 @@ The system consists of approximately 10,000 lines of production-grade Python and
 ### For Players/Clients
 
 **[Windows WARP P2P Client Setup Guide](../WARP-p2p-client/WINDOWS_CLIENT_SETUP_GUIDE.md)** - Beginner-friendly guide for setting up the WARP P2P client on Windows to connect to the rAthena AI World server with P2P hosting capabilities.
+
+---
+
+## P2P Coordinator Service
+
+**Location**: `p2p-coordinator/`
+**Version**: 2.0.0
+**Status**: ✅ Production-Ready (All 26 Security & Functionality Fixes Complete)
+
+The P2P Coordinator Service is a FastAPI-based WebSocket signaling server that manages P2P session discovery, host selection, and WebRTC signaling for the WARP P2P Client.
+
+### 🎉 New Features in Version 2.0.0
+
+- **Redis State Management**: Persistent signaling state for horizontal scaling
+- **Rate Limiting**: Token bucket algorithm with Redis backend (API: 100/60s, WebSocket: 1000/60s, Auth: 10/60s)
+- **Session Health Monitoring**: Automatic monitoring and cleanup of inactive sessions every 30 seconds
+- **NPC State Broadcasting**: Fetches NPC state from AI service every 5 seconds and broadcasts to active sessions
+- **Prometheus Metrics**: Full metrics endpoint with text exposition format
+- **Refresh Token Endpoint**: JWT refresh token flow with 7-day expiration
+- **Custom Exception Handling**: Proper error handling with specific exception classes
+- **Database Indexes**: Composite indexes for common query patterns
+- **Security Enforcement**: Production startup validation - refuses to start with weak secrets (<32 characters)
+
+### Key Features
+
+- ✅ WebSocket signaling for WebRTC offer/answer/ICE candidate exchange
+- ✅ Session discovery and joining with automatic host selection
+- ✅ JWT authentication with refresh token support
+- ✅ Rate limiting to protect against abuse
+- ✅ Session health monitoring with auto-cleanup
+- ✅ NPC state broadcasting to all active sessions
+- ✅ Prometheus metrics for monitoring
+- ✅ Redis state management for horizontal scaling
+- ✅ PostgreSQL 17 with composite indexes
+- ✅ DragonflyDB (Redis-compatible) for caching
+
+### API Endpoints
+
+- `POST /api/v1/auth/login` - Authenticate and get JWT tokens
+- `POST /api/v1/auth/refresh` - Refresh JWT access token
+- `GET /api/v1/hosts` - List available hosts
+- `POST /api/v1/hosts` - Register a new host
+- `GET /api/v1/zones` - List zones
+- `GET /api/v1/sessions` - List active sessions
+- `POST /api/v1/sessions` - Create a new session
+- `WS /api/v1/signaling/ws` - WebSocket signaling endpoint
+- `GET /api/v1/monitoring/metrics` - Prometheus metrics
+
+### Documentation
+
+- [P2P Coordinator Deployment Guide](p2p-coordinator/docs/DEPLOYMENT.md) - Complete deployment guide with all new features
+- [API Documentation](p2p-coordinator/docs/API.md) - REST API reference
+- [Architecture Documentation](p2p-coordinator/docs/ARCHITECTURE.md) - System architecture
+- [Configuration Guide](p2p-coordinator/docs/CONFIGURATION.md) - Configuration reference
 
 ---
 
@@ -117,6 +192,118 @@ The system consists of approximately 10,000 lines of production-grade Python and
 - **Context-Aware Dialogue**: Historical conversation data influences future dialogue generation
 - **Memori SDK Integration**: Advanced memory management with DragonflyDB fallback storage
 
+### 🆕 NPC Social Intelligence & Information Sharing System
+
+**Status**: ⚠️ Experimental (Beta Quality)
+
+NPCs now intelligently decide what information to share with players based on trust, relationship level, and personality traits, creating more realistic and dynamic social interactions.
+
+#### Information Sensitivity Levels
+
+NPCs categorize information into four sensitivity levels, each requiring different relationship thresholds:
+
+- **PUBLIC** (Threshold: 0) - General information available to anyone
+- **PRIVATE** (Threshold: 5) - Personal information shared with acquaintances
+- **SECRET** (Threshold: 8) - Sensitive information shared only with trusted friends
+- **CONFIDENTIAL** (Threshold: 10) - Highly sensitive information shared only with closest allies
+
+#### Personality-Based Sharing Modifiers
+
+NPC personality traits dynamically adjust information sharing thresholds:
+
+- **High Agreeableness** (>0.7): -1 threshold modifier (shares more easily, friendly and open)
+- **Low Agreeableness** (<0.3): +1 threshold modifier (shares less easily, guarded and suspicious)
+- **High Neuroticism** (>0.7): +1 threshold modifier (more cautious, anxious about sharing)
+- **Low Neuroticism** (<0.3): -1 threshold modifier (less cautious, confident in sharing)
+- **High Openness** (>0.7): -1 threshold modifier (more willing to share, curious and expressive)
+
+**Example**: An NPC with high agreeableness (0.8), low neuroticism (0.2), and high openness (0.95) would have a -3 total adjustment, making them very open to sharing information even with players they've just met.
+
+#### Relationship-Based Information Filtering
+
+- NPCs evaluate player relationship level before sharing information
+- Information is filtered in real-time during dialogue generation
+- Players must build trust over time to access more sensitive information
+- Different NPCs with different personalities share information at different rates
+
+#### Information Sharing History
+
+- All information sharing events are stored in OpenMemory SDK
+- Tracks what specific information has been shared with each player
+- Prevents repetitive information sharing
+- Enables NPCs to reference past shared information in future conversations
+
+#### Example Behavior
+
+**Lyra the Explorer** (Friendly, Open Personality):
+- Agreeableness: 0.80, Neuroticism: 0.20, Openness: 0.95
+- Threshold Adjustment: -3 (very open to sharing)
+- At relationship level 0: Shares PUBLIC information
+- At relationship level 6: Shares PUBLIC, PRIVATE, and most SECRET information
+- Response style: Warm, engaging, hints at deeper secrets
+
+**Guard Thorne** (Cautious, Guarded Personality):
+- Agreeableness: 0.25, Neuroticism: 0.85, Openness: 0.20
+- Threshold Adjustment: +2 (very restrictive)
+- At relationship level 0: Shares nothing (even PUBLIC requires relationship 2)
+- At relationship level 1: Still shares nothing
+- Response style: Professional, guarded, emphasizes discretion
+
+### 🆕 Configurable NPC Movement Boundaries
+
+**Status**: ⚠️ Experimental (Beta Quality)
+
+NPCs can now be configured with different movement restrictions, allowing for more realistic and controlled autonomous behavior.
+
+#### Movement Modes
+
+- **Global** - NPCs can move freely across all maps without restrictions
+- **Map-Restricted** - NPCs stay within their current map, cannot cross map boundaries
+- **Radius-Restricted** - NPCs stay within a defined tile radius from their spawn point
+- **Disabled** - NPCs remain stationary at their spawn location
+
+#### Per-NPC Configuration
+
+Each NPC can be individually configured with:
+- **Movement Mode**: One of the four modes above
+- **Movement Radius**: Tile radius for radius-restricted mode (0-100 tiles)
+- **Spawn Point**: Reference point for radius calculations (map, x, y coordinates)
+
+#### Boundary Validation
+
+- All movement decisions are validated before execution
+- NPCs attempting to move outside boundaries are blocked
+- Detailed logging of boundary violations for debugging
+- Graceful fallback to idle behavior when no valid movement position exists
+
+#### DecisionAgent Integration
+
+- Movement decisions respect configured boundaries
+- Wander and exploration behaviors stay within allowed areas
+- Automatic radius adjustment based on current distance from spawn
+- Maximum 10 attempts to find valid position before falling back to idle
+
+#### Example Configurations
+
+**Guard Thorne** (Patrol Guard):
+- Movement Mode: `radius_restricted`
+- Movement Radius: `7 tiles`
+- Spawn Point: `prontera (145, 175)`
+- Behavior: Patrols a small area around the guard post
+
+**Lyra the Explorer** (Stationary NPC):
+- Movement Mode: `disabled`
+- Movement Radius: `0 tiles`
+- Spawn Point: `prontera (155, 185)`
+- Behavior: Remains at fixed location for player interactions
+
+#### Technical Implementation
+
+- Boundary validation occurs at two levels: decision generation and movement execution
+- Euclidean distance calculation for radius checks
+- Infinite distance for cross-map movement in restricted modes
+- Integration with existing NPCMovementManager and event-driven movement system
+
 ---
 
 ## 🔗 Related Projects
@@ -125,18 +312,46 @@ The system consists of approximately 10,000 lines of production-grade Python and
 
 The **[WARP-p2p-client](https://github.com/iskandarsulaili/WARP-p2p-client)** is the C++ WebRTC client implementation that connects to the rathena-AI-world P2P coordinator service. It enables hybrid P2P architecture where players can host game zones while maintaining centralized AI NPCs and authentication.
 
-**Key Features**:
-- WebRTC-based P2P connections for zone hosting
-- Automatic host discovery and selection
-- Secure communication with encryption
-- Graceful fallback to main server
-- Performance monitoring and host validation
+**Version**: 2.0.0 - ✅ Production-Ready (All 26 Security & Functionality Fixes Complete)
 
-**Integration**: The WARP client connects to the P2P coordinator service (`rathena-AI-world/p2p-coordinator`) via WebSocket signaling at `/api/signaling/ws`. See [P2P_INTEGRATION_ANALYSIS.md](../P2P_INTEGRATION_ANALYSIS.md) for detailed integration requirements.
+### ⚠️ Important: P2P is Completely Optional
+
+**The P2P system is entirely optional and can be disabled at any time:**
+- When P2P is disabled or unavailable, the system **automatically falls back** to traditional server routing
+- Players experience **no difference in gameplay** when P2P is disabled
+- The fallback is **transparent** - no manual intervention required
+- You can enable/disable P2P per zone or globally via configuration
+
+**P2P provides benefits when enabled:**
+- Reduced server load in high-traffic zones
+- Lower latency for player-to-player interactions
+- Distributed bandwidth usage
+
+**But the game works perfectly without it** - P2P is a performance enhancement, not a requirement.
+
+**Key Features**:
+- ✅ WebRTC-based P2P connections for zone hosting
+- ✅ Automatic host discovery and selection
+- ✅ Secure communication with SSL certificate verification
+- ✅ **Automatic graceful fallback** to main server when P2P unavailable
+- ✅ Performance monitoring and host validation
+- ✅ **NEW**: Packet hooking for transparent P2P routing
+- ✅ **NEW**: JWT token refresh with 7-day expiration
+- ✅ **NEW**: Rate limiting (token bucket algorithm)
+- ✅ **NEW**: Session health monitoring with auto-cleanup
+- ✅ **NEW**: NPC state broadcasting
+- ✅ **NEW**: Prometheus metrics for monitoring
+
+**Integration**: The WARP client connects to the P2P coordinator service (`rathena-AI-world/p2p-coordinator`) via WebSocket signaling at `/api/v1/signaling/ws`. See [P2P_INTEGRATION_ANALYSIS.md](../P2P_INTEGRATION_ANALYSIS.md) for detailed integration requirements.
 
 **Architecture**: Hybrid P2P model where:
-- **Centralized**: AI NPCs, authentication, anti-cheat, critical game logic
-- **P2P**: Zone-based player interactions, reducing server load and latency
+- **Centralized**: AI NPCs, authentication, anti-cheat, critical game logic (always active)
+- **P2P**: Zone-based player interactions, reducing server load and latency (optional, with automatic fallback)
+
+**Documentation**:
+- [WARP P2P Client README](../WARP-p2p-client/README.md) - Overview and features
+- [P2P DLL Deployment Guide](../WARP-p2p-client/P2P-DLL/DEPLOYMENT_GUIDE.md) - Complete deployment guide with all 26 fixes
+- [P2P Coordinator Deployment Guide](p2p-coordinator/docs/DEPLOYMENT.md) - Coordinator service deployment
 
 ---
 
@@ -146,8 +361,8 @@ The **[WARP-p2p-client](https://github.com/iskandarsulaili/WARP-p2p-client)** is
 
 We maintain an independent, welcoming community free from arbitrary moderation:
 
-- **GitHub Issues**: [Report bugs and request features](https://github.com/iskandarsulaili/ai-mmorpg-world/issues)
-- **GitHub Discussions**: [Ask questions and share ideas](https://github.com/iskandarsulaili/ai-mmorpg-world/discussions)
+- **GitHub Issues**: [Report bugs and request features](https://github.com/iskandarsulaili/rathena-AI-world/issues)
+- **GitHub Discussions**: [Ask questions and share ideas](https://github.com/iskandarsulaili/rathena-AI-world/discussions)
 - **Pull Requests**: Contributions are always welcome! See [How to Contribute](#6-how-to-contribute)
 
 ### Getting Help
@@ -210,22 +425,6 @@ Everyone is welcome here, especially those who have felt silenced or dismissed e
 - **AMD GPU**: RX 6000/7000 series with ROCm 5.4+
 - **Performance**: 10-100x faster LLM inference, 5-20x faster vector search
 
-### Docker Deployment
-
-```bash
-cd ai-autonomous-world
-
-# Configure environment
-cp ai-service/.env.example ai-service/.env
-# Edit .env with your API keys
-
-# Start all services
-docker-compose up -d
-
-# Verify deployment
-curl http://localhost:8000/health
-```
-
 ### Manual Installation
 
 ```bash
@@ -259,7 +458,7 @@ Interactive API documentation available at `http://localhost:8000/docs` when AI 
 
 - **Production Implementation**: Comprehensive error handling and verbose logging throughout codebase
 - **Cloud-Optimized Deployment**: 3.5GB memory footprint without local LLM models
-- **Horizontal Scaling**: Docker-based deployment supports horizontal scaling
+- **Horizontal Scaling**: Native deployment supports horizontal scaling
 - **Asynchronous Operations**: Non-blocking async/await pattern implementation
 - **Type Safety**: Pydantic models for all data structures and API contracts
 - **Test Coverage**: Integration and unit tests included
@@ -297,11 +496,6 @@ rAthena is a collaborative software development project for creating a massively
 
 rAthena AI World extends the base rAthena server with an AI-driven autonomous world system for enhanced NPC behavior and emergent gameplay.
 
-### rAthena Resources
-
-[Forum](https://rathena.org/board)|[Wiki](https://github.com/rathena/rathena/wiki)|[FluxCP](https://github.com/rathena/FluxCP)|[Crowdfunding](https://rathena.org/board/crowdfunding/)|[Fork and Pull Request Q&A](https://rathena.org/board/topic/86913-pull-request-qa/)
---------|--------|--------|--------|--------
-
 > **Note**: We maintain independence from the original rAthena community channels. For support with the AI World system, please use GitHub Issues or Discussions on this repository.
 
 ---
@@ -333,7 +527,6 @@ Application | Version | Purpose
 ------|------|------
 Python | 3.12+ | AI Service runtime
 DragonflyDB | Latest | State management (Redis-compatible)
-Docker | 20.10+ | Optional - for containerized deployment
 
 ### LLM Provider API Keys
 At least one LLM provider API key is required:
@@ -384,15 +577,7 @@ Database | [MySQL Workbench 5 or newer](http://www.mysql.com/downloads/workbench
 
 Complete setup guide: [ai-autonomous-world/INSTALL.md](ai-autonomous-world/INSTALL.md)
 
-Docker installation:
-```bash
-cd ai-autonomous-world
-cp ai-service/.env.example ai-service/.env
-# Edit .env with your LLM API keys
-docker-compose up -d
-```
-
-Manual installation:
+Installation:
 ```bash
 cd ai-autonomous-world
 source venv/bin/activate
@@ -418,8 +603,6 @@ Note: The AI Bridge Layer is integrated into the rAthena web server. Compile wit
 AI Service startup issues:
 ```bash
 # Check logs
-docker-compose logs ai-service
-# Or for manual setup
 tail -f ai-service/logs/ai-service.log
 ```
 
@@ -506,8 +689,27 @@ Copyright (c) rAthena Development Team - Licensed under [GNU General Public Lice
 
 ## Getting Started
 
-1. Clone this repository
-2. Set up the AI system: Follow [ai-autonomous-world/INSTALL.md](ai-autonomous-world/INSTALL.md)
-3. Install rAthena base: Follow standard rAthena installation guides above
-4. Configure LLM API keys in `ai-autonomous-world/ai-service/.env`
-5. Launch the server
+### Quick Start (10 Minutes)
+See [QUICK_START.md](QUICK_START.md) for a rapid deployment guide.
+
+### Production Deployment
+See [UBUNTU_SERVER_DEPLOYMENT_GUIDE.md](UBUNTU_SERVER_DEPLOYMENT_GUIDE.md) for comprehensive production deployment instructions.
+
+### Documentation
+
+📚 **Core Documentation:**
+- [QUICK_START.md](QUICK_START.md) - Quick start guide with service status checks and testing
+- [UBUNTU_SERVER_DEPLOYMENT_GUIDE.md](UBUNTU_SERVER_DEPLOYMENT_GUIDE.md) - Complete production deployment guide
+- [FINAL_VERIFICATION_REPORT.md](FINAL_VERIFICATION_REPORT.md) - Verification, completion status, and test results
+- [SERVER_MANAGEMENT.md](SERVER_MANAGEMENT.md) - Server management and operations guide
+
+📦 **Component Documentation:**
+- [ai-autonomous-world/README.md](ai-autonomous-world/README.md) - AI autonomous world system overview
+- [ai-autonomous-world/INSTALL.md](ai-autonomous-world/INSTALL.md) - AI system installation guide
+- [p2p-coordinator/README.md](p2p-coordinator/README.md) - P2P coordinator service documentation
+
+🔧 **Advanced Features:**
+- [docs/ADVANCED_AUTONOMOUS_FEATURES.md](docs/ADVANCED_AUTONOMOUS_FEATURES.md) - Advanced autonomous features guide
+- [ai-autonomous-world/docs/ARCHITECTURE.md](ai-autonomous-world/docs/ARCHITECTURE.md) - System architecture details
+- [ai-autonomous-world/docs/CONFIGURATION.md](ai-autonomous-world/docs/CONFIGURATION.md) - Configuration reference
+- [p2p-coordinator/docs/API.md](p2p-coordinator/docs/API.md) - P2P coordinator API documentation

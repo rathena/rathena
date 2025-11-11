@@ -41,16 +41,16 @@ OnNPCChat:
 	// Get command arguments
 	// Format: @npc <npc_id> <message>
 	.@args$ = implode(.@atcmd_parameters$, " ");
-	
-	// Parse NPC ID and message
-	.@space_pos = instr(.@args$, " ");
-	
+
+	// Parse NPC ID and message using strpos (PHP-style string position function)
+	.@space_pos = strpos(.@args$, " ", 0);
+
 	if (.@space_pos == -1) {
 		dispbottom "[AI Chat] Usage: @npc <npc_id> <message>";
 		dispbottom "[AI Chat] Example: @npc merchant_001 Tell me about the ancient ruins";
 		end;
 	}
-	
+
 	.@npc_id$ = substr(.@args$, 0, .@space_pos - 1);
 	.@message$ = substr(.@args$, .@space_pos + 1, getstrlen(.@args$) - 1);
 	
@@ -160,41 +160,30 @@ OnNPCChat:
 	// Call AI Service via Bridge Layer
 	dispbottom "[AI Chat] Sending message to " + .@npc_id$ + "...";
 
-	// Attempt HTTP request if available
-	// Note: rAthena may not have built-in HTTP support
-	// This implementation assumes a custom HTTP plugin or external bridge
+	// Make HTTP POST request to AI service
+	.@response$ = httppost(.bridge_url$ + "/ai/chat/command", .@json$);
 
-	if (function_exists("httppost")) {
-		// Use httppost if available (requires plugin)
-		.@response$ = httppost(.bridge_url$ + "/ai/chat/command", .@json$, "Content-Type: application/json");
+	// Parse response (simplified - assumes JSON response)
+	if (.@response$ != "") {
+		// Extract NPC response from JSON
+		// This is a simplified parser - production should use proper JSON parsing
+		.@npc_response$ = extract_json_field(.@response$, "npc_response");
+		.@emotion$ = extract_json_field(.@response$, "emotion");
 
-		// Parse response (simplified - assumes JSON response)
-		if (.@response$ != "") {
-			// Extract NPC response from JSON
-			// This is a simplified parser - production should use proper JSON parsing
-			.@npc_response$ = extract_json_field(.@response$, "npc_response");
-			.@emotion$ = extract_json_field(.@response$, "emotion");
+		if (.@npc_response$ != "") {
+			dispbottom "[" + .@npc_id$ + "] " + .@npc_response$;
 
-			if (.@npc_response$ != "") {
-				dispbottom "[" + .@npc_id$ + "] " + .@npc_response$;
-
-				// Show emotion if available
-				if (.@emotion$ != "")
-					dispbottom "[AI Chat] *" + .@emotion$ + "*";
-			} else {
-				dispbottom "[AI Chat] No response from NPC.";
-			}
+			// Show emotion if available
+			if (.@emotion$ != "")
+				dispbottom "[AI Chat] *" + .@emotion$ + "*";
 		} else {
-			dispbottom "[AI Chat] Error: Empty response from AI service.";
+			dispbottom "[AI Chat] No response from NPC.";
 		}
 	} else {
-		// Fallback: Use external bridge script
-		// This requires a custom implementation or plugin
-		dispbottom "[AI Chat] HTTP support not available.";
-		dispbottom "[AI Chat] Please configure HTTP plugin or external bridge.";
-		dispbottom "[AI Chat] Your message: " + .@message$;
+		dispbottom "[AI Chat] Error: Empty response from AI service.";
+		dispbottom "[AI Chat] Make sure AI service is running on " + .bridge_url$;
 	}
-	
+
 	end;
 
 // Helper function to escape JSON strings

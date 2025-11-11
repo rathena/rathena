@@ -40,15 +40,40 @@ class WorldAgent(BaseAIAgent):
     
     def _create_crew_agent(self) -> Agent:
         """Create CrewAI agent for world analysis"""
+        # Import CrewAI's LLM class
+        from crewai import LLM
+        import os
+
+        # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
+        try:
+            from ai_service.config import settings
+
+            # Set Azure OpenAI environment variables for litellm
+            os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key
+            os.environ["AZURE_API_BASE"] = settings.azure_openai_endpoint
+            os.environ["AZURE_API_VERSION"] = settings.azure_openai_api_version
+
+            # Use litellm format: azure/<deployment_name>
+            llm = LLM(
+                model=f"azure/{settings.azure_openai_deployment}",
+                temperature=0.7,
+                max_tokens=2000
+            )
+            logger.info(f"Created Azure OpenAI LLM with deployment: {settings.azure_openai_deployment}")
+        except Exception as e:
+            logger.error(f"Failed to create Azure LLM: {e}")
+            raise
+
         return Agent(
             role="World State Analyst",
             goal="Analyze world conditions and their impact on NPCs to create a living, reactive world",
-            backstory="""You are an expert in systems thinking and world simulation. You understand how 
-            economic, political, and environmental factors interact and affect individuals. You excel at 
-            identifying patterns, predicting trends, and determining how global changes impact local 
+            backstory="""You are an expert in systems thinking and world simulation. You understand how
+            economic, political, and environmental factors interact and affect individuals. You excel at
+            identifying patterns, predicting trends, and determining how global changes impact local
             behavior. You help create a world that feels alive and responsive.""",
             verbose=self.config.get("verbose", False),
-            allow_delegation=False
+            allow_delegation=False,
+            llm=llm
         )
     
     async def process(self, context: AgentContext) -> AgentResponse:
