@@ -130,7 +130,7 @@ async def lifespan(app: FastAPI):
     # Initialize OpenMemory SDK with PostgreSQL backend
     global _openmemory_manager
     try:
-        from ai_service.memory.openmemory_manager import initialize_openmemory
+        from memory.openmemory_manager import initialize_openmemory
         logger.info("Initializing OpenMemory SDK...")
 
         # Get OpenMemory backend URL from environment or use default
@@ -155,7 +155,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize LLM provider (test connection)
     try:
-        from ai_service.llm import get_llm_provider
+        from llm import get_llm_provider
         llm = get_llm_provider()
         logger.info(f"LLM provider initialized: {settings.default_llm_provider}")
         logger.debug(f"LLM provider type: {type(llm).__name__}")
@@ -171,7 +171,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize NPC Relationship Manager
     try:
-        from ai_service.tasks.npc_relationships import npc_relationship_manager
+        from tasks.npc_relationships import npc_relationship_manager
         await npc_relationship_manager.initialize()
         await npc_relationship_manager.start_background_tasks()
         logger.info("✓ NPC Relationship Manager started")
@@ -182,7 +182,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize Instant Response System
     try:
-        from ai_service.tasks.instant_response import instant_response_manager
+        from tasks.instant_response import instant_response_manager
         await instant_response_manager.start()
         logger.info("✓ Instant Response System started")
     except ImportError as e:
@@ -192,7 +192,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize Environment System
     try:
-        from ai_service.tasks.environment import initialize_environment
+        from tasks.environment import initialize_environment
         await initialize_environment()
         logger.info("✓ Environment System initialized")
     except ImportError as e:
@@ -202,7 +202,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize Universal Consciousness Engine
     try:
-        from ai_service.agents.universal_consciousness import universal_consciousness
+        from agents.universal_consciousness import universal_consciousness
         await universal_consciousness.initialize()
         logger.info("✓ Universal Consciousness Engine initialized")
     except ImportError as e:
@@ -212,7 +212,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize Decision Optimizer
     try:
-        from ai_service.agents.decision_optimizer import decision_optimizer
+        from agents.decision_optimizer import decision_optimizer
         await decision_optimizer.initialize()
         logger.info("✓ Decision Optimizer initialized")
     except ImportError as e:
@@ -239,7 +239,7 @@ async def lifespan(app: FastAPI):
 
     # Stop Instant Response System
     try:
-        from ai_service.tasks.instant_response import instant_response_manager
+        from tasks.instant_response import instant_response_manager
         await instant_response_manager.stop()
         logger.info("✓ Instant Response System stopped")
     except Exception as e:
@@ -247,7 +247,7 @@ async def lifespan(app: FastAPI):
 
     # Stop NPC Relationship Manager
     try:
-        from ai_service.tasks.npc_relationships import npc_relationship_manager
+        from tasks.npc_relationships import npc_relationship_manager
         await npc_relationship_manager.stop_background_tasks()
         logger.info("✓ NPC Relationship Manager stopped")
     except Exception as e:
@@ -255,7 +255,7 @@ async def lifespan(app: FastAPI):
 
     # Stop background task scheduler
     try:
-        from ai_service.scheduler import autonomous_scheduler
+        from scheduler import autonomous_scheduler
         autonomous_scheduler.stop()
         logger.info("✓ Autonomous task scheduler stopped")
     except Exception as e:

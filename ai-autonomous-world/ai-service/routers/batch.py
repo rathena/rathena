@@ -12,8 +12,8 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from ai_service.utils.decorators import handle_errors, retry_on_error
-from ai_service.database import postgres_db
+from utils.decorators import handle_errors, retry_on_error
+from database import postgres_db
 
 
 router = APIRouter(prefix="/api/batch", tags=["batch"])

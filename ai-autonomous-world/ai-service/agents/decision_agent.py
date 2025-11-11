@@ -8,12 +8,8 @@ from loguru import logger
 import json
 
 from crewai import Agent
-try:
-    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-    from ai_service.config import settings
-except ModuleNotFoundError:
-    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-    from ai_service.config import settings
+from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+from config import settings
 
 
 class DecisionAgent(BaseAIAgent):

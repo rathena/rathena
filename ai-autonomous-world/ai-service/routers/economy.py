@@ -9,8 +9,8 @@ from typing import List, Dict, Any, Optional
 from datetime import datetime
 from loguru import logger
 
-from ..config import settings
-from ..models.economy import (
+from config import settings
+from models.economy import (
     EconomicState,
     MarketItem,
     ShopInventory,
