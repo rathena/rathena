@@ -3,6 +3,7 @@
 [![Production Ready](https://img.shields.io/badge/status-production%20ready-brightgreen.svg)](ai-autonomous-world/README.md)
 [![AI Agents](https://img.shields.io/badge/AI%20agents-6%20specialized-blue.svg)](ai-autonomous-world/README.md#-current-status)
 [![LLM Providers](https://img.shields.io/badge/LLM%20providers-5%20(Azure%2C%20OpenAI%2C%20Anthropic%2C%20Google%2C%20DeepSeek)-orange.svg)](ai-autonomous-world/ai-service/llm/)
+[![OpenMemory](https://img.shields.io/badge/OpenMemory-Integrated-blueviolet.svg)](https://github.com/iskandarsulaili/AI-MMORPG-OpenMemory)
 ![GitHub](https://img.shields.io/github/license/rathena/rathena.svg)
 
 ---
@@ -71,6 +72,231 @@ The system consists of approximately 10,000 lines of production-grade Python and
 - **Long-term Memory Management**: Memori SDK integration with DragonflyDB fallback for persistent NPC memories and relationship tracking
 - **Multi-Provider LLM Support**: OpenAI GPT-4, Anthropic Claude-3, and Google Gemini integration
 - **Production-Grade Implementation**: Comprehensive error handling, verbose logging, async/await operations, and type-safe Pydantic models
+
+---
+
+## 📦 Dependencies & Installation
+
+This section provides comprehensive dependency information and installation instructions for the rAthena AI World system.
+
+### System Requirements
+
+#### Minimum Hardware
+- **CPU**: 4 cores (2 cores minimum)
+- **RAM**: 8GB (16GB recommended for production)
+- **Storage**: 10GB minimum free space
+- **Network**: Internet connection for package downloads and LLM API access
+
+#### Operating System
+- **Primary**: Ubuntu 24.04 LTS (tested and recommended)
+- **Compatible**: Ubuntu 22.04+, Debian 11+, CentOS 8+
+- **Development**: Windows 10/11 with WSL2, macOS 12+
+
+### Core Dependencies
+
+#### 1. Database Systems
+- **PostgreSQL 17+** (for AI services)
+  - Required extensions: TimescaleDB, Apache AGE, pgvector
+  - Database: `ai_world_memory`
+  - User: `ai_world_user`
+
+- **MariaDB 10.6+** or **MySQL 8.0+** (for rAthena game server)
+  - Database: `ragnarok`
+  - User: `ragnarok`
+
+- **DragonflyDB** or **Redis 7.0+** (for caching and state management)
+  - Redis-compatible interface on port 6379
+
+#### 2. Programming Languages & Runtimes
+- **Python 3.12+** (AI services)
+- **Node.js 20+** (OpenMemory module)
+- **C++ Compiler** (rAthena compilation)
+  - Linux: gcc-6 or newer + Make
+  - Windows: MS Visual Studio 2017 or newer
+
+#### 3. LLM Provider API Keys (At least one required)
+- **OpenAI**: GPT-4 API key
+- **Anthropic**: Claude-3 API key
+- **Google**: Gemini-Pro API key
+- **Azure OpenAI**: Azure deployment credentials
+- **DeepSeek**: API key (cost-effective alternative)
+
+### Python Dependencies
+
+The AI service provides multiple requirement profiles:
+
+#### Full Installation (All Features)
+```bash
+pip install -r ai-service/requirements.txt
+```
+
+#### Cloud-Optimized (No Local ML Models)
+```bash
+pip install -r ai-service/requirements-cloud.txt
+```
+
+#### Minimal Installation (Basic Functionality)
+```bash
+pip install -r ai-service/requirements-minimal.txt
+```
+
+#### GPU Acceleration (Optional)
+```bash
+pip install -r ai-service/requirements-gpu.txt
+# Additional platform-specific installation required
+```
+
+### AI-MMORPG-OpenMemory Module Dependencies
+
+The [OpenMemory module](https://github.com/iskandarsulaili/AI-MMORPG-OpenMemory) provides long-term memory management for AI systems and requires:
+
+#### Node.js Dependencies
+```bash
+cd AI-MMORPG-OpenMemory/backend
+npm install
+```
+
+Key dependencies include:
+- `@modelcontextprotocol/sdk` - MCP server support
+- `sqlite3` - Local database storage
+- `pg` - PostgreSQL support
+- `ws` - WebSocket support
+- `zod` - Schema validation
+
+#### Docker Deployment
+```bash
+cd AI-MMORPG-OpenMemory
+docker compose up --build -d
+```
+
+#### Quick Start (Local Development)
+```bash
+git clone https://github.com/iskandarsulaili/AI-MMORPG-OpenMemory.git
+cd AI-MMORPG-OpenMemory/backend
+cp .env.example .env
+npm install
+npm run dev
+```
+
+The server runs on `http://localhost:8080` with API documentation available at `http://localhost:8080/docs`.
+
+### GPU Acceleration (Optional)
+
+#### NVIDIA CUDA (Linux/Windows)
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+pip install faiss-gpu
+```
+
+#### Apple Silicon (macOS)
+```bash
+pip install torch torchvision torchaudio
+pip install faiss-cpu
+```
+
+#### AMD ROCm (Linux)
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/rocm5.4.2
+```
+
+### Installation Methods
+
+#### Automated Installation (Recommended)
+```bash
+cd rathena-AI-world/ai-autonomous-world
+./install.sh
+```
+
+The installation script provides:
+- ✅ Idempotent operations (safe to run multiple times)
+- ✅ Dry-run mode for preview
+- ✅ Component skipping options
+- ✅ Environment variable configuration
+- ✅ Comprehensive error handling and logging
+
+#### Manual Installation Steps
+
+1. **Install PostgreSQL 17 with extensions**
+2. **Install DragonflyDB or Redis**
+3. **Set up Python virtual environment**
+4. **Install Python dependencies**
+5. **Configure environment variables**
+6. **Set up LLM API keys**
+7. **Install and configure OpenMemory module**
+
+### Environment Variables
+
+Required environment variables (set in `.env`):
+
+```bash
+# PostgreSQL Configuration
+POSTGRES_DB=ai_world_memory
+POSTGRES_USER=ai_world_user
+POSTGRES_PASSWORD=your_secure_password
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+
+# DragonflyDB/Redis Configuration
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+# LLM Provider API Keys (at least one required)
+OPENAI_API_KEY=sk-...
+ANTHROPIC_API_KEY=sk-ant-...
+GOOGLE_API_KEY=AIza...
+AZURE_OPENAI_API_KEY=...
+DEEPSEEK_API_KEY=...
+
+# OpenMemory Configuration (optional)
+OPENMEMORY_URL=http://localhost:8080
+OPENMEMORY_API_KEY=your_secret_key
+```
+
+### Verification & Testing
+
+After installation, verify all components:
+
+```bash
+# Test PostgreSQL connection
+psql -h localhost -U ai_world_user -d ai_world_memory
+
+# Test DragonflyDB/Redis
+redis-cli ping
+
+# Test Python environment
+python -c "import sys; print(f'Python {sys.version}')"
+
+# Test OpenMemory
+curl http://localhost:8080/health
+
+# Test AI service
+curl http://localhost:8000/health
+```
+
+### Troubleshooting Common Issues
+
+#### Database Connection Issues
+- Verify PostgreSQL service is running: `sudo systemctl status postgresql@17-main`
+- Check DragonflyDB service: `sudo systemctl status dragonfly`
+
+#### Python Import Errors
+- Ensure virtual environment is activated: `source venv/bin/activate`
+- Reinstall dependencies: `pip install -r requirements.txt`
+
+#### LLM API Issues
+- Verify API keys are correctly set in `.env`
+- Check network connectivity to LLM providers
+
+#### OpenMemory Issues
+- Ensure Node.js 20+ is installed
+- Check OpenMemory service is running on port 8080
+
+### Additional Resources
+
+- [Complete Installation Guide](ai-autonomous-world/INSTALL.md)
+- [GPU Acceleration Guide](ai-autonomous-world/docs/GPU_ACCELERATION.md)
+- [Configuration Reference](ai-autonomous-world/docs/CONFIGURATION.md)
+- [Troubleshooting Guide](ai-autonomous-world/docs/QUICK_START.md#troubleshooting)
 
 ---
 

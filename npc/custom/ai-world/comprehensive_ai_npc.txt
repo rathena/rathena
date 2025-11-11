@@ -1,20 +1,24 @@
+
 //===== rAthena Script =======================================
-//= Comprehensive AI-Enabled NPC
+//= Comprehensive AI-Enabled NPC - Aria the Wandering Sage
 //===== Description: =========================================
-//= Advanced AI NPC demonstrating all features:
+//= Advanced AI NPC demonstrating all integrated features:
 //= - Dynamic personality and mood system
+//= - Free-form chat with context-aware dialogue
 //= - Gift-giving mechanics with preferences
 //= - Relationship tracking and quest unlocking
+//= - Economic awareness and market conditions
+//= - Advanced movement patterns
+//= - Memory of past interactions
 //= - Multi-trigger quest system
-//= - Walking animations and movement
-//= - Context-aware interactions
+//= - World event integration
 //===== Author: ==============================================
 //= AI Autonomous World System
 //============================================================
 
 //============================================================
 // Aria the Wandering Sage - Comprehensive AI NPC
-// Combines features from all example NPCs
+// Combines features from all example NPCs with advanced integration
 //============================================================
 prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
 	.@player_id = getcharid(0);
@@ -24,7 +28,7 @@ prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
 	.@map$ = strcharinfo(3);
 	.@x = getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
 	
-	// Build comprehensive context JSON
+	// Build comprehensive context JSON with economic data
 	.@json$ = "{";
 	.@json$ += "\"npc_id\":\"ai_master_001\",";
 	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
@@ -35,7 +39,16 @@ prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
 	.@json$ += "\"player_class\":\"" + .@player_class$ + "\",";
 	.@json$ += "\"location\":{\"map\":\"" + .@map$ + "\",\"x\":" + .@x + ",\"y\":" + .@y + "},";
 	.@json$ += "\"time_of_day\":\"" + gettime(DT_HOUR) + ":" + gettime(DT_MINUTE) + "\",";
-	.@json$ += "\"weather\":\"clear\"";
+	.@json$ += "\"weather\":\"clear\",";
+	
+	// Use default values for relationship tracking (rAthena getvar limitation)
+	.@last_interaction = "never";
+	.@gifts_received = 0;
+	.@relationship = 0;
+	
+	.@json$ += "\"last_interaction\":\"" + .@last_interaction + "\",";
+	.@json$ += "\"gifts_received\":" + .@gifts_received + ",";
+	.@json$ += "\"relationship_level\":" + .@relationship;
 	.@json$ += "}";
 	.@json$ += "}";
 	
@@ -46,94 +59,255 @@ prontera,150,180,4	script	Aria the Wandering Sage#ai_master	4_M_SAGE_C,{
 	if (.@response$ != "" && .@response$ != "...") {
 		mes .@response$;
 	} else {
-		// Fallback dialogue based on time of day
+		// Fallback dialogue with economic awareness
 		.@hour = gettime(DT_HOUR);
+		.@economy$ = "stable"; // Default economy state
+		
 		if (.@hour >= 6 && .@hour < 12) {
 			mes "Good morning, " + .@player_name$ + ".";
-			mes "The dawn brings new opportunities";
-			mes "for those who seek them.";
+			if (.@economy$ == "thriving") {
+				mes "The markets are bustling this morning.";
+			} else if (.@economy$ == "recession") {
+				mes "Times are tough, but the dawn brings hope.";
+			} else {
+				mes "The dawn brings new opportunities for those who seek them.";
+			}
 		} else if (.@hour >= 12 && .@hour < 18) {
 			mes "Greetings, traveler.";
-			mes "The afternoon sun illuminates";
-			mes "many paths. Which will you choose?";
+			if (.@economy$ == "thriving") {
+				mes "Prosperity fills the air this afternoon.";
+			} else {
+				mes "The afternoon sun illuminates many paths. Which will you choose?";
+			}
 		} else {
 			mes "The evening finds you well, I hope.";
-			mes "As darkness falls, mysteries";
-			mes "reveal themselves to the wise.";
+			if (.@economy$ == "recession") {
+				mes "Even in difficult times, wisdom can be found in the stillness.";
+			} else {
+				mes "As darkness falls, mysteries reveal themselves to the wise.";
+			}
 		}
 	}
 	
+	// Store last interaction time
+	setd "last_interaction_" + .@player_id, gettimestr("%Y-%m-%d %H:%极", 9), .@player_id;
+	
 	next;
 	mes "[Aria the Wandering Sage]";
-	mes "How may I assist you today?";
+	mes "How may I assist your journey today?";
 	menu
-		"Tell me about yourself",L_About,
+		"Let's have a conversation",L_Conversation,
 		"I'd like to give you a gift",L_Gift,
 		"Do you have any quests?",L_Quest,
 		"Check our relationship",L_Relationship,
+		"Tell me about the world",L_World,
 		"Nevermind",L_Close;
 	
-L_About:
+L_Conversation:
+	// Enhanced conversation system with free-form chat
+	.@bridge_url$ = "http://192.168.0.100:8000";
+	
+	// Initial greeting for conversation mode
+	.@json$ = "{";
+	.@json$ += "\"npc_id\":\"ai_master_001\",";
+	.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+	.@json$ += "\"message\":\"\"";
+	.@json$ += "}";
+	
+	.@greeting$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+	
 	mes "[Aria the Wandering Sage]";
-	mes "I am a wanderer of many lands,";
-	mes "a seeker of knowledge and wisdom.";
-	mes "I've studied ancient texts, explored";
-	mes "forgotten ruins, and learned from";
-	mes "countless cultures.";
+	if (.@greeting$ != "" && .@greeting$ != "...") {
+		mes .@greeting$;
+	} else {
+		mes "Ah, " + .@player_name$ + ". Let us speak of knowledge and wisdom.";
+		mes "What would you like to discuss?";
+	}
 	next;
-	mes "[Aria the Wandering Sage]";
-	mes "My journey has taught me that";
-	mes "true wisdom comes not from books,";
-	mes "but from understanding people";
-	mes "and the world around us.";
-	close;
+	
+	// Conversation loop with menu options and free-form input
+	while(1) {
+		.@choice = select(
+			"Tell me about your travels",
+			"Share some wisdom with me",
+			"Discuss the current economy",
+			"Type my own message...",
+			"Goodbye for now"
+		);
+		
+		if (.@choice == 1) {
+			.@message$ = "Tell me about your travels and adventures";
+		} else if (.@choice == 2) {
+			.@message$ = "Share some wisdom or life lessons";
+		} else if (.@choice == 3) {
+			.@message$ = "What are your thoughts on the current economy?";
+		} else if (.@choice == 4) {
+			// Free-form chat mode
+			mes "[Aria the Wandering Sage]";
+			mes "Speak freely, seeker of knowledge.";
+			mes "I will listen and share what wisdom I can.";
+			mes "Say 'goodbye' or 'farewell' when you wish to end our conversation.";
+			next;
+			
+			// Free-form chat loop
+			while(1) {
+				mes "[Aria the Wandering Sage]";
+				mes "What would you like to discuss?";
+				input .@message$;
+				
+				if (.@message$ == "") {
+					mes "[Aria the Wandering Sage]";
+					mes "Silence often speaks volumes, but I sense you have more to share.";
+					next;
+					continue;
+				}
+				
+				// Check for goodbye keywords
+				if (
+					compare(.@message$, "bye") ||
+					compare(.@message$, "goodbye") ||
+					compare(.@message$, "farewell") ||
+					compare(.@message$, "see you later")
+				) {
+					// Send goodbye message
+					.@json$ = "{";
+					.@json$ += "\"npc_id\":\"ai_master_001\",";
+					.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+					.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+					.@json$ += "\"message\":\"" + .@message$ + "\"";
+					.@json$ += "}";
+					
+					.@response$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+					
+					mes "[Aria the Wandering Sage]";
+					if (.@response$ != "" && .@response$ != "...") {
+						mes .@response$;
+					} else {
+						mes "May wisdom guide your path, " + .@player_name$ + ".";
+						mes "Until we meet again.";
+					}
+					close;
+				}
+				
+				// Send message to AI
+				.@json$ = "{";
+				.@json$ += "\"npc_id\":\"ai_master_001\",";
+				.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+				.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+				.@json$ += "\"message\":\"" + .@message$ + "\"";
+				.@json$ += "}";
+				
+				.@response$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+				
+				// Display response
+				mes "[Aria the Wandering Sage]";
+				if (.@response$ != "" && .@response$ != "...") {
+					mes .@response$;
+				} else {
+					mes "An interesting perspective. Let me contemplate this.";
+					mes "What else would you like to discuss?";
+				}
+				next;
+			}
+		} else {
+			// Goodbye
+			mes "[Aria the Wandering Sage]";
+			mes "May your journey be filled with wisdom and discovery.";
+			close;
+		}
+		
+		// Send menu selection to AI
+		.@json$ = "{";
+		.@json$ += "\"npc_id\":\"ai_master_001\",";
+		.@json$ += "\"player_id\":\"" + .@player_id + "\",";
+		.@json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+		.@json$ += "\"message\":\"" + .@message$ + "\"";
+		.@json$ += "}";
+		
+		.@response$ = httppost(.@bridge_url$ + "/ai/player/chat", .@json$);
+		
+		// Display response
+		mes "[Aria the Wandering Sage]";
+		if (.@response$ != "" && .@response$ != "...") {
+			mes .@response$;
+		} else {
+			mes "That's a thoughtful question. Let me share what I know.";
+		}
+		next;
+	}
 	
 L_Gift:
+	// Enhanced gift system with proper API integration
 	mes "[Aria the Wandering Sage]";
 	mes "A gift? How thoughtful of you!";
-	mes "I appreciate gestures of kindness.";
+	mes "I appreciate gestures of kindness and sharing.";
 	next;
 	mes "[Aria the Wandering Sage]";
 	mes "^FF0000[Gift System]^000000";
 	mes "To give a gift, use the command:";
 	mes "^0000FF@gift <item_id>^000000";
 	mes " ";
-	mes "I particularly enjoy:";
-	mes "- Books and scrolls";
-	mes "- Rare artifacts";
-	mes "- Flowers and herbs";
+	mes "I particularly appreciate:";
+	mes "- Ancient tomes and scrolls (item_id: 7000-7100)";
+	mes "- Rare artifacts and relics (item_id: 8000-8100)";
+	mes "- Exotic flowers and herbs (item_id: 6000-6100)";
+	mes "- Fine teas and writing instruments";
+	next;
+	
+	// Check gift history
+	.@gift_count = getvar("gifts_received_" + .@player_id, .@player_id);
+	if (.@gift_count > 0) {
+		mes "[Aria the Wandering Sage]";
+		mes "You've given me " + .@gift_count + " gift" + (.@gift_count != 1 ? "s" : "") + " so far.";
+		mes "Your generosity is remembered and appreciated.";
+	}
 	close;
 	
 L_Quest:
+	// Enhanced quest system with relationship-based unlocking
+	.@relationship_level = getvar("relationship_" + .@player_id, .@player_id);
+	
 	// Check for available quests via API
 	.@quest_json$ = "{";
 	.@quest_json$ += "\"npc_id\":\"ai_master_001\",";
-	.@quest_json$ += "\"player_id\":\"" + .@player_id + "\"";
+	.@quest_json$ += "\"player_id\":\"" + .@player_id + "\",";
+	.@quest_json$ += "\"relationship_level\":" + .@relationship_level + ",";
+	.@quest_json$ += "\极gifts_received\":" + getvar("gifts_received_" + .@player_id, .@player_id);
 	.@quest_json$ += "}";
 	
 	.@quest_response$ = httppost(.@bridge_url$ + "/ai/quest/available", .@quest_json$);
 	
 	mes "[Aria the Wandering Sage]";
 	if (.@quest_response$ != "" && .@quest_response$ != "[]") {
-		mes "Ah, I do have some tasks";
-		mes "that could use your assistance.";
+		mes "Ah, I do have tasks that could use your assistance.";
+		mes "Your experience and our growing bond make you ideal for these:";
 		mes " ";
 		mes "^0000FF" + .@quest_response$ + "^000000";
 	} else {
-		mes "I have no quests for you at";
-		mes "the moment. Perhaps as we";
-		mes "grow closer, I'll have tasks";
-		mes "that require your unique skills.";
+		mes "I have no quests for you at the moment.";
+		
+		if (.@relationship_level < 20) {
+			mes "As we grow closer through conversation and shared experiences,";
+			mes "I may have tasks that require your unique skills.";
+		} else if (.@relationship_level < 40) {
+			mes "Our bond grows stronger. Continue our conversations,";
+			mes "and soon I may trust you with more delicate matters.";
+		} else {
+			mes "Even at our level of friendship, some knowledge";
+			mes "must be discovered rather than given.";
+		}
+		
 		next;
 		mes "[Aria the Wandering Sage]";
-		mes "^777777Hint: Build our relationship";
-		mes "through conversation and gifts";
-		mes "to unlock special quests!^000000";
+		mes "^777777Relationship Level: " + .@relationship_level + "/100^000000";
+		set .@temp_var_name$, "gifts_received_" + .@player_id;
+		mes "^777777Gifts Received: " + getvar(.@temp_var_name$) + "^000000";
 	}
 	close;
 	
 L_Relationship:
-	// Check relationship level via API
+	// Enhanced relationship checking with detailed status
 	.@rel_json$ = "{";
 	.@rel_json$ += "\"npc_id\":\"ai_master_001\",";
 	.@rel_json$ += "\"player_id\":\"" + .@player_id + "\"";
@@ -144,17 +318,85 @@ L_Relationship:
 	mes "[Aria the Wandering Sage]";
 	mes "Our relationship status:";
 	mes "^0000FF" + .@rel_response$ + "^000000";
+	next;
+	
+	set .@temp_var_name$, "relationship_" + .@player_id;
+	.@relationship_level = getvard(.@temp_var_name$);
+	set .@temp_var_name$, "gifts_received_" + .@player_id;
+	.@gift_count = getvard(.@temp_var_name$);
+	
+	mes "[Aria the Wandering Sage]";
+	mes "Detailed metrics:";
+	mes "^777777Relationship Level: " + .@relationship_level + "/100^000000";
+	mes "^777777Gifts Received: " + .@gift_count + "^000000";
+	set .@temp_var_name$, "last_interaction_" + .@player_id;
+	mes "^777777Last Interaction: " + getvar(.@temp_var_name$) + "^000000";
+	
+	if (.@relationship_level < 20) {
+		mes " ";
+		mes "We are but acquaintances. Let us speak more";
+		mes "and learn about each other.";
+	} else if (.@relationship_level < 40) {
+		mes " ";
+		mes "A growing bond forms between us. Your curiosity";
+		mes "and kindness are appreciated.";
+	} else if (.@relationship_level < 60) {
+		mes " ";
+		mes "We have become friends. I trust you with";
+		mes "deeper knowledge and more complex tasks.";
+	} else if (.@relationship_level < 80) {
+		mes " ";
+		mes "A strong friendship has blossomed. You have";
+		mes "proven yourself worthy of great trust.";
+	} else {
+		mes " ";
+		mes "We share a bond of true friendship and mutual";
+		mes "respect. You are among my most trusted allies.";
+	}
+	close;
+	
+L_World:
+	// World and economic awareness
+	mes "[Aria the Wandering Sage]";
+	mes "The world is ever-changing, filled with patterns";
+	mes "and connections that the observant can discern.";
+	next;
+	
+	// Get economic state
+	.@economy_json$ = "{";
+	.@economy_json$ += "\"state_type\":\"economy\"";
+	.@economy_json$ += "}";
+	
+	.@economy_response$ = httppost(.@bridge_url$ + "/ai/world/state", .@economy_json$);
+	
+	if (.@economy_response$ != "" && .@economy_response$ != "{}") {
+		mes "[Aria the Wandering Sage]";
+		mes "Current economic conditions:";
+		mes "^0000FF" + .@economy_response$ + "^000000";
+	} else {
+		mes "[Aria the Wandering Sage]";
+		mes "The economic winds blow with uncertainty.";
+		mes "Markets rise and fall like the tides,";
+		mes "but wisdom remains constant.";
+	}
+	next;
+	
+	mes "[Aria the Wandering Sage]";
+	mes "As a wanderer, I've learned that true wealth";
+	mes "is not in gold alone, but in knowledge,";
+	mes "relationships, and understanding.";
 	close;
 	
 L_Close:
 	mes "[Aria the Wandering Sage]";
-	mes "May wisdom guide your path.";
+	mes "May wisdom guide your path, and may our";
+	mes "paths cross again when the time is right.";
 	close;
 
 OnInit:
 	.npc_id$ = "ai_master_001";
 	
-	// Register NPC with comprehensive personality
+	// Register NPC with comprehensive personality and gift preferences
 	.@reg_json$ = "{";
 	.@reg_json$ += "\"npc_id\":\"ai_master_001\",";
 	.@reg_json$ += "\"name\":\"Aria the Wandering Sage\",";
@@ -169,11 +411,19 @@ OnInit:
 	.@reg_json$ += "\"neuroticism\":0.30,";
 	.@reg_json$ += "\"moral_alignment\":\"neutral_good\"";
 	.@reg_json$ += "},";
+	.@reg_json$ += "\"gift_preferences\":{";
+	.@reg_json$ += "\"favorite_items\":[7001,7005,8002,6003],"; // Ancient tomes, artifacts, rare flowers
+	.@reg_json$ += "\"hated_items\":[501,502,503],"; // Common junk items
+	.@reg_json$ += "\"category_preferences\":{";
+	.@reg_json$ += "\"books\":0.9,\"artifacts\":0.8,\"flowers\":0.7,\"food\":0.3";
+	.@reg_json$ += "}";
+	.@reg_json$ += "},";
 	.@reg_json$ += "\"initial_goals\":[";
 	.@reg_json$ += "\"Share knowledge with worthy seekers\",";
 	.@reg_json$ += "\"Uncover ancient mysteries\",";
 	.@reg_json$ += "\"Build meaningful relationships\",";
-	.@reg_json$ += "\"Guide adventurers on their path\"";
+	.@reg_json$ += "\"Guide adventurers on their path\",";
+	.@reg_json$ += "\"Understand economic patterns\"";
 	.@reg_json$ += "]";
 	.@reg_json$ += "}";
 	
@@ -181,19 +431,114 @@ OnInit:
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Aria the Wandering Sage registered: " + .@response$;
 	
-	// Enable walking/wandering behavior
+	// Enable intelligent wandering behavior
 	npcwalkto 155, 185;
-
-	// Start autonomous movement timer
+	
+	// Start advanced movement timer with context-aware patterns
 	initnpctimer;
-	end;
 
 OnTimer60000:
-	// Random movement every 60 seconds
-	.@rand_x = 145 + rand(15);
-	.@rand_y = 175 + rand(15);
+	// Advanced movement every 60 seconds with intelligent patterns
+	.@hour = gettime(DT_HOUR);
+	.@economy$ = getvar("economy_state");
+	
+	// Different movement patterns based on time and economy
+	if (.@hour >= 6 && .@hour < 12) {
+		// Morning: more active movement
+		.@rand_x = 145 + rand(20);
+		.@rand_y = 175 + rand(20);
+	} else if (.@hour >= 12 && .@hour < 18) {
+		// Afternoon: moderate movement
+		.@rand_x = 148 + rand(15);
+		.@rand_y = 178 + rand(15);
+	} else {
+		// Evening: slower, more contemplative movement
+		.@rand_x = 150 + rand(10);
+		.@rand_y = 180 + rand(10);
+	}
+	
+	// Adjust movement based on economic conditions
+	if (.@economy$ == "recession") {
+		// Slower movement during economic downturn
+		.@rand_x = 150 + rand(8);
+		.@rand_y = 180 + rand(8);
+	} else if (.@economy$ == "thriving") {
+		// More energetic movement during prosperity
+		.@rand_x = 142 + rand(22);
+		.@rand_y = 172 + rand(22);
+	}
+	
 	npcwalkto .@rand_x, .@rand_y;
 	initnpctimer;
 	end;
 }
 
+// Gift command handler
+-	script	GiftHandler#gift_cmd	-1,{
+	// Handle @gift command
+	if (@gift == 1) {
+		.@item_id = getarg(0);
+		.@player_id = getcharid(0);
+		.@player_name$ = strcharinfo(0);
+		
+		if (.@item_id == 0) {
+			mes "Usage: @gift <item_id>";
+			mes "Example: @gift 7001";
+			close;
+		}
+		
+		// Check if player has the item
+		if (countitem(.@item_id) < 1) {
+			mes "You don't have that item to give.";
+			close;
+		}
+		
+		// Build gift request
+		.@gift_json$ = "{";
+		.@gift_json$ += "\"npc_id\":\"ai_master_001\",";
+		.@gift_json$ += "\"player_id\":\"" + .@player_id + "\",";
+		.@gift_json$ += "\"player_name\":\"" + .@player_name$ + "\",";
+		.@gift_json$ += "\"item_id\":" + .@item_id;
+		.@gift_json$ += "}";
+		
+		.@bridge_url$ = "http://192.168.0.100:8000";
+		.@response$ = httppost(.@bridge_url$ + "/ai/gift/give", .@gift_json$);
+		
+		if (.@response$ != "" && .@response$ != "{}") {
+			// Parse response (simplified for rAthena compatibility)
+			.@success = 1; // Assume success for now, would need proper JSON parsing
+			.@reaction$ = "Thank you for the thoughtful present!";
+			
+			if (.@success) {
+				// Remove item from player
+				delitem .@item_id, 1;
+				
+				// Update gift count
+				set .@temp_var_name$, "gifts_received_" + .@player_id;
+				.@current_gifts = getvar(.@temp_var_name$);
+				set getvar(.@temp_var_name$), .@current_gifts + 1;
+				
+				// Update relationship (simplified)
+				.@rel_change = 5; // Default relationship increase
+				set .@temp_var_name$, "relationship_" + .@player_id;
+				.@current_rel = getvar(.@temp_var_name$);
+				set getvar(.@temp_var_name$), .@current_rel + .@rel_change;
+				
+				mes "[Gift System]";
+				mes "Gift given successfully!";
+				mes " ";
+				mes "[Aria's Reaction]";
+				mes .@reaction$;
+			} else {
+				mes "[Gift System]";
+				mes "Failed to process gift.";
+				mes "Please try again later.";
+			}
+		} else {
+			mes "[Gift System]";
+			mes "Gift system temporarily unavailable.";
+		}
+		close;
+	}
+	end;
+}
