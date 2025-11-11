@@ -22,8 +22,8 @@ OnInit:
 	// - NPCs without #suffix: use exact name (e.g., "WanderingMerchant")
 
 	// Normal NPCs (30-second interval)
-	setarray .npc_ids$[0], "ai_guard_003", "ai_explorer_002";
-	setarray .npc_names$[0], "Guard Thorne#ai003", "Lyra the Explorer#ai002";
+	setarray .npc_ids$[0], "ai_guard_003", "ai_explorer_002", "ai_master_001";
+	setarray .npc_names$[0], "Guard Thorne#ai003", "Lyra the Explorer#ai002", "Aria the Wandering Sage#ai_master";
 
 	// Aggressive movement NPCs (2-second interval)
 	setarray .aggressive_npc_ids$[0], "test_merchant_001";

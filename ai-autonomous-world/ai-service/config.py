@@ -105,11 +105,7 @@ class Settings(BaseSettings):
     # CrewAI Configuration
     crewai_verbose: bool = Field(default=True, env="CREWAI_VERBOSE")
     crewai_max_iterations: int = Field(default=15, env="CREWAI_MAX_ITERATIONS")
-    
-    # Memori SDK Configuration
-    memori_enabled: bool = Field(default=True, env="MEMORI_ENABLED")
-    memori_api_key: Optional[str] = Field(default=None, env="MEMORI_API_KEY")
-    
+
     # API Security
     api_key: Optional[str] = Field(default=None, env="API_KEY")
     api_key_header: str = Field(default="X-API-Key", env="API_KEY_HEADER")

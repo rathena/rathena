@@ -511,16 +511,11 @@ def get_orchestrator() -> AgentOrchestrator:
             "verbose": False
         }
 
-        # Note: Memori SDK has been replaced with OpenMemory SDK
-        # OpenMemory is initialized globally in main.py and accessed via get_openmemory_manager()
-        # The orchestrator no longer needs a memori_client parameter
-        memori_client = None
         logger.info("Using OpenMemory SDK for persistent memory (initialized globally)")
 
         _orchestrator = AgentOrchestrator(
             llm_provider=llm,
-            config=config,
-            memori_client=memori_client
+            config=config
         )
         logger.info("Agent Orchestrator initialized for player interactions")
     return _orchestrator

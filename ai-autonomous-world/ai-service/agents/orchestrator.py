@@ -35,8 +35,7 @@ class AgentOrchestrator:
     def __init__(
         self,
         llm_provider: Any,
-        config: Dict[str, Any],
-        memori_client: Optional[Any] = None
+        config: Dict[str, Any]
     ):
         """
         Initialize Agent Orchestrator
@@ -44,7 +43,6 @@ class AgentOrchestrator:
         Args:
             llm_provider: LLM provider instance
             config: Configuration dictionary
-            memori_client: Deprecated parameter (kept for backward compatibility)
 
         Note:
             Memory storage now uses OpenMemory SDK (initialized globally in main.py)

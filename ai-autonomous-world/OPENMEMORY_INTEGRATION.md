@@ -2,7 +2,7 @@
 
 ## Overview
 
-The AI Autonomous World system uses **OpenMemory SDK** for persistent long-term memory storage. This replaces the previous Memori SDK implementation which had critical initialization issues.
+The AI Autonomous World system uses **OpenMemory SDK** for persistent long-term memory storage.
 
 ## Architecture
 

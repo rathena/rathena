@@ -30,8 +30,7 @@ class MemoryAgent(BaseAIAgent):
         self,
         agent_id: str,
         llm_provider: Any,
-        config: Dict[str, Any],
-        memori_client: Any = None
+        config: Dict[str, Any]
     ):
         """
         Initialize Memory Agent
@@ -40,10 +39,9 @@ class MemoryAgent(BaseAIAgent):
             agent_id: Unique identifier for this agent
             llm_provider: LLM provider instance
             config: Agent configuration
-            memori_client: Deprecated parameter (kept for backward compatibility)
 
         Note:
-            Memory storage now uses OpenMemory SDK (accessed globally via get_openmemory_manager())
+            Memory storage uses OpenMemory SDK (accessed globally via get_openmemory_manager())
         """
         super().__init__(
             agent_id=agent_id,
@@ -53,7 +51,6 @@ class MemoryAgent(BaseAIAgent):
         )
 
         # OpenMemory SDK is accessed globally via get_openmemory_manager()
-        # The memori_client parameter is deprecated but kept for backward compatibility
         logger.info(f"Memory Agent {agent_id} initialized with OpenMemory SDK")
     
     def _create_crew_agent(self) -> Agent:
@@ -193,7 +190,7 @@ class MemoryAgent(BaseAIAgent):
             raise ValueError("player_id required for relationship update")
 
         # Get current relationship level from database
-        from database import db
+        from ai_service.database import db
 
         relationship_key = f"relationship:{context.npc_id}:{player_id}"
         current_level = await db.redis.get(relationship_key)

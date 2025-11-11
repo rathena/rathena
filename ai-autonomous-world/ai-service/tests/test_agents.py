@@ -252,15 +252,9 @@ class TestAgentOrchestrator:
     @pytest.mark.asyncio
     async def test_orchestrator_initialization(self, mock_llm_provider):
         """Test orchestrator initializes correctly"""
-        # Create mock memori client
-        mock_memori = MagicMock()
-        mock_memori.store = AsyncMock()
-        mock_memori.retrieve = AsyncMock(return_value=[])
-
         orchestrator = AgentOrchestrator(
             llm_provider=mock_llm_provider,
-            config={},
-            memori_client=mock_memori
+            config={}
         )
 
         assert orchestrator.llm_provider is not None
@@ -275,8 +269,7 @@ class TestAgentOrchestrator:
 
         orchestrator = AgentOrchestrator(
             llm_provider=mock_llm_provider,
-            config={},
-            memori_client=mock_memori
+            config={}
         )
 
         mock_llm_provider.generate.return_value = MagicMock(

@@ -294,3 +294,74 @@ async def complete_quest(quest_id: str, completion_data: Optional[Dict[str, Any]
             detail=f"Failed to complete quest: {str(e)}"
         )
 
+
+@router.post("/available")
+async def get_available_quests(request: Dict[str, Any]):
+    """
+    Get available quests for a player from an NPC
+
+    Request body should contain:
+    - npc_id: NPC identifier
+    - player_id: Player identifier
+    - player_level: Player level (optional)
+    """
+    try:
+        npc_id = request.get("npc_id")
+        player_id = request.get("player_id")
+
+        if not npc_id or not player_id:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail="npc_id and player_id are required"
+            )
+
+        logger.info(f"Getting available quests for player {player_id} from NPC {npc_id}")
+
+        # Get all quests for this NPC
+        quest_key_pattern = f"quest:{npc_id}:*"
+        quest_keys = []
+
+        # Scan for quest keys
+        cursor = 0
+        while True:
+            cursor, keys = await db.redis.scan(cursor, match=quest_key_pattern, count=100)
+            quest_keys.extend(keys)
+            if cursor == 0:
+                break
+
+        available_quests = []
+
+        for quest_key in quest_keys:
+            quest_data = await db.redis.get(quest_key)
+            if quest_data:
+                try:
+                    import json
+                    quest = json.loads(quest_data) if isinstance(quest_data, (str, bytes)) else quest_data
+
+                    # Check if quest is available (not completed, not in progress)
+                    quest_status = quest.get("status", "available")
+                    if quest_status == "available":
+                        available_quests.append(quest)
+                except Exception as e:
+                    logger.warning(f"Failed to parse quest data for {quest_key}: {e}")
+                    continue
+
+        logger.info(f"Found {len(available_quests)} available quests for player {player_id}")
+
+        return {
+            "npc_id": npc_id,
+            "player_id": player_id,
+            "quests": available_quests,
+            "count": len(available_quests),
+            "timestamp": datetime.utcnow().isoformat()
+        }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        logger.error(f"Error getting available quests: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Failed to get available quests: {str(e)}"
+        )
+

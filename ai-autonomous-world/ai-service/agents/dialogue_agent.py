@@ -291,7 +291,7 @@ class DialogueAgent(BaseAIAgent):
         enabling NPCs to reference past conversations and avoid repetition.
         """
         try:
-            from main import get_openmemory_manager
+            from ai_service.main import get_openmemory_manager
             openmemory_manager = get_openmemory_manager()
 
             if not openmemory_manager or not openmemory_manager.is_available():
@@ -354,7 +354,9 @@ class DialogueAgent(BaseAIAgent):
 
         # Validate inputs
         if not player_message or not isinstance(player_message, str):
-            logger.warning(f"Invalid player message: {player_message}")
+            # Only log if message is not just empty (initial greeting is expected to be empty)
+            if player_message and not isinstance(player_message, str):
+                logger.warning(f"Invalid player message type: {type(player_message)}")
             return f"I didn't quite catch that, {player_name}."
 
         if len(player_message) > settings.max_player_message_length:

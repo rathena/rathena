@@ -512,7 +512,7 @@ async def get_npc_memory(
     """
     Get NPC memories
 
-    Retrieves memories from Memori SDK / PostgreSQL.
+    Retrieves memories from OpenMemory SDK / PostgreSQL.
     Can filter by memory type (episodic, semantic, procedural).
     Supports pagination with limit and offset.
     """
@@ -562,7 +562,7 @@ async def add_npc_memory(npc_id: str, memory_data: Dict[str, Any]):
     """
     Add a memory to NPC
 
-    Stores memory in Memori SDK / PostgreSQL with vector embedding.
+    Stores memory in OpenMemory SDK / PostgreSQL with vector embedding.
     Memory types: episodic (events), semantic (facts), procedural (skills).
     """
     try:

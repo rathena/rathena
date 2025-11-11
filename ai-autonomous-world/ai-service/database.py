@@ -1,7 +1,7 @@
 """
 Database connection management for AI Service
 - DragonflyDB/Redis: High-speed caching and real-time state
-- PostgreSQL: Persistent memory storage for Memori SDK
+- PostgreSQL: Persistent memory storage for OpenMemory SDK
 """
 
 import asyncio
@@ -223,7 +223,7 @@ class PostgreSQLManager:
             raise
 
     def get_connection_string(self) -> str:
-        """Get the PostgreSQL connection string (for Memori SDK)"""
+        """Get the PostgreSQL connection string (for OpenMemory SDK)"""
         return settings.postgres_connection_string
 
 
@@ -718,8 +718,18 @@ class Database:
             logger.error(f"Error clearing conversation history for {conversation_key}: {e}")
             raise
 
-
 # Global database instances
 db = Database()  # DragonflyDB/Redis for caching and real-time state
 postgres_db = PostgreSQLManager()  # PostgreSQL for persistent memory storage
+
+
+# Utility functions for accessing database instances
+def get_dragonfly_client():
+    """Get the global DragonflyDB instance"""
+    return db
+
+
+def get_postgres_pool():
+    """Get the global PostgreSQL manager instance"""
+    return postgres_db
 

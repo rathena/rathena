@@ -23,9 +23,12 @@ from ai_service.routers.chat_command import router as chat_command_router
 from ai_service.routers.batch import router as batch_router
 from ai_service.routers.economy import router as economy_router
 from ai_service.routers.faction import router as faction_router
+from ai_service.routers.gift import router as gift_router
 from ai_service.routers.npc_spawning import router as npc_spawning_router
 from ai_service.routers.world_bootstrap import router as world_bootstrap_router
 from ai_service.routers.npc_movement import router as npc_movement_router
+from ai_service.routers.mvp import router as mvp_router
+from ai_service.routers.relationship import router as relationship_router
 from ai_service.middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
@@ -166,17 +169,6 @@ async def lifespan(app: FastAPI):
         logger.error(f"LLM provider initialization failed: {e}", exc_info=True)
         raise
 
-    # Start background task scheduler for autonomous features
-    try:
-        from ai_service.scheduler import autonomous_scheduler
-        autonomous_scheduler.start()
-        logger.info("✓ Autonomous task scheduler started")
-    except ImportError as e:
-        logger.warning(f"Scheduler dependencies not available: {e}")
-    except Exception as e:
-        logger.error(f"Scheduler initialization failed: {e}", exc_info=True)
-        # Don't raise - scheduler is optional
-
     # Initialize NPC Relationship Manager
     try:
         from ai_service.tasks.npc_relationships import npc_relationship_manager
@@ -268,16 +260,6 @@ async def lifespan(app: FastAPI):
         logger.info("✓ Autonomous task scheduler stopped")
     except Exception as e:
         logger.error(f"Scheduler shutdown error: {e}", exc_info=True)
-
-    # Shutdown Memori SDK
-    try:
-        from ai_service.memory.memori_manager import get_memori_manager
-        memori_mgr = get_memori_manager()
-        if memori_mgr:
-            memori_mgr.shutdown()
-            logger.info("✓ Memori SDK shutdown complete")
-    except Exception as e:
-        logger.error(f"Memori SDK shutdown error: {e}", exc_info=True)
 
     # Disconnect from PostgreSQL
     try:
@@ -420,20 +402,23 @@ app.include_router(chat_command_router)
 app.include_router(batch_router)
 app.include_router(economy_router)
 app.include_router(faction_router)
+app.include_router(gift_router)
 app.include_router(npc_spawning_router)
 app.include_router(world_bootstrap_router)
 app.include_router(npc_movement_router)
+app.include_router(mvp_router)
+app.include_router(relationship_router)
 
-logger.info("✓ All routers registered (11 routers)")
+logger.info("✓ All routers registered (14 routers)")
 
 
 # Run server
 if __name__ == "__main__":
     uvicorn.run(
-        "main:app",
+        app,  # Use app object directly instead of string import
         host=settings.service_host,
         port=settings.service_port,
-        reload=settings.debug,
+        reload=False,  # Disable reload when using app object
         log_level=settings.log_level.lower(),
     )
 

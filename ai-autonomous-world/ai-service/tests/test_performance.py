@@ -186,8 +186,7 @@ class TestAgentPerformance:
 
         orchestrator = AgentOrchestrator(
             llm_provider=mock_llm_provider,
-            config={},
-            memori_client=mock_memori
+            config={}
         )
 
         mock_llm_provider.generate.return_value = MagicMock(
@@ -233,15 +232,9 @@ class TestEndToEndPerformance:
         db = Database()
         db.client = mock_database.client
 
-        # Create mock memori client
-        mock_memori = MagicMock()
-        mock_memori.store = AsyncMock()
-        mock_memori.retrieve = AsyncMock(return_value=[])
-
         orchestrator = AgentOrchestrator(
-            llm_provider=mock_llm_provider,
-            config={},
-            memori_client=mock_memori
+            llm_provider=mock_llm极客时间_provider,
+            config={}
         )
 
         mock_llm_provider.generate.return_value = MagicMock(
