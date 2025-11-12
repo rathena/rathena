@@ -778,6 +778,7 @@ struct Battle_Config
 	int32 major_overweight_rate;
 	int32 trade_count_stackable;
 	int32 enable_bonus_map_drops;
+	int32 hide_cloaked_units;
 
 #include <custom/battle_config_struct.inc>
 };

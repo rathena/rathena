@@ -154,8 +154,9 @@ Body:
       Raises your base level the desired number of levels.
   - Command: bodystyle
     Help: |
-      Params: <bodystyle> - value between 0-1
-      Changes the character's bodystyle to <bodystyle>.
+      Params: <job ID>
+      Params: off. Restores default job bodystyle.
+      Changes the character's bodystyle to <job ID>.
   - Command: breakguild
     Help: |
       Breaks the guild of the attached character.

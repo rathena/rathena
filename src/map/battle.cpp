@@ -12378,6 +12378,7 @@ static const struct _battle_data {
 	{ "major_overweight_rate",              &battle_config.major_overweight_rate,           90,     0,      100             },
 	{ "trade_count_stackable",              &battle_config.trade_count_stackable,           1,      0,      1,              },
 	{ "enable_bonus_map_drops",             &battle_config.enable_bonus_map_drops,          1,      0,      1,              },
+	{ "hide_cloaked_units",                 &battle_config.hide_cloaked_units,              0,      0,      BL_ALL,         },
 
 #include <custom/battle_config_init.inc>
 };
