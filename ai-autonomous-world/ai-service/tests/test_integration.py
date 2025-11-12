@@ -16,7 +16,7 @@ class TestModuleImports:
     
     def test_config_import(self):
         """Test config module imports"""
-        from ai_service.config import settings, Settings
+        from config import settings, Settings
         assert settings is not None
         assert Settings is not None
     
@@ -63,7 +63,7 @@ class TestConfigurationValues:
     
     def test_remediation_config_fields(self):
         """Test new configuration fields from remediation"""
-        from ai_service.config import settings
+        from config import settings
         
         # Action validation config
         assert hasattr(settings, 'max_movement_distance')
@@ -88,14 +88,14 @@ class TestConfigurationValues:
     
     def test_cors_security(self):
         """Test CORS is not set to wildcard"""
-        from ai_service.config import settings
+        from config import settings
         
         assert "*" not in settings.cors_origins
         assert len(settings.cors_origins) > 0
     
     def test_llm_provider_config(self):
         """Test LLM provider configuration"""
-        from ai_service.config import settings
+        from config import settings
         
         assert settings.default_llm_provider in [
             "openai", "azure_openai", "anthropic", 

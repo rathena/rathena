@@ -9,7 +9,7 @@ from loguru import logger
 
 from crewai import Agent
 try:
-    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 
@@ -61,7 +61,7 @@ class MemoryAgent(BaseAIAgent):
 
         # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
         try:
-            from ai_service.config import settings
+            from config import settings
 
             # Set Azure OpenAI environment variables for litellm
             os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key
@@ -190,7 +190,7 @@ class MemoryAgent(BaseAIAgent):
             raise ValueError("player_id required for relationship update")
 
         # Get current relationship level from database
-        from ai_service.database import db
+        from database import db
 
         relationship_key = f"relationship:{context.npc_id}:{player_id}"
         current_level = await db.redis.get(relationship_key)
@@ -215,7 +215,7 @@ class MemoryAgent(BaseAIAgent):
 
         try:
             # Get OpenMemory manager
-            from ai_service.memory.openmemory_manager import get_openmemory_manager
+            from memory.openmemory_manager import get_openmemory_manager
             om_manager = get_openmemory_manager()
 
             if not om_manager or not om_manager.is_available():
@@ -289,7 +289,7 @@ class MemoryAgent(BaseAIAgent):
 
         try:
             # Get OpenMemory manager
-            from ai_service.memory.openmemory_manager import get_openmemory_manager
+            from memory.openmemory_manager import get_openmemory_manager
             om_manager = get_openmemory_manager()
 
             if not om_manager or not om_manager.is_available():

@@ -514,7 +514,6 @@ def get_orchestrator() -> AgentOrchestrator:
         logger.info("Using OpenMemory SDK for persistent memory (initialized globally)")
 
         _orchestrator = AgentOrchestrator(
-            llm_provider=llm,
             config=config
         )
         logger.info("Agent Orchestrator initialized for player interactions")

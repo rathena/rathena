@@ -10,7 +10,7 @@ from loguru import logger
 from enum import Enum
 import uuid
 
-from ai_service.config import settings
+from config import settings
 
 
 class EventPriority(str, Enum):

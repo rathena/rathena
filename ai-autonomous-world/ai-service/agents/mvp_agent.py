@@ -10,8 +10,8 @@ from datetime import datetime, timedelta
 
 from crewai import Agent
 try:
-    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-    from ai_service.models.mvp_behavior import (
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from models.mvp_behavior import (
         MVPState, MVPAction, MVPBehaviorState, CombatPattern,
         PlayerStrategy, MVPCombatMemory, MVPPersonality, MVPBehaviorConfig
     )
@@ -59,7 +59,7 @@ class MVPAgent(BaseAIAgent):
         import os
         
         try:
-            from ai_service.config import settings
+            from config import settings
             
             os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key
             os.environ["AZURE_API_BASE"] = settings.azure_openai_endpoint

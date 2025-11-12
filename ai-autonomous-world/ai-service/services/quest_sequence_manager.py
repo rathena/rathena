@@ -8,9 +8,9 @@ from typing import Dict, Any, List, Optional
 import json
 
 try:
-    from ai_service.models.quest import Quest, QuestStatus
-    from ai_service.database import db
-    from ai_service.services.quest_trigger_engine import get_trigger_engine
+    from models.quest import Quest, QuestStatus
+    from database import db
+    from services.quest_trigger_engine import get_trigger_engine
 except ImportError:
     from models.quest import Quest, QuestStatus
     from database import db

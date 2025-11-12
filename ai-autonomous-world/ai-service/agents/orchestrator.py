@@ -37,10 +37,12 @@ class AgentOrchestrator:
         self.npc_context = npc_context or {}
         
         # Initialize agents
-        self.dialogue_agent = DialogueAgent(config.get("dialogue", {}))
-        self.decision_agent = DecisionAgent(config.get("decision", {}))
-        self.memory_agent = MemoryAgent(config.get("memory", {}))
-        self.world_agent = WorldAgent(config.get("world", {}))
+        from llm.factory import get_llm_provider
+        llm = get_llm_provider()
+        self.dialogue_agent = DialogueAgent("dialogue_agent", llm, config.get("dialogue", {}))
+        self.decision_agent = DecisionAgent("decision_agent", llm, config.get("decision", {}))
+        self.memory_agent = MemoryAgent("memory_agent", llm, config.get("memory", {}))
+        self.world_agent = WorldAgent("world_agent", llm, config.get("world", {}))
         
         logger.info("AgentOrchestrator initialized with {} agents", 4)
 

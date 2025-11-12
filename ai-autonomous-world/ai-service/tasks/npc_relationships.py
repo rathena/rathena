@@ -10,7 +10,7 @@ from typing import Dict, List, Optional, Tuple, Any
 from loguru import logger
 import uuid
 
-from ai_service.config import settings
+from config import settings
 from database import db, postgres_db
 from models.npc_relationship import (
     NPCRelationship,
@@ -87,7 +87,7 @@ class NPCRelationshipManager:
         """Check for NPCs in proximity and trigger interactions"""
         try:
             # Get all active NPCs from cache
-            npc_keys = await self.db.keys("npc:*:state")
+            npc_keys = await self.db.client.keys("npc:*:state")
             
             if len(npc_keys) < 2:
                 return  # Need at least 2 NPCs
@@ -96,7 +96,7 @@ class NPCRelationshipManager:
             npc_positions = {}
             for key in npc_keys:
                 npc_id = key.decode().split(":")[1]
-                state_data = await self.db.get(key)
+                state_data = await self.db.client.get(key)
                 if state_data:
                     state = json.loads(state_data)
                     if "position" in state:

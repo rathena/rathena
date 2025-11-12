@@ -392,7 +392,7 @@ class TestLLMFactoryGetProvider:
     def test_get_llm_provider_openai_with_settings(self):
         """Test get_llm_provider builds config from settings for OpenAI"""
         from llm.factory import get_llm_provider
-        from ai_service.config import settings
+        from config import settings
 
         # Clear cache before test
         LLMProviderFactory.clear_cache()
@@ -411,7 +411,7 @@ class TestLLMFactoryGetProvider:
     def test_get_llm_provider_anthropic_with_settings(self):
         """Test get_llm_provider builds config from settings for Anthropic"""
         from llm.factory import get_llm_provider
-        from ai_service.config import settings
+        from config import settings
 
         # Clear cache before test
         LLMProviderFactory.clear_cache()
@@ -430,7 +430,7 @@ class TestLLMFactoryGetProvider:
     def test_get_llm_provider_google_with_settings(self):
         """Test get_llm_provider builds config from settings for Google"""
         from llm.factory import get_llm_provider
-        from ai_service.config import settings
+        from config import settings
 
         # Clear cache before test
         LLMProviderFactory.clear_cache()

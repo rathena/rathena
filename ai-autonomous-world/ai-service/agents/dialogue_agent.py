@@ -48,7 +48,7 @@ class DialogueAgent(BaseAIAgent):
         # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
         # CrewAI uses litellm under the hood which supports Azure via environment variables
         try:
-            from ai_service.config import settings
+            from config import settings
 
             # Set Azure OpenAI environment variables for litellm
             os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key
@@ -283,7 +283,7 @@ class DialogueAgent(BaseAIAgent):
         enabling NPCs to reference past conversations and avoid repetition.
         """
         try:
-            from ai_service.main import get_openmemory_manager
+            from main import get_openmemory_manager
             openmemory_manager = get_openmemory_manager()
 
             if not openmemory_manager or not openmemory_manager.is_available():

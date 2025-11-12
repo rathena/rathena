@@ -112,7 +112,7 @@ def get_llm_provider(
     Returns:
         LLM provider instance
     """
-    from ai_service.config import settings
+    from config import settings
     
     # Use default provider if not specified
     if provider_name is None:

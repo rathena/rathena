@@ -8,7 +8,7 @@ from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 from loguru import logger
 
-from ai_service.config import settings
+from config import settings
 from database import db, postgres_db
 from agents.decision_agent import DecisionAgent
 from agents.base_agent import AgentContext

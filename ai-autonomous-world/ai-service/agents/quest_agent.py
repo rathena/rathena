@@ -10,12 +10,12 @@ from datetime import datetime
 
 from crewai import Agent
 try:
-    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-    from ai_service.models.quest import (
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from models.quest import (
         Quest, QuestType, QuestDifficulty, QuestStatus,
         QuestObjective, QuestReward, QuestRequirements
     )
-    from ai_service.models.quest_trigger import (
+    from models.quest_trigger import (
         QuestTrigger, TriggerType, RelationshipTrigger, GiftTrigger,
         SequenceTrigger, RealTimeTrigger, ScheduledTrigger
     )
@@ -66,7 +66,7 @@ class QuestAgent(BaseAIAgent):
 
         # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
         try:
-            from ai_service.config import settings
+            from config import settings
 
             # Set Azure OpenAI environment variables for litellm
             os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key

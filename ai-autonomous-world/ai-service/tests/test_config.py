@@ -4,7 +4,7 @@ Unit tests for configuration module
 
 import pytest
 from pydantic import ValidationError
-from ai_service.config import Settings
+from config import Settings
 
 
 class TestSettings:
@@ -235,13 +235,13 @@ class TestConfigValidation:
 
     def test_load_yaml_config_file_not_found(self):
         """Test load_yaml_config with non-existent file"""
-        from ai_service.config import load_yaml_config
+        from config import load_yaml_config
         result = load_yaml_config("nonexistent.yaml")
         assert result == {}
 
     def test_load_yaml_config_invalid_yaml(self, tmp_path):
         """Test load_yaml_config with invalid YAML"""
-        from ai_service.config import load_yaml_config
+        from config import load_yaml_config
         invalid_yaml = tmp_path / "invalid.yaml"
         invalid_yaml.write_text("invalid: yaml: content:")
         result = load_yaml_config(str(invalid_yaml))
@@ -249,7 +249,7 @@ class TestConfigValidation:
 
     def test_get_settings_with_gpu_enabled(self, monkeypatch):
         """Test get_settings with GPU enabled"""
-        from ai_service.config import get_settings
+        from config import get_settings
         monkeypatch.setenv("GPU_ENABLED", "true")
         monkeypatch.setenv("GPU_DEVICE", "cuda:0")
 

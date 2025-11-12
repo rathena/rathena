@@ -81,7 +81,7 @@ class TestDialogueAgent:
     @pytest.mark.asyncio
     async def test_dialogue_length_limit(self, mock_llm_provider, mock_agent_context):
         """Test dialogue agent enforces message length limit"""
-        from ai_service.config import settings
+        from config import settings
         from models.npc import NPCPersonality
 
         agent = DialogueAgent(
@@ -147,7 +147,7 @@ class TestDialogueAgent:
     @pytest.mark.asyncio
     async def test_dialogue_uses_config_temperature(self, mock_llm_provider):
         """Test dialogue agent uses configured temperature"""
-        from ai_service.config import settings
+        from config import settings
         from models.npc import NPCPersonality
 
         agent = DialogueAgent(
@@ -215,7 +215,7 @@ class TestDecisionAgent:
     @pytest.mark.asyncio
     async def test_decision_uses_config_temperature(self, mock_llm_provider):
         """Test decision agent uses configured temperature"""
-        from ai_service.config import settings
+        from config import settings
         from models.npc import NPCPersonality
 
         agent = DecisionAgent(

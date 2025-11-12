@@ -10,7 +10,7 @@ from typing import Dict, Any, List, Optional, Tuple
 from loguru import logger
 import json
 
-from ai_service.config import settings
+from config import settings
 from database import db
 from models.world import EnvironmentState
 

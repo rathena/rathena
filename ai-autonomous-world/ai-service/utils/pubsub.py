@@ -8,7 +8,7 @@ import json
 import logging
 import asyncio
 from typing import Dict, Any, Callable, Optional, List
-from ai_service.database import db
+from database import db
 
 logger = logging.getLogger(__name__)
 

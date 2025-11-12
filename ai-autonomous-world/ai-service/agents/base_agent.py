@@ -11,7 +11,7 @@ from loguru import logger
 
 from crewai import Agent
 try:
-    from ai_service.models.npc import NPCPersonality
+    from models.npc import NPCPersonality
 except ModuleNotFoundError:
     from models.npc import NPCPersonality
 

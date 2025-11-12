@@ -9,7 +9,7 @@ import json
 
 from crewai import Agent
 try:
-    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 
@@ -46,7 +46,7 @@ class WorldAgent(BaseAIAgent):
 
         # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
         try:
-            from ai_service.config import settings
+            from config import settings
 
             # Set Azure OpenAI environment variables for litellm
             os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key

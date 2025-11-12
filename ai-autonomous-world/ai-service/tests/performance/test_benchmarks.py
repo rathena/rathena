@@ -176,7 +176,7 @@ class TestConfigurationPerformance:
     @pytest.mark.benchmark(group="configuration")
     def test_config_load_performance(self, benchmark):
         """Benchmark configuration loading"""
-        from ai_service.config import Settings
+        from config import Settings
         
         def load_config():
             settings = Settings()

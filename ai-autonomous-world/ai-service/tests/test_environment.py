@@ -20,7 +20,7 @@ from tasks.environment import (
     environment_manager
 )
 from models.world import EnvironmentState
-from ai_service.config import settings
+from config import settings
 
 
 @pytest.fixture

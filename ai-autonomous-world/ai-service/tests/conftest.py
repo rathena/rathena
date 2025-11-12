@@ -24,7 +24,7 @@ def event_loop():
 @pytest.fixture
 def mock_settings():
     """Mock settings for testing"""
-    from ai_service.config import Settings
+    from config import Settings
     settings = Settings(
         service_name="test-service",
         service_host="127.0.0.1",

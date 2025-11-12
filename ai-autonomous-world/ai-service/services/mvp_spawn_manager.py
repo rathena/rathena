@@ -10,8 +10,8 @@ import random
 import asyncio
 
 try:
-    from ai_service.models.mvp_behavior import MVPSpawnCondition, MVPBehaviorConfig
-    from ai_service.database import db
+    from models.mvp_behavior import MVPSpawnCondition, MVPBehaviorConfig
+    from database import db
 except ImportError:
     from models.mvp_behavior import MVPSpawnCondition, MVPBehaviorConfig
     from database import db
