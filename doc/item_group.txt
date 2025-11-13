@@ -270,7 +270,7 @@ RefineMinimum: Applies at least this refine level to all equipable items.
 ---------------------------------------
 
 RefineMaximum: Applies at most this refine level to all equipable items.
-       When RefineMaximum also has a value, the refine level of the equipment will be between RefineMinimum and RefineMaximum.
+       When RefineMinimum also has a value, the refine level of the equipment will be between RefineMinimum and RefineMaximum.
        When RefineMinimum hasn't a value, the refine level of the equipment will be between 1 and RefineMaximum.
 
 Example 1:
