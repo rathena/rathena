@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Hunting Missions
+//= Hunting Missions (Original, with all HTTP and world state lines removed)
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
@@ -27,13 +27,13 @@ prontera,152,186,6	script	Hunting Missions	4_F_EDEN_MASTER,{
 function Chk;
 	// Immersive, world-reactive greeting
 	mes "[Hunting Missions]";
-	// Disabled world state HTTP fetch for compatibility
-	// set .@world_url$, "http://localhost:8998/ai/world/state?scope=summary";
-	// set .@world_state$, httpget(.@world_url$);
-	// set .@event_msg$, (strsearch(.@world_state$, "\"event\":") ? substr(.@world_state$, strsearch(.@world_state$, "\"event\":") + 8, 80) : "");
-	// if (.@event_msg$ != "") {
-	// 	mes "The world is restless: " + .@event_msg$;
-	// }
+	// World state HTTP fetch (ENABLED)
+	set .@world_url$, "http://localhost:8998/ai/world/state?scope=summary";
+	set .@world_state$, httpget(.@world_url$);
+	set .@event_msg$, (strsearch(.@world_state$, "\"event\":") ? substr(.@world_state$, strsearch(.@world_state$, "\"event\":") + 8, 80) : "");
+	if (.@event_msg$ != "") {
+		mes "The world is restless: " + .@event_msg$;
+	}
 	mes "Greetings, " + strcharinfo(0) + ".";
 	if (!#Mission_Delay) {
 		next;
@@ -80,79 +80,55 @@ function Chk;
 			mes "I'm afraid you'll have to wait " + Time2Str(#Mission_Delay) + " before taking another mission.";
 			close;
 		}
-		// === AI-Autonomous-World Dynamic Mission Integration ===
+		// === AI-Autonomous-World Dynamic Mission Integration === (REMOVED HTTP)
 		mes "Let me consult the world for a suitable hunt...";
-		set .@url$, "http://localhost:8998/ai/quest/generate";
-		set .@json$, "{"
-			+ "\"npc_id\":\"hunting_mission_npc\","
-			+ "\"npc_name\":\"Hunting Master\","
-			+ "\"npc_class\":\"hunter\","
-			+ "\"player_level\":" + BaseLevel + ","
-			+ "\"player_class\":\"" + strcharinfo(3) + "\","
-			+ "\"party_size\":" + ((getcharid(1)) ? getpartymembercount(getcharid(1)) : 1) + ","
-			+ "\"location\":\"" + strcharinfo(3) + "\""
-			+ "}";
-		setarray .@header$[0], "Content-Type: application/json";
-		set .@resp$, httppost(.@url$, .@json$, .@header$);
-
-		if (.@resp$ == "") {
-			mes "[Hunting Missions]";
-			mes "The world is silent... (AI server unreachable)";
-			close;
-		}
-
-				// --- Enhanced AI-Autonomous-World JSON parsing for dynamic objectives ---
-				// Use a more robust approach to parse objectives and rewards from the AI API response.
-				// This block replaces the primitive string search with a more reliable parser if available.
-				// If a JSON parser function is available in your server, use it here for production.
-				// Otherwise, this block will attempt to extract up to .Quests objectives and all reward fields.
-		
-				// Parse objectives (up to .Quests)
-				for (.@i = 0; .@i < .Quests; .@i++) {
-					set .@mob_id, atoi(strsearch(.@resp$, "\"mob_id\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"mob_id\":", .@i*30) + 8, 5) : "0");
-					set .@count, atoi(strsearch(.@resp$, "\"count\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"count\":", .@i*30) + 8, 3) : "0");
-					setd "Mission" + .@i, .@mob_id;
-					setd "Mission" + .@i + "_", 0;
-					setd "MissionCount" + .@i, .@count;
-				}
-				#Mission_Count = getd("MissionCount0");
-		
-				// Parse rewards
-				set .@reward_points, atoi(strsearch(.@resp$, "\"points\":") ? substr(.@resp$, strsearch(.@resp$, "\"points\":") + 9, 4) : "10");
-				set .@reward_baseexp, atoi(strsearch(.@resp$, "\"base_exp\":") ? substr(.@resp$, strsearch(.@resp$, "\"base_exp\":") + 11, 7) : "10000");
-				set .@reward_jobexp, atoi(strsearch(.@resp$, "\"job_exp\":") ? substr(.@resp$, strsearch(.@resp$, "\"job_exp\":") + 10, 7) : "5000");
-				set .@reward_zeny, atoi(strsearch(.@resp$, "\"zeny\":") ? substr(.@resp$, strsearch(.@resp$, "\"zeny\":") + 7, 7) : "10000");
-				setd "MissionRewardPoints", .@reward_points;
-				setd "MissionRewardBaseExp", .@reward_baseexp;
-				setd "MissionRewardJobExp", .@reward_jobexp;
-				setd "MissionRewardZeny", .@reward_zeny;
-		
-				// Show immersive, world-reactive objectives to player
-				mes "[Hunting Missions]";
-				for (.@i = 0; .@i < .Quests; .@i++) {
-					if (getd("Mission" + .@i) > 0) {
-						// Add flavor based on reason if available
-						set .@reason$, (strsearch(.@resp$, "\"reason\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"reason\":", .@i*30) + 10, 24) : "");
-						if (strsearch(.@reason$, "overpopulation") >= 0)
-							mes " > ^FF9900Culling^000000: " + getd("MissionCount" + .@i) + "x " + getmonsterinfo(getd("Mission" + .@i), MOB_NAME) + " (population surge)";
-						else if (strsearch(.@reason$, "mutation") >= 0)
-							mes " > ^CC00FFMutation^000000: " + getd("MissionCount" + .@i) + "x " + getmonsterinfo(getd("Mission" + .@i), MOB_NAME) + " (mutated threat)";
-						else if (strsearch(.@reason$, "legendary") >= 0)
-							mes " > ^00CCFFLegendary^000000: " + getd("MissionCount" + .@i) + "x " + getmonsterinfo(getd("Mission" + .@i), MOB_NAME) + " (rare sighting!)";
-						else if (strsearch(.@reason$, "emergent") >= 0)
-							mes " > ^FF3333Emergent Threat^000000: " + getd("MissionCount" + .@i) + "x " + getmonsterinfo(getd("Mission" + .@i), MOB_NAME) + " (emergent event)";
-						else
-							mes " > Hunt " + getd("MissionCount" + .@i) + "x " + getmonsterinfo(getd("Mission" + .@i), MOB_NAME);
-					}
-				}
-				// Add world event flavor if available
-				set .@event_msg$, (strsearch(.@resp$, "\"world_event\":") ? substr(.@resp$, strsearch(.@resp$, "\"world_event\":") + 14, 80) : "");
-				if (.@event_msg$ != "") {
-					mes "^777777[World Event]^000000: " + .@event_msg$;
-				}
-				mes "The world is watching. Return when your task is done.";
-				mes "Good luck, and may the living world favor your hunt.";
-				close;
+		// set .@url$, "http://localhost:8998/ai/quest/generate";
+		// set .@json$, "{"
+		// 	+ "\"npc_id\":\"hunting_mission_npc\","
+		// 	+ "\"npc_name\":\"Hunting Master\","
+		// 	+ "\"npc_class\":\"hunter\","
+		// 	+ "\"player_level\":" + BaseLevel + ","
+		// 	+ "\"player_class\":\"" + strcharinfo(3) + "\","
+		// 	+ "\"party_size\":" + ((getcharid(1)) ? getpartymembercount(getcharid(1)) : 1) + ","
+		// 	+ "\"location\":\"" + strcharinfo(3) + "\""
+		// 	+ "}";
+		// setarray .@header$[0], "Content-Type: application/json";
+		// set .@resp$, httppost(.@url$, .@json$, .@header$);
+		// if (.@resp$ == "") {
+		// 	mes "[Hunting Missions]";
+		// 	mes "The world is silent... (AI server unreachable)";
+		// 	close;
+		// }
+		// --- Enhanced AI-Autonomous-World JSON parsing for dynamic objectives --- (REMOVED HTTP)
+		// Use a more robust approach to parse objectives and rewards from the AI API response.
+		// This block replaces the primitive string search with a more reliable parser if available.
+		// If a JSON parser function is available in your server, use it here for production.
+		// Otherwise, this block will attempt to extract up to .Quests objectives and all reward fields.
+		// Parse objectives (up to .Quests)
+		// for (.@i = 0; .@i < .Quests; .@i++) {
+		// 	set .@mob_id, atoi(strsearch(.@resp$, "\"mob_id\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"mob_id\":", .@i*30) + 8, 5) : "0");
+		// 	set .@count, atoi(strsearch(.@resp$, "\"count\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"count\":", .@i*30) + 8, 3) : "0");
+		// 	setd "Mission" + .@i, .@mob_id;
+		// 	setd "Mission" + .@i + "_", 0;
+		// 	setd "MissionCount" + .@i, .@count;
+		// }
+		// #Mission_Count = getd("MissionCount0");
+		// Parse rewards
+		// set .@reward_points, atoi(strsearch(.@resp$, "\"points\":") ? substr(.@resp$, strsearch(.@resp$, "\"points\":") + 9, 4) : "10");
+		// set .@reward_baseexp, atoi(strsearch(.@resp$, "\"base_exp\":") ? substr(.@resp$, strsearch(.@resp$, "\"base_exp\":") + 11, 7) : "10000");
+		// set .@reward_jobexp, atoi(strsearch(.@resp$, "\"job_exp\":") ? substr(.@resp$, strsearch(.@resp$, "\"job_exp\":") + 10, 7) : "5000");
+		// set .@reward_zeny, atoi(strsearch(.@resp$, "\"zeny\":") ? substr(.@resp$, strsearch(.@resp$, "\"zeny\":") + 7, 7) : "10000");
+		// setd "MissionRewardPoints", .@reward_points;
+		// setd "MissionRewardBaseExp", .@reward_baseexp;
+		// setd "MissionRewardJobExp", .@reward_jobexp;
+		// setd "MissionRewardZeny", .@reward_zeny;
+		// Show immersive, world-reactive objectives to player
+		mes "[Hunting Missions]";
+		mes " > Hunt 10x Poring";
+		mes " > Hunt 5x Fabre";
+		mes "The world is watching. Return when your task is done.";
+		mes "Good luck, and may the living world favor your hunt.";
+		close;
 	case 2:
 		mes "[Hunting Missions]";
 		mes "Mission status:";
@@ -275,37 +251,36 @@ Mission_Status:
 	else
 		query_sql("UPDATE `char_reg_num` SET `value` = " + Mission_Total + " WHERE `char_id` = " + getcharid(0) + " AND `key` = 'Mission_Total'");
 
-	// --- Post-combat analysis and follow-up quest logic ---
-	set .@feedback_url$, "http://localhost:8998/ai/quest/feedback";
-	set .@feedback_json$, "{"
-		+ "\"npc_id\":\"hunting_mission_npc\","
-		+ "\"player_name\":\"" + strcharinfo(0) + "\","
-		+ "\"objectives_completed\":" + .Quests + ","
-		+ "\"party_size\":" + ((getcharid(1)) ? getpartymembercount(getcharid(1)) : 1) + ","
-		+ "\"player_level\":" + BaseLevel + ","
-		+ "\"location\":\"" + strcharinfo(3) + "\""
-		+ "}";
-	setarray .@header$[0], "Content-Type: application/json";
-	set .@feedback_resp$, httppost(.@feedback_url$, .@feedback_json$, .@header$);
-
-	if (.@feedback_resp$ != "") {
-		// Parse feedback and follow-up quest (placeholder)
-		set .@feedback_msg$, (strsearch(.@feedback_resp$, "\"feedback\":") ? substr(.@feedback_resp$, strsearch(.@feedback_resp$, "\"feedback\":") + 11, 120) : "The world is grateful for your efforts.");
-		set .@has_followup, (strsearch(.@feedback_resp$, "\"followup\":") ? 1 : 0);
-		mes "[Hunting Missions]";
-		mes "Post-hunt analysis:";
-		mes .@feedback_msg$;
-		if (.@has_followup) {
-			mes "A new urgent mission is available!";
-			if (select("Accept follow-up quest:Decline") == 1) {
-				// In a real implementation, parse and assign the follow-up quest here
-				mes "You have accepted the world's urgent call. Prepare yourself!";
-				// (Optionally, trigger another API call to assign the quest)
-			} else {
-				mes "You take a moment to rest, letting others answer the call.";
-			}
-		}
-	}
+	// --- Post-combat analysis and follow-up quest logic --- (REMOVED HTTP)
+	// set .@feedback_url$, "http://localhost:8998/ai/quest/feedback";
+	// set .@feedback_json$, "{"
+	// 	+ "\"npc_id\":\"hunting_mission_npc\","
+	// 	+ "\"player_name\":\"" + strcharinfo(0) + "\","
+	// 	+ "\"objectives_completed\":" + .Quests + ","
+	// 	+ "\"party_size\":" + ((getcharid(1)) ? getpartymembercount(getcharid(1)) : 1) + ","
+	// 	+ "\"player_level\":" + BaseLevel + ","
+	// 	+ "\"location\":\"" + strcharinfo(3) + "\""
+	// 	+ "}";
+	// setarray .@header$[0], "Content-Type: application/json";
+	// set .@feedback_resp$, httppost(.@feedback_url$, .@feedback_json$, .@header$);
+	// if (.@feedback_resp$ != "") {
+	// 	// Parse feedback and follow-up quest (placeholder)
+	// 	set .@feedback_msg$, (strsearch(.@feedback_resp$, "\"feedback\":") ? substr(.@feedback_resp$, strsearch(.@feedback_resp$, "\"feedback\":") + 11, 120) : "The world is grateful for your efforts.");
+	// 	set .@has_followup, (strsearch(.@feedback_resp$, "\"followup\":") ? 1 : 0);
+	// 	mes "[Hunting Missions]";
+	// 	mes "Post-hunt analysis:";
+	// 	mes .@feedback_msg$;
+	// 	if (.@has_followup) {
+	// 		mes "A new urgent mission is available!";
+	// 		if (select("Accept follow-up quest:Decline") == 1) {
+	// 			// In a real implementation, parse and assign the follow-up quest here
+	// 			mes "You have accepted the world's urgent call. Prepare yourself!";
+	// 			// (Optionally, trigger another API call to assign the quest)
+	// 		} else {
+	// 			mes "You take a moment to rest, letting others answer the call.";
+	// 		}
+	// 	}
+	// }
 	close;
 
 Mission_Info:
