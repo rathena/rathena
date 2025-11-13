@@ -37,7 +37,7 @@ class MarketItem(BaseModel):
     demand: int = 0  # Demand level
     trend: MarketTrend = MarketTrend.STABLE
     price_history: List[Dict[str, Any]] = Field(default_factory=list)  # [{timestamp, price}]
-    last_updated: datetime = Field(default_factory=datetime.utcnow)
+    last_updated: datetime = Field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
 
 
 class TradeTransaction(BaseModel):
@@ -49,7 +49,7 @@ class TradeTransaction(BaseModel):
     quantity: int
     price_per_unit: int
     total_price: int
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
     location: str = "unknown"
 
 
@@ -70,7 +70,7 @@ class EconomicState(BaseModel):
     weekly_volume: int = 0
     monthly_volume: int = 0
     
-    last_updated: datetime = Field(default_factory=datetime.utcnow)
+    last_updated: datetime = Field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
 
 
 class PriceUpdateRequest(BaseModel):

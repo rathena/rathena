@@ -165,7 +165,7 @@ class QuestAgent(BaseAIAgent):
                     "quest_type": quest_type,
                     "difficulty": difficulty
                 },
-                timestamp=datetime.utcnow()
+                timestamp=datetime.now(__import__('datetime').timezone.utc)
             )
             
         except Exception as e:
@@ -177,7 +177,7 @@ class QuestAgent(BaseAIAgent):
                 confidence=0.0,
                 reasoning=f"Quest generation error: {str(e)}",
                 metadata={"error": str(e)},
-                timestamp=datetime.utcnow()
+                timestamp=datetime.now(__import__('datetime').timezone.utc)
             )
     
     def _determine_quest_type(self, npc_class: str, personality: Any) -> QuestType:
@@ -371,7 +371,7 @@ Make it engaging and contextual!"""
         """Build Quest object from generated data"""
 
         # Generate unique quest ID
-        quest_id = f"quest_{context.npc_id}_{int(datetime.utcnow().timestamp())}"
+        quest_id = f"quest_{context.npc_id}_{int(datetime.now(__import__('datetime').timezone.utc).timestamp())}"
 
         # Build objectives
         objectives = []

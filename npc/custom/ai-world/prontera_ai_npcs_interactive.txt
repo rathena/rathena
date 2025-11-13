@@ -14,7 +14,7 @@
 prontera,155,185,4	script	Lyra the Explorer#ai002	4_F_NOVICE,{
 	.@player_id = getcharid(0);
 	.@player_name$ = strcharinfo(0);
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 
 	// Initial greeting (no message)
 	.@json$ = "{";
@@ -164,10 +164,13 @@ OnInit:
 	.@reg_json$ += "\"neuroticism\":0.2,";
 	.@reg_json$ += "\"moral_alignment\":\"chaotic_good\"";
 	.@reg_json$ += "},";
-	.@reg_json$ += "\"initial_goals\":[\"Explore new areas\",\"Meet new people\",\"Find rare treasures\"]";
+	.@reg_json$ += "\"initial_goals\":[\"Explore new areas\",\"Meet new people\",\"Find rare treasures\"],";
+	.@reg_json$ += "\"movement_mode\":\"radius_restricted\",";
+	.@reg_json$ += "\"movement_radius\":15,";
+	.@reg_json$ += "\"spawn_point\":{\"map\":\"prontera\",\"x\":155,\"y\":185}";
 	.@reg_json$ += "}";
 	
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Lyra the Explorer registered: " + .@response$;
 	end;
@@ -179,7 +182,7 @@ OnInit:
 prontera,145,175,4	script	Guard Thorne#ai003	4_M_JOB_KNIGHT1,{
 	.@player_id = getcharid(0);
 	.@player_name$ = strcharinfo(0);
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 
 	// Initial greeting
 	.@json$ = "{";
@@ -327,7 +330,7 @@ OnInit:
 	.@reg_json$ += "\"initial_goals\":[\"Maintain order\",\"Catch criminals\",\"Protect citizens\"]";
 	.@reg_json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Guard Thorne registered: " + .@response$;
 	end;

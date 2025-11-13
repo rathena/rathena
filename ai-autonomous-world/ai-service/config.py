@@ -693,6 +693,7 @@ class Settings(BaseSettings):
         env_file_encoding = "utf-8"
         case_sensitive = False
         extra = "ignore"  # Allow extra fields from .env that aren't defined in Settings
+        # 'fields' config removed for Pydantic v2 compatibility
 
 
 def load_yaml_config(config_path: Optional[str] = None) -> Dict[str, Any]:

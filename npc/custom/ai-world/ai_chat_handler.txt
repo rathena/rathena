@@ -26,7 +26,7 @@ OnInit:
 	.log_interactions = 1;  // 1 = log all interactions, 0 = no logging
 	
 	// Bridge Layer URL
-	.bridge_url$ = "http://localhost:8888";
+	.bridge_url$ = "http://localhost:8998";
 	
 	debugmes "[AI Chat Handler] Initialized - @npc command registered";
 	end;

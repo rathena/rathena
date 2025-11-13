@@ -1,7 +1,19 @@
+# NOTE: AgentDecision stub for dependency resolution
+from typing import Any, Dict, Optional
+from dataclasses import dataclass, field
+from datetime import datetime
+
+@dataclass
+class AgentDecision:
+    success: bool
+    data: Dict[str, Any]
+    reasoning: Optional[str] = None
+    timestamp: datetime = field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
 """
 Base Agent Classes for AI Autonomous World System
 Provides abstract base classes for all specialized agents
 """
+
 
 from abc import ABC, abstractmethod
 from typing import Dict, Any, List, Optional
@@ -26,7 +38,7 @@ class AgentContext:
     world_state: Dict[str, Any]
     recent_events: List[Dict[str, Any]] = field(default_factory=list)
     memory_context: Optional[Dict[str, Any]] = None
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
 
 
 @dataclass
@@ -38,7 +50,7 @@ class AgentResponse:
     confidence: float  # 0.0 to 1.0
     reasoning: Optional[str] = None
     metadata: Dict[str, Any] = field(default_factory=dict)
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    timestamp: datetime = field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
 
 
 class BaseAIAgent(ABC):

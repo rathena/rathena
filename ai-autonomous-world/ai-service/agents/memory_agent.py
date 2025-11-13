@@ -139,7 +139,7 @@ class MemoryAgent(BaseAIAgent):
         
         memory_entry = {
             "npc_id": context.npc_id,
-            "timestamp": datetime.utcnow().isoformat(),
+            "timestamp": datetime.now(__import__('datetime').timezone.utc).isoformat(),
             "type": memory_data.get("type", "interaction"),
             "content": memory_data.get("content", ""),
             "participants": memory_data.get("participants", []),
@@ -232,7 +232,7 @@ class MemoryAgent(BaseAIAgent):
                 'memory_type': memory_entry.get('memory_type', 'interaction'),
                 'importance': memory_entry.get('importance', 0.5),
                 'emotional_valence': memory_entry.get('emotional_valence', 0.0),
-                'timestamp': memory_entry.get('timestamp', datetime.utcnow().isoformat()),
+                'timestamp': memory_entry.get('timestamp', datetime.now(__import__('datetime').timezone.utc).isoformat()),
                 'location': memory_entry.get('location'),
             }
 

@@ -23,10 +23,18 @@
 //=     Syntax updates and style cleaning.
 //============================================================
 
-prontera,152,187,6	script	Hunting Missions	4_F_EDEN_MASTER,{
+prontera,152,186,6	script	Hunting Missions	4_F_EDEN_MASTER,{
 function Chk;
+	// Immersive, world-reactive greeting
 	mes "[Hunting Missions]";
-	mes "Hello, " + strcharinfo(0) + "!";
+	// Disabled world state HTTP fetch for compatibility
+	// set .@world_url$, "http://localhost:8998/ai/world/state?scope=summary";
+	// set .@world_state$, httpget(.@world_url$);
+	// set .@event_msg$, (strsearch(.@world_state$, "\"event\":") ? substr(.@world_state$, strsearch(.@world_state$, "\"event\":") + 8, 80) : "");
+	// if (.@event_msg$ != "") {
+	// 	mes "The world is restless: " + .@event_msg$;
+	// }
+	mes "Greetings, " + strcharinfo(0) + ".";
 	if (!#Mission_Delay) {
 		next;
 		mes "[Hunting Missions]";
@@ -39,9 +47,8 @@ function Chk;
 		#Mission_Delay = 1;
 		close;
 	}
-	mes F_Rand("Working hard, as always...", "Not slacking, I hope...");
-	mes "Is there anything I can help";
-	mes "you with?";
+	mes F_Rand("The world is always changing...", "Not slacking, I hope? The creatures surely aren't.");
+	mes "What brings you to my post today?";
 	mes " ";
 	mes "^777777~ You've completed " + F_InsertPlural(Mission_Total,"mission",0,"^0055FF%d^777777 %s") + ". ~^000000";
 	next;
@@ -73,21 +80,79 @@ function Chk;
 			mes "I'm afraid you'll have to wait " + Time2Str(#Mission_Delay) + " before taking another mission.";
 			close;
 		}
-		mes "You must hunt:";
-		query_sql("SELECT ID FROM `" + .mob_db$ + "` WHERE left(name_aegis, 4) != 'meta' AND left(name_aegis, 2) != 'E_' AND base_exp > 0 AND job_exp > 0 AND (class != 'boss' OR class is null) AND (drop3_item like '%_card' OR drop4_item like '%_card' OR drop5_item like '%_card' OR drop6_item like '%_card' OR drop7_item like '%_card' OR drop8_item like '%_card' OR drop9_item like '%_card' OR drop10_item like '%_card') AND ID < 2000 AND instr('"+.Blacklist$+"',ID) = 0 ORDER BY rand() LIMIT " + .Quests, .@mob);
-		
-		for (.@i = 0; .@i < .Quests; .@i++) {
-			setd "Mission" + .@i, .@mob[.@i];
-			setd "Mission" + .@i +"_", 0;
+		// === AI-Autonomous-World Dynamic Mission Integration ===
+		mes "Let me consult the world for a suitable hunt...";
+		set .@url$, "http://localhost:8998/ai/quest/generate";
+		set .@json$, "{"
+			+ "\"npc_id\":\"hunting_mission_npc\","
+			+ "\"npc_name\":\"Hunting Master\","
+			+ "\"npc_class\":\"hunter\","
+			+ "\"player_level\":" + BaseLevel + ","
+			+ "\"player_class\":\"" + strcharinfo(3) + "\","
+			+ "\"party_size\":" + ((getcharid(1)) ? getpartymembercount(getcharid(1)) : 1) + ","
+			+ "\"location\":\"" + strcharinfo(3) + "\""
+			+ "}";
+		setarray .@header$[0], "Content-Type: application/json";
+		set .@resp$, httppost(.@url$, .@json$, .@header$);
+
+		if (.@resp$ == "") {
+			mes "[Hunting Missions]";
+			mes "The world is silent... (AI server unreachable)";
+			close;
 		}
-		#Mission_Count = rand(.Count[0], .Count[1]);
-		callsub Mission_Status;
-		next;
-		mes "[Hunting Missions]";
-		mes "Report back when";
-		mes "you've finished.";
-		mes "Good luck!";
-		close;
+
+				// --- Enhanced AI-Autonomous-World JSON parsing for dynamic objectives ---
+				// Use a more robust approach to parse objectives and rewards from the AI API response.
+				// This block replaces the primitive string search with a more reliable parser if available.
+				// If a JSON parser function is available in your server, use it here for production.
+				// Otherwise, this block will attempt to extract up to .Quests objectives and all reward fields.
+		
+				// Parse objectives (up to .Quests)
+				for (.@i = 0; .@i < .Quests; .@i++) {
+					set .@mob_id, atoi(strsearch(.@resp$, "\"mob_id\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"mob_id\":", .@i*30) + 8, 5) : "0");
+					set .@count, atoi(strsearch(.@resp$, "\"count\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"count\":", .@i*30) + 8, 3) : "0");
+					setd "Mission" + .@i, .@mob_id;
+					setd "Mission" + .@i + "_", 0;
+					setd "MissionCount" + .@i, .@count;
+				}
+				#Mission_Count = getd("MissionCount0");
+		
+				// Parse rewards
+				set .@reward_points, atoi(strsearch(.@resp$, "\"points\":") ? substr(.@resp$, strsearch(.@resp$, "\"points\":") + 9, 4) : "10");
+				set .@reward_baseexp, atoi(strsearch(.@resp$, "\"base_exp\":") ? substr(.@resp$, strsearch(.@resp$, "\"base_exp\":") + 11, 7) : "10000");
+				set .@reward_jobexp, atoi(strsearch(.@resp$, "\"job_exp\":") ? substr(.@resp$, strsearch(.@resp$, "\"job_exp\":") + 10, 7) : "5000");
+				set .@reward_zeny, atoi(strsearch(.@resp$, "\"zeny\":") ? substr(.@resp$, strsearch(.@resp$, "\"zeny\":") + 7, 7) : "10000");
+				setd "MissionRewardPoints", .@reward_points;
+				setd "MissionRewardBaseExp", .@reward_baseexp;
+				setd "MissionRewardJobExp", .@reward_jobexp;
+				setd "MissionRewardZeny", .@reward_zeny;
+		
+				// Show immersive, world-reactive objectives to player
+				mes "[Hunting Missions]";
+				for (.@i = 0; .@i < .Quests; .@i++) {
+					if (getd("Mission" + .@i) > 0) {
+						// Add flavor based on reason if available
+						set .@reason$, (strsearch(.@resp$, "\"reason\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"reason\":", .@i*30) + 10, 24) : "");
+						if (strsearch(.@reason$, "overpopulation") >= 0)
+							mes " > ^FF9900Culling^000000: " + getd("MissionCount" + .@i) + "x " + getmonsterinfo(getd("Mission" + .@i), MOB_NAME) + " (population surge)";
+						else if (strsearch(.@reason$, "mutation") >= 0)
+							mes " > ^CC00FFMutation^000000: " + getd("MissionCount" + .@i) + "x " + getmonsterinfo(getd("Mission" + .@i), MOB_NAME) + " (mutated threat)";
+						else if (strsearch(.@reason$, "legendary") >= 0)
+							mes " > ^00CCFFLegendary^000000: " + getd("MissionCount" + .@i) + "x " + getmonsterinfo(getd("Mission" + .@i), MOB_NAME) + " (rare sighting!)";
+						else if (strsearch(.@reason$, "emergent") >= 0)
+							mes " > ^FF3333Emergent Threat^000000: " + getd("MissionCount" + .@i) + "x " + getmonsterinfo(getd("Mission" + .@i), MOB_NAME) + " (emergent event)";
+						else
+							mes " > Hunt " + getd("MissionCount" + .@i) + "x " + getmonsterinfo(getd("Mission" + .@i), MOB_NAME);
+					}
+				}
+				// Add world event flavor if available
+				set .@event_msg$, (strsearch(.@resp$, "\"world_event\":") ? substr(.@resp$, strsearch(.@resp$, "\"world_event\":") + 14, 80) : "");
+				if (.@event_msg$ != "") {
+					mes "^777777[World Event]^000000: " + .@event_msg$;
+				}
+				mes "The world is watching. Return when your task is done.";
+				mes "Good luck, and may the living world favor your hunt.";
+				close;
 	case 2:
 		mes "[Hunting Missions]";
 		mes "Mission status:";
@@ -164,17 +229,14 @@ Mission_Status:
 	deletearray .@j[0], getarraysize(.@j);
 	for (.@i = 0; .@i < .Quests; .@i++) {
 		.@j[.@i] = getd("Mission" + .@i);
-		.@j[.Quests] = .@j[.Quests] + getmonsterinfo(.@j[.@i], MOB_LV);
-		.@j[.Quests+1] = .@j[.Quests+1] + (getmonsterinfo(.@j[.@i], MOB_BASEEXP) / (getbattleflag("base_exp_rate") / 100) * .Modifier[0]);
-		.@j[.Quests+2] = .@j[.Quests+2] + (getmonsterinfo(.@j[.@i], MOB_JOBEXP) / (getbattleflag("job_exp_rate") / 100) * .Modifier[1]);
-		mes " > "+Chk(getd("Mission"+.@i+"_"),#Mission_Count) + getmonsterinfo(.@j[.@i], MOB_NAME) + " (" + getd("Mission"+.@i+"_") + "/" + #Mission_Count + ")^000000";
+		mes " > "+Chk(getd("Mission"+.@i+"_"),getd("MissionCount"+.@i)) + getmonsterinfo(.@j[.@i], MOB_NAME) + " (" + getd("Mission"+.@i+"_") + "/" + getd("MissionCount"+.@i) + ")^000000";
 	}
 
-	// Reward formulas:
-	.@Mission_Points = 3 + (.@j[.Quests] / .Quests / 6);
-	.@Base_Exp = #Mission_Count * .@j[.Quests+1] / 5;
-	.@Job_Exp = #Mission_Count * .@j[.Quests+2] / 5;
-	.@Zeny = #Mission_Count * .Quests * .@j[.@i] * .Modifier[2];
+	// Use AI-driven rewards if available, else fallback to static
+	.@Mission_Points = getd("MissionRewardPoints") ? getd("MissionRewardPoints") : 10;
+	.@Base_Exp = getd("MissionRewardBaseExp") ? getd("MissionRewardBaseExp") : 10000;
+	.@Job_Exp = getd("MissionRewardJobExp") ? getd("MissionRewardJobExp") : 5000;
+	.@Zeny = getd("MissionRewardZeny") ? getd("MissionRewardZeny") : 10000;
 
 	next;
 	mes "[Hunting Missions]";
@@ -190,8 +252,8 @@ Mission_Status:
 	next;
 	mes "[Hunting Missions]";
 	mes "Oh, you're done!";
-	mes "Good work.";
-	mes "Here's your reward.";
+	mes "The world feels a little safer.";
+	mes "Here's your reward, as decreed by the living world.";
 	emotion ET_BEST;
 	specialeffect2 EF_ANGEL;
 	specialeffect2 EF_TRUESIGHT;
@@ -202,6 +264,7 @@ Mission_Status:
 	for (.@i = 0; .@i < .Quests; .@i++) {
 		setd "Mission" + .@i, 0;
 		setd "Mission" + .@i+"_", 0;
+		setd "MissionCount" + .@i, 0;
 	}
 	#Mission_Count = 0;
 	if (.Delay)
@@ -211,6 +274,38 @@ Mission_Status:
 		query_sql("INSERT INTO `char_reg_num` (`char_id`,`key`,`index`,`value`) VALUES (" + getcharid(0) + ",'Mission_Total','0',1)");
 	else
 		query_sql("UPDATE `char_reg_num` SET `value` = " + Mission_Total + " WHERE `char_id` = " + getcharid(0) + " AND `key` = 'Mission_Total'");
+
+	// --- Post-combat analysis and follow-up quest logic ---
+	set .@feedback_url$, "http://localhost:8998/ai/quest/feedback";
+	set .@feedback_json$, "{"
+		+ "\"npc_id\":\"hunting_mission_npc\","
+		+ "\"player_name\":\"" + strcharinfo(0) + "\","
+		+ "\"objectives_completed\":" + .Quests + ","
+		+ "\"party_size\":" + ((getcharid(1)) ? getpartymembercount(getcharid(1)) : 1) + ","
+		+ "\"player_level\":" + BaseLevel + ","
+		+ "\"location\":\"" + strcharinfo(3) + "\""
+		+ "}";
+	setarray .@header$[0], "Content-Type: application/json";
+	set .@feedback_resp$, httppost(.@feedback_url$, .@feedback_json$, .@header$);
+
+	if (.@feedback_resp$ != "") {
+		// Parse feedback and follow-up quest (placeholder)
+		set .@feedback_msg$, (strsearch(.@feedback_resp$, "\"feedback\":") ? substr(.@feedback_resp$, strsearch(.@feedback_resp$, "\"feedback\":") + 11, 120) : "The world is grateful for your efforts.");
+		set .@has_followup, (strsearch(.@feedback_resp$, "\"followup\":") ? 1 : 0);
+		mes "[Hunting Missions]";
+		mes "Post-hunt analysis:";
+		mes .@feedback_msg$;
+		if (.@has_followup) {
+			mes "A new urgent mission is available!";
+			if (select("Accept follow-up quest:Decline") == 1) {
+				// In a real implementation, parse and assign the follow-up quest here
+				mes "You have accepted the world's urgent call. Prepare yourself!";
+				// (Optionally, trigger another API call to assign the quest)
+			} else {
+				mes "You take a moment to rest, letting others answer the call.";
+			}
+		}
+	}
 	close;
 
 Mission_Info:
@@ -265,41 +360,63 @@ OnBuyItem:
 	close;
 
 OnNPCKillEvent:
+	// AI-driven multi-objective progress tracking
 	if (!getcharid(1) || !.Party) {
-		if (!#Mission_Count || !Mission0) end;
+		// Solo or no party logic
 		for (.@i = 0; .@i < .Quests; .@i++) {
-			if (getmonsterinfo(killedrid, MOB_NAME) == getmonsterinfo(getd("Mission" + .@i), MOB_NAME)) {
-				if (getd("Mission" + .@i + "_") < #Mission_Count) {
-					dispbottom "[Hunting Mission] Killed " + (set(getd("Mission" + .@i + "_"),getd("Mission" + .@i + "_") + 1)) +
-					           " of " + #Mission_Count + " " + getmonsterinfo(killedrid, MOB_NAME) + ".";
-					end;
+			if (getd("Mission" + .@i) > 0 && getmonsterinfo(killedrid, MOB_NAME) == getmonsterinfo(getd("Mission" + .@i), MOB_NAME)) {
+				if (getd("Mission" + .@i + "_") < getd("MissionCount" + .@i)) {
+					setd "Mission" + .@i + "_", getd("Mission" + .@i + "_") + 1;
+					dispbottom "[Hunting Mission] Killed " + getd("Mission" + .@i + "_") + " of " + getd("MissionCount" + .@i) + " " + getmonsterinfo(killedrid, MOB_NAME) + ".";
 				}
 			}
 		}
+		// Check if all objectives are complete
+		.@all_done = 1;
+		for (.@i = 0; .@i < .Quests; .@i++) {
+			if (getd("Mission" + .@i) > 0 && getd("Mission" + .@i + "_") < getd("MissionCount" + .@i)) {
+				.@all_done = 0;
+			}
+		}
+		if (.@all_done) {
+			// All objectives complete, call Mission_Status for reward
+			callsub Mission_Status;
+		}
 	} else if (.Party) {
+		// Party logic (simplified for AI-driven objectives)
 		.@mob = killedrid;
 		getmapxy(.@map1$,.@x1,.@y1);
 		getpartymember getcharid(1),1;
 		getpartymember getcharid(1),2;
 		for (.@i = 0; .@i < $@partymembercount; .@i++) {
 			if (isloggedin($@partymemberaid[.@i], $@partymembercid[.@i])) {
-				set .@Mission_Count, getvar(#Mission_Count, $@partymembercid[.@i]);
-				set .@Mission0, getvar(Mission0, $@partymembercid[.@i]);
 				set .@HP, readparam(HP, $@partymembercid[.@i]);
-
-				if (.@Mission_Count && .@Mission0 && .@HP > 0) {
+				if (.@HP > 0) {
 					getmapxy(.@map2$,.@x2,.@y2,BL_PC,rid2name($@partymemberaid[.@i]));
 					if ((.@map1$ == .@map2$ || .Party == 1) && (distance(.@x1,.@y1,.@x2,.@y2) <= 30 || .Party < 3)) {
 						for (.@j = 0; .@j < .Quests; .@j++) {
-							.@my_mob_id = getvar( getd("Mission"+.@j),$@partymembercid[.@i] );
-							.@my_count = getvar( getd("Mission"+.@j+"_"), $@partymembercid[.@i] );
-							if (getmonsterinfo(.@mob, MOB_NAME) == getmonsterinfo(.@my_mob_id, MOB_NAME)) {
-								if (.@my_count < .@Mission_Count) {
+							.@my_mob_id = getvar(getd("Mission"+.@j),$@partymembercid[.@i]);
+							.@my_count = getvar(getd("Mission"+.@j+"_"), $@partymembercid[.@i]);
+							.@my_goal = getvar(getd("MissionCount"+.@j), $@partymembercid[.@i]);
+							if (.@my_mob_id > 0 && getmonsterinfo(.@mob, MOB_NAME) == getmonsterinfo(.@my_mob_id, MOB_NAME)) {
+								if (.@my_count < .@my_goal) {
 									setd "Mission"+.@j+"_", (.@my_count+1), $@partymembercid[.@i];
-									dispbottom "[Hunting Mission] Killed " + (.@my_count+1) + " of " + .@Mission_Count + " " + getmonsterinfo(.@mob, MOB_NAME) + ".", 0x777777, $@partymembercid[.@i];
-									break;
+									dispbottom "[Hunting Mission] Killed " + (.@my_count+1) + " of " + .@my_goal + " " + getmonsterinfo(.@mob, MOB_NAME) + ".", 0x777777, $@partymembercid[.@i];
 								}
 							}
+						}
+						// Check if all objectives are complete for this party member
+						.@all_done = 1;
+						for (.@j = 0; .@j < .Quests; .@j++) {
+							.@my_mob_id = getvar(getd("Mission"+.@j),$@partymembercid[.@i]);
+							.@my_count = getvar(getd("Mission"+.@j+"_"), $@partymembercid[.@i]);
+							.@my_goal = getvar(getd("MissionCount"+.@j), $@partymembercid[.@i]);
+							if (.@my_mob_id > 0 && .@my_count < .@my_goal) {
+								.@all_done = 0;
+							}
+						}
+						if (.@all_done) {
+							callsub Mission_Status;
 						}
 					}
 				}

@@ -21,7 +21,7 @@ prontera,155,185,4	script	Lyra the Explorer#ai002	4_F_NOVICE,{
 	.@json$ += "\"context\":{\"player_name\":\"" + .@player_name$ + "\"}";
 	.@json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Lyra the Explorer]";
@@ -54,7 +54,7 @@ OnInit:
 	.@reg_json$ += "\"initial_goals\":[\"Explore new areas\",\"Meet new people\",\"Find rare treasures\"]";
 	.@reg_json$ += "}";
 	
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Lyra the Explorer registered: " + .@response$;
 	end;
@@ -84,7 +84,7 @@ prontera,145,175,4	script	Guard Thorne#ai003	4_M_JOB_KNIGHT1,{
 	.@json$ += "}";
 	.@json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Guard Thorne]";
@@ -116,7 +116,7 @@ OnInit:
 	.@reg_json$ += "\"initial_goals\":[\"Maintain order\",\"Catch criminals\",\"Protect citizens\"]";
 	.@reg_json$ += "}";
 	
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Guard Thorne registered: " + .@response$;
 	end;
@@ -146,7 +146,7 @@ prontera,160,190,4	script	Scholar Elara#ai004	4_F_SAGE_B,{
 	.@json$ += "}";
 	.@json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Scholar Elara]";
@@ -179,7 +179,7 @@ OnInit:
 	.@reg_json$ += "\"initial_goals\":[\"Preserve knowledge\",\"Teach others\",\"Research ancient texts\"]";
 	.@reg_json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Scholar Elara registered: " + .@response$;
 	end;
@@ -209,7 +209,7 @@ prontera,140,185,4	script	Merchant Marcus#ai005	4_M_ORIENT02,{
 	.@json$ += "}";
 	.@json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Merchant Marcus]";
@@ -242,7 +242,7 @@ OnInit:
 	.@reg_json$ += "\"initial_goals\":[\"Maximize profit\",\"Build wealth\",\"Expand business\"]";
 	.@reg_json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Merchant Marcus registered: " + .@response$;
 	end;
@@ -272,7 +272,7 @@ prontera,165,180,4	script	Healer Mira#ai006	4_F_SISTER,{
 	.@json$ += "}";
 	.@json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Healer Mira]";
@@ -305,7 +305,7 @@ OnInit:
 	.@reg_json$ += "\"initial_goals\":[\"Help the wounded\",\"Avoid conflict\",\"Find peace\"]";
 	.@reg_json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Healer Mira registered: " + .@response$;
 	end;
@@ -335,7 +335,7 @@ prontera,150,195,4	script	Bard Finn#ai007	4_M_BARD,{
 	.@json$ += "}";
 	.@json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Bard Finn]";
@@ -368,7 +368,7 @@ OnInit:
 	.@reg_json$ += "\"initial_goals\":[\"Entertain crowds\",\"Collect stories\",\"Spread joy\"]";
 	.@reg_json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Bard Finn registered: " + .@response$;
 	end;
@@ -398,7 +398,7 @@ prontera,135,190,4	script	Blacksmith Grom#ai008	4_M_DWARF,{
 	.@json$ += "}";
 	.@json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Blacksmith Grom]";
@@ -430,7 +430,7 @@ OnInit:
 	.@reg_json$ += "\"initial_goals\":[\"Perfect craft\",\"Maintain quality\",\"Work in peace\"]";
 	.@reg_json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Blacksmith Grom registered: " + .@response$;
 	end;
@@ -460,7 +460,7 @@ prontera,170,175,4	script	Seer Zara#ai009	4_F_ZONDAGIRL,{
 	.@json$ += "}";
 	.@json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/player/interaction/simple", .@json$);
 
 	mes "[Seer Zara]";
@@ -493,7 +493,7 @@ OnInit:
 	.@reg_json$ += "\"initial_goals\":[\"Understand fate\",\"Guide seekers\",\"Uncover mysteries\"]";
 	.@reg_json$ += "}";
 
-	.@bridge_url$ = "http://192.168.0.100:8000";
+	.@bridge_url$ = "http://192.168.0.100:8998";
 	.@response$ = httppost(.@bridge_url$ + "/ai/npc/register", .@reg_json$);
 	debugmes "[AI World] Seer Zara registered: " + .@response$;
 	end;

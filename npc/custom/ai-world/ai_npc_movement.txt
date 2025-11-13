@@ -14,7 +14,7 @@ OnInit:
 	// Initialize movement system
 	.movement_interval = 30000; // 30 seconds between movement checks (normal NPCs)
 	.aggressive_interval = 2000; // 2 seconds for aggressive movement (WanderingMerchant)
-	.ai_service_url$ = "http://192.168.0.100:8000";
+	.ai_service_url$ = "http://192.168.0.100:8998";
 
 	// Register NPCs for autonomous movement
 	// NOTE: NPC names must match EXACTLY as defined in their respective NPC scripts

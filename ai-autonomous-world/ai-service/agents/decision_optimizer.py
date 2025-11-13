@@ -38,7 +38,7 @@ class DecisionBatch(BaseModel):
     """Batch of similar decisions"""
     batch_id: str
     decisions: List[Dict[str, Any]] = Field(default_factory=list)
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
     timeout_at: datetime
     max_size: int = 5
 
@@ -75,7 +75,7 @@ class DecisionOptimizer:
     
     async def initialize(self):
         """Initialize the optimizer"""
-        self.postgres_pool = await get_postgres_pool()
+        self.postgres_pool = get_postgres_pool()
         logger.info("✓ Decision Optimizer ready")
     
     async def optimize_decision(

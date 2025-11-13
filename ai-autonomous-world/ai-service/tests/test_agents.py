@@ -253,22 +253,19 @@ class TestAgentOrchestrator:
     async def test_orchestrator_initialization(self, mock_llm_provider):
         """Test orchestrator initializes correctly"""
         orchestrator = AgentOrchestrator(
-            llm_provider=mock_llm_provider,
             config={}
         )
 
-        assert orchestrator.llm_provider is not None
+        assert orchestrator.config is not None
+        assert hasattr(orchestrator, 'dialogue_agent')
+        assert hasattr(orchestrator, 'decision_agent')
+        assert hasattr(orchestrator, 'memory_agent')
+        assert hasattr(orchestrator, 'world_agent')
 
     @pytest.mark.asyncio
     async def test_orchestrator_error_handling(self, mock_llm_provider, mock_agent_context):
         """Test orchestrator handles errors gracefully"""
-        # Create mock memori client
-        mock_memori = MagicMock()
-        mock_memori.store = AsyncMock()
-        mock_memori.retrieve = AsyncMock(return_value=[])
-
         orchestrator = AgentOrchestrator(
-            llm_provider=mock_llm_provider,
             config={}
         )
 
@@ -283,8 +280,9 @@ class TestAgentOrchestrator:
 
             # Should handle error and continue
             response = await orchestrator.handle_player_interaction(
+                player_input="Hello",
                 npc_context=mock_agent_context,
-                player_message="Hello"
+                player_context={}
             )
 
             # Should still return a response (with fallback)

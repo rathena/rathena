@@ -161,12 +161,16 @@ class TestEnvironmentManager:
         assert sum(weights) == pytest.approx(1.0, rel=1e-5)
         assert all(w >= 0 for w in weights)
 
-    def test_weather_transition_weights_zero_total_edge_case(self, env_manager):
+    @pytest.mark.asyncio
+    async def test_weather_transition_weights_zero_total_edge_case(self, env_manager, mock_db):
         """Test weather transition weights when total is zero (edge case for line 198)"""
         # Looking at the transitions in environment.py line 177:
         # "sunny": {"sunny": 0.5, "clear": 0.3, "cloudy": 0.15, "rainy": 0.03, "stormy": 0.01, "snowy": 0.01, "foggy": 0.0}
         # If we call with current_weather="sunny" and weather_types=["foggy"], we get weight=0.0
         # But that's only 1 weather type, so total=0.0 and line 198 executes
+
+        mock_db.redis.get.return_value = None
+        await env_manager.initialize()
 
         result = env_manager._get_weather_transition_weights("sunny", ["foggy"])
 

@@ -46,7 +46,7 @@ class ReasoningChain(BaseModel):
     confidence_score: float = Field(default=0.5, ge=0.0, le=1.0)
     
     # Metadata
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
     llm_calls_used: int = 0
     processing_time_ms: float = 0.0
 
@@ -64,7 +64,7 @@ class UniversalConsciousnessEngine:
     
     async def initialize(self):
         """Initialize the consciousness engine"""
-        self.postgres_pool = await get_postgres_pool()
+        self.postgres_pool = get_postgres_pool()
         logger.info("✓ Universal Consciousness Engine ready")
     
     async def build_reasoning_chain(
@@ -86,7 +86,7 @@ class UniversalConsciousnessEngine:
         Returns:
             Complete reasoning chain with past, present, and future analysis
         """
-        start_time = datetime.utcnow()
+        start_time = datetime.now(__import__('datetime').timezone.utc)
         depth = depth or settings.reasoning_depth
         
         logger.debug(f"Building {depth} reasoning chain for {entity_type} {entity_id}")
@@ -138,7 +138,7 @@ class UniversalConsciousnessEngine:
             )
         
         # Calculate processing time
-        processing_time = (datetime.utcnow() - start_time).total_seconds() * 1000
+        processing_time = (datetime.now(__import__('datetime').timezone.utc) - start_time).total_seconds() * 1000
         chain.processing_time_ms = processing_time
         
         logger.debug(f"Reasoning chain built in {processing_time:.1f}ms "
@@ -219,7 +219,7 @@ class UniversalConsciousnessEngine:
             return []
 
         try:
-            cutoff_date = datetime.utcnow() - timedelta(days=days)
+            cutoff_date = datetime.now(__import__('datetime').timezone.utc) - timedelta(days=days)
             async with self.postgres_pool.acquire() as conn:
                 rows = await conn.fetch(
                     """
@@ -261,7 +261,7 @@ class UniversalConsciousnessEngine:
         # Pattern 2: Time-based patterns
         time_patterns = {}
         for decision in past_decisions:
-            hour = decision.get("timestamp", datetime.utcnow()).hour
+            hour = decision.get("timestamp", datetime.now(__import__('datetime').timezone.utc)).hour
             time_patterns[hour] = time_patterns.get(hour, 0) + 1
 
         if time_patterns:

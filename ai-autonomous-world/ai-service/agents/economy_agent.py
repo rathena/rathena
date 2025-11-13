@@ -122,7 +122,7 @@ class EconomyAgent(BaseAIAgent):
                 confidence=0.8,
                 reasoning=f"Completed {operation} operation",
                 metadata={"operation": operation},
-                timestamp=datetime.utcnow()
+                timestamp=datetime.now(__import__('datetime').timezone.utc)
             )
             
         except Exception as e:
@@ -134,7 +134,7 @@ class EconomyAgent(BaseAIAgent):
                 confidence=0.0,
                 reasoning=f"Error: {str(e)}",
                 metadata={"error": str(e)},
-                timestamp=datetime.utcnow()
+                timestamp=datetime.now(__import__('datetime').timezone.utc)
             )
     
     async def _update_market_prices(self, context: AgentContext) -> Dict[str, Any]:
@@ -184,11 +184,11 @@ class EconomyAgent(BaseAIAgent):
             
             item.current_price = new_price
             item.trend = trend
-            item.last_updated = datetime.utcnow()
+            item.last_updated = datetime.now(__import__('datetime').timezone.utc)
             
             # Add to price history
             item.price_history.append({
-                "timestamp": datetime.utcnow().isoformat(),
+                "timestamp": datetime.now(__import__('datetime').timezone.utc).isoformat(),
                 "price": new_price
             })
             
@@ -242,7 +242,7 @@ class EconomyAgent(BaseAIAgent):
             active_traders=context.current_state.get("active_traders", 0),
             market_health=market_health,
             dominant_trend=dominant_trend,
-            last_updated=datetime.utcnow()
+            last_updated=datetime.now(__import__('datetime').timezone.utc)
         )
 
         # Generate analysis using LLM
@@ -317,7 +317,7 @@ Make it interesting and impactful!"""
                     "severity": random.uniform(0.3, 0.8)
                 }
 
-            event_id = f"event_{int(datetime.utcnow().timestamp())}"
+            event_id = f"event_{int(datetime.now(__import__('datetime').timezone.utc).timestamp())}"
 
             event = EconomicEvent(
                 event_id=event_id,
@@ -327,7 +327,7 @@ Make it interesting and impactful!"""
                 price_multiplier=event_data.get("price_multiplier", 1.0),
                 duration=event_data.get("duration", 3600),
                 severity=event_data.get("severity", 0.5),
-                expires_at=datetime.utcnow() + timedelta(seconds=event_data.get("duration", 3600))
+                expires_at=datetime.now(__import__('datetime').timezone.utc) + timedelta(seconds=event_data.get("duration", 3600))
             )
 
             logger.info(f"Generated economic event: {event_id} - {event_type}")

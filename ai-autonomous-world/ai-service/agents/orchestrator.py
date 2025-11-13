@@ -36,13 +36,13 @@ class AgentOrchestrator:
         self.config = config
         self.npc_context = npc_context or {}
         
-        # Initialize agents
+        # Initialize agents with provided LLM provider or get default
         from llm.factory import get_llm_provider
-        llm = get_llm_provider()
-        self.dialogue_agent = DialogueAgent("dialogue_agent", llm, config.get("dialogue", {}))
-        self.decision_agent = DecisionAgent("decision_agent", llm, config.get("decision", {}))
-        self.memory_agent = MemoryAgent("memory_agent", llm, config.get("memory", {}))
-        self.world_agent = WorldAgent("world_agent", llm, config.get("world", {}))
+        self.llm_provider = config.get("llm_provider") or get_llm_provider()
+        self.dialogue_agent = DialogueAgent("dialogue_agent", self.llm_provider, config.get("dialogue", {}))
+        self.decision_agent = DecisionAgent("decision_agent", self.llm_provider, config.get("decision", {}))
+        self.memory_agent = MemoryAgent("memory_agent", self.llm_provider, config.get("memory", {}))
+        self.world_agent = WorldAgent("world_agent", self.llm_provider, config.get("world", {}))
         
         logger.info("AgentOrchestrator initialized with {} agents", 4)
 
@@ -72,9 +72,20 @@ class AgentOrchestrator:
                 "player_info": player_context
             })
             
-            # Store interaction in memory
+            # Store interaction in memory using the process method
             try:
-                await self.memory_agent.store_interaction(memory_context)
+                memory_context_obj = AgentContext(
+                    npc_id=npc_context.npc_id,
+                    npc_name=npc_context.npc_name,
+                    personality=npc_context.personality,
+                    current_state={
+                        "operation": "store",
+                        "memory_data": memory_context
+                    },
+                    world_state=npc_context.world_state,
+                    recent_events=npc_context.recent_events
+                )
+                await self.memory_agent.process(memory_context_obj)
             except Exception as e:
                 logger.warning("Failed to store interaction in memory: {}", e)
             
@@ -83,16 +94,31 @@ class AgentOrchestrator:
             
             # Execute the crew to generate response
             try:
+                # Convert context objects to dictionaries for JSON serialization
+                npc_context_dict = {
+                    "npc_id": getattr(npc_context, "npc_id", "unknown"),
+                    "npc_name": getattr(npc_context, "npc_name", "Unknown NPC"),
+                    "personality": getattr(npc_context, "personality", {}),
+                    "current_state": getattr(npc_context, "current_state", {}),
+                    "world_state": getattr(npc_context, "world_state", {}),
+                    "recent_events": getattr(npc_context, "recent_events", [])
+                }
+                
                 result = await crew.kickoff(inputs={
                     "player_input": player_input,
-                    "npc_context": npc_context,
+                    "npc_context": npc_context_dict,
                     "player_context": player_context
                 })
                 
                 response = AgentResponse(
-                    text=result.get("response", "I'm not sure how to respond to that."),
-                    emotional_state=result.get("emotional_state", "neutral"),
-                    actions=result.get("actions", []),
+                    agent_type="dialogue",
+                    success=True,
+                    data={
+                        "text": result.get("response", "I'm not sure how to respond to that."),
+                        "emotional_state": result.get("emotional_state", "neutral"),
+                        "actions": result.get("actions", [])
+                    },
+                    confidence=0.8,
                     metadata=result.get("metadata", {})
                 )
                 
@@ -101,8 +127,26 @@ class AgentOrchestrator:
             except Exception as e:
                 logger.error("Crew execution failed: {}", e)
                 # Fallback to direct dialogue agent
-                return await self.dialogue_agent.generate_response(
-                    player_input, npc_context, player_context
+                fallback_response = await self.dialogue_agent.process(
+                    AgentContext(
+                        npc_id=getattr(npc_context, "npc_id", "unknown"),
+                        npc_name=getattr(npc_context, "npc_name", "Unknown NPC"),
+                        personality=getattr(npc_context, "personality", {}),
+                        current_state={"player_message": player_input},
+                        world_state=getattr(npc_context, "world_state", {}),
+                        recent_events=getattr(npc_context, "recent_events", [])
+                    )
+                )
+                return AgentResponse(
+                    agent_type="dialogue",
+                    success=True,
+                    data={
+                        "text": fallback_response.data.get("text", "I'm not sure how to respond to that."),
+                        "emotional_state": fallback_response.data.get("emotional_state", "neutral"),
+                        "actions": fallback_response.data.get("actions", [])
+                    },
+                    confidence=0.5,
+                    metadata={"fallback": True}
                 )
                 
         except Exception as e:
@@ -207,15 +251,15 @@ class AgentOrchestrator:
         
         return Crew(
             agents=[
-                self.dialogue_agent.get_crew_agent(),
-                self.decision_agent.get_crew_agent(),
-                self.memory_agent.get_crew_agent(),
-                self.world_agent.get_crew_agent()
+                self.dialogue_agent.crew_agent,
+                self.decision_agent.crew_agent,
+                self.memory_agent.crew_agent,
+                self.world_agent.crew_agent
             ],
             tasks=[{
                 "description": config["description"],
                 "expected_output": config["expected_output"],
-                "agent": self.dialogue_agent.get_crew_agent()
+                "agent": self.dialogue_agent.crew_agent
             }],
             process=Process.sequential,
             verbose=True

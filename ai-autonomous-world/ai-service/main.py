@@ -341,12 +341,12 @@ async def health_check():
     Returns basic service status without expensive operations.
     For detailed health check, use /health/detailed
     """
-    from datetime import datetime
+    from datetime import datetime, UTC
     return {
         "status": "healthy",
         "service": settings.service_name,
         "version": "1.0.0",
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.now(UTC).isoformat()
     }
 
 

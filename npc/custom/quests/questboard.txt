@@ -19,6 +19,51 @@
 // 1.6.6 Bug fixes for delay time does not appear [mazvi]
 //============================================================
 prontera,129,215,5	script	Questboard	4_BOARD3,{
+	// === AI-Autonomous-World Dynamic Questboard Integration ===
+	mes "[^FF7700Questboard^000000]";
+	set .@world_url$, "http://localhost:8998/ai/world/state?scope=summary";
+	set .@world_state$, httpget(.@world_url$);
+	set .@event_msg$, (strsearch(.@world_state$, "\"event\":") ? substr(.@world_state$, strsearch(.@world_state$, "\"event\":") + 8, 80) : "");
+	if (.@event_msg$ != "") {
+		mes "^777777[World Event]^000000: " + .@event_msg$;
+	}
+	mes "Welcome, " + strcharinfo(0) + ".";
+	mes "The quests here reflect the living world's needs.";
+	// Fetch dynamic questboard missions from AI service
+	set .@quest_url$, "http://localhost:8998/ai/quest/generate";
+	set .@json$, "{"
+		+ "\"npc_id\":\"questboard_npc\","
+		+ "\"npc_name\":\"Questboard\","
+		+ "\"npc_class\":\"questboard\","
+		+ "\"player_level\":" + BaseLevel + ","
+		+ "\"player_class\":\"" + strcharinfo(3) + "\","
+		+ "\"party_size\":" + ((getcharid(1)) ? getpartymembercount(getcharid(1)) : 1) + ","
+		+ "\"location\":\"" + strcharinfo(3) + "\""
+		+ "}";
+	setarray .@header$[0], "Content-Type: application/json";
+	set .@resp$, httppost(.@quest_url$, .@json$, .@header$);
+	if (.@resp$ != "") {
+		// Simple parsing: show up to 3 dynamic quests
+		for (.@i = 0; .@i < 3; .@i++) {
+			set .@mob_id, atoi(strsearch(.@resp$, "\"mob_id\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"mob_id\":", .@i*30) + 8, 5) : "0");
+			set .@count, atoi(strsearch(.@resp$, "\"count\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"count\":", .@i*30) + 8, 3) : "0");
+			set .@reason$, (strsearch(.@resp$, "\"reason\":", .@i*30) ? substr(.@resp$, strsearch(.@resp$, "\"reason\":", .@i*30) + 10, 24) : "");
+			if (.@mob_id > 0) {
+				if (strsearch(.@reason$, "overpopulation") >= 0)
+					mes " > ^FF9900Culling^000000: " + .@count + "x " + getmonsterinfo(.@mob_id, MOB_NAME) + " (population surge)";
+				else if (strsearch(.@reason$, "mutation") >= 0)
+					mes " > ^CC00FFMutation^000000: " + .@count + "x " + getmonsterinfo(.@mob_id, MOB_NAME) + " (mutated threat)";
+				else if (strsearch(.@reason$, "legendary") >= 0)
+					mes " > ^00CCFFLegendary^000000: " + .@count + "x " + getmonsterinfo(.@mob_id, MOB_NAME) + " (rare sighting!)";
+				else
+					mes " > Hunt " + .@count + "x " + getmonsterinfo(.@mob_id, MOB_NAME);
+			}
+		}
+		mes "These missions are shaped by the world's current state.";
+	} else {
+		mes "The world is silent... (AI quest server unreachable)";
+	}
+	next;
 
 	if(c_run==true){
 		mes "[^FF7700Questboard^000000]";
@@ -148,6 +193,37 @@ prontera,129,215,5	script	Questboard	4_BOARD3,{
 				mes "[^FF7700Questboard^000000]";
 				mes "You have to wait ^0000FF"+Time2Str(getd(.@selection + "_hunting_delay"))+"^000000 to do this quest again.";
 				close;
+		
+			// === Post-combat analysis and follow-up quest logic (AI-driven) ===
+			if (h_run == true || c_run == true) {
+				set .@feedback_url$, "http://localhost:8998/ai/quest/feedback";
+				set .@feedback_json$, "{"
+					+ "\"npc_id\":\"questboard_npc\","
+					+ "\"player_name\":\"" + strcharinfo(0) + "\","
+					+ "\"objectives_completed\":1,"
+					+ "\"party_size\":" + ((getcharid(1)) ? getpartymembercount(getcharid(1)) : 1) + ","
+					+ "\"player_level\":" + BaseLevel + ","
+					+ "\"location\":\"" + strcharinfo(3) + "\""
+					+ "}";
+				setarray .@header$[0], "Content-Type: application/json";
+				set .@feedback_resp$, httppost(.@feedback_url$, .@feedback_json$, .@header$);
+				if (.@feedback_resp$ != "") {
+					set .@feedback_msg$, (strsearch(.@feedback_resp$, "\"feedback\":") ? substr(.@feedback_resp$, strsearch(.@feedback_resp$, "\"feedback\":") + 11, 120) : "The world is grateful for your efforts.");
+					set .@has_followup, (strsearch(.@feedback_resp$, "\"followup\":") ? 1 : 0);
+					mes "[^FF7700Questboard^000000]";
+					mes "Post-quest analysis:";
+					mes .@feedback_msg$;
+					if (.@has_followup) {
+						mes "A new urgent mission is available!";
+						if (select("Accept follow-up quest:Decline") == 1) {
+							mes "You have accepted the world's urgent call. Prepare yourself!";
+							// (Optionally, trigger another API call to assign the quest)
+						} else {
+							mes "You take a moment to rest, letting others answer the call.";
+						}
+					}
+				}
+			}
 			}
 		}
 		else{

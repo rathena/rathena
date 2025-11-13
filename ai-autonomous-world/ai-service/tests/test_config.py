@@ -267,11 +267,11 @@ class TestConfigValidation:
         """Test CORS origins parsing from empty string"""
         monkeypatch.setenv("CORS_ORIGINS", "")
         settings = Settings()
-        assert settings.cors_origins == ["http://localhost:8888", "http://127.0.0.1:8888"]
+        assert settings.cors_origins == ["http://192.168.0.100:8888", "http://localhost:8888", "http://127.0.0.1:8888"]
 
     def test_cors_origins_from_whitespace_string(self, monkeypatch):
         """Test CORS origins parsing from whitespace string"""
         monkeypatch.setenv("CORS_ORIGINS", "   ")
         settings = Settings()
-        assert settings.cors_origins == ["http://localhost:8888", "http://127.0.0.1:8888"]
+        assert settings.cors_origins == ["http://192.168.0.100:8888", "http://localhost:8888", "http://127.0.0.1:8888"]
 

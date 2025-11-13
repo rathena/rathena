@@ -26,7 +26,36 @@
 //	callfunc "qshop"{,<shop ID>{,<shop ID>{,...}}};
 //  ADD YOUR NPC HERE
 //============================================================
-prontera,164,203,6	script	Quest Shop#1	998,{ callfunc "qshop"; }
+prontera,164,203,6	script	Quest Shop#1	998,{
+	// === AI-Autonomous-World Dynamic Shop Integration ===
+	mes "[Quest Shop]";
+	set .@world_url$, "http://localhost:8998/ai/world/state?scope=summary";
+	set .@world_state$, httpget(.@world_url$);
+	set .@event_msg$, (strsearch(.@world_state$, "\"event\":") ? substr(.@world_state$, strsearch(.@world_state$, "\"event\":") + 8, 80) : "");
+	if (.@event_msg$ != "") {
+		mes "^777777[World Event]^000000: " + .@event_msg$;
+	}
+	mes "Welcome, " + strcharinfo(0) + ".";
+	mes "Our wares change with the tides of the world.";
+	// Fetch dynamic shop inventory from AI service
+	set .@shop_url$, "http://localhost:8998/ai/economy/shop/quest_shop/inventory";
+	set .@shop_resp$, httpget(.@shop_url$);
+	if (.@shop_resp$ != "") {
+		// Simple parsing: look for up to 5 items and their prices
+		for (.@i = 0; .@i < 5; .@i++) {
+			set .@item_id, atoi(strsearch(.@shop_resp$, "\"item_id\":", .@i*30) ? substr(.@shop_resp$, strsearch(.@shop_resp$, "\"item_id\":", .@i*30) + 10, 6) : "0");
+			set .@price, atoi(strsearch(.@shop_resp$, "\"price\":", .@i*30) ? substr(.@shop_resp$, strsearch(.@shop_resp$, "\"price\":", .@i*30) + 8, 6) : "0");
+			if (.@item_id > 0) {
+				mes " > " + getitemname(.@item_id) + " (" + .@price + " Mission Points)";
+			}
+		}
+		mes "These offers are shaped by the world's needs.";
+	} else {
+		mes "The world is silent... (AI shop server unreachable)";
+	}
+	next;
+	callfunc "qshop";
+}
 // prontera,165,203,6	script	Quest Shop#2	998,{ callfunc "qshop",1,2; }	// call the shop 1 and 2 defined below
 // etc.. Add your Shop NPCs 'Quest Shop#XXX' here
 //============================================================

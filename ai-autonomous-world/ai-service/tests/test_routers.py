@@ -125,10 +125,21 @@ class TestChatCommandRouter:
         }
 
         with patch('routers.chat_command.handle_player_interaction') as mock_handler:
-            mock_handler.return_value = {
-                "npc_response": "Hello, adventurer!",
-                "emotion": "happy"
-            }
+            # Mock the actual return type - PlayerInteractionResponse with NPCResponse
+            from models.player import PlayerInteractionResponse, NPCResponse
+            mock_response = PlayerInteractionResponse(
+                npc_id="npc_001",
+                player_id="player_001",
+                response=NPCResponse(
+                    action="dialogue",
+                    data={"text": "Hello, adventurer!"},
+                    emotion="happy",
+                    next_actions=["talk", "end_conversation"]
+                ),
+                npc_state_update={},
+                relationship_change={}
+            )
+            mock_handler.return_value = mock_response
 
             response = client.post("/ai/chat/command", json=command_data)
             # Should succeed (rate limiting is handled by middleware)
