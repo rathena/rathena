@@ -2744,6 +2744,17 @@ ACMD_FUNC(gat)
 }
 
 /*==========================================
+ * Timer callback for @displaystatus auto-removal
+ *------------------------------------------*/
+static TIMER_FUNC(displaystatus_timer) {
+    map_session_data *sd = map_id2sd(id);
+    if (sd) {
+        clif_status_change(sd, (int32)data, 0, 0, 0, 0, 0);
+    }
+    return 0;
+}
+
+/*==========================================
  *
  *------------------------------------------*/
 ACMD_FUNC(displaystatus)
@@ -2759,6 +2770,11 @@ ACMD_FUNC(displaystatus)
 	if (i < 3) tick = 0;
 
 	clif_status_change(sd, type, flag, tick, val1, val2, val3);
+
+    // Add timer for automatic removal
+    if (flag && tick > 0) {
+        add_timer(gettick() + tick, displaystatus_timer, sd->id, type);
+    }
 
 	return 0;
 }
