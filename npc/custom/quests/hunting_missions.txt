@@ -1,155 +1,72 @@
-//===== rAthena Script =======================================
-//= Hunting Missions
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.4
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: =========================================
-//= Random hunting missions.
-//= Rewards are based on quest difficulty.
-//= 
-//= NOTE: Requires SQL mob database.
-//===== Additional Comments: =================================
-//= 1.0 Initial script.
-//= 1.1 Small improvements and fixes.
-//= 1.2 Added party support and replaced blacklists with an
-//=     SQL query, both thanks to AnnieRuru.
-//= 1.3 Re-added a blacklist adapted for the SQL query.
-//= 1.3a Added mission reset options.
-//= 1.3b Function updates.
-//= 1.4 Check for deleted characters, thanks to AnnieRuru.
-//=     Syntax updates and style cleaning.
-//============================================================
+/*
+===== rAthena Script =======================================
+= Hunting Missions (AIWorld Native Integration)
+===== By: ================================================
+= Euphy, AIWorld Integration by Roo
+===== Current Version: ====================================
+= 2.0 (AIWorld/ZeroMQ Native)
+===== Compatible With: ====================================
+= rAthena Project + Standalone AIWorld Server (ZeroMQ)
+===== Description: ========================================
+= Random hunting missions, rewards based on quest difficulty.
+= Now fully integrated with native AIWorld server via ZeroMQ IPC.
+= All mission assignment, progress, and completion handled by AIWorld.
+= No HTTP, no legacy async hacks.
+===== Additional Comments: ================================
+= 2.0: Full rewrite for native AIWorld/ZeroMQ integration.
+=      All mission logic, assignment, and state handled by AIWorld server.
+=      This script is now a thin bridge: it only calls AIWorld via script commands.
+=      See docs/AIWORLD_MISSION_SCRIPT.md for details.
+============================================================
+*/
 
 prontera,152,187,6	script	Hunting Missions	4_F_EDEN_MASTER,{
-function Chk;
 	mes "[Hunting Missions]";
-	mes "Hello, " + strcharinfo(0) + "!";
-	if (!#Mission_Delay) {
-		next;
-		mes "[Hunting Missions]";
-		mes "I can't find any records...";
-		mes "You must be new here!";
-		emotion ET_HUK;
-		next;
-		callsub Mission_Info;
-		emotion ET_GO;
-		#Mission_Delay = 1;
-		close;
-	}
-	mes F_Rand("Working hard, as always...", "Not slacking, I hope...");
-	mes "Is there anything I can help";
-	mes "you with?";
-	mes " ";
-	mes "^777777~ You've completed " + F_InsertPlural(Mission_Total,"mission",0,"^0055FF%d^777777 %s") + ". ~^000000";
+	mes "Welcome to the new AI-powered Hunting Missions!";
+	mes "All missions are now managed by the AIWorld server (native, ZeroMQ).";
+	mes "You can request a new mission, check your status, or claim rewards.";
 	next;
-	switch(select(
-		((!Mission0) ? " ~ New Mission::" : ": ~ Mission Status: ~ Abandon Mission") +
-		": ~ Information: ~ Mission Shop: ~ View Top Hunters: ~ ^777777Cancel^000000"
-	)) {
+	switch(select(" ~ New Mission: ~ Mission Status: ~ Abandon Mission: ~ Information: ~ Mission Shop: ~ View Top Hunters: ~ Cancel")) {
 	case 1:
 		mes "[Hunting Missions]";
-		if (#Mission_Count) {
-			mes "You've started a mission";
-			mes "on another character.";
-			if (!@hm_char_del_check) {  // check for deleted character
-				query_sql("SELECT 1 FROM `char_reg_num` WHERE `key` = 'Mission0' AND `char_id` IN(SELECT `char_id` FROM `char` WHERE `account_id` = " + getcharid(3) + ")", .@i);
-				if (!.@i) {
-					next;
-					mes "[Hunting Missions]";
-					mes "I can't seem to find any records";
-					mes "for that character, though...";
-					mes "One moment, please.";
-					emotion ET_SCRATCH;
-					#Mission_Count = 0;
-				}
-				@hm_char_del_check = true;
-			}
-			close;
-		}
-		if (#Mission_Delay > gettimetick(2) && .Delay) {
-			mes "I'm afraid you'll have to wait " + Time2Str(#Mission_Delay) + " before taking another mission.";
-			close;
-		}
-		mes "You must hunt:";
-		query_sql("SELECT ID FROM `" + .mob_db$ + "` WHERE left(name_aegis, 4) != 'meta' AND left(name_aegis, 2) != 'E_' AND base_exp > 0 AND job_exp > 0 AND (class != 'boss' OR class is null) AND (drop3_item like '%_card' OR drop4_item like '%_card' OR drop5_item like '%_card' OR drop6_item like '%_card' OR drop7_item like '%_card' OR drop8_item like '%_card' OR drop9_item like '%_card' OR drop10_item like '%_card') AND ID < 2000 AND instr('"+.Blacklist$+"',ID) = 0 ORDER BY rand() LIMIT " + .Quests, .@mob);
-		
-		for (.@i = 0; .@i < .Quests; .@i++) {
-			setd "Mission" + .@i, .@mob[.@i];
-			setd "Mission" + .@i +"_", 0;
-		}
-		#Mission_Count = rand(.Count[0], .Count[1]);
-		callsub Mission_Status;
-		next;
-		mes "[Hunting Missions]";
-		mes "Report back when";
-		mes "you've finished.";
-		mes "Good luck!";
+		mes "Requesting a new mission from AIWorld...";
+		// Native script command: aiworld_assign_mission(player_id)
+		.@result$ = callfunc("aiworld_assign_mission", getcharid(0));
+		mes .@result$;
 		close;
 	case 2:
 		mes "[Hunting Missions]";
-		mes "Mission status:";
-		callsub Mission_Status;
+		mes "Querying mission status from AIWorld...";
+		// Native script command: aiworld_query_mission_status(player_id)
+		.@status$ = callfunc("aiworld_query_mission_status", getcharid(0));
+		mes .@status$;
 		close;
 	case 3:
 		mes "[Hunting Missions]";
-		mes "Do you really want to";
-		mes "abandon your mission?";
-		if (.Reset < 0 && .Delay)
-			mes "Your delay time will not be reset.";
-		else if (.Reset > 0)
-			mes "It will cost " + F_InsertComma(.Reset) + " Zeny.";
-		next;
-		switch(select(" ~ Abandon...: ~ ^777777Cancel^000000")) {
-		case 1:
-			if (.Reset > 0) {
-				if (Zeny < .Reset) {
-					mes "[Hunting Missions]";
-					mes "You don't have enough";
-					mes "Zeny to drop this mission.";
-					emotion ET_SORRY;
-					close;
-				}
-				Zeny -= .Reset;
-				emotion ET_MONEY;
-			}
-			mes "[Hunting Missions]";
-			mes "Alright, I've dropped";
-			mes "your current mission.";
-			specialeffect2 EF_STORMKICK4;
-			for (.@i = 0; .@i < .Quests; .@i++) {
-				setd "Mission"+.@i, 0;
-				setd "Mission"+.@i+"_", 0;
-			}
-			#Mission_Count = 0;
-			if (.Reset < 0 && .Delay)
-				#Mission_Delay = gettimetick(2) + (.Delay * 3600);
-			close;
-		case 2:
-			mes "[Hunting Missions]";
-			mes "I knew you were kidding!";
-			mes "Keep up the good work.";
-			emotion ET_SMILE;
-			close;
-		}
+		mes "Requesting mission abandonment from AIWorld...";
+		// Native script command: aiworld_abandon_mission(player_id)
+		.@abandon$ = callfunc("aiworld_abandon_mission", getcharid(0));
+		mes .@abandon$;
+		close;
 	case 4:
-		callsub Mission_Info;
+		mes "[Hunting Missions]";
+		mes "This system is now fully powered by the AIWorld server.";
+		mes "All mission logic, assignment, and progress is handled natively.";
+		mes "You can request, check, or abandon missions at any time.";
 		close;
 	case 5:
 		mes "[Hunting Missions]";
-		mes "You have ^0055FF" + #Mission_Points + "^000000 Mission Points.";
-		mes "Use them well!";
-		callshop "mission_shop",1;
-		npcshopattach "mission_shop";
-		end;
+		mes "Mission Shop is now managed by AIWorld.";
+		// Native script command: aiworld_mission_shop(player_id)
+		.@shop$ = callfunc("aiworld_mission_shop", getcharid(0));
+		mes .@shop$;
+		close;
 	case 6:
 		mes "[Hunting Missions]";
-		mes "The top hunters are:";
-		query_sql("SELECT char_id AS id, (SELECT `name` FROM `char` WHERE char_id = id),`value` FROM `char_reg_num` WHERE `key` = 'Mission_Total' ORDER BY CAST(`value` AS SIGNED) DESC LIMIT 5", .@id, .@name$, .@val);
-		for (.@i = 0; .@i < 5; .@i++)
-			mes "  [Rank " + (.@i+1) + "]  " + ((.@name$[.@i] == "") ? "^777777none" : "^0055FF" + .@name$[.@i]+"^000000 : ^FF0000" + .@val[.@i] + " pt.") + "^000000";
+		mes "Top hunters are now tracked by AIWorld.";
+		// Native script command: aiworld_top_hunters()
+		.@top$ = callfunc("aiworld_top_hunters");
+		mes .@top$;
 		close;
 	case 7:
 		mes "[Hunting Missions]";
@@ -309,28 +226,7 @@ OnNPCKillEvent:
 	end;
 
 OnInit:
-	.Delay = 12;            // Quest delay, in hours (0 to disable).
-	.Quests = 4;            // Number of subquests per mission (increases rewards).
-	.Party = 3;             // Party options: 0 (exclude party kills), 1 (include party kills), 2 (same map only), 3 (screen area only)
-	.Reset = -1;            // Reset options: -1 (abandoning mission sets delay time), 0 (no delay time), [Zeny] (cost to abandon mission, no delay time)
-	setarray .Count[0],     // Min and max monsters per subquest (increases rewards).
-		40,70;
-	setarray .Modifier[0],  // Multipliers for Base Exp, Job Exp, and Zeny rewards.
-		getbattleflag("base_exp_rate")/100,getbattleflag("job_exp_rate")/100,60;
-	.mob_db$ =              // Table name of SQL mob database
-		(checkre(0))?"mob_db_re":"mob_db";
-	setarray .Shop[0],      // Reward items: <ID>,<point cost> (about 10~20 points per hunt).
-		512,1,513,1,514,1,538,5,539,5,558,10,561,10;
-	.Blacklist$ =           // Blacklisted mob IDs.
-		"1062,1088,1183,1186,1200,1212,1220,1221,1234,1235,"+
-		"1244,1245,1250,1268,1290,1293,1294,1296,1298,1299,"+
-		"1300,1301,1303,1304,1305,1306,1308,1309,1311,1313,"+
-		"1515,1588,1618,1676,1677,1678,1679,1796,1797,1974,"+
-		"1975,1976,1977,1978,1979";
-
-	npcshopdelitem "mission_shop",512;
-	for (.@i = 0; .@i < getarraysize(.Shop); .@i += 2)
-		npcshopadditem "mission_shop", .Shop[.@i], .Shop[.@i+1];
+	// All mission logic, shop, and ranking is now handled by AIWorld.
+	// No local configuration needed.
 	end;
 }
--	shop	mission_shop	-1,512:-1

@@ -14,7 +14,6 @@ from agents.decision_agent import DecisionAgent
 from agents.memory_agent import MemoryAgent
 from agents.world_agent import WorldAgent
 
-
 class AgentOrchestrator:
     """
     Orchestrates multiple AI agents to handle complex NPC interactions
@@ -28,14 +27,14 @@ class AgentOrchestrator:
     ):
         """
         Initialize the orchestrator with configuration and optional NPC context
-        
+
         Args:
             config: Configuration dictionary with agent settings
             npc_context: Optional NPC context for initial state
         """
         self.config = config
         self.npc_context = npc_context or {}
-        
+
         # Initialize agents with provided LLM provider or get default
         from llm.factory import get_llm_provider
         self.llm_provider = config.get("llm_provider") or get_llm_provider()
@@ -43,35 +42,27 @@ class AgentOrchestrator:
         self.decision_agent = DecisionAgent("decision_agent", self.llm_provider, config.get("decision", {}))
         self.memory_agent = MemoryAgent("memory_agent", self.llm_provider, config.get("memory", {}))
         self.world_agent = WorldAgent("world_agent", self.llm_provider, config.get("world", {}))
-        
+
         logger.info("AgentOrchestrator initialized with {} agents", 4)
 
     async def handle_player_interaction(
         self,
-        player_input: str,
-        npc_context: Dict[str, Any],
-        player_context: Dict[str, Any]
+        npc_context: AgentContext,
+        interaction_type: str,
+        message: str = "",
     ) -> AgentResponse:
         """
         Handle player interaction by coordinating multiple agents
-        
+
         Args:
-            player_input: Player's input text
-            npc_context: NPC's current state and context
-            player_context: Player's information and history
-            
+            npc_context: AgentContext for the NPC
+            interaction_type: Type of interaction (e.g., "dialogue", "trade")
+            message: Player's input text
+
         Returns:
             AgentResponse containing the generated response
         """
         try:
-            # Update context with current interaction
-            memory_context = npc_context.current_state.copy()
-            memory_context.update({
-                "player_input": player_input,
-                "timestamp": datetime.now().isoformat(),
-                "player_info": player_context
-            })
-            
             # Store interaction in memory using the process method
             try:
                 memory_context_obj = AgentContext(
@@ -80,7 +71,11 @@ class AgentOrchestrator:
                     personality=npc_context.personality,
                     current_state={
                         "operation": "store",
-                        "memory_data": memory_context
+                        "memory_data": {
+                            "player_input": message,
+                            "timestamp": datetime.now().isoformat(),
+                            "interaction_type": interaction_type,
+                        }
                     },
                     world_state=npc_context.world_state,
                     recent_events=npc_context.recent_events
@@ -88,13 +83,12 @@ class AgentOrchestrator:
                 await self.memory_agent.process(memory_context_obj)
             except Exception as e:
                 logger.warning("Failed to store interaction in memory: {}", e)
-            
+
             # Create crew for dialogue generation
             crew = self.create_crew_for_task("dialogue")
-            
+
             # Execute the crew to generate response
             try:
-                # Convert context objects to dictionaries for JSON serialization
                 npc_context_dict = {
                     "npc_id": getattr(npc_context, "npc_id", "unknown"),
                     "npc_name": getattr(npc_context, "npc_name", "Unknown NPC"),
@@ -103,13 +97,13 @@ class AgentOrchestrator:
                     "world_state": getattr(npc_context, "world_state", {}),
                     "recent_events": getattr(npc_context, "recent_events", [])
                 }
-                
+
                 result = await crew.kickoff(inputs={
-                    "player_input": player_input,
+                    "player_input": message,
                     "npc_context": npc_context_dict,
-                    "player_context": player_context
+                    "interaction_type": interaction_type,
                 })
-                
+
                 response = AgentResponse(
                     agent_type="dialogue",
                     success=True,
@@ -121,9 +115,9 @@ class AgentOrchestrator:
                     confidence=0.8,
                     metadata=result.get("metadata", {})
                 )
-                
+
                 return response
-                
+
             except Exception as e:
                 logger.error("Crew execution failed: {}", e)
                 # Fallback to direct dialogue agent
@@ -132,7 +126,7 @@ class AgentOrchestrator:
                         npc_id=getattr(npc_context, "npc_id", "unknown"),
                         npc_name=getattr(npc_context, "npc_name", "Unknown NPC"),
                         personality=getattr(npc_context, "personality", {}),
-                        current_state={"player_message": player_input},
+                        current_state={"player_message": message},
                         world_state=getattr(npc_context, "world_state", {}),
                         recent_events=getattr(npc_context, "recent_events", [])
                     )
@@ -148,7 +142,7 @@ class AgentOrchestrator:
                     confidence=0.5,
                     metadata={"fallback": True}
                 )
-                
+
         except Exception as e:
             logger.error("Error in player interaction handling: {}", e)
             return AgentResponse(
@@ -160,30 +154,30 @@ class AgentOrchestrator:
 
     async def handle_npc_action_decision(
         self,
-        world_state: Dict[str, Any],
-        npc_context: Dict[str, Any]
+        agent_context: AgentContext
     ) -> Dict[str, Any]:
         """
         Make decisions about NPC actions based on world state
-        
+
         Args:
-            world_state: Current state of the game world
-            npc_context: NPC's current state and context
-            
+            agent_context: AgentContext for the NPC
+
         Returns:
             Dictionary containing decided actions and their parameters
         """
         try:
-            # Create crew for decision making
             crew = self.create_crew_for_task("decision")
-            
             result = await crew.kickoff(inputs={
-                "world_state": world_state,
-                "npc_context": npc_context
+                "world_state": agent_context.world_state,
+                "npc_context": {
+                    "npc_id": agent_context.npc_id,
+                    "npc_name": agent_context.npc_name,
+                    "personality": agent_context.personality,
+                    "current_state": agent_context.current_state,
+                    "recent_events": agent_context.recent_events,
+                }
             })
-            
             return result.get("actions", {})
-            
         except Exception as e:
             logger.error("Error in NPC action decision: {}", e)
             return {"move": "stay", "interact": False}
@@ -196,27 +190,23 @@ class AgentOrchestrator:
     ) -> Dict[str, Any]:
         """
         Process world events and coordinate NPC responses
-        
+
         Args:
             event_type: Type of world event
             event_data: Event-specific data
             affected_npcs: List of NPCs affected by the event
-            
+
         Returns:
             Dictionary with NPC responses and world changes
         """
         try:
-            # Create crew for world event processing
             crew = self.create_crew_for_task("world_event")
-            
             result = await crew.kickoff(inputs={
                 "event_type": event_type,
                 "event_data": event_data,
                 "affected_npcs": affected_npcs
             })
-            
             return result
-            
         except Exception as e:
             logger.error("Error processing world event: {}", e)
             return {"responses": {}, "world_changes": {}}
@@ -224,14 +214,13 @@ class AgentOrchestrator:
     def create_crew_for_task(self, task_type: str) -> Crew:
         """
         Create a CrewAI crew for a specific task type
-        
+
         Args:
             task_type: Type of task ("dialogue", "decision", "world_event")
-            
+
         Returns:
             Configured Crew instance
         """
-        # Base tasks configuration
         tasks_config = {
             "dialogue": {
                 "description": "Generate appropriate dialogue response for NPC",
@@ -246,9 +235,9 @@ class AgentOrchestrator:
                 "expected_output": "NPC responses and world state changes"
             }
         }
-        
+
         config = tasks_config.get(task_type, tasks_config["dialogue"])
-        
+
         return Crew(
             agents=[
                 self.dialogue_agent.crew_agent,
