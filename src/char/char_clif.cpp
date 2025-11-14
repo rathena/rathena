@@ -55,12 +55,15 @@ bool pincode_allowed( char* pincode );
 // 0: success
 // 1: failed
 void chclif_moveCharSlotReply( int32 fd, struct char_session_data* sd, uint16 index, int16 reason ){
-	WFIFOHEAD(fd,8);
-	WFIFOW(fd,0) = HEADER_HC_ACK_CHANGE_CHARACTER_SLOT;
-	WFIFOW(fd,2) = 8;
-	WFIFOW(fd,4) = reason;
-	WFIFOW(fd,6) = sd->char_moves[index];
-	WFIFOSET(fd,8);
+	PACKET_HC_ACK_CHANGE_CHARACTER_SLOT packet;
+	packet.packetType = HEADER_HC_ACK_CHANGE_CHARACTER_SLOT;
+	packet.packetLength = 8;
+	packet.reason = reason;
+	packet.charMoves = sd->char_moves[index];
+
+	WFIFOHEAD(fd, 8);
+	memcpy(WFIFOP(fd, 0), &packet, 8);
+	WFIFOSET(fd, 8);
 }
 
 /*
@@ -69,11 +72,12 @@ void chclif_moveCharSlotReply( int32 fd, struct char_session_data* sd, uint16 in
 int32 chclif_parse_moveCharSlot( int32 fd, struct char_session_data* sd){
 	FIFOSD_CHECK(8);
 
-	uint16 from, to;
+	// Read the packet using the struct
+	const struct PACKET_CH_MOVE_CHAR_SLOT* p = reinterpret_cast<const struct PACKET_CH_MOVE_CHAR_SLOT*>(RFIFOP(fd, 0));
 
-	from = RFIFOW(fd,2);
-	to = RFIFOW(fd,4);
-	//Cnt = RFIFOW(fd,6); //how many time we have left to change (client.. lol we don't trust him)
+	uint16 from = p->from;
+	uint16 to = p->to;
+	//Cnt = p->count; //how many time we have left to change (client.. lol we don't trust him)
 	RFIFOSKIP(fd,8);
 
 	// Bounds check
@@ -172,7 +176,10 @@ void chclif_pincode_sendstate( int32 fd, struct char_session_data* sd, enum pinc
 int32 chclif_parse_reqpincode_window(int32 fd, struct char_session_data* sd){
 	FIFOSD_CHECK(6);
 
-	if( charserv_config.pincode_config.pincode_enabled && RFIFOL(fd,2) == sd->account_id ){
+	// Read the packet using the struct
+	const struct PACKET_CH_REQ_PINCODE_WINDOW* p = reinterpret_cast<const struct PACKET_CH_REQ_PINCODE_WINDOW*>(RFIFOP(fd, 0));
+
+	if( charserv_config.pincode_config.pincode_enabled && p->accountId == sd->account_id ){
 		if( strlen( sd->pincode ) <= 0 ){
 			chclif_pincode_sendstate( fd, sd, PINCODE_NEW );
 		}else{
@@ -189,18 +196,21 @@ int32 chclif_parse_reqpincode_window(int32 fd, struct char_session_data* sd){
 int32 chclif_parse_pincode_check( int32 fd, struct char_session_data* sd ){
 	FIFOSD_CHECK(10);
 
+	// Read the packet using the struct
+	const struct PACKET_CH_PINCODE_CHECK* p = reinterpret_cast<const struct PACKET_CH_PINCODE_CHECK*>(RFIFOP(fd, 0));
+
 	char pin[PINCODE_LENGTH+1];
 
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
+	if( charserv_config.pincode_config.pincode_enabled==0 || p->accountId != sd->account_id ) {
 		set_eof(fd);
 		return 1;
 	}
 
 	memset(pin,0,PINCODE_LENGTH+1);
-	strncpy((char*)pin, RFIFOCP(fd, 6), PINCODE_LENGTH);
+	strncpy((char*)pin, p->pinCode, PINCODE_LENGTH);
 	RFIFOSKIP(fd,10);
 
-	if (!char_pincode_decrypt(sd->pincode_seed, pin )) {
+	if (!char_pincode_decrypt(p->seed, pin )) {
 		set_eof(fd);
 		return 1;
 	}
@@ -288,7 +298,10 @@ bool pincode_allowed( char* pincode ){
 int32 chclif_parse_pincode_change( int32 fd, struct char_session_data* sd ){
 	FIFOSD_CHECK(14);
 
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
+	// Read the packet using the struct
+	const struct PACKET_CH_PINCODE_CHANGE* p = reinterpret_cast<const struct PACKET_CH_PINCODE_CHANGE*>(RFIFOP(fd, 0));
+
+	if( charserv_config.pincode_config.pincode_enabled==0 || p->accountId != sd->account_id ) {
 		set_eof(fd);
 		return 1;
 	}
@@ -298,8 +311,8 @@ int32 chclif_parse_pincode_change( int32 fd, struct char_session_data* sd ){
 
 		memset(oldpin,0,PINCODE_LENGTH+1);
 		memset(newpin,0,PINCODE_LENGTH+1);
-		strncpy(oldpin, RFIFOCP(fd,6), PINCODE_LENGTH);
-		strncpy(newpin, RFIFOCP(fd,10), PINCODE_LENGTH);
+		strncpy(oldpin, p->oldPin, PINCODE_LENGTH);
+		strncpy(newpin, p->newPin, PINCODE_LENGTH);
 		RFIFOSKIP(fd,14);
 
 		if (!char_pincode_decrypt(sd->pincode_seed,oldpin) || !char_pincode_decrypt(sd->pincode_seed,newpin)) {
@@ -330,7 +343,10 @@ int32 chclif_parse_pincode_change( int32 fd, struct char_session_data* sd ){
 int32 chclif_parse_pincode_setnew( int32 fd, struct char_session_data* sd ){
 	FIFOSD_CHECK(10);
 
-	if( charserv_config.pincode_config.pincode_enabled==0 || RFIFOL(fd,2) != sd->account_id ) {
+	// Read the packet using the struct
+	const struct PACKET_CH_PINCODE_SETNEW* p = reinterpret_cast<const struct PACKET_CH_PINCODE_SETNEW*>(RFIFOP(fd, 0));
+
+	if( charserv_config.pincode_config.pincode_enabled==0 || p->accountId != sd->account_id ) {
 		set_eof(fd);
 		return 1;
 	} else if (strnlen(sd->pincode, PINCODE_LENGTH) > 0) {
@@ -339,7 +355,7 @@ int32 chclif_parse_pincode_setnew( int32 fd, struct char_session_data* sd ){
 	} else {
 		char newpin[PINCODE_LENGTH+1];
 		memset(newpin,0,PINCODE_LENGTH+1);
-		strncpy( newpin, RFIFOCP(fd,6), PINCODE_LENGTH );
+		strncpy( newpin, p->newPin, PINCODE_LENGTH );
 		RFIFOSKIP(fd,10);
 
 		if (!char_pincode_decrypt( sd->pincode_seed, newpin )) {
@@ -367,18 +383,23 @@ int32 chclif_parse_pincode_setnew( int32 fd, struct char_session_data* sd ){
 void chclif_charlist_notify( int32 fd, struct char_session_data* sd ){
 // This is needed on RE clients from october 2015 onwards
 #if defined(PACKETVER_RE) && PACKETVER >= 20151001 && PACKETVER < 20180103
+	PACKET_HC_CHARLIST_NOTIFY packet;
+	packet.packetType = 0x9a0;
+	packet.totalPages = (sd->char_slots>3)?sd->char_slots/3:1;
+	packet.charSlots = sd->char_slots;
+
 	WFIFOHEAD(fd, 10);
-	WFIFOW(fd, 0) = 0x9a0;
-	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
-	WFIFOL(fd, 2) = (sd->char_slots>3)?sd->char_slots/3:1; //int32 TotalCnt (nb page to load)
-	WFIFOL(fd, 6) = sd->char_slots;
-	WFIFOSET(fd,10);
+	memcpy(WFIFOP(fd, 0), &packet, 10);
+	WFIFOSET(fd, 10);
 #else
+	PACKET_HC_CHARLIST_NOTIFY packet;
+	packet.packetType = 0x9a0;
+	packet.totalPages = (sd->char_slots>3)?sd->char_slots/3:1;
+	// charSlots field is not included in this case
+
 	WFIFOHEAD(fd, 6);
-	WFIFOW(fd, 0) = 0x9a0;
-	// pages to req / send them all in 1 until mmo_chars_fromsql can split them up
-	WFIFOL(fd, 2) = (sd->char_slots>3)?sd->char_slots/3:1; //int32 TotalCnt (nb page to load)
-	WFIFOSET(fd,6);
+	memcpy(WFIFOP(fd, 0), &packet, 6);
+	WFIFOSET(fd, 6);
 #endif
 }
 
@@ -434,18 +455,25 @@ void chclif_mmo_send082d(int32 fd, struct char_session_data* sd) {
 void chclif_mmo_send099d(int32 fd, struct char_session_data *sd) {
 	uint8 count = 0;
 
-	WFIFOHEAD(fd,4 + (MAX_CHARS*MAX_CHAR_BUF));
+	int packetSize = 4 + (MAX_CHARS*MAX_CHAR_BUF);
+	WFIFOHEAD(fd, packetSize);
+
+	// Fill the packet with the character data
+	short packetLength = char_mmo_chars_fromsql(sd, WFIFOP(fd,4), &count) + 4;
 	WFIFOW(fd,0) = HEADER_HC_ACK_CHARINFO_PER_PAGE;
-	WFIFOW(fd,2) = char_mmo_chars_fromsql(sd, WFIFOP(fd,4), &count) + 4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+	WFIFOW(fd,2) = packetLength;
+	WFIFOSET(fd, packetLength);
 
 	// This is something special Gravity came up with.
 	// The client triggers some finalization code only if count is != 3.
 	if( count == 3 ){
-		WFIFOHEAD(fd,4);
-		WFIFOW(fd,0) = HEADER_HC_ACK_CHARINFO_PER_PAGE;
-		WFIFOW(fd,2) = 4;
-		WFIFOSET(fd,4);
+		PACKET_HC_ACK_CHARINFO_PER_PAGE packet;
+		packet.packetType = HEADER_HC_ACK_CHARINFO_PER_PAGE;
+		packet.packetLength = 4;
+
+		WFIFOHEAD(fd, 4);
+		memcpy(WFIFOP(fd, 0), &packet, 4);
+		WFIFOSET(fd, 4);
 	}
 }
 
@@ -487,13 +515,16 @@ void chclif_mmo_char_send(int32 fd, struct char_session_data* sd){
  * 13 : Connection is terminated because your IP doesn't match authorized Ip
  * 14 : Connection is terminated to prevent charging from your account's play time
  * 15 : Disconnected from server!
- * 
+ *
  */
 void chclif_send_auth_result(int32 fd,char result){
-	WFIFOHEAD(fd,3);
-	WFIFOW(fd,0) = 0x81;
-	WFIFOB(fd,2) = result;
-	WFIFOSET(fd,3);
+	PACKET_HC_NOTIFY_BAN packet;
+	packet.packetType = 0x81;
+	packet.result = result;
+
+	WFIFOHEAD(fd, 3);
+	memcpy(WFIFOP(fd, 0), &packet, 3);
+	WFIFOSET(fd, 3);
 }
 
 /// @param result
@@ -505,16 +536,19 @@ void chclif_send_auth_result(int32 fd,char result){
 /// Any (0x718): An unknown error has occurred.
 /// HC: <0828>.W <char id>.L <Msg:0-5>.L <deleteDate>.L
 void chclif_char_delete2_ack(int32 fd, uint32 char_id, uint32 result, time_t delete_date) {
-	WFIFOHEAD(fd,14);
-	WFIFOW(fd,0) = 0x828;
-	WFIFOL(fd,2) = char_id;
-	WFIFOL(fd,6) = result;
+	PACKET_HC_CHAR_DELETE2_ACK packet;
+	packet.packetType = 0x828;
+	packet.charId = char_id;
+	packet.result = result;
 #if PACKETVER_CHAR_DELETEDATE
-	WFIFOL(fd,10) = TOL(delete_date-time(nullptr));
+	packet.deleteDate = TOL(delete_date-time(nullptr));
 #else
-	WFIFOL(fd,10) = TOL(delete_date);
+	packet.deleteDate = TOL(delete_date);
 #endif
-	WFIFOSET(fd,14);
+
+	WFIFOHEAD(fd, 14);
+	memcpy(WFIFOP(fd, 0), &packet, 14);
+	WFIFOSET(fd, 14);
 }
 
 /// @param result
@@ -535,11 +569,14 @@ void chclif_char_delete2_accept_ack(int32 fd, uint32 char_id, uint32 result) {
 	}
 #endif
 
-	WFIFOHEAD(fd,10);
-	WFIFOW(fd,0) = 0x82a;
-	WFIFOL(fd,2) = char_id;
-	WFIFOL(fd,6) = result;
-	WFIFOSET(fd,10);
+	PACKET_HC_CHAR_DELETE2_ACCEPT_ACK packet;
+	packet.packetType = 0x82a;
+	packet.charId = char_id;
+	packet.result = result;
+
+	WFIFOHEAD(fd, 10);
+	memcpy(WFIFOP(fd, 0), &packet, 10);
+	WFIFOSET(fd, 10);
 }
 
 /// @param result
@@ -548,22 +585,28 @@ void chclif_char_delete2_accept_ack(int32 fd, uint32 char_id, uint32 result) {
 /// Any (0x718): An unknown error has occurred.
 /// HC: <082c>.W <char id>.L <Msg:1-2>.L
 void chclif_char_delete2_cancel_ack(int32 fd, uint32 char_id, uint32 result) {
-	WFIFOHEAD(fd,10);
-	WFIFOW(fd,0) = 0x82c;
-	WFIFOL(fd,2) = char_id;
-	WFIFOL(fd,6) = result;
-	WFIFOSET(fd,10);
+	PACKET_HC_CHAR_DELETE2_CANCEL_ACK packet;
+	packet.packetType = 0x82c;
+	packet.charId = char_id;
+	packet.result = result;
+
+	WFIFOHEAD(fd, 10);
+	memcpy(WFIFOP(fd, 0), &packet, 10);
+	WFIFOSET(fd, 10);
 }
 
 // CH: <0827>.W <char id>.L
 int32 chclif_parse_char_delete2_req(int32 fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(6)
 	{
-		uint32 char_id, i, guild_id, party_id;
+		// Read the packet using the struct
+		const struct PACKET_CH_REQ_CHAR_DELETE2* p = reinterpret_cast<const struct PACKET_CH_REQ_CHAR_DELETE2*>(RFIFOP(fd, 0));
+
+		uint32 char_id = p->charId;
+		uint32 i, guild_id, party_id;
 		char* data;
 		time_t delete_date;
 
-		char_id = RFIFOL(fd,2);
 		RFIFOSKIP(fd,6);
 
 		ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == char_id );
@@ -651,21 +694,23 @@ bool chclif_delchar_check(struct char_session_data *sd, char *delcode, uint8 fla
 int32 chclif_parse_char_delete2_accept(int32 fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(12)
 	{
+		// Read the packet using the struct
+		const struct PACKET_CH_REQ_CHAR_DELETE2_ACCEPT* p = reinterpret_cast<const struct PACKET_CH_REQ_CHAR_DELETE2_ACCEPT*>(RFIFOP(fd, 0));
+
 		char birthdate[8+1];
-		uint32 char_id;
-		char_id = RFIFOL(fd,2);
+		uint32 char_id = p->charId;
 
 		ShowInfo(CL_RED "Request Char Deletion: " CL_GREEN "%d (%d)" CL_RESET "\n", sd->account_id, char_id);
 
-		// construct "YY-MM-DD"
-		birthdate[0] = RFIFOB(fd,6);
-		birthdate[1] = RFIFOB(fd,7);
+		// construct "YY-MM-DD" from the birthDate array
+		birthdate[0] = p->birthDate[0];
+		birthdate[1] = p->birthDate[1];
 		birthdate[2] = '-';
-		birthdate[3] = RFIFOB(fd,8);
-		birthdate[4] = RFIFOB(fd,9);
+		birthdate[3] = p->birthDate[2];
+		birthdate[4] = p->birthDate[3];
 		birthdate[5] = '-';
-		birthdate[6] = RFIFOB(fd,10);
-		birthdate[7] = RFIFOB(fd,11);
+		birthdate[6] = p->birthDate[4];
+		birthdate[7] = p->birthDate[5];
 		birthdate[8] = 0;
 		RFIFOSKIP(fd,12);
 
@@ -707,9 +752,11 @@ int32 chclif_parse_char_delete2_accept(int32 fd, struct char_session_data* sd) {
 int32 chclif_parse_char_delete2_cancel(int32 fd, struct char_session_data* sd) {
 	FIFOSD_CHECK(6);
 
-	uint32 char_id, i;
+	// Read the packet using the struct
+	const struct PACKET_CH_REQ_CHAR_DELETE2_CANCEL* p = reinterpret_cast<const struct PACKET_CH_REQ_CHAR_DELETE2_CANCEL*>(RFIFOP(fd, 0));
 
-	char_id = RFIFOL(fd,2);
+	uint32 char_id = p->charId, i;
+
 	RFIFOSKIP(fd,6);
 
 	ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == char_id );
@@ -776,10 +823,13 @@ int32 chclif_parse_reqtoconnect(int32 fd, struct char_session_data* sd,uint32 ip
 	if( RFIFOREST(fd) < 17 ) // request to connect
 		return 0;
 	else {
-		uint32 account_id = RFIFOL(fd,2);
-		uint32 login_id1 = RFIFOL(fd,6);
-		uint32 login_id2 = RFIFOL(fd,10);
-		int32 sex = RFIFOB(fd,16);
+		// Read the packet using the struct
+		const struct PACKET_CH_REQ_TO_CONNECT* p = reinterpret_cast<const struct PACKET_CH_REQ_TO_CONNECT*>(RFIFOP(fd, 0));
+
+		uint32 account_id = p->account_id;
+		uint32 login_id1 = p->login_id1;
+		uint32 login_id2 = p->login_id2;
+		int32 sex = p->sex;
 		RFIFOSKIP(fd,17);
 
 		ShowInfo("request connect - account_id:%d/login_id1:%d/login_id2:%d\n", account_id, login_id1, login_id2);
@@ -847,6 +897,10 @@ int32 chclif_parse_reqtoconnect(int32 fd, struct char_session_data* sd,uint32 ip
 //struct PACKET_CH_CHARLIST_REQ { 0x0 int16 PacketType}
 int32 chclif_parse_req_charlist(int32 fd, struct char_session_data* sd){
 	FIFOSD_CHECK(2);
+
+	// Read the packet using the struct
+	const struct PACKET_CH_REQ_CHARLIST* p = reinterpret_cast<const struct PACKET_CH_REQ_CHARLIST*>(RFIFOP(fd, 0));
+
 	RFIFOSKIP(fd,2);
 	chclif_mmo_send099d(fd,sd);
 	return 1;
@@ -854,30 +908,32 @@ int32 chclif_parse_req_charlist(int32 fd, struct char_session_data* sd){
 
 //Send player to map
 void chclif_send_map_data( int32 fd, std::shared_ptr<struct mmo_charstatus> cd, uint32 ipl, int32 map_server_index ){
+	PACKET_HC_SEND_MAP_DATA packet;
 #if PACKETVER >= 20170315
-	int32 cmd = 0xAC5;
+	packet.packetType = 0xAC5;
 	int32 size = 156;
 #else
-	int32 cmd = 0x71;
+	packet.packetType = 0x71;
 	int32 size = 28;
 #endif
 
-	WFIFOHEAD(fd,size);
-	WFIFOW(fd,0) = cmd;
-	WFIFOL(fd,2) = cd->char_id;
-	mapindex_getmapname_ext( cd->last_point.map, WFIFOCP( fd, 6 ) );
+	packet.charId = cd->char_id;
+	mapindex_getmapname_ext( cd->last_point.map, packet.mapName );
 	uint32 subnet_map_ip = char_lan_subnetcheck(ipl); // Advanced subnet check [LuzZza]
-	WFIFOL(fd,22) = htonl((subnet_map_ip) ? subnet_map_ip : map_server[map_server_index].ip);
-	WFIFOW(fd,26) = ntows(htons(map_server[map_server_index].port)); // [!] LE byte order here [!]
+	packet.ip = htonl((subnet_map_ip) ? subnet_map_ip : map_server[map_server_index].ip);
+	packet.port = ntows(htons(map_server[map_server_index].port)); // [!] LE byte order here [!]
 #if PACKETVER >= 20170315
-	memset(WFIFOP(fd, 28), 0, 128); // Unknown
+	memset(packet.unknown, 0, 128); // Unknown
 #endif
+
+	WFIFOHEAD(fd, size);
+	memcpy(WFIFOP(fd, 0), &packet, size);
+	WFIFOSET(fd, size);
 #ifdef DEBUG
 	ShowDebug("Sending the client (%d %d.%d.%d.%d) to map-server with ip %d.%d.%d.%d and port %hu\n",
 			  cd->account_id, CONVIP(ipl), CONVIP((subnet_map_ip) ? subnet_map_ip : map_server[map_server_index].ip),
 			  map_server[map_server_index].port);
 #endif
-	WFIFOSET(fd,size);
 }
 
 int32 chclif_parse_select_accessible_map( int32 fd, struct char_session_data* sd, uint32 ipl ){
@@ -1042,12 +1098,15 @@ void chclif_accessible_maps( int32 fd ){
 int32 chclif_parse_charselect(int32 fd, struct char_session_data* sd,uint32 ipl){
 	FIFOSD_CHECK(3)
 	{
+		// Read the packet using the struct
+		const struct PACKET_CH_SELECT_CHAR* p = reinterpret_cast<const struct PACKET_CH_SELECT_CHAR*>(RFIFOP(fd, 0));
+
 		struct mmo_charstatus char_dat;
 		char* data;
 		uint32 char_id;
 		int32 i, map_fd, server_id;
 
-		int32 slot = RFIFOB(fd,2);
+		int32 slot = p->slot;
 		RFIFOSKIP(fd,3);
 
 		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, session_isValid(map_server[server_id].fd) && !map_server[server_id].maps.empty() );
@@ -1312,11 +1371,22 @@ int32 chclif_parse_delchar(int32 fd,struct char_session_data* sd, int32 cmd){
 	else if (cmd == 0x1fb) FIFOSD_CHECK(56)
 	else return 0;
 	{
+		// Read the packet using the appropriate struct based on command
+		uint32 cid;
 		char email[40];
-		uint32 cid = RFIFOL(fd,2);
+
+		if (cmd == 0x68) {
+			const struct PACKET_CH_DELETE_CHAR* p = reinterpret_cast<const struct PACKET_CH_DELETE_CHAR*>(RFIFOP(fd, 0));
+			cid = p->charId;
+			memcpy(email, p->email, 40);
+		} else {
+			const struct PACKET_CH_DELETE_CHAR_NEW* p = reinterpret_cast<const struct PACKET_CH_DELETE_CHAR_NEW*>(RFIFOP(fd, 0));
+			cid = p->charId;
+			memcpy(email, p->email, 40);
+		}
 
 		ShowInfo(CL_RED "Request Char Deletion: " CL_GREEN "%u (%u)" CL_RESET "\n", sd->account_id, cid);
-		memcpy(email, RFIFOP(fd,6), 40);
+
 		RFIFOSKIP(fd,( cmd == 0x68) ? 46 : 56);
 
 		if (!chclif_delchar_check(sd, email, charserv_config.char_config.char_del_option)) {
@@ -1354,7 +1424,11 @@ int32 chclif_parse_delchar(int32 fd,struct char_session_data* sd, int32 cmd){
 int32 chclif_parse_keepalive(int32 fd){
 	if (RFIFOREST(fd) < 6)
 		return 0;
-	//int32 aid = RFIFOL(fd,2);
+
+	// Read the packet using the struct
+	const struct PACKET_CH_KEEP_ALIVE* p = reinterpret_cast<const struct PACKET_CH_KEEP_ALIVE*>(RFIFOP(fd, 0));
+
+	//int32 aid = p->accountId;
 	RFIFOSKIP(fd,6);
 	return 1;
 }
@@ -1376,13 +1450,16 @@ void chclif_reqrename_response( int32 fd, struct char_session_data* sd, bool nam
 int32 chclif_parse_reqrename( int32 fd, struct char_session_data* sd ){
 	FIFOSD_CHECK(34);
 
+	// Read the packet using the struct
+	const struct PACKET_CH_REQ_IS_VALID_CHARNAME* p = reinterpret_cast<const struct PACKET_CH_REQ_IS_VALID_CHARNAME*>(RFIFOP(fd, 0));
+
 	int32 i, cid, aid;
 	char name[NAME_LENGTH];
 	char esc_name[NAME_LENGTH*2+1];
 
-	aid = RFIFOL(fd,2);
-	cid = RFIFOL(fd,6);
-	safestrncpy(name, RFIFOCP(fd,10), NAME_LENGTH);
+	aid = p->accountId;
+	cid = p->charId;
+	safestrncpy(name, p->newName, NAME_LENGTH);
 	RFIFOSKIP(fd,34);
 
 	if( aid != sd->account_id )
@@ -1500,11 +1577,13 @@ int32 chclif_parse_ackrename(int32 fd, struct char_session_data* sd){
 #if PACKETVER >= 20111101
 	FIFOSD_CHECK(30)
 	{
-		int32 i, cid;
+		// Use newer rename packet that includes the new name
+		const struct PACKET_CH_REQ_CHANGE_CHARACTERNAME* p = reinterpret_cast<const struct PACKET_CH_REQ_CHANGE_CHARACTERNAME*>(RFIFOP(fd, 0));
+
+		int32 i, cid = p->charId;
 		char name[NAME_LENGTH], esc_name[NAME_LENGTH * 2 + 1];
 
-		cid = RFIFOL(fd, 2);
-		safestrncpy(name, RFIFOCP(fd, 6), NAME_LENGTH);
+		safestrncpy(name, p->newName, NAME_LENGTH);
 		RFIFOSKIP(fd, 30);
 
 		ARR_FIND(0, MAX_CHARS, i, sd->found_char[i] == cid);
@@ -1530,8 +1609,11 @@ int32 chclif_parse_ackrename(int32 fd, struct char_session_data* sd){
 #else
 	FIFOSD_CHECK(6)
 	{
+		// Use older rename packet that just has the character id
+		const struct PACKET_CH_REQ_CHANGE_CHARNAME* p = reinterpret_cast<const struct PACKET_CH_REQ_CHANGE_CHARNAME*>(RFIFOP(fd, 0));
+
 		int32 i;
-		int32 cid = RFIFOL(fd,2);
+		int32 cid = p->charId;
 		RFIFOSKIP(fd,6);
 
 		ARR_FIND( 0, MAX_CHARS, i, sd->found_char[i] == cid );
@@ -1556,10 +1638,13 @@ int32 chclif_ack_captcha(int32 fd){
 
 // R 06C <ErrorCode>B HEADER_HC_REFUSE_ENTER
 void chclif_reject(int32 fd, uint8 errCode){
-	WFIFOHEAD(fd,3);
-	WFIFOW(fd,0) = 0x6c;
-	WFIFOB(fd,2) = errCode;// rejected from server
-	WFIFOSET(fd,3);
+	PACKET_HC_REFUSE_ENTER packet;
+	packet.packetType = 0x6c;
+	packet.errorCode = errCode;// rejected from server
+
+	WFIFOHEAD(fd, 3);
+	memcpy(WFIFOP(fd, 0), &packet, 3);
+	WFIFOSET(fd, 3);
 }
 
 // R 07e5 <?>.w <aid>.l
