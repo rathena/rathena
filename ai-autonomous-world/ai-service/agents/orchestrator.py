@@ -19,7 +19,6 @@ class AgentOrchestrator:
     Orchestrates multiple AI agents to handle complex NPC interactions
     Uses CrewAI for agent coordination and task management
     """
-
     def __init__(
         self,
         config: Dict[str, Any],
@@ -69,6 +68,9 @@ class AgentOrchestrator:
                     npc_id=npc_context.npc_id,
                     npc_name=npc_context.npc_name,
                     personality=npc_context.personality,
+                    goal_state=getattr(npc_context, "goal_state", None),
+                    emotion_state=getattr(npc_context, "emotion_state", None),
+                    memory_state=getattr(npc_context, "memory_state", None),
                     current_state={
                         "operation": "store",
                         "memory_data": {
@@ -93,6 +95,9 @@ class AgentOrchestrator:
                     "npc_id": getattr(npc_context, "npc_id", "unknown"),
                     "npc_name": getattr(npc_context, "npc_name", "Unknown NPC"),
                     "personality": getattr(npc_context, "personality", {}),
+                    "goal_state": getattr(npc_context, "goal_state", None),
+                    "emotion_state": getattr(npc_context, "emotion_state", None),
+                    "memory_state": getattr(npc_context, "memory_state", None),
                     "current_state": getattr(npc_context, "current_state", {}),
                     "world_state": getattr(npc_context, "world_state", {}),
                     "recent_events": getattr(npc_context, "recent_events", [])
@@ -126,6 +131,9 @@ class AgentOrchestrator:
                         npc_id=getattr(npc_context, "npc_id", "unknown"),
                         npc_name=getattr(npc_context, "npc_name", "Unknown NPC"),
                         personality=getattr(npc_context, "personality", {}),
+                        goal_state=getattr(npc_context, "goal_state", None),
+                        emotion_state=getattr(npc_context, "emotion_state", None),
+                        memory_state=getattr(npc_context, "memory_state", None),
                         current_state={"player_message": message},
                         world_state=getattr(npc_context, "world_state", {}),
                         recent_events=getattr(npc_context, "recent_events", [])
@@ -146,10 +154,11 @@ class AgentOrchestrator:
         except Exception as e:
             logger.error("Error in player interaction handling: {}", e)
             return AgentResponse(
-                text="I'm having trouble processing that right now. Could you try again?",
-                emotional_state="confused",
-                actions=[],
-                metadata={"error": str(e)}
+                agent_type="dialogue",
+                success=False,
+                data={"text": "I'm having trouble processing that right now. Could you try again?"},
+                confidence=0.0,
+                reasoning=f"Error: {str(e)}"
             )
 
     async def handle_npc_action_decision(
@@ -173,6 +182,9 @@ class AgentOrchestrator:
                     "npc_id": agent_context.npc_id,
                     "npc_name": agent_context.npc_name,
                     "personality": agent_context.personality,
+                    "goal_state": getattr(agent_context, "goal_state", None),
+                    "emotion_state": getattr(agent_context, "emotion_state", None),
+                    "memory_state": getattr(agent_context, "memory_state", None),
                     "current_state": agent_context.current_state,
                     "recent_events": agent_context.recent_events,
                 }

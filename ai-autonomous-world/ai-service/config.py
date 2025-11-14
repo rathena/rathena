@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     service_port: int = Field(default=8000, env="SERVICE_PORT")
     environment: str = Field(default="development", env="ENVIRONMENT")
     debug: bool = Field(default=True, env="DEBUG")
+    # Agent Mode Selection (per-agent, comma-separated, e.g. "dialogue:LLM,decision:hybrid,quest:LLM,memory:CPU,world:hybrid,economy:CPU,faction:hybrid")
+    agent_modes: str = Field(default="dialogue:LLM,decision:hybrid,quest:LLM,memory:CPU,world:hybrid,economy:CPU,faction:hybrid", env="AGENT_MODES")
 
     # rAthena Bridge Configuration (for pushing commands back to game server)
     rathena_bridge_host: str = Field(default="192.168.0.100", env="RATHENA_BRIDGE_HOST")
@@ -881,6 +883,46 @@ def get_settings(config_path: Optional[str] = None) -> Settings:
     return settings
 
 
+# Agent Mode Synonyms and Parser
+AGENT_MODE_SYNONYMS = {
+    "llm": "LLM",
+    "llm_only": "LLM",
+    "llm-only": "LLM",
+    "LLM_ONLY": "LLM",
+    "cpu": "CPU",
+    "cpu_only": "CPU",
+    "cpu-only": "CPU",
+    "CPU_ONLY": "CPU",
+    "gpu": "GPU",
+    "gpu_only": "GPU",
+    "gpu-only": "GPU",
+    "GPU_ONLY": "GPU",
+    "hybrid": "hybrid",
+    "llm+cpu": "LLM+CPU",
+    "llm+gpu": "LLM+GPU",
+    "llm+cpu+gpu": "LLM+CPU+GPU",
+    "cpu+gpu": "CPU+GPU",
+    "llm_cpu": "LLM+CPU",
+    "llm_gpu": "LLM+GPU",
+    "llm_cpu_gpu": "LLM+CPU+GPU",
+    "cpu_gpu": "CPU+GPU",
+}
+
+def parse_agent_modes(agent_modes_str):
+    """
+    Parse AGENT_MODES string into a dict of agent_name:mode, supporting synonyms and custom/unknown agent types.
+    Example: "dialogue:LLM,decision:hybrid,quest:LLM,memory:CPU,world:hybrid,economy:CPU,faction:hybrid"
+    """
+    agent_modes = {}
+    for entry in agent_modes_str.split(","):
+        if ":" not in entry:
+            continue
+        agent, mode = entry.split(":", 1)
+        agent = agent.strip().lower()
+        mode_key = mode.strip().lower().replace("-", "_")
+        canonical_mode = AGENT_MODE_SYNONYMS.get(mode_key, mode.upper())
+        agent_modes[agent] = canonical_mode
+    return agent_modes
 # Global settings instance
 settings = get_settings()
 
