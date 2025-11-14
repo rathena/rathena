@@ -13002,7 +13002,9 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 				clif_changelook(bl,LOOK_WEAPON,0);
 				clif_changelook(bl,LOOK_SHIELD,0);
 				clif_changelook(bl,LOOK_CLOTHES_COLOR,vd->look[LOOK_CLOTHES_COLOR]);
+#if PACKETVER_MAIN_NUM < 20231220
 				clif_changelook(bl,LOOK_BODY2,vd->look[LOOK_BODY2]);
+#endif
 				break;
 			case SC_STONE:
 			case SC_STONEWAIT:
