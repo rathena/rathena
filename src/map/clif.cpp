@@ -4054,9 +4054,11 @@ void clif_changelook(block_list *bl, int32 type, int32 val) {
 #if PACKETVER < 20150513
 				return;
 #else
+#if PACKETVER_MAIN_NUM < 20231220
 				if( sc != nullptr && sc->option&OPTION_COSTUME ){
  					val = sd->status.class_;
 				}
+#endif
 
  				vd->look[LOOK_BODY2] = val;
 				break;
