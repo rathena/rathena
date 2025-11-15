@@ -54,7 +54,8 @@ class QuestAgent(BaseAIAgent):
             llm_provider=llm_provider,
             config=config
         )
-        
+        from agents.moral_alignment import MoralAlignment
+        self.moral_alignment = MoralAlignment()
         self.crew_agent = self._create_crew_agent()
         logger.info(f"Quest Agent {agent_id} initialized")
     
@@ -110,6 +111,15 @@ class QuestAgent(BaseAIAgent):
         """
         try:
             logger.info(f"Generating quest for NPC: {context.npc_id}")
+
+            # --- Moral Alignment Integration ---
+            # Update alignment based on quest event and context
+            alignment_action = {
+                "type": "quest_generation",
+                "npc_id": context.npc_id,
+                "player_level": context.current_state.get("player_level", 1)
+            }
+            self.moral_alignment.update_from_action(alignment_action)
             
             # Extract generation parameters
             player_level = context.current_state.get("player_level", 1)
@@ -155,15 +165,17 @@ class QuestAgent(BaseAIAgent):
                     "quest_id": quest.quest_id,
                     "title": quest.title,
                     "type": quest.quest_type,
-                    "difficulty": quest.difficulty
+                    "difficulty": quest.difficulty,
+                    "alignment": self.moral_alignment.to_dict()
                 },
                 confidence=0.85,
-                reasoning=f"Generated {quest_type} quest for {npc_class} NPC",
+                reasoning=f"Generated {quest_type} quest for {npc_class} NPC and updated alignment",
                 metadata={
                     "npc_id": context.npc_id,
                     "player_level": player_level,
                     "quest_type": quest_type,
-                    "difficulty": difficulty
+                    "difficulty": difficulty,
+                    "alignment": self.moral_alignment.to_dict()
                 },
                 timestamp=datetime.now(__import__('datetime').timezone.utc)
             )

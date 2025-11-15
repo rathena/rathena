@@ -48,7 +48,8 @@ class MVPAgent(BaseAIAgent):
             llm_provider=llm_provider,
             config=config
         )
-        
+        from agents.moral_alignment import MoralAlignment
+        self.moral_alignment = MoralAlignment()
         self.mvp_config = mvp_config
         self.crew_agent = self._create_crew_agent()
         logger.info(f"MVP Agent {agent_id} initialized for {mvp_config.mvp_name}")
@@ -102,6 +103,14 @@ class MVPAgent(BaseAIAgent):
             AgentResponse with next action
         """
         try:
+            # --- Moral Alignment Integration ---
+            alignment_action = {
+                "type": "mvp_action",
+                "npc_id": context.npc_id if hasattr(context, "npc_id") else None,
+                "event": "combat"
+            }
+            self.moral_alignment.update_from_action(alignment_action)
+
             mvp_state = MVPState(**context.current_state.get("mvp_state", {}))
             
             # Detect player strategy
@@ -129,7 +138,8 @@ class MVPAgent(BaseAIAgent):
                 data={
                     "action": action.dict(),
                     "new_state": new_state.value,
-                    "detected_strategy": player_strategy.dict() if player_strategy else None
+                    "detected_strategy": player_strategy.dict() if player_strategy else None,
+                    "alignment": self.moral_alignment.to_dict()
                 },
                 message=f"MVP action: {action.action_type}"
             )

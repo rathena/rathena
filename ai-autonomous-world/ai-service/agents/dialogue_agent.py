@@ -36,6 +36,8 @@ class DialogueAgent(BaseAIAgent):
             llm_provider=llm_provider,
             config=config
         )
+        from agents.moral_alignment import MoralAlignment
+        self.moral_alignment = MoralAlignment()
         logger.info(f"Dialogue Agent {agent_id} initialized")
 
     def _create_crew_agent(self) -> Agent:
@@ -104,6 +106,15 @@ class DialogueAgent(BaseAIAgent):
             # Build social fabric context (gossip, persuasion, social learning, reputation)
             social_context = self._build_social_fabric_context(context)
 
+            # --- Moral Alignment Integration ---
+            # Update alignment based on dialogue context and player interaction
+            alignment_action = {
+                "type": "dialogue",
+                "player_message": player_message,
+                "interaction_type": interaction_type
+            }
+            self.moral_alignment.update_from_action(alignment_action)
+
             # Generate dialogue
             dialogue = await self._generate_dialogue(
                 npc_name=context.npc_name,
@@ -138,7 +149,8 @@ class DialogueAgent(BaseAIAgent):
                 "text": dialogue,
                 "speaker": context.npc_name,
                 "emotion": emotion,
-                "next_actions": next_actions
+                "next_actions": next_actions,
+                "alignment": self.moral_alignment.to_dict()
             }
 
             logger.info(f"Dialogue generated successfully for {context.npc_id}")
@@ -148,10 +160,11 @@ class DialogueAgent(BaseAIAgent):
                 success=True,
                 data=response_data,
                 confidence=0.85,
-                reasoning="Dialogue generated based on personality, goals, emotion, memory, social context, and world state",
+                reasoning="Dialogue generated based on personality, goals, emotion, memory, social context, world state, and updated alignment",
                 metadata={
                     "interaction_type": interaction_type,
-                    "player_message_length": len(player_message)
+                    "player_message_length": len(player_message),
+                    "alignment": self.moral_alignment.to_dict()
                 }
             )
 

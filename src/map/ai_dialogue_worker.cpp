@@ -190,8 +190,9 @@ std::string AIDialogueWorker::call_aiworld_server(const AIDialogueRequest& req, 
     payload["account_id"] = req.account_id;
     payload["request_time"] = req.request_time;
     payload["type"] = "dialogue";
+    // AIWorldMessage now expects IPCMessageType (enum class) as first argument
+    // No cast needed, constructor signature matches
     AIWorldMessage msg(IPCMessageType::AI_ACTION_REQUEST, generate_correlation_id(), payload);
-
     if (!zmq_client->send_message(msg)) {
         error_msg = "ZeroMQ send failed";
         return "";

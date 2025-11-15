@@ -48,6 +48,8 @@ class MemoryAgent(BaseAIAgent):
             llm_provider=llm_provider,
             config=config
         )
+        from agents.moral_alignment import MoralAlignment
+        self.moral_alignment = MoralAlignment()
         logger.info(f"Memory Agent {agent_id} initialized with OpenMemory SDK")
 
     def _create_crew_agent(self) -> Agent:
@@ -92,6 +94,16 @@ class MemoryAgent(BaseAIAgent):
         """
         try:
             operation = context.current_state.get("operation", "retrieve")
+
+            # --- Moral Alignment Integration ---
+            # Update alignment based on memory operation and context
+            alignment_action = {
+                "type": f"memory_{operation}",
+                "npc_id": context.npc_id,
+                "operation": operation
+            }
+            self.moral_alignment.update_from_action(alignment_action)
+
             if operation == "store":
                 result = await self._store_memory(context)
             elif operation == "retrieve":
@@ -104,9 +116,10 @@ class MemoryAgent(BaseAIAgent):
             return AgentResponse(
                 agent_type=self.agent_type,
                 success=True,
-                data=result,
+                data={**result, "alignment": self.moral_alignment.to_dict()},
                 confidence=0.90,
-                reasoning=f"Memory {operation} operation completed successfully"
+                reasoning=f"Memory {operation} operation completed successfully and alignment updated",
+                metadata={"alignment": self.moral_alignment.to_dict()}
             )
         except Exception as e:
             logger.error(f"Memory operation failed for {context.npc_id}: {e}")

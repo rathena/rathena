@@ -6,17 +6,18 @@
 #include <vector>
 #include <cstdint>
 #include <nlohmann/json.hpp>
+#include "aiworld_types.hpp"
 
 namespace aiworld {
 
 // Message base struct
 struct AIWorldMessage {
-    int32_t message_type; // See IPCMessageType
+    IPCMessageType message_type; // See IPCMessageType (enum class)
     std::string correlation_id; // For request/response matching
     nlohmann::json payload;     // JSON-encoded message data
 
-    AIWorldMessage() : message_type(0) {}
-    AIWorldMessage(int32_t type, const std::string& corr, const nlohmann::json& data)
+    AIWorldMessage() : message_type(IPCMessageType::ERROR) {}
+    AIWorldMessage(IPCMessageType type, const std::string& corr, const nlohmann::json& data)
         : message_type(type), correlation_id(corr), payload(data) {}
 };
 

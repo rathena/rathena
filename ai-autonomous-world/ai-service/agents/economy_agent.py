@@ -47,7 +47,8 @@ class EconomyAgent(BaseAIAgent):
             llm_provider=llm_provider,
             config=config
         )
-        
+        from agents.moral_alignment import MoralAlignment
+        self.moral_alignment = MoralAlignment()
         self.crew_agent = self._create_crew_agent()
         logger.info(f"Economy Agent {agent_id} initialized")
     
@@ -100,7 +101,15 @@ class EconomyAgent(BaseAIAgent):
         """
         try:
             operation = context.current_state.get("operation", "analyze")
-            
+
+            # --- Moral Alignment Integration ---
+            # Update alignment based on economic operation and context
+            alignment_action = {
+                "type": f"economy_{operation}",
+                "operation": operation
+            }
+            self.moral_alignment.update_from_action(alignment_action)
+
             logger.info(f"Economy Agent processing: {operation}")
             
             if operation == "update_prices":
@@ -118,10 +127,10 @@ class EconomyAgent(BaseAIAgent):
             return AgentResponse(
                 agent_type=self.agent_type,
                 success=True,
-                data=result,
+                data={**result, "alignment": self.moral_alignment.to_dict()},
                 confidence=0.8,
-                reasoning=f"Completed {operation} operation",
-                metadata={"operation": operation},
+                reasoning=f"Completed {operation} operation and updated alignment",
+                metadata={"operation": operation, "alignment": self.moral_alignment.to_dict()},
                 timestamp=datetime.now(__import__('datetime').timezone.utc)
             )
             

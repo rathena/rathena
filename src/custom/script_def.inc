@@ -11,9 +11,9 @@
 //BUILDIN_DEF(example,""),
 
 // HTTP Functions for AI Integration
-BUILDIN_DEF(httppost,"ss"),  // httppost("<url>", "<json_body>")
-BUILDIN_DEF(httpget,"s"),    // httpget("<url>")
+//BUILDIN_DEF(httppost,"ss"),  // httppost("<url>", "<json_body>")
+//BUILDIN_DEF(httpget,"s"),    // httpget("<url>")
 
 // NPC Movement Functions for AI-Driven NPCs
-BUILDIN_DEF(npcwalk,"sii"),   // npcwalk("<npc_name>", <x>, <y>)
-BUILDIN_DEF(npcwalkid,"iii"), // npcwalkid(<npc_id>, <x>, <y>)
+//BUILDIN_DEF(npcwalk,"sii"),   // npcwalk("<npc_name>", <x>, <y>)
+//BUILDIN_DEF(npcwalkid,"iii"), // npcwalkid(<npc_id>, <x>, <y>)

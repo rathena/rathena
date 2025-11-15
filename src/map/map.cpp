@@ -5511,8 +5511,8 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 
 		// Create worker configuration
 		AIDialogueWorkerConfig worker_config;
-		worker_config.bridge_url = "127.0.0.1";
-		worker_config.bridge_port = 8888;
+		// worker_config.bridge_url = "127.0.0.1";
+		// worker_config.bridge_port = 8888;
 		worker_config.num_threads = 4;
 		worker_config.request_timeout_ms = 30000; // 30 seconds
 		worker_config.max_retries = 2;

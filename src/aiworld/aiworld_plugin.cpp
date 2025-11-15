@@ -53,8 +53,8 @@ std::string AIWorldPlugin::handle_script_command(const std::string& command, con
     nlohmann::json payload;
     payload["command"] = command;
     payload["args"] = args;
-    AIWorldMessage msg(IPCMessageType::AI_ACTION_REQUEST, generate_correlation_id(), payload);
-
+    // AIWorldMessage now expects IPCMessageType (enum class) as first argument
+    // No cast needed, constructor signature matches
     if (!ipc_client->send_message(msg)) {
         log_error("Failed to send script command to AIWorld server.");
         return "{\"error\": \"IPC send failed\"}";

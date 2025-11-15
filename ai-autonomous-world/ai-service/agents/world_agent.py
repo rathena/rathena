@@ -36,6 +36,8 @@ class WorldAgent(BaseAIAgent):
             llm_provider=llm_provider,
             config=config
         )
+        from agents.moral_alignment import MoralAlignment
+        self.moral_alignment = MoralAlignment()
         logger.info(f"World Agent {agent_id} initialized")
 
     def _create_crew_agent(self) -> Agent:
@@ -80,6 +82,16 @@ class WorldAgent(BaseAIAgent):
         """
         try:
             operation = context.current_state.get("operation", "analyze")
+
+            # --- Moral Alignment Integration ---
+            # Update alignment based on world event/operation
+            alignment_action = {
+                "type": f"world_{operation}",
+                "npc_id": context.npc_id if hasattr(context, "npc_id") else None,
+                "operation": operation
+            }
+            self.moral_alignment.update_from_action(alignment_action)
+
             if operation == "analyze":
                 result = await self._analyze_world_state(context)
             elif operation == "impact":
@@ -92,9 +104,10 @@ class WorldAgent(BaseAIAgent):
             return AgentResponse(
                 agent_type=self.agent_type,
                 success=True,
-                data=result,
+                data={**result, "alignment": self.moral_alignment.to_dict()},
                 confidence=0.75,
-                reasoning=f"World {operation} operation completed"
+                reasoning=f"World {operation} operation completed and alignment updated",
+                metadata={"alignment": self.moral_alignment.to_dict()}
             )
         except Exception as e:
             logger.error(f"World operation failed: {e}")

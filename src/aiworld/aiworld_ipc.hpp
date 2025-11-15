@@ -7,20 +7,11 @@
 #include <thread>
 #include <atomic>
 #include <zmq.h>
+#include "aiworld_types.hpp"
 #include "aiworld_messages.hpp"
 
 namespace aiworld {
-
-// IPC message types
-enum class IPCMessageType {
-    ENTITY_STATE_SYNC = 1,
-    MISSION_ASSIGNMENT = 2,
-    EVENT_NOTIFICATION = 3,
-    AI_ACTION_REQUEST = 4,
-    AI_ACTION_RESPONSE = 5,
-    HEARTBEAT = 6,
-    ERROR = 99
-};
+// IPC message types are now defined in aiworld_types.hpp
 
 // IPC client for rAthena <-> AIWorld server communication
 class AIWorldIPCClient {

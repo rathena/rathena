@@ -26,7 +26,7 @@ bool AIWorldIPCClient::connect() {
         log_error("ZeroMQ context creation failed.");
         return false;
     }
-    zmq_socket = zmq_socket(zmq_context, ZMQ_REQ);
+    zmq_socket = ::zmq_socket(zmq_context, ZMQ_REQ);
     if (!zmq_socket) {
         log_error("ZeroMQ socket creation failed.");
         return false;
@@ -66,7 +66,7 @@ bool AIWorldIPCClient::receive_message(AIWorldMessage& msg, bool blocking) {
     try {
         msg.payload = nlohmann::json::parse(msg_str);
         // Optionally parse message_type/correlation_id if present
-        msg.message_type = msg.payload.value("message_type", 0);
+        msg.message_type = static_cast<IPCMessageType>(msg.payload.value("message_type", 0));
         msg.correlation_id = msg.payload.value("correlation_id", "");
     } catch (...) {
         return false;
