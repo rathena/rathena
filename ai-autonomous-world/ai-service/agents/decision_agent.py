@@ -12,6 +12,7 @@ from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 from config import settings
 
 from agents.decision_optimizer import DecisionOptimizer
+from agents.moral_alignment import MoralAlignment
 
 class DecisionAgent(BaseAIAgent):
     """
@@ -36,6 +37,7 @@ class DecisionAgent(BaseAIAgent):
         )
         self.ml_mode = config.get("ml_mode", "auto")  # "auto", "cpu", "gpu", "sklearn", "xgboost", "torch", "tf"
         self.optimizer = DecisionOptimizer(mode=self.ml_mode, fallback=None)
+        self.moral_alignment = MoralAlignment()
         logger.info(f"Decision Agent {agent_id} initialized (ML mode: {self.ml_mode})")
 
     def _create_crew_agent(self) -> Agent:
@@ -103,7 +105,10 @@ class DecisionAgent(BaseAIAgent):
                 except Exception as e:
                     logger.warning(f"ML model failed, will fallback to LLM: {e}")
 
+            # --- Moral Alignment System: update from action ---
+            # Example: update alignment from action type
             if ml_decision is not None:
+                self.moral_alignment.update_from_action({"type": ml_decision["action_type"]})
                 action_data = self._parse_decision(ml_decision, available_actions, context)
                 logger.info(f"Decision made for {context.npc_id} (ML): {action_data.get('action_type')}")
                 return AgentResponse(
@@ -115,7 +120,8 @@ class DecisionAgent(BaseAIAgent):
                     metadata={
                         "available_actions_count": len(available_actions),
                         "events_considered": len(context.recent_events),
-                        "ml_mode": self.ml_mode
+                        "ml_mode": self.ml_mode,
+                        "alignment": self.moral_alignment.to_dict()
                     }
                 )
 
@@ -139,6 +145,9 @@ class DecisionAgent(BaseAIAgent):
                     "priority": 1
                 }
 
+            # --- Moral Alignment System: update from action ---
+            self.moral_alignment.update_from_action({"type": decision.get("action_type", "idle")})
+
             action_data = self._parse_decision(decision, available_actions, context)
             logger.info(f"Decision made for {context.npc_id} (LLM): {action_data.get('action_type')}")
             return AgentResponse(
@@ -150,7 +159,8 @@ class DecisionAgent(BaseAIAgent):
                 metadata={
                     "available_actions_count": len(available_actions),
                     "events_considered": len(context.recent_events),
-                    "ml_mode": self.ml_mode
+                    "ml_mode": self.ml_mode,
+                    "alignment": self.moral_alignment.to_dict()
                 }
             )
 
