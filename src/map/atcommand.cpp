@@ -8665,6 +8665,84 @@ ACMD_FUNC(whodrops)
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
+
+		sprintf(atcmd_output, "Map drops:");
+		clif_displaymessage(fd, atcmd_output);
+
+		std::map<std::pair<uint16, double>, std::vector<std::string>> map_drop_groups;
+		bool found_map_drops = false;
+
+		for (const auto& map_entry : map_drop_db) {
+			std::shared_ptr<s_map_drops> mapdrops = map_entry.second;
+			std::string map_name = map_mapid2mapname(map_entry.first);
+			std::string display_name = map_name;
+
+			if (map_name.find("@") != std::string::npos) {
+				for (const auto& instance_entry : instance_db) {
+					std::shared_ptr<s_instance_db> instance = instance_entry.second;
+					if (strcmp(map_mapid2mapname(instance->enter.map), map_name.c_str()) == 0) {
+						display_name = instance->name;
+						break;
+					}
+					for (const auto& additional_map : instance->maplist) {
+						if (strcmp(map_mapid2mapname(additional_map), map_name.c_str()) == 0) {
+							display_name = instance->name;
+							break;
+						}
+					}
+					if (display_name != map_name) break;
+				}
+			}
+
+			for (const auto& global_drop : mapdrops->globals) {
+				if (global_drop.second->nameid == id->nameid) {
+					double rate_percent = (global_drop.second->rate * 100.0) / 100000.0;
+					std::pair<uint16, double> key = std::make_pair(0, rate_percent);
+					map_drop_groups[key].push_back(display_name);
+					found_map_drops = true;
+				}
+			}
+
+			for (const auto& specific_entry : mapdrops->specific) {
+				uint16 mob_id = specific_entry.first;
+				for (const auto& drop : specific_entry.second) {
+					if (drop.second->nameid == id->nameid) {
+						double rate_percent = (drop.second->rate * 100.0) / 100000.0;
+						std::pair<uint16, double> key = std::make_pair(mob_id, rate_percent);
+						map_drop_groups[key].push_back(display_name);
+						found_map_drops = true;
+					}
+				}
+			}
+		}
+
+		if (!found_map_drops) {
+			sprintf(atcmd_output, " - Item is not dropped by map-specific drops.");
+			clif_displaymessage(fd, atcmd_output);
+		} else {
+			for (const auto& group : map_drop_groups) {
+				uint16 mob_id = group.first.first;
+				double rate = group.first.second;
+				const std::vector<std::string>& maps = group.second;
+
+				std::string map_list = "";
+				for (size_t i = 0; i < maps.size(); ++i) {
+					if (i > 0) map_list += ", ";
+					map_list += maps[i];
+				}
+
+				if (mob_id == 0) {  
+					sprintf(atcmd_output, "- All monsters: %.2f%% - (%s)", rate, map_list.c_str());  
+					clif_displaymessage(fd, atcmd_output);  
+				} else {  
+					std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);  
+					if (mob) {  
+						sprintf(atcmd_output, "- %s (%d): %.2f%% - (%s)", mob->jname.c_str(), mob_id, rate, map_list.c_str());  
+						clif_displaymessage(fd, atcmd_output);  
+					}  
+				}
+			}  
+		}
 	}
 	return 0;
 }
