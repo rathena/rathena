@@ -280,9 +280,9 @@ class TestAgentOrchestrator:
 
             # Should handle error and continue
             response = await orchestrator.handle_player_interaction(
-                player_input="Hello",
                 npc_context=mock_agent_context,
-                player_context={}
+                interaction_type="talk",
+                message="Hello"
             )
 
             # Should still return a response (with fallback)

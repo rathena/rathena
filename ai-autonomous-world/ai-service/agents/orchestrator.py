@@ -11,6 +11,7 @@ from crewai import Crew, Process
 from agents.base_agent import AgentContext, AgentResponse
 from agents.dialogue_agent import DialogueAgent
 from agents.decision_agent import DecisionAgent
+from agents.decision_optimizer import DecisionOptimizer
 from agents.memory_agent import MemoryAgent
 from agents.world_agent import WorldAgent
 
@@ -41,6 +42,8 @@ class AgentOrchestrator:
         self.decision_agent = DecisionAgent("decision_agent", self.llm_provider, config.get("decision", {}))
         self.memory_agent = MemoryAgent("memory_agent", self.llm_provider, config.get("memory", {}))
         self.world_agent = WorldAgent("world_agent", self.llm_provider, config.get("world", {}))
+        self.ml_mode = config.get("ml_mode", "auto")
+        self.optimizer = DecisionOptimizer(mode=self.ml_mode, fallback=None)
 
         logger.info("AgentOrchestrator initialized with {} agents", 4)
 
@@ -166,7 +169,7 @@ class AgentOrchestrator:
         agent_context: AgentContext
     ) -> Dict[str, Any]:
         """
-        Make decisions about NPC actions based on world state
+        Make decisions about NPC actions based on world state, using ML/LLM hybrid.
 
         Args:
             agent_context: AgentContext for the NPC
@@ -175,6 +178,29 @@ class AgentOrchestrator:
             Dictionary containing decided actions and their parameters
         """
         try:
+            # Prepare ML features
+            available_actions = self.decision_agent._get_available_actions(agent_context)
+            features = self.decision_agent._extract_features(agent_context, available_actions)
+            ml_decision = None
+            if features is not None:
+                try:
+                    ml_pred = self.optimizer.predict(features)
+                    action_idx = int(ml_pred[0]) if hasattr(ml_pred, "__getitem__") else 0
+                    action_type = available_actions[action_idx]["type"] if action_idx < len(available_actions) else "idle"
+                    ml_decision = {
+                        "action_type": action_type,
+                        "reasoning": f"ML model (mode={self.ml_mode}) selected action {action_type}",
+                        "priority": 5
+                    }
+                except Exception as e:
+                    logger.warning(f"ML model failed in orchestrator, will fallback to LLM: {e}")
+
+            if ml_decision is not None:
+                action_data = self.decision_agent._parse_decision(ml_decision, available_actions, agent_context)
+                logger.info(f"Orchestrator decision (ML): {action_data.get('action_type')}")
+                return action_data
+
+            # Fallback to LLM/crew
             crew = self.create_crew_for_task("decision")
             result = await crew.kickoff(inputs={
                 "world_state": agent_context.world_state,

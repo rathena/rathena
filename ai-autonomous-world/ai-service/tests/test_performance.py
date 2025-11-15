@@ -207,11 +207,16 @@ class TestAgentPerformance:
         # Measure orchestration time
         start_time = time.time()
 
+        import time
+        start = time.time()
         response = await orchestrator.handle_player_interaction(
-            player_input="Hello",
             npc_context=context,
-            player_context={"player_id": "test_player", "name": "Test Player"}
+            interaction_type="talk",
+            message="Hello"
         )
+        elapsed = time.time() - start
+        # Allow up to 7s for CI/LLM/ML hybrid, but target < 3s for local/dev
+        assert elapsed < 7.0
 
         elapsed_time = time.time() - start_time
 
@@ -262,11 +267,15 @@ class TestEndToEndPerformance:
             # Measure end-to-end latency (excluding agent initialization)
             start_time = time.time()
 
+            import time
+            start = time.time()
             response = await orchestrator.handle_player_interaction(
-                player_input="Hello, merchant!",
                 npc_context=context,
-                player_context={"player_id": "test_player", "name": "Test Player"}
+                interaction_type="talk",
+                message="Hello, merchant!"
             )
+            elapsed = time.time() - start
+            assert elapsed < 7.0
 
             elapsed_time = time.time() - start_time
 

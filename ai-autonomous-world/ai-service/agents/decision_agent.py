@@ -11,9 +11,11 @@ from crewai import Agent
 from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 from config import settings
 
+from agents.decision_optimizer import DecisionOptimizer
+
 class DecisionAgent(BaseAIAgent):
     """
-    Specialized agent for NPC decision-making
+    Specialized agent for NPC decision-making (Hybrid ML/LLM, CPU/GPU, runtime selection)
     
     Responsibilities:
     - Decide NPC actions based on current state
@@ -22,6 +24,7 @@ class DecisionAgent(BaseAIAgent):
     - Evaluate risks and rewards
     - Plan short-term actions
     - Integrate goal, emotion, and memory state for full consciousness model
+    - Use DecisionOptimizer for ML-based decision (CPU/GPU), fallback to LLM if needed
     """
     def __init__(self, agent_id: str, llm_provider: Any, config: Dict[str, Any]):
         """Initialize Decision Agent"""
@@ -31,7 +34,9 @@ class DecisionAgent(BaseAIAgent):
             llm_provider=llm_provider,
             config=config
         )
-        logger.info(f"Decision Agent {agent_id} initialized")
+        self.ml_mode = config.get("ml_mode", "auto")  # "auto", "cpu", "gpu", "sklearn", "xgboost", "torch", "tf"
+        self.optimizer = DecisionOptimizer(mode=self.ml_mode, fallback=None)
+        logger.info(f"Decision Agent {agent_id} initialized (ML mode: {self.ml_mode})")
 
     def _create_crew_agent(self) -> Agent:
         """Create CrewAI agent for decision-making"""
@@ -65,7 +70,7 @@ class DecisionAgent(BaseAIAgent):
 
     async def process(self, context: AgentContext) -> AgentResponse:
         """
-        Make decision for NPC action
+        Make decision for NPC action using ML (CPU/GPU) or fallback to LLM.
 
         Args:
             context: AgentContext with NPC state and world information
@@ -82,7 +87,39 @@ class DecisionAgent(BaseAIAgent):
             # Build decision context (now includes goal, emotion, memory)
             decision_context = self._build_decision_context(context)
 
-            # Make decision using LLM
+            # Prepare ML input features (example: flatten context, personality, goals, etc.)
+            features = self._extract_features(context, available_actions)
+            ml_decision = None
+            if features is not None:
+                try:
+                    ml_pred = self.optimizer.predict(features)
+                    action_idx = int(ml_pred[0]) if hasattr(ml_pred, "__getitem__") else 0
+                    action_type = available_actions[action_idx]["type"] if action_idx < len(available_actions) else "idle"
+                    ml_decision = {
+                        "action_type": action_type,
+                        "reasoning": f"ML model (mode={self.ml_mode}) selected action {action_type}",
+                        "priority": 5
+                    }
+                except Exception as e:
+                    logger.warning(f"ML model failed, will fallback to LLM: {e}")
+
+            if ml_decision is not None:
+                action_data = self._parse_decision(ml_decision, available_actions, context)
+                logger.info(f"Decision made for {context.npc_id} (ML): {action_data.get('action_type')}")
+                return AgentResponse(
+                    agent_type=self.agent_type,
+                    success=True,
+                    data=action_data,
+                    confidence=0.95,
+                    reasoning=ml_decision.get("reasoning", "Decision based on ML model"),
+                    metadata={
+                        "available_actions_count": len(available_actions),
+                        "events_considered": len(context.recent_events),
+                        "ml_mode": self.ml_mode
+                    }
+                )
+
+            # Fallback to LLM
             decision = await self._make_decision(
                 npc_name=context.npc_name,
                 personality=self._build_personality_prompt(context.personality),
@@ -94,7 +131,6 @@ class DecisionAgent(BaseAIAgent):
                 recent_events=context.recent_events
             )
 
-            # Ensure decision is a dict
             if not isinstance(decision, dict):
                 logger.warning(f"Decision is not a dict (type: {type(decision)}), using fallback")
                 decision = {
@@ -103,11 +139,8 @@ class DecisionAgent(BaseAIAgent):
                     "priority": 1
                 }
 
-            # Parse and validate decision
             action_data = self._parse_decision(decision, available_actions, context)
-
-            logger.info(f"Decision made for {context.npc_id}: {action_data.get('action_type')}")
-
+            logger.info(f"Decision made for {context.npc_id} (LLM): {action_data.get('action_type')}")
             return AgentResponse(
                 agent_type=self.agent_type,
                 success=True,
@@ -116,13 +149,13 @@ class DecisionAgent(BaseAIAgent):
                 reasoning=decision.get("reasoning", "Decision based on personality, goals, emotion, and context"),
                 metadata={
                     "available_actions_count": len(available_actions),
-                    "events_considered": len(context.recent_events)
+                    "events_considered": len(context.recent_events),
+                    "ml_mode": self.ml_mode
                 }
             )
 
         except Exception as e:
             logger.error(f"Decision-making failed for {context.npc_id}: {e}")
-            # Fallback to idle action
             return AgentResponse(
                 agent_type=self.agent_type,
                 success=True,
@@ -213,6 +246,41 @@ class DecisionAgent(BaseAIAgent):
             context_parts.append(f"Last action: {last_action}")
         return ". ".join(context_parts)
 
+    import numpy as np
+    def _extract_features(self, context: AgentContext, available_actions: List[Dict[str, Any]]) -> Optional[np.ndarray]:
+        """
+        Extracts features from context for ML model input.
+        Returns: np.ndarray of shape (1, input_dim) or None if not enough data.
+        """
+        try:
+            # Example: flatten personality, goal, emotion, and some state into a feature vector
+            features = []
+            p = context.personality
+            features.extend([
+                getattr(p, "openness", 0.5),
+                getattr(p, "conscientiousness", 0.5),
+                getattr(p, "extraversion", 0.5),
+                getattr(p, "agreeableness", 0.5),
+                getattr(p, "neuroticism", 0.5)
+            ])
+            g = getattr(context, "goal_state", None)
+            if g:
+                features.extend([
+                    getattr(g, "survival", 1.0),
+                    getattr(g, "security", 1.0),
+                    getattr(g, "social", 1.0),
+                    getattr(g, "esteem", 1.0),
+                    getattr(g, "self_actualization", 1.0)
+                ])
+            else:
+                features.extend([1.0, 1.0, 1.0, 1.0, 1.0])
+            # Pad/truncate to input_dim
+            features = features[:self.optimizer.input_dim] + [0.0] * (self.optimizer.input_dim - len(features))
+            return np.array([features])
+        except Exception as e:
+            logger.warning(f"Failed to extract ML features: {e}")
+            return None
+
     async def _make_decision(
         self,
         npc_name: str,
@@ -236,7 +304,7 @@ class DecisionAgent(BaseAIAgent):
                 for event in recent_events[-5:]
             ])
         system_message = f"""You are making decisions for {npc_name}, an NPC in a medieval fantasy MMORPG.
-
+        
 {personality}
 {goal_state}
 {emotion_state}

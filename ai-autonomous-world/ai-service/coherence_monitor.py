@@ -43,20 +43,43 @@ class CoherenceMonitor:
         logger.info(f"CoherenceMonitor: {len(issues)} issues detected at {datetime.utcnow().isoformat()}")
         return issues
 
-    def apply_soft_constraints(self, npc_states: List[Dict[str, Any]]) -> None:
+    def apply_soft_constraints(self, npc_states: List[Any]) -> None:
         """
         Applies soft constraints to NPCs to prevent extreme or impossible behavior.
+        Accepts both dicts and Pydantic models.
         """
         for npc in npc_states:
+            # Support both dict and Pydantic model
+            if hasattr(npc, "dict"):
+                npc_dict = npc.dict() if callable(npc.dict) else dict(npc)
+            elif isinstance(npc, dict):
+                npc_dict = npc
+            else:
+                continue
             # Example: Personality consistency
-            if abs(npc.get("personality", {}).get("openness", 0.5) - npc.get("personality", {}).get("conscientiousness", 0.5)) > 0.9:
-                npc["personality"]["openness"] = 0.5  # Smooth out extreme difference
+            personality = npc_dict.get("personality", {})
+            openness = personality.get("openness", 0.5)
+            conscientiousness = personality.get("conscientiousness", 0.5)
+            if abs(openness - conscientiousness) > 0.9:
+                if hasattr(npc, "personality") and hasattr(npc.personality, "openness"):
+                    npc.personality.openness = 0.5
+                elif isinstance(personality, dict):
+                    personality["openness"] = 0.5
             # Example: Social pressure
-            if npc.get("reputation", 0) < -900 and npc.get("npc_class") != "criminal":
-                npc["reputation"] = max(npc["reputation"], -900)
+            reputation = npc_dict.get("reputation", 0)
+            npc_class = npc_dict.get("npc_class", "")
+            if reputation < -900 and npc_class != "criminal":
+                if hasattr(npc, "reputation"):
+                    npc.reputation = max(reputation, -900)
+                elif isinstance(npc, dict):
+                    npc["reputation"] = max(reputation, -900)
             # Example: Physical limits
-            if npc.get("energy", 100) > 200:
-                npc["energy"] = 200
+            energy = npc_dict.get("energy", 100)
+            if energy > 200:
+                if hasattr(npc, "energy"):
+                    npc.energy = 200
+                elif isinstance(npc, dict):
+                    npc["energy"] = 200
         logger.info("CoherenceMonitor: Soft constraints applied to NPC states.")
 
     def feedback_loop(self, world_state: Dict[str, Any], event_log: List[Dict[str, Any]]) -> None:
