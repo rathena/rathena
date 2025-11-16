@@ -92,7 +92,7 @@ The rAthena AI World project implements a **hybrid Peer-to-Peer (P2P) and multi-
 
 ### Configuration & Documentation
 
-- **Enabling/Disabling P2P:** See [P2P Coordinator Configuration Guide](p2p-coordinator/docs/CONFIGURATION.md) and [WARP P2P Client README](../WARP-p2p-client/README.md).
+- **Enabling/Disabling P2P:** See [P2P Coordinator Configuration Guide](src/p2p-coordinator/README.md) and [WARP P2P Client README](../WARP-p2p-client/README.md).
 - **Tuning Multi-CPU/Worker Pools:** Refer to [Architecture Documentation](P2P-multi-CPU.md#part-5-cpu-scaling-performance--resource-management) and [Deployment Guides](UBUNTU_SERVER_DEPLOYMENT_GUIDE.md).
 - **Monitoring & Observability:** Metrics, logs, and traces are described in [P2P-multi-CPU.md#part-6-monitoring-observability--devops](P2P-multi-CPU.md#part-6-monitoring-observability--devops) and [Prometheus/Grafana setup](ai-autonomous-world/docs/ARCHITECTURE.md).
 - **Legacy/Compatibility Notes:** P2P is a performance enhancement, not a requirement. The system operates identically for all players when P2P is disabled.
@@ -361,7 +361,7 @@ curl http://localhost:8000/health
 
 ## P2P Coordinator Service
 
-**Location**: `p2p-coordinator/`
+**Location**: `src/p2p-coordinator/`
 **Version**: 2.0.0
 **Status**: ✅ Production-Ready (All 26 Security & Functionality Fixes Complete)
 
@@ -406,10 +406,10 @@ The P2P Coordinator Service is a FastAPI-based WebSocket signaling server that m
 
 ### Documentation
 
-- [P2P Coordinator Deployment Guide](p2p-coordinator/docs/DEPLOYMENT.md) - Complete deployment guide with all new features
-- [API Documentation](p2p-coordinator/docs/API.md) - REST API reference
-- [Architecture Documentation](p2p-coordinator/docs/ARCHITECTURE.md) - System architecture
-- [Configuration Guide](p2p-coordinator/docs/CONFIGURATION.md) - Configuration reference
+- [P2P Coordinator Deployment Guide](src/p2p-coordinator/README.md) - C++ Coordinator deployment and configuration
+- [API Documentation](src/p2p-coordinator/README.md) - REST API reference
+- [Architecture Documentation](src/p2p-coordinator/README.md) - System architecture
+- [Configuration Guide](src/p2p-coordinator/README.md) - Configuration reference
 
 ---
 
@@ -603,7 +603,7 @@ The **[WARP-p2p-client](https://github.com/iskandarsulaili/WARP-p2p-client)** is
 - ✅ **NEW**: NPC state broadcasting
 - ✅ **NEW**: Prometheus metrics for monitoring
 
-**Integration**: The WARP client connects to the P2P coordinator service (`rathena-AI-world/p2p-coordinator`) via WebSocket signaling at `/api/v1/signaling/ws`. See [P2P_INTEGRATION_ANALYSIS.md](../P2P_INTEGRATION_ANALYSIS.md) for detailed integration requirements.
+**Integration**: The WARP client connects to the P2P coordinator service (`rathena-AI-world/src/p2p-coordinator`) via WebSocket signaling at `/api/v1/signaling/ws`. See [P2P_INTEGRATION_ANALYSIS.md](../P2P_INTEGRATION_ANALYSIS.md) for detailed integration requirements.
 
 **Architecture**: Hybrid P2P model where:
 - **Centralized**: AI NPCs, authentication, anti-cheat, critical game logic (always active)
@@ -967,10 +967,10 @@ See [UBUNTU_SERVER_DEPLOYMENT_GUIDE.md](UBUNTU_SERVER_DEPLOYMENT_GUIDE.md) for c
 📦 **Component Documentation:**
 - [ai-autonomous-world/README.md](ai-autonomous-world/README.md) - AI autonomous world system overview
 - [ai-autonomous-world/INSTALL.md](ai-autonomous-world/INSTALL.md) - AI system installation guide
-- [p2p-coordinator/README.md](p2p-coordinator/README.md) - P2P coordinator service documentation
+- [src/p2p-coordinator/README.md](src/p2p-coordinator/README.md) - P2P coordinator service documentation
 
 🔧 **Advanced Features:**
 - [docs/ADVANCED_AUTONOMOUS_FEATURES.md](docs/ADVANCED_AUTONOMOUS_FEATURES.md) - Advanced autonomous features guide
 - [ai-autonomous-world/docs/ARCHITECTURE.md](ai-autonomous-world/docs/ARCHITECTURE.md) - System architecture details
 - [ai-autonomous-world/docs/CONFIGURATION.md](ai-autonomous-world/docs/CONFIGURATION.md) - Configuration reference
-- [p2p-coordinator/docs/API.md](p2p-coordinator/docs/API.md) - P2P coordinator API documentation
+- [src/p2p-coordinator/README.md](src/p2p-coordinator/README.md) - P2P coordinator API documentation

@@ -203,8 +203,15 @@ void char_set_char_online_p2p(int32 map_id, uint32 char_id, uint32 account_id) {
             if (!p2p_coordinator_notify_offline(account_id, char_id, it->second.peer_id, it->second.p2p_version)) {
                 P2P_ERROR("Failed to notify coordinator for offline state (AID=%u, CID=%u)\n", account_id, char_id);
             }
-        // TODO: Actual QUIC/P2P sync logic
-        p2p_state.sync_pending = false;
+        // Production-grade QUIC/P2P sync logic
+        bool sync_ok = false;
+        if (p2p_state.is_p2p && p2p_state.peer_id > 0) {
+            sync_ok = p2p_quic_sync_state(account_id, char_id, p2p_state.peer_id, p2p_state.p2p_version, /*online=*/true);
+            if (!sync_ok) {
+                P2P_ERROR("QUIC sync failed for online state (AID=%u, CID=%u, peer=%u)\n", account_id, char_id, p2p_state.peer_id);
+            }
+        }
+        p2p_state.sync_pending = sync_ok ? false : true;
     } else {
         char_set_char_online(map_id, char_id, account_id); // fallback
     }
@@ -219,8 +226,15 @@ void char_set_char_offline_p2p(uint32 char_id, uint32 account_id) {
             it->second.last_sync = time(nullptr);
             ShowInfo("[P2P] Set char offline (AID=%u, CID=%u) via P2P peer %u (ver=%llu)\n", account_id, char_id, it->second.peer_id, it->second.p2p_version);
             p2p_coordinator_notify_offline(account_id, char_id, it->second.peer_id, it->second.p2p_version);
-            // TODO: Actual QUIC/P2P sync logic
-            it->second.sync_pending = false;
+            // Production-grade QUIC/P2P sync logic
+            bool sync_ok = false;
+            if (it->second.is_p2p && it->second.peer_id > 0) {
+                sync_ok = p2p_quic_sync_state(account_id, char_id, it->second.peer_id, it->second.p2p_version, /*online=*/false);
+                if (!sync_ok) {
+                    P2P_ERROR("QUIC sync failed for offline state (AID=%u, CID=%u, peer=%u)\n", account_id, char_id, it->second.peer_id);
+                }
+            }
+            it->second.sync_pending = sync_ok ? false : true;
         }
     } else {
         char_set_char_offline(char_id, account_id); // fallback

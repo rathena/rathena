@@ -636,15 +636,14 @@ void do_init_vending_autotrade(void)
 					at->sit = battle_config.feature_autotrade_sit;
 
 				// initialize player
-				CREATE(at->sd, map_session_data, 1); // TODO: Dont use Memory Manager allocation anymore and rely on the C++ container
-				new (at->sd) map_session_data();
-				pc_setnewpc(at->sd, at->account_id, at->char_id, 0, gettick(), at->sex, 0);
-				at->sd->state.autotrade = 1|2;
+				at->sd_ptr = std::make_shared<map_session_data>();
+				pc_setnewpc(at->sd_ptr.get(), at->account_id, at->char_id, 0, gettick(), at->sex, 0);
+				at->sd_ptr->state.autotrade = 1|2;
 				if (battle_config.autotrade_monsterignore)
-					at->sd->state.block_action |= PCBLOCK_IMMUNE;
+					at->sd_ptr->state.block_action |= PCBLOCK_IMMUNE;
 				else
-					at->sd->state.block_action &= ~PCBLOCK_IMMUNE;
-				chrif_authreq(at->sd, true);
+					at->sd_ptr->state.block_action &= ~PCBLOCK_IMMUNE;
+				chrif_authreq(at->sd_ptr.get(), true);
 				uidb_put(vending_autotrader_db, at->char_id, at);
 			}
 			Sql_FreeResult(mmysql_handle);

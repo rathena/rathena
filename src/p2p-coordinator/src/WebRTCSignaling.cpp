@@ -5,6 +5,29 @@
 #include "Logger.h"
 #include <thread>
 #include <chrono>
+#include <nlohmann/json.hpp>
+#include <stdexcept>
+
+using json = nlohmann::json;
+
+namespace {
+    std::string signalToJson(const SignalMessage& msg) {
+        json j;
+        j["sessionId"] = msg.sessionId;
+        j["type"] = msg.type;
+        j["payload"] = msg.payload;
+        return j.dump();
+    }
+
+    SignalMessage signalFromJson(const std::string& data) {
+        auto j = json::parse(data);
+        SignalMessage msg;
+        msg.sessionId = j.value("sessionId", "");
+        msg.type = j.value("type", "");
+        msg.payload = j.value("payload", "");
+        return msg;
+    }
+}
 
 WebRTCSignaling::WebRTCSignaling(std::shared_ptr<RedisClient> redis,
                                  std::shared_ptr<SessionManager> sessionManager,
@@ -12,37 +35,72 @@ WebRTCSignaling::WebRTCSignaling(std::shared_ptr<RedisClient> redis,
     : redis_(std::move(redis)), sessionManager_(std::move(sessionManager)), aiServiceClient_(std::move(aiServiceClient)) {}
 
 void WebRTCSignaling::run() {
+    running_ = true;
     Logger::info("WebRTC signaling thread started.");
     processWebSocket();
 }
 
+void WebRTCSignaling::stop() {
+    running_ = false;
+    Logger::info("WebRTC signaling stopping...");
+}
+
 bool WebRTCSignaling::handleSignal(const SignalMessage& msg) {
-    persistSignal(msg);
-    Logger::info("Handled WebRTC signal for session: " + msg.sessionId + " type: " + msg.type);
-    return true;
+    try {
+        persistSignal(msg);
+        Logger::info("Handled WebRTC signal for session: " + msg.sessionId + " type: " + msg.type);
+        return true;
+    } catch (const std::exception& ex) {
+        Logger::error("Failed to handle WebRTC signal: " + std::string(ex.what()));
+        return false;
+    }
 }
 
 std::vector<SignalMessage> WebRTCSignaling::getPendingSignals(const std::string& sessionId) {
-    // Load pending signals from Redis (to be implemented)
     std::vector<SignalMessage> signals;
-    // Example: auto data = redis_->hget("signals", sessionId);
-    // Deserialize and populate signals
+    try {
+        auto dataOpt = redis_->hget("signals", sessionId);
+        if (dataOpt) {
+            auto j = json::parse(*dataOpt);
+            if (j.is_array()) {
+                for (const auto& item : j) {
+                    signals.push_back(signalFromJson(item.dump()));
+                }
+            }
+        }
+    } catch (const std::exception& ex) {
+        Logger::error("Failed to get pending signals: " + std::string(ex.what()));
+    }
     return signals;
 }
 
 void WebRTCSignaling::processWebSocket() {
-    // Placeholder for WebSocket server loop
-    while (true) {
-        // Accept connections, receive messages, call handleSignal
+    // Production: integrate with actual WebSocket server library
+    // Accept connections, receive messages, call handleSignal
+    // This is a placeholder loop; in production, replace with real server event loop.
+    while (running_) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
+    Logger::info("WebRTC signaling thread stopped.");
 }
 
 void WebRTCSignaling::persistSignal(const SignalMessage& msg) {
-    // Serialize SignalMessage to JSON (to be implemented)
-    // redis_->hset("signals", msg.sessionId, data);
+    try {
+        // Store signals as a JSON array per sessionId
+        auto dataOpt = redis_->hget("signals", msg.sessionId);
+        json arr = json::array();
+        if (dataOpt) {
+            arr = json::parse(*dataOpt);
+        }
+        arr.push_back(json::parse(signalToJson(msg)));
+        redis_->hset("signals", msg.sessionId, arr.dump());
+    } catch (const std::exception& ex) {
+        Logger::error("Failed to persist signal: " + std::string(ex.what()));
+        throw;
+    }
 }
 
 void WebRTCSignaling::loadSignalsFromRedis() {
-    // Load signals from Redis (to be implemented)
+    // Optionally preload signals if needed
+    // Not required for stateless API
 }

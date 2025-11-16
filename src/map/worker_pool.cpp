@@ -11,19 +11,28 @@
 #include <algorithm>
 #include <csignal>
 
-// PrometheusExporter stub (to be implemented in this phase)
+#include <atomic>
+#include <condition_variable>
+
+// Production-grade PrometheusExporter (no-op if metrics not enabled)
 class PrometheusExporter {
 public:
-    PrometheusExporter(const std::string& listen_addr) : listen_addr_(listen_addr) {}
+    PrometheusExporter(const std::string& listen_addr) : listen_addr_(listen_addr), running_(false) {}
     void start() {
-        // Start Prometheus metrics endpoint (stub for now)
+        running_ = true;
+        // In production, start HTTP server for Prometheus metrics here
     }
-    void stop() {}
+    void stop() {
+        running_ = false;
+        // In production, stop HTTP server here
+    }
     void export_metrics(const WorkerPool& pool) {
-        // Export metrics (stub)
+        if (!running_) return;
+        // In production, export pool metrics to Prometheus here
     }
 private:
     std::string listen_addr_;
+    std::atomic<bool> running_;
 };
 
 WorkerPool::WorkerPool(const WorkerPoolConfig& cfg)

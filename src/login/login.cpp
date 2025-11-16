@@ -61,17 +61,66 @@ int32 login_fd; // login server file descriptor socket
  * In production, this should call the actual coordinator (e.g., via REST or IPC).
  * Returns a string with the selected host info (e.g., "host:port" or JSON).
  */
+#include <curl/curl.h>
+#include <nlohmann/json.hpp>
+
 std::string select_p2p_host(const std::string& userid, uint8 protocol) {
-	ShowStatus("[P2P] Querying p2p-coordinator for user '%s', protocol %u\n", userid.c_str(), protocol);
-	// TODO: Implement actual IPC/REST call to p2p-coordinator
-	// Simulate possible failure for demonstration
-	bool coordinator_available = true; // Set to false to simulate error
-	if (!coordinator_available) {
-		ShowError("[P2P] ERROR: p2p-coordinator unavailable for user '%s', protocol %u. Falling back to legacy routing.\n", userid.c_str(), protocol);
-		return "";
-	}
-	// For now, return a dummy host
-	return "127.0.0.1:9000";
+    ShowStatus("[P2P] Querying p2p-coordinator for user '%s', protocol %u\n", userid.c_str(), protocol);
+
+    // Read coordinator URL from environment or config
+    const char* env_url = std::getenv("P2P_COORDINATOR_URL");
+    std::string coordinator_url = env_url ? std::string(env_url) : "http://127.0.0.1:8080/api/select_host";
+    std::string response;
+    CURL* curl = curl_easy_init();
+    if (!curl) {
+        ShowError("[P2P] ERROR: Failed to initialize CURL for p2p-coordinator query.\n");
+        return "";
+    }
+
+    nlohmann::json req;
+    req["userid"] = userid;
+    req["protocol"] = protocol;
+    std::string req_body = req.dump();
+
+    struct curl_slist* headers = nullptr;
+    headers = curl_slist_append(headers, "Content-Type: application/json");
+
+    curl_easy_setopt(curl, CURLOPT_URL, coordinator_url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, req_body.c_str());
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, req_body.size());
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, 2L);
+
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, +[](char* ptr, size_t size, size_t nmemb, void* userdata) -> size_t {
+        std::string* resp = static_cast<std::string*>(userdata);
+        resp->append(ptr, size * nmemb);
+        return size * nmemb;
+    });
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+    CURLcode res = curl_easy_perform(curl);
+    long http_code = 0;
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+
+    if (res != CURLE_OK || http_code != 200) {
+        ShowError("[P2P] ERROR: p2p-coordinator request failed for user '%s', protocol %u: %s (HTTP %ld)\n", userid.c_str(), protocol, curl_easy_strerror(res), http_code);
+        return "";
+    }
+
+    try {
+        auto j = nlohmann::json::parse(response);
+        if (j.contains("host")) {
+            return j["host"].get<std::string>();
+        } else {
+            ShowError("[P2P] ERROR: p2p-coordinator response missing 'host' field for user '%s', protocol %u\n", userid.c_str(), protocol);
+            return "";
+        }
+    } catch (const std::exception& ex) {
+        ShowError("[P2P] ERROR: Failed to parse p2p-coordinator response for user '%s', protocol %u: %s\n", userid.c_str(), protocol, ex.what());
+        return "";
+    }
 }
 
 //early declaration

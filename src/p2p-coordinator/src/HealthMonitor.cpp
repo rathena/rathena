@@ -15,8 +15,14 @@ HealthMonitor::HealthMonitor(std::shared_ptr<HostRegistry> hostRegistry,
       running_(true) {}
 
 void HealthMonitor::run() {
+    running_ = true;
     Logger::info("Health monitor thread started.");
     monitorLoop();
+}
+
+void HealthMonitor::stop() {
+    running_ = false;
+    Logger::info("Health monitor stopping...");
 }
 
 void HealthMonitor::stop() {
@@ -31,6 +37,7 @@ void HealthMonitor::monitorLoop() {
         cleanup();
         std::this_thread::sleep_for(std::chrono::seconds(10));
     }
+    Logger::info("Health monitor thread stopped.");
 }
 
 void HealthMonitor::checkHosts() {

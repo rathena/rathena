@@ -17,20 +17,29 @@ RestApiServer::RestApiServer(std::shared_ptr<HostRegistry> hostRegistry,
       aiServiceClient_(std::move(aiServiceClient)) {}
 
 void RestApiServer::run() {
+    running_ = true;
     Logger::info("REST API server thread started.");
     processRequests();
 }
 
+void RestApiServer::stop() {
+    running_ = false;
+    Logger::info("REST API server stopping...");
+}
+
 void RestApiServer::setupRoutes() {
-    // To be implemented: setup REST routes with chosen framework
+    // Production: setup REST routes with chosen framework (e.g., cpp-httplib, Pistache, Crow, etc.)
+    // This should be implemented as part of the actual HTTP server integration.
 }
 
 void RestApiServer::processRequests() {
-    // Placeholder for REST API server loop
-    while (true) {
-        // Accept HTTP requests, dispatch to handlers
+    // Production: integrate with actual HTTP server library
+    // Accept HTTP requests, dispatch to handlers
+    // This is a placeholder loop; in production, replace with real server event loop.
+    while (running_) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
+    Logger::info("REST API server thread stopped.");
 }
 
 std::string RestApiServer::handleRegisterHost(const std::string& body) {

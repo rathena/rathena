@@ -9,7 +9,7 @@
 # IMPORTANT - DATABASE ARCHITECTURE:
 # ==================================
 # This script installs PostgreSQL for AI SERVICES ONLY.
-# - PostgreSQL: Used EXCLUSIVELY by AI services (ai-world, p2p-coordinator, NPC memory)
+# - PostgreSQL: Used EXCLUSIVELY by AI services (ai-world, p2p-coordinator [C++], NPC memory)
 # - MariaDB: Used EXCLUSIVELY by rAthena game servers (installed separately)
 #
 # DO NOT use PostgreSQL for rAthena components!

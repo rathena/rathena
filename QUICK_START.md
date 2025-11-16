@@ -447,10 +447,10 @@ For more details, see `docs/ADVANCED_AUTONOMOUS_FEATURES.md`
 📚 **Advanced Features:**
 - `docs/ADVANCED_AUTONOMOUS_FEATURES.md` - Advanced autonomous features documentation
 - `ai-autonomous-world/README.md` - AI autonomous world system overview
-- `p2p-coordinator/README.md` - P2P coordinator service documentation
+- `src/p2p-coordinator/README.md` - P2P coordinator service documentation
 
 🔧 **Technical Details:**
 - `ai-autonomous-world/docs/ARCHITECTURE.md` - System architecture
 - `ai-autonomous-world/docs/CONFIGURATION.md` - Configuration guide
-- `p2p-coordinator/docs/API.md` - P2P coordinator API documentation
+- `src/p2p-coordinator/README.md` - P2P coordinator API documentation
 
