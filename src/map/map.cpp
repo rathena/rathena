@@ -59,6 +59,9 @@
 using namespace rathena;
 using namespace rathena::server_map;
 
+// Global worker pool instance
+WorkerPool* global_worker_pool = nullptr;
+
 std::string default_codepage = "";
 
 int32 map_server_port = 3306;
@@ -123,6 +126,21 @@ AIDialogueQueue* ai_dialogue_queue = nullptr;
 static AIDialogueWorker* ai_dialogue_worker = nullptr;  // Keep static - only used in map.cpp
 AIDialogueStateManager* ai_dialogue_state = nullptr;
 bool ai_dialogue_enabled = true; // Can be configured
+
+// Worker pool initialization
+static void init_worker_pool() {
+    static bool initialized = false;
+    if (initialized) return;
+    WorkerPoolConfig cfg = load_worker_pool_config();
+    if (cfg.enabled) {
+        global_worker_pool = new WorkerPool(cfg);
+        global_worker_pool->start();
+        ShowStatus("WorkerPool: Multi-threaded worker pool enabled (%d threads)\n", cfg.num_threads);
+    } else {
+        ShowStatus("WorkerPool: Disabled (single-threaded mode)\n");
+    }
+    initialized = true;
+}
 
 static int32 map_users=0;
 
@@ -5496,6 +5514,9 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	add_timer_func_list(map_clearflooritem_timer, "map_clearflooritem_timer");
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
 	add_timer_func_list(ai_dialogue_check_responses, "ai_dialogue_check_responses");
+
+	// Initialize Worker Pool (multi-threaded entity processing)
+	init_worker_pool();
 
 	// Initialize AI Dialogue System
 	if (ai_dialogue_enabled) {

@@ -11,6 +11,7 @@ autom4te.cache/
 .ycm_extra_conf.py*
 Thumbs.db
 *.service
+.env
 
 # /
 /*_fifo

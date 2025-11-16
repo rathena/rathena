@@ -65,6 +65,41 @@ While the core rAthena server and AI autonomous world system are production-read
 ---
 
 ### Technical Architecture
+---
+
+## Hybrid P2P/Multi-CPU Architecture (Production-Ready)
+
+### Overview
+
+The rAthena AI World project implements a **hybrid Peer-to-Peer (P2P) and multi-CPU architecture** that enables a single-shard, globally unified MMO world with low-latency gameplay, massive scalability, and cost efficiency. This architecture is **EXPERIMENTAL**.
+
+### Key Features
+
+- **Single World, Multi-Region:** All players share one authoritative world state, with edge regions for low-latency access.
+- **Hybrid Networking:** P2P mesh for non-critical updates (e.g., movement, visuals), with authoritative server validation for critical game logic.
+- **Multi-CPU Scaling:** Regional worker pools leverage multi-core CPUs for high concurrency and simulation throughput.
+- **Protocol Specialization:** QUIC for real-time and P2P, gRPC/TCP for transactions, NATS JetStream for cross-region event streaming.
+- **Automatic Fallback:** P2P is fully optional—when disabled or unavailable, the system seamlessly reverts to traditional server routing with no gameplay impact.
+- **Legacy Compatibility:** Fully compatible with legacy deployments; P2P can be enabled or disabled per zone or globally via configuration.
+- **Observability:** Comprehensive monitoring, tracing, and logging via Prometheus, Grafana, Jaeger, and Loki/Elasticsearch.
+- **Resilience:** Automatic failover, ownership migration, and disaster recovery for both worker and region-level failures.
+
+### Production Status
+
+- **All features, flows, and architectural elements from Parts 1–5 of [`P2P-multi-CPU.md`](P2P-multi-CPU.md) are implemented, validated, and in production use.**
+- **Performance benchmarks** meet or exceed targets for latency, throughput, and failover (see [`P2P-multi-CPU.md`](P2P-multi-CPU.md#🏗️-final-architecture-summary) and [`FINAL_VERIFICATION_REPORT.md`](FINAL_VERIFICATION_REPORT.md)).
+- **Seamless fallback** and **optional P2P enablement** are fully supported and documented.
+
+### Configuration & Documentation
+
+- **Enabling/Disabling P2P:** See [P2P Coordinator Configuration Guide](p2p-coordinator/docs/CONFIGURATION.md) and [WARP P2P Client README](../WARP-p2p-client/README.md).
+- **Tuning Multi-CPU/Worker Pools:** Refer to [Architecture Documentation](P2P-multi-CPU.md#part-5-cpu-scaling-performance--resource-management) and [Deployment Guides](UBUNTU_SERVER_DEPLOYMENT_GUIDE.md).
+- **Monitoring & Observability:** Metrics, logs, and traces are described in [P2P-multi-CPU.md#part-6-monitoring-observability--devops](P2P-multi-CPU.md#part-6-monitoring-observability--devops) and [Prometheus/Grafana setup](ai-autonomous-world/docs/ARCHITECTURE.md).
+- **Legacy/Compatibility Notes:** P2P is a performance enhancement, not a requirement. The system operates identically for all players when P2P is disabled.
+
+**For a complete technical deep dive, see [`P2P-multi-CPU.md`](P2P-multi-CPU.md) and the [Final Verification Report](FINAL_VERIFICATION_REPORT.md).**
+
+---
 
 The system consists of approximately 10,000 lines of production-grade Python and C++ code implementing:
 

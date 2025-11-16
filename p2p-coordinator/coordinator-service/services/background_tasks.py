@@ -199,6 +199,10 @@ class BackgroundTasksService:
                                     f"Auto-ending session {session.session_id} "
                                     f"(no peers for > 10 minutes)"
                                 )
+                                logger.info(
+                                    f"Fallback to centralized server triggered for session {session.session_id} (zone {session.zone_id})"
+                                )
+                                # TODO: Increment fallback_to_server metric here
                                 await session_manager.end_session(session.session_id)
 
             except asyncio.CancelledError:
