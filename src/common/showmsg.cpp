@@ -823,6 +823,14 @@ void ShowStatus(const char *string, ...) {
 	_vShowMessage(MSG_STATUS, string, ap);
 	va_end(ap);
 }
+void ShowStatusCID(uint64_t cid, const char *string, ...) {
+	va_list ap;
+	va_start(ap, string);
+	char buf[SBUF_SIZE];
+	snprintf(buf, sizeof(buf), "[CID:%llu] %s", (unsigned long long)cid, string);
+	_vShowMessage(MSG_STATUS, buf, ap);
+	va_end(ap);
+}
 void ShowSQL(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
@@ -833,6 +841,14 @@ void ShowInfo(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_INFORMATION, string, ap);
+	va_end(ap);
+}
+void ShowInfoCID(uint64_t cid, const char *string, ...) {
+	va_list ap;
+	va_start(ap, string);
+	char buf[SBUF_SIZE];
+	snprintf(buf, sizeof(buf), "[CID:%llu] %s", (unsigned long long)cid, string);
+	_vShowMessage(MSG_INFORMATION, buf, ap);
 	va_end(ap);
 }
 void ShowNotice(const char *string, ...) {
@@ -868,6 +884,14 @@ void ShowError(const char *string, ...) {
 	va_list ap;
 	va_start(ap, string);
 	_vShowMessage(MSG_ERROR, string, ap);
+	va_end(ap);
+}
+void ShowErrorCID(uint64_t cid, const char *string, ...) {
+	va_list ap;
+	va_start(ap, string);
+	char buf[SBUF_SIZE];
+	snprintf(buf, sizeof(buf), "[CID:%llu] %s", (unsigned long long)cid, string);
+	_vShowMessage(MSG_ERROR, buf, ap);
 	va_end(ap);
 }
 void ShowFatalError(const char *string, ...) {

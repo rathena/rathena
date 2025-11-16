@@ -42,6 +42,17 @@
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
+// --- P2P/QUIC protocol enums and options ---
+enum class SocketProtocol { TCP, QUIC, P2P };
+struct SocketOptions {
+    SocketProtocol protocol = SocketProtocol::TCP;
+    bool silent = false;
+    int timeout = 5;
+    // Add more as needed (e.g., peer id, QUIC config)
+};
+// --- P2P/QUIC protocol support extension ---
+#include "quic.hpp"         // (to be created/extended)
+#include "p2p_coordinator.hpp" // (to be created/extended)
 #include "mmo.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
@@ -710,6 +721,9 @@ int32 make_connection(uint32 ip, uint16 port, bool silent,int32 timeout) {
 
 	if( epoll_ctl( epfd, EPOLL_CTL_ADD, fd, &epevent ) == SOCKET_ERROR ){
 		ShowError( "make_connection: failed to add socket #%d to epoll event dispatcher: %s\n", fd, error_msg() );
+// --- Hybrid Protocol/P2P/QUIC extensions ---
+int32 make_connection_ex(uint32 ip, uint16 port, const SocketOptions& options);
+int32 make_listen_bind_ex(uint32 ip, uint16 port, const SocketOptions& options);
 		sClose(fd);
 		return -1;
 	}
@@ -721,6 +735,55 @@ int32 make_connection(uint32 ip, uint16 port, bool silent,int32 timeout) {
 	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
 
 	return fd;
+// --- Hybrid Protocol/P2P/QUIC extensions ---
+
+#include "socket.hpp"
+#include <iostream>
+
+int32 make_connection_ex(uint32 ip, uint16 port, const SocketOptions& options) {
+    switch (options.protocol) {
+        case SocketProtocol::TCP:
+            ShowStatus("[SOCKET] Using TCP protocol for connection to %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            return make_connection(ip, port, options.silent, options.timeout);
+        case SocketProtocol::QUIC:
+            ShowStatus("[SOCKET] QUIC protocol requested for %d.%d.%d.%d:%u, but not implemented. Falling back to TCP.\n", CONVIP(ip), port);
+            // TODO: Integrate QUIC library (e.g., msquic, quiche, or custom)
+// --- QUIC/P2P protocol stub: log and return error for now ---
+        case SocketProtocol::QUIC:
+            ShowError("[SOCKET] QUIC protocol requested but not implemented. Returning error.\n");
+            return -1;
+        case SocketProtocol::P2P:
+            ShowError("[SOCKET] P2P protocol requested but not implemented. Returning error.\n");
+            return -1;
+            return make_connection(ip, port, options.silent, options.timeout);
+        case SocketProtocol::P2P:
+            ShowStatus("[SOCKET] P2P protocol requested for %d.%d.%d.%d:%u, but not implemented. Falling back to TCP.\n", CONVIP(ip), port);
+            // TODO: Integrate P2P library (e.g., libp2p, custom coordinator)
+            return make_connection(ip, port, options.silent, options.timeout);
+        default:
+            ShowStatus("[SOCKET] Unknown protocol requested, falling back to TCP for %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            return make_connection(ip, port, options.silent, options.timeout);
+    }
+}
+
+int32 make_listen_bind_ex(uint32 ip, uint16 port, const SocketOptions& options) {
+    switch (options.protocol) {
+        case SocketProtocol::TCP:
+            ShowStatus("[SOCKET] Listening with TCP protocol on %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            return make_listen_bind(ip, port);
+        case SocketProtocol::QUIC:
+            ShowStatus("[SOCKET] QUIC listen requested on %d.%d.%d.%d:%u, but not implemented. Falling back to TCP.\n", CONVIP(ip), port);
+            // TODO: Integrate QUIC server setup
+            return make_listen_bind(ip, port);
+        case SocketProtocol::P2P:
+            ShowStatus("[SOCKET] P2P listen requested on %d.%d.%d.%d:%u, but not implemented. Falling back to TCP.\n", CONVIP(ip), port);
+            // TODO: Integrate P2P listen setup
+            return make_listen_bind(ip, port);
+        default:
+            ShowStatus("[SOCKET] Unknown protocol for listen, falling back to TCP on %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            return make_listen_bind(ip, port);
+    }
+}
 }
 
 static int32 create_session(int32 fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse)

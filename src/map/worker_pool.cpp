@@ -224,4 +224,67 @@ void WorkerPool::perform_migration() {
     // In production, implement actual migration logic based on load, affinity, etc.
     // For now, just log the current state.
     log_status();
+// --- P2P/Distributed extensions ---
+
+#ifdef __linux__
+#include <pthread.h>
+#endif
+
+void WorkerPool::set_thread_affinity(int worker_id, int cpu_core) {
+#ifdef __linux__
+    cpu_set_t cpuset;
+    CPU_ZERO(&cpuset);
+    CPU_SET(cpu_core, &cpuset);
+    if (worker_id < workers.size()) {
+        int rc = pthread_setaffinity_np(workers[worker_id].native_handle(), sizeof(cpu_set_t), &cpuset);
+        if (rc != 0) {
+            log_error("Failed to set thread affinity for worker " + std::to_string(worker_id));
+        } else {
+            log_debug("Set thread affinity for worker " + std::to_string(worker_id) + " to core " + std::to_string(cpu_core));
+        }
+    }
+#else
+    (void)worker_id; (void)cpu_core;
+    log_debug("Thread affinity not supported on this platform");
+#endif
+}
+
+void WorkerPool::on_distributed_assignment(entity_id_t entity_id, int worker_id) {
+    // Notify P2P coordinator and DragonflyDB of assignment
+    if (p2p_coordinator) {
+        p2p_coordinator->notify_assignment(entity_id, worker_id);
+    }
+    if (dragonflydb_client) {
+        dragonflydb_client->update_entity_assignment(entity_id, worker_id);
+    }
+    log_distributed_event("assignment", entity_id, worker_id);
+}
+
+void WorkerPool::on_distributed_migration(entity_id_t entity_id, int from_worker, int to_worker) {
+    // Notify P2P coordinator and DragonflyDB of migration
+    if (p2p_coordinator) {
+        p2p_coordinator->notify_migration(entity_id, from_worker, to_worker);
+    }
+    if (dragonflydb_client) {
+        dragonflydb_client->update_entity_migration(entity_id, from_worker, to_worker);
+    }
+    log_distributed_event("migration", entity_id, to_worker, from_worker);
+}
+
+void WorkerPool::set_p2p_coordinator(std::shared_ptr<P2PCoordinator> coordinator) {
+    p2p_coordinator = coordinator;
+    log("P2P coordinator set", "info");
+}
+
+void WorkerPool::set_dragonflydb_client(std::shared_ptr<DragonflyDBClient> db_client) {
+    dragonflydb_client = db_client;
+    log("DragonflyDB client set", "info");
+}
+
+void WorkerPool::log_distributed_event(const std::string& event, entity_id_t entity_id, int worker_id, int extra) const {
+    std::ostringstream oss;
+    oss << "[distributed] " << event << " entity=" << entity_id << " worker=" << worker_id;
+    if (extra >= 0) oss << " from=" << extra;
+    log(oss.str(), "info");
+}
 }

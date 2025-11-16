@@ -21,6 +21,9 @@
 #include <common/utilities.hpp>
 #include <common/utils.hpp>
 
+// --- P2P/QUIC/P2P-Coordinator integration ---
+#include "p2p_coordinator.hpp"
+#include <common/quic.hpp>
 #include "char.hpp"
 #include "char_logif.hpp"
 #include "char_mapif.hpp"
@@ -922,6 +925,12 @@ int32 chclif_parse_select_accessible_map( int32 fd, struct char_session_data* sd
 	char_set_char_online( -2, char_id, sd->account_id );
 
 	struct mmo_charstatus char_dat;
+// --- P2P-aware: use P2P offline state if enabled for char select fallback ---
+        if (charserv_config.p2p_enabled) {
+            char_set_char_offline_p2p(char_id, sd->account_id);
+        } else {
+            char_set_char_offline(char_id, sd->account_id);
+        }
 
 	if( !char_mmo_char_fromsql( char_id, &char_dat, true ) ) {
 		/* failed? set it back offline */
@@ -1081,6 +1090,12 @@ int32 chclif_parse_charselect(int32 fd, struct char_session_data* sd,uint32 ipl)
 		if( sd->found_char[slot] == char_id && sd->unban_time[slot] > time(nullptr) ) {
 			chclif_reject(fd, 0); // rejected from server
 			return 1;
+// --- P2P-aware: use P2P online state if enabled ---
+        if (charserv_config.p2p_enabled) {
+            char_set_char_online_p2p(-2, char_id, sd->account_id);
+        } else {
+            char_set_char_online(-2, char_id, sd->account_id);
+        }
 		}
 
 		/* set char as online prior to loading its data so 3rd party applications will realise the sql data is not reliable */

@@ -26,13 +26,14 @@ from services.ai_integration import ai_service_client
 from services.background_tasks import background_tasks
 from middleware.api_key import api_key_middleware
 from middleware.rate_limit import RateLimitMiddleware
+from middleware.request_id import RequestIdMiddleware, get_correlation_id
 
 
 # Configure logging
 logger.remove()  # Remove default handler
 logger.add(
     sys.stderr,
-    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>",
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> | <magenta>cid={extra[correlation_id]}</magenta> - <level>{message}</level>",
     level=settings.monitoring.log_level,
     colorize=True,
 )
@@ -43,7 +44,7 @@ logger.add(
     rotation="500 MB",
     retention="10 days",
     level=settings.monitoring.log_level,
-    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} - {message}",
+    format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} | cid={extra[correlation_id]} - {message}",
 )
 
 
@@ -117,6 +118,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Add request/correlation ID middleware
+app.add_middleware(RequestIdMiddleware)
+
 # Add rate limiting middleware
 app.add_middleware(RateLimitMiddleware)
 
@@ -130,6 +134,35 @@ app.include_router(zones_router)
 app.include_router(signaling_router)
 app.include_router(sessions_router)
 app.include_router(monitoring_router)
+
+# Runtime log level/debug toggle endpoint
+from fastapi import Request
+@app.post("/api/v1/monitoring/loglevel")
+async def set_log_level(request: Request):
+    """
+    Set log level and debug toggle at runtime.
+    Body: { "level": "DEBUG"|"INFO"|"WARNING"|"ERROR", "debug": true|false }
+    """
+    data = await request.json()
+    level = data.get("level", "INFO").upper()
+    debug = data.get("debug", None)
+    logger.info(f"Setting log level to {level}, debug={debug}")
+    logger.remove()
+    logger.add(
+        sys.stderr,
+        format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> | <magenta>cid={extra[correlation_id]}</magenta> - <level>{message}</level>",
+        level=level,
+        colorize=True,
+    )
+    logger.add(
+        "logs/p2p-coordinator.log",
+        rotation="500 MB",
+        retention="10 days",
+        level=level,
+        format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function}:{line} | cid={extra[correlation_id]} - {message}",
+    )
+    # Optionally, set a global debug flag if needed
+    return {"status": "ok", "level": level, "debug": debug}
 
 
 @app.get("/")

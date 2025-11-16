@@ -140,6 +140,35 @@ static void init_worker_pool() {
         ShowStatus("WorkerPool: Disabled (single-threaded mode)\n");
     }
     initialized = true;
+// --- P2P/Distributed/Hybrid Networking Integration ---
+#include "p2p_coordinator.hpp"
+#include "dragonflydb_client.hpp"
+#include <cstdlib>
+
+static std::shared_ptr<P2PCoordinator> global_p2p_coordinator;
+static std::shared_ptr<DragonflyDBClient> global_dragonflydb_client;
+
+static void init_distributed_integration() {
+    // Example: select protocol from environment or config
+    const char* proto_env = std::getenv("INTER_SERVER_PROTOCOL");
+    if (proto_env) {
+        if (std::string(proto_env) == "QUIC") set_inter_server_protocol(InterServerProtocol::QUIC);
+        else if (std::string(proto_env) == "P2P") set_inter_server_protocol(InterServerProtocol::P2P);
+        else set_inter_server_protocol(InterServerProtocol::LEGACY_TCP);
+    } else {
+        set_inter_server_protocol(InterServerProtocol::LEGACY_TCP);
+    }
+
+    // Instantiate and inject coordinator and distributed state client
+    // (Replace with actual implementations)
+    // global_p2p_coordinator = std::make_shared<MyP2PCoordinatorImpl>();
+    // global_dragonflydb_client = std::make_shared<MyDragonflyDBClientImpl>();
+
+    if (global_worker_pool) {
+        if (global_p2p_coordinator) global_worker_pool->set_p2p_coordinator(global_p2p_coordinator);
+        if (global_dragonflydb_client) global_worker_pool->set_dragonflydb_client(global_dragonflydb_client);
+    }
+}
 }
 
 static int32 map_users=0;

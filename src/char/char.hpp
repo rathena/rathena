@@ -19,6 +19,9 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
+// --- P2P/QUIC/P2P-Coordinator integration ---
+#include "p2p_coordinator.hpp" // (to be created/extended)
+#include <common/quic.hpp>     // (to be created/extended)
 namespace rathena::server_character {
 class CharacterServer : public Core {
 	protected:
@@ -246,6 +249,16 @@ struct online_char_data {
 
 public: 
 	online_char_data( uint32 account_id );
+};
+// --- P2P session state for multi-CPU/peer-aware char server ---
+struct p2p_session_state {
+	bool is_p2p;                // Is this session managed via P2P?
+	uint32 peer_id;             // Owning peer (if P2P)
+	uint64 p2p_version;         // Version for distributed consistency
+	bool sync_pending;          // Is a sync in progress?
+	time_t last_sync;           // Last sync timestamp
+	// Add more as needed for P2P/QUIC
+	p2p_session_state() : is_p2p(false), peer_id(0), p2p_version(0), sync_pending(false), last_sync(0) {}
 };
 
 std::unordered_map<uint32, std::shared_ptr<struct online_char_data>>& char_get_onlinedb();

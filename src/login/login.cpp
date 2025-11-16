@@ -23,6 +23,7 @@
 #include <common/utilities.hpp>
 #include <common/utils.hpp>
 #include <config/core.hpp>
+#include <string>
 
 #include "account.hpp"
 #include "ipban.hpp"
@@ -54,6 +55,24 @@ struct s_subnet {
 int32 subnet_count = 0; //number of subnet config
 
 int32 login_fd; // login server file descriptor socket
+
+/**
+ * Stub: Query the p2p-coordinator for host selection.
+ * In production, this should call the actual coordinator (e.g., via REST or IPC).
+ * Returns a string with the selected host info (e.g., "host:port" or JSON).
+ */
+std::string select_p2p_host(const std::string& userid, uint8 protocol) {
+	ShowStatus("[P2P] Querying p2p-coordinator for user '%s', protocol %u\n", userid.c_str(), protocol);
+	// TODO: Implement actual IPC/REST call to p2p-coordinator
+	// Simulate possible failure for demonstration
+	bool coordinator_available = true; // Set to false to simulate error
+	if (!coordinator_available) {
+		ShowError("[P2P] ERROR: p2p-coordinator unavailable for user '%s', protocol %u. Falling back to legacy routing.\n", userid.c_str(), protocol);
+		return "";
+	}
+	// For now, return a dummy host
+	return "127.0.0.1:9000";
+}
 
 //early declaration
 bool login_check_password( struct login_session_data& sd, struct mmo_account& acc );
@@ -142,6 +161,17 @@ struct auth_node* login_add_auth_node( struct login_session_data* sd, uint32 ip 
 	node->sex = sd->sex;
 	node->ip = ip;
 	node->clienttype = sd->clienttype;
+
+	// --- P2P session routing extensions ---
+	node->p2p_capable = sd->p2p_capable;
+	node->p2p_protocol = sd->p2p_protocol;
+	if (sd->p2p_capable) {
+		// For now, re-query the host (should be stored in session if persistent)
+		std::string p2p_host = select_p2p_host(sd->userid, sd->p2p_protocol);
+		safestrncpy(node->p2p_host, p2p_host.c_str(), sizeof(node->p2p_host));
+	} else {
+		node->p2p_host[0] = '\0';
+	}
 
 	return node;
 }
@@ -298,6 +328,21 @@ int32 login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 	char ip[16];
 	ip2str(session[sd->fd]->client_addr, ip);
+
+	// --- P2P host selection ---
+	if (sd->p2p_capable) {
+		std::string p2p_host = select_p2p_host(sd->userid, sd->p2p_protocol);
+		if (p2p_host.empty()) {
+			ShowWarning("[P2P] No valid P2P host for user '%s'. Falling back to legacy session routing.\n", sd->userid);
+			// Optionally, set sd->p2p_capable = false to force legacy path
+		} else {
+			ShowStatus("[P2P] Selected host for user '%s': %s\n", sd->userid, p2p_host.c_str());
+			// Optionally, store p2p_host in session or pass to char/map server
+			// TODO: Add field to login_session_data if persistent storage is needed
+		}
+	} else {
+		ShowStatus("[Legacy] Client '%s' is not P2P-capable, using legacy authentication/session flow.\n", sd->userid);
+	}
 
 	// DNS Blacklist check
 	if( login_config.use_dnsbl ) {

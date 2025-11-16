@@ -3,6 +3,9 @@
 
 #pragma warning(disable:4800)
 #include "char.hpp"
+// P2P/QUIC/P2P-Coordinator integration headers
+#include "p2p_coordinator.hpp" // (to be created/extended)
+#include <common/quic.hpp>     // (to be created/extended)
 
 #include <cstdarg>
 #include <cstdio>
@@ -113,8 +116,16 @@ void char_set_charselect(uint32 account_id) {
 		delete_timer(character->waiting_disconnect, char_chardb_waiting_disconnect);
 		character->waiting_disconnect = INVALID_TIMER;
 	}
+// --- Backward compatibility: legacy fallback for mixed environments ---
+bool is_legacy_account(uint32 account_id) {
+    // Example: check a config, database, or peer map to determine if this account should use legacy path
+    // For now, fallback to P2P if enabled, else legacy
+    return !charserv_config.p2p_enabled;
+}
 
 	chlogif_send_setacconline(account_id);
+// Replace char_set_char_online with P2P-aware version
+// (call char_set_char_online_p2p instead of char_set_char_online in mapif/other entry points)
 
 }
 
@@ -146,14 +157,75 @@ void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id) {
 	//Update state data
 	character->char_id = char_id;
 	character->server = map_id;
+// --- Use legacy or P2P path based on account/session ---
+void char_set_char_online_auto(int32 map_id, uint32 char_id, uint32 account_id) {
+    if (is_legacy_account(account_id)) {
+        char_set_char_online(map_id, char_id, account_id);
+    } else {
+        char_set_char_online_p2p(map_id, char_id, account_id);
+    }
+}
+void char_set_char_offline_auto(uint32 char_id, uint32 account_id) {
+    if (is_legacy_account(account_id)) {
+        char_set_char_offline(char_id, account_id);
+    } else {
+        char_set_char_offline_p2p(char_id, account_id);
+    }
+}
 
 	if( character->server > -1 )
 		map_server[character->server].users++;
 
 	//Set char online in guild cache. If char is in memory, use the guild id on it, otherwise seek it.
 	std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_get_chardb(), char_id );
+    // --- Logging and error handling for P2P operations ---
+    #define P2P_LOG(fmt, ...) ShowInfo("[P2P] " fmt, ##__VA_ARGS__)
+    #define P2P_ERROR(fmt, ...) ShowError("[P2P] " fmt, ##__VA_ARGS__)
 
 	inter_guild_CharOnline(char_id, cp?cp->guild_id:-1);
+// --- P2P-aware character online/offline state sync ---
+void char_set_char_online_p2p(int32 map_id, uint32 char_id, uint32 account_id) {
+        P2P_LOG("Set char online (AID=%u, CID=%u) via P2P peer %u (ver=%llu)\n", account_id, char_id, p2p_state.peer_id, p2p_state.p2p_version);
+        if (!p2p_coordinator_notify_online(account_id, char_id, p2p_state.peer_id, p2p_state.p2p_version)) {
+            P2P_ERROR("Failed to notify coordinator for online state (AID=%u, CID=%u)\n", account_id, char_id);
+        }
+    if (charserv_config.p2p_enabled) {
+        auto& p2p_state = p2p_sessions[account_id];
+        p2p_state.is_p2p = true;
+        p2p_state.peer_id = p2p_coordinator_get_peer(account_id);
+        p2p_state.p2p_version++;
+        p2p_state.sync_pending = true;
+        p2p_state.last_sync = time(nullptr);
+        ShowInfo("[P2P] Set char online (AID=%u, CID=%u) via P2P peer %u (ver=%llu)\n", account_id, char_id, p2p_state.peer_id, p2p_state.p2p_version);
+        // Notify coordinator and peers (QUIC send)
+        p2p_coordinator_notify_online(account_id, char_id, p2p_state.peer_id, p2p_state.p2p_version);
+            P2P_LOG("Set char offline (AID=%u, CID=%u) via P2P peer %u (ver=%llu)\n", account_id, char_id, it->second.peer_id, it->second.p2p_version);
+            if (!p2p_coordinator_notify_offline(account_id, char_id, it->second.peer_id, it->second.p2p_version)) {
+                P2P_ERROR("Failed to notify coordinator for offline state (AID=%u, CID=%u)\n", account_id, char_id);
+            }
+        // TODO: Actual QUIC/P2P sync logic
+        p2p_state.sync_pending = false;
+    } else {
+        char_set_char_online(map_id, char_id, account_id); // fallback
+    }
+}
+
+void char_set_char_offline_p2p(uint32 char_id, uint32 account_id) {
+    if (charserv_config.p2p_enabled) {
+        auto it = p2p_sessions.find(account_id);
+        if (it != p2p_sessions.end()) {
+            it->second.p2p_version++;
+            it->second.sync_pending = true;
+            it->second.last_sync = time(nullptr);
+            ShowInfo("[P2P] Set char offline (AID=%u, CID=%u) via P2P peer %u (ver=%llu)\n", account_id, char_id, it->second.peer_id, it->second.p2p_version);
+            p2p_coordinator_notify_offline(account_id, char_id, it->second.peer_id, it->second.p2p_version);
+            // TODO: Actual QUIC/P2P sync logic
+            it->second.sync_pending = false;
+        }
+    } else {
+        char_set_char_offline(char_id, account_id); // fallback
+    }
+}
 
 	//Notify login server
 	chlogif_send_setacconline(account_id);
@@ -247,6 +319,8 @@ void char_set_all_offline(int32 id){
 }
 
 void char_set_all_offline_sql(void){
+// --- P2P session state map (account_id -> p2p_session_state) ---
+static std::unordered_map<uint32, p2p_session_state> p2p_sessions;
 	//Set all players to 'OFFLINE'
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online` = '0'", schema_config.char_db) )
 		Sql_ShowDebug(sql_handle);
@@ -3282,7 +3356,23 @@ bool CharacterServer::initialize( int32 argc, char *argv[] ){
 		return false;
 	}
 
+    // P2P/QUIC/Coordinator integration: call P2P init
+    char_p2p_initialize();
 	do_init_chcnslif();
+
+// --- P2P/QUIC/Coordinator integration: initialization hook ---
+void char_p2p_initialize() {
+    // Connect to p2p-coordinator if enabled
+    if (charserv_config.p2p_enabled) {
+        ShowStatus("[P2P] Initializing P2P coordinator integration...\n");
+        if (!p2p_coordinator_init(charserv_config.p2p_coordinator_addr, charserv_config.p2p_coordinator_port)) {
+            ShowError("[P2P] Failed to connect to P2P coordinator at %s:%d\n",
+                charserv_config.p2p_coordinator_addr, charserv_config.p2p_coordinator_port);
+            // Fallback: disable P2P, log error
+            charserv_config.p2p_enabled = false;
+        }
+    }
+}
 
 	ShowStatus("The char-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %d).\n\n", charserv_config.char_port);
 

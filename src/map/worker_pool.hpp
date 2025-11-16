@@ -21,6 +21,9 @@
 #include <set>
 #include <map>
 #include <optional>
+// P2P/Distributed
+#include "p2p_coordinator.hpp" // C++ coordinator interface
+#include "dragonflydb_client.hpp" // DragonflyDB client interface
 
 // Forward declarations
 struct EntityAssignment;
@@ -98,6 +101,20 @@ public:
     int get_num_entities() const;
     std::map<int, std::vector<entity_id_t>> get_worker_entity_map() const;
 
+    // --- P2P/Distributed extensions ---
+    // Set thread affinity for per-core management
+    void set_thread_affinity(int worker_id, int cpu_core);
+
+    // Distributed assignment/migration hooks
+    void on_distributed_assignment(entity_id_t entity_id, int worker_id);
+    void on_distributed_migration(entity_id_t entity_id, int from_worker, int to_worker);
+
+    // P2P coordinator integration
+    void set_p2p_coordinator(std::shared_ptr<P2PCoordinator> coordinator);
+
+    // DragonflyDB integration
+    void set_dragonflydb_client(std::shared_ptr<DragonflyDBClient> db_client);
+
 private:
     void worker_loop(int worker_id);
     void migration_loop();
@@ -132,6 +149,12 @@ private:
     // Internal helpers
     int select_worker_for_assignment(entity_id_t entity_id);
     void perform_migration();
+
+    // --- P2P/Distributed extensions ---
+    std::shared_ptr<P2PCoordinator> p2p_coordinator;
+    std::shared_ptr<DragonflyDBClient> dragonflydb_client;
+
+    void log_distributed_event(const std::string& event, entity_id_t entity_id, int worker_id, int extra = -1) const;
 
     // Prevent copy
     WorkerPool(const WorkerPool&) = delete;

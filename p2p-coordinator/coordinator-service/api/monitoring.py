@@ -10,6 +10,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 from loguru import logger
 import time
+import psutil
 
 from database import get_db_session, db_manager
 from models.host import Host, HostStatus
@@ -85,6 +86,10 @@ async def get_dashboard_metrics(
         redis = await db_manager.get_redis()
         redis_healthy = await redis.ping()
         
+        # Resource utilization metrics
+        cpu_percent = psutil.cpu_percent(interval=0.1)
+        mem = psutil.virtual_memory()
+        net = psutil.net_io_counters()
         dashboard = {
             "hosts": {
                 "total": total_hosts,
@@ -107,6 +112,18 @@ async def get_dashboard_metrics(
             "system": {
                 "postgres": "healthy",
                 "redis": "healthy" if redis_healthy else "unhealthy",
+                "cpu_percent": cpu_percent,
+                "memory": {
+                    "total_mb": round(mem.total / 1024 / 1024, 2),
+                    "used_mb": round(mem.used / 1024 / 1024, 2),
+                    "percent": mem.percent,
+                },
+                "network": {
+                    "bytes_sent": net.bytes_sent,
+                    "bytes_recv": net.bytes_recv,
+                    "packets_sent": net.packets_sent,
+                    "packets_recv": net.packets_recv,
+                }
             },
         }
         

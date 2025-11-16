@@ -273,6 +273,13 @@ static bool logclif_parse_reqauth_raw( int32 fd, login_session_data& sd ){
 	safestrncpy( sd.userid, p->username, sizeof( sd.userid ) );
 	sd.clienttype = p->clienttype;
 
+	// --- P2P capability detection ---
+	sd.p2p_capable = (sd.clienttype & 0x80) != 0; // Example: high bit signals P2P
+	sd.p2p_protocol = (sd.clienttype & 0x80) ? ((sd.clienttype & 0x03) ? 2 : 1) : 0; // 1=P2P-TCP, 2=P2P-QUIC, 0=legacy
+	if (sd.p2p_capable) {
+		ShowStatus("[P2P] Client %s (ip: %s) supports P2P protocol %u\n", sd.userid, ip, sd.p2p_protocol);
+	}
+
 	ShowStatus( "Request for connection of %s (ip: %s)\n", sd.userid, ip );
 	safestrncpy( sd.passwd, p->password, PASSWD_LENGTH );
 
@@ -303,6 +310,13 @@ static bool logclif_parse_reqauth_md5( int32 fd, login_session_data& sd ){
 
 	safestrncpy( sd.userid, p->username, sizeof( sd.userid ) );
 	sd.clienttype = p->clienttype;
+
+	// --- P2P capability detection ---
+	sd.p2p_capable = (sd.clienttype & 0x80) != 0;
+	sd.p2p_protocol = (sd.clienttype & 0x80) ? ((sd.clienttype & 0x03) ? 2 : 1) : 0;
+	if (sd.p2p_capable) {
+		ShowStatus("[P2P] Client %s (ip: %s) supports P2P protocol %u\n", sd.userid, ip, sd.p2p_protocol);
+	}
 
 	ShowStatus( "Request for connection (passwdenc mode) of %s (ip: %s)\n", sd.userid, ip );
 	bin2hex( sd.passwd, p->passwordMD5, sizeof( p->passwordMD5 ) ); // raw binary data here!
@@ -337,6 +351,13 @@ static bool logclif_parse_reqauth_sso( int32 fd, login_session_data& sd ){
 
 	safestrncpy( sd.userid, p->username, sizeof( sd.userid ) );
 	sd.clienttype = p->clienttype;
+
+	// --- P2P capability detection ---
+	sd.p2p_capable = (sd.clienttype & 0x80) != 0;
+	sd.p2p_protocol = (sd.clienttype & 0x80) ? ((sd.clienttype & 0x03) ? 2 : 1) : 0;
+	if (sd.p2p_capable) {
+		ShowStatus("[P2P] Client %s (ip: %s) supports P2P protocol %u\n", sd.userid, ip, sd.p2p_protocol);
+	}
 
 	ShowStatus( "Request for connection (SSO mode) of %s (ip: %s)\n", sd.userid, ip );
 	// Shinryo: For the time being, just use token as password.
