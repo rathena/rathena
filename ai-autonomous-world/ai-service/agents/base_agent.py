@@ -23,7 +23,7 @@ from loguru import logger
 from crewai import Agent
 try:
     from models.npc import NPCPersonality, NPCGoalState, NPCEmotionState, NPCMemoryState
-from agents.moral_alignment import MoralAlignment
+    from agents.moral_alignment import MoralAlignment
 except ModuleNotFoundError:
     from models.npc import NPCPersonality, NPCGoalState, NPCEmotionState, NPCMemoryState
 

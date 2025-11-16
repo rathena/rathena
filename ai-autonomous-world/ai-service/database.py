@@ -1,7 +1,9 @@
 """
 Database connection management for AI Service
-- DragonflyDB/Redis: High-speed caching and real-time state
+- DragonFlyDB: High-speed caching and real-time state (Redis protocol)
 - PostgreSQL: Persistent memory storage for OpenMemory SDK
+
+Note: DragonFlyDB is used as a drop-in replacement for Redis, but all configuration and documentation should reference DragonFlyDB as the backend.
 """
 
 import asyncio
@@ -10,6 +12,25 @@ import redis.asyncio as aioredis
 from redis.asyncio import ConnectionPool
 from typing import Optional
 from loguru import logger
+from prometheus_client import Counter, Gauge
+
+# Prometheus metrics for DragonFlyDB
+dragonfly_connection_attempts = Counter(
+    "dragonfly_connection_attempts_total",
+    "Total DragonFlyDB connection attempts"
+)
+dragonfly_connection_failures = Counter(
+    "dragonfly_connection_failures_total",
+    "Total DragonFlyDB connection failures"
+)
+dragonfly_connection_success = Counter(
+    "dragonfly_connection_success_total",
+    "Total successful DragonFlyDB connections"
+)
+dragonfly_health_gauge = Gauge(
+    "dragonfly_health_status",
+    "DragonFlyDB health status (1=healthy, 0=unhealthy)"
+)
 
 try:
     from config import settings
@@ -228,7 +249,7 @@ class PostgreSQLManager:
 
 
 class Database:
-    """DragonflyDB / Redis database connection manager"""
+    """DragonFlyDB database connection manager (Redis protocol)"""
 
     def __init__(self):
         self.pool: Optional[ConnectionPool] = None
@@ -257,17 +278,30 @@ class Database:
 
         for attempt in range(1, max_retries + 1):
             try:
+                dragonfly_connection_attempts.inc()
                 logger.info(f"Connecting to DragonflyDB at {settings.redis_host}:{settings.redis_port} (attempt {attempt}/{max_retries})")
+
+                # TLS/SSL support (optional)
+                ssl_params = {}
+                if hasattr(settings, "dragonfly_ssl") and settings.dragonfly_ssl:
+                    import ssl as sslmod
+                    ssl_params["ssl"] = True
+                    ssl_params["ssl_cert_reqs"] = sslmod.CERT_REQUIRED if getattr(settings, "dragonfly_ssl_verify", True) else sslmod.CERT_NONE
+                    if getattr(settings, "dragonfly_ssl_ca_certs", None):
+                        ssl_params["ssl_ca_certs"] = settings.dragonfly_ssl_ca_certs
 
                 # Create connection pool for DragonflyDB (Redis-compatible)
                 self.pool = ConnectionPool(
-                    host=settings.redis_host,
-                    port=settings.redis_port,
-                    db=settings.redis_db,
-                    password=settings.redis_password,
-                    max_connections=settings.redis_max_connections,
+                    host=getattr(settings, "dragonfly_host", settings.redis_host),
+                    port=getattr(settings, "dragonfly_port", settings.redis_port),
+                    db=getattr(settings, "dragonfly_db", settings.redis_db),
+                    password=getattr(settings, "dragonfly_password", settings.redis_password),
+                    max_connections=getattr(settings, "dragonfly_max_connections", settings.redis_max_connections),
                     decode_responses=False,  # False to support binary data
                     encoding="utf-8",
+                    socket_timeout=getattr(settings, "dragonfly_socket_timeout", 5),
+                    socket_connect_timeout=getattr(settings, "dragonfly_socket_connect_timeout", 5),
+                    **ssl_params
                 )
 
                 # Create DragonflyDB client (using Redis protocol)
@@ -276,6 +310,8 @@ class Database:
                 # Test connection
                 await self.client.ping()
                 logger.info("✓ Successfully connected to DragonflyDB")
+                dragonfly_connection_success.inc()
+                dragonfly_health_gauge.set(1)
 
                 # Log database info
                 info = await self.client.info()
@@ -286,6 +322,8 @@ class Database:
 
             except Exception as e:
                 last_error = e
+                dragonfly_connection_failures.inc()
+                dragonfly_health_gauge.set(0)
                 logger.warning(f"Connection attempt {attempt}/{max_retries} failed: {e}")
 
                 if attempt < max_retries:
@@ -320,10 +358,13 @@ class Database:
         """Check if database connection is healthy"""
         try:
             if not self.client:
+                dragonfly_health_gauge.set(0)
                 return False
             await self.client.ping()
+            dragonfly_health_gauge.set(1)
             return True
         except Exception as e:
+            dragonfly_health_gauge.set(0)
             logger.error(f"Database health check failed: {e}")
             return False
 

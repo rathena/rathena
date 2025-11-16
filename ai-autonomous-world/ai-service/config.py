@@ -1,6 +1,8 @@
 """
 Configuration management for AI Service
 Loads settings from YAML config file and environment variables
+
+Note: All cache and real-time state configuration should reference DragonFlyDB (not Redis) as the backend.
 """
 
 import re

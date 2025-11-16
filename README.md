@@ -271,9 +271,9 @@ POSTGRES_PASSWORD=your_secure_password
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 
-# DragonflyDB Configuration
-REDIS_HOST=localhost
-REDIS_PORT=6379
+# DragonFlyDB Configuration (Redis protocol)
+DRAGONFLY_HOST=localhost
+DRAGONFLY_PORT=6379
 
 # LLM Provider API Keys (at least one required)
 OPENAI_API_KEY=sk-...
@@ -295,8 +295,8 @@ After installation, verify all components:
 # Test PostgreSQL connection
 psql -h localhost -U ai_world_user -d ai_world_memory
 
-# Test DragonflyDB/Redis
-redis-cli ping
+# Test DragonFlyDB (Redis protocol)
+redis-cli -h $DRAGONFLY_HOST -p $DRAGONFLY_PORT ping
 
 # Test Python environment
 python -c "import sys; print(f'Python {sys.version}')"

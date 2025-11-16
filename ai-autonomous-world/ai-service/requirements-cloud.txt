@@ -18,9 +18,8 @@ anthropic==0.39.0
 google-generativeai==0.8.3
 azure-identity==1.19.0
 
-# Database and Caching
+# Database and Caching (DragonFlyDB backend, Redis protocol)
 redis==5.2.0
-redis-om==0.3.3
 
 # HTTP Clients
 httpx>=0.27.0,<0.28.0
@@ -33,6 +32,11 @@ pyyaml==6.0.2
 
 # Logging
 loguru==0.7.3
+
+# ML/AI
+scikit-learn==1.5.0
+xgboost==2.0.3
+tensorflow==2.16.1
 
 # Monitoring
 prometheus-client==0.21.0

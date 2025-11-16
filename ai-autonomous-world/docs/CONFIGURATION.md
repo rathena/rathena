@@ -46,20 +46,20 @@ debug: bool = True
 ### DragonflyDB (High-Speed Caching)
 
 ```python
-# Redis host
-redis_host: str = "127.0.0.1"
+# DragonFlyDB host (Redis protocol)
+dragonfly_host: str = "127.0.0.1"
 
-# Redis port
-redis_port: int = 6379
+# DragonFlyDB port
+dragonfly_port: int = 6379
 
-# Redis database number
-redis_db: int = 0
+# DragonFlyDB database number
+dragonfly_db: int = 0
 
-# Redis password (optional)
-redis_password: Optional[str] = None
+# DragonFlyDB password (optional)
+dragonfly_password: Optional[str] = None
 
 # Maximum connections
-redis_max_connections: int = 50
+dragonfly_max_connections: int = 50
 ```
 
 ### PostgreSQL 17 (Persistent Storage)
@@ -351,12 +351,15 @@ export SERVICE_PORT=8000
 export SERVICE_ENV="development"
 export LOG_LEVEL="DEBUG"
 
-# DragonflyDB
-export REDIS_HOST="127.0.0.1"
-export REDIS_PORT=6379
-export REDIS_PASSWORD=""
-export REDIS_DB=0
-export REDIS_MAX_CONNECTIONS=50
+# DragonFlyDB (Redis protocol)
+export DRAGONFLY_HOST="127.0.0.1"
+export DRAGONFLY_PORT=6379
+export DRAGONFLY_PASSWORD=""
+export DRAGONFLY_DB=0
+export DRAGONFLY_MAX_CONNECTIONS=50
+
+# (Deprecated) REDIS_* variables are supported for backward compatibility only.
+# Use DRAGONFLY_* for all new deployments.
 
 # PostgreSQL
 export POSTGRES_HOST="localhost"

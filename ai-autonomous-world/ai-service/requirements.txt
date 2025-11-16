@@ -15,9 +15,8 @@ google-generativeai==0.8.3
 ollama==0.4.4
 azure-identity==1.19.0
 
-# Database and Caching
+# Database and Caching (DragonFlyDB backend, Redis protocol)
 redis==5.2.0
-redis-om==0.3.3
 sqlalchemy==2.0.36
 psycopg2-binary==2.9.10
 
@@ -33,6 +32,9 @@ pyyaml==6.0.2
 # Data Processing
 numpy==2.2.0
 pandas==2.2.3
+scikit-learn==1.5.0
+xgboost==2.0.3
+tensorflow==2.16.1
 
 # Vector Operations
 sentence-transformers==3.3.1

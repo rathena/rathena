@@ -107,7 +107,8 @@ llm:
 # Database Configuration
 # ============================================================================
 
-# DragonflyDB (Redis-compatible) - High-speed caching and Pub/Sub
+# DragonflyDB - High-speed caching and Pub/Sub (Redis protocol)
+# This is the primary cache and real-time state backend.
 # IMPORTANT: Set password in .env file if authentication is enabled
 dragonfly:
   host: "${DRAGONFLY_HOST:-localhost}"
@@ -266,8 +267,8 @@ performance:
     max_connections: 100
     timeout: 30
 
-  # Redis Caching
-  redis_caching:
+  # DragonFlyDB Caching (Redis protocol)
+  dragonfly_caching:
     enabled: true
     default_ttl: 300  # seconds
     max_cache_size: 10000  # items
