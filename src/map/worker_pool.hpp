@@ -128,8 +128,8 @@ private:
     std::unordered_map<entity_id_t, EntityAssignment> entity_table;
     std::mutex entity_table_mutex;
 
-    // Worker load tracking
-    std::vector<std::atomic<int>> worker_loads;
+    // Worker load tracking (use shared_ptr to avoid atomic copy issues)
+    std::vector<std::shared_ptr<std::atomic<int>>> worker_loads;
 
     // Assignment state
     std::atomic<int> round_robin_counter;

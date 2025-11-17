@@ -165,6 +165,7 @@ struct Char_Config {
 #define TRIM_CHARS "\255\xA0\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 struct CharServ_Config {
 	char userid[24];
+	bool p2p_enabled = false;
 	char passwd[24];
 	char server_name[20];
 	char wisp_server_name[NAME_LENGTH];
@@ -311,6 +312,11 @@ int32 char_count_users(void);
 void char_db_setoffline( std::shared_ptr<struct online_char_data> character, int32 server );
 void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id);
 void char_set_char_offline(uint32 char_id, uint32 account_id);
+void char_set_char_online_auto(int32 map_id, uint32 char_id, uint32 account_id);
+void char_set_char_offline_auto(uint32 char_id, uint32 account_id);
+void char_set_char_online_p2p(int32 map_id, uint32 char_id, uint32 account_id);
+void char_set_char_offline_p2p(uint32 char_id, uint32 account_id);
+void char_p2p_initialize();
 void char_set_all_offline(int32 id);
 void char_disconnect_player(uint32 account_id);
 TIMER_FUNC(char_chardb_waiting_disconnect);

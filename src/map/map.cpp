@@ -1,9 +1,19 @@
+// enum class InterServerProtocol { LEGACY_TCP, QUIC, P2P };
+// void set_inter_server_protocol(InterServerProtocol) {}
+// #include "worker_pool_config.cpp"
+#include "worker_pool.hpp"
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "map.hpp"
 
+// Forward declaration for worker pool config loader
+struct WorkerPoolConfig;
+WorkerPoolConfig load_worker_pool_config();
 #include <cstdlib>
+// InterServerProtocol and set_inter_server_protocol are defined in intif.cpp, so declare them here for use.
+enum class InterServerProtocol { LEGACY_TCP, QUIC, P2P };
+void set_inter_server_protocol(InterServerProtocol);
 #include <cmath>
 
 #include <config/core.hpp>
@@ -148,7 +158,6 @@ static void init_worker_pool() {
 static std::shared_ptr<P2PCoordinator> global_p2p_coordinator;
 static std::shared_ptr<DragonflyDBClient> global_dragonflydb_client;
 
-static void init_distributed_integration() {
     // Example: select protocol from environment or config
     const char* proto_env = std::getenv("INTER_SERVER_PROTOCOL");
     if (proto_env) {
@@ -168,7 +177,6 @@ static void init_distributed_integration() {
         if (global_p2p_coordinator) global_worker_pool->set_p2p_coordinator(global_p2p_coordinator);
         if (global_dragonflydb_client) global_worker_pool->set_dragonflydb_client(global_dragonflydb_client);
     }
-}
 }
 
 static int32 map_users=0;
@@ -5640,5 +5648,5 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 }
 
 int32 main( int32 argc, char *argv[] ){
-	return main_core<MapServer>( argc, argv );
+    return main_core<MapServer>( argc, argv );
 }

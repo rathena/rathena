@@ -1,7 +1,7 @@
+#include "worker_pool.hpp"
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // WorkerPoolConfig loader: loads from conf/worker_pool.conf and .env
 
-#include "worker_pool.hpp"
 #include <fstream>
 #include <sstream>
 #include <cstdlib>
@@ -24,6 +24,7 @@ static AssignmentStrategy parse_strategy(const std::string& s) {
 }
 
 // Load config from conf/worker_pool.conf and .env
+WorkerPoolConfig load_worker_pool_config();
 WorkerPoolConfig load_worker_pool_config() {
     WorkerPoolConfig cfg;
     std::map<std::string, std::string> kv;

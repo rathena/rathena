@@ -36,9 +36,11 @@ struct s_autotrade_entry {
 	t_itemid item_id; ///< Item ID (for buyingstore)
 };
 
+#include <memory>
 /// Struct of autotrader
 struct s_autotrader {
 	uint32 id; ///< vendor/buyer id
+	std::shared_ptr<map_session_data> sd_ptr;
 	uint32 account_id; ///< Account ID
 	uint32 char_id; ///< Char ID
 	int32 m; ///< Map location

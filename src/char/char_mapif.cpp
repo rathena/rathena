@@ -894,13 +894,6 @@ int32 chmapif_parse_reqdivorce(int32 fd){
  * @return : 0 not enough data received, 1 success
  */
 // --- P2P-aware: use P2P offline state if enabled ---
-    if (charserv_config.p2p_enabled) {
-        char_set_char_offline_p2p(RFIFOL(fd,2), RFIFOL(fd,6));
-    } else {
-        char_set_char_offline(RFIFOL(fd,2), RFIFOL(fd,6));
-    }
-    RFIFOSKIP(fd,10);
-    return 1;
 int32 chmapif_parse_setcharoffline(int32 fd){
 	if (RFIFOREST(fd) < 6)
 		return 0;
@@ -931,13 +924,6 @@ int32 chmapif_parse_setalloffline(int32 fd, int32 id){
  * @return : 0 not enough data received, 1 success
  */
 // --- P2P-aware: use P2P online state if enabled ---
-    if (charserv_config.p2p_enabled) {
-        char_set_char_online_p2p(id, RFIFOL(fd,2), RFIFOL(fd,6));
-    } else {
-        char_set_char_online(id, RFIFOL(fd,2), RFIFOL(fd,6));
-    }
-    RFIFOSKIP(fd,10);
-    return 1;
 int32 chmapif_parse_setcharonline(int32 fd, int32 id){
 	if (RFIFOREST(fd) < 10)
 		return 0;

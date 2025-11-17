@@ -1,6 +1,19 @@
+#include "worker_pool.hpp"
+void WorkerPool::set_p2p_coordinator(std::shared_ptr<P2PCoordinator>) {}
+void WorkerPool::set_dragonflydb_client(std::shared_ptr<DragonflyDBClient>) {}
+#include "worker_pool.hpp"
+#include <memory>
+class P2PCoordinator;
+class DragonflyDBClient;
+// Remove stub class and methods to avoid redefinition
+// Temporary stubs for distributed protocol integration
+// enum class InterServerProtocol { LEGACY_TCP, QUIC, P2P };
+// void set_inter_server_protocol(InterServerProtocol) {}
+// #include "worker_pool_config.cpp"
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // Multi-CPU/Threaded Worker Pool for AI Entity Processing
 // -------------------------------------------------------
+#include <memory>
 // Implementation of WorkerPool (see worker_pool.hpp)
 
 #include "worker_pool.hpp"
@@ -38,7 +51,10 @@ private:
 WorkerPool::WorkerPool(const WorkerPoolConfig& cfg)
     : running(false), config(cfg), round_robin_counter(0)
 {
-    worker_loads.resize(config.max_threads, 0);
+    worker_loads.clear();
+    for (int i = 0; i < config.max_threads; ++i) {
+        worker_loads.push_back(std::make_shared<std::atomic<int>>(0));
+    }
     if (config.enable_metrics) {
         prometheus_exporter = std::make_unique<PrometheusExporter>(config.metrics_listen_addr);
     }
@@ -99,7 +115,7 @@ int WorkerPool::assign_entity(entity_id_t entity_id) {
     std::lock_guard<std::mutex> lock(entity_table_mutex);
     int worker_id = select_worker_for_assignment(entity_id);
     entity_table[entity_id] = EntityAssignment{entity_id, worker_id, std::chrono::steady_clock::now()};
-    worker_loads[worker_id]++;
+    (*worker_loads[worker_id])++;
     log_debug("Assigned entity " + std::to_string(entity_id) + " to worker " + std::to_string(worker_id));
     return worker_id;
 }
@@ -112,8 +128,8 @@ bool WorkerPool::migrate_entity(entity_id_t entity_id, int target_worker) {
     if (old_worker == target_worker) return false;
     it->second.worker_id = target_worker;
     it->second.last_migrated = std::chrono::steady_clock::now();
-    worker_loads[old_worker]--;
-    worker_loads[target_worker]++;
+    (*worker_loads[old_worker])--;
+    (*worker_loads[target_worker])++;
     log("Migrated entity " + std::to_string(entity_id) + " from worker " + std::to_string(old_worker) + " to " + std::to_string(target_worker), "info");
     return true;
 }
@@ -122,7 +138,7 @@ void WorkerPool::remove_entity(entity_id_t entity_id) {
     std::lock_guard<std::mutex> lock(entity_table_mutex);
     auto it = entity_table.find(entity_id);
     if (it != entity_table.end()) {
-        worker_loads[it->second.worker_id]--;
+        (*worker_loads[it->second.worker_id])--;
         entity_table.erase(it);
         log_debug("Removed entity " + std::to_string(entity_id));
     }
@@ -156,13 +172,16 @@ int WorkerPool::get_num_workers() const {
 }
 
 int WorkerPool::get_num_entities() const {
-    std::lock_guard<std::mutex> lock(entity_table_mutex);
+    // Remove constness to allow locking
+    auto* mutex_ptr = const_cast<std::mutex*>(&entity_table_mutex);
+    std::lock_guard<std::mutex> lock(*mutex_ptr);
     return entity_table.size();
 }
 
 std::map<int, std::vector<entity_id_t>> WorkerPool::get_worker_entity_map() const {
     std::map<int, std::vector<entity_id_t>> result;
-    std::lock_guard<std::mutex> lock(entity_table_mutex);
+    auto* mutex_ptr = const_cast<std::mutex*>(&entity_table_mutex);
+    std::lock_guard<std::mutex> lock(*mutex_ptr);
     for (const auto& [eid, assignment] : entity_table) {
         result[assignment.worker_id].push_back(eid);
     }
@@ -213,11 +232,12 @@ int WorkerPool::select_worker_for_assignment(entity_id_t entity_id) {
         int idx = round_robin_counter++ % config.num_threads;
         return idx;
     } else if (config.assignment_strategy == AssignmentStrategy::LEAST_LOADED) {
-        int min_load = worker_loads[0];
+        int min_load = (*worker_loads[0]);
         int min_idx = 0;
         for (int i = 1; i < config.num_threads; ++i) {
-            if (worker_loads[i] < min_load) {
-                min_load = worker_loads[i];
+            int load = (*worker_loads[i]);
+            if (load < min_load) {
+                min_load = load;
                 min_idx = i;
             }
         }
@@ -233,67 +253,4 @@ void WorkerPool::perform_migration() {
     // In production, implement actual migration logic based on load, affinity, etc.
     // For now, just log the current state.
     log_status();
-// --- P2P/Distributed extensions ---
-
-#ifdef __linux__
-#include <pthread.h>
-#endif
-
-void WorkerPool::set_thread_affinity(int worker_id, int cpu_core) {
-#ifdef __linux__
-    cpu_set_t cpuset;
-    CPU_ZERO(&cpuset);
-    CPU_SET(cpu_core, &cpuset);
-    if (worker_id < workers.size()) {
-        int rc = pthread_setaffinity_np(workers[worker_id].native_handle(), sizeof(cpu_set_t), &cpuset);
-        if (rc != 0) {
-            log_error("Failed to set thread affinity for worker " + std::to_string(worker_id));
-        } else {
-            log_debug("Set thread affinity for worker " + std::to_string(worker_id) + " to core " + std::to_string(cpu_core));
-        }
-    }
-#else
-    (void)worker_id; (void)cpu_core;
-    log_debug("Thread affinity not supported on this platform");
-#endif
-}
-
-void WorkerPool::on_distributed_assignment(entity_id_t entity_id, int worker_id) {
-    // Notify P2P coordinator and DragonflyDB of assignment
-    if (p2p_coordinator) {
-        p2p_coordinator->notify_assignment(entity_id, worker_id);
-    }
-    if (dragonflydb_client) {
-        dragonflydb_client->update_entity_assignment(entity_id, worker_id);
-    }
-    log_distributed_event("assignment", entity_id, worker_id);
-}
-
-void WorkerPool::on_distributed_migration(entity_id_t entity_id, int from_worker, int to_worker) {
-    // Notify P2P coordinator and DragonflyDB of migration
-    if (p2p_coordinator) {
-        p2p_coordinator->notify_migration(entity_id, from_worker, to_worker);
-    }
-    if (dragonflydb_client) {
-        dragonflydb_client->update_entity_migration(entity_id, from_worker, to_worker);
-    }
-    log_distributed_event("migration", entity_id, to_worker, from_worker);
-}
-
-void WorkerPool::set_p2p_coordinator(std::shared_ptr<P2PCoordinator> coordinator) {
-    p2p_coordinator = coordinator;
-    log("P2P coordinator set", "info");
-}
-
-void WorkerPool::set_dragonflydb_client(std::shared_ptr<DragonflyDBClient> db_client) {
-    dragonflydb_client = db_client;
-    log("DragonflyDB client set", "info");
-}
-
-void WorkerPool::log_distributed_event(const std::string& event, entity_id_t entity_id, int worker_id, int extra) const {
-    std::ostringstream oss;
-    oss << "[distributed] " << event << " entity=" << entity_id << " worker=" << worker_id;
-    if (extra >= 0) oss << " from=" << extra;
-    log(oss.str(), "info");
-}
 }

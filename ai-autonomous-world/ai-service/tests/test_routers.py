@@ -52,7 +52,7 @@ class TestNPCRouter:
             "position": {"map": "prontera", "x": 150, "y": 180},
             "personality": {
                 "traits": ["friendly", "helpful"],
-                "background": "A helpful merchant",
+                "background": {"summary": "A helpful merchant"},
                 "goals": ["Make profit"],
                 "speech_style": "Cheerful"
             }
@@ -63,6 +63,8 @@ class TestNPCRouter:
             
             response = client.post("/ai/npc/register", json=npc_data)
             
+            if response.status_code != 200:
+                print("RESPONSE BODY:", response.json())
             assert response.status_code == 200
             data = response.json()
             assert data["npc_id"] == "test_npc_001"

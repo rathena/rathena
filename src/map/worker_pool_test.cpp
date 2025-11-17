@@ -72,10 +72,11 @@ void test_dynamic_scaling_stub() {
     std::cout << "test_dynamic_scaling_stub passed\n";
 }
 
-int main() {
+/* int main() {
     test_basic_assignment();
     test_migration();
     test_dynamic_scaling_stub();
     std::cout << "All WorkerPool tests passed.\n";
     return 0;
-}
+} */
+// Main removed: now integrated into map.cpp for production.

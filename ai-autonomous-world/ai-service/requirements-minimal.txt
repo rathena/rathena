@@ -57,6 +57,7 @@ tensorflow==2.16.1
 pytest==8.3.4
 pytest-asyncio==0.24.0
 pytest-cov==6.0.0
+pytest-benchmark==4.0.0
 respx==0.21.1
 
 # Development

@@ -5,6 +5,7 @@
 #define SOCKET_HPP
 
 #include <ctime>
+#include <string>
 
 #include <config/core.hpp>
 

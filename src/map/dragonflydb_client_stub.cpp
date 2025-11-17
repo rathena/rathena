@@ -3,6 +3,7 @@
 
 #include "dragonflydb_client.hpp"
 #include <iostream>
+#include <memory>
 
 class DragonflyDBClientStub : public DragonflyDBClient {
 public:
