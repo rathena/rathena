@@ -74,10 +74,33 @@ std::vector<SignalMessage> WebRTCSignaling::getPendingSignals(const std::string&
     return signals;
 }
 
+#include "JwtAuth.h"
+#include <memory>
+
 void WebRTCSignaling::processWebSocket() {
-    // Production: integrate with actual WebSocket server library
-    // Accept connections, receive messages, call handleSignal
-    // This is a placeholder loop; in production, replace with real server event loop.
+    // Production: integrate with actual WebSocket server library (e.g., uWebSockets)
+    // Accept connections, require JWT token, validate before accepting messages
+
+    std::string jwt_secret = "REPLACE_WITH_SECURE_SECRET";
+    std::unique_ptr<JwtAuth> jwtAuth = std::make_unique<JwtAuth>(jwt_secret);
+
+    // Pseudocode for WebSocket server integration:
+    // websocket_server.on_connect = [&](WebSocketConnection& conn) {
+    //     std::string token = conn.get_query_param("token");
+    //     std::string error;
+    //     if (!jwtAuth->ValidateToken(token, error)) {
+    //         Logger::warn("WebSocket authentication failed: " + error);
+    //         conn.close();
+    //         return;
+    //     }
+    //     Logger::info("WebSocket client authenticated.");
+    //     conn.on_message = [&](const std::string& msg) {
+    //         auto signal = signalFromJson(msg);
+    //         handleSignal(signal);
+    //     };
+    // };
+
+    // Placeholder event loop
     while (running_) {
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }

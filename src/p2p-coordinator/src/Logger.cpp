@@ -3,11 +3,25 @@
 #include <chrono>
 #include <ctime>
 #include <iomanip>
+#include <sstream>
+#include <filesystem>
 
 std::mutex Logger::mutex_;
+std::unique_ptr<std::ofstream> Logger::logFile_ = nullptr;
+std::string Logger::logFilePath_;
+size_t Logger::maxFileSize_ = 10 * 1024 * 1024;
+int Logger::maxFiles_ = 5;
+Logger::Format Logger::logFormat_ = Logger::Format::Plain;
 
-void Logger::init() {
-    // Optionally configure log output, file, etc.
+void Logger::init(const std::string& logFilePath, size_t maxFileSize, int maxFiles, Format format) {
+    std::lock_guard<std::mutex> lock(mutex_);
+    logFilePath_ = logFilePath;
+    maxFileSize_ = maxFileSize;
+    maxFiles_ = maxFiles;
+    logFormat_ = format;
+    if (!logFilePath_.empty()) {
+        openLogFile();
+    }
 }
 
 void Logger::info(const std::string& msg) {
@@ -36,5 +50,26 @@ void Logger::log(const std::string& level, const std::string& msg) {
 #else
     localtime_r(&now_c, &tm);
 #endif
-    std::cout << "[" << std::put_time(&tm, "%F %T") << "] [" << level << "] " << msg << std::endl;
+
+    std::ostringstream oss;
+    if (logFormat_ == Format::JSON) {
+        oss << "{";
+        oss << "\"timestamp\":\"" << std::put_time(&tm, "%F %T") << "\",";
+        oss << "\"level\":\"" << level << "\",";
+        oss << "\"message\":\"" << msg << "\"";
+        oss << "}";
+    } else {
+        oss << "[" << std::put_time(&tm, "%F %T") << "] [" << level << "] " << msg;
+    }
+    std::string logEntry = oss.str();
+
+    // Write to file if enabled
+    if (logFile_) {
+        (*logFile_) << logEntry << std::endl;
+        logFile_->flush();
+        rotateLogsIfNeeded();
+    }
+
+    // Always write to console
+    std::cout << logEntry << std::endl;
 }
