@@ -374,7 +374,7 @@ struct view_data * mob_get_viewdata(int32 mob_id)
 	return &db->vd;
 }
 
-e_mob_bosstype s_mob_db::get_bosstype(){
+e_mob_bosstype s_mob_db::get_bosstype() const{
 	if( status_has_mode( &this->status, MD_MVP ) ){
 		return BOSSTYPE_MVP;
 	}else if( this->status.class_ == CLASS_BOSS ){
@@ -384,7 +384,7 @@ e_mob_bosstype s_mob_db::get_bosstype(){
 	}
 }
 
-e_mob_bosstype mob_data::get_bosstype(){
+e_mob_bosstype mob_data::get_bosstype() const{
 	if( status_has_mode( &this->status, MD_MVP ) ){
 		return BOSSTYPE_MVP;
 	}else if( this->status.class_ == CLASS_BOSS ){
@@ -3722,7 +3722,7 @@ int32 mob_guardian_guildchange(mob_data *md)
 /*==========================================
  * Pick a random class for the mob
  *------------------------------------------*/
-int32 mob_random_class(int32 *value, size_t count)
+int32 mob_random_class( const int32 *value, size_t count )
 {
 	nullpo_ret(value);
 
@@ -4203,7 +4203,7 @@ mob_data *mob_getfriendstatus(mob_data *md,int64 cond1,int64 cond2)
 }
 
 // Display message from mob_chat_db.yml
-bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
+bool mob_chat_display_message( const mob_data& md, uint16 msg_id ) {
 	std::shared_ptr<s_mob_chat> mc = mob_chat_db.find(msg_id);
 
 	if (mc != nullptr) {
