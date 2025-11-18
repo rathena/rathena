@@ -27,8 +27,6 @@ class Settings(BaseSettings):
     agent_modes: str = Field(default="dialogue:LLM,decision:hybrid,quest:LLM,memory:CPU,world:hybrid,economy:CPU,faction:hybrid", env="AGENT_MODES")
 
     # rAthena Bridge Configuration (for pushing commands back to game server)
-    rathena_bridge_host: str = Field(default="192.168.0.100", env="RATHENA_BRIDGE_HOST")
-    rathena_bridge_port: int = Field(default=8888, env="RATHENA_BRIDGE_PORT")
 
     # DragonflyDB Configuration (for caching and real-time state)
     redis_host: str = Field(default="192.168.0.100", env="REDIS_HOST")

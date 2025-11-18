@@ -543,54 +543,7 @@ class NPCMovementManager:
                 return
 
             # Fallback to HTTP if Pub/Sub fails
-            logger.warning(f"[PUBSUB] Failed, falling back to HTTP for NPC {npc_id}")
-            await self._push_to_rathena_http(command)
-
-        except Exception as e:
-            logger.error(f"Error pushing to rAthena: {e}", exc_info=True)
-            # Try HTTP fallback
-            try:
-                await self._push_to_rathena_http(command)
-            except Exception as fallback_error:
-                logger.error(f"HTTP fallback also failed: {fallback_error}")
-
-    async def _push_to_rathena_http(self, command: Dict[str, Any]):
-        """HTTP fallback for pushing commands to rAthena bridge"""
-        try:
-            import httpx
-            from ..config import settings
-
-            # Build bridge URL (web-server bridge)
-            bridge_url = f"http://{settings.rathena_bridge_host}:{settings.rathena_bridge_port}"
-            endpoint = "/ai/npc/execute-action"
-
-            # Prepare request payload
-            payload = {
-                "npc_id": command.get("npc_id"),
-                "action": {
-                    "type": command.get("action_type", "move"),
-                    "target_x": command.get("target_x"),
-                    "target_y": command.get("target_y"),
-                    "parameters": command.get("parameters", {})
-                }
-            }
-
-            # Make HTTP POST request to bridge
-            async with httpx.AsyncClient(timeout=5.0) as client:
-                response = await client.post(
-                    f"{bridge_url}{endpoint}",
-                    json=payload,
-                    headers={"Content-Type": "application/json"}
-                )
-
-                if response.status_code == 200:
-                    logger.info(f"[HTTP] Successfully pushed movement command to rAthena for NPC {command.get('npc_id')}")
-                else:
-                    logger.warning(f"[HTTP] Failed to push to rAthena: HTTP {response.status_code} - {response.text}")
-
-        except Exception as e:
-            logger.error(f"[HTTP] Error pushing to rAthena: {e}", exc_info=True)
-
+            logger.warning(f"[PUBSUB] Failed to publish for NPC {npc_id} (HTTP fallback removed)")
     async def _update_npc_position(self, npc_id: str, decision_data: Dict[str, Any]):
         """Update NPC position in database"""
         try:
