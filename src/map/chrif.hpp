@@ -51,13 +51,13 @@ extern char charserver_name[NAME_LENGTH];
 struct auth_node* chrif_search(uint32 account_id);
 struct auth_node* chrif_auth_check(uint32 account_id, uint32 char_id, enum sd_state state);
 bool chrif_auth_delete(uint32 account_id, uint32 char_id, enum sd_state state);
-bool chrif_auth_finished(map_session_data* sd);
+bool chrif_auth_finished( const map_session_data* sd );
 
 void chrif_authreq(map_session_data* sd, bool autotrade);
 void chrif_authok(int32 fd);
 int32 chrif_scdata_request(uint32 account_id, uint32 char_id);
 int32 chrif_skillcooldown_request(uint32 account_id, uint32 char_id);
-int32 chrif_skillcooldown_save(map_session_data &sd);
+int32 chrif_skillcooldown_save( const map_session_data& sd );
 int32 chrif_skillcooldown_load(int32 fd);
 
 int32 chrif_save(map_session_data* sd, int32 flag);
@@ -67,14 +67,14 @@ int32 chrif_changemapserver(map_session_data* sd, uint32 ip, uint16 port);
 int32 chrif_searchcharid(uint32 char_id);
 int32 chrif_changeemail(int32 id, const char *actual_email, const char *new_email);
 int32 chrif_req_login_operation(int32 aid, const char* character_name, enum chrif_req_op operation_type, int32 timediff, int32 val1, int32 val2);
-int32 chrif_updatefamelist(map_session_data &sd, e_rank ranktype);
+int32 chrif_updatefamelist( const map_session_data& sd, e_rank ranktype );
 int32 chrif_buildfamelist(void);
-int32 chrif_save_scdata(map_session_data *sd);
-int32 chrif_char_offline(map_session_data *sd);
+int32 chrif_save_scdata( const map_session_data* sd );
+int32 chrif_char_offline( const map_session_data* sd );
 int32 chrif_char_offline_nsd(uint32 account_id, uint32 char_id);
 int32 chrif_char_reset_offline(void);
 int32 send_users_tochar(void);
-int32 chrif_char_online(map_session_data *sd);
+int32 chrif_char_online( const map_session_data* sd );
 int32 chrif_changesex(map_session_data *sd, bool change_account);
 int32 chrif_divorce(int32 partner_id1, int32 partner_id2);
 

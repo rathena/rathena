@@ -78,7 +78,7 @@ int32 quest_change(map_session_data *sd, int32 qid1, int32 qid2);
 int32 quest_update_objective_sub(block_list *bl, va_list ap);
 void quest_update_objective(map_session_data *sd, mob_data* md);
 int32 quest_update_status(map_session_data *sd, int32 quest_id, e_quest_state status);
-int32 quest_check(map_session_data *sd, int32 quest_id, e_quest_check_type type);
+int32 quest_check( const map_session_data* sd, int32 quest_id, e_quest_check_type type );
 
 std::shared_ptr<s_quest_db> quest_search(int32 quest_id);
 

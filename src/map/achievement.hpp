@@ -138,9 +138,9 @@ void achievement_get_reward(map_session_data *sd, int32 achievement_id, time_t r
 struct achievement *achievement_add(map_session_data *sd, int32 achievement_id);
 bool achievement_remove(map_session_data *sd, int32 achievement_id);
 bool achievement_update_achievement(map_session_data *sd, int32 achievement_id, bool complete);
-void achievement_check_reward(map_session_data *sd, int32 achievement_id);
+void achievement_check_reward( const map_session_data* sd, int32 achievement_id );
 void achievement_free(map_session_data *sd);
-int32 achievement_check_progress(map_session_data *sd, int32 achievement_id, int32 type);
+int32 achievement_check_progress( const map_session_data* sd, int32 achievement_id, int32 type );
 int32 *achievement_level(map_session_data *sd, bool flag);
 bool achievement_check_condition(struct script_code* condition, map_session_data* sd);
 void achievement_get_titles(uint32 char_id);

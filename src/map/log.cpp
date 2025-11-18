@@ -204,7 +204,7 @@ void log_branch(map_session_data* sd)
 }
 
 /// logs item transactions (generic)
-void log_pick(int32 id, int16 m, e_log_pick_type type, int32 amount, struct item* itm)
+void log_pick( int32 id, int16 m, e_log_pick_type type, int32 amount, const item* itm )
 {
 	nullpo_retv(itm);
 	if( ( log_config.enable_logs&type ) == 0 )
@@ -258,7 +258,7 @@ void log_pick(int32 id, int16 m, e_log_pick_type type, int32 amount, struct item
 }
 
 /// logs item transactions (players)
-void log_pick_pc(map_session_data* sd, e_log_pick_type type, int32 amount, struct item* itm)
+void log_pick_pc( const map_session_data* sd, e_log_pick_type type, int32 amount, const item* itm )
 {
 	nullpo_retv(sd);
 	log_pick(sd->status.char_id, sd->m, type, amount, itm);
@@ -266,7 +266,7 @@ void log_pick_pc(map_session_data* sd, e_log_pick_type type, int32 amount, struc
 
 
 /// logs item transactions (monsters)
-void log_pick_mob(mob_data* md, e_log_pick_type type, int32 amount, struct item* itm)
+void log_pick_mob( const mob_data* md, e_log_pick_type type, int32 amount, const item* itm )
 {
 	nullpo_retv(md);
 	log_pick(md->mob_id, md->m, type, amount, itm);
@@ -274,7 +274,7 @@ void log_pick_mob(mob_data* md, e_log_pick_type type, int32 amount, struct item*
 
 /// logs zeny transactions
 // ids are char_ids
-void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int32 amount)
+void log_zeny( const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int32 amount )
 {
 	if( !log_config.zeny || ( log_config.zeny != 1 && abs(amount) < log_config.zeny ) )
 		return;
@@ -305,7 +305,7 @@ void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 sr
 
 
 /// logs MVP monster rewards
-void log_mvpdrop(map_session_data* sd, int32 monster_id, t_itemid nameid, t_exp exp )
+void log_mvpdrop( const map_session_data* sd, int32 monster_id, t_itemid nameid, t_exp exp )
 {
 	nullpo_retv(sd);
 
@@ -375,7 +375,7 @@ void log_atcommand(map_session_data* sd, const char* message)
 }
 
 /// logs messages passed to script command 'logmes'
-void log_npc( npc_data* nd, const char* message ){
+void log_npc(npc_data* nd, const char* message){
 	nullpo_retv(nd);
 
 	if( !log_config.npc )
@@ -491,7 +491,7 @@ void log_chat(e_log_chat_type type, int32 type_id, int32 src_charid, int32 src_a
 }
 
 /// logs cash transactions
-void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int32 amount ){
+void log_cash( const map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int32 amount ){
 	nullpo_retv( sd );
 
 	if( !log_config.cash )
@@ -524,7 +524,7 @@ void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_
  * @param type Log type, @see e_log_feeding_type
  * @param nameid Item used as food
  **/
-void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid) {
+void log_feeding( const map_session_data* sd, e_log_feeding_type type, t_itemid nameid ) {
 	uint32 target_id = 0, intimacy = 0;
 	uint16 target_class = 0;
 

@@ -172,6 +172,10 @@ public:
 		}
 	}
 
+	std::shared_ptr<const datatype> find(keytype key) const{
+		return const_cast<TypesafeCachedYamlDatabase*>(this)->find(key);
+	}
+
 	std::vector<std::shared_ptr<datatype>> getCache() {
 		return this->cache;
 	}
