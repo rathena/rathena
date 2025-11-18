@@ -15,6 +15,8 @@
 #include "http.hpp"
 #include "web.hpp"
 
+#include <nlohmann/json.hpp>
+#include "aiworld/aiworld_plugin.hpp"
 namespace AIBridge {
 	// AI Service configuration with defaults
 	std::string ai_service_url = "127.0.0.1";

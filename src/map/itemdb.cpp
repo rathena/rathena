@@ -4018,6 +4018,8 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	ryml::NodeRef jobs = rootNode["Jobs"];
 	jobs |= ryml::MAP;
 
+	std::cout << "[stoi debug] itemdb.cpp index=" << index << " value='" << str[index] << "'\n";
+	std::cout << std::flush;
 	if (!str[++index].empty())
 		jobs["All"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())
@@ -4074,6 +4076,8 @@ static bool itemdb_read_sqldb_sub(std::vector<std::string> str) {
 	ryml::NodeRef classes = rootNode["Classes"];
 	classes |= ryml::MAP;
 
+	std::cout << "[stoi debug] itemdb.cpp index=" << index << " value='" << str[index] << "'\n";
+	std::cout << std::flush;
 	if (!str[++index].empty())
 		classes["All"] << (std::stoi(str[index]) ? "true" : "false");
 	if (!str[++index].empty())

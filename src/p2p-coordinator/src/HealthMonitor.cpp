@@ -25,9 +25,6 @@ void HealthMonitor::stop() {
     Logger::info("Health monitor stopping...");
 }
 
-void HealthMonitor::stop() {
-    running_ = false;
-}
 
 void HealthMonitor::monitorLoop() {
     while (running_) {

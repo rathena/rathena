@@ -55,15 +55,68 @@ WorkerPoolConfig load_worker_pool_config() {
     }
 
     // 3. Parse values
-    if (kv.count("num_threads")) cfg.num_threads = std::stoi(kv["num_threads"]);
-    if (kv.count("WORKER_POOL_NUM_THREADS")) cfg.num_threads = std::stoi(kv["WORKER_POOL_NUM_THREADS"]);
-    if (kv.count("min_threads")) cfg.min_threads = std::stoi(kv["min_threads"]);
-    if (kv.count("WORKER_POOL_MIN_THREADS")) cfg.min_threads = std::stoi(kv["WORKER_POOL_MIN_THREADS"]);
-    if (kv.count("max_threads")) cfg.max_threads = std::stoi(kv["max_threads"]);
-    if (kv.count("WORKER_POOL_MAX_THREADS")) cfg.max_threads = std::stoi(kv["WORKER_POOL_MAX_THREADS"]);
+    if (kv.count("num_threads")) {
+        std::cout << "[stoi debug] worker_pool_config.cpp num_threads='" << kv["num_threads"] << "'\n";
+        std::cout << std::flush;
+        try {
+            cfg.num_threads = std::stoi(kv["num_threads"]);
+        } catch (const std::exception& ex) {
+            std::cerr << "[worker_pool_config] Invalid num_threads value: '" << kv["num_threads"] << "', using default 4\n";
+            cfg.num_threads = 4;
+        }
+    }
+    if (kv.count("WORKER_POOL_NUM_THREADS")) {
+        std::cout << "[stoi debug] worker_pool_config.cpp WORKER_POOL_NUM_THREADS='" << kv["WORKER_POOL_NUM_THREADS"] << "'\n";
+        std::cout << std::flush;
+        try {
+            cfg.num_threads = std::stoi(kv["WORKER_POOL_NUM_THREADS"]);
+        } catch (const std::exception& ex) {
+            std::cerr << "[worker_pool_config] Invalid WORKER_POOL_NUM_THREADS value: '" << kv["WORKER_POOL_NUM_THREADS"] << "', using default 4\n";
+            cfg.num_threads = 4;
+        }
+    }
+    if (kv.count("min_threads")) {
+        std::cout << "[stoi debug] worker_pool_config.cpp min_threads='" << kv["min_threads"] << "'\n";
+        std::cout << std::flush;
+        try {
+            cfg.min_threads = std::stoi(kv["min_threads"]);
+        } catch (const std::exception& ex) {
+            std::cerr << "[worker_pool_config] Invalid min_threads value: '" << kv["min_threads"] << "', using default 1\n";
+            cfg.min_threads = 1;
+        }
+    }
+    if (kv.count("WORKER_POOL_MIN_THREADS")) {
+        std::cout << "[stoi debug] worker_pool_config.cpp WORKER_POOL_MIN_THREADS='" << kv["WORKER_POOL_MIN_THREADS"] << "'\n";
+        std::cout << std::flush;
+        try {
+            cfg.min_threads = std::stoi(kv["WORKER_POOL_MIN_THREADS"]);
+        } catch (const std::exception& ex) {
+            std::cerr << "[worker_pool_config] Invalid WORKER_POOL_MIN_THREADS value: '" << kv["WORKER_POOL_MIN_THREADS"] << "', using default 1\n";
+            cfg.min_threads = 1;
+        }
+    }
+    if (kv.count("max_threads")) {
+        std::cout << "[stoi debug] worker_pool_config.cpp max_threads='" << kv["max_threads"] << "'\n";
+        std::cout << std::flush;
+        try {
+            cfg.max_threads = std::stoi(kv["max_threads"]);
+        } catch (const std::exception& ex) {
+            std::cerr << "[worker_pool_config] Invalid max_threads value: '" << kv["max_threads"] << "', using default 8\n";
+            cfg.max_threads = 8;
+        }
+    }
+    if (kv.count("WORKER_POOL_MAX_THREADS")) {
+        std::cout << "[stoi debug] worker_pool_config.cpp WORKER_POOL_MAX_THREADS='" << kv["WORKER_POOL_MAX_THREADS"] << "'\n";
+        std::cout << std::flush;
+        cfg.max_threads = std::stoi(kv["WORKER_POOL_MAX_THREADS"]);
+    }
     if (kv.count("assignment_strategy")) cfg.assignment_strategy = parse_strategy(kv["assignment_strategy"]);
     if (kv.count("WORKER_POOL_ASSIGNMENT_STRATEGY")) cfg.assignment_strategy = parse_strategy(kv["WORKER_POOL_ASSIGNMENT_STRATEGY"]);
-    if (kv.count("migration_interval_ms")) cfg.migration_interval_ms = std::stoi(kv["migration_interval_ms"]);
+    if (kv.count("migration_interval_ms")) {
+        std::cout << "[stoi debug] worker_pool_config.cpp migration_interval_ms='" << kv["migration_interval_ms"] << "'\n";
+        std::cout << std::flush;
+        cfg.migration_interval_ms = std::stoi(kv["migration_interval_ms"]);
+    }
     if (kv.count("enable_metrics")) cfg.enable_metrics = (kv["enable_metrics"] == "true");
     if (kv.count("WORKER_POOL_METRICS_ENABLED")) cfg.enable_metrics = (kv["WORKER_POOL_METRICS_ENABLED"] == "true");
     if (kv.count("metrics_listen_addr")) cfg.metrics_listen_addr = kv["metrics_listen_addr"];
@@ -82,7 +135,11 @@ WorkerPoolConfig load_worker_pool_config() {
         std::string token;
         while (std::getline(iss, token, ',')) {
             token = trim(token);
-            if (!token.empty()) cfg.cpu_affinity.insert(std::stoi(token));
+            if (!token.empty()) {
+                std::cout << "[stoi debug] worker_pool_config.cpp cpu_affinity token='" << token << "'\n";
+                std::cout << std::flush;
+                cfg.cpu_affinity.insert(std::stoi(token));
+            }
         }
     }
     if (kv.count("WORKER_POOL_CPU_AFFINITY")) {
@@ -91,7 +148,11 @@ WorkerPoolConfig load_worker_pool_config() {
         std::string token;
         while (std::getline(iss, token, ',')) {
             token = trim(token);
-            if (!token.empty()) cfg.cpu_affinity.insert(std::stoi(token));
+            if (!token.empty()) {
+                std::cout << "[stoi debug] worker_pool_config.cpp cpu_affinity token='" << token << "'\n";
+                std::cout << std::flush;
+                cfg.cpu_affinity.insert(std::stoi(token));
+            }
         }
     }
     if (kv.count("enabled")) cfg.enabled = (kv["enabled"] == "true");

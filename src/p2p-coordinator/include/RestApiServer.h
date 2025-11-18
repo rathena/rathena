@@ -2,6 +2,7 @@
 #include <memory>
 #include <string>
 #include <vector>
+#include <atomic>
 
 class HostRegistry;
 class SessionManager;
@@ -15,6 +16,7 @@ public:
                   std::shared_ptr<ZoneManager> zoneManager,
                   std::shared_ptr<AIServiceClient> aiServiceClient);
     void run();
+    void stop();
 
     // REST endpoint handlers (examples)
     std::string handleRegisterHost(const std::string& body);
@@ -32,6 +34,7 @@ private:
     std::shared_ptr<SessionManager> sessionManager_;
     std::shared_ptr<ZoneManager> zoneManager_;
     std::shared_ptr<AIServiceClient> aiServiceClient_;
+    std::atomic<bool> running_;
     void setupRoutes();
     void processRequests();
 };

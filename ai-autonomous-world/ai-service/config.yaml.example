@@ -16,6 +16,7 @@ database:
     db: 0
     password: ""
     max_connections: 50
+    # DragonflyDB is running as the Redis-compatible cache backend (v1.34.2)
 
 llm:
   default_provider: "openai"

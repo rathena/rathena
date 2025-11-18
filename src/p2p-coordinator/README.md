@@ -24,6 +24,22 @@ This service is a native C++ implementation of the p2p-coordinator for the AI MM
 
 ## Build
 
+### Dependencies
+
+- Download jwt-cpp (JWT C++ library):
+
+```sh
+git clone https://github.com/Thalhammer/jwt-cpp.git external/jwt-cpp
+```
+
+- Or add as a submodule:
+
+```sh
+git submodule add https://github.com/Thalhammer/jwt-cpp.git external/jwt-cpp
+```
+
+### Build steps
+
 ```sh
 cd rathena-AI-world/src/p2p-coordinator
 mkdir build && cd build

@@ -12,6 +12,7 @@ find_package(Threads REQUIRED)
 # Example: find_package(hiredis REQUIRED)
 
 include_directories(include)
+include_directories(external/jwt-cpp/include)
 
 add_executable(p2p_coordinator
     src/main.cpp
@@ -25,6 +26,7 @@ add_executable(p2p_coordinator
     src/HealthMonitor.cpp
     src/Logger.cpp
     src/ErrorHandling.cpp
+    src/JwtAuth.cpp
 )
 
 target_link_libraries(p2p_coordinator

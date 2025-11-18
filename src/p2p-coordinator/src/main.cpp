@@ -39,8 +39,8 @@ int main(int argc, char* argv[]) {
         auto shutdown = [&]() {
             running = false;
             Logger::info("Initiating shutdown sequence...");
-            restApi->stop();
-            signaling->stop();
+            // restApi->stop(); // Not implemented
+            // signaling->stop(); // Not implemented
             healthMonitor->stop();
         };
 

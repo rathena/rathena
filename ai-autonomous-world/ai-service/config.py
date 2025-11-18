@@ -583,7 +583,7 @@ class Settings(BaseSettings):
     db_connection_max_retries: int = Field(default=5, env="DB_CONNECTION_MAX_RETRIES", description="Maximum database connection retries")
     db_connection_retry_delay: float = Field(default=1.0, env="DB_CONNECTION_RETRY_DELAY", description="Initial database retry delay in seconds")
 
-    @field_validator('service_port', 'redis_port', 'postgres_port', 'rathena_bridge_port')
+    @field_validator('service_port', 'redis_port', 'postgres_port', 'rathena_bridge_port', check_fields=False)
     @classmethod
     def validate_port(cls, v: int, info) -> int:
         """Validate port numbers are in valid range (1-65535)"""

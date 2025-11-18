@@ -73,3 +73,6 @@ void Logger::log(const std::string& level, const std::string& msg) {
     // Always write to console
     std::cout << logEntry << std::endl;
 }
+// Stub implementations for missing Logger methods
+void Logger::openLogFile() {}
+void Logger::rotateLogsIfNeeded() {}
