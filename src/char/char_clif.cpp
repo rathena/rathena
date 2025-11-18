@@ -112,7 +112,21 @@ int32 chclif_parse_moveCharSlot( int32 fd, struct char_session_data* sd){
 
 	if( sd->found_char[to] > 0 ){
 		// We want to move to a used position
-		if( charserv_config.charmove_config.char_movetoused ){ // TODO: check if the target is in deletion process
+		if( charserv_config.charmove_config.char_movetoused ){
+			// Check if the target character is in deletion process
+			char* data;
+			time_t delete_date = 0;
+			if( SQL_SUCCESS == Sql_Query(sql_handle, "SELECT `delete_date` FROM `%s` WHERE `char_id`='%d'", schema_config.char_db, sd->found_char[to])
+				&& SQL_SUCCESS == Sql_NextRow(sql_handle)
+				&& SQL_SUCCESS == Sql_GetData(sql_handle, 0, &data, nullptr) ) {
+				delete_date = strtoul(data, nullptr, 10);
+			}
+			Sql_FreeResult(sql_handle);
+			if (delete_date != 0) {
+				// Target slot is in deletion process, cannot move
+				chclif_moveCharSlotReply( fd, sd, from, 1 );
+				return 1;
+			}
 			// Admin is friendly and uses triangle exchange
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, "START TRANSACTION")
 				|| SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `char_num`='%d' WHERE `char_id` = '%d'",schema_config.char_db, to, sd->found_char[from] )

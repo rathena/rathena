@@ -142,8 +142,13 @@ set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
 set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 
+list(APPEND SOURCE_FILES
+  ${CMAKE_CURRENT_SOURCE_DIR}/p2p_coordinator.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/quic.cpp
+)
 add_library( common_base ${SOURCE_FILES} )
 #message( STATUS "common_base LIBRARIES=${LIBRARIES}, DEFINITIONS=${DEFINITIONS}")
+list(APPEND LIBRARIES curl)
 target_link_libraries( common_base ${LIBRARIES} )
 set_target_properties( common_base PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
 include_directories( ${INCLUDE_DIRS} )

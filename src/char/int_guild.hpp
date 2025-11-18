@@ -23,7 +23,8 @@ enum e_guild_action : uint32 {
 	GS_MES = 0x0200,
 	GS_MASK = 0x03FF,
 	GS_BASIC_MASK = (GS_BASIC | GS_EMBLEM | GS_CONNECT | GS_LEVEL | GS_MES),
-	GS_REMOVE = 0x8000,
+	// Deprecated: legacy flag, retained for compatibility
+	GS_REMOVE = 0x8000
 };
 
 struct mmo_guild;

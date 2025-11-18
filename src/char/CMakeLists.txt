@@ -28,6 +28,9 @@ add_executable( char-server ${SOURCE_FILES} )
 add_dependencies( char-server ${DEPENDENCIES} )
 target_link_libraries( char-server ${LIBRARIES} ${DEPENDENCIES} )
 set_target_properties( char-server PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
+target_include_directories(char-server PRIVATE
+  ${CMAKE_SOURCE_DIR}/src/common
+)
 
 if( INSTALL_COMPONENT_RUNTIME )
 	cpack_add_component( Runtime_charserver DESCRIPTION "char-server" DISPLAY_NAME "char-server" GROUP Runtime )
