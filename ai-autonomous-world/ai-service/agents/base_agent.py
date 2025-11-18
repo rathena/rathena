@@ -20,12 +20,25 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from loguru import logger
 
+import os
+import threading
+import concurrent.futures
+import time
+import psutil
+from prometheus_client import Counter, Histogram
+
 from crewai import Agent
 try:
     from models.npc import NPCPersonality, NPCGoalState, NPCEmotionState, NPCMemoryState
     from agents.moral_alignment import MoralAlignment
 except ModuleNotFoundError:
     from models.npc import NPCPersonality, NPCGoalState, NPCEmotionState, NPCMemoryState
+
+# Shared thread pool and metrics for all agents
+AGENT_THREAD_POOL = concurrent.futures.ThreadPoolExecutor(max_workers=os.cpu_count() or 4)
+AGENT_EXEC_HISTOGRAM = Histogram("ai_agent_exec_time_seconds", "Agent execution time", ["agent_type"])
+AGENT_SUCCESS_COUNTER = Counter("ai_agent_success_total", "Agent success count", ["agent_type"])
+AGENT_FAILURE_COUNTER = Counter("ai_agent_failure_total", "Agent failure count", ["agent_type"])
 
 @dataclass
 class AgentContext:
@@ -58,8 +71,9 @@ class BaseAIAgent(ABC):
     """
     Abstract base class for all AI agents in the system
     
-    All specialized agents (Dialogue, Decision, Memory, World) inherit from this class
-    and implement the process() method for their specific functionality.
+    All specialized agents (Dialogue, Decision, Memory, World, Quest, Economy) inherit from this class
+    and implement the _process() method for their specific functionality.
+    The public process() method is multi-threaded, sets CPU affinity, and exposes Prometheus metrics.
     """
     def __init__(
         self,
@@ -73,7 +87,7 @@ class BaseAIAgent(ABC):
         
         Args:
             agent_id: Unique identifier for this agent instance
-            agent_type: Type of agent (dialogue, decision, memory, world)
+            agent_type: Type of agent (dialogue, decision, memory, world, quest, economy)
             llm_provider: LLM provider instance for generation
             config: Configuration dictionary for agent behavior
         """
@@ -86,7 +100,7 @@ class BaseAIAgent(ABC):
         
         # Create CrewAI agent
         self.crew_agent = self._create_crew_agent()
-    
+
     @abstractmethod
     def _create_crew_agent(self) -> Agent:
         """
@@ -96,19 +110,68 @@ class BaseAIAgent(ABC):
             Configured CrewAI Agent
         """
         pass
-    
+
     @abstractmethod
-    async def process(self, context: AgentContext) -> AgentResponse:
+    async def _process(self, context: AgentContext) -> AgentResponse:
         """
-        Process the given context and generate a response
-        
-        Args:
-            context: AgentContext with all necessary information
-            
-        Returns:
-            AgentResponse with results
+        Subclass must implement this: process the given context and generate a response.
         """
         pass
+
+    async def process(self, context: AgentContext) -> AgentResponse:
+        """
+        Multi-threaded, monitored agent process method.
+        Runs _process() in a thread, sets CPU affinity, and exposes Prometheus metrics.
+        """
+        start_time = time.time()
+        def set_affinity():
+            if hasattr(os, "sched_setaffinity"):
+                try:
+                    cpu_id = threading.get_ident() % (os.cpu_count() or 1)
+                    os.sched_setaffinity(0, {cpu_id})
+                    logger.info(f"Set CPU affinity for thread {threading.get_ident()} to CPU {cpu_id}")
+                except Exception as e:
+                    logger.warning(f"Failed to set thread affinity: {e}")
+
+        def run_agent():
+            set_affinity()
+            import asyncio
+            try:
+                loop = asyncio.new_event_loop()
+                asyncio.set_event_loop(loop)
+                result = loop.run_until_complete(self._process(context))
+                loop.close()
+                return result
+            except Exception as e:
+                logger.error(f"Agent {self.agent_type} failed: {e}")
+                return AgentResponse(
+                    agent_type=self.agent_type,
+                    success=False,
+                    data={"error": str(e)},
+                    confidence=0.0,
+                    reasoning=f"Error in agent: {e}"
+                )
+
+        future = AGENT_THREAD_POOL.submit(run_agent)
+        try:
+            result = future.result(timeout=60)
+            if result.success:
+                AGENT_SUCCESS_COUNTER.labels(agent_type=self.agent_type).inc()
+            else:
+                AGENT_FAILURE_COUNTER.labels(agent_type=self.agent_type).inc()
+            AGENT_EXEC_HISTOGRAM.labels(agent_type=self.agent_type).observe(time.time() - start_time)
+            return result
+        except Exception as e:
+            AGENT_FAILURE_COUNTER.labels(agent_type=self.agent_type).inc()
+            AGENT_EXEC_HISTOGRAM.labels(agent_type=self.agent_type).observe(time.time() - start_time)
+            logger.error(f"Agent {self.agent_type} process() error: {e}")
+            return AgentResponse(
+                agent_type=self.agent_type,
+                success=False,
+                data={"error": str(e)},
+                confidence=0.0,
+                reasoning=f"Error in agent process: {e}"
+            )
     
     def _build_personality_prompt(self, personality: NPCPersonality) -> str:
         """

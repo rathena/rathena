@@ -7,6 +7,15 @@ from datetime import datetime
 from typing import Dict, Any, List, Optional
 from loguru import logger
 
+import os
+import psutil
+import ctypes
+import threading
+import concurrent.futures
+import time
+
+from prometheus_client import Counter, Histogram, Gauge
+
 from crewai import Crew, Process
 from agents.base_agent import AgentContext, AgentResponse
 from agents.dialogue_agent import DialogueAgent
@@ -35,6 +44,16 @@ class AgentOrchestrator:
         self.config = config
         self.npc_context = npc_context or {}
 
+        # Multi-threading and metrics setup
+        self.max_workers = config.get("max_workers", os.cpu_count() or 4)
+        self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers)
+        self.thread_affinity_enabled = config.get("thread_affinity_enabled", True)
+        self.thread_pool_gauge = Gauge("ai_thread_pool_size", "Current thread pool size")
+        self.cpu_util_gauge = Gauge("ai_cpu_utilization", "Current CPU utilization percent")
+        self.agent_exec_histogram = Histogram("ai_agent_exec_time_seconds", "Agent execution time", ["agent_type"])
+        self.agent_success_counter = Counter("ai_agent_success_total", "Agent success count", ["agent_type"])
+        self.agent_failure_counter = Counter("ai_agent_failure_total", "Agent failure count", ["agent_type"])
+
         # Initialize agents with provided LLM provider or get default
         from llm.factory import get_llm_provider
         self.llm_provider = config.get("llm_provider") or get_llm_provider()
@@ -45,7 +64,41 @@ class AgentOrchestrator:
         self.ml_mode = config.get("ml_mode", "auto")
         self.optimizer = DecisionOptimizer(mode=self.ml_mode, fallback=None)
 
-        logger.info("AgentOrchestrator initialized with {} agents", 4)
+        logger.info("AgentOrchestrator initialized with {} agents and {} workers", 4, self.max_workers)
+        self.thread_pool_gauge.set(self.max_workers)
+
+        # Start dynamic scaling thread
+        self._scaling_thread = threading.Thread(target=self._dynamic_scaling_loop, daemon=True)
+        self._scaling_thread.start()
+
+    def _set_thread_affinity(self):
+        """Set CPU affinity for current thread (Linux only)"""
+        if self.thread_affinity_enabled and hasattr(os, "sched_setaffinity"):
+            try:
+                cpu_id = threading.get_ident() % (os.cpu_count() or 1)
+                os.sched_setaffinity(0, {cpu_id})
+                logger.info(f"Set CPU affinity for thread {threading.get_ident()} to CPU {cpu_id}")
+            except Exception as e:
+                logger.warning(f"Failed to set thread affinity: {e}")
+
+    def _dynamic_scaling_loop(self):
+        """Dynamically scale thread pool based on CPU utilization"""
+        while True:
+            try:
+                cpu_util = psutil.cpu_percent(interval=2)
+                self.cpu_util_gauge.set(cpu_util)
+                # Scale up if CPU < 60% and tasks are pending, scale down if > 90%
+                if cpu_util < 60 and self.executor._max_workers < (os.cpu_count() or 4) * 2:
+                    self.executor._max_workers += 1
+                    self.thread_pool_gauge.set(self.executor._max_workers)
+                    logger.info(f"Scaled up thread pool to {self.executor._max_workers} workers (CPU {cpu_util}%)")
+                elif cpu_util > 90 and self.executor._max_workers > 2:
+                    self.executor._max_workers -= 1
+                    self.thread_pool_gauge.set(self.executor._max_workers)
+                    logger.info(f"Scaled down thread pool to {self.executor._max_workers} workers (CPU {cpu_util}%)")
+            except Exception as e:
+                logger.warning(f"Dynamic scaling error: {e}")
+            time.sleep(5)
 
     async def handle_player_interaction(
         self,
@@ -54,7 +107,7 @@ class AgentOrchestrator:
         message: str = "",
     ) -> AgentResponse:
         """
-        Handle player interaction by coordinating multiple agents
+        Handle player interaction by coordinating multiple agents (multi-threaded, monitored)
 
         Args:
             npc_context: AgentContext for the NPC
@@ -64,54 +117,69 @@ class AgentOrchestrator:
         Returns:
             AgentResponse containing the generated response
         """
+        start_time = time.time()
+        self._set_thread_affinity()
         try:
-            # Store interaction in memory using the process method
-            try:
-                memory_context_obj = AgentContext(
-                    npc_id=npc_context.npc_id,
-                    npc_name=npc_context.npc_name,
-                    personality=npc_context.personality,
-                    goal_state=getattr(npc_context, "goal_state", None),
-                    emotion_state=getattr(npc_context, "emotion_state", None),
-                    memory_state=getattr(npc_context, "memory_state", None),
-                    current_state={
-                        "operation": "store",
-                        "memory_data": {
-                            "player_input": message,
-                            "timestamp": datetime.now().isoformat(),
-                            "interaction_type": interaction_type,
-                        }
-                    },
-                    world_state=npc_context.world_state,
-                    recent_events=npc_context.recent_events
-                )
-                await self.memory_agent.process(memory_context_obj)
-            except Exception as e:
-                logger.warning("Failed to store interaction in memory: {}", e)
+            # Store interaction in memory using the process method (threaded)
+            def store_memory_task():
+                try:
+                    memory_context_obj = AgentContext(
+                        npc_id=npc_context.npc_id,
+                        npc_name=npc_context.npc_name,
+                        personality=npc_context.personality,
+                        goal_state=getattr(npc_context, "goal_state", None),
+                        emotion_state=getattr(npc_context, "emotion_state", None),
+                        memory_state=getattr(npc_context, "memory_state", None),
+                        current_state={
+                            "operation": "store",
+                            "memory_data": {
+                                "player_input": message,
+                                "timestamp": datetime.now().isoformat(),
+                                "interaction_type": interaction_type,
+                            }
+                        },
+                        world_state=npc_context.world_state,
+                        recent_events=npc_context.recent_events
+                    )
+                    return self.memory_agent.process(memory_context_obj)
+                except Exception as e:
+                    logger.warning("Failed to store interaction in memory: {}", e)
+                    return None
+
+            mem_future = self.executor.submit(store_memory_task)
+            # Optionally: await mem_future.result() if process() is async
 
             # Create crew for dialogue generation
             crew = self.create_crew_for_task("dialogue")
 
-            # Execute the crew to generate response
-            try:
-                npc_context_dict = {
-                    "npc_id": getattr(npc_context, "npc_id", "unknown"),
-                    "npc_name": getattr(npc_context, "npc_name", "Unknown NPC"),
-                    "personality": getattr(npc_context, "personality", {}),
-                    "goal_state": getattr(npc_context, "goal_state", None),
-                    "emotion_state": getattr(npc_context, "emotion_state", None),
-                    "memory_state": getattr(npc_context, "memory_state", None),
-                    "current_state": getattr(npc_context, "current_state", {}),
-                    "world_state": getattr(npc_context, "world_state", {}),
-                    "recent_events": getattr(npc_context, "recent_events", [])
-                }
+            # Execute the crew to generate response (threaded)
+            def crew_task():
+                try:
+                    npc_context_dict = {
+                        "npc_id": getattr(npc_context, "npc_id", "unknown"),
+                        "npc_name": getattr(npc_context, "npc_name", "Unknown NPC"),
+                        "personality": getattr(npc_context, "personality", {}),
+                        "goal_state": getattr(npc_context, "goal_state", None),
+                        "emotion_state": getattr(npc_context, "emotion_state", None),
+                        "memory_state": getattr(npc_context, "memory_state", None),
+                        "current_state": getattr(npc_context, "current_state", {}),
+                        "world_state": getattr(npc_context, "world_state", {}),
+                        "recent_events": getattr(npc_context, "recent_events", [])
+                    }
+                    result = crew.kickoff(inputs={
+                        "player_input": message,
+                        "npc_context": npc_context_dict,
+                        "interaction_type": interaction_type,
+                    })
+                    return result
+                except Exception as e:
+                    logger.error("Crew execution failed: {}", e)
+                    return None
 
-                result = await crew.kickoff(inputs={
-                    "player_input": message,
-                    "npc_context": npc_context_dict,
-                    "interaction_type": interaction_type,
-                })
+            crew_future = self.executor.submit(crew_task)
+            result = crew_future.result(timeout=30)  # Wait for result
 
+            if result:
                 response = AgentResponse(
                     agent_type="dialogue",
                     success=True,
@@ -123,32 +191,36 @@ class AgentOrchestrator:
                     confidence=0.8,
                     metadata=result.get("metadata", {})
                 )
-
+                self.agent_success_counter.labels(agent_type="dialogue").inc()
+                self.agent_exec_histogram.labels(agent_type="dialogue").observe(time.time() - start_time)
                 return response
-
-            except Exception as e:
-                logger.error("Crew execution failed: {}", e)
-                # Fallback to direct dialogue agent
-                fallback_response = await self.dialogue_agent.process(
-                    AgentContext(
-                        npc_id=getattr(npc_context, "npc_id", "unknown"),
-                        npc_name=getattr(npc_context, "npc_name", "Unknown NPC"),
-                        personality=getattr(npc_context, "personality", {}),
-                        goal_state=getattr(npc_context, "goal_state", None),
-                        emotion_state=getattr(npc_context, "emotion_state", None),
-                        memory_state=getattr(npc_context, "memory_state", None),
-                        current_state={"player_message": message},
-                        world_state=getattr(npc_context, "world_state", {}),
-                        recent_events=getattr(npc_context, "recent_events", [])
+            else:
+                # Fallback to direct dialogue agent (threaded)
+                def fallback_task():
+                    return self.dialogue_agent.process(
+                        AgentContext(
+                            npc_id=getattr(npc_context, "npc_id", "unknown"),
+                            npc_name=getattr(npc_context, "npc_name", "Unknown NPC"),
+                            personality=getattr(npc_context, "personality", {}),
+                            goal_state=getattr(npc_context, "goal_state", None),
+                            emotion_state=getattr(npc_context, "emotion_state", None),
+                            memory_state=getattr(npc_context, "memory_state", None),
+                            current_state={"player_message": message},
+                            world_state=getattr(npc_context, "world_state", {}),
+                            recent_events=getattr(npc_context, "recent_events", [])
+                        )
                     )
-                )
+                fallback_future = self.executor.submit(fallback_task)
+                fallback_response = fallback_future.result(timeout=15)
+                self.agent_failure_counter.labels(agent_type="dialogue").inc()
+                self.agent_exec_histogram.labels(agent_type="dialogue").observe(time.time() - start_time)
                 return AgentResponse(
                     agent_type="dialogue",
                     success=True,
                     data={
-                        "text": fallback_response.data.get("text", "I'm not sure how to respond to that."),
-                        "emotional_state": fallback_response.data.get("emotional_state", "neutral"),
-                        "actions": fallback_response.data.get("actions", [])
+                        "text": getattr(fallback_response.data, "text", "I'm not sure how to respond to that."),
+                        "emotional_state": getattr(fallback_response.data, "emotional_state", "neutral"),
+                        "actions": getattr(fallback_response.data, "actions", [])
                     },
                     confidence=0.5,
                     metadata={"fallback": True}
@@ -156,6 +228,8 @@ class AgentOrchestrator:
 
         except Exception as e:
             logger.error("Error in player interaction handling: {}", e)
+            self.agent_failure_counter.labels(agent_type="dialogue").inc()
+            self.agent_exec_histogram.labels(agent_type="dialogue").observe(time.time() - start_time)
             return AgentResponse(
                 agent_type="dialogue",
                 success=False,

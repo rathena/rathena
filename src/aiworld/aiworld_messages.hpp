@@ -21,10 +21,41 @@ struct AIWorldMessage {
         : message_type(type), correlation_id(corr), payload(data) {}
 };
 
-// Entity state sync message
+// Entity state sync message (expanded for world concept design)
 struct EntityStateSync {
     std::string entity_id;
     std::string entity_type; // "player", "npc"
+
+    // Core Identity
+    nlohmann::json personality; // Big Five + custom traits
+    std::string background_story;
+    nlohmann::json skills; // combat, social, economic, creative
+    nlohmann::json physical; // appearance, age, health
+
+    // Moral Alignment
+    nlohmann::json moral_alignment; // dynamic alignment spectrum
+
+    // Memory System
+    nlohmann::json episodic_memory;
+    nlohmann::json semantic_memory;
+    nlohmann::json procedural_memory;
+
+    // Goal and Motivation
+    nlohmann::json goals; // short-term, long-term, hierarchy
+
+    // Emotional System
+    nlohmann::json emotional_state; // current emotion, mood, triggers
+
+    // Social/Relationship System
+    nlohmann::json relationships; // type, strength, reputation
+
+    // World/Environment context (optional)
+    nlohmann::json environment_state;
+
+    // For extensibility
+    nlohmann::json extra;
+
+    // For backward compatibility
     nlohmann::json state;    // Arbitrary state data
 };
 
@@ -50,11 +81,27 @@ struct AIAction {
     nlohmann::json result; // For responses
 };
 
-// Serialization helpers
+/**
+ * Serialization helpers
+ * Expanded to include all new fields for world concept design.
+ */
 inline nlohmann::json to_json(const EntityStateSync& msg) {
     return nlohmann::json{
         {"entity_id", msg.entity_id},
         {"entity_type", msg.entity_type},
+        {"personality", msg.personality},
+        {"background_story", msg.background_story},
+        {"skills", msg.skills},
+        {"physical", msg.physical},
+        {"moral_alignment", msg.moral_alignment},
+        {"episodic_memory", msg.episodic_memory},
+        {"semantic_memory", msg.semantic_memory},
+        {"procedural_memory", msg.procedural_memory},
+        {"goals", msg.goals},
+        {"emotional_state", msg.emotional_state},
+        {"relationships", msg.relationships},
+        {"environment_state", msg.environment_state},
+        {"extra", msg.extra},
         {"state", msg.state}
     };
 }

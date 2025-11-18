@@ -42,7 +42,13 @@ bool AIWorldIPCClient::connect() {
 
 bool AIWorldIPCClient::send_message(const AIWorldMessage& msg) {
     if (!connected) return false;
-    std::string msg_str = msg.payload.dump();
+    // Serialize full message (type, correlation_id, payload)
+    nlohmann::json msg_json = {
+        {"message_type", static_cast<int>(msg.message_type)},
+        {"correlation_id", msg.correlation_id},
+        {"payload", msg.payload}
+    };
+    std::string msg_str = msg_json.dump();
     zmq_msg_t zmq_msg;
     zmq_msg_init_size(&zmq_msg, msg_str.size());
     std::memcpy(zmq_msg_data(&zmq_msg), msg_str.data(), msg_str.size());
@@ -64,10 +70,10 @@ bool AIWorldIPCClient::receive_message(AIWorldMessage& msg, bool blocking) {
     std::string msg_str(static_cast<char*>(zmq_msg_data(&zmq_msg)), zmq_msg_size(&zmq_msg));
     zmq_msg_close(&zmq_msg);
     try {
-        msg.payload = nlohmann::json::parse(msg_str);
-        // Optionally parse message_type/correlation_id if present
-        msg.message_type = static_cast<IPCMessageType>(msg.payload.value("message_type", 0));
-        msg.correlation_id = msg.payload.value("correlation_id", "");
+        nlohmann::json msg_json = nlohmann::json::parse(msg_str);
+        msg.message_type = static_cast<IPCMessageType>(msg_json.value("message_type", 0));
+        msg.correlation_id = msg_json.value("correlation_id", "");
+        msg.payload = msg_json.value("payload", nlohmann::json::object());
     } catch (...) {
         return false;
     }
