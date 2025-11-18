@@ -38,17 +38,18 @@ except ImportError:
     from config import settings
 
 
+import asyncpg
+
 class PostgreSQLManager:
-    """PostgreSQL database connection manager for persistent memory storage"""
+    """PostgreSQL database connection manager for persistent memory storage (asyncpg only)"""
 
     def __init__(self):
-        self.engine = None
-        self.session_factory = None
+        self.pool: Optional[asyncpg.Pool] = None
         self._initialized = False
 
     async def connect(self, max_retries: int = None, retry_delay: float = None):
         """
-        Establish connection to PostgreSQL with retry logic
+        Establish connection to PostgreSQL with retry logic using asyncpg
 
         Args:
             max_retries: Maximum number of connection attempts (defaults to settings value)
@@ -61,45 +62,30 @@ class PostgreSQLManager:
             retry_delay = settings.db_connection_retry_delay
 
         last_error = None
+        dsn = (
+            f"postgresql://{settings.postgres_user}:{settings.postgres_password}"
+            f"@{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}"
+        )
 
         for attempt in range(1, max_retries + 1):
             try:
                 logger.info(f"Connecting to PostgreSQL at {settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db} (attempt {attempt}/{max_retries})")
-
-                # Import SQLAlchemy here to avoid import errors if not installed
-                from sqlalchemy import create_engine, text
-                from sqlalchemy.orm import sessionmaker
-                from sqlalchemy.pool import QueuePool
-
-                # Create engine with connection pooling
-                self.engine = create_engine(
-                    settings.postgres_connection_string,
-                    poolclass=QueuePool,
-                    pool_size=settings.postgres_pool_size,
-                    max_overflow=settings.postgres_max_overflow,
-                    pool_pre_ping=True,  # Verify connections before using
-                    echo=settings.postgres_echo_sql,
+                self.pool = await asyncpg.create_pool(
+                    dsn=dsn,
+                    min_size=1,
+                    max_size=getattr(settings, "postgres_pool_size", 10),
+                    timeout=30,
                 )
-
-                # Test connection
-                with self.engine.connect() as conn:
-                    result = conn.execute(text("SELECT version()"))
-                    version = result.scalar()
+                async with self.pool.acquire() as conn:
+                    version = await conn.fetchval("SELECT version()")
                     logger.info(f"✓ Successfully connected to PostgreSQL")
                     logger.info(f"PostgreSQL version: {version}")
-
-                # Create session factory
-                self.session_factory = sessionmaker(bind=self.engine)
                 self._initialized = True
-
-                return  # Success - exit retry loop
-
+                return
             except Exception as e:
                 last_error = e
                 logger.warning(f"PostgreSQL connection attempt {attempt}/{max_retries} failed: {e}")
-
                 if attempt < max_retries:
-                    # Exponential backoff
                     wait_time = retry_delay * (2 ** (attempt - 1))
                     logger.info(f"Retrying in {wait_time:.1f} seconds...")
                     await asyncio.sleep(wait_time)
@@ -110,28 +96,26 @@ class PostgreSQLManager:
     async def disconnect(self):
         """Close connection to PostgreSQL"""
         try:
-            if self.engine:
-                self.engine.dispose()
+            if self.pool:
+                await self.pool.close()
                 logger.info("Disconnected from PostgreSQL")
                 self._initialized = False
         except Exception as e:
             logger.error(f"Error disconnecting from PostgreSQL: {e}")
 
-    def get_session(self):
-        """Get a new database session"""
-        if not self._initialized or not self.session_factory:
+    def get_pool(self):
+        """Get the asyncpg pool"""
+        if not self._initialized or not self.pool:
             raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
-        return self.session_factory()
+        return self.pool
 
     async def health_check(self) -> bool:
         """Check if PostgreSQL connection is healthy"""
         try:
-            if not self.engine:
+            if not self.pool:
                 return False
-
-            from sqlalchemy import text
-            with self.engine.connect() as conn:
-                conn.execute(text("SELECT 1"))
+            async with self.pool.acquire() as conn:
+                await conn.execute("SELECT 1")
             return True
         except Exception as e:
             logger.error(f"PostgreSQL health check failed: {e}")
@@ -146,29 +130,15 @@ class PostgreSQLManager:
             *args: Query parameters
 
         Returns:
-            Row object or None
+            Row dict or None
         """
-        if not self.engine:
+        if not self.pool:
             raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
-
         try:
-            from sqlalchemy import text
-
-            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
-            converted_query = query
-            params = {}
-            for i, arg in enumerate(args, 1):
-                placeholder = f"${i}"
-                param_name = f"param{i}"
-                converted_query = converted_query.replace(placeholder, f":{param_name}")
-                params[param_name] = arg
-
-            with self.engine.connect() as conn:
-                result = conn.execute(text(converted_query), params)
-                row = result.fetchone()
+            async with self.pool.acquire() as conn:
+                row = await conn.fetchrow(query, *args)
                 if row:
-                    # Convert Row to dict
-                    return dict(row._mapping)
+                    return dict(row)
                 return None
         except Exception as e:
             logger.error(f"Error executing fetch_one query: {e}")
@@ -183,28 +153,14 @@ class PostgreSQLManager:
             *args: Query parameters
 
         Returns:
-            List of row objects
+            List of row dicts
         """
-        if not self.engine:
+        if not self.pool:
             raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
-
         try:
-            from sqlalchemy import text
-
-            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
-            converted_query = query
-            params = {}
-            for i, arg in enumerate(args, 1):
-                placeholder = f"${i}"
-                param_name = f"param{i}"
-                converted_query = converted_query.replace(placeholder, f":{param_name}")
-                params[param_name] = arg
-
-            with self.engine.connect() as conn:
-                result = conn.execute(text(converted_query), params)
-                rows = result.fetchall()
-                # Convert Rows to dicts
-                return [dict(row._mapping) for row in rows]
+            async with self.pool.acquire() as conn:
+                rows = await conn.fetch(query, *args)
+                return [dict(row) for row in rows]
         except Exception as e:
             logger.error(f"Error executing fetch_all query: {e}")
             raise
@@ -220,32 +176,24 @@ class PostgreSQLManager:
         Returns:
             Number of affected rows
         """
-        if not self.engine:
+        if not self.pool:
             raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
-
         try:
-            from sqlalchemy import text
-
-            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
-            converted_query = query
-            params = {}
-            for i, arg in enumerate(args, 1):
-                placeholder = f"${i}"
-                param_name = f"param{i}"
-                converted_query = converted_query.replace(placeholder, f":{param_name}")
-                params[param_name] = arg
-
-            with self.engine.connect() as conn:
-                result = conn.execute(text(converted_query), params)
-                conn.commit()
-                return result.rowcount
+            async with self.pool.acquire() as conn:
+                result = await conn.execute(query, *args)
+                # asyncpg returns a string like 'INSERT 0 1', so parse the rowcount
+                rowcount = int(result.split()[-1])
+                return rowcount
         except Exception as e:
             logger.error(f"Error executing query: {e}")
             raise
 
     def get_connection_string(self) -> str:
         """Get the PostgreSQL connection string (for OpenMemory SDK)"""
-        return settings.postgres_connection_string
+        return (
+            f"postgresql://{settings.postgres_user}:{settings.postgres_password}"
+            f"@{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}"
+        )
 
 
 class Database:

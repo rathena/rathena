@@ -22,10 +22,10 @@ public:
     // Connect to AIWorld server
     bool connect();
 
-    // Send message to AIWorld server
+    // Send message to AIWorld server (zero-copy, binary)
     bool send_message(const AIWorldMessage& msg);
 
-    // Receive message from AIWorld server (blocking or non-blocking)
+    // Receive message from AIWorld server (zero-copy, binary)
     bool receive_message(AIWorldMessage& msg, bool blocking = false);
 
     // Start background receive thread for async event handling

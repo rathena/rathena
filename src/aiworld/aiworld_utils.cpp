@@ -43,4 +43,9 @@ void log_error(const std::string& msg) {
     std::cerr << "[AIWORLD][ERROR] " << msg << std::endl;
 }
 
+void log_performance(const nlohmann::json& perf) {
+    // Output single-line JSON for easy parsing
+    std::cout << perf.dump() << std::endl;
+}
+
 } // namespace aiworld

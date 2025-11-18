@@ -42,23 +42,48 @@ bool AIWorldIPCClient::connect() {
 
 bool AIWorldIPCClient::send_message(const AIWorldMessage& msg) {
     if (!connected) return false;
-    // Serialize full message (type, correlation_id, payload)
-    nlohmann::json msg_json = {
-        {"message_type", static_cast<int>(msg.message_type)},
-        {"correlation_id", msg.correlation_id},
-        {"payload", msg.payload}
-    };
-    std::string msg_str = msg_json.dump();
+    auto ts_start = std::chrono::high_resolution_clock::now();
+    thread_local std::vector<uint8_t> buffer;
+    thread_local std::vector<uint8_t> payload_buf;
+    payload_buf.clear();
+    auto ser_start = std::chrono::high_resolution_clock::now();
+    msg.serialize_payload(payload_buf); // Custom binary serialization
+    auto ser_end = std::chrono::high_resolution_clock::now();
+    int32_t type = static_cast<int32_t>(msg.message_type);
+    int32_t corr_len = msg.correlation_id.size();
+    int32_t payload_size = payload_buf.size();
+    size_t total_size = 12 + corr_len + payload_size;
+    buffer.resize(total_size);
+    std::memcpy(buffer.data(), &type, 4);
+    std::memcpy(buffer.data() + 4, &corr_len, 4);
+    std::memcpy(buffer.data() + 8, &payload_size, 4);
+    std::memcpy(buffer.data() + 12, msg.correlation_id.data(), corr_len);
+    std::memcpy(buffer.data() + 12 + corr_len, payload_buf.data(), payload_size);
     zmq_msg_t zmq_msg;
-    zmq_msg_init_size(&zmq_msg, msg_str.size());
-    std::memcpy(zmq_msg_data(&zmq_msg), msg_str.data(), msg_str.size());
+    zmq_msg_init_data(&zmq_msg, buffer.data(), buffer.size(), nullptr, nullptr); // zero-copy
     int rc = zmq_msg_send(&zmq_msg, zmq_socket, 0);
     zmq_msg_close(&zmq_msg);
+    auto ts_end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(ts_end - ts_start).count();
+    auto ser_duration = std::chrono::duration_cast<std::chrono::microseconds>(ser_end - ser_start).count();
+    nlohmann::json perf = {
+        {"event", "ipc_send"},
+        {"correlation_id", msg.correlation_id},
+        {"msg_type", static_cast<int>(msg.message_type)},
+        {"msg_size", buffer.size()},
+        {"ts_start", std::chrono::duration_cast<std::chrono::microseconds>(ts_start.time_since_epoch()).count()},
+        {"ts_end", std::chrono::duration_cast<std::chrono::microseconds>(ts_end.time_since_epoch()).count()},
+        {"duration_us", duration},
+        {"serialization_us", ser_duration},
+        {"result", rc >= 0 ? "success" : "failure"}
+    };
+    log_performance(perf);
     return rc >= 0;
 }
 
 bool AIWorldIPCClient::receive_message(AIWorldMessage& msg, bool blocking) {
     if (!connected) return false;
+    auto ts_start = std::chrono::high_resolution_clock::now();
     zmq_msg_t zmq_msg;
     zmq_msg_init(&zmq_msg);
     int flags = blocking ? 0 : ZMQ_DONTWAIT;
@@ -67,17 +92,39 @@ bool AIWorldIPCClient::receive_message(AIWorldMessage& msg, bool blocking) {
         zmq_msg_close(&zmq_msg);
         return false;
     }
-    std::string msg_str(static_cast<char*>(zmq_msg_data(&zmq_msg)), zmq_msg_size(&zmq_msg));
+    uint8_t* data = static_cast<uint8_t*>(zmq_msg_data(&zmq_msg));
+    size_t size = zmq_msg_size(&zmq_msg);
     zmq_msg_close(&zmq_msg);
-    try {
-        nlohmann::json msg_json = nlohmann::json::parse(msg_str);
-        msg.message_type = static_cast<IPCMessageType>(msg_json.value("message_type", 0));
-        msg.correlation_id = msg_json.value("correlation_id", "");
-        msg.payload = msg_json.value("payload", nlohmann::json::object());
-    } catch (...) {
-        return false;
-    }
-    return true;
+    if (size < 12) return false;
+    int32_t type, corr_len, payload_size;
+    std::memcpy(&type, data, 4);
+    std::memcpy(&corr_len, data + 4, 4);
+    std::memcpy(&payload_size, data + 8, 4);
+    if (size < 12 + corr_len + payload_size) return false;
+    msg.message_type = static_cast<IPCMessageType>(type);
+    msg.correlation_id.assign(reinterpret_cast<char*>(data + 12), corr_len);
+    thread_local std::vector<uint8_t> payload_buf;
+    payload_buf.resize(payload_size);
+    auto deser_start = std::chrono::high_resolution_clock::now();
+    std::memcpy(payload_buf.data(), data + 12 + corr_len, payload_size);
+    bool deser_ok = msg.deserialize_payload(payload_buf); // Custom binary deserialization
+    auto deser_end = std::chrono::high_resolution_clock::now();
+    auto ts_end = std::chrono::high_resolution_clock::now();
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(ts_end - ts_start).count();
+    auto deser_duration = std::chrono::duration_cast<std::chrono::microseconds>(deser_end - deser_start).count();
+    nlohmann::json perf = {
+        {"event", "ipc_recv"},
+        {"correlation_id", msg.correlation_id},
+        {"msg_type", static_cast<int>(msg.message_type)},
+        {"msg_size", size},
+        {"ts_start", std::chrono::duration_cast<std::chrono::microseconds>(ts_start.time_since_epoch()).count()},
+        {"ts_end", std::chrono::duration_cast<std::chrono::microseconds>(ts_end.time_since_epoch()).count()},
+        {"duration_us", duration},
+        {"deserialization_us", deser_duration},
+        {"result", deser_ok ? "success" : "failure"}
+    };
+    log_performance(perf);
+    return deser_ok;
 }
 
 void AIWorldIPCClient::start_receive_thread() {

@@ -1,8 +1,8 @@
-/**
- * aiworld_http_bridge.cpp
- * HTTP-to-ZeroMQ bridge for rAthena AIWorld
- * Exposes legacy HTTP endpoints, translates requests to ZeroMQ, and returns responses.
- * Ensures 100% backward compatibility for NPC scripts.
+/*
+ * REMOVED: aiworld_http_bridge.cpp
+ * The HTTP bridge implementation has been removed as part of the migration to native C++ IPC.
+ * All functionality is now handled by native ZeroMQ-based APIs.
+ * See migration guide for details.
  */
 
 #include "aiworld_ipc.hpp"

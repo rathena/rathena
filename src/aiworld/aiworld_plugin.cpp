@@ -9,6 +9,18 @@
 #include <nlohmann/json.hpp>
 #include <iostream>
 
+// rAthena script engine headers (assumed, adjust as needed)
+extern "C" {
+#include "script.h"
+#include "map/pc.h"
+#include "map/npc.h"
+}
+
+#include "aiworld_native_api.hpp"
+using aiworld::AIWorldNativeAPI;
+using aiworld::APIResult;
+using aiworld::ErrorCode;
+
 namespace aiworld {
 
 AIWorldPlugin::AIWorldPlugin()
@@ -180,3 +192,177 @@ nlohmann::json AIWorldPlugin::get_npc_emotion(const std::string& npc_id) {
 }
 
 } // namespace aiworld
+
+// --------------------
+// Script Command Bindings for rAthena
+// --------------------
+
+/**
+ * @brief Registers a new NPC with the AI system.
+ * Script usage: ai_npc_register(npc_name$, personality_json$, initial_goals_json$)
+ * @param npc_name$ (string) - Unique NPC identifier
+ * @param personality_json$ (string) - JSON string for personality traits
+ * @param initial_goals_json$ (string) - JSON string for initial goals
+ * @return int (0=success, <0=error)
+ */
+BUILDIN(ai_npc_register) {
+    if (script_isstring(st, 2) == 0 || script_isstring(st, 3) == 0 || script_isstring(st, 4) == 0) {
+        script_pushint(st, -1);
+        ShowError("ai_npc_register: All parameters must be strings (npc_name, personality_json, initial_goals_json)\n");
+        return SCRIPT_CMD_SUCCESS;
+    }
+    const char* npc_name = script_getstr(st, 2);
+    const char* personality_json = script_getstr(st, 3);
+    const char* initial_goals_json = script_getstr(st, 4);
+
+    try {
+        nlohmann::json npc_data;
+        npc_data["personality"] = nlohmann::json::parse(personality_json);
+        npc_data["initial_goals"] = nlohmann::json::parse(initial_goals_json);
+
+        APIResult result = AIWorldNativeAPI::getInstance().registerNPC(npc_name, npc_data);
+        if (!result.success) {
+            script_pushint(st, -result.error_code);
+            ShowError("ai_npc_register: %s\n", result.error_message.c_str());
+        } else {
+            script_pushint(st, 0);
+        }
+    } catch (const nlohmann::json::exception& e) {
+        script_pushint(st, -102); // INVALID_JSON
+        ShowError("ai_npc_register: JSON parse error: %s\n", e.what());
+    } catch (const std::exception& e) {
+        script_pushint(st, -500);
+        ShowError("ai_npc_register: Exception: %s\n", e.what());
+    }
+    return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * @brief Processes an NPC event.
+ * Script usage: ai_npc_event(npc_id$, event_type$, event_data_json$)
+ * @param npc_id$ (string) - Target NPC identifier
+ * @param event_type$ (string) - Event type
+ * @param event_data_json$ (string) - JSON string for event data
+ * @return int (0=success, <0=error)
+ */
+BUILDIN(ai_npc_event) {
+    if (script_isstring(st, 2) == 0 || script_isstring(st, 3) == 0 || script_isstring(st, 4) == 0) {
+        script_pushint(st, -1);
+        ShowError("ai_npc_event: All parameters must be strings (npc_id, event_type, event_data_json)\n");
+        return SCRIPT_CMD_SUCCESS;
+    }
+    const char* npc_id = script_getstr(st, 2);
+    const char* event_type = script_getstr(st, 3);
+    const char* event_data_json = script_getstr(st, 4);
+
+    try {
+        nlohmann::json event_data = nlohmann::json::parse(event_data_json);
+        APIResult result = AIWorldNativeAPI::getInstance().processNPCEvent(event_type, event_data, "", npc_id);
+        if (!result.success) {
+            script_pushint(st, -result.error_code);
+            ShowError("ai_npc_event: %s\n", result.error_message.c_str());
+        } else {
+            script_pushint(st, 0);
+        }
+    } catch (const nlohmann::json::exception& e) {
+        script_pushint(st, -102);
+        ShowError("ai_npc_event: JSON parse error: %s\n", e.what());
+    } catch (const std::exception& e) {
+        script_pushint(st, -500);
+        ShowError("ai_npc_event: Exception: %s\n", e.what());
+    }
+    return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * @brief Handles an NPC interaction.
+ * Script usage: ai_npc_interact(npc_id$, player_id$, interaction_type$, data_json$)
+ * @param npc_id$ (string) - Target NPC identifier
+ * @param player_id$ (string) - Player or initiator identifier
+ * @param interaction_type$ (string) - Type of interaction
+ * @param data_json$ (string) - JSON string for interaction data
+ * @return int (0=success, <0=error)
+ */
+BUILDIN(ai_npc_interact) {
+    if (script_isstring(st, 2) == 0 || script_isstring(st, 3) == 0 || script_isstring(st, 4) == 0 || script_isstring(st, 5) == 0) {
+        script_pushint(st, -1);
+        ShowError("ai_npc_interact: All parameters must be strings (npc_id, player_id, interaction_type, data_json)\n");
+        return SCRIPT_CMD_SUCCESS;
+    }
+    const char* npc_id = script_getstr(st, 2);
+    const char* player_id = script_getstr(st, 3);
+    const char* interaction_type = script_getstr(st, 4);
+    const char* data_json = script_getstr(st, 5);
+
+    try {
+        nlohmann::json interaction_data = nlohmann::json::parse(data_json);
+        APIResult result = AIWorldNativeAPI::getInstance().handleNPCInteraction(npc_id, interaction_type, interaction_data, player_id);
+        if (!result.success) {
+            script_pushint(st, -result.error_code);
+            ShowError("ai_npc_interact: %s\n", result.error_message.c_str());
+        } else {
+            script_pushint(st, 0);
+        }
+    } catch (const nlohmann::json::exception& e) {
+        script_pushint(st, -102);
+        ShowError("ai_npc_interact: JSON parse error: %s\n", e.what());
+    } catch (const std::exception& e) {
+        script_pushint(st, -500);
+        ShowError("ai_npc_interact: Exception: %s\n", e.what());
+    }
+    return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * @brief Gets the state of an NPC.
+ * Script usage: ai_npc_get_state(npc_id$)
+ * @param npc_id$ (string) - Target NPC identifier
+ * @return string (JSON) - NPC state as JSON string, or error JSON
+ */
+BUILDIN(ai_npc_get_state) {
+    if (script_isstring(st, 2) == 0) {
+        script_pushstrcopy(st, "{\"error\":\"npc_id must be a string\"}");
+        ShowError("ai_npc_get_state: npc_id must be a string\n");
+        return SCRIPT_CMD_SUCCESS;
+    }
+    const char* npc_id = script_getstr(st, 2);
+
+    try {
+        APIResult result = AIWorldNativeAPI::getInstance().getNPCState(npc_id);
+        if (!result.success) {
+            nlohmann::json err = {
+                {"error_code", result.error_code},
+                {"error_message", result.error_message}
+            };
+            script_pushstrcopy(st, err.dump().c_str());
+            ShowError("ai_npc_get_state: %s\n", result.error_message.c_str());
+        } else {
+            script_pushstrcopy(st, result.data.dump().c_str());
+        }
+    } catch (const std::exception& e) {
+        nlohmann::json err = {
+            {"error_code", 500},
+            {"error_message", e.what()}
+        };
+        script_pushstrcopy(st, err.dump().c_str());
+        ShowError("ai_npc_get_state: Exception: %s\n", e.what());
+    }
+    return SCRIPT_CMD_SUCCESS;
+}
+
+// --------------------
+// Script Command Registration
+// --------------------
+/**
+ * @brief Registers all AIWorld script commands with the rAthena script engine.
+ * Call this in plugin initialization.
+ */
+void aiworld_register_script_commands() {
+    addScriptCommand("ai_npc_register", &buildin_ai_npc_register);
+    addScriptCommand("ai_npc_event", &buildin_ai_npc_event);
+    addScriptCommand("ai_npc_interact", &buildin_ai_npc_interact);
+    addScriptCommand("ai_npc_get_state", &buildin_ai_npc_get_state);
+}
+
+// In plugin initialization (example, adjust as needed):
+// aiworld_register_script_commands();

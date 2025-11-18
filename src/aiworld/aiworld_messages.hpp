@@ -19,6 +19,22 @@ struct AIWorldMessage {
     AIWorldMessage() : message_type(IPCMessageType::ERROR) {}
     AIWorldMessage(IPCMessageType type, const std::string& corr, const nlohmann::json& data)
         : message_type(type), correlation_id(corr), payload(data) {}
+
+    // --- Binary serialization ---
+    void serialize_payload(std::vector<uint8_t>& out) const {
+        // Replace with efficient binary serialization for payload types
+        std::string s = payload.dump();
+        out.assign(s.begin(), s.end());
+    }
+    bool deserialize_payload(const std::vector<uint8_t>& in) {
+        try {
+            std::string s(in.begin(), in.end());
+            payload = nlohmann::json::parse(s);
+            return true;
+        } catch (...) {
+            return false;
+        }
+    }
 };
 
 // Entity state sync message (expanded for world concept design)

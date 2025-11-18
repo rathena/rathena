@@ -688,7 +688,7 @@ class Settings(BaseSettings):
             postgresql+psycopg2://user:password@host:port/database
         """
         return (
-            f"postgresql+psycopg2://{self.postgres_user}:{self.postgres_password}"
+            f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}"
             f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
         )
 
