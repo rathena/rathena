@@ -7865,6 +7865,10 @@ The valid information types are:
  33 - Whether the amount of users in the waiting room is higher than the trigger
       number.
 
+This function returns -1 if the type is unknown.
+If no npc is found or npc has no chatroom, return -1 when expecting a number
+or "null" for strings.
+
 ---------------------------------------
 
 *warpwaitingpc "<map name>",<x>,<y>{,<number of people>};
