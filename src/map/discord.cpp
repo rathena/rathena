@@ -319,10 +319,10 @@ remove("discord_response.txt");
 
 // Notify MVP respawn
 void discord_notify_mvp_respawn(struct mob_data* md) {
-if (discord_mvp_webhook_url.empty() || !md) return;
+	if (discord_mvp_webhook_url.empty() || !md) return;
 
-const char* mvp_name = md->name;
-const char* map_name = map[md->m].name;
+	const char* mvp_name = md->name;
+	const char* map_name = ::map[md->m].name;  // Use global map array
 
 // Get respawn time from spawn data
 uint32 respawn_time_ms = 0;

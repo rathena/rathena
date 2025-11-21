@@ -1,34 +1,37 @@
 #ifndef DISCORD_HPP
 #define DISCORD_HPP
 
-#include <vector>
-#include <string>
+#include <common/mmo.hpp>  // For int64, t_itemid, t_exp
 
-#include "mob.hpp"
+// Forward declarations
+struct mob_data;
 
-struct DiscordChannelConfig {
-	bool enabled;
-	bool mention_everyone;
-	char webhook_url[256];
-};
+// Discord webhook integration functions
 
-struct Discord_Config {
-	DiscordChannelConfig mvp;
-	DiscordChannelConfig status;
-	DiscordChannelConfig card;
-};
+void discord_set_mvp_webhook(const char* url);
+void discord_set_card_webhook(const char* url);
+void discord_set_server_webhook(const char* url);
+void discord_set_server_label(const char* label);
+const char* discord_get_server_label();
 
-extern Discord_Config discord_config;
+void discord_clear_mvp_messages_on_start();
+void discord_clear_card_messages_on_start();
 
-void discord_set_defaults(void);
-bool discord_handle_config(const char* key, const char* value);
+void discord_notify_mvp_kill(
+	const char* mvp_name,
+	const char* map_name,
+	const char* killer_name,
+	int kill_duration_ms,
+	const char* top1_name, int64 top1_damage,
+	const char* top2_name, int64 top2_damage,
+	const char* top3_name, int64 top3_damage,
+	t_itemid mvp_reward_item_id,
+	t_exp mvp_reward_exp
+);
+void discord_notify_mvp_respawn(struct mob_data* md);
+void discord_notify_card_drop(const char* card_name, const char* mob_name, const char* map_name, const char* player_name);
 
-void discord_notify_mvp_kill(mob_data* md, map_session_data* killer, const std::vector<s_mvp_damage_entry>& lootdmg, int64 total_damage, uint32 kill_duration_ms, t_itemid mvp_reward_item_id, t_exp mvp_reward_exp);
-void discord_notify_mvp_respawn(mob_data* md);
-void discord_notify_card_drop(map_session_data* sd, uint16 mob_id, t_itemid item_id);
-
-void discord_notify_server_status(bool online, int32 player_count, bool force = false, bool wait_completion = false, bool force_all_offline = false);
-void discord_on_user_count_change(int32 users);
-void discord_handle_server_shutdown(void);
+void discord_notify_server_online();
+void discord_notify_server_offline();
 
 #endif /* DISCORD_HPP */

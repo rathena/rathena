@@ -52,6 +52,7 @@
 #include "quest.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
+#include "discord.hpp"
 
 using namespace rathena;
 using namespace rathena::server_map;
@@ -5039,6 +5040,7 @@ void MapServer::finalize(){
 	chrif_char_reset_offline();
 	chrif_flush_fifo();
 
+	// discord_handle_server_shutdown(); // TODO: Implement if needed
 	do_final_atcommand();
 	do_final_battle();
 	do_final_chrif();
@@ -5063,6 +5065,7 @@ void MapServer::finalize(){
 	do_final_msg();
 	do_final_skill();
 	do_final_status();
+	// discord_handle_server_shutdown(); // TODO: Implement if needed
 	do_final_unit();
 	do_final_battleground();
 	do_final_duel();
@@ -5417,6 +5420,7 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	do_init_path();
 	do_init_atcommand();
 	do_init_battle();
+	// discord_set_defaults(); // TODO: Implement if needed
 	do_init_instance();
 	do_init_chrif();
 	do_init_clan();
