@@ -19,6 +19,7 @@
 #include "atcommand.hpp"	//msg_txt()
 #include "battle.hpp"
 #include "chrif.hpp" // charserver_name
+#include "discord.hpp"
 #include "clif.hpp"
 #include "instance.hpp"
 #include "intif.hpp"
@@ -1295,7 +1296,7 @@ void party_exp_share(struct party_data* p, block_list* src, t_exp base_exp, t_ex
 }
 
 //Does party loot. first_charid holds the charid of the player who has time priority to take the item.
-int32 party_share_loot(struct party_data* p, map_session_data* sd, struct item* item, int32 first_charid)
+int32 party_share_loot(struct party_data* p, map_session_data* sd, struct item* item, int32 first_charid, uint16 mob_id)
 {
 	TBL_PC* target = nullptr;
 	int32 i;
@@ -1358,6 +1359,22 @@ int32 party_share_loot(struct party_data* p, map_session_data* sd, struct item* 
 
 	if( p && battle_config.party_show_share_picker && battle_config.show_picker_item_type&(1<<itemdb_type(item->nameid)) )
 		clif_party_show_picker(target, item);
+
+	// Discord notification for card drops
+	if (mob_id > 0) {
+		std::shared_ptr<item_data> i_data = item_db.find(item->nameid);
+		if (i_data && i_data->type == IT_CARD) {
+			std::shared_ptr<s_mob_db> mob = mob_db.find(mob_id);
+			if (mob) {
+				discord_notify_card_drop(
+					i_data->ename.c_str(),
+					mob->name.c_str(),
+					map[target->m].name,
+					target->status.name
+				);
+			}
+		}
+	}
 
 	return 0;
 }

@@ -93,7 +93,7 @@ int32 party_recv_message( int32 party_id, uint32 account_id, const char *mes, si
 int32 party_skill_check(map_session_data *sd, int32 party_id, uint16 skill_id, uint16 skill_lv);
 int32 party_send_xy_clear(struct party_data *p);
 void party_exp_share(struct party_data *p,block_list *src,t_exp base_exp,t_exp job_exp,int32 zeny);
-int32 party_share_loot(struct party_data* p, map_session_data* sd, struct item* item, int32 first_charid);
+int32 party_share_loot(struct party_data* p, map_session_data* sd, struct item* item, int32 first_charid, uint16 mob_id = 0);
 int32 party_send_dot_remove(map_session_data *sd);
 int32 party_sub_count(block_list *bl, va_list ap);
 int32 party_sub_count_class(block_list *bl, va_list ap);

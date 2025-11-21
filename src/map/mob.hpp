@@ -15,6 +15,12 @@
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
 
 struct guardian_data;
+struct map_session_data;
+
+struct s_mvp_damage_entry {
+	struct map_session_data* sd;
+	int64 damage;
+};
 
 //This is the distance at which @autoloot works,
 //if the item drops farther from the player than this,
@@ -363,6 +369,7 @@ struct mob_data : public block_list {
 	} state;
 	struct guardian_data* guardian_data;
 	std::deque<s_dmglog> dmglog;
+	t_tick first_damage_tick;
 	uint32 spotted_log[DAMAGELOG_SIZE];
 	struct spawn_data *spawn; //Spawn data.
 	int32 spawn_timer; //Required for Convex Mirror

@@ -6219,7 +6219,7 @@ bool pc_takeitem(map_session_data *sd,flooritem_data *fitem)
 		return false;
 
 	//This function takes care of giving the item to whoever should have it, considering party-share options.
-	if ((flag = party_share_loot(p,sd,&fitem->item, fitem->first_get_charid))) {
+	if ((flag = party_share_loot(p,sd,&fitem->item, fitem->first_get_charid, fitem->mob_id))) {
 		clif_additem(sd,0,0,flag);
 		return true;
 	}
