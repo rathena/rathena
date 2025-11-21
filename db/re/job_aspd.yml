@@ -612,7 +612,6 @@ Body:
       Fist: 40
       Book: 45
       Shield: 3
-# 2 handed staff value unconfirmed.
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
@@ -621,5 +620,5 @@ Body:
       Fist: 45
       Dagger: 40
       Staff: 50
-      2hStaff: 52
+      2hStaff: 52 # TODO: Unconfirmed
       Shield: 5
