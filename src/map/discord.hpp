@@ -14,6 +14,8 @@ void discord_set_server_webhook(const char* url);
 void discord_set_server_label(const char* label);
 const char* discord_get_server_label();
 
+bool discord_handle_config(const char* key, const char* value);
+
 void discord_clear_mvp_messages_on_start();
 void discord_clear_card_messages_on_start();
 

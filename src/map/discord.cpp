@@ -14,6 +14,7 @@
 #include <common/showmsg.hpp>
 #include <common/socket.hpp>
 #include <common/timer.hpp>
+#include <common/strlib.hpp>
 
 #include "itemdb.hpp"
 #include "map.hpp"
@@ -64,7 +65,28 @@ discord_server_cached_label = label;
 }
 
 const char* discord_get_server_label() {
-return discord_server_cached_label.c_str();
+	return discord_server_cached_label.c_str();
+}
+
+// Handle configuration from log_athena.conf
+bool discord_handle_config(const char* key, const char* value) {
+	if (strcmpi(key, "discord_mvp_webhook") == 0) {
+		discord_set_mvp_webhook(value);
+		return true;
+	}
+	else if (strcmpi(key, "discord_card_webhook") == 0) {
+		discord_set_card_webhook(value);
+		return true;
+	}
+	else if (strcmpi(key, "discord_server_webhook") == 0) {
+		discord_set_server_webhook(value);
+		return true;
+	}
+	else if (strcmpi(key, "discord_server_label") == 0) {
+		discord_set_server_label(value);
+		return true;
+	}
+	return false;  // Not a Discord config
 }
 
 // URL-encode a string for safe transmission
