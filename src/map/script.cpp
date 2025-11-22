@@ -27823,8 +27823,6 @@ BUILDIN_FUNC(mesitemicon){
 	return SCRIPT_CMD_SUCCESS;
 }
 
-#include <custom/script.inc>
-
 // declarations that were supposed to be exported from npc_chat.cpp
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -27869,6 +27867,50 @@ BUILDIN_FUNC(preg_match) {
 	script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
 #endif
+}
+
+// Custom AIWorld Script Commands - Stub implementations
+// The actual implementations are in aiworld plugin
+// These stubs allow compilation and will be overridden by the plugin at runtime
+
+/**
+ * httppost(url$, json_data$)
+ * HTTP POST to AI service
+ */
+BUILDIN_FUNC(httppost) {
+	script_pushstrcopy(st, "{\"error\":\"AIWorld plugin not loaded\"}");
+	ShowWarning("httppost: AIWorld plugin is not loaded. Command unavailable.\n");
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * httpget(url$)
+ * HTTP GET from AI service
+ */
+BUILDIN_FUNC(httpget) {
+	script_pushstrcopy(st, "{\"error\":\"AIWorld plugin not loaded\"}");
+	ShowWarning("httpget: AIWorld plugin is not loaded. Command unavailable.\n");
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * npcwalk(npc_name$, x, y)
+ * AI-driven NPC movement by name
+ */
+BUILDIN_FUNC(npcwalk) {
+	script_pushint(st, 0);
+	ShowWarning("npcwalk: AIWorld plugin is not loaded. Command unavailable.\n");
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * npcwalkid(npc_id, x, y)
+ * AI-driven NPC movement by ID
+ */
+BUILDIN_FUNC(npcwalkid) {
+	script_pushint(st, 0);
+	ShowWarning("npcwalkid: AIWorld plugin is not loaded. Command unavailable.\n");
+	return SCRIPT_CMD_SUCCESS;
 }
 
 /// script command definitions

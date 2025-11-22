@@ -10,10 +10,10 @@
 
 //BUILDIN_DEF(example,""),
 
-// HTTP Functions for AI Integration
-//BUILDIN_DEF(httppost,"ss"),  // httppost("<url>", "<json_body>")
-//BUILDIN_DEF(httpget,"s"),    // httpget("<url>")
+// HTTP Functions for AI Integration - ENABLED
+BUILDIN_DEF(httppost,"ss"),  // httppost("<url>", "<json_body>")
+BUILDIN_DEF(httpget,"s"),    // httpget("<url>")
 
-// NPC Movement Functions for AI-Driven NPCs
-//BUILDIN_DEF(npcwalk,"sii"),   // npcwalk("<npc_name>", <x>, <y>)
-//BUILDIN_DEF(npcwalkid,"iii"), // npcwalkid(<npc_id>, <x>, <y>)
+// NPC Movement Functions for AI-Driven NPCs - ENABLED
+BUILDIN_DEF(npcwalk,"sii"),   // npcwalk("<npc_name>", <x>, <y>)
+BUILDIN_DEF(npcwalkid,"iii"), // npcwalkid(<npc_id>, <x>, <y>)

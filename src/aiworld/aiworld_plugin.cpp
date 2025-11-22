@@ -21,6 +21,11 @@ using aiworld::AIWorldNativeAPI;
 using aiworld::APIResult;
 using aiworld::ErrorCode;
 
+// HTTP Script Commands - External declarations
+extern void aiworld_init_http_client(const std::string& base_url);
+extern void aiworld_shutdown_http_client();
+extern void aiworld_register_http_script_commands();
+
 namespace aiworld {
 
 AIWorldPlugin::AIWorldPlugin()
@@ -38,22 +43,42 @@ AIWorldPlugin::~AIWorldPlugin() {
 bool AIWorldPlugin::initialize() {
     if (is_initialized) return true;
     log_info("AIWorldPlugin: Initializing...");
+    
+    // Initialize HTTP client for AI service communication
+    aiworld_init_http_client("http://127.0.0.1:8000");
+    log_info("AIWorldPlugin: HTTP client initialized");
+    
+    // Register HTTP-based script commands (httppost, httpget, npcwalk, npcwalkid)
+    aiworld_register_http_script_commands();
+    log_info("AIWorldPlugin: HTTP script commands registered");
+    
+    // Initialize ZeroMQ IPC (for backward compatibility with existing code)
     if (!ipc_client->connect()) {
-        log_error("AIWorldPlugin: Failed to connect to AIWorld server via ZeroMQ.");
-        return false;
+        log_warning("AIWorldPlugin: ZeroMQ connection failed (non-fatal, HTTP integration active)");
+        // Don't fail initialization - HTTP integration is primary now
+    } else {
+        ipc_client->start_receive_thread();
+        log_info("AIWorldPlugin: ZeroMQ IPC connected (legacy support)");
     }
-    ipc_client->start_receive_thread();
+    
     is_initialized = true;
-    log_info("AIWorldPlugin: Initialized and connected to AIWorld server.");
+    log_info("AIWorldPlugin: Initialization complete - HTTP REST integration active");
     return true;
 }
 
 void AIWorldPlugin::shutdown() {
     if (!is_initialized) return;
     log_info("AIWorldPlugin: Shutting down...");
+    
+    // Shutdown HTTP client and log statistics
+    aiworld_shutdown_http_client();
+    log_info("AIWorldPlugin: HTTP client shutdown complete");
+    
+    // Shutdown ZeroMQ IPC
     ipc_client->stop_receive_thread();
+    
     is_initialized = false;
-    log_info("AIWorldPlugin: Shutdown complete.");
+    log_info("AIWorldPlugin: Shutdown complete");
 }
 
 void AIWorldPlugin::on_tick() {

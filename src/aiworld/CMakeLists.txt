@@ -19,6 +19,9 @@ set(AIWORLD_SRC
     aiworld_plugin.hpp
     aiworld_utils.cpp
     aiworld_utils.hpp
+    aiworld_http_client.hpp
+    aiworld_http_client.cpp
+    aiworld_script_commands.cpp
 )
 
 add_library(aiworld_plugin SHARED ${AIWORLD_SRC})
@@ -27,6 +30,8 @@ target_include_directories(aiworld_plugin
     PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}
         ${ZeroMQ_INCLUDE_DIRS}
+        ${CMAKE_SOURCE_DIR}/3rdparty/httplib
+        ${CMAKE_SOURCE_DIR}/3rdparty/json/single_include
         ../common
         ../map
         ../char

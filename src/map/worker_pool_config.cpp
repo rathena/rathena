@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include <sstream>
+#include <iostream>
 #include <cstdlib>
 #include <algorithm>
 #include <map>
@@ -108,14 +109,24 @@ WorkerPoolConfig load_worker_pool_config() {
     if (kv.count("WORKER_POOL_MAX_THREADS")) {
         std::cout << "[stoi debug] worker_pool_config.cpp WORKER_POOL_MAX_THREADS='" << kv["WORKER_POOL_MAX_THREADS"] << "'\n";
         std::cout << std::flush;
-        cfg.max_threads = std::stoi(kv["WORKER_POOL_MAX_THREADS"]);
+        try {
+            cfg.max_threads = std::stoi(kv["WORKER_POOL_MAX_THREADS"]);
+        } catch (const std::exception& ex) {
+            std::cerr << "[worker_pool_config] Invalid WORKER_POOL_MAX_THREADS value: '" << kv["WORKER_POOL_MAX_THREADS"] << "', using default 8\n";
+            cfg.max_threads = 8;
+        }
     }
     if (kv.count("assignment_strategy")) cfg.assignment_strategy = parse_strategy(kv["assignment_strategy"]);
     if (kv.count("WORKER_POOL_ASSIGNMENT_STRATEGY")) cfg.assignment_strategy = parse_strategy(kv["WORKER_POOL_ASSIGNMENT_STRATEGY"]);
     if (kv.count("migration_interval_ms")) {
         std::cout << "[stoi debug] worker_pool_config.cpp migration_interval_ms='" << kv["migration_interval_ms"] << "'\n";
         std::cout << std::flush;
-        cfg.migration_interval_ms = std::stoi(kv["migration_interval_ms"]);
+        try {
+            cfg.migration_interval_ms = std::stoi(kv["migration_interval_ms"]);
+        } catch (const std::exception& ex) {
+            std::cerr << "[worker_pool_config] Invalid migration_interval_ms value: '" << kv["migration_interval_ms"] << "', using default 5000\n";
+            cfg.migration_interval_ms = 5000;
+        }
     }
     if (kv.count("enable_metrics")) cfg.enable_metrics = (kv["enable_metrics"] == "true");
     if (kv.count("WORKER_POOL_METRICS_ENABLED")) cfg.enable_metrics = (kv["WORKER_POOL_METRICS_ENABLED"] == "true");
@@ -138,7 +149,11 @@ WorkerPoolConfig load_worker_pool_config() {
             if (!token.empty()) {
                 std::cout << "[stoi debug] worker_pool_config.cpp cpu_affinity token='" << token << "'\n";
                 std::cout << std::flush;
-                cfg.cpu_affinity.insert(std::stoi(token));
+                try {
+                    cfg.cpu_affinity.insert(std::stoi(token));
+                } catch (const std::exception& ex) {
+                    std::cerr << "[worker_pool_config] Invalid cpu_affinity value: '" << token << "', skipping\n";
+                }
             }
         }
     }
@@ -151,7 +166,11 @@ WorkerPoolConfig load_worker_pool_config() {
             if (!token.empty()) {
                 std::cout << "[stoi debug] worker_pool_config.cpp cpu_affinity token='" << token << "'\n";
                 std::cout << std::flush;
-                cfg.cpu_affinity.insert(std::stoi(token));
+                try {
+                    cfg.cpu_affinity.insert(std::stoi(token));
+                } catch (const std::exception& ex) {
+                    std::cerr << "[worker_pool_config] Invalid WORKER_POOL_CPU_AFFINITY value: '" << token << "', skipping\n";
+                }
             }
         }
     }
