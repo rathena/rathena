@@ -17,6 +17,7 @@ extern "C" {
 }
 
 #include "aiworld_native_api.hpp"
+#include "aiworld_native_commands.hpp"
 using aiworld::AIWorldNativeAPI;
 using aiworld::APIResult;
 using aiworld::ErrorCode;
@@ -51,6 +52,16 @@ bool AIWorldPlugin::initialize() {
     // Register HTTP-based script commands (httppost, httpget, npcwalk, npcwalkid)
     aiworld_register_http_script_commands();
     log_info("AIWorldPlugin: HTTP script commands registered");
+    
+    // Native script commands registered via BUILDIN_DEF in script_def.inc
+    log_info("AIWorldPlugin: Native script commands (ai_npc_*) registered via script_def.inc");
+    
+    // Initialize Native API singleton with ZeroMQ endpoint
+    if (!AIWorldNativeAPI::getInstance().initialize("tcp://127.0.0.1:5555")) {
+        log_warning("AIWorldPlugin: Native API initialization failed (non-fatal)");
+    } else {
+        log_info("AIWorldPlugin: Native API initialized successfully");
+    }
     
     // Initialize ZeroMQ IPC (for backward compatibility with existing code)
     if (!ipc_client->connect()) {

@@ -22,6 +22,10 @@ set(AIWORLD_SRC
     aiworld_http_client.hpp
     aiworld_http_client.cpp
     aiworld_script_commands.cpp
+    aiworld_native_commands.hpp
+    aiworld_native_commands.cpp
+    aiworld_native_api.hpp
+    aiworld_native_api.cpp
 )
 
 add_library(aiworld_plugin SHARED ${AIWORLD_SRC})

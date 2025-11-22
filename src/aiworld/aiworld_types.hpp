@@ -13,7 +13,10 @@ enum class IPCMessageType : int32_t {
     EVENT_NOTIFICATION = 3,
     AI_ACTION_REQUEST = 4,
     AI_ACTION_RESPONSE = 5,
+    AIACTION = 5,  // Alias for AI_ACTION_RESPONSE (used by native commands)
     HEARTBEAT = 6,
+    DIALOGUE = 7,  // AI dialogue interactions
+    DECISION = 8,  // AI decision-making
     ERROR = 99
 };
 

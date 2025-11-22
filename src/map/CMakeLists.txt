@@ -26,10 +26,11 @@ endif()
 set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${MAP_HEADERS} ${MAP_SOURCES}
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_ipc.cpp
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_utils.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_native_commands.cpp
 )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} )
 source_group( map FILES ${MAP_HEADERS} ${MAP_SOURCES} )
-include_directories( ${INCLUDE_DIRS} )
+include_directories( ${INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/src/map ${CMAKE_SOURCE_DIR}/src/aiworld ${CMAKE_SOURCE_DIR}/3rdparty/json/single_include )
 
 #message( STATUS "map-server SOURCE_FILES=${SOURCE_FILES}")
 add_executable( map-server ${SOURCE_FILES} )

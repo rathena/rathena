@@ -63,6 +63,9 @@
 #include "quest.hpp"
 #include "storage.hpp"
 
+// AIWorld custom native commands - ENABLED
+#include "../aiworld/aiworld_native_commands.hpp"
+
 using namespace rathena;
 
 const int64 SCRIPT_INT_MIN = INT64_MIN;
