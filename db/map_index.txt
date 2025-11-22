@@ -1293,6 +1293,30 @@ uknw_ruin2
 ygg_edge
 ygg_fruit
 ygg_roots
+httyd_01
+httyd_02
+vr_po
+vr_pop1
+vr_pop2
+vr_pop3
+vr_clo1
+vr_clo2
+vr_gen
+vr_cas
+2025arena1
+2025arena2
+2025arena3
+2025arena4
+2025arena5
+25ros03_01
+ch1zero1
+ch1zero2
+ch1zero3
+ch1zero4
+ch1fild1
+tra_fild01
+tra_fild02
+tra_fild03
 
 //======================================================================================
 // - Other/Extra maps -
