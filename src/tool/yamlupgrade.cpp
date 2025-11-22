@@ -146,7 +146,7 @@ bool YamlUpgradeTool::initialize( int32 argc, char* argv[] ){
 		} ) ){
 		return false;
 	}
-	if( !process( "ITEM_GROUP_DB", 4, root_paths, "item_group_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
+	if( !process( "ITEM_GROUP_DB", 5, root_paths, "item_group_db", []( const std::string& path, const std::string& name_ext, uint32 source_version ) -> bool {
 		return upgrade_item_group_db( path + name_ext, source_version );
 		} ) ){
 		return false;
@@ -443,6 +443,7 @@ static bool upgrade_item_group_db( std::string file, const uint32 source_version
 	size_t entries = 0;
 
 	for( const auto input : inNode["Body"] ){
+		// Added the "Algorithm" field based on the previous "Subgroup"
 		if( source_version < 4 ){
 			body << YAML::BeginMap;
 			body << YAML::Key << "Group" << YAML::Value << input["Group"];

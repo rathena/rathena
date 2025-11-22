@@ -3061,6 +3061,13 @@ void ItemGroupDatabase::pc_get_itemgroup_sub( map_session_data& sd, bool identif
 				tmp.refine = 0;
 			}
 
+			if (data->maximumEnchantgrade > 0 && data->minimumEnchantgrade <= data->maximumEnchantgrade) {
+				tmp.enchantgrade = static_cast<uint8>(rnd_value<uint16>(data->minimumEnchantgrade, data->maximumEnchantgrade));
+			}
+			else {
+				tmp.enchantgrade = 0;
+			}
+
 			if( data->randomOptionGroup != nullptr ){
 				memset( tmp.option, 0, sizeof( tmp.option ) );
 
@@ -3647,6 +3654,52 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						entry->refineMaximum = 0;
 					}
 				}
+
+				if (this->nodeExists(listit, "MinimumEnchantgrade")) {
+					std::string enchantgrade;
+
+					if (!this->asString(listit, "MinimumEnchantgrade", enchantgrade)) {
+						return 0;
+					}
+
+					std::string grade_constant = "ENCHANTGRADE_" + enchantgrade;
+					int64 constant;
+
+					if (!script_get_constant(grade_constant.c_str(), &constant) || constant < ENCHANTGRADE_NONE || constant > MAX_ENCHANTGRADE) {
+						this->invalidWarning(listit["MinimumEnchantgrade"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
+						constant = ENCHANTGRADE_NONE;
+					}
+
+					entry->minimumEnchantgrade = static_cast<e_enchantgrade>(constant);
+				}
+				else {
+					if (!exists) {
+						entry->minimumEnchantgrade = ENCHANTGRADE_NONE;
+					}
+				}
+
+				if (this->nodeExists(listit, "MaximumEnchantgrade")) {
+					std::string enchantgrade;
+
+					if (!this->asString(listit, "MaximumEnchantgrade", enchantgrade)) {
+						return 0;
+					}
+
+					std::string grade_constant = "ENCHANTGRADE_" + enchantgrade;
+					int64 constant;
+
+					if (!script_get_constant(grade_constant.c_str(), &constant) || constant < ENCHANTGRADE_NONE || constant > MAX_ENCHANTGRADE) {
+						this->invalidWarning(listit["MaximumEnchantgrade"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
+						constant = ENCHANTGRADE_NONE;
+					}
+
+					entry->maximumEnchantgrade = static_cast<e_enchantgrade>(constant);
+				}
+				else {
+					if (!exists) {
+						entry->maximumEnchantgrade = ENCHANTGRADE_NONE;
+					}
+				}
 			}
 		}
 	}
@@ -3670,13 +3723,18 @@ void ItemGroupDatabase::loadingFinished() {
 		}
 	}
 
-	// Calculate rates
+	// Calculate rates, cap Enchantgrades
 	for (const auto &group : *this) {
 		for (const auto &random : group.second->random) {
 			random.second->total_rate = 0;
 			random.second->total_given = 0;
 			for (const auto &it : random.second->data) {
 				random.second->total_rate += it.second->rate;
+
+				if (it.second->minimumEnchantgrade > it.second->maximumEnchantgrade) {
+					ShowDebug("Subgroup %u from item group %hu: MinimumEnchantgrade exceeds MaximumEnchantgrade. Capping...\n", it.first, group.first);
+					it.second->minimumEnchantgrade = it.second->maximumEnchantgrade;
+				}
 			}
 		}
 	}
