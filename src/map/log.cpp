@@ -19,6 +19,7 @@
 #include "npc.hpp"
 #include "pc.hpp"
 #include "pet.hpp"
+#include "discord.hpp"
 
 static char log_timestamp_format[20];
 
@@ -634,12 +635,15 @@ int32 log_config_read(const char* cfgName)
 			else if( strcmpi(w1, "log_npc") == 0 )
 				log_config.npc = config_switch(w2);
 			else if( strcmpi(w1, "log_chat") == 0 )
-				log_config.chat = config_switch(w2);
-			else if( strcmpi(w1, "log_mvpdrop") == 0 )
-				log_config.mvpdrop = config_switch(w2);
-			else if( strcmpi(w1, "log_feeding") == 0 )
-				log_config.feeding = config_switch(w2);
-			else if( strcmpi(w1, "log_chat_woe_disable") == 0 )
+		log_config.chat = config_switch(w2);
+	else if( strcmpi(w1, "log_mvpdrop") == 0 )
+		log_config.mvpdrop = config_switch(w2);
+	else if( strcmpi(w1, "log_feeding") == 0 )
+		log_config.feeding = config_switch(w2);
+	else if (discord_handle_config(w1, w2)) {
+		// Successfully handled by Discord config handler
+	}
+	else if( strcmpi(w1, "log_chat_woe_disable") == 0 )
 				log_config.log_chat_woe_disable = config_switch(w2) > 0;
 			else if( strcmpi(w1, "log_branch_db") == 0 )
 				safestrncpy(log_config.log_branch, w2, sizeof(log_config.log_branch));

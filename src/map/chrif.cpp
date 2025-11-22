@@ -32,6 +32,7 @@
 #include "pet.hpp"
 #include "script.hpp" // script_config
 #include "storage.hpp"
+#include "discord.hpp"
 
 static TIMER_FUNC(check_connect_char_server);
 
@@ -542,6 +543,7 @@ void chrif_on_ready(void) {
 	ShowStatus("Map Server is now online.\n");
 
 	chrif_state = 2;
+	discord_notify_server_online();
 
 	//If there are players online, send them to the char-server. [Skotlex]
 	send_users_tochar();
@@ -1497,6 +1499,7 @@ int32 chrif_char_online(map_session_data *sd) {
 void chrif_on_disconnect(void) {
 	if( chrif_connected != 1 )
 		ShowWarning("Connection to Char Server lost.\n\n");
+	discord_notify_server_online();
 	chrif_connected = 0;
 
 	other_mapserver_count = 0; //Reset counter. We receive ALL maps from all map-servers on reconnect.

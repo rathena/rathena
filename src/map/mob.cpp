@@ -4,9 +4,11 @@
 #include "mob.hpp"
 
 #include <algorithm>
+#include <cstdio>
 #include <cmath>
 #include <cstdlib>
 #include <map>
+#include <string>
 #include <unordered_map>
 #include <vector>
 
@@ -32,6 +34,7 @@
 #include "intif.hpp"
 #include "itemdb.hpp"
 #include "log.hpp"
+#include "discord.hpp"
 #include "map.hpp"
 #include "mercenary.hpp"
 #include "npc.hpp"
@@ -1053,7 +1056,8 @@ TIMER_FUNC(mob_delayspawn){
 			return 0;
 		}
 		md->spawn_timer = INVALID_TIMER;
-		mob_spawn(md);
+		if (mob_spawn(md) == 0 && md->get_bosstype() == BOSSTYPE_MVP)
+			discord_notify_mvp_respawn(md);
 	}
 	return 0;
 }
@@ -1200,6 +1204,7 @@ int32 mob_spawn (mob_data *md)
 		md->spotted_log[i] = 0;
 
 	md->dmglog.clear();
+	md->first_damage_tick = 0;
 
 	if (md->lootitems)
 		memset(md->lootitems, 0, sizeof(*md->lootitems));
@@ -2681,6 +2686,9 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 	if( !damage && !damage_tanked && !(src->type&DEFAULT_ENEMY_TYPE(md)) )
 		return; //Do not log non-damaging effects from non-enemies.
 
+	if( damage > 0 && md->first_damage_tick == 0 )
+		md->first_damage_tick = gettick();
+
 	switch( src->type )
 	{
 		case BL_PC:
@@ -2981,7 +2989,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		map_session_data* sd;
 		int64 damage;
 	};
-	std::vector<s_dmg_entry> lootdmg;
+	std::vector<s_mvp_damage_entry> lootdmg;
 
 	count = 0;
 	int64 total_damage = 0;
@@ -3037,7 +3045,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 
 		if (it == lootdmg.end()) {
 			// No matching player found, create new entry for player
-			s_dmg_entry dmg_entry;
+			s_mvp_damage_entry dmg_entry;
 			dmg_entry.sd = tsd;
 			dmg_entry.damage = entry.dmg;
 			lootdmg.push_back(dmg_entry);
@@ -3052,7 +3060,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		lootdmg[0].damage += (total_damage * battle_config.first_attack_loot_bonus) / 100;
 
 		// Sort list by damage now and determine top 3 damage dealers
-		std::sort(lootdmg.begin(), lootdmg.end(), [](s_dmg_entry& a, s_dmg_entry& b) {
+		std::sort(lootdmg.begin(), lootdmg.end(), [](s_mvp_damage_entry& a, s_mvp_damage_entry& b) {
 			return a.damage > b.damage;
 		});
 		first_sd = lootdmg[0].sd;
@@ -3535,6 +3543,41 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 		}
 
 		log_mvpdrop(mvp_sd, md->mob_id, log_mvp_nameid, log_mvp_exp);
+		
+		// Discord notification for MVP kill
+		if (md->get_bosstype() == BOSSTYPE_MVP && md->first_damage_tick > 0) {
+			int kill_duration_ms = (int)(gettick() - md->first_damage_tick);
+			
+			const char* top1_name = nullptr;
+			const char* top2_name = nullptr;
+			const char* top3_name = nullptr;
+			int64 top1_dmg = 0, top2_dmg = 0, top3_dmg = 0;
+			
+			if (!lootdmg.empty()) {
+				top1_name = lootdmg[0].sd->status.name;
+				top1_dmg = lootdmg[0].damage;
+			}
+			if (lootdmg.size() > 1) {
+				top2_name = lootdmg[1].sd->status.name;
+				top2_dmg = lootdmg[1].damage;
+			}
+			if (lootdmg.size() > 2) {
+				top3_name = lootdmg[2].sd->status.name;
+				top3_dmg = lootdmg[2].damage;
+			}
+			
+			discord_notify_mvp_kill(
+				md->name,
+				map[md->m].name,
+				mvp_sd->status.name,
+				kill_duration_ms,
+				top1_name, top1_dmg,
+				top2_name, top2_dmg,
+				top3_name, top3_dmg,
+				log_mvp_nameid,
+				log_mvp_exp
+			);
+		}
 	}
 
 	if (type&2 && !sd && md->mob_id == MOBID_EMPERIUM)
