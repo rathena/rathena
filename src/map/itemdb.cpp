@@ -3061,11 +3061,14 @@ void ItemGroupDatabase::pc_get_itemgroup_sub( map_session_data& sd, bool identif
 				tmp.refine = 0;
 			}
 
-			if (data->maximumEnchantgrade > 0 && data->minimumEnchantgrade <= data->maximumEnchantgrade) {
-				tmp.enchantgrade = static_cast<uint8>(rnd_value<uint16>(data->minimumEnchantgrade, data->maximumEnchantgrade));
-			}
-			else {
-				tmp.enchantgrade = 0;
+			if( data->minimumEnchantgrade > ENCHANTGRADE_NONE && data->maximumEnchantgrade > ENCHANTGRADE_NONE ){
+				tmp.enchantgrade = static_cast<uint8>( rnd_value<uint16>( data->minimumEnchantgrade, data->maximumEnchantgrade ) );
+			}else if( data->minimumEnchantgrade > ENCHANTGRADE_NONE ){
+				tmp.enchantgrade = static_cast<uint8>( rnd_value<uint16>( data->minimumEnchantgrade, MAX_ENCHANTGRADE ) );
+			}else if( data->maximumEnchantgrade > ENCHANTGRADE_NONE ){
+				tmp.enchantgrade = static_cast<uint8>( rnd_value<uint16>( ENCHANTGRADE_NONE, data->maximumEnchantgrade ) );
+			}else{
+				tmp.enchantgrade = static_cast<uint8>( ENCHANTGRADE_NONE );
 			}
 
 			if( data->randomOptionGroup != nullptr ){
@@ -3670,11 +3673,11 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						constant = ENCHANTGRADE_NONE;
 					}
 
-					entry->minimumEnchantgrade = static_cast<e_enchantgrade>(constant);
+					entry->minimumEnchantgrade = static_cast<uint16>(constant);
 				}
 				else {
 					if (!exists) {
-						entry->minimumEnchantgrade = ENCHANTGRADE_NONE;
+						entry->minimumEnchantgrade = static_cast<uint16>( ENCHANTGRADE_NONE );
 					}
 				}
 
@@ -3693,11 +3696,11 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 						constant = ENCHANTGRADE_NONE;
 					}
 
-					entry->maximumEnchantgrade = static_cast<e_enchantgrade>(constant);
+					entry->maximumEnchantgrade = static_cast<uint16>(constant);
 				}
 				else {
 					if (!exists) {
-						entry->maximumEnchantgrade = ENCHANTGRADE_NONE;
+						entry->maximumEnchantgrade = static_cast<uint16>( ENCHANTGRADE_NONE );
 					}
 				}
 			}
@@ -3723,18 +3726,13 @@ void ItemGroupDatabase::loadingFinished() {
 		}
 	}
 
-	// Calculate rates, cap Enchantgrades
+	// Calculate rates
 	for (const auto &group : *this) {
 		for (const auto &random : group.second->random) {
 			random.second->total_rate = 0;
 			random.second->total_given = 0;
 			for (const auto &it : random.second->data) {
 				random.second->total_rate += it.second->rate;
-
-				if (it.second->minimumEnchantgrade > it.second->maximumEnchantgrade) {
-					ShowDebug("Subgroup %u from item group %hu: MinimumEnchantgrade exceeds MaximumEnchantgrade. Capping...\n", it.first, group.first);
-					it.second->minimumEnchantgrade = it.second->maximumEnchantgrade;
-				}
 			}
 		}
 	}

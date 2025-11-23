@@ -293,12 +293,17 @@ Example 3:
 ---------------------------------------
 
 GradeMinimum: Applies at least this level of grade to all equipable items.
+       When GradeMaximum also has a value, the level of grade of the equipment will be between GradeMinimum and GradeMaximum.
+       When GradeMaximum hasn't a value, the level of grade of the equipment will be between GradeMinimum and the highest possible grade (A).
+
        Accepted value, written in ascending order of level : None, D, C, B, A
-       Starting grade D, GradeMaximum field must also have a value, which must be equal to or greater than GradeMinimum.
 
 ---------------------------------------
 
 GradeMaximum: Applies at most this level of grade to all equipable items.
+       When GradeMinimum also has a value, the level of grade of the equipment will be between GradeMinimum and GradeMaximum.
+       When GradeMinimum hasn't a value, the level of grade of the equipment will be between None and GradeMaximum.
+
        Accepted value, written in ascending order of level : None, D, C, B, A
 
 Example 1:
