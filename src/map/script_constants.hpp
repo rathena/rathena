@@ -8657,6 +8657,15 @@
 	export_constant_npc(JT_4_HM_LOLBBY);
 	export_constant_npc(JT_4_HM_YOBBY);
 	export_constant_npc(JT_4_HM_MUNCH);
+	export_constant_npc(JT_4_F_VACATION_MIRIAM);
+	export_constant_npc(JT_1_CLB_DT_HICCUP);
+	export_constant_npc(JT_1_CLB_DT_ASTRID);
+	export_constant_npc(JT_1_CLB_DT_RUFFNUT);
+	export_constant_npc(JT_1_CLB_DT_TUFFNUT);
+	export_constant_npc(JT_1_CLB_DT_TOOTHLESS);
+	export_constant_npc(JT_1_CLB_DT_STORMFLY);
+	export_constant_npc(JT_1_CLB_DT_BARF_BELCH);
+	export_constant_npc(JT_4_POINT_PURPLE);
 	export_constant_npc(JT_ROZ_MQ_XAVIER);
 	export_constant_npc(JT_ROZ_MQ_MOCLORD);
 	export_constant_npc(JT_ROZ_MQ_SKULD);
