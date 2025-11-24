@@ -8,9 +8,10 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from loguru import logger
 import uvicorn
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -29,6 +30,7 @@ from routers.world_bootstrap import router as world_bootstrap_router
 from routers.npc_movement import router as npc_movement_router
 from routers.mvp import router as mvp_router
 from routers.relationship import router as relationship_router
+from routers.cost import router as cost_router
 from middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
@@ -221,6 +223,21 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"Decision Optimizer initialization failed: {e}", exc_info=True)
 
+    # Initialize Cost Manager
+    try:
+        from services.cost_manager import init_cost_manager
+        cost_manager = init_cost_manager(
+            daily_budget_usd=settings.daily_budget_usd,
+            per_provider_budgets=settings.per_provider_budgets,
+            alert_thresholds=settings.budget_alert_thresholds,
+            enabled=settings.cost_management_enabled
+        )
+        logger.info("✓ Cost Manager initialized")
+    except ImportError as e:
+        logger.warning(f"Cost Manager dependencies not available: {e}")
+    except Exception as e:
+        logger.error(f"Cost Manager initialization failed: {e}", exc_info=True)
+
     logger.info("AI Service startup complete")
     logger.info("=" * 80)
     logger.info("ADVANCED AUTONOMOUS FEATURES ENABLED:")
@@ -400,6 +417,27 @@ async def root():
         "status": "running",
         "docs": "/docs",
     }
+# Prometheus metrics endpoint
+@app.get("/metrics", tags=["monitoring"])
+async def metrics():
+    """
+    Prometheus metrics endpoint
+    
+    Exposes comprehensive metrics for:
+    - Agent performance (dialogue, quest, decision, etc.)
+    - LLM provider latency and tokens
+    - Decision layer performance
+    - Economic simulation
+    - Database operations
+    - Memory and relationships
+    """
+    return Response(
+        content=generate_latest(),
+        media_type=CONTENT_TYPE_LATEST
+    )
+
+logger.info("✓ Prometheus metrics endpoint registered at /metrics")
+
 
 
 # Include routers
@@ -418,9 +456,9 @@ app.include_router(world_bootstrap_router)
 app.include_router(npc_movement_router)
 app.include_router(mvp_router)
 app.include_router(relationship_router)
-app.include_router(mvp_router)
+app.include_router(cost_router)
 
-logger.info("✓ All routers registered (14 routers)")
+logger.info("✓ All routers registered (15 routers)")
 
 
 # Run server

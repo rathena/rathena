@@ -103,6 +103,35 @@ llm:
     temperature: "${OLLAMA_TEMPERATURE:-0.7}"
     timeout: "${OLLAMA_TIMEOUT:-60}"
 
+  # ============================================================================
+  # LLM Fallback Chain Configuration
+  # ============================================================================
+  # Automatic provider fallback ensures high availability by trying providers
+  # in sequence until one succeeds. The system tracks failures and automatically
+  # switches to the next provider when a threshold is reached. It also periodically
+  # checks if the primary provider has recovered.
+  #
+  # Default Chain: Azure OpenAI → OpenAI → Anthropic → DeepSeek → Ollama
+  # ============================================================================
+  
+  fallback:
+    enabled: true  # Enable automatic fallback chain
+    
+    # Provider chain order (tried sequentially on failure)
+    chain:
+      - azure_openai
+      - openai
+      - anthropic
+      - deepseek
+      - ollama
+    
+    # Max consecutive failures before switching to next provider
+    max_failures_per_provider: 3
+    
+    # Probability (0.0-1.0) of checking if primary provider recovered
+    # Set to 0.1 = 10% of successful calls check primary recovery
+    primary_recovery_check_rate: 0.1
+
 # ============================================================================
 # Database Configuration
 # ============================================================================

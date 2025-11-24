@@ -22,6 +22,10 @@ except ModuleNotFoundError:
         EconomicEvent, TradeRecommendation
     )
 
+# NEW: Import economic simulation components
+from agents.economic_simulation import EconomicSimulation
+from agents.economic_agents import EconomicAgentType
+
 
 class EconomyAgent(BaseAIAgent):
     """
@@ -33,6 +37,11 @@ class EconomyAgent(BaseAIAgent):
     - Economic events generation
     - Trade recommendations
     - Inflation and deflation
+    - Production chains
+    - Trade routes
+    - Economic agents
+    - Resource depletion
+    - Innovation cycles
     """
     
     def __init__(
@@ -49,8 +58,28 @@ class EconomyAgent(BaseAIAgent):
         )
         from agents.moral_alignment import MoralAlignment
         self.moral_alignment = MoralAlignment()
+        
+        # NEW: Initialize Complete Economic Simulation System
+        self.economic_simulation = EconomicSimulation()
+        
+        # NEW: Game statistics for innovation triggers
+        self.game_statistics = {
+            "total_iron_smelted": 0,
+            "wood_depleted_count": 0,
+            "potions_crafted": 0,
+            "total_trades": 0
+        }
+        
+        # NEW: Simulation update tracking
+        self.last_simulation_update = datetime.now(__import__('datetime').timezone.utc)
+        
         self.crew_agent = self._create_crew_agent()
-        logger.info(f"Economy Agent {agent_id} initialized")
+        logger.info(
+            f"Economy Agent {agent_id} initialized "
+            f"(Production chains: {len(self.economic_simulation.production_chains)}, "
+            f"Trade routes: {len(self.economic_simulation.trade_network.routes)}, "
+            f"Resources: {len(self.economic_simulation.resources)})"
+        )
     
     def _create_crew_agent(self) -> Agent:
         """Create CrewAI agent for economic simulation"""
@@ -89,9 +118,9 @@ class EconomyAgent(BaseAIAgent):
             llm=llm
         )
     
-    async def process(self, context: AgentContext) -> AgentResponse:
+    async def _process(self, context: AgentContext) -> AgentResponse:
         """
-        Process economic simulation task
+        Process economic simulation task (internal implementation)
         
         Args:
             context: Agent context with operation type
@@ -120,6 +149,13 @@ class EconomyAgent(BaseAIAgent):
                 result = await self._generate_economic_event(context)
             elif operation == "recommend_trade":
                 result = await self._recommend_trade(context)
+            # NEW: Complete economic simulation operations
+            elif operation == "simulate_complete":
+                result = await self._simulate_complete_economy(context)
+            elif operation == "add_agent":
+                result = await self._add_economic_agent(context)
+            elif operation == "check_innovations":
+                result = await self._check_innovations(context)
             else:
                 logger.warning(f"Unknown operation: {operation}")
                 result = {"error": f"Unknown operation: {operation}"}
@@ -445,4 +481,124 @@ Provide a brief analysis (2-3 sentences) and one key recommendation."""
                 json_str = response_text[start:end].strip()
                 return json.loads(json_str)
             return None
+    
+    async def _simulate_complete_economy(self, context: AgentContext) -> Dict[str, Any]:
+        """
+        Run complete economic simulation cycle
+        
+        Includes:
+        - Production chains
+        - Trade routes
+        - Economic agents
+        - Resource depletion
+        - Innovation checks
+        """
+        current_time = datetime.now(__import__('datetime').timezone.utc)
+        delta_seconds = (current_time - self.last_simulation_update).total_seconds()
+        self.last_simulation_update = current_time
+        
+        market_state = context.current_state.get("market_state", {})
+        
+        results = {
+            "simulation_time": current_time.isoformat(),
+            "delta_seconds": delta_seconds
+        }
+        
+        try:
+            # 1. Simulate production chains
+            production_results = await self.economic_simulation.simulate_production_chains(market_state)
+            results["production"] = production_results
+            
+            # Update statistics
+            for item_id, qty in production_results.get("items_produced", {}).items():
+                if "iron" in item_id:
+                    self.game_statistics["total_iron_smelted"] += qty
+                elif "potion" in item_id:
+                    self.game_statistics["potions_crafted"] += qty
+            
+            # 2. Simulate trade routes
+            trade_results = await self.economic_simulation.simulate_trade_routes(market_state)
+            results["trade"] = trade_results
+            self.game_statistics["total_trades"] += trade_results.get("routes_active", 0)
+            
+            # 3. Simulate economic agents
+            agent_results = await self.economic_simulation.simulate_economic_agents(market_state)
+            results["agents"] = agent_results
+            
+            # 4. Simulate resource depletion
+            depletion_results = self.economic_simulation.simulate_resource_depletion(delta_seconds)
+            results["resources"] = depletion_results
+            
+            # Track wood depletion
+            if "wood" in depletion_results.get("resources_depleted", []):
+                self.game_statistics["wood_depleted_count"] += 1
+            
+            # 5. Check for monopolies
+            monopolies = self.economic_simulation.detect_monopoly(market_state)
+            results["monopolies"] = monopolies
+            
+            # 6. Check innovations
+            innovations = self.economic_simulation.check_innovation_triggers(self.game_statistics)
+            results["innovations_discovered"] = [
+                {
+                    "id": inn.innovation_id,
+                    "name": inn.name,
+                    "discovered_at": inn.discovered_at.isoformat() if inn.discovered_at else None
+                }
+                for inn in innovations
+            ]
+            
+            # 7. Get simulation state
+            results["simulation_state"] = self.economic_simulation.get_simulation_state()
+            
+            logger.info(
+                f"Economic simulation completed: "
+                f"{production_results['chains_executed']} productions, "
+                f"{trade_results['routes_active']} trades, "
+                f"{agent_results['agents_active']} agents active"
+            )
+            
+            return results
+            
+        except Exception as e:
+            logger.error(f"Economic simulation failed: {e}")
+            return {"error": str(e)}
+    
+    async def _add_economic_agent(self, context: AgentContext) -> Dict[str, Any]:
+        """Add new economic agent to simulation"""
+        npc_id = context.current_state.get("npc_id")
+        agent_type_str = context.current_state.get("agent_type", "merchant")
+        
+        try:
+            agent_type = EconomicAgentType(agent_type_str)
+            agent = self.economic_simulation.add_economic_agent(npc_id, agent_type)
+            
+            return {
+                "success": True,
+                "agent_id": npc_id,
+                "agent_type": agent_type.value,
+                "starting_wealth": agent.wealth
+            }
+        except Exception as e:
+            logger.error(f"Failed to add economic agent: {e}")
+            return {"success": False, "error": str(e)}
+    
+    async def _check_innovations(self, context: AgentContext) -> Dict[str, Any]:
+        """Check and trigger innovations"""
+        innovations = self.economic_simulation.check_innovation_triggers(self.game_statistics)
+        
+        return {
+            "innovations_discovered": len(innovations),
+            "innovations": [
+                {
+                    "id": inn.innovation_id,
+                    "name": inn.name,
+                    "description": inn.description,
+                    "effects": inn.effects,
+                    "discovered_at": inn.discovered_at.isoformat() if inn.discovered_at else None
+                }
+                for inn in innovations
+            ],
+            "game_statistics": self.game_statistics
+        }
 

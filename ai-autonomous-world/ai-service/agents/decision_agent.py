@@ -13,6 +13,8 @@ from config import settings
 
 from agents.decision_optimizer import DecisionOptimizer
 from agents.moral_alignment import MoralAlignment
+from agents.decision_layers import HierarchicalDecisionSystem, DecisionLayer
+from agents.utility_system import UtilityBasedPlanner
 
 class DecisionAgent(BaseAIAgent):
     """
@@ -26,6 +28,8 @@ class DecisionAgent(BaseAIAgent):
     - Plan short-term actions
     - Integrate goal, emotion, and memory state for full consciousness model
     - Use DecisionOptimizer for ML-based decision (CPU/GPU), fallback to LLM if needed
+    - Use HierarchicalDecisionSystem for latency-based decision layers
+    - Use UtilityBasedPlanner for weighted factor evaluation
     """
     def __init__(self, agent_id: str, llm_provider: Any, config: Dict[str, Any]):
         """Initialize Decision Agent"""
@@ -38,7 +42,17 @@ class DecisionAgent(BaseAIAgent):
         self.ml_mode = config.get("ml_mode", "auto")  # "auto", "cpu", "gpu", "sklearn", "xgboost", "torch", "tf"
         self.optimizer = DecisionOptimizer(mode=self.ml_mode, fallback=None)
         self.moral_alignment = MoralAlignment()
-        logger.info(f"Decision Agent {agent_id} initialized (ML mode: {self.ml_mode})")
+        
+        # NEW: Initialize Hierarchical Decision System
+        self.hierarchical_system = HierarchicalDecisionSystem(llm_provider=self.llm_provider)
+        
+        # NEW: Initialize Utility-Based Planner with default weights
+        self.utility_planner = UtilityBasedPlanner()
+        
+        logger.info(
+            f"Decision Agent {agent_id} initialized "
+            f"(ML mode: {self.ml_mode}, Hierarchical: ✓, Utility: ✓)"
+        )
 
     def _create_crew_agent(self) -> Agent:
         """Create CrewAI agent for decision-making"""
@@ -70,9 +84,11 @@ class DecisionAgent(BaseAIAgent):
             llm=llm
         )
 
-    async def process(self, context: AgentContext) -> AgentResponse:
+    async def _process(self, context: AgentContext) -> AgentResponse:
         """
-        Make decision for NPC action using ML (CPU/GPU) or fallback to LLM.
+        Make decision for NPC action using hierarchical layers and utility-based planning.
+        
+        Internal implementation called by base class process() method.
 
         Args:
             context: AgentContext with NPC state and world information
@@ -85,81 +101,138 @@ class DecisionAgent(BaseAIAgent):
 
             # Get available actions
             available_actions = self._get_available_actions(context)
+            action_list = [a["type"] for a in available_actions]
 
             # Build decision context (now includes goal, emotion, memory)
             decision_context = self._build_decision_context(context)
 
-            # Prepare ML input features (example: flatten context, personality, goals, etc.)
-            features = self._extract_features(context, available_actions)
-            ml_decision = None
-            if features is not None:
-                try:
-                    ml_pred = self.optimizer.predict(features)
-                    action_idx = int(ml_pred[0]) if hasattr(ml_pred, "__getitem__") else 0
-                    action_type = available_actions[action_idx]["type"] if action_idx < len(available_actions) else "idle"
-                    ml_decision = {
-                        "action_type": action_type,
-                        "reasoning": f"ML model (mode={self.ml_mode}) selected action {action_type}",
-                        "priority": 5
-                    }
-                except Exception as e:
-                    logger.warning(f"ML model failed, will fallback to LLM: {e}")
+            # NEW: Assess urgency for latency budget
+            urgency = self._assess_urgency(context)
+            latency_budget = self._get_latency_budget(urgency)
+            
+            # NEW: Prepare state for hierarchical system
+            npc_state = {
+                "npc_id": context.npc_id,
+                "npc_class": context.current_state.get("npc_class", "generic"),
+                "personality": {
+                    "openness": context.personality.openness,
+                    "conscientiousness": context.personality.conscientiousness,
+                    "extraversion": context.personality.extraversion,
+                    "agreeableness": context.personality.agreeableness,
+                    "neuroticism": context.personality.neuroticism,
+                    "curiosity": getattr(context.personality, "curiosity", 0.5)
+                },
+                "hunger": context.current_state.get("hunger", 0),
+                "social_need": context.current_state.get("social_need", 0),
+                "current_goal": getattr(context.goal_state, "current_goal", None) if hasattr(context, "goal_state") else None,
+                "long_term_goals": getattr(context.goal_state, "long_term_goals", []) if hasattr(context, "goal_state") else [],
+                "relationships": context.current_state.get("relationships", {}),
+                "visited_locations": context.current_state.get("visited_locations", [])
+            }
+            
+            hierarchical_context = {
+                "hp_percentage": context.current_state.get("hp_percentage", 100),
+                "immediate_threat": context.current_state.get("immediate_threat"),
+                "nearby_npcs": context.current_state.get("nearby_npcs", []),
+                "distance_from_home": context.current_state.get("distance_from_home", 0),
+                "time_of_day": context.current_state.get("time_of_day", "day"),
+                "location": context.current_state.get("location", {})
+            }
 
-            # --- Moral Alignment System: update from action ---
-            # Example: update alignment from action type
-            if ml_decision is not None:
-                self.moral_alignment.update_from_action({"type": ml_decision["action_type"]})
-                action_data = self._parse_decision(ml_decision, available_actions, context)
-                logger.info(f"Decision made for {context.npc_id} (ML): {action_data.get('action_type')}")
-                return AgentResponse(
-                    agent_type=self.agent_type,
-                    success=True,
-                    data=action_data,
-                    confidence=0.95,
-                    reasoning=ml_decision.get("reasoning", "Decision based on ML model"),
-                    metadata={
-                        "available_actions_count": len(available_actions),
-                        "events_considered": len(context.recent_events),
-                        "ml_mode": self.ml_mode,
-                        "alignment": self.moral_alignment.to_dict()
-                    }
+            # NEW: Try hierarchical decision system first
+            hierarchical_decision = None
+            try:
+                layer_decision = await self.hierarchical_system.make_decision(
+                    npc_state=npc_state,
+                    context=hierarchical_context,
+                    max_latency=latency_budget
                 )
+                
+                if layer_decision and layer_decision.action in action_list:
+                    hierarchical_decision = {
+                        "action_type": layer_decision.action,
+                        "reasoning": f"[{layer_decision.layer.value}] {layer_decision.reasoning}",
+                        "priority": int(layer_decision.confidence * 10),
+                        "confidence": layer_decision.confidence,
+                        "layer": layer_decision.layer.value,
+                        "latency_ms": layer_decision.latency_ms
+                    }
+                    logger.info(
+                        f"Hierarchical decision for {context.npc_id}: "
+                        f"{layer_decision.action} (layer: {layer_decision.layer.value}, "
+                        f"confidence: {layer_decision.confidence:.2f})"
+                    )
+            except Exception as e:
+                logger.warning(f"Hierarchical decision failed: {e}")
 
-            # Fallback to LLM
-            decision = await self._make_decision(
-                npc_name=context.npc_name,
-                personality=self._build_personality_prompt(context.personality),
-                goal_state=self._build_goal_prompt(getattr(context, "goal_state", None)),
-                emotion_state=self._build_emotion_prompt(getattr(context, "emotion_state", None)),
-                memory_state=self._build_memory_prompt(getattr(context, "memory_state", None)),
-                available_actions=available_actions,
-                decision_context=decision_context,
-                recent_events=context.recent_events
-            )
-
-            if not isinstance(decision, dict):
-                logger.warning(f"Decision is not a dict (type: {type(decision)}), using fallback")
-                decision = {
-                    "action_type": "idle",
-                    "reasoning": "Fallback due to invalid decision format",
-                    "priority": 1
-                }
+            # NEW: If hierarchical decision uncertain, use utility-based planner
+            if hierarchical_decision and hierarchical_decision["confidence"] >= 0.7:
+                decision = hierarchical_decision
+            else:
+                logger.info("Using utility-based planner for decision refinement")
+                try:
+                    # Adjust utility weights based on personality
+                    self.utility_planner.adjust_weights_by_personality(npc_state["personality"])
+                    
+                    # Select best action using utility system
+                    best_action, utility_score = self.utility_planner.select_best_action(
+                        possible_actions=action_list,
+                        npc_state=npc_state,
+                        context=hierarchical_context
+                    )
+                    
+                    decision = {
+                        "action_type": best_action,
+                        "reasoning": f"Utility-based selection (score: {utility_score:.3f})",
+                        "priority": int(utility_score * 10),
+                        "confidence": utility_score,
+                        "method": "utility_planner"
+                    }
+                    logger.info(
+                        f"Utility decision for {context.npc_id}: "
+                        f"{best_action} (utility: {utility_score:.3f})"
+                    )
+                except Exception as e:
+                    logger.warning(f"Utility planner failed: {e}")
+                    # Final fallback to LLM
+                    decision = await self._make_decision(
+                        npc_name=context.npc_name,
+                        personality=self._build_personality_prompt(context.personality),
+                        goal_state=self._build_goal_prompt(getattr(context, "goal_state", None)),
+                        emotion_state=self._build_emotion_prompt(getattr(context, "emotion_state", None)),
+                        memory_state=self._build_memory_prompt(getattr(context, "memory_state", None)),
+                        available_actions=available_actions,
+                        decision_context=decision_context,
+                        recent_events=context.recent_events
+                    )
+                    
+                    if not isinstance(decision, dict):
+                        logger.warning(f"Decision is not a dict (type: {type(decision)}), using fallback")
+                        decision = {
+                            "action_type": "idle",
+                            "reasoning": "Fallback due to invalid decision format",
+                            "priority": 1,
+                            "confidence": 0.5
+                        }
 
             # --- Moral Alignment System: update from action ---
             self.moral_alignment.update_from_action({"type": decision.get("action_type", "idle")})
 
             action_data = self._parse_decision(decision, available_actions, context)
-            logger.info(f"Decision made for {context.npc_id} (LLM): {action_data.get('action_type')}")
+            logger.info(f"Final decision for {context.npc_id}: {action_data.get('action_type')}")
+            
             return AgentResponse(
                 agent_type=self.agent_type,
                 success=True,
                 data=action_data,
-                confidence=0.80,
-                reasoning=decision.get("reasoning", "Decision based on personality, goals, emotion, and context"),
+                confidence=decision.get("confidence", 0.80),
+                reasoning=decision.get("reasoning", "Decision based on hierarchical/utility systems"),
                 metadata={
                     "available_actions_count": len(available_actions),
                     "events_considered": len(context.recent_events),
-                    "ml_mode": self.ml_mode,
+                    "decision_method": decision.get("method", decision.get("layer", "unknown")),
+                    "urgency": urgency,
+                    "latency_budget_ms": latency_budget * 1000 if latency_budget else None,
                     "alignment": self.moral_alignment.to_dict()
                 }
             )
@@ -488,3 +561,44 @@ Respond with a JSON object containing:
             logger.warning(f"NPC {context.npc_id}: Could not find valid exploration position within boundaries")
             return {"movement_type": "idle", "duration": 5}
         return {"movement_type": movement_type, "duration": 5}
+    
+    def _assess_urgency(self, context: AgentContext) -> str:
+        """
+        Assess situation urgency
+        
+        Returns:
+            "critical", "high", "normal", or "low"
+        """
+        # Check for critical situations
+        hp = context.current_state.get("hp", 100)
+        if hp < 20:
+            return "critical"
+        
+        # Check for immediate threats
+        if context.current_state.get("immediate_threat"):
+            return "high"
+        
+        # Check primary emotion
+        if hasattr(context, "emotion_state") and context.emotion_state:
+            if context.emotion_state.primary_emotion == "fear":
+                return "high"
+            elif context.emotion_state.primary_emotion in ["anger", "surprise"]:
+                return "normal"
+        
+        # Default normal
+        return "normal"
+    
+    def _get_latency_budget(self, urgency: str) -> Optional[float]:
+        """
+        Get time budget based on urgency
+        
+        Returns:
+            Max latency in seconds or None for full budget
+        """
+        budgets = {
+            "critical": 0.010,  # 10ms - reflex only
+            "high": 0.050,      # 50ms - up to reactive
+            "normal": 0.200,    # 200ms - up to deliberative
+            "low": None         # Full budget - all layers
+        }
+        return budgets.get(urgency, 0.200)

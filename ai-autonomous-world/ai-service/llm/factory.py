@@ -12,6 +12,7 @@ from .providers.anthropic_provider import AnthropicProvider
 from .providers.google_provider import GoogleProvider
 from .providers.deepseek_provider import DeepSeekProvider
 from .providers.ollama_provider import OllamaProvider
+from .fallback_provider import FallbackLLMProvider
 
 
 class LLMProviderFactory:
@@ -188,4 +189,71 @@ def get_llm_provider(
         raise ValueError(f"API key for provider '{provider_name}' is empty or None")
 
     return LLMProviderFactory.get_or_create_provider(provider_name, config)
+
+
+def get_llm_provider_with_fallback(
+    provider_chain: Optional[List[str]] = None,
+    max_failures: int = 3,
+    recovery_check_rate: float = 0.1
+) -> FallbackLLMProvider:
+    """
+    Get LLM provider with automatic fallback chain.
+    
+    Tries providers in order until one succeeds:
+    Default chain: azure_openai → openai → anthropic → deepseek → ollama
+    
+    Args:
+        provider_chain: Custom fallback order, or None for default
+        max_failures: Max consecutive failures before switching (default: 3)
+        recovery_check_rate: Probability of checking primary recovery (default: 0.1)
+        
+    Returns:
+        FallbackLLMProvider wrapper that handles automatic switching
+        
+    Raises:
+        ValueError: If no providers are available in the fallback chain
+    """
+    from config import settings
+    
+    if provider_chain is None:
+        # Default fallback chain from documentation
+        provider_chain = [
+            "azure_openai",
+            "openai",
+            "anthropic",
+            "deepseek",
+            "ollama"
+        ]
+    
+    # Create provider instances for chain
+    providers = []
+    provider_names = []
+    
+    for provider_name in provider_chain:
+        try:
+            provider = get_llm_provider(provider_name)
+            providers.append(provider)
+            provider_names.append(provider_name)
+            logger.info(f"Added {provider_name} to fallback chain")
+        except Exception as e:
+            logger.warning(f"Failed to initialize {provider_name} for fallback chain: {e}")
+            continue
+    
+    if not providers:
+        raise ValueError(
+            f"No providers available in fallback chain. "
+            f"Attempted: {', '.join(provider_chain)}"
+        )
+    
+    logger.info(
+        f"Created fallback chain with {len(providers)} providers: "
+        f"{' → '.join(provider_names)}"
+    )
+    
+    return FallbackLLMProvider(
+        providers=providers,
+        provider_names=provider_names,
+        max_failures=max_failures,
+        recovery_check_rate=recovery_check_rate
+    )
 

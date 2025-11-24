@@ -33,7 +33,12 @@ numpy==2.3.5
 pandas==2.3.3
 scikit-learn==1.7.2
 xgboost==3.1.1
-tensorflow==2.20.0
+
+# Deep Learning Frameworks
+torch>=2.4.0  # PyTorch for neural network training and reinforcement learning
+transformers>=4.45.0  # Hugging Face transformers for LLM/NLP tasks
+accelerate>=0.34.0  # Hugging Face acceleration library for multi-GPU and distributed training
+tensorflow==2.20.0  # TensorFlow for additional ML models
 
 # Vector Operations
 sentence-transformers==5.1.2

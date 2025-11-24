@@ -66,6 +66,9 @@ void set_inter_server_protocol(InterServerProtocol);
 #include "storage.hpp"
 #include "trade.hpp"
 
+// Embedded Python AI Bridge
+#include "../custom/ai_bridge.hpp"
+
 using namespace rathena;
 using namespace rathena::server_map;
 
@@ -5132,7 +5135,12 @@ void MapServer::finalize(){
 	ShowStatus("Terminating...\n");
 	channel_config.closing = true;
 
-	// Shutdown AI Dialogue System first
+	// Shutdown Embedded Python AI Bridge first
+	ShowStatus("Shutting down Embedded Python AI Bridge...\n");
+	AIBridge::instance().shutdown();
+	ShowStatus("Embedded Python AI Bridge: Shutdown complete\n");
+
+	// Shutdown AI Dialogue System
 	if (ai_dialogue_enabled && ai_dialogue_worker) {
 		ShowStatus("Shutting down AI Dialogue System...\n");
 		ai_dialogue_worker->stop();
@@ -5620,6 +5628,15 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	do_init_duel();
 	do_init_vending();
 	do_init_buyingstore();
+
+	// Initialize Embedded Python AI Bridge
+	ShowStatus("Initializing Embedded Python AI Bridge...\n");
+	if (!AIBridge::instance().initialize()) {
+		ShowWarning("Failed to initialize Embedded Python AI Bridge - AI features will be unavailable\n");
+		ShowWarning("Server will continue in degraded mode without AI support\n");
+	} else {
+		ShowStatus("Embedded Python AI Bridge: Initialized successfully (sub-microsecond latency enabled)\n");
+	}
 
 	npc_event_do_oninit();	// Init npcs (OnInit)
 

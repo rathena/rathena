@@ -79,8 +79,8 @@ class BaseAIAgent(ABC):
         self,
         agent_id: str,
         agent_type: str,
-        llm_provider: Any,
-        config: Dict[str, Any]
+        llm_provider: Optional[Any] = None,
+        config: Optional[Dict[str, Any]] = None
     ):
         """
         Initialize base agent
@@ -88,13 +88,38 @@ class BaseAIAgent(ABC):
         Args:
             agent_id: Unique identifier for this agent instance
             agent_type: Type of agent (dialogue, decision, memory, world, quest, economy)
-            llm_provider: LLM provider instance for generation
+            llm_provider: LLM provider instance for generation (if None, uses fallback chain)
             config: Configuration dictionary for agent behavior
         """
         self.agent_id = agent_id
         self.agent_type = agent_type
-        self.llm_provider = llm_provider
-        self.config = config
+        self.config = config or {}
+        
+        # Initialize LLM provider with fallback chain if not provided
+        if llm_provider is None:
+            try:
+                from llm.factory import get_llm_provider_with_fallback
+                from config import settings
+                
+                # Use fallback chain by default
+                self.llm_provider = get_llm_provider_with_fallback(
+                    provider_chain=getattr(settings, 'llm_fallback_chain', None),
+                    max_failures=getattr(settings, 'llm_fallback_max_failures', 3),
+                    recovery_check_rate=getattr(settings, 'llm_primary_recovery_check_rate', 0.1)
+                )
+                
+                logger.info(
+                    f"Initialized {agent_id} with fallback chain: "
+                    f"{self.llm_provider.get_current_provider_name()}"
+                )
+            except Exception as e:
+                logger.error(f"Failed to initialize fallback chain for {agent_id}: {e}")
+                # Fallback to single provider
+                from llm.factory import get_llm_provider
+                self.llm_provider = get_llm_provider()
+                logger.warning(f"Using single provider fallback for {agent_id}")
+        else:
+            self.llm_provider = llm_provider
         
         logger.info(f"Initializing {agent_type} agent: {agent_id}")
         
@@ -267,7 +292,7 @@ class BaseAIAgent(ABC):
         temperature: float = 0.7
     ) -> str:
         """
-        Generate text using the LLM provider
+        Generate text using the LLM provider with cost tracking
 
         Args:
             prompt: User prompt
@@ -280,10 +305,34 @@ class BaseAIAgent(ABC):
         try:
             response = await self.llm_provider.generate(
                 prompt=prompt,
-                system_prompt=system_message,  # Fixed: use system_prompt instead of system_message
+                system_prompt=system_message,
                 temperature=temperature
             )
-            return response.content  # Fixed: use content instead of text
+            
+            # NEW: Record cost if cost manager available
+            try:
+                from services.cost_manager import get_cost_manager
+                cost_manager = get_cost_manager()
+                
+                # Get provider name from response metadata or llm_provider
+                provider_name = getattr(response, 'provider', 'unknown')
+                if hasattr(self.llm_provider, 'get_current_provider_name'):
+                    provider_name = self.llm_provider.get_current_provider_name()
+                
+                # Record cost
+                cost_manager.record_cost(
+                    provider=provider_name,
+                    model=getattr(response, 'model', 'unknown'),
+                    tokens_input=getattr(response, 'tokens_input', 0),
+                    tokens_output=getattr(response, 'tokens_output', 0),
+                    cost_usd=getattr(response, 'cost_usd', 0.0),
+                    request_type=self.agent_type
+                )
+            except Exception as cost_err:
+                # Don't fail request if cost tracking fails
+                logger.warning(f"Cost tracking failed: {cost_err}")
+            
+            return response.content
         except Exception as e:
             logger.error(f"LLM generation failed in {self.agent_type} agent: {e}")
             raise

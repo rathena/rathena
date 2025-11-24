@@ -27,6 +27,15 @@ except ImportError:
     get_circuit_breaker = None
     CircuitBreakerError = Exception
 
+# Import cost manager
+try:
+    from services.cost_manager import get_cost_manager, BudgetExceededException, ProviderBudgetExceededException
+except ImportError:
+    # Fallback if import fails
+    get_cost_manager = None
+    BudgetExceededException = Exception
+    ProviderBudgetExceededException = Exception
+
 
 class ProviderType(Enum):
     """LLM provider types"""
@@ -223,6 +232,10 @@ class BaseLLMProvider(ABC):
             
         Returns:
             LLMResponse with generated text and metadata
+            
+        Raises:
+            BudgetExceededException: If daily budget limit reached
+            ProviderBudgetExceededException: If provider-specific budget limit reached
         """
         start_time = time.time()
         self._total_requests += 1
@@ -231,6 +244,26 @@ class BaseLLMProvider(ABC):
             # Mock mode for testing
             if self.mock_mode:
                 return await self._mock_response(messages)
+            
+            # Check budget availability BEFORE making request
+            if get_cost_manager:
+                try:
+                    cost_manager = get_cost_manager()
+                    # Estimate cost based on max_tokens (conservative estimate)
+                    estimated_cost = (max_tokens / 1000) * max(self.COST_PER_1K_INPUT_TOKENS, self.COST_PER_1K_OUTPUT_TOKENS)
+                    if not cost_manager.is_budget_available(estimated_cost, self.provider_type.value):
+                        logger.error(
+                            f"Budget limit reached for {self.provider_type.value}, "
+                            f"request blocked"
+                        )
+                        raise BudgetExceededException(
+                            f"Daily budget limit reached",
+                            current=cost_manager.get_total_cost_today() + estimated_cost,
+                            limit=cost_manager.daily_budget
+                        )
+                except RuntimeError:
+                    # Cost manager not initialized, proceed without budget check
+                    pass
             
             # Rate limit check
             await self._check_rate_limit()
@@ -242,8 +275,26 @@ class BaseLLMProvider(ABC):
             
             # Calculate metrics
             latency_ms = (time.time() - start_time) * 1000
-            tokens_used = response.get("tokens_used", 0)
-            cost = self._calculate_cost(tokens_used)
+            tokens_input = response.get("tokens_input", 0)
+            tokens_output = response.get("tokens_output", 0)
+            tokens_used = response.get("tokens_used", tokens_input + tokens_output)
+            cost = self._calculate_cost_detailed(tokens_input, tokens_output)
+            
+            # Record cost in cost manager
+            if get_cost_manager:
+                try:
+                    cost_manager = get_cost_manager()
+                    cost_manager.record_cost(
+                        provider=self.provider_type.value,
+                        model=self.model,
+                        tokens_input=tokens_input,
+                        tokens_output=tokens_output,
+                        cost_usd=cost,
+                        request_type=kwargs.get("request_type", "chat")
+                    )
+                except (RuntimeError, BudgetExceededException, ProviderBudgetExceededException):
+                    # Cost manager error - log but don't fail the request since it already succeeded
+                    logger.warning(f"Cost recording failed but request succeeded")
             
             # Update metrics
             self._successful_requests += 1
@@ -269,6 +320,10 @@ class BaseLLMProvider(ABC):
                 metadata=response.get("metadata", {}),
             )
             
+        except (BudgetExceededException, ProviderBudgetExceededException):
+            # Budget exceptions should propagate
+            self._failed_requests += 1
+            raise
         except Exception as e:
             self._failed_requests += 1
             logger.error(
@@ -378,6 +433,21 @@ class BaseLLMProvider(ABC):
         """
         # Simple calculation - can be overridden for more complex pricing
         return (tokens_used / 1000) * self.COST_PER_1K_INPUT_TOKENS
+    
+    def _calculate_cost_detailed(self, tokens_input: int, tokens_output: int) -> float:
+        """
+        Calculate cost with separate input/output token pricing.
+        
+        Args:
+            tokens_input: Input token count
+            tokens_output: Output token count
+            
+        Returns:
+            Cost in USD
+        """
+        input_cost = (tokens_input / 1000) * self.COST_PER_1K_INPUT_TOKENS
+        output_cost = (tokens_output / 1000) * self.COST_PER_1K_OUTPUT_TOKENS
+        return input_cost + output_cost
     
     async def _mock_response(self, messages: List[Dict[str, str]]) -> LLMResponse:
         """Generate mock response for testing"""

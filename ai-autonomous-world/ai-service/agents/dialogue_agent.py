@@ -6,11 +6,13 @@ Phase 8A: Added Redis caching for frequently requested dialogues
 
 from typing import Dict, Any, List
 from loguru import logger
+import time
 
 from crewai import Agent
 from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 from config import settings
 from utils.cache import cache_response
+from utils.prometheus_metrics import record_agent_request, agent_request_duration, npc_dialogue_length
 from models.information import (
     InformationItem, filter_information_by_relationship
 )
@@ -80,6 +82,10 @@ class DialogueAgent(BaseAIAgent):
         Returns:
             AgentResponse with generated dialogue
         """
+        start_time = time.time()
+        status = "failure"
+        error_type = None
+        
         try:
             logger.info(f"Dialogue Agent processing for NPC: {context.npc_id}")
 
@@ -153,6 +159,10 @@ class DialogueAgent(BaseAIAgent):
                 "alignment": self.moral_alignment.to_dict()
             }
 
+            # Record dialogue length metric
+            npc_dialogue_length.labels(npc_type=context.npc_name).observe(len(dialogue))
+            
+            status = "success"
             logger.info(f"Dialogue generated successfully for {context.npc_id}")
 
             return AgentResponse(
@@ -170,12 +180,24 @@ class DialogueAgent(BaseAIAgent):
 
         except Exception as e:
             logger.error(f"Dialogue generation failed for {context.npc_id}: {e}")
+            error_type = type(e).__name__
             return AgentResponse(
                 agent_type=self.agent_type,
                 success=False,
                 data={"error": str(e)},
                 confidence=0.0,
                 reasoning=f"Error during dialogue generation: {e}"
+            )
+        finally:
+            # Record agent metrics
+            duration = time.time() - start_time
+            record_agent_request(
+                agent_type="dialogue",
+                operation="generate",
+                duration=duration,
+                status=status,
+                confidence=0.85 if status == "success" else None,
+                error_type=error_type
             )
 
     def _build_context_info(self, context: AgentContext) -> str:

@@ -61,3 +61,27 @@ performance:
   max_concurrent_requests: 100
   request_timeout: 30
 
+# Cost Management and Budget Controls
+# Comprehensive cost tracking and budget enforcement for LLM API calls
+cost_management:
+  enabled: true
+  
+  # Total daily spending limit (USD)
+  daily_budget_usd: 100.0
+  
+  # Per-provider daily budget limits (USD)
+  per_provider_budgets:
+    azure_openai: 50.0
+    openai: 30.0
+    anthropic: 20.0
+    deepseek: 10.0
+    ollama: 0.0  # Free/local
+  
+  # Budget alert thresholds (percentages)
+  # Alerts triggered when budget usage reaches these levels
+  budget_alert_thresholds:
+    - 50
+    - 75
+    - 90
+    - 100
+

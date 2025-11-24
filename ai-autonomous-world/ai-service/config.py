@@ -94,6 +94,57 @@ class Settings(BaseSettings):
     azure_openai_deployment: str = Field(default="gpt-4", env="AZURE_OPENAI_DEPLOYMENT")
     azure_openai_api_version: str = Field(default="2024-02-15-preview", env="AZURE_OPENAI_API_VERSION")
 
+    # LLM Fallback Chain Configuration
+    llm_fallback_enabled: bool = Field(
+        default=True,
+        env="LLM_FALLBACK_ENABLED",
+        description="Enable automatic LLM provider fallback chain"
+    )
+    
+    llm_fallback_chain: List[str] = Field(
+        default=["azure_openai", "openai", "anthropic", "deepseek", "ollama"],
+        env="LLM_FALLBACK_CHAIN",
+        description="Provider fallback order (comma-separated in env)"
+    )
+    
+    llm_fallback_max_failures: int = Field(
+        default=3,
+        env="LLM_FALLBACK_MAX_FAILURES",
+        description="Max consecutive failures before switching provider"
+    )
+    
+    llm_primary_recovery_check_rate: float = Field(
+        default=0.1,
+        env="LLM_PRIMARY_RECOVERY_CHECK_RATE",
+        description="Probability of checking primary provider recovery (0.0-1.0)"
+    )
+
+    @field_validator('llm_fallback_chain', mode='before')
+    @classmethod
+    def parse_fallback_chain(cls, v):
+        """Parse fallback chain from comma-separated string or list"""
+        if isinstance(v, str):
+            if not v or v.strip() == '':
+                return ["azure_openai", "openai", "anthropic", "deepseek", "ollama"]
+            return [provider.strip() for provider in v.split(',') if provider.strip()]
+        return v
+
+    @field_validator('llm_fallback_max_failures')
+    @classmethod
+    def validate_max_failures(cls, v: int) -> int:
+        """Validate max failures is positive"""
+        if v < 1:
+            raise ValueError(f"llm_fallback_max_failures must be at least 1, got {v}")
+        return v
+
+    @field_validator('llm_primary_recovery_check_rate')
+    @classmethod
+    def validate_recovery_rate(cls, v: float) -> float:
+        """Validate recovery check rate is between 0.0 and 1.0"""
+        if not 0.0 <= v <= 1.0:
+            raise ValueError(f"llm_primary_recovery_check_rate must be between 0.0 and 1.0, got {v}")
+        return v
+
     @field_validator('azure_openai_endpoint')
     @classmethod
     def validate_azure_endpoint(cls, v: Optional[str]) -> Optional[str]:
@@ -613,6 +664,84 @@ class Settings(BaseSettings):
     db_connection_max_retries: int = Field(default=5, env="DB_CONNECTION_MAX_RETRIES", description="Maximum database connection retries")
     db_connection_retry_delay: float = Field(default=1.0, env="DB_CONNECTION_RETRY_DELAY", description="Initial database retry delay in seconds")
 
+    # ============================================================================
+    # COST MANAGEMENT CONFIGURATION
+    # ============================================================================
+    
+    # Cost Management
+    cost_management_enabled: bool = Field(
+        default=True,
+        env="COST_MANAGEMENT_ENABLED",
+        description="Enable cost tracking and budget enforcement"
+    )
+    
+    daily_budget_usd: float = Field(
+        default=100.0,
+        env="DAILY_BUDGET_USD",
+        description="Maximum daily spending limit in USD"
+    )
+    
+    per_provider_budgets: Dict[str, float] = Field(
+        default_factory=lambda: {
+            "azure_openai": 50.0,
+            "openai": 30.0,
+            "anthropic": 20.0,
+            "deepseek": 10.0,
+            "ollama": 0.0  # Free/local
+        },
+        env="PER_PROVIDER_BUDGETS",
+        description="Per-provider daily budget limits in USD (JSON format in env)"
+    )
+    
+    budget_alert_thresholds: List[int] = Field(
+        default=[50, 75, 90, 100],
+        env="BUDGET_ALERT_THRESHOLDS",
+        description="Budget percentage thresholds for alerts (comma-separated in env)"
+    )
+
+    @field_validator('per_provider_budgets', mode='before')
+    @classmethod
+    def parse_provider_budgets(cls, v):
+        """Parse provider budgets from JSON string or dict"""
+        if isinstance(v, str):
+            import json
+            try:
+                return json.loads(v)
+            except json.JSONDecodeError:
+                logger.warning(f"Invalid JSON for per_provider_budgets: {v}, using defaults")
+                return {
+                    "azure_openai": 50.0,
+                    "openai": 30.0,
+                    "anthropic": 20.0,
+                    "deepseek": 10.0,
+                    "ollama": 0.0
+                }
+        return v or {
+            "azure_openai": 50.0,
+            "openai": 30.0,
+            "anthropic": 20.0,
+            "deepseek": 10.0,
+            "ollama": 0.0
+        }
+
+    @field_validator('budget_alert_thresholds', mode='before')
+    @classmethod
+    def parse_alert_thresholds(cls, v):
+        """Parse alert thresholds from comma-separated string or list"""
+        if isinstance(v, str):
+            if not v or v.strip() == '':
+                return [50, 75, 90, 100]
+            return [int(x.strip()) for x in v.split(',') if x.strip()]
+        return v or [50, 75, 90, 100]
+
+    @field_validator('daily_budget_usd')
+    @classmethod
+    def validate_daily_budget(cls, v: float) -> float:
+        """Validate daily budget is positive"""
+        if v <= 0:
+            raise ValueError(f"daily_budget_usd must be positive, got {v}")
+        return v
+
     @field_validator('service_port', 'redis_port', 'postgres_port', 'rathena_bridge_port', check_fields=False)
     @classmethod
     def validate_port(cls, v: int, info) -> int:
@@ -883,6 +1012,15 @@ def get_settings(config_path: Optional[str] = None) -> Settings:
     logger.info(f"  - Complexity Threshold: {settings.decision_complexity_threshold}")
 
     logger.info("=" * 80)
+    
+    # Log Cost Management Configuration
+    logger.info(f"Cost Management: Enabled={settings.cost_management_enabled}")
+    if settings.cost_management_enabled:
+        logger.info(f"  - Daily Budget: ${settings.daily_budget_usd:.2f}")
+        logger.info(f"  - Per-Provider Budgets:")
+        for provider, budget in settings.per_provider_budgets.items():
+            logger.info(f"    - {provider}: ${budget:.2f}")
+        logger.info(f"  - Alert Thresholds: {settings.budget_alert_thresholds}%")
 
     # Log Free-Form Text Input Configuration
     logger.info(f"Free-Form Text Input: Enabled={settings.freeform_text_enabled}")
