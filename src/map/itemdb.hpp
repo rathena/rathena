@@ -3362,6 +3362,11 @@ struct item_data
 		int32 chance;
 		int32 id;
 	} mob[MAX_SEARCH]; //Holds the mobs that have the highest drop rate for this item. [Skotlex]
+    struct {  
+        int32 chance;  
+        uint16 mapid;  
+        uint16 mob_id;  // 0 for global drops, specific mob_id for mob-specific drops  
+    } map_drop[MAX_SEARCH];
 	struct script_code *script;	//Default script for everything.
 	struct script_code *equip_script;	//Script executed once when equipping.
 	struct script_code *unequip_script;//Script executed once when unequipping.
