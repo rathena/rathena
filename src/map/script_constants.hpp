@@ -10309,6 +10309,7 @@
 	export_constant(INF2_SHOWSCALE);
 	export_constant(INF2_IGNOREGTB);
 	export_constant(INF2_TOGGLEABLE);
+	export_constant(INF2_MULTIHITONPLANTS);
 
 	/* skill no near npc flags */
 	export_constant(SKILL_NONEAR_WARPPORTAL);
