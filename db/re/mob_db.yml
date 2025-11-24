@@ -59,6 +59,8 @@
 #   ClientAttackMotion      Client attack speed. (Default: AttackMotion)
 #   DamageMotion            Damage animation speed. (Default: 0)
 #   DamageTaken             Rate at which the monster will receive incoming damage. (Default: 100)
+#   GroupId                 Monster group ID. (Default: 0)
+#   Title                   Monster title. (Default: None)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)
 #   Class                   Aegis monster class. (Default: Normal)
 #   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
@@ -78,7 +80,7 @@
 
 Header:
   Type: MOB_DB
-  Version: 4
+  Version: 5
 
 Body:
   - Id: 1001
@@ -93067,6 +93069,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Plant
+    RaceGroups:
+      Lasagna: true
     Element: Water
     ElementLevel: 1
     WalkSpeed: 200
@@ -93115,6 +93119,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 300
@@ -93163,6 +93169,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 250
@@ -93211,6 +93219,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Brute
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 250
@@ -93314,6 +93324,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Plant
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 1000
@@ -93362,6 +93374,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Insect
+    RaceGroups:
+      Lasagna: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 250
@@ -100685,6 +100699,7 @@ Body:
     Race: Insect
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 5
     Element: Earth
     ElementLevel: 1
     WalkSpeed: 200
@@ -100737,6 +100752,7 @@ Body:
     Race: Formless
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 5
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 150
@@ -100787,6 +100803,7 @@ Body:
     Race: Formless
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 5
     Element: Neutral
     ElementLevel: 4
     WalkSpeed: 200
@@ -100896,6 +100913,7 @@ Body:
     Race: Plant
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 4
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 175
@@ -100946,6 +100964,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 4
     Element: Earth
     ElementLevel: 2
     WalkSpeed: 200
@@ -100996,6 +101015,7 @@ Body:
     Race: Demihuman
     RaceGroups:
       Illusion_Luanda: true
+    GroupId: 4
     Element: Fire
     ElementLevel: 2
     WalkSpeed: 200
@@ -102421,6 +102441,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 120
@@ -102466,6 +102488,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 150
@@ -102508,6 +102532,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 150
@@ -102558,6 +102584,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Formless
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Earth
     ElementLevel: 3
     WalkSpeed: 200
@@ -102604,6 +102632,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demihuman
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Undead
     ElementLevel: 2
     WalkSpeed: 150
@@ -103000,6 +103030,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Water
     ElementLevel: 3
     WalkSpeed: 150
@@ -103049,6 +103081,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Fire
     ElementLevel: 3
     WalkSpeed: 150
@@ -103315,6 +103349,8 @@ Body:
     ChaseRange: 12
     Size: Medium
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Wind
     ElementLevel: 2
     WalkSpeed: 100
@@ -103365,6 +103401,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Demon
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Dark
     ElementLevel: 3
     WalkSpeed: 150
@@ -103422,6 +103460,8 @@ Body:
     ChaseRange: 12
     Size: Large
     Race: Undead
+    RaceGroups:
+      Glast_Heim_Abyss: true
     Element: Undead
     ElementLevel: 3
     WalkSpeed: 100
@@ -104475,6 +104515,7 @@ Body:
   - Id: 20620
     AegisName: MD_REDPEPPER
     Name: Red Pepper
+    Title: "<Red Pepper>"
     Level: 135
     Hp: 9514800
     BaseExp: 426099
@@ -104528,6 +104569,7 @@ Body:
   - Id: 20621
     AegisName: MD_REDPEPPER_H
     Name: Senior Red Pepper
+    Title: "<Red Pepper>"
     Level: 185
     Hp: 1008398847
     BaseExp: 3381619
@@ -108780,7 +108822,7 @@ Body:
     AttackMotion: 864
     ClientAttackMotion: 648
     DamageMotion: 1440
-#   Ai: 
+    Ai: Abr_Offensive
   - Id: 20835
     AegisName: ABR_DUAL_CANNON
     Name: ABR Duel Cannon
@@ -108805,7 +108847,7 @@ Body:
     AttackMotion: 768
     ClientAttackMotion: 576
     DamageMotion: 1008
-#   Ai: 
+    Ai: Abr_Offensive
   - Id: 20836
     AegisName: ABR_MOTHER_NET
     Name: ABR Mother Net
@@ -108830,7 +108872,7 @@ Body:
     AttackMotion: 1008
     ClientAttackMotion: 672
     DamageMotion: 576
-#   Ai: 
+    Ai: Abr_Passive
   - Id: 20837
     AegisName: ABR_INFINITY
     Name: ABR Infinity
@@ -108855,7 +108897,7 @@ Body:
     AttackMotion: 1728
     ClientAttackMotion: 840
     DamageMotion: 1008
-#   Ai: 
+    Ai: Abr_Offensive
 #  - Id: 20838
 #    AegisName: ELEMETAL_MASTER_S1
 #  - Id: 20839
@@ -117610,10 +117652,20 @@ Body:
 #    AegisName: EP21_B_YORTUS_A_H
 #  - Id: 22422
 #    AegisName: EP21_B_YORTUS_B_H
+#  - Id: 22423
+#    AegisName: 2501_EV_MATJALAL
+#  - Id: 22424
+#    AegisName: 2501_EV_ACARI
 #  - Id: 22425
 #    AegisName: E_LEADER_SHEEP
 #  - Id: 22426
 #    AegisName: E_WINTER_SAVAGE
+#  - Id: 22427
+#    AegisName: MANDURING
+#  - Id: 22429
+#    AegisName: KINGMANDURING
+#  - Id: 22430
+#    AegisName: E_WINTER_KEEPER
 #  - Id: 22431
 #    AegisName: TATSI
 #  - Id: 22432
@@ -117638,6 +117690,456 @@ Body:
 #    AegisName: CP_SIRENA
 #  - Id: 22442
 #    AegisName: CP_DIOSA
+#  - Id: 22443
+#    AegisName: CH1_YGGRING
+#  - Id: 22444
+#    AegisName: CH1_LEAFEING
+#  - Id: 22445
+#    AegisName: CH1_CHARCOARING
+#  - Id: 22446
+#    AegisName: CH1_VULRING
+#  - Id: 22447
+#    AegisName: CH1_FIRELOOP
+#  - Id: 22448
+#    AegisName: CH1_FIRAFFLESIA
+#  - Id: 22449
+#    AegisName: CH1_VOLIMPET
+#  - Id: 22450
+#    AegisName: CH1_FIRE_FLOWER
+#  - Id: 22451
+#    AegisName: CH1_PEEPING
+#  - Id: 22452
+#    AegisName: CH1_SILK_FROG
+#  - Id: 22453
+#    AegisName: CH1_SILK_SNAIL
+#  - Id: 22454
+#    AegisName: CH1_EX_ROBOT
+#  - Id: 22455
+#    AegisName: CH1_REPAIR_ROBOT
+#  - Id: 22456
+#    AegisName: CH1_DIMIC_1
+#  - Id: 22457
+#    AegisName: CH1_DIMIC_2
+#  - Id: 22458
+#    AegisName: CH1_DIMIC_3
+#  - Id: 22459
+#    AegisName: CH1_DIMIC_4
+#  - Id: 22460
+#    AegisName: CH1_IMMORTAL_CORPS1
+#  - Id: 22461
+#    AegisName: CH1_IMMORTAL_CORPS2
+#  - Id: 22462
+#    AegisName: CH1_IMMORTAL_CORPS3
+#  - Id: 22463
+#    AegisName: CH1_NYAISE
+#  - Id: 22464
+#    AegisName: CH1_SHADOW_JAILER
+#  - Id: 22465
+#    AegisName: CH1_TULIP
+#  - Id: 22466
+#    AegisName: CH1_CALENDULA
+#  - Id: 22467
+#    AegisName: CH1_SCABIOSA
+#  - Id: 22468
+#    AegisName: CH1_LOBELIA
+#  - Id: 22469
+#    AegisName: CH1_MYOSOTIS
+#  - Id: 22470
+#    AegisName: CH1_ANEMONE
+#  - Id: 22471
+#    AegisName: CH1_SKOGL
+#  - Id: 22472
+#    AegisName: CH1_FRUS
+#  - Id: 22473
+#    AegisName: CH1_LISTENER
+#  - Id: 22474
+#    AegisName: CH1_IMMORTAL_OFFICER1
+#  - Id: 22475
+#    AegisName: CH1_IMMORTAL_OFFICER2
+#  - Id: 22476
+#    AegisName: CH1_TOXIT
+#  - Id: 22477
+#    AegisName: CP_CH1_TOXIT
+#  - Id: 22478
+#    AegisName: CH1_LUNARINA
+#  - Id: 22479
+#    AegisName: CP_CH1_LUNARINA
+#  - Id: 22480
+#    AegisName: CH1_BLOODY_SLASHER
+#  - Id: 22481
+#    AegisName: CP_CH1_BLOODY_SLASHER
+#  - Id: 22482
+#    AegisName: CH1_SHADIEST
+#  - Id: 22483
+#    AegisName: CP_CH1_SHADIEST
+#  - Id: 22484
+#    AegisName: CH1_SUCCUBUS
+#  - Id: 22485
+#    AegisName: CP_CH1_SUCCUBUS
+#  - Id: 22486
+#    AegisName: CH1_INCCUBUS
+#  - Id: 22487
+#    AegisName: CP_CH1_INCCUBUS
+#  - Id: 22488
+#    AegisName: CH1_ABYSS_KNIGHT
+#  - Id: 22489
+#    AegisName: CP_CH1_ABYSS_KNIGHT
+#  - Id: 22490
+#    AegisName: G_CH1_FIRELOOP
+#  - Id: 22491
+#    AegisName: G_CH1_VOLIMPET
+#  - Id: 22492
+#    AegisName: G_CH1_MYOSOTIS
+#  - Id: 22493
+#    AegisName: G_CH1_ANEMONE
+#  - Id: 22494
+#    AegisName: CH1_BULGASARI
+#  - Id: 22495
+#    AegisName: CH1_GLUTTO
+#  - Id: 22496
+#    AegisName: CH1_MD_HEMEL_N
+#  - Id: 22497
+#    AegisName: CH1_MD_HEMEL
+#  - Id: 22498
+#    AegisName: CH1_MD_AMDARAIS
+#  - Id: 22499
+#    AegisName: CH1_MD_VESSEL
+#  - Id: 22504
+#    AegisName: C_TOWER_MANAGER2
+#  - Id: 22505
+#    AegisName: ANGELGOLT3
+#  - Id: 22506
+#    AegisName: TIMEHOLDER3
+#  - Id: 22507
+#    AegisName: CH1_RK
+#  - Id: 22508
+#    AegisName: CH1_MC_M
+#  - Id: 22509
+#    AegisName: CH1_SC
+#  - Id: 22510
+#    AegisName: CH1_RA
+#  - Id: 22511
+#    AegisName: CH1_SO
+#  - Id: 22512
+#    AegisName: CH1_AB
+#  - Id: 22513
+#    AegisName: CH1_MI_D
+#  - Id: 22514
+#    AegisName: CH1_GC_D
+#  - Id: 22515
+#    AegisName: G_M_EL_N
+#  - Id: 22516
+#    AegisName: CH1_RG
+#  - Id: 22517
+#    AegisName: CH1_MC
+#  - Id: 22518
+#    AegisName: CH1_GN
+#  - Id: 22519
+#    AegisName: CH1_GC
+#  - Id: 22520
+#    AegisName: CH1_MI
+#  - Id: 22521
+#    AegisName: CH1_SR
+#  - Id: 22522
+#    AegisName: CH1_WL
+#  - Id: 22523
+#    AegisName: CH1_WA
+#  - Id: 22524
+#    AegisName: G_M_HO_FG
+#  - Id: 22525
+#    AegisName: CH1_RK_1
+#  - Id: 22526
+#    AegisName: CH1_MC_M_1
+#  - Id: 22527
+#    AegisName: CH1_SC_1
+#  - Id: 22528
+#    AegisName: CH1_RA_1
+#  - Id: 22529
+#    AegisName: CH1_SO_1
+#  - Id: 22530
+#    AegisName: CH1_AB_1
+#  - Id: 22531
+#    AegisName: CH1_MI_D_1
+#  - Id: 22532
+#    AegisName: CH1_GC_D_1
+#  - Id: 22533
+#    AegisName: G_M_EL_N2
+#  - Id: 22534
+#    AegisName: ROS_GOLDPORING
+#  - Id: 22535
+#    AegisName: ROS_KING_PORING
+#  - Id: 22536
+#    AegisName: ROS_RUNEKNIGHT
+#  - Id: 22537
+#    AegisName: ROS_RANGER
+#  - Id: 22538
+#    AegisName: ROS_WARLOCK
+#  - Id: 22539
+#    AegisName: ROS_ARCHBISHOP
+#  - Id: 22540
+#    AegisName: LITTLE_BOOK_PINATA
+#  - Id: 22541
+#    AegisName: GIANT_BOOK_PINATA
+#  - Id: 22542
+#    AegisName: CH1_RG_1
+#  - Id: 22543
+#    AegisName: CH1_MC_1
+#  - Id: 22544
+#    AegisName: CH1_GN_1
+#  - Id: 22545
+#    AegisName: CH1_GC_1
+#  - Id: 22546
+#    AegisName: CH1_MI_1
+#  - Id: 22547
+#    AegisName: CH1_SR_1
+#  - Id: 22548
+#    AegisName: CH1_WL_1
+#  - Id: 22549
+#    AegisName: CH1_WA_1
+#  - Id: 22550
+#    AegisName: G_M_HO_LE
+#  - Id: 22551
+#    AegisName: S_DUMMY_SMALL_R10
+#  - Id: 22552
+#    AegisName: S_DUMMY_MEDIUM_R10
+#  - Id: 22553
+#    AegisName: S_DUMMY_LARGE_R10
+#  - Id: 22554
+#    AegisName: S_DUMMY_XLARGE_R40
+#  - Id: 22555
+#    AegisName: S_DUMMY_SMALL_R20
+#  - Id: 22556
+#    AegisName: S_DUMMY_MEDIUM_R20
+#  - Id: 22557
+#    AegisName: S_DUMMY_LARGE_R20
+#  - Id: 22558
+#    AegisName: S_DUMMY_XLARGE_R50
+#  - Id: 22559
+#    AegisName: S_DUMMY_SMALL_R30
+#  - Id: 22560
+#    AegisName: S_DUMMY_MEDIUM_R30
+#  - Id: 22561
+#    AegisName: S_DUMMY_SMALL1
+#  - Id: 22562
+#    AegisName: S_DUMMY_MEDIUM1
+#  - Id: 22563
+#    AegisName: S_DUMMY_LARGE1
+#  - Id: 22564
+#    AegisName: S_DUMMY_SMALL1_R10
+#  - Id: 22565
+#    AegisName: S_DUMMY_MEDIUM1_R10
+#  - Id: 22566
+#    AegisName: S_DUMMY_LARGE1_R10
+#  - Id: 22567
+#    AegisName: S_DUMMY_XLARGE1_R40
+#  - Id: 22568
+#    AegisName: S_DUMMY_SMALL1_R20
+#  - Id: 22569
+#    AegisName: S_DUMMY_MEDIUM1_R20
+#  - Id: 22570
+#    AegisName: S_DUMMY_LARGE1_R20
+#  - Id: 22571
+#    AegisName: S_DUMMY_XLARGE1_R50
+#  - Id: 22572
+#    AegisName: S_DUMMY_SMALL1_R30
+#  - Id: 22573
+#    AegisName: S_DUMMY_MEDIUM1_R30
+#  - Id: 22574
+#    AegisName: S_DUMMY_LARGE1_R30
+#  - Id: 22575
+#    AegisName: S_DUMMY_SMALL2
+#  - Id: 22576
+#    AegisName: S_DUMMY_MEDIUM2
+#  - Id: 22577
+#    AegisName: S_DUMMY_LARGE2
+#  - Id: 22578
+#    AegisName: S_DUMMY_SMALL2_R10
+#  - Id: 22579
+#    AegisName: S_DUMMY_MEDIUM2_R10
+#  - Id: 22580
+#    AegisName: S_DUMMY_LARGE2_R10
+#  - Id: 22581
+#    AegisName: S_DUMMY_XLARGE2_R40
+#  - Id: 22582
+#    AegisName: S_DUMMY_SMALL2_R20
+#  - Id: 22583
+#    AegisName: S_DUMMY_MEDIUM2_R20
+#  - Id: 22584
+#    AegisName: S_DUMMY_LARGE2_R20
+#  - Id: 22585
+#    AegisName: S_DUMMY_XLARGE2_R50
+#  - Id: 22586
+#    AegisName: S_DUMMY_SMALL2_R30
+#  - Id: 22587
+#    AegisName: S_DUMMY_MEDIUM2_R30
+#  - Id: 22588
+#    AegisName: S_DUMMY_LARGE2_R30
+#  - Id: 22589
+#    AegisName: S_DUMMY_SMALL_M10
+#  - Id: 22590
+#    AegisName: S_DUMMY_MEDIUM_M10
+#  - Id: 22591
+#    AegisName: S_DUMMY_LARGE_M10
+#  - Id: 22592
+#    AegisName: S_DUMMY_XLARGE_M40
+#  - Id: 22593
+#    AegisName: S_DUMMY_SMALL_M20
+#  - Id: 22594
+#    AegisName: S_DUMMY_MEDIUM_M20
+#  - Id: 22595
+#    AegisName: S_DUMMY_LARGE_M20
+#  - Id: 22596
+#    AegisName: S_DUMMY_XLARGE_M50
+#  - Id: 22597
+#    AegisName: S_DUMMY_SMALL_M30
+#  - Id: 22598
+#    AegisName: S_DUMMY_MEDIUM_M30
+#  - Id: 22599
+#    AegisName: S_DUMMY_LARGE_M30
+#  - Id: 22600
+#    AegisName: S_DUMMY_SMALL3
+#  - Id: 22601
+#    AegisName: S_DUMMY_MEDIUM3
+#  - Id: 22602
+#    AegisName: S_DUMMY_LARGE3
+#  - Id: 22603
+#    AegisName: S_DUMMY_SMALL3_M10
+#  - Id: 22604
+#    AegisName: S_DUMMY_MEDIUM3_M10
+#  - Id: 22605
+#    AegisName: S_DUMMY_LARGE3_M10
+#  - Id: 22606
+#    AegisName: S_DUMMY_XLARGE1_M40
+#  - Id: 22607
+#    AegisName: S_DUMMY_SMALL3_M20
+#  - Id: 22608
+#    AegisName: S_DUMMY_MEDIUM3_M20
+#  - Id: 22609
+#    AegisName: S_DUMMY_LARGE3_M20
+#  - Id: 22610
+#    AegisName: S_DUMMY_XLARGE1_M50
+#  - Id: 22611
+#    AegisName: S_DUMMY_SMALL3_M30
+#  - Id: 22612
+#    AegisName: S_DUMMY_MEDIUM3_M30
+#  - Id: 22613
+#    AegisName: S_DUMMY_LARGE3_M30
+#  - Id: 22614
+#    AegisName: S_DUMMY_SMALL4
+#  - Id: 22615
+#    AegisName: S_DUMMY_MEDIUM4
+#  - Id: 22616
+#    AegisName: S_DUMMY_LARGE4
+#  - Id: 22617
+#    AegisName: S_DUMMY_SMALL4_M10
+#  - Id: 22618
+#    AegisName: S_DUMMY_MEDIUM4_M10
+#  - Id: 22619
+#    AegisName: S_DUMMY_LARGE4_M10
+#  - Id: 22620
+#    AegisName: S_DUMMY_XLARGE2_M40
+#  - Id: 22621
+#    AegisName: S_DUMMY_SMALL4_M20
+#  - Id: 22622
+#    AegisName: S_DUMMY_MEDIUM4_M20
+#  - Id: 22623
+#    AegisName: S_DUMMY_LARGE4_M20
+#  - Id: 22624
+#    AegisName: S_DUMMY_XLARGE2_M50
+#  - Id: 22625
+#    AegisName: S_DUMMY_SMALL4_M30
+#  - Id: 22626
+#    AegisName: S_DUMMY_MEDIUM4_M30
+#  - Id: 22627
+#    AegisName: S_DUMMY_LARGE4_M30
+#  - Id: 22628
+#    AegisName: S_DUMMY2_NOTHING
+#  - Id: 22629
+#    AegisName: S_DUMMY2_DRAGON
+#  - Id: 22630
+#    AegisName: S_DUMMY2_ANIMAL
+#  - Id: 22631
+#    AegisName: S_DUMMY2_HUMAN
+#  - Id: 22632
+#    AegisName: S_DUMMY2_INSECT
+#  - Id: 22633
+#    AegisName: S_DUMMY2_FISH
+#  - Id: 22634
+#    AegisName: S_DUMMY2_DEMON
+#  - Id: 22635
+#    AegisName: S_DUMMY2_PLANT
+#  - Id: 22636
+#    AegisName: S_DUMMY2_ANGEL
+#  - Id: 22637
+#    AegisName: S_DUMMY2_UNDEAD
+#  - Id: 22638
+#    AegisName: S_DUMMY3_NOTHING
+#  - Id: 22639
+#    AegisName: S_DUMMY3_DRAGON
+#  - Id: 22640
+#    AegisName: S_DUMMY3_ANIMAL
+#  - Id: 22641
+#    AegisName: S_DUMMY3_HUMAN
+#  - Id: 22642
+#    AegisName: S_DUMMY3_INSECT
+#  - Id: 22643
+#    AegisName: S_DUMMY3_FISH
+#  - Id: 22644
+#    AegisName: S_DUMMY3_DEMON
+#  - Id: 22645
+#    AegisName: S_DUMMY3_PLANT
+#  - Id: 22646
+#    AegisName: S_DUMMY3_ANGEL
+#  - Id: 22647
+#    AegisName: S_DUMMY3_UNDEAD
+#  - Id: 22648
+#    AegisName: S_DUMMY2_NOTHING2
+#  - Id: 22649
+#    AegisName: S_DUMMY2_WATER
+#  - Id: 22650
+#    AegisName: S_DUMMY2_GROUND
+#  - Id: 22651
+#    AegisName: S_DUMMY2_FIRE
+#  - Id: 22652
+#    AegisName: S_DUMMY2_WIND
+#  - Id: 22653
+#    AegisName: S_DUMMY2_POISON
+#  - Id: 22654
+#    AegisName: S_DUMMY2_SAINT
+#  - Id: 22655
+#    AegisName: S_DUMMY2_DARKNESS
+#  - Id: 22656
+#    AegisName: S_DUMMY2_TELEKINESIS
+#  - Id: 22657
+#    AegisName: S_DUMMY2_UNDEAD2
+#  - Id: 22658
+#    AegisName: S_DUMMY3_NOTHING2
+#  - Id: 22659
+#    AegisName: S_DUMMY3_WATER
+#  - Id: 22660
+#    AegisName: S_DUMMY3_GROUND
+#  - Id: 22661
+#    AegisName: S_DUMMY3_FIRE
+#  - Id: 22662
+#    AegisName: S_DUMMY3_WIND
+#  - Id: 22663
+#    AegisName: S_DUMMY3_POISON
+#  - Id: 22664
+#    AegisName: S_DUMMY3_SAINT
+#  - Id: 22665
+#    AegisName: S_DUMMY3_DARKNESS
+#  - Id: 22666
+#    AegisName: S_DUMMY3_TELEKINESIS
+#  - Id: 22667
+#    AegisName: S_DUMMY3_UNDEAD2
+#  - Id: 22668
+#    AegisName: S_DUMMY_LARGE_R30
+#  - Id: 22669
+#    AegisName: G_CH1_RK_ER
+#  - Id: 22670
+#    AegisName: G_CH1_GC_ER
+#  - Id: 22671
+#    AegisName: G_CH1_GC_D_ER
 #  - Id: 23000
 #    AegisName: DARK_ILLUSION2
 #  - Id: 23001

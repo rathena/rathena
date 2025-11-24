@@ -75,17 +75,35 @@ bool chclif_parse_moveCharSlot( int32 fd, char_session_data& sd ){
 	uint16 from = p->slot_before;
 	uint16 to = p->slot_after;
 
-	// Have we changed to often or is it disabled?
+	// Bounds check
+	if( from >= MAX_CHARS ){
+		chclif_moveCharSlotReply( fd, sd, from, 1 );
+		return 1;
+	}
+
+	// Have we changed too often or is it disabled?
 	if( (charserv_config.charmove_config.char_move_enabled)==0
 	|| ( (charserv_config.charmove_config.char_moves_unlimited)==0 && sd.char_moves[from] <= 0 ) ){
 		chclif_moveCharSlotReply( fd, sd, from, 1 );
 		return true;
 	}
 
-	// We don't even have a character on the chosen slot?
-	if( sd.found_char[from] <= 0 || to >= sd.char_slots ){
+	// Check if there is a character on this slot
+	if( sd.found_char[from] <= 0 ){
 		chclif_moveCharSlotReply( fd, sd, from, 1 );
 		return true;
+	}
+
+	// Bounds check
+	if( to >= MAX_CHARS ){
+		chclif_moveCharSlotReply( fd, sd, from, 1 );
+		return 1;
+	}
+
+	// Check maximum allowed char slot for this account
+	if( to >= sd.char_slots ){
+		chclif_moveCharSlotReply( fd, sd, from, 1 );
+		return 1;
 	}
 
 	if( sd.found_char[to] > 0 ){
@@ -477,7 +495,20 @@ void chclif_mmo_char_send( int32 fd, char_session_data& sd ){
  * result :
  *  1 : Server closed
  *  2 : Someone has already logged in with this id
- *  8 : already online
+ *  3 : Time gap between client and server
+ *  4 : Server is overpopulated
+ *  5 : You are underaged and cannot join this server
+ *  6 : You didn't pay for this account
+ *  7 : Server is overpopulated
+ *  8 : Already online
+ *  9 : IP capacity of Internet Cafe is full
+ * 10 : Out of available playing time
+ * 11 : Your account is suspended
+ * 12 : Connection is terminated due to changes to the billing policy
+ * 13 : Connection is terminated because your IP doesn't match authorized Ip
+ * 14 : Connection is terminated to prevent charging from your account's play time
+ * 15 : Disconnected from server!
+ * 
  */
 void chclif_send_auth_result(int32 fd,char result){
 	PACKET_SC_NOTIFY_BAN p = {};

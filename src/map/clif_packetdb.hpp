@@ -31,7 +31,6 @@
 	packet(0x007c,41);
 	parseable_packet(0x007d,2,clif_parse_LoadEndAck,0);
 	parseable_packet(0x007e,6,clif_parse_TickSend,2);
-	packet(0x007f,6);
 	packet(0x0082,2);
 	packet(0x0083,2);
 	packet(0x0084,2);
@@ -64,8 +63,7 @@
 	parseable_packet(0x00b9,6,clif_parse_NpcNextClicked,2);
 	packet(0x00ba,2);
 	parseable_packet(0x00bb,5,clif_parse_StatusUp,2,4);
-	parseable_packet(0x00bf,3,clif_parse_Emotion,2);
-	packet(0x00c0,7);
+	parseable_packet( HEADER_CZ_REQ_EMOTION, sizeof(  PACKET_CZ_REQ_EMOTION ), clif_parse_Emotion, 0 );
 	parseable_packet(0x00c1,2,clif_parse_HowManyConnections,0);
 	packet(0x00c3,8);
 	parseable_packet( HEADER_CZ_ACK_SELECT_DEALTYPE, sizeof( PACKET_CZ_ACK_SELECT_DEALTYPE ), clif_parse_NpcBuySellSelected, 0 );
@@ -78,11 +76,8 @@
 	packet(0x00cd,3);
 	parseable_packet(0x00ce,2,clif_parse_GMKickAll,0);
 	parseable_packet(0x00cf,27,clif_parse_PMIgnore,2,26);
-	parseable_packet(0x00d0,3,clif_parse_PMIgnoreAll,2);
-	packet(0x00d1,4);
-	packet(0x00d2,4);
+	parseable_packet( HEADER_CZ_SETTING_WHISPER_STATE, sizeof( PACKET_CZ_SETTING_WHISPER_STATE ), clif_parse_PMIgnoreAll, 0 );
 	parseable_packet(0x00d3,2,clif_parse_PMIgnoreList,0);
-	packet(0x00d4,-1);
 	parseable_packet( HEADER_CZ_CREATE_CHATROOM, -1, clif_parse_CreateChatRoom, 0 );
 	parseable_packet( HEADER_CZ_REQ_ENTER_ROOM, sizeof( PACKET_CZ_REQ_ENTER_ROOM ), clif_parse_ChatAddMember, 0 );
 	parseable_packet( HEADER_CZ_CHANGE_CHATROOM, -1, clif_parse_ChatRoomStatusChange, 0 );
@@ -112,7 +107,6 @@
 	packet(0x0104,79);
 	parseable_packet(0x0108,-1,clif_parse_PartyMessage,2,4);
 	packet(0x0109,-1);
-	packet(0x010f,-1);
 	parseable_packet(0x0112,4,clif_parse_SkillUp,2);
 	parseable_packet(0x0113,10,clif_parse_UseSkillToId,2,4,6);
 	packet(0x0114,31);
@@ -133,10 +127,8 @@
 	parseable_packet(0x012e,2,clif_parse_CloseVending,0);
 	parseable_packet(0x012f,-1,clif_parse_OpenVending,2,4,0,84);
 	parseable_packet(0x0130,6,clif_parse_VendingListReq,2);
-	packet(0x0132,6);
 	parseable_packet( HEADER_CZ_PC_PURCHASE_ITEMLIST_FROMMC, -1, clif_parse_PurchaseReq, 0 );
 	packet(0x0138,3);
-	packet(0x013e,24);
 	parseable_packet(0x013f,26,clif_parse_GM_Item_Monster,2);
 	parseable_packet( HEADER_CZ_MOVETO_MAP, sizeof( PACKET_CZ_MOVETO_MAP ), clif_parse_MapMove, 0 );
 	parseable_packet( HEADER_CZ_INPUT_EDITDLG, sizeof( PACKET_CZ_INPUT_EDITDLG ), clif_parse_NpcAmountInput, 0 );
@@ -145,7 +137,6 @@
 	packet(0x0147,39);
 	parseable_packet(0x0149,9,clif_parse_GMReqNoChat,2,6,7);
 	packet(0x014a,6);
-	packet(0x014b,27);
 	parseable_packet(0x014d,2,clif_parse_GuildCheckMaster,0);
 	parseable_packet(0x014f,6,clif_parse_GuildRequestInfo,2);
 	packet(0x0150,110);
@@ -154,7 +145,6 @@
 	parseable_packet(0x0153,-1,clif_parse_GuildChangeEmblem,2,4);
 	packet(0x0154,-1);
 	parseable_packet( HEADER_CZ_REQ_CHANGE_MEMBERPOS, -1, clif_parse_GuildChangeMemberPosition, 0 );
-	packet(0x0156,-1);
 	packet(0x0157,6);
 	packet(0x0158,-1);
 	parseable_packet( HEADER_CZ_REQ_LEAVE_GUILD, sizeof( PACKET_CZ_REQ_LEAVE_GUILD ), clif_parse_GuildLeave, 0 );
@@ -168,11 +158,9 @@
 	parseable_packet( HEADER_CZ_REQ_JOIN_GUILD, sizeof( PACKET_CZ_REQ_JOIN_GUILD ), clif_parse_GuildInvite, 0 );
 	parseable_packet( HEADER_CZ_JOIN_GUILD, sizeof( PACKET_CZ_JOIN_GUILD ), clif_parse_GuildReplyInvite, 0 );
 	packet(0x016c,43);
-	packet(0x016d,14);
 	parseable_packet(0x016e,186,clif_parse_GuildChangeNotice,2,6,66);
 	parseable_packet(0x0170,14,clif_parse_GuildRequestAlliance,2,6,10);
 	parseable_packet(0x0172,10,clif_parse_GuildReplyAlliance,2,6);
-	packet(0x0174,-1);
 	packet(0x0175,6);
 	packet(0x0176,106);
 	packet(0x0177,-1);
@@ -253,12 +241,10 @@
 	packet(0x01e6,26);
 	parseable_packet(0x01e7,2,clif_parse_NoviceDoriDori,0);
 	parseable_packet( HEADER_CZ_MAKE_GROUP2, sizeof( PACKET_CZ_MAKE_GROUP2 ), clif_parse_CreateParty2, 0 );
-	packet(0x01ea,6);
 	packet(0x01ec,26);
 	parseable_packet(0x01ed,2,clif_parse_NoviceExplosionSpirits,0);
 	packet(0x01f0,-1);
 	packet(0x01f1,-1);
-	packet(0x01f2,20);
 	packet(0x01f3,10);
 	packet(0x01f6,34);
 	parseable_packet( HEADER_CZ_JOIN_BABY, sizeof( PACKET_CZ_JOIN_BABY ), clif_parse_Adopt_reply, 0 );
@@ -273,7 +259,6 @@
 	parseable_packet(0x0202,26,clif_parse_FriendsListAdd,2);
 	parseable_packet(0x0203,10,clif_parse_FriendsListRemove,2,6);
 	packet(0x0204,18);
-	packet(0x0205,26);
 	packet(0x0207,34);
 	parseable_packet(0x0208,11,clif_parse_FriendsListReply,2,6,10);
 	packet(0x0209,36);
@@ -437,7 +422,6 @@
 // 2004-11-01aSakexe
 #if PACKETVER >= 20041101
 	packet(0x0084,-1);
-	packet(0x0215,6);
 #endif
 
 // 2004-11-08aSakexe
@@ -826,7 +810,6 @@
 	packet(0x028e,4);
 	packet(0x028f,6);
 	packet(0x0290,4);
-	packet(0x0291,4);
 	parseable_packet(0x0292,2,clif_parse_AutoRevive,0);
 	packet(0x0293,70);
 	packet(0x0294,10);
@@ -935,7 +918,6 @@
 	parseable_packet(0x02d6,6,clif_parse_ViewPlayerEquip,2);
 	parseable_packet(0x02d8,10,clif_parse_configuration,2,6);
 	packet(0x02d9,10);
-	packet(0x02da,3);
 	parseable_packet(0x02db,-1,clif_parse_BattleChat,2,4);
 	packet(0x02dc,-1);
 	packet(0x02dd,32);
@@ -1284,7 +1266,6 @@
 #if PACKETVER >= 20090818
 	packet(0x07e3,6);
 	parseable_packet(0x07e4,-1,clif_parse_ItemListWindowSelected,2,4,8,12);
-	packet(0x07e6,8);
 #endif
 
 // 2009-08-25aRagexeRE
@@ -1295,7 +1276,6 @@
 // 2009-09-22aRagexeRE
 #if PACKETVER >= 20090922
 	packet(0x07e5,8);
-	packet(0x07e6,8);
 	packet(0x07e7,32);
 	packet(0x07e8,-1);
 	packet(0x07e9,5);
@@ -1312,11 +1292,6 @@
 	packet(0x07f7,-1);
 	packet(0x07f8,-1);
 	packet(0x07f9,-1);
-#endif
-
-// 2009-11-24aRagexeRE
-#if PACKETVER >= 20091124
-	packet(0x07fb,25);
 #endif
 
 // 2009-12-01aRagexeRE
@@ -1666,8 +1641,6 @@
 	packet(0x0979,50); //ackworldinfo
 	packet(0x099b,8); //maptypeproperty2
 	// New Packets
-	packet(0x08ff,24); // ZC_EFST_SET_ENTER
-	packet(0x0984,28); // ZC_EFST_SET_ENTER2
 	packet(0x099f,22); // ZC_SKILL_ENTRY4
 #endif
 
@@ -1689,7 +1662,6 @@
 #if PACKETVER >= 20130807
 	// Merge Item
 	parseable_packet(0x0974,2,clif_parse_merge_item_cancel,0); // CZ_CANCEL_MERGE_ITEM
-	packet(0x9CD,8); // ZC_MSG_COLOR
 #endif
 
 // 2013-08-21bRagexe
@@ -2050,8 +2022,28 @@
 	parseable_packet( HEADER_CZ_RESET_SKILL, sizeof( struct PACKET_CZ_RESET_SKILL ), clif_parse_reset_skill, 0 );
 #endif
 
+#if PACKETVER_MAIN_NUM >= 20230607
+	parseable_packet( HEADER_CZ_ALLY_CHAT, -1, clif_parse_dull, 0 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20230705
+	parseable_packet( HEADER_CZ_REQ_EMOTION_EXPANSION, sizeof( struct PACKET_CZ_REQ_EMOTION_EXPANSION ), clif_parse_dull, 0 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20230802
+	parseable_packet( HEADER_CZ_QUEST_STATUS_REQ, -1, clif_parse_dull, 0 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20230830
+	parseable_packet( HEADER_CZ_REQ_REPORT_USER, sizeof( struct PACKET_CZ_REQ_REPORT_USER ), clif_parse_dull, 0 );
+#endif
+
 #if PACKETVER_MAIN_NUM >= 20240502
 	parseable_packet( HEADER_CZ_GM_CHECKER, sizeof( struct PACKET_CZ_GM_CHECKER ), clif_parse_macro_checker, 0 );
+#endif
+
+#if PACKETVER_MAIN_NUM >= 20250122
+	parseable_packet( HEADER_CZ_MOVE_ITEM_TO_PERSONAL, sizeof( PACKET_CZ_MOVE_ITEM_TO_PERSONAL ), clif_parse_MoveFromKafraFav, 0 );
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */

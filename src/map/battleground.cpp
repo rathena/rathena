@@ -531,12 +531,12 @@ bool bg_team_join(int32 bg_id, map_session_data *sd, bool is_queue)
 
 		sd->bg_id = bg_id;
 		member.sd = sd;
-		member.x = sd->bl.x;
-		member.y = sd->bl.y;
+		member.x = sd->x;
+		member.y = sd->y;
 		if (is_queue) { // Save the location from where the person entered the battleground
 			member.entry_point.map = sd->mapindex;
-			member.entry_point.x = sd->bl.x;
-			member.entry_point.y = sd->bl.y;
+			member.entry_point.x = sd->x;
+			member.entry_point.y = sd->y;
 		}
 		bgteam->members.push_back(member);
 
@@ -544,7 +544,7 @@ bool bg_team_join(int32 bg_id, map_session_data *sd, bool is_queue)
 
 		for (const auto &pl_sd : bgteam->members) {
 			if (pl_sd.sd != sd)
-				clif_hpmeter_single( *sd, pl_sd.sd->bl.id, pl_sd.sd->battle_status.hp, pl_sd.sd->battle_status.max_hp );
+				clif_hpmeter_single( *sd, pl_sd.sd->id, pl_sd.sd->battle_status.hp, pl_sd.sd->battle_status.max_hp );
 		}
 
 		clif_bg_hp(sd);
@@ -609,7 +609,7 @@ int32 bg_team_leave(map_session_data *sd, bool quit, bool deserter)
 			std::shared_ptr<s_battleground_type> bg = battleground_db.find(bg_id);
 
 			if (bg)
-				sc_start(nullptr, &sd->bl, SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT, 100, 1, static_cast<t_tick>(bg->deserter_time) * 1000); // Deserter timer
+				sc_start(nullptr, sd, SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT, 100, 1, static_cast<t_tick>(bg->deserter_time) * 1000); // Deserter timer
 		}
 
 		return static_cast<int32>( bgteam->members.size() );
@@ -635,7 +635,7 @@ bool bg_member_respawn(map_session_data *sd)
 			return false; // Respawn not handled by Core
 
 		pc_setpos(sd, bgteam->cemetery.map, bgteam->cemetery.x, bgteam->cemetery.y, CLR_OUTSIGHT);
-		status_revive(&sd->bl, 1, 100);
+		status_revive(sd, 1, 100);
 
 		return true; // Warped
 	}
@@ -679,7 +679,7 @@ int32 bg_create(uint16 mapindex, s_battleground_team* team)
  * @param bl: Object
  * @return Battleground ID
  */
-int32 bg_team_get_id(struct block_list *bl)
+int32 bg_team_get_id(block_list *bl)
 {
 	nullpo_ret(bl);
 
@@ -692,7 +692,7 @@ int32 bg_team_get_id(struct block_list *bl)
 			break;
 		case BL_MOB: {
 			map_session_data *msd;
-			struct mob_data *md = (TBL_MOB*)bl;
+			mob_data *md = (TBL_MOB*)bl;
 
 			if( md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr )
 				return msd->bg_id;
@@ -730,7 +730,7 @@ void bg_send_message(map_session_data *sd, const char *mes, size_t len)
 	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, sd->bg_id);
 
 	if (bgteam)
-		clif_bg_message(bgteam.get(), sd->bl.id, sd->status.name, mes, len);
+		clif_bg_message(bgteam.get(), sd->id, sd->status.name, mes, len);
 
 	return;
 }
@@ -746,9 +746,9 @@ int32 bg_send_xy_timer_sub(std::shared_ptr<s_battleground_data> bg)
 	for (auto &pl_sd : bg->members) {
 		sd = pl_sd.sd;
 
-		if (sd->bl.x != pl_sd.x || sd->bl.y != pl_sd.y) { // xy update
-			pl_sd.x = sd->bl.x;
-			pl_sd.y = sd->bl.y;
+		if (sd->x != pl_sd.x || sd->y != pl_sd.y) { // xy update
+			pl_sd.x = sd->x;
+			pl_sd.y = sd->y;
 			clif_bg_xy(sd);
 		}
 	}
@@ -890,7 +890,7 @@ static bool bg_queue_check_status(map_session_data* sd, const char *name)
 
 			sprintf(buf, msg_txt(sd, 339), static_cast<int32>((get_timer(sd->sc.getSCE(SC_ENTRY_QUEUE_APPLY_DELAY)->timer)->tick - gettick()) / 1000)); // You can't apply to a battleground queue for %d seconds due to recently leaving one.
 			clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
-			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], buf, false, SELF);
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], buf, false, SELF);
 			return false;
 		}
 
@@ -900,7 +900,7 @@ static bool bg_queue_check_status(map_session_data* sd, const char *name)
 
 			sprintf(buf, msg_txt(sd, 338), status_tick / 60, status_tick % 60); // You can't apply to a battleground queue due to recently deserting a battleground. Time remaining: %d minutes and %d seconds.
 			clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
-			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], buf, false, SELF);
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], buf, false, SELF);
 			return false;
 		}
 	}
@@ -941,13 +941,13 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, map_sessio
 
 	if (bg_player_is_in_bg_map(sd)) { // Is the player currently in a battleground map? Reject them.
 		clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
 		return false;
 	}
 
-	if (battle_config.bgqueue_nowarp_mapflag > 0 && map_getmapflag(sd->bl.m, MF_NOWARP)) { // Check player's current position for mapflag check
+	if (battle_config.bgqueue_nowarp_mapflag > 0 && map_getmapflag(sd->m, MF_NOWARP)) { // Check player's current position for mapflag check
 		clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
 		return false;
 	}
 
@@ -1287,7 +1287,7 @@ static bool bg_queue_leave_sub(map_session_data *sd, std::vector<map_session_dat
 			members.erase(list_it);
 
 			if (apply_sc)
-				sc_start(nullptr, &sd->bl, SC_ENTRY_QUEUE_APPLY_DELAY, 100, 1, 60000);
+				sc_start(nullptr, sd, SC_ENTRY_QUEUE_APPLY_DELAY, 100, 1, 60000);
 			sd->bg_queue_id = 0;
 			pc_delete_bg_queue_timer(sd);
 			return true;
@@ -1386,8 +1386,8 @@ void bg_join_active(map_session_data *sd, std::shared_ptr<s_battleground_queue> 
 		return;
 
 	// Check player's current position for mapflag check
-	if (battle_config.bgqueue_nowarp_mapflag > 0 && map_getmapflag(sd->bl.m, MF_NOWARP)) {
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
+	if (battle_config.bgqueue_nowarp_mapflag > 0 && map_getmapflag(sd->m, MF_NOWARP)) {
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
 		bg_queue_leave(sd);
 		clif_bg_queue_entry_init(sd);
 		return;
@@ -1450,8 +1450,8 @@ bool bg_mapflag_check(std::shared_ptr<s_battleground_queue> queue) {
 	bool found = false;
 
 	for (const auto &sd : queue->teama_members) {
-		if (map_getmapflag(sd->bl.m, MF_NOWARP)) {
-			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
+		if (map_getmapflag(sd->m, MF_NOWARP)) {
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
 			bg_queue_leave(sd);
 			clif_bg_queue_entry_init(sd);
 			found = true;
@@ -1459,8 +1459,8 @@ bool bg_mapflag_check(std::shared_ptr<s_battleground_queue> queue) {
 	}
 
 	for (const auto &sd : queue->teamb_members) {
-		if (map_getmapflag(sd->bl.m, MF_NOWARP)) {
-			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
+		if (map_getmapflag(sd->m, MF_NOWARP)) {
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You can't apply to a battleground queue from this map.
 			bg_queue_leave(sd);
 			clif_bg_queue_entry_init(sd);
 			found = true;
@@ -1479,10 +1479,10 @@ bool bg_mapflag_check(std::shared_ptr<s_battleground_queue> queue) {
 
 		// Announce failure to remaining players
 		for (const auto &sd : queue->teama_members)
-			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 340), false, SELF); // Participants were unable to join. Delaying entry for more participants.
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 340), false, SELF); // Participants were unable to join. Delaying entry for more participants.
 
 		for (const auto &sd : queue->teamb_members)
-			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 340), false, SELF); // Participants were unable to join. Delaying entry for more participants.
+			clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 340), false, SELF); // Participants were unable to join. Delaying entry for more participants.
 	}
 
 	return found;

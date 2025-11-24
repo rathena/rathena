@@ -352,7 +352,7 @@ int32 party_recv_info(struct party* sp, uint32 char_id)
 		if( sd == nullptr )
 			continue;// not online
 
-		clif_name_area(&sd->bl); //Update other people's display. [Skotlex]
+		clif_name_area(sd); //Update other people's display. [Skotlex]
 		clif_party_member_info( *p, *sd );
 		// Only send this on party creation, otherwise it will be sent by party_send_movemap [Lemongrass]
 		if( sd->party_creating ){
@@ -398,7 +398,7 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 	}
 
 	// Party locked.
-	if( map_getmapflag( sd.bl.m, MF_PARTYLOCK ) ){
+	if( map_getmapflag( sd.m, MF_PARTYLOCK ) ){
 		clif_displaymessage( sd.fd, msg_txt( &sd, 227 ) );
 		return false;
 	}
@@ -408,7 +408,7 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 		return false;
 	}
 
-	if( tsd == NULL ){
+	if( tsd == nullptr ){
 		clif_party_invite_reply( sd, "", PARTY_REPLY_OFFLINE );
 		return false;
 	}
@@ -682,12 +682,12 @@ int32 party_member_added(int32 party_id,uint32 account_id,uint32 char_id, int32 
 		sd2 = p->data[i].sd;
 
 		if( sd2 && sd2->status.account_id != account_id && sd2->status.char_id != char_id )
-			clif_hpmeter_single( *sd, sd2->bl.id, sd2->battle_status.hp, sd2->battle_status.max_hp );
+			clif_hpmeter_single( *sd, sd2->id, sd2->battle_status.hp, sd2->battle_status.max_hp );
 	}
 
 	clif_party_hp( *sd );
 	clif_party_xy( *sd );
-	clif_name_area(&sd->bl); //Update char name's display [Skotlex]
+	clif_name_area(sd); //Update char name's display [Skotlex]
 
 	if (p->instance_id > 0)
 		instance_reqinfo(sd, p->instance_id);
@@ -698,7 +698,7 @@ int32 party_member_added(int32 party_id,uint32 account_id,uint32 char_id, int32 
 /// Party member 'sd' requesting kick of member with <account_id, name>.
 bool party_removemember( map_session_data& sd, uint32 account_id, const char* name ){
 	// Party locked.
-	if( map_getmapflag( sd.bl.m, MF_PARTYLOCK ) ){
+	if( map_getmapflag( sd.m, MF_PARTYLOCK ) ){
 		clif_displaymessage( sd.fd, msg_txt( &sd, 227 ) );
 		return false;
 	}
@@ -758,7 +758,7 @@ int32 party_removemember2(map_session_data *sd,uint32 char_id,int32 party_id)
 /// Party member 'sd' requesting exit from party.
 bool party_leave( map_session_data& sd, bool showMessage ){
 	// Party locked.
-	if( map_getmapflag( sd.bl.m, MF_PARTYLOCK ) ){
+	if( map_getmapflag( sd.m, MF_PARTYLOCK ) ){
 		// If it was not triggered by the user itself, but from a script for example
 		if( showMessage ){
 			clif_displaymessage( sd.fd, msg_txt( &sd,227 ) );
@@ -832,11 +832,11 @@ int32 party_member_withdraw(int32 party_id, uint32 account_id, uint32 char_id, c
 #endif
 
 		sd->status.party_id = 0;
-		clif_name_area(&sd->bl); //Update name display [Skotlex]
+		clif_name_area(sd); //Update name display [Skotlex]
 		//TODO: hp bars should be cleared too
 
 		if( p != nullptr && p->instance_id ){
-			struct map_data *mapdata = map_getmapdata(sd->bl.m);
+			struct map_data *mapdata = map_getmapdata(sd->m);
 
 			// User was on the instance map of the party
 			if( mapdata != nullptr && p->instance_id == mapdata->instance_id ){
@@ -950,7 +950,7 @@ int32 party_changeleader(map_session_data *sd, map_session_data *tsd, struct par
 			return -3;
 		}
 
-		if ( map_getmapflag(sd->bl.m, MF_PARTYLOCK) ) {
+		if ( map_getmapflag(sd->m, MF_PARTYLOCK) ) {
 			clif_displaymessage(sd->fd, msg_txt(sd,287));
 			return 0;
 		}
@@ -976,7 +976,7 @@ int32 party_changeleader(map_session_data *sd, map_session_data *tsd, struct par
 			return 0; // Shouldn't happen
 
 		if( battle_config.change_party_leader_samemap && strncmp( p->party.member[mi].map, p->party.member[tmi].map, sizeof( p->party.member[mi].map ) ) != 0 ){
-			clif_msg(sd, MSI_PARTY_MASTER_CHANGE_SAME_MAP);
+			clif_msg( *sd, MSI_PARTY_MASTER_CHANGE_SAME_MAP );
 			return 0;
 		}
 	} else {
@@ -1062,7 +1062,7 @@ void party_send_movemap(map_session_data *sd)
 		for(i=0; i < MAX_PARTY; i++) {
 			if (p->data[i].sd &&
 				p->data[i].sd != sd &&
-				p->data[i].sd->bl.m == sd->bl.m)
+				p->data[i].sd->m == sd->m)
 			{
 				clif_party_xy_single( *sd, *p->data[i].sd );
 				clif_party_xy_single( *p->data[i].sd, *sd );
@@ -1106,7 +1106,7 @@ int32 party_send_message(map_session_data *sd,const char *mes, size_t len)
 	party_recv_message(sd->status.party_id,sd->status.account_id,mes,len);
 
 	// Chat logging type 'P' / Party Chat
-	log_chat(LOG_CHAT_PARTY, sd->status.party_id, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, nullptr, mes);
+	log_chat(LOG_CHAT_PARTY, sd->status.party_id, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->x, sd->y, nullptr, mes);
 
 	return 0;
 }
@@ -1147,14 +1147,14 @@ int32 party_skill_check(map_session_data *sd, int32 party_id, uint16 skill_id, u
 		if ((p_sd = p->data[i].sd) == nullptr)
 			continue;
 
-		if (sd->bl.m != p_sd->bl.m)
+		if (sd->m != p_sd->m)
 			continue;
 
 		switch(skill_id) {
 			case TK_COUNTER: //Increase Triple Attack rate of Monks.
 				if((p_sd->class_&MAPID_UPPERMASK) == MAPID_MONK
 					&& pc_checkskill(p_sd,MO_TRIPLEATTACK)) {
-					sc_start4(&p_sd->bl,&p_sd->bl,SC_SKILLRATE_UP,100,MO_TRIPLEATTACK,
+					sc_start4(p_sd,p_sd,SC_SKILLRATE_UP,100,MO_TRIPLEATTACK,
 						50+50*skill_lv, //+100/150/200% rate
 						0,0,skill_get_time(SG_FRIEND, 1));
 				}
@@ -1163,7 +1163,7 @@ int32 party_skill_check(map_session_data *sd, int32 party_id, uint16 skill_id, u
 				if((p_sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR
 					&& p_sd->sc.getSCE(SC_READYCOUNTER)
 					&& pc_checkskill(p_sd,SG_FRIEND)) {
-					sc_start4(&p_sd->bl,&p_sd->bl,SC_SKILLRATE_UP,100,TK_COUNTER,
+					sc_start4(p_sd,p_sd,SC_SKILLRATE_UP,100,TK_COUNTER,
 						50+50*pc_checkskill(p_sd,SG_FRIEND), //+100/150/200% rate
 						0,0,skill_get_time(SG_FRIEND, 1));
 				}
@@ -1193,10 +1193,10 @@ TIMER_FUNC(party_send_xy_timer){
 			if( !sd )
 				continue;
 
-			if( p->data[i].x != sd->bl.x || p->data[i].y != sd->bl.y ) { // perform position update
+			if( p->data[i].x != sd->x || p->data[i].y != sd->y ) { // perform position update
 				clif_party_xy( *sd );
-				p->data[i].x = sd->bl.x;
-				p->data[i].y = sd->bl.y;
+				p->data[i].x = sd->x;
+				p->data[i].y = sd->y;
 			}
 
 			if (battle_config.party_hp_mode && p->data[i].hp != sd->battle_status.hp) { // perform hp update
@@ -1235,7 +1235,7 @@ int32 party_send_xy_clear(struct party_data *p)
  * @param zeny Zeny gained from killed mob
  * @author Valaris
  **/
-void party_exp_share(struct party_data* p, struct block_list* src, t_exp base_exp, t_exp job_exp, int32 zeny)
+void party_exp_share(struct party_data* p, block_list* src, t_exp base_exp, t_exp job_exp, int32 zeny)
 {
 	map_session_data* sd[MAX_PARTY];
 	uint32 i, c;
@@ -1250,7 +1250,7 @@ void party_exp_share(struct party_data* p, struct block_list* src, t_exp base_ex
 
 	// count the number of players eligible for exp sharing
 	for (i = c = 0; i < MAX_PARTY; i++) {
-		if( (sd[c] = p->data[i].sd) == nullptr || sd[c]->bl.m != src->m || pc_isdead(sd[c]) || (battle_config.idle_no_share && pc_isidle_party(sd[c])) )
+		if( (sd[c] = p->data[i].sd) == nullptr || sd[c]->m != src->m || pc_isdead(sd[c]) || (battle_config.idle_no_share && pc_isidle_party(sd[c])) )
 			continue;
 		c++;
 	}
@@ -1312,7 +1312,7 @@ int32 party_share_loot(struct party_data* p, map_session_data* sd, struct item* 
 				if (i >= MAX_PARTY)
 					i = 0;	// reset counter to 1st person in party so it'll stop when it reaches "itemc"
 
-				if( (psd = p->data[i].sd) == nullptr || sd->bl.m != psd->bl.m || pc_isdead(psd) || (battle_config.idle_no_share && pc_isidle_party(psd)) )
+				if( (psd = p->data[i].sd) == nullptr || sd->m != psd->m || pc_isdead(psd) || (battle_config.idle_no_share && pc_isidle_party(psd)) )
 					continue;
 
 				if (pc_additem(psd,item,item->amount,LOG_TYPE_PICKDROP_PLAYER))
@@ -1329,7 +1329,7 @@ int32 party_share_loot(struct party_data* p, map_session_data* sd, struct item* 
 
 			//Collect pick candidates
 			for (i = 0; i < MAX_PARTY; i++) {
-				if( (psd[count] = p->data[i].sd) == nullptr || psd[count]->bl.m != sd->bl.m || pc_isdead(psd[count]) || (battle_config.idle_no_share && pc_isidle_party(psd[count])) )
+				if( (psd[count] = p->data[i].sd) == nullptr || psd[count]->m != sd->m || pc_isdead(psd[count]) || (battle_config.idle_no_share && pc_isidle_party(psd[count])) )
 					continue;
 
 				count++;
@@ -1376,7 +1376,7 @@ int32 party_send_dot_remove(map_session_data *sd)
  * @param ap: List of parameters
  * @return 1 when neither autotrading and not idle or 0 otherwise
  */
-int32 party_sub_count(struct block_list *bl, va_list ap)
+int32 party_sub_count(block_list *bl, va_list ap)
 {
 	map_session_data *sd = (TBL_PC *)bl;
 
@@ -1395,7 +1395,7 @@ int32 party_sub_count(struct block_list *bl, va_list ap)
  * @param ap: List of parameters: Class_Mask, Class_ID
  * @return 1 when class exists in party or 0 otherwise
  */
-int32 party_sub_count_class(struct block_list *bl, va_list ap)
+int32 party_sub_count_class(block_list *bl, va_list ap)
 {
 	map_session_data *sd = (TBL_PC *)bl;
 	uint32 mask = va_arg(ap, uint32);
@@ -1411,12 +1411,12 @@ int32 party_sub_count_class(struct block_list *bl, va_list ap)
 }
 
 /// Executes 'func' for each party member on the same map and in range (0:whole map)
-int32 party_foreachsamemap(int32 (*func)(struct block_list*,va_list),map_session_data *sd,int32 range,...)
+int32 party_foreachsamemap(int32 (*func)(block_list*,va_list),map_session_data *sd,int32 range,...)
 {
 	struct party_data *p;
 	int32 i;
 	int32 x0,y0,x1,y1;
-	struct block_list *list[MAX_PARTY];
+	block_list *list[MAX_PARTY];
 	int32 blockcount=0;
 	int32 total = 0; //Return value.
 
@@ -1425,10 +1425,10 @@ int32 party_foreachsamemap(int32 (*func)(struct block_list*,va_list),map_session
 	if((p = party_search(sd->status.party_id)) == nullptr)
 		return 0;
 
-	x0 = sd->bl.x-range;
-	y0 = sd->bl.y-range;
-	x1 = sd->bl.x+range;
-	y1 = sd->bl.y+range;
+	x0 = sd->x-range;
+	y0 = sd->y-range;
+	x1 = sd->x+range;
+	y1 = sd->y+range;
 
 	for(i = 0; i < MAX_PARTY; i++) {
 		map_session_data *psd = p->data[i].sd;
@@ -1436,18 +1436,18 @@ int32 party_foreachsamemap(int32 (*func)(struct block_list*,va_list),map_session
 		if(!psd)
 			continue;
 
-		if(psd->bl.m!=sd->bl.m || !psd->bl.prev)
+		if(psd->m!=sd->m || !psd->prev)
 			continue;
 
 		if(range &&
-			(psd->bl.x<x0 || psd->bl.y<y0 ||
-			 psd->bl.x>x1 || psd->bl.y>y1 ) )
+			(psd->x<x0 || psd->y<y0 ||
+			 psd->x>x1 || psd->y>y1 ) )
 			continue;
 
-		list[blockcount++]=&psd->bl;
+		list[blockcount++]=psd;
 	}
 
-	map_freeblock_lock();
+	FreeBlockLock freeLock;
 
 	for(i = 0; i < blockcount; i++) {
 		va_list ap;
@@ -1455,8 +1455,6 @@ int32 party_foreachsamemap(int32 (*func)(struct block_list*,va_list),map_session
 		total += func(list[i], ap);
 		va_end(ap);
 	}
-
-	map_freeblock_unlock();
 
 	return total;
 }
