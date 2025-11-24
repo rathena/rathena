@@ -81,6 +81,13 @@ class Settings(BaseSettings):
     deepseek_temperature: float = Field(default=0.7, env="DEEPSEEK_TEMPERATURE")
     deepseek_max_tokens: int = Field(default=2000, env="DEEPSEEK_MAX_TOKENS")
 
+    # Ollama Configuration (Local LLM - No API key required)
+    ollama_base_url: str = Field(default="http://localhost:11434", env="OLLAMA_BASE_URL")
+    ollama_model: str = Field(default="llama2:13b", env="OLLAMA_MODEL")
+    ollama_temperature: float = Field(default=0.7, env="OLLAMA_TEMPERATURE")
+    ollama_max_tokens: int = Field(default=2000, env="OLLAMA_MAX_TOKENS")
+    ollama_timeout: float = Field(default=120.0, env="OLLAMA_TIMEOUT")
+
     # Azure OpenAI Configuration
     azure_openai_api_key: Optional[str] = Field(default=None, env="AZURE_OPENAI_API_KEY")
     azure_openai_endpoint: Optional[str] = Field(default=None, env="AZURE_OPENAI_ENDPOINT")
@@ -111,12 +118,20 @@ class Settings(BaseSettings):
     # API Security
     api_key: Optional[str] = Field(default=None, env="API_KEY")
     api_key_header: str = Field(default="X-API-Key", env="API_KEY_HEADER")
-    api_key_required: bool = Field(default=False, env="API_KEY_REQUIRED")
+    api_key_required: bool = Field(default=True, env="API_KEY_REQUIRED")  # Changed default to True for security
     cors_origins: Union[List[str], str] = Field(
-        default=["http://192.168.0.100:8888", "http://localhost:8888", "http://127.0.0.1:8888"],
+        default=["http://localhost:8888"],  # Restricted default - only localhost
         env="CORS_ORIGINS",
         description="CORS allowed origins - restrict to known domains for security"
     )
+    
+    # SSL/TLS Configuration
+    ssl_enabled: bool = Field(default=False, env="SSL_ENABLED")
+    ssl_keyfile: Optional[str] = Field(default=None, env="SSL_KEYFILE")
+    ssl_certfile: Optional[str] = Field(default=None, env="SSL_CERTFILE")
+    
+    # PostgreSQL SSL Configuration
+    postgres_sslmode: str = Field(default="prefer", env="POSTGRES_SSLMODE")  # prefer, require, verify-ca, verify-full
 
     @field_validator('cors_origins', mode='before')
     @classmethod
@@ -124,8 +139,23 @@ class Settings(BaseSettings):
         """Parse CORS origins from comma-separated string or list"""
         if isinstance(v, str):
             if not v or v.strip() == '':
-                return ["http://192.168.0.100:8888", "http://localhost:8888", "http://127.0.0.1:8888"]
-            return [origin.strip() for origin in v.split(',') if origin.strip()]
+                return ["http://localhost:8888"]  # Secure default - only localhost
+            # Reject wildcard origins for security
+            origins = [origin.strip() for origin in v.split(',') if origin.strip()]
+            if "*" in origins:
+                raise ValueError("Wildcard CORS origins (*) are not allowed for security. Specify exact domains.")
+            return origins
+        if isinstance(v, list) and "*" in v:
+            raise ValueError("Wildcard CORS origins (*) are not allowed for security. Specify exact domains.")
+        return v
+    
+    @field_validator('postgres_sslmode')
+    @classmethod
+    def validate_postgres_sslmode(cls, v: str) -> str:
+        """Validate PostgreSQL SSL mode"""
+        valid_modes = ['disable', 'allow', 'prefer', 'require', 'verify-ca', 'verify-full']
+        if v not in valid_modes:
+            raise ValueError(f"postgres_sslmode must be one of {valid_modes}, got {v}")
         return v
 
     # Rate Limiting
@@ -679,16 +709,20 @@ class Settings(BaseSettings):
     @property
     def postgres_connection_string(self) -> str:
         """
-        Get PostgreSQL connection string for SQLAlchemy
+        Get PostgreSQL connection string for SQLAlchemy with SSL support
 
         Returns:
             PostgreSQL connection string in format:
-            postgresql+psycopg2://user:password@host:port/database
+            postgresql+asyncpg://user:password@host:port/database?sslmode=require
         """
-        return (
+        conn_str = (
             f"postgresql+asyncpg://{self.postgres_user}:{self.postgres_password}"
             f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
         )
+        # Add SSL mode parameter
+        if self.postgres_sslmode and self.postgres_sslmode != 'disable':
+            conn_str += f"?sslmode={self.postgres_sslmode}"
+        return conn_str
 
     class Config:
         env_file = ".env"

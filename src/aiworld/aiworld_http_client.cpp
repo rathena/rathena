@@ -21,6 +21,10 @@ struct AIWorldHTTPClient::Impl {
     int timeout_ms;
     int max_retries;
     
+    // Persistent HTTP client with connection pooling
+    std::shared_ptr<httplib::Client> persistent_client;
+    mutable std::mutex client_mutex;
+    
     // Statistics
     std::atomic<size_t> total_requests{0};
     std::atomic<size_t> successful_requests{0};
@@ -33,6 +37,7 @@ struct AIWorldHTTPClient::Impl {
     Impl(const std::string& url, int timeout, int retries)
         : base_url(url), timeout_ms(timeout), max_retries(retries) {
         parse_url(url);
+        initialize_persistent_client();
     }
     
     void parse_url(const std::string& url) {
@@ -56,12 +61,35 @@ struct AIWorldHTTPClient::Impl {
         }
     }
     
-    std::unique_ptr<httplib::Client> create_client() {
-        auto client = std::make_unique<httplib::Client>(host, port);
-        client->set_connection_timeout(0, timeout_ms * 1000); // seconds, microseconds
-        client->set_read_timeout(timeout_ms / 1000, (timeout_ms % 1000) * 1000);
-        client->set_write_timeout(timeout_ms / 1000, (timeout_ms % 1000) * 1000);
-        return client;
+    void initialize_persistent_client() {
+        std::lock_guard<std::mutex> lock(client_mutex);
+        persistent_client = std::make_shared<httplib::Client>(host, port);
+        
+        // Enable HTTP keep-alive for connection reuse
+        persistent_client->set_keep_alive(true);
+        
+        // Configure timeouts
+        persistent_client->set_connection_timeout(0, timeout_ms * 1000);
+        persistent_client->set_read_timeout(timeout_ms / 1000, (timeout_ms % 1000) * 1000);
+        persistent_client->set_write_timeout(timeout_ms / 1000, (timeout_ms % 1000) * 1000);
+        
+        log_info("HTTP connection pool initialized with keep-alive");
+    }
+    
+    std::shared_ptr<httplib::Client> get_client() {
+        std::lock_guard<std::mutex> lock(client_mutex);
+        
+        // Verify client is still valid, recreate if needed
+        if (!persistent_client) {
+            log_warning("Persistent client lost, recreating...");
+            persistent_client = std::make_shared<httplib::Client>(host, port);
+            persistent_client->set_keep_alive(true);
+            persistent_client->set_connection_timeout(0, timeout_ms * 1000);
+            persistent_client->set_read_timeout(timeout_ms / 1000, (timeout_ms % 1000) * 1000);
+            persistent_client->set_write_timeout(timeout_ms / 1000, (timeout_ms % 1000) * 1000);
+        }
+        
+        return persistent_client;
     }
 };
 
@@ -99,7 +127,8 @@ HTTPResponse AIWorldHTTPClient::execute_request(
     int attempt = 0;
     while (attempt <= pimpl_->max_retries) {
         try {
-            auto client = pimpl_->create_client();
+            // Reuse persistent client with connection pooling
+            auto client = pimpl_->get_client();
             
             httplib::Result res;
             if (method == "GET") {

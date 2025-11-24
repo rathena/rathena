@@ -33,6 +33,7 @@ from middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
     RequestSizeLimitMiddleware,
+    SecurityHeadersMiddleware,
 )
 
 # Global instances
@@ -302,18 +303,26 @@ app.add_middleware(
 # Add security and performance middleware
 logger.info("Configuring middleware...")
 
-# Request size limit (first to reject large requests early)
+# Security headers (first for all responses)
+app.add_middleware(
+    SecurityHeadersMiddleware,
+    enable_hsts=getattr(settings, 'ssl_enabled', False),
+    enable_csp=True
+)
+logger.info("✓ Security headers middleware enabled")
+
+# Request size limit (second to reject large requests early)
 app.add_middleware(RequestSizeLimitMiddleware)
 logger.info(f"✓ Request size limit: {settings.max_request_size} bytes")
 
-# Rate limiting (second to prevent abuse)
+# Rate limiting (third to prevent abuse)
 if settings.rate_limit_enabled:
     app.add_middleware(RateLimitMiddleware)
     logger.info(f"✓ Rate limiting: {settings.rate_limit_requests} requests per {settings.rate_limit_period}s")
 else:
     logger.warning("⚠ Rate limiting disabled")
 
-# API key authentication (third to validate access)
+# API key authentication (fourth to validate access)
 if settings.api_key_required and settings.api_key:
     app.add_middleware(APIKeyMiddleware)
     logger.info(f"✓ API key authentication enabled (header: {settings.api_key_header})")
@@ -416,11 +425,37 @@ logger.info("✓ All routers registered (14 routers)")
 
 # Run server
 if __name__ == "__main__":
+    # Check for SSL configuration
+    ssl_keyfile = getattr(settings, 'ssl_keyfile', None)
+    ssl_certfile = getattr(settings, 'ssl_certfile', None)
+    ssl_enabled = getattr(settings, 'ssl_enabled', False)
+    
+    # Log SSL status
+    if ssl_enabled and ssl_keyfile and ssl_certfile:
+        from pathlib import Path
+        if Path(ssl_keyfile).exists() and Path(ssl_certfile).exists():
+            logger.info(f"✓ SSL/TLS enabled")
+            logger.info(f"  Key file: {ssl_keyfile}")
+            logger.info(f"  Cert file: {ssl_certfile}")
+        else:
+            logger.error("❌ SSL enabled but certificate files not found")
+            logger.error("   Run: bash scripts/generate-ssl-certs.sh")
+            logger.error("   Falling back to HTTP")
+            ssl_keyfile = None
+            ssl_certfile = None
+    else:
+        logger.warning("⚠ SSL/TLS not enabled - Using HTTP")
+        logger.warning("  For production, enable SSL: SSL_ENABLED=true in .env")
+        ssl_keyfile = None
+        ssl_certfile = None
+    
     uvicorn.run(
         app,  # Use app object directly instead of string import
         host=settings.service_host,
         port=settings.service_port,
         reload=False,  # Disable reload when using app object
         log_level=settings.log_level.lower(),
+        ssl_keyfile=ssl_keyfile,
+        ssl_certfile=ssl_certfile,
     )
 

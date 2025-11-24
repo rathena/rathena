@@ -62,20 +62,38 @@ class PostgreSQLManager:
             retry_delay = settings.db_connection_retry_delay
 
         last_error = None
-        dsn = (
-            f"postgresql://{settings.postgres_user}:{settings.postgres_password}"
-            f"@{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}"
-        )
+        
+        # Build connection parameters with SSL support
+        conn_params = {
+            "user": settings.postgres_user,
+            "password": settings.postgres_password,
+            "host": settings.postgres_host,
+            "port": settings.postgres_port,
+            "database": settings.postgres_db,
+            "min_size": 1,
+            "max_size": getattr(settings, "postgres_pool_size", 10),
+            "timeout": 30,
+        }
+        
+        # Add SSL mode if configured
+        sslmode = getattr(settings, "postgres_sslmode", "prefer")
+        if sslmode and sslmode != "disable":
+            # asyncpg uses ssl parameter instead of sslmode
+            import ssl as sslmod
+            if sslmode == "require":
+                conn_params["ssl"] = True
+            elif sslmode in ["verify-ca", "verify-full"]:
+                ssl_context = sslmod.create_default_context()
+                ssl_context.check_hostname = (sslmode == "verify-full")
+                ssl_context.verify_mode = sslmod.CERT_REQUIRED
+                conn_params["ssl"] = ssl_context
+            else:  # prefer or allow
+                conn_params["ssl"] = "prefer"
 
         for attempt in range(1, max_retries + 1):
             try:
-                logger.info(f"Connecting to PostgreSQL at {settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db} (attempt {attempt}/{max_retries})")
-                self.pool = await asyncpg.create_pool(
-                    dsn=dsn,
-                    min_size=1,
-                    max_size=getattr(settings, "postgres_pool_size", 10),
-                    timeout=30,
-                )
+                logger.info(f"Connecting to PostgreSQL at {settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db} (attempt {attempt}/{max_retries}, SSL: {sslmode})")
+                self.pool = await asyncpg.create_pool(**conn_params)
                 async with self.pool.acquire() as conn:
                     version = await conn.fetchval("SELECT version()")
                     logger.info(f"✓ Successfully connected to PostgreSQL")
@@ -189,11 +207,16 @@ class PostgreSQLManager:
             raise
 
     def get_connection_string(self) -> str:
-        """Get the PostgreSQL connection string (for OpenMemory SDK)"""
-        return (
+        """Get the PostgreSQL connection string (for OpenMemory SDK) with SSL support"""
+        conn_str = (
             f"postgresql://{settings.postgres_user}:{settings.postgres_password}"
             f"@{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}"
         )
+        # Add SSL mode parameter if configured
+        sslmode = getattr(settings, "postgres_sslmode", "prefer")
+        if sslmode and sslmode != "disable":
+            conn_str += f"?sslmode={sslmode}"
+        return conn_str
 
 
 class Database:
@@ -542,14 +565,37 @@ class Database:
             return None
 
     async def get_npc_quests(self, npc_id: str) -> list:
-        """Get all quests for an NPC"""
+        """Get all quests for an NPC (optimized with batch query to eliminate N+1 pattern)"""
         try:
             quest_ids = await self.client.smembers(f"quests:npc:{npc_id}")
+            if not quest_ids:
+                return []
+            
+            # Decode quest_ids if they are bytes
+            decoded_ids = []
+            for qid in quest_ids:
+                if isinstance(qid, bytes):
+                    decoded_ids.append(qid.decode('utf-8'))
+                else:
+                    decoded_ids.append(qid)
+            
+            # Batch GET all quests in a single round-trip (eliminates N+1 problem)
+            keys = [f"quest:{qid}" for qid in decoded_ids]
+            quest_jsons = await self.client.mget(*keys)
+            
+            # Parse quest data
             quests = []
-            for quest_id in quest_ids:
-                quest_data = await self.get_quest(quest_id)
-                if quest_data:
-                    quests.append(quest_data)
+            for quest_json in quest_jsons:
+                if quest_json:
+                    if isinstance(quest_json, bytes):
+                        quest_json = quest_json.decode('utf-8')
+                    try:
+                        quests.append(json.loads(quest_json))
+                    except json.JSONDecodeError as e:
+                        logger.warning(f"Failed to parse quest JSON: {e}")
+                        continue
+            
+            logger.debug(f"Retrieved {len(quests)} quests for NPC {npc_id} using batch query")
             return quests
         except Exception as e:
             logger.error(f"Error getting NPC quests for {npc_id}: {e}")

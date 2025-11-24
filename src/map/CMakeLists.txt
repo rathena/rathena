@@ -26,6 +26,7 @@ endif()
 set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${MAP_HEADERS} ${MAP_SOURCES}
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_ipc.cpp
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_utils.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_native_api.cpp
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_native_commands.cpp
 )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} )

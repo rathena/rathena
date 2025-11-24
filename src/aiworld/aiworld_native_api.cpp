@@ -10,17 +10,6 @@
 
 namespace aiworld {
 
-// Utility for correlation ID
-static std::string generate_correlation_id() {
-    static std::random_device rd;
-    static std::mt19937 gen(rd());
-    static std::uniform_int_distribution<> dis(0, 15);
-    std::stringstream ss;
-    ss << std::hex;
-    for (int i = 0; i < 32; ++i) ss << dis(gen);
-    return ss.str();
-}
-
 // --- Impl class ---
 class AIWorldNativeAPI::Impl {
 public:

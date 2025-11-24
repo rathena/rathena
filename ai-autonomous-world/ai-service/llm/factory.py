@@ -11,6 +11,7 @@ from .providers.azure_openai_provider import AzureOpenAIProvider
 from .providers.anthropic_provider import AnthropicProvider
 from .providers.google_provider import GoogleProvider
 from .providers.deepseek_provider import DeepSeekProvider
+from .providers.ollama_provider import OllamaProvider
 
 
 class LLMProviderFactory:
@@ -23,6 +24,7 @@ class LLMProviderFactory:
         "google": GoogleProvider,
         "gemini": GoogleProvider,  # Alias
         "deepseek": DeepSeekProvider,
+        "ollama": OllamaProvider,
     }
 
     # Class-level cache for provider instances
@@ -172,9 +174,17 @@ def get_llm_provider(
                 "temperature": settings.deepseek_temperature,
                 "max_tokens": settings.deepseek_max_tokens,
             }
+        elif provider_name == "ollama":
+            # Ollama doesn't require API key - runs locally
+            config = {
+                "model": settings.ollama_model,
+                "base_url": settings.ollama_base_url,
+                "timeout": settings.ollama_timeout,
+                "debug": settings.debug,
+            }
 
-    # Validate API key is present in config
-    if "api_key" in config and not config["api_key"]:
+    # Validate API key is present in config (skip for ollama - no API key needed)
+    if provider_name != "ollama" and "api_key" in config and not config["api_key"]:
         raise ValueError(f"API key for provider '{provider_name}' is empty or None")
 
     return LLMProviderFactory.get_or_create_provider(provider_name, config)

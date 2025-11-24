@@ -19,6 +19,14 @@ from enum import Enum
 
 logger = logging.getLogger(__name__)
 
+# Import circuit breaker
+try:
+    from utils.circuit_breaker import get_circuit_breaker, CircuitBreakerError
+except ImportError:
+    # Fallback if import fails
+    get_circuit_breaker = None
+    CircuitBreakerError = Exception
+
 
 class ProviderType(Enum):
     """LLM provider types"""
@@ -114,7 +122,7 @@ class BaseLLMProvider(ABC):
         provider_type: ProviderType,
         model: str,
         api_key: Optional[str] = None,
-        timeout: float = 60.0,
+        timeout: float = 10.0,  # Reduced from 60s to 10s
         mock_mode: bool = False,
         debug: bool = False,
     ):
@@ -125,7 +133,7 @@ class BaseLLMProvider(ABC):
             provider_type: Type of provider
             model: Model identifier
             api_key: API key for authentication
-            timeout: Request timeout in seconds
+            timeout: Request timeout in seconds (default: 10s)
             mock_mode: Enable mock mode for testing
             debug: Enable debug logging
         """
@@ -135,6 +143,9 @@ class BaseLLMProvider(ABC):
         self.timeout = timeout
         self.mock_mode = mock_mode
         self.debug = debug
+        
+        # Circuit breaker for this provider
+        self.circuit_breaker = get_circuit_breaker(provider_type.value) if get_circuit_breaker else None
         
         # Metrics
         self._total_requests = 0
@@ -274,7 +285,7 @@ class BaseLLMProvider(ABC):
         **kwargs
     ) -> Dict[str, Any]:
         """
-        Retry request with exponential backoff.
+        Retry request with exponential backoff and circuit breaker protection.
         
         Args:
             messages: Message list
@@ -288,11 +299,30 @@ class BaseLLMProvider(ABC):
         backoff = self.INITIAL_BACKOFF
         last_exception = None
         
+        # Wrap in circuit breaker if available
+        async def make_request_with_timeout():
+            try:
+                # Apply timeout to prevent hanging
+                return await asyncio.wait_for(
+                    self._make_request(messages, temperature, max_tokens, **kwargs),
+                    timeout=self.timeout
+                )
+            except asyncio.TimeoutError:
+                raise TimeoutError(f"LLM request timed out after {self.timeout}s")
+        
         for attempt in range(self.MAX_RETRIES):
             try:
-                return await self._make_request(
-                    messages, temperature, max_tokens, **kwargs
-                )
+                # Use circuit breaker if available
+                if self.circuit_breaker:
+                    return await self.circuit_breaker.call(make_request_with_timeout)
+                else:
+                    return await make_request_with_timeout()
+                    
+            except CircuitBreakerError as e:
+                # Circuit is open - fail fast
+                logger.error(f"Circuit breaker open for {self.provider_type.value}: {e}")
+                raise
+                
             except RateLimitError as e:
                 last_exception = e
                 # Use provider's suggested retry time if available
