@@ -19,6 +19,7 @@
 #include <common/malloc.hpp>
 #include <common/mapindex.hpp>
 #include <common/mmo.hpp>
+#include <common/packets.hpp>
 #include <common/random.hpp>
 #include <common/showmsg.hpp>
 #include <common/socket.hpp>
@@ -39,7 +40,6 @@
 #include "int_mercenary.hpp"
 #include "int_party.hpp"
 #include "int_storage.hpp"
-#include "packets.hpp"
 
 using namespace rathena;
 using namespace rathena::server_character;
@@ -905,11 +905,9 @@ int32 char_mmo_gender( const struct char_session_data *sd, const struct mmo_char
 #endif
 }
 
-int32 char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
-
 //=====================================================================================================
 // Loads the basic character rooster for the given account. Returns total buffer used.
-int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count ) {
+int32 char_mmo_chars_fromsql( char_session_data& sd, CHARACTER_INFO chars[], uint8* count ){
 	SqlStmt stmt{ *sql_handle };
 	struct mmo_charstatus p;
 	int32 j = 0, i;
@@ -918,8 +916,8 @@ int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* co
 	memset(&p, 0, sizeof(p));
 
 	for( i = 0; i < MAX_CHARS; i++ ) {
-		sd->found_char[i] = -1;
-		sd->unban_time[i] = 0;
+		sd.found_char[i] = -1;
+		sd.unban_time[i] = 0;
 	}
 
 	// read char data
@@ -932,7 +930,7 @@ int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* co
 		"`hotkey_rowshift2`,"
 		"`max_ap`,`ap`,`trait_point`,`pow`,`sta`,`wis`,`spl`,`con`,`crt`,"
 		"`inventory_slots`,`body_direction`,`disable_call`,`disable_partyinvite`,`disable_showcostumes`"
-		" FROM `%s` WHERE `account_id`='%d' AND `char_num` < '%d'", schema_config.char_db, sd->account_id, MAX_CHARS)
+		" FROM `%s` WHERE `account_id`='%d' AND `char_num` < '%d'", schema_config.char_db, sd.account_id, MAX_CHARS )
 	||	SQL_ERROR == stmt.Execute()
 	||	SQL_ERROR == stmt.BindColumn( 0,  SQLDT_INT32, &p.char_id )
 	||	SQL_ERROR == stmt.BindColumn( 1,  SQLDT_UCHAR, &p.slot )
@@ -1002,21 +1000,21 @@ int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* co
 
 	for( i = 0; i < MAX_CHARS && SQL_SUCCESS == stmt.NextRow(); i++ )
 	{
-		sd->found_char[p.slot] = p.char_id;
-		sd->unban_time[p.slot] = p.unban_time;
-		p.sex = char_mmo_gender(sd, &p, sex[0]);
-		j += char_mmo_char_tobuf(WBUFP(buf, j), &p);
+		sd.found_char[p.slot] = p.char_id;
+		sd.unban_time[p.slot] = p.unban_time;
+		p.sex = char_mmo_gender( &sd, &p, sex[0] );
+		j += char_mmo_char_tobuf( chars[i], p );
 
 		// Addon System
 		// store the required info into the session
-		sd->char_moves[p.slot] = p.character_moves;
+		sd.char_moves[p.slot] = p.character_moves;
 	}
 
 	if( count != nullptr ){
 		*count = i;
 	}
 
-	memset(sd->new_name,0,sizeof(sd->new_name));
+	memset( sd.new_name, 0, sizeof( sd.new_name ) );
 
 	return j;
 }
@@ -1777,94 +1775,89 @@ int32 char_count_users(void)
 // Writes char data to the buffer in the format used by the client.
 // Used in packets 0x6b (chars info) and 0x6d (new char info)
 // Returns the size
-int32 char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p){
-	if( buffer == nullptr || p == nullptr )
-		return 0;
-
-	struct CHARACTER_INFO* info = (struct CHARACTER_INFO*)buffer;
-
-	info->GID = p->char_id;
+int32 char_mmo_char_tobuf( CHARACTER_INFO& info, mmo_charstatus& p ){
+	info.GID = p.char_id;
 #if PACKETVER >= 20170830
-	info->exp = u64min( p->base_exp, MAX_EXP );
+	info.exp = u64min( p.base_exp, MAX_EXP );
 #else
-	info->exp = (int32)u64min( p->base_exp, MAX_EXP );
+	info.exp = (int32)u64min( p.base_exp, MAX_EXP );
 #endif
-	info->money = p->zeny;
+	info.money = p.zeny;
 #if PACKETVER >= 20170830
-	info->jobexp = u64min( p->job_exp, MAX_EXP );
+	info.jobexp = u64min( p.job_exp, MAX_EXP );
 #else
-	info->jobexp = (int32)u64min( p->job_exp, MAX_EXP );
+	info.jobexp = (int32)u64min( p.job_exp, MAX_EXP );
 #endif
-	info->joblevel = p->job_level;
-	info->bodystate = 0; // probably opt1
-	info->healthstate = 0; // probably opt2
-	info->effectstate = p->option;
-	info->virtue = p->karma;
-	info->honor = p->manner;
-	info->jobpoint = umin( p->status_point, INT16_MAX );
-	info->hp = p->hp;
-	info->maxhp = p->max_hp;
-	info->sp = min( p->sp, INT16_MAX );
-	info->maxsp = min( p->max_sp, INT16_MAX );
-	info->speed = DEFAULT_WALK_SPEED; // p->speed;
-	info->job = p->class_;
-	info->head = p->hair;
+	info.joblevel = p.job_level;
+	info.bodystate = 0; // probably opt1
+	info.healthstate = 0; // probably opt2
+	info.effectstate = p.option;
+	info.virtue = p.karma;
+	info.honor = p.manner;
+	info.jobpoint = umin( p.status_point, INT16_MAX );
+	info.hp = p.hp;
+	info.maxhp = p.max_hp;
+	info.sp = min( p.sp, INT16_MAX );
+	info.maxsp = min( p.max_sp, INT16_MAX );
+	info.speed = DEFAULT_WALK_SPEED; // p.speed;
+	info.job = p.class_;
+	info.head = p.hair;
 #if PACKETVER >= 20231220
-	info->body = p->body;
+	info.body = p.body;
 #elif PACKETVER >= 20141022
-	if( p->body > JOB_SECOND_JOB_START && p->body < JOB_SECOND_JOB_END ){
-		info->body = 1;
+	if( p.body > JOB_SECOND_JOB_START && p.body < JOB_SECOND_JOB_END ){
+		info.body = 1;
 	}else{
-		info->body = 0;
+		info.body = 0;
 	}
 #endif
 	//When the weapon is sent and your option is riding, the client crashes on login!?
-	info->weapon = p->option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p->weapon;
-	info->level = p->base_level;
-	info->sppoint = umin( p->skill_point, INT16_MAX );
-	info->accessory = p->head_bottom;
-	info->shield = p->shield;
-	info->accessory2 = p->head_top;
-	info->accessory3 = p->head_mid;
-	info->headpalette = p->hair_color;
-	info->bodypalette = p->clothes_color;
-	safestrncpy( info->name, p->name, NAME_LENGTH );
-	info->Str = (uint8)u16min( p->str, UINT8_MAX );
-	info->Agi = (uint8)u16min( p->agi, UINT8_MAX );
-	info->Vit = (uint8)u16min( p->vit, UINT8_MAX );
-	info->Int = (uint8)u16min( p->int_, UINT8_MAX );
-	info->Dex = (uint8)u16min( p->dex, UINT8_MAX );
-	info->Luk = (uint8)u16min( p->luk, UINT8_MAX );
-	info->CharNum = p->slot;
-	info->hairColor = (uint8)u16min( p->hair_color, UINT8_MAX );
-	info->bIsChangedCharName = ( p->rename > 0 ) ? 0 : 1;
+	info.weapon = p.option&(0x20|0x80000|0x100000|0x200000|0x400000|0x800000|0x1000000|0x2000000|0x4000000|0x8000000) ? 0 : p.weapon;
+	info.level = p.base_level;
+	info.sppoint = umin( p.skill_point, INT16_MAX );
+	info.accessory = p.head_bottom;
+	info.shield = p.shield;
+	info.accessory2 = p.head_top;
+	info.accessory3 = p.head_mid;
+	info.headpalette = p.hair_color;
+	info.bodypalette = p.clothes_color;
+	safestrncpy( info.name, p.name, NAME_LENGTH );
+	info.Str = (uint8)u16min( p.str, UINT8_MAX );
+	info.Agi = (uint8)u16min( p.agi, UINT8_MAX );
+	info.Vit = (uint8)u16min( p.vit, UINT8_MAX );
+	info.Int = (uint8)u16min( p.int_, UINT8_MAX );
+	info.Dex = (uint8)u16min( p.dex, UINT8_MAX );
+	info.Luk = (uint8)u16min( p.luk, UINT8_MAX );
+	info.CharNum = p.slot;
+	info.hairColor = (uint8)u16min( p.hair_color, UINT8_MAX );
+	info.bIsChangedCharName = ( p.rename > 0 ) ? 0 : 1;
 #if (PACKETVER >= 20100720 && PACKETVER <= 20100727) || PACKETVER >= 20100803
-	mapindex_getmapname_ext( p->last_point.map, info->mapName );
+	mapindex_getmapname_ext( p.last_point.map, info.mapName );
 #endif
 #if PACKETVER >= 20100803
 #if PACKETVER_CHAR_DELETEDATE
-	info->DelRevDate = ( p->delete_date ? TOL( p->delete_date - time( nullptr ) ) : 0 );
+	info.DelRevDate = ( p.delete_date ? TOL( p.delete_date - time( nullptr ) ) : 0 );
 #else
-	info->DelRevDate = TOL( p->delete_date );
+	info.DelRevDate = TOL( p.delete_date );
 #endif
 #endif
 #if PACKETVER >= 20110111
-	info->robePalette = p->robe;
+	info.robePalette = p.robe;
 #endif
 #if PACKETVER >= 20110928
 	// change slot feature (0 = disabled, otherwise enabled)
 	if( charserv_config.charmove_config.char_move_enabled == 0 )
-		info->chr_slot_changeCnt = 0;
+		info.chr_slot_changeCnt = 0;
 	else if( charserv_config.charmove_config.char_moves_unlimited )
-		info->chr_slot_changeCnt = 1;
+		info.chr_slot_changeCnt = 1;
 	else
-		info->chr_slot_changeCnt = max( 0, (int32)p->character_moves );
+		info.chr_slot_changeCnt = max( 0, (int32)p.character_moves );
 #endif
 #if PACKETVER >= 20111025
-	info->chr_name_changeCnt = ( p->rename > 0 ) ? 1 : 0; // (0 = disabled, otherwise displays "Add-Ons" sidebar)
+	info.chr_name_changeCnt = ( p.rename > 0 ) ? 1 : 0; // (0 = disabled, otherwise displays "Add-Ons" sidebar)
 #endif
 #if PACKETVER >= 20141016
-	info->sex = p->sex; // sex - (0 = female, 1 = male, 99 = logindefined)
+	info.sex = p.sex; // sex - (0 = female, 1 = male, 99 = logindefined)
 #endif
 
 	return sizeof( struct CHARACTER_INFO );
@@ -2135,15 +2128,15 @@ int32 parse_console(const char* buf){
 //------------------------------------------------
 //Pincode system
 //------------------------------------------------
-int32 char_pincode_compare( int32 fd, struct char_session_data* sd, char* pin ){
-	if( strcmp( sd->pincode, pin ) == 0 ){
-		sd->pincode_try = 0;
+int32 char_pincode_compare( int32 fd, char_session_data& sd, char* pin ){
+	if( strcmp( sd.pincode, pin ) == 0 ){
+		sd.pincode_try = 0;
 		return 1;
 	}else{
 		chclif_pincode_sendstate( fd, sd, PINCODE_WRONG );
 
-		if( charserv_config.pincode_config.pincode_maxtry && ++sd->pincode_try >= charserv_config.pincode_config.pincode_maxtry ){
-			chlogif_pincode_notifyLoginPinError( sd->account_id );
+		if( charserv_config.pincode_config.pincode_maxtry && ++sd.pincode_try >= charserv_config.pincode_config.pincode_maxtry ){
+			chlogif_pincode_notifyLoginPinError( sd.account_id );
 		}
 
 		return 0;
