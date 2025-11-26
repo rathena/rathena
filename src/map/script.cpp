@@ -13244,33 +13244,50 @@ BUILDIN_FUNC(getwaitingroomstate)
 	if( script_hasdata(st,3) )
 		nd = npc_name2id(script_getstr(st, 3));
 	else
-		nd = (npc_data *)map_id2bl(st->oid);
+		nd = static_cast<npc_data*>(map_id2bl(st->oid));
 
-	if( nd == nullptr || (cd=(chat_data *)map_id2bl(nd->chat_id)) == nullptr )
-	{
-		switch(type){
-			case 4:
-			case 5:
-			case 16:
-				script_pushconststr(st,"null");
-				break;
-			default: script_pushint(st,-1);break;
-		}
-		return SCRIPT_CMD_SUCCESS;
+	switch(type){
+		case WIT_USERCOUNT:
+		case WIT_MAXUSERS:
+		case WIT_HASTRIGGER:
+		case WIT_ISDISABLED:
+		case WIT_TITLE:
+		case WIT_PASSWORD:
+		case WIT_EVENTNAME:
+		case WIT_ISFULL:
+		case WIT_OVERTRIGGER:
+			if(nd == nullptr || (cd=static_cast<chat_data*>(map_id2bl(nd->chat_id))) == nullptr){
+				switch(type){
+					case WIT_TITLE:
+					case WIT_PASSWORD:
+					case WIT_EVENTNAME:
+						script_pushconststr(st,"null");
+						break;
+					default:
+						script_pushint(st,-1);
+						break;
+				}
+				return SCRIPT_CMD_SUCCESS;
+			}
+			break;
+		default:
+			ShowError( "buildin_getwaitingroomstate: Unknown type %d.\n", type );
+			return SCRIPT_CMD_FAILURE;
+			break;
 	}
 
-	switch(type)
-	{
-	case 0:  script_pushint(st, cd->users); break;
-	case 1:  script_pushint(st, cd->limit); break;
-	case 2:  script_pushint(st, cd->trigger&0x7f); break;
-	case 3:  script_pushint(st, ((cd->trigger&0x80)!=0)); break;
-	case 4:  script_pushstrcopy(st, cd->title); break;
-	case 5:  script_pushstrcopy(st, cd->pass); break;
-	case 16: script_pushstrcopy(st, cd->npc_event);break;
-	case 32: script_pushint(st, (cd->users >= cd->limit)); break;
-	case 33: script_pushint(st, (cd->users >= cd->trigger)); break;
-	default: script_pushint(st, -1); break;
+
+	switch(type){
+		case WIT_USERCOUNT: script_pushint(st,cd->users); break;
+		case WIT_MAXUSERS: script_pushint(st,cd->limit); break;
+		case WIT_HASTRIGGER: script_pushint(st,cd->trigger&0x7f); break;
+		case WIT_ISDISABLED:  script_pushint(st,((cd->trigger&0x80)!=0)); break;
+		case WIT_TITLE: script_pushstrcopy(st,cd->title); break;
+		case WIT_PASSWORD: script_pushstrcopy(st,cd->pass); break;
+		case WIT_EVENTNAME: script_pushstrcopy(st,cd->npc_event);break;
+		case WIT_ISFULL: script_pushint(st,(cd->users >= cd->limit)); break;
+		case WIT_OVERTRIGGER: script_pushint(st,(cd->users >= cd->trigger)); break;
+		default: script_pushint(st,-1); break;
 	}
 	return SCRIPT_CMD_SUCCESS;
 }

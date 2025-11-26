@@ -7851,19 +7851,19 @@ any.
 
 The valid information types are:
 
- 0  - Number of users currently chatting.
- 1  - Maximum number of users allowed.
- 2  - Will return 1 if the waiting room has a trigger set.
-      0 otherwise.
- 3  - Will return 1 if the waiting room is currently disabled.
-      0 otherwise.
- 4  - The Title of the waiting room (string)
- 5  - Password of the waiting room, if any. Pointless, since there is no way to
-      set a password on a waiting room right now.
- 16 - Event name of the waiting room (string)
- 32 - Whether or not the waiting room is full.
- 33 - Whether the amount of users in the waiting room is higher than the trigger
-      number.
+ WIT_USERCOUNT - Number of users currently chatting.
+ WIT_MAXUSERS - Maximum number of users allowed.
+ WIT_HASTRIGGER - Will return 1 if the waiting room has a trigger set.
+				0 otherwise.
+ WIT_ISDISABLED - Will return 1 if the waiting room is currently disabled.
+				0 otherwise.
+ WIT_TITLE - The Title of the waiting room (string)
+ WIT_PASSWORD - Password of the waiting room, if any. Pointless, since there is no way to
+				set a password on a waiting room right now.
+ WIT_EVENTNAME - Event name of the waiting room (string)
+ WIT_ISFULL - Whether or not the waiting room is full.
+ WIT_OVERTRIGGER - Whether the amount of users in the waiting room is higher than the trigger
+			       number.
 
 This function returns -1 if the type is unknown.
 If no npc is found or npc has no chatroom, return -1 when expecting a number

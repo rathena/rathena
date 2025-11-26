@@ -428,6 +428,18 @@ enum e_questinfo_markcolor : uint8 {
 	QMARK_MAX
 };
 
+enum waitingroom_info_type{
+	WIT_USERCOUNT	= 0,
+	WIT_MAXUSERS	= 1,
+	WIT_HASTRIGGER	= 2,
+	WIT_ISDISABLED	= 3,
+	WIT_TITLE		= 4,
+	WIT_PASSWORD	= 5,
+	WIT_EVENTNAME	= 16,
+	WIT_ISFULL		= 32,
+	WIT_OVERTRIGGER = 33
+};
+
 #ifndef WIN32
 	// These are declared in wingdi.h
 	/* Font Weights */
