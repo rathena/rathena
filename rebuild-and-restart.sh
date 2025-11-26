@@ -78,6 +78,11 @@ fi
 ./configure
 print_success "Configure complete"
 
+print_step "Applying Makefile patches..."
+chmod +x fix-makefiles.sh
+./fix-makefiles.sh
+print_success "Makefile patches applied"
+
 print_step "Building rAthena server (this may take several minutes)..."
 make server -j$(nproc)
 if [ $? -eq 0 ]; then

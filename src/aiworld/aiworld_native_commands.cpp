@@ -13,6 +13,7 @@
 #include "aiworld_native_commands.hpp"
 #include "aiworld_native_api.hpp"
 #include "aiworld_utils.hpp"
+#include "aiworld_threadpool.hpp"
 #include <sstream>
 #include <iomanip>
 #include <random>
@@ -20,6 +21,7 @@
 // rAthena script engine headers (include dirs already configured in CMake)
 #include "../map/script.hpp"
 #include "../map/pc.hpp"
+#include "../map/npc.hpp"
 #include <common/showmsg.hpp>
 
 namespace aiworld {
@@ -379,14 +381,65 @@ int32 buildin_ai_request_async(struct script_state* st) {
         std::string request_id = AsyncRequestManager::getInstance().createRequest(
             request_type, npc_id, callback_label, timeout_ms);
         
-        // TODO: Initiate actual async IPC call in background thread
-        // For now, just store the request - full async implementation requires
-        // background worker thread or integration with rAthena's event loop
-        
         ShowInfo("ai_request_async: Created async request %s (type=%s, npc=%s)\n",
                 request_id.c_str(), request_type, npc_id.c_str());
         
-        // Return request ID
+        // Convert to std::string for lambda capture
+        std::string req_type_str(request_type);
+        std::string callback_str(callback_label);
+        
+        // Launch async IPC call in background thread pool
+        ThreadPool::getInstance().submit([request_id, req_type_str, npc_id, data, callback_str, timeout_ms]() {
+            try {
+                APIResult result;
+                
+                // Route to appropriate API call based on request type
+                if (req_type_str == "dialogue") {
+                    int player_id = data.value("player_id", 0);
+                    std::string message = data.value("message", "");
+                    result = AIWorldNativeAPI::getInstance().handleNPCInteraction(
+                        npc_id, "dialogue", data, std::to_string(player_id), timeout_ms);
+                    
+                } else if (req_type_str == "decide_action") {
+                    result = AIWorldNativeAPI::getInstance().handleNPCInteraction(
+                        npc_id, "decide_action", data, "", timeout_ms);
+                    
+                } else if (req_type_str == "get_emotion") {
+                    std::vector<std::string> fields = {"emotion", "emotional_state"};
+                    result = AIWorldNativeAPI::getInstance().getNPCState(npc_id, fields, timeout_ms);
+                    
+                } else {
+                    // Generic action request
+                    result = AIWorldNativeAPI::getInstance().handleNPCInteraction(
+                        npc_id, req_type_str, data, "", timeout_ms);
+                }
+                
+                // Update request with result
+                AsyncRequestManager::getInstance().updateRequest(
+                    request_id, result.data, result.error_code, result.error_message);
+                
+                // Trigger callback event if specified
+                if (!callback_str.empty() && !npc_id.empty()) {
+                    // Build event name: npc_name::callback_label
+                    std::string event_name = npc_id + "::" + callback_str;
+                    
+                    // Trigger NPC event with request_id as parameter
+                    // Note: This schedules the event to run on main thread
+                    npc_event_do(event_name.c_str());
+                    
+                    ShowInfo("ai_request_async: Triggered callback %s for request %s\n",
+                            event_name.c_str(), request_id.c_str());
+                }
+                
+            } catch (const std::exception& e) {
+                ShowError("ai_request_async: Exception in worker thread: %s\n", e.what());
+                AsyncRequestManager::getInstance().updateRequest(
+                    request_id, nlohmann::json::object(), -500,
+                    std::string("Worker thread exception: ") + e.what());
+            }
+        });
+        
+        // Return request ID immediately (non-blocking)
         script_pushstrcopy(st, request_id.c_str());
         
     } catch (const nlohmann::json::exception& e) {

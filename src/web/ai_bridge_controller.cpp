@@ -16,8 +16,12 @@
 #include "web.hpp"
 
 #include <nlohmann/json.hpp>
-#include "aiworld/aiworld_plugin.hpp"
+#include "../aiworld/aiworld_native_api.hpp"
+
 namespace AIBridge {
+	// Use AIWorldNativeAPI for production-ready IPC integration
+	bool aiworld_api_initialized = false;
+	
 	// AI Service configuration with defaults
 	std::string ai_service_url = "127.0.0.1";
 	uint16 ai_service_port = 8000;
@@ -26,12 +30,24 @@ namespace AIBridge {
 
 	// --- AIWorld IPC Integration ---
 	// If enabled, use ZeroMQ IPC instead of HTTP for internal AI/NPC/quest/event calls
-	bool aiworld_ipc_enabled = true;
+	bool aiworld_ipc_enabled = false;
 
 	void initialize() {
 		ShowInfo("[AI Bridge] Initializing AI Bridge Layer...\n");
 		ShowInfo("[AI Bridge] AI Service URL: %s:%d\n", ai_service_url.c_str(), ai_service_port);
 		ShowInfo("[AI Bridge] AI Service Enabled: %s\n", ai_service_enabled ? "Yes" : "No");
+		
+		// Initialize AIWorldNativeAPI for IPC integration
+		auto& api = aiworld::AIWorldNativeAPI::getInstance();
+		std::string zmq_endpoint = "tcp://127.0.0.1:5555"; // Default ZeroMQ endpoint
+		
+		if (api.initialize(zmq_endpoint)) {
+			aiworld_ipc_enabled = true;
+			aiworld_api_initialized = true;
+			ShowInfo("[AI Bridge] AIWorld IPC enabled successfully (ZMQ: %s)\n", zmq_endpoint.c_str());
+		} else {
+			ShowWarning("[AI Bridge] AIWorld IPC initialization failed, using HTTP fallback\n");
+		}
 	}
 
 	void read_config(const char* w1, const char* w2) {
@@ -90,38 +106,52 @@ namespace AIBridge {
 		int& status_code
 	) {
 		// If aiworld_ipc_enabled, use ZeroMQ IPC for internal AI/NPC/quest/event calls
-		if (aiworld_ipc_enabled) {
+		if (aiworld_ipc_enabled && aiworld_api_initialized) {
 			try {
-				// Use the aiworld_plugin to send/receive via IPC
-				extern aiworld::AIWorldPlugin* g_aiworld_plugin;
-				if (!g_aiworld_plugin || !g_aiworld_plugin->is_initialized) {
-					ShowError("[AI Bridge] AIWorld IPC not initialized.\n");
+				auto& api = aiworld::AIWorldNativeAPI::getInstance();
+				
+				if (!api.isConnected()) {
+					ShowError("[AI Bridge] AIWorld IPC not connected\n");
 					status_code = 503;
-					response_body = "{\"error\": \"AIWorld IPC not initialized\"}";
+					response_body = "{\"error\": \"AIWorld IPC not connected\"}";
 					return false;
 				}
-				// Map endpoint/method to plugin call (example for /ai/npc/{id}/state)
+				
+				// Map endpoint/method to IPC call
 				if (endpoint.find("/ai/npc/") == 0 && endpoint.find("/state") != std::string::npos) {
 					std::string npc_id = extract_path_param(endpoint, "/ai/npc/");
 					size_t pos = npc_id.find("/state");
 					if (pos != std::string::npos) npc_id = npc_id.substr(0, pos);
+					
 					if (method == "GET") {
-						auto state = g_aiworld_plugin->get_npc_consciousness(npc_id);
-						response_body = state.dump();
-						status_code = 200;
-						return true;
+						std::vector<std::string> empty_fields;
+						auto result = api.getNPCState(npc_id, empty_fields, 5000);
+						status_code = result.success ? 200 : 500;
+						if (result.success) {
+							response_body = result.data.dump();
+						} else {
+							nlohmann::json error_obj;
+							error_obj["error"] = result.error_message;
+							response_body = error_obj.dump();
+						}
+						return result.success;
 					} else if (method == "PUT") {
-						nlohmann::json j = nlohmann::json::parse(body);
-						bool ok = g_aiworld_plugin->update_npc_consciousness(npc_id, j);
-						status_code = ok ? 200 : 500;
-						response_body = ok ? "{\"status\": \"ok\"}" : "{\"error\": \"update failed\"}";
-						return ok;
+						nlohmann::json state_data = nlohmann::json::parse(body);
+						auto result = api.handleNPCInteraction(npc_id, "update_state", state_data, "web_server", 5000);
+						status_code = result.success ? 200 : 500;
+						if (result.success) {
+							response_body = "{\"status\": \"ok\"}";
+						} else {
+							nlohmann::json error_obj;
+							error_obj["error"] = result.error_message;
+							response_body = error_obj.dump();
+						}
+						return result.success;
 					}
 				}
-				// Fallback: not implemented
-				status_code = 501;
-				response_body = "{\"error\": \"Not implemented in IPC bridge\"}";
-				return false;
+				
+				// Fallback to HTTP for unimplemented IPC endpoints
+				ShowInfo("[AI Bridge] Endpoint not implemented in IPC, falling back to HTTP: %s\n", endpoint.c_str());
 			} catch (const std::exception& e) {
 				ShowError("[AI Bridge] Exception during IPC request: %s\n", e.what());
 				status_code = 500;

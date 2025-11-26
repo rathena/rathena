@@ -6,21 +6,24 @@
 
 #include "aiworld_plugin.hpp"
 #include "aiworld_utils.hpp"
+#include "aiworld_callbacks.hpp"
+#include "aiworld_threadpool.hpp"
 #include <nlohmann/json.hpp>
 #include <iostream>
 
-// rAthena script engine headers (assumed, adjust as needed)
-extern "C" {
-#include "script.h"
-#include "map/pc.h"
-#include "map/npc.h"
-}
+// rAthena script engine headers
+#include "../map/script.hpp"
+#include "../map/pc.hpp"
+#include "../map/npc.hpp"
+#include "../common/showmsg.hpp"
 
 #include "aiworld_native_api.hpp"
 #include "aiworld_native_commands.hpp"
 using aiworld::AIWorldNativeAPI;
 using aiworld::APIResult;
 using aiworld::ErrorCode;
+using aiworld::CallbackRegistry;
+using aiworld::ThreadPool;
 
 // HTTP Script Commands - External declarations
 extern void aiworld_init_http_client(const std::string& base_url);
@@ -45,6 +48,10 @@ bool AIWorldPlugin::initialize() {
     if (is_initialized) return true;
     log_info("AIWorldPlugin: Initializing...");
     
+    // Initialize thread pool for async operations
+    ThreadPool::getInstance().initialize(4);
+    log_info("AIWorldPlugin: Thread pool initialized with 4 workers");
+    
     // Initialize HTTP client for AI service communication
     aiworld_init_http_client("http://127.0.0.1:8000");
     log_info("AIWorldPlugin: HTTP client initialized");
@@ -58,14 +65,81 @@ bool AIWorldPlugin::initialize() {
     
     // Initialize Native API singleton with ZeroMQ endpoint
     if (!AIWorldNativeAPI::getInstance().initialize("tcp://127.0.0.1:5555")) {
-        log_warning("AIWorldPlugin: Native API initialization failed (non-fatal)");
+        log_warn("AIWorldPlugin: Native API initialization failed (non-fatal)");
     } else {
         log_info("AIWorldPlugin: Native API initialized successfully");
     }
     
+    // Register IPC callbacks for async messages
+    CallbackRegistry& registry = CallbackRegistry::getInstance();
+    
+    // Mission Assignment Callback (MISSION_ASSIGNMENT = 2)
+    registry.registerCallback(aiworld::IPCMessageType::MISSION_ASSIGNMENT,
+        [](aiworld::IPCMessageType type, const nlohmann::json& payload) {
+            try {
+                std::string mission_id = payload.value("mission_id", "");
+                std::string assignee_id = payload.value("assignee_id", "");
+                nlohmann::json mission_data = payload.value("mission_data", nlohmann::json::object());
+                
+                log_info("Mission Assignment: ID=" + mission_id + ", Assignee=" + assignee_id);
+                
+                // Trigger NPC event: assignee_npc::OnMissionAssigned
+                if (!assignee_id.empty()) {
+                    std::string event_name = assignee_id + "::OnMissionAssigned";
+                    npc_event_do(event_name.c_str());
+                    log_info("Triggered NPC event: " + event_name);
+                }
+            } catch (const std::exception& e) {
+                log_error("Mission Assignment Callback error: " + std::string(e.what()));
+            }
+        });
+    
+    // Entity State Sync Callback (ENTITY_STATE_SYNC = 1)
+    registry.registerCallback(aiworld::IPCMessageType::ENTITY_STATE_SYNC,
+        [](aiworld::IPCMessageType type, const nlohmann::json& payload) {
+            try {
+                std::string entity_id = payload.value("entity_id", "");
+                std::string entity_type = payload.value("entity_type", "");
+                
+                log_info("State Query Response: Entity=" + entity_id + ", Type=" + entity_type);
+                
+                // Trigger NPC event: entity_id::OnStateQueryComplete
+                if (!entity_id.empty()) {
+                    std::string event_name = entity_id + "::OnStateQueryComplete";
+                    npc_event_do(event_name.c_str());
+                    log_info("Triggered NPC event: " + event_name);
+                }
+            } catch (const std::exception& e) {
+                log_error("State Query Callback error: " + std::string(e.what()));
+            }
+        });
+    
+    // AI Action Response Callback (AI_ACTION_RESPONSE = 5)
+    registry.registerCallback(aiworld::IPCMessageType::AI_ACTION_RESPONSE,
+        [](aiworld::IPCMessageType type, const nlohmann::json& payload) {
+            try {
+                std::string entity_id = payload.value("entity_id", "");
+                std::string action_type = payload.value("action_type", "");
+                nlohmann::json result = payload.value("result", nlohmann::json::object());
+                
+                log_info("AI Action Response: Entity=" + entity_id + ", Action=" + action_type);
+                
+                // Trigger NPC event: entity_id::OnAIActionComplete
+                if (!entity_id.empty()) {
+                    std::string event_name = entity_id + "::OnAIActionComplete";
+                    npc_event_do(event_name.c_str());
+                    log_info("Triggered NPC event: " + event_name);
+                }
+            } catch (const std::exception& e) {
+                log_error("AI Action Callback error: " + std::string(e.what()));
+            }
+        });
+    
+    log_info("AIWorldPlugin: IPC callbacks registered");
+    
     // Initialize ZeroMQ IPC (for backward compatibility with existing code)
     if (!ipc_client->connect()) {
-        log_warning("AIWorldPlugin: ZeroMQ connection failed (non-fatal, HTTP integration active)");
+        log_warn("AIWorldPlugin: ZeroMQ connection failed (non-fatal, HTTP integration active)");
         // Don't fail initialization - HTTP integration is primary now
     } else {
         ipc_client->start_receive_thread();
@@ -73,13 +147,17 @@ bool AIWorldPlugin::initialize() {
     }
     
     is_initialized = true;
-    log_info("AIWorldPlugin: Initialization complete - HTTP REST integration active");
+    log_info("AIWorldPlugin: Initialization complete - HTTP REST + IPC callbacks active");
     return true;
 }
 
 void AIWorldPlugin::shutdown() {
     if (!is_initialized) return;
     log_info("AIWorldPlugin: Shutting down...");
+    
+    // Shutdown thread pool
+    ThreadPool::getInstance().shutdown();
+    log_info("AIWorldPlugin: Thread pool shutdown complete");
     
     // Shutdown HTTP client and log statistics
     aiworld_shutdown_http_client();
@@ -118,7 +196,7 @@ std::string AIWorldPlugin::handle_script_command(const std::string& command, con
             log_error("AIWorldPlugin: Failed to send mission assignment to AIWorld server.");
             return "{\"error\": \"IPC send failed\"}";
         }
-        // TODO: Integrate with rAthena script engine callback for mission assignment result
+        // Callback will be triggered by IPC receive thread
         return "{\"status\": \"mission assigned\"}";
     } else if (command == "aiworld_query_state") {
         // Query entity state
@@ -127,7 +205,7 @@ std::string AIWorldPlugin::handle_script_command(const std::string& command, con
             log_error("AIWorldPlugin: Failed to send entity state query to AIWorld server.");
             return "{\"error\": \"IPC send failed\"}";
         }
-        // TODO: Integrate with rAthena script engine callback for entity state result
+        // Callback will be triggered by IPC receive thread
         return "{\"status\": \"state query sent\"}";
     } else {
         // Default: route as AI action request
@@ -136,7 +214,7 @@ std::string AIWorldPlugin::handle_script_command(const std::string& command, con
             log_error("AIWorldPlugin: Failed to send script command to AIWorld server. Command=" + command + ", Args=" + args);
             return "{\"error\": \"IPC send failed\"}";
         }
-        // TODO: Integrate with rAthena script engine callback for generic AI action result
+        // Callback will be triggered by IPC receive thread
         return "{\"status\": \"command sent\"}";
     }
 }
@@ -152,7 +230,7 @@ bool AIWorldPlugin::update_npc_consciousness(const std::string& npc_id, const nl
     EntityStateSync state;
     state.entity_id = npc_id;
     state.entity_type = "npc";
-    state.consciousness = consciousness;
+    state.personality = consciousness; // Store consciousness in personality field
     nlohmann::json payload = to_json(state);
     AIWorldMessage msg(IPCMessageType::ENTITY_STATE_SYNC, generate_correlation_id(), payload);
     bool result = ipc_client->send_message(msg);
@@ -165,9 +243,60 @@ bool AIWorldPlugin::update_npc_consciousness(const std::string& npc_id, const nl
 }
 
 nlohmann::json AIWorldPlugin::get_npc_consciousness(const std::string& npc_id) {
-    // For now, just a stub. In production, would send a request and wait for response.
-    // Could be extended to block/wait for reply from AIWorld server.
-    return nlohmann::json{};
+    if (!is_initialized || !ipc_client || !ipc_client->is_connected()) {
+        log_error("AIWorldPlugin::get_npc_consciousness: Plugin not initialized or IPC not connected");
+        return nlohmann::json{{"error", "Plugin not initialized"}};
+    }
+    
+    try {
+        // Build query message
+        nlohmann::json query_payload;
+        query_payload["entity_id"] = npc_id;
+        query_payload["query_type"] = "get_consciousness";
+        
+        AIWorldMessage query_msg(IPCMessageType::ENTITY_STATE_SYNC, generate_correlation_id(), query_payload);
+        
+        // Send query
+        if (!ipc_client->send_message(query_msg)) {
+            log_error("AIWorldPlugin::get_npc_consciousness: Failed to send IPC query for NPC " + npc_id);
+            return nlohmann::json{{"error", "IPC send failed"}};
+        }
+        
+        // Wait for response with 5s timeout
+        AIWorldMessage response_msg;
+        auto start_time = std::chrono::steady_clock::now();
+        bool received = false;
+        
+        while (!received && std::chrono::steady_clock::now() - start_time < std::chrono::seconds(5)) {
+            if (ipc_client->receive_message(response_msg, false)) {
+                if (response_msg.correlation_id == query_msg.correlation_id) {
+                    received = true;
+                    break;
+                }
+            }
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        }
+        
+        if (!received) {
+            log_warn("AIWorldPlugin::get_npc_consciousness: Timeout waiting for response for NPC " + npc_id);
+            return nlohmann::json{{"error", "Timeout"}};
+        }
+        
+        // Parse consciousness data from response
+        if (response_msg.payload.contains("personality")) {
+            nlohmann::json consciousness = {
+                {"personality", response_msg.payload["personality"]},
+                {"goals", response_msg.payload.value("goals", nlohmann::json::array())},
+                {"emotions", response_msg.payload.value("emotional_state", nlohmann::json::object())}
+            };
+            return consciousness;
+        }
+        
+        return response_msg.payload;
+    } catch (const std::exception& e) {
+        log_error("AIWorldPlugin::get_npc_consciousness: Exception: " + std::string(e.what()));
+        return nlohmann::json{{"error", e.what()}};
+    }
 }
 
 bool AIWorldPlugin::update_npc_memory(const std::string& npc_id, const nlohmann::json& memory) {
@@ -175,7 +304,7 @@ bool AIWorldPlugin::update_npc_memory(const std::string& npc_id, const nlohmann:
     EntityStateSync state;
     state.entity_id = npc_id;
     state.entity_type = "npc";
-    state.memory = memory;
+    state.episodic_memory = memory; // Use episodic_memory field
     nlohmann::json payload = to_json(state);
     AIWorldMessage msg(IPCMessageType::ENTITY_STATE_SYNC, generate_correlation_id(), payload);
     bool result = ipc_client->send_message(msg);
@@ -241,10 +370,10 @@ nlohmann::json AIWorldPlugin::get_npc_emotion(const std::string& npc_id) {
  * @param initial_goals_json$ (string) - JSON string for initial goals
  * @return int (0=success, <0=error)
  */
-BUILDIN(ai_npc_register) {
-    if (script_isstring(st, 2) == 0 || script_isstring(st, 3) == 0 || script_isstring(st, 4) == 0) {
+int32 buildin_ai_npc_register(struct script_state* st) {
+    if (!script_hasdata(st, 2) || !script_hasdata(st, 3) || !script_hasdata(st, 4)) {
         script_pushint(st, -1);
-        ShowError("ai_npc_register: All parameters must be strings (npc_name, personality_json, initial_goals_json)\n");
+        ShowError("ai_npc_register: Missing required parameters\n");
         return SCRIPT_CMD_SUCCESS;
     }
     const char* npc_name = script_getstr(st, 2);
@@ -281,10 +410,10 @@ BUILDIN(ai_npc_register) {
  * @param event_data_json$ (string) - JSON string for event data
  * @return int (0=success, <0=error)
  */
-BUILDIN(ai_npc_event) {
-    if (script_isstring(st, 2) == 0 || script_isstring(st, 3) == 0 || script_isstring(st, 4) == 0) {
+int32 buildin_ai_npc_event(struct script_state* st) {
+    if (!script_hasdata(st, 2) || !script_hasdata(st, 3) || !script_hasdata(st, 4)) {
         script_pushint(st, -1);
-        ShowError("ai_npc_event: All parameters must be strings (npc_id, event_type, event_data_json)\n");
+        ShowError("ai_npc_event: Missing required parameters\n");
         return SCRIPT_CMD_SUCCESS;
     }
     const char* npc_id = script_getstr(st, 2);
@@ -319,10 +448,10 @@ BUILDIN(ai_npc_event) {
  * @param data_json$ (string) - JSON string for interaction data
  * @return int (0=success, <0=error)
  */
-BUILDIN(ai_npc_interact) {
-    if (script_isstring(st, 2) == 0 || script_isstring(st, 3) == 0 || script_isstring(st, 4) == 0 || script_isstring(st, 5) == 0) {
+int32 buildin_ai_npc_interact(struct script_state* st) {
+    if (!script_hasdata(st, 2) || !script_hasdata(st, 3) || !script_hasdata(st, 4) || !script_hasdata(st, 5)) {
         script_pushint(st, -1);
-        ShowError("ai_npc_interact: All parameters must be strings (npc_id, player_id, interaction_type, data_json)\n");
+        ShowError("ai_npc_interact: Missing required parameters\n");
         return SCRIPT_CMD_SUCCESS;
     }
     const char* npc_id = script_getstr(st, 2);
@@ -355,10 +484,10 @@ BUILDIN(ai_npc_interact) {
  * @param npc_id$ (string) - Target NPC identifier
  * @return string (JSON) - NPC state as JSON string, or error JSON
  */
-BUILDIN(ai_npc_get_state) {
-    if (script_isstring(st, 2) == 0) {
-        script_pushstrcopy(st, "{\"error\":\"npc_id must be a string\"}");
-        ShowError("ai_npc_get_state: npc_id must be a string\n");
+int32 buildin_ai_npc_get_state(struct script_state* st) {
+    if (!script_hasdata(st, 2)) {
+        script_pushstrcopy(st, "{\"error\":\"Missing npc_id parameter\"}");
+        ShowError("ai_npc_get_state: Missing npc_id parameter\n");
         return SCRIPT_CMD_SUCCESS;
     }
     const char* npc_id = script_getstr(st, 2);
@@ -389,16 +518,5 @@ BUILDIN(ai_npc_get_state) {
 // --------------------
 // Script Command Registration
 // --------------------
-/**
- * @brief Registers all AIWorld script commands with the rAthena script engine.
- * Call this in plugin initialization.
- */
-void aiworld_register_script_commands() {
-    addScriptCommand("ai_npc_register", &buildin_ai_npc_register);
-    addScriptCommand("ai_npc_event", &buildin_ai_npc_event);
-    addScriptCommand("ai_npc_interact", &buildin_ai_npc_interact);
-    addScriptCommand("ai_npc_get_state", &buildin_ai_npc_get_state);
-}
-
-// In plugin initialization (example, adjust as needed):
-// aiworld_register_script_commands();
+// Script commands registered via BUILDIN_DEF in script_def.inc
+// No manual registration needed

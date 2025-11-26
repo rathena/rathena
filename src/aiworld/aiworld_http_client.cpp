@@ -81,7 +81,7 @@ struct AIWorldHTTPClient::Impl {
         
         // Verify client is still valid, recreate if needed
         if (!persistent_client) {
-            log_warning("Persistent client lost, recreating...");
+            log_warn("Persistent client lost, recreating...");
             persistent_client = std::make_shared<httplib::Client>(host, port);
             persistent_client->set_keep_alive(true);
             persistent_client->set_connection_timeout(0, timeout_ms * 1000);
@@ -130,7 +130,7 @@ HTTPResponse AIWorldHTTPClient::execute_request(
             // Reuse persistent client with connection pooling
             auto client = pimpl_->get_client();
             
-            httplib::Result res;
+            httplib::Result res(nullptr, httplib::Error::Success, httplib::Headers{});
             if (method == "GET") {
                 res = client->Get(endpoint.c_str());
             } else if (method == "POST") {
@@ -143,20 +143,23 @@ HTTPResponse AIWorldHTTPClient::execute_request(
                 break;
             }
             
-            if (res) {
+            if (res && res->status >= 200 && res->status < 300) {
+                // Success case
                 response.status_code = res->status;
                 response.body = res->body;
-                response.success = (res->status >= 200 && res->status < 300);
-                
-                if (response.success) {
-                    pimpl_->successful_requests++;
-                    break;
-                } else {
-                    response.error_message = "HTTP " + std::to_string(res->status);
-                }
+                response.success = true;
+                pimpl_->successful_requests++;
+                break;
+            } else if (res) {
+                // HTTP error status
+                response.status_code = res->status;
+                response.body = res->body;
+                response.success = false;
+                response.error_message = "HTTP " + std::to_string(res->status);
             } else {
-                auto err = res.error();
-                response.error_message = "Connection error: " + httplib::to_string(err);
+                // Connection/network error
+                response.success = false;
+                response.error_message = "Connection error";
             }
             
         } catch (const std::exception& e) {
@@ -167,7 +170,7 @@ HTTPResponse AIWorldHTTPClient::execute_request(
         if (!response.success && attempt < pimpl_->max_retries) {
             pimpl_->retried_requests++;
             attempt++;
-            log_warning("Request failed, retrying (" + std::to_string(attempt) + "/" + 
+            log_warn("Request failed, retrying (" + std::to_string(attempt) + "/" +
                        std::to_string(pimpl_->max_retries) + "): " + response.error_message);
             std::this_thread::sleep_for(std::chrono::milliseconds(100 * attempt));
         } else {
@@ -178,13 +181,14 @@ HTTPResponse AIWorldHTTPClient::execute_request(
     // Update statistics
     auto end_time = std::chrono::steady_clock::now();
     auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end_time - start_time);
-    pimpl_->total_latency_ms += duration.count();
+    double current_latency = pimpl_->total_latency_ms.load();
+    pimpl_->total_latency_ms.store(current_latency + duration.count());
     
     if (!response.success) {
         pimpl_->failed_requests++;
         log_error("HTTP " + method + " " + endpoint + " failed: " + response.error_message);
     } else {
-        log_debug("HTTP " + method + " " + endpoint + " succeeded (" + 
+        log_info("HTTP " + method + " " + endpoint + " succeeded (" +
                  std::to_string(duration.count()) + "ms)");
     }
     
@@ -208,6 +212,50 @@ AIWorldHTTPClient::Stats AIWorldHTTPClient::get_stats() const {
     }
     
     return stats;
+}
+
+// --- Global HTTP Client Management ---
+// These are outside the namespace to provide C-linkage for plugin initialization
+
+static std::unique_ptr<aiworld::AIWorldHTTPClient> g_aiworld_http_client;
+
+/**
+ * Initialize the global HTTP client instance
+ */
+void aiworld_init_http_client(const std::string& base_url) {
+    if (!g_aiworld_http_client) {
+        g_aiworld_http_client = std::make_unique<aiworld::AIWorldHTTPClient>(base_url, 3000, 2);
+        aiworld::log_info("Global HTTP client initialized: " + base_url);
+    }
+}
+
+/**
+ * Get the global HTTP client instance
+ */
+aiworld::AIWorldHTTPClient* aiworld_get_http_client() {
+    return g_aiworld_http_client.get();
+}
+
+/**
+ * Shutdown the global HTTP client
+ */
+void aiworld_shutdown_http_client() {
+    if (g_aiworld_http_client) {
+        auto stats = g_aiworld_http_client->get_stats();
+        aiworld::log_info("HTTP client shutdown - Requests: " + std::to_string(stats.total_requests) +
+                         ", Success: " + std::to_string(stats.successful_requests) +
+                         ", Failed: " + std::to_string(stats.failed_requests));
+        g_aiworld_http_client.reset();
+    }
+}
+
+/**
+ * Register HTTP script commands (stub - implementation in map server)
+ */
+void aiworld_register_http_script_commands() {
+    // This is a stub - actual implementation is in the map server's script command layer
+    // The map server will register httppost, httpget, npcwalk, npcwalkid commands
+    aiworld::log_info("HTTP script commands registration requested");
 }
 
 } // namespace aiworld

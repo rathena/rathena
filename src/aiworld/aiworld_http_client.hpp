@@ -105,4 +105,12 @@ private:
 
 } // namespace aiworld
 
+// --- Global HTTP Client Management (C-linkage for plugin use) ---
+void aiworld_init_http_client(const std::string& base_url = "http://127.0.0.1:8000");
+aiworld::AIWorldHTTPClient* aiworld_get_http_client();
+void aiworld_shutdown_http_client();
+
+// --- Script Command Registration ---
+void aiworld_register_http_script_commands();
+
 #endif // AIWORLD_HTTP_CLIENT_HPP

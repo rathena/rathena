@@ -264,8 +264,8 @@ static void save_world_model() {
     log_info("AIWorldServer: [Persistent] Updated world model for " + entity_id);
     save_world_model();
 }
-                        // TODO: Store in persistent world model (future)
-                        response_json["message_type"] = msg_type;
+        // Persistent world model storage complete
+        response_json["message_type"] = msg_type;
                         response_json["correlation_id"] = corr_id;
                         response_json["payload"] = {
                             {"status", "ok"},
@@ -286,28 +286,78 @@ static void save_world_model() {
 static void bootstrap_world() {
     std::lock_guard<std::mutex> lock(world_model_mutex);
 
-    // Seed NPCs
+    // Seed NPCs with randomized attributes
+    std::random_device rd;
+    std::mt19937 rng(rd());
+    std::uniform_real_distribution<double> dist(0.0, 1.0);
+    
     for (int i = 0; i < 100; ++i) {
         std::string npc_id = "npc_" + std::to_string(i);
-        nlohmann::json npc = {
+        
+        // NPC Personality Generation (Big Five traits)
+        nlohmann::json personality = {
+            {"openness", dist(rng) * 0.4 + 0.3},           // 0.3-0.7
+            {"conscientiousness", dist(rng) * 0.4 + 0.3},  // 0.3-0.7
+            {"extraversion", dist(rng) * 0.4 + 0.3},       // 0.3-0.7
+            {"agreeableness", dist(rng) * 0.4 + 0.3},      // 0.3-0.7
+            {"neuroticism", dist(rng) * 0.4 + 0.3}         // 0.3-0.7
+        };
+        
+        // NPC Skills (random 2 skills from available set)
+        std::vector<std::string> all_skills = {"combat", "crafting", "trading", "magic", "persuasion", "stealth"};
+        std::shuffle(all_skills.begin(), all_skills.end(), rng);
+        nlohmann::json skills = nlohmann::json::array();
+        for (int s = 0; s < 2; ++s) {
+            skills.push_back(all_skills[s]);
+        }
+        
+        // NPC Physical Attributes
+        nlohmann::json physical = {
+            {"age", static_cast<int>(dist(rng) * 60 + 18)},    // 18-78 years
+            {"health", dist(rng) * 30 + 70},                    // 70-100%
+            {"appearance", "generated_sprite_" + std::to_string(i)}
+        };
+        
+        // NPC Moral Alignment (D&D-style 9 alignments)
+        std::vector<std::string> alignments = {
+            "lawful_good", "neutral_good", "chaotic_good",
+            "lawful_neutral", "true_neutral", "chaotic_neutral",
+            "lawful_evil", "neutral_evil", "chaotic_evil"
+        };
+        std::string moral_alignment = alignments[static_cast<int>(dist(rng) * alignments.size())];
+        
+        // NPC Goals (Maslow's hierarchy)
+        nlohmann::json goals = {
+            {"short_term", nlohmann::json::array({"survive", "earn_money"})},
+            {"long_term", nlohmann::json::array({"become_master_craftsman"})}
+        };
+        
+        // NPC Emotion (PAD model with slight positive bias)
+        nlohmann::json emotional_state = {
+            {"valence", dist(rng) * 0.6 + 0.2},     // 0.2-0.8 (slightly positive bias)
+            {"arousal", dist(rng) * 0.4 + 0.3},     // 0.3-0.7
+            {"dominance", dist(rng) * 0.4 + 0.3}    // 0.3-0.7
+        };
+        
+        nlohmann::json npc_data = {
             {"entity_id", npc_id},
             {"entity_type", "npc"},
-            {"personality", {/* TODO: random Big Five + custom traits */}},
+            {"personality", personality},
             {"background_story", "Generated background for " + npc_id},
-            {"skills", {/* TODO: random skills */}},
-            {"physical", {/* TODO: random appearance, age, health */}},
-            {"moral_alignment", {/* TODO: random alignment */}},
+            {"skills", skills},
+            {"physical", physical},
+            {"moral_alignment", moral_alignment},
             {"episodic_memory", nlohmann::json::array()},
             {"semantic_memory", nlohmann::json::object()},
             {"procedural_memory", nlohmann::json::object()},
-            {"goals", {/* TODO: random goals */}},
-            {"emotional_state", {/* TODO: random emotion */}},
+            {"goals", goals},
+            {"emotional_state", emotional_state},
             {"relationships", nlohmann::json::array()},
             {"environment_state", nlohmann::json::object()},
             {"extra", nlohmann::json::object()},
             {"state", nlohmann::json::object()}
         };
-        persistent_world_model[npc_id] = npc;
+        persistent_world_model[npc_id] = npc_data;
     }
 
     // Seed factions
@@ -316,7 +366,12 @@ static void bootstrap_world() {
         {"entity_type", "faction"},
         {"name", "Kingdom"},
         {"members", nlohmann::json::array()},
-        {"resources", {/* TODO: initial resources */}},
+        {"resources", {
+            {"gold", 100000},
+            {"soldiers", 5000},
+            {"territory", 3},
+            {"influence", 0.5}
+        }},
         {"relationships", nlohmann::json::array()}
     };
     persistent_world_model["faction_merchant_guild"] = {
@@ -324,7 +379,12 @@ static void bootstrap_world() {
         {"entity_type", "faction"},
         {"name", "Merchant Guild"},
         {"members", nlohmann::json::array()},
-        {"resources", {/* TODO: initial resources */}},
+        {"resources", {
+            {"gold", 150000},
+            {"soldiers", 2000},
+            {"territory", 5},
+            {"influence", 0.7}
+        }},
         {"relationships", nlohmann::json::array()}
     };
     persistent_world_model["faction_thieves_guild"] = {
@@ -332,13 +392,111 @@ static void bootstrap_world() {
         {"entity_type", "faction"},
         {"name", "Thieves Guild"},
         {"members", nlohmann::json::array()},
-        {"resources", {/* TODO: initial resources */}},
+        {"resources", {
+            {"gold", 80000},
+            {"soldiers", 3000},
+            {"territory", 2},
+            {"influence", 0.3}
+        }},
         {"relationships", nlohmann::json::array()}
     };
 
-    // TODO: Seed initial economy, prices, trade routes, relationships, etc.
+    // Seed initial economy system
+    // Prices for common tradeable items (gold pieces)
+    nlohmann::json economy_prices = {
+        {"wheat", 5},
+        {"iron_ore", 20},
+        {"leather", 15},
+        {"cloth", 10},
+        {"potion", 50},
+        {"sword", 100},
+        {"armor", 200},
+        {"magic_scroll", 150},
+        {"gemstone", 300}
+    };
+    
+    // Trade routes between major locations
+    nlohmann::json trade_routes = nlohmann::json::array();
+    trade_routes.push_back({
+        {"route_id", "route_capital_port"},
+        {"from", "capital_city"},
+        {"to", "port_town"},
+        {"distance", 50},
+        {"travel_time_hours", 24},
+        {"goods", nlohmann::json::array({"wheat", "cloth", "iron_ore"})},
+        {"safety_level", 0.8}  // 80% safe (bandits/monsters)
+    });
+    trade_routes.push_back({
+        {"route_id", "route_port_mines"},
+        {"from", "port_town"},
+        {"to", "mining_outpost"},
+        {"distance", 30},
+        {"travel_time_hours", 12},
+        {"goods", nlohmann::json::array({"iron_ore", "gemstone"})},
+        {"safety_level", 0.6}  // 60% safe (dangerous area)
+    });
+    trade_routes.push_back({
+        {"route_id", "route_capital_forest"},
+        {"from", "capital_city"},
+        {"to", "forest_village"},
+        {"distance", 40},
+        {"travel_time_hours", 18},
+        {"goods", nlohmann::json::array({"leather", "potion"})},
+        {"safety_level", 0.75}  // 75% safe
+    });
+    
+    // Inter-faction relationships (scale: -1.0 = hostile, 0.0 = neutral, 1.0 = allied)
+    nlohmann::json faction_relations = nlohmann::json::array();
+    
+    // Kingdom <-> Merchant Guild: Positive alliance (trade benefits)
+    faction_relations.push_back({
+        {"faction_a", "faction_kingdom"},
+        {"faction_b", "faction_merchant_guild"},
+        {"relationship", 0.7},  // Strong positive
+        {"type", "trade_alliance"},
+        {"treaty_date", "year_1_day_1"},
+        {"trade_bonus", 0.2}  // 20% trade bonus
+    });
+    
+    // Kingdom <-> Thieves Guild: Negative (law vs crime)
+    faction_relations.push_back({
+        {"faction_a", "faction_kingdom"},
+        {"faction_b", "faction_thieves_guild"},
+        {"relationship", -0.6},  // Hostile
+        {"type", "conflict"},
+        {"bounty_active", true},
+        {"patrol_frequency", 0.8}  // High patrols against thieves
+    });
+    
+    // Merchant Guild <-> Thieves Guild: Complex (protection racket)
+    faction_relations.push_back({
+        {"faction_a", "faction_merchant_guild"},
+        {"faction_b", "faction_thieves_guild"},
+        {"relationship", -0.2},  // Slightly negative (uneasy truce)
+        {"type", "extortion_truce"},
+        {"protection_payment", 1000},  // Monthly gold
+        {"tension_level", 0.4}  // Moderate tension
+    });
+    
+    // Store economy data in persistent world model
+    persistent_world_model["economy_prices"] = economy_prices;
+    persistent_world_model["trade_routes"] = trade_routes;
+    persistent_world_model["faction_relations"] = faction_relations;
+    
+    // Global economy state tracking
+    persistent_world_model["economy_state"] = {
+        {"total_gold_in_circulation", 330000},  // Sum of faction gold
+        {"inflation_rate", 0.02},  // 2% baseline inflation
+        {"market_demand", {
+            {"weapons", 0.7},  // High demand (70%)
+            {"food", 0.9},     // Very high demand (90%)
+            {"luxury", 0.3}    // Low demand (30%)
+        }},
+        {"active_trade_missions", 0},
+        {"world_timestamp", "year_1_day_1_hour_0"}
+    };
 
-    log_info("AIWorldServer: World bootstrap complete (seeded NPCs and factions)");
+    log_info("AIWorldServer: World bootstrap complete (seeded NPCs, factions, economy, trade routes, and relationships)");
 }
 
 // Call bootstrap on server start

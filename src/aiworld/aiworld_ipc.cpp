@@ -5,6 +5,7 @@
 
 #include "aiworld_ipc.hpp"
 #include "aiworld_utils.hpp"
+#include "aiworld_callbacks.hpp"
 #include <iostream>
 #include <cstring>
 
@@ -143,8 +144,27 @@ void AIWorldIPCClient::receive_loop() {
     while (running) {
         AIWorldMessage msg;
         if (receive_message(msg, false)) {
-            // TODO: Dispatch event to plugin/event system
-            log_info("Received async message from AIWorld server: " + msg.payload.dump());
+            // Dispatch event to callback registry
+            log_info("Received async message (type=" +
+                    std::to_string(static_cast<int32_t>(msg.message_type)) +
+                    ", corr_id=" + msg.correlation_id + ")");
+            
+            // Route message to appropriate handler via callback registry
+            CallbackRegistry& registry = CallbackRegistry::getInstance();
+            
+            if (!registry.dispatch(msg.message_type, msg.payload)) {
+                log_warn("No handler registered for message type: " +
+                         std::to_string(static_cast<int32_t>(msg.message_type)));
+                
+                // Log unhandled message details for debugging
+                nlohmann::json log_data = {
+                    {"event", "unhandled_ipc_message"},
+                    {"message_type", static_cast<int32_t>(msg.message_type)},
+                    {"correlation_id", msg.correlation_id},
+                    {"payload_preview", msg.payload.dump().substr(0, 200)}
+                };
+                log_performance(log_data);
+            }
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }

@@ -14,13 +14,11 @@
 #include <nlohmann/json.hpp>
 
 // rAthena script engine headers
-extern "C" {
-#include "script.h"
-#include "map/pc.h"
-#include "map/npc.h"
-#include "map/mob.h"
-#include "common/showmsg.h"
-}
+#include "../map/script.hpp"
+#include "../map/pc.hpp"
+#include "../map/npc.hpp"
+#include "../map/mob.hpp"
+#include "../common/showmsg.hpp"
 
 using namespace aiworld;
 

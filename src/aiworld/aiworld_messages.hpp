@@ -82,11 +82,65 @@ struct MissionAssignment {
     nlohmann::json mission_data;
 };
 
+// NPC Registration message
+struct NPCRegistration {
+    std::string npc_id;
+    std::string entity_type;
+    nlohmann::json personality;
+    nlohmann::json background_story;
+    nlohmann::json skills;
+    nlohmann::json physical_characteristics;
+    nlohmann::json initial_state;
+    
+    nlohmann::json to_json() const;
+    static NPCRegistration from_json(const nlohmann::json& j);
+};
+
 // Event notification message
 struct EventNotification {
     std::string event_id;
     std::string event_type;
+    std::string source_id;
+    std::string target_id;
     nlohmann::json event_data;
+    int64_t timestamp;
+    
+    nlohmann::json to_json() const;
+    static EventNotification from_json(const nlohmann::json& j);
+};
+
+// Interaction Request message
+struct InteractionRequest {
+    std::string npc_id;
+    std::string interaction_type;
+    std::string initiator_id;
+    nlohmann::json interaction_data;
+    int64_t timestamp;
+    
+    nlohmann::json to_json() const;
+    static InteractionRequest from_json(const nlohmann::json& j);
+};
+
+// NPC State message (comprehensive)
+struct NPCState {
+    std::string npc_id;
+    nlohmann::json personality;
+    nlohmann::json background_story;
+    nlohmann::json skills;
+    nlohmann::json physical;
+    nlohmann::json moral_alignment;
+    nlohmann::json episodic_memory;
+    nlohmann::json semantic_memory;
+    nlohmann::json procedural_memory;
+    nlohmann::json goals;
+    nlohmann::json emotional_state;
+    nlohmann::json relationships;
+    nlohmann::json environment_state;
+    nlohmann::json extra;
+    nlohmann::json state;
+    
+    nlohmann::json to_json() const;
+    static NPCState from_json(const nlohmann::json& j);
 };
 
 // AI action request/response message

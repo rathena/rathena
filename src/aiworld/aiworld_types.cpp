@@ -1,4 +1,5 @@
-#include "aiworld_types.hpp"
+#include "aiworld_messages.hpp"
+#include <nlohmann/json.hpp>
 
 namespace aiworld {
 
@@ -74,21 +75,21 @@ InteractionRequest InteractionRequest::from_json(const nlohmann::json& j) {
 // --- NPCState ---
 nlohmann::json NPCState::to_json() const {
     nlohmann::json j;
-    j["npc_id"] = npc_id;
-    j["personality"] = personality;
-    j["background_story"] = background_story;
-    j["skills"] = skills;
-    j["physical"] = physical;
-    j["moral_alignment"] = moral_alignment;
-    j["episodic_memory"] = episodic_memory;
-    j["semantic_memory"] = semantic_memory;
-    j["procedural_memory"] = procedural_memory;
-    j["goals"] = goals;
-    j["emotional_state"] = emotional_state;
-    j["relationships"] = relationships;
-    j["environment_state"] = environment_state;
-    j["extra"] = extra;
-    j["state"] = state;
+    j["npc_id"] = this->npc_id;
+    j["personality"] = this->personality;
+    j["background_story"] = this->background_story;
+    j["skills"] = this->skills;
+    j["physical"] = this->physical;
+    j["moral_alignment"] = this->moral_alignment;
+    j["episodic_memory"] = this->episodic_memory;
+    j["semantic_memory"] = this->semantic_memory;
+    j["procedural_memory"] = this->procedural_memory;
+    j["goals"] = this->goals;
+    j["emotional_state"] = this->emotional_state;
+    j["relationships"] = this->relationships;
+    j["environment_state"] = this->environment_state;
+    j["extra"] = this->extra;
+    j["state"] = this->state;
     return j;
 }
 

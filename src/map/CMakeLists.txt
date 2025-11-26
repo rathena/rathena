@@ -39,6 +39,7 @@ set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${MAP_HEADERS} ${MAP_
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_utils.cpp
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_native_api.cpp
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_native_commands.cpp
+  ${CMAKE_SOURCE_DIR}/src/custom/ai_bridge.cpp
 )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} )
 source_group( map FILES ${MAP_HEADERS} ${MAP_SOURCES} )

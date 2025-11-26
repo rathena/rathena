@@ -7,9 +7,6 @@
 #ifndef AI_BRIDGE_HPP
 #define AI_BRIDGE_HPP
 
-#define PY_SSIZE_T_CLEAN
-#include <Python.h>
-
 #include <string>
 #include <memory>
 #include <mutex>
@@ -117,56 +114,10 @@ private:
     AIBridge& operator=(const AIBridge&) = delete;
     AIBridge(AIBridge&&) = delete;
     AIBridge& operator=(AIBridge&&) = delete;
-    
-    /**
-     * @brief Thread-safe Python function call wrapper
-     * @tparam Ret Return type (std::string or bool)
-     * @param func_name Python function name
-     * @param npc_id NPC identifier
-     * @param args Additional arguments
-     * @return Result or default value on error
-     * 
-     * Handles GIL acquisition, argument marshalling, function call,
-     * result extraction, and error handling with full exception safety.
-     */
-    template<typename Ret>
-    Ret call_python_function(const char* func_name, int npc_id, 
-                            const std::string& arg1 = "", 
-                            int arg2 = 0) noexcept;
-    
-    /**
-     * @brief Convert C++ string to Python string object
-     * @param str C++ string
-     * @return New reference to PyObject or nullptr on error
-     */
-    PyObject* to_python_string(const std::string& str) noexcept;
-    
-    /**
-     * @brief Extract std::string from Python string object
-     * @param obj Python string object
-     * @return C++ string or empty on error
-     */
-    std::string from_python_string(PyObject* obj) noexcept;
-    
-    /**
-     * @brief Handle Python exception and log error
-     * @param context Error context string
-     */
-    void handle_python_exception(const char* context) noexcept;
 
     // === State Variables ===
     std::atomic<bool> m_initialized{false};  ///< Initialization flag
     std::mutex m_init_mutex;                  ///< Initialization mutex
-    
-    // === Python Objects (cached for performance) ===
-    PyObject* m_ai_module{nullptr};           ///< AI module reference
-    PyObject* m_orchestrator{nullptr};        ///< Orchestrator instance
-    
-    // Cached function references (avoid lookup overhead)
-    PyObject* m_func_generate_dialogue{nullptr};
-    PyObject* m_func_get_npc_decision{nullptr};
-    PyObject* m_func_store_memory{nullptr};
-    PyObject* m_func_generate_quest{nullptr};
 };
 
 // === Script Command Declarations ===

@@ -38,20 +38,9 @@
 #define script_hasdata(st,i) ( (st)->end > (st)->start + (i) )
 /// Returns the index of the last data in the stack
 #define script_lastdata(st) ( (st)->end - (st)->start - 1 )
-/// Pushes an int32 into the stack
-#define script_pushint(st,val) push_val((st)->stack, C_INT, (val))
-/// Pushes an int64 into the stack
-#define script_pushint64( st, val ) push_val2( (st)->stack, C_INT, val, nullptr )
-/// Pushes a string into the stack (script engine frees it automatically)
-#define script_pushstr(st,val) push_str((st)->stack, C_STR, (val))
-/// Pushes a copy of a string into the stack
-#define script_pushstrcopy(st,val) push_str((st)->stack, C_STR, aStrdup(val))
-/// Pushes a constant string into the stack (must never change or be freed)
-#define script_pushconststr(st,val) push_str((st)->stack, C_CONSTSTR, const_cast<char *>(val))
-/// Pushes a nil into the stack
-#define script_pushnil(st) push_val((st)->stack, C_NOP, 0)
-/// Pushes a copy of the data in the target index
-#define script_pushcopy(st,i) push_copy((st)->stack, (st)->start + (i))
+
+// Note: script_push* macros are defined after function declarations (line ~2290)
+// to avoid forward declaration issues
 
 #define script_isstring(st,i) data_isstring(get_val(st, script_getdata(st,i)))
 #define script_isint(st,i) data_isint(get_val(st, script_getdata(st,i)))
@@ -68,10 +57,8 @@
 
 /// Returns the script_data at the target index relative to the top of the stack
 #define script_getdatatop(st,i) ( &((st)->stack->stack_data[(st)->stack->sp + (i)]) )
-/// Pushes a copy of the data in the target index relative to the top of the stack
-#define script_pushcopytop(st,i) push_copy((st)->stack, (st)->stack->sp + (i))
-/// Removes the range of values [start,end[ relative to the top of the stack
-#define script_removetop(st,start,end) ( pop_stack((st), ((st)->stack->sp + (start)), (st)->stack->sp + (end)) )
+
+// Note: script_pushcopytop and script_removetop are defined after function declarations
 
 //
 // struct script_data* data;
@@ -132,6 +119,9 @@
 
 /// Maximum amount of elements in script arrays
 #define SCRIPT_MAX_ARRAYSIZE (UINT_MAX - 1)
+
+// Script builtin function macro for declaring script commands
+#define BUILDIN_FUNC(x) int32 buildin_ ## x (struct script_state* st)
 
 enum script_cmd_result {
 	SCRIPT_CMD_SUCCESS = 0, ///when a buildin cmd was correctly done
@@ -2287,6 +2277,29 @@ int32 conv_num(struct script_state *st, struct script_data *data);
 const char* conv_str(struct script_state *st,struct script_data *data);
 void pop_stack(struct script_state* st, int32 start, int32 end);
 struct script_data* push_str(struct script_stack* stack, enum c_op type, char* str);
+struct script_data* push_val2(struct script_stack* stack, enum c_op type, int64 val, struct reg_db *ref);
+struct script_data* push_copy(struct script_stack* stack, int32 pos);
+
+// Script stack manipulation macros (defined here after function declarations)
+/// Pushes an int32 into the stack
+#define script_pushint(st,val) push_val2((st)->stack, C_INT, (val), nullptr)
+/// Pushes an int64 into the stack
+#define script_pushint64( st, val ) push_val2( (st)->stack, C_INT, val, nullptr )
+/// Pushes a string into the stack (script engine frees it automatically)
+#define script_pushstr(st,val) push_str((st)->stack, C_STR, (val))
+/// Pushes a copy of a string into the stack
+#define script_pushstrcopy(st,val) push_str((st)->stack, C_STR, aStrdup(val))
+/// Pushes a constant string into the stack (must never change or be freed)
+#define script_pushconststr(st,val) push_str((st)->stack, C_CONSTSTR, const_cast<char *>(val))
+/// Pushes a nil into the stack
+#define script_pushnil(st) push_val2((st)->stack, C_NOP, 0, nullptr)
+/// Pushes a copy of the data in the target index
+#define script_pushcopy(st,i) push_copy((st)->stack, (st)->start + (i))
+/// Pushes a copy of the data in the target index relative to the top of the stack
+#define script_pushcopytop(st,i) push_copy((st)->stack, (st)->stack->sp + (i))
+/// Removes the range of values [start,end[ relative to the top of the stack
+#define script_removetop(st,start,end) ( pop_stack((st), ((st)->stack->sp + (start)), (st)->stack->sp + (end)) )
+
 TIMER_FUNC(run_script_timer);
 void script_stop_sleeptimers(int32 id);
 struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);

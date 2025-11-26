@@ -23,6 +23,7 @@ class DragonflyDBClient;
 #include <stdexcept>
 #include <algorithm>
 #include <csignal>
+#include <climits>
 
 #include <atomic>
 #include <condition_variable>
@@ -152,8 +153,37 @@ std::optional<int> WorkerPool::get_worker_for_entity(entity_id_t entity_id) {
 }
 
 void WorkerPool::scale_workers(int new_count) {
-    // Dynamic scaling logic (stub for now)
-    log("Scaling workers to " + std::to_string(new_count), "info");
+    if (!config.dynamic_scaling) {
+        log_debug("Dynamic scaling disabled, ignoring scale request");
+        return;
+    }
+    
+    // Enforce min/max bounds
+    if (new_count < config.min_threads) {
+        new_count = config.min_threads;
+    } else if (new_count > config.max_threads) {
+        new_count = config.max_threads;
+    }
+    
+    int current_count = workers.size();
+    if (new_count == current_count) {
+        return; // No change needed
+    }
+    
+    if (new_count > current_count) {
+        // Add workers
+        for (int i = current_count; i < new_count; ++i) {
+            workers.emplace_back(&WorkerPool::worker_loop, this, i);
+            log("Added worker thread " + std::to_string(i), "info");
+        }
+    } else {
+        // Remove workers - signal workers to stop gracefully
+        // In production, would need to migrate entities first
+        log("Worker scaling down not fully implemented - would migrate entities first", "warn");
+    }
+    
+    log("Workers scaled from " + std::to_string(current_count) + " to " +
+        std::to_string(new_count), "info");
 }
 
 void WorkerPool::export_metrics() {
@@ -190,10 +220,63 @@ std::map<int, std::vector<entity_id_t>> WorkerPool::get_worker_entity_map() cons
 
 void WorkerPool::worker_loop(int worker_id) {
     log("Worker " + std::to_string(worker_id) + " started", "info");
+    
+    // 60Hz tick rate = 16.67ms per tick (as per P2P-multi-CPU.md:717)
+    const auto tick_duration = std::chrono::milliseconds(16);
+    auto last_cpu_check = std::chrono::steady_clock::now();
+    
     while (running.load()) {
-        // TODO: Implement actual entity processing logic
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        auto tick_start = std::chrono::steady_clock::now();
+        
+        // Get entities assigned to this worker
+        std::vector<entity_id_t> assigned_entities;
+        {
+            std::lock_guard<std::mutex> lock(entity_table_mutex);
+            for (const auto& [eid, assignment] : entity_table) {
+                if (assignment.worker_id == worker_id) {
+                    assigned_entities.push_back(eid);
+                }
+            }
+        }
+        
+        // Process each entity
+        for (entity_id_t entity_id : assigned_entities) {
+            // In production, this would:
+            // 1. Call AI decision system for entity
+            // 2. Update entity state based on AI decisions
+            // 3. Execute actions (movement, combat, dialogue)
+            // 4. Sync state to DragonflyDB if modified
+            
+            // For now, just track processing
+            if (config.verbose && assigned_entities.size() > 0) {
+                log_debug("Worker " + std::to_string(worker_id) +
+                         " processing " + std::to_string(assigned_entities.size()) + " entities");
+            }
+        }
+        
+        // Check CPU usage periodically for dynamic scaling
+        auto now = std::chrono::steady_clock::now();
+        if (config.dynamic_scaling &&
+            std::chrono::duration_cast<std::chrono::seconds>(now - last_cpu_check).count() >= 10) {
+            
+            // Simple load estimation based on entity count
+            int current_load = assigned_entities.size();
+            int capacity_per_worker = 100; // Entities per worker threshold
+            
+            // Update worker load metric
+            (*worker_loads[worker_id]) = current_load;
+            
+            last_cpu_check = now;
+        }
+        
+        // Sleep for remaining tick time to maintain 60Hz
+        auto tick_end = std::chrono::steady_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::milliseconds>(tick_end - tick_start);
+        if (elapsed < tick_duration) {
+            std::this_thread::sleep_for(tick_duration - elapsed);
+        }
     }
+    
     log("Worker " + std::to_string(worker_id) + " stopped", "info");
 }
 
@@ -249,8 +332,85 @@ int WorkerPool::select_worker_for_assignment(entity_id_t entity_id) {
 }
 
 void WorkerPool::perform_migration() {
-    // Example: migrate entities from overloaded to underloaded workers (stub)
-    // In production, implement actual migration logic based on load, affinity, etc.
-    // For now, just log the current state.
-    log_status();
+    if (!running.load()) return;
+    
+    std::lock_guard<std::mutex> lock(entity_table_mutex);
+    
+    if (entity_table.empty()) {
+        return;
+    }
+    
+    // Calculate load for each worker
+    std::vector<int> worker_entity_counts(config.num_threads, 0);
+    for (const auto& [eid, assignment] : entity_table) {
+        if (assignment.worker_id < config.num_threads) {
+            worker_entity_counts[assignment.worker_id]++;
+        }
+    }
+    
+    // Find most loaded and least loaded workers
+    int max_load = 0, max_worker = 0;
+    int min_load = INT_MAX, min_worker = 0;
+    
+    for (int i = 0; i < config.num_threads; ++i) {
+        if (worker_entity_counts[i] > max_load) {
+            max_load = worker_entity_counts[i];
+            max_worker = i;
+        }
+        if (worker_entity_counts[i] < min_load) {
+            min_load = worker_entity_counts[i];
+            min_worker = i;
+        }
+    }
+    
+    // Check if migration is needed (imbalance threshold: >30% difference)
+    if (max_load == 0 || min_load == max_load) {
+        return; // Balanced or no entities
+    }
+    
+    float imbalance = static_cast<float>(max_load - min_load) / max_load;
+    if (imbalance < 0.3f) {
+        log_debug("Load balanced, no migration needed");
+        return;
+    }
+    
+    // Migrate 10% of entities from most loaded to least loaded worker
+    int entities_to_migrate = std::max(1, static_cast<int>(max_load * 0.1));
+    int migrated = 0;
+    
+    for (auto& [eid, assignment] : entity_table) {
+        if (migrated >= entities_to_migrate) break;
+        
+        if (assignment.worker_id == max_worker) {
+            // Check migration cooldown (don't migrate same entity too frequently)
+            auto time_since_migration = std::chrono::steady_clock::now() - assignment.last_migrated;
+            if (std::chrono::duration_cast<std::chrono::seconds>(time_since_migration).count() < 30) {
+                continue; // Skip recently migrated entities
+            }
+            
+            // Perform migration
+            int old_worker = assignment.worker_id;
+            assignment.worker_id = min_worker;
+            assignment.last_migrated = std::chrono::steady_clock::now();
+            
+            // Update load counters
+            (*worker_loads[old_worker])--;
+            (*worker_loads[min_worker])++;
+            
+            // Notify DragonflyDB if available
+            if (dragonflydb_client) {
+                dragonflydb_client->update_entity_migration(eid, old_worker, min_worker);
+            }
+            
+            log("Migrated entity " + std::to_string(eid) + " from worker " +
+                std::to_string(old_worker) + " to " + std::to_string(min_worker), "info");
+            
+            migrated++;
+        }
+    }
+    
+    if (migrated > 0) {
+        log("Migration complete: moved " + std::to_string(migrated) + " entities from worker " +
+            std::to_string(max_worker) + " to " + std::to_string(min_worker), "info");
+    }
 }

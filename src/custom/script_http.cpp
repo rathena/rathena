@@ -33,7 +33,7 @@ static CURL* global_curl = nullptr;
  * @param userdata Pointer to user-defined data (our response string)
  * @return Number of bytes processed
  */
-static size_t curl_write_callback(void* ptr, size_t size, size_t nmemb, void* userdata) {
+static size_t http_response_write_callback(void* ptr, size_t size, size_t nmemb, void* userdata) {
 	std::string* response = static_cast<std::string*>(userdata);
 	size_t total_size = size * nmemb;
 	
@@ -125,7 +125,7 @@ std::string http_post(const std::string& url, const std::string& data) {
 	curl_easy_setopt(global_curl, CURLOPT_POSTFIELDS, data.c_str());
 	curl_easy_setopt(global_curl, CURLOPT_POSTFIELDSIZE, data.size());
 	curl_easy_setopt(global_curl, CURLOPT_TIMEOUT, HTTP_TIMEOUT);
-	curl_easy_setopt(global_curl, CURLOPT_WRITEFUNCTION, curl_write_callback);
+	curl_easy_setopt(global_curl, CURLOPT_WRITEFUNCTION, http_response_write_callback);
 	curl_easy_setopt(global_curl, CURLOPT_WRITEDATA, &response);
 	curl_easy_setopt(global_curl, CURLOPT_NOSIGNAL, 1L); // Thread-safe
 	
@@ -179,7 +179,7 @@ std::string http_get(const std::string& url) {
 	curl_easy_setopt(global_curl, CURLOPT_HTTPHEADER, headers);
 	curl_easy_setopt(global_curl, CURLOPT_HTTPGET, 1L);
 	curl_easy_setopt(global_curl, CURLOPT_TIMEOUT, HTTP_TIMEOUT);
-	curl_easy_setopt(global_curl, CURLOPT_WRITEFUNCTION, curl_write_callback);
+	curl_easy_setopt(global_curl, CURLOPT_WRITEFUNCTION, http_response_write_callback);
 	curl_easy_setopt(global_curl, CURLOPT_WRITEDATA, &response);
 	curl_easy_setopt(global_curl, CURLOPT_NOSIGNAL, 1L); // Thread-safe
 	
