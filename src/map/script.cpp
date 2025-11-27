@@ -66,6 +66,9 @@
 // AIWorld custom native commands - ENABLED
 #include "../aiworld/aiworld_native_commands.hpp"
 
+// AI IPC Script Commands - Database-based IPC for NPC-to-AI communication
+#include "../custom/script_ai_ipc.hpp"
+
 using namespace rathena;
 
 const int64 SCRIPT_INT_MIN = INT64_MIN;
@@ -27872,49 +27875,14 @@ BUILDIN_FUNC(preg_match) {
 #endif
 }
 
-// Custom AIWorld Script Commands - Stub implementations
-// The actual implementations are in aiworld plugin
-// These stubs allow compilation and will be overridden by the plugin at runtime
-
-/**
- * httppost(url$, json_data$)
- * HTTP POST to AI service
- */
-BUILDIN_FUNC(httppost) {
-	script_pushstrcopy(st, "{\"error\":\"AIWorld plugin not loaded\"}");
-	ShowWarning("httppost: AIWorld plugin is not loaded. Command unavailable.\n");
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/**
- * httpget(url$)
- * HTTP GET from AI service
- */
-BUILDIN_FUNC(httpget) {
-	script_pushstrcopy(st, "{\"error\":\"AIWorld plugin not loaded\"}");
-	ShowWarning("httpget: AIWorld plugin is not loaded. Command unavailable.\n");
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/**
- * npcwalk(npc_name$, x, y)
- * AI-driven NPC movement by name
- */
-BUILDIN_FUNC(npcwalk) {
-	script_pushint(st, 0);
-	ShowWarning("npcwalk: AIWorld plugin is not loaded. Command unavailable.\n");
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/**
- * npcwalkid(npc_id, x, y)
- * AI-driven NPC movement by ID
- */
-BUILDIN_FUNC(npcwalkid) {
-	script_pushint(st, 0);
-	ShowWarning("npcwalkid: AIWorld plugin is not loaded. Command unavailable.\n");
-	return SCRIPT_CMD_SUCCESS;
-}
+// ============================================================================
+// NOTE: AIWorld script commands (httppost, httpget, npcwalk, npcwalkid)
+// are now implemented in:
+//   - src/custom/script_ai_ipc.cpp (httppost, httpget via DB IPC)
+//   - src/custom/script_http.cpp (npcwalk, npcwalkid)
+//
+// The stub implementations have been removed to prevent multiple definition errors.
+// ============================================================================
 
 /// script command definitions
 /// for an explanation on args, see add_buildin_func

@@ -1,0 +1,96 @@
+# =============================================================================
+# AI IPC Service - Python Dependencies
+# =============================================================================
+# 
+# Install with: pip install -r requirements.txt
+# 
+# For development, also install: pip install -r requirements-dev.txt (if exists)
+#
+# Python version: 3.11+ recommended, 3.9+ minimum
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Database - Async MySQL support
+# -----------------------------------------------------------------------------
+# aiomysql: Pure Python async MySQL client
+# Uses PyMySQL under the hood for protocol implementation
+aiomysql>=0.2.0
+
+# PyMySQL: Pure Python MySQL client (dependency of aiomysql)
+PyMySQL>=1.1.0
+
+# -----------------------------------------------------------------------------
+# HTTP Client - Async HTTP requests
+# -----------------------------------------------------------------------------
+# aiohttp: Async HTTP client/server framework
+# Used for HTTP proxy handler and AI service communication
+aiohttp>=3.9.0
+
+# -----------------------------------------------------------------------------
+# Configuration - YAML config file support
+# -----------------------------------------------------------------------------
+# PyYAML: YAML parser and emitter
+pyyaml>=6.0.1
+
+# -----------------------------------------------------------------------------
+# Environment - Environment variable management
+# -----------------------------------------------------------------------------
+# python-dotenv: Load environment variables from .env files
+python-dotenv>=1.0.0
+
+# -----------------------------------------------------------------------------
+# Logging - Structured logging support
+# -----------------------------------------------------------------------------
+# structlog: Structured logging for Python
+# Provides JSON logging output for production environments
+structlog>=23.2.0
+
+# -----------------------------------------------------------------------------
+# Type Hints (Optional but recommended)
+# -----------------------------------------------------------------------------
+# typing-extensions: Backport of typing features for older Python versions
+# Required for Python < 3.11 for some type hint features
+typing-extensions>=4.8.0;python_version<"3.11"
+
+# =============================================================================
+# Optional Dependencies (uncomment if needed)
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Monitoring & Metrics (Optional)
+# -----------------------------------------------------------------------------
+# prometheus-client: Prometheus metrics client
+# prometheus-client>=0.19.0
+
+# -----------------------------------------------------------------------------
+# Performance Profiling (Optional)
+# -----------------------------------------------------------------------------
+# py-spy: Sampling profiler for Python
+# py-spy>=0.3.14
+
+# -----------------------------------------------------------------------------
+# Testing (Development only)
+# -----------------------------------------------------------------------------
+# pytest: Testing framework
+# pytest>=7.4.0
+
+# pytest-asyncio: Async test support
+# pytest-asyncio>=0.21.0
+
+# pytest-cov: Coverage reporting
+# pytest-cov>=4.1.0
+
+# -----------------------------------------------------------------------------
+# Code Quality (Development only)
+# -----------------------------------------------------------------------------
+# black: Code formatter
+# black>=23.11.0
+
+# isort: Import sorter
+# isort>=5.12.0
+
+# mypy: Static type checker
+# mypy>=1.7.0
+
+# ruff: Fast Python linter
+# ruff>=0.1.6

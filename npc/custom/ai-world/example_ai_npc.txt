@@ -13,6 +13,37 @@
 //=   ai_quest(<npc_id>, <player_level>)
 //=   ai_walk(<npc_id>, <x>, <y>, "<map>")
 //============================================================
+//
+//===================================================================
+// AI Integration Architecture Notice
+//===================================================================
+// This script uses the EMBEDDED PYTHON AI BRIDGE, which is different
+// from the HTTP-based AI IPC system used by httpget/httppost.
+//
+// Two AI Integration Approaches:
+//
+// 1. EMBEDDED PYTHON BRIDGE (this file)
+//    - Commands: ai_dialogue, ai_decision, ai_remember, ai_quest, ai_walk
+//    - Architecture: Direct C++ ↔ Python FFI calls
+//    - Latency: Sub-microsecond (<1μs)
+//    - Use for: Real-time NPC AI, dialogue generation, decisions
+//    - Requires: Python interpreter embedded in map-server
+//
+// 2. DATABASE IPC SYSTEM (httpget/httppost)
+//    - Commands: httpget, httppost, ai_db_request, ai_db_wait, etc.
+//    - Architecture: NPC → Database Queue → Worker → AI Service
+//    - Latency: Milliseconds (async, network overhead)
+//    - Use for: External AI services, web APIs, distributed processing
+//    - Requires: Database + Python worker process
+//
+// When to use which:
+//   • Use ai_dialogue/ai_decision for immediate NPC responses
+//   • Use httpget/httppost/ai_db_* for external AI service calls
+//   • Embedded Python is faster but requires local Python
+//   • Database IPC is more flexible and supports external services
+//
+// Both systems can coexist - use the right tool for each use case.
+//===================================================================
 
 //============================================================
 // AI-Powered Merchant NPC

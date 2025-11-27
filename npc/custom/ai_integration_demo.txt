@@ -1,13 +1,41 @@
 //===== rAthena Script =======================================
 //= AI Integration Demo NPCs
 //===== Description: =========================================
-//= Demonstrates C++ ↔ Python HTTP integration
-//= Tests all 4 custom script commands:
+//= Demonstrates C++ ↔ Python AI integration
+//= Tests custom script commands:
 //=   - httppost, httpget, npcwalk, npcwalkid
 //===== Additional Comments: =================================
 //= Test the complete integration chain:
-//= Player → NPC Script → C++ HTTP Client → Python AI Service
+//= Player → NPC Script → C++ IPC Layer → Python AI Service
 //============================================================
+//
+//===================================================================
+// AI IPC System Notice (Phase 2 Update)
+//===================================================================
+// This script uses database-based IPC instead of direct HTTP calls.
+// The httpget()/httppost() commands now use ai_db_* internally.
+//
+// Architecture Change:
+//   OLD: NPC Script → httpget/httppost → External HTTP Request → AI Service
+//   NEW: NPC Script → httpget/httppost → ai_db_request → Database Queue → Worker → AI Service
+//
+// New Native Commands Available (for advanced use):
+//   ai_db_request(type, endpoint, data{, priority}) -> request_id
+//   ai_db_response(request_id) -> response_json or ""
+//   ai_db_wait(request_id, timeout_ms) -> response_json
+//   ai_db_status(request_id) -> 0=not_found, 1=pending, 2=processing, 3=completed, 4=failed
+//   ai_db_cancel(request_id) -> 1=success, 0=failed
+//
+// Benefits of Database IPC:
+//   • No external HTTP dependencies from map-server
+//   • Request persistence across server restarts
+//   • Priority queue for urgent requests
+//   • Automatic retry handling by worker
+//   • Full audit trail in database
+//
+// httpget(url) and httppost(url, data) still work for backward compatibility.
+// They internally convert to ai_db_request calls and wait for responses.
+//===================================================================
 
 //============================================================
 // Test NPC #1: HTTP POST/GET Demo

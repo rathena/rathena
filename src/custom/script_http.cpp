@@ -205,13 +205,22 @@ std::string http_get(const std::string& url) {
 	return response;
 }
 
+// ============================================================================
+// DISABLED: httppost and httpget BUILDIN_FUNCs
+// These are now implemented in script_ai_ipc.cpp using database IPC
+// instead of direct HTTP/CURL calls for better reliability.
+// The utility functions http_post() and http_get() above are still available
+// for internal use by other commands like npcwalk/npcwalkid.
+// ============================================================================
+
+#if 0  // DISABLED - implemented in script_ai_ipc.cpp
 /**
  * Script command: httppost
  * Performs an HTTP POST request to the AI service
- * 
+ *
  * Usage: httppost("<url>", "<json_data>")
  * Returns: Response string or empty string on failure
- * 
+ *
  * Example:
  *   .@response$ = httppost("http://localhost:8000/api/v1/npc/1001/action", "{\"action\":\"walk\",\"x\":150,\"y\":180}");
  */
@@ -241,10 +250,10 @@ BUILDIN_FUNC(httppost) {
 /**
  * Script command: httpget
  * Performs an HTTP GET request to the AI service
- * 
+ *
  * Usage: httpget("<url>")
  * Returns: Response string or empty string on failure
- * 
+ *
  * Example:
  *   .@response$ = httpget("http://localhost:8000/api/v1/npc/1001/state");
  */
@@ -269,6 +278,7 @@ BUILDIN_FUNC(httpget) {
 	
 	return SCRIPT_CMD_SUCCESS;
 }
+#endif // DISABLED - implemented in script_ai_ipc.cpp
 
 /**
  * Script command: npcwalk

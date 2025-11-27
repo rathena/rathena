@@ -6,27 +6,125 @@
 //= Demonstrates httpget() command usage
 //= Fetches data from AI service and displays it
 //============================================================
+//
+//===================================================================
+// AI IPC System Notice (Phase 2 Update)
+//===================================================================
+// This script uses database-based IPC instead of direct HTTP calls.
+// The httpget() command now uses ai_db_* internally for all requests.
+//
+// New Native Commands Available:
+//   ai_db_request(type, endpoint, data{, priority}) -> request_id
+//   ai_db_response(request_id) -> response_json or ""
+//   ai_db_wait(request_id, timeout_ms) -> response_json
+//   ai_db_status(request_id) -> 0=not_found, 1=pending, 2=processing, 3=completed, 4=failed
+//   ai_db_cancel(request_id) -> 1=success, 0=failed
+//
+// httpget(url) still works for backward compatibility.
+// The wrapper extracts the endpoint from URL and calls ai_db_request internally.
+//===================================================================
 
+//============================================================
+// Example 1: Health Check - Comparing Old vs New API
+//============================================================
 prontera,155,185,4	script	AI Health Check	1_M_BARD,{
 	mes "[AI Service Monitor]";
-	mes "Checking AI service health...";
+	mes "Which API method to use?";
 	next;
 	
-	// Simple health check
-	.@response$ = httpget("http://192.168.0.100:8000/api/v1/health");
-	
-	if (.@response$ == "") {
-		mes "^FF0000Error: AI service is not responding!^000000";
-		close;
+	switch(select("New API (ai_db_*)", "Legacy API (httpget)", "Compare Both")) {
+	case 1:
+		// === New AI IPC API (Recommended) ===
+		// Non-blocking request with explicit control
+		mes "Using new ai_db_* API...";
+		next;
+		
+		// Create request (non-blocking, returns immediately)
+		.@request_id = ai_db_request("http_get", "/api/v1/health", "{}");
+		
+		if (.@request_id <= 0) {
+			mes "^FF0000Error: Failed to create request!^000000";
+			close;
+		}
+		
+		mes "Request ID: " + .@request_id;
+		mes "Waiting for response...";
+		next;
+		
+		// Wait for response with 5 second timeout
+		.@response$ = ai_db_wait(.@request_id, 5000);
+		
+		if (.@response$ == "") {
+			// Check status for more details
+			.@status = ai_db_status(.@request_id);
+			if (.@status == 4) {
+				mes "^FF0000Request failed!^000000";
+			} else if (.@status == 1 || .@status == 2) {
+				mes "^FFFF00Request still processing (timeout)^000000";
+			} else {
+				mes "^FF0000Unknown error (status: " + .@status + ")^000000";
+			}
+			close;
+		}
+		
+		mes "^00FF00AI Service is healthy!^000000";
+		mes " ";
+		mes "Response:";
+		mes .@response$;
+		break;
+		
+	case 2:
+		// === Legacy API (Backward Compatible) ===
+		// Simple blocking call - wrapper handles IPC internally
+		mes "Using legacy httpget() API...";
+		next;
+		
+		.@response$ = httpget("http://192.168.0.100:8000/api/v1/health");
+		
+		if (.@response$ == "") {
+			mes "^FF0000Error: AI service is not responding!^000000";
+			close;
+		}
+		
+		mes "^00FF00AI Service is healthy!^000000";
+		mes " ";
+		mes "Response:";
+		mes .@response$;
+		break;
+		
+	case 3:
+		// === Compare Both APIs ===
+		mes "Running both APIs for comparison...";
+		next;
+		
+		// New API
+		.@start1 = gettimetick(2);
+		.@req_id = ai_db_request("http_get", "/api/v1/health", "{}");
+		.@resp1$ = ai_db_wait(.@req_id, 5000);
+		.@time1 = gettimetick(2) - .@start1;
+		
+		// Legacy API
+		.@start2 = gettimetick(2);
+		.@resp2$ = httpget("http://192.168.0.100:8000/api/v1/health");
+		.@time2 = gettimetick(2) - .@start2;
+		
+		mes "^0000FFNew API (ai_db_*):^000000";
+		mes "Time: " + .@time1 + "ms";
+		mes "Success: " + ((.@resp1$ != "") ? "Yes" : "No");
+		mes " ";
+		mes "^0000FFLegacy API (httpget):^000000";
+		mes "Time: " + .@time2 + "ms";
+		mes "Success: " + ((.@resp2$ != "") ? "Yes" : "No");
+		mes " ";
+		mes "^FFFFFFBoth use same IPC backend!^000000";
+		break;
 	}
-	
-	mes "^00FF00AI Service is healthy!^000000";
-	mes " ";
-	mes "Response:";
-	mes .@response$;
 	close;
 }
 
+//============================================================
+// Example 2: NPC State Fetch with Status Polling
+//============================================================
 prontera,157,185,4	script	Fetch NPC State	1_F_MARIA,{
 	mes "[Dynamic NPC Manager]";
 	mes "Enter NPC ID to check:";
@@ -38,14 +136,48 @@ prontera,157,185,4	script	Fetch NPC State	1_F_MARIA,{
 	}
 	
 	mes "Fetching state for NPC " + .@npc_id + "...";
+	mes " ";
+	mes "^777777Using ai_db_* with status polling^000000";
 	next;
 	
-	// Fetch NPC state from AI service
-	.@url$ = "http://192.168.0.100:8000/api/v1/procedural/dynamic-npc/" + .@npc_id + "/state";
-	.@response$ = httpget(.@url$);
+	// === New API: Non-blocking with status polling ===
+	.@endpoint$ = "/api/v1/procedural/dynamic-npc/" + .@npc_id + "/state";
+	.@request_id = ai_db_request("http_get", .@endpoint$, "{}");
+	
+	if (.@request_id <= 0) {
+		mes "^FF0000Failed to create request^000000";
+		close;
+	}
+	
+	// Poll status (non-blocking check)
+	.@attempts = 0;
+	.@max_attempts = 50; // 5 seconds with 100ms intervals
+	
+	while (.@attempts < .@max_attempts) {
+		.@status = ai_db_status(.@request_id);
+		
+		// Status codes: 0=not_found, 1=pending, 2=processing, 3=completed, 4=failed
+		if (.@status == 3) {
+			// Completed - get response
+			.@response$ = ai_db_response(.@request_id);
+			break;
+		} else if (.@status == 4) {
+			// Failed
+			mes "^FF0000Request failed!^000000";
+			close;
+		} else if (.@status == 0) {
+			// Not found (shouldn't happen)
+			mes "^FF0000Request not found!^000000";
+			close;
+		}
+		
+		// Still pending/processing - wait a bit
+		sleep2 100;
+		.@attempts++;
+	}
 	
 	if (.@response$ == "") {
-		mes "^FF0000Failed to fetch NPC state^000000";
+		mes "^FF0000Timeout waiting for response^000000";
 		close;
 	}
 	
@@ -54,13 +186,27 @@ prontera,157,185,4	script	Fetch NPC State	1_F_MARIA,{
 	close;
 }
 
+//============================================================
+// Example 3: Active Problems with Priority Request
+//============================================================
 prontera,159,185,4	script	Active Problems	1_M_WIZARD,{
 	mes "[World Problem Monitor]";
 	mes "Checking active world problems...";
 	next;
 	
-	// Fetch active problems
-	.@response$ = httpget("http://192.168.0.100:8000/api/v1/procedural/problem/active");
+	// === New API: High-priority request ===
+	// Priority levels: 0=low, 1=normal, 2=high, 3=urgent
+	.@request_id = ai_db_request("http_get", "/api/v1/procedural/problem/active", "{}", 2);
+	
+	if (.@request_id <= 0) {
+		mes "^FF0000Failed to create request^000000";
+		close;
+	}
+	
+	mes "^777777Request ID: " + .@request_id + " (high priority)^000000";
+	
+	// Use ai_db_wait for blocking wait with timeout
+	.@response$ = ai_db_wait(.@request_id, 5000);
 	
 	if (.@response$ == "") {
 		mes "^FF0000No problems found (or service offline)^000000";
@@ -73,5 +219,38 @@ prontera,159,185,4	script	Active Problems	1_M_WIZARD,{
 	
 	mes "These problems are affecting the world right now!";
 	mes "Complete quests or defeat monsters to resolve them.";
+	close;
+}
+
+//============================================================
+// Example 4: Request Cancellation Demo
+//============================================================
+prontera,161,185,4	script	Cancel Demo	1_M_LIBRARIAN,{
+	mes "[Request Manager]";
+	mes "This demonstrates request cancellation.";
+	next;
+	
+	// Create a request
+	.@request_id = ai_db_request("http_get", "/api/v1/slow-endpoint", "{}");
+	
+	mes "Created request: " + .@request_id;
+	mes "Cancelling in 1 second...";
+	next;
+	
+	sleep2 1000;
+	
+	// Cancel the request
+	.@cancelled = ai_db_cancel(.@request_id);
+	
+	if (.@cancelled) {
+		mes "^00FF00Request successfully cancelled!^000000";
+		mes "Status: " + ai_db_status(.@request_id);
+	} else {
+		mes "^FFFF00Could not cancel (may already be completed)^000000";
+		.@response$ = ai_db_response(.@request_id);
+		if (.@response$ != "") {
+			mes "Response: " + .@response$;
+		}
+	}
 	close;
 }

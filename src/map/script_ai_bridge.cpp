@@ -16,12 +16,20 @@ using namespace AIBridge;
 // Maximum response size (10KB)
 #define MAX_HTTP_RESPONSE_SIZE 10240
 
+// ============================================================================
+// DISABLED: httpget and httppost BUILDIN_FUNCs
+// These are now implemented in script_ai_ipc.cpp using database IPC
+// instead of the BridgeLayer for better reliability and cross-platform support.
+// The BridgeLayer is still available for other commands like ai_bridge_status.
+// ============================================================================
+
+#if 0  // DISABLED - implemented in script_ai_ipc.cpp
 /**
  * httpget(url$)
- * 
+ *
  * Performs HTTP GET request to AI service
  * Returns response body as string or empty string on error
- * 
+ *
  * Example:
  *   .@response$ = httpget("http://192.168.0.100:8000/api/v1/health");
  *   mes .@response$;
@@ -73,10 +81,10 @@ BUILDIN_FUNC(httpget) {
 
 /**
  * httppost(url$, json_body$)
- * 
+ *
  * Performs HTTP POST request to AI service
  * Returns response body as string or empty string on error
- * 
+ *
  * Example:
  *   .@data$ = "{\"player_id\":150001,\"action\":\"login\"}";
  *   .@response$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch", .@data$);
@@ -134,6 +142,7 @@ BUILDIN_FUNC(httppost) {
     
     return SCRIPT_CMD_SUCCESS;
 }
+#endif // DISABLED - implemented in script_ai_ipc.cpp
 
 /**
  * ai_bridge_status()
