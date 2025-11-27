@@ -103,7 +103,7 @@ class AIServiceConfig:
             raise ValueError("AI service base_url is required")
 
 
-@dataclass 
+@dataclass
 class LoggingConfig:
     """Logging configuration."""
     level: str = "INFO"
@@ -126,6 +126,70 @@ class LoggingConfig:
 
 
 @dataclass
+class SecurityConfig:
+    """Security and authentication configuration."""
+    # Authentication settings
+    auth_enabled: bool = True
+    auth_method: str = "api_key"  # 'api_key', 'token', or 'none'
+    api_key: str = ""  # Set via AI_IPC_API_KEY environment variable
+    
+    # Rate limiting
+    rate_limit_enabled: bool = True
+    rate_limit_per_npc: int = 60  # Max requests per NPC per minute
+    rate_limit_global: int = 1000  # Max global requests per minute
+    
+    # Request validation
+    validate_requests: bool = True
+    max_request_size: int = 65535  # Maximum request data size in bytes
+    allowed_request_types: list[str] = field(default_factory=list)  # Empty = all allowed
+    blocked_npcs: list[str] = field(default_factory=list)  # NPCs blocked from making requests
+    
+    def __post_init__(self) -> None:
+        """Validate security configuration after initialization."""
+        valid_methods = {"api_key", "token", "none"}
+        if self.auth_method.lower() not in valid_methods:
+            raise ValueError(
+                f"Invalid auth_method: {self.auth_method}. Must be one of: {valid_methods}"
+            )
+        if self.auth_enabled and self.auth_method != "none" and not self.api_key:
+            logger.warning(
+                "Authentication is enabled but no API key is set. "
+                "Set AI_IPC_API_KEY environment variable for production."
+            )
+        if self.max_request_size < 1024:
+            raise ValueError("max_request_size must be at least 1024 bytes")
+    
+    def validate_api_key(self, provided_key: str) -> bool:
+        """
+        Validate a provided API key against the configured key.
+        
+        Args:
+            provided_key: The API key to validate
+            
+        Returns:
+            True if valid, False otherwise
+        """
+        if not self.auth_enabled or self.auth_method == "none":
+            return True
+        if not self.api_key:
+            logger.warning("No API key configured, allowing request")
+            return True
+        # Use constant-time comparison to prevent timing attacks
+        import hmac
+        return hmac.compare_digest(self.api_key, provided_key)
+    
+    def is_npc_blocked(self, npc_name: str) -> bool:
+        """Check if an NPC is blocked from making requests."""
+        return npc_name in self.blocked_npcs
+    
+    def is_request_type_allowed(self, request_type: str) -> bool:
+        """Check if a request type is allowed."""
+        if not self.allowed_request_types:
+            return True  # Empty list means all allowed
+        return request_type in self.allowed_request_types
+
+
+@dataclass
 class Config:
     """
     Main configuration class for the AI IPC Service.
@@ -137,6 +201,7 @@ class Config:
     polling: PollingConfig = field(default_factory=PollingConfig)
     ai_service: AIServiceConfig = field(default_factory=AIServiceConfig)
     logging: LoggingConfig = field(default_factory=LoggingConfig)
+    security: SecurityConfig = field(default_factory=SecurityConfig)
     
     # Service metadata
     service_name: str = "ai_ipc_service"
@@ -238,14 +303,41 @@ class Config:
             include_request_id=log_yaml.get("include_request_id", True),
         )
         
+        # Security configuration
+        sec_yaml = yaml_config.get("security", {})
+        security_config = SecurityConfig(
+            auth_enabled=cls._parse_bool(
+                os.getenv("AI_IPC_AUTH_ENABLED", str(sec_yaml.get("auth_enabled", True)))
+            ),
+            auth_method=os.getenv("AI_IPC_AUTH_METHOD", sec_yaml.get("auth_method", "api_key")),
+            api_key=os.getenv("AI_IPC_API_KEY", sec_yaml.get("api_key", "")),
+            rate_limit_enabled=cls._parse_bool(
+                str(sec_yaml.get("rate_limit_enabled", True))
+            ),
+            rate_limit_per_npc=int(sec_yaml.get("rate_limit_per_npc", 60)),
+            rate_limit_global=int(sec_yaml.get("rate_limit_global", 1000)),
+            validate_requests=cls._parse_bool(
+                str(sec_yaml.get("validate_requests", True))
+            ),
+            max_request_size=int(sec_yaml.get("max_request_size", 65535)),
+            allowed_request_types=sec_yaml.get("allowed_request_types", []),
+            blocked_npcs=sec_yaml.get("blocked_npcs", []),
+        )
+        
         return cls(
             database=database,
             polling=polling,
             ai_service=ai_service,
             logging=logging_config,
+            security=security_config,
             service_name=yaml_config.get("service_name", "ai_ipc_service"),
             version=yaml_config.get("version", "1.0.0"),
         )
+    
+    @staticmethod
+    def _parse_bool(value: str) -> bool:
+        """Parse string to boolean."""
+        return value.lower() in ("true", "1", "yes", "on")
     
     def validate(self) -> list[str]:
         """
@@ -284,7 +376,7 @@ class Config:
         """
         Convert configuration to dictionary (for logging/debugging).
         
-        Note: Password is masked for security.
+        Note: Password and API key are masked for security.
         
         Returns:
             Dictionary representation of configuration
@@ -313,6 +405,15 @@ class Config:
             "logging": {
                 "level": self.logging.level,
                 "format": self.logging.format,
+            },
+            "security": {
+                "auth_enabled": self.security.auth_enabled,
+                "auth_method": self.security.auth_method,
+                "api_key": "***" if self.security.api_key else "(not set)",
+                "rate_limit_enabled": self.security.rate_limit_enabled,
+                "rate_limit_per_npc": self.security.rate_limit_per_npc,
+                "rate_limit_global": self.security.rate_limit_global,
+                "validate_requests": self.security.validate_requests,
             },
         }
     

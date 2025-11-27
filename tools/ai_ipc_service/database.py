@@ -206,12 +206,121 @@ class Database:
             await conn.rollback()
             raise
     
-    async def fetch_pending_requests(
-        self, 
+    async def fetch_and_mark_processing(
+        self,
         limit: int = 50
     ) -> list[dict[str, Any]]:
         """
-        Fetch pending requests from the queue.
+        Atomically fetch pending requests and mark them as processing.
+        
+        This method combines fetch and mark operations in a single transaction
+        to prevent race conditions where requests could be stuck forever if
+        the service crashes between SELECT and UPDATE.
+        
+        Uses SELECT ... FOR UPDATE SKIP LOCKED for safe concurrent access,
+        then immediately marks selected requests as 'processing' within
+        the same transaction.
+        
+        Args:
+            limit: Maximum number of requests to fetch
+            
+        Returns:
+            List of request dictionaries with all columns
+        """
+        logger.debug(f"Fetching and marking up to {limit} pending requests")
+        
+        # First, get IDs of pending requests we want to process
+        select_ids_query = """
+            SELECT id
+            FROM ai_requests
+            WHERE status = 'pending'
+              AND (expires_at IS NULL OR expires_at > NOW())
+            ORDER BY priority ASC, created_at ASC
+            LIMIT %s
+            FOR UPDATE SKIP LOCKED
+        """
+        
+        # Update those requests to processing status
+        update_query = """
+            UPDATE ai_requests
+            SET status = 'processing',
+                updated_at = NOW()
+            WHERE id IN ({placeholders})
+              AND status = 'pending'
+        """
+        
+        # Fetch full data for the updated requests
+        fetch_query = """
+            SELECT
+                id,
+                request_type,
+                endpoint,
+                request_data,
+                status,
+                priority,
+                correlation_id,
+                source_npc,
+                source_map,
+                created_at,
+                expires_at,
+                retry_count
+            FROM ai_requests
+            WHERE id IN ({placeholders})
+        """
+        
+        try:
+            async with self._get_connection() as conn:
+                async with self._transaction(conn):
+                    async with conn.cursor() as cur:
+                        # Step 1: Select IDs with lock
+                        await cur.execute(select_ids_query, (limit,))
+                        id_rows = await cur.fetchall()
+                        
+                        if not id_rows:
+                            logger.debug("No pending requests found")
+                            return []
+                        
+                        request_ids = [row['id'] for row in id_rows]
+                        
+                        # Step 2: Mark as processing (within same transaction)
+                        placeholders = ",".join(["%s"] * len(request_ids))
+                        await cur.execute(
+                            update_query.format(placeholders=placeholders),
+                            request_ids
+                        )
+                        affected = cur.rowcount
+                        
+                        if affected == 0:
+                            logger.warning(
+                                "Selected requests were already taken by another worker"
+                            )
+                            return []
+                        
+                        # Step 3: Fetch full data for the marked requests
+                        await cur.execute(
+                            fetch_query.format(placeholders=placeholders),
+                            request_ids
+                        )
+                        rows = await cur.fetchall()
+            
+            logger.debug(
+                f"Atomically fetched and marked {len(rows)} requests as processing"
+            )
+            return list(rows) if rows else []
+            
+        except Exception as e:
+            logger.error(f"Failed to fetch and mark pending requests: {e}")
+            raise QueryError(f"Failed to fetch pending requests: {e}") from e
+    
+    async def fetch_pending_requests(
+        self,
+        limit: int = 50
+    ) -> list[dict[str, Any]]:
+        """
+        Fetch pending requests from the queue (DEPRECATED - use fetch_and_mark_processing).
+        
+        This method is kept for backward compatibility but fetch_and_mark_processing
+        should be used instead to avoid race conditions.
         
         Uses SELECT ... FOR UPDATE SKIP LOCKED for safe concurrent access.
         Requests are ordered by priority (ASC) and creation time (ASC).
@@ -222,10 +331,14 @@ class Database:
         Returns:
             List of request dictionaries with all columns
         """
+        logger.warning(
+            "fetch_pending_requests is deprecated. "
+            "Use fetch_and_mark_processing for atomic operation."
+        )
         logger.debug(f"Fetching up to {limit} pending requests")
         
         query = """
-            SELECT 
+            SELECT
                 id,
                 request_type,
                 endpoint,
@@ -488,6 +601,80 @@ class Database:
         except Exception as e:
             logger.error(f"Failed to cleanup expired requests: {e}")
             raise QueryError(f"Failed to cleanup expired requests: {e}") from e
+    
+    async def cleanup_stuck_processing(self, stuck_threshold_seconds: int = 300) -> int:
+        """
+        Clean up requests stuck in 'processing' state.
+        
+        Requests can get stuck in 'processing' if the worker crashes after
+        marking them but before completing. This method marks such requests
+        back to 'pending' for retry, or 'failed' if max retries exceeded.
+        
+        Args:
+            stuck_threshold_seconds: How long a request can be in 'processing'
+                                    before considered stuck (default: 5 minutes)
+        
+        Returns:
+            Number of requests cleaned up
+        """
+        logger.debug(
+            f"Cleaning up requests stuck in processing for >{stuck_threshold_seconds}s"
+        )
+        
+        # Mark stuck requests back to pending (if retries available)
+        reset_query = """
+            UPDATE ai_requests
+            SET status = 'pending',
+                retry_count = retry_count + 1,
+                updated_at = NOW()
+            WHERE status = 'processing'
+              AND updated_at < DATE_SUB(NOW(), INTERVAL %s SECOND)
+              AND retry_count < %s
+        """
+        
+        # Mark stuck requests as failed (if retries exhausted)
+        fail_query = """
+            UPDATE ai_requests
+            SET status = 'failed',
+                updated_at = NOW()
+            WHERE status = 'processing'
+              AND updated_at < DATE_SUB(NOW(), INTERVAL %s SECOND)
+              AND retry_count >= %s
+        """
+        
+        max_retries = 3  # Should come from config
+        
+        try:
+            total_affected = 0
+            async with self._get_connection() as conn:
+                async with self._transaction(conn):
+                    async with conn.cursor() as cur:
+                        # Reset retryable requests
+                        await cur.execute(
+                            reset_query,
+                            (stuck_threshold_seconds, max_retries)
+                        )
+                        reset_count = cur.rowcount
+                        
+                        # Fail non-retryable requests
+                        await cur.execute(
+                            fail_query,
+                            (stuck_threshold_seconds, max_retries)
+                        )
+                        fail_count = cur.rowcount
+                        
+                        total_affected = reset_count + fail_count
+                    
+            if total_affected > 0:
+                logger.info(
+                    f"Cleaned up {total_affected} stuck requests "
+                    f"({reset_count} reset, {fail_count} failed)"
+                )
+            return total_affected
+            
+        except Exception as e:
+            logger.error(f"Failed to cleanup stuck requests: {e}")
+            raise QueryError(f"Failed to cleanup stuck requests: {e}") from e
     
     async def get_request_status(self, request_id: int) -> str | None:
         """

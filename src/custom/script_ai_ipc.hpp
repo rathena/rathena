@@ -8,6 +8,7 @@
 
 #include <string>
 #include <cstdint>
+#include <unordered_map>
 
 // Forward declarations from rAthena
 struct script_state;
@@ -15,14 +16,17 @@ struct script_state;
 /**
  * @file script_ai_ipc.hpp
  * @brief Native C++ script commands for AI IPC communication
- * 
+ *
  * This module provides script commands that allow NPC scripts to communicate
  * with external AI services through a database-based IPC mechanism:
  * - NPC scripts write requests to the ai_requests table
  * - External AI worker processes read requests and write responses to ai_responses
  * - NPC scripts read responses from ai_responses table
- * 
+ *
  * This replaces HTTP-based communication for better reliability and performance.
+ *
+ * IMPORTANT: httpget/httppost use NON-BLOCKING timer-based polling to avoid
+ * freezing the server. They use script sleep mechanism to yield control.
  */
 
 namespace ai_ipc {
@@ -45,20 +49,42 @@ enum class RequestStatus : int {
 };
 
 // ============================================================================
+// Wait State for Non-Blocking HTTP Requests
+// ============================================================================
+
+/**
+ * State tracking for non-blocking HTTP requests
+ * Used to store context between timer checks
+ */
+struct HttpWaitState {
+    int64 request_id;        // Database request ID
+    unsigned int timeout_tick; // When to give up (gettick() + timeout)
+    int st_oid;              // Script state object ID (NPC)
+    int st_rid;              // Script state RID (player)
+    bool is_post;            // true for POST, false for GET
+    std::string result;      // Result to push when done
+    bool completed;          // Whether request completed
+};
+
+// Wait state database - maps request_id to wait state
+extern std::unordered_map<int64, HttpWaitState> http_wait_db;
+
+// ============================================================================
 // Configuration Constants
 // ============================================================================
 
 // Default expiration time for requests (in seconds)
 constexpr int DEFAULT_EXPIRE_SECONDS = 30;
 
-// Maximum timeout for blocking wait (in milliseconds)
+// Maximum timeout for blocking wait (in milliseconds) - DEPRECATED
 constexpr int MAX_WAIT_TIMEOUT_MS = 30000;
 
 // Default timeout for HTTP compatibility functions (in milliseconds)
 constexpr int HTTP_COMPAT_TIMEOUT_MS = 5000;
 
-// Poll interval for blocking wait (in milliseconds)
-constexpr int POLL_INTERVAL_MS = 50;
+// Poll interval for timer-based checking (in milliseconds)
+// This is how often the timer checks for responses (non-blocking)
+constexpr int POLL_INTERVAL_MS = 100;
 
 // Maximum length for escaped SQL strings
 constexpr size_t MAX_ESCAPED_STRING_LEN = 65535;
@@ -102,7 +128,30 @@ const char* get_current_npc_name(struct script_state* st);
  */
 const char* get_current_map_name(struct script_state* st);
 
+/**
+ * Properly escape a string for JSON inclusion
+ * Handles special characters like quotes, backslashes, newlines
+ * @param str String to escape
+ * @return JSON-safe escaped string
+ */
+std::string json_escape_string(const std::string& str);
+
+/**
+ * Check pending HTTP requests and resume completed scripts
+ * Called by timer system
+ * @return Number of requests processed
+ */
+int check_pending_http_requests();
+
+/**
+ * Clean up expired HTTP wait states
+ */
+void cleanup_expired_http_waits();
+
 } // namespace ai_ipc
+
+// Timer function declaration for non-blocking HTTP polling
+TIMER_FUNC(ai_ipc_http_poll_timer);
 
 // ============================================================================
 // Script Command Declarations (BUILDIN_FUNC implementations)
@@ -209,15 +258,18 @@ BUILDIN_FUNC(ai_db_cancel);
 
 /**
  * httpget(url)
- * 
- * Backward compatibility wrapper - performs HTTP GET via database IPC.
- * 
+ *
+ * HTTP GET via database IPC with NON-BLOCKING implementation.
+ *
  * @param url Full URL to request
  * @return Response data or error JSON
- * 
- * Note: This is a BLOCKING call with 5-second timeout for compatibility.
- * New scripts should use ai_db_request/ai_db_response instead.
- * 
+ *
+ * Implementation: Uses timer-based polling to avoid blocking the server.
+ * The script yields control using sleep mechanism and resumes when
+ * response is ready or timeout occurs.
+ *
+ * Recommended: Use ai_db_request/ai_db_response for more control.
+ *
  * Script usage:
  *   .@result$ = httpget("http://ai-server:8000/api/v1/health");
  */
@@ -225,19 +277,55 @@ BUILDIN_FUNC(httpget);
 
 /**
  * httppost(url, data)
- * 
- * Backward compatibility wrapper - performs HTTP POST via database IPC.
- * 
+ *
+ * HTTP POST via database IPC with NON-BLOCKING implementation.
+ *
  * @param url  Full URL to request
  * @param data POST body data (usually JSON)
  * @return Response data or error JSON
- * 
- * Note: This is a BLOCKING call with 5-second timeout for compatibility.
- * New scripts should use ai_db_request/ai_db_response instead.
- * 
+ *
+ * Implementation: Uses timer-based polling to avoid blocking the server.
+ * The script yields control using sleep mechanism and resumes when
+ * response is ready or timeout occurs.
+ *
+ * Recommended: Use ai_db_request/ai_db_response for more control.
+ *
  * Script usage:
  *   .@result$ = httppost("http://ai-server:8000/api/v1/dialogue", .@json$);
  */
 BUILDIN_FUNC(httppost);
+
+/**
+ * httpget_async(url)
+ *
+ * Async HTTP GET - returns immediately with request ID.
+ * Use ai_db_response() or ai_db_status() to check completion.
+ *
+ * @param url Full URL to request
+ * @return Request ID for tracking
+ *
+ * Script usage:
+ *   .@req_id = httpget_async("http://ai-server:8000/api/v1/health");
+ *   sleep2 1000;
+ *   .@result$ = ai_db_response(.@req_id);
+ */
+BUILDIN_FUNC(httpget_async);
+
+/**
+ * httppost_async(url, data)
+ *
+ * Async HTTP POST - returns immediately with request ID.
+ * Use ai_db_response() or ai_db_status() to check completion.
+ *
+ * @param url  Full URL to request
+ * @param data POST body data (usually JSON)
+ * @return Request ID for tracking
+ *
+ * Script usage:
+ *   .@req_id = httppost_async("http://ai-server:8000/api/v1/dialogue", .@json$);
+ *   sleep2 1000;
+ *   .@result$ = ai_db_response(.@req_id);
+ */
+BUILDIN_FUNC(httppost_async);
 
 #endif // SCRIPT_AI_IPC_HPP

@@ -44,6 +44,7 @@ from .handlers import (
     get_handler,
 )
 from .handlers.base import HandlerError, ValidationError
+from .handlers.base_handler import BaseHandler as AuthBaseHandler
 
 logger = logging.getLogger(__name__)
 
@@ -85,8 +86,33 @@ class RequestProcessor:
         # Processing statistics
         self.stats = ProcessingStats()
         
+        # Initialize security configuration for handlers
+        self._init_security()
+        
         # Initialize handlers
         self._init_handlers()
+    
+    def _init_security(self) -> None:
+        """
+        Initialize security configuration for all handlers.
+        
+        Sets the shared security config on the BaseHandler class
+        so all handler instances have access to authentication and
+        rate limiting settings.
+        """
+        if hasattr(self.config, 'security'):
+            logger.info("Initializing security configuration for handlers")
+            AuthBaseHandler.set_security_config(self.config.security)
+            logger.info(
+                f"Security: auth_enabled={self.config.security.auth_enabled}, "
+                f"auth_method={self.config.security.auth_method}, "
+                f"rate_limit_enabled={self.config.security.rate_limit_enabled}"
+            )
+        else:
+            logger.warning(
+                "No security configuration found. "
+                "Authentication and rate limiting disabled."
+            )
     
     def _init_handlers(self) -> None:
         """
@@ -136,15 +162,18 @@ class RequestProcessor:
         Fetch and process a batch of pending requests.
         
         This is the main processing method called by the polling loop.
-        It fetches pending requests, marks them as processing, and
-        processes them concurrently.
+        It uses the atomic fetch_and_mark_processing to avoid race conditions
+        where requests could get stuck if the service crashes between
+        fetching and marking.
         
         Returns:
             Number of requests processed
         """
         try:
-            # Fetch pending requests
-            requests = await self.db.fetch_pending_requests(
+            # Atomically fetch and mark requests as processing
+            # This prevents race conditions where requests get stuck
+            # if the service crashes between SELECT and UPDATE
+            requests = await self.db.fetch_and_mark_processing(
                 limit=self.config.polling.batch_size
             )
             
@@ -153,10 +182,6 @@ class RequestProcessor:
             
             logger.info(f"Processing batch of {len(requests)} requests")
             self.stats.batches_processed += 1
-            
-            # Mark all as processing
-            request_ids = [r['id'] for r in requests]
-            await self.db.mark_processing(request_ids)
             
             # Process all requests concurrently
             tasks = [
@@ -349,6 +374,31 @@ class RequestProcessor:
             return count
         except DatabaseError as e:
             logger.error(f"Failed to cleanup expired requests: {e}")
+            return 0
+    
+    async def cleanup_stuck(self, stuck_threshold_seconds: int = 300) -> int:
+        """
+        Clean up requests stuck in 'processing' state.
+        
+        This handles the case where a worker crashes after marking requests
+        as processing but before completing them. Such requests would be
+        stuck forever without this cleanup.
+        
+        Args:
+            stuck_threshold_seconds: How long before a processing request
+                                    is considered stuck (default: 5 minutes)
+        
+        Returns:
+            Number of requests cleaned up
+        """
+        try:
+            count = await self.db.cleanup_stuck_processing(stuck_threshold_seconds)
+            if count > 0:
+                logger.info(f"Recovered {count} stuck requests")
+                self.stats.requests_failed += count
+            return count
+        except DatabaseError as e:
+            logger.error(f"Failed to cleanup stuck requests: {e}")
             return 0
     
     @property

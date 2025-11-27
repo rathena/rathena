@@ -133,6 +133,7 @@ class AIIPCService:
         self._running = False
         self._shutdown_event = asyncio.Event()
         self._config_path = config_path
+        self._pending_tasks: set[asyncio.Task] = set()
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def start(self) -> None:
@@ -203,14 +204,16 @@ class AIIPCService:
         Run the main polling loop.
         
         Continuously polls for requests until shutdown is signaled.
-        Includes periodic cleanup of expired requests.
+        Includes periodic cleanup of expired and stuck requests.
         """
         if not self._running or self.processor is None or self.config is None:
             raise RuntimeError("Service not started. Call start() first.")
         
         poll_interval_sec = self.config.polling.interval_ms / 1000.0
         cleanup_interval_sec = 60.0  # Run cleanup every minute
+        stuck_cleanup_interval_sec = 300.0  # Run stuck cleanup every 5 minutes
         last_cleanup = asyncio.get_event_loop().time()
+        last_stuck_cleanup = asyncio.get_event_loop().time()
         
         self.logger.info("Starting polling loop...")
         
@@ -230,11 +233,17 @@ class AIIPCService:
                         f"rate={stats['requests_per_second']:.2f}/s"
                     )
                 
-                # Periodic cleanup
+                # Periodic cleanup of expired requests
                 current_time = asyncio.get_event_loop().time()
                 if current_time - last_cleanup >= cleanup_interval_sec:
                     await self.processor.cleanup_expired()
                     last_cleanup = current_time
+                
+                # Periodic cleanup of stuck processing requests
+                # This recovers from crashes that left requests stuck
+                if current_time - last_stuck_cleanup >= stuck_cleanup_interval_sec:
+                    await self.processor.cleanup_stuck(stuck_threshold_seconds=300)
+                    last_stuck_cleanup = current_time
                 
                 # Check for shutdown signal
                 if self._shutdown_event.is_set():
@@ -265,18 +274,51 @@ class AIIPCService:
         
         self.logger.info("Polling loop ended")
     
-    async def stop(self) -> None:
+    async def stop(self, timeout_seconds: float = 30.0) -> None:
         """
         Stop the AI IPC service gracefully.
         
-        Signals shutdown, waits for current processing to complete,
-        and closes all connections.
+        Signals shutdown, waits for current processing to complete (up to timeout),
+        and closes all connections. This ensures in-flight requests are not
+        abruptly terminated.
+        
+        Args:
+            timeout_seconds: Maximum time to wait for graceful shutdown
         """
         self.logger.info("Stopping AI IPC Service...")
+        self.logger.info(f"Waiting up to {timeout_seconds}s for pending work to complete...")
         
-        # Signal shutdown
+        # Signal shutdown - this will cause the polling loop to exit
         self._running = False
         self._shutdown_event.set()
+        
+        # Give in-flight requests time to complete
+        # The polling loop will finish current batch before exiting
+        if self.processor and self._pending_tasks:
+            self.logger.info(f"Waiting for {len(self._pending_tasks)} pending tasks...")
+            try:
+                # Wait for pending tasks with timeout
+                done, pending = await asyncio.wait(
+                    self._pending_tasks,
+                    timeout=timeout_seconds,
+                    return_when=asyncio.ALL_COMPLETED
+                )
+                
+                if pending:
+                    self.logger.warning(
+                        f"{len(pending)} tasks did not complete within timeout. "
+                        "Cancelling..."
+                    )
+                    for task in pending:
+                        task.cancel()
+                    
+                    # Wait briefly for cancellation
+                    await asyncio.gather(*pending, return_exceptions=True)
+                else:
+                    self.logger.info("All pending tasks completed successfully")
+                    
+            except Exception as e:
+                self.logger.error(f"Error during graceful shutdown: {e}")
         
         # Stop processor
         if self.processor:
@@ -299,7 +341,7 @@ class AIIPCService:
             self.logger.info("Closing database connection...")
             await self.db.disconnect()
         
-        self.logger.info("AI IPC Service stopped")
+        self.logger.info("AI IPC Service stopped gracefully")
     
     def request_shutdown(self) -> None:
         """
