@@ -1,0 +1,131 @@
+//===== rAthena Script =======================================
+//= AI Bridge - HTTP POST Example
+//===== By: ==================================================
+//= AI Architect
+//===== Description: =========================================
+//= Demonstrates httppost() command usage
+//= Sends events and data to AI service
+//============================================================
+
+prontera,155,188,4	script	AI Event Tester	1_M_WIZARD,{
+	mes "[AI Event Tester]";
+	mes "This NPC demonstrates httppost()";
+	mes "to send events to the AI service.";
+	next;
+	
+	menu "Send Player Login Event",L_Login,
+	     "Send Monster Kill Event",L_MonsterKill,
+	     "Trigger Daily Reset",L_DailyReset,
+	     "Get AI Service Status",L_Status,
+	     "Cancel",-;
+	close;
+
+L_Login:
+	mes "[AI Event Tester]";
+	mes "Sending player login event...";
+	
+	// Build JSON payload
+	.@player_id = getcharid(0);
+	.@map$ = strcharinfo(3);
+	.@payload$ = "{";
+	.@payload$ = .@payload$ + "\"event_type\":\"player_login\",";
+	.@payload$ = .@payload$ + "\"player_id\":" + .@player_id + ",";
+	.@payload$ = .@payload$ + "\"map\":\"" + .@map$ + "\",";
+	.@payload$ = .@payload$ + "\"timestamp\":" + gettimetick(2);
+	.@payload$ = .@payload$ + "}";
+	
+	// Send to AI service
+	.@response$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch", .@payload$);
+	
+	next;
+	mes "[AI Event Tester]";
+	if (.@response$ == "") {
+		mes "^FF0000Failed to send event!^000000";
+	} else {
+		mes "^00FF00Event sent successfully!^000000";
+		mes "Response: " + .@response$;
+	}
+	close;
+
+L_MonsterKill:
+	mes "[AI Event Tester]";
+	mes "Enter Monster ID:";
+	input .@monster_id;
+	
+	if (.@monster_id <= 0) {
+		mes "Invalid Monster ID!";
+		close;
+	}
+	
+	// Build JSON payload
+	.@player_id = getcharid(0);
+	.@map$ = strcharinfo(3);
+	.@payload$ = "{";
+	.@payload$ = .@payload$ + "\"event_type\":\"monster_kill\",";
+	.@payload$ = .@payload$ + "\"player_id\":" + .@player_id + ",";
+	.@payload$ = .@payload$ + "\"monster_id\":" + .@monster_id + ",";
+	.@payload$ = .@payload$ + "\"map\":\"" + .@map$ + "\"";
+	.@payload$ = .@payload$ + "}";
+	
+	.@response$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch", .@payload$);
+	
+	next;
+	mes "[AI Event Tester]";
+	if (.@response$ == "") {
+		mes "^FF0000Failed to send event!^000000";
+	} else {
+		mes "^00FF00Event sent successfully!^000000";
+		mes "AI Service acknowledged kill event.";
+	}
+	close;
+
+L_DailyReset:
+	mes "[AI Event Tester]";
+	mes "^FFFF00WARNING:^000000 This triggers daily reset!";
+	mes "This will regenerate all procedural content.";
+	next;
+	
+	if (select("Confirm:Cancel") == 2) {
+		close;
+	}
+	
+	.@payload$ = "{\"event_type\":\"daily_reset\",\"priority\":\"urgent\"}";
+	.@response$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch", .@payload$);
+	
+	next;
+	mes "[AI Event Tester]";
+	if (.@response$ == "") {
+		mes "^FF0000Failed to trigger reset!^000000";
+	} else {
+		mes "^00FF00Daily reset triggered!^000000";
+		mes "New content is being generated...";
+		announce "Daily content refresh in progress!", bc_all;
+	}
+	close;
+
+L_Status:
+	mes "[AI Event Tester]";
+	mes "Fetching Bridge Layer status...";
+	
+	.@status$ = ai_bridge_status();
+	
+	next;
+	mes "[Bridge Layer Status]";
+	mes .@status$;
+	close;
+}
+
+// Daily reset trigger (runs at midnight server time)
+-	script	AI_DailyReset	-1,{
+OnClock0000:
+	// Trigger daily reset event via AI service
+	.@payload$ = "{\"event_type\":\"daily_reset\",\"priority\":\"urgent\"}";
+	.@response$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch", .@payload$);
+	
+	if (.@response$ != "") {
+		announce "[AI World] Daily content refreshed! New adventures await!", bc_all;
+	} else {
+		debugmes "Failed to trigger daily reset event";
+	}
+	end;
+}

@@ -1,0 +1,304 @@
+//===== rAthena Script =======================================
+//= Advanced Systems Integration Handler
+//===== By: ==================================================
+//= AI Autonomous World Team
+//===== Description: =========================================
+//= Example integration handler for advanced systems agents
+//= Connects rAthena to AI Service advanced endpoints
+//= Phase 4E: Adaptive Dungeon, Archaeology, Event Chains
+//============================================================
+
+-	script	Advanced_Systems_Handler	FAKE_NPC,{
+	end;
+
+// ============================================================================
+// ADAPTIVE DUNGEON INTEGRATION
+// ============================================================================
+
+// Daily Dungeon Info NPC
+prontera,150,180,4	script	Dungeon Master	4_M_SAGE_A,{
+	mes "[Dungeon Master]";
+	mes "Welcome to the Adaptive Dungeon!";
+	mes "Every day at midnight, a new procedural dungeon is generated.";
+	next;
+	
+	mes "[Dungeon Master]";
+	mes "Would you like to:";
+	mes "1. View today's dungeon";
+	mes "2. Create party instance";
+	mes "3. View leaderboard";
+	next;
+	
+	switch(select("View Dungeon:Create Instance:Leaderboard:Cancel")) {
+	case 1:
+		// Get current dungeon
+		.@url$ = "http://192.168.0.100:8000/api/v1/advanced/dungeon/current";
+		.@response$ = requestget(.@url$);
+		
+		mes "[Dungeon Master]";
+		mes "Today's dungeon:";
+		mes "Theme: " + getjsonstr(.@response$, "theme");
+		mes "Floors: " + getjsonstr(.@response$, "floor_count");
+		mes "Difficulty: " + getjsonstr(.@response$, "difficulty_rating") + "/10";
+		close;
+		
+	case 2:
+		// Check if in party
+		if (!getcharid(1)) {
+			mes "[Dungeon Master]";
+			mes "You need to be in a party to enter!";
+			mes "Minimum 2 players, maximum 12.";
+			close;
+		}
+		
+		// Create instance
+		.@url$ = "http://192.168.0.100:8000/api/v1/advanced/dungeon/instance/create";
+		.@body$ = "{\"party_id\":" + getcharid(1) + ",\"participants\":[" + getcharid(0) + "]}";
+		.@response$ = requestpost(.@url$, .@body$);
+		
+		mes "[Dungeon Master]";
+		mes "Instance created!";
+		mes "Instance ID: " + getjsonstr(.@response$, "data.instance_id");
+		mes "You have 60 minutes to clear the dungeon.";
+		mes "Good luck!";
+		
+		// Warp to dungeon
+		warp "instance_map", 50, 50;
+		close;
+		
+	case 3:
+		// Get leaderboard
+		.@url$ = "http://192.168.0.100:8000/api/v1/advanced/dungeon/leaderboard?limit=5";
+		.@response$ = requestget(.@url$);
+		
+		mes "[Dungeon Master]";
+		mes "Top 5 Fastest Clears:";
+		// Parse and display leaderboard
+		// (Simplified - production would iterate JSON array)
+		close;
+		
+	case 4:
+		close;
+	}
+}
+
+// ============================================================================
+// ARCHAEOLOGY INTEGRATION
+// ============================================================================
+
+// Dig Spot (spawned dynamically by AI service)
+-	script	Dig_Spot	HIDDEN_NPC,{
+	// This would be spawned by AI service via bridge
+	// Location: Random coordinates from dig_spots table
+	
+	mes "[Mysterious Spot]";
+	mes "You notice disturbed earth here...";
+	mes "Would you like to dig? (Requires Shovel)";
+	next;
+	
+	if (select("Dig Here:Leave") == 2) {
+		close;
+	}
+	
+	// Check for shovel
+	if (countitem(713) < 1) {  // 713 = Emperium (placeholder for Shovel)
+		mes "[Mysterious Spot]";
+		mes "You need a Shovel to dig here!";
+		close;
+	}
+	
+	// Get spot_id from NPC name or variable
+	.@spot_id = atoi(strnpcinfo(2));  // Extract from NPC name
+	
+	// Call AI service to dig
+	.@url$ = "http://192.168.0.100:8000/api/v1/advanced/archaeology/dig-spots/" + .@spot_id + "/dig";
+	.@body$ = "{\"player_id\":" + getcharid(0) + ",\"archaeology_level\":" + readparam(bBaseLevel) + "}";
+	.@response$ = requestpost(.@url$, .@body$);
+	
+	// Parse artifact
+	.@artifact_name$ = getjsonstr(.@response$, "name");
+	.@artifact_rarity$ = getjsonstr(.@response$, "rarity");
+	
+	mes "[Mysterious Spot]";
+	mes "You carefully dig through the earth...";
+	next;
+	
+	mes "[Mysterious Spot]";
+	mes "You found: ^0000FF" + .@artifact_name$ + "^000000!";
+	mes "Rarity: " + .@artifact_rarity$;
+	
+	// Check if collection complete
+	if (getjsonstr(.@response$, "completion_reward") != "") {
+		next;
+		mes "[Mysterious Spot]";
+		mes "^FF0000Collection Complete!^000000";
+		mes "You earned: " + getjsonstr(.@response$, "completion_reward.title");
+	}
+	
+	// Remove spot
+	disablenpc strnpcinfo(0);
+	close;
+}
+
+// Archaeology Progress NPC
+prontera,160,180,4	script	Archaeologist	4_F_SAGE,{
+	mes "[Archaeologist]";
+	mes "Greetings, fellow explorer!";
+	mes "Would you like to check your archaeology progress?";
+	next;
+	
+	if (select("Check Progress:View Collection:Cancel") == 3) {
+		close;
+	}
+	
+	// Get progress
+	.@url$ = "http://192.168.0.100:8000/api/v1/advanced/archaeology/" + getcharid(0) + "/progress";
+	.@response$ = requestget(.@url$);
+	
+	mes "[Archaeologist]";
+	mes "Archaeology Level: " + getjsonstr(.@response$, "archaeology_level") + "/10";
+	mes "Total Digs: " + getjsonstr(.@response$, "total_digs");
+	mes "Artifacts Found: " + getjsonstr(.@response$, "artifacts_found");
+	mes "Collections Completed: " + getjsonstr(.@response$, "collections_completed");
+	mes "Secrets Unlocked: " + getjsonstr(.@response$, "secret_locations_unlocked");
+	close;
+}
+
+// ============================================================================
+// EVENT CHAIN INTEGRATION
+// ============================================================================
+
+// Chain Step NPC (spawned dynamically)
+-	script	Chain_NPC	4_M_KNIGHT_GOLD,{
+	// This would be spawned by AI service for active chain steps
+	
+	.@chain_id = atoi(strnpcinfo(2));  // Extract chain_id from NPC name
+	
+	// Get current step
+	.@url$ = "http://192.168.0.100:8000/api/v1/advanced/chains/" + .@chain_id + "/current-step";
+	.@response$ = requestget(.@url$);
+	
+	// Display dialogue
+	mes "[" + getjsonstr(.@response$, "npc_data.npc_name") + "]";
+	mes getjsonstr(.@response$, "dialogue");
+	next;
+	
+	mes "[" + getjsonstr(.@response$, "npc_data.npc_name") + "]";
+	mes "Objective: " + getjsonstr(.@response$, "objective");
+	next;
+	
+	// Check step type
+	.@step_type$ = getjsonstr(.@response$, "step_type");
+	
+	if (.@step_type$ == "npc_dialogue") {
+		// Simple dialogue completion
+		mes "[" + getjsonstr(.@response$, "npc_data.npc_name") + "]";
+		mes "Thank you for listening.";
+		
+		// Advance chain with success
+		.@advance_url$ = "http://192.168.0.100:8000/api/v1/advanced/chains/" + .@chain_id + "/advance";
+		.@advance_body$ = "{\"outcome\":\"success\"}";
+		requestpost(.@advance_url$, .@advance_body$);
+		
+		// Record participation
+		.@part_url$ = "http://192.168.0.100:8000/api/v1/advanced/chains/" + .@chain_id + "/participate";
+		.@part_body$ = "{\"player_id\":" + getcharid(0) + ",\"contribution\":10}";
+		requestpost(.@part_url$, .@part_body$);
+		
+	} else if (.@step_type$ == "boss_battle") {
+		// Spawn boss from spawn_data
+		mes "[" + getjsonstr(.@response$, "npc_data.npc_name") + "]";
+		mes "Prepare for battle!";
+		// (Boss spawning would be handled by AI bridge)
+	}
+	
+	close;
+}
+
+// Event Chain Info NPC
+prontera,140,180,4	script	Chain Master	4_M_CHncasi,{
+	mes "[Chain Master]";
+	mes "I track the ongoing story events!";
+	next;
+	
+	// Get active chains
+	.@url$ = "http://192.168.0.100:8000/api/v1/advanced/chains/active";
+	.@response$ = requestget(.@url$);
+	
+	.@total = getjsonint(.@response$, "total");
+	
+	mes "[Chain Master]";
+	if (.@total == 0) {
+		mes "No active event chains at the moment.";
+		mes "Check back later!";
+	} else {
+		mes "Active Event Chains: " + .@total;
+		// (Would display chain list from JSON array)
+	}
+	close;
+}
+
+// ============================================================================
+// UTILITY FUNCTIONS
+// ============================================================================
+
+// Helper function to make HTTP requests (simplified)
+// Production would use actual HTTP request functions from rAthena
+function	script	requestget	{
+	// .@url$ = getarg(0);
+	// Use callhttprequest or similar
+	// Returns JSON response string
+	return "{}";  // Placeholder
+}
+
+function	script	requestpost	{
+	// .@url$ = getarg(0);
+	// .@body$ = getarg(1);
+	// Use callhttprequest or similar
+	// Returns JSON response string
+	return "{}";  // Placeholder
+}
+
+function	script	getjsonstr	{
+	// .@json$ = getarg(0);
+	// .@path$ = getarg(1);
+	// Parse JSON and extract string value
+	// Returns extracted value
+	return "";  // Placeholder
+}
+
+function	script	getjsonint	{
+	// .@json$ = getarg(0);
+	// .@path$ = getarg(1);
+	// Parse JSON and extract integer value
+	// Returns extracted value
+	return 0;  // Placeholder
+}
+
+// ============================================================================
+// NOTES FOR PRODUCTION
+// ============================================================================
+
+/*
+ * This is an EXAMPLE handler showing integration patterns.
+ * 
+ * Production Requirements:
+ * 1. Implement actual HTTP request functions (callhttprequest or bridge)
+ * 2. Add JSON parsing utilities
+ * 3. Error handling for API failures
+ * 4. Rate limiting to prevent abuse
+ * 5. Validation of AI service responses
+ * 6. Security: API key authentication
+ * 7. Proper NPC spawning/despawning via AI bridge
+ * 8. Instance map creation for dungeons
+ * 9. Reward distribution system
+ * 10. Integration with existing quest/event systems
+ * 
+ * Integration Flow:
+ * rAthena NPC → AI Bridge (C++) → AI Service (Python) → Database → Response
+ * 
+ * See:
+ * - src/web/ai_bridge/ for C++ bridge implementation
+ * - routers/advanced.py for API endpoints
+ * - agents/advanced/ for agent logic
+ */

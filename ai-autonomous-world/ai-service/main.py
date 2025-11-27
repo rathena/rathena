@@ -31,6 +31,11 @@ from routers.npc_movement import router as npc_movement_router
 from routers.mvp import router as mvp_router
 from routers.relationship import router as relationship_router
 from routers.cost import router as cost_router
+from routers.procedural import router as procedural_router
+from routers.progression import router as progression_router
+from routers.environmental import router as environmental_router
+from routers.economy_social import router as economy_social_router
+from routers.advanced import router as advanced_router
 from middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
@@ -450,15 +455,20 @@ app.include_router(batch_router)
 app.include_router(economy_router)
 app.include_router(faction_router)
 app.include_router(gift_router)
-app.include_router(gift_router)
 app.include_router(npc_spawning_router)
 app.include_router(world_bootstrap_router)
 app.include_router(npc_movement_router)
 app.include_router(mvp_router)
 app.include_router(relationship_router)
 app.include_router(cost_router)
+app.include_router(procedural_router)
+app.include_router(progression_router)
+app.include_router(environmental_router)
+app.include_router(economy_social_router)
+app.include_router(advanced_router)
+app.include_router(storyline_router)
 
-logger.info("✓ All routers registered (15 routers)")
+logger.info("✓ All routers registered (21 routers)")
 
 
 # Run server

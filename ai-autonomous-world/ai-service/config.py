@@ -665,6 +665,544 @@ class Settings(BaseSettings):
     db_connection_retry_delay: float = Field(default=1.0, env="DB_CONNECTION_RETRY_DELAY", description="Initial database retry delay in seconds")
 
     # ============================================================================
+    # PROCEDURAL CONTENT AGENTS CONFIGURATION (Phase 4A)
+    # ============================================================================
+    
+    # Problem Agent Configuration
+    problem_agent_enabled: bool = Field(
+        default=True,
+        env="PROBLEM_AGENT_ENABLED",
+        description="Enable Problem Agent for daily world problems"
+    )
+    daily_problem_count: int = Field(
+        default=1,
+        env="DAILY_PROBLEM_COUNT",
+        description="Number of problems to generate daily (1-3)"
+    )
+    problem_min_duration_hours: int = Field(
+        default=12,
+        env="PROBLEM_MIN_DURATION_HOURS",
+        description="Minimum problem duration in hours"
+    )
+    problem_max_duration_hours: int = Field(
+        default=24,
+        env="PROBLEM_MAX_DURATION_HOURS",
+        description="Maximum problem duration in hours"
+    )
+    
+    # Dynamic NPC Agent Configuration
+    dynamic_npc_enabled: bool = Field(
+        default=True,
+        env="DYNAMIC_NPC_ENABLED",
+        description="Enable Dynamic NPC Agent for roaming NPCs"
+    )
+    daily_npc_count: int = Field(
+        default=3,
+        env="DAILY_NPC_COUNT",
+        description="Number of NPCs to spawn daily (1-5)"
+    )
+    npc_min_spawn_distance: int = Field(
+        default=10,
+        env="NPC_MIN_SPAWN_DISTANCE",
+        description="Minimum distance between NPC spawns in cells"
+    )
+    npc_despawn_time: str = Field(
+        default="23:59:59",
+        env="NPC_DESPAWN_TIME",
+        description="Time when NPCs despawn (HH:MM:SS)"
+    )
+    
+    # World Event Agent Configuration
+    world_event_enabled: bool = Field(
+        default=True,
+        env="WORLD_EVENT_ENABLED",
+        description="Enable World Event Agent for server-wide events"
+    )
+    event_check_interval: int = Field(
+        default=60,
+        env="EVENT_CHECK_INTERVAL",
+        description="Interval in seconds to check event thresholds"
+    )
+    event_min_cooldown_hours: int = Field(
+        default=4,
+        env="EVENT_MIN_COOLDOWN_HOURS",
+        description="Minimum cooldown between events in hours"
+    )
+    event_max_concurrent: int = Field(
+        default=1,
+        env="EVENT_MAX_CONCURRENT",
+        description="Maximum concurrent world events"
+    )
+    
+    # ============================================================================
+    # PROGRESSION AGENTS CONFIGURATION (Phase 4B)
+    # ============================================================================
+    
+    # Faction Agent Configuration
+    faction_agent_enabled: bool = Field(
+        default=True,
+        env="FACTION_AGENT_ENABLED",
+        description="Enable Faction Agent for world alignment system"
+    )
+    faction_alignment_update_interval: int = Field(
+        default=300,
+        env="FACTION_ALIGNMENT_UPDATE_INTERVAL",
+        description="Interval in seconds to update faction alignment (default 300 = 5 minutes)"
+    )
+    faction_decay_rate: float = Field(
+        default=0.01,
+        env="FACTION_DECAY_RATE",
+        description="Daily decay rate for faction alignment (0.01 = 1% per day)"
+    )
+    faction_shift_threshold: int = Field(
+        default=1000,
+        env="FACTION_SHIFT_THRESHOLD",
+        description="Minimum alignment score for faction effects"
+    )
+    
+    # Reputation Agent Configuration
+    reputation_agent_enabled: bool = Field(
+        default=True,
+        env="REPUTATION_AGENT_ENABLED",
+        description="Enable Reputation Agent for player influence system"
+    )
+    reputation_daily_cap_per_type: int = Field(
+        default=500,
+        env="REPUTATION_DAILY_CAP_PER_TYPE",
+        description="Daily reputation gain cap per type"
+    )
+    reputation_tier_thresholds: List[int] = Field(
+        default=[0, 1000, 3000, 5000, 7000, 10000],
+        env="REPUTATION_TIER_THRESHOLDS",
+        description="Influence thresholds for each tier (comma-separated)"
+    )
+    
+    # Dynamic Boss Agent Configuration
+    dynamic_boss_enabled: bool = Field(
+        default=True,
+        env="DYNAMIC_BOSS_ENABLED",
+        description="Enable Dynamic Boss Agent for adaptive mini-bosses"
+    )
+    boss_spawn_check_interval: int = Field(
+        default=900,
+        env="BOSS_SPAWN_CHECK_INTERVAL",
+        description="Interval in seconds to check boss spawn conditions (default 900 = 15 minutes)"
+    )
+    boss_anti_farm_threshold: int = Field(
+        default=100,
+        env="BOSS_ANTI_FARM_THRESHOLD",
+        description="Monster kills per hour to trigger anti-farm boss"
+    )
+    boss_random_spawn_chance: float = Field(
+        default=0.05,
+        env="BOSS_RANDOM_SPAWN_CHANCE",
+        description="Daily chance for random boss spawn (0.05 = 5%)"
+    )
+    # ============================================================================
+    # ENVIRONMENTAL AGENTS CONFIGURATION (Phase 4C)
+    # ============================================================================
+    
+    # Map Hazard System Configuration
+    map_hazard_enabled: bool = Field(
+        default=True,
+        env="MAP_HAZARD_ENABLED",
+        description="Enable Map Hazard Agent for dynamic map modifiers"
+    )
+    daily_hazard_count: int = Field(
+        default=4,
+        env="DAILY_HAZARD_COUNT",
+        description="Number of hazards to generate daily (3-5)"
+    )
+    hazard_duration_hours: int = Field(
+        default=24,
+        env="HAZARD_DURATION_HOURS",
+        description="Duration of map hazards in hours"
+    )
+    hazard_min_map_distance: int = Field(
+        default=3,
+        env="HAZARD_MIN_MAP_DISTANCE",
+        description="Minimum maps apart for hazard distribution"
+    )
+    
+    # Weather/Time System Configuration
+    weather_time_enabled: bool = Field(
+        default=True,
+        env="WEATHER_TIME_ENABLED",
+        description="Enable Weather/Time Agent for dynamic weather and time effects"
+    )
+    weather_update_interval_hours: int = Field(
+        default=3,
+        env="WEATHER_UPDATE_INTERVAL_HOURS",
+        description="Interval in hours between weather changes (2-6)"
+    )
+    weather_continuity_chance: float = Field(
+        default=0.6,
+        env="WEATHER_CONTINUITY_CHANCE",
+        description="Probability of weather staying the same (0.6 = 60%)"
+    )
+    full_moon_random_chance: float = Field(
+        default=0.1,
+        env="FULL_MOON_RANDOM_CHANCE",
+        description="Probability of full moon per night (0.1 = 10%)"
+    )
+    time_effects_enabled: bool = Field(
+        default=True,
+        env="TIME_EFFECTS_ENABLED",
+        description="Enable time-of-day effects (dawn/day/dusk/night)"
+    )
+    
+    # Treasure System Configuration
+    treasure_agent_enabled: bool = Field(
+        default=True,
+        env="TREASURE_AGENT_ENABLED",
+        description="Enable Treasure Agent for procedural treasure spawns"
+    )
+    daily_treasure_count: int = Field(
+        default=10,
+        env="DAILY_TREASURE_COUNT",
+        description="Number of treasures to spawn daily (5-15)"
+    )
+    treasure_min_spawn_distance: int = Field(
+        default=20,
+        env="TREASURE_MIN_SPAWN_DISTANCE",
+        description="Minimum distance between treasures in cells"
+    )
+    treasure_despawn_hours_min: int = Field(
+        default=2,
+        env="TREASURE_DESPAWN_HOURS_MIN",
+        description="Minimum treasure despawn time in hours"
+    )
+    treasure_despawn_hours_max: int = Field(
+        default=12,
+        env="TREASURE_DESPAWN_HOURS_MAX",
+        description="Maximum treasure despawn time in hours"
+    )
+    treasure_hint_enabled: bool = Field(
+        default=True,
+        env="TREASURE_HINT_ENABLED",
+        description="Show vague hints for treasure locations"
+    )
+    card_fragment_exchange_rate: int = Field(
+        default=100,
+        env="CARD_FRAGMENT_EXCHANGE_RATE",
+        description="Fragments needed to exchange for one card"
+    )
+
+
+    # ============================================================================
+    # ECONOMY & SOCIAL AGENTS CONFIGURATION (Phase 4D)
+    # ============================================================================
+    
+    # Merchant Economy Agent Configuration
+    merchant_economy_enabled: bool = Field(
+        default=True,
+        env="MERCHANT_ECONOMY_ENABLED",
+        description="Enable Merchant Economy Agent for dynamic pricing"
+    )
+    economy_analysis_interval_hours: int = Field(
+        default=6,
+        env="ECONOMY_ANALYSIS_INTERVAL_HOURS",
+        description="Interval in hours for economic analysis (default 6)"
+    )
+    price_adjustment_max_percent: float = Field(
+        default=0.5,
+        env="PRICE_ADJUSTMENT_MAX_PERCENT",
+        description="Maximum price adjustment percentage (+/- 50%)"
+    )
+    zeny_sink_trigger_threshold: int = Field(
+        default=10000000,
+        env="ZENY_SINK_TRIGGER_THRESHOLD",
+        description="Zeny per capita threshold to trigger zeny sink event"
+    )
+    inflation_threshold: float = Field(
+        default=0.15,
+        env="INFLATION_THRESHOLD",
+        description="Inflation rate threshold (0.15 = 15%)"
+    )
+    
+    # Karma Agent Configuration
+    karma_agent_enabled: bool = Field(
+        default=True,
+        env="KARMA_AGENT_ENABLED",
+        description="Enable Karma Agent for world morality tracking"
+    )
+    karma_update_interval: int = Field(
+        default=900,
+        env="KARMA_UPDATE_INTERVAL",
+        description="Interval in seconds for karma updates (default 900 = 15 minutes)"
+    )
+    karma_daily_decay: float = Field(
+        default=0.01,
+        env="KARMA_DAILY_DECAY",
+        description="Daily karma decay rate toward neutral (0.01 = 1%)"
+    )
+    karma_thresholds: List[int] = Field(
+        default=[-7000, -3000, 3000, 7000],
+        env="KARMA_THRESHOLDS",
+        description="Karma alignment thresholds (comma-separated)"
+    )
+    protected_monsters: List[str] = Field(
+        default=["PORING", "LUNATIC", "DROPS"],
+        env="PROTECTED_MONSTERS",
+        description="Monsters that give negative karma when killed (comma-separated)"
+    )
+    
+    # Social Interaction Agent Configuration
+    social_agent_enabled: bool = Field(
+        default=True,
+        env="SOCIAL_AGENT_ENABLED",
+        description="Enable Social Interaction Agent for community events"
+    )
+    daily_social_event_count: int = Field(
+        default=5,
+        env="DAILY_SOCIAL_EVENT_COUNT",
+        description="Number of social events to spawn daily (3-7)"
+    )
+    social_event_duration_hours: int = Field(
+        default=6,
+        env="SOCIAL_EVENT_DURATION_HOURS",
+        description="Default duration for social events in hours"
+    )
+    guild_tasks_per_day: int = Field(
+        default=3,
+        env="GUILD_TASKS_PER_DAY",
+        description="Number of tasks per guild per day"
+    )
+    party_buff_duration_minutes: int = Field(
+        default=60,
+        env="PARTY_BUFF_DURATION_MINUTES",
+        description="Duration of party buffs from social events"
+    )
+
+    # ============================================================================
+    # ADVANCED SYSTEMS AGENTS CONFIGURATION (Phase 4E)
+    # ============================================================================
+    
+    # Adaptive Dungeon Configuration
+    adaptive_dungeon_enabled: bool = Field(
+        default=True,
+        env="ADAPTIVE_DUNGEON_ENABLED",
+        description="Enable Adaptive Dungeon Agent for daily procedural dungeons"
+    )
+    dungeon_floor_count_min: int = Field(
+        default=5,
+        env="DUNGEON_FLOOR_COUNT_MIN",
+        description="Minimum number of dungeon floors"
+    )
+    dungeon_floor_count_max: int = Field(
+        default=10,
+        env="DUNGEON_FLOOR_COUNT_MAX",
+        description="Maximum number of dungeon floors"
+    )
+    dungeon_time_limit_minutes: int = Field(
+        default=60,
+        env="DUNGEON_TIME_LIMIT_MINUTES",
+        description="Time limit for dungeon completion in minutes"
+    )
+    dungeon_party_size_min: int = Field(
+        default=2,
+        env="DUNGEON_PARTY_SIZE_MIN",
+        description="Minimum party size for dungeon instances"
+    )
+    dungeon_party_size_max: int = Field(
+        default=12,
+        env="DUNGEON_PARTY_SIZE_MAX",
+        description="Maximum party size for dungeon instances"
+    )
+    
+    # Archaeology Configuration
+    archaeology_enabled: bool = Field(
+        default=True,
+        env="ARCHAEOLOGY_ENABLED",
+        description="Enable Archaeology Agent for artifact collection"
+    )
+    daily_dig_spot_count: int = Field(
+        default=15,
+        env="DAILY_DIG_SPOT_COUNT",
+        description="Number of dig spots to spawn daily (10-20)"
+    )
+    dig_spot_despawn_hours: int = Field(
+        default=48,
+        env="DIG_SPOT_DESPAWN_HOURS",
+        description="Hours until dig spot despawns"
+    )
+    archaeology_max_level: int = Field(
+        default=10,
+        env="ARCHAEOLOGY_MAX_LEVEL",
+        description="Maximum archaeology level"
+    )
+    lore_fragment_set_size: int = Field(
+        default=20,
+        env="LORE_FRAGMENT_SET_SIZE",
+        description="Number of lore fragments needed for complete set"
+    )
+    
+    # Event Chain Configuration
+    event_chain_enabled: bool = Field(
+        default=True,
+        env="EVENT_CHAIN_ENABLED",
+        description="Enable Event Chain Agent for multi-step events"
+    )
+    max_concurrent_chains: int = Field(
+        default=3,
+        env="MAX_CONCURRENT_CHAINS",
+        description="Maximum concurrent event chains"
+    )
+    chain_step_timeout_hours: int = Field(
+        default=24,
+        env="CHAIN_STEP_TIMEOUT_HOURS",
+        description="Hours until chain step times out"
+    )
+    chain_llm_narrative: bool = Field(
+        default=False,
+        env="CHAIN_LLM_NARRATIVE",
+        description="Use LLM for creative chain narratives (optional)"
+    )
+    chain_min_steps: int = Field(
+        default=3,
+        env="CHAIN_MIN_STEPS",
+        description="Minimum steps per event chain"
+    )
+    chain_max_steps: int = Field(
+        default=7,
+        env="CHAIN_MAX_STEPS",
+        description="Maximum steps per event chain"
+    )
+
+    # ============================================================================
+    # AI-DRIVEN STORYLINE GENERATOR CONFIGURATION (Phase 5)
+    # ============================================================================
+    
+    # Storyline System
+    storyline_enabled: bool = Field(
+        default=True,
+        env="STORYLINE_ENABLED",
+        description="Enable AI-Driven Storyline Generator system"
+    )
+    storyline_llm_provider: str = Field(
+        default="azure_openai",
+        env="STORYLINE_LLM_PROVIDER",
+        description="LLM provider for story generation"
+    )
+    storyline_llm_model: str = Field(
+        default="gpt-4-turbo",
+        env="STORYLINE_LLM_MODEL",
+        description="LLM model for story generation"
+    )
+    storyline_max_tokens: int = Field(
+        default=4000,
+        env="STORYLINE_MAX_TOKENS",
+        description="Max tokens for story generation"
+    )
+    storyline_temperature: float = Field(
+        default=0.8,
+        env="STORYLINE_TEMPERATURE",
+        description="Temperature for creative story generation (0.0-1.0)"
+    )
+    
+    # Arc Configuration
+    arc_duration_days_min: int = Field(
+        default=7,
+        env="ARC_DURATION_DAYS_MIN",
+        description="Minimum story arc duration in days"
+    )
+    arc_duration_days_max: int = Field(
+        default=30,
+        env="ARC_DURATION_DAYS_MAX",
+        description="Maximum story arc duration in days"
+    )
+    arc_auto_advance: bool = Field(
+        default=True,
+        env="ARC_AUTO_ADVANCE",
+        description="Automatically advance chapters based on completion"
+    )
+    
+    # Chapter Configuration
+    chapter_duration_days: int = Field(
+        default=3,
+        env="CHAPTER_DURATION_DAYS",
+        description="Duration of each chapter in days (0 = milestone-based)"
+    )
+    chapter_auto_generate: bool = Field(
+        default=True,
+        env="CHAPTER_AUTO_GENERATE",
+        description="Auto-generate next chapter based on outcomes"
+    )
+    
+    # Hero Recognition
+    hero_recognition_enabled: bool = Field(
+        default=True,
+        env="HERO_RECOGNITION_ENABLED",
+        description="Enable Hero of the Week recognition"
+    )
+    hero_selection_top_n: int = Field(
+        default=3,
+        env="HERO_SELECTION_TOP_N",
+        description="Number of top contributors to recognize (1-5)"
+    )
+    
+    # Recurring Characters
+    recurring_characters_enabled: bool = Field(
+        default=True,
+        env="RECURRING_CHARACTERS_ENABLED",
+        description="Enable recurring NPCs across arcs"
+    )
+    villain_evolution_enabled: bool = Field(
+        default=True,
+        env="VILLAIN_EVOLUTION_ENABLED",
+        description="Enable villain evolution based on defeats"
+    )
+    
+    # Cost Control
+    storyline_monthly_budget: int = Field(
+        default=500,
+        env="STORYLINE_MONTHLY_BUDGET",
+        description="Monthly budget for storyline LLM costs (USD)"
+    )
+    storyline_fallback_to_templates: bool = Field(
+        default=True,
+        env="STORYLINE_FALLBACK_TO_TEMPLATES",
+        description="Use template fallback if LLM fails or budget exceeded"
+    )
+    
+    # Story Quest ID Range
+    story_quest_id_min: int = Field(
+        default=8000,
+        env="STORY_QUEST_ID_MIN",
+        description="Minimum quest ID for story quests"
+    )
+    story_quest_id_max: int = Field(
+        default=8999,
+        env="STORY_QUEST_ID_MAX",
+        description="Maximum quest ID for story quests"
+    )
+    
+    # Validation
+    @field_validator('storyline_temperature')
+    @classmethod
+    def validate_storyline_temperature(cls, v: float) -> float:
+        """Validate storyline temperature is between 0.0 and 1.0"""
+        if not 0.0 <= v <= 1.0:
+            raise ValueError("storyline_temperature must be between 0.0 and 1.0")
+        return v
+    
+    @field_validator('arc_duration_days_min', 'arc_duration_days_max')
+    @classmethod
+    def validate_arc_duration(cls, v: int, info) -> int:
+        """Validate arc duration is positive"""
+        if v <= 0:
+            raise ValueError(f"{info.field_name} must be positive")
+        return v
+    
+    @field_validator('hero_selection_top_n')
+    @classmethod
+    def validate_hero_count(cls, v: int) -> int:
+        """Validate hero selection count"""
+        if not 1 <= v <= 5:
+            raise ValueError("hero_selection_top_n must be between 1 and 5")
+        return v
+
+    # ============================================================================
     # COST MANAGEMENT CONFIGURATION
     # ============================================================================
     

@@ -2,7 +2,7 @@
 LLM Provider Factory
 """
 
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 from loguru import logger
 
 from .base import BaseLLMProvider

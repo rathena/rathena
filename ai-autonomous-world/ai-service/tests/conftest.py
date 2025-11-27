@@ -63,6 +63,11 @@ async def mock_database():
     db.client.sadd = AsyncMock(return_value=1)
     db.client.smembers = AsyncMock(return_value=set())
     db.client.srem = AsyncMock(return_value=1)
+    # Additional methods for player memory and rate limiting
+    db.client.lrange = AsyncMock(return_value=[])
+    db.client.rpush = AsyncMock(return_value=1)
+    db.client.expire = AsyncMock(return_value=True)
+    db.client.ttl = AsyncMock(return_value=-1)
     return db
 
 

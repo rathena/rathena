@@ -1,0 +1,625 @@
+//===== rAthena Script =======================================
+//= Environmental System Handler (Phase 4C)
+//===== Description: =========================================
+//= NPC handlers for Map Hazards, Weather/Time, and Treasure
+//= Integration examples for environmental agents
+//============================================================
+
+// ============================================================================
+// MAP HAZARD HANDLER NPC
+// ============================================================================
+
+prontera,150,150,4	script	Hazard Monitor#env	4_M_SAGE_A,{
+	mes "[Hazard Monitor]";
+	mes "I track environmental hazards across the world.";
+	next;
+	
+	menu "View Active Hazards", L_ViewHazards,
+	     "Check Current Map", L_CheckMap,
+	     "Hazard Statistics", L_Stats,
+	     "Close", L_Close;
+
+L_ViewHazards:
+	mes "[Hazard Monitor]";
+	mes "Fetching active hazards...";
+	
+	// Call AI Service API
+	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/hazards/active");
+	.@json = json_decode(.@response$);
+	
+	.@count = json_array_length(.@json);
+	
+	if (.@count == 0) {
+		mes "^00FF00No active hazards detected.^000000";
+		close;
+	}
+	
+	mes "^FF0000Active Hazards: " + .@count + "^000000";
+	next;
+	
+	for (.@i = 0; .@i < .@count; .@i++) {
+		.@hazard = json_array_get(.@json, .@i);
+		.@map$ = json_get_str(.@hazard, "map_name");
+		.@type$ = json_get_str(.@hazard, "hazard_type");
+		.@name$ = json_get_str(.@hazard, "hazard_name");
+		
+		mes "^0000FF" + .@name$ + "^000000";
+		mes "Location: " + .@map$;
+		mes "Type: " + .@type$;
+		mes "---";
+	}
+	close;
+
+L_CheckMap:
+	mes "[Hazard Monitor]";
+	mes "Checking hazards in current map...";
+	
+	.@map$ = strcharinfo(3);
+	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/hazards/" + .@map$);
+	.@json = json_decode(.@response$);
+	
+	.@count = json_array_length(.@json);
+	
+	if (.@count == 0) {
+		mes "^00FF00This map is safe.^000000";
+		close;
+	}
+	
+	.@hazard = json_array_get(.@json, 0);
+	.@name$ = json_get_str(.@hazard, "hazard_name");
+	.@desc$ = json_get_str(.@hazard, "description");
+	
+	mes "^FF0000WARNING: Hazard Detected!^000000";
+	mes "^0000FF" + .@name$ + "^000000";
+	mes .@desc$;
+	
+	// Show effects
+	.@effects = json_get_obj(.@hazard, "effects");
+	.@drop_mult = json_get_float(.@effects, "drop_rate_mult");
+	
+	if (.@drop_mult > 1.0) {
+		mes "^00FF00Drop rate increased!^000000";
+	} else if (.@drop_mult < 1.0) {
+		mes "^FF0000Drop rate decreased!^000000";
+	}
+	
+	close;
+
+L_Stats:
+	mes "[Hazard Monitor]";
+	mes "Fetching statistics...";
+	
+	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/metrics");
+	.@json = json_decode(.@response$);
+	
+	.@hazards_today = json_get_int(.@json, "hazards_generated_today");
+	
+	mes "Hazards Generated Today: " + .@hazards_today;
+	close;
+
+L_Close:
+	close;
+}
+
+// ============================================================================
+// WEATHER INFORMATION NPC
+// ============================================================================
+
+prontera,155,150,4	script	Weather Sage#env	4_F_SAGE,{
+	mes "[Weather Sage]";
+	mes "I can tell you about the weather and time.";
+	next;
+	
+	menu "Current Weather", L_CurrentWeather,
+	     "Weather Forecast", L_Forecast,
+	     "Time of Day", L_TimeOfDay,
+	     "Close", L_Close;
+
+L_CurrentWeather:
+	mes "[Weather Sage]";
+	
+	// Get current weather
+	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/weather/current");
+	.@json = json_decode(.@response$);
+	
+	.@type$ = json_get_str(.@json, "weather_type");
+	.@name$ = json_get_str(.@json, "weather_name");
+	
+	mes "Current Weather: ^0000FF" + .@name$ + "^000000";
+	
+	// Show effects
+	.@effects = json_get_obj(.@json, "effects");
+	.@desc$ = json_get_str(.@effects, "description");
+	mes .@desc$;
+	
+	// Element modifiers
+	.@elem_mod = json_get_obj(.@effects, "element_modifiers");
+	if (json_length(.@elem_mod) > 0) {
+		next;
+		mes "^FF0000Element Effects:^000000";
+		mes "Check your element damage!";
+	}
+	
+	close;
+
+L_Forecast:
+	mes "[Weather Sage]";
+	mes "Looking into the future...";
+	
+	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/weather/forecast?hours=24");
+	.@json = json_decode(.@response$);
+	.@forecast = json_get_array(.@json, "forecast");
+	
+	.@count = json_array_length(.@forecast);
+	
+	mes "24-Hour Weather Forecast:";
+	next;
+	
+	for (.@i = 0; .@i < min(.@count, 3); .@i++) {
+		.@period = json_array_get(.@forecast, .@i);
+		.@weather$ = json_get_str(.@period, "weather_name");
+		.@prob = json_get_float(.@period, "probability");
+		
+		mes "Period " + (.@i + 1) + ": " + .@weather$ + " (" + (.@prob * 100) + "%)";
+	}
+	
+	close;
+
+L_TimeOfDay:
+	mes "[Weather Sage]";
+	
+	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/time/current");
+	.@json = json_decode(.@response$);
+	
+	.@time$ = json_get_str(.@json, "time_of_day");
+	.@hour = json_get_int(.@json, "current_hour");
+	.@exp_mult = json_get_float(.@json, "exp_mult");
+	.@drop_mult = json_get_float(.@json, "drop_rate_mult");
+	
+	mes "Time of Day: ^0000FF" + .@time$ + "^000000";
+	mes "Hour: " + .@hour + ":00";
+	
+	if (.@exp_mult > 1.0) {
+		mes "^00FF00EXP Bonus: +" + ((.@exp_mult - 1.0) * 100) + "%^000000";
+	}
+	
+	if (.@drop_mult > 1.0) {
+		mes "^00FF00Drop Bonus: +" + ((.@drop_mult - 1.0) * 100) + "%^000000";
+	}
+	
+	if (.@time$ == "full_moon") {
+		mes "^FF00FFThe full moon rises tonight!^000000";
+	}
+	
+	close;
+
+L_Close:
+	close;
+}
+
+// ============================================================================
+// TREASURE CHEST OBJECT
+// ============================================================================
+
+// Example: Treasure chest spawn
+// Spawned dynamically by Treasure Agent via HTTP POST
+prt_fild01,100,150,0	script	Hidden Treasure#1	HIDDEN_NPC,{
+	// Check if treasure still active
+	.@treasure_id = getvariableofnpc(.treasure_id, "TreasureManager#env");
+	
+	mes "[Mysterious Chest]";
+	mes "You found a hidden treasure!";
+	mes "^FFD700Sparkles^000000 emanate from within...";
+	next;
+	
+	menu "Open Treasure", L_Open,
+	     "Leave it", L_Leave;
+
+L_Open:
+	// Call AI Service to process discovery
+	.@player_id = getcharid(0);
+	.@url$ = "http://192.168.0.100:8000/api/v1/environmental/treasure/" + .@treasure_id + "/discover?player_id=" + .@player_id;
+	.@response$ = aiworld_http_post(.@url$, "{}");
+	.@json = json_decode(.@response$);
+	
+	.@success = json_get_bool(.@json, "success");
+	
+	if (!.@success) {
+		mes "[Mysterious Chest]";
+		mes "The treasure has already been claimed!";
+		close;
+	}
+	
+	// Get rewards
+	.@rewards = json_get_obj(.@json, "rewards");
+	.@rarity$ = json_get_str(.@json, "rarity");
+	.@items = json_get_array(.@rewards, "items");
+	.@zeny = json_get_int(.@rewards, "zeny");
+	.@fragments = json_get_int(.@rewards, "card_fragments");
+	
+	mes "[Mysterious Chest]";
+	mes "^FFD700" + .@rarity$ + " Treasure!^000000";
+	next;
+	
+	// Award items
+	.@item_count = json_array_length(.@items);
+	for (.@i = 0; .@i < .@item_count; .@i++) {
+		.@item = json_array_get(.@items, .@i);
+		.@item_name$ = json_get_str(.@item, "name");
+		.@quantity = json_get_int(.@item, "quantity");
+		
+		// Would call getitembound or getitem here
+		mes "Received: ^0000FF" + .@item_name$ + " x" + .@quantity + "^000000";
+	}
+	
+	// Award zeny
+	if (.@zeny > 0) {
+		mes "Received: ^FFD700" + .@zeny + " Zeny^000000";
+		set Zeny, Zeny + .@zeny;
+	}
+	
+	// Show card fragments
+	if (.@fragments > 0) {
+		mes "Received: ^FF00FF" + .@fragments + " Card Fragments^000000";
+		mes "Collect 100 fragments to claim a random card!";
+	}
+	
+	// Show reputation
+	.@rep = json_get_int(.@rewards, "reputation_reward");
+	if (.@rep > 0) {
+		mes "^00FF00++" + .@rep + " Explorer Reputation^000000";
+	}
+	
+	// Despawn this treasure
+	disablenpc strnpcinfo(0);
+	close;
+
+L_Leave:
+	mes "[Mysterious Chest]";
+	mes "The treasure remains hidden...";
+	close;
+}
+
+// ============================================================================
+// TREASURE MANAGER (Helper NPC)
+// ============================================================================
+
+-	script	TreasureManager#env	-1,{
+OnInit:
+	// Initialize treasure system
+	.treasure_count = 0;
+	end;
+
+OnSpawnTreasure:
+	// Called by AI Service via HTTP
+	// Parameters: .@map$, .@x, .@y, .@treasure_id
+	
+	.treasure_count++;
+	
+	// Spawn treasure NPC
+	.@npc$ = "Hidden Treasure#" + .treasure_count;
+	clone .@map$, .@x, .@y, .@npc$, HIDDEN_NPC, 0;
+	
+	// Store treasure ID
+	setvariableofnpc .treasure_id, .@treasure_id, .@npc$;
+	
+	announce "A mysterious treasure has appeared somewhere in " + .@map$ + "!", bc_all, 0x00FFFF;
+	end;
+}
+
+// ============================================================================
+// CARD FRAGMENT EXCHANGE NPC
+// ============================================================================
+
+prontera,160,150,4	script	Fragment Collector#env	4_M_ALCHE_C,{
+	mes "[Fragment Collector]";
+	mes "I can exchange 100 Card Fragments";
+	mes "for a random card!";
+	next;
+	
+	menu "Check My Fragments", L_CheckFragments,
+	     "Exchange for Card", L_ExchangeCard,
+	     "About Fragments", L_About,
+	     "Close", L_Close;
+
+L_CheckFragments:
+	.@player_id = getcharid(0);
+	.@url$ = "http://192.168.0.100:8000/api/v1/environmental/treasure/" + .@player_id + "/fragments";
+	.@response$ = aiworld_http_get(.@url$);
+	.@json = json_decode(.@response$);
+	
+	.@count = json_get_int(.@json, "fragment_count");
+	.@claimed = json_get_int(.@json, "cards_claimed");
+	.@needed = json_get_int(.@json, "fragments_needed");
+	
+	mes "[Fragment Collector]";
+	mes "Your Card Fragments: ^FF00FF" + .@count + "^000000";
+	mes "Cards Claimed: " + .@claimed;
+	mes "Fragments Needed: " + .@needed;
+	
+	if (.@count >= 100) {
+		next;
+		mes "^00FF00You can claim a card!^000000";
+	}
+	
+	close;
+
+L_ExchangeCard:
+	.@player_id = getcharid(0);
+	
+	mes "[Fragment Collector]";
+	mes "Exchanging 100 fragments...";
+	
+	.@url$ = "http://192.168.0.100:8000/api/v1/environmental/treasure/" + .@player_id + "/claim-card";
+	.@response$ = aiworld_http_post(.@url$, "{}");
+	.@json = json_decode(.@response$);
+	
+	.@success = json_get_bool(.@json, "success");
+	
+	if (!.@success) {
+		.@error$ = json_get_str(json_get_obj(.@json, "data"), "error");
+		mes "^FF0000" + .@error$ + "^000000";
+		close;
+	}
+	
+	// Get card obtained
+	.@card = json_get_obj(json_get_obj(.@json, "data"), "card_obtained");
+	.@card_name$ = json_get_str(.@card, "name");
+	.@card_id = json_get_int(.@card, "id");
+	
+	mes "^00FF00You obtained:^000000";
+	mes "^FFD700" + .@card_name$ + "^000000";
+	
+	// Give card to player
+	getitem .@card_id, 1;
+	
+	close;
+
+L_About:
+	mes "[Fragment Collector]";
+	mes "Card Fragments are rare treasures";
+	mes "found in hidden chests across the world.";
+	next;
+	mes "[Fragment Collector]";
+	mes "^FF00FFSilver^000000 treasures: 1 fragment";
+	mes "^FFD700Gold^000000 treasures: 5 fragments";
+	mes "^FF0000Mythic^000000 treasures: 15+ fragments";
+	next;
+	mes "[Fragment Collector]";
+	mes "Explore low-traffic maps for";
+	mes "better chances at rare treasures!";
+	mes "Forgotten maps have 40x higher mythic rates!";
+	close;
+
+L_Close:
+	close;
+}
+
+// ============================================================================
+// WEATHER EFFECTS HANDLER (OnPCLoginEvent)
+// ============================================================================
+
+-	script	WeatherEffects#env	-1,{
+OnPCLoginEvent:
+	// Apply weather effects when player logs in
+	.@player_id = getcharid(0);
+	
+	// Get current weather
+	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/weather/current");
+	.@json = json_decode(.@response$);
+	
+	.@weather$ = json_get_str(.@json, "weather_type");
+	.@effects = json_get_obj(.@json, "effects");
+	
+	// Apply stat modifiers (example)
+	.@stat_mod = json_get_obj(.@effects, "stat_modifiers");
+	
+	// Example: Apply flee modifier
+	if (json_has_key(.@stat_mod, "flee_mult")) {
+		.@flee_mult = json_get_float(.@stat_mod, "flee_mult");
+		// Would apply via sc_start or skill effect
+	}
+	
+	// Get time effects
+	.@time_response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/time/current");
+	.@time_json = json_decode(.@time_response$);
+	
+	.@time$ = json_get_str(.@time_json, "time_of_day");
+	.@exp_mult = json_get_float(.@time_json, "exp_mult");
+	
+	// Apply EXP bonus
+	if (.@exp_mult > 1.0) {
+		.@bonus = (.@exp_mult - 1.0) * 100;
+		sc_start SC_EXPBOOST, 600000, .@bonus;  // 10 min duration
+	}
+	
+	// Notify player
+	if (.@weather$ != "clear" || .@time$ == "full_moon") {
+		dispbottom "Weather: " + .@weather$ + ", Time: " + .@time$;
+	}
+	
+	end;
+
+OnPCMapMoveEvent:
+	// Check for map hazards when changing maps
+	.@map$ = strcharinfo(3);
+	
+	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/hazards/" + .@map$);
+	.@json = json_decode(.@response$);
+	
+	.@count = json_array_length(.@json);
+	
+	if (.@count > 0) {
+		.@hazard = json_array_get(.@json, 0);
+		.@name$ = json_get_str(.@hazard, "hazard_name");
+		
+		dispbottom "^FF0000Map Hazard: " + .@name$ + "^000000";
+	}
+	
+	end;
+}
+
+// ============================================================================
+// TREASURE DIG SPOT EXAMPLE
+// ============================================================================
+
+pay_fild01,200,250,0	script	#TreasureDigSpot	CLEAR_NPC,2,2,{
+	// Treasure dig spot - no visual until player steps on it
+	mes "[Disturbed Ground]";
+	mes "The ground looks unusual here...";
+	mes "Do you want to dig?";
+	next;
+	
+	menu "Dig Here", L_Dig,
+	     "Leave", L_Leave;
+
+L_Dig:
+	mes "[Disturbed Ground]";
+	mes "You start digging...";
+	
+	// Process treasure discovery
+	.@player_id = getcharid(0);
+	.@treasure_id = .treasure_id;  // Set by TreasureManager
+	
+	.@url$ = "http://192.168.0.100:8000/api/v1/environmental/treasure/" + .@treasure_id + "/discover?player_id=" + .@player_id;
+	.@response$ = aiworld_http_post(.@url$, "{}");
+	.@json = json_decode(.@response$);
+	
+	.@success = json_get_bool(.@json, "success");
+	
+	if (!.@success) {
+		mes "^FF0000The spot has been depleted...^000000";
+		close;
+	}
+	
+	.@rewards = json_get_obj(.@json, "rewards");
+	.@rarity$ = json_get_str(.@json, "rarity");
+	
+	mes "^00FF00You found a " + .@rarity$ + " treasure!^000000";
+	
+	// Award rewards (similar to chest example)
+	// ...
+	
+	disablenpc strnpcinfo(0);
+	close;
+
+L_Leave:
+	close;
+
+OnTouch:
+	// Show hint when player gets close
+	if (.treasure_id > 0) {
+		emotion e_dots;
+	}
+	end;
+}
+
+// ============================================================================
+// HAZARD ENCOUNTER TRACKING
+// ============================================================================
+
+-	script	HazardTracker#env	-1,{
+OnPCMapMoveEvent:
+	// Start tracking when entering hazard map
+	.@map$ = strcharinfo(3);
+	.@player_id = getcharid(0);
+	
+	// Check for hazard
+	.@response$ = aiworld_http_get("http://192.168.0.100:8000/api/v1/environmental/hazards/" + .@map$);
+	.@json = json_decode(.@response$);
+	
+	.@count = json_array_length(.@json);
+	
+	if (.@count > 0) {
+		.@hazard = json_array_get(.@json, 0);
+		.@hazard_id = json_get_int(.@hazard, "hazard_id");
+		
+		// Store player's hazard entry time
+		setd ".hazard_entry_time_" + .@player_id, gettimetick(2);
+		setd ".current_hazard_" + .@player_id, .@hazard_id;
+	} else {
+		// Exiting hazard zone - record encounter
+		.@current_hazard = getd(".current_hazard_" + .@player_id);
+		
+		if (.@current_hazard > 0) {
+			.@entry_time = getd(".hazard_entry_time_" + .@player_id);
+			.@time_in_hazard = gettimetick(2) - .@entry_time;
+			
+			// Record encounter
+			.@data$ = "{\"time_in_hazard\": " + .@time_in_hazard + ", \"items_dropped\": 0, \"deaths\": 0}";
+			.@url$ = "http://192.168.0.100:8000/api/v1/environmental/hazards/" + .@current_hazard + "/encounter";
+			.@response$ = aiworld_http_post(.@url$, .@data$);
+			
+			// Clear tracking
+			setd ".current_hazard_" + .@player_id, 0;
+			setd ".hazard_entry_time_" + .@player_id, 0;
+		}
+	}
+	
+	end;
+}
+
+// ============================================================================
+// HELPER FUNCTIONS (Placeholder - Implement in Bridge Layer)
+// ============================================================================
+
+/*
+Function: aiworld_http_get
+Description: HTTP GET request to AI Service
+Parameters: url$ (string)
+Returns: response$ (JSON string)
+
+Function: aiworld_http_post
+Description: HTTP POST request to AI Service  
+Parameters: url$ (string), data$ (JSON string)
+Returns: response$ (JSON string)
+
+Function: json_decode
+Description: Parse JSON string
+Parameters: json$ (string)
+Returns: json_object (handle)
+
+Function: json_get_str
+Description: Get string value from JSON
+Parameters: json_obj (handle), key$ (string)
+Returns: value$ (string)
+
+Function: json_get_int
+Description: Get integer value from JSON
+Parameters: json_obj (handle), key$ (string)
+Returns: value (integer)
+
+Function: json_get_float
+Description: Get float value from JSON
+Parameters: json_obj (handle), key$ (string)
+Returns: value (float)
+
+Function: json_get_bool
+Description: Get boolean value from JSON
+Parameters: json_obj (handle), key$ (string)
+Returns: value (boolean)
+
+Function: json_get_obj
+Description: Get nested object from JSON
+Parameters: json_obj (handle), key$ (string)
+Returns: nested_obj (handle)
+
+Function: json_get_array
+Description: Get array from JSON
+Parameters: json_obj (handle), key$ (string)
+Returns: array_obj (handle)
+
+Function: json_array_length
+Description: Get array length
+Parameters: array_obj (handle)
+Returns: length (integer)
+
+Function: json_array_get
+Description: Get array element
+Parameters: array_obj (handle), index (integer)
+Returns: element (handle)
+*/
+
+//============================================================
+// END OF FILE
+//============================================================

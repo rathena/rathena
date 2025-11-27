@@ -1,0 +1,422 @@
+<testsuites id="" name="" tests="100" failures="0" skipped="100" errors="0" time="0.1627710000000002">
+<testsuite name="admin-workflow.spec.ts" timestamp="2025-11-27T04:01:45.044Z" hostname="chromium" tests="11" failures="0" skipped="11" time="0" errors="0">
+<testcase name="Admin Dashboard Workflow › admin can view all 21 agents" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can see real-time updates" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can navigate between modules" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can view system health metrics" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can view performance charts" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can check LLM cost breakdown" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can filter error logs" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can export metrics" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard loads in &lt;3s" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard achieves good Core Web Vitals" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard handles offline gracefully" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="public-workflow.spec.ts" timestamp="2025-11-27T04:01:45.044Z" hostname="chromium" tests="9" failures="0" skipped="9" time="0" errors="0">
+<testcase name="Public Dashboard Workflow › user can view active story arc" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can view world map" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can view leaderboard" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can see active events" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can check server status" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public pages load quickly (&lt;3s)" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public dashboard works on mobile viewport" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public dashboard handles slow network" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user interactions are smooth (60fps)" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="admin-workflow.spec.ts" timestamp="2025-11-27T04:01:45.044Z" hostname="firefox" tests="11" failures="0" skipped="11" time="0" errors="0">
+<testcase name="Admin Dashboard Workflow › admin can view all 21 agents" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can see real-time updates" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can navigate between modules" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can view system health metrics" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can view performance charts" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can check LLM cost breakdown" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can filter error logs" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can export metrics" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard loads in &lt;3s" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard achieves good Core Web Vitals" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard handles offline gracefully" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="public-workflow.spec.ts" timestamp="2025-11-27T04:01:45.044Z" hostname="firefox" tests="9" failures="0" skipped="9" time="0" errors="0">
+<testcase name="Public Dashboard Workflow › user can view active story arc" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can view world map" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can view leaderboard" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can see active events" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can check server status" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public pages load quickly (&lt;3s)" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public dashboard works on mobile viewport" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public dashboard handles slow network" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user interactions are smooth (60fps)" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="admin-workflow.spec.ts" timestamp="2025-11-27T04:01:45.044Z" hostname="webkit" tests="11" failures="0" skipped="11" time="0" errors="0">
+<testcase name="Admin Dashboard Workflow › admin can view all 21 agents" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can see real-time updates" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can navigate between modules" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can view system health metrics" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can view performance charts" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can check LLM cost breakdown" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can filter error logs" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can export metrics" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard loads in &lt;3s" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard achieves good Core Web Vitals" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard handles offline gracefully" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="public-workflow.spec.ts" timestamp="2025-11-27T04:01:45.044Z" hostname="webkit" tests="9" failures="0" skipped="9" time="0" errors="0">
+<testcase name="Public Dashboard Workflow › user can view active story arc" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can view world map" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can view leaderboard" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can see active events" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can check server status" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public pages load quickly (&lt;3s)" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public dashboard works on mobile viewport" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public dashboard handles slow network" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user interactions are smooth (60fps)" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="admin-workflow.spec.ts" timestamp="2025-11-27T04:01:45.044Z" hostname="Mobile Chrome" tests="11" failures="0" skipped="11" time="0" errors="0">
+<testcase name="Admin Dashboard Workflow › admin can view all 21 agents" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can see real-time updates" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can navigate between modules" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can view system health metrics" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can view performance charts" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can check LLM cost breakdown" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can filter error logs" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can export metrics" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard loads in &lt;3s" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard achieves good Core Web Vitals" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard handles offline gracefully" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="public-workflow.spec.ts" timestamp="2025-11-27T04:01:45.044Z" hostname="Mobile Chrome" tests="9" failures="0" skipped="9" time="0" errors="0">
+<testcase name="Public Dashboard Workflow › user can view active story arc" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can view world map" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can view leaderboard" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can see active events" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can check server status" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public pages load quickly (&lt;3s)" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public dashboard works on mobile viewport" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public dashboard handles slow network" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user interactions are smooth (60fps)" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="admin-workflow.spec.ts" timestamp="2025-11-27T04:01:45.044Z" hostname="Mobile Safari" tests="11" failures="0" skipped="11" time="0" errors="0">
+<testcase name="Admin Dashboard Workflow › admin can view all 21 agents" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can see real-time updates" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can navigate between modules" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can view system health metrics" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can view performance charts" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can check LLM cost breakdown" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can filter error logs" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › admin can export metrics" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard loads in &lt;3s" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard achieves good Core Web Vitals" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Admin Dashboard Workflow › dashboard handles offline gracefully" classname="admin-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+<testsuite name="public-workflow.spec.ts" timestamp="2025-11-27T04:01:45.044Z" hostname="Mobile Safari" tests="9" failures="0" skipped="9" time="0" errors="0">
+<testcase name="Public Dashboard Workflow › user can view active story arc" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can view world map" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can view leaderboard" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can see active events" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user can check server status" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public pages load quickly (&lt;3s)" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public dashboard works on mobile viewport" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › public dashboard handles slow network" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+<testcase name="Public Dashboard Workflow › user interactions are smooth (60fps)" classname="public-workflow.spec.ts" time="0">
+<skipped>
+</skipped>
+</testcase>
+</testsuite>
+</testsuites>

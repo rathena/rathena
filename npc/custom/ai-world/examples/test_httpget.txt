@@ -1,0 +1,77 @@
+//===== rAthena Script =======================================
+//= AI Bridge - HTTP GET Example
+//===== By: ==================================================
+//= AI Architect
+//===== Description: =========================================
+//= Demonstrates httpget() command usage
+//= Fetches data from AI service and displays it
+//============================================================
+
+prontera,155,185,4	script	AI Health Check	1_M_BARD,{
+	mes "[AI Service Monitor]";
+	mes "Checking AI service health...";
+	next;
+	
+	// Simple health check
+	.@response$ = httpget("http://192.168.0.100:8000/api/v1/health");
+	
+	if (.@response$ == "") {
+		mes "^FF0000Error: AI service is not responding!^000000";
+		close;
+	}
+	
+	mes "^00FF00AI Service is healthy!^000000";
+	mes " ";
+	mes "Response:";
+	mes .@response$;
+	close;
+}
+
+prontera,157,185,4	script	Fetch NPC State	1_F_MARIA,{
+	mes "[Dynamic NPC Manager]";
+	mes "Enter NPC ID to check:";
+	input .@npc_id;
+	
+	if (.@npc_id <= 0) {
+		mes "Invalid NPC ID!";
+		close;
+	}
+	
+	mes "Fetching state for NPC " + .@npc_id + "...";
+	next;
+	
+	// Fetch NPC state from AI service
+	.@url$ = "http://192.168.0.100:8000/api/v1/procedural/dynamic-npc/" + .@npc_id + "/state";
+	.@response$ = httpget(.@url$);
+	
+	if (.@response$ == "") {
+		mes "^FF0000Failed to fetch NPC state^000000";
+		close;
+	}
+	
+	mes "^00FF00NPC State Retrieved:^000000";
+	mes .@response$;
+	close;
+}
+
+prontera,159,185,4	script	Active Problems	1_M_WIZARD,{
+	mes "[World Problem Monitor]";
+	mes "Checking active world problems...";
+	next;
+	
+	// Fetch active problems
+	.@response$ = httpget("http://192.168.0.100:8000/api/v1/procedural/problem/active");
+	
+	if (.@response$ == "") {
+		mes "^FF0000No problems found (or service offline)^000000";
+		close;
+	}
+	
+	mes "^FFFF00Active World Problems:^000000";
+	mes .@response$;
+	next;
+	
+	mes "These problems are affecting the world right now!";
+	mes "Complete quests or defeat monsters to resolve them.";
+	close;
+}

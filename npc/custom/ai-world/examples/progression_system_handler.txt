@@ -1,0 +1,321 @@
+//===== rAthena Script =======================================
+//= Progression System Integration Handler
+//===== Description: =========================================
+//= Example NPC script showing integration with Faction,
+//= Reputation, and Dynamic Boss agents (Phase 4B)
+//============================================================
+
+// ============================================================================
+// FACTION ALIGNMENT HANDLER
+// ============================================================================
+
+prontera,155,185,4	script	Faction Monitor	4_F_KNIGHT_GOLD,{
+	// Get player's faction reputations
+	.@player_id = getcharid(0);
+	
+	mes "[Faction Monitor]";
+	mes "Greetings, adventurer!";
+	mes "I can show you the current world faction status.";
+	next;
+	
+	// Call AI service to get faction alignment
+	.@url$ = "http://192.168.0.100:8000/api/v1/progression/factions/alignment";
+	.@response$ = ai_http_get(.@url$);
+	
+	// Parse response (simplified - would use JSON parser)
+	mes "^0000FFCurrent Faction Alignment:^000000";
+	mes .@response$;
+	next;
+	
+	// Get player's reputation with each faction
+	mes "^0000FFYour Faction Standing:^000000";
+	
+	.@url$ = "http://192.168.0.100:8000/api/v1/progression/factions/" + .@player_id + "/reputation";
+	.@rep_response$ = ai_http_get(.@url$);
+	
+	mes .@rep_response$;
+	close;
+}
+
+// ============================================================================
+// FACTION QUEST HANDLER (Records faction actions)
+// ============================================================================
+
+prontera,160,185,4	script	Rune Alliance Quest	4_M_RUNE_KNIGHT,{
+	.@player_id = getcharid(0);
+	
+	mes "[Commander Siegfried]";
+	mes "The Rune Alliance needs your help!";
+	mes "Will you assist us?";
+	next;
+	
+	if (select("Yes, I'll help:No, not now") == 2) {
+		mes "[Commander Siegfried]";
+		mes "Return when you're ready.";
+		close;
+	}
+	
+	// Give quest to kill 10 monsters
+	mes "[Commander Siegfried]";
+	mes "Defeat 10 enemies in the field!";
+	setquest 99001;
+	close;
+	
+OnKillMonster:
+	// When quest complete, record faction action
+	if (checkquest(99001, PLAYTIME) == 2) {
+		.@player_id = getcharid(0);
+		
+		// Build faction action payload
+		.@payload$ = "{" +
+			"\"faction_id\": \"rune_alliance\"," +
+			"\"action_type\": \"quest_complete\"," +
+			"\"action_data\": {\"quest_id\": 99001}" +
+		"}";
+		
+		// Send to AI service
+		.@url$ = "http://192.168.0.100:8000/api/v1/progression/factions/" + .@player_id + "/action";
+		.@response$ = ai_http_post(.@url$, .@payload$);
+		
+		// Also record reputation gain
+		.@rep_payload$ = "{" +
+			"\"reputation_type\": \"faction_loyalist\"," +
+			"\"amount\": 100," +
+			"\"source\": \"faction_quest\"" +
+		"}";
+		
+		.@rep_url$ = "http://192.168.0.100:8000/api/v1/progression/reputation/" + .@player_id + "/gain";
+		.@rep_response$ = ai_http_post(.@rep_url$, .@rep_payload$);
+		
+		// Reward player
+		getexp 50000, 0;
+		getitem 607, 3; // Yggdrasil Berry
+		
+		mes "[Commander Siegfried]";
+		mes "Excellent work! The Rune Alliance thanks you.";
+		mes "^00FF00You gained reputation with the Rune Alliance!^000000";
+		
+		erasequest 99001;
+		close;
+	}
+}
+
+// ============================================================================
+// REPUTATION STATUS DISPLAY
+// ============================================================================
+
+prontera,165,185,4	script	Reputation Monitor	4_F_SAGE_A,{
+	.@player_id = getcharid(0);
+	
+	mes "[Reputation Monitor]";
+	mes "Let me check your influence status...";
+	next;
+	
+	// Get player's total influence
+	.@url$ = "http://192.168.0.100:8000/api/v1/progression/reputation/" + .@player_id;
+	.@response$ = ai_http_get(.@url$);
+	
+	// Display (would parse JSON properly)
+	mes "^0000FFYour Influence Profile:^000000";
+	mes .@response$;
+	next;
+	
+	// Get unlocked benefits
+	.@benefits_url$ = "http://192.168.0.100:8000/api/v1/progression/reputation/" + .@player_id + "/benefits";
+	.@benefits$ = ai_http_get(.@benefits_url$);
+	
+	mes "^00FF00Unlocked Benefits:^000000";
+	mes .@benefits$;
+	close;
+}
+
+// ============================================================================
+// DYNAMIC BOSS SPAWN HANDLER
+// ============================================================================
+
+-	script	DynamicBossManager	-1,{
+	end;
+
+OnInit:
+	// Background task to evaluate boss spawns
+	// Called every 15 minutes by scheduler
+	end;
+
+OnBossSpawnEvaluate:
+	// Build world state
+	.@world_state$ = "{" +
+		"\"avg_player_level\": " + $@avg_player_level + "," +
+		"\"online_players\": " + getusers(1) + "," +
+		"\"map_activity\": {}," +
+		"\"monster_kills\": {}" +
+	"}";
+	
+	// Check if boss should spawn
+	.@eval_url$ = "http://192.168.0.100:8000/api/v1/progression/boss/evaluate-spawn";
+	.@eval_response$ = ai_http_post(.@eval_url$, .@world_state$);
+	
+	// If conditions met, spawn boss
+	if (.@eval_response$ != "") {
+		// Parse spawn decision (simplified)
+		announce "A powerful boss has appeared!", bc_all, 0xFF0000;
+		
+		// Spawn boss via AI service
+		.@spawn_payload$ = "{" +
+			"\"spawn_reason\": \"anti_farm\"," +
+			"\"spawn_map\": \"prt_fild01\"," +
+			"\"difficulty_modifier\": 1.0" +
+		"}";
+		
+		.@spawn_url$ = "http://192.168.0.100:8000/api/v1/progression/boss/spawn";
+		.@boss$ = ai_http_post(.@spawn_url$, .@spawn_payload$);
+		
+		// Would parse boss data and actually spawn monster
+		// monster "prt_fild01", <x>, <y>, "Boss Name", <mob_id>, 1, "DynamicBossManager::OnBossKilled";
+	}
+	end;
+
+OnBossKilled:
+	.@boss_id = 1; // Would get from monster data
+	.@player_id = getcharid(0);
+	
+	// Record boss encounter
+	.@encounter_payload$ = "{" +
+		"\"player_id\": " + .@player_id + "," +
+		"\"damage_dealt\": 5000," +
+		"\"deaths\": 0," +
+		"\"time_participated\": 300" +
+	"}";
+	
+	.@encounter_url$ = "http://192.168.0.100:8000/api/v1/progression/boss/" + .@boss_id + "/encounter";
+	ai_http_post(.@encounter_url$, .@encounter_payload$);
+	
+	// Check if boss defeated (last player)
+	if (getmonsterinfo(killedrid, MOB_HP) <= 0) {
+		// Get all participants
+		.@participants$ = "[" + .@player_id + "]"; // Would collect all participants
+		
+		.@defeat_payload$ = "{" +
+			"\"participants\": " + .@participants$ + "," +
+			"\"time_to_kill\": 600" +
+		"}";
+		
+		.@defeat_url$ = "http://192.168.0.100:8000/api/v1/progression/boss/" + .@boss_id + "/defeat";
+		.@rewards$ = ai_http_post(.@defeat_url$, .@defeat_payload$);
+		
+		// Distribute rewards (would parse JSON)
+		announce "Boss defeated! Rewards distributed to all participants!", bc_all, 0x00FF00;
+		
+		// Award reputation to all
+		// Each participant gets reputation gain
+	}
+	end;
+}
+
+// ============================================================================
+// REPUTATION TIER BENEFITS HANDLER
+// ============================================================================
+
+prontera,170,185,4	script	Influence Rewards	4_F_ACROSS,{
+	.@player_id = getcharid(0);
+	
+	mes "[Influence Rewards Master]";
+	mes "Greetings, renowned adventurer!";
+	mes "Your influence grants you special privileges.";
+	next;
+	
+	// Get player's unlocked benefits
+	.@url$ = "http://192.168.0.100:8000/api/v1/progression/reputation/" + .@player_id + "/benefits";
+	.@benefits$ = ai_http_get(.@url$);
+	
+	// Would parse JSON to show available benefits
+	mes "^00FF00Available Benefits:^000000";
+	mes .@benefits$;
+	next;
+	
+	mes "What would you like to access?";
+	.@choice = select(
+		"Special Shop (Tier 1+)",
+		"Claim Stat Bonuses (Tier 2+)",
+		"Use NPC Shortcuts (Tier 3+)",
+		"Claim Unique Headgear (Tier 4+)",
+		"Cancel"
+	);
+	
+	switch (.@choice) {
+		case 1:
+			// Open special shop based on tier
+			mes "Opening special shop...";
+			// callshop "SpecialShop", 1;
+			close;
+		
+		case 2:
+			// Grant stat bonuses
+			mes "Stat bonuses applied automatically!";
+			mes "Check your status window.";
+			close;
+		
+		case 3:
+			// Show warp options
+			mes "Where would you like to warp?";
+			// Would show tier-appropriate warp destinations
+			close;
+		
+		case 4:
+			// Give unique headgear
+			mes "Select your legendary headgear:";
+			// Would show available headgears
+			close;
+		
+		default:
+			close;
+	}
+}
+
+// ============================================================================
+// HELPER FUNCTIONS
+// ============================================================================
+
+// HTTP GET wrapper (uses rAthena's http_get if available)
+function	script	ai_http_get	{
+	.@url$ = getarg(0);
+	// In production, would use actual HTTP client
+	// return http_get(.@url$);
+	return "{}"; // Placeholder
+}
+
+// HTTP POST wrapper
+function	script	ai_http_post	{
+	.@url$ = getarg(0);
+	.@payload$ = getarg(1);
+	// In production, would use actual HTTP client
+	// return http_post(.@url$, .@payload$);
+	return "{}"; // Placeholder
+}
+
+// ============================================================================
+// NOTES FOR IMPLEMENTATION
+// ============================================================================
+
+/*
+This example demonstrates integration points for progression agents.
+
+Production Implementation Requirements:
+1. HTTP client support in rAthena (http_get, http_post functions)
+2. JSON parser for response handling
+3. Monster spawn integration for dynamic bosses
+4. Stat bonus application for reputation tiers
+5. Shop integration for tier-based merchants
+
+Event Triggers:
+- OnKillMonster: Record faction actions and boss encounters
+- OnQuestComplete: Grant faction reputation
+- OnPCLoginEvent: Check tier benefits and apply
+- OnPCDieEvent: Record boss encounter deaths
+
+Integration Flow:
+Player Action → NPC Script → HTTP Request → AI Service → Database Update → Cache Invalidation → Response → Reward Distribution
+
+For complete API documentation, see:
+- docs/PROGRESSION_AGENTS_GUIDE.md
+- ai-service/PROGRESSION_AGENTS_README.md
+*/
