@@ -8763,7 +8763,7 @@ uint32 PlayerStatPointDatabase::pc_gets_status_point(uint16 level) const{
 * @return Total number of trait points at specific base level.
 */
 uint32 PlayerStatPointDatabase::get_trait_table_point( uint16 level ) const{
-	std::shared_ptr< const s_statpoint_entry> entry = this->find( level );
+	std::shared_ptr<const s_statpoint_entry> entry = this->find( level );
 
 	if( entry != nullptr ){
 		return entry->traitpoints;
