@@ -249,6 +249,63 @@ class AIAsyncRequestHandler(BaseHandler):
             }
 
 
+    async def handle_callback(
+        self,
+        request_id: int,
+        callback_data: dict[str, Any]
+    ) -> dict[str, Any]:
+        """
+        Handle callback from async request completion.
+        
+        Args:
+            request_id: The database request ID
+            callback_data: The callback data containing job status and result
+            
+        Returns:
+            Processed callback response
+        """
+        job_id = callback_data.get("job_id")
+        status = callback_data.get("status", "unknown")
+        result = callback_data.get("result", {})
+        
+        self.logger.info(
+            f"Handling callback for request {request_id}, "
+            f"job_id={job_id}, status={status}"
+        )
+        
+        # Find the async request by job_id if stored
+        async_request_id = None
+        for req_id, info in _async_requests.items():
+            if info.get("job_id") == job_id:
+                async_request_id = req_id
+                break
+        
+        if async_request_id:
+            # Update the async request status
+            if status == "completed":
+                _async_results[async_request_id] = {
+                    "status": "completed",
+                    "result": result,
+                    "completed_at": datetime.utcnow().isoformat(),
+                }
+                _async_requests[async_request_id]["state"] = "completed"
+            elif status == "failed":
+                _async_results[async_request_id] = {
+                    "status": "failed",
+                    "error": callback_data.get("error", "Unknown error"),
+                    "failed_at": datetime.utcnow().isoformat(),
+                }
+                _async_requests[async_request_id]["state"] = "failed"
+        
+        return {
+            "status": "ok",
+            "request_id": request_id,
+            "job_id": job_id,
+            "callback_status": status,
+            "processed_at": datetime.utcnow().isoformat(),
+        }
+
+
 class AICheckResultHandler(BaseHandler):
     """
     Handler for checking async request results.
@@ -345,3 +402,7 @@ def get_pending_request_count() -> int:
 def get_processing_request_count() -> int:
     """Get count of processing async requests."""
     return sum(1 for r in _async_requests.values() if r["state"] == "processing")
+
+
+# Alias for backward compatibility with tests
+AIAsyncHandler = AIAsyncRequestHandler

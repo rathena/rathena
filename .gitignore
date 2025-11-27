@@ -333,3 +333,52 @@ Makefile
 *.dSYM/
 *.vscode/
 *.idea/
+
+# ============================================================================
+# AI IPC Service - Specific Ignores
+# ============================================================================
+
+# AI IPC service virtual environment
+tools/ai_ipc_service/venv/
+tools/ai_ipc_service/.venv/
+
+# AI IPC service test coverage
+tools/ai_ipc_service/htmlcov/
+tools/ai_ipc_service/.coverage
+tools/ai_ipc_service/.coverage.*
+tools/ai_ipc_service/coverage.xml
+
+# AI IPC service logs
+tools/ai_ipc_service/*.log
+tools/ai_ipc_service/logs/
+
+# AI IPC service config with secrets
+tools/ai_ipc_service/config.yaml
+tools/ai_ipc_service/.env
+
+# Keep example configs
+!tools/ai_ipc_service/config.example.yaml
+!tools/ai_ipc_service/.env.example
+
+# AI IPC service cache
+tools/ai_ipc_service/__pycache__/
+tools/ai_ipc_service/.pytest_cache/
+tools/ai_ipc_service/.mypy_cache/
+
+# ============================================================================
+# rAthena Server Specific
+# ============================================================================
+
+# Server save data (player data, guild data, etc.)
+save/
+save/*.txt
+save/*.log
+
+# Server log files  
+log/
+log/*.log
+log/*.txt
+
+# Server runtime files
+*.pid
+*.lock

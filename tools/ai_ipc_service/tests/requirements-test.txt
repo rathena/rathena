@@ -1,0 +1,75 @@
+# AI IPC Service Test Requirements
+# Install with: pip install -r requirements-test.txt
+
+# Core testing framework
+pytest>=7.4.0
+
+# Async testing support
+pytest-asyncio>=0.21.0
+
+# Code coverage
+pytest-cov>=4.1.0
+coverage>=7.3.0
+
+# Mocking utilities
+pytest-mock>=3.11.0
+
+# Test timeout protection
+pytest-timeout>=2.2.0
+
+# HTTP client for testing
+httpx>=0.25.0
+
+# Async HTTP mocking
+aioresponses>=0.7.4
+
+# Test data factories
+factory-boy>=3.3.0
+
+# Fake data generation
+faker>=19.0.0
+
+# Database testing
+aiomysql>=0.2.0
+PyMySQL>=1.1.0
+
+# YAML configuration
+PyYAML>=6.0.1
+
+# Async HTTP client (same as production)
+aiohttp>=3.9.0
+
+# JSON schema validation
+jsonschema>=4.19.0
+
+# Datetime handling
+python-dateutil>=2.8.2
+
+# Environment variable loading
+python-dotenv>=1.0.0
+
+# Colored test output
+pytest-sugar>=0.9.7
+
+# Test ordering
+pytest-ordering>=0.6
+
+# Parallel test execution
+pytest-xdist>=3.3.1
+
+# Benchmark testing
+pytest-benchmark>=4.0.0
+
+# HTML report generation
+pytest-html>=4.1.1
+
+# Snapshot testing
+syrupy>=4.0.0
+
+# Structlog for testing logging
+structlog>=23.2.0
+
+# Type checking support
+mypy>=1.5.0
+types-PyMySQL>=1.1.0
+types-PyYAML>=6.0.12

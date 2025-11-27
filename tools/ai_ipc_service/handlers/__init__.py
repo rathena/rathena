@@ -29,13 +29,13 @@ Request Types -> Handlers:
     - 'ai_check_result', 'check_result' -> AICheckResultHandler
 """
 
-from .base import BaseHandler
-from .health_check import HealthCheckHandler
-from .http_proxy import HttpProxyHandler
-from .ai_dialogue import AIDialogueHandler
-from .ai_decision import AIDecisionHandler
-from .ai_emotion import AIEmotionHandler
-from .ai_async import AIAsyncRequestHandler, AICheckResultHandler
+from handlers.base import BaseHandler
+from handlers.health_check import HealthCheckHandler
+from handlers.http_proxy import HttpProxyHandler
+from handlers.ai_dialogue import AIDialogueHandler
+from handlers.ai_decision import AIDecisionHandler
+from handlers.ai_emotion import AIEmotionHandler
+from handlers.ai_async import AIAsyncRequestHandler, AICheckResultHandler
 
 __all__ = [
     "BaseHandler",

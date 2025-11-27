@@ -16,6 +16,7 @@
 #include "../map/map.hpp"
 #include "../map/npc.hpp"
 #include "../map/script.hpp"
+#include "../map/unit.hpp"
 
 #include <cstring>
 #include <cstdlib>
@@ -1002,5 +1003,86 @@ BUILDIN_FUNC(ai_check_result) {
     }
     
     script_pushstrcopy(st, "{\"status\":\"not_found\",\"error\":\"request_not_found\"}");
+    return SCRIPT_CMD_SUCCESS;
+}
+
+// ============================================================================
+// NPC Movement Commands for AI-Driven NPCs
+// ============================================================================
+
+/**
+ * npcwalk("<npc_name>", <x>, <y>)
+ * Make an NPC walk to the specified coordinates
+ */
+BUILDIN_FUNC(npcwalk) {
+    const char* npc_name = script_getstr(st, 2);
+    int x = script_getnum(st, 3);
+    int y = script_getnum(st, 4);
+    
+    ShowInfo("[AI-IPC] npcwalk: npc='%s', target=(%d,%d)\n", npc_name, x, y);
+    
+    // Find the NPC by name
+    struct npc_data* nd = npc_name2id(npc_name);
+    if (nd == nullptr) {
+        ShowWarning("[AI-IPC] npcwalk: NPC '%s' not found\n", npc_name);
+        script_pushint(st, 0);
+        return SCRIPT_CMD_SUCCESS;
+    }
+    
+    // Check if coordinates are valid
+    if (x < 0 || y < 0) {
+        ShowWarning("[AI-IPC] npcwalk: Invalid coordinates (%d,%d)\n", x, y);
+        script_pushint(st, 0);
+        return SCRIPT_CMD_SUCCESS;
+    }
+    
+    // Use unit_walktoxy to make the NPC walk
+    // Note: This requires the NPC to have movement enabled
+    if (unit_walktoxy(&nd->bl, x, y, 0) == 0) {
+        ShowInfo("[AI-IPC] npcwalk: NPC '%s' walking to (%d,%d)\n", npc_name, x, y);
+        script_pushint(st, 1);
+    } else {
+        ShowWarning("[AI-IPC] npcwalk: Failed to start walk for NPC '%s'\n", npc_name);
+        script_pushint(st, 0);
+    }
+    
+    return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * npcwalkid(<npc_id>, <x>, <y>)
+ * Make an NPC walk to the specified coordinates using NPC ID
+ */
+BUILDIN_FUNC(npcwalkid) {
+    int npc_id = script_getnum(st, 2);
+    int x = script_getnum(st, 3);
+    int y = script_getnum(st, 4);
+    
+    ShowInfo("[AI-IPC] npcwalkid: npc_id=%d, target=(%d,%d)\n", npc_id, x, y);
+    
+    // Find the NPC by ID
+    struct npc_data* nd = map_id2nd(npc_id);
+    if (nd == nullptr) {
+        ShowWarning("[AI-IPC] npcwalkid: NPC ID %d not found\n", npc_id);
+        script_pushint(st, 0);
+        return SCRIPT_CMD_SUCCESS;
+    }
+    
+    // Check if coordinates are valid
+    if (x < 0 || y < 0) {
+        ShowWarning("[AI-IPC] npcwalkid: Invalid coordinates (%d,%d)\n", x, y);
+        script_pushint(st, 0);
+        return SCRIPT_CMD_SUCCESS;
+    }
+    
+    // Use unit_walktoxy to make the NPC walk
+    if (unit_walktoxy(&nd->bl, x, y, 0) == 0) {
+        ShowInfo("[AI-IPC] npcwalkid: NPC ID %d walking to (%d,%d)\n", npc_id, x, y);
+        script_pushint(st, 1);
+    } else {
+        ShowWarning("[AI-IPC] npcwalkid: Failed to start walk for NPC ID %d\n", npc_id);
+        script_pushint(st, 0);
+    }
+    
     return SCRIPT_CMD_SUCCESS;
 }

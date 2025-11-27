@@ -386,3 +386,7 @@ class BaseHandler(ABC):
             HandlerResponse with result
         """
         pass
+
+
+# Alias for backward compatibility with tests
+BaseRequestHandler = BaseHandler

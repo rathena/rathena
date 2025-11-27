@@ -22,10 +22,10 @@ from __future__ import annotations
 
 import logging
 from abc import ABC, abstractmethod
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Any
 
-from ..config import Config
+from config import Config
 
 
 class HandlerError(Exception):
@@ -293,3 +293,89 @@ class BaseHandler(ABC):
             f"Completed request {request.get('id')} "
             f"in {processing_time_ms}ms"
         )
+
+
+class RateLimiter:
+    """
+    Simple rate limiter for handler requests.
+    
+    Tracks request counts per NPC and enforces rate limits.
+    Uses a sliding window approach for rate limiting.
+    
+    Attributes:
+        max_requests: Maximum requests per time window
+        window_seconds: Time window in seconds
+    """
+    
+    def __init__(self, max_requests: int = 60, window_seconds: int = 60) -> None:
+        """
+        Initialize rate limiter.
+        
+        Args:
+            max_requests: Maximum requests per time window
+            window_seconds: Time window in seconds
+        """
+        self.max_requests = max_requests
+        self.window_seconds = window_seconds
+        self._request_counts: dict[str, list[datetime]] = {}
+    
+    def is_allowed(self, key: str) -> bool:
+        """
+        Check if a request is allowed for the given key.
+        
+        Args:
+            key: Identifier for rate limiting (e.g., NPC ID)
+            
+        Returns:
+            True if request is allowed, False if rate limited
+        """
+        now = datetime.utcnow()
+        cutoff = now - timedelta(seconds=self.window_seconds)
+        
+        # Initialize or clean up old requests
+        if key not in self._request_counts:
+            self._request_counts[key] = []
+        
+        # Remove expired entries
+        self._request_counts[key] = [
+            t for t in self._request_counts[key] if t > cutoff
+        ]
+        
+        # Check if under limit
+        if len(self._request_counts[key]) < self.max_requests:
+            self._request_counts[key].append(now)
+            return True
+        
+        return False
+    
+    def get_remaining(self, key: str) -> int:
+        """
+        Get remaining requests for a key.
+        
+        Args:
+            key: Identifier for rate limiting
+            
+        Returns:
+            Number of remaining requests allowed
+        """
+        now = datetime.utcnow()
+        cutoff = now - timedelta(seconds=self.window_seconds)
+        
+        if key not in self._request_counts:
+            return self.max_requests
+        
+        # Count valid entries
+        valid_count = sum(1 for t in self._request_counts[key] if t > cutoff)
+        return max(0, self.max_requests - valid_count)
+    
+    def reset(self, key: str | None = None) -> None:
+        """
+        Reset rate limit counters.
+        
+        Args:
+            key: If provided, reset only this key. Otherwise reset all.
+        """
+        if key is None:
+            self._request_counts.clear()
+        elif key in self._request_counts:
+            del self._request_counts[key]

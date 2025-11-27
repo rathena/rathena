@@ -101,6 +101,67 @@ class AIServiceConfig:
             raise ValueError("AI service timeout must be at least 1 second")
         if not self.base_url:
             raise ValueError("AI service base_url is required")
+    
+    @property
+    def dialogue_url(self) -> str:
+        """URL for the dialogue endpoint."""
+        return f"{self.base_url.rstrip('/')}/dialogue"
+    
+    @property
+    def decision_url(self) -> str:
+        """URL for the decision endpoint."""
+        return f"{self.base_url.rstrip('/')}/decision"
+    
+    @property
+    def emotion_url(self) -> str:
+        """URL for the emotion endpoint."""
+        return f"{self.base_url.rstrip('/')}/emotion"
+    
+    @property
+    def memory_url(self) -> str:
+        """URL for the memory endpoint."""
+        return f"{self.base_url.rstrip('/')}/memory"
+    
+    # Alias properties for test compatibility (using *_endpoint naming)
+    @property
+    def dialogue_endpoint(self) -> str:
+        """URL alias for dialogue endpoint."""
+        return self.dialogue_url
+    
+    @property
+    def decision_endpoint(self) -> str:
+        """URL alias for decision endpoint."""
+        return self.decision_url
+    
+    @property
+    def emotion_endpoint(self) -> str:
+        """URL alias for emotion endpoint."""
+        return self.emotion_url
+    
+    @property
+    def memory_endpoint(self) -> str:
+        """URL alias for memory endpoint."""
+        return self.memory_url
+    
+    @property
+    def health_url(self) -> str:
+        """URL for the health check endpoint."""
+        return f"{self.base_url.rstrip('/')}/health"
+    
+    @property
+    def health_endpoint(self) -> str:
+        """URL alias for health endpoint."""
+        return self.health_url
+    
+    @property
+    def async_url(self) -> str:
+        """URL for the async endpoint."""
+        return f"{self.base_url.rstrip('/')}/async"
+    
+    @property
+    def async_endpoint(self) -> str:
+        """URL alias for async endpoint."""
+        return self.async_url
 
 
 @dataclass
@@ -137,6 +198,7 @@ class SecurityConfig:
     rate_limit_enabled: bool = True
     rate_limit_per_npc: int = 60  # Max requests per NPC per minute
     rate_limit_global: int = 1000  # Max global requests per minute
+    rate_limit_window_seconds: int = 60  # Window size for rate limiting
     
     # Request validation
     validate_requests: bool = True
@@ -420,3 +482,44 @@ class Config:
     def __repr__(self) -> str:
         """Return string representation with masked password."""
         return f"Config({self.to_dict()})"
+
+
+# =============================================================================
+# Convenience Functions
+# =============================================================================
+
+def load_config(config_path: str | Path | None = None) -> Config:
+    """
+    Load configuration from YAML file and environment variables.
+    
+    This is a convenience function that wraps Config.load().
+    
+    Args:
+        config_path: Path to YAML config file. If None, uses AI_IPC_CONFIG
+                    environment variable or default 'config.yaml'
+    
+    Returns:
+        Fully initialized Config instance
+    """
+    return Config.load(config_path)
+
+
+def load_config_from_file(config_path: str | Path) -> Config:
+    """
+    Load configuration from a specific YAML file.
+    
+    This is a convenience function that wraps Config.load() with a required path.
+    
+    Args:
+        config_path: Path to YAML config file (required)
+    
+    Returns:
+        Fully initialized Config instance
+        
+    Raises:
+        ValueError: If the config file doesn't exist or is invalid
+    """
+    path = Path(config_path)
+    if not path.exists():
+        raise ValueError(f"Configuration file not found: {config_path}")
+    return Config.load(config_path)
