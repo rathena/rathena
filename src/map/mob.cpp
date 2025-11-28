@@ -5925,6 +5925,7 @@ uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		mob->vd.look[LOOK_BASE] = static_cast<int32>( constant );
+		mob->vd.look[LOOK_BODY2] = static_cast<int32>( constant );
 	} else {
 		this->invalidWarning(node["Sprite"], "Sprite is missing.\n");
 		return 0;

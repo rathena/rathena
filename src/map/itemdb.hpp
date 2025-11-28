@@ -3299,6 +3299,8 @@ struct s_item_group_entry
 	std::shared_ptr<s_random_opt_group> randomOptionGroup;
 	uint16 refineMinimum;
 	uint16 refineMaximum;
+	uint16 minimumEnchantgrade;
+	uint16 maximumEnchantgrade;
 };
 
 /// Struct of random group
@@ -3465,7 +3467,7 @@ extern ItemDatabase item_db;
 
 class ItemGroupDatabase : public TypesafeCachedYamlDatabase<uint16, s_item_group_db> {
 public:
-	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 4, 1) {
+	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 5, 1) {
 
 	}
 
