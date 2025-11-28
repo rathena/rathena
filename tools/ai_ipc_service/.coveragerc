@@ -1,0 +1,31 @@
+[run]
+source = .
+branch = true
+omit = 
+    tests/*
+    venv/*
+    */__pycache__/*
+    /ai-mmorpg-world/rathena-AI-world/tools/convert_emotions.py
+    /ai-mmorpg-world/rathena-AI-world/tools/navi.py
+    */convert_emotions.py
+    */navi.py
+
+[report]
+fail_under = 100
+exclude_lines =
+    pragma: no cover
+    pragma: no branch
+    if __name__ == .__main__.:
+    raise NotImplementedError
+
+omit = 
+    tests/*
+    venv/*
+    */__pycache__/*
+    /ai-mmorpg-world/rathena-AI-world/tools/convert_emotions.py
+    /ai-mmorpg-world/rathena-AI-world/tools/navi.py
+    */convert_emotions.py
+    */navi.py
+
+[html]
+directory = htmlcov

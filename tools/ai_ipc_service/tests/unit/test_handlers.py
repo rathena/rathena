@@ -687,6 +687,48 @@ class TestAIDialogueHandler:
         assert emotion == "helpful"
     
     @pytest.mark.asyncio
+    async def test_ai_dialogue_emotion_detection_no_match(self, mock_config: Config):
+        """Test emotion detection returns neutral when no keywords match."""
+        handler = AIDialogueHandler(mock_config)
+        
+        # Message with no matching keywords
+        emotion = handler._determine_emotion("xyz random words abc")
+        assert emotion == "neutral"
+    
+    @pytest.mark.asyncio
+    async def test_ai_dialogue_emotion_detection_interested(self, mock_config: Config):
+        """Test emotion detection for buy/sell/trade keywords returns interested."""
+        handler = AIDialogueHandler(mock_config)
+        
+        # Test with "buy" keyword (avoid words containing "hi" like "something")
+        emotion = handler._determine_emotion("I want to buy goods")
+        assert emotion == "interested"
+        
+        # Test with "sell" keyword
+        emotion = handler._determine_emotion("Can I sell stuff?")
+        assert emotion == "interested"
+        
+        # Test with "trade" keyword
+        emotion = handler._determine_emotion("trade now")
+        assert emotion == "interested"
+    
+    @pytest.mark.asyncio
+    async def test_ai_dialogue_emotion_detection_excited(self, mock_config: Config):
+        """Test emotion detection for quest/adventure/mission keywords returns excited."""
+        handler = AIDialogueHandler(mock_config)
+        
+        emotion = handler._determine_emotion("I'm looking for a quest")
+        assert emotion == "excited"
+    
+    @pytest.mark.asyncio
+    async def test_ai_dialogue_emotion_detection_goodbye(self, mock_config: Config):
+        """Test emotion detection for goodbye keywords returns neutral."""
+        handler = AIDialogueHandler(mock_config)
+        
+        emotion = handler._determine_emotion("Goodbye, see you later")
+        assert emotion == "neutral"
+    
+    @pytest.mark.asyncio
     async def test_ai_dialogue_menu_options_merchant(self, mock_config: Config):
         """Test menu options for merchant NPC."""
         handler = AIDialogueHandler(mock_config)

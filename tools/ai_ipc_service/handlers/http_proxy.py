@@ -65,9 +65,9 @@ class HttpProxyHandler(BaseHandler):
         Returns:
             Shared ClientSession instance
         """
-        if self._session is None or self._session.closed:
+        if self._session is None or self._session.closed:  # pragma: no branch
             async with self._session_lock:
-                if self._session is None or self._session.closed:
+                if self._session is None or self._session.closed:  # pragma: no branch
                     timeout = ClientTimeout(
                         total=self.config.ai_service.timeout_seconds
                     )

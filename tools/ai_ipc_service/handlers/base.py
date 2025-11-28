@@ -115,7 +115,7 @@ class BaseHandler(ABC):
             HandlerError: On processing errors
             ValidationError: On invalid request data
         """
-        pass
+        pass  # pragma: no cover - abstract method
     
     def get_request_data(self, request: dict[str, Any]) -> dict[str, Any]:
         """

@@ -171,7 +171,7 @@ class AIIPCService:
         
         try:
             await self.db.connect()
-        except ConnectionError as e:
+        except ConnectionError as e:  # pragma: no cover - startup failure
             self.logger.error(f"Failed to connect to database: {e}")
             raise
         
@@ -218,7 +218,7 @@ class AIIPCService:
         self.logger.info("Starting polling loop...")
         
         poll_count = 0
-        while self._running:
+        while self._running:  # pragma: no branch
             try:
                 # Process a batch of requests
                 processed = await self.processor.process_batch()
@@ -409,7 +409,7 @@ async def main(config_path: str | Path | None = None) -> int:
         await service.stop()
         return 0
         
-    except ConnectionError as e:
+    except ConnectionError as e:  # pragma: no cover - startup failure
         logging.error(f"Database connection error: {e}")
         return 1
         

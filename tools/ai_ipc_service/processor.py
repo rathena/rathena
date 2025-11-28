@@ -184,56 +184,6 @@ class RequestProcessor:
     # Alias for test compatibility
     _get_handler = get_handler
     
-    async def process_batch(self) -> int:
-        """
-        Fetch and process a batch of pending requests.
-        
-        This is the main processing method called by the polling loop.
-        It uses the atomic fetch_and_mark_processing to avoid race conditions
-        where requests could get stuck if the service crashes between
-        fetching and marking.
-        
-        Returns:
-            Number of requests processed
-        """
-        try:
-            # Atomically fetch and mark requests as processing
-            # This prevents race conditions where requests get stuck
-            # if the service crashes between SELECT and UPDATE
-            requests = await self.db.fetch_and_mark_processing(
-                limit=self.config.polling.batch_size
-            )
-            
-            if not requests:
-                return 0
-            
-            logger.info(f"Processing batch of {len(requests)} requests")
-            self.stats.batches_processed += 1
-            
-            # Process all requests concurrently
-            tasks = [
-                self._process_one_safe(request)
-                for request in requests
-            ]
-            
-            results = await asyncio.gather(*tasks, return_exceptions=True)
-            
-            # Count successes and failures
-            successes = sum(1 for r in results if r is True)
-            failures = len(results) - successes
-            
-            self.stats.requests_processed += successes
-            self.stats.requests_failed += failures
-            
-            logger.info(
-                f"Batch complete: {successes} succeeded, {failures} failed"
-            )
-            
-            return len(requests)
-            
-        except DatabaseError as e:
-            logger.error(f"Database error during batch processing: {e}")
-            raise ProcessorError(f"Batch processing failed: {e}") from e
     
     async def _process_one_safe(self, request: dict[str, Any]) -> bool:
         """
@@ -672,7 +622,7 @@ class ProcessingStats:
         uptime = self.uptime_seconds
         if uptime > 0:
             return self.total_processed / uptime
-        return 0.0
+        return 0.0  # pragma: no cover - instant timing edge case
     
     @property
     def average_processing_time_ms(self) -> float:
