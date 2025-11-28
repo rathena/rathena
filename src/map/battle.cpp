@@ -11491,9 +11491,8 @@ int32 battle_check_target( const block_list* src, const block_list* target, int3
 				break;
 
 			const map_session_data* sd = static_cast<const map_session_data*>(t_bl);
-			const status_change* sc = status_get_sc(t_bl);
 
-			if( ((sd->state.block_action & PCBLOCK_IMMUNE) || (sc->getSCE(SC_KINGS_GRACE) && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
+			if( ((sd->state.block_action & PCBLOCK_IMMUNE) || (sd->sc.getSCE(SC_KINGS_GRACE) && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
 				return 0; // Global immunity only to Attacks
 			if( sd->status.karma && s_bl->type == BL_PC && ((TBL_PC*)s_bl)->status.karma )
 				state |= BCT_ENEMY; // Characters with bad karma may fight amongst them
