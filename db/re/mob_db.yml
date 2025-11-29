@@ -63,7 +63,7 @@
 #   Title                   Monster title. (Default: None)
 #   Ai                      Aegis monster type AI behavior. (Default: 06)
 #   Class                   Aegis monster class. (Default: Normal)
-#   Modes:                  List of unique behavior not defined by AI, Class, or. (Optional)
+#   Modes:                  List of unique behavior not defined by AI, Class, or Attribute. (Optional)
 #     <mode>: <value>       Mode to toggle.
 #   MvpDrops:               List of possible MVP prize items. Max of MAX_MVP_DROP. (Optional)
 #     - Item                Item name.
