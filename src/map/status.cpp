@@ -10205,7 +10205,7 @@ bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 ra
 		case SC_STONE:
 		case SC_STONEWAIT:
 		case SC_FREEZE:
-			if (!flag&SCSTART_NOAVOID) {
+			if (!(flag&SCSTART_NOAVOID)) {
 				// These status changes fail on any opt1 status change, usually specified in status.yml
 				// Undead race has opt1=undead without a related status change, so we need to hardcode it here
 				if (battle_config.undead_detect_type == 0 && status->race == RC_UNDEAD)
