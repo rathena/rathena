@@ -1068,10 +1068,10 @@ Body:
       - Index: 130
         Value: Job_Spirit_Handler
         RequiredJob: Job_Spirit_Handler
-        CostsHuman:
+        CostsDoram:
             Price: 0
       - Index: 131
         Value: Job_Summoner
         RequiredJob: Job_Spirit_Handler
-        CostsHuman:
+        CostsDoram:
             RequiredItem: Costume_Ticket
