@@ -335,11 +335,21 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}
 					break;
 				case LOOK_BODY2:
-					if( !this->asUInt32( optionNode, "Value", value ) ){
+					std::string bodyStyle;
+					int64 id;
+					if (!this->asString(optionNode, "Value", bodyStyle)) {
 						return 0;
 					}
 
-					// TODO: Unsupported for now => This is job specific now
+					if (!script_get_constant(bodyStyle.c_str(), &id)) {
+						this->invalidWarning(optionNode["Value"], "Job %s does not exist.\n", bodyStyle.c_str());
+						return 0;
+					}
+
+					value = (uint32)id;
+#if PACKETVER < 20231220
+					value = cap_value(value, 0, 1);
+#endif
 #if 0
 					if( value < MIN_BODY_STYLE ){
 						this->invalidWarning( optionNode["Value"], "stylist_parseBodyNode: body style \"%u\" is too low...\n", value );
@@ -353,6 +363,21 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 			}
 
 			entry->value = value;
+		}
+
+		if (this->nodeExists(node, "RequiredJob")) {
+			std::string RequiredJob;
+			if (!this->asString(node, "RequiredJob", RequiredJob)) {
+				return 0;
+			}
+
+			int64 id;
+			if (!script_get_constant(RequiredJob.c_str(), &id)) {
+				this->invalidWarning(node["RequiredJob"], "Job %s does not exist.\n", RequiredJob.c_str());
+				return 0;
+			}
+
+			entry->required_job = (e_job)id;
 		}
 
 		if( this->nodeExists( optionNode, "CostsHuman" ) ) {

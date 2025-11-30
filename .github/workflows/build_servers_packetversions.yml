@@ -35,7 +35,7 @@ jobs:
           # We run build checks for both Renewal and PRE-Renewal
           mode: ['PRE','RE']
           # Check build success for different packet-versions
-          packetver: ['20211103', '20200902', '20200401', '20180620', '20151104']
+          packetver: [ '20231220', '20211103', '20200902', '20200401', '20180620', '20151104']
 
     steps:
       - uses: actions/checkout@v4

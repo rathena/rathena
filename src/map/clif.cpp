@@ -22861,6 +22861,10 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 		return false;
 	}
 
+	if (look == LOOK_BODY2 && entry->required_job > 0 && entry->required_job != sd->status.class_){
+		return false;
+	}
+
 	int16 inventoryIndex = -1;
 
 	if( costs->requiredItem != 0 ){
@@ -22930,7 +22934,51 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 }
 
 void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
-#if PACKETVER >= 20151104
+
+	nullpo_retv(sd);
+
+#if PACKETVER >= 20231220
+
+	enum e_stylist_actions : int16
+	{
+		STYLIST_HAIR_COLLOR,
+		STYLIST_HAIR,
+		STYLIST_CLOTHS_COLLOR,
+		STYLIST_HEAD_TOP,
+		STYLIST_HEAD_MID,
+		STYLIST_HEAD_BOTTOM,
+		STYLIST_BODY2 = 9
+	};
+
+	std::map<int16, _look> stylist_actions {
+		{ STYLIST_HAIR_COLLOR, LOOK_HAIR_COLOR },
+		{ STYLIST_HAIR, LOOK_HAIR },
+		{ STYLIST_CLOTHS_COLLOR, LOOK_CLOTHES_COLOR },
+		{ STYLIST_HEAD_TOP, LOOK_HEAD_TOP },
+		{ STYLIST_HEAD_MID, LOOK_HEAD_MID },
+		{ STYLIST_HEAD_BOTTOM, LOOK_HEAD_BOTTOM },
+		{ STYLIST_BODY2, LOOK_BODY2 }
+	};
+
+	const PACKET_CZ_REQ_STYLE_CHANGE3* p = reinterpret_cast<PACKET_CZ_REQ_STYLE_CHANGE3*>(RFIFOP(fd, 0));
+
+	for (int32 i = 0; i < p->count; i++) {
+		const CZ_REQ_STYLE_CHANGE3_SUB& data = p->data[i];
+
+		auto action = stylist_actions.find(data.action);
+		if (action == stylist_actions.end())
+		{
+			ShowError("clif_parse_stylist_buy: Unknown action type %d\n", data.action);
+			clif_stylist_response(sd, true);
+			return;
+		}
+
+		if (!clif_parse_stylist_buy_sub(sd, action->second, data.value)) {
+			clif_stylist_response(sd, true);
+			return;
+		}
+	}
+#elif PACKETVER >= 20151104
 #if PACKETVER >= 20180516
 	const PACKET_CZ_REQ_STYLE_CHANGE2* p = reinterpret_cast<PACKET_CZ_REQ_STYLE_CHANGE2*>( RFIFOP( fd, 0 ) );
 #else
@@ -22978,9 +23026,9 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 		return;
 	}
 #endif
+#endif
 
 	clif_stylist_response( sd, false );
-#endif
 }
 
 void clif_parse_stylist_close( int32 fd, map_session_data* sd ){
