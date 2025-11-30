@@ -347,18 +347,10 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}
 
 					value = (uint32)id;
-#if PACKETVER < 20231220
-					value = cap_value(value, 0, 1);
-#endif
-#if 0
-					if( value < MIN_BODY_STYLE ){
-						this->invalidWarning( optionNode["Value"], "stylist_parseBodyNode: body style \"%u\" is too low...\n", value );
-						return 0;
-					}else if( value > MAX_BODY_STYLE ){
-						this->invalidWarning( optionNode["Value"], "stylist_parseBodyNode: body style \"%u\" is too high...\n", value );
+					if (!job_db.exists(value) && (value <= JOB_SECOND_JOB_START || value >= JOB_SECOND_JOB_END)) {
+						this->invalidWarning(optionNode["Value"], "stylist_parseBodyNode: body style \"%u\" is too low...\n", value);
 						return 0;
 					}
-#endif
 					break;
 			}
 

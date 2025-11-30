@@ -11158,6 +11158,9 @@ void pc_changelook(map_session_data *sd,int32 type,int32 val) {
 		sd->setlook_robe = val;
 		break;
 	case LOOK_BODY2:
+		if (!job_db.exists(sd->status.body) && (sd->status.body <= JOB_SECOND_JOB_START || sd->status.body >= JOB_SECOND_JOB_END))
+			return;
+
 		sd->status.body = val;
 		break;
 	}

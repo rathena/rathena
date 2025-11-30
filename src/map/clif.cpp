@@ -22861,7 +22861,7 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 		return false;
 	}
 
-	if (look == LOOK_BODY2 && entry->required_job > 0 && entry->required_job != sd->status.class_){
+	if (entry->required_job > 0 && entry->required_job != sd->status.class_) {
 		return false;
 	}
 
@@ -22934,6 +22934,9 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 }
 
 void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
+#if	PACKETVER < 20151104
+	return; // unsuported
+#endif
 
 	nullpo_retv(sd);
 
@@ -22966,8 +22969,7 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 		const CZ_REQ_STYLE_CHANGE3_SUB& data = p->data[i];
 
 		auto action = stylist_actions.find(data.action);
-		if (action == stylist_actions.end())
-		{
+		if (action == stylist_actions.end()){
 			ShowError("clif_parse_stylist_buy: Unknown action type %d\n", data.action);
 			clif_stylist_response(sd, true);
 			return;
@@ -22978,7 +22980,7 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 			return;
 		}
 	}
-#elif PACKETVER >= 20151104
+#else
 #if PACKETVER >= 20180516
 	const PACKET_CZ_REQ_STYLE_CHANGE2* p = reinterpret_cast<PACKET_CZ_REQ_STYLE_CHANGE2*>( RFIFOP( fd, 0 ) );
 #else
@@ -23014,13 +23016,7 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 		return;
 	}
 
-#if PACKETVER >= 20231220
-	if( p->BodyStyle != 0 ){
-		// TODO: Unsupported for now => This is job specific now
-		clif_stylist_response( sd, true );
-		return;
-	}
-#elif PACKETVER >= 20180516
+#if PACKETVER >= 20180516
 	if( p->BodyStyle != 0 && ( sd->class_ & JOBL_THIRD ) != 0 && ( sd->class_ & JOBL_FOURTH ) == 0 && !clif_parse_stylist_buy_sub( sd, LOOK_BODY2, p->BodyStyle ) ){
 		clif_stylist_response( sd, true );
 		return;
