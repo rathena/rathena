@@ -22953,7 +22953,7 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 	std::map<int16, _look> stylist_actions {
 		{ STYLIST_HAIR_COLLOR, LOOK_HAIR_COLOR },
 		{ STYLIST_HAIR, LOOK_HAIR },
-		{ STYLIST_CLOTHS_COLLOR, LOOK_CLOTHES_COLOR },
+		{ STYLIST_CLOTHES_COLLOR, LOOK_CLOTHES_COLOR },
 		{ STYLIST_HEAD_TOP, LOOK_HEAD_TOP },
 		{ STYLIST_HEAD_MID, LOOK_HEAD_MID },
 		{ STYLIST_HEAD_BOTTOM, LOOK_HEAD_BOTTOM },
