@@ -10205,10 +10205,16 @@ bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 ra
 		case SC_STONE:
 		case SC_STONEWAIT:
 		case SC_FREEZE:
-			// Undead are immune to Freeze/Stone
-			if (battle_check_undead(status->race, status->def_ele) != 0 && !(flag&SCSTART_NOAVOID))
-				return false;
-			else if (type == SC_STONEWAIT) {
+			if (!(flag&SCSTART_NOAVOID)) {
+				// These status changes fail on any opt1 status change, usually specified in status.yml
+				// Undead race has opt1=undead without a related status change, so we need to hardcode it here
+				if (battle_config.undead_detect_type == 0 && status->race == RC_UNDEAD)
+					return false;
+				// Undead are immune to Freeze/Stone
+				if (battle_check_undead(status->race, status->def_ele) != 0)
+					return false;
+			}
+			if (type == SC_STONEWAIT) {
 				// Stonewait has a unique handling where the delay is actually the duration until stone kicks in
 				val3 = std::max<int32>(1, tick - delay); // Petrify time
 				tick = delay;
@@ -16010,7 +16016,7 @@ uint64 StatusDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		if (constant < OPT1_NONE || constant >= OPT1_MAX) {
-			this->invalidWarning(node["Opt1"], "Opt2 %s is out of bounds.\n", opt.c_str());
+			this->invalidWarning(node["Opt1"], "Opt1 %s is out of bounds.\n", opt.c_str());
 			return 0;
 		}
 
