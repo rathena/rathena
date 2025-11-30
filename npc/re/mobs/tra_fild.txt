@@ -35,12 +35,12 @@ tra_fild01,176,36	monster	Dummy (Medium)	22598,1	// S_DUMMY_MEDIUM_M30
 tra_fild01,176,55	monster	Dummy (Medium)	22594,1	// S_DUMMY_MEDIUM_M20
 tra_fild01,176,74	monster	Dummy (Medium)	22590,1	// S_DUMMY_MEDIUM_M10
 tra_fild01,176,93	monster	Dummy (Medium)	21065,1	// S_DUMMY_100_MEDIUM
-tra_fild01,157,36	Monster	Dummy (Large)	22599,1	// S_DUMMY_LARGE_M30
+tra_fild01,157,36	monster	Dummy (Large)	22599,1	// S_DUMMY_LARGE_M30
 tra_fild01,157,55	monster	Dummy (Large)	22595,1	// S_DUMMY_LARGE_M20
 tra_fild01,157,74	monster	Dummy (Large)	22591,1	// S_DUMMY_LARGE_M10
 tra_fild01,157,93	monster	Dummy (Large)	21066,1	// S_DUMMY_100_LARGE
 tra_fild01,138,36	monster	Dummy (Extra Large)	22596,1	// S_DUMMY_XLARGE_M50
-tra_fild01,138,55	Monster	Dummy (Extra Large)	22592,1	// S_DUMMY_XLARGE_M40
+tra_fild01,138,55	monster	Dummy (Extra Large)	22592,1	// S_DUMMY_XLARGE_M40
 
 tra_fild01,138,74	monster	Dummy (Human Player)	21087,1	// S_DUMMY_100_HUMANP
 tra_fild01,138,93	monster	Dummy (Doram Player)	21088,1	// S_DUMMY_100_DORAMP
@@ -54,14 +54,14 @@ tra_fild01,100,132	monster	Dummy (Undead Attribute)	21086,1	// S_DUMMY_100_UNDEA
 tra_fild01,24,151	monster	Dummy (Water Attribute)	21078,1	// S_DUMMY_100_WATER
 tra_fild01,43,151	monster	Dummy (Earth Attribute)	21079,1	// S_DUMMY_100_GROUND
 tra_fild01,62,151	monster	Dummy (Neutral Attribute)	21077,1	// S_DUMMY_100_NOTHING2
-tra_fild01,81,151	Monster	Dummy (Ghost Attribute)	21085,1	// S_DUMMY_100_TELEKINESIS
-tra_fild01,100,151	Monster	Dummy (Holy Attribute)	21083,1	// S_DUMMY_100_SAINT
+tra_fild01,81,151	monster	Dummy (Ghost Attribute)	21085,1	// S_DUMMY_100_TELEKINESIS
+tra_fild01,100,151	monster	Dummy (Holy Attribute)	21083,1	// S_DUMMY_100_SAINT
 
 tra_fild01,195,151	monster	Dummy (Wind Attribute)	21081,1	// S_DUMMY_100_WIND
 tra_fild01,176,151	monster	Dummy (Fire Attribute)	21080,1	// S_DUMMY_100_FIRE
 tra_fild01,157,151	monster	Dummy (Dark Attribute)	21084,1	// S_DUMMY_100_DARKNESS
 tra_fild01,138,151	monster	Dummy (Poison Attribute)	21082,1	// S_DUMMY_100_POISON
-tra_fild01,119,151	Monster	Dummy (Undead Attribute)	21086,1	// S_DUMMY_100_UNDEAD2
+tra_fild01,119,151	monster	Dummy (Undead Attribute)	21086,1	// S_DUMMY_100_UNDEAD2
 tra_fild01,195,132	monster	Dummy (Water Attribute)	21078,1	// S_DUMMY_100_WATER
 tra_fild01,176,132	monster	Dummy (Earth Attribute)	21079,1	// S_DUMMY_100_GROUND
 tra_fild01,157,132	monster	Dummy (Neutral Attribute)	21077,1	// S_DUMMY_100_NOTHING2
@@ -94,11 +94,11 @@ tra_fild01,119,170	monster	Dummy (Insect Race)	21071,1	// S_DUMMY_100_INSECT
 // Size
 tra_fild02,24,36	monster	Dummy (Small)	22572,1	// S_DUMMY_SMALL1_R30
 tra_fild02,24,55	monster	Dummy (Small)	22568,1	// S_DUMMY_SMALL1_R20
-tra_fild02,24,74	Monster	Dummy (Small)	22564,1	// S_DUMMY_SMALL1_R10
-tra_fild02,24,93	Monster	Dummy (Small)	22561,1	// S_DUMMY_SMALL1
+tra_fild02,24,74	monster	Dummy (Small)	22564,1	// S_DUMMY_SMALL1_R10
+tra_fild02,24,93	monster	Dummy (Small)	22561,1	// S_DUMMY_SMALL1
 tra_fild02,43,36	monster	Dummy (Medium)	22573,1	// S_DUMMY_MEDIUM1_R30
 tra_fild02,43,55	monster	Dummy (Medium)	22569,1	// S_DUMMY_MEDIUM1_R20
-tra_fild02,43,74	Monster	Dummy (Medium)	22565,1	// S_DUMMY_MEDIUM1_R10
+tra_fild02,43,74	monster	Dummy (Medium)	22565,1	// S_DUMMY_MEDIUM1_R10
 tra_fild02,43,93	monster	Dummy (Medium)	22562,1	// S_DUMMY_MEDIUM1
 tra_fild02,62,36	monster	Dummy (Large)	22574,1	// S_DUMMY_LARGE1_R30
 tra_fild02,62,55	monster	Dummy (Large)	22570,1	// S_DUMMY_LARGE1_R20
@@ -135,8 +135,8 @@ tra_fild02,62,132	monster	Dummy (Dark Lv 1)	22655,1	// S_DUMMY2_DARKNESS
 tra_fild02,62,151	monster	Dummy (Neutral Lv 1)	22648,1	// S_DUMMY2_NOTHING2
 tra_fild02,81,132	monster	Dummy (Poison Lv 1)	22653,1	// S_DUMMY2_POISON
 tra_fild02,81,151	monster	Dummy (Ghost Lv 1)	22656,1	// S_DUMMY2_TELEKINESIS
-tra_fild02,100,132	Monster	Dummy (Undead Lv 1)	22657,1	// S_DUMMY2_UNDEAD2
-tra_fild02,100,151	Monster	Dummy (Holy Lv 1)	22654,1	// S_DUMMY2_SAINT
+tra_fild02,100,132	monster	Dummy (Undead Lv 1)	22657,1	// S_DUMMY2_UNDEAD2
+tra_fild02,100,151	monster	Dummy (Holy Lv 1)	22654,1	// S_DUMMY2_SAINT
 
 tra_fild02,195,151	monster	Dummy (Wind Lv 1)	22652,1	// S_DUMMY2_WIND
 tra_fild02,195,132	monster	Dummy (Water Lv 1)	22649,1	// S_DUMMY2_WATER
@@ -144,21 +144,21 @@ tra_fild02,176,151	monster	Dummy (Fire Lv 1)	22651,1	// S_DUMMY2_FIRE
 tra_fild02,176,132	monster	Dummy (Earth Lv 1)	22650,1	// S_DUMMY2_GROUND
 tra_fild02,157,151	monster	Dummy (Dark Lv 1)	22655,1	// S_DUMMY2_DARKNESS
 tra_fild02,157,132	monster	Dummy (Neutral Lv 1)	22648,1	// S_DUMMY2_NOTHING2
-tra_fild02,138,151	Monster	Dummy (Poison Lv 1)	22653,1	// S_DUMMY2_POISON
-tra_fild02,138,132	monster	Dummy (Scorch Lv 1)	22656,1	// S_DUMMY2_TELEKINESIS
-tra_fild02,119,151	Monster	Dummy (Undead Lv 1)	22657,1	// S_DUMMY2_UNDEAD2
-tra_fild02,119,132	Monster	Dummy (Holy Lv 1)	22654,1	// S_DUMMY2_SAINT
+tra_fild02,138,151	monster	Dummy (Poison Lv 1)	22653,1	// S_DUMMY2_POISON
+tra_fild02,138,132	monster	Dummy (Ghost Lv 1)	22656,1	// S_DUMMY2_TELEKINESIS
+tra_fild02,119,151	monster	Dummy (Undead Lv 1)	22657,1	// S_DUMMY2_UNDEAD2
+tra_fild02,119,132	monster	Dummy (Holy Lv 1)	22654,1	// S_DUMMY2_SAINT
 
 // Race
 tra_fild02,24,170	monster	Dummy (Undead Race)	22637,1	// S_DUMMY2_UNDEAD
 tra_fild02,24,189	monster	Dummy (Formless Race)	22628,1	// S_DUMMY2_NOTHING
 tra_fild02,43,170	monster	Dummy (Angel Race)	22636,1	// S_DUMMY2_ANGEL
 tra_fild02,43,189	monster	Dummy (Dragon Race)	22629,1	// S_DUMMY2_DRAGON
-tra_fild02,62,170	Monster	Dummy (Plant Race)	22635,1	// S_DUMMY2_PLANT
-tra_fild02,62,189	Monster	Dummy (Brute Race)	22630,1	// S_DUMMY2_ANIMAL
-tra_fild02,81,170	Monster	Dummy (Demon Race)	22634,1	// S_DUMMY2_DEMON
-tra_fild02,81,189	Monster	Dummy (Human Race)	22631,1	// S_DUMMY2_HUMAN
-tra_fild02,100,170	Monster	Dummy (Fish Race)	22633,1	// S_DUMMY2_FISH
+tra_fild02,62,170	monster	Dummy (Plant Race)	22635,1	// S_DUMMY2_PLANT
+tra_fild02,62,189	monster	Dummy (Brute Race)	22630,1	// S_DUMMY2_ANIMAL
+tra_fild02,81,170	monster	Dummy (Demon Race)	22634,1	// S_DUMMY2_DEMON
+tra_fild02,81,189	monster	Dummy (Human Race)	22631,1	// S_DUMMY2_HUMAN
+tra_fild02,100,170	monster	Dummy (Fish Race)	22633,1	// S_DUMMY2_FISH
 tra_fild02,100,189	monster	Dummy (Insect Race)	22632,1	// S_DUMMY2_INSECT
 
 tra_fild02,195,189	monster	Dummy (Undead Race)	22637,1	// S_DUMMY2_UNDEAD
@@ -173,12 +173,12 @@ tra_fild02,119,189	monster	Dummy (Fish Race)	22633,1	// S_DUMMY2_FISH
 tra_fild02,119,170	monster	Dummy (Insect Race)	22632,1	// S_DUMMY2_INSECT
 
 // Size
-tra_fild03,24,36	Monster	Dummy (Small)	22586,1	// S_DUMMY_SMALL2_R30
+tra_fild03,24,36	monster	Dummy (Small)	22586,1	// S_DUMMY_SMALL2_R30
 tra_fild03,24,55	monster	Dummy (Small)	22582,1	// S_DUMMY_SMALL2_R20
 tra_fild03,24,74	monster	Dummy (Small)	22578,1	// S_DUMMY_SMALL2_R10
 tra_fild03,24,93	monster	Dummy (Small)	22575,1	// S_DUMMY_SMALL2
-tra_fild03,43,36	Monster	Dummy (Medium)	22587,1	// S_DUMMY_MEDIUM2_R30
-tra_fild03,43,55	Monster	Dummy (Medium)	22583,1	// S_DUMMY_MEDIUM2_R20
+tra_fild03,43,36	monster	Dummy (Medium)	22587,1	// S_DUMMY_MEDIUM2_R30
+tra_fild03,43,55	monster	Dummy (Medium)	22583,1	// S_DUMMY_MEDIUM2_R20
 tra_fild03,43,74	monster	Dummy (Medium)	22579,1	// S_DUMMY_MEDIUM2_R10
 tra_fild03,43,93	monster	Dummy (Medium)	22576,1	// S_DUMMY_MEDIUM2
 tra_fild03,62,36	monster	Dummy (Large)	22588,1	// S_DUMMY_LARGE2_R30

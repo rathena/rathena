@@ -11,8 +11,8 @@ tra_fild01,204,110,2	script	Training Ground Warehouse Soldier#fild01_1	8W_SOLDIE
 	mes "[Training Ground Warehouse Soldier]";
 	mes "Would you like to use the Storage? 1000 Zeny is required to use the training ground Storage. Please select the Storage you wish to use.";
 	next;
-	// switch( select( "¢º Storage-¥°", "¢º Storage-¥±", "¢º Storage-¥²", "¢º Guild Storage", "¢º Cancel" ) ) {
-	switch( select( "¢º Storage-¥°", "", "", "¢º Guild Storage", "¢º Cancel" ) ) {
+	// switch( select( "âˆˆ Storage-ã‚°", "âˆˆ Storage-ã‚±", "âˆˆ Storage-ã‚²", "âˆˆ Guild Storage", "âˆˆ Cancel" ) ) {
+	switch( select( "âˆˆ Storage-ã‚°", "", "", "âˆˆ Guild Storage", "âˆˆ Cancel" ) ) {
 	case 1:
 		.@storage_num = 1;
 		break;
@@ -189,7 +189,7 @@ tra_fild01,128,142,7	script	Nine Oranges#npc04	4_F_ROGUE,{
 	close;
 }
 
-tra_fild01,97,64,3	script	Village #npc01	4_M_CHN8GUEK,{
+tra_fild01,97,64,3	script	Village#npc01	4_M_CHN8GUEK,{
 	mes "[Village ]";
 	mes "Hi! The weather is really nice, isn't it? I came to check out the new training grounds.";
 	next;
