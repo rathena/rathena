@@ -1,0 +1,137 @@
+# ============================================================
+# QUICK REFERENCE - Safe Mob Drop Materials
+# For easy copy-paste into custom content
+# ============================================================
+# Total items: 129
+# Format: ItemID,ItemName
+# ============================================================
+
+902,Tree Root
+903,Reptile Tongue
+922,Orc's Fang
+928,Insect Feeler
+967,Turtle Shell
+1014,Ant Jaw
+1031,Mantis Scythe
+1034,Blue Hair
+1039,Little Evil Wing
+1044,Zenorc's Fang
+1045,Cultish Masque
+1056,Grit
+1063,Fang
+1098,Manacles
+7006,Wing of Red Bat
+7007,Claw of Rat
+7008,Stiff Horn
+7009,Glitter Shell
+7010,Tail of Steel Scorpion
+7011,Claw of Monkey
+7016,Spoon Stub
+7067,Stone Fragment
+7070,Broken Shell
+7071,Tattered Clothes
+7072,Old Shuriken
+7095,Metal Fragment
+7107,Antelope Skin
+7108,Piece of Shield
+7109,Shining Spear Blade
+7113,Broken Pharaoh Emblem
+7116,Harpy Talon
+7124,Sand Clump
+7125,Scorpion Claw
+7154,Poisonous Powder
+7159,Tengu Nose
+7162,Cloud Crumb
+7163,Hard Feeler
+7168,Giant Butterfly Wing
+7169,Ba Gua
+7171,Leopard Skin
+7186,Thin Trunk
+7192,Vane
+7195,Slingshot
+7202,Pincher of Beetle
+7203,Strong Branch
+7208,Rusty Kitchen Knife
+7209,Helm of Dullahan
+7210,Armor Piece of Dullahan
+7211,Fragment of Rossata Stone
+7214,Bat Cage
+7215,Broken Needle
+7218,Decomposed Rope
+7219,Striped Sock
+7221,Tangled Chains
+7223,Contorted Self-Portrait
+7225,Pumpkin Lantern
+7226,Pellet
+7264,Dry Sand
+7265,Dragon Horn
+7266,Denture from Dragon Mask
+7268,Little Ghost Doll
+7269,Pinafore
+7272,Rice Ball Doll
+7299,Straw Basket
+7300,Gemstone
+7303,Straw Rice Bag
+7316,Insect Leg
+7318,Old Pick
+7320,Dust Pollutant
+7322,Toxic Gas
+7323,Battered Kettle
+7327,Flashlight
+7435,Golden Ornament
+7436,Fragment of Agony
+7437,Fragment of Misery
+7438,Fragment of Hatred
+7439,Fragment of Despair
+7440,Red Feather
+7441,Blue Feather
+7442,Cursed Seal
+7443,Three-Headed Dragon's Head
+7450,Skeletal Armor Piece
+7477,Level 6 Cookbook
+7478,Level 7 Cookbook
+7479,Level 8 Cookbook
+7480,Level 9 Cookbook
+7481,Level 10 Cookbook
+7510,Valhalla's Flower
+7512,Burnt Part
+7513,Pocket Watch
+7565,Sticky Poison
+7566,Will of Red Darkness
+7567,Suspicious Hat
+7568,White Mask
+7578,Countermagic Crystal
+7582,Jewel of Destruction
+7607,Neck of Demon Dragon
+7613,Small Rice Cake Dough
+7701,Soul
+7703,Piece of Cogwheel
+7742,Kaong
+7743,Gulaman
+7744,Leche Flan
+7745,Ube Jam
+7746,Sago
+7747,Langka
+7748,Sweet Beans
+7749,Sweet Bananas
+7750,Macapuno
+7751,Old White Cloth
+7752,Clattering Skull
+7753,Broken Farming Utensil
+7754,Broken Crown
+7781,Engrave Treasure Box
+7830,Goddess Tear
+7832,Brynhild Armor Piece
+7833,Hero's Remains
+7834,Andvari's Ring
+7835,Dusk Glow
+7836,Dawn Essence
+7837,Cold Moonlight
+7838,Hazy Starlight
+7849,Soul Crystal
+7850,Wooden Block
+7858,Dragonball Yellow
+7860,Peeps
+7861,Jelly Bean
+7862,Marshmallow
+7888,Bag of Nuts

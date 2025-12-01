@@ -1,0 +1,995 @@
+# ============================================================
+# EXCLUDED ITEMS REPORT
+# Items that did NOT pass verification
+# ============================================================
+# Generated: 2025-12-01 02:55:29
+# Total excluded: 986
+# Format: ItemID,ItemName,ExclusionReason,FileFound
+# ============================================================
+
+901,Daenggie,NPC Shop: countitem in npc/pre-re/merchants/hair_style.txt; NPC Shop: delitem in npc/pre-re/merchants/hair_style.txt; Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt,npc/pre-re/merchants/hair_style.txt; npc/custom/quests/thq/THQS_Quests.txt
+904,Scorpion Tail,Job quest: countitem in npc/jobs/2-2/rogue.txt; Job quest: delitem in npc/jobs/2-2/rogue.txt; Quest requirement: countitem in npc/quests/the_sign_quest.txt,npc/jobs/2-2/rogue.txt; npc/quests/the_sign_quest.txt
+905,Stem,Quest requirement: countitem in npc/re/quests/quests_eclage.txt; Quest requirement: delitem in npc/re/quests/quests_eclage.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/re/quests/quests_eclage.txt; npc/jobs/2-2/monk.txt
+906,Pointed Scale,Quest requirement: countitem in npc/quests/skills/archer_skills.txt; Quest requirement: delitem in npc/quests/skills/archer_skills.txt; Quest requirement: countitem in npc/quests/first_class/tu_archer.txt,npc/quests/skills/archer_skills.txt; npc/quests/first_class/tu_archer.txt
+907,Resin,Job quest: countitem in npc/jobs/novice/supernovice.txt; Job quest: delitem in npc/jobs/novice/supernovice.txt; Quest requirement: countitem in npc/quests/the_sign_quest.txt,npc/jobs/novice/supernovice.txt; npc/quests/the_sign_quest.txt
+908,Spawn,Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt; Job quest: countitem in npc/jobs/2-2/rogue.txt,npc/re/quests/newgears/2010_headgears.txt; npc/jobs/2-2/rogue.txt
+909,Jellopy,Job quest: countitem in npc/re/jobs/novice/academy.txt; Job quest: delitem in npc/re/jobs/novice/academy.txt; Custom script: delitem in npc/re/custom/lasagna/lasagna_npcs.txt,npc/re/jobs/novice/academy.txt; npc/re/custom/lasagna/lasagna_npcs.txt
+910,Garlet,Quest requirement: countitem in npc/re/quests/eden/26-40.txt; Quest requirement: delitem in npc/re/quests/eden/26-40.txt; Quest reward: getitem in npc/quests/quests_umbala.txt,npc/re/quests/eden/26-40.txt; npc/quests/quests_umbala.txt
+911,Scell,Quest requirement: countitem in npc/quests/skills/thief_skills.txt; Quest requirement: delitem in npc/quests/skills/thief_skills.txt,npc/quests/skills/thief_skills.txt
+912,Zargon,Job quest: countitem in npc/jobs/1-1e/gunslinger.txt; Job quest: delitem in npc/jobs/1-1e/gunslinger.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/jobs/1-1e/gunslinger.txt; npc/jobs/2-2/monk.txt
+913,Tooth of Bat,Job quest: countitem in npc/jobs/2-2/rogue.txt; Job quest: delitem in npc/jobs/2-2/rogue.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/jobs/2-2/rogue.txt; npc/jobs/2-2/monk.txt
+914,Fluff,Job quest: countitem in npc/re/jobs/novice/academy.txt; Job quest: delitem in npc/re/jobs/novice/academy.txt; Custom script: delitem in npc/re/custom/lasagna/lasagna_npcs.txt,npc/re/jobs/novice/academy.txt; npc/re/custom/lasagna/lasagna_npcs.txt
+915,Chrysalis,Quest requirement: countitem in npc/pre-re/quests/collection/quest_pupa.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_pupa.txt; Job quest: countitem in npc/jobs/2-2/rogue.txt,npc/pre-re/quests/collection/quest_pupa.txt; npc/jobs/2-2/rogue.txt
+916,Feather of Birds,Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt; Job quest: countitem in npc/jobs/2-2/rogue.txt,npc/re/quests/newgears/2010_headgears.txt; npc/jobs/2-2/rogue.txt
+917,Talon,Job quest: countitem in npc/jobs/2-2/rogue.txt; Job quest: delitem in npc/jobs/2-2/rogue.txt,npc/jobs/2-2/rogue.txt
+918,Sticky Webfoot,Custom script: countitem in npc/re/custom/lasagna/lasagna_npcs.txt; Custom script: delitem in npc/re/custom/lasagna/lasagna_npcs.txt; Quest reward: getitem in npc/quests/quests_13_2.txt,npc/re/custom/lasagna/lasagna_npcs.txt; npc/quests/quests_13_2.txt
+919,Animal Skin,Quest requirement: countitem in npc/re/quests/eden/26-40.txt; Quest requirement: delitem in npc/re/quests/eden/26-40.txt; Job quest: countitem in npc/jobs/2-2/rogue.txt,npc/re/quests/eden/26-40.txt; npc/jobs/2-2/rogue.txt
+920,Wolf Claw,Quest requirement: countitem in npc/quests/partyrelay.txt; Quest requirement: delitem in npc/quests/partyrelay.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/quests/partyrelay.txt; npc/quests/guildrelay.txt
+921,Mushroom Spore,Custom script: countitem in npc/re/custom/lasagna/lasagna_npcs.txt; Custom script: delitem in npc/re/custom/lasagna/lasagna_npcs.txt; Quest requirement: countitem in npc/quests/quests_hugel.txt,npc/re/custom/lasagna/lasagna_npcs.txt; npc/quests/quests_hugel.txt
+923,Evil Horn,Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: delitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: countitem in npc/quests/quests_alberta.txt,npc/custom/quests/thq/THQS_Quests.txt; npc/quests/quests_alberta.txt
+924,Powder of Butterfly,Quest requirement: countitem in npc/pre-re/quests/collection/quest_creamy.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_creamy.txt; Quest requirement: countitem in npc/quests/skills/swordman_skills.txt,npc/pre-re/quests/collection/quest_creamy.txt; npc/quests/skills/swordman_skills.txt
+925,Bill of Birds,Quest requirement: countitem in npc/pre-re/quests/collection/quest_pecopeco.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_pecopeco.txt; Quest requirement: countitem in npc/custom/quests/may_hats.txt,npc/pre-re/quests/collection/quest_pecopeco.txt; npc/custom/quests/may_hats.txt
+926,Snake Scale,Quest requirement: countitem in npc/quests/quests_comodo.txt; Quest requirement: delitem in npc/quests/quests_comodo.txt,npc/quests/quests_comodo.txt
+929,Immortal Heart,Job quest: countitem in npc/jobs/2-2e/SoulLinker.txt; Job quest: delitem in npc/jobs/2-2e/SoulLinker.txt,npc/jobs/2-2e/SoulLinker.txt
+930,Rotten Bandage,Quest requirement: countitem in npc/re/quests/quests_malaya.txt; Quest requirement: delitem in npc/re/quests/quests_malaya.txt; Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt,npc/re/quests/quests_malaya.txt; npc/custom/quests/thq/THQS_Quests.txt
+931,Orcish Voucher,Quest-named: Name contains 'voucher'; Quest requirement: countitem in npc/quests/newgears/2004_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2004_headgears.txt,Name analysis; npc/quests/newgears/2004_headgears.txt
+932,Skel-Bone,Quest requirement: countitem in npc/re/quests/eden/26-40.txt; Quest requirement: delitem in npc/re/quests/eden/26-40.txt; Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt,npc/re/quests/eden/26-40.txt; npc/custom/quests/thq/THQS_Quests.txt
+934,Memento,Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: delitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: countitem in npc/quests/quests_nameless.txt,npc/custom/quests/thq/THQS_Quests.txt; npc/quests/quests_nameless.txt
+935,Shell,Job quest: countitem in npc/jobs/1-1e/gunslinger.txt; Job quest: delitem in npc/jobs/1-1e/gunslinger.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/jobs/1-1e/gunslinger.txt; npc/jobs/2-2/monk.txt
+936,Scale Shell,Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: countitem in npc/quests/quests_comodo.txt,npc/re/quests/newgears/2010_headgears.txt; npc/quests/quests_comodo.txt
+937,Venom Canine,Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: countitem in npc/quests/quests_louyang.txt,npc/re/quests/newgears/2010_headgears.txt; npc/quests/quests_louyang.txt
+938,Sticky Mucus,Job quest: countitem in npc/jobs/2-2/monk.txt; Job quest: delitem in npc/jobs/2-2/monk.txt; Job quest: countitem in npc/jobs/novice/supernovice.txt,npc/jobs/2-2/monk.txt; npc/jobs/novice/supernovice.txt
+939,Bee Sting,Quest requirement: countitem in npc/quests/quests_louyang.txt; Quest requirement: delitem in npc/quests/quests_louyang.txt,npc/quests/quests_louyang.txt
+940,Grasshopper's Leg,Quest requirement: countitem in npc/quests/cooking_quest.txt; Quest requirement: delitem in npc/quests/cooking_quest.txt; Quest requirement: countitem in npc/quests/skills/thief_skills.txt,npc/quests/cooking_quest.txt; npc/quests/skills/thief_skills.txt
+941,Nose Ring,Quest requirement: countitem in npc/quests/newgears/2005_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2005_headgears.txt,npc/quests/newgears/2005_headgears.txt
+942,Yoyo Tail,Quest requirement: countitem in npc/re/quests/eden/26-40.txt; Quest requirement: delitem in npc/re/quests/eden/26-40.txt; Job quest: countitem in npc/jobs/2-2/rogue.txt,npc/re/quests/eden/26-40.txt; npc/jobs/2-2/rogue.txt
+943,Solid Shell,Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/re/quests/newgears/2010_headgears.txt; npc/jobs/2-2/monk.txt
+944,Horseshoe,Quest requirement: countitem in npc/re/quests/quests_eclage.txt; Quest requirement: delitem in npc/re/quests/quests_eclage.txt; Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt,npc/re/quests/quests_eclage.txt; npc/custom/quests/thq/THQS_Quests.txt
+945,Raccoon Leaf,Quest requirement: countitem in npc/re/quests/eden/26-40.txt; Quest requirement: delitem in npc/re/quests/eden/26-40.txt; Job quest: countitem in npc/jobs/2-2/rogue.txt,npc/re/quests/eden/26-40.txt; npc/jobs/2-2/rogue.txt
+946,Snail's Shell,Quest requirement: countitem in npc/quests/skills/sage_skills.txt; Quest requirement: delitem in npc/quests/skills/sage_skills.txt,npc/quests/skills/sage_skills.txt
+947,Horn,Quest requirement: countitem in npc/quests/skills/sage_skills.txt; Quest requirement: delitem in npc/quests/skills/sage_skills.txt,npc/quests/skills/sage_skills.txt
+948,Bear's Footskin,Quest requirement: countitem in npc/re/quests/eden/26-40.txt; Quest requirement: delitem in npc/re/quests/eden/26-40.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/re/quests/eden/26-40.txt; npc/jobs/2-2/monk.txt
+949,Feather,Job quest: countitem in npc/re/jobs/3-2/shadow_chaser.txt; Job quest: delitem in npc/re/jobs/3-2/shadow_chaser.txt; Job quest: countitem in npc/re/jobs/novice/academy.txt,npc/re/jobs/3-2/shadow_chaser.txt; npc/re/jobs/novice/academy.txt
+950,Heart of Mermaid,Quest requirement: countitem in npc/quests/quests_amatsu.txt; Quest requirement: delitem in npc/quests/quests_amatsu.txt; Quest requirement: countitem in npc/quests/quests_brasilis.txt,npc/quests/quests_amatsu.txt; npc/quests/quests_brasilis.txt
+951,Fin,Quest requirement: countitem in npc/quests/seals/sleipnir_seal.txt; Quest requirement: delitem in npc/quests/seals/sleipnir_seal.txt,npc/quests/seals/sleipnir_seal.txt
+952,Cactus Needle,Event script: countitem in npc/events/christmas_2005.txt; Event script: delitem in npc/events/christmas_2005.txt; Quest requirement: countitem in npc/quests/newgears/2006_headgears.txt,npc/events/christmas_2005.txt; npc/quests/newgears/2006_headgears.txt
+953,Stone Heart,Quest requirement: countitem in npc/pre-re/quests/collection/quest_golem.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_golem.txt; Job quest: countitem in npc/jobs/2-2/rogue.txt,npc/pre-re/quests/collection/quest_golem.txt; npc/jobs/2-2/rogue.txt
+954,Shining Scale,Quest requirement: countitem in npc/quests/quests_comodo.txt; Quest requirement: delitem in npc/quests/quests_comodo.txt; Quest requirement: countitem in npc/quests/newgears/2006_headgears.txt,npc/quests/quests_comodo.txt; npc/quests/newgears/2006_headgears.txt
+955,Worm Peeling,Quest reward: getitem in npc/re/quests/quests_dewata.txt; Quest requirement: countitem in npc/re/quests/eden/26-40.txt; Quest requirement: delitem in npc/re/quests/eden/26-40.txt,npc/re/quests/quests_dewata.txt; npc/re/quests/eden/26-40.txt
+956,Gill,Quest reward: getitem in npc/quests/quests_13_2.txt; Quest reward: getitem in npc/quests/quests_13_1.txt; Quest requirement: countitem in npc/quests/seals/sleipnir_seal.txt,npc/quests/quests_13_2.txt; npc/quests/quests_13_1.txt
+957,Decayed Nail,Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: delitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: countitem in npc/quests/quests_yuno.txt,npc/custom/quests/thq/THQS_Quests.txt; npc/quests/quests_yuno.txt
+958,Horrendous Mouth,Quest requirement: countitem in npc/quests/monstertamers.txt; Quest requirement: delitem in npc/quests/monstertamers.txt; Quest requirement: countitem in npc/quests/skills/swordman_skills.txt,npc/quests/monstertamers.txt; npc/quests/skills/swordman_skills.txt
+959,Stinky Scale,Quest requirement: countitem in npc/quests/quests_comodo.txt; Quest requirement: delitem in npc/quests/quests_comodo.txt; Quest requirement: countitem in npc/quests/newgears/2004_headgears.txt,npc/quests/quests_comodo.txt; npc/quests/newgears/2004_headgears.txt
+960,Nipper,Quest requirement: countitem in npc/quests/cooking_quest.txt; Quest requirement: delitem in npc/quests/cooking_quest.txt; Quest reward: getitem in npc/quests/quests_13_2.txt,npc/quests/cooking_quest.txt; npc/quests/quests_13_2.txt
+961,Conch,Quest requirement: countitem in npc/quests/quests_amatsu.txt; Quest requirement: delitem in npc/quests/quests_amatsu.txt; Quest requirement: countitem in npc/quests/seals/sleipnir_seal.txt,npc/quests/quests_amatsu.txt; npc/quests/seals/sleipnir_seal.txt
+962,Tentacle,Quest requirement: countitem in npc/quests/doomed_swords_quest.txt; Quest requirement: delitem in npc/quests/doomed_swords_quest.txt; Quest requirement: countitem in npc/quests/skills/merchant_skills.txt,npc/quests/doomed_swords_quest.txt; npc/quests/skills/merchant_skills.txt
+963,Sharp Scale,Quest reward: getitem in npc/quests/quests_13_2.txt; Quest reward: getitem in npc/quests/quests_13_1.txt; Quest requirement: countitem in npc/quests/seals/sleipnir_seal.txt,npc/quests/quests_13_2.txt; npc/quests/quests_13_1.txt
+964,Crab Shell,Quest requirement: countitem in npc/quests/quests_amatsu.txt; Quest requirement: delitem in npc/quests/quests_amatsu.txt; Quest requirement: countitem in npc/quests/obb_quest.txt,npc/quests/quests_amatsu.txt; npc/quests/obb_quest.txt
+965,Clam Shell,Quest requirement: countitem in npc/quests/obb_quest.txt; Quest requirement: delitem in npc/quests/obb_quest.txt; Quest requirement: countitem in npc/quests/seals/sleipnir_seal.txt,npc/quests/obb_quest.txt; npc/quests/seals/sleipnir_seal.txt
+966,Clam Flesh,Quest requirement: countitem in npc/quests/seals/sleipnir_seal.txt; Quest requirement: delitem in npc/quests/seals/sleipnir_seal.txt,npc/quests/seals/sleipnir_seal.txt
+968,Heroic Emblem,Quest requirement: countitem in npc/quests/quests_alberta.txt; Quest requirement: delitem in npc/quests/quests_alberta.txt; Quest requirement: countitem in npc/quests/newgears/2004_headgears.txt,npc/quests/quests_alberta.txt; npc/quests/newgears/2004_headgears.txt
+969,Gold,Quest requirement: countitem in npc/custom/quests/event_6_new_hats.txt; Quest requirement: delitem in npc/custom/quests/event_6_new_hats.txt; Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt,npc/custom/quests/event_6_new_hats.txt; npc/custom/quests/thq/THQS_Quests.txt
+970,Alcohol,Quest requirement: countitem in npc/re/quests/quests_16_1.txt; Quest requirement: delitem in npc/re/quests/quests_16_1.txt; NPC Shop: countitem in npc/merchants/wander_pet_food.txt,npc/re/quests/quests_16_1.txt; npc/merchants/wander_pet_food.txt
+971,Detrimindexta,Quest requirement: countitem in npc/quests/quests_hugel.txt; Quest requirement: delitem in npc/quests/quests_hugel.txt; Quest requirement: countitem in npc/quests/counteragent_mixture.txt,npc/quests/quests_hugel.txt; npc/quests/counteragent_mixture.txt
+972,Karvodailnirol,Quest requirement: countitem in npc/re/quests/quests_eclage.txt; Quest requirement: delitem in npc/re/quests/quests_eclage.txt; Quest requirement: countitem in npc/quests/counteragent_mixture.txt,npc/re/quests/quests_eclage.txt; npc/quests/counteragent_mixture.txt
+973,Counteragent,No valid mob drops found in mob_db.yml; NPC Shop: countitem in npc/pre-re/merchants/hair_style.txt; NPC Shop: delitem in npc/pre-re/merchants/hair_style.txt,mob_db.yml; npc/pre-re/merchants/hair_style.txt
+974,Mixture,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt,mob_db.yml; npc/re/quests/newgears/2010_headgears.txt
+975,Scarlet Dyestuffs,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt,mob_db.yml; npc/re/quests/newgears/2010_headgears.txt
+976,Lemon Dyestuffs,No valid mob drops found in mob_db.yml; NPC Shop: delitem in npc/pre-re/merchants/hair_dyer.txt; Quest requirement: countitem in npc/custom/quests/event_6_new_hats.txt,mob_db.yml; npc/pre-re/merchants/hair_dyer.txt
+978,Cobaltblue Dyestuffs,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt,mob_db.yml; npc/re/quests/newgears/2010_headgears.txt
+979,Darkgreen Dyestuffs,NPC Shop: delitem in npc/pre-re/merchants/hair_dyer.txt; Quest requirement: countitem in npc/custom/quests/event_6_new_hats.txt; Quest requirement: delitem in npc/custom/quests/event_6_new_hats.txt,npc/pre-re/merchants/hair_dyer.txt; npc/custom/quests/event_6_new_hats.txt
+980,Orange Dyestuffs,No valid mob drops found in mob_db.yml; NPC Shop: delitem in npc/pre-re/merchants/hair_dyer.txt; Quest requirement: countitem in npc/custom/quests/may_hats.txt,mob_db.yml; npc/pre-re/merchants/hair_dyer.txt
+981,Violet Dyestuffs,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt,mob_db.yml; npc/re/quests/newgears/2010_headgears.txt
+982,White Dyestuffs,No valid mob drops found in mob_db.yml; NPC Shop: delitem in npc/pre-re/merchants/hair_dyer.txt; NPC Shop: countitem in npc/merchants/hair_dyer.txt,mob_db.yml; npc/pre-re/merchants/hair_dyer.txt
+983,Black Dyestuffs,NPC Shop: delitem in npc/pre-re/merchants/hair_dyer.txt; Quest requirement: countitem in npc/custom/quests/bandit_beard.txt; Quest requirement: delitem in npc/custom/quests/bandit_beard.txt,npc/pre-re/merchants/hair_dyer.txt; npc/custom/quests/bandit_beard.txt
+984,Oridecon,Job quest: getitem in npc/re/jobs/novice/academy.txt; Quest requirement: countitem in npc/re/quests/quests_dewata.txt; Quest requirement: delitem in npc/re/quests/quests_dewata.txt,npc/re/jobs/novice/academy.txt; npc/re/quests/quests_dewata.txt
+985,Elunium,Job quest: getitem in npc/re/jobs/novice/academy.txt; Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt,npc/re/jobs/novice/academy.txt; npc/re/quests/quests_16_2.txt
+986,Anvil,No valid mob drops found in mob_db.yml; NPC Shop: getitem in npc/merchants/refine.txt; Quest requirement: countitem in npc/quests/the_sign_quest.txt,mob_db.yml; npc/merchants/refine.txt
+987,Oridecon Anvil,No valid mob drops found in mob_db.yml; NPC Shop: getitem in npc/merchants/refine.txt; Quest requirement: countitem in npc/quests/the_sign_quest.txt,mob_db.yml; npc/merchants/refine.txt
+988,Golden Anvil,No valid mob drops found in mob_db.yml; NPC Shop: getitem in npc/merchants/refine.txt; Quest requirement: countitem in npc/quests/the_sign_quest.txt,mob_db.yml; npc/merchants/refine.txt
+989,Emperium Anvil,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/the_sign_quest.txt; Quest requirement: delitem in npc/quests/the_sign_quest.txt,mob_db.yml; npc/quests/the_sign_quest.txt
+990,Red Blood,Job quest: countitem in npc/re/jobs/3-2/sorcerer.txt; Job quest: countitem in npc/jobs/2-1/wizard.txt; Job quest: delitem in npc/jobs/2-1/wizard.txt,npc/re/jobs/3-2/sorcerer.txt; npc/jobs/2-1/wizard.txt
+991,Crystal Blue,Job quest: countitem in npc/re/jobs/3-2/sorcerer.txt; Job quest: getitem in npc/jobs/2-2/sage.txt; Job quest: countitem in npc/jobs/2-1/wizard.txt,npc/re/jobs/3-2/sorcerer.txt; npc/jobs/2-2/sage.txt
+992,Wind of Verdure,Job quest: countitem in npc/re/jobs/3-2/sorcerer.txt; Job quest: getitem in npc/jobs/2-2/sage.txt; Job quest: countitem in npc/jobs/2-1/wizard.txt,npc/re/jobs/3-2/sorcerer.txt; npc/jobs/2-2/sage.txt
+993,Green Live,Job quest: countitem in npc/re/jobs/3-2/sorcerer.txt; Job quest: getitem in npc/jobs/2-2/sage.txt; Job quest: countitem in npc/jobs/2-1/wizard.txt,npc/re/jobs/3-2/sorcerer.txt; npc/jobs/2-2/sage.txt
+994,Flame Heart,Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: delitem in npc/re/quests/quests_16_2.txt; Job quest: countitem in npc/jobs/2-1e/StarGladiator.txt,npc/re/quests/quests_16_2.txt; npc/jobs/2-1e/StarGladiator.txt
+995,Mystic Frozen,Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: delitem in npc/re/quests/quests_16_2.txt; Job quest: countitem in npc/jobs/2-1e/StarGladiator.txt,npc/re/quests/quests_16_2.txt; npc/jobs/2-1e/StarGladiator.txt
+996,Rough Wind,Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: delitem in npc/re/quests/quests_16_2.txt; Job quest: countitem in npc/jobs/2-1e/StarGladiator.txt,npc/re/quests/quests_16_2.txt; npc/jobs/2-1e/StarGladiator.txt
+997,Great Nature,Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: delitem in npc/re/quests/quests_16_2.txt; Job quest: countitem in npc/jobs/2-1e/StarGladiator.txt,npc/re/quests/quests_16_2.txt; npc/jobs/2-1e/StarGladiator.txt
+998,Iron,Job quest: countitem in npc/re/jobs/2e/kagerou_oboro.txt; Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: countitem in npc/re/quests/eden/eden_quests.txt,npc/re/jobs/2e/kagerou_oboro.txt; npc/re/quests/quests_16_2.txt
+999,Steel,Job quest: countitem in npc/re/jobs/2e/kagerou_oboro.txt; Quest requirement: countitem in npc/re/quests/pile_bunker.txt; Quest requirement: delitem in npc/re/quests/pile_bunker.txt,npc/re/jobs/2e/kagerou_oboro.txt; npc/re/quests/pile_bunker.txt
+1000,Star Crumb,Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: delitem in npc/re/quests/quests_16_2.txt; Job quest: countitem in npc/jobs/2-1e/StarGladiator.txt,npc/re/quests/quests_16_2.txt; npc/jobs/2-1e/StarGladiator.txt
+1001,Star Dust,Quest requirement: countitem in npc/re/quests/quests_16_1.txt; Quest requirement: delitem in npc/re/quests/quests_16_1.txt; Job quest: countitem in npc/jobs/2-1e/StarGladiator.txt,npc/re/quests/quests_16_1.txt; npc/jobs/2-1e/StarGladiator.txt
+1002,Iron Ore,Job quest: getitem in npc/re/jobs/2e/kagerou_oboro.txt; Job quest: countitem in npc/re/jobs/2e/kagerou_oboro.txt; Quest requirement: countitem in npc/re/quests/eden/eden_quests.txt,npc/re/jobs/2e/kagerou_oboro.txt; npc/re/quests/eden/eden_quests.txt
+1003,Coal,Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: delitem in npc/re/quests/quests_16_2.txt; Quest requirement: countitem in npc/quests/quests_hugel.txt,npc/re/quests/quests_16_2.txt; npc/quests/quests_hugel.txt
+1004,Chivalry Emblem,Job quest: countitem in npc/jobs/2-2/crusader.txt; Job quest: delitem in npc/jobs/2-2/crusader.txt; Quest requirement: countitem in npc/quests/monstertamers.txt,npc/jobs/2-2/crusader.txt; npc/quests/monstertamers.txt
+1005,Hammer of Blacksmith,Job quest: countitem in npc/jobs/2-2/alchemist.txt; Job quest: delitem in npc/jobs/2-2/alchemist.txt; Job quest: countitem in npc/jobs/2-1/blacksmith.txt,npc/jobs/2-2/alchemist.txt; npc/jobs/2-1/blacksmith.txt
+1006,Old Magicbook,Job quest: countitem in npc/jobs/2-2/alchemist.txt; Job quest: delitem in npc/jobs/2-2/alchemist.txt; Job quest: countitem in npc/jobs/2-2/sage.txt,npc/jobs/2-2/alchemist.txt; npc/jobs/2-2/sage.txt
+1007,Necklace of Wisdom,Job quest: countitem in npc/jobs/2-2/sage.txt; Job quest: delitem in npc/jobs/2-2/sage.txt; Job quest: countitem in npc/jobs/2-1/hunter.txt,npc/jobs/2-2/sage.txt; npc/jobs/2-1/hunter.txt
+1008,Necklace of Oblivion,Job quest: countitem in npc/jobs/2-1/assassin.txt; Job quest: delitem in npc/jobs/2-1/assassin.txt; Job quest: getitem in npc/jobs/2-1/assassin.txt,npc/jobs/2-1/assassin.txt; npc/quests/doomed_swords.txt
+1009,Hand of God,Job quest: countitem in npc/jobs/2-2/crusader.txt; Job quest: delitem in npc/jobs/2-2/crusader.txt,npc/jobs/2-2/crusader.txt
+1010,Phracon,Job quest: getitem in npc/re/jobs/2e/kagerou_oboro.txt; Job quest: countitem in npc/re/jobs/2e/kagerou_oboro.txt; Job quest: getitem in npc/re/jobs/novice/novice.txt,npc/re/jobs/2e/kagerou_oboro.txt; npc/re/jobs/novice/novice.txt
+1011,Emveretarcon,Job quest: countitem in npc/re/jobs/2e/kagerou_oboro.txt; Job quest: getitem in npc/re/jobs/novice/academy.txt; NPC Shop: countitem in npc/pre-re/merchants/ammo_dealer.txt,npc/re/jobs/2e/kagerou_oboro.txt; npc/re/jobs/novice/academy.txt
+1012,Frill,Quest requirement: countitem in npc/pre-re/quests/collection/quest_frilldora.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_frilldora.txt; Quest requirement: countitem in npc/quests/partyrelay.txt,npc/pre-re/quests/collection/quest_frilldora.txt; npc/quests/partyrelay.txt
+1013,Rainbow Shell,Job quest: countitem in npc/jobs/1-1e/gunslinger.txt; Job quest: delitem in npc/jobs/1-1e/gunslinger.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/jobs/1-1e/gunslinger.txt; npc/quests/guildrelay.txt
+1015,Tongue,Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: delitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: countitem in npc/quests/partyrelay.txt,npc/custom/quests/thq/THQS_Quests.txt; npc/quests/partyrelay.txt
+1016,Rat Tail,Quest requirement: countitem in npc/re/quests/quests_eclage.txt; Quest requirement: delitem in npc/re/quests/quests_eclage.txt; Quest requirement: countitem in npc/re/quests/quests_malangdo.txt,npc/re/quests/quests_eclage.txt; npc/re/quests/quests_malangdo.txt
+1017,Mole Whiskers,Quest requirement: countitem in npc/re/quests/eden/26-40.txt; Quest requirement: delitem in npc/re/quests/eden/26-40.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/re/quests/eden/26-40.txt; npc/quests/guildrelay.txt
+1018,Mole Claw,Quest requirement: countitem in npc/re/quests/eden/26-40.txt; Quest requirement: delitem in npc/re/quests/eden/26-40.txt,npc/re/quests/eden/26-40.txt
+1019,Trunk,Job quest: countitem in npc/pre-re/jobs/1-1/archer.txt; Job quest: delitem in npc/pre-re/jobs/1-1/archer.txt; Job quest: countitem in npc/jobs/1-1e/gunslinger.txt,npc/pre-re/jobs/1-1/archer.txt; npc/jobs/1-1e/gunslinger.txt
+1020,Black Hair,NPC Shop: countitem in npc/pre-re/merchants/hair_style.txt; NPC Shop: delitem in npc/pre-re/merchants/hair_style.txt; Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt,npc/pre-re/merchants/hair_style.txt; npc/custom/quests/thq/THQS_Quests.txt
+1021,Dokebi Horn,Quest requirement: countitem in npc/pre-re/quests/collection/quest_dokebi.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_dokebi.txt; Quest requirement: countitem in npc/quests/partyrelay.txt,npc/pre-re/quests/collection/quest_dokebi.txt; npc/quests/partyrelay.txt
+1022,Nine Tails,Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: delitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: countitem in npc/quests/quests_amatsu.txt,npc/custom/quests/thq/THQS_Quests.txt; npc/quests/quests_amatsu.txt
+1023,Fish Tail,Quest requirement: countitem in npc/re/quests/quests_malangdo.txt; Quest requirement: delitem in npc/re/quests/quests_malangdo.txt; Quest requirement: countitem in npc/quests/partyrelay.txt,npc/re/quests/quests_malangdo.txt; npc/quests/partyrelay.txt
+1024,Squid Ink,Job quest: countitem in npc/jobs/2-2/sage.txt; Job quest: delitem in npc/jobs/2-2/sage.txt; Script reference: countitem in npc/cities/lutie.txt,npc/jobs/2-2/sage.txt; npc/cities/lutie.txt
+1025,Cobweb,Job quest: countitem in npc/jobs/2-2/monk.txt; Job quest: delitem in npc/jobs/2-2/monk.txt; Quest requirement: countitem in npc/quests/quests_comodo.txt,npc/jobs/2-2/monk.txt; npc/quests/quests_comodo.txt
+1026,Acorn,Quest requirement: countitem in npc/re/quests/eden/26-40.txt; Quest requirement: delitem in npc/re/quests/eden/26-40.txt; Quest requirement: countitem in npc/pre-re/quests/collection/quest_coco.txt,npc/re/quests/eden/26-40.txt; npc/pre-re/quests/collection/quest_coco.txt
+1027,Porcupine Quill,Quest requirement: countitem in npc/pre-re/quests/collection/quest_caramel.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_caramel.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/pre-re/quests/collection/quest_caramel.txt; npc/jobs/2-2/monk.txt
+1028,Mane,Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: delitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: countitem in npc/quests/newgears/2006_headgears.txt,npc/custom/quests/thq/THQS_Quests.txt; npc/quests/newgears/2006_headgears.txt
+1029,Tiger Skin,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/custom/quests/may_hats.txt; Quest requirement: delitem in npc/custom/quests/may_hats.txt,mob_db.yml; npc/custom/quests/may_hats.txt
+1030,Tiger's Footskin,Quest requirement: countitem in npc/custom/quests/may_hats.txt; Quest requirement: delitem in npc/custom/quests/may_hats.txt; Quest requirement: countitem in npc/quests/quests_alberta.txt,npc/custom/quests/may_hats.txt; npc/quests/quests_alberta.txt
+1032,Maneater Blossom,Job quest: countitem in npc/jobs/2-2/bard.txt; Quest requirement: countitem in npc/quests/newgears/2008_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2008_headgears.txt,npc/jobs/2-2/bard.txt; npc/quests/newgears/2008_headgears.txt
+1033,Maneater Root,Quest requirement: countitem in npc/quests/quests_veins.txt; Quest requirement: delitem in npc/quests/quests_veins.txt,npc/quests/quests_veins.txt
+1035,Dragon Canine,Script reference: countitem in npc/warps/fields/abyss_warper.txt; Script reference: delitem in npc/warps/fields/abyss_warper.txt,npc/warps/fields/abyss_warper.txt
+1036,Dragon Scale,Script reference: countitem in npc/warps/fields/abyss_warper.txt; Script reference: delitem in npc/warps/fields/abyss_warper.txt; Quest requirement: countitem in npc/quests/ninja_quests.txt,npc/warps/fields/abyss_warper.txt; npc/quests/ninja_quests.txt
+1037,Dragon Tail,Script reference: countitem in npc/warps/fields/abyss_warper.txt; Script reference: delitem in npc/warps/fields/abyss_warper.txt,npc/warps/fields/abyss_warper.txt
+1038,Little Evil Horn,Quest requirement: countitem in npc/quests/the_sign_quest.txt; Quest requirement: delitem in npc/quests/the_sign_quest.txt; Quest requirement: countitem in npc/quests/quests_nameless.txt,npc/quests/the_sign_quest.txt; npc/quests/quests_nameless.txt
+1040,Elder Pixie's Moustache,Quest requirement: countitem in npc/custom/quests/elvenear.txt; Quest requirement: delitem in npc/custom/quests/elvenear.txt; Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt,npc/custom/quests/elvenear.txt; npc/custom/quests/thq/THQS_Quests.txt
+1041,Lantern,Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: delitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: countitem in npc/quests/seals/megingard_seal.txt,npc/custom/quests/thq/THQS_Quests.txt; npc/quests/seals/megingard_seal.txt
+1042,Bug Leg,Job quest: countitem in npc/jobs/2-2/monk.txt; Job quest: delitem in npc/jobs/2-2/monk.txt,npc/jobs/2-2/monk.txt
+1043,Orc Claw,Quest requirement: countitem in npc/quests/gunslinger_quests.txt; Quest requirement: delitem in npc/quests/gunslinger_quests.txt,npc/quests/gunslinger_quests.txt
+1046,Scorpion Nipper,No valid mob drops found in mob_db.yml,mob_db.yml
+1047,Dead Medusa,No valid mob drops found in mob_db.yml,mob_db.yml
+1048,Horrendous Hair,Quest requirement: countitem in npc/quests/partyrelay.txt; Quest requirement: delitem in npc/quests/partyrelay.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/quests/partyrelay.txt; npc/quests/guildrelay.txt
+1049,Skirt of Virgin,Quest reward: getitem in npc/quests/eye_of_hellion.txt; Quest requirement: countitem in npc/quests/eye_of_hellion.txt; Quest requirement: delitem in npc/quests/eye_of_hellion.txt,npc/quests/eye_of_hellion.txt; npc/quests/quests_payon.txt
+1050,Tendon,Quest requirement: countitem in npc/quests/seals/sleipnir_seal.txt; Quest requirement: delitem in npc/quests/seals/sleipnir_seal.txt,npc/quests/seals/sleipnir_seal.txt
+1051,Detonator,Quest requirement: countitem in npc/quests/seals/sleipnir_seal.txt; Quest requirement: delitem in npc/quests/seals/sleipnir_seal.txt,npc/quests/seals/sleipnir_seal.txt
+1052,Single Cell,Quest requirement: countitem in npc/quests/seals/sleipnir_seal.txt; Quest requirement: delitem in npc/quests/seals/sleipnir_seal.txt,npc/quests/seals/sleipnir_seal.txt
+1053,Ancient Tooth,Quest requirement: countitem in npc/quests/newgears/2006_headgears.txt; Quest requirement: countitem in npc/quests/seals/sleipnir_seal.txt; Quest requirement: delitem in npc/quests/seals/sleipnir_seal.txt,npc/quests/newgears/2006_headgears.txt; npc/quests/seals/sleipnir_seal.txt
+1054,Ancient Lips,Quest requirement: countitem in npc/quests/quests_brasilis.txt; Quest requirement: delitem in npc/quests/quests_brasilis.txt; Quest requirement: countitem in npc/quests/quests_alberta.txt,npc/quests/quests_brasilis.txt; npc/quests/quests_alberta.txt
+1055,Earthworm Peeling,Quest requirement: countitem in npc/pre-re/quests/collection/quest_hode.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_hode.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/pre-re/quests/collection/quest_hode.txt; npc/jobs/2-2/monk.txt
+1057,Moth Dust,Quest requirement: countitem in npc/quests/skills/alchemist_skills.txt; Quest requirement: delitem in npc/quests/skills/alchemist_skills.txt,npc/quests/skills/alchemist_skills.txt
+1058,Moth Wings,Quest requirement: countitem in npc/quests/skills/swordman_skills.txt; Quest requirement: delitem in npc/quests/skills/swordman_skills.txt,npc/quests/skills/swordman_skills.txt
+1059,Fabric,Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: countitem in npc/custom/quests/event_6_new_hats.txt,npc/re/quests/newgears/2010_headgears.txt; npc/custom/quests/event_6_new_hats.txt
+1060,Golden Hair,NPC Shop: countitem in npc/pre-re/merchants/hair_style.txt; NPC Shop: delitem in npc/pre-re/merchants/hair_style.txt; Quest requirement: countitem in npc/quests/quests_nameless.txt,npc/pre-re/merchants/hair_style.txt; npc/quests/quests_nameless.txt
+1061,Witched Starsand,Quest requirement: countitem in npc/quests/quests_gonryun.txt; Quest requirement: delitem in npc/quests/quests_gonryun.txt,npc/quests/quests_gonryun.txt
+1062,Jack o' Pumpkin,Event script: countitem in npc/events/halloween_2009.txt; Event script: delitem in npc/events/halloween_2009.txt; Quest requirement: countitem in npc/quests/quests_nameless.txt,npc/events/halloween_2009.txt; npc/quests/quests_nameless.txt
+1064,Reins,Quest requirement: countitem in npc/pre-re/quests/quests_morocc.txt; Quest requirement: delitem in npc/pre-re/quests/quests_morocc.txt,npc/pre-re/quests/quests_morocc.txt
+1065,Trap,Event script: countitem in npc/events/MemorialDay_2008.txt,npc/events/MemorialDay_2008.txt
+1066,Fine-grained Trunk,Job quest: countitem in npc/pre-re/jobs/1-1/archer.txt; Job quest: delitem in npc/pre-re/jobs/1-1/archer.txt; Job quest: countitem in npc/jobs/2-2/bard.txt,npc/pre-re/jobs/1-1/archer.txt; npc/jobs/2-2/bard.txt
+1067,Solid Trunk,Job quest: countitem in npc/pre-re/jobs/1-1/archer.txt; Job quest: delitem in npc/pre-re/jobs/1-1/archer.txt; Job quest: countitem in npc/jobs/2-2/bard.txt,npc/pre-re/jobs/1-1/archer.txt; npc/jobs/2-2/bard.txt
+1068,Barren Trunk,Job quest: countitem in npc/pre-re/jobs/1-1/archer.txt; Job quest: delitem in npc/pre-re/jobs/1-1/archer.txt; Job quest: countitem in npc/jobs/2-2/bard.txt,npc/pre-re/jobs/1-1/archer.txt; npc/jobs/2-2/bard.txt
+1069,Orange Net Mushroom,Job quest: countitem in npc/pre-re/jobs/1-1/thief.txt; Job quest: delitem in npc/pre-re/jobs/1-1/thief.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/pre-re/jobs/1-1/thief.txt; npc/jobs/2-2/monk.txt
+1070,Orange Gooey Mushroom,Job quest: countitem in npc/pre-re/jobs/1-1/thief.txt; Job quest: delitem in npc/pre-re/jobs/1-1/thief.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/pre-re/jobs/1-1/thief.txt; npc/jobs/2-2/monk.txt
+1071,Unknown Test Tube,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/mage.txt; Job quest: delitem in npc/pre-re/jobs/1-1/mage.txt,mob_db.yml; npc/pre-re/jobs/1-1/mage.txt
+1072,Delivery Message,No valid mob drops found in mob_db.yml; Job quest: getitem in npc/pre-re/jobs/1-1/merchant.txt; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt,mob_db.yml; npc/pre-re/jobs/1-1/merchant.txt
+1073,Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt,Name analysis; mob_db.yml
+1074,Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt,Name analysis; mob_db.yml
+1075,Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt,Name analysis; mob_db.yml
+1076,Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt,Name analysis; mob_db.yml
+1077,Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt,Name analysis; mob_db.yml
+1078,Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt,Name analysis; mob_db.yml
+1079,Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt,Name analysis; mob_db.yml
+1080,Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt,Name analysis; mob_db.yml
+1081,Delivery Box,No valid mob drops found in mob_db.yml; Custom script: countitem in npc/re/custom/lasagna/lasagna_npcs.txt; Custom script: delitem in npc/re/custom/lasagna/lasagna_npcs.txt,mob_db.yml; npc/re/custom/lasagna/lasagna_npcs.txt
+1082,Delivery Box,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt; Job quest: delitem in npc/pre-re/jobs/1-1/merchant.txt,mob_db.yml; npc/pre-re/jobs/1-1/merchant.txt
+1083,Delivery Box,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt; Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt,mob_db.yml; npc/pre-re/jobs/1-1/merchant.txt
+1084,Kafra Pass,Quest-named: Name contains 'pass'; No valid mob drops found in mob_db.yml; Script reference: countitem in npc/cities/aldebaran.txt,Name analysis; mob_db.yml
+1085,Unknown Test Tube,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/mage.txt; Job quest: delitem in npc/pre-re/jobs/1-1/mage.txt,mob_db.yml; npc/pre-re/jobs/1-1/mage.txt
+1086,Unknown Test Tube,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/mage.txt; Job quest: delitem in npc/pre-re/jobs/1-1/mage.txt,mob_db.yml; npc/pre-re/jobs/1-1/mage.txt
+1087,Unknown Test Tube,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/mage.txt; Job quest: delitem in npc/pre-re/jobs/1-1/mage.txt,mob_db.yml; npc/pre-re/jobs/1-1/mage.txt
+1088,Morocc Solution,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/mage.txt; Job quest: delitem in npc/pre-re/jobs/1-1/mage.txt,mob_db.yml; npc/pre-re/jobs/1-1/mage.txt
+1089,Payon Solution,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/mage.txt; Job quest: delitem in npc/pre-re/jobs/1-1/mage.txt,mob_db.yml; npc/pre-re/jobs/1-1/mage.txt
+1090,Unknown Test Tube,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/mage.txt; Job quest: delitem in npc/pre-re/jobs/1-1/mage.txt,mob_db.yml; npc/pre-re/jobs/1-1/mage.txt
+1091,Delivery Box,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/pre-re/jobs/1-1/merchant.txt; Job quest: delitem in npc/pre-re/jobs/1-1/merchant.txt,mob_db.yml; npc/pre-re/jobs/1-1/merchant.txt
+1092,Empty Test Tube,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/re/quests/quests_mora.txt; Quest requirement: countitem in npc/re/quests/quests_mora.txt,mob_db.yml; npc/re/quests/quests_mora.txt
+1093,Empty Potion Bottle,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_louyang.txt; Quest requirement: delitem in npc/quests/quests_louyang.txt,mob_db.yml; npc/quests/quests_louyang.txt
+1094,Short Daenggie,NPC Shop: countitem in npc/pre-re/merchants/hair_style.txt; NPC Shop: delitem in npc/pre-re/merchants/hair_style.txt,npc/pre-re/merchants/hair_style.txt
+1095,Needle of Alarm,Quest requirement: countitem in npc/quests/newgears/2004_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2004_headgears.txt,npc/quests/newgears/2004_headgears.txt
+1096,Round Shell,Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: delitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/custom/quests/thq/THQS_Quests.txt; npc/quests/guildrelay.txt
+1097,Worn Out Page,Quest requirement: countitem in npc/re/quests/quests_eclage.txt; Quest requirement: delitem in npc/re/quests/quests_eclage.txt; Job quest: getitem in npc/jobs/2-2/rogue.txt,npc/re/quests/quests_eclage.txt; npc/jobs/2-2/rogue.txt
+1099,Worn-out Prison Uniform,Quest requirement: countitem in npc/quests/quests_comodo.txt; Quest requirement: delitem in npc/quests/quests_comodo.txt,npc/quests/quests_comodo.txt
+7001,Mould Powder,Quest requirement: countitem in npc/re/quests/quests_eclage.txt; Quest requirement: delitem in npc/re/quests/quests_eclage.txt; Quest requirement: countitem in npc/re/quests/quests_16_1.txt,npc/re/quests/quests_eclage.txt; npc/re/quests/quests_16_1.txt
+7002,Ogre Tooth,Quest requirement: countitem in npc/quests/doomed_swords.txt; Quest requirement: delitem in npc/quests/doomed_swords.txt; Quest requirement: countitem in npc/quests/doomed_swords_quest.txt,npc/quests/doomed_swords.txt; npc/quests/doomed_swords_quest.txt
+7003,Anolian Skin,Quest requirement: countitem in npc/pre-re/quests/collection/quest_alligator.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_alligator.txt; Quest requirement: countitem in npc/quests/partyrelay.txt,npc/pre-re/quests/collection/quest_alligator.txt; npc/quests/partyrelay.txt
+7004,Mud Lump,Quest reward: getitem in npc/quests/quests_louyang.txt; Quest requirement: countitem in npc/quests/quests_louyang.txt; Quest requirement: delitem in npc/quests/quests_louyang.txt,npc/quests/quests_louyang.txt
+7005,Skull,Quest requirement: countitem in npc/custom/quests/thq/THQS_Quests.txt; Quest requirement: delitem in npc/custom/quests/thq/THQS_Quests.txt,npc/custom/quests/thq/THQS_Quests.txt
+7012,Tough Scalelike Stem,Quest requirement: countitem in npc/quests/quests_lutie.txt; Quest requirement: delitem in npc/quests/quests_lutie.txt,npc/quests/quests_lutie.txt
+7013,Coral Reef,Quest requirement: countitem in npc/quests/the_sign_quest.txt; Quest requirement: delitem in npc/quests/the_sign_quest.txt; Quest requirement: countitem in npc/quests/quests_alberta.txt,npc/quests/the_sign_quest.txt; npc/quests/quests_alberta.txt
+7014,Old Portrait,Quest requirement: countitem in npc/quests/monstertamers.txt; Quest requirement: delitem in npc/quests/monstertamers.txt,npc/quests/monstertamers.txt
+7015,Bookclip in Memory,Quest requirement: countitem in npc/quests/quests_hugel.txt; Quest requirement: delitem in npc/quests/quests_hugel.txt; Quest requirement: countitem in npc/quests/newgears/2006_headgears.txt,npc/quests/quests_hugel.txt; npc/quests/newgears/2006_headgears.txt
+7017,Executioner's Mitten,Quest requirement: countitem in npc/quests/doomed_swords.txt; Quest requirement: delitem in npc/quests/doomed_swords.txt,npc/quests/doomed_swords.txt
+7018,Young Twig,Quest requirement: countitem in npc/quests/doomed_swords.txt; Quest requirement: delitem in npc/quests/doomed_swords.txt,npc/quests/doomed_swords.txt
+7019,Loki's Whispers,Quest requirement: countitem in npc/quests/doomed_swords.txt; Quest requirement: delitem in npc/quests/doomed_swords.txt; Quest requirement: countitem in npc/quests/doomed_swords_quest.txt,npc/quests/doomed_swords.txt; npc/quests/doomed_swords_quest.txt
+7020,Mother's Nightmare,Quest requirement: countitem in npc/quests/doomed_swords.txt; Quest requirement: delitem in npc/quests/doomed_swords.txt,npc/quests/doomed_swords.txt
+7021,Foolishness of the Blind,Quest requirement: countitem in npc/quests/doomed_swords.txt; Quest requirement: delitem in npc/quests/doomed_swords.txt; Quest requirement: countitem in npc/quests/doomed_swords_quest.txt,npc/quests/doomed_swords.txt; npc/quests/doomed_swords_quest.txt
+7022,Old Hilt,Quest requirement: countitem in npc/quests/ninja_quests.txt; Quest requirement: delitem in npc/quests/ninja_quests.txt; Quest requirement: countitem in npc/quests/doomed_swords.txt,npc/quests/ninja_quests.txt; npc/quests/doomed_swords.txt
+7023,Blade Lost in Darkness,Quest requirement: countitem in npc/quests/doomed_swords.txt; Quest requirement: delitem in npc/quests/doomed_swords.txt; Quest requirement: countitem in npc/quests/doomed_swords_quest.txt,npc/quests/doomed_swords.txt; npc/quests/doomed_swords_quest.txt
+7024,Bloody Edge,Quest requirement: countitem in npc/quests/doomed_swords.txt; Quest requirement: delitem in npc/quests/doomed_swords.txt; Quest requirement: countitem in npc/quests/doomed_swords_quest.txt,npc/quests/doomed_swords.txt; npc/quests/doomed_swords_quest.txt
+7025,Lucifer's Lament,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7026,Key of Clock Tower,Quest-named: Name contains 'key',Name analysis
+7027,Key of Underground,Quest-named: Name contains 'key',Name analysis
+7028,Invite for Duel,No valid mob drops found in mob_db.yml; Script reference: countitem in npc/other/pvp.txt; Script reference: delitem in npc/other/pvp.txt,mob_db.yml; npc/other/pvp.txt
+7029,Admission for Duel,No valid mob drops found in mob_db.yml; Script reference: countitem in npc/other/pvp.txt; Script reference: delitem in npc/other/pvp.txt,mob_db.yml; npc/other/pvp.txt
+7030,Claw of Desert Wolf,Quest requirement: countitem in npc/quests/quests_yuno.txt; Quest requirement: delitem in npc/quests/quests_yuno.txt; Quest requirement: countitem in npc/quests/quests_lutie.txt,npc/quests/quests_yuno.txt; npc/quests/quests_lutie.txt
+7031,Old Frying Pan,Quest requirement: countitem in npc/quests/cooking_quest.txt; Quest requirement: delitem in npc/quests/cooking_quest.txt; Quest requirement: countitem in npc/quests/quests_moscovia.txt,npc/quests/cooking_quest.txt; npc/quests/quests_moscovia.txt
+7032,Piece of Egg Shell,Quest requirement: countitem in npc/quests/quests_yuno.txt; Quest requirement: delitem in npc/quests/quests_yuno.txt,npc/quests/quests_yuno.txt
+7033,Poison Spore,Job quest: countitem in npc/jobs/2-2/monk.txt; Job quest: delitem in npc/jobs/2-2/monk.txt; Quest requirement: countitem in npc/quests/the_sign_quest.txt,npc/jobs/2-2/monk.txt; npc/quests/the_sign_quest.txt
+7034,Red Stocking,Event script: countitem in npc/events/xmas.txt; Event script: delitem in npc/events/xmas.txt,npc/events/xmas.txt
+7035,Matchstick,Quest requirement: countitem in npc/quests/quests_nameless.txt; Quest requirement: delitem in npc/quests/quests_nameless.txt; Quest requirement: countitem in npc/quests/quests_lutie.txt,npc/quests/quests_nameless.txt; npc/quests/quests_lutie.txt
+7036,Fang of Hatii,Quest requirement: countitem in npc/quests/quests_payon.txt; Quest requirement: delitem in npc/quests/quests_payon.txt,npc/quests/quests_payon.txt
+7037,Coupon,No valid mob drops found in mob_db.yml,mob_db.yml
+7038,Yarn,Quest requirement: countitem in npc/re/quests/quests_malangdo.txt; Quest requirement: delitem in npc/re/quests/quests_malangdo.txt; Quest requirement: countitem in npc/quests/quests_moscovia.txt,npc/re/quests/quests_malangdo.txt; npc/quests/quests_moscovia.txt
+7039,Newbie Tag,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/skills/novice_skills.txt; Quest requirement: delitem in npc/quests/skills/novice_skills.txt,mob_db.yml; npc/quests/skills/novice_skills.txt
+7040,Megaphone,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_veins.txt; Quest requirement: delitem in npc/quests/quests_veins.txt,mob_db.yml; npc/quests/quests_veins.txt
+7041,Fine Grit,Quest requirement: countitem in npc/quests/skills/thief_skills.txt; Quest requirement: delitem in npc/quests/skills/thief_skills.txt,npc/quests/skills/thief_skills.txt
+7042,Leather Bag of Infinity,No valid mob drops found in mob_db.yml; Quest requirement: delitem in npc/quests/skills/thief_skills.txt; Quest reward: getitem in npc/quests/skills/thief_skills.txt,mob_db.yml; npc/quests/skills/thief_skills.txt
+7043,Fine Sand,Quest requirement: countitem in npc/re/quests/quests_16_1.txt; Quest requirement: delitem in npc/re/quests/quests_16_1.txt; Job quest: getitem in npc/jobs/2-2/alchemist.txt,npc/re/quests/quests_16_1.txt; npc/jobs/2-2/alchemist.txt
+7044,Vigorgra,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/the_sign_quest.txt; Quest requirement: delitem in npc/quests/the_sign_quest.txt,mob_db.yml; npc/quests/the_sign_quest.txt
+7045,Magic Paint,No valid mob drops found in mob_db.yml,mob_db.yml
+7046,Cart Parts,No valid mob drops found in mob_db.yml,mob_db.yml
+7047,Alice's Apron,Quest requirement: countitem in npc/quests/quests_lutie.txt; Quest requirement: delitem in npc/quests/quests_lutie.txt,npc/quests/quests_lutie.txt
+7048,Talon of Griffon,Quest requirement: countitem in npc/quests/quests_payon.txt; Quest requirement: delitem in npc/quests/quests_payon.txt,npc/quests/quests_payon.txt
+7049,Stone,Job quest: getitem in npc/re/jobs/3-2/royal_guard.txt; Job quest: countitem in npc/re/jobs/novice/academy.txt; Quest reward: getitem in npc/re/quests/quests_dewata.txt,npc/re/jobs/3-2/royal_guard.txt; npc/re/jobs/novice/academy.txt
+7050,Cotton Mat,No valid mob drops found in mob_db.yml,mob_db.yml
+7051,Silk Mat,No valid mob drops found in mob_db.yml,mob_db.yml
+7052,Old Papers,No valid mob drops found in mob_db.yml,mob_db.yml
+7053,Cyfar,Job quest: countitem in npc/jobs/1-1e/ninja.txt; Job quest: delitem in npc/jobs/1-1e/ninja.txt; Job quest: countitem in npc/jobs/2-2/monk.txt,npc/jobs/1-1e/ninja.txt; npc/jobs/2-2/monk.txt
+7054,Brigan,Quest requirement: countitem in npc/re/quests/eden/eden_100_111.txt; Quest requirement: delitem in npc/re/quests/eden/eden_100_111.txt; Quest requirement: countitem in npc/quests/quests_nameless.txt,npc/re/quests/eden/eden_100_111.txt; npc/quests/quests_nameless.txt
+7055,Animal Poop,No valid mob drops found in mob_db.yml,mob_db.yml
+7056,Payment Statement for Kafra Employee,No valid mob drops found in mob_db.yml,mob_db.yml
+7057,Gjallar,No valid mob drops found in mob_db.yml,mob_db.yml
+7058,Gleipnir,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,mob_db.yml; npc/quests/seals/god_weapon_creation.txt
+7059,Free Ticket for Kafra Storage,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Job quest: getitem in npc/re/jobs/novice/novice.txt,Name analysis; mob_db.yml
+7060,Free Ticket for Kafra Transportation,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Job quest: getitem in npc/re/jobs/novice/novice.txt,Name analysis; mob_db.yml
+7061,Free Ticket for the Cart Service,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/re/quests/quests_16_1.txt,Name analysis; mob_db.yml
+7062,Broken Turtle Shell,No valid mob drops found in mob_db.yml,mob_db.yml
+7063,Soft Feather,Quest requirement: countitem in npc/quests/quests_alberta.txt; Quest requirement: delitem in npc/quests/quests_alberta.txt; Quest requirement: countitem in npc/quests/newgears/2006_headgears.txt,npc/quests/quests_alberta.txt; npc/quests/newgears/2006_headgears.txt
+7064,Wing of Dragonfly,Job quest: countitem in npc/re/jobs/3-1/ranger.txt; Job quest: delitem in npc/re/jobs/3-1/ranger.txt; Quest requirement: countitem in npc/quests/quests_lutie.txt,npc/re/jobs/3-1/ranger.txt; npc/quests/quests_lutie.txt
+7065,Sea-Otter Fur,Quest requirement: countitem in npc/quests/quests_moscovia.txt; Quest requirement: delitem in npc/quests/quests_moscovia.txt; Quest requirement: countitem in npc/quests/quests_lutie.txt,npc/quests/quests_moscovia.txt; npc/quests/quests_lutie.txt
+7066,Ice Cubic,Custom script: countitem in npc/re/custom/lasagna/lasagna_npcs.txt; Custom script: delitem in npc/re/custom/lasagna/lasagna_npcs.txt; Quest requirement: countitem in npc/re/quests/quests_malangdo.txt,npc/re/custom/lasagna/lasagna_npcs.txt; npc/re/quests/quests_malangdo.txt
+7068,Burnt Tree,Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: delitem in npc/re/quests/quests_16_2.txt; Job quest: getitem in npc/jobs/2-2/alchemist.txt,npc/re/quests/quests_16_2.txt; npc/jobs/2-2/alchemist.txt
+7069,Destroyed Armor,Quest requirement: countitem in npc/quests/quests_comodo.txt; Quest requirement: delitem in npc/quests/quests_comodo.txt,npc/quests/quests_comodo.txt
+7073,Freya's Jewel,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7074,Thor's Gauntlets,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7075,Iron Maiden,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7076,Wheel of the Unknown,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7077,Silver Ornament,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7078,Wrath of Valkyrie,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7079,Feather of Angel Wing,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7080,Cat Tread,Quest requirement: countitem in npc/quests/seals/megingard_seal.txt; Quest requirement: delitem in npc/quests/seals/megingard_seal.txt,npc/quests/seals/megingard_seal.txt
+7081,Woman's Moustache,Quest requirement: countitem in npc/quests/seals/megingard_seal.txt; Quest requirement: delitem in npc/quests/seals/megingard_seal.txt,npc/quests/seals/megingard_seal.txt
+7082,Root of Stone,Quest requirement: countitem in npc/quests/seals/megingard_seal.txt; Quest requirement: delitem in npc/quests/seals/megingard_seal.txt,npc/quests/seals/megingard_seal.txt
+7083,Spirit of Fish,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7084,Sputum of Bird,Quest requirement: countitem in npc/quests/seals/megingard_seal.txt; Quest requirement: delitem in npc/quests/seals/megingard_seal.txt,npc/quests/seals/megingard_seal.txt
+7085,Sinew of Bear,Quest requirement: countitem in npc/quests/seals/megingard_seal.txt; Quest requirement: delitem in npc/quests/seals/megingard_seal.txt,npc/quests/seals/megingard_seal.txt
+7086,Emblem of the Sun God,Quest requirement: countitem in npc/quests/quests_alberta.txt; Quest requirement: delitem in npc/quests/quests_alberta.txt; Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/quests_alberta.txt; npc/quests/seals/god_weapon_creation.txt
+7087,Breath of Spirit,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7088,Snow Crystal,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7089,Omen of Tempest,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7090,Ripple,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7091,Billow,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7092,Drifting Air,Quest requirement: countitem in npc/quests/seals/god_weapon_creation.txt; Quest requirement: delitem in npc/quests/seals/god_weapon_creation.txt,npc/quests/seals/god_weapon_creation.txt
+7093,Cogwheel,Quest reward: getitem in npc/quests/eye_of_hellion.txt; Quest requirement: countitem in npc/quests/eye_of_hellion.txt; Quest requirement: delitem in npc/quests/eye_of_hellion.txt,npc/quests/eye_of_hellion.txt
+7094,Fragment,Quest requirement: countitem in npc/re/quests/eden/eden_111_120.txt; Quest requirement: delitem in npc/re/quests/eden/eden_111_120.txt,npc/re/quests/eden/eden_111_120.txt
+7096,Lava,Quest reward: getitem in npc/quests/quests_louyang.txt; Quest requirement: countitem in npc/quests/quests_louyang.txt; Quest requirement: delitem in npc/quests/quests_louyang.txt,npc/quests/quests_louyang.txt
+7097,Burning Heart,Job quest: countitem in npc/re/jobs/3-2/royal_guard.txt; Job quest: delitem in npc/re/jobs/3-2/royal_guard.txt; Quest requirement: countitem in npc/quests/quests_nameless.txt,npc/re/jobs/3-2/royal_guard.txt; npc/quests/quests_nameless.txt
+7098,Live Coal,Quest requirement: countitem in npc/quests/quests_nameless.txt; Quest requirement: delitem in npc/quests/quests_nameless.txt; Quest requirement: countitem in npc/quests/ninja_quests.txt,npc/quests/quests_nameless.txt; npc/quests/ninja_quests.txt
+7099,Worn-out Magic Scroll,Quest requirement: countitem in npc/quests/ninja_quests.txt; Quest requirement: delitem in npc/quests/ninja_quests.txt; Quest requirement: countitem in npc/quests/newgears/2005_headgears.txt,npc/quests/ninja_quests.txt; npc/quests/newgears/2005_headgears.txt
+7100,Sharp Leaf,Quest requirement: countitem in npc/re/quests/eden/eden_quests.txt; Quest requirement: delitem in npc/re/quests/eden/eden_quests.txt; Quest requirement: countitem in npc/pre-re/quests/collection/quest_dryad.txt,npc/re/quests/eden/eden_quests.txt; npc/pre-re/quests/collection/quest_dryad.txt
+7101,Peco Peco Feather,Quest requirement: countitem in npc/quests/partyrelay.txt; Quest requirement: delitem in npc/quests/partyrelay.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/quests/partyrelay.txt; npc/quests/guildrelay.txt
+7102,Nightmare,No valid mob drops found in mob_db.yml,mob_db.yml
+7103,Unknown Liquid Bottle,No valid mob drops found in mob_db.yml,mob_db.yml
+7104,False Angel Wing,No valid mob drops found in mob_db.yml,mob_db.yml
+7105,False Heaven Ring,No valid mob drops found in mob_db.yml,mob_db.yml
+7106,Antelope Horn,Quest requirement: countitem in npc/pre-re/quests/collection/quest_goat.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_goat.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/pre-re/quests/collection/quest_goat.txt; npc/quests/guildrelay.txt
+7110,Broken Sword,Quest requirement: countitem in npc/re/quests/quests_17_2.txt; Quest requirement: delitem in npc/re/quests/quests_17_2.txt; Quest requirement: countitem in npc/quests/quests_gonryun.txt,npc/re/quests/quests_17_2.txt; npc/quests/quests_gonryun.txt
+7111,Slick Paper,Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: delitem in npc/re/quests/quests_16_2.txt; Quest requirement: countitem in npc/quests/quests_umbala.txt,npc/re/quests/quests_16_2.txt; npc/quests/quests_umbala.txt
+7112,Sharp Paper,Quest requirement: countitem in npc/quests/guildrelay.txt; Quest requirement: delitem in npc/quests/guildrelay.txt,npc/quests/guildrelay.txt
+7114,Masque of Tutankhamen,Quest reward: getitem in npc/custom/quests/sphinx_mask.txt,npc/custom/quests/sphinx_mask.txt
+7115,Harpy Feather,Quest requirement: countitem in npc/quests/ninja_quests.txt; Quest requirement: delitem in npc/quests/ninja_quests.txt; Quest requirement: countitem in npc/quests/skills/hunter_skills.txt,npc/quests/ninja_quests.txt; npc/quests/skills/hunter_skills.txt
+7117,Torn Magic Book,Quest reward: getitem in npc/custom/quests/umbalian_language.txt; Quest requirement: countitem in npc/custom/quests/umbalian_language.txt; Quest requirement: delitem in npc/custom/quests/umbalian_language.txt,npc/custom/quests/umbalian_language.txt
+7118,Torn Scroll,Quest reward: getitem in npc/custom/quests/umbalian_language.txt; Quest requirement: countitem in npc/custom/quests/umbalian_language.txt; Quest requirement: delitem in npc/custom/quests/umbalian_language.txt,npc/custom/quests/umbalian_language.txt
+7119,Bacillus,Quest requirement: countitem in npc/pre-re/quests/collection/quest_demonpungus.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_demonpungus.txt,npc/pre-re/quests/collection/quest_demonpungus.txt
+7120,Burning Horseshoe,Quest requirement: countitem in npc/quests/newgears/2004_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2004_headgears.txt,npc/quests/newgears/2004_headgears.txt
+7121,Honey Pot,Quest requirement: countitem in npc/quests/quests_louyang.txt; Quest requirement: delitem in npc/quests/quests_louyang.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/quests/quests_louyang.txt; npc/quests/guildrelay.txt
+7122,Burning Hair,Quest requirement: countitem in npc/re/quests/quests_16_1.txt; Quest requirement: delitem in npc/re/quests/quests_16_1.txt,npc/re/quests/quests_16_1.txt
+7123,Dragon Skin,Quest requirement: countitem in npc/quests/ninja_quests.txt; Quest requirement: delitem in npc/quests/ninja_quests.txt,npc/quests/ninja_quests.txt
+7126,Large Jellopy,Event script: getitem in npc/events/MemorialDay_2008.txt; Quest requirement: countitem in npc/quests/quests_ein.txt; Quest requirement: delitem in npc/quests/quests_ein.txt,npc/events/MemorialDay_2008.txt; npc/quests/quests_ein.txt
+7127,Alcohol Creation Guide,No valid mob drops found in mob_db.yml; Job quest: getitem in npc/jobs/2-2/alchemist.txt,mob_db.yml; npc/jobs/2-2/alchemist.txt
+7128,Bottle Grenade Creation Guide,No valid mob drops found in mob_db.yml; Job quest: getitem in npc/jobs/2-2/alchemist.txt,mob_db.yml; npc/jobs/2-2/alchemist.txt
+7129,Acid Bottle Creation Guide,No valid mob drops found in mob_db.yml; Job quest: getitem in npc/jobs/2-2/alchemist.txt,mob_db.yml; npc/jobs/2-2/alchemist.txt
+7130,Plant Bottle Creation Guide,No valid mob drops found in mob_db.yml; Job quest: getitem in npc/jobs/2-2/alchemist.txt,mob_db.yml; npc/jobs/2-2/alchemist.txt
+7131,Marine Sphere Creation Guide,No valid mob drops found in mob_db.yml; Job quest: getitem in npc/jobs/2-2/alchemist.txt,mob_db.yml; npc/jobs/2-2/alchemist.txt
+7132,Glistening Coat Creation Guide,No valid mob drops found in mob_db.yml,mob_db.yml
+7133,Condensed Potion Creation Guide,No valid mob drops found in mob_db.yml; Job quest: getitem in npc/jobs/2-2/alchemist.txt,mob_db.yml; npc/jobs/2-2/alchemist.txt
+7134,Medicine Bowl,No valid mob drops found in mob_db.yml; Job quest: countitem in npc/jobs/2-2/alchemist.txt; Job quest: delitem in npc/jobs/2-2/alchemist.txt,mob_db.yml; npc/jobs/2-2/alchemist.txt
+7135,Bottle Grenade,No valid mob drops found in mob_db.yml,mob_db.yml
+7136,Acid Bottle,No valid mob drops found in mob_db.yml,mob_db.yml
+7137,Plant Bottle,No valid mob drops found in mob_db.yml,mob_db.yml
+7138,Marine Sphere Bottle,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/quests_hugel.txt; Quest requirement: countitem in npc/quests/quests_hugel.txt,mob_db.yml; npc/quests/quests_hugel.txt
+7139,Glistening Coat,No valid mob drops found in mob_db.yml,mob_db.yml
+7140,Seed of Life,No valid mob drops found in mob_db.yml,mob_db.yml
+7141,Morning Dew of Yggdrasil,No valid mob drops found in mob_db.yml,mob_db.yml
+7142,Embryo,No valid mob drops found in mob_db.yml,mob_db.yml
+7143,Glass Tube,No valid mob drops found in mob_db.yml,mob_db.yml
+7144,Potion Creation Guide,No valid mob drops found in mob_db.yml; Job quest: getitem in npc/jobs/2-2/alchemist.txt,mob_db.yml; npc/jobs/2-2/alchemist.txt
+7145,Ragnarok T-shirt,No valid mob drops found in mob_db.yml,mob_db.yml
+7146,Vacation Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7147,Jasmine,No valid mob drops found in mob_db.yml,mob_db.yml
+7148,Mother's Letter,Quest-named: Name contains 'letter'; No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/first_class/tu_acolyte.txt,Name analysis; mob_db.yml
+7149,Yellow Plate,Quest requirement: countitem in npc/quests/the_sign_quest.txt; Quest requirement: delitem in npc/quests/the_sign_quest.txt,npc/quests/the_sign_quest.txt
+7150,Piece of Bamboo,Job quest: countitem in npc/re/jobs/3-2/shadow_chaser.txt; Job quest: delitem in npc/re/jobs/3-2/shadow_chaser.txt; NPC Shop: countitem in npc/re/merchants/flute.txt,npc/re/jobs/3-2/shadow_chaser.txt; npc/re/merchants/flute.txt
+7151,Oil Paper,Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: countitem in npc/quests/quests_umbala.txt,npc/re/quests/newgears/2010_headgears.txt; npc/quests/quests_umbala.txt
+7152,Glossy Hair,NPC Shop: countitem in npc/pre-re/merchants/hair_style.txt; NPC Shop: delitem in npc/pre-re/merchants/hair_style.txt,npc/pre-re/merchants/hair_style.txt
+7153,Worn-out Kimono,Quest requirement: countitem in npc/quests/guildrelay.txt; Quest requirement: delitem in npc/quests/guildrelay.txt,npc/quests/guildrelay.txt
+7155,Poisonous Toad Skin,Quest requirement: countitem in npc/quests/partyrelay.txt; Quest requirement: delitem in npc/quests/partyrelay.txt; Quest requirement: countitem in npc/quests/quests_louyang.txt,npc/quests/partyrelay.txt; npc/quests/quests_louyang.txt
+7156,Broken Shuriken,Quest requirement: countitem in npc/re/quests/ninja_quests.txt; Quest requirement: delitem in npc/re/quests/ninja_quests.txt,npc/re/quests/ninja_quests.txt
+7157,Dark Mask,Quest requirement: countitem in npc/quests/partyrelay.txt; Quest requirement: delitem in npc/quests/partyrelay.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/quests/partyrelay.txt; npc/quests/guildrelay.txt
+7158,Broken Liquor Jar,NPC Shop: countitem in npc/merchants/wander_pet_food.txt; NPC Shop: delitem in npc/merchants/wander_pet_food.txt,npc/merchants/wander_pet_food.txt
+7160,Feudal Lord Permit,Quest-named: Name contains 'permit'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_amatsu.txt,Name analysis; mob_db.yml
+7161,Black Bear Skin,Quest requirement: countitem in npc/quests/newgears/2004_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2004_headgears.txt,npc/quests/newgears/2004_headgears.txt
+7164,Solid Peach,Quest requirement: countitem in npc/custom/quests/may_hats.txt; Quest requirement: delitem in npc/custom/quests/may_hats.txt; Quest requirement: countitem in npc/quests/quests_louyang.txt,npc/custom/quests/may_hats.txt; npc/quests/quests_louyang.txt
+7165,Transparent Celestial Robe,Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/re/quests/newgears/2010_headgears.txt; npc/quests/guildrelay.txt
+7166,Soft Silk,Quest requirement: countitem in npc/re/quests/quests_16_1.txt; Quest requirement: delitem in npc/re/quests/quests_16_1.txt; Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt,npc/re/quests/quests_16_1.txt; npc/re/quests/newgears/2010_headgears.txt
+7167,Strange Steel Piece,Quest requirement: countitem in npc/quests/quests_moscovia.txt; Quest requirement: delitem in npc/quests/quests_moscovia.txt,npc/quests/quests_moscovia.txt
+7170,Tuxedo,No valid mob drops found in mob_db.yml; Script reference: countitem in npc/other/marriage.txt; Script reference: delitem in npc/other/marriage.txt,mob_db.yml; npc/other/marriage.txt
+7172,Leopard Claw,Quest requirement: countitem in npc/quests/partyrelay.txt; Quest requirement: delitem in npc/quests/partyrelay.txt; Quest requirement: countitem in npc/quests/quests_louyang.txt,npc/quests/partyrelay.txt; npc/quests/quests_louyang.txt
+7173,iROGM02's Backpack,No valid mob drops found in mob_db.yml,mob_db.yml
+7174,Wrapping Lace,Event script: countitem in npc/events/christmas_2008.txt; Event script: delitem in npc/events/christmas_2008.txt; Event script: countitem in npc/events/valentinesday_2009.txt,npc/events/christmas_2008.txt; npc/events/valentinesday_2009.txt
+7175,Wrapping Paper,Event script: countitem in npc/events/christmas_2008.txt; Event script: delitem in npc/events/christmas_2008.txt; Event script: countitem in npc/events/valentinesday_2009.txt,npc/events/christmas_2008.txt; npc/events/valentinesday_2009.txt
+7176,Royal Certificate,Quest-named: Name contains 'certificate'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7177,Crumb of Sobbing Starlight,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7178,Sobbing Starlight,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7179,Proof of Donation,Quest-named: Name contains 'proof'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7180,Hahn Sukbong's Recommendation,No valid mob drops found in mob_db.yml,mob_db.yml
+7181,Receipt,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/the_sign_quest.txt; Quest requirement: delitem in npc/quests/the_sign_quest.txt,mob_db.yml; npc/quests/the_sign_quest.txt
+7182,Cacao,Quest requirement: countitem in npc/quests/kiel_hyre_quest.txt; Quest requirement: delitem in npc/quests/kiel_hyre_quest.txt,npc/quests/kiel_hyre_quest.txt
+7183,Letter from Sister,Quest-named: Name contains 'letter'; No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/the_sign_quest.txt,Name analysis; mob_db.yml
+7184,Piano Key,Quest-named: Name contains 'key'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7185,Quiz Entry,No valid mob drops found in mob_db.yml,mob_db.yml
+7187,Festival Mask,Quest requirement: countitem in npc/re/quests/eden/71-85.txt; Quest requirement: delitem in npc/re/quests/eden/71-85.txt,npc/re/quests/eden/71-85.txt
+7188,Brown Root,Quest requirement: countitem in npc/quests/quests_louyang.txt; Quest requirement: delitem in npc/quests/quests_louyang.txt; Quest requirement: countitem in npc/quests/quests_13_1.txt,npc/quests/quests_louyang.txt; npc/quests/quests_13_1.txt
+7189,Wooden Heart,Quest requirement: countitem in npc/custom/quests/dead_branch.txt; Quest requirement: delitem in npc/custom/quests/dead_branch.txt; Quest requirement: delitem in npc/quests/partyrelay.txt,npc/custom/quests/dead_branch.txt; npc/quests/partyrelay.txt
+7190,Solid Husk,Quest requirement: countitem in npc/quests/quests_ayothaya.txt; Quest requirement: delitem in npc/quests/quests_ayothaya.txt,npc/quests/quests_ayothaya.txt
+7191,Lamp,No valid mob drops found in mob_db.yml,mob_db.yml
+7193,Sprout,Quest reward: getitem in npc/quests/quests_13_2.txt; Quest requirement: countitem in npc/quests/quests_13_2.txt; Quest requirement: delitem in npc/quests/quests_13_2.txt,npc/quests/quests_13_2.txt; npc/quests/quests_louyang.txt
+7194,Soft Blade of Grass,Quest requirement: countitem in npc/quests/quests_nameless.txt; Quest requirement: delitem in npc/quests/quests_nameless.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/quests/quests_nameless.txt; npc/quests/guildrelay.txt
+7196,Shoulder Protector,Quest requirement: countitem in npc/re/quests/eden/eden_quests.txt; Quest requirement: delitem in npc/re/quests/eden/eden_quests.txt; Quest requirement: countitem in npc/quests/partyrelay.txt,npc/re/quests/eden/eden_quests.txt; npc/quests/partyrelay.txt
+7197,Tough Vines,Quest requirement: countitem in npc/re/quests/quests_18.txt; Quest requirement: delitem in npc/re/quests/quests_18.txt; Quest requirement: countitem in npc/quests/quests_moscovia.txt,npc/re/quests/quests_18.txt; npc/quests/quests_moscovia.txt
+7198,Huge Leaf,Quest reward: getitem in npc/re/quests/quests_dewata.txt; Quest requirement: countitem in npc/pre-re/quests/collection/quest_leafcat.txt; Quest requirement: delitem in npc/pre-re/quests/collection/quest_leafcat.txt,npc/re/quests/quests_dewata.txt; npc/pre-re/quests/collection/quest_leafcat.txt
+7199,Coupon,No valid mob drops found in mob_db.yml,mob_db.yml
+7200,Elastic Band,Quest requirement: countitem in npc/custom/quests/bandit_beard.txt; Quest requirement: delitem in npc/custom/quests/bandit_beard.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,npc/custom/quests/bandit_beard.txt; npc/quests/guildrelay.txt
+7201,Log,Quest requirement: countitem in npc/re/quests/quests_dewata.txt; Quest requirement: delitem in npc/re/quests/quests_dewata.txt; Quest requirement: countitem in npc/custom/quests/dead_branch.txt,npc/re/quests/quests_dewata.txt; npc/custom/quests/dead_branch.txt
+7204,Gunpowder,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_louyang.txt; Quest requirement: delitem in npc/quests/quests_louyang.txt,mob_db.yml; npc/quests/quests_louyang.txt
+7205,Piece of Black Cloth,Quest requirement: countitem in npc/re/quests/quests_16_1.txt; Quest requirement: delitem in npc/re/quests/quests_16_1.txt; Event script: countitem in npc/custom/events/holiday/hallow06.txt,npc/re/quests/quests_16_1.txt; npc/custom/events/holiday/hallow06.txt
+7206,Black Cat Doll,Event script: getitem in npc/events/christmas_2005.txt; Quest requirement: countitem in npc/quests/newgears/2004_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2004_headgears.txt,npc/events/christmas_2005.txt; npc/quests/newgears/2004_headgears.txt
+7207,Old Manteau,Quest requirement: countitem in npc/custom/quests/may_hats.txt; Quest requirement: delitem in npc/custom/quests/may_hats.txt,npc/custom/quests/may_hats.txt
+7212,Hung Doll,Event script: getitem in npc/events/christmas_2005.txt; Quest requirement: countitem in npc/quests/seals/megingard_seal.txt,npc/events/christmas_2005.txt; npc/quests/seals/megingard_seal.txt
+7213,Needle Packet,Quest requirement: countitem in npc/quests/newgears/2004_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2004_headgears.txt,npc/quests/newgears/2004_headgears.txt
+7216,Red Muffler,Quest requirement: countitem in npc/quests/newgears/2004_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2004_headgears.txt,npc/quests/newgears/2004_headgears.txt
+7217,Spool,Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: countitem in npc/quests/quests_moscovia.txt,npc/re/quests/newgears/2010_headgears.txt; npc/quests/quests_moscovia.txt
+7220,Ectoplasm,Quest requirement: countitem in npc/quests/newgears/2004_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2004_headgears.txt,npc/quests/newgears/2004_headgears.txt
+7222,Wooden Gnarl,Quest requirement: countitem in npc/custom/quests/dead_branch.txt; Quest requirement: delitem in npc/custom/quests/dead_branch.txt,npc/custom/quests/dead_branch.txt
+7224,Stone of Sage,No valid mob drops found in mob_db.yml,mob_db.yml
+7227,TCG Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7228,Gold Bullion,No valid mob drops found in mob_db.yml; Instance reward: makeitem in npc/re/instances/HorrorToyFactory.txt; Instance reward: makeitem in npc/re/instances/OldGlastHeim.txt,mob_db.yml; npc/re/instances/HorrorToyFactory.txt
+7229,Silver Bullion,No valid mob drops found in mob_db.yml; Instance reward: makeitem in npc/re/instances/HorrorToyFactory.txt; Instance reward: makeitem in npc/re/instances/OldGlastHeim.txt,mob_db.yml; npc/re/instances/HorrorToyFactory.txt
+7230,Platinum Bullion,No valid mob drops found in mob_db.yml; Instance reward: makeitem in npc/re/instances/OldGlastHeim.txt,mob_db.yml; npc/re/instances/OldGlastHeim.txt
+7231,Gold Ore,No valid mob drops found in mob_db.yml,mob_db.yml
+7232,Silver Ore,No valid mob drops found in mob_db.yml,mob_db.yml
+7233,Mithril Ore,No valid mob drops found in mob_db.yml,mob_db.yml
+7234,Spirit of Guild,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/guildrelay.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7235,Spirit of Charge,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest reward: getitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7236,Spirit of Protection,No valid mob drops found in mob_db.yml,mob_db.yml
+7237,Spirit of Association,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest reward: getitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7238,Spirit of Coordination,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest reward: getitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7239,Spirit of Advance,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest requirement: delitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7240,Spirit of Trust,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/guildrelay.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7241,Spirit of Union,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest reward: getitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7242,Spirit of Combination,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest reward: getitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7243,Spirit of Cooperation,No valid mob drops found in mob_db.yml,mob_db.yml
+7244,Spirit of Solidarity,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest reward: getitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7245,Spirit of Friendship,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest requirement: delitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7246,Spirit of Peace,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/guildrelay.txt; Quest requirement: countitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7247,Spirit of Determination,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest reward: getitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7248,Spirit of Honor,No valid mob drops found in mob_db.yml,mob_db.yml
+7249,Spirit of Service,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest reward: getitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7250,Spirit of Glory,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest reward: getitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7251,Spirit of Victory,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/guildrelay.txt; Quest requirement: delitem in npc/quests/guildrelay.txt,mob_db.yml; npc/quests/guildrelay.txt
+7252,Herbal Medicine,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_louyang.txt; Quest requirement: delitem in npc/quests/quests_louyang.txt,mob_db.yml; npc/quests/quests_louyang.txt
+7253,Golden Korean Flag,No valid mob drops found in mob_db.yml,mob_db.yml
+7254,Digital Picture Printing Coupon,No valid mob drops found in mob_db.yml,mob_db.yml
+7255,Mystic Orb,No valid mob drops found in mob_db.yml,mob_db.yml
+7256,Mystic Orb,No valid mob drops found in mob_db.yml,mob_db.yml
+7257,Mystic Orb,No valid mob drops found in mob_db.yml,mob_db.yml
+7258,Mystic Orb,No valid mob drops found in mob_db.yml,mob_db.yml
+7259,Mystic Orb,No valid mob drops found in mob_db.yml,mob_db.yml
+7260,Mystic Orb,No valid mob drops found in mob_db.yml,mob_db.yml
+7261,Mystic Orb,No valid mob drops found in mob_db.yml,mob_db.yml
+7262,Folding Fan of Cat Ghost,Quest requirement: countitem in npc/quests/quests_13_1.txt; Quest requirement: delitem in npc/quests/quests_13_1.txt,npc/quests/quests_13_1.txt
+7263,Cat's Eye,Quest requirement: countitem in npc/quests/newgears/2005_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2005_headgears.txt,npc/quests/newgears/2005_headgears.txt
+7267,Tiger Panty,Quest requirement: countitem in npc/custom/quests/may_hats.txt; Quest requirement: delitem in npc/custom/quests/may_hats.txt; Quest requirement: countitem in npc/quests/newgears/2005_headgears.txt,npc/custom/quests/may_hats.txt; npc/quests/newgears/2005_headgears.txt
+7270,Nursing Bottle,Quest requirement: countitem in npc/quests/newgears/2005_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2005_headgears.txt,npc/quests/newgears/2005_headgears.txt
+7271,Novice Figure,No valid mob drops found in mob_db.yml,mob_db.yml
+7273,RWC Necklace,No valid mob drops found in mob_db.yml,mob_db.yml
+7274,Translated Ancient Language,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/the_sign_quest.txt,mob_db.yml; npc/quests/the_sign_quest.txt
+7275,Record of Ancient Language,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7276,Doodled Message,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7277,Munak Doll,Event script: getitem in npc/events/christmas_2005.txt; Quest requirement: countitem in npc/quests/skills/bard_skills.txt; Quest requirement: delitem in npc/quests/skills/bard_skills.txt,npc/events/christmas_2005.txt; npc/quests/skills/bard_skills.txt
+7278,Letter to Wife,Quest-named: Name contains 'letter'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/the_sign_quest.txt,Name analysis; mob_db.yml
+7279,Vita500 Lid,No valid mob drops found in mob_db.yml,mob_db.yml
+7280,1st Quiz Entry,No valid mob drops found in mob_db.yml,mob_db.yml
+7281,2nd Quiz Entry,No valid mob drops found in mob_db.yml,mob_db.yml
+7282,3rd Quiz Entry,No valid mob drops found in mob_db.yml,mob_db.yml
+7283,4th Quiz Entry,No valid mob drops found in mob_db.yml,mob_db.yml
+7284,5th Quiz Entry,No valid mob drops found in mob_db.yml,mob_db.yml
+7285,Holy Threads,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/quests_ayothaya.txt; Quest requirement: countitem in npc/quests/quests_ayothaya.txt,mob_db.yml; npc/quests/quests_ayothaya.txt
+7286,Red Chile,Quest requirement: countitem in npc/quests/quests_ayothaya.txt; Quest requirement: delitem in npc/quests/quests_ayothaya.txt; Quest reward: getitem in npc/quests/quests_ayothaya.txt,npc/quests/quests_ayothaya.txt
+7287,Holier Threads,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/quests_ayothaya.txt; Quest requirement: countitem in npc/quests/quests_ayothaya.txt,mob_db.yml; npc/quests/quests_ayothaya.txt
+7288,Engagement Ring,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_ayothaya.txt; Quest requirement: delitem in npc/quests/quests_ayothaya.txt,mob_db.yml; npc/quests/quests_ayothaya.txt
+7289,Peridot,Quest requirement: countitem in npc/quests/lvl4_weapon_quest.txt; Quest requirement: delitem in npc/quests/lvl4_weapon_quest.txt; Quest reward: getitem in npc/quests/quests_ein.txt,npc/quests/lvl4_weapon_quest.txt; npc/quests/quests_ein.txt
+7290,Phlogopite,Quest requirement: countitem in npc/quests/lvl4_weapon_quest.txt; Quest requirement: delitem in npc/quests/lvl4_weapon_quest.txt; Quest reward: getitem in npc/quests/quests_ein.txt,npc/quests/lvl4_weapon_quest.txt; npc/quests/quests_ein.txt
+7291,Agate,Quest requirement: countitem in npc/quests/lvl4_weapon_quest.txt; Quest requirement: delitem in npc/quests/lvl4_weapon_quest.txt; Quest reward: getitem in npc/quests/quests_ein.txt,npc/quests/lvl4_weapon_quest.txt; npc/quests/quests_ein.txt
+7292,Muscovite,Quest requirement: countitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: delitem in npc/re/quests/newgears/2010_headgears.txt; Quest requirement: countitem in npc/quests/lvl4_weapon_quest.txt,npc/re/quests/newgears/2010_headgears.txt; npc/quests/lvl4_weapon_quest.txt
+7293,Rose Quartz,Instance reward: makeitem in npc/re/instances/DevilTower.txt; Quest requirement: countitem in npc/quests/lvl4_weapon_quest.txt; Quest requirement: delitem in npc/quests/lvl4_weapon_quest.txt,npc/re/instances/DevilTower.txt; npc/quests/lvl4_weapon_quest.txt
+7294,Turquoise,Quest requirement: countitem in npc/quests/lvl4_weapon_quest.txt; Quest requirement: delitem in npc/quests/lvl4_weapon_quest.txt; Quest reward: getitem in npc/quests/quests_ein.txt,npc/quests/lvl4_weapon_quest.txt; npc/quests/quests_ein.txt
+7295,Citrin,Quest requirement: countitem in npc/quests/lvl4_weapon_quest.txt; Quest requirement: delitem in npc/quests/lvl4_weapon_quest.txt; Quest reward: getitem in npc/quests/quests_ein.txt,npc/quests/lvl4_weapon_quest.txt; npc/quests/quests_ein.txt
+7296,Pyroxene,Quest requirement: countitem in npc/quests/lvl4_weapon_quest.txt; Quest requirement: delitem in npc/quests/lvl4_weapon_quest.txt; Quest reward: getitem in npc/quests/quests_ein.txt,npc/quests/lvl4_weapon_quest.txt; npc/quests/quests_ein.txt
+7297,Biotite,Quest requirement: countitem in npc/quests/lvl4_weapon_quest.txt; Quest requirement: delitem in npc/quests/lvl4_weapon_quest.txt; Quest reward: getitem in npc/quests/quests_moscovia.txt,npc/quests/lvl4_weapon_quest.txt; npc/quests/quests_moscovia.txt
+7298,Fig Leaf,Quest requirement: countitem in npc/custom/quests/may_hats.txt; Quest requirement: delitem in npc/custom/quests/may_hats.txt,npc/custom/quests/may_hats.txt
+7301,Tassel,Quest requirement: countitem in npc/quests/ninja_quests.txt; Quest requirement: delitem in npc/quests/ninja_quests.txt; Quest requirement: countitem in npc/quests/newgears/2005_headgears.txt,npc/quests/ninja_quests.txt; npc/quests/newgears/2005_headgears.txt
+7302,Krathong,No valid mob drops found in mob_db.yml,mob_db.yml
+7304,Witch's Spell Scroll,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7305,Symbol of the Nine Realms,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7306,Piece of Spirit,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7307,Spiritual Whispers,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7308,Witch's Tonic,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7309,Crow Wing,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7310,Free Ticket for Peco Ride,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Script reference: getitem in npc/other/turbo_track.txt,Name analysis; mob_db.yml
+7311,Free Ticket for Flyship,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Script reference: countitem in npc/airports/lighthalzen.txt,Name analysis; mob_db.yml
+7312,Jubilee,Event script: countitem in npc/events/christmas_2008.txt; Event script: delitem in npc/events/christmas_2008.txt; Quest requirement: countitem in npc/quests/quests_ein.txt,npc/events/christmas_2008.txt; npc/quests/quests_ein.txt
+7313,Witch's Medal,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/the_sign_quest.txt; Quest reward: getitem in npc/quests/the_sign_quest.txt,mob_db.yml; npc/quests/the_sign_quest.txt
+7314,The Sign,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7315,Dark Crystal Fragment,Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: delitem in npc/re/quests/quests_16_2.txt; Quest requirement: countitem in npc/quests/newgears/2005_headgears.txt,npc/re/quests/quests_16_2.txt; npc/quests/newgears/2005_headgears.txt
+7317,Rusty Screw,Quest requirement: countitem in npc/re/quests/eden/eden_111_120.txt; Quest requirement: delitem in npc/re/quests/eden/eden_111_120.txt; Quest requirement: countitem in npc/quests/quests_nameless.txt,npc/re/quests/eden/eden_111_120.txt; npc/quests/quests_nameless.txt
+7319,Used Iron Plate,Quest requirement: countitem in npc/re/quests/quests_16_2.txt; Quest requirement: delitem in npc/re/quests/quests_16_2.txt; Quest requirement: countitem in npc/re/quests/quests_15_1.txt,npc/re/quests/quests_16_2.txt; npc/re/quests/quests_15_1.txt
+7321,Crystal Fragment,Quest requirement: countitem in npc/re/quests/ninja_quests.txt; Quest requirement: delitem in npc/re/quests/ninja_quests.txt; Quest requirement: countitem in npc/re/quests/quests_16_2.txt,npc/re/quests/ninja_quests.txt; npc/re/quests/quests_16_2.txt
+7325,Flexible Tube,Quest requirement: countitem in npc/re/quests/pile_bunker.txt; Quest requirement: delitem in npc/re/quests/pile_bunker.txt; Quest requirement: countitem in npc/quests/quests_ein.txt,npc/re/quests/pile_bunker.txt; npc/quests/quests_ein.txt
+7326,Fluorescent Liquid,Quest requirement: countitem in npc/re/quests/quests_17_2.txt; Quest requirement: delitem in npc/re/quests/quests_17_2.txt; Quest requirement: countitem in npc/quests/quests_13_2.txt,npc/re/quests/quests_17_2.txt; npc/quests/quests_13_2.txt
+7328,Legend of Songkran,No valid mob drops found in mob_db.yml,mob_db.yml
+7329,Old Bronze Key,Quest-named: Name contains 'key'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/kiel_hyre_quest.txt,Name analysis; mob_db.yml
+7330,Mystic Orb,No valid mob drops found in mob_db.yml,mob_db.yml
+7331,Heaven Flower,No valid mob drops found in mob_db.yml,mob_db.yml
+7332,Complete Tablet,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7333,Prontera Tablet,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7334,Payon Tablet,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7335,Morocc Tablet,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7336,Geffen Tablet,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7337,Eye of Hellion,Quest requirement: countitem in npc/quests/eye_of_hellion.txt; Quest requirement: delitem in npc/quests/eye_of_hellion.txt,npc/quests/eye_of_hellion.txt
+7338,One-way Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7339,Commemorative Travel Card,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7340,Will of the Darkness,Quest requirement: countitem in npc/quests/quests_airship.txt; Quest requirement: delitem in npc/quests/quests_airship.txt,npc/quests/quests_airship.txt
+7341,Old Pendant,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7342,File Folder,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7343,Sealed File Folder,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7344,Shinokas Case File,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7345,Handcuffs,Quest requirement: countitem in npc/quests/quests_lighthalzen.txt; Quest requirement: delitem in npc/quests/quests_lighthalzen.txt; Quest requirement: countitem in npc/quests/quests_hugel.txt,npc/quests/quests_lighthalzen.txt; npc/quests/quests_hugel.txt
+7346,Ymir's Heart Piece,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7347,Research Chart,NPC Shop: countitem in npc/re/merchants/nightmare_biolab.txt; NPC Shop: delitem in npc/re/merchants/nightmare_biolab.txt; Quest requirement: countitem in npc/quests/quests_lighthalzen.txt,npc/re/merchants/nightmare_biolab.txt; npc/quests/quests_lighthalzen.txt
+7348,Membership Card,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/quests_lighthalzen.txt; Quest requirement: countitem in npc/quests/quests_lighthalzen.txt,mob_db.yml; npc/quests/quests_lighthalzen.txt
+7349,Archive Permit,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'permit',item_db_etc.yml; item_db_etc.yml
+7350,Pass,Quest-named: Name contains 'pass'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_lighthalzen.txt,Name analysis; mob_db.yml
+7351,Friend's Diary,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7352,Transparent Plate,Quest requirement: countitem in npc/quests/quests_juperos.txt; Quest requirement: delitem in npc/quests/quests_juperos.txt,npc/quests/quests_juperos.txt
+7353,Transparent Plate,Quest requirement: countitem in npc/quests/quests_juperos.txt; Quest requirement: delitem in npc/quests/quests_juperos.txt,npc/quests/quests_juperos.txt
+7354,Transparent Plate,Quest requirement: countitem in npc/quests/quests_juperos.txt; Quest requirement: delitem in npc/quests/quests_juperos.txt,npc/quests/quests_juperos.txt
+7355,Transparent Plate,Quest requirement: countitem in npc/quests/quests_juperos.txt; Quest requirement: delitem in npc/quests/quests_juperos.txt,npc/quests/quests_juperos.txt
+7356,Crest Piece,Quest requirement: countitem in npc/quests/quests_juperos.txt; Quest requirement: delitem in npc/quests/quests_juperos.txt; Quest reward: getitem in npc/quests/quests_juperos.txt,npc/quests/quests_juperos.txt
+7357,Crest Piece,Quest requirement: countitem in npc/quests/quests_juperos.txt; Quest requirement: delitem in npc/quests/quests_juperos.txt; Quest reward: getitem in npc/quests/quests_juperos.txt,npc/quests/quests_juperos.txt
+7358,Crest Piece,Quest requirement: countitem in npc/quests/quests_juperos.txt; Quest requirement: delitem in npc/quests/quests_juperos.txt; Quest reward: getitem in npc/quests/quests_juperos.txt,npc/quests/quests_juperos.txt
+7359,Crest Piece,Quest requirement: countitem in npc/quests/quests_juperos.txt; Quest requirement: delitem in npc/quests/quests_juperos.txt; Quest reward: getitem in npc/quests/quests_juperos.txt,npc/quests/quests_juperos.txt
+7360,RO Festival Invitation,No valid mob drops found in mob_db.yml,mob_db.yml
+7361,Lotto Ball 01,No valid mob drops found in mob_db.yml,mob_db.yml
+7362,Lotto Ball 02,No valid mob drops found in mob_db.yml,mob_db.yml
+7363,Lotto Ball 03,No valid mob drops found in mob_db.yml,mob_db.yml
+7364,Lotto Ball 04,No valid mob drops found in mob_db.yml,mob_db.yml
+7365,Lotto Ball 05,No valid mob drops found in mob_db.yml,mob_db.yml
+7366,Lotto Ball 06,No valid mob drops found in mob_db.yml,mob_db.yml
+7367,Lotto Ball 07,No valid mob drops found in mob_db.yml,mob_db.yml
+7368,Lotto Ball 08,No valid mob drops found in mob_db.yml,mob_db.yml
+7369,Lotto Ball 09,No valid mob drops found in mob_db.yml,mob_db.yml
+7370,Lotto Ball 10,No valid mob drops found in mob_db.yml,mob_db.yml
+7371,Lotto Ball 11,No valid mob drops found in mob_db.yml,mob_db.yml
+7372,Lotto Ball 12,No valid mob drops found in mob_db.yml,mob_db.yml
+7373,Lotto Ball 13,No valid mob drops found in mob_db.yml,mob_db.yml
+7374,Lotto Ball 14,No valid mob drops found in mob_db.yml,mob_db.yml
+7375,Lotto Ball 15,No valid mob drops found in mob_db.yml,mob_db.yml
+7376,Lotto Ball 16,No valid mob drops found in mob_db.yml,mob_db.yml
+7377,Lotto Ball 17,No valid mob drops found in mob_db.yml,mob_db.yml
+7378,Lotto Ball 18,No valid mob drops found in mob_db.yml,mob_db.yml
+7379,Lotto Ball 19,No valid mob drops found in mob_db.yml,mob_db.yml
+7380,Lotto Ball 20,No valid mob drops found in mob_db.yml,mob_db.yml
+7381,Lotto Ball 21,No valid mob drops found in mob_db.yml,mob_db.yml
+7382,Lotto Ball 22,No valid mob drops found in mob_db.yml,mob_db.yml
+7383,Lotto Ball 23,No valid mob drops found in mob_db.yml,mob_db.yml
+7384,Lotto Ball 24,No valid mob drops found in mob_db.yml,mob_db.yml
+7385,Lotto Ball 25,No valid mob drops found in mob_db.yml,mob_db.yml
+7386,Lotto Ball 26,No valid mob drops found in mob_db.yml,mob_db.yml
+7387,Lotto Ball 27,No valid mob drops found in mob_db.yml,mob_db.yml
+7388,Lotto Ball 28,No valid mob drops found in mob_db.yml,mob_db.yml
+7389,Lotto Ball 29,No valid mob drops found in mob_db.yml,mob_db.yml
+7390,Lotto Ball 30,No valid mob drops found in mob_db.yml,mob_db.yml
+7391,Lotto Ball 31,No valid mob drops found in mob_db.yml,mob_db.yml
+7392,Lotto Ball 32,No valid mob drops found in mob_db.yml,mob_db.yml
+7393,Lotto Ball 33,No valid mob drops found in mob_db.yml,mob_db.yml
+7394,Lotto Ball 34,No valid mob drops found in mob_db.yml,mob_db.yml
+7395,Lotto Ball 35,No valid mob drops found in mob_db.yml,mob_db.yml
+7396,Lotto Ball 36,No valid mob drops found in mob_db.yml,mob_db.yml
+7397,Lotto Ball 37,No valid mob drops found in mob_db.yml,mob_db.yml
+7398,Lotto Ball 38,No valid mob drops found in mob_db.yml,mob_db.yml
+7399,Selamat,No valid mob drops found in mob_db.yml,mob_db.yml
+7400,Hari,No valid mob drops found in mob_db.yml,mob_db.yml
+7401,Kemerdekaan,No valid mob drops found in mob_db.yml,mob_db.yml
+7402,Republik,No valid mob drops found in mob_db.yml,mob_db.yml
+7403,Indonesia,No valid mob drops found in mob_db.yml,mob_db.yml
+7404,Ke-60,No valid mob drops found in mob_db.yml,mob_db.yml
+7405,Crushed Can,No valid mob drops found in mob_db.yml,mob_db.yml
+7406,Yuebing,No valid mob drops found in mob_db.yml,mob_db.yml
+7407,Yuebing,No valid mob drops found in mob_db.yml,mob_db.yml
+7408,Yuebing,No valid mob drops found in mob_db.yml,mob_db.yml
+7409,Yuebing,No valid mob drops found in mob_db.yml,mob_db.yml
+7410,Yuebing,No valid mob drops found in mob_db.yml,mob_db.yml
+7411,Yuebing,No valid mob drops found in mob_db.yml,mob_db.yml
+7412,Yuebing,No valid mob drops found in mob_db.yml,mob_db.yml
+7413,Yuebing,No valid mob drops found in mob_db.yml,mob_db.yml
+7414,Yuebing,No valid mob drops found in mob_db.yml,mob_db.yml
+7415,Summoning Stone,No valid mob drops found in mob_db.yml,mob_db.yml
+7416,Letter of Recommendation,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'letter',item_db_etc.yml; item_db_etc.yml
+7417,Written Request(A),Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7418,Written Request(B),Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7419,Embryo Creation Guide,No valid mob drops found in mob_db.yml,mob_db.yml
+7420,Skull,Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; mob_db.yml
+7421,Red Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7422,Yellow Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7423,Blue Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7424,Green Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7425,Black Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7426,Red Charm Stone,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7427,Yellow Charm Stone,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7428,Blue Charm Stone,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7429,Green Charm Stone,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7430,Black Charm Stone,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7431,Pile of Books,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7432,Leather Pouch,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7433,Blank Scroll,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_rachel.txt; Quest requirement: delitem in npc/quests/quests_rachel.txt,mob_db.yml; npc/quests/quests_rachel.txt
+7434,Elemental Potion Creation Guide,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/skills/alchemist_skills.txt; Quest requirement: countitem in npc/quests/skills/alchemist_skills.txt,mob_db.yml; npc/quests/skills/alchemist_skills.txt
+7444,Treasure Box,Quest reward: getitem in npc/quests/quests_13_2.txt,npc/quests/quests_13_2.txt
+7445,Green Bijou,Quest requirement: countitem in npc/quests/newgears/2006_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2006_headgears.txt,npc/quests/newgears/2006_headgears.txt
+7446,Blue Bijou,Quest requirement: countitem in npc/quests/newgears/2006_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2006_headgears.txt,npc/quests/newgears/2006_headgears.txt
+7447,Red Bijou,Quest requirement: countitem in npc/quests/newgears/2006_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2006_headgears.txt,npc/quests/newgears/2006_headgears.txt
+7448,Yellow Bijou,Quest requirement: countitem in npc/quests/newgears/2006_headgears.txt; Quest requirement: delitem in npc/quests/newgears/2006_headgears.txt,npc/quests/newgears/2006_headgears.txt
+7449,Bloody Page,Quest requirement: countitem in npc/re/quests/eden/eden_111_120.txt; Quest requirement: delitem in npc/re/quests/eden/eden_111_120.txt,npc/re/quests/eden/eden_111_120.txt
+7451,Fire Dragon Scale,Quest requirement: countitem in npc/re/quests/ninja_quests.txt; Quest requirement: delitem in npc/re/quests/ninja_quests.txt,npc/re/quests/ninja_quests.txt
+7452,Yellow Spice,No valid mob drops found in mob_db.yml,mob_db.yml
+7453,Sweet Sauce,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/re/quests/eden/eden_quests.txt; Quest requirement: delitem in npc/re/quests/eden/eden_quests.txt,mob_db.yml; npc/re/quests/eden/eden_quests.txt
+7454,Savory Sauce,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/re/quests/quests_malangdo.txt; Quest requirement: delitem in npc/re/quests/quests_malangdo.txt,mob_db.yml; npc/re/quests/quests_malangdo.txt
+7455,Spicy Sauce,No valid mob drops found in mob_db.yml,mob_db.yml
+7456,Red Spice,No valid mob drops found in mob_db.yml,mob_db.yml
+7457,Cooking Oil,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/cooking_quest.txt; Quest requirement: delitem in npc/quests/cooking_quest.txt,mob_db.yml; npc/quests/cooking_quest.txt
+7458,Fortune Horn,No valid mob drops found in mob_db.yml,mob_db.yml
+7459,Idul Fitri Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7460,Niflheim Express Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Event script: getitem in npc/events/halloween_2006.txt,Name analysis; mob_db.yml
+7461,Blue A Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7462,Blue E Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7463,Blue F Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7464,Blue H Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7465,Blue L Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7466,Blue N Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7467,Blue O Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7468,Blue P Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7469,Blue U Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7470,Blue W Card,No valid mob drops found in mob_db.yml; Event script: countitem in npc/events/RWC_2011.txt; Event script: delitem in npc/events/RWC_2011.txt,mob_db.yml; npc/events/RWC_2011.txt
+7471,Blue Y Card,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/cooking_quest.txt,mob_db.yml; npc/quests/cooking_quest.txt
+7472,Level 1 Cookbook,No valid mob drops found in mob_db.yml; Quest requirement: delitem in npc/quests/cooking_quest.txt; Quest reward: getitem in npc/quests/cooking_quest.txt,mob_db.yml; npc/quests/cooking_quest.txt
+7473,Level 2 Cookbook,No valid mob drops found in mob_db.yml; Quest requirement: delitem in npc/quests/cooking_quest.txt; Quest reward: getitem in npc/quests/cooking_quest.txt,mob_db.yml; npc/quests/cooking_quest.txt
+7474,Level 3 Cookbook,No valid mob drops found in mob_db.yml; Quest requirement: delitem in npc/quests/cooking_quest.txt; Quest reward: getitem in npc/quests/cooking_quest.txt,mob_db.yml; npc/quests/cooking_quest.txt
+7475,Level 4 Cookbook,No valid mob drops found in mob_db.yml; Quest requirement: delitem in npc/quests/cooking_quest.txt; Quest reward: getitem in npc/quests/cooking_quest.txt,mob_db.yml; npc/quests/cooking_quest.txt
+7476,Level 5 Cookbook,No valid mob drops found in mob_db.yml; Quest requirement: delitem in npc/quests/cooking_quest.txt; Quest reward: getitem in npc/quests/cooking_quest.txt,mob_db.yml; npc/quests/cooking_quest.txt
+7482,Pot,No valid mob drops found in mob_db.yml,mob_db.yml
+7483,Key of the Seal,Quest-named: Name contains 'key'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7484,Symbol of a Brave Warrior,Trade: NoDrop=true; Trade: NoTrade=true,item_db_etc.yml; item_db_etc.yml
+7485,Cloud General,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7486,Wind General,Trade: NoDrop=true; Trade: NoTrade=true,item_db_etc.yml; item_db_etc.yml
+7487,Culinary Wine,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7488,Delivery Package,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7489,Cottage Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7490,Letter to Elly,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'letter',item_db_etc.yml; item_db_etc.yml
+7491,Steel Box,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7492,Yellow Keycard,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7493,Golden Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7494,Luxurious Button,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7495,Blue Keycard,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7496,Red Keycard,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7497,Metal Fragment,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7498,Rosimier Mansion Keys,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7499,Family Portrait,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7500,Woman's Portrait,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7501,K.H's Letter,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'letter',item_db_etc.yml; item_db_etc.yml
+7502,James's Note,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7503,Man's Portrait,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7504,Power Device,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7505,Toy Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7506,Black Keycard,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7507,Solid Iron Piece,Quest requirement: countitem in npc/quests/kiel_hyre_quest.txt; Quest requirement: delitem in npc/quests/kiel_hyre_quest.txt,npc/quests/kiel_hyre_quest.txt
+7508,Allysia's Ring,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7509,Luxurious Keycard,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7511,Rune of Darkness,Instance reward: makeitem in npc/re/instances/DevilTower.txt; Quest requirement: countitem in npc/re/quests/quests_eclage.txt; Quest requirement: delitem in npc/re/quests/quests_eclage.txt,npc/re/instances/DevilTower.txt; npc/re/quests/quests_eclage.txt
+7514,Monster Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Script reference: getitem in npc/other/monster_race.txt,Name analysis; mob_db.yml
+7515,Prize Medal,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7516,Green Keycard,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7517,Gold Coin,No valid mob drops found in mob_db.yml,mob_db.yml
+7518,Women's Medal,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7519,Handsel,No valid mob drops found in mob_db.yml,mob_db.yml
+7520,Please Be Rich,No valid mob drops found in mob_db.yml,mob_db.yml
+7521,Flame Stone,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/ninja_quests.txt; Quest requirement: delitem in npc/quests/ninja_quests.txt,mob_db.yml; npc/quests/ninja_quests.txt
+7522,Ice Stone,No valid mob drops found in mob_db.yml,mob_db.yml
+7523,Wind Stone,No valid mob drops found in mob_db.yml,mob_db.yml
+7524,Shadow Orb,No valid mob drops found in mob_db.yml,mob_db.yml
+7525,Summer Festival Ticket,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'ticket',item_db_etc.yml; item_db_etc.yml
+7526,Manuscript Paper,No valid mob drops found in mob_db.yml,mob_db.yml
+7527,Book About True Life,Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; mob_db.yml
+7528,Lottery Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7529,Stolen Sandal,No valid mob drops found in mob_db.yml,mob_db.yml
+7530,Travel Brochure [Amatsu],Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7531,Travel Brochure [Kunlun],Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7532,Travel Brochure [Luoyang],Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7533,Travel Brochure [Ayothaya],Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7534,Amatsu Completed Photo Album,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7535,Kunlun Completed Photo Album,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7536,Luoyang Completed Photo Album,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7537,Ayothaya Completed Photo Album,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7538,Sand for Work,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7539,Poring Coin,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7540,Lotto Ball 39,No valid mob drops found in mob_db.yml,mob_db.yml
+7541,Lotto Ball 40,No valid mob drops found in mob_db.yml,mob_db.yml
+7542,Lotto Ball 41,No valid mob drops found in mob_db.yml,mob_db.yml
+7543,Lotto Ball 42,No valid mob drops found in mob_db.yml,mob_db.yml
+7544,Lotto Ball 43,No valid mob drops found in mob_db.yml,mob_db.yml
+7545,Lotto Ball 44,No valid mob drops found in mob_db.yml,mob_db.yml
+7546,Lotto Ball 45,No valid mob drops found in mob_db.yml,mob_db.yml
+7547,Soccer Ball,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7548,Soccer Shoes,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7549,Brazilian Flag,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7550,6.13 Ticket,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'ticket',item_db_etc.yml; item_db_etc.yml
+7551,6.18 Ticket,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'ticket',item_db_etc.yml; item_db_etc.yml
+7552,6.22 Ticket,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'ticket',item_db_etc.yml; item_db_etc.yml
+7553,Lotus Flower,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7554,Striped Candle,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7555,Green Incense,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7556,Longing Heart,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7557,Invitation Letter,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'letter',item_db_etc.yml; item_db_etc.yml
+7558,Invitation Ticket,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'ticket',item_db_etc.yml; item_db_etc.yml
+7559,Key to the Secret Garden,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7560,Longing Heart,No valid mob drops found in mob_db.yml,mob_db.yml
+7561,Glacial Heart,Quest requirement: countitem in npc/quests/quests_rachel.txt; Quest requirement: delitem in npc/quests/quests_rachel.txt; Quest requirement: countitem in npc/quests/quests_morocc.txt,npc/quests/quests_rachel.txt; npc/quests/quests_morocc.txt
+7562,Ice Scale,Quest requirement: countitem in npc/re/quests/ninja_quests.txt; Quest requirement: delitem in npc/re/quests/ninja_quests.txt; Quest requirement: countitem in npc/quests/quests_rachel.txt,npc/re/quests/ninja_quests.txt; npc/quests/quests_rachel.txt
+7563,Bloody Rune,Quest requirement: countitem in npc/re/quests/quests_eclage.txt; Quest requirement: delitem in npc/re/quests/quests_eclage.txt; Quest requirement: countitem in npc/quests/quests_13_1.txt,npc/re/quests/quests_eclage.txt; npc/quests/quests_13_1.txt
+7564,Rotten Meat,Quest requirement: countitem in npc/re/quests/quests_illusion_dungeons.txt; Quest requirement: delitem in npc/re/quests/quests_illusion_dungeons.txt,npc/re/quests/quests_illusion_dungeons.txt
+7569,Wind Hammer,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7570,Temple Lottery Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/quests_rachel.txt,Name analysis; mob_db.yml
+7571,Bruspetti's Diary,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_rachel.txt; Quest requirement: delitem in npc/quests/quests_rachel.txt,mob_db.yml; npc/quests/quests_rachel.txt
+7572,Ashy Necklace,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7573,Sparkling Necklace,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7574,Freezing Snow Powder,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/quests_rachel.txt; Quest requirement: countitem in npc/quests/quests_rachel.txt,mob_db.yml; npc/quests/quests_rachel.txt
+7575,Red Jewel,Trade: NoDrop=true; Trade: NoTrade=true; Quest requirement: countitem in npc/quests/quests_13_2.txt,item_db_etc.yml; item_db_etc.yml
+7576,Blue Jewel,Trade: NoDrop=true; Trade: NoTrade=true; Quest requirement: countitem in npc/quests/quests_13_2.txt,item_db_etc.yml; item_db_etc.yml
+7577,Yellow Jewel,Trade: NoDrop=true; Trade: NoTrade=true,item_db_etc.yml; item_db_etc.yml
+7579,Silk Handkerchief of Zhi Nu,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7580,Black Marble,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7581,Celebration Document,No valid mob drops found in mob_db.yml,mob_db.yml
+7583,Evil Mind,Trade: NoDrop=true; Trade: NoTrade=true,item_db_etc.yml; item_db_etc.yml
+7584,Guard's First Proof,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'proof',item_db_etc.yml; item_db_etc.yml
+7585,Guard's Second Proof,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'proof',item_db_etc.yml; item_db_etc.yml
+7586,Guard's Third Proof,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'proof',item_db_etc.yml; item_db_etc.yml
+7587,Guard's Fourth Proof,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'proof',item_db_etc.yml; item_db_etc.yml
+7588,IPOD Coupon,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7589,Lettered Moon Snack 01,No valid mob drops found in mob_db.yml,mob_db.yml
+7590,Lettered Moon Snack 02,No valid mob drops found in mob_db.yml,mob_db.yml
+7591,Lettered Moon Snack 03,No valid mob drops found in mob_db.yml,mob_db.yml
+7592,Lettered Moon Snack 04,No valid mob drops found in mob_db.yml,mob_db.yml
+7593,Lettered Moon Snack 05,No valid mob drops found in mob_db.yml,mob_db.yml
+7594,Sonia's Letter,Quest-named: Name contains 'letter'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7595,Special Sword,No valid mob drops found in mob_db.yml,mob_db.yml
+7596,Special Shield,No valid mob drops found in mob_db.yml,mob_db.yml
+7597,Magic Stone,No valid mob drops found in mob_db.yml,mob_db.yml
+7603,RO Party Invitation Ticket,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'ticket',item_db_etc.yml; item_db_etc.yml
+7604,Flour,No valid mob drops found in mob_db.yml,mob_db.yml
+7605,Chicken Egg,No valid mob drops found in mob_db.yml; Event script: getitem in npc/events/easter_2008.txt; Event script: countitem in npc/events/easter_2008.txt,mob_db.yml; npc/events/easter_2008.txt
+7606,Token of the Ox,Quest-named: Name contains 'token'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7608,Premium Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7609,Pumpkin Mojo,Event script: countitem in npc/events/halloween_2006.txt; Event script: delitem in npc/events/halloween_2006.txt,npc/events/halloween_2006.txt
+7610,Food Exchange Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7611,Symbol of Fox,No valid mob drops found in mob_db.yml,mob_db.yml
+7612,Heart of Queen Fox,No valid mob drops found in mob_db.yml,mob_db.yml
+7614,Wrapping Paper,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7615,MVP Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7616,Miniboss Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7617,Monster Voucher,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7618,Monster Crystal,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7619,Enriched Elunium,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7620,Enriched Oridecon,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7621,Token Of Siegfried,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'token',item_db_etc.yml; item_db_etc.yml
+7622,Hairstyle Coupon,Trade: NoDrop=true; No valid mob drops found in mob_db.yml; NPC Shop: countitem in npc/re/merchants/cashmall.txt,item_db_etc.yml; mob_db.yml
+7623,Ticket Of Identification,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'ticket',item_db_etc.yml; item_db_etc.yml
+7624,Spring Stanza23,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7625,Registration Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7626,Bubble Gum Token,Quest-named: Name contains 'token'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7627,Sage Key,Quest-named: Name contains 'key'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7628,Idiot Key,Quest-named: Name contains 'key'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7629,Pink Gift Box,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7630,Clean Beach Brush,No valid mob drops found in mob_db.yml,mob_db.yml
+7631,Trash Debris,No valid mob drops found in mob_db.yml,mob_db.yml
+7635,Sachet,No valid mob drops found in mob_db.yml,mob_db.yml
+7702,Special Cogwheel,No valid mob drops found in mob_db.yml,mob_db.yml
+7704,Broken Thermometer,No valid mob drops found in mob_db.yml; Quest requirement: delitem in npc/quests/quests_veins.txt; Quest requirement: countitem in npc/quests/quests_veins.txt,mob_db.yml; npc/quests/quests_veins.txt
+7705,Note of Geologist,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/quests_veins.txt; Quest requirement: delitem in npc/quests/quests_veins.txt,mob_db.yml; npc/quests/quests_veins.txt
+7706,Broken Carrot Juice,No valid mob drops found in mob_db.yml,mob_db.yml
+7707,Broken Banana Juice,No valid mob drops found in mob_db.yml,mob_db.yml
+7708,Broken Apple Juice,No valid mob drops found in mob_db.yml,mob_db.yml
+7709,Broken Grape Juice,No valid mob drops found in mob_db.yml,mob_db.yml
+7710,Black Gemstone,No valid mob drops found in mob_db.yml,mob_db.yml
+7711,Event Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7712,Nokia 5500,No valid mob drops found in mob_db.yml,mob_db.yml
+7713,Blue A(2) Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7714,Blue R(2) Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7715,Handmade Chocolate Recipe,No valid mob drops found in mob_db.yml,mob_db.yml
+7716,Chocolate Strawberry Recipe,No valid mob drops found in mob_db.yml,mob_db.yml
+7717,Chocolate Tart Recipe,No valid mob drops found in mob_db.yml,mob_db.yml
+7718,Cacao Bean,No valid mob drops found in mob_db.yml,mob_db.yml
+7719,Blue G Card,No valid mob drops found in mob_db.yml,mob_db.yml
+7720,Gold Coin,Event script: countitem in npc/events/StPatrick_2008.txt; Event script: delitem in npc/events/StPatrick_2008.txt; Event script: getitem in npc/events/StPatrick_2008.txt,npc/events/StPatrick_2008.txt
+7721,Treasure Box,Event script: delitem in npc/events/StPatrick_2008.txt; Event script: getitem in npc/events/StPatrick_2008.txt,npc/events/StPatrick_2008.txt
+7722,Debt Note,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_nameless.txt; Quest requirement: delitem in npc/quests/quests_nameless.txt,mob_db.yml; npc/quests/quests_nameless.txt
+7723,Diamond of Ruin,No valid mob drops found in mob_db.yml; Quest requirement: delitem in npc/quests/quests_nameless.txt; Quest reward: getitem in npc/quests/quests_nameless.txt,mob_db.yml; npc/quests/quests_nameless.txt
+7724,Forbidden Secret Art,No valid mob drops found in mob_db.yml; Quest requirement: delitem in npc/quests/quests_nameless.txt; Quest reward: getitem in npc/quests/quests_nameless.txt,mob_db.yml; npc/quests/quests_nameless.txt
+7725,Unlucky Emerald,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_nameless.txt; Quest reward: getitem in npc/quests/quests_nameless.txt,mob_db.yml; npc/quests/quests_nameless.txt
+7726,Token of King,Quest-named: Name contains 'token'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_nameless.txt,Name analysis; mob_db.yml
+7727,HP Doctor Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7728,SP Doctor Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7729,Rok Star Badge,Quest-named: Name contains 'badge'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7730,Mission Ticket 1,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7731,Mission Ticket 2,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7732,Mission Ticket 3,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7733,Mission Ticket 4,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7734,Mission Ticket 5,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7735,Mission Ticket 6,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7736,Mission Ticket 7,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7737,Mission Ticket 8,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7738,Mission Ticket 9,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7739,Mission Ticket 10,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7740,Mission Ticket 11,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7741,Mission Ticket 12,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/partyrelay.txt,Name analysis; mob_db.yml
+7755,Research Note,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/quests_nameless.txt; Quest requirement: countitem in npc/quests/quests_nameless.txt,mob_db.yml; npc/quests/quests_nameless.txt
+7756,Sealed Book,No valid mob drops found in mob_db.yml,mob_db.yml
+7757,Mithril,No valid mob drops found in mob_db.yml,mob_db.yml
+7758,Star Crystal,No valid mob drops found in mob_db.yml,mob_db.yml
+7759,Geologist's Report,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7760,Yaga's Magic Book,No valid mob drops found in mob_db.yml,mob_db.yml
+7761,Magic Gourd Bottle,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_moscovia.txt; Quest requirement: delitem in npc/quests/quests_moscovia.txt,mob_db.yml; npc/quests/quests_moscovia.txt
+7762,Yaga's Pestle,Quest requirement: countitem in npc/quests/quests_moscovia.txt; Quest requirement: delitem in npc/quests/quests_moscovia.txt,npc/quests/quests_moscovia.txt
+7763,Sticky Herb,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_moscovia.txt; Quest requirement: delitem in npc/quests/quests_moscovia.txt,mob_db.yml; npc/quests/quests_moscovia.txt
+7764,High Strength Adhesive,No valid mob drops found in mob_db.yml; Quest requirement: delitem in npc/quests/quests_moscovia.txt; Quest reward: getitem in npc/quests/quests_moscovia.txt,mob_db.yml; npc/quests/quests_moscovia.txt
+7765,Baba Yaga's Secret Medicine,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/quests_moscovia.txt; Quest requirement: countitem in npc/quests/quests_moscovia.txt,mob_db.yml; npc/quests/quests_moscovia.txt
+7766,Bok Choy,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7767,Green Maiden's Cake,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7768,Squid,No valid mob drops found in mob_db.yml,mob_db.yml
+7769,Egg Yolk,No valid mob drops found in mob_db.yml,mob_db.yml
+7770,Sweet Rice,No valid mob drops found in mob_db.yml; Event script: countitem in npc/events/lunar_2008.txt; Event script: delitem in npc/events/lunar_2008.txt,mob_db.yml; npc/events/lunar_2008.txt
+7771,Lotus Leaf,No valid mob drops found in mob_db.yml,mob_db.yml
+7772,String,No valid mob drops found in mob_db.yml,mob_db.yml
+7773,War Badge,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'badge',item_db_etc.yml; item_db_etc.yml
+7774,Green Maiden Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7775,Spring Rabbit Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7776,Gym Pass,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'pass',item_db_etc.yml; item_db_etc.yml
+7777,Sealed Golden Box,No valid mob drops found in mob_db.yml,mob_db.yml
+7778,Sealed Silver Box,No valid mob drops found in mob_db.yml,mob_db.yml
+7779,Golden Key,Quest-named: Name contains 'key'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7780,Silver Key,Quest-named: Name contains 'key'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7782,Episode 13.1 Poporing Key,Quest-named: Name contains 'key',Name analysis
+7783,Episode 13.2 Poring Key,Quest-named: Name contains 'key',Name analysis
+7784,Free Coupon 1,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7785,Free Coupon 2,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7786,Free Coupon 3,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7787,Free Coupon 4,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7788,Free Coupon 5,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7789,Free Coupon 6,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7790,Free Coupon 7,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7791,Free Coupon 8,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7792,Guyak,No valid mob drops found in mob_db.yml,mob_db.yml
+7793,Golden Apple,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7794,The Crow of Destiny,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7795,Mammi's Photo Album,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/quests/quests_morocc.txt; Quest requirement: countitem in npc/quests/quests_morocc.txt,mob_db.yml; npc/quests/quests_morocc.txt
+7796,Author's Autograph,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_morocc.txt; Quest requirement: delitem in npc/quests/quests_morocc.txt,mob_db.yml; npc/quests/quests_morocc.txt
+7797,Author's Memo,No valid mob drops found in mob_db.yml; Quest requirement: countitem in npc/quests/quests_morocc.txt; Quest requirement: delitem in npc/quests/quests_morocc.txt,mob_db.yml; npc/quests/quests_morocc.txt
+7798,Fragment of Darkness,Quest requirement: countitem in npc/re/quests/quests_eclage.txt; Quest requirement: delitem in npc/re/quests/quests_eclage.txt; Instance reward: countitem in npc/instances/SealedShrine.txt,npc/re/quests/quests_eclage.txt; npc/instances/SealedShrine.txt
+7799,Crystal of Darkness,Instance reward: countitem in npc/instances/SealedShrine.txt; Instance reward: delitem in npc/instances/SealedShrine.txt,npc/instances/SealedShrine.txt
+7800,Golden Charm Apple,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7801,Girl's Letter,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'letter',item_db_etc.yml; item_db_etc.yml
+7802,Signature Notebook,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7803,Beginner's Field Manual,No valid mob drops found in mob_db.yml,mob_db.yml
+7805,Brown Jenoss's Family Ring,No valid mob drops found in mob_db.yml,mob_db.yml
+7806,God Anvil,No valid mob drops found in mob_db.yml,mob_db.yml
+7807,God Mineral,No valid mob drops found in mob_db.yml,mob_db.yml
+7808,God Hammer,No valid mob drops found in mob_db.yml,mob_db.yml
+7809,God Furnace,No valid mob drops found in mob_db.yml,mob_db.yml
+7810,Symbol of Richness,No valid mob drops found in mob_db.yml,mob_db.yml
+7811,Anvil,No valid mob drops found in mob_db.yml,mob_db.yml
+7812,Symbol of Bravery,No valid mob drops found in mob_db.yml,mob_db.yml
+7813,Red Jenoss's Family Ring,No valid mob drops found in mob_db.yml,mob_db.yml
+7814,Green Jenoss's Family Ring,No valid mob drops found in mob_db.yml,mob_db.yml
+7815,Blue Jenoss's Family Ring,No valid mob drops found in mob_db.yml,mob_db.yml
+7816,Symbol of Faith,No valid mob drops found in mob_db.yml,mob_db.yml
+7817,Symbol of Peace,No valid mob drops found in mob_db.yml,mob_db.yml
+7818,Jessur's Necklace,No valid mob drops found in mob_db.yml,mob_db.yml
+7819,Nokia 5300,No valid mob drops found in mob_db.yml,mob_db.yml
+7820,Piece of Morocc Skin,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7821,Green Apple,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7822,Whole Barbecue,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7823,Meat Veg Skewer,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7824,Spirit Liquor,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7825,Heroic Stone,No valid mob drops found in mob_db.yml,mob_db.yml
+7826,Continental Guard Paper,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7827,Mineral Evals,No valid mob drops found in mob_db.yml,mob_db.yml
+7828,Bravery Badge,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'badge',item_db_etc.yml; item_db_etc.yml
+7829,Valor Badge,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'badge',item_db_etc.yml; item_db_etc.yml
+7831,Valkyrie's Token,Quest-named: Name contains 'token',Name analysis
+7839,Crystal Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7840,Valkyrie's Gift,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7841,Stained Piece Of Paper,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7842,Torn Piece Of Paper,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7843,Old Piece Of Paper,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7844,Burnt Pieces Of Paper,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7845,Copy Of Spotted Paper,No valid mob drops found in mob_db.yml,mob_db.yml
+7846,Copy Of Torn Paper,No valid mob drops found in mob_db.yml,mob_db.yml
+7847,Copy Of Old Paper,No valid mob drops found in mob_db.yml,mob_db.yml
+7848,Copy Of Burnt Paper,No valid mob drops found in mob_db.yml,mob_db.yml
+7851,Wii Raffle Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7852,Divx Player Raffle Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7853,iPod nano Raffle Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7854,Comodo Festival Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7855,Heart,No valid mob drops found in mob_db.yml,mob_db.yml
+7856,Girl's Bouquet,No valid mob drops found in mob_db.yml,mob_db.yml
+7857,Hand-made Kitty Doll,No valid mob drops found in mob_db.yml,mob_db.yml
+7859,Game Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7863,Special Gold,Trade: NoDrop=true; Trade: NoTrade=true,item_db_etc.yml; item_db_etc.yml
+7864,Love Flower,Event script: countitem in npc/events/valentinesday_2012.txt; Event script: delitem in npc/events/valentinesday_2012.txt,npc/events/valentinesday_2012.txt
+7865,Gold Pouch,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7866,Certificate,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'certificate',item_db_etc.yml; item_db_etc.yml
+7867,Sesame Bag,No valid mob drops found in mob_db.yml,mob_db.yml
+7868,Fresh Water,No valid mob drops found in mob_db.yml,mob_db.yml
+7869,Rice Pouch,No valid mob drops found in mob_db.yml; Event script: countitem in npc/events/lunar_2008.txt; Event script: delitem in npc/events/lunar_2008.txt,mob_db.yml; npc/events/lunar_2008.txt
+7870,Corn,No valid mob drops found in mob_db.yml,mob_db.yml
+7871,Bean Bag,No valid mob drops found in mob_db.yml,mob_db.yml
+7872,Herb,No valid mob drops found in mob_db.yml,mob_db.yml
+7873,MVP Monster Scroll,No valid mob drops found in mob_db.yml,mob_db.yml
+7874,Create Monster Scroll,No valid mob drops found in mob_db.yml,mob_db.yml
+7875,Pirate Treasure,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7876,Golden Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7877,Red Ring,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7878,Lusalka's Hair,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7879,Golden Thread,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7880,Baba Yaga's Silver Spoon,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7881,Mystery Magic Book,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7882,Sharp Branch,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7883,Wooden Flute,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7884,Jade Plate,Trade: NoDrop=true; Trade: NoTrade=true,item_db_etc.yml; item_db_etc.yml
+7885,Sacred Arrow,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7886,Bean Paste,No valid mob drops found in mob_db.yml,mob_db.yml
+7887,Dried Fruit Box,No valid mob drops found in mob_db.yml,mob_db.yml
+7889,Chicken Feed,No valid mob drops found in mob_db.yml,mob_db.yml
+7891,Mug,No valid mob drops found in mob_db.yml,mob_db.yml
+7892,Charcoal,No valid mob drops found in mob_db.yml,mob_db.yml
+7893,Sulphur,No valid mob drops found in mob_db.yml,mob_db.yml
+7894,Nitrogen Acid,No valid mob drops found in mob_db.yml,mob_db.yml
+7895,Rama5 Book,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7896,Loykrathong Book,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7897,Constitution Book,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7898,VV Strong Balmung,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7899,Dagger Of Psychic,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7900,Jonathan Family Ring,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7901,Jillberriel Family Ring,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7902,Jessur Family Ring,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7903,Jenoss Family Ring,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7904,Piano Key,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'key',item_db_etc.yml; item_db_etc.yml
+7905,Rok Star Badge,Quest-named: Name contains 'badge'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7906,Poppy Wreath,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7907,Bobbin Of Goddess,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7908,Louise's Beauty Coupon,No valid mob drops found in mob_db.yml,mob_db.yml
+7909,Stolen Cookie,No valid mob drops found in mob_db.yml; Event script: countitem in npc/events/christmas_2013.txt; Event script: delitem in npc/events/christmas_2013.txt,mob_db.yml; npc/events/christmas_2013.txt
+7910,Stolen Candy,No valid mob drops found in mob_db.yml; Event script: countitem in npc/events/christmas_2013.txt; Event script: delitem in npc/events/christmas_2013.txt,mob_db.yml; npc/events/christmas_2013.txt
+7911,Yulia's Hat,No valid mob drops found in mob_db.yml,mob_db.yml
+7912,Portable Snowman Machine,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7913,Battle Test Certificate,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'certificate',item_db_etc.yml; item_db_etc.yml
+7914,Ancient Language Document,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7915,Bronze Coin,No valid mob drops found in mob_db.yml; Event script: countitem in npc/events/StPatrick_2008.txt; Event script: delitem in npc/events/StPatrick_2008.txt,mob_db.yml; npc/events/StPatrick_2008.txt
+7916,Silver Coin,No valid mob drops found in mob_db.yml; Event script: countitem in npc/events/StPatrick_2008.txt; Event script: delitem in npc/events/StPatrick_2008.txt,mob_db.yml; npc/events/StPatrick_2008.txt
+7917,Magic Potion,No valid mob drops found in mob_db.yml,mob_db.yml
+7918,Fragment Of Memory,No valid mob drops found in mob_db.yml,mob_db.yml
+7919,Festival Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7920,He's Arsenal,No valid mob drops found in mob_db.yml,mob_db.yml
+7921,Essence Of Dragon,No valid mob drops found in mob_db.yml,mob_db.yml
+7922,RWC Voucher Items,Quest-named: Name contains 'voucher'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7923,Krathong,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7928,Brazil National Flag,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7929,Gold Coin,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7930,Devil's Cattle Ring,Trade: NoDrop=true; Trade: NoTrade=true,item_db_etc.yml; item_db_etc.yml
+7931,Poison Kit,No valid mob drops found in mob_db.yml,mob_db.yml
+7932,Poison Herb Nerium,No valid mob drops found in mob_db.yml,mob_db.yml
+7933,Poison Herb Rantana,No valid mob drops found in mob_db.yml,mob_db.yml
+7934,Poison Herb Makulata,No valid mob drops found in mob_db.yml,mob_db.yml
+7935,Poison Herb Seratum,No valid mob drops found in mob_db.yml,mob_db.yml
+7936,Poison Herb Scoporia,No valid mob drops found in mob_db.yml,mob_db.yml
+7937,Poison Herb Amoena,No valid mob drops found in mob_db.yml,mob_db.yml
+7938,Light Granule,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/re/quests/eden/eden_iro.txt,mob_db.yml; npc/re/quests/eden/eden_iro.txt
+7939,Elder Branch,No valid mob drops found in mob_db.yml; Quest reward: getitem in npc/re/quests/eden/eden_iro.txt,mob_db.yml; npc/re/quests/eden/eden_iro.txt
+7940,Special Alloy Trap,No valid mob drops found in mob_db.yml,mob_db.yml
+7941,Halloween Ticket,Quest-named: Name contains 'ticket'; No valid mob drops found in mob_db.yml; Event script: getitem in npc/events/halloween_2008.txt,Name analysis; mob_db.yml
+7942,Chico Cesar Letter,Quest-named: Name contains 'letter'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7943,Caskinya,No valid mob drops found in mob_db.yml,mob_db.yml
+7944,Sealed Box,Trade: NoDrop=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; mob_db.yml
+7945,Universal Amulet,Trade: NoDrop=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; mob_db.yml
+7946,Gold Ring Of Valentine,No valid mob drops found in mob_db.yml; Event script: countitem in npc/events/valentinesday_2009.txt; Event script: delitem in npc/events/valentinesday_2009.txt,mob_db.yml; npc/events/valentinesday_2009.txt
+7947,Silver Ring Of Valentine,No valid mob drops found in mob_db.yml; Event script: countitem in npc/events/valentinesday_2009.txt; Event script: delitem in npc/events/valentinesday_2009.txt,mob_db.yml; npc/events/valentinesday_2009.txt
+7948,Box,No valid mob drops found in mob_db.yml; Event script: countitem in npc/events/valentinesday_2009.txt; Event script: delitem in npc/events/valentinesday_2009.txt,mob_db.yml; npc/events/valentinesday_2009.txt
+7949,Woven Wool,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7950,Ayothaya Fest Ticket,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'ticket',item_db_etc.yml; item_db_etc.yml
+7951,Golden Tulip Flower,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7952,Gift Of Lomi Ross,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7953,Gift Of Juliet,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7954,Summer Festival Ticket,Trade: NoDrop=true; Trade: NoTrade=true; Quest-named: Name contains 'ticket',item_db_etc.yml; item_db_etc.yml
+7955,Lost Card1,No valid mob drops found in mob_db.yml,mob_db.yml
+7956,Lost Card2,No valid mob drops found in mob_db.yml,mob_db.yml
+7957,Lost Card3,No valid mob drops found in mob_db.yml,mob_db.yml
+7958,Lost Card4,No valid mob drops found in mob_db.yml,mob_db.yml
+7959,Ancient Gold Coin,Trade: NoDrop=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; mob_db.yml
+7960,Ancient Silver Coin,Trade: NoDrop=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; mob_db.yml
+7961,Weapon Exchange,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7962,Treasure Map1,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7963,Treasure Map2,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7964,Treasure Map3,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7965,Treasure Map4,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7966,Weird Parchment1,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7967,Weird Parchment2,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7968,Weird Parchment3,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7969,Weird Parchment4,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7970,Unwritten Letter1,No valid mob drops found in mob_db.yml,mob_db.yml
+7971,Unwritten Letter2,No valid mob drops found in mob_db.yml,mob_db.yml
+7972,Oath Day Letter,Quest-named: Name contains 'letter'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7973,Immortality Egg,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7974,Illusion Piece,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7975,Cupid Choco,No valid mob drops found in mob_db.yml,mob_db.yml
+7976,Gf Magic Coin,No valid mob drops found in mob_db.yml,mob_db.yml
+7977,Hunting Medal Badge,Quest-named: Name contains 'badge'; No valid mob drops found in mob_db.yml,Name analysis; mob_db.yml
+7978,Spring Stanza1,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7979,Spring Stanza2,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7980,Spring Stanza3,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7981,Spring Stanza4,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7982,Spring Stanza5,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7983,Spring Stanza6,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7984,Spring Stanza7,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7985,Spring Stanza8,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7986,Spring Stanza9,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7987,Spring Stanza10,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7988,Spring Stanza11,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7989,Spring Stanza12,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7990,Spring Stanza13,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7991,Spring Stanza14,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7992,Spring Stanza15,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7993,Spring Stanza16,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7994,Spring Stanza17,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7995,Spring Stanza18,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7996,Spring Stanza19,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7997,Spring Stanza20,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7998,Spring Stanza21,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml
+7999,Spring Stanza22,Trade: NoDrop=true; Trade: NoTrade=true; No valid mob drops found in mob_db.yml,item_db_etc.yml; item_db_etc.yml

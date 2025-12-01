@@ -1,0 +1,146 @@
+# ============================================================
+# VERIFIED PURE MOB DROP MATERIALS DATABASE
+# Pre-Renewal rAthena - Safe for Custom Content
+# ============================================================
+# Generated: 2025-12-01 02:55:29
+# Total verified items: 129
+# 
+# These items:
+#   - Exist in db/pre-re/item_db_etc.yml
+#   - Drop from mobs in db/pre-re/mob_db.yml
+#   - Have NO references in any NPC scripts
+#   - Are fully tradeable
+#   - Are safe for custom content
+# 
+# Format: ItemID,AegisName,ItemName,Weight
+# ============================================================
+
+902,Tree_Root,Tree Root,10
+903,Reptile_Tongue,Reptile Tongue,10
+922,Orcish_Cuspid,Orc's Fang,10
+928,Insect_Feeler,Insect Feeler,10
+967,Turtle_Shell,Turtle Shell,10
+1014,Jaws_Of_Ant,Ant Jaw,10
+1031,Limb_Of_Mantis,Mantis Scythe,10
+1034,Cobold_Hair,Blue Hair,10
+1039,Petite_DiablOfs_Wing,Little Evil Wing,10
+1044,Tooth_Of_,Zenorc's Fang,10
+1045,Sacred_Masque,Cultish Masque,10
+1056,Grit,Grit,10
+1063,Sharpened_Cuspid,Fang,10
+1098,Manacles,Manacles,10
+7006,Wing_Of_Red_Bat,Wing of Red Bat,10
+7007,Claw_Of_Rat,Claw of Rat,10
+7008,Stiff_Horn,Stiff Horn,10
+7009,Glitter_Shell,Glitter Shell,10
+7010,Tail_Of_Steel_Scorpion,Tail of Steel Scorpion,10
+7011,Claw_Of_Monkey,Claw of Monkey,10
+7016,Spoon_Stub,Spoon Stub,20
+7067,Stone_Piece,Stone Fragment,10
+7070,Broken_Shell,Broken Shell,10
+7071,Tatters_Clothes,Tattered Clothes,10
+7072,Rust_Suriken,Old Shuriken,10
+7095,Broken_Steel_Piece,Metal Fragment,10
+7107,Gaoat's_Skin,Antelope Skin,10
+7108,Boroken_Shiled_Piece,Piece of Shield,10
+7109,Shine_Spear_Blade,Shining Spear Blade,10
+7113,Broken_Pharaoh_Symbol,Broken Pharaoh Emblem,10
+7116,Harpy's_Claw,Harpy Talon,10
+7124,Sand_Lump,Sand Clump,10
+7125,Scropion's_Nipper,Scorpion Claw,10
+7154,Poison_Powder,Poisonous Powder,10
+7159,Tengu's_Nose,Tengu Nose,10
+7162,Cloud_Piece,Cloud Crumb,10
+7163,Sharp_Feeler,Hard Feeler,10
+7168,Great_Wing,Giant Butterfly Wing,10
+7169,Taegeuk_Plate,Ba Gua,10
+7171,Leopard_Skin,Leopard Skin,10
+7186,Thin_Stem,Thin Trunk,10
+7192,Blade_Of_Pinwheel,Vane,10
+7195,Air_Rifle,Slingshot,10
+7202,Beetle_Nipper,Pincher of Beetle,10
+7203,Solid_Twig,Strong Branch,10
+7208,Rusty_Cleaver,Rusty Kitchen Knife,10
+7209,Dullahan's_Helm,Helm of Dullahan,10
+7210,Dullahan_Armor,Armor Piece of Dullahan,10
+7211,Rojerta_Piece,Fragment of Rossata Stone,10
+7214,Bat_Cage,Bat Cage,10
+7215,Broken_Needle,Broken Needle,10
+7218,Rotten_Rope,Decomposed Rope,10
+7219,Striped_Socks,Striped Sock,10
+7221,Tangled_Chain,Tangled Chains,10
+7223,Distorted_Portrait,Contorted Self-Portrait,10
+7225,Pumpkin_Bucket,Pumpkin Lantern,10
+7226,Pill,Pellet,10
+7264,Dried_Sand,Dry Sand,10
+7265,Dragon_Horn,Dragon Horn,10
+7266,Dragon_Fang,Denture from Dragon Mask,10
+7268,Little_Blacky_Ghost,Little Ghost Doll,10
+7269,Bib,Pinafore,10
+7272,Meat_Dumpling_Doll,Rice Ball Doll,10
+7299,Bamboo_Basket,Straw Basket,10
+7300,Gemstone,Gemstone,10
+7303,Bag_Of_Rice,Straw Rice Bag,800
+7316,Long_Limb,Insect Leg,10
+7318,Old_Pick,Old Pick,10
+7320,Air_Pollutant,Dust Pollutant,10
+7322,Poisonous_Gas,Toxic Gas,10
+7323,Battered_Kettle,Battered Kettle,10
+7327,Headlamp,Flashlight,10
+7435,Golden_Bracelet,Golden Ornament,10
+7436,Piece_Of_Memory_Green,Fragment of Agony,10
+7437,Piece_Of_Memory_Purple,Fragment of Misery,10
+7438,Piece_Of_Memory_Blue,Fragment of Hatred,10
+7439,Piece_Of_Memory_Red,Fragment of Despair,10
+7440,Red_Feather,Red Feather,10
+7441,Blue_Feather,Blue Feather,10
+7442,Cursed_Seal,Cursed Seal,10
+7443,Tri_Headed_Dragon_Head,Three-Headed Dragon's Head,10
+7450,Piece_Of_Bone_Armor,Skeletal Armor Piece,10
+7477,Cookbook06,Level 6 Cookbook,10
+7478,Cookbook07,Level 7 Cookbook,10
+7479,Cookbook08,Level 8 Cookbook,10
+7480,Cookbook09,Level 9 Cookbook,10
+7481,Cookbook10,Level 10 Cookbook,10
+7510,Valhalla_Flower,Valhalla's Flower,10
+7512,Burnt_Parts,Burnt Part,10
+7513,Pocket_Watch,Pocket Watch,10
+7565,Sticky_Poison,Sticky Poison,10
+7566,Will_Of_Darkness_,Will of Red Darkness,10
+7567,Suspicious_Hat,Suspicious Hat,10
+7568,White_Mask,White Mask,10
+7578,Anti_Spell_Bead,Countermagic Crystal,10
+7582,Gem_Of_Ruin,Jewel of Destruction,10
+7607,Evil_Dragon_Head,Neck of Demon Dragon,10
+7613,Small_Rice_Dough,Small Rice Cake Dough,0
+7701,Dragon_Spirit,Soul,10
+7703,Piece_Of_Cogwheel,Piece of Cogwheel,10
+7742,Kaong,Kaong,10
+7743,Gulaman,Gulaman,10
+7744,Leche_Flan,Leche Flan,10
+7745,Ube_Jam,Ube Jam,10
+7746,Sago,Sago,10
+7747,Langka,Langka,10
+7748,Sweet_Bean,Sweet Beans,10
+7749,Sweet_Banana,Sweet Bananas,10
+7750,Macapuno,Macapuno,10
+7751,Old_White_Cloth,Old White Cloth,10
+7752,Clattering_Skull,Clattering Skull,10
+7753,Broken_Farming_Utensil,Broken Farming Utensil,10
+7754,Broken_Crown,Broken Crown,10
+7781,Heart_Box,Engrave Treasure Box,10
+7830,Goddess_Tear,Goddess Tear,500
+7832,Brynhild_Armor_Piece,Brynhild Armor Piece,500
+7833,Hero_Remains,Hero's Remains,500
+7834,Andvari_Ring,Andvari's Ring,500
+7835,Dusk_Glow,Dusk Glow,500
+7836,Dawn_Essence,Dawn Essence,500
+7837,Cold_Moonlight,Cold Moonlight,500
+7838,Hazy_Starlight,Hazy Starlight,500
+7849,Soul_Crystal,Soul Crystal,10
+7850,Wooden_Block_,Wooden Block,100
+7858,Dragonball_Yellow_,Dragonball Yellow,10
+7860,Peeps,Peeps,50
+7861,Jelly_Bean,Jelly Bean,50
+7862,Marshmallow,Marshmallow,50
+7888,Bag_Of_Nuts,Bag of Nuts,30
