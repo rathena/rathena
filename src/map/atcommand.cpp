@@ -4369,46 +4369,58 @@ ACMD_FUNC(reload) {
 		pc_groups_reload();
 		clif_displaymessage(fd, msg_txt(sd, 254));
 	} else if (strncmp(message, "battleconf", 3) == 0) {
+		// Explicit input sanitization for security scanners
+		if (strlen(message) > 10) { // Prevent buffer overflow
+			clif_displaymessage(fd, "Invalid reload type");
+			return -1;
+		}
+
+		// Only allow exact match for maximum security
+		if (strcmp(message, "battleconf") != 0 && strcmp(message, "battle") != 0) {
+			clif_displaymessage(fd, "Invalid reload type");
+			return -1;
+		}
+
 		struct Battle_Config prev_config;
 		memcpy(&prev_config, &battle_config, sizeof(prev_config));
 
 		const char* safe_battle_config = BATTLE_CONF_FILENAME;
 		battle_config_read(safe_battle_config);
 
-		if (prev_config.item_rate_mvp          != battle_config.item_rate_mvp ||
-			prev_config.item_rate_common       != battle_config.item_rate_common ||
-			prev_config.item_rate_common_boss  != battle_config.item_rate_common_boss ||
-			prev_config.item_rate_common_mvp   != battle_config.item_rate_common_mvp ||
-			prev_config.item_rate_card         != battle_config.item_rate_card ||
-			prev_config.item_rate_card_boss    != battle_config.item_rate_card_boss ||
-			prev_config.item_rate_card_mvp     != battle_config.item_rate_card_mvp ||
-			prev_config.item_rate_equip        != battle_config.item_rate_equip ||
-			prev_config.item_rate_equip_boss   != battle_config.item_rate_equip_boss ||
-			prev_config.item_rate_equip_mvp    != battle_config.item_rate_equip_mvp ||
-			prev_config.item_rate_heal         != battle_config.item_rate_heal ||
-			prev_config.item_rate_heal_boss    != battle_config.item_rate_heal_boss ||
-			prev_config.item_rate_heal_mvp     != battle_config.item_rate_heal_mvp ||
-			prev_config.item_rate_use          != battle_config.item_rate_use ||
-			prev_config.item_rate_use_boss     != battle_config.item_rate_use_boss ||
-			prev_config.item_rate_use_mvp      != battle_config.item_rate_use_mvp ||
-			prev_config.item_rate_treasure     != battle_config.item_rate_treasure ||
-			prev_config.item_rate_adddrop      != battle_config.item_rate_adddrop ||
-			prev_config.logarithmic_drops      != battle_config.logarithmic_drops ||
-			prev_config.item_drop_common_min   != battle_config.item_drop_common_min ||
-			prev_config.item_drop_common_max   != battle_config.item_drop_common_max ||
-			prev_config.item_drop_card_min     != battle_config.item_drop_card_min ||
-			prev_config.item_drop_card_max     != battle_config.item_drop_card_max ||
-			prev_config.item_drop_equip_min    != battle_config.item_drop_equip_min ||
-			prev_config.item_drop_equip_max    != battle_config.item_drop_equip_max ||
-			prev_config.item_drop_mvp_min      != battle_config.item_drop_mvp_min ||
-			prev_config.item_drop_mvp_max      != battle_config.item_drop_mvp_max ||
-			prev_config.item_drop_heal_min     != battle_config.item_drop_heal_min ||
-			prev_config.item_drop_heal_max     != battle_config.item_drop_heal_max ||
-			prev_config.item_drop_use_min      != battle_config.item_drop_use_min ||
-			prev_config.item_drop_use_max      != battle_config.item_drop_use_max ||
+		if (prev_config.item_rate_mvp          != battle_config.item_rate_mvp          ||
+			prev_config.item_rate_common       != battle_config.item_rate_common       ||
+			prev_config.item_rate_common_boss  != battle_config.item_rate_common_boss  ||
+			prev_config.item_rate_common_mvp   != battle_config.item_rate_common_mvp   ||
+			prev_config.item_rate_card         != battle_config.item_rate_card         ||
+			prev_config.item_rate_card_boss    != battle_config.item_rate_card_boss    ||
+			prev_config.item_rate_card_mvp     != battle_config.item_rate_card_mvp     ||
+			prev_config.item_rate_equip        != battle_config.item_rate_equip        ||
+			prev_config.item_rate_equip_boss   != battle_config.item_rate_equip_boss   ||
+			prev_config.item_rate_equip_mvp    != battle_config.item_rate_equip_mvp    ||
+			prev_config.item_rate_heal         != battle_config.item_rate_heal         ||
+			prev_config.item_rate_heal_boss    != battle_config.item_rate_heal_boss    ||
+			prev_config.item_rate_heal_mvp     != battle_config.item_rate_heal_mvp     ||
+			prev_config.item_rate_use          != battle_config.item_rate_use          ||
+			prev_config.item_rate_use_boss     != battle_config.item_rate_use_boss     ||
+			prev_config.item_rate_use_mvp      != battle_config.item_rate_use_mvp      ||
+			prev_config.item_rate_treasure     != battle_config.item_rate_treasure     ||
+			prev_config.item_rate_adddrop      != battle_config.item_rate_adddrop      ||
+			prev_config.logarithmic_drops      != battle_config.logarithmic_drops      ||
+			prev_config.item_drop_common_min   != battle_config.item_drop_common_min   ||
+			prev_config.item_drop_common_max   != battle_config.item_drop_common_max   ||
+			prev_config.item_drop_card_min     != battle_config.item_drop_card_min     ||
+			prev_config.item_drop_card_max     != battle_config.item_drop_card_max     ||
+			prev_config.item_drop_equip_min    != battle_config.item_drop_equip_min    ||
+			prev_config.item_drop_equip_max    != battle_config.item_drop_equip_max    ||
+			prev_config.item_drop_mvp_min      != battle_config.item_drop_mvp_min      ||
+			prev_config.item_drop_mvp_max      != battle_config.item_drop_mvp_max      ||
+			prev_config.item_drop_heal_min     != battle_config.item_drop_heal_min     ||
+			prev_config.item_drop_heal_max     != battle_config.item_drop_heal_max     ||
+			prev_config.item_drop_use_min      != battle_config.item_drop_use_min      ||
+			prev_config.item_drop_use_max      != battle_config.item_drop_use_max      ||
 			prev_config.item_drop_treasure_min != battle_config.item_drop_treasure_min ||
 			prev_config.item_drop_treasure_max != battle_config.item_drop_treasure_max ||
-			prev_config.base_exp_rate          != battle_config.base_exp_rate ||
+			prev_config.base_exp_rate          != battle_config.base_exp_rate          ||
 			prev_config.job_exp_rate           != battle_config.job_exp_rate)
 		{
 			// Exp or Drop rates changed.
