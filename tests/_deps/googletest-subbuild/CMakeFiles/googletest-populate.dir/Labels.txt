@@ -1,0 +1,14 @@
+# Target labels
+ googletest-populate
+# Source files and their labels
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/CMakeFiles/googletest-populate
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/CMakeFiles/googletest-populate.rule
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/CMakeFiles/googletest-populate-complete.rule
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build.rule
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure.rule
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download.rule
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install.rule
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir.rule
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch.rule
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test.rule
+/ai-mmorpg-world/rathena-AI-world/tests/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update.rule

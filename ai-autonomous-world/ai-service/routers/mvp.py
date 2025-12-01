@@ -9,14 +9,14 @@ from loguru import logger
 from datetime import datetime
 
 try:
-    from ai_service.models.mvp_behavior import (
+    from models.mvp_behavior import (
         MVPState, MVPAction, MVPBehaviorConfig, MVPCombatMemory,
         MVPSpawnCondition, MVPPersonality, MVPBehaviorState, CombatPattern
     )
-    from ai_service.agents.mvp_agent import MVPAgent
-    from ai_service.services.mvp_spawn_manager import get_spawn_manager
-    from ai_service.database import db
-    from ai_service.config import settings
+    from agents.mvp_agent import MVPAgent
+    from services.mvp_spawn_manager import get_spawn_manager
+    from database import db
+    from config import settings
 except ImportError:
     from models.mvp_behavior import (
         MVPState, MVPAction, MVPBehaviorConfig, MVPCombatMemory,
@@ -106,7 +106,7 @@ async def get_mvp_action(request: MVPActionRequest):
             )
             
             # Create agent
-            from ai_service.agents.base_agent import AgentContext
+            from agents.base_agent import AgentContext
             mvp_agents[request.mvp_id] = MVPAgent(
                 agent_id=request.mvp_id,
                 llm_provider=None,  # Will use default
@@ -117,7 +117,7 @@ async def get_mvp_action(request: MVPActionRequest):
         agent = mvp_agents[request.mvp_id]
         
         # Build context
-        from ai_service.agents.base_agent import AgentContext
+        from agents.base_agent import AgentContext
         context = AgentContext(
             npc_id=request.mvp_id,
             player_id="system",
@@ -180,7 +180,7 @@ async def register_mvp(request: MVPRegisterRequest):
         )
         
         # Create MVP agent
-        from ai_service.agents.base_agent import AgentContext
+        from agents.base_agent import AgentContext
         mvp_agents[request.mvp_id] = MVPAgent(
             agent_id=request.mvp_id,
             llm_provider=None,

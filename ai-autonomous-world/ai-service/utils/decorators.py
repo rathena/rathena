@@ -13,8 +13,8 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from ai_service.database import db
-from ai_service.config import settings
+from database import db
+from config import settings
 
 
 def handle_errors(

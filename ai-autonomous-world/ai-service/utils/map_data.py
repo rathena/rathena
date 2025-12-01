@@ -104,7 +104,8 @@ class MapDataManager:
             cache_time = cache_entry["timestamp"]
             
             # Check if cache is still valid
-            if datetime.utcnow() - cache_time < timedelta(seconds=self.cache_ttl):
+            from datetime import UTC
+            if datetime.now(UTC) - cache_time < timedelta(seconds=self.cache_ttl):
                 logger.debug(f"Using cached map data for {map_name}")
                 return cache_entry["walkable_map"]
             else:
@@ -117,7 +118,7 @@ class MapDataManager:
             # Update cache
             self.map_cache[map_name] = {
                 "walkable_map": walkable_map,
-                "timestamp": datetime.utcnow()
+                "timestamp": datetime.now(UTC)
             }
             logger.debug(f"Cached map data for {map_name}")
         

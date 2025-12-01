@@ -1,0 +1,147 @@
+# =============================================================================
+# AI IPC Service Configuration
+# =============================================================================
+# This file contains the configuration for the AI IPC polling service.
+# Copy this file to 'config.yaml' and modify values as needed.
+#
+# Environment variables take precedence over values in this file.
+# See config.py for the full list of supported environment variables.
+# =============================================================================
+
+# Service metadata
+service_name: ai_ipc_service
+version: "1.0.0"
+
+# =============================================================================
+# Database Configuration
+# =============================================================================
+# Connection settings for the MySQL/MariaDB database.
+# The service connects to the same database as rAthena to read/write
+# ai_requests and ai_responses tables.
+
+database:
+  # Database host (override with DB_HOST env var)
+  host: localhost
+  
+  # Database port (override with DB_PORT env var)
+  port: 3306
+  
+  # Database user (override with DB_USER env var)
+  user: ragnarok
+  
+  # Database password (override with DB_PASSWORD env var)
+  # IMPORTANT: For production, use environment variable instead of this file
+  password: ragnarok
+  
+  # Database name (override with DB_NAME env var)
+  database: ragnarok
+  
+  # Connection pool size (override with DB_POOL_SIZE env var)
+  # Should be at least equal to worker_count + 1
+  pool_size: 5
+  
+  # Connection recycle time in seconds
+  # Connections older than this will be recycled
+  pool_recycle: 3600
+  
+  # Connection timeout in seconds
+  connect_timeout: 10
+  
+  # Read timeout in seconds
+  read_timeout: 30
+  
+  # Write timeout in seconds
+  write_timeout: 30
+  
+  # Character set for the connection
+  charset: utf8mb4
+
+# =============================================================================
+# Polling Configuration
+# =============================================================================
+# Settings that control how the service polls for pending requests.
+
+polling:
+  # Interval between polls in milliseconds (override with POLL_INTERVAL_MS env var)
+  # Lower values = more responsive but higher database load
+  # Recommended: 50-200ms for low-latency, 500-1000ms for batch processing
+  interval_ms: 100
+  
+  # Number of requests to fetch per poll (override with BATCH_SIZE env var)
+  # Higher values = better throughput but higher memory usage
+  # Recommended: 10-100 depending on request complexity
+  batch_size: 50
+  
+  # Number of concurrent request processors (override with WORKER_COUNT env var)
+  # Should match expected concurrent request rate
+  # Recommended: 2-8 for most use cases
+  worker_count: 4
+  
+  # Maximum retry attempts for failed requests
+  max_retries: 3
+  
+  # Delay between retries in milliseconds
+  retry_delay_ms: 1000
+
+# =============================================================================
+# AI Service Configuration
+# =============================================================================
+# Settings for connecting to external AI/LLM services.
+# Used by the HTTP proxy handler to forward requests.
+
+ai_service:
+  # Base URL for the AI service (override with AI_SERVICE_BASE_URL env var)
+  # This is where HTTP proxy requests are forwarded
+  base_url: http://localhost:8000
+  
+  # Request timeout in seconds (override with AI_SERVICE_TIMEOUT env var)
+  timeout_seconds: 10
+  
+  # Maximum retries for failed AI service calls
+  max_retries: 2
+  
+  # Backoff factor for exponential retry delay
+  # delay = retry_backoff_factor * (2 ^ retry_number)
+  retry_backoff_factor: 0.5
+
+# =============================================================================
+# Logging Configuration
+# =============================================================================
+# Settings for service logging output.
+
+logging:
+  # Log level: DEBUG, INFO, WARNING, ERROR, CRITICAL (override with LOG_LEVEL env var)
+  level: INFO
+  
+  # Log format: 'json' for structured logging, 'text' for human-readable
+  # (override with LOG_FORMAT env var)
+  # Recommended: 'json' for production, 'text' for development
+  format: json
+  
+  # Include timestamp in log entries
+  include_timestamp: true
+  
+  # Include request_id in log entries for tracing
+  include_request_id: true
+
+# =============================================================================
+# Example Environment Variable Override
+# =============================================================================
+# You can override any of the above settings using environment variables:
+#
+# export DB_HOST=production-db.example.com
+# export DB_PORT=3306
+# export DB_USER=ragnarok
+# export DB_PASSWORD=your-secure-password
+# export DB_NAME=ragnarok
+# export DB_POOL_SIZE=10
+# export POLL_INTERVAL_MS=100
+# export BATCH_SIZE=50
+# export WORKER_COUNT=4
+# export AI_SERVICE_BASE_URL=http://ai-service.example.com:8000
+# export AI_SERVICE_TIMEOUT=30
+# export LOG_LEVEL=INFO
+# export LOG_FORMAT=json
+#
+# Or use a .env file with python-dotenv (loaded automatically if present)
+# =============================================================================

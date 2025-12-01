@@ -7,7 +7,7 @@ categorized by sensitivity level.
 
 from typing import List, Dict
 try:
-    from ai_service.models.information import InformationItem, InformationSensitivity
+    from models.information import InformationItem, InformationSensitivity
 except ModuleNotFoundError:
     from models.information import InformationItem, InformationSensitivity
 

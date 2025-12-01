@@ -78,6 +78,11 @@ fi
 ./configure
 print_success "Configure complete"
 
+print_step "Applying Makefile patches..."
+chmod +x fix-makefiles.sh
+./fix-makefiles.sh
+print_success "Makefile patches applied"
+
 print_step "Building rAthena server (this may take several minutes)..."
 make server -j$(nproc)
 if [ $? -eq 0 ]; then
@@ -99,7 +104,7 @@ print_success "All server executables verified"
 # ============================================
 print_header "PHASE 3: Verifying P2P Coordinator"
 
-cd p2p-coordinator
+cd src/p2p-coordinator
 
 print_step "Checking P2P coordinator virtual environment..."
 if [ ! -d "venv" ]; then
@@ -203,9 +208,9 @@ fi
 # ============================================
 print_header "PHASE 7: Starting P2P Coordinator Service"
 
-cd p2p-coordinator
-screen -dmS p2p-coordinator bash -c "source venv/bin/activate && cd coordinator-service && uvicorn main:app --host 0.0.0.0 --port 8001 --log-level info"
-cd ..
+cd src/p2p-coordinator
+# Start the C++ p2p-coordinator here if needed (update this section for C++ build/run)
+cd ../..
 
 sleep 3
 
@@ -303,7 +308,7 @@ print_info "To view service logs, use:"
 print_info "  screen -r rathena-login   # Login server"
 print_info "  screen -r rathena-char    # Char server"
 print_info "  screen -r rathena-map     # Map server"
-print_info "  screen -r p2p-coordinator # P2P coordinator"
+# print_info "  screen -r p2p-coordinator # P2P coordinator"
 print_info "  screen -r ai-service      # AI service"
 echo ""
 print_info "To detach from a screen session: Ctrl+A then D"

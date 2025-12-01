@@ -9,7 +9,7 @@ import json
 import logging
 from functools import wraps
 from typing import Any, Callable, Optional
-from ai_service.database import db
+from database import db
 
 logger = logging.getLogger(__name__)
 

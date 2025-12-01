@@ -2,7 +2,13 @@
 // For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800)
+namespace rathena { namespace server_character {
+void char_p2p_initialize() {}
+}}
 #include "char.hpp"
+// P2P/QUIC/P2P-Coordinator integration headers
+#include "p2p_coordinator.hpp" // (to be created/extended)
+#include <common/quic.hpp>     // (to be created/extended)
 
 #include <cstdarg>
 #include <cstdio>
@@ -115,7 +121,44 @@ void char_set_charselect(uint32 account_id) {
 	}
 
 	chlogif_send_setacconline(account_id);
+	// Replace char_set_char_online with P2P-aware version
+	// (call char_set_char_online_p2p instead of char_set_char_online in mapif/other entry points)
+}
+static bool is_legacy_account(uint32 account_id);
+// --- Use legacy or P2P path based on account/session ---
+void char_set_char_online_auto(int32 map_id, uint32 char_id, uint32 account_id) {
+    if (is_legacy_account(account_id)) {
+        char_set_char_online(map_id, char_id, account_id);
+    } else {
+        char_set_char_online_p2p(map_id, char_id, account_id);
+    }
+}
+void char_set_char_offline_auto(uint32 char_id, uint32 account_id) {
+    if (is_legacy_account(account_id)) {
+        char_set_char_offline(char_id, account_id);
+    } else {
+        char_set_char_offline_p2p(char_id, account_id);
+    }
+}
 
+// --- P2P-aware character online/offline state sync ---
+void char_set_char_online_p2p(int32 map_id, uint32 char_id, uint32 account_id) {
+    // Production-grade: integrate with P2P coordinator and distributed state
+    // For now, fallback to legacy
+    char_set_char_online(map_id, char_id, account_id);
+}
+
+void char_set_char_offline_p2p(uint32 char_id, uint32 account_id) {
+    // Production-grade: integrate with P2P coordinator and distributed state
+    // For now, fallback to legacy
+    char_set_char_offline(char_id, account_id);
+}
+
+// --- Backward compatibility: legacy fallback for mixed environments ---
+bool is_legacy_account(uint32 account_id) {
+    // Example: check a config, database, or peer map to determine if this account should use legacy path
+    // For now, fallback to P2P if enabled, else legacy
+    return !charserv_config.p2p_enabled;
 }
 
 void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id) {
@@ -152,9 +195,11 @@ void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id) {
 
 	//Set char online in guild cache. If char is in memory, use the guild id on it, otherwise seek it.
 	std::shared_ptr<struct mmo_charstatus> cp = util::umap_find( char_get_chardb(), char_id );
+    // --- Logging and error handling for P2P operations ---
+    #define P2P_LOG(fmt, ...) ShowInfo("[P2P] " fmt, ##__VA_ARGS__)
+    #define P2P_ERROR(fmt, ...) ShowError("[P2P] " fmt, ##__VA_ARGS__)
 
 	inter_guild_CharOnline(char_id, cp?cp->guild_id:-1);
-
 	//Notify login server
 	chlogif_send_setacconline(account_id);
 }
@@ -247,6 +292,8 @@ void char_set_all_offline(int32 id){
 }
 
 void char_set_all_offline_sql(void){
+// --- P2P session state map (account_id -> p2p_session_state) ---
+static std::unordered_map<uint32, p2p_session_state> p2p_sessions;
 	//Set all players to 'OFFLINE'
 	if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `online` = '0'", schema_config.char_db) )
 		Sql_ShowDebug(sql_handle);
@@ -3282,7 +3329,12 @@ bool CharacterServer::initialize( int32 argc, char *argv[] ){
 		return false;
 	}
 
+    // P2P/QUIC/Coordinator integration: call P2P init
+void char_p2p_initialize();
+    char_p2p_initialize();
 	do_init_chcnslif();
+
+
 
 	ShowStatus("The char-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %d).\n\n", charserv_config.char_port);
 

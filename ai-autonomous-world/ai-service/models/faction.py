@@ -72,8 +72,8 @@ class Faction(BaseModel):
     ideology: str = "neutral"
     goals: List[str] = Field(default_factory=list)
     
-    created_at: datetime = Field(default_factory=datetime.utcnow)
-    last_updated: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
+    last_updated: datetime = Field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
 
 
 class PlayerReputation(BaseModel):
@@ -89,7 +89,7 @@ class PlayerReputation(BaseModel):
     # Rewards unlocked
     unlocked_rewards: List[str] = Field(default_factory=list)
     
-    last_updated: datetime = Field(default_factory=datetime.utcnow)
+    last_updated: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
 
 class FactionEvent(BaseModel):
@@ -107,7 +107,7 @@ class FactionEvent(BaseModel):
     duration: Optional[int] = None  # Seconds
     severity: float = 0.5  # 0.0 to 1.0
     
-    created_at: datetime = Field(default_factory=datetime.utcnow)
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     expires_at: Optional[datetime] = None
 
 
@@ -135,7 +135,7 @@ class FactionConflict(BaseModel):
     # Objectives
     objectives: List[Dict[str, Any]] = Field(default_factory=list)
     
-    started_at: datetime = Field(default_factory=datetime.utcnow)
+    started_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
     ends_at: Optional[datetime] = None
 
 

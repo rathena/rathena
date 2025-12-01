@@ -9,15 +9,15 @@ import json
 
 from crewai import Agent
 try:
-    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
 except ModuleNotFoundError:
     from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-
+from models.npc_relationship import NPCRelationship, NPCInteraction, SharedInformation
 
 class WorldAgent(BaseAIAgent):
     """
     Specialized agent for world state analysis
-    
+
     Responsibilities:
     - Analyze world state changes
     - Determine impact on NPCs
@@ -25,8 +25,9 @@ class WorldAgent(BaseAIAgent):
     - Track economic trends
     - Monitor political changes
     - Assess environmental conditions
+    - Integrate with full NPC consciousness model (personality, goals, emotion, memory, reflection)
+    - Integrate social fabric: relationship, gossip, persuasion, social learning, reputation
     """
-    
     def __init__(self, agent_id: str, llm_provider: Any, config: Dict[str, Any]):
         """Initialize World Agent"""
         super().__init__(
@@ -35,25 +36,19 @@ class WorldAgent(BaseAIAgent):
             llm_provider=llm_provider,
             config=config
         )
-        
+        from agents.moral_alignment import MoralAlignment
+        self.moral_alignment = MoralAlignment()
         logger.info(f"World Agent {agent_id} initialized")
-    
+
     def _create_crew_agent(self) -> Agent:
         """Create CrewAI agent for world analysis"""
-        # Import CrewAI's LLM class
         from crewai import LLM
         import os
-
-        # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
         try:
-            from ai_service.config import settings
-
-            # Set Azure OpenAI environment variables for litellm
+            from config import settings
             os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key
             os.environ["AZURE_API_BASE"] = settings.azure_openai_endpoint
             os.environ["AZURE_API_VERSION"] = settings.azure_openai_api_version
-
-            # Use litellm format: azure/<deployment_name>
             llm = LLM(
                 model=f"azure/{settings.azure_openai_deployment}",
                 temperature=0.7,
@@ -63,32 +58,40 @@ class WorldAgent(BaseAIAgent):
         except Exception as e:
             logger.error(f"Failed to create Azure LLM: {e}")
             raise
-
         return Agent(
             role="World State Analyst",
             goal="Analyze world conditions and their impact on NPCs to create a living, reactive world",
             backstory="""You are an expert in systems thinking and world simulation. You understand how
             economic, political, and environmental factors interact and affect individuals. You excel at
             identifying patterns, predicting trends, and determining how global changes impact local
-            behavior. You help create a world that feels alive and responsive.""",
+            behavior. You help create a world that feels alive and responsive. You also understand social fabric, reputation, and emergent behavior.""",
             verbose=self.config.get("verbose", False),
             allow_delegation=False,
             llm=llm
         )
-    
+
     async def process(self, context: AgentContext) -> AgentResponse:
         """
         Analyze world state and determine impact
-        
+
         Args:
             context: AgentContext with world state information
-            
+
         Returns:
             AgentResponse with analysis results
         """
         try:
             operation = context.current_state.get("operation", "analyze")
-            
+
+            # --- Moral Alignment Integration ---
+            # Update alignment based on world event/operation
+            alignment_action = {
+                "type": f"world_{operation}",
+                "npc_id": context.npc_id if hasattr(context, "npc_id") else None,
+                "operation": operation
+            }
+            self.moral_alignment.update_from_action(alignment_action)
+
             if operation == "analyze":
                 result = await self._analyze_world_state(context)
             elif operation == "impact":
@@ -97,17 +100,15 @@ class WorldAgent(BaseAIAgent):
                 result = await self._generate_world_event(context)
             else:
                 raise ValueError(f"Unknown world operation: {operation}")
-            
             logger.info(f"World operation '{operation}' completed")
-            
             return AgentResponse(
                 agent_type=self.agent_type,
                 success=True,
-                data=result,
+                data={**result, "alignment": self.moral_alignment.to_dict()},
                 confidence=0.75,
-                reasoning=f"World {operation} operation completed"
+                reasoning=f"World {operation} operation completed and alignment updated",
+                metadata={"alignment": self.moral_alignment.to_dict()}
             )
-            
         except Exception as e:
             logger.error(f"World operation failed: {e}")
             return AgentResponse(
@@ -117,40 +118,39 @@ class WorldAgent(BaseAIAgent):
                 confidence=0.0,
                 reasoning=f"Error during world operation: {e}"
             )
-    
+
     async def _analyze_world_state(self, context: AgentContext) -> Dict[str, Any]:
-        """Analyze current world state"""
+        """Analyze current world state (now with consciousness and social context)"""
         world_state = context.world_state
-        
+        # Optionally, use personality, goal, emotion, memory for world-level analysis
         analysis = {
             "economy": self._analyze_economy(world_state.get("economy", {})),
             "politics": self._analyze_politics(world_state.get("politics", {})),
             "environment": self._analyze_environment(world_state.get("environment", {})),
             "overall_stability": 0.0,
-            "trends": []
+            "trends": [],
+            "npc_consciousness": {
+                "personality": self._build_personality_prompt(context.personality),
+                "goal_state": self._build_goal_prompt(getattr(context, "goal_state", None)),
+                "emotion_state": self._build_emotion_prompt(getattr(context, "emotion_state", None)),
+                "memory_state": self._build_memory_prompt(getattr(context, "memory_state", None))
+            },
+            "social_fabric": self._build_social_fabric_context(context)
         }
-        
-        # Calculate overall stability
         stability_scores = [
             analysis["economy"].get("stability", 0.5),
             analysis["politics"].get("stability", 0.5),
             analysis["environment"].get("stability", 0.5)
         ]
         analysis["overall_stability"] = sum(stability_scores) / len(stability_scores)
-        
-        # Identify trends
         analysis["trends"] = self._identify_trends(analysis)
-        
         logger.info(f"World state analyzed: stability={analysis['overall_stability']:.2f}")
-        
         return analysis
-    
+
     def _analyze_economy(self, economy_state: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze economic conditions"""
         inflation_rate = economy_state.get("inflation_rate", 0.0)
         trade_volume = economy_state.get("trade_volume", 0.0)
-        
-        # Determine economic health
         if inflation_rate < 0.05 and trade_volume > 500000:
             health = "thriving"
             stability = 0.9
@@ -163,7 +163,6 @@ class WorldAgent(BaseAIAgent):
         else:
             health = "crisis"
             stability = 0.2
-        
         return {
             "health": health,
             "stability": stability,
@@ -171,16 +170,12 @@ class WorldAgent(BaseAIAgent):
             "trade_volume": trade_volume,
             "description": f"Economy is {health} with {inflation_rate*100:.1f}% inflation"
         }
-    
+
     def _analyze_politics(self, politics_state: Dict[str, Any]) -> Dict[str, Any]:
         """Analyze political conditions"""
         faction_relations = politics_state.get("faction_relations", {})
         conflict_level = politics_state.get("conflict_level", 0)
-
-        # Log faction relations for monitoring
         logger.debug(f"Analyzing politics with {len(faction_relations)} faction relations")
-
-        # Determine political stability
         if conflict_level < 0.2:
             status = "peaceful"
             stability = 0.9
@@ -193,7 +188,6 @@ class WorldAgent(BaseAIAgent):
         else:
             status = "war"
             stability = 0.1
-        
         return {
             "status": status,
             "stability": stability,
@@ -206,8 +200,6 @@ class WorldAgent(BaseAIAgent):
         weather = environment_state.get("weather", "clear")
         season = environment_state.get("season", "spring")
         disasters = environment_state.get("recent_disasters", [])
-
-        # Determine environmental stability
         if not disasters and weather in ["clear", "sunny"]:
             condition = "favorable"
             stability = 0.9
@@ -220,7 +212,6 @@ class WorldAgent(BaseAIAgent):
         else:
             condition = "hazardous"
             stability = 0.2
-
         return {
             "condition": condition,
             "stability": stability,
@@ -232,71 +223,93 @@ class WorldAgent(BaseAIAgent):
     def _identify_trends(self, analysis: Dict[str, Any]) -> List[str]:
         """Identify notable trends from analysis"""
         trends = []
-
-        # Economic trends
         economy = analysis["economy"]
         if economy["stability"] < 0.5:
             trends.append("economic_decline")
         elif economy["stability"] > 0.8:
             trends.append("economic_boom")
-
-        # Political trends
         politics = analysis["politics"]
         if politics["stability"] < 0.5:
             trends.append("political_instability")
-
-        # Environmental trends
         environment = analysis["environment"]
         if environment["stability"] < 0.5:
             trends.append("environmental_crisis")
-
         return trends
 
+    def _build_social_fabric_context(self, context: AgentContext) -> str:
+        """
+        Build social fabric context: relationships, gossip, persuasion, social learning, reputation
+        """
+        relationship_data = context.current_state.get("npc_relationships", [])
+        gossip_data = context.current_state.get("gossip", [])
+        reputation = context.current_state.get("reputation", 0)
+        social_parts = []
+        if relationship_data:
+            for rel in relationship_data:
+                try:
+                    rel_obj = NPCRelationship(**rel)
+                    social_parts.append(
+                        f"Relationship with {rel_obj.npc_id_2}: {rel_obj.relationship_type} ({rel_obj.relationship_value:.1f}), trust: {rel_obj.trust_level:.1f}"
+                    )
+                except Exception:
+                    continue
+        if gossip_data:
+            for g in gossip_data:
+                try:
+                    g_obj = SharedInformation(**g)
+                    social_parts.append(
+                        f"Gossip: {g_obj.content} (from {g_obj.source_npc_id}, reliability: {g_obj.reliability:.2f})"
+                    )
+                except Exception:
+                    continue
+        social_parts.append(f"Reputation: {reputation}")
+        return "\n".join(social_parts)
+
     async def _assess_impact(self, context: AgentContext) -> Dict[str, Any]:
-        """Assess impact of world state on specific NPC"""
+        """Assess impact of world state on specific NPC (with consciousness and social context)"""
         world_analysis = await self._analyze_world_state(context)
         npc_class = context.current_state.get("npc_class", "generic")
-
-        # Determine impact based on NPC class
         impact = {
             "affected": False,
-            "impact_level": 0.0,  # 0.0 to 1.0
+            "impact_level": 0.0,
             "suggested_behaviors": [],
-            "mood_modifier": 0.0  # -1.0 to 1.0
+            "mood_modifier": 0.0,
+            "npc_consciousness": {
+                "personality": self._build_personality_prompt(context.personality),
+                "goal_state": self._build_goal_prompt(getattr(context, "goal_state", None)),
+                "emotion_state": self._build_emotion_prompt(getattr(context, "emotion_state", None)),
+                "memory_state": self._build_memory_prompt(getattr(context, "memory_state", None))
+            },
+            "social_fabric": self._build_social_fabric_context(context)
         }
-
-        # Merchants affected by economy
         if npc_class == "merchant":
             economy_stability = world_analysis["economy"]["stability"]
             impact["affected"] = True
             impact["impact_level"] = 1.0 - economy_stability
-
             if economy_stability < 0.5:
                 impact["suggested_behaviors"].append("complain_about_economy")
                 impact["mood_modifier"] = -0.3
             elif economy_stability > 0.8:
                 impact["suggested_behaviors"].append("celebrate_prosperity")
                 impact["mood_modifier"] = 0.3
-
-        # Guards affected by politics
         elif npc_class == "guard":
             politics_stability = world_analysis["politics"]["stability"]
             impact["affected"] = True
             impact["impact_level"] = 1.0 - politics_stability
-
             if politics_stability < 0.5:
                 impact["suggested_behaviors"].append("increase_vigilance")
                 impact["mood_modifier"] = -0.2
-
         return impact
 
     async def _generate_world_event(self, context: AgentContext) -> Dict[str, Any]:
-        """Generate a world event based on current state"""
+        """Generate a world event based on current state (with consciousness and social context)"""
         world_state = context.world_state
-
-        # Use LLM to generate creative world event
-        event = await self._generate_event_with_llm(world_state)
-
+        personality = self._build_personality_prompt(context.personality)
+        goal_state = self._build_goal_prompt(getattr(context, "goal_state", None))
+        emotion_state = self._build_emotion_prompt(getattr(context, "emotion_state", None))
+        memory_state = self._build_memory_prompt(getattr(context, "memory_state", None))
+        social_context = self._build_social_fabric_context(context)
+        event = await self._generate_event_with_llm(world_state, personality, goal_state, emotion_state, memory_state, social_context)
         return {
             "event_type": event.get("type", "general"),
             "description": event.get("description", "A notable event occurred"),
@@ -305,10 +318,18 @@ class WorldAgent(BaseAIAgent):
             "duration": event.get("duration", "short")
         }
 
-    async def _generate_event_with_llm(self, world_state: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate world event using LLM"""
+    async def _generate_event_with_llm(
+        self,
+        world_state: Dict[str, Any],
+        personality: str,
+        goal_state: str,
+        emotion_state: str,
+        memory_state: str,
+        social_context: str
+    ) -> Dict[str, Any]:
+        """Generate world event using LLM (with consciousness and social context)"""
         system_message = """You are a world event generator for a medieval fantasy MMORPG.
-Generate interesting, lore-appropriate world events based on the current world state.
+Generate interesting, lore-appropriate world events based on the current world state, the consciousness of key NPCs, and the social fabric of the world.
 Events should be engaging and have potential gameplay impact.
 
 Respond with JSON containing:
@@ -323,6 +344,15 @@ Economy: {world_state.get('economy', {})}
 Politics: {world_state.get('politics', {})}
 Environment: {world_state.get('environment', {})}
 
+Key NPC consciousness:
+{personality}
+{goal_state}
+{emotion_state}
+{memory_state}
+
+Social fabric:
+{social_context}
+
 Generate an appropriate world event. Respond with JSON only."""
 
         response_text = await self._generate_with_llm(
@@ -332,12 +362,10 @@ Generate an appropriate world event. Respond with JSON only."""
         )
 
         try:
-            # Parse JSON response
             if "```json" in response_text:
                 json_start = response_text.find("```json") + 7
                 json_end = response_text.find("```", json_start)
                 response_text = response_text[json_start:json_end].strip()
-
             event = json.loads(response_text)
             return event
         except json.JSONDecodeError:
@@ -361,9 +389,6 @@ Generate an appropriate world event. Respond with JSON only."""
             Map information including boundaries and walkable areas
         """
         logger.debug(f"Getting map info for: {map_name}")
-
-        # Default map boundaries (these would ideally come from rAthena server)
-        # For now, use common map sizes
         map_boundaries = {
             "prontera": {"width": 300, "height": 300},
             "geffen": {"width": 200, "height": 200},
@@ -372,15 +397,13 @@ Generate an appropriate world event. Respond with JSON only."""
             "alberta": {"width": 200, "height": 200},
             "izlude": {"width": 200, "height": 200},
         }
-
         boundaries = map_boundaries.get(map_name, {"width": 200, "height": 200})
-
         return {
             "map_name": map_name,
             "width": boundaries["width"],
             "height": boundaries["height"],
-            "walkable": True,  # Simplified - would need actual walkability data
-            "safe_zone": True  # Simplified - would need actual zone data
+            "walkable": True,
+            "safe_zone": True
         }
 
     async def validate_movement_target(
@@ -407,8 +430,6 @@ Generate an appropriate world event. Respond with JSON only."""
             Validation result with reachable flag and adjusted coordinates
         """
         logger.debug(f"Validating movement from {current_map}({current_x},{current_y}) to {target_map}({target_x},{target_y})")
-
-        # Check if maps are the same
         if current_map != target_map:
             logger.warning(f"Cross-map movement not supported: {current_map} -> {target_map}")
             return {
@@ -416,18 +437,11 @@ Generate an appropriate world event. Respond with JSON only."""
                 "reason": "Cross-map movement not supported",
                 "adjusted_target": None
             }
-
-        # Get map boundaries
         map_info = await self.get_map_info(target_map)
-
-        # Clamp coordinates to map boundaries
         adjusted_x = max(0, min(target_x, map_info["width"] - 1))
         adjusted_y = max(0, min(target_y, map_info["height"] - 1))
-
-        # Check if adjustment was needed
         if adjusted_x != target_x or adjusted_y != target_y:
             logger.info(f"Target coordinates adjusted: ({target_x},{target_y}) -> ({adjusted_x},{adjusted_y})")
-
         return {
             "reachable": True,
             "reason": "Target is reachable",
@@ -436,6 +450,5 @@ Generate an appropriate world event. Respond with JSON only."""
                 "x": adjusted_x,
                 "y": adjusted_y
             },
-            "distance": abs(target_x - current_x) + abs(target_y - current_y)  # Manhattan distance
+            "distance": abs(target_x - current_x) + abs(target_y - current_y)
         }
-

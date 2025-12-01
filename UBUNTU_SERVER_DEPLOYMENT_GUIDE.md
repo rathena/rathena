@@ -69,7 +69,7 @@ This guide will walk you through deploying the complete rAthena AI World system 
 - **AI Autonomous World Service** (Python/FastAPI) - AI-driven NPCs and world systems
 - **P2P Coordinator Service** (Python/FastAPI) - Peer-to-peer session management
 - **PostgreSQL 17** - Long-term memory storage with pgvector, TimescaleDB, Apache AGE
-- **DragonflyDB** - High-speed Redis-compatible cache
+- **DragonflyDB 1.12.1** - High-speed Redis-compatible cache
 
 **Estimated Time**: 2-3 hours  
 **Skill Level**: Basic Linux command-line knowledge required
@@ -302,7 +302,7 @@ psql -h localhost -U ai_world_user -d ai_world_memory -c "\dx"
 
 ## Step 3: DragonflyDB Installation
 
-DragonflyDB is a high-performance Redis-compatible in-memory database.
+DragonflyDB 1.12.1 is a high-performance Redis-compatible in-memory database.
 
 ### 3.1 Install DragonflyDB
 
@@ -548,7 +548,7 @@ python3 -c "from config import settings; print('✓ Configuration loaded')"
 
 ```bash
 # Navigate to P2P coordinator directory
-cd ~/ai-mmorpg-world/rathena-AI-world/p2p-coordinator
+cd ~/ai-mmorpg-world/rathena-AI-world/src/p2p-coordinator
 
 # Create virtual environment
 python3.11 -m venv venv
@@ -621,7 +621,7 @@ GRANT ALL PRIVILEGES ON DATABASE p2p_coordinator TO p2p_user;
 
 ```bash
 # Activate virtual environment
-cd ~/ai-mmorpg-world/rathena-AI-world/p2p-coordinator
+cd ~/ai-mmorpg-world/rathena-AI-world/src/p2p-coordinator
 source venv/bin/activate
 
 # Run database migrations (if available)
@@ -667,7 +667,7 @@ python3 main.py
 **Terminal 3: Start P2P Coordinator**
 
 ```bash
-cd ~/ai-mmorpg-world/rathena-AI-world/p2p-coordinator
+cd ~/ai-mmorpg-world/rathena-AI-world/src/p2p-coordinator
 source venv/bin/activate
 cd coordinator-service
 
@@ -907,7 +907,7 @@ sudo -u postgres psql -l | grep p2p_coordinator
 psql -h localhost -U p2p_user -d p2p_coordinator -c "SELECT 1;"
 
 # Check .env configuration
-cd ~/ai-mmorpg-world/rathena-AI-world/p2p-coordinator
+cd ~/ai-mmorpg-world/rathena-AI-world/src/p2p-coordinator
 grep "POSTGRES" .env
 ```
 
@@ -966,7 +966,7 @@ tail -f ~/ai-mmorpg-world/rathena-AI-world/log/*.log
 tail -f ~/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/logs/*.log
 
 # P2P coordinator logs
-tail -f ~/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/coordinator-service/logs/*.log
+tail -f ~/ai-mmorpg-world/rathena-AI-world/src/p2p-coordinator/logs/*.log
 
 # System logs
 sudo journalctl -f
@@ -1145,7 +1145,7 @@ User: ragnarok
 Password: ragnarok  ⚠️ CHANGE THIS!
 ```
 
-#### DragonflyDB (Redis)
+#### DragonflyDB 1.12.1
 ```
 Host: 127.0.0.1
 Port: 6379
@@ -1216,7 +1216,7 @@ sudo ufw enable
 ```bash
 # Restrict access to sensitive files
 chmod 600 ~/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/ai-service/.env
-chmod 600 ~/ai-mmorpg-world/rathena-AI-world/p2p-coordinator/.env
+chmod 600 ~/ai-mmorpg-world/rathena-AI-world/src/p2p-coordinator/.env
 chmod 600 ~/ai-mmorpg-world/rathena-AI-world/conf/inter_athena.conf
 ```
 
@@ -1255,7 +1255,7 @@ After successful deployment:
 ## Additional Resources
 
 - **AI Service Documentation**: `rathena-AI-world/ai-autonomous-world/docs/`
-- **P2P Coordinator Documentation**: `rathena-AI-world/p2p-coordinator/docs/`
+- **P2P Coordinator Documentation**: `rathena-AI-world/src/p2p-coordinator/`
 - **rAthena Wiki**: https://github.com/rathena/rathena/wiki
 - **PostgreSQL Documentation**: https://www.postgresql.org/docs/17/
 - **DragonflyDB Documentation**: https://www.dragonflydb.io/docs

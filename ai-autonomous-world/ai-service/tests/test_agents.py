@@ -81,7 +81,7 @@ class TestDialogueAgent:
     @pytest.mark.asyncio
     async def test_dialogue_length_limit(self, mock_llm_provider, mock_agent_context):
         """Test dialogue agent enforces message length limit"""
-        from ai_service.config import settings
+        from config import settings
         from models.npc import NPCPersonality
 
         agent = DialogueAgent(
@@ -147,7 +147,7 @@ class TestDialogueAgent:
     @pytest.mark.asyncio
     async def test_dialogue_uses_config_temperature(self, mock_llm_provider):
         """Test dialogue agent uses configured temperature"""
-        from ai_service.config import settings
+        from config import settings
         from models.npc import NPCPersonality
 
         agent = DialogueAgent(
@@ -215,7 +215,7 @@ class TestDecisionAgent:
     @pytest.mark.asyncio
     async def test_decision_uses_config_temperature(self, mock_llm_provider):
         """Test decision agent uses configured temperature"""
-        from ai_service.config import settings
+        from config import settings
         from models.npc import NPCPersonality
 
         agent = DecisionAgent(
@@ -253,22 +253,19 @@ class TestAgentOrchestrator:
     async def test_orchestrator_initialization(self, mock_llm_provider):
         """Test orchestrator initializes correctly"""
         orchestrator = AgentOrchestrator(
-            llm_provider=mock_llm_provider,
             config={}
         )
 
-        assert orchestrator.llm_provider is not None
+        assert orchestrator.config is not None
+        assert hasattr(orchestrator, 'dialogue_agent')
+        assert hasattr(orchestrator, 'decision_agent')
+        assert hasattr(orchestrator, 'memory_agent')
+        assert hasattr(orchestrator, 'world_agent')
 
     @pytest.mark.asyncio
     async def test_orchestrator_error_handling(self, mock_llm_provider, mock_agent_context):
         """Test orchestrator handles errors gracefully"""
-        # Create mock memori client
-        mock_memori = MagicMock()
-        mock_memori.store = AsyncMock()
-        mock_memori.retrieve = AsyncMock(return_value=[])
-
         orchestrator = AgentOrchestrator(
-            llm_provider=mock_llm_provider,
             config={}
         )
 
@@ -284,7 +281,8 @@ class TestAgentOrchestrator:
             # Should handle error and continue
             response = await orchestrator.handle_player_interaction(
                 npc_context=mock_agent_context,
-                player_message="Hello"
+                interaction_type="talk",
+                message="Hello"
             )
 
             # Should still return a response (with fallback)

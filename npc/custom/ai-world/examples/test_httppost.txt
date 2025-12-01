@@ -1,0 +1,352 @@
+//===== rAthena Script =======================================
+//= AI Bridge - HTTP POST Example
+//===== By: ==================================================
+//= AI Architect
+//===== Description: =========================================
+//= Demonstrates httppost() command usage
+//= Sends events and data to AI service
+//============================================================
+//
+//===================================================================
+// AI IPC System Notice (Phase 2 Update)
+//===================================================================
+// This script uses database-based IPC instead of direct HTTP calls.
+// The httppost() command now uses ai_db_* internally for all requests.
+//
+// New Native Commands Available:
+//   ai_db_request(type, endpoint, data{, priority}) -> request_id
+//   ai_db_response(request_id) -> response_json or ""
+//   ai_db_wait(request_id, timeout_ms) -> response_json
+//   ai_db_status(request_id) -> 0=not_found, 1=pending, 2=processing, 3=completed, 4=failed
+//   ai_db_cancel(request_id) -> 1=success, 0=failed
+//
+// httppost(url, data) still works for backward compatibility.
+// The wrapper extracts the endpoint from URL and calls ai_db_request internally.
+//===================================================================
+
+//============================================================
+// Main Event Tester NPC - Demonstrates both APIs
+//============================================================
+prontera,155,188,4	script	AI Event Tester	1_M_WIZARD,{
+	mes "[AI Event Tester]";
+	mes "This NPC demonstrates httppost()";
+	mes "and the new ai_db_* API.";
+	next;
+	
+	menu "Send Player Login Event",L_Login,
+	     "Send Monster Kill Event",L_MonsterKill,
+	     "Trigger Daily Reset",L_DailyReset,
+	     "Get AI Service Status",L_Status,
+	     "Compare APIs (Benchmark)",L_Compare,
+	     "Cancel",-;
+	close;
+
+L_Login:
+	mes "[AI Event Tester]";
+	mes "Which API to use?";
+	next;
+	
+	switch(select("New API (ai_db_*)", "Legacy API (httppost)")) {
+	case 1:
+		// === New AI IPC API (Recommended) ===
+		mes "[AI Event Tester]";
+		mes "Using new ai_db_* API...";
+		next;
+		
+		// Build JSON payload
+		.@player_id = getcharid(0);
+		.@map$ = strcharinfo(3);
+		.@payload$ = "{";
+		.@payload$ = .@payload$ + "\"event_type\":\"player_login\",";
+		.@payload$ = .@payload$ + "\"player_id\":" + .@player_id + ",";
+		.@payload$ = .@payload$ + "\"map\":\"" + .@map$ + "\",";
+		.@payload$ = .@payload$ + "\"timestamp\":" + gettimetick(2);
+		.@payload$ = .@payload$ + "}";
+		
+		// Create request with normal priority (1)
+		.@request_id = ai_db_request("http_post", "/api/v1/events/dispatch", .@payload$, 1);
+		
+		if (.@request_id <= 0) {
+			mes "^FF0000Failed to create request!^000000";
+			close;
+		}
+		
+		mes "Request ID: " + .@request_id;
+		mes "Waiting for response...";
+		next;
+		
+		// Wait with 5 second timeout
+		.@response$ = ai_db_wait(.@request_id, 5000);
+		
+		mes "[AI Event Tester]";
+		if (.@response$ == "") {
+			.@status = ai_db_status(.@request_id);
+			mes "^FF0000Failed! Status: " + .@status + "^000000";
+		} else {
+			mes "^00FF00Event sent successfully!^000000";
+			mes "Response: " + .@response$;
+		}
+		break;
+		
+	case 2:
+		// === Legacy API (Backward Compatible) ===
+		mes "[AI Event Tester]";
+		mes "Using legacy httppost() API...";
+		
+		// Build JSON payload
+		.@player_id = getcharid(0);
+		.@map$ = strcharinfo(3);
+		.@payload$ = "{";
+		.@payload$ = .@payload$ + "\"event_type\":\"player_login\",";
+		.@payload$ = .@payload$ + "\"player_id\":" + .@player_id + ",";
+		.@payload$ = .@payload$ + "\"map\":\"" + .@map$ + "\",";
+		.@payload$ = .@payload$ + "\"timestamp\":" + gettimetick(2);
+		.@payload$ = .@payload$ + "}";
+		
+		// Send to AI service (wrapper uses ai_db_* internally)
+		.@response$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch", .@payload$);
+		
+		next;
+		mes "[AI Event Tester]";
+		if (.@response$ == "") {
+			mes "^FF0000Failed to send event!^000000";
+		} else {
+			mes "^00FF00Event sent successfully!^000000";
+			mes "Response: " + .@response$;
+		}
+		break;
+	}
+	close;
+
+L_MonsterKill:
+	mes "[AI Event Tester]";
+	mes "Enter Monster ID:";
+	input .@monster_id;
+	
+	if (.@monster_id <= 0) {
+		mes "Invalid Monster ID!";
+		close;
+	}
+	
+	// === New API with priority for game events ===
+	.@player_id = getcharid(0);
+	.@map$ = strcharinfo(3);
+	.@payload$ = "{";
+	.@payload$ = .@payload$ + "\"event_type\":\"monster_kill\",";
+	.@payload$ = .@payload$ + "\"player_id\":" + .@player_id + ",";
+	.@payload$ = .@payload$ + "\"monster_id\":" + .@monster_id + ",";
+	.@payload$ = .@payload$ + "\"map\":\"" + .@map$ + "\"";
+	.@payload$ = .@payload$ + "}";
+	
+	// Use normal priority (1) for regular game events
+	.@request_id = ai_db_request("http_post", "/api/v1/events/dispatch", .@payload$, 1);
+	
+	if (.@request_id <= 0) {
+		mes "^FF0000Failed to create request!^000000";
+		close;
+	}
+	
+	// Non-blocking: just submit and show confirmation
+	// The worker will process it asynchronously
+	mes "^777777Request queued (ID: " + .@request_id + ")^000000";
+	next;
+	
+	// Optionally wait for response
+	mes "[AI Event Tester]";
+	mes "Wait for AI response?";
+	next;
+	
+	if (select("Yes", "No (fire and forget)") == 1) {
+		.@response$ = ai_db_wait(.@request_id, 5000);
+		if (.@response$ == "") {
+			mes "^FF0000No response (timeout or error)^000000";
+		} else {
+			mes "^00FF00Event sent successfully!^000000";
+			mes "AI Service acknowledged kill event.";
+		}
+	} else {
+		mes "Event queued for processing.";
+		mes "AI will process it asynchronously.";
+	}
+	close;
+
+L_DailyReset:
+	mes "[AI Event Tester]";
+	mes "^FFFF00WARNING:^000000 This triggers daily reset!";
+	mes "This will regenerate all procedural content.";
+	next;
+	
+	if (select("Confirm:Cancel") == 2) {
+		close;
+	}
+	
+	// === New API: Use URGENT priority (3) for critical system events ===
+	.@payload$ = "{\"event_type\":\"daily_reset\",\"priority\":\"urgent\"}";
+	
+	// Priority 3 = urgent - processed before normal requests
+	.@request_id = ai_db_request("http_post", "/api/v1/events/dispatch", .@payload$, 3);
+	
+	if (.@request_id <= 0) {
+		mes "^FF0000Failed to create request!^000000";
+		close;
+	}
+	
+	mes "^777777Urgent request queued (ID: " + .@request_id + ")^000000";
+	mes "High-priority requests are processed first!";
+	next;
+	
+	.@response$ = ai_db_wait(.@request_id, 10000); // 10 second timeout for reset
+	
+	mes "[AI Event Tester]";
+	if (.@response$ == "") {
+		mes "^FF0000Failed to trigger reset!^000000";
+		.@status = ai_db_status(.@request_id);
+		mes "Status: " + .@status;
+	} else {
+		mes "^00FF00Daily reset triggered!^000000";
+		mes "New content is being generated...";
+		announce "Daily content refresh in progress!", bc_all;
+	}
+	close;
+
+L_Status:
+	mes "[AI Event Tester]";
+	mes "Fetching Bridge Layer status...";
+	
+	// ai_bridge_status() returns info about the IPC system
+	.@status$ = ai_bridge_status();
+	
+	next;
+	mes "[Bridge Layer Status]";
+	mes .@status$;
+	mes " ";
+	mes "^777777IPC System: Database Queue^000000";
+	mes "^777777Worker: Python Async Processor^000000";
+	close;
+
+L_Compare:
+	// === API Comparison / Benchmark ===
+	mes "[AI Event Tester]";
+	mes "Running API comparison...";
+	mes "This will send 5 requests each.";
+	next;
+	
+	.@payload$ = "{\"event_type\":\"benchmark\",\"test\":true}";
+	
+	// Test New API
+	.@start1 = gettimetick(2);
+	for (.@i = 0; .@i < 5; .@i++) {
+		.@req = ai_db_request("http_post", "/api/v1/events/dispatch", .@payload$, 1);
+		.@resp$ = ai_db_wait(.@req, 5000);
+	}
+	.@time1 = gettimetick(2) - .@start1;
+	
+	// Test Legacy API
+	.@start2 = gettimetick(2);
+	for (.@i = 0; .@i < 5; .@i++) {
+		.@resp$ = httppost("http://192.168.0.100:8000/api/v1/events/dispatch", .@payload$);
+	}
+	.@time2 = gettimetick(2) - .@start2;
+	
+	mes "^0000FF=== Results ===^000000";
+	mes " ";
+	mes "^00FF00New API (ai_db_*):^000000";
+	mes "5 requests in " + .@time1 + "ms";
+	mes "Average: " + (.@time1 / 5) + "ms";
+	mes " ";
+	mes "^FFFF00Legacy API (httppost):^000000";
+	mes "5 requests in " + .@time2 + "ms";
+	mes "Average: " + (.@time2 / 5) + "ms";
+	mes " ";
+	mes "^FFFFFFBoth use the same IPC backend.^000000";
+	mes "^FFFFFFLegacy API has wrapper overhead.^000000";
+	close;
+}
+
+//============================================================
+// Batch Request Demo NPC
+//============================================================
+prontera,157,188,4	script	Batch Request Demo	1_F_GONRYUN,{
+	mes "[Batch Request Demo]";
+	mes "Demonstrates sending multiple";
+	mes "requests without waiting for each.";
+	next;
+	
+	mes "This uses the non-blocking nature";
+	mes "of ai_db_request() to queue many";
+	mes "requests, then wait for all.";
+	next;
+	
+	if (select("Run Demo", "Cancel") == 2) close;
+	
+	mes "[Batch Request Demo]";
+	mes "Queueing 10 requests...";
+	next;
+	
+	// Queue all requests at once (non-blocking)
+	for (.@i = 0; .@i < 10; .@i++) {
+		.@payload$ = "{\"batch_id\":" + .@i + ",\"test\":true}";
+		.@requests[.@i] = ai_db_request("http_post", "/api/v1/events/dispatch", .@payload$, 1);
+		mes "Queued request " + .@i + " (ID: " + .@requests[.@i] + ")";
+	}
+	next;
+	
+	mes "[Batch Request Demo]";
+	mes "All requests queued!";
+	mes "Now collecting responses...";
+	next;
+	
+	// Now wait for each response
+	.@success = 0;
+	.@failed = 0;
+	for (.@i = 0; .@i < 10; .@i++) {
+		.@response$ = ai_db_wait(.@requests[.@i], 5000);
+		if (.@response$ != "") {
+			.@success++;
+		} else {
+			.@failed++;
+		}
+	}
+	
+	mes "[Batch Request Demo]";
+	mes "^00FF00Completed: " + .@success + "/10^000000";
+	if (.@failed > 0) {
+		mes "^FF0000Failed: " + .@failed + "/10^000000";
+	}
+	mes " ";
+	mes "Batch processing is efficient for";
+	mes "bulk operations like migrations!";
+	close;
+}
+
+//============================================================
+// Daily Reset Trigger (runs at midnight server time)
+// Uses new API with URGENT priority
+//============================================================
+-	script	AI_DailyReset	-1,{
+OnClock0000:
+	// Trigger daily reset event via AI service
+	// Using new API with urgent priority (3) for system events
+	.@payload$ = "{\"event_type\":\"daily_reset\",\"priority\":\"urgent\"}";
+	
+	// Create urgent request (priority 3)
+	.@request_id = ai_db_request("http_post", "/api/v1/events/dispatch", .@payload$, 3);
+	
+	if (.@request_id <= 0) {
+		debugmes "[AI_DailyReset] Failed to create reset request";
+		end;
+	}
+	
+	// Wait for completion with extended timeout
+	.@response$ = ai_db_wait(.@request_id, 30000); // 30 second timeout
+	
+	if (.@response$ != "") {
+		announce "[AI World] Daily content refreshed! New adventures await!", bc_all;
+		debugmes "[AI_DailyReset] Daily reset completed successfully";
+	} else {
+		debugmes "[AI_DailyReset] Failed to complete daily reset";
+		.@status = ai_db_status(.@request_id);
+		debugmes "[AI_DailyReset] Final status: " + .@status;
+	}
+	end;
+}

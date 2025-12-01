@@ -8,6 +8,8 @@
  */
 
 #include "redis_subscriber.hpp"
+#include "../aiworld/aiworld_native_api.hpp"
+#include "../common/showmsg.hpp"
 #include <hiredis/hiredis.h>
 #include <nlohmann/json.hpp>
 #include <iostream>
@@ -207,47 +209,95 @@ void RedisSubscriber::execute_npc_action(
 	const std::string& action_data
 ) {
 	try {
-		std::cout << "[RedisSubscriber] Executing NPC action: " << npc_id
-		          << " type=" << action_type << std::endl;
+		ShowInfo("[RedisSubscriber] Executing NPC action: %s type=%s\n", npc_id.c_str(), action_type.c_str());
 
 		json data = json::parse(action_data);
 
+		// Use IPC to communicate with map server via AIWorldNativeAPI
+		auto& api = aiworld::AIWorldNativeAPI::getInstance();
+		
+		if (!api.isConnected()) {
+			ShowError("[RedisSubscriber] AIWorld IPC not connected - cannot execute NPC action\n");
+			return;
+		}
+
 		if (action_type == "move") {
-			int target_x = data.value("target_x", 0);
-			int target_y = data.value("target_y", 0);
-			int speed = data.value("speed", 150);
+		    int target_x = data.value("target_x", 0);
+		    int target_y = data.value("target_y", 0);
+		    std::string map_name = data.value("map", "prontera");
 
-			std::cout << "[RedisSubscriber] NPC " << npc_id << " moving to ("
-			          << target_x << "," << target_y << ") speed=" << speed << std::endl;
+		    ShowInfo("[RedisSubscriber] NPC %s moving to (%d,%d) on map %s\n",
+		             npc_id.c_str(), target_x, target_y, map_name.c_str());
 
-			// TODO: Call rAthena map-server API to move NPC
-			// This would require integration with map-server's NPC movement functions
+		    // Send IPC request to map server
+		    json interaction_data = {
+		        {"action", "move"},
+		        {"target_x", target_x},
+		        {"target_y", target_y},
+		        {"map", map_name}
+		    };
+		    
+		    auto result = api.handleNPCInteraction(npc_id, "move", interaction_data, "redis_subscriber", 5000);
+		    
+		    if (result.success) {
+		        ShowInfo("[RedisSubscriber] ✓ NPC %s move command sent successfully\n", npc_id.c_str());
+		    } else {
+		        ShowError("[RedisSubscriber] Failed to send move command for NPC %s: %s\n",
+		                 npc_id.c_str(), result.error_message.c_str());
+		    }
 
 		} else if (action_type == "emote") {
-			int emote_id = data.value("emote_id", 0);
-			int duration = data.value("duration", 3000);
+		    int emote_id = data.value("emote_id", 0);
+		    int duration = data.value("duration", 3000);
 
-			std::cout << "[RedisSubscriber] NPC " << npc_id << " emote "
-			          << emote_id << " duration=" << duration << "ms" << std::endl;
+		    ShowInfo("[RedisSubscriber] NPC %s emote %d duration=%dms\n",
+		             npc_id.c_str(), emote_id, duration);
 
-			// TODO: Call rAthena map-server API to show emote
+		    // Send IPC request to map server
+		    json interaction_data = {
+		        {"action", "emote"},
+		        {"emote_id", emote_id},
+		        {"duration", duration}
+		    };
+		    
+		    auto result = api.handleNPCInteraction(npc_id, "emote", interaction_data, "redis_subscriber", 5000);
+		    
+		    if (result.success) {
+		        ShowInfo("[RedisSubscriber] ✓ NPC %s emote command sent successfully\n", npc_id.c_str());
+		    } else {
+		        ShowError("[RedisSubscriber] Failed to send emote command for NPC %s: %s\n",
+		                 npc_id.c_str(), result.error_message.c_str());
+		    }
 
 		} else if (action_type == "state_change") {
-			std::string new_state = data.value("new_state", "");
+		    std::string new_state = data.value("new_state", "");
 
-			std::cout << "[RedisSubscriber] NPC " << npc_id << " state change to "
-			          << new_state << std::endl;
+		    ShowInfo("[RedisSubscriber] NPC %s state change to %s\n",
+		             npc_id.c_str(), new_state.c_str());
 
-			// TODO: Update NPC state in map-server
+		    // Send IPC request to map server
+		    json interaction_data = {
+		        {"action", "state_change"},
+		        {"new_state", new_state}
+		    };
+		    
+		    auto result = api.handleNPCInteraction(npc_id, "state_change", interaction_data, "redis_subscriber", 5000);
+		    
+		    if (result.success) {
+		        ShowInfo("[RedisSubscriber] ✓ NPC %s state updated successfully\n", npc_id.c_str());
+		    } else {
+		        ShowError("[RedisSubscriber] Failed to update state for NPC %s: %s\n",
+		                 npc_id.c_str(), result.error_message.c_str());
+		    }
 
 		} else {
-			std::cout << "[RedisSubscriber] Unknown action type: " << action_type << std::endl;
+			ShowWarning("[RedisSubscriber] Unknown action type: %s\n", action_type.c_str());
 		}
 
 	} catch (const json::exception& e) {
-		std::cerr << "[RedisSubscriber] JSON parse error in action data: " << e.what() << std::endl;
+		ShowError("[RedisSubscriber] JSON parse error in action data: %s\n", e.what());
 	} catch (const std::exception& e) {
-		std::cerr << "[RedisSubscriber] Error executing NPC action: " << e.what() << std::endl;
+		ShowError("[RedisSubscriber] Error executing NPC action: %s\n", e.what());
 	}
 }
 

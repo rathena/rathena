@@ -9,6 +9,9 @@
 
 #include <common/malloc.hpp>
 #include <common/showmsg.hpp>
+// --- P2P/QUIC/P2P-Coordinator integration ---
+#include "p2p_coordinator.hpp"
+#include <common/quic.hpp>
 #include <common/socket.hpp>
 #include <common/sql.hpp>
 #include <common/strlib.hpp>
@@ -416,6 +419,12 @@ int32 chmapif_parse_reqsavechar(int32 fd, int32 id){
 		{
 			ShowError("parse_from_map (save-char): Size mismatch! %d != %" PRIuPTR "\n", size-13, sizeof(struct mmo_charstatus));
 			RFIFOSKIP(fd,size);
+// --- P2P-aware: use P2P online state if enabled for save-char fallback ---
+            if (charserv_config.p2p_enabled) {
+                char_set_char_online_p2p(id, cid, aid);
+            } else {
+                char_set_char_online(id, cid, aid);
+            }
 			return 1;
 		}
 
@@ -884,6 +893,7 @@ int32 chmapif_parse_reqdivorce(int32 fd){
  * @param fd: wich fd to parse from
  * @return : 0 not enough data received, 1 success
  */
+// --- P2P-aware: use P2P offline state if enabled ---
 int32 chmapif_parse_setcharoffline(int32 fd){
 	if (RFIFOREST(fd) < 6)
 		return 0;
@@ -913,6 +923,7 @@ int32 chmapif_parse_setalloffline(int32 fd, int32 id){
  * @param id: wich map_serv id
  * @return : 0 not enough data received, 1 success
  */
+// --- P2P-aware: use P2P online state if enabled ---
 int32 chmapif_parse_setcharonline(int32 fd, int32 id){
 	if (RFIFOREST(fd) < 10)
 		return 0;

@@ -1,0 +1,1 @@
+# Bridge package for embedded C++ integration

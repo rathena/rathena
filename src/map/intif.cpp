@@ -12,6 +12,33 @@
 #include <common/socket.hpp>
 #include <common/strlib.hpp>
 #include <common/timer.hpp>
+// --- Hybrid Networking (P2P/QUIC/Authoritative) extensions ---
+#include <common/socket.hpp>
+#include <string>
+
+enum class InterServerProtocol {
+    LEGACY_TCP,
+    QUIC,
+    P2P
+};
+
+static InterServerProtocol inter_server_protocol = InterServerProtocol::LEGACY_TCP;
+
+// Set protocol at startup or via config
+void set_inter_server_protocol(InterServerProtocol proto) {
+    inter_server_protocol = proto;
+    switch (proto) {
+        case InterServerProtocol::LEGACY_TCP:
+            ShowInfo("[intif] Using legacy TCP for inter-server communication\n");
+            break;
+        case InterServerProtocol::QUIC:
+            ShowInfo("[intif] Using QUIC for inter-server communication\n");
+            break;
+        case InterServerProtocol::P2P:
+            ShowInfo("[intif] Using P2P for inter-server communication\n");
+            break;
+    }
+}
 
 #include "achievement.hpp"
 #include "battle.hpp"

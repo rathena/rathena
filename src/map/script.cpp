@@ -63,6 +63,12 @@
 #include "quest.hpp"
 #include "storage.hpp"
 
+// AIWorld custom native commands - ENABLED
+#include "../aiworld/aiworld_native_commands.hpp"
+
+// AI IPC Script Commands - Database-based IPC for NPC-to-AI communication
+#include "../custom/script_ai_ipc.hpp"
+
 using namespace rathena;
 
 const int64 SCRIPT_INT_MIN = INT64_MIN;
@@ -27823,8 +27829,6 @@ BUILDIN_FUNC(mesitemicon){
 	return SCRIPT_CMD_SUCCESS;
 }
 
-#include <custom/script.inc>
-
 // declarations that were supposed to be exported from npc_chat.cpp
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
@@ -27870,6 +27874,15 @@ BUILDIN_FUNC(preg_match) {
 	return SCRIPT_CMD_SUCCESS;
 #endif
 }
+
+// ============================================================================
+// NOTE: AIWorld script commands (httppost, httpget, npcwalk, npcwalkid)
+// are now implemented in:
+//   - src/custom/script_ai_ipc.cpp (httppost, httpget via DB IPC)
+//   - src/custom/script_http.cpp (npcwalk, npcwalkid)
+//
+// The stub implementations have been removed to prevent multiple definition errors.
+// ============================================================================
 
 /// script command definitions
 /// for an explanation on args, see add_buildin_func

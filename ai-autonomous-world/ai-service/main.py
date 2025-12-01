@@ -8,33 +8,39 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
 from loguru import logger
 import uvicorn
+from prometheus_client import CONTENT_TYPE_LATEST, generate_latest
 
 # Add parent directory to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from ai_service.config import settings
-from ai_service.database import db, postgres_db
-from ai_service.routers import npc_router, world_router, player_router
-from ai_service.routers.quest import router as quest_router
-from ai_service.routers.chat_command import router as chat_command_router
-from ai_service.routers.batch import router as batch_router
-from ai_service.routers.economy import router as economy_router
-from ai_service.routers.faction import router as faction_router
-from ai_service.routers.gift import router as gift_router
-from ai_service.routers.gift import router as gift_router
-from ai_service.routers.npc_spawning import router as npc_spawning_router
-from ai_service.routers.world_bootstrap import router as world_bootstrap_router
-from ai_service.routers.npc_movement import router as npc_movement_router
-from ai_service.routers.mvp import router as mvp_router
-from ai_service.routers.relationship import router as relationship_router
-from ai_service.routers.mvp import router as mvp_router
-from ai_service.middleware import (
+from config import settings
+from database import db, postgres_db
+from routers import npc_router, world_router, player_router
+from routers.quest import router as quest_router
+from routers.chat_command import router as chat_command_router
+from routers.batch import router as batch_router
+from routers.economy import router as economy_router
+from routers.faction import router as faction_router
+from routers.gift import router as gift_router
+from routers.npc_spawning import router as npc_spawning_router
+from routers.world_bootstrap import router as world_bootstrap_router
+from routers.npc_movement import router as npc_movement_router
+from routers.mvp import router as mvp_router
+from routers.relationship import router as relationship_router
+from routers.cost import router as cost_router
+from routers.procedural import router as procedural_router
+from routers.progression import router as progression_router
+from routers.environmental import router as environmental_router
+from routers.economy_social import router as economy_social_router
+from routers.advanced import router as advanced_router
+from middleware import (
     APIKeyMiddleware,
     RateLimitMiddleware,
     RequestSizeLimitMiddleware,
+    SecurityHeadersMiddleware,
 )
 
 # Global instances
@@ -116,7 +122,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize GPU manager
     try:
-        from ai_service.utils import initialize_gpu
+        from utils import initialize_gpu
         gpu_manager = initialize_gpu(settings)
         if gpu_manager.is_available():
             logger.info(f"GPU acceleration enabled: {gpu_manager.get_info().device_name}")
@@ -132,7 +138,7 @@ async def lifespan(app: FastAPI):
     # Initialize OpenMemory SDK with PostgreSQL backend
     global _openmemory_manager
     try:
-        from ai_service.memory.openmemory_manager import initialize_openmemory
+        from memory.openmemory_manager import initialize_openmemory
         logger.info("Initializing OpenMemory SDK...")
 
         # Get OpenMemory backend URL from environment or use default
@@ -157,7 +163,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize LLM provider (test connection)
     try:
-        from ai_service.llm import get_llm_provider
+        from llm import get_llm_provider
         llm = get_llm_provider()
         logger.info(f"LLM provider initialized: {settings.default_llm_provider}")
         logger.debug(f"LLM provider type: {type(llm).__name__}")
@@ -173,7 +179,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize NPC Relationship Manager
     try:
-        from ai_service.tasks.npc_relationships import npc_relationship_manager
+        from tasks.npc_relationships import npc_relationship_manager
         await npc_relationship_manager.initialize()
         await npc_relationship_manager.start_background_tasks()
         logger.info("✓ NPC Relationship Manager started")
@@ -184,7 +190,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize Instant Response System
     try:
-        from ai_service.tasks.instant_response import instant_response_manager
+        from tasks.instant_response import instant_response_manager
         await instant_response_manager.start()
         logger.info("✓ Instant Response System started")
     except ImportError as e:
@@ -194,7 +200,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize Environment System
     try:
-        from ai_service.tasks.environment import initialize_environment
+        from tasks.environment import initialize_environment
         await initialize_environment()
         logger.info("✓ Environment System initialized")
     except ImportError as e:
@@ -204,7 +210,7 @@ async def lifespan(app: FastAPI):
 
     # Initialize Universal Consciousness Engine
     try:
-        from ai_service.agents.universal_consciousness import universal_consciousness
+        from agents.universal_consciousness import universal_consciousness
         await universal_consciousness.initialize()
         logger.info("✓ Universal Consciousness Engine initialized")
     except ImportError as e:
@@ -214,13 +220,28 @@ async def lifespan(app: FastAPI):
 
     # Initialize Decision Optimizer
     try:
-        from ai_service.agents.decision_optimizer import decision_optimizer
+        from agents.decision_optimizer import decision_optimizer
         await decision_optimizer.initialize()
         logger.info("✓ Decision Optimizer initialized")
     except ImportError as e:
         logger.warning(f"Decision Optimizer dependencies not available: {e}")
     except Exception as e:
         logger.error(f"Decision Optimizer initialization failed: {e}", exc_info=True)
+
+    # Initialize Cost Manager
+    try:
+        from services.cost_manager import init_cost_manager
+        cost_manager = init_cost_manager(
+            daily_budget_usd=settings.daily_budget_usd,
+            per_provider_budgets=settings.per_provider_budgets,
+            alert_thresholds=settings.budget_alert_thresholds,
+            enabled=settings.cost_management_enabled
+        )
+        logger.info("✓ Cost Manager initialized")
+    except ImportError as e:
+        logger.warning(f"Cost Manager dependencies not available: {e}")
+    except Exception as e:
+        logger.error(f"Cost Manager initialization failed: {e}", exc_info=True)
 
     logger.info("AI Service startup complete")
     logger.info("=" * 80)
@@ -241,7 +262,7 @@ async def lifespan(app: FastAPI):
 
     # Stop Instant Response System
     try:
-        from ai_service.tasks.instant_response import instant_response_manager
+        from tasks.instant_response import instant_response_manager
         await instant_response_manager.stop()
         logger.info("✓ Instant Response System stopped")
     except Exception as e:
@@ -249,7 +270,7 @@ async def lifespan(app: FastAPI):
 
     # Stop NPC Relationship Manager
     try:
-        from ai_service.tasks.npc_relationships import npc_relationship_manager
+        from tasks.npc_relationships import npc_relationship_manager
         await npc_relationship_manager.stop_background_tasks()
         logger.info("✓ NPC Relationship Manager stopped")
     except Exception as e:
@@ -257,7 +278,7 @@ async def lifespan(app: FastAPI):
 
     # Stop background task scheduler
     try:
-        from ai_service.scheduler import autonomous_scheduler
+        from scheduler import autonomous_scheduler
         autonomous_scheduler.stop()
         logger.info("✓ Autonomous task scheduler stopped")
     except Exception as e:
@@ -304,18 +325,26 @@ app.add_middleware(
 # Add security and performance middleware
 logger.info("Configuring middleware...")
 
-# Request size limit (first to reject large requests early)
+# Security headers (first for all responses)
+app.add_middleware(
+    SecurityHeadersMiddleware,
+    enable_hsts=getattr(settings, 'ssl_enabled', False),
+    enable_csp=True
+)
+logger.info("✓ Security headers middleware enabled")
+
+# Request size limit (second to reject large requests early)
 app.add_middleware(RequestSizeLimitMiddleware)
 logger.info(f"✓ Request size limit: {settings.max_request_size} bytes")
 
-# Rate limiting (second to prevent abuse)
+# Rate limiting (third to prevent abuse)
 if settings.rate_limit_enabled:
     app.add_middleware(RateLimitMiddleware)
     logger.info(f"✓ Rate limiting: {settings.rate_limit_requests} requests per {settings.rate_limit_period}s")
 else:
     logger.warning("⚠ Rate limiting disabled")
 
-# API key authentication (third to validate access)
+# API key authentication (fourth to validate access)
 if settings.api_key_required and settings.api_key:
     app.add_middleware(APIKeyMiddleware)
     logger.info(f"✓ API key authentication enabled (header: {settings.api_key_header})")
@@ -343,12 +372,12 @@ async def health_check():
     Returns basic service status without expensive operations.
     For detailed health check, use /health/detailed
     """
-    from datetime import datetime
+    from datetime import datetime, UTC
     return {
         "status": "healthy",
         "service": settings.service_name,
         "version": "1.0.0",
-        "timestamp": datetime.utcnow().isoformat()
+        "timestamp": datetime.now(UTC).isoformat()
     }
 
 
@@ -393,6 +422,27 @@ async def root():
         "status": "running",
         "docs": "/docs",
     }
+# Prometheus metrics endpoint
+@app.get("/metrics", tags=["monitoring"])
+async def metrics():
+    """
+    Prometheus metrics endpoint
+    
+    Exposes comprehensive metrics for:
+    - Agent performance (dialogue, quest, decision, etc.)
+    - LLM provider latency and tokens
+    - Decision layer performance
+    - Economic simulation
+    - Database operations
+    - Memory and relationships
+    """
+    return Response(
+        content=generate_latest(),
+        media_type=CONTENT_TYPE_LATEST
+    )
+
+logger.info("✓ Prometheus metrics endpoint registered at /metrics")
+
 
 
 # Include routers
@@ -405,24 +455,55 @@ app.include_router(batch_router)
 app.include_router(economy_router)
 app.include_router(faction_router)
 app.include_router(gift_router)
-app.include_router(gift_router)
 app.include_router(npc_spawning_router)
 app.include_router(world_bootstrap_router)
 app.include_router(npc_movement_router)
 app.include_router(mvp_router)
 app.include_router(relationship_router)
-app.include_router(mvp_router)
+app.include_router(cost_router)
+app.include_router(procedural_router)
+app.include_router(progression_router)
+app.include_router(environmental_router)
+app.include_router(economy_social_router)
+app.include_router(advanced_router)
+app.include_router(storyline_router)
 
-logger.info("✓ All routers registered (14 routers)")
+logger.info("✓ All routers registered (21 routers)")
 
 
 # Run server
 if __name__ == "__main__":
+    # Check for SSL configuration
+    ssl_keyfile = getattr(settings, 'ssl_keyfile', None)
+    ssl_certfile = getattr(settings, 'ssl_certfile', None)
+    ssl_enabled = getattr(settings, 'ssl_enabled', False)
+    
+    # Log SSL status
+    if ssl_enabled and ssl_keyfile and ssl_certfile:
+        from pathlib import Path
+        if Path(ssl_keyfile).exists() and Path(ssl_certfile).exists():
+            logger.info(f"✓ SSL/TLS enabled")
+            logger.info(f"  Key file: {ssl_keyfile}")
+            logger.info(f"  Cert file: {ssl_certfile}")
+        else:
+            logger.error("❌ SSL enabled but certificate files not found")
+            logger.error("   Run: bash scripts/generate-ssl-certs.sh")
+            logger.error("   Falling back to HTTP")
+            ssl_keyfile = None
+            ssl_certfile = None
+    else:
+        logger.warning("⚠ SSL/TLS not enabled - Using HTTP")
+        logger.warning("  For production, enable SSL: SSL_ENABLED=true in .env")
+        ssl_keyfile = None
+        ssl_certfile = None
+    
     uvicorn.run(
         app,  # Use app object directly instead of string import
         host=settings.service_host,
         port=settings.service_port,
         reload=False,  # Disable reload when using app object
         log_level=settings.log_level.lower(),
+        ssl_keyfile=ssl_keyfile,
+        ssl_certfile=ssl_certfile,
     )
 

@@ -1,0 +1,423 @@
+//===== rAthena Script =======================================
+//= Economy & Social Agents Integration Example
+//===== By: ==================================================
+//= AI Autonomous World System
+//===== Description: =========================================
+//= Example integration for Economy, Karma, and Social agents
+//= Shows how to connect game events to AI agents
+//============================================================
+
+// ============================================================================
+// ECONOMY TRACKING - Monitor trades and purchases
+// ============================================================================
+
+-	script	Economy_Tracker	FAKE_NPC,{
+OnInit:
+	// Configuration
+	.api_url$ = "http://192.168.0.100:8000/api/v1/economy_social";
+	.api_key$ = "your-api-key-here";
+	end;
+
+OnPCBuyItemEvent:
+	// Track purchases for economy analysis
+	.@item_id = @bought_nameid;
+	.@amount = @bought_quantity;
+	.@price = @bought_price;
+	.@total_zeny = @bought_price * @bought_quantity;
+	
+	// Post to economy API (simplified - use actual HTTP plugin)
+	dispbottom "Economy tracking: Purchased " + .@amount + "x Item #" + .@item_id;
+	end;
+
+OnPCTradeEndEvent:
+	// Track player-to-player trades
+	.@trade_value = 0; // Calculate from traded items
+	
+	// Update trade frequency metric
+	dispbottom "Economy tracking: Trade completed";
+	end;
+}
+
+// ============================================================================
+// KARMA TRACKING - Monitor good/evil actions
+// ============================================================================
+
+-	script	Karma_Tracker	FAKE_NPC,{
+OnInit:
+	.api_url$ = "http://192.168.0.100:8000/api/v1/economy_social";
+	
+	// Protected monsters (negative karma when killed)
+	setarray .protected_mobs[0], 1002, 1063, 1113; // Poring, Lunatic, Drops
+	end;
+
+OnNPCKillEvent:
+	.@mob_id = killedrid;
+	.@player_id = getcharid(0);
+	
+	// Check if protected monster
+	.@is_protected = 0;
+	for (.@i = 0; .@i < getarraysize(.protected_mobs); .@i++) {
+		if (.@mob_id == .protected_mobs[.@i]) {
+			.@is_protected = 1;
+			break;
+		}
+	}
+	
+	if (.@is_protected) {
+		// Negative karma for killing protected
+		announce strcharinfo(0) + " killed a protected creature! Karma decreased.", bc_self, 0xFF0000;
+		callsub PostKarmaAction, .@player_id, "kill_poring";
+	} else if (.@mob_id >= 1900) {
+		// Demon/Boss kill = positive karma
+		callsub PostKarmaAction, .@player_id, "kill_demon";
+	}
+	end;
+
+OnQuestComplete:
+	.@quest_id = getarg(0);
+	.@player_id = getcharid(0);
+	
+	// Check quest alignment
+	if (inarray(.good_quests, .@quest_id) != -1) {
+		callsub PostKarmaAction, .@player_id, "complete_good_quest";
+		announce "Your noble deed has increased world karma!", bc_self, 0x00FF00;
+	} else if (inarray(.evil_quests, .@quest_id) != -1) {
+		callsub PostKarmaAction, .@player_id, "complete_evil_quest";
+		announce "Your dark deed has decreased world karma!", bc_self, 0xFF0000;
+	}
+	end;
+
+PostKarmaAction:
+	.@player_id = getarg(0);
+	.@action_type$ = getarg(1);
+	
+	// In production, use HTTP plugin to POST to:
+	// POST /api/v1/economy_social/karma/update
+	// {
+	//   "actions": [
+	//     {
+	//       "player_id": player_id,
+	//       "action_type": action_type,
+	//       "target": null,
+	//       "data": null
+	//     }
+	//   ]
+	// }
+	
+	debugmes "Karma action recorded: Player " + .@player_id + " - " + .@action_type$;
+	return;
+}
+
+// ============================================================================
+// SOCIAL EVENT - Picnic NPC Example
+// ============================================================================
+
+prontera,150,150,4	script	Picnic Organizer	4_F_KHELLISIA,{
+	// Check if this is an active social event
+	.@event_id = getvariableofnpc(.current_event_id, "Social_Event_Manager");
+	
+	if (.@event_id == 0) {
+		mes "[Picnic Organizer]";
+		mes "Sorry, no picnic event is currently active.";
+		close;
+	}
+	
+	mes "[Picnic Organizer]";
+	mes "Welcome to our social gathering!";
+	mes "Enjoying the company of friends?";
+	next;
+	
+	// Check party requirement
+	if (!getcharid(1)) {
+		mes "[Picnic Organizer]";
+		mes "This event requires you to be in a party.";
+		mes "Gather some friends and come back!";
+		close;
+	}
+	
+	.@party_id = getcharid(1);
+	getpartymember .@party_id, 1;
+	
+	if ($@partymembercount < 2) {
+		mes "[Picnic Organizer]";
+		mes "You need at least 2 party members.";
+		close;
+	}
+	
+	mes "[Picnic Organizer]";
+	mes "Wonderful! Enjoy these party buffs!";
+	
+	// Grant party buffs (all party members in range)
+	.@party_size = $@partymembercount;
+	for (.@i = 0; .@i < .@party_size; .@i++) {
+		if (isloggedin($@partymemberaid[.@i], $@partymembercid[.@i])) {
+			attachrid $@partymemberaid[.@i];
+			
+			// Social Gathering buffs
+			sc_start SC_INCATKRATE, 3600000, 5;  // +5% ATK for 60 min
+			sc_start SC_INCMATKRATE, 3600000, 5; // +5% MATK
+			sc_start SC_INCDEFRATE, 3600000, 5;  // +5% DEF
+			
+			dispbottom "Received Social Gathering Bonus! (60 minutes)";
+		}
+	}
+	
+	detachrid;
+	
+	// Record participation
+	callsub PostSocialParticipation, .@event_id, .@party_id;
+	
+	close;
+
+PostSocialParticipation:
+	.@event_id = getarg(0);
+	.@party_id = getarg(1);
+	
+	// In production, POST to:
+	// POST /api/v1/economy_social/social/events/{event_id}/participate
+	// {
+	//   "event_id": event_id,
+	//   "participants": [array of player IDs],
+	//   "party_id": party_id
+	// }
+	
+	debugmes "Social participation recorded: Event " + .@event_id + " Party " + .@party_id;
+	return;
+}
+
+// ============================================================================
+// GUILD TASK BOARD - Daily Guild Missions
+// ============================================================================
+
+prontera,155,181,4	script	Guild Task Board	4_BOARD3,{
+	if (!getcharid(2)) {
+		mes "[Guild Task Board]";
+		mes "You must be in a guild to accept tasks.";
+		close;
+	}
+	
+	.@guild_id = getcharid(2);
+	
+	mes "[Guild Task Board]";
+	mes "Welcome to the Guild Task Board!";
+	mes "Current tasks for your guild:";
+	next;
+	
+	// In production, fetch from API:
+	// GET /api/v1/economy_social/social/guild-tasks/{guild_id}
+	
+	// Example tasks display
+	mes "^0000FF1. Cooperative Hunting^000000";
+	mes "   Kill 150 monsters as a guild";
+	mes "   Progress: " + .guild_task_progress[.@guild_id] + "/150";
+	mes "   Reward: 1500 Guild EXP, 10x Elunium";
+	next;
+	
+	mes "^0000FF2. Resource Gathering^000000";
+	mes "   Collect 50 Oridecon items";
+	mes "   Progress: 0/50";
+	mes "   Reward: 1000 Guild EXP, 5x Elunium";
+	next;
+	
+	mes "^0000FF3. Exploration^000000";
+	mes "   Visit 10 different maps as guild";
+	mes "   Progress: 0/10";
+	mes "   Reward: 800 Guild EXP, Discovery Items";
+	close;
+
+OnGuildMonsterKill:
+	.@guild_id = getcharid(2);
+	if (.@guild_id == 0) end;
+	
+	// Update task progress
+	.guild_task_progress[.@guild_id]++;
+	
+	// Check completion
+	if (.guild_task_progress[.@guild_id] >= 150) {
+		announce "Guild Task Completed! Your guild has finished Cooperative Hunting!", bc_guild;
+		
+		// Grant rewards (would POST to API in production)
+		callsub GrantGuildRewards, .@guild_id, 1500, 10;
+		
+		.guild_task_progress[.@guild_id] = 0;
+	}
+	end;
+
+GrantGuildRewards:
+	.@guild_id = getarg(0);
+	.@guild_exp = getarg(1);
+	.@elunium_count = getarg(2);
+	
+	// Grant guild EXP and items
+	// In production, this would be handled via Bridge Layer
+	
+	debugmes "Guild " + .@guild_id + " earned " + .@guild_exp + " EXP";
+	return;
+}
+
+// ============================================================================
+// SOCIAL EVENT MANAGER - Coordinates with Social Interaction Agent
+// ============================================================================
+
+-	script	Social_Event_Manager	FAKE_NPC,{
+OnInit:
+	.api_url$ = "http://192.168.0.100:8000/api/v1/economy_social";
+	.current_event_id = 0;
+	.event_despawn_timer = 0;
+	end;
+
+OnMinute00:
+	// Check for new social events every hour
+	if (gettime(3) == 7) {
+		// 7 AM - spawn social events
+		callsub SpawnSocialEvents;
+	}
+	end;
+
+SpawnSocialEvents:
+	// In production, fetch from API:
+	// GET /api/v1/economy_social/social/events/active
+	
+	// For each active event, spawn appropriate NPC
+	// Example: Picnic event spawns at specified coordinates
+	
+	debugmes "Checking for social events to spawn...";
+	
+	// Set current event ID for other NPCs to reference
+	.current_event_id = 123; // From API response
+	
+	return;
+
+OnEventExpire:
+	// Clean up when event expires
+	.current_event_id = 0;
+	end;
+}
+
+// ============================================================================
+// KARMA EFFECTS - Apply atmospheric changes based on alignment
+// ============================================================================
+
+-	script	Karma_Effects_Manager	FAKE_NPC,{
+OnInit:
+	.current_alignment$ = "neutral";
+	end;
+
+OnMinute00:
+	// Check karma alignment every 30 minutes
+	if (gettime(2) % 30 == 0) {
+		callsub CheckKarmaAlignment;
+	}
+	end;
+
+CheckKarmaAlignment:
+	// In production, fetch from API:
+	// GET /api/v1/economy_social/karma/effects
+	
+	.@new_alignment$ = "good"; // From API
+	
+	if (.@new_alignment$ != .current_alignment$) {
+		announce "World karma alignment has shifted to: " + .@new_alignment$, bc_all, 0x00FFFF;
+		
+		.current_alignment$ = .@new_alignment$;
+		
+		// Apply effects
+		callsub ApplyAlignmentEffects, .@new_alignment$;
+	}
+	return;
+
+ApplyAlignmentEffects:
+	.@alignment$ = getarg(0);
+	
+	// Clear existing effects
+	atcommand "@reloadscript"; // Reload to clear
+	
+	// Apply new effects based on alignment
+	if (.@alignment$ == "very_good") {
+		// Extend daylight, spawn angel NPCs
+		announce "Divine light bathes the world!", bc_all, 0xFFD700;
+	} else if (.@alignment$ == "very_evil") {
+		// Permanent night, spawn demons
+		announce "Darkness consumes the world!", bc_all, 0x8B0000;
+	}
+	
+	return;
+}
+
+// ============================================================================
+// PRICE ADJUSTMENT - Dynamic merchant prices
+// ============================================================================
+
+-	script	Dynamic_Pricing	FAKE_NPC,{
+OnInit:
+	// Price modifiers from economy agent
+	.price_modifier = 1.0; // 1.0 = normal, 1.5 = +50%, 0.5 = -50%
+	end;
+
+OnMinute00:
+	// Check for price updates every 6 hours
+	if (gettime(3) % 6 == 0) {
+		callsub UpdatePriceModifiers;
+	}
+	end;
+
+UpdatePriceModifiers:
+	// In production, fetch from API:
+	// GET /api/v1/economy_social/economy/snapshot
+	
+	// Apply price modifier to all shops
+	// This would integrate with shop system
+	
+	debugmes "Price modifier updated: " + .price_modifier;
+	return;
+}
+
+// ============================================================================
+// USAGE INSTRUCTIONS
+// ============================================================================
+
+/*
+INTEGRATION CHECKLIST:
+
+1. Database Setup:
+   - Run migrations/014_economy_social_agents.sql
+
+2. API Configuration:
+   - Update .api_url$ with your AI service URL
+   - Set .api_key$ for authentication
+
+3. HTTP Plugin:
+   - Install rAthena HTTP plugin for API calls
+   - Configure SSL if needed
+
+4. Bridge Layer:
+   - Enable economy tracking in bridge config
+   - Enable karma action forwarding
+   - Enable social event synchronization
+
+5. Testing:
+   - Spawn test events via API
+   - Trigger karma actions in-game
+   - Monitor economy metrics
+   - Verify social events appear
+
+6. Monitoring:
+   - Check API status: GET /api/v1/economy_social/status
+   - View metrics: GET /api/v1/economy_social/metrics
+   - Monitor logs: tail -f logs/ai-service.log
+
+EXAMPLE API CALLS (via HTTP plugin):
+
+// Check global karma
+http_get(.api_url$ + "/karma/global", .@response$);
+
+// Create zeny sink (admin)
+http_post(.api_url$ + "/economy/zeny-sink", "{\"severity\": 0.8}", .@response$);
+
+// Get active social events
+http_get(.api_url$ + "/social/events/active", .@response$);
+
+// Record participation
+.@data$ = "{\"event_id\": 123, \"participants\": [" + getcharid(0) + "], \"party_id\": " + getcharid(1) + "}";
+http_post(.api_url$ + "/social/events/123/participate", .@data$, .@response$);
+*/

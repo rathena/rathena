@@ -57,6 +57,10 @@ struct login_session_data {
 	int32 fd;				///socket of client
 
 	char web_auth_token[WEB_AUTH_TOKEN_LENGTH]; /// web authentication token
+
+	// --- P2P multi-CPU architecture extensions ---
+	bool p2p_capable;      /// True if client supports P2P
+	uint8 p2p_protocol;    /// 0=legacy, 1=P2P-TCP, 2=P2P-QUIC, etc.
 };
 
 #define MAX_SERVERS 5 //max number of mapserv that could be attach
@@ -155,6 +159,11 @@ struct auth_node {
 	uint32 ip;
 	char sex;
 	uint8 clienttype;
+
+	// --- P2P session routing extensions ---
+	bool p2p_capable;
+	uint8 p2p_protocol;
+	char p2p_host[64]; // e.g., "127.0.0.1:9000"
 };
 
 ///Accessors

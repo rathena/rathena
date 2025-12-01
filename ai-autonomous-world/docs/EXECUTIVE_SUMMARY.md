@@ -61,7 +61,7 @@ Instead of scripted events:
 - **Python**: 3.12.3
 - **FastAPI**: 0.115.12 with uvicorn 0.34.0
 - **Agent Framework**: CrewAI 0.86.0 with 6 agents (Dialogue, Decision, Memory, World, Quest, Economy)
-- **Memory Management**: Memori SDK 0.1.19 with PostgreSQL 17.6 backend
+- **Memory Management**: OpenMemory with PostgreSQL 17.6 backend
 - **State Storage**: DragonflyDB 7.4.0 (Redis-compatible) + PostgreSQL 17.6 (18 tables)
 - **LLM Support**: Azure OpenAI (primary), OpenAI, Anthropic, Google, DeepSeek
 - **Infrastructure**: Native deployment (no Docker)
@@ -140,7 +140,7 @@ A gold rush causes inflation, food shortages, and starvation. The king's poor ec
 - ✅ LLM Provider abstraction (Azure OpenAI, OpenAI, DeepSeek, Anthropic, Google)
 - ✅ CrewAI integration
 - ✅ Basic NPC consciousness model
-- ⏳ Memori SDK integration (using DragonflyDB fallback)
+- ⏳ OpenMemory integration (using DragonflyDB fallback)
 
 ### Phase 3: World Systems (Weeks 7-10)
 - Economy system

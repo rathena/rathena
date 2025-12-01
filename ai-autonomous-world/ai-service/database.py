@@ -1,7 +1,9 @@
 """
 Database connection management for AI Service
-- DragonflyDB/Redis: High-speed caching and real-time state
+- DragonFlyDB: High-speed caching and real-time state (Redis protocol)
 - PostgreSQL: Persistent memory storage for OpenMemory SDK
+
+Note: DragonFlyDB is used as a drop-in replacement for Redis, but all configuration and documentation should reference DragonFlyDB as the backend.
 """
 
 import asyncio
@@ -10,24 +12,44 @@ import redis.asyncio as aioredis
 from redis.asyncio import ConnectionPool
 from typing import Optional
 from loguru import logger
+from prometheus_client import Counter, Gauge
+
+# Prometheus metrics for DragonFlyDB
+dragonfly_connection_attempts = Counter(
+    "dragonfly_connection_attempts_total",
+    "Total DragonFlyDB connection attempts"
+)
+dragonfly_connection_failures = Counter(
+    "dragonfly_connection_failures_total",
+    "Total DragonFlyDB connection failures"
+)
+dragonfly_connection_success = Counter(
+    "dragonfly_connection_success_total",
+    "Total successful DragonFlyDB connections"
+)
+dragonfly_health_gauge = Gauge(
+    "dragonfly_health_status",
+    "DragonFlyDB health status (1=healthy, 0=unhealthy)"
+)
 
 try:
-    from .config import settings
+    from config import settings
 except ImportError:
-    from ai_service.config import settings
+    from config import settings
 
+
+import asyncpg
 
 class PostgreSQLManager:
-    """PostgreSQL database connection manager for persistent memory storage"""
+    """PostgreSQL database connection manager for persistent memory storage (asyncpg only)"""
 
     def __init__(self):
-        self.engine = None
-        self.session_factory = None
+        self.pool: Optional[asyncpg.Pool] = None
         self._initialized = False
 
     async def connect(self, max_retries: int = None, retry_delay: float = None):
         """
-        Establish connection to PostgreSQL with retry logic
+        Establish connection to PostgreSQL with retry logic using asyncpg
 
         Args:
             max_retries: Maximum number of connection attempts (defaults to settings value)
@@ -40,45 +62,48 @@ class PostgreSQLManager:
             retry_delay = settings.db_connection_retry_delay
 
         last_error = None
+        
+        # Build connection parameters with SSL support
+        conn_params = {
+            "user": settings.postgres_user,
+            "password": settings.postgres_password,
+            "host": settings.postgres_host,
+            "port": settings.postgres_port,
+            "database": settings.postgres_db,
+            "min_size": 1,
+            "max_size": getattr(settings, "postgres_pool_size", 10),
+            "timeout": 30,
+        }
+        
+        # Add SSL mode if configured
+        sslmode = getattr(settings, "postgres_sslmode", "prefer")
+        if sslmode and sslmode != "disable":
+            # asyncpg uses ssl parameter instead of sslmode
+            import ssl as sslmod
+            if sslmode == "require":
+                conn_params["ssl"] = True
+            elif sslmode in ["verify-ca", "verify-full"]:
+                ssl_context = sslmod.create_default_context()
+                ssl_context.check_hostname = (sslmode == "verify-full")
+                ssl_context.verify_mode = sslmod.CERT_REQUIRED
+                conn_params["ssl"] = ssl_context
+            else:  # prefer or allow
+                conn_params["ssl"] = "prefer"
 
         for attempt in range(1, max_retries + 1):
             try:
-                logger.info(f"Connecting to PostgreSQL at {settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db} (attempt {attempt}/{max_retries})")
-
-                # Import SQLAlchemy here to avoid import errors if not installed
-                from sqlalchemy import create_engine, text
-                from sqlalchemy.orm import sessionmaker
-                from sqlalchemy.pool import QueuePool
-
-                # Create engine with connection pooling
-                self.engine = create_engine(
-                    settings.postgres_connection_string,
-                    poolclass=QueuePool,
-                    pool_size=settings.postgres_pool_size,
-                    max_overflow=settings.postgres_max_overflow,
-                    pool_pre_ping=True,  # Verify connections before using
-                    echo=settings.postgres_echo_sql,
-                )
-
-                # Test connection
-                with self.engine.connect() as conn:
-                    result = conn.execute(text("SELECT version()"))
-                    version = result.scalar()
+                logger.info(f"Connecting to PostgreSQL at {settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db} (attempt {attempt}/{max_retries}, SSL: {sslmode})")
+                self.pool = await asyncpg.create_pool(**conn_params)
+                async with self.pool.acquire() as conn:
+                    version = await conn.fetchval("SELECT version()")
                     logger.info(f"✓ Successfully connected to PostgreSQL")
                     logger.info(f"PostgreSQL version: {version}")
-
-                # Create session factory
-                self.session_factory = sessionmaker(bind=self.engine)
                 self._initialized = True
-
-                return  # Success - exit retry loop
-
+                return
             except Exception as e:
                 last_error = e
                 logger.warning(f"PostgreSQL connection attempt {attempt}/{max_retries} failed: {e}")
-
                 if attempt < max_retries:
-                    # Exponential backoff
                     wait_time = retry_delay * (2 ** (attempt - 1))
                     logger.info(f"Retrying in {wait_time:.1f} seconds...")
                     await asyncio.sleep(wait_time)
@@ -89,28 +114,26 @@ class PostgreSQLManager:
     async def disconnect(self):
         """Close connection to PostgreSQL"""
         try:
-            if self.engine:
-                self.engine.dispose()
+            if self.pool:
+                await self.pool.close()
                 logger.info("Disconnected from PostgreSQL")
                 self._initialized = False
         except Exception as e:
             logger.error(f"Error disconnecting from PostgreSQL: {e}")
 
-    def get_session(self):
-        """Get a new database session"""
-        if not self._initialized or not self.session_factory:
+    def get_pool(self):
+        """Get the asyncpg pool"""
+        if not self._initialized or not self.pool:
             raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
-        return self.session_factory()
+        return self.pool
 
     async def health_check(self) -> bool:
         """Check if PostgreSQL connection is healthy"""
         try:
-            if not self.engine:
+            if not self.pool:
                 return False
-
-            from sqlalchemy import text
-            with self.engine.connect() as conn:
-                conn.execute(text("SELECT 1"))
+            async with self.pool.acquire() as conn:
+                await conn.execute("SELECT 1")
             return True
         except Exception as e:
             logger.error(f"PostgreSQL health check failed: {e}")
@@ -125,29 +148,15 @@ class PostgreSQLManager:
             *args: Query parameters
 
         Returns:
-            Row object or None
+            Row dict or None
         """
-        if not self.engine:
+        if not self.pool:
             raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
-
         try:
-            from sqlalchemy import text
-
-            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
-            converted_query = query
-            params = {}
-            for i, arg in enumerate(args, 1):
-                placeholder = f"${i}"
-                param_name = f"param{i}"
-                converted_query = converted_query.replace(placeholder, f":{param_name}")
-                params[param_name] = arg
-
-            with self.engine.connect() as conn:
-                result = conn.execute(text(converted_query), params)
-                row = result.fetchone()
+            async with self.pool.acquire() as conn:
+                row = await conn.fetchrow(query, *args)
                 if row:
-                    # Convert Row to dict
-                    return dict(row._mapping)
+                    return dict(row)
                 return None
         except Exception as e:
             logger.error(f"Error executing fetch_one query: {e}")
@@ -162,28 +171,14 @@ class PostgreSQLManager:
             *args: Query parameters
 
         Returns:
-            List of row objects
+            List of row dicts
         """
-        if not self.engine:
+        if not self.pool:
             raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
-
         try:
-            from sqlalchemy import text
-
-            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
-            converted_query = query
-            params = {}
-            for i, arg in enumerate(args, 1):
-                placeholder = f"${i}"
-                param_name = f"param{i}"
-                converted_query = converted_query.replace(placeholder, f":{param_name}")
-                params[param_name] = arg
-
-            with self.engine.connect() as conn:
-                result = conn.execute(text(converted_query), params)
-                rows = result.fetchall()
-                # Convert Rows to dicts
-                return [dict(row._mapping) for row in rows]
+            async with self.pool.acquire() as conn:
+                rows = await conn.fetch(query, *args)
+                return [dict(row) for row in rows]
         except Exception as e:
             logger.error(f"Error executing fetch_all query: {e}")
             raise
@@ -199,36 +194,33 @@ class PostgreSQLManager:
         Returns:
             Number of affected rows
         """
-        if not self.engine:
+        if not self.pool:
             raise RuntimeError("PostgreSQL not initialized. Call connect() first.")
-
         try:
-            from sqlalchemy import text
-
-            # Convert PostgreSQL-style placeholders ($1, $2) to SQLAlchemy-style (:param1, :param2)
-            converted_query = query
-            params = {}
-            for i, arg in enumerate(args, 1):
-                placeholder = f"${i}"
-                param_name = f"param{i}"
-                converted_query = converted_query.replace(placeholder, f":{param_name}")
-                params[param_name] = arg
-
-            with self.engine.connect() as conn:
-                result = conn.execute(text(converted_query), params)
-                conn.commit()
-                return result.rowcount
+            async with self.pool.acquire() as conn:
+                result = await conn.execute(query, *args)
+                # asyncpg returns a string like 'INSERT 0 1', so parse the rowcount
+                rowcount = int(result.split()[-1])
+                return rowcount
         except Exception as e:
             logger.error(f"Error executing query: {e}")
             raise
 
     def get_connection_string(self) -> str:
-        """Get the PostgreSQL connection string (for OpenMemory SDK)"""
-        return settings.postgres_connection_string
+        """Get the PostgreSQL connection string (for OpenMemory SDK) with SSL support"""
+        conn_str = (
+            f"postgresql://{settings.postgres_user}:{settings.postgres_password}"
+            f"@{settings.postgres_host}:{settings.postgres_port}/{settings.postgres_db}"
+        )
+        # Add SSL mode parameter if configured
+        sslmode = getattr(settings, "postgres_sslmode", "prefer")
+        if sslmode and sslmode != "disable":
+            conn_str += f"?sslmode={sslmode}"
+        return conn_str
 
 
 class Database:
-    """DragonflyDB / Redis database connection manager"""
+    """DragonFlyDB database connection manager (Redis protocol)"""
 
     def __init__(self):
         self.pool: Optional[ConnectionPool] = None
@@ -257,17 +249,30 @@ class Database:
 
         for attempt in range(1, max_retries + 1):
             try:
+                dragonfly_connection_attempts.inc()
                 logger.info(f"Connecting to DragonflyDB at {settings.redis_host}:{settings.redis_port} (attempt {attempt}/{max_retries})")
+
+                # TLS/SSL support (optional)
+                ssl_params = {}
+                if hasattr(settings, "dragonfly_ssl") and settings.dragonfly_ssl:
+                    import ssl as sslmod
+                    ssl_params["ssl"] = True
+                    ssl_params["ssl_cert_reqs"] = sslmod.CERT_REQUIRED if getattr(settings, "dragonfly_ssl_verify", True) else sslmod.CERT_NONE
+                    if getattr(settings, "dragonfly_ssl_ca_certs", None):
+                        ssl_params["ssl_ca_certs"] = settings.dragonfly_ssl_ca_certs
 
                 # Create connection pool for DragonflyDB (Redis-compatible)
                 self.pool = ConnectionPool(
-                    host=settings.redis_host,
-                    port=settings.redis_port,
-                    db=settings.redis_db,
-                    password=settings.redis_password,
-                    max_connections=settings.redis_max_connections,
+                    host=getattr(settings, "dragonfly_host", settings.redis_host),
+                    port=getattr(settings, "dragonfly_port", settings.redis_port),
+                    db=getattr(settings, "dragonfly_db", settings.redis_db),
+                    password=getattr(settings, "dragonfly_password", settings.redis_password),
+                    max_connections=getattr(settings, "dragonfly_max_connections", settings.redis_max_connections),
                     decode_responses=False,  # False to support binary data
                     encoding="utf-8",
+                    socket_timeout=getattr(settings, "dragonfly_socket_timeout", 5),
+                    socket_connect_timeout=getattr(settings, "dragonfly_socket_connect_timeout", 5),
+                    **ssl_params
                 )
 
                 # Create DragonflyDB client (using Redis protocol)
@@ -276,6 +281,8 @@ class Database:
                 # Test connection
                 await self.client.ping()
                 logger.info("✓ Successfully connected to DragonflyDB")
+                dragonfly_connection_success.inc()
+                dragonfly_health_gauge.set(1)
 
                 # Log database info
                 info = await self.client.info()
@@ -286,6 +293,8 @@ class Database:
 
             except Exception as e:
                 last_error = e
+                dragonfly_connection_failures.inc()
+                dragonfly_health_gauge.set(0)
                 logger.warning(f"Connection attempt {attempt}/{max_retries} failed: {e}")
 
                 if attempt < max_retries:
@@ -320,10 +329,13 @@ class Database:
         """Check if database connection is healthy"""
         try:
             if not self.client:
+                dragonfly_health_gauge.set(0)
                 return False
             await self.client.ping()
+            dragonfly_health_gauge.set(1)
             return True
         except Exception as e:
+            dragonfly_health_gauge.set(0)
             logger.error(f"Database health check failed: {e}")
             return False
 
@@ -553,14 +565,37 @@ class Database:
             return None
 
     async def get_npc_quests(self, npc_id: str) -> list:
-        """Get all quests for an NPC"""
+        """Get all quests for an NPC (optimized with batch query to eliminate N+1 pattern)"""
         try:
             quest_ids = await self.client.smembers(f"quests:npc:{npc_id}")
+            if not quest_ids:
+                return []
+            
+            # Decode quest_ids if they are bytes
+            decoded_ids = []
+            for qid in quest_ids:
+                if isinstance(qid, bytes):
+                    decoded_ids.append(qid.decode('utf-8'))
+                else:
+                    decoded_ids.append(qid)
+            
+            # Batch GET all quests in a single round-trip (eliminates N+1 problem)
+            keys = [f"quest:{qid}" for qid in decoded_ids]
+            quest_jsons = await self.client.mget(*keys)
+            
+            # Parse quest data
             quests = []
-            for quest_id in quest_ids:
-                quest_data = await self.get_quest(quest_id)
-                if quest_data:
-                    quests.append(quest_data)
+            for quest_json in quest_jsons:
+                if quest_json:
+                    if isinstance(quest_json, bytes):
+                        quest_json = quest_json.decode('utf-8')
+                    try:
+                        quests.append(json.loads(quest_json))
+                    except json.JSONDecodeError as e:
+                        logger.warning(f"Failed to parse quest JSON: {e}")
+                        continue
+            
+            logger.debug(f"Retrieved {len(quests)} quests for NPC {npc_id} using batch query")
             return quests
         except Exception as e:
             logger.error(f"Error getting NPC quests for {npc_id}: {e}")

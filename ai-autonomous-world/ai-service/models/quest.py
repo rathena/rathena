@@ -8,7 +8,7 @@ from datetime import datetime
 from enum import Enum
 
 try:
-    from ai_service.models.quest_trigger import QuestTrigger
+    from models.quest_trigger import QuestTrigger
 except ImportError:
     from models.quest_trigger import QuestTrigger
 

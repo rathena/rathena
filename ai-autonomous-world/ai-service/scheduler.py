@@ -10,7 +10,7 @@ from loguru import logger
 from typing import Optional
 import asyncio
 
-from ai_service.config import settings
+from config import settings
 
 
 class AutonomousScheduler:

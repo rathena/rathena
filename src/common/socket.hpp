@@ -5,6 +5,7 @@
 #define SOCKET_HPP
 
 #include <ctime>
+#include <string>
 
 #include <config/core.hpp>
 
@@ -20,6 +21,30 @@
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
 #include "timer.hpp" // t_tick
+// --- Hybrid Protocol/P2P/QUIC extensions ---
+
+enum class SocketProtocol {
+    TCP,
+    QUIC,
+    P2P
+};
+
+struct SocketOptions {
+    SocketProtocol protocol = SocketProtocol::TCP;
+    // For QUIC
+    std::string quic_cert_file;
+    std::string quic_key_file;
+    // For P2P
+    std::string p2p_peer_id;
+    std::string p2p_bootstrap_addr;
+    // Common
+    int timeout = 5;
+    bool silent = false;
+};
+
+// Extended connection functions for protocol selection
+int32 make_connection_ex(uint32 ip, uint16 port, const SocketOptions& options);
+int32 make_listen_bind_ex(uint32 ip, uint16 port, const SocketOptions& options);
 
 #ifndef MAXCONN
 	#define MAXCONN FD_SETSIZE

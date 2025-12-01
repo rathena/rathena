@@ -5615,6 +5615,8 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 		node["Name"] << str[index];
 	if (!str[++index].empty())
 		node["JapaneseName"] << str[index];
+	std::cout << "[stoi debug] mob.cpp index=" << index << " value='" << str[index] << "'\n";
+	std::cout << std::flush;
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
 		node["Level"] << str[index];
 	if (!str[++index].empty() && std::stoul(str[index]) > 1)
@@ -5635,6 +5637,8 @@ static bool mob_read_sqldb_sub(std::vector<std::string> str) {
 		node["Defense"] << str[index];
 	if (!str[++index].empty())
 		node["MagicDefense"] << str[index];
+	std::cout << "[stoi debug] mob.cpp index=" << index << " value='" << str[index] << "'\n";
+	std::cout << std::flush;
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)
 		node["Str"] << str[index];
 	if (!str[++index].empty() && std::stoi(str[index]) > 1)

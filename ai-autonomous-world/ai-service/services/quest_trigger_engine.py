@@ -9,10 +9,10 @@ from datetime import datetime, time as datetime_time
 import asyncio
 
 try:
-    from ai_service.models.quest_trigger import (
+    from models.quest_trigger import (
         QuestTrigger, TriggerType, WeatherCondition, Season
     )
-    from ai_service.database import db
+    from database import db
 except ImportError:
     from models.quest_trigger import (
         QuestTrigger, TriggerType, WeatherCondition, Season

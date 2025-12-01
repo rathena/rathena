@@ -93,16 +93,35 @@ int32 logchrif_parse_reqauth(int32 fd, int32 id,char* ip){
 			//ShowStatus("Char-server '%s': authentication of the account %d accepted (ip: %s).\n", server[id].name, account_id, ip);
 
 			// send ack
-			WFIFOHEAD(fd,21);
-			WFIFOW(fd,0) = 0x2713;
-			WFIFOL(fd,2) = account_id;
-			WFIFOL(fd,6) = login_id1;
-			WFIFOL(fd,10) = login_id2;
-			WFIFOB(fd,14) = sex;
-			WFIFOB(fd,15) = 0;// ok
-			WFIFOL(fd,16) = request_id;
-			WFIFOB(fd,20) = node->clienttype;
-			WFIFOSET(fd,21);
+			if (node->p2p_capable) {
+				// Extended packet for P2P clients
+				WFIFOHEAD(fd, 21 + 1 + 1 + 64); // base + p2p_capable + p2p_protocol + p2p_host
+				WFIFOW(fd,0) = 0x2713;
+				WFIFOL(fd,2) = account_id;
+				WFIFOL(fd,6) = login_id1;
+				WFIFOL(fd,10) = login_id2;
+				WFIFOB(fd,14) = sex;
+				WFIFOB(fd,15) = 0;// ok
+				WFIFOL(fd,16) = request_id;
+				WFIFOB(fd,20) = node->clienttype;
+				WFIFOB(fd,21) = node->p2p_capable ? 1 : 0;
+				WFIFOB(fd,22) = node->p2p_protocol;
+				safestrncpy((char*)WFIFOP(fd,23), node->p2p_host, 64);
+				WFIFOSET(fd, 21 + 1 + 1 + 64);
+				ShowStatus("[P2P] Sent P2P session info to char-server: account %u, host %s, protocol %u\n", account_id, node->p2p_host, node->p2p_protocol);
+			} else {
+				// Legacy packet
+				WFIFOHEAD(fd,21);
+				WFIFOW(fd,0) = 0x2713;
+				WFIFOL(fd,2) = account_id;
+				WFIFOL(fd,6) = login_id1;
+				WFIFOL(fd,10) = login_id2;
+				WFIFOB(fd,14) = sex;
+				WFIFOB(fd,15) = 0;// ok
+				WFIFOL(fd,16) = request_id;
+				WFIFOB(fd,20) = node->clienttype;
+				WFIFOSET(fd,21);
+			}
 
 			// each auth entry can only be used once
 			login_remove_auth_node( account_id );

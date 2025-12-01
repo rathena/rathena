@@ -6,12 +6,8 @@ Handles movement capability detection, sprite filtering, and movement validation
 from typing import Dict, Any, Optional, List
 from loguru import logger
 
-try:
-    from ai_service.models.npc import NPCMovementCapabilities, NPCPosition
-    from ai_service.config import settings
-except ModuleNotFoundError:
-    from models.npc import NPCMovementCapabilities, NPCPosition
-    from ai_service.config import settings
+from models.npc import NPCMovementCapabilities, NPCPosition
+from config import settings
 
 
 # Known NPC sprite IDs that support walking animations

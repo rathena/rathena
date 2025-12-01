@@ -35,6 +35,12 @@ faiss-gpu>=1.7.4
 # Common Dependencies
 # ============================================================================
 
+# Deep Learning Frameworks (GPU Support)
+# Note: Install PyTorch separately with appropriate CUDA/ROCm/MPS support (see instructions below)
+torch>=2.4.0  # PyTorch with GPU acceleration (CUDA/ROCm/MPS)
+transformers>=4.45.0  # Hugging Face transformers for LLM/NLP tasks
+accelerate>=0.34.0  # Hugging Face acceleration library for multi-GPU training
+
 # NumPy for array operations
 numpy>=1.24.0
 

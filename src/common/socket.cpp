@@ -42,6 +42,8 @@
 
 #include "cbasetypes.hpp"
 #include "malloc.hpp"
+#include "quic.hpp"         // (to be created/extended)
+#include "p2p_coordinator.hpp" // (to be created/extended)
 #include "mmo.hpp"
 #include "showmsg.hpp"
 #include "strlib.hpp"
@@ -710,8 +712,8 @@ int32 make_connection(uint32 ip, uint16 port, bool silent,int32 timeout) {
 
 	if( epoll_ctl( epfd, EPOLL_CTL_ADD, fd, &epevent ) == SOCKET_ERROR ){
 		ShowError( "make_connection: failed to add socket #%d to epoll event dispatcher: %s\n", fd, error_msg() );
-		sClose(fd);
-		return -1;
+sClose(fd);
+return -1;
 	}
 #endif
 
@@ -721,6 +723,104 @@ int32 make_connection(uint32 ip, uint16 port, bool silent,int32 timeout) {
 	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
 
 	return fd;
+}
+	// --- Hybrid Protocol/P2P/QUIC extensions ---
+
+#include "socket.hpp"
+#include <iostream>
+
+int32 make_connection_ex(uint32 ip, uint16 port, const SocketOptions& options) {
+    switch (options.protocol) {
+        case SocketProtocol::TCP:
+            ShowStatus("[SOCKET] Using TCP protocol for connection to %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            return make_connection(ip, port, options.silent, options.timeout);
+        case SocketProtocol::QUIC: {
+            ShowStatus("[SOCKET] Using QUIC protocol for connection to %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            QuicOptions quic_opts;
+            quic_opts.cert_file = options.quic_cert_file;
+            quic_opts.key_file = options.quic_key_file;
+            quic_opts.timeout = options.timeout;
+            quic_opts.silent = options.silent;
+            std::string ip_str = std::to_string((ip >> 24) & 0xFF) + "." +
+                                 std::to_string((ip >> 16) & 0xFF) + "." +
+                                 std::to_string((ip >> 8) & 0xFF) + "." +
+                                 std::to_string(ip & 0xFF);
+            int fd = quic_connect(ip_str, port, quic_opts);
+            if (fd < 0) {
+                ShowError("[SOCKET] QUIC connection failed, falling back to TCP.\n");
+                return make_connection(ip, port, options.silent, options.timeout);
+            }
+            return fd;
+        }
+        case SocketProtocol::P2P: {
+            ShowStatus("[SOCKET] Using P2P protocol for connection to %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            P2POptions p2p_opts;
+            p2p_opts.peer_id = options.p2p_peer_id;
+            p2p_opts.bootstrap_addr = options.p2p_bootstrap_addr;
+            p2p_opts.timeout = options.timeout;
+            p2p_opts.silent = options.silent;
+            std::string ip_str = std::to_string((ip >> 24) & 0xFF) + "." +
+                                 std::to_string((ip >> 16) & 0xFF) + "." +
+                                 std::to_string((ip >> 8) & 0xFF) + "." +
+                                 std::to_string(ip & 0xFF);
+            int fd = p2p_connect(ip_str, port, p2p_opts);
+            if (fd < 0) {
+                ShowError("[SOCKET] P2P connection failed, falling back to TCP.\n");
+                return make_connection(ip, port, options.silent, options.timeout);
+            }
+            return fd;
+        }
+        default:
+            ShowStatus("[SOCKET] Unknown protocol requested, falling back to TCP for %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            return make_connection(ip, port, options.silent, options.timeout);
+    }
+}
+
+int32 make_listen_bind_ex(uint32 ip, uint16 port, const SocketOptions& options) {
+    switch (options.protocol) {
+        case SocketProtocol::TCP:
+            ShowStatus("[SOCKET] Listening with TCP protocol on %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            return make_listen_bind(ip, port);
+        case SocketProtocol::QUIC: {
+            ShowStatus("[SOCKET] Listening with QUIC protocol on %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            QuicOptions quic_opts;
+            quic_opts.cert_file = options.quic_cert_file;
+            quic_opts.key_file = options.quic_key_file;
+            quic_opts.timeout = options.timeout;
+            quic_opts.silent = options.silent;
+            std::string ip_str = std::to_string((ip >> 24) & 0xFF) + "." +
+                                 std::to_string((ip >> 16) & 0xFF) + "." +
+                                 std::to_string((ip >> 8) & 0xFF) + "." +
+                                 std::to_string(ip & 0xFF);
+            int fd = quic_listen(ip_str, port, quic_opts);
+            if (fd < 0) {
+                ShowError("[SOCKET] QUIC listen failed, falling back to TCP.\n");
+                return make_listen_bind(ip, port);
+            }
+            return fd;
+        }
+        case SocketProtocol::P2P: {
+            ShowStatus("[SOCKET] Listening with P2P protocol on %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            P2POptions p2p_opts;
+            p2p_opts.peer_id = options.p2p_peer_id;
+            p2p_opts.bootstrap_addr = options.p2p_bootstrap_addr;
+            p2p_opts.timeout = options.timeout;
+            p2p_opts.silent = options.silent;
+            std::string ip_str = std::to_string((ip >> 24) & 0xFF) + "." +
+                                 std::to_string((ip >> 16) & 0xFF) + "." +
+                                 std::to_string((ip >> 8) & 0xFF) + "." +
+                                 std::to_string(ip & 0xFF);
+            int fd = p2p_listen(ip_str, port, p2p_opts);
+            if (fd < 0) {
+                ShowError("[SOCKET] P2P listen failed, falling back to TCP.\n");
+                return make_listen_bind(ip, port);
+            }
+            return fd;
+        }
+        default:
+            ShowStatus("[SOCKET] Unknown protocol for listen, falling back to TCP on %d.%d.%d.%d:%u\n", CONVIP(ip), port);
+            return make_listen_bind(ip, port);
+    }
 }
 
 static int32 create_session(int32 fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse)

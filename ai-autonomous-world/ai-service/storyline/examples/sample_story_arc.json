@@ -1,0 +1,246 @@
+{
+  "_metadata": {
+    "generated_by": "AI-Driven Storyline Generator",
+    "version": "1.0",
+    "generated_at": "2025-11-26T18:22:00Z",
+    "world_state_snapshot": "average_level_75_karma_good_faction_rune"
+  },
+  "story_arc_name": "The Shattered Rune",
+  "story_arc_summary": "A powerful ancient rune protecting Midgard has been shattered into seven fragments, scattered across dangerous territories. As dark forces gather to claim the fragments for nefarious purposes, the Rune Alliance calls upon brave adventurers to recover the pieces before it's too late. Each fragment is guarded by corrupted guardians who have fallen under a sinister influence. The fate of the realm hangs in the balance.",
+  "chapter": 1,
+  "duration_days": 14,
+  "theme": "mystery",
+  "events": [
+    {
+      "npc_name": "Elder Magistra Selene",
+      "npc_location": "prontera",
+      "npc_sprite": "4_F_JOB_SAGE",
+      "npc_role": "mentor",
+      "dialogue": [
+        "Welcome, adventurer. I sense great potential within you.",
+        "The Sacred Rune of Protection has been shattered by unknown forces.",
+        "Seven fragments now lie scattered across Midgard, each calling to those who would seek power.",
+        "We must recover them before the Shadow Cult does. Will you aid us?"
+      ],
+      "quest": {
+        "title": "The First Fragment",
+        "objective": "Investigate the ruins near Geffen and recover the First Fragment",
+        "objectives": [
+          {
+            "objective_type": "explore",
+            "description": "Search the Geffen ruins for clues",
+            "target_map": "gef_dun02",
+            "quantity": 1
+          },
+          {
+            "objective_type": "kill",
+            "description": "Defeat 30 corrupted guardians",
+            "monsters": ["1036", "1111", "1192"],
+            "quantity": 30
+          },
+          {
+            "objective_type": "collect",
+            "description": "Collect the First Rune Fragment",
+            "required_items": [{"item_id": 7001, "quantity": 1}],
+            "quantity": 1
+          }
+        ],
+        "monsters": ["1036", "1111", "1192"],
+        "required_items": [
+          {"item_id": 7001, "quantity": 1}
+        ],
+        "reward": {
+          "exp": 150000,
+          "items": [
+            {"item_id": 607, "quantity": 5},
+            {"item_id": 12210, "quantity": 3}
+          ],
+          "reputation": 200
+        }
+      }
+    },
+    {
+      "npc_name": "Captain Theron",
+      "npc_location": "geffen",
+      "npc_sprite": "4_M_JOB_KNIGHT2",
+      "npc_role": "ally",
+      "dialogue": [
+        "Hail, brave one! I've been tracking Shadow Cult movements.",
+        "They're after the rune fragments too - we must move quickly.",
+        "I'll provide military support if you venture into dangerous territories.",
+        "Together, we can stop this threat!"
+      ],
+      "quest": {
+        "title": "Shadow Cult Disruption",
+        "objective": "Disrupt Shadow Cult operations in the Payon dungeon",
+        "objectives": [
+          {
+            "objective_type": "kill",
+            "description": "Defeat Shadow Cult acolytes",
+            "monsters": ["1416", "1444"],
+            "quantity": 50
+          }
+        ],
+        "monsters": ["1416", "1444"],
+        "required_items": [],
+        "reward": {
+          "exp": 120000,
+          "items": [
+            {"item_id": 608, "quantity": 3}
+          ],
+          "reputation": 150
+        }
+      }
+    },
+    {
+      "npc_name": "Mysterious Cloaked Figure",
+      "npc_location": "morocc",
+      "npc_sprite": "4_M_ACROSS",
+      "npc_role": "antagonist",
+      "dialogue": [
+        "...So you're the one interfering with our plans.",
+        "The fragments belong to those who understand their true power.",
+        "Your precious Alliance is too weak to wield such might.",
+        "Turn back now, while you still can..."
+      ],
+      "quest": null
+    },
+    {
+      "npc_name": "Lyra the Oracle",
+      "npc_location": "payon",
+      "npc_sprite": "4_F_UMGIRL",
+      "npc_role": "neutral",
+      "dialogue": [
+        "The threads of fate are tangled around the shattered rune.",
+        "I see darkness gathering, but also a glimmer of hope.",
+        "Three paths lie before you - choose wisely, for each has consequences.",
+        "The fragments call to each other... perhaps they wish to be whole again?"
+      ],
+      "quest": {
+        "title": "Visions of the Past",
+        "objective": "Uncover the truth about the rune's destruction",
+        "objectives": [
+          {
+            "objective_type": "talk",
+            "description": "Speak with ancient spirits",
+            "target_npc": "Elder Spirit",
+            "quantity": 3
+          },
+          {
+            "objective_type": "collect",
+            "description": "Gather vision crystals",
+            "required_items": [{"item_id": 7020, "quantity": 10}],
+            "quantity": 10
+          }
+        ],
+        "monsters": [],
+        "required_items": [
+          {"item_id": 7020, "quantity": 10}
+        ],
+        "reward": {
+          "exp": 100000,
+          "items": [
+            {"item_id": 617, "quantity": 1}
+          ],
+          "reputation": 100,
+          "special": {
+            "unlock_lore": "The Truth About the Shattered Rune"
+          }
+        }
+      }
+    }
+  ],
+  "boss_event": {
+    "spawn_map": "gef_dun02",
+    "boss_name": "Corrupted Rune Guardian",
+    "boss_id": 1917,
+    "modifiers": ["enrage", "rune_barrier", "fragment_resonance"],
+    "hp_multiplier": 3.0,
+    "drop_bonus_percent": 150,
+    "spawn_message": "The Corrupted Rune Guardian has awakened! Brave adventurers, unite to defeat this ancient evil!"
+  },
+  "world_modifiers": [
+    {
+      "map": "gef_dun02",
+      "modifier": "dark_fog",
+      "duration_hours": 168,
+      "effects": {
+        "visibility": 0.7,
+        "mob_atk": 1.15
+      }
+    },
+    {
+      "map": "prontera",
+      "modifier": "ominous_clouds",
+      "duration_hours": 336,
+      "effects": {
+        "atmosphere": "tense"
+      }
+    }
+  ],
+  "faction_impact": {
+    "faction_id": "rune_alliance",
+    "alignment_shift": 500,
+    "reason": "Protecting the Sacred Rune aligns with Alliance values"
+  },
+  "success_outcomes": {
+    "next_chapter": 2,
+    "world_changes": [
+      "The first fragment has been secured, but six remain",
+      "The Rune Alliance's influence grows stronger in Prontera",
+      "Citizens feel safer knowing heroes are protecting the realm",
+      "Ancient rune magic begins to resonate across Midgard"
+    ],
+    "faction_impacts": [
+      {
+        "faction_id": "rune_alliance",
+        "alignment_shift": 300,
+        "reason": "Successfully protected first fragment"
+      }
+    ],
+    "unlocked_content": [
+      "Chapter 2: The Northern Fragments",
+      "Rune Fragment crafting system",
+      "Alliance commendation rewards"
+    ]
+  },
+  "failure_outcomes": {
+    "next_chapter": 2,
+    "world_changes": [
+      "Shadow Cult agents have secured the first fragment",
+      "Dark energy radiates from their stronghold",
+      "The remaining fragments become harder to locate",
+      "Urgency increases as time runs short"
+    ],
+    "faction_impacts": [
+      {
+        "faction_id": "shadow_cult",
+        "alignment_shift": 300,
+        "reason": "Shadow Cult claims first fragment"
+      }
+    ],
+    "unlocked_content": [
+      "Chapter 2: Desperate Measures",
+      "Shadow infiltration missions"
+    ]
+  },
+  "_generation_metadata": {
+    "world_state_used": {
+      "online_players": 50,
+      "average_level": 75,
+      "dominant_faction": "rune_alliance",
+      "global_karma": 3500,
+      "karma_alignment": "good",
+      "top_visited_maps": ["prontera", "geffen", "payon"],
+      "least_visited_maps": ["abyss_03", "gef_dun02"],
+      "inflation_rate": 0.05
+    },
+    "previous_arcs_referenced": 0,
+    "generation_approach": "template_with_customization",
+    "llm_provider": "azure_openai",
+    "llm_model": "gpt-4-turbo",
+    "generation_time_seconds": 15.3,
+    "estimated_cost_usd": 0.12,
+    "validation_passed": true
+  }
+}

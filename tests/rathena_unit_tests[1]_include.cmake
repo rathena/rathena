@@ -1,0 +1,5 @@
+if(EXISTS "/ai-mmorpg-world/rathena-AI-world/tests/rathena_unit_tests[1]_tests.cmake")
+  include("/ai-mmorpg-world/rathena-AI-world/tests/rathena_unit_tests[1]_tests.cmake")
+else()
+  add_test(rathena_unit_tests_NOT_BUILT rathena_unit_tests_NOT_BUILT)
+endif()

@@ -108,6 +108,7 @@ dragonfly:
   socket_connect_timeout: 5
   retry_on_timeout: true
   health_check_interval: 30
+  # DragonflyDB is running as the Redis-compatible cache backend (v1.34.2)
 
 # CrewAI Configuration
 crewai:

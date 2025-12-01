@@ -7,7 +7,7 @@ from typing import Dict, Any, Optional, List
 from loguru import logger
 
 try:
-    from ai_service.models.npc import NPCAction, NPCPosition
+    from models.npc import NPCAction, NPCPosition
 except ModuleNotFoundError:
     from models.npc import NPCAction, NPCPosition
 

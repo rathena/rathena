@@ -103,11 +103,41 @@ llm:
     temperature: "${OLLAMA_TEMPERATURE:-0.7}"
     timeout: "${OLLAMA_TIMEOUT:-60}"
 
+  # ============================================================================
+  # LLM Fallback Chain Configuration
+  # ============================================================================
+  # Automatic provider fallback ensures high availability by trying providers
+  # in sequence until one succeeds. The system tracks failures and automatically
+  # switches to the next provider when a threshold is reached. It also periodically
+  # checks if the primary provider has recovered.
+  #
+  # Default Chain: Azure OpenAI → OpenAI → Anthropic → DeepSeek → Ollama
+  # ============================================================================
+  
+  fallback:
+    enabled: true  # Enable automatic fallback chain
+    
+    # Provider chain order (tried sequentially on failure)
+    chain:
+      - azure_openai
+      - openai
+      - anthropic
+      - deepseek
+      - ollama
+    
+    # Max consecutive failures before switching to next provider
+    max_failures_per_provider: 3
+    
+    # Probability (0.0-1.0) of checking if primary provider recovered
+    # Set to 0.1 = 10% of successful calls check primary recovery
+    primary_recovery_check_rate: 0.1
+
 # ============================================================================
 # Database Configuration
 # ============================================================================
 
-# DragonflyDB (Redis-compatible) - High-speed caching and Pub/Sub
+# DragonflyDB - High-speed caching and Pub/Sub (Redis protocol)
+# This is the primary cache and real-time state backend.
 # IMPORTANT: Set password in .env file if authentication is enabled
 dragonfly:
   host: "${DRAGONFLY_HOST:-localhost}"
@@ -118,7 +148,7 @@ dragonfly:
   socket_timeout: "${DRAGONFLY_SOCKET_TIMEOUT:-5}"
   socket_connect_timeout: "${DRAGONFLY_SOCKET_CONNECT_TIMEOUT:-5}"
 
-# PostgreSQL - Persistent memory storage (requires Memori SDK)
+# PostgreSQL - Persistent memory storage (requires OpenMemory)
 # IMPORTANT: Set your actual password in the .env file, NOT here!
 postgres:
   host: "${POSTGRES_HOST:-localhost}"
@@ -266,8 +296,8 @@ performance:
     max_connections: 100
     timeout: 30
 
-  # Redis Caching
-  redis_caching:
+  # DragonFlyDB Caching (Redis protocol)
+  dragonfly_caching:
     enabled: true
     default_ttl: 300  # seconds
     max_cache_size: 10000  # items

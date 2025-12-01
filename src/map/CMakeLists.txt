@@ -9,11 +9,22 @@ set( MAP_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
 #
 if( BUILD_SERVERS )
 message( STATUS "Creating target map-server" )
+
+# Find Python3 for embedded AI bridge
+find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+if(Python3_FOUND)
+	message( STATUS "Found Python ${Python3_VERSION}: ${Python3_EXECUTABLE}" )
+	message( STATUS "Python include dirs: ${Python3_INCLUDE_DIRS}" )
+	message( STATUS "Python libraries: ${Python3_LIBRARIES}" )
+else()
+	message( WARNING "Python3 not found - AI bridge will not be available" )
+endif()
+
 file(GLOB_RECURSE MAP_HEADERS ${MAP_SOURCE_DIR}/*.hpp)
 file(GLOB_RECURSE MAP_SOURCES ${MAP_SOURCE_DIR}/*.cpp)
 set( DEPENDENCIES common ryml)
-set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} )
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} )
+set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} zmq ${Python3_LIBRARIES} )
+set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} ${Python3_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
 if( WITH_PCRE )
 	message( STATUS "Enabled PCRE code" )
@@ -23,10 +34,16 @@ if( WITH_PCRE )
 else()
 	message( STATUS "Disabled PCRE code" )
 endif()
-set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${MAP_HEADERS} ${MAP_SOURCES} )
+set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${MAP_HEADERS} ${MAP_SOURCES}
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_ipc.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_utils.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_native_api.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_native_commands.cpp
+  ${CMAKE_SOURCE_DIR}/src/custom/ai_bridge.cpp
+)
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} )
 source_group( map FILES ${MAP_HEADERS} ${MAP_SOURCES} )
-include_directories( ${INCLUDE_DIRS} )
+include_directories( ${INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/src/map ${CMAKE_SOURCE_DIR}/src/aiworld ${CMAKE_SOURCE_DIR}/3rdparty/json/single_include )
 
 #message( STATUS "map-server SOURCE_FILES=${SOURCE_FILES}")
 add_executable( map-server ${SOURCE_FILES} )

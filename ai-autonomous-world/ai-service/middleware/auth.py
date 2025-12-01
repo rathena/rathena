@@ -12,7 +12,7 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-from ai_service.config import settings
+from config import settings
 
 
 class APIKeyMiddleware(BaseHTTPMiddleware):

@@ -9,12 +9,12 @@ from datetime import datetime
 import uuid
 
 try:
-    from ai_service.models.gift import (
+    from models.gift import (
         Gift, GiftCategory, GiftGivingRequest, GiftGivingResponse,
         NPCGiftPreferences, GiftHistory, GiftPreference
     )
-    from ai_service.database import db
-    from ai_service.llm import get_llm_provider
+    from database import db
+    from llm import get_llm_provider
 except ImportError:
     from models.gift import (
         Gift, GiftCategory, GiftGivingRequest, GiftGivingResponse,

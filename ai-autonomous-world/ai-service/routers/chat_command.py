@@ -9,14 +9,14 @@ from datetime import datetime, timedelta
 from typing import Dict, Optional
 from pydantic import BaseModel, Field
 
-from ai_service.config import settings
-from ai_service.models.player import (
+from config import settings
+from models.player import (
     PlayerInteractionRequest,
     PlayerInteractionResponse,
     InteractionContext
 )
-from ai_service.routers.player import handle_player_interaction
-from ai_service.database import db
+from routers.player import handle_player_interaction
+from database import db
 
 router = APIRouter(prefix="/ai/chat", tags=["chat"])
 

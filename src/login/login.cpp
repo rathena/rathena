@@ -23,6 +23,7 @@
 #include <common/utilities.hpp>
 #include <common/utils.hpp>
 #include <config/core.hpp>
+#include <string>
 
 #include "account.hpp"
 #include "ipban.hpp"
@@ -54,6 +55,73 @@ struct s_subnet {
 int32 subnet_count = 0; //number of subnet config
 
 int32 login_fd; // login server file descriptor socket
+
+/**
+ * Stub: Query the p2p-coordinator for host selection.
+ * In production, this should call the actual coordinator (e.g., via REST or IPC).
+ * Returns a string with the selected host info (e.g., "host:port" or JSON).
+ */
+#include <curl/curl.h>
+#include <nlohmann/json.hpp>
+
+std::string select_p2p_host(const std::string& userid, uint8 protocol) {
+    ShowStatus("[P2P] Querying p2p-coordinator for user '%s', protocol %u\n", userid.c_str(), protocol);
+
+    // Read coordinator URL from environment or config
+    const char* env_url = std::getenv("P2P_COORDINATOR_URL");
+    std::string coordinator_url = env_url ? std::string(env_url) : "http://127.0.0.1:8080/api/select_host";
+    std::string response;
+    CURL* curl = curl_easy_init();
+    if (!curl) {
+        ShowError("[P2P] ERROR: Failed to initialize CURL for p2p-coordinator query.\n");
+        return "";
+    }
+
+    nlohmann::json req;
+    req["userid"] = userid;
+    req["protocol"] = protocol;
+    std::string req_body = req.dump();
+
+    struct curl_slist* headers = nullptr;
+    headers = curl_slist_append(headers, "Content-Type: application/json");
+
+    curl_easy_setopt(curl, CURLOPT_URL, coordinator_url.c_str());
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDS, req_body.c_str());
+    curl_easy_setopt(curl, CURLOPT_POSTFIELDSIZE, req_body.size());
+    curl_easy_setopt(curl, CURLOPT_TIMEOUT, 2L);
+
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, +[](char* ptr, size_t size, size_t nmemb, void* userdata) -> size_t {
+        std::string* resp = static_cast<std::string*>(userdata);
+        resp->append(ptr, size * nmemb);
+        return size * nmemb;
+    });
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+    CURLcode res = curl_easy_perform(curl);
+    long http_code = 0;
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &http_code);
+    curl_slist_free_all(headers);
+    curl_easy_cleanup(curl);
+
+    if (res != CURLE_OK || http_code != 200) {
+        ShowError("[P2P] ERROR: p2p-coordinator request failed for user '%s', protocol %u: %s (HTTP %ld)\n", userid.c_str(), protocol, curl_easy_strerror(res), http_code);
+        return "";
+    }
+
+    try {
+        auto j = nlohmann::json::parse(response);
+        if (j.contains("host")) {
+            return j["host"].get<std::string>();
+        } else {
+            ShowError("[P2P] ERROR: p2p-coordinator response missing 'host' field for user '%s', protocol %u\n", userid.c_str(), protocol);
+            return "";
+        }
+    } catch (const std::exception& ex) {
+        ShowError("[P2P] ERROR: Failed to parse p2p-coordinator response for user '%s', protocol %u: %s\n", userid.c_str(), protocol, ex.what());
+        return "";
+    }
+}
 
 //early declaration
 bool login_check_password( struct login_session_data& sd, struct mmo_account& acc );
@@ -142,6 +210,17 @@ struct auth_node* login_add_auth_node( struct login_session_data* sd, uint32 ip 
 	node->sex = sd->sex;
 	node->ip = ip;
 	node->clienttype = sd->clienttype;
+
+	// --- P2P session routing extensions ---
+	node->p2p_capable = sd->p2p_capable;
+	node->p2p_protocol = sd->p2p_protocol;
+	if (sd->p2p_capable) {
+		// For now, re-query the host (should be stored in session if persistent)
+		std::string p2p_host = select_p2p_host(sd->userid, sd->p2p_protocol);
+		safestrncpy(node->p2p_host, p2p_host.c_str(), sizeof(node->p2p_host));
+	} else {
+		node->p2p_host[0] = '\0';
+	}
 
 	return node;
 }
@@ -298,6 +377,21 @@ int32 login_mmo_auth(struct login_session_data* sd, bool isServer) {
 
 	char ip[16];
 	ip2str(session[sd->fd]->client_addr, ip);
+
+	// --- P2P host selection ---
+	if (sd->p2p_capable) {
+		std::string p2p_host = select_p2p_host(sd->userid, sd->p2p_protocol);
+		if (p2p_host.empty()) {
+			ShowWarning("[P2P] No valid P2P host for user '%s'. Falling back to legacy session routing.\n", sd->userid);
+			// Optionally, set sd->p2p_capable = false to force legacy path
+		} else {
+			ShowStatus("[P2P] Selected host for user '%s': %s\n", sd->userid, p2p_host.c_str());
+			// Optionally, store p2p_host in session or pass to char/map server
+			// TODO: Add field to login_session_data if persistent storage is needed
+		}
+	} else {
+		ShowStatus("[Legacy] Client '%s' is not P2P-capable, using legacy authentication/session flow.\n", sd->userid);
+	}
 
 	// DNS Blacklist check
 	if( login_config.use_dnsbl ) {

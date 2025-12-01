@@ -6,6 +6,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <utility>
+#include <sys/time.h>
 
 #include "cbasetypes.hpp"
 #include "db.hpp"

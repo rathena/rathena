@@ -67,10 +67,11 @@ class BatchProcessor:
             
             # Set batch start time if this is first item
             if batch_key not in self._batch_times:
-                self._batch_times[batch_key] = datetime.utcnow()
+                from datetime import UTC
+                self._batch_times[batch_key] = datetime.now(UTC)
             
             batch = self._batches[batch_key]
-            batch_age = (datetime.utcnow() - self._batch_times[batch_key]).total_seconds()
+            batch_age = (datetime.now(UTC) - self._batch_times[batch_key]).total_seconds()
             
             logger.debug(f"[BATCH] {batch_key}: {len(batch)}/{self.batch_size} items (age: {batch_age:.2f}s)")
             
@@ -131,13 +132,14 @@ class BatchProcessor:
         
         try:
             logger.info(f"[BATCH PROCESS] {batch_key}: Processing {len(batch)} items")
-            start_time = datetime.utcnow()
+            from datetime import UTC
+            start_time = datetime.now(UTC)
             
             # Process batch
             results = await func(batch)
             
             # Calculate performance metrics
-            duration = (datetime.utcnow() - start_time).total_seconds()
+            duration = (datetime.now(UTC) - start_time).total_seconds()
             items_per_sec = len(batch) / duration if duration > 0 else 0
             
             logger.info(

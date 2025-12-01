@@ -10,6 +10,11 @@
 #include "core.hpp"
 #include "showmsg.hpp"
 
+#ifdef UNIT_TEST
+const char* get_git_hash(void) { return "testhash"; }
+const char* get_svn_revision(void) { return "0"; }
+#endif
+
 #if defined(__64BIT__)
 	#define FREED_POINTER 0xdeadbeafL
 #else

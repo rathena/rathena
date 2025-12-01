@@ -55,7 +55,7 @@ help:
 
 char-server: obj $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR) $(RAPIDYAML_AR)
 	@echo "	LD	@OCHR@@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OCHR@@EXEEXT@ $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR) $(LIBCONFIG_OBJ) $(RAPIDYAML_AR) @LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OCHR@@EXEEXT@ $(CHAR_DIR_OBJ) $(LIBCONFIG_AR) $(COMMON_AR) $(LIBCONFIG_OBJ) $(RAPIDYAML_AR) @LIBS@ @MYSQL_LIBS@ -lcurl
 
 needs_mysql:
 	@echo "MySQL not found or disabled by the configure script"

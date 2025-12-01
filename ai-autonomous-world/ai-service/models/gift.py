@@ -55,7 +55,7 @@ class GiftHistory(BaseModel):
     npc_id: str
     player_id: str
     gift: Gift
-    timestamp: datetime = Field(default_factory=datetime.utcnow)
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(__import__('datetime').timezone.utc))
     relationship_change: float = Field(
         description="Actual relationship points gained/lost"
     )

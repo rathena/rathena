@@ -19,6 +19,9 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
+// --- P2P/QUIC/P2P-Coordinator integration ---
+#include "p2p_coordinator.hpp" // (to be created/extended)
+#include <common/quic.hpp>     // (to be created/extended)
 namespace rathena::server_character {
 class CharacterServer : public Core {
 	protected:
@@ -162,6 +165,7 @@ struct Char_Config {
 #define TRIM_CHARS "\255\xA0\032\t\x0A\x0D " //The following characters are trimmed regardless because they cause confusion and problems on the servers. [Skotlex]
 struct CharServ_Config {
 	char userid[24];
+	bool p2p_enabled = false;
 	char passwd[24];
 	char server_name[20];
 	char wisp_server_name[NAME_LENGTH];
@@ -247,6 +251,16 @@ struct online_char_data {
 public: 
 	online_char_data( uint32 account_id );
 };
+// --- P2P session state for multi-CPU/peer-aware char server ---
+struct p2p_session_state {
+	bool is_p2p;                // Is this session managed via P2P?
+	uint32 peer_id;             // Owning peer (if P2P)
+	uint64 p2p_version;         // Version for distributed consistency
+	bool sync_pending;          // Is a sync in progress?
+	time_t last_sync;           // Last sync timestamp
+	// Add more as needed for P2P/QUIC
+	p2p_session_state() : is_p2p(false), peer_id(0), p2p_version(0), sync_pending(false), last_sync(0) {}
+};
 
 std::unordered_map<uint32, std::shared_ptr<struct online_char_data>>& char_get_onlinedb();
 
@@ -298,6 +312,11 @@ int32 char_count_users(void);
 void char_db_setoffline( std::shared_ptr<struct online_char_data> character, int32 server );
 void char_set_char_online(int32 map_id, uint32 char_id, uint32 account_id);
 void char_set_char_offline(uint32 char_id, uint32 account_id);
+void char_set_char_online_auto(int32 map_id, uint32 char_id, uint32 account_id);
+void char_set_char_offline_auto(uint32 char_id, uint32 account_id);
+void char_set_char_online_p2p(int32 map_id, uint32 char_id, uint32 account_id);
+void char_set_char_offline_p2p(uint32 char_id, uint32 account_id);
+void char_p2p_initialize();
 void char_set_all_offline(int32 id);
 void char_disconnect_player(uint32 account_id);
 TIMER_FUNC(char_chardb_waiting_disconnect);

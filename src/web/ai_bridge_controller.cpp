@@ -15,17 +15,39 @@
 #include "http.hpp"
 #include "web.hpp"
 
+#include <nlohmann/json.hpp>
+#include "../aiworld/aiworld_native_api.hpp"
+
 namespace AIBridge {
+	// Use AIWorldNativeAPI for production-ready IPC integration
+	bool aiworld_api_initialized = false;
+	
 	// AI Service configuration with defaults
 	std::string ai_service_url = "127.0.0.1";
 	uint16 ai_service_port = 8000;
 	std::string ai_service_api_key = "";
 	bool ai_service_enabled = true;
 
+	// --- AIWorld IPC Integration ---
+	// If enabled, use ZeroMQ IPC instead of HTTP for internal AI/NPC/quest/event calls
+	bool aiworld_ipc_enabled = false;
+
 	void initialize() {
 		ShowInfo("[AI Bridge] Initializing AI Bridge Layer...\n");
 		ShowInfo("[AI Bridge] AI Service URL: %s:%d\n", ai_service_url.c_str(), ai_service_port);
 		ShowInfo("[AI Bridge] AI Service Enabled: %s\n", ai_service_enabled ? "Yes" : "No");
+		
+		// Initialize AIWorldNativeAPI for IPC integration
+		auto& api = aiworld::AIWorldNativeAPI::getInstance();
+		std::string zmq_endpoint = "tcp://127.0.0.1:5555"; // Default ZeroMQ endpoint
+		
+		if (api.initialize(zmq_endpoint)) {
+			aiworld_ipc_enabled = true;
+			aiworld_api_initialized = true;
+			ShowInfo("[AI Bridge] AIWorld IPC enabled successfully (ZMQ: %s)\n", zmq_endpoint.c_str());
+		} else {
+			ShowWarning("[AI Bridge] AIWorld IPC initialization failed, using HTTP fallback\n");
+		}
 	}
 
 	void read_config(const char* w1, const char* w2) {
@@ -83,35 +105,81 @@ namespace AIBridge {
 		std::string& response_body,
 		int& status_code
 	) {
+		// If aiworld_ipc_enabled, use ZeroMQ IPC for internal AI/NPC/quest/event calls
+		if (aiworld_ipc_enabled && aiworld_api_initialized) {
+			try {
+				auto& api = aiworld::AIWorldNativeAPI::getInstance();
+				
+				if (!api.isConnected()) {
+					ShowError("[AI Bridge] AIWorld IPC not connected\n");
+					status_code = 503;
+					response_body = "{\"error\": \"AIWorld IPC not connected\"}";
+					return false;
+				}
+				
+				// Map endpoint/method to IPC call
+				if (endpoint.find("/ai/npc/") == 0 && endpoint.find("/state") != std::string::npos) {
+					std::string npc_id = extract_path_param(endpoint, "/ai/npc/");
+					size_t pos = npc_id.find("/state");
+					if (pos != std::string::npos) npc_id = npc_id.substr(0, pos);
+					
+					if (method == "GET") {
+						std::vector<std::string> empty_fields;
+						auto result = api.getNPCState(npc_id, empty_fields, 5000);
+						status_code = result.success ? 200 : 500;
+						if (result.success) {
+							response_body = result.data.dump();
+						} else {
+							nlohmann::json error_obj;
+							error_obj["error"] = result.error_message;
+							response_body = error_obj.dump();
+						}
+						return result.success;
+					} else if (method == "PUT") {
+						nlohmann::json state_data = nlohmann::json::parse(body);
+						auto result = api.handleNPCInteraction(npc_id, "update_state", state_data, "web_server", 5000);
+						status_code = result.success ? 200 : 500;
+						if (result.success) {
+							response_body = "{\"status\": \"ok\"}";
+						} else {
+							nlohmann::json error_obj;
+							error_obj["error"] = result.error_message;
+							response_body = error_obj.dump();
+						}
+						return result.success;
+					}
+				}
+				
+				// Fallback to HTTP for unimplemented IPC endpoints
+				ShowInfo("[AI Bridge] Endpoint not implemented in IPC, falling back to HTTP: %s\n", endpoint.c_str());
+			} catch (const std::exception& e) {
+				ShowError("[AI Bridge] Exception during IPC request: %s\n", e.what());
+				status_code = 500;
+				response_body = "{\"error\": \"Internal server error\"}";
+				return false;
+			}
+		}
+		// Fallback to HTTP if not using IPC
 		if (!ai_service_enabled) {
 			ShowWarning("[AI Bridge] AI Service is disabled. Skipping request to %s\n", endpoint.c_str());
 			status_code = 503; // Service Unavailable
 			response_body = "{\"error\": \"AI Service is disabled\"}";
 			return false;
 		}
-		
 		try {
 			ShowDebug("[AI Bridge] Making %s request to AI Service: %s\n", method.c_str(), endpoint.c_str());
 			ShowDebug("[AI Bridge] Request body: %s\n", body.c_str());
-			
-			// Create HTTP client
 			httplib::Client client(ai_service_url.c_str(), ai_service_port);
 			client.set_connection_timeout(5, 0); // 5 seconds
 			client.set_read_timeout(30, 0); // 30 seconds
 			client.set_write_timeout(5, 0); // 5 seconds
-			
-			// Set headers
 			httplib::Headers headers = {
 				{"Content-Type", "application/json"},
 				{"User-Agent", "rAthena-AI-Bridge/1.0"}
 			};
-			
-			// Add API key if configured
 			if (!ai_service_api_key.empty()) {
 				headers.insert({"X-API-Key", ai_service_api_key});
 			}
-			
-			// Make request based on method and get response
 			if (method == "GET") {
 				auto res = client.Get(endpoint.c_str(), headers);
 				if (!res) {
@@ -154,12 +222,9 @@ namespace AIBridge {
 				response_body = "{\"error\": \"Unsupported HTTP method\"}";
 				return false;
 			}
-
 			ShowDebug("[AI Bridge] Response status: %d\n", status_code);
 			ShowDebug("[AI Bridge] Response body: %s\n", response_body.c_str());
-
 			return (status_code >= 200 && status_code < 300);
-
 		} catch (const std::exception& e) {
 			ShowError("[AI Bridge] Exception during HTTP request: %s\n", e.what());
 			status_code = 500;

@@ -31,8 +31,23 @@ MAP_H = $(shell find ../ -type f -name "*.hpp") \
 
 MAP_OBJ = $(shell find . -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" -e "s/^\.\///")
 #MAP_OBJ += $(shell ls *.c | sed -e "s/\.c/\.o/g")
-MAP_DIR_OBJ = $(MAP_OBJ:%=obj/%)
-MAP_GEN_DIR_OBJ = $(MAP_OBJ:%=obj-gen/%)
+
+# Add custom AI Bridge files
+CUSTOM_OBJ = ../custom/ai_bridge.o ../custom/script_http.o
+
+# Add AIWorld module files
+AIWORLD_OBJ = ../aiworld/aiworld_ipc.o \
+              ../aiworld/aiworld_plugin.o \
+              ../aiworld/aiworld_native_commands.o \
+              ../aiworld/aiworld_callbacks.o \
+              ../aiworld/aiworld_threadpool.o \
+              ../aiworld/aiworld_utils.o \
+              ../aiworld/aiworld_native_api.o \
+              ../aiworld/aiworld_types.o \
+              ../aiworld/aiworld_http_client.o
+
+MAP_DIR_OBJ = $(MAP_OBJ:%=obj/%) $(CUSTOM_OBJ:%=obj/%) $(AIWORLD_OBJ:%=obj/%)
+MAP_GEN_DIR_OBJ = $(MAP_OBJ:%=obj-gen/%) $(CUSTOM_OBJ:%=obj-gen/%) $(AIWORLD_OBJ:%=obj-gen/%)
 
 HAVE_MYSQL=@HAVE_MYSQL@
 ifeq ($(HAVE_MYSQL),yes)
@@ -103,12 +118,12 @@ $(MAP_GEN_OBJ_DIRS):
 
 map-server: obj $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) $(HTTPLIB_AR)
 	@echo "	LD	@OMAP@@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) $(HTTPLIB_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../@OMAP@@EXEEXT@ $(MAP_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) $(HTTPLIB_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@ -lcurl -lhiredis
 
 
 map-server-generator: obj-gen $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) $(HTTPLIB_AR)
 	@echo "	LD	map-server-generator@EXEEXT@"
-	@@CXX@ @LDFLAGS@ -o ../../map-server-generator@EXEEXT@ $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) $(HTTPLIB_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../map-server-generator@EXEEXT@ $(MAP_GEN_DIR_OBJ) $(COMMON_AR) $(LIBCONFIG_AR) $(RAPIDYAML_AR) $(HTTPLIB_AR) @LIBS@ @PCRE_LIBS@ @MYSQL_LIBS@ -lcurl -lhiredis
 
 
 # map object files
@@ -142,6 +157,36 @@ obj/ai_dialogue_queue.o: ai_dialogue_queue.cpp $(MAP_H) $(COMMON_H)
 obj/ai_dialogue_state.o: ai_dialogue_state.cpp $(MAP_H) $(COMMON_H)
 	@echo "	CXX	$<"
 	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+# Custom AI Bridge files (in ../custom directory)
+obj/../custom/ai_bridge.o: ../custom/ai_bridge.cpp ../custom/ai_bridge.hpp $(HTTPLIB_H) $(NLOHMANN_H) $(COMMON_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) $(HTTPLIB_INCLUDE) $(NLOHMANN_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj/../custom/script_http.o: ../custom/script_http.cpp ../custom/script_http.hpp $(HTTPLIB_H) $(COMMON_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) $(HTTPLIB_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+# AIWorld module files (require ZeroMQ, nlohmann/json, threading)
+obj/../aiworld/aiworld_ipc.o: ../aiworld/aiworld_ipc.cpp ../aiworld/aiworld_ipc.hpp $(NLOHMANN_H) $(COMMON_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) $(NLOHMANN_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj/../aiworld/aiworld_plugin.o: ../aiworld/aiworld_plugin.cpp ../aiworld/aiworld_plugin.hpp $(NLOHMANN_H) $(COMMON_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) $(NLOHMANN_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj/../aiworld/aiworld_native_commands.o: ../aiworld/aiworld_native_commands.cpp ../aiworld/aiworld_native_commands.hpp $(NLOHMANN_H) $(COMMON_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) $(NLOHMANN_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj/../aiworld/aiworld_callbacks.o: ../aiworld/aiworld_callbacks.cpp ../aiworld/aiworld_callbacks.hpp $(NLOHMANN_H) $(COMMON_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) $(NLOHMANN_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+
+obj/../aiworld/aiworld_threadpool.o: ../aiworld/aiworld_threadpool.cpp ../aiworld/aiworld_threadpool.hpp $(COMMON_H)
+	@echo "	CXX	$<"
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(RA_INCLUDE) $(LIBCONFIG_INCLUDE) $(RAPIDYAML_INCLUDE) @MYSQL_CFLAGS@ @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 obj/%.o: %.cpp $(MAP_H) $(COMMON_H) $(LIBCONFIG_H) $(RAPIDYAML_H)
 	@echo "	CXX	$<"

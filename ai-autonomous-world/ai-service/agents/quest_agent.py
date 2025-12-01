@@ -10,12 +10,12 @@ from datetime import datetime
 
 from crewai import Agent
 try:
-    from ai_service.agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
-    from ai_service.models.quest import (
+    from agents.base_agent import BaseAIAgent, AgentContext, AgentResponse
+    from models.quest import (
         Quest, QuestType, QuestDifficulty, QuestStatus,
         QuestObjective, QuestReward, QuestRequirements
     )
-    from ai_service.models.quest_trigger import (
+    from models.quest_trigger import (
         QuestTrigger, TriggerType, RelationshipTrigger, GiftTrigger,
         SequenceTrigger, RealTimeTrigger, ScheduledTrigger
     )
@@ -54,7 +54,8 @@ class QuestAgent(BaseAIAgent):
             llm_provider=llm_provider,
             config=config
         )
-        
+        from agents.moral_alignment import MoralAlignment
+        self.moral_alignment = MoralAlignment()
         self.crew_agent = self._create_crew_agent()
         logger.info(f"Quest Agent {agent_id} initialized")
     
@@ -66,7 +67,7 @@ class QuestAgent(BaseAIAgent):
 
         # Create CrewAI-compatible LLM using litellm format for Azure OpenAI
         try:
-            from ai_service.config import settings
+            from config import settings
 
             # Set Azure OpenAI environment variables for litellm
             os.environ["AZURE_API_KEY"] = settings.azure_openai_api_key
@@ -110,6 +111,15 @@ class QuestAgent(BaseAIAgent):
         """
         try:
             logger.info(f"Generating quest for NPC: {context.npc_id}")
+
+            # --- Moral Alignment Integration ---
+            # Update alignment based on quest event and context
+            alignment_action = {
+                "type": "quest_generation",
+                "npc_id": context.npc_id,
+                "player_level": context.current_state.get("player_level", 1)
+            }
+            self.moral_alignment.update_from_action(alignment_action)
             
             # Extract generation parameters
             player_level = context.current_state.get("player_level", 1)
@@ -155,17 +165,19 @@ class QuestAgent(BaseAIAgent):
                     "quest_id": quest.quest_id,
                     "title": quest.title,
                     "type": quest.quest_type,
-                    "difficulty": quest.difficulty
+                    "difficulty": quest.difficulty,
+                    "alignment": self.moral_alignment.to_dict()
                 },
                 confidence=0.85,
-                reasoning=f"Generated {quest_type} quest for {npc_class} NPC",
+                reasoning=f"Generated {quest_type} quest for {npc_class} NPC and updated alignment",
                 metadata={
                     "npc_id": context.npc_id,
                     "player_level": player_level,
                     "quest_type": quest_type,
-                    "difficulty": difficulty
+                    "difficulty": difficulty,
+                    "alignment": self.moral_alignment.to_dict()
                 },
-                timestamp=datetime.utcnow()
+                timestamp=datetime.now(__import__('datetime').timezone.utc)
             )
             
         except Exception as e:
@@ -177,7 +189,7 @@ class QuestAgent(BaseAIAgent):
                 confidence=0.0,
                 reasoning=f"Quest generation error: {str(e)}",
                 metadata={"error": str(e)},
-                timestamp=datetime.utcnow()
+                timestamp=datetime.now(__import__('datetime').timezone.utc)
             )
     
     def _determine_quest_type(self, npc_class: str, personality: Any) -> QuestType:
@@ -371,7 +383,7 @@ Make it engaging and contextual!"""
         """Build Quest object from generated data"""
 
         # Generate unique quest ID
-        quest_id = f"quest_{context.npc_id}_{int(datetime.utcnow().timestamp())}"
+        quest_id = f"quest_{context.npc_id}_{int(datetime.now(__import__('datetime').timezone.utc).timestamp())}"
 
         # Build objectives
         objectives = []

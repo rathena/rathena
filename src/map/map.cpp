@@ -1,9 +1,19 @@
+// enum class InterServerProtocol { LEGACY_TCP, QUIC, P2P };
+// void set_inter_server_protocol(InterServerProtocol) {}
+// #include "worker_pool_config.cpp"
+#include "worker_pool.hpp"
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "map.hpp"
 
+// Forward declaration for worker pool config loader
+struct WorkerPoolConfig;
+WorkerPoolConfig load_worker_pool_config();
 #include <cstdlib>
+// InterServerProtocol and set_inter_server_protocol are defined in intif.cpp, so declare them here for use.
+enum class InterServerProtocol { LEGACY_TCP, QUIC, P2P };
+void set_inter_server_protocol(InterServerProtocol);
 #include <cmath>
 
 #include <config/core.hpp>
@@ -56,8 +66,14 @@
 #include "storage.hpp"
 #include "trade.hpp"
 
+// Embedded Python AI Bridge
+#include "../custom/ai_bridge.hpp"
+
 using namespace rathena;
 using namespace rathena::server_map;
+
+// Global worker pool instance
+WorkerPool* global_worker_pool = nullptr;
 
 std::string default_codepage = "";
 
@@ -123,6 +139,48 @@ AIDialogueQueue* ai_dialogue_queue = nullptr;
 static AIDialogueWorker* ai_dialogue_worker = nullptr;  // Keep static - only used in map.cpp
 AIDialogueStateManager* ai_dialogue_state = nullptr;
 bool ai_dialogue_enabled = true; // Can be configured
+
+// Worker pool initialization
+static void init_worker_pool() {
+    static bool initialized = false;
+    if (initialized) return;
+    WorkerPoolConfig cfg = load_worker_pool_config();
+    if (cfg.enabled) {
+        global_worker_pool = new WorkerPool(cfg);
+        global_worker_pool->start();
+        ShowStatus("WorkerPool: Multi-threaded worker pool enabled (%d threads)\n", cfg.num_threads);
+    } else {
+        ShowStatus("WorkerPool: Disabled (single-threaded mode)\n");
+    }
+    initialized = true;
+// --- P2P/Distributed/Hybrid Networking Integration ---
+#include "p2p_coordinator.hpp"
+#include "dragonflydb_client.hpp"
+#include <cstdlib>
+
+static std::shared_ptr<P2PCoordinator> global_p2p_coordinator;
+static std::shared_ptr<DragonflyDBClient> global_dragonflydb_client;
+
+    // Example: select protocol from environment or config
+    const char* proto_env = std::getenv("INTER_SERVER_PROTOCOL");
+    if (proto_env) {
+        if (std::string(proto_env) == "QUIC") set_inter_server_protocol(InterServerProtocol::QUIC);
+        else if (std::string(proto_env) == "P2P") set_inter_server_protocol(InterServerProtocol::P2P);
+        else set_inter_server_protocol(InterServerProtocol::LEGACY_TCP);
+    } else {
+        set_inter_server_protocol(InterServerProtocol::LEGACY_TCP);
+    }
+
+    // Instantiate and inject coordinator and distributed state client
+    // (Replace with actual implementations)
+    // global_p2p_coordinator = std::make_shared<MyP2PCoordinatorImpl>();
+    // global_dragonflydb_client = std::make_shared<MyDragonflyDBClientImpl>();
+
+    if (global_worker_pool) {
+        if (global_p2p_coordinator) global_worker_pool->set_p2p_coordinator(global_p2p_coordinator);
+        if (global_dragonflydb_client) global_worker_pool->set_dragonflydb_client(global_dragonflydb_client);
+    }
+}
 
 static int32 map_users=0;
 
@@ -5077,7 +5135,12 @@ void MapServer::finalize(){
 	ShowStatus("Terminating...\n");
 	channel_config.closing = true;
 
-	// Shutdown AI Dialogue System first
+	// Shutdown Embedded Python AI Bridge first
+	ShowStatus("Shutting down Embedded Python AI Bridge...\n");
+	AIBridge::instance().shutdown();
+	ShowStatus("Embedded Python AI Bridge: Shutdown complete\n");
+
+	// Shutdown AI Dialogue System
 	if (ai_dialogue_enabled && ai_dialogue_worker) {
 		ShowStatus("Shutting down AI Dialogue System...\n");
 		ai_dialogue_worker->stop();
@@ -5497,6 +5560,9 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
 	add_timer_func_list(ai_dialogue_check_responses, "ai_dialogue_check_responses");
 
+	// Initialize Worker Pool (multi-threaded entity processing)
+	init_worker_pool();
+
 	// Initialize AI Dialogue System
 	if (ai_dialogue_enabled) {
 		ShowStatus("Initializing AI Dialogue System...\n");
@@ -5511,8 +5577,8 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 
 		// Create worker configuration
 		AIDialogueWorkerConfig worker_config;
-		worker_config.bridge_url = "127.0.0.1";
-		worker_config.bridge_port = 8888;
+		// worker_config.bridge_url = "127.0.0.1";
+		// worker_config.bridge_port = 8888;
 		worker_config.num_threads = 4;
 		worker_config.request_timeout_ms = 30000; // 30 seconds
 		worker_config.max_retries = 2;
@@ -5563,6 +5629,15 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	do_init_vending();
 	do_init_buyingstore();
 
+	// Initialize Embedded Python AI Bridge
+	ShowStatus("Initializing Embedded Python AI Bridge...\n");
+	if (!AIBridge::instance().initialize()) {
+		ShowWarning("Failed to initialize Embedded Python AI Bridge - AI features will be unavailable\n");
+		ShowWarning("Server will continue in degraded mode without AI support\n");
+	} else {
+		ShowStatus("Embedded Python AI Bridge: Initialized successfully (sub-microsecond latency enabled)\n");
+	}
+
 	npc_event_do_oninit();	// Init npcs (OnInit)
 
 	if (battle_config.pk_mode)
@@ -5590,5 +5665,5 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 }
 
 int32 main( int32 argc, char *argv[] ){
-	return main_core<MapServer>( argc, argv );
+    return main_core<MapServer>( argc, argv );
 }

@@ -1,0 +1,525 @@
+"""
+Configuration Management for AI IPC Service
+
+Supports loading configuration from:
+1. YAML configuration file (default: config.yaml)
+2. Environment variables (override YAML values)
+3. Default values for missing configuration
+
+Environment Variable Mapping:
+    AI_IPC_CONFIG -> Path to YAML config file
+    DB_HOST -> database.host
+    DB_PORT -> database.port
+    DB_USER -> database.user
+    DB_PASSWORD -> database.password
+    DB_NAME -> database.database
+    DB_POOL_SIZE -> database.pool_size
+    POLL_INTERVAL_MS -> polling.interval_ms
+    BATCH_SIZE -> polling.batch_size
+    WORKER_COUNT -> polling.worker_count
+    AI_SERVICE_BASE_URL -> ai_service.base_url
+    AI_SERVICE_TIMEOUT -> ai_service.timeout_seconds
+    LOG_LEVEL -> logging.level
+    LOG_FORMAT -> logging.format
+"""
+
+from __future__ import annotations
+
+import os
+import logging
+from dataclasses import dataclass, field
+from pathlib import Path
+from typing import Any
+
+import yaml
+
+logger = logging.getLogger(__name__)
+
+
+@dataclass
+class DatabaseConfig:
+    """Database connection configuration."""
+    host: str = "localhost"
+    port: int = 3306
+    user: str = "ragnarok"
+    password: str = ""
+    database: str = "ragnarok"
+    pool_size: int = 5
+    pool_recycle: int = 3600  # Recycle connections after 1 hour
+    connect_timeout: int = 10
+    read_timeout: int = 30
+    write_timeout: int = 30
+    charset: str = "utf8mb4"
+    
+    def __post_init__(self) -> None:
+        """Validate database configuration after initialization."""
+        if not self.password:
+            logger.warning(
+                "Database password is empty. Set DB_PASSWORD environment variable."
+            )
+        if self.pool_size < 1:
+            raise ValueError("Database pool_size must be at least 1")
+        if self.port < 1 or self.port > 65535:
+            raise ValueError("Database port must be between 1 and 65535")
+
+
+@dataclass
+class PollingConfig:
+    """Polling behavior configuration."""
+    interval_ms: int = 100  # Polling interval in milliseconds
+    batch_size: int = 50    # Number of requests to fetch per poll
+    worker_count: int = 4   # Number of concurrent workers
+    max_retries: int = 3    # Maximum retries for failed requests
+    retry_delay_ms: int = 1000  # Delay between retries
+    
+    def __post_init__(self) -> None:
+        """Validate polling configuration after initialization."""
+        if self.interval_ms < 10:
+            raise ValueError("Polling interval_ms must be at least 10ms")
+        if self.batch_size < 1:
+            raise ValueError("Batch size must be at least 1")
+        if self.batch_size > 1000:
+            logger.warning(
+                f"Batch size {self.batch_size} is very large. "
+                "Consider reducing for better responsiveness."
+            )
+        if self.worker_count < 1:
+            raise ValueError("Worker count must be at least 1")
+
+
+@dataclass
+class AIServiceConfig:
+    """External AI service configuration."""
+    base_url: str = "http://localhost:8000"
+    timeout_seconds: int = 10
+    max_retries: int = 2
+    retry_backoff_factor: float = 0.5
+    
+    def __post_init__(self) -> None:
+        """Validate AI service configuration after initialization."""
+        if self.timeout_seconds < 1:
+            raise ValueError("AI service timeout must be at least 1 second")
+        if not self.base_url:
+            raise ValueError("AI service base_url is required")
+    
+    @property
+    def dialogue_url(self) -> str:
+        """URL for the dialogue endpoint."""
+        return f"{self.base_url.rstrip('/')}/dialogue"
+    
+    @property
+    def decision_url(self) -> str:
+        """URL for the decision endpoint."""
+        return f"{self.base_url.rstrip('/')}/decision"
+    
+    @property
+    def emotion_url(self) -> str:
+        """URL for the emotion endpoint."""
+        return f"{self.base_url.rstrip('/')}/emotion"
+    
+    @property
+    def memory_url(self) -> str:
+        """URL for the memory endpoint."""
+        return f"{self.base_url.rstrip('/')}/memory"
+    
+    # Alias properties for test compatibility (using *_endpoint naming)
+    @property
+    def dialogue_endpoint(self) -> str:
+        """URL alias for dialogue endpoint."""
+        return self.dialogue_url
+    
+    @property
+    def decision_endpoint(self) -> str:
+        """URL alias for decision endpoint."""
+        return self.decision_url
+    
+    @property
+    def emotion_endpoint(self) -> str:
+        """URL alias for emotion endpoint."""
+        return self.emotion_url
+    
+    @property
+    def memory_endpoint(self) -> str:
+        """URL alias for memory endpoint."""
+        return self.memory_url
+    
+    @property
+    def health_url(self) -> str:
+        """URL for the health check endpoint."""
+        return f"{self.base_url.rstrip('/')}/health"
+    
+    @property
+    def health_endpoint(self) -> str:
+        """URL alias for health endpoint."""
+        return self.health_url
+    
+    @property
+    def async_url(self) -> str:
+        """URL for the async endpoint."""
+        return f"{self.base_url.rstrip('/')}/async"
+    
+    @property
+    def async_endpoint(self) -> str:
+        """URL alias for async endpoint."""
+        return self.async_url
+
+
+@dataclass
+class LoggingConfig:
+    """Logging configuration."""
+    level: str = "INFO"
+    format: str = "json"  # 'json' or 'text'
+    include_timestamp: bool = True
+    include_request_id: bool = True
+    
+    def __post_init__(self) -> None:
+        """Validate logging configuration after initialization."""
+        valid_levels = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
+        if self.level.upper() not in valid_levels:
+            raise ValueError(
+                f"Invalid log level: {self.level}. Must be one of: {valid_levels}"
+            )
+        valid_formats = {"json", "text"}
+        if self.format.lower() not in valid_formats:
+            raise ValueError(
+                f"Invalid log format: {self.format}. Must be one of: {valid_formats}"
+            )
+
+
+@dataclass
+class SecurityConfig:
+    """Security and authentication configuration."""
+    # Authentication settings
+    auth_enabled: bool = True
+    auth_method: str = "api_key"  # 'api_key', 'token', or 'none'
+    api_key: str = ""  # Set via AI_IPC_API_KEY environment variable
+    
+    # Rate limiting
+    rate_limit_enabled: bool = True
+    rate_limit_per_npc: int = 60  # Max requests per NPC per minute
+    rate_limit_global: int = 1000  # Max global requests per minute
+    rate_limit_window_seconds: int = 60  # Window size for rate limiting
+    
+    # Request validation
+    validate_requests: bool = True
+    max_request_size: int = 65535  # Maximum request data size in bytes
+    allowed_request_types: list[str] = field(default_factory=list)  # Empty = all allowed
+    blocked_npcs: list[str] = field(default_factory=list)  # NPCs blocked from making requests
+    
+    def __post_init__(self) -> None:
+        """Validate security configuration after initialization."""
+        valid_methods = {"api_key", "token", "none"}
+        if self.auth_method.lower() not in valid_methods:
+            raise ValueError(
+                f"Invalid auth_method: {self.auth_method}. Must be one of: {valid_methods}"
+            )
+        if self.auth_enabled and self.auth_method != "none" and not self.api_key:
+            logger.warning(
+                "Authentication is enabled but no API key is set. "
+                "Set AI_IPC_API_KEY environment variable for production."
+            )
+        if self.max_request_size < 1024:
+            raise ValueError("max_request_size must be at least 1024 bytes")
+    
+    def validate_api_key(self, provided_key: str) -> bool:
+        """
+        Validate a provided API key against the configured key.
+        
+        Args:
+            provided_key: The API key to validate
+            
+        Returns:
+            True if valid, False otherwise
+        """
+        if not self.auth_enabled or self.auth_method == "none":
+            return True
+        if not self.api_key:
+            logger.warning("No API key configured, allowing request")
+            return True
+        # Use constant-time comparison to prevent timing attacks
+        import hmac
+        return hmac.compare_digest(self.api_key, provided_key)
+    
+    def is_npc_blocked(self, npc_name: str) -> bool:
+        """Check if an NPC is blocked from making requests."""
+        return npc_name in self.blocked_npcs
+    
+    def is_request_type_allowed(self, request_type: str) -> bool:
+        """Check if a request type is allowed."""
+        if not self.allowed_request_types:
+            return True  # Empty list means all allowed
+        return request_type in self.allowed_request_types
+
+
+@dataclass
+class Config:
+    """
+    Main configuration class for the AI IPC Service.
+    
+    Combines all sub-configurations and provides loading from
+    YAML files and environment variables.
+    """
+    database: DatabaseConfig = field(default_factory=DatabaseConfig)
+    polling: PollingConfig = field(default_factory=PollingConfig)
+    ai_service: AIServiceConfig = field(default_factory=AIServiceConfig)
+    logging: LoggingConfig = field(default_factory=LoggingConfig)
+    security: SecurityConfig = field(default_factory=SecurityConfig)
+    
+    # Service metadata
+    service_name: str = "ai_ipc_service"
+    version: str = "1.0.0"
+    
+    @classmethod
+    def load(cls, config_path: str | Path | None = None) -> Config:
+        """
+        Load configuration from YAML file and environment variables.
+        
+        Priority (highest to lowest):
+        1. Environment variables
+        2. YAML configuration file
+        3. Default values
+        
+        Args:
+            config_path: Path to YAML config file. If None, uses AI_IPC_CONFIG
+                        environment variable or default 'config.yaml'
+        
+        Returns:
+            Fully initialized Config instance
+        """
+        # Determine config file path
+        if config_path is None:
+            config_path = os.getenv("AI_IPC_CONFIG", "config.yaml")
+        
+        config_path = Path(config_path)
+        
+        # Load YAML configuration if file exists
+        yaml_config: dict[str, Any] = {}
+        if config_path.exists():
+            logger.info(f"Loading configuration from {config_path}")
+            try:
+                with open(config_path, "r", encoding="utf-8") as f:
+                    yaml_config = yaml.safe_load(f) or {}
+            except yaml.YAMLError as e:
+                logger.error(f"Failed to parse YAML config: {e}")
+                raise ValueError(f"Invalid YAML configuration: {e}") from e
+        else:
+            logger.info(
+                f"Config file {config_path} not found. Using defaults and environment."
+            )
+        
+        # Build configuration with environment overrides
+        return cls._build_config(yaml_config)
+    
+    @classmethod
+    def _build_config(cls, yaml_config: dict[str, Any]) -> Config:
+        """
+        Build configuration from YAML dict with environment overrides.
+        
+        Args:
+            yaml_config: Dictionary from YAML file
+            
+        Returns:
+            Configured Config instance
+        """
+        # Database configuration
+        db_yaml = yaml_config.get("database", {})
+        database = DatabaseConfig(
+            host=os.getenv("DB_HOST", db_yaml.get("host", "localhost")),
+            port=int(os.getenv("DB_PORT", db_yaml.get("port", 3306))),
+            user=os.getenv("DB_USER", db_yaml.get("user", "ragnarok")),
+            password=os.getenv("DB_PASSWORD", db_yaml.get("password", "")),
+            database=os.getenv("DB_NAME", db_yaml.get("database", "ragnarok")),
+            pool_size=int(os.getenv("DB_POOL_SIZE", db_yaml.get("pool_size", 5))),
+            pool_recycle=int(db_yaml.get("pool_recycle", 3600)),
+            connect_timeout=int(db_yaml.get("connect_timeout", 10)),
+            read_timeout=int(db_yaml.get("read_timeout", 30)),
+            write_timeout=int(db_yaml.get("write_timeout", 30)),
+            charset=db_yaml.get("charset", "utf8mb4"),
+        )
+        
+        # Polling configuration
+        poll_yaml = yaml_config.get("polling", {})
+        polling = PollingConfig(
+            interval_ms=int(os.getenv("POLL_INTERVAL_MS", poll_yaml.get("interval_ms", 100))),
+            batch_size=int(os.getenv("BATCH_SIZE", poll_yaml.get("batch_size", 50))),
+            worker_count=int(os.getenv("WORKER_COUNT", poll_yaml.get("worker_count", 4))),
+            max_retries=int(poll_yaml.get("max_retries", 3)),
+            retry_delay_ms=int(poll_yaml.get("retry_delay_ms", 1000)),
+        )
+        
+        # AI Service configuration
+        ai_yaml = yaml_config.get("ai_service", {})
+        ai_service = AIServiceConfig(
+            base_url=os.getenv("AI_SERVICE_BASE_URL", ai_yaml.get("base_url", "http://localhost:8000")),
+            timeout_seconds=int(os.getenv("AI_SERVICE_TIMEOUT", ai_yaml.get("timeout_seconds", 10))),
+            max_retries=int(ai_yaml.get("max_retries", 2)),
+            retry_backoff_factor=float(ai_yaml.get("retry_backoff_factor", 0.5)),
+        )
+        
+        # Logging configuration
+        log_yaml = yaml_config.get("logging", {})
+        logging_config = LoggingConfig(
+            level=os.getenv("LOG_LEVEL", log_yaml.get("level", "INFO")),
+            format=os.getenv("LOG_FORMAT", log_yaml.get("format", "json")),
+            include_timestamp=log_yaml.get("include_timestamp", True),
+            include_request_id=log_yaml.get("include_request_id", True),
+        )
+        
+        # Security configuration
+        sec_yaml = yaml_config.get("security", {})
+        security_config = SecurityConfig(
+            auth_enabled=cls._parse_bool(
+                os.getenv("AI_IPC_AUTH_ENABLED", str(sec_yaml.get("auth_enabled", True)))
+            ),
+            auth_method=os.getenv("AI_IPC_AUTH_METHOD", sec_yaml.get("auth_method", "api_key")),
+            api_key=os.getenv("AI_IPC_API_KEY", sec_yaml.get("api_key", "")),
+            rate_limit_enabled=cls._parse_bool(
+                str(sec_yaml.get("rate_limit_enabled", True))
+            ),
+            rate_limit_per_npc=int(sec_yaml.get("rate_limit_per_npc", 60)),
+            rate_limit_global=int(sec_yaml.get("rate_limit_global", 1000)),
+            validate_requests=cls._parse_bool(
+                str(sec_yaml.get("validate_requests", True))
+            ),
+            max_request_size=int(sec_yaml.get("max_request_size", 65535)),
+            allowed_request_types=sec_yaml.get("allowed_request_types", []),
+            blocked_npcs=sec_yaml.get("blocked_npcs", []),
+        )
+        
+        return cls(
+            database=database,
+            polling=polling,
+            ai_service=ai_service,
+            logging=logging_config,
+            security=security_config,
+            service_name=yaml_config.get("service_name", "ai_ipc_service"),
+            version=yaml_config.get("version", "1.0.0"),
+        )
+    
+    @staticmethod
+    def _parse_bool(value: str) -> bool:
+        """Parse string to boolean."""
+        return value.lower() in ("true", "1", "yes", "on")
+    
+    def validate(self) -> list[str]:
+        """
+        Validate the entire configuration and return any warnings.
+        
+        Returns:
+            List of warning messages (empty if all OK)
+        """
+        warnings: list[str] = []
+        
+        # Check database password
+        if not self.database.password:
+            warnings.append(
+                "Database password is not set. "
+                "Set DB_PASSWORD environment variable for production."
+            )
+        
+        # Check worker/pool ratio
+        if self.polling.worker_count > self.database.pool_size:
+            warnings.append(
+                f"Worker count ({self.polling.worker_count}) exceeds "
+                f"database pool size ({self.database.pool_size}). "
+                "Consider increasing pool_size."
+            )
+        
+        # Check AI service URL
+        if "localhost" in self.ai_service.base_url:
+            warnings.append(
+                "AI service base_url points to localhost. "
+                "Update for production deployment."
+            )
+        
+        return warnings
+    
+    def to_dict(self) -> dict[str, Any]:
+        """
+        Convert configuration to dictionary (for logging/debugging).
+        
+        Note: Password and API key are masked for security.
+        
+        Returns:
+            Dictionary representation of configuration
+        """
+        return {
+            "service_name": self.service_name,
+            "version": self.version,
+            "database": {
+                "host": self.database.host,
+                "port": self.database.port,
+                "user": self.database.user,
+                "password": "***" if self.database.password else "(not set)",
+                "database": self.database.database,
+                "pool_size": self.database.pool_size,
+            },
+            "polling": {
+                "interval_ms": self.polling.interval_ms,
+                "batch_size": self.polling.batch_size,
+                "worker_count": self.polling.worker_count,
+                "max_retries": self.polling.max_retries,
+            },
+            "ai_service": {
+                "base_url": self.ai_service.base_url,
+                "timeout_seconds": self.ai_service.timeout_seconds,
+            },
+            "logging": {
+                "level": self.logging.level,
+                "format": self.logging.format,
+            },
+            "security": {
+                "auth_enabled": self.security.auth_enabled,
+                "auth_method": self.security.auth_method,
+                "api_key": "***" if self.security.api_key else "(not set)",
+                "rate_limit_enabled": self.security.rate_limit_enabled,
+                "rate_limit_per_npc": self.security.rate_limit_per_npc,
+                "rate_limit_global": self.security.rate_limit_global,
+                "validate_requests": self.security.validate_requests,
+            },
+        }
+    
+    def __repr__(self) -> str:
+        """Return string representation with masked password."""
+        return f"Config({self.to_dict()})"
+
+
+# =============================================================================
+# Convenience Functions
+# =============================================================================
+
+def load_config(config_path: str | Path | None = None) -> Config:
+    """
+    Load configuration from YAML file and environment variables.
+    
+    This is a convenience function that wraps Config.load().
+    
+    Args:
+        config_path: Path to YAML config file. If None, uses AI_IPC_CONFIG
+                    environment variable or default 'config.yaml'
+    
+    Returns:
+        Fully initialized Config instance
+    """
+    return Config.load(config_path)
+
+
+def load_config_from_file(config_path: str | Path) -> Config:
+    """
+    Load configuration from a specific YAML file.
+    
+    This is a convenience function that wraps Config.load() with a required path.
+    
+    Args:
+        config_path: Path to YAML config file (required)
+    
+    Returns:
+        Fully initialized Config instance
+        
+    Raises:
+        ValueError: If the config file doesn't exist or is invalid
+    """
+    path = Path(config_path)
+    if not path.exists():
+        raise ValueError(f"Configuration file not found: {config_path}")
+    return Config.load(config_path)

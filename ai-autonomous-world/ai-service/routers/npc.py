@@ -31,7 +31,7 @@ except ImportError:
         NPCAction,
     )
     from database import db
-    from ai_service.config import settings
+    from config import settings
     from models.npc_information_defaults import get_default_information
 
 router = APIRouter(prefix="/ai/npc", tags=["npc"])

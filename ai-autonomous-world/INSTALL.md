@@ -18,7 +18,7 @@ The system uses TWO separate database systems:
 
 2. **PostgreSQL** (installed by this script)
    - Used EXCLUSIVELY by AI services
-   - Components: ai-world service, p2p-coordinator, NPC memory system
+   - Components: ai-world service, p2p-coordinator (C++), NPC memory system
    - Database: `ai_world_memory`
    - User: `ai_world_user`
 

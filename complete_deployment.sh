@@ -272,7 +272,7 @@ echo -e "${YELLOW}Step 3: Installing systemd services...${NC}"
 
 # Copy service files to systemd directory
 cp "$SCRIPT_DIR/systemd/ai-world.service" /etc/systemd/system/
-cp "$SCRIPT_DIR/systemd/p2p-coordinator.service" /etc/systemd/system/
+# cp "$SCRIPT_DIR/systemd/p2p-coordinator.service" /etc/systemd/system/
 cp "$SCRIPT_DIR/systemd/rathena-login.service" /etc/systemd/system/
 cp "$SCRIPT_DIR/systemd/rathena-char.service" /etc/systemd/system/
 cp "$SCRIPT_DIR/systemd/rathena-map.service" /etc/systemd/system/

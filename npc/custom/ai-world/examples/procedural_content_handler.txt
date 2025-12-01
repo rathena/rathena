@@ -1,0 +1,495 @@
+//===== rAthena Script =======================================
+//= Procedural Content Handler Example
+//===== By: ==================================================
+//= AI Autonomous World System
+//===== Description: =========================================
+//= Example NPC script demonstrating integration with
+//= Problem Agent, Dynamic NPC Agent, and World Event Agent
+//= via the C++ Bridge Layer
+//============================================================
+
+//============================================================
+// DAILY PROBLEM MANAGER NPC
+//============================================================
+prontera,155,185,4	script	Problem Master#ai	4_M_SAGE_C,{
+	mes "[Problem Master]";
+	mes "I monitor the world for daily challenges!";
+	next;
+	
+	menu "Check Current Problem",L_CheckProblem,
+	     "My Participation",L_MyParticipation,
+	     "Problem Stats",L_Stats,
+	     "Close",L_Close;
+
+L_CheckProblem:
+	// Call AI Service via Bridge Layer
+	// GET /api/v1/procedural/problem/current
+	.@problem_id = aiworld_get_current_problem();
+	
+	if (.@problem_id <= 0) {
+		mes "[Problem Master]";
+		mes "No active problem right now.";
+		mes "Check back at midnight for the next challenge!";
+		close;
+	}
+	
+	// Get problem details from Bridge Layer cache
+	.@problem_type$ = aiworld_get_problem_data(.@problem_id, "type");
+	.@title$ = aiworld_get_problem_data(.@problem_id, "title");
+	.@description$ = aiworld_get_problem_data(.@problem_id, "description");
+	.@difficulty = aiworld_get_problem_data(.@problem_id, "difficulty");
+	.@target_map$ = aiworld_get_problem_data(.@problem_id, "target_map");
+	
+	mes "[Problem Master]";
+	mes "^FF0000[Active Problem #" + .@problem_id + "]^000000";
+	mes "^0000FF" + .@title$ + "^000000";
+	mes " ";
+	mes .@description$;
+	mes " ";
+	mes "^00AA00Difficulty: " + .@difficulty + "/10^000000";
+	mes "^00AA00Location: " + .@target_map$ + "^000000";
+	next;
+	
+	mes "[Problem Master]";
+	mes "Would you like to participate?";
+	next;
+	
+	if (select("Yes, warp me there!", "Not yet") == 1) {
+		// Record participation via AI Service
+		// POST /api/v1/procedural/problem/{id}/participate
+		aiworld_record_problem_participation(.@problem_id, getcharid(0), "warp");
+		
+		warp .@target_map$, 0, 0;
+	}
+	close;
+
+L_MyParticipation:
+	mes "[Problem Master]";
+	mes "Your contribution to current problem:";
+	// In production, query player's participation score
+	mes "^00AA00Score: 0 (not tracked yet)^000000";
+	close;
+
+L_Stats:
+	mes "[Problem Master]";
+	mes "Problem statistics:";
+	// In production, query from AI Service
+	mes "^0000FFProblems this week: 7^000000";
+	mes "^0000FFCompletion rate: 85%^000000";
+	mes "^0000FFAvg participation: 12 players^000000";
+	close;
+
+L_Close:
+	close;
+}
+
+//============================================================
+// DYNAMIC NPC SPAWNING TRIGGER
+//============================================================
+-	script	DynamicNPCSpawner	-1,{
+OnInit:
+	// Register with Bridge Layer
+	aiworld_register_system("dynamic_npc_spawner");
+	end;
+
+OnClock0600:
+	// Trigger daily NPC spawn at 6 AM
+	announce "Wandering NPCs have been spotted across the realm!", bc_all;
+	
+	// Call AI Service via Bridge Layer
+	// POST /api/v1/procedural/npc/spawn
+	.@spawned = aiworld_spawn_daily_npcs();
+	
+	if (.@spawned > 0) {
+		announce "Seek them out for rare rewards!", bc_all;
+	}
+	end;
+
+OnClock2359:
+	// Despawn NPCs at end of day
+	// POST /api/v1/procedural/npc/despawn-expired
+	.@despawned = aiworld_despawn_expired_npcs();
+	
+	if (.@despawned > 0) {
+		announce "The wandering NPCs have departed for the night.", bc_blue;
+	}
+	end;
+}
+
+//============================================================
+// EXAMPLE DYNAMIC NPC (Spawned by AI)
+//============================================================
+// This NPC is dynamically created by Dynamic NPC Agent
+// Coordinates and personality are AI-generated
+
+-	script	DynamicNPC#template	-1,{
+	// NPC data populated by Bridge Layer from AI Service
+	.@npc_id = aiworld_get_npc_data("npc_id");
+	.@npc_name$ = aiworld_get_npc_data("npc_name");
+	.@npc_type$ = aiworld_get_npc_data("npc_type");
+	.@personality$ = aiworld_get_npc_data("personality");
+	
+	mes "[" + .@npc_name$ + "]";
+	mes .@personality$;  // AI-generated backstory
+	next;
+	
+	menu "What do you seek?",L_Quest,
+	     "Tell me about yourself",L_Personality,
+	     "Goodbye",L_Close;
+
+L_Quest:
+	// Call AI Service for dialogue and quest
+	// POST /api/v1/procedural/npc/{id}/interact
+	.@response$ = aiworld_npc_interact(.@npc_id, getcharid(0), "quest_start");
+	
+	mes "[" + .@npc_name$ + "]";
+	mes .@response$;
+	next;
+	
+	// Check if quest was granted
+	.@quest_id = aiworld_get_quest_from_response();
+	if (.@quest_id > 0) {
+		mes "[" + .@npc_name$ + "]";
+		mes "I've marked your quest log.";
+		mes "Return when you've completed it!";
+		// Quest objectives would be set via Bridge Layer
+	}
+	close;
+
+L_Personality:
+	mes "[" + .@npc_name$ + "]";
+	.@backstory$ = aiworld_get_npc_data("backstory");
+	mes .@backstory$;
+	next;
+	
+	.@quirks$ = aiworld_get_npc_data("quirks");
+	mes "[" + .@npc_name$ + "]";
+	mes .@quirks$;
+	close;
+
+L_Close:
+	mes "[" + .@npc_name$ + "]";
+	mes "Safe travels, adventurer!";
+	close;
+}
+
+//============================================================
+// WORLD EVENT MONITOR
+//============================================================
+-	script	EventMonitor	-1,{
+OnInit:
+	// Start event monitoring
+	aiworld_register_system("event_monitor");
+	
+	// Check events every 60 seconds
+	initnpctimer;
+	end;
+
+OnTimer60000:
+	// Query world state
+	.@avg_level = aiworld_get_avg_player_level();
+	.@online = getusers(1);  // Get online player count
+	
+	// Build world state JSON
+	.@world_state$ = "{" +
+		"\"avg_player_level\": " + .@avg_level + "," +
+		"\"online_players\": " + .@online + "," +
+		"\"map_activity\": {}," +
+		"\"monster_kills\": {}," +
+		"\"mvp_kills\": {}," +
+		"\"economy\": {}" +
+	"}";
+	
+	// Call AI Service to check event triggers
+	// POST /api/v1/procedural/events/check
+	.@event_id = aiworld_check_event_triggers(.@world_state$);
+	
+	if (.@event_id > 0) {
+		// Event was triggered!
+		.@event_title$ = aiworld_get_event_data(.@event_id, "title");
+		.@event_desc$ = aiworld_get_event_data(.@event_id, "description");
+		
+		// Broadcast to all players
+		announce "=== WORLD EVENT TRIGGERED ===", bc_all | bc_WoE;
+		announce .@event_title$, bc_all | bc_blue;
+		announce .@event_desc$, bc_all;
+		
+		// Apply event effects
+		donpcevent "EventEffects::OnEventStart";
+	}
+	
+	// Restart timer
+	initnpctimer;
+	end;
+}
+
+//============================================================
+// EVENT EFFECTS HANDLER
+//============================================================
+-	script	EventEffects	-1,{
+OnEventStart:
+	// Get active event from AI Service
+	.@event_id = aiworld_get_active_event();
+	if (.@event_id <= 0) end;
+	
+	.@event_type$ = aiworld_get_event_data(.@event_id, "type");
+	
+	// Apply event-specific effects
+	if (.@event_type$ == "global_xp_boost") {
+		// Double EXP for all players
+		setbattleflag "base_exp_rate", 200;
+		setbattleflag "job_exp_rate", 200;
+		announce "Double EXP Event Active!", bc_all | bc_blue;
+	}
+	else if (.@event_type$ == "lucky_day") {
+		// Increase refine success rates
+		// (Would need custom code modifications)
+		announce "Lucky Day Event Active!", bc_all | bc_blue;
+	}
+	else if (.@event_type$ == "market_crash") {
+		// Reduce shop prices (handled by EconomyAgent)
+		announce "Market Sale Event Active!", bc_all | bc_blue;
+	}
+	else if (.@event_type$ == "mvp_enraged") {
+		// Boost MVP stats via atcommand
+		atcommand "@reloadmobdb";  // Reload with modified stats
+		announce "MVPs are Enraged! Greater challenge, greater rewards!", bc_all | bc_WoE;
+	}
+	
+	// Get event duration
+	.@duration = aiworld_get_event_data(.@event_id, "duration_minutes");
+	
+	// Schedule event end
+	.@end_seconds = .@duration * 60;
+	addtimer .@end_seconds * 1000, "EventEffects::OnEventEnd";
+	end;
+
+OnEventEnd:
+	// Reset battle flags
+	setbattleflag "base_exp_rate", 100;
+	setbattleflag "job_exp_rate", 100;
+	
+	announce "World Event has ended. Thank you for participating!", bc_all;
+	
+	// Notify AI Service
+	.@event_id = aiworld_get_active_event();
+	if (.@event_id > 0) {
+		// POST /api/v1/procedural/events/{id}/end
+		aiworld_end_event(.@event_id);
+	}
+	end;
+}
+
+//============================================================
+// PROBLEM COMPLETION HANDLER
+//============================================================
+-	script	ProblemTracker	-1,{
+OnNPCKillEvent:
+	// Check if killed mob is part of active problem
+	.@problem_id = aiworld_get_current_problem();
+	if (.@problem_id <= 0) end;
+	
+	.@target_map$ = aiworld_get_problem_data(.@problem_id, "target_map");
+	if (strcharinfo(3) != .@target_map$) end;  // Not on problem map
+	
+	// Check if killed correct monster
+	.@target_mob = aiworld_get_problem_data(.@problem_id, "mob_id");
+	if (killedrid != .@target_mob) end;
+	
+	// Record participation
+	// POST /api/v1/procedural/problem/{id}/participate
+	aiworld_record_problem_participation(
+		.@problem_id,
+		getcharid(0),
+		"monster_kill",
+		killedrid,
+		1  // Contribution score
+	);
+	
+	// Check if problem completed (all monsters killed)
+	.@total_kills = aiworld_get_problem_data(.@problem_id, "total_kills");
+	.@required_kills = aiworld_get_problem_data(.@problem_id, "required_kills");
+	
+	if (.@total_kills >= .@required_kills) {
+		// Problem completed!
+		announce "The world problem has been solved! Thank you, brave adventurers!", bc_all | bc_blue;
+		
+		// Complete problem via AI Service
+		aiworld_complete_problem(.@problem_id);
+		
+		// Grant rewards to all participants
+		donpcevent "ProblemRewards::OnDistribute";
+	}
+	end;
+}
+
+//============================================================
+// UTILITY FUNCTIONS (Provided by Bridge Layer)
+//============================================================
+/*
+These functions are implemented in the C++ Bridge Layer:
+
+// Problem Agent
+aiworld_get_current_problem() -> int problem_id
+aiworld_get_problem_data(problem_id, field$) -> any
+aiworld_record_problem_participation(problem_id, player_id, action$, data, score)
+aiworld_complete_problem(problem_id)
+
+// Dynamic NPC Agent  
+aiworld_spawn_daily_npcs() -> int count
+aiworld_despawn_expired_npcs() -> int count
+aiworld_get_npc_data(field$) -> any
+aiworld_npc_interact(npc_id, player_id, type$) -> string response
+
+// World Event Agent
+aiworld_check_event_triggers(world_state$) -> int event_id
+aiworld_get_active_event() -> int event_id
+aiworld_get_event_data(event_id, field$) -> any
+aiworld_end_event(event_id)
+
+// Utilities
+aiworld_get_avg_player_level() -> int
+aiworld_register_system(system_name$)
+
+All functions communicate with the AI Service at:
+http://192.168.0.100:8000/api/v1/procedural/*
+*/
+
+//============================================================
+// EXAMPLE: Testing Procedural Content
+//============================================================
+prontera,150,180,4	script	Procedural Tester	4_M_SCIENCE,{
+	mes "[Procedural Content Tester]";
+	mes "I can help you test the AI-powered procedural systems.";
+	next;
+	
+	menu "Generate Test Problem",L_TestProblem,
+	     "Spawn Test NPC",L_TestNPC,
+	     "Trigger Test Event",L_TestEvent,
+	     "View Status",L_Status;
+
+L_TestProblem:
+	mes "[Tester]";
+	mes "Generating test problem...";
+	
+	// Build test world state
+	.@world_state$ = "{" +
+		"\"avg_player_level\": 50," +
+		"\"online_players\": " + getusers(1) + "," +
+		"\"map_activity\": {\"prontera\": 20}," +
+		"\"monster_kills\": {}," +
+		"\"mvp_kills\": {}," +
+		"\"economy\": {\"zeny_circulation\": 500000000}" +
+	"}";
+	
+	// POST /api/v1/procedural/problem/generate
+	.@problem_id = aiworld_generate_problem(.@world_state$);
+	
+	if (.@problem_id > 0) {
+		mes "✓ Problem generated: #" + .@problem_id;
+		.@title$ = aiworld_get_problem_data(.@problem_id, "title");
+		mes "Title: " + .@title$;
+	} else {
+		mes "✗ Failed to generate problem";
+	}
+	close;
+
+L_TestNPC:
+	mes "[Tester]";
+	mes "Spawning test NPC...";
+	
+	// Build map activity
+	.@map_activity$ = "{\"map_activity\": {\"cmd_fild01\": 2}}";
+	
+	// POST /api/v1/procedural/npc/spawn
+	.@count = aiworld_spawn_npcs(.@map_activity$, 1);
+	
+	mes "✓ Spawned " + .@count + " NPC(s)";
+	mes "Check cmd_fild01 to find them!";
+	close;
+
+L_TestEvent:
+	mes "[Tester]";
+	mes "Choose event to trigger:";
+	next;
+	
+	.@event$ = select(
+		"Lucky Day",
+		"Global XP Boost",
+		"MVP Enraged",
+		"Market Crash"
+	);
+	
+	.@event_types$ = "lucky_day:global_xp_boost:mvp_enraged:market_crash";
+	.@event_type$ = explode(.@event_types$, ":")[.@event$];
+	
+	// POST /api/v1/procedural/events/trigger
+	.@event_id = aiworld_trigger_event(.@event_type$, 60);
+	
+	if (.@event_id > 0) {
+		.@title$ = aiworld_get_event_data(.@event_id, "title");
+		announce "Event Triggered: " + .@title$, bc_all | bc_blue;
+		mes "[Tester]";
+		mes "✓ Event #" + .@event_id + " activated!";
+	} else {
+		mes "[Tester]";
+		mes "✗ Failed to trigger event";
+	}
+	close;
+
+L_Status:
+	mes "[Tester]";
+	mes "Procedural Content Status:";
+	mes " ";
+	
+	// GET /api/v1/procedural/status
+	.@problem_active = aiworld_has_active_problem();
+	.@npc_count = aiworld_get_active_npc_count();
+	.@event_count = aiworld_get_active_event_count();
+	
+	mes "^0000FFActive Problem: " + (.@problem_active ? "Yes" : "No") + "^000000";
+	mes "^0000FFActive NPCs: " + .@npc_count + "/5^000000";
+	mes "^0000FFActive Events: " + .@event_count + "/1^000000";
+	close;
+}
+
+//============================================================
+// NOTES FOR DEVELOPERS
+//============================================================
+/*
+INTEGRATION CHECKLIST:
+
+1. C++ Bridge Layer Functions:
+   - Implement all aiworld_* functions in src/custom/ai_bridge_layer.cpp
+   - Functions make HTTP requests to AI Service
+   - Handle JSON parsing and error cases
+
+2. Database Setup:
+   - Apply migration: migrations/004_procedural_agents.sql
+   - Verify tables created: world_problems, dynamic_npcs, world_events
+
+3. AI Service Configuration:
+   - Enable agents in .env
+   - Configure schedules
+   - Set LLM optimization tiers
+
+4. Testing:
+   - Use "Procedural Tester" NPC to verify functionality
+   - Check logs: logs/ai-service.log
+   - Monitor metrics: http://192.168.0.100:8000/metrics
+
+5. Production Deployment:
+   - Set proper API keys for security
+   - Configure rate limiting
+   - Enable SSL/TLS
+   - Monitor costs via /api/v1/cost/summary
+
+PERFORMANCE TARGETS:
+- Problem generation: <200ms (p95)
+- NPC spawning: <500ms for 3 NPCs
+- Event checking: <100ms per check
+- LLM cost reduction: 60-90% via optimization
+
+For full documentation, see:
+rathena-AI-world/ai-autonomous-world/docs/PROCEDURAL_AGENTS_GUIDE.md
+*/

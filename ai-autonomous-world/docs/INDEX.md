@@ -102,7 +102,7 @@ This index provides a comprehensive overview of all documentation for the AI-dri
   - LLM provider settings
   - DragonflyDB configuration
   - CrewAI settings
-  - Memori SDK settings
+  - OpenMemory settings
   - NPC configuration
   - World systems configuration
   - Performance tuning
@@ -181,7 +181,7 @@ All diagrams are created using Mermaid and are interactive:
 - **Bridge Layer**: C++ REST API extension (⏳ planned, not yet implemented)
 - **AI Service**: Python 3.11+ with FastAPI (✅ implemented)
 - **Agent Framework**: CrewAI (✅ implemented)
-- **Memory SDK**: Memori SDK (optional, using DragonflyDB fallback)
+- **Memory SDK**: OpenMemory (optional, using DragonflyDB fallback)
 - **State Management**: DragonflyDB (✅ implemented)
 
 #### LLM Providers (Implemented)

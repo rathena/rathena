@@ -1,0 +1,2168 @@
+{
+  "config": {
+    "configFile": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/playwright.config.ts",
+    "rootDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/tests/e2e",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {},
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "html",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "test-results/results.json"
+        }
+      ],
+      [
+        "junit",
+        {
+          "outputFile": "test-results/junit.xml"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "firefox",
+        "name": "firefox",
+        "testDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "webkit",
+        "name": "webkit",
+        "testDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Chrome",
+        "name": "Mobile Chrome",
+        "testDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      },
+      {
+        "outputDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {},
+        "id": "Mobile Safari",
+        "name": "Mobile Safari",
+        "testDir": "/ai-mmorpg-world/rathena-AI-world/ai-autonomous-world/dashboard/tests/e2e",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.57.0",
+    "workers": 32,
+    "webServer": {
+      "command": "npm run dev",
+      "url": "http://localhost:3000",
+      "reuseExistingServer": true,
+      "timeout": 120000
+    }
+  },
+  "suites": [
+    {
+      "title": "admin-workflow.spec.ts",
+      "file": "admin-workflow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Admin Dashboard Workflow",
+          "file": "admin-workflow.spec.ts",
+          "line": 16,
+          "column": 6,
+          "specs": [
+            {
+              "title": "admin can view all 21 agents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-761eeef1956a51085a93",
+              "file": "admin-workflow.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "admin can see real-time updates",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-c8b78bf03ff866c29967",
+              "file": "admin-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "admin can navigate between modules",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-21dd79b89b3acad09acf",
+              "file": "admin-workflow.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "admin can view system health metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-a3de3be8dc94e79e00f9",
+              "file": "admin-workflow.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "admin can view performance charts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-bba2d43349c306bac1c3",
+              "file": "admin-workflow.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "admin can check LLM cost breakdown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-8714d5fe651a9f14959c",
+              "file": "admin-workflow.spec.ts",
+              "line": 106,
+              "column": 7
+            },
+            {
+              "title": "admin can filter error logs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-cf5acda1bfac2f3e2c45",
+              "file": "admin-workflow.spec.ts",
+              "line": 124,
+              "column": 7
+            },
+            {
+              "title": "admin can export metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-c510a0389bcc22d7962b",
+              "file": "admin-workflow.spec.ts",
+              "line": 144,
+              "column": 7
+            },
+            {
+              "title": "dashboard loads in <3s",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-8e24ea07a75af5c4905f",
+              "file": "admin-workflow.spec.ts",
+              "line": 157,
+              "column": 7
+            },
+            {
+              "title": "dashboard achieves good Core Web Vitals",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-5eaa2bd0ff35292510ff",
+              "file": "admin-workflow.spec.ts",
+              "line": 168,
+              "column": 7
+            },
+            {
+              "title": "dashboard handles offline gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-e5f9e13b4ebed1be8b66",
+              "file": "admin-workflow.spec.ts",
+              "line": 190,
+              "column": 7
+            },
+            {
+              "title": "admin can view all 21 agents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-eea3f4d4b8de2576c0df",
+              "file": "admin-workflow.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "admin can see real-time updates",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-77b2a9925cbc8fdf113e",
+              "file": "admin-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "admin can navigate between modules",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-6adbf510f2889fa8b0a7",
+              "file": "admin-workflow.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "admin can view system health metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-6a1d127d7ee6f7daee83",
+              "file": "admin-workflow.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "admin can view performance charts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-5119af39afcfb25ac50f",
+              "file": "admin-workflow.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "admin can check LLM cost breakdown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-0f1ce4f5a1007dd88aa1",
+              "file": "admin-workflow.spec.ts",
+              "line": 106,
+              "column": 7
+            },
+            {
+              "title": "admin can filter error logs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-6e2a19512ef5f67bb674",
+              "file": "admin-workflow.spec.ts",
+              "line": 124,
+              "column": 7
+            },
+            {
+              "title": "admin can export metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-e29961b0b6287244209f",
+              "file": "admin-workflow.spec.ts",
+              "line": 144,
+              "column": 7
+            },
+            {
+              "title": "dashboard loads in <3s",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-a7809ca1785ad15476ab",
+              "file": "admin-workflow.spec.ts",
+              "line": 157,
+              "column": 7
+            },
+            {
+              "title": "dashboard achieves good Core Web Vitals",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-1e2960f59bd575a5181f",
+              "file": "admin-workflow.spec.ts",
+              "line": 168,
+              "column": 7
+            },
+            {
+              "title": "dashboard handles offline gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-3d3e8249fe7423a303d6",
+              "file": "admin-workflow.spec.ts",
+              "line": 190,
+              "column": 7
+            },
+            {
+              "title": "admin can view all 21 agents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-115d5cc8314cc674d8d5",
+              "file": "admin-workflow.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "admin can see real-time updates",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-ebd1134ec0050284d662",
+              "file": "admin-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "admin can navigate between modules",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-c26c7f6f13a77c982fce",
+              "file": "admin-workflow.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "admin can view system health metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-541015d6b1d097822c83",
+              "file": "admin-workflow.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "admin can view performance charts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-305849a059305f92379c",
+              "file": "admin-workflow.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "admin can check LLM cost breakdown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-14a24ed6ad258cafb69c",
+              "file": "admin-workflow.spec.ts",
+              "line": 106,
+              "column": 7
+            },
+            {
+              "title": "admin can filter error logs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-ef773c3749c9cb46c7a3",
+              "file": "admin-workflow.spec.ts",
+              "line": 124,
+              "column": 7
+            },
+            {
+              "title": "admin can export metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-a69e713937fdff1edeaa",
+              "file": "admin-workflow.spec.ts",
+              "line": 144,
+              "column": 7
+            },
+            {
+              "title": "dashboard loads in <3s",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-f1f4ed5bf4dd123e9cfb",
+              "file": "admin-workflow.spec.ts",
+              "line": 157,
+              "column": 7
+            },
+            {
+              "title": "dashboard achieves good Core Web Vitals",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-7da89c289b6bd781e253",
+              "file": "admin-workflow.spec.ts",
+              "line": 168,
+              "column": 7
+            },
+            {
+              "title": "dashboard handles offline gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-64e0b414092b16e01168",
+              "file": "admin-workflow.spec.ts",
+              "line": 190,
+              "column": 7
+            },
+            {
+              "title": "admin can view all 21 agents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-e2b21e200ed1b57c26fa",
+              "file": "admin-workflow.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "admin can see real-time updates",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-c7775eb7c435fd7bb97d",
+              "file": "admin-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "admin can navigate between modules",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-9795a0ed801b78845394",
+              "file": "admin-workflow.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "admin can view system health metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-646d13ca3e56f5bdcb98",
+              "file": "admin-workflow.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "admin can view performance charts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-0dc355eec51912c935dd",
+              "file": "admin-workflow.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "admin can check LLM cost breakdown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-e5e48a8611f5eb691bb3",
+              "file": "admin-workflow.spec.ts",
+              "line": 106,
+              "column": 7
+            },
+            {
+              "title": "admin can filter error logs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-10e2bf2467bc9d2f5ac9",
+              "file": "admin-workflow.spec.ts",
+              "line": 124,
+              "column": 7
+            },
+            {
+              "title": "admin can export metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-1fbe72d6febbf89cd236",
+              "file": "admin-workflow.spec.ts",
+              "line": 144,
+              "column": 7
+            },
+            {
+              "title": "dashboard loads in <3s",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-905cdefbc0590f8036b8",
+              "file": "admin-workflow.spec.ts",
+              "line": 157,
+              "column": 7
+            },
+            {
+              "title": "dashboard achieves good Core Web Vitals",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-2616b7aeae985597d4aa",
+              "file": "admin-workflow.spec.ts",
+              "line": 168,
+              "column": 7
+            },
+            {
+              "title": "dashboard handles offline gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-f508d217b1700c70a83d",
+              "file": "admin-workflow.spec.ts",
+              "line": 190,
+              "column": 7
+            },
+            {
+              "title": "admin can view all 21 agents",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-1a2f0fad87276f1ef34c",
+              "file": "admin-workflow.spec.ts",
+              "line": 22,
+              "column": 7
+            },
+            {
+              "title": "admin can see real-time updates",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-1dd492715a384184f8e5",
+              "file": "admin-workflow.spec.ts",
+              "line": 39,
+              "column": 7
+            },
+            {
+              "title": "admin can navigate between modules",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-d51f300d67677c57c6c6",
+              "file": "admin-workflow.spec.ts",
+              "line": 56,
+              "column": 7
+            },
+            {
+              "title": "admin can view system health metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-c50c8c23ed3bbffd58eb",
+              "file": "admin-workflow.spec.ts",
+              "line": 75,
+              "column": 7
+            },
+            {
+              "title": "admin can view performance charts",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-f13aac8644cae773706d",
+              "file": "admin-workflow.spec.ts",
+              "line": 88,
+              "column": 7
+            },
+            {
+              "title": "admin can check LLM cost breakdown",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-9232cd214f0b352564d0",
+              "file": "admin-workflow.spec.ts",
+              "line": 106,
+              "column": 7
+            },
+            {
+              "title": "admin can filter error logs",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-56814f248977ee583c8a",
+              "file": "admin-workflow.spec.ts",
+              "line": 124,
+              "column": 7
+            },
+            {
+              "title": "admin can export metrics",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-b3e62c9d2a5b880c592f",
+              "file": "admin-workflow.spec.ts",
+              "line": 144,
+              "column": 7
+            },
+            {
+              "title": "dashboard loads in <3s",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-e45095b007243a1f687c",
+              "file": "admin-workflow.spec.ts",
+              "line": 157,
+              "column": 7
+            },
+            {
+              "title": "dashboard achieves good Core Web Vitals",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-4002854960c81b54da3e",
+              "file": "admin-workflow.spec.ts",
+              "line": 168,
+              "column": 7
+            },
+            {
+              "title": "dashboard handles offline gracefully",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "93e90d6a018238a0cca4-7c413fabec9315e87bd8",
+              "file": "admin-workflow.spec.ts",
+              "line": 190,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "public-workflow.spec.ts",
+      "file": "public-workflow.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Public Dashboard Workflow",
+          "file": "public-workflow.spec.ts",
+          "line": 15,
+          "column": 6,
+          "specs": [
+            {
+              "title": "user can view active story arc",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-7895ba44515557b8f14b",
+              "file": "public-workflow.spec.ts",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "user can view world map",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-29957d0c9280c997e8c0",
+              "file": "public-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "user can view leaderboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-c108a32f566a383af7ca",
+              "file": "public-workflow.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "user can see active events",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-aaa4886906ba1a700226",
+              "file": "public-workflow.spec.ts",
+              "line": 66,
+              "column": 7
+            },
+            {
+              "title": "user can check server status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-ff9eeeb7b15c64650c61",
+              "file": "public-workflow.spec.ts",
+              "line": 85,
+              "column": 7
+            },
+            {
+              "title": "public pages load quickly (<3s)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-7bb4b5f817281496d446",
+              "file": "public-workflow.spec.ts",
+              "line": 104,
+              "column": 7
+            },
+            {
+              "title": "public dashboard works on mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-2fa492df58027b5a62b2",
+              "file": "public-workflow.spec.ts",
+              "line": 119,
+              "column": 7
+            },
+            {
+              "title": "public dashboard handles slow network",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-38888956a8d96c3f7ce6",
+              "file": "public-workflow.spec.ts",
+              "line": 136,
+              "column": 7
+            },
+            {
+              "title": "user interactions are smooth (60fps)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-ed5c7a0e8ae0fab01544",
+              "file": "public-workflow.spec.ts",
+              "line": 152,
+              "column": 7
+            },
+            {
+              "title": "user can view active story arc",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-33229a91a453e09a6c74",
+              "file": "public-workflow.spec.ts",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "user can view world map",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-a5221f58ef23e4de67e8",
+              "file": "public-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "user can view leaderboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-89eec00e722cf43c92ce",
+              "file": "public-workflow.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "user can see active events",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-8d5545e9b5bb901152b8",
+              "file": "public-workflow.spec.ts",
+              "line": 66,
+              "column": 7
+            },
+            {
+              "title": "user can check server status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-91d7838fa19c0b3d946f",
+              "file": "public-workflow.spec.ts",
+              "line": 85,
+              "column": 7
+            },
+            {
+              "title": "public pages load quickly (<3s)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-255e0caace24dd352ae1",
+              "file": "public-workflow.spec.ts",
+              "line": 104,
+              "column": 7
+            },
+            {
+              "title": "public dashboard works on mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-35ad0cd329b92d9374c3",
+              "file": "public-workflow.spec.ts",
+              "line": 119,
+              "column": 7
+            },
+            {
+              "title": "public dashboard handles slow network",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-ede5f20fea316867984c",
+              "file": "public-workflow.spec.ts",
+              "line": 136,
+              "column": 7
+            },
+            {
+              "title": "user interactions are smooth (60fps)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "firefox",
+                  "projectName": "firefox",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-a0082cef9706955a0ad9",
+              "file": "public-workflow.spec.ts",
+              "line": 152,
+              "column": 7
+            },
+            {
+              "title": "user can view active story arc",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-8ee9b4d2ce81e677463a",
+              "file": "public-workflow.spec.ts",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "user can view world map",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-f368e349473f4925284c",
+              "file": "public-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "user can view leaderboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-ecfa91f8590bc04758d4",
+              "file": "public-workflow.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "user can see active events",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-c4dc6e1cdf734ceb42c1",
+              "file": "public-workflow.spec.ts",
+              "line": 66,
+              "column": 7
+            },
+            {
+              "title": "user can check server status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-def64f87a45787abfe1d",
+              "file": "public-workflow.spec.ts",
+              "line": 85,
+              "column": 7
+            },
+            {
+              "title": "public pages load quickly (<3s)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-3308d3af3fa300f5c33d",
+              "file": "public-workflow.spec.ts",
+              "line": 104,
+              "column": 7
+            },
+            {
+              "title": "public dashboard works on mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-185a662c94a8cc7dffc6",
+              "file": "public-workflow.spec.ts",
+              "line": 119,
+              "column": 7
+            },
+            {
+              "title": "public dashboard handles slow network",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-20619c4d5a9aaef7b6e1",
+              "file": "public-workflow.spec.ts",
+              "line": 136,
+              "column": 7
+            },
+            {
+              "title": "user interactions are smooth (60fps)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "webkit",
+                  "projectName": "webkit",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-03f5c73181ed976bfeb7",
+              "file": "public-workflow.spec.ts",
+              "line": 152,
+              "column": 7
+            },
+            {
+              "title": "user can view active story arc",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-d1e914a81c7de6e0eaed",
+              "file": "public-workflow.spec.ts",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "user can view world map",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-6cb538e16ab4b41db2d5",
+              "file": "public-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "user can view leaderboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-0a3e1895fe7cf45890b6",
+              "file": "public-workflow.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "user can see active events",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-de1360185eed5d634d26",
+              "file": "public-workflow.spec.ts",
+              "line": 66,
+              "column": 7
+            },
+            {
+              "title": "user can check server status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-3de25516d27cd18daef4",
+              "file": "public-workflow.spec.ts",
+              "line": 85,
+              "column": 7
+            },
+            {
+              "title": "public pages load quickly (<3s)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-7d4d7246ed3b4e75ef87",
+              "file": "public-workflow.spec.ts",
+              "line": 104,
+              "column": 7
+            },
+            {
+              "title": "public dashboard works on mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-fa0a5a49e30976d2142f",
+              "file": "public-workflow.spec.ts",
+              "line": 119,
+              "column": 7
+            },
+            {
+              "title": "public dashboard handles slow network",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-2db6970815539cfb3129",
+              "file": "public-workflow.spec.ts",
+              "line": 136,
+              "column": 7
+            },
+            {
+              "title": "user interactions are smooth (60fps)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Chrome",
+                  "projectName": "Mobile Chrome",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-f267ead3110e068e838f",
+              "file": "public-workflow.spec.ts",
+              "line": 152,
+              "column": 7
+            },
+            {
+              "title": "user can view active story arc",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-aa1a60fbecf825d1871f",
+              "file": "public-workflow.spec.ts",
+              "line": 16,
+              "column": 7
+            },
+            {
+              "title": "user can view world map",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-f8151d8867ab8387f54d",
+              "file": "public-workflow.spec.ts",
+              "line": 31,
+              "column": 7
+            },
+            {
+              "title": "user can view leaderboard",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-39ca312d8a576d65c811",
+              "file": "public-workflow.spec.ts",
+              "line": 46,
+              "column": 7
+            },
+            {
+              "title": "user can see active events",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-274a198aa95448bc7700",
+              "file": "public-workflow.spec.ts",
+              "line": 66,
+              "column": 7
+            },
+            {
+              "title": "user can check server status",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-3f014d2098a7d4039b2f",
+              "file": "public-workflow.spec.ts",
+              "line": 85,
+              "column": 7
+            },
+            {
+              "title": "public pages load quickly (<3s)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-f88e293ab51e09bd54bb",
+              "file": "public-workflow.spec.ts",
+              "line": 104,
+              "column": 7
+            },
+            {
+              "title": "public dashboard works on mobile viewport",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-7c39d8303009215683b0",
+              "file": "public-workflow.spec.ts",
+              "line": 119,
+              "column": 7
+            },
+            {
+              "title": "public dashboard handles slow network",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-17b31d0a0c718bf6d0bd",
+              "file": "public-workflow.spec.ts",
+              "line": 136,
+              "column": 7
+            },
+            {
+              "title": "user interactions are smooth (60fps)",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "Mobile Safari",
+                  "projectName": "Mobile Safari",
+                  "results": [],
+                  "status": "skipped"
+                }
+              ],
+              "id": "fed95c765ef8071f8570-4e7fea5d4df952b17754",
+              "file": "public-workflow.spec.ts",
+              "line": 152,
+              "column": 7
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2025-11-27T04:01:44.883Z",
+    "duration": 162.77100000000019,
+    "expected": 0,
+    "skipped": 100,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}
