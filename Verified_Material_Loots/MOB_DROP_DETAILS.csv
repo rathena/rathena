@@ -1,60 +1,242 @@
 ItemID,ItemName,AegisName,MobID,MobName,DropRate,MobLevel
-902,Tree Root,Tree_Root,1010,Willow,9000,4
-902,Tree Root,Tree_Root,2026,Runaway Dandelion Member,2000,90
-903,Reptile Tongue,Reptile_Tongue,1119,Frilldora,1500,30
-903,Reptile Tongue,Reptile_Tongue,1687,Grove,1000,54
+904,Scorpion Tail,Scorpion's_Tail,1001,Scorpion,5500,24
+904,Scorpion Tail,Scorpion's_Tail,1387,Gig,5500,60
+906,Pointed Scale,Pointed_Scale,1024,Wormtail,5500,14
+906,Pointed Scale,Pointed_Scale,1078,Red Plant,300,1
+906,Pointed Scale,Pointed_Scale,1079,Blue Plant,300,1
+906,Pointed Scale,Pointed_Scale,1080,Green Plant,1500,1
+906,Pointed Scale,Pointed_Scale,1081,Yellow Plant,300,1
+906,Pointed Scale,Pointed_Scale,1082,White Plant,1500,1
+906,Pointed Scale,Pointed_Scale,1878,Shining Plant,1500,1
+907,Resin,Resin,1010,Willow,1500,4
+907,Resin,Resin,1033,Elder Willow,9000,20
+907,Resin,Resin,1880,Wood Goblin,2000,42
+917,Talon,Talon,1009,Condor,9000,5
+917,Talon,Talon,2073,Toucan,3000,70
+920,Wolf Claw,Claw_Of_Wolves,1013,Wolf,9000,25
+920,Wolf Claw,Claw_Of_Wolves,1092,Vagabond Wolf,8000,24
+920,Wolf Claw,Claw_Of_Wolves,1106,Desert Wolf,2000,27
+920,Wolf Claw,Claw_Of_Wolves,1220,Desert Wolf,2000,27
 922,Orc's Fang,Orcish_Cuspid,1152,Orc Skeleton,5500,28
-928,Insect Feeler,Insect_Feeler,1053,Thief Bug Female,200,10
-928,Insect Feeler,Insect_Feeler,1054,Thief Bug Male,5500,19
-928,Insect Feeler,Insect_Feeler,1070,Kukre,450,11
-928,Insect Feeler,Insect_Feeler,1114,Dustiness,2000,21
-928,Insect Feeler,Insect_Feeler,1494,Beetle King,1000,34
-928,Insect Feeler,Insect_Feeler,1619,Porcellio,1000,28
+924,Powder of Butterfly,Powder_Of_Butterfly,1018,Creamy,9000,16
+924,Powder of Butterfly,Powder_Of_Butterfly,1231,Creamy,6000,16
+924,Powder of Butterfly,Powder_Of_Butterfly,1293,Creamy Fear,4550,62
+924,Powder of Butterfly,Powder_Of_Butterfly,1408,Bloody Butterfly,5500,55
+926,Snake Scale,Scale_Of_Snakes,1025,Boa,9000,15
+926,Snake Scale,Scale_Of_Snakes,1030,Anacondaq,1500,23
+926,Snake Scale,Scale_Of_Snakes,1037,Side Winder,5000,43
+926,Snake Scale,Scale_Of_Snakes,1993,Naga,5000,111
+926,Snake Scale,Scale_Of_Snakes,2047,Naga,5000,99
+929,Immortal Heart,Immortal_Heart,1032,Verit,9000,38
+941,Nose Ring,Nose_Ring,1149,Minorous,5335,52
+941,Nose Ring,Nose_Ring,1310,Majoruros,4413,66
+944,Horseshoe,Horseshoe,1061,Nightmare,6000,49
+944,Horseshoe,Horseshoe,1992,Cornus,6000,108
+951,Fin,Fin,1044,Obeaune,500,31
+951,Fin,Fin,1045,Marc,1000,36
+951,Fin,Fin,1065,Strouf,5335,48
+951,Fin,Fin,1158,Phen,500,26
+951,Fin,Fin,1968,Strouf,5335,48
+951,Fin,Fin,1969,Marc,1000,36
+951,Fin,Fin,1970,Obeune,500,31
+951,Fin,Fin,2069,Iara,500,79
+952,Cactus Needle,Cactus_Needle,1055,Muka,9000,17
+952,Cactus Needle,Cactus_Needle,1854,Muka,9000,17
+954,Shining Scale,Shining_Scales,1025,Boa,1,15
+954,Shining Scale,Shining_Scales,1029,Isis,1000,47
+954,Shining Scale,Shining_Scales,1037,Side Winder,5335,43
+954,Shining Scale,Shining_Scales,1993,Naga,2000,111
+957,Decayed Nail,Decayed_Nail,1015,Zombie,9000,15
+958,Horrendous Mouth,Horrendous_Mouth,1015,Zombie,50,15
+958,Horrendous Mouth,Horrendous_Mouth,1036,Ghoul,6000,40
+958,Horrendous Mouth,Horrendous_Mouth,1164,Requiem,3500,35
+958,Horrendous Mouth,Horrendous_Mouth,1298,Zombie Master,1500,62
+958,Horrendous Mouth,Horrendous_Mouth,1869,Flame Skull,6000,60
+959,Stinky Scale,Rotten_Scale,1064,Megalodon,5500,24
+961,Conch,Conch,1067,Cornutus,5500,23
 967,Turtle Shell,Turtle_Shell,1148,Medusa,3500,79
 967,Turtle Shell,Turtle_Shell,1314,Permeter,4413,63
 967,Turtle Shell,Turtle_Shell,1315,Assaulter,4413,71
 967,Turtle Shell,Turtle_Shell,1316,Solider,4413,70
 967,Turtle Shell,Turtle_Shell,1318,Heater,4413,68
 967,Turtle Shell,Turtle_Shell,1319,Freezer,4413,72
+970,Alcohol,Alchol,1072,Kaho,5,60
+970,Alcohol,Alchol,1084,Black Mushroom,50,1
+970,Alcohol,Alchol,1085,Red Mushroom,50,1
+970,Alcohol,Alchol,1089,Toad,100,10
+970,Alcohol,Alchol,1129,Horong,50,34
+970,Alcohol,Alchol,1161,Plankton,4,10
+970,Alcohol,Alchol,1858,Plankton,4,10
+971,Detrimindexta,Detrimindexta,1068,Hydra,20,14
+971,Detrimindexta,Detrimindexta,1084,Black Mushroom,50,1
+971,Detrimindexta,Detrimindexta,1089,Toad,100,10
+971,Detrimindexta,Detrimindexta,1108,Deviace,200,47
+971,Detrimindexta,Detrimindexta,1682,Remover,50,55
+971,Detrimindexta,Detrimindexta,2021,Phylla,5,85
+972,Karvodailnirol,Karvodailnirol,1077,Poison Spore,50,19
+972,Karvodailnirol,Karvodailnirol,1085,Red Mushroom,50,1
+972,Karvodailnirol,Karvodailnirol,1682,Remover,100,55
+972,Karvodailnirol,Karvodailnirol,1855,Poison Spore,50,19
+972,Karvodailnirol,Karvodailnirol,2015,Dark Pinguicula,10,83
+972,Karvodailnirol,Karvodailnirol,2020,Rhyncho,5,85
+1004,Chivalry Emblem,Patriotism_Marks,1132,Khalitzburg,10,63
+1004,Chivalry Emblem,Patriotism_Marks,1163,Raydric,10,52
+1006,Old Magicbook,Old_Magic_Book,1102,Bathory,15,44
+1006,Old Magicbook,Old_Magic_Book,1177,Zenorc,5,31
+1006,Old Magicbook,Old_Magic_Book,1195,Rideword,20,59
+1009,Hand of God,Sacred_Marks,1038,Osiris,1000,78
+1009,Hand of God,Sacred_Marks,1109,Deviruchi,5,46
+1009,Hand of God,Sacred_Marks,1198,Dark Priest,50,79
+1009,Hand of God,Sacred_Marks,1292,Mini Demon,10,68
+1012,Frill,Lizard_Scruff,1119,Frilldora,5500,30
+1012,Frill,Lizard_Scruff,1380,Driller,7500,52
 1014,Ant Jaw,Jaws_Of_Ant,1159,Phreeoni,5000,69
 1014,Ant Jaw,Jaws_Of_Ant,1618,Ungoliant,3500,69
-1031,Mantis Scythe,Limb_Of_Mantis,1139,Mantis,9000,26
-1031,Mantis Scythe,Limb_Of_Mantis,1294,Killer Mantis,4550,56
-1034,Blue Hair,Cobold_Hair,1133,Kobold,5335,36
-1034,Blue Hair,Cobold_Hair,1134,Kobold,5335,31
-1034,Blue Hair,Cobold_Hair,1135,Kobold,5335,31
-1034,Blue Hair,Cobold_Hair,1282,Kobold Archer,4850,33
-1034,Blue Hair,Cobold_Hair,1296,Kobold Leader,6305,65
-1039,Little Evil Wing,Petite_DiablOfs_Wing,1109,Deviruchi,400,46
-1039,Little Evil Wing,Petite_DiablOfs_Wing,1253,Gargoyle,500,48
-1039,Little Evil Wing,Petite_DiablOfs_Wing,1292,Mini Demon,450,68
-1039,Little Evil Wing,Petite_DiablOfs_Wing,1382,Diabolic,4850,67
-1039,Little Evil Wing,Petite_DiablOfs_Wing,1582,Deviling,3000,31
-1039,Little Evil Wing,Petite_DiablOfs_Wing,1928,Deviruchi,3000,46
+1015,Tongue,Thin_N'_Long_Tongue,1159,Phreeoni,9700,69
+1015,Tongue,Thin_N'_Long_Tongue,1201,Rybio,3880,71
+1015,Tongue,Thin_N'_Long_Tongue,1202,Phendark,3880,73
+1016,Rat Tail,Rat_Tail,1175,Tarou,9000,11
+1017,Mole Whiskers,Moustache_Of_Mole,1145,Martin,9000,18
+1017,Mole Whiskers,Moustache_Of_Mole,1628,Holden,5000,36
+1017,Mole Whiskers,Moustache_Of_Mole,1862,Martin,9000,18
+1018,Mole Claw,Nail_Of_Mole,1145,Martin,500,18
+1018,Mole Claw,Nail_Of_Mole,1628,Holden,5000,36
+1033,Maneater Root,Root_Of_Maneater,1162,Rafflesia,5500,17
+1033,Maneater Root,Root_Of_Maneater,1368,Geographer,5500,56
+1033,Maneater Root,Root_Of_Maneater,1413,Hermit Plant,3800,46
+1033,Maneater Root,Root_Of_Maneater,1780,Muscipular,2000,57
+1033,Maneater Root,Root_Of_Maneater,1781,Drosera,2000,46
+1037,Dragon Tail,Dragon_Train,1155,Petite,300,44
+1037,Dragon Tail,Dragon_Train,1156,Petite,300,45
+1037,Dragon Tail,Dragon_Train,1384,Deleter,3880,66
+1037,Dragon Tail,Dragon_Train,1385,Deleter,3880,65
+1037,Dragon Tail,Dragon_Train,2013,Draco,1000,82
+1041,Lantern,Lantern,1169,Skeleton Worker,5500,30
+1041,Lantern,Lantern,1616,Pitman,1000,43
+1043,Orc Claw,Nail_Of_Orc,1153,Orc Zombie,5500,24
 1044,Zenorc's Fang,Tooth_Of_,1177,Zenorc,5500,31
 1045,Cultish Masque,Sacred_Masque,1098,Anubis,4365,75
 1045,Cultish Masque,Sacred_Masque,1140,Marduk,4365,40
+1048,Horrendous Hair,Slender_Snake,1148,Medusa,5335,79
+1048,Horrendous Hair,Slender_Snake,1283,Chimera,2500,70
+1053,Ancient Tooth,Tooth_Of_Ancient_Fish,1108,Deviace,9000,47
+1053,Ancient Tooth,Tooth_Of_Ancient_Fish,2070,Piranha,500,75
+1054,Ancient Lips,Lip_Of_Ancient_Fish,1108,Deviace,1000,47
+1054,Ancient Lips,Lip_Of_Ancient_Fish,1264,Merman,1300,53
+1054,Ancient Lips,Lip_Of_Ancient_Fish,2070,Piranha,500,75
 1056,Grit,Grit,1074,Shellfish,1000,15
 1056,Grit,Grit,1165,Sandman,5335,34
 1056,Grit,Grit,1386,Sleeper,5335,67
+1058,Moth Wings,Wing_Of_Moth,1114,Dustiness,500,21
+1060,Golden Hair,Golden_Hair,1143,Marionette,9000,41
+1060,Golden Hair,Golden_Hair,1390,Violy,6305,75
 1063,Fang,Sharpened_Cuspid,1189,Orc Archer,4656,49
+1064,Reins,Reins,1219,Abysmal Knight,5335,79
+1066,Fine-grained Trunk,Tree_Of_Archer_1,1010,Willow,1000,4
+1067,Solid Trunk,Tree_Of_Archer_2,1010,Willow,2000,4
+1068,Barren Trunk,Tree_Of_Archer_3,1010,Willow,3500,4
+1069,Orange Net Mushroom,Mushroom_Of_Thief_1,1182,Thief Mushroom,1500,1
+1070,Orange Gooey Mushroom,Mushroom_Of_Thief_2,1182,Thief Mushroom,3000,1
+1096,Round Shell,Round_Shell,1194,Arclouze,3500,59
+1096,Round Shell,Round_Shell,1304,Giant Spider,680,55
+1096,Round Shell,Round_Shell,1305,Ancient Worm,680,67
+1096,Round Shell,Round_Shell,1321,Dragon Tail,400,61
 1098,Manacles,Manacles,1196,Skeleton Prisoner,3500,52
 1098,Manacles,Manacles,1248,Cruiser,900,35
-7006,Wing of Red Bat,Wing_Of_Red_Bat,1111,Drainliar,5500,24
-7006,Wing of Red Bat,Wing_Of_Red_Bat,1111,Drainliar,1500,24
-7006,Wing of Red Bat,Wing_Of_Red_Bat,1383,Explosion,5500,46
+1099,Worn-out Prison Uniform,Worn_Out_Prison_Uniform,1197,Zombie Prisoner,3500,53
+1099,Worn-out Prison Uniform,Worn_Out_Prison_Uniform,1271,Alligator,600,42
+7001,Mould Powder,Mould_Powder,1199,Punk,5335,43
+7001,Mould Powder,Mould_Powder,1378,Demon Pungus,4559,56
+7001,Mould Powder,Mould_Powder,1620,Noxious,3000,35
+7002,Ogre Tooth,Ogre_Tooth,1213,High Orc,2500,52
+7003,Anolian Skin,Anolian_Skin,1206,Anolian,4850,61
+7003,Anolian Skin,Anolian_Skin,1271,Alligator,2000,42
 7007,Claw of Rat,Claw_Of_Rat,1209,Cramp,4656,56
 7008,Stiff Horn,Stiff_Horn,1991,Tendrilion,4850,113
 7009,Glitter Shell,Glitter_Shell,1211,Brilight,5335,46
 7010,Tail of Steel Scorpion,Tail_Of_Steel_Scorpion,1212,Iron Fist,5335,47
 7011,Claw of Monkey,Claw_Of_Monkey,1214,Choco,5335,43
 7011,Claw of Monkey,Claw_Of_Monkey,1861,Choco,5335,43
+7012,Tough Scalelike Stem,Tough_Scalelike_Stem,1215,Stem Worm,5335,40
+7013,Coral Reef,Coral_Reef,1216,Penomena,4850,57
+7013,Coral Reef,Coral_Reef,1266,Aster,40,18
+7014,Old Portrait,Old_Portrait,1188,Bongun,40,32
+7015,Bookclip in Memory,Bookclip_In_Memory,1195,Rideword,300,59
+7015,Bookclip in Memory,Bookclip_In_Memory,1698,Death Word,300,65
 7016,Spoon Stub,Spoon_Stub,1196,Skeleton Prisoner,100,52
 7016,Spoon Stub,Spoon_Stub,1197,Zombie Prisoner,105,53
 7016,Spoon Stub,Spoon_Stub,2026,Runaway Dandelion Member,2000,90
+7019,Loki's Whispers,Loki's_Whispers,1203,Mysteltainn,1,76
+7019,Loki's Whispers,Loki's_Whispers,1505,Loli Ruri,1,71
+7021,Foolishness of the Blind,Foolishness_Of_Blind,1127,Hode,1,26
+7022,Old Hilt,Old_Hilt,1204,Ogretooth,1,71
+7022,Old Hilt,Old_Hilt,1768,Gloom Under Night,2000,89
+7023,Blade Lost in Darkness,Blade_Lost_In_Darkness,1219,Abysmal Knight,5,79
+7023,Blade Lost in Darkness,Blade_Lost_In_Darkness,1582,Deviling,1,31
+7023,Blade Lost in Darkness,Blade_Lost_In_Darkness,1768,Gloom Under Night,4000,89
+7024,Bloody Edge,Bloody_Edge,1205,Executioner,5,65
+7024,Bloody Edge,Bloody_Edge,1751,Valkyrie Randgris,2500,99
+7034,Red Stocking,Red_Socks_With_Holes,1247,Antonio,10000,10
+7035,Matchstick,Matchstick,1250,Chepet,2500,42
+7038,Yarn,Yarn,1514,Zhu Po Long,3000,54
+7048,Talon of Griffon,Talon_Of_Griffin,1259,Gryphon,2500,72
+7054,Brigan,Brigan,1163,Raydric,4850,52
+7054,Brigan,Brigan,1256,Pest,200,40
+7054,Brigan,Brigan,1257,Injustice,5335,51
+7054,Brigan,Brigan,1259,Gryphon,5335,72
+7054,Brigan,Brigan,1260,Dark Frame,4656,59
+7054,Brigan,Brigan,1262,Mutant Dragonoid,4850,65
+7054,Brigan,Brigan,1267,Carat,3200,51
+7054,Brigan,Brigan,1268,Bloody Knight,4850,82
+7054,Brigan,Brigan,1270,Clock Tower Manager,5335,63
+7054,Brigan,Brigan,1276,Raydric Archer,4656,52
+7054,Brigan,Brigan,1277,Greatest General,2000,40
+7054,Brigan,Brigan,1278,Stalactic Golem,4850,60
+7054,Brigan,Brigan,1283,Chimera,5335,70
+7054,Brigan,Brigan,1299,Goblin Leader,1500,64
+7054,Brigan,Brigan,1300,Caterpillar,5335,64
+7054,Brigan,Brigan,1302,Dark Illusion,5335,77
+7054,Brigan,Brigan,1305,Ancient Worm,2500,67
+7054,Brigan,Brigan,1308,Panzer Goblin,3500,59
+7054,Brigan,Brigan,1318,Heater,600,68
+7054,Brigan,Brigan,1322,Spring Rabbit,3500,58
+7054,Brigan,Brigan,1512,Yao Jun,3880,56
+7054,Brigan,Brigan,1704,Odium of Thanatos,1000,92
+7054,Brigan,Brigan,1705,Despero of Thanatos,1000,88
+7054,Brigan,Brigan,1706,Maero of Thanatos,1000,83
+7054,Brigan,Brigan,1707,Dolor of Thanatos,1000,83
+7054,Brigan,Brigan,1709,Odium of Thanatos,1000,92
+7054,Brigan,Brigan,1710,Despero of Thanatos,1000,88
+7054,Brigan,Brigan,1711,Maero of Thanatos,1000,83
+7054,Brigan,Brigan,1712,Dolor of Thanatos,1000,83
+7054,Brigan,Brigan,1737,Aliza,4000,69
+7054,Brigan,Brigan,1752,Skogul,1000,70
+7054,Brigan,Brigan,1753,Frus,1000,69
+7054,Brigan,Brigan,1867,Banshee,5335,81
+7054,Brigan,Brigan,1918,Incarnation of Morocc,4850,97
+7054,Brigan,Brigan,1920,Incarnation of Morocc,4850,96
+7054,Brigan,Brigan,1974,Banshee Master,5335,84
+7054,Brigan,Brigan,1989,Hillslion,4850,105
+7064,Wing of Dragonfly,Dragon_Fly_Wing,1321,Dragon Tail,4413,61
+7065,Sea-Otter Fur,Sea_Otter_Leather,1323,Sea Otter,4365,59
+7066,Ice Cubic,Ice_Piece,1319,Freezer,1250,72
+7066,Ice Cubic,Ice_Piece,1515,Baby Hatii,4365,61
+7066,Ice Cubic,Ice_Piece,1775,Snowier,1000,60
+7066,Ice Cubic,Ice_Piece,1776,Siroma,500,42
+7066,Ice Cubic,Ice_Piece,1777,Ice Titan,3000,60
+7066,Ice Cubic,Ice_Piece,1778,Gazeti,3000,55
+7066,Ice Cubic,Ice_Piece,1789,Iceicle,1000,38
+7066,Ice Cubic,Ice_Piece,1789,Iceicle,500,38
+7066,Ice Cubic,Ice_Piece,1887,Freezer,2000,72
+7066,Ice Cubic,Ice_Piece,1888,Baby Hatii,2000,61
+7066,Ice Cubic,Ice_Piece,1889,Marozka's Guard,2000,73
 7067,Stone Fragment,Stone_Piece,1316,Solider,850,70
 7067,Stone Fragment,Stone_Piece,1583,Tao Gunka,4850,70
 7067,Stone Fragment,Stone_Piece,2024,Bradium Golem,3000,101
+7069,Destroyed Armor,Broken_Armor_Piece,1315,Assaulter,1200,71
+7069,Destroyed Armor,Broken_Armor_Piece,1584,Tamruan,3000,52
+7069,Destroyed Armor,Broken_Armor_Piece,1829,Sword Master,3000,86
+7069,Destroyed Armor,Broken_Armor_Piece,1830,Bow Master,3000,80
 7070,Broken Shell,Broken_Shell,1312,Turtle General,5335,97
 7070,Broken Shell,Broken_Shell,1314,Permeter,45,63
 7070,Broken Shell,Broken_Shell,1316,Solider,64,70
@@ -64,85 +246,236 @@ ItemID,ItemName,AegisName,MobID,MobName,DropRate,MobLevel
 7071,Tattered Clothes,Tatters_Clothes,1298,Zombie Master,4413,62
 7071,Tattered Clothes,Tatters_Clothes,1320,Owl Duke,4413,75
 7072,Old Shuriken,Rust_Suriken,1315,Assaulter,840,71
+7094,Fragment,Mystery_Piece,1365,Apocalypse,2400,66
+7094,Fragment,Mystery_Piece,1670,Dimik,300,79
+7094,Fragment,Mystery_Piece,1671,Dimik,300,89
+7094,Fragment,Mystery_Piece,1672,Dimik,300,80
+7094,Fragment,Mystery_Piece,1673,Dimik,300,82
+7094,Fragment,Mystery_Piece,1676,Venatu,300,72
+7094,Fragment,Mystery_Piece,1677,Venatu,300,80
+7094,Fragment,Mystery_Piece,1678,Venatu,300,78
+7094,Fragment,Mystery_Piece,1679,Venatu,300,75
+7094,Fragment,Mystery_Piece,1685,Vesper,3000,97
+7094,Fragment,Mystery_Piece,1978,Hell Apocalypse,2400,86
 7095,Metal Fragment,Broken_Steel_Piece,1365,Apocalypse,5335,66
 7095,Metal Fragment,Broken_Steel_Piece,1685,Vesper,5000,97
 7095,Metal Fragment,Broken_Steel_Piece,1978,Hell Apocalypse,5335,86
+7098,Live Coal,Live_Coal,1367,Blazer,3400,43
+7098,Live Coal,Live_Coal,1837,Fire Imp,2500,76
+7099,Worn-out Magic Scroll,Old_Magic_Circle,1377,Elder,4000,64
+7099,Worn-out Magic Scroll,Old_Magic_Circle,1882,Baba Yaga,1000,49
+7100,Sharp Leaf,Sharp_Leaf,1493,Dryad,3000,50
+7100,Sharp Leaf,Sharp_Leaf,1881,Les,2000,39
+7100,Sharp Leaf,Sharp_Leaf,1995,Pinguicula,5000,80
+7100,Sharp Leaf,Sharp_Leaf,2015,Dark Pinguicula,5000,83
+7101,Peco Peco Feather,Peco_Wing_Feather,1369,Grand Peco,4850,58
 7107,Antelope Skin,Gaoat's_Skin,1372,Goat,2500,69
 7108,Piece of Shield,Boroken_Shiled_Piece,1373,Lord of the Dead,5335,94
 7109,Shining Spear Blade,Shine_Spear_Blade,1373,Lord of the Dead,10,94
+7110,Broken Sword,Vroken_Sword,1154,Pasana,4365,61
+7110,Broken Sword,Vroken_Sword,1839,Byorgue,4365,86
+7111,Slick Paper,Smooth_Paper,1375,The Paper,4947,56
+7111,Slick Paper,Smooth_Paper,1400,Karakasa,2200,30
+7112,Sharp Paper,Fright_Paper_Blade,1375,The Paper,3200,56
 7113,Broken Pharaoh Emblem,Broken_Pharaoh_Symbol,1157,Pharaoh,5820,93
+7115,Harpy Feather,Harpy's_Feather,1376,Harpy,4850,70
+7115,Harpy Feather,Harpy's_Feather,1680,Hill Wind,4000,45
 7116,Harpy Talon,Harpy's_Claw,1376,Harpy,2500,70
 7116,Harpy Talon,Harpy's_Claw,1680,Hill Wind,3000,45
+7119,Bacillus,Spawns,1378,Demon Pungus,4074,56
+7119,Bacillus,Spawns,1621,Venomous,3000,42
+7119,Bacillus,Spawns,1627,Anopheles,500,23
+7120,Burning Horseshoe,Burning_Horse_Shoe,1379,Nightmare Terror,4947,78
+7120,Burning Horseshoe,Burning_Horse_Shoe,2071,Headless Mule,4000,80
+7121,Honey Pot,Honey_Jar,1154,Pasana,2500,61
+7122,Burning Hair,Hot_Hair,1383,Explosion,3200,46
+7122,Burning Hair,Hot_Hair,1833,Kasa,2500,85
+7122,Burning Hair,Hot_Hair,1837,Fire Imp,3000,76
+7122,Burning Hair,Hot_Hair,2071,Headless Mule,1000,80
+7123,Dragon Skin,Dragon's_Skin,1384,Deleter,4074,66
+7123,Dragon Skin,Dragon's_Skin,1385,Deleter,4074,65
+7123,Dragon Skin,Dragon's_Skin,1714,Ferus,1000,70
+7123,Dragon Skin,Dragon's_Skin,1720,Hydrolancer,4000,89
+7123,Dragon Skin,Dragon's_Skin,2013,Draco,100,82
 7124,Sand Clump,Sand_Lump,1386,Sleeper,4947,67
 7125,Scorpion Claw,Scropion's_Nipper,1387,Gig,4365,60
-7154,Poisonous Powder,Poison_Powder,1402,Poison Toad,2400,46
-7154,Poisonous Powder,Poison_Powder,1508,Quve,100,40
-7154,Poisonous Powder,Poison_Powder,1621,Venomous,1000,42
+7149,Yellow Plate,Yellow_Plate,1406,Kapha,6500,41
+7150,Piece of Bamboo,Bamboo_Cut,1400,Karakasa,4268,30
+7150,Piece of Bamboo,Bamboo_Cut,1409,Dumpling Child,3200,27
+7151,Oil Paper,Oil_Paper,1400,Karakasa,5000,30
+7151,Oil Paper,Oil_Paper,1409,Dumpling Child,2500,27
+7152,Glossy Hair,Glossy_Hair,1404,Miyabi Doll,5335,33
+7153,Worn-out Kimono,Old_Japaness_Clothes,1404,Miyabi Doll,2500,33
+7155,Poisonous Toad Skin,Poison_Toad's_Skin,1402,Poison Toad,5500,46
+7156,Broken Shuriken,Broken_Shuriken,1401,Shinobi,5335,69
+7157,Dark Mask,Black_Mask,1401,Shinobi,2000,69
+7158,Broken Liquor Jar,Broken_Wine_Vessel,1405,Tengu,5500,65
 7159,Tengu Nose,Tengu's_Nose,1405,Tengu,3500,65
+7161,Black Bear Skin,Black_Bear's_Skin,1417,Zipper Bear,4462,35
 7162,Cloud Crumb,Cloud_Piece,1412,Taoist Hermit,4656,56
 7163,Hard Feeler,Sharp_Feeler,1408,Bloody Butterfly,4608,55
+7164,Solid Peach,Hard_Peach,1410,Enchanted Peach Tree,4365,53
+7165,Transparent Celestial Robe,Limpid_Celestial_Robe,1416,Evil Nymph,3977,63
+7165,Transparent Celestial Robe,Limpid_Celestial_Robe,1518,White Lady,3000,72
+7165,Transparent Celestial Robe,Limpid_Celestial_Robe,1630,White Lady,3000,85
+7166,Soft Silk,Soft_Silk_Cloth,1416,Evil Nymph,1380,63
+7166,Soft Silk,Soft_Silk_Cloth,1518,White Lady,1000,72
+7166,Soft Silk,Soft_Silk_Cloth,1630,White Lady,1000,85
+7167,Strange Steel Piece,Mystery_Iron_Bit,1417,Zipper Bear,3500,35
 7168,Giant Butterfly Wing,Great_Wing,1408,Bloody Butterfly,2500,55
 7169,Ba Gua,Taegeuk_Plate,1418,Evil Snake Lord,5820,73
 7171,Leopard Skin,Leopard_Skin,1415,Baby Leopard,5200,32
 7171,Leopard Skin,Leopard_Skin,2072,Jaguar,3000,71
+7172,Leopard Claw,Leopard_Talon,1415,Baby Leopard,3200,32
+7172,Leopard Claw,Leopard_Talon,2072,Jaguar,2000,71
+7182,Cacao,Cacao,1057,Yoyo,900,21
+7182,Cacao,Cacao,1234,Yoyo,500,19
+7182,Cacao,Cacao,1498,Wootan Shooter,100,39
 7186,Thin Trunk,Thin_Stem,1500,Parasite,3880,49
+7187,Festival Mask,Festival_Mask,1409,Dumpling Child,3000,27
+7188,Brown Root,Browny_Root,1493,Dryad,3000,50
+7188,Brown Root,Browny_Root,1495,Stone Shooter,1000,42
+7188,Brown Root,Browny_Root,1497,Wooden Golem,4000,51
+7188,Brown Root,Browny_Root,1995,Pinguicula,3000,80
+7188,Brown Root,Browny_Root,2015,Dark Pinguicula,3000,83
+7189,Wooden Heart,Heart_Of_Tree,1497,Wooden Golem,4000,51
+7190,Solid Husk,Solid_Peeling,1494,Beetle King,6500,34
 7192,Vane,Blade_Of_Pinwheel,1409,Dumpling Child,5000,27
+7194,Soft Blade of Grass,Soft_Leaf,1500,Parasite,2000,49
+7194,Soft Blade of Grass,Soft_Leaf,1520,Boiled Rice,1000,15
 7195,Slingshot,Air_Rifle,1498,Wootan Shooter,4500,39
+7196,Shoulder Protector,Shoulder_Protection,1499,Wootan Fighter,4000,41
+7197,Tough Vines,Tough_Vines,1493,Dryad,5335,50
+7197,Tough Vines,Tough_Vines,1991,Tendrilion,5335,113
+7197,Tough Vines,Tough_Vines,2019,Ancient Tree,1000,102
+7200,Elastic Band,Flexible_String,1498,Wootan Shooter,3500,39
+7201,Log,Log,1495,Stone Shooter,5000,42
+7201,Log,Log,1497,Wooden Golem,5000,51
+7201,Log,Log,1880,Wood Goblin,2000,42
+7201,Log,Log,2019,Ancient Tree,5000,102
 7202,Pincher of Beetle,Beetle_Nipper,1494,Beetle King,4500,34
 7203,Strong Branch,Solid_Twig,1495,Stone Shooter,5000,42
 7203,Strong Branch,Solid_Twig,1880,Wood Goblin,4000,42
+7205,Piece of Black Cloth,Piece_Of_Black_Cloth,1508,Quve,3200,40
+7205,Piece of Black Cloth,Piece_Of_Black_Cloth,2023,Dark Shadow,5000,114
+7207,Old Manteau,Old_Manteau,1507,Bloody Murderer,4171,72
 7208,Rusty Kitchen Knife,Rusty_Cleaver,1507,Bloody Murderer,2000,72
 7209,Helm of Dullahan,Dullahan's_Helm,1504,Dullahan,3200,62
 7210,Armor Piece of Dullahan,Dullahan_Armor,1504,Dullahan,4850,62
 7211,Fragment of Rossata Stone,Rojerta_Piece,1511,Amon Ra,7760,88
 7214,Bat Cage,Bat_Cage,1505,Loli Ruri,5044,71
 7215,Broken Needle,Broken_Needle,1510,Heirozoist,4365,51
+7216,Red Muffler,Red_Scarf,1506,Disguise,4850,55
 7218,Decomposed Rope,Rotten_Rope,1503,Gibbet,5335,58
 7219,Striped Sock,Striped_Socks,1505,Loli Ruri,3000,71
+7220,Ectoplasm,Ectoplasm,1508,Quve,5723,40
+7220,Ectoplasm,Ectoplasm,1509,Lude,5723,36
+7220,Ectoplasm,Ectoplasm,1510,Heirozoist,300,51
 7221,Tangled Chains,Tangled_Chain,1506,Disguise,3686,55
+7222,Wooden Gnarl,Tree_Knot,1503,Gibbet,4074,58
 7223,Contorted Self-Portrait,Distorted_Portrait,1507,Bloody Murderer,1000,72
 7225,Pumpkin Lantern,Pumpkin_Bucket,1509,Lude,3200,36
 7225,Pumpkin Lantern,Pumpkin_Bucket,1722,Jakk,1000,99
 7225,Pumpkin Lantern,Pumpkin_Bucket,1812,Delightful Lude,5000,99
 7226,Pellet,Pill,1418,Evil Snake Lord,900,73
 7226,Pellet,Pill,1882,Baba Yaga,150,49
+7262,Folding Fan of Cat Ghost,Fan,1513,Mao Guai,4171,62
+7263,Cat's Eye,Cat_Eyed_Stone,1513,Mao Guai,2000,62
 7264,Dry Sand,Dried_Sand,1516,Mi Gao,4365,51
 7265,Dragon Horn,Dragon_Horn,1514,Zhu Po Long,3000,54
 7266,Denture from Dragon Mask,Dragon_Fang,1514,Zhu Po Long,4365,54
+7267,Tiger Panty,Tiger_Skin_Panties,1517,Jing Guai,4500,48
+7267,Tiger Panty,Tiger_Skin_Panties,1811,Bandit,500,18
+7267,Tiger Panty,Tiger_Skin_Panties,2074,Curupira,500,68
 7268,Little Ghost Doll,Little_Blacky_Ghost,1514,Zhu Po Long,800,54
 7268,Little Ghost Doll,Little_Blacky_Ghost,1517,Jing Guai,400,48
 7269,Pinafore,Bib,1515,Baby Hatii,2500,61
 7269,Pinafore,Bib,1686,Orc Baby,100,21
+7270,Nursing Bottle,Milk_Bottle,1515,Baby Hatii,1500,61
+7270,Nursing Bottle,Milk_Bottle,1686,Orc Baby,200,21
 7272,Rice Ball Doll,Meat_Dumpling_Doll,1520,Boiled Rice,3000,15
+7298,Fig Leaf,Leaf_Clothes,1586,Leaf Cat,5335,38
 7299,Straw Basket,Bamboo_Basket,1587,Kraben,4850,50
 7299,Straw Basket,Bamboo_Basket,1811,Bandit,500,18
 7300,Gemstone,Gemstone,1583,Tao Gunka,4850,70
+7301,Tassel,Sword_Accessory,1584,Tamruan,4850,52
 7303,Straw Rice Bag,Bag_Of_Rice,1828,Gullinbrusti,6000,20
+7312,Jubilee,Jubilee,1613,Metaling,5000,26
+7312,Jubilee,Jubilee,1619,Porcellio,5000,28
+7312,Jubilee,Jubilee,1784,Stapo,1000,23
+7312,Jubilee,Jubilee,1977,Heavy Metaling,5000,73
+7315,Dark Crystal Fragment,Dark_Crystal_Fragment,1615,Obsidian,3000,50
 7316,Insect Leg,Long_Limb,1618,Ungoliant,4500,69
+7317,Rusty Screw,Screw,1613,Metaling,200,26
+7317,Rusty Screw,Screw,1622,Teddy Bear,3800,71
+7317,Rusty Screw,Screw,1668,Archdam,5000,79
+7317,Rusty Screw,Screw,1676,Venatu,2000,72
+7317,Rusty Screw,Screw,1677,Venatu,2000,80
+7317,Rusty Screw,Screw,1678,Venatu,2000,78
+7317,Rusty Screw,Screw,1679,Venatu,2000,75
+7317,Rusty Screw,Screw,1735,Alicel,500,75
+7317,Rusty Screw,Screw,1736,Aliot,500,75
+7317,Rusty Screw,Screw,1977,Heavy Metaling,200,73
+7317,Rusty Screw,Screw,1979,Zakudam,5000,82
 7318,Old Pick,Old_Pick,1616,Pitman,3000,43
+7319,Used Iron Plate,Old_Steel_Plate,1616,Pitman,500,43
+7319,Used Iron Plate,Old_Steel_Plate,1617,Old Stove,3800,68
+7319,Used Iron Plate,Old_Steel_Plate,1670,Dimik,2000,79
+7319,Used Iron Plate,Old_Steel_Plate,1671,Dimik,2000,89
+7319,Used Iron Plate,Old_Steel_Plate,1672,Dimik,2000,80
+7319,Used Iron Plate,Old_Steel_Plate,1673,Dimik,2000,82
+7319,Used Iron Plate,Old_Steel_Plate,1682,Remover,5000,55
 7320,Dust Pollutant,Air_Pollutant,1620,Noxious,3000,35
 7320,Dust Pollutant,Air_Pollutant,1621,Venomous,5000,42
+7321,Crystal Fragment,Fragment_Of_Crystal,1614,Mineral,3000,56
+7321,Crystal Fragment,Fragment_Of_Crystal,1976,Cobalt Mineral,3000,72
 7322,Toxic Gas,Poisonous_Gas,1620,Noxious,1000,35
 7322,Toxic Gas,Poisonous_Gas,1621,Venomous,2000,42
 7323,Battered Kettle,Battered_Kettle,1617,Old Stove,1000,68
+7325,Flexible Tube,Tube,1613,Metaling,4000,26
+7325,Flexible Tube,Tube,1738,Constant,10,55
+7325,Flexible Tube,Tube,1977,Heavy Metaling,4000,73
+7326,Fluorescent Liquid,Fluorescent_Liquid,1618,Ungoliant,2500,69
+7326,Fluorescent Liquid,Fluorescent_Liquid,1619,Porcellio,30,28
+7326,Fluorescent Liquid,Fluorescent_Liquid,2016,Aqua Elemental,5000,83
+7326,Fluorescent Liquid,Fluorescent_Liquid,2020,Rhyncho,5000,85
+7326,Fluorescent Liquid,Fluorescent_Liquid,2021,Phylla,5000,85
 7327,Flashlight,Headlamp,1616,Pitman,80,43
 7327,Flashlight,Headlamp,1623,RSX-0806,5000,86
-7435,Golden Ornament,Golden_Bracelet,1700,Dame of Sentinel,100,81
-7436,Fragment of Agony,Piece_Of_Memory_Green,1707,Dolor of Thanatos,10000,83
-7437,Fragment of Misery,Piece_Of_Memory_Purple,1706,Maero of Thanatos,10000,83
-7438,Fragment of Hatred,Piece_Of_Memory_Blue,1704,Odium of Thanatos,10000,92
-7439,Fragment of Despair,Piece_Of_Memory_Red,1705,Despero of Thanatos,10000,88
-7440,Red Feather,Red_Feather,1701,Mistress of Shelter,200,80
-7440,Red Feather,Red_Feather,1702,Baroness of Retribution,400,79
-7441,Blue Feather,Blue_Feather,1700,Dame of Sentinel,500,81
-7441,Blue Feather,Blue_Feather,1703,Lady Solace,200,77
-7442,Cursed Seal,Cursed_Seal,1700,Dame of Sentinel,100,81
-7442,Cursed Seal,Cursed_Seal,1701,Mistress of Shelter,1,80
-7442,Cursed Seal,Cursed_Seal,1701,Mistress of Shelter,50,80
-7442,Cursed Seal,Cursed_Seal,1702,Baroness of Retribution,50,79
-7442,Cursed Seal,Cursed_Seal,1703,Lady Solace,50,77
+7337,Eye of Hellion,Eye_Of_Hellion,1626,Hellion Revenant,8000,88
+7337,Eye of Hellion,Eye_Of_Hellion,1626,Hellion Revenant,5000,88
+7337,Eye of Hellion,Eye_Of_Hellion,1626,Hellion Revenant,3000,88
+7337,Eye of Hellion,Eye_Of_Hellion,1626,Hellion Revenant,1000,88
+7337,Eye of Hellion,Eye_Of_Hellion,1626,Hellion Revenant,500,88
+7337,Eye of Hellion,Eye_Of_Hellion,1626,Hellion Revenant,100,88
+7340,Will of the Darkness,Will_Of_Darkness,1632,Gremlin,3000,53
+7340,Will of the Darkness,Will_Of_Darkness,1773,Hodremlin,1000,61
+7340,Will of the Darkness,Will_Of_Darkness,1774,Seeker,1000,65
+7345,Handcuffs,Armlet_Of_Prisoner,1634,Seyren Windsor,3000,91
+7345,Handcuffs,Armlet_Of_Prisoner,1636,Howard Alt-Eisen,3000,83
+7345,Handcuffs,Armlet_Of_Prisoner,1638,Cecil Damon,3000,82
+7345,Handcuffs,Armlet_Of_Prisoner,1639,Kathryne Keyron,3000,92
+7345,Handcuffs,Armlet_Of_Prisoner,1653,Wickebine Tres,2000,62
+7345,Handcuffs,Armlet_Of_Prisoner,1654,Armeyer Dinze,1000,66
+7345,Handcuffs,Armlet_Of_Prisoner,1655,Errende Ebecee,500,59
+7347,Research Chart,Lab_Staff_Record,1635,Eremes Guile,2000,87
+7347,Research Chart,Lab_Staff_Record,1637,Margaretha Sorin,2000,90
+7347,Research Chart,Lab_Staff_Record,1652,Egnigem Cenia,1000,58
+7347,Research Chart,Lab_Staff_Record,1656,Kavach Icarus,2000,60
+7352,Transparent Plate,Transparent_Plate01,1670,Dimik,50,79
+7353,Transparent Plate,Transparent_Plate02,1671,Dimik,50,89
+7354,Transparent Plate,Transparent_Plate03,1672,Dimik,50,80
+7355,Transparent Plate,Transparent_Plate04,1673,Dimik,50,82
 7443,Three-Headed Dragon's Head,Tri_Headed_Dragon_Head,1720,Hydrolancer,3880,89
+7445,Green Bijou,Dragonball_Green,1717,Ferus,800,69
+7445,Green Bijou,Dragonball_Green,1717,Ferus,100,69
+7446,Blue Bijou,Dragonball_Blue,1716,Acidus,800,76
+7446,Blue Bijou,Dragonball_Blue,1716,Acidus,100,76
+7447,Red Bijou,Dragonball_Red,1714,Ferus,800,70
+7448,Yellow Bijou,Dragonball_Yellow,1713,Acidus,800,80
+7449,Bloody Page,Bloody_Page,1698,Death Word,500,65
 7450,Skeletal Armor Piece,Piece_Of_Bone_Armor,1708,Memory of Thanatos,5000,99
+7451,Fire Dragon Scale,Scale_Of_Red_Dragon,1719,Detardeurus,3589,90
 7477,Level 6 Cookbook,Cookbook06,1071,Pirate Skeleton,5,25
 7477,Level 6 Cookbook,Cookbook06,1164,Requiem,1,35
 7477,Level 6 Cookbook,Cookbook06,1273,Orc Lady,3,31
@@ -152,12 +485,41 @@ ItemID,ItemName,AegisName,MobID,MobName,DropRate,MobLevel
 7480,Level 9 Cookbook,Cookbook09,1312,Turtle General,200,97
 7480,Level 9 Cookbook,Cookbook09,1698,Death Word,1,65
 7481,Level 10 Cookbook,Cookbook10,1289,Maya Purple,2,81
-7510,Valhalla's Flower,Valhalla_Flower,1751,Valkyrie Randgris,5000,99
-7510,Valhalla's Flower,Valhalla_Flower,1765,Valkyrie,500,99
+7484,Symbol of a Brave Warrior,Warrior_Symbol,1731,Doppelganger,10000,72
+7486,Wind General,3rd_Floor_Pass,1732,Treasure Chest,1000,98
+7507,Solid Iron Piece,Sturdy_Iron_Piece,1735,Alicel,3000,75
+7507,Solid Iron Piece,Sturdy_Iron_Piece,1736,Aliot,3000,75
+7507,Solid Iron Piece,Sturdy_Iron_Piece,1738,Constant,1500,55
+7507,Solid Iron Piece,Sturdy_Iron_Piece,1739,Alicel,500,75
+7507,Solid Iron Piece,Sturdy_Iron_Piece,1740,Aliot,500,75
+7507,Solid Iron Piece,Sturdy_Iron_Piece,1745,Constant,500,55
+7507,Solid Iron Piece,Sturdy_Iron_Piece,1746,Aliza,500,69
 7512,Burnt Part,Burnt_Parts,1735,Alicel,2000,75
 7512,Burnt Part,Burnt_Parts,1736,Aliot,2000,75
 7512,Burnt Part,Burnt_Parts,1738,Constant,100,55
 7513,Pocket Watch,Pocket_Watch,1734,Kiel D-01,3000,90
+7561,Glacial Heart,Ice_Heart,1775,Snowier,3000,60
+7561,Glacial Heart,Ice_Heart,1776,Siroma,1000,42
+7561,Glacial Heart,Ice_Heart,1777,Ice Titan,5000,60
+7561,Glacial Heart,Ice_Heart,1778,Gazeti,3000,55
+7561,Glacial Heart,Ice_Heart,1788,Ice Titan,1,60
+7562,Ice Scale,Ice_Scale,1779,Ktullanux,9000,98
+7563,Bloody Rune,Bloody_Rune,1769,Agav,4000,73
+7563,Bloody Rune,Bloody_Rune,1769,Agav,100,73
+7563,Bloody Rune,Bloody_Rune,1770,Echio,4000,69
+7563,Bloody Rune,Bloody_Rune,1770,Echio,100,69
+7563,Bloody Rune,Bloody_Rune,1771,Vanberk,1000,59
+7563,Bloody Rune,Bloody_Rune,1771,Vanberk,100,59
+7563,Bloody Rune,Bloody_Rune,1772,Isilla,1000,62
+7563,Bloody Rune,Bloody_Rune,1772,Isilla,100,62
+7563,Bloody Rune,Bloody_Rune,1773,Hodremlin,1000,61
+7563,Bloody Rune,Bloody_Rune,1774,Seeker,1000,65
+7563,Bloody Rune,Bloody_Rune,1785,Atroce,7000,82
+7563,Bloody Rune,Bloody_Rune,1796,Aunoe,4000,62
+7563,Bloody Rune,Bloody_Rune,1796,Aunoe,100,62
+7563,Bloody Rune,Bloody_Rune,1797,Fanat,4000,62
+7564,Rotten Meat,Rotten_Meat,1782,Roween,3000,31
+7564,Rotten Meat,Rotten_Meat,1783,Galion,3000,44
 7565,Sticky Poison,Sticky_Poison,1780,Muscipular,3000,57
 7565,Sticky Poison,Sticky_Poison,1781,Drosera,3000,46
 7566,Will of Red Darkness,Will_Of_Darkness_,1768,Gloom Under Night,7000,89
@@ -169,13 +531,25 @@ ItemID,ItemName,AegisName,MobID,MobName,DropRate,MobLevel
 7568,White Mask,White_Mask,1772,Isilla,2500,62
 7568,White Mask,White_Mask,1796,Aunoe,2500,62
 7568,White Mask,White_Mask,1797,Fanat,2500,62
+7575,Red Jewel,Red_Jewel_,1790,Rafflesia,4000,17
+7576,Blue Jewel,Blue_Jewel_,1790,Rafflesia,2000,17
+7577,Yellow Jewel,Golden_Jewel_,1790,Rafflesia,3000,17
 7578,Countermagic Crystal,Anti_Spell_Bead,1795,Bloody Knight,10000,82
 7582,Jewel of Destruction,Gem_Of_Ruin,1798,Treasure Chest,10000,99
+7583,Evil Mind,Evil_Mind,1799,Lord Knight Seyren,300,99
+7583,Evil Mind,Evil_Mind,1800,Assassin Cross Eremes,300,99
+7583,Evil Mind,Evil_Mind,1801,Mastersmith Howard,300,99
+7583,Evil Mind,Evil_Mind,1802,High Priest Margaretha,300,99
+7583,Evil Mind,Evil_Mind,1803,Sniper Cecil,300,99
+7583,Evil Mind,Evil_Mind,1804,High Wizard Kathryne,300,99
+7583,Evil Mind,Evil_Mind,1805,Lord Knight Seyren,10000,99
+7583,Evil Mind,Evil_Mind,1806,Assassin Cross Eremes,10000,99
+7583,Evil Mind,Evil_Mind,1807,Mastersmith Howard,10000,99
+7583,Evil Mind,Evil_Mind,1808,High Priest Margaretha,10000,99
+7583,Evil Mind,Evil_Mind,1809,Sniper Cecil,10000,99
+7583,Evil Mind,Evil_Mind,1810,High Wizard Kathryne,10000,99
 7607,Neck of Demon Dragon,Evil_Dragon_Head,1813,Hydrolancer,10000,99
-7613,Small Rice Cake Dough,Small_Rice_Dough,1815,Rice Cake,10000,12
-7613,Small Rice Cake Dough,Small_Rice_Dough,1815,Rice Cake,10000,12
-7613,Small Rice Cake Dough,Small_Rice_Dough,1815,Rice Cake,10000,12
-7613,Small Rice Cake Dough,Small_Rice_Dough,1815,Rice Cake,10000,12
+7609,Pumpkin Mojo,Pumpkin_Mojo,1812,Delightful Lude,5000,99
 7613,Small Rice Cake Dough,Small_Rice_Dough,1815,Rice Cake,10000,12
 7613,Small Rice Cake Dough,Small_Rice_Dough,1815,Rice Cake,5000,12
 7613,Small Rice Cake Dough,Small_Rice_Dough,1815,Rice Cake,4000,12
@@ -199,15 +573,18 @@ ItemID,ItemName,AegisName,MobID,MobName,DropRate,MobLevel
 7753,Broken Farming Utensil,Broken_Farming_Utensil,1864,Zombie Slaughter,3000,77
 7754,Broken Crown,Broken_Crown,1874,Beelzebub,9000,98
 7754,Broken Crown,Broken_Crown,1875,Dead King,9000,80
+7762,Yaga's Pestle,Yaga_Pestle,1882,Baba Yaga,5000,49
 7781,Engrave Treasure Box,Heart_Box,1901,Condor,5000,5
-7830,Goddess Tear,Goddess_Tear,1938,Treasure Chest,80,99
-7832,Brynhild Armor Piece,Brynhild_Armor_Piece,1940,Treasure Chest,80,99
-7833,Hero's Remains,Hero_Remains,1941,Treasure Chest,80,99
-7834,Andvari's Ring,Andvari_Ring,1942,Treasure Chest,80,99
-7835,Dusk Glow,Dusk_Glow,1943,Treasure Chest,80,99
-7836,Dawn Essence,Dawn_Essence,1944,Treasure Chest,80,99
-7837,Cold Moonlight,Cold_Moonlight,1945,Treasure Chest,80,99
-7838,Hazy Starlight,Hazy_Starlight,1946,Treasure Chest,80,99
+7798,Fragment of Darkness,Dark_Debris,1917,Wounded Morocc,9000,99
+7798,Fragment of Darkness,Dark_Debris,1918,Incarnation of Morocc,3000,97
+7798,Fragment of Darkness,Dark_Debris,1919,Incarnation of Morocc,3000,97
+7798,Fragment of Darkness,Dark_Debris,1920,Incarnation of Morocc,3000,96
+7798,Fragment of Darkness,Dark_Debris,1921,Incarnation of Morocc,3000,98
+7799,Crystal of Darkness,Dark_Crystal,1917,Wounded Morocc,9000,99
+7799,Crystal of Darkness,Dark_Crystal,1918,Incarnation of Morocc,1000,97
+7799,Crystal of Darkness,Dark_Crystal,1919,Incarnation of Morocc,1000,97
+7799,Crystal of Darkness,Dark_Crystal,1920,Incarnation of Morocc,1000,96
+7799,Crystal of Darkness,Dark_Crystal,1921,Incarnation of Morocc,1000,98
 7849,Soul Crystal,Soul_Crystal,1955,Treasure Chest,4000,99
 7850,Wooden Block,Wooden_Block_,1819,Bathory,2000,44
 7850,Wooden Block,Wooden_Block_,1820,Bigfoot,2000,25
@@ -222,4 +599,8 @@ ItemID,ItemName,AegisName,MobID,MobName,DropRate,MobLevel
 7860,Peeps,Peeps,1863,Spring Rabbit,5000,25
 7861,Jelly Bean,Jelly_Bean,1863,Spring Rabbit,5000,25
 7862,Marshmallow,Marshmallow,1863,Spring Rabbit,5000,25
+7863,Special Gold,GOLD_ID4,1877,Crystal,10,1
+7864,Love Flower,Love_Flower,1878,Shining Plant,3000,1
+7884,Jade Plate,Jade_Plate,1898,Zombie,10000,12
 7888,Bag of Nuts,Bag_Of_Nuts,1690,Spring Rabbit,5000,12
+7930,Devil's Cattle Ring,Cowking's_Nose_Ring,2009,Woomawang,10000,82

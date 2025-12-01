@@ -1,108 +1,234 @@
-# ============================================================
-# QUICK REFERENCE - Safe Mob Drop Materials
-# For easy copy-paste into custom content
-# ============================================================
-# Total items: 129
-# Format: ItemID,ItemName
-# ============================================================
+# Quick Reference - 260 verified items
 
-902,Tree Root
-903,Reptile Tongue
+904,Scorpion Tail
+906,Pointed Scale
+907,Resin
+917,Talon
+920,Wolf Claw
 922,Orc's Fang
-928,Insect Feeler
+924,Powder of Butterfly
+926,Snake Scale
+929,Immortal Heart
+941,Nose Ring
+944,Horseshoe
+951,Fin
+952,Cactus Needle
+954,Shining Scale
+957,Decayed Nail
+958,Horrendous Mouth
+959,Stinky Scale
+961,Conch
 967,Turtle Shell
+970,Alcohol
+971,Detrimindexta
+972,Karvodailnirol
+1004,Chivalry Emblem
+1006,Old Magicbook
+1009,Hand of God
+1012,Frill
 1014,Ant Jaw
-1031,Mantis Scythe
-1034,Blue Hair
-1039,Little Evil Wing
+1015,Tongue
+1016,Rat Tail
+1017,Mole Whiskers
+1018,Mole Claw
+1033,Maneater Root
+1037,Dragon Tail
+1041,Lantern
+1043,Orc Claw
 1044,Zenorc's Fang
 1045,Cultish Masque
+1048,Horrendous Hair
+1053,Ancient Tooth
+1054,Ancient Lips
 1056,Grit
+1058,Moth Wings
+1060,Golden Hair
 1063,Fang
+1064,Reins
+1066,Fine-grained Trunk
+1067,Solid Trunk
+1068,Barren Trunk
+1069,Orange Net Mushroom
+1070,Orange Gooey Mushroom
+1096,Round Shell
 1098,Manacles
-7006,Wing of Red Bat
+1099,Worn-out Prison Uniform
+7001,Mould Powder
+7002,Ogre Tooth
+7003,Anolian Skin
 7007,Claw of Rat
 7008,Stiff Horn
 7009,Glitter Shell
 7010,Tail of Steel Scorpion
 7011,Claw of Monkey
+7012,Tough Scalelike Stem
+7013,Coral Reef
+7014,Old Portrait
+7015,Bookclip in Memory
 7016,Spoon Stub
+7019,Loki's Whispers
+7021,Foolishness of the Blind
+7022,Old Hilt
+7023,Blade Lost in Darkness
+7024,Bloody Edge
+7034,Red Stocking
+7035,Matchstick
+7038,Yarn
+7048,Talon of Griffon
+7054,Brigan
+7064,Wing of Dragonfly
+7065,Sea-Otter Fur
+7066,Ice Cubic
 7067,Stone Fragment
+7069,Destroyed Armor
 7070,Broken Shell
 7071,Tattered Clothes
 7072,Old Shuriken
+7094,Fragment
 7095,Metal Fragment
+7098,Live Coal
+7099,Worn-out Magic Scroll
+7100,Sharp Leaf
+7101,Peco Peco Feather
 7107,Antelope Skin
 7108,Piece of Shield
 7109,Shining Spear Blade
+7110,Broken Sword
+7111,Slick Paper
+7112,Sharp Paper
 7113,Broken Pharaoh Emblem
+7115,Harpy Feather
 7116,Harpy Talon
+7119,Bacillus
+7120,Burning Horseshoe
+7121,Honey Pot
+7122,Burning Hair
+7123,Dragon Skin
 7124,Sand Clump
 7125,Scorpion Claw
-7154,Poisonous Powder
+7149,Yellow Plate
+7150,Piece of Bamboo
+7151,Oil Paper
+7152,Glossy Hair
+7153,Worn-out Kimono
+7155,Poisonous Toad Skin
+7156,Broken Shuriken
+7157,Dark Mask
+7158,Broken Liquor Jar
 7159,Tengu Nose
+7161,Black Bear Skin
 7162,Cloud Crumb
 7163,Hard Feeler
+7164,Solid Peach
+7165,Transparent Celestial Robe
+7166,Soft Silk
+7167,Strange Steel Piece
 7168,Giant Butterfly Wing
 7169,Ba Gua
 7171,Leopard Skin
+7172,Leopard Claw
+7182,Cacao
 7186,Thin Trunk
+7187,Festival Mask
+7188,Brown Root
+7189,Wooden Heart
+7190,Solid Husk
 7192,Vane
+7194,Soft Blade of Grass
 7195,Slingshot
+7196,Shoulder Protector
+7197,Tough Vines
+7200,Elastic Band
+7201,Log
 7202,Pincher of Beetle
 7203,Strong Branch
+7205,Piece of Black Cloth
+7207,Old Manteau
 7208,Rusty Kitchen Knife
 7209,Helm of Dullahan
 7210,Armor Piece of Dullahan
 7211,Fragment of Rossata Stone
 7214,Bat Cage
 7215,Broken Needle
+7216,Red Muffler
 7218,Decomposed Rope
 7219,Striped Sock
+7220,Ectoplasm
 7221,Tangled Chains
+7222,Wooden Gnarl
 7223,Contorted Self-Portrait
 7225,Pumpkin Lantern
 7226,Pellet
+7262,Folding Fan of Cat Ghost
+7263,Cat's Eye
 7264,Dry Sand
 7265,Dragon Horn
 7266,Denture from Dragon Mask
+7267,Tiger Panty
 7268,Little Ghost Doll
 7269,Pinafore
+7270,Nursing Bottle
 7272,Rice Ball Doll
+7298,Fig Leaf
 7299,Straw Basket
 7300,Gemstone
+7301,Tassel
 7303,Straw Rice Bag
+7312,Jubilee
+7315,Dark Crystal Fragment
 7316,Insect Leg
+7317,Rusty Screw
 7318,Old Pick
+7319,Used Iron Plate
 7320,Dust Pollutant
+7321,Crystal Fragment
 7322,Toxic Gas
 7323,Battered Kettle
+7325,Flexible Tube
+7326,Fluorescent Liquid
 7327,Flashlight
-7435,Golden Ornament
-7436,Fragment of Agony
-7437,Fragment of Misery
-7438,Fragment of Hatred
-7439,Fragment of Despair
-7440,Red Feather
-7441,Blue Feather
-7442,Cursed Seal
+7337,Eye of Hellion
+7340,Will of the Darkness
+7345,Handcuffs
+7347,Research Chart
+7352,Transparent Plate
+7353,Transparent Plate
+7354,Transparent Plate
+7355,Transparent Plate
 7443,Three-Headed Dragon's Head
+7445,Green Bijou
+7446,Blue Bijou
+7447,Red Bijou
+7448,Yellow Bijou
+7449,Bloody Page
 7450,Skeletal Armor Piece
+7451,Fire Dragon Scale
 7477,Level 6 Cookbook
 7478,Level 7 Cookbook
 7479,Level 8 Cookbook
 7480,Level 9 Cookbook
 7481,Level 10 Cookbook
-7510,Valhalla's Flower
+7484,Symbol of a Brave Warrior
+7486,Wind General
+7507,Solid Iron Piece
 7512,Burnt Part
 7513,Pocket Watch
+7561,Glacial Heart
+7562,Ice Scale
+7563,Bloody Rune
+7564,Rotten Meat
 7565,Sticky Poison
 7566,Will of Red Darkness
 7567,Suspicious Hat
 7568,White Mask
+7575,Red Jewel
+7576,Blue Jewel
+7577,Yellow Jewel
 7578,Countermagic Crystal
 7582,Jewel of Destruction
+7583,Evil Mind
 7607,Neck of Demon Dragon
+7609,Pumpkin Mojo
 7613,Small Rice Cake Dough
 7701,Soul
 7703,Piece of Cogwheel
@@ -119,19 +245,18 @@
 7752,Clattering Skull
 7753,Broken Farming Utensil
 7754,Broken Crown
+7762,Yaga's Pestle
 7781,Engrave Treasure Box
-7830,Goddess Tear
-7832,Brynhild Armor Piece
-7833,Hero's Remains
-7834,Andvari's Ring
-7835,Dusk Glow
-7836,Dawn Essence
-7837,Cold Moonlight
-7838,Hazy Starlight
+7798,Fragment of Darkness
+7799,Crystal of Darkness
 7849,Soul Crystal
 7850,Wooden Block
 7858,Dragonball Yellow
 7860,Peeps
 7861,Jelly Bean
 7862,Marshmallow
+7863,Special Gold
+7864,Love Flower
+7884,Jade Plate
 7888,Bag of Nuts
+7930,Devil's Cattle Ring
