@@ -1921,7 +1921,7 @@
 	packet(0x0ADD, 22);
 #endif
 
-#if PACKETVER >= 20231220
+#if PACKETVER_MAIN_NUM >= 20231220
 	parseable_packet(HEADER_CZ_REQ_STYLE_CHANGE3, -1, clif_parse_stylist_buy, 0);
 #elif PACKETVER >= 20180516
 	parseable_packet( HEADER_CZ_REQ_STYLE_CHANGE2, sizeof( PACKET_CZ_REQ_STYLE_CHANGE2 ), clif_parse_stylist_buy, 0 );

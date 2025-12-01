@@ -22940,7 +22940,7 @@ void clif_parse_stylist_buy( int32 fd, map_session_data* sd ){
 
 	nullpo_retv(sd);
 
-#if PACKETVER >= 20231220
+#if PACKETVER_MAIN_NUM >= 20231220
 
 	enum e_stylist_actions : int16
 	{
