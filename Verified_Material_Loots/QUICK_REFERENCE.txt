@@ -1,4 +1,4 @@
-# Quick Reference - 260 verified items
+# Quick Reference - 259 verified items
 
 904,Scorpion Tail
 906,Pointed Scale
@@ -209,7 +209,6 @@
 7480,Level 9 Cookbook
 7481,Level 10 Cookbook
 7484,Symbol of a Brave Warrior
-7486,Wind General
 7507,Solid Iron Piece
 7512,Burnt Part
 7513,Pocket Watch

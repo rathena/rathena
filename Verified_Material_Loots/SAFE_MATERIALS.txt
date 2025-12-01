@@ -2,13 +2,13 @@
 # VERIFIED PURE MOB DROP MATERIALS DATABASE
 # Pre-Renewal rAthena
 # ============================================================
-# Generated: 2025-12-01 03:11:20.695117
-# Total verified items: 260
+# Generated: 2025-12-01 03:19:22.563570
+# Total verified items: 259
 #
 # INCLUSION CRITERIA:
 #   - Has mob drops in db/pre-re/mob_db.yml
 #   - NOT given by any NPC (getitem, shops, rewards)
-#   - No quest-like naming
+#   - No quest-like naming (key, token, pass, ticket, etc.)
 #
 # NOTE: Items with delitem/countitem are INCLUDED
 #       (used as quest requirements but still from mobs)
@@ -226,7 +226,6 @@
 7480,Cookbook09,Level 9 Cookbook,10
 7481,Cookbook10,Level 10 Cookbook,10
 7484,Warrior_Symbol,Symbol of a Brave Warrior,10
-7486,3rd_Floor_Pass,Wind General,10
 7507,Sturdy_Iron_Piece,Solid Iron Piece,10
 7512,Burnt_Parts,Burnt Part,10
 7513,Pocket_Watch,Pocket Watch,10

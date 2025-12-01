@@ -1,297 +1,297 @@
 # EXCLUDED ITEMS
-# Total: 855
+# Total: 856
 
-901,Daenggie,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55
-902,Tree Root,GIVEN by NPC: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320; GIVEN by NPC: shop_item in npc/merchants/shops.txt:228
-903,Reptile Tongue,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:578
-905,Stem,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:385; GIVEN by NPC: getitem in npc/quests/newgears/2004_headgears.txt:257
-908,Spawn,GIVEN by NPC: getitem in npc/quests/quests_13_2.txt:486; GIVEN by NPC: setarray_getitem in npc/quests/quests_moscovia.txt:4519; GIVEN by NPC: getitem in npc/quests/quests_13_1.txt:8284
-909,Jellopy,GIVEN by NPC: setarray_getitem in npc/re/jobs/novice/academy.txt:4511; GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:24; GIVEN by NPC: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320
-910,Garlet,GIVEN by NPC: shop_item in npc/re/quests/eden/eden_iro.txt:1162; GIVEN by NPC: shop_item in npc/custom/official/GeffenMagicTournament.txt:235; GIVEN by NPC: shop_item in npc/merchants/shops.txt:114
-911,Scell,GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:123; GIVEN by NPC: shop_item in npc/re/quests/eden/eden_iro.txt:1162; GIVEN by NPC: shop_item in npc/custom/official/GeffenMagicTournament.txt:235
-912,Zargon,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:386; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/blacksmith.txt:588; GIVEN by NPC: shop_item in npc/custom/official/GeffenMagicTournament.txt:235
-913,Tooth of Bat,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:388; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:509
-914,Fluff,GIVEN by NPC: setarray_getitem in npc/re/jobs/novice/academy.txt:4511; GIVEN by NPC: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:530
-915,Chrysalis,GIVEN by NPC: setarray_getitem in npc/re/jobs/novice/academy.txt:4511; GIVEN by NPC: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320
-916,Feather of Birds,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:24; GIVEN by NPC: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:530
-918,Sticky Webfoot,GIVEN by NPC: getitem in npc/quests/quests_13_2.txt:491; GIVEN by NPC: getitem in npc/quests/quests_13_1.txt:8289
-919,Animal Skin,GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:123; GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:24; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/blacksmith.txt:594
-921,Mushroom Spore,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:24
-923,Evil Horn,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:86; GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:17
-925,Bill of Birds,GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:123; GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:489
-928,Insect Feeler,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1961; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:484
-930,Rotten Bandage,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/blacksmith.txt:586
-931,Orcish Voucher,Quest-named: contains 'voucher'; GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:578
-932,Skel-Bone,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/blacksmith.txt:588; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:489
-934,Memento,GIVEN by NPC: shop_item in npc/merchants/shops.txt:228; GIVEN by NPC: getitem in npc/quests/quests_niflheim.txt:732
-935,Shell,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:24; GIVEN by NPC: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1961
-936,Scale Shell,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55
-937,Venom Canine,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:494
-938,Sticky Mucus,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/dancer.txt:292; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:383
-939,Bee Sting,GIVEN by NPC: setarray_getitem in npc/re/jobs/novice/academy.txt:4511
-940,Grasshopper's Leg,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:24; GIVEN by NPC: setarray_getitem in npc/quests/quests_moscovia.txt:4519
-942,Yoyo Tail,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:384; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:514
-943,Solid Shell,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:86; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1967; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:386
-945,Raccoon Leaf,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55
-946,Snail's Shell,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1963; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:580
-947,Horn,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1963; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:499
-948,Bear's Footskin,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:388; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:509
-949,Feather,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:535; GIVEN by NPC: setarray_getitem in npc/quests/bunnyband.txt:36
-950,Heart of Mermaid,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1805; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:580
-953,Stone Heart,GIVEN by NPC: getitem in npc/quests/eye_of_hellion.txt:1378
-955,Worm Peeling,GIVEN by NPC: getitem in npc/re/quests/quests_dewata.txt:1560; GIVEN by NPC: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1965
-956,Gill,GIVEN by NPC: getitem in npc/quests/quests_13_2.txt:489; GIVEN by NPC: getitem in npc/quests/quests_13_1.txt:8287
-960,Nipper,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1805; GIVEN by NPC: getitem in npc/quests/quests_13_2.txt:492; GIVEN by NPC: getitem in npc/quests/quests_13_1.txt:8290
-962,Tentacle,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1803
-963,Sharp Scale,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1807; GIVEN by NPC: getitem in npc/quests/quests_13_2.txt:488; GIVEN by NPC: getitem in npc/quests/quests_13_1.txt:8286
-964,Crab Shell,GIVEN by NPC: shop_item in npc/merchants/shops.txt:91
-965,Clam Shell,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/dancer.txt:300; GIVEN by NPC: shop_item in npc/merchants/shops.txt:91
-966,Clam Flesh,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1805; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:580
-968,Heroic Emblem,GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:17; GIVEN by NPC: getitem in npc/quests/newgears/2004_headgears.txt:3452
-969,Gold,GIVEN by NPC: setarray_getitem in npc/custom/etc/rpsroulette.txt:115; GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:31
-973,Counteragent,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/counteragent_mixture.txt:476
-974,Mixture,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/jobs/2-2/alchemist.txt:1925; GIVEN by NPC: getitem in npc/quests/counteragent_mixture.txt:520
-975,Scarlet Dyestuffs,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN by NPC: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
-976,Lemon Dyestuffs,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN by NPC: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
-978,Cobaltblue Dyestuffs,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN by NPC: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
-979,Darkgreen Dyestuffs,GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN by NPC: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
-980,Orange Dyestuffs,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN by NPC: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
-981,Violet Dyestuffs,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN by NPC: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
-982,White Dyestuffs,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN by NPC: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
-983,Black Dyestuffs,GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN by NPC: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
-984,Oridecon,GIVEN by NPC: getitem in npc/re/jobs/novice/academy.txt:13400; GIVEN by NPC: setarray_getitem in npc/re/merchants/refine.txt:363; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28
-985,Elunium,GIVEN by NPC: getitem in npc/re/jobs/novice/academy.txt:13433; GIVEN by NPC: setarray_getitem in npc/re/merchants/refine.txt:366; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28
-986,Anvil,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/merchants/refine.txt:41
-987,Oridecon Anvil,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/merchants/refine.txt:52
-988,Golden Anvil,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/merchants/refine.txt:63
-989,Emperium Anvil,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:28
-990,Red Blood,GIVEN by NPC: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:383; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/blacksmith.txt:590; GIVEN by NPC: getitem in npc/quests/quests_umbala.txt:767
-991,Crystal Blue,GIVEN by NPC: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:384; GIVEN by NPC: getitem in npc/jobs/2-2/sage.txt:2214; GIVEN by NPC: getitem in npc/quests/quests_umbala.txt:770
-992,Wind of Verdure,GIVEN by NPC: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:386; GIVEN by NPC: getitem in npc/jobs/2-2/sage.txt:2216; GIVEN by NPC: getitem in npc/quests/quests_umbala.txt:773
-993,Green Live,GIVEN by NPC: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:385; GIVEN by NPC: getitem in npc/jobs/2-2/sage.txt:2215; GIVEN by NPC: getitem in npc/quests/quests_umbala.txt:776
-994,Flame Heart,GIVEN by NPC: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:383; GIVEN by NPC: setarray_getitem in npc/merchants/elemental_trader.txt:84
-995,Mystic Frozen,GIVEN by NPC: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:384; GIVEN by NPC: setarray_getitem in npc/merchants/elemental_trader.txt:84
-996,Rough Wind,GIVEN by NPC: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:386; GIVEN by NPC: setarray_getitem in npc/merchants/elemental_trader.txt:84
-997,Great Nature,GIVEN by NPC: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:385; GIVEN by NPC: setarray_getitem in npc/merchants/elemental_trader.txt:84
-998,Iron,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/blacksmith.txt:594; GIVEN by NPC: getitem in npc/quests/quests_ein.txt:962
-999,Steel,GIVEN by NPC: getitem in npc/jobs/2-1/blacksmith.txt:288
-1000,Star Crumb,GIVEN by NPC: setarray_getitem in npc/re/merchants/coin_exchange.txt:195; GIVEN by NPC: setarray_getitem in npc/cities/aldebaran.txt:1101
-1001,Star Dust,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/blacksmith.txt:588; GIVEN by NPC: getitem in npc/events/easter_2010.txt:421
-1002,Iron Ore,GIVEN by NPC: getitem in npc/re/jobs/2e/kagerou_oboro.txt:744; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:530; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:384
-1003,Coal,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/blacksmith.txt:590; GIVEN by NPC: getitem in npc/quests/quests_ein.txt:572
-1005,Hammer of Blacksmith,GIVEN by NPC: getitem in npc/jobs/2-1/blacksmith.txt:1544
-1007,Necklace of Wisdom,GIVEN by NPC: getitem in npc/jobs/2-1/hunter.txt:760
-1008,Necklace of Oblivion,GIVEN by NPC: getitem in npc/jobs/2-1/assassin.txt:2135
-1010,Phracon,GIVEN by NPC: getitem in npc/re/jobs/2e/kagerou_oboro.txt:745; GIVEN by NPC: getitem in npc/re/jobs/novice/novice.txt:1823; GIVEN by NPC: getitem in npc/re/jobs/novice/academy.txt:13110
-1011,Emveretarcon,GIVEN by NPC: getitem in npc/re/jobs/novice/academy.txt:13145; GIVEN by NPC: getitem in npc/merchants/refine.txt:235; GIVEN by NPC: getitem in npc/quests/quests_ein.txt:938
-1013,Rainbow Shell,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1965; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:494
-1019,Trunk,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:484
-1020,Black Hair,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:86; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/dancer.txt:300
-1021,Dokebi Horn,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:499
-1022,Nine Tails,GIVEN by NPC: setarray_getitem in npc/quests/quests_ayothaya.txt:1340; GIVEN by NPC: getitem in npc/quests/quests_amatsu.txt:1962
-1023,Fish Tail,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1803
-1024,Squid Ink,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:535
-1025,Cobweb,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1961; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:389; GIVEN by NPC: shop_item in npc/custom/itemmall.txt:42
-1026,Acorn,GIVEN by NPC: setarray_getitem in npc/re/merchants/enchan_mora.txt:252; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:514; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:4104
-1027,Porcupine Quill,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:389; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:514
-1028,Mane,GIVEN by NPC: setarray_getitem in npc/re/merchants/enchan_mora.txt:253; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:578
+901,Daenggie,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55
+902,Tree Root,GIVEN: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320; GIVEN: shop_item in npc/merchants/shops.txt:228
+903,Reptile Tongue,GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:578
+905,Stem,GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:385; GIVEN: getitem in npc/quests/newgears/2004_headgears.txt:257
+908,Spawn,GIVEN: getitem in npc/quests/quests_13_2.txt:486; GIVEN: setarray_getitem in npc/quests/quests_moscovia.txt:4519; GIVEN: getitem in npc/quests/quests_13_1.txt:8284
+909,Jellopy,GIVEN: setarray_getitem in npc/re/jobs/novice/academy.txt:4511; GIVEN: setarray_getitem in npc/re/quests/cupet.txt:24; GIVEN: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320
+910,Garlet,GIVEN: shop_item in npc/re/quests/eden/eden_iro.txt:1162; GIVEN: shop_item in npc/custom/official/GeffenMagicTournament.txt:235; GIVEN: shop_item in npc/merchants/shops.txt:114
+911,Scell,GIVEN: shop_item in npc/re/merchants/shops.txt:123; GIVEN: shop_item in npc/re/quests/eden/eden_iro.txt:1162; GIVEN: shop_item in npc/custom/official/GeffenMagicTournament.txt:235
+912,Zargon,GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:386; GIVEN: setarray_getitem in npc/jobs/2-1/blacksmith.txt:588; GIVEN: shop_item in npc/custom/official/GeffenMagicTournament.txt:235
+913,Tooth of Bat,GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:388; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:509
+914,Fluff,GIVEN: setarray_getitem in npc/re/jobs/novice/academy.txt:4511; GIVEN: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320; GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:530
+915,Chrysalis,GIVEN: setarray_getitem in npc/re/jobs/novice/academy.txt:4511; GIVEN: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320
+916,Feather of Birds,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:24; GIVEN: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320; GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:530
+918,Sticky Webfoot,GIVEN: getitem in npc/quests/quests_13_2.txt:491; GIVEN: getitem in npc/quests/quests_13_1.txt:8289
+919,Animal Skin,GIVEN: shop_item in npc/re/merchants/shops.txt:123; GIVEN: setarray_getitem in npc/re/quests/cupet.txt:24; GIVEN: setarray_getitem in npc/jobs/2-1/blacksmith.txt:594
+921,Mushroom Spore,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:24
+923,Evil Horn,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:86; GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:17
+925,Bill of Birds,GIVEN: shop_item in npc/re/merchants/shops.txt:123; GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:489
+928,Insect Feeler,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1961; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:484
+930,Rotten Bandage,GIVEN: setarray_getitem in npc/jobs/2-1/blacksmith.txt:586
+931,Orcish Voucher,Quest-named: Name contains 'voucher'; GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:578
+932,Skel-Bone,GIVEN: setarray_getitem in npc/jobs/2-1/blacksmith.txt:588; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:489
+934,Memento,GIVEN: shop_item in npc/merchants/shops.txt:228; GIVEN: getitem in npc/quests/quests_niflheim.txt:732
+935,Shell,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:24; GIVEN: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320; GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1961
+936,Scale Shell,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55
+937,Venom Canine,GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:494
+938,Sticky Mucus,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN: setarray_getitem in npc/jobs/2-2/dancer.txt:292; GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:383
+939,Bee Sting,GIVEN: setarray_getitem in npc/re/jobs/novice/academy.txt:4511
+940,Grasshopper's Leg,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:24; GIVEN: setarray_getitem in npc/quests/quests_moscovia.txt:4519
+942,Yoyo Tail,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:384; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:514
+943,Solid Shell,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:86; GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1967; GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:386
+945,Raccoon Leaf,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55
+946,Snail's Shell,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1963; GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:580
+947,Horn,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1963; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:499
+948,Bear's Footskin,GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:388; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:509
+949,Feather,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:535; GIVEN: setarray_getitem in npc/quests/bunnyband.txt:36
+950,Heart of Mermaid,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1805; GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:580
+953,Stone Heart,GIVEN: getitem in npc/quests/eye_of_hellion.txt:1378
+955,Worm Peeling,GIVEN: getitem in npc/re/quests/quests_dewata.txt:1560; GIVEN: setarray_getitem in npc/re/quests/eden/eden_iro.txt:320; GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1965
+956,Gill,GIVEN: getitem in npc/quests/quests_13_2.txt:489; GIVEN: getitem in npc/quests/quests_13_1.txt:8287
+960,Nipper,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1805; GIVEN: getitem in npc/quests/quests_13_2.txt:492; GIVEN: getitem in npc/quests/quests_13_1.txt:8290
+962,Tentacle,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1803
+963,Sharp Scale,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1807; GIVEN: getitem in npc/quests/quests_13_2.txt:488; GIVEN: getitem in npc/quests/quests_13_1.txt:8286
+964,Crab Shell,GIVEN: shop_item in npc/merchants/shops.txt:91
+965,Clam Shell,GIVEN: setarray_getitem in npc/jobs/2-2/dancer.txt:300; GIVEN: shop_item in npc/merchants/shops.txt:91
+966,Clam Flesh,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1805; GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:580
+968,Heroic Emblem,Quest-named: AegisName contains 'voucher'; GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:17; GIVEN: getitem in npc/quests/newgears/2004_headgears.txt:3452
+969,Gold,GIVEN: setarray_getitem in npc/custom/etc/rpsroulette.txt:115; GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:31
+973,Counteragent,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/counteragent_mixture.txt:476
+974,Mixture,No mob drops in mob_db.yml; GIVEN: getitem in npc/jobs/2-2/alchemist.txt:1925; GIVEN: getitem in npc/quests/counteragent_mixture.txt:520
+975,Scarlet Dyestuffs,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
+976,Lemon Dyestuffs,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
+978,Cobaltblue Dyestuffs,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
+979,Darkgreen Dyestuffs,GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
+980,Orange Dyestuffs,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
+981,Violet Dyestuffs,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
+982,White Dyestuffs,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
+983,Black Dyestuffs,GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28; GIVEN: setarray_getitem in npc/re/quests/quests_malaya.txt:8519
+984,Oridecon,GIVEN: getitem in npc/re/jobs/novice/academy.txt:13400; GIVEN: setarray_getitem in npc/re/merchants/refine.txt:363; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28
+985,Elunium,GIVEN: getitem in npc/re/jobs/novice/academy.txt:13433; GIVEN: setarray_getitem in npc/re/merchants/refine.txt:366; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28
+986,Anvil,No mob drops in mob_db.yml; GIVEN: getitem in npc/merchants/refine.txt:41
+987,Oridecon Anvil,No mob drops in mob_db.yml; GIVEN: getitem in npc/merchants/refine.txt:52
+988,Golden Anvil,No mob drops in mob_db.yml; GIVEN: getitem in npc/merchants/refine.txt:63
+989,Emperium Anvil,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:28
+990,Red Blood,GIVEN: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:383; GIVEN: setarray_getitem in npc/jobs/2-1/blacksmith.txt:590; GIVEN: getitem in npc/quests/quests_umbala.txt:767
+991,Crystal Blue,GIVEN: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:384; GIVEN: getitem in npc/jobs/2-2/sage.txt:2214; GIVEN: getitem in npc/quests/quests_umbala.txt:770
+992,Wind of Verdure,GIVEN: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:386; GIVEN: getitem in npc/jobs/2-2/sage.txt:2216; GIVEN: getitem in npc/quests/quests_umbala.txt:773
+993,Green Live,GIVEN: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:385; GIVEN: getitem in npc/jobs/2-2/sage.txt:2215; GIVEN: getitem in npc/quests/quests_umbala.txt:776
+994,Flame Heart,GIVEN: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:383; GIVEN: setarray_getitem in npc/merchants/elemental_trader.txt:84
+995,Mystic Frozen,GIVEN: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:384; GIVEN: setarray_getitem in npc/merchants/elemental_trader.txt:84
+996,Rough Wind,GIVEN: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:386; GIVEN: setarray_getitem in npc/merchants/elemental_trader.txt:84
+997,Great Nature,GIVEN: setarray_getitem in npc/re/jobs/3-2/sorcerer.txt:385; GIVEN: setarray_getitem in npc/merchants/elemental_trader.txt:84
+998,Iron,GIVEN: setarray_getitem in npc/jobs/2-1/blacksmith.txt:594; GIVEN: getitem in npc/quests/quests_ein.txt:962
+999,Steel,GIVEN: getitem in npc/jobs/2-1/blacksmith.txt:288
+1000,Star Crumb,GIVEN: setarray_getitem in npc/re/merchants/coin_exchange.txt:195; GIVEN: setarray_getitem in npc/cities/aldebaran.txt:1101
+1001,Star Dust,GIVEN: setarray_getitem in npc/jobs/2-1/blacksmith.txt:588; GIVEN: getitem in npc/events/easter_2010.txt:421
+1002,Iron Ore,GIVEN: getitem in npc/re/jobs/2e/kagerou_oboro.txt:744; GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:530; GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:384
+1003,Coal,GIVEN: setarray_getitem in npc/jobs/2-1/blacksmith.txt:590; GIVEN: getitem in npc/quests/quests_ein.txt:572
+1005,Hammer of Blacksmith,GIVEN: getitem in npc/jobs/2-1/blacksmith.txt:1544
+1007,Necklace of Wisdom,GIVEN: getitem in npc/jobs/2-1/hunter.txt:760
+1008,Necklace of Oblivion,GIVEN: getitem in npc/jobs/2-1/assassin.txt:2135
+1010,Phracon,GIVEN: getitem in npc/re/jobs/2e/kagerou_oboro.txt:745; GIVEN: getitem in npc/re/jobs/novice/novice.txt:1823; GIVEN: getitem in npc/re/jobs/novice/academy.txt:13110
+1011,Emveretarcon,GIVEN: getitem in npc/re/jobs/novice/academy.txt:13145; GIVEN: getitem in npc/merchants/refine.txt:235; GIVEN: getitem in npc/quests/quests_ein.txt:938
+1013,Rainbow Shell,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1965; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:494
+1019,Trunk,GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:484
+1020,Black Hair,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:86; GIVEN: setarray_getitem in npc/jobs/2-2/dancer.txt:300
+1021,Dokebi Horn,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:499
+1022,Nine Tails,GIVEN: setarray_getitem in npc/quests/quests_ayothaya.txt:1340; GIVEN: getitem in npc/quests/quests_amatsu.txt:1962
+1023,Fish Tail,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1803
+1024,Squid Ink,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:535
+1025,Cobweb,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1961; GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:389; GIVEN: shop_item in npc/custom/itemmall.txt:42
+1026,Acorn,GIVEN: setarray_getitem in npc/re/merchants/enchan_mora.txt:252; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:514; GIVEN: getitem in npc/quests/quests_moscovia.txt:4104
+1027,Porcupine Quill,GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:389; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:514
+1028,Mane,GIVEN: setarray_getitem in npc/re/merchants/enchan_mora.txt:253; GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:578
 1029,Tiger Skin,No mob drops in mob_db.yml
-1030,Tiger's Footskin,GIVEN by NPC: setarray_getitem in npc/re/merchants/enchan_mora.txt:254
-1031,Mantis Scythe,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1965
-1032,Maneater Blossom,GIVEN by NPC: setarray_getitem in npc/re/merchants/enchan_mora.txt:255; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:580
-1034,Blue Hair,GIVEN by NPC: setarray_getitem in npc/re/merchants/enchan_mora.txt:256
-1035,Dragon Canine,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55
-1036,Dragon Scale,GIVEN by NPC: setarray_getitem in npc/re/merchants/enchan_mora.txt:257
-1038,Little Evil Horn,GIVEN by NPC: setarray_getitem in npc/re/merchants/enchan_mora.txt:258; GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:86; GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:18
-1039,Little Evil Wing,GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:18
-1040,Elder Pixie's Moustache,GIVEN by NPC: setarray_getitem in npc/re/merchants/enchan_mora.txt:232; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:578
-1042,Bug Leg,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:389; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:580
-1046,Scorpion Nipper,No mob drops in mob_db.yml; GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:18
+1030,Tiger's Footskin,GIVEN: setarray_getitem in npc/re/merchants/enchan_mora.txt:254
+1031,Mantis Scythe,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1965
+1032,Maneater Blossom,GIVEN: setarray_getitem in npc/re/merchants/enchan_mora.txt:255; GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:580
+1034,Blue Hair,GIVEN: setarray_getitem in npc/re/merchants/enchan_mora.txt:256
+1035,Dragon Canine,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55
+1036,Dragon Scale,GIVEN: setarray_getitem in npc/re/merchants/enchan_mora.txt:257
+1038,Little Evil Horn,GIVEN: setarray_getitem in npc/re/merchants/enchan_mora.txt:258; GIVEN: setarray_getitem in npc/re/quests/cupet.txt:86; GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:18
+1039,Little Evil Wing,GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:18
+1040,Elder Pixie's Moustache,GIVEN: setarray_getitem in npc/re/merchants/enchan_mora.txt:232; GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:578
+1042,Bug Leg,GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:389; GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:580
+1046,Scorpion Nipper,No mob drops in mob_db.yml; GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:18
 1047,Dead Medusa,No mob drops in mob_db.yml
-1049,Skirt of Virgin,GIVEN by NPC: getitem in npc/quests/eye_of_hellion.txt:1381
-1050,Tendon,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1807
-1051,Detonator,GIVEN by NPC: setarray_getitem in npc/quests/quests_moscovia.txt:4519
-1052,Single Cell,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1803; GIVEN by NPC: shop_item in npc/merchants/shops.txt:228
-1055,Earthworm Peeling,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/dancer.txt:296; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:383
-1057,Moth Dust,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/sage.txt:1963; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:578
-1059,Fabric,GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:18; GIVEN by NPC: setarray_getitem in npc/quests/quests_ayothaya.txt:1340
-1061,Witched Starsand,GIVEN by NPC: setarray_getitem in npc/custom/quests/berzebub.txt:18; GIVEN by NPC: setarray_getitem in npc/other/monster_race.txt:2672; GIVEN by NPC: setarray_getitem in npc/quests/quests_moscovia.txt:4519
-1062,Jack o' Pumpkin,GIVEN by NPC: shop_item in npc/merchants/shops.txt:228
-1065,Trap,GIVEN by NPC: shop_item in npc/re/custom/lasagna/lasagna_npcs.txt:999; GIVEN by NPC: shop_item in npc/re/merchants/enchan_rockridge.txt:520; GIVEN by NPC: shop_item in npc/re/merchants/eden_market.txt:241
-1071,Unknown Test Tube,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/mage.txt:561
-1072,Delivery Message,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:415; GIVEN by NPC: getitem in npc/custom/quests/thq/THQS_QuestNPC.txt:139
-1073,Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:979
-1074,Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:987
-1075,Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:885
-1076,Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:890
-1077,Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:808
-1078,Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:816
-1079,Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:1097
-1080,Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:1104
-1081,Delivery Box,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:719; GIVEN by NPC: getitem in npc/custom/quests/thq/THQS_QuestNPC.txt:445
-1082,Delivery Box,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:721; GIVEN by NPC: getitem in npc/custom/quests/thq/THQS_QuestNPC.txt:230
-1083,Delivery Box,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/custom/quests/thq/THQS_QuestNPC.txt:351
-1084,Kafra Pass,Quest-named: contains 'pass'; No mob drops in mob_db.yml
-1085,Unknown Test Tube,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/mage.txt:567
-1086,Unknown Test Tube,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/mage.txt:573
-1087,Unknown Test Tube,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/mage.txt:579; GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:18
-1088,Morocc Solution,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/mage_solution.txt:54
-1089,Payon Solution,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/mage_solution.txt:33
-1090,Unknown Test Tube,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/mage.txt:586
-1091,Delivery Box,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/1-1/merchant.txt:723
-1092,Empty Test Tube,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/Dealer_Update.txt:155; GIVEN by NPC: getitem in npc/re/quests/quests_mora.txt:2850
-1093,Empty Potion Bottle,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/Dealer_Update.txt:155; GIVEN by NPC: shop_item in npc/re/quests/eden/eden_iro.txt:1162
-1094,Short Daenggie,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55
-1095,Needle of Alarm,GIVEN by NPC: setarray_getitem in npc/custom/quests/berzebub.txt:18
-1097,Worn Out Page,GIVEN by NPC: getitem in npc/jobs/2-2/rogue.txt:699; GIVEN by NPC: getitem in npc/events/christmas_2005.txt:1411
-7004,Mud Lump,GIVEN by NPC: getitem in npc/quests/quests_louyang.txt:4756
-7005,Skull,GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:17
-7006,Wing of Red Bat,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:578; GIVEN by NPC: setarray_getitem in npc/quests/quests_moscovia.txt:4519
-7017,Executioner's Mitten,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:88
-7018,Young Twig,GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:17
-7020,Mother's Nightmare,GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:17
-7025,Lucifer's Lament,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:10905
-7026,Key of Clock Tower,Quest-named: contains 'key'
-7027,Key of Underground,Quest-named: contains 'key'
+1049,Skirt of Virgin,GIVEN: getitem in npc/quests/eye_of_hellion.txt:1381
+1050,Tendon,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1807
+1051,Detonator,GIVEN: setarray_getitem in npc/quests/quests_moscovia.txt:4519
+1052,Single Cell,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1803; GIVEN: shop_item in npc/merchants/shops.txt:228
+1055,Earthworm Peeling,GIVEN: setarray_getitem in npc/jobs/2-2/dancer.txt:296; GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:383
+1057,Moth Dust,GIVEN: setarray_getitem in npc/jobs/2-2/sage.txt:1963; GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:578
+1059,Fabric,GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:18; GIVEN: setarray_getitem in npc/quests/quests_ayothaya.txt:1340
+1061,Witched Starsand,GIVEN: setarray_getitem in npc/custom/quests/berzebub.txt:18; GIVEN: setarray_getitem in npc/other/monster_race.txt:2672; GIVEN: setarray_getitem in npc/quests/quests_moscovia.txt:4519
+1062,Jack o' Pumpkin,GIVEN: shop_item in npc/merchants/shops.txt:228
+1065,Trap,GIVEN: shop_item in npc/re/custom/lasagna/lasagna_npcs.txt:999; GIVEN: shop_item in npc/re/merchants/enchan_rockridge.txt:520; GIVEN: shop_item in npc/re/merchants/eden_market.txt:241
+1071,Unknown Test Tube,No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/mage.txt:561
+1072,Delivery Message,No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:415; GIVEN: getitem in npc/custom/quests/thq/THQS_QuestNPC.txt:139
+1073,Voucher,Quest-named: Name contains 'voucher'; No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:979
+1074,Voucher,Quest-named: Name contains 'voucher'; No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:987
+1075,Voucher,Quest-named: Name contains 'voucher'; No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:885
+1076,Voucher,Quest-named: Name contains 'voucher'; No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:890
+1077,Voucher,Quest-named: Name contains 'voucher'; No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:808
+1078,Voucher,Quest-named: Name contains 'voucher'; No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:816
+1079,Voucher,Quest-named: Name contains 'voucher'; No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:1097
+1080,Voucher,Quest-named: Name contains 'voucher'; No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:1104
+1081,Delivery Box,No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:719; GIVEN: getitem in npc/custom/quests/thq/THQS_QuestNPC.txt:445
+1082,Delivery Box,No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:721; GIVEN: getitem in npc/custom/quests/thq/THQS_QuestNPC.txt:230
+1083,Delivery Box,No mob drops in mob_db.yml; GIVEN: getitem in npc/custom/quests/thq/THQS_QuestNPC.txt:351
+1084,Kafra Pass,Quest-named: Name contains 'pass'; No mob drops in mob_db.yml
+1085,Unknown Test Tube,No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/mage.txt:567
+1086,Unknown Test Tube,No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/mage.txt:573
+1087,Unknown Test Tube,No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/mage.txt:579; GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:18
+1088,Morocc Solution,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/mage_solution.txt:54
+1089,Payon Solution,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/mage_solution.txt:33
+1090,Unknown Test Tube,No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/mage.txt:586
+1091,Delivery Box,No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/1-1/merchant.txt:723
+1092,Empty Test Tube,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/Dealer_Update.txt:155; GIVEN: getitem in npc/re/quests/quests_mora.txt:2850
+1093,Empty Potion Bottle,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/Dealer_Update.txt:155; GIVEN: shop_item in npc/re/quests/eden/eden_iro.txt:1162
+1094,Short Daenggie,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55
+1095,Needle of Alarm,GIVEN: setarray_getitem in npc/custom/quests/berzebub.txt:18
+1097,Worn Out Page,GIVEN: getitem in npc/jobs/2-2/rogue.txt:699; GIVEN: getitem in npc/events/christmas_2005.txt:1411
+7004,Mud Lump,GIVEN: getitem in npc/quests/quests_louyang.txt:4756
+7005,Skull,GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:17
+7006,Wing of Red Bat,GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:578; GIVEN: setarray_getitem in npc/quests/quests_moscovia.txt:4519
+7017,Executioner's Mitten,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:88
+7018,Young Twig,GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:17
+7020,Mother's Nightmare,GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:17
+7025,Lucifer's Lament,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:10905
+7026,Key of Clock Tower,Quest-named: Name contains 'key'
+7027,Key of Underground,Quest-named: Name contains 'key'
 7028,Invite for Duel,No mob drops in mob_db.yml
 7029,Admission for Duel,No mob drops in mob_db.yml
-7030,Claw of Desert Wolf,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:484
-7031,Old Frying Pan,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/knight.txt:580
-7032,Piece of Egg Shell,GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:499
-7033,Poison Spore,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:388; GIVEN by NPC: setarray_getitem in npc/jobs/2-1/hunter.txt:499
-7036,Fang of Hatii,GIVEN by NPC: setarray_getitem in npc/custom/quests/kahohorn.txt:17
+7030,Claw of Desert Wolf,GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:484
+7031,Old Frying Pan,GIVEN: setarray_getitem in npc/jobs/2-1/knight.txt:580
+7032,Piece of Egg Shell,GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:499
+7033,Poison Spore,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:55; GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:388; GIVEN: setarray_getitem in npc/jobs/2-1/hunter.txt:499
+7036,Fang of Hatii,GIVEN: setarray_getitem in npc/custom/quests/kahohorn.txt:17
 7037,Coupon,No mob drops in mob_db.yml
-7039,Newbie Tag,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/skills/novice_skills.txt:447
-7040,Megaphone,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_veins.txt:1583
-7041,Fine Grit,GIVEN by NPC: setarray_getitem in npc/quests/quests_moscovia.txt:4519
-7042,Leather Bag of Infinity,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/skills/thief_skills.txt:474
-7043,Fine Sand,GIVEN by NPC: getitem in npc/jobs/2-2/alchemist.txt:1927
-7044,Vigorgra,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:6351
+7039,Newbie Tag,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/skills/novice_skills.txt:447
+7040,Megaphone,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_veins.txt:1583
+7041,Fine Grit,GIVEN: setarray_getitem in npc/quests/quests_moscovia.txt:4519
+7042,Leather Bag of Infinity,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/skills/thief_skills.txt:474
+7043,Fine Sand,GIVEN: getitem in npc/jobs/2-2/alchemist.txt:1927
+7044,Vigorgra,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:6351
 7045,Magic Paint,No mob drops in mob_db.yml
 7046,Cart Parts,No mob drops in mob_db.yml
-7047,Alice's Apron,GIVEN by NPC: setarray_getitem in npc/re/quests/cupet.txt:86
-7049,Stone,GIVEN by NPC: getitem in npc/re/jobs/3-2/royal_guard.txt:455; GIVEN by NPC: getitem in npc/re/quests/quests_dewata.txt:1550; GIVEN by NPC: getitem in npc/re/quests/quests_15_1.txt:3312
+7047,Alice's Apron,GIVEN: setarray_getitem in npc/re/quests/cupet.txt:86
+7049,Stone,GIVEN: getitem in npc/re/jobs/3-2/royal_guard.txt:455; GIVEN: getitem in npc/re/quests/quests_dewata.txt:1550; GIVEN: getitem in npc/re/quests/quests_15_1.txt:3312
 7050,Cotton Mat,No mob drops in mob_db.yml
 7051,Silk Mat,No mob drops in mob_db.yml
 7052,Old Papers,No mob drops in mob_db.yml
-7053,Cyfar,GIVEN by NPC: setarray_getitem in npc/jobs/2-2/monk.txt:387
+7053,Cyfar,GIVEN: setarray_getitem in npc/jobs/2-2/monk.txt:387
 7055,Animal Poop,No mob drops in mob_db.yml
 7056,Payment Statement for Kafra Employee,No mob drops in mob_db.yml
 7057,Gjallar,No mob drops in mob_db.yml
-7058,Gleipnir,No mob drops in mob_db.yml; GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:46; GIVEN by NPC: getitem in npc/quests/seals/megingard_seal.txt:52
-7059,Free Ticket for Kafra Storage,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/re/jobs/novice/novice.txt:722
-7060,Free Ticket for Kafra Transportation,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/re/jobs/novice/novice.txt:723
-7061,Free Ticket for the Cart Service,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/pre-re/jobs/novice/novice.txt:3483
+7058,Gleipnir,No mob drops in mob_db.yml; GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:46; GIVEN: getitem in npc/quests/seals/megingard_seal.txt:52
+7059,Free Ticket for Kafra Storage,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/re/jobs/novice/novice.txt:722
+7060,Free Ticket for Kafra Transportation,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/re/jobs/novice/novice.txt:723
+7061,Free Ticket for the Cart Service,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/pre-re/jobs/novice/novice.txt:3483
 7062,Broken Turtle Shell,No mob drops in mob_db.yml
-7063,Soft Feather,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:56
-7068,Burnt Tree,GIVEN by NPC: getitem in npc/jobs/2-2/alchemist.txt:1926; GIVEN by NPC: getitem in npc/quests/quests_louyang.txt:4754
-7073,Freya's Jewel,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:41
-7074,Thor's Gauntlets,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:31
-7075,Iron Maiden,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:31
-7076,Wheel of the Unknown,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:36
-7077,Silver Ornament,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:41
-7078,Wrath of Valkyrie,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:31
-7079,Feather of Angel Wing,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:36
-7080,Cat Tread,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:46
-7081,Woman's Moustache,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:46
-7082,Root of Stone,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:46
-7083,Spirit of Fish,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:36
-7084,Sputum of Bird,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:46
-7085,Sinew of Bear,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:46
-7086,Emblem of the Sun God,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:36
-7087,Breath of Spirit,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:36
-7088,Snow Crystal,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:41
-7089,Omen of Tempest,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:31
-7090,Ripple,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:41
-7091,Billow,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:31
-7092,Drifting Air,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:41
-7093,Cogwheel,GIVEN by NPC: getitem in npc/quests/eye_of_hellion.txt:858
-7096,Lava,GIVEN by NPC: getitem in npc/quests/quests_louyang.txt:4755
-7097,Burning Heart,GIVEN by NPC: setarray_getitem in npc/quests/quests_moscovia.txt:4519
+7063,Soft Feather,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:56
+7068,Burnt Tree,GIVEN: getitem in npc/jobs/2-2/alchemist.txt:1926; GIVEN: getitem in npc/quests/quests_louyang.txt:4754
+7073,Freya's Jewel,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:41
+7074,Thor's Gauntlets,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:31
+7075,Iron Maiden,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:31
+7076,Wheel of the Unknown,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:36
+7077,Silver Ornament,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:41
+7078,Wrath of Valkyrie,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:31
+7079,Feather of Angel Wing,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:36
+7080,Cat Tread,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:46
+7081,Woman's Moustache,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:46
+7082,Root of Stone,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:46
+7083,Spirit of Fish,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:36
+7084,Sputum of Bird,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:46
+7085,Sinew of Bear,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:46
+7086,Emblem of the Sun God,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:36
+7087,Breath of Spirit,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:36
+7088,Snow Crystal,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:41
+7089,Omen of Tempest,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:31
+7090,Ripple,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:41
+7091,Billow,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:31
+7092,Drifting Air,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:41
+7093,Cogwheel,GIVEN: getitem in npc/quests/eye_of_hellion.txt:858
+7096,Lava,GIVEN: getitem in npc/quests/quests_louyang.txt:4755
+7097,Burning Heart,GIVEN: setarray_getitem in npc/quests/quests_moscovia.txt:4519
 7102,Nightmare,No mob drops in mob_db.yml
 7103,Unknown Liquid Bottle,No mob drops in mob_db.yml
 7104,False Angel Wing,No mob drops in mob_db.yml
 7105,False Heaven Ring,No mob drops in mob_db.yml
-7106,Antelope Horn,GIVEN by NPC: shop_item in npc/merchants/shops.txt:228
-7114,Masque of Tutankhamen,GIVEN by NPC: getitem in npc/custom/quests/sphinx_mask.txt:49
-7117,Torn Magic Book,GIVEN by NPC: getitem in npc/custom/quests/umbalian_language.txt:77
-7118,Torn Scroll,GIVEN by NPC: getitem in npc/custom/quests/umbalian_language.txt:143
-7126,Large Jellopy,GIVEN by NPC: getitem in npc/events/MemorialDay_2008.txt:418; GIVEN by NPC: getitem in npc/quests/quests_louyang.txt:4181
-7127,Alcohol Creation Guide,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/jobs/2-2/alchemist.txt:1725
-7128,Bottle Grenade Creation Guide,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/jobs/2-2/alchemist.txt:1728
-7129,Acid Bottle Creation Guide,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/jobs/2-2/alchemist.txt:1731
-7130,Plant Bottle Creation Guide,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/jobs/2-2/alchemist.txt:1734
-7131,Marine Sphere Creation Guide,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/jobs/2-2/alchemist.txt:1737
+7106,Antelope Horn,GIVEN: shop_item in npc/merchants/shops.txt:228
+7114,Masque of Tutankhamen,GIVEN: getitem in npc/custom/quests/sphinx_mask.txt:49
+7117,Torn Magic Book,GIVEN: getitem in npc/custom/quests/umbalian_language.txt:77
+7118,Torn Scroll,GIVEN: getitem in npc/custom/quests/umbalian_language.txt:143
+7126,Large Jellopy,GIVEN: getitem in npc/events/MemorialDay_2008.txt:418; GIVEN: getitem in npc/quests/quests_louyang.txt:4181
+7127,Alcohol Creation Guide,No mob drops in mob_db.yml; GIVEN: getitem in npc/jobs/2-2/alchemist.txt:1725
+7128,Bottle Grenade Creation Guide,No mob drops in mob_db.yml; GIVEN: getitem in npc/jobs/2-2/alchemist.txt:1728
+7129,Acid Bottle Creation Guide,No mob drops in mob_db.yml; GIVEN: getitem in npc/jobs/2-2/alchemist.txt:1731
+7130,Plant Bottle Creation Guide,No mob drops in mob_db.yml; GIVEN: getitem in npc/jobs/2-2/alchemist.txt:1734
+7131,Marine Sphere Creation Guide,No mob drops in mob_db.yml; GIVEN: getitem in npc/jobs/2-2/alchemist.txt:1737
 7132,Glistening Coat Creation Guide,No mob drops in mob_db.yml
-7133,Condensed Potion Creation Guide,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/jobs/2-2/alchemist.txt:1714
-7134,Medicine Bowl,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/merchants/alchemist.txt:84; GIVEN by NPC: setarray_getitem in npc/quests/quests_moscovia.txt:9899
-7135,Bottle Grenade,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/custom/itemmall.txt:42
-7136,Acid Bottle,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/custom/itemmall.txt:42
-7137,Plant Bottle,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/custom/itemmall.txt:42
-7138,Marine Sphere Bottle,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/custom/itemmall.txt:42; GIVEN by NPC: getitem in npc/quests/quests_hugel.txt:3467
-7139,Glistening Coat,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/custom/itemmall.txt:42
-7140,Seed of Life,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:35; GIVEN by NPC: shop_item in npc/pre-re/merchants/shops.txt:27
-7141,Morning Dew of Yggdrasil,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:35; GIVEN by NPC: shop_item in npc/pre-re/merchants/shops.txt:27
+7133,Condensed Potion Creation Guide,No mob drops in mob_db.yml; GIVEN: getitem in npc/jobs/2-2/alchemist.txt:1714
+7134,Medicine Bowl,No mob drops in mob_db.yml; GIVEN: getitem in npc/merchants/alchemist.txt:84; GIVEN: setarray_getitem in npc/quests/quests_moscovia.txt:9899
+7135,Bottle Grenade,No mob drops in mob_db.yml; GIVEN: shop_item in npc/custom/itemmall.txt:42
+7136,Acid Bottle,No mob drops in mob_db.yml; GIVEN: shop_item in npc/custom/itemmall.txt:42
+7137,Plant Bottle,No mob drops in mob_db.yml; GIVEN: shop_item in npc/custom/itemmall.txt:42
+7138,Marine Sphere Bottle,No mob drops in mob_db.yml; GIVEN: shop_item in npc/custom/itemmall.txt:42; GIVEN: getitem in npc/quests/quests_hugel.txt:3467
+7139,Glistening Coat,No mob drops in mob_db.yml; GIVEN: shop_item in npc/custom/itemmall.txt:42
+7140,Seed of Life,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/shops.txt:35; GIVEN: shop_item in npc/pre-re/merchants/shops.txt:27
+7141,Morning Dew of Yggdrasil,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/shops.txt:35; GIVEN: shop_item in npc/pre-re/merchants/shops.txt:27
 7142,Embryo,No mob drops in mob_db.yml
-7143,Glass Tube,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:35; GIVEN by NPC: shop_item in npc/pre-re/merchants/shops.txt:27
-7144,Potion Creation Guide,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/jobs/2-2/alchemist.txt:1740
+7143,Glass Tube,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/shops.txt:35; GIVEN: shop_item in npc/pre-re/merchants/shops.txt:27
+7144,Potion Creation Guide,No mob drops in mob_db.yml; GIVEN: getitem in npc/jobs/2-2/alchemist.txt:1740
 7145,Ragnarok T-shirt,No mob drops in mob_db.yml
-7146,Vacation Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7146,Vacation Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7147,Jasmine,No mob drops in mob_db.yml
-7148,Mother's Letter,Quest-named: contains 'letter'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/first_class/tu_acolyte.txt:436
-7154,Poisonous Powder,GIVEN by NPC: shop_item in npc/merchants/shops.txt:228
-7160,Feudal Lord Permit,Quest-named: contains 'permit'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_amatsu.txt:1480
-7170,Tuxedo,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:32; GIVEN by NPC: shop_item in npc/merchants/shops.txt:175
+7148,Mother's Letter,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/first_class/tu_acolyte.txt:436
+7154,Poisonous Powder,GIVEN: shop_item in npc/merchants/shops.txt:228
+7160,Feudal Lord Permit,Quest-named: Name contains 'permit'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_amatsu.txt:1480
+7170,Tuxedo,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:32; GIVEN: shop_item in npc/merchants/shops.txt:175
 7173,iROGM02's Backpack,No mob drops in mob_db.yml
-7174,Wrapping Lace,GIVEN by NPC: getitem in npc/events/valentinesday_2009.txt:253
-7175,Wrapping Paper,GIVEN by NPC: getitem in npc/events/valentinesday_2009.txt:212
-7176,Royal Certificate,Quest-named: contains 'certificate'; No mob drops in mob_db.yml
-7177,Crumb of Sobbing Starlight,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:295
-7178,Sobbing Starlight,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:7375
-7179,Proof of Donation,Quest-named: contains 'proof'; No mob drops in mob_db.yml
+7174,Wrapping Lace,GIVEN: getitem in npc/events/valentinesday_2009.txt:253
+7175,Wrapping Paper,GIVEN: getitem in npc/events/valentinesday_2009.txt:212
+7176,Royal Certificate,Quest-named: Name contains 'certificate'; No mob drops in mob_db.yml
+7177,Crumb of Sobbing Starlight,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:295
+7178,Sobbing Starlight,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:7375
+7179,Proof of Donation,Quest-named: Name contains 'proof'; No mob drops in mob_db.yml
 7180,Hahn Sukbong's Recommendation,No mob drops in mob_db.yml
-7181,Receipt,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:6857; GIVEN by NPC: getitem in npc/quests/first_class/tu_acolyte.txt:684
-7183,Letter from Sister,Quest-named: contains 'letter'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:5945
-7184,Piano Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_niflheim.txt:57
-7185,Quiz Entry,No mob drops in mob_db.yml
+7181,Receipt,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:6857; GIVEN: getitem in npc/quests/first_class/tu_acolyte.txt:684
+7183,Letter from Sister,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:5945
+7184,Piano Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_niflheim.txt:57
+7185,Quiz Entry,Quest-named: AegisName contains 'ticket'; No mob drops in mob_db.yml
 7191,Lamp,No mob drops in mob_db.yml
-7193,Sprout,GIVEN by NPC: getitem in npc/quests/quests_13_2.txt:5760; GIVEN by NPC: getitem in npc/quests/quests_13_1.txt:4739
-7198,Huge Leaf,GIVEN by NPC: getitem in npc/re/quests/quests_dewata.txt:1555
+7193,Sprout,GIVEN: getitem in npc/quests/quests_13_2.txt:5760; GIVEN: getitem in npc/quests/quests_13_1.txt:4739
+7198,Huge Leaf,GIVEN: getitem in npc/re/quests/quests_dewata.txt:1555
 7199,Coupon,No mob drops in mob_db.yml
-7204,Gunpowder,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_louyang.txt:4913
-7206,Black Cat Doll,GIVEN by NPC: getitem in npc/events/christmas_2005.txt:1308
-7212,Hung Doll,GIVEN by NPC: getitem in npc/events/christmas_2005.txt:1319
-7213,Needle Packet,GIVEN by NPC: setarray_getitem in npc/quests/quests_ayothaya.txt:1338
-7217,Spool,GIVEN by NPC: setarray_getitem in npc/quests/quests_ayothaya.txt:1338
+7204,Gunpowder,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_louyang.txt:4913
+7206,Black Cat Doll,GIVEN: getitem in npc/events/christmas_2005.txt:1308
+7212,Hung Doll,GIVEN: getitem in npc/events/christmas_2005.txt:1319
+7213,Needle Packet,GIVEN: setarray_getitem in npc/quests/quests_ayothaya.txt:1338
+7217,Spool,GIVEN: setarray_getitem in npc/quests/quests_ayothaya.txt:1338
 7224,Stone of Sage,No mob drops in mob_db.yml
 7227,TCG Card,No mob drops in mob_db.yml
-7228,Gold Bullion,No mob drops in mob_db.yml; GIVEN by NPC: makeitem in npc/re/instances/HorrorToyFactory.txt:1407; GIVEN by NPC: makeitem in npc/re/instances/OldGlastHeim.txt:2124
-7229,Silver Bullion,No mob drops in mob_db.yml; GIVEN by NPC: makeitem in npc/re/instances/HorrorToyFactory.txt:1396; GIVEN by NPC: makeitem in npc/re/instances/OldGlastHeim.txt:2102
-7230,Platinum Bullion,No mob drops in mob_db.yml; GIVEN by NPC: makeitem in npc/re/instances/OldGlastHeim.txt:2110
+7228,Gold Bullion,No mob drops in mob_db.yml; GIVEN: makeitem in npc/re/instances/HorrorToyFactory.txt:1407; GIVEN: makeitem in npc/re/instances/OldGlastHeim.txt:2124
+7229,Silver Bullion,No mob drops in mob_db.yml; GIVEN: makeitem in npc/re/instances/HorrorToyFactory.txt:1396; GIVEN: makeitem in npc/re/instances/OldGlastHeim.txt:2102
+7230,Platinum Bullion,No mob drops in mob_db.yml; GIVEN: makeitem in npc/re/instances/OldGlastHeim.txt:2110
 7231,Gold Ore,No mob drops in mob_db.yml
 7232,Silver Ore,No mob drops in mob_db.yml
 7233,Mithril Ore,No mob drops in mob_db.yml
-7234,Spirit of Guild,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:374
-7235,Spirit of Charge,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:1328
+7234,Spirit of Guild,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:374
+7235,Spirit of Charge,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:1328
 7236,Spirit of Protection,No mob drops in mob_db.yml
-7237,Spirit of Association,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:1429
-7238,Spirit of Coordination,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:1534
-7239,Spirit of Advance,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:1610
-7240,Spirit of Trust,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:93
-7241,Spirit of Union,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:1823
-7242,Spirit of Combination,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:2005
+7237,Spirit of Association,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:1429
+7238,Spirit of Coordination,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:1534
+7239,Spirit of Advance,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:1610
+7240,Spirit of Trust,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:93
+7241,Spirit of Union,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:1823
+7242,Spirit of Combination,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:2005
 7243,Spirit of Cooperation,No mob drops in mob_db.yml
-7244,Spirit of Solidarity,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:2108
-7245,Spirit of Friendship,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:2188
-7246,Spirit of Peace,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:263
-7247,Spirit of Determination,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:2534
+7244,Spirit of Solidarity,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:2108
+7245,Spirit of Friendship,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:2188
+7246,Spirit of Peace,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:263
+7247,Spirit of Determination,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:2534
 7248,Spirit of Honor,No mob drops in mob_db.yml
-7249,Spirit of Service,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:2684
-7250,Spirit of Glory,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:2786
-7251,Spirit of Victory,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/guildrelay.txt:2918
-7252,Herbal Medicine,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_louyang.txt:1818
+7249,Spirit of Service,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:2684
+7250,Spirit of Glory,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:2786
+7251,Spirit of Victory,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/guildrelay.txt:2918
+7252,Herbal Medicine,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_louyang.txt:1818
 7253,Golden Korean Flag,No mob drops in mob_db.yml
-7254,Digital Picture Printing Coupon,No mob drops in mob_db.yml
+7254,Digital Picture Printing Coupon,Quest-named: AegisName contains 'ticket'; No mob drops in mob_db.yml
 7255,Mystic Orb,No mob drops in mob_db.yml
 7256,Mystic Orb,No mob drops in mob_db.yml
 7257,Mystic Orb,No mob drops in mob_db.yml
@@ -301,66 +301,66 @@
 7261,Mystic Orb,No mob drops in mob_db.yml
 7271,Novice Figure,No mob drops in mob_db.yml
 7273,RWC Necklace,No mob drops in mob_db.yml
-7274,Translated Ancient Language,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:8122
-7275,Record of Ancient Language,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:7961
-7276,Doodled Message,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:7108; GIVEN by NPC: getitem in npc/quests/quests_airship.txt:641
-7277,Munak Doll,GIVEN by NPC: getitem in npc/events/christmas_2005.txt:1332
-7278,Letter to Wife,Quest-named: contains 'letter'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:7339
+7274,Translated Ancient Language,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:8122
+7275,Record of Ancient Language,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:7961
+7276,Doodled Message,Quest-named: AegisName contains 'letter'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:7108
+7277,Munak Doll,GIVEN: getitem in npc/events/christmas_2005.txt:1332
+7278,Letter to Wife,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:7339
 7279,Vita500 Lid,No mob drops in mob_db.yml
 7280,1st Quiz Entry,No mob drops in mob_db.yml
 7281,2nd Quiz Entry,No mob drops in mob_db.yml
 7282,3rd Quiz Entry,No mob drops in mob_db.yml
 7283,4th Quiz Entry,No mob drops in mob_db.yml
 7284,5th Quiz Entry,No mob drops in mob_db.yml
-7285,Holy Threads,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_ayothaya.txt:1507
-7286,Red Chile,GIVEN by NPC: getitem in npc/quests/quests_ayothaya.txt:2959
-7287,Holier Threads,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_ayothaya.txt:1653
-7288,Engagement Ring,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_ayothaya.txt:918
-7289,Peridot,GIVEN by NPC: getitem in npc/quests/quests_ein.txt:301; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:4176
-7290,Phlogopite,GIVEN by NPC: getitem in npc/quests/quests_ein.txt:283; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:4164
-7291,Agate,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:56; GIVEN by NPC: getitem in npc/quests/quests_ein.txt:286; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:4172
-7292,Muscovite,GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:4168
-7293,Rose Quartz,GIVEN by NPC: makeitem in npc/re/instances/DevilTower.txt:2022; GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:56; GIVEN by NPC: getitem in npc/quests/quests_ein.txt:289
-7294,Turquoise,GIVEN by NPC: getitem in npc/quests/quests_ein.txt:292; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:4174
-7295,Citrin,GIVEN by NPC: getitem in npc/quests/quests_ein.txt:295; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:4177
-7296,Pyroxene,GIVEN by NPC: getitem in npc/quests/quests_ein.txt:298; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:4181
-7297,Biotite,GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:4166
+7285,Holy Threads,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_ayothaya.txt:1507
+7286,Red Chile,GIVEN: getitem in npc/quests/quests_ayothaya.txt:2959
+7287,Holier Threads,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_ayothaya.txt:1653
+7288,Engagement Ring,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_ayothaya.txt:918
+7289,Peridot,GIVEN: getitem in npc/quests/quests_ein.txt:301; GIVEN: getitem in npc/quests/quests_moscovia.txt:4176
+7290,Phlogopite,GIVEN: getitem in npc/quests/quests_ein.txt:283; GIVEN: getitem in npc/quests/quests_moscovia.txt:4164
+7291,Agate,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:56; GIVEN: getitem in npc/quests/quests_ein.txt:286; GIVEN: getitem in npc/quests/quests_moscovia.txt:4172
+7292,Muscovite,GIVEN: getitem in npc/quests/quests_moscovia.txt:4168
+7293,Rose Quartz,GIVEN: makeitem in npc/re/instances/DevilTower.txt:2022; GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:56; GIVEN: getitem in npc/quests/quests_ein.txt:289
+7294,Turquoise,GIVEN: getitem in npc/quests/quests_ein.txt:292; GIVEN: getitem in npc/quests/quests_moscovia.txt:4174
+7295,Citrin,GIVEN: getitem in npc/quests/quests_ein.txt:295; GIVEN: getitem in npc/quests/quests_moscovia.txt:4177
+7296,Pyroxene,GIVEN: getitem in npc/quests/quests_ein.txt:298; GIVEN: getitem in npc/quests/quests_moscovia.txt:4181
+7297,Biotite,GIVEN: getitem in npc/quests/quests_moscovia.txt:4166
 7302,Krathong,No mob drops in mob_db.yml
-7304,Witch's Spell Scroll,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:11728
-7305,Symbol of the Nine Realms,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:10801
-7306,Piece of Spirit,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:12039
-7307,Spiritual Whispers,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:12030
-7308,Witch's Tonic,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:10197
-7309,Crow Wing,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:10474
-7310,Free Ticket for Peco Ride,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/other/turbo_track.txt:4633
-7311,Free Ticket for Flyship,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_airship.txt:483
-7313,Witch's Medal,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:10199
-7314,The Sign,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/the_sign_quest.txt:663
+7304,Witch's Spell Scroll,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:11728
+7305,Symbol of the Nine Realms,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:10801
+7306,Piece of Spirit,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:12039
+7307,Spiritual Whispers,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:12030
+7308,Witch's Tonic,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:10197
+7309,Crow Wing,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:10474
+7310,Free Ticket for Peco Ride,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/other/turbo_track.txt:4633
+7311,Free Ticket for Flyship,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_airship.txt:483
+7313,Witch's Medal,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:10199
+7314,The Sign,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/the_sign_quest.txt:663
 7328,Legend of Songkran,No mob drops in mob_db.yml
-7329,Old Bronze Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:2460
+7329,Old Bronze Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:2460
 7330,Mystic Orb,No mob drops in mob_db.yml
 7331,Heaven Flower,No mob drops in mob_db.yml
-7332,Complete Tablet,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/eye_of_hellion.txt:2180
-7333,Prontera Tablet,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/eye_of_hellion.txt:1222
-7334,Payon Tablet,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/eye_of_hellion.txt:1867
-7335,Morocc Tablet,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/eye_of_hellion.txt:364
-7336,Geffen Tablet,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/eye_of_hellion.txt:2104
-7338,One-way Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7332,Complete Tablet,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/eye_of_hellion.txt:2180
+7333,Prontera Tablet,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/eye_of_hellion.txt:1222
+7334,Payon Tablet,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/eye_of_hellion.txt:1867
+7335,Morocc Tablet,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/eye_of_hellion.txt:364
+7336,Geffen Tablet,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/eye_of_hellion.txt:2104
+7338,One-way Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7339,Commemorative Travel Card,No mob drops in mob_db.yml
-7341,Old Pendant,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_lighthalzen.txt:4241
-7342,File Folder,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_lighthalzen.txt:7825; GIVEN by NPC: getitem in npc/quests/quests_hugel.txt:2811
-7343,Sealed File Folder,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_lighthalzen.txt:8926; GIVEN by NPC: getitem in npc/quests/quests_nameless.txt:2063
-7344,Shinokas Case File,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_lighthalzen.txt:9947
-7346,Ymir's Heart Piece,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_lighthalzen.txt:10224
-7348,Membership Card,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_lighthalzen.txt:6845
-7349,Archive Permit,Quest-named: contains 'permit'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_lighthalzen.txt:9441
-7350,Pass,Quest-named: contains 'pass'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_lighthalzen.txt:3091
-7351,Friend's Diary,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_lighthalzen.txt:3284
-7356,Crest Piece,GIVEN by NPC: getitem in npc/quests/quests_juperos.txt:4300
-7357,Crest Piece,GIVEN by NPC: getitem in npc/quests/quests_juperos.txt:4302
-7358,Crest Piece,GIVEN by NPC: getitem in npc/quests/quests_juperos.txt:4303
-7359,Crest Piece,GIVEN by NPC: getitem in npc/quests/quests_juperos.txt:4301
-7360,RO Festival Invitation,No mob drops in mob_db.yml
+7341,Old Pendant,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_lighthalzen.txt:4241
+7342,File Folder,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_lighthalzen.txt:7825; GIVEN: getitem in npc/quests/quests_hugel.txt:2811
+7343,Sealed File Folder,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_lighthalzen.txt:8926; GIVEN: getitem in npc/quests/quests_nameless.txt:2063
+7344,Shinokas Case File,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_lighthalzen.txt:9947
+7346,Ymir's Heart Piece,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_lighthalzen.txt:10224
+7348,Membership Card,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_lighthalzen.txt:6845
+7349,Archive Permit,Quest-named: Name contains 'permit'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_lighthalzen.txt:9441
+7350,Pass,Quest-named: Name contains 'pass'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_lighthalzen.txt:3091
+7351,Friend's Diary,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_lighthalzen.txt:3284
+7356,Crest Piece,GIVEN: getitem in npc/quests/quests_juperos.txt:4300
+7357,Crest Piece,GIVEN: getitem in npc/quests/quests_juperos.txt:4302
+7358,Crest Piece,GIVEN: getitem in npc/quests/quests_juperos.txt:4303
+7359,Crest Piece,GIVEN: getitem in npc/quests/quests_juperos.txt:4301
+7360,RO Festival Invitation,Quest-named: AegisName contains 'ticket'; No mob drops in mob_db.yml
 7361,Lotto Ball 01,No mob drops in mob_db.yml
 7362,Lotto Ball 02,No mob drops in mob_db.yml
 7363,Lotto Ball 03,No mob drops in mob_db.yml
@@ -416,43 +416,43 @@
 7413,Yuebing,No mob drops in mob_db.yml
 7414,Yuebing,No mob drops in mob_db.yml
 7415,Summoning Stone,No mob drops in mob_db.yml
-7416,Letter of Recommendation,Quest-named: contains 'letter'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/dandelion_request.txt:80
-7417,Written Request(A),No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/dandelion_request.txt:3091
-7418,Written Request(B),No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/dandelion_request.txt:3127
+7416,Letter of Recommendation,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/dandelion_request.txt:80
+7417,Written Request(A),No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/dandelion_request.txt:3091
+7418,Written Request(B),No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/dandelion_request.txt:3127
 7419,Embryo Creation Guide,No mob drops in mob_db.yml
 7420,Skull,No mob drops in mob_db.yml
-7421,Red Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/thana_quest.txt:957
-7422,Yellow Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/thana_quest.txt:1087
-7423,Blue Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/thana_quest.txt:1201
-7424,Green Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/thana_quest.txt:1446
-7425,Black Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/thana_quest.txt:1568
-7426,Red Charm Stone,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/thana_quest.txt:1675
-7427,Yellow Charm Stone,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/thana_quest.txt:1709
-7428,Blue Charm Stone,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/thana_quest.txt:1743
-7429,Green Charm Stone,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/thana_quest.txt:1777
-7430,Black Charm Stone,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/thana_quest.txt:2306
-7431,Pile of Books,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_prontera.txt:565
-7432,Leather Pouch,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_prontera.txt:1945
-7433,Blank Scroll,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/merchants/shops.txt:158
-7434,Elemental Potion Creation Guide,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/skills/alchemist_skills.txt:928
-7435,Golden Ornament,GIVEN by NPC: setarray_getitem in npc/quests/thana_quest.txt:461
-7436,Fragment of Agony,GIVEN by NPC: setarray_getitem in npc/quests/thana_quest.txt:2106
-7437,Fragment of Misery,GIVEN by NPC: setarray_getitem in npc/quests/thana_quest.txt:2102
-7438,Fragment of Hatred,GIVEN by NPC: setarray_getitem in npc/quests/thana_quest.txt:2110
-7439,Fragment of Despair,GIVEN by NPC: setarray_getitem in npc/quests/thana_quest.txt:2114
-7440,Red Feather,GIVEN by NPC: setarray_getitem in npc/quests/thana_quest.txt:461
-7441,Blue Feather,GIVEN by NPC: setarray_getitem in npc/quests/thana_quest.txt:461
-7442,Cursed Seal,GIVEN by NPC: setarray_getitem in npc/quests/thana_quest.txt:461
-7444,Treasure Box,GIVEN by NPC: getitem in npc/quests/quests_13_2.txt:3116
-7452,Yellow Spice,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186
-7453,Sweet Sauce,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186
-7454,Savory Sauce,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186
-7455,Spicy Sauce,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186
-7456,Red Spice,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186
-7457,Cooking Oil,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186
+7421,Red Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/thana_quest.txt:957
+7422,Yellow Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/thana_quest.txt:1087
+7423,Blue Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/thana_quest.txt:1201
+7424,Green Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/thana_quest.txt:1446
+7425,Black Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/thana_quest.txt:1568
+7426,Red Charm Stone,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/thana_quest.txt:1675
+7427,Yellow Charm Stone,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/thana_quest.txt:1709
+7428,Blue Charm Stone,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/thana_quest.txt:1743
+7429,Green Charm Stone,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/thana_quest.txt:1777
+7430,Black Charm Stone,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/thana_quest.txt:2306
+7431,Pile of Books,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_prontera.txt:565
+7432,Leather Pouch,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_prontera.txt:1945
+7433,Blank Scroll,No mob drops in mob_db.yml; GIVEN: shop_item in npc/merchants/shops.txt:158
+7434,Elemental Potion Creation Guide,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/skills/alchemist_skills.txt:928
+7435,Golden Ornament,GIVEN: setarray_getitem in npc/quests/thana_quest.txt:461
+7436,Fragment of Agony,GIVEN: setarray_getitem in npc/quests/thana_quest.txt:2106
+7437,Fragment of Misery,GIVEN: setarray_getitem in npc/quests/thana_quest.txt:2102
+7438,Fragment of Hatred,GIVEN: setarray_getitem in npc/quests/thana_quest.txt:2110
+7439,Fragment of Despair,GIVEN: setarray_getitem in npc/quests/thana_quest.txt:2114
+7440,Red Feather,GIVEN: setarray_getitem in npc/quests/thana_quest.txt:461
+7441,Blue Feather,GIVEN: setarray_getitem in npc/quests/thana_quest.txt:461
+7442,Cursed Seal,GIVEN: setarray_getitem in npc/quests/thana_quest.txt:461
+7444,Treasure Box,GIVEN: getitem in npc/quests/quests_13_2.txt:3116
+7452,Yellow Spice,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN: shop_item in npc/re/merchants/shops.txt:186
+7453,Sweet Sauce,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN: shop_item in npc/re/merchants/shops.txt:186
+7454,Savory Sauce,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN: shop_item in npc/re/merchants/shops.txt:186
+7455,Spicy Sauce,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN: shop_item in npc/re/merchants/shops.txt:186
+7456,Red Spice,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN: shop_item in npc/re/merchants/shops.txt:186
+7457,Cooking Oil,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN: shop_item in npc/re/merchants/shops.txt:186
 7458,Fortune Horn,No mob drops in mob_db.yml
 7459,Idul Fitri Card,No mob drops in mob_db.yml
-7460,Niflheim Express Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/events/halloween_2006.txt:440
+7460,Niflheim Express Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/events/halloween_2006.txt:440
 7461,Blue A Card,No mob drops in mob_db.yml
 7462,Blue E Card,No mob drops in mob_db.yml
 7463,Blue F Card,No mob drops in mob_db.yml
@@ -464,53 +464,54 @@
 7469,Blue U Card,No mob drops in mob_db.yml
 7470,Blue W Card,No mob drops in mob_db.yml
 7471,Blue Y Card,No mob drops in mob_db.yml
-7472,Level 1 Cookbook,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186; GIVEN by NPC: getitem in npc/quests/cooking_quest.txt:1405
-7473,Level 2 Cookbook,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186; GIVEN by NPC: getitem in npc/quests/cooking_quest.txt:1409
-7474,Level 3 Cookbook,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186; GIVEN by NPC: getitem in npc/quests/cooking_quest.txt:1413
-7475,Level 4 Cookbook,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186; GIVEN by NPC: getitem in npc/quests/cooking_quest.txt:1417
-7476,Level 5 Cookbook,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186; GIVEN by NPC: getitem in npc/quests/cooking_quest.txt:1421
-7482,Pot,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:186
-7483,Key of the Seal,Quest-named: contains 'key'; No mob drops in mob_db.yml
-7485,Cloud General,No mob drops in mob_db.yml
-7487,Culinary Wine,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:359
-7488,Delivery Package,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:532
-7489,Cottage Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:1242
-7490,Letter to Elly,Quest-named: contains 'letter'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:2184
-7491,Steel Box,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:2790
-7492,Yellow Keycard,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:2651
-7493,Golden Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:1609
-7494,Luxurious Button,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:1610
-7495,Blue Keycard,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:1678
-7496,Red Keycard,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:3520
-7497,Metal Fragment,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:3740
-7498,Rosimier Mansion Keys,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:5363
-7499,Family Portrait,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:5481
-7500,Woman's Portrait,No mob drops in mob_db.yml; GIVEN by NPC: setarray_getitem in npc/re/quests/quests_dewata.txt:1295; GIVEN by NPC: setarray_getitem in npc/jobs/2-2/alchemist.txt:259
-7501,K.H's Letter,Quest-named: contains 'letter'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:5605
-7502,James's Note,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:5664
-7503,Man's Portrait,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:5860
-7504,Power Device,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:4564
-7505,Toy Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:6006
-7506,Black Keycard,No mob drops in mob_db.yml; GIVEN by NPC: makeitem in npc/quests/kiel_hyre_quest.txt:5913
-7508,Allysia's Ring,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:6966
-7509,Luxurious Keycard,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:4651
-7510,Valhalla's Flower,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:61
-7511,Rune of Darkness,GIVEN by NPC: makeitem in npc/re/instances/DevilTower.txt:2024
-7514,Monster Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/other/monster_race.txt:192
-7515,Prize Medal,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/other/hugel_bingo.txt:661; GIVEN by NPC: getitem in npc/other/monster_race.txt:338
-7516,Green Keycard,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/kiel_hyre_quest.txt:2695
+7472,Level 1 Cookbook,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/shops.txt:186; GIVEN: getitem in npc/quests/cooking_quest.txt:1405
+7473,Level 2 Cookbook,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/shops.txt:186; GIVEN: getitem in npc/quests/cooking_quest.txt:1409
+7474,Level 3 Cookbook,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/shops.txt:186; GIVEN: getitem in npc/quests/cooking_quest.txt:1413
+7475,Level 4 Cookbook,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/shops.txt:186; GIVEN: getitem in npc/quests/cooking_quest.txt:1417
+7476,Level 5 Cookbook,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/shops.txt:186; GIVEN: getitem in npc/quests/cooking_quest.txt:1421
+7482,Pot,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/eden_market.txt:247; GIVEN: shop_item in npc/re/merchants/shops.txt:186
+7483,Key of the Seal,Quest-named: Name contains 'key'; No mob drops in mob_db.yml
+7485,Cloud General,Quest-named: AegisName contains 'pass'; No mob drops in mob_db.yml
+7486,Wind General,Quest-named: AegisName contains 'pass'
+7487,Culinary Wine,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:359
+7488,Delivery Package,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:532
+7489,Cottage Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:1242
+7490,Letter to Elly,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:2184
+7491,Steel Box,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:2790
+7492,Yellow Keycard,Quest-named: AegisName contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:2651
+7493,Golden Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:1609
+7494,Luxurious Button,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:1610
+7495,Blue Keycard,Quest-named: AegisName contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:1678
+7496,Red Keycard,Quest-named: AegisName contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:3520
+7497,Metal Fragment,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:3740
+7498,Rosimier Mansion Keys,Quest-named: AegisName contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:5363
+7499,Family Portrait,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:5481
+7500,Woman's Portrait,No mob drops in mob_db.yml; GIVEN: setarray_getitem in npc/re/quests/quests_dewata.txt:1295; GIVEN: setarray_getitem in npc/jobs/2-2/alchemist.txt:259
+7501,K.H's Letter,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:5605
+7502,James's Note,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:5664
+7503,Man's Portrait,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:5860
+7504,Power Device,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:4564
+7505,Toy Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:6006
+7506,Black Keycard,Quest-named: AegisName contains 'key'; No mob drops in mob_db.yml; GIVEN: makeitem in npc/quests/kiel_hyre_quest.txt:5913
+7508,Allysia's Ring,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:6966
+7509,Luxurious Keycard,Quest-named: AegisName contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:4651
+7510,Valhalla's Flower,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:61
+7511,Rune of Darkness,GIVEN: makeitem in npc/re/instances/DevilTower.txt:2024
+7514,Monster Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/other/monster_race.txt:192
+7515,Prize Medal,No mob drops in mob_db.yml; GIVEN: getitem in npc/other/hugel_bingo.txt:661; GIVEN: getitem in npc/other/monster_race.txt:338
+7516,Green Keycard,Quest-named: AegisName contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/kiel_hyre_quest.txt:2695
 7517,Gold Coin,No mob drops in mob_db.yml
 7518,Women's Medal,No mob drops in mob_db.yml
 7519,Handsel,No mob drops in mob_db.yml
 7520,Please Be Rich,No mob drops in mob_db.yml
-7521,Flame Stone,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/Extended_Ammunition.txt:202; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:145
-7522,Ice Stone,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/Extended_Ammunition.txt:202; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:145
-7523,Wind Stone,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/Extended_Ammunition.txt:202; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:145
-7524,Shadow Orb,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/Extended_Ammunition.txt:202; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:145
-7525,Summer Festival Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7521,Flame Stone,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/Extended_Ammunition.txt:202; GIVEN: shop_item in npc/re/merchants/shops.txt:145
+7522,Ice Stone,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/Extended_Ammunition.txt:202; GIVEN: shop_item in npc/re/merchants/shops.txt:145
+7523,Wind Stone,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/Extended_Ammunition.txt:202; GIVEN: shop_item in npc/re/merchants/shops.txt:145
+7524,Shadow Orb,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/Extended_Ammunition.txt:202; GIVEN: shop_item in npc/re/merchants/shops.txt:145
+7525,Summer Festival Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7526,Manuscript Paper,No mob drops in mob_db.yml
 7527,Book About True Life,No mob drops in mob_db.yml
-7528,Lottery Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7528,Lottery Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7529,Stolen Sandal,No mob drops in mob_db.yml
 7530,Travel Brochure [Amatsu],No mob drops in mob_db.yml
 7531,Travel Brochure [Kunlun],No mob drops in mob_db.yml
@@ -521,7 +522,7 @@
 7536,Luoyang Completed Photo Album,No mob drops in mob_db.yml
 7537,Ayothaya Completed Photo Album,No mob drops in mob_db.yml
 7538,Sand for Work,No mob drops in mob_db.yml
-7539,Poring Coin,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/other/poring_war.txt:1240
+7539,Poring Coin,No mob drops in mob_db.yml; GIVEN: getitem in npc/other/poring_war.txt:1240
 7540,Lotto Ball 39,No mob drops in mob_db.yml
 7541,Lotto Ball 40,No mob drops in mob_db.yml
 7542,Lotto Ball 41,No mob drops in mob_db.yml
@@ -532,76 +533,76 @@
 7547,Soccer Ball,No mob drops in mob_db.yml
 7548,Soccer Shoes,No mob drops in mob_db.yml
 7549,Brazilian Flag,No mob drops in mob_db.yml
-7550,6.13 Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7551,6.18 Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7552,6.22 Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7553,Lotus Flower,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_brasilis.txt:1724
+7550,6.13 Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
+7551,6.18 Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
+7552,6.22 Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
+7553,Lotus Flower,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_brasilis.txt:1724
 7554,Striped Candle,No mob drops in mob_db.yml
 7555,Green Incense,No mob drops in mob_db.yml
 7556,Longing Heart,No mob drops in mob_db.yml
-7557,Invitation Letter,Quest-named: contains 'letter'; No mob drops in mob_db.yml
-7558,Invitation Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7559,Key to the Secret Garden,Quest-named: contains 'key'; No mob drops in mob_db.yml
+7557,Invitation Letter,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml
+7558,Invitation Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
+7559,Key to the Secret Garden,Quest-named: Name contains 'key'; No mob drops in mob_db.yml
 7560,Longing Heart,No mob drops in mob_db.yml
-7569,Wind Hammer,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_rachel.txt:3376
-7570,Temple Lottery Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_rachel.txt:4199
-7571,Bruspetti's Diary,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_rachel.txt:2631
-7572,Ashy Necklace,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_rachel.txt:2804
-7573,Sparkling Necklace,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_rachel.txt:3198
-7574,Freezing Snow Powder,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_rachel.txt:3199; GIVEN by NPC: getitem in npc/quests/quests_13_2.txt:4508
+7569,Wind Hammer,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_rachel.txt:3376
+7570,Temple Lottery Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_rachel.txt:4199
+7571,Bruspetti's Diary,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_rachel.txt:2631
+7572,Ashy Necklace,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_rachel.txt:2804
+7573,Sparkling Necklace,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_rachel.txt:3198
+7574,Freezing Snow Powder,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_rachel.txt:3199; GIVEN: getitem in npc/quests/quests_13_2.txt:4508
 7579,Silk Handkerchief of Zhi Nu,No mob drops in mob_db.yml
 7580,Black Marble,No mob drops in mob_db.yml
-7581,Celebration Document,No mob drops in mob_db.yml
-7584,Guard's First Proof,Quest-named: contains 'proof'; No mob drops in mob_db.yml
-7585,Guard's Second Proof,Quest-named: contains 'proof'; No mob drops in mob_db.yml
-7586,Guard's Third Proof,Quest-named: contains 'proof'; No mob drops in mob_db.yml
-7587,Guard's Fourth Proof,Quest-named: contains 'proof'; No mob drops in mob_db.yml
+7581,Celebration Document,Quest-named: AegisName contains 'ticket'; No mob drops in mob_db.yml
+7584,Guard's First Proof,Quest-named: Name contains 'proof'; No mob drops in mob_db.yml
+7585,Guard's Second Proof,Quest-named: Name contains 'proof'; No mob drops in mob_db.yml
+7586,Guard's Third Proof,Quest-named: Name contains 'proof'; No mob drops in mob_db.yml
+7587,Guard's Fourth Proof,Quest-named: Name contains 'proof'; No mob drops in mob_db.yml
 7588,IPOD Coupon,No mob drops in mob_db.yml
 7589,Lettered Moon Snack 01,No mob drops in mob_db.yml
 7590,Lettered Moon Snack 02,No mob drops in mob_db.yml
 7591,Lettered Moon Snack 03,No mob drops in mob_db.yml
 7592,Lettered Moon Snack 04,No mob drops in mob_db.yml
 7593,Lettered Moon Snack 05,No mob drops in mob_db.yml
-7594,Sonia's Letter,Quest-named: contains 'letter'; No mob drops in mob_db.yml
+7594,Sonia's Letter,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml
 7595,Special Sword,No mob drops in mob_db.yml
 7596,Special Shield,No mob drops in mob_db.yml
 7597,Magic Stone,No mob drops in mob_db.yml
-7603,RO Party Invitation Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7603,RO Party Invitation Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7604,Flour,No mob drops in mob_db.yml
-7605,Chicken Egg,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/events/easter_2008.txt:124
-7606,Token of the Ox,Quest-named: contains 'token'; No mob drops in mob_db.yml
-7608,Premium Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7610,Food Exchange Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7605,Chicken Egg,No mob drops in mob_db.yml; GIVEN: getitem in npc/events/easter_2008.txt:124
+7606,Token of the Ox,Quest-named: Name contains 'token'; No mob drops in mob_db.yml
+7608,Premium Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
+7610,Food Exchange Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7611,Symbol of Fox,No mob drops in mob_db.yml
 7612,Heart of Queen Fox,No mob drops in mob_db.yml
 7614,Wrapping Paper,No mob drops in mob_db.yml
-7615,MVP Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml
-7616,Miniboss Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml
-7617,Monster Voucher,Quest-named: contains 'voucher'; No mob drops in mob_db.yml
+7615,MVP Voucher,Quest-named: AegisName contains 'ticket'; No mob drops in mob_db.yml
+7616,Miniboss Voucher,Quest-named: AegisName contains 'ticket'; No mob drops in mob_db.yml
+7617,Monster Voucher,Quest-named: AegisName contains 'ticket'; No mob drops in mob_db.yml
 7618,Monster Crystal,No mob drops in mob_db.yml
-7619,Enriched Elunium,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:26; GIVEN by NPC: shop_item in npc/re/quests/eden/eden_iro.txt:1011
-7620,Enriched Oridecon,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:26; GIVEN by NPC: shop_item in npc/re/quests/eden/eden_iro.txt:1011
-7621,Token Of Siegfried,Quest-named: contains 'token'; No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:26
-7622,Hairstyle Coupon,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:26
-7623,Ticket Of Identification,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7619,Enriched Elunium,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:26; GIVEN: shop_item in npc/re/quests/eden/eden_iro.txt:1011
+7620,Enriched Oridecon,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:26; GIVEN: shop_item in npc/re/quests/eden/eden_iro.txt:1011
+7621,Token Of Siegfried,Quest-named: Name contains 'token'; No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:26
+7622,Hairstyle Coupon,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:26
+7623,Ticket Of Identification,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7624,Spring Stanza23,No mob drops in mob_db.yml
-7625,Registration Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7626,Bubble Gum Token,Quest-named: contains 'token'; No mob drops in mob_db.yml
-7627,Sage Key,Quest-named: contains 'key'; No mob drops in mob_db.yml
-7628,Idiot Key,Quest-named: contains 'key'; No mob drops in mob_db.yml
+7625,Registration Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
+7626,Bubble Gum Token,Quest-named: Name contains 'token'; No mob drops in mob_db.yml
+7627,Sage Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml
+7628,Idiot Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml
 7629,Pink Gift Box,No mob drops in mob_db.yml
 7630,Clean Beach Brush,No mob drops in mob_db.yml
 7631,Trash Debris,No mob drops in mob_db.yml
 7635,Sachet,No mob drops in mob_db.yml
 7702,Special Cogwheel,No mob drops in mob_db.yml
-7704,Broken Thermometer,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_veins.txt:6028
-7705,Note of Geologist,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_veins.txt:5836
+7704,Broken Thermometer,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_veins.txt:6028
+7705,Note of Geologist,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_veins.txt:5836
 7706,Broken Carrot Juice,No mob drops in mob_db.yml
 7707,Broken Banana Juice,No mob drops in mob_db.yml
 7708,Broken Apple Juice,No mob drops in mob_db.yml
 7709,Broken Grape Juice,No mob drops in mob_db.yml
 7710,Black Gemstone,No mob drops in mob_db.yml
-7711,Event Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7711,Event Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7712,Nokia 5500,No mob drops in mob_db.yml
 7713,Blue A(2) Card,No mob drops in mob_db.yml
 7714,Blue R(2) Card,No mob drops in mob_db.yml
@@ -610,55 +611,55 @@
 7717,Chocolate Tart Recipe,No mob drops in mob_db.yml
 7718,Cacao Bean,No mob drops in mob_db.yml
 7719,Blue G Card,No mob drops in mob_db.yml
-7720,Gold Coin,GIVEN by NPC: getitem in npc/events/StPatrick_2008.txt:250
-7721,Treasure Box,GIVEN by NPC: getitem in npc/events/StPatrick_2008.txt:236
-7722,Debt Note,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_nameless.txt:4636
-7723,Diamond of Ruin,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_nameless.txt:6297
-7724,Forbidden Secret Art,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_nameless.txt:8742
-7725,Unlucky Emerald,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_nameless.txt:9929
-7726,Token of King,Quest-named: contains 'token'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_nameless.txt:1440
-7727,HP Doctor Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7728,SP Doctor Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7729,Rok Star Badge,Quest-named: contains 'badge'; No mob drops in mob_db.yml
-7730,Mission Ticket 1,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:246
-7731,Mission Ticket 2,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:1360
-7732,Mission Ticket 3,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:2236
-7733,Mission Ticket 4,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:2891
-7734,Mission Ticket 5,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:183
-7735,Mission Ticket 6,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:889
-7736,Mission Ticket 7,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:2006
-7737,Mission Ticket 8,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:2694
-7738,Mission Ticket 9,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:134
-7739,Mission Ticket 10,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:423
-7740,Mission Ticket 11,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:1858
-7741,Mission Ticket 12,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/partyrelay.txt:2495
-7755,Research Note,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_nameless.txt:1343
+7720,Gold Coin,GIVEN: getitem in npc/events/StPatrick_2008.txt:250
+7721,Treasure Box,GIVEN: getitem in npc/events/StPatrick_2008.txt:236
+7722,Debt Note,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_nameless.txt:4636
+7723,Diamond of Ruin,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_nameless.txt:6297
+7724,Forbidden Secret Art,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_nameless.txt:8742
+7725,Unlucky Emerald,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_nameless.txt:9929
+7726,Token of King,Quest-named: Name contains 'token'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_nameless.txt:1440
+7727,HP Doctor Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
+7728,SP Doctor Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
+7729,Rok Star Badge,Quest-named: Name contains 'badge'; No mob drops in mob_db.yml
+7730,Mission Ticket 1,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:246
+7731,Mission Ticket 2,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:1360
+7732,Mission Ticket 3,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:2236
+7733,Mission Ticket 4,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:2891
+7734,Mission Ticket 5,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:183
+7735,Mission Ticket 6,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:889
+7736,Mission Ticket 7,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:2006
+7737,Mission Ticket 8,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:2694
+7738,Mission Ticket 9,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:134
+7739,Mission Ticket 10,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:423
+7740,Mission Ticket 11,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:1858
+7741,Mission Ticket 12,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/partyrelay.txt:2495
+7755,Research Note,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_nameless.txt:1343
 7756,Sealed Book,No mob drops in mob_db.yml
 7757,Mithril,No mob drops in mob_db.yml
 7758,Star Crystal,No mob drops in mob_db.yml
 7759,Geologist's Report,No mob drops in mob_db.yml
 7760,Yaga's Magic Book,No mob drops in mob_db.yml
-7761,Magic Gourd Bottle,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:6200
-7763,Sticky Herb,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:3864
-7764,High Strength Adhesive,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:3779
-7765,Baba Yaga's Secret Medicine,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:4827
+7761,Magic Gourd Bottle,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:6200
+7763,Sticky Herb,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:3864
+7764,High Strength Adhesive,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:3779
+7765,Baba Yaga's Secret Medicine,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:4827
 7766,Bok Choy,No mob drops in mob_db.yml
 7767,Green Maiden's Cake,No mob drops in mob_db.yml
 7768,Squid,No mob drops in mob_db.yml
 7769,Egg Yolk,No mob drops in mob_db.yml
-7770,Sweet Rice,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/events/lunar_2008.txt:223
+7770,Sweet Rice,No mob drops in mob_db.yml; GIVEN: getitem in npc/events/lunar_2008.txt:223
 7771,Lotus Leaf,No mob drops in mob_db.yml
 7772,String,No mob drops in mob_db.yml
-7773,War Badge,Quest-named: contains 'badge'; No mob drops in mob_db.yml; GIVEN by NPC: getnameditem in npc/other/poring_war.txt:338
-7774,Green Maiden Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7775,Spring Rabbit Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7776,Gym Pass,Quest-named: contains 'pass'; No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:27
+7773,War Badge,Quest-named: Name contains 'badge'; No mob drops in mob_db.yml; GIVEN: getnameditem in npc/other/poring_war.txt:338
+7774,Green Maiden Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
+7775,Spring Rabbit Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
+7776,Gym Pass,Quest-named: Name contains 'pass'; No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:27
 7777,Sealed Golden Box,No mob drops in mob_db.yml
 7778,Sealed Silver Box,No mob drops in mob_db.yml
-7779,Golden Key,Quest-named: contains 'key'; No mob drops in mob_db.yml
-7780,Silver Key,Quest-named: contains 'key'; No mob drops in mob_db.yml
-7782,Episode 13.1 Poporing Key,Quest-named: contains 'key'
-7783,Episode 13.2 Poring Key,Quest-named: contains 'key'
+7779,Golden Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml
+7780,Silver Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml
+7782,Episode 13.1 Poporing Key,Quest-named: Name contains 'key'
+7783,Episode 13.2 Poring Key,Quest-named: Name contains 'key'
 7784,Free Coupon 1,No mob drops in mob_db.yml
 7785,Free Coupon 2,No mob drops in mob_db.yml
 7786,Free Coupon 3,No mob drops in mob_db.yml
@@ -670,11 +671,11 @@
 7792,Guyak,No mob drops in mob_db.yml
 7793,Golden Apple,No mob drops in mob_db.yml
 7794,The Crow of Destiny,No mob drops in mob_db.yml
-7795,Mammi's Photo Album,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_morocc.txt:2324
-7796,Author's Autograph,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_morocc.txt:3180
-7797,Author's Memo,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_morocc.txt:3181
+7795,Mammi's Photo Album,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_morocc.txt:2324
+7796,Author's Autograph,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_morocc.txt:3180
+7797,Author's Memo,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_morocc.txt:3181
 7800,Golden Charm Apple,No mob drops in mob_db.yml
-7801,Girl's Letter,Quest-named: contains 'letter'; No mob drops in mob_db.yml
+7801,Girl's Letter,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml
 7802,Signature Notebook,No mob drops in mob_db.yml
 7803,Beginner's Field Manual,No mob drops in mob_db.yml
 7805,Brown Jenoss's Family Ring,No mob drops in mob_db.yml
@@ -692,27 +693,27 @@
 7817,Symbol of Peace,No mob drops in mob_db.yml
 7818,Jessur's Necklace,No mob drops in mob_db.yml
 7819,Nokia 5300,No mob drops in mob_db.yml
-7820,Piece of Morocc Skin,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_morocc.txt:1932
+7820,Piece of Morocc Skin,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_morocc.txt:1932
 7821,Green Apple,No mob drops in mob_db.yml
 7822,Whole Barbecue,No mob drops in mob_db.yml
-7823,Meat Veg Skewer,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:26
-7824,Spirit Liquor,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/pet_groomer.txt:9; GIVEN by NPC: shop_item in npc/re/merchants/eden_market.txt:249
-7825,Heroic Stone,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/cash_trader-idRO.txt:27
-7826,Continental Guard Paper,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_morocc.txt:1501
+7823,Meat Veg Skewer,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:26
+7824,Spirit Liquor,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/pet_groomer.txt:9; GIVEN: shop_item in npc/re/merchants/eden_market.txt:249
+7825,Heroic Stone,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/cash_trader-idRO.txt:27
+7826,Continental Guard Paper,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_morocc.txt:1501
 7827,Mineral Evals,No mob drops in mob_db.yml
-7828,Bravery Badge,Quest-named: contains 'badge'; No mob drops in mob_db.yml; GIVEN by NPC: setarray_getitem in npc/battleground/bg_common.txt:417
-7829,Valor Badge,Quest-named: contains 'badge'; No mob drops in mob_db.yml; GIVEN by NPC: setarray_getitem in npc/battleground/bg_common.txt:417
-7830,Goddess Tear,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:61
-7831,Valkyrie's Token,Quest-named: contains 'token'; GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:61
-7832,Brynhild Armor Piece,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:61
-7833,Hero's Remains,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:61
-7834,Andvari's Ring,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:61
-7835,Dusk Glow,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:56
-7836,Dawn Essence,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:56
-7837,Cold Moonlight,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:56
-7838,Hazy Starlight,GIVEN by NPC: setarray_getitem in npc/custom/quests/valhallen.txt:56
-7839,Crystal Key,Quest-named: contains 'key'
-7840,Valkyrie's Gift,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/okolnir.txt:2184
+7828,Bravery Badge,Quest-named: Name contains 'badge'; No mob drops in mob_db.yml; GIVEN: setarray_getitem in npc/battleground/bg_common.txt:417
+7829,Valor Badge,Quest-named: Name contains 'badge'; No mob drops in mob_db.yml; GIVEN: setarray_getitem in npc/battleground/bg_common.txt:417
+7830,Goddess Tear,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:61
+7831,Valkyrie's Token,Quest-named: Name contains 'token'; GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:61
+7832,Brynhild Armor Piece,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:61
+7833,Hero's Remains,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:61
+7834,Andvari's Ring,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:61
+7835,Dusk Glow,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:56
+7836,Dawn Essence,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:56
+7837,Cold Moonlight,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:56
+7838,Hazy Starlight,GIVEN: setarray_getitem in npc/custom/quests/valhallen.txt:56
+7839,Crystal Key,Quest-named: Name contains 'key'
+7840,Valkyrie's Gift,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/okolnir.txt:2184
 7841,Stained Piece Of Paper,No mob drops in mob_db.yml
 7842,Torn Piece Of Paper,No mob drops in mob_db.yml
 7843,Old Piece Of Paper,No mob drops in mob_db.yml
@@ -721,16 +722,16 @@
 7846,Copy Of Torn Paper,No mob drops in mob_db.yml
 7847,Copy Of Old Paper,No mob drops in mob_db.yml
 7848,Copy Of Burnt Paper,No mob drops in mob_db.yml
-7851,Wii Raffle Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7852,Divx Player Raffle Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7853,iPod nano Raffle Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
-7854,Comodo Festival Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7851,Wii Raffle Ticket,Quest-named: AegisName contains 'pass'; No mob drops in mob_db.yml
+7852,Divx Player Raffle Ticket,Quest-named: AegisName contains 'pass'; No mob drops in mob_db.yml
+7853,iPod nano Raffle Ticket,Quest-named: AegisName contains 'pass'; No mob drops in mob_db.yml
+7854,Comodo Festival Ticket,Quest-named: AegisName contains 'pass'; No mob drops in mob_db.yml
 7855,Heart,No mob drops in mob_db.yml
 7856,Girl's Bouquet,No mob drops in mob_db.yml
 7857,Hand-made Kitty Doll,No mob drops in mob_db.yml
-7859,Game Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7859,Game Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7865,Gold Pouch,No mob drops in mob_db.yml
-7866,Certificate,Quest-named: contains 'certificate'; No mob drops in mob_db.yml
+7866,Certificate,Quest-named: Name contains 'certificate'; No mob drops in mob_db.yml
 7867,Sesame Bag,No mob drops in mob_db.yml
 7868,Fresh Water,No mob drops in mob_db.yml
 7869,Rice Pouch,No mob drops in mob_db.yml
@@ -740,14 +741,14 @@
 7873,MVP Monster Scroll,No mob drops in mob_db.yml
 7874,Create Monster Scroll,No mob drops in mob_db.yml
 7875,Pirate Treasure,No mob drops in mob_db.yml
-7876,Golden Key,Quest-named: contains 'key'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:9652
-7877,Red Ring,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:7678
-7878,Lusalka's Hair,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:8477
-7879,Golden Thread,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:9343
-7880,Baba Yaga's Silver Spoon,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:10292
-7881,Mystery Magic Book,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:10528
-7882,Sharp Branch,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:8264
-7883,Wooden Flute,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/quests/quests_moscovia.txt:8227
+7876,Golden Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:9652
+7877,Red Ring,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:7678
+7878,Lusalka's Hair,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:8477
+7879,Golden Thread,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:9343
+7880,Baba Yaga's Silver Spoon,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:10292
+7881,Mystery Magic Book,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:10528
+7882,Sharp Branch,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:8264
+7883,Wooden Flute,No mob drops in mob_db.yml; GIVEN: getitem in npc/quests/quests_moscovia.txt:8227
 7885,Sacred Arrow,No mob drops in mob_db.yml
 7886,Bean Paste,No mob drops in mob_db.yml
 7887,Dried Fruit Box,No mob drops in mob_db.yml
@@ -765,8 +766,8 @@
 7901,Jillberriel Family Ring,No mob drops in mob_db.yml
 7902,Jessur Family Ring,No mob drops in mob_db.yml
 7903,Jenoss Family Ring,No mob drops in mob_db.yml
-7904,Piano Key,Quest-named: contains 'key'; No mob drops in mob_db.yml
-7905,Rok Star Badge,Quest-named: contains 'badge'; No mob drops in mob_db.yml
+7904,Piano Key,Quest-named: Name contains 'key'; No mob drops in mob_db.yml
+7905,Rok Star Badge,Quest-named: Name contains 'badge'; No mob drops in mob_db.yml
 7906,Poppy Wreath,No mob drops in mob_db.yml
 7907,Bobbin Of Goddess,No mob drops in mob_db.yml
 7908,Louise's Beauty Coupon,No mob drops in mob_db.yml
@@ -774,43 +775,43 @@
 7910,Stolen Candy,No mob drops in mob_db.yml
 7911,Yulia's Hat,No mob drops in mob_db.yml
 7912,Portable Snowman Machine,No mob drops in mob_db.yml
-7913,Battle Test Certificate,Quest-named: contains 'certificate'
+7913,Battle Test Certificate,Quest-named: Name contains 'certificate'
 7914,Ancient Language Document,No mob drops in mob_db.yml
-7915,Bronze Coin,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/events/StPatrick_2008.txt:245
-7916,Silver Coin,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/events/StPatrick_2008.txt:249
+7915,Bronze Coin,No mob drops in mob_db.yml; GIVEN: getitem in npc/events/StPatrick_2008.txt:245
+7916,Silver Coin,No mob drops in mob_db.yml; GIVEN: getitem in npc/events/StPatrick_2008.txt:249
 7917,Magic Potion,No mob drops in mob_db.yml
 7918,Fragment Of Memory,No mob drops in mob_db.yml
-7919,Festival Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7919,Festival Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7920,He's Arsenal,No mob drops in mob_db.yml
 7921,Essence Of Dragon,No mob drops in mob_db.yml
-7922,RWC Voucher Items,Quest-named: contains 'voucher'; No mob drops in mob_db.yml
+7922,RWC Voucher Items,Quest-named: AegisName contains 'ticket'; No mob drops in mob_db.yml
 7923,Krathong,No mob drops in mob_db.yml
 7928,Brazil National Flag,No mob drops in mob_db.yml
 7929,Gold Coin,No mob drops in mob_db.yml
-7931,Poison Kit,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/3rd_trader.txt:26
-7932,Poison Herb Nerium,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/3rd_trader.txt:26
-7933,Poison Herb Rantana,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/3rd_trader.txt:26
-7934,Poison Herb Makulata,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/3rd_trader.txt:26
-7935,Poison Herb Seratum,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/3rd_trader.txt:26
-7936,Poison Herb Scoporia,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/3rd_trader.txt:26
-7937,Poison Herb Amoena,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/3rd_trader.txt:26
-7938,Light Granule,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/3rd_trader.txt:40; GIVEN by NPC: getitem in npc/re/quests/eden/eden_iro.txt:899
-7939,Elder Branch,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/3rd_trader.txt:40; GIVEN by NPC: getitem in npc/re/quests/eden/eden_iro.txt:904
-7940,Special Alloy Trap,No mob drops in mob_db.yml; GIVEN by NPC: shop_item in npc/re/merchants/eden_market.txt:241; GIVEN by NPC: shop_item in npc/re/merchants/shops.txt:98
-7941,Halloween Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/events/halloween_2008.txt:54
-7942,Chico Cesar Letter,Quest-named: contains 'letter'; No mob drops in mob_db.yml
+7931,Poison Kit,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/3rd_trader.txt:26
+7932,Poison Herb Nerium,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/3rd_trader.txt:26
+7933,Poison Herb Rantana,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/3rd_trader.txt:26
+7934,Poison Herb Makulata,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/3rd_trader.txt:26
+7935,Poison Herb Seratum,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/3rd_trader.txt:26
+7936,Poison Herb Scoporia,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/3rd_trader.txt:26
+7937,Poison Herb Amoena,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/3rd_trader.txt:26
+7938,Light Granule,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/3rd_trader.txt:40; GIVEN: getitem in npc/re/quests/eden/eden_iro.txt:899
+7939,Elder Branch,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/3rd_trader.txt:40; GIVEN: getitem in npc/re/quests/eden/eden_iro.txt:904
+7940,Special Alloy Trap,No mob drops in mob_db.yml; GIVEN: shop_item in npc/re/merchants/eden_market.txt:241; GIVEN: shop_item in npc/re/merchants/shops.txt:98
+7941,Halloween Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml; GIVEN: getitem in npc/events/halloween_2008.txt:54
+7942,Chico Cesar Letter,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml
 7943,Caskinya,No mob drops in mob_db.yml
 7944,Sealed Box,No mob drops in mob_db.yml
 7945,Universal Amulet,No mob drops in mob_db.yml
 7946,Gold Ring Of Valentine,No mob drops in mob_db.yml
 7947,Silver Ring Of Valentine,No mob drops in mob_db.yml
-7948,Box,No mob drops in mob_db.yml; GIVEN by NPC: getitem in npc/events/valentinesday_2009.txt:294
+7948,Box,No mob drops in mob_db.yml; GIVEN: getitem in npc/events/valentinesday_2009.txt:294
 7949,Woven Wool,No mob drops in mob_db.yml
-7950,Ayothaya Fest Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7950,Ayothaya Fest Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7951,Golden Tulip Flower,No mob drops in mob_db.yml
 7952,Gift Of Lomi Ross,No mob drops in mob_db.yml
 7953,Gift Of Juliet,No mob drops in mob_db.yml
-7954,Summer Festival Ticket,Quest-named: contains 'ticket'; No mob drops in mob_db.yml
+7954,Summer Festival Ticket,Quest-named: Name contains 'ticket'; No mob drops in mob_db.yml
 7955,Lost Card1,No mob drops in mob_db.yml
 7956,Lost Card2,No mob drops in mob_db.yml
 7957,Lost Card3,No mob drops in mob_db.yml
@@ -828,12 +829,12 @@
 7969,Weird Parchment4,No mob drops in mob_db.yml
 7970,Unwritten Letter1,No mob drops in mob_db.yml
 7971,Unwritten Letter2,No mob drops in mob_db.yml
-7972,Oath Day Letter,Quest-named: contains 'letter'; No mob drops in mob_db.yml
+7972,Oath Day Letter,Quest-named: Name contains 'letter'; No mob drops in mob_db.yml
 7973,Immortality Egg,No mob drops in mob_db.yml
 7974,Illusion Piece,No mob drops in mob_db.yml
 7975,Cupid Choco,No mob drops in mob_db.yml
 7976,Gf Magic Coin,No mob drops in mob_db.yml
-7977,Hunting Medal Badge,Quest-named: contains 'badge'; No mob drops in mob_db.yml
+7977,Hunting Medal Badge,Quest-named: Name contains 'badge'; No mob drops in mob_db.yml
 7978,Spring Stanza1,No mob drops in mob_db.yml
 7979,Spring Stanza2,No mob drops in mob_db.yml
 7980,Spring Stanza3,No mob drops in mob_db.yml
