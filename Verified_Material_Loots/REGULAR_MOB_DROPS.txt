@@ -1,0 +1,207 @@
+# ============================================================
+# VERIFIED MATERIALS FROM REGULAR MONSTERS ONLY
+# Items that ONLY drop from regular mobs (NO boss drops)
+# ============================================================
+# Generated: 2025-12-01 03:23:58.255155
+# Total items: 194
+#
+# These items do NOT drop from any MVP or Mini-Boss
+# Safe for use without affecting boss hunting rewards
+#
+# Format: ItemID,AegisName,ItemName,MobCount
+# ============================================================
+
+904,Scorpion's_Tail,Scorpion Tail,2
+906,Pointed_Scale,Pointed Scale,7
+907,Resin,Resin,3
+917,Talon,Talon,2
+922,Orcish_Cuspid,Orc's Fang,1
+924,Powder_Of_Butterfly,Powder of Butterfly,4
+926,Scale_Of_Snakes,Snake Scale,5
+929,Immortal_Heart,Immortal Heart,1
+941,Nose_Ring,Nose Ring,2
+944,Horseshoe,Horseshoe,2
+951,Fin,Fin,8
+952,Cactus_Needle,Cactus Needle,2
+954,Shining_Scales,Shining Scale,4
+957,Decayed_Nail,Decayed Nail,1
+958,Horrendous_Mouth,Horrendous Mouth,5
+959,Rotten_Scale,Stinky Scale,1
+961,Conch,Conch,1
+972,Karvodailnirol,Karvodailnirol,6
+1004,Patriotism_Marks,Chivalry Emblem,2
+1006,Old_Magic_Book,Old Magicbook,3
+1012,Lizard_Scruff,Frill,2
+1016,Rat_Tail,Rat Tail,1
+1017,Moustache_Of_Mole,Mole Whiskers,3
+1018,Nail_Of_Mole,Mole Claw,2
+1033,Root_Of_Maneater,Maneater Root,5
+1037,Dragon_Train,Dragon Tail,5
+1041,Lantern,Lantern,2
+1043,Nail_Of_Orc,Orc Claw,1
+1044,Tooth_Of_,Zenorc's Fang,1
+1045,Sacred_Masque,Cultish Masque,2
+1053,Tooth_Of_Ancient_Fish,Ancient Tooth,2
+1054,Lip_Of_Ancient_Fish,Ancient Lips,3
+1056,Grit,Grit,3
+1058,Wing_Of_Moth,Moth Wings,1
+1060,Golden_Hair,Golden Hair,2
+1063,Sharpened_Cuspid,Fang,1
+1064,Reins,Reins,1
+1066,Tree_Of_Archer_1,Fine-grained Trunk,1
+1067,Tree_Of_Archer_2,Solid Trunk,1
+1068,Tree_Of_Archer_3,Barren Trunk,1
+1069,Mushroom_Of_Thief_1,Orange Net Mushroom,1
+1070,Mushroom_Of_Thief_2,Orange Gooey Mushroom,1
+1096,Round_Shell,Round Shell,4
+1098,Manacles,Manacles,2
+1099,Worn_Out_Prison_Uniform,Worn-out Prison Uniform,2
+7001,Mould_Powder,Mould Powder,3
+7002,Ogre_Tooth,Ogre Tooth,1
+7003,Anolian_Skin,Anolian Skin,2
+7007,Claw_Of_Rat,Claw of Rat,1
+7009,Glitter_Shell,Glitter Shell,1
+7010,Tail_Of_Steel_Scorpion,Tail of Steel Scorpion,1
+7011,Claw_Of_Monkey,Claw of Monkey,2
+7012,Tough_Scalelike_Stem,Tough Scalelike Stem,1
+7013,Coral_Reef,Coral Reef,2
+7014,Old_Portrait,Old Portrait,1
+7015,Bookclip_In_Memory,Bookclip in Memory,2
+7016,Spoon_Stub,Spoon Stub,3
+7021,Foolishness_Of_Blind,Foolishness of the Blind,1
+7034,Red_Socks_With_Holes,Red Stocking,1
+7035,Matchstick,Matchstick,1
+7038,Yarn,Yarn,1
+7064,Dragon_Fly_Wing,Wing of Dragonfly,1
+7065,Sea_Otter_Leather,Sea-Otter Fur,1
+7072,Rust_Suriken,Old Shuriken,1
+7098,Live_Coal,Live Coal,2
+7099,Old_Magic_Circle,Worn-out Magic Scroll,2
+7100,Sharp_Leaf,Sharp Leaf,4
+7101,Peco_Wing_Feather,Peco Peco Feather,1
+7107,Gaoat's_Skin,Antelope Skin,1
+7111,Smooth_Paper,Slick Paper,2
+7112,Fright_Paper_Blade,Sharp Paper,1
+7115,Harpy's_Feather,Harpy Feather,2
+7116,Harpy's_Claw,Harpy Talon,2
+7119,Spawns,Bacillus,3
+7120,Burning_Horse_Shoe,Burning Horseshoe,2
+7121,Honey_Jar,Honey Pot,1
+7124,Sand_Lump,Sand Clump,1
+7125,Scropion's_Nipper,Scorpion Claw,1
+7149,Yellow_Plate,Yellow Plate,1
+7150,Bamboo_Cut,Piece of Bamboo,2
+7151,Oil_Paper,Oil Paper,2
+7152,Glossy_Hair,Glossy Hair,1
+7153,Old_Japaness_Clothes,Worn-out Kimono,1
+7155,Poison_Toad's_Skin,Poisonous Toad Skin,1
+7156,Broken_Shuriken,Broken Shuriken,1
+7157,Black_Mask,Dark Mask,1
+7158,Broken_Wine_Vessel,Broken Liquor Jar,1
+7159,Tengu's_Nose,Tengu Nose,1
+7161,Black_Bear's_Skin,Black Bear Skin,1
+7162,Cloud_Piece,Cloud Crumb,1
+7163,Sharp_Feeler,Hard Feeler,1
+7164,Hard_Peach,Solid Peach,1
+7167,Mystery_Iron_Bit,Strange Steel Piece,1
+7168,Great_Wing,Giant Butterfly Wing,1
+7171,Leopard_Skin,Leopard Skin,2
+7172,Leopard_Talon,Leopard Claw,2
+7182,Cacao,Cacao,3
+7186,Thin_Stem,Thin Trunk,1
+7187,Festival_Mask,Festival Mask,1
+7188,Browny_Root,Brown Root,5
+7189,Heart_Of_Tree,Wooden Heart,1
+7190,Solid_Peeling,Solid Husk,1
+7192,Blade_Of_Pinwheel,Vane,1
+7194,Soft_Leaf,Soft Blade of Grass,2
+7195,Air_Rifle,Slingshot,1
+7196,Shoulder_Protection,Shoulder Protector,1
+7200,Flexible_String,Elastic Band,1
+7201,Log,Log,4
+7202,Beetle_Nipper,Pincher of Beetle,1
+7203,Solid_Twig,Strong Branch,2
+7205,Piece_Of_Black_Cloth,Piece of Black Cloth,2
+7207,Old_Manteau,Old Manteau,1
+7208,Rusty_Cleaver,Rusty Kitchen Knife,1
+7209,Dullahan's_Helm,Helm of Dullahan,1
+7210,Dullahan_Armor,Armor Piece of Dullahan,1
+7214,Bat_Cage,Bat Cage,1
+7215,Broken_Needle,Broken Needle,1
+7216,Red_Scarf,Red Muffler,1
+7218,Rotten_Rope,Decomposed Rope,1
+7219,Striped_Socks,Striped Sock,1
+7220,Ectoplasm,Ectoplasm,3
+7221,Tangled_Chain,Tangled Chains,1
+7222,Tree_Knot,Wooden Gnarl,1
+7223,Distorted_Portrait,Contorted Self-Portrait,1
+7262,Fan,Folding Fan of Cat Ghost,1
+7263,Cat_Eyed_Stone,Cat's Eye,1
+7264,Dried_Sand,Dry Sand,1
+7265,Dragon_Horn,Dragon Horn,1
+7266,Dragon_Fang,Denture from Dragon Mask,1
+7267,Tiger_Skin_Panties,Tiger Panty,3
+7268,Little_Blacky_Ghost,Little Ghost Doll,2
+7269,Bib,Pinafore,2
+7270,Milk_Bottle,Nursing Bottle,2
+7272,Meat_Dumpling_Doll,Rice Ball Doll,1
+7298,Leaf_Clothes,Fig Leaf,1
+7299,Bamboo_Basket,Straw Basket,2
+7301,Sword_Accessory,Tassel,1
+7312,Jubilee,Jubilee,4
+7315,Dark_Crystal_Fragment,Dark Crystal Fragment,1
+7316,Long_Limb,Insect Leg,1
+7317,Screw,Rusty Screw,11
+7318,Old_Pick,Old Pick,1
+7319,Old_Steel_Plate,Used Iron Plate,7
+7320,Air_Pollutant,Dust Pollutant,2
+7321,Fragment_Of_Crystal,Crystal Fragment,2
+7322,Poisonous_Gas,Toxic Gas,2
+7323,Battered_Kettle,Battered Kettle,1
+7325,Tube,Flexible Tube,3
+7326,Fluorescent_Liquid,Fluorescent Liquid,5
+7340,Will_Of_Darkness,Will of the Darkness,3
+7345,Armlet_Of_Prisoner,Handcuffs,7
+7347,Lab_Staff_Record,Research Chart,4
+7352,Transparent_Plate01,Transparent Plate,1
+7353,Transparent_Plate02,Transparent Plate,1
+7354,Transparent_Plate03,Transparent Plate,1
+7355,Transparent_Plate04,Transparent Plate,1
+7445,Dragonball_Green,Green Bijou,1
+7446,Dragonball_Blue,Blue Bijou,1
+7447,Dragonball_Red,Red Bijou,1
+7448,Dragonball_Yellow,Yellow Bijou,1
+7449,Bloody_Page,Bloody Page,1
+7477,Cookbook06,Level 6 Cookbook,3
+7478,Cookbook07,Level 7 Cookbook,1
+7507,Sturdy_Iron_Piece,Solid Iron Piece,7
+7512,Burnt_Parts,Burnt Part,3
+7561,Ice_Heart,Glacial Heart,5
+7565,Sticky_Poison,Sticky Poison,2
+7567,Suspicious_Hat,Suspicious Hat,4
+7568,White_Mask,White Mask,4
+7575,Red_Jewel_,Red Jewel,1
+7576,Blue_Jewel_,Blue Jewel,1
+7577,Golden_Jewel_,Yellow Jewel,1
+7703,Piece_Of_Cogwheel,Piece of Cogwheel,1
+7742,Kaong,Kaong,1
+7743,Gulaman,Gulaman,1
+7744,Leche_Flan,Leche Flan,1
+7745,Ube_Jam,Ube Jam,1
+7746,Sago,Sago,1
+7747,Langka,Langka,1
+7748,Sweet_Bean,Sweet Beans,1
+7749,Sweet_Banana,Sweet Bananas,1
+7750,Macapuno,Macapuno,1
+7751,Old_White_Cloth,Old White Cloth,2
+7753,Broken_Farming_Utensil,Broken Farming Utensil,1
+7762,Yaga_Pestle,Yaga's Pestle,1
+7781,Heart_Box,Engrave Treasure Box,1
+7850,Wooden_Block_,Wooden Block,9
+7860,Peeps,Peeps,1
+7861,Jelly_Bean,Jelly Bean,1
+7862,Marshmallow,Marshmallow,1
+7864,Love_Flower,Love Flower,1
+7884,Jade_Plate,Jade Plate,1
+7888,Bag_Of_Nuts,Bag of Nuts,1
+7930,Cowking's_Nose_Ring,Devil's Cattle Ring,1

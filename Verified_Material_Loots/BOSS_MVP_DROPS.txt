@@ -1,0 +1,79 @@
+# ============================================================
+# VERIFIED MATERIALS FROM BOSS/MVP MONSTERS
+# Items that drop from MVP or Mini-Boss monsters
+# ============================================================
+# Generated: 2025-12-01 03:23:58.254875
+# Total items: 65
+#
+# Boss Types:
+#   MVP = Major boss with MVP rewards
+#   Mini-Boss = Boss-type but not MVP
+#
+# Format: ItemID,AegisName,ItemName,BossCount,BossList
+# ============================================================
+
+920,Claw_Of_Wolves,Wolf Claw,1,Vagabond Wolf(Mini-Boss)
+967,Turtle_Shell,Turtle Shell,1,Turtle General(MVP)
+970,Alchol,Alcohol,1,Toad(Mini-Boss)
+971,Detrimindexta,Detrimindexta,1,Toad(Mini-Boss)
+1009,Sacred_Marks,Hand of God,2,Osiris(MVP); Dark Priest(Mini-Boss)
+1014,Jaws_Of_Ant,Ant Jaw,1,Phreeoni(MVP)
+1015,Thin_N'_Long_Tongue,Tongue,1,Phreeoni(MVP)
+1048,Slender_Snake,Horrendous Hair,1,Chimera(Mini-Boss)
+7008,Stiff_Horn,Stiff Horn,1,Tendrilion(Mini-Boss)
+7019,Loki's_Whispers,Loki's Whispers,1,Mysteltainn(Mini-Boss)
+7022,Old_Hilt,Old Hilt,2,Ogretooth(Mini-Boss); Gloom Under Night(MVP)
+7023,Blade_Lost_In_Darkness,Blade Lost in Darkness,2,Deviling(Mini-Boss); Gloom Under Night(MVP)
+7024,Bloody_Edge,Bloody Edge,2,Executioner(Mini-Boss); Valkyrie Randgris(MVP)
+7048,Talon_Of_Griffin,Talon of Griffon,1,Gryphon(Mini-Boss)
+7054,Brigan,Brigan,14,Gryphon(Mini-Boss); Mutant Dragonoid(Mini-Boss); Chimera(Mini-Boss); Dark Illusion(Mini-Boss); Odium of Thanatos(Mini-Boss); +9 more
+7066,Ice_Piece,Ice Cubic,1,Marozka's Guard(Mini-Boss)
+7067,Stone_Piece,Stone Fragment,1,Tao Gunka(MVP)
+7069,Broken_Armor_Piece,Destroyed Armor,2,Sword Master(Mini-Boss); Bow Master(Mini-Boss)
+7070,Broken_Shell,Broken Shell,1,Turtle General(MVP)
+7071,Tatters_Clothes,Tattered Clothes,2,Owl Baron(Mini-Boss); Owl Duke(Mini-Boss)
+7094,Mystery_Piece,Fragment,1,Vesper(MVP)
+7095,Broken_Steel_Piece,Metal Fragment,1,Vesper(MVP)
+7108,Boroken_Shiled_Piece,Piece of Shield,1,Lord of the Dead(MVP)
+7109,Shine_Spear_Blade,Shining Spear Blade,1,Lord of the Dead(MVP)
+7110,Vroken_Sword,Broken Sword,1,Byorgue(Mini-Boss)
+7113,Broken_Pharaoh_Symbol,Broken Pharaoh Emblem,1,Pharaoh(MVP)
+7122,Hot_Hair,Burning Hair,1,Kasa(Mini-Boss)
+7123,Dragon's_Skin,Dragon Skin,1,Hydrolancer(Mini-Boss)
+7165,Limpid_Celestial_Robe,Transparent Celestial Robe,1,White Lady(MVP)
+7166,Soft_Silk_Cloth,Soft Silk,1,White Lady(MVP)
+7169,Taegeuk_Plate,Ba Gua,1,Evil Snake Lord(MVP)
+7197,Tough_Vines,Tough Vines,1,Tendrilion(Mini-Boss)
+7211,Rojerta_Piece,Fragment of Rossata Stone,1,Amon Ra(MVP)
+7225,Pumpkin_Bucket,Pumpkin Lantern,1,Delightful Lude(Mini-Boss)
+7226,Pill,Pellet,1,Evil Snake Lord(MVP)
+7300,Gemstone,Gemstone,1,Tao Gunka(MVP)
+7303,Bag_Of_Rice,Straw Rice Bag,1,Gullinbrusti(Mini-Boss)
+7327,Headlamp,Flashlight,1,RSX-0806(MVP)
+7337,Eye_Of_Hellion,Eye of Hellion,1,Hellion Revenant(Mini-Boss)
+7443,Tri_Headed_Dragon_Head,Three-Headed Dragon's Head,1,Hydrolancer(Mini-Boss)
+7450,Piece_Of_Bone_Armor,Skeletal Armor Piece,1,Memory of Thanatos(MVP)
+7451,Scale_Of_Red_Dragon,Fire Dragon Scale,1,Detardeurus(MVP)
+7479,Cookbook08,Level 8 Cookbook,1,Gemini-S58(Mini-Boss)
+7480,Cookbook09,Level 9 Cookbook,1,Turtle General(MVP)
+7481,Cookbook10,Level 10 Cookbook,1,Maya Purple(Mini-Boss)
+7484,Warrior_Symbol,Symbol of a Brave Warrior,1,Doppelganger(Mini-Boss)
+7513,Pocket_Watch,Pocket Watch,1,Kiel D-01(MVP)
+7562,Ice_Scale,Ice Scale,1,Ktullanux(MVP)
+7563,Bloody_Rune,Bloody Rune,1,Atroce(MVP)
+7564,Rotten_Meat,Rotten Meat,1,Galion(Mini-Boss)
+7566,Will_Of_Darkness_,Will of Red Darkness,1,Gloom Under Night(MVP)
+7578,Anti_Spell_Bead,Countermagic Crystal,1,Bloody Knight(Mini-Boss)
+7582,Gem_Of_Ruin,Jewel of Destruction,1,Treasure Chest(Mini-Boss)
+7583,Evil_Mind,Evil Mind,12,Lord Knight Seyren(Mini-Boss); Assassin Cross Eremes(Mini-Boss); Mastersmith Howard(Mini-Boss); High Priest Margaretha(Mini-Boss); Sniper Cecil(Mini-Boss); +7 more
+7607,Evil_Dragon_Head,Neck of Demon Dragon,1,Hydrolancer(Mini-Boss)
+7609,Pumpkin_Mojo,Pumpkin Mojo,1,Delightful Lude(Mini-Boss)
+7613,Small_Rice_Dough,Small Rice Cake Dough,1,Rice Cake(Mini-Boss)
+7701,Dragon_Spirit,Soul,1,Detarderous(Mini-Boss)
+7752,Clattering_Skull,Clattering Skull,1,Necromancer(Mini-Boss)
+7754,Broken_Crown,Broken Crown,1,Beelzebub(MVP)
+7798,Dark_Debris,Fragment of Darkness,5,Wounded Morocc(MVP); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss)
+7799,Dark_Crystal,Crystal of Darkness,5,Wounded Morocc(MVP); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss)
+7849,Soul_Crystal,Soul Crystal,1,Treasure Chest(Mini-Boss)
+7858,Dragonball_Yellow_,Dragonball Yellow,1,Dream Metal(Mini-Boss)
+7863,GOLD_ID4,Special Gold,1,Crystal(Mini-Boss)

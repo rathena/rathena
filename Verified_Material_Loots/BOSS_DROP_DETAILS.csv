@@ -1,0 +1,104 @@
+ItemID,ItemName,AegisName,MobID,MobName,BossType,DropRate,MobLevel,DropType
+920,Wolf Claw,Claw_Of_Wolves,1092,Vagabond Wolf,Mini-Boss,8000,24,normal
+967,Turtle Shell,Turtle_Shell,1312,Turtle General,MVP,5500,97,mvp_drop
+970,Alcohol,Alchol,1089,Toad,Mini-Boss,100,10,normal
+971,Detrimindexta,Detrimindexta,1089,Toad,Mini-Boss,100,10,normal
+1009,Hand of God,Sacred_Marks,1038,Osiris,MVP,1000,78,normal
+1009,Hand of God,Sacred_Marks,1198,Dark Priest,Mini-Boss,50,79,normal
+1014,Ant Jaw,Jaws_Of_Ant,1159,Phreeoni,MVP,5000,69,normal
+1015,Tongue,Thin_N'_Long_Tongue,1159,Phreeoni,MVP,9700,69,normal
+1048,Horrendous Hair,Slender_Snake,1283,Chimera,Mini-Boss,2500,70,normal
+7008,Stiff Horn,Stiff_Horn,1991,Tendrilion,Mini-Boss,4850,113,normal
+7019,Loki's Whispers,Loki's_Whispers,1203,Mysteltainn,Mini-Boss,1,76,normal
+7022,Old Hilt,Old_Hilt,1204,Ogretooth,Mini-Boss,1,71,normal
+7022,Old Hilt,Old_Hilt,1768,Gloom Under Night,MVP,2000,89,normal
+7023,Blade Lost in Darkness,Blade_Lost_In_Darkness,1582,Deviling,Mini-Boss,1,31,normal
+7023,Blade Lost in Darkness,Blade_Lost_In_Darkness,1768,Gloom Under Night,MVP,4000,89,normal
+7024,Bloody Edge,Bloody_Edge,1205,Executioner,Mini-Boss,5,65,normal
+7024,Bloody Edge,Bloody_Edge,1751,Valkyrie Randgris,MVP,2500,99,normal
+7048,Talon of Griffon,Talon_Of_Griffin,1259,Gryphon,Mini-Boss,2500,72,normal
+7054,Brigan,Brigan,1259,Gryphon,Mini-Boss,5335,72,normal
+7054,Brigan,Brigan,1262,Mutant Dragonoid,Mini-Boss,4850,65,normal
+7054,Brigan,Brigan,1283,Chimera,Mini-Boss,5335,70,normal
+7054,Brigan,Brigan,1302,Dark Illusion,Mini-Boss,5335,77,normal
+7054,Brigan,Brigan,1704,Odium of Thanatos,Mini-Boss,1000,92,normal
+7054,Brigan,Brigan,1705,Despero of Thanatos,Mini-Boss,1000,88,normal
+7054,Brigan,Brigan,1706,Maero of Thanatos,Mini-Boss,1000,83,normal
+7054,Brigan,Brigan,1707,Dolor of Thanatos,Mini-Boss,1000,83,normal
+7054,Brigan,Brigan,1709,Odium of Thanatos,Mini-Boss,1000,92,normal
+7054,Brigan,Brigan,1710,Despero of Thanatos,Mini-Boss,1000,88,normal
+7054,Brigan,Brigan,1711,Maero of Thanatos,Mini-Boss,1000,83,normal
+7054,Brigan,Brigan,1712,Dolor of Thanatos,Mini-Boss,1000,83,normal
+7054,Brigan,Brigan,1918,Incarnation of Morocc,Mini-Boss,4850,97,normal
+7054,Brigan,Brigan,1920,Incarnation of Morocc,Mini-Boss,4850,96,normal
+7066,Ice Cubic,Ice_Piece,1889,Marozka's Guard,Mini-Boss,2000,73,normal
+7067,Stone Fragment,Stone_Piece,1583,Tao Gunka,MVP,4850,70,normal
+7069,Destroyed Armor,Broken_Armor_Piece,1829,Sword Master,Mini-Boss,3000,86,normal
+7069,Destroyed Armor,Broken_Armor_Piece,1830,Bow Master,Mini-Boss,3000,80,normal
+7070,Broken Shell,Broken_Shell,1312,Turtle General,MVP,5335,97,normal
+7071,Tattered Clothes,Tatters_Clothes,1295,Owl Baron,Mini-Boss,3500,75,normal
+7071,Tattered Clothes,Tatters_Clothes,1320,Owl Duke,Mini-Boss,4413,75,normal
+7094,Fragment,Mystery_Piece,1685,Vesper,MVP,3000,97,normal
+7095,Metal Fragment,Broken_Steel_Piece,1685,Vesper,MVP,5000,97,normal
+7108,Piece of Shield,Boroken_Shiled_Piece,1373,Lord of the Dead,MVP,5335,94,normal
+7109,Shining Spear Blade,Shine_Spear_Blade,1373,Lord of the Dead,MVP,10,94,normal
+7110,Broken Sword,Vroken_Sword,1839,Byorgue,Mini-Boss,4365,86,normal
+7113,Broken Pharaoh Emblem,Broken_Pharaoh_Symbol,1157,Pharaoh,MVP,5820,93,normal
+7122,Burning Hair,Hot_Hair,1833,Kasa,Mini-Boss,2500,85,normal
+7123,Dragon Skin,Dragon's_Skin,1720,Hydrolancer,Mini-Boss,4000,89,normal
+7165,Transparent Celestial Robe,Limpid_Celestial_Robe,1630,White Lady,MVP,3000,85,normal
+7166,Soft Silk,Soft_Silk_Cloth,1630,White Lady,MVP,1000,85,normal
+7169,Ba Gua,Taegeuk_Plate,1418,Evil Snake Lord,MVP,5820,73,normal
+7197,Tough Vines,Tough_Vines,1991,Tendrilion,Mini-Boss,5335,113,normal
+7211,Fragment of Rossata Stone,Rojerta_Piece,1511,Amon Ra,MVP,7760,88,normal
+7225,Pumpkin Lantern,Pumpkin_Bucket,1812,Delightful Lude,Mini-Boss,5000,99,normal
+7226,Pellet,Pill,1418,Evil Snake Lord,MVP,900,73,normal
+7300,Gemstone,Gemstone,1583,Tao Gunka,MVP,4850,70,normal
+7303,Straw Rice Bag,Bag_Of_Rice,1828,Gullinbrusti,Mini-Boss,6000,20,normal
+7327,Flashlight,Headlamp,1623,RSX-0806,MVP,5000,86,normal
+7337,Eye of Hellion,Eye_Of_Hellion,1626,Hellion Revenant,Mini-Boss,8000,88,normal
+7443,Three-Headed Dragon's Head,Tri_Headed_Dragon_Head,1720,Hydrolancer,Mini-Boss,3880,89,normal
+7450,Skeletal Armor Piece,Piece_Of_Bone_Armor,1708,Memory of Thanatos,MVP,5000,99,normal
+7451,Fire Dragon Scale,Scale_Of_Red_Dragon,1719,Detardeurus,MVP,3589,90,normal
+7479,Level 8 Cookbook,Cookbook08,1681,Gemini-S58,Mini-Boss,6,72,normal
+7480,Level 9 Cookbook,Cookbook09,1312,Turtle General,MVP,200,97,normal
+7481,Level 10 Cookbook,Cookbook10,1289,Maya Purple,Mini-Boss,2,81,normal
+7484,Symbol of a Brave Warrior,Warrior_Symbol,1731,Doppelganger,Mini-Boss,10000,72,normal
+7513,Pocket Watch,Pocket_Watch,1734,Kiel D-01,MVP,3000,90,normal
+7562,Ice Scale,Ice_Scale,1779,Ktullanux,MVP,9000,98,normal
+7563,Bloody Rune,Bloody_Rune,1785,Atroce,MVP,7000,82,normal
+7564,Rotten Meat,Rotten_Meat,1783,Galion,Mini-Boss,3000,44,normal
+7566,Will of Red Darkness,Will_Of_Darkness_,1768,Gloom Under Night,MVP,7000,89,normal
+7578,Countermagic Crystal,Anti_Spell_Bead,1795,Bloody Knight,Mini-Boss,10000,82,normal
+7582,Jewel of Destruction,Gem_Of_Ruin,1798,Treasure Chest,Mini-Boss,10000,99,normal
+7583,Evil Mind,Evil_Mind,1799,Lord Knight Seyren,Mini-Boss,300,99,normal
+7583,Evil Mind,Evil_Mind,1800,Assassin Cross Eremes,Mini-Boss,300,99,normal
+7583,Evil Mind,Evil_Mind,1801,Mastersmith Howard,Mini-Boss,300,99,normal
+7583,Evil Mind,Evil_Mind,1802,High Priest Margaretha,Mini-Boss,300,99,normal
+7583,Evil Mind,Evil_Mind,1803,Sniper Cecil,Mini-Boss,300,99,normal
+7583,Evil Mind,Evil_Mind,1804,High Wizard Kathryne,Mini-Boss,300,99,normal
+7583,Evil Mind,Evil_Mind,1805,Lord Knight Seyren,Mini-Boss,10000,99,normal
+7583,Evil Mind,Evil_Mind,1806,Assassin Cross Eremes,Mini-Boss,10000,99,normal
+7583,Evil Mind,Evil_Mind,1807,Mastersmith Howard,Mini-Boss,10000,99,normal
+7583,Evil Mind,Evil_Mind,1808,High Priest Margaretha,Mini-Boss,10000,99,normal
+7583,Evil Mind,Evil_Mind,1809,Sniper Cecil,Mini-Boss,10000,99,normal
+7583,Evil Mind,Evil_Mind,1810,High Wizard Kathryne,Mini-Boss,10000,99,normal
+7607,Neck of Demon Dragon,Evil_Dragon_Head,1813,Hydrolancer,Mini-Boss,10000,99,normal
+7609,Pumpkin Mojo,Pumpkin_Mojo,1812,Delightful Lude,Mini-Boss,5000,99,normal
+7613,Small Rice Cake Dough,Small_Rice_Dough,1815,Rice Cake,Mini-Boss,10000,12,normal
+7701,Soul,Dragon_Spirit,1817,Detarderous,Mini-Boss,10000,99,normal
+7752,Clattering Skull,Clattering_Skull,1870,Necromancer,Mini-Boss,3000,88,normal
+7754,Broken Crown,Broken_Crown,1874,Beelzebub,MVP,9000,98,normal
+7798,Fragment of Darkness,Dark_Debris,1917,Wounded Morocc,MVP,9000,99,normal
+7798,Fragment of Darkness,Dark_Debris,1918,Incarnation of Morocc,Mini-Boss,3000,97,normal
+7798,Fragment of Darkness,Dark_Debris,1919,Incarnation of Morocc,Mini-Boss,3000,97,normal
+7798,Fragment of Darkness,Dark_Debris,1920,Incarnation of Morocc,Mini-Boss,3000,96,normal
+7798,Fragment of Darkness,Dark_Debris,1921,Incarnation of Morocc,Mini-Boss,3000,98,normal
+7799,Crystal of Darkness,Dark_Crystal,1917,Wounded Morocc,MVP,9000,99,normal
+7799,Crystal of Darkness,Dark_Crystal,1918,Incarnation of Morocc,Mini-Boss,1000,97,normal
+7799,Crystal of Darkness,Dark_Crystal,1919,Incarnation of Morocc,Mini-Boss,1000,97,normal
+7799,Crystal of Darkness,Dark_Crystal,1920,Incarnation of Morocc,Mini-Boss,1000,96,normal
+7799,Crystal of Darkness,Dark_Crystal,1921,Incarnation of Morocc,Mini-Boss,1000,98,normal
+7849,Soul Crystal,Soul_Crystal,1955,Treasure Chest,Mini-Boss,4000,99,normal
+7858,Dragonball Yellow,Dragonball_Yellow_,1846,Dream Metal,Mini-Boss,2000,90,normal
+7863,Special Gold,GOLD_ID4,1877,Crystal,Mini-Boss,10,1,normal

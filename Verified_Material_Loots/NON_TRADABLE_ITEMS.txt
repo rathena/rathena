@@ -1,0 +1,18 @@
+# ============================================================
+# NON-TRADABLE VERIFIED MATERIALS
+# These items have trade restrictions that may need updating
+# ============================================================
+# Generated: 2025-12-01 03:23:58.254610
+# Total items: 8
+#
+# Format: ItemID,AegisName,ItemName,Restrictions
+# ============================================================
+
+7484,Warrior_Symbol,Symbol of a Brave Warrior,no_drop, no_trade, no_sell, no_cart, no_storage, no_guild_storage, no_mail, no_auction
+7575,Red_Jewel_,Red Jewel,no_drop, no_trade, no_sell, no_cart, no_storage, no_guild_storage, no_mail, no_auction
+7576,Blue_Jewel_,Blue Jewel,no_drop, no_trade, no_sell, no_cart, no_storage, no_guild_storage, no_mail, no_auction
+7577,Golden_Jewel_,Yellow Jewel,no_drop, no_trade, no_cart, no_storage, no_guild_storage, no_mail, no_auction
+7583,Evil_Mind,Evil Mind,no_drop, no_trade, no_cart, no_storage, no_guild_storage, no_mail, no_auction
+7863,GOLD_ID4,Special Gold,no_drop, no_trade, no_cart, no_guild_storage, no_mail, no_auction
+7884,Jade_Plate,Jade Plate,no_drop, no_trade, no_sell, no_cart, no_guild_storage, no_mail, no_auction
+7930,Cowking's_Nose_Ring,Devil's Cattle Ring,no_drop, no_trade, no_sell, no_cart, no_storage, no_guild_storage, no_mail, no_auction
