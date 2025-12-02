@@ -1,0 +1,25 @@
+# ============================================================
+# EVENT-ONLY DROPS (NOT FARMABLE NORMALLY)
+# Items that ONLY drop from Event/Guild/WoE mobs
+# ============================================================
+# Generated: 2025-12-02 01:01:48.305441
+# Total items: 8
+#
+# WARNING: These items CANNOT be farmed normally!
+# They only drop from event/guild mobs that don't spawn in the
+# regular game world. DO NOT use these in quests unless you
+# have custom spawns for these mobs.
+#
+# Event mob prefixes: EVENT_, G_, E_
+#
+# Format: ItemID,AegisName,ItemName,EventMobCount,EventMobList
+# ============================================================
+
+7225,Pumpkin_Bucket,Pumpkin Lantern,1,Delightful Lude(EVENT_LUDE)
+7303,Bag_Of_Rice,Straw Rice Bag,1,Gullinbrusti(EVENT_GULLINBURSTI)
+7337,Eye_Of_Hellion,Eye of Hellion,1,Hellion Revenant(G_DARK_PRIEST)
+7484,Warrior_Symbol,Symbol of a Brave Warrior,1,Doppelganger(G_DOPPELGANGER)
+7607,Evil_Dragon_Head,Neck of Demon Dragon,1,Hydrolancer(EVENT_HYDRO)
+7609,Pumpkin_Mojo,Pumpkin Mojo,1,Delightful Lude(EVENT_LUDE)
+7613,Small_Rice_Dough,Small Rice Cake Dough,1,Rice Cake(EVENT_RICECAKE)
+7701,Dragon_Spirit,Soul,1,Detarderous(EVENT_DETALE)

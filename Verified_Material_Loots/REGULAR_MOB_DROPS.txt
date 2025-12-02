@@ -2,10 +2,10 @@
 # VERIFIED MATERIALS FROM REGULAR MONSTERS ONLY
 # Items that ONLY drop from regular mobs (NO boss drops)
 # ============================================================
-# Generated: 2025-12-01 03:23:58.255155
+# Generated: 2025-12-02 01:01:48.305641
 # Total items: 194
 #
-# These items do NOT drop from any MVP or Mini-Boss
+# These items do NOT drop from any MVP, Mini-Boss, or Event mob
 # Safe for use without affecting boss hunting rewards
 #
 # Format: ItemID,AegisName,ItemName,MobCount
