@@ -691,6 +691,8 @@ enum e_require_state : uint8 {
 };
 
 /// List of Skills
+/// Note: Some skills have the official name commented next to it due to
+/// these ID's being discovered and used before we knew the official names.
 enum e_skill {
 	NV_BASIC = 1,
 
