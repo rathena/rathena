@@ -1735,6 +1735,9 @@ bool pc_is_same_equip_index(enum equip_index eqi, int16 *equip_index, int16 inde
 /// Check if player is Taekwon Ranker and the level is >= 90 (battle_config.taekwon_ranker_min_lv)
 #define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
 
+/// Check if player is a trait job.
+#define pc_is_trait_job(class_) (((class_)&JOBL_FOURTH) || ((class_)&MAPID_THIRDMASK) == MAPID_NIGHT_WATCH || ((class_)&MAPID_THIRDMASK) == MAPID_SHINKIROSHIRANUI || ((class_)&MAPID_UPPERMASK) == MAPID_SPIRIT_HANDLER)
+
 TIMER_FUNC(pc_autotrade_timer);
 
 void pc_validate_skill(map_session_data *sd);
