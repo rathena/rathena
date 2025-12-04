@@ -4862,6 +4862,11 @@ a palette number that exists/is usable by the client you use.
 
 	setlook LOOK_CLOTHES_COLOR,1;
 
+	// This will change your body sprite, so they are using job id 1, whatever
+	// your sprite Swordsman is, your body will look that job sprite.
+
+	setlook LOOK_BODY2,1;
+
 Here are the possible look types:
 
  LOOK_BASE - Base sprite
