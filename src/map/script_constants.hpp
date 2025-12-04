@@ -857,6 +857,7 @@
 	export_constant2("bAddItemSPHealRate", SP_ADD_ITEM_SPHEAL_RATE);
 	export_constant2("bAddItemGroupSPHealRate", SP_ADD_ITEMGROUP_SPHEAL_RATE);
 	export_constant2("bWeaponSubSize", SP_WEAPON_SUBSIZE);
+	export_constant2("bNormalAtkRate", SP_NORMAL_ATK_RATE);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);
@@ -10309,6 +10310,7 @@
 	export_constant(INF2_SHOWSCALE);
 	export_constant(INF2_IGNOREGTB);
 	export_constant(INF2_TOGGLEABLE);
+	export_constant(INF2_IGNORENORMALATKBONUS);
 
 	/* skill no near npc flags */
 	export_constant(SKILL_NONEAR_WARPPORTAL);
