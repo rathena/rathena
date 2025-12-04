@@ -507,7 +507,7 @@ void buyingstore_trade( map_session_data* sd, uint32 account_id, uint32 buyer_id
 
 
 /// Checks if an item is being bought in given player's buying store.
-bool buyingstore_search(map_session_data* sd, t_itemid nameid)
+bool buyingstore_search( const map_session_data* sd, t_itemid nameid )
 {
 	uint32 i;
 
@@ -530,10 +530,10 @@ bool buyingstore_search(map_session_data* sd, t_itemid nameid)
 
 /// Searches for all items in a buyingstore, that match given ids, price and possible cards.
 /// @return Whether or not the search should be continued.
-bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_search* s)
+bool buyingstore_searchall( const map_session_data* sd, const struct s_search_store_search* s )
 {
 	uint32 i, idx;
-	struct s_buyingstore_item* it;
+	const s_buyingstore_item* it;
 
 	nullpo_ret(sd);
 

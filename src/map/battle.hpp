@@ -127,26 +127,27 @@ int32 battle_damage(block_list *src, block_list *target, int64 damage, int16 div
 int32 battle_delay_damage (t_tick tick, int32 amotion, block_list *src, block_list *target, int32 attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int16 div_, bool additional_effects, bool isspdamage, bool is_norm_attacked = false);
 int32 battle_fix_damage(block_list* src, block_list* target, int64 damage, int16 div_, uint16 skill_id);
 
-int32 battle_calc_chorusbonus(map_session_data *sd);
+int32 battle_calc_chorusbonus(const map_session_data* sd);
 
 // Summary normal attack treatment (basic attack)
 enum damage_lv battle_weapon_attack( block_list *bl,block_list *target,t_tick tick,int32 flag);
 
 // Accessors
 block_list* battle_get_master(block_list *src);
-block_list* battle_gettargeted(block_list *target);
-block_list* battle_getenemy(block_list *target, int32 type, int32 range);
-int32 battle_gettarget(block_list *bl);
-uint16 battle_getcurrentskill(block_list *bl);
+const block_list* battle_get_master( const block_list* src );
+block_list* battle_gettargeted( const block_list* target );
+block_list* battle_getenemy( const block_list* target, int32 type, int32 range );
+int32 battle_gettarget( const block_list* bl );
+uint16 battle_getcurrentskill( const block_list* bl );
 
 int32 battle_check_undead(int32 race,int32 element);
-int32 battle_check_target(block_list *src, block_list *target,int32 flag);
-bool battle_check_range(block_list *src,block_list *bl,int32 range);
-bool battle_check_coma(map_session_data& sd, block_list& target, e_battle_flag attack_type);
+int32 battle_check_target( const block_list* src, const block_list* target,int32 flag );
+bool battle_check_range( const block_list* src,const block_list* bl,int32 range );
+bool battle_check_coma( const map_session_data& sd, const block_list& target, e_battle_flag attack_type );
 
 void battle_consume_ammo(map_session_data* sd, int32 skill, int32 lv);
 
-bool is_infinite_defense(block_list *target, int32 flag);
+bool is_infinite_defense( const block_list* target, int32 flag );
 
 // Settings
 
