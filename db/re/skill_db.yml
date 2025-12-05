@@ -43979,7 +43979,7 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Ground
-    Range: 1
+    Range: 9
     Hit: Multi_Hit
     HitCount: -3
     Element: Weapon
