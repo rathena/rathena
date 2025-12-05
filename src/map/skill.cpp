@@ -5491,10 +5491,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case SS_KAGEGISSEN:
-		skill_mirage_cast(*src, bl, skill_id, skill_lv, 0, 0, tick, flag);
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		[[fallthrough]];
 	case NC_FLAMELAUNCHER:
 		skill_area_temp[1] = bl->id;
 		if (battle_config.skill_eightpath_algorithm) {
@@ -5853,6 +5849,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SKE_SKY_SUN:
 	case SKE_SKY_MOON:
 	case SKE_STAR_LIGHT_KICK:
+	case SS_KAGEGISSEN:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
 			int32 heal = 0;

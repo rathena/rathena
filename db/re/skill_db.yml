@@ -43850,12 +43850,35 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    Range: 1
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 2
     Hit: Multi_Hit
     HitCount: -4
     GiveAp: 1
     Element: Weapon
-    SplashArea: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
     ActiveInstance: 10
     AfterCastActDelay: 250
     Cooldown: 500
