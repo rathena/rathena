@@ -44295,40 +44295,60 @@ Body:
     Description: Thundering Cannon
     MaxLevel: 10
     Type: Magic
-    TargetType: Ground
-    Range: 1
+    TargetType: Attack
+    Range: 9
     Hit: Multi_Hit
     HitCount: -2
     ActiveInstance: 13
     Element: Wind
     DamageFlags:
       Splash: true
-    SplashArea: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
     CastTime: 2000
     Cooldown: 700
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 47
+          Amount: 53
         - Level: 2
-          Amount: 52
+          Amount: 56
         - Level: 3
-          Amount: 57
+          Amount: 59
         - Level: 4
           Amount: 62
         - Level: 5
-          Amount: 67
+          Amount: 65
         - Level: 6
-          Amount: 72
+          Amount: 68
         - Level: 7
-          Amount: 77
+          Amount: 71
         - Level: 8
-          Amount: 82
+          Amount: 74
         - Level: 9
-          Amount: 87
+          Amount: 77
         - Level: 10
-          Amount: 92
+          Amount: 80
       ItemCost:
         - Item: SS_Charm_L
           Amount: 1
