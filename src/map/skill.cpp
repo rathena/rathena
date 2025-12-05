@@ -5850,6 +5850,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SKE_SKY_MOON:
 	case SKE_STAR_LIGHT_KICK:
 	case SS_KAGEGISSEN:
+	case SS_SEKIENHOU:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
 			int32 heal = 0;
@@ -15470,7 +15471,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
 	case SS_RAIDENPOU:
-	case SS_SEKIENHOU:
 		skill_area_temp[1] = 0;
 		skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, x, y, tick, flag | BCT_WOS);
 		if (map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR)) {
