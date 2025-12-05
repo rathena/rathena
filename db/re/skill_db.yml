@@ -43809,7 +43809,7 @@ Body:
       - Level: 4
         Area: 2
       - Level: 5
-        Area: 3
+        Area: 2
       - Level: 6
         Area: 3
       - Level: 7
@@ -43817,33 +43817,33 @@ Body:
       - Level: 8
         Area: 3
       - Level: 9
-        Area: 4
+        Area: 3
       - Level: 10
-        Area: 4
+        Area: 3
     AfterCastActDelay: 250
     Cooldown: 400
     Requires:
       SpCost:
         - Level: 1
-          Amount: 38
+          Amount: 37
         - Level: 2
-          Amount: 41
+          Amount: 42
         - Level: 3
-          Amount: 44
-        - Level: 4
           Amount: 47
+        - Level: 4
+          Amount: 52
         - Level: 5
-          Amount: 50
+          Amount: 57
         - Level: 6
-          Amount: 53
-        - Level: 7
-          Amount: 56
-        - Level: 8
-          Amount: 59
-        - Level: 9
           Amount: 62
+        - Level: 7
+          Amount: 67
+        - Level: 8
+          Amount: 72
+        - Level: 9
+          Amount: 77
         - Level: 10
-          Amount: 65
+          Amount: 82
   - Id: 5482
     Name: SS_KAGEGISSEN
     Description: Shadow Flash
