@@ -6668,7 +6668,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio = skillratio * 3 / 10;
 			break;
 		case SS_KUNAIKUSSETSU:
-			skillratio += -100 + 200 + 360 * skill_lv;
+			skillratio += -100 + 250 + 420 * skill_lv;
 			skillratio += pc_checkskill( sd, SS_KUNAIKAITEN ) * 10 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
