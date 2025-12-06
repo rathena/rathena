@@ -334,25 +334,63 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						return 0;
 					}
 					break;
-				case LOOK_BODY2:
-					if( !this->asUInt32( optionNode, "Value", value ) ){
-						return 0;
-					}
+				case LOOK_BODY2: {
+						std::string job_name;
 
-					// TODO: Unsupported for now => This is job specific now
-#if 0
-					if( value < MIN_BODY_STYLE ){
-						this->invalidWarning( optionNode["Value"], "stylist_parseBodyNode: body style \"%u\" is too low...\n", value );
-						return 0;
-					}else if( value > MAX_BODY_STYLE ){
-						this->invalidWarning( optionNode["Value"], "stylist_parseBodyNode: body style \"%u\" is too high...\n", value );
-						return 0;
-					}
-#endif
-					break;
+						if( !this->asString( optionNode, "Value", job_name ) ){
+							return 0;
+						}
+
+						std::string job_name_constant = "JOB_" + job_name;
+						int64 job_id;
+
+						if( !script_get_constant( job_name_constant.c_str(), &job_id ) ){
+							this->invalidWarning( optionNode["Value"], "Job %s does not exist.\n", job_name.c_str() );
+							return 0;
+						}
+
+						value = static_cast<decltype(value)>( job_id );
+					} break;
 			}
 
 			entry->value = value;
+		}
+
+		if (this->nodeExists(optionNode, "RequiredJobs")) {
+			const ryml::NodeRef& jobNode = optionNode["RequiredJobs"];
+
+			for (const auto& jobit : jobNode) {
+				std::string jobName;
+				c4::from_chars(jobit.key(), &jobName);
+				std::string job_name_constant = "JOB_" + jobName;
+				int64 job_id_constant;
+
+				if (!script_get_constant(job_name_constant.c_str(), &job_id_constant)) {
+					this->invalidWarning(optionNode["RequiredJobs"], "Job %s does not exist.\n", jobName.c_str());
+					return 0;
+				}
+
+				bool active;
+
+				if (!this->asBool(jobNode, jobName, active))
+					return 0;
+
+				uint16 job_id = static_cast<decltype(job_id)>( job_id_constant );
+
+				if( active ){
+					if( util::vector_exists( entry->required_jobs, job_id ) ){
+						this->invalidWarning( jobit, "Job \"%s\" is already required. Please check your data.\n", jobName.c_str() );
+						return false;
+					}else{
+						entry->required_jobs.push_back( job_id );
+					}
+				}else{
+					if( !util::vector_erase_if_exists( entry->required_jobs, job_id ) ){
+						this->invalidWarning( jobit, "Job \"%s\" is not required. Please check your data.\n", jobName.c_str() );
+						return false;
+					}
+				}
+			}
 		}
 
 		if( this->nodeExists( optionNode, "CostsHuman" ) ) {
