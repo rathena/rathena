@@ -6680,8 +6680,8 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(100);
 			break;
 		case SS_KAGEGISSEN:
-			skillratio += -100 + 1600 + 700 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_KAGENOMAI ) * 100 * skill_lv;
+			skillratio += -100 + 1500 + 950 * skill_lv;
+			skillratio += pc_checkskill( sd, SS_KAGENOMAI ) * 150 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			if (wd->miscflag & SKILL_ALTDMG_FLAG)
