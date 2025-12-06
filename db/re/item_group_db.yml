@@ -37,16 +37,18 @@
 #          Stacked             Whether stackable items are given stacked or not. (Default: true)
 #          Named               Inscribes the item with the obtainer's name. (Default: false)
 #          Bound               Binds the obtained item. (Default: None)
-#          RandomOptionGroup   Applies random options of this group to all equipable items (Default: None)
-#          RefineMinimum       Applies at least this refine level to all equipable items (Default: 0)
-#          RefineMaximum       Applies at most this refine level to all equipable items (Default: 0)
+#          RandomOptionGroup   Applies random options of this group to all equipable items. (Default: None)
+#          RefineMinimum       Applies at least this refine level to all equipable items. (Default: 0)
+#          RefineMaximum       Applies at most this refine level to all equipable items. (Default: 0)
+#          GradeMinimum        Applies at least this level of grade to all equipable items. (Default: None)
+#          GradeMaximum        Applies at most this level of grade to all equipable items. (Default: None)
 #          Clear               Whether the current datas should be removed. (Optional)
 #       Clear                  Remove the given SubGroup. (Optional)
 ###########################################################################
 
 Header:
   Type: ITEM_GROUP_DB
-  Version: 4
+  Version: 5
 
 Body:
   - Group: 2013_RWC_SCROLL
@@ -114387,57 +114389,93 @@ Body:
             Rate: 800
           - Index: 5
             Item: Gaebolg_Armor
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 6
             Item: Gaebolg_Robe
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 7
             Item: Gaebolg_Boots
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 8
             Item: Gaebolg_Shoes
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 9
             Item: Gaebolg_Manteau
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 10
             Item: Gaebolg_Muffler
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 11
             Item: Gaebolg_Armor
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 12
             Item: Gaebolg_Robe
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 13
             Item: Gaebolg_Boots
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 14
             Item: Gaebolg_Shoes
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 15
             Item: Gaebolg_Manteau
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 16
             Item: Gaebolg_Muffler
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 17
             Item: Gaebolg_Armor
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 18
             Item: Gaebolg_Robe
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 19
             Item: Gaebolg_Boots
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 20
             Item: Gaebolg_Shoes
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 21
             Item: Gaebolg_Manteau
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 22
             Item: Gaebolg_Muffler
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 23
             Item: Gaebolg_Glove
@@ -114674,57 +114712,95 @@ Body:
             Rate: 800
           - Index: 5
             Item: Gaebolg_Armor
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 6
             Item: Gaebolg_Robe
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 7
             Item: Gaebolg_Boots
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 8
             Item: Gaebolg_Shoes
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 9
             Item: Gaebolg_Manteau
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 10
             Item: Gaebolg_Muffler
+            RefineMinimum: 9
+            RefineMaximum: 9
             Rate: 150
           - Index: 11
             Item: Gaebolg_Armor
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 12
             Item: Gaebolg_Robe
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 13
             Item: Gaebolg_Boots
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 14
             Item: Gaebolg_Shoes
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 15
             Item: Gaebolg_Manteau
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 16
             Item: Gaebolg_Muffler
+            RefineMinimum: 10
+            RefineMaximum: 10
             Rate: 100
           - Index: 17
             Item: Gaebolg_Armor
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 18
             Item: Gaebolg_Robe
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 19
             Item: Gaebolg_Boots
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 20
             Item: Gaebolg_Shoes
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 21
             Item: Gaebolg_Manteau
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 22
             Item: Gaebolg_Muffler
+            RefineMinimum: 11
+            RefineMaximum: 11
+            RefineMinimum: 11
+            RefineMaximum: 11
             Rate: 20
           - Index: 23
             Item: Gaebolg_Glove
@@ -118104,10 +118180,16 @@ Body:
         List:
           - Index: 0
             Item: True_Hunting_Mail
+            RefineMinimum: 9
+            RefineMaximum: 9
           - Index: 1
             Item: True_Hunting_Manteau
+            RefineMinimum: 9
+            RefineMaximum: 9
           - Index: 2
             Item: True_Hunting_Boots
+            RefineMinimum: 9
+            RefineMaximum: 9
   - Group: REGIA_HUNTING_SET
     SubGroups:
       - SubGroup: 0
@@ -118115,10 +118197,16 @@ Body:
         List:
           - Index: 0
             Item: Regia_Hunting_Mail
+            RefineMinimum: 9
+            RefineMaximum: 9
           - Index: 1
             Item: Regia_Hunting_Manteau
+            RefineMinimum: 9
+            RefineMaximum: 9
           - Index: 2
             Item: Regia_Hunting_Boots
+            RefineMinimum: 9
+            RefineMaximum: 9
   - Group: MYSTERIOUS_FRUIT_BOX
     SubGroups:
       - SubGroup: 0

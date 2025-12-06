@@ -618,7 +618,7 @@ Body:
     FoodItem: Mystic_Stone
     Fullness: 7
     IntimacyFed: 20
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -634,7 +634,7 @@ Body:
     FoodItem: Small_Snow_Flower
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -649,7 +649,7 @@ Body:
     FoodItem: Apple_Pudding
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 200
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -665,7 +665,7 @@ Body:
     FoodItem: Damp_Darkness
     Fullness: 7
     IntimacyFed: 20
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -681,7 +681,7 @@ Body:
     FoodItem: Big_Cell
     Fullness: 7
     IntimacyFed: 10
-    CaptureRate: 50
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -697,7 +697,7 @@ Body:
     FoodItem: Vital_Flower_
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 200
+    CaptureRate: 300
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -712,7 +712,7 @@ Body:
     FoodItem: Vital_Flower
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 50
+    CaptureRate: 300
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -727,7 +727,7 @@ Body:
     FoodItem: Fresh_Plant
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 200
+    CaptureRate: 300
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -742,7 +742,7 @@ Body:
     FoodItem: Grilled_Rice_Cake
     Fullness: 7
     IntimacyFed: 20
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -757,7 +757,7 @@ Body:
     FoodItem: Well_Ripened_Berry
     Fullness: 3
     IntimacyFed: 15
-    CaptureRate: 200
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -773,7 +773,7 @@ Body:
     FoodItem: Morning_Dew
     Fullness: 3
     IntimacyFed: 15
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -789,7 +789,7 @@ Body:
     FoodItem: Plant_Neutrient
     Fullness: 7
     IntimacyFed: 20
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -804,7 +804,7 @@ Body:
     FoodItem: Sunset_On_The_Rock
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 200
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -819,7 +819,7 @@ Body:
     FoodItem: Pumpkin_Pie_
     Fullness: 3
     IntimacyFed: 15
-    CaptureRate: 200
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -835,7 +835,7 @@ Body:
     FoodItem: Flavored_Alcohol
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 500
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -850,7 +850,7 @@ Body:
     FoodItem: Fish_With_Blue_Back
     Fullness: 7
     IntimacyFed: 20
-    CaptureRate: 200
+    CaptureRate: 1000
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -866,7 +866,7 @@ Body:
     FoodItem: Traditional_Cookie
     Fullness: 7
     IntimacyFed: 10
-    CaptureRate: 2000
+    CaptureRate: 300
     SpecialPerformance: false
   - Mob: IMP
     TameItem: Flaming_Ice
@@ -875,7 +875,7 @@ Body:
     FoodItem: Flame_Gemstone
     Fullness: 3
     IntimacyFed: 10
-    CaptureRate: 200
+    CaptureRate: 300
     SpecialPerformance: false
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -893,5 +893,5 @@ Body:
     IntimacyFed: 0
     IntimacyOverfed: 0
     IntimacyOwnerDie: 0
-    CaptureRate: 50
+    CaptureRate: 5000
     SpecialPerformance: false
