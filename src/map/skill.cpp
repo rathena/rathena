@@ -6145,6 +6145,8 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					sc_start(src,src,skill_get_sc(skill_id),100,skill_lv,skill_get_time(skill_id,skill_lv));
 					break;
 				case SS_KINRYUUHOU:
+				case SS_SEKIENHOU:
+				case SS_RAIDENPOU:
 					skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, 0, 0, tick, flag | BCT_WOS);
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					break;
