@@ -3658,10 +3658,10 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					}
 				}
 
-				if (this->nodeExists(listit, "MinimumEnchantgrade")) {
+				if (this->nodeExists(listit, "GradeMinimum")) {
 					std::string enchantgrade;
 
-					if (!this->asString(listit, "MinimumEnchantgrade", enchantgrade)) {
+					if (!this->asString(listit, "GradeMinimum", enchantgrade)) {
 						return 0;
 					}
 
@@ -3669,7 +3669,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					int64 constant;
 
 					if (!script_get_constant(grade_constant.c_str(), &constant) || constant < ENCHANTGRADE_NONE || constant > MAX_ENCHANTGRADE) {
-						this->invalidWarning(listit["MinimumEnchantgrade"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
+						this->invalidWarning(listit["GradeMinimum"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
 						constant = ENCHANTGRADE_NONE;
 					}
 
@@ -3681,10 +3681,10 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					}
 				}
 
-				if (this->nodeExists(listit, "MaximumEnchantgrade")) {
+				if (this->nodeExists(listit, "GradeMaximum")) {
 					std::string enchantgrade;
 
-					if (!this->asString(listit, "MaximumEnchantgrade", enchantgrade)) {
+					if (!this->asString(listit, "GradeMaximum", enchantgrade)) {
 						return 0;
 					}
 
@@ -3692,7 +3692,7 @@ uint64 ItemGroupDatabase::parseBodyNode(const ryml::NodeRef& node) {
 					int64 constant;
 
 					if (!script_get_constant(grade_constant.c_str(), &constant) || constant < ENCHANTGRADE_NONE || constant > MAX_ENCHANTGRADE) {
-						this->invalidWarning(listit["MaximumEnchantgrade"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
+						this->invalidWarning(listit["GradeMaximum"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
 						constant = ENCHANTGRADE_NONE;
 					}
 
