@@ -43809,7 +43809,7 @@ Body:
       - Level: 4
         Area: 2
       - Level: 5
-        Area: 3
+        Area: 2
       - Level: 6
         Area: 3
       - Level: 7
@@ -43817,45 +43817,68 @@ Body:
       - Level: 8
         Area: 3
       - Level: 9
-        Area: 4
+        Area: 3
       - Level: 10
-        Area: 4
+        Area: 3
     AfterCastActDelay: 250
     Cooldown: 400
     Requires:
       SpCost:
         - Level: 1
-          Amount: 38
+          Amount: 37
         - Level: 2
-          Amount: 41
+          Amount: 42
         - Level: 3
-          Amount: 44
-        - Level: 4
           Amount: 47
+        - Level: 4
+          Amount: 52
         - Level: 5
-          Amount: 50
+          Amount: 57
         - Level: 6
-          Amount: 53
-        - Level: 7
-          Amount: 56
-        - Level: 8
-          Amount: 59
-        - Level: 9
           Amount: 62
+        - Level: 7
+          Amount: 67
+        - Level: 8
+          Amount: 72
+        - Level: 9
+          Amount: 77
         - Level: 10
-          Amount: 65
+          Amount: 82
   - Id: 5482
     Name: SS_KAGEGISSEN
     Description: Shadow Flash
     MaxLevel: 10
     Type: Weapon
     TargetType: Attack
-    Range: 1
+    DamageFlags:
+      Splash: true
+      Critical: true
+    Range: 2
     Hit: Multi_Hit
     HitCount: -4
     GiveAp: 1
     Element: Weapon
-    SplashArea: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
     ActiveInstance: 10
     AfterCastActDelay: 250
     Cooldown: 500
@@ -43956,7 +43979,7 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Ground
-    Range: 1
+    Range: 9
     Hit: Multi_Hit
     HitCount: -3
     Element: Weapon
@@ -44149,40 +44172,60 @@ Body:
     Description: Red Flame Cannon
     MaxLevel: 10
     Type: Magic
-    TargetType: Ground
-    Range: 1
+    TargetType: Attack
+    Range: 9
     Hit: Multi_Hit
     HitCount: -3
     ActiveInstance: 7
     Element: Fire
     DamageFlags:
       Splash: true
-    SplashArea: 1
+    SplashArea:
+      - Level: 1
+        Area: 2
+      - Level: 2
+        Area: 2
+      - Level: 3
+        Area: 2
+      - Level: 4
+        Area: 2
+      - Level: 5
+        Area: 2
+      - Level: 6
+        Area: 3
+      - Level: 7
+        Area: 3
+      - Level: 8
+        Area: 3
+      - Level: 9
+        Area: 3
+      - Level: 10
+        Area: 3
     CastTime: 2000
     Cooldown: 700
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 65
+          Amount: 53
         - Level: 2
-          Amount: 68
+          Amount: 56
         - Level: 3
-          Amount: 71
+          Amount: 59
         - Level: 4
-          Amount: 74
+          Amount: 62
         - Level: 5
-          Amount: 77
+          Amount: 65
         - Level: 6
-          Amount: 80
+          Amount: 68
         - Level: 7
-          Amount: 83
+          Amount: 71
         - Level: 8
-          Amount: 86
+          Amount: 74
         - Level: 9
-          Amount: 89
+          Amount: 77
         - Level: 10
-          Amount: 92
+          Amount: 80
       ItemCost:
         - Item: SS_Charm_F
           Amount: 1
@@ -44252,53 +44295,12 @@ Body:
     Description: Thundering Cannon
     MaxLevel: 10
     Type: Magic
-    TargetType: Ground
-    Range: 1
+    TargetType: Attack
+    Range: 9
     Hit: Multi_Hit
     HitCount: -2
     ActiveInstance: 13
     Element: Wind
-    DamageFlags:
-      Splash: true
-    SplashArea: 1
-    CastTime: 2000
-    Cooldown: 700
-    FixedCastTime: 1000
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 47
-        - Level: 2
-          Amount: 52
-        - Level: 3
-          Amount: 57
-        - Level: 4
-          Amount: 62
-        - Level: 5
-          Amount: 67
-        - Level: 6
-          Amount: 72
-        - Level: 7
-          Amount: 77
-        - Level: 8
-          Amount: 82
-        - Level: 9
-          Amount: 87
-        - Level: 10
-          Amount: 92
-      ItemCost:
-        - Item: SS_Charm_L
-          Amount: 1
-  - Id: 5491
-    Name: SS_KINRYUUHOU
-    Description: Golden Dragon Cannon
-    MaxLevel: 10
-    Type: Magic
-    TargetType: Attack
-    Range: 13
-    Hit: Single
-    HitCount: 1
-    Element: Earth
     DamageFlags:
       Splash: true
     SplashArea:
@@ -44311,7 +44313,7 @@ Body:
       - Level: 4
         Area: 2
       - Level: 5
-        Area: 3
+        Area: 2
       - Level: 6
         Area: 3
       - Level: 7
@@ -44319,34 +44321,95 @@ Body:
       - Level: 8
         Area: 3
       - Level: 9
-        Area: 4
+        Area: 3
       - Level: 10
-        Area: 4
+        Area: 3
+    CastTime: 2000
+    Cooldown: 700
+    FixedCastTime: 1000
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 53
+        - Level: 2
+          Amount: 56
+        - Level: 3
+          Amount: 59
+        - Level: 4
+          Amount: 62
+        - Level: 5
+          Amount: 65
+        - Level: 6
+          Amount: 68
+        - Level: 7
+          Amount: 71
+        - Level: 8
+          Amount: 74
+        - Level: 9
+          Amount: 77
+        - Level: 10
+          Amount: 80
+      ItemCost:
+        - Item: SS_Charm_L
+          Amount: 1
+  - Id: 5491
+    Name: SS_KINRYUUHOU
+    Description: Golden Dragon Cannon
+    MaxLevel: 10
+    Type: Magic
+    TargetType: Attack
+    Range: 9
+    Hit: Single
+    HitCount: 1
+    Element: Earth
+    DamageFlags:
+      Splash: true
+    SplashArea:
+      - Level: 1
+        Area: 1
+      - Level: 2
+        Area: 1
+      - Level: 3
+        Area: 1
+      - Level: 4
+        Area: 1
+      - Level: 5
+        Area: 1
+      - Level: 6
+        Area: 2
+      - Level: 7
+        Area: 2
+      - Level: 8
+        Area: 2
+      - Level: 9
+        Area: 2
+      - Level: 10
+        Area: 2
     CastTime: 3000
     Cooldown: 300
     FixedCastTime: 1000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 52
+          Amount: 47
         - Level: 2
-          Amount: 56
+          Amount: 49
         - Level: 3
-          Amount: 60
+          Amount: 51
         - Level: 4
-          Amount: 64
+          Amount: 53
         - Level: 5
-          Amount: 68
+          Amount: 55
         - Level: 6
-          Amount: 72
+          Amount: 57
         - Level: 7
-          Amount: 76
+          Amount: 59
         - Level: 8
-          Amount: 80
+          Amount: 61
         - Level: 9
-          Amount: 84
+          Amount: 63
         - Level: 10
-          Amount: 88
+          Amount: 65
       ItemCost:
         - Item: SS_Charm_G
           Amount: 1
