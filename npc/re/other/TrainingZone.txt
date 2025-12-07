@@ -11,8 +11,8 @@ tra_fild01,204,110,2	script	Training Ground Warehouse Soldier#fild01_1	8W_SOLDIE
 	mes "[Training Ground Warehouse Soldier]";
 	mes "Would you like to use the Storage? 1000 Zeny is required to use the training ground Storage. Please select the Storage you wish to use.";
 	next;
-	// switch( select( "âˆˆ Storage-ã‚°", "âˆˆ Storage-ã‚±", "âˆˆ Storage-ã‚²", "âˆˆ Guild Storage", "âˆˆ Cancel" ) ) {
-	switch( select( "âˆˆ Storage-ã‚°", "", "", "âˆˆ Guild Storage", "âˆˆ Cancel" ) ) {
+	// switch( select( "¢º Storage 1", "¢º Storage 2", "¢º Storage 3", "¢º Guild Storage", "¢º Cancel" ) ) {
+	switch( select( "¢º Storage 1", "", "", "¢º Guild Storage", "¢º Cancel" ) ) {
 	case 1:
 		.@storage_num = 1;
 		break;
@@ -27,26 +27,26 @@ tra_fild01,204,110,2	script	Training Ground Warehouse Soldier#fild01_1	8W_SOLDIE
 		.@guildid = getcharid( 2 );
 
 		if( .@guildid == 0 ){
-			mes "[Warehouse Manager]";
+			mes "[Training Ground Warehouse Soldier]";
 			mes "The guild storage is only available for guild members.";
 			close;
 		}
 
 		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 || !guild_has_permission( GUILD_PERM_STORAGE ) ){
-			mes "[Warehouse Manager]";
+			mes "[Training Ground Warehouse Soldier]";
 			mes "It seems that it is not yet possible for your guild to use the guild warehouse or you do not have access permissions for the warehouse.";
 			mes "Please come back after checking the guild skill and the permission to access the warehouse.";
 			close;
 		}
 
 		if( Zeny < 1000 ){
-			mes "[Warehouse Manager]";
+			mes "[Training Ground Warehouse Soldier]";
 			mes "I am afraid you do not have enough money to settle the fee.";
 			mes "The fee is 1000 Zeny.";
 			close;
 		}
 
-		mes "[Warehouse Manager]";
+		mes "[Training Ground Warehouse Soldier]";
 		mes "I will open the guild storage for you then. Have a memorable time!";
 		close2;
 
@@ -59,7 +59,7 @@ tra_fild01,204,110,2	script	Training Ground Warehouse Soldier#fild01_1	8W_SOLDIE
 			Zeny -= 1000;
 			end;
 		}else{
-			mes "[Warehouse Manager]";
+			mes "[Training Ground Warehouse Soldier]";
 			mes "I am afraid someone else is using the warehouse right now.";
 			mes "Please try again after a while.";
 			close;
@@ -67,6 +67,18 @@ tra_fild01,204,110,2	script	Training Ground Warehouse Soldier#fild01_1	8W_SOLDIE
 	case 5:
 		end;
 	}
+	// TODO (custom text)
+	if (!callfunc("F_CanOpenStorage")) {
+		mes "[Training Ground Warehouse Soldier]";
+		mes "I'm sorry, but you";
+		mes "need the Novice's";
+		mes "Basic Skill Level 6 to";
+		mes "use the Storage Service.";
+		close2;
+		cutin "",255;
+		end;
+	}
+
 	if (Zeny < 1000) {
 		mes "[Training Ground Warehouse Soldier]";
 		mes "^4d4df 1000 Zeny is required to use the training grounds Storage.^000000";
