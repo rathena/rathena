@@ -4357,99 +4357,8 @@ Body:
         Dex: 1
   - Jobs:
       Kagerou: true
-      Baby_Kagerou: true
-    MaxWeight: 26000
-    HpFactor: 75
-    SpIncrease: 540
-    BonusStats:
-      - Level: 1
-        Dex: 1
-      - Level: 3
-        Int: 1
-      - Level: 5
-        Agi: 1
-      - Level: 6
-        Vit: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Luk: 1
-      - Level: 11
-        Dex: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Agi: 1
-      - Level: 15
-        Int: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
-        Vit: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Dex: 1
-      - Level: 21
-        Agi: 1
-      - Level: 23
-        Luk: 1
-      - Level: 24
-        Vit: 1
-      - Level: 25
-        Int: 1
-      - Level: 27
-        Dex: 1
-      - Level: 29
-        Agi: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Int: 1
-      - Level: 34
-        Dex: 1
-      - Level: 35
-        Int: 1
-      - Level: 37
-        Vit: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 41
-        Agi: 1
-      - Level: 42
-        Int: 1
-      - Level: 43
-        Str: 1
-      - Level: 45
-        Dex: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
-        Agi: 1
-      - Level: 48
-        Str: 1
-      - Level: 50
-        Dex: 1
-      - Level: 55
-        Agi: 1
-      - Level: 60
-        Agi: 1
-      - Level: 61
-        Agi: 1
-      - Level: 63
-        Vit: 1
-      - Level: 65
-        Luk: 1
-      - Level: 66
-        Dex: 1
-      - Level: 68
-        Agi: 1
-      - Level: 70
-        Vit: 1
-  - Jobs:
       Oboro: true
+      Baby_Kagerou: true
       Baby_Oboro: true
     MaxWeight: 26000
     HpFactor: 75
@@ -4525,22 +4434,6 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
-      - Level: 55
-        Agi: 1
-      - Level: 60
-        Agi: 1
-      - Level: 61
-        Agi: 1
-      - Level: 63
-        Vit: 1
-      - Level: 65
-        Luk: 1
-      - Level: 66
-        Agi: 1
-      - Level: 68
-        Vit: 1
-      - Level: 70
-        Luk: 1
   - Jobs:
       Rebellion: true
       Baby_Rebellion: true
@@ -7194,131 +7087,127 @@ Body:
     BonusStats:
       - Level: 1
         Str: 1
-        Dex: 1
-        Sta: 1
-      - Level: 2
-        Str: 1
-        Pow: 1
-        Sta: 1
-      - Level: 3
-        Agi: 1
         Int: 1
-        Dex: -1
+      - Level: 2
+        Dex: 1
+      - Level: 3
+        Int: 1
+        Pow: 1
       - Level: 4
         Str: 1
-        Agi: 1
-        Dex: 2
-        Sta: 1
       - Level: 5
-        Str: 1
-        Int: 1
-        Pow: 1
-        Sta: 1
+        Agi: 1
+        Dex: 1
       - Level: 6
-        Str: 1
-        Sta: 1
+        Luk: 1
       - Level: 7
         Str: 1
         Dex: 1
-        Sta: 1
       - Level: 8
-        Dex: 1
-        Crt: 1
-      - Level: 9
         Agi: 1
-        Vit: 1
-      - Level: 10
+      - Level: 9
+        Int: 1
         Dex: 1
+      - Level: 10
+        Crt: 1
       - Level: 11
         Vit: 1
         Int: 1
       - Level: 12
         Str: 1
-        Luk: 1
-        Sta: 1
       - Level: 13
         Str: 1
         Vit: 1
-        Sta: 1
       - Level: 14
-        Crt: 1
+        Sta: 1
       - Level: 15
+        Dex: 1
         Wis: 1
       - Level: 16
         Str: 1
-        Sta: 1
       - Level: 17
         Str: 1
         Agi: 1
-        Sta: 1
+      - Level: 18
+        Dex: 1
       - Level: 19
-        Pow: 1
-      - Level: 20
         Str: 1
-        Sta: 1
+      - Level: 20
+        Agi: 1
       - Level: 21
         Dex: 1
       - Level: 22
+        Str: 1
         Agi: 1
       - Level: 23
-        Agi: 1
-      - Level: 24
-        Str: 1
-        Dex: 1
-        Sta: 1
-      - Level: 25
-        Agi: 1
-      - Level: 26
-        Dex: 1
         Luk: 1
-      - Level: 27
+      - Level: 24
+        Vit: 1
+        Dex: 1
+      - Level: 25
         Con: 1
+      - Level: 26
+        Vit: 1
+        Dex: 1
+      - Level: 27
+        Agi: 1
+        Pow: 1
       - Level: 28
         Agi: 1
-        Pow: 1
-      - Level: 29
         Vit: 1
-        Dex: 1
-      - Level: 30
+      - Level: 29
         Luk: 1
         Con: 1
+      - Level: 30
+        Crt: 1
       - Level: 31
-        Agi: 1
-        Vit: 1
+        Pow: 1
       - Level: 32
         Agi: 1
-      - Level: 33
         Vit: 1
-      - Level: 34
+      - Level: 33
         Pow: 1
+        Sta: 1
+      - Level: 34
+        Wis: 1
       - Level: 35
+        Sta: 1
         Con: 1
       - Level: 36
         Pow: 1
+        Crt: 1
       - Level: 37
         Con: 1
       - Level: 38
-        Crt: 1
-      - Level: 40
+        Sta: 1
+      - Level: 39
+        Str: 1
         Pow: 1
+      - Level: 40
+        Sta: 1
       - Level: 41
         Pow: 1
       - Level: 42
+        Pow: 1
+        Sta: 1
+      - Level: 43
         Crt: 1
       - Level: 44
-        Pow: 1
-      - Level: 45
+        Sta: 1
         Crt: 1
+      - Level: 45
+        Sta: 1
       - Level: 46
         Crt: 1
       - Level: 47
         Pow: 1
         Wis: 1
-      - Level: 49
+      - Level: 48
         Con: 1
+      - Level: 49
+        Crt: 1
       - Level: 50
         Pow: 1
-        Crt: 1
       - Level: 51
         Crt: 1
       - Level: 52
@@ -7346,121 +7235,128 @@ Body:
     SpIncrease: 474
     BonusStats:
       - Level: 1
-        Vit: 1
+        Str: 1
         Int: 1
       - Level: 2
-        Int: 1
         Dex: 1
       - Level: 3
-        Agi: 1
-        Spl: 1
+        Int: 1
+        Wis: 1
       - Level: 4
-        Int: 1
-        Dex: 1
+        Str: 1
       - Level: 5
-        Int: 1
+        Agi: 1
         Dex: 1
       - Level: 6
-        Dex: 1
-        Spl: 1
+        Luk: 1
       - Level: 7
         Int: 1
         Dex: 1
       - Level: 8
-        Vit: 1
-        Dex: 1
+        Agi: 1
       - Level: 9
         Int: 1
-        Spl: 1
-      - Level: 10
-        Vit: 1
         Dex: 1
+      - Level: 10
+        Crt: 1
       - Level: 11
-        Agi: 1
+        Vit: 1
         Int: 1
       - Level: 12
         Int: 1
-        Dex: 1
       - Level: 13
-        Wis: 1
-        Con: 1
+        Str: 1
+        Vit: 1
       - Level: 14
-        Int: 1
-        Luk: 1
+        Sta: 1
       - Level: 15
-        Vit: 1
-        Int: 1
-      - Level: 16
-        Vit: 1
-        Crt: 1
-      - Level: 17
         Dex: 1
-      - Level: 18
-        Con: 1
-      - Level: 19
         Wis: 1
+      - Level: 16
+        Int: 1
+      - Level: 17
+        Str: 1
+        Agi: 1
+      - Level: 18
+        Dex: 1
+      - Level: 19
+        Int: 1
+      - Level: 20
+        Agi: 1
       - Level: 21
         Dex: 1
       - Level: 22
-        Dex: 1
-        Spl: 1
-      - Level: 23
-        Int: 1
-        Luk: 1
-      - Level: 25
         Agi: 1
+        Int: 1
+      - Level: 23
+        Luk: 1
+      - Level: 24
+        Vit: 1
+        Dex: 1
+      - Level: 25
+        Con: 1
       - Level: 26
-        Spl: 1
+        Vit: 1
+        Dex: 1
       - Level: 27
-        Str: 1
-        Sta: 1
+        Agi: 1
+        Wis: 1
       - Level: 28
         Agi: 1
-        Vit: 1
+        Dex: 1
       - Level: 29
-        Str: 1
-        Agi: 1
-        Sta: 1
+        Luk: 1
+        Con: 1
       - Level: 30
-        Spl: 1
+        Crt: 1
       - Level: 31
         Wis: 1
       - Level: 32
         Agi: 1
-        Dex: 1
-      - Level: 33
-        Con: 1
-      - Level: 34
-        Agi: 1
-      - Level: 35
         Vit: 1
-        Dex: 1
-      - Level: 36
-        Str: 1
+      - Level: 33
+        Pow: 1
         Sta: 1
+      - Level: 34
+        Wis: 1
+      - Level: 35
+        Sta: 1
+        Con: 1
+      - Level: 36
+        Wis: 1
+        Crt: 1
       - Level: 37
-        Spl: 1
+        Con: 1
+      - Level: 38
+        Sta: 1
+      - Level: 39
+        Int: 1
+        Wis: 1
       - Level: 40
-        Crt: 1
+        Sta: 1
+      - Level: 41
+        Wis: 1
+      - Level: 42
+        Pow: 1
+        Sta: 1
       - Level: 43
-        Wis: 1
-        Con: 1
-      - Level: 44
-        Wis: 1
-        Spl: 1
-      - Level: 45
-        Spl: 1
-      - Level: 46
-        Con: 1
-      - Level: 47
-        Spl: 1
-      - Level: 48
         Crt: 1
-      - Level: 49
+      - Level: 44
+        Sta: 1
+        Crt: 1
+      - Level: 45
+        Sta: 1
+      - Level: 46
+        Crt: 1
+      - Level: 47
+        Pow: 1
+        Wis: 1
+      - Level: 48
         Con: 1
+      - Level: 49
+        Crt: 1
       - Level: 50
         Wis: 1
-        Spl: 1
       - Level: 51
         Pow: 1
       - Level: 52
