@@ -1,3 +1,8 @@
+/conf/char_athena.conf
+/conf/inter_athena.conf
+/conf/map_athena.conf
+
+
 autom4te.cache/
 
 #Global
@@ -10,6 +15,7 @@ autom4te.cache/
 .local.vimrc
 .ycm_extra_conf.py*
 Thumbs.db
+.history
 
 # /
 /*_fifo
