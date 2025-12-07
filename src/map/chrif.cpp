@@ -1773,7 +1773,7 @@ int32 chrif_parse(int32 fd) {
 			case 0x2b03: clif_charselectok(RFIFOL(fd,2), RFIFOB(fd,6)); break;
 			case 0x2b04: chrif_recvmap(fd); break;
 			case 0x2b06: chrif_changemapserverack( RFIFOL( fd, 2 ), RFIFOL( fd, 6 ), RFIFOL( fd, 10 ), RFIFOL( fd, 14 ), RFIFOCP( fd, 18 ), RFIFOW( fd, 18 + MAP_NAME_LENGTH_EXT ), RFIFOW( fd, 18 + MAP_NAME_LENGTH_EXT + 2 ), RFIFOL( fd, 18 + MAP_NAME_LENGTH_EXT + 4 ), RFIFOW( fd, 18 + MAP_NAME_LENGTH_EXT + 8 ) ); break;
-			case 0x2b09: map_addnickdb(RFIFOL(fd,2), RFIFOCP(fd,6)); break;
+			case 0x2b09: map_addnickdb((uint32)RFIFOL(fd,2), RFIFOCP(fd,6)); break;
 			case 0x2b0b: chrif_skillcooldown_load(fd); break;
 			case 0x2b0d: chrif_changedsex(fd); break;
 			case 0x2b0f: chrif_ack_login_req(RFIFOL(fd,2), RFIFOCP(fd,6), RFIFOW(fd,30), RFIFOW(fd,32)); break;
