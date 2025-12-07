@@ -111253,10 +111253,46 @@ Body:
     Class: Boss
     Modes:
       TeleportBlock: true
-#  - Id: 21087
-#    AegisName: S_DUMMY_100_HUMANP
-#  - Id: 21088
-#    AegisName: S_DUMMY_100_DORAMP
+  - Id: 21087
+    AegisName: S_DUMMY_100_HUMANP
+    Name: Dummy (Human Player)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Player_Human
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 21088
+    AegisName: S_DUMMY_100_DORAMP
+    Name: Dummy (Doram Player)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Player_Doram
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
 #  - Id: 21089
 #    AegisName: WANDERING_DUCK
 #  - Id: 21090
@@ -117898,242 +117934,2528 @@ Body:
 #    AegisName: CH1_WA_1
 #  - Id: 22550
 #    AegisName: G_M_HO_LE
-#  - Id: 22551
-#    AegisName: S_DUMMY_SMALL_R10
-#  - Id: 22552
-#    AegisName: S_DUMMY_MEDIUM_R10
-#  - Id: 22553
-#    AegisName: S_DUMMY_LARGE_R10
-#  - Id: 22554
-#    AegisName: S_DUMMY_XLARGE_R40
-#  - Id: 22555
-#    AegisName: S_DUMMY_SMALL_R20
-#  - Id: 22556
-#    AegisName: S_DUMMY_MEDIUM_R20
-#  - Id: 22557
-#    AegisName: S_DUMMY_LARGE_R20
-#  - Id: 22558
-#    AegisName: S_DUMMY_XLARGE_R50
-#  - Id: 22559
-#    AegisName: S_DUMMY_SMALL_R30
-#  - Id: 22560
-#    AegisName: S_DUMMY_MEDIUM_R30
-#  - Id: 22561
-#    AegisName: S_DUMMY_SMALL1
-#  - Id: 22562
-#    AegisName: S_DUMMY_MEDIUM1
-#  - Id: 22563
-#    AegisName: S_DUMMY_LARGE1
-#  - Id: 22564
-#    AegisName: S_DUMMY_SMALL1_R10
-#  - Id: 22565
-#    AegisName: S_DUMMY_MEDIUM1_R10
-#  - Id: 22566
-#    AegisName: S_DUMMY_LARGE1_R10
-#  - Id: 22567
-#    AegisName: S_DUMMY_XLARGE1_R40
-#  - Id: 22568
-#    AegisName: S_DUMMY_SMALL1_R20
-#  - Id: 22569
-#    AegisName: S_DUMMY_MEDIUM1_R20
-#  - Id: 22570
-#    AegisName: S_DUMMY_LARGE1_R20
-#  - Id: 22571
-#    AegisName: S_DUMMY_XLARGE1_R50
-#  - Id: 22572
-#    AegisName: S_DUMMY_SMALL1_R30
-#  - Id: 22573
-#    AegisName: S_DUMMY_MEDIUM1_R30
-#  - Id: 22574
-#    AegisName: S_DUMMY_LARGE1_R30
-#  - Id: 22575
-#    AegisName: S_DUMMY_SMALL2
-#  - Id: 22576
-#    AegisName: S_DUMMY_MEDIUM2
-#  - Id: 22577
-#    AegisName: S_DUMMY_LARGE2
-#  - Id: 22578
-#    AegisName: S_DUMMY_SMALL2_R10
-#  - Id: 22579
-#    AegisName: S_DUMMY_MEDIUM2_R10
-#  - Id: 22580
-#    AegisName: S_DUMMY_LARGE2_R10
-#  - Id: 22581
-#    AegisName: S_DUMMY_XLARGE2_R40
-#  - Id: 22582
-#    AegisName: S_DUMMY_SMALL2_R20
-#  - Id: 22583
-#    AegisName: S_DUMMY_MEDIUM2_R20
-#  - Id: 22584
-#    AegisName: S_DUMMY_LARGE2_R20
-#  - Id: 22585
-#    AegisName: S_DUMMY_XLARGE2_R50
-#  - Id: 22586
-#    AegisName: S_DUMMY_SMALL2_R30
-#  - Id: 22587
-#    AegisName: S_DUMMY_MEDIUM2_R30
-#  - Id: 22588
-#    AegisName: S_DUMMY_LARGE2_R30
-#  - Id: 22589
-#    AegisName: S_DUMMY_SMALL_M10
-#  - Id: 22590
-#    AegisName: S_DUMMY_MEDIUM_M10
-#  - Id: 22591
-#    AegisName: S_DUMMY_LARGE_M10
-#  - Id: 22592
-#    AegisName: S_DUMMY_XLARGE_M40
-#  - Id: 22593
-#    AegisName: S_DUMMY_SMALL_M20
-#  - Id: 22594
-#    AegisName: S_DUMMY_MEDIUM_M20
-#  - Id: 22595
-#    AegisName: S_DUMMY_LARGE_M20
-#  - Id: 22596
-#    AegisName: S_DUMMY_XLARGE_M50
-#  - Id: 22597
-#    AegisName: S_DUMMY_SMALL_M30
-#  - Id: 22598
-#    AegisName: S_DUMMY_MEDIUM_M30
-#  - Id: 22599
-#    AegisName: S_DUMMY_LARGE_M30
-#  - Id: 22600
-#    AegisName: S_DUMMY_SMALL3
-#  - Id: 22601
-#    AegisName: S_DUMMY_MEDIUM3
-#  - Id: 22602
-#    AegisName: S_DUMMY_LARGE3
-#  - Id: 22603
-#    AegisName: S_DUMMY_SMALL3_M10
-#  - Id: 22604
-#    AegisName: S_DUMMY_MEDIUM3_M10
-#  - Id: 22605
-#    AegisName: S_DUMMY_LARGE3_M10
-#  - Id: 22606
-#    AegisName: S_DUMMY_XLARGE1_M40
-#  - Id: 22607
-#    AegisName: S_DUMMY_SMALL3_M20
-#  - Id: 22608
-#    AegisName: S_DUMMY_MEDIUM3_M20
-#  - Id: 22609
-#    AegisName: S_DUMMY_LARGE3_M20
-#  - Id: 22610
-#    AegisName: S_DUMMY_XLARGE1_M50
-#  - Id: 22611
-#    AegisName: S_DUMMY_SMALL3_M30
-#  - Id: 22612
-#    AegisName: S_DUMMY_MEDIUM3_M30
-#  - Id: 22613
-#    AegisName: S_DUMMY_LARGE3_M30
-#  - Id: 22614
-#    AegisName: S_DUMMY_SMALL4
-#  - Id: 22615
-#    AegisName: S_DUMMY_MEDIUM4
-#  - Id: 22616
-#    AegisName: S_DUMMY_LARGE4
-#  - Id: 22617
-#    AegisName: S_DUMMY_SMALL4_M10
-#  - Id: 22618
-#    AegisName: S_DUMMY_MEDIUM4_M10
-#  - Id: 22619
-#    AegisName: S_DUMMY_LARGE4_M10
-#  - Id: 22620
-#    AegisName: S_DUMMY_XLARGE2_M40
-#  - Id: 22621
-#    AegisName: S_DUMMY_SMALL4_M20
-#  - Id: 22622
-#    AegisName: S_DUMMY_MEDIUM4_M20
-#  - Id: 22623
-#    AegisName: S_DUMMY_LARGE4_M20
-#  - Id: 22624
-#    AegisName: S_DUMMY_XLARGE2_M50
-#  - Id: 22625
-#    AegisName: S_DUMMY_SMALL4_M30
-#  - Id: 22626
-#    AegisName: S_DUMMY_MEDIUM4_M30
-#  - Id: 22627
-#    AegisName: S_DUMMY_LARGE4_M30
-#  - Id: 22628
-#    AegisName: S_DUMMY2_NOTHING
-#  - Id: 22629
-#    AegisName: S_DUMMY2_DRAGON
-#  - Id: 22630
-#    AegisName: S_DUMMY2_ANIMAL
-#  - Id: 22631
-#    AegisName: S_DUMMY2_HUMAN
-#  - Id: 22632
-#    AegisName: S_DUMMY2_INSECT
-#  - Id: 22633
-#    AegisName: S_DUMMY2_FISH
-#  - Id: 22634
-#    AegisName: S_DUMMY2_DEMON
-#  - Id: 22635
-#    AegisName: S_DUMMY2_PLANT
-#  - Id: 22636
-#    AegisName: S_DUMMY2_ANGEL
-#  - Id: 22637
-#    AegisName: S_DUMMY2_UNDEAD
-#  - Id: 22638
-#    AegisName: S_DUMMY3_NOTHING
-#  - Id: 22639
-#    AegisName: S_DUMMY3_DRAGON
-#  - Id: 22640
-#    AegisName: S_DUMMY3_ANIMAL
-#  - Id: 22641
-#    AegisName: S_DUMMY3_HUMAN
-#  - Id: 22642
-#    AegisName: S_DUMMY3_INSECT
-#  - Id: 22643
-#    AegisName: S_DUMMY3_FISH
-#  - Id: 22644
-#    AegisName: S_DUMMY3_DEMON
-#  - Id: 22645
-#    AegisName: S_DUMMY3_PLANT
-#  - Id: 22646
-#    AegisName: S_DUMMY3_ANGEL
-#  - Id: 22647
-#    AegisName: S_DUMMY3_UNDEAD
-#  - Id: 22648
-#    AegisName: S_DUMMY2_NOTHING2
-#  - Id: 22649
-#    AegisName: S_DUMMY2_WATER
-#  - Id: 22650
-#    AegisName: S_DUMMY2_GROUND
-#  - Id: 22651
-#    AegisName: S_DUMMY2_FIRE
-#  - Id: 22652
-#    AegisName: S_DUMMY2_WIND
-#  - Id: 22653
-#    AegisName: S_DUMMY2_POISON
-#  - Id: 22654
-#    AegisName: S_DUMMY2_SAINT
-#  - Id: 22655
-#    AegisName: S_DUMMY2_DARKNESS
-#  - Id: 22656
-#    AegisName: S_DUMMY2_TELEKINESIS
-#  - Id: 22657
-#    AegisName: S_DUMMY2_UNDEAD2
-#  - Id: 22658
-#    AegisName: S_DUMMY3_NOTHING2
-#  - Id: 22659
-#    AegisName: S_DUMMY3_WATER
-#  - Id: 22660
-#    AegisName: S_DUMMY3_GROUND
-#  - Id: 22661
-#    AegisName: S_DUMMY3_FIRE
-#  - Id: 22662
-#    AegisName: S_DUMMY3_WIND
-#  - Id: 22663
-#    AegisName: S_DUMMY3_POISON
-#  - Id: 22664
-#    AegisName: S_DUMMY3_SAINT
-#  - Id: 22665
-#    AegisName: S_DUMMY3_DARKNESS
-#  - Id: 22666
-#    AegisName: S_DUMMY3_TELEKINESIS
-#  - Id: 22667
-#    AegisName: S_DUMMY3_UNDEAD2
-#  - Id: 22668
-#    AegisName: S_DUMMY_LARGE_R30
+  - Id: 22551
+    AegisName: S_DUMMY_SMALL_R10
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22552
+    AegisName: S_DUMMY_MEDIUM_R10
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22553
+    AegisName: S_DUMMY_LARGE_R10
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22554
+    AegisName: S_DUMMY_XLARGE_R40
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 4000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22555
+    AegisName: S_DUMMY_SMALL_R20
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22556
+    AegisName: S_DUMMY_MEDIUM_R20
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22557
+    AegisName: S_DUMMY_LARGE_R20
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22558
+    AegisName: S_DUMMY_XLARGE_R50
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 5000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22559
+    AegisName: S_DUMMY_SMALL_R30
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22560
+    AegisName: S_DUMMY_MEDIUM_R30
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22561
+    AegisName: S_DUMMY_SMALL1
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22562
+    AegisName: S_DUMMY_MEDIUM1
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22563
+    AegisName: S_DUMMY_LARGE1
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22564
+    AegisName: S_DUMMY_SMALL1_R10
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22565
+    AegisName: S_DUMMY_MEDIUM1_R10
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22566
+    AegisName: S_DUMMY_LARGE1_R10
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22567
+    AegisName: S_DUMMY_XLARGE1_R40
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 4000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22568
+    AegisName: S_DUMMY_SMALL1_R20
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22569
+    AegisName: S_DUMMY_MEDIUM1_R20
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22570
+    AegisName: S_DUMMY_LARGE1_R20
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22571
+    AegisName: S_DUMMY_XLARGE1_R50
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 5000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22572
+    AegisName: S_DUMMY_SMALL1_R30
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22573
+    AegisName: S_DUMMY_MEDIUM1_R30
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22574
+    AegisName: S_DUMMY_LARGE1_R30
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22575
+    AegisName: S_DUMMY_SMALL2
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22576
+    AegisName: S_DUMMY_MEDIUM2
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22577
+    AegisName: S_DUMMY_LARGE2
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22578
+    AegisName: S_DUMMY_SMALL2_R10
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22579
+    AegisName: S_DUMMY_MEDIUM2_R10
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22580
+    AegisName: S_DUMMY_LARGE2_R10
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22581
+    AegisName: S_DUMMY_XLARGE2_R40
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 4000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22582
+    AegisName: S_DUMMY_SMALL2_R20
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22583
+    AegisName: S_DUMMY_MEDIUM2_R20
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22584
+    AegisName: S_DUMMY_LARGE2_R20
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22585
+    AegisName: S_DUMMY_XLARGE2_R50
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 5000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22586
+    AegisName: S_DUMMY_SMALL2_R30
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22587
+    AegisName: S_DUMMY_MEDIUM2_R30
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22588
+    AegisName: S_DUMMY_LARGE2_R30
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22589
+    AegisName: S_DUMMY_SMALL_M10
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22590
+    AegisName: S_DUMMY_MEDIUM_M10
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22591
+    AegisName: S_DUMMY_LARGE_M10
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22592
+    AegisName: S_DUMMY_XLARGE_M40
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 4000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22593
+    AegisName: S_DUMMY_SMALL_M20
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22594
+    AegisName: S_DUMMY_MEDIUM_M20
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22595
+    AegisName: S_DUMMY_LARGE_M20
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22596
+    AegisName: S_DUMMY_XLARGE_M50
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 5000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22597
+    AegisName: S_DUMMY_SMALL_M30
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22598
+    AegisName: S_DUMMY_MEDIUM_M30
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22599
+    AegisName: S_DUMMY_LARGE_M30
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22600
+    AegisName: S_DUMMY_SMALL3
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22601
+    AegisName: S_DUMMY_MEDIUM3
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22602
+    AegisName: S_DUMMY_LARGE3
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22603
+    AegisName: S_DUMMY_SMALL3_M10
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22604
+    AegisName: S_DUMMY_MEDIUM3_M10
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22605
+    AegisName: S_DUMMY_LARGE3_M10
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22606
+    AegisName: S_DUMMY_XLARGE1_M40
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 4000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22607
+    AegisName: S_DUMMY_SMALL3_M20
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22608
+    AegisName: S_DUMMY_MEDIUM3_M20
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22609
+    AegisName: S_DUMMY_LARGE3_M20
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22610
+    AegisName: S_DUMMY_XLARGE1_M50
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 5000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22611
+    AegisName: S_DUMMY_SMALL3_M30
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22612
+    AegisName: S_DUMMY_MEDIUM3_M30
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22613
+    AegisName: S_DUMMY_LARGE3_M30
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22614
+    AegisName: S_DUMMY_SMALL4
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22615
+    AegisName: S_DUMMY_MEDIUM4
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22616
+    AegisName: S_DUMMY_LARGE4
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22617
+    AegisName: S_DUMMY_SMALL4_M10
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22618
+    AegisName: S_DUMMY_MEDIUM4_M10
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22619
+    AegisName: S_DUMMY_LARGE4_M10
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 1000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22620
+    AegisName: S_DUMMY_XLARGE2_M40
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 4000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22621
+    AegisName: S_DUMMY_SMALL4_M20
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22622
+    AegisName: S_DUMMY_MEDIUM4_M20
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22623
+    AegisName: S_DUMMY_LARGE4_M20
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 2000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22624
+    AegisName: S_DUMMY_XLARGE2_M50
+    Name: Dummy (Extra Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 5000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22625
+    AegisName: S_DUMMY_SMALL4_M30
+    Name: Dummy (Small)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Small
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22626
+    AegisName: S_DUMMY_MEDIUM4_M30
+    Name: Dummy (Medium)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22627
+    AegisName: S_DUMMY_LARGE4_M30
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    MagicResistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22628
+    AegisName: S_DUMMY2_NOTHING
+    Name: Dummy (Formless Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22629
+    AegisName: S_DUMMY2_DRAGON
+    Name: Dummy (Dragon Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22630
+    AegisName: S_DUMMY2_ANIMAL
+    Name: Dummy (Brute Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22631
+    AegisName: S_DUMMY2_HUMAN
+    Name: Dummy (Human Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22632
+    AegisName: S_DUMMY2_INSECT
+    Name: Dummy (Insect Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Insect
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22633
+    AegisName: S_DUMMY2_FISH
+    Name: Dummy (Fish Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Fish
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22634
+    AegisName: S_DUMMY2_DEMON
+    Name: Dummy (Demon Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Demon
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22635
+    AegisName: S_DUMMY2_PLANT
+    Name: Dummy (Plant Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Plant
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22636
+    AegisName: S_DUMMY2_ANGEL
+    Name: Dummy (Angel Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Angel
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22637
+    AegisName: S_DUMMY2_UNDEAD
+    Name: Dummy (Undead Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Undead
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22638
+    AegisName: S_DUMMY3_NOTHING
+    Name: Dummy (Formless Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22639
+    AegisName: S_DUMMY3_DRAGON
+    Name: Dummy (Dragon Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Dragon
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22640
+    AegisName: S_DUMMY3_ANIMAL
+    Name: Dummy (Brute Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Brute
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22641
+    AegisName: S_DUMMY3_HUMAN
+    Name: Dummy (Human Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Demihuman
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22642
+    AegisName: S_DUMMY3_INSECT
+    Name: Dummy (Insect Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Insect
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22643
+    AegisName: S_DUMMY3_FISH
+    Name: Dummy (Fish Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Fish
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22644
+    AegisName: S_DUMMY3_DEMON
+    Name: Dummy (Demon Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Demon
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22645
+    AegisName: S_DUMMY3_PLANT
+    Name: Dummy (Plant Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Plant
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22646
+    AegisName: S_DUMMY3_ANGEL
+    Name: Dummy (Angel Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Angel
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22647
+    AegisName: S_DUMMY3_UNDEAD
+    Name: Dummy (Undead Race)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Undead
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22648
+    AegisName: S_DUMMY2_NOTHING2
+    Name: Dummy (Neutral)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22649
+    AegisName: S_DUMMY2_WATER
+    Name: Dummy (Water)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22650
+    AegisName: S_DUMMY2_GROUND
+    Name: Dummy (Earth)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22651
+    AegisName: S_DUMMY2_FIRE
+    Name: Dummy (Fire)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22652
+    AegisName: S_DUMMY2_WIND
+    Name: Dummy (Wind)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22653
+    AegisName: S_DUMMY2_POISON
+    Name: Dummy (Poison)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22654
+    AegisName: S_DUMMY2_SAINT
+    Name: Dummy (Holy)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22655
+    AegisName: S_DUMMY2_DARKNESS
+    Name: Dummy (Dark)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22656
+    AegisName: S_DUMMY2_TELEKINESIS
+    Name: Dummy (Ghost)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22657
+    AegisName: S_DUMMY2_UNDEAD2
+    Name: Dummy (Undead)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 10
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22658
+    AegisName: S_DUMMY3_NOTHING2
+    Name: Dummy (Neutral)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22659
+    AegisName: S_DUMMY3_WATER
+    Name: Dummy (Water)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Water
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22660
+    AegisName: S_DUMMY3_GROUND
+    Name: Dummy (Earth)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Earth
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22661
+    AegisName: S_DUMMY3_FIRE
+    Name: Dummy (Fire)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Fire
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22662
+    AegisName: S_DUMMY3_WIND
+    Name: Dummy (Wind)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Wind
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22663
+    AegisName: S_DUMMY3_POISON
+    Name: Dummy (Poison)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Poison
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22664
+    AegisName: S_DUMMY3_SAINT
+    Name: Dummy (Holy)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Holy
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22665
+    AegisName: S_DUMMY3_DARKNESS
+    Name: Dummy (Dark)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Dark
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22666
+    AegisName: S_DUMMY3_TELEKINESIS
+    Name: Dummy (Ghost)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Ghost
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22667
+    AegisName: S_DUMMY3_UNDEAD2
+    Name: Dummy (Undead)
+    Level: 100
+    Hp: 2000000000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Medium
+    Race: Formless
+    Element: Undead
+    ElementLevel: 1
+    WalkSpeed: 1000
+    DamageTaken: 1
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
+  - Id: 22668
+    AegisName: S_DUMMY_LARGE_R30
+    Name: Dummy (Large)
+    Level: 100
+    Hp: 2000000000
+    Resistance: 3000
+    Str: 0
+    Agi: 0
+    Vit: 0
+    Int: 0
+    Dex: 0
+    Luk: 0
+    Size: Large
+    Race: Formless
+    Element: Neutral
+    ElementLevel: 1
+    WalkSpeed: 1000
+    Ai: 06
+    Class: Boss
+    Modes:
+      TeleportBlock: true
 #  - Id: 22669
 #    AegisName: G_CH1_RK_ER
 #  - Id: 22670
