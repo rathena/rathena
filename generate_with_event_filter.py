@@ -20,12 +20,27 @@ OUTPUT_DIR = BASE_DIR / "Verified_Material_Loots"
 # Prefixes that indicate event/guild/special mobs (don't spawn normally)
 EVENT_PREFIXES = ['EVENT_', 'G_', 'E_']
 
+# Patterns for WoE/Agit mobs (Treasure Chests, etc.)
+WOE_PATTERNS = ['TREASURE_BOX', 'TREASURE_CHEST']
+
 def is_event_mob(aegis_name):
     """Check if mob is an event/guild mob based on AegisName"""
     for prefix in EVENT_PREFIXES:
         if aegis_name.startswith(prefix):
             return True
     return False
+
+def is_woe_mob(aegis_name):
+    """Check if mob is a WoE/Agit mob (Treasure Chest, etc.)"""
+    aegis_upper = aegis_name.upper()
+    for pattern in WOE_PATTERNS:
+        if pattern in aegis_upper:
+            return True
+    return False
+
+def is_non_farmable_mob(aegis_name):
+    """Check if mob is non-farmable (event, guild, WoE, etc.)"""
+    return is_event_mob(aegis_name) or is_woe_mob(aegis_name)
 
 def parse_safe_materials():
     """Parse the SAFE_MATERIALS.txt file"""
@@ -115,8 +130,8 @@ def parse_mob_db_detailed():
         if mob.get('MvpExp', 0) > 0:
             is_mvp = True
 
-        # Check if event/guild mob
-        is_event = is_event_mob(mob_aegis)
+        # Check if event/guild/WoE mob (non-farmable)
+        is_event = is_non_farmable_mob(mob_aegis)
 
         mob_info = {
             'id': mob_id,

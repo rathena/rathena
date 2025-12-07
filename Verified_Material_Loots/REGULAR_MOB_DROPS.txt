@@ -2,7 +2,7 @@
 # VERIFIED MATERIALS FROM REGULAR MONSTERS ONLY
 # Items that ONLY drop from regular mobs (NO boss drops)
 # ============================================================
-# Generated: 2025-12-02 01:01:48.305641
+# Generated: 2025-12-07 07:32:36.543166
 # Total items: 194
 #
 # These items do NOT drop from any MVP, Mini-Boss, or Event mob

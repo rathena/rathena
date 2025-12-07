@@ -2,8 +2,8 @@
 # VERIFIED MATERIALS FROM BOSS/MVP MONSTERS (FARMABLE)
 # Items that drop from regular Boss/MVP monsters
 # ============================================================
-# Generated: 2025-12-02 01:01:48.305064
-# Total items: 57
+# Generated: 2025-12-07 07:32:36.542576
+# Total items: 55
 #
 # NOTE: Event-only drops have been EXCLUDED from this list
 #       These items can actually be farmed in-game
@@ -59,12 +59,10 @@
 7564,Rotten_Meat,Rotten Meat,1,Galion(Mini-Boss)
 7566,Will_Of_Darkness_,Will of Red Darkness,1,Gloom Under Night(MVP)
 7578,Anti_Spell_Bead,Countermagic Crystal,1,Bloody Knight(Mini-Boss)
-7582,Gem_Of_Ruin,Jewel of Destruction,1,Treasure Chest(Mini-Boss)
 7583,Evil_Mind,Evil Mind,6,Lord Knight Seyren(Mini-Boss); Assassin Cross Eremes(Mini-Boss); Mastersmith Howard(Mini-Boss); High Priest Margaretha(Mini-Boss); Sniper Cecil(Mini-Boss); +1 more
 7752,Clattering_Skull,Clattering Skull,1,Necromancer(Mini-Boss)
 7754,Broken_Crown,Broken Crown,1,Beelzebub(MVP)
 7798,Dark_Debris,Fragment of Darkness,5,Wounded Morocc(MVP); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss)
 7799,Dark_Crystal,Crystal of Darkness,5,Wounded Morocc(MVP); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss); Incarnation of Morocc(Mini-Boss)
-7849,Soul_Crystal,Soul Crystal,1,Treasure Chest(Mini-Boss)
 7858,Dragonball_Yellow_,Dragonball Yellow,1,Dream Metal(Mini-Boss)
 7863,GOLD_ID4,Special Gold,1,Crystal(Mini-Boss)

@@ -62,7 +62,6 @@ ItemID,ItemName,AegisName,MobID,MobName,MobAegis,BossType,DropRate,MobLevel,Drop
 7564,Rotten Meat,Rotten_Meat,1783,Galion,GALION,Mini-Boss,3000,44,normal,No
 7566,Will of Red Darkness,Will_Of_Darkness_,1768,Gloom Under Night,GLOOMUNDERNIGHT,MVP,7000,89,normal,No
 7578,Countermagic Crystal,Anti_Spell_Bead,1795,Bloody Knight,BLOODY_KNIGHT_,Mini-Boss,10000,82,normal,No
-7582,Jewel of Destruction,Gem_Of_Ruin,1798,Treasure Chest,TREASURE_BOX_,Mini-Boss,10000,99,normal,No
 7583,Evil Mind,Evil_Mind,1805,Lord Knight Seyren,B_SEYREN_,Mini-Boss,10000,99,normal,No
 7583,Evil Mind,Evil_Mind,1806,Assassin Cross Eremes,B_EREMES_,Mini-Boss,10000,99,normal,No
 7583,Evil Mind,Evil_Mind,1807,Mastersmith Howard,B_HARWORD_,Mini-Boss,10000,99,normal,No
@@ -81,6 +80,5 @@ ItemID,ItemName,AegisName,MobID,MobName,MobAegis,BossType,DropRate,MobLevel,Drop
 7799,Crystal of Darkness,Dark_Crystal,1919,Incarnation of Morocc,MOROCC_2,Mini-Boss,1000,97,normal,No
 7799,Crystal of Darkness,Dark_Crystal,1920,Incarnation of Morocc,MOROCC_3,Mini-Boss,1000,96,normal,No
 7799,Crystal of Darkness,Dark_Crystal,1921,Incarnation of Morocc,MOROCC_4,Mini-Boss,1000,98,normal,No
-7849,Soul Crystal,Soul_Crystal,1955,Treasure Chest,TREASURE_BOX_I,Mini-Boss,4000,99,normal,No
 7858,Dragonball Yellow,Dragonball_Yellow_,1846,Dream Metal,DREAMMETAL,Mini-Boss,2000,90,normal,No
 7863,Special Gold,GOLD_ID4,1877,Crystal,CRYSTAL_5,Mini-Boss,10,1,normal,No
