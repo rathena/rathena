@@ -1800,25 +1800,25 @@ Body:
       SpCost: 5
       ZenyCost:
         - Level: 1
-          Amount: 100
+          Amount: 50
         - Level: 2
-          Amount: 200
+          Amount: 100
         - Level: 3
-          Amount: 300
+          Amount: 150
         - Level: 4
-          Amount: 400
+          Amount: 200
         - Level: 5
-          Amount: 500
+          Amount: 250
         - Level: 6
-          Amount: 600
+          Amount: 300
         - Level: 7
-          Amount: 700
+          Amount: 350
         - Level: 8
-          Amount: 800
+          Amount: 400
         - Level: 9
-          Amount: 900
+          Amount: 460
         - Level: 10
-          Amount: 1000
+          Amount: 500
   - Id: 43
     Name: AC_OWL
     Description: Owl's Eye
@@ -2398,15 +2398,15 @@ Body:
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
-        Time: 60000
-      - Level: 2
-        Time: 90000
-      - Level: 3
         Time: 120000
+      - Level: 2
+        Time: 240000
+      - Level: 3
+        Time: 360000
       - Level: 4
-        Time: 150000
+        Time: 480000
       - Level: 5
-        Time: 180000
+        Time: 600000
     Requires:
       SpCost:
         - Level: 1
@@ -3946,27 +3946,27 @@ Body:
     SplashArea: -1
     Duration1:
       - Level: 1
-        Time: 30000
-      - Level: 2
         Time: 60000
-      - Level: 3
+      - Level: 2
         Time: 90000
+      - Level: 3
+        Time: 1200000
       - Level: 4
-        Time: 120000
-      - Level: 5
         Time: 150000
+      - Level: 5
+        Time: 180000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 20
+          Amount: 24
         - Level: 2
-          Amount: 23
+          Amount: 28
         - Level: 3
-          Amount: 26
+          Amount: 31
         - Level: 4
-          Amount: 29
+          Amount: 35
         - Level: 5
-          Amount: 32
+          Amount: 40
       Weapon:
         1hAxe: true
         2hAxe: true
@@ -4026,27 +4026,27 @@ Body:
     SplashArea: -1
     Duration1:
       - Level: 1
-        Time: 20000
-      - Level: 2
-        Time: 40000
-      - Level: 3
         Time: 60000
+      - Level: 2
+        Time: 90000
+      - Level: 3
+        Time: 120000
       - Level: 4
-        Time: 80000
+        Time: 150000
       - Level: 5
-        Time: 100000
+        Time: 180000
     Requires:
       SpCost:
         - Level: 1
-          Amount: 18
+          Amount: 23
         - Level: 2
-          Amount: 16
+          Amount: 21
         - Level: 3
-          Amount: 14
+          Amount: 19
         - Level: 4
-          Amount: 12
+          Amount: 17
         - Level: 5
-          Amount: 10
+          Amount: 15
       Weapon:
         Dagger: true
         1hSword: true
@@ -4749,7 +4749,7 @@ Body:
     HitCount: -8
     Element: Weapon
     AfterCastActDelay: 2000
-    AfterCastWalkDelay: 2000
+    AfterCastWalkDelay: 0
     Duration2: 5000
     CastDelayFlags:
       IgnoreStatus: true
@@ -10135,15 +10135,15 @@ Body:
     AfterCastActDelay: 2000
     Duration1:
       - Level: 1
-        Time: 40000
+        Time: 70000
       - Level: 2
-        Time: 45000
+        Time: 75000
       - Level: 3
-        Time: 50000
+        Time: 80000
       - Level: 4
-        Time: 55000
+        Time: 85000
       - Level: 5
-        Time: 60000
+        Time: 90000
     Duration2: 60000
     Requires:
       SpCost:
@@ -10628,7 +10628,7 @@ Body:
         Time: 3000
       - Level: 10
         Time: 3000
-    AfterCastWalkDelay: 2000
+    AfterCastWalkDelay: 0
     CastDelayFlags:
       IgnoreStatus: true
     Requires:
@@ -12809,7 +12809,6 @@ Body:
       NoDamage: true
     HitCount: 1
     CastTime: 1000
-    Duration1: 600000
     Requires:
       SpCost: 30
     Status: Preserve
@@ -13103,25 +13102,25 @@ Body:
       SpCost: 15
       ZenyCost:
         - Level: 1
-          Amount: 600
+          Amount: 300
         - Level: 2
-          Amount: 700
+          Amount: 350
         - Level: 3
-          Amount: 800
+          Amount: 400
         - Level: 4
-          Amount: 900
+          Amount: 450
         - Level: 5
-          Amount: 1000
+          Amount: 500
         - Level: 6
-          Amount: 1100
+          Amount: 550
         - Level: 7
-          Amount: 1200
+          Amount: 600
         - Level: 8
-          Amount: 1300
+          Amount: 650
         - Level: 9
-          Amount: 1400
+          Amount: 700
         - Level: 10
-          Amount: 1500
+          Amount: 750
       Weapon:
         Fist: true
         Dagger: true
@@ -13863,7 +13862,48 @@ Body:
     Hit: Multi_Hit
     HitCount: -5
     Element: Weapon
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
+    Requires:
+      SpCost:
+        - Level: 1
+          Amount: 12
+        - Level: 2
+          Amount: 14
+        - Level: 3
+          Amount: 16
+        - Level: 4
+          Amount: 18
+        - Level: 5
+          Amount: 20
+        - Level: 6
+          Amount: 22
+        - Level: 7
+          Amount: 24
+        - Level: 8
+          Amount: 26
+        - Level: 9
+          Amount: 28
+        - Level: 10
+          Amount: 30
+      Weapon:
+        Revolver: true
+      Ammo:
+        Bullet: true
+      AmmoAmount: 5
+  - Id: 516
+    Name: GS_DESPERADO
+    Description: Desperado
+    MaxLevel: 10
+    Type: Weapon
+    TargetType: Self
+    DamageFlags:
+      Splash: true
+    Hit: Multi_Hit
+    HitCount: 1
+    Element: Weapon
+    SplashArea: 3
+    AfterCastActDelay: 500
+    Duration1: 1000
     Requires:
       SpCost:
         - Level: 1
@@ -13886,48 +13926,6 @@ Body:
           Amount: 38
         - Level: 10
           Amount: 40
-      Weapon:
-        Revolver: true
-      Ammo:
-        Bullet: true
-      AmmoAmount: 5
-  - Id: 516
-    Name: GS_DESPERADO
-    Description: Desperado
-    MaxLevel: 10
-    Type: Weapon
-    TargetType: Self
-    DamageFlags:
-      Splash: true
-    Hit: Multi_Hit
-    HitCount: 1
-    Element: Weapon
-    SplashArea: 3
-    AfterCastActDelay: 1000
-    AfterCastWalkDelay: 1000
-    Duration1: 1000
-    Requires:
-      SpCost:
-        - Level: 1
-          Amount: 32
-        - Level: 2
-          Amount: 34
-        - Level: 3
-          Amount: 36
-        - Level: 4
-          Amount: 38
-        - Level: 5
-          Amount: 40
-        - Level: 6
-          Amount: 42
-        - Level: 7
-          Amount: 44
-        - Level: 8
-          Amount: 46
-        - Level: 9
-          Amount: 48
-        - Level: 10
-          Amount: 50
       Weapon:
         Revolver: true
       Ammo:
@@ -14297,7 +14295,7 @@ Body:
     Hit: Multi_Hit
     HitCount: 3
     Element: Weapon
-    AfterCastActDelay: 1000
+    AfterCastActDelay: 500
     Requires:
       SpCost:
         - Level: 1
@@ -14340,7 +14338,7 @@ Body:
     Element: Weapon
     SplashArea: 1
     CastTime: 3000
-    AfterCastActDelay: 2000
+    AfterCastActDelay: 1000
     Requires:
       SpCost:
         - Level: 1

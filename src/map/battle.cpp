@@ -5063,10 +5063,8 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			i = 10 * (16 - skill_lv);
 			if (i < 1) i = 1;
 			//Preserve damage ratio when max cart weight is changed.
-			if (sd && sd->cart_weight)
-				skillratio += sd->cart_weight / i * 80000 / battle_config.max_cart_weight - 100;
-			else if (!sd)
-				skillratio += 80000 / i - 100;
+			const int fixed_cart_weight = 8000;
+			skillratio += fixed_cart_weight / i * 80000 / fixed_cart_weight - 100;
 			break;
 		case TK_DOWNKICK:
 		case TK_STORMKICK:
