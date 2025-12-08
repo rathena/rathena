@@ -15537,12 +15537,36 @@ static int32 status_natural_heal(block_list* bl, va_list args)
 		// Our timer system isn't 100% accurate so make sure we use the closest interval
 		rate -= NATURAL_HEAL_INTERVAL / 2;
 
+		// if(regen->tick.hp + rate <= natural_heal_prev_tick) {
+		// 	regen->tick.hp = natural_heal_prev_tick;
+		// 	if (status->hp >= status->max_hp)
+		// 		flag &= ~(RGN_HP | RGN_SHP);
+		// 	else if (status_heal(bl, regen->hp, 0, 1) < regen->hp)
+		// 		flag &= ~RGN_SHP; // Full
+		// }
 		if(regen->tick.hp + rate <= natural_heal_prev_tick) {
 			regen->tick.hp = natural_heal_prev_tick;
-			if (status->hp >= status->max_hp)
+
+			if (status->hp >= status->max_hp) {
 				flag &= ~(RGN_HP | RGN_SHP);
-			else if (status_heal(bl, regen->hp, 0, 1) < regen->hp)
-				flag &= ~RGN_SHP; // Full
+			} else {
+				// =====================================================
+				// CUSTOM: Player sentado regenera 3% do HP máximo
+				// =====================================================
+				if (bl->type == BL_PC && vd && vd->dead_sit == 2) {
+					int32 heal_amount = (int32)(status->max_hp * 0.03); // 3% do max HP
+					if (heal_amount < 1)
+						heal_amount = 1;
+
+					if (status_heal(bl, heal_amount, 0, 1) < heal_amount) {
+						// HP cheio, pode desativar skill-based HP regen
+						flag &= ~RGN_SHP;
+					}
+				} else if (status_heal(bl, regen->hp, 0, 1) < regen->hp) {
+					// Regen normal (em pé ou não-player)
+					flag &= ~RGN_SHP; // Full
+				}
+			}
 		}
 	}
 	else {
@@ -15568,12 +15592,35 @@ static int32 status_natural_heal(block_list* bl, va_list args)
 		// Our timer system isn't 100% accurate so make sure we use the closest interval
 		rate -= NATURAL_HEAL_INTERVAL / 2;
 
+		// if(regen->tick.sp + rate <= natural_heal_prev_tick) {
+		// 	regen->tick.sp = natural_heal_prev_tick;
+		// 	if (status->sp >= status->max_sp)
+		// 		flag &= ~(RGN_SP | RGN_SSP);
+		// 	else if (status_heal(bl, 0, regen->sp, 1) < regen->sp)
+		// 		flag &= ~RGN_SSP; // Full
+		// }
 		if(regen->tick.sp + rate <= natural_heal_prev_tick) {
 			regen->tick.sp = natural_heal_prev_tick;
-			if (status->sp >= status->max_sp)
+
+			// =====================================================
+			// CUSTOM: Player sentado regenera 3% do SP máximo
+			// =====================================================
+			if (bl->type == BL_PC && vd && vd->dead_sit == 2) {
+				int32 heal_amount_sp = (int32)(status->max_sp * 0.03); // 3%
+
+				if (heal_amount_sp < 1)
+					heal_amount_sp = 1;
+
+				if (status_heal(bl, 0, heal_amount_sp, 1) < heal_amount_sp) {
+					flag &= ~RGN_SSP;
+				}
+			}
+			else if (status->sp >= status->max_sp) {
 				flag &= ~(RGN_SP | RGN_SSP);
-			else if (status_heal(bl, 0, regen->sp, 1) < regen->sp)
+			}
+			else if (status_heal(bl, 0, regen->sp, 1) < regen->sp) {
 				flag &= ~RGN_SSP; // Full
+			}
 		}
 	}
 	else {
