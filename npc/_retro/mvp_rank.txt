@@ -1,0 +1,164 @@
+//===== rAthena Script =======================================
+//= MVP Ranking & History (from SQL mvplog)
+//===== Description: =========================================
+//= Shows MVP statistics using the mvplog table
+//= from the RETRO-logs database.
+//============================================================
+
+prontera,147,174,5	script	MVP Record Keeper	2_BULLETIN_BOARD,{
+
+	mes "[MVP Record Keeper]";
+	mes "Hello adventurer.";
+	mes "I keep records of all MVP kills on this world.";
+	next;
+
+	while (true) {
+		mes "[MVP Record Keeper]";
+		mes "What would you like to see?";
+		next;
+
+		.@s = select(
+			"My MVP statistics",
+			"Top 10 MVP hunters",
+			"Recent MVP kills",
+			"Exit"
+		);
+
+		if (.@s == 4) {
+			mes "[MVP Record Keeper]";
+			mes "Come back anytime you want to check MVP history.";
+			close;
+		}
+
+		switch (.@s) {
+
+			//------------------------------------------------
+			// 1. My MVP statistics
+			//------------------------------------------------
+			case 1:
+				// Clear arrays
+				deletearray .@total[0], getarraysize(.@total);
+				deletearray .@date$[0], getarraysize(.@date$);
+				deletearray .@mob_id[0], getarraysize(.@mob_id);
+				deletearray .@map$[0], getarraysize(.@map$);
+
+				// Total MVPs killed by this character
+				query_sql(
+					"SELECT COUNT(*) "
+					+ "FROM `RETRO-logs`.mvplog "
+					+ "WHERE kill_char_id = " + getcharid(0),
+					.@total
+				);
+
+				mes "[MVP Record Keeper]";
+				if (.@total[0] <= 0) {
+					mes "You have not defeated any MVPs yet.";
+					next;
+					break;
+				}
+
+				mes "You have defeated ^0000FF" + .@total[0] + "^000000 MVP(s) in total.";
+				next;
+
+				// Now fetch the last 10 MVP kills of this character
+				.@rows = query_sql(
+					"SELECT mvp_date, monster_id, map "
+					+ "FROM `RETRO-logs`.mvplog "
+					+ "WHERE kill_char_id = " + getcharid(0) + " "
+					+ "ORDER BY mvp_date DESC "
+					+ "LIMIT 10",
+					.@date$, .@mob_id, .@map$
+				);
+
+				mes "[MVP Record Keeper]";
+				mes "Here are your last " + .@rows + " MVP kill(s):";
+
+				for (.@i = 0; .@i < .@rows; .@i++) {
+					.@mid = .@mob_id[.@i];
+					.@mob_name$ = getmonsterinfo(.@mid, MOB_NAME);
+
+					mes "^777777" + .@date$[.@i] + "^000000 - "
+						+ "^FF0000" + .@mob_name$ + "^000000 "
+						+ "on ^00AAFF" + .@map$[.@i] + "^000000";
+				}
+				next;
+				break;
+
+
+			//------------------------------------------------
+			// 2. Top 10 MVP hunters
+			//------------------------------------------------
+			case 2:
+				deletearray .@name$[0], getarraysize(.@name$);
+				deletearray .@kills[0], getarraysize(.@kills);
+
+				.@rows = query_sql(
+					"SELECT c.name, COUNT(*) AS kills "
+					+ "FROM `RETRO-logs`.mvplog m "
+					+ "JOIN `char` c ON c.char_id = m.kill_char_id "
+					+ "GROUP BY m.kill_char_id "
+					+ "ORDER BY kills DESC "
+					+ "LIMIT 10",
+					.@name$, .@kills
+				);
+
+				mes "[MVP Record Keeper]";
+				if (.@rows <= 0) {
+					mes "There is no MVP kill data recorded yet.";
+					next;
+					break;
+				}
+
+				mes "Top 10 MVP hunters:";
+				for (.@i = 0; .@i < .@rows; .@i++) {
+					mes "^0000FF" + (.@i + 1) + ".^000000 "
+						+ .@name$[.@i] + "  -  "
+						+ .@kills[.@i] + " MVP(s)";
+				}
+				next;
+				break;
+
+			//------------------------------------------------
+			// 3. Recent MVP kills
+			//------------------------------------------------
+			case 3:
+				deletearray .@date$[0], getarraysize(.@date$);
+				deletearray .@mob_id[0], getarraysize(.@mob_id);
+				deletearray .@map$[0], getarraysize(.@map$);
+				deletearray .@killer$[0], getarraysize(.@killer$);
+
+				.@rows = query_sql(
+					"SELECT m.mvp_date, m.monster_id, m.map, c.name "
+					+ "FROM `RETRO-logs`.mvplog m "
+					+ "LEFT JOIN `char` c ON c.char_id = m.kill_char_id "
+					+ "ORDER BY m.mvp_date DESC "
+					+ "LIMIT 10",
+					.@date$, .@mob_id, .@map$, .@killer$
+				);
+
+				mes "[MVP Record Keeper]";
+				if (.@rows <= 0) {
+					mes "No MVP kills have been recorded yet.";
+					next;
+					break;
+				}
+
+				mes "Last " + .@rows + " recorded MVP kills:";
+				for (.@i = 0; .@i < .@rows; .@i++) {
+					.@mid = .@mob_id[.@i];
+					.@mob_name$ = getmonsterinfo(.@mid, MOB_NAME);
+
+					.@killer_name$ = .@killer$[.@i];
+					if (.@killer_name$ == "")
+						.@killer_name$ = "(Unknown)";
+
+					mes "^777777" + .@date$[.@i] + "^000000 - "
+						+ "^FF0000" + .@mob_name$ + "^000000 "
+						+ "on ^00AAFF" + .@map$[.@i] + "^000000 "
+						+ "by ^00CC00" + .@killer_name$ + "^000000";
+				}
+				next;
+				break;
+		}
+	}
+}

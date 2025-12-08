@@ -1,0 +1,27 @@
+//===== rAthena Script =======================================
+//= MVP Kill Announcer
+//===== Description: =========================================
+//= Announces to the entire server whenever a player kills an MVP.
+//============================================================
+
+-	script	MVP_Kill_Announcer	-1,{
+
+OnNPCKillEvent:
+	// killedrid = ID of the defeated monster
+	.@mob_id = killedrid;
+
+	// Check if the monster is an MVP:
+	// MVPs in rAthena have MOB_MVPEXP > 0
+	if (getmonsterinfo(.@mob_id, MOB_MVPEXP) <= 0)
+		end;
+
+	// Retrieve MVP and killer information
+	.@mob_name$    = getmonsterinfo(.@mob_id, MOB_NAME);
+	.@killer_name$ = strcharinfo(0);
+	.@map_name$    = strcharinfo(3);
+
+	// Global announcement
+	announce "[MVP] " + .@killer_name$ + " has defeated the MVP " + .@mob_name$ + " on " + .@map_name$ + "!", bc_all, 0xff0000;
+
+	end;
+}
