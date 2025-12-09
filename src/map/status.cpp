@@ -10780,6 +10780,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 	switch(type)
 	{
 		/* Permanent effects */
+		case SC_PRESERVE:
 		case SC_AETERNA:
 		case SC_MODECHANGE:
 		case SC_WEIGHT50:
@@ -13364,6 +13365,7 @@ int32 status_change_clear(block_list* bl, int32 type)
 					case SC_ELEMENTALCHANGE: // Only when its Holy or Dark that it doesn't dispell on death
 						if (sc->getSCE(status)->val2 != ELE_HOLY && sc->getSCE(status)->val2 != ELE_DARK)
 							break;
+					case SC_PRESERVE:
 					default:
 						continue;
 				}

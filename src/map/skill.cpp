@@ -8366,7 +8366,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case NJ_NEN:
 	case NPC_DEFENDER:
 	case NPC_MAGICMIRROR:
-	case ST_PRESERVE:
+	//case ST_PRESERVE:
 	case NPC_KEEPING:
 	case NPC_WEAPONBRAKER:
 	case NPC_BARRIER:
@@ -9337,6 +9337,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case TK_READYTURN:
 	case TK_READYCOUNTER:
 	case TK_DODGE:
+	case ST_PRESERVE:
 	case CR_SHRINK:
 	case SG_FUSION:
 	case GS_GATLINGFEVER:

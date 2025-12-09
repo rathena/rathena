@@ -1649,6 +1649,7 @@ Body:
     Flags:
       NoSave: true
       RemoveOnHermode: true
+      NoRemoveOnDead: true
   - Status: Battleorders
     Icon: EFST_GDSKILL_BATTLEORDER
     DurationLookup: GD_BATTLEORDER
