@@ -235,6 +235,17 @@ prt_in,47,96,3	script	Hunter's Assurance	4_M_SAKRAY_TIED,{
 	.@item_name$ = getitemname(.@item_id);
 
 	//------------------------------------------------------
+	// Do not allow contract for an item already in inventory
+	//------------------------------------------------------
+	if (countitem(.@item_id) > 0) {
+		mes "[Hunter's Assurance Broker]";
+		mes "You already have at least one copy of ^00AAFF" + .@item_name$ + "^000000 in your inventory.";
+		mes "Hunter's Assurance is intended for items that you do not own yet.";
+		mes "Please choose another item.";
+		close;
+	}
+
+	//------------------------------------------------------
 	// Confirm contract
 	//------------------------------------------------------
 	mes "[Hunter's Assurance Broker]";
@@ -305,10 +316,10 @@ OnStatus:
 //----------------------------------------------------------
 OnInit:
 	.enabled            = 1;
-	.FEE_ZENY           = 250000;      // Contract price in Zeny
+	.FEE_ZENY           = 500000;      // Contract price in Zeny
 	.PRICE_COIN         = 1230001;     // Coin item
-    .PRICE_COIN_AMOUNT  = 50;          // quantity of coin required
-	.MAX_KILLS          = 2000;        // Max kills before guarantee
+    .PRICE_COIN_AMOUNT  = 1;         // quantity of coin required
+	.MAX_KILLS          = 5;        // Max kills before guarantee
 	end;
 
 
@@ -343,8 +354,12 @@ OnNPCKillEvent:
 	// If reached or exceeded max kills, guarantee the item
 	if (HA_KillCount >= .MAX_KILLS) {
 		getitem HA_ItemID, 1;
+
 		dispbottom "Hunter's Assurance: You have reached " + .MAX_KILLS + " kills without the drop.";
 		dispbottom "The guaranteed " + getitemname(HA_ItemID) + " has been granted.";
+
+		// Special announcement for Assurance reward
+		callfunc "F_AssuranceAnnounce", HA_ItemID, 1;
 		callsub S_ResetAssurance;
 	}
 

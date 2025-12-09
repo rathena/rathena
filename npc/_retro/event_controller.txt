@@ -1,0 +1,93 @@
+//==============================================================
+// Global Card Announce function
+// - Called whenever we want to announce a card drop
+//==============================================================
+function	script	F_AssuranceAnnounce	{
+	.@item_id = getarg(0);
+	.@amount  = getarg(1, 1);
+	announce strcharinfo(0) + " received the guaranteed item: " + getitemname(.@item_id) + " from Hunter's Assurance", bc_all, 0xFFDD00;
+	end;
+}
+
+//==============================================================
+// KillEventController
+//==============================================================
+-	script	KillEventController	-1,{
+
+OnInit:
+	end;
+
+//----------------------------------------------------------
+// Triggered whenever a player kills a monster
+//----------------------------------------------------------
+OnNPCKillEvent:
+	callsub S_GlobalDropHandler;
+	callsub S_MVPKillHandler;
+	end;
+
+//----------------------------------------------------------
+// Sub: Card drop handler (uses @inventorylist_*)
+//----------------------------------------------------------
+S_CardDropHandler:
+
+	.@count = @inventorylist_count;
+	if (!.@count)
+		return;
+
+	for (.@i = 0; .@i < .@count; .@i++) {
+
+		.@id  = @inventorylist_id[.@i];
+		.@amt = @inventorylist_amount[.@i];
+
+		// calls global card announce function
+		callfunc "F_CardDropAnnounce", .@id, .@amt;
+	}
+	return;
+
+//----------------------------------------------------------
+// Sub: GlobalDrop logic
+//----------------------------------------------------------
+S_GlobalDropHandler:
+
+	//-----------------------------------------
+	// Global drop (any monster)
+	//-----------------------------------------
+	.@item_id     = 1230001;
+	.@item_chance = 500;    // 500 = 5.00%
+
+	if (rand(10000) < .@item_chance)
+		getitem .@item_id, 1;
+
+	//-----------------------------------------
+	// 100% drop exclusively for MVP
+	//-----------------------------------------
+	// If MvPExp > 0 → it's MVP (no mini-boss)
+	if (getmonsterinfo(killedrid, MOB_MVPEXP) > 0) {
+
+		.@mvp_item = 1230003; // MVP-only reward, 100% chance
+		getitem .@mvp_item, 1;
+	}
+	return;
+
+//----------------------------------------------------------
+// Sub: MVP Kill Announcer
+//----------------------------------------------------------
+S_MVPKillHandler:
+
+	// killedrid = ID of the defeated monster
+	.@mob_id = killedrid;
+
+	// Check if the monster is an MVP:
+	// MVPs in rAthena have MOB_MVPEXP > 0
+	if (getmonsterinfo(.@mob_id, MOB_MVPEXP) <= 0)
+		return;
+
+	// Retrieve MVP and killer information
+	.@mob_name$    = getmonsterinfo(.@mob_id, MOB_NAME);
+	.@killer_name$ = strcharinfo(0);
+	.@map_name$    = strcharinfo(3);
+
+	// Global announcement
+	announce "[MVP] " + .@killer_name$ + " has defeated the MVP " + .@mob_name$ + " on " + .@map_name$ + "!", bc_all, 0xff0000;
+	return;
+}
