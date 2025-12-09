@@ -1,0 +1,16 @@
+//===== rAthena Script =======================================
+//= Online Players Counter NPC (player-style chat bubble)
+//============================================================
+prontera,151,193,5	script	Online Counter	4_M_SALVATION,{
+
+OnInit:
+    while(1) {
+        .@count = getusers(1);
+        .@suffix$ = (.@count != 1) ? "s" : "";
+
+        DelWaitingRoom;
+
+        WaitingRoom(.@count + " Player" + .@suffix$ + " Online", 0);
+        sleep 5000;
+    }
+}

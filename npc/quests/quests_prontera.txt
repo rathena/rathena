@@ -164,7 +164,7 @@ prt_fild05,270,212,5	script	Culvert Guardian	105,{
 
 // Ph.D Hat Quest :: npc_6cript
 //============================================================
-prt_in,38,108,4	script	Teacher	53,{
+prontera,167,230,3	script	Teacher	53,{
 	if ((countitem(710) > 0) && (countitem(703) > 0) && (countitem(704) > 0) && (countitem(708) > 0)) {
 		mes "[Teacher]";
 		mes "Oh...";

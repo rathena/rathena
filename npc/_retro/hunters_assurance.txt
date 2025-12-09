@@ -1,0 +1,352 @@
+//===== rAthena Script =======================================
+//= Hunter's Assurance System (YML mob_db version)
+//===== Description: =========================================
+//= For a configurable fee in Zeny and 1 coin item, players can
+//= activate Hunter's Assurance for a specific item dropped
+//= by a normal (non-boss, non-miniboss) monster.
+//= Uses getmobdrops(), reading from mob_db.yml in memory.
+//= If the chosen item does not drop naturally within
+//= MAX_KILLS kills, the item is granted.
+//============================================================
+
+prt_in,47,96,3	script	Hunter's Assurance	4_M_SAKRAY_TIED,{
+
+	mes "[Hunter's Assurance Broker]";
+
+	// System enabled?
+	if (!.enabled) {
+		mes "The Hunter's Assurance service is currently unavailable.";
+		close;
+	}
+
+	//------------------------------------------------------
+	// If the player already has an active contract
+	//------------------------------------------------------
+	if (HA_Active) {
+		.@mob_name$  = getmonsterinfo(HA_MobID, MOB_NAME);
+		.@item_name$ = getitemname(HA_ItemID);
+
+		mes "You currently have an active Hunter's Assurance contract.";
+		mes " ";
+		mes "Target monster: ^0000FF" + .@mob_name$ + "^000000 (ID: " + HA_MobID + ")";
+		mes "Target item: ^00AAFF" + .@item_name$ + "^000000 (ID: " + HA_ItemID + ")";
+		mes "Kills so far: ^FFCC00" + HA_KillCount + "^000000 / " + .MAX_KILLS + ".";
+		if (countitem(HA_ItemID) > 0) {
+			mes "You already possess at least one copy of the target item.";
+		}
+		next;
+
+		.@sel = select(
+			"View contract details again",
+			"Cancel my current contract (no refund)",
+			"Leave"
+		);
+
+		switch (.@sel) {
+		case 1:
+			close2;
+			donpcevent strnpcinfo(0) + "::OnStatus";
+			end;
+
+		case 2:
+			mes "[Hunter's Assurance Broker]";
+			mes "Are you sure you want to cancel your current contract?";
+			mes "You will not receive any refund.";
+			next;
+			if (select("Yes, cancel it.:No, keep it.") == 2) {
+				mes "[Hunter's Assurance Broker]";
+				mes "Very well. Your contract remains active.";
+				close;
+			}
+			callsub S_ResetAssurance;
+			mes "[Hunter's Assurance Broker]";
+			mes "Your Hunter's Assurance contract has been cancelled.";
+			close;
+
+		case 3:
+			mes "[Hunter's Assurance Broker]";
+			mes "Come back if you require Hunter's Assurance again.";
+			close;
+		}
+		end;
+	}
+
+	//------------------------------------------------------
+	// No active contract yet
+	//------------------------------------------------------
+    mes "For a fee of ^FFCC00" + .FEE_ZENY + " Zeny^000000 and ^FFCC00" + .PRICE_COIN_AMOUNT + "x " + getitemname(.PRICE_COIN) + "^000000 you can activate ^00AAFFHunter's Assurance^000000";
+	mes " ";
+	mes "This service guarantees you will obtain a chosen item";
+	mes "from a specific normal monster if you have not obtained it";
+	mes "naturally within ^FFCC00" + .MAX_KILLS + "^000000 kills.";
+	next;
+
+	.@choice = select(
+		"Tell me more.",
+		"Start a contract.",
+		"Leave."
+	);
+
+	if (.@choice == 1) {
+		mes "[Hunter's Assurance Broker]";
+		mes "Here is how it works:";
+		mes "1. You choose a ^0000FFnormal monster^000000 and an item it drops.";
+		mes "2. You pay the service fee: ^FFCC00" + .FEE_ZENY + " Zeny^000000 and ^FFCC001 " + getitemname(.PRICE_COIN) + "^000000.";
+		mes "3. From that moment, we track how many of that monster you defeat.";
+		mes "4. If you obtain the item naturally, the contract ends.";
+		mes "5. If you reach ^FFCC00" + .MAX_KILLS + "^000000 kills without obtaining the item, we grant you ^00AAFF1 guaranteed copy^000000 of that item.";
+		mes "6. Only one contract can be active per character at a time.";
+		next;
+		mes "[Hunter's Assurance Broker]";
+		mes "Would you like to start a contract now?";
+		if (select("Yes.:No.") == 2) {
+			mes "Very well. Come back anytime.";
+			close;
+		}
+	} else if (.@choice == 2) {
+		// proceed
+	} else {
+		mes "[Hunter's Assurance Broker]";
+		mes "Very well. Come back anytime.";
+		close;
+	}
+
+	//------------------------------------------------------
+	// Check payment
+	//------------------------------------------------------
+    if (Zeny < .FEE_ZENY || countitem(.PRICE_COIN) < .PRICE_COIN_AMOUNT) {
+		mes "[Hunter's Assurance Broker]";
+        mes "You do not have enough resources to start a contract.";
+        mes "Required:";
+        mes " - ^FFCC00" + .FEE_ZENY + " Zeny^000000";
+        mes " - ^FFCC00" + .PRICE_COIN_AMOUNT + "x " + getitemname(.PRICE_COIN) + "^000000";
+		close;
+	}
+
+	//------------------------------------------------------
+	// Choose Monster ID
+	//------------------------------------------------------
+	mes "[Hunter's Assurance Broker]";
+	mes "Please input the Monster ID of the target.";
+	mes "It must be a normal monster (no MVP, no miniboss).";
+	next;
+	input .@mob_id;
+
+	if (.@mob_id <= 0 || getmonsterinfo(.@mob_id, MOB_NAME) == "") {
+		mes "[Hunter's Assurance Broker]";
+		mes "That is not a valid monster ID.";
+		close;
+	}
+
+	// Check that it is not a boss/miniboss/MVP
+	.@mode   = getmonsterinfo(.@mob_id, MOB_MODE);
+	.@mvpexp = getmonsterinfo(.@mob_id, MOB_MVPEXP);
+
+	if ((.@mode & MD_BOSS) || (.@mode & MD_MINIBOSS) || .@mvpexp > 0) {
+		mes "[Hunter's Assurance Broker]";
+		mes "Hunter's Assurance can only be used on normal monsters.";
+		mes "Boss, miniboss, and MVP monsters are not eligible.";
+		close;
+	}
+
+	.@mob_name$ = getmonsterinfo(.@mob_id, MOB_NAME);
+
+	//------------------------------------------------------
+	// Get drops from mob_db (YML) via getmobdrops()
+	//------------------------------------------------------
+	if (!getmobdrops(.@mob_id)) {
+		mes "[Hunter's Assurance Broker]";
+		mes "I could not find drop data for this monster.";
+		close;
+	}
+
+	// $@MobDrop_item[]  -> item IDs
+	// $@MobDrop_rate[]  -> drop rate (1 = 0.01%)
+	// $@MobDrop_count   -> number of drops
+	if ($@MobDrop_count <= 0) {
+		mes "[Hunter's Assurance Broker]";
+		mes "This monster does not seem to drop any items.";
+		close;
+	}
+
+	// Build filtered arrays for menu
+	deletearray .@drop_id[0], getarraysize(.@drop_id);
+	deletearray .@drop_rate[0], getarraysize(.@drop_rate);
+	deletearray .@drop_name$[0], getarraysize(.@drop_name$);
+
+	.@cnt = 0;
+	for (.@i = 0; .@i < $@MobDrop_count; .@i++) {
+
+		.@id   = $@MobDrop_item[.@i];
+		.@rate = $@MobDrop_rate[.@i];
+
+		if (.@id <= 0)
+			continue;
+
+		.@name$ = getitemname(.@id);
+		if (.@name$ == "null")
+			continue;
+
+		.@drop_id[.@cnt]    = .@id;
+		.@drop_rate[.@cnt]  = .@rate;
+		.@drop_name$[.@cnt] = .@name$;
+		.@cnt++;
+	}
+
+	if (.@cnt <= 0) {
+		mes "[Hunter's Assurance Broker]";
+		mes "This monster does not have any valid droppable items.";
+		close;
+	}
+
+	//------------------------------------------------------
+	// Build menu: Item Name (x.xx%)
+	//------------------------------------------------------
+	.@menu$ = "";
+	for (.@i = 0; .@i < .@cnt; .@i++) {
+		.@rate   = .@drop_rate[.@i]; // 1 = 0.01%
+		.@whole  = .@rate / 100;
+		.@frac   = .@rate % 100;
+
+		.@rate_str$ = .@whole + ".";
+		if (.@frac < 10)
+			.@rate_str$ += "0";
+		.@rate_str$ += .@frac + "%";
+
+		if (.@menu$ != "")
+			.@menu$ += ":";
+
+		.@menu$ += .@drop_name$[.@i] + " (" + .@rate_str$ + ")";
+	}
+
+	mes "[Hunter's Assurance Broker]";
+	mes "Select which drop from ^0000FF" + .@mob_name$ + "^000000";
+	mes "you want Hunter's Assurance to guarantee.";
+	next;
+
+	.@sel = select(.@menu$) - 1;
+	if (.@sel < 0 || .@sel >= .@cnt) {
+		mes "[Hunter's Assurance Broker]";
+		mes "Invalid selection.";
+		close;
+	}
+
+	.@item_id    = .@drop_id[.@sel];
+	.@item_name$ = getitemname(.@item_id);
+
+	//------------------------------------------------------
+	// Confirm contract
+	//------------------------------------------------------
+	mes "[Hunter's Assurance Broker]";
+	mes "You are about to start a Hunter's Assurance contract with:";
+	mes " ";
+	mes "Monster: ^0000FF" + .@mob_name$ + "^000000 (ID: " + .@mob_id + ")";
+	mes "Item: ^00AAFF" + .@item_name$ + "^000000 (ID: " + .@item_id + ")";
+    mes "Fee: ^FFCC00" + .FEE_ZENY + " Zeny^000000 and ^FFCC00" + .PRICE_COIN_AMOUNT + "x " + getitemname(.PRICE_COIN) + "^000000.";
+	next;
+
+	if (select("Confirm contract.:Cancel.") == 2) {
+		mes "[Hunter's Assurance Broker]";
+		mes "Contract cancelled.";
+		close;
+	}
+
+	// Re-check payment before charging
+    if (Zeny < .FEE_ZENY || countitem(.PRICE_COIN) < .PRICE_COIN_AMOUNT) {
+		mes "[Hunter's Assurance Broker]";
+		mes "You no longer have enough resources to start the contract.";
+		close;
+	}
+
+	// Charge the fee
+	Zeny -= .FEE_ZENY;
+    delitem .PRICE_COIN, .PRICE_COIN_AMOUNT;
+
+	// Initialize contract variables
+	HA_Active    = 1;
+	HA_MobID     = .@mob_id;
+	HA_ItemID    = .@item_id;
+	HA_KillCount = 0;
+
+	mes "[Hunter's Assurance Broker]";
+	mes "Your Hunter's Assurance contract has been created.";
+	mes "Good luck hunting ^0000FF" + .@mob_name$ + "^000000!";
+	close;
+
+//----------------------------------------------------------
+// Subroutine: reset all contract variables for this char
+//----------------------------------------------------------
+S_ResetAssurance:
+	HA_Active    = 0;
+	HA_MobID     = 0;
+	HA_ItemID    = 0;
+	HA_KillCount = 0;
+	return;
+
+//----------------------------------------------------------
+// Optional: separate status view (can be reused)
+//----------------------------------------------------------
+OnStatus:
+	mes "[Hunter's Assurance Broker]";
+	if (!HA_Active) {
+		mes "You do not have an active Hunter's Assurance contract.";
+		close;
+	}
+	.@mob_name$  = getmonsterinfo(HA_MobID, MOB_NAME);
+	.@item_name$ = getitemname(HA_ItemID);
+	mes "Current contract:";
+	mes "Monster: ^0000FF" + .@mob_name$ + "^000000 (ID: " + HA_MobID + ")";
+	mes "Item: ^00AAFF" + .@item_name$ + "^000000 (ID: " + HA_ItemID + ")";
+	mes "Kills: ^FFCC00" + HA_KillCount + "^000000 / " + .MAX_KILLS + ".";
+	close;
+
+//----------------------------------------------------------
+// OnInit: configuration
+//----------------------------------------------------------
+OnInit:
+	.enabled            = 1;
+	.FEE_ZENY           = 250000;      // Contract price in Zeny
+	.PRICE_COIN         = 1230001;     // Coin item
+    .PRICE_COIN_AMOUNT  = 50;          // quantity of coin required
+	.MAX_KILLS          = 2000;        // Max kills before guarantee
+	end;
+
+
+//----------------------------------------------------------
+// Kill tracking: OnNPCKillEvent
+// Shows progress EVERY KILL
+//----------------------------------------------------------
+OnNPCKillEvent:
+
+	// Only track if contract is active
+	if (!HA_Active)
+		end;
+
+	// Only count kills of the configured monster
+	if (killedrid != HA_MobID)
+		end;
+
+	// If the player already has the item, contract finishes naturally
+	if (countitem(HA_ItemID) > 0) {
+		dispbottom "Hunter's Assurance: You have obtained " + getitemname(HA_ItemID) + ". Contract completed.";
+		callsub S_ResetAssurance;
+		end;
+	}
+
+	// Increment kill count
+	HA_KillCount++;
+
+	// Show progress EVERY kill
+	.@mob_name$ = getmonsterinfo(HA_MobID, MOB_NAME);
+	dispbottom "Hunter's Assurance: " + HA_KillCount + " / " + .MAX_KILLS + " " + .@mob_name$ + " defeated.";
+
+	// If reached or exceeded max kills, guarantee the item
+	if (HA_KillCount >= .MAX_KILLS) {
+		getitem HA_ItemID, 1;
+		dispbottom "Hunter's Assurance: You have reached " + .MAX_KILLS + " kills without the drop.";
+		dispbottom "The guaranteed " + getitemname(HA_ItemID) + " has been granted.";
+		callsub S_ResetAssurance;
+	}
+
+	end;
+}
