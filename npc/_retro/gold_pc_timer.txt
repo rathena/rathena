@@ -3,61 +3,76 @@
 //===== Description: =========================================
 //= NPC that can be spawned via the Gold PC Timer Button.
 //===== Changelog: ===========================================
-//= 1.0 Initial release [Lemongrass]
-//= 1.1 Replay version [eppc0330]
-//= 1.2 Translation of the replay version [Lemongrass]
-//= 1.3 Cleanup of NPC logic [Lemongrass]
-//= 1.4 Added replay version of buff NPC [eppc0330]
+//= Customized to show reward item and amount in the menu
 //============================================================
 
-prontera,0,0,0	script	Goldpoint Manager::GOLDPCCAFE	4_F_02,{
-	// ID:AMOUNT:PRICE
+prt_in,45,117,5	script	Goldpoint Manager::GOLDPCCAFE	4_TREASURE_BOX,{
+
+	// Format: "ITEM_ID:AMOUNT:COST_IN_POINTS"
 	setarray .items$[1],
-		"25464:1:2", // World_Tour_Ticket 1
-		"23919:1:10",  // K_Secret_Key 1
-		"23919:11:100",// K_Secret_Key 11
-		"23919:33:300";// K_Secret_Key 33
+		"1230003:1:120",
+		"1230003:2:210",
+		"1230003:3:300";
 
 	mes "[Goldpoint Manager]";
 	mes "You currently have ^0000ff"+#Goldpc_Points+"^000000 points.";
 	mes "What reward do you want?";
 	next;
 
+	// First option: just view current points
 	.@menu$ = "View current points";
 
-	for(.@i = 1; .@i < getarraysize(.items$); .@i++) {
+	// Build dynamic menu with item name, amount and cost
+	for (.@i = 1; .@i < getarraysize(.items$); .@i++) {
 		explode(.@array$, .items$[.@i], ":");
-		.@cost = atoi(.@array$[2]);
-		.@menu$ += ":" + .@cost + " points gift";
-        	if( #Goldpc_Points < .@cost ){
-			.@menu$ += " ^ff0000(not enough points)^000000";
-		}
+		.@itemid = atoi(.@array$[0]);
+		.@amount = atoi(.@array$[1]);
+		.@cost   = atoi(.@array$[2]);
+		.@name$  = getitemname(.@itemid);
+
+		// Label example: "3x Beginner Coin (300 points)"
+		.@line$ = .@amount + "x " + .@name$ + " (" + .@cost + " points)";
+
+		// Mark as not enough points if player can't afford
+		if (#Goldpc_Points < .@cost)
+			.@line$ += " ^ff0000(not enough points)^000000";
+
+		.@menu$ += ":" + .@line$;
 	}
 
-	.@s = select(.@menu$)-1;
+	.@s = select(.@menu$) - 1;
 
-	if(.@s == 0) {
+	// Option 0: just view points
+	if (.@s == 0) {
 		mes "[Goldpoint Manager]";
 		mes "You currently have ^0000ff"+#Goldpc_Points+"^000000 points.";
 		close;
 	}
 
+	// Resolve selected reward
 	explode(.@array$, .items$[.@s], ":");
 	.@itemid = atoi(.@array$[0]);
 	.@amount = atoi(.@array$[1]);
-	.@cost = atoi(.@array$[2]);
+	.@cost   = atoi(.@array$[2]);
+	.@name$  = getitemname(.@itemid);
 
-	if(#Goldpc_Points < .@cost) {
+	if (#Goldpc_Points < .@cost) {
 		mes "[Goldpoint Manager]";
 		mes "You have ^0000ff"+#Goldpc_Points+"^000000 points remaining.";
-		mes "You cannot get the prize with this amount of points.";
+		mes "You cannot get ^FFCC00"+.@amount+"x "+.@name$+"^000000 with this amount of points.";
 		close;
 	}
 
 	mes "[Goldpoint Manager]";
-	mes "You chose the "+.@cost+" points gift. We will reward you immediately.";
+	mes "You chose ^FFCC00"+.@amount+"x "+.@name$+"^000000 for ^0000ff"+.@cost+"^000000 points.";
+	mes "We will reward you immediately.";
+	next;
+
 	#Goldpc_Points -= .@cost;
-	getitem .@itemid,.@amount;
+	getitem .@itemid, .@amount;
+
+	mes "[Goldpoint Manager]";
+	mes "You received ^FFCC00"+.@amount+"x "+.@name$+"^000000.";
 	mes "You have ^0000ff"+#Goldpc_Points+"^000000 points remaining.";
 	close;
 }

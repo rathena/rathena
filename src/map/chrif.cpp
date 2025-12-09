@@ -1605,7 +1605,7 @@ void chrif_parse_ack_vipActive(int32 fd) {
 		}
 	}
 
-	clif_goldpc_info( *sd );
+	// clif_goldpc_info( *sd );
 	
 	// Show info if status changed
 	if (((flag&0x4) || changed) && !sd->vip.disableshowrate) {

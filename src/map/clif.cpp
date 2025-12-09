@@ -11087,7 +11087,7 @@ void clif_parse_LoadEndAck(int32 fd,map_session_data *sd)
 		clif_pk_mode_message(sd);
 
 		// Update the client
-		clif_goldpc_info( *sd );
+		// clif_goldpc_info( *sd );
 	}
 	
 	if( sd->guild && ( battle_config.guild_notice_changemap == 2 || guild_notice ) ){
@@ -25670,11 +25670,12 @@ void clif_parse_dynamic_npc( int fd, map_session_data* sd ){
 
 	char npcname[NPC_NAME_LENGTH + 1];
 
-	if( strncasecmp( "GOLDPCCAFE", p->name, sizeof( p->name ) ) == 0 ){
-		safestrncpy( npcname, p->name, sizeof( npcname ) );
-	}else{
-		return;
-	}
+	// if( strncasecmp( "GOLDPCCAFE", p->name, sizeof( p->name ) ) == 0 ){
+	// 	safestrncpy( npcname, p->name, sizeof( npcname ) );
+	// }else{
+	// 	return;
+	// }
+	if( strncasecmp( "GOLDPCCAFE", p->name, sizeof( p->name ) ) == 0 ) return;
 
 	struct npc_data* nd = npc_name2id( npcname );
 
