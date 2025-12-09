@@ -5,7 +5,7 @@
 function	script	F_AssuranceAnnounce	{
 	.@item_id = getarg(0);
 	.@amount  = getarg(1, 1);
-	announce strcharinfo(0) + " received the guaranteed item: " + getitemname(.@item_id) + " from Hunter's Assurance", bc_all, 0xFFDD00;
+	announce "'" + strcharinfo(0) + "' got the guaranteed item: " + getitemname(.@item_id) + " from Hunter's Assurance", bc_all, 0xFFDD00;
 	end;
 }
 
@@ -88,6 +88,6 @@ S_MVPKillHandler:
 	.@map_name$    = strcharinfo(3);
 
 	// Global announcement
-	announce "[MVP] " + .@killer_name$ + " has defeated the MVP " + .@mob_name$ + " on " + .@map_name$ + "!", bc_all, 0xff0000;
+	announce "'" + .@killer_name$ + "' has defeated the MVP " + .@mob_name$, bc_all, 0xD67FFF;
 	return;
 }

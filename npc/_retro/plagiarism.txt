@@ -1,0 +1,154 @@
+//===== rAthena Script =======================================
+//= Plagiarism NPC (No getskillname dependency)
+//===== By: ==================================================
+//= Easycore (adapted)
+//===== Last Updated: ========================================
+//= 2025-12-09
+//===== Description: ========================================= 
+//= Simple Plagiarism Skill NPC
+//= This version does NOT require the custom getskillname command.
+//============================================================
+
+prt_in,43,107,3	script	Plagiarism NPC	4_F_SHADOWCHASER,{
+
+	mes "[ ^FF0000Plagiarism Master^000000 ]";
+
+	// Must have Plagiarism learned?
+	if (.plag_skill && !getskilllv("RG_PLAGIARISM")) {
+		mes "You must have the ^FF0000Plagiarism^000000 skill learned to use my service.";
+		close;
+	}
+
+	mes "Heya ^FFA500" + strcharinfo(0) + "^000000!";
+	mes "Do you want to copy a skill?";
+	if (.zeny)
+		mes "My service costs ^FF0000" + .zeny + " Zeny^000000.";
+	if (select("~ Proceed:Cancel") == 2)
+		close;
+
+	// Check Zeny before proceeding
+	if (.zeny > 0 && Zeny < .zeny) {
+		message(strcharinfo(0), "Not enough Zeny.");
+		close;
+	}
+
+	// Build menu of skills (using .SkillName$[])
+	.@menu$ = "";
+	.@f = getarraysize(.SkillID);
+	if (.@f != getarraysize(.SkillLV) || .@f != getarraysize(.SkillName$)) {
+		mes "Configuration error: Skill arrays size mismatch.";
+		close;
+	}
+
+	for (.@i = 0; .@i < .@f; .@i++) {
+		.@menu$ += .SkillName$[.@i] + ((.@i == .@f - 1) ? "" : ":");
+	}
+
+	.@s = select(.@menu$) - 1;
+	close2;
+
+	// Safety check
+	if (.@s < 0 || .@s >= .@f)
+		end;
+
+	// Charge Zeny once
+	if (.zeny > 0 && Zeny < .zeny)
+		end;
+	if (.zeny > 0)
+		Zeny -= .zeny;
+
+	// Make the NPC cast the chosen skill
+	npcskill .SkillID[.@s], .SkillLV[.@s], 20, 200;
+
+	// Small delay and warp the NPC back to its original position (in case of knockback/etc.)
+	sleep2 1500;
+	unitwarp getnpcid(0), .map$, .x, .y;
+	end;
+
+
+OnInit:
+	// Default NPC data values (so it can cast properly)
+	setunitdata(getnpcid(0), UNPC_DEX, 300);
+	setunitdata(getnpcid(0), UNPC_ATKMIN, 100);
+	setunitdata(getnpcid(0), UNPC_ATKMAX, 200);
+	getmapxy(.map$, .x, .y, BL_NPC);
+
+	// Configuration
+	// Zeny required? Set 0 to disable it
+	.zeny = 25000;
+
+	// Must Plagiarism skill be learned? (1 = Yes | 0 = No)
+	.plag_skill = 1;
+
+	// Skill ID Array
+	// (coloque aqui os IDs exatos dos skills que quer copiar)
+	setarray .SkillID[0],
+		263,  // Example: Back Stab (ajuste conforme seu emulador)
+		13,
+		7,
+		14,
+		19,
+		20,
+		21,
+		83,
+		84,
+		85,
+		86,
+		89,
+		90,
+		91,
+		421,
+		534,
+		536,
+		537,
+		540,
+		542;
+
+	// Skill Level Array (deve ter o MESMO tamanho que SkillID)
+	setarray .SkillLV[0],
+		10,
+		10,
+		10,
+		10,a
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		10,
+		5,
+		7,
+		10,
+		5,
+		10,
+		19,
+		5;
+
+	// Skill Names Array (texto mostrado no menu)
+	setarray .SkillName$[0],
+		"Back Stab (263)",
+		"Skill 13",
+		"Skill 7",
+		"Skill 14",
+		"Skill 19",
+		"Skill 20",
+		"Skill 21",
+		"Skill 83",
+		"Skill 84",
+		"Skill 85",
+		"Skill 86",
+		"Skill 89",
+		"Skill 90",
+		"Skill 91",
+		"Skill 421",
+		"Skill 534",
+		"Skill 536",
+		"Skill 537",
+		"Skill 540",
+		"Skill 542";
+
+	end;
+}

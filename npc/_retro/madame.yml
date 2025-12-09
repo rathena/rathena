@@ -1,0 +1,144 @@
+#==============================================================
+# Custom Barter Database - Madame
+#==============================================================
+
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Body:
+  - Name: Madame
+    Map: prt_in
+    X: 38
+    Y: 107
+    Direction: East
+    Sprite: 4_F_MADAME
+    Items:
+      - Index: 0
+        Item: Bubble_Gum
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 999
+      - Index: 1
+        Item: Battle_Manual100
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 150
+      - Index: 2
+        Item: Job_Manual50
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 200
+      - Index: 3
+        Item: Blessing_10_Scroll
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 2
+      - Index: 4
+        Item: Inc_Agi_10_Scroll
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 2
+      - Index: 5
+        Item: F_Kafra_Card
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 20
+      - Index: 6
+        Item: C_Wing_Of_Fly
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 700
+      - Index: 7
+        Item: C_Wing_Of_Butterfly
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 700
+      - Index: 8
+        Item: Giant_Fly_Wing
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 5
+      - Index: 10
+        Item: WOB_Local
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 10
+      - Index: 11
+        Item: WOB_Schwaltz
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 10
+      - Index: 12
+        Item: WOB_Rachel
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 10
+      - Index: 13
+        Item: WOB_Rune
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 10
+      - Index: 14
+        Item: Max_Weight_Up_Scroll
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 50
+      - Index: 15
+        Item: Bloody_Dead_Branch
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 16
+        Item: Speed_Up_Potion
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 5

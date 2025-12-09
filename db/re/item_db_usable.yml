@@ -34779,7 +34779,7 @@ Body:
     Name: Field Manual 100%
     Type: Usable
     Buy: 2
-    Weight: 10
+    Weight: 0
     Trade:
       NoDrop: true
       NoTrade: true
