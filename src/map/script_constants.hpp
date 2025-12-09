@@ -10525,10 +10525,11 @@
 	export_constant(UNT_FIRE_RAIN);
 	export_constant(UNT_CATNIPPOWDER);
 	export_constant(UNT_NYANGGRASS);
+	export_constant(UNT_GROUNDDRIFT_NEUTRAL);
 	export_constant(UNT_CREATINGSTAR);
-	export_constant(UNT_DUMMY_0);
 	export_constant(UNT_RAIN_OF_CRYSTAL);
 	export_constant(UNT_MYSTERY_ILLUSION);
+	export_constant(UNT_SEEDTRAP);
 	export_constant(UNT_STRANTUM_TREMOR);
 	export_constant(UNT_VIOLENT_QUAKE);
 	export_constant(UNT_ALL_BLOOM);
@@ -10545,13 +10546,11 @@
 	export_constant(UNT_LIGHTNING_LAND);
 	export_constant(UNT_VENOM_SWAMP);
 	export_constant(UNT_CONFLAGRATION);
-	export_constant(UNT_DEEPBLINDTRAP);
-	export_constant(UNT_SOLIDTRAP);
-	export_constant(UNT_SWIFTTRAP);
-	export_constant(UNT_FLAMETRAP);
+	export_constant(UNT_CANE_OF_EVIL_EYE);
 	export_constant(UNT_TWINKLING_GALAXY);
 	export_constant(UNT_STAR_CANNON);
 	export_constant(UNT_GRENADES_DROPPING);
+	export_constant(UNT_UNKNOWN_2);
 	export_constant(UNT_FUUMASHOUAKU);
 	export_constant(UNT_MISSION_BOMBARD);
 	export_constant(UNT_TOTEM_OF_TUTELARY);
@@ -10559,14 +10558,22 @@
 	export_constant(UNT_SHINKIROU);
 	export_constant(UNT_JACK_FROST_NOVA);
 	export_constant(UNT_GROUND_GRAVITATION);
-	export_constant(UNT_KUNAIWAIKYOKU);
-	export_constant(UNT_STAR_BURST);
 	export_constant(UNT_KUNAIKAITEN);
+	export_constant(UNT_KUNAIWAIKYOKU);
+	export_constant(UNT_KUNAIKUSSETSU);
+	export_constant(UNT_SEKIENHOU);
+
+	export_constant(UNT_STAR_BURST);
+
+	export_constant(UNT_DEEPBLINDTRAP);
+	export_constant(UNT_SOLIDTRAP);
+	export_constant(UNT_SWIFTTRAP);
+	export_constant(UNT_FLAMETRAP);
+
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
 	export_constant(UNT_GD_HAWKEYES);
-	export_constant(UNT_CANE_OF_EVIL_EYE);
 
 	/* battleground info types */
 	export_constant(BG_INFO_ID);
