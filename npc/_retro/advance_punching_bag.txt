@@ -1,0 +1,513 @@
+//==============================================================
+// Advanced Punching Bag - Multi Bag Version (4 bags + 1 NPC per bag)
+// Base logic inspired by pajodex
+//==============================================================
+//===== rAthena Script =======================================
+//= Advanced Punching Bag Entrance NPC
+//===== By: ==================================================
+//= ChatGPT (for RetRO)
+//===== Description: =========================================
+//= NPC that explains and warps players to the Advanced
+//= Punching Bag training map.
+//============================================================
+
+prontera,170,179,3	script	Advanced Bag Instructor#1	4_F_BERRYTEA,{
+
+	mes "[Advanced Bag Instructor]";
+	mes "Oh, hey there, adventurer!";
+	mes "You look like someone who cares about ^0000FFreal^000000 damage numbers.";
+	next;
+
+	switch(select("Enter the Advanced Punching Bag.:What is this place?:Maybe later.")) {
+
+	// --------------------------------------------------------
+	// Enter
+	// --------------------------------------------------------
+	case 1:
+		warp "prontera",225,79;
+		end;
+
+	// --------------------------------------------------------
+	// Explanation
+	// --------------------------------------------------------
+	case 2:
+		mes "[Advanced Bag Instructor]";
+		mes "This is the entrance to the ^FF0000Advanced Punching Bag^000000.";
+		mes "It's a special training room created by the kingdom for serious fighters.";
+		next;
+		mes "[Advanced Bag Instructor]";
+		mes "Inside, you'll find several training dummies:";
+		mes " ^0000FF- Very high HP^000000 so you can hit them for a long time.";
+		mes " ^0000FF- No AI^000000, they never fight back.";
+		mes " ^0000FF- No knockback or movement^000000, perfect for testing area skills.";
+		next;
+		mes "[Advanced Bag Instructor]";
+		mes "Use them to:";
+		mes " ^0000FF- Compare weapons or cards^000000 (crit builds, ASPD builds, etc.)";
+		mes " ^0000FF- Practice combos and timing with your skills^000000";
+		mes " ^0000FF- Check real damage with and without party buffs^000000";
+		next;
+		mes "[Advanced Bag Instructor]";
+		mes "If you ever feel unsure about your damage,";
+		mes "step inside, beat up some dummies, and adjust your build.";
+		mes "No risk, no cost, just pure training.";
+		close;
+
+	// --------------------------------------------------------
+	// Cancel
+	// --------------------------------------------------------
+	case 3:
+		mes "[Advanced Bag Instructor]";
+		mes "Training is always here if you need it.";
+		mes "Come back whenever you want to test your strength.";
+		close;
+	}
+}
+
+
+prontera,230,82,3	script	Advanced Bag Instructor#2	4_F_BERRYTEA,{
+
+	mes "[Advanced Bag Instructor]";
+	mes "Finished testing your damage?";
+	mes "The instructors always say:";
+	mes "^0000FF'Numbers never lie, but they do hurt our feelings sometimes.'^000000";
+	next;
+
+	switch(select("Return to Prontera.:Tell me something useful.:Cancel.")) {
+
+	// --------------------------------------------------------
+	// Leave arena
+	// --------------------------------------------------------
+	case 1:
+		mes "[Advanced Bag Instructor]";
+		mes "Very well!";
+		mes "I'll send you back to Prontera’s main square.";
+		mes "Come back anytime you want to fine-tune your build.";
+		close2;
+		warp "prontera",156,180; // ajuste a posição se quiser
+		end;
+
+	// --------------------------------------------------------
+	// Small advice line
+	// --------------------------------------------------------
+	case 2:
+		mes "[Advanced Bag Instructor]";
+		mes "A small tip for your training:";
+		mes "^FF0000Always test your damage with and without buffs.^000000";
+		next;
+		mes "[Advanced Bag Instructor]";
+		mes "You'll be surprised how much difference a single potion,";
+		mes "guild skill, or card effect can make!";
+		close;
+
+	// --------------------------------------------------------
+	// Cancel
+	// --------------------------------------------------------
+	case 3:
+		mes "[Training Exit Assistant]";
+		mes "No problem. Keep training!";
+		close;
+	}
+}
+//4_M_PROFESSORWORM
+
+//==============================================================
+// PUNCHING BAG #1
+//==============================================================
+-	script	PBAG1_Controller	-1,{
+
+OnInit:
+	.BaseMobID = 1905;          // sprite base
+	.MaxHP     = 2000000000;    // 2B HP
+
+	// atributos padrão
+	.Size = 1;
+	.Level = 10;
+	.Race = 3;
+	.EleType = 1;
+	.EleLv   = 1;
+
+	.Str=5;.Agi=5;.Vit=5;.Int=5;.Dex=5;.Luk=5;
+	.Def=10;.Mdef=10;
+
+	callsub SpawnBag;
+	initnpctimer;
+	end;
+
+SpawnBag:
+	// mata o antigo (se existir)
+	if (.GID)
+		killmonster "prontera", strnpcinfo(3)+"::OnDied";
+
+	// spawna o dummy
+	monster "prontera",224,79,"First Punching Bag",.BaseMobID,1,strnpcinfo(3)+"::OnDied";
+	.GID = $@mobid[0];
+
+	// lê o mode atual e ajusta flags
+	getunitdata .GID, .@d;
+	.@mode = .@d[UMOB_MODE];
+
+	// tira movimento (MD_CANMOVE = 0x00000001)
+	.@mode &= ~0x00000001;
+	// adiciona NO KNOCKBACK (MD_NOKNOCKBACK = 0x00004000)
+	.@mode |= 0x00004000;
+
+	setunitdata .GID, UMOB_MODE,   .@mode;
+	setunitdata .GID, UMOB_MAXHP,  .MaxHP;
+	setunitdata .GID, UMOB_HP,     .MaxHP;
+
+	setunitdata .GID, UMOB_SIZE,   .Size;
+	setunitdata .GID, UMOB_LEVEL,  .Level;
+	setunitdata .GID, UMOB_RACE,   .Race;
+	setunitdata .GID, UMOB_ELETYPE,  .EleType;
+	setunitdata .GID, UMOB_ELELEVEL, .EleLv;
+
+	setunitdata .GID, UMOB_STR, .Str;
+	setunitdata .GID, UMOB_AGI, .Agi;
+	setunitdata .GID, UMOB_VIT, .Vit;
+	setunitdata .GID, UMOB_INT, .Int;
+	setunitdata .GID, UMOB_DEX, .Dex;
+	setunitdata .GID, UMOB_LUK, .Luk;
+
+	setunitdata .GID, UMOB_DEF,  .Def;
+	setunitdata .GID, UMOB_MDEF, .Mdef;
+	return;
+
+OnDied:
+	callsub SpawnBag;
+	end;
+
+// DPS a cada 5s
+OnTimer5000:
+	if (!unitexists(.GID)) {
+		initnpctimer;
+		end;
+	}
+	getunitdata .GID, .@d;
+	.@dmg = .MaxHP - .@d[UMOB_HP];
+	if (.@dmg > 0) {
+		npctalk "[Bag 1] DPS: " + F_InsertComma(.@dmg/5);
+		setunitdata .GID, UMOB_HP, .MaxHP;
+	}
+	initnpctimer;
+	end;
+}
+
+// NPC CONFIG DO BAG #1
+prontera,226,78,3	script	First Trainer	4_M_PROFESSORWORM,{
+	callfunc "F_BagConfigSimple","PBAG1_Controller";
+	end;
+}
+
+
+
+//==============================================================
+// PUNCHING BAG #2
+//==============================================================
+-	script	PBAG2_Controller	-1,{
+
+OnInit:
+	.BaseMobID = 1905;
+	.MaxHP     = 2000000000;
+
+	.Size = 1;
+	.Level = 10;
+	.Race = 3;
+	.EleType = 1;
+	.EleLv   = 1;
+
+	.Str=5;.Agi=5;.Vit=5;.Int=5;.Dex=5;.Luk=5;
+	.Def=10;.Mdef=10;
+
+	callsub SpawnBag;
+	initnpctimer;
+	end;
+
+SpawnBag:
+	if (.GID)
+		killmonster "prontera", strnpcinfo(3)+"::OnDied";
+
+	monster "prontera",216,79,"Second Punching Bag",.BaseMobID,1,strnpcinfo(3)+"::OnDied";
+	.GID = $@mobid[0];
+
+	getunitdata .GID, .@d;
+	.@mode = .@d[UMOB_MODE];
+	.@mode &= ~0x00000001;      // sem movimento
+	.@mode |= 0x00004000;       // sem knockback
+
+	setunitdata .GID, UMOB_MODE,   .@mode;
+	setunitdata .GID, UMOB_MAXHP,  .MaxHP;
+	setunitdata .GID, UMOB_HP,     .MaxHP;
+
+	setunitdata .GID, UMOB_SIZE,   .Size;
+	setunitdata .GID, UMOB_LEVEL,  .Level;
+	setunitdata .GID, UMOB_RACE,   .Race;
+	setunitdata .GID, UMOB_ELETYPE,  .EleType;
+	setunitdata .GID, UMOB_ELELEVEL, .EleLv;
+
+	setunitdata .GID, UMOB_STR, .Str;
+	setunitdata .GID, UMOB_AGI, .Agi;
+	setunitdata .GID, UMOB_VIT, .Vit;
+	setunitdata .GID, UMOB_INT, .Int;
+	setunitdata .GID, UMOB_DEX, .Dex;
+	setunitdata .GID, UMOB_LUK, .Luk;
+
+	setunitdata .GID, UMOB_DEF,  .Def;
+	setunitdata .GID, UMOB_MDEF, .Mdef;
+	return;
+
+OnDied:
+	callsub SpawnBag;
+	end;
+
+OnTimer5000:
+	if (!unitexists(.GID)) {
+		initnpctimer;
+		end;
+	}
+	getunitdata .GID, .@d;
+	.@dmg = .MaxHP - .@d[UMOB_HP];
+	if (.@dmg > 0) {
+		npctalk "[Bag 2] DPS: " + F_InsertComma(.@dmg/5);
+		setunitdata .GID, UMOB_HP, .MaxHP;
+	}
+	initnpctimer;
+	end;
+}
+
+// NPC CONFIG DO BAG #2
+prontera,214,78,5	script	Second Trainer	4_M_PROFESSORWORM,{
+	callfunc "F_BagConfigSimple","PBAG2_Controller";
+	end;
+}
+
+
+
+//==============================================================
+// PUNCHING BAG #3
+//==============================================================
+-	script	PBAG3_Controller	-1,{
+
+OnInit:
+	.BaseMobID = 1905;
+	.MaxHP     = 2000000000;
+
+	.Size = 1;
+	.Level = 10;
+	.Race = 3;
+	.EleType = 1;
+	.EleLv   = 1;
+
+	.Str=5;.Agi=5;.Vit=5;.Int=5;.Dex=5;.Luk=5;
+	.Def=10;.Mdef=10;
+
+	callsub SpawnBag;
+	initnpctimer;
+	end;
+
+SpawnBag:
+	if (.GID)
+		killmonster "prontera", strnpcinfo(3)+"::OnDied";
+
+	monster "prontera",224,70,"Third Punching Bag",.BaseMobID,1,strnpcinfo(3)+"::OnDied";
+	.GID = $@mobid[0];
+
+	getunitdata .GID, .@d;
+	.@mode = .@d[UMOB_MODE];
+	.@mode &= ~0x00000001;      // sem movimento
+	.@mode |= 0x00004000;       // sem knockback
+
+	setunitdata .GID, UMOB_MODE,   .@mode;
+	setunitdata .GID, UMOB_MAXHP,  .MaxHP;
+	setunitdata .GID, UMOB_HP,     .MaxHP;
+
+	setunitdata .GID, UMOB_SIZE,   .Size;
+	setunitdata .GID, UMOB_LEVEL,  .Level;
+	setunitdata .GID, UMOB_RACE,   .Race;
+	setunitdata .GID, UMOB_ELETYPE,  .EleType;
+	setunitdata .GID, UMOB_ELELEVEL, .EleLv;
+
+	setunitdata .GID, UMOB_STR, .Str;
+	setunitdata .GID, UMOB_AGI, .Agi;
+	setunitdata .GID, UMOB_VIT, .Vit;
+	setunitdata .GID, UMOB_INT, .Int;
+	setunitdata .GID, UMOB_DEX, .Dex;
+	setunitdata .GID, UMOB_LUK, .Luk;
+
+	setunitdata .GID, UMOB_DEF,  .Def;
+	setunitdata .GID, UMOB_MDEF, .Mdef;
+	return;
+
+OnDied:
+	callsub SpawnBag;
+	end;
+
+OnTimer5000:
+	if (!unitexists(.GID)) {
+		initnpctimer;
+		end;
+	}
+	getunitdata .GID, .@d;
+	.@dmg = .MaxHP - .@d[UMOB_HP];
+	if (.@dmg > 0) {
+		npctalk "[Bag 3] DPS: " + F_InsertComma(.@dmg/5);
+		setunitdata .GID, UMOB_HP, .MaxHP;
+	}
+	initnpctimer;
+	end;
+}
+
+// NPC CONFIG DO BAG #3
+prontera,226,69,4	script	Third Trainer	4_M_PROFESSORWORM,{
+	callfunc "F_BagConfigSimple","PBAG3_Controller";
+	end;
+}
+
+
+
+//==============================================================
+// PUNCHING BAG #4
+//==============================================================
+-	script	PBAG4_Controller	-1,{
+
+OnInit:
+	.BaseMobID = 1905;
+	.MaxHP     = 2000000000;
+
+	.Size = 1;
+	.Level = 10;
+	.Race = 3;
+	.EleType = 1;
+	.EleLv   = 1;
+
+	.Str=5;.Agi=5;.Vit=5;.Int=5;.Dex=5;.Luk=5;
+	.Def=10;.Mdef=10;
+
+	callsub SpawnBag;
+	initnpctimer;
+	end;
+
+SpawnBag:
+	if (.GID)
+		killmonster "prontera", strnpcinfo(3)+"::OnDied";
+
+	monster "prontera",216,70,"Fourth Punching Bag",.BaseMobID,1,strnpcinfo(3)+"::OnDied";
+	.GID = $@mobid[0];
+
+	getunitdata .GID, .@d;
+	.@mode = .@d[UMOB_MODE];
+	.@mode &= ~0x00000001;      // sem movimento
+	.@mode |= 0x00004000;       // sem knockback
+
+	setunitdata .GID, UMOB_MODE,   .@mode;
+	setunitdata .GID, UMOB_MAXHP,  .MaxHP;
+	setunitdata .GID, UMOB_HP,     .MaxHP;
+
+	setunitdata .GID, UMOB_SIZE,   .Size;
+	setunitdata .GID, UMOB_LEVEL,  .Level;
+	setunitdata .GID, UMOB_RACE,   .Race;
+	setunitdata .GID, UMOB_ELETYPE,  .EleType;
+	setunitdata .GID, UMOB_ELELEVEL, .EleLv;
+
+	setunitdata .GID, UMOB_STR, .Str;
+	setunitdata .GID, UMOB_AGI, .Agi;
+	setunitdata .GID, UMOB_VIT, .Vit;
+	setunitdata .GID, UMOB_INT, .Int;
+	setunitdata .GID, UMOB_DEX, .Dex;
+	setunitdata .GID, UMOB_LUK, .Luk;
+
+	setunitdata .GID, UMOB_DEF,  .Def;
+	setunitdata .GID, UMOB_MDEF, .Mdef;
+	return;
+
+OnDied:
+	callsub SpawnBag;
+	end;
+
+OnTimer5000:
+	if (!unitexists(.GID)) {
+		initnpctimer;
+		end;
+	}
+	getunitdata .GID, .@d;
+	.@dmg = .MaxHP - .@d[UMOB_HP];
+	if (.@dmg > 0) {
+		npctalk "[Bag 4] DPS: " + F_InsertComma(.@dmg/5);
+		setunitdata .GID, UMOB_HP, .MaxHP;
+	}
+	initnpctimer;
+	end;
+}
+
+// NPC CONFIG DO BAG #4
+prontera,214,69,5	script	Fourth Trainer	4_M_PROFESSORWORM,{
+	callfunc "F_BagConfigSimple","PBAG4_Controller";
+	end;
+}
+
+
+
+//==============================================================
+// FUNÇÃO DE CONFIGURAÇÃO SIMPLES (SEM FOR/ARRAY DE BAGS)
+//==============================================================
+function	script	F_BagConfigSimple	{
+
+	.@ctrl$ = getarg(0);
+
+	mes "[Punching Bag Manager]";
+	mes "Which parameter do you want to change?";
+	next;
+
+	menu
+		"Level",L_Level,
+		"Race",L_Race,
+		"Element",L_Element,
+		"Stats",L_Stats,
+		"Respawn",L_Respawn,
+		"Exit",L_Quit;
+
+L_Level:
+	input .@v,1,999;
+	set getvariableofnpc(.Level,.@ctrl$),.@v;
+	goto L_Apply;
+
+L_Race:
+	menu "Formless",1,"Undead",2,"Brute",3,"Plant",4,"Insect",5,"Fish",6,"Demon",7,"Demihuman",8,"Angel",9,"Dragon",10,"Player",11;
+	set getvariableofnpc(.Race,.@ctrl$),@menu-1;
+	goto L_Apply;
+
+L_Element:
+	menu "Neutral",1,"Water",2,"Earth",3,"Fire",4,"Wind",5,"Poison",6,"Holy",7,"Shadow",8,"Ghost",9,"Undead",10;
+	set getvariableofnpc(.EleType,.@ctrl$),@menu-1;
+	input .@lv,1,4;
+	set getvariableofnpc(.EleLv,.@ctrl$),.@lv;
+	goto L_Apply;
+
+L_Stats:
+	mes "STR:"; input .@s1,1,999;
+	mes "AGI:"; input .@s2,1,999;
+	mes "VIT:"; input .@s3,1,999;
+	mes "INT:"; input .@s4,1,999;
+	mes "DEX:"; input .@s5,1,999;
+	mes "LUK:"; input .@s6,1,999;
+	set getvariableofnpc(.Str,.@ctrl$),.@s1;
+	set getvariableofnpc(.Agi,.@ctrl$),.@s2;
+	set getvariableofnpc(.Vit,.@ctrl$),.@s3;
+	set getvariableofnpc(.Int,.@ctrl$),.@s4;
+	set getvariableofnpc(.Dex,.@ctrl$),.@s5;
+	set getvariableofnpc(.Luk,.@ctrl$),.@s6;
+	goto L_Apply;
+
+L_Respawn:
+	donpcevent .@ctrl$+"::SpawnBag";
+	mes "Respawned!";
+	close;
+
+L_Apply:
+	mes "Applied!";
+	donpcevent .@ctrl$+"::SpawnBag";
+	close;
+
+L_Quit:
+	close;
+}

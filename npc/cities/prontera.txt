@@ -108,7 +108,7 @@ prontera,149,202,2	script	YuNa#pront	700,{
 	close;
 }
 
-prontera,216,70,2	script	Strife#pront	48,{
+prontera,212,44,2	script	Strife#pront	48,{
 	if (Class == Job_Novice) {
 		if (event_prt_nov_dreamtalk == 0) {
 			mes "[Strife]";
