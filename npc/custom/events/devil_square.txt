@@ -3,17 +3,19 @@
 //===== By: ==================================================
 //= Kirlein, Stillhard (translation), AnnieRuru (rewrite)
 //===== Current Version: =====================================
-//= 1.0
+//= 1.0 (modified for 4th round monsters + exit reward)
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
 //= Devil Square, based on the event in MU Online.
-//= Defeat three waves of monsters for treasure.
+//= Defeat four waves of monsters for a reward.
 //===== Additional Comments: =================================
 //= 1.0 First version, edited. [Euphy]
+//= Custom edit: 4th wave is monsters, reward on exit NPC.
 //============================================================
 
-prontera,156,185,5	script	Devil Square Guardian#1	406,{
+prontera,127,193,5	script	Devil Square Guardian#1	4_EXJOB_HYUN_ROK,{
+
 	set .@gm_level, 99; // GM level required to start/stop the event
 
 	mes "[Devil Square Guardian]";
@@ -22,7 +24,8 @@ prontera,156,185,5	script	Devil Square Guardian#1	406,{
 	next;
 	switch(select("Enter.:Information.:" + ((getgmlevel() >= .@gm_level) ? "GM Menu." : "") + ":Cancel.")) {
 	case 1:
-		if (.start != 1) { // registration period
+		// Fecha apenas se o evento estiver parado (.start == 0)
+		if (.start == 0) {
 			mes "[Devil Square Guardian]";
 			mes "Devil Square is now closed.";
 			mes "It will open at these times:";
@@ -31,6 +34,14 @@ prontera,156,185,5	script	Devil Square Guardian#1	406,{
 			mes "16:00 , 18:00 , 20:00 , 22:00";
 			close;
 		}
+		// Bloqueia entrada se essa rodada já foi finalizada
+		if ($DevilSquareFinished) {
+			mes "[Devil Square Guardian]";
+			mes "This round of Devil Square has already finished.";
+			mes "Please wait for the next opening time.";
+			close;
+		}
+
 		if (BaseLevel < 70 || Zeny < 20000) { // requirements
 			mes "[Devil Square Guardian]";
 			mes "You do not meet the requirements to enter Devil Square.";
@@ -47,10 +58,11 @@ prontera,156,185,5	script	Devil Square Guardian#1	406,{
 		close;
 	case 2:
 		mes "[Devil Square Guardian]";
-		mes "Inside, you will encounter 3 waves of monsters. The monsters will grow stronger with each wave.";
+		mes "Inside, you will encounter 4 waves of monsters. The monsters will grow stronger with each wave.";
 		next;
 		mes "[Devil Square Guardian]";
-		mes "If you defeat all the enemies, you will be given the opportunity to open 10 Treasure Chests with items, equipment, and rare cards inside!";
+		mes "If you defeat all the enemies, you will have to leave through the Exit Guardian inside the arena,";
+		mes "and you will receive your reward from him.";
 		close;
 	case 3:
 		mes "[Devil Square Guardian]";
@@ -90,6 +102,9 @@ prontera,156,185,5	script	Devil Square Guardian#1	406,{
 	mes "Farewell.";
 	close;
 
+//--------------------------------------------------------------
+// Event start (on schedule or by GM)
+//--------------------------------------------------------------
 OnStartEvent:
 OnClock0000:
 OnClock0200:
@@ -104,12 +119,20 @@ OnClock1800:
 OnClock2000:
 OnClock2200:
 	.start = 1;
-	disablenpc "ord11-12"; //from npc/warps/pvp.txt
+	.round = 0;
+	.mob   = 0;
+
+	// Variáveis globais da rodada
+	$DevilSquareFinished = 0;
+	$DevilSquareEventID  = gettimetick(2); // id único da rodada
+
+	disablenpc "ord11-12"; // from npc/warps/pvp.txt
 	disablenpc "Devil Square Guardian#2";
 	mapannounce "ordeal_1-1","Devil Square is now closed.", bc_map;
 	getmapxy .@map$, .@x, .@y, BL_NPC;
 	mapwarp "ordeal_1-1", .@map$, .@x, .@y;
 	killmonsterall "ordeal_1-1";
+
 	announce "Devil Square is OPEN. The event will begin in 5 minutes.", bc_all;
 	sleep 60000;
 	announce "Devil Square will begin in 4 minutes.", bc_all;
@@ -121,8 +144,9 @@ OnClock2200:
 	announce "Devil Square will begin in 1 minute.", bc_all;
 	sleep 60000;
 	announce "Devil Square has STARTED!", bc_all;
-	if ( !getmapusers("ordeal_1-1") )
+	if (!getmapusers("ordeal_1-1"))
 		goto OnStopEvent;
+
 	.start = 2;
 	.round = 1;
 	.mob = 75;
@@ -134,16 +158,22 @@ OnClock2200:
 	areamonster "ordeal_1-1",183,182,246,244,"[DS] REQUIEM",1164,10,strnpcinfo(0)+"::OnDevilDead";
 	end;
 
+//--------------------------------------------------------------
+// Round 1
+//--------------------------------------------------------------
 OnDevilDead:
 	.mob--;
-	if ( .mob == 25 || .mob == 5 )
+	if (.mob == 25 || .mob == 5)
 		announce "Devil Square : "+ .mob +" monsters remaining in round 1.", bc_map;
-	else if ( .mob <= 0 ) {
+	else if (.mob <= 0) {
 		announce "Devil Square is entering round 2...", bc_map;
 		goto OnDevil2;
 	}
 	end;
 
+//--------------------------------------------------------------
+// Round 2
+//--------------------------------------------------------------
 OnDevil2:
 	.round = 2;
 	.mob = 70;
@@ -157,14 +187,17 @@ OnDevil2:
 
 OnDevilDead2:
 	.mob--;
-	if ( .mob == 25 || .mob == 5 )
+	if (.mob == 25 || .mob == 5)
 		announce "Devil Square : "+ .mob +" monsters remaining in round 2.", bc_map;
-	else if ( .mob <= 0 ) {
+	else if (.mob <= 0) {
 		announce "Devil Square is entering round 3...", bc_map;
 		goto OnDevil3;
 	}
 	end;
 
+//--------------------------------------------------------------
+// Round 3
+//--------------------------------------------------------------
 OnDevil3:
 	.round = 3;
 	.mob = 58;
@@ -178,52 +211,118 @@ OnDevil3:
 
 OnDevilDead3:
 	.mob--;
-	if ( .mob == 25 || .mob == 5 )
-		announce "Devil Square : "+ .mob +" monsters remaining in the final round.", bc_map;
-	else if ( .mob <= 0 ) {
-		announce "Devil Square : CONGRATULATIONS. These 10 Treasure Chests are yours.", bc_map;
+	if (.mob == 25 || .mob == 5)
+		announce "Devil Square : "+ .mob +" monsters remaining in round 3.", bc_map;
+	else if (.mob <= 0) {
+		announce "Devil Square is entering the final round...", bc_map;
 		goto OnDevil4;
 	}
 	end;
 
+//--------------------------------------------------------------
+// Round 4 (now also monsters)
+//--------------------------------------------------------------
 OnDevil4:
 	.round = 4;
-	.mob = 10;
-	monster "ordeal_1-1",231,250,"Treasure Chest",1324,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",234,247,"Treasure Chest",1328,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",237,244,"Treasure Chest",1332,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",240,241,"Treasure Chest",1336,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",243,238,"Treasure Chest",1340,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",246,235,"Treasure Chest",1344,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",249,232,"Treasure Chest",1348,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",252,229,"Treasure Chest",1352,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",249,241,"Treasure Chest",1356,1,strnpcinfo(0)+"::OnTreasureDead";
-	monster "ordeal_1-1",240,249,"Treasure Chest",1360,1,strnpcinfo(0)+"::OnTreasureDead";
+	.mob = 50;
+	// Final, stronger wave
+	areamonster "ordeal_1-1",183,182,246,244,"[DS] HELL APARITION",1836,10,strnpcinfo(0)+"::OnDevilDead4";
+	areamonster "ordeal_1-1",183,182,246,244,"[DS] BLOODY KNIGHT",1268,10,strnpcinfo(0)+"::OnDevilDead4";
+	areamonster "ordeal_1-1",183,182,246,244,"[DS] ABYSS KNIGHT",1219,10,strnpcinfo(0)+"::OnDevilDead4";
+	areamonster "ordeal_1-1",183,182,246,244,"[DS] DARK LORD",1272,5,strnpcinfo(0)+"::OnDevilDead4";
+	areamonster "ordeal_1-1",183,182,246,244,"[DS] BAPHOMET",1039,5,strnpcinfo(0)+"::OnDevilDead4";
+	areamonster "ordeal_1-1",183,182,246,244,"[DS] DRACULA",1389,10,strnpcinfo(0)+"::OnDevilDead4";
 	end;
 
-OnTreasureDead:
+OnDevilDead4:
 	.mob--;
-	announce "Devil Square : "+ strcharinfo(0) +" has opened the Treasure Chest at Devil Square.", bc_all;
-	if ( .mob <= 0 )
+	if (.mob == 25 || .mob == 5)
+		announce "Devil Square : "+ .mob +" monsters remaining in the final round.", bc_map;
+	else if (.mob <= 0) {
+		$DevilSquareFinished = 1; // evento concluído
+		announce "Devil Square : CONGRATULATIONS! All monsters have been defeated.", bc_map;
+		announce "Talk to the Exit Guardian inside Devil Square to receive your reward.", bc_map;
 		goto OnStopEvent;
+	}
 	end;
 
+//--------------------------------------------------------------
+// Stop / reset
+//--------------------------------------------------------------
 OnStopEvent:
 	killmonsterall "ordeal_1-1";
-	enablenpc "ord11-12"; //from npc/warps/pvp.txt
+	enablenpc "ord11-12"; // from npc/warps/pvp.txt
 	enablenpc "Devil Square Guardian#2";
-	.start = .round = .mob = 0;
+	.start = 0;
+	.round = 0;
+	.mob   = 0;
+	// NÃO mexe em $DevilSquareFinished nem em $DevilSquareEventID aqui
 	end;
 }
 
-ordeal_1-1,246,245,7	script	Devil Square Guardian#2	406,{
-	mes "[Exit]";
+//--------------------------------------------------------------
+// Exit NPC (reward on click)
+//--------------------------------------------------------------
+ordeal_1-1,246,245,3	script	Devil Square Guardian#2	4_EXJOB_HYUN_ROK,{
+
+	mes "[Devil Square Guardian]";
+
+	// Se o evento não foi marcado como concluído, sem recompensa
+	if (!$DevilSquareFinished) {
+		mes "Devil Square is still in progress.";
+		mes "If you leave now, you will not receive any reward.";
+		next;
+		if (select("Leave anyway.:Stay inside.") == 1) {
+			mes "[Devil Square Guardian]";
+			mes "Very well. I will send you back to your Save Point.";
+			close2;
+			warp "SavePoint",0,0;
+			end;
+		}
+		mes "[Devil Square Guardian]";
+		mes "Then stay strong and keep fighting.";
+		close;
+	}
+
+	// Verifica se essa conta já pegou a recompensa desta rodada
+	if (#DevilSquareLastEvent == $DevilSquareEventID) {
+		mes "You have already claimed your reward for this Devil Square run.";
+		mes "I will still send you back to Prontera.";
+		next;
+		mes "Farewell.";
+		close2;
+		warp "prontera",133,192;
+		end;
+	}
+
+	// Primeira vez pegando recompensa desta rodada
+	mes "Congratulations, brave adventurer!";
+	mes "You helped cleanse Devil Square of its horrors.";
+	mes "As a token of appreciation, please accept this reward.";
+	next;
+
+	// Marca que essa conta já recebeu recompensa desta rodada
+	set #DevilSquareLastEvent, $DevilSquareEventID;
+
+	// Recompensa: 5x 1230002
+	getitem 1230002, 5;
+
+	// Experiência
+	getexp 1000000, 500000; // +1,000,000 base / +500,000 job
+
+	mes "[Devil Square Guardian]";
+	mes "Your efforts have been rewarded.";
+	mes "Train hard and come back for the next Devil Square.";
+	next;
 	mes "Farewell.";
 	close2;
-	warp "SavePoint",0,0;
+	warp "prontera",133,192;
 	end;
 }
 
+//--------------------------------------------------------------
+// Mapflags
+//--------------------------------------------------------------
 ordeal_1-1	mapflag	nowarp
 ordeal_1-1	mapflag	nowarpto
 ordeal_1-1	mapflag	noteleport

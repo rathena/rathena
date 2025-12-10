@@ -17,22 +17,22 @@
 //============================================================
 
 //Battle Ordeal Mode
-ordeal_1-1,100,150,0	warp	ord11-1	1,1,ordeal_1-1,128,150
-ordeal_1-1,123,150,0	warp	ord11-2	1,1,ordeal_1-1,95,150
-ordeal_1-1,114,183,0	warp	ord11-3	1,1,ordeal_1-1,135,163
-ordeal_1-1,130,168,0	warp	ord11-4	1,1,ordeal_1-1,109,188
-ordeal_1-1,115,115,0	warp	ord11-5	1,1,ordeal_1-1,136,136
-ordeal_1-1,131,131,0	warp	ord11-6	1,1,ordeal_1-1,110,110
-ordeal_1-1,148,176,0	warp	ord11-7	1,1,ordeal_1-1,149,204
-ordeal_1-1,149,199,0	warp	ord11-8	1,1,ordeal_1-1,148,171
-ordeal_1-1,149,99,0	warp	ord11-9	1,1,ordeal_1-1,151,129
-ordeal_1-1,151,124,0	warp	ord11-10	1,1,ordeal_1-1,151,94
-ordeal_1-1,168,168,0	warp	ord11-11	1,1,ordeal_1-1,189,189
-ordeal_1-1,184,184,0	warp	ord11-12	1,1,ordeal_1-1,163,163
-ordeal_1-1,169,131,0	warp	ord11-13	1,1,ordeal_1-1,188,111
-ordeal_1-1,183,116,0	warp	ord11-14	1,1,ordeal_1-1,164,136
-ordeal_1-1,176,150,0	warp	ord11-15	1,1,ordeal_1-1,204,150
-ordeal_1-1,199,150,0	warp	ord11-16	1,1,ordeal_1-1,171,150
+// ordeal_1-1,100,150,0	warp	ord11-1	1,1,ordeal_1-1,128,150
+// ordeal_1-1,123,150,0	warp	ord11-2	1,1,ordeal_1-1,95,150
+// ordeal_1-1,114,183,0	warp	ord11-3	1,1,ordeal_1-1,135,163
+// ordeal_1-1,130,168,0	warp	ord11-4	1,1,ordeal_1-1,109,188
+// ordeal_1-1,115,115,0	warp	ord11-5	1,1,ordeal_1-1,136,136
+// ordeal_1-1,131,131,0	warp	ord11-6	1,1,ordeal_1-1,110,110
+// ordeal_1-1,148,176,0	warp	ord11-7	1,1,ordeal_1-1,149,204
+// ordeal_1-1,149,199,0	warp	ord11-8	1,1,ordeal_1-1,148,171
+// ordeal_1-1,149,99,0	warp	ord11-9	1,1,ordeal_1-1,151,129
+// ordeal_1-1,151,124,0	warp	ord11-10	1,1,ordeal_1-1,151,94
+// ordeal_1-1,168,168,0	warp	ord11-11	1,1,ordeal_1-1,189,189
+// ordeal_1-1,184,184,0	warp	ord11-12	1,1,ordeal_1-1,163,163
+// ordeal_1-1,169,131,0	warp	ord11-13	1,1,ordeal_1-1,188,111
+// ordeal_1-1,183,116,0	warp	ord11-14	1,1,ordeal_1-1,164,136
+// ordeal_1-1,176,150,0	warp	ord11-15	1,1,ordeal_1-1,204,150
+// ordeal_1-1,199,150,0	warp	ord11-16	1,1,ordeal_1-1,171,150
 ordeal_1-2,128,154,0	warp	ord12-1	1,1,ordeal_1-2,24,154
 ordeal_1-2,136,136,0	warp	ord12-2	1,1,ordeal_1-2,24,24
 ordeal_1-2,136,172,0	warp	ord12-3	1,1,ordeal_1-2,24,284
