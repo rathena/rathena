@@ -1,0 +1,316 @@
+//===== rAthena Script =======================================
+//= Cursed Knight
+//===============  by: =============================
+//= pajodex (dialogues slightly enhanced)
+//===== Current Version: =====================================
+//= 1.1 (with tie fix & small improvements)
+//===== Compatible With: =====================================
+//= rAthena Project (pajodex)
+//===== Description: =========================================
+/*
+Cursed Knight
+
+	Teams have to find the Cursed Knight located at the bottom
+	end of the map. To earn points, they must come close to the
+	Cursed Knight.
+
+	Every second near the Cursed Knight, players will earn points
+	for their team. However, they will also be cursed, take
+	continuous damage and be silenced.
+
+	The more members of a team standing near the Cursed Knight,
+	the more points that team will earn.
+
+	Your job is simple:
+		- Protect your team’s position around the Knight.
+		- Keep the enemy away from the cursed zone.
+		- Survive the curse as long as you can.
+
+	Enjoy!
+*/
+//=====******** Note ********=================================
+//= If you find bugs or problems, please DM me at
+//= Discord (pajodex#1328) or rAthena (pajodex).
+//= Open for suggestions.
+//===== Additional Comments: =================================
+/*
+	1.0 - Initial release
+	1.1 - Mapflags added
+	    - Script optimization
+	    - Tie condition fix
+*/
+//=============================================================
+
+function	script	F_ShuffleNumbers	{
+	deletearray getarg(2);
+	.@static = getarg(0);
+	.@range  = getarg(1) + 1 - .@static;
+	.@count  = getarg(3, .@range);
+	if (.@range <= 0 || .@count <= 0)
+		return 0;
+	if (.@count > .@range)
+		.@count = .@range;
+
+	for (.@i = 0; .@i < .@range; ++.@i)
+		.@temparray[.@i] = .@i;
+
+	for (.@i = 0; .@i < .@count; ++.@i) {
+		.@rand = rand(.@range);
+		set getelementofarray(getarg(2), .@i), .@temparray[.@rand] + .@static;
+		.@temparray[.@rand] = .@temparray[--.@range];
+	}
+	return .@count;
+}
+
+// NOTE : Remove the nightmare mapflag for this map
+pvp_n_1-4,0,0,0	script	thing#main	100,{
+
+OnInit:
+	// =============
+	// Game Settings
+	// =============
+
+	// Minimum players per team to start
+	// default: 5 ( 5v5 )
+	.minplayer2start = 3;
+
+	// Event duration in minutes
+	// default: 5 mins
+	.duration = 5;
+
+	// Reward settings
+	setarray .rwd[0],
+		1230002, 3,	// winning team reward
+		1230002, 1;	// losing team reward
+
+	end;
+
+OnStart:
+	.start = 1;
+
+	.red  = bg_create(strnpcinfo(4),  37, 122, strnpcinfo(0) + "::OnRedQuit",  strnpcinfo(0) + "::OnRedDie");
+	.blue = bg_create(strnpcinfo(4), 162, 122, strnpcinfo(0) + "::OnBlueQuit", strnpcinfo(0) + "::OnBlueDie");
+
+	callfunc "F_ShuffleNumbers", 0, .minplayer2start * 2 - 1, .@r;
+
+	for (.@i = 0; .@i < .minplayer2start * 2; ++.@i) {
+		attachrid .aid_[.@r[.@i]];
+		bg_join ( .@i % 2 ) ? .red : .blue;
+	}
+	detachrid;
+
+	announce "[Cursed Knight] A mysterious presence has appeared at the bottom of this battlefield...", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+	announce "[Cursed Knight] Whoever stands near it will fall under a powerful curse!", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+	announce "[Cursed Knight] You will take continuous damage and lose the ability to cast skills.", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+	announce "[Cursed Knight] But those who endure the curse will earn points for their team!", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+	announce "[Cursed Knight] The team with the highest score when the time ends will be victorious!", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+	announce "[Cursed Knight] The battle begins now!", bc_npc | bc_map | bc_blue;
+
+	sleep .duration * 60000;
+
+	// Get points from the Cursed Knight NPC
+	.@redpoints  = getvariableofnpc(.redpoints,  "Cursed Knight");
+	.@bluepoints = getvariableofnpc(.bluepoints, "Cursed Knight");
+
+	if (.@redpoints > .@bluepoints)
+		callsub L_reward, .red, .blue, "Red";
+	else if (.@bluepoints > .@redpoints)
+		callsub L_reward, .blue, .red, "Blue";
+	else if (.@bluepoints == .@redpoints)
+		announce "[Cursed Knight] The battle ends in a draw! Both teams fought bravely.", bc_npc | bc_map | bc_blue;
+
+	// Reset points stored on the Cursed Knight NPC
+	set getvariableofnpc(.redpoints,  "Cursed Knight"), 0;
+	set getvariableofnpc(.bluepoints, "Cursed Knight"), 0;
+
+	// Warp everyone back and reset BG data
+	mapwarp strnpcinfo(4), "prontera", 150, 180, 0;
+	bg_updatescore strnpcinfo(4), 0, 0;
+	.start = 0;
+	bg_destroy .red;
+	bg_destroy .blue;
+	end;
+
+L_reward:
+	announce "[Cursed Knight] The " + getarg(2) + " Team has claimed victory!", bc_npc | bc_map | bc_blue;
+
+	bg_get_data getarg(0), 1;
+	for (.@i = 0; .@i < $@arenamemberscount; ++.@i)
+		getitem .rwd[0], .rwd[1], $@arenamembers[.@i];
+
+	sleep 1;
+
+	bg_get_data getarg(1), 1;
+	for (.@i = 0; .@i < $@arenamemberscount; ++.@i)
+		getitem .rwd[2], .rwd[3], $@arenamembers[.@i];
+
+	return;
+
+OnRedQuit:
+	callsub L_Quit, .red, "Red";
+OnBlueQuit:
+	callsub L_Quit, .blue, "Blue";
+
+L_Quit:
+	if (bg_get_data(getarg(0), 0)) end; // team still has members
+
+	announce "[Cursed Knight] All members of the " + getarg(2) + " Team have left the battlefield!", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+
+	callsub L_reward,
+		(getarg(0) == .red) ? .red  : .blue,
+		(getarg(0) == .red) ? .blue : .red,
+		(getarg(0) == .red) ? "Red" : "Blue";
+
+	awake instance_npcname(strnpcinfo(0));
+	end;
+
+OnRedDie:
+OnBlueDie:
+	sleep2 1250;
+	percentheal 100, 100;
+	end;
+}
+
+prontera,140,174,5	script	Cursed Knight	4_M_NFDEADSWDMAN,{
+
+	.@name$           = strcharinfo(0);
+	.@minplayer2start = getvariableofnpc(.minplayer2start, "thing#main");
+	.@start           = getvariableofnpc(.start,           "thing#main");
+
+	mes "[Cursed Knight Officer]";
+	mes "Welcome to the ^FF0000Cursed Knight Battleground^000000.";
+	mes "Two teams will fight for control of a cursed aura at the bottom of the map.";
+	next;
+
+	if (.@start == 1) {
+		mes "[Cursed Knight Officer]";
+		mes "A match is already in progress.";
+		mes "Please wait until the current battle is finished to join the next one.";
+		close;
+	}
+
+	// Check if already in queue
+	.@i = 0;
+	while (.aid[.@i] != getcharid(3) && .@i < .size) ++.@i;
+	if (.@i < .size) {
+		mes "[Cursed Knight Officer]";
+		mes "You are already registered in the queue.";
+		mes "Stay on this map until the battle begins.";
+		close;
+	}
+
+	mes "[Cursed Knight Officer]";
+	mes "If you join, you will be added to the queue and matched into a team.";
+	mes "You ^FF0000must remain on this map^000000 until the event starts.";
+	next;
+
+	switch (select("Join the battle:Cancel")) {
+		case 1:
+			mes "[Cursed Knight Officer]";
+			mes "You have been added to the queue.";
+			mes "Remain in this area while we gather enough adventurers.";
+			close2;
+			break;
+		case 2:
+			mes "[Cursed Knight Officer]";
+			mes "Very well. Come back if you wish to challenge the curse.";
+			close;
+	}
+
+	// Add player to queue
+	.aid[.size++] = getcharid(3);
+
+	// Clean queue of offline / wrong map players
+	for (.@i = 0; .@i < .size; ++.@i) {
+		if (!isloggedin(.aid[.@i])) {
+			deletearray .aid[.@i], 1;
+			--.@i;
+			--.size;
+		} else {
+			attachrid .aid[.@i];
+			if (strcharinfo(3) != strnpcinfo(4)) {
+				deletearray .aid[.@i], 1;
+				--.@i;
+				--.size;
+			}
+		}
+	}
+	detachrid;
+
+	if (.size == .@minplayer2start * 2) {
+		// Enough players, start event
+		copyarray getvariableofnpc(.aid_, "thing#main"), .aid, .size;
+		donpcevent "thing#main::OnStart";
+		deletearray .aid;
+		.size = 0;
+	} else {
+		announce "[Cursed Knight] " + .@name$ + " has joined the queue. Current: " + .size + "/" + (.@minplayer2start * 2) + " players.", bc_npc | bc_area;
+	}
+	end;
+}
+
+pvp_n_1-4,99,17,0	script	Cursed Knight::thingspot	1795,4,4,{
+
+	end;
+
+OnTouch:
+	dispbottom "[Cursed Knight] The curse grips your body! You will take damage every second.", 0xff0000;
+	dispbottom "[Cursed Knight] A dark aura seals your voice. Skills cannot be used near this presence.", 0xff0000;
+
+	getmapxy(.@mapname$, .@mapx, .@mapy, UNITTYPE_NPC, strnpcinfo(3));
+	setarray .@n_mapx[0], .@mapx - 4, .@mapx + 4;
+	setarray .@n_mapy[0], .@mapy - 4, .@mapy + 4;
+
+	.@red  = getvariableofnpc(.red,  "thing#main");
+	.@blue = getvariableofnpc(.blue, "thing#main");
+
+	@point = 1;
+
+	while (@point) {
+
+		if (Hp > 1)
+			percentheal -10, 0;
+		else
+			percentheal -100, 0;
+
+		specialeffect2 49;
+
+		if (getcharid(4) == .@red)
+			++.redpoints;
+		else if (getcharid(4) == .@blue)
+			++.bluepoints;
+
+		bg_updatescore strnpcinfo(4), .redpoints, .bluepoints;
+
+		sc_start SC_CURSE,   30000, 1;
+		sc_start SC_SILENCE, 30000, 1;
+		specialeffect2 49;
+		percentheal -1, 0;
+
+		sleep2 1000;
+
+		getmapxy(@mapname$, @mapx, @mapy, UNITTYPE_PC);
+		if (@mapx < .@n_mapx[0] || @mapx > .@n_mapx[1] || @mapy < .@n_mapy[0] || @mapy > .@n_mapy[1]) {
+			@point = 0;
+			sc_end SC_CURSE;
+			sc_end SC_SILENCE;
+		}
+	}
+	end;
+}
+
+pvp_n_1-4	mapflag	battleground	2
+pvp_n_1-4	mapflag	nosave	SavePoint
+pvp_n_1-4	mapflag	nowarp
+pvp_n_1-4	mapflag	nowarpto
+pvp_n_1-4	mapflag	noteleport
+pvp_n_1-4	mapflag	nomemo
+pvp_n_1-4	mapflag	nopenalty
+pvp_n_1-4	mapflag	nobranch
+pvp_n_1-4	mapflag	noicewall

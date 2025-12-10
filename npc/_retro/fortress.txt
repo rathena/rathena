@@ -1,0 +1,400 @@
+//===== rAthena Script =======================================
+//= Fortress Battleground (Original, polished)
+//===== By: ==================================================
+//= pajodex (dialogue & minor fixes by: ChatGPT)
+//===== Current Version: =====================================
+//= 1.1 (text improvements + small fixes)
+//============================================================
+// Last team that controls the Main Fortress wins the match.
+// Much more fun that way. ;)
+//============================================================
+// If there's anything you need, don't hesitate to PM pajodex.
+//============================================================
+
+function	script	F_ShuffleNumbers	{
+	// Utility: randomly fills an array with unique numbers in a range
+	deletearray getarg(2);
+	.@static = getarg(0);
+	.@range  = getarg(1) + 1 - .@static;
+	.@count  = getarg(3, .@range);
+
+	if (.@range <= 0 || .@count <= 0)
+		return 0;
+	if (.@count > .@range)
+		.@count = .@range;
+
+	for (.@i = 0; .@i < .@range; ++.@i)
+		.@temparray[.@i] = .@i;
+
+	for (.@i = 0; .@i < .@count; ++.@i) {
+		.@rand = rand(.@range);
+		set getelementofarray(getarg(2), .@i), .@temparray[.@rand] + .@static;
+		.@temparray[.@rand] = .@temparray[--.@range];
+	}
+	return .@count;
+}
+
+//============================================================
+// Registration NPC
+//============================================================
+prontera,140,172,5	script	Fortress	4_M_JOB_KNIGHT2,{
+
+	.@name$           = strcharinfo(0);
+	.@minplayer2start = getvariableofnpc(.minplayer2start, "fortress#bg");
+	.@start           = getvariableofnpc(.start,           "fortress#bg");
+
+	mes "[Fortress Commander]";
+	mes "Welcome to the ^FF0000Fortress Battleground^000000.";
+	mes "Two teams will fight to control the ^FFCC00Main Fortress^000000 at the center of the battlefield.";
+	next;
+
+	if (.@start == 1) {
+		mes "[Fortress Commander]";
+		mes "A battle is already in progress.";
+		mes "Please wait until the current match is finished to join the next one.";
+		close;
+	}
+
+	mes "[Fortress Commander]";
+	mes "If you join the queue, you will be placed into a team when enough adventurers have signed up.";
+	mes "You ^FF0000must remain on this map^000000 until the battle begins.";
+	next;
+
+	// Check if player is already in queue
+	.@i = 0;
+	while (.aid[.@i] != getcharid(3) && .@i < .size) ++.@i;
+	if (.@i < .size) {
+		mes "[Fortress Commander]";
+		mes "You are already registered in the queue.";
+		mes "Please wait patiently for the match to start.";
+		close;
+	}
+
+	switch(select("Join the battle:Cancel")) {
+		case 1:
+			mes "[Fortress Commander]";
+			mes "You are now in the queue.";
+			mes "Stay in this area until we have gathered enough fighters.";
+			close2;
+			break;
+		case 2:
+			mes "[Fortress Commander]";
+			mes "Very well. Return if you wish to fight for the fortress.";
+			close;
+	}
+
+	// Add player to queue
+	.aid[.size++] = getcharid(3);
+
+	// Clean the queue from offline players or players who left the map
+	for (.@i = 0; .@i < .size; ++.@i) {
+		if (!isloggedin(.aid[.@i])) {
+			deletearray .aid[.@i], 1;
+			--.@i;
+			--.size;
+		} else {
+			attachrid .aid[.@i];
+			if (strcharinfo(3) != strnpcinfo(4)) {
+				deletearray .aid[.@i], 1;
+				--.@i;
+				--.size;
+			}
+		}
+	}
+	detachrid;
+
+	if (.size == .@minplayer2start * 2) {
+		// Enough players, start the battleground
+		copyarray getvariableofnpc(.aid_, "fortress#bg"), .aid, .size;
+		donpcevent "fortress#bg::OnStart";
+		deletearray .aid;
+		.size = 0;
+	} else {
+		announce "[Fortress] " + .@name$ + " has joined the queue. Current: " + .size + "/" + (.@minplayer2start * 2) + " players.", bc_npc | bc_area;
+	}
+	end;
+}
+
+//============================================================
+// Main Battleground Controller
+//============================================================
+bat_c01,0,0,0	script	fortress#bg	100,{
+
+OnInit:
+	// =============
+	// Game Settings
+	// =============
+
+	// Minimum players per team to start (default: 5 for 5v5)
+	.minplayer2start = 3;
+
+	// Event duration in minutes (default: 5 mins)
+	.duration = 5;
+
+	// Reward settings: itemID, amount (win / lose)
+	setarray .rwd[0],
+		1230002, 3,	// winning team
+		1230002, 1;	// losing team
+
+	end;
+
+OnStart:
+	.start = 1;
+
+	.red  = bg_create(strnpcinfo(4),  58, 123, strnpcinfo(0) + "::OnRedQuit",  strnpcinfo(0) + "::OnRedDie");
+	.blue = bg_create(strnpcinfo(4), 141,  60, strnpcinfo(0) + "::OnBlueQuit", strnpcinfo(0) + "::OnBlueDie");
+
+	// Randomly assign queued players into Red / Blue
+	callfunc "F_ShuffleNumbers", 0, .minplayer2start * 2 - 1, .@r;
+	for (.@i = 0; .@i < .minplayer2start * 2; ++.@i) {
+		attachrid .aid_[.@r[.@i]];
+		bg_join ( .@i % 2 ) ? .red : .blue;
+	}
+	detachrid;
+
+	// Announce mechanics
+	announce "[Fortress] The battle for the Main Fortress is about to begin!", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+	announce "[Fortress] Control the ^FFCC00Main Fortress^000000 in the center to claim victory!", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+	announce "[Fortress] Each team also has a ^00AAFFMini-Fortress^000000 that heals allies and harms enemies.", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+	announce "[Fortress] The last team holding the Main Fortress when the time runs out will win!", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+	announce "[Fortress] Get ready... Fight!", bc_npc | bc_map | bc_blue;
+
+	// Spawn neutral Main Fortress crystal
+	bg_monster 0, "bat_c01", 99, 92, "Main Fortress", 1911, strnpcinfo(3) + "::OnEmpDown";
+
+	// Run event for set duration
+	sleep .duration * 60000;
+
+	// Check winner
+	if (.owner)
+		callsub L_reward,
+			(.owner == .red)  ? .red  : .blue,
+			(.owner == .red)  ? .blue : .red,
+			(.owner == .red)  ? "Red" : "Blue";
+	else
+		announce "[Fortress] Time is up! No team has secured the Main Fortress. It's a draw!", bc_npc | bc_map | bc_blue;
+
+	.owner = .start = 0;
+	bg_destroy .red;
+	bg_destroy .blue;
+	mapwarp strnpcinfo(4), "prontera", 150, 180, 0;
+	end;
+
+L_reward:
+	announce "[Fortress] The " + getarg(2) + " Team has won the Fortress Battleground!", bc_npc | bc_map | bc_blue;
+
+	// Reward winning team
+	bg_get_data getarg(0), 1;
+	for (.@i = 0; .@i < $@arenamemberscount; ++.@i)
+		getitem .rwd[0], .rwd[1], $@arenamembers[.@i];
+
+	sleep 1;
+
+	// Reward losing team (consolation prize)
+	bg_get_data getarg(1), 1;
+	for (.@i = 0; .@i < $@arenamemberscount; ++.@i)
+		getitem .rwd[2], .rwd[3], $@arenamembers[.@i];
+
+	return;
+
+OnEmpDown:
+	// Store BG owner of the Main Fortress (Battleground ID)
+	.owner = getcharid(4);
+
+	announce "[Fortress] The " + ((getcharid(4) == .red) ? "Red" : "Blue") + " Team has taken control of the ^FFCC00Main Fortress^000000!", bc_npc | bc_map | bc_blue;
+
+	// Warp both teams back to their bases
+	bg_warp .red,  strnpcinfo(4),  58, 123;
+	bg_warp .blue, strnpcinfo(4), 141,  60;
+
+	// Respawn the Main Fortress with the appropriate sprite for the owning team
+	bg_monster .owner, "bat_c01", 99, 92, "Main Fortress",
+		(getcharid(4) == .red) ? 1912 : 1913,
+		strnpcinfo(3) + "::OnEmpDown";
+
+	// If you want a visible crystal NPC instead of only mob sprite, you could:
+	// setnpcdisplay("#mainfort", "Main Fortress", (getcharid(4) == .red) ? 1912 : 1913);
+	end;
+
+OnRedQuit:
+	callsub L_Quit, .red, "Red";
+OnBlueQuit:
+	callsub L_Quit, .blue, "Blue";
+
+L_Quit:
+	// If the team still has members, ignore
+	if (bg_get_data(getarg(0), 0)) end;
+
+	announce "[Fortress] All members of the " + getarg(2) + " Team have left the battleground!", bc_npc | bc_map | bc_blue;
+	sleep 1000;
+
+	// The remaining team wins automatically
+	callsub L_reward,
+		(getarg(0) == .red) ? .red  : .blue,
+		(getarg(0) == .red) ? .blue : .red,
+		(getarg(0) == .red) ? "Red" : "Blue";
+
+	awake instance_npcname(strnpcinfo(0));
+	end;
+
+OnRedDie:
+OnBlueDie:
+	sleep2 1250;
+	percentheal 100, 100;
+	end;
+}
+
+//============================================================
+// Main Fortress "zone" (touch area around the crystal)
+//============================================================
+bat_c01,99,92,0	script	#mainfort	-1,5,5,{
+
+	end;
+
+OnTouch:
+	getmapxy(.@mapname$, .@mapx, .@mapy, UNITTYPE_NPC, strnpcinfo(3));
+	setarray .@n_mapx[0], .@mapx - 5, .@mapx + 5;
+	setarray .@n_mapy[0], .@mapy - 5, .@mapy + 5;
+
+	@ontouch = 1;
+	.@owner  = getvariableofnpc(.owner, "fortress#bg");
+
+	if (.@owner && .@owner == getcharid(4))
+		dispbottom "[Fortress] You are standing within your team's Main Fortress. The aura restores your strength.";
+	else
+		dispbottom "[Fortress] You are inside the enemy's Main Fortress! The defensive aura is damaging you!", 0xff0000;
+
+	while (@ontouch && strcharinfo(3) == strnpcinfo(4)) {
+
+		if (.@owner != getcharid(4)) {
+			// Enemy inside main fortress: take damage
+			if (HP > 1)
+				percentheal -10, 0;
+			else
+				percentheal -100, 0;
+			specialeffect2 49;
+		} else if (.@owner == getcharid(4)) {
+			// Owner inside main fortress: heal
+			if (HP != MaxHP)
+				specialeffect2 EF_HEAL;
+			percentheal 10, 10;
+		}
+
+		sleep2 1000;
+
+		getmapxy(@mapname$, @mapx, @mapy, UNITTYPE_PC);
+		if (@mapx < .@n_mapx[0] || @mapx > .@n_mapx[1] || @mapy < .@n_mapy[0] || @mapy > .@n_mapy[1]) {
+			@ontouch = 0;
+		}
+	}
+	end;
+}
+
+//============================================================
+// Red Mini Fortress (Red base aura)
+//============================================================
+bat_c01,55,126,0	script	#redminifort	1915,5,5,{
+
+	end;
+
+OnTouch:
+	getmapxy(.@mapname$, .@mapx, .@mapy, UNITTYPE_NPC, strnpcinfo(3));
+	setarray .@n_mapx[0], .@mapx - 5, .@mapx + 5;
+	setarray .@n_mapy[0], .@mapy - 5, .@mapy + 5;
+
+	.@owner  = getvariableofnpc(.red, "fortress#bg");
+	@ontouch = 1;
+
+	if (.@owner == getcharid(4))
+		dispbottom "[Fortress] You feel protected by the Red Team's Mini-Fortress.";
+	else
+		dispbottom "[Fortress] The Red Team's defensive aura repels you!", 0xff0000;
+
+	while (@ontouch && strcharinfo(3) == strnpcinfo(4)) {
+
+		if (.@owner != getcharid(4)) {
+			// Enemy at Red mini fort: stronger damage, sometimes more burst
+			if (HP > 10)
+				percentheal rand(-40, -20), 0; // fixed order, random negative damage
+			else
+				percentheal -100, 0;
+			specialeffect2 49;
+		} else {
+			// Ally at Red mini fort: heal
+			if (HP != MaxHP)
+				specialeffect2 EF_HEAL;
+			percentheal 10, 10;
+		}
+
+		sleep2 1000;
+
+		getmapxy(@mapname$, @mapx, @mapy, UNITTYPE_PC);
+		if (@mapx < .@n_mapx[0] || @mapx > .@n_mapx[1] || @mapy < .@n_mapy[0] || @mapy > .@n_mapy[1]) {
+			@ontouch = 0;
+		}
+	}
+	end;
+}
+
+//============================================================
+// Blue Mini Fortress (Blue base aura)
+//============================================================
+bat_c01,144,57,0	script	#blueminifort	1914,5,5,{
+
+	end;
+
+OnTouch:
+	getmapxy(.@mapname$, .@mapx, .@mapy, UNITTYPE_NPC, strnpcinfo(3));
+	setarray .@n_mapx[0], .@mapx - 5, .@mapx + 5;
+	setarray .@n_mapy[0], .@mapy - 5, .@mapy + 5;
+
+	.@owner  = getvariableofnpc(.blue, "fortress#bg");
+	@ontouch = 1;
+
+	if (.@owner == getcharid(4))
+		dispbottom "[Fortress] You feel protected by the Blue Team's Mini-Fortress.";
+	else
+		dispbottom "[Fortress] The Blue Team's defensive aura repels you!", 0x0000ff;
+
+	while (@ontouch && strcharinfo(3) == strnpcinfo(4)) {
+
+		if (.@owner != getcharid(4)) {
+			// Enemy at Blue mini fort: damage
+			if (HP > 10)
+				percentheal rand(-40, -20), 0; // fixed order, random negative damage
+			else
+				percentheal -100, 0;
+			specialeffect2 49;
+		} else {
+			// Ally at Blue mini fort: heal
+			if (HP != MaxHP)
+				specialeffect2 EF_HEAL;
+			percentheal 10, 10;
+		}
+
+		sleep2 1000;
+
+		getmapxy(@mapname$, @mapx, @mapy, UNITTYPE_PC);
+		if (@mapx < .@n_mapx[0] || @mapx > .@n_mapx[1] || @mapy < .@n_mapy[0] || @mapy > .@n_mapy[1]) {
+			@ontouch = 0;
+		}
+	}
+	end;
+}
+
+//============================================================
+// Mapflags
+//============================================================
+bat_c01	mapflag	battleground	2
+bat_c01	mapflag	nosave	SavePoint
+bat_c01	mapflag	nowarp
+bat_c01	mapflag	nowarpto
+bat_c01	mapflag	noteleport
+bat_c01	mapflag	nomemo
+bat_c01	mapflag	nopenalty
+bat_c01	mapflag	nobranch
+bat_c01	mapflag	noicewall

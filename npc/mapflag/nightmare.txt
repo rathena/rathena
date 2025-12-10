@@ -1,12 +1,12 @@
 //===== rAthena Script =======================================
 //= Mapflag: Nightmare mode.
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Players drop items/equipment on death.
 //= pvp_nightmaredrop	id,type,percent
 //=   id: Drop a specific item ID or "random"
 //=   type: "inventory", "equip", or "all"
 //=   percent: Rate of item drop.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Initial script.
 //============================================================
 
@@ -34,7 +34,7 @@ pvp_n_5-3	mapflag	pvp_nightmaredrop	random,equip,300
 pvp_n_6-3	mapflag	pvp_nightmaredrop	random,equip,300
 pvp_n_7-3	mapflag	pvp_nightmaredrop	random,equip,300
 pvp_n_8-3	mapflag	pvp_nightmaredrop	random,equip,300
-pvp_n_1-4	mapflag	pvp_nightmaredrop	random,equip,300
+//pvp_n_1-4	mapflag	pvp_nightmaredrop	random,equip,300
 pvp_n_2-4	mapflag	pvp_nightmaredrop	random,equip,300
 pvp_n_3-4	mapflag	pvp_nightmaredrop	random,equip,300
 pvp_n_4-4	mapflag	pvp_nightmaredrop	random,equip,300

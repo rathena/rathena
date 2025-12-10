@@ -102,7 +102,7 @@ OnEndDM:
 	if (.teamBlueScore == .teamRedScore)
 	{
 		announce "[Death Match] It's a Draw with a score of " + .teamBlueScore + " to " + .teamRedScore + "! Congratulations everybody!",bc_all,0xC3FF00;
-		
+
 		for(.@i = 0; .@i<getarraysize($@dmTeamRed); .@i++)
 		{
 			if(attachrid($@dmTeamRed[.@i]))
@@ -200,11 +200,11 @@ OnEndDM:
 	bg_destroy($@blueTeam_DMId);
 	bg_destroy($@RedTeam_DMId);
 	$deathmatchon = 0;
-	end;	
+	end;
 
 OnTimer60000:
 	//every minute, check for members availability
-	.countTimer++;	
+	.countTimer++;
 	if (.countTimer == $battleDuration)
 	{
 		goto OnEndDM;
@@ -237,11 +237,11 @@ OnPCDieEvent:
 		bg_updatescore $deathMatchMap$,.teamBlueScore,.teamRedScore;
 	}
 	end;
-	
+
 OnPCLoginEvent:
 	DMPOINTS = 0;
 	end;
-	
+
 OnHealAfterDeath:
 	percentheal 100, 100;
 	if(.buffs == 1)
@@ -251,12 +251,12 @@ OnHealAfterDeath:
 	}
 	dispbottom "[Valkyrie] You received the War Goddess benediction!";
 	end;
-	
+
 OnBoardAsked:
 	if($deathmatchon == 2)
 	{
 		.@caller = getcharid(3);
-		
+
 		.@found1 = callfunc("CheckDMTeamRedPlayer");
 		.@found2 = callfunc("CheckDMTeamBluePlayer");
 		.@found = .@found1 + .@found2;
@@ -270,7 +270,7 @@ OnBoardAsked:
 				.@attached = attachrid($@dmTeamRed[.@i]);
 				if (.@attached == 0)
 				{
-					deletearray $@dmTeamRed[.@i], 1;			
+					deletearray $@dmTeamRed[.@i], 1;
 				}
 				else
 				{
@@ -279,7 +279,7 @@ OnBoardAsked:
 						dispbottom .@message$;
 				}
 			}
-			
+
 			dispbottom "";
 			dispbottom "Blue Team total Points ==> " + .teamBlueScore;
 			for(.@i = 0; .@i<getarraysize($@dmTeamBlue); .@i++)
@@ -287,7 +287,7 @@ OnBoardAsked:
 				.@attached = attachrid($@dmTeamBlue[.@i]);
 				if (.@attached == 0)
 				{
-					deletearray $@dmTeamBlue[.@i], 1;			
+					deletearray $@dmTeamBlue[.@i], 1;
 				}
 				else
 				{
@@ -314,7 +314,7 @@ OnInit:
 	.buffs = 1;						// Buff after death ( 1 = on ; 0 = off )
 	setarray $DMDuration[0], 5, 10, 15; // Game time in minutes
 	// Config ends here --------------------------
-	
+
 	// Dont touch these part below if you dont know what your doing
 	$deathmatchon = 0;
 	$deathMatchMap$ = "pvp_n_3-5";
@@ -329,7 +329,7 @@ OnInit:
 
 pvp_n_3-5	mapflag	battleground	2
 
-prontera,140,176,5	script	Death Match::aladment	4_M_SURA,{
+prontera,140,176,5	script	Death Match::aladment	4_M_JOB_KNIGHT1,{
 	.@npcname$ = "[Leag]";
 	mes .@npcname$;
 	mes "Hello to you, " + strcharinfo(0);
@@ -452,7 +452,7 @@ OnJoin:
 			for(.@i = 0; .@i<getarraysize($DMDuration); .@i++)
 			{
 				.@menu$ = .@menu$ + (.@i == 0 ? "" : ":") + $DMDuration[.@i] + " minutes";
-			} 
+			}
 			.@duration = select(.@menu$) - 1;
 			next;
 			mes .@npcname$;
@@ -468,13 +468,13 @@ OnJoin:
 		{
 			deletearray $@DMMembers[0], getarraysize($@DMMembers);
 			$@DMMembers[0] = getcharid(3);
-			
-			bg_destroy $@RedTeam_DMId; 
-			bg_destroy $@blueTeam_DMId; 
+
+			bg_destroy $@RedTeam_DMId;
+			bg_destroy $@blueTeam_DMId;
 			bg_leave;
-     
+
 			bg_updatescore $deathMatchMap$, 0, 0;
-      
+
 			$deathmatchon = 1;
 			$battleDuration = $DMDuration[.@duration];
 			announce "[Death Match] " + strcharinfo(0) + " just join the Death Match. Who will come to fight him?",bc_all,0xC3FF00;
@@ -494,7 +494,7 @@ OnJoin:
 				.teamCount = $maxDMMemberCount / 2;
 				//warp first char
 				announce "[Death Match] The fight begins!",bc_all,0xC3FF00;
-				.@warped = 0;	
+				.@warped = 0;
 				$@RedTeam_DMId = bg_create($deathMatchMap$,$warpPointRedDM[0],$warpPointRedDM[1]);
 				$@blueTeam_DMId = bg_create($deathMatchMap$,$warpPointBlueDM[0],$warpPointBlueDM[1]);
 				for(.@i = 0; .@i<getarraysize($@DMMembers); .@i++)
