@@ -1,20 +1,20 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Find the Mushroom
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Mysterious
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 3.6a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Find the Mushroom - random amount of Mushrooms spawns in random maps.
 //= Players need to find these mushrooms and kill them to gain prizes!
 //===== Additional Comments: =================================
 //= 3.0 Fully Functional with Rewritten script. [Mysterious]
 //= 3.6a Slightly edited. [Euphy]
-//============================================================ 
+//============================================================
 
-prontera,142,228,6	script	Find the Mushroom	1084,{
+prontera,154,197,6	script	Find the Mushroom	1084,{
 	mes "[ Find The Mushroom ]";
 	if (.status == 1) {
 		.@count = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
@@ -38,8 +38,8 @@ prontera,142,228,6	script	Find the Mushroom	1084,{
 	close;
 
 OnInit:
-	.prize = 512;	// Reward item ID
-	.amount = 10;	// Reward item amount
+	.prize = 1230002;	// Reward item ID
+	.amount = 1;	// Reward item amount
 	.GM = 60;		// GM level required to access NPC
 	setarray .maps_list$[0],"izlude","geffen","morocc","prontera"; // Possible maps
 	end;

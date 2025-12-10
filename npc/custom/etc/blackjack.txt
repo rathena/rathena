@@ -17,7 +17,7 @@
 //= 1.0 First version.
 //============================================================
 
-cmd_in02,188,89,1	script	Black Jack Dealer	57,{
+prontera,164,170,3	script	Black Jack Dealer	4_EP17_KAYA,{
 	mes "[Dealer]";
 	mes "Hello there! Would you like to play a game of Black Jack?";
 M_Menu:
@@ -130,23 +130,23 @@ L_Play:
 	mes "[Dealer]";
 	mes "Please place your bets...";
 	next;
-	menu "2z",M_1a, "10z",M_1b, "20z",M_1c, "100z",M_1d, "Too rich for my blood....",M_End;
+	menu "100.000 zenys",M_1a, "150.000 zenys",M_1b, "300.000 zenys",M_1c, "500.000 zenys",M_1d, "Too rich for my blood....",M_End;
 
 M_1a:
-	if(Zeny < 2) goto sL_NotEnuf;
-	set @bet, 2;
+	if(Zeny < 100000) goto sL_NotEnuf;
+	set @bet, 100000;
 	goto L_Cont0;
 M_1b:
-	if(Zeny < 10) goto sL_NotEnuf;
-	set @bet, 10;
+	if(Zeny < 150000) goto sL_NotEnuf;
+	set @bet, 150000;
 	goto L_Cont0;
 M_1c:
-	if(Zeny < 20) goto sL_NotEnuf;
-	set @bet, 20;
+	if(Zeny < 300000) goto sL_NotEnuf;
+	set @bet, 300000;
 	goto L_Cont0;
 M_1d:
-	if(Zeny < 100) goto sL_NotEnuf;
-	set @bet, 100;
+	if(Zeny < 500000) goto sL_NotEnuf;
+	set @bet, 500000;
 	goto L_Cont0;
 
 sL_NotEnuf:
@@ -235,7 +235,9 @@ sL_Win:
 	mes "[Dealer]";
 	mes "Congratulations, you've won!";
 	next;
-	set Zeny, Zeny + @bet;
+	set Zeny, Zeny + @bet*2;
+	getitem .BetItemID, @bet*2;
+	getitem 1230002, 1;
 	goto L_Play;
 sL_Lose:
 	mes "[Dealer]";

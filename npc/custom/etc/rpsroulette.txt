@@ -3,126 +3,196 @@
 //===== By: ==================================================
 //= acky
 //===== Current Version: =====================================
-//= 1.2
+//= 1.2 (dialogue enhanced, prize explanation)
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Plays a hybrid Russian Roulette Rock Scissors Paper game.
+//= Plays a hybrid Russian Roulette Rock–Paper–Scissors game.
 //===== Additional Comments: =================================
 //= Prizes customizable, Added emotions.
 //= 1.2 Fixes by Blackthunder and me [Poki#3]
 //============================================================
 
-cmd_in02,182,126,2	script	Crazy Boris	85,{
+prontera,164,172,3	script	Crazy Elena	4_F_ELENA,{
+
 	set .@counter,1;
-	mes "Hey you! Up for Rock Scissors Roulette?";
+
+	mes "[Crazy Elena]";
+	mes "Heh, you there!";
+	mes "How about a round of ^0000FFRock^000000, ^FF0000Scissors^000000 and a bit of ^FF0000Russian Roulette^000000 on top?";
+	mes "Win the mind game, survive the gun, and you walk away with prizes.";
 	next;
-	menu "Let me play.",PLAY,"Explain the rules.",RULES,"Leave",LEAVE;
+	menu "Let me play.",PLAY,"Explain the rules (and prizes).",RULES,"Leave",LEAVE;
+
 SAME:
-	mes "Draw! Again!";
+	mes "[Crazy Elena]";
+	mes "A draw!";
+	mes "No fun in that... let's go again!";
 	next;
+
 PLAY:
-	mes "Rock... Paper...";
+	mes "[Crazy Elena]";
+	mes "Alright... focus!";
+	mes "^0000FFRock^000000... ^00FF00Paper^000000... ^FF0000Scissors^000000...";
+	next;
+
 	set .@opp, rand(1,3);
 	menu "^0000FFROCK!",-,"^FF0000SCISSORS!",SCISSORS,"^00FF00PAPER!^000000",PAPER;
 
-  	if (.@lastchoice == 1) set .@opp, rand(1,3);
-  	if (.@opp == 1) emotion ET_ROCK;
-  	else if (.@opp == 2) emotion ET_SCISSOR;
-  	else emotion ET_WRAP;
-  	set .@lastchoice,1;
-	if (.@opp == 1) goto SAME;
-	if (.@opp == 2) goto WIN;
-	goto LOSE;
+	// Player picked ROCK
+	if (.@lastchoice == 1) set .@opp, rand(1,3);
+	if (.@opp == 1) emotion ET_ROCK;
+	else if (.@opp == 2) emotion ET_SCISSOR;
+	else emotion ET_WRAP;
+	set .@lastchoice,1;
+
+	if (.@opp == 1) goto SAME; // Rock vs Rock
+	if (.@opp == 2) goto WIN;  // Rock beats Scissors
+	goto LOSE;                  // Rock loses to Paper
 
 SCISSORS:
+	// Player picked SCISSORS
 	if (.@lastchoice == 2) set .@opp,rand(1,2);
-  	if (.@opp == 1) emotion ET_ROCK;
-  	else if (.@opp == 2) emotion ET_SCISSOR;
-  	else emotion ET_WRAP;
-  	set .@lastchoice,2;
-	if (.@opp == 1) goto LOSE;
-	if (.@opp == 2) goto SAME;
-	goto WIN;
+	if (.@opp == 1) emotion ET_ROCK;
+	else if (.@opp == 2) emotion ET_SCISSOR;
+	else emotion ET_WRAP;
+	set .@lastchoice,2;
+
+	if (.@opp == 1) goto LOSE; // Scissors lose to Rock
+	if (.@opp == 2) goto SAME; // Scissors vs Scissors
+	goto WIN;                   // Scissors beat Paper
 
 PAPER:
+	// Player picked PAPER
 	if (.@lastchoice == 3) set .@opp,rand(2,3);
-  	if (.@opp == 1) emotion ET_ROCK;
-  	else if (.@opp == 2) emotion ET_SCISSOR;
-  	else emotion ET_WRAP;
-  	set .@lastchoice,3;
-	if (.@opp == 1) goto WIN;
-	if (.@opp == 2) goto LOSE;
-	goto SAME;
+	if (.@opp == 1) emotion ET_ROCK;
+	else if (.@opp == 2) emotion ET_SCISSOR;
+	else emotion ET_WRAP;
+	set .@lastchoice,3;
+
+	if (.@opp == 1) goto WIN;  // Paper beats Rock
+	if (.@opp == 2) goto LOSE; // Paper loses to Scissors
+	goto SAME;                  // Paper vs Paper
 
 WIN:
-	mes "Damnit, You Win!";
+	mes "[Crazy Elena]";
+	mes "Tch... You win this round!";
+	mes "But the real fun starts with the trigger...";
 	emotion ET_PROFUSELY_SWEAT;
 	next;
-	set .@win, 1;
+	set .@win, 1; // You won RPS -> Elena risks dying
 	goto YOUPULL;
 
 LOSE:
 	emotion ET_SMILE;
-	mes "Boorah! You Lose!";
+	mes "[Crazy Elena]";
+	mes "Bwahaha! I win!";
+	mes "Time to see if luck is on ^0000FFyour^000000 side.";
 	next;
-	set .@win, 0;
+	set .@win, 0; // You lost RPS -> you risk dying
 
 YOUPULL:
-	mes .@counter +" of 6";
-	if ( .@counter == 6 )
-		mes "Say your prayers";
-	set .@pull, rand( 1,( 7 -.@counter ) );
-	set .@counter, .@counter +1;
+	mes "[Crazy Elena]";
+	mes "Chamber: ^FF0000" + .@counter + " of 6^000000.";
+	if (.@counter == 6)
+		mes "This is the last chamber... better start praying.";
+	set .@pull, rand(1,(7 - .@counter));
+	set .@counter, .@counter + 1;
 	next;
-	if ( .@pull == 1 ) {
-		if ( .@win ) goto KILL;
+
+	if (.@pull == 1) {
+		// Bullet fired
+		if (.@win) goto KILL; // If you had won RPS, Elena is the one who dies
 		specialeffect2 EF_SUI_EXPLOSION;
 		emotion ET_KIK;
 		percentheal -100,-100;
-		mes "*^0000FFClick^000000* *^FF0000BANG^000000*";
+		mes "[Crazy Elena]";
+		mes "*^0000FFClick^000000* ... *^FF0000BANG^000000*";
+		mes "That was your last mistake...";
 		mes "You're dead!";
 		close;
 	}
+
+	// No bullet – continue
 	emotion ET_HNG;
-	mes "*^0000FFClick^000000* whew...";
+	mes "[Crazy Elena]";
+	mes "*^0000FFClick^000000* ... whew, still alive.";
+	mes "Again! Let's play another round!";
+	next;
 	goto PLAY;
 
 RULES:
-	mes "Ok here are the rules:";
-	mes "I have with me a ^FF00006^000000 chamber pistol with ^FF00001^000000 round. First we play ^FF0000Scissors ^00FF00Paper ^0000FFRock^000000. The loser pulls the trigger. The winner is whoever comes out best.";
-	mes "Beat me to win a prize.";
+	mes "[Crazy Elena]";
+	mes "Alright, listen up. How this little game works:";
 	next;
+
+	mes "[Crazy Elena]";
+	mes "- I have a ^FF00006-chamber pistol^000000 with ^FF00001 bullet^000000.";
+	mes "- First we play ^0000FFRock^000000, ^FF0000Scissors^000000, ^00FF00Paper^000000.";
+	mes "- After each round, someone pulls the trigger once.";
+	next;
+
+	mes "[Crazy Elena]";
+	mes "- If ^0000FFyou win^000000 the Rock Scissors Paper round and the bullet fires, ^FF0000I^000000 take the shot.";
+	mes "- If ^FF0000you lose^000000 and the bullet fires, ^FF0000you^000000 die on the spot.";
+	mes "- Survive the roulette ^AND^ beat me, and you walk away with a prize.";
+	next;
+
+	mes "[Crazy Elena]";
+	mes "And what kind of prizes, you ask?";
+	mes "- Special coins and tokens like ^00FF00" + getitemname(1230001) + "^000000 and ^00FF00" + getitemname(1230002) + "^000000.";
+	mes "- Even rarer stuff like ^00FF00" + getitemname(1230003) + "^000000 for the lucky ones.";
+	mes "- Useful items such as ^00FF00" + getitemname(616) + "^000000 and ^00FF00" + getitemname(617) + "^000000.";
+	mes "- Dangerous items like ^00FF00" + getitemname(604) + "^000000.";
+	next;
+
+	mes "[Crazy Elena]";
+	mes "Different rounds, different rewards. Sometimes you get coins, sometimes consumables, sometimes a nice surprise box.";
+	mes "The only certainty is: if I take the bullet and survive long enough to talk, ^00FF00you get paid^000000.";
+	next;
+
 	menu "Let me play.",-,"No thanks.",LEAVE;
-	mes "Ok here we go...";
+	mes "[Crazy Elena]";
+	mes "Hehehe... Good! Let's get this madness started!";
 	next;
 	goto PLAY;
 
 KILL:
+	// Elena takes the bullet, player wins a prize
 	specialeffect EF_SUI_EXPLOSION;
 	emotion ET_HUK;
-	mes "*^0000FFClick^000000* *^FF0000BANG^000000*";
-	mes "OWWW @#$%^!! THAT HURT LIKE HELL!!";
+	mes "[Crazy Elena]";
+	mes "*^0000FFClick^000000* ... *^FF0000BANG^000000*";
+	mes "OWWW!! That hurts every single time!";
 	next;
-	mes "Congratulations! You have won...";
-	switch( rand( 1,10 ) ) {
-		case 1: setarray .@reward[0], 10,984; break;
-		case 3: setarray .@reward[0],100,601; break;	// 100x Fly Wings
-		case 4: setarray .@reward[0],  8,603; break;	// 8x Old Blue Box
-		case 5: setarray .@reward[0],  4,617; break;	// 4x Old Violet Box
-		case 6: setarray .@reward[0],  1,616; break;	// 1x Old Card Album
-		case 7: setarray .@reward[0], 10,604; break;	// 10x Dead Branch
-		case 8: setarray .@reward[0],  3,969; break;	// 3x Gold
-		case 10: setarray .@reward[0],20,505; break;	// 20x Blue Potion
-		case 2:
-		case 9:
-			setarray .@reward[0], 10,985;
+
+	mes "[Crazy Elena]";
+	mes "Alright, alright... a deal is a deal.";
+	mes "You survived and beat me. Congratulations, you’ve won a prize!";
+	next;
+
+	// Prize pool (you edited these values)
+	switch (rand(1,10)) {
+		case 1:  setarray .@reward[0],  2,1230002; break; // 2x custom coin (1230002)
+		case 2:  setarray .@reward[0],  1,   616; break; // 1x Blue Potion
+		case 3:  setarray .@reward[0],  5,1230002; break; // 5x custom coin (1230002)
+		case 4:  setarray .@reward[0],  5,1230003; break; // 5x custom coin (1230003)
+		case 5:  setarray .@reward[0],  4,   617; break; // 4x White Potion
+		case 6:  setarray .@reward[0],  1,   616; break; // 1x Blue Potion
+		case 7:  setarray .@reward[0], 10,   604; break; // 10x Yellow Potion
+		case 8:  setarray .@reward[0],  3,   969; break; // 3x Old Blue Box
+		case 9:  setarray .@reward[0],100,1230001; break; // 100x custom coin (1230001)
+		case 10: setarray .@reward[0], 10,1230002; break; // 10x custom coin (1230002)
 	}
-	mes .@reward[0] +"x "+ getitemname( .@reward[1] ) +"!";
+
+	mes "[Crazy Elena]";
+	mes "You receive ^00FF00" + .@reward[0] + "x " + getitemname(.@reward[1]) + "^000000!";
 	getitem .@reward[1], .@reward[0];
 	close;
 
 LEAVE:
-	mes "Pansy.";
+	mes "[Crazy Elena]";
+	mes "Hah! Chickening out, huh?";
+	mes "Come back when you're ready to gamble with your life!";
 	close;
 }

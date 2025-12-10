@@ -13,7 +13,7 @@
 //= 1.0 First version, edited. [Euphy]
 //============================================================
 
-prontera,148,174,5	script	Private MVP Room	100,{
+prontera,130,217,5	script	Private MVP Room	4_EP18_DEMIFREYA,{
 	mes "[Private MVP Room]";
 	mes "Please select a private MVP room.";
 	if ( getvariableofnpc( .rentcost, "MVP Summoner" ) )
@@ -228,20 +228,20 @@ OnInit:
 	// Do NOT set this to zero!
 	set .timeout, 60;
 
-	set .rentcost, 100000;	// Zeny cost for renting a room (0 = free)
-	set .mvpcost, 100000;	// Zeny cost to summon an MVP (0 = free)
-	set .bosscost, 50000;	// Zeny cost to summon a boss monster (0 = free)
+	set .rentcost, 50000000;	// Zeny cost for renting a room (0 = free)
+	set .mvpcost, 1000000;	// Zeny cost to summon an MVP (0 = free)
+	set .bosscost, 500000;	// Zeny cost to summon a boss monster (0 = free)
 
 	//	Options setting inside MVP room
-	set .@menu[1], 1;	// Turn Heal option On/Off
+	set .@menu[1], 0;	// Turn Heal option On/Off
 	set .@menu[2], 1;	// Turn MVP Summoning On/Off
 	set .@menu[3], 1;	// Turn Mini boss Summoning On/Off
-	set .@menu[4], 0;	// Sell items (branches) On/Off (see shop below, before the mapflags)
+	set .@menu[4], 1;	// Sell items (branches) On/Off (see shop below, before the mapflags)
 
 	// Respawn point when players leave the room
 	set .respawnmap$, "prontera";
-	set .respawnx, 150;
-	set .respawny, 174;
+	set .respawnx, 155;
+	set .respawny, 184;
 
 	setarray .mvpid[0],
 		1511,//	Amon Ra

@@ -14,10 +14,10 @@
 // 2.9 Somewhat iRO-official NPC names [DracoRPG]
 //============================================================
 
-// Configuration Variables: 
+// Configuration Variables:
 -	script	marriage_init	-1,{
 OnInit:
-	set $@wed_allow, 0;	//If 1, allows same sex marriages.
+	set $@wed_allow, 1;	//If 1, allows same sex marriages.
 	set $@wed_veil, 0;	//Set to 0 to disable veil check on the bride
 
 //Id of the item that is traded for the wedding ring (use 0 to disable):
@@ -32,7 +32,7 @@ OnInit:
 
 // Other Configuration:
 // Line 61,62: Priest location, sprite and name.
-// Line 437,438: Registration location, sprite and name. 
+// Line 437,438: Registration location, sprite and name.
 // Line 813,814: Divorcing location, sprite and name.
 
 // Variable Notes:
@@ -67,7 +67,7 @@ prt_church,100,123,4	script	Vomars	60,{
 	function SF_RetrieveRingF;
 	function SF_RingsAccepted;
 	function SF_StartCeremony;
-	
+
 	if (getpartnerid() > 0) {
 		mes "["+@name$+"]";
 		mes "You have my blessings, have a wonderful married life.";
@@ -83,7 +83,7 @@ prt_church,100,123,4	script	Vomars	60,{
 		mes "to prepare for marriage";
 		close;
 	} // End official iRO dialog
-	
+
 	if (strcharinfo(0) == $wed_groom$) {
 		SF_Groom();
 		end;
@@ -280,7 +280,7 @@ function SF_RetrieveRingM {
 	mes "Here's the wedding ring for your bride.";
 	if ($@wed_ring) delitem $@wed_ring,1;
 	set $wed_groom_progress,4;
-	
+
 	if ($wed_bride_progress == 4)
 		SF_StartCeremony();
 	else {
@@ -338,7 +338,7 @@ function SF_StartCeremony {
 OnTimer1000:
 	npctalk @name$ +" : Ladies and Gentlemen, We will now join in holy matrimony these two lovers.";
 	end;
-	
+
 OnTimer5000:
 	npctalk @name$ +" : Now more than ever, will both of your lives be entwined together as so will be your souls.";
 	end;
@@ -346,31 +346,31 @@ OnTimer5000:
 OnTimer10000:
 	npctalk @name$ +" : You will both honor and cherish each other through the best and worst of times.";
 	end;
-	
+
 OnTimer15000:
 	npctalk @name$ +" : The safety and well being of your other will now also be your responsibility.";
 	end;
-	
+
 OnTimer20000:
 	npctalk @name$ +" : May in sickness or good health, your love burn bright like no force can extinguish it.";
 	end;
-	
+
 OnTimer25000:
 	npctalk @name$ +" : Those here stand witness to these vows bestowed upon you, you must act accordingly to them.";
 	end;
-	
+
 OnTimer30000:
 	npctalk @name$ +" : Understanding that, we are nothing more but mortals on this earth, but this is our triumph.";
 	end;
-	
+
 OnTimer35000:
 	npctalk @name$ +" : We here will now join these two mortal entities, and create an immortal love.";
 	end;
-	
+
 OnTimer40000:
 	npctalk @name$ +" : "+ $wed_groom$ +", you have accepted to take "+$wed_bride$+" as your lawfully wedded wife,";
 	end;
-	
+
 OnTimer45000:
 	npctalk @name$ +" : and you, "+$wed_bride$+", have accepted take "+$wed_groom$+" as your lawfully wedded husband.";
 	end;
@@ -442,7 +442,7 @@ prt_church,106,99,3	script	Happy Marry	67,{
 		mes "Isn't marriage beautiful?";
 		close;
 	}
-	
+
 	function SF_WedProgress;
 	function SF_Principles;
 	function SF_Procedure;
@@ -453,7 +453,7 @@ prt_church,106,99,3	script	Happy Marry	67,{
 		SF_WedProgress();
 		end;
 	}
-	
+
 	do {
 		mes "["+@name$+"]";
 		mes "Marriage... is such a beautiful thing.";
@@ -531,7 +531,7 @@ function SF_Register {
 		close;
 	}
 }
-	
+
 function SF_WedProgress {
 	if (strcharinfo(0) == $wed_groom$) {
 		mes "["+@name$+"]";
@@ -543,7 +543,7 @@ function SF_WedProgress {
 	}
 	if (strcharinfo(0) == $wed_bride$) {
 		mes "["+@name$+"]";
-		if ($wed_groom_progress > 0) 
+		if ($wed_groom_progress > 0)
 			mes "The Priest will handle the rest of the ceremony.";
 		else
 			mes "Tell your groom to register, what is taking so long? Time is running out.";
@@ -558,7 +558,7 @@ function SF_WedProgress {
 			stopnpctimer;
 			set $wed_groom_progress,1;
 			mes "["+@name$+"]";
-			mes "Very well, now go to the Priest to reaffirm your vows and the ceremony will begin."; 
+			mes "Very well, now go to the Priest to reaffirm your vows and the ceremony will begin.";
 			emotion ET_BEST;
 			close2;
 			npctalk @name$ +" : Registration finished. "+$wed_groom$+" and "+$wed_bride$+", please reaffirm your vows with the Priest.";
@@ -579,7 +579,7 @@ function SF_WedProgress {
 			SF_TryRegister(1);
 			stopnpctimer;
 			mes "["+@name$+"]";
-			mes "Very well, now go to the Priest to reaffirm your vows and the ceremony will begin."; 
+			mes "Very well, now go to the Priest to reaffirm your vows and the ceremony will begin.";
 			emotion ET_BEST;
 			close2;
 			npctalk @name$ +" : Registration finished. "+$wed_groom$+" and "+$wed_bride$+", please reaffirm your vows with the Priest.";
@@ -660,7 +660,7 @@ OnTimer60000:
 
 	npctalk @name$ +" : Registration timed out. Is there no one who wants to marry "+$@msg$+"..?";
 	emotion ET_SCRATCH;
-	
+
 	set $wed_groom$,"";
 	set $wed_groom_sex, 0;
 	set $wed_bride$,"";
@@ -677,7 +677,7 @@ function SF_TryRegister {
 	set @type$, "groom";
 	if (@bride)
 		set @type$, "bride";
-		
+
 	mes "["+@name$+"]";
 	mes "Before registering as "+@type$+", let me check if you meet all the requirements...";
 	next;
@@ -691,7 +691,7 @@ function SF_TryRegister {
 		set @item, 7170;
 	else
 		set @item, 2338;
-	
+
 	if (getequipid(EQI_ARMOR) != @item) {
 		mes "["+@name$+"]";
 		mes "You should be wearing a "+getitemname(@item)+" if you want to get married.";
@@ -709,13 +709,13 @@ function SF_TryRegister {
 	}
 	if (@bride)
 		set @cost, $@wed_bride_reg;
-	else 
+	else
 		set @cost, $@wed_groom_reg;
 
 	if (Zeny < @cost) {
 		mes "["+@name$+"]";
 		mes "I am sorry, but you don't have enough to pay for the registration fee.";
-		mes "Come back once you have collected "+@cost+"z."; 
+		mes "Come back once you have collected "+@cost+"z.";
 		close;
 	}
 	set Zeny,Zeny-@cost;
@@ -816,12 +816,12 @@ prt_church,94,99,4	script	Sister Lisa	79,{
 
 	function SF_DivorceEnd;
 	function SF_InProgress;
-	
+
 	if ($@divorce_progress==1) {
 		goto SF_InProgress;
 		end;
 	}
-	
+
 	do {
 		mes "["+@name$+"]";
 		mes "Divorcing can be such a sad event...";
@@ -866,7 +866,7 @@ prt_church,94,99,4	script	Sister Lisa	79,{
 				mes "["+@name$+"]";
 				mes "You should think this through.";
 				close;
-			} 
+			}
 			mes "["+@name$+"]";
 			set $@divorcee,getpartnerid();
 			set $@divorcer$,strcharinfo(0);
@@ -879,7 +879,7 @@ prt_church,94,99,4	script	Sister Lisa	79,{
 end;
 
 function SF_InProgress {
-	if (strcharinfo(0) == $@divorcer$) { 
+	if (strcharinfo(0) == $@divorcer$) {
 		mes "["+@name$+"]";
 		mes "...I am still waiting for your partner to confirm the divorce procedure.";
 		close;

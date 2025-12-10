@@ -7,8 +7,8 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Click the chicken and try retrieve the item at a low 
-//= chance. If you fail he will nuke, freeze, stone, 
+//= Click the chicken and try retrieve the item at a low
+//= chance. If you fail he will nuke, freeze, stone,
 //= stun, or make you fall asleep.
 //= The prize is configurable and triggered by the NPC.
 //===== Additional Comments: =================================
@@ -110,8 +110,8 @@ OnTimer30000:
 OnTimer40000:
 	announce "GO! Click the chicken to get the prize!",bc_blue;
 	stopnpctimer;
-	if (!$cluck_item_id) set $cluck_item_id,512;
-	if (!$cluck_item_amount) set $cluck_item_amount,1;
+	if (!$cluck_item_id) set $cluck_item_id, 1230002;
+	if (!$cluck_item_amount) set $cluck_item_amount, 1;
 	set .startcluck,1;
 	end;
 }
