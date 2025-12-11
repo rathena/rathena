@@ -176,12 +176,12 @@ KILL:
 		case 1:  setarray .@reward[0],  2,1230002; break; // 2x custom coin (1230002)
 		case 2:  setarray .@reward[0],  1,   616; break; // 1x Blue Potion
 		case 3:  setarray .@reward[0],  5,1230002; break; // 5x custom coin (1230002)
-		case 4:  setarray .@reward[0],  5,1230003; break; // 5x custom coin (1230003)
+		case 4:  setarray .@reward[0],  5,1230002; break; // 5x custom coin (1230002)
 		case 5:  setarray .@reward[0],  4,   617; break; // 4x White Potion
 		case 6:  setarray .@reward[0],  1,   616; break; // 1x Blue Potion
 		case 7:  setarray .@reward[0], 10,   604; break; // 10x Yellow Potion
 		case 8:  setarray .@reward[0],  3,   969; break; // 3x Old Blue Box
-		case 9:  setarray .@reward[0],100,1230001; break; // 100x custom coin (1230001)
+		case 9:  setarray .@reward[0],50,1230001; break; // 100x custom coin (1230001)
 		case 10: setarray .@reward[0], 10,1230002; break; // 10x custom coin (1230002)
 	}
 
