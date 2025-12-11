@@ -298,7 +298,7 @@ har_in01,24,69,3	script	Affable Lady#rockridge0	1_F_MERCHANT_02,{
 	mes "Ah, you're interested in the";
 	mes "[" + mesitemlink( .@item_id[.@s], false, .@item_name$[.@s] ) + "].";
 	mes "Click the name for the detailed description.";
-	mes "As I told you, it's ^0000CD3,000,000 Zeny^000000. Do you want to buy it?";
+	mes "As I told you, it's ^0000CD"+callfunc("F_InsertComma",.@cost)+" Zeny^000000. Do you want to buy it?";
 	next;
 	if (select( "Yes.", "No." ) == 2) {
 		mes "[Affable Lady]";

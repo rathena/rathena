@@ -54,7 +54,9 @@ alberta,240,103,5	script	Karam Pucci#alberta	4_M_SEAMAN,3,3,{
 			mes "Rock Ridge, the land of gold and opportunities!";
 			setquest 7790;// Rock Ridge, Land of Opportunities
 			completequest 7790;// Rock Ridge, Land of Opportunities
-			close;
+			close2;
+			warp "harboro1",70,215;
+			end;
 		}
 		mes "[Karam Pucci]";
 		mes "You look like a capable adventurer.";
@@ -6387,7 +6389,7 @@ harboro1,156,215,5	script	Innkeeper#rockridge	1_ETC_01,{
 	}
 }
 
-harboro1,228,170,3	script	Wanderer Doram#rkrgtwn	4_DR_STELO,{
+harboro1,228,170,3	script	Wanderer Doram#rkrgtwn	4_DR_STELO,5,5,{
 	mes "[Wanderer Doram]";
 	mes "Boohoo! Where the hell is the sheriff's office? My money! Moneeeyyy!";
 	next;
@@ -6619,9 +6621,9 @@ harboro1,270,252,6	script	Bank Clerk#dy	4_M_MANAGER,{
 		mes "" + strcharinfo(0) + ", right?";
 		next;
 		mes "[Bank Clerk]";
-		mes "You don't have an account with us, but you do have an account under the name of" + strcharinfo(0) + ". Is there anything else I can do for you today?";
+		mes "You don't have an account with us, but you do have an account under the name of " + strcharinfo(0) + ". Is there anything else I can do for you today?";
 		close2;
-		// todoUI bank
+		openbank;
 		end;
 	case 2:
 		emotion ET_SORRY;
