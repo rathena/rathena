@@ -1,0 +1,92 @@
+//===== rAthena Script =======================================
+//= Special Assistant (Savepoint + Storage + Guild Storage + Buffs)
+//===== Description: =========================================
+//= - Set Save Point
+//= - Storage
+//= - Guild Storage (guild members only) via guildopenstorage()
+//= - Full Heal + Blessing + Increase AGI (10 minutes / 10k Zeny)
+//============================================================
+
+prontera,158,187,3	script	Special Assistant	4_EP17_TABLET,{
+
+	// ----------------------------
+	// Config
+	// ----------------------------
+	.@save_map$ = "prontera";
+	.@save_x = 155;
+	.@save_y = 184;
+
+	.@buff_duration = 600000; // 10 minutes (milliseconds)
+	.@buff_level = 10;
+	.@cost_service = 10000;   // 10k zeny (heal + buffs together)
+
+	mes "[Special Assistant]";
+	mes "Welcome! How may I assist you today?";
+	next;
+
+	while (1) {
+		.@menu$  = "Set Save Point";
+		.@menu$ += ":Open Storage";
+		.@menu$ += ":Open Guild Storage";
+		.@menu$ += ":Heal + Buffs (10k)";
+		.@menu$ += ":Leave";
+
+		switch(select(.@menu$)) {
+
+			// Set Save Point
+			case 1:
+				savepoint .@save_map$, .@save_x, .@save_y;
+				mes "[Special Assistant]";
+				mes "Your save point has been set to ^0055FF"+.@save_map$+" "+.@save_x+","+.@save_y+"^000000.";
+				close;
+
+			// Storage
+			case 2:
+				mes "[Special Assistant]";
+				mes "Opening Storage...";
+				close2;
+				openstorage;
+				close;
+
+			// Guild Storage
+			case 3:
+				if (getcharid(2) == 0) {
+					mes "[Special Assistant]";
+					mes "You must be in a ^FF0000Guild^000000 to use the Guild Storage.";
+					next;
+					break;
+				}
+				mes "[Special Assistant]";
+				mes "Opening Guild Storage...";
+				close2;
+				guildopenstorage();
+				close;
+
+			// Heal + Buffs
+			case 4:
+				if (Zeny < .@cost_service) {
+					mes "[Special Assistant]";
+					mes "You need ^FF0000"+.@cost_service+" Zeny^000000 to use this service.";
+					next;
+					break;
+				}
+
+				set Zeny, Zeny - .@cost_service;
+
+				percentheal 100, 100;
+				sc_start SC_BLESSING, .@buff_duration, .@buff_level;
+				sc_start SC_INCREASEAGI, .@buff_duration, .@buff_level;
+
+				mes "[Special Assistant]";
+				mes "You are fully healed!";
+				mes "Blessing and Increase AGI are active for ^0055FF10 minutes^000000.";
+				close;
+
+			// Leave
+			default:
+				mes "[Special Assistant]";
+				mes "Thank you! Have a safe journey.";
+				close;
+		}
+	}
+}
