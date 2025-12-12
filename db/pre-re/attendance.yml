@@ -28,7 +28,74 @@
 #     - Day                 Reward day.
 #       ItemId              Item ID.
 ###########################################################################
+# Version [20251212] - Generated using Multiple Custom File Generator by Chaos92 (https://x-files.amirazman.my/customfilegenerator).
+###########################################################################
 
 Header:
   Type: ATTENDANCE_DB
   Version: 1
+
+Body:
+  - Start: 20251201
+    End: 20251231
+    Rewards:
+      - Day: 1
+        ItemId: 12263
+        Amount: 1
+      - Day: 2
+        ItemId: 12215
+        Amount: 10
+      - Day: 3
+        ItemId: 12216
+        Amount: 10
+      - Day: 4
+        ItemId: 14003
+        Amount: 1
+      - Day: 5
+        ItemId: 12209
+        Amount: 5
+      - Day: 6
+        ItemId: 14601
+        Amount: 5
+      - Day: 7
+        ItemId: 12214
+        Amount: 5
+      - Day: 8
+        ItemId: 12210
+        Amount: 1
+      - Day: 9
+        ItemId: 12263
+        Amount: 1
+      - Day: 10
+        ItemId: 7621
+        Amount: 2
+      - Day: 11
+        ItemId: 12211
+        Amount: 5
+      - Day: 12
+        ItemId: 12209
+        Amount: 5
+      - Day: 13
+        ItemId: 12215
+        Amount: 10
+      - Day: 14
+        ItemId: 12216
+        Amount: 10
+      - Day: 15
+        ItemId: 12263
+        Amount: 1
+      - Day: 16
+        ItemId: 14003
+        Amount: 3
+      - Day: 17
+        ItemId: 12263
+        Amount: 1
+      - Day: 18
+        ItemId: 7621
+        Amount: 3
+      - Day: 19
+        ItemId: 12210
+        Amount: 1
+      - Day: 20
+        ItemId: 14545
+        Amount: 1
