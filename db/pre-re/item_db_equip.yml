@@ -26977,7 +26977,7 @@ Body:
     Name: Alice Doll
     Type: Armor
     Buy: 20
-    Weight: 500
+    Weight: 50
     Slots: 1
     Jobs:
       All: true
@@ -28190,7 +28190,7 @@ Body:
     Name: Rideword Hat
     Type: Armor
     Buy: 20
-    Weight: 300
+    Weight: 30
     Defense: 2
     Slots: 1
     Jobs:
@@ -28245,7 +28245,7 @@ Body:
     AegisName: Dress_Hat
     Name: Dress Hat
     Type: Armor
-    Weight: 200
+    Weight: 20
     Defense: 2
     Slots: 1
     Locations:
@@ -29158,7 +29158,7 @@ Body:
     Name: Lif Doll Hat
     Type: Armor
     Buy: 20
-    Weight: 200
+    Weight: 20
     Defense: 1
     Slots: 1
     Locations:
@@ -29741,10 +29741,6 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 10
     View: 311
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
     Script: |
       bonus bLuk,2;
       bonus bMaxHP,50;
@@ -29857,10 +29853,6 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 30
     View: 317
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
     Script: |
       bonus bUnbreakableHelm;
       bonus3 bAutoSpell,"MG_FIREBOLT",1,10;
@@ -30515,7 +30507,7 @@ Body:
     Name: Little Angel Doll
     Type: Armor
     Buy: 20
-    Weight: 300
+    Weight: 30
     Defense: 2
     Locations:
       Head_Top: true
@@ -30523,10 +30515,6 @@ Body:
     EquipLevelMin: 10
     Refineable: true
     View: 344
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
     Script: |
       bonus bDex,3;
       bonus4 bAutoSpellWhenHit,"CR_GRANDCROSS",3,30,0;
@@ -30774,7 +30762,7 @@ Body:
     AegisName: Deprotai_Doll_Hat
     Name: Defolty Doll Hat
     Type: Armor
-    Weight: 500
+    Weight: 50
     Slots: 1
     Locations:
       Head_Top: true
@@ -30790,7 +30778,7 @@ Body:
     AegisName: Claris_Doll_Hat
     Name: Glaris Doll Hat
     Type: Armor
-    Weight: 500
+    Weight: 50
     Slots: 1
     Locations:
       Head_Top: true
@@ -30822,7 +30810,7 @@ Body:
     AegisName: Tayelin_Doll_Hat
     Name: Telling Doll Hat
     Type: Armor
-    Weight: 500
+    Weight: 50
     Slots: 1
     Locations:
       Head_Top: true
@@ -31165,10 +31153,6 @@ Body:
     ArmorLevel: 1
     EquipLevelMin: 60
     View: 369
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
     Script: |
       bonus bBaseAtk,5;
       if (BaseJob == Job_Rogue)
@@ -31371,7 +31355,7 @@ Body:
     Name: Koneko Hat
     Type: Armor
     Buy: 20
-    Weight: 500
+    Weight: 50
     Defense: 1
     Locations:
       Head_Top: true
@@ -31414,17 +31398,13 @@ Body:
     Name: Gigantic Majestic Goat
     Type: Armor
     Buy: 20
-    Weight: 800
+    Weight: 80
     Defense: 5
     Locations:
       Head_Top: true
     ArmorLevel: 1
     Refineable: true
     View: 380
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
     Script: |
       bonus2 bAddRace,RC_DemiHuman,12;
       bonus2 bAddRace,RC_Player_Human,12;
@@ -31443,10 +31423,6 @@ Body:
     ArmorLevel: 1
     Refineable: true
     View: 381
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
     Script: |
       bonus bStr,2;
       bonus3 bAutoSpellWhenHit,"BS_WEAPONPERFECT",3,10;
@@ -31475,15 +31451,11 @@ Body:
     Name: Gentleman's Pipe
     Type: Armor
     Buy: 20
-    Weight: 100
+    Weight: 10
     Locations:
       Head_Low: true
     ArmorLevel: 1
     View: 383
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
     Script: |
       bonus2 bSubRace,RC_DemiHuman,2;
       bonus2 bSubRace,RC_Player_Human,2;
@@ -31509,7 +31481,7 @@ Body:
     AegisName: Balloon_Hat
     Name: Tam
     Type: Armor
-    Weight: 800
+    Weight: 80
     Defense: 3
     Slots: 1
     Locations:
@@ -31977,19 +31949,15 @@ Body:
     Name: Fish In Mouth
     Type: Armor
     Buy: 10
-    Weight: 200
+    Weight: 20
     Locations:
       Head_Low: true
     ArmorLevel: 1
     EquipLevelMin: 30
     View: 406
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
     Script: |
       bonus2 bAddMonsterDropItem,579,500;
-      bonus2 bAddItemHealRate,579,25;
+      bonus2 bAddItemHealRate,579,50;
   - Id: 5404
     AegisName: Blue_Ribbon
     Name: Blue Ribbon
@@ -33034,19 +33002,13 @@ Body:
     Name: Rainbow Scarf
     Type: Armor
     Buy: 20
-    Weight: 100
+    Weight: 10
     Defense: 1
     Locations:
       Head_Low: true
     ArmorLevel: 1
     EquipLevelMin: 90
     View: 460
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
-      NoMail: true
-      NoAuction: true
     Script: |
       bonus bInt,1;
       bonus bMdef,2;
@@ -34048,7 +34010,7 @@ Body:
     Name: Lunatic Hat
     Type: Armor
     Buy: 20
-    Weight: 300
+    Weight: 30
     Defense: 2
     Locations:
       Head_Top: true
@@ -34056,10 +34018,6 @@ Body:
     EquipLevelMin: 1
     Refineable: true
     View: 521
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
     Script: |
       bonus bLuk,5;
       bonus bMdef,2;
@@ -35925,7 +35883,7 @@ Body:
     Name: Blush of Groom
     Type: Armor
     Buy: 20
-    Weight: 50
+    Weight: 5
     Locations:
       Head_Mid: true
     ArmorLevel: 1
