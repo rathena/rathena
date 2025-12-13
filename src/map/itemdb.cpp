@@ -876,7 +876,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			item->stack.guild_storage = false;
 		}
 	}
-	
+
 	if (this->nodeExists(node, "NoUse")) {
 		const auto& nouseNode = node["NoUse"];
 
@@ -1070,7 +1070,7 @@ uint64 ItemDatabase::parseBodyNode(const ryml::NodeRef& node) {
 
 		item->script = parse_script(script.c_str(), this->getCurrentFile().c_str(), this->getLineNumber(node["Script"]), SCRIPT_IGNORE_EXTERNAL_BRACKETS);
 	} else {
-		if (!exists) 
+		if (!exists)
 			item->script = nullptr;
 	}
 
@@ -3318,16 +3318,16 @@ bool itemdb_ishatched_egg(struct item* item) {
 * @param nameid ID of item
 */
 char itemdb_isidentified(t_itemid nameid) {
-	int32 type=itemdb_type(nameid);
-	switch (type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_PETARMOR:
-		case IT_SHADOWGEAR:
-			return 0;
-		default:
-			return 1;
-	}
+// 	int32 type=itemdb_type(nameid);
+// 	switch (type) {
+// 		case IT_WEAPON:
+// 		case IT_ARMOR:
+// 		case IT_PETARMOR:
+// 		case IT_SHADOWGEAR:
+// 			return 0;
+// 		default:
+ 			return 1;
+// 	}
 }
 
 const std::string ItemGroupDatabase::getDefaultLocation() {
@@ -4419,7 +4419,7 @@ static int32 itemdb_read_sqldb(void) {
 bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
-	
+
 	struct map_data *mapdata = map_getmapdata(m);
 
 	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
@@ -4861,18 +4861,18 @@ static void itemdb_read(void) {
 		"",
 		"/" DBIMPORT,
 	};
-	
+
 	if (db_use_sqldbs)
 		itemdb_read_sqldb();
 	else
 		item_db.load();
-	
+
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
 		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
 		char* dbsubpath1 = (char*)aMalloc(n1+1);
 		char* dbsubpath2 = (char*)aMalloc(n2+1);
-		
+
 
 		if(i==0) {
 			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
@@ -4973,7 +4973,7 @@ void itemdb_reload(void) {
 		pc_setinventorydata( *sd );
 		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
 		pc_load_combo(sd); // Check to see if new combos are available
-		status_calc_pc(sd, SCO_FORCE); // 
+		status_calc_pc(sd, SCO_FORCE); //
 	}
 	mapit_free(iter);
 }
