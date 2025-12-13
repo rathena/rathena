@@ -31148,10 +31148,6 @@ Body:
     EquipLevelMin: 45
     Refineable: true
     View: 368
-    Trade:
-      NoDrop: true
-      NoSell: true
-      NoGuildStorage: true
     Script: |
       bonus bFlee,10;
       bonus bCritical,3;
@@ -40808,36 +40804,6 @@ Body:
       bonus bMatkRate,5;
       bonus bMaxHPRate,10;
       bonus bMaxSPRate,10;
-  - Id: 18505
-    AegisName: Umbala_Spirit
-    Name: Umbala Spirit
-    Type: Armor
-    Weight: 200
-    Defense: 1
-    Slots: 1
-    Locations:
-      Head_Low: true
-    ArmorLevel: 1
-    EquipLevelMin: 30
-    View: 675
-    Script: |
-      bonus bVit,1;
-  - Id: 18506
-    AegisName: Hattah_Black
-    Name: Hattah Black
-    Type: Armor
-    Buy: 12000
-    Weight: 4000
-    Defense: 2
-    Slots: 1
-    Locations:
-      Head_Low: true
-      Head_Mid: true
-      Head_Top: true
-    ArmorLevel: 1
-    EquipLevelMin: 1
-    Refineable: true
-    View: 676
   - Id: 18507
     AegisName: Elven_Ears_
     Name: Elven Ears

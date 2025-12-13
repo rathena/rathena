@@ -1,0 +1,110 @@
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Body:
+  - Name: Crafter
+    Map: prt_in
+    X: 38
+    Y: 104
+    Direction: East
+    Sprite: 4_M_DWARF
+    Items:
+      - Index: 0
+        Item: Mitra
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Armlet_Of_Prisoner
+            Amount: 1000
+          - Index: 2
+            Item: Magaleta_Card
+            Amount: 1
+      - Index: 1
+        Item: Love_Guard
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Lab_Staff_Record
+            Amount: 500
+          - Index: 2
+            Item: Erend_Card
+            Amount: 3
+      - Index: 2
+        Item: Improved_Assassin_Mask
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1000
+          - Index: 1
+            Item: Assassin_Mask_
+            Amount: 1
+          - Index: 2
+            Item: Star_Crumb
+            Amount: 500
+      - Index: 3
+        Item: Anubis_Helm
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Sacred_Masque
+            Amount: 1000
+          - Index: 2
+            Item: Mitten_Of_Presbyter
+            Amount: 3
+      - Index: 4
+        Item: Puppy_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1000
+          - Index: 1
+            Item: Fur
+            Amount: 200
+          - Index: 2
+            Item: Ear_Of_Puppy
+            Amount: 5
+      - Index: 5
+        Item: Umbala_Spirit
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Heart_Of_Tree
+            Amount: 850
+          - Index: 2
+            Item: Well_Dried_Bone
+            Amount: 5
+      - Index: 6
+        Item: Whikebain_Ears
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1000
+          - Index: 1
+            Item: Black_Kitty_Doll
+            Amount: 500
+          - Index: 2
+            Item: Cat_Hairband
+            Amount: 1
