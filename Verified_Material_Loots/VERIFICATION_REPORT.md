@@ -379,3 +379,33 @@ All 22 replacement items are:
 - ✓ Pure mob drops (NOT from NPCs/shops/quests)
 - ✓ Drop from 4-11 different mob types each
 - ✓ All mobs have active spawns in Pre-Renewal fields/dungeons
+
+### Spawn Verification (Total mob spawns per item)
+
+| New ID | Item Name | Total Spawns | Top Mob Sources |
+|--------|-----------|--------------|-----------------|
+| 7317 | Rusty Screw | 1,144 | Metaling(395), Venatu(160x4) |
+| 906 | Pointed Scale | 1,956 | Green Plant(597), Yellow Plant(583) |
+| 7312 | Jubilee | 963 | Stapo(413), Metaling(395) |
+| 1033 | Maneater Root | 759 | Geographer(357), Drosera(170) |
+| 972 | Karvodailnirol | 533 | Poison Spore(247), Red Mushroom(156) |
+| 1037 | Dragon Tail | 488 | Petite(200+130), Deleter(60) |
+| 958 | Horrendous Mouth | 486 | Ghoul(261), Requiem(70) |
+| 926 | Snake Scale | 484 | Side Winder(194), Anacondaq(170) |
+| 951 | Fin | 425 | Iara(250), Strouf(50) |
+| 7188 | Brown Root | 422 | Pinguicula(145), Stone Shooter(95) |
+| 7319 | Used Iron Plate | 406 | Remover(120), Pitman(70) |
+| 954 | Shining Scale | 369 | Side Winder(194), Boa(65) |
+| 7345 | Handcuffs | 362 | Cecil Damon(81), Errende Ebecee(63) |
+| 7561 | Glacial Heart | 326 | Siroma(105), Snowier(85) |
+| 7100 | Sharp Leaf | 318 | Pinguicula(145), Dryad(90) |
+| 7201 | Log | 273 | Wood Goblin(96), Stone Shooter(95) |
+| 1096 | Round Shell | 265 | Arclouze(150), Dragon Tail(100) |
+| 924 | Powder of Butterfly | 236 | Creamy(141), Bloody Butterfly(75) |
+| 7347 | Research Chart | 206 | Kavach Icarus(63), Egnigem Cenia(58) |
+| 7567 | Suspicious Hat | 190 | Agav(100), Echio(90) |
+| 7326 | Fluorescent Liquid | 163 | Porcellio(140), Aqua Elemental(20) |
+| 7507 | Solid Iron Piece | 123 | Alicel(34), Aliot(30), Constant(23) |
+
+**Minimum total spawns: 123 (Solid Iron Piece)**
+**All items verified farmable on standard Pre-Renewal rAthena servers.**
