@@ -1,0 +1,172 @@
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Body:
+  - Name: Ellie
+    Map: prt_in
+    X: 42
+    Y: 94
+    Direction: West
+    Sprite: 4_F_STARFISHGIRL
+    Items:
+      - Index: 0
+        Item: c_poring_basket
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 1
+        Item: c_aqua_fin_decoration
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 2
+        Item: greatdevilwing2
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 3
+        Item: C_SantaTeddyBear
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 4
+        Item: c_loli_ruri_moon_b
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 5
+        Item: c_pretty_bear_wh
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 6
+        Item: gold_majestic_gout
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 7
+        Item: Red_Baby_Dragon_LT
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 8
+        Item: Let_It_Snow
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 9
+        Item: C_Vanargandr_Helm_GL
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 10
+        Item: C_Baby_Panda
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 11
+        Item: dancingbutterfly
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 12
+        Item: flowery_vision_th
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 13
+        Item: Larva_Yellow_Mini
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 14
+        Item: c_seyren_mini
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 15
+        Item: c_eremes_scarf_bu
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 16
+        Item: C_Alpha_Long_Pony
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 17
+        Item: C_Deep_You_N
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 18
+        Item: C_Poring_Muffler
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500
+      - Index: 19
+        Item: C_Protect_Cloth_b
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 500

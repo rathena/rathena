@@ -1,0 +1,465 @@
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Body:
+  - Name: Magnus
+    Map: prt_in
+    X: 38
+    Y: 104
+    Direction: East
+    Sprite: 4_M_DWARF
+    Items:
+      - Index: 0
+        Item: Mitra
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Armlet_Of_Prisoner
+            Amount: 1000
+          - Index: 2
+            Item: Magaleta_Card
+            Amount: 1
+      - Index: 1
+        Item: Love_Guard
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Lab_Staff_Record
+            Amount: 500
+          - Index: 2
+            Item: Erend_Card
+            Amount: 3
+      - Index: 2
+        Item: Improved_Assassin_Mask
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1000
+          - Index: 1
+            Item: Assassin_Mask_
+            Amount: 1
+          - Index: 2
+            Item: Star_Crumb
+            Amount: 500
+      - Index: 3
+        Item: Anubis_Helm
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Sacred_Masque
+            Amount: 1000
+          - Index: 2
+            Item: Mitten_Of_Presbyter
+            Amount: 3
+      - Index: 4
+        Item: Puppy_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1000
+          - Index: 1
+            Item: Fur
+            Amount: 200
+          - Index: 2
+            Item: Ear_Of_Puppy
+            Amount: 5
+      - Index: 5
+        Item: Umbala_Spirit
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Heart_Of_Tree
+            Amount: 850
+          - Index: 2
+            Item: Well_Dried_Bone
+            Amount: 5
+      - Index: 6
+        Item: Whikebain_Ears
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1000
+          - Index: 1
+            Item: Black_Kitty_Doll
+            Amount: 500
+          - Index: 2
+            Item: Cat_Hairband
+            Amount: 1
+      - Index: 7
+        Item: Blush_Of_Groom
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Blush
+            Amount: 1
+          - Index: 2
+            Item: Rouge
+            Amount: 15
+      - Index: 8
+        Item: Antique_Pipe
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Smoking_Pipe
+            Amount: 1
+          - Index: 2
+            Item: Matchstick
+            Amount: 15
+      - Index: 9
+        Item: Vanilmirth_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Large_Jellopy
+            Amount: 300
+          - Index: 2
+            Item: Flame_Heart
+            Amount: 50
+      - Index: 10
+        Item: L_Magestic_Goat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Magestic_Goat
+            Amount: 1
+          - Index: 2
+            Item: Magestic_Goat_
+            Amount: 1
+      - Index: 11
+        Item: Filir_Wing
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Red_Feather
+            Amount: 50
+          - Index: 2
+            Item: Blue_Feather
+            Amount: 50
+      - Index: 12
+        Item: Chick_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1200
+          - Index: 1
+            Item: Feather_Of_Birds
+            Amount: 500
+          - Index: 2
+            Item: Egg_Shell
+            Amount: 1
+          - Index: 3
+            Item: Side_Winder_Card
+            Amount: 1
+      - Index: 13
+        Item: Rainbow_Scarf
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1200
+          - Index: 1
+            Item: Red_Feather
+            Amount: 25
+          - Index: 2
+            Item: Blue_Feather
+            Amount: 25
+          - Index: 3
+            Item: Soft_Silk_Cloth
+            Amount: 500
+      - Index: 14
+        Item: Gang_Scarf
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1200
+          - Index: 1
+            Item: Scarlet_Dyestuffs
+            Amount: 20
+          - Index: 2
+            Item: Ganster_Mask
+            Amount: 10
+      - Index: 15
+        Item: Evil's_Bone_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 2000
+          - Index: 1
+            Item: Clattering_Skull
+            Amount: 200
+          - Index: 2
+            Item: Ice_Scale
+            Amount: 1
+          - Index: 3
+            Item: Ice_Heart
+            Amount: 500
+      - Index: 16
+        Item: L_Orc_Hero_Helm
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 2000
+          - Index: 1
+            Item: Voucher_Of_Orcish_Hero
+            Amount: 100
+          - Index: 2
+            Item: Gold
+            Amount: 20
+      - Index: 17
+        Item: Little_Angel_Doll
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 2000
+          - Index: 1
+            Item: Red_Feather
+            Amount: 100
+          - Index: 2
+            Item: Fur
+            Amount: 100
+      - Index: 18
+        Item: Fish_In_Mouth
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1000
+          - Index: 1
+            Item: Lip_Of_Ancient_Fish
+            Amount: 300
+          - Index: 2
+            Item: Mistic_Frozen
+            Amount: 25
+          - Index: 3
+            Item: Rough_Wind
+            Amount: 25
+      - Index: 19
+        Item: Alice_Doll
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 2000
+          - Index: 1
+            Item: Alice's_Apron
+            Amount: 500
+          - Index: 2
+            Item: Sway_Apron
+            Amount: 10
+          - Index: 3
+            Item: Marionette_Doll
+            Amount: 1
+          - Index: 4
+            Item: Hydra_Card
+            Amount: 1
+      - Index: 20
+        Item: Claris_Doll_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 2000
+          - Index: 1
+            Item: Alice's_Apron
+            Amount: 500
+          - Index: 2
+            Item: Sway_Apron
+            Amount: 10
+          - Index: 3
+            Item: Marionette_Doll
+            Amount: 1
+          - Index: 4
+            Item: Thara_Frog_Card
+            Amount: 1
+      - Index: 21
+        Item: Deprotai_Doll_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 2000
+          - Index: 1
+            Item: Alice's_Apron
+            Amount: 500
+          - Index: 2
+            Item: Sway_Apron
+            Amount: 10
+          - Index: 3
+            Item: Marionette_Doll
+            Amount: 1
+          - Index: 4
+            Item: Thara_Frog_Card
+            Amount: 1
+      - Index: 22
+        Item: Tayelin_Doll_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 3000
+          - Index: 1
+            Item: Alice's_Apron
+            Amount: 500
+          - Index: 2
+            Item: Sway_Apron
+            Amount: 10
+          - Index: 3
+            Item: Marionette_Doll
+            Amount: 1
+          - Index: 4
+            Item: Thara_Frog_Card
+            Amount: 1
+      - Index: 23
+        Item: Dress_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 2000
+          - Index: 1
+            Item: Magician_Hat
+            Amount: 1
+          - Index: 2
+            Item: Soft_Feather
+            Amount: 500
+      - Index: 24
+        Item: Rideword_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 2000
+          - Index: 1
+            Item: Bookclip_In_Memory
+            Amount: 200
+          - Index: 2
+            Item: Old_Magic_Book
+            Amount: 5
+      - Index: 25
+        Item: Pumpkin_Hat_H
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Pumpkin_Bucket
+            Amount: 1000
+          - Index: 2
+            Item: Four_Leaf_Clover
+            Amount: 25
+      - Index: 26
+        Item: Drooping_White_Kitty
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Drooping_Kitty
+            Amount: 1
+      - Index: 27
+        Item: Lunatic_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Stem
+            Amount: 500
+          - Index: 2
+            Item: Lunatic_Card
+            Amount: 1
+      - Index: 27
+        Item: Balloon_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Bone_Wand
+            Amount: 1
+          - Index: 2
+            Item: Fedora_
+            Amount: 1
+      - Index: 28
+        Item: Lif_Doll_Hat
+        Stock: 0
+        Zeny: 100000
+        RequiredItems:
+          - Index: 0
+            Item: Bronze_Coin_Custom
+            Amount: 1500
+          - Index: 1
+            Item: Sharp_Leaf
+            Amount: 500
+          - Index: 2
+            Item: Marionette_Doll
+            Amount: 1

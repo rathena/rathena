@@ -1,0 +1,108 @@
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Body:
+  - Name: Chrome
+    Map: prt_in
+    X: 39
+    Y: 94
+    Direction: West
+    Sprite: 4_M_BELIEVER02
+    Items:
+      - Index: 0
+        Item: c_leticia_wing
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 1
+        Item: Bow_On_the_Back
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 2
+        Item: C_Baphomet_Scythe
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 3
+        Item: C_Rabbit_Hopping_BL
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 4
+        Item: khalitzburg_kn_helm_bl
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 5
+        Item: C_Choco_Banana
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 6
+        Item: C_B_Shiba_Inu_TW
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 7
+        Item: C_N_Forest_Cat
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 8
+        Item: c_wanderer_grim_reaper
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 9
+        Item: Cons_Of_Darkness
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 10
+        Item: C_Book_Of_Magic
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
+      - Index: 11
+        Item: C_Cat_Footprints
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Silver_Coin_Custom
+            Amount: 500
