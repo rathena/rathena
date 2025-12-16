@@ -1,0 +1,40 @@
+#==============================================================
+# Custom Barter Database - Madame
+#==============================================================
+
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Body:
+  - Name: Jimmy
+    Map: lhz_dun04
+    X: 145
+    Y: 276
+    Direction: East
+    Sprite: 4_M_HEINRICH
+    Items:
+      - Index: 0
+        Item: Enriched_Oridecon
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Particles_Of_Energy4
+            Amount: 450
+      - Index: 1
+        Item: Enriched_Elunium
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Particles_Of_Energy4
+            Amount: 450
+      - Index: 2
+        Item: Blacksmith_Blessing
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Blood_Thirst
+            Amount: 999

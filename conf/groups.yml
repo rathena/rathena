@@ -53,6 +53,22 @@ Body:
       can_trade: true
       can_party: true
       attendance: true
+      commands: true
+      rates: true
+      showdelay: true
+      mobinfo: true
+      iteminfo: true
+      whodrops: true
+      hominfo: true
+      homstats: true
+      showexp: true
+      showzeny: true
+      whereis: true
+      refresh: true
+      noask: true
+      noks: true
+      autoloot: true
+      autotrade: true
   - Id: 1
     Name: Super Player
     # Can do everything Players can and more
@@ -163,6 +179,7 @@ Body:
       marry: true
       divorce: true
       refreshall: true
+      rates: true
     CharCommands:
       item: true
       zeny: true
@@ -230,7 +247,7 @@ Body:
       command_enable: true
       all_skill: false
       all_equipment: false
-      skill_unconditional: false
+      skill_unconditional: true
       use_check: true
       use_changemaptype: true
       all_commands: true
@@ -241,8 +258,7 @@ Body:
       bypass_max_stat: true
       macro_register: true
       trade_unconditional: true
-      #all_permission: true
-
+      all_permission: true
 Footer:
   Imports:
   - Path: conf/import/groups.yml
