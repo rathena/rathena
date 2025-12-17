@@ -19807,7 +19807,6 @@ int32 clif_skill_itemlistwindow( map_session_data *sd, uint16 skill_id, uint16 s
 	WFIFOHEAD(fd, packet_len(0x7e3));
 	WFIFOW(fd,0) = 0x7e3;
 	WFIFOL(fd,2) = skill_lv;
-	WFIFOL(fd,4) = 0;
 	WFIFOSET(fd, packet_len(0x7e3));
 #endif
 	return 1;
