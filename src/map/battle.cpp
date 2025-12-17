@@ -11250,7 +11250,7 @@ enum damage_lv battle_weapon_attack(block_list* src, block_list* target, t_tick 
  */
 int32 battle_check_undead(int32 race,int32 element)
 {
-	if(battle_config.undead_detect_type == 0) {
+	if(battle_config.undead_detect_type == 0 || battle_config.undead_detect_type == 3) {
 		if(element == ELE_UNDEAD)
 			return 1;
 	}
@@ -11888,7 +11888,7 @@ static const struct _battle_data {
 	{ "battle_log",                         &battle_config.battle_log,                      0,      0,      1,              },
 	{ "etc_log",                            &battle_config.etc_log,                         1,      0,      1,              },
 	{ "save_clothcolor",                    &battle_config.save_clothcolor,                 1,      0,      1,              },
-	{ "undead_detect_type",                 &battle_config.undead_detect_type,              0,      0,      2,              },
+	{ "undead_detect_type",                 &battle_config.undead_detect_type,              0,      0,      3,              },
 	{ "auto_counter_type",                  &battle_config.auto_counter_type,               BL_ALL, BL_NUL, BL_ALL,         },
 	{ "min_hitrate",                        &battle_config.min_hitrate,                     5,      0,      100,            },
 	{ "max_hitrate",                        &battle_config.max_hitrate,                     100,    0,      100,            },
