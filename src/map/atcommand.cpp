@@ -2963,7 +2963,7 @@ ACMD_FUNC(param)
 	if( stat < PARAM_POW ){
 		status = pc_getstat( sd, SP_STR + stat - PARAM_STR );
 	}else{
-		if( !( sd->class_ & JOBL_FOURTH ) ){
+		if( !pc_is_trait_job(sd->class_) ){
 			clif_displaymessage(fd, msg_txt(sd, 797)); // This command is unavailable to non - 4th class.
 			return -1;
 		}
@@ -3089,7 +3089,7 @@ ACMD_FUNC(trait_all) {
 	return -1;
 #endif
 
-	if( !( sd->class_ & JOBL_FOURTH ) ){
+	if( !pc_is_trait_job(sd->class_) ){
 		clif_displaymessage(fd, msg_txt(sd, 797)); // This command is unavailable to non - 4th class.
 		return -1;
 	}
@@ -10951,13 +10951,13 @@ ACMD_FUNC(clonestat) {
 		pc_resetstate(sd);
 		if (pc_has_permission(sd, PC_PERM_BYPASS_STAT_ONCLONE)) {
 			for (i = PARAM_STR; i < PARAM_MAX; i++) {
-				if (i >= PARAM_POW && !(sd->class_ & JOBL_FOURTH))
+				if (i >= PARAM_POW && !pc_is_trait_job(sd->class_))
 					continue;
 				max_status[i] = SHRT_MAX;
 			}
 		} else {
 			for (i = PARAM_STR; i < PARAM_MAX; i++) {
-				if (i >= PARAM_POW && sd->class_ & JOBL_FOURTH)
+				if (i >= PARAM_POW && pc_is_trait_job(sd->class_))
 					continue;
 				max_status[i] = pc_maxparameter(sd, static_cast<e_params>(i));
 			}
@@ -10987,7 +10987,7 @@ ACMD_FUNC(clonestat) {
 			clif_updatestatus(*sd, static_cast<_sp>( SP_USTR + i ) );
 		}
 
-		if (sd->class_ & JOBL_FOURTH) {
+		if (pc_is_trait_job(sd->class_)) {
 			clonestat_check(pow, PARAM_POW);
 			clonestat_check(sta, PARAM_STA);
 			clonestat_check(wis, PARAM_WIS);
