@@ -6637,8 +6637,8 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(100);
 			break;
 		case SS_KAGENOMAI:
-			skillratio += -100 + 400 + 550 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_KAGEGARI ) * 50 * skill_lv;
+			skillratio += -100 + 750 + 900 * skill_lv;
+			skillratio += pc_checkskill( sd, SS_KAGEGARI ) * 70 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			if (wd->miscflag & SKILL_ALTDMG_FLAG)
@@ -6651,11 +6651,11 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(100);
 			break;
 		case SS_FUUMAKOUCHIKU:
-			skillratio += -100 + 600 + 400 * skill_lv;
+			skillratio += -100 + 900 + 1750 * skill_lv;
 			if( wd->miscflag&SKILL_ALTDMG_FLAG ){
 				skillratio += 200;
 			}
-			skillratio += pc_checkskill( sd, SS_FUUMASHOUAKU ) * 30 * skill_lv;
+			skillratio += pc_checkskill( sd, SS_FUUMASHOUAKU ) * 100 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
@@ -6668,20 +6668,20 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio = skillratio * 3 / 10;
 			break;
 		case SS_KUNAIKUSSETSU:
-			skillratio += -100 + 200 + 360 * skill_lv;
+			skillratio += -100 + 250 + 420 * skill_lv;
 			skillratio += pc_checkskill( sd, SS_KUNAIKAITEN ) * 10 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case SS_KUNAIKAITEN:
-			skillratio += -100 + 800 + 700 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_KUNAIWAIKYOKU ) * 70 * skill_lv;
+			skillratio += -100 + 950 + 1050 * skill_lv;
+			skillratio += pc_checkskill( sd, SS_KUNAIWAIKYOKU ) * 100 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
 		case SS_KAGEGISSEN:
-			skillratio += -100 + 1600 + 700 * skill_lv;
-			skillratio += pc_checkskill( sd, SS_KAGENOMAI ) * 100 * skill_lv;
+			skillratio += -100 + 1500 + 950 * skill_lv;
+			skillratio += pc_checkskill( sd, SS_KAGENOMAI ) * 150 * skill_lv;
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			if (wd->miscflag & SKILL_ALTDMG_FLAG)
@@ -9403,7 +9403,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						break;
 					case SS_SEKIENHOU:
-						skillratio += -100 + 850 + 1250 * skill_lv;
+						skillratio += -100 + 600 + 1100 * skill_lv;
 						skillratio += 70 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
 						skillratio += 5 * sstatus->spl;
 
@@ -9414,7 +9414,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						break;
 					case SS_REIKETSUHOU:
-						skillratio += -100 + 250 + 550 * skill_lv;
+						skillratio += -100 + 450 + 950 * skill_lv;
 						skillratio += 40 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
 						skillratio += 5 * sstatus->spl;
 
@@ -9425,7 +9425,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						break;
 					case SS_KINRYUUHOU:
-						skillratio += -100 + 300 + 400 * skill_lv;
+						skillratio += -100 + 800 + 1500 * skill_lv;
 						skillratio += 15 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
 						skillratio += 5 * sstatus->spl;
 
@@ -9441,7 +9441,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						break;
 					case SS_RAIDENPOU:
-						skillratio += -100 + 600 + 1300 * skill_lv;
+						skillratio += -100 + 600 + 1100 * skill_lv;
 						skillratio += 70 * pc_checkskill( sd, SS_ANTENPOU ) * skill_lv;
 						skillratio += 5 * sstatus->spl;
 
