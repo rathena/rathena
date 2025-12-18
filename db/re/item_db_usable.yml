@@ -1609,6 +1609,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      Spirit_Handler: true
       StarGladiator: true
       Summoner: true
       SuperNovice: true
@@ -34401,6 +34402,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      Spirit_Handler: true
       StarGladiator: true
       Summoner: true
       SuperNovice: true
@@ -57059,6 +57061,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      Spirit_Handler: true
       StarGladiator: true
       Summoner: true
       SuperNovice: true
@@ -73742,7 +73745,7 @@ Body:
     Script: |
       laphine_synthesis();
   - Id: 101314
-    AegisName: aegis_101314
+    AegisName: Viva_Adul_Hat_Box
     Name: Helm of Faith Box
     Type: Usable
     Weight: 10
@@ -73770,7 +73773,7 @@ Body:
     Script: |
       getgroupitem(IG_2020_REWARD_BOX);
   - Id: 101322
-    AegisName: aegis_101322
+    AegisName: TH_DF_Special01
     Name: Love Confession Chocolate
     Type: Healing
     Script: |
@@ -73786,7 +73789,7 @@ Body:
       /* TODO : pet 21632; */
       pet;
   - Id: 101336
-    AegisName: aegis_101336
+    AegisName: DF_DEX_Biscuit_Stick
     Name: "[Scroll] DEX Biscuit Stick"
     Type: Usable
     Weight: 10
@@ -73795,7 +73798,7 @@ Body:
       sc_start SC_FOOD_DEX_CASH,1800000,15;
       sc_start SC_HITFOOD,600000,rand(11,33);
   - Id: 101337
-    AegisName: aegis_101337
+    AegisName: DF_VIT_Biscuit_Stick
     Name: "[Scroll] VIT Biscuit Stick"
     Type: Usable
     Weight: 10
@@ -73992,7 +73995,7 @@ Body:
 #   Script: |
 #     /* TODO */
   - Id: 101393
-    AegisName: aegis_101393
+    AegisName: MugwortRiceCake
     Name: Mugwort Rice Cake
     Type: Healing
     Weight: 10
@@ -74000,7 +74003,7 @@ Body:
       percentheal 0,20;
       itemskill "PR_MAGNIFICAT",3;
   - Id: 101394
-    AegisName: aegis_101394
+    AegisName: Dogyeonju
     Name: Azalea Wine
     Type: Healing
     Weight: 10
@@ -74018,7 +74021,7 @@ Body:
     Script: |
       getgroupitem(IG_ENCHANT_TICKET_3);
   - Id: 101404
-    AegisName: aegis_101404
+    AegisName: Fantastic_Exp_Potion
     Name: Fantasy Growth Potion
     Type: Usable
     Weight: 10
@@ -74027,7 +74030,7 @@ Body:
 #   Script: |
 #     /* TODO */
   - Id: 101406
-    AegisName: aegis_101406
+    AegisName: Fantastic_JobExp_Potion
     Name: Fantasy Job Growth Potion
     Type: Usable
     Weight: 10
@@ -74036,7 +74039,7 @@ Body:
 #   Script: |
 #     /* TODO */
   - Id: 101407
-    AegisName: aegis_101407
+    AegisName: Normal_VR_Scroll
     Name: Move Scroll(Convenience)
     Type: Usable
     Weight: 10
@@ -74045,7 +74048,7 @@ Body:
 #   Script: |
 #     /* TODO */
   - Id: 101408
-    AegisName: aegis_101408
+    AegisName: Danger_VR_Scroll
     Name: Move Scroll(Danger Areas)
     Type: Usable
     Weight: 10
@@ -74054,7 +74057,7 @@ Body:
 #   Script: |
 #     /* TODO */
   - Id: 101416
-    AegisName: aegis_101416
+    AegisName: Enchant_Stone_Box27
     Name: Costume Enchant Stone Box 27
     Type: Usable
     Weight: 10
@@ -74563,7 +74566,7 @@ Body:
     Script: |
       getgroupitem(IG_BOOSTER_PACK_250);
   - Id: 101512
-    AegisName: aegis_101512
+    AegisName: Hero_Weapon_Box_TH1
     Name: Ancient Hero Box 1    # !todo check english name
     Type: Usable
     Weight: 200
@@ -74572,7 +74575,7 @@ Body:
     Script: |
       getgroupitem(IG_Ancient_Hero_Box_1);
   - Id: 101513
-    AegisName: aegis_101513
+    AegisName: DF_STR_Biscuit_Stick
     Name: "[Scroll] STR Biscuit Stick"
     Type: Usable
     Weight: 10
@@ -74580,7 +74583,7 @@ Body:
       sc_start SC_FOOD_STR_CASH,1800000,15;
       sc_start SC_ATKPOTION,600000,rand(11,111);
   - Id: 101514
-    AegisName: aegis_101514
+    AegisName: DF_INT_Biscuit_Stick
     Name: "[Scroll] INT Biscuit Stick"
     Type: Usable
     Weight: 10
@@ -75187,7 +75190,7 @@ Body:
     Script: |
       getgroupitem(IG_SHADOW_UP_BOX);
   - Id: 101675
-    AegisName: aegis_101675
+    AegisName: Enchant_Stone_Box28
     Name: Costume Enchant Stone Box 28
     Type: Usable
     Weight: 10
@@ -76124,7 +76127,7 @@ Body:
     Script: |
       getgroupitem(IG_LUXURIOUS_BLUE_BOX);
   - Id: 101876
-    AegisName: aegis_101876
+    AegisName: Enchant_Stone_Box29
     Name: Costume Enchant Stone Box 29
     Type: Usable
     Weight: 10
@@ -76823,7 +76826,7 @@ Body:
     Type: DelayConsume
     Weight: 10
   - Id: 102121
-    AegisName: aegis_102121
+    AegisName: DF_AGI_Biscuit_Stick
     Name: "[Scroll] AGI Biscuit Stick"
     Type: Usable
     Weight: 10
@@ -76893,7 +76896,7 @@ Body:
       sc_start2 SC_M_LIFEPOTION,3600000,-4,3;
       sc_start SC_SPEEDUP0,600000,25;
   - Id: 102193
-    AegisName: aegis_102193
+    AegisName: Enchant_Stone_Box30
     Name: Costume Enchant Stone Box 30
     Type: Usable
     Weight: 10
@@ -76926,12 +76929,12 @@ Body:
     Type: DelayConsume
     Weight: 10
   - Id: 102215
-    AegisName: aegis_102215
+    AegisName: 12_Refine_Cube
     Name: 12 refine selection cube    # !todo check english name
     Type: DelayConsume
     Weight: 10
   - Id: 102216
-    AegisName: aegis_102216
+    AegisName: 11_Refine_Cube
     Name: 11 refine selection cube    # !todo check english name
     Type: DelayConsume
     Weight: 10
@@ -77166,7 +77169,7 @@ Body:
     Script: |
       laphine_synthesis();
   - Id: 102332
-    AegisName: aegis_102332
+    AegisName: Enchant_Stone_Box31
     Name: Costume Enchant Stone Box 31
     Type: Usable
     Weight: 10
@@ -77313,7 +77316,7 @@ Body:
     Script: |
       sc_start SC_INTRAVISION,60000,0;
   - Id: 102413
-    AegisName: aegis_102413
+    AegisName: Hero_Weapon_Box_TH2
     Name: Ancient Hero Box 2
     Type: Usable
     Weight: 200
@@ -77322,7 +77325,7 @@ Body:
     Script: |
       getgroupitem(IG_Ancient_Hero_Box_2);
   - Id: 102414
-    AegisName: aegis_102414
+    AegisName: Hero_Weapon_Box_TH3
     Name: Ancient Hero Box 3
     Type: Usable
     Weight: 200
@@ -77374,7 +77377,7 @@ Body:
     Script: |
       item_reform();
   - Id: 102441
-    AegisName: aegis_102441
+    AegisName: Enchant_Stone_Box32
     Name: Costume Enchant Stone Box 32
     Type: Usable
     Weight: 10
@@ -77831,7 +77834,7 @@ Body:
     Script: |
       getgroupitem(IG_AIRBOAT_ANTIQUITY,true);
   - Id: 102580
-    AegisName: aegis_102580
+    AegisName: C_AB_Hair_Box_TW
     Name: Ponytail Gift Box
     Type: Usable
     Weight: 10
@@ -77854,7 +77857,7 @@ Body:
 #   Script: |
 #     /* TODO */
   - Id: 102605
-    AegisName: aegis_102605
+    AegisName: Enchant_Stone_Box33
     Name: Costume Enchant Stone Box 33
     Type: Usable
     Weight: 10
@@ -78075,7 +78078,7 @@ Body:
     Script: |
       getgroupitem(IG_BL_DEPTH_EV_2);
   - Id: 102723
-    AegisName: aegis_102723
+    AegisName: Beehive_Box
     Name: Beehive Box
     Type: Usable
   - Id: 102732
@@ -86312,7 +86315,7 @@ Body:
     Script: |
       itemheal 2000,0; /* average value */
   - Id: 1100027
-    AegisName: aegis_1100027
+    AegisName: 2501_ev_Matjalal
     Name: Matjalal    # !todo check english name
     Type: Healing
     Flags:

@@ -13,7 +13,7 @@ SkillProvokeSelf::SkillProvokeSelf() : SkillImpl(SM_SELFPROVOKE)
 {
 }
 
-void SkillProvokeSelf::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillProvokeSelf::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const
 {
 	sc_type type = skill_get_sc(getSkillId());
 	status_data *tstatus = status_get_status_data(*bl);
@@ -22,7 +22,6 @@ void SkillProvokeSelf::castendNoDamageId(block_list *src, block_list *bl, uint16
 
 	if (status_has_mode(tstatus, MD_STATUSIMMUNE) || battle_check_undead(tstatus->race, tstatus->def_ele))
 	{
-		map_freeblock_unlock();
 		return;
 	}
 
@@ -31,7 +30,6 @@ void SkillProvokeSelf::castendNoDamageId(block_list *src, block_list *bl, uint16
 	{
 		if (sd)
 			clif_skill_fail(*sd, getSkillId());
-		map_freeblock_unlock();
 		return;
 	}
 	clif_skill_nodamage(src, *bl, SM_PROVOKE, skill_lv, success != 0);

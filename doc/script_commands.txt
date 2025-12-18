@@ -2454,9 +2454,10 @@ an empty string will be returned for CPC_NAME, 0 for other <type>.
 
 ---------------------------------------
 
-*strnpcinfo(<type>)
+*strnpcinfo(<type>{,<npc_id>})
 
-This function will return the various parts of the name of the calling NPC.
+This function will return the various parts of the name of the calling NPC, or, if an
+NPC id is specified, of that npc.
 Whatever it returns is determined by type.
 
  0 - The NPC's display name (visible#hidden)
@@ -2464,6 +2465,7 @@ Whatever it returns is determined by type.
  2 - The hidden part of the NPC's display name
  3 - The NPC's unique name (::name)
  4 - The name of the map the NPC is in.
+ 5 - The path of the NPC file
 
 ---------------------------------------
 
@@ -11229,6 +11231,13 @@ Examples:
 	hateffect HAT_EF_FLUTTER_BUTTERFLY, true, $@mobid; // Enables the hat effect on a spawned mob
 
 Requires client 2015-05-13aRagEXE or newer.
+
+---------------------------------------
+
+*has_hateffect(<hat effect id>{,<GID>});
+
+Returns true if the unit <GID> already has the hat effect enabled, and false otherwise.
+If no GID is specified, the attached unit will be used.
 
 ---------------------------------------
 

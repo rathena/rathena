@@ -639,7 +639,7 @@ Body:
       - Group: 5
         Items:
           - Item: Hero_Weapon_Hammer_6
-  - Item: aegis_102215
+  - Item: 12_Refine_Cube
     Groups:
       - Group: 0
         Items:
@@ -650,7 +650,7 @@ Body:
       - Group: 2
         Items:
           - Item: Geffen_Refine_Cube
-  - Item: aegis_102216
+  - Item: 11_Refine_Cube
     Groups:
       - Group: 0
         Items:
@@ -1095,23 +1095,23 @@ Body:
     Groups:
       - Group: 0
         Items:
-          - Item: aegis_400749
+          - Item: C_Guide_Of_Dead_Cap
       - Group: 1
         Items:
-          - Item: aegis_400760
+          - Item: C_Wedjat
   - Item: Eypgt_Costume_Select2
     Groups:
       - Group: 0
         Items:
-          - Item: aegis_410385
+          - Item: C_Libra_Of_Judgement
       - Group: 1
         Items:
-          - Item: aegis_480523
+          - Item: C_Libra_Wing
   - Item: Eypgt_Costume_Select3
     Groups:
       - Group: 0
         Items:
-          - Item: aegis_420430
+          - Item: C_Medjed_Text
       - Group: 1
         Items:
-          - Item: aegis_420429
+          - Item: C_Guide_Of_Dead_Text

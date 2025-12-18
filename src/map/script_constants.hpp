@@ -249,6 +249,20 @@
 
 	export_constant(JOB_SKY_EMPEROR2);
 
+	export_constant(JOB_RUNE_KNIGHT_2ND);
+	export_constant(JOB_MECHANIC_2ND);
+	export_constant(JOB_GUILLOTINE_CROSS_2ND);
+	export_constant(JOB_WARLOCK_2ND);
+	export_constant(JOB_ARCHBISHOP_2ND);
+	export_constant(JOB_RANGER_2ND);
+	export_constant(JOB_ROYAL_GUARD_2ND);
+	export_constant(JOB_GENETIC_2ND);
+	export_constant(JOB_SHADOW_CHASER_2ND);
+	export_constant(JOB_SORCERER_2ND);
+	export_constant(JOB_SURA_2ND);
+	export_constant(JOB_MINSTREL_2ND);
+	export_constant(JOB_WANDERER_2ND);
+
 	/* EA jobs */
 	export_constant2("EAJL_2_1",JOBL_2_1);
 	export_constant2("EAJL_2_2",JOBL_2_2);
@@ -404,18 +418,13 @@
 	export_constant2("EAJ_SUPER_BABY_E",MAPID_SUPER_BABY_E);
 
 	export_constant2("EAJ_SUMMONER",MAPID_SUMMONER);
-	export_constant2("EAJ_SPIRIT_HANDLER", MAPID_SPIRIT_HANDLER);
 
-	export_constant2("EAJ_HYPER_NOVICE", MAPID_HYPER_NOVICE);
 	export_constant2("EAJ_DRAGON_KNIGHT",MAPID_DRAGON_KNIGHT);
 	export_constant2("EAJ_ARCH_MAGE",MAPID_ARCH_MAGE);
 	export_constant2("EAJ_WINDHAWK",MAPID_WINDHAWK);
 	export_constant2("EAJ_CARDINAL",MAPID_CARDINAL);
 	export_constant2("EAJ_MEISTER",MAPID_MEISTER);
 	export_constant2("EAJ_SHADOW_CROSS",MAPID_SHADOW_CROSS);
-	export_constant2("EAJ_SKY_EMPEROR", MAPID_SKY_EMPEROR);
-	export_constant2("EAJ_NIGHT_WATCH", MAPID_NIGHT_WATCH);
-	export_constant2("EAJ_SHINKIRO_SHIRANUI", MAPID_SHINKIRO_SHIRANUI);
 
 	export_constant2("EAJ_IMPERIAL_GUARD",MAPID_IMPERIAL_GUARD);
 	export_constant2("EAJ_ELEMENTAL_MASTER",MAPID_ELEMENTAL_MASTER);
@@ -423,7 +432,13 @@
 	export_constant2("EAJ_INQUISITOR",MAPID_INQUISITOR);
 	export_constant2("EAJ_BIOLO",MAPID_BIOLO);
 	export_constant2("EAJ_ABYSS_CHASER",MAPID_ABYSS_CHASER);
-	export_constant2("EAJ_SOUL_ASCETIC", MAPID_SOUL_ASCETIC);
+
+	export_constant2("EAJ_SKY_EMPEROR",MAPID_SKY_EMPEROR);
+	export_constant2("EAJ_SOUL_ASCETIC",MAPID_SOUL_ASCETIC);
+	export_constant2("EAJ_SHINKIROSHIRANUI",MAPID_SHINKIROSHIRANUI);
+	export_constant2("EAJ_NIGHT_WATCH",MAPID_NIGHT_WATCH);
+	export_constant2("EAJ_HYPER_NOVICE",MAPID_HYPER_NOVICE);
+	export_constant2("EAJ_SPIRIT_HANDLER",MAPID_SPIRIT_HANDLER);
 
 	/* sex */
 	export_constant(SEX_FEMALE);
@@ -522,6 +537,7 @@
 	export_constant(MF_NOBANK);
 	export_constant(MF_SPECIALPOPUP);
 	export_constant(MF_NOMACROCHECKER);
+	export_constant(MF_INVINCIBLE_TIME);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -1985,6 +2001,11 @@
 	export_constant(SC_CONTENTS_19);
 	export_constant(SC_CONTENTS_20);
 	export_constant(SC_OVERCOMING_CRISIS);
+	export_constant(SC_CHASING);
+	export_constant(SC_FIRE_CHARM_POWER);
+	export_constant(SC_WATER_CHARM_POWER);
+	export_constant(SC_WIND_CHARM_POWER);
+	export_constant(SC_GROUND_CHARM_POWER);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
@@ -8638,6 +8659,15 @@
 	export_constant_npc(JT_4_HM_LOLBBY);
 	export_constant_npc(JT_4_HM_YOBBY);
 	export_constant_npc(JT_4_HM_MUNCH);
+	export_constant_npc(JT_4_F_VACATION_MIRIAM);
+	export_constant_npc(JT_1_CLB_DT_HICCUP);
+	export_constant_npc(JT_1_CLB_DT_ASTRID);
+	export_constant_npc(JT_1_CLB_DT_RUFFNUT);
+	export_constant_npc(JT_1_CLB_DT_TUFFNUT);
+	export_constant_npc(JT_1_CLB_DT_TOOTHLESS);
+	export_constant_npc(JT_1_CLB_DT_STORMFLY);
+	export_constant_npc(JT_1_CLB_DT_BARF_BELCH);
+	export_constant_npc(JT_4_POINT_PURPLE);
 	export_constant_npc(JT_ROZ_MQ_XAVIER);
 	export_constant_npc(JT_ROZ_MQ_MOCLORD);
 	export_constant_npc(JT_ROZ_MQ_SKULD);
@@ -10498,10 +10528,11 @@
 	export_constant(UNT_FIRE_RAIN);
 	export_constant(UNT_CATNIPPOWDER);
 	export_constant(UNT_NYANGGRASS);
+	export_constant(UNT_GROUNDDRIFT_NEUTRAL);
 	export_constant(UNT_CREATINGSTAR);
-	export_constant(UNT_DUMMY_0);
 	export_constant(UNT_RAIN_OF_CRYSTAL);
 	export_constant(UNT_MYSTERY_ILLUSION);
+	export_constant(UNT_SEEDTRAP);
 	export_constant(UNT_STRANTUM_TREMOR);
 	export_constant(UNT_VIOLENT_QUAKE);
 	export_constant(UNT_ALL_BLOOM);
@@ -10518,13 +10549,11 @@
 	export_constant(UNT_LIGHTNING_LAND);
 	export_constant(UNT_VENOM_SWAMP);
 	export_constant(UNT_CONFLAGRATION);
-	export_constant(UNT_DEEPBLINDTRAP);
-	export_constant(UNT_SOLIDTRAP);
-	export_constant(UNT_SWIFTTRAP);
-	export_constant(UNT_FLAMETRAP);
+	export_constant(UNT_CANE_OF_EVIL_EYE);
 	export_constant(UNT_TWINKLING_GALAXY);
 	export_constant(UNT_STAR_CANNON);
 	export_constant(UNT_GRENADES_DROPPING);
+	export_constant(UNT_UNKNOWN_2);
 	export_constant(UNT_FUUMASHOUAKU);
 	export_constant(UNT_MISSION_BOMBARD);
 	export_constant(UNT_TOTEM_OF_TUTELARY);
@@ -10532,14 +10561,22 @@
 	export_constant(UNT_SHINKIROU);
 	export_constant(UNT_JACK_FROST_NOVA);
 	export_constant(UNT_GROUND_GRAVITATION);
-	export_constant(UNT_KUNAIWAIKYOKU);
-	export_constant(UNT_STAR_BURST);
 	export_constant(UNT_KUNAIKAITEN);
+	export_constant(UNT_KUNAIWAIKYOKU);
+	export_constant(UNT_KUNAIKUSSETSU);
+	export_constant(UNT_SEKIENHOU);
+
+	export_constant(UNT_STAR_BURST);
+
+	export_constant(UNT_DEEPBLINDTRAP);
+	export_constant(UNT_SOLIDTRAP);
+	export_constant(UNT_SWIFTTRAP);
+	export_constant(UNT_FLAMETRAP);
+
 	export_constant(UNT_GD_LEADERSHIP);
 	export_constant(UNT_GD_GLORYWOUNDS);
 	export_constant(UNT_GD_SOULCOLD);
 	export_constant(UNT_GD_HAWKEYES);
-	export_constant(UNT_CANE_OF_EVIL_EYE);
 
 	/* battleground info types */
 	export_constant(BG_INFO_ID);

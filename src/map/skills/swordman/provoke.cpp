@@ -13,7 +13,7 @@ SkillProvoke::SkillProvoke() : SkillImpl(SM_PROVOKE)
 {
 }
 
-void SkillProvoke::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const
+void SkillProvoke::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32& flag) const
 {
 	sc_type type = skill_get_sc(getSkillId());
 	status_data *tstatus = status_get_status_data(*bl);
@@ -22,7 +22,6 @@ void SkillProvoke::castendNoDamageId(block_list *src, block_list *bl, uint16 ski
 
 	if (status_has_mode(tstatus, MD_STATUSIMMUNE) || battle_check_undead(tstatus->race, tstatus->def_ele))
 	{
-		map_freeblock_unlock();
 		return;
 	}
 	// Official chance is 70% + 3%*skill_lv + srcBaseLevel% - tarBaseLevel%
@@ -31,7 +30,6 @@ void SkillProvoke::castendNoDamageId(block_list *src, block_list *bl, uint16 ski
 	{
 		if (sd)
 			clif_skill_fail(*sd, getSkillId());
-		map_freeblock_unlock();
 		return;
 	}
 	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, success != 0);
