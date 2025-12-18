@@ -8955,7 +8955,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case AG_ASTRAL_STRIKE:
 						skillratio += -100 + 300 + 1800 * skill_lv + 10 * sstatus->spl;
 						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DRAGON)
-							skillratio += 400 * skill_lv;
+							skillratio += 100 + 300 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case AG_ASTRAL_STRIKE_ATK:
@@ -9128,6 +9128,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_PROCELLA ) ){
 							skillratio += 200 * skill_lv;
+							skillratio += 2 * sstatus->spl;
 						}
 
 						RE_LVL_DMOD(100);
@@ -9138,6 +9139,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 						if( sc && sc->getSCE( SC_SUMMON_ELEMENTAL_SERPENS ) ){
 							skillratio += 200 * skill_lv;
+							skillratio += 2 * sstatus->spl;
 						}
 
 						RE_LVL_DMOD(100);
@@ -9148,6 +9150,7 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_ARDOR ) ){
 							skillratio += 200 * skill_lv;
+							skillratio += 2 * sstatus->spl;
 						}
 
 						RE_LVL_DMOD(100);
