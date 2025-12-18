@@ -29450,7 +29450,7 @@ Body:
     Description: Bind Trap
     MaxLevel: 5
     Type: Misc
-    TargetType: Self
+    TargetType: Ground
     DamageFlags:
       NoDamage: true
     Flags:
