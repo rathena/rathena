@@ -7720,6 +7720,9 @@ Body:
     Name: F Abrasive
     Type: Usable
     Weight: 10
+    Script: |
+      specialeffect2 EF_MAGICALATTHIT;
+      sc_start SC_INCCRI,300000,30;
   - Id: 12459
     AegisName: F_Med_Life_Potion
     Name: F Med Life Potion

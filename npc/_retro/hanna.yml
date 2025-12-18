@@ -1,0 +1,132 @@
+Header:
+  Type: BARTER_DB
+  Version: 2
+
+Body:
+  - Name: Hanna
+    Map: prt_in
+    X: 36
+    Y: 94
+    Direction: West
+    Sprite: 4_F_CHILD
+    Items:
+      - Index: 0
+        Item: Comp_Bubble_Gum_24h
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 100
+      - Index: 1
+        Item: F_Abrasive
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 2
+        Item: Int_Dish10_
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 3
+        Item: Agi_Dish10_
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 4
+        Item: Dex_Dish10_
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 5
+        Item: Luk_Dish10_
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 6
+        Item: Vit_Dish10_
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 7
+        Item: Assumptio_5_Scroll
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 8
+        Item: B_Def_Potion
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 9
+        Item: B_Mdef_Potion
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 10
+        Item: Sleepy_Box
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 11
+        Item: Box_Of_Grudge
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 12
+        Item: Flee_30_Scroll
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 13
+        Item: Enrich_Celermine_Juice
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 1
+      - Index: 14
+        Item: Tyr's_Blessing
+        Stock: 0
+        Zeny: 0
+        RequiredItems:
+          - Index: 0
+            Item: Gold_Coin_Custom
+            Amount: 5
