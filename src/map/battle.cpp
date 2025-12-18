@@ -4393,9 +4393,18 @@ static void battle_calc_skill_base_damage(struct Damage* wd, block_list *src,blo
 				int32 skill;
 
 #ifndef RENEWAL
-				if (sd->bonus.crit_atk_rate && (bflag & BDMG_CRIT)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
-					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
+				if (bflag & BDMG_CRIT) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
+					if (sd->bonus.crit_atk_rate > 0) {
+						ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
+					}
 				}
+				else if (std::shared_ptr<s_skill_db> skill_tmp = skill_db.find(skill_id); skill_id == 0 || skill_tmp != nullptr && !skill_tmp->inf2[INF2_IGNORENONCRITATKBONUS]) {
+					// custom, officially non_crit_atk_rate did not exist on pre-renewal
+					if (sd->bonus.non_crit_atk_rate > 0) {
+						ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.non_crit_atk_rate);
+					}
+				}
+
 				if(sd->status.party_id && (skill=pc_checkskill(sd,TK_POWER)) > 0) {
 					if( (i = party_foreachsamemap(party_sub_count, sd, 0)) > 1 ) { // exclude the player himself [Inkfish]
 						// Reduce count by one (self) [Tydus1]
@@ -7952,6 +7961,9 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 						wd.damage2 += (int64)floor((float)(wd.damage2 * sd->bonus.crit_atk_rate / 100));
 				}
 			}
+			else if (std::shared_ptr<s_skill_db> skill_tmp = skill_db.find(skill_id); skill_id == 0 || skill_tmp != nullptr && !skill_tmp->inf2[INF2_IGNORENONCRITATKBONUS]) {
+				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.non_crit_atk_rate);
+			}
 
 			if (wd.flag & BF_SHORT)
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.short_attack_atk_rate);
@@ -8049,12 +8061,6 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 
 		if (tsd && tsd->bonus.crit_def_rate != 0)
 			ATK_ADDRATE(wd.damage, wd.damage2, -tsd->bonus.crit_def_rate);
-	}
-	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
-		sd != nullptr
-		&& !(wd.type == DMG_CRITICAL || wd.type == DMG_MULTI_HIT_CRITICAL)
-		&& !(skill != nullptr && skill->inf2[INF2_IGNORENORMALATKBONUS])) {
-		ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.normal_atk_rate);
 	}
 #endif
 

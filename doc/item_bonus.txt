@@ -129,7 +129,6 @@ bonus bAtk,n;      			ATK + n (unofficial)
 bonus bAtk2,n;     			ATK2 + n
 bonus bAtkRate,n;  			ATK + n% that won't interfere with Damage modifier and SC_EDP (renewal mode only)
 bonus bWeaponAtkRate,n; 	Weapon ATK + n%
-bonus bNormalAtkRate,n;		Normal ATK + n% (renewal mode only, the damage bonus doesn't increase critical damage)
 bonus bMatk,n;     			Magical attack power + n
 bonus bMatk2,n;     		Magical attack power + n (not visible in status window)
 bonus bMatkRate,n; 			Magical attack power + n%
@@ -203,6 +202,7 @@ bonus bSkillRatio,n;			Adds n to the skillratio of all attacks/skills that use i
 bonus bShortAtkRate,n;			Increases damage of short ranged attacks by n%
 bonus bLongAtkRate,n;     		Increases damage of long ranged attacks by n%
 bonus bCritAtkRate,n;     		Increases critical damage by +n%
+bonus bNonCritAtkRate,n;		Increases non-critical damage by +n%
 bonus bCritDefRate,n;			Decreases critical damage received by n%
 bonus bCriticalDef,n;     		Decreases the chance of being hit by critical hits by n%
 bonus2 bWeaponAtk,w,n;    		Adds n ATK when weapon of type w is equipped

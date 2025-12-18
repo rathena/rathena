@@ -4225,7 +4225,7 @@ Body:
       IsTrap: true
       AlterRangeResearchTrap: true
       IgnoreHovering: true
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       AllowOnWarg: true
     Range: 3
     Hit: Single
@@ -4527,7 +4527,7 @@ Body:
       IsTrap: true
       AlterRangeResearchTrap: true
       IgnoreHovering: true
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       AllowOnWarg: true
     Range: 3
     Hit: Single
@@ -4582,7 +4582,7 @@ Body:
       TargetTrap: true
       AlterRangeResearchTrap: true
       IgnoreHovering: true
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       AllowOnWarg: true
     Range: 3
     Hit: Single
@@ -5297,7 +5297,7 @@ Body:
     DamageFlags:
       IgnoreFlee: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       IsQuest: true
     Range: 7
     Hit: Single
@@ -7065,7 +7065,7 @@ Body:
       IgnoreDefense: true
       SimpleDefense: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -9876,7 +9876,7 @@ Body:
     Type: Weapon
     TargetType: Attack
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
     Range: 9
     Hit: Multi_Hit
     HitCount: 1
@@ -9976,7 +9976,7 @@ Body:
     Flags:
       IgnoreAutoGuard: true
       IgnoreCicada: true
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
     Hit: Single
     HitCount: 1
     Requires:
@@ -10343,7 +10343,7 @@ Body:
       IgnoreFlee: true
       IgnoreDefCard: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
     Range: 9
     Hit: Multi_Hit
     HitCount: 1
@@ -14486,7 +14486,7 @@ Body:
     Flags:
       IgnoreBgReduction: true
       IgnoreGvgReduction: true
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
     Range: 9
     Hit: Single
     HitCount: 1
@@ -15549,7 +15549,7 @@ Body:
     DamageFlags:
       IgnoreFlee: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
     Range: -5
     Hit: Multi_Hit
     HitCount: 1
@@ -18672,7 +18672,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
     Hit: Single
     HitCount: 1
     Knockback: 3
@@ -18872,7 +18872,7 @@ Body:
       IgnoreFlee: true
       SimpleDefense: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       TargetTrap: true
     Range: 9
     Hit: Single
@@ -21833,7 +21833,7 @@ Body:
       IgnoreFlee: true
     Flags:
       AllowOnWarg: true
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       IncreaseDanceWithWugDamage: true
       Toggleable: true
     Hit: Single
@@ -21858,7 +21858,7 @@ Body:
       AllowOnWarg: true
       IgnoreAutoGuard: true
       IgnoreCicada: true
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       IncreaseDanceWithWugDamage: true
     Range: 9
     Hit: Single
@@ -21889,7 +21889,7 @@ Body:
       AlterRangeVulture: true
       IgnoreAutoGuard: true
       IgnoreCicada: true
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       IncreaseDanceWithWugDamage: true
     Range: 9
     Hit: Single
@@ -25058,7 +25058,7 @@ Body:
       Splash: true
       IgnoreFlee: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       TargetTrap: true
     Range: 1
     Hit: Single
@@ -29454,7 +29454,7 @@ Body:
     DamageFlags:
       NoDamage: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
     Range:
       - Level: 1
         Size: 3
@@ -31676,7 +31676,7 @@ Body:
       IgnoreElement: true
       IgnoreFlee: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
     Range: 11
     Hit: Multi_Hit
     HitCount: -10
@@ -32787,7 +32787,7 @@ Body:
       IgnoreFlee: true
       SimpleDefense: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       TargetTrap: true
     Range: 9
     Hit: Single
@@ -36330,7 +36330,7 @@ Body:
     DamageFlags:
       Splash: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
     Range: 3
     Hit: Multi_Hit
     HitCount: 1
@@ -44943,7 +44943,7 @@ Body:
       Splash: true
       IgnoreDefense: true
     Flags:
-      IgnoreNormalAtkBonus: true
+      IgnoreNonCritAtkBonus: true
       TargetTrap: true
     Range: 9
     GiveAp: 2

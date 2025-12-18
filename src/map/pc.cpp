@@ -4281,9 +4281,9 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 			if (sd->state.lr_flag != LR_FLAG_ARROW)	//[Lupus] it should stack, too. As any other cards rate bonuses
 				sd->bonus.long_attack_atk_rate+=val;
 			break;
-		case SP_NORMAL_ATK_RATE:
+		case SP_NON_CRIT_ATK_RATE:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
-				sd->bonus.normal_atk_rate += val;
+				sd->bonus.non_crit_atk_rate += val;
 			break;
 		case SP_BREAK_WEAPON_RATE:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
@@ -10349,7 +10349,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_SKILL_RATIO:     val = sd->bonus.skill_ratio; break;
 		case SP_SHORT_ATK_RATE:  val = sd->bonus.short_attack_atk_rate; break;
 		case SP_LONG_ATK_RATE:   val = sd->bonus.long_attack_atk_rate; break;
-		case SP_NORMAL_ATK_RATE:  val = sd->bonus.normal_atk_rate; break;
+		case SP_NON_CRIT_ATK_RATE:  val = sd->bonus.non_crit_atk_rate; break;
 		case SP_BREAK_WEAPON_RATE: val = sd->bonus.break_weapon_rate; break;
 		case SP_BREAK_ARMOR_RATE: val = sd->bonus.break_armor_rate; break;
 		case SP_ADD_STEAL_RATE:  val = sd->bonus.add_steal_rate; break;
