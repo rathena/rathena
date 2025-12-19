@@ -4398,7 +4398,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, block_list *src,blo
 						ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
 					}
 				}
-				else if (std::shared_ptr<s_skill_db> skill_tmp = skill_db.find(skill_id); skill_id == 0 || skill_tmp != nullptr && !skill_tmp->inf2[INF2_IGNORENONCRITATKBONUS]) {
+				else if (std::shared_ptr<s_skill_db> skill_tmp = skill_db.find(skill_id); skill_tmp == nullptr || !skill_tmp->inf2[INF2_IGNORENONCRITATKBONUS]) {
 					// custom, officially non_crit_atk_rate did not exist on pre-renewal
 					if (sd->bonus.non_crit_atk_rate > 0) {
 						ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.non_crit_atk_rate);
@@ -7961,7 +7961,7 @@ static struct Damage battle_calc_weapon_attack(block_list *src, block_list *targ
 						wd.damage2 += (int64)floor((float)(wd.damage2 * sd->bonus.crit_atk_rate / 100));
 				}
 			}
-			else if (std::shared_ptr<s_skill_db> skill_tmp = skill_db.find(skill_id); skill_id == 0 || skill_tmp != nullptr && !skill_tmp->inf2[INF2_IGNORENONCRITATKBONUS]) {
+			else if (std::shared_ptr<s_skill_db> skill_tmp = skill_db.find(skill_id); skill_tmp == nullptr || !skill_tmp->inf2[INF2_IGNORENONCRITATKBONUS]) {
 				ATK_ADDRATE(wd.damage, wd.damage2, sd->bonus.non_crit_atk_rate);
 			}
 
