@@ -1132,7 +1132,7 @@ Body:
   - Command: reload
     Help: |
       Params: <type>
-      Reload a database or configuration file.
+      Reload a database or a configuration file.
       itemdb               mobdb               skilldb
       atcommand         battleconf          statusdb
       pcdb                  motd                 script
