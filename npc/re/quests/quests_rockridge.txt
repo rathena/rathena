@@ -54,7 +54,9 @@ alberta,240,103,5	script	Karam Pucci#alberta	4_M_SEAMAN,3,3,{
 			mes "Rock Ridge, the land of gold and opportunities!";
 			setquest 7790;// Rock Ridge, Land of Opportunities
 			completequest 7790;// Rock Ridge, Land of Opportunities
-			close;
+			close2;
+			warp "harboro1",70,215;
+			end;
 		}
 		mes "[Karam Pucci]";
 		mes "You look like a capable adventurer.";
@@ -1212,7 +1214,7 @@ har_in01,88,22,6	script	Ivoka Skudi#har02	4_M_EVOKASCUDI,{
 		mes "[Ivoka Skudi]";
 		mes "(Whispering) He's more simpleminded than I thought. Let's go report to the Sheriff.";
 		close2;
-		cloakonnpcself(  "Ivoka Skudi#har02" );
+		cloakonnpcself( "Ivoka Skudi#har02" );
 		end;
 	}
 	end;
@@ -1367,7 +1369,7 @@ rockrdg1,153,303,5	script	Wyatt Warp#revt03	4_M_YATTWARP,{
 		mes "[Wyatt Warp]";
 		mes "Let's go back to my office.";
 		close2;
-		cloakonnpcself(  "Wyatt Warp#revt03" );
+		cloakonnpcself( "Wyatt Warp#revt03" );
 		end;
 	}
 	end;
@@ -2574,7 +2576,7 @@ rockrdg1,286,247,3	script	Suspicious Sand Mound#rremef06	4_ENERGY_RED,15,15,{
 			if (checkquest(16078,HUNTING) < 2) {
 				next;
 				mes "[" + .@name$ + "]";
-				mes "Oh, right?I also need to hunt 30 Coyotes.";
+				mes "Oh, right? I also need to hunt 30 Coyotes.";
 			}
 		}
 		close;
@@ -6387,7 +6389,7 @@ harboro1,156,215,5	script	Innkeeper#rockridge	1_ETC_01,{
 	}
 }
 
-harboro1,228,170,3	script	Wanderer Doram#rkrgtwn	4_DR_STELO,{
+harboro1,228,170,3	script	Wanderer Doram#rkrgtwn	4_DR_STELO,5,5,{
 	mes "[Wanderer Doram]";
 	mes "Boohoo! Where the hell is the sheriff's office? My money! Moneeeyyy!";
 	next;
@@ -6619,9 +6621,9 @@ harboro1,270,252,6	script	Bank Clerk#dy	4_M_MANAGER,{
 		mes "" + strcharinfo(0) + ", right?";
 		next;
 		mes "[Bank Clerk]";
-		mes "You don't have an account with us, but you do have an account under the name of" + strcharinfo(0) + ". Is there anything else I can do for you today?";
+		mes "You don't have an account with us, but you do have an account under the name of " + strcharinfo(0) + ". Is there anything else I can do for you today?";
 		close2;
-		// todoUI bank
+		openbank;
 		end;
 	case 2:
 		emotion ET_SORRY;
