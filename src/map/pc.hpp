@@ -654,6 +654,7 @@ public:
 		int32 magic_damage_return; // AppleGirl Was Here
 		int32 break_weapon_rate,break_armor_rate;
 		int32 crit_atk_rate;
+		int32 non_crit_atk_rate;
 		int32 crit_def_rate;
 		int32 classchange; // [Valaris]
 		int32 speed_rate, speed_add_rate, aspd_add;
