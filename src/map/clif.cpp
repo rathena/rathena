@@ -1178,7 +1178,7 @@ static void clif_set_unit_idle( block_list* bl, bool walking, send_target target
 		p.isBoss = BOSSTYPE_NONE;
 	}
 #endif
-#if PACKETVER >= 20231220
+#if PACKETVER >= 20231220 && !defined(PACKETVER_ZERO)
 	p.body = vd->look[LOOK_BODY2];
 #elif PACKETVER >= 20150513
 	if( vd->look[LOOK_BODY2] > JOB_SECOND_JOB_START && vd->look[LOOK_BODY2] < JOB_SECOND_JOB_END ){
@@ -1427,7 +1427,7 @@ static void clif_set_unit_walking( block_list& bl, map_session_data* tsd, struct
 		p.isBoss = BOSSTYPE_NONE;
 	}
 #endif
-#if PACKETVER >= 20231220
+#if PACKETVER >= 20231220 && !defined(PACKETVER_ZERO)
 	p.body = vd->look[LOOK_BODY2];
 #elif PACKETVER >= 20150513
 	if( vd->look[LOOK_BODY2] > JOB_SECOND_JOB_START && vd->look[LOOK_BODY2] < JOB_SECOND_JOB_END ){
