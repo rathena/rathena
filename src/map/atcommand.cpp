@@ -4339,161 +4339,6 @@ ACMD_FUNC(partyrecall)
  *
  *------------------------------------------*/
 void atcommand_doload();
-ACMD_FUNC(reload) {
-	nullpo_retr(-1, sd);
-
-    if (!message || !*message) {
-        if (const char* help = atcommand_help_string(command); help != nullptr) {
-            clif_displaymessage(fd, help);
-        }
-        return -1;
-    }
-
-	if (strncmp(message, "itemdb", 4) == 0) {
-		itemdb_reload();
-		clif_displaymessage(fd, msg_txt(sd, 97)); // Item database has been reloaded.
-
-	} else if (strncmp(message, "cashdb", 4) == 0) {
-		cashshop_reloaddb();
-		clif_displaymessage(fd, msg_txt(sd, 832)); // Cash shop database has been reloaded.
-
-	} else if (strncmp(message, "mobdb", 3) == 0) {
-		mob_reload();
-		pet_db.reload();
-		hom_reload();
-		mercenary_db.reload();
-		elemental_db.reload();
-		clif_displaymessage(fd, msg_txt(sd, 98)); // Monster database has been reloaded.
-
-	} else if (strncmp(message, "skilldb", 4) == 0) {
-		skill_reload();
-		homunculus_db.reload();
-		clif_displaymessage(fd, msg_txt(sd, 99)); // Skill database has been reloaded.
-
-	} else if (strncmp(message, "atcommand", 4) == 0) {
-		atcommand_doload();
-		pc_groups_reload();
-		clif_displaymessage(fd, msg_txt(sd, 254)); // GM command configuration has been reloaded.
-
-	} else if (strncmp(message, "battleconf", 3) == 0) {
-		struct Battle_Config prev_config;
-		memcpy(&prev_config, &battle_config, sizeof(prev_config));
-
-		battle_config_read(BATTLE_CONF_FILENAME);
-
-		if (prev_config.item_rate_mvp          != battle_config.item_rate_mvp          ||
-		    prev_config.item_rate_common       != battle_config.item_rate_common       ||
-		    prev_config.item_rate_common_boss  != battle_config.item_rate_common_boss  ||
-		    prev_config.item_rate_common_mvp   != battle_config.item_rate_common_mvp   ||
-		    prev_config.item_rate_card         != battle_config.item_rate_card         ||
-		    prev_config.item_rate_card_boss    != battle_config.item_rate_card_boss    ||
-		    prev_config.item_rate_card_mvp     != battle_config.item_rate_card_mvp     ||
-		    prev_config.item_rate_equip        != battle_config.item_rate_equip        ||
-		    prev_config.item_rate_equip_boss   != battle_config.item_rate_equip_boss   ||
-		    prev_config.item_rate_equip_mvp    != battle_config.item_rate_equip_mvp    ||
-		    prev_config.item_rate_heal         != battle_config.item_rate_heal         ||
-		    prev_config.item_rate_heal_boss    != battle_config.item_rate_heal_boss    ||
-		    prev_config.item_rate_heal_mvp     != battle_config.item_rate_heal_mvp     ||
-		    prev_config.item_rate_use          != battle_config.item_rate_use          ||
-		    prev_config.item_rate_use_boss     != battle_config.item_rate_use_boss     ||
-		    prev_config.item_rate_use_mvp      != battle_config.item_rate_use_mvp      ||
-		    prev_config.item_rate_treasure     != battle_config.item_rate_treasure     ||
-		    prev_config.item_rate_adddrop      != battle_config.item_rate_adddrop      ||
-		    prev_config.logarithmic_drops      != battle_config.logarithmic_drops      ||
-		    prev_config.item_drop_common_min   != battle_config.item_drop_common_min   ||
-		    prev_config.item_drop_common_max   != battle_config.item_drop_common_max   ||
-		    prev_config.item_drop_card_min     != battle_config.item_drop_card_min     ||
-		    prev_config.item_drop_card_max     != battle_config.item_drop_card_max     ||
-		    prev_config.item_drop_equip_min    != battle_config.item_drop_equip_min    ||
-		    prev_config.item_drop_equip_max    != battle_config.item_drop_equip_max    ||
-		    prev_config.item_drop_mvp_min      != battle_config.item_drop_mvp_min      ||
-		    prev_config.item_drop_mvp_max      != battle_config.item_drop_mvp_max      ||
-		    prev_config.item_drop_heal_min     != battle_config.item_drop_heal_min     ||
-		    prev_config.item_drop_heal_max     != battle_config.item_drop_heal_max     ||
-		    prev_config.item_drop_use_min      != battle_config.item_drop_use_min      ||
-		    prev_config.item_drop_use_max      != battle_config.item_drop_use_max      ||
-		    prev_config.item_drop_treasure_min != battle_config.item_drop_treasure_min ||
-		    prev_config.item_drop_treasure_max != battle_config.item_drop_treasure_max ||
-		    prev_config.base_exp_rate          != battle_config.base_exp_rate          ||
-		    prev_config.job_exp_rate           != battle_config.job_exp_rate)
-		{
-			// Exp or Drop rates changed.
-			mob_reload(); // Needed as well so rate changes take effect.
-		}
-
-		clif_displaymessage(fd, msg_txt(sd, 255)); // Battle configuration has been reloaded.
-
-	} else if (strncmp(message, "statusdb", 3) == 0) {
-		status_readdb(true);
-		clif_displaymessage(fd, msg_txt(sd, 256)); // Status database has been reloaded.
-
-	} else if (strncmp(message, "pcdb", 2) == 0) {
-		pc_readdb();
-		clif_displaymessage(fd, msg_txt(sd, 257)); // Player database has been reloaded.
-
-	} else if (strncmp(message, "motd", 4) == 0) {
-		pc_read_motd();
-		clif_displaymessage(fd, msg_txt(sd, 268)); // Reloaded the Message of the Day.
-
-	} else if (strncmp(message, "script", 3) == 0) {
-		struct s_mapiterator *iter;
-		map_session_data *pl_sd;
-
-		iter = mapit_getallusers();
-		for (pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter)) {
-			pc_close_npc(pl_sd, 1);
-			clif_cutin(*pl_sd, "", 255);
-			pl_sd->state.block_action &= ~(PCBLOCK_ALL ^ PCBLOCK_IMMUNE);
-			bg_queue_leave(pl_sd);
-		}
-		mapit_free(iter);
-
-		for (auto &bg : bg_queues) {
-			for (auto &bg_sd : bg->teama_members)
-				bg_team_leave(bg_sd, false, false); // Kick Team A from battlegrounds
-			for (auto &bg_sd : bg->teamb_members)
-				bg_team_leave(bg_sd, false, false); // Kick Team B from battlegrounds
-			bg_queue_clear(bg, true);
-		}
-
-		flush_fifos();
-		map_reloadnpc(true); // reload config files seeking for npcs
-		script_reload();
-		npc_reload();
-
-		clif_displaymessage(fd, msg_txt(sd, 100)); // Scripts have been reloaded.
-
-	} else if (strncmp(message, "msgconf", 3) == 0) {
-		map_msg_reload();
-		clif_displaymessage(fd, msg_txt(sd, 463)); // Message configuration has been reloaded.
-
-	} else if (strncmp(message, "questdb", 3) == 0) {
-		if (quest_db.reload())
-			clif_displaymessage(fd, msg_txt(sd, 1377)); // Quest database has been reloaded.
-
-	} else if (strncmp(message, "instancedb", 4) == 0) {
-		if (instance_db.reload())
-			clif_displaymessage(fd, msg_txt(sd, 516)); // Instance database has been reloaded.
-
-	} else if (strncmp(message, "achievementdb", 4) == 0) {
-		achievement_db_reload();
-		clif_displaymessage(fd, msg_txt(sd, 771)); // Achievement database has been reloaded.
-
-	} else if (strncmp(message, "attendancedb", 4) == 0) {
-		attendance_db.reload();
-		clif_displaymessage(fd, msg_txt(sd, 795)); // Attendance database has been reloaded.
-
-	} else if (strncmp(message, "barterdb", 4) == 0) {
-		barter_db.reload();
-		clif_displaymessage(fd, msg_txt(sd, 830)); // Barter database has been reloaded.
-
-	} else if (strncmp(message, "logconf", 3) == 0) {
-		log_config_read(LOG_CONF_NAME);
-		clif_displaymessage(fd, msg_txt(sd, 1536)); // Log configuration has been reloaded.
-	}
-
-	return 0;
-}
 
 ACMD_FUNC(reloadcashdb){
 	nullpo_retr(-1, sd);
@@ -4721,6 +4566,69 @@ ACMD_FUNC(reloadlogconf){
 	clif_displaymessage(fd, msg_txt(sd,1536)); // Log configuration has been reloaded.
 
 	return 0;
+}
+
+ACMD_FUNC( reload ){
+	static const struct{
+		const char* type;
+		int32 (*func)( const int32 fd, map_session_data* sd, const char* command, const char* message );
+	} types[] = {
+		{ "achievementdb", atcommand_reloadachievementdb },
+		{ "atcommand", atcommand_reloadatcommand },
+		{ "attendancedb", atcommand_reloadattendancedb },
+		{ "barterdb", atcommand_reloadbarterdb },
+		{ "battleconf", atcommand_reloadbattleconf },
+		{ "cashdb", atcommand_reloadcashdb },
+		{ "instancedb", atcommand_reloadinstancedb },
+		{ "itemdb", atcommand_reloaditemdb },
+		{ "logconf", atcommand_reloadlogconf },
+		{ "mobdb", atcommand_reloadmobdb },
+		{ "motd", atcommand_reloadmotd },
+		{ "msgconf", atcommand_reloadmsgconf },
+		{ "pcdb", atcommand_reloadpcdb },
+		{ "script", atcommand_reloadscript },
+		{ "skilldb", atcommand_reloadskilldb },
+		{ "statusdb", atcommand_reloadstatusdb },
+		{ "questdb", atcommand_reloadquestdb },
+	};
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message) {
+		if (const char* help = atcommand_help_string(command); help != nullptr) {
+			clif_displaymessage(fd, help);
+		}
+		return -1;
+	}
+
+	// Case insensitive full string search
+	for( const auto& type : types ){
+		if( strcasecmp( type.type, message ) == 0 ){
+			if( pc_can_use_command( sd, type.type, COMMAND_ATCOMMAND ) ){
+				return type.func( fd, sd, type.type, "" );
+			}else{
+				return -1;
+			}
+		}
+	}
+
+	// Case sensitive partial string search
+	for( const auto& type : types ){
+		if( strstr( type.type, message ) != nullptr ){
+			if( pc_can_use_command( sd, type.type, COMMAND_ATCOMMAND ) ){
+				return type.func( fd, sd, type.type, "" );
+			}else{
+				return -1;
+			}
+		}
+	}
+
+	// No valid type specified
+	if( const char* help = atcommand_help_string( command ); help != nullptr ){
+		clif_displaymessage( fd, help );
+	}
+
+	return -1;
 }
 
 /*==========================================
