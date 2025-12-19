@@ -60360,7 +60360,7 @@ Body:
           - aegis_314663   # 314663
           - aegis_314664   # 314664
     Script: |
-      bonus bNormalAtkRate,6;
+      bonus bNonCritAtkRate,6;
   - Combos:
       - Combo:
           - aegis_314665   # 314665
@@ -60558,7 +60558,7 @@ Body:
          }
       }
       bonus2 bSkillAtk,"IG_OVERSLASH",25;
-      bonus bNormalAtkRate,15;
+      bonus bNonCritAtkRate,15;
   - Combos:
       - Combo:
           - Frontier_R_Crown_MT   # 400977
@@ -60572,7 +60572,7 @@ Body:
          }
       }
       bonus2 bSkillAtk,"MT_RUSH_STRIKE",25;
-      bonus bNormalAtkRate,15;
+      bonus bNonCritAtkRate,15;
   - Combos:
       - Combo:
           - Frontier_R_Crown_BO   # 400978
@@ -60581,11 +60581,11 @@ Body:
       .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
       if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A) {
          if (getskilllv("BO_EXPLOSIVE_POWDER")>=5) {
-            autobonus3 "{ .@r_weapon = getequiprefinerycnt(EQI_HAND_R); bonus bNormalAtkRate,2*.@r_weapon; bonus bShortAtkRate,8*.@r_weapon; bonus4 bAutoSpellOnSkill,\"BO_DUST_EXPLOSION\",\"BO_EXPLOSIVE_POWDER\",5,1000; }",1000,150000,"BO_RESEARCHREPORT";
+            autobonus3 "{ .@r_weapon = getequiprefinerycnt(EQI_HAND_R); bonus bNonCritAtkRate,2*.@r_weapon; bonus bShortAtkRate,8*.@r_weapon; bonus4 bAutoSpellOnSkill,\"BO_DUST_EXPLOSION\",\"BO_EXPLOSIVE_POWDER\",5,1000; }",1000,150000,"BO_RESEARCHREPORT";
          }
       }
       bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",25;
-      bonus bNormalAtkRate,15;
+      bonus bNonCritAtkRate,15;
   - Combos:
       - Combo:
           - Frontier_R_Crown_SHC   # 400979
@@ -60694,9 +60694,9 @@ Body:
       .@r_weapon = getequiprefinerycnt(EQI_HAND_R);
       .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+.@r_weapon;
       if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A) {
-         autobonus3 "{ .@r_weapon = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillCooldown,\"WM_SEVERE_RAINSTORM\",-1500; bonus2 bSkillAtk,\"WM_SEVERE_RAINSTORM_MELEE\",150+75*.@r_weapon; bonus2 bSkillAtk,\"TR_ROSEBLOSSOM\",20; bonus2 bSkillAtk,\"TR_ROSEBLOSSOM_ATK\",20; bonus bNormalAtkRate,2*.@r_weapon; bonus bLongAtkRate,8*.@r_weapon; }",1000,15000,"TR_MYSTIC_SYMPHONY";
+         autobonus3 "{ .@r_weapon = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillCooldown,\"WM_SEVERE_RAINSTORM\",-1500; bonus2 bSkillAtk,\"WM_SEVERE_RAINSTORM_MELEE\",150+75*.@r_weapon; bonus2 bSkillAtk,\"TR_ROSEBLOSSOM\",20; bonus2 bSkillAtk,\"TR_ROSEBLOSSOM_ATK\",20; bonus bNonCritAtkRate,2*.@r_weapon; bonus bLongAtkRate,8*.@r_weapon; }",1000,15000,"TR_MYSTIC_SYMPHONY";
       }
-      bonus bNormalAtkRate,15;
+      bonus bNonCritAtkRate,15;
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM",25;
       bonus2 bSkillAtk,"TR_ROSEBLOSSOM_ATK",25;
   - Combos:
@@ -60707,10 +60707,10 @@ Body:
       .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
       if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A) {
          if (getskilllv("SS_FUUMAKOUCHIKU")>=10) {
-            autobonus3 "{ .@r_weapon = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillCooldown,\"KO_HUUMARANKA\",-2500; bonus2 bSkillAtk,\"SS_FUUMAKOUCHIKU\",25; bonus2 bSkillAtk,\"KO_HUUMARANKA\",125+85*.@r_weapon; bonus bNormalAtkRate,2*.@r_weapon; bonus bLongAtkRate,8*.@r_weapon; bonus4 bAutoSpellOnSkill,\"KO_HUUMARANKA\",\"SS_FUUMAKOUCHIKU\",10,1000; }",1000,90000,"SS_HITOUAKUMU";
+            autobonus3 "{ .@r_weapon = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillCooldown,\"KO_HUUMARANKA\",-2500; bonus2 bSkillAtk,\"SS_FUUMAKOUCHIKU\",25; bonus2 bSkillAtk,\"KO_HUUMARANKA\",125+85*.@r_weapon; bonus bNonCritAtkRate,2*.@r_weapon; bonus bLongAtkRate,8*.@r_weapon; bonus4 bAutoSpellOnSkill,\"KO_HUUMARANKA\",\"SS_FUUMAKOUCHIKU\",10,1000; }",1000,90000,"SS_HITOUAKUMU";
          }
       }
-      bonus bNormalAtkRate,15;
+      bonus bNonCritAtkRate,15;
       bonus2 bSkillAtk,"SS_KUNAIKUSSETSU",25;
   - Combos:
       - Combo:
@@ -60800,7 +60800,7 @@ Body:
           - Sky_Rune_Crown_ABC   # 401059
           - Sky_Chasing_Dagger   # 510199
     Script: |
-      bonus bNormalAtkRate,15;
+      bonus bNonCritAtkRate,15;
       bonus2 bSkillAtk,"ABC_DEFT_STAB",45;
       .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
       if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getskilllv("ABC_DEFT_STAB")>=10) {

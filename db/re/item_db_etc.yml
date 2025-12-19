@@ -89937,9 +89937,9 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,30;
       if (.@r>=7) {
-         bonus bNormalAtkRate,3;
+         bonus bNonCritAtkRate,3;
          if (.@r>=9) {
-            bonus bNormalAtkRate,4;
+            bonus bNonCritAtkRate,4;
          }
       }
   - Id: 314231
@@ -89954,16 +89954,16 @@ Body:
       bonus bAtkRate,2;
       bonus bBaseAtk,25;
       if (.@r>=7) {
-         bonus bNormalAtkRate,5;
+         bonus bNonCritAtkRate,5;
          if (.@r>=9) {
             bonus bShortAtkRate,10;
             bonus bLongAtkRate,10;
          }
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus bNormalAtkRate,5;
+         bonus bNonCritAtkRate,5;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus bNormalAtkRate,5;
+            bonus bNonCritAtkRate,5;
          }
       }
   - Id: 314232
@@ -89974,20 +89974,20 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
-      bonus bNormalAtkRate,3;
+      bonus bNonCritAtkRate,3;
       bonus bShortAtkRate,3;
       bonus bLongAtkRate,3;
       if (.@r>=7) {
-         bonus bNormalAtkRate,5;
+         bonus bNonCritAtkRate,5;
          if (.@r>=9) {
-            bonus bNormalAtkRate,3;
+            bonus bNonCritAtkRate,3;
          }
       }
       if (.@g>=ENCHANTGRADE_D) {
-         bonus bNormalAtkRate,4;
+         bonus bNonCritAtkRate,4;
          bonus bPerfectHitAddRate,3;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus bNormalAtkRate,5;
+            bonus bNonCritAtkRate,5;
             bonus bPerfectHitAddRate,5;
          }
       }
@@ -90001,9 +90001,9 @@ Body:
       bonus bPAtk,3;
       bonus bHit,25;
       if (.@g>=ENCHANTGRADE_D) {
-         bonus bNormalAtkRate,5;
+         bonus bNonCritAtkRate,5;
          if (.@g>=ENCHANTGRADE_C) {
-            bonus bNormalAtkRate,5;
+            bonus bNonCritAtkRate,5;
             bonus bShortAtkRate,3;
             bonus bLongAtkRate,3;
          }
@@ -90016,7 +90016,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bHit,(.@r/2);
-      bonus bNormalAtkRate,(.@r/3);
+      bonus bNonCritAtkRate,(.@r/3);
       bonus bShortAtkRate,(.@r/3);
   - Id: 314244
     AegisName: T_D_Jewel_POW_2
@@ -90027,7 +90027,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,(.@r/2);
       bonus bHit,3*(.@r/2);
-      bonus bNormalAtkRate,2*(.@r/3);
+      bonus bNonCritAtkRate,2*(.@r/3);
       bonus bShortAtkRate,(.@r/3)+(.@r/5);
   - Id: 314245
     AegisName: T_D_Jewel_POW_3
@@ -90038,7 +90038,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,3*(.@r/2);
       bonus bHit,5*(.@r/2);
-      bonus bNormalAtkRate,3*(.@r/3);
+      bonus bNonCritAtkRate,3*(.@r/3);
       bonus bShortAtkRate,(.@r/3)+(.@r/4);
   - Id: 314246
     AegisName: T_D_Jewel_CON_1
@@ -90048,7 +90048,7 @@ Body:
     Script: |
       .@r = getrefine();
       bonus bHit,(.@r/2);
-      bonus bNormalAtkRate,(.@r/3);
+      bonus bNonCritAtkRate,(.@r/3);
       bonus bLongAtkRate,(.@r/3);
   - Id: 314247
     AegisName: T_D_Jewel_CON_2
@@ -90059,7 +90059,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,(.@r/2);
       bonus bHit,3*(.@r/2);
-      bonus bNormalAtkRate,2*(.@r/3);
+      bonus bNonCritAtkRate,2*(.@r/3);
       bonus bLongAtkRate,(.@r/3)+(.@r/5);
   - Id: 314248
     AegisName: T_D_Jewel_CON_3
@@ -90070,7 +90070,7 @@ Body:
       .@r = getrefine();
       bonus bBaseAtk,3*(.@r/2);
       bonus bHit,5*(.@r/2);
-      bonus bNormalAtkRate,3*(.@r/3);
+      bonus bNonCritAtkRate,3*(.@r/3);
       bonus bLongAtkRate,(.@r/3)+(.@r/4);
   - Id: 314249
     AegisName: Fierce_A_Jewel_1
@@ -90078,7 +90078,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,25;
+      bonus bNonCritAtkRate,25;
       bonus bShortAtkRate,1;
   - Id: 314250
     AegisName: Fierce_A_Jewel_2
@@ -90086,7 +90086,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,40;
+      bonus bNonCritAtkRate,40;
       bonus bShortAtkRate,3;
   - Id: 314251
     AegisName: Fierce_A_Jewel_3
@@ -90094,7 +90094,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,55;
+      bonus bNonCritAtkRate,55;
       bonus bShortAtkRate,4;
   - Id: 314252
     AegisName: Fierce_A_Jewel_4
@@ -90102,7 +90102,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,70;
+      bonus bNonCritAtkRate,70;
       bonus bShortAtkRate,6;
   - Id: 314253
     AegisName: Fierce_A_Jewel_5
@@ -90110,7 +90110,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,85;
+      bonus bNonCritAtkRate,85;
       bonus bShortAtkRate,7;
   - Id: 314254
     AegisName: Fierce_A_Jewel_6
@@ -90118,7 +90118,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,100;
+      bonus bNonCritAtkRate,100;
       bonus bShortAtkRate,9;
   - Id: 314255
     AegisName: Fierce_A_Jewel_7
@@ -90126,7 +90126,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,115;
+      bonus bNonCritAtkRate,115;
       bonus bShortAtkRate,10;
   - Id: 314256
     AegisName: Fierce_A_Jewel_8
@@ -90134,7 +90134,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,130;
+      bonus bNonCritAtkRate,130;
       bonus bShortAtkRate,12;
   - Id: 314257
     AegisName: Fierce_A_Jewel_9
@@ -90142,7 +90142,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,145;
+      bonus bNonCritAtkRate,145;
       bonus bShortAtkRate,13;
   - Id: 314258
     AegisName: Fierce_A_Jewel_10
@@ -90150,7 +90150,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,160;
+      bonus bNonCritAtkRate,160;
       bonus bShortAtkRate,15;
   - Id: 314259
     AegisName: Great_C_Jewel_1
@@ -90158,7 +90158,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,25;
+      bonus bNonCritAtkRate,25;
       bonus bLongAtkRate,1;
   - Id: 314260
     AegisName: Great_C_Jewel_2
@@ -90166,7 +90166,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,40;
+      bonus bNonCritAtkRate,40;
       bonus bLongAtkRate,3;
   - Id: 314261
     AegisName: Great_C_Jewel_3
@@ -90174,7 +90174,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,55;
+      bonus bNonCritAtkRate,55;
       bonus bLongAtkRate,4;
   - Id: 314262
     AegisName: Great_C_Jewel_4
@@ -90182,7 +90182,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,70;
+      bonus bNonCritAtkRate,70;
       bonus bLongAtkRate,6;
   - Id: 314263
     AegisName: Great_C_Jewel_5
@@ -90190,7 +90190,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,85;
+      bonus bNonCritAtkRate,85;
       bonus bLongAtkRate,7;
   - Id: 314264
     AegisName: Great_C_Jewel_6
@@ -90198,7 +90198,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,100;
+      bonus bNonCritAtkRate,100;
       bonus bLongAtkRate,9;
   - Id: 314265
     AegisName: Great_C_Jewel_7
@@ -90206,7 +90206,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,115;
+      bonus bNonCritAtkRate,115;
       bonus bLongAtkRate,10;
   - Id: 314266
     AegisName: Great_C_Jewel_8
@@ -90214,7 +90214,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,130;
+      bonus bNonCritAtkRate,130;
       bonus bLongAtkRate,12;
   - Id: 314267
     AegisName: Great_C_Jewel_9
@@ -90222,7 +90222,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,145;
+      bonus bNonCritAtkRate,145;
       bonus bLongAtkRate,13;
   - Id: 314268
     AegisName: Great_C_Jewel_10
@@ -90230,7 +90230,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,160;
+      bonus bNonCritAtkRate,160;
       bonus bLongAtkRate,15;
   - Id: 314661
     AegisName: aegis_314661
@@ -90238,7 +90238,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,10;
+      bonus bNonCritAtkRate,10;
       bonus bPerfectHitAddRate,5;
       bonus bAtkRate,5;
   - Id: 314662
@@ -90247,28 +90247,28 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,3;
+      bonus bNonCritAtkRate,3;
   - Id: 314663
     AegisName: aegis_314663
     Name: Hit Physical Stone (Middle)    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,3;
+      bonus bNonCritAtkRate,3;
   - Id: 314664
     AegisName: aegis_314664
     Name: Hit Physical Stone (Lower)    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,3;
+      bonus bNonCritAtkRate,3;
   - Id: 314665
     AegisName: aegis_314665
     Name: Hit Physical Stone (Garment)    # !todo check english name
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bNormalAtkRate,20;
+      bonus bNonCritAtkRate,20;
   - Id: 314666
     AegisName: aegis_314666
     Name: Experience Stone (Garment)    # !todo check english name
