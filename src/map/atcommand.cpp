@@ -4339,6 +4339,7 @@ ACMD_FUNC(partyrecall)
  *
  *------------------------------------------*/
 void atcommand_doload();
+
 ACMD_FUNC(reloadcashdb){
 	nullpo_retr(-1, sd);
 
@@ -4565,6 +4566,69 @@ ACMD_FUNC(reloadlogconf){
 	clif_displaymessage(fd, msg_txt(sd,1536)); // Log configuration has been reloaded.
 
 	return 0;
+}
+
+ACMD_FUNC( reload ){
+	static const struct{
+		const char* type;
+		int32 (*func)( const int32 fd, map_session_data* sd, const char* command, const char* message );
+	} types[] = {
+		{ "achievementdb", atcommand_reloadachievementdb },
+		{ "atcommand", atcommand_reloadatcommand },
+		{ "attendancedb", atcommand_reloadattendancedb },
+		{ "barterdb", atcommand_reloadbarterdb },
+		{ "battleconf", atcommand_reloadbattleconf },
+		{ "cashdb", atcommand_reloadcashdb },
+		{ "instancedb", atcommand_reloadinstancedb },
+		{ "itemdb", atcommand_reloaditemdb },
+		{ "logconf", atcommand_reloadlogconf },
+		{ "mobdb", atcommand_reloadmobdb },
+		{ "motd", atcommand_reloadmotd },
+		{ "msgconf", atcommand_reloadmsgconf },
+		{ "pcdb", atcommand_reloadpcdb },
+		{ "script", atcommand_reloadscript },
+		{ "skilldb", atcommand_reloadskilldb },
+		{ "statusdb", atcommand_reloadstatusdb },
+		{ "questdb", atcommand_reloadquestdb },
+	};
+
+	nullpo_retr(-1, sd);
+
+	if (!message || !*message) {
+		if (const char* help = atcommand_help_string(command); help != nullptr) {
+			clif_displaymessage(fd, help);
+		}
+		return -1;
+	}
+
+	// Case insensitive full string search
+	for( const auto& type : types ){
+		if( strcasecmp( type.type, message ) == 0 ){
+			if( pc_can_use_command( sd, type.type, COMMAND_ATCOMMAND ) ){
+				return type.func( fd, sd, type.type, "" );
+			}else{
+				return -1;
+			}
+		}
+	}
+
+	// Case sensitive partial string search
+	for( const auto& type : types ){
+		if( strstr( type.type, message ) != nullptr ){
+			if( pc_can_use_command( sd, type.type, COMMAND_ATCOMMAND ) ){
+				return type.func( fd, sd, type.type, "" );
+			}else{
+				return -1;
+			}
+		}
+	}
+
+	// No valid type specified
+	if( const char* help = atcommand_help_string( command ); help != nullptr ){
+		clif_displaymessage( fd, help );
+	}
+
+	return -1;
 }
 
 /*==========================================
@@ -11519,6 +11583,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(broadcast), // + /b and /nb
 		ACMD_DEF(localbroadcast), // + /lb and /nlb
 		ACMD_DEF(recallall),
+		ACMD_DEFR(reload,ATCMD_NOSCRIPT),
 		ACMD_DEF(reloaditemdb),
 		ACMD_DEF(reloadcashdb),
 		ACMD_DEF(reloadmobdb),
