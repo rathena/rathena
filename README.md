@@ -65,7 +65,7 @@ Database | [MySQL Workbench 5 or newer](http://www.mysql.com/downloads/workbench
 If you're having problems with starting your server, the first thing you should
 do is check what's happening on your consoles. More often that not, all support issues
 can be solved simply by looking at the error messages given. Check out the [wiki](https://github.com/rathena/rathena/wiki)
-or [forums](https://rathena.org/forum) if you need more support on troubleshooting.
+or [forums](https://rathena.org/board) if you need more support on troubleshooting.
 
 ## 4. More Documentation
 rAthena has a large collection of help files and sample NPC scripts located in the /doc/
