@@ -85,7 +85,7 @@ tra_fild01,204,110,2	script	Training Ground Warehouse Soldier#fild01_1	8W_SOLDIE
 		close;
 	}
 	Zeny -= 1000;
-	openstorage;
+	openstorage; // TODO: open correct storage 1-3
 	end;
 }
 tra_fild01,15,110,6	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild01_2	8W_SOLDIER
