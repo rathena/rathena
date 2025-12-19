@@ -3645,7 +3645,7 @@ struct s_item_package_item{
 	uint16 amount;
 	uint16 rentalhours;
 	uint16 refine;
-	uint8 grade;
+	uint16 grade;
 	std::shared_ptr<s_random_opt_group> randomOptionGroup;
 };
 

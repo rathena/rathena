@@ -2879,7 +2879,6 @@ uint64 ItemPackageDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						return 0;
 					}
 
-					// SCRIPT CONSTANT NAME: ENCHANTGRADE_X
 					std::string grade_constant = "ENCHANTGRADE_" + enchantgrade;
 					int64 constant;
 
@@ -2888,11 +2887,11 @@ uint64 ItemPackageDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						constant = ENCHANTGRADE_NONE;
 					}
 
-					package_item->grade = static_cast<uint16>(constant);
+					package_item->grade = static_cast<decltype(package_item->grade)>(constant);
 				}
 				else {
 					if (!package_item_exists) {
-						package_item->grade = static_cast<uint16>(ENCHANTGRADE_NONE);
+						package_item->grade = static_cast<decltype(package_item->grade)>(ENCHANTGRADE_NONE);
 					}
 				}
 
