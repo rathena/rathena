@@ -1325,8 +1325,14 @@ static void clif_spawn_unit( block_list *bl, enum send_target target ){
 		p.isBoss = BOSSTYPE_NONE;
 	}
 #endif
-#if PACKETVER >= 20150513
+#if PACKETVER >= 20231220 && !defined(PACKETVER_ZERO)
 	p.body = vd->look[LOOK_BODY2];
+#elif PACKETVER >= 20150513
+	if( vd->look[LOOK_BODY2] > JOB_SECOND_JOB_START && vd->look[LOOK_BODY2] < JOB_SECOND_JOB_END ){
+		p.body = 1;
+	}else{
+		p.body = 0;
+	}
 #endif
 /* Might be earlier, this is when the named item bug began */
 #if PACKETVER >= 20131223
