@@ -13287,7 +13287,6 @@ BUILDIN_FUNC(getwaitingroomstate)
 		case WIT_EVENTNAME: script_pushstrcopy(st,cd->npc_event);break;
 		case WIT_ISFULL: script_pushint(st,(cd->users >= cd->limit)); break;
 		case WIT_OVERTRIGGER: script_pushint(st,(cd->users >= cd->trigger)); break;
-		default: script_pushint(st,-1); break;
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
