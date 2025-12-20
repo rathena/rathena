@@ -20845,7 +20845,8 @@ void roulette_generate_bonus( map_session_data& sd ){
 void clif_roulette_open( map_session_data* sd ){
 	nullpo_retv( sd );
 
-	roulette_generate_bonus( *sd );
+	if (!sd->roulette.claimPrize)
+		roulette_generate_bonus( *sd );
 
 	struct packet_roulette_open_ack p;
 
@@ -21038,7 +21039,7 @@ void clif_parse_roulette_generate( int32 fd, map_session_data* sd ){
 	}
 
 	// Player has not claimed his prize yet
-	if( sd->roulette.claimPrize ){
+	if( !sd->roulette.stage && sd->roulette.claimPrize ){
 		clif_roulette_getitem( sd );
 	}
 
