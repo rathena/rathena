@@ -81,7 +81,7 @@ tra_fild01,204,110,2	script	Training Ground Warehouse Soldier#fild01_1	8W_SOLDIE
 
 	if (Zeny < 1000) {
 		mes "[Training Ground Warehouse Soldier]";
-		mes "^4d4df 1000 Zeny is required to use the training grounds Storage.^000000";
+		mes "^4d4dff1000 Zeny is required to use the training grounds Storage.^000000";
 		close;
 	}
 	Zeny -= 1000;
@@ -115,13 +115,13 @@ OnStart:
 	.is_moving[.@num] = true;
 	stopnpctimer;
 
-	setarray .@emotions[0], ET_SWEAT, ET_PROFUSELY_SWAT, ET_HUNGRY, ET_OHNO;
-	.@size = getarraysize(.@emotions);
-	emotion .@emotions[.@size];
+	setarray .@emotions[0], ET_SWEAT, ET_PROFUSELY_SWEAT, ET_HUNGRY, ET_OHNO;
+	.@r = rand( getarraysize(.@emotions) );
+	emotion .@emotions[.@r];
 
 	setarray .@speed[0], 300, 400, 500, 600;
-	.@size = getarraysize(.@speed);
-	npcspeed .@speed[.@size];
+	.@r = rand( getarraysize(.@speed) );
+	npcspeed .@speed[.@r];
 
 	getmapxy .@map$,.@x,.@y, BL_NPC;
 	switch( .@num ) {
@@ -156,6 +156,12 @@ OnMoveEnd:
 	end;
 OnTimer30000:
 	donpcevent strnpcinfo(0) + "::OnStart";
+	end;
+
+OnInit:
+	.@num = atoi( charat(strnpcinfo(2), 5) );
+	.sens[.@num] = 1;
+	initnpctimer;
 	end;
 }
 tra_fild02,53,113,2	duplicate(Cleaning Robot#fild01)	Cleaning Robot#fild02	EP17_2_OMEGA_CLEANER
