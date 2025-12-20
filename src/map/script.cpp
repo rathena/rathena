@@ -13244,7 +13244,7 @@ BUILDIN_FUNC(getwaitingroomstate)
 	if( script_hasdata(st,3) )
 		nd = npc_name2id(script_getstr(st, 3));
 	else
-		nd = static_cast<npc_data*>(map_id2bl(st->oid));
+		nd = map_id2nd(st->oid);
 
 	switch(type){
 		case WIT_USERCOUNT:
