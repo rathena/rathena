@@ -428,7 +428,7 @@ enum e_questinfo_markcolor : uint8 {
 	QMARK_MAX
 };
 
-enum waitingroom_info_type{
+enum e_waitingroom_info_type{
 	WIT_USERCOUNT	= 0,
 	WIT_MAXUSERS	= 1,
 	WIT_HASTRIGGER	= 2,
