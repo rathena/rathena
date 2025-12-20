@@ -45710,7 +45710,7 @@ Body:
     Element: Weapon
     GiveAp: 2
     AfterCastActDelay: 500
-    Casttime: 1000
+    CastTime: 1000
     Cooldown: 750
     FixedCastTime: 1000
     Requires:
@@ -46038,7 +46038,7 @@ Body:
       - Level: 5
         Area: 4
     CastCancel: true
-    Casttime: 2000
+    CastTime: 2000
     AfterCastActDelay: 1000
     Cooldown: 400
     FixedCastTime: 1000
