@@ -13256,7 +13256,7 @@ BUILDIN_FUNC(getwaitingroomstate)
 		case WIT_EVENTNAME:
 		case WIT_ISFULL:
 		case WIT_OVERTRIGGER:
-			if(nd == nullptr || (cd=static_cast<chat_data*>(map_id2bl(nd->chat_id))) == nullptr){
+			if(nd == nullptr || (cd=map_id2cd(nd->chat_id)) == nullptr){
 				switch(type){
 					case WIT_TITLE:
 					case WIT_PASSWORD:
