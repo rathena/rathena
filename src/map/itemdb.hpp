@@ -3661,7 +3661,7 @@ struct s_item_package{
 
 class ItemPackageDatabase : public TypesafeYamlDatabase<t_itemid, s_item_package>{
 public:
-	ItemPackageDatabase() : TypesafeYamlDatabase( "ITEM_PACKAGE_DB", 2 ){
+	ItemPackageDatabase() : TypesafeYamlDatabase( "ITEM_PACKAGE_DB", 2, 1 ){
 
 	}
 
