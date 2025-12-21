@@ -2895,24 +2895,14 @@ void pc_clean_skilltree(map_session_data *sd)
 uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 	int32 skill_point = pc_calc_skillpoint( sd );
 
-	if( sd->class_ & MAPID_SUMMONER ){
+	if ((sd->class_ & MAPID_BASEMASK) != MAPID_SUMMONER)
+	{
 		// Novice's skill points for basic skill.
-		std::shared_ptr<s_job_info> summoner_job = job_db.find( JOB_SUMMONER );
-
-		int32 summoner_skills = summoner_job->max_job_level - 1;
-
-		if( skill_point < summoner_skills ){
-			return MAPID_SUMMONER;
-		}
-
-		skill_point -= summoner_skills;
-	}else{
-		// Novice's skill points for basic skill.
-		std::shared_ptr<s_job_info> novice_job = job_db.find( JOB_NOVICE );
+		std::shared_ptr<s_job_info> novice_job = job_db.find(JOB_NOVICE);
 
 		int32 novice_skills = novice_job->max_job_level - 1;
 
-		if( skill_point < novice_skills ){
+		if (skill_point < novice_skills) {
 			return MAPID_NOVICE;
 		}
 
@@ -2942,7 +2932,7 @@ uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 	}
 
 	// 2nd Class Job LV Check
-	if( sd->class_ & JOBL_THIRD && (sd->class_ & MAPID_THIRDMASK) != MAPID_SUPER_NOVICE_E ){
+	if( sd->class_ & JOBL_THIRD ){
 		uint64 mapid_2nd = sd->class_ & MAPID_UPPERMASK;
 		int32 class_2nd = pc_mapid2jobid( mapid_2nd, sd->status.sex );
 
@@ -2965,7 +2955,7 @@ uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 
 	// 3rd Class Job LV Check
 	if( sd->class_ & JOBL_FOURTH ){
-		uint64 mapid_3rd = sd->class_ & MAPID_THIRDMASK | JOBL_THIRD;
+		uint64 mapid_3rd = sd->class_ & MAPID_THIRDMASK;
 		int32 class_3rd = pc_mapid2jobid( mapid_3rd, sd->status.sex );
 
 		if( !sd->change_level_4th ){
@@ -4314,6 +4304,10 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_LONG_ATK_RATE:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)	//[Lupus] it should stack, too. As any other cards rate bonuses
 				sd->bonus.long_attack_atk_rate+=val;
+			break;
+		case SP_NON_CRIT_ATK_RATE:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->bonus.non_crit_atk_rate += val;
 			break;
 		case SP_BREAK_WEAPON_RATE:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
@@ -7651,6 +7645,9 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_MECHANIC:              return MAPID_MECHANIC;
 		case JOB_GUILLOTINE_CROSS:      return MAPID_GUILLOTINE_CROSS;
 		case JOB_STAR_EMPEROR:          return MAPID_STAR_EMPEROR;
+		case JOB_NIGHT_WATCH:           return MAPID_NIGHT_WATCH;
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:              return MAPID_SHINKIROSHIRANUI;
 	//3-2 Jobs
 		case JOB_ROYAL_GUARD:           return MAPID_ROYAL_GUARD;
 		case JOB_SORCERER:              return MAPID_SORCERER;
@@ -7693,9 +7690,6 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_BABY_GENETIC:          return MAPID_BABY_GENETIC;
 		case JOB_BABY_SHADOW_CHASER:    return MAPID_BABY_SHADOW_CHASER;
 		case JOB_BABY_SOUL_REAPER:      return MAPID_BABY_SOUL_REAPER;
-	//Doram Jobs
-		case JOB_SUMMONER:              return MAPID_SUMMONER;
-		case JOB_SPIRIT_HANDLER:        return MAPID_SPIRIT_HANDLER;
 	//4-1 Jobs
 		case JOB_HYPER_NOVICE:          return MAPID_HYPER_NOVICE;
 		case JOB_DRAGON_KNIGHT:         return MAPID_DRAGON_KNIGHT;
@@ -7705,9 +7699,6 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_MEISTER:               return MAPID_MEISTER;
 		case JOB_SHADOW_CROSS:          return MAPID_SHADOW_CROSS;
 		case JOB_SKY_EMPEROR:           return MAPID_SKY_EMPEROR;
-		case JOB_NIGHT_WATCH:           return MAPID_NIGHT_WATCH;
-		case JOB_SHINKIRO:
-		case JOB_SHIRANUI:              return MAPID_SHINKIRO_SHIRANUI;
 	//4-2 Jobs
 		case JOB_IMPERIAL_GUARD:        return MAPID_IMPERIAL_GUARD;
 		case JOB_ELEMENTAL_MASTER:      return MAPID_ELEMENTAL_MASTER;
@@ -7717,7 +7708,9 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_BIOLO:                 return MAPID_BIOLO;
 		case JOB_ABYSS_CHASER:          return MAPID_ABYSS_CHASER;
 		case JOB_SOUL_ASCETIC:          return MAPID_SOUL_ASCETIC;
-	//Unknown
+	//Doram Jobs
+		case JOB_SUMMONER:              return MAPID_SUMMONER;
+		case JOB_SPIRIT_HANDLER:        return MAPID_SPIRIT_HANDLER;
 		default:
 			return -1;
 	}
@@ -7828,6 +7821,8 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_MECHANIC:              return JOB_MECHANIC;
 		case MAPID_GUILLOTINE_CROSS:      return JOB_GUILLOTINE_CROSS;
 		case MAPID_STAR_EMPEROR:          return JOB_STAR_EMPEROR;
+		case MAPID_NIGHT_WATCH:           return JOB_NIGHT_WATCH;
+		case MAPID_SHINKIROSHIRANUI:      return sex?JOB_SHINKIRO:JOB_SHIRANUI;
 	//3-2 Jobs
 		case MAPID_ROYAL_GUARD:           return JOB_ROYAL_GUARD;
 		case MAPID_SORCERER:              return JOB_SORCERER;
@@ -7867,9 +7862,6 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_BABY_GENETIC:          return JOB_BABY_GENETIC;
 		case MAPID_BABY_SHADOW_CHASER:    return JOB_BABY_SHADOW_CHASER;
 		case MAPID_BABY_SOUL_REAPER:      return JOB_BABY_SOUL_REAPER;
-	//Doram Jobs
-		case MAPID_SUMMONER:              return JOB_SUMMONER;
-		case MAPID_SPIRIT_HANDLER:        return JOB_SPIRIT_HANDLER;
 	//4-1 Jobs
 		case MAPID_HYPER_NOVICE:          return JOB_HYPER_NOVICE;
 		case MAPID_DRAGON_KNIGHT:         return JOB_DRAGON_KNIGHT;
@@ -7879,8 +7871,6 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_MEISTER:               return JOB_MEISTER;
 		case MAPID_SHADOW_CROSS:          return JOB_SHADOW_CROSS;
 		case MAPID_SKY_EMPEROR:           return JOB_SKY_EMPEROR;
-		case MAPID_NIGHT_WATCH:           return JOB_NIGHT_WATCH;
-		case MAPID_SHINKIRO_SHIRANUI:     return sex?JOB_SHINKIRO:JOB_SHIRANUI;
 	//4-2 Jobs
 		case MAPID_IMPERIAL_GUARD:        return JOB_IMPERIAL_GUARD;
 		case MAPID_ELEMENTAL_MASTER:      return JOB_ELEMENTAL_MASTER;
@@ -7889,7 +7879,9 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_BIOLO:                 return JOB_BIOLO;
 		case MAPID_ABYSS_CHASER:          return JOB_ABYSS_CHASER;
 		case MAPID_SOUL_ASCETIC:          return JOB_SOUL_ASCETIC;
-	//Unknown
+	//Doram Jobs
+		case MAPID_SUMMONER:              return JOB_SUMMONER;
+		case MAPID_SPIRIT_HANDLER:        return JOB_SPIRIT_HANDLER;
 		default:
 			return -1;
 	}
@@ -9389,7 +9381,7 @@ int32 pc_resetstate(map_session_data* sd)
 		sd->status.status_point += battle_config.transcendent_status_points;
 	}
 
-	if ((sd->class_&JOBL_FOURTH) != 0) {
+	if (pc_is_trait_job(sd->class_)) {
 		sd->status.trait_point += battle_config.trait_points_job_change;
 	}
 
@@ -10381,6 +10373,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_SKILL_RATIO:     val = sd->bonus.skill_ratio; break;
 		case SP_SHORT_ATK_RATE:  val = sd->bonus.short_attack_atk_rate; break;
 		case SP_LONG_ATK_RATE:   val = sd->bonus.long_attack_atk_rate; break;
+		case SP_NON_CRIT_ATK_RATE:  val = sd->bonus.non_crit_atk_rate; break;
 		case SP_BREAK_WEAPON_RATE: val = sd->bonus.break_weapon_rate; break;
 		case SP_BREAK_ARMOR_RATE: val = sd->bonus.break_armor_rate; break;
 		case SP_ADD_STEAL_RATE:  val = sd->bonus.add_steal_rate; break;
@@ -10973,7 +10966,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	clif_updatestatus(*sd,SP_ULUK);
 
 	// Give or reduce trait status points
-	if ((b_class & JOBL_FOURTH) && !(previous_class & JOBL_FOURTH)) {// Change to a 4th job.
+	if (pc_is_trait_job(b_class) && !pc_is_trait_job(previous_class)) {// Change to a trait job.
 		sd->status.trait_point += battle_config.trait_points_job_change;
 		clif_updatestatus(*sd, SP_TRAITPOINT);
 		clif_updatestatus(*sd, SP_UPOW);
@@ -10982,7 +10975,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		clif_updatestatus(*sd, SP_USPL);
 		clif_updatestatus(*sd, SP_UCON);
 		clif_updatestatus(*sd, SP_UCRT);
-	} else if (!(b_class & JOBL_FOURTH) && (previous_class & JOBL_FOURTH)) {// Change to a non 4th job.
+	} else if (!pc_is_trait_job(b_class) && pc_is_trait_job(previous_class)) {// Change to a non trait job.
 		if (sd->status.trait_point < battle_config.trait_points_job_change) {
 			// Player may have already used the trait status points. Force a reset.
 			pc_resetstate(sd);
@@ -14383,7 +14376,7 @@ void JobDatabase::loadingFinished() {
 				break;
 			}
 
-			if( class_ & JOBL_FOURTH ){
+			if( pc_is_trait_job(class_) ){
 				max = battle_config.max_fourth_parameter;
 				break;
 			}
@@ -14415,7 +14408,7 @@ void JobDatabase::loadingFinished() {
 		}
 
 		// Set trait status limit
-		if( class_ & JOBL_FOURTH ){
+		if( pc_is_trait_job(class_) ){
 			max = battle_config.max_trait_parameter;
 		}else{
 			max = 0;

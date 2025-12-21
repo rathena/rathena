@@ -1,0 +1,280 @@
+//===== rAthena Script =======================================
+//= Training Zone
+//===== Description: =========================================
+//= NPCs related to the training zone.
+//===== Changelog: ===========================================
+//= 1.0 Initial Release [Atemo]
+//============================================================
+
+// Storage
+tra_fild01,204,110,2	script	Training Ground Warehouse Soldier#fild01_1	8W_SOLDIER,{
+	mes "[Training Ground Warehouse Soldier]";
+	mes "Would you like to use the Storage? 1000 Zeny is required to use the training ground Storage. Please select the Storage you wish to use.";
+	next;
+	// switch( select( "¢º Storage 1", "¢º Storage 2", "¢º Storage 3", "¢º Guild Storage", "¢º Cancel" ) ) {
+	switch( select( "¢º Storage 1", "", "", "¢º Guild Storage", "¢º Cancel" ) ) {
+	case 1:
+		.@storage_num = 1;
+		break;
+	case 2:
+		.@storage_num = 2;
+		break;
+	case 3:
+		.@storage_num = 3;
+		break;
+	case 4:
+		// copied from npc/re/merchants/guild_warehouse.txt
+		.@guildid = getcharid( 2 );
+
+		if( .@guildid == 0 ){
+			mes "[Training Ground Warehouse Soldier]";
+			mes "The guild storage is only available for guild members.";
+			close;
+		}
+
+		if( getgdskilllv( .@guildid, "GD_GUILD_STORAGE" ) == 0 || !guild_has_permission( GUILD_PERM_STORAGE ) ){
+			mes "[Training Ground Warehouse Soldier]";
+			mes "It seems that it is not yet possible for your guild to use the guild warehouse or you do not have access permissions for the warehouse.";
+			mes "Please come back after checking the guild skill and the permission to access the warehouse.";
+			close;
+		}
+
+		if( Zeny < 1000 ){
+			mes "[Training Ground Warehouse Soldier]";
+			mes "I am afraid you do not have enough money to settle the fee.";
+			mes "The fee is 1000 Zeny.";
+			close;
+		}
+
+		mes "[Training Ground Warehouse Soldier]";
+		mes "I will open the guild storage for you then. Have a memorable time!";
+		close2;
+
+		if( Zeny < 1000 ){
+			// Cheat prevention
+			end;
+		}
+
+		if( guildopenstorage() == GSTORAGE_OPEN ){
+			Zeny -= 1000;
+			end;
+		}else{
+			mes "[Training Ground Warehouse Soldier]";
+			mes "I am afraid someone else is using the warehouse right now.";
+			mes "Please try again after a while.";
+			close;
+		}
+	case 5:
+		end;
+	}
+	// TODO (custom text)
+	if (!callfunc("F_CanOpenStorage")) {
+		mes "[Training Ground Warehouse Soldier]";
+		mes "I'm sorry, but you";
+		mes "need the Novice's";
+		mes "Basic Skill Level 6 to";
+		mes "use the Storage Service.";
+		close2;
+		cutin "",255;
+		end;
+	}
+
+	if (Zeny < 1000) {
+		mes "[Training Ground Warehouse Soldier]";
+		mes "^4d4dff1000 Zeny is required to use the training grounds Storage.^000000";
+		close;
+	}
+	Zeny -= 1000;
+	openstorage; // TODO: open correct storage 1-3
+	end;
+}
+tra_fild01,15,110,6	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild01_2	8W_SOLDIER
+tra_fild01,113,32,0	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild01_3	8W_SOLDIER
+tra_fild01,111,100,4	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild01_4	8W_SOLDIER
+
+tra_fild02,204,110,2	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild02_1	8W_SOLDIER
+tra_fild02,15,110,6	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild02_2	8W_SOLDIER
+tra_fild02,113,32,0	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild02_3	8W_SOLDIER
+tra_fild02,111,100,4	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild02_4	8W_SOLDIER
+
+tra_fild03,204,110,2	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild03_1	8W_SOLDIER
+tra_fild03,15,110,6	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild03_2	8W_SOLDIER
+tra_fild03,113,32,0	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild03_3	8W_SOLDIER
+tra_fild03,111,100,4	duplicate(Training Ground Warehouse Soldier#fild01_1)	Training Ground Warehouse Soldier#fild03_4	8W_SOLDIER
+
+
+// Misc NPCs
+
+// Cleaner
+tra_fild01,142,113,6	script	Cleaning Robot#fild01	EP17_2_OMEGA_CLEANER,{
+OnStart:
+	.@num = atoi( charat(strnpcinfo(2), 5) );
+
+	if (.is_moving[.@num])
+		end;
+	.is_moving[.@num] = true;
+	stopnpctimer;
+
+	setarray .@emotions[0], ET_SWEAT, ET_PROFUSELY_SWEAT, ET_HUNGRY, ET_OHNO;
+	.@r = rand( getarraysize(.@emotions) );
+	emotion .@emotions[.@r];
+
+	setarray .@speed[0], 300, 400, 500, 600;
+	.@r = rand( getarraysize(.@speed) );
+	npcspeed .@speed[.@r];
+
+	getmapxy .@map$,.@x,.@y, BL_NPC;
+	switch( .@num ) {
+	case 1:
+		if (.@x <= 126)
+			.sens[.@num] = 1;
+		else if (.@x >= 198)
+			.sens[.@num] = -1;
+		.@x += 8 * .sens[.@num];
+		break;
+	case 2:
+		if (.@x <= 21)
+			.sens[.@num] = 1;
+		else if (.@x >= 85)
+			.sens[.@num] = -1;
+		.@x += 8 * .sens[.@num];
+		break;
+	case 3:
+		if (.@y <= 33)
+			.sens[.@num] = 1;
+		else if (.@y >= 89)
+			.sens[.@num] = -1;
+		.@y += 8 * .sens[.@num];
+		break;
+	}
+	unitwalk getnpcid(0),.@x,.@y, strnpcinfo(0) + "::OnMoveEnd";
+	end;
+OnMoveEnd:
+	.@num = atoi( charat(strnpcinfo(2), 5) );
+	.is_moving[.@num] = false;
+	initnpctimer;
+	end;
+OnTimer30000:
+	donpcevent strnpcinfo(0) + "::OnStart";
+	end;
+
+OnInit:
+	.@num = atoi( charat(strnpcinfo(2), 5) );
+	.sens[.@num] = 1;
+	initnpctimer;
+	end;
+}
+tra_fild02,53,113,2	duplicate(Cleaning Robot#fild01)	Cleaning Robot#fild02	EP17_2_OMEGA_CLEANER
+tra_fild03,110,57,4	duplicate(Cleaning Robot#fild01)	Cleaning Robot#fild03	EP17_2_OMEGA_CLEANER
+
+
+// Chitchat
+tra_fild01,122,75,6	script	Neighborhood Grandmother#npc02	4_F_JPNOBA,{
+	mes "[Neighborhood Grandmother]";
+	mes "Hohoho- Seeing the young people sweating and working hard makes me feel a bit energized.";
+	next;
+	mes "[Neighborhood Grandmother]";
+	mes "Oh, by the way. Did you know that?";
+	next;
+	mes "[Neighborhood Grandmother]";
+	mes "Dummies in the training grounds that are strong against physical attacks have a sword icon above their heads, and dummies that are strong against magic attacks have a staff icon above their heads.";
+	next;
+	mes "[Neighborhood Grandmother]";
+	mes "If you know this, you'll be able to hit them harder, right?";
+	close;
+}
+
+tra_fild01,34,102,3	script	Cat#npc03	4_CAT_REST,{
+	npctalk "Meow-", "", bc_self;
+	end;
+}
+
+tra_fild01,34,120,3	script	Fress#npc05	4_M_SITDOWN,{
+	mes "[Fress]";
+	mes "If you want to go to Prontera, you can exit through the guards located throughout the area or through the warp portals at 3 and 9 o'clock. Seriously.";
+	close;
+}
+
+tra_fild01,128,142,7	script	Nine Oranges#npc04	4_F_ROGUE,{
+	mes "[Nine Oranges]";
+	mes "Remember! Once you've chosen a name, it's hard to change, so choose wisely.";
+	next;
+	mes "[Nine Oranges]";
+	mes "By the way, where's the Undead Dummy?";
+	next;
+	mes "[Nine Oranges]";
+	mes "My friend said it has a bone icon above its head...? You have to see it first.";
+	close;
+}
+
+tra_fild01,97,64,3	script	Village#npc01	4_M_CHN8GUEK,{
+	mes "[Village ]";
+	mes "Hi! The weather is really nice, isn't it? I came to check out the new training grounds.";
+	next;
+	mes "[Village ]";
+	mes "The old training grounds weren't bad, but they were actually renting space that beginners had been using for a long time, so there were some inconveniences.";
+	next;
+	mes "[Village ]";
+	mes "But they're building such a spacious and nice new training ground. It seems like they're quite financially sound these days!";
+	close;
+}
+
+tra_fild02,101,90,5	script	Jar Cat#npc09	4_CAT_SAILOR5,{
+	mes "[Jar Cat]";
+	mes "Is this your first time at the training grounds? I'll explain myself, as a veteran.";
+	next;
+	mes "[Jar Cat]";
+	mes "There are three training grounds: the basic training ground, the 1/10 training ground, and the 1/100 training ground. I'll leave the differences between each training ground for you to discover for yourself.";
+	next;
+	mes "[Jar Cat]";
+	mes "Oh, right! To move to another training ground, you can use the warp portals at 3 o'clock and 9 o'clock. Remember!";
+	close;
+}
+
+tra_fild02,166,46,3	script	Little One#npc06	4_M_KID2,{
+	mes "[Little One]";
+	mes "Dad told me! The Dummys with staff icons above their heads are strong against magic!";
+	next;
+	mes "[Little One]";
+	mes "So... if you can defeat those Dummys with magic, you're truly strong, right?!";
+	close;
+}
+
+tra_fild02,129,93,6	script	Kekekekereurur#npc10	4_GEFFEN_02,{
+	mes "[Kekekekereurur]";
+	mes "They say training with the Dummys with cat icons above them will help you fight Doram in PvP.";
+	next;
+	mes "[Kekekekereurur]";
+	mes "I'm definitely not practicing here after getting beat up by a passing Doram. Remember!";
+	close;
+}
+
+tra_fild03,98,46,7	script	Lumberjack#npc13	4_M_NOV_HUNT,{
+	mes "[Lumberjack]";
+	mes "Whoosh- Cha-Whoosh- Cha-";
+	close;
+}
+
+tra_fild03,53,140,5	script	Dong#npc15	4_M_CACTUSMAN1,{
+	mes "[Dong]";
+	mes "Aaaah- Stop! Stop! I'm not a monster. Don't attack me.";
+	next;
+	mes "[Dong]";
+	mes "Whew- Thank you. Some people often mistake me for the monster Mukka, but I'm a cactus from a place called RockRidge.";
+	next;
+	mes "[Dong]";
+	mes "If you visit RockRidge, you can meet our living, breathing Cacti, the Cactus. Come visit. Hahaha.";
+	close;
+}
+
+tra_fild03,92,108,7	script	Cat#npc12	4_CAT_REST,{
+	npctalk "Gororong-", "", bc_self;
+	end;
+}
+
+tra_fild03,180,102,4	script	Coco#npc14	4_COCO,{
+	emotion ET_QUESTION;
+	mes "[Coco]";
+	mes "?";
+	close;
+}
