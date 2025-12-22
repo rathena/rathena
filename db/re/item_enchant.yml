@@ -36323,6 +36323,14 @@ Body:
       Sky_Rune_Crown_IG: true
       Sky_Rune_Crown_ABC: true
       Sky_Rune_Crown_SH: true
+      Stardust_Crown_SC: true
+      Stardust_Crown_VI: true
+      Sky_Rune_Crown_MS: true
+      Sky_Rune_Crown_WH: true
+      Sky_Rune_Crown_HN: true
+      Sky_Rune_Crown_CD: true
+      Sky_Rune_Crown_IQ: true
+      Sky_Rune_Crown_SKE: true
     Reset:
       Chance: 100000
       Materials:
