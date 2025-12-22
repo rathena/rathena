@@ -182,7 +182,9 @@ int32 logchrif_send_accdata(int32 fd, uint32 aid) {
 		char_vip = login_config.vip_sys.char_increase;
 		if( acc.vip_time > time(nullptr) ) {
 			isvip = true;
-			char_slots += char_vip;
+			if (char_slots <= login_config.char_per_account) {
+				char_slots += char_vip;
+			}
 		}
 #endif
 	}
