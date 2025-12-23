@@ -25048,6 +25048,7 @@ void clif_parse_itempackage_select( int32 fd, map_session_data* sd ){
 		item.nameid = entry.second->item_id;
 		item.identify = 1;
 		item.refine = (char)entry.second->refine;
+		item.enchantgrade = static_cast<uint8>(entry.second->grade);
 
 		if( entry.second->rentalhours ){
 			item.expire_time = (uint32)( time( nullptr ) + entry.second->rentalhours * 3600 );

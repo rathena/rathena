@@ -2872,6 +2872,29 @@ uint64 ItemPackageDatabase::parseBodyNode( const ryml::NodeRef& node ){
 					}
 				}
 
+				if (this->nodeExists(itemNode, "Grade")) {
+					std::string enchantgrade;
+
+					if (!this->asString(itemNode, "Grade", enchantgrade)) {
+						return 0;
+					}
+
+					std::string grade_constant = "ENCHANTGRADE_" + enchantgrade;
+					int64 constant;
+
+					if (!script_get_constant(grade_constant.c_str(), &constant) || constant < ENCHANTGRADE_NONE ||	constant > MAX_ENCHANTGRADE) {
+						this->invalidWarning(itemNode["Grade"], "Invalid enchantgrade %s, defaulting to None.\n", enchantgrade.c_str());
+						constant = ENCHANTGRADE_NONE;
+					}
+
+					package_item->grade = static_cast<decltype(package_item->grade)>(constant);
+				}
+				else {
+					if (!package_item_exists) {
+						package_item->grade = static_cast<decltype(package_item->grade)>(ENCHANTGRADE_NONE);
+					}
+				}
+
 				if( !package_item_exists ){
 					group->items[package_item->item_id] = package_item;
 				}
