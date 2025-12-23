@@ -136,6 +136,7 @@ lhz_d_n2	mapflag	nowarpto
 un_bk_q	mapflag	nowarpto
 un_myst	mapflag	nowarpto
 1@mcd	mapflag	nowarpto
+1@ffp	mapflag	nowarpto
 
 //============================================================
 // Infinite Space
