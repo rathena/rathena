@@ -9474,7 +9474,7 @@ ACMD_FUNC(request)
  *------------------------------------------*/
 ACMD_FUNC(feelreset)
 {
-	if ((sd->class_&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
+	if ((sd->class_&MAPID_SECONDMASK) != MAPID_STAR_GLADIATOR) {
 		clif_displaymessage(sd->fd,msg_txt(sd,35));	// You can't use this command with this class.
 		return -1;
 	}
@@ -9490,7 +9490,7 @@ ACMD_FUNC(feelreset)
  *------------------------------------------*/
 ACMD_FUNC(hatereset)
 {
-	if ((sd->class_&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
+	if ((sd->class_&MAPID_SECONDMASK) != MAPID_STAR_GLADIATOR) {
 		clif_displaymessage(sd->fd,msg_txt(sd,35));	// You can't use this command with this class.
 		return -1;
 	}

@@ -1733,10 +1733,35 @@ int16 pc_get_itemgroup_bonus_group(map_session_data* sd, uint16 group_id, std::v
 
 bool pc_is_same_equip_index(enum equip_index eqi, int16 *equip_index, int16 index);
 /// Check if player is Taekwon Ranker and the level is >= 90 (battle_config.taekwon_ranker_min_lv)
-#define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
+#define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_SECONDMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
 
-/// Check if player is a trait job.
-#define pc_is_trait_job(class_) (((class_)&JOBL_FOURTH) || ((class_)&MAPID_THIRDMASK) == MAPID_NIGHT_WATCH || ((class_)&MAPID_THIRDMASK) == MAPID_SHINKIROSHIRANUI || ((class_)&MAPID_UPPERMASK) == MAPID_SPIRIT_HANDLER)
+/// Checks if the player is a primary 3rd job or higher.
+#define pc_is_primary_third(class_) (\
+	((class_&MAPID_THIRDMASK) >= MAPID_RUNE_KNIGHT && (class_&MAPID_THIRDMASK) <= MAPID_GUILLOTINE_CROSS) || \
+	((class_&MAPID_THIRDMASK) >= MAPID_ROYAL_GUARD && (class_&MAPID_THIRDMASK) <= MAPID_SHADOW_CHASER))
+
+/// Checks if the player is a primary 4th job or higher.
+#define pc_is_primary_fourth(class_) (\
+	((class_&MAPID_FOURTHMASK) >= MAPID_DRAGON_KNIGHT && (class_&MAPID_FOURTHMASK) <= MAPID_SHADOW_CROSS) || \
+	((class_&MAPID_FOURTHMASK) >= MAPID_IMPERIAL_GUARD && (class_&MAPID_FOURTHMASK) <= MAPID_ABYSS_CHASER))
+
+/// Checks if the player is a 1st upper expanded job or higher.
+#define pc_is_upper_expanded_first(class_) (\
+	(class_&MAPID_THIRDMASK) == MAPID_SUPER_NOVICE_E || (class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || \
+	(class_&MAPID_THIRDMASK) == MAPID_SOUL_REAPER || (class_&MAPID_SECONDMASK) == MAPID_REBELLION || \
+	(class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO || (class_&MAPID_FIRSTMASK) == MAPID_SUMMONER)
+
+/// Checks if the player is a 2nd upper expanded job or higher.
+#define pc_is_upper_expanded_second(class_) (\
+	(class_&MAPID_FOURTHMASK) == MAPID_HYPER_NOVICE || (class_&MAPID_FOURTHMASK) == MAPID_SKY_EMPEROR || \
+	(class_&MAPID_FOURTHMASK) == MAPID_SOUL_ASCETIC || (class_&MAPID_THIRDMASK) == MAPID_NIGHT_WATCH || \
+	(class_&MAPID_THIRDMASK) == MAPID_SHINKIROSHIRANUI || (class_&MAPID_SECONDMASK) == MAPID_SPIRIT_HANDLER)
+
+/// Checks if the player is a renewal era job or higher. (Primary 3rd / 1st Upper Expanded)
+#define pc_is_renewal_job (class_) (pc_is_primary_third(class_) || pc_is_upper_expanded_first(class_))
+
+/// Checks if the player is a trait era job or higher. (Primary 4th / 2nd Upper Expanded)
+#define pc_is_trait_job(class_) (pc_is_primary_fourth(class_) || pc_is_upper_expanded_second(class_))
 
 TIMER_FUNC(pc_autotrade_timer);
 
