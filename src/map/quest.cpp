@@ -895,7 +895,7 @@ int32 quest_update_status(map_session_data *sd, int32 quest_id, e_quest_state st
  *              1 if the quest's timeout has expired
  *              0 otherwise
  */
-int32 quest_check(map_session_data *sd, int32 quest_id, e_quest_check_type type)
+int32 quest_check( const map_session_data* sd, int32 quest_id, e_quest_check_type type )
 {
 	int32 i;
 

@@ -515,7 +515,7 @@ int32 skill_get_inf( uint16 skill_id );
 int32 skill_get_ele( uint16 skill_id , uint16 skill_lv );
 int32 skill_get_max( uint16 skill_id );
 int32 skill_get_range( uint16 skill_id , uint16 skill_lv );
-int32 skill_get_range2(block_list *bl, uint16 skill_id, uint16 skill_lv, bool isServer);
+int32 skill_get_range2(const block_list* bl, uint16 skill_id, uint16 skill_lv, bool isServer);
 int32 skill_get_splash( uint16 skill_id , uint16 skill_lv );
 int32 skill_get_num( uint16 skill_id ,uint16 skill_lv );
 int32 skill_get_cast( uint16 skill_id ,uint16 skill_lv );
@@ -2819,7 +2819,7 @@ extern ReadingSpellbookDatabase reading_spellbook_db;
 
 void skill_spellbook(map_session_data &sd, t_itemid nameid);
 
-int32 skill_block_check(block_list *bl, enum sc_type type, uint16 skill_id);
+int32 skill_block_check(const block_list* bl, enum sc_type type, uint16 skill_id);
 
 struct s_skill_magicmushroom_db {
 	uint16 skill_id;

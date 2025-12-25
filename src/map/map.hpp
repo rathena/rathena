@@ -58,7 +58,7 @@ struct map_data *map_getmapdata(int16 m);
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
 int32 map_msg_config_read(const char *cfgName,int32 lang);
-const char* map_msg_txt(map_session_data *sd,int32 msg_number);
+const char* map_msg_txt(const map_session_data* sd,int32 msg_number);
 void map_do_final_msg(void);
 void map_msg_reload(void);
 
@@ -929,7 +929,7 @@ extern bool agit3_flag;
  * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool mapdata_flag_vs(struct map_data *mapdata) {
+inline bool mapdata_flag_vs(const map_data* mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -974,7 +974,7 @@ inline bool mapdata_flag_gvg(struct map_data *mapdata) {
  * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool mapdata_flag_gvg2(struct map_data *mapdata) {
+inline bool mapdata_flag_gvg2(const map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -989,7 +989,7 @@ inline bool mapdata_flag_gvg2(struct map_data *mapdata) {
  * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool mapdata_flag_ks(struct map_data *mapdata) {
+inline bool mapdata_flag_ks(const map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -1145,15 +1145,15 @@ int32 map_freeblock_unlock(void);
 int32 map_addblock(block_list* bl);
 int32 map_delblock(block_list* bl);
 int32 map_moveblock(block_list *, int32, int32, t_tick);
-int32 map_foreachinrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 type, ...);
-int32 map_foreachinallrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 type, ...);
-int32 map_foreachinshootrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 type, ...);
+int32 map_foreachinrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 type, ...);
+int32 map_foreachinallrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 type, ...);
+int32 map_foreachinshootrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 type, ...);
 int32 map_foreachinarea(int32 (*func)(block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...);
 int32 map_foreachinallarea(int32 (*func)(block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...);
 int32 map_foreachinshootarea(int32 (*func)(block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...);
-int32 map_forcountinrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 count, int32 type, ...);
+int32 map_forcountinrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 count, int32 type, ...);
 int32 map_forcountinarea(int32 (*func)(block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 count, int32 type, ...);
-int32 map_foreachinmovearea(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int16 dx, int16 dy, int32 type, ...);
+int32 map_foreachinmovearea(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int16 dx, int16 dy, int32 type, ...);
 int32 map_foreachincell(int32 (*func)(block_list*,va_list), int16 m, int16 x, int16 y, int32 type, ...);
 int32 map_foreachinpath(int32 (*func)(block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int32 length, int32 type, ...);
 int32 map_foreachindir(int32 (*func)(block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int32 length, int32 offset, int32 type, ...);
@@ -1246,9 +1246,9 @@ bool                    mapit_exists(struct s_mapiterator* mapit);
 #define mapit_geteachiddb() mapit_alloc(MAPIT_NORMAL,BL_ALL)
 
 int32 map_check_dir(int32 s_dir,int32 t_dir);
-uint8 map_calc_dir(block_list *src,int16 x,int16 y);
+uint8 map_calc_dir(const block_list* src,int16 x,int16 y);
 uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir);
-int32 map_random_dir(block_list *bl, int16 *x, int16 *y); // [Skotlex]
+int32 map_random_dir(const block_list* bl, int16 *x, int16 *y); // [Skotlex]
 
 int32 cleanup_sub(block_list *bl, va_list ap);
 
@@ -1266,10 +1266,10 @@ void map_removemobs(int16 m); // [Wizputer]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, union u_mapflag_args *args);
-void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
+void map_skill_damage_add(map_data* m, uint16 skill_id, union u_mapflag_args *args);
+void map_skill_duration_add(map_data* mapd, uint16 skill_id, uint16 per);
 
-enum e_mapflag map_getmapflag_by_name(char* name);
+enum e_mapflag map_getmapflag_by_name(const char* name);
 bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
 int32 map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args);
 bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);

@@ -322,7 +322,7 @@ PlayerGroupDatabase player_group_db;
  * @param command Command name without @/# and params
  * @param type enum AtCommanndType { COMMAND_ATCOMMAND = 1, COMMAND_CHARCOMMAND = 2 }
  */
-bool s_player_group::can_use_command( const std::string& command, AtCommandType type ){
+bool s_player_group::can_use_command( const std::string& command, AtCommandType type ) const{
 	if( this->has_permission( PC_PERM_USE_ALL_COMMANDS ) ){
 		return true;
 	}
@@ -365,14 +365,14 @@ void pc_group_pc_load(map_session_data * sd) {
  * Checks if player group has a permission
  * @param permission permission to check
  */
-bool s_player_group::has_permission( e_pc_permission permission ){
+bool s_player_group::has_permission( e_pc_permission permission ) const{
 	return this->permissions.test( permission );
 }
 
 /**
  * Checks commands used by player group should be logged
  */
-bool s_player_group::should_log_commands(){
+bool s_player_group::should_log_commands() const{
 	return this->log_commands;
 }
 

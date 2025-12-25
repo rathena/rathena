@@ -1189,7 +1189,7 @@ status_change::status_change(){
 	this->lastStatus = { SC_NONE, nullptr };
 }
 
-bool status_change::hasSCE( enum sc_type type ){
+bool status_change::hasSCE( enum sc_type type ) const{
 	return this->getSCE( type ) != nullptr;
 }
 
@@ -1209,8 +1209,16 @@ status_change_entry* status_change::getSCE( enum sc_type type ){
 	return this->lastStatus.second;
 }
 
+const status_change_entry* status_change::getSCE( sc_type type) const{
+	return const_cast<status_change*>(this)->getSCE(type);
+}
+
 status_change_entry* status_change::getSCE( uint32 type ){
 	return this->getSCE( static_cast<sc_type>( type ) );
+}
+
+const status_change_entry* status_change::getSCE( uint32 type) const{
+	return const_cast<status_change*>(this)->getSCE(type);
 }
 
 status_change_entry* status_change::createSCE( enum sc_type type ){
@@ -1232,7 +1240,7 @@ void status_change::deleteSCE(enum sc_type type) {
 	this->lastStatus.second = nullptr;
 }
 
-bool status_change::empty(){
+bool status_change::empty() const{
 	return this->data.empty();
 }
 
@@ -1240,11 +1248,11 @@ size_t status_change::size(){
 	return this->data.size();
 }
 
-std::unordered_map<enum sc_type, status_change_entry>::const_iterator status_change::begin(){
+std::unordered_map<enum sc_type, status_change_entry>::const_iterator status_change::begin() const{
 	return this->data.begin();
 }
 
-std::unordered_map<enum sc_type, status_change_entry>::const_iterator status_change::end(){
+std::unordered_map<enum sc_type, status_change_entry>::const_iterator status_change::end() const{
 	return this->data.end();
 }
 
@@ -2029,8 +2037,8 @@ int32 status_revive(block_list *bl, unsigned char per_hp, unsigned char per_sp, 
  * @return src can use skill (1) or cannot use skill (0)
  * @author [Skotlex]
  */
-bool status_check_skilluse(block_list *src, block_list *target, uint16 skill_id, int32 flag) {
-	status_data* status;
+bool status_check_skilluse(const block_list* src, const block_list* target, uint16 skill_id, int32 flag) {
+	const status_data* status;
 	int32 hide_flag;
 
 	if (src) {
@@ -2041,8 +2049,8 @@ bool status_check_skilluse(block_list *src, block_list *target, uint16 skill_id,
 		status = &dummy_status;
 	}
 
-	status_change *sc = status_get_sc(src);
-	status_change *tsc = status_get_sc(target);
+	const status_change *sc = status_get_sc(src);
+	const status_change *tsc = status_get_sc(target);
 
 	if (!skill_id) { // Normal attack checks.
 		if (sc && sc->cant.attack)
@@ -2281,23 +2289,23 @@ bool status_check_skilluse(block_list *src, block_list *target, uint16 skill_id,
  * @return src can see (true) or target is invisible (false)
  * @author [Skotlex]
  */
-bool status_check_visibility(block_list* src, block_list* target, bool checkblind)
+bool status_check_visibility(const block_list* src, const block_list* target, bool checkblind)
 {
 	int32 view_range;
-	status_change* tsc = status_get_sc(target);
+	const status_change* tsc = status_get_sc(target);
 	switch (src->type) {
 		case BL_MOB:
-			view_range = ((TBL_MOB*)src)->db->range3;
+			view_range = static_cast<const mob_data*>(src)->db->range3;
 			break;
 		case BL_PET:
-			view_range = ((TBL_PET*)src)->db->range2;
+			view_range = static_cast<const pet_data*>(src)->db->range2;
 			break;
 		default:
 			view_range = AREA_SIZE;
 	}
 
 	if (checkblind) {
-		status_change* sc = status_get_sc(src);
+		const status_change* sc = status_get_sc(src);
 		if (sc != nullptr && sc->getSCE(SC_BLIND) != nullptr)
 			view_range = 1;
 	}
@@ -2314,7 +2322,7 @@ bool status_check_visibility(block_list* src, block_list* target, bool checkblin
 
 		switch (target->type) {	// Check for chase-walk/hiding/cloaking opponents.
 			case BL_PC: {
-					map_session_data *tsd = (TBL_PC*)target;
+					const map_session_data* tsd = static_cast<const map_session_data*>(target);
 
 					if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD) || tsc->getSCE(SC_SUHIDE)) && !is_boss && (tsd->special_state.perfect_hiding || !is_detector))
 						return false;
@@ -2413,7 +2421,7 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
  * @param status: Object status
  * @return base attack
  */
-uint16 status_base_atk(const block_list *bl, const struct status_data *status, int32 level)
+uint16 status_base_atk(const block_list* bl, const struct status_data *status, int32 level)
 {
 	int32 flag = 0, str, dex, dstr;
 
@@ -2494,21 +2502,20 @@ uint16 status_base_atk(const block_list *bl, const struct status_data *status, i
  * @param status: Player status
  * @return weapon attack
  */
-uint32 status_weapon_atk(weapon_atk &wa)
-{
+uint32 status_weapon_atk( const weapon_atk& wa ){
 	return wa.atk + wa.atk2;
 }
 #endif
 
 #ifndef RENEWAL
-uint16 status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
-uint16 status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
+uint16 status_base_matk_min( const status_data* status ) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
+uint16 status_base_matk_max( const status_data* status ) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
 #else
 /*
 * Calculates minimum attack variance 80% from db's ATK1 for non BL_PC
 * status->batk (base attack) will be added in battle_calc_base_damage
 */
-uint16 status_base_atk_min(block_list *bl, const struct status_data* status, int32 level)
+uint16 status_base_atk_min( const block_list* bl, const status_data* status, int32 level )
 {
 	switch (bl->type) {
 		case BL_PET:
@@ -2527,7 +2534,7 @@ uint16 status_base_atk_min(block_list *bl, const struct status_data* status, int
 * Calculates maximum attack variance 120% from db's ATK1 for non BL_PC
 * status->batk (base attack) will be added in battle_calc_base_damage
 */
-uint16 status_base_atk_max(block_list *bl, const struct status_data* status, int32 level)
+uint16 status_base_atk_max( const block_list* bl, const status_data* status, int32 level )
 {
 	switch (bl->type) {
 		case BL_PET:
@@ -2545,7 +2552,7 @@ uint16 status_base_atk_max(block_list *bl, const struct status_data* status, int
 /*
 * Calculates minimum magic attack
 */
-uint16 status_base_matk_min(block_list *bl, const struct status_data* status, int32 level)
+uint16 status_base_matk_min( const block_list* bl, const status_data* status, int32 level )
 {
 	switch (bl->type) {
 		case BL_PET:
@@ -2564,7 +2571,7 @@ uint16 status_base_matk_min(block_list *bl, const struct status_data* status, in
 /*
 * Calculates maximum magic attack
 */
-uint16 status_base_matk_max(block_list *bl, const struct status_data* status, int32 level)
+uint16 status_base_matk_max( const block_list* bl, const status_data* status, int32 level )
 {
 	switch (bl->type) {
 		case BL_PET:
@@ -8821,7 +8828,7 @@ static unsigned char status_calc_element_lv(block_list *bl, status_change *sc, i
  * @param element: Object's current attack element
  * @return new attack element
  */
-unsigned char status_calc_attack_element(block_list *bl, status_change *sc, int32 element)
+unsigned char status_calc_attack_element(const block_list* bl, const status_change *sc, int32 element)
 {
 	if(sc == nullptr || sc->empty())
 		return cap_value(element, 0, UCHAR_MAX);
@@ -8906,10 +8913,10 @@ void status_calc_slave_mode(mob_data& md)
  * @param bl: Object whose name to get [PC|MOB|PET|HOM|NPC]
  * @return name or "Unknown" if any other bl->type than noted above
  */
-const char* status_get_name( block_list& bl ){
+const char* status_get_name( const block_list& bl ){
 	switch( bl.type ){
 		case BL_PC: {
-				map_session_data& sd = reinterpret_cast<map_session_data&>( bl );
+				const map_session_data& sd = static_cast<const map_session_data&>(bl);
 
 				if( sd.fakename[0] != '\0' ){
 					return sd.fakename;
@@ -8919,24 +8926,24 @@ const char* status_get_name( block_list& bl ){
 			} break;
 
 		case BL_MOB:
-			return reinterpret_cast<mob_data&>( bl ).name;
+			return static_cast<const mob_data&>( bl ).name;
 
 		case BL_PET:
-			return reinterpret_cast<pet_data&>( bl ).pet.name;
+			return static_cast<const pet_data&>( bl ).pet.name;
 
 		case BL_HOM:
-			return reinterpret_cast<homun_data&>( bl ).homunculus.name;
+			return static_cast<const homun_data&>( bl ).homunculus.name;
 
 		case BL_MER:
 			// They only have database names which are global, not specific to GID.
-			return reinterpret_cast<s_mercenary_data&>( bl ).db->name.c_str();
+			return static_cast<const s_mercenary_data&>( bl ).db->name.c_str();
 
 		case BL_NPC:
-			return reinterpret_cast<npc_data&>( bl ).name;
+			return static_cast<const npc_data&>( bl ).name;
 
 		case BL_ELEM:
 			// They only have database names which are global, not specific to GID.
-			return reinterpret_cast<s_elemental_data&>( bl ).db->name.c_str();
+			return static_cast<const s_elemental_data&>( bl ).db->name.c_str();
 	}
 
 	return "Unknown";
@@ -8947,17 +8954,17 @@ const char* status_get_name( block_list& bl ){
  * @param bl: Object whose class to get [PC|MOB|PET|HOM|MER|NPC|ELEM]
  * @return class or 0 if any other bl->type than noted above
  */
-int32 status_get_class(block_list *bl)
+int32 status_get_class(const block_list* bl)
 {
 	nullpo_ret(bl);
 	switch( bl->type ) {
-		case BL_PC:	return ((TBL_PC*)bl)->status.class_;
-		case BL_MOB:	return ((TBL_MOB*)bl)->vd->look[LOOK_BASE]; // Class used on all code should be the view class of the mob.
-		case BL_PET:	return ((TBL_PET*)bl)->pet.class_;
-		case BL_HOM:	return ((TBL_HOM*)bl)->homunculus.class_;
-		case BL_MER:	return ((TBL_MER*)bl)->mercenary.class_;
-		case BL_NPC:	return ((TBL_NPC*)bl)->class_;
-		case BL_ELEM:	return ((TBL_ELEM*)bl)->elemental.class_;
+		case BL_PC:		return static_cast<const map_session_data*>(bl)->status.class_;
+		case BL_MOB:	return static_cast<const mob_data*>(bl)->vd->look[LOOK_BASE]; // Class used on all code should be the view class of the mob.
+		case BL_PET:	return static_cast<const pet_data*>(bl)->pet.class_;
+		case BL_HOM:	return static_cast<const homun_data*>(bl)->homunculus.class_;
+		case BL_MER:	return static_cast<const s_mercenary_data*>(bl)->mercenary.class_;
+		case BL_NPC:	return static_cast<const npc_data*>(bl)->class_;
+		case BL_ELEM:	return static_cast<const s_elemental_data*>(bl)->elemental.class_;
 	}
 	return 0;
 }
@@ -8967,7 +8974,7 @@ int32 status_get_class(block_list *bl)
  * @param bl: Object whose base level to get [PC|MOB|PET|HOM|MER|NPC|ELEM]
  * @return base level or 1 if any other bl->type than noted above
  */
-int32 status_get_lv(const block_list *bl)
+int32 status_get_lv(const block_list* bl)
 {
 	nullpo_ret(bl);
 	switch (bl->type) {
@@ -8987,18 +8994,22 @@ int32 status_get_lv(const block_list *bl)
  * @param bl: Object whose regen info to get [PC|HOM|MER|ELEM]
  * @return regen data or nullptr if any other bl->type than noted above
  */
-struct regen_data *status_get_regen_data(block_list *bl)
+struct regen_data* status_get_regen_data(block_list* bl)
 {
 	nullpo_retr(nullptr, bl);
 	switch (bl->type) {
-		case BL_PC:	return &((TBL_PC*)bl)->regen;
-		case BL_HOM:	return &((TBL_HOM*)bl)->regen;
-		case BL_MER:	return &((TBL_MER*)bl)->regen;
-		case BL_ELEM:	return &((TBL_ELEM*)bl)->regen;
+		case BL_PC:	return &reinterpret_cast<map_session_data*>(bl)->regen;
+		case BL_HOM:	return &reinterpret_cast<homun_data*>(bl)->regen;
+		case BL_MER:	return &reinterpret_cast<s_mercenary_data*>(bl)->regen;
+		case BL_ELEM:	return &reinterpret_cast<s_elemental_data*>(bl)->regen;
 		default:
 			return nullptr;
 	}
 }
+const regen_data* status_get_regen_data(const block_list* bl){
+	return status_get_regen_data(const_cast<block_list*>(bl));
+}
+
 
 /**
  * Gets the status data of the given bl
@@ -9033,6 +9044,10 @@ status_data* status_get_status_data(block_list& bl){
 	}
 }
 
+const status_data* status_get_status_data(const block_list& bl){
+	return status_get_status_data(const_cast<block_list&>(bl));
+}
+
 /**
  * Gets the base status data of the given bl
  * @param bl: Object whose status to get [PC|MOB|PET|HOM|MER|ELEM|NPC]
@@ -9054,15 +9069,19 @@ struct status_data *status_get_base_status(block_list *bl)
 	}
 }
 
+const status_data* status_get_base_status(const block_list* bl){
+	return status_get_base_status(const_cast<block_list*>(bl));
+}
+
 /**
  * Gets the defense of the given bl
  * @param bl: Object whose defense to get [PC|MOB|HOM|MER|ELEM]
  * @return defense with cap_value(def, DEFTYPE_MIN, DEFTYPE_MAX)
  */
-defType status_get_def(block_list *bl)
+defType status_get_def( const block_list* bl )
 {
-	struct unit_data *ud;
-	status_data* status = status_get_status_data(*bl);
+	const unit_data* ud;
+	const status_data* status = status_get_status_data(*bl);
 	// TODO: check if dummy_status? Can never be nullptr [Lemongrass]
 	int32 def = status?status->def:0;
 	ud = unit_bl2ud(bl);
@@ -9077,11 +9096,11 @@ defType status_get_def(block_list *bl)
  * @param bl: Object whose speed to get [PC|MOB|PET|HOM|MER|ELEM|NPC]
  * @return speed
  */
-uint16 status_get_speed(block_list *bl)
+uint16 status_get_speed( const block_list* bl )
 {
 	// TODO: is the statement of Skotlex still true? And would it not be better to check for dummy_status instead? [Lemongrass]
 	if(bl->type==BL_NPC)// Only BL with speed data but no status_data [Skotlex]
-		return ((npc_data *)bl)->speed;
+		return (static_cast<const npc_data*>(bl))->speed;
 	return status_get_status_data(*bl)->speed;
 }
 
@@ -9090,18 +9109,18 @@ uint16 status_get_speed(block_list *bl)
  * @param bl: Object whose party ID to get [PC|MOB|PET|HOM|MER|SKILL|ELEM]
  * @return party ID
  */
-int32 status_get_party_id(block_list *bl)
+int32 status_get_party_id( const block_list* bl )
 {
 	nullpo_ret(bl);
 	switch (bl->type) {
 		case BL_PC:
-			return ((TBL_PC*)bl)->status.party_id;
+			return static_cast<const map_session_data*>(bl)->status.party_id;
 		case BL_PET:
-			if (((TBL_PET*)bl)->master)
-				return ((TBL_PET*)bl)->master->status.party_id;
+			if (static_cast<const pet_data*>(bl)->master)
+				return static_cast<const pet_data*>(bl)->master->status.party_id;
 			break;
 		case BL_MOB: {
-				mob_data *md=(TBL_MOB*)bl;
+				const mob_data* md = static_cast<const mob_data*>(bl);
 				if( md->master_id > 0 ) {
 					map_session_data *msd;
 					if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9111,39 +9130,40 @@ int32 status_get_party_id(block_list *bl)
 			}
 			break;
 		case BL_HOM:
-			if (((TBL_HOM*)bl)->master)
-				return ((TBL_HOM*)bl)->master->status.party_id;
+			if (static_cast<const homun_data*>(bl)->master)
+				return static_cast<const homun_data*>(bl)->master->status.party_id;
 			break;
 		case BL_MER:
-			if (((TBL_MER*)bl)->master)
-				return ((TBL_MER*)bl)->master->status.party_id;
+			if (static_cast<const s_mercenary_data*>(bl)->master)
+				return static_cast<const s_mercenary_data*>(bl)->master->status.party_id;
 			break;
 		case BL_SKILL:
-			if (((TBL_SKILL*)bl)->group)
-				return ((TBL_SKILL*)bl)->group->party_id;
+			if (static_cast<const skill_unit*>(bl)->group)
+				return static_cast<const skill_unit*>(bl)->group->party_id;
 			break;
 		case BL_ELEM:
-			if (((TBL_ELEM*)bl)->master)
-				return ((TBL_ELEM*)bl)->master->status.party_id;
+			if (static_cast<const s_elemental_data*>(bl)->master)
+				return static_cast<const s_elemental_data*>(bl)->master->status.party_id;
 			break;
 	}
 	return 0;
 }
+
 
 /**
  * Gets the guild ID of the given bl
  * @param bl: Object whose guild ID to get [PC|MOB|PET|HOM|MER|SKILL|ELEM|NPC]
  * @return guild ID
  */
-int32 status_get_guild_id(block_list *bl)
+int32 status_get_guild_id(const block_list* bl)
 {
 	nullpo_ret(bl);
 	switch (bl->type) {
 		case BL_PC:
-			return ((TBL_PC*)bl)->status.guild_id;
+			return static_cast<const map_session_data*>(bl)->status.guild_id;
 		case BL_PET:
-			if (((TBL_PET*)bl)->master)
-				return ((TBL_PET*)bl)->master->status.guild_id;
+			if (static_cast<const pet_data*>(bl)->master)
+				return static_cast<const pet_data*>(bl)->master->status.guild_id;
 			break;
 		case BL_MOB:
 			{
@@ -9156,24 +9176,24 @@ int32 status_get_guild_id(block_list *bl)
 			}
 			break;
 		case BL_HOM:
-			if (((TBL_HOM*)bl)->master)
-				return ((TBL_HOM*)bl)->master->status.guild_id;
+			if (static_cast<const homun_data*>(bl)->master)
+				return static_cast<const homun_data*>(bl)->master->status.guild_id;
 			break;
 		case BL_MER:
-			if (((TBL_MER*)bl)->master)
-				return ((TBL_MER*)bl)->master->status.guild_id;
+			if (static_cast<const s_mercenary_data*>(bl)->master)
+				return static_cast<const s_mercenary_data*>(bl)->master->status.guild_id;
 			break;
 		case BL_NPC:
-			if (((TBL_NPC*)bl)->subtype == NPCTYPE_SCRIPT)
-				return ((TBL_NPC*)bl)->u.scr.guild_id;
+			if (static_cast<const npc_data*>(bl)->subtype == NPCTYPE_SCRIPT)
+				return static_cast<const npc_data*>(bl)->u.scr.guild_id;
 			break;
 		case BL_SKILL:
-			if (((TBL_SKILL*)bl)->group)
-				return ((TBL_SKILL*)bl)->group->guild_id;
+			if (static_cast<const skill_unit*>(bl)->group)
+				return static_cast<const skill_unit*>(bl)->group->guild_id;
 			break;
 		case BL_ELEM:
-			if (((TBL_ELEM*)bl)->master)
-				return ((TBL_ELEM*)bl)->master->status.guild_id;
+			if (static_cast<const s_elemental_data*>(bl)->master)
+				return static_cast<const s_elemental_data*>(bl)->master->status.guild_id;
 			break;
 	}
 	return 0;
@@ -9184,20 +9204,20 @@ int32 status_get_guild_id(block_list *bl)
  * @param bl: Object whose emblem ID to get [PC|MOB|PET|HOM|MER|SKILL|ELEM|NPC]
  * @return guild emblem ID
  */
-int32 status_get_emblem_id(block_list *bl)
+int32 status_get_emblem_id(const block_list* bl)
 {
 	nullpo_ret(bl);
 	switch (bl->type) {
 		case BL_PC:
-			return ((TBL_PC*)bl)->guild_emblem_id;
+			return static_cast<const map_session_data*>(bl)->guild_emblem_id;
 		case BL_PET:
-			if (((TBL_PET*)bl)->master)
-				return ((TBL_PET*)bl)->master->guild_emblem_id;
+			if (static_cast<const pet_data*>(bl)->master)
+				return static_cast<const pet_data*>(bl)->master->guild_emblem_id;
 			break;
 		case BL_MOB:
 			{
-				map_session_data *msd;
-				mob_data *md = (mob_data *)bl;
+				const map_session_data* msd;
+				const mob_data* md = static_cast<const mob_data*>(bl);
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->emblem_id;
 				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
@@ -9205,25 +9225,25 @@ int32 status_get_emblem_id(block_list *bl)
 			}
 			break;
 		case BL_HOM:
-			if (((TBL_HOM*)bl)->master)
-				return ((TBL_HOM*)bl)->master->guild_emblem_id;
+			if (static_cast<const homun_data*>(bl)->master)
+				return static_cast<const homun_data*>(bl)->master->guild_emblem_id;
 			break;
 		case BL_MER:
-			if (((TBL_MER*)bl)->master)
-				return ((TBL_MER*)bl)->master->guild_emblem_id;
+			if (static_cast<const s_mercenary_data*>(bl)->master)
+				return static_cast<const s_mercenary_data*>(bl)->master->guild_emblem_id;
 			break;
 		case BL_NPC:
-			if (((TBL_NPC*)bl)->subtype == NPCTYPE_SCRIPT && ((TBL_NPC*)bl)->u.scr.guild_id > 0) {
-				auto g = guild_search(((TBL_NPC*)bl)->u.scr.guild_id);
+			if (static_cast<const npc_data*>(bl)->subtype == NPCTYPE_SCRIPT && static_cast<const npc_data*>(bl)->u.scr.guild_id > 0) {
+				auto g = guild_search(static_cast<const npc_data*>(bl)->u.scr.guild_id);
 				if (g)
 					return g->guild.emblem_id;
 			}
 			break;
 		case BL_ELEM:
-			if (((TBL_ELEM*)bl)->master)
-				return ((TBL_ELEM*)bl)->master->guild_emblem_id;
+			if (static_cast<const s_elemental_data*>(bl)->master)
+				return static_cast<const s_elemental_data*>(bl)->master->guild_emblem_id;
 			break;
-	}
+}
 	return 0;
 }
 
@@ -9232,14 +9252,14 @@ int32 status_get_emblem_id(block_list *bl)
  * @param bl: Object whose race2 to get [MOB|PET]
  * @return race2
  */
-std::vector<e_race2> status_get_race2(block_list *bl)
+std::vector<e_race2> status_get_race2(const block_list* bl)
 {
 	nullpo_retr(std::vector<e_race2>(),bl);
 
 	if (bl->type == BL_MOB)
-		return ((mob_data *)bl)->db->race2;
+		return static_cast<const mob_data*>(bl)->db->race2;
 	if (bl->type == BL_PET)
-		return ((pet_data *)bl)->db->race2;
+		return static_cast<const pet_data*>(bl)->db->race2;
 	return std::vector<e_race2>();
 }
 
@@ -9248,7 +9268,7 @@ std::vector<e_race2> status_get_race2(block_list *bl)
  * @param bl: Object to check [PC|MOB|HOM|MER|ELEM]
  * @return 1: Is dead or 0: Is alive
  */
-bool status_isdead(block_list &bl){
+bool status_isdead(const block_list &bl){
 	return status_get_status_data(bl)->hp == 0;
 }
 
@@ -9257,9 +9277,9 @@ bool status_isdead(block_list &bl){
  * @param bl: Object to check [PC|MOB|HOM|MER|ELEM]
  * @return value of magic damage to be blocked
  */
-int32 status_isimmune(block_list *bl)
+int32 status_isimmune(const block_list* bl)
 {
-	status_change *sc =status_get_sc(bl);
+	const status_change *sc =status_get_sc(bl);
 
 	if (sc) {
 		if (sc->getSCE(SC_HERMODE))
@@ -9270,8 +9290,8 @@ int32 status_isimmune(block_list *bl)
 	}
 
 	if (bl->type == BL_PC &&
-		((TBL_PC*)bl)->special_state.no_magic_damage >= battle_config.gtb_sc_immunity)
-		return ((TBL_PC*)bl)->special_state.no_magic_damage;
+		(static_cast<const map_session_data*>(bl))->special_state.no_magic_damage >= battle_config.gtb_sc_immunity)
+		return (static_cast<const map_session_data*>(bl))->special_state.no_magic_damage;
 	return 0;
 }
 
@@ -9283,7 +9303,7 @@ int32 status_isimmune(block_list *bl)
  * @param visible: If true, function returns if the endure effect should be shown on the client
  * @return Whether object can be stopped (false) or not (true)
  */
-bool status_isendure(block_list& bl, t_tick tick, bool visible)
+bool status_isendure(const block_list& bl, t_tick tick, bool visible)
 {
 	// If bl type is set to always have endure, we don't need to check anything else
 	if (battle_config.infinite_endure&bl.type)
@@ -9293,14 +9313,14 @@ bool status_isendure(block_list& bl, t_tick tick, bool visible)
 	// Endure is forbidden on some maps, but the bonus is still set to true on such maps.
 	// That's why we need to check it here and disable the bonus to correctly mimic official behavior.
 	if (bl.m >= 0 && bl.type == BL_PC && !status_change_isDisabledOnMap(SC_ENDURE, map_getmapdata(bl.m))) {
-		if (reinterpret_cast<map_session_data&>(bl).special_state.no_walk_delay)
+		if (static_cast<const map_session_data&>(bl).special_state.no_walk_delay)
 			return true;
 	}
 
-	if (unit_data* ud = unit_bl2ud(&bl); ud != nullptr && DIFF_TICK(ud->endure_tick, tick) > 0)
+	if (const unit_data* ud = unit_bl2ud(&bl); ud != nullptr && DIFF_TICK(ud->endure_tick, tick) > 0)
 		return true;
 
-	if (status_change* sc = status_get_sc(&bl); sc != nullptr && !sc->empty()) {
+	if (const status_change* sc = status_get_sc(&bl); sc != nullptr && !sc->empty()) {
 		// Officially endure also sets endure_tick
 		// However, we have a lot of extra logic for infinite endure, so we use the status change for now
 		if (sc->getSCE(SC_ENDURE) != nullptr)
@@ -9329,16 +9349,21 @@ struct view_data* status_get_viewdata(block_list *bl)
 {
 	nullpo_retr(nullptr, bl);
 	switch (bl->type) {
-		case BL_PC:  return &((TBL_PC*)bl)->vd;
-		case BL_MOB: return ((TBL_MOB*)bl)->vd;
-		case BL_PET: return &((TBL_PET*)bl)->vd;
-		case BL_NPC: return &((TBL_NPC*)bl)->vd;
-		case BL_HOM: return ((TBL_HOM*)bl)->vd;
-		case BL_MER: return ((TBL_MER*)bl)->vd;
-		case BL_ELEM: return ((TBL_ELEM*)bl)->vd;
+		case BL_PC:  return &reinterpret_cast<map_session_data*>(bl)->vd;
+		case BL_MOB: return reinterpret_cast<mob_data*>(bl)->vd;
+		case BL_PET: return &reinterpret_cast<pet_data*>(bl)->vd;
+		case BL_NPC: return &reinterpret_cast<npc_data*>(bl)->vd;
+		case BL_HOM: return reinterpret_cast<homun_data*>(bl)->vd;
+		case BL_MER: return reinterpret_cast<s_mercenary_data*>(bl)->vd;
+		case BL_ELEM: return reinterpret_cast<s_elemental_data*>(bl)->vd;
 	}
 	return nullptr;
 }
+
+const struct view_data* status_get_viewdata(const block_list* bl){
+	return status_get_viewdata(const_cast<block_list*>(bl));
+}
+
 
 /**
  * Set view data of an object
@@ -9516,18 +9541,22 @@ void status_set_viewdata(block_list *bl, int32 class_)
  * @param bl: Object whose sc data to get [PC|MOB|HOM|MER|ELEM|NPC]
  * @return status change data structure bl->sc
  */
-status_change* status_get_sc(const block_list* bl){
+status_change* status_get_sc(block_list* bl){
 	if( bl )
 	switch (bl->type) {
-		case BL_PC:  return &((TBL_PC*)bl)->sc;
-		case BL_MOB: return &((TBL_MOB*)bl)->sc;
-		case BL_NPC: return &((TBL_NPC*)bl)->sc;
-		case BL_HOM: return &((TBL_HOM*)bl)->sc;
-		case BL_MER: return &((TBL_MER*)bl)->sc;
-		case BL_ELEM: return &((TBL_ELEM*)bl)->sc;
+		case BL_PC:  return &reinterpret_cast<map_session_data*>(bl)->sc;
+		case BL_MOB: return &reinterpret_cast<mob_data*>(bl)->sc;
+		case BL_NPC: return &reinterpret_cast<npc_data*>(bl)->sc;
+		case BL_HOM: return &reinterpret_cast<homun_data*>(bl)->sc;
+		case BL_MER: return &reinterpret_cast<s_mercenary_data*>(bl)->sc;
+		case BL_ELEM: return &reinterpret_cast<s_elemental_data*>(bl)->sc;
 	}
 	return nullptr;
 }
+const status_change* status_get_sc(const block_list* bl){
+	return status_get_sc(const_cast<block_list*>(bl));
+}
+
 
 /*========================================== [Playtester]
 * Returns the interval for status changes that iterate multiple times
@@ -9583,7 +9612,7 @@ static int32 status_get_sc_interval(enum sc_type type)
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
  * @return adjusted duration based on flag values
  */
-t_tick status_get_sc_def(block_list *src, block_list *bl, sc_type type, int32 rate, t_tick tick, uint8 flag)
+t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type type, int32 rate, t_tick tick, uint8 flag)
 {
 	/// Resistance rate: 10000 = 100%
 	/// Example:	50% (5000) -> sc_def = 5000 -> 25%;
@@ -9593,8 +9622,7 @@ t_tick status_get_sc_def(block_list *src, block_list *bl, sc_type type, int32 ra
 	/// Example:	25% (2500) -> sc_def2 = 2000 -> 5%;
 	///				2500ms -> tick_def2=2000 -> 500ms
 	int32 sc_def2 = 0, tick_def2 = 0;
-	status_change *sc;
-	map_session_data *sd;
+	const status_change *sc;
 
 	nullpo_ret(bl);
 	if (src == nullptr)
@@ -9602,7 +9630,7 @@ t_tick status_get_sc_def(block_list *src, block_list *bl, sc_type type, int32 ra
 
 	// Skills (magic type) that are blocked by Golden Thief Bug card or Wand of Hermod
 	if (status_isimmune(bl)) {
-		std::shared_ptr<s_skill_db> skill = skill_db.find(battle_getcurrentskill(src));
+		std::shared_ptr<const s_skill_db> skill = skill_db.find(battle_getcurrentskill(src));
 
 		if (skill == nullptr) // Check for ground-type skills using the status when a player moves through units
 			skill = skill_db.find(status_db.getSkill(type));
@@ -9614,9 +9642,9 @@ t_tick status_get_sc_def(block_list *src, block_list *bl, sc_type type, int32 ra
 			return 0;
 	}
 
-	sd = BL_CAST(BL_PC,bl);
-	status_data* status = status_get_status_data(*bl);
-	status_data* status_src = status_get_status_data(*src);
+	const map_session_data* sd = BL_CAST(BL_PC,bl);
+	const status_data* status = status_get_status_data(*bl);
+	const status_data* status_src = status_get_status_data(*src);
 	sc = status_get_sc(bl);
 	if( sc != nullptr && sc->empty() )
 		sc = nullptr;
@@ -15367,7 +15395,7 @@ void status_change_clear_buffs(block_list* bl, uint8 type)
  * @param bl: Object to change
  * @return 1: Success 0: Fail
  */
-int32 status_change_spread(block_list *src, block_list *bl)
+int32 status_change_spread( block_list* src, block_list* bl )
 {
 	if (src == nullptr || bl == nullptr)
 		return 0;
@@ -15376,7 +15404,7 @@ int32 status_change_spread(block_list *src, block_list *bl)
 	if (status_bl_has_mode(src, MD_STATUSIMMUNE) || status_bl_has_mode(bl, MD_STATUSIMMUNE))
 		return 0;
 
-	status_change *sc = status_get_sc(src);
+	const status_change *sc = status_get_sc(src);
 
 	if (sc == nullptr || sc->empty())
 		return 0;
