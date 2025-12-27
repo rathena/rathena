@@ -3513,7 +3513,7 @@ static uint32 status_calc_maxhp_pc( map_session_data& sd, uint32 vit ){
 		dmax *= ( 1.0 + vit * 0.01 );
 	}
 
-	if( sd.class_&JOBL_UPPER ){
+	if( (sd.class_&JOBL_UPPER) || pc_is_primary_fourth(sd.class_) ){
 		dmax *= 1.25;
 	}else if( pc_is_taekwon_ranker( &sd ) ){
 		dmax *= 3;
@@ -3564,10 +3564,10 @@ static uint32 status_calc_maxsp_pc( map_session_data& sd, uint32 int_ ){
 		dmax *= ( 1.0 + int_ * 0.01 );
 	}
 
-	if( sd.class_&JOBL_UPPER ){
+	if( (sd.class_&JOBL_UPPER) || pc_is_primary_fourth(sd.class_) ){
 		dmax *= 1.25;
 	}else if( pc_is_taekwon_ranker( &sd ) ){
-		dmax *= 3.0;
+		dmax *= 3;
 	}
 
 	// Int from equip gives +1 additional SP
@@ -3815,7 +3815,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	// Give them all modes except these (useful for clones)
 	base_status->mode = static_cast<e_mode>(MD_MASK&~(MD_STATUSIMMUNE|MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC|MD_DETECTOR|MD_ANGRY|MD_TARGETWEAK));
 
-	base_status->size = (sd->class_&JOBL_BABY) ? SZ_SMALL : (((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.summoner_size : SZ_MEDIUM);
+	base_status->size = (sd->class_&JOBL_BABY) ? SZ_SMALL : (((sd->class_&MAPID_FIRSTMASK) == MAPID_SUMMONER) ? battle_config.summoner_size : SZ_MEDIUM);
 	if (battle_config.character_size && pc_isriding(sd)) { // [Lupus]
 		if (sd->class_&JOBL_BABY) {
 			if (battle_config.character_size&SZ_BIG)
@@ -3826,7 +3826,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	}
 	base_status->aspd_rate = 1000;
 	base_status->ele_lv = 1;
-	base_status->race = ((sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.summoner_race : RC_PLAYER_HUMAN;
+	base_status->race = ((sd->class_&MAPID_FIRSTMASK) == MAPID_SUMMONER) ? battle_config.summoner_race : RC_PLAYER_HUMAN;
 	base_status->class_ = CLASS_NORMAL;
 
 	sd->autospell.clear();
@@ -4254,7 +4254,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	}
 
 	// If a Super Novice has never died and is at least joblv 70, he gets all stats +10
-	if(((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && (sd->status.job_level >= 70  || sd->class_&JOBL_THIRD)) && sd->die_counter == 0) {
+	if(((sd->class_&MAPID_SECONDMASK) == MAPID_SUPER_NOVICE && (sd->status.job_level >= 70  || sd->class_&JOBL_THIRD)) && sd->die_counter == 0) {
 		base_status->str += 10;
 		base_status->agi += 10;
 		base_status->vit += 10;
@@ -4373,7 +4373,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		base_status->hp = base_status->max_hp;
 		base_status->sp = base_status->max_sp;
 	} else {
-		if((sd->class_&MAPID_BASEMASK) == MAPID_NOVICE && !(sd->class_&JOBL_2)
+		if((sd->class_&MAPID_FIRSTMASK) == MAPID_NOVICE && !(sd->class_&JOBL_2)
 			&& battle_config.restart_hp_rate < 50)
 			base_status->hp = base_status->max_hp / 2;
 		else
@@ -4503,7 +4503,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	// Absolute modifiers from passive skills
 	if((skill=pc_checkskill(sd,TF_MISS))>0)
-		base_status->flee += skill*(sd->class_&JOBL_2 && (sd->class_&MAPID_BASEMASK) == MAPID_THIEF? 4 : 3);
+		base_status->flee += skill*(sd->class_&JOBL_2 && (sd->class_&MAPID_FIRSTMASK) == MAPID_THIEF? 4 : 3);
 	if((skill=pc_checkskill(sd,MO_DODGE))>0)
 		base_status->flee += (skill*3) / 2;
 	if (pc_checkskill(sd, SU_POWEROFLIFE) > 0)
@@ -5405,10 +5405,10 @@ void status_calc_regen_rate(block_list *bl, struct regen_data *regen, status_cha
 	if (sc->getSCE(SC_DANCING) ||
 		sc->getSCE(SC_MAXIMIZEPOWER) ||
 #ifndef RENEWAL
-		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_SECONDMASK) == MAPID_MONK &&
 		(sc->getSCE(SC_EXTREMITYFIST) || sc->getSCE(SC_EXPLOSIONSPIRITS)) && (!sc->getSCE(SC_SPIRIT) || sc->getSCE(SC_SPIRIT)->val2 != SL_MONK)) ||
 #else
-		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+		(bl->type == BL_PC && (((TBL_PC*)bl)->class_&MAPID_SECONDMASK) == MAPID_MONK &&
 		sc->getSCE(SC_EXTREMITYFIST) && (!sc->getSCE(SC_SPIRIT) || sc->getSCE(SC_SPIRIT)->val2 != SL_MONK)) ||
 #endif
 		(sc->getSCE(SC_OBLIVIONCURSE) && sc->getSCE(SC_OBLIVIONCURSE)->val3 == 1))
@@ -8143,7 +8143,7 @@ static uint16 status_calc_speed(block_list *bl, status_change *sc, int32 speed)
 			val = max( val, 2 * sc->getSCE(SC_WINDWALK)->val1 );
 		if( sc->getSCE(SC_CARTBOOST) )
 			val = max( val, 20 );
-		if( sd && (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN && pc_checkskill(sd,TF_MISS) > 0 )
+		if( sd && (sd->class_&MAPID_SECONDMASK) == MAPID_ASSASSIN && pc_checkskill(sd,TF_MISS) > 0 )
 			val = max( val, 1 * pc_checkskill(sd,TF_MISS) );
 		if( sc->getSCE(SC_CLOAKING) && (sc->getSCE(SC_CLOAKING)->val4&1) == 1 )
 			val = max( val, sc->getSCE(SC_CLOAKING)->val1 >= 10 ? 25 : 3 * sc->getSCE(SC_CLOAKING)->val1 - 3 );
@@ -10534,7 +10534,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_SPIRIT:
 			if( sd ){
 				uint64 target_class = 0;
-				uint64 mask = MAPID_UPPERMASK;
+				uint64 mask = MAPID_SECONDMASK;
 
 				switch( val2 ){
 					case SL_ALCHEMIST:
@@ -11001,7 +11001,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			}
 			break;
 		case SC_SUITON:
-			if (!val2 || (sd && (sd->class_&MAPID_BASEMASK) == MAPID_NINJA)) {
+			if (!val2 || (sd && (sd->class_&MAPID_FIRSTMASK) == MAPID_NINJA)) {
 				// No penalties.
 				val2 = 0; // Agi penalty
 				val3 = 0; // Walk speed penalty
@@ -12589,7 +12589,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		case SC_ARCLOUSEDASH:
 			val2 = 15 + 5 * val1; // AGI
 			val3 = 25; // Move speed increase
-			if (sd && (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER)
+			if (sd && (sd->class_&MAPID_FIRSTMASK) == MAPID_SUMMONER)
 				val4 = 10; // Ranged ATK increase if the target is a Doram
 			break;
 		case SC_SHRIMP:
@@ -15560,7 +15560,7 @@ static int32 status_natural_heal(block_list* bl, va_list args)
 		if (bl->type == BL_MER)
 			rate = (rate * 3) / 4;
 #ifdef RENEWAL
-		if (sd && (sd->class_&MAPID_UPPERMASK) == MAPID_MONK &&
+		if (sd && (sd->class_&MAPID_SECONDMASK) == MAPID_MONK &&
 			sc && sc->getSCE(SC_EXPLOSIONSPIRITS) && (!sc->getSCE(SC_SPIRIT) || sc->getSCE(SC_SPIRIT)->val2 != SL_MONK))
 			rate *= 2; // Tick is doubled in Fury state
 #endif
@@ -15606,7 +15606,7 @@ static int32 status_natural_heal(block_list* bl, va_list args)
 					sc_start(bl,bl,skill_get_sc(TK_SPTIME),
 						100,rate,skill_get_time(TK_SPTIME, rate));
 				if (
-					(sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
+					(sd->class_&MAPID_SECONDMASK) == MAPID_STAR_GLADIATOR &&
 					rnd()%10000 < battle_config.sg_angel_skill_ratio
 				) { // Angel of the Sun/Moon/Star
 					clif_feel_hate_reset(sd);

@@ -963,7 +963,7 @@ int32 chrif_changedsex(int32 fd) {
 		sd->status.sex = !sd->status.sex;
 
 		// Reset skills of gender split jobs.
-		if ((sd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) {
+		if ((sd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER || (sd->class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO) {
 			const static struct {
 				e_skill start;
 				e_skill end;
