@@ -60853,7 +60853,7 @@ Body:
       .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
       if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getskilllv("SH_HOGOGONG_STRIKE")>=7) {
          bonus2 bSkillCooldown,"SH_CHUL_HO_BATTERING",-250;
-         bonus4 bAutoSpellOnSkill,"SH_CHUL_HO_BATTERING","SH_HOGOGONG_STRIKE",10,1000;
+         bonus4 bAutoSpellOnSkill,"SH_CHUL_HO_BATTERING","SH_HOGOGONG_STRIKE",7,1000;
       }
   - Combos:
       - Combo:
@@ -61500,4 +61500,151 @@ Body:
             bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-50;
             bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-50;
          }
+      }
+  - Combos:
+      - Combo:
+          - aegis_300720   # 300720
+          - aegis_300719   # 300719
+    Script: |
+      bonus2 bAddSize,Size_Medium,15;
+      bonus2 bMagicAddSize,Size_Medium,15;
+      bonus2 bAddRace,RC_Demon,15;
+      bonus2 bMagicAddRace,RC_Demon,15;
+      bonus2 bAddRace,RC_DemiHuman,15;
+      bonus2 bMagicAddRace,RC_DemiHuman,15;
+  - Combos:
+      - Combo:
+          - aegis_300721   # 300721
+          - S_Helmut_Card   # 300310
+    Script: |
+      bonus bNonCritAtkRate,5;
+  - Combos:
+      - Combo:
+          - aegis_300722   # 300722
+          - S_Helmut_Card   # 300310
+    Script: |
+      bonus bCritAtkRate,3;
+      bonus bCritical,15;
+  - Combos:
+      - Combo:
+          - Sky_Rune_Crown_MS   # 401115
+          - Sky_Rush_Axe   # 28145
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
+      bonus bNonCritAtkRate,15;
+      bonus2 bSkillAtk,"MT_POWERFUL_SWING",35;
+      if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getskilllv("MT_POWERFUL_SWING")>=5) {
+         bonus4 bAutoSpellOnSkill,"MT_RUSH_STRIKE","MT_POWERFUL_SWING",5,1000;
+      }
+  - Combos:
+      - Combo:
+          - Sky_Rune_Crown_WH   # 401116
+          - Sky_Crescive_Bow   # 700125
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
+      bonus bCritAtkRate,15;
+      bonus2 bSkillAtk,"WH_HAWKRUSH",40;
+      if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getskilllv("WH_HAWKRUSH")>=5) {
+         bonus4 bAutoSpellOnSkill,"WH_CRESCIVE_BOLT","WH_HAWKRUSH",5,1000;
+      }
+  - Combos:
+      - Combo:
+          - Sky_Rune_Crown_HN   # 401117
+          - Sky_Napalm_Sword   # 500134
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bSkillAtk,"HN_NAPALM_VULCAN_STRIKE",35;
+      if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A) {
+         bonus2 bSkillAtk,"WL_CHAINLIGHTNING_ATK",.@sum*2;
+         if (getskilllv("WL_CHAINLIGHTNING")>=5) {
+            bonus4 bAutoSpellOnSkill,"HN_NAPALM_VULCAN_STRIKE","WL_CHAINLIGHTNING",5,1000;
+         }
+      }
+  - Combos:
+      - Combo:
+          - Sky_Rune_Crown_CD   # 401118
+          - Sky_Arbi_Rod   # 550190
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
+      bonus2 bMagicAtkEle,Ele_Holy,15;
+      bonus2 bSkillAtk,"CD_FRAMEN",35;
+      if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getskilllv("CD_FRAMEN")>=5) {
+         bonus4 bAutoSpellOnSkill,"CD_ARBITRIUM","CD_FRAMEN",5,1000;
+      }
+  - Combos:
+      - Combo:
+          - Sky_Rune_Crown_IQ   # 401119
+          - Sky_Destroy_Knuckle   # 560086
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
+      bonus bShortAtkRate,15;
+      bonus2 bSkillAtk,"SR_TIGERCANNON",40;
+      if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getskilllv("SR_TIGERCANNON")>=10) {
+         bonus4 bAutoSpellOnSkill,"IQ_THIRD_FLAME_BOMB","SR_TIGERCANNON",10,1000;
+      }
+  - Combos:
+      - Combo:
+          - Sky_Rune_Crown_SKE   # 401120
+          - Sky_Moon_Book   # 540122
+    Script: |
+      .@sum = getequiprefinerycnt(EQI_HEAD_TOP)+getequiprefinerycnt(EQI_HAND_R);
+      bonus bNonCritAtkRate,15;
+      bonus2 bSkillAtk,"SKE_SKY_MOON",45;
+      if (.@sum>=24 && getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A && getenchantgrade(EQI_HAND_R)>=ENCHANTGRADE_A && getskilllv("SKE_SKY_MOON")>=5) {
+         bonus2 bSkillCooldown,"SKE_STAR_LIGHT_KICK",-250;
+         bonus4 bAutoSpellOnSkill,"SKE_STAR_LIGHT_KICK","SKE_SKY_MOON",5,1000;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480671   # 480671
+          - Stardust_Crown_SC   # 401056
+    Script: |
+      bonus bNonCritAtkRate,15;
+      bonus bPAtk,5;
+      if (getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bAddEle,Ele_All,10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480672   # 480672
+          - Stardust_Crown_SC   # 401056
+    Script: |
+      bonus bShortAtkRate,10;
+      bonus bLongAtkRate,10;
+      bonus bPAtk,4;
+      bonus bMaxHPrate,3;
+      if (getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bAddEle,Ele_All,10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480673   # 480673
+          - Stardust_Crown_VI   # 401057
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Neutral,15;
+      bonus2 bMagicAtkEle,Ele_Fire,15;
+      bonus2 bMagicAtkEle,Ele_Earth,15;
+      bonus2 bMagicAtkEle,Ele_Water,15;
+      bonus2 bMagicAtkEle,Ele_Wind,15;
+      bonus2 bMagicAtkEle,Ele_Poison,15;
+      bonus2 bMagicAtkEle,Ele_Dark,15;
+      bonus bSMatk,5;
+      if (getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bMagicAddEle,Ele_All,10;
+      }
+  - Combos:
+      - Combo:
+          - aegis_480674   # 480674
+          - Stardust_Crown_VI   # 401057
+    Script: |
+      bonus2 bMagicAtkEle,Ele_Undead,15;
+      bonus2 bMagicAtkEle,Ele_Fire,15;
+      bonus2 bMagicAtkEle,Ele_Neutral,15;
+      bonus2 bMagicAtkEle,Ele_Wind,15;
+      bonus2 bMagicAtkEle,Ele_Ghost,15;
+      bonus2 bMagicAtkEle,Ele_Holy,15;
+      bonus2 bMagicAtkEle,Ele_Dark,15;
+      bonus bSMatk,5;
+      if (getenchantgrade(EQI_HEAD_TOP)>=ENCHANTGRADE_A) {
+         bonus2 bMagicAddEle,Ele_All,10;
       }
