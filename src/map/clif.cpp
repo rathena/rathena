@@ -10387,6 +10387,35 @@ void clif_msg( map_session_data& sd, e_clif_messages msg_id ){
 }
 
 
+/// Display msgstringtable.txt string and fill in a valid for %s format.
+/// 0x02c2 <packet_length>.W <message_id>.W <string>.?B (ZC_FORMATSTRING_MSG)
+void clif_msg_value( map_session_data& sd, e_clif_messages msg_id, const char* str ){
+#if PACKETVER >= 20070227
+	if (str == nullptr) {
+		return;
+	}
+
+	PACKET_ZC_FORMATSTRING_MSG* p = reinterpret_cast<PACKET_ZC_FORMATSTRING_MSG*>( packet_buffer );
+
+	p->PacketType = HEADER_ZC_FORMATSTRING_MSG;
+	p->PacketLength = sizeof( *p );
+	p->MessageId = msg_id; // zero-based msgstringtable.txt index
+
+	size_t name_len = strlen(str) + 1; // Include null terminator
+
+	// Safety check to prevent buffer overflow
+	if ( p->PacketType + name_len > std::numeric_limits<int16>::max() ) {
+		ShowWarning("clif_msg_value: String is too long '%s' (len=%" PRIuPTR ").\n", str, name_len);
+		return;
+	}
+
+	safestrncpy( p->MessageString, str, name_len );
+	p->PacketLength += static_cast<decltype(p->PacketLength)>( name_len );
+
+	clif_send( p, p->PacketLength, &sd, SELF );
+#endif
+}
+
 /// Display msgstringtable.txt string and fill in a valid for %d format.
 /// 0x7e2 <message>.W <value>.L (ZC_MSG_VALUE)
 void clif_msg_value( map_session_data& sd, e_clif_messages msg_id, int32 value ){

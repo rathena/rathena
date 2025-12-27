@@ -3375,6 +3375,23 @@ const char* conv_str(struct script_state* st, struct script_data* data)
 	return conv_str_(st, data, nullptr);
 }
 
+/*==========================================
+ * Get active instance name
+ *------------------------------------------*/
+const char* script_instancegetname(int32 instance_id) {
+	std::shared_ptr<s_instance_data> im = util::umap_find(instances, instance_id);
+	if (im == nullptr) {
+		return nullptr;
+	}
+
+	std::shared_ptr<s_instance_db> db = instance_db.find(im->id);
+	if (db == nullptr) {
+		return nullptr;
+	}
+
+	return db->name.c_str();
+}
+
 /**
  * Converts the data to an int32
  * @param st
@@ -21712,11 +21729,13 @@ BUILDIN_FUNC(instance_create)
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
+
+	map_session_data *sd = nullptr;
+
 	if (script_hasdata(st, 4))
 		owner_id = script_getnum(st, 4);
 	else {
 		// If sd is nullptr, instance_create will return -2.
-		map_session_data *sd = nullptr;
 
 		switch(mode) {
 			case IM_NONE:
@@ -21744,7 +21763,31 @@ BUILDIN_FUNC(instance_create)
 		}
 	}
 
-	script_pushint(st, instance_create(owner_id, script_getstr(st, 2), mode));
+	const char* instance_name = script_getstr(st, 2);
+	int32 result = instance_create(owner_id, instance_name, mode);
+
+	// Handle error messages based on result code
+	if ( sd != nullptr && result < 0 ) { // If there's an error and we have session data
+		int32 active_instance_id = script_instancegetid(st, mode);
+		const char* active_instance_name = script_instancegetname(active_instance_id);
+
+		switch (result) {
+			case -1:
+				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_UNKNOWN, active_instance_name ); //##TODO Unknow conditions
+				break;
+			case -2:
+				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_RIGHT, active_instance_name ); //##TODO Unknow conditions
+				break;
+			case -3:
+				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_EXIST, active_instance_name );
+				break;
+			case -4:
+				clif_msg_value( *sd, MSI_MDUNGEON_SUBSCRIPTION_ERROR_DUPLICATE, active_instance_name ); //##TODO Unknow conditions
+				break;
+		}
+	}
+
+	script_pushint(st, result);
 	return SCRIPT_CMD_SUCCESS;
 }
 
