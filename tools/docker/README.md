@@ -2,6 +2,14 @@
 
 Note that this Dockerized environment **is not suitable** for production deployments, see [Installations](https://github.com/rathena/rathena/wiki/installations) instead.
 
+## Run it without build
+
+```sh
+docker-compose -f runtime.docker-compose.yaml up
+```
+
+## Development Environment
+
 ### How to setup a local development environment :computer:
 
 1. `docker-compose up -d` to spin up dev container and database (ensure port `3306` is free)
