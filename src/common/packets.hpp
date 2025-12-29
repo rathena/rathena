@@ -156,21 +156,19 @@ struct PACKET_CH_MAKE_CHAR{
 DEFINE_PACKET_HEADER( CH_MAKE_CHAR, 0x67 );
 #endif
 
-#if PACKETVER >= 20040419
-struct PACKET_CH_DELETE_CHAR{
-	int16 packetType;
-	uint32 CID;
-	char key[50];
-} __attribute__((packed));
-DEFINE_PACKET_HEADER( CH_DELETE_CHAR, 0x1fb );
-#else
 struct PACKET_CH_DELETE_CHAR{
 	int16 packetType;
 	uint32 CID;
 	char key[40];
 } __attribute__((packed));
 DEFINE_PACKET_HEADER( CH_DELETE_CHAR, 0x68 );
-#endif
+
+struct PACKET_CH_DELETE_CHAR2{
+	int16 packetType;
+	uint32 CID;
+	char key[50];
+} __attribute__((packed));
+DEFINE_PACKET_HEADER( CH_DELETE_CHAR2, 0x1fb );
 
 #if PACKETVER >= 20170315
 struct PACKET_AC_ACCEPT_LOGIN_sub{
