@@ -25,7 +25,9 @@ typedef int32 (*AtCommandFunc)(const int32 fd, map_session_data* sd, const char*
 
 bool is_atcommand(const int32 fd, map_session_data* sd, const char* message, int32 type);
 
+
 void do_init_atcommand(void);
+void ltp_autorun(struct map_session_data* sd);
 void do_final_atcommand(void);
 void atcommand_db_load_groups();
 

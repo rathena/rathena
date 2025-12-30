@@ -639,6 +639,8 @@ ACMD_FUNC(mapmove)
 	return 0;
 }
 
+
+
 /*==========================================
  * Displays where a character is. Corrected version by Silent. [Skotlex]
  *------------------------------------------*/
@@ -675,6 +677,25 @@ ACMD_FUNC(where)
  *------------------------------------------*/
 ACMD_FUNC(ltp)
 {
+    nullpo_retr(-1, sd);
+
+    sd->ltp_auto = !sd->ltp_auto;
+
+    if (sd->ltp_auto)
+        clif_displaymessage(sd->fd, "LTP Auto: ON");
+    else
+        clif_displaymessage(sd->fd, "LTP Auto: OFF");
+
+    return 0;
+}
+
+static void ltp_do_action(struct map_session_data* sd) {
+
+    if (!sd)
+        return;
+
+    int fd = sd->fd;
+
 	nullpo_retr(-1, sd);
 
 	int32 x = pc_readreg(sd, add_str("#LTP_X"));
@@ -683,7 +704,7 @@ ACMD_FUNC(ltp)
 
 	if (x <= 0 || y <= 0 || mapname == nullptr || mapname[0] == '\0') {
 		clif_displaymessage(fd, "No teleport position recorded yet.");
-		return 0;
+		return;
 	}
 
 	// Marker on minimap (red)
@@ -693,9 +714,16 @@ ACMD_FUNC(ltp)
 	snprintf(out, sizeof(out), "Last position before teleport: %s (%d, %d)", mapname, x, y);
 	clif_displaymessage(fd, out);
 
-	return 0;
+	return;
 }
 
+
+void ltp_autorun(struct map_session_data* sd) {
+    if (!sd || !sd->ltp_auto)
+        return;
+
+    ltp_do_action(sd);
+}
 
 
 /*==========================================

@@ -466,6 +466,7 @@ public:
 		t_itemid item_reform;
 		uint64 item_enchant_index;
 	} state;
+	bool ltp_auto;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
 		uint32 restart_full_recover : 1;
@@ -1377,7 +1378,7 @@ public:
 
 extern PlayerStatPointDatabase statpoint_db;
 
-/// Enum of Summoner Power of 
+/// Enum of Summoner Power of
 enum e_summoner_power_type {
 	SUMMONER_POWER_LAND = 0,
 	SUMMONER_POWER_LIFE,

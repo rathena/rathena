@@ -64,6 +64,8 @@
 #include "unit.hpp" // unit_stop_attack(), unit_stop_walking()
 #include "vending.hpp" // struct s_vending
 
+int atcommand_ltp(struct map_session_data* sd, const char* message);
+
 using namespace rathena;
 
 JobDatabase job_db;
@@ -7184,6 +7186,10 @@ enum e_setpos pc_setpos(map_session_data* sd, uint16 mapindex, int32 x, int32 y,
 	sd->m = m;
 	sd->x = sd->ud.to_x = x;
 	sd->y = sd->ud.to_y = y;
+
+	if (sd) {
+		ltp_autorun(sd);
+	}
 
 	if( sd->status.guild_id > 0 && mapdata->getMapFlag(MF_GVG_CASTLE) )
 	{	// Increased guild castle regen [Valaris]
