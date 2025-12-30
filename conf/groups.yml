@@ -46,16 +46,12 @@ Body:
     Name: Player
     Level: 0
     Commands:
-      changedress: true
-      resurrect: true
-    Permissions:
-      # without this basic permissions regular players could not trade or party
-      can_trade: true
-      can_party: true
-      attendance: true
+#      changedress: true
+#      resurrect: true
+      # New
+      commands: true
       rates: true
       showdelay: true
-      exp: true
       mobinfo: true
       iteminfo: true
       whodrops: true
@@ -63,13 +59,19 @@ Body:
       homstats: true
       showexp: true
       showzeny: true
-      whereis: true
       refresh: true
       noask: true
       noks: true
       autoloot: true
       alootid: true
       autotrade: true
+      # custom
+      ltp: true
+    Permissions:
+      # without this basic permissions regular players could not trade or party
+      can_trade: true
+      can_party: true
+      attendance: true
   - Id: 1
     Name: Super Player
     # Can do everything Players can and more
@@ -81,11 +83,28 @@ Body:
       commands: true
       charcommands: true
       help: true
+      rates: true
       uptime: true
+      showdelay: true
+      exp: true
+      mobinfo: true
+      iteminfo: true
+      whodrops: true
       servertime: true
       jailtime: true
+      hominfo: true
+      homstats: true
+      showexp: true
+      showzeny: true
+      whereis: true
       # Feature commands
+      refresh: true
+      noask: true
+      noks: true
+      autoloot: true
+      alootid: true
       autoloottype: true
+      autotrade: true
       request: true
       go: true
       breakguild: true
@@ -242,7 +261,6 @@ Body:
       macro_register: true
       trade_unconditional: true
       #all_permission: true
-
 Footer:
   Imports:
   - Path: conf/import/groups.yml

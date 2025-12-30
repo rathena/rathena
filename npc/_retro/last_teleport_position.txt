@@ -1,0 +1,35 @@
+//============================================================
+// @ltp - Last Teleport Position
+// Stores player's last position before ANY teleport
+// Compatible with all teleport skills, items and commands
+//============================================================
+
+-	script	LastTeleportTracker	-1,{
+
+OnInit:
+	// Variáveis por personagem
+	// #LTP_MAP$  -> nome do mapa
+	// #LTP_X     -> coordenada X
+	// #LTP_Y     -> coordenada Y
+	end;
+
+// Antes de qualquer mudança de mapa (teleport)
+OnPCLoadMapEvent:
+	// Evita salvar quando loga pela primeira vez
+	if (!@ltp_loaded) {
+		@ltp_loaded = 1;
+		end;
+	}
+
+	// Salva posição atual ANTES do teleport
+	set #LTP_MAP$, strcharinfo(3);
+	set #LTP_X, @last_x;
+	set #LTP_Y, @last_y;
+	end;
+
+// Armazena posição continuamente
+OnPCStatCalcEvent:
+	set @last_x, getcharid(CHAR_ID) ? readparam(bX) : 0;
+	set @last_y, getcharid(CHAR_ID) ? readparam(bY) : 0;
+	end;
+}

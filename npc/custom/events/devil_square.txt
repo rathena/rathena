@@ -126,7 +126,7 @@ OnClock2200:
 	$DevilSquareFinished = 0;
 	$DevilSquareEventID  = gettimetick(2); // id único da rodada
 
-	disablenpc "ord11-12"; // from npc/warps/pvp.txt
+	disablenpc "ordeal_1-1"; // from npc/warps/pvp.txt
 	disablenpc "Devil Square Guardian#2";
 	mapannounce "ordeal_1-1","Devil Square is now closed.", bc_map;
 	getmapxy .@map$, .@x, .@y, BL_NPC;

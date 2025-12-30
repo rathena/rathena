@@ -73,10 +73,10 @@ function	script	Q_Warpra	{
 	mes "Hello,";
 	mes "I can warp you to any town or dungeon, but you need to unlock them first by visiting us.";
 	mes "What do you need?";
-	
+
 	if(getarg(0) == 0) callfunc "QWS_MMarray",0;
 	if(getarg(0) == 1) callfunc "QWS_MMarray",1;
-	
+
 	set @MMenu,select(@Mmenulist$[0],@Mmenulist$[1],@Mmenulist$[2],@Mmenulist$[3],@Mmenulist$[4],@Mmenulist$[5],@Mmenulist$[6],@Mmenulist$[7],@Mmenulist$[8],@Mmenulist$[9],@Mmenulist$[10],@Mmenulist$[11]);
 
 	switch(@Mmenuref[@MMenu-1]+1){
@@ -169,7 +169,7 @@ Setprice:
 	if (!$QW_S_PRICE) mes "Storage = ^FF0000 Free ^000000";
 	if ($QW_S_PRICE == 60) mes "Storage = ^0000FF Kafra Mode ^000000";
 	mes "Guild Storage = "+(($QW_GS_PRICE)?"^00FF00"+$QW_GS_PRICE:"^FF0000Free")+"^000000";
-	
+
 	switch(select("Basic - Warps","Advanced - Warps","Overseas - Warps","Basic Dungeon warp fee","Advanced Dungeon warp fee","Overseas Dungeon warp fee","Full Healing","Part Healing","Storage","Guild Storage","Back","Exit")) {
 	case 1:
 		next;
@@ -390,7 +390,7 @@ L_heal_Part:
 	if (@healchoice == 2) callsub PHeal,1,0;
 	if (@healchoice == 3) callsub PHeal,0,1;
 	goto L_end;
-	
+
 PHeal:
 	next;
 	set @Hp, MaxHp-Hp;
@@ -403,7 +403,7 @@ PHeal:
 	set @total, @HpPrice+@SpPrice;
 	mes "for a total of "+@total+" zeny";
     	if (select("Heal me","Let me see the choices again")==2) goto L_heal_Part;
-    	
+
     	if(getarg(0) == 1)set @HpPrice, (MaxHp-Hp)*$QW_HP_H_PRICE;
 	if(getarg(1) == 1)set @SpPrice, (MaxSp-Sp)*$QW_HP_S_PRICE;
 	set @healfee, @HpPrice+@SpPrice;
@@ -501,7 +501,7 @@ L_GStorage:
 	close2;
 	guildopenstorage;
 	end;
-	
+
 L_end:
 	close;
 	end;
@@ -525,7 +525,7 @@ L_NoUnlock:
 	mes "I don't unlock this location, my assistant deeper in the dungeon will unlock this place.";
 	close;
 	end;
-	
+
 //=========================Short=On=Zeny===========================
 L_Short_on_zeny:
 	next;
@@ -538,7 +538,7 @@ L_Short_on_zeny:
 	}
 	close;
 	end;
-	
+
 //===========================Stamp=Card============================
 stampcard:
 // Counting of the amount of places you have unlocked
@@ -1069,7 +1069,7 @@ function	script	QWS_Darray	{
 	QWS_Make_Dungeon_Menu 1;
 
 //----------------ANT HELL
-	setarray @pDmenuitems$[@Di], "Ant Hell Dungeon"; 
+	setarray @pDmenuitems$[@Di], "Ant Hell Dungeon";
 	setarray @pDprice[@Di], $QW_BW_PRICE;
 	setarray @pDfee$[@Di], "$QW_BW_FEE";
 	setarray @DLevels[2], 2;
@@ -1274,7 +1274,7 @@ function	script	QWS_Darray	{
 	setarray @DLevelName$[@Dref], "Level 1", "Level 2", "Level 3";
 	setarray @DXcoords[@Dref], 150, 150, 140;
 	setarray @DYcoords[@Dref], 287, 18, 137;
-	setarray @DDepth[@Dref], 0, 1, 2;
+	setarray @DDepth[@Dref], 0, 1, 2, 3;
 
 	QWS_Make_Dungeon_Menu 15;
 
@@ -1446,6 +1446,20 @@ function	script	QWS_Darray	{
 
 	QWS_Make_Dungeon_Menu 27;
 
+//----------------Special Map (lhz_dun04)
+	setarray @pDmenuitems$[@Di], "Lighthalzen Bio Lab 04";
+	setarray @pDprice[@Di], $QW_AW_PRICE;
+	setarray @pDfee$[@Di], "$QW_AW_FEE";
+	setarray @DLevels[@Di], 1;
+
+	setarray @DGat$[@Dref], "lhz_dun04";
+	setarray @DLevelName$[@Dref], "Level 4";
+	setarray @DXcoords[@Dref], 241;
+	setarray @DYcoords[@Dref], 56;
+	setarray @DDepth[@Dref], 0;
+
+	QWS_Make_Dungeon_Menu 28;
+
 //----------------Cancel
 	setarray @pDmenuitems$[@Di], "Cancel";
 	setarray @pDprice[@Di], 0;
@@ -1529,7 +1543,7 @@ function	script	QWS_DLarray	{
 function	script	QWS_Dungeon_Warpra	{
 	function QWS_D_getbin;
 	function QWS_D_setbin;
-	
+
 	if ((QWS_D_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
 		mes "[Dimensius]";
 		mes getarg(1)+" unlocked!";
@@ -1575,7 +1589,7 @@ binget:
 function	script	QWS_Town_Warpra	{
 	function QWS_T_getbin;
 	function QWS_T_setbin;
-	
+
 	if ((QWS_T_getbin(getarg(0)) == 0) && (getarg(1) != "")) {
 		mes "[Dimensius]";
 		mes getarg(1)+" unlocked!";
@@ -1692,3 +1706,4 @@ xmas_dun02,124,131,3	script	Dimensius#71	10308,{ callfunc "QWS_Dungeon_Warpra",2
 um_dun02,44,28,3	script	Dimensius#72	10308,{ callfunc "QWS_Dungeon_Warpra",27,"Umbala Dungeon"; close; }
 tur_dun02,162,23,3	script	Dimensius#73	10308,{ callfunc "QWS_Dungeon_Warpra",26,"Turtle Island Dungeon"; close; }
 prt_maze02,102,69,4	script	Dimensius#74	10308,{ callfunc "QWS_Dungeon_Warpra",13,"Hidden Dungeon"; close; }
+lhz_dun04,241,56,4	script	Dimensius#75	10308,{ callfunc "QWS_Dungeon_Warpra",28,"Hidden Dungeon"; close; }
