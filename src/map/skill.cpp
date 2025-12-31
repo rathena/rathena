@@ -13659,6 +13659,11 @@ static int8 skill_castend_id_check(block_list *src, block_list *target, uint16 s
 					return -1; //Works on silenced allies
 			}
 			break;
+		case PF_SOULBURN:
+			// Only works on players
+			if (target->type != BL_PC)
+				return USESKILL_FAIL_LEVEL;
+			break;
 		case RA_WUGSTRIKE:
 			// Check if path can be reached
 			if (!path_search(nullptr,src->m,src->x,src->y,target->x,target->y,1,CELL_CHKNOREACH))
