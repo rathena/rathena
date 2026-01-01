@@ -1,0 +1,164 @@
+prontera,148,195,5	script	ROTD	436,{
+	while(1){
+
+		mes "^FF0000ROTD^000000 refer to ^0000FFRace of the Day^000000";
+		mes "In another word, it mean that the ^FF0000Monster's Race^000000 that you killed by day will grant you ^FF0000Extra Bonus EXP / Item / Zeny ^000000.";
+		next;
+		mes "[ ^FF0000Today's ROTD^000000 ] = ^0000FF"+.ROTD$[.Race]+"^000000 Race";
+		mes "^FF0000_____________________________^000000";
+		mes "Bonus Lists :";
+		mes "^FF0000@^000000 EXP  = ^0000FF"+( ( !.BonusEXP )?"No":.BonusEXP+" %" )+"^000000 EXP Bonus";
+		mes "^FF0000@^000000 Zeny = ^0000FF"+( ( !.BonusZeny )?"No":.BonusZeny )+"^000000 Zeny";
+		mes "^FF0000@^000000 Item = ^0000FF"+( ( !.BonusItemAmount )?"No Items":.BonusItemAmount+" x "+getitemname( .BonusItem ) )+"^000000";
+		if( .BonusItemAmount ){
+			mes "^FF0000@^000000 Rate = ^0000FF"+.BonusRate+"^000000 %";
+			mes "^FF0000_____________________________^000000";
+			mes "The Amount of Bonus Reward is given ^FF0000Randomly^000000 at a fixed Rate.";
+		}
+		next;
+		switch(select("^4EEE94ROTD Information^000000",
+					( getgmlevel() < .GMLevel )?"":"^FF0000[GM]^000000Set a New Monster's Race",
+					( getgmlevel() < .GMLevel )?"":"^FF0000[GM]^000000Set EXP Bonus",
+					( getgmlevel() < .GMLevel )?"":"^FF0000[GM]^000000Set Item / Zeny Bonus")){
+
+		Case 1:
+			mes "Today's ROTD has choosen ^0000FF"+.ROTD$[.Race]+"^000000 Race , which will grant you some ^FF0000Extra Bonus EXP^000000.";
+			mes "The amount of ^FF0000EXP Bonus^000000 are ^0000FF"+.BonusEXP+" %^000000.";
+			next;
+			mes "For ^0000FFParty Members^000000 , they will only receive ^FF0000Bonus EXP^000000 if they didnt killed any monster.";
+			mes "Besides, they have to stay in the ^FF0000Same Map^000000 in order to get the ^FF0000EXP Bonus^000000.";
+			next;
+			break;
+
+		Case 2:
+			mes "Choose ^FF0000Randomly / Manually^000000 ?";
+			for( set .@i,0; .@i < getarraysize( .ROTD$ ); set .@i,.@i+1 ){
+				mes "[ ^FF0000"+.@i+"^000000. ] ^0000FF"+.ROTD$[.@i]+"^000000 Race";
+			}
+			message strcharinfo(0),"Input the Number. Choose Random if you want it Randomise a Race for you.";
+			input .Race,0,getarraysize( .ROTD$ )-1;
+			next;
+			if( .Race == getarraysize( .ROTD$ )-1 ){
+				set .Race,rand( getarraysize( .ROTD$ )-1 );
+			}
+			mes "[ ^FF0000ROTD Update^000000 ]";
+			mes "[ ^FF0000Updated^000000 ] = ^0000FF"+.ROTD$[.Race]+"^000000 Race";
+			mes "[ ^FF0000Bonus EXP^000000 ] = Extra ^0000FF"+.BonusEXP+"^000000 %";
+			announce "[ ROTD ] : New Race : "+.ROTD$[.Race]+" with Bonus EXP of "+.BonusEXP+" % ",bc_blue;
+			delwaitingroom;
+			waitingroom "[ROTD] "+.ROTD$[.Race]+" ",0;
+			next;
+			break;
+
+		Case 3:
+			mes "Set ^FF0000Random EXP / Manually^000000";
+			mes "Input 0 for ^0000FFRandom Bonus EXP Rate^000000";
+			mes "Input ^FF0000RATE^000000 for ^0000FFManual Bonus EXP Rate^000000";
+			mes "^FF0000EXP Range^000000 : 1% ~ 100%";
+			mes "Current Rate = [ ^0000FF"+.BonusEXP+"^000000 % ]";
+			input .BonusEXP,0,100;
+			if( .BonusEXP == 0 ){
+				set .BonusEXP,rand( 1,100 );
+			}
+			next;
+			mes "The New EXP Rate is [ ^0000FF"+.BonusEXP+"^000000 % ]";
+			announce "[ ROTD ] : New Race : "+.ROTD$[.Race]+" with Bonus EXP of "+.BonusEXP+" % ",bc_blue;
+			next;
+			break;
+
+		Case 4:
+			mes "You may set a ^FF0000 Item / Zeny Bonus^000000 for the ^0000FFROTD^000000.";
+			mes "This will work when you have killed a ^FF0000ROTD's Monster^000000, there will be a chances for Player to gain the ^FF0000Item / Zeny^000000.";
+			next;
+			mes "Input the ^FF0000Zeny Bonus^000000";
+			message strcharinfo(0),"You may input 0 to disable it. [ Use it Wisely ]";
+			input .BonusZeny;;
+			mes "Input the ^FF0000Item ID^000000";
+			do{
+				input .BonusItem,0,32767;
+			}while( getitemname( .BonusItem ) == "null" );
+			mes "Input the ^FF0000Item Bonus Amount^000000";
+			mes "Range of Amount = 0 ~ 30,000";
+			message strcharinfo(0),"You may input 0 to disable it. [ Use it Wisely ]";
+			input .BonusItemAmount,0,30000;
+			next;
+			mes "^FF0000Rate^000000 to get it ??";
+			mes "^FF0000100 = 100%^000000";
+			mes "^FF0000 10 =  10%^000000";
+			mes "^FF0000  1 =   1%^000000";
+			mes "^FF0000  0 = DISABLED^000000";
+			input .BonusRate,0,100;
+			next;
+			mes "[ ^FF0000ROTD Update^000000 ]";
+			mes "^0000FFZeny Bonus^000000 : "+.BonusZeny+" Zeny";
+			mes "^0000FFItem Bonus^000000 : "+.BonusItemAmount+" x "+getitemname( .BonusItem );
+			mes "^0000FFItem Rate^000000  : "+.BonusRate+" %";
+			next;
+			break;
+		}
+	}
+	close;
+
+OnInit:
+	set .GMLevel,80;
+	setarray .ROTD$[0],
+					"Formless",
+					"Undead",
+					"Brute",
+					"Plant",
+					"Insect",
+					"Fish",
+					"Demon",
+					"Demi-Human",
+					"Angel",
+					"Dragon",
+					"Random";
+
+	set .ExpLvlRange,10;
+
+	// First initialization
+	donpcevent strnpcinfo(0)+"::OnROTDChange";
+
+	// Change automatically every 2 hours (7200000 ms)
+	initnpctimer;
+	end;
+
+OnTimer7200000:
+	donpcevent strnpcinfo(0)+"::OnROTDChange";
+	initnpctimer;
+	end;
+
+OnROTDChange:
+	// Randomize Race (0..9) and EXP bonus (1..100)
+	set .Race, rand(10);
+	set .BonusEXP, rand(1,100);
+
+	delwaitingroom;
+	waitingroom "[ROTD]:"+.ROTD$[.Race]+" ",0;
+
+	announce "[ ROTD ] : New Race : "+.ROTD$[.Race]+" with Bonus EXP of "+.BonusEXP+" % ", bc_blue;
+	end;
+
+OnNPCKillEvent:
+	if( getmonsterinfo( killedrid,19 ) != .Race  ) end;
+
+	if( getcharid(1) ){
+		set .@Location$,strcharinfo(3);
+		set .BaseLvl,BaseLevel;
+		getpartymember getcharid(1),1;
+		getpartymember getcharid(1),2;
+		for ( set .@a, 0; .@a < .partymembercount; set .@a, .@a +1 )
+			if ( isloggedin( .partymemberaid[.@a] )  )
+				attachrid( .partymemberaid[.@a] );
+					if( strcharinfo(3) == .@Location$ && ( .BaseLvl - BaseLevel ) <= .ExpLvlRange )
+						getexp ( getmonsterinfo( killedrid,3 ) * .BonusEXP / 100 ),( getmonsterinfo( killedrid,4 ) * .BonusEXP / 100 );
+	}else{
+		getexp ( getmonsterinfo( killedrid,3 ) * .BonusEXP / 100 ),( getmonsterinfo( killedrid,4 ) * .BonusEXP / 100 );
+	}
+
+	if( rand(100) <= .BonusRate && .BonusItemAmount )
+		getitem .BonusItem,rand( 1,.BonusItemAmount );
+	if( rand(100) <= .BonusRate && .BonusZeny )
+		set Zeny,Zeny + rand( 1,.BonusZeny );
+	end;
+}
