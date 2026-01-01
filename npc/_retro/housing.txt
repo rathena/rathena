@@ -1,0 +1,236 @@
+//===================================================
+// House & Clan Hall System (rAthena - New Instance)
+//===================================================
+// REQUISITO:
+// As instâncias DEVEM existir no instance_db.yml
+// Ex:
+//  - HC_House_0, HC_House_1, HC_House_2
+//  - HC_GuildHall_0, HC_GuildHall_1
+//===================================================
+
+
+//---------------------------------------------------
+// CONFIG
+//---------------------------------------------------
+-	script	HC_Config	-1,{
+
+	OnInit:
+		setarray .house_maps$[0], "guild_vs1", "guild_vs2", "guild_vs3";
+		.house_price = 1000000;
+		.house_rent_days = 0;
+
+		setarray .hall_maps$[0], "guild_room", "guild_room2";
+		.hall_price = 5000000;
+		.hall_rent_minutes = 60;
+		.min_guild_lv = 5;
+		.min_members = 10;
+		end;
+}
+
+
+//---------------------------------------------------
+// HOUSE MANAGER
+//---------------------------------------------------
+prontera,155,180,4	script	House Manager	4_F_KAFRA1,{
+
+	.@cfg$ = "HC_Config";
+
+	.@hsize = getarraysize(getvariableofnpc(.house_maps$, .@cfg$));
+	copyarray .@maps$[0], getvariableofnpc(.house_maps$[0], .@cfg$), .@hsize;
+
+	.@price = getvariableofnpc(.house_price, .@cfg$);
+	.@days  = getvariableofnpc(.house_rent_days, .@cfg$);
+
+	if (#house_id == 0 && #house_expire == 0)
+		#house_id = -1;
+
+	mes "[House Manager]";
+
+	if (#house_id < 0) {
+		mes "You do not own a house.";
+		mes "Price: "+.@price+" Zeny";
+		next;
+
+		switch(select("Buy:Preview Maps:Cancel")) {
+
+			case 1:
+				if (Zeny < .@price) { mes "Not enough Zeny."; close; }
+
+				for (.@i = 0; .@i < .@hsize; .@i++) {
+					if (getd("$HouseOwner_"+.@i+"$") == "") {
+						Zeny -= .@price;
+						#house_id = .@i;
+
+						if (.@days > 0)
+							#house_expire = gettimetick(2) + (.@days * 86400);
+						else
+							#house_expire = 0;
+
+						setd("$HouseOwner_"+.@i+"$"), strcharinfo(0);
+						mes "House purchased!";
+						close;
+					}
+				}
+				mes "No houses available.";
+				close;
+
+			case 2:
+				for (.@i = 0; .@i < .@hsize; .@i++)
+					mes "["+.@i+"] "+.@maps$[.@i];
+				close;
+
+			default:
+				close;
+		}
+	}
+
+	if (#house_expire > 0 && gettimetick(2) >= #house_expire) {
+		setd("$HouseOwner_"+#house_id+"$"), "";
+		#house_id = -1;
+		#house_expire = 0;
+		mes "Your house expired.";
+		close;
+	}
+
+	if (#house_expire == 0)
+		mes "Status: Permanent";
+	else {
+		.@time$ = "";
+		callsub S_TimeLeft$, #house_expire;
+		mes "Time left: "+.@time$;
+	}
+
+	next;
+
+	switch(select("Enter House:Release House:Cancel")) {
+
+		case 1:
+			.@inst$ = "HC_House_"+#house_id;
+			if (instance_create(.@inst$) < 0) {
+				mes "Instance error. Check instance_db.yml";
+				close;
+			}
+			instance_enter(.@inst$);
+			close;
+
+		case 2:
+			setd("$HouseOwner_"+#house_id+"$"), "";
+			#house_id = -1;
+			#house_expire = 0;
+			Zeny += (.@price / 2);
+			mes "House released.";
+			close;
+
+		default:
+			close;
+	}
+
+S_TimeLeft$:
+	.@left = getarg(0) - gettimetick(2);
+	if (.@left <= 0) {
+		.@time$ = "expired";
+		return;
+	}
+	.@d = .@left / 86400;
+	.@h = (.@left % 86400) / 3600;
+	.@m = (.@left % 3600) / 60;
+	.@time$ = (.@d)+"d "+(.@h)+"h "+(.@m)+"m";
+	return;
+}
+
+
+//---------------------------------------------------
+// CLAN HALL MANAGER
+//---------------------------------------------------
+prontera,158,180,4	script	Clan Hall Manager	4_F_KAFRA2,{
+
+	.@cfg$ = "HC_Config";
+
+	.@msize = getarraysize(getvariableofnpc(.hall_maps$, .@cfg$));
+	copyarray .@maps$[0], getvariableofnpc(.hall_maps$[0], .@cfg$), .@msize;
+
+	.@price = getvariableofnpc(.hall_price, .@cfg$);
+	.@mins  = getvariableofnpc(.hall_rent_minutes, .@cfg$);
+	.@minlv = getvariableofnpc(.min_guild_lv, .@cfg$);
+	.@minmb = getvariableofnpc(.min_members, .@cfg$);
+
+	.@gid = getcharid(2);
+	if (.@gid == 0) { mes "Join a guild first."; close; }
+
+	mes "[Clan Hall Manager]";
+
+	.@expire = getd("$GuildHall_"+.@gid+"_expire");
+
+	if (.@expire > gettimetick(2)) {
+		.@time$ = "";
+		callsub S_TimeLeftHall$, .@expire;
+		mes "Hall active.";
+		mes "Time left: "+.@time$;
+		next;
+
+		switch(select("Enter Hall:Disband:Cancel")) {
+
+			case 1:
+				.@idx = (.@gid % .@msize);
+				.@inst$ = "HC_GuildHall_"+.@idx;
+				if (instance_create(.@inst$) < 0) {
+					mes "Instance error.";
+					close;
+				}
+				instance_enter(.@inst$);
+				close;
+
+			case 2:
+				if (getguildmaster(.@gid) != strcharinfo(0)) {
+					mes "Leader only.";
+					close;
+				}
+				setd("$GuildHall_"+.@gid+"_expire"), 0;
+				mes "Hall disbanded.";
+				close;
+
+			default:
+				close;
+		}
+	}
+
+	if (getguildmaster(.@gid) != strcharinfo(0)) {
+		mes "Only guild leader can rent.";
+		close;
+	}
+
+	if (getguildlv(.@gid) < .@minlv) { mes "Guild level too low."; close; }
+	if (getguildmembercount(.@gid) < .@minmb) { mes "Not enough members."; close; }
+
+	mes "Price: "+.@price+" Zeny";
+	mes "Duration: "+.@mins+" minutes";
+	next;
+
+	if (select("Rent:Cancel") == 1) {
+		if (Zeny < .@price) { mes "Not enough Zeny."; close; }
+
+		Zeny -= .@price;
+		setd("$GuildHall_"+.@gid+"_expire"), gettimetick(2) + (.@mins * 60);
+		mes "Hall rented.";
+		close;
+	}
+
+	close;
+
+S_TimeLeftHall$:
+	.@left = getarg(0) - gettimetick(2);
+	if (.@left <= 0) {
+		.@time$ = "expired";
+		return;
+	}
+	.@d = .@left / 86400;
+	.@h = (.@left % 86400) / 3600;
+	.@m = (.@left % 3600) / 60;
+	.@time$ = (.@d)+"d "+(.@h)+"h "+(.@m)+"m";
+	return;
+}
+
+
+//===================================================
+// END
+//===================================================
