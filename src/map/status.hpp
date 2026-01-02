@@ -3522,7 +3522,7 @@ public:
 	status_change_entry* createSCE( enum sc_type type );
 	void deleteSCE(enum sc_type type);
 	bool empty() const;
-	size_t size();
+	size_t size() const;
 	std::unordered_map<enum sc_type, status_change_entry>::const_iterator begin() const;
 	std::unordered_map<enum sc_type, status_change_entry>::const_iterator end() const;
 };
@@ -3578,7 +3578,7 @@ struct status_data *status_get_base_status( block_list* bl );
 const status_data* status_get_base_status( const block_list* bl );
 const char* status_get_name( const block_list& bl );
 int32 status_get_class( const block_list* bl );
-int32 status_get_lv( const block_list* bl );
+int32 status_get_lv(const block_list *bl);
 #define status_get_range(bl) status_get_status_data(*bl)->rhw.range
 #define status_get_hp(bl) status_get_status_data(*bl)->hp
 #define status_get_max_hp(bl) status_get_status_data(*bl)->max_hp
@@ -3709,17 +3709,17 @@ static void status_calc_bl(block_list *bl, std::vector<e_scb_flag> flags) {
 	status_calc_bl_(bl, temp);
 }
 
-void status_calc_misc( block_list* bl, status_data *status, int32 level );
-void status_calc_regen( block_list* bl, status_data *status, regen_data* regen );
-void status_calc_regen_rate( block_list* bl, regen_data* regen, status_change* sc );
-void status_calc_state( block_list* bl, status_change* sc, std::bitset<SCS_MAX> flag, bool start );
+void status_calc_misc(block_list *bl, struct status_data *status, int32 level);
+void status_calc_regen(block_list *bl, struct status_data *status, struct regen_data *regen);
+void status_calc_regen_rate(block_list *bl, struct regen_data *regen, status_change *sc);
+void status_calc_state(block_list *bl, status_change *sc, std::bitset<SCS_MAX> flag, bool start);
 
 void status_calc_slave_mode(mob_data& md);
 
 bool status_check_skilluse(const block_list* src, const block_list* target, uint16 skill_id, int32 flag);
 bool status_check_visibility(const block_list* src, const block_list* target, bool checkblind);
 
-int32 status_change_spread( block_list* src, block_list* bl );
+int32 status_change_spread(block_list *src, block_list *bl);
 
 #ifndef RENEWAL
 uint16 status_base_matk_min(const struct status_data* status);
@@ -3733,7 +3733,7 @@ uint16 status_base_matk_max( const block_list* bl, const status_data* status, in
 uint16 status_calc_consumablematk( status_change *sc, int32 matk );
 uint16 status_calc_pseudobuff_matk( map_session_data *sd, status_change *sc, int32 matk );
 
-uint16 status_base_atk(const block_list* bl, const struct status_data *status, int32 level);
+uint16 status_base_atk(const block_list *bl, const struct status_data *status, int32 level);
 
 // Status changes accessors for StatusChange database
 uint16 status_efst_get_bl_type(enum efst_type efst);

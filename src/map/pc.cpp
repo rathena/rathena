@@ -7456,7 +7456,6 @@ static void pc_checkallowskill(map_session_data *sd)
 	}
 }
 
-
 /*==========================================
  * Return equipped index of item on player sd at pos
  * Return

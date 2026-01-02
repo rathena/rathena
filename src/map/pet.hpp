@@ -206,12 +206,8 @@ struct pet_data : public block_list {
 	int32 masterteleport_timer;
 	map_session_data *master;
 
-	std::shared_ptr<s_pet_db> get_pet_db() {
+	auto get_pet_db() const {
 		return pet_db.find(this->pet.class_);
-	}
-
-	const std::shared_ptr<const s_pet_db> get_pet_db() const{
-		return const_cast<pet_data*>(this)->get_pet_db();
 	}
 
 	int32 get_pet_walk_speed() {

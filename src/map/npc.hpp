@@ -1683,7 +1683,7 @@ int32 npc_instanceinit(npc_data* nd);
 int32 npc_instancedestroy(npc_data* nd);
 int32 npc_cashshop_buy(map_session_data *sd, t_itemid nameid, int32 amount, int32 points);
 
-void npc_shop_currency_type( map_session_data* sd, const npc_data* nd, int32 cost[2], bool display );
+void npc_shop_currency_type( const map_session_data* sd, const npc_data* nd, int32 cost[2], bool display );
 
 extern npc_data* fake_nd;
 

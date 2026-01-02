@@ -1244,7 +1244,7 @@ bool status_change::empty() const{
 	return this->data.empty();
 }
 
-size_t status_change::size(){
+size_t status_change::size() const{
 	return this->data.size();
 }
 
@@ -2421,7 +2421,7 @@ int32 status_base_amotion_pc(map_session_data* sd, struct status_data* status)
  * @param status: Object status
  * @return base attack
  */
-uint16 status_base_atk(const block_list* bl, const struct status_data *status, int32 level)
+uint16 status_base_atk(const block_list *bl, const struct status_data *status, int32 level)
 {
 	int32 flag = 0, str, dex, dstr;
 
@@ -2508,8 +2508,12 @@ uint32 status_weapon_atk( const weapon_atk& wa ){
 #endif
 
 #ifndef RENEWAL
-uint16 status_base_matk_min( const status_data* status ) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
-uint16 status_base_matk_max( const status_data* status ) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
+uint16 status_base_matk_min( const status_data* status ) {
+	return status->int_ + (status->int_ / 7) * (status->int_ / 7);
+}
+uint16 status_base_matk_max( const status_data* status ) {
+	return status->int_ + (status->int_ / 5) * (status->int_ / 5);
+}
 #else
 /*
 * Calculates minimum attack variance 80% from db's ATK1 for non BL_PC
@@ -8974,7 +8978,7 @@ int32 status_get_class(const block_list* bl)
  * @param bl: Object whose base level to get [PC|MOB|PET|HOM|MER|NPC|ELEM]
  * @return base level or 1 if any other bl->type than noted above
  */
-int32 status_get_lv(const block_list* bl)
+int32 status_get_lv(const block_list *bl)
 {
 	nullpo_ret(bl);
 	switch (bl->type) {
@@ -8994,7 +8998,7 @@ int32 status_get_lv(const block_list* bl)
  * @param bl: Object whose regen info to get [PC|HOM|MER|ELEM]
  * @return regen data or nullptr if any other bl->type than noted above
  */
-struct regen_data* status_get_regen_data(block_list* bl)
+struct regen_data *status_get_regen_data(block_list* bl)
 {
 	nullpo_retr(nullptr, bl);
 	switch (bl->type) {
@@ -9006,10 +9010,10 @@ struct regen_data* status_get_regen_data(block_list* bl)
 			return nullptr;
 	}
 }
+
 const regen_data* status_get_regen_data(const block_list* bl){
 	return status_get_regen_data(const_cast<block_list*>(bl));
 }
-
 
 /**
  * Gets the status data of the given bl
@@ -9100,7 +9104,7 @@ uint16 status_get_speed( const block_list* bl )
 {
 	// TODO: is the statement of Skotlex still true? And would it not be better to check for dummy_status instead? [Lemongrass]
 	if(bl->type==BL_NPC)// Only BL with speed data but no status_data [Skotlex]
-		return (static_cast<const npc_data*>(bl))->speed;
+		return static_cast<const npc_data*>(bl)->speed;
 	return status_get_status_data(*bl)->speed;
 }
 
@@ -9149,7 +9153,6 @@ int32 status_get_party_id( const block_list* bl )
 	return 0;
 }
 
-
 /**
  * Gets the guild ID of the given bl
  * @param bl: Object whose guild ID to get [PC|MOB|PET|HOM|MER|SKILL|ELEM|NPC]
@@ -9162,38 +9165,39 @@ int32 status_get_guild_id(const block_list* bl)
 		case BL_PC:
 			return static_cast<const map_session_data*>(bl)->status.guild_id;
 		case BL_PET:
-			if (static_cast<const pet_data*>(bl)->master)
-				return static_cast<const pet_data*>(bl)->master->status.guild_id;
+			if (const pet_data* pd = static_cast<const pet_data*>(bl); pd->master != nullptr)
+				return pd->master->status.guild_id;
 			break;
 		case BL_MOB:
 			{
-				map_session_data *msd;
-				mob_data *md = (mob_data *)bl;
+				const mob_data *md = static_cast<const mob_data*>(bl);
 				if (md->guardian_data)	// Guardian's guild [Skotlex]
 					return md->guardian_data->guild_id;
-				if (md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr)
-					return msd->status.guild_id; // Alchemist's mobs [Skotlex]
+				if (md->special_state.ai){
+					if(map_session_data* msd = map_id2sd(md->master_id); msd != nullptr)
+						return msd->status.guild_id; // Alchemist's mobs [Skotlex]
+				}
 			}
 			break;
 		case BL_HOM:
-			if (static_cast<const homun_data*>(bl)->master)
-				return static_cast<const homun_data*>(bl)->master->status.guild_id;
+			if (const homun_data* hd = static_cast<const homun_data*>(bl); hd->master != nullptr)
+				return hd->master->status.guild_id;
 			break;
 		case BL_MER:
-			if (static_cast<const s_mercenary_data*>(bl)->master)
-				return static_cast<const s_mercenary_data*>(bl)->master->status.guild_id;
+			if (const s_mercenary_data* md = static_cast<const s_mercenary_data*>(bl); md->master != nullptr)
+				return md->master->status.guild_id;
 			break;
 		case BL_NPC:
-			if (static_cast<const npc_data*>(bl)->subtype == NPCTYPE_SCRIPT)
-				return static_cast<const npc_data*>(bl)->u.scr.guild_id;
+			if (const npc_data* nd = static_cast<const npc_data*>(bl); nd->subtype == NPCTYPE_SCRIPT)
+				return nd->u.scr.guild_id;
 			break;
 		case BL_SKILL:
-			if (static_cast<const skill_unit*>(bl)->group)
-				return static_cast<const skill_unit*>(bl)->group->guild_id;
+			if (const skill_unit* su = static_cast<const skill_unit*>(bl); su->group != nullptr)
+				return su->group->guild_id;
 			break;
 		case BL_ELEM:
-			if (static_cast<const s_elemental_data*>(bl)->master)
-				return static_cast<const s_elemental_data*>(bl)->master->status.guild_id;
+			if (const s_elemental_data* ed = static_cast<const s_elemental_data*>(bl); ed->master != nullptr)
+				return ed->master->status.guild_id;
 			break;
 	}
 	return 0;
@@ -9233,8 +9237,8 @@ int32 status_get_emblem_id(const block_list* bl)
 				return static_cast<const s_mercenary_data*>(bl)->master->guild_emblem_id;
 			break;
 		case BL_NPC:
-			if (static_cast<const npc_data*>(bl)->subtype == NPCTYPE_SCRIPT && static_cast<const npc_data*>(bl)->u.scr.guild_id > 0) {
-				auto g = guild_search(static_cast<const npc_data*>(bl)->u.scr.guild_id);
+			if (const npc_data* nd = static_cast<const npc_data*>(bl); nd->subtype == NPCTYPE_SCRIPT && nd->u.scr.guild_id > 0) {
+				auto g = guild_search(nd->u.scr.guild_id);
 				if (g)
 					return g->guild.emblem_id;
 			}
@@ -9243,7 +9247,7 @@ int32 status_get_emblem_id(const block_list* bl)
 			if (static_cast<const s_elemental_data*>(bl)->master)
 				return static_cast<const s_elemental_data*>(bl)->master->guild_emblem_id;
 			break;
-}
+	}
 	return 0;
 }
 
@@ -9363,7 +9367,6 @@ struct view_data* status_get_viewdata(block_list *bl)
 const struct view_data* status_get_viewdata(const block_list* bl){
 	return status_get_viewdata(const_cast<block_list*>(bl));
 }
-
 
 /**
  * Set view data of an object
@@ -9553,6 +9556,7 @@ status_change* status_get_sc(block_list* bl){
 	}
 	return nullptr;
 }
+
 const status_change* status_get_sc(const block_list* bl){
 	return status_get_sc(const_cast<block_list*>(bl));
 }
@@ -15395,7 +15399,7 @@ void status_change_clear_buffs(block_list* bl, uint8 type)
  * @param bl: Object to change
  * @return 1: Success 0: Fail
  */
-int32 status_change_spread( block_list* src, block_list* bl )
+int32 status_change_spread(block_list *src, block_list *bl)
 {
 	if (src == nullptr || bl == nullptr)
 		return 0;

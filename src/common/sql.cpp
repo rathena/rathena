@@ -470,7 +470,7 @@ static enum enum_field_types Sql_P_SizeToMysqlIntType(int32 sz)
 /// Binds a parameter/result.
 ///
 /// @private
-static int32 Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_type, void* buffer, size_t buffer_len, unsigned long* out_length, int8* out_is_null)
+static int32 Sql_P_BindSqlDataType(MYSQL_BIND* bind, enum SqlDataType buffer_type, const void* buffer, size_t buffer_len, unsigned long* out_length, int8* out_is_null)
 {
 	memset(bind, 0, sizeof(MYSQL_BIND));
 	switch( buffer_type )
@@ -703,7 +703,7 @@ size_t SqlStmt::NumParams(){
 
 
 /// Binds a parameter to a buffer.
-int32 SqlStmt::BindParam(size_t idx, enum SqlDataType buffer_type, void* buffer, size_t buffer_len){
+int32 SqlStmt::BindParam(size_t idx, enum SqlDataType buffer_type, const void* buffer, size_t buffer_len){
 	if( !this->bind_params ){
 		// initialize the bindings
 		size_t count = this->NumParams();

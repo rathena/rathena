@@ -45,7 +45,7 @@ static struct eri *delay_damage_ers; //For battle delay damage structures.
 #endif
 
 // Early declaration
-int32 battle_get_weapon_element( Damage *wd, const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int16 weapon_position, bool calc_for_damage_only );
+int32 battle_get_weapon_element( const Damage *wd, const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int16 weapon_position, bool calc_for_damage_only );
 int32 battle_get_magic_element( const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int32 mflag );
 int32 battle_get_misc_element( const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int32 mflag );
 static void battle_calc_defense_reduction( Damage* wd, block_list* src, block_list* target, uint16 skill_id, uint16 skill_lv );
@@ -3145,7 +3145,7 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-static int32 is_attack_piercing(struct Damage* wd, block_list* src, const block_list* target, int32 skill_id, int32 skill_lv, int16 weapon_position)
+static int32 is_attack_piercing(struct Damage* wd, const block_list* src, const block_list* target, int32 skill_id, int32 skill_lv, int16 weapon_position)
 {
 	if (skill_id == MO_INVESTIGATE || skill_id == RL_MASS_SPIRAL)
 		return 2;
@@ -3524,9 +3524,9 @@ static int32 battle_calc_equip_attack(block_list *src, int32 skill_id)
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-int32 battle_get_weapon_element( Damage* wd, const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int16 weapon_position, bool calc_for_damage_only ){
+int32 battle_get_weapon_element( const Damage* wd, const block_list* src, const block_list* target, uint16 skill_id, uint16 skill_lv, int16 weapon_position, bool calc_for_damage_only ){
 	const map_session_data* sd = BL_CAST(BL_PC,src);
-	const status_change *sc = status_get_sc(src);
+	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 	int32 element = skill_get_ele(skill_id, skill_lv);
 
@@ -4594,7 +4594,7 @@ static void battle_calc_multi_attack(struct Damage* wd, block_list *src,block_li
  * @param sc: Object's status change information
  * @return atkpercent with cap_value(watk,0,USHRT_MAX)
  */
-static uint16 battle_get_atkpercent(block_list& bl, uint16 skill_id, status_change& sc)
+static uint16 battle_get_atkpercent( const block_list& bl, uint16 skill_id, const status_change& sc)
 {
 	if (bl.type == BL_PC && !battle_skill_stacks_masteries_vvs(skill_id, BCHK_ALL))
 		return 100;
@@ -4676,7 +4676,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 200;
 #endif
 		if (!skill_id || skill_id == KN_AUTOCOUNTER) {
-			if (status_change_entry* sce = sc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 1) {
+			if (const status_change_entry* sce = sc->getSCE(SC_POISONREACT); sce != nullptr && sce->val4 == 1) {
 				// Damage boost from poison react (for players bonus depends on level learned)
 				if (sd != nullptr)
 					skillratio += 30 * pc_checkskill(sd, AS_POISONREACT);
@@ -7584,11 +7584,10 @@ static struct Damage initialize_weapon_data(const block_list* src, const block_l
 					wd.div_ = -6;
 				break;
 #endif
-			case MH_SONIC_CRAW:{
-				const homun_data* hd = BL_CAST(BL_HOM,src);
-				if(hd != nullptr)
+			case MH_SONIC_CRAW:
+				if(const homun_data* hd = BL_CAST(BL_HOM,src); hd != nullptr){
 					wd.div_ = hd->homunculus.spiritball;
-			}
+				}
 				break;
 			case MO_FINGEROFFENSIVE:
 				if (sd) {
@@ -11392,13 +11391,13 @@ int32 battle_check_target( const block_list* src, const block_list* target, int3
 		}
 	}
 
-	map_data* mapdata = map_getmapdata(m);
+	const map_data* mapdata = map_getmapdata(m);
 
 	switch( target->type ) { // Checks on actual target
 		case BL_PC: {
 				const status_change* sc = status_get_sc(src);
-
-				if (static_cast<const map_session_data*>(target)->invincible_timer != INVALID_TIMER || pc_isinvisible(static_cast<const map_session_data*>(target)))
+				const map_session_data* tsd = static_cast<const map_session_data*>(target);
+				if (tsd->invincible_timer != INVALID_TIMER || pc_isinvisible(tsd))
 					return -1; //Cannot be targeted yet.
 				if( sc != nullptr && !sc->empty() ) {
 					if( sc->getSCE(SC_VOICEOFSIREN) && sc->getSCE(SC_VOICEOFSIREN)->val2 == target->id )
@@ -11492,7 +11491,7 @@ int32 battle_check_target( const block_list* src, const block_list* target, int3
 
 			const map_session_data* sd = static_cast<const map_session_data*>(t_bl);
 
-			if( ((sd->state.block_action & PCBLOCK_IMMUNE) || (sd->sc.getSCE(SC_KINGS_GRACE) && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
+			if( ((sd->state.block_action & PCBLOCK_IMMUNE) || (sd->sc.hasSCE(SC_KINGS_GRACE) && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
 				return 0; // Global immunity only to Attacks
 			if( sd->status.karma && s_bl->type == BL_PC && ((TBL_PC*)s_bl)->status.karma )
 				state |= BCT_ENEMY; // Characters with bad karma may fight amongst them
@@ -11655,7 +11654,8 @@ int32 battle_check_target( const block_list* src, const block_list* target, int3
 
 		if( state&BCT_ENEMY && battle_config.pk_mode && !mapdata_flag_gvg(mapdata) && s_bl->type == BL_PC && t_bl->type == BL_PC )
 		{ // Prevent novice engagement on pk_mode (feature by Valaris)
-			const map_session_data* sd = static_cast<const map_session_data*>(s_bl), *sd2 = static_cast<const map_session_data*>(t_bl);
+			const map_session_data* sd = static_cast<const map_session_data*>(s_bl);
+			const map_session_data* sd2 = static_cast<const map_session_data*>(t_bl);
 			if (
 				(sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
 				(sd2->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||

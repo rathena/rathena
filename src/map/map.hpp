@@ -944,7 +944,7 @@ inline bool mapdata_flag_vs(const map_data* mapdata) {
  * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool mapdata_flag_vs2(struct map_data *mapdata) {
+inline bool mapdata_flag_vs2( const map_data* mapdata ) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -959,7 +959,7 @@ inline bool mapdata_flag_vs2(struct map_data *mapdata) {
  * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool mapdata_flag_gvg(struct map_data *mapdata) {
+inline bool mapdata_flag_gvg( const map_data* mapdata ) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -1005,7 +1005,7 @@ inline bool mapdata_flag_ks(const map_data *mapdata) {
  * @return True on success or false otherwise
  * @author Cydh
  */
-inline bool mapdata_flag_gvg2_te(struct map_data *mapdata) {
+inline bool mapdata_flag_gvg2_te( const map_data* mapdata ) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -1021,7 +1021,7 @@ inline bool mapdata_flag_gvg2_te(struct map_data *mapdata) {
  * @return True on success or false otherwise
  * @author Cydh
  */
-inline bool mapdata_flag_gvg2_no_te(struct map_data *mapdata) {
+inline bool mapdata_flag_gvg2_no_te( const map_data* mapdata ) {
 	if (mapdata == nullptr)
 		return false;
 

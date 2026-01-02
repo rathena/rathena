@@ -115,11 +115,7 @@ public:
 	}
 
 	virtual std::shared_ptr<const datatype> find(keytype key) const{
-		if(auto it = this->data.find(key); it != this->data.end()){
-			return it->second;
-		} else{
-			return nullptr;
-		}
+		return const_cast<TypesafeYamlDatabase*>(this)->find(key);
 	}
 
 	virtual void put( keytype key, std::shared_ptr<datatype> ptr ){
@@ -134,7 +130,7 @@ public:
 		return this->data.end();
 	}
 
-	size_t size(){
+	size_t size() const{
 		return this->data.size();
 	}
 

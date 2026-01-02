@@ -691,28 +691,30 @@ int32 bg_team_get_id( const block_list* bl )
 		case BL_PC:
 			return static_cast<const map_session_data*>(bl)->bg_id;
 		case BL_PET:
-			if(static_cast<const pet_data*>(bl)->master != nullptr)
-				return static_cast<const pet_data*>(bl)->master->bg_id;
+			if(const pet_data* pd = static_cast<const pet_data*>(bl); pd->master != nullptr)
+				return pd->master->bg_id;
 			break;
 		case BL_MOB: {
-			const map_session_data* msd;
 			const mob_data* md = static_cast<const mob_data*>(bl);
-
-			if( md->special_state.ai && (msd = map_id2sd(md->master_id)) != nullptr )
-				return msd->bg_id;
-
+			if( md->special_state.ai && md->master_id != 0 ){
+				if( const block_list* mbl = map_id2bl( md->master_id ); mbl != nullptr ){
+					return bg_team_get_id( mbl );
+				}
+			}
 			return md->bg_id;
 		}
 		case BL_HOM:
-			if(static_cast<const homun_data*>(bl)->master)
-				return static_cast<const homun_data*>(bl)->master->bg_id;
+			if(const homun_data* hd = static_cast<const homun_data*>(bl); hd->master != nullptr)
+				return hd->master->bg_id;
 			break;
 		case BL_MER:
-			if(static_cast<const s_mercenary_data*>(bl)->master )
-				return static_cast<const s_mercenary_data*>(bl)->master->bg_id;
+			if(const s_mercenary_data* md = static_cast<const s_mercenary_data*>(bl); md->master != nullptr )
+				return md->master->bg_id;
 			break;
 		case BL_SKILL:
-			return static_cast<const skill_unit*>(bl)->group->bg_id;
+			if(const skill_unit* su = static_cast<const skill_unit*>(bl); su->group != nullptr)
+				return su->group->bg_id;
+			break;
 	}
 
 	return 0;

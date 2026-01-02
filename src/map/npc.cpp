@@ -2611,7 +2611,7 @@ int32 npc_cashshop_buylist( map_session_data *sd, int32 points, std::vector<s_np
  * @param cost: Reference to cost variable
  * @param display: Display cost type to player?
  */
-void npc_shop_currency_type( map_session_data* sd, const npc_data* nd, int32 cost[2], bool display)
+void npc_shop_currency_type( const map_session_data* sd, const npc_data* nd, int32 cost[2], bool display)
 {
 	nullpo_retv(sd);
 

@@ -1395,7 +1395,7 @@ int32 party_sub_count(block_list *bl, va_list ap)
  * @param ap: List of parameters: Class_Mask, Class_ID
  * @return 1 when class exists in party or 0 otherwise
  */
-int32 party_sub_count_class( block_list *bl, va_list ap)
+int32 party_sub_count_class(block_list *bl, va_list ap)
 {
 	map_session_data *sd = (TBL_PC *)bl;
 	uint32 mask = va_arg(ap, uint32);
@@ -1458,7 +1458,6 @@ int32 party_foreachsamemap(int32 (*func)(block_list*,va_list),const map_session_
 
 	return total;
 }
-
 
 /*==========================================
  * Party Booking in KRO [Spiria]

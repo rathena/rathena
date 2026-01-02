@@ -3514,9 +3514,9 @@ void unit_skillunit_maxcount( const unit_data& ud, uint16 skill_id, int& maxcoun
  * @return number of targets or 0
  */
 int32 unit_counttargeted( const block_list* bl ) {
-	const unit_data* ud{};
+	const unit_data* ud = unit_bl2ud(bl);
 
-	if( bl && (ud = unit_bl2ud(bl)) )
+	if( ud != nullptr )
 		return ud->target_count;
 
 	return 0;
