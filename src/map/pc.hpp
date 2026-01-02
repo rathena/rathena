@@ -661,6 +661,7 @@ public:
 		int32 magic_damage_return; // AppleGirl Was Here
 		int32 break_weapon_rate,break_armor_rate;
 		int32 crit_atk_rate;
+		int32 non_crit_atk_rate;
 		int32 crit_def_rate;
 		int32 classchange; // [Valaris]
 		int32 speed_rate, speed_add_rate, aspd_add;
@@ -1743,6 +1744,9 @@ int16 pc_get_itemgroup_bonus_group(map_session_data* sd, uint16 group_id, std::v
 bool pc_is_same_equip_index(enum equip_index eqi, int16 *equip_index, int16 index);
 /// Check if player is Taekwon Ranker and the level is >= 90 (battle_config.taekwon_ranker_min_lv)
 #define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
+
+/// Check if player is a trait job.
+#define pc_is_trait_job(class_) (((class_)&JOBL_FOURTH) || ((class_)&MAPID_THIRDMASK) == MAPID_NIGHT_WATCH || ((class_)&MAPID_THIRDMASK) == MAPID_SHINKIROSHIRANUI || ((class_)&MAPID_UPPERMASK) == MAPID_SPIRIT_HANDLER)
 
 TIMER_FUNC(pc_autotrade_timer);
 

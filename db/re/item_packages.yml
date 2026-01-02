@@ -31,144 +31,100 @@
 #                              To remove an item via import set amount to 0.
 #           RentalHours        Rental time in hours. (Default: 0)
 #           Refine             Refine level of the item. (Default: 0)
+#           Grade              Grade level of the item. (None, D, C, B or A. Default: None)
 #           RandomOptionGroup  Name of the random option group that will be applied. (Default: none)
 ###########################################################################
 
 Header:
   Type: ITEM_PACKAGE_DB
-  Version: 1
+  Version: 2
 
 Body:
   - Item: Select_Example1
     Groups:
       - Group: 0
         Items:
-          - Item: Cotton_Shirt
+          - Item: 5LvBattle_Axe
             Refine: 7
-#            RandomOptionGroup: TODO <insert random option group name>
-          - Item: Shoes
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: D
+          - Item: 5LvKanata
             Refine: 5
-#            RandomOptionGroup: TODO <insert random option group name>
-          - Item: Muffler
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: C
+          - Item: 5LvJur
             Refine: 3
-#            RandomOptionGroup: TODO <insert random option group name>
-          - Item: Event_Pierrot_Nose
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: B
+          - Item: 5LvGuisarme
             RentalHours: 24
-#            RandomOptionGroup: TODO <insert random option group name>
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: A
       - Group: 1
         Items:
-          - Item: Red_Potion
-            Amount: 100
-          - Item: Orange_Potion
-            Amount: 50
-          - Item: White_Potion
-            Amount: 10
+          - Item: 5LvStaff
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: D
+          - Item: 5LvHuuma
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: C
+          - Item: 5LvBow
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: B
+          - Item: 5LvSix_Shooter
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: A
       - Group: 2
         Items:
-          - Item: Jellopy
-            Amount: 10
-          - Item: Hinalle
-          - Item: Yellow_Gemstone
-            Amount: 3
-          - Item: Azure_Jewel
+          - Item: 5LvRifle
+            RentalHours: 3
+            Grade: D
+          - Item: 5LvRolling_Stone
+            RentalHours: 5
+            Grade: C
+          - Item: 5LvSword
+            RentalHours: 7
+            Grade: B
+          - Item: 5LvKnife
+            RentalHours: 9
+            Grade: A
           - Item: Spore_Doll
             Amount: 2
   - Item: Select_Example2
     Groups:
       - Group: 0
         Items:
-          - Item: Knife
-            Refine: 4
-#            RandomOptionGroup: TODO <insert random option group name>
-          - Item: Cotton_Shirt
-            Refine: 4
-#            RandomOptionGroup: TODO <insert random option group name>
-          - Item: Red_Potion
-            Amount: 100
-          - Item: Ring
-            RentalHours: 24
-#            RandomOptionGroup: TODO <insert random option group name>
+          - Item: 2LvHat
+            Refine: 1
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: D
+          - Item: 2LvGlass
+            Refine: 3
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: C
+          - Item: 2LvMask
+            Refine: 5
+            Grade: B
+          - Item: 2Lv_Shirt
+            Refine: 7
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: A
       - Group: 1
         Items:
-          - Item: Tsurugi
-            Refine: 5
-#            RandomOptionGroup: TODO <insert random option group name>
-          - Item: Padded_Armor
-            Refine: 5
-#            RandomOptionGroup: TODO <insert random option group name>
-          - Item: Yellow_Potion
-            Amount: 50
-      - Group: 2
-        Items:
-          - Item: Sword
+          - Item: 2LvGuard
+            Refine: 9
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: D
+          - Item: 2LvSandals
+            Refine: 12
+#           RandomOptionGroup: TODO <insert random option group name>
+            Grade: C
+          - Item: 2LvHood
+            Refine: 15
+            Grade: B
+          - Item: 2LvClip
             Refine: 20
-#            RandomOptionGroup: TODO <insert random option group name>
-          - Item: Guard
-            RentalHours: 168
-            Refine: 5
-#            RandomOptionGroup: TODO <insert random option group name>
-          - Item: White_Herb
-            Amount: 100
-      - Group: 3
-        Items:
-          - Item: Fabre_Card
-          - Item: Pupa_Card
-          - Item: Drops_Card
-          - Item: Poring__Card
-          - Item: Lunatic_Card
-          - Item: Pecopeco_Egg_Card
-          - Item: Picky_Card
-          - Item: Chonchon_Card
-          - Item: Wilow_Card
-          - Item: Picky__Card
-          - Item: Thief_Bug_Egg_Card
-          - Item: Andre_Egg_Card
-          - Item: Roda_Frog_Card
-          - Item: Condor_Card
-          - Item: Thief_Bug_Card
-          - Item: Savage_Babe_Card
-          - Item: Andre_Larva_Card
-          - Item: Hornet_Card
-          - Item: Farmiliar_Card
-          - Item: Rocker_Card
-      - Group: 4
-        Items:
-          - Item: Poring_Card
-      - Group: 5
-        Items:
-          - Item: LI_Nyangvine_Box3_26
-            Amount: 5
-      - Group: 6
-        Items:
-          - Item: C_Hair_Of_The_Strong
-#            RandomOptionGroup: TODO <insert random option group name>
-          - Item: C_Imp_Hat
-#            RandomOptionGroup: TODO <insert random option group name>
-      - Group: 7
-        Items:
-          - Item: C_Classical_Fhat
-      - Group: 8
-        Items:
-          - Item: Wing_Of_Fly
-            Amount: 3
-            RentalHours: 24
-          - Item: Wing_Of_Butterfly
-            Amount: 5
-            RentalHours: 168
-          - Item: Old_Blue_Box
-            RentalHours: 1
-      - Group: 9
-        Items:
-          - Item: Red_Potion
-            Amount: 3
-            RentalHours: 1
-      - Group: 10
-        Items:
-          - Item: Guard_
-      - Group: 11
-        Items:
-          - Item: Orange_Potion
-            Amount: 800
+            Grade: A
   - Item: Minus_Status_Box_
     Groups:
       - Group: 0
@@ -306,6 +262,40 @@ Body:
       - Group: 3
         Items:
           - Item: Skill_Sha_R_M_Magic
+  - Item: Boost_Armor_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: Atker_Plate
+          - Item: Atker_Manteau
+          - Item: Atker_Greave
+          - Item: Atker_Ring
+          - Item: Boost_Up_1
+            Amount: 3
+      - Group: 1
+        Items:
+          - Item: Ran_Suits
+          - Item: Ran_Manteau
+          - Item: Ran_Boots
+          - Item: Ran_Brooch
+          - Item: Boost_Up_1
+            Amount: 3
+      - Group: 2
+        Items:
+          - Item: Ele_Robe
+          - Item: Ele_Muffler
+          - Item: Ele_Shoes
+          - Item: Ele_Earing
+          - Item: Boost_Up_1
+            Amount: 3
+      - Group: 3
+        Items:
+          - Item: Defn_Robe
+          - Item: Defn_Muffler
+          - Item: Defn_Shoes
+          - Item: Defn_Earing
+          - Item: Boost_Up_1
+            Amount: 3
   - Item: Metal_W_Box
     Groups:
       - Group: 0
@@ -422,40 +412,6 @@ Body:
         Items:
           - Item: Ep19_Snow_Flower
             Amount: 20
-  - Item: Boost_Armor_Box
-    Groups:
-      - Group: 0
-        Items:
-          - Item: Atker_Plate
-          - Item: Atker_Manteau
-          - Item: Atker_Greave
-          - Item: Atker_Ring
-          - Item: Boost_Up_1
-            Amount: 3
-      - Group: 1
-        Items:
-          - Item: Ran_Suits
-          - Item: Ran_Manteau
-          - Item: Ran_Boots
-          - Item: Ran_Brooch
-          - Item: Boost_Up_1
-            Amount: 3
-      - Group: 2
-        Items:
-          - Item: Ele_Robe
-          - Item: Ele_Muffler
-          - Item: Ele_Shoes
-          - Item: Ele_Earing
-          - Item: Boost_Up_1
-            Amount: 3
-      - Group: 3
-        Items:
-          - Item: Defn_Robe
-          - Item: Defn_Muffler
-          - Item: Defn_Shoes
-          - Item: Defn_Earing
-          - Item: Boost_Up_1
-            Amount: 3
   - Item: AllMighty_Select_Box
     Groups:
       - Group: 0
@@ -845,15 +801,23 @@ Body:
       - Group: 0
         Items:
           - Item: C_Lop_Bunny_Cloak
+          - Item: Enchant_Stone_Box30
+            Amount: 3
       - Group: 1
         Items:
           - Item: C_Heart_Chiffon_Rabbit
+          - Item: Enchant_Stone_Box30
+            Amount: 3
       - Group: 2
         Items:
           - Item: C_Teaparty_Wonderland
+          - Item: Enchant_Stone_Box30
+            Amount: 3
       - Group: 3
         Items:
           - Item: C_Chocolat_Rabbit_Hair
+          - Item: Enchant_Stone_Box30
+            Amount: 3
   - Item: RO_Concert_Scroll2
     Groups:
       - Group: 0
@@ -870,12 +834,18 @@ Body:
       - Group: 0
         Items:
           - Item: C_Ocean_Color_Long
+          - Item: Enchant_Stone_Box32
+            Amount: 3
       - Group: 1
         Items:
           - Item: C_Aqua_Fin_Decoration
+          - Item: Enchant_Stone_Box32
+            Amount: 3
       - Group: 2
         Items:
           - Item: C_Sailor_Cap
+          - Item: Enchant_Stone_Box32
+            Amount: 3
   - Item: Cinnamon_Costume_Box
     Groups:
       - Group: 0
@@ -1115,3 +1085,152 @@ Body:
       - Group: 1
         Items:
           - Item: C_Guide_Of_Dead_Text
+  - Item: C_CLB_DT_Select_Box1
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_CLB_DT_TS_Hat
+      - Group: 1
+        Items:
+          - Item: C_CLB_DT_TS_Mini
+      - Group: 2
+        Items:
+          - Item: C_CLB_DT_TS_Hood
+  - Item: C_CLB_DT_Select_Box2
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_CLB_DT_TS_Wing
+      - Group: 1
+        Items:
+          - Item: CLB_DT_2D_Foot_Robe
+      - Group: 2
+        Items:
+          - Item: CLB_DT_3D_Foot_Robe
+  - Item: C_Clouds_Select_Box
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Over_Cloud
+      - Group: 1
+        Items:
+          - Item: C_Aurora_On_Clouds
+  - Item: SP_Costume_Select
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_Petal_Hood
+          - Item: aegis_105059
+            Amount: 5
+      - Group: 1
+        Items:
+          - Item: C_Muka_Sombrero
+          - Item: aegis_105059
+            Amount: 5
+      - Group: 2
+        Items:
+          - Item: C_Capybara
+          - Item: aegis_105059
+            Amount: 5
+  - Item: Niflheim_Select_1
+    Groups:
+      - Group: 0
+        Items:
+          - Item: aegis_401000
+      - Group: 1
+        Items:
+          - Item: aegis_410474
+  - Item: Niflheim_Select_2
+    Groups:
+      - Group: 0
+        Items:
+          - Item: aegis_401001
+      - Group: 1
+        Items:
+          - Item: aegis_420575
+  - Item: Niflheim_Select_3
+    Groups:
+      - Group: 0
+        Items:
+          - Item: aegis_420576
+      - Group: 1
+        Items:
+          - Item: aegis_480632
+  - Item: aegis_105830
+    Groups:
+      - Group: 0
+        Items:
+          - Item: GoodnEvil_Circlet_NW
+            Refine: 12
+            Grade: A
+      - Group: 1
+        Items:
+          - Item: GoodnEvil_Circlet_NW2
+            Refine: 12
+            Grade: A
+      - Group: 2
+        Items:
+          - Item: GoodnEvil_Circlet_NW3
+            Refine: 12
+            Grade: A
+      - Group: 3
+        Items:
+          - Item: GoodnEvil_Circlet_NW4
+            Refine: 12
+            Grade: A
+      - Group: 4
+        Items:
+          - Item: GoodnEvil_Circlet_NW5
+            Refine: 12
+            Grade: A
+  - Item: aegis_105831
+    Groups:
+      - Group: 0
+        Items:
+          - Item: GoodnEvil_Circlet_NW
+            Refine: 10
+            Grade: C
+      - Group: 1
+        Items:
+          - Item: GoodnEvil_Circlet_NW2
+            Refine: 10
+            Grade: C
+      - Group: 2
+        Items:
+          - Item: GoodnEvil_Circlet_NW3
+            Refine: 10
+            Grade: C
+      - Group: 3
+        Items:
+          - Item: GoodnEvil_Circlet_NW4
+            Refine: 10
+            Grade: C
+      - Group: 4
+        Items:
+          - Item: GoodnEvil_Circlet_NW5
+            Refine: 10
+            Grade: C
+  - Item: Select_Costume_DEC_1
+    Groups:
+      - Group: 0
+        Items:
+          - Item: C_WH_Fox_Hood_Twin
+      - Group: 1
+        Items:
+          - Item: C_WH_Fox_Hood_Twin_N
+  - Item: Select_Costume_DEC_2
+    Groups:
+      - Group: 0
+        Items:
+          - Item: aegis_420570
+      - Group: 1
+        Items:
+          - Item: aegis_420571
+  - Item: Select_Costume_DEC_3
+    Groups:
+      - Group: 0
+        Items:
+          - Item: aegis_420515
+      - Group: 1
+        Items:
+          - Item: aegis_420514

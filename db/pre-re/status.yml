@@ -2423,7 +2423,6 @@ Body:
       NoSave: true
       NoClearance: true
       NoBanishingBuster: true
-      NoDispell: true
       RemoveOnHermode: true
   - Status: Bunsinjyutsu
     Icon: EFST_NJ_BUNSINJYUTSU
