@@ -595,7 +595,7 @@ typedef struct st_mysql_bind
 {
   unsigned long	*length;          /* output length pointer */
   my_bool       *is_null;	  /* Pointer to null indicator */
-  const void	*buffer;	  /* buffer to get/put data */
+  void		*buffer;	  /* buffer to get/put data */
   /* set this if you want to track data truncations happened during fetch */
   my_bool       *error;
   unsigned char *row_ptr;         /* for the current data position */

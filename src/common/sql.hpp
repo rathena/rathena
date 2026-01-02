@@ -289,7 +289,7 @@ public:
 	/// All parameters should have bindings.
 	///
 	/// @return SQL_SUCCESS or SQL_ERROR
-	int32 BindParam( size_t idx, SqlDataType buffer_type, const void* buffer, size_t buffer_len );
+	int32 BindParam( size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len );
 
 	/// Executes the prepared statement.
 	/// Any previous result is freed and all column bindings are removed.
