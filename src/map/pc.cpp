@@ -11166,9 +11166,9 @@ void pc_changelook(map_session_data *sd,int32 type,int32 val) {
  *------------------------------------------*/
 void pc_setoption(map_session_data *sd,int32 type, int32 subtype)
 {
-	int32 p_type, new_look=0;
 	nullpo_retv(sd);
-	p_type = sd->sc.option;
+
+	int32 p_type = sd->sc.option;
 
 	//Option has to be changed client-side before the class sprite or it won't always work (eg: Wedding sprite) [Skotlex]
 	sd->sc.option=type;
@@ -11217,26 +11217,25 @@ void pc_setoption(map_session_data *sd,int32 type, int32 subtype)
 		status_change_end(sd, SC_MADOGEAR);
 	}
 
-	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING))
-		new_look = JOB_STAR_GLADIATOR2;
-	else if (!(type&OPTION_FLYING) && p_type&OPTION_FLYING)
-		new_look = -1;
-
-	if (sd->disguise || !new_look)
+	if (sd->disguise)
 		return; //Disguises break sprite changes
 
-	if (new_look < 0) { //Restore normal look.
-		status_set_viewdata(sd, sd->status.class_);
-		new_look = sd->vd.look[LOOK_BASE];
-	}
+	if (type&OPTION_FLYING && !(p_type&OPTION_FLYING)){
+		// Set flying look
+		sd->vd.look[LOOK_BASE] = JOB_STAR_GLADIATOR2;
+		sd->vd.look[LOOK_BODY2] = JOB_STAR_GLADIATOR2;
+	}else if (!(type&OPTION_FLYING) && p_type&OPTION_FLYING){
+		// Restore normal look
+		sd->vd.look[LOOK_BASE] = JOB_STAR_GLADIATOR;
+		sd->vd.look[LOOK_BODY2] = JOB_STAR_GLADIATOR;
+	}else
+		return; // Nothing to change
 
 	// Stop attacking on new view change (to prevent wedding/santa attacks).
 	unit_stop_attack( sd );
-	clif_changelook(sd,LOOK_BASE,new_look);
-	if (sd->vd.look[LOOK_CLOTHES_COLOR])
-		clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.look[LOOK_CLOTHES_COLOR]);
-	if( sd->vd.look[LOOK_BODY2] )
-		clif_changelook(sd,LOOK_BODY2,sd->vd.look[LOOK_BODY2]);
+	clif_changelook(sd,LOOK_BASE,sd->vd.look[LOOK_BASE]);
+	clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.look[LOOK_CLOTHES_COLOR]);
+	clif_changelook(sd,LOOK_BODY2,sd->vd.look[LOOK_BODY2]);
 	clif_skillinfoblock(*sd); // Skill list needs to be updated after base change.
 }
 
