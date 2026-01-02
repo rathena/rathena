@@ -1824,7 +1824,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if ((eaclass()&EAJ_ASSASSIN_CROSS)==EAJ_ASSASSIN_CROSS) {
+      if ((eaclass()&EAJ_ASSASSIN_CROSS)==EAJ_ASSASSIN_CROSS || (eaclass()&EAJ_THIRDMASK)==EAJ_GUILLOTINE_CROSS) {
          sc_start SC_DPOISON,60000,0;
          sc_start SC_ASPDPOTION3,60000,9;
       }
