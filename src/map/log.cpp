@@ -170,7 +170,7 @@ static bool should_log_item(t_itemid nameid, int32 amount, int32 refine)
 
 
 /// logs items, that summon monsters
-void log_branch( const map_session_data* sd )
+void log_branch( map_session_data* sd )
 {
 	nullpo_retv(sd);
 
@@ -338,7 +338,7 @@ void log_mvpdrop( const map_session_data* sd, int32 monster_id, t_itemid nameid,
 
 
 /// logs used atcommands
-void log_atcommand( const map_session_data* sd, const char* message )
+void log_atcommand( map_session_data* sd, const char* message )
 {
 	nullpo_retv(sd);
 
@@ -375,7 +375,7 @@ void log_atcommand( const map_session_data* sd, const char* message )
 }
 
 /// logs messages passed to script command 'logmes'
-void log_npc( const npc_data* nd, const char* message ){
+void log_npc( npc_data* nd, const char* message ){
 	nullpo_retv(nd);
 
 	if( !log_config.npc )
@@ -410,7 +410,7 @@ void log_npc( const npc_data* nd, const char* message ){
 }
 
 /// logs messages passed to script command 'logmes'
-void log_npc( const map_session_data* sd, const char* message )
+void log_npc( map_session_data* sd, const char* message )
 {
 	nullpo_retv(sd);
 
