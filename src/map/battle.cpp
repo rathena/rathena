@@ -3145,7 +3145,7 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-static int32 is_attack_piercing(struct Damage* wd, const block_list* src, const block_list* target, int32 skill_id, int32 skill_lv, int16 weapon_position)
+static int32 is_attack_piercing(struct Damage* wd, block_list* src, const block_list* target, int32 skill_id, int32 skill_lv, int16 weapon_position)
 {
 	if (skill_id == MO_INVESTIGATE || skill_id == RL_MASS_SPIRAL)
 		return 2;
@@ -3392,7 +3392,7 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-static bool attack_ignores_def(const Damage* wd, const block_list *src, const block_list *target, uint16 skill_id, uint16 skill_lv, int16 weapon_position)
+static bool attack_ignores_def(Damage* wd, block_list *src, const block_list *target, uint16 skill_id, uint16 skill_lv, int16 weapon_position)
 {
 	const status_data* tstatus = status_get_status_data(*target);
 	const status_change *sc = status_get_sc(src);
