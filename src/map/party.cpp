@@ -53,7 +53,7 @@ static void party_fill_member( struct party_member& member, map_session_data& sd
 
 /// Get the member_id of a party member.
 /// Return -1 if not in party.
-int32 party_getmemberid(struct party_data* p, map_session_data* sd)
+int32 party_getmemberid(const party_data* p, const map_session_data* sd)
 {
 	int32 member_id;
 	nullpo_retr(-1, p);
@@ -70,7 +70,7 @@ int32 party_getmemberid(struct party_data* p, map_session_data* sd)
 /*==========================================
  * Request an available sd of this party
  *------------------------------------------*/
-map_session_data* party_getavailablesd(struct party_data *p)
+map_session_data* party_getavailablesd(const party_data *p)
 {
 	int32 i;
 	nullpo_retr(nullptr, p);
@@ -471,7 +471,7 @@ bool party_invite( map_session_data& sd, map_session_data *tsd ){
 	return true;
 }
 
-bool party_isleader( map_session_data* sd ){
+bool party_isleader( const map_session_data* sd ){
 	if( sd == nullptr ){
 		return false;
 	}
@@ -480,7 +480,7 @@ bool party_isleader( map_session_data* sd ){
 		return false;
 	}
 
-	struct party_data* party = party_search( sd->status.party_id );
+	const party_data* party = party_search( sd->status.party_id );
 
 	if( party == nullptr ){
 		return false;
@@ -1378,7 +1378,7 @@ int32 party_send_dot_remove(map_session_data *sd)
  */
 int32 party_sub_count(block_list *bl, va_list ap)
 {
-	map_session_data *sd = (TBL_PC *)bl;
+	map_session_data *sd = reinterpret_cast<map_session_data*>(bl);
 
 	if (sd->state.autotrade)
 		return 0;
@@ -1411,7 +1411,7 @@ int32 party_sub_count_class(block_list *bl, va_list ap)
 }
 
 /// Executes 'func' for each party member on the same map and in range (0:whole map)
-int32 party_foreachsamemap(int32 (*func)(block_list*,va_list),map_session_data *sd,int32 range,...)
+int32 party_foreachsamemap(int32 (*func)(block_list*,va_list),const map_session_data* sd,int32 range,...)
 {
 	struct party_data *p;
 	int32 i;
@@ -1501,10 +1501,10 @@ void party_booking_register(map_session_data *sd, int16 level, int16 mapid, int1
 	clif_PartyBookingInsertNotify(sd, pb_ad); // Notice
 }
 
-void party_booking_update(map_session_data *sd, int16* job)
+void party_booking_update( map_session_data* sd, int16* job )
 {
 	int32 i;
-	struct party_booking_ad_info *pb_ad;
+	party_booking_ad_info* pb_ad;
 
 	pb_ad = (struct party_booking_ad_info*)idb_get(party_booking_db, sd->status.char_id);
 
@@ -1526,7 +1526,7 @@ void party_booking_search(map_session_data *sd, int16 level, int16 mapid, int16 
 {
 	struct party_booking_ad_info *pb_ad;
 	int32 i, count=0;
-	struct party_booking_ad_info* result_list[MAX_PARTY_BOOKING_RESULTS];
+	const party_booking_ad_info* result_list[MAX_PARTY_BOOKING_RESULTS];
 	bool more_result = false;
 	DBIterator* iter = db_iterator(party_booking_db);
 

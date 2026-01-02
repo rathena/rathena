@@ -80,15 +80,15 @@ bool mercenary_dead(s_mercenary_data *md);
 int32 mercenary_delete(s_mercenary_data *md, int32 reply);
 void mercenary_contract_stop(s_mercenary_data *md);
 
-t_tick mercenary_get_lifetime(s_mercenary_data *md);
-e_MercGuildType mercenary_get_guild(s_mercenary_data *md);
-int32 mercenary_get_faith(s_mercenary_data *md);
-void mercenary_set_faith(s_mercenary_data *md, int32 value);
-int32 mercenary_get_calls(s_mercenary_data *md);
-void mercenary_set_calls(s_mercenary_data *md, int32 value);
-void mercenary_kills(s_mercenary_data *md);
+t_tick mercenary_get_lifetime( const s_mercenary_data* md );
+e_MercGuildType mercenary_get_guild( const s_mercenary_data* md );
+int32 mercenary_get_faith( const s_mercenary_data* md );
+void mercenary_set_faith( s_mercenary_data* md, int32 value );
+int32 mercenary_get_calls( const s_mercenary_data* md );
+void mercenary_set_calls( s_mercenary_data* md, int32 value );
+void mercenary_kills( s_mercenary_data* md );
 
-uint16 mercenary_checkskill(s_mercenary_data *md, uint16 skill_id);
+uint16 mercenary_checkskill( const s_mercenary_data *md, uint16 skill_id );
 
 void do_init_mercenary(void);
 void do_final_mercenary(void);

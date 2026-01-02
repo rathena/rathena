@@ -3514,15 +3514,17 @@ private:
 public:
 	status_change();
 
-	bool hasSCE( enum sc_type type );
+	bool hasSCE( enum sc_type type ) const;
 	status_change_entry* getSCE( enum sc_type type );
+	const status_change_entry* getSCE( sc_type type ) const;
 	status_change_entry* getSCE( uint32 type );
+	const status_change_entry* getSCE( uint32 type ) const;
 	status_change_entry* createSCE( enum sc_type type );
 	void deleteSCE(enum sc_type type);
-	bool empty();
-	size_t size();
-	std::unordered_map<enum sc_type, status_change_entry>::const_iterator begin();
-	std::unordered_map<enum sc_type, status_change_entry>::const_iterator end();
+	bool empty() const;
+	size_t size() const;
+	std::unordered_map<enum sc_type, status_change_entry>::const_iterator begin() const;
+	std::unordered_map<enum sc_type, status_change_entry>::const_iterator end() const;
 };
 #ifndef ONLY_CONSTANTS
 int32 status_damage( block_list *src, block_list *target, int64 dhp, int64 dsp, int64 dap, t_tick walkdelay, int32 flag, uint16 skill_id );
@@ -3568,11 +3570,14 @@ static int32 status_heal( block_list *bl,int64 hhp,int64 hsp, int32 flag ){
 }
 int32 status_revive(block_list *bl, unsigned char per_hp, unsigned char per_sp, unsigned char per_ap = 0);
 
-struct regen_data *status_get_regen_data(block_list *bl);
-status_data* status_get_status_data(block_list& bl);
-struct status_data *status_get_base_status(block_list *bl);
-const char* status_get_name( block_list& bl );
-int32 status_get_class(block_list *bl);
+struct regen_data* status_get_regen_data( block_list* bl );
+const regen_data* status_get_regen_data( const block_list* bl );
+status_data* status_get_status_data( block_list& bl );
+const status_data* status_get_status_data( const block_list& bl );
+struct status_data *status_get_base_status( block_list* bl );
+const status_data* status_get_base_status( const block_list* bl );
+const char* status_get_name( const block_list& bl );
+int32 status_get_class( const block_list* bl );
 int32 status_get_lv(const block_list *bl);
 #define status_get_range(bl) status_get_status_data(*bl)->rhw.range
 #define status_get_hp(bl) status_get_status_data(*bl)->hp
@@ -3595,7 +3600,7 @@ int32 status_get_lv(const block_list *bl);
 #define status_get_crt(bl) status_get_status_data(*bl)->crt
 #define status_get_hit(bl) status_get_status_data(*bl)->hit
 #define status_get_flee(bl) status_get_status_data(*bl)->flee
-defType status_get_def(block_list *bl);
+defType status_get_def( const block_list* bl );
 #define status_get_mdef(bl) status_get_status_data(*bl)->mdef
 #define status_get_flee2(bl) status_get_status_data(*bl)->flee2
 #define status_get_def2(bl) status_get_status_data(*bl)->def2
@@ -3608,7 +3613,7 @@ defType status_get_def(block_list *bl);
 #define status_get_matk_min(bl) status_get_status_data(*bl)->matk_min
 #define status_get_lwatk(bl) status_get_status_data(*bl)->lhw.atk
 #define status_get_lwatk2(bl) status_get_status_data(*bl)->lhw.atk2
-uint16 status_get_speed(block_list *bl);
+uint16 status_get_speed( const block_list* bl );
 #define status_get_adelay(bl) status_get_status_data(*bl)->adelay
 #define status_get_amotion(bl) status_get_status_data(*bl)->amotion
 #define status_get_clientamotion(bl) status_get_status_data(*bl)->clientamotion
@@ -3621,7 +3626,7 @@ uint16 status_get_speed(block_list *bl);
 #define status_get_crate(bl) status_get_status_data(*bl)->crate
 #define status_get_element(bl) status_get_status_data(*bl)->def_ele
 #define status_get_element_level(bl) status_get_status_data(*bl)->ele_lv
-unsigned char status_calc_attack_element(block_list *bl, status_change *sc, int32 element);
+unsigned char status_calc_attack_element(const block_list* bl, const status_change *sc, int32 element);
 #define status_get_attack_sc_element(bl, sc) status_calc_attack_element(bl, sc, 0)
 #define status_get_attack_element(bl) status_get_status_data(*bl)->rhw.ele
 #define status_get_attack_lelement(bl) status_get_status_data(*bl)->lhw.ele
@@ -3639,20 +3644,22 @@ unsigned char status_calc_attack_element(block_list *bl, status_change *sc, int3
 #define status_get_homdex(bl) (status->dex + ((TBL_HOM*)bl)->homunculus.dex_value)
 #define status_get_homluk(bl) (status->luk + ((TBL_HOM*)bl)->homunculus.luk_value)
 
-int32 status_get_party_id(block_list *bl);
-int32 status_get_guild_id(block_list *bl);
-int32 status_get_emblem_id(block_list *bl);
-std::vector<e_race2> status_get_race2(block_list *bl);
+int32 status_get_party_id(const block_list* bl);
+int32 status_get_guild_id(const block_list* bl);
+int32 status_get_emblem_id(const block_list* bl);
+std::vector<e_race2> status_get_race2(const block_list* bl);
 
 struct view_data *status_get_viewdata(block_list *bl);
+const struct view_data *status_get_viewdata(const block_list* bl);
 void status_set_viewdata(block_list *bl, int32 class_);
-status_change* status_get_sc(const block_list* bl);
+status_change* status_get_sc(block_list* bl);
+const status_change* status_get_sc(const block_list* bl);
 
-bool status_isdead(block_list &bl);
-int32 status_isimmune(block_list *bl);
-bool status_isendure(block_list& bl, t_tick tick, bool visible);
+bool status_isdead(const block_list &bl);
+int32 status_isimmune(const block_list* bl);
+bool status_isendure(const block_list& bl, t_tick tick, bool visible);
 
-t_tick status_get_sc_def(block_list* src, block_list* bl, sc_type type, int32 rate, t_tick tick, uint8 flag);
+t_tick status_get_sc_def(const block_list* src, const block_list* bl, sc_type type, int32 rate, t_tick tick, uint8 flag);
 bool status_change_start(block_list* src, block_list* bl, sc_type type, int32 rate, int32 val1, int32 val2, int32 val3, int32 val4, t_tick duration, uint8 flag, int32 delay = 0);
 //Short version, receives rate in 1->100 range, and does not uses a flag setting.
 static bool sc_start(block_list *src, block_list *bl, sc_type type, int32 rate, int32 val1, t_tick duration, int32 delay = 0) {
@@ -3709,8 +3716,8 @@ void status_calc_state(block_list *bl, status_change *sc, std::bitset<SCS_MAX> f
 
 void status_calc_slave_mode(mob_data& md);
 
-bool status_check_skilluse(block_list *src, block_list *target, uint16 skill_id, int32 flag);
-bool status_check_visibility(block_list* src, block_list* target, bool checkblind);
+bool status_check_skilluse(const block_list* src, const block_list* target, uint16 skill_id, int32 flag);
+bool status_check_visibility(const block_list* src, const block_list* target, bool checkblind);
 
 int32 status_change_spread(block_list *src, block_list *bl);
 
@@ -3718,11 +3725,10 @@ int32 status_change_spread(block_list *src, block_list *bl);
 uint16 status_base_matk_min(const struct status_data* status);
 uint16 status_base_matk_max(const struct status_data* status);
 #else
-uint32 status_weapon_atk(struct weapon_atk wa, map_session_data *sd);
-uint16 status_base_atk_min(block_list *bl, const struct status_data* status, int32 level);
-uint16 status_base_atk_max(block_list *bl, const struct status_data* status, int32 level);
-uint16 status_base_matk_min(block_list *bl, const struct status_data* status, int32 level);
-uint16 status_base_matk_max(block_list *bl, const struct status_data* status, int32 level);
+uint16 status_base_atk_min( const block_list* bl, const status_data* status, int32 level );
+uint16 status_base_atk_max( const block_list* bl, const status_data* status, int32 level );
+uint16 status_base_matk_min( const block_list* bl, const status_data* status, int32 level );
+uint16 status_base_matk_max( const block_list* bl, const status_data* status, int32 level );
 #endif
 uint16 status_calc_consumablematk( status_change *sc, int32 matk );
 uint16 status_calc_pseudobuff_matk( map_session_data *sd, status_change *sc, int32 matk );

@@ -716,7 +716,7 @@ skill_unit* map_find_skill_unit_oncell(block_list* target,int16 x,int16 y,uint16
 /*==========================================
  * Adapted from foreachinarea for an easier invocation. [Skotlex]
  *------------------------------------------*/
-int32 map_foreachinrangeV(int32 (*func)(block_list*,va_list),block_list* center, int16 range, int32 type, va_list ap, bool wall_check)
+int32 map_foreachinrangeV(int32 (*func)(block_list*,va_list),const block_list* center, int16 range, int32 type, va_list ap, bool wall_check)
 {
 	int32 bx, by, m;
 	int32 returnCount = 0;	//total sum of returned values of func() [Skotlex]
@@ -790,7 +790,7 @@ int32 map_foreachinrangeV(int32 (*func)(block_list*,va_list),block_list* center,
 	return returnCount;	//[Skotlex]
 }
 
-int32 map_foreachinrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 type, ...)
+int32 map_foreachinrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 type, ...)
 {
 	int32 returnCount = 0;
 	va_list ap;
@@ -800,7 +800,7 @@ int32 map_foreachinrange(int32 (*func)(block_list*,va_list), block_list* center,
 	return returnCount;
 }
 
-int32 map_foreachinallrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 type, ...)
+int32 map_foreachinallrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 type, ...)
 {
 	int32 returnCount = 0;
 	va_list ap;
@@ -813,7 +813,7 @@ int32 map_foreachinallrange(int32 (*func)(block_list*,va_list), block_list* cent
 /*==========================================
  * Same as foreachinrange, but there must be a shoot-able range between center and target to be counted in. [Skotlex]
  *------------------------------------------*/
-int32 map_foreachinshootrange(int32 (*func)(block_list*,va_list),block_list* center, int16 range, int32 type,...)
+int32 map_foreachinshootrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 type,...)
 {
 	int32 returnCount = 0;
 	va_list ap;
@@ -942,7 +942,7 @@ int32 map_foreachinarea(int32 (*func)(block_list*, va_list), int16 m, int16 x0, 
 /*==========================================
  * Adapted from forcountinarea for an easier invocation. [pakpil]
  *------------------------------------------*/
-int32 map_forcountinrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 count, int32 type, ...)
+int32 map_forcountinrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 count, int32 type, ...)
 {
 	int32 bx, by, m;
 	int32 returnCount = 0;	//total sum of returned values of func() [Skotlex]
@@ -1074,7 +1074,7 @@ int32 map_forcountinarea(int32 (*func)(block_list*,va_list), int16 m, int16 x0, 
  * Move bl and do func* with va_list while moving.
  * Movement is set by dx dy which are distance in x and y
  *------------------------------------------*/
-int32 map_foreachinmovearea(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int16 dx, int16 dy, int32 type, ...)
+int32 map_foreachinmovearea(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int16 dx, int16 dy, int32 type, ...)
 {
 	int32 bx, by, m;
 	int32 returnCount = 0;  //total sum of returned values of func() [Skotlex]
@@ -3190,7 +3190,7 @@ int32 map_check_dir(int32 s_dir,int32 t_dir)
 /*==========================================
  * Returns the direction of the given cell, relative to 'src'
  *------------------------------------------*/
-uint8 map_calc_dir(block_list* src, int16 x, int16 y)
+uint8 map_calc_dir(const block_list* src, int16 x, int16 y)
 {
 	uint8 dir = DIR_NORTH;
 
@@ -3248,7 +3248,7 @@ uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir) {
  * Randomizes target cell x,y to a random walkable cell that
  * has the same distance from object as given coordinates do. [Skotlex]
  *------------------------------------------*/
-int32 map_random_dir(block_list *bl, int16 *x, int16 *y)
+int32 map_random_dir(const block_list* bl, int16 *x, int16 *y)
 {
 	int16 xi = *x-bl->x;
 	int16 yi = *y-bl->y;
@@ -4630,7 +4630,7 @@ static int32 map_mapflag_pvp_stop_sub(block_list *bl, va_list ap)
  * @param name: Mapflag name
  * @return Mapflag enum value
  */
-enum e_mapflag map_getmapflag_by_name(char* name)
+enum e_mapflag map_getmapflag_by_name( const char* name )
 {
 	char flag_constant[255];
 	int64 mapflag;
@@ -5224,7 +5224,7 @@ int32 map_msg_config_read(const char *cfgName, int32 lang){
 	}
 	return 0;
 }
-const char* map_msg_txt(map_session_data *sd, int32 msg_number){
+const char* map_msg_txt(const map_session_data* sd, int32 msg_number){
 	struct msg_data *mdb;
 	uint8 lang = 0; //default
 	if(sd && sd->langtype) lang = sd->langtype;

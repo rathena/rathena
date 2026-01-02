@@ -3524,7 +3524,7 @@ struct item_data
 		this->combos.clear();
 	}
 
-	bool isStackable();
+	bool isStackable() const;
 	int32 inventorySlotNeeded(int32 quantity);
 };
 
@@ -3807,17 +3807,17 @@ const char *itemdb_typename_ammo (e_ammo_type ammo);
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
 //Item trade restrictions [Skotlex]
-bool itemdb_isdropable_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_cantrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
-bool itemdb_canpartnertrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
-bool itemdb_cansell_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_cancartstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canguildstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canmail_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canauction_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int32, int32));
-bool itemdb_ishatched_egg(struct item* item);
+bool itemdb_isdropable_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_cantrade_sub( const item_data *itd, int32 gmlv, int32 gmlv2 );
+bool itemdb_canpartnertrade_sub( const item_data *itd, int32 gmlv, int32 gmlv2 );
+bool itemdb_cansell_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_cancartstore_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_canstore_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_canguildstore_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_canmail_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_canauction_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_isrestricted( const item* item, int32 gmlv, int32 gmlv2, bool (*func)(const item_data*, int32, int32) );
+bool itemdb_ishatched_egg( const item* item );
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
 #define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
@@ -3828,12 +3828,12 @@ bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_canmail(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canmail_sub)
 #define itemdb_canauction(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canauction_sub)
 
-bool itemdb_isequip2(struct item_data *id);
+bool itemdb_isequip2( const item_data *id);
 #define itemdb_isequip(nameid) itemdb_isequip2(itemdb_search(nameid))
 char itemdb_isidentified(t_itemid nameid);
-bool itemdb_isstackable2(struct item_data *id);
+bool itemdb_isstackable2( const item_data *id );
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
-bool itemdb_isNoEquip(struct item_data *id, uint16 m);
+bool itemdb_isNoEquip( const item_data *id, uint16 m);
 
 bool itemdb_parse_roulette_db(void);
 
