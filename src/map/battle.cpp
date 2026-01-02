@@ -8432,6 +8432,18 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 				}
 
 				switch(skill_id) {
+					case MG_FIREBOLT:
+					case MG_COLDBOLT:
+					case MG_LIGHTNINGBOLT:
+						if (sc) {
+							// TODO: Refactor
+							if (sc->getSCE(SC_SPELLFIST) && mflag & BF_SHORT) {
+								ad.div_ = 1; // ad mods, to make it work similar to regular hits [Xazax]
+								ad.flag = BF_WEAPON | BF_SHORT;
+								ad.type = DMG_NORMAL;
+							}
+						}
+						break;
 					case AL_HOLYLIGHT:
 						skillratio += 25;
 						if (sd && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_PRIEST)

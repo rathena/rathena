@@ -19,9 +19,6 @@ void SkillLightningBolt::calculateSkillRatio(const Damage *wd, const block_list 
 		if (sc->getSCE(SC_SPELLFIST) && mflag & BF_SHORT) {
 			base_skillratio += (sc->getSCE(SC_SPELLFIST)->val3 * 100) + (sc->getSCE(SC_SPELLFIST)->val1 * 50 - 50) - 100;
 			// val3 = used bolt level, val1 = used spellfist level. [Rytech]
-			wd->div_ = 1; // ad mods, to make it work similar to regular hits [Xazax]
-			wd->flag = BF_WEAPON | BF_SHORT;
-			wd->type = DMG_NORMAL;
 		}
 	}
 }
