@@ -3392,11 +3392,11 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
  *	Initial refactoring by Baalberith
  *	Refined and optimized by helvetica
  */
-static bool attack_ignores_def(struct Damage* wd, block_list *src, block_list *target, uint16 skill_id, uint16 skill_lv, int16 weapon_position)
+static bool attack_ignores_def(const Damage* wd, const block_list *src, const block_list *target, uint16 skill_id, uint16 skill_lv, int16 weapon_position)
 {
-	status_data* tstatus = status_get_status_data(*target);
-	status_change *sc = status_get_sc(src);
-	map_session_data *sd = BL_CAST(BL_PC, src);
+	const status_data* tstatus = status_get_status_data(*target);
+	const status_change *sc = status_get_sc(src);
+	const map_session_data *sd = BL_CAST(BL_PC, src);
 	std::bitset<NK_MAX> nk = battle_skill_get_damage_properties(skill_id, wd->miscflag);
 
 #ifndef RENEWAL
