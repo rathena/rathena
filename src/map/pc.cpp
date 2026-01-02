@@ -3004,7 +3004,7 @@ uint64 pc_calc_skilltree_normalize_job( map_session_data* sd ){
  * @param sd: Player data
  * @param weight: (optional) Weight to check, if 0, player's current weight is used
  */
-uint16 pc_getpercentweight(map_session_data& sd, uint32 weight)
+uint16 pc_getpercentweight(const map_session_data& sd, uint32 weight)
 {
 	if (weight == 0)
 		weight = sd.weight;
