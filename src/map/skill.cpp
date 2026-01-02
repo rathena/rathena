@@ -19785,8 +19785,11 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 		{
 			if( !require.itemid[i] )
 				continue;
-
+#ifdef RENEWAL
+			if( itemdb_group.item_exists(IG_GEMSTONE, require.itemid[i]) && skill_id != HW_GANBANTEIN && sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_WIZARD )
+#else
 			if( itemdb_group.item_exists(IG_GEMSTONE, require.itemid[i]) && sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_WIZARD )
+#endif
 				continue; //Gemstones are checked, but not substracted from inventory.
 
 			switch( skill_id ){
