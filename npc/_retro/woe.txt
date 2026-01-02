@@ -37,9 +37,11 @@
 
 // Information NPC
 //============================================================
-prontera,139,181,4	script	WOE Information	835,{
-	doevent "WOE_CONTROL::OnMenu";
-	end;
+prontera,123,169,4	script	WOE Information	835,{
+
+doevent "WOE_CONTROL::OnMenu";
+end;
+
 OnAgitStart:
 	while(agitcheck() || agitcheck2() || agitcheck3()) {
 		sleep 425;

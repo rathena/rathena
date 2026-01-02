@@ -1,0 +1,83 @@
+//============================================================
+// FluxCP Credits -> CASHPOINTS (acc_reg_num)
+//
+// Source: cp_credits.balance
+// Target: acc_reg_num (#CASHPOINTS)
+//
+// Safe:
+// - Atomic SQL update
+// - No GM commands
+// - Single option: Redeem ALL
+//============================================================
+
+prontera,139,181,5	script	Credit Redeemer	2_F_SIGN1,{
+
+	.@npc$ = "[Credit Redeemer]";
+	.@maxRedeem = 1000000; // safety cap
+
+	mes .@npc$;
+	mes "This NPC converts all your FluxCP credits into Cash Points.";
+	next;
+
+	.@aid = getcharid(3);
+	if (.@aid <= 0) {
+		mes .@npc$;
+		mes "Account ID not detected. Please relog.";
+		close;
+	}
+
+	// Load CP credits
+	.@credits = 0;
+	.@q$ = "SELECT balance FROM cp_credits WHERE account_id = " + .@aid + " LIMIT 1";
+	.@rows = query_sql(.@q$, .@credits);
+
+	if (.@rows <= 0 || .@credits <= 0) {
+		mes .@npc$;
+		mes "You have no credits to redeem.";
+		close;
+	}
+
+	if (.@credits > .@maxRedeem) {
+		mes .@npc$;
+		mes "You have ^00aa00" + .@credits + "^000000 credits.";
+		mes "For safety, the maximum allowed is ^ff0000" + .@maxRedeem + "^000000.";
+		close;
+	}
+
+	mes .@npc$;
+	mes "Credits available: ^00aa00" + .@credits + "^000000";
+	mes "This will convert ALL credits into Cash Points.";
+	next;
+
+	if (select("Redeem ALL credits:Cancel") == 2) close;
+
+	// Deduct credits (atomic)
+	.@q$ = "UPDATE cp_credits SET balance = balance - " + .@credits + " WHERE account_id = " + .@aid + " AND balance >= " + .@credits;
+	query_sql(.@q$);
+
+	.@affected = 0;
+	query_sql("SELECT ROW_COUNT()", .@affected);
+
+	if (.@affected <= 0) {
+		mes .@npc$;
+		mes "Redeem failed. Please try again.";
+		close;
+	}
+
+	// Add CASHPOINTS into acc_reg_num (upsert)
+	.@q$ = "INSERT INTO acc_reg_num (`account_id`,`key`,`index`,`value`) VALUES (" + .@aid + ", '#CASHPOINTS', 0, " + .@credits + ") ON DUPLICATE KEY UPDATE value = value + " + .@credits;
+	query_sql(.@q$);
+
+	// Show final balance
+	.@cash = 0;
+	.@q$ = "SELECT value FROM acc_reg_num WHERE account_id = " + .@aid + " AND `key` = '#CASHPOINTS' AND `index` = 0 LIMIT 1";
+	query_sql(.@q$, .@cash);
+
+	mes .@npc$;
+	mes "Success!";
+	mes "Added Cash Points: ^00aa00" + .@credits + "^000000";
+	mes "Total Cash Points: ^00aa00" + .@cash + "^000000";
+	mes "";
+	mes "^ff0000Relog to see the updated amount in-game.^000000";
+	close;
+}
