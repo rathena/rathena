@@ -2,8 +2,8 @@ version: "3.7"
 
 services:
     db:
-        image: "mariadb:bionic"
-        container_name: "rathena_db"
+        image: "mariadb:noble"
+        container_name: "rathena-db"
         ports:
             - "3306:3306" # allow DB connections from host
         volumes:
@@ -32,7 +32,7 @@ services:
             dockerfile: Dockerfile
         environment:
             BUILDER_CONFIGURE: "--enable-packetver=20211103"
-    
+
     login:
         image: "rathena:local"
         container_name: "rathena-login"

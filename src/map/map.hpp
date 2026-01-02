@@ -46,8 +46,10 @@ struct chat_data;
 struct homun_data;
 struct mob_data;
 struct npc_data;
+struct pet_data;
 struct skill_unit;
 struct item_data;
+struct s_elemental_data;
 struct s_mercenary_data;
 struct Channel;
 
@@ -56,7 +58,7 @@ struct map_data *map_getmapdata(int16 m);
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
 int32 map_msg_config_read(const char *cfgName,int32 lang);
-const char* map_msg_txt(map_session_data *sd,int32 msg_number);
+const char* map_msg_txt(const map_session_data* sd,int32 msg_number);
 void map_do_final_msg(void);
 void map_msg_reload(void);
 
@@ -93,10 +95,10 @@ void map_msg_reload(void);
 #define JOBL_FOURTH 0x8000 //32768
 
 //for filtering and quick checking.
-#define MAPID_BASEMASK 0x00ff
-#define MAPID_UPPERMASK 0x0fff
-#define MAPID_THIRDMASK (JOBL_THIRD|MAPID_UPPERMASK)
-#define MAPID_FOURTHMASK (JOBL_FOURTH|MAPID_THIRDMASK|JOBL_UPPER)
+#define MAPID_BASEMASK 0x00ff // Check's for 1st jobs and their successors.
+#define MAPID_UPPERMASK 0x0fff // Check's for 2nd jobs and their successors.
+#define MAPID_THIRDMASK (JOBL_THIRD|MAPID_UPPERMASK) // Check's for 3rd jobs and their successors.
+#define MAPID_FOURTHMASK (JOBL_FOURTH|MAPID_THIRDMASK|JOBL_UPPER) // Check's for 4th jobs and their successors.
 
 //First Jobs
 //Note the oddity of the novice:
@@ -133,6 +135,7 @@ enum e_mapid : uint64{
 	MAPID_REBELLION = JOBL_2_1|MAPID_GUNSLINGER,
 	MAPID_KAGEROUOBORO,
 	MAPID_DEATH_KNIGHT = JOBL_2_1|MAPID_GANGSI,
+	MAPID_SPIRIT_HANDLER = JOBL_2_1|MAPID_SUMMONER,
 //2-2 Jobs
 	MAPID_CRUSADER = JOBL_2_2|MAPID_SWORDMAN,
 	MAPID_SAGE,
@@ -204,6 +207,8 @@ enum e_mapid : uint64{
 	MAPID_MECHANIC,
 	MAPID_GUILLOTINE_CROSS,
 	MAPID_STAR_EMPEROR,
+	MAPID_NIGHT_WATCH = JOBL_THIRD|MAPID_REBELLION,
+	MAPID_SHINKIROSHIRANUI,
 //3-2 Jobs
 	MAPID_ROYAL_GUARD = JOBL_THIRD|MAPID_CRUSADER,
 	MAPID_SORCERER,
@@ -244,25 +249,22 @@ enum e_mapid : uint64{
 	MAPID_BABY_SHADOW_CHASER,
 	MAPID_BABY_SOUL_REAPER,
 //4-1 Jobs
-	MAPID_HYPER_NOVICE = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_SUPER_NOVICE,
-	MAPID_DRAGON_KNIGHT,
+	MAPID_HYPER_NOVICE = JOBL_FOURTH|MAPID_SUPER_NOVICE_E,
+	MAPID_DRAGON_KNIGHT = JOBL_FOURTH|MAPID_RUNE_KNIGHT_T,
 	MAPID_ARCH_MAGE,
 	MAPID_WINDHAWK,
 	MAPID_CARDINAL,
 	MAPID_MEISTER,
 	MAPID_SHADOW_CROSS,
-	MAPID_SKY_EMPEROR,
-	MAPID_NIGHT_WATCH = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_REBELLION,
-	MAPID_SHINKIRO_SHIRANUI,
-	MAPID_SPIRIT_HANDLER = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|JOBL_2_1|MAPID_SUMMONER,
+	MAPID_SKY_EMPEROR = JOBL_FOURTH|MAPID_STAR_EMPEROR,
 //4-2 Jobs
-	MAPID_IMPERIAL_GUARD = JOBL_FOURTH|JOBL_THIRD|JOBL_UPPER|MAPID_CRUSADER,
+	MAPID_IMPERIAL_GUARD = JOBL_FOURTH|MAPID_ROYAL_GUARD_T,
 	MAPID_ELEMENTAL_MASTER,
 	MAPID_TROUBADOURTROUVERE,
 	MAPID_INQUISITOR,
 	MAPID_BIOLO,
 	MAPID_ABYSS_CHASER,
-	MAPID_SOUL_ASCETIC,
+	MAPID_SOUL_ASCETIC = JOBL_FOURTH|MAPID_SOUL_REAPER,
 // Additional constants
 	MAPID_ALL = UINT64_MAX
 };
@@ -586,7 +588,8 @@ enum _sp {
 	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE, SP_SHORT_ATK_RATE, SP_MAGIC_SUBSIZE, SP_CRIT_DEF_RATE, // 2093-2097
 	SP_MAGIC_SUBDEF_ELE, SP_REDUCE_DAMAGE_RETURN, SP_ADD_ITEM_SPHEAL_RATE, SP_ADD_ITEMGROUP_SPHEAL_RATE, // 2098-2101
 	SP_WEAPON_SUBSIZE, SP_ABSORB_DMG_MAXHP2, // 2102-2103
-	SP_SP_IGNORE_RES_RACE_RATE, SP_SP_IGNORE_MRES_RACE_RATE, SP_EMATK_HIDDEN, SP_SKILL_RATIO // 2104-2107
+	SP_SP_IGNORE_RES_RACE_RATE, SP_SP_IGNORE_MRES_RACE_RATE, SP_EMATK_HIDDEN, SP_SKILL_RATIO, // 2104-2107
+	SP_NON_CRIT_ATK_RATE //2108
 };
 
 enum _look {
@@ -926,7 +929,7 @@ extern bool agit3_flag;
  * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool mapdata_flag_vs(struct map_data *mapdata) {
+inline bool mapdata_flag_vs(const map_data* mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -941,7 +944,7 @@ inline bool mapdata_flag_vs(struct map_data *mapdata) {
  * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool mapdata_flag_vs2(struct map_data *mapdata) {
+inline bool mapdata_flag_vs2( const map_data* mapdata ) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -956,7 +959,7 @@ inline bool mapdata_flag_vs2(struct map_data *mapdata) {
  * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool mapdata_flag_gvg(struct map_data *mapdata) {
+inline bool mapdata_flag_gvg( const map_data* mapdata ) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -971,7 +974,7 @@ inline bool mapdata_flag_gvg(struct map_data *mapdata) {
  * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool mapdata_flag_gvg2(struct map_data *mapdata) {
+inline bool mapdata_flag_gvg2(const map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -986,7 +989,7 @@ inline bool mapdata_flag_gvg2(struct map_data *mapdata) {
  * @param mapdata: Map Data
  * @return True on success or false otherwise
  */
-inline bool mapdata_flag_ks(struct map_data *mapdata) {
+inline bool mapdata_flag_ks(const map_data *mapdata) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -1002,7 +1005,7 @@ inline bool mapdata_flag_ks(struct map_data *mapdata) {
  * @return True on success or false otherwise
  * @author Cydh
  */
-inline bool mapdata_flag_gvg2_te(struct map_data *mapdata) {
+inline bool mapdata_flag_gvg2_te( const map_data* mapdata ) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -1018,7 +1021,7 @@ inline bool mapdata_flag_gvg2_te(struct map_data *mapdata) {
  * @return True on success or false otherwise
  * @author Cydh
  */
-inline bool mapdata_flag_gvg2_no_te(struct map_data *mapdata) {
+inline bool mapdata_flag_gvg2_no_te( const map_data* mapdata ) {
 	if (mapdata == nullptr)
 		return false;
 
@@ -1142,15 +1145,15 @@ int32 map_freeblock_unlock(void);
 int32 map_addblock(block_list* bl);
 int32 map_delblock(block_list* bl);
 int32 map_moveblock(block_list *, int32, int32, t_tick);
-int32 map_foreachinrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 type, ...);
-int32 map_foreachinallrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 type, ...);
-int32 map_foreachinshootrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 type, ...);
+int32 map_foreachinrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 type, ...);
+int32 map_foreachinallrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 type, ...);
+int32 map_foreachinshootrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 type, ...);
 int32 map_foreachinarea(int32 (*func)(block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...);
 int32 map_foreachinallarea(int32 (*func)(block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...);
 int32 map_foreachinshootarea(int32 (*func)(block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 type, ...);
-int32 map_forcountinrange(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int32 count, int32 type, ...);
+int32 map_forcountinrange(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int32 count, int32 type, ...);
 int32 map_forcountinarea(int32 (*func)(block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int32 count, int32 type, ...);
-int32 map_foreachinmovearea(int32 (*func)(block_list*,va_list), block_list* center, int16 range, int16 dx, int16 dy, int32 type, ...);
+int32 map_foreachinmovearea(int32 (*func)(block_list*,va_list), const block_list* center, int16 range, int16 dx, int16 dy, int32 type, ...);
 int32 map_foreachincell(int32 (*func)(block_list*,va_list), int16 m, int16 x, int16 y, int32 type, ...);
 int32 map_foreachinpath(int32 (*func)(block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int32 length, int32 type, ...);
 int32 map_foreachindir(int32 (*func)(block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int32 length, int32 offset, int32 type, ...);
@@ -1192,8 +1195,8 @@ mob_data * map_id2md(int32 id);
 npc_data * map_id2nd(int32 id);
 homun_data* map_id2hd(int32 id);
 s_mercenary_data* map_id2mc(int32 id);
-struct pet_data* map_id2pd(int32 id);
-struct s_elemental_data* map_id2ed(int32 id);
+pet_data* map_id2pd(int32 id);
+s_elemental_data* map_id2ed(int32 id);
 chat_data* map_id2cd(int32 id);
 block_list * map_id2bl(int32 id);
 bool map_blid_exists( int32 id );
@@ -1243,9 +1246,9 @@ bool                    mapit_exists(struct s_mapiterator* mapit);
 #define mapit_geteachiddb() mapit_alloc(MAPIT_NORMAL,BL_ALL)
 
 int32 map_check_dir(int32 s_dir,int32 t_dir);
-uint8 map_calc_dir(block_list *src,int16 x,int16 y);
+uint8 map_calc_dir(const block_list* src,int16 x,int16 y);
 uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir);
-int32 map_random_dir(block_list *bl, int16 *x, int16 *y); // [Skotlex]
+int32 map_random_dir(const block_list* bl, int16 *x, int16 *y); // [Skotlex]
 
 int32 cleanup_sub(block_list *bl, va_list ap);
 
@@ -1263,10 +1266,10 @@ void map_removemobs(int16 m); // [Wizputer]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, union u_mapflag_args *args);
-void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
+void map_skill_damage_add(map_data* m, uint16 skill_id, union u_mapflag_args *args);
+void map_skill_duration_add(map_data* mapd, uint16 skill_id, uint16 per);
 
-enum e_mapflag map_getmapflag_by_name(char* name);
+enum e_mapflag map_getmapflag_by_name(const char* name);
 bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
 int32 map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args);
 bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
@@ -1296,10 +1299,10 @@ typedef mob_data         TBL_MOB;
 typedef flooritem_data   TBL_ITEM;
 typedef chat_data        TBL_CHAT;
 typedef skill_unit       TBL_SKILL;
-typedef struct pet_data         TBL_PET;
+typedef pet_data         TBL_PET;
 typedef homun_data       TBL_HOM;
 typedef s_mercenary_data   TBL_MER;
-typedef struct s_elemental_data	TBL_ELEM;
+typedef s_elemental_data	TBL_ELEM;
 
 #define BL_CAST(type_, bl) \
 	( ((bl) == nullptr || (bl)->type != (type_)) \

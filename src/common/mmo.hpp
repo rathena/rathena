@@ -89,7 +89,7 @@ typedef uint32 t_itemid;
 #endif
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1640 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1641 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed (other than NPC)
 #define DEFAULT_NPC_WALK_SPEED 200 ///Default NPC walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
@@ -1091,6 +1091,23 @@ enum e_job {
 	JOB_SPIRIT_HANDLER,
 
 	JOB_SKY_EMPEROR2 = 4316,
+
+	JOB_SECOND_JOB_START = 4331,
+	JOB_RUNE_KNIGHT_2ND,
+	JOB_MECHANIC_2ND,
+	JOB_GUILLOTINE_CROSS_2ND,
+	JOB_WARLOCK_2ND,
+	JOB_ARCHBISHOP_2ND,
+	JOB_RANGER_2ND,
+	JOB_ROYAL_GUARD_2ND,
+	JOB_GENETIC_2ND,
+	JOB_SHADOW_CHASER_2ND,
+	JOB_SORCERER_2ND,
+	JOB_SURA_2ND,
+	JOB_MINSTREL_2ND,
+	JOB_WANDERER_2ND,
+
+	JOB_SECOND_JOB_END = 4350,
 
 	JOB_MAX,
 };

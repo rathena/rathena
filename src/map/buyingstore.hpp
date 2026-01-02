@@ -60,8 +60,8 @@ int8 buyingstore_create(map_session_data* sd, int32 zenylimit, unsigned char res
 void buyingstore_close(map_session_data* sd);
 void buyingstore_open(map_session_data* sd, uint32 account_id);
 void buyingstore_trade(map_session_data* sd, uint32 account_id, uint32 buyer_id, const struct PACKET_CZ_REQ_TRADE_BUYING_STORE_sub* itemlist, uint32 count);
-bool buyingstore_search(map_session_data* sd, t_itemid nameid);
-bool buyingstore_searchall(map_session_data* sd, const struct s_search_store_search* s);
+bool buyingstore_search( const map_session_data* sd, t_itemid nameid );
+bool buyingstore_searchall( const map_session_data* sd, const struct s_search_store_search* s );
 DBMap *buyingstore_getdb(void);
 void do_final_buyingstore(void);
 void do_init_buyingstore(void);

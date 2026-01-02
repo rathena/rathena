@@ -8641,6 +8641,13 @@ Body:
             Level: 5
           - Name: SS_ANTENPOU
             Level: 5
+      - Name: SS_FOUR_CHARM
+        MaxLevel: 1
+        Requires:
+          - Name: KO_KAIHOU
+            Level: 1
+          - Name: SS_SHINKIROU
+            Level: 1
   - Job: Shiranui
     Inherit:
       Novice: true
@@ -8744,3 +8751,10 @@ Body:
             Level: 5
           - Name: SS_ANTENPOU
             Level: 5
+      - Name: SS_FOUR_CHARM
+        MaxLevel: 1
+        Requires:
+          - Name: KO_KAIHOU
+            Level: 1
+          - Name: SS_SHINKIROU
+            Level: 1

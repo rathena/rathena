@@ -1609,6 +1609,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      Spirit_Handler: true
       StarGladiator: true
       Summoner: true
       SuperNovice: true
@@ -34401,6 +34402,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      Spirit_Handler: true
       StarGladiator: true
       Summoner: true
       SuperNovice: true
@@ -36157,6 +36159,17 @@ Body:
     Script: |
       sc_start SC_FOOD_LUK_CASH,1800000,15;
       sc_start SC_CRIFOOD,600000,rand(11,33);
+  - Id: 14622
+    AegisName: aegis_14622
+    Name: Cherry Blossom Scroll    # !todo check english name
+    Type: Cash
+    Weight: 10
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+    Script: |
+      getgroupitem(IG_AEGIS_14622);
   - Id: 14623
     AegisName: GoldenTreasureBox
     Name: Golden Treasure Box
@@ -57059,6 +57072,7 @@ Body:
       Rogue: true
       Sage: true
       SoulLinker: true
+      Spirit_Handler: true
       StarGladiator: true
       Summoner: true
       SuperNovice: true
@@ -69953,6 +69967,22 @@ Body:
     Weight: 10
     Script: |
       laphine_upgrade();
+  - Id: 100582
+    AegisName: aegis_100582
+    Name: Test 1
+    Type: Usable
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_100582);
+  - Id: 100584
+    AegisName: aegis_100584
+    Name: Test 2
+    Type: Usable
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_100584);
   - Id: 100585
     AegisName: Thanatos_Pendant_Box
     Name: Thanatos Necklace Box
@@ -79175,6 +79205,22 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_2024ROS_BOX_5TH);
+  - Id: 103218
+    AegisName: aegis_103218
+    Name: Angel's Song    # !todo check english name
+    Type: Usable
+    NoUse:
+      Sitting: true
+    Script: |
+      pet;
+  - Id: 103219
+    AegisName: aegis_103219
+    Name: Clock Lubricant    # !todo check english name
+    Type: Usable
+    NoUse:
+      Sitting: true
+    Script: |
+      pet;
   - Id: 103234
     AegisName: aegis_103234
     Name: Costume Enchant Stone Box 36
@@ -82253,6 +82299,1402 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_HANMAC_COLLABO_2S);
+  - Id: 104714
+    AegisName: C_CLB_DT_Select_Box1
+    Name: Toothless Selection Box I    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 104715
+    AegisName: C_CLB_DT_Select_Box2
+    Name: Toothless Selection Box II    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 104716
+    AegisName: C_Clouds_Select_Box
+    Name: Cloud Costume Selection Box    # !todo check english name
+    Type: DelayConsume
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 104741
+    AegisName: Rt_Ch01_Armor_A
+    Name: Entwined Magical Equipment Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_CH01_ARMOR_A);
+  - Id: 104742
+    AegisName: Rt_Ch01_Armor_C
+    Name: Entwined Magical Equipment Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_CH01_ARMOR_C);
+  - Id: 104743
+    AegisName: Rt_Ch01_Dimen_A
+    Name: Footsteps of Dimension Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_CH01_DIMEN_A);
+  - Id: 104744
+    AegisName: Rt_Ch01_Dimen_C
+    Name: Footsteps of Dimension Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_CH01_DIMEN_C);
+  - Id: 104745
+    AegisName: Rt_Ch01_Dimen_3
+    Name: Footsteps of Dimension 3 Sets Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_CH01_DIMEN_3);
+  - Id: 104746
+    AegisName: Rt_Ch01_Extra_A
+    Name: Chaos Activation Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_CH01_EXTRA_A);
+  - Id: 104747
+    AegisName: Rt_Ch01_Extra_C
+    Name: Chaos Completion Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_CH01_EXTRA_C);
+  - Id: 104748
+    AegisName: Rt_Ch01_Extra_2
+    Name: Chaos 2 Sets Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_CH01_EXTRA_2);
+  - Id: 104749
+    AegisName: Rt_Ch01_Extra_4
+    Name: Chaos 4 Sets Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_CH01_EXTRA_4);
+  - Id: 104750
+    AegisName: Rt_Ch01_Extra_5
+    Name: Chaos 5 Sets Reward
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_CH01_EXTRA_5);
+  - Id: 104901
+    AegisName: aegis_104901
+    Name: Costume Enchant Stone Box 40    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_104901);
+  - Id: 105031
+    AegisName: aegis_105031
+    Name: ROS Gold Capsule    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105031);
+  - Id: 105045
+    AegisName: 23th_Costume_A
+    Name: Fluffy Costume Gift Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_23TH_COSTUME_A);
+  - Id: 105046
+    AegisName: 23th_Costume_B
+    Name: Fluttering Costume Gift Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_23TH_COSTUME_B);
+  - Id: 105047
+    AegisName: 23th_Costume_C
+    Name: Divine Costume Gift Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_23TH_COSTUME_C);
+  - Id: 105059
+    AegisName: aegis_105059
+    Name: Special Enchant Stone Box    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105059);
+  - Id: 105161
+    AegisName: aegis_105161
+    Name: Tangled Singularity    # !todo check english name
+    Type: Usable
+    Weight: 100
+    EquipLevelMin: 260
+    Flags:
+      BuyingStore: true
+      Container: true
+      DropEffect: CLIENT
+    Script: |
+      getgroupitem(IG_AEGIS_105161);
+  - Id: 105162
+    AegisName: aegis_105162
+    Name: Boundary Singularity    # !todo check english name
+    Type: Usable
+    Weight: 100
+    EquipLevelMin: 270
+    Flags:
+      BuyingStore: true
+      Container: true
+      DropEffect: CLIENT
+    Script: |
+      getgroupitem(IG_AEGIS_105162);
+  - Id: 105163
+    AegisName: Fron_Fix_DK_T_Sword
+    Name: Boundary Tuning (Frontier Dragon Sword)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105164
+    AegisName: Fron_Fix_IG_Spear
+    Name: Boundary Tuning (Frontier Imperial Spear)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105165
+    AegisName: Fron_Fix_MT_T_Axe
+    Name: Boundary Tuning (Frontier Mechanical Axe)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105166
+    AegisName: Fron_Fix_BO_Hall
+    Name: Boundary Tuning (Frontier Biological Hall)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105167
+    AegisName: Fron_Fix_SHC_Katar
+    Name: Boundary Tuning (Frontier Shadow Katar)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105168
+    AegisName: Fron_Fix_ABC_Dagger
+    Name: Boundary Tuning (Frontier Abyss Dagger)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105169
+    AegisName: Fron_Fix_AG_Staff
+    Name: Boundary Tuning (Frontier Arc Staff)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105170
+    AegisName: Fron_Fix_EM_Book
+    Name: Boundary Tuning (Frontier Elemental Book)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105171
+    AegisName: Fron_Fix_CD_Rod
+    Name: Boundary Tuning (Frontier Saint Lord)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105172
+    AegisName: Fron_Fix_IQ_Claw
+    Name: Boundary Tuning (Frontier Judgment Claw)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105173
+    AegisName: Fron_Fix_WH_Bow
+    Name: Boundary Tuning (Frontier Wind Bow)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105174
+    AegisName: Fron_Fix_TR_Vilolin
+    Name: Boundary Tuning (Frontier Musical Violin)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105175
+    AegisName: Fron_Fix_TR_Rope
+    Name: Tuning of the Boundary (Frontier Musical Rope)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105176
+    AegisName: Fron_Fix_SS_Humma
+#   Name: Tuning of the Boundary (Frontier Moonlight Fuma Shuriken)
+    Name: Tuning of the Boundary (Frontier Moonlight Fuma S    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105177
+    AegisName: Fron_Fix_NW_Rifle
+    Name: Tuning of the Boundary (Frontier Knight Rifle)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105178
+    AegisName: Fron_Fix_SKE_Book
+#   Name: Tuning of the Boundary (Frontier Emperor Battle Book)
+    Name: Tuning of the Boundary (Frontier Emperor Battle B    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105179
+    AegisName: Fron_Fix_SOA_Staff
+    Name: Tuning of the Boundary (Frontier Soul Staff)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105180
+    AegisName: Fron_Fix_HN_Rod
+    Name: Tuning of the Boundary (Frontier Hyper Rod)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105181
+    AegisName: Fron_Fix_SH_Foxtail
+    Name: Tuning of the Boundary (Frontier Spirit Foxtail)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Script: |
+      item_reform();
+  - Id: 105219
+    AegisName: aegis_105219
+    Name: "[A] Wrathful Two-Handed Dagger Box"    # !todo check english name
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105219);
+  - Id: 105220
+    AegisName: aegis_105220
+    Name: "[A] Wrathful Spear Shield Box"    # !todo check english name
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105220);
+  - Id: 105356
+    AegisName: SP_Costume_Select
+    Name: Special Costume Selection Box    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 105357
+    AegisName: SP_Costume_Collection
+    Name: Special Costume Collection Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_SP_COSTUME_COLLECTION);
+  - Id: 105415
+    AegisName: A_DM_Fix_DK_T_Spear
+    Name: Tuning of the Dimension (Faceworm Queen's Horn)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105416
+    AegisName: A_DM_Fix_IG_Spear
+    Name: Dimensional Tuning (Ispetar)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105417
+    AegisName: A_DM_Fix_ABC_Bow
+    Name: Dimensional Tuning (Baregun Crossbow)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105418
+    AegisName: A_DM_Fix_BO_Sword
+    Name: Second-Dimensional Tuning (Falx)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105419
+    AegisName: A_DM_Fix_AG_T_Staff
+    Name: Second-Dimensional Tuning (Wepawet)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105420
+    AegisName: A_DM_Fix_EM_Book
+    Name: Second-Dimensional Tuning (Elemental Spirits)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105421
+    AegisName: A_DM_Fix_NW_Launcher
+    Name: Second-Dimensional Tuning (Agent Launcher)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105422
+    AegisName: A_DM_Fix_SKE_Book
+    Name: Second-Dimensional Tuning (Book of the Red Moon)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105488
+    AegisName: All_In_One_Healing_E
+    Name: "[Event] All-in-One Healing Potion"    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 105489
+    AegisName: All_In_One_buff_E
+    Name: "[Event] All-in-One Buff Potion"    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 105490
+    AegisName: 2025ROS_For_Offline
+    Name: ROS Gift Box    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2025ROS_FOR_OFFLINE);
+  - Id: 105518
+    AegisName: aegis_105518
+    Name: Costume Enchantment Stone Box 41    # !todo check english name
+    Type: Usable
+    Weight: 10
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105518);
+  - Id: 105526
+    AegisName: Niflheim_Select_1
+    Name: Niflheim Costume Selection 1
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 105527
+    AegisName: Niflheim_Select_2
+    Name: Niflheim Costume Selection 2
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 105528
+    AegisName: Niflheim_Select_3
+    Name: Niflheim Costume Selection 3
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 105615
+    AegisName: ROS_FESTA_BOX
+    Name: ROS FESTA BOX    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_ROS_FESTA_BOX);
+  - Id: 105616
+    AegisName: R_Ep1921_Album
+    Name: Episode 19-21 Card Album    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_R_EP1921_ALBUM);
+  - Id: 105617
+    AegisName: R_Ep1921_Boss
+    Name: Episode 19-21 Boss Card Album    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_R_EP1921_BOSS);
+  - Id: 105619
+    AegisName: Rt_Ep21_Gaebolg_A
+    Name: Geoborg Activation Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_GAEBOLG_A);
+  - Id: 105620
+    AegisName: Rt_Ep21_Gaebolg_C
+    Name: Geoborg Completion Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_GAEBOLG_C);
+  - Id: 105621
+    AegisName: Rt_Ep21_Icy_A
+    Name: Ice Coast Activation Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_ICY_A);
+  - Id: 105622
+    AegisName: Rt_Ep21_Icy_C
+    Name: Ice Coast Completion Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_ICY_C);
+  - Id: 105623
+    AegisName: Rt_Ep21_Icy_2
+    Name: Ice Coast 2-Set Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_ICY_2);
+  - Id: 105624
+    AegisName: Rt_Ep21_Yorker_A
+    Name: Yosker Yorker Activation Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_YORKER_A);
+  - Id: 105625
+    AegisName: Rt_Ep21_Yorker_C
+    Name: Yosker Yorker Completion Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_YORKER_C);
+  - Id: 105626
+    AegisName: Rt_Ep21_Working_A
+    Name: Staff Activation Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_WORKING_A);
+  - Id: 105627
+    AegisName: Rt_Ep21_Working_C
+    Name: Staff Completion Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_WORKING_C);
+  - Id: 105628
+    AegisName: Rt_Ep21_Admin_A
+    Name: Management Activation Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_ADMIN_A);
+  - Id: 105629
+    AegisName: Rt_Ep21_Admin_C
+    Name: Management Completion Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_ADMIN_C);
+  - Id: 105630
+    AegisName: Rt_Ep21_Admin_2
+    Name: Management 2-Set Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_ADMIN_2);
+  - Id: 105631
+    AegisName: Rt_Ep21_Purify_A
+    Name: Purification Activity Activation Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_PURIFY_A);
+  - Id: 105632
+    AegisName: Rt_Ep21_Purify_C
+    Name: Purification Activity Completion Rewards    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_PURIFY_C);
+  - Id: 105633
+    AegisName: Rt_Ep21_Purify_3
+    Name: Purification Activity 3-Set Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_PURIFY_3);
+  - Id: 105634
+    AegisName: Rt_Ep21_Purify_5
+    Name: Purification Activity 5-Set Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_PURIFY_5);
+  - Id: 105635
+    AegisName: Rt_Ep21_Aid_A
+    Name: Civil Support Activation Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_AID_A);
+  - Id: 105636
+    AegisName: Rt_Ep21_Aid_C
+    Name: Civil Support Completion Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_AID_C);
+  - Id: 105637
+    AegisName: Rt_Ep21_Aid_2
+    Name: Civil Support 2-Set Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_AID_2);
+  - Id: 105638
+    AegisName: Rt_Ep21_Aid_4
+    Name: Civil Support 4-Set Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_AID_4);
+  - Id: 105639
+    AegisName: Rt_Ep21_Company_A
+    Name: Group Activation Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_COMPANY_A);
+  - Id: 105640
+    AegisName: Rt_Ep21_Company_C
+    Name: Group Completion Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_COMPANY_C);
+  - Id: 105641
+    AegisName: Rt_Ep21_Company_3
+    Name: Group 3-Set Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_COMPANY_3);
+  - Id: 105642
+    AegisName: Rt_Ep21_Company_5
+    Name: Group 5-Set Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_COMPANY_5);
+  - Id: 105643
+    AegisName: Rt_Ep21_Horn_A
+    Name: Frozen Horn Activation Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_HORN_A);
+  - Id: 105644
+    AegisName: Rt_Ep21_Horn_C
+    Name: Frozen Horn Completion Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_HORN_C);
+  - Id: 105645
+    AegisName: Rt_Ep21_Horn_3
+    Name: Frozen Horn 3-Set Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_HORN_3);
+  - Id: 105646
+    AegisName: Rt_Ep21_Horn_5
+    Name: Frozen Horn 5-Set Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_HORN_5);
+  - Id: 105647
+    AegisName: Rt_Ep21_Tan_A
+    Name: Encroachment Activation Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_TAN_A);
+  - Id: 105648
+    AegisName: Rt_Ep21_Tan_C
+    Name: Encroachment Completion Reward    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_RT_EP21_TAN_C);
+  - Id: 105685
+    AegisName: A_DM_Fix_MT_Mace
+    Name: Second Dimensional Tuning (Submarine Anchor)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105686
+    AegisName: A_DM_Fix_SHC_Katar
+    Name: Second Dimensional Tuning (Vida Noctorno)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105687
+    AegisName: A_DM_Fix_CD_Book
+    Name: Second Dimensional Tuning (Judgment Day)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105688
+    AegisName: A_DM_Fix_TR_Violin
+    Name: Second Dimensional Tuning (Geigg)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105689
+    AegisName: A_DM_Fix_TR_Whip
+    Name: Second Dimensional Tuning (Needle Whip)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105690
+    AegisName: A_DM_Fix_HN_Mace
+    Name: Second Dimensional Tuning (Jack O'Rush)    # !todo check english name
+    Type: DelayConsume
+    Weight: 50
+    EquipLevelMin: 265
+    Flags:
+      DropEffect: CLIENT
+    Script: |
+      item_reform();
+  - Id: 105715
+    AegisName: aegis_105715
+    Name: Infinite Giant Fly's Wings 1-Hour Box    # !todo check english name
+    Type: Cash
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105715);
+  - Id: 105737
+    AegisName: Sky_Weapon_Hammer
+    Name: Celestial Weapon Refining Hammer    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 105738
+    AegisName: Sky_Crown_Hammer
+    Name: Celestial Crown Refining Hammer    # !todo check english name
+    Type: DelayConsume
+    Weight: 10
+    Flags:
+      BuyingStore: true
+    Script: |
+      item_reform();
+  - Id: 105828
+    AegisName: aegis_105828
+    Name: "[A] Time Gap Dagger Box"    # !todo check english name
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105828);
+  - Id: 105829
+    AegisName: aegis_105829
+    Name: "[A] Time Gap Kurojin Boxes"    # !todo check english name
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105829);
+  - Id: 105830
+    AegisName: aegis_105830
+#   Name: +12 [A] Crown of Good and Evil (Night's Watch) Selection Box
+    Name: "+12 [A] Crown of Good and Evil (Night's Watch) Se"    # !todo check english name
+    Type: Usable
+    Weight: 10
+  - Id: 105831
+    AegisName: aegis_105831
+#   Name: +10 [C] Crown of Good and Evil (Night's Watch) Selection Box
+    Name: "+10 [C] Crown of Good and Evil (Night's Watch) Se"    # !todo check english name
+    Type: Usable
+    Weight: 10
+  - Id: 105832
+    AegisName: aegis_105832
+    Name: "+12 [A] Spear of Wrath Shield Box"    # !todo check english name
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105832);
+  - Id: 105833
+    AegisName: aegis_105833
+    Name: "+10 [C] Spear of Wrath Shield Box"    # !todo check english name
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105833);
+  - Id: 105834
+    AegisName: aegis_105834
+    Name: "+12 [A] Two-Handed Dagger of Wrath Box"    # !todo check english name
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105834);
+  - Id: 105835
+    AegisName: aegis_105835
+    Name: "+10 [C] Two-Handed Dagger of Wrath Box"    # !todo check english name
+    Type: Usable
+    Weight: 100
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105835);
+  - Id: 105836
+    AegisName: aegis_105836
+    Name: Holiday Season Gift    # !todo check english name
+    Type: Usable
+    Flags:
+      Container: true
+    Script: |
+      getgroupitem(IG_AEGIS_105836);
+  - Id: 105917
+    AegisName: aegis_105917
+    Name: Divine Box    # !todo check english name
+    Type: Usable
+    Weight: 500
+    EquipLevelMin: 250
+    Flags:
+      Container: true
+      DropEffect: CLIENT
+    Script: |
+      getgroupitem(IG_AEGIS_105917);
+  - Id: 105927
+    AegisName: Select_Costume_DEC_1
+    Name: White Fox Hooded Twin Costume Selection Box    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 105928
+    AegisName: Select_Costume_DEC_2
+    Name: Winged Hair Costume Selection Box    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 105929
+    AegisName: Select_Costume_DEC_3
+    Name: Wonderful Long Costume Selection Box    # !todo check english name
+    Type: Usable
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 200000
     AegisName: IDTest_Cash
     Name: IDTest Cash
@@ -86031,6 +87473,607 @@ Body:
       NoAuction: true
     Script: |
       getgroupitem(IG_LI_NYANGVINE_BOX3_39);
+  - Id: 200665
+    AegisName: DT_Colabo_Box1
+    Name: Toothless Costume Package I    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_DT_COLABO_BOX1);
+  - Id: 200666
+    AegisName: DT_Colabo_Box2
+    Name: Toothless Costume Package II    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_DT_COLABO_BOX2);
+  - Id: 200667
+    AegisName: Cloud_Costume_Pack
+    Name: Cloud Costume Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_CLOUD_COSTUME_PACK);
+  - Id: 200669
+    AegisName: CostumeMilePack_39_1
+#   Name: Nyangdarae Costume Mileage Package I (Stone Box 39)
+    Name: Nyangdarae Costume Mileage Package I (Stone Box 3    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_39_1);
+  - Id: 200670
+    AegisName: CostumeMilePack_39_2
+#   Name: Nyangdarae Costume Mileage Package II (Stone Box 39)
+    Name: Nyangdarae Costume Mileage Package II (Stone Box     # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_39_2);
+  - Id: 200671
+    AegisName: CostumeMilePack_39_3
+#   Name: Nyangdarae Costume Mileage Package III (Stone Box 39)
+    Name: Nyangdarae Costume Mileage Package III (Stone Box    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_39_3);
+  - Id: 200700
+    AegisName: LI_Nyangvine_Box1_40
+#   Name: (Account Exclusive) Cat's Nest Fruit Package I (Stone Box 40)
+    Name: (Account Exclusive) Cat's Nest Fruit Package I (S    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_NYANGVINE_BOX1_40);
+  - Id: 200701
+    AegisName: LI_Nyangvine_Box2_40
+#   Name: (Account Exclusive) Cat's Nest Fruit Package II (Stone Box 40)
+    Name: (Account Exclusive) Cat's Nest Fruit Package II (    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_NYANGVINE_BOX2_40);
+  - Id: 200702
+    AegisName: LI_Nyangvine_Box3_40
+#   Name: (Account Exclusive) Cat's Nest Fruit Package III (Stone Box 40)
+    Name: (Account Exclusive) Cat's Nest Fruit Package III     # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_NYANGVINE_BOX3_40);
+  - Id: 200713
+    AegisName: 23th_Costume_Pack_A
+    Name: Fluffy Concentrated Refining Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_23TH_COSTUME_PACK_A);
+  - Id: 200714
+    AegisName: 23th_Costume_Pack_B
+    Name: Fluttering High-Concentrated Refining Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_23TH_COSTUME_PACK_B);
+  - Id: 200715
+    AegisName: 23th_Costume_Pack_C
+    Name: Sacred Cat's Nest Fruit Packages    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_23TH_COSTUME_PACK_C);
+  - Id: 200716
+    AegisName: 23th_Package_1
+    Name: Special Monthly Package I    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_23TH_PACKAGE_1);
+  - Id: 200717
+    AegisName: 23th_Package_2
+    Name: Special Monthly Package II    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_23TH_PACKAGE_2);
+  - Id: 200718
+    AegisName: 23th_Package_3
+    Name: Special Monthly Package III    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_23TH_PACKAGE_3);
+  - Id: 200719
+    AegisName: 23th_Package_4
+    Name: Special Monthly Package IV    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_23TH_PACKAGE_4);
+  - Id: 200721
+    AegisName: CostumeMilePack_SP_1
+    Name: Nyangdarae Costume Mileage Package I (Special)    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_SP_1);
+  - Id: 200722
+    AegisName: CostumeMilePack_SP_2
+    Name: Nyangdarae Costume Mileage Package II (Special)    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_SP_2);
+  - Id: 200723
+    AegisName: CostumeMilePack_SP_3
+    Name: Nyangdarae Costume Mileage Package III (Special)    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_SP_3);
+  - Id: 200724
+    AegisName: CostumeMilePack_SP_4
+    Name: Nyangdarae Costume Mileage Package (Special)    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_SP_4);
+  - Id: 200764
+    AegisName: CostumeMilePack_41_1
+#   Name: Nymphalina Costume Mileage Package I (Stone Box 41)
+    Name: Nymphalina Costume Mileage Package I (Stone Box 4    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_41_1);
+  - Id: 200765
+    AegisName: CostumeMilePack_41_2
+#   Name: Nymphalina Costume Mileage Package II (Stone Box 41)
+    Name: Nymphalina Costume Mileage Package II (Stone Box     # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_41_2);
+  - Id: 200766
+    AegisName: CostumeMilePack_41_3
+#   Name: Nymphalina Costume Mileage Package III (Stone Box 41)
+    Name: Nymphalina Costume Mileage Package III (Stone Box    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_COSTUMEMILEPACK_41_3);
+  - Id: 200767
+    AegisName: Niflheim_Costume_1
+    Name: Niflheim Costume Package I
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_NIFLHEIM_COSTUME_1);
+  - Id: 200768
+    AegisName: Niflheim_Costume_2
+    Name: Niflheim Costume Package II
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_NIFLHEIM_COSTUME_2);
+  - Id: 200769
+    AegisName: Niflheim_Costume_3
+    Name: Niflheim Costume Package III
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_NIFLHEIM_COSTUME_3);
+  - Id: 200770
+    AegisName: Niflheim_Costume_4
+    Name: Niflheim Night Sky Package
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_NIFLHEIM_COSTUME_4);
+  - Id: 200785
+    AegisName: LI_Nyangvine_Box1_SP
+    Name: Cat's Nest Fruit Special Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_NYANGVINE_BOX1_SP);
+  - Id: 200786
+    AegisName: LI_Nyangvine_Box2_SP
+    Name: Cat's Nest Fruit Special Package I    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_NYANGVINE_BOX2_SP);
+  - Id: 200787
+    AegisName: LI_Nyangvine_Box3_SP
+    Name: Cat's Nest Fruit Special Package II    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_NYANGVINE_BOX3_SP);
+  - Id: 200788
+    AegisName: LI_Nyangvine_Box4_SP
+    Name: Nyandarae Fruit Special Package III    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_LI_NYANGVINE_BOX4_SP);
+  - Id: 200789
+    AegisName: 2025_DEC_Package1
+    Name: Special Refining Month Package I    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2025_DEC_PACKAGE1);
+  - Id: 200790
+    AegisName: 2025_DEC_Package2
+    Name: Special Refining Month Package II    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_2025_DEC_PACKAGE2);
+  - Id: 200791
+    AegisName: Cash_Booster_Box2
+    Name: Special Year-End Growth Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_CASH_BOOSTER_BOX2);
+  - Id: 200792
+    AegisName: Select_DEC_Pack1
+    Name: White Fox Costume Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_SELECT_DEC_PACK1);
+  - Id: 200793
+    AegisName: Select_DEC_Pack2
+    Name: Clock Witch Costume Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_SELECT_DEC_PACK2);
+  - Id: 200794
+    AegisName: Select_DEC_Pack3
+    Name: Wonderful Forest Costume Package    # !todo check english name
+    Type: Cash
+    Flags:
+      Container: true
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+    Script: |
+      getgroupitem(IG_SELECT_DEC_PACK3);
   - Id: 1100000
     AegisName: IDTest_heal
     Name: IDTest heal
@@ -86391,3 +88434,24 @@ Body:
       NoAuction: true
     Script: |
       itemheal 0,300; /* average value */
+  - Id: 1100036
+    AegisName: aegis_1100036
+    Name: Sharing Fish    # !todo check english name
+    Type: Healing
+    Weight: 1
+    Script: |
+      itemheal 2500,0; /* average value */
+  - Id: 1100037
+    AegisName: 25_A_Ev_Cookie
+    Name: Orleans' Handmade Cookies    # !todo check english name
+    Type: Healing
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true

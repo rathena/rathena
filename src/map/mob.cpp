@@ -374,7 +374,7 @@ struct view_data * mob_get_viewdata(int32 mob_id)
 	return &db->vd;
 }
 
-e_mob_bosstype s_mob_db::get_bosstype(){
+e_mob_bosstype s_mob_db::get_bosstype() const{
 	if( status_has_mode( &this->status, MD_MVP ) ){
 		return BOSSTYPE_MVP;
 	}else if( this->status.class_ == CLASS_BOSS ){
@@ -384,7 +384,7 @@ e_mob_bosstype s_mob_db::get_bosstype(){
 	}
 }
 
-e_mob_bosstype mob_data::get_bosstype(){
+e_mob_bosstype mob_data::get_bosstype() const{
 	if( status_has_mode( &this->status, MD_MVP ) ){
 		return BOSSTYPE_MVP;
 	}else if( this->status.class_ == CLASS_BOSS ){
@@ -2267,7 +2267,7 @@ void mob_set_attacked_id(int32 src_id, int32 target_id, t_tick tick, bool is_nor
 	{
 		case BL_PET:
 		{
-			struct pet_data& pd = *reinterpret_cast<pet_data*>(src);
+			pet_data& pd = *reinterpret_cast<pet_data*>(src);
 			if (pd.master)
 			{
 				// Let mobs retaliate against the pet's master
@@ -2706,7 +2706,7 @@ void mob_log_damage(mob_data* md, block_list* src, int64 damage, int64 damage_ta
 		}
 		case BL_PET:
 		{
-			struct pet_data *pd = (TBL_PET*)src;
+			pet_data *pd = (TBL_PET*)src;
 			flag = MDLF_PET;
 			if( pd->master )
 				char_id = pd->master->status.char_id;
@@ -2892,12 +2892,17 @@ int32 mob_getdroprate(block_list *src, std::shared_ptr<s_mob_db> mob, int32 base
 /**
  * Returns the MVP player based on the monster's damage log
  * This player has the highest value when damage dealt and damage tanked are added together
+ * @param first_sd: Player with loot priority (for custom legacy behavior)
  * @return The MVP player
  */
-map_session_data* mob_data::get_mvp_player() {
+map_session_data* mob_data::get_mvp_player(map_session_data* first_sd) {
 	// There cannot be an MVP player if the monster is not an MVP
 	if (this->get_bosstype() != BOSSTYPE_MVP)
 		return nullptr;
+
+	// Skip MVP player determination and return the player with loot priority instead
+	if (battle_config.mvp_to_loot_priority)
+		return first_sd;
 
 	int64 mvp_damage = 0;
 	map_session_data* mvp_sd = nullptr;
@@ -3063,7 +3068,7 @@ int32 mob_dead(mob_data *md, block_list *src, int32 type)
 	merckillonly = (bool)((dmgbltypes & BL_MER) && !(dmgbltypes & ~BL_MER));
 
 	// Determine MVP (need to do it here so that it's not influenced by first attacker bonus below)
-	map_session_data* mvp_sd = md->get_mvp_player();
+	map_session_data* mvp_sd = md->get_mvp_player(first_sd);
 
 	if(battle_config.exp_calc_type == 2 && count > 1) {	//Apply first-attacker 200% exp share bonus
 		s_dmglog& entry = md->dmglog[0];
@@ -3717,7 +3722,7 @@ int32 mob_guardian_guildchange(mob_data *md)
 /*==========================================
  * Pick a random class for the mob
  *------------------------------------------*/
-int32 mob_random_class(int32 *value, size_t count)
+int32 mob_random_class( const int32 *value, size_t count )
 {
 	nullpo_ret(value);
 
@@ -4198,7 +4203,7 @@ mob_data *mob_getfriendstatus(mob_data *md,int64 cond1,int64 cond2)
 }
 
 // Display message from mob_chat_db.yml
-bool mob_chat_display_message(mob_data &md, uint16 msg_id) {
+bool mob_chat_display_message( const mob_data& md, uint16 msg_id ) {
 	std::shared_ptr<s_mob_chat> mc = mob_chat_db.find(msg_id);
 
 	if (mc != nullptr) {
@@ -5920,6 +5925,7 @@ uint64 MobAvailDatabase::parseBodyNode(const ryml::NodeRef& node) {
 		}
 
 		mob->vd.look[LOOK_BASE] = static_cast<int32>( constant );
+		mob->vd.look[LOOK_BODY2] = static_cast<int32>( constant );
 	} else {
 		this->invalidWarning(node["Sprite"], "Sprite is missing.\n");
 		return 0;

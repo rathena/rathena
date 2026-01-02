@@ -326,7 +326,7 @@ e_cast_type skill_get_casttype (uint16 skill_id) {
 }
 
 //Returns actual skill range taking into account attack range and AC_OWL [Skotlex]
-int32 skill_get_range2(block_list *bl, uint16 skill_id, uint16 skill_lv, bool isServer) {
+int32 skill_get_range2(const block_list* bl, uint16 skill_id, uint16 skill_lv, bool isServer) {
 	if( bl->type == BL_MOB && battle_config.mob_ai&0x400 )
 		return 9; //Mobs have a range of 9 regardless of skill used.
 
@@ -2393,41 +2393,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		}
 	}
 
-	// Check for player and pet autobonuses when attacking
-	if (sd != nullptr) {
-		// Player
-		if (!sd->autobonus.empty()) {
-			for (auto &it : sd->autobonus) {
-				if (it == nullptr)
-					continue;
-				if (rnd_value(0, 1000) >= it->rate)
-					continue;
-				if (!(((it->atk_type) & attack_type) & BF_WEAPONMASK &&
-					  ((it->atk_type) & attack_type) & BF_RANGEMASK &&
-					  ((it->atk_type) & attack_type) & BF_SKILLMASK))
-					continue; // one or more trigger conditions were not fulfilled
-
-				pc_exeautobonus(*sd, &sd->autobonus, it);
-			}
-		}
-
-		// Pet
-		if (sd->pd != nullptr && !sd->pd->autobonus.empty()) {
-			for (auto &it : sd->pd->autobonus) {
-				if (it == nullptr)
-					continue;
-				if (rnd_value(0, 1000) >= it->rate)
-					continue;
-				if (!(((it->atk_type) & attack_type) & BF_WEAPONMASK &&
-					  ((it->atk_type) & attack_type) & BF_RANGEMASK &&
-					  ((it->atk_type) & attack_type) & BF_SKILLMASK))
-					continue; // one or more trigger conditions were not fulfilled
-
-				pet_exeautobonus(*sd, &sd->pd->autobonus, it);
-			}
-		}
-	}
-
 	//Polymorph
 	if(sd && sd->bonus.classchange && attack_type&BF_WEAPON &&
 		dstmd && !status_has_mode(tstatus,MD_STATUSIMMUNE) &&
@@ -2748,6 +2713,41 @@ int32 skill_counter_additional_effect (block_list* src, block_list *bl, uint16 s
 					if ( battle_config.display_status_timers && dstsd )
 						clif_status_change(bl, EFST_POSTDELAY, 1, delay, 0, 0, 0);
 				}
+			}
+		}
+	}
+
+	// Check for player and pet autobonuses when attacking
+	if (sd != nullptr) {
+		// Player
+		if (!sd->autobonus.empty()) {
+			for (auto& it : sd->autobonus) {
+				if (it == nullptr)
+					continue;
+				if (rnd_value(0, 1000) >= it->rate)
+					continue;
+				if (!(((it->atk_type) & attack_type) & BF_WEAPONMASK &&
+					((it->atk_type) & attack_type) & BF_RANGEMASK &&
+					((it->atk_type) & attack_type) & BF_SKILLMASK))
+					continue; // one or more trigger conditions were not fulfilled
+
+				pc_exeautobonus(*sd, &sd->autobonus, it);
+			}
+		}
+
+		// Pet
+		if (sd->pd != nullptr && !sd->pd->autobonus.empty()) {
+			for (auto& it : sd->pd->autobonus) {
+				if (it == nullptr)
+					continue;
+				if (rnd_value(0, 1000) >= it->rate)
+					continue;
+				if (!(((it->atk_type) & attack_type) & BF_WEAPONMASK &&
+					((it->atk_type) & attack_type) & BF_RANGEMASK &&
+					((it->atk_type) & attack_type) & BF_SKILLMASK))
+					continue; // one or more trigger conditions were not fulfilled
+
+				pet_exeautobonus(*sd, &sd->pd->autobonus, it);
 			}
 		}
 	}
@@ -3614,7 +3614,7 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 	//! CHECKME: This check maybe breaks the battle_calc_attack, and maybe need better calculation.
 	// Adjusted to the new system [Skotlex]
 	if( src->type == BL_PET ) { // [Valaris]
-		struct pet_data *pd = (TBL_PET*)src;
+		pet_data *pd = (TBL_PET*)src;
 		if (pd->a_skill && pd->a_skill->div_ && pd->a_skill->id == skill_id) { //petskillattack2
 			if (battle_config.pet_ignore_infinite_def || !is_infinite_defense(bl,dmg.flag)) {
 				int32 element = skill_get_ele(skill_id, skill_lv);
@@ -3935,7 +3935,7 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		case SP_SPA:
 		case SP_SHA:
 			if (dmg.div_ < 2)
-				type = DMG_SPLASH;
+				dmg_type = DMG_SPLASH;
 			if (!(flag&SD_ANIMATION))
 				clif_skill_nodamage(dsrc, *bl, skill_id, skill_lv);
 			[[fallthrough]];
@@ -5486,10 +5486,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case SS_KAGEGISSEN:
-		skill_mirage_cast(*src, bl, skill_id, skill_lv, 0, 0, tick, flag);
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		[[fallthrough]];
 	case NC_FLAMELAUNCHER:
 		skill_area_temp[1] = bl->id;
 		if (battle_config.skill_eightpath_algorithm) {
@@ -5846,6 +5842,9 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SKE_SKY_SUN:
 	case SKE_SKY_MOON:
 	case SKE_STAR_LIGHT_KICK:
+	case SS_KAGEGISSEN:
+	case SS_SEKIENHOU:
+	case SS_RAIDENPOU:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
 			int32 heal = 0;
@@ -6139,6 +6138,8 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					sc_start(src,src,skill_get_sc(skill_id),100,skill_lv,skill_get_time(skill_id,skill_lv));
 					break;
 				case SS_KINRYUUHOU:
+				case SS_SEKIENHOU:
+				case SS_RAIDENPOU:
 					skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, 0, 0, tick, flag | BCT_WOS);
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					break;
@@ -8234,6 +8235,21 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
+	case SS_FOUR_CHARM:
+		if (sd != nullptr) {
+			switch (sd->spiritcharm_type) {
+				case CHARM_TYPE_FIRE:  type = SC_FIRE_CHARM_POWER;    break;
+				case CHARM_TYPE_WATER: type = SC_WATER_CHARM_POWER;   break;
+				case CHARM_TYPE_LAND:  type = SC_GROUND_CHARM_POWER;  break;
+				case CHARM_TYPE_WIND:  type = SC_WIND_CHARM_POWER;    break;
+				default:  type = SC_NONE;    break;
+			}
+			if (type != SC_NONE) {
+				clif_skill_nodamage(src, *bl, skill_id, skill_lv,
+					sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+			}
+		}
+		break;
 
 	case PR_KYRIE:
 	case MER_KYRIE:
@@ -9936,7 +9952,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 							continue;
 						break;
 				}
-				if (i == SC_BERSERK || i == SC_SATURDAYNIGHTFEVER)
+				if (status == SC_BERSERK || status == SC_SATURDAYNIGHTFEVER)
 					tsc->getSCE(status)->val2 = 0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
 				status_change_end(bl, status);
 			}
@@ -11484,7 +11500,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 							continue;
 						break;
 				}
-				if (i == SC_BERSERK || i == SC_SATURDAYNIGHTFEVER)
+				if (status == SC_BERSERK || status == SC_SATURDAYNIGHTFEVER)
 					tsc->getSCE(status)->val2 = 0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
 				status_change_end(bl,status);
 			}
@@ -13600,6 +13616,11 @@ static int8 skill_castend_id_check(block_list *src, block_list *target, uint16 s
 					return -1; //Works on silenced allies
 			}
 			break;
+		case PF_SOULBURN:
+			// Only works on players
+			if (target->type != BL_PC)
+				return USESKILL_FAIL_LEVEL;
+			break;
 		case RA_WUGSTRIKE:
 			// Check if path can be reached
 			if (!path_search(nullptr,src->m,src->x,src->y,target->x,target->y,1,CELL_CHKNOREACH))
@@ -15413,27 +15434,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case SS_KUNAIKUSSETSU:
 		map_foreachinallrange(skill_detonator, src, skill_get_splash(skill_id, skill_lv), BL_SKILL, src, skill_lv);
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
-		break;
-	case SS_RAIDENPOU:
-	case SS_SEKIENHOU:
-		skill_area_temp[1] = 0;
-		skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, x, y, tick, flag | BCT_WOS);
-		if (map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR)) {
-			clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-			return 0;
-		}
-		clif_skill_nodamage(src, *src, skill_id, skill_lv);
-		if (battle_config.skill_eightpath_algorithm) {
-			//Use official AoE algorithm
-			map_foreachindir(skill_attack_area, src->m, src->x, src->y, x, y,
-				skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
-				skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
-		}
-		else {
-			map_foreachinpath(skill_attack_area, src->m, src->x, src->y, x, y,
-				skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), splash_target(src),
-				skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
-		}
 		break;
 	case SS_SHINKIROU:
 		flag |= 1;
@@ -18982,6 +18982,12 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		case KO_KAIHOU:
 		case KO_ZENKAI:
 			if (sd.spiritcharm_type == CHARM_TYPE_NONE || sd.spiritcharm <= 0) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL_SUMMON_NONE );
+				return false;
+			}
+			break;
+		case SS_FOUR_CHARM:
+			if (sd.spiritcharm_type == CHARM_TYPE_NONE || sd.spiritcharm < MAX_SPIRITCHARM) {
 				clif_skill_fail( sd, skill_id, USESKILL_FAIL_SUMMON_NONE );
 				return false;
 			}
@@ -24677,8 +24683,8 @@ void skill_init_nounit_layout (void) {
 		ShowError("skill_init_nounit_layout: The skill_nounit_layout has met the limit or overflowed (pos=%d)\n", pos);
 }
 
-int32 skill_block_check(block_list *bl, sc_type type , uint16 skill_id) {
-	status_change *sc = status_get_sc(bl);
+int32 skill_block_check(const block_list* bl, sc_type type , uint16 skill_id) {
+	const status_change *sc = status_get_sc(bl);
 
 	if( !sc || !bl || !skill_id )
 		return 0; // Can do it
@@ -26391,7 +26397,7 @@ void skill_reload (void) {
 
 	for( map_session_data *sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) ) {
 		pc_validate_skill(sd);
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 	}
 	mapit_free(iter);
 }
