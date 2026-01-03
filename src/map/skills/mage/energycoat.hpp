@@ -3,12 +3,9 @@
 
 #pragma once
 
-#include "../skill_impl.hpp"
-#include "map/battle.hpp"
+#include "../status_skill_impl.hpp"
 
-class SkillEnergyCoat : public SkillImpl {
+class SkillEnergyCoat : public StatusSkillImpl {
 public:
 	SkillEnergyCoat();
-
-	void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const override;
 };
