@@ -32,17 +32,14 @@ void SkillStoneCurse::castendNoDamageId(block_list *src, block_list *target, uin
 
 	// Except for players, the skill animation shows even if the status change doesn't start
 	// Players get a skill has failed message instead
-	int success = sc_start2(src, target, type, (skill_lv * 4 + 20) + brate, skill_lv, src->id, skill_get_time2(getSkillId(), skill_lv),
-	                        skill_get_time(getSkillId(), skill_lv));
-	if (success || sd == nullptr)
+	if (sc_start2(src, target, type, (skill_lv * 4 + 20) + brate, skill_lv, src->id, skill_get_time2(getSkillId(), skill_lv), skill_get_time(getSkillId(), skill_lv)) || sd == nullptr)
 		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	else {
-		clif_skill_fail(*sd, getSkillId());
+		clif_skill_fail( *sd, getSkillId() );
 		// Level 6-10 doesn't consume a red gem if it fails [celest]
-		if (skill_lv > 5) {
-			// not to consume items
-			// return 0;
-			return;
+		if (skill_lv > 5)
+		{ // not to consume items
+			flag |= SKILL_NOCONSUME_REQ;
 		}
 	}
 }
