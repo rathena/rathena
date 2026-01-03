@@ -3,9 +3,6 @@
 
 #include "firewall.hpp"
 
-#include "map/clif.hpp"
-#include "map/status.hpp"
-
 SkillFireWall::SkillFireWall() : SkillImpl(MG_FIREWALL) {
 }
 

@@ -3,7 +3,6 @@
 
 #include "coldbolt.hpp"
 
-#include "map/clif.hpp"
 #include "map/status.hpp"
 
 SkillColdBolt::SkillColdBolt() : SkillImpl(MG_COLDBOLT) {

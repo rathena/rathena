@@ -3,9 +3,6 @@
 
 #include "thunderstorm.hpp"
 
-#include "map/clif.hpp"
-#include "map/status.hpp"
-
 SkillThunderStorm::SkillThunderStorm() : SkillImpl(MG_THUNDERSTORM) {
 }
 

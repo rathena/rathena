@@ -4,7 +4,6 @@
 #pragma once
 
 #include "../skill_impl.hpp"
-#include "map/battle.hpp"
 
 class SkillStoneCurse : public SkillImpl {
 public:
