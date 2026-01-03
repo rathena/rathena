@@ -1942,6 +1942,8 @@ Body:
     Description: Double Attack
     MaxLevel: 10
     Type: Weapon
+    DamageFlags:
+      Critical: true
     Range: -1
     Hit: Multi_Hit
     HitCount: 2
