@@ -8434,7 +8434,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						ShowError("0 enemies targeted by %d:%s, divide per 0 avoided!\n", skill_id, skill_get_name(skill_id));
 				}
 
-				std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 				if (skill != nullptr && skill->impl != nullptr) {
 					skill->impl->calculateSkillRatio(&ad, src, target, skill_lv, skillratio, mflag);
 				}
