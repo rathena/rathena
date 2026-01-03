@@ -5861,13 +5861,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				break;
 
 			switch (skill_id) {
-				case MG_FIREBALL:
-					// For players, the distance between original target and splash target determines the damage
-					if (sd != nullptr) {
-						if (block_list* orig_bl = map_id2bl(skill_area_temp[1]); orig_bl != nullptr)
-							sflag |= distance_bl(orig_bl, bl);
-					}
-					break;
 				case ABC_DEFT_STAB:
 					// Deft Stab - Make sure the flag of 2 is passed on when the skill is double casted.
 					if (flag&2)
