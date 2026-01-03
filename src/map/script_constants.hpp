@@ -6,7 +6,7 @@
 
 	#define export_constant(a) script_set_constant(#a,a,false,false)
 	#define export_constant2(a,b) script_set_constant(a,b,false,false)
-	#define export_constant_offset(a,offset) script_set_constant(#a + (offset),a,false,false)
+	#define export_constant_offset(a,offset) script_set_constant(static_cast<const char*>(#a) + static_cast<std::ptrdiff_t>(offset),a,false,false)
 	#define export_parameter(a,b) script_set_constant(a,b,true,false)
 	#define export_deprecated_constant(a) script_set_constant(#a,a,false,true)
 	#define export_deprecated_constant2(a,b) script_set_constant(a,b,false,true)
