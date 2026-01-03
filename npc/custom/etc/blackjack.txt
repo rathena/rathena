@@ -17,7 +17,7 @@
 //= 1.0 First version.
 //============================================================
 
-prontera,164,170,3	script	Black Jack Dealer	4_EP17_KAYA,{
+prontera,164,172,3	script	Black Jack Dealer	4_EP17_KAYA,{
 	mes "[Dealer]";
 	mes "Hello there! Would you like to play a game of Black Jack?";
 M_Menu:
