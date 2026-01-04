@@ -654,6 +654,7 @@ public:
 		int32 magic_damage_return; // AppleGirl Was Here
 		int32 break_weapon_rate,break_armor_rate;
 		int32 crit_atk_rate;
+		int32 non_crit_atk_rate;
 		int32 crit_def_rate;
 		int32 classchange; // [Valaris]
 		int32 speed_rate, speed_add_rate, aspd_add;
@@ -749,7 +750,7 @@ public:
 
 	struct s_search_store_info searchstore;
 
-	struct pet_data *pd;
+	pet_data *pd;
 	homun_data *hd;	// [blackhole89]
 	s_mercenary_data *md;
 	s_elemental_data *ed;
@@ -1102,11 +1103,12 @@ struct s_job_info {
 		uint32 zone;
 		uint8 group_lv;
 	} noenter_map;
+	std::vector<uint16> alternate_outfits;
 };
 
 class JobDatabase : public TypesafeCachedYamlDatabase<uint16, s_job_info> {
 public:
-	JobDatabase() : TypesafeCachedYamlDatabase( "JOB_STATS", 3, 2 ){
+	JobDatabase() : TypesafeCachedYamlDatabase( "JOB_STATS", 4, 2 ){
 
 	}
 
@@ -1115,11 +1117,11 @@ public:
 	void loadingFinished() override;
 
 	// Additional
-	uint32 get_maxBaseLv(uint16 job_id);
-	uint32 get_maxJobLv(uint16 job_id);
-	t_exp get_baseExp(uint16 job_id, uint32 level);
-	t_exp get_jobExp(uint16 job_id, uint32 level);
-	int32 get_maxWeight(uint16 job_id);
+	uint32 get_maxBaseLv(uint16 job_id) const;
+	uint32 get_maxJobLv(uint16 job_id) const;
+	t_exp get_baseExp(uint16 job_id, uint32 level) const;
+	t_exp get_jobExp(uint16 job_id, uint32 level) const;
+	int32 get_maxWeight(uint16 job_id) const;
 
 private:
 	uint32 calc_basehp( const uint16 level, const std::shared_ptr<s_job_info>& job );
@@ -1193,8 +1195,8 @@ static inline bool pc_hasprogress(map_session_data *sd, enum e_wip_block progres
 	return sd == nullptr || (sd->state.workinprogress&progress) == progress;
 }
 
-uint16 pc_maxparameter(map_session_data *sd, e_params param);
-int16 pc_maxaspd(map_session_data *sd);
+uint16 pc_maxparameter( const map_session_data* sd, e_params param );
+int16 pc_maxaspd( const map_session_data* sd );
 
 /**
  * Ranger
@@ -1360,10 +1362,10 @@ public:
 	void loadingFinished() override;
 
 	// Additional
-	uint32 pc_gets_status_point(uint16 level);
-	uint32 get_table_point(uint16 level);
-	uint32 pc_gets_trait_point(uint16 level);
-	uint32 get_trait_table_point(uint16 level);
+	uint32 pc_gets_status_point(uint16 level) const;
+	uint32 get_table_point(uint16 level) const;
+	uint32 pc_gets_trait_point(uint16 level) const;
+	uint32 get_trait_table_point(uint16 level) const;
 };
 
 extern PlayerStatPointDatabase statpoint_db;
@@ -1377,16 +1379,16 @@ enum e_summoner_power_type {
 
 void pc_set_reg_load(bool val);
 int32 pc_class2idx(int32 class_);
-int32 pc_get_group_level(map_session_data *sd);
-int32 pc_get_group_id(map_session_data *sd);
-bool pc_can_sell_item(map_session_data* sd, struct item * item, enum npc_subtype shoptype);
-bool pc_can_give_items(map_session_data *sd);
-bool pc_can_give_bounded_items(map_session_data *sd);
-bool pc_can_trade_item(map_session_data *sd, int32 index);
+int32 pc_get_group_level( const map_session_data* sd );
+int32 pc_get_group_id( const map_session_data* sd );
+bool pc_can_sell_item( const map_session_data* sd, const item* item, enum npc_subtype shoptype );
+bool pc_can_give_items( const map_session_data* sd );
+bool pc_can_give_bounded_items( const map_session_data* sd );
+bool pc_can_trade_item( const map_session_data* sd, int32 index );
 
-bool pc_can_use_command(map_session_data *sd, const char *command, AtCommandType type);
-bool pc_has_permission( map_session_data* sd, e_pc_permission permission );
-bool pc_should_log_commands(map_session_data *sd);
+bool pc_can_use_command( const map_session_data* sd, const char *command, AtCommandType type );
+bool pc_has_permission( const map_session_data* sd, e_pc_permission permission );
+bool pc_should_log_commands( const map_session_data* sd );
 
 void pc_setrestartvalue(map_session_data *sd, char type);
 void pc_makesavestatus(map_session_data *sd);
@@ -1398,19 +1400,19 @@ void pc_reg_received(map_session_data *sd);
 void pc_close_npc(map_session_data *sd,int32 flag);
 TIMER_FUNC(pc_close_npc_timer);
 
-void pc_setequipindex(map_session_data *sd);
-uint8 pc_isequip(map_session_data *sd,int32 n);
-int32 pc_equippoint(map_session_data *sd,int32 n);
-int32 pc_equippoint_sub(map_session_data *sd, struct item_data* id);
+void pc_setequipindex( map_session_data *sd );
+uint8 pc_isequip( const map_session_data* sd, int32 n );
+int32 pc_equippoint( const map_session_data* sd, int32 n );
+int32 pc_equippoint_sub( const map_session_data* sd, const item_data* id );
 void pc_setinventorydata( map_session_data& sd );
 
-int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_lv);
-uint8 pc_checkskill(const map_session_data *sd,uint16 skill_id);
-e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id);
-uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type);
-uint8 pc_checkskill_imperial_guard(map_session_data *sd, int16 flag);
-int16 pc_checkequip(map_session_data *sd,int32 pos,bool checkall=false);
-bool pc_checkequip2(map_session_data *sd, t_itemid nameid, int32 min, int32 max);
+int32 pc_get_skillcooldown( const map_session_data* sd, uint16 skill_id, uint16 skill_lv );
+uint8 pc_checkskill( const map_session_data* sd,uint16 skill_id );
+e_skill_flag pc_checkskill_flag( const map_session_data &sd, uint16 skill_id );
+uint8 pc_checkskill_summoner( const map_session_data* sd, e_summoner_power_type type);
+uint8 pc_checkskill_imperial_guard( const map_session_data* sd, int16 flag);
+int16 pc_checkequip( const map_session_data* sd, int32 pos, bool checkall = false );
+bool pc_checkequip2( const map_session_data* sd, t_itemid nameid, int32 min, int32 max );
 
 void pc_scdata_received(map_session_data *sd);
 void pc_check_expiration(map_session_data *sd);
@@ -1438,9 +1440,9 @@ void pc_setsavepoint(map_session_data *sd, int16 mapindex,int32 x,int32 y);
 char pc_randomwarp(map_session_data *sd,clr_type type,bool ignore_mapflag = false);
 bool pc_memo(map_session_data* sd, int32 pos);
 
-char pc_checkadditem(map_session_data *sd, t_itemid nameid, int32 amount);
-uint8 pc_inventoryblank(map_session_data *sd);
-int16 pc_search_inventory(map_session_data *sd, t_itemid nameid);
+char pc_checkadditem( const map_session_data* sd, t_itemid nameid, int32 amount );
+uint8 pc_inventoryblank( const map_session_data* sd );
+int16 pc_search_inventory( const map_session_data* sd, t_itemid nameid);
 char pc_payzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uint32 log_charid = 0);
 enum e_additem_result pc_additem(map_session_data *sd, struct item *item, int32 amount, e_log_pick_type log_type, bool favorite=false);
 char pc_getzeny(map_session_data *sd, int32 zeny, enum e_log_pick_type type, uint32 log_charid = 0);
@@ -1449,7 +1451,7 @@ char pc_delitem(map_session_data *sd, int32 n, int32 amount, int32 type, int16 r
 uint64 pc_generate_unique_id(map_session_data *sd);
 
 //Bound items
-int32 pc_bound_chk(TBL_PC *sd,enum bound_type type,int32 *idxlist);
+int32 pc_bound_chk( const map_session_data* sd, enum bound_type type, int32* idxlist );
 
 // Special Shop System
 int32 pc_paycash( map_session_data *sd, int32 price, int32 points, e_log_pick_type type );
@@ -1465,10 +1467,10 @@ bool pc_takeitem(map_session_data *sd,flooritem_data *fitem);
 bool pc_dropitem(map_session_data *sd,int32 n,int32 amount);
 
 bool pc_isequipped(map_session_data *sd, t_itemid nameid);
-enum adopt_responses pc_try_adopt(map_session_data *p1_sd, map_session_data *p2_sd, map_session_data *b_sd);
+enum adopt_responses pc_try_adopt( const map_session_data* p1_sd, const map_session_data* p2_sd, const map_session_data* b_sd);
 bool pc_adoption(map_session_data *p1_sd, map_session_data *p2_sd, map_session_data *b_sd);
 
-uint16 pc_getpercentweight(map_session_data& sd, uint32 weight = 0);
+uint16 pc_getpercentweight(const map_session_data& sd, uint32 weight = 0);
 void pc_updateweightstatus(map_session_data& sd);
 
 bool pc_addautobonus(std::vector<std::shared_ptr<s_autobonus>> &bonus, const char *script, int16 rate, uint32 dur, uint16 atk_type, const char *o_script, uint32 pos, bool onskill);
@@ -1500,30 +1502,30 @@ int32 pc_identifyall(map_session_data *sd, bool identify_item);
 bool pc_steal_item(map_session_data *sd,block_list *bl, uint16 skill_lv);
 int32 pc_steal_coin(map_session_data *sd,block_list *bl);
 
-int32 pc_modifybuyvalue(map_session_data*,int32);
-int32 pc_modifysellvalue(map_session_data*,int32);
+int32 pc_modifybuyvalue( const map_session_data*, int32 orig_value );
+int32 pc_modifysellvalue( const map_session_data*,int32 orig_value );
 
 int32 pc_follow(map_session_data*, int32); // [MouseJstr]
 int32 pc_stop_following(map_session_data*);
 
-uint32 pc_maxbaselv(map_session_data *sd);
-uint32 pc_maxjoblv(map_session_data *sd);
-bool pc_is_maxbaselv(map_session_data *sd);
-bool pc_is_maxjoblv(map_session_data *sd);
+uint32 pc_maxbaselv( const map_session_data* sd );
+uint32 pc_maxjoblv( const map_session_data* sd );
+bool pc_is_maxbaselv( const map_session_data* sd );
+bool pc_is_maxjoblv( const map_session_data* sd );
 int32 pc_checkbaselevelup(map_session_data *sd);
 int32 pc_checkjoblevelup(map_session_data *sd);
 void pc_gainexp(map_session_data *sd, block_list *src, t_exp base_exp, t_exp job_exp, uint8 exp_flag);
 void pc_gainexp_disp(map_session_data *sd, t_exp base_exp, t_exp next_base_exp, t_exp job_exp, t_exp next_job_exp, bool lost);
 void pc_lostexp(map_session_data *sd, t_exp base_exp, t_exp job_exp);
-t_exp pc_nextbaseexp(map_session_data *sd);
-t_exp pc_nextjobexp(map_session_data *sd);
+t_exp pc_nextbaseexp( const map_session_data* sd );
+t_exp pc_nextjobexp( const map_session_data* sd );
 int32 pc_need_status_point(map_session_data *,int32,int32);
 int32 pc_maxparameterincrease(map_session_data*,int32);
 bool pc_statusup(map_session_data*,int32,int32);
 int32 pc_statusup2(map_session_data*,int32,int32);
-int32 pc_getstat(map_session_data *sd, int32 type);
+int32 pc_getstat( const map_session_data* sd, int32 type );
 int32 pc_setstat(map_session_data* sd, int32 type, int32 val);
-int32 pc_need_trait_point(map_session_data *, int32, int32);
+int32 pc_need_trait_point( const map_session_data* sd, int32 type, int32 val );
 int32 pc_maxtraitparameterincrease(map_session_data*, int32);
 bool pc_traitstatusup(map_session_data*, int32, int32);
 int32 pc_traitstatusup2(map_session_data*, int32, int32);
@@ -1564,15 +1566,15 @@ void pc_changelook(map_session_data *,int32,int32);
 void pc_equiplookall(map_session_data *sd);
 void pc_set_costume_view(map_session_data *sd);
 
-int64 pc_readparam(map_session_data *sd, int64 type);
+int64 pc_readparam( const map_session_data* sd, int64 type );
 bool pc_setparam(map_session_data *sd, int64 type, int64 val);
-int64 pc_readreg(map_session_data *sd, int64 reg);
+int64 pc_readreg( const map_session_data* sd, int64 reg );
 bool pc_setreg(map_session_data *sd, int64 reg, int64 val);
-char *pc_readregstr(map_session_data *sd, int64 reg);
+char *pc_readregstr( const map_session_data* sd, int64 reg );
 bool pc_setregstr(map_session_data *sd, int64 reg, const char *str);
-int64 pc_readregistry(map_session_data *sd, int64 reg);
+int64 pc_readregistry( const map_session_data* sd, int64 reg );
 bool pc_setregistry(map_session_data *sd, int64 reg, int64 val);
-char *pc_readregistry_str(map_session_data *sd, int64 reg);
+char *pc_readregistry_str( const map_session_data* sd, int64 reg );
 bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val);
 
 #define pc_readglobalreg(sd,reg) pc_readregistry(sd,reg)
@@ -1589,34 +1591,34 @@ bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val);
 #define pc_setaccountreg2str(sd,reg,val) pc_setregistry_str(sd,reg,val)
 
 bool pc_setreg2(map_session_data *sd, const char *reg, int64 val);
-int64 pc_readreg2(map_session_data *sd, const char *reg);
+int64 pc_readreg2( const map_session_data* sd, const char *reg);
 
 bool pc_addeventtimer(map_session_data *sd,int32 tick,const char *name);
 bool pc_deleventtimer(map_session_data *sd,const char *name);
 void pc_cleareventtimer(map_session_data *sd);
 void pc_addeventtimercount(map_session_data *sd,const char *name,int32 tick);
 
-int32 pc_calc_pvprank(map_session_data *sd);
-TIMER_FUNC(pc_calc_pvprank_timer);
+int32 pc_calc_pvprank( map_session_data *sd );
+TIMER_FUNC( pc_calc_pvprank_timer );
 
-int32 pc_ismarried(map_session_data *sd);
+int32 pc_ismarried( const map_session_data* sd );
 bool pc_marriage(map_session_data *sd,map_session_data *dstsd);
 bool pc_divorce(map_session_data *sd);
-map_session_data *pc_get_partner(map_session_data *sd);
-map_session_data *pc_get_father(map_session_data *sd);
-map_session_data *pc_get_mother(map_session_data *sd);
-map_session_data *pc_get_child(map_session_data *sd);
+map_session_data* pc_get_partner( const map_session_data* sd );
+map_session_data* pc_get_father( const map_session_data* sd );
+map_session_data* pc_get_mother( const map_session_data* sd );
+map_session_data* pc_get_child( const map_session_data* sd );
 
-void pc_bleeding (map_session_data *sd, t_tick diff_tick);
-void pc_regen (map_session_data *sd, t_tick diff_tick);
+void pc_bleeding( map_session_data* sd, t_tick diff_tick);
+void pc_regen( map_session_data* sd, t_tick diff_tick);
 
-bool pc_setstand(map_session_data *sd, bool force);
-bool pc_candrop(map_session_data *sd,struct item *item);
+bool pc_setstand( map_session_data* sd, bool force );
+bool pc_candrop( map_session_data* sd,struct item *item );
 
-uint64 pc_jobid2mapid(uint16 b_class);	// Skotlex
-int32 pc_mapid2jobid(uint64 class_, int32 sex);	// Skotlex
+uint64 pc_jobid2mapid( uint16 b_class );	// Skotlex
+int32 pc_mapid2jobid( uint64 class_, int32 sex );	// Skotlex
 
-const char * job_name(int32 class_);
+const char* job_name( int32 class_ );
 
 struct s_skill_tree_entry {
 	uint16 skill_id, max_lv;
@@ -1730,9 +1732,37 @@ void pc_cell_basilica(map_session_data *sd);
 int16 pc_get_itemgroup_bonus(map_session_data* sd, t_itemid nameid, std::vector<s_item_bonus>& bonuses);
 int16 pc_get_itemgroup_bonus_group(map_session_data* sd, uint16 group_id, std::vector<s_item_bonus>& bonuses);
 
-bool pc_is_same_equip_index(enum equip_index eqi, int16 *equip_index, int16 index);
+bool pc_is_same_equip_index(enum equip_index eqi, const int16* equip_index, int16 index);
 /// Check if player is Taekwon Ranker and the level is >= 90 (battle_config.taekwon_ranker_min_lv)
-#define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_UPPERMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
+#define pc_is_taekwon_ranker(sd) (((sd)->class_&MAPID_SECONDMASK) == MAPID_TAEKWON && (sd)->status.base_level >= battle_config.taekwon_ranker_min_lv && pc_famerank((sd)->status.char_id,MAPID_TAEKWON))
+
+/// Checks if the player is a primary 3rd job or higher.
+#define pc_is_primary_third(class_) (\
+	((class_&MAPID_THIRDMASK) >= MAPID_RUNE_KNIGHT && (class_&MAPID_THIRDMASK) <= MAPID_GUILLOTINE_CROSS) || \
+	((class_&MAPID_THIRDMASK) >= MAPID_ROYAL_GUARD && (class_&MAPID_THIRDMASK) <= MAPID_SHADOW_CHASER))
+
+/// Checks if the player is a primary 4th job or higher.
+#define pc_is_primary_fourth(class_) (\
+	((class_&MAPID_FOURTHMASK) >= MAPID_DRAGON_KNIGHT && (class_&MAPID_FOURTHMASK) <= MAPID_SHADOW_CROSS) || \
+	((class_&MAPID_FOURTHMASK) >= MAPID_IMPERIAL_GUARD && (class_&MAPID_FOURTHMASK) <= MAPID_ABYSS_CHASER))
+
+/// Checks if the player is a 1st upper expanded job or higher.
+#define pc_is_upper_expanded_first(class_) (\
+	(class_&MAPID_THIRDMASK) == MAPID_SUPER_NOVICE_E || (class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || \
+	(class_&MAPID_THIRDMASK) == MAPID_SOUL_REAPER || (class_&MAPID_SECONDMASK) == MAPID_REBELLION || \
+	(class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO || (class_&MAPID_FIRSTMASK) == MAPID_SUMMONER)
+
+/// Checks if the player is a 2nd upper expanded job or higher.
+#define pc_is_upper_expanded_second(class_) (\
+	(class_&MAPID_FOURTHMASK) == MAPID_HYPER_NOVICE || (class_&MAPID_FOURTHMASK) == MAPID_SKY_EMPEROR || \
+	(class_&MAPID_FOURTHMASK) == MAPID_SOUL_ASCETIC || (class_&MAPID_THIRDMASK) == MAPID_NIGHT_WATCH || \
+	(class_&MAPID_THIRDMASK) == MAPID_SHINKIROSHIRANUI || (class_&MAPID_SECONDMASK) == MAPID_SPIRIT_HANDLER)
+
+/// Checks if the player is a renewal era job or higher. (Primary 3rd / 1st Upper Expanded)
+#define pc_is_renewal_job (class_) (pc_is_primary_third(class_) || pc_is_upper_expanded_first(class_))
+
+/// Checks if the player is a trait era job or higher. (Primary 4th / 2nd Upper Expanded)
+#define pc_is_trait_job(class_) (pc_is_primary_fourth(class_) || pc_is_upper_expanded_second(class_))
 
 TIMER_FUNC(pc_autotrade_timer);
 

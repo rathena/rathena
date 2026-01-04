@@ -131,8 +131,9 @@ extern std::vector<std::shared_ptr<s_battleground_queue>> bg_queues;
 std::shared_ptr<s_battleground_type> bg_search_name(const char *name);
 std::shared_ptr<s_battleground_queue> bg_search_queue(int32 queue_id);
 void bg_send_dot_remove(map_session_data *sd);
-int32 bg_team_get_id(block_list *bl);
-map_session_data *bg_getavailablesd(s_battleground_data *bg);
+int32 bg_team_get_id( const block_list* bl );
+map_session_data* bg_getavailablesd(s_battleground_data *bg);
+const map_session_data* bg_getavailablesd( const s_battleground_data* bg );
 
 bool bg_queue_reservation(const char *name, bool state, bool ended);
 #define bg_queue_reserve(name, end) (bg_queue_reservation(name, true, end))
@@ -143,7 +144,7 @@ bool bg_team_join(int32 bg_id, map_session_data *sd, bool is_queue);
 bool bg_team_delete(int32 bg_id);
 int32 bg_team_leave(map_session_data *sd, bool quit, bool deserter);
 bool bg_team_warp(int32 bg_id, uint16 mapindex, int16 x, int16 y);
-bool bg_player_is_in_bg_map(map_session_data *sd);
+bool bg_player_is_in_bg_map( const map_session_data* sd );
 bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, map_session_data *sd, const char *name);
 void bg_queue_join_solo(const char *name, map_session_data *sd);
 void bg_queue_join_party(const char *name, map_session_data *sd);
@@ -155,7 +156,7 @@ bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> q
 void bg_queue_on_accept_invite(map_session_data *sd);
 void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue);
 bool bg_member_respawn(map_session_data *sd);
-void bg_send_message(map_session_data *sd, const char *mes, size_t len);
+void bg_send_message( const map_session_data* sd, const char *mes, size_t len );
 
 void do_init_battleground(void);
 void do_final_battleground(void);

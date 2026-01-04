@@ -39853,6 +39853,8 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
+    Classes:
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -39880,6 +39882,8 @@ Body:
       Rogue: true
       Swordman: true
       Thief: true
+    Classes:
+      Upper: true
     Locations:
       Right_Hand: true
     WeaponLevel: 4
@@ -40994,7 +40998,6 @@ Body:
       Head_Mid: true
     ArmorLevel: 1
     EquipLevelMin: 20
-    Refineable: true
     View: 779
   - Id: 18656
     AegisName: Wit_Pumpkin_Hat

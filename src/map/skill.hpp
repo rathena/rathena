@@ -118,6 +118,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_SHOWSCALE, // Skill shows AoE area while casting
 	INF2_IGNOREGTB, // Skill ignores effect of GTB
 	INF2_TOGGLEABLE, // Skill can be toggled on and off (won't consume HP/SP when toggled off)
+	INF2_IGNORENONCRITATKBONUS, // Skill ignores the bonus of bNonCritAtkRate
 	INF2_MAX,
 };
 
@@ -514,7 +515,7 @@ int32 skill_get_inf( uint16 skill_id );
 int32 skill_get_ele( uint16 skill_id , uint16 skill_lv );
 int32 skill_get_max( uint16 skill_id );
 int32 skill_get_range( uint16 skill_id , uint16 skill_lv );
-int32 skill_get_range2(block_list *bl, uint16 skill_id, uint16 skill_lv, bool isServer);
+int32 skill_get_range2(const block_list* bl, uint16 skill_id, uint16 skill_lv, bool isServer);
 int32 skill_get_splash( uint16 skill_id , uint16 skill_lv );
 int32 skill_get_num( uint16 skill_id ,uint16 skill_lv );
 int32 skill_get_cast( uint16 skill_id ,uint16 skill_lv );
@@ -645,6 +646,7 @@ int32 skill_castend_nodamage_id( block_list *src, block_list *bl,uint16 skill_id
 int32 skill_castend_damage_id( block_list* src, block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag );
 int32 skill_castend_pos2( block_list *src, int32 x,int32 y,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag);
 int32 skill_area_sub(block_list *bl, va_list ap);
+int32 skill_area_sub_count(block_list* src, block_list* target, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag);
 extern int32 skill_area_temp[8];
 
 bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick);
@@ -692,6 +694,8 @@ enum e_require_state : uint8 {
 };
 
 /// List of Skills
+/// Note: Some skills have the official name commented next to it due to
+/// these ID's being discovered and used before we knew the official names.
 enum e_skill {
 	NV_BASIC = 1,
 
@@ -1525,7 +1529,9 @@ enum e_skill {
 	NPC_FROST_FIELD,
 	NPC_LIGHTNING_JUDGEMENT,
 	NPC_GROGGY_ON,
-	NPC_RESET_EFST, //793
+	NPC_RESET_EFST,
+	NPC_CORRUPTUNDEAD,
+	NPC_SLOWSKILL,
 
 	KN_CHARGEATK = 1001,
 	CR_SHRINK,
@@ -1867,6 +1873,7 @@ enum e_skill {
 	GM_ITEM_ATKMIN,
 	GM_ITEM_MATKMAX,
 	GM_ITEM_MATKMIN,
+	GM_AP_HEAL,
 
 	RL_GLITTERING_GREED = 2551,
 	RL_RICHS_COIN,
@@ -1891,7 +1898,7 @@ enum e_skill {
 	RL_HAMMER_OF_GOD,
 	RL_R_TRIP_PLUSATK,
 	RL_B_FLICKER_ATK,
-//	RL_GLITTERING_GREED_ATK,
+
 	SJ_LIGHTOFMOON,
 	SJ_LUNARSTANCE,
 	SJ_FULLMOONKICK,
@@ -1914,6 +1921,7 @@ enum e_skill {
 	SJ_PROMINENCEKICK,
 	SJ_FALLINGSTAR_ATK,
 	SJ_FALLINGSTAR_ATK2,
+
 	SP_SOULGOLEM,
 	SP_SOULSHADOW,
 	SP_SOULFALCON,
@@ -1969,8 +1977,8 @@ enum e_skill {
 	ECLAGE_RECALL,
 	BA_POEMBRAGI2,
 	DC_FORTUNEKISS2,
-	// ITEM_OPTION_SPLASH_ATTACK,
-	GM_FORCE_TRANSFER = 3039,
+	ITEM_OPTION_SPLASH_ATTACK,
+	GM_FORCE_TRANSFER,
 	GM_WIDE_RESURRECTION,
 	ALL_NIFLHEIM_RECALL,
 	ALL_PRONTERA_RECALL,
@@ -2034,21 +2042,27 @@ enum e_skill {
 	SU_CHATTERING,
 	SU_SPIRITOFSEA,
 
-	WE_CALLALLFAMILY = 5063,
+	PRIVATE_AIRPLANE = 5059,
+	MACRO_DETECTOR_ANSWER_WAITING,
+	ALL_ASSISTANT_VENDING,
+	ALL_ASSISTANT_BUYING,
+	WE_CALLALLFAMILY,
 	WE_ONEFOREVER,
 	WE_CHEERUP,
-
-	ALL_EQSWITCH = 5067,
-
+	ALL_REFINING_UI,
+	ALL_EQSWITCH,// SWAP_EQUIPITEM
 	CG_SPECIALSINGER,
-
-	AB_VITUPERATUM = 5072,
+	GC_ROLLINGCUTTER2,
+	GC_COUNTERSLASH2,
+	EVT_FULL_THROTTLE,
+	AB_VITUPERATUM,
 	AB_CONVENIO,
 	ALL_LIGHTNING_STORM,
 	NV_BREAKTHROUGH,
 	NV_HELPANGEL,
 	NV_TRANSCENDENCE,
 	WL_READING_SB_READING,
+	ALL_GRADE_ENCHANT_UI,
 
 	DK_SERVANTWEAPON = 5201,
 	DK_SERVANTWEAPON_ATK,
@@ -2162,11 +2176,11 @@ enum e_skill {
 	MT_SUMMON_ABR_MOTHER_NET,
 	MT_SUMMON_ABR_INFINITY,
 
-	AG_DESTRUCTIVE_HURRICANE_CLIMAX,
-	BO_ACIDIFIED_ZONE_WATER_ATK,
-	BO_ACIDIFIED_ZONE_GROUND_ATK,
-	BO_ACIDIFIED_ZONE_WIND_ATK,
-	BO_ACIDIFIED_ZONE_FIRE_ATK,
+	AG_DESTRUCTIVE_HURRICANE_CLIMAX,// AG_DESTRUCTIVE_HURRICANE_BUFF
+	BO_ACIDIFIED_ZONE_WATER_ATK,// BO_ACIDIFIED_ZONE_WATER_INSTALL_ON_GROUND
+	BO_ACIDIFIED_ZONE_GROUND_ATK,// BO_ACIDIFIED_ZONE_GROUND_INSTALL_ON_GROUND
+	BO_ACIDIFIED_ZONE_WIND_ATK,// BO_ACIDIFIED_ZONE_WIND_INSTALL_ON_GROUND
+	BO_ACIDIFIED_ZONE_FIRE_ATK,// BO_ACIDIFIED_ZONE_FIRE_INSTALL_ON_GROUND
 
 	ABC_DAGGER_AND_BOW_M,
 	ABC_MAGIC_SWORD_M,
@@ -2246,16 +2260,17 @@ enum e_skill {
 
 	ABC_CHAIN_REACTION_SHOT_ATK,
 	ABC_FROM_THE_ABYSS_ATK,
-	BO_WOODEN_THROWROCK,
-	BO_WOODEN_ATTACK,
-	BO_HELL_HOWLING,
-	BO_HELL_DUSTY,
-	BO_FAIRY_DUSTY,
+	BO_WOODEN_THROWROCK,// NPC_BO_THROWROCK
+	BO_WOODEN_ATTACK,// NPC_BO_WOODEN_ATTACK
+	BO_HELL_HOWLING,// NPC_BO_HELL_HOWLING
+	BO_HELL_DUSTY,// NPC_BO_HELL_DUSTY
+	BO_FAIRY_DUSTY,// NPC_BO_FAIRY_DUSTY
 	EM_ELEMENTAL_BUSTER_FIRE,
 	EM_ELEMENTAL_BUSTER_WATER,
 	EM_ELEMENTAL_BUSTER_WIND,
 	EM_ELEMENTAL_BUSTER_GROUND,
 	EM_ELEMENTAL_BUSTER_POISON,
+	DK_CHARGINGPIERCE_ATK,
 
 	NW_P_F_I = 5401,
 	NW_GRENADE_MASTERY,
@@ -2360,8 +2375,8 @@ enum e_skill {
 
 	NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING,
 	NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN,
-
-	SS_FOUR_CHARM = 5499,
+	SS_FUUMAKOUCHIKU_BLASTING,// SS_FUUMASHOUAKU_HIT
+	SS_FOUR_CHARM,
 	NW_WILD_SHOT,
 	NW_MIDNIGHT_FALLEN,
 	SKE_SKY_SUN,
@@ -2369,7 +2384,7 @@ enum e_skill {
 	SKE_STAR_LIGHT_KICK,
 	HN_OVERCOMING_CRISIS,
 	SH_CHUL_HO_BATTERING,
-	SH_HYUN_ROK_SPIRIT_POWER,	// 5507
+	SH_HYUN_ROK_SPIRIT_POWER,
 
 	DK_DRAGONIC_BREATH = 6001,
 	MT_SPARK_BLASTER,
@@ -2398,7 +2413,7 @@ enum e_skill {
 	IQ_BLAZING_FLAME_BLAST,
 	WH_WILD_WALK,
 	TR_RHYTHMICAL_WAVE,
-	ABC_ABYSS_FLAME_ATK,	// 6522
+	ABC_ABYSS_FLAME_ATK,
 
 	HLIF_HEAL = 8001,
 	HLIF_AVOID,
@@ -2564,7 +2579,7 @@ enum e_skill {
 	ABR_DUAL_CANNON_FIRE,
 	ABR_NET_REPAIR,
 	ABR_NET_SUPPORT,
-	ABR_INFINITY_BUSTER,
+	ABR_INFINITY_BUSTER
 };
 
 /// The client view ids for land skills.
@@ -2710,13 +2725,13 @@ enum e_skill_unit_id : uint16 {
 	UNT_CATNIPPOWDER,
 	UNT_NYANGGRASS,
 
-	UNT_CREATINGSTAR,// Should be GROUNDDRIFT_NEUTRAL
-	UNT_DUMMY_0,// CREATINGSTAR
+	UNT_GROUNDDRIFT_NEUTRAL,
+	UNT_CREATINGSTAR,
 
 	UNT_RAIN_OF_CRYSTAL,
 	UNT_MYSTERY_ILLUSION,
-
-	UNT_STRANTUM_TREMOR = 269,
+	UNT_SEEDTRAP,
+	UNT_STRANTUM_TREMOR,
 	UNT_VIOLENT_QUAKE,
 	UNT_ALL_BLOOM,
 	UNT_TORNADO_STORM,
@@ -2736,16 +2751,18 @@ enum e_skill_unit_id : uint16 {
 	UNT_TWINKLING_GALAXY,
 	UNT_STAR_CANNON,
 	UNT_GRENADES_DROPPING,
-
-	UNT_FUUMASHOUAKU = 290, // Huuma Shuriken - Grasp
+	UNT_UNKNOWN_2,// Shows Nothing
+	UNT_FUUMASHOUAKU,// Huuma Shuriken - Grasp
 	UNT_MISSION_BOMBARD,
 	UNT_TOTEM_OF_TUTELARY,
 	UNT_HYUN_ROKS_BREEZE,
-	UNT_SHINKIROU, // Mirage
+	UNT_SHINKIROU,// Mirage
 	UNT_JACK_FROST_NOVA,
 	UNT_GROUND_GRAVITATION,
-	UNT_KUNAIKAITEN, // Shows Nothing
-	UNT_KUNAIWAIKYOKU, // Kunai - Distortion
+	UNT_KUNAIKAITEN,// Kunai - Rotation
+	UNT_KUNAIWAIKYOKU,// Kunai - Distortion
+	UNT_KUNAIKUSSETSU,// Kunai - Refraction
+	UNT_SEKIENHOU,// Red Flame Cannon
 
 	UNT_STAR_BURST = 2409,
 
@@ -2804,7 +2821,7 @@ extern ReadingSpellbookDatabase reading_spellbook_db;
 
 void skill_spellbook(map_session_data &sd, t_itemid nameid);
 
-int32 skill_block_check(block_list *bl, enum sc_type type, uint16 skill_id);
+int32 skill_block_check(const block_list* bl, enum sc_type type, uint16 skill_id);
 
 struct s_skill_magicmushroom_db {
 	uint16 skill_id;

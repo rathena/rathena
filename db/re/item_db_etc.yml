@@ -5888,11 +5888,11 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddDefMonster,1285,-50;
-      bonus2 bAddDefMonster,1286,-50;
-      bonus2 bAddDefMonster,1287,-50;
-      bonus2 bAddDefMonster,1899,-50;
-      bonus2 bAddDefMonster,1900,-50;
+      bonus2 bAddDefMonster,1285,50;
+      bonus2 bAddDefMonster,1286,50;
+      bonus2 bAddDefMonster,1287,50;
+      bonus2 bAddDefMonster,1899,50;
+      bonus2 bAddDefMonster,1900,50;
   - Id: 4232
     AegisName: Wild_Ginseng_Card
     Name: Hermit Plant Card
@@ -47472,7 +47472,8 @@ Body:
       if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
          bonus bAspdRate,10;
          bonus2 bAddEff,Eff_Stun,1000;
-         bonus2 bSkillAtk,"SJ_FALLINGSTAR",50;
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",50;
+         bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",50;
       }
   - Id: 29719
     AegisName: SoulR_Enchant_1
@@ -56146,6 +56147,111 @@ Body:
       bonus bMaxHPrate,25;
       bonus bMaxSPrate,-25;
       bonus2 bAddItemHealRate,517,150;
+  - Id: 300715
+    AegisName: aegis_300715
+    Name: As Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300716
+    AegisName: aegis_300716
+    Name: Kaya Toss Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300717
+    AegisName: aegis_300717
+    Name: Tatio Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300718
+    AegisName: aegis_300718
+    Name: Chairman Rekenber Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300719
+    AegisName: aegis_300719
+    Name: As Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_Demon,12;
+      bonus2 bMagicAddRace,RC_Demon,12;
+      bonus2 bAddRace,RC_DemiHuman,12;
+      bonus2 bMagicAddRace,RC_DemiHuman,12;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bAddRace,RC_Demon,10;
+         bonus2 bMagicAddRace,RC_Demon,10;
+         bonus2 bAddRace,RC_DemiHuman,10;
+         bonus2 bMagicAddRace,RC_DemiHuman,10;
+      }
+  - Id: 300720
+    AegisName: aegis_300720
+    Name: Rekenber Kaya Toss Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddSize,Size_Medium,10;
+      bonus2 bMagicAddSize,Size_Medium,10;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bAddSize,Size_Medium,10;
+         bonus2 bMagicAddSize,Size_Medium,10;
+      }
+  - Id: 300721
+    AegisName: aegis_300721
+    Name: Rekenber Tatio Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,-10;
+      bonus bNonCritAtkRate,5+4*(getrefine()/2);
+  - Id: 300722
+    AegisName: aegis_300722
+    Name: Rekenber Chairman Rekenber Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,-10;
+      bonus bCritAtkRate,4+4*(getrefine()/2);
+      bonus bCritical,5;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -68368,16 +68474,20 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"SJ_FLASHKICK",15;
-      bonus2 bSkillAtk,"SJ_FALLINGSTAR",15;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
       if (.@r>=7) {
         bonus2 bSkillAtk,"SJ_FLASHKICK",15;
-        bonus2 bSkillAtk,"SJ_FALLINGSTAR",15;
+        bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+        bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
         if (.@r>=9) {
           bonus2 bSkillAtk,"SJ_FLASHKICK",15;
-          bonus2 bSkillAtk,"SJ_FALLINGSTAR",15;
+          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
           if (.@r>=11) {
             bonus2 bSkillAtk,"SJ_FLASHKICK",15;
-            bonus2 bSkillAtk,"SJ_FALLINGSTAR",15;
+            bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",15;
+            bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",15;
             bonus2 bSkillAtk,"SKE_STAR_CANNON",15;
           }
         }
@@ -69516,13 +69626,16 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"SJ_FLASHKICK",20+10*(.@r/3);
-      bonus2 bSkillAtk,"SJ_FALLINGSTAR",20+10*(.@r/3);
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",20+10*(.@r/3);
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",20+10*(.@r/3);
       if (.@r>=9) {
         bonus2 bSkillAtk,"SJ_FLASHKICK",20;
-        bonus2 bSkillAtk,"SJ_FALLINGSTAR",20;
+        bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",20;
+        bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",20;
         if (.@r>=11) {
           bonus2 bSkillAtk,"SJ_FLASHKICK",20;
-          bonus2 bSkillAtk,"SJ_FALLINGSTAR",20;
+          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",20;
+          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",20;
         }
       }
   - Id: 311247
@@ -69900,9 +70013,9 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bSkillAtk,"DK_SERVANTWEAPON",10+5*(.@r/4);
+      bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",10+5*(.@r/4);
       if (.@r>=9) {
-        bonus2 bSkillAtk,"DK_SERVANTWEAPON",10;
+        bonus2 bSkillAtk,"DK_SERVANTWEAPON_ATK",10;
       }
   - Id: 311273
     AegisName: Glacier_F_Orb_82
@@ -70057,8 +70170,10 @@ Body:
     Script: |
       .@r = getrefine();
       bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",10+5*(.@r/4);
+      bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",10+5*(.@r/4);
       if (.@r>=9) {
         bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT",10;
+        bonus2 bSkillAtk,"ABC_CHAIN_REACTION_SHOT_ATK",10;
       }
   - Id: 311287
     AegisName: Glacier_F_Orb_95
@@ -71169,7 +71284,6 @@ Body:
           bonus bPAtk,3;
         }
       }
-
   - Id: 311379
     AegisName: Gear_NW3
     Name: The Vigilant at Night Tuning Device
@@ -81505,7 +81619,8 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"SJ_FALLINGSTAR",BaseLevel/10;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",BaseLevel/10;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",BaseLevel/10;
   - Id: 312830
     AegisName: aegis_312830
     Name: Latent Awakening (Spirit of Savage II)
@@ -84737,7 +84852,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",BaseLevel/3;
+      bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM_MELEE",BaseLevel/3;
   - Id: 313298
     AegisName: aegis_313298
     Name: Latent Awakening (Arms Cannon II)
@@ -85015,7 +85130,9 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"AB_DUPLELIGHT",2*getskilllv("HP_BASILICA");
+      .@a = 2*getskilllv("HP_BASILICA");
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",.@a;
+      bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",.@a;
       bonus4 bAutoSpellOnSkill,"SR_HOWLINGOFLION","CH_SOULCOLLECT",1,1000;
   - Id: 313339
     AegisName: aegis_313339
@@ -89638,6 +89755,24 @@ Body:
       hateffect FOOTPRINT_EF_BUTTERFLY_BLUE,true;
     UnEquipScript: |
       hateffect FOOTPRINT_EF_BUTTERFLY_BLUE,false;
+  - Id: 313956
+    AegisName: Butterfly_purple_Foot
+    Name: Purple Butterfly Footprints
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_BUTTERFLY_PURPLE,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_BUTTERFLY_PURPLE,false;
+  - Id: 313957
+    AegisName: Butterfly_yellow_Foot
+    Name: Yellow Butterfly Footprints
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_BUTTERFLY_YELLOW,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_BUTTERFLY_YELLOW,false;
   - Id: 314021
     AegisName: aegis_314021
     Name: Guillotine Cross Stone II (Upper)
@@ -89728,6 +89863,612 @@ Body:
       bonus2 bMagicAddRace,RC_All,3*(getskilllv("SOA_SOUL_MASTERY")/2);
       bonus2 bMagicAddRace,RC_Player_Human,-3*(getskilllv("SOA_SOUL_MASTERY")/2);
       bonus2 bMagicAddRace,RC_Player_Doram,-3*(getskilllv("SOA_SOUL_MASTERY")/2);
+  - Id: 314066
+    AegisName: aegis_314066
+    Name: ROS2025 Commemorative Footprints    # !todo check english name
+    Type: Card
+    SubType: Enchant
+#   Script: |
+#     /* TODO */
+  - Id: 314094
+    AegisName: aegis_314094
+    Name: Blue Fighting Spirit Effect    # !todo check english name
+    Type: Card
+    SubType: Enchant
+#   Script: |
+#     /* TODO */
+  - Id: 314095
+    AegisName: aegis_314095
+    Name: Red Fighting Spirit Effect    # !todo check english name
+    Type: Card
+    SubType: Enchant
+#   Script: |
+#     /* TODO */
+  - Id: 314171
+    AegisName: aegis_314171
+    Name: Footprint (2D)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_DRAGON_FACE_2D,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_DRAGON_FACE_2D,false;
+  - Id: 314172
+    AegisName: aegis_314172
+    Name: Footprint (3D)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_DRAGON_FACE_3D,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_DRAGON_FACE_3D,false;
+  - Id: 314181
+    AegisName: aegis_314181
+    Name: Archbishop Stone II (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@m = getskilllv("AB_CANTO");
+      bonus2 bAddSize,Size_All,.@m*3;
+      bonus2 bMagicAddSize,Size_All,.@m*3;
+  - Id: 314182
+    AegisName: aegis_314182
+    Name: Archbishop Stone II (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@m = getskilllv("AB_LAUDARAMUS");
+      bonus2 bMagicAtkEle,Ele_Holy,.@m*4;
+      bonus2 bMagicAtkEle,Ele_Neutral,.@m*4;
+  - Id: 314183
+    AegisName: aegis_314183
+    Name: Archbishop Stone II (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-100*(getskilllv("AB_ORATIO")/2);
+  - Id: 314184
+    AegisName: aegis_314184
+    Name: Cardinal Stone II (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bCritical,10;
+      bonus2 bSkillAtk,"CD_DIVINUS_FLOS",15;
+  - Id: 314185
+    AegisName: aegis_314185
+    Name: Shadow Chaser Stone II (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@m = getskilllv("SC_ESCAPE");
+      bonus bShortAtkRate,.@m;
+      bonus bLongAtkRate,.@m;
+  - Id: 314186
+    AegisName: aegis_314186
+    Name: Shadow Chaser Stone II (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-getskilllv("SC_SHADOWFORM");
+  - Id: 314187
+    AegisName: aegis_314187
+    Name: Shadow Chaser Stone II (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bAspdRate,getskilllv("SC_REPRODUCE");
+  - Id: 314188
+    AegisName: aegis_314188
+    Name: Abyss Chaser Stone II (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"ABC_ABYSS_DAGGER",10;
+  - Id: 314189
+    AegisName: aegis_314189
+    Name: Super Novice Stone II (Upper)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@m = getskilllv("NV_BREAKTHROUGH");
+      bonus2 bAddSize,Size_All,.@m*3;
+      bonus2 bMagicAddSize,Size_All,.@m*3;
+  - Id: 314190
+    AegisName: aegis_314190
+    Name: Super Novice Stone II (Middle)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@m = getskilllv("NV_TRANSCENDENCE");
+      bonus2 bMagicAtkEle,Ele_Water,.@m*2;
+      bonus2 bMagicAtkEle,Ele_Wind,.@m*2;
+      bonus2 bMagicAtkEle,Ele_Earth,.@m*2;
+      bonus2 bMagicAtkEle,Ele_Fire,.@m*2;
+      bonus2 bMagicAtkEle,Ele_Neutral,.@m*2;
+      bonus2 bMagicAtkEle,Ele_Holy,.@m*2;
+      bonus2 bMagicAtkEle,Ele_Ghost,.@m*2;
+  - Id: 314191
+    AegisName: aegis_314191
+    Name: Super Novice Stone II (Lower)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      if (getskilllv("NV_HELPANGEL")>=1) {
+         bonus bLongAtkRate,15;
+         bonus bShortAtkRate,15;
+      }
+  - Id: 314192
+    AegisName: aegis_314192
+    Name: Hyper Novice Stone II (Garment)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"HN_DOUBLEBOWLINGBASH",15;
+  - Id: 314212
+    AegisName: Nyar_Foot_BU
+    Name: Nyar's Blue Footprints
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_NYAR_BLUE,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_NYAR_BLUE,false;
+  - Id: 314213
+    AegisName: Nyar_Foot_PP
+    Name: Nyar's Purple Footprints
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_NYAR_PURPLE,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_NYAR_PURPLE,false;
+  - Id: 314214
+    AegisName: Divine_Light_Foot
+    Name: Divine Light Footprints
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_DIVINE,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_DIVINE,false;
+  - Id: 314230
+    AegisName: Ch01_1_Fighter
+    Name: Frontier Spell (Fighter)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,30;
+      if (.@r>=7) {
+         bonus bNonCritAtkRate,3;
+         if (.@r>=9) {
+            bonus bNonCritAtkRate,4;
+         }
+      }
+  - Id: 314231
+    AegisName: Ch01_2_Fighter2
+    Name: Frontier Spell (Special Force)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bPAtk,2;
+      bonus bAtkRate,2;
+      bonus bBaseAtk,25;
+      if (.@r>=7) {
+         bonus bNonCritAtkRate,5;
+         if (.@r>=9) {
+            bonus bShortAtkRate,10;
+            bonus bLongAtkRate,10;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bNonCritAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bNonCritAtkRate,5;
+         }
+      }
+  - Id: 314232
+    AegisName: Ch01_3_Hit_Attack
+    Name: Frontier Spell (Hit Attack)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      .@r = getrefine();
+      bonus bNonCritAtkRate,3;
+      bonus bShortAtkRate,3;
+      bonus bLongAtkRate,3;
+      if (.@r>=7) {
+         bonus bNonCritAtkRate,5;
+         if (.@r>=9) {
+            bonus bNonCritAtkRate,3;
+         }
+      }
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bNonCritAtkRate,4;
+         bonus bPerfectHitAddRate,3;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bNonCritAtkRate,5;
+            bonus bPerfectHitAddRate,5;
+         }
+      }
+  - Id: 314233
+    AegisName: Ch01_3_Special_Agent
+    Name: Frontier Spell (Special Agent)
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@g = getenchantgrade();
+      bonus bPAtk,3;
+      bonus bHit,25;
+      if (.@g>=ENCHANTGRADE_D) {
+         bonus bNonCritAtkRate,5;
+         if (.@g>=ENCHANTGRADE_C) {
+            bonus bNonCritAtkRate,5;
+            bonus bShortAtkRate,3;
+            bonus bLongAtkRate,3;
+         }
+      }
+  - Id: 314243
+    AegisName: T_D_Jewel_POW_1
+    Name: Time Dimension Jewel (Strength) 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bHit,(.@r/2);
+      bonus bNonCritAtkRate,(.@r/3);
+      bonus bShortAtkRate,(.@r/3);
+  - Id: 314244
+    AegisName: T_D_Jewel_POW_2
+    Name: Time Dimension Jewel (Strength) 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,(.@r/2);
+      bonus bHit,3*(.@r/2);
+      bonus bNonCritAtkRate,2*(.@r/3);
+      bonus bShortAtkRate,(.@r/3)+(.@r/5);
+  - Id: 314245
+    AegisName: T_D_Jewel_POW_3
+    Name: Time Dimension Jewel (Strength) 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bHit,5*(.@r/2);
+      bonus bNonCritAtkRate,3*(.@r/3);
+      bonus bShortAtkRate,(.@r/3)+(.@r/4);
+  - Id: 314246
+    AegisName: T_D_Jewel_CON_1
+    Name: Lv1 Time-Space Jewel (Concentration)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bHit,(.@r/2);
+      bonus bNonCritAtkRate,(.@r/3);
+      bonus bLongAtkRate,(.@r/3);
+  - Id: 314247
+    AegisName: T_D_Jewel_CON_2
+    Name: Lv2 Time-Space Jewel (Concentration)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,(.@r/2);
+      bonus bHit,3*(.@r/2);
+      bonus bNonCritAtkRate,2*(.@r/3);
+      bonus bLongAtkRate,(.@r/3)+(.@r/5);
+  - Id: 314248
+    AegisName: T_D_Jewel_CON_3
+    Name: Lv3 Time-Space Jewel (Concentration)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@r = getrefine();
+      bonus bBaseAtk,3*(.@r/2);
+      bonus bHit,5*(.@r/2);
+      bonus bNonCritAtkRate,3*(.@r/3);
+      bonus bLongAtkRate,(.@r/3)+(.@r/4);
+  - Id: 314249
+    AegisName: Fierce_A_Jewel_1
+    Name: Fierce Attack Jewel 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,25;
+      bonus bShortAtkRate,1;
+  - Id: 314250
+    AegisName: Fierce_A_Jewel_2
+    Name: Fierce Attack Jewel 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,40;
+      bonus bShortAtkRate,3;
+  - Id: 314251
+    AegisName: Fierce_A_Jewel_3
+    Name: Fierce Attack Jewel 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,55;
+      bonus bShortAtkRate,4;
+  - Id: 314252
+    AegisName: Fierce_A_Jewel_4
+    Name: Fierce Attack Jewel 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,70;
+      bonus bShortAtkRate,6;
+  - Id: 314253
+    AegisName: Fierce_A_Jewel_5
+    Name: Fierce Attack Jewel 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,85;
+      bonus bShortAtkRate,7;
+  - Id: 314254
+    AegisName: Fierce_A_Jewel_6
+    Name: Fierce Attack Jewel 6Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,100;
+      bonus bShortAtkRate,9;
+  - Id: 314255
+    AegisName: Fierce_A_Jewel_7
+    Name: Fierce Attack Jewel 7Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,115;
+      bonus bShortAtkRate,10;
+  - Id: 314256
+    AegisName: Fierce_A_Jewel_8
+    Name: Fierce Attack Jewel 8Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,130;
+      bonus bShortAtkRate,12;
+  - Id: 314257
+    AegisName: Fierce_A_Jewel_9
+    Name: Fierce Attack Jewel 9Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,145;
+      bonus bShortAtkRate,13;
+  - Id: 314258
+    AegisName: Fierce_A_Jewel_10
+    Name: Fierce Attack Jewel 10Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,160;
+      bonus bShortAtkRate,15;
+  - Id: 314259
+    AegisName: Great_C_Jewel_1
+    Name: Great Craftsman Jewel 1Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,25;
+      bonus bLongAtkRate,1;
+  - Id: 314260
+    AegisName: Great_C_Jewel_2
+    Name: Great Craftsman Jewel 2Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,40;
+      bonus bLongAtkRate,3;
+  - Id: 314261
+    AegisName: Great_C_Jewel_3
+    Name: Great Craftsman Jewel 3Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,55;
+      bonus bLongAtkRate,4;
+  - Id: 314262
+    AegisName: Great_C_Jewel_4
+    Name: Great Craftsman Jewel 4Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,70;
+      bonus bLongAtkRate,6;
+  - Id: 314263
+    AegisName: Great_C_Jewel_5
+    Name: Great Craftsman Jewel 5Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,85;
+      bonus bLongAtkRate,7;
+  - Id: 314264
+    AegisName: Great_C_Jewel_6
+    Name: Great Craftsman Jewel 6Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,100;
+      bonus bLongAtkRate,9;
+  - Id: 314265
+    AegisName: Great_C_Jewel_7
+    Name: Great Craftsman Jewel 7Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,115;
+      bonus bLongAtkRate,10;
+  - Id: 314266
+    AegisName: Great_C_Jewel_8
+    Name: Great Craftsman Jewel 8Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,130;
+      bonus bLongAtkRate,12;
+  - Id: 314267
+    AegisName: Great_C_Jewel_9
+    Name: Great Craftsman Jewel 9Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,145;
+      bonus bLongAtkRate,13;
+  - Id: 314268
+    AegisName: Great_C_Jewel_10
+    Name: Great Craftsman Jewel 10Lv
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,160;
+      bonus bLongAtkRate,15;
+  - Id: 314661
+    AegisName: aegis_314661
+    Name: Hit Physical Stone (Dual)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,10;
+      bonus bPerfectHitAddRate,5;
+      bonus bAtkRate,5;
+  - Id: 314662
+    AegisName: aegis_314662
+    Name: Hit Physical Stone (Upper)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,3;
+  - Id: 314663
+    AegisName: aegis_314663
+    Name: Hit Physical Stone (Middle)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,3;
+  - Id: 314664
+    AegisName: aegis_314664
+    Name: Hit Physical Stone (Lower)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,3;
+  - Id: 314665
+    AegisName: aegis_314665
+    Name: Hit Physical Stone (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bNonCritAtkRate,20;
+  - Id: 314666
+    AegisName: aegis_314666
+    Name: Experience Stone (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bExpAddRace,RC_All,5;
+  - Id: 314667
+    AegisName: aegis_314667
+    Name: Archmage Stone II (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"AG_RAIN_OF_CRYSTAL",10;
+      bonus2 bSkillAtk,"AG_STRANTUM_TREMOR",10;
+  - Id: 314668
+    AegisName: aegis_314668
+    Name: Biolo Stone II (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"BO_EXPLOSIVE_POWDER",10;
+  - Id: 314669
+    AegisName: aegis_314669
+    Name: Celestial Stone II (Garment)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SKE_STAR_LIGHT_KICK",15;
+  - Id: 314670
+    AegisName: aegis_314670
+    Name: Warlock Stone II (Upper)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bMagicAtkEle,Ele_All,2*getskilllv("WL_CRIMSONROCK");
+  - Id: 314671
+    AegisName: aegis_314671
+    Name: Warlock Stone II (Middle)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-100*getskilllv("WL_COMET");
+  - Id: 314672
+    AegisName: aegis_314672
+    Name: Warlock Stone II (Lower)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-getskilllv("WL_CHAINLIGHTNING");
+  - Id: 314673
+    AegisName: aegis_314673
+    Name: Generic Stone II (Upper)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bDelayrate,-(getskilllv("GN_CART_TORNADO")/2);
+  - Id: 314674
+    AegisName: aegis_314674
+    Name: Generic Stone II (Middle)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@m = getskilllv("GN_REMODELING_CART");
+      bonus bShortAtkRate,.@m*2;
+      bonus bLongAtkRate,.@m*2;
+  - Id: 314675
+    AegisName: aegis_314675
+    Name: Generic Stone II (Lower)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus bFixedCast,-100*getskilllv("GN_TRAINING_SWORD");
+  - Id: 314676
+    AegisName: aegis_314676
+    Name: Holy Emperor Stone II (Upper)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SJ_SOLARBURST",4*getskilllv("SJ_LIGHTOFSUN");
+  - Id: 314677
+    AegisName: aegis_314677
+    Name: Holy Emperor Stone II (Middle)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      bonus2 bSkillAtk,"SJ_FULLMOONKICK",4*getskilllv("SJ_LIGHTOFMOON");
+  - Id: 314678
+    AegisName: aegis_314678
+    Name: Holy Emperor Stone II (Lower)    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      .@m = getskilllv("SJ_LIGHTOFSTAR");
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",.@m*4;
+      bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",.@m*4;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -94831,6 +95572,18 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1001215
+    AegisName: EpisodClear21
+    Name: Eps 21 Clear Ticket
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1001216
     AegisName: 2301_ev_paste
     Name: Sticky dough    # !todo check english name
@@ -99487,6 +100240,642 @@ Body:
     Weight: 10
     Flags:
       BuyingStore: true
+  - Id: 1002185
+    AegisName: Summer_Leaflet
+    Name: Ocean Week Flyer    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002186
+    AegisName: ROS_Pre_Certificate
+#   Name: ROS Representative Tournament Participation Certificate
+    Name: ROS Representative Tournament Participation Certi    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002187
+    AegisName: Gu_5LvWeapon_13Up_ROS
+#   Name: Level 5 Weapon 13 Refinement Guaranteed Ticket [ROS]
+    Name: "Level 5 Weapon 13 Refinement Guaranteed Ticket [R"    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002188
+    AegisName: Gu_2LvArmor_13Up_ROS
+    Name: "Guaranteed Ticket for 2Lv Armor 13 Refining [ROS]"    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002189
+    AegisName: Gu_5LvWeapon_14Up_ROS
+#   Name: Guaranteed Ticket for 5Lv Weapon 14 Refining [ROS]
+    Name: "Guaranteed Ticket for 5Lv Weapon 14 Refining [ROS"    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002190
+    AegisName: Gu_2LvArmor_14Up_ROS
+    Name: "Guaranteed Ticket for 2Lv Armor 14 Refining [ROS]"    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002191
+    AegisName: Gu_5LvWeapon_15Up_ROS
+#   Name: Guaranteed Ticket for 5Lv Weapon 15 Refining [ROS]
+    Name: "Guaranteed Ticket for 5Lv Weapon 15 Refining [ROS"    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002192
+    AegisName: Gu_2LvArmor_15Up_ROS
+    Name: "Guaranteed Ticket for 2Lv Armor 15 Refining [ROS]"    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002193
+    AegisName: ROS_BlueEffect_Middle
+    Name: Blue Fighting Spirit Effect (Mid)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002194
+    AegisName: ROS_RedEffect_Middle
+    Name: Red Fighting Spirit Effect (Mid)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002224
+    AegisName: CLB_DT_Ticket
+    Name: "[Collab] Viking Mark"
+    Type: Etc
+  - Id: 1002239
+    AegisName: CLB_DT_2D_Foot_Robe
+    Name: Footprint (2D) (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002240
+    AegisName: CLB_DT_3D_Foot_Robe
+    Name: Footprint (3D) (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002243
+    AegisName: R_Entwined_Armor
+    Name: Printed Entwined Magical Armor
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002244
+    AegisName: R_Entwined_Robe
+    Name: Printed Entwined Magical Robe
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002245
+    AegisName: R_Entwined_Manteau
+    Name: Printed Entwined Magical Manteau
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002246
+    AegisName: R_Entwined_Muffler
+    Name: Printed Entwined Magical Muffler
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002247
+    AegisName: R_Entwined_Boots
+    Name: Printed Entwined Magical Boots
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002248
+    AegisName: R_Dimension_B_Greave
+    Name: Printed Dimension World Battle Greaves
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002249
+    AegisName: R_Dimension_H_Boots
+    Name: Printed Dimension World Hunting Boots
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002250
+    AegisName: R_Dimension_S_Shoes
+    Name: Printed Dimension World Spell Shoes
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002251
+    AegisName: R_Dimension_M_Shoes
+    Name: Printed Dimension World Magic Shoes
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002252
+    AegisName: R_Dimension_E_Boots
+    Name: Printed Dimension World Executioner Boots
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002253
+    AegisName: R_Entwined_Shoes
+    Name: Printed Entwined Magical Shoes
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002273
+    AegisName: aegis_1002273
+    Name: Archbishop Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1002274
+    AegisName: aegis_1002274
+    Name: Archbishop Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1002275
+    AegisName: aegis_1002275
+    Name: Archbishop Stone II (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1002276
+    AegisName: aegis_1002276
+    Name: Cardinal Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002277
+    AegisName: aegis_1002277
+    Name: Shadow Chaser Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1002278
+    AegisName: aegis_1002278
+    Name: Shadow Chaser Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1002279
+    AegisName: aegis_1002279
+    Name: Shadow Chaser Stone II (Lower)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002280
+    AegisName: aegis_1002280
+    Name: Abyss Chaser Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002281
+    AegisName: aegis_1002281
+    Name: Super Novice Stone II (Upper)
+    Type: Etc
+    Weight: 100
+  - Id: 1002282
+    AegisName: aegis_1002282
+    Name: Super Novice Stone II (Middle)
+    Type: Etc
+    Weight: 100
+  - Id: 1002283
+    AegisName: aegis_1002283
+    Name: Super Novice Stone II (Lower)
+    Type: Etc
+    Weight: 100
+  - Id: 1002284
+    AegisName: aegis_1002284
+    Name: Hyper Novice Stone II (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002285
+    AegisName: Butter_Purple_foot_Robe
+    Name: Purple Butterfly Footprints (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002286
+    AegisName: ROS2025Vic_Foot_Robe
+    Name: ROS2025 Commemorative Footprints (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002289
+    AegisName: aegis_1002289
+    Name: ROS Gold Coin    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1002290
+    AegisName: aegis_1002290
+    Name: ROS Coin    # !todo check english name
+    Type: Etc
+    Flags:
+      BuyingStore: true
+  - Id: 1002294
+    AegisName: Nyar_Foot_BU_Robe
+    Name: Nyar's Blue Footprints (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002295
+    AegisName: Nyar_Foot_PP_Robe
+    Name: Nyar's Purple Footprints (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002296
+    AegisName: Divine_L_Foot_Robe
+    Name: Divine Light Footprints (Garments
+    Type: Etc
+    Weight: 100
+  - Id: 1002331
+    AegisName: Physical_TuningScroll
+    Name: Physical Magic Tuning Formula    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002332
+    AegisName: Magical_TuningScroll
+    Name: Magic Tuning Formula    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002333
+    AegisName: Tiem_SpellScroll
+    Name: Time Magic Scroll    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002334
+    AegisName: Dimansion_SpellScroll
+    Name: Dimensional Magic Scroll    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002335
+    AegisName: Pure_SpellScoll
+    Name: Pure Magic Scroll    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002336
+    AegisName: Polluted_SpellScroll
+    Name: Contaminated Magic Book    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002337
+    AegisName: Immortal_SpellScroll
+    Name: Immortal Magic Book    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 1002356
+    AegisName: 25_A_Ev_Photo
+    Name: Landscape Photo    # !todo check english name
+    Type: Etc
+    Weight: 10
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoStorage: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002394
+    AegisName: aegis_1002394
+    Name: Yellow Butterfly Footprints (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002395
+    AegisName: aegis_1002395
+    Name: Hit Physical Stone (Dual)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002396
+    AegisName: aegis_1002396
+    Name: Hit Physical Stone (Upper)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002397
+    AegisName: aegis_1002397
+    Name: Hit Physical Stone (Middle)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002398
+    AegisName: aegis_1002398
+    Name: Hit Physical Stone (Lower)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002399
+    AegisName: aegis_1002399
+    Name: Hit Physical Stone (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002404
+    AegisName: aegis_1002404
+    Name: Experience Stone (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002405
+    AegisName: aegis_1002405
+    Name: Archmage Stone II (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002406
+    AegisName: aegis_1002406
+    Name: Biolo Stone II (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002407
+    AegisName: aegis_1002407
+    Name: Celestial Stone II (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002408
+    AegisName: aegis_1002408
+    Name: Warlock Stone II (Upper)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002409
+    AegisName: aegis_1002409
+    Name: Warlock Stone II (Middle)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002410
+    AegisName: aegis_1002410
+    Name: Warlock Stone II (Lower)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002411
+    AegisName: aegis_1002411
+    Name: Generic Stone II (Upper)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002412
+    AegisName: aegis_1002412
+    Name: Generic Stone II (Middle)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002413
+    AegisName: aegis_1002413
+    Name: Generic Stone II (Lower)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002414
+    AegisName: aegis_1002414
+    Name: Holy Stone II (Upper)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002415
+    AegisName: aegis_1002415
+    Name: Holy Stone II (Middle)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002416
+    AegisName: aegis_1002416
+    Name: Holy Stone II (Lower)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002442
+    AegisName: D_EpisodClear21
+    Name: Episode 21 Pass Ticket    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002473
+    AegisName: R_Gaebolg_Armor
+    Name: Engraved Gaebolg Armor    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002474
+    AegisName: R_Gaebolg_Robe
+    Name: Engraved Gaebolg Robe    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002475
+    AegisName: R_Gaebolg_Manteau
+    Name: Engraved Gaebolg Cloak    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002476
+    AegisName: R_Gaebolg_Muffler
+    Name: Engraved Gaebolg Muffler    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002477
+    AegisName: R_Gaebolg_Boots
+    Name: Engraved Gaebolg Boots    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002478
+    AegisName: R_Gaebolg_Shoes
+    Name: Engraved Gaebolg Shoes    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002479
+    AegisName: R_Gaebolg_Ring
+    Name: Engraved Gaebolg Ring    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002480
+    AegisName: R_Gaebolg_Glove
+    Name: Engraved Gaebolg Gloves    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002481
+    AegisName: R_Gaebolg_Earring
+    Name: Engraved Gaebolg Earrings    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002482
+    AegisName: R_Gaebolg_Necklace
+    Name: Engraved Gaebolg Necklace    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
