@@ -1152,7 +1152,7 @@ int32 party_skill_check(map_session_data *sd, int32 party_id, uint16 skill_id, u
 
 		switch(skill_id) {
 			case TK_COUNTER: //Increase Triple Attack rate of Monks.
-				if((p_sd->class_&MAPID_UPPERMASK) == MAPID_MONK
+				if((p_sd->class_&MAPID_SECONDMASK) == MAPID_MONK
 					&& pc_checkskill(p_sd,MO_TRIPLEATTACK)) {
 					sc_start4(p_sd,p_sd,SC_SKILLRATE_UP,100,MO_TRIPLEATTACK,
 						50+50*skill_lv, //+100/150/200% rate
@@ -1160,7 +1160,7 @@ int32 party_skill_check(map_session_data *sd, int32 party_id, uint16 skill_id, u
 				}
 				break;
 			case MO_COMBOFINISH: //Increase Counter rate of Star Gladiators
-				if((p_sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR
+				if((p_sd->class_&MAPID_SECONDMASK) == MAPID_STAR_GLADIATOR
 					&& p_sd->sc.getSCE(SC_READYCOUNTER)
 					&& pc_checkskill(p_sd,SG_FRIEND)) {
 					sc_start4(p_sd,p_sd,SC_SKILLRATE_UP,100,TK_COUNTER,

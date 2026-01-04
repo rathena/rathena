@@ -7303,7 +7303,7 @@ static void battle_calc_attack_left_right_hands(struct Damage* wd, block_list *s
 #endif
 			// If you only have a weapon in the left hand, then your main hand damage will be identical to an unarmed attack
 			if (is_attack_right_handed(src, skill_id) && wd->damage) {
-				if( (sd->class_&MAPID_BASEMASK) == MAPID_THIEF ) {
+				if( (sd->class_&MAPID_FIRSTMASK) == MAPID_THIEF ) {
 					skill = pc_checkskill(sd,AS_RIGHT);
 					ATK_RATER(wd->damage, 50 + (skill * 10))
 				}
@@ -7316,7 +7316,7 @@ static void battle_calc_attack_left_right_hands(struct Damage* wd, block_list *s
 			}
 			// Left hand damage will always be adjusted, even if you don't have a weapon in the main hand
 			if (wd->damage2) {
-				if( (sd->class_&MAPID_BASEMASK) == MAPID_THIEF) {
+				if( (sd->class_&MAPID_FIRSTMASK) == MAPID_THIEF) {
 					skill = pc_checkskill(sd,AS_LEFT);
 					ATK_RATEL(wd->damage2, 30 + (skill * 10))
 				}
@@ -11657,8 +11657,8 @@ int32 battle_check_target( const block_list* src, const block_list* target, int3
 			const map_session_data* sd = static_cast<const map_session_data*>(s_bl);
 			const map_session_data* sd2 = static_cast<const map_session_data*>(t_bl);
 			if (
-				(sd->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
-				(sd2->class_&MAPID_UPPERMASK) == MAPID_NOVICE ||
+				(sd->class_&MAPID_SECONDMASK) == MAPID_NOVICE ||
+				(sd2->class_&MAPID_SECONDMASK) == MAPID_NOVICE ||
 				(int32)sd->status.base_level < battle_config.pk_min_level ||
 			  	(int32)sd2->status.base_level < battle_config.pk_min_level ||
 				(battle_config.pk_level_range && abs((int32)sd->status.base_level - (int32)sd2->status.base_level) > battle_config.pk_level_range)

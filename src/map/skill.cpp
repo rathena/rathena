@@ -604,7 +604,7 @@ int32 skill_calc_heal(block_list *src, block_list *target, uint16 skill_id, uint
 #else
 				hp += hp * skill * 2 / 100;
 #endif
-			if (sd && tsd && sd->status.partner_id == tsd->status.char_id && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0)
+			if (sd && tsd && sd->status.partner_id == tsd->status.char_id && (sd->class_&MAPID_SECONDMASK) == MAPID_SUPER_NOVICE && sd->status.sex == 0)
 				hp *= 2;
 			break;
 	}
@@ -2071,7 +2071,7 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			if (status_isimmune(bl))
 				break;
 
-			if ((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 50 + 5 * skill_lv) {
+			if ((dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 50 + 5 * skill_lv) {
 				if (sd)
 					clif_skill_fail( *sd, skill_id );
 				break;
@@ -2599,7 +2599,7 @@ int32 skill_counter_additional_effect (block_list* src, block_list *bl, uint16 s
 		break;
 	}
 
-	if(sd && (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR &&
+	if(sd && (sd->class_&MAPID_SECONDMASK) == MAPID_STAR_GLADIATOR &&
 		map_getmapflag(sd->m, MF_NOSUNMOONSTARMIRACLE) == 0) {	//SG_MIRACLE [Komurka]
 		// 0.005% chance per sg_miracle_skill_ratio
 		// Chance is further reduced if agi is above 46
@@ -8106,7 +8106,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 	case CR_PROVIDENCE:
 		if(sd && dstsd){ //Check they are not another crusader [Skotlex]
-			if ((dstsd->class_&MAPID_UPPERMASK) == MAPID_CRUSADER) {
+			if ((dstsd->class_&MAPID_SECONDMASK) == MAPID_CRUSADER) {
 				clif_skill_fail( *sd, skill_id );
 				return 1;
 			}
@@ -8117,7 +8117,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 	case CG_MARIONETTE:
 		{
-			if( (sd && dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER && dstsd->status.sex == sd->status.sex) || (tsc && (tsc->getSCE(SC_CURSE) || tsc->getSCE(SC_QUAGMIRE))) )
+			if( (sd && dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER && dstsd->status.sex == sd->status.sex) || (tsc && (tsc->getSCE(SC_CURSE) || tsc->getSCE(SC_QUAGMIRE))) )
 			{// Cannot cast on another bard/dancer-type class of the same gender as caster, or targets under Curse/Quagmire
 				clif_skill_fail( *sd, skill_id );
 				return 1;
@@ -8765,7 +8765,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			if( lv > battle_config.devotion_level_difference || // Level difference requeriments
 				(dstsd->sc.getSCE(type) && dstsd->sc.getSCE(type)->val1 != src->id) || // Cannot Devote a player devoted from another source
 				(skill_id == ML_DEVOTION && (!mer || mer != dstsd->md)) || // Mercenary only can devote owner
-				(dstsd->class_&MAPID_UPPERMASK) == MAPID_CRUSADER || // Crusader Cannot be devoted
+				(dstsd->class_&MAPID_SECONDMASK) == MAPID_CRUSADER || // Crusader Cannot be devoted
 				(dstsd->sc.getSCE(SC_HELLPOWER))) // Players affected by SC_HELLPOWER cannot be devoted.
 			{
 				if( sd )
@@ -8897,7 +8897,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 	case MO_KITRANSLATION:
-		if(dstsd && ((dstsd->class_&MAPID_BASEMASK) != MAPID_GUNSLINGER && (dstsd->class_&MAPID_UPPERMASK) != MAPID_REBELLION) && dstsd->spiritball < 5) {
+		if(dstsd && ((dstsd->class_&MAPID_FIRSTMASK) != MAPID_GUNSLINGER && (dstsd->class_&MAPID_SECONDMASK) != MAPID_REBELLION) && dstsd->spiritball < 5) {
 			//Require will define how many spiritballs will be transferred
 			struct s_skill_condition require;
 			require = skill_get_requirement(sd,skill_id,skill_lv);
@@ -8922,7 +8922,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case MO_ABSORBSPIRITS:
 		i = 0;
 		if (dstsd && (battle_check_target(src, bl, BCT_SELF) > 0 || (battle_check_target(src, bl, BCT_ENEMY) > 0 && (map_flag_vs(src->m) || (sd && sd->duel_group && sd->duel_group == dstsd->duel_group)))) && // Only works on self and enemies
-			((dstsd->class_&MAPID_BASEMASK) != MAPID_GUNSLINGER || (dstsd->class_&MAPID_UPPERMASK) != MAPID_REBELLION)) { // split the if for readability, and included gunslingers in the check so that their coins cannot be removed [Reddozen]
+			((dstsd->class_&MAPID_FIRSTMASK) != MAPID_GUNSLINGER || (dstsd->class_&MAPID_SECONDMASK) != MAPID_REBELLION)) { // split the if for readability, and included gunslingers in the check so that their coins cannot be removed [Reddozen]
 			if (dstsd->spiritball > 0) {
 				i = dstsd->spiritball * 7;
 				pc_delspiritball(dstsd,dstsd->spiritball,0);
@@ -9368,7 +9368,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		if (sd) {
 			if (!dstsd || !(
 				(sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SOULLINKER) ||
-				(dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER ||
+				(dstsd->class_&MAPID_SECONDMASK) == MAPID_SOUL_LINKER ||
 				dstsd->status.char_id == sd->status.char_id ||
 				dstsd->status.char_id == sd->status.partner_id ||
 				dstsd->status.char_id == sd->status.child ||
@@ -9952,7 +9952,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			if (sd && dstsd && !map_flag_vs(sd->m) && (!sd->duel_group || sd->duel_group != dstsd->duel_group) && (!sd->status.party_id || sd->status.party_id != dstsd->status.party_id))
 				break; // Outside PvP it should only affect party members and no skill fail message
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			if((dstsd && (dstsd->class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER)
+			if((dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_SOUL_LINKER)
 				|| (tsc && tsc->getSCE(SC_SPIRIT) && tsc->getSCE(SC_SPIRIT)->val2 == SL_ROGUE) //Rogue's spirit defends againt32 dispel.
 				|| rnd()%100 >= 50+10*skill_lv)
 			{
@@ -11990,7 +11990,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SR_ASSIMILATEPOWER:
 		if (flag&1) {
 			i = 0;
-			if (dstsd && (sd == dstsd || map_flag_vs(src->m)) && (dstsd->class_&MAPID_BASEMASK)!=MAPID_GUNSLINGER) {
+			if (dstsd && (sd == dstsd || map_flag_vs(src->m)) && (dstsd->class_&MAPID_FIRSTMASK)!=MAPID_GUNSLINGER) {
 				if (dstsd->spiritball > 0) {
 					i = dstsd->spiritball;
 					pc_delspiritball(dstsd,dstsd->spiritball,0);
@@ -13706,7 +13706,7 @@ static int8 skill_castend_id_check(block_list *src, block_list *target, uint16 s
 				return USESKILL_FAIL_TOTARGET;
 			}
 
-			if( ( status_get_class_( target )&MAPID_BASEMASK ) == MAPID_SUMMONER ){
+			if( ( status_get_class_( target )&MAPID_FIRSTMASK ) == MAPID_SUMMONER ){
 				return USESKILL_FAIL_TOTARGET;
 			}
 
@@ -18051,14 +18051,14 @@ int32 skill_check_condition_char_sub (block_list *bl, va_list ap)
 			case PR_BENEDICTIO: {
 				uint8 dir = map_calc_dir(sd,tsd->x,tsd->y);
 				dir = (unit_getdir(sd) + dir)%8; //This adjusts dir to account for the direction the sd is facing.
-				if ((tsd->class_&MAPID_BASEMASK) == MAPID_ACOLYTE && (dir == 2 || dir == 6) //Must be standing to the left/right of Priest.
+				if ((tsd->class_&MAPID_FIRSTMASK) == MAPID_ACOLYTE && (dir == 2 || dir == 6) //Must be standing to the left/right of Priest.
 					&& sd->status.sp >= 10)
 					p_sd[(*c)++]=tsd->id;
 				return 1;
 			}
 			case AB_ADORAMUS:
 			// Adoramus does not consume Blue Gemstone when there is at least 1 Priest class next to the caster
-				if( (tsd->class_&MAPID_UPPERMASK) == MAPID_PRIEST )
+				if( (tsd->class_&MAPID_SECONDMASK) == MAPID_PRIEST )
 					p_sd[(*c)++] = tsd->id;
 				return 1;
 			case TR_GEF_NOCTURN:
@@ -18078,7 +18078,7 @@ int32 skill_check_condition_char_sub (block_list *bl, va_list ap)
 					if(pc_issit(tsd) || !unit_can_move(tsd))
 						return 0;
 					if (sd->status.sex != tsd->status.sex &&
-							(tsd->class_&MAPID_UPPERMASK) == MAPID_BARDDANCER &&
+							(tsd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER &&
 							(skill_lv = pc_checkskill(tsd, skill_id)) > 0 &&
 							(tsd->weapontype1==W_MUSICAL || tsd->weapontype1==W_WHIP) &&
 							sd->status.party_id && tsd->status.party_id &&
@@ -18574,7 +18574,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			sd.spiritball_old = sd.spiritball;
 			break;
 		case TK_MISSION:
-			if( (sd.class_&MAPID_UPPERMASK) != MAPID_TAEKWON ) { // Cannot be used by Non-Taekwon classes
+			if( (sd.class_&MAPID_SECONDMASK) != MAPID_TAEKWON ) { // Cannot be used by Non-Taekwon classes
 				clif_skill_fail( sd, skill_id );
 				return false;
 			}
@@ -18594,7 +18594,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		case TK_READYSTORM:
 		case TK_READYTURN:
 		case TK_JUMPKICK:
-			if( (sd.class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER ) { // Soul Linkers cannot use this skill
+			if( (sd.class_&MAPID_SECONDMASK) == MAPID_SOUL_LINKER ) { // Soul Linkers cannot use this skill
 				clif_skill_fail( sd, skill_id );
 				return false;
 			}
@@ -18603,7 +18603,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 		case TK_STORMKICK:
 		case TK_DOWNKICK:
 		case TK_COUNTER:
-			if ((sd.class_&MAPID_UPPERMASK) == MAPID_SOUL_LINKER)
+			if ((sd.class_&MAPID_SECONDMASK) == MAPID_SOUL_LINKER)
 				return false; //Anti-Soul Linker check in case you job-changed with Stances active.
 			if(!(sc && sc->getSCE(SC_COMBO)) || sc->getSCE(SC_COMBO)->val1 == TK_JUMPKICK)
 				return false; //Combo needs to be ready
@@ -19397,7 +19397,7 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 
 			default: // Skills that require spirit/coin spheres.
 				if (sd.spiritball < require.spiritball) {
-					if ((sd.class_&MAPID_BASEMASK) == MAPID_GUNSLINGER || (sd.class_&MAPID_UPPERMASK) == MAPID_REBELLION)
+					if ((sd.class_&MAPID_FIRSTMASK) == MAPID_GUNSLINGER || (sd.class_&MAPID_SECONDMASK) == MAPID_REBELLION)
 						clif_skill_fail( sd, skill_id, USESKILL_FAIL_COINS, (require.spiritball == -1) ? 1 : require.spiritball );
 					else
 						clif_skill_fail( sd, skill_id, USESKILL_FAIL_SPIRITS, (require.spiritball == -1) ? 1 : require.spiritball );

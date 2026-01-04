@@ -3682,7 +3682,7 @@ void clif_updatestatus( map_session_data& sd, enum _sp type ){
 			// On officials the HP never go below 1, even if you die [Lemongrass]
 			// On officials the HP Novice class never go below 50%, even if you die [Napster]
 			if (sd.battle_status.hp == 0) {
-				clif_par_change(sd, type, (sd.class_&MAPID_UPPERMASK) != MAPID_NOVICE ? 1 : sd.battle_status.max_hp/2);
+				clif_par_change(sd, type, (sd.class_&MAPID_SECONDMASK) != MAPID_NOVICE ? 1 : sd.battle_status.max_hp/2);
 			} else {
 				clif_par_change(sd, type, sd.battle_status.hp);
 			}
@@ -15247,7 +15247,7 @@ void clif_parse_NoviceDoriDori(int32 fd, map_session_data *sd)
 {
 	if (sd->state.doridori) return;
 
-	switch (sd->class_&MAPID_UPPERMASK) {
+	switch (sd->class_&MAPID_SECONDMASK) {
 		case MAPID_SOUL_LINKER:
 		case MAPID_STAR_GLADIATOR:
 		case MAPID_TAEKWON:
@@ -15274,7 +15274,7 @@ void clif_parse_NoviceDoriDori(int32 fd, map_session_data *sd)
 ///       "Help me out~ Please~ T_T"
 void clif_parse_NoviceExplosionSpirits(int32 fd, map_session_data *sd)
 {
-	if( (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE ) {
+	if( (sd->class_&MAPID_SECONDMASK) == MAPID_SUPER_NOVICE ) {
 		t_exp next = pc_nextbaseexp(sd);
 
 		if( next ) {
@@ -20121,7 +20121,7 @@ void clif_ranklist( map_session_data& sd, e_rank rankingtype ){
 		p.points[i] = 0;
 	}
 
-	switch( sd.class_&MAPID_UPPERMASK ){
+	switch( sd.class_&MAPID_SECONDMASK ){
 		case MAPID_BLACKSMITH:
 		case MAPID_ALCHEMIST:
 		case MAPID_TAEKWON:
@@ -20140,7 +20140,7 @@ void clif_ranklist( map_session_data& sd, e_rank rankingtype ){
 	p.type = rankingtype;
 	clif_sub_ranklist( p.list, rankingtype );
 
-	switch( sd.class_&MAPID_UPPERMASK ){
+	switch( sd.class_&MAPID_SECONDMASK ){
 		case MAPID_BLACKSMITH:
 		case MAPID_ALCHEMIST:
 		case MAPID_TAEKWON:
@@ -22858,7 +22858,7 @@ bool clif_parse_stylist_buy_sub( map_session_data* sd, _look look, int16 index )
 
 	std::shared_ptr<s_stylist_costs> costs;
 
-	if( ( sd->class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
+	if( ( sd->class_ & MAPID_FIRSTMASK ) == MAPID_SUMMONER ){
 		costs = entry->doram;
 	}else{
 		costs = entry->human;
