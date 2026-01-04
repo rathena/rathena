@@ -25,7 +25,7 @@ void SkillImpl::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, 
 	// no-op
 }
 
-void SkillImpl::calculateSkillRatio(const Damage*, const block_list*, const block_list*, uint16, int32&) const {
+void SkillImpl::calculateSkillRatio(const Damage*, const block_list*, const block_list*, uint16, int32&, int32) const {
 	// no-op
 }
 
@@ -92,7 +92,7 @@ void SkillImplRecursiveDamageSplash::splashSearch(block_list* src, block_list* t
 	// if skill damage should be split among targets, count them
 	// SD_LEVEL -> Forced splash damage -> count targets
 	if (flag & SD_LEVEL || skill_get_nk(getSkillId(), NK_SPLASHSPLIT)){
-		skill_area_temp[0] = map_foreachinallrange(skill_area_sub, target, this->getSearchSize(skill_lv), BL_CHAR, src, getSkillId(), skill_lv, tick, BCT_ENEMY, 1);
+		skill_area_temp[0] = map_foreachinallrange(skill_area_sub, target, this->getSearchSize(skill_lv), BL_CHAR, src, getSkillId(), skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
 		// If there are no characters in the area, then it always counts as if there was one target
 		// This happens when targetting skill units such as icewall
 		skill_area_temp[0] = std::max(1, skill_area_temp[0]);

@@ -1435,11 +1435,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		unit_set_walkdelay(bl, tick, skill_get_time2(skill_id, skill_lv), 1);
 		break;
 
-	case MG_FROSTDIVER:
-		if(!sc_start(src,bl,SC_FREEZE,min(skill_lv*3+35,skill_lv+60),skill_lv,skill_get_time2(skill_id,skill_lv)) && sd)
-			clif_skill_fail( *sd, skill_id );
-		break;
-
 	case WZ_FROSTNOVA:
 		sc_start(src,bl,SC_FREEZE,(sd!=nullptr)?skill_lv*5+33:skill_lv*3+35,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
@@ -5682,8 +5677,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case AS_SPLASHER:
 	case HT_BLITZBEAT:
 	case MA_SHOWER:
-	case MG_NAPALMBEAT:
-	case MG_FIREBALL:
 	case RG_RAID:
 #ifdef RENEWAL
 	case SN_SHARPSHOOTING:
@@ -5868,13 +5861,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				break;
 
 			switch (skill_id) {
-				case MG_FIREBALL:
-					// For players, the distance between original target and splash target determines the damage
-					if (sd != nullptr) {
-						if (block_list* orig_bl = map_id2bl(skill_area_temp[1]); orig_bl != nullptr)
-							sflag |= distance_bl(orig_bl, bl);
-					}
-					break;
 				case ABC_DEFT_STAB:
 					// Deft Stab - Make sure the flag of 2 is passed on when the skill is double casted.
 					if (flag&2)
@@ -6535,16 +6521,12 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case MG_SOULSTRIKE:
 	case NPC_DARKSTRIKE:
-	case MG_COLDBOLT:
-	case MG_FIREBOLT:
 	case MG_LIGHTNINGBOLT:
 	case WZ_EARTHSPIKE:
 	case NPC_DARKTHUNDER:
 	case NPC_FIRESTORM:
 	case PR_ASPERSIO:
-	case MG_FROSTDIVER:
 	case WZ_SIGHTBLASTER:
 	case WZ_SIGHTRASHER:
 #ifdef RENEWAL
@@ -8333,7 +8315,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case MER_QUICKEN:
 	case CR_SPEARQUICKEN:
 	case AS_POISONREACT:
-	case MG_ENERGYCOAT:
 	case MO_EXPLOSIONSPIRITS:
 	case MO_STEELBODY:
 	case MO_BLADESTOP:
@@ -8648,7 +8629,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-	case MG_SIGHT:
 	case MER_SIGHT:
 	case WZ_SIGHTBLASTER:
 	case NPC_WIDESIGHT:
@@ -9540,36 +9520,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 			else
 				clif_skill_fail( *sd, skill_id );
-		}
-		break;
-
-	case MG_STONECURSE:
-		{
-			if (status_has_mode(tstatus,MD_STATUSIMMUNE)) {
-				if (sd)
-					clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			if(status_isimmune(bl) || !tsc)
-				break;
-
-			int32 brate = 0;
-
-			if (sd && sd->sc.getSCE(SC_PETROLOGY_OPTION))
-				brate = sd->sc.getSCE(SC_PETROLOGY_OPTION)->val3;
-
-			// Except for players, the skill animation shows even if the status change doesn't start
-			// Players get a skill has failed message instead
-			if (sc_start2(src, bl, type, (skill_lv * 4 + 20) + brate, skill_lv, src->id, skill_get_time2(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)) || sd == nullptr)
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			else {
-				clif_skill_fail( *sd, skill_id );
-				// Level 6-10 doesn't consume a red gem if it fails [celest]
-				if (skill_lv > 5)
-				{ // not to consume items
-					return 0;
-				}
-			}
 		}
 		break;
 
