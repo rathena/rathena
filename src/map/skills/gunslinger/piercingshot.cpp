@@ -4,6 +4,7 @@
 #include "piercingshot.hpp"
 
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillPiercingShot::SkillPiercingShot() : WeaponSkillImpl(GS_PIERCINGSHOT) {
 }
