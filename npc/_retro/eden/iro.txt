@@ -1,0 +1,170 @@
+// Carrot Traders
+//============================================================
+moc_para01,166,51,3	script	Phelix#edco	85,{
+	mes "[Phelix]";
+	mes "Oh... I see from that look that you want me to work and give you Meat and Carrots...";
+	mes "Well my friend Izaac here has some Red Potions with him, but I only have some Carrots.";
+	mes "So I can trade you ^0000CC1 Carrot for 3 Jellopy^000000.";
+	next;
+	mes "[Phelix]";
+	mes "If you're interested in my offer, get me the Jellopies I mentioned.";
+	next;
+	select("Carrots please.");
+	mes "[Phelix]";
+	mes "Alright, let's see what ya got...";
+	next;
+	if (countitem(909) < 3) {
+		mes "[Phelix]";
+		mes "Hmm, look dude, I said 3 Jellopies for 1 Carrot... got it?";
+		close;
+	}
+	mes "[Phelix]";
+	mes "Not too bad...";
+	mes "How many do you want?";
+	next;
+	switch(select("As many as I can get, please.:I want to choose.:Never mind, I like my Jellopy.")) {
+	case 1:
+		set .@amount, countitem(909) / 3;
+		break;
+	case 2:
+		set .@available, countitem(909) / 3;
+		mes "[Phelix]";
+		mes "How many do you want?";
+		mes "^ff0000You have enough for up to " + .@available + " Carrots.^000000";
+		input .@input;
+		next;
+		if (.@input < 1 || .@input > 10000) {
+			mes "[Phelix]";
+			mes "Don't want to deal? Fair enough...";
+			close;
+		}
+		if (.@input > .@available) {
+			mes "[Phelix]";
+			mes "Dude, I said for every 3 Jellopy I'll give you 1 Carrot.";
+			close;
+		}
+		set .@amount, .@input;
+		break;
+	case 3:
+		mes "[Phelix]";
+		mes "Don't bother me if you don't want to trade.";
+		close;
+	}
+	if (checkweight(515,.@amount) == 0) {
+		mes "[Phelix]";
+		mes "You are overweight.";
+		close;
+	}
+	mes "[Phelix]";
+	mes "There you go~! As I promised.";
+	mes "Try not to stuff yer face.";
+	delitem 909,.@amount*3; //Jellopy
+	getitem 515,.@amount; //Carrot
+	end;
+}
+
+// Red Potion Traders
+//============================================================
+moc_para01,163,51,7	script	Izaac#edco	86,{
+	mes "[Izaac]";
+	mes "Good day!";
+	mes "Have you collected any weird stuff from monsters?";
+	mes "I want things like Jellopy, Fluff, Shell, Feather of Birds, Tree Root, Worm Peelings, and Chrysalis.";
+	mes "I need those for something.";
+	next;
+	mes "[Izaac]";
+	mes "Of course, I won't ask you to give me that stuff for free. What if I traded the following for ^CC00001 Red Potion^000000:";
+	mes "^00CC005 Shell^000000";
+	mes "^0000CC10 Fluff^000000";
+	mes "^00CC0010 Jellopy^000000";
+	mes "^0000CC6 Tree Root^000000";
+	mes "^00CC001 Worm Peeling^000000";
+	mes "^0000CC7 Feather of Birds^000000";
+	mes "^00CC006 Chrysalis^000000";
+	next;
+	switch(select("Sure!:I think it's a rip-off!:No, thanks.")) {
+	case 1:
+		mes "[Izaac]";
+		mes "So which items do";
+		mes "you want to bring me?";
+		next;
+
+		setarray .@items[0], 935, 914, 909, 902, 955, 916, 915;
+		setarray .@count[0],   5,  10,  10,   6,   1,   7,   6;
+
+		set .@size, getarraysize(.@items);
+		for(set .@i,0; .@i<.@size; set .@i,.@i+1)
+			set .@menu$, .@menu$+getitemname(.@items[.@i])+":";
+		set .@select, select(.@menu$+"Cancel")-1;
+		if (.@select == .@size) {
+			mes "[Izaac]";
+			mes "Sure~";
+			mes "No problem.";
+			close;
+		}
+		set .@item, .@items[.@select];
+		set .@item$, getitemname(.@item);
+		set .@price, .@count[.@select];
+
+		if (countitem(.@item) < .@price) {
+			mes "[Izaac]";
+			mes "Hey, where's all";
+			mes "that "+.@item$+" that";
+			mes "you promised me?";
+			mes "Give me "+.@item$+"!";
+			close;
+		}
+		mes "[Izaac]";
+		mes "Okay, let me check";
+		mes "how much "+.@item$;
+		mes "you have on you.";
+		mes "Hmm...";
+		next;
+		set .@amount, countitem(.@item) / .@price;
+		set .@trade_amount, .@amount * .@price;
+		mes "[Izaac]";
+		mes "You have";
+		mes "a total of "+countitem(.@item)+" "+.@item$+"...";
+		mes "For all those, I can give you";
+		mes "a total of "+.@amount+" Red Potion(s).";
+		next;
+		mes "[Izaac]";
+		mes "What do you say?";
+		mes "Do we have a deal?";
+		next;
+		if(select("Deal.:No deal.") == 2) {
+			mes "[Izaac]";
+			mes "Huh~";
+			mes "Alright.";
+			mes "Though are";
+			mes .@item$ + " more useful";
+			mes "to an adventurer like you?";
+			close;
+		}
+		if (checkweight(501,.@amount) == 0) { //custom check
+			mes "[Izaac]";
+			mes "You are overweight.";
+			close;
+		}
+		delitem .@item,.@trade_amount;
+		getitem 501,.@amount; //Red_Potion
+		mes "[Izaac]";
+		mes "There you go!";
+		mes "Check how many "+.@item$;
+		mes "I've given you, it should be good.";
+		mes "Thanks, that was a good deal~";
+		close;
+	case 2:
+		mes "[Izaac]";
+		mes "A rip-off...?";
+		mes "If you check the market value";
+		mes "of the items being traded, I'm actually the one getting";
+		mes "ripped off here.";
+		close;
+	case 3:
+		mes "[Izaac]";
+		mes "Alright, No problem.";
+		mes "But come back to me if you change your mind.";
+		close;
+	}
+}

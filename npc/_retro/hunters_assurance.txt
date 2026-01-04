@@ -9,7 +9,7 @@
 //= MAX_KILLS kills, the item is granted.
 //============================================================
 
-//prt_in,47,97,3	script	Hunter's Assurance	4_M_SAKRAY_TIED,{
+prt_in,47,97,3	script	Hunter's Assurance	4_M_SAKRAY_TIED,{
 
 	mes "[Hunter's Assurance Broker]";
 

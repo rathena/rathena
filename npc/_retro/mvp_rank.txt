@@ -45,7 +45,7 @@ prontera,147,174,5	script	MVP Record Keeper	2_BULLETIN_BOARD,{
 				// Total MVPs killed by this character
 				query_sql(
 					"SELECT COUNT(*) "
-					+ "FROM `RETRO-logs`.mvplog "
+					+ "FROM db_retro_logs.mvplog "
 					+ "WHERE kill_char_id = " + getcharid(0),
 					.@total
 				);
@@ -63,7 +63,7 @@ prontera,147,174,5	script	MVP Record Keeper	2_BULLETIN_BOARD,{
 				// Now fetch the last 10 MVP kills of this character
 				.@rows = query_sql(
 					"SELECT mvp_date, monster_id, map "
-					+ "FROM `RETRO-logs`.mvplog "
+					+ "FROM db_retro_logs.mvplog "
 					+ "WHERE kill_char_id = " + getcharid(0) + " "
 					+ "ORDER BY mvp_date DESC "
 					+ "LIMIT 10",
@@ -94,7 +94,7 @@ prontera,147,174,5	script	MVP Record Keeper	2_BULLETIN_BOARD,{
 
 				.@rows = query_sql(
 					"SELECT c.name, COUNT(*) AS kills "
-					+ "FROM `RETRO-logs`.mvplog m "
+					+ "FROM db_retro_logs.mvplog m "
 					+ "JOIN `char` c ON c.char_id = m.kill_char_id "
 					+ "GROUP BY m.kill_char_id "
 					+ "ORDER BY kills DESC "
@@ -129,7 +129,7 @@ prontera,147,174,5	script	MVP Record Keeper	2_BULLETIN_BOARD,{
 
 				.@rows = query_sql(
 					"SELECT m.mvp_date, m.monster_id, m.map, c.name "
-					+ "FROM `RETRO-logs`.mvplog m "
+					+ "FROM db_retro_logs.mvplog m "
 					+ "LEFT JOIN `char` c ON c.char_id = m.kill_char_id "
 					+ "ORDER BY m.mvp_date DESC "
 					+ "LIMIT 10",

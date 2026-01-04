@@ -1,0 +1,1564 @@
+//===== rAthena Script =======================================
+//= Eden Tutorial
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= A series of quests introducing the major features of
+//= Ragnarok Online.
+//===== Additional Comments: =================================
+//= 1.0 First Version. [Euphy]
+//============================================================
+
+// Main Quest :: TutorialVer2
+//============================================================
+moc_para01,34,178,3	script	Tutorial Instructor	904,{
+	if (Class == Job_Novice) {
+		// Fall through
+	} else if (checkquest(9167) == -1) {
+	OnStartQuest:
+		if (@tutorial_restart) {
+			set .@tutorial_restart,1;
+			set @tutorial_restart,0;
+		}
+		mes "[Tutorial Instructor]";
+		mes "Lately, it has been said that";
+		mes "they are developing ways to add options";
+		mes "to put in sockets or add statuses";
+		mes "on equipment that normally don't have it.";
+		mes "They call that ^006400Enchant^000000.";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "After seeing that being developed,";
+		mes "I was so inspired by it";
+		mes "that I worked hard to discover";
+		mes "a way to do it and I finally";
+		mes "made my own way to ^006400Enchant^000000!";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "But in order do to this";
+		mes "I need some special materials.";
+		mes "If you're okay with it...";
+		mes "Do you think you can";
+		mes "help me out by gathering them?";
+		next;
+		switch(select("Sure, I can help out!:I'm a little busy right now...")) {
+		case 1:
+			mes "[Tutorial Instructor]";
+			mes "However, looking at you";
+			mes "in your current state makes me";
+			mes "doubt your ability to gather";
+			mes "the items I need...";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "Well, I guess if you employ";
+			mes "a ^006400Mercenary^000000 for this";
+			mes "then I think I can entrust you";
+			mes "with my requests... right?";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "In order to employ a Mercenary,";
+			mes "go find the ^006400Mercenary Guild^000000";
+			mes "which is by the front door of ^8B4513Prontera^000000.";
+			mes "Go to the ^006400Information Agent^000000";
+			mes "and ask them where the ^006400Mercenary Guild Official^000000";
+			mes "is located and they will let you know.";
+			next;
+			if (.@tutorial_restart) {
+				erasequest 9167;
+				erasequest 9168;
+				erasequest 9169;
+				erasequest 9170;
+				erasequest 9171;
+				erasequest 9172;
+				completequest 9173;
+				erasequest 9173;
+			}
+			mes "[Tutorial Instructor]";
+			mes "Now... Hurry and employ";
+			mes "a ^006400Mercenary^000000 and come back to me!";
+			setquest 9167;
+			close;
+		case 2:
+			mes "[Tutorial Instructor]";
+			mes "Well since you said you're busy";
+			mes "I can't be helped...";
+			mes "When you're not so busy, come find me again.";
+			close;
+		}
+	} else if (checkquest(9167) == 0 || checkquest(9167) == 1) {
+		if (!getmercinfo(1)) {
+			mes "[Tutorial Instructor]";
+			mes "You haven't gotten a mercenary yet.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "In order to employ a Mercenary,";
+			mes "go find the ^006400Mercenary Guild^000000";
+			mes "which is by the front door of ^8B4513Prontera^000000.";
+			mes "Go to the ^006400Information Agent^000000";
+			mes "and ask them where the ^006400Mercenary Guild Official^000000";
+			mes "is located and they will let you know.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "Now... Hurry and employ";
+			mes "a ^006400Mercenary^000000 and come back to me!";
+			close;
+		}
+		mes "[Tutorial Instructor]";
+		mes "Seeing you with a ^006400Mercenary^000000 definitely makes me trust you more.";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "If a 006400Mercenary^000000 gives you direct effect";
+		mes "by fighting for you";
+		mes "then a ^006400Pet^000000 helps you indirectly with their";
+		mes "abilities and varied appearances,";
+		mes "and it captures your heart.";
+		mes "Try raising a ^006400Pet^000000 in the future as well.";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "Now, let's see... In order to";
+		mes "get this ^006400Enchant^000000 to succeed";
+		mes "you have to go gather some materials for me...";
+		mes "What I need is...";
+		mes "..............";
+		next;
+		select("I don't think I heard you clearly...");
+		mes "[Tutorial Instructor]";
+		mes "I really don't like to repeat myself..";
+		mes "If you ask me again like that";
+		mes "does it just make your mouth tired?";
+		mes "In these situations, open your ^006400Quest Window^000000";
+		mes "and you can see what is requested of you";
+		mes "and the details of my request.";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "If you look at the top left";
+		mes "in the area with the information,";
+		mes "it says ^006400QUEST^000000";
+		mes "and if you click that";
+		mes "it'll show all information";
+		mes "that pertains to the request.";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "Once you verify what materials";
+		mes "you need go gather from";
+		mes "the ^006400Quest Window^000000,";
+		mes "come find and talk to me again.";
+		completequest 9167;
+		setquest 9168;
+		close;
+	} else if (checkquest(9168) == 0 || checkquest(9168) == 1) {
+		if (checkweight(607,1) == 0) {
+			if (MaxWeight - Weight < getiteminfo(607, ITEMINFO_WEIGHT)) {
+				mes "[Tutorial Instructor]";
+				mes "You seemed to be sluggish with a lot of items";
+				mes "in your inventory making you heavy...";
+				mes "It'll be hard to do my request";
+				mes "when you're heavy with all that junk!";
+				mes "Go empty out your inventory and come back to me.";
+				close;
+			} else {
+				mes "[Tutorial Instructor]";
+				mes "It seems that you have";
+				mes "one too many items on you...";
+				mes "If you want to help me out";
+				mes "then you're gonna have to put some";
+				mes "stuff away then come back.";
+				close;
+			}
+		}
+		mes "[Tutorial Instructor]";
+		mes "Did you open your ^006400Quest Window^000000";
+		mes "to verify the materials?";
+		next;
+		switch(select("Yup!:No...:Where is the Quest Window...")) {
+		case 1:
+			mes "[Tutorial Instructor]";
+			mes "Oh yeah? Then shall I test you to see";
+			mes "if you really checked it?";
+			mes "Write down what material I asked you to get.";
+			next;
+			input .@inputstr$;
+			if (.@inputstr$ == "10 Jellopy") {
+				mes "[Tutorial Instructor]";
+				mes "Good, you know.";
+				mes "Now, are you feeling pretty familiar";
+				mes "about the ^006400Quest Window^000000?";
+				mes "But there is an issue...";
+				mes "You know what material to collect,";
+				mes "but gathering that won't be easy.";
+				next;
+				mes "[Tutorial Instructor]";
+				mes "Also, there is one thing";
+				mes "I absolutely think you need to try.";
+				mes "And that is...";
+				mes "the ^006400Universal Silver Catalog^000000.";
+				next;
+				mes "[Tutorial Instructor]";
+				mes "The ^006400Universal Silver Catalog^000000";
+				mes "can be obtained from";
+				mes "the ^0000FFCatalogue Wizard^000000";
+				mes "that is located in the Eden Group Headquarter.";
+				next;
+				mes "[Tutorial Instructor]";
+				mes "Now, go and obtain";
+				mes "a ^006400Universal Silver Catalog^000000";
+				mes "then come back and talk to me.";
+				completequest 9168;
+				setquest 9169;
+				close;
+			}
+			mes "[Tutorial Instructor]";
+			mes "You... still don't seem";
+			mes "to know much about the";
+			mes "^006400Quest Window^000000.";
+			mes "I will inform you again.";
+			next;
+			break;
+		case 2:
+			mes "[Tutorial Instructor]";
+			mes "Hurry and check to see";
+			mes "what materials are required in";
+			mes "your ^006400Quest Window^000000.";
+			close;
+		case 3:
+			break;
+		}
+		mes "[Tutorial Instructor]";
+		mes "If you look at the top left";
+		mes "in the area with the information,";
+		mes "it says ^006400QUEST^000000";
+		mes "and if you click that";
+		mes "it'll show all information";
+		mes "that pertains to the request.";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "Once you verify what materials";
+		mes "you need go gather from";
+		mes "the ^006400Quest Window^000000,";
+		mes "come find and talk to me again.";
+		close;
+	} else if (checkquest(9169) == 0 || checkquest(9169) == 1) {
+		if (countitem(12580) == 0) {
+			mes "[Tutorial Instructor]";
+			mes "Hmm? So I noticed that";
+			mes "you haven't gone and picked up a";
+			mes "^006400Universal Silver Catalog^000000 yet!";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "You can get the";
+			mes "^006400Universal Silver Catalog^000000";
+			mes "from the ^0000FFCatalogue Wizard^000000";
+			mes "who is located in the Eden Group Headquarter.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "So, go and get the";
+			mes "^006400Universal Silver Catalog^000000";
+			mes "then come back to me.";
+			close;
+		}
+		mes "[Tutorial Instructor]";
+		mes "Oh! You managed to get a";
+		mes "^006400Universal Silver Catalog^000000!";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "This lets you browse and search";
+		mes "through all the various stores";
+		mes "that are on the same map and";
+		mes "are open for vending.";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "It only costs 200 zeny for one";
+		mes "of these and with it you can";
+		mes "search up to 10 times.";
+		mes "You can say that it's a necessity.";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "So, go to the area you want";
+		mes "and try out the ^006400Universal Silver Catalog^000000";
+		mes "then come and find me";
+		mes "after you've done this.";
+		completequest 9169;
+		setquest 9170;
+		close;
+	} else if (checkquest(9170) == 0 || checkquest(9170) == 1) {
+		if (countitem(12580)) {
+			mes "[Tutorial Instructor]";
+			mes "Hmm... It seems that you still have";
+			mes "the ^006400Universal Silver Catalog^000000 in your inventory.";
+			mes "Since you're saying you forgot how to use it";
+			mes "I'll explain it to you again.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "You see... the ^006400Universal Silver Catalog^000000";
+			mes "lets you browse and search";
+			mes "through all the various stores";
+			mes "that are on the same map and";
+			mes "are open for vending.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "So, go to the area you want";
+			mes "and try out the ^006400Universal Silver Catalog^000000";
+			mes "them come and find me";
+			mes "after you've done this.";
+			close;
+		}
+		mes "[Tutorial Instructor]";
+		mes "How do you feel after trying out";
+		mes "the ^006400Universal Silver Catalog^000000?";
+		mes "It feels a lot easier than";
+		mes "going through each individual";
+		mes "vendor and finding the item";
+		mes "you need, right?";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "Now, go out and gather";
+		mes "the materials I need and";
+		mes "I will make sure to give you";
+		mes "a fantastic ^006400enchant^000000!";
+		mes "I'll be waiting!";
+		completequest 9170;
+		setquest 9171;
+		close;
+	} else if (checkquest(9171) == 0 || checkquest(9171) == 1) {
+		if (countitem(909) < 10) {
+			mes "[Tutorial Instructor]";
+			mes "It seems you didn't bring";
+			mes "enough materials. Did you forget";
+			mes "what you needed to gather?";
+			next;
+			switch(select("Yeah...:Nope!")) {
+			case 1:
+				mes "[Tutorial Instructor]";
+				mes "I've been told that if you click the";
+				mes "thing on the top left that says";
+				mes "^006400QUEST^000000, it'll show you all";
+				mes "the information that you need";
+				mes "that pertains to your requests.";
+				next;
+				mes "[Tutorial Instructor]";
+				mes "Once you gather all the materials";
+				mes "that are listed in your ^006400Quest Window^000000";
+				mes "come and talk to me.";
+				close;
+			case 2:
+				mes "[Tutorial Instructor]";
+				mes "When you gather the items";
+				mes "come to me and I will show you";
+				mes "an awesome ^006400ENCHANT^000000.";
+				mes "I'll be waiting!";
+				close;
+			}
+		}
+		if (checkweight(607,6) == 0) {
+			if (MaxWeight - Weight < getiteminfo(607, ITEMINFO_WEIGHT)) {
+				mes "[Tutorial Instructor]";
+				mes "Your inventory seems to be really full";
+				mes "with various stuff... Do you think";
+				mes "you can get anything done when you're so";
+				mes "weighed down? Go put some stuff away";
+				mes "then come back to me.";
+				close;
+			} else {
+				mes "[Tutorial Instructor]";
+				mes "You seem to have too much stuff";
+				mes "in your inventory... Go put some";
+				mes "stuff away then come back to me";
+				mes "when you have less suff on you.";
+				close;
+			}
+		}
+		mes "[Tutorial Instructor]";
+		mes "You got everything I asked for!";
+		mes "So~ Shall we start on the awesome";
+		mes "Enchant that I found and developed?";
+		next;
+		specialeffect EF_BASH3D2;
+		mes "[Tutorial Instructor]";
+		mes "Okay! Now for the first skill!!";
+		mes "To add a new ability to your armor...";
+		mes "^006400HIDDEN SOCKET ENCHANT^000000!!";
+		next;
+		specialeffect EF_BASH3D2;
+		mes "[Tutorial Instructor]";
+		mes "And for the second skill!!";
+		mes "To add a new socket into your";
+		mes "weapon and shield...";
+		mes "^006400SOCKET ENCHANT^000000!!";
+		next;
+		mes "[Tutorial Instructor]";
+		mes "There. The Enchant is done. You can't understand the process by just watching me, so I'll let you look at the items themselves.";
+		delitem 909,10; //Jellopy
+		completequest 9171;
+		setquest 9172;
+		getitem2 15033,1,1,0,0,0,0,0,4702; //Tutorial_Mattle[Strength3]
+		getitem 15033,1; //Tutorial_Mattle
+		getitem 15034,1; //Tutorial_Mattle_
+		next;
+		mes "[Tutorial Instructor]";
+		mes "Those items cannot be";
+		mes "worn or traded so don't even";
+		mes "think about running away with them.";
+		mes "When you're done looking at them,";
+		mes "give them back to me.";
+		close;
+	} else if (checkquest(9172) == 0 || checkquest(9172) == 1) {
+		if (countitem(15033) == 0 || countitem(15034) == 0) {
+			mes "[Tutorial Instructor]";
+			mes "What did you do with the Enchanted";
+			mes "items I lent to you to look at?";
+			mes "Until you bring back the fruits of";
+			mes "my labor, I don't want to talk to you,";
+			mes "let alone see your face.";
+			close;
+		}
+		mes "[Tutorial Instructor]";
+		mes "Are you done looking over";
+		mes "the items I Enchanted?";
+		next;
+		switch(select("Yes, thank you.:I haven't looked at them yet.")) {
+		case 1:
+			mes "[Tutorial Instructor]";
+			mes "So what did you think after inspecting it? Now that you've looked at an actual Enchanted item, do you understand it?";
+			// Item deletions moved below to prevent errors.
+			next;
+			mes "[Tutorial Instructor]";
+			mes "Thanks to you I was able to see great results of my research and study.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "If you have any questions about anything that I discussed with you, I will tell you everything! Thanks for your hard work!";
+			delitem 15033,2;
+			delitem 15034,1;
+			completequest 9172;
+			setquest 9173;
+			getexp 5000,2500;
+			close;
+		case 2:
+			mes "[Tutorial Instructor]";
+			mes "Take your time to look them over";
+			mes "then bring them back to me.";
+			close;
+		}
+	} else if (checkquest(9173) == 0 || checkquest(9173) == 1) {
+		mes "[Tutorial Instructor]";
+		mes "Do you have any questions?";
+		next;
+		switch(select("Can I do the same quest again?:About the Quest Window...:About ENCHANT...:About Searching Vends...:About Mercenary and Pets...:End Conversation.")) {
+		case 1:
+			if (checkquest(9173,PLAYTIME) == 0 || checkquest(9173,PLAYTIME) == 1) {
+				mes "[Tutorial Instructor]";
+				mes "The one method to do the same quests repeatdedly is to do the ^006400Daily Quests^000000.";
+				next;
+				mes "[Tutorial Instructor]";
+				mes "Once you complete a ^006400Daily Quest^000000 and turn it in, wait about a day then come back to get the request and do it all over again!";
+				mes "[Tutorial Instructor]";
+				mes "If you received a daily quest, look at bottom right of the ^006400Quest Window^000000. There is a section that is called ^006400LIMITED^000000. In that section, it'll tell you how much time needs to pass before you can pick up another daily quest.";
+				next;
+				mes "[Tutorial Instructor]";
+				mes "It seems you still have some time left to wait out after finishing my quest. Wait it out a bit more, then come find me and you can get the same quest again.";
+				close;
+			}
+			mes "[Tutorial Instructor]";
+			mes "It seems that about a day has passed since you've finished my quest. Alright, so like the ^006400Daily Quests^000000, you can get a quest from me. Did you want to proceed?";
+			next;
+			switch(select("Yes:No")) {
+			case 1:
+				set @tutorial_restart,1;
+				goto OnStartQuest;
+			case 2:
+				mes "[Tutorial Instructor]";
+				mes "Okay. But if you change your mind and want to receive a quest, come find me.";
+				close;
+			}
+		case 2:
+			mes "[Tutorial Instructor]";
+			mes "They say that the ^006400Quest Window^000000 details out everything you need to know about your quests.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "If you look at the top left";
+			mes "in the area with the information,";
+			mes "it says ^006400QUEST^000000";
+			mes "and if you click that";
+			mes "it'll show all information";
+			mes "that pertains to the request.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "Using the ^006400Quest Window^000000 will make your life easier. It'll tell you where to go, what items to get or who to find and etc.";
+			close;
+		case 3:
+			mes "[Tutorial Instructor]";
+			mes "^006400ENCHANT^000000, in general, is divided into two parts: ^006400SOCKET ENCHANT^000000 and ^006400HIDDEN SOCKET ENCHANT^000000.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "^006400SOCKET ENCHANT^000000 is used to add a SOCKET into equipments and ^006400HIDDEN SOCKET ENCHANT^000000 is used to put in stats into a socket of an armor.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "Of course, in order to do this we are in need of some materials and there is a chance that it may fail, but that's the risk you're taking.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "The people who do the ^006400SOCKET ENCHANT^000000 can be found in ^8B4513Prontera, Morocc, Payon,^000000. ^8B4513Rhitalzen^000000 is in the Refinery and ^0000FFSeiyablem^000000 and ^0000FFReiablem^000000 can be found near the entrance.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "The one who does ^006400HIDDEN SOCKET ENCHANT^000000 is found at the 6 o'clock location of ^8B4513Prontera^000000. Look for the ^0000FFCraftman Apprentice^000000.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "Do you think you understand a little bit more about ^006400ENCHANT^000000?";
+			close;
+		case 4:
+			mes "[Tutorial Instructor]";
+			mes "^006400Vend Search^000000 can be utilized by the ^006400Universal Silver Catalog^000000 item. Since you search through as vends on that map, it'll make it easier for you to find the item that you're looking for.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "The ^006400Universal Silver Catalog^000000";
+			mes "can be obtained from ";
+			mes "the ^0000FFCatalogue Wizard^000000";
+			mes "that is located in the Eden Group Headquarter.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "It only costs 200 zeny for one";
+			mes "of these and with it you can";
+			mes "search up to 10 times.";
+			mes "You can say that it's a necessity.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "So, are you getting familiar with ^006400Vend Search^000000? Don't just stand there and listen to me. Go ahead and try it for yourself!";
+			close;
+		case 5:
+			mes "[Tutorial Instructor]";
+			mes "Depending on what you need, ^006400Mercenary^000000 and ^006400Pet^000000 can be used in various ways.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "If a 006400Mercenary^000000 gives you direct effect";
+			mes "by fighting for you";
+			mes "then a ^006400Pet^000000 helps you indirectly with their";
+			mes "abilities and varied appearances,";
+			mes "and it captures your heart.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "In order to employ a Mercenary";
+			mes "Go find the ^006400Mercenary Guild^000000";
+			mes "which is by the front door of ^8B4513Prontera^000000.";
+			mes "Go to the ^006400Information Agent^000000";
+			mes "and ask them where the ^006400Mercenary Guild Official^000000";
+			mes "is located and they will let you know.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "In order to get a ^006400Pet^000000, while hunting you will obtain taming items. Use the tame on the monster it's for and you can get a pet.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "Because there is a chance for failure, please use the taming item with great care.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "That aside... you can get a ^006400Mercenary^000000 from the Mercenary Guild and you can get a ^006400Pet^000000 by trading or buying it from another player.";
+			next;
+			mes "[Tutorial Instructor]";
+			mes "Now, do you understand a bit more about using a ^006400Mercenary^000000 and a ^006400Pet^000000? I hope you get a chance to use them in the future.";
+			close;
+		case 6:
+			mes "[Tutorial Instructor]";
+			mes "If you have any questions, come find me again.";
+			close;
+		}
+	}
+	mes "[Tutorial Instructor]";
+	mes "Lately, it has been said that";
+	mes "they are developing ways to add options";
+	mes "to put in sockets or add statuses";
+	mes "on equipment that normally don't have it.";
+	close;
+}
+
+moc_para01,32,179,4	script	Tutorial Goal	895,{
+	if (checkweight(608,7) == 0) {
+		if (MaxWeight - Weight < getiteminfo(608, ITEMINFO_WEIGHT)) {
+			mes "[Tutorial Goal]";
+			mes "You seem to be overweight with items. Go put some stuff away then come back.";
+			close;
+		} else {
+			mes "[Tutorial Goal]";
+			mes "You have too many items on you. Go put some stuff away then come back.";
+			close;
+		}
+	}
+	if (checkquest(4161) == 0 || checkquest(4161) == 1) {
+		mes "[Tutorial Goal]";
+		mes "Well~ We gotta go challenge the experts right?";
+		mes "Let's start off by finding the ^006400Siege Expert^000000!";
+		close;
+	} else if (checkquest(4162) == 0 || checkquest(4162) == 1) {
+		mes "[Tutorial Goal]";
+		mes "You've passed the ^006400Siege Expert^000000's test! Congrats!";
+		mes "Now, go find the ^006400Party Recruiting Expert^000000!";
+		close;
+	} else if (checkquest(4163) == 0 || checkquest(4163) == 1) {
+		mes "[Tutorial Goal]";
+		mes "Oh! You've passed the ^006400Party Recruiting Expert^000000's test! Congrats!";
+		mes "Now, go find the ^006400Battleground Expert^000000!";
+		close;
+	} else if (checkquest(4164) == 0 || checkquest(4164) == 1) {
+		mes "[Tutorial Goal]";
+		mes "Yay! You passed the test from the ^006400Battleground Expert^000000! Congrats!";
+		mes "Next, go and find the ^006400Memorial Dungeon Expert^000000!";
+		close;
+	} else if (checkquest(4165) == 0 || checkquest(4165) == 1) {
+		mes "[Tutorial Goal]";
+		mes "You passed the test from ^006400Memorial Dungeon Expert^000000! That's great!";
+		mes "Try finding the ^006400Map Expert^000000!";
+		close;
+	} else if (checkquest(4166) == 0 || checkquest(4166) == 1) {
+		mes "[Tutorial Goal]";
+		mes "You passed ^006400Map Expert^000000's test! Congrats!";
+		mes "I'm so glad that you were to pass all the Experts' tests! You're better than I expected!!";
+		next;
+		mes "[Tutorial Goal]";
+		mes "Now, even you are an ^006400Expert^000000!! Such a fitting nick name for you!";
+		mes "Thank you so much for your hard work. As promised, here is a small little reward for you.";
+		next;
+		mes "[Tutorial Goal]";
+		mes "I think it'll be useful to you during your adventures. I wish you luck on your future adventures~";
+		completequest 4166;
+		getitem 510,5; //Blue_Herb
+		getitem 511,5; //Green_Herb
+		getitem 504,5; //White_Potion
+		getitem 608,1; //Seed_Of_Yggdrasil
+		close;
+	} else if (checkquest(4166) == 2) {
+		mes "[Tutorial Goal]";
+		mes "Now, even you are an ^006400Expert^000000!! Such a fitting nick name for you!";
+		mes "Thank you so much for your hard work.";
+		mes "I hope that your future adventures are filled with good luck.";
+		close;
+	}
+	if (Class == Job_Novice) {
+		mes "[Tutorial Goal]";
+		mes "Hmm, I wonder if there is any adventurer that is smart enough to challenge our Experts...";
+		close;
+	}
+	mes "[Tutorial Goal]";
+	mes "Hey you! You look like an adventurer... Though you look a little dull...";
+	next;
+	if(select("What'd you say? I'm smart!:Yeah... I'm dull.") == 1) {
+		mes "[Tutorial Goal]";
+		mes "Serious? Though I don't know if I can believe that. Look at the expert who is in front of me! He took up only one area of study for 16 years and now he is as dignified as can be!";
+		next;
+		mes "[Tutorial Goal]";
+		mes "Well, if you manage to pass all their tests then I will believe in your abilities.";
+		next;
+		mes "[Tutorial Goal]";
+		mes "And I will apologize for calling you dull. How about it, Dull Expert?! Do you want to challenge them?";
+		next;
+		if(select("Ch... Challenge!!:Um... I think I'll just give up now...") == 1) {
+			mes "[Tutorial Goal]";
+			mes "You're braver than you look. You can't go back now that you've decided to challenge!";
+			next;
+			mes "[Tutorial Goal]";
+			mes "Okay~ Start by talking to the ^006400Siege Expert^000000 who's right there in front.";
+			setquest 4161;
+			close;
+		}
+	}
+	mes "[Tutorial Goal]";
+	mes "Well, don't get discouraged... If you change your mind and want to do the challenge, come find me.";
+	close;
+}
+
+moc_para01,24,175,4	script	Siege Master	734,{
+	set .@checkquest, checkquest(4161);
+	if (.@checkquest == 2) {
+		mes "[Siege Expert]";
+		mes "Since you've come again, I assume you're curious about ^006400Siege^000000?";
+		next;
+		switch(select("Listen about Siege.:End Conversation.")) {
+		case 1:
+			callsub L_Info;
+			mes "[Siege Expert]";
+			mes "Now that you've gone through all of this with an expert, isn't it easy to understand? If you want to go over anything, just come talk to me.";
+			close;
+		case 2:
+			mes "[Siege Expert]";
+			mes "If you want to go over anything, just come talk to me.";
+			close;
+		}
+	} else if (.@checkquest == 0 || .@checkquest == 1) {
+		mes "[Siege Expert]";
+		mes "I am someone who has studied War of Emperium for 16 years! So that makes me an expert! Since you came to find me, I assume you want to learn more about ^006400Siege^000000.";
+		next;
+		mes "[Siege Expert]";
+		mes "You have great desire and enthusiasm. As the Expert of ^006400Siege^000000, you have motivated me! All the other Experts are waiting for you! Go get'em!";
+		next;
+		mes "[Siege Expert]";
+		mes "If I told you that there was a great prize for being able to pass all the Experts' tests~ would you go for the challenge?";
+		next;
+		mes "[Siege Expert]";
+		mes "As the first Expert, I can teach you about ^006400Siege^000000. How about it? Did you wanna learn about ^006400Siege^000000s?";
+		next;
+		switch(select("Listen about Siege.:End Conversation.")) {
+		case 1:
+			callsub L_Info;
+			mes "[Siege Expert]";
+			mes "Now that you've gone through all of this with an expert, isn't it easy to understand?";
+			mes "Now I'll give you 3 questions~ get those right and you've passed! Do you want a challenge?";
+			while(1) {
+				set .@correct,0;
+				next;
+				switch(select("Challenge me!:Listen Again:Quit")) {
+				case 1:
+					switch(rand(1,3)) {
+					case 1:
+						mes "[Siege Expert]";
+						mes "A Siege is done in order to take over a [].";
+						mes "It's a war that happens between a [] and another [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Castle, User, Guild:Castle, Guild, Guild:Town, Guild, Guild:Town, User, User") == 2)
+							set .@correct, .@correct+10;
+						mes "[Siege Expert]";
+						mes "What is the wrong Siege time?";
+						next;
+						if(select("WoE 1 Tues 9-11:WoE 1 Sat 4-6:WoE 1 Thurs 8-10") == 3)
+							set .@correct, .@correct+10;
+						mes "[Siege Expert]";
+						mes "When you get a castle, you must raise [] in order to get better benefits.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Commerce Development:Industrial Development:Guild Development:Town Development") == 1)
+							set .@correct, .@correct+10;
+						break;
+					case 2:
+						mes "[Siege Expert]";
+						mes "There are 2 types of Siege.";
+						mes "There is the normal War of Emperium";
+						mes "and then there is [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("War of Emperium MO:War of Emperium NE:War of Emperium SK:War of Emperium SE") == 4)
+							set .@correct, .@correct+10;
+						mes "[Siege Expert]";
+						mes "As the guild that owns a castle, you must protect the [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Emperial:Emperium:Emperiom:Imperial") == 2)
+							set .@correct, .@correct+10;
+						mes "[Siege Expert]";
+						mes "What benefits does the guild get for winning the Siege?";
+						next;
+						if(select("30% off all items when purchasing:Increase experience gained by 20%:Access to Guild Dungeon:Getting Weapons everyday at midnight.") == 3)
+							set .@correct, .@correct+10;
+						break;
+					case 3:
+						mes "[Siege Expert]";
+						mes "What benefits does the guild get for winning the Siege?";
+						next;
+						if(select("Increase experience gained by 20%:30% off all items when purchasing:Access to Guild Field:Treasure Box daily at midnight") == 4)
+							set .@correct, .@correct+10;
+						mes "[Siege Expert]";
+						mes "How many hours does a siege last?";
+						next;
+						if(select("1 Hour:2 Hours:3 Hours:4 Hours") == 2)
+							set .@correct, .@correct+10;
+						mes "[Siege Expert]";
+						mes "When you get a castle, you must raise [] in order to get better benefits.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Town Development:Industry Development:Guild Development:Commerce Development") == 4)
+							set .@correct, .@correct+10;
+						break;
+					}
+					if (.@correct == 30) {
+						mes "[Siege Expert]";
+						mes "Wow! You got all 3 questions correct! So, you feel pretty good about ^006400Siege^000000s? Right?";
+						next;
+						mes "[Siege Expert]";
+						mes "If you ever want to learn about ^006400Siege^000000, come find me.";
+						next;
+						mes "[Siege Expert]";
+						mes "Now, go and find the ^0000FFParty Recruiting Expert^000000. He's waiting for you.";
+						completequest 4161;
+						setquest 4162;
+						getexp 2000,1000;
+						close;
+					}
+					mes "[Siege Expert]";
+					mes "There's only 3 questions and you didn't get them all right! At this rate, you'll fail all the Experts' tests.";
+					next;
+					mes "[Siege Expert]";
+					mes "But when I look at you I know you have potential. Did you want to try to tackle it again?";
+					break;
+				case 2:
+					callsub L_Info;
+					mes "[Siege Expert]";
+					mes "Now that you've gone through all of this with an expert, isn't it easy to understand?";
+					mes "Now I'll give you 3 questions~ get those right and you've passed! Do you want a challenge?";
+					break;
+				case 3:
+					mes "[Siege Expert]";
+					mes "Bah! You're no fun... you give up too easy! If you change your mind, come find me.";
+					close;
+				}
+			}
+			close;
+		case 2:
+			mes "[Siege Expert]";
+			mes "Are you giving up? If you change your mind, come find me.";
+			close;
+		}
+	}
+	mes "[Siege Expert]";
+	mes "If you want to learn something from me, go meet ^006400Tutorial Goal^000000 first.";
+	close;
+
+L_Info:
+	mes "[Siege Expert]";
+	mes "A ^006400Siege^000000 is a ^0000FFGuild vs. Guild^000000 war in hope to occupy a castle!";
+	next;
+	mes "[Siege Expert]";
+	mes "There are 2 different types of ^006400Siege^000000.";
+	mes "There is the standard ^006400War of Emperium^000000 and one that is slightly different which is known as ^006400War of Emperium 2^000000.";
+	next;
+	mes "[Siege Expert]";
+	mes "So during this time, there are two sides of the war.";
+	mes "The ^0000FFGuild That Owns a Castle^000000 tries to protect the ^006400Emperium^000000 and the ^0000FFGuild That Attacks a Castle^000000 tries to break the ^006400Emperium^000000.";
+	next;
+	mes "[Siege Expert]";
+	mes "You can find ^006400Siege^000000 times on our website.";
+	mes "And guilds that win also get a special something-something.";
+	next;
+	mes "[Siege Expert]";
+	mes "Guilds that win during the Siege";
+	mes "get access to a ^006400Guild Dungeon^000000";
+	mes "and the Guild Master gets to open ^006400Treasure Box^000000es at ^0000FFMidnight each day^000000.";
+	mes "Isn't that a great benefit?";
+	next;
+	mes "[Siege Expert]";
+	mes "Another thing you have to do when you win a castle is called ^006400Commerce Development^000000. The more you do it, the better the benefits.";
+	next;
+	return;
+}
+
+moc_para01,21,172,4	script	Party Recruiting Expert	878,{
+	set .@checkquest, checkquest(4162);
+	if (.@checkquest == 2) {
+		mes "[Party Recruiting Expert]";
+		mes "Since you've come and found me, it seems you're curious about ^006400Party Recruiting^000000?";
+		next;
+		switch(select("Listen about Party Recruiting.:End Conversation.")) {
+		case 1:
+			callsub L_Info;
+			mes "[Party Recruiting Expert]";
+			mes "This expert's explanation was pretty great, huh? If you need a refresher, come find me again.";
+			close;
+		case 2:
+			mes "[Party Recruiting Expert]";
+			mes "Well, if you have any questions, come find me.";
+			close;
+		}
+	} else if (.@checkquest == 0 || .@checkquest == 1) {
+		mes "[Party Recruiting Expert]";
+		mes "I am the ^006400Party Recruiting^000000 expert because I did research about Party Recruting for 16 years! It seems that the ^006400Siege Expert^000000 sent you my way since you passed his tests, hmm?";
+		next;
+		mes "[Party Recruiting Expert]";
+		mes "You may have already heard but if you pass all the Experts' quizzes, you'll get an awesome prize!";
+		next;
+		mes "[Party Recruiting Expert]";
+		mes "As the 2nd expert, I'll tell you all about ^006400Party Recruiting^000000! How about it?";
+		next;
+		switch(select("Listen about Party Recruiting.:End Conversation.")) {
+		case 1:
+			callsub L_Info;
+			mes "[Party Recruiting Expert]";
+			mes "Now~ my explanations were smoother than a smooth criminal, right? Now I'm gonna give you a quiz with 3 questions. Get them all right and you've passed. Wanna take the challenge?";
+			while(1) {
+				set .@correct,0;
+				next;
+				switch(select("On to the quiz!:Explain again please?:Give up.")) {
+				case 1:
+					switch(rand(1,3)) {
+					case 1:
+						mes "[Party Recruiting Expert]";
+						mes "Party Recruiting is used to help";
+						mes "users that are looking for []";
+						mes "and those looking for a [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Guild, Guildmate:Club, Club Members:Paris, Party Members:Party, Party Members") == 4)
+							set .@correct, .@correct+10;
+						mes "[Party Recruiting Expert]";
+						mes "The window that is used to help users look and search for a party is called a [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Party List:Party Wanted List:Party Recruiting List:Costume Party List") == 3)
+							set .@correct, .@correct+10;
+						mes "[Party Recruiting Expert]";
+						mes "Which of the choices are not listed as a choice to pick when making a party recruit notice?";
+						next;
+						if(select("LEVEL:SKILL:JOB:MAP") == 2)
+							set .@correct, .@correct+10;
+						break;
+					case 2:
+						mes "[Party Recruiting Expert]";
+						mes "There are 2 types of Party Recruiting.";
+						mes "Registering Party Recruiting is one";
+						mes "and the 2nd one is [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Search for Parties that are Recruiting:Parties that are starting to hunt:Party Recruit and Item Distribution:Party Stuff") == 1)
+							set .@correct, .@correct+10;
+						mes "[Party Recruiting Expert]";
+						mes "In order to start Party Recruiting, you have to click the [] button which is located in the info section of the upper left hand side.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("party:guild:booking:skill") == 3)
+							set .@correct, .@correct+10;
+						mes "[Party Recruiting Expert]";
+						mes "If you want to know more about commands for Party Recruiting, you have to press the [] button on the Party Recruting List window.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Basic Information:Help:Party:Confirm") == 2)
+							set .@correct, .@correct+10;
+						break;
+					case 3:
+						mes "[Party Recruiting Expert]";
+						mes "For Party Recruiting, in order to make the";
+						mes "Party Recruiting Window pop up,";
+						mes "You type in this command [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("/Party Collection Window:/Party Collection:/Party Recruitment Window:/Party Recruitment") == 4)
+							set .@correct, .@correct+10;
+						mes "[Party Recruiting Expert]";
+						mes "When recruiting for a party, you can set 3 parameters. Those 3 are";
+						mes "LEVEL, JOB, and [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("SKILL:GUILD:MAP:OPTION") == 3)
+							set .@correct, .@correct+10;
+						mes "[Party Recruiting Expert]";
+						mes "Party Recruiting is used to help";
+						mes "users that are looking for []";
+						mes "and those looking for a [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Parry, Party Members:Club, Club Members:Party, Party Members:Guild, Guild Members") == 3)
+							set .@correct, .@correct+10;
+						break;
+					}
+					if (.@correct == 30) {
+						mes "[Party Recruiting Expert]";
+						mes "Nice! You got all 3 correct! Now do you feel more confident about ^006400Party Recruiting^000000?";
+						next;
+						mes "[Party Recruiting Expert]";
+						mes "If you ever want to hear more about ^006400Party Recruiting^000000, come find me anytime.";
+						next;
+						mes "[Party Recruiting Expert]";
+						mes "Well, off you go to the ^0000FFBattleground Expert^000000! He is probably waiting for you.";
+						completequest 4162;
+						setquest 4163;
+						getexp 2000,1000;
+						close;
+					}
+					mes "[Party Recruiting Expert]";
+					mes "There's only 3 questions and you didn't get them all right! At this rate, you'll fail all the Experts' tests.";
+					next;
+					mes "[Party Recruiting Expert]";
+					mes "But if you want to retake the quiz! Go for it! I think you have potential! Wanna take the quiz again?";
+					break;
+				case 2:
+					callsub L_Info;
+					mes "[Party Recruiting Expert]";
+					mes "Now~ my explanations were smoother than a smooth criminal, right? Now I'm gonna give you a quiz with 3 questions. Get them all right and you've passed. Wanna take the challenge?";
+					break;
+				case 3:
+					mes "[Party Recruiting Expert]";
+					mes "Don't give up! You can do it! If you change your mind, come talk to me again!";
+					close;
+				}
+			}
+			close;
+		case 2:
+			mes "[Party Recruiting Expert]";
+			mes "You're gonna give up without even listening to me? If you change your mind, come talk to me again!";
+			close;
+		}
+	}
+	mes "[Party Recruiting Expert]";
+	mes "If you want to learn something from me, talk to the ^006400Siege Master^000000 first.";
+	close;
+
+L_Info:
+	mes "[Party Recruiting Expert]";
+	mes "^006400Party Recruiting^000000 is pretty self explanatory. It helps people find party members and it helps people find parties.";
+	next;
+	mes "[Party Recruiting Expert]";
+	mes "There are 2 parts to Party Recruiting.";
+	mes "1st step is ^0000FFRegistering Party Recruiting^000000,";
+	mes "and the 2nd step is ^0000FFParty Search^000000.";
+	next;
+	mes "[Party Recruiting Expert]";
+	mes "In order to look up Party Recruiting, in the info window on the upper left, click the button that says ^006400booking^000000. Then the ^006400Party Recruiting List^000000 will come up.";
+	next;
+	mes "[Party Recruiting Expert]";
+	mes "^006400Party Recruiting List^000000 window shows you the parties that are looking for members that was listed by other users. You can search through it.";
+	next;
+	mes "[Party Recruiting Expert]";
+	mes "In the case that you don't want to join a party, but you want to recruit for one, type in the ^0000FF/Party Recruit^000000 command then in the ^006400Party Recruiting^000000 window, you can do some recruiting!";
+	next;
+	mes "[Party Recruiting Expert]";
+	mes "Once you register your party recruit notice in the ^006400Party Recruiting^000000 window, the users can search out your ^006400Party Recruiting List^000000";
+	next;
+	mes "[Party Recruiting Expert]";
+	mes "In the ^006400Party Recruiting List^000000 and";
+	mes "^006400Party Recruiting^000000 you can put in basic information of what you're going to be doing, or what you're looking for like ";
+	mes "^006400LEVEL^000000, ^006400MAP^000000, ^006400JOB^000000.";
+	mes "Then the users can search using those parameters and utilizing the ^006400Party Recruitment^000000 system.";
+	next;
+	mes "[Party Recruiting Expert]";
+	mes "If you want to learn more commands about ^006400Party Recruiting^000000, click on the ^006400Help^000000 button on the bottom right of the ^006400Party Recruiting list^000000.";
+	next;
+	return;
+}
+
+moc_para01,12,179,6	script	Battleground Master	419,{
+	set .@checkquest, checkquest(4163);
+	if (.@checkquest == 2) {
+		mes "[Battleground Expert]";
+		mes "Seeing that you sought me out, I guess you want to learn about ^006400Battleground^000000s, eh?";
+		next;
+		switch(select("Learn about Battlegrounds.:End Conversation.")) {
+		case 1:
+			callsub L_Info;
+			mes "[Battleground Expert]";
+			mes "There's nothing better than hearing it straight from the expert! If you want to go over it again, just talk to me.";
+			close;
+		case 2:
+			mes "[Battleground Expert]";
+			mes "If you want to go over anything, let me know.";
+			close;
+		}
+	} else if (.@checkquest == 0 || .@checkquest == 1) {
+		mes "[Battleground Expert]";
+		mes "For 16 years, I experienced the intense heat of battle on the ^006400Battleground^000000s... I am the ^006400Battleground^000000 Expert!";
+		mes "It seems that the ^006400Party Recruiting Expert^000000 sent you to me since you passed his quiz.";
+		next;
+		mes "[Battleground Expert]";
+		mes "You may already know but if you get pass all the quizzes from the Experts, you'll get a prize!";
+		next;
+		mes "[Battleground Expert]";
+		mes "I will tell you about the ^006400Battleground^000000s! I will tell you everything I know! How about it? Wanna hear about it?";
+		next;
+		switch(select("Learn about Battlegrounds.:End Conversation.")) {
+		case 1:
+			callsub L_Info;
+			mes "[Battleground Expert]";
+			mes "There's nothing better than hearing it straight from the expert! Now, do you wanna take my 3-question quiz? You have to answer all 3 correctly to pass!";
+			while(1) {
+				set .@correct,0;
+				next;
+				switch(select("On to the quiz!:Explain again please?:Give up.")) {
+				case 1:
+					switch(rand(1,3)) {
+					case 1:
+						mes "[Battleground Expert]";
+						mes "For starters, you have to pick either the side of [] Camp or [] Camp in order to participate in Battleground.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Guillaume, Tierra:Rachel, KVM:Guillaume, Croix:Maroll, KVM") == 3)
+							set .@correct, .@correct+10;
+						mes "[Battleground Expert]";
+						mes "[] can do either 10vs10 and you have to attack the crystals of the opposing team while protecting yours.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Tierra:Flavius:KVM:Maroll") == 2)
+							set .@correct, .@correct+10;
+						mes "[Battleground Expert]";
+						mes "When you complete a battle, you may get a reward! From a KVM battle, you get [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("KVM Badge:Valor Badge:Bravery Badge:Honor Badge") == 1)
+							set .@correct, .@correct+10;
+						break;
+					case 2:
+						mes "[Battleground Expert]";
+						mes "For [], it's 10vs10. You also need to attack the enemies supply depot while protecting your own.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Maroll:KVM:Flavius:Tierra") == 4)
+							set .@correct, .@correct+10;
+						mes "[Battleground Expert]";
+						mes "In order to get into the battlegrounds, which one is not the recruiter you need to find?";
+						next;
+						if(select("Maroll Mercenary Recruiter:KVM Mercenary Recruiter:Tierra Mercenary Recruiter:Flavius Mercenary Recruiter") == 1)
+							set .@correct, .@correct+10;
+						mes "[Battleground Expert]";
+						mes "You can get [] from participating in the Battlegrounds of Tierra.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("KVM Badge:Valor Badge:Bravery Badge:Honor Badge") == 2)
+							set .@correct, .@correct+10;
+						break;
+					case 3:
+						mes "[Battleground Expert]";
+						mes "In every major city, you can find [] to enter the Battlegrounds.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Maroll Battleground Recruiter:Tierra Battleground Recruiter:Flavius Battleground Recruiter:KVM Battleground Recruiter") == 1)
+							set .@correct, .@correct+10;
+						mes "[Battleground Expert]";
+						mes "For [], you go in 5vs5 with the intention of trying to reduce the number of enemies on the opposite side.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Maroll:Flavius:KVM:Tierra") == 3)
+							set .@correct, .@correct+10;
+						mes "[Battleground Expert]";
+						mes "When you complete a battle, you get a prize. The prize from Flavius is called [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("KVM Badge:Valor Badge:Bravery Badge:Honor Badge") == 3)
+							set .@correct, .@correct+10;
+						break;
+					}
+					if (.@correct == 30) {
+						mes "[Battleground Expert]";
+						mes "You got all 3 correct! I think you got a pretty good head on your shoulders. You know a thing or two about ^006400Battleground^000000s.";
+						next;
+						mes "[Battleground Expert]";
+						mes "If you ever want to go over anything about ^006400Battleground^000000s, feel free to come talk to me!";
+						next;
+						mes "[Battleground Expert]";
+						mes "Go on and find and talk to the 0000FFMemorial Dungeon Expert^000000!";
+						completequest 4163;
+						setquest 4164;
+						getexp 2000,1000;
+						close;
+					}
+					mes "[Battleground Expert]";
+					mes "There's only 3 questions and you didn't get them all right! At this rate, you'll fail all the Experts' tests.";
+					next;
+					mes "[Battleground Expert]";
+					mes "But if you want to take it on again, you should.";
+					break;
+				case 2:
+					callsub L_Info;
+					mes "[Battleground Expert]";
+					mes "There's nothing better than hearing it straight from the expert! Now, do you wanna take my 3-question quiz? You have to answer all 3 correctly to pass!";
+					break;
+				case 3:
+					mes "[Battleground Expert]";
+					mes "Don't disappoint me by giving up. If you change your mind, come find me again.";
+					close;
+				}
+			}
+			close;
+		case 2:
+			mes "[Battleground Expert]";
+			mes "You're a coward if you give up even before starting. If you change your mind, come find me again.";
+			close;
+		}
+		close;
+	}
+	mes "[Battleground Expert]";
+	mes "If you want to learn something from me, go get acknowledged by the ^006400Party Recruiting Expert^000000 first.";
+	close;
+
+L_Info:
+	mes "[Battleground Expert]";
+	mes "To explain ^006400Battleground^000000 easily...";
+	mes "You pick either Camp ^006400Guillaume^000000 or Camp ^006400Croix^000000 then you fight each other.";
+	next;
+	mes "[Battleground Expert]";
+	mes "There are 3 types of ^006400Battleground^000000s.";
+	mes "First is ^006400KVM^000000. It is a 5vs5 battle with the goal of reducing the number of people on either side.";
+	next;
+	mes "[Battleground Expert]";
+	mes "The second one is 10vs10. You attack the supply depots of your opponents and in turn, you protect your supply depots. This is called ^006400Tierra^000000.";
+	next;
+	mes "[Battleground Expert]";
+	mes "The third and final one is called ^006400Flavius^000000. This one is also 10vs10. For this one, you attack the crystals of your opponents while trying to protect your own.";
+	next;
+	mes "[Battleground Expert]";
+	mes "To get to ^006400Battleground^000000s, find ^006400Maroll, the Recruiter^000000 who can be found in all major towns.";
+	next;
+	mes "[Battleground Expert]";
+	mes "After you enter, pick if you want to side with Guillaume or Croix, then on their side, pick either...";
+	mes "^006400KVM Mercenary Recruiter^000000,";
+	mes "^006400Tierra Mercenary Recruiter^000000, or";
+	mes "^006400Flavius Mercenary Recruiter^000000,";
+	mes "then you can join the ^006400Battleground^000000s.";
+	next;
+	mes "[Battleground Expert]";
+	mes "Depending on the outcome of the ^006400Battleground^000000 you can get a prize too.";
+	mes "You get KVM Badges from ^006400KVM^000000,";
+	mes "from ^006400Tierra^000000 you obtain Bravery Badges and";
+	mes "you receive Valor Badges ^006400Flavius^000000.";
+	next;
+	mes "[Battleground Expert]";
+	mes "With the rewards from ^006400Battleground^000000s, you can get items that you can't normally get elsewhere.";
+	mes "Each ^006400Battleground^000000 reward you can obtain is different so you'll have to check on it.";
+	next;
+	return;
+}
+
+moc_para01,28,167,3	script	Memorial Dungeon Expert	868,{
+	set .@checkquest, checkquest(4164);
+	if (.@checkquest == 2) {
+		mes "[Memorial Dungeon Expert]";
+		mes "Since you've come here, it seems you want to learn about the ^006400Memorial Dungeon^000000.";
+		next;
+		switch(select("Listen about Memorial Dungeon.:End Conversation.")) {
+		case 1:
+			callsub L_Info;
+			mes "[Memorial Dungeon Expert]";
+			mes "Now that you've listend to an expert, it's easy to understand, right? If you want to hear about it again, come find me.";
+			close;
+		case 2:
+			mes "[Memorial Dungeon Expert]";
+			mes " If you want to hear about it again, come find me.";
+			close;
+		}
+	} else if (.@checkquest == 0 || .@checkquest == 1) {
+		mes "[Memorial Dungeon Expert]";
+		mes "I am the ^006400Memorial Dungeon^000000 Expert! I studied the ^006400Memorial Dungeon^000000 for 16 years!";
+		mes "Since you've sought me out, I assume that you've passed the ^006400Battleground Expert^000000's quiz.";
+		next;
+		mes "[Memorial Dungeon Expert]";
+		mes "As you already know, if you pass all the Experts' quiz you'll get a prize.";
+		next;
+		mes "[Memorial Dungeon Expert]";
+		mes "As the 4th Expert, I will explain everything to you about ^006400Memorial Dungeon^000000.";
+		mes "Want to hear about ^006400Memorial Dungeon^000000?";
+		next;
+		switch(select("Listen about Memorial Dungeon.:End Conversation.")) {
+		case 1:
+			callsub L_Info;
+			mes "[Memorial Dungeon Expert]";
+			mes "Now that you've listend to an expert, it's easy to understand, right? If you want to hear about it again, come find me.";
+			mes "Okay, now I'm gonna give you a quiz. You have to get all the questions right to pass. Ready?";
+			while(1) {
+				set .@correct,0;
+				next;
+				switch(select("On to the quiz!:Explain again please?:Give up.")) {
+				case 1:
+					switch(rand(1,3)) {
+					case 1:
+						mes "[Memorial Dungeon Expert]";
+						mes "^006400Memorial Dungeon^000000 isn't a dungeon that is open to all users. It's only available to you and your [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Party Members:Guildmates:Friends:Family") == 1)
+							set .@correct, .@correct+10;
+						mes "[Memorial Dungeon Expert]";
+						mes "If you go to [] and find [], he will give you information about Endless Tower- which is a huge and tall dungeon.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Prontera, Seiyablem:Alberta, Leyablem:Alberta, Captain Jansen:Prontera, Captin Jansen") == 3)
+							set .@correct, .@correct+10;
+						mes "[Memorial Dungeon Expert]";
+						mes "In order to enter Memorial Dungeon the [] must apply and then be on stand-by to enter. You will enter in the order the application was put in.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Guild Member:Guild Leader:Party Leader:Party Member") == 3)
+							set .@correct, .@correct+10;
+						break;
+					case 2:
+						mes "[Memorial Dungeon Expert]";
+						mes "When you're done with the [], you cannot re-enter the same dungeon for a certain period of time.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Buff:Ritual:Exploration:Inspection") == 3)
+							set .@correct, .@correct+10;
+						mes "[Memorial Dungeon Expert]";
+						mes "If you go to the Orc Map where all the orcs live, you will be able to find []. He will probably be able to give you information about the Orc's Memory dungeon.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Insane Scientist:Crazy Scientist:Insane Alchemist:Crazy Alchemist") == 1)
+							set .@correct, .@correct+10;
+						mes "[Memorial Dungeon Expert]";
+						mes "In order to enter Memorial Dungeon, the [] must apply- then you'll be able to enter in order of when your application was turned in.";
+						mes "You have to be on stand-by for this.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Guild Leader:Guildmate:Party Member:Party Leader") == 4)
+							set .@correct, .@correct+10;
+						break;
+					case 3:
+						mes "[Memorial Dungeon Expert]";
+						mes "If you go to the place where you can become a monk, the Capitolina Monastery, you can meet []. He will tell you about the dungeon with the Sealed Baphomet.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Agent Patrick:Patrolman Patrick:Drunken Patrick:Detective Patrick") == 4)
+							set .@correct, .@correct+10;
+						mes "[Memorial Dungeon Expert]";
+						mes "When you're done with the [], you cannot re-enter the same dungeon for a certain period of time.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Exploration:Inspection:Buff:Ritual") == 1)
+							set .@correct, .@correct+10;
+						mes "[Memorial Dungeon Expert]";
+						mes "^006400Memorial Dungeon^000000 is not just open to all users. It is open available for you and your [].";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Friends:Family:Party Members:Guildmates") == 3)
+							set .@correct, .@correct+10;
+						break;
+					}
+					if (.@correct == 30) {
+						mes "[Memorial Dungeon Expert]";
+						mes "You're pretty bright~ seeing that you got all 3 correct. Now do you understand about ^006400Memorial Dungeon^000000?";
+						next;
+						mes "[Memorial Dungeon Expert]";
+						mes "If you ever want to go over things about ^006400Memorial Dungeon^000000, come talk to me any time.";
+						next;
+						mes "[Memorial Dungeon Expert]";
+						mes "Now, off you go to the ^0000FFMap Expert^000000!";
+						completequest 4164;
+						setquest 4165;
+						getexp 2000,1000;
+						close;
+					}
+					mes "[Memorial Dungeon Expert]";
+					mes "The quiz wasn't that hard...";
+					next;
+					mes "[Memorial Dungeon Expert]";
+					mes "You look like you have potential... you should try again.";
+					break;
+				case 2:
+					callsub L_Info;
+					mes "[Memorial Dungeon Expert]";
+					mes "It's easy to understand since it's coming from an expert like me. Now it's quiz time. You have to get all the answers correct to pass. Are you ready?";
+					break;
+				case 3:
+					mes "[Memorial Dungeon Expert]";
+					mes "Giving up is lame. If you change your mind, come talk to me.";
+					close;
+				}
+			}
+			close;
+		case 2:
+			mes "[Memorial Dungeon Expert]";
+			mes "Giving up without even trying is lame. If you change your mind, come talk to me.";
+			close;
+		}
+		close;
+	}
+	mes "[Memorial Dungeon Expert]";
+	mes "If you want to learn anything from me, talk to the ^006400Battleground Master^000000 first and get acknowledged by him.";
+	close;
+
+L_Info:
+	mes "[Memorial Dungeon Expert]";
+	mes "The ^006400Memorial Dungeon^000000is not a dungeon that is open to everyone. It only opens to ^0000FFYou and your Party Members^000000.";
+	next;
+	mes "[Memorial Dungeon Expert]";
+	mes "Therefore, in order to enter ^006400Memorial Dungeon^000000, the Party Leader must apply to enter. Since you enter in the order you apply, you must be on stand-by to enter.";
+	next;
+	mes "[Memorial Dungeon Expert]";
+	mes "Also, after you explore Memorial Dungeon, you cannot re-enter the same ^006400Memorial Dungeon^000000 for a certain period of time.";
+	next;
+	mes "[Memorial Dungeon Expert]";
+	mes "Many ^006400Memorial Dungeon^000000s exist, but we will give you hints to help you find Memorial Dungeon in the world of Midgard.";
+	next;
+	mes "[Memorial Dungeon Expert]";
+	mes "First, go to ^8B4513Alberta^000000 and find ^006400Captain Jansen^000000.";
+	mes "He will give you information about the really huge and tall dungeon known as ^006400Endless Tower^000000.";
+	next;
+	mes "[Memorial Dungeon Expert]";
+	mes "Second, go to the ^8B4513Orc Map^000000 where all the orcs live and find the ^006400Insane Scientist^000000.";
+	mes "You might be able to get some information about a dungeon that has to do with ^006400Orc's Memory^000000.";
+	next;
+	mes "[Memorial Dungeon Expert]";
+	mes "Third and last, seek out the place where you can become a monk, which is the ^8B4513Capitolina Monastery^000000 and seek out ^006400Detective Patrick^000000.";
+	mes "He will be able to give you information about the dungeon with the ^006400Sealed Baphomet^000000+.";
+	next;
+	mes "[Memorial Dungeon Expert]";
+	mes "Of course there are other locations for Memorial Dungeon but it's best to start where you can find it easily.";
+	mes "As you continue to go on your adventures you will be able to find them more easily.";
+	next;
+	return;
+}
+
+moc_para01,14,168,6	script	Map Expert	743,{
+	set .@checkquest, checkquest(4165);
+	if (.@checkquest == 2) {
+		mes "[Map Expert]";
+		mes "Seeing that you came to me, I assume you have some questions about ^006400MAP^000000s?";
+		next;
+		switch(select("List about the Map.:End Conversation.")) {
+		case 1:
+			callsub L_Info;
+			mes "[Map Expert]";
+			mes "If you end up in those areas while you're adventuring, be sure to tell me all about it!";
+			mes "And now, since you've passed all the Expert's quizzes, go on and talk to ^006400Tutorial Goal^000000.";
+			close;
+		case 2:
+			mes "[Map Expert]";
+			mes "If you have any more questions, come find me.";
+			close;
+		}
+	} else if (.@checkquest == 0 || .@checkquest == 1) {
+		mes "[Map Expert]";
+		mes "I have been researching and studying ^006400MAP^000000s for 16 years and so now I am the ^006400MAP^000000 Expert!";
+		mes "Since you've sought me out, it seems you've passed ^006400Memorial Dungeon Expert^000000's quiz.";
+		next;
+		mes "[Map Expert]";
+		mes "As you already know, if you pass all the Experts' quiz you'll get a prize.";
+		next;
+		mes "[Map Expert]";
+		mes "As the last Expert, I will try to explain everything about ^006400MAP^000000s to make it easy on you. Ready to start?";
+		next;
+		switch(select("Listen about Maps.:End Conversation.")) {
+		case 1:
+			callsub L_Info;
+			mes "[Map Expert]";
+			mes "How was my explanation? Now I am gonna give you a quick quiz! You have to get all the answers correct in order to pass. Ready?";
+			while(1) {
+				set .@correct,0;
+				next;
+				switch(select("On to the quiz!:Explain again please?:Give up.")) {
+				case 1:
+					switch(rand(1,3)) {
+					case 1:
+						mes "[Map Expert]";
+						mes "You can view the map by clicking on the [] button that is located in the upper left hand side.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("SKILL:GUILD:MAP:BOOKING") == 3)
+							set .@correct, .@correct+10;
+						mes "[Map Expert]";
+						mes "When looking at the map, each area offers the [] and [] information about the monsters. That will take all the guess work out of where you should hunt.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Name, Age:Attributes, Level:Attributes, Tribe:Name, Level") == 4)
+							set .@correct, .@correct+10;
+						mes "[Map Expert]";
+						mes "If you want to stop looking at the map, simple press the shortcut key of [] or ESC and it will close the map for you.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("ALT + F4:CTRL + %:CTRL + M:ALT + ESC") == 2)
+							set .@correct, .@correct+10;
+						break;
+					case 2:
+						mes "[Map Expert]";
+						mes "After you open your map and you";
+						mes "hover your mouse over specific areas";
+						mes "you can see the [] and [] of the region.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Name, Area Details:Name, Monster Attributes:Specialties, Area Details:Specialties, Name") == 1)
+							set .@correct, .@correct+10;
+						mes "[Map Expert]";
+						mes "If you look to the bottom right of the map, you will see a drawing of []. Click on that or press the TAB shortcut key and you can find out various information.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Desert Wolf:Mimic:Siroma:Poring") == 4)
+							set .@correct, .@correct+10;
+						mes "[Map Expert]";
+						mes "While looking at the map, when you press the TAB shortcut key, you will be able to find and locate various dungeons and their Entrance Locations.";
+						mes "You can also find the [] of the monsters in that area.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Name:Level:Attribute:Size") == 2)
+							set .@correct, .@correct+10;
+						break;
+					case 3:
+						mes "[Map Expert]";
+						mes "If you want to stop looking at the map, all you need to do is press the [] to go back to your normal screen.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("O:X:EXIT:ALT") == 2)
+							set .@correct, .@correct+10;
+						mes "[Map Expert]";
+						mes "While looking at the map, when you press the TAB shortcut key, you will be able to find and locate various dungeons and their Entrance Locations.";
+						mes "You can also find the [] of the monsters in that area.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("Level:Name:Size:Attribute") == 1)
+							set .@correct, .@correct+10;
+						mes "[Map Expert]";
+						mes "You can view the map by clicking on the [] button that is located in the upper left hand side.";
+						mes "What words go in the empty spaces of []?";
+						next;
+						if(select("GUILD:SKILL:BOOKING:MAP") == 4)
+							set .@correct, .@correct+10;
+						break;
+					}
+					if (.@correct == 30) {
+						mes "[Map Expert]";
+						mes "Bingo! You got all 3 answers correct! Now, do you feel like you understand stuff about ^006400MAP^000000s more?";
+						next;
+						mes "[Map Expert]";
+						mes "If you ever feel like you want to learn more about ^006400MAP^000000s, come talk to me anytime.";
+						next;
+						mes "[Map Expert]";
+						mes "Congrats on passing all the Experts' quizzes! Now, go find and talk to the ^006400Tutorial Goal^000000!";
+						completequest 4165;
+						setquest 4166;
+						getexp 2000,1000;
+						close;
+					}
+					mes "[Map Expert]";
+					mes "The 3 questions shouldn't have been that hard...";
+					next;
+					mes "[Map Expert]";
+					mes "Well, you seem to be pretty smart so why not try the quiz again?";
+					break;
+				case 2:
+					callsub L_Info;
+					mes "[Map Expert]";
+					mes "How is this Expert's explanations? Now I am gonna give you a quick quiz. You have to get all the answers correct to pass. Want to try it?";
+					break;
+				case 3:
+					mes "[Map Expert]";
+					mes "I'm the last Expert! Dont' give up! Come find me again when you're ready!";
+					close;
+				}
+			}
+			close;
+		case 2:
+			mes "[Map Expert]";
+			mes "You're gonna give up without even trying? But I'm the last Expert! Dont' give up! Come find me again when you're ready!";
+			close;
+		}
+		close;
+	}
+	mes "[Map Expert]";
+	mes "If you want to learn from me, go get acknowledged by the ^006400Memorial Dungeon^000000 first.";
+	close;
+
+L_Info:
+	mes "[Map Expert]";
+	mes "A ^006400MAP^000000 shows you things that is much needed for travelling around the world; such as the lay of the land, major towns and fields and such. It's a very important tool!";
+	next;
+	mes "[Map Expert]";
+	mes "Because of this, it's more important than everything else that you know about ^006400MAP^000000s.";
+	next;
+	mes "[Map Expert]";
+	mes "The map can be accessed by clicking on the button that says ^006400MAP^000000 on the upper left side of your screen.";
+	next;
+	mes "[Map Expert]";
+	mes "When you click on the ^006400MAP^000000 button, a full sized map of Midgard will take up your screen.";
+	mes "When you ^0000FFHover your mouse over specific areas^000000, you can find out more things such as ^006400NAME^000000 and Area Details.";
+	next;
+	mes "[Map Expert]";
+	mes "If you look to the lower right side of your map, there is a ^006400Poring drawing^000000.";
+	mes "If you click on it or press the ^006400TAB^000000 shortcut key, you will be able to various information.";
+	next;
+	mes "[Map Expert]";
+	mes "Firstly, you can find out the ^006400NAME^000000 and ^006400LEVEL^000000 of the monsters in each area. That will take a lot of the guess work out of where you want to go hunt.";
+	next;
+	mes "[Map Expert]";
+	mes "Secondly, You can locate various ^006400DUNGEON^000000s and their";
+	mes "^006400Entrance Location^000000. Plus, it'll also tell you monsters that reside in that area";
+	mes "along with their ^006400LEVEL^000000. It's displayed in red so it's easy to find.";
+	next;
+	mes "[Map Expert]";
+	mes "If you want to stop looking at the map, there are 2 ways to do this.";
+	mes "You can press the shortcut keys which are ^006400CTRL + %^000000 or ^006400ESC^000000";
+	mes "Or at the top right of the map, there is a ^006400X^000000 button. Click that and you will return to your normal game screen.";
+	next;
+	mes "[Map Expert]";
+	mes "Currently, we cannot see places that are beyond Midgard but it has been said that there are a lot of unknown worlds that exist in the beyond.";
+	next;
+	return;
+}

@@ -1,0 +1,136 @@
+//===== rAthena Script =======================================
+//= Weekend EXP Event (STRICT SCHEDULE + GM NPC)
+//===== Rules:
+//= - Automatic ONLY at:
+//=     Saturday 00:01 -> ENABLE 7.5x
+//=     Monday   00:01 -> DISABLE to 5x
+//= - GM can manually enable/disable anytime via NPC menu
+//= - Any manual change will only be overridden by the two times above
+//= - Base / Job EXP only (no drops)
+//============================================================
+
+
+//============================================================
+// Controller (no map)
+//============================================================
+-	script	WeekendExpController	-1,{
+
+OnInit:
+	set .NormalRate, 500;   // 5x
+	set .WeekendRate, 750;  // 7.5x
+
+	// 0 = normal (5x), 1 = weekend (7.5x)
+	if ($WeekendExpState != 0 && $WeekendExpState != 1)
+		set $WeekendExpState, 0;
+
+	// Apply saved state on startup (NO announce)
+	if ($WeekendExpState == 1)
+		callsub S_ApplyWeekend, 0;
+	else
+		callsub S_ApplyNormal, 0;
+
+	end;
+
+// Automatic schedule ONLY at 00:01
+OnClock0001:
+	set .dow, gettime(3); // 0=Sun ... 6=Sat
+
+	// Saturday 00:01 -> ENABLE
+	if (.dow == 6) {
+		if ($WeekendExpState != 1) {
+			set $WeekendExpState, 1;
+			callsub S_ApplyWeekend, 1;
+		}
+		end;
+	}
+
+	// Monday 00:01 -> DISABLE
+	if (.dow == 1) {
+		if ($WeekendExpState != 0) {
+			set $WeekendExpState, 0;
+			callsub S_ApplyNormal, 1;
+		}
+		end;
+	}
+
+	end;
+
+// Events callable via donpcevent (MUST be "On...")
+OnApplyWeekend:
+	set $WeekendExpState, 1;
+	callsub S_ApplyWeekend, 1;
+	end;
+
+OnApplyNormal:
+	set $WeekendExpState, 0;
+	callsub S_ApplyNormal, 1;
+	end;
+
+// Internal subs
+S_ApplyWeekend:
+	// getarg(0): announce? 0=no | 1=yes
+	set .ann, getarg(0);
+
+	setbattleflag "base_exp_rate", .WeekendRate;
+	setbattleflag "job_exp_rate",  .WeekendRate;
+
+	if (.ann) {
+		announce "EXP Event is now ACTIVE! Base & Job EXP increased to 7.5x.", bc_all, 0x00FF99;
+	}
+	end;
+
+S_ApplyNormal:
+	set .ann, getarg(0);
+
+	setbattleflag "base_exp_rate", .NormalRate;
+	setbattleflag "job_exp_rate",  .NormalRate;
+
+	if (.ann) {
+		announce "Exp Event has ended. EXP rates are back to 5x.", bc_all, 0xFF9966;
+	}
+	end;
+}
+
+
+//============================================================
+// GM NPC (place it where you want)
+//============================================================
+quiz_02,330,349,5	script	Weekend EXP GM	4_F_KAFRA1,{
+
+	// Adjust GM level requirement if needed
+	if (getgmlevel() < 60) {
+		mes "[Weekend EXP]";
+		mes "You are not allowed to use this NPC.";
+		close;
+	}
+
+	mes "[Weekend EXP]";
+	if ($WeekendExpState == 1) mes "Status: ^00FF00ENABLED^000000 (7.5x)";
+	else mes "Status: ^FF0000DISABLED^000000 (5x)";
+	mes "";
+	mes "Automation:";
+	mes "- Saturday 00:01 -> ENABLE";
+	mes "- Monday   00:01 -> DISABLE";
+	next;
+
+	switch(select("Enable 7.5x now:Disable (5x) now:Re-Apply current state:Close")) {
+
+		case 1:
+			donpcevent "WeekendExpController::OnApplyWeekend";
+			close;
+
+		case 2:
+			donpcevent "WeekendExpController::OnApplyNormal";
+			close;
+
+		case 3:
+			if ($WeekendExpState == 1)
+				donpcevent "WeekendExpController::OnApplyWeekend";
+			else
+				donpcevent "WeekendExpController::OnApplyNormal";
+			close;
+
+		default:
+			close;
+	}
+}
