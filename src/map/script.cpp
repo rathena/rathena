@@ -12940,7 +12940,7 @@ BUILDIN_FUNC(resetskill)
 BUILDIN_FUNC(resetfeel)
 {
 	TBL_PC *sd;
-	if (!script_charid2sd(2,sd) || (sd->class_&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR)
+	if (!script_charid2sd(2,sd) || (sd->class_&MAPID_SECONDMASK) != MAPID_STAR_GLADIATOR)
 		return SCRIPT_CMD_FAILURE;
 	pc_resetfeel(sd);
 	return SCRIPT_CMD_SUCCESS;
@@ -12953,7 +12953,7 @@ BUILDIN_FUNC(resetfeel)
 BUILDIN_FUNC(resethate)
 {
 	TBL_PC *sd;
-	if (!script_charid2sd(2,sd) || (sd->class_&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR)
+	if (!script_charid2sd(2,sd) || (sd->class_&MAPID_SECONDMASK) != MAPID_STAR_GLADIATOR)
 		return SCRIPT_CMD_FAILURE;
 	pc_resethate(sd);
 	return SCRIPT_CMD_SUCCESS;
@@ -27483,7 +27483,7 @@ BUILDIN_FUNC(getfamerank) {
 	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	script_pushint(st, pc_famerank(sd->status.char_id, sd->class_ & MAPID_UPPERMASK));
+	script_pushint(st, pc_famerank(sd->status.char_id, sd->class_ & MAPID_SECONDMASK));
 
 	return SCRIPT_CMD_SUCCESS;
 }

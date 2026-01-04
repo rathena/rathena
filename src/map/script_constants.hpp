@@ -6,7 +6,7 @@
 
 	#define export_constant(a) script_set_constant(#a,a,false,false)
 	#define export_constant2(a,b) script_set_constant(a,b,false,false)
-	#define export_constant_offset(a,offset) script_set_constant(#a + (offset),a,false,false)
+	#define export_constant_offset(a,offset) script_set_constant(static_cast<const char*>(#a) + static_cast<std::ptrdiff_t>(offset),a,false,false)
 	#define export_parameter(a,b) script_set_constant(a,b,true,false)
 	#define export_deprecated_constant(a) script_set_constant(#a,a,false,true)
 	#define export_deprecated_constant2(a,b) script_set_constant(a,b,false,true)
@@ -267,13 +267,14 @@
 	export_constant2("EAJL_2_1",JOBL_2_1);
 	export_constant2("EAJL_2_2",JOBL_2_2);
 	export_constant2("EAJL_2",JOBL_2);
-	export_constant2("EAJL_UPPER",JOBL_UPPER);
-	export_constant2("EAJL_BABY",JOBL_BABY);
 	export_constant2("EAJL_THIRD",JOBL_THIRD);
 	export_constant2("EAJL_FOURTH",JOBL_FOURTH);
 
-	export_constant2("EAJ_BASEMASK",MAPID_BASEMASK);
-	export_constant2("EAJ_UPPERMASK",MAPID_UPPERMASK);
+	export_constant2("EAJL_UPPER",JOBL_UPPER);
+	export_constant2("EAJL_BABY",JOBL_BABY);
+
+	export_constant2("EAJ_BASEMASK",MAPID_FIRSTMASK);// Update name in future update for item/scripts. (Rytech)
+	export_constant2("EAJ_UPPERMASK",MAPID_SECONDMASK);// Update name in future update for item/scripts. (Rytech)
 	export_constant2("EAJ_THIRDMASK",MAPID_THIRDMASK);
 	export_constant2("EAJ_FOURTHMASK",MAPID_FOURTHMASK);
 
@@ -287,8 +288,11 @@
 	export_constant2("EAJ_TAEKWON",MAPID_TAEKWON);
 	export_constant2("EAJ_GUNSLINGER",MAPID_GUNSLINGER);
 	export_constant2("EAJ_NINJA",MAPID_NINJA);
+	export_constant2("EAJ_SUMMONER",MAPID_SUMMONER);
 	export_constant2("EAJ_GANGSI",MAPID_GANGSI);
 
+	export_constant2("EAJ_SUPER_NOVICE",MAPID_SUPER_NOVICE);
+	export_constant2("EAJ_SUPERNOVICE",MAPID_SUPER_NOVICE);
 	export_constant2("EAJ_KNIGHT",MAPID_KNIGHT);
 	export_constant2("EAJ_WIZARD",MAPID_WIZARD);
 	export_constant2("EAJ_HUNTER",MAPID_HUNTER);
@@ -299,6 +303,7 @@
 	export_constant2("EAJ_STARGLADIATOR",MAPID_STAR_GLADIATOR);
 	export_constant2("EAJ_REBELLION",MAPID_REBELLION);
 	export_constant2("EAJ_KAGEROUOBORO",MAPID_KAGEROUOBORO);
+	export_constant2("EAJ_SPIRIT_HANDLER",MAPID_SPIRIT_HANDLER);
 	export_constant2("EAJ_DEATH_KNIGHT",MAPID_DEATH_KNIGHT);
 	export_constant2("EAJ_DEATHKNIGHT",MAPID_DEATH_KNIGHT);
 
@@ -347,6 +352,7 @@
 	export_constant2("EAJ_BABY_NINJA",MAPID_BABY_NINJA);
 	export_constant2("EAJ_BABY_SUMMONER",MAPID_BABY_SUMMONER);
 
+	export_constant2("EAJ_SUPER_BABY",MAPID_SUPER_BABY);
 	export_constant2("EAJ_BABY_KNIGHT",MAPID_BABY_KNIGHT);
 	export_constant2("EAJ_BABY_WIZARD",MAPID_BABY_WIZARD);
 	export_constant2("EAJ_BABY_HUNTER",MAPID_BABY_HUNTER);
@@ -365,6 +371,7 @@
 	export_constant2("EAJ_BABY_ROGUE",MAPID_BABY_ROGUE);
 	export_constant2("EAJ_BABY_SOUL_LINKER",MAPID_BABY_SOUL_LINKER);
 
+	export_constant2("EAJ_SUPER_NOVICE_E", MAPID_SUPER_NOVICE_E);
 	export_constant2("EAJ_RUNE_KNIGHT",MAPID_RUNE_KNIGHT);
 	export_constant2("EAJ_WARLOCK",MAPID_WARLOCK);
 	export_constant2("EAJ_RANGER",MAPID_RANGER);
@@ -395,6 +402,7 @@
 	export_constant2("EAJ_GENETIC_T",MAPID_GENETIC_T);
 	export_constant2("EAJ_SHADOW_CHASER_T",MAPID_SHADOW_CHASER_T);
 
+	export_constant2("EAJ_SUPER_BABY_E",MAPID_SUPER_BABY_E);
 	export_constant2("EAJ_BABY_RUNE_KNIGHT",MAPID_BABY_RUNE_KNIGHT);
 	export_constant2("EAJ_BABY_WARLOCK",MAPID_BABY_WARLOCK);
 	export_constant2("EAJ_BABY_RANGER",MAPID_BABY_RANGER);
@@ -411,20 +419,16 @@
 	export_constant2("EAJ_BABY_SHADOW_CHASER",MAPID_BABY_SHADOW_CHASER);
 	export_constant2("EAJ_BABY_SOUL_REAPER",MAPID_BABY_SOUL_REAPER);
 
-	export_constant2("EAJ_SUPER_NOVICE",MAPID_SUPER_NOVICE);
-	export_constant2("EAJ_SUPERNOVICE",MAPID_SUPER_NOVICE);
-	export_constant2("EAJ_SUPER_BABY",MAPID_SUPER_BABY);
-	export_constant2("EAJ_SUPER_NOVICE_E",MAPID_SUPER_NOVICE_E);
-	export_constant2("EAJ_SUPER_BABY_E",MAPID_SUPER_BABY_E);
-
-	export_constant2("EAJ_SUMMONER",MAPID_SUMMONER);
-
+	export_constant2("EAJ_HYPER_NOVICE",MAPID_HYPER_NOVICE);
 	export_constant2("EAJ_DRAGON_KNIGHT",MAPID_DRAGON_KNIGHT);
 	export_constant2("EAJ_ARCH_MAGE",MAPID_ARCH_MAGE);
 	export_constant2("EAJ_WINDHAWK",MAPID_WINDHAWK);
 	export_constant2("EAJ_CARDINAL",MAPID_CARDINAL);
 	export_constant2("EAJ_MEISTER",MAPID_MEISTER);
 	export_constant2("EAJ_SHADOW_CROSS",MAPID_SHADOW_CROSS);
+	export_constant2("EAJ_SKY_EMPEROR",MAPID_SKY_EMPEROR);
+	export_constant2("EAJ_NIGHT_WATCH",MAPID_NIGHT_WATCH);
+	export_constant2("EAJ_SHINKIROSHIRANUI",MAPID_SHINKIROSHIRANUI);
 
 	export_constant2("EAJ_IMPERIAL_GUARD",MAPID_IMPERIAL_GUARD);
 	export_constant2("EAJ_ELEMENTAL_MASTER",MAPID_ELEMENTAL_MASTER);
@@ -432,13 +436,7 @@
 	export_constant2("EAJ_INQUISITOR",MAPID_INQUISITOR);
 	export_constant2("EAJ_BIOLO",MAPID_BIOLO);
 	export_constant2("EAJ_ABYSS_CHASER",MAPID_ABYSS_CHASER);
-
-	export_constant2("EAJ_SKY_EMPEROR",MAPID_SKY_EMPEROR);
 	export_constant2("EAJ_SOUL_ASCETIC",MAPID_SOUL_ASCETIC);
-	export_constant2("EAJ_SHINKIROSHIRANUI",MAPID_SHINKIROSHIRANUI);
-	export_constant2("EAJ_NIGHT_WATCH",MAPID_NIGHT_WATCH);
-	export_constant2("EAJ_HYPER_NOVICE",MAPID_HYPER_NOVICE);
-	export_constant2("EAJ_SPIRIT_HANDLER",MAPID_SPIRIT_HANDLER);
 
 	/* sex */
 	export_constant(SEX_FEMALE);
@@ -595,8 +593,8 @@
 	export_parameter("MaxSp",SP_MAXSP);
 	export_parameter("Ap",SP_AP);
 	export_parameter("MaxAp",SP_MAXAP);
-	export_parameter("BaseJob",SP_BASEJOB);
-	export_parameter("BaseClass",SP_BASECLASS);
+	export_parameter("BaseJob",SP_BASESECOND);// Update name in future update for item/scripts. (Rytech)
+	export_parameter("BaseClass",SP_BASEFIRST);// Update name in future update for item/scripts. (Rytech)
 	export_parameter("killerrid",SP_KILLERRID);
 	export_parameter("killedrid",SP_KILLEDRID);
 	export_parameter("killedgid",SP_KILLEDGID);
@@ -7347,6 +7345,58 @@
 	export_constant(IG_NIFLHEIM_COSTUME_2);
 	export_constant(IG_NIFLHEIM_COSTUME_3);
 	export_constant(IG_NIFLHEIM_COSTUME_4);
+	export_constant(IG_AEGIS_14622);
+	export_constant(IG_ROS_FESTA_BOX);
+	export_constant(IG_R_EP1921_ALBUM);
+	export_constant(IG_R_EP1921_BOSS);
+	export_constant(IG_RT_EP21_GAEBOLG_A);
+	export_constant(IG_RT_EP21_GAEBOLG_C);
+	export_constant(IG_RT_EP21_ICY_A);
+	export_constant(IG_RT_EP21_ICY_C);
+	export_constant(IG_RT_EP21_ICY_2);
+	export_constant(IG_RT_EP21_YORKER_A);
+	export_constant(IG_RT_EP21_YORKER_C);
+	export_constant(IG_RT_EP21_WORKING_A);
+	export_constant(IG_RT_EP21_WORKING_C);
+	export_constant(IG_RT_EP21_ADMIN_A);
+	export_constant(IG_RT_EP21_ADMIN_C);
+	export_constant(IG_RT_EP21_ADMIN_2);
+	export_constant(IG_RT_EP21_PURIFY_A);
+	export_constant(IG_RT_EP21_PURIFY_C);
+	export_constant(IG_RT_EP21_PURIFY_3);
+	export_constant(IG_RT_EP21_PURIFY_5);
+	export_constant(IG_RT_EP21_AID_A);
+	export_constant(IG_RT_EP21_AID_C);
+	export_constant(IG_RT_EP21_AID_2);
+	export_constant(IG_RT_EP21_AID_4);
+	export_constant(IG_RT_EP21_COMPANY_A);
+	export_constant(IG_RT_EP21_COMPANY_C);
+	export_constant(IG_RT_EP21_COMPANY_3);
+	export_constant(IG_RT_EP21_COMPANY_5);
+	export_constant(IG_RT_EP21_HORN_A);
+	export_constant(IG_RT_EP21_HORN_C);
+	export_constant(IG_RT_EP21_HORN_3);
+	export_constant(IG_RT_EP21_HORN_5);
+	export_constant(IG_RT_EP21_TAN_A);
+	export_constant(IG_RT_EP21_TAN_C);
+	export_constant(IG_AEGIS_105828);
+	export_constant(IG_AEGIS_105829);
+	export_constant(IG_AEGIS_105832);
+	export_constant(IG_AEGIS_105833);
+	export_constant(IG_AEGIS_105834);
+	export_constant(IG_AEGIS_105835);
+	export_constant(IG_AEGIS_105836);
+	export_constant(IG_AEGIS_105917);
+	export_constant(IG_LI_NYANGVINE_BOX1_SP);
+	export_constant(IG_LI_NYANGVINE_BOX2_SP);
+	export_constant(IG_LI_NYANGVINE_BOX3_SP);
+	export_constant(IG_LI_NYANGVINE_BOX4_SP);
+	export_constant(IG_2025_DEC_PACKAGE1);
+	export_constant(IG_2025_DEC_PACKAGE2);
+	export_constant(IG_CASH_BOOSTER_BOX2);
+	export_constant(IG_SELECT_DEC_PACK1);
+	export_constant(IG_SELECT_DEC_PACK2);
+	export_constant(IG_SELECT_DEC_PACK3);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

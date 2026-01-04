@@ -61,7 +61,7 @@ void duel_savetime(map_session_data* sd)
 /*
  * Check if the time elapsed between last duel is enough to launch another.
  */
-bool duel_checktime(map_session_data* sd)
+bool duel_checktime( const map_session_data* sd )
 {
 	int64 diff;
 	time_t timer;
@@ -108,7 +108,7 @@ static int32 duel_showinfo_sub(map_session_data* sd, va_list va)
  * Display duel infos,
  * Number of duely...
  */
-void duel_showinfo(const size_t did, map_session_data* sd)
+void duel_showinfo( const size_t did, const map_session_data* sd )
 {
 	//std::lock_guard<std::recursive_mutex> _(duel_list_mutex); //or shared_ptr	
 	if ( !duel_exist( did ) )

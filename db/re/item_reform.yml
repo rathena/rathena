@@ -10350,6 +10350,96 @@ Body:
         RandomOptionGroup: Group_0
         ClearSlots: true
         RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Armor
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Armor
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Robe
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Robe
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Manteau
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Manteau
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Muffler
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Muffler
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Boots
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Boots
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Shoes
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Shoes
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Ring
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Ring
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Glove
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Glove
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Earring
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Earring
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
+      - BaseItem: Gaebolg_Necklace
+        Materials:
+          - Material: Imperfect_Rune
+            Amount: 10
+        ResultItem: R_Gaebolg_Necklace
+        ChangeRefine: -20
+        RandomOptionGroup: Group_0
+        ClearSlots: true
+        RemoveEnchantgrade: true
   - Item: Season_H_Upgrade
     BaseItems:
       - BaseItem: Season_Hood_Spring
@@ -16706,6 +16796,66 @@ Body:
             Amount: 50
         ResultItem: Sky_Chulho_Foxtail
         ChangeRefine: 1
+      - BaseItem: Sky_Rush_Axe
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Rush_Axe
+        ChangeRefine: 1
+      - BaseItem: Sky_Crescive_Bow
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Crescive_Bow
+        ChangeRefine: 1
+      - BaseItem: Sky_Napalm_Sword
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Napalm_Sword
+        ChangeRefine: 1
+      - BaseItem: Sky_Moon_Book
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Moon_Book
+        ChangeRefine: 1
+      - BaseItem: Sky_Arbi_Rod
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Arbi_Rod
+        ChangeRefine: 1
+      - BaseItem: Sky_Destroy_Knuckle
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Shadowdecon
+            Amount: 50
+        ResultItem: Sky_Destroy_Knuckle
+        ChangeRefine: 1
   - Item: Sky_Crown_Hammer
     BaseItems:
       - BaseItem: Sky_Rune_Crown_IG
@@ -16737,4 +16887,64 @@ Body:
           - Material: Zelunium
             Amount: 50
         ResultItem: Sky_Rune_Crown_SH
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_MS
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_MS
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_WH
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_WH
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_HN
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_HN
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_CD
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_CD
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_IQ
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_IQ
+        ChangeRefine: 1
+      - BaseItem: Sky_Rune_Crown_SKE
+        MinimumRefine: 9
+        MaximumRefine: 11
+        Materials:
+          - Material: Blacksmith_Blessing
+            Amount: 5
+          - Material: Zelunium
+            Amount: 50
+        ResultItem: Sky_Rune_Crown_SKE
         ChangeRefine: 1

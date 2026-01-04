@@ -280,7 +280,7 @@ struct s_mob_db {
 	int32 group_id;
 	std::string title;
 
-	e_mob_bosstype get_bosstype();
+	e_mob_bosstype get_bosstype() const;
 	s_mob_db();
 };
 
@@ -398,7 +398,7 @@ struct mob_data : public block_list {
 	int32 tomb_nid;
 	uint16 damagetaken;
 
-	e_mob_bosstype get_bosstype();
+	e_mob_bosstype get_bosstype() const;
 	map_session_data* get_mvp_player(map_session_data* first_sd);
 };
 
@@ -545,13 +545,13 @@ void do_final_mob(bool is_reload);
 TIMER_FUNC(mob_timer_delete);
 int32 mob_deleteslave(mob_data *md);
 
-int32 mob_random_class (int32 *value, size_t count);
+int32 mob_random_class ( const int32 *value, size_t count );
 int32 mob_get_random_id(int32 type, enum e_random_monster_flags flag, int32 lv);
 int32 mob_class_change(mob_data *md,int32 mob_id);
 int32 mob_warpslave(block_list *bl, int32 range);
 int32 mob_linksearch(block_list *bl,va_list ap);
 
-bool mob_chat_display_message (mob_data &md, uint16 msg_id);
+bool mob_chat_display_message( const mob_data& md, uint16 msg_id );
 void mobskill_delay(mob_data& md, t_tick tick);
 bool mobskill_use(mob_data *md,t_tick tick,int32 event, int64 damage = 0);
 int32 mobskill_event(mob_data *md,block_list *src,t_tick tick, int32 flag, int64 damage = 0);

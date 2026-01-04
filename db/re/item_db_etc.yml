@@ -56147,6 +56147,111 @@ Body:
       bonus bMaxHPrate,25;
       bonus bMaxSPrate,-25;
       bonus2 bAddItemHealRate,517,150;
+  - Id: 300715
+    AegisName: aegis_300715
+    Name: As Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300716
+    AegisName: aegis_300716
+    Name: Kaya Toss Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300717
+    AegisName: aegis_300717
+    Name: Tatio Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300718
+    AegisName: aegis_300718
+    Name: Chairman Rekenber Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+  - Id: 300719
+    AegisName: aegis_300719
+    Name: As Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddRace,RC_Demon,12;
+      bonus2 bMagicAddRace,RC_Demon,12;
+      bonus2 bAddRace,RC_DemiHuman,12;
+      bonus2 bMagicAddRace,RC_DemiHuman,12;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bAddRace,RC_Demon,10;
+         bonus2 bMagicAddRace,RC_Demon,10;
+         bonus2 bAddRace,RC_DemiHuman,10;
+         bonus2 bMagicAddRace,RC_DemiHuman,10;
+      }
+  - Id: 300720
+    AegisName: aegis_300720
+    Name: Rekenber Kaya Toss Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Right_Hand: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bAddSize,Size_Medium,10;
+      bonus2 bMagicAddSize,Size_Medium,10;
+      if (getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_WEAPONLEVEL)==5) {
+         bonus2 bAddSize,Size_Medium,10;
+         bonus2 bMagicAddSize,Size_Medium,10;
+      }
+  - Id: 300721
+    AegisName: aegis_300721
+    Name: Rekenber Tatio Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,-10;
+      bonus bNonCritAtkRate,5+4*(getrefine()/2);
+  - Id: 300722
+    AegisName: aegis_300722
+    Name: Rekenber Chairman Rekenber Card    # !todo check english name
+    Type: Card
+    Weight: 10
+    Locations:
+      Garment: true
+    Flags:
+      BuyingStore: true
+      DropEffect: CLIENT
+    Script: |
+      bonus2 bSubEle,Ele_Neutral,-10;
+      bonus bCritAtkRate,4+4*(getrefine()/2);
+      bonus bCritical,5;
   - Id: 310000
     AegisName: Ranger_Top2
     Name: Sniper Stone II (Top)
@@ -71179,7 +71284,6 @@ Body:
           bonus bPAtk,3;
         }
       }
-
   - Id: 311379
     AegisName: Gear_NW3
     Name: The Vigilant at Night Tuning Device
@@ -100658,6 +100762,116 @@ Body:
       NoDrop: true
       NoTrade: true
       NoSell: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002473
+    AegisName: R_Gaebolg_Armor
+    Name: Engraved Gaebolg Armor    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002474
+    AegisName: R_Gaebolg_Robe
+    Name: Engraved Gaebolg Robe    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002475
+    AegisName: R_Gaebolg_Manteau
+    Name: Engraved Gaebolg Cloak    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002476
+    AegisName: R_Gaebolg_Muffler
+    Name: Engraved Gaebolg Muffler    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002477
+    AegisName: R_Gaebolg_Boots
+    Name: Engraved Gaebolg Boots    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002478
+    AegisName: R_Gaebolg_Shoes
+    Name: Engraved Gaebolg Shoes    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002479
+    AegisName: R_Gaebolg_Ring
+    Name: Engraved Gaebolg Ring    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002480
+    AegisName: R_Gaebolg_Glove
+    Name: Engraved Gaebolg Gloves    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002481
+    AegisName: R_Gaebolg_Earring
+    Name: Engraved Gaebolg Earrings    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
+      NoCart: true
+      NoGuildStorage: true
+      NoMail: true
+      NoAuction: true
+  - Id: 1002482
+    AegisName: R_Gaebolg_Necklace
+    Name: Engraved Gaebolg Necklace    # !todo check english name
+    Type: Etc
+    Trade:
+      NoDrop: true
+      NoTrade: true
       NoCart: true
       NoGuildStorage: true
       NoMail: true
