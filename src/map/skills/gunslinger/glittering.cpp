@@ -3,6 +3,7 @@
 
 #include "glittering.hpp"
 
+#include "map/clif.hpp"
 #include "map/pc.hpp"
 
 SkillGlittering::SkillGlittering() : SkillImpl(GS_GLITTERING) {

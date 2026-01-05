@@ -5,8 +5,6 @@
 
 #include "../skill_impl.hpp"
 
-#include "map/battle.hpp"
-
 class SkillGlittering : public SkillImpl {
 public:
 	SkillGlittering();
