@@ -3,11 +3,9 @@
 
 #pragma once
 
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-#include "map/battle.hpp"
-
-class SkillCracker : public WeaponSkillImpl {
+class SkillCracker : public SkillImpl {
 public:
 	SkillCracker();
 

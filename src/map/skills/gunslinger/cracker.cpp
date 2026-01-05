@@ -3,9 +3,10 @@
 
 #include "cracker.hpp"
 
+#include "map/clif.hpp"
 #include "map/pc.hpp"
 
-SkillCracker::SkillCracker() : WeaponSkillImpl(GS_CRACKER) {
+SkillCracker::SkillCracker() : SkillImpl(GS_CRACKER) {
 }
 
 void SkillCracker::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
