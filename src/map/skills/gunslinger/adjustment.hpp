@@ -3,9 +3,7 @@
 
 #pragma once
 
-#include "../weapon_skill_impl.hpp"
-
-#include "map/battle.hpp"
+#include "../skill_impl.hpp"
 
 class SkillAdjustment : public SkillImpl {
 public:
