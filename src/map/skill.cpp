@@ -5272,9 +5272,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case HT_PHANTASMIC:
 	case TK_DOWNKICK:
 	case TK_COUNTER:
-#ifndef RENEWAL
-	case GS_MAGICALBULLET:
-#endif
 	case NJ_SYURIKEN:
 	case NJ_KUNAI:
 	case ASC_BREAKER:

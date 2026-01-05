@@ -3,13 +3,20 @@
 
 #pragma once
 
-#include "../skill_impl.hpp"
+#include <config/core.hpp>
 
-#include "map/battle.hpp"
+#ifdef RENEWAL
+#include "../status_skill_impl.hpp"
 
-class SkillMagicalBullet : public SkillImpl {
+class SkillMagicalBullet : public StatusSkillImpl {
 public:
 	SkillMagicalBullet();
-
-	void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const override;
 };
+#else // PRE-RENEWAL
+#include "../weapon_skill_impl.hpp"
+
+class SkillMagicalBullet : public WeaponSkillImpl {
+public:
+	SkillMagicalBullet();
+};
+#endif
