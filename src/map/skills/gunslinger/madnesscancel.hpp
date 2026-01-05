@@ -3,13 +3,9 @@
 
 #pragma once
 
-#include "../weapon_skill_impl.hpp"
+#include "../status_skill_impl.hpp"
 
-#include "map/battle.hpp"
-
-class SkillMadnessCancel : public SkillImpl {
+class SkillMadnessCancel : public StatusSkillImpl {
 public:
 	SkillMadnessCancel();
-
-	void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const override;
 };
