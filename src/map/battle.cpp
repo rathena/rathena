@@ -5093,53 +5093,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			else
 				skillratio += -70 + 10 * skill_lv;
 			break;
-		case GS_TRIPLEACTION:
-			skillratio += 50 * skill_lv;
-			break;
-		case GS_BULLSEYE:
-			//Only works well against brute/demihumans non bosses.
-			if((tstatus->race == RC_BRUTE || tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_PLAYER_HUMAN || tstatus->race == RC_PLAYER_DORAM) && !status_has_mode(tstatus,MD_STATUSIMMUNE))
-				skillratio += 400;
-			break;
-		case GS_TRACKING:
-			skillratio += 100 * (skill_lv + 1);
-			break;
-		case GS_PIERCINGSHOT:
-#ifdef RENEWAL
-			if (sd && sd->weapontype1 == W_RIFLE)
-				skillratio += 150 + 30 * skill_lv;
-			else
-				skillratio += 100 + 20 * skill_lv;
-#else
-			skillratio += 20 * skill_lv;
-#endif
-			break;
-		case GS_RAPIDSHOWER:
-			skillratio += 400 + 50 * skill_lv;
-			break;
-		case GS_DESPERADO:
-			skillratio += 50 * (skill_lv - 1);
-			if (sc && sc->getSCE(SC_FALLEN_ANGEL))
-				skillratio *= 2;
-			break;
-		case GS_DUST:
-			skillratio += 50 * skill_lv;
-			break;
-		case GS_FULLBUSTER:
-			skillratio += 100 * (skill_lv + 2);
-			break;
-		case GS_SPREADATTACK:
-#ifdef RENEWAL
-			skillratio += 30 * skill_lv;
-#else
-			skillratio += 20 * (skill_lv - 1);
-#endif
-			break;
-#ifdef RENEWAL
-		case GS_GROUNDDRIFT:
-			skillratio += 100 + 20 * skill_lv;
-			break;
-#endif
 		case NJ_HUUMA:
 #ifdef RENEWAL
 			skillratio += -150 + 250 * skill_lv;
