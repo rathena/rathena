@@ -4,6 +4,7 @@
 #include "skill_factory_taekwon.hpp"
 
 #include "../status_skill_impl.hpp"
+#include "../weapon_skill_impl.hpp"
 
 #include "counter.hpp"
 #include "downkick.hpp"
@@ -17,6 +18,12 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case SKE_DAWN_BREAK:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SKE_MIDNIGHT_KICK:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SKE_RISING_MOON:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case TK_COUNTER:
 			return std::make_unique<SkillCounter>();
 		case TK_DODGE:

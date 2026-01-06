@@ -13,12 +13,30 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case ABC_CHAIN_REACTION_SHOT_ATK:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case AS_SONICBLOW:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case AS_VENOMKNIFE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case ASC_BREAKER:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case GC_VENOMPRESSURE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case GC_WEAPONCRUSH:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case RG_INTIMIDATE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SC_FEINTBOMB:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SC_TRIANGLESHOT:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case TF_BACKSLIDING:
 			return std::make_unique<SkillBackSlide>();
 		case TF_DETOXIFY:
 			return std::make_unique<SkillDetoxify>();
 		case TF_DOUBLE:
-			return std::make_unique<WeaponSkillImpl>(TF_DOUBLE);
+			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case TF_POISON:
 			return std::make_unique<SkillEnvenom>();
 		case TF_PICKSTONE:
@@ -31,6 +49,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillSteal>();
 		case TF_THROWSTONE:
 			return std::make_unique<SkillStoneFling>();
+
 		default:
 			return nullptr;
 	}

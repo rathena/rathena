@@ -27,11 +27,11 @@
 std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill skill_id) const {
 	switch (skill_id) {
 		case GS_ADJUSTMENT:
-			return std::make_unique<StatusSkillImpl>(GS_ADJUSTMENT);
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GS_BULLSEYE:
 			return std::make_unique<SkillBullseye>();
 		case GS_CHAINACTION:
-			return std::make_unique<WeaponSkillImpl>(GS_CHAINACTION);
+			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case GS_CRACKER:
 			return std::make_unique<SkillCracker>();
 		case GS_DESPERADO:
@@ -51,14 +51,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 		case GS_GROUNDDRIFT:
 			return std::make_unique<SkillGroundDrift>();
 		case GS_INCREASING:
-			return std::make_unique<StatusSkillImpl>(GS_INCREASING);
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GS_MADNESSCANCEL:
-			return std::make_unique<StatusSkillImpl>(GS_MADNESSCANCEL);
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GS_MAGICALBULLET:
 #ifdef RENEWAL
-			return std::make_unique<StatusSkillImpl>(GS_MAGICALBULLET);
+			return std::make_unique<StatusSkillImpl>(skill_id);
 #else
-			return std::make_unique<WeaponSkillImpl>(GS_MAGICALBULLET);
+			return std::make_unique<WeaponSkillImpl>(skill_id);
 #endif
 		case GS_PIERCINGSHOT:
 			return std::make_unique<SkillPiercingShot>();
@@ -70,6 +70,25 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillTracking>();
 		case GS_TRIPLEACTION:
 			return std::make_unique<SkillTripleAction>();
+		case NW_BASIC_GRENADE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NW_HASTY_FIRE_IN_THE_HOLE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NW_MIDNIGHT_FALLEN:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NW_MISSION_BOMBARD:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NW_WILD_FIRE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case RL_AM_BLAST:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case RL_BANISHING_BUSTER:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case RL_MASS_SPIRAL:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case RL_SLUGSHOT:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+
 		default:
 			return nullptr;
 	}
