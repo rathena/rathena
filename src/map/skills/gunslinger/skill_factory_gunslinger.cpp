@@ -3,6 +3,11 @@
 
 #include "skill_factory_gunslinger.hpp"
 
+#include <config/core.hpp>
+
+#include "../status_skill_impl.hpp"
+#include "../weapon_skill_impl.hpp"
+
 #include "bullseye.hpp"
 #include "cracker.hpp"
 #include "desperado.hpp"
@@ -13,7 +18,6 @@
 #include "gatlingfever.hpp"
 #include "glittering.hpp"
 #include "grounddrift.hpp"
-#include "magicalbullet.hpp"
 #include "piercingshot.hpp"
 #include "rapidshower.hpp"
 #include "spreadattack.hpp"
@@ -51,7 +55,11 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 		case GS_MADNESSCANCEL:
 			return std::make_unique<StatusSkillImpl>(GS_MADNESSCANCEL);
 		case GS_MAGICALBULLET:
-			return std::make_unique<SkillMagicalBullet>();
+#ifdef RENEWAL
+			return std::make_unique<StatusSkillImpl>(GS_MAGICALBULLET);
+#else
+			return std::make_unique<WeaponSkillImpl>(GS_MAGICALBULLET);
+#endif
 		case GS_PIERCINGSHOT:
 			return std::make_unique<SkillPiercingShot>();
 		case GS_RAPIDSHOWER:
