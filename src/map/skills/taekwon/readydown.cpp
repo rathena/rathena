@@ -10,12 +10,13 @@ SkillReadyDown::SkillReadyDown() : SkillImpl(TK_READYDOWN) {
 }
 
 void SkillReadyDown::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
-	status_change_entry *tsce = status_get_sc(bl)->getSCE(SC_READYDOWN);
+	sc_type type = skill_get_sc(getSkillId());
+	status_change_entry *tsce = status_get_sc(bl)->getSCE(type);
 
 	if (tsce) {
-		clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, status_change_end(bl, SC_READYDOWN));
+		clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, status_change_end(bl, type));
 		return;
 	}
 
-	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, sc_start(src, bl, SC_READYDOWN, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)));
+	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)));
 }
