@@ -15,7 +15,6 @@
 #include "glittering.hpp"
 #include "grounddrift.hpp"
 #include "increasing.hpp"
-#include "madnesscancel.hpp"
 #include "magicalbullet.hpp"
 #include "piercingshot.hpp"
 #include "rapidshower.hpp"
@@ -52,7 +51,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 		case GS_INCREASING:
 			return std::make_unique<SkillIncreasing>();
 		case GS_MADNESSCANCEL:
-			return std::make_unique<SkillMadnessCancel>();
+			return std::make_unique<StatusSkillImpl>(GS_MADNESSCANCEL);
 		case GS_MAGICALBULLET:
 			return std::make_unique<SkillMagicalBullet>();
 		case GS_PIERCINGSHOT:

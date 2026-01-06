@@ -459,9 +459,6 @@
     <ClInclude Include="skills/gunslinger/increasing.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
-    <ClInclude Include="skills/gunslinger/madnesscancel.hpp">
-      <Filter>Header Files\Skills\Gunslinger</Filter>
-    </ClInclude>
     <ClInclude Include="skills/gunslinger/magicalbullet.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -711,9 +708,6 @@
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/increasing.cpp">
-      <Filter>Source Files\Skills\Gunslinger</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/gunslinger/madnesscancel.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/magicalbullet.cpp">

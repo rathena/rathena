@@ -272,7 +272,6 @@
     <ClInclude Include="skills/gunslinger/glittering.hpp" />
     <ClInclude Include="skills/gunslinger/grounddrift.hpp" />
     <ClInclude Include="skills/gunslinger/increasing.hpp" />
-    <ClInclude Include="skills/gunslinger/madnesscancel.hpp" />
     <ClInclude Include="skills/gunslinger/magicalbullet.hpp" />
     <ClInclude Include="skills/gunslinger/piercingshot.hpp" />
     <ClInclude Include="skills/gunslinger/rapidshower.hpp" />
@@ -404,7 +403,6 @@
     <ClCompile Include="skills/gunslinger/glittering.cpp" />
     <ClCompile Include="skills/gunslinger/grounddrift.cpp" />
     <ClCompile Include="skills/gunslinger/increasing.cpp" />
-    <ClCompile Include="skills/gunslinger/madnesscancel.cpp" />
     <ClCompile Include="skills/gunslinger/magicalbullet.cpp" />
     <ClCompile Include="skills/gunslinger/piercingshot.cpp" />
     <ClCompile Include="skills/gunslinger/rapidshower.cpp" />
