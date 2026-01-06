@@ -23,7 +23,10 @@ void SkillTurnKick::applyAdditionalEffects(block_list *src, block_list *target, 
 }
 
 void SkillTurnKick::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
-	// Note: This is used in skill_castend_nodamage_id to avoid affecting the target.
+	// Active part of the attack.
+	// Note: skill_area_temp[1] is used in castendNoDamageId to avoid affecting the target.
+	skill_area_temp[1] = target->id;
+
 	if (skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag))
 		map_foreachinallrange(skill_area_sub, target,
 		                      skill_get_splash(getSkillId(), skill_lv), BL_MOB,
