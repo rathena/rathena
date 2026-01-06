@@ -18,6 +18,16 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case SG_FUSION:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SJ_UNIVERSESTANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SJ_SUNSTANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SJ_STARSTANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SJ_LUNARSTANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case SKE_DAWN_BREAK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SKE_MIDNIGHT_KICK:

@@ -3,6 +3,7 @@
 
 #include "skill_factory_mercenary.hpp"
 
+#include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
 #include "mercenary_bash.hpp"
@@ -25,6 +26,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryMercenary::create(const e_skill ski
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MER_CRASH:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case ML_AUTOGUARD:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case ML_DEFENDER:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ML_PIERCE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case ML_SPIRALPIERCE:

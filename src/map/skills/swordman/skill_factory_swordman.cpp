@@ -14,12 +14,22 @@
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
 	switch( skill_id ){
+		case CR_AUTOGUARD:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case CR_DEFENDER:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case CR_HOLYCROSS:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case CR_SHIELDBOOMERANG:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case CR_SHIELDCHARGE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case CR_SHRINK:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case IG_ATTACK_STANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case IG_GUARD_STANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case KN_PIERCE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case KN_SPEARBOOMERANG:

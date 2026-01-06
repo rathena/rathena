@@ -9072,32 +9072,14 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case BS_MAXIMIZE:
-	case NV_TRICKDEAD:
-	case CR_DEFENDER:
-	case ML_DEFENDER:
-	case CR_AUTOGUARD:
-	case ML_AUTOGUARD:
-	case CR_SHRINK:
-	case SG_FUSION:
-	case SJ_LUNARSTANCE:
-	case SJ_STARSTANCE:
-	case SJ_UNIVERSESTANCE:
-	case SJ_SUNSTANCE:
 	case SP_SOULCOLLECT:
-	case IG_GUARD_STANCE:
-	case IG_ATTACK_STANCE:
 		if( tsce )
 		{
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,status_change_end(bl, type));
 			return 0;
 		}
 
-		if( skill_id == SP_SOULCOLLECT ){
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd, SP_SOULENERGY), skill_get_time(skill_id, skill_lv)));
-		}else{
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		}
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd, SP_SOULENERGY), skill_get_time(skill_id, skill_lv)));
 		break;
 	case SL_KAITE:
 	case SL_KAAHI:

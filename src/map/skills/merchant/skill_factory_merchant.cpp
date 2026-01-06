@@ -5,6 +5,7 @@
 
 #include <config/core.hpp>
 
+#include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
 #include "decoratecart.hpp"
@@ -27,6 +28,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case BO_ACIDIFIED_ZONE_FIRE_ATK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case BS_MAXIMIZE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 #ifdef RENEWAL
 		case CR_ACIDDEMONSTRATION:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
