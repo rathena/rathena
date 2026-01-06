@@ -1803,6 +1803,7 @@ static bool pc_job_can_use_item( const map_session_data* sd, const item_data* it
  *------------------------------------------*/
 static bool pc_isItemClass ( const map_session_data* sd, const item_data* item ) {
 	while (1) {
+		// Existance is pointless. Should be removed soon.
 		if (item->class_upper&ITEMJ_NORMAL && !(sd->class_&(JOBL_UPPER|JOBL_BABY|JOBL_THIRD|JOBL_FOURTH)))	//normal classes (no upper, no baby, no third, no fourth)
 			break;
 #ifndef RENEWAL
@@ -1817,22 +1818,30 @@ static bool pc_isItemClass ( const map_session_data* sd, const item_data* item )
 		if (item->class_upper&(ITEMJ_THIRD|ITEMJ_THIRD_UPPER|ITEMJ_THIRD_BABY) && sd->class_&JOBL_THIRD)
 			break;
 #else
-		//trans. classes (exl. third-trans.)
-		if (item->class_upper&ITEMJ_UPPER && sd->class_&JOBL_UPPER && !(sd->class_&JOBL_THIRD))
+		// Transcedent Jobs (Inherited By Primary 3rd Jobs And Higher)
+		if (item->class_upper&ITEMJ_UPPER && ((sd->class_&JOBL_UPPER) || pc_is_primary_third(sd->class_)))
 			break;
-		//baby classes (exl. third-baby)
-		if (item->class_upper&ITEMJ_BABY && sd->class_&JOBL_BABY && !(sd->class_&JOBL_THIRD))
+		// Baby Jobs
+		if (item->class_upper&ITEMJ_BABY && sd->class_&JOBL_BABY)
 			break;
-		//third classes (exl. third-trans. and baby-third and fourth)
-		if (item->class_upper&ITEMJ_THIRD && sd->class_&JOBL_THIRD && !(sd->class_&(JOBL_UPPER|JOBL_BABY)) && !(sd->class_&JOBL_FOURTH))
+		// Renewal Jobs (Primary 3rd / 1st Upper Expanded) (Inherited By Primary 4th Jobs / 2nd Upper Expanded Jobs)
+		if (item->class_upper&ITEMJ_RENEWAL_JOB && pc_is_renewal_job(sd->class_))
 			break;
-		//trans-third classes (exl. fourth)
+		// Trait Jobs (Primary 4th / 2nd Upper Expanded)
+		if (item->class_upper&ITEMJ_TRAIT_JOB && pc_is_trait_job(sd->class_))
+			break;
+
+		// Deprecated classes.
+		//third classes (exl. third-trans. and baby-third and fourth) - Replaced with ITEMJ_RENEWAL_JOB.
+		if (item->class_upper&ITEMJ_THIRD && sd->class_&JOBL_THIRD && !(sd->class_ & (JOBL_UPPER|JOBL_BABY)) && !(sd->class_&JOBL_FOURTH))
+			break;
+		//trans-third classes (exl. fourth) - Replaced with ITEMJ_RENEWAL_JOB.
 		if (item->class_upper&ITEMJ_THIRD_UPPER && sd->class_&JOBL_THIRD && sd->class_&JOBL_UPPER && !(sd->class_&JOBL_FOURTH))
 			break;
-		//third-baby classes (exl. fourth)
+		//third-baby classes (exl. fourth) - Replaced with ITEMJ_RENEWAL_JOB.
 		if (item->class_upper&ITEMJ_THIRD_BABY && sd->class_&JOBL_THIRD && sd->class_&JOBL_BABY && !(sd->class_&JOBL_FOURTH))
 			break;
-		//fourth classes
+		//fourth classes - Replaced with ITEMJ_TRAIT_JOB.
 		if (item->class_upper&ITEMJ_FOURTH && sd->class_&JOBL_FOURTH)
 			break;
 #endif
@@ -10201,9 +10210,11 @@ int64 pc_readparam( const map_session_data* sd, int64 type )
 		case SP_BASELEVEL:       val = sd->status.base_level; break;
 		case SP_JOBLEVEL:        val = sd->status.job_level; break;
 		case SP_CLASS:           val = sd->status.class_; break;
-		case SP_BASESECOND:      val = pc_mapid2jobid(sd->class_&MAPID_SECONDMASK, sd->status.sex); break; //Base job, extracting upper type.
+		case SP_BASEFIRST:       val = pc_mapid2jobid(sd->class_&MAPID_FIRSTMASK, sd->status.sex); break;
+		case SP_BASESECOND:      val = pc_mapid2jobid(sd->class_&MAPID_SECONDMASK, sd->status.sex); break;
+		case SP_BASETHIRD:       val = pc_mapid2jobid(sd->class_&MAPID_THIRDMASK, sd->status.sex); break;
+		case SP_BASEFOURTH:      val = pc_mapid2jobid(sd->class_&MAPID_FOURTHMASK, sd->status.sex); break;
 		case SP_UPPER:           val = sd->class_&JOBL_UPPER?1:(sd->class_&JOBL_BABY?2:0); break;
-		case SP_BASEFIRST:       val = pc_mapid2jobid(sd->class_&MAPID_FIRSTMASK, sd->status.sex); break; //Extract base class tree. [Skotlex]
 		case SP_SEX:             val = sd->status.sex; break;
 		case SP_WEIGHT:          val = sd->weight; break;
 		case SP_MAXWEIGHT:       val = sd->max_weight; break;

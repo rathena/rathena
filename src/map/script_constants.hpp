@@ -593,8 +593,12 @@
 	export_parameter("MaxSp",SP_MAXSP);
 	export_parameter("Ap",SP_AP);
 	export_parameter("MaxAp",SP_MAXAP);
-	export_parameter("BaseJob",SP_BASESECOND);// Update name in future update for item/scripts. (Rytech)
-	export_parameter("BaseClass",SP_BASEFIRST);// Update name in future update for item/scripts. (Rytech)
+	export_parameter("BaseJob",SP_BASESECOND);// Note: Deprecated. Use BaseFirst instead.
+	export_parameter("BaseClass",SP_BASEFIRST);// Note: Deprecated. Use BaseSecond instead.
+	export_parameter("BaseFirst",SP_BASEFIRST);
+	export_parameter("BaseSecond",SP_BASESECOND);
+	export_parameter("BaseThird",SP_BASETHIRD);
+	export_parameter("BaseFourth",SP_BASEFOURTH);
 	export_parameter("killerrid",SP_KILLERRID);
 	export_parameter("killedrid",SP_KILLEDRID);
 	export_parameter("killedgid",SP_KILLEDGID);
@@ -10713,16 +10717,18 @@
 	export_constant(BG_INFO_DESERTER_TIME);
 
 	/* item job classes */
-	export_constant(ITEMJ_NORMAL);
+	export_constant(ITEMJ_NORMAL);// Pointless. Should be removed.
 	export_constant(ITEMJ_UPPER);
 	export_constant(ITEMJ_BABY);
-	export_constant(ITEMJ_THIRD);
-	export_constant(ITEMJ_THIRD_UPPER);
-	export_constant(ITEMJ_THIRD_BABY);
-	export_constant(ITEMJ_FOURTH);
-	export_constant(ITEMJ_ALL_UPPER);
-	export_constant(ITEMJ_ALL_BABY);
-	export_constant(ITEMJ_ALL_THIRD);
+	export_constant(ITEMJ_THIRD);// Note: Deprecated. Use ITEMJ_RENEWAL_JOB instead.
+	export_constant(ITEMJ_THIRD_UPPER);// Note: Deprecated. Use ITEMJ_RENEWAL_JOB instead.
+	export_constant(ITEMJ_THIRD_BABY);// Note: Deprecated. Use ITEMJ_RENEWAL_JOB instead.
+	export_constant(ITEMJ_FOURTH);// Note: Deprecated. Use ITEMJ_TRAIT_JOB instead.
+	export_constant(ITEMJ_RENEWAL_JOB);
+	export_constant(ITEMJ_TRAIT_JOB);
+	export_constant(ITEMJ_ALL_UPPER);// Note: Deprecated.
+	export_constant(ITEMJ_ALL_BABY);// Note: Deprecated.
+	export_constant(ITEMJ_ALL_THIRD);// Note: Deprecated. Use ITEMJ_RENEWAL_JOB instead.
 
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);
