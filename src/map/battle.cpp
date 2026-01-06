@@ -5073,26 +5073,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			else if (!sd)
 				skillratio += 80000 / i - 100;
 			break;
-		case TK_DOWNKICK:
-		case TK_STORMKICK:
-			skillratio += 60 + 20 * skill_lv;
-			break;
-		case TK_TURNKICK:
-		case TK_COUNTER:
-			skillratio += 90 + 30 * skill_lv;
-			break;
-		case TK_JUMPKICK:
-			//Different damage formulas depending on damage trigger
-			if (sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == skill_id)
-				skillratio += -100 + 4 * status_get_lv(src); //Tumble formula [4%*baselevel]
-			else if (wd->miscflag) {
-				skillratio += -100 + 4 * status_get_lv(src); //Running formula [4%*baselevel]
-				if (sc && sc->getSCE(SC_SPURT)) //Spurt formula [8%*baselevel]
-					skillratio *= 2;
-			}
-			else
-				skillratio += -70 + 10 * skill_lv;
-			break;
 		case NJ_HUUMA:
 #ifdef RENEWAL
 			skillratio += -150 + 250 * skill_lv;
