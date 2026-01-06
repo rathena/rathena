@@ -18,8 +18,8 @@
 #include "./novice/skill_factory_novice.hpp"
 #include "./summoner/skill_factory_summoner.hpp"
 #include "./swordman/skill_factory_swordman.hpp"
+#include "./taekwon/skill_factory_taekwon.hpp"
 #include "./thief/skill_factory_thief.hpp"
-#include "taekwon/skill_factory_taekwon.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id) const {
 	static const std::vector<std::shared_ptr<SkillFactory>> factories = {
