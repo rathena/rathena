@@ -10,7 +10,6 @@
 #include "highjump.hpp"
 #include "jumpkick.hpp"
 #include "mission.hpp"
-#include "readystorm.hpp"
 #include "readyturn.hpp"
 #include "run.hpp"
 #include "sevenwind.hpp"
@@ -36,7 +35,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 		case TK_READYDOWN:
 			return std::make_unique<StatusSkillImpl>(TK_READYDOWN, true);
 		case TK_READYSTORM:
-			return std::make_unique<SkillReadyStorm>();
+			return std::make_unique<StatusSkillImpl>(TK_READYSTORM, true);
 		case TK_READYTURN:
 			return std::make_unique<SkillReadyTurn>();
 		case TK_RUN:
