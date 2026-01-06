@@ -1,24 +1,21 @@
 # Docker
 
-Note that this Dockerized environment **is not suitable** for production deployments, see [Installations](https://github.com/rathena/rathena/wiki/installations) instead.
+Note that this docker environment has a bit unusual setup given the nature of the Docker tool itself.
+
+> [!IMPORTANT]
+> Source files have been stripped out of the resulting container (it doesn't make sense to ship the full source to production, right?).
 
 ### How to setup a local development environment :computer:
 
-1. `docker-compose up -d` to spin up dev container and database (ensure port `3306` is free)
-2. `docker-compose run builder bash` in order to run aditional build or shell scripts within the linux context.
-3. All rAthena development commands can be executed inside the dev container, such as compiling (`./configure`, `make clean server`) and starting the server (`./athena-start`, `gdb map-server`, etc ...)
-4. `docker-compose down` outside the dev container when done to close database and free resources
-5. All commands expect you to have change directory to this directory, `$projectRoot/tools/docker`.
-6. Change the value of `BUILDER_CONFIGURE` environment variable of the `builder` service in order to change the parameters sent to the `./configure` command
-> If you have already compiled the project once, you might want to connect directly to the builder service (see 2.) and run commands from there (see 3.). 
-7. If you want the builder to build your project on each start change line 8 from
-```bash
-  export runBuild=0;
-```
-to
-```bash
-  export runBuild=1;
-```
+1. Run either `patch.ps1` or `patch.sh` based on your host OS. These are for generating the import folders and patching the configs we need to make docker containers talk to each other.
+2. `docker-compose up -d` to spin up dev container and database (ensure port `3306` is free)
+3. `docker-compose down` outside the dev container when done to close database and free resources
+4. Change the value of `BUILDER_CONFIGURE` environment variable of the `login` service in order to change the parameters sent to the `./configure` command
+
+### Rebuilding the source :wrench:
+
+1. Take down the services with `docker-compose down`
+2. Rebuild everything with `docker-compose up [-d] --build`
 
 #### Tips & tricks for local development :beginner:
 
