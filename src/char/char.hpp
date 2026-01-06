@@ -11,10 +11,9 @@
 #include <common/core.hpp> // CORE_ST_LAST
 #include <common/mmo.hpp>
 #include <common/msg_conf.hpp>
+#include <common/packets.hpp>
 #include <common/timer.hpp>
 #include <config/core.hpp>
-
-#include "packets.hpp"
 
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
@@ -303,10 +302,10 @@ void char_disconnect_player(uint32 account_id);
 TIMER_FUNC(char_chardb_waiting_disconnect);
 
 int32 char_mmo_gender(const struct char_session_data *sd, const struct mmo_charstatus *p, char sex);
-int32 char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
+int32 char_mmo_char_tobuf( CHARACTER_INFO& info, mmo_charstatus& p );
 int32 char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p);
 int32 char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything);
-int32 char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count = nullptr);
+int32 char_mmo_chars_fromsql( char_session_data& sd, CHARACTER_INFO chars[], uint8* count = nullptr );
 enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_id);
 int32 char_rename_char_sql(struct char_session_data *sd, uint32 char_id);
 int32 char_divorce_char_sql(int32 partner_id1, int32 partner_id2);
@@ -322,7 +321,7 @@ int32 char_loadName(uint32 char_id, char* name);
 int32 char_check_char_name(char * name, char * esc_name);
 
 bool char_pincode_decrypt( uint32 userSeed, char* pin );
-int32 char_pincode_compare( int32 fd, struct char_session_data* sd, char* pin );
+int32 char_pincode_compare( int32 fd, char_session_data& sd, char* pin );
 void char_auth_ok(int32 fd, struct char_session_data *sd);
 void char_set_charselect(uint32 account_id);
 void char_read_fame_list(void);

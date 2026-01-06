@@ -82,7 +82,7 @@ bool mercenary_create(map_session_data *sd, uint16 class_, uint32 lifetime) {
 * @param md The Mercenary
 * @return The Lifetime
 **/
-t_tick mercenary_get_lifetime(s_mercenary_data *md) {
+t_tick mercenary_get_lifetime( const s_mercenary_data* md ) {
 	if( md == nullptr || md->contract_timer == INVALID_TIMER )
 		return 0;
 
@@ -95,7 +95,7 @@ t_tick mercenary_get_lifetime(s_mercenary_data *md) {
 * @param md Mercenary
 * @return enum e_MercGuildType
 **/
-e_MercGuildType mercenary_get_guild(s_mercenary_data *md){
+e_MercGuildType mercenary_get_guild( const s_mercenary_data* md ){
 	if( md == nullptr || md->db == nullptr )
 		return NONE_MERC_GUILD;
 
@@ -116,8 +116,8 @@ e_MercGuildType mercenary_get_guild(s_mercenary_data *md){
 * @param md Mercenary
 * @return the Faith value
 **/
-int32 mercenary_get_faith(s_mercenary_data *md) {
-	map_session_data *sd;
+int32 mercenary_get_faith( const s_mercenary_data* md ) {
+	const map_session_data* sd;
 
 	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
 		return 0;
@@ -175,7 +175,7 @@ void mercenary_set_faith(s_mercenary_data *md, int32 value) {
 * @param md Mercenary
 * @return Number of calls
 **/
-int32 mercenary_get_calls(s_mercenary_data *md) {
+int32 mercenary_get_calls( const s_mercenary_data* md ) {
 	map_session_data *sd;
 
 	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
@@ -201,7 +201,7 @@ int32 mercenary_get_calls(s_mercenary_data *md) {
 * @param md Mercenary
 * @param value
 **/
-void mercenary_set_calls(s_mercenary_data *md, int32 value) {
+void mercenary_set_calls( s_mercenary_data* md, int32 value ) {
 	map_session_data *sd;
 
 	if( md == nullptr || md->db == nullptr || (sd = md->master) == nullptr )
@@ -450,7 +450,7 @@ bool mercenary_dead(s_mercenary_data *md) {
 * Gives bonus to Mercenary
 * @param md Mercenary
 **/
-void mercenary_killbonus(s_mercenary_data *md) {
+void mercenary_killbonus( s_mercenary_data *md ) {
 	std::vector<sc_type> scs = { SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP };
 
 	sc_start(md,md, util::vector_random(scs), 100, rnd_value(1, 5), 300000); //Bonus lasts for 5 minutes
@@ -460,7 +460,7 @@ void mercenary_killbonus(s_mercenary_data *md) {
 * Mercenary does kill
 * @param md Mercenary
 **/
-void mercenary_kills(s_mercenary_data *md){
+void mercenary_kills( s_mercenary_data *md ){
 	if(md->mercenary.kill_count <= (INT_MAX-1)) //safe cap to INT_MAX
 		md->mercenary.kill_count++;
 
@@ -480,7 +480,7 @@ void mercenary_kills(s_mercenary_data *md){
 * @param skill_id The skill
 * @return Skill Level or 0 if Mercenary doesn't have the skill
 **/
-uint16 mercenary_checkskill(s_mercenary_data *md, uint16 skill_id) {
+uint16 mercenary_checkskill( const s_mercenary_data* md, uint16 skill_id ) {
 	if (!md || !md->db)
 		return 0;
 	auto skill_level = util::umap_find(md->db->skill, skill_id);

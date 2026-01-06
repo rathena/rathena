@@ -6859,6 +6859,7 @@ BUILDIN_FUNC(countinarray)
  *------------------------------------------*/
 BUILDIN_FUNC(setlook)
 {
+	// TODO: no checks at all... [Lemongrass]
 	int32 type,val;
 	TBL_PC* sd;
 
@@ -6921,13 +6922,13 @@ BUILDIN_FUNC(changelook){
 			break;
 
 		case LOOK_BODY2:
-			if( val < MIN_BODY_STYLE ){
-				ShowError( "buildin_changelook: Invalid body style. Minimum: %d\n", MIN_BODY_STYLE );
+			if( val < JOB_NOVICE ){
+				ShowError( "buildin_changelook: Invalid body style. Minimum: %d\n", JOB_NOVICE );
 				return SCRIPT_CMD_FAILURE;
 			}
 
-			if( val > MAX_BODY_STYLE ){
-				ShowError( "buildin_changelook: Invalid body style. Maximum: %d\n", MAX_BODY_STYLE );
+			if( val >= JOB_MAX ){
+				ShowError( "buildin_changelook: Invalid body style. Maximum: %d\n", ( JOB_MAX - 1 ) );
 				return SCRIPT_CMD_FAILURE;
 			}
 			break;
@@ -9242,14 +9243,18 @@ BUILDIN_FUNC(strcharinfo)
  *	2 : #str
  *	3 : ::str
  *	4 : map name
+ *	5 : NPC file path
  *------------------------------------------*/
 BUILDIN_FUNC(strnpcinfo)
 {
 	TBL_NPC* nd;
 	int32 num;
 	char *buf,*name=nullptr;
-
-	nd = map_id2nd(st->oid);
+	if(script_hasdata(st,3)){
+		int32 id = script_getnum(st,3);
+		nd = map_id2nd(id);
+	}else
+		nd = map_id2nd(st->oid);
 	if (!nd) {
 		script_pushconststr(st, "");
 		return SCRIPT_CMD_SUCCESS;
@@ -9278,6 +9283,9 @@ BUILDIN_FUNC(strnpcinfo)
 		case 4: // map name
 			if (nd->m >= 0)
 				name = aStrdup(map_getmapdata(nd->m)->name);
+			break;
+		case 5: // NPC file path
+			name = aStrdup(nd->path);
 			break;
 	}
 
@@ -12932,7 +12940,7 @@ BUILDIN_FUNC(resetskill)
 BUILDIN_FUNC(resetfeel)
 {
 	TBL_PC *sd;
-	if (!script_charid2sd(2,sd) || (sd->class_&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR)
+	if (!script_charid2sd(2,sd) || (sd->class_&MAPID_SECONDMASK) != MAPID_STAR_GLADIATOR)
 		return SCRIPT_CMD_FAILURE;
 	pc_resetfeel(sd);
 	return SCRIPT_CMD_SUCCESS;
@@ -12945,7 +12953,7 @@ BUILDIN_FUNC(resetfeel)
 BUILDIN_FUNC(resethate)
 {
 	TBL_PC *sd;
-	if (!script_charid2sd(2,sd) || (sd->class_&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR)
+	if (!script_charid2sd(2,sd) || (sd->class_&MAPID_SECONDMASK) != MAPID_STAR_GLADIATOR)
 		return SCRIPT_CMD_FAILURE;
 	pc_resethate(sd);
 	return SCRIPT_CMD_SUCCESS;
@@ -12993,7 +13001,7 @@ BUILDIN_FUNC(changebase)
 			clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.look[LOOK_CLOTHES_COLOR]);
 		if (sd->vd.look[LOOK_BODY2])
 			clif_changelook(sd,LOOK_BODY2,sd->vd.look[LOOK_BODY2]);
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -27171,7 +27179,7 @@ BUILDIN_FUNC(getjobexp_ratio){
 		job_level = sd->status.job_level;
 	}
 
-	t_exp class_exp = job_db.get_baseExp( sd->status.class_, job_level );
+	t_exp class_exp = job_db.get_jobExp( sd->status.class_, job_level );
 
 	if( class_exp <= 0 ){
 		ShowError( "getjobexp_ratio: No job experience defined for class %s at job level %d.\n", job_name( sd->status.class_ ), job_level );
@@ -27475,7 +27483,7 @@ BUILDIN_FUNC(getfamerank) {
 	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	script_pushint(st, pc_famerank(sd->status.char_id, sd->class_ & MAPID_UPPERMASK));
+	script_pushint(st, pc_famerank(sd->status.char_id, sd->class_ & MAPID_SECONDMASK));
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -27920,7 +27928,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getguildmasterid,"i"),
 	BUILDIN_DEF(getguildinfo,"ii"),
 	BUILDIN_DEF(strcharinfo,"i?"),
-	BUILDIN_DEF(strnpcinfo,"i"),
+	BUILDIN_DEF(strnpcinfo,"i?"),
 	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
 	BUILDIN_DEF(getequipname,"i?"),

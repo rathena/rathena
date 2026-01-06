@@ -699,7 +699,7 @@ void achievement_get_reward(map_session_data *sd, int32 achievement_id, time_t r
  * @param sd: Player to get reward
  * @param achievement_id: Achievement to get reward data
  */
-void achievement_check_reward(map_session_data *sd, int32 achievement_id)
+void achievement_check_reward( const map_session_data* sd, int32 achievement_id )
 {
 	int32 i;
 
@@ -775,7 +775,7 @@ void achievement_free(map_session_data *sd)
  * @param type: Type to return
  * @return The type's data, -1 if player doesn't have achievement, -2 on failure/incorrect type
  */
-int32 achievement_check_progress(map_session_data *sd, int32 achievement_id, int32 type)
+int32 achievement_check_progress( const map_session_data* sd, int32 achievement_id, int32 type )
 {
 	int32 i;
 

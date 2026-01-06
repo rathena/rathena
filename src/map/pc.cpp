@@ -755,7 +755,7 @@ int32 pc_class2idx(int32 class_) {
 * @param sd
 * @return Group ID
 */
-int32 pc_get_group_id(map_session_data *sd) {
+int32 pc_get_group_id( const map_session_data* sd ) {
 	return sd->group_id;
 }
 
@@ -763,7 +763,7 @@ int32 pc_get_group_id(map_session_data *sd) {
 * @param sd
 * @return Group Level
 */
-int32 pc_get_group_level(map_session_data *sd) {
+int32 pc_get_group_level( const map_session_data* sd ) {
 	return sd->group->level;
 }
 
@@ -1081,7 +1081,7 @@ bool pc_addfame(map_session_data &sd, int32 count)
 {
 	enum e_rank ranktype;
 
-	switch(sd.class_&MAPID_UPPERMASK){
+	switch(sd.class_&MAPID_SECONDMASK){
 		case MAPID_BLACKSMITH:	ranktype = RANK_BLACKSMITH; break;
 		case MAPID_ALCHEMIST:	ranktype = RANK_ALCHEMIST; break;
 		case MAPID_TAEKWON:		ranktype = RANK_TAEKWON; break;
@@ -1258,7 +1258,7 @@ void pc_inventory_rental_add(map_session_data *sd, uint32 seconds)
  * @param shoptype: NPC's sub type see enum npc_subtype
  * @return bool 'true' is sellable, 'false' otherwise
  */
-bool pc_can_sell_item(map_session_data *sd, struct item *item, enum npc_subtype shoptype) {
+bool pc_can_sell_item( const map_session_data* sd, const item* item, enum npc_subtype shoptype) {
 	if (sd == nullptr || item == nullptr)
 		return false;
 
@@ -1316,16 +1316,14 @@ bool pc_can_sell_item(map_session_data *sd, struct item *item, enum npc_subtype 
 /**
  * Determines if player can give / drop / trade / vend items
  */
-bool pc_can_give_items(map_session_data *sd)
-{
+bool pc_can_give_items( const map_session_data* sd ){
 	return (pc_has_permission(sd, PC_PERM_TRADE) || pc_has_permission(sd, PC_PERM_TRADE_UNCONDITIONAL));
 }
 
 /**
  * Determines if player can give / drop / trade / vend bounded items
  */
-bool pc_can_give_bounded_items(map_session_data *sd)
-{
+bool pc_can_give_bounded_items( const map_session_data* sd ){
 	return (pc_has_permission(sd, PC_PERM_TRADE_BOUNDED) || pc_has_permission(sd, PC_PERM_TRADE_UNCONDITIONAL));
 }
 
@@ -1336,7 +1334,7 @@ bool pc_can_give_bounded_items(map_session_data *sd)
  * @param index: Item inventory index
  * @return True if the item can be traded or false otherwise
  */
-bool pc_can_trade_item(map_session_data *sd, int32 index) {
+bool pc_can_trade_item( const map_session_data* sd, int32 index ) {
 	if (sd && index >= 0) {
 		return (sd->inventory.u.items_inventory[index].expire_time == 0 &&
 			(sd->inventory.u.items_inventory[index].bound == 0 || pc_can_give_bounded_items(sd)) &&
@@ -1463,7 +1461,7 @@ void pc_setnewpc(map_session_data *sd, uint32 account_id, uint32 char_id, int32 
 * @param sd
 * @param id
 */
-int32 pc_equippoint_sub(map_session_data *sd,struct item_data* id){
+int32 pc_equippoint_sub( const map_session_data* sd, const item_data* id){
 	int32 ep = 0;
 
 	nullpo_ret(sd);
@@ -1474,7 +1472,7 @@ int32 pc_equippoint_sub(map_session_data *sd,struct item_data* id){
 
 	ep = id->equip;
 	if(id->subtype == W_DAGGER	|| id->subtype == W_1HSWORD || id->subtype == W_1HAXE) {
-		if(pc_checkskill(sd,AS_LEFT) > 0 || (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN || (sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) { //Kagerou and Oboro can dual wield daggers. [Rytech]
+		if(pc_checkskill(sd,AS_LEFT) > 0 || (sd->class_&MAPID_SECONDMASK) == MAPID_ASSASSIN || (sd->class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO) { //Kagerou and Oboro can dual wield daggers. [Rytech]
 			if (ep == EQP_WEAPON)
 				return EQP_ARMS;
 			if (ep == EQP_SHADOW_WEAPON)
@@ -1489,7 +1487,7 @@ int32 pc_equippoint_sub(map_session_data *sd,struct item_data* id){
 * @param sd
 * @param n Equip index in inventory
 */
-int32 pc_equippoint(map_session_data *sd,int32 n){
+int32 pc_equippoint( const map_session_data* sd, int32 n ){
 	nullpo_ret(sd);
 
 	return pc_equippoint_sub(sd,sd->inventory_data[n]);
@@ -1561,7 +1559,7 @@ void pc_calcweapontype(map_session_data *sd)
 * Set equip index
 * @param sd : Player
 */
-void pc_setequipindex(map_session_data *sd)
+void pc_setequipindex( map_session_data *sd )
 {
 	uint16 i;
 
@@ -1632,7 +1630,7 @@ void pc_setequipindex(map_session_data *sd)
  * @param nameid : itemid
  * @return 1:yes, 0:no
  */
-bool pc_isequipped(map_session_data *sd, t_itemid nameid)
+bool pc_isequipped( const map_session_data* sd, t_itemid nameid )
 {
 	uint8 i;
 
@@ -1671,7 +1669,7 @@ bool pc_isequipped(map_session_data *sd, t_itemid nameid)
  *         ADOPT_LEVEL_70 - Parents need to be level 70+ (client message)
  *         ADOPT_MARRIED - Cannot adopt a married person (client message)
  */
-enum adopt_responses pc_try_adopt(map_session_data *p1_sd, map_session_data *p2_sd, map_session_data *b_sd)
+enum adopt_responses pc_try_adopt( const map_session_data* p1_sd, const map_session_data* p2_sd, const map_session_data* b_sd)
 {
 	if( !p1_sd || !p2_sd || !b_sd )
 		return ADOPT_CHARACTER_NOT_FOUND;
@@ -1770,12 +1768,12 @@ bool pc_adoption(map_session_data *p1_sd, map_session_data *p2_sd, map_session_d
 	return false; // Job Change Fail
 }
 
-static bool pc_job_can_use_item( map_session_data* sd, struct item_data* item ){
+static bool pc_job_can_use_item( const map_session_data* sd, const item_data* item ){
 	nullpo_retr( false, sd );
 	nullpo_retr( false, item );
 
 	// Calculate the required bit to check
-	uint64 job = 1ULL << ( sd->class_ & MAPID_BASEMASK );
+	uint64 job = 1ULL << ( sd->class_ & MAPID_FIRSTMASK );
 
 	size_t index;
 
@@ -1803,7 +1801,7 @@ static bool pc_job_can_use_item( map_session_data* sd, struct item_data* item ){
 		[Haru] for third-classes extension
 		[Cydh] finishing :D
  *------------------------------------------*/
-static bool pc_isItemClass (map_session_data *sd, struct item_data* item) {
+static bool pc_isItemClass ( const map_session_data* sd, const item_data* item ) {
 	while (1) {
 		if (item->class_upper&ITEMJ_NORMAL && !(sd->class_&(JOBL_UPPER|JOBL_BABY|JOBL_THIRD|JOBL_FOURTH)))	//normal classes (no upper, no baby, no third, no fourth)
 			break;
@@ -1849,9 +1847,9 @@ static bool pc_isItemClass (map_session_data *sd, struct item_data* item) {
  * @param n Item index in inventory
  * @return ITEM_EQUIP_ACK_OK(0) if can be equipped, or ITEM_EQUIP_ACK_FAIL(1)/ITEM_EQUIP_ACK_FAILLEVEL(2) if can't
  *------------------------------------------------*/
-uint8 pc_isequip(map_session_data *sd,int32 n)
+uint8 pc_isequip( const map_session_data* sd, int32 n )
 {
-	struct item_data *item;
+	const item_data* item;
 
 	nullpo_retr(ITEM_EQUIP_ACK_FAIL, sd);
 
@@ -2112,7 +2110,10 @@ bool pc_authok(map_session_data *sd, uint32 login_id2, time_t expiration_time, i
 	sd->status.hair = cap_value(sd->status.hair,MIN_HAIR_STYLE,MAX_HAIR_STYLE);
 	sd->status.hair_color = cap_value(sd->status.hair_color,MIN_HAIR_COLOR,MAX_HAIR_COLOR);
 	sd->status.clothes_color = cap_value(sd->status.clothes_color,MIN_CLOTH_COLOR,MAX_CLOTH_COLOR);
-	sd->status.body = cap_value(sd->status.body,MIN_BODY_STYLE,MAX_BODY_STYLE);
+
+	if( !job_db.exists( sd->status.body ) ){
+		sd->status.body = sd->status.class_;
+	}
 
 	//Initializations to null/0 unneeded since map_session_data was filled with 0 upon allocation.
 	sd->state.connect_new = 1;
@@ -2372,7 +2373,7 @@ void pc_reg_received(map_session_data *sd)
 	// Cooking Exp
 	sd->cook_mastery = static_cast<int16>(pc_readglobalreg(sd, add_str(COOKMASTERY_VAR)));
 
-	if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON )
+	if( (sd->class_&MAPID_FIRSTMASK) == MAPID_TAEKWON )
 	{ // Better check for class rather than skill to prevent "skill resets" from unsetting this
 		sd->mission_mobid = static_cast<int16>(pc_readglobalreg(sd, add_str(TKMISSIONID_VAR)));
 		sd->mission_count = static_cast<unsigned char>(pc_readglobalreg(sd, add_str(TKMISSIONCOUNT_VAR)));
@@ -2628,7 +2629,7 @@ void pc_calc_skilltree(map_session_data *sd)
 			}
 			switch (skill_id) {
 				case NV_TRICKDEAD:
-					if( (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE ) {
+					if( (sd->class_&MAPID_SECONDMASK) != MAPID_NOVICE ) {
 						sd->status.skill[idx].id = 0;
 						sd->status.skill[idx].lv = 0;
 						sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
@@ -2649,7 +2650,7 @@ void pc_calc_skilltree(map_session_data *sd)
 	}
 
 	// Removes Taekwon Ranker skill bonus
-	if ((sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON) {
+	if ((sd->class_&MAPID_SECONDMASK) != MAPID_TAEKWON) {
 		std::shared_ptr<s_skill_tree> tree = skill_tree_db.find(JOB_TAEKWON);
 	
 		if (tree != nullptr && !tree->skills.empty()) {
@@ -2892,24 +2893,14 @@ void pc_clean_skilltree(map_session_data *sd)
 uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 	int32 skill_point = pc_calc_skillpoint( sd );
 
-	if( sd->class_ & MAPID_SUMMONER ){
+	if ((sd->class_ & MAPID_FIRSTMASK) != MAPID_SUMMONER)
+	{
 		// Novice's skill points for basic skill.
-		std::shared_ptr<s_job_info> summoner_job = job_db.find( JOB_SUMMONER );
-
-		int32 summoner_skills = summoner_job->max_job_level - 1;
-
-		if( skill_point < summoner_skills ){
-			return MAPID_SUMMONER;
-		}
-
-		skill_point -= summoner_skills;
-	}else{
-		// Novice's skill points for basic skill.
-		std::shared_ptr<s_job_info> novice_job = job_db.find( JOB_NOVICE );
+		std::shared_ptr<s_job_info> novice_job = job_db.find(JOB_NOVICE);
 
 		int32 novice_skills = novice_job->max_job_level - 1;
 
-		if( skill_point < novice_skills ){
+		if (skill_point < novice_skills) {
 			return MAPID_NOVICE;
 		}
 
@@ -2917,8 +2908,8 @@ uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 	}
 
 	// 1st Class Job LV Check
-	if( sd->class_ & JOBL_2 && ( sd->class_ & MAPID_UPPERMASK ) != MAPID_SUPER_NOVICE ){
-		uint64 mapid_1st = sd->class_ & MAPID_BASEMASK;
+	if( sd->class_ & JOBL_2 && ( sd->class_ & MAPID_SECONDMASK ) != MAPID_SUPER_NOVICE ){
+		uint64 mapid_1st = sd->class_ & MAPID_FIRSTMASK;
 		int32 class_1st = pc_mapid2jobid( mapid_1st, sd->status.sex );
 
 		if( !sd->change_level_2nd ){
@@ -2939,8 +2930,8 @@ uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 	}
 
 	// 2nd Class Job LV Check
-	if( sd->class_ & JOBL_THIRD && (sd->class_ & MAPID_THIRDMASK) != MAPID_SUPER_NOVICE_E ){
-		uint64 mapid_2nd = sd->class_ & MAPID_UPPERMASK;
+	if( sd->class_ & JOBL_THIRD ){
+		uint64 mapid_2nd = sd->class_ & MAPID_SECONDMASK;
 		int32 class_2nd = pc_mapid2jobid( mapid_2nd, sd->status.sex );
 
 		if( !sd->change_level_3rd ){
@@ -2962,7 +2953,7 @@ uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 
 	// 3rd Class Job LV Check
 	if( sd->class_ & JOBL_FOURTH ){
-		uint64 mapid_3rd = sd->class_ & MAPID_THIRDMASK | JOBL_THIRD;
+		uint64 mapid_3rd = sd->class_ & MAPID_THIRDMASK;
 		int32 class_3rd = pc_mapid2jobid( mapid_3rd, sd->status.sex );
 
 		if( !sd->change_level_4th ){
@@ -2985,7 +2976,7 @@ uint64 pc_calc_skilltree_normalize_job_sub( map_session_data *sd ){
 	return sd->class_;
 }
 
-uint64 pc_calc_skilltree_normalize_job( map_session_data *sd ){
+uint64 pc_calc_skilltree_normalize_job( map_session_data* sd ){
 	if( !battle_config.skillup_limit || pc_has_permission( sd, PC_PERM_ALL_SKILL ) ){
 		return sd->class_;
 	}
@@ -3013,7 +3004,7 @@ uint64 pc_calc_skilltree_normalize_job( map_session_data *sd ){
  * @param sd: Player data
  * @param weight: (optional) Weight to check, if 0, player's current weight is used
  */
-uint16 pc_getpercentweight(map_session_data& sd, uint32 weight)
+uint16 pc_getpercentweight(const map_session_data& sd, uint32 weight)
 {
 	if (weight == 0)
 		weight = sd.weight;
@@ -4287,6 +4278,10 @@ void pc_bonus(map_session_data *sd,int32 type,int32 val)
 		case SP_LONG_ATK_RATE:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)	//[Lupus] it should stack, too. As any other cards rate bonuses
 				sd->bonus.long_attack_atk_rate+=val;
+			break;
+		case SP_NON_CRIT_ATK_RATE:
+			if (sd->state.lr_flag != LR_FLAG_ARROW)
+				sd->bonus.non_crit_atk_rate += val;
 			break;
 		case SP_BREAK_WEAPON_RATE:
 			if (sd->state.lr_flag != LR_FLAG_ARROW)
@@ -5649,7 +5644,7 @@ int32 pc_identifyall(map_session_data *sd, bool identify_item)
 /*==========================================
  * Update buying value by skills
  *------------------------------------------*/
-int32 pc_modifybuyvalue(map_session_data *sd,int32 orig_value)
+int32 pc_modifybuyvalue(const map_session_data* sd, int32 orig_value )
 {
 	int32 skill,val = orig_value,rate1 = 0,rate2 = 0;
 	if((skill=pc_checkskill(sd,MC_DISCOUNT))>0)	// merchant discount
@@ -5668,7 +5663,7 @@ int32 pc_modifybuyvalue(map_session_data *sd,int32 orig_value)
 /*==========================================
  * Update selling value by skills
  *------------------------------------------*/
-int32 pc_modifysellvalue(map_session_data *sd,int32 orig_value)
+int32 pc_modifysellvalue( const map_session_data* sd, int32 orig_value )
 {
 	int32 skill,val = orig_value,rate = 0;
 	if((skill=pc_checkskill(sd,MC_OVERCHARGE))>0)	//OverCharge
@@ -5689,7 +5684,7 @@ int32 pc_modifysellvalue(map_session_data *sd,int32 orig_value)
  * @param amount
  * @return e_chkitem_result
  *------------------------------------------*/
-char pc_checkadditem(map_session_data *sd, t_itemid nameid, int32 amount)
+char pc_checkadditem( const map_session_data* sd, t_itemid nameid, int32 amount )
 {
 	int32 i;
 	struct item_data* data;
@@ -5732,7 +5727,7 @@ char pc_checkadditem(map_session_data *sd, t_itemid nameid, int32 amount)
  * @param sd
  * @return Number of empty slots
  *------------------------------------------*/
-uint8 pc_inventoryblank(map_session_data *sd)
+uint8 pc_inventoryblank( const map_session_data* sd )
 {
 	uint16 i;
 	uint8 b;
@@ -5928,7 +5923,7 @@ int32 pc_getcash(map_session_data *sd, int32 cash, int32 points, e_log_pick_type
  * @param nameid Find this Item!
  * @return Stored index in inventory, or -1 if not found.
  **/
-int16 pc_search_inventory(map_session_data *sd, t_itemid nameid) {
+int16 pc_search_inventory( const map_session_data* sd, t_itemid nameid) {
 	int16 i;
 	nullpo_retr(-1, sd);
 
@@ -6509,7 +6504,31 @@ int32 pc_useitem(map_session_data *sd,int32 n)
 	if( itemdb_group.item_exists(IG_CASH_FOOD, nameid) )
 		sd->canusecashfood_tick = tick + battle_config.cashfood_use_interval;
 
-	run_script(script,0,sd->id,fake_nd->id);
+	// Save the old script the player was attached to
+	struct script_state* previous_st = sd->st;
+
+	// Only if there was an old script
+	if( previous_st != nullptr ){
+		// Detach the player from the current script
+		script_detach_rid( previous_st );
+	}
+
+	run_script( script, 0, sd->id, fake_nd->id );
+
+	if( sd->st != nullptr ){
+		script_free_state( sd->st );
+		sd->st = nullptr;
+	}
+
+	// If an old script is present
+	if( previous_st != nullptr ){
+		// Because of detach the RID will be removed, so we need to restore it
+		previous_st->rid = sd->id;
+
+		// Reattach the player to it, so that the limitations of that script kick back in
+		script_attach_state( previous_st );
+	}
+
 	potion_flag = 0;
 	return 1;
 }
@@ -6708,7 +6727,7 @@ bool pc_getitemfromcart(map_session_data *sd,int32 idx,int32 amount)
  * 3 Party Bound
  * 4 Character Bound
  *------------------------------------------*/
-int32 pc_bound_chk(TBL_PC *sd,enum bound_type type,int32 *idxlist)
+int32 pc_bound_chk( const map_session_data* sd,enum bound_type type,int32 *idxlist)
 {
 	int32 i = 0, j = 0;
 	for(i = 0; i < MAX_INVENTORY; i++) {
@@ -7270,9 +7289,9 @@ bool pc_memo(map_session_data* sd, int32 pos)
  * @param lv : skill lv
  * @return player skill cooldown
  */
-int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_lv) {
+int32 pc_get_skillcooldown( const map_session_data* sd, uint16 skill_id, uint16 skill_lv ) {
 	if (skill_id == SJ_NOVAEXPLOSING) {
-		status_change *sc = status_get_sc(sd);
+		const status_change *sc = status_get_sc(sd);
 
 		if (sc && sc->getSCE(SC_DIMENSION))
 			return 0;
@@ -7296,7 +7315,7 @@ int32 pc_get_skillcooldown(map_session_data *sd, uint16 skill_id, uint16 skill_l
 /*==========================================
  * Return player sd skill_lv learned for given skill
  *------------------------------------------*/
-uint8 pc_checkskill(const map_session_data *sd, uint16 skill_id)
+uint8 pc_checkskill(const map_session_data* sd, uint16 skill_id)
 {
 	uint16 idx = 0;
 	if (sd == nullptr)
@@ -7328,7 +7347,7 @@ uint8 pc_checkskill(const map_session_data *sd, uint16 skill_id)
  * @param skill_id: Skill to lookup
  * @return Skill flag type
  */
-e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id) {
+e_skill_flag pc_checkskill_flag(const map_session_data &sd, uint16 skill_id) {
 	uint16 idx;
 
 #ifdef RENEWAL
@@ -7353,7 +7372,7 @@ e_skill_flag pc_checkskill_flag(map_session_data &sd, uint16 skill_id) {
  * @param type: Summoner Power Type
  * @return Skill points invested
  */
-uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type) {
+uint8 pc_checkskill_summoner( const map_session_data* sd, e_summoner_power_type type) {
 	if (sd == nullptr)
 		return 0;
 
@@ -7384,7 +7403,7 @@ uint8 pc_checkskill_summoner(map_session_data *sd, e_summoner_power_type type) {
  *		Flag&1 = IG_SHIELD_MASTERY
  *		Flag&2 = IG_SPEAR_SWORD_M
  */
-uint8 pc_checkskill_imperial_guard(map_session_data *sd, int16 flag)
+uint8 pc_checkskill_imperial_guard( const map_session_data* sd, int16 flag )
 {
 	nullpo_retr(0, sd);
 
@@ -7429,7 +7448,7 @@ static void pc_checkallowskill(map_session_data *sd)
 
 		if (flag[SCF_REQUIRESHIELD]) { // Skills requiring a shield
 			// Only crusader-type classes require a shield for Defender
-			if (status == SC_DEFENDER && (sd->class_&MAPID_UPPERMASK) != MAPID_CRUSADER)
+			if (status == SC_DEFENDER && (sd->class_&MAPID_SECONDMASK) != MAPID_CRUSADER)
 				continue;
 			if (sd->sc.getSCE(status) && sd->status.shield <= 0)
 				status_change_end(sd, status);
@@ -7443,7 +7462,7 @@ static void pc_checkallowskill(map_session_data *sd)
  * -1 : Nothing equipped
  * idx : (this index could be used in inventory to found item_data)
  *------------------------------------------*/
-int16 pc_checkequip(map_session_data *sd,int32 pos, bool checkall)
+int16 pc_checkequip( const map_session_data* sd, int32 pos, bool checkall )
 {
 	uint8 i;
 
@@ -7471,7 +7490,7 @@ int16 pc_checkequip(map_session_data *sd,int32 pos, bool checkall)
  * @max : see pc.hpp enum equip_index for @min to ?
  * -return true,false
  *------------------------------------------*/
-bool pc_checkequip2(map_session_data *sd, t_itemid nameid, int32 min, int32 max)
+bool pc_checkequip2( const map_session_data* sd, t_itemid nameid, int32 min, int32 max )
 {
 	int32 i;
 
@@ -7503,13 +7522,14 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_MERCHANT:              return MAPID_MERCHANT;
 		case JOB_THIEF:                 return MAPID_THIEF;
 		case JOB_TAEKWON:               return MAPID_TAEKWON;
-		case JOB_WEDDING:               return MAPID_WEDDING;
 		case JOB_GUNSLINGER:            return MAPID_GUNSLINGER;
 		case JOB_NINJA:                 return MAPID_NINJA;
+		case JOB_SUMMONER:              return MAPID_SUMMONER;
+		case JOB_GANGSI:                return MAPID_GANGSI;
+		case JOB_WEDDING:               return MAPID_WEDDING;
 		case JOB_XMAS:                  return MAPID_XMAS;
 		case JOB_SUMMER:                return MAPID_SUMMER;
 		case JOB_HANBOK:                return MAPID_HANBOK;
-		case JOB_GANGSI:                return MAPID_GANGSI;
 		case JOB_OKTOBERFEST:           return MAPID_OKTOBERFEST;
 		case JOB_SUMMER2:               return MAPID_SUMMER2;
 	//2-1 Jobs
@@ -7521,9 +7541,10 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_BLACKSMITH:            return MAPID_BLACKSMITH;
 		case JOB_ASSASSIN:              return MAPID_ASSASSIN;
 		case JOB_STAR_GLADIATOR:        return MAPID_STAR_GLADIATOR;
+		case JOB_REBELLION:             return MAPID_REBELLION;
 		case JOB_KAGEROU:
 		case JOB_OBORO:                 return MAPID_KAGEROUOBORO;
-		case JOB_REBELLION:             return MAPID_REBELLION;
+		case JOB_SPIRIT_HANDLER:        return MAPID_SPIRIT_HANDLER;
 		case JOB_DEATH_KNIGHT:          return MAPID_DEATH_KNIGHT;
 	//2-2 Jobs
 		case JOB_CRUSADER:              return MAPID_CRUSADER;
@@ -7600,6 +7621,9 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_MECHANIC:              return MAPID_MECHANIC;
 		case JOB_GUILLOTINE_CROSS:      return MAPID_GUILLOTINE_CROSS;
 		case JOB_STAR_EMPEROR:          return MAPID_STAR_EMPEROR;
+		case JOB_NIGHT_WATCH:           return MAPID_NIGHT_WATCH;
+		case JOB_SHINKIRO:
+		case JOB_SHIRANUI:              return MAPID_SHINKIROSHIRANUI;
 	//3-2 Jobs
 		case JOB_ROYAL_GUARD:           return MAPID_ROYAL_GUARD;
 		case JOB_SORCERER:              return MAPID_SORCERER;
@@ -7642,9 +7666,6 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_BABY_GENETIC:          return MAPID_BABY_GENETIC;
 		case JOB_BABY_SHADOW_CHASER:    return MAPID_BABY_SHADOW_CHASER;
 		case JOB_BABY_SOUL_REAPER:      return MAPID_BABY_SOUL_REAPER;
-	//Doram Jobs
-		case JOB_SUMMONER:              return MAPID_SUMMONER;
-		case JOB_SPIRIT_HANDLER:        return MAPID_SPIRIT_HANDLER;
 	//4-1 Jobs
 		case JOB_HYPER_NOVICE:          return MAPID_HYPER_NOVICE;
 		case JOB_DRAGON_KNIGHT:         return MAPID_DRAGON_KNIGHT;
@@ -7654,19 +7675,16 @@ uint64 pc_jobid2mapid(uint16 b_class)
 		case JOB_MEISTER:               return MAPID_MEISTER;
 		case JOB_SHADOW_CROSS:          return MAPID_SHADOW_CROSS;
 		case JOB_SKY_EMPEROR:           return MAPID_SKY_EMPEROR;
-		case JOB_NIGHT_WATCH:           return MAPID_NIGHT_WATCH;
-		case JOB_SHINKIRO:
-		case JOB_SHIRANUI:              return MAPID_SHINKIRO_SHIRANUI;
 	//4-2 Jobs
 		case JOB_IMPERIAL_GUARD:        return MAPID_IMPERIAL_GUARD;
 		case JOB_ELEMENTAL_MASTER:      return MAPID_ELEMENTAL_MASTER;
-		case JOB_INQUISITOR:            return MAPID_INQUISITOR;
 		case JOB_TROUBADOUR:
 		case JOB_TROUVERE:              return MAPID_TROUBADOURTROUVERE;
+		case JOB_INQUISITOR:            return MAPID_INQUISITOR;
 		case JOB_BIOLO:                 return MAPID_BIOLO;
 		case JOB_ABYSS_CHASER:          return MAPID_ABYSS_CHASER;
 		case JOB_SOUL_ASCETIC:          return MAPID_SOUL_ASCETIC;
-	//Unknown
+	//None
 		default:
 			return -1;
 	}
@@ -7685,13 +7703,14 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_MERCHANT:              return JOB_MERCHANT;
 		case MAPID_THIEF:                 return JOB_THIEF;
 		case MAPID_TAEKWON:               return JOB_TAEKWON;
-		case MAPID_WEDDING:               return JOB_WEDDING;
 		case MAPID_GUNSLINGER:            return JOB_GUNSLINGER;
 		case MAPID_NINJA:                 return JOB_NINJA;
+		case MAPID_SUMMONER:              return JOB_SUMMONER;
+		case MAPID_GANGSI:                return JOB_GANGSI;
+		case MAPID_WEDDING:               return JOB_WEDDING;
 		case MAPID_XMAS:                  return JOB_XMAS;
 		case MAPID_SUMMER:                return JOB_SUMMER;
 		case MAPID_HANBOK:                return JOB_HANBOK;
-		case MAPID_GANGSI:                return JOB_GANGSI;
 		case MAPID_OKTOBERFEST:           return JOB_OKTOBERFEST;
 		case MAPID_SUMMER2:               return JOB_SUMMER2;
 	//2-1 Jobs
@@ -7703,8 +7722,9 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_BLACKSMITH:            return JOB_BLACKSMITH;
 		case MAPID_ASSASSIN:              return JOB_ASSASSIN;
 		case MAPID_STAR_GLADIATOR:        return JOB_STAR_GLADIATOR;
-		case MAPID_KAGEROUOBORO:          return sex?JOB_KAGEROU:JOB_OBORO;
 		case MAPID_REBELLION:             return JOB_REBELLION;
+		case MAPID_KAGEROUOBORO:          return sex?JOB_KAGEROU:JOB_OBORO;
+		case MAPID_SPIRIT_HANDLER:        return JOB_SPIRIT_HANDLER;
 		case MAPID_DEATH_KNIGHT:          return JOB_DEATH_KNIGHT;
 	//2-2 Jobs
 		case MAPID_CRUSADER:              return JOB_CRUSADER;
@@ -7777,6 +7797,8 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_MECHANIC:              return JOB_MECHANIC;
 		case MAPID_GUILLOTINE_CROSS:      return JOB_GUILLOTINE_CROSS;
 		case MAPID_STAR_EMPEROR:          return JOB_STAR_EMPEROR;
+		case MAPID_NIGHT_WATCH:           return JOB_NIGHT_WATCH;
+		case MAPID_SHINKIROSHIRANUI:      return sex?JOB_SHINKIRO:JOB_SHIRANUI;
 	//3-2 Jobs
 		case MAPID_ROYAL_GUARD:           return JOB_ROYAL_GUARD;
 		case MAPID_SORCERER:              return JOB_SORCERER;
@@ -7816,9 +7838,6 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_BABY_GENETIC:          return JOB_BABY_GENETIC;
 		case MAPID_BABY_SHADOW_CHASER:    return JOB_BABY_SHADOW_CHASER;
 		case MAPID_BABY_SOUL_REAPER:      return JOB_BABY_SOUL_REAPER;
-	//Doram Jobs
-		case MAPID_SUMMONER:              return JOB_SUMMONER;
-		case MAPID_SPIRIT_HANDLER:        return JOB_SPIRIT_HANDLER;
 	//4-1 Jobs
 		case MAPID_HYPER_NOVICE:          return JOB_HYPER_NOVICE;
 		case MAPID_DRAGON_KNIGHT:         return JOB_DRAGON_KNIGHT;
@@ -7828,17 +7847,15 @@ int32 pc_mapid2jobid(uint64 class_, int32 sex)
 		case MAPID_MEISTER:               return JOB_MEISTER;
 		case MAPID_SHADOW_CROSS:          return JOB_SHADOW_CROSS;
 		case MAPID_SKY_EMPEROR:           return JOB_SKY_EMPEROR;
-		case MAPID_NIGHT_WATCH:           return JOB_NIGHT_WATCH;
-		case MAPID_SHINKIRO_SHIRANUI:     return sex?JOB_SHINKIRO:JOB_SHIRANUI;
 	//4-2 Jobs
 		case MAPID_IMPERIAL_GUARD:        return JOB_IMPERIAL_GUARD;
 		case MAPID_ELEMENTAL_MASTER:      return JOB_ELEMENTAL_MASTER;
-		case MAPID_INQUISITOR:            return JOB_INQUISITOR;
 		case MAPID_TROUBADOURTROUVERE:    return sex?JOB_TROUBADOUR:JOB_TROUVERE;
+		case MAPID_INQUISITOR:            return JOB_INQUISITOR;
 		case MAPID_BIOLO:                 return JOB_BIOLO;
 		case MAPID_ABYSS_CHASER:          return JOB_ABYSS_CHASER;
 		case MAPID_SOUL_ASCETIC:          return JOB_SOUL_ASCETIC;
-	//Unknown
+	//None
 		default:
 			return -1;
 	}
@@ -8252,14 +8269,14 @@ int32 pc_checkbaselevelup(map_session_data *sd) {
 	status_calc_pc(sd,SCO_FORCE);
 	status_percent_heal(sd,100,100);
 
-	if ((sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
+	if ((sd->class_&MAPID_SECONDMASK) == MAPID_SUPER_NOVICE) {
 		for (const auto &status : status_db) {
 			if (status.second->flag[SCF_SUPERNOVICEANGEL])
 				sc_start(sd, sd, status.second->type, 100, 1, 120000); //All buffs with super novice flag for 2 minutes
 		}
 		if (sd->state.snovice_dead_flag)
 			sd->state.snovice_dead_flag = 0; //Reenable steelbody resurrection on dead.
-	} else if( (sd->class_&MAPID_BASEMASK) == MAPID_TAEKWON ) {
+	} else if( (sd->class_&MAPID_FIRSTMASK) == MAPID_TAEKWON ) {
 		for (const auto &status : status_db) {
 			if (status.second->flag[SCF_TAEKWONANGEL])
 				sc_start(sd, sd, status.second->type, 100, 10, 600000);
@@ -8541,7 +8558,7 @@ void pc_lostexp(map_session_data *sd, t_exp base_exp, t_exp job_exp) {
  * @param job_id: Player's class
  * @return Max Base Level
  */
-uint32 JobDatabase::get_maxBaseLv(uint16 job_id) {
+uint32 JobDatabase::get_maxBaseLv(uint16 job_id) const {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 
 	return job ? job->max_base_level : 0;
@@ -8552,7 +8569,7 @@ uint32 JobDatabase::get_maxBaseLv(uint16 job_id) {
  * @param sd Player
  * @return Max Base Level
  **/
-uint32 pc_maxbaselv(map_session_data *sd){
+uint32 pc_maxbaselv( const map_session_data* sd ){
 	return job_db.get_maxBaseLv(sd->status.class_);
 }
 
@@ -8561,7 +8578,7 @@ uint32 pc_maxbaselv(map_session_data *sd){
  * @param job_id: Player's class
  * @return Max Job Level
  */
-uint32 JobDatabase::get_maxJobLv(uint16 job_id) {
+uint32 JobDatabase::get_maxJobLv(uint16 job_id) const {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 
 	return job ? job->max_job_level : 0;
@@ -8572,7 +8589,7 @@ uint32 JobDatabase::get_maxJobLv(uint16 job_id) {
  * @param sd Player
  * @return Max Job Level
  **/
-uint32 pc_maxjoblv(map_session_data *sd){
+uint32 pc_maxjoblv( const map_session_data* sd ){
 	return job_db.get_maxJobLv(sd->status.class_);
 }
 
@@ -8581,7 +8598,7 @@ uint32 pc_maxjoblv(map_session_data *sd){
  * @param sd
  * @return True if reached max level
  **/
-bool pc_is_maxbaselv(map_session_data *sd) {
+bool pc_is_maxbaselv( const map_session_data* sd ) {
 	nullpo_retr(false, sd);
 	return (sd->status.base_level >= pc_maxbaselv(sd));
 }
@@ -8591,7 +8608,7 @@ bool pc_is_maxbaselv(map_session_data *sd) {
  * @param sd
  * @return True if reached max level
  **/
-bool pc_is_maxjoblv(map_session_data *sd) {
+bool pc_is_maxjoblv( const map_session_data* sd ) {
 	nullpo_retr(false, sd);
 	return (sd->status.job_level >= pc_maxjoblv(sd));
 }
@@ -8602,7 +8619,7 @@ bool pc_is_maxjoblv(map_session_data *sd) {
  * @param level: Player's level
  * @return Base EXP
  */
-t_exp JobDatabase::get_baseExp(uint16 job_id, uint32 level) {
+t_exp JobDatabase::get_baseExp(uint16 job_id, uint32 level) const {
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 
 	return job ? job->base_exp[level - 1] : 0;
@@ -8613,7 +8630,7 @@ t_exp JobDatabase::get_baseExp(uint16 job_id, uint32 level) {
  * @param sd
  * @return Base EXP needed for next base level
  **/
-t_exp pc_nextbaseexp(map_session_data *sd){
+t_exp pc_nextbaseexp( const map_session_data* sd ){
 	nullpo_ret(sd);
 	if (sd->status.base_level == 0) // Is this something that possible?
 		return 0;
@@ -8628,7 +8645,7 @@ t_exp pc_nextbaseexp(map_session_data *sd){
  * @param level: Player's level
  * @return Job EXP
  */
-t_exp JobDatabase::get_jobExp(uint16 job_id, uint32 level) {
+t_exp JobDatabase::get_jobExp(uint16 job_id, uint32 level) const{
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 
 	return job ? job->job_exp[level - 1] : 0;
@@ -8639,7 +8656,7 @@ t_exp JobDatabase::get_jobExp(uint16 job_id, uint32 level) {
  * @param sd
  * @return Job EXP needed for next job level
  **/
-t_exp pc_nextjobexp(map_session_data *sd){
+t_exp pc_nextjobexp( const map_session_data* sd ){
 	nullpo_ret(sd);
 	if (sd->status.job_level == 0) // Is this something that possible?
 		return 0;
@@ -8653,14 +8670,14 @@ t_exp pc_nextjobexp(map_session_data *sd){
  * @param job_id: Player's class
  * @return Max weight base
  */
-int32 JobDatabase::get_maxWeight(uint16 job_id) {
+int32 JobDatabase::get_maxWeight(uint16 job_id) const{
 	std::shared_ptr<s_job_info> job = job_db.find(job_id);
 
 	return job ? job->max_weight_base : 0;
 }
 
 /// Returns the value of the specified stat.
-int32 pc_getstat(map_session_data *sd, int32 type)
+int32 pc_getstat( const map_session_data* sd, int32 type )
 {
 	nullpo_retr(-1, sd);
 
@@ -8712,8 +8729,8 @@ int32 pc_setstat(map_session_data* sd, int32 type, int32 val)
  * @param level: Player base level.
  * @return Total number of status points at specific base level.
  */
-uint32 PlayerStatPointDatabase::get_table_point(uint16 level) {
-	std::shared_ptr<s_statpoint_entry> entry = this->find( level );
+uint32 PlayerStatPointDatabase::get_table_point( uint16 level ) const{
+	std::shared_ptr<const s_statpoint_entry> entry = this->find( level );
 
 	if( entry != nullptr ){
 		return entry->statpoints;
@@ -8728,7 +8745,7 @@ uint32 PlayerStatPointDatabase::get_table_point(uint16 level) {
  * @param table: Use table value or formula.
  * @return Status points at specific base level.
  */
-uint32 PlayerStatPointDatabase::pc_gets_status_point(uint16 level) {
+uint32 PlayerStatPointDatabase::pc_gets_status_point(uint16 level) const{
 	uint32 next_level = this->get_table_point( level + 1 );
 	uint32 current_level = this->get_table_point( level );
 
@@ -8744,8 +8761,8 @@ uint32 PlayerStatPointDatabase::pc_gets_status_point(uint16 level) {
 * @param level: Player base level.
 * @return Total number of trait points at specific base level.
 */
-uint32 PlayerStatPointDatabase::get_trait_table_point(uint16 level) {
-	std::shared_ptr<s_statpoint_entry> entry = this->find( level );
+uint32 PlayerStatPointDatabase::get_trait_table_point( uint16 level ) const{
+	std::shared_ptr<const s_statpoint_entry> entry = this->find( level );
 
 	if( entry != nullptr ){
 		return entry->traitpoints;
@@ -8760,7 +8777,7 @@ uint32 PlayerStatPointDatabase::get_trait_table_point(uint16 level) {
 * @param table: Use table value or formula.
 * @return Trait points at specific base level.
 */
-uint32 PlayerStatPointDatabase::pc_gets_trait_point(uint16 level) {
+uint32 PlayerStatPointDatabase::pc_gets_trait_point(uint16 level) const{
 	uint32 next_level = this->get_trait_table_point( level + 1 );
 	uint32 current_level = this->get_trait_table_point( level );
 
@@ -8940,7 +8957,7 @@ int32 pc_statusup2(map_session_data* sd, int32 type, int32 val)
 /// Returns the number of trait stat points needed to change the specified trait stat by val.
 /// If val is negative, returns the number of trait stat points that would be needed to
 /// raise the specified trait stat from (current value - val) to current value.
-int32 pc_need_trait_point(map_session_data* sd, int32 type, int32 val)
+int32 pc_need_trait_point( const map_session_data* sd, int32 type, int32 val )
 {
 	nullpo_retr(0, sd);
 
@@ -9149,7 +9166,7 @@ void pc_skillup(map_session_data *sd,uint16 skill_id)
 			if (pc_checkskill(sd, SG_DEVIL) && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
 				clif_status_change(sd, EFST_DEVIL1, 1, 0, 0, 0, 1); //Permanent blind effect from SG_DEVIL.
 			if (!pc_has_permission(sd, PC_PERM_ALL_SKILL)) // may skill everything at any time anyways, and this would cause a huge slowdown
-				clif_skillinfoblock(sd);
+				clif_skillinfoblock(*sd);
 		}
 		//else
 		//	ShowDebug("Skill Level up failed. ID:%d idx:%d (CID=%d. AID=%d)\n", skill_id, idx, sd->status.char_id, sd->status.account_id);
@@ -9203,7 +9220,7 @@ int32 pc_allskillup(map_session_data *sd)
 	status_calc_pc(sd,SCO_NONE);
 	//Required because if you could level up all skills previously,
 	//the update will not be sent as only the lv variable changes.
-	clif_skillinfoblock(sd);
+	clif_skillinfoblock(*sd);
 	return 0;
 }
 
@@ -9313,7 +9330,7 @@ int32 pc_resetlvl(map_session_data* sd,int32 type)
 		party_send_levelup(sd);
 
 	status_calc_pc(sd, SCO_FORCE);
-	clif_skillinfoblock(sd);
+	clif_skillinfoblock(*sd);
 
 	return 0;
 }
@@ -9334,11 +9351,11 @@ int32 pc_resetstate(map_session_data* sd)
 	sd->status.status_point = statpoint_db.get_table_point( sd->status.base_level );
 	sd->status.trait_point = statpoint_db.get_trait_table_point(sd->status.base_level);
 
-	if( ( sd->class_&JOBL_UPPER ) != 0 ){
+	if( (sd->class_&JOBL_UPPER) || pc_is_primary_fourth(sd->class_) ){
 		sd->status.status_point += battle_config.transcendent_status_points;
 	}
 
-	if ((sd->class_&JOBL_FOURTH) != 0) {
+	if (pc_is_trait_job(sd->class_)) {
 		sd->status.trait_point += battle_config.trait_points_job_change;
 	}
 
@@ -9406,7 +9423,7 @@ int32 pc_resetskill(map_session_data* sd, int32 flag)
 	int32 i, skill_point=0;
 	nullpo_ret(sd);
 
-	if( flag&4 && (sd->class_&MAPID_UPPERMASK) != MAPID_BARDDANCER )
+	if( flag&4 && (sd->class_&MAPID_SECONDMASK) != MAPID_BARDDANCER )
 		return 0;
 
 	if( !(flag&2) ) { //Remove stuff lost when resetting skills.
@@ -9461,7 +9478,7 @@ int32 pc_resetskill(map_session_data* sd, int32 flag)
 			continue;
 
 		// Don't reset trick dead if not a novice/baby
-		if( skill_id == NV_TRICKDEAD && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
+		if( skill_id == NV_TRICKDEAD && (sd->class_&MAPID_SECONDMASK) != MAPID_NOVICE )
 		{
 			sd->status.skill[idx].lv = 0;
 			sd->status.skill[idx].flag = SKILL_FLAG_PERMANENT;
@@ -9469,7 +9486,7 @@ int32 pc_resetskill(map_session_data* sd, int32 flag)
 		}
 
 		// do not reset basic skill
-		if (skill_id == NV_BASIC && (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE )
+		if (skill_id == NV_BASIC && (sd->class_&MAPID_SECONDMASK) != MAPID_NOVICE )
 			continue;
 
 		if( sd->status.skill[idx].flag == SKILL_FLAG_PERM_GRANTED )
@@ -9506,7 +9523,7 @@ int32 pc_resetskill(map_session_data* sd, int32 flag)
 
 	if (flag&1) {
 		clif_updatestatus(*sd,SP_SKILLPOINT);
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 		status_calc_pc(sd, SCO_FORCE);
 	}
 
@@ -9752,7 +9769,7 @@ int32 pc_dead(map_session_data *sd,block_list *src)
 
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
 	// Super Novices have no kill or die functions attached when saved by their angel
-	if (!sd->state.snovice_dead_flag && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE) {
+	if (!sd->state.snovice_dead_flag && (sd->class_&MAPID_SECONDMASK) == MAPID_SUPER_NOVICE) {
 		t_exp exp = pc_nextbaseexp(sd);
 
 		if( exp && get_percentage_exp(sd->status.base_exp, exp) >= 99 ) {
@@ -9966,7 +9983,7 @@ int32 pc_dead(map_session_data *sd,block_list *src)
 
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type
-		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
+		&& (sd->class_&MAPID_SECONDMASK) != MAPID_NOVICE	// only novices will receive no penalty
 	    && !sd->sc.cant.deathpenalty
 		&& !mapdata->getMapFlag(MF_NOEXPPENALTY) && !mapdata_flag_gvg2(mapdata))
 	{
@@ -10170,7 +10187,7 @@ bool pc_revive_item(map_session_data *sd) {
 /*==========================================
  * script reading pc status registry
  *------------------------------------------*/
-int64 pc_readparam(map_session_data* sd,int64 type)
+int64 pc_readparam( const map_session_data* sd, int64 type )
 {
 	int64 val = 0;
 
@@ -10184,9 +10201,9 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_BASELEVEL:       val = sd->status.base_level; break;
 		case SP_JOBLEVEL:        val = sd->status.job_level; break;
 		case SP_CLASS:           val = sd->status.class_; break;
-		case SP_BASEJOB:         val = pc_mapid2jobid(sd->class_&MAPID_UPPERMASK, sd->status.sex); break; //Base job, extracting upper type.
+		case SP_BASESECOND:      val = pc_mapid2jobid(sd->class_&MAPID_SECONDMASK, sd->status.sex); break; //Base job, extracting upper type.
 		case SP_UPPER:           val = sd->class_&JOBL_UPPER?1:(sd->class_&JOBL_BABY?2:0); break;
-		case SP_BASECLASS:       val = pc_mapid2jobid(sd->class_&MAPID_BASEMASK, sd->status.sex); break; //Extract base class tree. [Skotlex]
+		case SP_BASEFIRST:       val = pc_mapid2jobid(sd->class_&MAPID_FIRSTMASK, sd->status.sex); break; //Extract base class tree. [Skotlex]
 		case SP_SEX:             val = sd->status.sex; break;
 		case SP_WEIGHT:          val = sd->weight; break;
 		case SP_MAXWEIGHT:       val = sd->max_weight; break;
@@ -10330,6 +10347,7 @@ int64 pc_readparam(map_session_data* sd,int64 type)
 		case SP_SKILL_RATIO:     val = sd->bonus.skill_ratio; break;
 		case SP_SHORT_ATK_RATE:  val = sd->bonus.short_attack_atk_rate; break;
 		case SP_LONG_ATK_RATE:   val = sd->bonus.long_attack_atk_rate; break;
+		case SP_NON_CRIT_ATK_RATE:  val = sd->bonus.non_crit_atk_rate; break;
 		case SP_BREAK_WEAPON_RATE: val = sd->bonus.break_weapon_rate; break;
 		case SP_BREAK_ARMOR_RATE: val = sd->bonus.break_armor_rate; break;
 		case SP_ADD_STEAL_RATE:  val = sd->bonus.add_steal_rate; break;
@@ -10605,7 +10623,7 @@ bool pc_setparam(map_session_data *sd,int64 type,int64 val_tmp)
 		if (sd->die_counter == val)
 			return true;
 		sd->die_counter = val;
-		if (!sd->state.connect_new && sd->die_counter == 1 && (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE)
+		if (!sd->state.connect_new && sd->die_counter == 1 && (sd->class_&MAPID_SECONDMASK) == MAPID_SUPER_NOVICE)
 			status_calc_pc(sd, SCO_NONE); // Lost the bonus.
 		pc_setglobalreg(sd, add_str(PCDIECOUNTER_VAR), sd->die_counter);
 		return true;
@@ -10838,7 +10856,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	if (job == -1)
 		return false;
 
-	if ((uint16)b_class == sd->class_)
+	if (b_class == sd->class_)
 		return false; //Nothing to change.
 
 	// If the job does not exist in the job db, dont allow changing to it
@@ -10868,25 +10886,23 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		pc_skill_plagiarism_reset(*sd, 2);
 	}
 
-	if ( (b_class&MAPID_UPPERMASK) != (sd->class_&MAPID_UPPERMASK) ) { //Things to remove when changing class tree.
+	if ( (b_class&MAPID_SECONDMASK) != (sd->class_&MAPID_SECONDMASK) ) { //Things to remove when changing class tree.
 		status_db.changeSkillTree(sd);
 	}
 
-	if( (sd->class_&MAPID_UPPERMASK) == MAPID_STAR_GLADIATOR && (b_class&MAPID_UPPERMASK) != MAPID_STAR_GLADIATOR) {
+	if( (sd->class_&MAPID_SECONDMASK) == MAPID_STAR_GLADIATOR && (b_class&MAPID_SECONDMASK) != MAPID_STAR_GLADIATOR) {
 		/* going off star glad lineage, reset feel and hate to not store no-longer-used vars in the database */
 		pc_resetfeel(sd);
 		pc_resethate(sd);
 	}
 
-	// Reset body style to 0 before changing job to avoid
-	// errors since not every job has a alternate outfit.
-	sd->status.body = 0;
-	clif_changelook(sd,LOOK_BODY2,0);
-
 	sd->status.class_ = job;
-	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_UPPERMASK);
+	// Reset body style before changing job to avoid errors since not every job has a alternate outfit.
+	sd->status.body = sd->status.class_;
+
+	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_SECONDMASK);
 	uint64 previous_class = sd->class_;
-	sd->class_ = (uint16)b_class;
+	sd->class_ = b_class;
 	sd->status.job_level=1;
 	sd->status.job_exp=0;
 
@@ -10902,10 +10918,10 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	}
 
 	// Give or reduce transcendent status points
-	if( (b_class&JOBL_UPPER) && !(previous_class&JOBL_UPPER) ){ // Change from a non t class to a t class -> give points
+	if( ((b_class&JOBL_UPPER) || pc_is_primary_fourth(b_class)) && !((previous_class&JOBL_UPPER) || pc_is_primary_fourth(previous_class)) ){ // Change from a non t class to a t class -> give points
 		sd->status.status_point += battle_config.transcendent_status_points;
 		clif_updatestatus(*sd,SP_STATUSPOINT);
-	}else if( !(b_class&JOBL_UPPER) && (previous_class&JOBL_UPPER) ){ // Change from a t class to a non t class -> remove points
+	}else if( !((b_class&JOBL_UPPER) || pc_is_primary_fourth(b_class)) && ((previous_class&JOBL_UPPER) || pc_is_primary_fourth(previous_class)) ){ // Change from a t class to a non t class -> remove points
 		if( sd->status.status_point < battle_config.transcendent_status_points ){
 			// The player already used his bonus points, so we have to reset his status points
 			pc_resetstate(sd);
@@ -10915,8 +10931,16 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		}
 	}
 
+	// Update increase cost indicator
+	clif_updatestatus(*sd,SP_USTR);
+	clif_updatestatus(*sd,SP_UAGI);
+	clif_updatestatus(*sd,SP_UVIT);
+	clif_updatestatus(*sd,SP_UINT);
+	clif_updatestatus(*sd,SP_UDEX);
+	clif_updatestatus(*sd,SP_ULUK);
+
 	// Give or reduce trait status points
-	if ((b_class & JOBL_FOURTH) && !(previous_class & JOBL_FOURTH)) {// Change to a 4th job.
+	if (pc_is_trait_job(b_class) && !pc_is_trait_job(previous_class)) {// Change to a trait job.
 		sd->status.trait_point += battle_config.trait_points_job_change;
 		clif_updatestatus(*sd, SP_TRAITPOINT);
 		clif_updatestatus(*sd, SP_UPOW);
@@ -10925,7 +10949,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		clif_updatestatus(*sd, SP_USPL);
 		clif_updatestatus(*sd, SP_UCON);
 		clif_updatestatus(*sd, SP_UCRT);
-	} else if (!(b_class & JOBL_FOURTH) && (previous_class & JOBL_FOURTH)) {// Change to a non 4th job.
+	} else if (!pc_is_trait_job(b_class) && pc_is_trait_job(previous_class)) {// Change to a non trait job.
 		if (sd->status.trait_point < battle_config.trait_points_job_change) {
 			// Player may have already used the trait status points. Force a reset.
 			pc_resetstate(sd);
@@ -10962,15 +10986,12 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 #if PACKETVER >= 20151001
 	clif_changelook(sd, LOOK_HAIR, sd->vd.look[LOOK_HAIR]); // Update player's head (only matters when switching to or from Doram)
 #endif
-	if(sd->vd.look[LOOK_CLOTHES_COLOR])
-		clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.look[LOOK_CLOTHES_COLOR]);
-	/*
-	if(sd->vd.body_style)
-		clif_changelook(sd,LOOK_BODY2,sd->vd.look[LOOK_BODY2]);
-	*/
+	clif_changelook( sd, LOOK_CLOTHES_COLOR, sd->vd.look[LOOK_CLOTHES_COLOR] );
+	clif_changelook( sd, LOOK_BODY2, sd->vd.look[LOOK_BODY2] );
+	
 	//Update skill tree.
 	pc_calc_skilltree(sd);
-	clif_skillinfoblock(sd);
+	clif_skillinfoblock(*sd);
 
 	if (sd->ed)
 		elemental_delete(sd->ed);
@@ -11044,7 +11065,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 		chrif_buildfamelist();
 	else if (sd->status.fame > 0) {
 		//It may be that now they are famous?
- 		switch (sd->class_&MAPID_UPPERMASK) {
+ 		switch (sd->class_&MAPID_SECONDMASK) {
 			case MAPID_BLACKSMITH:
 			case MAPID_ALCHEMIST:
 			case MAPID_TAEKWON:
@@ -11128,7 +11149,9 @@ void pc_changelook(map_session_data *sd,int32 type,int32 val) {
 		sd->setlook_robe = val;
 		break;
 	case LOOK_BODY2:
-		val = cap_value(val, MIN_BODY_STYLE, MAX_BODY_STYLE);
+		if( !job_db.exists( val ) ){
+			return;
+		}
 
 		sd->status.body = val;
 		break;
@@ -11212,7 +11235,7 @@ void pc_setoption(map_session_data *sd,int32 type, int32 subtype)
 		clif_changelook(sd,LOOK_CLOTHES_COLOR,sd->vd.look[LOOK_CLOTHES_COLOR]);
 	if( sd->vd.look[LOOK_BODY2] )
 		clif_changelook(sd,LOOK_BODY2,sd->vd.look[LOOK_BODY2]);
-	clif_skillinfoblock(sd); // Skill list needs to be updated after base change.
+	clif_skillinfoblock(*sd); // Skill list needs to be updated after base change.
 }
 
 /**
@@ -11334,7 +11357,7 @@ bool pc_candrop(map_session_data *sd, struct item *item)
 /*==========================================
  * Read '@type' variables (temporary numeric char reg)
  *------------------------------------------*/
-int64 pc_readreg(map_session_data* sd, int64 reg)
+int64 pc_readreg( const map_session_data* sd, int64 reg )
 {
 	return i64db_i64get(sd->regs.vars, reg);
 }
@@ -11364,7 +11387,7 @@ bool pc_setreg(map_session_data* sd, int64 reg, int64 val)
 /*==========================================
  * Read '@type$' variables (temporary string char reg)
  *------------------------------------------*/
-char* pc_readregstr(map_session_data* sd, int64 reg)
+char* pc_readregstr( const map_session_data* sd, int64 reg )
 {
 	struct script_reg_str *p = nullptr;
 
@@ -11419,7 +11442,7 @@ bool pc_setregstr(map_session_data* sd, int64 reg, const char* str)
  * - '#type' (permanent numeric account reg)
  * - '##type' (permanent numeric account reg2)
  **/
-int64 pc_readregistry(map_session_data *sd, int64 reg)
+int64 pc_readregistry( const map_session_data* sd , int64 reg )
 {
 	struct script_reg_num *p = nullptr;
 
@@ -11442,7 +11465,7 @@ int64 pc_readregistry(map_session_data *sd, int64 reg)
  * - '#type$' (permanent str account reg)
  * - '##type$' (permanent str account reg2)
  **/
-char* pc_readregistry_str(map_session_data *sd, int64 reg)
+char* pc_readregistry_str( const map_session_data* sd, int64 reg )
 {
 	struct script_reg_str *p = nullptr;
 
@@ -11586,7 +11609,7 @@ bool pc_setregistry_str(map_session_data *sd, int64 reg, const char *val)
  * @param value
  * @return True if success, false if failed.
  **/
-bool pc_setreg2(map_session_data *sd, const char *reg, int64 val) {
+bool pc_setreg2( map_session_data* sd, const char *reg, int64 val ) {
 	char prefix = reg[0];
 
 	nullpo_retr(false, sd);
@@ -11619,7 +11642,7 @@ bool pc_setreg2(map_session_data *sd, const char *reg, int64 val) {
  * @param reg Variable name
  * @return Variable value or 0 if failed.
  **/
-int64 pc_readreg2(map_session_data *sd, const char *reg) {
+int64 pc_readreg2( const map_session_data* sd, const char *reg ) {
 	char prefix = reg[0];
 
 	nullpo_ret(sd);
@@ -12216,7 +12239,7 @@ bool pc_equipitem(map_session_data *sd,int16 n,int32 req_pos,bool equipswitch)
 
 	status_calc_pc(sd,SCO_NONE);
 	if (flag) //Update skill data
-		clif_skillinfoblock(sd);
+		clif_skillinfoblock(*sd);
 
 	//OnEquip script [Skotlex]
 	if (id) {
@@ -12756,7 +12779,7 @@ TIMER_FUNC(pc_calc_pvprank_timer){
  *	partner_id = yes
  *	0 = no
  *------------------------------------------*/
-int32 pc_ismarried(map_session_data *sd)
+int32 pc_ismarried( const map_session_data* sd )
 {
 	if(sd == nullptr)
 		return -1;
@@ -12833,7 +12856,7 @@ bool pc_divorce(map_session_data *sd)
  * @param sd : the husband|wife session
  * @return partner session or nullptr
  */
-map_session_data *pc_get_partner(map_session_data *sd){
+map_session_data* pc_get_partner(const map_session_data* sd ){
 	if (!sd || !pc_ismarried(sd))
 		return nullptr;
 	return map_charid2sd(sd->status.partner_id);
@@ -12844,7 +12867,7 @@ map_session_data *pc_get_partner(map_session_data *sd){
  * @param sd : the baby session
  * @return father session or nullptr
  */
-map_session_data *pc_get_father (map_session_data *sd){
+map_session_data* pc_get_father( const map_session_data* sd ){
 	if (!sd || !(sd->class_&JOBL_BABY) || !sd->status.father)
 		return nullptr;
 	return map_charid2sd(sd->status.father);
@@ -12855,7 +12878,7 @@ map_session_data *pc_get_father (map_session_data *sd){
  * @param sd : the baby session
  * @return mother session or nullptr
  */
-map_session_data *pc_get_mother (map_session_data *sd){
+map_session_data* pc_get_mother( const map_session_data* sd ){
 	if (!sd || !(sd->class_&JOBL_BABY) || !sd->status.mother)
 		return nullptr;
 	return map_charid2sd(sd->status.mother);
@@ -12864,7 +12887,7 @@ map_session_data *pc_get_mother (map_session_data *sd){
 /*==========================================
  * Get sd children charid. (Need to be married)
  *------------------------------------------*/
-map_session_data *pc_get_child (map_session_data *sd)
+map_session_data* pc_get_child(const map_session_data* sd )
 {
 	if (!sd || !pc_ismarried(sd) || !sd->status.child)
 		// charid2sd returns nullptr if not found
@@ -13126,11 +13149,11 @@ bool pc_isautolooting(map_session_data *sd, t_itemid nameid)
  * @param command Command name without @/# and params
  * @param type is it atcommand or charcommand
  */
-bool pc_can_use_command( map_session_data *sd, const char *command, AtCommandType type ){
+bool pc_can_use_command( const map_session_data* sd, const char *command, AtCommandType type ){
 	return sd->group->can_use_command( command, type );
 }
 
-bool pc_has_permission( map_session_data* sd, e_pc_permission permission ){
+bool pc_has_permission( const map_session_data* sd, e_pc_permission permission ){
 	return sd->permissions.test( permission );
 }
 
@@ -13139,7 +13162,7 @@ bool pc_has_permission( map_session_data* sd, e_pc_permission permission ){
  * according to their group setting.
  * @param sd Player map session data
  */
-bool pc_should_log_commands( map_session_data *sd ){
+bool pc_should_log_commands( const map_session_data* sd ){
 	return sd->group->log_commands;
 }
 
@@ -13682,20 +13705,20 @@ uint32 JobDatabase::calc_basehp( const uint16 level, const std::shared_ptr<s_job
 	}
 
 #ifndef RENEWAL
-	if( (mapid & MAPID_BASEMASK) == MAPID_NINJA ){
+	if( (mapid & MAPID_FIRSTMASK) == MAPID_NINJA ){
 		if( level >= 10 ){
 			base_hp += 90.;
 		}
-	}else if( (mapid & MAPID_BASEMASK) == MAPID_GUNSLINGER ){
+	}else if( (mapid & MAPID_FIRSTMASK) == MAPID_GUNSLINGER ){
 		if( level >= 10 ){
 			base_hp += 90.;
 		}
 	}
 #endif
 
-	if( (mapid&MAPID_BASEMASK) == MAPID_SUMMONER ){
+	if( (mapid&MAPID_FIRSTMASK) == MAPID_SUMMONER ){
 		base_hp += floor( ( base_hp / 2 ) + 0.5 );
-	}else if( (mapid&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE ){
+	}else if( (mapid&MAPID_SECONDMASK) == MAPID_SUPER_NOVICE ){
 		// Supernovice lvl99 HP bonus.
 		if( level >= 99 ){
 			base_hp += 2000.;
@@ -13727,19 +13750,19 @@ uint32 JobDatabase::calc_basesp( const uint16 level, const std::shared_ptr<s_job
 		base_sp += floor( ( ( job->sp_factor / 100. ) * i ) + 0.5 );
 	}
 
-	if( (mapid & MAPID_BASEMASK) == MAPID_NINJA ){
+	if( (mapid & MAPID_FIRSTMASK) == MAPID_NINJA ){
 		if( level >= 10 ){
 			base_sp -= 22.;
 		}else{
 			base_sp = 11. + 3. * level;
 		}
-	}else if( (mapid & MAPID_BASEMASK) == MAPID_GUNSLINGER ){
+	}else if( (mapid & MAPID_FIRSTMASK) == MAPID_GUNSLINGER ){
 		if( level >= 10 ){
 			base_sp -= 18.;
 		}else{
 			base_sp = 9. + 3. * level;
 		}
-	}else if( (mapid&MAPID_BASEMASK) == MAPID_SUMMONER ){
+	}else if( (mapid&MAPID_FIRSTMASK) == MAPID_SUMMONER ){
 		base_sp += floor( ( base_sp / 2 ) + 0.5 );
 	}
 
@@ -14182,6 +14205,44 @@ uint64 JobDatabase::parseBodyNode(const ryml::NodeRef& node) {
 			}
 #endif
 
+			if( this->nodeExists( node, "AlternateOutfits" ) ){
+				const ryml::NodeRef& alternateOutfitNodes = node["AlternateOutfits"];
+
+				for( const ryml::NodeRef& alternateOutfitNode : alternateOutfitNodes ){
+					std::string alternate_name;
+					c4::from_chars( alternateOutfitNode.key(), &alternate_name );
+					std::string job_name_constant = "JOB_" + alternate_name;
+					int64 alternate_constant;
+
+					if( !script_get_constant( job_name_constant.c_str(), &alternate_constant ) ){
+						this->invalidWarning( alternateOutfitNode, "Job %s does not exist.\n", alternate_name.c_str() );
+						return 0;
+					}
+
+					bool active;
+
+					if( !this->asBool( alternateOutfitNodes, alternate_name, active ) ){
+						return 0;
+					}
+
+					uint16 alternate_job_id = static_cast<decltype(alternate_job_id)>( alternate_constant );
+
+					if( util::vector_exists( job->alternate_outfits, alternate_job_id ) ){
+						if( active ){
+							this->invalidWarning( alternateOutfitNode, "Job %s is already in the alternate outfit list.\n", alternate_name.c_str() );
+						}else{
+							util::vector_erase_if_exists( job->alternate_outfits, alternate_job_id );
+						}
+					}else{
+						if( active ){
+							job->alternate_outfits.push_back( alternate_job_id );
+						}else{
+							this->invalidWarning( alternateOutfitNode, "Job %s is not in the alternate outfit list.\n", alternate_name.c_str() );
+						}
+					}
+				}
+			}
+
 			if (!exists)
 				this->put(static_cast<uint16>(job_id), job);
 		}
@@ -14275,18 +14336,18 @@ void JobDatabase::loadingFinished() {
 			}
 
 			// Summoner
-			if( ( class_ & MAPID_BASEMASK ) == MAPID_SUMMONER ){
+			if( ( class_ & MAPID_FIRSTMASK ) == MAPID_SUMMONER ){
 				max = battle_config.max_summoner_parameter;
 				break;
 			}
 
 			// Extended classes
-			if( ( class_ & MAPID_UPPERMASK ) == MAPID_KAGEROUOBORO || ( class_ & MAPID_UPPERMASK ) == MAPID_REBELLION ){
+			if( ( class_ & MAPID_SECONDMASK ) == MAPID_KAGEROUOBORO || ( class_ & MAPID_SECONDMASK ) == MAPID_REBELLION ){
 				max = battle_config.max_extended_parameter;
 				break;
 			}
 
-			if( class_ & JOBL_FOURTH ){
+			if( pc_is_trait_job(class_) ){
 				max = battle_config.max_fourth_parameter;
 				break;
 			}
@@ -14294,7 +14355,7 @@ void JobDatabase::loadingFinished() {
 			// 3rd class
 			if( class_ & JOBL_THIRD ){
 				// Transcendent
-				if( class_ & JOBL_UPPER ){
+				if( (class_ & JOBL_UPPER) || pc_is_primary_fourth(class_) ){
 					max = battle_config.max_third_trans_parameter;
 					break;
 				}else{
@@ -14318,7 +14379,7 @@ void JobDatabase::loadingFinished() {
 		}
 
 		// Set trait status limit
-		if( class_ & JOBL_FOURTH ){
+		if( pc_is_trait_job(class_) ){
 			max = battle_config.max_trait_parameter;
 		}else{
 			max = 0;
@@ -15156,7 +15217,7 @@ void pc_cell_basilica(map_session_data *sd) {
  * @param param: Max parameter to check
  * @return max_param
  */
-uint16 pc_maxparameter(map_session_data *sd, e_params param) {
+uint16 pc_maxparameter( const map_session_data* sd, e_params param ) {
 	nullpo_retr(0, sd);
 
 	std::shared_ptr<s_job_info> job = job_db.find(pc_mapid2jobid(sd->class_,sd->status.sex));
@@ -15173,12 +15234,12 @@ uint16 pc_maxparameter(map_session_data *sd, e_params param) {
 * @param sd Player
 * @return ASPD
 */
-int16 pc_maxaspd(map_session_data *sd) {
+int16 pc_maxaspd( const map_session_data* sd ) {
 	nullpo_ret(sd);
 
 	return (( sd->class_&JOBL_THIRD) ? battle_config.max_third_aspd : (
-			((sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO || (sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION) ? battle_config.max_extended_aspd : (
-			(sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? battle_config.max_summoner_aspd : 
+			((sd->class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO || (sd->class_&MAPID_SECONDMASK) == MAPID_REBELLION) ? battle_config.max_extended_aspd : (
+			(sd->class_&MAPID_FIRSTMASK) == MAPID_SUMMONER) ? battle_config.max_summoner_aspd : 
 			battle_config.max_aspd ));
 }
 
@@ -15230,7 +15291,7 @@ int16 pc_get_itemgroup_bonus_group(map_session_data* sd, uint16 group_id, std::v
 * @param index Known index item in inventory from sd->equip_index[] to compare with specified EQI in *equip_index
 * @return True if item in same inventory index, False if doesn't
 */
-bool pc_is_same_equip_index(enum equip_index eqi, int16 *equip_index, int16 index) {
+bool pc_is_same_equip_index(enum equip_index eqi, const int16* equip_index, int16 index) {
 	if (index < 0 || index >= MAX_INVENTORY)
 		return true;
 	// Dual weapon checks
