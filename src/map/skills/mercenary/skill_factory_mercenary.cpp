@@ -26,6 +26,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMercenary::create(const e_skill ski
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MER_CRASH:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case MER_QUICKEN:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ML_AUTOGUARD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ML_DEFENDER:
@@ -36,6 +38,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryMercenary::create(const e_skill ski
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MS_BASH:
 			return std::make_unique<SkillMercenaryBash>();
+		case MS_BERSERK:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MS_PARRYING:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 
 		default:
 			return nullptr;

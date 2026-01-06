@@ -3,6 +3,7 @@
 
 #include "skill_factory_mage.hpp"
 
+#include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
 #include "coldbolt.hpp"
@@ -20,6 +21,10 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case AG_CLIMAX:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case EM_SPELL_ENCHANTING:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case HW_MAGICCRASHER:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MG_SIGHT:
@@ -46,6 +51,16 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillColdBolt>();
 		case MG_THUNDERSTORM:
 			return std::make_unique<SkillThunderStorm>();
+		case PF_DOUBLECASTING:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case PF_MEMORIZE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WL_MARSHOFABYSS:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WL_RECOGNIZEDSPELL:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WL_TELEKINESIS_INTENSE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 
 		default:
 			return nullptr;

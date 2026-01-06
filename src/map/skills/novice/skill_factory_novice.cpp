@@ -7,8 +7,16 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryNovice::create(const e_skill skill_id) const {
 	switch( skill_id ){
+		case HN_BREAKINGLIMIT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case HN_RULEBREAK:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case HW_MAGICPOWER:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NV_TRICKDEAD:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SN_SIGHT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 
 		default:
 			return nullptr;

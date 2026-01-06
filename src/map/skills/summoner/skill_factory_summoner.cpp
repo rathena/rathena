@@ -3,13 +3,18 @@
 
 #include "skill_factory_summoner.hpp"
 
+#include "../status_skill_impl.hpp"
+
 std::unique_ptr<const SkillImpl> SkillFactorySummoner::create(const e_skill skill_id) const {
-#if 0
 	switch( skill_id ){
+		case SH_TEMPORARY_COMMUNION:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SU_ARCLOUSEDASH:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SU_FRESHSHRIMP:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+
 		default:
 			return nullptr;
 	}
-#endif
-
-	return nullptr;
 }
