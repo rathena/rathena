@@ -35,3 +35,11 @@ Note that this docker environment has a bit unusual setup given the nature of th
 ### F.A.Q
 
 `ls: can't open '.': Permission denied` turn off selinux.
+
+### Shipping to production
+
+Since now you have the container compiled with the binaries ready to go, the only thing you need to get this up and running in your VPS is to:
+
+1. Push the image to your registry [ref](https://docs.docker.com/reference/cli/docker/image/push/)
+2. Copy over `docker-compose.yml` and update the `image: "rathena:local"` to match your `registry:tag`
+3. Then its business as usual (`docker-compose up -d`)

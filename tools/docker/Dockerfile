@@ -46,6 +46,11 @@ COPY --from=builder /rathena/char-server /rathena/char-server
 COPY --from=builder /rathena/login-server /rathena/login-server
 COPY --from=builder /rathena/web-server /rathena/web-server
 
+# Copy over config files to the final container to ease production deployment
+COPY --from=builder /rathena/conf /rathena/conf
+COPY --from=builder /rathena/npc /rathena/npc
+COPY --from=builder /rathena/db /rathena/db
+
 COPY --from=builder /bin/wait-for /bin/wait-for
 
 RUN chmod +x \
