@@ -29,7 +29,7 @@ void SkillJumpKick::applyAdditionalEffects(block_list *src, block_list *target, 
 	map_session_data *dstsd = BL_CAST(BL_PC, target);
 
 	// debuff the following statuses
-	if (dstsd && dstsd->class_ != MAPID_SOUL_LINKER && !tsc->getSCE(SC_PRESERVE)) {
+	if (dstsd && dstsd->class_ != MAPID_SOUL_LINKER && tsc != nullptr && !tsc->getSCE(SC_PRESERVE)) {
 		status_change_end(target, SC_SPIRIT);
 		status_change_end(target, SC_ADRENALINE2);
 		status_change_end(target, SC_KAITE);
