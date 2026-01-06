@@ -24,6 +24,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMercenary::create(const e_skill ski
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MA_DOUBLE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case MER_AUTOBERSERK:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case MER_CRASH:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MER_QUICKEN:
