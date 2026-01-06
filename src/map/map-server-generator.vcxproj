@@ -315,7 +315,6 @@
     <ClInclude Include="skills/taekwon/highjump.hpp" />
     <ClInclude Include="skills/taekwon/jumpkick.hpp" />
     <ClInclude Include="skills/taekwon/mission.hpp" />
-    <ClInclude Include="skills/taekwon/readycounter.hpp" />
     <ClInclude Include="skills/taekwon/readydown.hpp" />
     <ClInclude Include="skills/taekwon/readystorm.hpp" />
     <ClInclude Include="skills/taekwon/readyturn.hpp" />
@@ -457,7 +456,6 @@
     <ClCompile Include="skills/taekwon/highjump.cpp" />
     <ClCompile Include="skills/taekwon/jumpkick.cpp" />
     <ClCompile Include="skills/taekwon/mission.cpp" />
-    <ClCompile Include="skills/taekwon/readycounter.cpp" />
     <ClCompile Include="skills/taekwon/readydown.cpp" />
     <ClCompile Include="skills/taekwon/readystorm.cpp" />
     <ClCompile Include="skills/taekwon/readyturn.cpp" />
