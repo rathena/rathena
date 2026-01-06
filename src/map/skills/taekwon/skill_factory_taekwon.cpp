@@ -20,7 +20,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 		case TK_COUNTER:
 			return std::make_unique<SkillCounter>();
 		case TK_DODGE:
-			return std::make_unique<StatusSkillImpl>(TK_DODGE, true);
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case TK_DOWNKICK:
 			return std::make_unique<SkillDownKick>();
 		case TK_HIGHJUMP:
@@ -30,13 +30,13 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 		case TK_MISSION:
 			return std::make_unique<SkillMission>();
 		case TK_READYCOUNTER:
-			return std::make_unique<StatusSkillImpl>(TK_READYCOUNTER, true);
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case TK_READYDOWN:
-			return std::make_unique<StatusSkillImpl>(TK_READYDOWN, true);
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case TK_READYSTORM:
-			return std::make_unique<StatusSkillImpl>(TK_READYSTORM, true);
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case TK_READYTURN:
-			return std::make_unique<StatusSkillImpl>(TK_READYTURN, true);
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case TK_RUN:
 			return std::make_unique<SkillRun>();
 		case TK_SEVENWIND:
