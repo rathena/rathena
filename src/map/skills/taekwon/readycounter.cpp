@@ -11,7 +11,8 @@ SkillReadyCounter::SkillReadyCounter() : SkillImpl(TK_READYCOUNTER) {
 
 void SkillReadyCounter::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	sc_type type = skill_get_sc(getSkillId());
-	status_change_entry *tsce = status_get_sc(bl)->getSCE(type);
+	status_change* tsc = status_get_sc(bl);
+	status_change_entry* tsce = (tsc && type != SC_NONE) ? tsc->getSCE(type) : nullptr;
 
 	if (tsce) {
 		clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, status_change_end(bl, type));
