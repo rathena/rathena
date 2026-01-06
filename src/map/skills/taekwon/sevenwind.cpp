@@ -9,7 +9,7 @@
 SkillSevenWind::SkillSevenWind() : SkillImpl(TK_SEVENWIND) {
 }
 
-void SkillSevenWind::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
+void SkillSevenWind::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	sc_type type = SC_NONE;
 
 	switch (skill_get_ele(getSkillId(), skill_lv)) {
@@ -36,6 +36,6 @@ void SkillSevenWind::castendNoDamageId(block_list *src, block_list *bl, uint16 s
 			break;
 	}
 
-	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)));
-	sc_start(src, bl, SC_SEVENWIND, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv, sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)));
+	sc_start(src, target, SC_SEVENWIND, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 }

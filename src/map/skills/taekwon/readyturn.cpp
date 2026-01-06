@@ -9,15 +9,15 @@
 SkillReadyTurn::SkillReadyTurn() : SkillImpl(TK_READYTURN) {
 }
 
-void SkillReadyTurn::castendNoDamageId(block_list *src, block_list *bl, uint16 skill_lv, t_tick tick, int32 &flag) const {
+void SkillReadyTurn::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	sc_type type = skill_get_sc(getSkillId());
-	status_change* tsc = status_get_sc(bl);
+	status_change* tsc = status_get_sc(target);
 	status_change_entry* tsce = (tsc && type != SC_NONE) ? tsc->getSCE(type) : nullptr;
 
 	if (tsce) {
-		clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, status_change_end(bl, type));
+		clif_skill_nodamage(src, *target, getSkillId(), skill_lv, status_change_end(target, type));
 		return;
 	}
 
-	clif_skill_nodamage(src, *bl, getSkillId(), skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)));
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv, sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)));
 }
