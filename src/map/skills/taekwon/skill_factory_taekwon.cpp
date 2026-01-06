@@ -3,8 +3,9 @@
 
 #include "skill_factory_taekwon.hpp"
 
+#include "../status_skill_impl.hpp"
+
 #include "counter.hpp"
-#include "dodge.hpp"
 #include "downkick.hpp"
 #include "highjump.hpp"
 #include "jumpkick.hpp"
@@ -23,7 +24,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 		case TK_COUNTER:
 			return std::make_unique<SkillCounter>();
 		case TK_DODGE:
-			return std::make_unique<SkillDodge>();
+			return std::make_unique<StatusSkillImpl>(TK_DODGE, true);
 		case TK_DOWNKICK:
 			return std::make_unique<SkillDownKick>();
 		case TK_HIGHJUMP:

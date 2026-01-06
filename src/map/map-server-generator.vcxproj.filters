@@ -582,9 +582,6 @@
     <ClInclude Include="skills/taekwon/counter.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/dodge.hpp">
-      <Filter>Header Files\Skills\Taekwon</Filter>
-    </ClInclude>
     <ClInclude Include="skills/taekwon/downkick.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
@@ -870,9 +867,6 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/counter.cpp">
-      <Filter>Source Files\Skills\Taekwon</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/taekwon/dodge.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/downkick.cpp">
