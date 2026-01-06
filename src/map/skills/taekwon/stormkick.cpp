@@ -8,7 +8,7 @@
 SkillStormKick::SkillStormKick() : SkillImpl(TK_STORMKICK) {
 }
 
-void SkillStormKick::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
+void SkillStormKick::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 	base_skillratio += 60 + 20 * skill_lv;
 }
 

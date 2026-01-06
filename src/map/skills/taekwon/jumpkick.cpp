@@ -11,8 +11,8 @@
 SkillJumpKick::SkillJumpKick() : SkillImpl(TK_JUMPKICK) {
 }
 
-void SkillJumpKick::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
-	status_change *sc = status_get_sc(src);
+void SkillJumpKick::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
+	const status_change *sc = status_get_sc(src);
 	// Different damage formulas depending on damage trigger
 	if (sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == getSkillId())
 		base_skillratio += -100 + 4 * status_get_lv(src); // Tumble formula [4%*baselevel]
