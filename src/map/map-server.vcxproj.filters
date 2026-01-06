@@ -423,9 +423,6 @@
     <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
-    <ClInclude Include="skills/gunslinger/adjustment.hpp">
-      <Filter>Header Files\Skills\Gunslinger</Filter>
-    </ClInclude>
     <ClInclude Include="skills/gunslinger/bullseye.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -669,9 +666,6 @@
       <Filter>Source Files\Skills\Custom</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp">
-      <Filter>Source Files\Skills\Gunslinger</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/gunslinger/adjustment.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/bullseye.cpp">

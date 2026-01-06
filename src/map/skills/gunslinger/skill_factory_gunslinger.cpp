@@ -3,7 +3,6 @@
 
 #include "skill_factory_gunslinger.hpp"
 
-#include "adjustment.hpp"
 #include "bullseye.hpp"
 #include "cracker.hpp"
 #include "desperado.hpp"
@@ -24,7 +23,7 @@
 std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill skill_id) const {
 	switch (skill_id) {
 		case GS_ADJUSTMENT:
-			return std::make_unique<SkillAdjustment>();
+			return std::make_unique<StatusSkillImpl>(GS_ADJUSTMENT);
 		case GS_BULLSEYE:
 			return std::make_unique<SkillBullseye>();
 		case GS_CHAINACTION:
