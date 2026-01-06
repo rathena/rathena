@@ -55,6 +55,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case PF_MEMORIZE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SA_REVERSEORCISH:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WL_MARSHOFABYSS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WL_RECOGNIZEDSPELL:
