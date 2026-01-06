@@ -594,9 +594,6 @@
     <ClInclude Include="skills/taekwon/mission.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/readyturn.hpp">
-      <Filter>Header Files\Skills\Taekwon</Filter>
-    </ClInclude>
     <ClInclude Include="skills/taekwon/run.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
@@ -870,9 +867,6 @@
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/mission.cpp">
-      <Filter>Source Files\Skills\Taekwon</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/taekwon/readyturn.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/run.cpp">
