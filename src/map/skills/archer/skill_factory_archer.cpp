@@ -38,6 +38,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case RA_UNLIMIT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SN_SIGHT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TR_KVASIR_SONATA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TR_MYSTIC_SYMPHONY:
