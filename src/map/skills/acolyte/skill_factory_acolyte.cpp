@@ -97,8 +97,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SR_GATEOFHELL:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SR_GENTLETOUCH_CHANGE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SR_GENTLETOUCH_ENERGYGAIN:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SR_GENTLETOUCH_QUIET:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SR_GENTLETOUCH_REVITALIZE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SR_LIGHTNINGWALK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 #ifndef RENEWAL
