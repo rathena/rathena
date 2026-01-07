@@ -3,6 +3,8 @@
 
 #include "skill_factory_mage.hpp"
 
+#include "../weapon_skill_impl.hpp"
+
 #include "coldbolt.hpp"
 #include "energycoat.hpp"
 #include "fireball.hpp"
@@ -18,6 +20,8 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case HW_MAGICCRASHER:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MG_SIGHT:
 			return std::make_unique<SkillSight>();
 		case MG_SOULSTRIKE:
@@ -42,6 +46,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillColdBolt>();
 		case MG_THUNDERSTORM:
 			return std::make_unique<SkillThunderStorm>();
+
 		default:
 			return nullptr;
 	}
