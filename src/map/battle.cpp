@@ -4778,7 +4778,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 					skillratio += ratio / 2;
 			}
 			break;
-		case KN_BOWLINGBASH:
 		case MS_BOWLINGBASH:
 			skillratio += 40 * skill_lv;
 			break;
