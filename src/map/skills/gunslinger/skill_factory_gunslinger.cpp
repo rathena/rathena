@@ -70,10 +70,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillTracking>();
 		case GS_TRIPLEACTION:
 			return std::make_unique<SkillTripleAction>();
+		case NW_AUTO_FIRING_LAUNCHER:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NW_BASIC_GRENADE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NW_HASTY_FIRE_IN_THE_HOLE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NW_HIDDEN_CARD:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NW_MIDNIGHT_FALLEN:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NW_MISSION_BOMBARD:

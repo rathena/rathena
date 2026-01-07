@@ -12787,12 +12787,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
 
-	case NW_HIDDEN_CARD:
-	case NW_AUTO_FIRING_LAUNCHER:
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		clif_skill_nodamage(src, *src, skill_id, skill_lv);
-		break;
-
 	case NW_GRENADE_FRAGMENT:
 		status_change_end(src, type);
 		if (skill_lv < 7)
