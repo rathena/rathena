@@ -10814,14 +10814,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		skill_castend_damage_id(src, bl, ABC_ABYSS_FLAME_ATK, skill_lv, tick, flag);
 		break;
 
-	case GC_WEAPONBLOCKING:
-		if( tsc && tsc->getSCE(SC_WEAPONBLOCKING) )
-			status_change_end(bl, SC_WEAPONBLOCKING);
-		else
-			sc_start(src,bl,SC_WEAPONBLOCKING,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-
 	case GC_CREATENEWPOISON:
 		if( sd )
 		{

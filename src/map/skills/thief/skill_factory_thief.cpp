@@ -33,6 +33,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GC_VENOMPRESSURE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case GC_WEAPONBLOCKING:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case GC_WEAPONCRUSH:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case RG_INTIMIDATE:

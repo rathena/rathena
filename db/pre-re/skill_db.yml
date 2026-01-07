@@ -18897,6 +18897,7 @@ Body:
           Amount: 28
         - Level: 5
           Amount: 24
+    Status: WeaponBlocking
   - Id: 2029
     Name: GC_COUNTERSLASH
     Description: Counter Slash
