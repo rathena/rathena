@@ -315,6 +315,7 @@
     <ClInclude Include="skills/swordman/selfprovoke.hpp" />
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
     <ClInclude Include="skills/swordman/spearboomerang.hpp" />
+    <ClInclude Include="skills/swordman/spearstab.hpp" />
     <ClInclude Include="skills/taekwon/counter.hpp" />
     <ClInclude Include="skills/taekwon/downkick.hpp" />
     <ClInclude Include="skills/taekwon/highjump.hpp" />
@@ -458,6 +459,7 @@
     <ClCompile Include="skills/swordman/selfprovoke.cpp" />
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp" />
     <ClCompile Include="skills/swordman/spearboomerang.cpp" />
+    <ClCompile Include="skills/swordman/spearstab.cpp" />
     <ClCompile Include="skills/taekwon/counter.cpp" />
     <ClCompile Include="skills/taekwon/downkick.cpp" />
     <ClCompile Include="skills/taekwon/highjump.cpp" />

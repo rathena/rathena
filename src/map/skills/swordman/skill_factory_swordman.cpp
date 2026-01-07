@@ -16,6 +16,7 @@
 #include "provoke.hpp"
 #include "selfprovoke.hpp"
 #include "spearboomerang.hpp"
+#include "spearstab.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -57,6 +58,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillPierce>();
 		case KN_SPEARBOOMERANG:
 			return std::make_unique<SkillSpearBoomerang>();
+		case KN_SPEARSTAB:
+			return std::make_unique<SkillSpearStab>();
 		case KN_TWOHANDQUICKEN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LG_BANISHINGPOINT:

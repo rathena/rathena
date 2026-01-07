@@ -4739,9 +4739,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case MER_CRASH:
 			skillratio += 10 * skill_lv;
 			break;
-		case KN_SPEARSTAB:
-			skillratio += 20 * skill_lv;
-			break;
 		case ML_BRANDISH:
 			{
 				int32 ratio = 100 + 20 * skill_lv;
