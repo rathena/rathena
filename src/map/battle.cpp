@@ -3282,7 +3282,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case MS_MAGNUM:
 				hitrate += hitrate * 10 * skill_lv / 100;
 				break;
-			case KN_AUTOCOUNTER:
 			case NPC_WATERATTACK:
 			case NPC_GROUNDATTACK:
 			case NPC_FIREATTACK:

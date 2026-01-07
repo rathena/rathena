@@ -8254,11 +8254,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sc_start(src, bl, type, skill_lv*20, skill_lv, skill_get_time2(skill_id, skill_lv)));
 		break;
 
-	case KN_AUTOCOUNTER:
-		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		skill_addtimerskill(src,tick + 100,bl->id,0,0,skill_id,skill_lv,BF_WEAPON,flag);
-		break;
-
 	case SO_STRIKING:
 		if (battle_check_target(src, bl, BCT_SELF|BCT_PARTY) > 0) {
 			int32 bonus = 0;
