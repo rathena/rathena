@@ -11,7 +11,7 @@
 SkillThrowHuumaShuriken::SkillThrowHuumaShuriken() : WeaponSkillImpl(NJ_HUUMA) {
 }
 
-void SkillThrowHuumaShuriken::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
+void SkillThrowHuumaShuriken::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
 #ifdef RENEWAL
 	base_skillratio += -150 + 250 * skill_lv;
 #else
@@ -19,7 +19,7 @@ void SkillThrowHuumaShuriken::calculateSkillRatio(const Damage *wd, const block_
 #endif
 }
 
-void SkillThrowHuumaShuriken::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillThrowHuumaShuriken::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 #ifndef RENEWAL
 	if (skill_get_inf2(this->skill_id_, INF2_ISNPC)) {
 #endif

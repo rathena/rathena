@@ -73,15 +73,15 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 		case KO_SETSUDAN:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NJ_KASUMIKIRI:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillVanishingSlash>();
 		case NJ_KUNAI:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillThrowKunai>();
 		case NJ_NEN:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillSoul>();
 		case NJ_SYURIKEN:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillThrowShuriken>();
 		case NJ_UTSUSEMI:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillCicadaSkinSheeding>();
 		case SS_FUUMAKOUCHIKU:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 

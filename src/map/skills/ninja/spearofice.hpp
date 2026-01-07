@@ -5,11 +5,9 @@
 
 #include "../skill_impl.hpp"
 
-#include "map/battle.hpp"
-
 class SkillSpearOfIce : public SkillImpl {
 public:
 	SkillSpearOfIce();
 
-	void castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const override;
+	void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };

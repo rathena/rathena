@@ -7,11 +7,12 @@
 #include "map/map.hpp"
 #include "map/skill.hpp"
 #include "../../unit.hpp"
+#include "map/status.hpp"
 
 SkillShadowSlash::SkillShadowSlash() : WeaponSkillImpl(NJ_KIRIKAGE) {
 }
 
-void SkillShadowSlash::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const {
+void SkillShadowSlash::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
 #ifdef RENEWAL
 	base_skillratio += -50 + 150 * skill_lv;
 #else
@@ -19,7 +20,7 @@ void SkillShadowSlash::calculateSkillRatio(const Damage *wd, const block_list *s
 #endif
 }
 
-void SkillShadowSlash::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillShadowSlash::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	if (!map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND)) {
 		// You don't move on GVG grounds.
 		int16 x, y;

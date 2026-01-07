@@ -3,17 +3,16 @@
 
 #pragma once
 
-#include "../weapon_skill_impl.hpp"
-
 #include "map/battle.hpp"
+#include "../status_skill_impl.hpp"
 
-class SkillVanishingSlash : public WeaponSkillImpl {
+class SkillVanishingSlash : public StatusSkillImpl {
 public:
 	SkillVanishingSlash();
 
-	void calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio) const override;
+	void calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const override;
 
-	void castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const override;
+	void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 
-	int32 castendNoDamageId(struct block_list *src, struct block_list *bl, uint16 skill_lv, t_tick tick, int32 flag) const override;
+	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };
