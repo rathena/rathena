@@ -10601,13 +10601,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case HLIF_CHANGE:
 #ifndef RENEWAL
 		status_percent_heal(bl, 100, 100);
-		[[fallthrough]];
 #endif
-	case HAMI_BLOODLUST:
-	case HFLI_FLEET:
-	case HFLI_SPEED:
-	case MH_ANGRIFFS_MODUS:
-	case MH_GOLDENE_FERSE:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;

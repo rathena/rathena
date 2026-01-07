@@ -16,10 +16,16 @@ std::unique_ptr<const SkillImpl> SkillFactoryMercenary::create(const e_skill ski
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case ABR_INFINITY_BUSTER:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case HAMI_BLOODLUST:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case HFLI_FLEET:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case HFLI_MOON:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case HFLI_SBR44:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case HFLI_SPEED:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MA_CHARGEARROW:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MA_DOUBLE:
@@ -29,6 +35,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryMercenary::create(const e_skill ski
 		case MER_CRASH:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MER_QUICKEN:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MH_ANGRIFFS_MODUS:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MH_GOLDENE_FERSE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ML_AUTOGUARD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
