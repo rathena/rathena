@@ -31,7 +31,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case BO_RESEARCHREPORT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case BS_MAXIMIZE:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 #ifdef RENEWAL
 		case CR_ACIDDEMONSTRATION:
 			return std::make_unique<WeaponSkillImpl>(skill_id);

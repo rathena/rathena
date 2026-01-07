@@ -41,9 +41,9 @@ std::unique_ptr<const SkillImpl> SkillFactoryMercenary::create(const e_skill ski
 		case MH_GOLDENE_FERSE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ML_AUTOGUARD:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case ML_DEFENDER:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case ML_PIERCE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case ML_SPIRALPIERCE:
