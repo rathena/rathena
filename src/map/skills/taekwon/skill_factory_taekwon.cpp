@@ -18,12 +18,42 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case SG_FUSION:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SG_MOON_COMFORT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SG_STAR_COMFORT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SG_SUN_COMFORT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SJ_BOOKOFDIMENSION:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SJ_FALLINGSTAR:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SJ_LIGHTOFMOON:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SJ_LIGHTOFSTAR:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SJ_LIGHTOFSUN:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SJ_LUNARSTANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SJ_SUNSTANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SJ_STARSTANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SJ_UNIVERSESTANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case SKE_DAWN_BREAK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SKE_ENCHANTING_SKY:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SKE_MIDNIGHT_KICK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SKE_RISING_MOON:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SP_SOULREAPER:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TK_COUNTER:
 			return std::make_unique<SkillCounter>();
 		case TK_DODGE:

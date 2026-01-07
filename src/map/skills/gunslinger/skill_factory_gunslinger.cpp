@@ -70,10 +70,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillTracking>();
 		case GS_TRIPLEACTION:
 			return std::make_unique<SkillTripleAction>();
+		case NW_AUTO_FIRING_LAUNCHER:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NW_BASIC_GRENADE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NW_HASTY_FIRE_IN_THE_HOLE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NW_HIDDEN_CARD:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NW_MIDNIGHT_FALLEN:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NW_MISSION_BOMBARD:
@@ -84,8 +88,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case RL_BANISHING_BUSTER:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case RL_E_CHAIN:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case RL_HEAT_BARREL:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RL_MASS_SPIRAL:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case RL_P_ALTER:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RL_SLUGSHOT:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 

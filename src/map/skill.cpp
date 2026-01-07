@@ -7883,11 +7883,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		status_kill(bl);
 		break;
-	case SA_REVERSEORCISH:
-	case ALL_REVERSEORCISH:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id, skill_lv)));
-		break;
 	case SA_FORTUNE:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		if(sd) pc_getzeny(sd,status_get_lv(bl)*100,LOG_TYPE_STEAL);
@@ -8097,124 +8092,10 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			break;
 		}
 		[[fallthrough]];
-	case PR_SLOWPOISON:
-	case PR_LEXAETERNA:
-#ifndef RENEWAL
-	case PR_IMPOSITIO:
-	case PR_SUFFRAGIUM:
-#endif
-	case LK_BERSERK:
-	case MS_BERSERK:
-	case KN_TWOHANDQUICKEN:
-	case KN_ONEHAND:
-	case MER_QUICKEN:
-	case CR_SPEARQUICKEN:
-	case AS_POISONREACT:
-	case MO_EXPLOSIONSPIRITS:
-	case MO_STEELBODY:
-	case MO_BLADESTOP:
-	case LK_AURABLADE:
-	case LK_PARRYING:
-	case MS_PARRYING:
-	case LK_CONCENTRATION:
-#ifdef RENEWAL
-	case HP_BASILICA:
-#endif
-	case WS_CARTBOOST:
-	case SN_SIGHT:
-	case WS_MELTDOWN:
-	case WS_OVERTHRUSTMAX:
-	case ST_REJECTSWORD:
-	case HW_MAGICPOWER:
-	case PF_MEMORIZE:
 	case PA_SACRIFICE:
-	case PF_DOUBLECASTING:
-	case SG_SUN_COMFORT:
-	case SG_MOON_COMFORT:
-	case SG_STAR_COMFORT:
-	case NJ_KASUMIKIRI:
-	case NJ_UTSUSEMI:
-	case NJ_NEN:
-	case NPC_DEFENDER:
-	case NPC_MAGICMIRROR:
-	case ST_PRESERVE:
-	case NPC_KEEPING:
-	case NPC_WEAPONBRAKER:
-	case NPC_BARRIER:
-	case NPC_INVINCIBLE:
-	case RK_DEATHBOUND:
-	case AB_EXPIATIO:
-	case AB_DUPLELIGHT:
-	case AB_SECRAMENT:
-	case AB_OFFERTORIUM:
-	case NC_ACCELERATION:
-	case NC_HOVERING:
-	case NC_SHAPESHIFT:
-	case WL_MARSHOFABYSS:
-	case WL_RECOGNIZEDSPELL:
-	case GC_VENOMIMPRESS:
-	case SC_DEADLYINFECT:
-	case LG_EXEEDBREAK:
-	case LG_PRESTIGE:
-	case LG_INSPIRATION:
-	case SR_CRESCENTELBOW:
-	case SR_LIGHTNINGWALK:
-	case GN_CARTBOOST:
-	case GN_BLOOD_SUCKER:
-	case GN_HELLS_PLANT:
-	case KO_MEIKYOUSISUI:
-	case ALL_ODINS_POWER:
 	case ALL_FULL_THROTTLE:
-	case RA_UNLIMIT:
-	case WL_TELEKINESIS_INTENSE:
-	case RL_HEAT_BARREL:
-	case RL_P_ALTER:
-	case RL_E_CHAIN:
-	case SU_FRESHSHRIMP:
-	case SU_ARCLOUSEDASH:
-	case NPC_MAXPAIN:
-	case NPC_KILLING_AURA:
-	case SP_SOULREAPER:
-	case SJ_LIGHTOFMOON:
-	case SJ_LIGHTOFSTAR:
-	case SJ_FALLINGSTAR:
-	case SJ_LIGHTOFSUN:
-	case SJ_BOOKOFDIMENSION:
-	case NPC_HALLUCINATIONWALK:
-	case DK_CHARGINGPIERCE:
-	case DK_VIGOR:
-	case AG_CLIMAX:
-	case IQ_POWERFUL_FAITH:
-	case IQ_FIRM_FAITH:
-	case IQ_SINCERE_FAITH:
-	case IQ_FIRST_FAITH_POWER:
-	case IQ_JUDGE:
-	case IQ_THIRD_EXOR_FLAME:
-	case IG_REBOUND_SHIELD:
-	case IG_HOLY_SHIELD:
-	case CD_ARGUTUS_VITA:
-	case CD_ARGUTUS_TELUM:
-	case CD_PRESENS_ACIES:
-	case CD_RELIGIO:
-	case CD_BENEDICTUM:
-	case SHC_SHADOW_EXCEED:
-	case SHC_POTENT_VENOM:
-	case SHC_ENCHANTING_SHADOW:
-	case MT_D_MACHINE:
-	case ABC_ABYSS_SLAYER:
-	case WH_WIND_SIGN:
-	case WH_CALAMITYGALE:
-	case BO_RESEARCHREPORT:
-	case TR_MYSTIC_SYMPHONY:
-	case TR_KVASIR_SONATA:
-	case EM_SPELL_ENCHANTING:
-	case NPC_DAMAGE_HEAL:
-	case NPC_RELIEVE_ON:
-	case NPC_RELIEVE_OFF:
-	case HN_BREAKINGLIMIT:
-	case HN_RULEBREAK:
-	case SH_TEMPORARY_COMMUNION:
-	case SKE_ENCHANTING_SKY:
+	case ALL_ODINS_POWER:
+	case ALL_REVERSEORCISH:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -9072,32 +8953,14 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case BS_MAXIMIZE:
-	case NV_TRICKDEAD:
-	case CR_DEFENDER:
-	case ML_DEFENDER:
-	case CR_AUTOGUARD:
-	case ML_AUTOGUARD:
-	case CR_SHRINK:
-	case SG_FUSION:
-	case SJ_LUNARSTANCE:
-	case SJ_STARSTANCE:
-	case SJ_UNIVERSESTANCE:
-	case SJ_SUNSTANCE:
 	case SP_SOULCOLLECT:
-	case IG_GUARD_STANCE:
-	case IG_ATTACK_STANCE:
 		if( tsce )
 		{
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,status_change_end(bl, type));
 			return 0;
 		}
 
-		if( skill_id == SP_SOULCOLLECT ){
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd, SP_SOULENERGY), skill_get_time(skill_id, skill_lv)));
-		}else{
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		}
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd, SP_SOULENERGY), skill_get_time(skill_id, skill_lv)));
 		break;
 	case SL_KAITE:
 	case SL_KAAHI:
@@ -9128,13 +8991,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			status_heal(bl, 0, tstatus->max_sp * (10 + 2 * skill_lv) / 100, 2);
 		} else
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		break;
-	case MER_AUTOBERSERK:
-		if( tsce )
-			i = status_change_end(bl, type);
-		else
-			i = sc_start(src,bl,type,100,skill_lv,60000);
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,i);
 		break;
 	case ST_CHASEWALK:
 	case KO_YAMIKUMO:
@@ -10745,13 +10601,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case HLIF_CHANGE:
 #ifndef RENEWAL
 		status_percent_heal(bl, 100, 100);
-		[[fallthrough]];
 #endif
-	case HAMI_BLOODLUST:
-	case HFLI_FLEET:
-	case HFLI_SPEED:
-	case MH_ANGRIFFS_MODUS:
-	case MH_GOLDENE_FERSE:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -10962,14 +10812,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case ABC_ABYSS_FLAME:
 		map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR | BL_SKILL, src, skill_id, skill_lv, tick, (flag | BCT_ENEMY | SD_SPLASH) & ~BCT_SELF, skill_castend_damage_id);
 		skill_castend_damage_id(src, bl, ABC_ABYSS_FLAME_ATK, skill_lv, tick, flag);
-		break;
-
-	case GC_WEAPONBLOCKING:
-		if( tsc && tsc->getSCE(SC_WEAPONBLOCKING) )
-			status_change_end(bl, SC_WEAPONBLOCKING);
-		else
-			sc_start(src,bl,SC_WEAPONBLOCKING,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		break;
 
 	case GC_CREATENEWPOISON:
@@ -11564,14 +11406,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		status_change_end(bl, SC_SV_ROOTTWIST);
 		break;
 
-	case LG_REFLECTDAMAGE:
-		if( tsc && tsc->getSCE(type) )
-			status_change_end(bl,type);
-		else
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-
 	case LG_PIETY:
 		if( flag&1 )
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -11692,12 +11526,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		}
 		break;
-	case SR_GENTLETOUCH_ENERGYGAIN:
-	case SR_GENTLETOUCH_CHANGE:
-	case SR_GENTLETOUCH_REVITALIZE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
+
 	case SR_FLASHCOMBO: {
 		const int32 combo[] = { SR_DRAGONCOMBO, SR_FALLENEMPIRE, SR_TIGERCANNON };
 		const int32 delay[] = { 0, 750, 1250 };
@@ -12547,21 +12376,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case SU_HIDE:
-		if (tsce) {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_change_end(bl, type);
-			return 0;
-		}
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
- 		break;
-
-	case SU_STOOP:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
- 		break;
-
 	case SU_SV_ROOTTWIST:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		if (sd && status_get_class_(bl) == CLASS_BOSS) {
@@ -12970,12 +12784,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
-		clif_skill_nodamage(src, *src, skill_id, skill_lv);
-		break;
-
-	case NW_HIDDEN_CARD:
-	case NW_AUTO_FIRING_LAUNCHER:
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
 
