@@ -60,6 +60,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LG_RAGEBURST:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case LG_REFLECTDAMAGE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case LG_SHIELDPRESS:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case LK_AURABLADE:
