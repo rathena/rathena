@@ -15,6 +15,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySummoner::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SU_HIDE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SU_STOOP:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 
 		default:
 			return nullptr;
