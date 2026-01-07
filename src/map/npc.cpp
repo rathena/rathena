@@ -339,6 +339,8 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						return 0;
 					}
 
+					// TODO: Unsupported for now => This is job specific now
+#if 0
 					if( value < MIN_BODY_STYLE ){
 						this->invalidWarning( optionNode["Value"], "stylist_parseBodyNode: body style \"%u\" is too low...\n", value );
 						return 0;
@@ -346,6 +348,7 @@ uint64 StylistDatabase::parseBodyNode( const ryml::NodeRef& node ){
 						this->invalidWarning( optionNode["Value"], "stylist_parseBodyNode: body style \"%u\" is too high...\n", value );
 						return 0;
 					}
+#endif
 					break;
 			}
 
@@ -998,7 +1001,7 @@ int32 npc_enable_sub(block_list *bl, va_list ap)
 	return 0;
 }
 
-bool npc_is_cloaked(npc_data* nd, map_session_data* sd) {
+bool npc_is_cloaked( const npc_data* nd, const map_session_data* sd ) {
 	bool npc_cloaked = (nd->sc.option & OPTION_CLOAK) ? true : false;
 
 	if (std::find(sd->cloaked_npc.begin(), sd->cloaked_npc.end(), nd->id) != sd->cloaked_npc.end())
@@ -1006,7 +1009,7 @@ bool npc_is_cloaked(npc_data* nd, map_session_data* sd) {
 	return npc_cloaked;
 }
 
-bool npc_is_hidden_dynamicnpc( npc_data& nd, map_session_data& tsd ){
+bool npc_is_hidden_dynamicnpc( const npc_data& nd, const map_session_data& tsd ){
 	// If the NPC is dynamic and the target character is not the owner of the dynamic NPC
 	return nd.dynamicnpc.owner_char_id != 0 && nd.dynamicnpc.owner_char_id != tsd.status.char_id;
 }
@@ -2608,7 +2611,7 @@ int32 npc_cashshop_buylist( map_session_data *sd, int32 points, std::vector<s_np
  * @param cost: Reference to cost variable
  * @param display: Display cost type to player?
  */
-void npc_shop_currency_type(map_session_data *sd, npc_data *nd, int32 cost[2], bool display)
+void npc_shop_currency_type( const map_session_data* sd, const npc_data* nd, int32 cost[2], bool display)
 {
 	nullpo_retv(sd);
 
@@ -4245,7 +4248,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 * @param discount Discount flag of NPC shop
 * @return bool 'true' is discountable, 'false' otherwise
 */
-bool npc_shop_discount( npc_data* nd ){
+bool npc_shop_discount( const npc_data* nd ){
 	switch( nd->subtype ){
 		case NPCTYPE_ITEMSHOP:
 			return nd->u.shop.discount || ( battle_config.discount_item_point_shop&1 );

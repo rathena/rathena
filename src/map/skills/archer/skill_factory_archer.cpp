@@ -3,6 +3,9 @@
 
 #include "skill_factory_archer.hpp"
 
+#include "../status_skill_impl.hpp"
+#include "../weapon_skill_impl.hpp"
+
 #include "arrowshower.hpp"
 #include "chargearrow.hpp"
 #include "concentration.hpp"
@@ -21,6 +24,35 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillMakingArrow>();
 		case AC_SHOWER:
 			return std::make_unique<SkillArrowShower>();
+		case BA_DISSONANCE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case BA_MUSICALSTRIKE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case CG_ARROWVULCAN:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case DC_THROWARROW:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case HT_PHANTASMIC:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case RA_AIMEDBOLT:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case RA_UNLIMIT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SN_SIGHT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case TR_KVASIR_SONATA:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case TR_MYSTIC_SYMPHONY:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WH_CALAMITYGALE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WH_WIND_SIGN:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WM_GREAT_ECHO:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case WM_SEVERE_RAINSTORM_MELEE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+
 		default:
 			return nullptr;
 	}

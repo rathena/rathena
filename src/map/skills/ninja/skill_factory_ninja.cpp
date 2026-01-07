@@ -27,28 +27,23 @@
 #include "crimsonfireformation.hpp"
 #include "kamaitachi.hpp"
 
+#include "../status_skill_impl.hpp"
+#include "../weapon_skill_impl.hpp"
+
 std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_id) const {
 	switch (skill_id) {
 		case NJ_TOBIDOUGU:
 			return std::make_unique<SkillShurikenTraining>();
-		case NJ_SYURIKEN:
-			return std::make_unique<SkillThrowShuriken>();
-		case NJ_KUNAI:
-			return std::make_unique<SkillThrowKunai>();
 		case NJ_HUUMA:
 			return std::make_unique<SkillThrowHuumaShuriken>();
 		case NJ_ZENYNAGE:
 			return std::make_unique<SkillThrowZeny>();
 		case NJ_TATAMIGAESHI:
 			return std::make_unique<SkillImprovisedDefense>();
-		case NJ_KASUMIKIRI:
-			return std::make_unique<SkillVanishingSlash>();
 		case NJ_SHADOWJUMP:
 			return std::make_unique<SkillShadowLeap>();
 		case NJ_KIRIKAGE:
 			return std::make_unique<SkillShadowSlash>();
-		case NJ_UTSUSEMI:
-			return std::make_unique<SkillCicadaSkinSheeding>();
 		case NJ_BUNSINJYUTSU:
 			return std::make_unique<SkillMirrorImage>();
 		case NJ_NINPOU:
@@ -71,10 +66,25 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 			return std::make_unique<SkillLightningStrikeOfDestruction>();
 		case NJ_KAMAITACHI:
 			return std::make_unique<SkillKamaitachi>();
-		case NJ_NEN:
-			return std::make_unique<SkillSoul>();
 		case NJ_ISSEN:
 			return std::make_unique<SkillFinalStrike>();
+		case KO_MEIKYOUSISUI:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case KO_SETSUDAN:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NJ_KASUMIKIRI:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NJ_KUNAI:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NJ_NEN:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NJ_SYURIKEN:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NJ_UTSUSEMI:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SS_FUUMAKOUCHIKU:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+
 		default:
 			return nullptr;
 	}

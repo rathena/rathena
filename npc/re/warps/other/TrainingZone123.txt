@@ -1,0 +1,162 @@
+//===== rAthena Script =======================================
+//= Training Zone
+//===== Description: =========================================
+//= NPC warp related to the training zone.
+//===== Changelog: ===========================================
+//= 1.0 Training Zone revamp : tra_fild splitted into
+//      tra_fild01, tra_fild02 and tra_fild03 [Atemo]
+//============================================================
+
+prontera,246,62,3	script	Training Instructor#prontera_in	8W_SOLDIER,{
+	mes "[Training Instructor]";
+	mes "The royal court has set up a training ground for adventurers who wish to test their skills. If you wish to test your skills under various conditions, we will send you to the training ground.";
+	next;
+	switch( select( "¢ºEnter Basic Training Ground", "¢ºEnter 1/10 Training Ground", "¢ºEnter 1/100 Training Ground", "¢ºCancel" ) ) {
+	case 1:
+		mes "[Training Instructor]";
+		mes "I'll send you to the Basic Training Ground.";
+		close2;
+		.@x = rand(109,110);
+		.@y = rand(93,94);
+		warp "tra_fild01",.@x,.@y;
+		break;
+	case 2:
+		mes "[Training Instructor]";
+		mes "I'll send you to the 1/10 Training Ground.";
+		close2;
+		.@x = rand(109,110);
+		.@y = rand(93,94);
+		warp "tra_fild02",109,94;
+		break;
+	case 3:
+		mes "[Training Instructor]";
+		mes "I'll send you to the 1/100 Training Ground.";
+		close2;
+		.@x = rand(109,110);
+		.@y = rand(93,94);
+		warp "tra_fild03",.@x,.@y;
+		break;
+	case 4:
+		break;
+	}
+	end;
+}
+
+
+// Warps
+tra_fild01,204,117,2	script	Training Ground Manager#fild01_1	8W_SOLDIER,{
+	mes "[Training Ground Manager]";
+	mes "Need to move to a different area within the training ground? Please select the location you'd like to move to.";
+	next;
+	switch( atoi( charat(strnpcinfo(2), 7) ) ) {
+	case 1:
+		.@menu$[0] = "¢º Central Area";
+		.@menu$[1] = "";
+		.@menu$[2] = "¢º 9 O'Clock Area";
+		.@menu$[3] = "¢º 6 O'Clock Area";
+		break;
+	case 2:
+		.@menu$[0] = "¢º Central Area";
+		.@menu$[1] = "¢º 3 O'Clock Area";
+		.@menu$[2] = "";
+		.@menu$[3] = "¢º 6 O'Clock Area";
+		break;
+	case 3:
+		.@menu$[0] = "¢º Central area";
+		.@menu$[1] = "¢º 3 O'Clock Area";
+		.@menu$[2] = "¢º 9 O'Clock Area";
+		.@menu$[3] = "";
+		break;
+	case 4:
+		.@menu$[0] = "";
+		.@menu$[1] = "¢º 3 O'Clock Area";
+		.@menu$[2] = "¢º 9 O'Clock Area";
+		.@menu$[3] = "¢º 6 O'Clock Area";
+		break;
+	}
+	switch( select( .@menu$[0], .@menu$[1], .@menu$[2], .@menu$[3], "¢º To Prontera", "¢º Cancel" ) ) {
+	case 1:
+		warp strcharinfo(3),109,94;
+		break;
+	case 2:
+		warp strcharinfo(3),198,114;
+		break;
+	case 3:
+		warp strcharinfo(3),22,114;
+		break;
+	case 4:
+		warp strcharinfo(3),109,41;
+		break;
+	case 5:
+		warp "prontera",246,60;
+		break;
+	case 6:
+		break;
+	}
+	end;
+}
+tra_fild01,15,117,6	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild01_2	8W_SOLDIER
+tra_fild01,106,32,0	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild01_3	8W_SOLDIER
+tra_fild01,108,100,4	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild01_4	8W_SOLDIER
+
+tra_fild02,204,117,2	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild02_1	8W_SOLDIER
+tra_fild02,15,117,6	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild02_2	8W_SOLDIER
+tra_fild02,106,32,0	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild02_3	8W_SOLDIER
+tra_fild02,108,100,4	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild02_4	8W_SOLDIER
+
+tra_fild03,204,117,2	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild03_1	8W_SOLDIER
+tra_fild03,15,117,6	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild03_2	8W_SOLDIER
+tra_fild03,106,32,0	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild03_3	8W_SOLDIER
+tra_fild03,108,100,4	duplicate(Training Ground Manager#fild01_1)	Training Ground Manager#fild03_4	8W_SOLDIER
+
+tra_fild01,12,114,0	script	tra_fild01_out1	WARPNPC,2,2,{
+	end;
+OnTouch:
+	switch( atoi( charat(strnpcinfo(1), 9) ) ) {
+	case 1:
+		.@menu$[0] = "";
+		.@menu$[1] = "¢ºEnter 1/10 Training Ground";
+		.@menu$[2] = "¢ºEnter 1/100 Training Ground";
+		break;
+	case 2:
+		.@menu$[0] = "¢ºEnter Basic Training Grounds";
+		.@menu$[1] = "";
+		.@menu$[2] = "¢ºEnter 1/100 Training Grounds";
+		break;
+	case 3:
+		.@menu$[0] = "¢ºEnter Basic Training Grounds";
+		.@menu$[1] = "¢ºEnter 1/10 Training Grounds";
+		.@menu$[2] = "";
+		break;
+	}
+	switch( select( "¢ºTo Prontera", .@menu$[0], .@menu$[1], .@menu$[2], "¢ºCancel" ) ) {
+	case 1:
+		warp "prontera",246,60;
+		break;
+	case 2:
+		.@x = rand(109,110);
+		.@y = rand(93,94);
+		warp "tra_fild01",.@x,.@y;
+		break;
+	case 3:
+		.@x = rand(109,110);
+		.@y = rand(93,94);
+		warp "tra_fild02",.@x,.@y;
+		break;
+	case 4:
+		.@x = rand(109,110);
+		.@y = rand(93,94);
+		warp "tra_fild03",.@x,.@y;
+		break;
+	case 5:
+		break;
+	}
+	end;
+}
+tra_fild01,207,114,0	duplicate(tra_fild01_out1)	tra_fild01_out2	WARPNPC,2,2
+
+tra_fild02,12,114,0	duplicate(tra_fild01_out1)	tra_fild02_out1	WARPNPC,2,2
+tra_fild02,207,114,0	duplicate(tra_fild01_out1)	tra_fild02_out2	WARPNPC,2,2
+
+tra_fild03,12,114,0	duplicate(tra_fild01_out1)	tra_fild03_out1	WARPNPC,2,2
+tra_fild03,207,114,0	duplicate(tra_fild01_out1)	tra_fild03_out2	WARPNPC,2,2
