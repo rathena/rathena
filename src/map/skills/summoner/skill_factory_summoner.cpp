@@ -13,6 +13,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySummoner::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SU_FRESHSHRIMP:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SU_HIDE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 
 		default:
 			return nullptr;

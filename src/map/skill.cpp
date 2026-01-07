@@ -12376,16 +12376,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case SU_HIDE:
-		if (tsce) {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_change_end(bl, type);
-			return 0;
-		}
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
- 		break;
-
 	case SU_STOOP:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
