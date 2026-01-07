@@ -3311,7 +3311,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case NPC_DARKNESSBREATH:
 				hitrate *= 2;
 				break;
-			case KN_PIERCE:
 			case ML_PIERCE:
 				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
@@ -4733,11 +4732,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			break;
 		case MA_CHARGEARROW:
 			skillratio += 50;
-			break;
-		case KN_PIERCE:
-			skillratio += 10 * skill_lv;
-			if (sc && sc->getSCE(SC_CHARGINGPIERCE_COUNT) && sc->getSCE(SC_CHARGINGPIERCE_COUNT)->val1 >= 10)
-				skillratio *= 2;
 			break;
 		case ML_PIERCE:
 			skillratio += 10 * skill_lv;
