@@ -307,6 +307,7 @@
     <ClInclude Include="skills/swordman/autoberserk.hpp" />
     <ClInclude Include="skills/swordman/bash.hpp" />
     <ClInclude Include="skills/swordman/bowlingbash.hpp" />
+    <ClInclude Include="skills/swordman/brandishspear.hpp" />
     <ClInclude Include="skills/swordman/magnum.hpp" />
     <ClInclude Include="skills/swordman/provoke.hpp" />
     <ClInclude Include="skills/swordman/selfprovoke.hpp" />
@@ -446,6 +447,7 @@
     <ClCompile Include="skills/swordman/autoberserk.cpp" />
     <ClCompile Include="skills/swordman/bash.cpp" />
     <ClCompile Include="skills/swordman/bowlingbash.cpp" />
+    <ClCompile Include="skills/swordman/brandishspear.cpp" />
     <ClCompile Include="skills/swordman/magnum.cpp" />
     <ClCompile Include="skills/swordman/provoke.cpp" />
     <ClCompile Include="skills/swordman/selfprovoke.cpp" />

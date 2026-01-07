@@ -9,6 +9,7 @@
 #include "autoberserk.hpp"
 #include "bash.hpp"
 #include "bowlingbash.hpp"
+#include "brandishspear.hpp"
 #include "magnum.hpp"
 #include "provoke.hpp"
 #include "selfprovoke.hpp"
@@ -43,6 +44,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case KN_BOWLINGBASH:
 			return std::make_unique<SkillBowlingBash>();
+		case KN_BRANDISHSPEAR:
+			return std::make_unique<SkillBrandishSpear>();
 		case KN_ONEHAND:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case KN_PIERCE:

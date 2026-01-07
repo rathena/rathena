@@ -8791,16 +8791,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		skill_castend_damage_id(src, src, skill_id, skill_lv, tick, flag);
 		break;
 
-#ifdef RENEWAL
-	case KN_BRANDISHSPEAR:
-		map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
-			skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
-			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 0,
-			skill_castend_damage_id);
-		break;
-#else
-	case KN_BRANDISHSPEAR:
-#endif
 	case ML_BRANDISH:
 		skill_area_temp[1] = bl->id;
 

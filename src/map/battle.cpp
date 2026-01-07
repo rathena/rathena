@@ -4752,13 +4752,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case KN_SPEARBOOMERANG:
 			skillratio += 50 * skill_lv;
 			break;
-#ifdef RENEWAL
-		case KN_BRANDISHSPEAR:
-			skillratio += -100 + 400 + 100 * skill_lv + sstatus->str * 3;
-			break;
-#else
-		case KN_BRANDISHSPEAR:
-#endif
 		case ML_BRANDISH:
 			{
 				int32 ratio = 100 + 20 * skill_lv;
