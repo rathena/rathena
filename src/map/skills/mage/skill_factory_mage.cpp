@@ -16,6 +16,7 @@
 #include "napalmbeat.hpp"
 #include "lightningbolt.hpp"
 #include "sight.hpp"
+#include "sightrasher.hpp"
 #include "soulstrike.hpp"
 #include "stonecurse.hpp"
 #include "thunderstorm.hpp"
@@ -68,6 +69,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WZ_FIREPILLAR:
 			return std::make_unique<SkillFirePillar>();
+		case WZ_SIGHTRASHER:
+			return std::make_unique<SkillSightRasher>();
 
 		default:
 			return nullptr;

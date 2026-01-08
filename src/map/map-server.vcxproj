@@ -297,6 +297,7 @@
     <ClInclude Include="skills/mage/lightningbolt.hpp" />
     <ClInclude Include="skills/mage/napalmbeat.hpp" />
     <ClInclude Include="skills/mage/sight.hpp" />
+    <ClInclude Include="skills/mage/sightrasher.hpp" />
     <ClInclude Include="skills/mage/skill_factory_mage.hpp" />
     <ClInclude Include="skills/mage/soulstrike.hpp" />
     <ClInclude Include="skills/mage/stonecurse.hpp" />
@@ -454,6 +455,7 @@
     <ClCompile Include="skills/mage/lightningbolt.cpp" />
     <ClCompile Include="skills/mage/napalmbeat.cpp" />
     <ClCompile Include="skills/mage/sight.cpp" />
+    <ClCompile Include="skills/mage/sightrasher.cpp" />
     <ClCompile Include="skills/mage/skill_factory_mage.cpp" />
     <ClCompile Include="skills/mage/soulstrike.cpp" />
     <ClCompile Include="skills/mage/stonecurse.cpp" />
