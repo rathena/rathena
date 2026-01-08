@@ -50,7 +50,6 @@
 using namespace rathena;
 
 #define SKILLUNITTIMER_INTERVAL	100
-#define TIMERSKILL_INTERVAL	150
 
 static struct eri *skill_timer_ers = nullptr; //For handling skill_timerskills [Skotlex]
 DBMap* bowling_db = nullptr; // int32 mob_id -> mob_data*
@@ -6358,10 +6357,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		//Deploy waterball cells, these are used and turned into waterballs via the timerskill
 		skill_unitsetting(src, skill_id, skill_lv, src->x, src->y, 0);
 		skill_addtimerskill(src, tick, bl->id, src->x, src->y, skill_id, skill_lv, 0, flag);
-		break;
-	case WZ_JUPITEL:
-		//Jupitel Thunder is delayed by 150ms, you can cast another spell before the knockback
-		skill_addtimerskill(src, tick+TIMERSKILL_INTERVAL, bl->id, 0, 0, skill_id, skill_lv, 1, flag);
 		break;
 
 	case SJ_NOVAEXPLOSING:
