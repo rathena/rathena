@@ -8380,9 +8380,9 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 #endif
 						break;
 					case WZ_FIREPILLAR:
+						// TODO: Refactor
 						if (sd && ad.div_ > 0)
 							ad.div_ *= -1; //For players, damage is divided by number of hits
-						skillratio += -60 + 20 * skill_lv; //20% MATK each hit
 						break;
 					case WZ_SIGHTRASHER:
 						skillratio += 20 * skill_lv;

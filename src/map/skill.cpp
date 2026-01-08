@@ -1431,10 +1431,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_QUAGMIRE,100,0,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case WZ_FIREPILLAR:
-		unit_set_walkdelay(bl, tick, skill_get_time2(skill_id, skill_lv), 1);
-		break;
-
 	case WZ_FROSTNOVA:
 		sc_start(src,bl,SC_FREEZE,(sd!=nullptr)?skill_lv*5+33:skill_lv*3+35,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
@@ -13810,7 +13806,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MG_FIREWALL:
 	case MG_THUNDERSTORM:
 	case AL_PNEUMA:
-	case WZ_FIREPILLAR:
 	case WZ_QUAGMIRE:
 	case WZ_VERMILION:
 	case WZ_STORMGUST:

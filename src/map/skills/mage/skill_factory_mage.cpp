@@ -10,6 +10,7 @@
 #include "energycoat.hpp"
 #include "fireball.hpp"
 #include "firebolt.hpp"
+#include "firepillar.hpp"
 #include "firewall.hpp"
 #include "frostdiver.hpp"
 #include "napalmbeat.hpp"
@@ -65,6 +66,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WL_TELEKINESIS_INTENSE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WZ_FIREPILLAR:
+			return std::make_unique<SkillFirePillar>();
 
 		default:
 			return nullptr;
