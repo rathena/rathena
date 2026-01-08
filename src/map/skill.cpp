@@ -20701,7 +20701,7 @@ static int32 skill_bind_trap(block_list *bl, va_list ap) {
  * Catched skill in cell value pushed to *unit pointer.
  * Set (*alive) to 0 will ends 'new unit' check
  *------------------------------------------*/
-static int32 skill_cell_overlap(block_list *bl, va_list ap)
+int32 skill_cell_overlap(block_list *bl, va_list ap)
 {
 	uint16 skill_id;
 	int32 *alive;
