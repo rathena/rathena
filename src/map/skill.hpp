@@ -587,6 +587,11 @@ void skill_clear_unitgroup(block_list *src);
 int32 skill_clear_group(block_list *bl, uint8 flag);
 void ext_skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick);
 int64 skill_unit_ondamaged(skill_unit *unit,int64 damage);
+bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
+// Use this function for splash skills that can't hit icewall when cast by players
+inline int32 splash_target(block_list* bl) {
+	return ( bl->type == BL_MOB ) ? BL_SKILL|BL_CHAR : BL_CHAR;
+}
 
 // Skill unit visibility [Cydh]
 void skill_getareachar_skillunit_visibilty(skill_unit *su, enum send_target target);

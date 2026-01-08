@@ -5,8 +5,6 @@
 
 #include "map/skills/skill_impl.hpp"
 
-#include "map/battle.hpp"
-
 class SkillLightningStrikeOfDestruction : public SkillImpl {
 public:
 	SkillLightningStrikeOfDestruction();
