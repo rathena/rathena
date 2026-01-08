@@ -22,6 +22,7 @@
 #include "incagi.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
+#include "statusrecovery.hpp"
 #include "suffragium.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
@@ -124,6 +125,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillSanctuary>();
 		case PR_SLOWPOISON:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case PR_STRECOVERY:
+			return std::make_unique<SkillStatusRecovery>();
 		case PR_SUFFRAGIUM:
 			return std::make_unique<SkillSuffragium>();
 		default:

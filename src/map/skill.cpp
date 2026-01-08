@@ -9059,37 +9059,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		status_heal(bl,5,0,0);
 		break;
 
-	case PR_STRECOVERY:
-		if(status_isimmune(bl)) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,false);
-			break;
-		}
-		if (battle_check_undead(tstatus->race, tstatus->def_ele))
-			skill_addtimerskill(src, tick + 1000, bl->id, 0, 0, skill_id, skill_lv, 100, flag);
-		else {
-			// Bodystate is reset to "normal" for non-undead
-			if (tsc) {
-				// The following are bodystate status changes
-				status_change_end(bl, SC_STONE);
-				status_change_end(bl, SC_FREEZE);
-				status_change_end(bl, SC_STUN);
-				status_change_end(bl, SC_SLEEP);
-				status_change_end(bl, SC_STONEWAIT);
-				status_change_end(bl, SC_BURNING);
-				status_change_end(bl, SC_WHITEIMPRISON);
-			}
-			// Resetting bodystate to normal always also resets the monster AI to idle
-			if (dstmd)
-				mob_unlocktarget(dstmd, tick);
-		}
-		if (tsc) {
-			// Ends SC_NETHERWORLD and SC_NORECOVER_STATE (even on undead)
-			status_change_end(bl, SC_NETHERWORLD);
-			status_change_end(bl, SC_NORECOVER_STATE);
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-
 	// Mercenary Supportive Skills
 	case MER_BENEDICTION:
 		status_change_end(bl, SC_CURSE);
