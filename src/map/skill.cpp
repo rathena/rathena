@@ -7698,7 +7698,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case PR_LEXDIVINA:
 	case MER_LEXDIVINA:
 		if (tsce)
 			status_change_end(bl, type);

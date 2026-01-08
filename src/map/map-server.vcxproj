@@ -255,6 +255,7 @@
     <ClInclude Include="skills/acolyte/impositiomanus.hpp" />
     <ClInclude Include="skills/acolyte/incagi.hpp" />
     <ClInclude Include="skills/acolyte/kyrieeleison.hpp" />
+    <ClInclude Include="skills/acolyte/lexdivina.hpp" />
     <ClInclude Include="skills/acolyte/magnificat.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/sanctuary.hpp" />
@@ -408,6 +409,7 @@
     <ClCompile Include="skills/acolyte/impositiomanus.cpp" />
     <ClCompile Include="skills/acolyte/incagi.cpp" />
     <ClCompile Include="skills/acolyte/kyrieeleison.cpp" />
+    <ClCompile Include="skills/acolyte/lexdivina.cpp" />
     <ClCompile Include="skills/acolyte/magnificat.cpp" />
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
     <ClCompile Include="skills/acolyte/sanctuary.cpp" />
