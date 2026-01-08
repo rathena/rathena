@@ -9,6 +9,7 @@
 #include "../weapon_skill_impl.hpp"
 
 #include "angelus.hpp"
+#include "aspersio.hpp"
 #include "blessing.hpp"
 #include "crucis.hpp"
 #include "cure.hpp"
@@ -109,6 +110,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SR_LIGHTNINGWALK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case PR_ASPERSIO:
+			return std::make_unique<SkillAspersio>();
 		case PR_IMPOSITIO:
 			return std::make_unique<SkillImpositioManus>();
 		case PR_LEXAETERNA:

@@ -242,6 +242,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="skills/acolyte/angelus.hpp" />
+    <ClInclude Include="skills/acolyte/aspersio.hpp" />
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/crucis.hpp" />
     <ClInclude Include="skills/acolyte/cure.hpp" />
@@ -388,6 +389,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="skills/acolyte/angelus.cpp" />
+    <ClCompile Include="skills/acolyte/aspersio.cpp" />
     <ClCompile Include="skills/acolyte/blessing.cpp" />
     <ClCompile Include="skills/acolyte/crucis.cpp" />
     <ClCompile Include="skills/acolyte/cure.cpp" />

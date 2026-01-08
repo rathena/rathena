@@ -6309,7 +6309,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case WZ_EARTHSPIKE:
 	case NPC_DARKTHUNDER:
 	case NPC_FIRESTORM:
-	case PR_ASPERSIO:
 	case WZ_SIGHTBLASTER:
 	case WZ_SIGHTRASHER:
 #ifdef RENEWAL
@@ -7932,15 +7931,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				clif_skill_fail( *sd, skill_id );
 		}
 #endif
-		break;
-
-	case PR_ASPERSIO:
-		if (sd && dstmd) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,false);
-			break;
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 
 	case ITEM_ENCHANTARMS:
