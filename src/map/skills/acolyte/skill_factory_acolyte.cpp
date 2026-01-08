@@ -11,6 +11,7 @@
 #include "angelus.hpp"
 #include "aspersio.hpp"
 #include "blessing.hpp"
+#include "bssacramenti.hpp"
 #include "crucis.hpp"
 #include "cure.hpp"
 #include "decagi.hpp"
@@ -112,6 +113,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case PR_ASPERSIO:
 			return std::make_unique<SkillAspersio>();
+		case PR_BENEDICTIO:
+			return std::make_unique<SkillBenedictioSanctissimiSacramenti>();
 		case PR_IMPOSITIO:
 			return std::make_unique<SkillImpositioManus>();
 		case PR_LEXAETERNA:
