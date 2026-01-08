@@ -8809,7 +8809,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		status_zap(src, sstatus->hp, 0, 0);
 		break;
 
-	case PR_GLORIA:
 	case SOA_SOUL_OF_HEAVEN_AND_EARTH:
 		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
 
@@ -8817,12 +8816,10 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			if (check_distance_bl(src, bl, AREA_SIZE))
 				clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
 
-			if( skill_id == SOA_SOUL_OF_HEAVEN_AND_EARTH ){
-				status_percent_heal(bl, 0, 100);
+			status_percent_heal(bl, 0, 100);
 
-				if( src != bl && sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr ){
-					status_heal(bl, 0, 0, 3 * skill_lv, 0);
-				}
+			if( src != bl && sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr ){
+				status_heal(bl, 0, 0, 3 * skill_lv, 0);
 			}
 
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));

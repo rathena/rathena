@@ -15,6 +15,7 @@
 #include "crucis.hpp"
 #include "cure.hpp"
 #include "decagi.hpp"
+#include "gloria.hpp"
 #include "heal.hpp"
 #include "holylight.hpp"
 #include "holywater.hpp"
@@ -119,6 +120,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillAspersio>();
 		case PR_BENEDICTIO:
 			return std::make_unique<SkillBenedictioSanctissimiSacramenti>();
+		case PR_GLORIA:
+			return std::make_unique<SkillGloria>();
 		case PR_IMPOSITIO:
 			return std::make_unique<SkillImpositioManus>();
 		case PR_KYRIE:

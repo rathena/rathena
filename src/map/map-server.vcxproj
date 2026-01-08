@@ -248,6 +248,7 @@
     <ClInclude Include="skills/acolyte/crucis.hpp" />
     <ClInclude Include="skills/acolyte/cure.hpp" />
     <ClInclude Include="skills/acolyte/decagi.hpp" />
+    <ClInclude Include="skills/acolyte/gloria.hpp" />
     <ClInclude Include="skills/acolyte/heal.hpp" />
     <ClInclude Include="skills/acolyte/holylight.hpp" />
     <ClInclude Include="skills/acolyte/holywater.hpp" />
@@ -400,6 +401,7 @@
     <ClCompile Include="skills/acolyte/crucis.cpp" />
     <ClCompile Include="skills/acolyte/cure.cpp" />
     <ClCompile Include="skills/acolyte/decagi.cpp" />
+    <ClCompile Include="skills/acolyte/gloria.cpp" />
     <ClCompile Include="skills/acolyte/heal.cpp" />
     <ClCompile Include="skills/acolyte/holylight.cpp" />
     <ClCompile Include="skills/acolyte/holywater.cpp" />
