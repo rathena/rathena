@@ -20,6 +20,7 @@
 #include "holywater.hpp"
 #include "impositiomanus.hpp"
 #include "incagi.hpp"
+#include "kyrieeleison.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
 #include "statusrecovery.hpp"
@@ -119,6 +120,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillBenedictioSanctissimiSacramenti>();
 		case PR_IMPOSITIO:
 			return std::make_unique<SkillImpositioManus>();
+		case PR_KYRIE:
+			return std::make_unique<SkillKyrieEleison>();
 		case PR_LEXAETERNA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case PR_SANCTUARY:

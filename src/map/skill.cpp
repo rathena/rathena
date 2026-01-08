@@ -7984,7 +7984,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case PR_KYRIE:
 	case MER_KYRIE:
 	case SU_TUNAPARTY:
 	case SU_GROOMING:
