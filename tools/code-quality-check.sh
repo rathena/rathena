@@ -146,12 +146,14 @@ if [ "$SKIP_CMAKE" = false ]; then
     
     if [ "$RUN_CMAKE_CHECK" = true ]; then
         if cmake -G "$GENERATOR" -DALLOW_SAME_DIRECTORY=ON . > /dev/null 2>&1; then
-            git add -N . 2>/dev/null || true
-            DIFF=$(git diff --name-only)
+            # Check for changes using git status (doesn't modify staging area)
+            STATUS=$(git status --porcelain)
             
-            if [ -n "$DIFF" ]; then
+            if [ -n "$STATUS" ]; then
                 echo -e "${RED}✗ CMake generation created or modified files:${NC}"
-                echo "$DIFF" | while read -r file; do
+                echo "$STATUS" | while read -r line; do
+                    # Remove status prefix (first 3 characters)
+                    file="${line:3}"
                     echo -e "${RED}  - $file${NC}"
                 done
                 FAILED_CHECKS+=("CMake generation")
@@ -183,11 +185,12 @@ if [ "$SKIP_FORMAT" = false ]; then
         
         find src -type f \( -name "*.cpp" -o -name "*.hpp" -o -name "*.c" -o -name "*.h" \) -exec clang-format -i {} \;
         
-        git add -N . 2>/dev/null || true
-        # Filter diff to only show files in src/ directory
-        DIFF=$(git diff --name-only | grep '^src/' || true)
+        # Check for changes using git status (doesn't modify staging area) - filter to only src/ directory
+        STATUS=$(git status --porcelain | grep ' src/' || true)
         
-        if [ -n "$DIFF" ]; then
+        if [ -n "$STATUS" ]; then
+            # Extract file names from status output (remove first 3 characters)
+            DIFF=$(echo "$STATUS" | while read -r line; do echo "${line:3}"; done)
             if [ "$FIX_FORMAT" = true ]; then
                 FILE_COUNT=$(echo "$DIFF" | wc -l | tr -d ' ')
                 echo -e "${GREEN}✓ Fixed formatting in $FILE_COUNT file(s):${NC}"

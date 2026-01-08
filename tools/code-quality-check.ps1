@@ -67,13 +67,15 @@ if (-not $SkipCMake) {
             $cmakeArgs = @("-G", $Generator) + $GeneratorArgs + @("-DALLOW_SAME_DIRECTORY=ON", ".")
             & cmake $cmakeArgs 2>&1 | Out-Null
             
-            # Check for changes
-            git add -N . 2>&1 | Out-Null
-            $diff = git diff --name-only
+            # Check for changes using git status (doesn't modify staging area)
+            $status = git status --porcelain
             
-            if ($diff) {
+            if ($status) {
                 Write-Host "✗ CMake generation created or modified files:" -ForegroundColor Red
-                $diff | ForEach-Object { Write-Host "  - $_" -ForegroundColor Red }
+                $status | ForEach-Object { 
+                    $file = $_.Substring(3)  # Remove status prefix (e.g., " M ", "??")
+                    Write-Host "  - $file" -ForegroundColor Red
+                }
                 $failed_checks += "CMake generation"
             } else {
                 Write-Host "✓ CMake generation check passed" -ForegroundColor Green
@@ -109,11 +111,11 @@ if (-not $SkipFormat) {
             & clang-format -i $file.FullName
         }
         
-        # Check for changes - filter to only src/ directory
-        git add -N . 2>&1 | Out-Null
-        $diff = git diff --name-only | Where-Object { $_ -match '^src/' }
+        # Check for changes using git status (doesn't modify staging area) - filter to only src/ directory
+        $status = git status --porcelain | Where-Object { $_ -match '\ssrc/' }
         
-        if ($diff) {
+        if ($status) {
+            $diff = $status | ForEach-Object { $_.Substring(3) }  # Remove status prefix
             if ($FixFormat) {
                 Write-Host "✓ Fixed formatting in $($diff.Count) file(s):" -ForegroundColor Green
                 $diff | ForEach-Object { Write-Host "  - $_" -ForegroundColor Green }
