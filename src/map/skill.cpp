@@ -104,12 +104,6 @@ static int32 skill_check_unit_range2 (block_list *bl, int32 x, int32 y, uint16 s
 static int32 skill_destroy_trap( block_list *bl, va_list ap );
 static int32 skill_check_condition_mob_master_sub (block_list *bl, va_list ap);
 static bool skill_check_condition_sc_required( map_session_data& sd, uint16 skill_id, s_skill_condition& require );
-static bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
-
-// Use this function for splash skills that can't hit icewall when cast by players
-static inline int32 splash_target(block_list* bl) {
-	return ( bl->type == BL_MOB ) ? BL_SKILL|BL_CHAR : BL_CHAR;
-}
 
 /**
  * Get skill id from name
@@ -24253,7 +24247,7 @@ int32 skill_get_elemental_type( uint16 skill_id , uint16 skill_lv ) {
  * @param check_flag Flags: 1:Check for BG maps, 2:Check for GVG maps on WOE times, 4:Check for GVG maps regardless Agit flags
  * @return True:If unit can be moved, False:If check on flags are met or unit cannot be moved.
  **/
-static bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath) {
+bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath) {
 	status_change *sc;
 
 	nullpo_retr(false, bl);
