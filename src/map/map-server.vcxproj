@@ -250,6 +250,7 @@
     <ClInclude Include="skills/acolyte/holylight.hpp" />
     <ClInclude Include="skills/acolyte/holywater.hpp" />
     <ClInclude Include="skills/acolyte/incagi.hpp" />
+    <ClInclude Include="skills/acolyte/pneuma.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
     <ClInclude Include="skills/archer/arrowshower.hpp" />
@@ -395,6 +396,7 @@
     <ClCompile Include="skills/acolyte/holylight.cpp" />
     <ClCompile Include="skills/acolyte/holywater.cpp" />
     <ClCompile Include="skills/acolyte/incagi.cpp" />
+    <ClCompile Include="skills/acolyte/pneuma.cpp" />
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
     <ClCompile Include="skills/archer/arrowshower.cpp" />

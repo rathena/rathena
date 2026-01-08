@@ -17,6 +17,7 @@
 #include "holylight.hpp"
 #include "holywater.hpp"
 #include "incagi.hpp"
+#include "pneuma.hpp"
 #include "ruwach.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
@@ -49,6 +50,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillHolyWater>();
 		case AL_INCAGI:
 			return std::make_unique<SkillIncreaseAgi>();
+		case AL_PNEUMA:
+			return std::make_unique<SkillPneuma>();
 		case AL_RUWACH:
 			return std::make_unique<SkillRuwach>();
 		case CD_ARGUTUS_TELUM:
