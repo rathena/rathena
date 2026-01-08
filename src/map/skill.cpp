@@ -6345,12 +6345,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case WZ_WATERBALL:
-		//Deploy waterball cells, these are used and turned into waterballs via the timerskill
-		skill_unitsetting(src, skill_id, skill_lv, src->x, src->y, 0);
-		skill_addtimerskill(src, tick, bl->id, src->x, src->y, skill_id, skill_lv, 0, flag);
-		break;
-
 	case SJ_NOVAEXPLOSING:
 		skill_attack(BF_MISC, src, src, bl, skill_id, skill_lv, tick, flag);
 

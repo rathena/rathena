@@ -23,6 +23,7 @@
 #include "soulstrike.hpp"
 #include "stonecurse.hpp"
 #include "thunderstorm.hpp"
+#include "waterball.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -80,6 +81,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillMeteorStorm>();
 		case WZ_SIGHTRASHER:
 			return std::make_unique<SkillSightRasher>();
+		case WZ_WATERBALL:
+			return std::make_unique<SkillWaterBall>();
 
 		default:
 			return nullptr;

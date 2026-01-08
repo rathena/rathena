@@ -305,6 +305,7 @@
     <ClInclude Include="skills/mage/soulstrike.hpp" />
     <ClInclude Include="skills/mage/stonecurse.hpp" />
     <ClInclude Include="skills/mage/thunderstorm.hpp" />
+    <ClInclude Include="skills/mage/waterball.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
     <ClInclude Include="skills/merchant/cartrevolution.hpp" />
@@ -466,6 +467,7 @@
     <ClCompile Include="skills/mage/soulstrike.cpp" />
     <ClCompile Include="skills/mage/stonecurse.cpp" />
     <ClCompile Include="skills/mage/thunderstorm.cpp" />
+    <ClCompile Include="skills/mage/waterball.cpp" />
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp" />
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp" />
     <ClCompile Include="skills/merchant/cartrevolution.cpp" />

@@ -8384,9 +8384,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if (sd && ad.div_ > 0)
 							ad.div_ *= -1; //For players, damage is divided by number of hits
 						break;
-					case WZ_WATERBALL:
-						skillratio += 30 * skill_lv;
-						break;
 					case WZ_STORMGUST:
 #ifdef RENEWAL
 						skillratio -= 30; // Offset only once
