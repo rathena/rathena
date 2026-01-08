@@ -8477,12 +8477,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_GROUNDDRIVE:
 						skillratio += 25;
 						break;
-					case WZ_VERMILION:
-						if(sd)
-							skillratio += 300 + skill_lv * 100;
-						else
-							skillratio += 20 * skill_lv - 20; //Monsters use old formula
-						break;
 					case BA_DISSONANCE:
 						skillratio += 10 + skill_lv * 50;
 						if (sd != nullptr)
@@ -8498,10 +8492,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						break;
 					case WZ_SIGHTBLASTER:
 						skillratio += 500;
-						break;
-#else
-					case WZ_VERMILION:
-						skillratio += 20 * skill_lv - 20;
 						break;
 #endif
 					case AB_JUDEX:
