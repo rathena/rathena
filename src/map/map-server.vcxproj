@@ -253,6 +253,7 @@
     <ClInclude Include="skills/acolyte/incagi.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
+    <ClInclude Include="skills/acolyte/suffragium.hpp" />
     <ClInclude Include="skills/archer/arrowshower.hpp" />
     <ClInclude Include="skills/archer/chargearrow.hpp" />
     <ClInclude Include="skills/archer/concentration.hpp" />
@@ -398,6 +399,7 @@
     <ClCompile Include="skills/acolyte/incagi.cpp" />
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
+    <ClCompile Include="skills/acolyte/suffragium.cpp" />
     <ClCompile Include="skills/archer/arrowshower.cpp" />
     <ClCompile Include="skills/archer/chargearrow.cpp" />
     <ClCompile Include="skills/archer/concentration.cpp" />

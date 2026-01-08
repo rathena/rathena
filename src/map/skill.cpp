@@ -8829,9 +8829,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		// Won't display the damage, but drop items and give exp
 		status_zap(src, sstatus->hp, 0, 0);
 		break;
-#ifdef RENEWAL
-	case PR_SUFFRAGIUM:
-#endif
 	case PR_MAGNIFICAT:
 	case PR_GLORIA:
 	case SOA_SOUL_OF_HEAVEN_AND_EARTH:

@@ -19,6 +19,7 @@
 #include "impositiomanus.hpp"
 #include "incagi.hpp"
 #include "ruwach.hpp"
+#include "suffragium.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -114,10 +115,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case PR_SLOWPOISON:
 			return std::make_unique<StatusSkillImpl>(skill_id);
-#ifndef RENEWAL
 		case PR_SUFFRAGIUM:
-			return std::make_unique<StatusSkillImpl>(skill_id);
-#endif
+			return std::make_unique<SkillSuffragium>();
 		default:
 			return nullptr;
 	}
