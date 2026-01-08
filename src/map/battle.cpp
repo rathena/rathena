@@ -8363,9 +8363,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 							}
 						}
 						break;
-					case AL_RUWACH:
-						skillratio += 45;
-						break;
 					case WZ_FROSTNOVA:
 #ifndef RENEWAL
 						skillratio += -100 + (100 + skill_lv * 10) * 2 / 3;
