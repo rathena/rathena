@@ -16,6 +16,7 @@
 #include "heal.hpp"
 #include "holylight.hpp"
 #include "holywater.hpp"
+#include "impositiomanus.hpp"
 #include "incagi.hpp"
 #include "ruwach.hpp"
 
@@ -107,10 +108,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SR_LIGHTNINGWALK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
-#ifndef RENEWAL
 		case PR_IMPOSITIO:
-			return std::make_unique<StatusSkillImpl>(skill_id);
-#endif
+			return std::make_unique<SkillImpositioManus>();
 		case PR_LEXAETERNA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case PR_SLOWPOISON:

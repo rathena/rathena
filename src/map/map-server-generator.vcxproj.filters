@@ -396,6 +396,9 @@
     <ClInclude Include="skills/acolyte/holywater.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/impositiomanus.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/incagi.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -684,6 +687,9 @@
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/holywater.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/impositiomanus.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/incagi.cpp">

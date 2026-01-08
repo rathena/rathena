@@ -8831,7 +8831,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 #ifdef RENEWAL
 	case PR_SUFFRAGIUM:
-	case PR_IMPOSITIO:
 #endif
 	case PR_MAGNIFICAT:
 	case PR_GLORIA:
