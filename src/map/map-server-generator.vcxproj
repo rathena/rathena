@@ -241,7 +241,6 @@
     <ClInclude Include="vending.hpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
     <ClInclude Include="skills/acolyte/angelus.hpp" />
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/crucis.hpp" />
@@ -252,6 +251,7 @@
     <ClInclude Include="skills/acolyte/holywater.hpp" />
     <ClInclude Include="skills/acolyte/incagi.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
+    <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
     <ClInclude Include="skills/archer/arrowshower.hpp" />
     <ClInclude Include="skills/archer/chargearrow.hpp" />
     <ClInclude Include="skills/archer/concentration.hpp" />
@@ -259,7 +259,6 @@
     <ClInclude Include="skills/archer/makingarrow.hpp" />
     <ClInclude Include="skills/archer/skill_factory_archer.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
-    <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
     <ClInclude Include="skills/gunslinger/cracker.hpp" />
     <ClInclude Include="skills/gunslinger/desperado.hpp" />
@@ -272,10 +271,10 @@
     <ClInclude Include="skills/gunslinger/grounddrift.hpp" />
     <ClInclude Include="skills/gunslinger/piercingshot.hpp" />
     <ClInclude Include="skills/gunslinger/rapidshower.hpp" />
+    <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp" />
     <ClInclude Include="skills/gunslinger/spreadattack.hpp" />
     <ClInclude Include="skills/gunslinger/tracking.hpp" />
     <ClInclude Include="skills/gunslinger/tripleaction.hpp" />
-    <ClInclude Include="skills/mage/skill_factory_mage.hpp" />
     <ClInclude Include="skills/mage/coldbolt.hpp" />
     <ClInclude Include="skills/mage/energycoat.hpp" />
     <ClInclude Include="skills/mage/fireball.hpp" />
@@ -285,24 +284,26 @@
     <ClInclude Include="skills/mage/lightningbolt.hpp" />
     <ClInclude Include="skills/mage/napalmbeat.hpp" />
     <ClInclude Include="skills/mage/sight.hpp" />
+    <ClInclude Include="skills/mage/skill_factory_mage.hpp" />
     <ClInclude Include="skills/mage/soulstrike.hpp" />
     <ClInclude Include="skills/mage/stonecurse.hpp" />
     <ClInclude Include="skills/mage/thunderstorm.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
-    <ClInclude Include="skills/merchant/skill_factory_merchant.hpp" />
     <ClInclude Include="skills/merchant/cartrevolution.hpp" />
     <ClInclude Include="skills/merchant/changecart.hpp" />
     <ClInclude Include="skills/merchant/crazyuproar.hpp" />
     <ClInclude Include="skills/merchant/decoratecart.hpp" />
     <ClInclude Include="skills/merchant/itemappraisal.hpp" />
     <ClInclude Include="skills/merchant/mammonite.hpp" />
+    <ClInclude Include="skills/merchant/skill_factory_merchant.hpp" />
     <ClInclude Include="skills/merchant/skill_vending.hpp" />
     <ClInclude Include="skills/ninja/skill_factory_ninja.hpp" />
     <ClInclude Include="skills/novice/skill_factory_novice.hpp" />
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/skill_impl.hpp" />
+    <ClInclude Include="skills/status_skill_impl.hpp" />
     <ClInclude Include="skills/summoner/skill_factory_summoner.hpp" />
     <ClInclude Include="skills/swordman/autoberserk.hpp" />
     <ClInclude Include="skills/swordman/bash.hpp" />
@@ -330,7 +331,6 @@
     <ClInclude Include="skills/thief/steal.hpp" />
     <ClInclude Include="skills/thief/stonefling.hpp" />
     <ClInclude Include="skills/weapon_skill_impl.hpp" />
-    <ClInclude Include="skills/status_skill_impl.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="achievement.cpp" />
@@ -379,7 +379,6 @@
     <ClCompile Include="vending.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
     <ClCompile Include="skills/acolyte/angelus.cpp" />
     <ClCompile Include="skills/acolyte/blessing.cpp" />
     <ClCompile Include="skills/acolyte/crucis.cpp" />
@@ -390,6 +389,7 @@
     <ClCompile Include="skills/acolyte/holywater.cpp" />
     <ClCompile Include="skills/acolyte/incagi.cpp" />
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
+    <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
     <ClCompile Include="skills/archer/arrowshower.cpp" />
     <ClCompile Include="skills/archer/chargearrow.cpp" />
     <ClCompile Include="skills/archer/concentration.cpp" />
@@ -397,7 +397,6 @@
     <ClCompile Include="skills/archer/makingarrow.cpp" />
     <ClCompile Include="skills/archer/skill_factory_archer.cpp" />
     <ClCompile Include="skills/custom/skill_factory_custom.cpp" />
-    <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp" />
     <ClCompile Include="skills/gunslinger/bullseye.cpp" />
     <ClCompile Include="skills/gunslinger/cracker.cpp" />
     <ClCompile Include="skills/gunslinger/desperado.cpp" />
@@ -410,10 +409,10 @@
     <ClCompile Include="skills/gunslinger/grounddrift.cpp" />
     <ClCompile Include="skills/gunslinger/piercingshot.cpp" />
     <ClCompile Include="skills/gunslinger/rapidshower.cpp" />
+    <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp" />
     <ClCompile Include="skills/gunslinger/spreadattack.cpp" />
     <ClCompile Include="skills/gunslinger/tracking.cpp" />
     <ClCompile Include="skills/gunslinger/tripleaction.cpp" />
-    <ClCompile Include="skills/mage/skill_factory_mage.cpp" />
     <ClCompile Include="skills/mage/coldbolt.cpp" />
     <ClCompile Include="skills/mage/energycoat.cpp" />
     <ClCompile Include="skills/mage/fireball.cpp" />
@@ -423,24 +422,26 @@
     <ClCompile Include="skills/mage/lightningbolt.cpp" />
     <ClCompile Include="skills/mage/napalmbeat.cpp" />
     <ClCompile Include="skills/mage/sight.cpp" />
+    <ClCompile Include="skills/mage/skill_factory_mage.cpp" />
     <ClCompile Include="skills/mage/soulstrike.cpp" />
     <ClCompile Include="skills/mage/stonecurse.cpp" />
     <ClCompile Include="skills/mage/thunderstorm.cpp" />
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp" />
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp" />
-    <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
     <ClCompile Include="skills/merchant/cartrevolution.cpp" />
     <ClCompile Include="skills/merchant/changecart.cpp" />
     <ClCompile Include="skills/merchant/crazyuproar.cpp" />
     <ClCompile Include="skills/merchant/decoratecart.cpp" />
     <ClCompile Include="skills/merchant/itemappraisal.cpp" />
     <ClCompile Include="skills/merchant/mammonite.cpp" />
+    <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
     <ClCompile Include="skills/merchant/skill_vending.cpp" />
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp" />
     <ClCompile Include="skills/novice/skill_factory_novice.cpp" />
     <ClCompile Include="skills/npc/skill_factory_npc.cpp" />
     <ClCompile Include="skills/skill_factory.cpp" />
     <ClCompile Include="skills/skill_impl.cpp" />
+    <ClCompile Include="skills/status_skill_impl.cpp" />
     <ClCompile Include="skills/summoner/skill_factory_summoner.cpp" />
     <ClCompile Include="skills/swordman/autoberserk.cpp" />
     <ClCompile Include="skills/swordman/bash.cpp" />
@@ -468,7 +469,6 @@
     <ClCompile Include="skills/thief/steal.cpp" />
     <ClCompile Include="skills/thief/stonefling.cpp" />
     <ClCompile Include="skills/weapon_skill_impl.cpp" />
-    <ClCompile Include="skills/status_skill_impl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
