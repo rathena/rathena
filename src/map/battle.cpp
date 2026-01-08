@@ -8489,10 +8489,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						else
 							skillratio += 20 * skill_lv - 20; //Monsters use old formula
 						break;
-					case PR_MAGNUS:
-						if (battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON)
-							skillratio += 30;
-						break;
 					case BA_DISSONANCE:
 						skillratio += 10 + skill_lv * 50;
 						if (sd != nullptr)

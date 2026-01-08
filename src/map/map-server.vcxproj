@@ -242,16 +242,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="skills/acolyte/angelus.hpp" />
+    <ClInclude Include="skills/acolyte/aspersio.hpp" />
     <ClInclude Include="skills/acolyte/blessing.hpp" />
+    <ClInclude Include="skills/acolyte/bssacramenti.hpp" />
     <ClInclude Include="skills/acolyte/crucis.hpp" />
     <ClInclude Include="skills/acolyte/cure.hpp" />
     <ClInclude Include="skills/acolyte/decagi.hpp" />
+    <ClInclude Include="skills/acolyte/gloria.hpp" />
     <ClInclude Include="skills/acolyte/heal.hpp" />
     <ClInclude Include="skills/acolyte/holylight.hpp" />
     <ClInclude Include="skills/acolyte/holywater.hpp" />
+    <ClInclude Include="skills/acolyte/impositiomanus.hpp" />
     <ClInclude Include="skills/acolyte/incagi.hpp" />
+    <ClInclude Include="skills/acolyte/kyrieeleison.hpp" />
+    <ClInclude Include="skills/acolyte/lexdivina.hpp" />
+    <ClInclude Include="skills/acolyte/magnificat.hpp" />
+    <ClInclude Include="skills/acolyte/magnusexorcismus.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
+    <ClInclude Include="skills/acolyte/sanctuary.hpp" />
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
+    <ClInclude Include="skills/acolyte/statusrecovery.hpp" />
+    <ClInclude Include="skills/acolyte/suffragium.hpp" />
+    <ClInclude Include="skills/acolyte/turnundead.hpp" />
     <ClInclude Include="skills/archer/arrowshower.hpp" />
     <ClInclude Include="skills/archer/chargearrow.hpp" />
     <ClInclude Include="skills/archer/concentration.hpp" />
@@ -386,16 +398,28 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="skills/acolyte/angelus.cpp" />
+    <ClCompile Include="skills/acolyte/aspersio.cpp" />
     <ClCompile Include="skills/acolyte/blessing.cpp" />
+    <ClCompile Include="skills/acolyte/bssacramenti.cpp" />
     <ClCompile Include="skills/acolyte/crucis.cpp" />
     <ClCompile Include="skills/acolyte/cure.cpp" />
     <ClCompile Include="skills/acolyte/decagi.cpp" />
+    <ClCompile Include="skills/acolyte/gloria.cpp" />
     <ClCompile Include="skills/acolyte/heal.cpp" />
     <ClCompile Include="skills/acolyte/holylight.cpp" />
     <ClCompile Include="skills/acolyte/holywater.cpp" />
+    <ClCompile Include="skills/acolyte/impositiomanus.cpp" />
     <ClCompile Include="skills/acolyte/incagi.cpp" />
+    <ClCompile Include="skills/acolyte/kyrieeleison.cpp" />
+    <ClCompile Include="skills/acolyte/lexdivina.cpp" />
+    <ClCompile Include="skills/acolyte/magnificat.cpp" />
+    <ClCompile Include="skills/acolyte/magnusexorcismus.cpp" />
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
+    <ClCompile Include="skills/acolyte/sanctuary.cpp" />
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
+    <ClCompile Include="skills/acolyte/statusrecovery.cpp" />
+    <ClCompile Include="skills/acolyte/suffragium.cpp" />
+    <ClCompile Include="skills/acolyte/turnundead.cpp" />
     <ClCompile Include="skills/archer/arrowshower.cpp" />
     <ClCompile Include="skills/archer/chargearrow.cpp" />
     <ClCompile Include="skills/archer/concentration.cpp" />
