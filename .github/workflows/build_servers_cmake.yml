@@ -22,10 +22,35 @@ on:
       - '**/CMakeLists.txt'
 
 jobs:
+  code-quality:
+    # Only run code quality checks on pull requests
+    if: github.event_name == 'pull_request' && !contains(github.event.head_commit.message, 'ci-skip')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for proper diff comparison
+      
+      - name: Install LLVM and Clang
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang-format clang-tidy
+      
+      - uses: lukka/get-cmake@latest
+      
+      - name: Run Code Quality Checks
+        run: |
+          ./tools/code-quality-check.sh \
+            --base-commit "${{ github.event.pull_request.base.sha }}" \
+            --head-commit "${{ github.event.pull_request.head.sha }}"
+
   build:
     # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
     # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
-    if: "!contains(github.event.head_commit.message, 'ci-skip')"
+    # Depends on code-quality job, but allows build to run even if code-quality is skipped (e.g., on push to master)
+    needs: [code-quality]
+    if: ${{ !cancelled() && !contains(github.event.head_commit.message, 'ci-skip') }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
