@@ -13872,7 +13872,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	}
 
 	// Skill Unit Setting
-	case MG_THUNDERSTORM:
 	case AL_PNEUMA:
 	case WZ_FIREPILLAR:
 	case WZ_QUAGMIRE:
