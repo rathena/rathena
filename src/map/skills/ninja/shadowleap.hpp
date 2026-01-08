@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../skill_impl.hpp"
+#include "map/skills/skill_impl.hpp"
 
 #include "map/battle.hpp"
 

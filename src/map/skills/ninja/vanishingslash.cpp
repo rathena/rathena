@@ -4,9 +4,9 @@
 #include "vanishingslash.hpp"
 
 #include "map/clif.hpp"
-#include "../../map.hpp"
-#include "../../skill.hpp"
-#include "../../status.hpp"
+#include "map/map.hpp"
+#include "map/skill.hpp"
+#include "map/status.hpp"
 
 SkillVanishingSlash::SkillVanishingSlash() : StatusSkillImpl(NJ_KASUMIKIRI) {
 }

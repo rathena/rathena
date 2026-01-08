@@ -4,8 +4,8 @@
 #include "ragingfiredragon.hpp"
 
 #include "map/clif.hpp"
-#include "../../skill.hpp"
-#include "../../unit.hpp"
+#include "map/skill.hpp"
+#include "map/unit.hpp"
 
 SkillRagingFireDragon::SkillRagingFireDragon() : SkillImpl(NJ_BAKUENRYU) {
 }

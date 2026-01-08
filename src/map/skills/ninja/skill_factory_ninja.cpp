@@ -27,8 +27,8 @@
 #include "crimsonfireformation.hpp"
 #include "kamaitachi.hpp"
 
-#include "../status_skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "map/skills/status_skill_impl.hpp"
+#include "map/skills/weapon_skill_impl.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_id) const {
 	switch (skill_id) {

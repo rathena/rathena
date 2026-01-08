@@ -7,7 +7,7 @@
 #include "map/map.hpp"
 #include "map/skill.hpp"
 #include "map/unit.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "map/skills/weapon_skill_impl.hpp"
 
 SkillThrowKunai::SkillThrowKunai() : WeaponSkillImpl(NJ_KUNAI) {
 }

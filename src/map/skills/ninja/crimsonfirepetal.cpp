@@ -4,8 +4,8 @@
 #include "crimsonfirepetal.hpp"
 
 #include "map/clif.hpp"
-#include "../../skill.hpp"
-#include "../../unit.hpp"
+#include "map/skill.hpp"
+#include "map/unit.hpp"
 
 SkillCrimsonFirePetal::SkillCrimsonFirePetal() : SkillImpl(NJ_KOUENKA) {
 }

@@ -5,8 +5,8 @@
 
 #include "map/clif.hpp"
 #include "map/map.hpp"
-#include "../../skill.hpp"
-#include "../../unit.hpp"
+#include "map/skill.hpp"
+#include "map/unit.hpp"
 
 SkillThrowShuriken::SkillThrowShuriken() : WeaponSkillImpl(NJ_SYURIKEN) {
 }

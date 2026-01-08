@@ -4,7 +4,7 @@
 #include "cicadaskinsheeding.hpp"
 
 #include "map/clif.hpp"
-#include "../../status.hpp"
+#include "map/status.hpp"
 
 SkillCicadaSkinSheeding::SkillCicadaSkinSheeding() : StatusSkillImpl(NJ_UTSUSEMI) {
 }

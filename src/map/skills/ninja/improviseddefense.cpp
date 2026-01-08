@@ -5,9 +5,9 @@
 
 #include "map/clif.hpp"
 #include "map/status.hpp"
-#include "../../map.hpp"
-#include "../../skill.hpp"
-#include "../../unit.hpp"
+#include "map/map.hpp"
+#include "map/skill.hpp"
+#include "map/unit.hpp"
 
 SkillImprovisedDefense::SkillImprovisedDefense() : WeaponSkillImpl(NJ_TATAMIGAESHI) {
 }

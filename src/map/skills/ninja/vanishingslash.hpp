@@ -3,8 +3,9 @@
 
 #pragma once
 
+#include "map/skills/status_skill_impl.hpp"
+
 #include "map/battle.hpp"
-#include "../status_skill_impl.hpp"
 
 class SkillVanishingSlash : public StatusSkillImpl {
 public:
