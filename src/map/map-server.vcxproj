@@ -257,6 +257,7 @@
     <ClInclude Include="skills/acolyte/kyrieeleison.hpp" />
     <ClInclude Include="skills/acolyte/lexdivina.hpp" />
     <ClInclude Include="skills/acolyte/magnificat.hpp" />
+    <ClInclude Include="skills/acolyte/magnusexorcismus.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/sanctuary.hpp" />
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
@@ -412,6 +413,7 @@
     <ClCompile Include="skills/acolyte/kyrieeleison.cpp" />
     <ClCompile Include="skills/acolyte/lexdivina.cpp" />
     <ClCompile Include="skills/acolyte/magnificat.cpp" />
+    <ClCompile Include="skills/acolyte/magnusexorcismus.cpp" />
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
     <ClCompile Include="skills/acolyte/sanctuary.cpp" />
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
