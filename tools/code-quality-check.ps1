@@ -31,45 +31,57 @@ Set-Location $root_dir
 
 $failed_checks = @()
 
-# Step 1: CMake Generation Check
+# Step 1: CMake Generation Check (only for Visual Studio generators)
 if (-not $SkipCMake) {
     Write-Host "[1/3] Checking CMake generation..." -ForegroundColor Yellow
     
     # Determine which generator to use
+    $RunCMakeCheck = $true
     if (-not $Generator) {
         if ($IsWindows -or $env:OS -eq "Windows_NT") {
             $Generator = "Visual Studio 17 2022"
             $GeneratorArgs = @("-A", "x64")
             Write-Host "Generating Visual Studio 2022 project files..." -ForegroundColor Gray
         } else {
-            $Generator = "Unix Makefiles"
-            $GeneratorArgs = @()
-            Write-Host "Generating Unix Makefiles..." -ForegroundColor Gray
+            # Non-Windows platforms: skip CMake check
+            $RunCMakeCheck = $false
+            Write-Host "Skipping CMake check (not using Visual Studio generator on this platform)." -ForegroundColor Gray
+            Write-Host "✓ CMake check skipped" -ForegroundColor Green
         }
     } else {
-        $GeneratorArgs = @("-A", "x64")
-        Write-Host "Generating $Generator project files..." -ForegroundColor Gray
+        # Check if generator is Visual Studio
+        if ($Generator -match "Visual Studio") {
+            $GeneratorArgs = @("-A", "x64")
+            Write-Host "Generating $Generator project files..." -ForegroundColor Gray
+        } else {
+            # Non-VS generator: skip CMake check
+            $RunCMakeCheck = $false
+            Write-Host "Skipping CMake check (generator '$Generator' is not Visual Studio)." -ForegroundColor Gray
+            Write-Host "✓ CMake check skipped" -ForegroundColor Green
+        }
     }
     
-    try {
-        # Run CMake
-        $cmakeArgs = @("-G", $Generator) + $GeneratorArgs + @("-DALLOW_SAME_DIRECTORY=ON", ".")
-        & cmake $cmakeArgs 2>&1 | Out-Null
-        
-        # Check for changes
-        git add -N . 2>&1 | Out-Null
-        $diff = git diff --name-only
-        
-        if ($diff) {
-            Write-Host "✗ CMake generation created or modified files:" -ForegroundColor Red
-            $diff | ForEach-Object { Write-Host "  - $_" -ForegroundColor Red }
+    if ($RunCMakeCheck) {
+        try {
+            # Run CMake
+            $cmakeArgs = @("-G", $Generator) + $GeneratorArgs + @("-DALLOW_SAME_DIRECTORY=ON", ".")
+            & cmake $cmakeArgs 2>&1 | Out-Null
+            
+            # Check for changes
+            git add -N . 2>&1 | Out-Null
+            $diff = git diff --name-only
+            
+            if ($diff) {
+                Write-Host "✗ CMake generation created or modified files:" -ForegroundColor Red
+                $diff | ForEach-Object { Write-Host "  - $_" -ForegroundColor Red }
+                $failed_checks += "CMake generation"
+            } else {
+                Write-Host "✓ CMake generation check passed" -ForegroundColor Green
+            }
+        } catch {
+            Write-Host "✗ CMake generation failed: $_" -ForegroundColor Red
             $failed_checks += "CMake generation"
-        } else {
-            Write-Host "✓ CMake generation check passed" -ForegroundColor Green
         }
-    } catch {
-        Write-Host "✗ CMake generation failed: $_" -ForegroundColor Red
-        $failed_checks += "CMake generation"
     }
     Write-Host ""
 }

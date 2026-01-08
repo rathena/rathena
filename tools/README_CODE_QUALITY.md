@@ -76,9 +76,11 @@ This directory contains scripts to run code quality checks locally, matching the
 ## What Each Check Does
 
 ### 1. CMake Generation Check
-- Runs CMake to generate project files
+- **Only runs for Visual Studio generators** (Windows platform or when explicitly specified)
+- Runs CMake to generate Visual Studio project files (.vcxproj, .sln)
 - Fails if any project files are modified
 - Ensures project files are up-to-date
+- **Automatically skipped** on non-Windows platforms or when using non-Visual Studio generators (like Unix Makefiles)
 
 ### 2. Code Formatting Check (clang-format)
 - Runs clang-format on **all source files in `src/` directory only**
@@ -96,11 +98,13 @@ This directory contains scripts to run code quality checks locally, matching the
 ## Fixing Issues
 
 ### CMake Changes
-If CMake generates changes, commit the updated project files:
+If CMake generates changes to Visual Studio project files, commit them:
 ```bash
 git add *.vcxproj *.sln
-git commit -m "Update project files"
+git commit -m "Update Visual Studio project files"
 ```
+
+**Note:** The CMake check only runs for Visual Studio generators. On Linux/macOS, this check is automatically skipped since Unix Makefiles generate files not tracked in git.
 
 ### Formatting Issues
 

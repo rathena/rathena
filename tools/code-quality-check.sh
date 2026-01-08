@@ -121,34 +121,47 @@ fi
 
 FAILED_CHECKS=()
 
-# Step 1: CMake Generation Check
+# Step 1: CMake Generation Check (only for Visual Studio generators)
 if [ "$SKIP_CMAKE" = false ]; then
     echo -e "${YELLOW}[1/3] Checking CMake generation...${NC}"
     
-    # Determine which generator to use
+    # Determine which generator to use and if we should run the check
+    RUN_CMAKE_CHECK=true
     if [ -z "$GENERATOR" ]; then
-        GENERATOR="Unix Makefiles"
-        echo -e "${GRAY}Generating Unix Makefiles...${NC}"
+        # Default: Unix Makefiles generates files not tracked in git, skip the check
+        RUN_CMAKE_CHECK=false
+        echo -e "${GRAY}Skipping CMake check (not using Visual Studio generator on this platform).${NC}"
+        echo -e "${GREEN}✓ CMake check skipped${NC}"
     else
-        echo -e "${GRAY}Generating $GENERATOR project files...${NC}"
+        # Check if generator is Visual Studio
+        if [[ "$GENERATOR" == *"Visual Studio"* ]]; then
+            echo -e "${GRAY}Generating $GENERATOR project files...${NC}"
+        else
+            # Non-VS generator: skip CMake check
+            RUN_CMAKE_CHECK=false
+            echo -e "${GRAY}Skipping CMake check (generator '$GENERATOR' is not Visual Studio).${NC}"
+            echo -e "${GREEN}✓ CMake check skipped${NC}"
+        fi
     fi
     
-    if cmake -G "$GENERATOR" -DALLOW_SAME_DIRECTORY=ON . > /dev/null 2>&1; then
-        git add -N . 2>/dev/null || true
-        DIFF=$(git diff --name-only)
-        
-        if [ -n "$DIFF" ]; then
-            echo -e "${RED}✗ CMake generation created or modified files:${NC}"
-            echo "$DIFF" | while read -r file; do
-                echo -e "${RED}  - $file${NC}"
-            done
-            FAILED_CHECKS+=("CMake generation")
+    if [ "$RUN_CMAKE_CHECK" = true ]; then
+        if cmake -G "$GENERATOR" -DALLOW_SAME_DIRECTORY=ON . > /dev/null 2>&1; then
+            git add -N . 2>/dev/null || true
+            DIFF=$(git diff --name-only)
+            
+            if [ -n "$DIFF" ]; then
+                echo -e "${RED}✗ CMake generation created or modified files:${NC}"
+                echo "$DIFF" | while read -r file; do
+                    echo -e "${RED}  - $file${NC}"
+                done
+                FAILED_CHECKS+=("CMake generation")
+            else
+                echo -e "${GREEN}✓ CMake generation check passed${NC}"
+            fi
         else
-            echo -e "${GREEN}✓ CMake generation check passed${NC}"
+            echo -e "${RED}✗ CMake generation failed${NC}"
+            FAILED_CHECKS+=("CMake generation")
         fi
-    else
-        echo -e "${RED}✗ CMake generation failed${NC}"
-        FAILED_CHECKS+=("CMake generation")
     fi
     echo ""
 fi
