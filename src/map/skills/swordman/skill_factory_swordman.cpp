@@ -3,14 +3,20 @@
 
 #include "skill_factory_swordman.hpp"
 
-#include "../weapon_skill_impl.hpp"
 #include "../status_skill_impl.hpp"
+#include "../weapon_skill_impl.hpp"
 
 #include "autoberserk.hpp"
 #include "bash.hpp"
+#include "bowlingbash.hpp"
+#include "brandishspear.hpp"
+#include "counterattack.hpp"
 #include "magnum.hpp"
+#include "pierce.hpp"
 #include "provoke.hpp"
 #include "selfprovoke.hpp"
+#include "spearboomerang.hpp"
+#include "spearstab.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -40,12 +46,20 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IG_REBOUND_SHIELD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case KN_BOWLINGBASH:
+			return std::make_unique<SkillBowlingBash>();
+		case KN_BRANDISHSPEAR:
+			return std::make_unique<SkillBrandishSpear>();
+		case KN_AUTOCOUNTER:
+			return std::make_unique<SkillCounterAttack>();
 		case KN_ONEHAND:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case KN_PIERCE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillPierce>();
 		case KN_SPEARBOOMERANG:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSpearBoomerang>();
+		case KN_SPEARSTAB:
+			return std::make_unique<SkillSpearStab>();
 		case KN_TWOHANDQUICKEN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LG_BANISHINGPOINT:
