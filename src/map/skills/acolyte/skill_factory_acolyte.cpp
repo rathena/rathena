@@ -28,6 +28,7 @@
 #include "sanctuary.hpp"
 #include "statusrecovery.hpp"
 #include "suffragium.hpp"
+#include "turnundead.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -141,6 +142,9 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillStatusRecovery>();
 		case PR_SUFFRAGIUM:
 			return std::make_unique<SkillSuffragium>();
+		case PR_TURNUNDEAD:
+			return std::make_unique<SkillTurnUndead>();
+
 		default:
 			return nullptr;
 	}
