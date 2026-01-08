@@ -21,6 +21,7 @@
 #include "impositiomanus.hpp"
 #include "incagi.hpp"
 #include "kyrieeleison.hpp"
+#include "magnificat.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
 #include "statusrecovery.hpp"
@@ -124,6 +125,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillKyrieEleison>();
 		case PR_LEXAETERNA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case PR_MAGNIFICAT:
+			return std::make_unique<SkillMagnificat>();
 		case PR_SANCTUARY:
 			return std::make_unique<SkillSanctuary>();
 		case PR_SLOWPOISON:
