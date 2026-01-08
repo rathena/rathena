@@ -8477,9 +8477,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_GROUNDDRIVE:
 						skillratio += 25;
 						break;
-					case WZ_METEOR:
-						skillratio += 25;
-						break;
 					case WZ_VERMILION:
 						if(sd)
 							skillratio += 300 + skill_lv * 100;

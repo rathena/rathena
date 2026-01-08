@@ -1459,7 +1459,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_FREEZE,3,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case WZ_METEOR:
 	case HN_METEOR_STORM_BUSTER:
 		sc_start(src,bl,SC_STUN,3*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
@@ -13995,16 +13994,14 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
 		break;
 
-	case SU_CN_METEOR:
+	case SU_CN_METEOR: {
 		if (sd) {
 			if (pc_search_inventory(sd, skill_db.find(SU_CN_METEOR)->require.itemid[0]) >= 0)
 				skill_id = SU_CN_METEOR2;
 			if (pc_checkskill(sd, SU_SPIRITOFLAND))
 				sc_start(src, src, SC_DORAM_SVSP, 100, 100, skill_get_time(SU_SPIRITOFLAND, 1));
 		}
-		[[fallthrough]];
-	case WZ_METEOR:
-	{
+
 		int32 area = skill_get_splash(skill_id, skill_lv);
 		int16 tmpx = 0, tmpy = 0;
 
