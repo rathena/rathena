@@ -3,8 +3,6 @@
 
 #include "spreadattack.hpp"
 
-#include "map/clif.hpp"
-
 SkillSpreadAttack::SkillSpreadAttack() : SkillImplRecursiveDamageSplash(GS_SPREADATTACK) {
 }
 
