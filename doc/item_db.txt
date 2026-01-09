@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20220402
+//= 2026-01-05
 //===== Description: =========================================
 //= Explanation of the item_db.yml file and structure.
 //============================================================
@@ -151,12 +151,18 @@ Wizard
 
 ---------------------------------------
 
-Classes: Equippable upper-types.
+Classes: Minimal required job class to be able to equip.
 
-All         - Applies to all classes.
-Normal      - Normal classes (no Baby/Transcendent/Third classes).
-Upper       - Transcedent classes (no Transcedent-Third classes).
-Baby        - Baby classes (no Third-Baby classes).
+All         - All Jobs
+Upper       - Transcedent Jobs (Inherited By Primary 3rd Jobs And Higher)
+Baby        - Baby Jobs
+Renewal_Job - Primary 3rd Jobs / 1st Upper Expanded Jobs (Inherited By Primary 4th Jobs / 2nd Upper Expanded Jobs)
+Trait_Job   - Primary 4th Jobs / 2nd Upper Expanded Jobs
+
+May Be Deprecated Soon
+Normal      - Normal Jobs (no Baby/Transcendent/Third classes).
+
+Deprecated Classes
 Third       - Third classes (no Transcedent-Third or Third-Baby classes).
 Third_Upper - Transcedent-Third classes.
 Third_Baby  - Third-Baby classes.
