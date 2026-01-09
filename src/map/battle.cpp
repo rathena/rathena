@@ -8376,13 +8376,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if (sd && ad.div_ > 0)
 							ad.div_ *= -1; //For players, damage is divided by number of hits
 						break;
-#ifdef RENEWAL
-					case WZ_EARTHSPIKE:
-						skillratio += 100;
-						if (sc && sc->getSCE(SC_EARTH_CARE_OPTION))
-							skillratio += skillratio * 800 / 100;
-						break;
-#endif
 					case HW_NAPALMVULCAN:
 #ifdef RENEWAL
 						skillratio += -100 + 70 * skill_lv;

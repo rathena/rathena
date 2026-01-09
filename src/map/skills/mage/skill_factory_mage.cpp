@@ -7,6 +7,7 @@
 #include "../weapon_skill_impl.hpp"
 
 #include "coldbolt.hpp"
+#include "earthspike.hpp"
 #include "energycoat.hpp"
 #include "fireball.hpp"
 #include "firebolt.hpp"
@@ -74,6 +75,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WL_TELEKINESIS_INTENSE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WZ_EARTHSPIKE:
+			return std::make_unique<SkillEarthSpike>();
 		case WZ_FIREPILLAR:
 			return std::make_unique<SkillFirePillar>();
 		case WZ_FROSTNOVA:

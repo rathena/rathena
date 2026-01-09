@@ -288,6 +288,7 @@
     <ClInclude Include="skills/gunslinger/tracking.hpp" />
     <ClInclude Include="skills/gunslinger/tripleaction.hpp" />
     <ClInclude Include="skills/mage/coldbolt.hpp" />
+    <ClInclude Include="skills/mage/earthspike.hpp" />
     <ClInclude Include="skills/mage/energycoat.hpp" />
     <ClInclude Include="skills/mage/fireball.hpp" />
     <ClInclude Include="skills/mage/firebolt.hpp" />
@@ -453,6 +454,7 @@
     <ClCompile Include="skills/gunslinger/tracking.cpp" />
     <ClCompile Include="skills/gunslinger/tripleaction.cpp" />
     <ClCompile Include="skills/mage/coldbolt.cpp" />
+    <ClCompile Include="skills/mage/earthspike.cpp" />
     <ClCompile Include="skills/mage/energycoat.cpp" />
     <ClCompile Include="skills/mage/fireball.cpp" />
     <ClCompile Include="skills/mage/firebolt.cpp" />
