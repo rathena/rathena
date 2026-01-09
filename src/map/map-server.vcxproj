@@ -254,6 +254,7 @@
     <ClInclude Include="skills/acolyte/holywater.hpp" />
     <ClInclude Include="skills/acolyte/impositiomanus.hpp" />
     <ClInclude Include="skills/acolyte/incagi.hpp" />
+    <ClInclude Include="skills/acolyte/pneuma.hpp" />
     <ClInclude Include="skills/acolyte/kyrieeleison.hpp" />
     <ClInclude Include="skills/acolyte/lexdivina.hpp" />
     <ClInclude Include="skills/acolyte/magnificat.hpp" />
@@ -295,6 +296,7 @@
     <ClInclude Include="skills/mage/frostdiver.hpp" />
     <ClInclude Include="skills/mage/lightningbolt.hpp" />
     <ClInclude Include="skills/mage/napalmbeat.hpp" />
+    <ClInclude Include="skills/mage/safetywall.hpp" />
     <ClInclude Include="skills/mage/sight.hpp" />
     <ClInclude Include="skills/mage/skill_factory_mage.hpp" />
     <ClInclude Include="skills/mage/soulstrike.hpp" />
@@ -410,6 +412,7 @@
     <ClCompile Include="skills/acolyte/holywater.cpp" />
     <ClCompile Include="skills/acolyte/impositiomanus.cpp" />
     <ClCompile Include="skills/acolyte/incagi.cpp" />
+    <ClCompile Include="skills/acolyte/pneuma.cpp" />
     <ClCompile Include="skills/acolyte/kyrieeleison.cpp" />
     <ClCompile Include="skills/acolyte/lexdivina.cpp" />
     <ClCompile Include="skills/acolyte/magnificat.cpp" />
@@ -451,6 +454,7 @@
     <ClCompile Include="skills/mage/frostdiver.cpp" />
     <ClCompile Include="skills/mage/lightningbolt.cpp" />
     <ClCompile Include="skills/mage/napalmbeat.cpp" />
+    <ClCompile Include="skills/mage/safetywall.cpp" />
     <ClCompile Include="skills/mage/sight.cpp" />
     <ClCompile Include="skills/mage/skill_factory_mage.cpp" />
     <ClCompile Include="skills/mage/soulstrike.cpp" />

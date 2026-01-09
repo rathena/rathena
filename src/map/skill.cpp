@@ -295,7 +295,7 @@ int32 skill_attack_area(block_list *bl,va_list ap);
 std::shared_ptr<s_skill_unit_group> skill_locate_element_field(block_list *bl); // [Skotlex]
 int32 skill_graffitiremover(block_list *bl, va_list ap); // [Valaris]
 int32 skill_greed(block_list *bl, va_list ap);
-static int32 skill_cell_overlap(block_list *bl, va_list ap);
+int32 skill_cell_overlap(block_list *bl, va_list ap);
 static int32 skill_trap_splash(block_list *bl, va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(block_list *bl,std::shared_ptr<s_skill_unit_group> sg,t_tick tick);
 static int32 skill_unit_onplace(skill_unit *src,block_list *bl,t_tick tick);
@@ -6304,7 +6304,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	case NPC_DARKSTRIKE:
-	case MG_LIGHTNINGBOLT:
 	case WZ_EARTHSPIKE:
 	case NPC_DARKTHUNDER:
 	case NPC_FIRESTORM:
@@ -13798,18 +13797,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	}
 
 	// Skill Unit Setting
-	case MG_SAFETYWALL: {
-		int32 dummy = 1;
-
-		if (map_foreachincell(skill_cell_overlap, src->m, x, y, BL_SKILL, skill_id, &dummy, src)) {
-			skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-			return 0; // Don't consume gems if cast on Land Protector
-		}
-	}
-	[[fallthrough]];
-	case MG_FIREWALL:
-	case MG_THUNDERSTORM:
-	case AL_PNEUMA:
 	case WZ_FIREPILLAR:
 	case WZ_QUAGMIRE:
 	case WZ_VERMILION:
@@ -20637,7 +20624,7 @@ static int32 skill_bind_trap(block_list *bl, va_list ap) {
  * Catched skill in cell value pushed to *unit pointer.
  * Set (*alive) to 0 will ends 'new unit' check
  *------------------------------------------*/
-static int32 skill_cell_overlap(block_list *bl, va_list ap)
+int32 skill_cell_overlap(block_list *bl, va_list ap)
 {
 	uint16 skill_id;
 	int32 *alive;
