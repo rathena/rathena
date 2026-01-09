@@ -33,12 +33,14 @@ void SkillStormGust::applyAdditionalEffects(block_list* src, block_list* target,
 #else
 	status_change* tsc = status_get_sc( target );
 
-	//On third hit, there is a 150% to freeze the target
-	if(tsc->sg_counter >= 3 &&
-		sc_start(src,target,SC_FREEZE,150,skill_lv,skill_get_time2(getSkillId(),skill_lv)))
-		tsc->sg_counter = 0;
-	// Being it only resets on success it'd keep stacking and eventually overflowing on mvps, so we reset at a high value
-	else if( tsc->sg_counter > 250 )
-		tsc->sg_counter = 0;
+	if (tsc != nullptr) {
+		//On third hit, there is a 150% to freeze the target
+		if(tsc->sg_counter >= 3 &&
+			sc_start(src,target,SC_FREEZE,150,skill_lv,skill_get_time2(getSkillId(),skill_lv)))
+			tsc->sg_counter = 0;
+		// Being it only resets on success it'd keep stacking and eventually overflowing on mvps, so we reset at a high value
+		else if( tsc->sg_counter > 250 )
+			tsc->sg_counter = 0;
+	}
 #endif
 }
