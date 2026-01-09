@@ -23,6 +23,7 @@
 #include "napalmbeat.hpp"
 #include "lightningbolt.hpp"
 #include "quagmire.hpp"
+#include "sense.hpp"
 #include "sight.hpp"
 #include "sightrasher.hpp"
 #include "soulstrike.hpp"
@@ -79,6 +80,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WZ_EARTHSPIKE:
 			return std::make_unique<SkillEarthSpike>();
+		case WZ_ESTIMATION:
+			return std::make_unique<SkillSense>();
 		case WZ_FIREPILLAR:
 			return std::make_unique<SkillFirePillar>();
 		case WZ_FROSTNOVA:

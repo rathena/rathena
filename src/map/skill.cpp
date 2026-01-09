@@ -9029,8 +9029,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		if( !mer )
 			break;
 		sd = mer->master;
-		[[fallthrough]];
-	case WZ_ESTIMATION:
 		if( sd == nullptr )
 			break;
 		if( dstsd )
@@ -9041,8 +9039,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 		if (dstmd != nullptr)
 			clif_skill_estimation( *sd, *dstmd );
-		if( skill_id == MER_ESTIMATION )
-			sd = nullptr;
+		sd = nullptr;
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
