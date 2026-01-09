@@ -22,6 +22,7 @@
 #include "meteorstorm.hpp"
 #include "napalmbeat.hpp"
 #include "lightningbolt.hpp"
+#include "quagmire.hpp"
 #include "sight.hpp"
 #include "sightrasher.hpp"
 #include "soulstrike.hpp"
@@ -92,6 +93,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillLordOfVermilion>();
 		case WZ_METEOR:
 			return std::make_unique<SkillMeteorStorm>();
+		case WZ_QUAGMIRE:
+			return std::make_unique<SkillQuagmire>();
 		case WZ_SIGHTRASHER:
 			return std::make_unique<SkillSightRasher>();
 		case WZ_STORMGUST:

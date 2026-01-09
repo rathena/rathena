@@ -303,6 +303,7 @@
     <ClInclude Include="skills/mage/lordofvermilion.hpp" />
     <ClInclude Include="skills/mage/meteorstorm.hpp" />
     <ClInclude Include="skills/mage/napalmbeat.hpp" />
+    <ClInclude Include="skills/mage/quagmire.hpp" />
     <ClInclude Include="skills/mage/sight.hpp" />
     <ClInclude Include="skills/mage/sightrasher.hpp" />
     <ClInclude Include="skills/mage/skill_factory_mage.hpp" />
@@ -470,6 +471,7 @@
     <ClCompile Include="skills/mage/lordofvermilion.cpp" />
     <ClCompile Include="skills/mage/meteorstorm.cpp" />
     <ClCompile Include="skills/mage/napalmbeat.cpp" />
+    <ClCompile Include="skills/mage/quagmire.cpp" />
     <ClCompile Include="skills/mage/sight.cpp" />
     <ClCompile Include="skills/mage/sightrasher.cpp" />
     <ClCompile Include="skills/mage/skill_factory_mage.cpp" />

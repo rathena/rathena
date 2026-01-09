@@ -13743,7 +13743,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MG_FIREWALL:
 	case MG_THUNDERSTORM:
 	case AL_PNEUMA:
-	case WZ_QUAGMIRE:
 	case NPC_GROUNDDRIVE:
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
