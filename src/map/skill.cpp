@@ -1443,10 +1443,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src,bl,SC_STUN,3*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case WZ_HEAVENDRIVE:
-		status_change_end(bl, SC_SV_ROOTTWIST);
-		break;
-
 	case HT_FREEZINGTRAP:
 	case MA_FREEZINGTRAP:
 		sc_start(src, bl, SC_FREEZE, 100, skill_lv, skill_get_time2(skill_id, skill_lv), sstatus->amotion + 100);
@@ -13748,7 +13744,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MG_THUNDERSTORM:
 	case AL_PNEUMA:
 	case WZ_QUAGMIRE:
-	case WZ_HEAVENDRIVE:
 	case NPC_GROUNDDRIVE:
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
