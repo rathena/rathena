@@ -8459,7 +8459,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bUnbreakableWeapon;
-      bonus2 bAddClass,Class_All,10;
+      bonus bAtkRate,10;
       bonus3 bAutoSpell,"SA_DISPELL",1,50;
   - Id: 4408
     AegisName: Gloom_Under_Night_Card
