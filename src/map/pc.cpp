@@ -2996,6 +2996,11 @@ uint64 pc_calc_skilltree_normalize_job( map_session_data* sd ){
 		}
 	}
 
+	// Primary 4th Jobs Can Access Trans Job Skill Trees.
+	if (pc_is_primary_fourth(sd->class_) && !pc_is_primary_fourth(c)) {
+		c |= JOBL_UPPER;
+	}
+
 	return c;
 }
 
