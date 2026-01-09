@@ -6304,7 +6304,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	case NPC_DARKSTRIKE:
-	case MG_LIGHTNINGBOLT:
 	case WZ_EARTHSPIKE:
 	case NPC_DARKTHUNDER:
 	case NPC_FIRESTORM:
