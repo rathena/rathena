@@ -1430,21 +1430,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_QUAGMIRE,100,0,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case WZ_STORMGUST:
-		// Storm Gust counter was dropped in renewal
-#ifdef RENEWAL
-		sc_start(src,bl,SC_FREEZE,65-(5*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-#else
-		//On third hit, there is a 150% to freeze the target
-		if(tsc->sg_counter >= 3 &&
-			sc_start(src,bl,SC_FREEZE,150,skill_lv,skill_get_time2(skill_id,skill_lv)))
-			tsc->sg_counter = 0;
-		// Being it only resets on success it'd keep stacking and eventually overflowing on mvps, so we reset at a high value
-		else if( tsc->sg_counter > 250 )
-			tsc->sg_counter = 0;
-#endif
-		break;
-
 	case NPC_STORMGUST2:
 		if (skill_lv == 1)
 			sc_start(src,bl,SC_FREEZE,10,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -13764,7 +13749,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MG_THUNDERSTORM:
 	case AL_PNEUMA:
 	case WZ_QUAGMIRE:
-	case WZ_STORMGUST:
 	case WZ_HEAVENDRIVE:
 	case NPC_GROUNDDRIVE:
 	case CR_GRANDCROSS:

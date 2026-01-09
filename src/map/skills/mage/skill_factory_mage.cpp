@@ -24,6 +24,7 @@
 #include "sightrasher.hpp"
 #include "soulstrike.hpp"
 #include "stonecurse.hpp"
+#include "stormgust.hpp"
 #include "thunderstorm.hpp"
 #include "waterball.hpp"
 
@@ -87,6 +88,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillMeteorStorm>();
 		case WZ_SIGHTRASHER:
 			return std::make_unique<SkillSightRasher>();
+		case WZ_STORMGUST:
+			return std::make_unique<SkillStormGust>();
 		case WZ_WATERBALL:
 			return std::make_unique<SkillWaterBall>();
 
