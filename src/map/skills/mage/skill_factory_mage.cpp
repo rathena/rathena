@@ -25,6 +25,7 @@
 #include "quagmire.hpp"
 #include "sense.hpp"
 #include "sight.hpp"
+#include "sightblaster.hpp"
 #include "sightrasher.hpp"
 #include "soulstrike.hpp"
 #include "stonecurse.hpp"
@@ -98,6 +99,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillMeteorStorm>();
 		case WZ_QUAGMIRE:
 			return std::make_unique<SkillQuagmire>();
+		case WZ_SIGHTBLASTER:
+			return std::make_unique<SkillSightBlaster>();
 		case WZ_SIGHTRASHER:
 			return std::make_unique<SkillSightRasher>();
 		case WZ_STORMGUST:

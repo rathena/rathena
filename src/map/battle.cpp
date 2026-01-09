@@ -8463,9 +8463,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += -100 + 500 + 150 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
-					case WZ_SIGHTBLASTER:
-						skillratio += 500;
-						break;
 #endif
 					case AB_JUDEX:
 						skillratio += -100 + 300 + 70 * skill_lv;

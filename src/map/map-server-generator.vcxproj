@@ -306,6 +306,7 @@
     <ClInclude Include="skills/mage/quagmire.hpp" />
     <ClInclude Include="skills/mage/sense.hpp" />
     <ClInclude Include="skills/mage/sight.hpp" />
+    <ClInclude Include="skills/mage/sightblaster.hpp" />
     <ClInclude Include="skills/mage/sightrasher.hpp" />
     <ClInclude Include="skills/mage/skill_factory_mage.hpp" />
     <ClInclude Include="skills/mage/soulstrike.hpp" />
@@ -475,6 +476,7 @@
     <ClCompile Include="skills/mage/quagmire.cpp" />
     <ClCompile Include="skills/mage/sense.cpp" />
     <ClCompile Include="skills/mage/sight.cpp" />
+    <ClCompile Include="skills/mage/sightblaster.cpp" />
     <ClCompile Include="skills/mage/sightrasher.cpp" />
     <ClCompile Include="skills/mage/skill_factory_mage.cpp" />
     <ClCompile Include="skills/mage/soulstrike.cpp" />

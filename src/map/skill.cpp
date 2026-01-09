@@ -6270,7 +6270,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case MG_LIGHTNINGBOLT:
 	case NPC_DARKTHUNDER:
 	case NPC_FIRESTORM:
-	case WZ_SIGHTBLASTER:
 #ifdef RENEWAL
 	case PA_PRESSURE:
 #endif
@@ -8188,7 +8187,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 	case MER_SIGHT:
-	case WZ_SIGHTBLASTER:
 	case NPC_WIDESIGHT:
 	case NPC_STONESKIN:
 	case NPC_ANTIMAGIC:
