@@ -1,0 +1,72 @@
+version: "3.7"
+
+services:
+    db:
+        image: "mariadb:noble"
+        container_name: "rathena-db"
+        ports:
+            - "3306:3306" # allow DB connections from host
+        volumes:
+            - "rathenadb:/var/lib/mysql" # save database to local disk
+            - "./sql-files/:/docker-entrypoint-initdb.d" # initialize db with ./sql-files
+        environment:
+            MYSQL_ROOT_PASSWORD: ragnarok
+            MYSQL_DATABASE: ragnarok
+            MYSQL_USER: ragnarok
+            MYSQL_PASSWORD: ragnarok
+
+    login:
+        image: "rathena:local"
+        container_name: "rathena-login"
+        command: sh -c "/bin/wait-for db:3306 -- /rathena/login-server"
+        ports:
+            - "6900:6900" # login server
+        volumes:
+            - "./conf:/rathena/conf"
+            - "./npc:/rathena/npc"
+            - "./db:/rathena/db"
+        init: true # helps with signal forwarding and process reaping
+        tty: true
+        stdin_open: true
+        build:
+            context: .
+            dockerfile: tools/docker/Dockerfile
+            args:
+                BUILDER_CONFIGURE: "--enable-packetver=20200401"
+        depends_on:
+            - db
+
+    char:
+        image: "rathena:local"
+        container_name: "rathena-char"
+        command: sh -c "/bin/wait-for db:3306 -- /rathena/char-server"
+        ports:
+            - "6121:6121" # char server
+        volumes:
+            - "./conf:/rathena/conf"
+            - "./npc:/rathena/npc"
+            - "./db:/rathena/db"
+        init: true # helps with signal forwarding and process reaping
+        tty: true
+        stdin_open: true
+        depends_on:
+            - login
+    
+    map:
+        image: "rathena:local"
+        container_name: "rathena-map"
+        command: sh -c "/bin/wait-for db:3306 -- /rathena/map-server"
+        ports:
+            - "5121:5121" # map server
+        volumes:
+            - "./conf:/rathena/conf"
+            - "./npc:/rathena/npc"
+            - "./db:/rathena/db"
+        init: true
+        tty: true
+        stdin_open: true
+        depends_on:
+            - char
+
+volumes:
+    rathenadb:
