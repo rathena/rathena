@@ -13910,7 +13910,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
 
-	case WZ_ICEWALL:
 	case NPC_CANE_OF_EVIL_EYE:
 		flag|=1;
 		if(skill_unitsetting(src,skill_id,skill_lv,x,y,0))

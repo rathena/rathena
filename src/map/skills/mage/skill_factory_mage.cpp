@@ -13,6 +13,7 @@
 #include "firepillar.hpp"
 #include "firewall.hpp"
 #include "frostdiver.hpp"
+#include "icewall.hpp"
 #include "jupitelthunder.hpp"
 #include "lordofvermilion.hpp"
 #include "meteorstorm.hpp"
@@ -73,6 +74,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WZ_FIREPILLAR:
 			return std::make_unique<SkillFirePillar>();
+		case WZ_ICEWALL:
+			return std::make_unique<SkillIceWall>();
 		case WZ_JUPITEL:
 			return std::make_unique<SkillJupitelThunder>();
 		case WZ_VERMILION:

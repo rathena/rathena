@@ -294,6 +294,7 @@
     <ClInclude Include="skills/mage/firepillar.hpp" />
     <ClInclude Include="skills/mage/firewall.hpp" />
     <ClInclude Include="skills/mage/frostdiver.hpp" />
+    <ClInclude Include="skills/mage/icewall.hpp" />
     <ClInclude Include="skills/mage/jupitelthunder.hpp" />
     <ClInclude Include="skills/mage/lightningbolt.hpp" />
     <ClInclude Include="skills/mage/lordofvermilion.hpp" />
@@ -456,6 +457,7 @@
     <ClCompile Include="skills/mage/firepillar.cpp" />
     <ClCompile Include="skills/mage/firewall.cpp" />
     <ClCompile Include="skills/mage/frostdiver.cpp" />
+    <ClCompile Include="skills/mage/icewall.cpp" />
     <ClCompile Include="skills/mage/jupitelthunder.cpp" />
     <ClCompile Include="skills/mage/lightningbolt.cpp" />
     <ClCompile Include="skills/mage/lordofvermilion.cpp" />
