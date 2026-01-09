@@ -8371,14 +8371,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case AL_RUWACH:
 						skillratio += 45;
 						break;
-					case WZ_FROSTNOVA:
-#ifndef RENEWAL
-						skillratio += -100 + (100 + skill_lv * 10) * 2 / 3;
-#else
-						// In renewal the damage formula is identical to MG_FROSTDIVER
-						skillratio += 10 * skill_lv;
-#endif
-						break;
 					case WZ_FIREPILLAR:
 						// TODO: Refactor
 						if (sd && ad.div_ > 0)

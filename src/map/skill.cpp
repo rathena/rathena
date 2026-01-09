@@ -1430,10 +1430,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_QUAGMIRE,100,0,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case WZ_FROSTNOVA:
-		sc_start(src,bl,SC_FREEZE,(sd!=nullptr)?skill_lv*5+33:skill_lv*3+35,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
 	case WZ_STORMGUST:
 		// Storm Gust counter was dropped in renewal
 #ifdef RENEWAL
@@ -8737,14 +8733,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv)-3, 0, splash_target(src),
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 0,
 			skill_castend_damage_id);
-		break;
-
-	case WZ_FROSTNOVA:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		skill_area_temp[1] = 0;
-		map_foreachinshootrange(skill_attack_area, src,
-			skill_get_splash(skill_id, skill_lv), splash_target(src),
-			BF_MAGIC, src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
 		break;
 
 	case NPC_SELFDESTRUCTION:
