@@ -148,17 +148,11 @@ OnInit:
 	    "2114,2115,2116,2117,2118,2119,2120,2121,2123,2124,2125,1496,";
 	end;
 OnClock0000:
-OnClock0200:
 OnClock0400:
-OnClock0600:
 OnClock0800:
-OnClock1000:
 OnClock1200:
-OnClock1400:
 OnClock1600:
-OnClock1800:
 OnClock2000:
-OnClock2200:
 	set .ResetCounter,.ResetCounter+1;
 	set .EventON,1;
 	set .Timer,1;

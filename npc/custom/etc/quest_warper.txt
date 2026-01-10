@@ -974,6 +974,16 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 168;
 
 	QWS_Make_Town_Menu 20;
+
+//----------------Midgard Expedition:
+	setarray @pTmenuitems$[@Ti], "Midgard Expedition";
+	setarray @pTprice[@Ti], $QW_AW_PRICE;
+
+	setarray @pTmap$[@Ti], "mid_camp";
+	setarray @pTXcoords[@Ti], 214;
+	setarray @pTYcoords[@Ti], 244;
+
+	QWS_Make_Town_Menu 31;
 //----------------Cancel
 	setarray @pTmenuitems$[@Ti], "Cancel";
 	setarray @pTprice[@Ti], 0;
@@ -1676,6 +1686,7 @@ splendide,205,153,4	script	Dimensius#42	10308,{ callfunc "QWS_Town_Warpra",27,"S
 veins,214,123,4	script	Dimensius#43	10308,{ callfunc "QWS_Town_Warpra",28,"Veins Town"; close; }
 dewata,194,178,6	script	Dimensius#44	10308,{ callfunc "QWS_Town_Warpra",29,"Dewata Town"; close; }
 eclage,107,37,4	script	Dimensius#45	10308,{ callfunc "QWS_Town_Warpra",30,"Eclage Town"; close; }
+mid_camp,208,242,4	script	Dimensius#46	10308,{ callfunc "QWS_Town_Warpra",31,"Midgard Expedition"; close; }
 
 abyss_02,274,266,1	script	Dimensius#46	10308,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
 ama_dun02,192,118,5	script	Dimensius#47	10308,{ callfunc "QWS_Dungeon_Warpra",1,"Amatsu Dungeon"; close; }

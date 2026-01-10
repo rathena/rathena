@@ -1,0 +1,50 @@
+moc_para01,24,22,5	script	Freebie	567,{
+
+	// Config
+	.@item_id = 1230092;
+	.@amount  = 1;
+
+	mes "[Freebie]";
+	mes "Hey! Welcome to the RetRO!";
+	mes "I can give you a small starter pack to help you begin.";
+	next;
+
+	// 1x por conta (account variable)
+	if (#freebie_quest) {
+		mes "[Freebie]";
+		mes "Looks like you already claimed this starter pack on this account.";
+		mes "I can only give it once per account.";
+		mes "Good luck and have fun!";
+		close;
+	}
+
+	mes "[Freebie]";
+	mes "This pack contains:";
+	mes "^00FF00" + .@amount + "^000000 x Item ID ^00FF00" + .@item_id + "^000000";
+	mes "";
+	mes "Do you want to claim it now?";
+	next;
+
+	switch(select("Yes, claim it!:Not now")) {
+		case 1:
+			mes "[Freebie]";
+			mes "Alright! Here you go.";
+			next;
+
+			getitem2 .@item_id, .@amount, 1, 0, 0, 0, 0, 0, BOUND_ACCOUNT;
+
+			// Marca como resgatado (por conta)
+			#freebie_quest = 1;
+
+			mes "[Freebie]";
+			mes "Done! Your starter pack has been delivered.";
+			mes "Remember: it's ^FF00001 time per account^000000.";
+			close;
+
+		default:
+			mes "[Freebie]";
+			mes "No worries!";
+			mes "Come back if you change your mind.";
+			close;
+	}
+}

@@ -647,11 +647,13 @@ void pet_set_intimate(pet_data *pd, int32 value)
 	int32 index = pet_egg_search( sd, pd->pet.pet_id );
 
 	if( pd->pet.intimate <= PET_INTIMATE_NONE ){
-		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_OTHER );
+		// NUNCA delete o ovo (evita "fuga/perda").
+		// Mantém apenas a flag de rename e deixa o status de intimidade como "awkward/none".
+		sd->inventory.u.items_inventory[index].card[3] &= 1;
+		// Não chama pet_return_egg aqui para evitar use-after-free em chamadas como pet_food().
 	}else{
 		// Remove everything except the rename flag
 		sd->inventory.u.items_inventory[index].card[3] &= 1;
-
 		sd->inventory.u.items_inventory[index].card[3] |= pet_get_card3_intimacy( pd->pet.intimate );
 	}
 
@@ -862,17 +864,18 @@ static TIMER_FUNC(pet_hungry){
 	pd->pet.hungry -= pet_db_ptr->fullness;
 
 	if( pd->pet.hungry < PET_HUNGRY_NONE ) {
-		unit_stop_attack( pd );
+		unit_stop_attack(pd);
 		pd->pet.hungry = PET_HUNGRY_NONE;
+
+		// aplica perda/ganho de intimidade por fome (se você quiser manter isso)
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->hungry_intimacy_dec);
 
-		if( pd->pet.intimate <= PET_INTIMATE_NONE ) {
-			pd->status.speed = pd->get_pet_walk_speed();
-		}
+		clif_send_petdata(sd, *pd, CHANGESTATEPET_HUNGER);
+		clif_send_petdata(sd, *pd, CHANGESTATEPET_INTIMACY);
 
-		status_calc_pet(pd,SCO_NONE);
-		clif_send_petdata( sd, *pd, CHANGESTATEPET_INTIMACY );
-		interval = 20000; // While starving, it's every 20 seconds
+		// fome = 0 sempre volta pro ovo
+		pet_return_egg(sd, pd);
+		return 0;
 	}
 
 	clif_send_petdata( sd, *pd, CHANGESTATEPET_HUNGER );
@@ -957,7 +960,7 @@ bool pet_return_egg( map_session_data *sd, pet_data *pd ){
 	if( i == -1 ){
 		return false;
  	}
- 
+
 	sd->inventory.u.items_inventory[i].attribute = 0;
 	sd->inventory.dirty = true;
 	pd->pet.incubate = 1;
@@ -1096,7 +1099,7 @@ int32 pet_birth_process(map_session_data *sd, struct s_pet *pet)
 	}
 
 	intif_save_petdata(sd->status.account_id,pet);
-	
+
 	if (save_settings&CHARSAVE_PET)
 		chrif_save(sd, CSAVE_INVENTORY); //is it REALLY Needed to save the char for hatching a pet? [Skotlex]
 
@@ -1637,6 +1640,17 @@ int32 pet_food(map_session_data *sd, pet_data *pd)
 	nullpo_retr(1, pd);
 
 	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
+
+	if (pet_db_ptr == nullptr) {
+		ShowError("pet_food: pet_db entry not found for pet class %d (pet_id=%d, owner=%d/%d)\n",
+			pd->pet.class_, pd->pet.pet_id,
+			sd->status.account_id, sd->status.char_id
+		);
+
+		pet_return_egg(sd, pd);
+		return 1;
+	}
+
 	int32 i,k;
 
 	k = pet_db_ptr->FoodID;
@@ -1651,9 +1665,13 @@ int32 pet_food(map_session_data *sd, pet_data *pd)
 
 	if (pd->pet.hungry > PET_HUNGRY_SATISFIED) {
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->r_full);
+
+		// Se intimidade zerou, volta pro ovo e encerra para não usar pd depois do unit_free()
 		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
-			unit_stop_attack( pd );
+			unit_stop_attack(pd);
 			pd->status.speed = pd->get_pet_walk_speed();
+			pet_return_egg(sd, pd);
+			return 0;
 		}
 	}
 	else {
@@ -1668,6 +1686,13 @@ int32 pet_food(map_session_data *sd, pet_data *pd)
 		}
 
 		pet_set_intimate(pd, pd->pet.intimate + k);
+		// Se intimidade zerou, volta pro ovo e encerra para não usar pd depois do unit_free()
+		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
+			unit_stop_attack(pd);
+			pd->status.speed = pd->get_pet_walk_speed();
+			pet_return_egg(sd, pd);
+			return 0;
+		}
 	}
 
 	status_calc_pet(pd,SCO_NONE);
@@ -2235,7 +2260,7 @@ bool pet_evolution_requirements_check(map_session_data *sd, int16 pet_id) {
 		if (count < requirement.second)
 			return false;
 	}
-	
+
 	return true;
 }
 
@@ -2292,7 +2317,7 @@ void pet_evolution(map_session_data *sd, int16 pet_id) {
 			}
 		}
 	}
-	
+
 	std::shared_ptr<s_pet_db> new_data = pet_db.find(pet_id);
 
 	if( new_data == nullptr ){

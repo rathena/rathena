@@ -49,6 +49,7 @@ Body:
 #      changedress: true
 #      resurrect: true
       # New
+      whereis: true
       commands: true
       rates: true
       showdelay: true
@@ -96,7 +97,6 @@ Body:
       homstats: true
       showexp: true
       showzeny: true
-      whereis: true
       # Feature commands
       refresh: true
       noask: true

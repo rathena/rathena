@@ -3779,7 +3779,7 @@ OnInit:
 //============================================================
 ra_temple,119,180,0	script	Temple Entrance#ra_tem	45,1,1,{
 OnTouch:
-	if ($rachel_donate >= 0) {
+	if ($rachel_donate >= 1) {
 		if (MISC_QUEST & 8192) { warp "ra_temin",169,23; end; }
 
 		if (ra_tem_q < 10) {
@@ -3799,7 +3799,7 @@ OnTouch:
 
 ra_temple,116,174,3	script	Nemma#ra_temple	920,{
 	cutin "ra_nemma02",2;
-	if ($rachel_donate < 10000) {
+	if ($rachel_donate < 1) {
 		if (ra_have_donated == 0) {
 			cutin "ra_nemma03",2;
 			mes "[Priestess Nemma]";

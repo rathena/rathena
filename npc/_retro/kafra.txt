@@ -1,10 +1,6 @@
 //===== rAthena Script =======================================
-//= Special Assistant (Savepoint + Storage + Guild Storage + Buffs)
-//===== Description: =========================================
-//= - Set Save Point
-//= - Storage
-//= - Guild Storage (guild members only) via guildopenstorage()
-//= - Full Heal + Blessing + Increase AGI (10 minutes / 10k Zeny)
+//= Special Assistant
+//= Save Point / Storage / Guild Storage / Buffs / Teleport / Cart
 //============================================================
 
 prontera,158,187,3	script	Special Assistant	4_EP17_TABLET,{
@@ -16,77 +12,168 @@ prontera,158,187,3	script	Special Assistant	4_EP17_TABLET,{
 	.@save_x = 155;
 	.@save_y = 184;
 
-	.@buff_duration = 600000; // 10 minutes (milliseconds)
+	.@buff_duration = 600000; // 10 min
 	.@buff_level = 10;
-	.@cost_service = 10000;   // 10k zeny (heal + buffs together)
+	.@buff_cost = 10000;
+
+	.@cart_cost = 800; // Pushcart price if no ticket
 
 	mes "[Special Assistant]";
 	mes "Welcome! How may I assist you today?";
 	next;
 
 	while (1) {
-		.@menu$  = "Set Save Point";
-		.@menu$ += ":Open Storage";
-		.@menu$ += ":Open Guild Storage";
-		.@menu$ += ":Heal + Buffs (10k)";
-		.@menu$ += ":Leave";
 
-		switch(select(.@menu$)) {
+		switch(select(
+			"Set Save Point:Open Storage:Open Guild Storage:Heal + Buffs (10k):Teleport:Rent a Pushcart:Leave"
+		)) {
 
-			// Set Save Point
-			case 1:
-				savepoint .@save_map$, .@save_x, .@save_y;
+		// ------------------------------------------------
+		// Save Point
+		// ------------------------------------------------
+		case 1:
+			savepoint .@save_map$, .@save_x, .@save_y;
+			mes "[Special Assistant]";
+			mes "Save point set successfully.";
+			close;
+
+		// ------------------------------------------------
+		// Storage
+		// ------------------------------------------------
+		case 2:
+			close2;
+			openstorage;
+			close;
+
+		// ------------------------------------------------
+		// Guild Storage
+		// ------------------------------------------------
+		case 3:
+			if (!getcharid(2)) {
 				mes "[Special Assistant]";
-				mes "Your save point has been set to ^0055FF"+.@save_map$+" "+.@save_x+","+.@save_y+"^000000.";
-				close;
+				mes "You must be in a guild.";
+				next;
+				break;
+			}
+			close2;
+			guildopenstorage();
+			close;
 
-			// Storage
-			case 2:
+		// ------------------------------------------------
+		// Heal + Buffs
+		// ------------------------------------------------
+		case 4:
+			if (Zeny < .@buff_cost) {
 				mes "[Special Assistant]";
-				mes "Opening Storage...";
-				close2;
-				openstorage;
-				close;
+				mes "You need 10,000 zeny.";
+				next;
+				break;
+			}
+			Zeny -= .@buff_cost;
+			percentheal 100,100;
+			sc_start SC_BLESSING, .@buff_duration, .@buff_level;
+			sc_start SC_INCREASEAGI, .@buff_duration, .@buff_level;
+			mes "[Special Assistant]";
+			mes "You are fully healed and buffed!";
+			close;
 
-			// Guild Storage
-			case 3:
-				if (getcharid(2) == 0) {
+		// ------------------------------------------------
+		// Teleport
+		// ------------------------------------------------
+		case 5:
+
+			mes "[Special Assistant]";
+			mes "Choose your destination.";
+			next;
+
+			.@map$ = ""; // reset
+
+			switch(select(
+				"Izlude [600z]:Geffen [1.200z]:Payon [1.200z]:Morocc [1.200z]:Orc Dungeon [1.700z]:Alberta [1.800z]:Cancel"
+			)) {
+
+				case 1: .@price=600;  .@map$="izlude";     .@x=91;  .@y=105; break;
+				case 2: .@price=1200; .@map$="geffen";     .@x=120; .@y=39;  break;
+				case 3: .@price=1200; .@map$="payon";      .@x=161; .@y=58;  break;
+				case 4: .@price=1200; .@map$="morocc";     .@x=156; .@y=46;  break;
+				case 5: .@price=1700; .@map$="gef_fild10"; .@x=52;  .@y=326; break;
+				case 6: .@price=1800; .@map$="alberta";    .@x=117; .@y=56;  break;
+				default:
+					break;
+			}
+
+			if (.@map$ == "") {
+				next;
+				break;
+			}
+
+			if (countitem(7060) > 0) {
+				delitem 7060,1;
+			} else {
+				if (Zeny < .@price) {
 					mes "[Special Assistant]";
-					mes "You must be in a ^FF0000Guild^000000 to use the Guild Storage.";
+					mes "You don't have enough zeny.";
 					next;
 					break;
 				}
-				mes "[Special Assistant]";
-				mes "Opening Guild Storage...";
-				close2;
-				guildopenstorage();
-				close;
+				Zeny -= .@price;
+				RESRVPTS += (.@price / 16);
+			}
 
-			// Heal + Buffs
-			case 4:
-				if (Zeny < .@cost_service) {
+			warp .@map$, .@x, .@y;
+			end;
+
+		// ------------------------------------------------
+		// Pushcart
+		// ------------------------------------------------
+		case 6:
+
+			if (BaseClass != Job_Merchant) {
+				mes "[Special Assistant]";
+				mes "Only Merchant classes can rent a cart.";
+				next;
+				break;
+			}
+
+			if (checkcart()) {
+				mes "[Special Assistant]";
+				mes "You already have a cart.";
+				next;
+				break;
+			}
+
+			if (getskilllv("MC_PUSHCART") == 0) {
+				mes "[Special Assistant]";
+				mes "You must learn Push Cart first.";
+				next;
+				break;
+			}
+
+			if (countitem(7061) > 0) {
+				delitem 7061,1;
+			} else {
+				if (Zeny < .@cart_cost) {
 					mes "[Special Assistant]";
-					mes "You need ^FF0000"+.@cost_service+" Zeny^000000 to use this service.";
+					mes "You need "+.@cart_cost+" zeny.";
 					next;
 					break;
 				}
+				Zeny -= .@cart_cost;
+				RESRVPTS += 48;
+			}
 
-				set Zeny, Zeny - .@cost_service;
+			setcart;
+			mes "[Special Assistant]";
+			mes "Pushcart rented successfully.";
+			close;
 
-				percentheal 100, 100;
-				sc_start SC_BLESSING, .@buff_duration, .@buff_level;
-				sc_start SC_INCREASEAGI, .@buff_duration, .@buff_level;
-
-				mes "[Special Assistant]";
-				mes "You are fully healed!";
-				mes "Blessing and Increase AGI are active for ^0055FF10 minutes^000000.";
-				close;
-
-			// Leave
-			default:
-				mes "[Special Assistant]";
-				mes "Thank you! Have a safe journey.";
-				close;
+		// ------------------------------------------------
+		// Leave
+		// ------------------------------------------------
+		default:
+			mes "[Special Assistant]";
+			mes "Have a safe journey!";
+			close;
 		}
 	}
 }
