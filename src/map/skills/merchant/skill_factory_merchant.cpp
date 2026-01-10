@@ -9,6 +9,7 @@
 #include "../weapon_skill_impl.hpp"
 
 #include "adrenalinerush.hpp"
+#include "advancedadrenalinerush.hpp"
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
 #include "changecart.hpp"
@@ -37,6 +38,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case BS_ADRENALINE:
 			return std::make_unique<SkillAdrenalineRush>();
+		case BS_ADRENALINE2:
+			return std::make_unique<SkillAdvancedAdrenalineRush>();
 		case BS_HAMMERFALL:
 			return std::make_unique<SkillHammerFall>();
 		case BS_MAXIMIZE:
