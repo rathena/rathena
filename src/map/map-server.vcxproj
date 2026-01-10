@@ -318,6 +318,7 @@
     <ClInclude Include="skills/mage/waterball.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
+    <ClInclude Include="skills/merchant/adrenalinerush.hpp" />
     <ClInclude Include="skills/merchant/cartrevolution.hpp" />
     <ClInclude Include="skills/merchant/changecart.hpp" />
     <ClInclude Include="skills/merchant/crazyuproar.hpp" />
@@ -492,6 +493,7 @@
     <ClCompile Include="skills/mage/waterball.cpp" />
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp" />
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp" />
+    <ClCompile Include="skills/merchant/adrenalinerush.cpp" />
     <ClCompile Include="skills/merchant/cartrevolution.cpp" />
     <ClCompile Include="skills/merchant/changecart.cpp" />
     <ClCompile Include="skills/merchant/crazyuproar.cpp" />
