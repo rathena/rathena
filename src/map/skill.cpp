@@ -8782,7 +8782,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 	case BS_ADRENALINE2:
-	case BS_WEAPONPERFECT:
 	case BS_OVERTHRUST:
 		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
 			int32 weapontype = skill_get_weapontype(skill_id);

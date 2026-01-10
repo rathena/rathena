@@ -17,6 +17,7 @@
 #include "crazyuproar.hpp"
 #include "mammonite.hpp"
 #include "skill_vending.hpp"
+#include "weaponperfection.hpp"
 #include "weaponrepair.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skill_id) const {
@@ -41,6 +42,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case BS_REPAIRWEAPON:
 			return std::make_unique<SkillWeaponRepair>();
+		case BS_WEAPONPERFECT:
+			return std::make_unique<SkillWeaponPerfection>();
 #ifdef RENEWAL
 		case CR_ACIDDEMONSTRATION:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
