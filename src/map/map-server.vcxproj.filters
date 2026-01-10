@@ -627,6 +627,9 @@
     <ClInclude Include="skills/merchant/mammonite.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/powerthrust.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/skill_factory_merchant.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -1011,6 +1014,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/mammonite.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/powerthrust.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp">

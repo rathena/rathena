@@ -16,6 +16,7 @@
 #include "itemappraisal.hpp"
 #include "crazyuproar.hpp"
 #include "mammonite.hpp"
+#include "powerthrust.hpp"
 #include "skill_vending.hpp"
 #include "weaponperfection.hpp"
 #include "weaponrepair.hpp"
@@ -40,6 +41,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillHammerFall>();
 		case BS_MAXIMIZE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case BS_OVERTHRUST:
+			return std::make_unique<SkillPowerThrust>();
 		case BS_REPAIRWEAPON:
 			return std::make_unique<SkillWeaponRepair>();
 		case BS_WEAPONPERFECT:

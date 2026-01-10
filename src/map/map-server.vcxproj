@@ -326,6 +326,7 @@
     <ClInclude Include="skills/merchant/hammerfall.hpp" />
     <ClInclude Include="skills/merchant/itemappraisal.hpp" />
     <ClInclude Include="skills/merchant/mammonite.hpp" />
+    <ClInclude Include="skills/merchant/powerthrust.hpp" />
     <ClInclude Include="skills/merchant/skill_factory_merchant.hpp" />
     <ClInclude Include="skills/merchant/skill_vending.hpp" />
     <ClInclude Include="skills/merchant/weaponperfection.hpp" />
@@ -502,6 +503,7 @@
     <ClCompile Include="skills/merchant/hammerfall.cpp" />
     <ClCompile Include="skills/merchant/itemappraisal.cpp" />
     <ClCompile Include="skills/merchant/mammonite.cpp" />
+    <ClCompile Include="skills/merchant/powerthrust.cpp" />
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
     <ClCompile Include="skills/merchant/skill_vending.cpp" />
     <ClCompile Include="skills/merchant/weaponperfection.cpp" />
