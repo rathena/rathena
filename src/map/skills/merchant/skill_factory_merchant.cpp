@@ -11,6 +11,7 @@
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
 #include "changecart.hpp"
+#include "hammerfall.hpp"
 #include "itemappraisal.hpp"
 #include "crazyuproar.hpp"
 #include "mammonite.hpp"
@@ -31,6 +32,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case BO_RESEARCHREPORT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case BS_HAMMERFALL:
+			return std::make_unique<SkillHammerFall>();
 		case BS_MAXIMIZE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case BS_REPAIRWEAPON:

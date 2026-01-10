@@ -322,6 +322,7 @@
     <ClInclude Include="skills/merchant/changecart.hpp" />
     <ClInclude Include="skills/merchant/crazyuproar.hpp" />
     <ClInclude Include="skills/merchant/decoratecart.hpp" />
+    <ClInclude Include="skills/merchant/hammerfall.hpp" />
     <ClInclude Include="skills/merchant/itemappraisal.hpp" />
     <ClInclude Include="skills/merchant/mammonite.hpp" />
     <ClInclude Include="skills/merchant/skill_factory_merchant.hpp" />
@@ -495,6 +496,7 @@
     <ClCompile Include="skills/merchant/changecart.cpp" />
     <ClCompile Include="skills/merchant/crazyuproar.cpp" />
     <ClCompile Include="skills/merchant/decoratecart.cpp" />
+    <ClCompile Include="skills/merchant/hammerfall.cpp" />
     <ClCompile Include="skills/merchant/itemappraisal.cpp" />
     <ClCompile Include="skills/merchant/mammonite.cpp" />
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
