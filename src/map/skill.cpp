@@ -8469,10 +8469,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case BS_HAMMERFALL:
-		skill_addtimerskill(src, tick+1000, bl->id, 0, 0, skill_id, skill_lv, min(20+10*skill_lv, 50+5*skill_lv), flag);
-		break;
-
 	case RG_RAID:
 		skill_area_temp[1] = 0;
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
@@ -8785,10 +8781,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case BS_ADRENALINE:
 	case BS_ADRENALINE2:
-	case BS_WEAPONPERFECT:
-	case BS_OVERTHRUST:
 		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
 			int32 weapontype = skill_get_weapontype(skill_id);
 			if (!weapontype || !dstsd || pc_check_weapontype(dstsd, weapontype)) {
@@ -9038,11 +9031,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_estimation( *sd, *dstmd );
 		sd = nullptr;
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		break;
-
-	case BS_REPAIRWEAPON:
-		if(sd && dstsd)
-			clif_item_repair_list( *sd, *dstsd, skill_lv );
 		break;
 
 	// Weapon Refining [Celest]
@@ -13676,14 +13664,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 
 	switch(skill_id)
 	{
-	case BS_HAMMERFALL:
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinallarea(skill_area_sub,
-			src->m, x-i, y-i, x+i, y+i, BL_CHAR,
-			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|2,
-			skill_castend_nodamage_id);
-		break;
-
 	case HT_DETECTING:
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinallarea( status_change_timer_sub,
