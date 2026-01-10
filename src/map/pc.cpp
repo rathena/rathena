@@ -1355,8 +1355,13 @@ void pc_makesavestatus(map_session_data *sd) {
 	if(!battle_config.save_clothcolor)
 		sd->status.clothes_color = 0;
 
-	if(!battle_config.save_body_style)
+	if(!battle_config.save_body_style) {
+#if PACKETVER_MAIN_NUM >= 20231220
+		sd->status.body = sd->status.class_;
+#else
 		sd->status.body = 0;
+#endif
+	}
 
 	//Only copy the Cart/Peco/Falcon options, the rest are handled via
 	//status change load/saving. [Skotlex]
@@ -10903,7 +10908,11 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 
 	sd->status.class_ = job;
 	// Reset body style before changing job to avoid errors since not every job has a alternate outfit.
-	sd->status.body = sd->status.class_;
+#if PACKETVER_MAIN_NUM >= 20231220
+	sd->status.body = job;
+#else
+	sd->status.body = 0;
+#endif
 
 	fame_flag = pc_famerank(sd->status.char_id,sd->class_&MAPID_SECONDMASK);
 	uint64 previous_class = sd->class_;
@@ -10992,7 +11001,7 @@ bool pc_jobchange(map_session_data *sd,int32 job, char upper)
 	clif_changelook(sd, LOOK_HAIR, sd->vd.look[LOOK_HAIR]); // Update player's head (only matters when switching to or from Doram)
 #endif
 	clif_changelook( sd, LOOK_CLOTHES_COLOR, sd->vd.look[LOOK_CLOTHES_COLOR] );
-	clif_changelook( sd, LOOK_BODY2, sd->vd.look[LOOK_BODY2] );
+	clif_changelook( sd, LOOK_BODY2, sd->status.body );
 	
 	//Update skill tree.
 	pc_calc_skilltree(sd);
