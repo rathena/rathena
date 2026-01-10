@@ -23,6 +23,7 @@
 #include "napalmbeat.hpp"
 #include "lightningbolt.hpp"
 #include "quagmire.hpp"
+#include "safetywall.hpp"
 #include "sense.hpp"
 #include "sight.hpp"
 #include "sightblaster.hpp"
@@ -43,6 +44,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case HW_MAGICPOWER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MG_SAFETYWALL:
+			return std::make_unique<SkillSafetyWall>();
 		case MG_SIGHT:
 			return std::make_unique<SkillSight>();
 		case MG_SOULSTRIKE:

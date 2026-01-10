@@ -8363,14 +8363,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 							}
 						}
 						break;
-					case AL_HOLYLIGHT:
-						skillratio += 25;
-						if (sd && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_PRIEST)
-							skillratio *= 5; //Does 5x damage include bonuses from other skills?
-						break;
-					case AL_RUWACH:
-						skillratio += 45;
-						break;
 					case WZ_FIREPILLAR:
 						// TODO: Refactor
 						if (sd && ad.div_ > 0)

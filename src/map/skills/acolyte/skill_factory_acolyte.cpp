@@ -25,6 +25,7 @@
 #include "lexdivina.hpp"
 #include "magnificat.hpp"
 #include "magnusexorcismus.hpp"
+#include "pneuma.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
 #include "statusrecovery.hpp"
@@ -61,6 +62,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillHolyWater>();
 		case AL_INCAGI:
 			return std::make_unique<SkillIncreaseAgi>();
+		case AL_PNEUMA:
+			return std::make_unique<SkillPneuma>();
 		case AL_RUWACH:
 			return std::make_unique<SkillRuwach>();
 		case CD_ARGUTUS_TELUM:
