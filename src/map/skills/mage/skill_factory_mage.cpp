@@ -7,18 +7,32 @@
 #include "../weapon_skill_impl.hpp"
 
 #include "coldbolt.hpp"
+#include "earthspike.hpp"
 #include "energycoat.hpp"
 #include "fireball.hpp"
 #include "firebolt.hpp"
+#include "firepillar.hpp"
 #include "firewall.hpp"
 #include "frostdiver.hpp"
+#include "frostnova.hpp"
+#include "heavensdrive.hpp"
+#include "icewall.hpp"
+#include "jupitelthunder.hpp"
+#include "lordofvermilion.hpp"
+#include "meteorstorm.hpp"
 #include "napalmbeat.hpp"
 #include "lightningbolt.hpp"
+#include "quagmire.hpp"
 #include "safetywall.hpp"
+#include "sense.hpp"
 #include "sight.hpp"
+#include "sightblaster.hpp"
+#include "sightrasher.hpp"
 #include "soulstrike.hpp"
 #include "stonecurse.hpp"
+#include "stormgust.hpp"
 #include "thunderstorm.hpp"
+#include "waterball.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -68,6 +82,34 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WL_TELEKINESIS_INTENSE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WZ_EARTHSPIKE:
+			return std::make_unique<SkillEarthSpike>();
+		case WZ_ESTIMATION:
+			return std::make_unique<SkillSense>();
+		case WZ_FIREPILLAR:
+			return std::make_unique<SkillFirePillar>();
+		case WZ_FROSTNOVA:
+			return std::make_unique<SkillFrostNova>();
+		case WZ_HEAVENDRIVE:
+			return std::make_unique<SkillHeavensDrive>();
+		case WZ_ICEWALL:
+			return std::make_unique<SkillIceWall>();
+		case WZ_JUPITEL:
+			return std::make_unique<SkillJupitelThunder>();
+		case WZ_VERMILION:
+			return std::make_unique<SkillLordOfVermilion>();
+		case WZ_METEOR:
+			return std::make_unique<SkillMeteorStorm>();
+		case WZ_QUAGMIRE:
+			return std::make_unique<SkillQuagmire>();
+		case WZ_SIGHTBLASTER:
+			return std::make_unique<SkillSightBlaster>();
+		case WZ_SIGHTRASHER:
+			return std::make_unique<SkillSightRasher>();
+		case WZ_STORMGUST:
+			return std::make_unique<SkillStormGust>();
+		case WZ_WATERBALL:
+			return std::make_unique<SkillWaterBall>();
 
 		default:
 			return nullptr;

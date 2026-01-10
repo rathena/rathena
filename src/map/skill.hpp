@@ -30,6 +30,10 @@ class SkillImpl;
 
 extern DBMap* bowling_db;
 
+#ifndef TIMERSKILL_INTERVAL
+	#define TIMERSKILL_INTERVAL	150
+#endif
+
 #define MAX_SKILL_PRODUCE_DB	300 /// Max Produce DB
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
@@ -531,6 +535,7 @@ int32 skill_get_castdef( uint16 skill_id );
 int32 skill_get_nocast( uint16 skill_id );
 int32 skill_get_unit_id( uint16 skill_id );
 int32 skill_get_unit_id2( uint16 skill_id );
+int32 skill_get_unit_interval( uint16 skill_id );
 int32 skill_get_castcancel( uint16 skill_id );
 int32 skill_get_maxcount( uint16 skill_id ,uint16 skill_lv );
 int32 skill_get_blewcount( uint16 skill_id ,uint16 skill_lv );

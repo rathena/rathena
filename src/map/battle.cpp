@@ -8363,40 +8363,11 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 							}
 						}
 						break;
-					case WZ_FROSTNOVA:
-#ifndef RENEWAL
-						skillratio += -100 + (100 + skill_lv * 10) * 2 / 3;
-#else
-						// In renewal the damage formula is identical to MG_FROSTDIVER
-						skillratio += 10 * skill_lv;
-#endif
-						break;
 					case WZ_FIREPILLAR:
+						// TODO: Refactor
 						if (sd && ad.div_ > 0)
 							ad.div_ *= -1; //For players, damage is divided by number of hits
-						skillratio += -60 + 20 * skill_lv; //20% MATK each hit
 						break;
-					case WZ_SIGHTRASHER:
-						skillratio += 20 * skill_lv;
-						break;
-					case WZ_WATERBALL:
-						skillratio += 30 * skill_lv;
-						break;
-					case WZ_STORMGUST:
-#ifdef RENEWAL
-						skillratio -= 30; // Offset only once
-						skillratio += 50 * skill_lv;
-#else
-						skillratio += 40 * skill_lv;
-#endif
-						break;
-#ifdef RENEWAL
-					case WZ_EARTHSPIKE:
-						skillratio += 100;
-						if (sc && sc->getSCE(SC_EARTH_CARE_OPTION))
-							skillratio += skillratio * 800 / 100;
-						break;
-#endif
 					case HW_NAPALMVULCAN:
 #ifdef RENEWAL
 						skillratio += -100 + 70 * skill_lv;
@@ -8468,18 +8439,8 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += 100 * skill_lv;
 						break;
 #ifdef RENEWAL
-					case WZ_HEAVENDRIVE:
 					case NPC_GROUNDDRIVE:
 						skillratio += 25;
-						break;
-					case WZ_METEOR:
-						skillratio += 25;
-						break;
-					case WZ_VERMILION:
-						if(sd)
-							skillratio += 300 + skill_lv * 100;
-						else
-							skillratio += 20 * skill_lv - 20; //Monsters use old formula
 						break;
 					case BA_DISSONANCE:
 						skillratio += 10 + skill_lv * 50;
@@ -8493,13 +8454,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case PA_PRESSURE:
 						skillratio += -100 + 500 + 150 * skill_lv;
 						RE_LVL_DMOD(100);
-						break;
-					case WZ_SIGHTBLASTER:
-						skillratio += 500;
-						break;
-#else
-					case WZ_VERMILION:
-						skillratio += 20 * skill_lv - 20;
 						break;
 #endif
 					case AB_JUDEX:

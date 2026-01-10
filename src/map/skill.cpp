@@ -50,7 +50,6 @@
 using namespace rathena;
 
 #define SKILLUNITTIMER_INTERVAL	100
-#define TIMERSKILL_INTERVAL	150
 
 static struct eri *skill_timer_ers = nullptr; //For handling skill_timerskills [Skotlex]
 DBMap* bowling_db = nullptr; // int32 mob_id -> mob_data*
@@ -1431,29 +1430,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_QUAGMIRE,100,0,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case WZ_FIREPILLAR:
-		unit_set_walkdelay(bl, tick, skill_get_time2(skill_id, skill_lv), 1);
-		break;
-
-	case WZ_FROSTNOVA:
-		sc_start(src,bl,SC_FREEZE,(sd!=nullptr)?skill_lv*5+33:skill_lv*3+35,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
-	case WZ_STORMGUST:
-		// Storm Gust counter was dropped in renewal
-#ifdef RENEWAL
-		sc_start(src,bl,SC_FREEZE,65-(5*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-#else
-		//On third hit, there is a 150% to freeze the target
-		if(tsc->sg_counter >= 3 &&
-			sc_start(src,bl,SC_FREEZE,150,skill_lv,skill_get_time2(skill_id,skill_lv)))
-			tsc->sg_counter = 0;
-		// Being it only resets on success it'd keep stacking and eventually overflowing on mvps, so we reset at a high value
-		else if( tsc->sg_counter > 250 )
-			tsc->sg_counter = 0;
-#endif
-		break;
-
 	case NPC_STORMGUST2:
 		if (skill_lv == 1)
 			sc_start(src,bl,SC_FREEZE,10,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -1463,21 +1439,8 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_FREEZE,3,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case WZ_METEOR:
 	case HN_METEOR_STORM_BUSTER:
 		sc_start(src,bl,SC_STUN,3*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
-	case WZ_VERMILION:
-#ifdef RENEWAL
-		sc_start(src,bl,SC_BLIND,10 + 5 * skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
-#else
-		sc_start(src,bl,SC_BLIND,min(4*skill_lv,40),skill_lv,skill_get_time2(skill_id,skill_lv));
-#endif
-		break;
-
-	case WZ_HEAVENDRIVE:
-		status_change_end(bl, SC_SV_ROOTTWIST);
 		break;
 
 	case HT_FREEZINGTRAP:
@@ -6304,11 +6267,8 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	case NPC_DARKSTRIKE:
-	case WZ_EARTHSPIKE:
 	case NPC_DARKTHUNDER:
 	case NPC_FIRESTORM:
-	case WZ_SIGHTBLASTER:
-	case WZ_SIGHTRASHER:
 #ifdef RENEWAL
 	case PA_PRESSURE:
 #endif
@@ -6357,16 +6317,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			e_skill subskill_id = subskills.at(rnd() % subskills.size());
 			skill_attack(skill_get_type(subskill_id), src, src, bl, subskill_id, skill_lv, tick, flag);
 		}
-		break;
-
-	case WZ_WATERBALL:
-		//Deploy waterball cells, these are used and turned into waterballs via the timerskill
-		skill_unitsetting(src, skill_id, skill_lv, src->x, src->y, 0);
-		skill_addtimerskill(src, tick, bl->id, src->x, src->y, skill_id, skill_lv, 0, flag);
-		break;
-	case WZ_JUPITEL:
-		//Jupitel Thunder is delayed by 150ms, you can cast another spell before the knockback
-		skill_addtimerskill(src, tick+TIMERSKILL_INTERVAL, bl->id, 0, 0, skill_id, skill_lv, 1, flag);
 		break;
 
 	case SJ_NOVAEXPLOSING:
@@ -8236,7 +8186,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 	case MER_SIGHT:
-	case WZ_SIGHTBLASTER:
 	case NPC_WIDESIGHT:
 	case NPC_STONESKIN:
 	case NPC_ANTIMAGIC:
@@ -8763,24 +8712,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			skill_castend_damage_id);
 		break;
 
-	case WZ_SIGHTRASHER:
-		//Passive side of the attack.
-		status_change_end(src, SC_SIGHT);
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		map_foreachinshootrange(skill_area_sub,src,
-			skill_get_splash(skill_id, skill_lv),BL_CHAR|BL_SKILL,
-			src,skill_id,skill_lv,tick, flag|BCT_ENEMY|SD_ANIMATION|1,
-			skill_castend_damage_id);
-		break;
-
-	case WZ_FROSTNOVA:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		skill_area_temp[1] = 0;
-		map_foreachinshootrange(skill_attack_area, src,
-			skill_get_splash(skill_id, skill_lv), splash_target(src),
-			BF_MAGIC, src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY);
-		break;
-
 	case NPC_SELFDESTRUCTION:
 		//Self Destruction hits everyone in range (allies+enemies)
 		//Except for Summoned Marine spheres on non-versus maps, where it's just enemies and your own slaves.
@@ -9095,8 +9026,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		if( !mer )
 			break;
 		sd = mer->master;
-		[[fallthrough]];
-	case WZ_ESTIMATION:
 		if( sd == nullptr )
 			break;
 		if( dstsd )
@@ -9107,8 +9036,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 		if (dstmd != nullptr)
 			clif_skill_estimation( *sd, *dstmd );
-		if( skill_id == MER_ESTIMATION )
-			sd = nullptr;
+		sd = nullptr;
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
@@ -13797,11 +13725,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	}
 
 	// Skill Unit Setting
-	case WZ_FIREPILLAR:
-	case WZ_QUAGMIRE:
-	case WZ_VERMILION:
-	case WZ_STORMGUST:
-	case WZ_HEAVENDRIVE:
 	case NPC_GROUNDDRIVE:
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
@@ -13934,7 +13857,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
 
-	case WZ_ICEWALL:
 	case NPC_CANE_OF_EVIL_EYE:
 		flag|=1;
 		if(skill_unitsetting(src,skill_id,skill_lv,x,y,0))
@@ -13998,16 +13920,14 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
 		break;
 
-	case SU_CN_METEOR:
+	case SU_CN_METEOR: {
 		if (sd) {
 			if (pc_search_inventory(sd, skill_db.find(SU_CN_METEOR)->require.itemid[0]) >= 0)
 				skill_id = SU_CN_METEOR2;
 			if (pc_checkskill(sd, SU_SPIRITOFLAND))
 				sc_start(src, src, SC_DORAM_SVSP, 100, 100, skill_get_time(SU_SPIRITOFLAND, 1));
 		}
-		[[fallthrough]];
-	case WZ_METEOR:
-	{
+
 		int32 area = skill_get_splash(skill_id, skill_lv);
 		int16 tmpx = 0, tmpy = 0;
 
