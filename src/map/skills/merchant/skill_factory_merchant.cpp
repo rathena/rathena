@@ -13,6 +13,7 @@
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
 #include "changecart.hpp"
+#include "greed.hpp"
 #include "hammerfall.hpp"
 #include "itemappraisal.hpp"
 #include "crazyuproar.hpp"
@@ -40,6 +41,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillAdrenalineRush>();
 		case BS_ADRENALINE2:
 			return std::make_unique<SkillAdvancedAdrenalineRush>();
+		case BS_GREED:
+			return std::make_unique<SkillGreed>();
 		case BS_HAMMERFALL:
 			return std::make_unique<SkillHammerFall>();
 		case BS_MAXIMIZE:

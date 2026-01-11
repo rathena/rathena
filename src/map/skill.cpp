@@ -290,11 +290,8 @@ int32 skill_tree_get_max(uint16 skill_id, int32 b_class) {
 }
 
 int32 skill_frostjoke_scream(block_list *bl,va_list ap);
-int32 skill_attack_area(block_list *bl,va_list ap);
 std::shared_ptr<s_skill_unit_group> skill_locate_element_field(block_list *bl); // [Skotlex]
 int32 skill_graffitiremover(block_list *bl, va_list ap); // [Valaris]
-int32 skill_greed(block_list *bl, va_list ap);
-int32 skill_cell_overlap(block_list *bl, va_list ap);
 static int32 skill_trap_splash(block_list *bl, va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(block_list *bl,std::shared_ptr<s_skill_unit_group> sg,t_tick tick);
 static int32 skill_unit_onplace(skill_unit *src,block_list *bl,t_tick tick);
@@ -9454,14 +9451,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			if(spellid > 0)
 				sc_start4(src,src,SC_AUTOSPELL,100,skill_lv,spellid,maxlv,0,
 					skill_get_time(SA_AUTOSPELL,skill_lv));
-		}
-		break;
-
-	case BS_GREED:
-		if(sd){
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			map_foreachinallrange(skill_greed,bl,
-				skill_get_splash(skill_id, skill_lv),BL_ITEM,bl);
 		}
 		break;
 
