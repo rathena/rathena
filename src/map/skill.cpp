@@ -13682,7 +13682,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case NPC_GROUNDDRIVE:
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
-	case HT_SKIDTRAP:
 	case MA_SKIDTRAP:
 	case HT_LANDMINE:
 	case MA_LANDMINE:
