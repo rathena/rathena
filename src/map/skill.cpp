@@ -1453,10 +1453,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src, bl, SC_STUN, 10, skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
 		break;
 
-	case HT_SHOCKWAVE:
-		status_percent_damage(src, bl, 0, -(15*skill_lv+5), false);
-		break;
-
 	case HT_SANDMAN:
 	case MA_SANDMAN:
 		sc_start(src, bl, SC_SLEEP, (10 * skill_lv + 40), skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
@@ -13683,7 +13679,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case NPC_GRANDDARKNESS:
 	case MA_SKIDTRAP:
 	case MA_LANDMINE:
-	case HT_SHOCKWAVE:
 	case HT_SANDMAN:
 	case MA_SANDMAN:
 	case HT_FLASHER:
