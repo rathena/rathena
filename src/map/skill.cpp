@@ -8781,21 +8781,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case BS_ADRENALINE2:
-		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
-			int32 weapontype = skill_get_weapontype(skill_id);
-			if (!weapontype || !dstsd || pc_check_weapontype(dstsd, weapontype)) {
-				clif_skill_nodamage(bl, *bl, skill_id, skill_lv,
-					sc_start2(src, bl, type, 100, skill_lv, (src == bl) ? 1 : 0, skill_get_time(skill_id, skill_lv)));
-			}
-		} else if (sd) {
-			party_foreachsamemap(skill_area_sub,
-				sd,skill_get_splash(skill_id, skill_lv),
-				src,skill_id,skill_lv,tick, flag|BCT_PARTY|1,
-				skill_castend_nodamage_id);
-		}
-		break;
-
 	case SP_SOULCOLLECT:
 		if( tsce )
 		{
