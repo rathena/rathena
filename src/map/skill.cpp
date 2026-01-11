@@ -1449,7 +1449,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
 		break;
 
-	case HT_LANDMINE:
 	case MA_LANDMINE:
 		sc_start(src, bl, SC_STUN, 10, skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
 		break;
@@ -13683,7 +13682,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
 	case MA_SKIDTRAP:
-	case HT_LANDMINE:
 	case MA_LANDMINE:
 	case HT_ANKLESNARE:
 	case HT_SHOCKWAVE:
