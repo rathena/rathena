@@ -290,11 +290,8 @@ int32 skill_tree_get_max(uint16 skill_id, int32 b_class) {
 }
 
 int32 skill_frostjoke_scream(block_list *bl,va_list ap);
-int32 skill_attack_area(block_list *bl,va_list ap);
 std::shared_ptr<s_skill_unit_group> skill_locate_element_field(block_list *bl); // [Skotlex]
 int32 skill_graffitiremover(block_list *bl, va_list ap); // [Valaris]
-int32 skill_greed(block_list *bl, va_list ap);
-int32 skill_cell_overlap(block_list *bl, va_list ap);
 static int32 skill_trap_splash(block_list *bl, va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(block_list *bl,std::shared_ptr<s_skill_unit_group> sg,t_tick tick);
 static int32 skill_unit_onplace(skill_unit *src,block_list *bl,t_tick tick);
@@ -8469,10 +8466,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case BS_HAMMERFALL:
-		skill_addtimerskill(src, tick+1000, bl->id, 0, 0, skill_id, skill_lv, min(20+10*skill_lv, 50+5*skill_lv), flag);
-		break;
-
 	case RG_RAID:
 		skill_area_temp[1] = 0;
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
@@ -8785,24 +8778,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case BS_ADRENALINE:
-	case BS_ADRENALINE2:
-	case BS_WEAPONPERFECT:
-	case BS_OVERTHRUST:
-		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
-			int32 weapontype = skill_get_weapontype(skill_id);
-			if (!weapontype || !dstsd || pc_check_weapontype(dstsd, weapontype)) {
-				clif_skill_nodamage(bl, *bl, skill_id, skill_lv,
-					sc_start2(src, bl, type, 100, skill_lv, (src == bl) ? 1 : 0, skill_get_time(skill_id, skill_lv)));
-			}
-		} else if (sd) {
-			party_foreachsamemap(skill_area_sub,
-				sd,skill_get_splash(skill_id, skill_lv),
-				src,skill_id,skill_lv,tick, flag|BCT_PARTY|1,
-				skill_castend_nodamage_id);
-		}
-		break;
-
 	case SP_SOULCOLLECT:
 		if( tsce )
 		{
@@ -9038,11 +9013,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_estimation( *sd, *dstmd );
 		sd = nullptr;
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		break;
-
-	case BS_REPAIRWEAPON:
-		if(sd && dstsd)
-			clif_item_repair_list( *sd, *dstsd, skill_lv );
 		break;
 
 	// Weapon Refining [Celest]
@@ -9481,14 +9451,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			if(spellid > 0)
 				sc_start4(src,src,SC_AUTOSPELL,100,skill_lv,spellid,maxlv,0,
 					skill_get_time(SA_AUTOSPELL,skill_lv));
-		}
-		break;
-
-	case BS_GREED:
-		if(sd){
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			map_foreachinallrange(skill_greed,bl,
-				skill_get_splash(skill_id, skill_lv),BL_ITEM,bl);
 		}
 		break;
 
@@ -13676,14 +13638,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 
 	switch(skill_id)
 	{
-	case BS_HAMMERFALL:
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinallarea(skill_area_sub,
-			src->m, x-i, y-i, x+i, y+i, BL_CHAR,
-			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|2,
-			skill_castend_nodamage_id);
-		break;
-
 	case HT_DETECTING:
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinallarea( status_change_timer_sub,

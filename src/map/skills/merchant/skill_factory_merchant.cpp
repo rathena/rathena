@@ -8,13 +8,20 @@
 #include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
+#include "adrenalinerush.hpp"
+#include "advancedadrenalinerush.hpp"
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
 #include "changecart.hpp"
+#include "greed.hpp"
+#include "hammerfall.hpp"
 #include "itemappraisal.hpp"
 #include "crazyuproar.hpp"
 #include "mammonite.hpp"
+#include "powerthrust.hpp"
 #include "skill_vending.hpp"
+#include "weaponperfection.hpp"
+#include "weaponrepair.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -30,8 +37,22 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case BO_RESEARCHREPORT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case BS_ADRENALINE:
+			return std::make_unique<SkillAdrenalineRush>();
+		case BS_ADRENALINE2:
+			return std::make_unique<SkillAdvancedAdrenalineRush>();
+		case BS_GREED:
+			return std::make_unique<SkillGreed>();
+		case BS_HAMMERFALL:
+			return std::make_unique<SkillHammerFall>();
 		case BS_MAXIMIZE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case BS_OVERTHRUST:
+			return std::make_unique<SkillPowerThrust>();
+		case BS_REPAIRWEAPON:
+			return std::make_unique<SkillWeaponRepair>();
+		case BS_WEAPONPERFECT:
+			return std::make_unique<SkillWeaponPerfection>();
 #ifdef RENEWAL
 		case CR_ACIDDEMONSTRATION:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
