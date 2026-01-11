@@ -444,6 +444,9 @@
     <ClInclude Include="skills/acolyte/turnundead.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/anklesnare.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/arrowshower.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -844,6 +847,9 @@
     </ClCompile>
     <ClCompile Include="skills/acolyte/turnundead.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/anklesnare.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/arrowshower.cpp">
       <Filter>Source Files\Skills\Archer</Filter>

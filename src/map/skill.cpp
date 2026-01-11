@@ -13683,7 +13683,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case NPC_GRANDDARKNESS:
 	case MA_SKIDTRAP:
 	case MA_LANDMINE:
-	case HT_ANKLESNARE:
 	case HT_SHOCKWAVE:
 	case HT_SANDMAN:
 	case MA_SANDMAN:
