@@ -21,6 +21,7 @@
 #include "sandman.hpp"
 #include "shockwavetrap.hpp"
 #include "skidtrap.hpp"
+#include "talkiebox.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -64,6 +65,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillShockwaveTrap>();
 		case HT_SKIDTRAP:
 			return std::make_unique<SkillSkidTrap>();
+		case HT_TALKIEBOX:
+			return std::make_unique<SkillTalkieBox>();
 		case RA_AIMEDBOLT:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case RA_UNLIMIT:

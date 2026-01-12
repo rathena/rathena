@@ -281,6 +281,7 @@
     <ClInclude Include="skills/archer/shockwavetrap.hpp" />
     <ClInclude Include="skills/archer/skidtrap.hpp" />
     <ClInclude Include="skills/archer/skill_factory_archer.hpp" />
+    <ClInclude Include="skills/archer/talkiebox.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
     <ClInclude Include="skills/gunslinger/cracker.hpp" />
@@ -470,6 +471,7 @@
     <ClCompile Include="skills/archer/shockwavetrap.cpp" />
     <ClCompile Include="skills/archer/skidtrap.cpp" />
     <ClCompile Include="skills/archer/skill_factory_archer.cpp" />
+    <ClCompile Include="skills/archer/talkiebox.cpp" />
     <ClCompile Include="skills/custom/skill_factory_custom.cpp" />
     <ClCompile Include="skills/gunslinger/bullseye.cpp" />
     <ClCompile Include="skills/gunslinger/cracker.cpp" />
