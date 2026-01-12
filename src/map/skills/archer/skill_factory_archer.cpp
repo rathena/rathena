@@ -13,6 +13,7 @@
 #include "doublestrafe.hpp"
 #include "landmine.hpp"
 #include "makingarrow.hpp"
+#include "sandman.hpp"
 #include "shockwavetrap.hpp"
 #include "skidtrap.hpp"
 
@@ -42,6 +43,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillLandMine>();
 		case HT_PHANTASMIC:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case HT_SANDMAN:
+			return std::make_unique<SkillSandman>();
 		case HT_SHOCKWAVE:
 			return std::make_unique<SkillShockwaveTrap>();
 		case HT_SKIDTRAP:
