@@ -13,6 +13,7 @@
 #include "chargearrow.hpp"
 #include "claymoretrap.hpp"
 #include "concentration.hpp"
+#include "detect.hpp"
 #include "doublestrafe.hpp"
 #include "flasher.hpp"
 #include "freezingtrap.hpp"
@@ -52,6 +53,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillBlitzBeat>();
 		case HT_CLAYMORETRAP:
 			return std::make_unique<SkillClaymoreTrap>();
+		case HT_DETECTING:
+			return std::make_unique<SkillDetect>();
 		case HT_FLASHER:
 			return std::make_unique<SkillFlasher>();
 		case HT_FREEZINGTRAP:

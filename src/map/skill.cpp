@@ -13587,14 +13587,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 
 	switch(skill_id)
 	{
-	case HT_DETECTING:
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinallarea( status_change_timer_sub,
-			src->m, x-i, y-i, x+i,y+i,BL_CHAR,
-			src,nullptr,SC_SIGHT,tick);
-		skill_reveal_trap_inarea(src, i, x, y);
-		break;
-
 	case SR_RIDEINLIGHTNING:
 	case NW_BASIC_GRENADE:
 		i = skill_get_splash(skill_id, skill_lv);
