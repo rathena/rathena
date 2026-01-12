@@ -9778,35 +9778,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 		}
 		break;
-	case HT_SPRINGTRAP:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		{
-			skill_unit *su=nullptr;
-			if((bl->type==BL_SKILL) && (su=(skill_unit *)bl) && (su->group) ){
-				switch(su->group->unit_id){
-					case UNT_ANKLESNARE:	// ankle snare
-						if (su->group->val2 != 0)
-							// if it is already trapping something don't spring it,
-							// remove trap should be used instead
-							break;
-						[[fallthrough]];
-					case UNT_BLASTMINE:
-					case UNT_SKIDTRAP:
-					case UNT_LANDMINE:
-					case UNT_SHOCKWAVE:
-					case UNT_SANDMAN:
-					case UNT_FLASHER:
-					case UNT_FREEZINGTRAP:
-					case UNT_CLAYMORETRAP:
-					case UNT_TALKIEBOX:
-						su->group->unit_id = UNT_USED_TRAPS;
-						clif_changetraplook(bl, UNT_USED_TRAPS);
-						su->group->limit=DIFF_TICK(tick+1500,su->group->tick);
-						su->limit=DIFF_TICK(tick+1500,su->group->tick);
-				}
-			}
-		}
-		break;
 	case BD_ENCORE:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		if (sd != nullptr) {
