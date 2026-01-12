@@ -10,6 +10,7 @@
 #include "arrowshower.hpp"
 #include "blastmine.hpp"
 #include "chargearrow.hpp"
+#include "claymoretrap.hpp"
 #include "concentration.hpp"
 #include "doublestrafe.hpp"
 #include "flasher.hpp"
@@ -44,6 +45,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillAnkleSnare>();
 		case HT_BLASTMINE:
 			return std::make_unique<SkillBlastMine>();
+		case HT_CLAYMORETRAP:
+			return std::make_unique<SkillClaymoreTrap>();
 		case HT_FLASHER:
 			return std::make_unique<SkillFlasher>();
 		case HT_FREEZINGTRAP:

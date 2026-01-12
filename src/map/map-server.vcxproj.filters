@@ -456,6 +456,9 @@
     <ClInclude Include="skills/archer/chargearrow.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/claymoretrap.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/concentration.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -873,6 +876,9 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/chargearrow.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/claymoretrap.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/concentration.cpp">

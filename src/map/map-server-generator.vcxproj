@@ -269,6 +269,7 @@
     <ClInclude Include="skills/archer/arrowshower.hpp" />
     <ClInclude Include="skills/archer/blastmine.hpp" />
     <ClInclude Include="skills/archer/chargearrow.hpp" />
+    <ClInclude Include="skills/archer/claymoretrap.hpp" />
     <ClInclude Include="skills/archer/concentration.hpp" />
     <ClInclude Include="skills/archer/doublestrafe.hpp" />
     <ClInclude Include="skills/archer/flasher.hpp" />
@@ -456,6 +457,7 @@
     <ClCompile Include="skills/archer/arrowshower.cpp" />
     <ClCompile Include="skills/archer/blastmine.cpp" />
     <ClCompile Include="skills/archer/chargearrow.cpp" />
+    <ClCompile Include="skills/archer/claymoretrap.cpp" />
     <ClCompile Include="skills/archer/concentration.cpp" />
     <ClCompile Include="skills/archer/doublestrafe.cpp" />
     <ClCompile Include="skills/archer/flasher.cpp" />
