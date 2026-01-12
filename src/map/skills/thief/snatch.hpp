@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillSnatch : public SkillImplRecursiveDamageSplash {
+class SkillSnatch : public WeaponSkillImpl {
 public:
 	SkillSnatch();
 
