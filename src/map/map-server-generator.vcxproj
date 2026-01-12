@@ -279,6 +279,7 @@
     <ClInclude Include="skills/archer/freezingtrap.hpp" />
     <ClInclude Include="skills/archer/landmine.hpp" />
     <ClInclude Include="skills/archer/makingarrow.hpp" />
+    <ClInclude Include="skills/archer/phantasmicarrow.hpp" />
     <ClInclude Include="skills/archer/removetrap.hpp" />
     <ClInclude Include="skills/archer/sandman.hpp" />
     <ClInclude Include="skills/archer/shockwavetrap.hpp" />
@@ -473,6 +474,7 @@
     <ClCompile Include="skills/archer/freezingtrap.cpp" />
     <ClCompile Include="skills/archer/landmine.cpp" />
     <ClCompile Include="skills/archer/makingarrow.cpp" />
+    <ClCompile Include="skills/archer/phantasmicarrow.cpp" />
     <ClCompile Include="skills/archer/removetrap.cpp" />
     <ClCompile Include="skills/archer/sandman.cpp" />
     <ClCompile Include="skills/archer/shockwavetrap.cpp" />

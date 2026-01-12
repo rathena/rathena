@@ -5100,13 +5100,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			}
 			break;
 #endif
-		case HT_PHANTASMIC:
-#ifdef RENEWAL
-			skillratio += 400;
-#else
-			skillratio += 50;
-#endif
-			break;
 		case MO_BALKYOUNG:
 #ifdef RENEWAL
 			skillratio += 700;
