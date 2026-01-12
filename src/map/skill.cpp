@@ -5444,7 +5444,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 		[[fallthrough]];
 	case AS_SPLASHER:
-	case HT_BLITZBEAT:
 	case MA_SHOWER:
 	case RG_RAID:
 #ifdef RENEWAL
