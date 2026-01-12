@@ -663,42 +663,6 @@
     <ClInclude Include="skills/npc/skill_factory_npc.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="skills/rogue/backstab.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/closeconfine.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/divestarmor.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/divesthelm.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/divestshield.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/divestweapon.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/mug.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/remover.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/scribble.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/sightlessmind.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/skill_factory_rogue.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/rogue/snatch.hpp">
-      <Filter>Header Files\Skills\Rogue</Filter>
-    </ClInclude>
     <ClInclude Include="skills/skill_factory.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
@@ -780,7 +744,25 @@
     <ClInclude Include="skills/thief/backslide.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/backstab.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/closeconfine.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/detoxify.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/divestarmor.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/divesthelm.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/divestshield.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/divestweapon.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/envenom.hpp">
@@ -792,10 +774,25 @@
     <ClInclude Include="skills/thief/hiding.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/mug.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/remover.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/sandattack.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/scribble.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/sightlessmind.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/skill_factory_thief.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/snatch.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/steal.hpp">
@@ -1094,42 +1091,6 @@
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="skills/rogue/backstab.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/closeconfine.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/divestarmor.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/divesthelm.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/divestshield.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/divestweapon.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/mug.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/remover.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/scribble.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/sightlessmind.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/skill_factory_rogue.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/rogue/snatch.hpp">
-      <Filter>Source Files\Skills\Rogue</Filter>
-    </ClCompile>
     <ClCompile Include="skills/skill_factory.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
@@ -1211,7 +1172,25 @@
     <ClCompile Include="skills/thief/backslide.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/backstab.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/closeconfine.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/detoxify.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/divestarmor.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/divesthelm.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/divestshield.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/divestweapon.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/envenom.cpp">
@@ -1223,10 +1202,25 @@
     <ClCompile Include="skills/thief/hiding.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/mug.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/remover.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/sandattack.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/scribble.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/sightlessmind.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/skill_factory_thief.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/snatch.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/steal.cpp">
