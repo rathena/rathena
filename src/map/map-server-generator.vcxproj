@@ -270,6 +270,7 @@
     <ClInclude Include="skills/archer/chargearrow.hpp" />
     <ClInclude Include="skills/archer/concentration.hpp" />
     <ClInclude Include="skills/archer/doublestrafe.hpp" />
+    <ClInclude Include="skills/archer/flasher.hpp" />
     <ClInclude Include="skills/archer/landmine.hpp" />
     <ClInclude Include="skills/archer/makingarrow.hpp" />
     <ClInclude Include="skills/archer/sandman.hpp" />
@@ -454,6 +455,7 @@
     <ClCompile Include="skills/archer/chargearrow.cpp" />
     <ClCompile Include="skills/archer/concentration.cpp" />
     <ClCompile Include="skills/archer/doublestrafe.cpp" />
+    <ClCompile Include="skills/archer/flasher.cpp" />
     <ClCompile Include="skills/archer/landmine.cpp" />
     <ClCompile Include="skills/archer/makingarrow.cpp" />
     <ClCompile Include="skills/archer/sandman.cpp" />
