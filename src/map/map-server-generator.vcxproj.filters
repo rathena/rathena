@@ -38,6 +38,9 @@
     <Filter Include="Source Files\Skills\Npc">
       <UniqueIdentifier>{242ebf78-1994-488e-b1aa-d6aa09e48d0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Skills\Rogue">
+      <UniqueIdentifier>{5c5b3b80-368e-4186-b5a6-0914baceccfb}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Skills\Summoner">
       <UniqueIdentifier>{1aab87a2-9226-480f-937d-309a89a02358}</UniqueIdentifier>
     </Filter>
@@ -86,6 +89,9 @@
     </Filter>
     <Filter Include="Header Files\Skills\Npc">
       <UniqueIdentifier>{18eed79b-2523-4ca0-ba97-a3f2c27d9efe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Rogue">
+      <UniqueIdentifier>{9d2a6536-8667-4b70-9ff7-083ee6b7bfe4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Skills\Summoner">
       <UniqueIdentifier>{021a5c3f-56ab-45a9-a02a-f4e73e582bdc}</UniqueIdentifier>
@@ -657,6 +663,42 @@
     <ClInclude Include="skills/npc/skill_factory_npc.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/rogue/backstab.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/closeconfine.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/divestarmor.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/divesthelm.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/divestshield.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/divestweapon.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/mug.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/remover.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/scribble.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/sightlessmind.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/skill_factory_rogue.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/rogue/snatch.hpp">
+      <Filter>Header Files\Skills\Rogue</Filter>
+    </ClInclude>
     <ClInclude Include="skills/skill_factory.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
@@ -1051,6 +1093,42 @@
     </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/backstab.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/closeconfine.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/divestarmor.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/divesthelm.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/divestshield.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/divestweapon.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/mug.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/remover.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/scribble.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/sightlessmind.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/skill_factory_rogue.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/rogue/snatch.hpp">
+      <Filter>Source Files\Skills\Rogue</Filter>
     </ClCompile>
     <ClCompile Include="skills/skill_factory.cpp">
       <Filter>Source Files\Skills</Filter>

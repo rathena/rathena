@@ -291,7 +291,6 @@ int32 skill_tree_get_max(uint16 skill_id, int32 b_class) {
 
 int32 skill_frostjoke_scream(block_list *bl,va_list ap);
 std::shared_ptr<s_skill_unit_group> skill_locate_element_field(block_list *bl); // [Skotlex]
-int32 skill_graffitiremover(block_list *bl, va_list ap); // [Valaris]
 static int32 skill_trap_splash(block_list *bl, va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(block_list *bl,std::shared_ptr<s_skill_unit_group> sg,t_tick tick);
 static int32 skill_unit_onplace(skill_unit *src,block_list *bl,t_tick tick);
@@ -1510,18 +1509,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		attack_type |= BF_WEAPON;
 		break;
 #endif
-
-	case RG_RAID:
-		sc_start(src,bl,SC_STUN,(10+3*skill_lv),skill_lv,skill_get_time(skill_id,skill_lv));
-		sc_start(src,bl,SC_BLIND,(10+3*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-#ifdef RENEWAL
-		sc_start(src, bl, SC_RAID, 100, skill_lv, 10000); // Hardcoded to 10 seconds since Duration1 and Duration2 are used
-		break;
-
-	case RG_BACKSTAP:
-		sc_start(src,bl,SC_STUN,(5+2*skill_lv),skill_lv,skill_get_time(skill_id,skill_lv));
-#endif
-		break;
 
 	case BA_FROSTJOKER:
 	case DC_SCREAM:
@@ -5326,48 +5313,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		status_change_end(src, SC_BLADESTOP);
 		break;
 
-	case RG_BACKSTAP:
-		{
-#ifdef RENEWAL
-			uint8 dir = map_calc_dir(src, bl->x, bl->y);
-			int16 x, y;
-
-			if (dir > 0 && dir < 4)
-				x = -1;
-			else if (dir > 4)
-				x = 1;
-			else
-				x = 0;
-
-			if (dir > 2 && dir < 6)
-				y = -1;
-			else if (dir == 7 || dir < 2)
-				y = 1;
-			else
-				y = 0;
-
-			if (battle_check_target(src, bl, BCT_ENEMY) > 0 && unit_movepos(src, bl->x + x, bl->y + y, 2, true)) { // Display movement + animation.
-#else
-			if (check_distance_bl(src, bl, 0))
-				break;
-
-			uint8 dir = map_calc_dir(src, bl->x, bl->y), t_dir = unit_getdir(bl);
-
-			if (!map_check_dir(dir, t_dir) || bl->type == BL_SKILL) {
-#endif
-				status_change_end(src, SC_HIDING);
-				dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
-				unit_setdir(bl,dir);
-#ifdef RENEWAL
-				clif_blown(src);
-#endif
-				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-			}
-			else if (sd)
-				clif_skill_fail( *sd, skill_id );
-		}
-		break;
-
 	case MO_FINGEROFFENSIVE:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		if (battle_config.finger_offensive_type && sd) {
@@ -5457,7 +5402,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case AS_SPLASHER:
 	case HT_BLITZBEAT:
 	case MA_SHOWER:
-	case RG_RAID:
 #ifdef RENEWAL
 	case SN_SHARPSHOOTING:
 #endif
@@ -7841,10 +7785,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case RG_CLOSECONFINE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start4(src,bl,type,100,skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv)));
-		break;
 	case SA_FLAMELAUNCHER:	// added failure chance and chance to break weapon if turned on [Valaris]
 	case SA_FROSTWEAPON:
 	case SA_LIGHTNINGLOADER:
@@ -8466,16 +8406,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case RG_RAID:
-		skill_area_temp[1] = 0;
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		map_foreachinrange(skill_area_sub, bl,
-			skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
-			src,skill_id,skill_lv,tick, flag|BCT_ENEMY|1,
-			skill_castend_damage_id);
-		status_change_end(src, SC_HIDING);
-		break;
-
 	//List of self skills that give damage around caster
 	case ASC_METEORASSAULT:
 	case RK_WINDCUTTER:
@@ -8939,20 +8869,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 #endif
 
-	case RG_STEALCOIN:
-		if(sd) {
-			if(pc_steal_coin(sd,bl))
-			{
-				dstmd->state.provoke_flag = src->id;
-				mob_target(dstmd, src, skill_get_range2(src, skill_id, skill_lv, true));
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-
-			}
-			else
-				clif_skill_fail( *sd, skill_id );
-		}
-		break;
-
 	case NV_FIRSTAID:
 		clif_skill_nodamage(src,*bl,skill_id,5);
 		status_heal(bl,5,0,0);
@@ -9077,10 +8993,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case RG_STRIPWEAPON:
-	case RG_STRIPSHIELD:
-	case RG_STRIPARMOR:
-	case RG_STRIPHELM:
 	case ST_FULLSTRIP:
 	case GC_WEAPONCRUSH:
 	case SC_STRIPACCESSARY:
@@ -10005,10 +9917,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		}
-		break;
-
-	case RG_CLEANER:	//AppleGirl
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		break;
 
 #ifndef RENEWAL
@@ -13816,10 +13724,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		if(skill_unitsetting(src,skill_id,skill_lv,x,y,0))
 			clif_skill_poseffect( *src, skill_id, skill_lv, x, y, tick );
 		break;
-	case RG_GRAFFITI:			/* Graffiti [Valaris] */
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-		flag|=1;
-		break;
 	case NPC_EARTHQUAKE:
 		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, -1, DMG_SINGLE );
 		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
@@ -13849,10 +13753,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 				skill_id,0,skill_lv,sg->group_id,skill_get_time(skill_id,skill_lv));
 		flag|=1;
 #endif
-		break;
-	case RG_CLEANER: // [Valaris]
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinallarea(skill_graffitiremover,src->m,x-i,y-i,x+i,y+i,BL_SKILL,1);
 		break;
 
 	case SO_WARMER:
