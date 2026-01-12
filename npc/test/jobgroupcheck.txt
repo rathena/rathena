@@ -1,0 +1,48 @@
+//===== rAthena Script =======================================
+//= Job Group Checker
+//===== Description: =========================================
+//= A script for testing checks for different jobs using the
+//= job group checks that are set in pc.hpp.
+//===== Additional Comments: =================================
+//= 1.0 Initial script. [Rytech]
+//============================================================
+payon,173,206,6	script	JobGroupTest	123,{
+	mes "Running Primary Group Checks....";
+	if (!IsPrimaryThird)
+		mes "You are a classic era primary job.";
+	if (IsPrimaryThird && !IsPrimaryFourth)
+		mes "You are a renewal era primary job.";
+	if (IsPrimaryFourth)
+		mes "You are a trait era primary job.";
+        next;
+	mes "Running Expanded Group Checks....";
+	if (!IsUpperExpandedFirst)
+		mes "You are a classic era expanded job.";
+	if (IsUpperExpandedFirst && !IsUpperExpandedSecond)
+		mes "You are a renewal era expanded job.";
+	if (IsUpperExpandedSecond)
+		mes "You are a trait era expanded job.";
+        next;
+	mes "Running Era Group Checks....";
+	if (!IsRenewalJob)
+		mes "You are a classic era job.";
+	if (IsRenewalJob && !IsTraitJob)
+		mes "You are a renewal era job.";
+	if (IsTraitJob)
+		mes "You are a trait era job.";
+        next;
+	mes "Running Group Inherit Checks....";
+	if (IsPrimaryThird)
+		mes "IsPrimaryThird Passed.";
+	if (IsPrimaryFourth)
+		mes "IsPrimaryFourth Passed.";
+	if (IsUpperExpandedFirst)
+		mes "IsUpperExpandedFirst Passed.";
+	if (IsUpperExpandedSecond)
+		mes "IsUpperExpandedSecond Passed.";
+	if (IsRenewalJob)
+		mes "IsRenewalJob Passed.";
+	if (IsTraitJob)
+		mes "IsTraitJob Passed.";
+	close;
+}

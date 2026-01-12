@@ -10215,6 +10215,12 @@ int64 pc_readparam( const map_session_data* sd, int64 type )
 		case SP_BASETHIRD:       val = pc_mapid2jobid(sd->class_&MAPID_THIRDMASK, sd->status.sex); break;
 		case SP_BASEFOURTH:      val = pc_mapid2jobid(sd->class_&MAPID_FOURTHMASK, sd->status.sex); break;
 		case SP_UPPER:           val = sd->class_&JOBL_UPPER?1:(sd->class_&JOBL_BABY?2:0); break;
+		case SP_PRIMARY_THIRD:         val = pc_is_primary_third(sd->class_); break;
+		case SP_PRIMARY_FOURTH:        val = pc_is_primary_fourth(sd->class_); break;
+		case SP_UPPER_EXPANDED_FIRST:  val = pc_is_upper_expanded_first(sd->class_); break;
+		case SP_UPPER_EXPANDED_SECOND: val = pc_is_upper_expanded_second(sd->class_); break;
+		case SP_RENEWAL_JOB:           val = pc_is_renewal_job(sd->class_); break;
+		case SP_TRAIT_JOB:             val = pc_is_trait_job(sd->class_); break;
 		case SP_SEX:             val = sd->status.sex; break;
 		case SP_WEIGHT:          val = sd->weight; break;
 		case SP_MAXWEIGHT:       val = sd->max_weight; break;

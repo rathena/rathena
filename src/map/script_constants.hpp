@@ -599,6 +599,12 @@
 	export_parameter("BaseSecond",SP_BASESECOND);
 	export_parameter("BaseThird",SP_BASETHIRD);
 	export_parameter("BaseFourth",SP_BASEFOURTH);
+	export_parameter("IsPrimaryThird",SP_PRIMARY_THIRD);
+	export_parameter("IsPrimaryFourth",SP_PRIMARY_FOURTH);
+	export_parameter("IsUpperExpandedFirst",SP_UPPER_EXPANDED_FIRST);
+	export_parameter("IsUpperExpandedSecond",SP_UPPER_EXPANDED_SECOND);
+	export_parameter("IsRenewalJob",SP_RENEWAL_JOB);
+	export_parameter("IsTraitJob",SP_TRAIT_JOB);
 	export_parameter("killerrid",SP_KILLERRID);
 	export_parameter("killedrid",SP_KILLEDRID);
 	export_parameter("killedgid",SP_KILLEDGID);
