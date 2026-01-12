@@ -17,6 +17,7 @@
 #include "freezingtrap.hpp"
 #include "landmine.hpp"
 #include "makingarrow.hpp"
+#include "removetrap.hpp"
 #include "sandman.hpp"
 #include "shockwavetrap.hpp"
 #include "skidtrap.hpp"
@@ -55,6 +56,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillLandMine>();
 		case HT_PHANTASMIC:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case HT_REMOVETRAP:
+			return std::make_unique<SkillRemoveTrap>();
 		case HT_SANDMAN:
 			return std::make_unique<SkillSandman>();
 		case HT_SHOCKWAVE:
