@@ -5420,11 +5420,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case HT_POWER:
-		if( tstatus->race == RC_BRUTE || tstatus->race == RC_PLAYER_DORAM || tstatus->race == RC_INSECT )
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-
 	case SU_PICKYPECK:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		[[fallthrough]];

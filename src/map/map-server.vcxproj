@@ -267,6 +267,7 @@
     <ClInclude Include="skills/acolyte/turnundead.hpp" />
     <ClInclude Include="skills/archer/anklesnare.hpp" />
     <ClInclude Include="skills/archer/arrowshower.hpp" />
+    <ClInclude Include="skills/archer/beaststrafing.hpp" />
     <ClInclude Include="skills/archer/blastmine.hpp" />
     <ClInclude Include="skills/archer/blitzbeat.hpp" />
     <ClInclude Include="skills/archer/chargearrow.hpp" />
@@ -460,6 +461,7 @@
     <ClCompile Include="skills/acolyte/turnundead.cpp" />
     <ClCompile Include="skills/archer/anklesnare.cpp" />
     <ClCompile Include="skills/archer/arrowshower.cpp" />
+    <ClCompile Include="skills/archer/beaststrafing.cpp" />
     <ClCompile Include="skills/archer/blastmine.cpp" />
     <ClCompile Include="skills/archer/blitzbeat.cpp" />
     <ClCompile Include="skills/archer/chargearrow.cpp" />
