@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../skill_impl.hpp"
+#include "../weapon_skill_impl.hpp"
 
 class SkillSnatch : public WeaponSkillImpl {
 public:
