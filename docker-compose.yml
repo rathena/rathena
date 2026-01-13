@@ -68,5 +68,21 @@ services:
         depends_on:
             - char
 
+    web:
+        image: "rathena:local"
+        container_name: "rathena-web"
+        command: sh -c "/bin/wait-for db:3306 -- /rathena/web-server"
+        ports:
+            - "8888:8888" # web server
+        volumes:
+            - "./conf:/rathena/conf"
+            - "./npc:/rathena/npc"
+            - "./db:/rathena/db"
+        init: true
+        tty: true
+        stdin_open: true
+        depends_on:
+            - login
+
 volumes:
     rathenadb:
