@@ -38175,7 +38175,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bAspdRate,-(1+(BaseLevel>=90)+(BaseLevel>=120));
+      bonus bAspdRate,1+(BaseLevel>=90)+(BaseLevel>=120);
   - Id: 27019
     AegisName: DR815_Card
     Name: DR815 Card
