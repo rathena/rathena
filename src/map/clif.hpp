@@ -1460,6 +1460,7 @@ void clif_laphine_upgrade_open( map_session_data* sd, const std::shared_ptr<cons
 // Reputation System
 void clif_reputation_type( const map_session_data& sd, int64 type, int64 points );
 void clif_reputation_list( map_session_data& sd );
+void clif_reputation_open( map_session_data& sd, uint64 tabID, uint32 repID, bool highlight );
 
 // Item Reform UI
 void clif_item_reform_open( map_session_data& sd, t_itemid item );

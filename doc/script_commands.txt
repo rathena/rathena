@@ -8607,6 +8607,14 @@ This command requires packet version 2020-07-24 or newer.
 
 ---------------------------------------
 
+*reputationui({<group id>{,<reputation id>{,<char id>}}})
+
+Opens the reputation UI for the attached character or the player given by the char ID parameter.
+If <group id> is passed reputation UI will open in selected group table, 0 = All.
+If <reputation id> is passed following reputation will be showed in red.
+
+---------------------------------------
+
 *set_reputation_points(<type>,<points>{,<char id>})
 
 Sets the reputation points via <points> for reputation group <type> for the attached player or the given character ID.
