@@ -273,8 +273,10 @@
 	export_constant2("EAJL_UPPER",JOBL_UPPER);
 	export_constant2("EAJL_BABY",JOBL_BABY);
 
-	export_constant2("EAJ_BASEMASK",MAPID_FIRSTMASK);// Update name in future update for item/scripts. (Rytech)
-	export_constant2("EAJ_UPPERMASK",MAPID_SECONDMASK);// Update name in future update for item/scripts. (Rytech)
+	export_constant2("EAJ_BASEMASK",MAPID_FIRSTMASK);// Use EAJ_FIRSTMASK instead.
+	export_constant2("EAJ_UPPERMASK",MAPID_SECONDMASK);// Use EAJ_SECONDMASK instead.
+	export_constant2("EAJ_FIRSTMASK",MAPID_FIRSTMASK);
+	export_constant2("EAJ_SECONDMASK",MAPID_SECONDMASK);
 	export_constant2("EAJ_THIRDMASK",MAPID_THIRDMASK);
 	export_constant2("EAJ_FOURTHMASK",MAPID_FOURTHMASK);
 
@@ -593,8 +595,8 @@
 	export_parameter("MaxSp",SP_MAXSP);
 	export_parameter("Ap",SP_AP);
 	export_parameter("MaxAp",SP_MAXAP);
-	export_parameter("BaseJob",SP_BASESECOND);// Note: Deprecated. Use BaseFirst instead.
-	export_parameter("BaseClass",SP_BASEFIRST);// Note: Deprecated. Use BaseSecond instead.
+	export_parameter("BaseJob",SP_BASESECOND);// Use BaseSecond instead.
+	export_parameter("BaseClass",SP_BASEFIRST);// Use BaseFirst instead.
 	export_parameter("BaseFirst",SP_BASEFIRST);
 	export_parameter("BaseSecond",SP_BASESECOND);
 	export_parameter("BaseThird",SP_BASETHIRD);
@@ -10726,15 +10728,15 @@
 	export_constant(ITEMJ_NORMAL);// Pointless. Should be removed.
 	export_constant(ITEMJ_UPPER);
 	export_constant(ITEMJ_BABY);
-	export_constant(ITEMJ_THIRD);// Note: Deprecated. Use ITEMJ_RENEWAL_JOB instead.
-	export_constant(ITEMJ_THIRD_UPPER);// Note: Deprecated. Use ITEMJ_RENEWAL_JOB instead.
-	export_constant(ITEMJ_THIRD_BABY);// Note: Deprecated. Use ITEMJ_RENEWAL_JOB instead.
-	export_constant(ITEMJ_FOURTH);// Note: Deprecated. Use ITEMJ_TRAIT_JOB instead.
+	export_constant(ITEMJ_THIRD);// Use ITEMJ_RENEWAL_JOB instead.
+	export_constant(ITEMJ_THIRD_UPPER);// Use ITEMJ_RENEWAL_JOB instead.
+	export_constant(ITEMJ_THIRD_BABY);// Use ITEMJ_RENEWAL_JOB instead.
+	export_constant(ITEMJ_FOURTH);// Use ITEMJ_TRAIT_JOB instead.
 	export_constant(ITEMJ_RENEWAL_JOB);
 	export_constant(ITEMJ_TRAIT_JOB);
 	export_constant(ITEMJ_ALL_UPPER);// Note: Deprecated.
 	export_constant(ITEMJ_ALL_BABY);// Note: Deprecated.
-	export_constant(ITEMJ_ALL_THIRD);// Note: Deprecated. Use ITEMJ_RENEWAL_JOB instead.
+	export_constant(ITEMJ_ALL_THIRD);// Use ITEMJ_RENEWAL_JOB instead.
 
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);
