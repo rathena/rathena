@@ -19,6 +19,7 @@
 #include "crazyuproar.hpp"
 #include "mammonite.hpp"
 #include "powerthrust.hpp"
+#include "preparepotion.hpp"
 #include "skill_vending.hpp"
 #include "weaponperfection.hpp"
 #include "weaponrepair.hpp"
@@ -27,6 +28,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 	switch (skill_id) {
 		case AM_ACIDTERROR:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case AM_PHARMACY:
+			return std::make_unique<SkillPreparePotion>();
 		case BO_ACIDIFIED_ZONE_WATER_ATK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case BO_ACIDIFIED_ZONE_GROUND_ATK:

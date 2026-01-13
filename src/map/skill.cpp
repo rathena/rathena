@@ -8452,13 +8452,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,i != 0);
 		break;
 
-	case AM_PHARMACY:
-		if(sd) {
-			clif_skill_produce_mix_list( *sd, skill_id, 22 );
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
 	case SA_CREATECON:
 		if( sd != nullptr ){
 			clif_elementalconverter_list( *sd );
