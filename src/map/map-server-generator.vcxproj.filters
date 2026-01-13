@@ -603,6 +603,9 @@
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/acidterror.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/adrenalinerush.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -1003,6 +1006,9 @@
     </ClCompile>
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/acidterror.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/adrenalinerush.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
