@@ -1488,14 +1488,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			clif_emotion( *bl, ET_HUK );
 		break;
 
-	case AM_DEMONSTRATION:
-#ifdef RENEWAL
-		skill_break_equip(src,bl, EQP_WEAPON, 300 * skill_lv, BCT_ENEMY);
-#else
-		skill_break_equip(src,bl, EQP_WEAPON, 100*skill_lv, BCT_ENEMY);
-#endif
-		break;
-
 	case CR_SHIELDCHARGE:
 		sc_start(src,bl,SC_STUN,(15+skill_lv*5),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
@@ -13689,7 +13681,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case HT_BLASTMINE:
 	case HT_CLAYMORETRAP:
 	case AS_VENOMDUST:
-	case AM_DEMONSTRATION:
 	case PF_FOGWALL:
 	case PF_SPIDERWEB:
 	case HT_TALKIEBOX:

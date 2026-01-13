@@ -10,6 +10,7 @@
 
 #include "adrenalinerush.hpp"
 #include "advancedadrenalinerush.hpp"
+#include "bomb.hpp"
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
 #include "changecart.hpp"
@@ -28,6 +29,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 	switch (skill_id) {
 		case AM_ACIDTERROR:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case AM_DEMONSTRATION:
+			return std::make_unique<SkillBomb>();
 		case AM_PHARMACY:
 			return std::make_unique<SkillPreparePotion>();
 		case BO_ACIDIFIED_ZONE_WATER_ATK:
