@@ -3,16 +3,68 @@
 
 #include "skill_factory_merchant.hpp"
 
+#include <config/core.hpp>
+
+#include "../status_skill_impl.hpp"
+#include "../weapon_skill_impl.hpp"
+
+#include "adrenalinerush.hpp"
+#include "advancedadrenalinerush.hpp"
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
 #include "changecart.hpp"
+#include "greed.hpp"
+#include "hammerfall.hpp"
 #include "itemappraisal.hpp"
 #include "crazyuproar.hpp"
 #include "mammonite.hpp"
+#include "powerthrust.hpp"
 #include "skill_vending.hpp"
+#include "weaponperfection.hpp"
+#include "weaponrepair.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case AM_ACIDTERROR:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case BO_ACIDIFIED_ZONE_WATER_ATK:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case BO_ACIDIFIED_ZONE_GROUND_ATK:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case BO_ACIDIFIED_ZONE_WIND_ATK:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case BO_ACIDIFIED_ZONE_FIRE_ATK:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case BO_RESEARCHREPORT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case BS_ADRENALINE:
+			return std::make_unique<SkillAdrenalineRush>();
+		case BS_ADRENALINE2:
+			return std::make_unique<SkillAdvancedAdrenalineRush>();
+		case BS_GREED:
+			return std::make_unique<SkillGreed>();
+		case BS_HAMMERFALL:
+			return std::make_unique<SkillHammerFall>();
+		case BS_MAXIMIZE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case BS_OVERTHRUST:
+			return std::make_unique<SkillPowerThrust>();
+		case BS_REPAIRWEAPON:
+			return std::make_unique<SkillWeaponRepair>();
+		case BS_WEAPONPERFECT:
+			return std::make_unique<SkillWeaponPerfection>();
+#ifdef RENEWAL
+		case CR_ACIDDEMONSTRATION:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+#endif
+		case GN_BLOOD_SUCKER:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case GN_CARTBOOST:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case GN_HELLS_PLANT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case GN_SLINGITEM_RANGEMELEEATK:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MC_CARTDECORATE:
 			return std::make_unique<SkillDecorateCart>();
 		case MC_CARTREVOLUTION:
@@ -27,6 +79,35 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillMammonite>();
 		case MC_VENDING:
 			return std::make_unique<SkillVending>();
+		case MT_D_MACHINE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MT_TRIPLE_LASER:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NC_ACCELERATION:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NC_AXEBOOMERANG:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NC_BOOSTKNUCKLE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NC_HOVERING:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NC_MAGMA_ERUPTION:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NC_PILEBUNKER:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NC_POWERSWING:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NC_SHAPESHIFT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WS_CARTBOOST:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WS_CARTTERMINATION:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case WS_MELTDOWN:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WS_OVERTHRUSTMAX:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+
 		default:
 			return nullptr;
 	}
