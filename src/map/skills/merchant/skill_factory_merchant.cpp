@@ -15,6 +15,7 @@
 #include "alchemicalweapon.hpp"
 #include "biochemicalhelm.hpp"
 #include "bomb.hpp"
+#include "callhomunculus.hpp"
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
 #include "changecart.hpp"
@@ -37,6 +38,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 	switch (skill_id) {
 		case AM_ACIDTERROR:
 			return std::make_unique<SkillAcidTerror>();
+		case AM_CALLHOMUN:
+			return std::make_unique<SkillCallHomunculus>();
 		case AM_CANNIBALIZE:
 			return std::make_unique<SkillSummonFlora>();
 		case AM_CP_ARMOR:

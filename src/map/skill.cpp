@@ -10238,15 +10238,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
-	case AM_CALLHOMUN:	//[orn]
-		if (sd && !hom_call(sd))
-			clif_skill_fail( *sd, skill_id );
-#ifdef RENEWAL
-		else if (sd && hom_is_active(sd->hd))
-			skill_area_temp[0] = 1; // Already passed pre-cast checks
-#endif
-		break;
-
 	case AM_REST:
 		if (sd) {
 			if (hom_vaporize(sd,HOM_ST_REST))

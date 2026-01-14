@@ -325,6 +325,7 @@
     <ClInclude Include="skills/merchant/alchemicalweapon.hpp" />
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp" />
     <ClInclude Include="skills/merchant/bomb.hpp" />
+    <ClInclude Include="skills/merchant/callhomunculus.hpp" />
     <ClInclude Include="skills/merchant/cartrevolution.hpp" />
     <ClInclude Include="skills/merchant/changecart.hpp" />
     <ClInclude Include="skills/merchant/crazyuproar.hpp" />
@@ -514,6 +515,7 @@
     <ClCompile Include="skills/merchant/alchemicalweapon.cpp" />
     <ClCompile Include="skills/merchant/biochemicalhelm.cpp" />
     <ClCompile Include="skills/merchant/bomb.cpp" />
+    <ClCompile Include="skills/merchant/callhomunculus.cpp" />
     <ClCompile Include="skills/merchant/cartrevolution.cpp" />
     <ClCompile Include="skills/merchant/changecart.cpp" />
     <ClCompile Include="skills/merchant/crazyuproar.cpp" />
