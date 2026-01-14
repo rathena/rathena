@@ -9208,7 +9208,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			status_heal(bl,hp,sp,0);
 		}
 		break;
-	case AM_CP_SHIELD:
 	case AM_CP_ARMOR:
 	case AM_CP_HELM:
 		{

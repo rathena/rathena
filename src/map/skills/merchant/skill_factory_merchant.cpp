@@ -27,6 +27,7 @@
 #include "skill_vending.hpp"
 #include "summonflora.hpp"
 #include "summonmarinesphere.hpp"
+#include "synthesizedshield.hpp"
 #include "weaponperfection.hpp"
 #include "weaponrepair.hpp"
 
@@ -36,6 +37,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillAcidTerror>();
 		case AM_CANNIBALIZE:
 			return std::make_unique<SkillSummonFlora>();
+		case AM_CP_SHIELD:
+			return std::make_unique<SkillSynthesizedShield>();
 		case AM_CP_WEAPON:
 			return std::make_unique<SkillAlchemicalWeapon>();
 		case AM_DEMONSTRATION:
