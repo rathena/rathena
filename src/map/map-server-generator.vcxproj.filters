@@ -864,7 +864,7 @@
     <ClInclude Include="skills/thief/venomsplasher.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
-    <ClInclude Include="skills/weapon_skill_impl.cpp">
+    <ClInclude Include="skills/weapon_skill_impl.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1286,7 +1286,7 @@
     <ClCompile Include="skills/thief/backstab.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/cloaking.hpp">
+    <ClCompile Include="skills/thief/cloaking.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/closeconfine.cpp">
@@ -1307,7 +1307,7 @@
     <ClCompile Include="skills/thief/divestweapon.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/enchantpoison.hpp">
+    <ClCompile Include="skills/thief/enchantpoison.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/envenom.cpp">
@@ -1316,7 +1316,7 @@
     <ClCompile Include="skills/thief/findstone.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/grimtooth.hpp">
+    <ClCompile Include="skills/thief/grimtooth.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/hiding.cpp">
@@ -1343,7 +1343,7 @@
     <ClCompile Include="skills/thief/snatch.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/sonicblow.hpp">
+    <ClCompile Include="skills/thief/sonicblow.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/steal.cpp">
@@ -1352,13 +1352,13 @@
     <ClCompile Include="skills/thief/stonefling.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/throwvenomknife.hpp">
+    <ClCompile Include="skills/thief/throwvenomknife.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/venomdust.hpp">
+    <ClCompile Include="skills/thief/venomdust.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/venomsplasher.hpp">
+    <ClCompile Include="skills/thief/venomsplasher.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/weapon_skill_impl.cpp">
