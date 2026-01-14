@@ -52930,7 +52930,6 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Neutral,-10;
-      bonus2 bMagicAtkEle,Ele_Neutral,5;
       bonus2 bMagicAtkEle,Ele_All,5+4*(getrefine()/2);
   - Id: 300425
     AegisName: Crux_Card
