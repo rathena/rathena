@@ -5043,9 +5043,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case KN_CHARGEATK:
 			skillratio += 600;
 			break;
-		case AS_VENOMKNIFE:
-			skillratio += 400;
-			break;
 #else
 		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
 				int32 k = (wd->miscflag-1)/3;

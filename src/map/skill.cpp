@@ -1408,7 +1408,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src,bl,SC_STUN,(6*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case AS_VENOMKNIFE:
 	case AS_SPLASHER:
 		sc_start2(src, bl, SC_POISON, 100, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));
 		break;
