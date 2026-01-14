@@ -344,6 +344,7 @@
     <ClInclude Include="skills/merchant/synthesizedshield.hpp" />
     <ClInclude Include="skills/merchant/syntheticarmor.hpp" />
     <ClInclude Include="skills/merchant/twilightalchemy1.hpp" />
+    <ClInclude Include="skills/merchant/twilightalchemy2.hpp" />
     <ClInclude Include="skills/merchant/vaporize.hpp" />
     <ClInclude Include="skills/merchant/weaponperfection.hpp" />
     <ClInclude Include="skills/merchant/weaponrepair.hpp" />
@@ -537,6 +538,7 @@
     <ClCompile Include="skills/merchant/synthesizedshield.cpp" />
     <ClCompile Include="skills/merchant/syntheticarmor.cpp" />
     <ClCompile Include="skills/merchant/twilightalchemy1.cpp" />
+    <ClCompile Include="skills/merchant/twilightalchemy2.cpp" />
     <ClCompile Include="skills/merchant/vaporize.cpp" />
     <ClCompile Include="skills/merchant/weaponperfection.cpp" />
     <ClCompile Include="skills/merchant/weaponrepair.cpp" />
