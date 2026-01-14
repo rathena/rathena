@@ -38,6 +38,25 @@ function	Require_Level	{
 	return;
 }
 
+// Checks if the given eac is an expanded class : Super Novice, Taekwon, Gunslinger, Ninja, Summoner
+function Is_Expanded	{
+	switch (BaseJob) {
+		case JOB_SUPER_NOVICE:
+		case JOB_TAEKWON:
+		case JOB_STAR_GLADIATOR:
+		case JOB_SOUL_LINKER:
+		case JOB_GUNSLINGER:
+		case JOB_REBELLION:
+		case JOB_NINJA:
+		case JOB_KAGEROU:
+		case JOB_OBORO:
+		case JOB_SUMMONER:
+			return true;
+		default:
+			return false;
+	}
+}
+
 // Checks if the given eac is a baby class
 function Is_Baby	{
 	return ((getarg(0, eaclass())&EAJL_BABY)>0);
@@ -48,14 +67,18 @@ function Is_Baby	{
 function	Can_Change_Fourth	{
 	// To change to fourth class you need to be:
 	// * Transcendent Third Class
-	if( !.FourthClass )
+	.@eac = eaclass();
+
+	if( !.TraitClass )
 		return false; // Fourth job change disabled
-	if( (eaclass()&(EAJL_THIRD|EAJL_UPPER)) != (EAJL_THIRD|EAJL_UPPER) )
-		return false; // Not Transcendent Third Class
-	if( eaclass()&EAJL_FOURTH )
+	if( .@eac&EAJL_FOURTH )
 		return false; // Already Fourth Class
-	if( roclass(eaclass()|EAJL_FOURTH) < 0 )
+	if( !(.@eac&EAJL_THIRD) )
+		return false; // Not Third Class
+	if( roclass((.@eac&(~EAJL_UPPER))|EAJL_FOURTH) < 0 )
 		return false; // Job has no Fourth Class
+	if (Is_Expanded())
+		return false;
 	return true;
 }
 
@@ -66,38 +89,51 @@ function	Can_Change_Third	{
 	// * Second Class
 	// * Transcendent Second Class
 	// * Baby Second Class
-	if( !.ThirdClass )
+	.@eac = eaclass();
+
+	if( !.RenewalClass )
 		return false; // Third job change disabled
-	if( !(eaclass()&EAJL_2) )
-		return false; // Not second Class
-	if( eaclass()&EAJL_THIRD )
+	if( .@eac&EAJL_THIRD )
 		return false; // Already Third Class
-	if( roclass(eaclass()|EAJL_THIRD) < 0 )
+	if( !(.@eac&EAJL_2) )
+		return false; // Not second Class
+	if( roclass(.@eac|EAJL_THIRD) < 0 )
 		return false; // Job has no third Class
-	if( (eaclass()&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE )
-		return false; // Exp. Super Novice equals 3rd Cls, but has it's own case
-	if( Is_Baby() && (!.BabyClass || !.BabyThird) )
+	if( Is_Baby() && (!.BabyClass || !.BabyRenewal) )
 		return false; // No Baby (Third) change allowed
+	if (Is_Expanded())
+		return false;
 	return true;
 }
 
 function	Can_Rebirth	{
 	// To rebirth, you need to be:
 	// * Second Class
+	.@eac = eaclass();
+
 	if( !.RebirthClass )
 		return false; // Rebirth disabled
-	if( !(eaclass()&EAJL_2) )
-		return false; // Not second Class
-	if( eaclass()&(EAJL_UPPER|EAJL_THIRD) )
+	if( .@eac&(EAJL_UPPER|EAJL_THIRD) )
 		return false; // Already Rebirthed/ Third Class
-	if( roclass(eaclass()|EAJL_UPPER) < 0 )
+	if( !(.@eac&EAJL_2) )
+		return false; // Not second Class
+	if( roclass(.@eac|EAJL_UPPER) < 0 )
 		return false; // Job has no transcended class
 	if( Is_Baby() && !.BabyClass )
 		return false; // No Baby changes allowed
+	if (Is_Expanded())
+		return false;
 	return true;
 }
 
 // Checks if the given eac is a first class
+// Expanded classes other than Taekwon have their own logic in order to follow the npc setting
+//
+// Swordman (1st class) => Knight (2nd class) => Rune Knight (3rd class) (renewal class) => Dragon Knight (4th class) (trait class)
+// Taekwon (1st class) => Star Gladiator (2nd class) => Star Emperor (3rd class) (renewal class) => Sky Emperor (4th class) (trait class)
+//
+// Gunslinger (1st class) => Rebellion (2nd class) (renewal class) => Night Watch (3rd class) (trait class)
+// Summoner (1st class) => Spirit Handler (2nd class) (trait class)
 function	Is_First_Cls	{
 	return (getarg(0) <= EAJ_TAEKWON);
 }
@@ -107,13 +143,12 @@ function	Check_Riding	{
 	// Mounts are considered as another class, which
 	// would make this NPC bigger just to handle with
 	// those special cases.
-	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
-		mes "Please remove your " +
-			((checkfalcon()) ? "falcon" : "") +
-			((checkcart()) ? "cart" : "") +
-			((checkriding()) ? "Peco" : "") +
-			((ismounting()) ? "mount" : "") +
-			" before proceeding.";
+	.@string$ = (checkfalcon() ? "falcon" : "");
+	.@string$ += (checkcart() ? (.@string$ != "" ? ", cart" : "cart") : "");
+	.@string$ += (checkriding() ? (.@string$ != "" ? ", Peco" : "Peco") : "");
+	.@string$ += (ismounting() ? (.@string$ != "" ? ", mount" : "mount") : "");
+	if (.@string$ != "") {
+		mes "Please remove your " +.@string$ + " before proceeding.";
 		close;
 	}
 	return;
@@ -149,6 +184,8 @@ function	Job_Options	{
 	.@rebirth_possible = Can_Rebirth();
 	.@first_eac = .@eac&EAJ_BASEMASK;
 	.@second_eac = .@eac&EAJ_UPPERMASK;
+	.@nobaby_eac = .@eac&(~EAJL_BABY);
+	.@noupper_eac = .@eac&(~EAJL_UPPER);
 	// Note: These are already set in pc.cpp
 	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
 	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
@@ -171,10 +208,11 @@ function	Job_Options	{
 	if( .@fourth_possible ) {
 		// Fourth Job change (displayed below rebirth)
 		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
-		Job_Options(.@job_opt, roclass(.@eac|EAJL_FOURTH));
+		Job_Options(.@job_opt, roclass(.@noupper_eac|EAJL_FOURTH));
 	}
-	 
-	if (.SecondExpanded && 
+
+	// Whether the character can become renewal (baby) expanded class : Expanded Super Novice
+	if (.RenewalExpanded &&
 	   (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE && // is Super Novice
 	   !(eaclass()&EAJL_THIRD) ) {				 	// not already Expanded SN
 		// (Baby) Super Novice to Expanded (Baby) Super Novice
@@ -186,36 +224,58 @@ function	Job_Options	{
 	}
 
 	// babies don't get to become 4th jobs
-	if (.FourthExpanded && .@eac == EAJ_REBELLION) {
+	if (.TraitExpanded && .@eac == EAJ_REBELLION) {
 		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
-		Job_Options(.@job_opt, roclass(EAJ_NIGHT_WATCH));
+		Job_Options(.@job_opt, roclass(EAJ_NIGHT_WATCH));	// .@eac|EAJL_THIRD
 	}
 
-	if (.FourthExpanded && .@eac == EAJ_KAGEROUOBORO) {
+	if (.TraitExpanded && .@eac == EAJ_KAGEROUOBORO) {
 		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
-		Job_Options(.@job_opt, roclass(EAJ_SHINKIRO_SHIRANUI));
+		Job_Options(.@job_opt, roclass(EAJ_SHINKIRO_SHIRANUI));	// .@eac|EAJL_THIRD
 	}
 
-	if (.FourthExpanded && .@eac == EAJ_SUPER_NOVICE_E) {
+	if (.TraitExpanded && .@eac == EAJ_SUPER_NOVICE_E) {
 		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
-		Job_Options(.@job_opt, roclass(EAJ_HYPER_NOVICE));
+		Job_Options(.@job_opt, roclass(EAJ_HYPER_NOVICE));	// .@eac|EAJL_FOURTH
 	}
-	
-	if (.FourthExpanded && .@eac == EAJ_SUMMONER) {
+
+	if (.TraitExpanded && .@eac == EAJ_SUMMONER) {
 		Require_Level(.Req_SHandler[0], .Req_SHandler[1]);
-		Job_Options(.@job_opt, roclass(EAJ_SPIRIT_HANDLER));
+		Job_Options(.@job_opt, roclass(EAJ_SPIRIT_HANDLER));	// .@eac|EAJL_2_1
 	}
 
-	if (.SecondExpanded && 
-		((.@eac&(~EAJL_BABY)) == EAJ_NINJA || 		// is (Baby) Ninja
-		(.@eac&(~EAJL_BABY)) == EAJ_GUNSLINGER)) {	// is (Baby) Gunslinger
-		// (Baby) Ninja to (Baby) Kagerou / Oboro
-		// (Baby) Gunslinger to (Baby) Rebellion
+	if (.TraitExpanded && .@eac == EAJ_STAR_EMPEROR) {
+		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
+		Job_Options(.@job_opt, roclass(EAJ_SKY_EMPEROR));	// .@eac|EAJL_FOURTH
+	}
+
+	if (.TraitExpanded && .@eac == EAJ_SOUL_REAPER) {
+		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
+		Job_Options(.@job_opt, roclass(EAJ_SOUL_ASCETIC));	// .@eac|EAJL_FOURTH
+	}
+
+	// Whether the character can become renewal (baby) expanded class - a class above level 99 without trait points : Rebellion, Kagerou/Oboro, Star Emperor, Soul Reaper
+	if (.RenewalExpanded) {
+		// .BabyClass & .BabyExpanded must be enabled if the is a baby
 		if( !Is_Baby(.@eac) || (.BabyClass && .BabyExpanded) ) {
-			// .BabyClass & .BabyExpanded must be enabled if the is a baby
-			Require_Level(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
-			// Kagerou, Oboro, Rebellion are considered as a 2-1 class
-			Job_Options(.@job_opt, roclass(.@eac|EAJL_2_1));
+			switch (.@nobaby_eac) {
+				case EAJ_SOULLINKER:
+				case EAJ_STAR_GLADIATOR:
+					// (Baby) Soul Linker to (Baby) Soul Reaper
+					// (Baby) Star Gladiator to (Baby) Star Emperor
+					// Star Emperor and Soul Reaper are considered as 3rd class
+					Require_Level(.Req_Third[0], .Req_Third[1]);
+					Job_Options(.@job_opt, roclass(.@eac|EAJL_THIRD));
+					break;
+				case EAJ_NINJA:
+				case EAJ_GUNSLINGER:
+					// (Baby) Ninja to (Baby) Kagerou / Oboro
+					// (Baby) Gunslinger to (Baby) Rebellion
+					// Kagerou, Oboro, Rebellion are considered as 2-1 class
+					Require_Level(.Req_Exp_NJ_GS[0], .Req_Exp_NJ_GS[1]);
+					Job_Options(.@job_opt, roclass(.@eac|EAJL_2_1));
+					break;
+			}
 		}
 	}
 	
@@ -261,7 +321,7 @@ function	Job_Options	{
 		}
 	} else if( Is_First_Cls(.@eac) || 				// First Class
 			   Is_First_Cls(.@eac&(~EAJL_UPPER)) ||	// Trans. First Cls
-			   (.BabyClass && Is_First_Cls(.@eac&(~EAJL_BABY))) ) {	// Baby First Cls
+			   (.BabyClass && Is_First_Cls(.@nobaby_eac)) ) {	// Baby First Cls
 		// Player is First Class (not Novice)
 		// most jobs should have two options here  (2-1 and 2-2)
 		.@class1 = roclass(.@eac|EAJL_2_1); // 2-1
@@ -503,14 +563,14 @@ OnInit:
 	.NPCName$ = "[Job Master]";
 	
 	// Settings
-	.FourthClass = true;				// Enable fourth classes?
-	.FourthExpanded = true;				// Enable new expanded fourth classes: Ex. Hyper Novice, Rebellion, Shinkiro/Shiranui?
-	.ThirdClass = true;					// Enable third classes?
-	.RebirthClass = true;				// Enable rebirth classes?
-	.SecondExpanded = true;				// Enable new expanded second classes: Ex. Super Novice, Kagerou/Oboro, Rebellion?
+	.TraitClass = true;					// Enable Trait classes of normal jobs Acolyte, Archer, Mage, Merchant, Swordman, Thief ? Trait classes are classes with trait points (fourth classes of normal jobs)
+	.TraitExpanded = true;				// Enable expanded trait classes: Hyper Novice, Night Watch, Shinkiro/Shiranui, Spirit Handler, Sky Emperor, Soul Ascetic?
+	.RenewalClass = true;				// Enable Renewal classes (normal jobs only)? Renewal classes are classes above BaseLevel 100 without trait points (third classes of normal jobs)
+	.RebirthClass = true;				// Enable rebirth classes (normal jobs only)?
+	.RenewalExpanded = true;			// Enable renewal expanded classes: Ex. Super Novice, Rebellion, Kagerou/Oboro, Star Emperor, Soul Reaper?
 	.BabyNovice = true;					// Enable Baby novice classes? Disable it if you like player must have parent to get job baby.
 	.BabyClass = true;					// Enable Baby classes?
-	.BabyThird = true;					// Enable Baby third classes?
+	.BabyRenewal = true;				// Enable Baby Renewal classes?
 	.BabyExpanded = true;				// Enable Baby Expanded classes: Ex. Baby Ninja, Baby Taekwon, etc.
 	.BabySummoner = true;				// Enable Baby Summoner?
 	.LastJob = true;					// Enforce linear class changes?
@@ -522,9 +582,9 @@ OnInit:
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class
 	setarray .Req_Second[0],1,40; 		// Minimum base level, job level to turn into 2nd class
 	setarray .Req_Rebirth[0],99,50;		// Minimum base level, job level to rebirth
-	setarray .Req_Third[0],99,50;		// Minimum base level, job level to change to third class
+	setarray .Req_Third[0],99,50;		// Minimum base level, job level to change to third class, Star Gladiator, Soul Linker
 	setarray .Req_Fourth[0],200,70;		// Minimum base level, job level to change to fourth class
-	setarray .Req_Exp_NJ_GS[0],99,70; 	// Minimum base level, job level to turn into Expanded Ninja and Gunslinger
+	setarray .Req_Exp_NJ_GS[0],99,70; 	// Minimum base level, job level to turn into Ninja -> Kagerou/Oboro, Gunslinger -> Rebellion
 	setarray .Req_Exp_SNOVI[0],99,99; 	// Minimum base level, job level to turn into Expanded Super Novice
 	setarray .Req_SHandler[0],200,60;	// Minimum base level, job level to turn into Spirit Handler
 	.SNovice = 45;						// Minimum base level to turn into Super Novice
