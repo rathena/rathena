@@ -13,6 +13,7 @@
 #include "advancedadrenalinerush.hpp"
 #include "aidpotion.hpp"
 #include "alchemicalweapon.hpp"
+#include "biochemicalhelm.hpp"
 #include "bomb.hpp"
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
@@ -40,6 +41,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillSummonFlora>();
 		case AM_CP_ARMOR:
 			return std::make_unique<SkillSyntheticArmor>();
+		case AM_CP_HELM:
+			return std::make_unique<SkillBiochemicalHelm>();
 		case AM_CP_SHIELD:
 			return std::make_unique<SkillSynthesizedShield>();
 		case AM_CP_WEAPON:

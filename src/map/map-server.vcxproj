@@ -323,6 +323,7 @@
     <ClInclude Include="skills/merchant/advancedadrenalinerush.hpp" />
     <ClInclude Include="skills/merchant/aidpotion.hpp" />
     <ClInclude Include="skills/merchant/alchemicalweapon.hpp" />
+    <ClInclude Include="skills/merchant/biochemicalhelm.hpp" />
     <ClInclude Include="skills/merchant/bomb.hpp" />
     <ClInclude Include="skills/merchant/cartrevolution.hpp" />
     <ClInclude Include="skills/merchant/changecart.hpp" />
@@ -511,6 +512,7 @@
     <ClCompile Include="skills/merchant/advancedadrenalinerush.cpp" />
     <ClCompile Include="skills/merchant/aidpotion.cpp" />
     <ClCompile Include="skills/merchant/alchemicalweapon.cpp" />
+    <ClCompile Include="skills/merchant/biochemicalhelm.cpp" />
     <ClCompile Include="skills/merchant/bomb.cpp" />
     <ClCompile Include="skills/merchant/cartrevolution.cpp" />
     <ClCompile Include="skills/merchant/changecart.cpp" />
