@@ -25,6 +25,7 @@
 #include "preparepotion.hpp"
 #include "skill_vending.hpp"
 #include "summonflora.hpp"
+#include "summonmarinesphere.hpp"
 #include "weaponperfection.hpp"
 #include "weaponrepair.hpp"
 
@@ -40,6 +41,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillPreparePotion>();
 		case AM_POTIONPITCHER:
 			return std::make_unique<SkillAidPotion>();
+		case AM_SPHEREMINE:
+			return std::make_unique<SkillSummonMarineSphere>();
 		case BO_ACIDIFIED_ZONE_WATER_ATK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case BO_ACIDIFIED_ZONE_GROUND_ATK:
