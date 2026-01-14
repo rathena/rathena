@@ -104,34 +104,34 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 		mes "You can't change jobs without using all your skill points. Please use all of your skill points before applying to change jobs~";
 		close;
 	}
-	if (BaseClass == Job_Novice) {
+	if (BaseFirst == Job_Novice) {
 		mes "[Hunter Guildsman]";
 		mes "You must be...";
 		mes "a Novice? Wow, you've got a long way ahead of you. I don't think there's much you can do here.";
 		close;
 	}
-	else if (BaseClass == Job_Swordman) {
+	else if (BaseFirst == Job_Swordman) {
 		mes "[Hunter Guildsman]";
 		mes "You have chosen the path of the sword. I can respect the strength of your blade. Of course, from far away, you can't really afford to throw your sword at enemies, can you?";
 		close;
 	}
-	else if (BaseClass == Job_Mage) {
+	else if (BaseFirst == Job_Mage) {
 		mes "[Hunter Guildsman]";
 		mes "You deal with magic? It must feel great to be able to wield mystic power.";
 		close;
 	}
-	else if (BaseClass == Job_Acolyte) {
+	else if (BaseFirst == Job_Acolyte) {
 		mes "[Hunter Guildsman]";
 		mes "Oh, a person who serves God! Nice to meet you. There aren't many people like you that visit this place~ Hehe.";
 		close;
 	}
-	else if (BaseClass == Job_Merchant) {
+	else if (BaseFirst == Job_Merchant) {
 		mes "[Hunter Guildsman]";
 		mes "Oh...";
 		mes "How's your business coming along?";
 		close;
 	}
-	else if (BaseClass == Job_Thief) {
+	else if (BaseFirst == Job_Thief) {
 		mes "[Hunter Guildsman]";
 		mes "Agh?!";
 		mes "This place doesn't have anything worth stealing or anyone worth killing!!";

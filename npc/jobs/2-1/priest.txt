@@ -113,7 +113,7 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 				close;
 			}
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "[Bishop Paul]";
 			mes "May God be";
 			if (Sex == SEX_MALE)
@@ -1297,7 +1297,7 @@ job_prist,24,109,4	script	prst1_1	45,3,3,{
 OnTouch_:
 	set .@mobs,getvariableofnpc(.MyMobs,"Zombie_Generator#prst");
 	if (BaseSecond == Job_Priest) warp "job_prist",168,17;
-	else if (BaseClass == Job_Acolyte && .@mobs < 1) {
+	else if (BaseFirst == Job_Acolyte && .@mobs < 1) {
 		warp "job_prist",168,17;
 		donpcevent "Zombie_Generator#prst::OnDisable";
 		donpcevent "Peter S. Alberto#2::OnDisable";
@@ -1329,7 +1329,7 @@ OnTouch_:
 		mes "Alright, alright, for old time's sake, I'll let you pass me. But only this once. But I better not catch you again! This is evil turf, you hear?!";
 		close;
 	}
-	if (BaseClass == Job_Acolyte) {
+	if (BaseFirst == Job_Acolyte) {
 		mes "[Deviruchi]";
 		mes "Why...";
 		mes "Hello little Aco.";
@@ -1420,7 +1420,7 @@ OnTouch_:
 		mes "Besides, this is none of your business. Whether or not this Acolyte becomes a Priest isn't up to you. Now get out of here, before I get violent.";
 		close;
 	}
-	else if (BaseClass == Job_Acolyte) {
+	else if (BaseFirst == Job_Acolyte) {
 		mes "[Doppelganger]";
 		mes "Hold on there, Acolyte.";
 		mes "I'm not like Deviruchi,";
@@ -1490,7 +1490,7 @@ OnTouch_:
 		mes "I shall personally see to that, mortal.^000000";
 		close;
 	}
-	else if (BaseClass == Job_Acolyte) {
+	else if (BaseFirst == Job_Acolyte) {
 		mes "[Dark Lord]";
 		mes "^330033Halt, human.";
 		mes "Who has granted";
@@ -1547,7 +1547,7 @@ OnTouch_:
 		mes "I don't have any business with you, servant of God. Just pass through.";
 		close;
 	}
-	else if (BaseClass == Job_Acolyte) {
+	else if (BaseFirst == Job_Acolyte) {
 		mes "[Baphomet]";
 		mes "Greetings.";
 		next;
@@ -1601,7 +1601,7 @@ OnTouch_:
 job_prist,168,180,4	script	prst2_1	45,3,3,{
 OnTouch_:
 	if (BaseSecond == Job_Priest) warp "job_prist",98,40;
-	else if (BaseClass == Job_Acolyte) {
+	else if (BaseFirst == Job_Acolyte) {
 		warp "job_prist",98,40;
 		donpcevent "Mummy_Generator::OnEnable";
 	}
@@ -1711,7 +1711,7 @@ OnTouch_:
 		warp "prt_church",15,36;
 		end; 
 	}
-	else if (BaseClass == Job_Acolyte) {
+	else if (BaseFirst == Job_Acolyte) {
 		set PRIEST_Q,7;
 		if(checkquest(8012) != -1) {
 			changequest 8012,8013;

@@ -19,7 +19,7 @@
 
 arena_room,114,102,0	script	onlyaco#arena	45,1,1,{
 OnTouch_:
-	if (BaseClass == Job_Acolyte) {
+	if (BaseFirst == Job_Acolyte) {
 		warp "arena_room",135,129;
 		end;
 	}

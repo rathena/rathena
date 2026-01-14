@@ -166,17 +166,17 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		mes "What brings you here?";
 		mes "I don't think I like the way you're looking at me... Punk.";
 		next;
-		if (BaseClass == Job_Novice) {
+		if (BaseFirst == Job_Novice) {
 			mes "[Ferocious-looking guy]";
 			mes "Hey Newbie. You should really get out of here as soon as you can. I can't guarantee your safety.";
 			close;
 		}
-		else if (BaseClass == Job_Swordman) {
+		else if (BaseFirst == Job_Swordman) {
 			mes "[Ferocious-looking guy]";
 			mes "What brings a man of the sword to this place? Why don't you try smashing stuff somewhere else, ya lunkhead.";
 			close;
 		}
-		else if (BaseClass == Job_Mage) {
+		else if (BaseFirst == Job_Mage) {
 			mes "[Ferocious-looking guy]";
 			mes "Now what would a magic user be doing here?";
 			next;
@@ -184,7 +184,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 			mes "There's a library in Prontera and Juno where you're welcome, so why don't you make like a magic trick and disappear?";
 			close;
 		}
-		else if (BaseClass == Job_Archer) {
+		else if (BaseFirst == Job_Archer) {
 			mes "[Ferocious-looking guy]";
 			mes "Well well well.";
 			mes "Look at that purdy bow.";
@@ -193,12 +193,12 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 			mes "There aren't many Bowmen with the gall to even come close to this place. Well, what do you think you're doin' here?!";
 			close;
 		}
-		else if (BaseClass == Job_Acolyte) {
+		else if (BaseFirst == Job_Acolyte) {
 			mes "[Ferocious-looking guy]";
 			mes "I thought something smelled funny. What's a servant of God doing in this place? You don't belong here.";
 			close;
 		}
-		else if (BaseClass == Job_Merchant) {
+		else if (BaseFirst == Job_Merchant) {
 			mes "[Ferocious-looking guy]";
 			mes "We don't like greedy people around these parts. You better sell your stuff somewhere else, Moneybags.";
 			close;

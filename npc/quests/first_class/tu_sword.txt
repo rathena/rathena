@@ -43,7 +43,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "come back to me...";
 		close;
 	}
-	if(BaseClass == Job_Swordman && (eaclass()&(EAJL_2|EAJL_UPPER|EAJL_THIRD))){
+	if(BaseFirst == Job_Swordman && (eaclass()&(EAJL_2|EAJL_UPPER|EAJL_THIRD))){
 		mes "From your raiment,";
 		mes "I see that you are";
 		if(Sex == SEX_MALE)
@@ -57,7 +57,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 		mes "There's nothing that I can actually offer to teach you. But if you know any new Swordmen that show potential, please direct them to me.";
 		close;
 	}
-	if(BaseClass != Job_Swordman){
+	if(BaseFirst != Job_Swordman){
 		mes "Greetings adventurer.";
 		mes "If you happen to know";
 		mes "any new Swordmen,";
@@ -1018,7 +1018,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 		mes "I don't know how you want to live your life, but you should give the Swordman job some serious thought...";
 		close;
 	}
-	if(BaseClass == Job_Swordman && (eaclass()&(EAJL_2|EAJL_UPPER))){
+	if(BaseFirst == Job_Swordman && (eaclass()&(EAJL_2|EAJL_UPPER))){
 		mes "[Dequ'ee]";
 		mes "Ah...";
 		mes "A fellow sword wielder!";
@@ -1029,7 +1029,7 @@ geffen,154,143,3	script	Dequ'ee	734,{
 		mes "depend on the strength of your blade. It's an awesome responsibility, but we can never let our allies down in battle...";
 		close;
 	}
-	if(BaseClass != Job_Swordman){
+	if(BaseFirst != Job_Swordman){
 		mes "[Dequ'ee]";
 		mes "Hello there.";
 		mes "Not a fan of swords, are you?";

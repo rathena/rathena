@@ -16,7 +16,7 @@
 //============================================================
 
 moc_ruins,118,99,5	script	Roberto	88,{
-	if (BaseClass == Job_Archer) {
+	if (BaseFirst == Job_Archer) {
 		if (getskilllv("AC_MAKINGARROW") == 1) {
 			mes "[Roberto]";
 			mes "Ooh, you're from my home town!";
@@ -142,7 +142,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 }
 
 payon,103,63,3	script	Jason	88,3,3,{
-	if (BaseClass == Job_Archer) {
+	if (BaseFirst == Job_Archer) {
 		if (getskilllv("AC_CHARGEARROW") == 1) {
 			mes "[Jason]";
 			mes "Eh, we meet again.";

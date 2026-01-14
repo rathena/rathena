@@ -17,7 +17,7 @@
 
 alberta,118,160,3	script	Bullet Dealer Tony#alb::bdt	4_M_04,{
 	mes "[Tony]";
-	if (BaseClass == Job_Gunslinger) {
+	if (BaseFirst == Job_Gunslinger) {
 		mes "I'm Tony, the Bullet Dealer.";
 		mes "Come to me whenever you're";
 		mes "short on ammo. Just bring me";

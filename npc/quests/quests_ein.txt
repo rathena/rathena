@@ -475,7 +475,7 @@ einbech,97,167,5	script	Cavitar	847,{
 // Uwe Kleine :: ein_anoz
 //============================================================
 einbroch,215,180,6	script	Uwe Kleine#ein	85,{
-	if (BaseClass == Job_Blacksmith) {
+	if (BaseFirst == Job_Blacksmith) {
 		if (ein_cook > 999) {
 			set .@ccc,ein_cook-1000;
 			if (.@ccc > 199) {

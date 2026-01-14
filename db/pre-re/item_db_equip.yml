@@ -17788,9 +17788,9 @@ Body:
     Script: |
       bonus bAllStats,1;
       bonus bUnbreakableArmor;
-      if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte)
+      if (BaseFirst == Job_Mage || BaseFirst == Job_Archer || BaseFirst == Job_Acolyte)
          bonus2 bResEff,Eff_Silence,5000;
-      else if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief)
+      else if (BaseFirst == Job_Swordman || BaseFirst == Job_Merchant || BaseFirst == Job_Thief)
          bonus2 bResEff,Eff_Stun,5000;
   - Id: 2358
     AegisName: Dress_Of_Angel
@@ -18433,9 +18433,9 @@ Body:
       bonus bMaxHP,(BaseLevel*7);
       bonus bMaxSP,(BaseLevel/2);
       autobonus2 "{ bonus bNoMagicDamage,100; }",10,2000,BF_MAGIC,"{ specialeffect2 EF_ENERGYCOAT; }";
-      if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte )
+      if (BaseFirst == Job_Mage || BaseFirst == Job_Archer || BaseFirst == Job_Acolyte )
          bonus bMdef,5;
-      else if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief )
+      else if (BaseFirst == Job_Swordman || BaseFirst == Job_Merchant || BaseFirst == Job_Thief )
          bonus bDef,3;
   - Id: 2387
     AegisName: Sprint_Mail
@@ -19104,9 +19104,9 @@ Body:
     Refineable: true
     Script: |
       bonus bUnbreakableShoes;
-      if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte)
+      if (BaseFirst == Job_Mage || BaseFirst == Job_Archer || BaseFirst == Job_Acolyte)
          bonus bMaxHP,(BaseLevel*5);
-      else if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief)
+      else if (BaseFirst == Job_Swordman || BaseFirst == Job_Merchant || BaseFirst == Job_Thief)
          bonus bMaxSP,(JobLevel*2);
   - Id: 2422
     AegisName: High_Fashion_Sandals
@@ -20196,9 +20196,9 @@ Body:
     Refineable: true
     Script: |
       bonus bUnbreakableGarment;
-      if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte)
+      if (BaseFirst == Job_Mage || BaseFirst == Job_Archer || BaseFirst == Job_Acolyte)
          bonus bFlee2,5+(getequiprefinerycnt(EQI_GARMENT)*2);
-      else if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief)
+      else if (BaseFirst == Job_Swordman || BaseFirst == Job_Merchant || BaseFirst == Job_Thief)
          bonus bShortWeaponDamageReturn,5+(getequiprefinerycnt(EQI_GARMENT)*2);
   - Id: 2525
     AegisName: Cape_Of_Ancient_Lord_
@@ -27572,7 +27572,7 @@ Body:
     Refineable: true
     View: 223
     Script: |
-      if (BaseClass == Job_Taekwon) {
+      if (BaseFirst == Job_Taekwon) {
          bonus bLuk,2;
          bonus bCritical,5;
       }
@@ -27645,7 +27645,7 @@ Body:
     Refineable: true
     View: 227
     Script: |
-      if (BaseClass == Job_Taekwon) {
+      if (BaseFirst == Job_Taekwon) {
          bonus bAgi,1;
          bonus bHPrecovRate,3;
       }
@@ -27664,7 +27664,7 @@ Body:
     Refineable: true
     View: 228
     Script: |
-      if (BaseClass == Job_Taekwon) {
+      if (BaseFirst == Job_Taekwon) {
          bonus bInt,1;
          bonus bSPrecovRate,3;
       }
@@ -27696,7 +27696,7 @@ Body:
     EquipLevelMin: 30
     View: 230
     Script: |
-      if (BaseClass == Job_Taekwon) {
+      if (BaseFirst == Job_Taekwon) {
          bonus bLuk,1;
          bonus bFlee2,2;
       }
@@ -27716,7 +27716,7 @@ Body:
     Refineable: true
     View: 231
     Script: |
-      if (BaseClass == Job_Taekwon) {
+      if (BaseFirst == Job_Taekwon) {
          bonus bDex,2;
          bonus bBaseAtk,2*getrefine();
          bonus3 bAddEff,Eff_Stun,1000,ATF_SHORT;
@@ -28562,7 +28562,7 @@ Body:
       bonus4 bAutoSpellWhenHit,"AL_ANGELUS",5,30,0;
       bonus4 bAutoSpellWhenHit,"HP_ASSUMPTIO",1,1,0;
       bonus2 bResEff,Eff_Stun,1000;
-      if (BaseClass == Job_Acolyte)
+      if (BaseFirst == Job_Acolyte)
          bonus4 bAutoSpellOnSkill,"AL_HEAL","PR_LEXAETERNA",1,1000;
   - Id: 5226
     AegisName: Mini_Propeller_
@@ -29315,11 +29315,11 @@ Body:
     View: 218
     Script: |
       bonus bInt,2;
-      if (BaseClass == Job_Mage)
+      if (BaseFirst == Job_Mage)
          bonus bMatkRate,(JobLevel/20);
-      if (BaseClass == Job_Acolyte)
+      if (BaseFirst == Job_Acolyte)
          bonus bUseSPrate,-(JobLevel/10);
-      if (BaseClass == Job_Archer)
+      if (BaseFirst == Job_Archer)
          bonus bMaxSP,(JobLevel*2);
   - Id: 5262
     AegisName: Gold_Tiara_
@@ -29336,7 +29336,7 @@ Body:
     Script: |
       bonus bStr,2;
       bonus bUnbreakableHelm;
-      if (readparam(bDex)<56 && (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief))
+      if (readparam(bDex)<56 && (BaseFirst == Job_Swordman || BaseFirst == Job_Merchant || BaseFirst == Job_Thief))
          bonus bDex,JobLevel/7;
   - Id: 5263
     AegisName: Ati_Atihan_Hat
@@ -35141,11 +35141,11 @@ Body:
     EquipLevelMin: 80
     View: 568
     Script: |
-      if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief || (BaseSecond == Job_Taekwon && Class!=Job_Soul_Linker))
+      if (BaseFirst == Job_Swordman || BaseFirst == Job_Merchant || BaseFirst == Job_Thief || (BaseSecond == Job_Taekwon && Class!=Job_Soul_Linker))
          bonus bStr,1;
-      else if (BaseClass == Job_Mage || BaseClass == Job_Acolyte || class == Job_Ninja || class == Job_Soul_Linker)
+      else if (BaseFirst == Job_Mage || BaseFirst == Job_Acolyte || class == Job_Ninja || class == Job_Soul_Linker)
          bonus bInt,1;
-      else if (BaseClass == Job_Archer || BaseClass == Job_Gunslinger)
+      else if (BaseFirst == Job_Archer || BaseFirst == Job_Gunslinger)
          bonus bDex,1;
       else if (BaseSecond == Job_Novice || BaseSecond == Job_SuperNovice) {
          bonus bMaxHP,80;

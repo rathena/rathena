@@ -3075,7 +3075,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				mes "my worst memories.";
 				next;
 				set ch_poison,1;
-				if (BaseClass == Job_Thief) {
+				if (BaseFirst == Job_Thief) {
 					mes "[Nagash Arses]";
 					mes "Ah, you look just like I did when";
 					mes "I was young. It seems you know";

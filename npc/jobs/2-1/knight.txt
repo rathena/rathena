@@ -57,7 +57,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 			mes "I hope you are living up to my expectations. We have vowed to be strong for our kingdom, even if death is upon us...";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "Welcome,";
 			mes "this is the";
 			mes "Prontera Chivalry.";
@@ -485,7 +485,7 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 			mes "After all, we are Knights.";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "Hey there,";
 			mes "little Novice.";
 			mes "Welcome to the";
@@ -694,7 +694,7 @@ prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 			mes "If you catch any of the new guys acting in a way unbecoming of a Knight, scold them for me please?";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "Oh?";
 			mes "What is a Novice";
 			mes "doing here?";
@@ -1066,7 +1066,7 @@ prt_in,79,94,4	script	Sir Windsor#knt	733,{
 	mes "[Sir Windsor]";
 	if (BaseSecond != Job_Swordman) {
 		if (BaseSecond == Job_Knight) mes "Protect.";
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "...Go play";
 			mes "outside.";
 		}
@@ -1467,7 +1467,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 			mes "the Prontera Chivalry~";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "Aww~";
 			mes "What a cute";
 			mes "little Novice!";
@@ -1808,7 +1808,7 @@ prt_in,70,99,6	script	Sir Edmond#knt	734,{
 			mes "any situation.";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "Trees with deep roots don't sway with the wind. The fact that powerful skills must be built on strong basics is immutable...";
 			next;
 			mes "[Sir Edmond]";
@@ -2086,7 +2086,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 				close;
 			}
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "Believe it";
 			mes "or not, I was";
 			mes "once a Novice";

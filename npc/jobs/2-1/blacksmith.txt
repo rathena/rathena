@@ -73,10 +73,10 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 	mes "and passion of our souls into";
 	mes "our craft. Our skills of melting metal into new weapons";
 	mes "and tools is truly a form of art!";
-	if (BaseClass >= Job_Thief) close;	// Custom expanded class check.
+	if (BaseFirst >= Job_Thief) close;	// Custom expanded class check.
 	next;
 
-	// Third class check - precedes other BaseClass dialogue.
+	// Third class check - precedes other BaseFirst dialogue.
 	if (Class >= Job_Rune_Knight && Class <= Job_Baby_Mechanic2) {
 		mes "[Altiregen]";
 		mes "You... look like a stranger. But somehow it seems that you're related to our guild. Haha~";
@@ -84,7 +84,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		close;
 	}
 
-	if (BaseClass == Job_Novice) {
+	if (BaseFirst == Job_Novice) {
 		mes "[Altiregen]";
 		if (Sex == SEX_FEMALE) {
 			mes "Oh~";
@@ -98,28 +98,28 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		mes "First, you must become a Merchant before you can become a Blacksmith. Go to the city of Alberta to learn the Merchant trade.";
 		close;
 	}
-	else if (BaseClass == Job_Swordman) {
+	else if (BaseFirst == Job_Swordman) {
 		mes "[Altiregen]";
 		mes "Oh, are you interested in having a weapon forged? I'm sorry to disappoint you, but I actually have a lot of business to attend to.";
 		close;
 	}
-	else if (BaseClass == Job_Archer) {
+	else if (BaseFirst == Job_Archer) {
 		mes "[Altiregen]";
 		mes "Oh...";
 		mes "There's not much we can offer you here. And you can't really help out around here unless you know how to make stuff...";
 		close;
 	}
-	else if (BaseClass == Job_Mage) {
+	else if (BaseFirst == Job_Mage) {
 		mes "[Altiregen]";
 		mes "Oh? What's a magic user doing here? I'm surprised. Usually this kind of rough work is beneath you intellectual types.";
 		close;
 	}
-	else if (BaseClass == Job_Acolyte) {
+	else if (BaseFirst == Job_Acolyte) {
 		mes "[Altiregen]";
 		mes "Oh! Am I correct in assuming you're a member of the Clergy? Would you please bless me before you leave!";
 		close;
 	}
-	else if (BaseClass == Job_Thief) {
+	else if (BaseFirst == Job_Thief) {
 		mes "[Altiregen]";
 		mes "I'm sorry...";
 		mes "But there really isn't anything for you to steal here. Well, there are the Daggers we keep in the back, but...";

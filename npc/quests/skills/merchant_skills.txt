@@ -16,7 +16,7 @@
 //============================================================
 
 alberta,83,96,5	script	Necko	98,7,7,{
-	if (BaseClass == Job_Merchant) {
+	if (BaseFirst == Job_Merchant) {
 		if (getskilllv("MC_LOUD") == 1) {
 			mes "[Necko]";
 			mes "I'm sorry. Necko's store is...";
@@ -180,7 +180,7 @@ OnTouch_:
 }
 
 alberta,119,221,6	script	Charlron	107,{
-	if (BaseClass == Job_Merchant) {
+	if (BaseFirst == Job_Merchant) {
 		if (getskilllv("MC_CHANGECART") == 1) {
 			mes "[Charlron]";
 			mes "Mmm? I was wondering who was making all";
@@ -333,7 +333,7 @@ alberta,119,221,6	script	Charlron	107,{
 }
 
 -	script	::Gershaun_alberta	-1,{
-	if (BaseClass == Job_Merchant) {
+	if (BaseFirst == Job_Merchant) {
 		if (getskilllv("MC_CARTREVOLUTION") == 1) {
 			mes "[Gershaun]";
 			mes "Ah, long time no see!";

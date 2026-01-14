@@ -7675,7 +7675,7 @@ gef_tower,118,36,4	script	Annoyed Man	64,{
 		close;
 	}
 	else if (sign_q == 72) {
-		if (BaseClass == Job_Mage) {
+		if (BaseFirst == Job_Mage) {
 			mes "Wah~";
 			mes "Why the hell did he even go there...!";
 		}

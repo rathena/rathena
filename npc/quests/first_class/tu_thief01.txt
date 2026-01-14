@@ -36,7 +36,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	4_M_02,{
 		mes "I might add--come and talk to me. I'll show you the ropes!";
 		close;
 	}
-	else if (BaseClass == Job_Thief && Upper != 2) {
+	else if (BaseFirst == Job_Thief && Upper != 2) {
 		if (Class != Job_Thief && tu_thief01 < 8) {
 			mes "Whaaaat are you";
 			mes "doin' here? There's";
@@ -588,7 +588,7 @@ moc_ruins,66,164,4	script	Thief Trainer#T	4_M_02,{
 			close;
 		}
 	}
-	else if (BaseClass == Job_Mage && Upper != 2){
+	else if (BaseFirst == Job_Mage && Upper != 2){
 		if(tu_magician01 < 7){
 			mes "[Yierhan]";
 			mes "Heya.";

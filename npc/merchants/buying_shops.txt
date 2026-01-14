@@ -107,7 +107,7 @@ alberta_in,58,52,4	script	Purchasing Team#Buying	59,{
 		close;
 	}
 	mes "[Mr. Hugh]";
-	if (BaseClass == Job_Merchant && getskilllv("MC_VENDING") >= 1) {
+	if (BaseFirst == Job_Merchant && getskilllv("MC_VENDING") >= 1) {
 		if (getskilllv("ALL_BUYING_STORE") == 1) {
 			mes "I'm Hugh from the Purchasing Team.";
 			mes "How may I help you today?";

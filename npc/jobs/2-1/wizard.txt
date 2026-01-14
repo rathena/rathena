@@ -53,7 +53,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 				mes "Well, if you fix me up with a cute guy... I'd appreciate it...hohoho!.";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "[Wizard Guildsman]";
 			mes "Oh my goodness, it's a novice~ ain't you the cutest little thing.";
 			mes "By the way honey, this place is for Wizards.";
@@ -482,7 +482,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			mes "Don't come any closer, just leave!";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "[Raulel]";
 			mes "Why did a little one like you come here?!";
 			mes "Get lost! ~Hahahahaha";
@@ -1672,7 +1672,7 @@ gef_tower,107,36,4	script	White Dog#wiz	81,{
 			cutin "job_wizard_maria01",255;
 			end;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			cutin "job_wizard_maria01",2;
 			mes "[Dog]";
 			mes "What? Kiddo!";

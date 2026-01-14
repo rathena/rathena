@@ -51,7 +51,7 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 			mes "Everyone is hoping that the biotechnological studies will yield positive results. Speaking of which, I wonder how the Alchemists working on artificial life are doing...";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "Welcome to the";
 			mes "Alchemist Union.";
 			mes "We are recruiting";
@@ -343,7 +343,7 @@ alde_alche,175,107,3	script	Fastidious Alchemist#am	749,{
 			mes "Alchemist Union!";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "Heeheehee";
 			mes "keheheh~!";
 			mes "How cute, you've come";
@@ -1616,7 +1616,7 @@ alde_alche,101,184,4	script	Master Alchemist#am	122,{
 			mes "If you discover something new,";
 			mes "come and tell us. Don't forget that we are all working together to unlock the mysteries of science!";
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "Hm...";
 			mes "A Novice?";
 			mes "You shouldn't be";

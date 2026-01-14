@@ -13,7 +13,7 @@
 //= 1.4a Added 'npcskill' command. [Euphy]
 //= 1.4b Added 'disable_items' command. [Euphy]
 //= 1.5 Added GM management function. [Euphy]
-//= 1.6 Kagerou/Oboro support (Class -> BaseClass) [Euphy]
+//= 1.6 Kagerou/Oboro support (Class -> BaseFirst) [Euphy]
 //= 2.0 Updated Instructor Ur's quests. [Capuche]
 //= 2.1 Updated Blacksmith Thorn and Weapons Expert NPC. [Capuche]
 //= 2.2 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
@@ -3918,7 +3918,7 @@ moc_para01,111,83,3	script	Blacksmith Thorn#2nd10	2_M_OLDBLSMITH,{
 					13066,"Eden Group Dagger III","Dagger, MATK +80, ATK 165",
 					1289,"Eden Group Katar I","Katar, ATK 155";
 			}
-			else if (BaseSecond == Job_Rogue || BaseClass == Job_Novice)
+			else if (BaseSecond == Job_Rogue || BaseFirst == Job_Novice)
 				getitem 13066,1;// P.Dagger III
 			else if (BaseSecond == Job_Alchemist || BaseSecond == Job_Blacksmith) {
 				callsub L_Select,"Your options are Mace, Saber and Axe.",

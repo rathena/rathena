@@ -246,7 +246,7 @@ OnMyMobDead:
 				callsub( S_Warp, "Prontera", "prontera",278,211 );
 		case 3:
 			mes "[Kafra Employee]";
-			if (BaseClass != Job_Merchant) {
+			if (BaseFirst != Job_Merchant) {
 				mes "I'm sorry, but the";
 				mes "Pushcart rental service";
 				mes "is only available to Merchants,";

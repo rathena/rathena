@@ -399,7 +399,7 @@ comodo,204,148,7	script	Devellin	4_F_01,{
 }
 
 comodo,210,154,2	script	Suspicious Guy#cmd	2_M_THIEFMASTER,{
-	if (BaseClass == Job_Thief){
+	if (BaseFirst == Job_Thief){
 		mes "[Cain]";
 		mes "Heeeey...";
 		mes "It seems we share the same line of work, you and me. Heh heh, lemme give you a hot tip.";

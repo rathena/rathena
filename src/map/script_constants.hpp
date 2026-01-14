@@ -598,8 +598,9 @@
 	export_parameter("Ap",SP_AP);
 	export_parameter("MaxAp",SP_MAXAP);
 	export_deprecated_parameter2("BaseJob",SP_BASESECOND,"BaseSecond");
-	export_parameter("BaseClass",SP_BASEFIRST);// Update name in future update for item/scripts. (Rytech)
+	export_deprecated_parameter2("BaseClass",SP_BASEFIRST,"BaseFirst");
 	export_parameter("BaseSecond", SP_BASESECOND);
+	export_parameter("BaseFirst", SP_BASEFIRST);
 	export_parameter("killerrid",SP_KILLERRID);
 	export_parameter("killedrid",SP_KILLEDRID);
 	export_parameter("killedgid",SP_KILLEDGID);

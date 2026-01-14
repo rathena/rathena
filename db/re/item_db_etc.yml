@@ -4918,7 +4918,7 @@ Body:
     Script: |
       bonus bFlee,2;
       bonus bCritical,7;
-      if (BaseClass == Job_Swordman)
+      if (BaseFirst == Job_Swordman)
          bonus3 bAutoSpell,"KN_BOWLINGBASH",5,10;
   - Id: 4164
     AegisName: Gullinbursti_Card
@@ -5242,7 +5242,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bInt,1;
-      if (BaseClass == Job_Acolyte) {
+      if (BaseFirst == Job_Acolyte) {
          bonus bInt,1;
          bonus bMdef,1;
       }
@@ -5593,7 +5593,7 @@ Body:
     Script: |
       if (!isequipped(4172,4257,4230,4272))
          bonus3 bAutoSpell,"RG_INTIMIDATE",1,20;
-      if (BaseClass == Job_Thief)
+      if (BaseFirst == Job_Thief)
          bonus bFlee,20;
   - Id: 4211
     AegisName: Vocal_Card
@@ -5922,7 +5922,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bLuk,3;
-      if (BaseClass == Job_Merchant)
+      if (BaseFirst == Job_Merchant)
          bonus bUnbreakableArmor;
   - Id: 4234
     AegisName: Anolian_Card
@@ -6265,7 +6265,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bAgi,1;
-      if (BaseClass == Job_Thief)
+      if (BaseFirst == Job_Thief)
          bonus bFlee2,5;
   - Id: 4258
     AegisName: Wicked_Nymph_Card
@@ -6625,7 +6625,7 @@ Body:
     Script: |
       bonus bBaseAtk,30;
       bonus bSPDrainValue,-1;
-      if (BaseClass == Job_Merchant)
+      if (BaseFirst == Job_Merchant)
          bonus bUnbreakableWeapon;
   - Id: 4282
     AegisName: Tengu_Card
@@ -6652,7 +6652,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpell,"MO_CALLSPIRITS",5,2+18*(BaseClass == Job_Acolyte);
+      bonus3 bAutoSpell,"MO_CALLSPIRITS",5,2+18*(BaseFirst == Job_Acolyte);
   - Id: 4284
     AegisName: Chepet_Card
     Name: Chepet Card
@@ -7067,7 +7067,7 @@ Body:
     Script: |
       bonus bFlee,3;
       bonus bHit,10;
-      if (BaseClass == Job_Acolyte) {
+      if (BaseFirst == Job_Acolyte) {
          bonus2 bCriticalAddRace,RC_Undead,9;
          bonus2 bCriticalAddRace,RC_Demon,9;
       }
@@ -7138,7 +7138,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bCritAtkRate,15;
-      if (BaseClass == Job_Thief)
+      if (BaseFirst == Job_Thief)
          bonus bCritical,4;
   - Id: 4318
     AegisName: Knight_Windstorm_Card
@@ -7339,7 +7339,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bCritical,3;
-      if (BaseClass == Job_Swordman)
+      if (BaseFirst == Job_Swordman)
          bonus bFlee2,3;
   - Id: 4332
     AegisName: Waste_Stove_Card
@@ -8382,11 +8382,11 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief) {
+      if (BaseFirst == Job_Swordman || BaseFirst == Job_Merchant || BaseFirst == Job_Thief) {
          bonus bStr,2;
          bonus bMaxHPrate,5;
       }
-      if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte) {
+      if (BaseFirst == Job_Mage || BaseFirst == Job_Archer || BaseFirst == Job_Acolyte) {
          bonus bInt,2;
          bonus bMaxSPrate,5;
       }
@@ -8431,7 +8431,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bMagicDamageReturn,min(10,getrefine())*2;
-      if (BaseClass == Job_Mage)
+      if (BaseFirst == Job_Mage)
          bonus bMdef,3;
   - Id: 4406
     AegisName: Skeggiold_Card
@@ -8491,7 +8491,7 @@ Body:
     Script: |
       bonus bMatkRate,5;
       bonus bDef,-10;
-      if (BaseClass == Job_Mage)
+      if (BaseFirst == Job_Mage)
          bonus bMaxSP,100;
   - Id: 4410
     AegisName: Echio_Card
@@ -8506,7 +8506,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bBaseAtk,15;
-      if (BaseClass == Job_Swordman)
+      if (BaseFirst == Job_Swordman)
          bonus bMaxHP,500;
   - Id: 4411
     AegisName: Vanberk_Card
@@ -8931,7 +8931,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (BaseClass == Job_Mage) {
+      if (BaseFirst == Job_Mage) {
          bonus bMaxSP,100;
          bonus bMaxHP,-100;
          bonus2 bSkillAtk,"MG_NAPALMBEAT",20;
@@ -9385,7 +9385,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bStr,2;
-      if (BaseClass == Job_Merchant) {
+      if (BaseFirst == Job_Merchant) {
          bonus2 bSkillAtk,"MC_CARTREVOLUTION",50;
          bonus2 bSkillUseSP,"MC_CARTREVOLUTION",-12;
       }
@@ -9959,7 +9959,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bDex,2;
-      if (BaseClass == Job_Archer) {
+      if (BaseFirst == Job_Archer) {
          bonus bDex,getrefine()/3;
       }
   - Id: 4507
@@ -10050,7 +10050,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bHealPower,3;
-      if (BaseClass == Job_Acolyte) {
+      if (BaseFirst == Job_Acolyte) {
          bonus bHealPower,getrefine()/2;
       }
   - Id: 4513
@@ -10068,7 +10068,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bCritAtkRate,2;
-      if (BaseClass == Job_Thief) {
+      if (BaseFirst == Job_Thief) {
          bonus bCritAtkRate,getrefine()/2;
       }
   - Id: 4514
@@ -10126,7 +10126,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bInt,2;
-      if (BaseClass == Job_Mage) {
+      if (BaseFirst == Job_Mage) {
          bonus bInt,getrefine()/3;
       }
   - Id: 4518
@@ -10225,7 +10225,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bStr,2;
-      if (BaseClass == Job_Swordman)
+      if (BaseFirst == Job_Swordman)
          bonus bStr,getrefine()/3;
   - Id: 4525
     AegisName: Kraken_Card
@@ -10322,7 +10322,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bLuk,2;
-      if (BaseClass == Job_Merchant)
+      if (BaseFirst == Job_Merchant)
          bonus bLuk,getrefine()/3;
   - Id: 4531
     AegisName: Red_Eruma_Card

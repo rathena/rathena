@@ -605,7 +605,7 @@ MaxWeight   - Maximum weight the character can carry.
 Sex         - 0 if female, 1 if male.
 Class       - Character's job.
 Upper       - 0 if the character is a normal class, 1 if advanced, 2 if baby.
-BaseClass   - The character's 1-1 'normal' job, regardless of Upper value.
+BaseFirst   - The character's 1-1 'normal' job, regardless of Upper value.
               For example, this will return Job_Acolyte for Acolyte, Priest/Monk,
               High Priest/Champion, and Arch Bishop/Sura. If the character has not
               reached a 1-1 class, it will return Job_Novice.
@@ -4940,7 +4940,7 @@ raise the specified stat from (current value - <val>) to current value.
 Return true if player (decided by job) can enter the map, false otherwise.
 
 For optional 'JobID', see constant of Job_*, or use player's Class, BaseSecond,
-and BaseClass. If no player is attached, this param must have a value.
+and BaseFirst. If no player is attached, this param must have a value.
 
 See also db/[pre-]re/job_noenter_map.txt
 

@@ -4781,7 +4781,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "out with their problems.";
 					close;
 				}
-				else if (BaseClass == Job_Swordman) {
+				else if (BaseFirst == Job_Swordman) {
 					mes "[Ibrahim]";
 					mes "I've got a few buddies";
 					mes "in the Swordman Association.";
@@ -4790,7 +4790,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "for someone smart and strong.";
 					close;
 				}
-				else if (BaseClass == Job_Crusader) {
+				else if (BaseFirst == Job_Crusader) {
 					mes "[Ibrahim]";
 					mes "Heh, so you really";
 					mes "are one of those holy";
@@ -4798,7 +4798,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "have met you for myself.";
 					close;
 				}
-				else if (BaseClass == Job_Acolyte) {
+				else if (BaseFirst == Job_Acolyte) {
 					mes "[Ibrahim]";
 					mes "I didn't think a member";
 					mes "of the clergy would be so";
@@ -4806,7 +4806,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "reputation precedes you.";
 					close;
 				}
-				else if (BaseClass == Job_Merchant) {
+				else if (BaseFirst == Job_Merchant) {
 					mes "[Ibrahim]";
 					mes "Hey, if I didn't know";
 					mes "your name, how could I call";
@@ -4814,14 +4814,14 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "an example for us all~";
 					close;
 				}
-				else if (BaseClass == Job_Blacksmith) {
+				else if (BaseFirst == Job_Blacksmith) {
 					mes "[Ibrahim]";
 					mes "We have a mutual friend,";
 					mes "you know that? Aragham";
 					mes "really spoke highly of you.";
 					close;
 				}
-				else if (BaseClass == Job_Alchemist) {
+				else if (BaseFirst == Job_Alchemist) {
 					mes "[Ibrahim]";
 					mes "I know a guy who knows";
 					mes "a guy in the Alchemist Guild.";
@@ -4829,7 +4829,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "like you're pretty hot stuff.";
 					close;
 				}
-				else if (BaseClass == Job_Magician) {
+				else if (BaseFirst == Job_Magician) {
 					mes "[Ibrahim]";
 					mes "Magic is totally beyond";
 					mes "my understanding, but";
@@ -4839,7 +4839,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "good at that stuff.";
 					close;
 				}
-				else if (BaseClass == Job_Thief) {
+				else if (BaseFirst == Job_Thief) {
 					mes "[Ibrahim]";
 					mes "Heh, it sounds like almost";
 					mes "anyone who's anyone in";
@@ -4848,7 +4848,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "acquaintance~";
 					close;
 				}
-				else if (BaseClass == Job_Archer) {
+				else if (BaseFirst == Job_Archer) {
 					mes "[Ibrahim]";
 					mes "Anyone who's used";
 					mes "a bow seems to drop";
@@ -4858,14 +4858,14 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					mes "actually talking to you~";
 					close;
 				}
-				else if (BaseClass == Job_Bard) {
+				else if (BaseFirst == Job_Bard) {
 					mes "[Ibrahim]";
 					mes "Is it really true?";
 					mes "I hear you sing";
 					mes "like an angel...";
 					close;
 				}
-				else if (BaseClass == Job_Dancer) {
+				else if (BaseFirst == Job_Dancer) {
 					mes "[Ibrahim]";
 					mes "Is it really true?";
 					mes "I hear you dance";
@@ -6065,7 +6065,7 @@ in_rogue,366,46,3	script	Rogue Investigator	828,{
 		mes "you'll find anything at all.";
 		close;
 	}
-	else if ((diamond_edq == 22) && (BaseClass == Job_Thief)) {
+	else if ((diamond_edq == 22) && (BaseFirst == Job_Thief)) {
 		mes "[Investigator]";
 		mes "Hey, how's it going?";
 		mes "You ever consider joining";

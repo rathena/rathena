@@ -663,7 +663,7 @@ function	script	F_getpositionname	{
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_GetPlatinumSkills	{
 	skill "NV_FIRSTAID",1,SKILL_PERM;
-	switch (BaseClass) {
+	switch (BaseFirst) {
 	case Job_Novice:
 		if (Class != Job_Super_Novice)
 			skill "NV_TRICKDEAD",1,SKILL_PERM;

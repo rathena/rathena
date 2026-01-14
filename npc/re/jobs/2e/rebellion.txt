@@ -51,7 +51,7 @@ OnTouch:
 }
 
 einbroch,54,97,3	script	Bouncer	4_M_REBELLION,{
-	if (BaseClass != Job_Gunslinger) {
+	if (BaseFirst != Job_Gunslinger) {
 		mes "[Bouncer]";
 		mes "No loitering around the venue.";
 		close;

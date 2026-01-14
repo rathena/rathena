@@ -18,7 +18,7 @@
 //============================================================
 
 -	script	::KnightDeThomas	98,4,4,{
-	if ((BaseClass == Job_Swordman) && (JobLevel >= 35 || (BaseSecond == Job_Knight || BaseSecond == Job_Crusader))) {
+	if ((BaseFirst == Job_Swordman) && (JobLevel >= 35 || (BaseSecond == Job_Knight || BaseSecond == Job_Crusader))) {
 		if (getskilllv("SM_MOVINGRECOVERY") == 1) {
 			mes "[De Thomas]";
 			mes "Oh, it's you?";
@@ -91,7 +91,7 @@
 	end;
 
 OnTouch:
-	if ((BaseClass == Job_Swordman) && (JobLevel >= 35 || (BaseSecond == Job_Knight || BaseSecond == Job_Crusader))) {
+	if ((BaseFirst == Job_Swordman) && (JobLevel >= 35 || (BaseSecond == Job_Knight || BaseSecond == Job_Crusader))) {
 		mes "[De Thomas]";
 		mes "Oh, no! You must have been hurt! Are you ok?";
 		mes "You must have fought hard to get such serious injuries..";
@@ -150,7 +150,7 @@ OnTouch:
 }
 
 prt_in,75,88,5	script	Leon Von Frich	85,3,3,{
-	if ((BaseClass == Job_Swordman) && (JobLevel >= 25 || (BaseSecond == Job_Knight || BaseSecond == Job_Crusader))) {
+	if ((BaseFirst == Job_Swordman) && (JobLevel >= 25 || (BaseSecond == Job_Knight || BaseSecond == Job_Crusader))) {
 		if (getskilllv("SM_FATALBLOW") == 1) {
 			mes "[Leon]";
 			mes "Eh?";
@@ -303,7 +303,7 @@ OnTouch_:
 }
 
 prt_in,94,57,3	script	Juan	85,4,4,{
-	if (BaseClass == Job_Swordman) {
+	if (BaseFirst == Job_Swordman) {
 		if (getskilllv("SM_AUTOBERSERK") == 1) {
 			mes "[Juan]";
 			mes "Mmm? Long time no see!";

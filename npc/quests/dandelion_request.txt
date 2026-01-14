@@ -26,7 +26,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 		mes "to store some of your items.^000000";
 		close;
 	}
-	if(!(BaseLevel > 59) || !(BaseSecond == Job_Novice || BaseSecond == Job_Super_Novice || BaseClass == Job_Swordman))
+	if(!(BaseLevel > 59) || !(BaseSecond == Job_Novice || BaseSecond == Job_Super_Novice || BaseFirst == Job_Swordman))
 	{
 		mes "[Guildsman]";
 		mes "There are rumors";
@@ -467,7 +467,7 @@ prontera,237,313,3	script	Nun#moc	79,3,3,{
 		mes "united in our humanity.";
 		close;
 	}
-	if(!(BaseClass == Job_Acolyte))
+	if(!(BaseFirst == Job_Acolyte))
 	{
 		mes "[Nun]";
 		mes "Ah, hello. Would you ask";
@@ -591,7 +591,7 @@ OnTouch:
 	{
 		if(!mao_request)
 		{
-			if(BaseClass == Job_Acolyte)
+			if(BaseFirst == Job_Acolyte)
 			{
 				mes "[Nun]";
 				mes "Oh, " + strcharinfo(0) + "!";
@@ -660,7 +660,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 		mes "something major going on...";
 		close;
 	}
-	if(!(Class == Job_Soul_Linker || BaseClass == Job_Merchant))
+	if(!(Class == Job_Soul_Linker || BaseFirst == Job_Merchant))
 	{
 		mes "[Guildsman]";
 		mes "Goodness, there's so";
@@ -1186,7 +1186,7 @@ geffen,123,109,3	script	Academy Staff	742,3,3,{
 		mes "to store some of your items.^000000";
 		close;
 	}
-	if(!(BaseLevel > 59) || !(BaseClass == Job_Mage))
+	if(!(BaseLevel > 59) || !(BaseFirst == Job_Mage))
 	{
 		mes "[Academy Staff]";
 		mes "Are you headed to the";
@@ -1295,7 +1295,7 @@ OnTouch:
 	{
 		if(!mao_request)
 		{
-			if(BaseClass == Job_Mage)
+			if(BaseFirst == Job_Mage)
 			{
 				mes "[Academy Staff]";
 				mes "Whoa, would you wait";
@@ -1364,7 +1364,7 @@ morocc,155,56,3	script	Miya	93,3,3,{
 		mes "away from strangers, okay?";
 		close;
 	}
-	if(!(Class == Job_Star_Gladiator || BaseClass == Job_Thief))
+	if(!(Class == Job_Star_Gladiator || BaseFirst == Job_Thief))
 	{
 		mes "[Girl]";
 		mes "...............................";
@@ -1645,7 +1645,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 		mes "children there...";
 		close;
 	}
-	if(!(Class == Job_Taekwon) || !(BaseClass == Job_Archer))
+	if(!(Class == Job_Taekwon) || !(BaseFirst == Job_Archer))
 	{
 		mes "[Guildsman]";
 		mes "Excuse me, but if you happen";

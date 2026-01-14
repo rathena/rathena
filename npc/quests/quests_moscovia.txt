@@ -6192,7 +6192,7 @@ OnTouch:
 		next;
 		while(1) {
 			if(select("Look for it.:I will try next time.") == 1) {
-				if (BaseClass == Job_Thief) {
+				if (BaseFirst == Job_Thief) {
 					mes "["+strcharinfo(0)+"]";
 					mes "Here it is.";
 					mes "That was easy to find.";
@@ -7315,7 +7315,7 @@ moscovia,178,127,0	script	The Blacksmith#rus06	1_M_SMITH,{
 			delitem 999,25;// Steel
 			rhea_rus_main = 8;
 			// changequest 8138,8139;
-			if (BaseClass == Job_Merchant || BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Archer)
+			if (BaseFirst == Job_Merchant || BaseFirst == Job_Swordman || BaseFirst == Job_Thief || BaseFirst == Job_Archer)
 				getitem 2429,1;// Iron_Boots01
 			else
 				getitem 2430,1;// Iron_Boots02
@@ -9468,7 +9468,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 		mes "[Baba Yaga]";
 		mes "Hmmm, you look energetic and strong. Ok, while I make the 'Golden Key', you must first do a favor for me!";
 		next;
-		if (BaseClass == Job_Archer) {
+		if (BaseFirst == Job_Archer) {
 			mes "[Baba Yaga]";
 			mes "My cow has run away. Find her and cast a Return Spell on her. The spell is '^ff0000Good feed is orange-flavored^000000'. You sould remember it.";
 			next;
@@ -9477,7 +9477,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 			rhea_rus_main = 11;
 			// changequest 8158,8159;
 			close;
-		} else if (BaseClass == Job_Acolyte) {
+		} else if (BaseFirst == Job_Acolyte) {
 			mes "[Baba Yaga]";
 			mes "Behind my house, there is noisy coffin. It has been so nosiy recently that I can't sleep. Silence it.";
 			next;
@@ -9486,7 +9486,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 			rhea_rus_main = 16;
 			// changequest 8158,8161;
 			close;
-		} else if (BaseClass == Job_Thief) {
+		} else if (BaseFirst == Job_Thief) {
 			mes "[Baba Yaga]";
 			mes "Please find my silver spoons. Those bad pirates stole them. I can feel them around the wrecked ship. Bring them to me.";
 			next;
@@ -9495,7 +9495,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 			rhea_rus_main = 21;
 			// changequest 8158,8163;
 			close;
-		} else if (BaseClass == Job_Mage) {
+		} else if (BaseFirst == Job_Mage) {
 			mes "[Baba Yaga]";
 			mes "Buy me a magic book. It is published by Momotaro in Amatsu. Go there and buy it for me.";
 			next;
@@ -9504,7 +9504,7 @@ mosk_dun02,48,214,5	script	Baba Yaga#rus32	4_F_BABAYAGA,{
 			rhea_rus_main = 26;
 			// changequest 8158,8169;
 			close;
-		} else if (BaseClass == Job_Swordman) {
+		} else if (BaseFirst == Job_Swordman) {
 			mes "[Baba Yaga]";
 			mes "Can you see a jar next to the cabin? There is a House ghost living in there. Drive him out of there. He irritates me a lot.";
 			next;

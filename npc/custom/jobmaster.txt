@@ -150,9 +150,9 @@ function	Job_Options	{
 	.@first_eac = .@eac&EAJ_FIRSTMASK;
 	.@second_eac = .@eac&EAJ_SECONDMASK;
 	// Note: These are already set in pc.cpp
-	// BaseClass = roclass(.@eac&EAJ_FIRSTMASK) which is the players First Class
+	// BaseFirst = roclass(.@eac&EAJ_FIRSTMASK) which is the players First Class
 	// BaseSecond = roclass(.@eac&EAJ_SECONDMASK) which is the players Second Class
-	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseSecond ("+BaseSecond+")";
+	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseFirst ("+BaseFirst+"), BaseSecond ("+BaseSecond+")";
 		
 	// From here on the jobmaster checks the current class
 	// and fills the array `.@job_opt` with possible
@@ -475,7 +475,7 @@ function	Get_Job_Equip	{
 	} else {
 		// Neither Second or Third Cls
 		// => First Cls or not covered by the switch
-		switch(BaseClass) {
+		switch(BaseFirst) {
 			// First Class
 			case Job_Swordman:
 				getitem 1108,1;	break;	//	Blade [4]

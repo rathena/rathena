@@ -293,7 +293,7 @@
 	mes "Which one do you think is better? The critical damage skill, ^FF2400Bash^000000, or the Splash damage skill, ^EE0000Magnum Break^000000?";
 	next;
 	if (select("Bash:Magnum Break") == 1)  {
-		if (BaseClass == Job_Swordman) {
+		if (BaseFirst == Job_Swordman) {
 			mes "[Red]";
 			mes "Hahahaha!!! I knew you'd see things my way!! You ARE a great guy!! Undoubtedly, only ^FF2400Bash^000000 suits a Swordman. Please tell that to this BONEHEAD over here~ Hahaha!";
 			next;
@@ -305,7 +305,7 @@
 		mes "Hahahaha!! See!? Someone who pursues a different job agrees with me~! You really are a great guy! Hahaha!! Undoubtedly, only ^FF2400Bash^000000 suits a Swordman. Please tell that to this NIMROD over here~ Hahaha!";
 		close;
 	}
-	if (BaseClass == Job_Swordman) {
+	if (BaseFirst == Job_Swordman) {
 		mes "[Cebalis]";
 		mes "Alright!! ^EE0000Magnum Break^000000 is the BEST!! Now you're talking~!! You know the stuff~ HaHaHa!";
 		next;
@@ -366,7 +366,7 @@
 	mes "Which one do you think is better? The critical damage skill, ^FF2400Bash^000000, or the Splash damage skill, ^EE0000Magnum Break^000000?";
 	next;
 	if (select("Bash:Magnum Break") == 1) {
-		if (BaseClass == Job_Swordman) {
+		if (BaseFirst == Job_Swordman) {
 			mes "[Red]";
 			mes "Hahahaha!!! I knew you'd see things my way!! You ARE a great guy!! Without a doubt, only ^FF2400Bash^000000 suits a Swordman. Please tell that to FUNBOY over here!! Hahaha.";
 			next;
@@ -382,7 +382,7 @@
 		mes "Without a doubt, only ^FF2400Bash^000000 suits a Swordman. Please tell that to this MORON over here!! Hahaha~";
 		close;
 	}
-	if (BaseClass == Job_Swordman) {
+	if (BaseFirst == Job_Swordman) {
 		mes "[Cebalis]";
 		mes " Alright!! ^EE0000Magnum Break^000000 is the BEST!! Now you're talking~!! You know your stuff, kid. HaHaHa~!";
 		next;

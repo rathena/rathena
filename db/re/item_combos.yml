@@ -591,7 +591,7 @@ Body:
           - Croce_Staff    # 1647
           - DVAngelNurseCap    # 5968
     Script: |
-      if (BaseClass == Job_Acolyte) {
+      if (BaseFirst == Job_Acolyte) {
          bonus bHealPower,getequiprefinerycnt(EQI_HAND_R)*4;
       }
   - Combos:
@@ -1151,7 +1151,7 @@ Body:
       bonus bStr,2;
       bonus bDef,5;
       bonus bMdef,5;
-      if (BaseClass == Job_Swordman)
+      if (BaseFirst == Job_Swordman)
          bonus bDef,6;
   - Combos:
       - Combo:
@@ -4525,7 +4525,7 @@ Body:
       bonus bAspdRate,5;
       bonus bSpeedRate,25;
       bonus bSPDrainValue,1;
-      if (BaseClass == Job_Thief)
+      if (BaseFirst == Job_Thief)
          bonus bNoGemStone;
   - Combos:
       - Combo:
@@ -4539,7 +4539,7 @@ Body:
       bonus bDex,3;
       bonus bLongAtkRate,20;
       bonus bPerfectHitAddRate,20;
-      if (BaseClass == Job_Archer) {
+      if (BaseFirst == Job_Archer) {
          bonus2 bExpAddRace,RC_Brute,5;
          bonus2 bComaRace,RC_Brute,100;
          bonus2 bComaRace,RC_Player_Doram,100;
@@ -4569,7 +4569,7 @@ Body:
       bonus bVit,10;
       bonus bVariableCastrate,-10;
       bonus bUseSPrate,-10;
-      if (BaseClass == Job_Acolyte) {
+      if (BaseFirst == Job_Acolyte) {
          bonus2 bExpAddRace,RC_Undead,5;
          bonus2 bExpAddRace,RC_Demon,5;
          bonus2 bSubRace,RC_Undead,30;
@@ -4602,7 +4602,7 @@ Body:
       bonus bLuk,10;
       bonus bSPDrainValue,2;
       bonus2 bSkillAtk,"MC_MAMMONITE",20;
-      if (BaseClass == Job_Merchant) {
+      if (BaseFirst == Job_Merchant) {
          bonus2 bAddMonsterDropItem,617,5;
          bonus bMagicDamageReturn,20;
       }
@@ -4621,7 +4621,7 @@ Body:
       bonus2 bSkillAtk,"MG_COLDBOLT",10;
       bonus2 bSkillAtk,"MG_FIREBOLT",10;
       bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",10;
-      if (BaseClass == Job_Mage) {
+      if (BaseFirst == Job_Mage) {
          bonus bMatkRate,3;
          bonus bVariableCastrate,-15;
       }
@@ -4690,7 +4690,7 @@ Body:
       bonus bHPrecovRate,50;
       bonus3 bAutoSpell,"BS_WEAPONPERFECT",1,3;
       bonus2 bAddMonsterDropItem,501,500;
-      if (BaseClass == Job_Swordman)
+      if (BaseFirst == Job_Swordman)
          bonus2 bAddItemGroupHealRate,IG_Potion,50;
   - Combos:
       - Combo:
@@ -4941,7 +4941,7 @@ Body:
           - FlyingGalapago    # 5967
     Script: |
       bonus bInt,1;
-      bonus bCritAtkRate,5 + (BaseClass == Job_Archer ? 15 : 0);
+      bonus bCritAtkRate,5 + (BaseFirst == Job_Archer ? 15 : 0);
   - Combos:
       - Combo:
           - Novice_Poring_Card    # 4545
@@ -12256,20 +12256,20 @@ Body:
       .@r1 = getequiprefinerycnt(EQI_SHADOW_ARMOR);
       .@r2 = getequiprefinerycnt(EQI_SHADOW_SHIELD);
       if ((.@r1+.@r2) >= 17) {
-         if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseSecond != Job_Soul_Linker)) {
+         if (BaseFirst == Job_Swordman || BaseFirst == Job_Thief || (BaseFirst == Job_Taekwon && BaseSecond != Job_Soul_Linker)) {
             bonus bBaseAtk,15;
             bonus bAspd,1;
          }
-         else if (BaseClass == Job_Merchant || BaseClass == Job_Archer || BaseClass == Job_Gunslinger) {
+         else if (BaseFirst == Job_Merchant || BaseFirst == Job_Archer || BaseFirst == Job_Gunslinger) {
             bonus bFlee,15;
             bonus bLongAtkRate,3;
          }
-         else if (BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Ninja || BaseSecond == Job_Soul_Linker) {
+         else if (BaseFirst == Job_Mage || BaseFirst == Job_Acolyte || BaseFirst == Job_Ninja || BaseSecond == Job_Soul_Linker) {
             bonus bMatk,15;
             bonus bMaxSPrate,2;
             bonus bHealPower,3;
          }
-         else if (BaseClass == Job_Novice || BaseSecond == Job_Summoner) {
+         else if (BaseFirst == Job_Novice || BaseSecond == Job_Summoner) {
             bonus bAspdRate,5;
             bonus bMaxHP,1000;
             bonus bVariableCastrate,-5;
@@ -19875,7 +19875,7 @@ Body:
           - Unknown_Swordman_Card    # 300266
           - B_Ygnizem_Card    # 4352
     Script: |
-      if (BaseClass == Job_Swordman) {
+      if (BaseFirst == Job_Swordman) {
          .@sum = getequiprefinerycnt(EQI_SHADOW_ARMOR)+getequiprefinerycnt(EQI_SHADOW_SHOES);
          bonus bLongAtkRate,10+2*(.@sum/4);
          bonus bShortAtkRate,10+2*(.@sum/4);
@@ -20848,7 +20848,7 @@ Body:
           - Astraea_Helm_TW    # 400075
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP) + getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_GARMENT) + getequiprefinerycnt(EQI_SHOES);
-      if (BaseClass == Job_Arch_Bishop && .@r >= 48) {
+      if (BaseFirst == Job_Arch_Bishop && .@r >= 48) {
          skill "MG_ENERGYCOAT",1;
       }
   - Combos:
@@ -20909,7 +20909,7 @@ Body:
           - Yoichi_Muffler    # 20816
           - Imuke_Upper_Shield    # 28910
     Script: |
-      if (BaseClass == Job_Ranger) {
+      if (BaseFirst == Job_Ranger) {
          bonus bLongAtkDef,-35;
       }
   - Combos:
@@ -21106,7 +21106,7 @@ Body:
           - Heaven_Cage    # 5932
           - Ixion_Wing_S    # 18129
     Script: |
-      if (BaseClass == Job_Ranger) {
+      if (BaseFirst == Job_Ranger) {
          bonus2 bSkillAtk,"HT_BLITZBEAT",5*getequiprefinerycnt(EQI_HAND_R);
       }
   - Combos:
@@ -24525,7 +24525,7 @@ Body:
           - Yellow_Scarf     # 5917
           - YDragon_SkyWing     # 19104
     Script: |
-      if (BaseClass == Job_Archer)
+      if (BaseFirst == Job_Archer)
          bonus bLongAtkDef,-10;
   - Combos:
       - Combo:
@@ -24755,7 +24755,7 @@ Body:
           - Crystal_Blade_Necklace_     # 32296
           - Strong_Blow5     # 29370
     Script: |
-      if (BaseClass == Job_Novice || BaseClass == Job_Swordman || BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Archer || BaseClass == Job_Merchant || BaseClass == Job_Taekwon || BaseClass == Job_Gunslinger || BaseClass == Job_Summoner) {
+      if (BaseFirst == Job_Novice || BaseFirst == Job_Swordman || BaseFirst == Job_Mage || BaseFirst == Job_Acolyte || BaseFirst == Job_Archer || BaseFirst == Job_Merchant || BaseFirst == Job_Taekwon || BaseFirst == Job_Gunslinger || BaseFirst == Job_Summoner) {
          bonus2 bAddClass,Class_All,10;
          bonus bPerfectHitAddRate,30;
       }
@@ -26510,7 +26510,7 @@ Body:
           - Pendant_of_Solomon     # 490035
           - Amplification5     # 29449
     Script: |
-      if (BaseClass == Job_Novice || BaseClass == Job_Mage || BaseClass == Job_Acolyte) {
+      if (BaseFirst == Job_Novice || BaseFirst == Job_Mage || BaseFirst == Job_Acolyte) {
          bonus2 bMagicAddRace,RC_All,10;
          bonus2 bIgnoreMdefRaceRate,RC_All,70;
       }
@@ -26531,7 +26531,7 @@ Body:
           - Pendant_of_Solomon_     # 490036
           - Amplification5     # 29449
     Script: |
-      if (BaseClass == Job_Novice || BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Summoner) {
+      if (BaseFirst == Job_Novice || BaseFirst == Job_Mage || BaseFirst == Job_Acolyte || BaseFirst == Job_Summoner) {
          bonus2 bMagicAddRace,RC_All,10;
          bonus2 bIgnoreMdefRaceRate,RC_All,70;
       }
@@ -44948,7 +44948,7 @@ Body:
           - CandyCaneRod    # 26110
           - Tiara_Norte_BR    # 400467
     Script: |
-      if (BaseClass == Job_SuperNovice) {
+      if (BaseFirst == Job_SuperNovice) {
          skill "WL_SOULEXPANSION",5;
          bonus2 bSkillAtk,"WL_SOULEXPANSION",7*(getequiprefinerycnt(EQI_HAND_R)/2);
       }
@@ -45005,7 +45005,7 @@ Body:
           - Star_Dust_Blade_    # 13446
           - Tiara_Sul_BR    # 400470
     Script: |
-      if (BaseClass == Job_SuperNovice) {
+      if (BaseFirst == Job_SuperNovice) {
          skill "RK_IGNITIONBREAK",5;
          bonus2 bSkillAtk,"RK_IGNITIONBREAK",7*(getequiprefinerycnt(EQI_HAND_R)/2);
       }
@@ -56427,7 +56427,7 @@ Body:
       bonus2 bSubSize,Size_Medium,15;
       bonus2 bSubSize,Size_Large,15;
       bonus bLongAtkRate,6*(getequiprefinerycnt(EQI_SHOES)/2);
-      if (BaseClass == Job_Archer)
+      if (BaseFirst == Job_Archer)
          bonus bBaseAtk,200;
   - Combos:
       - Combo:
@@ -58936,7 +58936,7 @@ Body:
       bonus2 bSubSize,Size_Large,8;
       bonus bShortAtkRate,4*(.@r/2);
       bonus bLongAtkRate,4*(.@r/2);
-      if (BaseClass == Job_Merchant) {
+      if (BaseFirst == Job_Merchant) {
          bonus bBaseAtk,100;
       }
   - Combos:
@@ -58950,7 +58950,7 @@ Body:
       bonus2 bSubSize,Size_Large,10;
       bonus bShortAtkRate,5*(.@r/2);
       bonus bLongAtkRate,5*(.@r/2);
-      if (BaseClass == Job_Merchant) {
+      if (BaseFirst == Job_Merchant) {
          bonus bBaseAtk,150;
       }
   - Combos:

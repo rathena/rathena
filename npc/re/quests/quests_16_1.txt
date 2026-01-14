@@ -770,7 +770,7 @@ prt_cas_q,28,30,3	script	Kafra Employee#ep16_s01	4_F_KAFRA2,{
 		openstorage;
 		end;
 	case 2:
-		if (BaseClass != Job_Merchant) {
+		if (BaseFirst != Job_Merchant) {
 			mes "[Kafra Employee]";
 			mes "I am sorry,";
 			mes "The Cart Service is available for Merchant classes only.";
@@ -13105,7 +13105,7 @@ prt_cas,165,245,0	script	Investigator Ryosun#ep16	4_M_ALCHE_A,{
 prt_cas,93,212,0	script	#vip_alimi	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
-	switch( BaseClass ) {
+	switch( BaseFirst ) {
 	case JOB_SWORDMAN:
 		npctalk "Tough Sword of Protection " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
 		end;

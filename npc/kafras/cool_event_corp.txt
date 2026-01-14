@@ -104,7 +104,7 @@ function	script	F_CoolEventCorp	{
 		break;
 	case 4:
 		mes "[Cool Event Corp. Staff]";
-		if(BaseClass != Job_Merchant){
+		if(BaseFirst != Job_Merchant){
 			mes "I'm sorry, but the";
 			mes "Pushcart rental service";
 			if (checkre(0))

@@ -547,7 +547,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 		mes "come here too late, alright?";
 		close;
 	}
-	if ((countitem(7738) > 0) && ((BaseClass == Job_Swordman) || (BaseClass == Job_Mage))) {
+	if ((countitem(7738) > 0) && ((BaseFirst == Job_Swordman) || (BaseFirst == Job_Mage))) {
 		mes "[Gatan]";
 		mes "Oh, um... Is that...?";
 		mes "That's a ticket from";
@@ -695,7 +695,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 			close;
 		}
 	}
-	else if ((countitem(7738) > 0) && ((BaseClass == Job_Swordman) || (BaseClass == Job_Mage))) {
+	else if ((countitem(7738) > 0) && ((BaseFirst == Job_Swordman) || (BaseFirst == Job_Mage))) {
 		mes "[Gatan]";
 		mes "Oh, um... Is that...?";
 		mes "That's a ticket from";
@@ -843,7 +843,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 			close;
 		}
 	}
-	if ((countitem(7738) > 0) && ((BaseClass == Job_Swordman) || (BaseClass == Job_Mage))) {
+	if ((countitem(7738) > 0) && ((BaseFirst == Job_Swordman) || (BaseFirst == Job_Mage))) {
 		mes "[Gatan]";
 		mes "Oh, um... Is that...?";
 		mes "That's a ticket from";
@@ -1012,7 +1012,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 		mes "times. A bit confusing, I know~";
 		close;
 	}
-	if ((BaseLevel > 39) && (countitem(7734) > 0) && (.@relaytime >= 8) && (.@relaytime < 11) && (BaseClass == Job_Mage)) {
+	if ((BaseLevel > 39) && (countitem(7734) > 0) && (.@relaytime >= 8) && (.@relaytime < 11) && (BaseFirst == Job_Mage)) {
 		mes "[Gatan]";
 		mes "Oh, um... Is that...?";
 		mes "That's a ticket from";
@@ -1160,7 +1160,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 			close;
 		}
 	}
-	else if ((BaseLevel > 39) && (countitem(7734) > 0) && (.@relaytime >= 21) && (BaseClass == Job_Mage)) {
+	else if ((BaseLevel > 39) && (countitem(7734) > 0) && (.@relaytime >= 21) && (BaseFirst == Job_Mage)) {
 		mes "[Gatan]";
 		mes "Oh, um... Is that...?";
 		mes "That's a ticket from";
@@ -1308,7 +1308,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 			close;
 		}
 	}
-	if ((BaseLevel > 39) && (countitem(7734) > 0) && (BaseClass == Job_Mage)) {
+	if ((BaseLevel > 39) && (countitem(7734) > 0) && (BaseFirst == Job_Mage)) {
 		mes "[Gatan]";
 		mes "Oh, um... Is that...?";
 		mes "That's a ticket from";
@@ -1486,7 +1486,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 		mes "Good luck to you, alright?";
 		close;
 	}
-	if ((BaseLevel > 39) && (countitem(7730) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && (BaseClass == Job_Swordman)) {
+	if ((BaseLevel > 39) && (countitem(7730) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && (BaseFirst == Job_Swordman)) {
 		mes "[Gatan]";
 		mes "Oh, um... Is that...?";
 		mes "That's a ticket from";
@@ -1635,7 +1635,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 			close;
 		}
 	}
-	else if ((BaseLevel > 39) && (countitem(7730) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && (BaseClass == Job_Swordman)) {
+	else if ((BaseLevel > 39) && (countitem(7730) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && (BaseFirst == Job_Swordman)) {
 		mes "[Gatan]";
 		mes "Oh, um... Is that...?";
 		mes "That's a ticket from";
@@ -1781,7 +1781,7 @@ payon,83,327,3	script	Gatan#payon::RelayGatan	86,{
 			close;
 		}
 	}
-	else if ((BaseLevel > 39) && (countitem(7730) > 0) && (BaseClass == Job_Swordman)) {
+	else if ((BaseLevel > 39) && (countitem(7730) > 0) && (BaseFirst == Job_Swordman)) {
 		mes "[Gatan]";
 		mes "Oh, um... Is that...?";
 		mes "That's a ticket from";
@@ -1910,7 +1910,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "Don't forget now, alright?";
 		close;
 	}
-	if ((countitem(7739) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && ((BaseClass == Job_Thief) || (BaseClass == Job_Acolyte))) {
+	if ((countitem(7739) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && ((BaseFirst == Job_Thief) || (BaseFirst == Job_Acolyte))) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -1937,7 +1937,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "I'll see you later~";
 		close;
 	}
-	else if ((countitem(7739) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && ((BaseClass == Job_Thief) || (BaseClass == Job_Acolyte))) {
+	else if ((countitem(7739) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && ((BaseFirst == Job_Thief) || (BaseFirst == Job_Acolyte))) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -1965,7 +1965,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "I'll see you later~";
 		close;
 	}
-	if ((countitem(7739) > 0) && ((BaseClass == Job_Thief) || (BaseClass == Job_Acolyte))) {
+	if ((countitem(7739) > 0) && ((BaseFirst == Job_Thief) || (BaseFirst == Job_Acolyte))) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2130,7 +2130,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "I just described, okay?";
 		close;
 	}
-	if ((countitem(7735) > 0) && (.@relaytime >= 14) && (.@relaytime < 17) && (BaseClass == Job_Acolyte)) {
+	if ((countitem(7735) > 0) && (.@relaytime >= 14) && (.@relaytime < 17) && (BaseFirst == Job_Acolyte)) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2162,7 +2162,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "I'll see you later~";
 		close;
 	}
-	else if ((countitem(7735) > 0) && (.@relaytime >= 18) && (.@relaytime < 21) && (BaseClass == Job_Acolyte)) {
+	else if ((countitem(7735) > 0) && (.@relaytime >= 18) && (.@relaytime < 21) && (BaseFirst == Job_Acolyte)) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2194,7 +2194,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "I'll see you later~";
 		close;
 	}
-	if ((countitem(7735) > 0) && (BaseClass == Job_Acolyte)) {
+	if ((countitem(7735) > 0) && (BaseFirst == Job_Acolyte)) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2347,7 +2347,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "Standard Time. Don't forget!";
 		close;
 	}
-	if ((countitem(7731) > 0) && (BaseLevel > 39) && ((.@relaytime >= 8) && (.@relaytime < 11)) && (BaseClass == Job_Thief)) {
+	if ((countitem(7731) > 0) && (BaseLevel > 39) && ((.@relaytime >= 8) && (.@relaytime < 11)) && (BaseFirst == Job_Thief)) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2379,7 +2379,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "items for missions, okay?";
 		close;
 	}
-	else if ((countitem(7731) > 0) && (BaseLevel > 39) && ((.@relaytime >= 21) && (BaseClass == Job_Thief))) {
+	else if ((countitem(7731) > 0) && (BaseLevel > 39) && ((.@relaytime >= 21) && (BaseFirst == Job_Thief))) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2411,7 +2411,7 @@ payon,204,221,3	script	Bafhail#payon::RelayBafhail	731,{
 		mes "items for missions, okay?";
 		close;
 	}
-	if ((countitem(7731) > 0) && (BaseLevel > 39) && (BaseClass == Job_Thief)) {
+	if ((countitem(7731) > 0) && (BaseLevel > 39) && (BaseFirst == Job_Thief)) {
 		mes "[Bafhail]";
 		mes "Oh, isn't that ticket...?";
 		mes "Ah, good, good. Judging";
@@ -2601,7 +2601,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		mes "important to know!";
 		close;
 	}
-	else if ((countitem(7740) > 0) && (.@relaytime >= 21) && ((BaseClass == Job_Archer) || (BaseClass == Job_Merchant))) {
+	else if ((countitem(7740) > 0) && (.@relaytime >= 21) && ((BaseFirst == Job_Archer) || (BaseFirst == Job_Merchant))) {
 		mes "[Lospii]";
 		mes "Hi, I'm Lospii! Maybe";
 		mes "I'm younger than you, but";
@@ -2642,7 +2642,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		mes "important to know!";
 		close;
 	}
-	if ((countitem(7740) > 0) && ((BaseClass == Job_Archer) || (BaseClass == Job_Merchant))) {
+	if ((countitem(7740) > 0) && ((BaseFirst == Job_Archer) || (BaseFirst == Job_Merchant))) {
 		mes "[Lospii]";
 		mes "Hi, I'm Lospii! Maybe";
 		mes "I'm younger than you, but";
@@ -2757,7 +2757,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		mes "Just only those times, okay?";
 		close;
 	}
-	if ((countitem(7736) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && (BaseClass == Job_Merchant)) {
+	if ((countitem(7736) > 0) && (.@relaytime >= 11) && (.@relaytime < 14) && (BaseFirst == Job_Merchant)) {
 		mes "[Lospii]";
 		mes "Hi, I'm Lospii! Maybe";
 		mes "I'm younger than you, but";
@@ -2798,7 +2798,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		mes "important to know!";
 		close;
 	}
-	else if ((countitem(7736) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && (BaseClass == Job_Merchant)) {
+	else if ((countitem(7736) > 0) && (.@relaytime >= 0) && (.@relaytime < 3) && (BaseFirst == Job_Merchant)) {
 		mes "[Lospii]";
 		mes "Hi, I'm Lospii! Maybe";
 		mes "I'm younger than you, but";
@@ -2839,7 +2839,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		mes "important to know!";
 		close;
 	}
-	if ((countitem(7736) > 0) && (BaseClass == Job_Merchant)) {
+	if ((countitem(7736) > 0) && (BaseFirst == Job_Merchant)) {
 		mes "[Lospii]";
 		mes "Hi, I'm Lospii! Maybe";
 		mes "I'm younger than you, but";
@@ -2954,7 +2954,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		mes "I... I can't read watches...";
 		close;
 	}
-	if ((countitem(7732) > 0) && (BaseLevel > 39) && ((.@relaytime >= 14) && (.@relaytime < 17)) && (BaseClass == Job_Archer)) {
+	if ((countitem(7732) > 0) && (BaseLevel > 39) && ((.@relaytime >= 14) && (.@relaytime < 17)) && (BaseFirst == Job_Archer)) {
 		mes "[Lospii]";
 		mes "Hi, I'm Lospii! Maybe";
 		mes "I'm younger than you, but";
@@ -2995,7 +2995,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		mes "important to know!";
 		close;
 	}
-	else if ((countitem(7732) > 0) && (BaseLevel > 39) && ((.@relaytime >= 18) && (.@relaytime < 21)) && (BaseClass == Job_Archer)) {
+	else if ((countitem(7732) > 0) && (BaseLevel > 39) && ((.@relaytime >= 18) && (.@relaytime < 21)) && (BaseFirst == Job_Archer)) {
 		mes "[Lospii]";
 		mes "Hi, I'm Lospii! Maybe";
 		mes "I'm younger than you, but";
@@ -3036,7 +3036,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		mes "important to know!";
 		close;
 	}
-	if ((countitem(7732) > 0) && (BaseLevel > 39) && (BaseClass == Job_Archer)) {
+	if ((countitem(7732) > 0) && (BaseLevel > 39) && (BaseFirst == Job_Archer)) {
 		mes "[Lospii]";
 		mes "Hi, I'm Lospii! Maybe";
 		mes "I'm younger than you, but";
