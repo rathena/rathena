@@ -34,6 +34,7 @@
 #include "syntheticarmor.hpp"
 #include "twilightalchemy1.hpp"
 #include "twilightalchemy2.hpp"
+#include "twilightalchemy3.hpp"
 #include "vaporize.hpp"
 #include "weaponperfection.hpp"
 #include "weaponrepair.hpp"
@@ -70,6 +71,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillTwilightAlchemy1>();
 		case AM_TWILIGHT2:
 			return std::make_unique<SkillTwilightAlchemy2>();
+		case AM_TWILIGHT3:
+			return std::make_unique<SkillTwilightAlchemy3>();
 		case BO_ACIDIFIED_ZONE_WATER_ATK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case BO_ACIDIFIED_ZONE_GROUND_ATK:

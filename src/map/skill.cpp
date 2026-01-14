@@ -9078,27 +9078,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 	}
 
-	case AM_TWILIGHT3:
-		if (sd) {
-			int32 ebottle = pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE);
-			int16 alcohol_idx = -1, acid_idx = -1, fire_idx = -1;
-			if( ebottle >= 0 )
-				ebottle = sd->inventory.u.items_inventory[ebottle].amount;
-			//check if you can produce all three, if not, then fail:
-			if (!(alcohol_idx = skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 100)) //100 Alcohol
-				|| !(acid_idx = skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 50)) //50 Acid Bottle
-				|| !(fire_idx = skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 50)) //50 Flame Bottle
-				|| ebottle < 200 //200 empty bottle are required at total.
-			) {
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100, alcohol_idx-1);
-			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50, acid_idx-1);
-			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50, fire_idx-1);
-		}
-		break;
 	case SA_DISPELL:
 		if (flag&1 || (i = skill_get_splash(skill_id, skill_lv)) < 1) {
 			if (sd && dstsd && !map_flag_vs(sd->m) && (!sd->duel_group || sd->duel_group != dstsd->duel_group) && (!sd->status.party_id || sd->status.party_id != dstsd->status.party_id))
