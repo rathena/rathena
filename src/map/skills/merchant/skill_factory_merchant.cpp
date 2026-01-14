@@ -12,6 +12,7 @@
 #include "adrenalinerush.hpp"
 #include "advancedadrenalinerush.hpp"
 #include "aidpotion.hpp"
+#include "alchemicalweapon.hpp"
 #include "bomb.hpp"
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
@@ -35,6 +36,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillAcidTerror>();
 		case AM_CANNIBALIZE:
 			return std::make_unique<SkillSummonFlora>();
+		case AM_CP_WEAPON:
+			return std::make_unique<SkillAlchemicalWeapon>();
 		case AM_DEMONSTRATION:
 			return std::make_unique<SkillBomb>();
 		case AM_PHARMACY:
