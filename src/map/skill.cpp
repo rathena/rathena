@@ -9079,7 +9079,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	}
 
 	case AM_BERSERKPITCHER:
-	case AM_POTIONPITCHER:
 		{
 			int32 j,hp = 0,sp = 0;
 			if( dstmd && dstmd->mob_id == MOBID_EMPERIUM ) {
@@ -9098,11 +9097,9 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 					clif_skill_fail( *sd, skill_id );
 					return 1;
 				}
-				if( skill_id == AM_BERSERKPITCHER ) {
-					if( dstsd && dstsd->status.base_level < (uint32)sd->inventory_data[j]->elv ) {
-						clif_skill_fail( *sd, skill_id );
-						return 1;
-					}
+				if( dstsd && dstsd->status.base_level < (uint32)sd->inventory_data[j]->elv ) {
+					clif_skill_fail( *sd, skill_id );
+					return 1;
 				}
 				potion_flag = 1;
 				potion_hp = potion_sp = potion_per_hp = potion_per_sp = 0;
@@ -9194,7 +9191,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 #endif
 
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			if( hp > 0 || (skill_id == AM_POTIONPITCHER && sp <= 0) )
+			if( hp > 0 )
 				clif_skill_nodamage(nullptr,*bl,AL_HEAL,hp,1);
 			if( sp > 0 )
 				clif_skill_nodamage(nullptr,*bl,MG_SRECOVERY,sp);
