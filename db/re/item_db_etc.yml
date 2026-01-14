@@ -65921,7 +65921,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bAtkRate,15+5*getenchantgrade();
+      bonus bAtkRate,10+2*getenchantgrade();
   - Id: 311017
     AegisName: Gear_MATK
     Name: Clockwork (Matk)
