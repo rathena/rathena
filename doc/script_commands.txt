@@ -4705,7 +4705,7 @@ which doesn't have an eA job-number equivalent.
 		mes "Your base job is Swordman.";
 	if (.@eac&EAJL_UPPER)
 		mes "You are a rebirth job.";
-	if ((.@eac&EAJ_UPPERMASK) == EAJ_SWORDMAN)
+	if ((.@eac&EAJ_SECONDMASK) == EAJ_SWORDMAN)
 		mes "You must be a Swordman, Baby Swordman or High Swordman.";
 
 For more information on the eA Job System, see the docs/ea_job_system.txt file.

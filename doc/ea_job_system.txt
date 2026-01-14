@@ -157,12 +157,12 @@ EAJL_FOURTH:
 	if(@eac&EAJL_FOURTH)
 		mes "Wow, you've really grown!";
 
-EAJ_UPPERMASK:
+EAJ_SECONDMASK:
 	The upper mask can be used to "strip" the upper/baby characteristics of a
 	class, used when you want to know if someone is a certain class regardless
 	of rebirth/adopted status. For example, the following code would go through
 	for Monks, Champions and Baby Monks:
-	if ((@eac&EAJ_UPPERMASK) == EAJ_MONK)
+	if ((@eac&EAJ_SECONDMASK) == EAJ_MONK)
 		mes "Aren't knuckles such a cool weapon?";
 
 	Note that if instead of EAJ_MONK you used EAJ_CHAMPION or EAJ_BABY_MONK,

@@ -274,8 +274,9 @@
 	export_constant2("EAJL_BABY",JOBL_BABY);
 
 	export_deprecated_constant3("EAJ_BASEMASK",MAPID_FIRSTMASK,"EAJ_FIRSTMASK");
-	export_constant2("EAJ_UPPERMASK",MAPID_SECONDMASK);// Update name in future update for item/scripts. (Rytech)
+	export_deprecated_constant3("EAJ_UPPERMASK",MAPID_SECONDMASK,"EAJ_SECONDMASK");
 	export_constant2("EAJ_FIRSTMASK", MAPID_FIRSTMASK);
+	export_constant2("EAJ_SECONDMASK", MAPID_SECONDMASK);
 	export_constant2("EAJ_THIRDMASK",MAPID_THIRDMASK);
 	export_constant2("EAJ_FOURTHMASK",MAPID_FOURTHMASK);
 

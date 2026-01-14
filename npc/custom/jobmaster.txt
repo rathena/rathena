@@ -74,7 +74,7 @@ function	Can_Change_Third	{
 		return false; // Already Third Class
 	if( roclass(eaclass()|EAJL_THIRD) < 0 )
 		return false; // Job has no third Class
-	if( (eaclass()&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE )
+	if( (eaclass()&EAJ_SECONDMASK) == EAJ_SUPER_NOVICE )
 		return false; // Exp. Super Novice equals 3rd Cls, but has it's own case
 	if( Is_Baby() && (!.BabyClass || !.BabyThird) )
 		return false; // No Baby (Third) change allowed
@@ -148,10 +148,10 @@ function	Job_Options	{
 	.@third_possible = Can_Change_Third();
 	.@rebirth_possible = Can_Rebirth();
 	.@first_eac = .@eac&EAJ_FIRSTMASK;
-	.@second_eac = .@eac&EAJ_UPPERMASK;
+	.@second_eac = .@eac&EAJ_SECONDMASK;
 	// Note: These are already set in pc.cpp
 	// BaseClass = roclass(.@eac&EAJ_FIRSTMASK) which is the players First Class
-	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
+	// BaseJob = roclass(.@eac&EAJ_SECONDMASK) which is the players Second Class
 	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
 		
 	// From here on the jobmaster checks the current class
@@ -175,7 +175,7 @@ function	Job_Options	{
 	}
 	 
 	if (.SecondExpanded && 
-	   (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE && // is Super Novice
+	   (.@eac&EAJ_SECONDMASK) == EAJ_SUPER_NOVICE && // is Super Novice
 	   !(eaclass()&EAJL_THIRD) ) {				 	// not already Expanded SN
 		// (Baby) Super Novice to Expanded (Baby) Super Novice
 	   	if( !Is_Baby(.@eac) || (.BabyClass && .BabyExpanded) ) {
