@@ -48439,7 +48439,7 @@ Body:
       bonus bStr,2;
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
-      bonus bBaseAtk,getskilllv("TK_POWER");
+      bonus bBaseAtk,getskilllv("TK_POWER")*7;
   - Id: 300086
     AegisName: Alnoldi_Ex_H_Card
     Name: Senior Special Alnoldi Card
