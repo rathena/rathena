@@ -147,10 +147,10 @@ function	Job_Options	{
 	.@fourth_possible = Can_Change_Fourth();
 	.@third_possible = Can_Change_Third();
 	.@rebirth_possible = Can_Rebirth();
-	.@first_eac = .@eac&EAJ_BASEMASK;
+	.@first_eac = .@eac&EAJ_FIRSTMASK;
 	.@second_eac = .@eac&EAJ_UPPERMASK;
 	// Note: These are already set in pc.cpp
-	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
+	// BaseClass = roclass(.@eac&EAJ_FIRSTMASK) which is the players First Class
 	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
 	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
 		
@@ -236,7 +236,7 @@ function	Job_Options	{
 				// Job change after rebirth
 				if( .LastJob && lastJob )
 					Job_Options(.@job_opt,
-						roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
+						roclass((eaclass(lastJob)&EAJ_FIRSTMASK)|EAJL_UPPER));
 				else
 					Job_Options(.@job_opt, 
 						Job_Swordman_High, Job_Mage_High, Job_Archer_High,

@@ -4701,7 +4701,7 @@ to convert among classes. The command will return -1 if you pass it a job number
 which doesn't have an eA job-number equivalent.
 
 	.@eac = eaclass();
-	if ((.@eac&EAJ_BASEMASK) == EAJ_SWORDMAN)
+	if ((.@eac&EAJ_FIRSTMASK) == EAJ_SWORDMAN)
 		mes "Your base job is Swordman.";
 	if (.@eac&EAJL_UPPER)
 		mes "You are a rebirth job.";

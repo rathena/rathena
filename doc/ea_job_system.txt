@@ -169,13 +169,13 @@ EAJ_UPPERMASK:
 	the check would had never passed, since the upper/baby state has been
 	removed from the original job when checking.
 
-EAJ_BASEMASK:
+EAJ_FIRSTMASK:
 	This mask strips also the 2nd class attributes. It can be used to check
 	against the basic job of a character. For example, the following code would
 	go through for Merchants (+Baby Merchant and High Merchant), Blacksmiths
 	(+Baby blacksmiths and Whitesmith) and Alchemist (+Baby Alchemist and
 	+Creator):
-	if ((@eac&EAJ_BASEMASK) == EAJ_MERCHANT)
+	if ((@eac&EAJ_FIRSTMASK) == EAJ_MERCHANT)
 		mes "Why I can't have discount like you guys do?";
 
 	Note that, like before, if you try to check versus any of the other
@@ -266,5 +266,5 @@ About Novices and Super Novices:
 	1st jobs. Even though that may seem like a hindrance, it makes it very easy
 	to add a check to discard Novice types from a quest:
 
-	if ((eaclass()&EAJ_BASEMASK) == EAJ_NOVICE)
+	if ((eaclass()&EAJ_FIRSTMASK) == EAJ_NOVICE)
 		//Novice class detected.
