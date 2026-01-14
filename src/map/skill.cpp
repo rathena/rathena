@@ -8140,18 +8140,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 */
 
-	case AS_ENCHANTPOISON:
-		if( sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) ) ){
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}else{
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, false );
-
-			if( sd != nullptr ){
-				clif_skill_fail( *sd, skill_id );
-			}
-		}
-		break;
-
 	case LK_TENSIONRELAX:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start4(src,bl,type,100,skill_lv,0,0,skill_get_time2(skill_id,skill_lv),
