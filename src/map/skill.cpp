@@ -13906,11 +13906,9 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		status_change_end(src, SC_HIDING);
 		break;
 	case AM_SPHEREMINE:
-	case AM_CANNIBALIZE:
 		{
-			int32 summons[5] = { MOBID_G_MANDRAGORA, MOBID_G_HYDRA, MOBID_G_FLORA, MOBID_G_PARASITE, MOBID_G_GEOGRAPHER };
-			int32 class_ = skill_id==AM_SPHEREMINE?MOBID_MARINE_SPHERE:summons[skill_lv-1];
-			enum mob_ai ai = (skill_id == AM_SPHEREMINE) ? AI_SPHERE : AI_FLORA;
+			int32 class_ = MOBID_MARINE_SPHERE;
+			enum mob_ai ai = AI_SPHERE;
 			mob_data *md;
 
 			// Correct info, don't change any of this! [celest]

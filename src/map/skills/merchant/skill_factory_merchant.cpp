@@ -24,6 +24,7 @@
 #include "powerthrust.hpp"
 #include "preparepotion.hpp"
 #include "skill_vending.hpp"
+#include "summonflora.hpp"
 #include "weaponperfection.hpp"
 #include "weaponrepair.hpp"
 
@@ -31,6 +32,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 	switch (skill_id) {
 		case AM_ACIDTERROR:
 			return std::make_unique<SkillAcidTerror>();
+		case AM_CANNIBALIZE:
+			return std::make_unique<SkillSummonFlora>();
 		case AM_DEMONSTRATION:
 			return std::make_unique<SkillBomb>();
 		case AM_PHARMACY:
