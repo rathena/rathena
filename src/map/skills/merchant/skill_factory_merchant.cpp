@@ -11,6 +11,7 @@
 #include "acidterror.hpp"
 #include "adrenalinerush.hpp"
 #include "advancedadrenalinerush.hpp"
+#include "aidberserkpotion.hpp"
 #include "aidpotion.hpp"
 #include "alchemicalweapon.hpp"
 #include "biochemicalhelm.hpp"
@@ -39,6 +40,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 	switch (skill_id) {
 		case AM_ACIDTERROR:
 			return std::make_unique<SkillAcidTerror>();
+		case AM_BERSERKPITCHER:
+			return std::make_unique<SkillAidBerserkPotion>();
 		case AM_CALLHOMUN:
 			return std::make_unique<SkillCallHomunculus>();
 		case AM_CANNIBALIZE:
