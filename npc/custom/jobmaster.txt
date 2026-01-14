@@ -231,7 +231,7 @@ function	Job_Options	{
 
 	if (.TraitExpanded && .@eac == EAJ_KAGEROUOBORO) {
 		Require_Level(.Req_Fourth[0], .Req_Fourth[1]);
-		Job_Options(.@job_opt, roclass(EAJ_SHINKIRO_SHIRANUI));	// .@eac|EAJL_THIRD
+		Job_Options(.@job_opt, roclass(EAJ_SHINKIROSHIRANUI));	// .@eac|EAJL_THIRD
 	}
 
 	if (.TraitExpanded && .@eac == EAJ_SUPER_NOVICE_E) {
