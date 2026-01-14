@@ -37,8 +37,8 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 		mes "feeling about you...";
 		close;
 	}
-	if (BaseJob != Job_Merchant) {
-		if (BaseJob == Job_Alchemist) {
+	if (BaseSecond != Job_Merchant) {
+		if (BaseSecond == Job_Alchemist) {
 			mes "Welcome, " + strcharinfo(0) + ".";
 			mes "The Alchemist Union";
 			mes "is busy today, like always.";
@@ -325,8 +325,8 @@ alde_alche,27,185,5	script	Alchemist Guildsman#am	744,{
 
 alde_alche,175,107,3	script	Fastidious Alchemist#am	749,{
 	mes "[Raspuchin Gregory]";
-	if (BaseJob != Job_Merchant) {
-		if (BaseJob == Job_Alchemist) {
+	if (BaseSecond != Job_Merchant) {
+		if (BaseSecond == Job_Alchemist) {
 			mes "Heeheehee";
 			mes "keheheh~!";
 			mes "Eh? What do you want?!";
@@ -803,8 +803,8 @@ alde_alche,13,15,7	script	Studying Man#am	750,{
 		close;
 	}
 	mes "[Darwin]";
-	if (BaseJob != Job_Merchant) {
-		if (BaseJob == Job_Alchemist) {
+	if (BaseSecond != Job_Merchant) {
+		if (BaseSecond == Job_Alchemist) {
 			mes "Ah...";
 			mes "You...";
 			mes "You've become";
@@ -1339,8 +1339,8 @@ alde_alche,13,15,7	script	Studying Man#am	750,{
 
 alde_alche,79,19,5	script	Experiment Expert#am	748,{
 	mes "[Van Helmont]";
-	if (BaseJob != Job_Merchant) {
-		if (BaseJob == Job_Alchemist) {
+	if (BaseSecond != Job_Merchant) {
+		if (BaseSecond == Job_Alchemist) {
 			mes "What do you want?";
 			mes "I'm busy!! Don't";
 			mes "bother me and get";
@@ -1603,8 +1603,8 @@ alde_alche,101,184,4	script	Master Alchemist#am	122,{
 		cutin "",255;
 		end;
 	}
-	if (BaseJob != Job_Merchant) {
-		if (BaseJob == Job_Alchemist) {
+	if (BaseSecond != Job_Merchant) {
+		if (BaseSecond == Job_Alchemist) {
 			mes "Welcome!";
 			mes "So how is your";
 			mes "research coming along?";
@@ -1962,7 +1962,7 @@ alde_alche,145,19,1	script	Chief Researcher#am	57,{
 		mes "All you have to do now is speak to the Union Leader on the 2nd floor! Congratulations, you'll become an Alchemist very soon!";
 		close;
 	}
-	else if (ALCH_Q == 40 && BaseJob == Job_Merchant) {
+	else if (ALCH_Q == 40 && BaseSecond == Job_Merchant) {
 		mes "[Nicholas Flamel]";
 		mes "All you have to do now is speak to the Union Leader on the 2nd floor! Congratulations, you'll become an Alchemist very soon!";
 		close;

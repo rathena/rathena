@@ -3907,51 +3907,51 @@ moc_para01,111,83,3	script	Blacksmith Thorn#2nd10	2_M_OLDBLSMITH,{
 				close;
 			}
 			mes "[Thorn]";
-			if (BaseJob == Job_Knight || BaseJob == Job_Crusader) {
+			if (BaseSecond == Job_Knight || BaseSecond == Job_Crusader) {
 				callsub L_Select,"One-handed sword, two-handed sword or spear.",
 					1197,"Eden Group Slayer III","Two-handed Sword, Attack 200",
 					13434,"Eden Group Saber III","One-handed Sword, Attack 185",
 					1434,"Eden Group Spear I","One-handed, Attack 165";
 			}
-			else if (BaseJob == Job_Assassin) {
+			else if (BaseSecond == Job_Assassin) {
 				callsub L_Select,"You have your choice of dagger or katar.",
 					13066,"Eden Group Dagger III","Dagger, MATK +80, ATK 165",
 					1289,"Eden Group Katar I","Katar, ATK 155";
 			}
-			else if (BaseJob == Job_Rogue || BaseClass == Job_Novice)
+			else if (BaseSecond == Job_Rogue || BaseClass == Job_Novice)
 				getitem 13066,1;// P.Dagger III
-			else if (BaseJob == Job_Alchemist || BaseJob == Job_Blacksmith) {
+			else if (BaseSecond == Job_Alchemist || BaseSecond == Job_Blacksmith) {
 				callsub L_Select,"Your options are Mace, Saber and Axe.",
 					16014,"Eden Group Mace III","Mace, Attack 172",// P_Mace3
 					13434,"Eden Group Saber III","Sword, Attack 185",//P.Saber III
 					1391,"Eden Group Axe I","Axe, Attack 195"; //P.Two-Handed Axe I
 			}
-			else if (BaseJob == Job_Wizard)
+			else if (BaseSecond == Job_Wizard)
 				getitem 1658,1;// P.Staff III
-			else if (BaseJob == Job_Sage) {
+			else if (BaseSecond == Job_Sage) {
 				callsub L_Select,"",
 					1658,"Eden Group Staff III","Staff, MATK + 170, INT +4, Attack 60", //P.Staff III
 					1583,"Eden Group Dictionary I","Book, MATK +100, Attack 135"; //P.Book I
 			}
-			else if (BaseJob == Job_Priest) {
+			else if (BaseSecond == Job_Priest) {
 				callsub L_Select,"",
 					1658,"Eden Group Staff III","Staff, MATK + 170, INT +4, Attack 60", //P.Staff III
 					1583,"Eden Group Dictionary I","Book, MATK +100, Attack 135", //P.Book I
 					16014,"Eden Group Mace III","Mace, Attack 172"; //P.Mace III
 			}
-			else if (BaseJob == Job_Monk) {
+			else if (BaseSecond == Job_Monk) {
 				callsub L_Select,"",
 					1831,"Eden Group Knuckles I","Knuckle, Attack 120", //P.Knuckle I
 					16014,"Eden Group Mace III","Mace, Attack 172"; //P.Mace III
 			}
-			else if (BaseJob == Job_Hunter)
+			else if (BaseSecond == Job_Hunter)
 				getitem 18106,1;// P.Bow III
-			else if (BaseJob == Job_Bard) {
+			else if (BaseSecond == Job_Bard) {
 				callsub L_Select,"",
 					18106,"Eden Group Bow III","Bow, Attack 140", //P.Bow III
 					1931,"Eden Group Guitar I","Guitar, Attack 125"; //P.Guitar I
 			}
-			else if (BaseJob == Job_Dancer) {
+			else if (BaseSecond == Job_Dancer) {
 				callsub L_Select,"",
 					18106,"Eden Group Bow III","Bow, Attack 140", //P.Bow III
 					1986,"Eden Group Whip I","Whip, Attack 125"; //P.Tail I

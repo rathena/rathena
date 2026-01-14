@@ -699,7 +699,7 @@ function	script	F_GetPlatinumSkills	{
 	default:
 		break;
 	}
-	switch (BaseJob) {
+	switch (BaseSecond) {
 	case Job_Knight:
 		skill "KN_CHARGEATK",1,SKILL_PERM;
 		break;

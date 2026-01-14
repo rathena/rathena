@@ -6670,7 +6670,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20;
       bonus2 bIgnoreDefRaceRate,RC_Player_Human,20;
       bonus bUnbreakableWeapon;
-      if (BaseJob == Job_Crusader)
+      if (BaseSecond == Job_Crusader)
          bonus bAspdRate,20;
   - Id: 1426
     AegisName: Krieger_Onehand_Spear1
@@ -6711,9 +6711,9 @@ Body:
          bonus bAspdRate,10;
       }
       if (getrefine()>8) {
-         if (BaseJob == Job_Knight)
+         if (BaseSecond == Job_Knight)
             bonus4 bAutoSpellOnSkill,"KN_PIERCE","NPC_CRITICALWOUND",2,200;
-         else if (BaseJob == Job_Crusader)
+         else if (BaseSecond == Job_Crusader)
             bonus3 bAutoSpell,"PA_PRESSURE",5,100;
       }
   - Id: 1427
@@ -7661,9 +7661,9 @@ Body:
          bonus2 bIgnoreDefRaceRate,RC_Player_Human,5;
       }
       if (getrefine()>8) {
-         if (BaseJob == Job_Knight)
+         if (BaseSecond == Job_Knight)
             bonus4 bAutoSpellOnSkill,"KN_PIERCE","NPC_CRITICALWOUND",2,200;
-         else if (BaseJob == Job_Crusader)
+         else if (BaseSecond == Job_Crusader)
             bonus3 bAutoSpell,"PA_PRESSURE",5,200;
       }
   - Id: 1487
@@ -9333,7 +9333,7 @@ Body:
       bonus2 bComaRace,RC_DemiHuman,10;
       bonus2 bComaRace,RC_Player_Human,10;
       bonus bAspdRate,getrefine();
-      if (BaseJob == Job_Sage)
+      if (BaseSecond == Job_Sage)
          bonus3 bAutoSpell,"NPC_HELLJUDGEMENT",5,20;
   - Id: 1566
     AegisName: Diary_Of_Great_Basil
@@ -9714,7 +9714,7 @@ Body:
       bonus2 bComaRace,RC_DemiHuman,10;
       bonus2 bComaRace,RC_Player_Human,10;
       bonus bAspdRate,getrefine();
-      if (BaseJob == Job_Sage)
+      if (BaseSecond == Job_Sage)
          bonus3 bAutoSpell,"NPC_HELLJUDGEMENT",5,20;
   - Id: 1580
     AegisName: Encyclopedia_C
@@ -23908,7 +23908,7 @@ Body:
     ArmorLevel: 1
     Script: |
       bonus bMaxHP,70;
-      if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice)
+      if (BaseSecond == Job_Novice || BaseSecond == Job_SuperNovice)
          bonus bMaxHP,30;
   - Id: 2766
     AegisName: Swordman_Figure
@@ -31175,7 +31175,7 @@ Body:
       NoGuildStorage: true
     Script: |
       bonus bBaseAtk,5;
-      if (BaseJob == Job_Rogue)
+      if (BaseSecond == Job_Rogue)
          skill "RG_GANGSTER",1;
   - Id: 5362
     AegisName: Ninja_Scroll
@@ -35141,13 +35141,13 @@ Body:
     EquipLevelMin: 80
     View: 568
     Script: |
-      if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief || (BaseJob == Job_Taekwon && Class!=Job_Soul_Linker))
+      if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief || (BaseSecond == Job_Taekwon && Class!=Job_Soul_Linker))
          bonus bStr,1;
       else if (BaseClass == Job_Mage || BaseClass == Job_Acolyte || class == Job_Ninja || class == Job_Soul_Linker)
          bonus bInt,1;
       else if (BaseClass == Job_Archer || BaseClass == Job_Gunslinger)
          bonus bDex,1;
-      else if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice) {
+      else if (BaseSecond == Job_Novice || BaseSecond == Job_SuperNovice) {
          bonus bMaxHP,80;
          bonus bMaxSP,30;
       }

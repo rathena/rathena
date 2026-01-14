@@ -59,8 +59,8 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 	switch(select("I want to be a merchant.:I want to know more about merchants.:Ask him the requirements to be a merchant.:Nothing.")) {
 	case 1:
 		mes "[Guildsman Mahnsoo]";
-		if(BaseJob != Job_Novice) {
-			if(BaseJob == Job_Merchant) {
+		if(BaseSecond != Job_Novice) {
+			if(BaseSecond == Job_Merchant) {
 				mes ".....? Sorry? What are you saying?";
 				mes "You are already a merchant. Oh my..";
 				mes "Huh?! ...Do I need to laugh right now?!";

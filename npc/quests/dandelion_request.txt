@@ -26,7 +26,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 		mes "to store some of your items.^000000";
 		close;
 	}
-	if(!(BaseLevel > 59) || !(BaseJob == Job_Novice || BaseJob == Job_Super_Novice || BaseClass == Job_Swordman))
+	if(!(BaseLevel > 59) || !(BaseSecond == Job_Novice || BaseSecond == Job_Super_Novice || BaseClass == Job_Swordman))
 	{
 		mes "[Guildsman]";
 		mes "There are rumors";
@@ -45,7 +45,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 	}
 	if(!mao_request)
 	{
-		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice))
+		if ((BaseSecond == Job_Novice) || (BaseSecond == Job_Super_Novice))
 		{
 			mes "[Guildsman]";
 			mes "Excuse me? "+strcharinfo(0)+"?";
@@ -80,7 +80,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 			getitem 7416,1;
 			close;
 		}
-		else if((BaseJob == Job_Swordman) || (BaseJob == Job_Swordman_High))
+		else if((BaseSecond == Job_Swordman) || (BaseSecond == Job_Swordman_High))
 		{
 			mes "[Guildsman]";
 			mes "Hey, " + strcharinfo(0) + "!";
@@ -195,7 +195,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 	}
 	else if(mao_request == 1)
 	{
-		if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice))
+		if ((BaseSecond == Job_Novice) || (BaseSecond == Job_Super_Novice))
 		{
 			mes "[Guildsman]";
 			mes "Ah, I forgot to tell you";
@@ -219,7 +219,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 			mes "Why don't you go check it out?";
 			close;
 		}
-		else if((BaseJob == Job_Swordman) || (BaseJob == Job_Swordman_High))
+		else if((BaseSecond == Job_Swordman) || (BaseSecond == Job_Swordman_High))
 		{
 			mes "[Guildsman]";
 			mes "Right, for this mission,";
@@ -293,7 +293,7 @@ OnTouch:
 	{
 		if(!mao_request)
 		{
-			if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice))
+			if ((BaseSecond == Job_Novice) || (BaseSecond == Job_Super_Novice))
 			{
 				mes "[Guildsman]";
 				mes "Excuse me? "+strcharinfo(0)+"?";
@@ -328,7 +328,7 @@ OnTouch:
 				getitem 7416,1;
 				close;
 			}
-			else if((BaseJob == Job_Swordman) || (BaseJob == Job_Swordman_High))
+			else if((BaseSecond == Job_Swordman) || (BaseSecond == Job_Swordman_High))
 			{
 				mes "[Guildsman]";
 				mes "Hey, " + strcharinfo(0) + "!";
@@ -738,7 +738,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "NOOOOOOO! PLEEEEEASE~!";
 			close;
 		}
-		else if((BaseJob == Job_Merchant) || (BaseJob == Job_Merchant_High))
+		else if((BaseSecond == Job_Merchant) || (BaseSecond == Job_Merchant_High))
 		{
 			mes "[Guildsman]";
 			mes "Well, if it isn't";
@@ -860,7 +860,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "I gonna go, huh? You need me!^000000";
 			close;
 		}
-		else if((BaseJob == Job_Merchant) || (BaseJob == Job_Merchant_High))
+		else if((BaseSecond == Job_Merchant) || (BaseSecond == Job_Merchant_High))
 		{
 			mes "[Guildsman]";
 			mes "So you're gonna represent";
@@ -921,7 +921,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "Yeah, uh, good luck!";
 			close;
 		}
-		else if((BaseJob == Job_Merchant) || (BaseJob == Job_Merchant_High))
+		else if((BaseSecond == Job_Merchant) || (BaseSecond == Job_Merchant_High))
 		{
 			mes "[Guildsman]";
 			mes "So you've been working";
@@ -974,7 +974,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "him forever! So... thanks, man.";
 			close;
 		}
-		else if((BaseJob == Job_Merchant) || (BaseJob == Job_Merchant_High) || (Class == Job_Blacksmith) || (Class == Job_Whitesmith))
+		else if((BaseSecond == Job_Merchant) || (BaseSecond == Job_Merchant_High) || (Class == Job_Blacksmith) || (Class == Job_Whitesmith))
 		{
 			mes "[Guildsman]";
 			mes "It's a nice, quiet";
@@ -1078,7 +1078,7 @@ OnTouch:
 				mes "NOOOOOOO! PLEEEEEASE~!";
 				close;
 			}
-			else if((BaseJob == Job_Merchant) || (BaseJob == Job_Merchant_High))
+			else if((BaseSecond == Job_Merchant) || (BaseSecond == Job_Merchant_High))
 			{
 				mes "[Guildsman]";
 				mes "Well, if it isn't";
@@ -1403,7 +1403,7 @@ morocc,155,56,3	script	Miya	93,3,3,{
 			getitem 7416,1;
 			close;
 		}
-		else if((BaseJob == Job_Thief) || (BaseJob == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
+		else if((BaseSecond == Job_Thief) || (BaseSecond == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
 		{
 			mes "[Miya]";
 			mes "Hey, " + strcharinfo(0) + ",";
@@ -1469,7 +1469,7 @@ morocc,155,56,3	script	Miya	93,3,3,{
 			mes "all he told me, so I'll seeya~";
 			close;
 		}
-		else if((BaseJob == Job_Thief) || (BaseJob == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
+		else if((BaseSecond == Job_Thief) || (BaseSecond == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
 		{
 			mes "[Miya]";
 			mes "There's supposed to be";
@@ -1493,7 +1493,7 @@ morocc,155,56,3	script	Miya	93,3,3,{
 	}
 	else if(((mao_request > 2) && (mao_request < 27)) || ((mao_request > 102) && (mao_request < 125)))
 	{
-		if((Class == Job_Star_Gladiator) || (BaseJob == Job_Thief) || (BaseJob == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
+		if((Class == Job_Star_Gladiator) || (BaseSecond == Job_Thief) || (BaseSecond == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
 		{
 			mes "[Miya]";
 			mes "So how's it been going?";
@@ -1568,7 +1568,7 @@ OnTouch:
 				getitem 7416,1;
 				close;
 			}
-			else if((BaseJob == Job_Thief) || (BaseJob == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
+			else if((BaseSecond == Job_Thief) || (BaseSecond == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
 			{
 				mes "[Miya]";
 				mes "Hey, " + strcharinfo(0) + ",";
@@ -1691,7 +1691,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "Good luck, my friend, and please represent Taekwon Do with pride.";
 			close;
 		}
-		else if((BaseJob == Job_Archer) || (BaseJob == Job_Archer_High) || (Class == Job_Hunter) || (Class == Job_Sniper))
+		else if((BaseSecond == Job_Archer) || (BaseSecond == Job_Archer_High) || (Class == Job_Hunter) || (Class == Job_Sniper))
 		{
 			mes "[Guildsman]";
 			mes "" + strcharinfo(0) + "...?";
@@ -1818,7 +1818,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "Good luck, my friend, and please represent Taekwon Do with pride.";
 			close;
 		}
-		else if((BaseJob == Job_Archer) || (BaseJob == Job_Archer_High) || (Class == Job_Hunter) || (Class == Job_Sniper))
+		else if((BaseSecond == Job_Archer) || (BaseSecond == Job_Archer_High) || (Class == Job_Hunter) || (Class == Job_Sniper))
 		{
 			mes "[Guildsman]";
 			mes "Please take your";
@@ -1871,7 +1871,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "mission is accomplished.";
 			close;
 		}
-		else if((BaseJob == Job_Thief) || (BaseJob == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
+		else if((BaseSecond == Job_Thief) || (BaseSecond == Job_Thief_High) || (Class == Job_Rogue) || (Class == Job_Stalker))
 		{
 			mes "[Guildsman]";
 			mes "It's good to see that";
@@ -1964,7 +1964,7 @@ OnTouch:
 				mes "Good luck, my friend, and please represent Taekwon Do with pride.";
 				close;
 			}
-			else if((BaseJob == Job_Archer) || (BaseJob == Job_Archer_High) || (Class == Job_Hunter) || (Class == Job_Sniper))
+			else if((BaseSecond == Job_Archer) || (BaseSecond == Job_Archer_High) || (Class == Job_Hunter) || (Class == Job_Sniper))
 			{
 				mes "[Guildsman]";
 				mes "" + strcharinfo(0) + "...?";
@@ -2386,7 +2386,7 @@ que_job01,82,95,3	script	Bar Master	46,{
 		mes "little pub. What";
 		mes "will you be having?";
 	}
-	else if(BaseJob == Job_Thief || BaseJob == Job_Thief_High || Class == Job_Rogue || Class == Job_Stalker)
+	else if(BaseSecond == Job_Thief || BaseSecond == Job_Thief_High || Class == Job_Rogue || Class == Job_Stalker)
 	{
 		mes "[Master]";
 		mes "Huh. How did";

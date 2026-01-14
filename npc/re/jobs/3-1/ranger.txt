@@ -26,7 +26,7 @@
 
 tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 	mes "[Survival Instructor, Rescue]";
-	if (BaseJob == Job_Hunter) {
+	if (BaseSecond == Job_Hunter) {
 		if (job_ranger01 < 1) {
 			mes "eeeeei~ ha!";
 			mes "The weather is really great.";
@@ -315,7 +315,7 @@ tur_dun01,156,36,5	script	Survival Instructor#jr01	59,{
 
 tur_dun01,91,169,3	script	Test Instructor#jr02	732,{
 	mes "[Test Instructor, Teardrop]";
-	if (BaseJob == Job_Hunter) {
+	if (BaseSecond == Job_Hunter) {
 		if (job_ranger01 < 3) {
 			mes "Good to goooooo!!!!!!!";
 			next;
@@ -1707,7 +1707,7 @@ job3_rang01,90,43,3	script	Ranger Master#jr_29	832,{
 			mes "Please unequip your riding pet and try again!";
 			close;
 		}
-		if (BaseJob != Job_Hunter) {
+		if (BaseSecond != Job_Hunter) {
 			mes "Wait, who are you?";
 			mes "You are not a Hunter or a Sniper?!";
 			next;

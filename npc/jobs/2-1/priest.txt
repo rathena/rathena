@@ -45,8 +45,8 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 			mes "Do not let evil conquer your soul. You have enough courage and power to overcome the hardest situation. May God bless you...";
 			close;
 	}
-	if (BaseJob != Job_Acolyte) {
-		if (BaseJob == Job_Priest) {
+	if (BaseSecond != Job_Acolyte) {
+		if (BaseSecond == Job_Priest) {
 			mes "[Bishop Paul]";
 			mes "Ah...";
 			if (Sex == SEX_MALE)
@@ -534,8 +534,8 @@ prt_church,16,41,4	script	High Bishop#prst	60,{
 
 prt_church,27,24,1	script	Sister Cecilia	79,{
 	mes "[Sister Cecilia]";
-	if (BaseJob != Job_Acolyte) {
-		if (BaseJob == Job_Priest) {
+	if (BaseSecond != Job_Acolyte) {
+		if (BaseSecond == Job_Priest) {
 			mes "May god bless you, "+ (Sex == SEX_MALE ? "brother":"sister") +". It brings my heart joy to see that you working hard to carry out the will of God.";
 		} else if (Class == Job_Novice) {
 			mes "May god bless you, "+ (Sex == SEX_MALE ? "brother":"sister") +".";
@@ -846,7 +846,7 @@ prt_church,27,24,1	script	Sister Cecilia	79,{
 //==========================================================
 job_prist,24,187,4	script	Peter S. Alberto	110,{
 	mes "[Father Peter]";
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		mes "Welcome!";
 		if (Sex == SEX_MALE)
 			mes "Brother "+ strcharinfo(0) +"!";
@@ -1035,7 +1035,7 @@ OnDisable:
 
 job_prist,23,187,1	script	Peter S. Alberto#2	110,{
 	mes "[Father Peter]";
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		mes "Welcome!";
 		if (Sex == SEX_MALE)
 			mes "Brother "+ strcharinfo(0) +"!";
@@ -1165,7 +1165,7 @@ OnMyMobDead:
 
 job_prist,24,44,0	script	Zombie Info	-1,1,1,{
 OnTouch_:
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		mes "[Father Peter]";
 		mes "When the Priest applicant enters, 5 minutes will be given to complete this trial. Proceed slowly and help your Acolyte.";
 		next;
@@ -1179,7 +1179,7 @@ OnTouch_:
 		mes "5 minutes. Best of luck~";
 		close;
 	}
-	else if (BaseJob == Job_Acolyte){
+	else if (BaseSecond == Job_Acolyte){
 		mes "[Father Peter]";
 		mes "I will give you exactly 5 minutes! You must proceed slowly and eliminate the Zombies.";
 		next;
@@ -1196,7 +1196,7 @@ OnInit:
 	end;
 
 OnTouch_:
-	if (BaseJob == Job_Acolyte) {
+	if (BaseSecond == Job_Acolyte) {
 		donpcevent "Zombie_Generator#prst::Onm1";
 		donpcevent "Zombie1_1::OnDisable";
 	}
@@ -1217,7 +1217,7 @@ OnInit:
 	end;
 
 OnTouch_:
-	if (BaseJob == Job_Acolyte) {
+	if (BaseSecond == Job_Acolyte) {
 		donpcevent "Zombie_Generator#prst::Onm2";
 		donpcevent "Zombie2_1::OnDisable";
 	}
@@ -1238,7 +1238,7 @@ OnInit:
 	end;
 
 OnTouch_:
-	if (BaseJob == Job_Acolyte) {
+	if (BaseSecond == Job_Acolyte) {
 		donpcevent "Zombie_Generator#prst::Onm3";
 		donpcevent "Zombie3_1::OnDisable";
 	}
@@ -1259,7 +1259,7 @@ OnInit:
 	end;
 
 OnTouch_:
-	if (BaseJob == Job_Acolyte) {
+	if (BaseSecond == Job_Acolyte) {
 		donpcevent "Zombie_Generator#prst::Onm4";
 		donpcevent "Zombie4_1::OnDisable";
 	}
@@ -1279,7 +1279,7 @@ OnInit:
 	end;
 
 OnTouch_:
-	if (BaseJob == Job_Acolyte) {
+	if (BaseSecond == Job_Acolyte) {
 		donpcevent "Zombie_Generator#prst::Onm5";
 		donpcevent "Zombie5_1::OnDisable";
 	}
@@ -1296,7 +1296,7 @@ OnDisable:
 job_prist,24,109,4	script	prst1_1	45,3,3,{
 OnTouch_:
 	set .@mobs,getvariableofnpc(.MyMobs,"Zombie_Generator#prst");
-	if (BaseJob == Job_Priest) warp "job_prist",168,17;
+	if (BaseSecond == Job_Priest) warp "job_prist",168,17;
 	else if (BaseClass == Job_Acolyte && .@mobs < 1) {
 		warp "job_prist",168,17;
 		donpcevent "Zombie_Generator#prst::OnDisable";
@@ -1311,7 +1311,7 @@ OnTouch_:
 //==========================================================
 job_prist,168,45,4	script	Deviruchi#prst	1109,8,1,{
 OnTouch_:
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		mes "[Deviruchi]";
 		mes "Whaaaaat...?";
 		mes "What are you";
@@ -1412,7 +1412,7 @@ OnTouch_:
 
 job_prist,168,80,4	script	Doppelganger#prst	1046,8,1,{
 OnTouch_:
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		mes "[Doppelganger]";
 		mes "What are you doing here? You've already made your choice, there's no going back... Priest.";
 		next;
@@ -1481,7 +1481,7 @@ OnTouch_:
 
 job_prist,168,115,4	script	Dark Lord#prst	1272,8,1,{
 OnTouch_:
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		mes "[Dark Lord]";
 		mes "^330033All is doom, darkness and despair! Those who love you will betray you, and all that will be left is grieving and fury!^000000";
 		next;
@@ -1538,7 +1538,7 @@ OnTouch_:
 
 job_prist,168,150,4	script	Baphomet#prst	736,8,1,{
 OnTouch_:
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		mes "[Baphomet]";
 		mes "I hate";
 		mes "Priests...";
@@ -1600,7 +1600,7 @@ OnTouch_:
 
 job_prist,168,180,4	script	prst2_1	45,3,3,{
 OnTouch_:
-	if (BaseJob == Job_Priest) warp "job_prist",98,40;
+	if (BaseSecond == Job_Priest) warp "job_prist",98,40;
 	else if (BaseClass == Job_Acolyte) {
 		warp "job_prist",98,40;
 		donpcevent "Mummy_Generator::OnEnable";
@@ -1648,7 +1648,7 @@ OnInit:
 	end;
 
 OnTouch_:
-	if (BaseJob == Job_Acolyte) {
+	if (BaseSecond == Job_Acolyte) {
 		donpcevent "Mummy_Generator::Onm1";
 		donpcevent "Mummy1_1::OnDisable";
 	}
@@ -1669,7 +1669,7 @@ OnInit:
 	end;
 
 OnTouch_:
-	if (BaseJob == Job_Acolyte) {
+	if (BaseSecond == Job_Acolyte) {
 		donpcevent "Mummy_Generator::Onm2";
 		donpcevent "Mummy2_1::OnDisable";
 	}
@@ -1690,7 +1690,7 @@ OnInit:
 	end;
 
 OnTouch_:
-	if (BaseJob == Job_Acolyte) {
+	if (BaseSecond == Job_Acolyte) {
 		donpcevent "Mummy_Generator::Onm3";
 		donpcevent "Mummy3_1::OnDisable";
 	}
@@ -1707,7 +1707,7 @@ OnDisable:
 
 job_prist,98,105,4	script	prst3_1	45,3,3,{
 OnTouch_:
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		warp "prt_church",15,36;
 		end; 
 	}

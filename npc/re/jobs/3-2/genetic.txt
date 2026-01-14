@@ -21,7 +21,7 @@
 alde_alche,35,186,5	script	Alchemist Union Member	805,{
 	mes "[Alchemist Union Member]";
 	if (BaseLevel > 98 && JobLevel > 49){
-		if (BaseJob == Job_Alchemist) {
+		if (BaseSecond == Job_Alchemist) {
 			if (SkillPoint != 0) {
 				mes "- You still have unused skill points. Come back when you have used all of them. -";
 				close;
@@ -515,7 +515,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			close;
 		}
 		mes "[Devries]";
-		if (BaseJob != Job_Alchemist || BaseLevel < 99 || JobLevel < 50) {
+		if (BaseSecond != Job_Alchemist || BaseLevel < 99 || JobLevel < 50) {
 			mes "Oh, it looks like you're not ready to hear it.";
 			close;
 		}

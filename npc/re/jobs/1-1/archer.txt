@@ -65,8 +65,8 @@ payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 	switch(select("I want to be an Archer.:I need the requirements, please.:Nothing, thanks.")) {
 	case 1:
 		mes "[Archer Guildsman]";
-		if(BaseJob != Job_Novice) {
-			if(BaseJob == Job_Archer)
+		if(BaseSecond != Job_Novice) {
+			if(BaseSecond == Job_Archer)
 				mes "Haha, you are kidding me...";
 			else {
 				mes "I feel sorry but only Novices can change their job.";

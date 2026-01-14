@@ -54,7 +54,7 @@ OnTouch:
 		setquest 5131;
 		set job_kagero,1;
 		close;
-	} else if (BaseJob != Job_Ninja && job_kagero > 0) {
+	} else if (BaseSecond != Job_Ninja && job_kagero > 0) {
 		for (set .@i,5131; .@i<=5146; set .@i,.@i+1)
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
@@ -103,7 +103,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "You don't need to carry so many things."; //custom translation
 		close;
 	}
-	if (BaseJob != Job_Ninja) {
+	if (BaseSecond != Job_Ninja) {
 		for (set .@i,5131; .@i<=5146; set .@i,.@i+1)
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
@@ -756,7 +756,7 @@ L_StartTest:
 // Test of Knowledge
 //============================================================
 job_ko,81,124,4	script	Kuuga Gai#ko	730,{
-	if (BaseJob != Job_Ninja) {
+	if (BaseSecond != Job_Ninja) {
 		for (set .@i,5131; .@i<=5146; set .@i,.@i+1)
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
@@ -1931,7 +1931,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		mes "Go reduce your weight! This test will be too difficult otherwise...";  //custom translation
 		close;
 	}
-	if (BaseJob != Job_Ninja) {
+	if (BaseSecond != Job_Ninja) {
 		for (set .@i,5131; .@i<=5146; set .@i,.@i+1)
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;

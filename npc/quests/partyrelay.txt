@@ -2560,7 +2560,7 @@ payon,168,314,3	script	Lospii#payon::RelayLospii	706,{
 		mes "Just only those times, okay?";
 		close;
 	}
-	if ((countitem(7740) > 0) && (.@relaytime >= 8) && (.@relaytime < 11) && ((BaseJob == Job_Archer) || (BaseJob == Job_Merchant))) {
+	if ((countitem(7740) > 0) && (.@relaytime >= 8) && (.@relaytime < 11) && ((BaseSecond == Job_Archer) || (BaseSecond == Job_Merchant))) {
 		mes "[Lospii]";
 		mes "Hi, I'm Lospii! Maybe";
 		mes "I'm younger than you, but";

@@ -20,7 +20,7 @@
 
 ve_in,237,125,0	script	King Crab#job_shu	107,{
 	if (job_shu == 0) {
-		if (BaseJob == Job_Monk && BaseLevel >= 99 && JobLevel >= 50) {
+		if (BaseSecond == Job_Monk && BaseLevel >= 99 && JobLevel >= 50) {
 			set .@job_check,1;
 			if (VIP_SCRIPT) {
 				callfunc "VIP_Third_Class";
@@ -178,7 +178,7 @@ ve_in,244,126,3	script	Waitress#job_shu	69,{
 		mes "I hope there is someone who can scold them for me.";
 		close;
 	} else if (job_shu == 1) {
-		if (BaseJob == Job_Monk) {
+		if (BaseSecond == Job_Monk) {
 			mes "Oh dear~";
 			mes "I really appreciate you, "+jobname(Class)+", for helping me a while ago.";
 			next;
@@ -774,7 +774,7 @@ sword_1-1,223,167,2	script	Master#job_shu	483,{
 			mes "Please go practice some more.";
 			close;
 		}
-		if (BaseJob != Job_Monk) {
+		if (BaseSecond != Job_Monk) {
 			mes "Hmm?";
 			close;
 		}

@@ -51,8 +51,8 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "May god bless your body and soul, warrior. I hope you will show your courage and protect those who are weaker than you.";
 		close;
 	}
-	if (BaseJob != Job_Swordman) {
-		if (BaseJob == Job_Knight) {
+	if (BaseSecond != Job_Swordman) {
+		if (BaseSecond == Job_Knight) {
 			mes "Ah, a member of our Chivalry.";
 			mes "I hope you are living up to my expectations. We have vowed to be strong for our kingdom, even if death is upon us...";
 			close;
@@ -468,8 +468,8 @@ L_Mission:
 
 prt_in,75,107,4	script	Sir Andrew#knt	65,{
 	mes "[Sir Andrew]";
-	if (BaseJob != Job_Swordman) {
-		if (BaseJob == Job_Knight) {
+	if (BaseSecond != Job_Swordman) {
+		if (BaseSecond == Job_Knight) {
 			mes "You must be";
 			mes "a member of";
 			mes "the Chivalry.";
@@ -672,8 +672,8 @@ prt_in,75,107,4	script	Sir Andrew#knt	65,{
 
 prt_in,71,91,0	script	Sir Siracuse#knt	65,{
 	mes "[Sir Siracuse]";
-	if (BaseJob != Job_Swordman) {
-		if (BaseJob == Job_Knight) {
+	if (BaseSecond != Job_Swordman) {
+		if (BaseSecond == Job_Knight) {
 			mes "Hey there!";
 			mes "How are you doing?";
 			mes "The Chivalry's been";
@@ -1064,8 +1064,8 @@ prt_in,79,94,4	script	Sir Windsor#knt	733,{
 	mes "......";
 	next;
 	mes "[Sir Windsor]";
-	if (BaseJob != Job_Swordman) {
-		if (BaseJob == Job_Knight) mes "Protect.";
+	if (BaseSecond != Job_Swordman) {
+		if (BaseSecond == Job_Knight) mes "Protect.";
 		else if (BaseClass == Job_Novice) {
 			mes "...Go play";
 			mes "outside.";
@@ -1448,8 +1448,8 @@ OnTimer182000:
 //==========================================================
 prt_in,69,107,6	script	Lady Amy#knt	728,{
 	mes "[Lady Amy]";
-	if (BaseJob != Job_Swordman) {
-		if (BaseJob == Job_Knight) {
+	if (BaseSecond != Job_Swordman) {
+		if (BaseSecond == Job_Knight) {
 			mes "Oh...!";
 			mes "I wonder, why";
 			mes "have you come";
@@ -1790,8 +1790,8 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 //==========================================================
 prt_in,70,99,6	script	Sir Edmond#knt	734,{
 	mes "[Sir Edmond]";
-	if (BaseJob != Job_Swordman) {
-		if (BaseJob == Job_Knight) {
+	if (BaseSecond != Job_Swordman) {
+		if (BaseSecond == Job_Knight) {
 			mes "Think of your";
 			mes "mind as if it were";
 			mes "flowing water.";
@@ -2005,8 +2005,8 @@ OnTouch_:
 //==========================================================
 prt_in,87,92,4	script	Sir Gray#knt	119,{
 	mes "[Sir Gray]";
-	if (BaseJob != Job_Swordman) {
-		if (BaseJob == Job_Knight) {
+	if (BaseSecond != Job_Swordman) {
+		if (BaseSecond == Job_Knight) {
 			mes "The glint of light";
 			mes "that shines off this blade cannot be put into words. This is the weapon every Knight must have.";
 			next;
@@ -2041,7 +2041,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 					close;
 				}
 				else {
-					if ((Zeny > 73999) && (countitem(999) > 0) && (BaseJob == Job_Knight)) {
+					if ((Zeny > 73999) && (countitem(999) > 0) && (BaseSecond == Job_Knight)) {
 						mes "[Sir Gray]";
 						mes "You are ready!";
 						mes "You must know the";

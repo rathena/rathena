@@ -72,7 +72,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 		mes "I never misunderstand people...oh well, be safe anyway!";
 		close;
 	}
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		if (SkillPoint) {
 			mes "[Rogue Guildsman]";
 			mes "Yo, what are you doin'?!";
@@ -456,7 +456,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 			close;
 		}
 	}
-	else if (BaseJob == Job_Assassin) {
+	else if (BaseSecond == Job_Assassin) {
 		mes "[Rogue Guildsman]";
 		mes "Huh...?";
 		mes "What's an Assassin doin' here? Uh, you haven't been assigned to kill someone in the Rogue Guild, are you?";
@@ -468,7 +468,7 @@ in_rogue,363,122,4	script	Rogue Guildsman#rg	747,{
 		mes "Don't get it, huh? It's something I always used to say to Huey. If you're in the Assassin Guild, you oughta have met him...";
 		close;
 	}
-	else if (BaseJob == Job_Rogue) {
+	else if (BaseSecond == Job_Rogue) {
 		mes "[Markie]";
 		mes "Hey hey~";
 		mes "Long time no see.";
@@ -1314,7 +1314,7 @@ OnTouch_:
 
 in_rogue,200,389,0	script	gen_ro#1	-1,3,3,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",200,389,"Zombie",1015,1,"gen_ro#1::OnMyMobDead";
 		monster "in_rogue",201,389,"Zombie",1015,1,"gen_ro#1::OnMyMobDead";
 		donpcevent "gen_ro#2::OnDisable";
@@ -1335,7 +1335,7 @@ OnMyMobDead:
 
 in_rogue,100,389,0	script	gen_ro#2	-1,3,3,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",100,389,"Mummy",1041,1,"gen_ro#2::OnMyMobDead";
 		donpcevent "gen_ro#1::OnDisable";
 	}
@@ -1353,7 +1353,7 @@ OnMyMobDead:
 
 in_rogue,150,389,0	script	gen_ro#3	-1,3,3,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",145,389,"Zombie",1015,1,"gen_ro#3::OnMyMobDead";
 		monster "in_rogue",143,389,"Mummy",1041,1,"gen_ro#3::OnMyMobDead";
 		donpcevent "gen_ro#2::OnDisable";
@@ -1372,7 +1372,7 @@ OnMyMobDead:
 
 in_rogue,250,389,0	script	gen_ro#4	-1,3,3,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",200,389,"Abysmal Knight",1219,1,"gen_ro#4::OnMyMobDead";
 		donpcevent "gen_ro#3::OnDisable";
 	}
@@ -1459,7 +1459,7 @@ in_rogue,244,39,1	script	Aragham Junior#rg	99,{
 		mes "when you're ready.";
 		close;
 	}
-	else if (BaseJob != Job_Rogue) {
+	else if (BaseSecond != Job_Rogue) {
 		mes "[Aragham Jr.]";
 		mes "Huh...?";
 		mes "Who are you?!";
@@ -1539,7 +1539,7 @@ in_rogue,160,34,1	script	Hollgrehenn junior#rg	85,{
 		mes "when you're ready.";
 		close;
 	}
-	else if (BaseJob != Job_Rogue) {
+	else if (BaseSecond != Job_Rogue) {
 		mes "[Hollgrehenn Jr.]";
 		mes "Huh...?";
 		mes "You're not from";
@@ -1634,7 +1634,7 @@ in_rogue,177,109,1	script	Antonio junior#rg	88,{
 		mes "the test.";
 		close;
 	}
-	else if (BaseJob != Job_Rogue) {
+	else if (BaseSecond != Job_Rogue) {
 		mes "Huh...?";
 		mes "Who are you?!";
 		mes "You're not from";
@@ -1662,7 +1662,7 @@ OnTouch_:
 
 in_rogue,15,184,0	script	mob_rogue#1	-1,8,1,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",14,187,"Zombie",1015,1,"mob_rogue#1::OnMyMobDead";
 		monster "in_rogue",15,188,"Zombie",1015,1,"mob_rogue#1::OnMyMobDead";
 		monster "in_rogue",16,189,"Zombie",1015,1,"mob_rogue#1::OnMyMobDead";
@@ -1684,7 +1684,7 @@ OnMyMobDead:
 
 in_rogue,15,273,0	script	mob_rogue#2	-1,8,1,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",15,276,"Mummy",1041,1,"mob_rogue#2::OnMyMobDead";
 		monster "in_rogue",13,276,"Mummy",1041,1,"mob_rogue#2::OnMyMobDead";
 		monster "in_rogue",11,276,"Mummy",1041,1,"mob_rogue#2::OnMyMobDead";
@@ -1703,7 +1703,7 @@ OnMyMobDead:
 
 in_rogue,15,333,0	script	mob_rogue#3	-1,8,1,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",15,336,"Zombie",1015,1,"mob_rogue#3::OnMyMobDead";
 		monster "in_rogue",15,336,"Zombie",1015,1,"mob_rogue#3::OnMyMobDead";
 		monster "in_rogue",15,336,"Zombie",1015,1,"mob_rogue#3::OnMyMobDead";
@@ -1726,7 +1726,7 @@ OnMyMobDead:
 
 in_rogue,39,341,0	script	mob_rogue#4	-1,1,8,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",39,341,"Mummy",1041,1,"mob_rogue#4::OnMyMobDead";
 		monster "in_rogue",40,341,"Ghoul",1036,1,"mob_rogue#4::OnMyMobDead";
 		monster "in_rogue",41,341,"Abysmal Knight",1219,1,"mob_rogue#4::OnMyMobDead";
@@ -1746,7 +1746,7 @@ OnMyMobDead:
 
 in_rogue,102,334,0	script	mob_rogue#5	-1,1,4,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",92,334,"Khalitzburg",1132,1,"mob_rogue#5::OnMyMobDead";
 		donpcevent "mob_rogue#1::OnDisable";
 		donpcevent "mob_rogue#2::OnDisable";
@@ -1766,7 +1766,7 @@ OnMyMobDead:
 
 in_rogue,58,309,0	script	mob_rogue#6	-1,4,1,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",57,301,"Khalitzburg",1132,1,"mob_rogue#6::OnMyMobDead";
 		donpcevent "mob_rogue#1::OnDisable";
 		donpcevent "mob_rogue#2::OnDisable";
@@ -1786,7 +1786,7 @@ OnMyMobDead:
 
 in_rogue,101,264,0	script	mob_rogue#7	-1,5,5,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",101,264,"Abysmal Knight",1219,1,"mob_rogue#7::OnMyMobDead";
 		monster "in_rogue",102,264,"Abysmal Knight",1219,1,"mob_rogue#7::OnMyMobDead";
 	}
@@ -1804,7 +1804,7 @@ OnMyMobDead:
 
 in_rogue,140,312,0	script	mob_rogue#8	-1,5,5,{
 OnTouch_:
-	if (BaseJob == Job_Thief)
+	if (BaseSecond == Job_Thief)
 		monster "in_rogue",140,312,"Abysmal Knight",1219,1,"mob_rogue#8::OnMyMobDead";
 	else
 		warp "mag_dun02",181,176;
@@ -1820,7 +1820,7 @@ OnMyMobDead:
 
 in_rogue,139,246,0	script	mob_rogue#9	-1,4,4,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",139,246,"Zombie",1015,1,"mob_rogue#9::OnMyMobDead";
 		monster "in_rogue",149,246,"Zombie",1015,1,"mob_rogue#9::OnMyMobDead";
 		monster "in_rogue",140,246,"Zombie",1015,1,"mob_rogue#9::OnMyMobDead";
@@ -1842,7 +1842,7 @@ OnMyMobDead:
 
 in_rogue,197,249,0	script	mob_rogue#10	-1,1,8,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",176,211,"Ghoul",1036,1,"mob_rogue#10::OnMyMobDead";
 		monster "in_rogue",176,212,"Zombie",1015,1,"mob_rogue#10::OnMyMobDead";
 		monster "in_rogue",176,213,"Zombie",1015,1,"mob_rogue#10::OnMyMobDead";
@@ -1877,7 +1877,7 @@ OnMyMobDead:
 
 in_rogue,96,205,0	script	mob_rogue#11	-1,1,8,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		donpcevent "mob_rogue#7::OnDisable";
 		donpcevent "mob_rogue#8::OnDisable";
 		donpcevent "mob_rogue#9::OnDisable";
@@ -1890,7 +1890,7 @@ OnTouch_:
 
 in_rogue,86,187,0	script	mob_rogue#12	-1,1,8,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",90,187,"Mummy",1041,1,"mob_rogue#12::OnMyMobDead";
 		monster "in_rogue",90,183,"Mummy",1041,1,"mob_rogue#12::OnMyMobDead";
 		monster "in_rogue",90,190,"Mummy",1041,1,"mob_rogue#12::OnMyMobDead";
@@ -1909,7 +1909,7 @@ OnMyMobDead:
 
 in_rogue,223,187,0	script	mob_rogue#13	-1,1,8,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",236,186,"Abysmal Knight",1219,1,"mob_rogue#13::OnMyMobDead";
 		monster "in_rogue",238,186,"Abysmal Knight",1219,1,"mob_rogue#13::OnMyMobDead";
 		monster "in_rogue",234,186,"Abysmal Knight",1219,1,"mob_rogue#13::OnMyMobDead";
@@ -1929,7 +1929,7 @@ OnMyMobDead:
 
 in_rogue,233,207,0	script	mob_rogue#14	-1,8,3,{
 OnTouch_:
-	if (BaseJob == Job_Thief)
+	if (BaseSecond == Job_Thief)
 		donpcevent "mob_rogue#13::OnDisable";
 	else
 		warp "mag_dun02",181,176;
@@ -1938,7 +1938,7 @@ OnTouch_:
 
 in_rogue,244,319,0	script	mob_rogue#15	-1,1,8,{
 OnTouch_:
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		monster "in_rogue",240,319,"Mummy",1041,1,"mob_rogue#15::OnMyMobDead";
 		monster "in_rogue",259,319,"Archer Skeleton",1016,1,"mob_rogue#15::OnMyMobDead";
 		monster "in_rogue",259,320,"Ghoul",1036,1,"mob_rogue#15::OnMyMobDead";
@@ -1960,7 +1960,7 @@ OnMyMobDead:
 
 in_rogue,334,319,0	script	mob_rogue#16	-1,8,8,{
 OnTouch_:
-	if (BaseJob == Job_Thief)
+	if (BaseSecond == Job_Thief)
 		donpcevent "mob_rogue#15::OnDisable";
 	else
 		warp "mag_dun02",181,176;

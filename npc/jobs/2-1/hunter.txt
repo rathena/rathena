@@ -88,7 +88,7 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 		mes "Oops! I'm sorry, I could have sworn that we've met before. Huh. How weird.";
 		close;
 	}
-	if (BaseJob == Job_Archer && JobLevel < 40) {
+	if (BaseSecond == Job_Archer && JobLevel < 40) {
 		mes "[Hunter Guildsman]";
 		mes "Eh? You haven't had enough training as an Archer yet. To become a Hunter, you must gain a certain level of experience as an Archer first.";
 		next;
@@ -137,13 +137,13 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 		mes "This place doesn't have anything worth stealing or anyone worth killing!!";
 		close;
 	}
-	else if (BaseJob == Job_Dancer || BaseJob == Job_Bard) {
+	else if (BaseSecond == Job_Dancer || BaseSecond == Job_Bard) {
 		mes "[Hunter Guildsman]";
 		mes "Phew...sometimes it is really hard for being a hunter, you know...";
 		mes "So how do you like your bohemian life? Yeah, I am envious of you for having so much freedom...";
 		close;
 	}
-	else if (BaseJob == Job_Hunter) {
+	else if (BaseSecond == Job_Hunter) {
 		mes "[Hunter Sherin]";
 		mes "Oh~ " + strcharinfo(0) + "!!";
 		mes "Long time no see~ What brings you here? Did your Falcon run away or something?";
@@ -152,7 +152,7 @@ hu_in01,386,373,4	script	Hunter Guildsman#hnt	727,{
 		mes "I don't really have any official notices from the guild at the moment, so I hope you didn't come here just for that...";
 		close;
 	}
-	else if (BaseJob == Job_Archer) {
+	else if (BaseSecond == Job_Archer) {
 		if (HNTR_Q == 17 && countitem(1007) == 0) {
 			mes "[Hunter Sherin]";
 			mes "Hmm... I've been informed that you passed the test. But you don't have the necessary 'Necklace of Wisdom (Penetration)' that proves your accomplishment.";

@@ -77,12 +77,12 @@ payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 	next;
 	switch(select("I want to be an Archer.:I need the requirements, please.:Nothing, thanks.")) {
 	case 1:
-		if (BaseJob == Job_Archer) {
+		if (BaseSecond == Job_Archer) {
 			mes "[Archer Guildsman]";
 			mes "You've already become an Archer...";
 			close;
 		}
-		else if (BaseJob != Job_Archer && BaseJob != Job_Novice) {
+		else if (BaseSecond != Job_Archer && BaseSecond != Job_Novice) {
 			mes "[Archer Guildsman]";
 			mes "Hmm...";
 			mes "You don't look much like a Novice at all...";
@@ -214,8 +214,8 @@ payon_in02,64,71,4	script	Archer Guildsman#archer	85,{
 	case 2:
 		mes "[Archer Guildsman]";
 		mes "I will explain the requirements for being an Archer.";
-		if (BaseJob != Job_Novice) {
-			if (BaseJob == Job_Archer) {
+		if (BaseSecond != Job_Novice) {
+			if (BaseSecond == Job_Archer) {
 				next;
 				mes "[Archer Guildsman]";
 				mes "But...";

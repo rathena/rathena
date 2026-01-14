@@ -1000,7 +1000,7 @@ izlude_in,82,163,3	script	Shurank	733,{
 // Daqu'ee
 //============================================================
 geffen,154,143,3	script	Dequ'ee	734,{
-	if(BaseJob == Job_Novice){
+	if(BaseSecond == Job_Novice){
 		mes "[Dequ'ee]";
 		mes "Hey there.";
 		mes "Frustrated with";

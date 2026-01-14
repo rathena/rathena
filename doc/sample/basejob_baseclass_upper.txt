@@ -12,7 +12,7 @@ prontera,155,177,1	script	Tell Me	725,{
 	mes "[Tell Me]";
 	mes "Class: " + Class;
 	mes "BaseClass: " + BaseClass;
-	mes "BaseJob: " + BaseJob;
+	mes "BaseSecond: " + BaseSecond;
 	mes "Upper: " + Upper;
 	close;
 }

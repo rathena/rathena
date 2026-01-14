@@ -21,7 +21,7 @@ gonryun,180,118,4	script	Iron man#gnp	85,{
 		mes "- after you lose some weight. -";
 		close;
 	}
-	if (BaseJob == Job_Novice) {
+	if (BaseSecond == Job_Novice) {
 		mes "[Songmoodoo]";
 		mes "Children are not allowed in here.";
 		close;
@@ -44,8 +44,8 @@ gonryun,180,118,4	script	Iron man#gnp	85,{
 			next;
 			mes "^0000FFSongmoodoo points to a rock";
 			mes "and asks you to lift it.";
-			if (BaseJob < Job_Knight) callsub L_Lifting,690;
-			else if (BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Merchant || BaseJob == Job_Monk) callsub L_Lifting,1100;
+			if (BaseSecond < Job_Knight) callsub L_Lifting,690;
+			else if (BaseClass == Job_Swordman || BaseClass == Job_Thief || BaseClass == Job_Merchant || BaseSecond == Job_Monk) callsub L_Lifting,1100;
 			else callsub L_Lifting,730;
 			break;
 		case 2:
@@ -114,7 +114,7 @@ L_Lifting:
 
 gon_test,50,14,4	script	Administrator#gnp	780,{
 	mes "[Administrator]";
-	if (BaseJob == Job_Novice) {
+	if (BaseSecond == Job_Novice) {
 		mes "Children are not allowed in here.";
 		close;
 	}

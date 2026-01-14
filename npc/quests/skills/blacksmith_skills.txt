@@ -14,7 +14,7 @@
 //============================================================
 
 geffen,178,72,3	script	Akkie#qsk_bs	726,{
-	if (BaseJob != Job_Blacksmith) {
+	if (BaseSecond != Job_Blacksmith) {
 		mes "[Akkie]";
 		mes "Ah, today seems like";
 		mes "a perfect day for forging.";
@@ -469,7 +469,7 @@ geffen,178,72,3	script	Akkie#qsk_bs	726,{
 }
 
 geffen,172,52,1	script	Goodman#qsk_bs	826,{
-	if (BaseJob != Job_Blacksmith) {
+	if (BaseSecond != Job_Blacksmith) {
 		mes "[Goodman]";
 		mes "I feel like exploring";
 		mes "the mountains to look for";

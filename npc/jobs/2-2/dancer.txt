@@ -99,8 +99,8 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		cutin "",255;
 		end;
 	}
-	if (BaseJob != Job_Archer) {
-		if (BaseJob == Job_Bard) {
+	if (BaseSecond != Job_Archer) {
+		if (BaseSecond == Job_Bard) {
 			cutin "job_dancer_eir01",2;
 			mes "[Aile]";
 			mes "Welcome~!";
@@ -110,7 +110,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 			cutin "",255;
 			end;
 		}
-		else if (BaseJob == Job_Dancer) {
+		else if (BaseSecond == Job_Dancer) {
 			cutin "",2;
 			mes "[Aile]";
 			mes "Welcome~!";
@@ -133,7 +133,7 @@ job_duncer,43,93,4	script	Aile#da	724,{
 		cutin "",255;
 		end;
 	}
-	if (DANC_Q == 0 && Sex == SEX_FEMALE && BaseJob == Job_Archer) {
+	if (DANC_Q == 0 && Sex == SEX_FEMALE && BaseSecond == Job_Archer) {
 		cutin "job_dancer_eir01",2;
 		mes "[Aile]";
 		mes "Welcome~!";
@@ -419,14 +419,14 @@ job_duncer,95,93,4	script	Bijou#da	101,{
 		mes "and come back later.";
 		close;
 	}
-	if (BaseJob != Job_Archer) {
-		if (BaseJob == Job_Bard) {
+	if (BaseSecond != Job_Archer) {
+		if (BaseSecond == Job_Bard) {
 			mes "[Bijou]";
 			mes "Welcome~";
 			mes "Ooh, a Bard! Do you have any new songs to show us? We can always use some musical accompaniment for our dances.";
 			close;
 		}
-		else if (BaseJob == Job_Dancer) {
+		else if (BaseSecond == Job_Dancer) {
 			mes "[Bijou]";
 			mes "Oh my...!";
 			mes "Welcome back~";

@@ -28,7 +28,7 @@
 //============================================================
 
 prontera,174,328,3	script	Young Man#bard_q1	89,3,3,{
-	if (BaseJob == Job_Bard) {
+	if (BaseSecond == Job_Bard) {
 		emotion ET_HUK;
 		mes "[Timid Young Man]";
 		mes "Eh? Wwwaaaah--!";
@@ -373,14 +373,14 @@ prontera,174,328,3	script	Young Man#bard_q1	89,3,3,{
 	}
 
 OnTouch:
-	if (BaseJob == Job_Bard) {
+	if (BaseSecond == Job_Bard) {
 		emotion ET_HUK;
 	}
 	end;
 }
 
 morocc_in,169,72,7	script	Spiteful-Looking Bard#bs	741,3,3,{
-	if (BaseJob == Job_Bard) {
+	if (BaseSecond == Job_Bard) {
 		if (Class == Job_Clown && qskill_bard == 9) {
 			if (getskilllv("BA_PANGVOICE") != 0) {
 				mes "[Riott]";

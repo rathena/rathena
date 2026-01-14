@@ -30,7 +30,7 @@
 //= 2.2 Merged Jfunc, changed job numbers to constants [Lupus]
 //= 2.3 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.4 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
-//= 2.4a Changed a BaseJob to baseclass. [L0ne_W0lf]
+//= 2.4a Changed a BaseSecond to baseclass. [L0ne_W0lf]
 //= 2.4b Further bug fixes with teh hel of Barron-Monster. [L0ne_W0lf]
 //= 2.4c More fixes courtosy of Micktu. [L0ne_W0lf]
 //= 2.4d Fixed an incorrect answer in the quiz. (Trojal) [L0ne_W0lf]
@@ -125,19 +125,19 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		mes "But there really isn't anything for you to steal here. Well, there are the Daggers we keep in the back, but...";
 		close;
 	}
-	else if (BaseJob == Job_Alchemist) {
+	else if (BaseSecond == Job_Alchemist) {
 		mes "[Altiregen]";
 		mes "So how's the pharmacy business going on recently?";
 		mes "Well, my forging business does not seem to grow any longer.";
 		close;
 	}
-	else if (BaseJob == Job_Blacksmith) {
+	else if (BaseSecond == Job_Blacksmith) {
 		mes "[Altiregen]";
 		mes "Oh! Long time no see.";
 		mes "Have you come to purchase supplies from Christopher? These days I'm stuck behind this desk. My body's itching to strike the ol' anvil.";
 		close;
 	}
-	else if (BaseJob == Job_Merchant) {
+	else if (BaseSecond == Job_Merchant) {
 		if (SkillPoint) {
 			mes "[Altiregen]";
 			mes "You can't change to the Blacksmith Job Class without first using all your skill points. Please come back after wisely using your skill points.";
@@ -300,7 +300,7 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 	mes "a Blacksmith by trade.";
 	mes "Nice to meet you!";
 	next;
-	if (BaseJob == Job_Merchant) {
+	if (BaseSecond == Job_Merchant) {
 		mes "[Geschupenschte]";
 		mes "Oh ho ho!";
 		mes "You're a Merchant!";

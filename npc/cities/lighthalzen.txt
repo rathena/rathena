@@ -2948,7 +2948,7 @@ lhz_in01,139,48,7	script	Leimi#mimir	73,{
 	mes "Good heavens!";
 	mes "Um, may I help you?";
 	emotion ET_HUK;
-	if (BaseJob == Job_Assassin) {
+	if (BaseSecond == Job_Assassin) {
 		if (Sex == SEX_MALE) {
 			next;
 			mes "[Leimi]";
@@ -2971,7 +2971,7 @@ lhz_in01,139,48,7	script	Leimi#mimir	73,{
 
 lhz_in01,138,47,0	script	#mimir_camera	-1,2,2,{
 OnTouch_:
-	if (BaseJob == Job_Assassin) {
+	if (BaseSecond == Job_Assassin) {
 		if (Sex == SEX_MALE) {
 			mes "^3355FF*Click*^000000";
 			next;

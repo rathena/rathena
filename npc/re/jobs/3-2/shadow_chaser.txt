@@ -19,7 +19,7 @@
 
 morocc,156,70,3	script	Girl#sc00	93,3,3,{
 	mes "[Girl]";
-	if (BaseJob == Job_Rogue) {
+	if (BaseSecond == Job_Rogue) {
 		if (job_sha == 0) {
 			if (BaseLevel < 99 || JobLevel < 50) {
 				mes "You're not ready.";
@@ -67,7 +67,7 @@ morocc,156,70,3	script	Girl#sc00	93,3,3,{
 	mes "I don't have anything for you...";
 	close;
 OnTouch_:
-	if (BaseJob == Job_Rogue && BaseLevel > 98 && JobLevel > 49 && job_sha == 0) {
+	if (BaseSecond == Job_Rogue && BaseLevel > 98 && JobLevel > 49 && job_sha == 0) {
 		mes "[Girl]";
 		mes "Hey? Stop!";
 		mes "Aren't you interested in hearing a funny story?";
@@ -77,7 +77,7 @@ OnTouch_:
 }
 
 in_rogue,376,100,5	script	Guild Member#sc01	828,{
-	if (BaseJob == Job_Rogue) {
+	if (BaseSecond == Job_Rogue) {
 		if (job_sha < 2) {
 			set @job_sha,0;
 		OnDialogue:
@@ -147,7 +147,7 @@ in_rogue,376,100,5	script	Guild Member#sc01	828,{
 }
 
 in_rogue,379,99,1	script	Guild Member#sc02	747,{
-	if (BaseJob == Job_Rogue) {
+	if (BaseSecond == Job_Rogue) {
 		if (job_sha < 2) {
 			set @job_sha,1;
 			doevent "Guild Member#sc01::OnDialogue";
@@ -178,7 +178,7 @@ in_rogue,379,99,1	script	Guild Member#sc02	747,{
 
 in_rogue,379,101,3	script	Scary Man#sc03	810,{
 	if (job_sha == 0) {
-		if (BaseJob == Job_Rogue && BaseLevel > 98 && JobLevel > 49) {
+		if (BaseSecond == Job_Rogue && BaseLevel > 98 && JobLevel > 49) {
 			mes "[Scary man]";
 			mes "Oh you are so talented?";
 			mes "Now I have one interesting quetion! Do you want it solved?";
@@ -1374,7 +1374,7 @@ s_atelier,70,66,4	script	Dumk#sc13_lgh	481,{
 		mes "That is no danger to rely on animals to escape, so you please get down!";
 		close;
 	}
-	if (BaseJob == Job_Rogue) {
+	if (BaseSecond == Job_Rogue) {
 		if (job_sha < 29) {
 			mes "[Dumk]";
 			mes "Vicente. No Soliciting.";
@@ -2494,7 +2494,7 @@ tha_t01,149,228,0	script	#shadowc02	45,2,2,{
 	end;
 OnTouch:
 	mes "You can feel weird power.";
-	if (BaseJob == Job_Rogue && job_sha == 27) {
+	if (BaseSecond == Job_Rogue && job_sha == 27) {
 		mes "You are getting dizzy.";
 		close2;
 		warp "job3_sha01",71,36;

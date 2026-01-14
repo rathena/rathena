@@ -11,6 +11,8 @@
 	#define export_deprecated_constant(a) script_set_constant(#a,a,false,true)
 	#define export_deprecated_constant2(a,b) script_set_constant(a,b,false,true)
 	#define export_deprecated_constant3(a,b,c) script_set_constant_(a,b,c,false,true)
+	#define export_deprecated_parameter(a,b) script_set_constant(a,b,true,true)
+	#define export_deprecated_parameter2(a,b,c) script_set_constant_(a,b,c,true,true)
 
 	/* min and maximum variable value */
 	export_constant(INT_MIN);
@@ -595,8 +597,9 @@
 	export_parameter("MaxSp",SP_MAXSP);
 	export_parameter("Ap",SP_AP);
 	export_parameter("MaxAp",SP_MAXAP);
-	export_parameter("BaseJob",SP_BASESECOND);// Update name in future update for item/scripts. (Rytech)
+	export_deprecated_parameter2("BaseJob",SP_BASESECOND,"BaseSecond");
 	export_parameter("BaseClass",SP_BASEFIRST);// Update name in future update for item/scripts. (Rytech)
+	export_parameter("BaseSecond", SP_BASESECOND);
 	export_parameter("killerrid",SP_KILLERRID);
 	export_parameter("killedrid",SP_KILLEDRID);
 	export_parameter("killedgid",SP_KILLEDGID);

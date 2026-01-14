@@ -4772,7 +4772,7 @@ moc_ruins,152,147,5	script	Ibrahim	732,3,3,{
 					close;
 				}
 			case 2:
-				if ((BaseJob == Job_Novice) || (BaseJob == Job_Super_Novice)) {
+				if ((BaseSecond == Job_Novice) || (BaseSecond == Job_Super_Novice)) {
 					mes "[Ibrahim]";
 					mes "So it's true...";
 					mes "People say you're";
@@ -6028,7 +6028,7 @@ OnTouch:
 }
 
 in_rogue,366,46,3	script	Rogue Investigator	828,{
-	if ((diamond_edq == 22) && (BaseJob == Job_Rogue)) {
+	if ((diamond_edq == 22) && (BaseSecond == Job_Rogue)) {
 		mes "[Investigator]";
 		mes "Oh, remember me?";
 		mes "It's been a long time";
@@ -6228,7 +6228,7 @@ in_rogue,366,46,3	script	Rogue Investigator	828,{
 
 cmd_in02,94,208,5	script	Investigator	828,{
 	if ((diamond_edq == 22) || (diamond_edq == 23)) {
-		if (BaseJob == Job_Rogue) {
+		if (BaseSecond == Job_Rogue) {
 			mes "[Investigator]";
 			mes "Hey, pal. You part";
 			mes "of the guild? Nice.";
@@ -7262,7 +7262,7 @@ in_rogue,359,116,3	script	Marybell	747,{
 		mes "cause some other time, yeah?";
 		close;
 	}
-	if (BaseJob == Job_Thief) {
+	if (BaseSecond == Job_Thief) {
 		mes "[Marybell]";
 		mes "That Z Gang has been";
 		mes "a pain the Rogue Guild's";
@@ -11485,7 +11485,7 @@ in_rogue,355,28,5	script	Rogue Agent	118,{
 	}
 	if (rumour_nd == 0) {
 		if (zdan_edq == 0) {
-			if (BaseJob == Job_Rogue) {
+			if (BaseSecond == Job_Rogue) {
 				mes "[Guildsman]";
 				mes "Man, it feels much safer";
 				mes "hanging out in an alley";
@@ -12222,7 +12222,7 @@ payon,209,44,5	script	Rogue Guild Agent#nd2	828,{
 		mes "[Agent]";
 		mes "Oh, yeah?";
 		next;
-		if (BaseJob == Job_Rogue) {
+		if (BaseSecond == Job_Rogue) {
 			mes "[Agent]";
 			mes "Heya guy. Always good";
 			mes "to see a fellow Rogue.";
@@ -12482,7 +12482,7 @@ payon,209,44,5	script	Rogue Guild Agent#nd2	828,{
 		mes "be totally good to";
 		mes "make a Counteragent.";
 		next;
-		if (BaseJob == Job_Alchemist) {
+		if (BaseSecond == Job_Alchemist) {
 			select("Wait, Karvodailnirol?!");
 			mes "[Agent]";
 			mes "Yeah. Karvodailnirol.";

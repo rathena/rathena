@@ -47,15 +47,15 @@
 		mes "Be advised to continue practicing yourself.";
 		close;
 	} 
-	else if(BaseJob != Job_Swordman) {
-		if(BaseJob == Job_Crusader) {
+	else if(BaseSecond != Job_Swordman) {
+		if(BaseSecond == Job_Crusader) {
 			mes "Go and train yourself in preparation for the holy war that is coming. Victory will be in the hands of those who are most ready to receive it.";
 			next;
 			mes "[Michael Halig]";
 			mes "Chaos will one day arise to challenge our principles of peace, justice and order. Until we have eliminated evil and created our ideal world, we must not cease training.";
 			close;
 		}
-		else if(BaseJob == Job_Novice) {
+		else if(BaseSecond == Job_Novice) {
 			mes "We are Crusaders,";
 			mes "warriors preparing";
 			mes "to fight in the Holy War.";
@@ -319,12 +319,12 @@
 //============================================================
 -	script	Man in Anguish_	-1,{
 	mes "[Murnak Mijoul]";
-	if(BaseJob != Job_Swordman) {
-		if (BaseJob == Job_Crusader) {
+	if(BaseSecond != Job_Swordman) {
+		if (BaseSecond == Job_Crusader) {
 			mes "Don't linger around in a place like this and forge your own path towards discovering your own strengths. The day that we will join hands in battle will come soon.";
 			close;
 		}
-		else if(BaseJob == Job_Novice) {
+		else if(BaseSecond == Job_Novice) {
 			mes "A Novice...?";
 			mes "So green, and yet,";
 			mes "so much potential.";
@@ -453,8 +453,8 @@
 //============================================================
 prt_church,95,127,3	script	Crusader	745,{
 	mes "[Gabriel Valentine]";
-	if(BaseJob != Job_Swordman) {
-		if (BaseJob == Job_Crusader) {
+	if(BaseSecond != Job_Swordman) {
+		if (BaseSecond == Job_Crusader) {
 			mes "Welcome, fellow Crusader.";
 			mes "How is your training";
 			mes "coming along?";
@@ -463,7 +463,7 @@ prt_church,95,127,3	script	Crusader	745,{
 			mes "You must not forget to train everyday, and prepare for the day the Holy War will come upon us.";
 			close;
 		}
-		else if(BaseJob == Job_Novice) {
+		else if(BaseSecond == Job_Novice) {
 			mes "Welcome, I am a Crusader.";
 			mes "I am preparing for the";
 			mes "foretold Holy War";
@@ -803,8 +803,8 @@ prt_church,95,127,3	script	Crusader	745,{
 -	script	Patron Knight_	-1,{
 	mes "[Bliant Piyord]";
 	mes "Welcome.";
-	if(BaseJob != Job_Swordman) {
-		if(BaseJob == Job_Crusader) {
+	if(BaseSecond != Job_Swordman) {
+		if(BaseSecond == Job_Crusader) {
 			mes "How goes";
 			mes "your training?";
 			next;
@@ -812,7 +812,7 @@ prt_church,95,127,3	script	Crusader	745,{
 			mes "Develop your faith. From faith springs strength and discipline. Day after day, train yourself and become a great Crusader.";
 			close;
 		}
-		else if(BaseJob == Job_Novice) {
+		else if(BaseSecond == Job_Novice) {
 			mes "We are Crusaders,";
 			mes "warriors of holiness preparing for the great Holy War that is to come.";
 			next;

@@ -352,7 +352,7 @@ que_job01,82,95,3	script	Bar Master#moc_main01	46,{
 		mes "Please, come in.";
 		mes "Care for a drink?";
 	}
-	else if ((BaseJob == Job_Thief) && (BaseClass != Job_Assassin)) {
+	else if ((BaseSecond == Job_Thief) && (BaseClass != Job_Assassin)) {
 		mes "[Master]";
 		mes "......Huh. How did a ruffian like you get in here?";
 		mes "Well, I guess Jack's not doing his job.";

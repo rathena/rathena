@@ -821,7 +821,7 @@ Body:
       bonus bMaxSPrate,7;
       bonus2 bSkillAtk,"MC_MAMMONITE",20;
       bonus bSPDrainValue,1;
-      if (BaseJob == Job_Alchemist) {
+      if (BaseSecond == Job_Alchemist) {
          bonus3 bAutoSpell,"BS_ADRENALINE",1,10;
          bonus2 bAddMonsterDropItem,7139,3;
          bonus2 bAddMonsterDropItem,905,10;
@@ -839,7 +839,7 @@ Body:
       bonus2 bSkillAtk,"RG_BACKSTAP",10;
       if (getskilllv("RG_STRIPARMOR") == 5)
          bonus3 bAutoSpell,"RG_STRIPARMOR",5,50;
-         if (BaseJob == Job_Rogue) {
+         if (BaseSecond == Job_Rogue) {
             bonus bUseSPrate,-20;
             bonus3 bAutoSpell,"RG_INTIMIDATE",1,-20;
          }
@@ -921,7 +921,7 @@ Body:
       bonus2 bSkillAtk,"CG_ARROWVULCAN",5;
       bonus2 bSkillAtk,"DC_THROWARROW",10;
       bonus2 bSkillAtk,"BA_MUSICALSTRIKE",10;
-      if (BaseJob == Job_Bard || BaseJob == Job_Dancer)
+      if (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)
          bonus3 bAutoSpellWhenHit,"CG_TAROTCARD",2,50;
   - Combos:
       - Combo:
@@ -952,7 +952,7 @@ Body:
       bonus bBaseAtk,25;
       bonus3 bAutoSpell,"AL_CRUCIS",5,10;
       bonus2 bSkillAtk,"MO_EXTREMITYFIST",10;
-      if (BaseJob == Job_Monk) {
+      if (BaseSecond == Job_Monk) {
          bonus bUseSPrate,-10;
          bonus bNoCastCancel;
       }
@@ -1008,7 +1008,7 @@ Body:
       bonus bInt,3;
       bonus2 bSkillAtk,"WZ_HEAVENDRIVE",10;
       bonus2 bSkillAtk,"MG_THUNDERSTORM",10;
-      if (BaseJob == Job_Sage) {
+      if (BaseSecond == Job_Sage) {
          bonus bMagicDamageReturn,20;
          bonus2 bAddMonsterDropItem,716,100;
          bonus2 bAddMonsterDropItem,715,100;
@@ -1074,7 +1074,7 @@ Body:
       bonus2 bSkillAtk,"PA_SHIELDCHAIN",10;
       bonus2 bSkillAtk,"PA_SACRIFICE",10;
       bonus bCastrate,-10;
-      if (BaseJob == Job_Crusader)
+      if (BaseSecond == Job_Crusader)
          bonus bDefEle,Ele_Holy;
   - Combos:
       - Combo:

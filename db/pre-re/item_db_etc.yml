@@ -4736,7 +4736,7 @@ Body:
       BuyingStore: true
     Script: |
       bonus2 bSPVanishRate,50,10;
-      if (BaseJob == Job_Sage)
+      if (BaseSecond == Job_Sage)
          bonus bSPDrainValue,1;
   - Id: 4172
     AegisName: The_Paper_Card
@@ -5034,7 +5034,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice)
+      if (BaseSecond == Job_Novice || BaseSecond == Job_SuperNovice)
          bonus3 bAutoSpellWhenHit,"SM_ENDURE",1,200;
   - Id: 4194
     AegisName: Rybio_Card
@@ -6385,7 +6385,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice)
+      if (BaseSecond == Job_Novice || BaseSecond == Job_SuperNovice)
          bonus3 bAutoSpellWhenHit,"AL_INCAGI",1,100;
   - Id: 4295
     AegisName: Kraben_Card
@@ -6462,7 +6462,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus2 bAddEffWhenHit,Eff_Poison,300+600*(BaseJob == Job_Assassin);
+      bonus2 bAddEffWhenHit,Eff_Poison,300+600*(BaseSecond == Job_Assassin);
   - Id: 4301
     AegisName: Killer_Mantis_Card
     Name: Killer Mantis Card
@@ -7751,7 +7751,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (BaseJob == Job_Priest)
+      if (BaseSecond == Job_Priest)
          bonus3 bAutoSpell,"CR_GRANDCROSS",5,20;
   - Id: 4395
     AegisName: Tha_Maero_Card
@@ -7828,7 +7828,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      bonus3 bAutoSpellWhenHit,"DC_WINKCHARM",1,50+50*(BaseJob == Job_Dancer);
+      bonus3 bAutoSpellWhenHit,"DC_WINKCHARM",1,50+50*(BaseSecond == Job_Dancer);
   - Id: 4401
     AegisName: Alicel_Card
     Name: Alicel Card
@@ -8182,7 +8182,7 @@ Body:
     Flags:
       BuyingStore: true
     Script: |
-      if (BaseJob == Job_Rogue) {
+      if (BaseSecond == Job_Rogue) {
          bonus bMatkRate,10;
          bonus2 bAddClass,Class_All,10;
       }

@@ -67,8 +67,8 @@ moc_prydb1,39,129,2	script	Thief Guide#thief	69,{
 		close;
 	}
 	mes "[Thief Guildsman]";
-	if(BaseJob != Job_Novice) {
-		if(BaseJob == Job_Thief) {
+	if(BaseSecond != Job_Novice) {
+		if(BaseSecond == Job_Thief) {
 			mes "Hey~ if you have any trouble, get it out to me anytime, huh?";
 			close;
 		}else{
@@ -184,8 +184,8 @@ moc_prydb1,42,133,2	script	Thief Guildsman#thief	118,{
 		mes "See you again.";
 		close;
 	}
-	if(BaseJob != Job_Novice) {
-		if(BaseJob == Job_Thief) {
+	if(BaseSecond != Job_Novice) {
+		if(BaseSecond == Job_Thief) {
 			mes "[Brad]";
 			mes "I don't have any special events now. So go on your way and come back later.";
 		}else{

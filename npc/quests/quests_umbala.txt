@@ -995,7 +995,7 @@ um_in,139,48,5	script	Phrenetan	783,{
 		mes "I will show him hell!!";
 		close;
 	}
-	if (BaseJob == Job_Novice && Upper != 2) {
+	if (BaseSecond == Job_Novice && Upper != 2) {
 		mes "[Phrenetan]";
 		mes "Umba~ umbaumbah!";
 		mes "Umbah woomumum!";

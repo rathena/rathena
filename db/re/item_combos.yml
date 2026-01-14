@@ -1969,7 +1969,7 @@ Body:
           - S_Blacksmith_Shoes    # 24258
           - S_Blacksmith_Armor    # 24271
     Script: |
-      if (BaseJob == Job_Blacksmith) {
+      if (BaseSecond == Job_Blacksmith) {
          bonus2 bAddSize,Size_All,3;
          bonus2 bMagicAddSize,Size_All,3;
          bonus2 bSkillUseSPrate,"BS_WEAPONPERFECT",20;
@@ -1979,7 +1979,7 @@ Body:
           - S_Alchemist_Shoes    # 24259
           - S_Alchemist_Armor    # 24272
     Script: |
-      if (BaseJob == Job_Alchemist) {
+      if (BaseSecond == Job_Alchemist) {
          skill "BS_ADRENALINE",3;
       }
   - Combos:
@@ -1987,7 +1987,7 @@ Body:
           - S_Priest_Shoes    # 24260
           - S_Priest_Armor    # 24273
     Script: |
-      if (BaseJob == Job_Priest) {
+      if (BaseSecond == Job_Priest) {
          bonus bMatkRate,3;
          bonus2 bVariableCastrate,"PR_MAGNUS",-40;
       }
@@ -2011,7 +2011,7 @@ Body:
           - S_Rogue_Shoes    # 24263
           - S_Rogue_Armor    # 24276
     Script: |
-      if (BaseJob == Job_Rogue) {
+      if (BaseSecond == Job_Rogue) {
          bonus2 bAddSize,Size_All,3;
          bonus2 bMagicAddSize,Size_All,3;
          bonus2 bSkillUseSPrate,"RG_RAID",20;
@@ -2031,7 +2031,7 @@ Body:
           - S_Sage_Armor    # 24278
     Script: |
       bonus2 bVariableCastrate,"WZ_HEAVENDRIVE",-40;
-      if (BaseJob == Job_Sage) {
+      if (BaseSecond == Job_Sage) {
          bonus bMatkRate,3;
       }
   - Combos:
@@ -2039,7 +2039,7 @@ Body:
           - S_Hunter_Shoes    # 24266
           - S_Hunter_Armor    # 24279
     Script: |
-      if (BaseJob == Job_Hunter) {
+      if (BaseSecond == Job_Hunter) {
          bonus2 bAddSize,Size_All,3;
          bonus2 bMagicAddSize,Size_All,3;
          bonus2 bSkillUseSPrate,"HT_CLAYMORETRAP",20;
@@ -4327,7 +4327,7 @@ Body:
       bonus bMaxSPrate,7;
       bonus2 bSkillAtk,"MC_MAMMONITE",20;
       bonus bSPDrainValue,1;
-      if (BaseJob == Job_Alchemist) {
+      if (BaseSecond == Job_Alchemist) {
          bonus3 bAutoSpell,"BS_ADRENALINE",1,10;
          bonus2 bAddMonsterDropItem,7139,3;
          bonus2 bAddMonsterDropItem,905,10;
@@ -4345,7 +4345,7 @@ Body:
       bonus2 bSkillAtk,"RG_BACKSTAP",10;
       if (getskilllv("RG_STRIPARMOR") == 5)
          bonus3 bAutoSpell,"RG_STRIPARMOR",5,50;
-         if (BaseJob == Job_Rogue) {
+         if (BaseSecond == Job_Rogue) {
             bonus bUseSPrate,-20;
             bonus3 bAutoSpell,"RG_INTIMIDATE",1,-20;
          }
@@ -4556,7 +4556,7 @@ Body:
       bonus2 bSkillAtk,"CG_ARROWVULCAN",5;
       bonus2 bSkillAtk,"DC_THROWARROW",10;
       bonus2 bSkillAtk,"BA_MUSICALSTRIKE",10;
-      if (BaseJob == Job_Bard || BaseJob == Job_Dancer)
+      if (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)
          bonus3 bAutoSpellWhenHit,"CG_TAROTCARD",2,50;
   - Combos:
       - Combo:
@@ -4587,7 +4587,7 @@ Body:
       bonus bBaseAtk,25;
       bonus3 bAutoSpell,"AL_CRUCIS",5,10;
       bonus2 bSkillAtk,"MO_EXTREMITYFIST",10;
-      if (BaseJob == Job_Monk) {
+      if (BaseSecond == Job_Monk) {
          bonus bUseSPrate,-10;
          bonus bNoCastCancel;
       }
@@ -4656,7 +4656,7 @@ Body:
       bonus bInt,3;
       bonus2 bSkillAtk,"WZ_HEAVENDRIVE",10;
       bonus2 bSkillAtk,"MG_THUNDERSTORM",10;
-      if (BaseJob == Job_Sage) {
+      if (BaseSecond == Job_Sage) {
          bonus bMagicDamageReturn,20;
          bonus2 bAddMonsterDropItem,716,100;
          bonus2 bAddMonsterDropItem,715,100;
@@ -4792,7 +4792,7 @@ Body:
       bonus2 bSkillAtk,"PA_SHIELDCHAIN",10;
       bonus2 bSkillAtk,"PA_SACRIFICE",10;
       bonus bVariableCastrate,-10;
-      if (BaseJob == Job_Crusader)
+      if (BaseSecond == Job_Crusader)
          bonus bDefEle,Ele_Holy;
   - Combos:
       - Combo:
@@ -7538,7 +7538,7 @@ Body:
           - Immaterial_Sword_IL    # 13469
           - Cape_Of_Ancient_Lord_IL    # 20840
     Script: |
-      if (BaseJob == Job_Rogue) {
+      if (BaseSecond == Job_Rogue) {
          .@weapon = getequiprefinerycnt(EQI_HAND_R);
          .@eq = getequiprefinerycnt(EQI_GARMENT);
          .@val = 100;
@@ -12256,7 +12256,7 @@ Body:
       .@r1 = getequiprefinerycnt(EQI_SHADOW_ARMOR);
       .@r2 = getequiprefinerycnt(EQI_SHADOW_SHIELD);
       if ((.@r1+.@r2) >= 17) {
-         if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseJob != Job_Soul_Linker)) {
+         if (BaseClass == Job_Swordman || BaseClass == Job_Thief || (BaseClass == Job_Taekwon && BaseSecond != Job_Soul_Linker)) {
             bonus bBaseAtk,15;
             bonus bAspd,1;
          }
@@ -12264,12 +12264,12 @@ Body:
             bonus bFlee,15;
             bonus bLongAtkRate,3;
          }
-         else if (BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Ninja || BaseJob == Job_Soul_Linker) {
+         else if (BaseClass == Job_Mage || BaseClass == Job_Acolyte || BaseClass == Job_Ninja || BaseSecond == Job_Soul_Linker) {
             bonus bMatk,15;
             bonus bMaxSPrate,2;
             bonus bHealPower,3;
          }
-         else if (BaseClass == Job_Novice || BaseJob == Job_Summoner) {
+         else if (BaseClass == Job_Novice || BaseSecond == Job_Summoner) {
             bonus bAspdRate,5;
             bonus bMaxHP,1000;
             bonus bVariableCastrate,-5;
@@ -19867,7 +19867,7 @@ Body:
           - Ghost_Cube_Card    # 300242
           - Lude_Gal_Card    # 300243
     Script: |
-      if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice) {
+      if (BaseSecond == Job_Novice || BaseSecond == Job_SuperNovice) {
          autobonus "{ bonus bNoSizeFix; }",1,7000,BF_WEAPON;
       }
   - Combos:
@@ -19886,7 +19886,7 @@ Body:
           - Crow_Baron_Card    # 300267
           - Crow_Duke_Card    # 300268
     Script: |
-      if (BaseJob == Job_Sage) {
+      if (BaseSecond == Job_Sage) {
          bonus2 bSkillAtk,"MG_FIREBOLT",30;
          bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",30;
          bonus2 bSkillAtk,"MG_COLDBOLT",30;
@@ -21438,7 +21438,7 @@ Body:
           - Ring_of_Pazuzu    # 490098
           - Release_Of_Magic    # 29371
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard) {
          bonus2 bSkillUseSP,"WL_CRIMSONROCK",50;
          bonus2 bSkillCooldown,"WL_CRIMSONROCK",-2000;
       }
@@ -21739,7 +21739,7 @@ Body:
           - Geffenia_Magictool_Ice    # 490029
           - Release_Of_Magic    # 29371
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard) {
          bonus bNoGemStone;
       }
   - Combos:
@@ -21747,7 +21747,7 @@ Body:
           - Sixth_Sense_Ring    # 490038
           - Release_Of_Magic    # 29371
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
   - Combos:
@@ -21778,7 +21778,7 @@ Body:
           - SoulExpansionRing    # 490079
           - Release_Of_Magic    # 29371
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard) {
          bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
   - Combos:
@@ -21793,7 +21793,7 @@ Body:
           - Skull_Ring    # 490102
           - Release_Of_Magic    # 29371
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker) {
          skill "MG_FIREWALL",10;
          bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
@@ -21809,7 +21809,7 @@ Body:
           - RingOfAdoramus    # 490118
           - Release_Of_Magic    # 29371
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest) {
          bonus2 bIgnoreMdefRaceRate,RC_All,100;
       }
   - Combos:
@@ -21824,7 +21824,7 @@ Body:
           - SkynetBlowRing    # 490130
           - Hero    # 29509
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk) {
          bonus2 bSkillCooldown,"SR_SKYNETBLOW",-200;
          autobonus3 "{ bonus bFlee2,100; }",50,3000,"SR_SKYNETBLOW";
       }
@@ -21834,7 +21834,7 @@ Body:
           - Metal_Pick    # 490141
           - Release_Of_Magic    # 29371
     Script: |
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
          bonus2 bSkillCooldown,"WM_METALICSOUND",-200;
       }
   - Combos:
@@ -21859,7 +21859,7 @@ Body:
           - Paracelsus_Glove    # 490146
           - Dynast    # 29436
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          bonus bNoWalkDelay;
          autobonus3 "{ bonus bPerfectHitAddRate,100; }",50,3000,"GN_CART_TORNADO";
          /*Unknow Rate*/
@@ -25253,14 +25253,14 @@ Body:
           - Imperial_Feather     # 18823
           - Bear's_Power     # 4875
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader)
          bonus2 bSkillCooldown,"LG_OVERBRAND",2000;
   - Combos:
       - Combo:
           - Ring_Of_Phoenix     # 490104
           - Bear's_Power     # 4875
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader) {
          bonus2 bSkillUseSP,"LG_OVERBRAND",15;
          bonus2 bSkillCooldown,"LG_OVERBRAND",-2000;
       }
@@ -27750,7 +27750,7 @@ Body:
           - Nidhogg_Shadow_Card    # 4456
     Script: |
       bonus bMaxHPrate,50;
-      if (eaclass()&EAJL_UPPER && BaseJob == Job_Wizard) {
+      if (eaclass()&EAJL_UPPER && BaseSecond == Job_Wizard) {
          bonus bFixedCastrate,-70;
          bonus bMatkRate,3*getequiprefinerycnt(EQI_ARMOR);
       }
@@ -29396,7 +29396,7 @@ Body:
           - Dynast    # 29436
           - Military_Glove    # 490183
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith) {
          bonus bLongAtkRate,25;
          bonus2 bSkillCooldown,"NC_AXEBOOMERANG",-3000;
       }
@@ -30708,12 +30708,12 @@ Body:
           - Subject_Cape_TW   # 480024
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 10) {
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter) {
             bonus bLongAtkRate,15;
             bonus bDelayrate,-5;
             bonus2 bSkillAtk,"RA_AIMEDBOLT",30;
          }
-         if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+         if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
             bonus2 bMagicAddRace,RC_All,10;
             bonus2 bSkillCooldown,"WM_METALICSOUND",-2000;
             bonus2 bSkillAtk,"WM_METALICSOUND",80;
@@ -30893,12 +30893,12 @@ Body:
           - Subject_Cape_TW   # 480024
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 10) {
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest) {
             bonus bFixedCast,-300;
             bonus2 bMagicAtkEle,Ele_Holy,15;
             bonus2 bSkillAtk,"PR_MAGNUS",40;
          }
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk) {
             bonus bDelayrate,-5;
             autobonus3 "{ bonus bMaxHPrate,20; }",1000,5000,"SR_GATEOFHELL";
             bonus2 bSkillAtk,"SR_GATEOFHELL",10;
@@ -30949,12 +30949,12 @@ Body:
           - Subject_Cape_TW   # 480024
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 10) {
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin) {
             bonus2 bIgnoreDefRaceRate,RC_All,10;
             bonus2 bAddClass,Class_All,15;
             bonus2 bSkillAtk,"GC_ROLLINGCUTTER",30;
          }
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue) {
             bonus bDelayrate,-5;
             bonus2 bSkillCooldown,"SC_FEINTBOMB",-800;
             bonus2 bSkillAtk,"SC_FEINTBOMB",40;
@@ -31012,12 +31012,12 @@ Body:
           - Subject_Cape_TW   # 480024
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 10) {
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith) {
             bonus2 bAddRace,RC_All,15;
             bonus2 bSkillCooldown,"NC_ARMSCANNON",-150;
             bonus2 bSkillAtk,"NC_ARMSCANNON",40;
          }
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
             bonus2 bAddRace,RC_All,15;
             bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-2000;
             bonus2 bSkillAtk,"GN_SPORE_EXPLOSION",40;
@@ -31070,13 +31070,13 @@ Body:
           - Subject_Cape_TW   # 480024
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 10) {
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight) {
             bonus2 bAddRace,RC_All,15;
             autobonus "{ bonus3 bAutoSpell,\"RK_MILLENNIUMSHIELD\",1,10; }",1000,6000,BF_WEAPON;
             autobonus3 "{ bonus3 bAutoSpell,\"RK_MILLENNIUMSHIELD\",1,10; }",1000,6000,"RK_STORMBLAST";
             bonus2 bSkillAtk,"RK_IGNITIONBREAK",30;
          }
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader) {
             bonus2 bMagicAddRace,RC_All,15;
             bonus bShortWeaponDamageReturn,25;
             bonus2 bSkillAtk,"LG_RAYOFGENESIS",30;
@@ -31135,12 +31135,12 @@ Body:
           - Subject_Cape_TW   # 480024
     Script: |
       if (getequiprefinerycnt(EQI_GARMENT) >= 10) {
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard) {
             bonus bFixedCast,-300;
             bonus2 bMagicAtkEle,Ele_Neutral,15;
             bonus2 bSkillAtk,"WL_COMET",30;
          }
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
             bonus2 bSkillCooldown,"SO_VACUUM_EXTREME",-1000;
             bonus2 bSkillAtk,"MG_FIREBOLT",30;
             bonus2 bSkillAtk,"MG_COLDBOLT",30;
@@ -32933,7 +32933,7 @@ Body:
           - Schmidt_Card    # 27329
     Script: |
       bonus bDelayrate,-30;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader)
          bonus2 bSkillCooldown,"LG_EARTHDRIVE",-3000;
   - Combos:
       - Combo:
@@ -33695,35 +33695,35 @@ Body:
           - Golden_Scarf_J    # 20900
           - Imuke_Upper_Shield    # 28910
     Script: |
-      if (eaclass()&EAJL_THIRD && (BaseJob == Job_Kagerou || BaseJob == Job_Oboro))
+      if (eaclass()&EAJL_THIRD && (BaseSecond == Job_Kagerou || BaseSecond == Job_Oboro))
          bonus bLongAtkDef,-35;
   - Combos:
       - Combo:
           - Golden_Scarf_J    # 20900
           - Horn_Card    # 4045
     Script: |
-      if (eaclass()&EAJL_THIRD && (BaseJob == Job_Kagerou || BaseJob == Job_Oboro))
+      if (eaclass()&EAJL_THIRD && (BaseSecond == Job_Kagerou || BaseSecond == Job_Oboro))
          bonus bLongAtkDef,-35;
   - Combos:
       - Combo:
           - Golden_Scarf_J    # 20900
           - Automatic_Orb_J01    # 310653
     Script: |
-      if (eaclass()&EAJL_THIRD && (BaseJob == Job_Kagerou || BaseJob == Job_Oboro))
+      if (eaclass()&EAJL_THIRD && (BaseSecond == Job_Kagerou || BaseSecond == Job_Oboro))
          bonus bLongAtkDef,-35;
   - Combos:
       - Combo:
           - Enforcer_cape    # 20800
           - Automatic_Orb_J01    # 310653
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin)
          bonus bLongAtkDef,-35;
   - Combos:
       - Combo:
           - Yoichi_Muffler    # 20816
           - Automatic_Orb_J01    # 310653
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter)
          bonus bLongAtkDef,-35;
   - Combos:
       - Combo:
@@ -33875,7 +33875,7 @@ Body:
           - Glittering_Cat_Choker    # 490149
           - Runaway_Magic    # 4876
     Script: |
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          skill "MG_FIREWALL",10;
          bonus bNoKnockback;
       }
@@ -34210,7 +34210,7 @@ Body:
           - aegis_29725    # 29725
           - Cancer_Axe_J    # 1335
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith)
          bonus2 bSkillCooldown,"NC_AXETORNADO",-500;
   - Combos:
       - Combo:
@@ -34218,7 +34218,7 @@ Body:
           - Cancer_Crown_J    # 19449
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith)
          bonus bDelayrate,-3*.@r;
   - Combos:
       - Combo:
@@ -34226,7 +34226,7 @@ Body:
           - Cancer_Mail_J    # 15412
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith)
          bonus bAtkRate,3*.@r;
   - Combos:
       - Combo:
@@ -34234,7 +34234,7 @@ Body:
           - Cancer_Manteau_J    # 20954
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith)
          bonus2 bSkillAtk,"NC_AXETORNADO",10*.@r;
   - Combos:
       - Combo:
@@ -34242,14 +34242,14 @@ Body:
           - Cancer_Shoes_J    # 22216
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith)
          bonus bDelayrate,-4*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Cancer_Ring_J    # 32253
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith) {
          bonus bAtkRate,15;
          bonus2 bVariableCastrate,"BS_GREED",-100;
       }
@@ -34258,7 +34258,7 @@ Body:
           - aegis_29725    # 29725
           - Taurus_Sword_J    # 1100
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist)
          bonus2 bSkillCooldown,"GN_CART_TORNADO",-200;
   - Combos:
       - Combo:
@@ -34266,7 +34266,7 @@ Body:
           - Taurus_Diadem_J    # 19473
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist)
          bonus2 bSkillAtk,"GN_CARTCANNON",5*.@r;
   - Combos:
       - Combo:
@@ -34274,7 +34274,7 @@ Body:
           - Taurus_Mail_J    # 15425
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist)
          bonus bAtkRate,3*.@r;
   - Combos:
       - Combo:
@@ -34282,7 +34282,7 @@ Body:
           - Taurus_Manteau_J    # 20971
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist)
          bonus2 bSkillAtk,"GN_CART_TORNADO",5*.@r;
   - Combos:
       - Combo:
@@ -34290,7 +34290,7 @@ Body:
           - Taurus_Shoes_J    # 22230
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          bonus2 bSkillAtk,"GN_CARTCANNON",15*.@r;
          bonus2 bSkillAtk,"GN_CART_TORNADO",10*.@r;
       }
@@ -34299,7 +34299,7 @@ Body:
           - aegis_29725    # 29725
           - Taurus_Ring_J    # 32264
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          bonus bAtkRate,15;
          bonus2 bVariableCastrate,"GN_CARTCANNON",-100;
       }
@@ -34308,7 +34308,7 @@ Body:
           - aegis_29725    # 29725
           - Leo_Mace_J    # 16098
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk)
       bonus2 bSkillCooldown,"SR_SKYNETBLOW",-200;
   - Combos:
       - Combo:
@@ -34316,7 +34316,7 @@ Body:
           - Leo_Crown_J    # 19447
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk)
          bonus bPerfectHitAddRate,2*.@r;
   - Combos:
       - Combo:
@@ -34324,7 +34324,7 @@ Body:
           - Leo_Mail_J    # 15408
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk)
          bonus bAtkRate,3*.@r;
   - Combos:
       - Combo:
@@ -34332,7 +34332,7 @@ Body:
           - Leo_Mantle_J    # 20951
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk)
          bonus bPerfectHitAddRate,2*.@r;
   - Combos:
       - Combo:
@@ -34340,14 +34340,14 @@ Body:
           - Leo_Shoes_J    # 22213
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk)
          bonus bPerfectHitAddRate,3*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Leo_Ring_J    # 32247
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk) {
          bonus bAtkRate,15;
          bonus2 bSkillAtk,"SR_SKYNETBLOW",150;
       }
@@ -34356,7 +34356,7 @@ Body:
           - aegis_29725    # 29725
           - Virgo_Divine_Cross_J    # 640002
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest)
          bonus2 bMagicAtkEle,Ele_Holy,40;
   - Combos:
       - Combo:
@@ -34364,7 +34364,7 @@ Body:
           - Virgo_Diadem    # 5599
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest)
          bonus2 bSkillAtk,"AB_JUDEX",10*.@r;
   - Combos:
       - Combo:
@@ -34372,7 +34372,7 @@ Body:
           - Virgo_Mail_J    # 450015
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest)
          bonus bMatkRate,3*.@r;
   - Combos:
       - Combo:
@@ -34380,7 +34380,7 @@ Body:
           - Virgo_Manteau_J    # 480009
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest)
          bonus bFlee2,3*.@r;
   - Combos:
       - Combo:
@@ -34388,14 +34388,14 @@ Body:
           - Virgo_Shoes_J    # 470014
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest)
          bonus2 bSkillAtk,"AB_JUDEX",10*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Virgo_Ring_J    # 490010
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest) {
          bonus bMatkRate,15;
          bonus2 bSkillAtk,"AB_JUDEX",50;
       }
@@ -34404,7 +34404,7 @@ Body:
           - aegis_29725    # 29725
           - Sagittarius_Hunter_Bow    # 700010
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter)
          bonus bPerfectHitAddRate,25;
   - Combos:
       - Combo:
@@ -34412,7 +34412,7 @@ Body:
           - Sagittarius_Crown    # 5739
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter)
          bonus2 bSubClass,Class_Boss,2*.@r;
   - Combos:
       - Combo:
@@ -34420,7 +34420,7 @@ Body:
           - Sagittarius_Mail_J    # 450140
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter)
          bonus bAtkRate,3*.@r;
   - Combos:
       - Combo:
@@ -34428,7 +34428,7 @@ Body:
           - Sagittarius_Manteau_J    # 480050
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter)
          bonus2 bSkillCooldown,"RA_UNLIMIT",-18000;
     UnEquipScript: |
       sc_end SC_UNLIMIT;
@@ -34438,14 +34438,14 @@ Body:
           - Sagittarius_Shoes_J    # 470045
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter)
          bonus bPerfectHitAddRate,3*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Sagittarius_Ring_J    # 490041
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter) {
          bonus bAtkRate,15;
          bonus2 bSkillAtk,"RA_AIMEDBOLT",30;
       }
@@ -34454,7 +34454,7 @@ Body:
           - aegis_29725    # 29725
           - Pisces_Staff_O_S_J    # 640006
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus2 bMagicAtkEle,Ele_Fire,40;
          bonus2 bMagicAtkEle,Ele_Water,40;
          bonus2 bMagicAtkEle,Ele_Wind,40;
@@ -34468,7 +34468,7 @@ Body:
           - Pisces_Diadem    # 5514
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage)
          bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-200*.@r;
   - Combos:
       - Combo:
@@ -34476,7 +34476,7 @@ Body:
           - Pisces_Mail_J    # 450133
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage)
          bonus bMatkRate,3*.@r;
   - Combos:
       - Combo:
@@ -34484,7 +34484,7 @@ Body:
           - Pisces_Manteau_J    # 480041
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus3 bAutoSpell,"MG_FIREBOLT",getskilllv("MG_FIREBOLT"),10*.@r;
          bonus3 bAutoSpell,"MG_COLDBOLT",getskilllv("MG_COLDBOLT"),10*.@r;
          bonus3 bAutoSpell,"MG_LIGHTNINGBOLT",getskilllv("MG_LIGHTNINGBOLT"),10*.@r;
@@ -34496,7 +34496,7 @@ Body:
           - Pisces_Shoes_J    # 470038
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus2 bSkillAtk,"MG_COLDBOLT",10*.@r;
          bonus2 bSkillAtk,"MG_FIREBOLT",10*.@r;
          bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",10*.@r;
@@ -34507,7 +34507,7 @@ Body:
           - aegis_29725    # 29725
           - Pisces_Ring_J    # 490034
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus bMatkRate,15;
          bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-1000;
       }
@@ -34519,7 +34519,7 @@ Body:
           - aegis_29725    # 29725
           - Gemini_Rope_J    # 580004          
     Script: |
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer))
          bonus2 bSkillAtk,"WM_REVERBERATION",150;
   - Combos:
       - Combo:
@@ -34527,7 +34527,7 @@ Body:
           - Gemini_Diadem    # 5569
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer))
          bonus bPerfectHitAddRate,2*.@r;
   - Combos:
       - Combo:
@@ -34535,7 +34535,7 @@ Body:
           - Gemini_Mail_J    # 450130
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
          bonus bAtkRate,3*.@r;
          bonus bMatkRate,3*.@r;
       }
@@ -34545,7 +34545,7 @@ Body:
           - Gemini_Manteau_J    # 480026
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
          bonus bInt,2*.@r;
          bonus bDex,2*.@r;
       }
@@ -34555,14 +34555,14 @@ Body:
           - Gemini_Shoes_J    # 470032
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer))
          bonus bPerfectHitAddRate,3*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Gemini_Ring_J    # 490032
     Script: |
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
          bonus bAtkRate,15;
          bonus bMatkRate,15;
          bonus2 bSkillAtk,"WM_REVERBERATION",50;
@@ -34572,7 +34572,7 @@ Body:
           - aegis_29725    # 29725
           - Scorpio_Katar_J    # 28047
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin)
          bonus2 bSkillAtk,"GC_ROLLINGCUTTER",150;
   - Combos:
       - Combo:
@@ -34580,7 +34580,7 @@ Body:
           - Scorpio_Crown_J    # 19471
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin)
          bonus2 bSubClass,Class_Boss,2*.@r;
   - Combos:
       - Combo:
@@ -34588,7 +34588,7 @@ Body:
           - Scorpio_Mail_J    # 15424
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin)
          bonus bAtkRate,3*.@r;
   - Combos:
       - Combo:
@@ -34596,7 +34596,7 @@ Body:
           - Scorpio_Manteau_J    # 20976
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin)
          bonus bPerfectHitAddRate,2*.@r;
   - Combos:
       - Combo:
@@ -34604,14 +34604,14 @@ Body:
           - Scorpio_Shoes_J    # 22233
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin)
          bonus2 bSkillCooldown,"GC_DARKILLUSION",-500*(.@r/2);
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Scorpio_Ring_J    # 32267
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin) {
          bonus bAtkRate,15;
          bonus2 bSkillCooldown,"GC_DARKCROW",-25000;
       }
@@ -34620,7 +34620,7 @@ Body:
           - aegis_29725    # 29725
           - Libra_Krasnaya_J    # 1150
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight)
          bonus bPerfectHitAddRate,25;
   - Combos:
       - Combo:
@@ -34628,7 +34628,7 @@ Body:
           - Libra_Diadem_J    # 19468
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight)
          bonus bLongAtkRate,2*.@r;
   - Combos:
       - Combo:
@@ -34636,7 +34636,7 @@ Body:
           - Libra_Mail_J    # 15418
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight)
          bonus bLongAtkRate,3*.@r;
   - Combos:
       - Combo:
@@ -34644,7 +34644,7 @@ Body:
           - Libra_Manteau_J    # 20970
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight)
          bonus bDelayrate,-2*.@r;
   - Combos:
       - Combo:
@@ -34652,7 +34652,7 @@ Body:
           - Libra_Shoes_J    # 22227
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight) {
          bonus2 bSkillAtk,"RK_DRAGONBREATH",5*.@r;
          bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",5*.@r;
       }
@@ -34661,7 +34661,7 @@ Body:
           - aegis_29725    # 29725
           - Libra_Ring_J    # 32261
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight) {
          bonus bLongAtkRate,15;
          bonus2 bSkillUseSP,"LK_SPIRALPIERCE",10;
       }
@@ -34670,7 +34670,7 @@ Body:
           - aegis_29725    # 29725
           - Aries_Spear_J    # 32031
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader)
          bonus bLongAtkRate,25;
   - Combos:
       - Combo:
@@ -34678,7 +34678,7 @@ Body:
           - Aries_Crown    # 5546
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader)
          bonus2 bSkillCooldown,"LG_CANNONSPEAR",-100*.@r;
   - Combos:
       - Combo:
@@ -34686,7 +34686,7 @@ Body:
           - Aries_Mail_J    # 450129
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader)
          bonus bAtkRate,3*.@r;
   - Combos:
       - Combo:
@@ -34694,7 +34694,7 @@ Body:
           - Aries_Manteau_J    # 480022
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader)
          bonus bAspdRate,2;
   - Combos:
       - Combo:
@@ -34702,14 +34702,14 @@ Body:
           - Aries_Shoes_J    # 470024
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader)
          bonus bDelayrate,-3*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Aries_Ring_J    # 490028
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader) {
          bonus bAtkRate,15;
          bonus2 bSkillAtk,"LG_CANNONSPEAR",30;
       }
@@ -34719,14 +34719,14 @@ Body:
           - Aries_Shield_J    # 460002
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_L);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader)
          bonus bMaxHP,500*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Aquarius_Staff_J    # 26167
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard)
          bonus2 bSkillAtk,"WL_HELLINFERNO",150;
   - Combos:
       - Combo:
@@ -34734,7 +34734,7 @@ Body:
           - Aquarius_Crown_J    # 19496
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard)
          bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-8000*.@r;
     UnEquipScript: |
       sc_end  SC_TELEKINESIS_INTENSE;
@@ -34744,7 +34744,7 @@ Body:
           - Aquarius_Mail_J    # 15426
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard)
          bonus bMatkRate,3*.@r;
   - Combos:
       - Combo:
@@ -34752,7 +34752,7 @@ Body:
           - Aquarius_Manteau_J    # 20972
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard)
          bonus bDelayrate,-2*.@r;
   - Combos:
       - Combo:
@@ -34760,14 +34760,14 @@ Body:
           - Aquarius_Shoes_J    # 22231
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard)
          bonus bMatkRate,2*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Aquarius_Ring_J    # 32266
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard) {
          bonus bMatkRate,15;
          bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-75000;
       }
@@ -34778,7 +34778,7 @@ Body:
           - aegis_29725    # 29725
           - Capricon_Bow_Of_Rogue_J    # 700004
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue)
          bonus bFlee2,20;
   - Combos:
       - Combo:
@@ -34786,7 +34786,7 @@ Body:
           - Capricon_Diadem_J    # 400015
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue)
          bonus bPerfectHitAddRate,2*.@r;
   - Combos:
       - Combo:
@@ -34794,7 +34794,7 @@ Body:
           - Capricon_Mail_J    # 450011
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue) {
          bonus bAtkRate,3*.@r;
          bonus bMatkRate,3*.@r;
       }
@@ -34804,7 +34804,7 @@ Body:
           - Capricon_Manteau_J    # 480006
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue)
          bonus2 bSkillAtk,"SC_TRIANGLESHOT",15*.@r;
   - Combos:
       - Combo:
@@ -34812,14 +34812,14 @@ Body:
           - Capricon_Shoes_J    # 470010
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue)
          bonus bPerfectHitAddRate,3*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Capricon_Ring_J    # 490009
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue) {
          bonus bAtkRate,15;
          bonus bMatkRate,15;
          bonus2 bSkillAtk,"SC_TRIANGLESHOT",70;
@@ -35451,7 +35451,7 @@ Body:
           - aegis_29725    # 29725
           - Procyon_Dagger_J    # 28784
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker) {
          bonus2 bSkillAtk,"SP_SHA",25;
          bonus2 bSkillAtk,"SP_SPA",25;
          bonus2 bSkillAtk,"SP_SWHOO",25;
@@ -35462,7 +35462,7 @@ Body:
           - Phoenix_Crown_J    # 15824
     Script: |      
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker)
          bonus bDelayrate,-3*.@r;
   - Combos:
       - Combo:
@@ -35470,7 +35470,7 @@ Body:
           - Procyon_Robe_J    # 15448
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker)
          bonus bMatkRate,3*.@r;
   - Combos:
       - Combo:
@@ -35478,7 +35478,7 @@ Body:
           - Procyon_Mantle_J    # 20984
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker)
          bonus bDelayrate,-2*.@r;
   - Combos:
       - Combo:
@@ -35499,14 +35499,14 @@ Body:
           - Procyon_Shoes_J    # 22242
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker)
          bonus bDelayrate,-3*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Procyon_Ring_J    # 32294
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker) {
          bonus bMatkRate,15;
          bonus2 bSkillCooldown,"SP_CURSEEXPLOSION",-500;
       }
@@ -35515,7 +35515,7 @@ Body:
           - aegis_29725    # 29725
           - Pollux_Book_J    # 28643
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Star_Gladiator)
          bonus bAllStats,10;
   - Combos:
       - Combo:
@@ -35523,7 +35523,7 @@ Body:
           - Golden_Crown_J    # 15823
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Star_Gladiator)
          bonus bPerfectHitAddRate,2*.@r;
   - Combos:
       - Combo:
@@ -35531,7 +35531,7 @@ Body:
           - Pollux_Robe_J    # 15447
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Star_Gladiator)
          bonus bAtkRate,3*.@r;
   - Combos:
       - Combo:
@@ -35539,7 +35539,7 @@ Body:
           - Pollux_Mantle_J    # 20983
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Star_Gladiator)
          bonus bWeaponAtkRate,.@r;
   - Combos:
       - Combo:
@@ -35557,14 +35557,14 @@ Body:
           - Pollux_Shoes_J    # 2400
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Star_Gladiator)
          bonus bPerfectHitAddRate,2*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Pollux_Ring_J    # 32293
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Star_Gladiator) {
          bonus bAtkRate,15;
          bonus2 bSkillAtk,"SG_SUN_WARM",100;
          bonus2 bSkillAtk,"SG_MOON_WARM",100;
@@ -35576,7 +35576,7 @@ Body:
           - Doram_Ele_Suit_J    # 15277
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          bonus bAtkRate,3*.@r;
          bonus bMatkRate,3*.@r;
       }
@@ -35586,7 +35586,7 @@ Body:
           - Doram_Ele_Cape_J    # 20917
     Script: |
       .@r = getequiprefinerycnt(EQI_GARMENT);
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          bonus2 bSkillAtk,"SU_PICKYPECK",5*.@r;
          bonus2 bSkillAtk,"SU_SCAROFTAROU",5*.@r;
          bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",5*.@r;
@@ -35609,7 +35609,7 @@ Body:
           - Doram_Ele_Shoes_J    # 22187
     Script: |
       .@r = getequiprefinerycnt(EQI_SHOES);
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          bonus bAtkRate,3*.@r;
          bonus bMatkRate,3*.@r;
       }
@@ -35619,14 +35619,14 @@ Body:
           - Clinging_Doram_1    # 19347
     Script: |
       .@r = getequiprefinerycnt(EQI_HEAD_TOP);
-      if (BaseJob == Job_Summoner)
+      if (BaseSecond == Job_Summoner)
          bonus2 bSubClass,Class_Boss,2*.@r;
   - Combos:
       - Combo:
           - aegis_29725    # 29725
           - Fresh_G_Necklace_J    # 28577
     Script: |
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          bonus bAtkRate,15;
          bonus2 bVariableCastrate,"SU_PICKYPECK",-50;
          bonus2 bVariableCastrate,"SU_ARCLOUSEDASH",-50;
@@ -35641,7 +35641,7 @@ Body:
           - aegis_29725    # 29725
           - Pretty_G_Necklace_J    # 28578
     Script: |
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          bonus bDef,150;
          bonus bMdef,15;
          bonus2 bVariableCastrate,"SU_FRESHSHRIMP",-50;
@@ -35657,7 +35657,7 @@ Body:
           - aegis_29725    # 29725
           - Charm_G_Necklace_J    # 28579
     Script: |
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          bonus bMatkRate,15;
          bonus2 bVariableCastrate,"SU_SV_STEMSPEAR",-50;
          bonus2 bVariableCastrate,"SU_SV_ROOTTWIST",-50;
@@ -35672,7 +35672,7 @@ Body:
           - aegis_29725    # 29725
           - ShiningTwigCharm_J    # 28589
     Script: |
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          bonus bMatkRate,15;
          bonus2 bVariableCastrate,"SU_SV_STEMSPEAR",-50;
          bonus2 bVariableCastrate,"SU_SV_ROOTTWIST",-50;
@@ -35687,7 +35687,7 @@ Body:
           - aegis_29725    # 29725
           - FreshTunaCharm_J    # 28590
     Script: |
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          bonus bDef,150;
          bonus bMdef,15;
          bonus2 bVariableCastrate,"SU_FRESHSHRIMP",-50;
@@ -35703,7 +35703,7 @@ Body:
           - aegis_29725    # 29725
           - PlumpyWormCharm_J    # 28591
     Script: |
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          bonus bAtkRate,15;
          bonus2 bVariableCastrate,"SU_PICKYPECK",-50;
          bonus2 bVariableCastrate,"SU_ARCLOUSEDASH",-50;
@@ -38355,7 +38355,7 @@ Body:
       bonus2 bSubSize,Size_Large,8;
       bonus bLongAtkRate,4*(.@r/3);
       bonus bShortAtkRate,4*(.@r/3);
-      if (BaseJob == Job_Merchant)
+      if (BaseSecond == Job_Merchant)
          bonus bBaseAtk,80;
   - Combos:
       - Combo:
@@ -38368,7 +38368,7 @@ Body:
       bonus2 bSubSize,Size_Large,10;
       bonus bLongAtkRate,4*(.@r/2);
       bonus bShortAtkRate,4*(.@r/2);
-      if (BaseJob == Job_Merchant)
+      if (BaseSecond == Job_Merchant)
          bonus bBaseAtk,120;
   - Combos:
       - Combo:
@@ -38376,7 +38376,7 @@ Body:
           - Scrap_Remodel_Shoes_TW    # 470120
     Script: |
       .@r = getequiprefinerycnt(EQI_HAND_L)+getequiprefinerycnt(EQI_SHOES);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          bonus2 bAddSize,Size_All,3*(.@r/4);
          bonus bLongAtkRate,5*(.@r/6);
          bonus bShortAtkRate,5*(.@r/6);
@@ -39900,12 +39900,12 @@ Body:
           - Comp_Record_Thief_TH    # 490231
           - Comp_Record_Thief2_TH    # 490395
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin) {
          bonus2 bIgnoreDefRaceRate,RC_All,35;
          bonus2 bSkillCooldown,"ASC_METEORASSAULT",-350;
          bonus2 bVariableCastrate,"ASC_METEORASSAULT",-100;
       }
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue) {
          bonus2 bVariableCastrate,"SC_TRIANGLESHOT",-100;
          bonus bPerfectHitAddRate,70;
       }
@@ -40834,7 +40834,7 @@ Body:
       .@r = getequiprefinerycnt(EQI_HAND_L);
       bonus2 bSubClass,Class_Normal,-10;
       bonus2 bSubClass,Class_Boss,-10;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight) {
          bonus2 bSubClass,Class_Normal,-10;
          bonus2 bSubClass,Class_Boss,-10;
          if (.@r>=7) {
@@ -44680,11 +44680,11 @@ Body:
           - Comp_Record_Merch2_TH    # 490412
           - Comp_Record_Merchant_TH    # 490240
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith) {
          bonus2 bVariableCastrate,"NC_ARMSCANNON",-50;
          bonus4 bAutoSpellOnSkill,"NC_AXEBOOMERANG","NC_AXEBOOMERANG",getskilllv("NC_AXEBOOMERANG"),350;
       }
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          bonus3 bAutoSpell,"GN_SPORE_EXPLOSION",10,150;
          bonus2 bVariableCastrate,"GN_SPORE_EXPLOSION",-100;
       }
@@ -45187,11 +45187,11 @@ Body:
       bonus bSMatk,20;
       bonus bFixedCast,-200;
       bonus2 bSkillAtk,"WL_COMET",7*(.@r/2);
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          skill "WL_COMET",3;
          bonus bUseSPrate,30;
       }
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard)
          bonus2 bSkillCooldown,"WL_COMET",-20000;
   - Combos:
       - Combo:
@@ -45201,7 +45201,7 @@ Body:
           - Ixion_Wing    # 1737
           - Comp_Heaven_Cage_ROC    # 400411
     Script: |
-      if (BaseJob == Job_Sniper)
+      if (BaseSecond == Job_Sniper)
          bonus2 bSkillAtk,"HT_BLITZBEAT",5*getequiprefinerycnt(EQI_HAND_R);
   - Combos:
       - Combo:
@@ -46088,7 +46088,7 @@ Body:
           - Pure_Heart_TW    # 490218
           - Infinity_Chip_MAX    # 490264
     Script: |
-      if (BaseJob == Job_Merchant) {
+      if (BaseSecond == Job_Merchant) {
          bonus bPow,3;
          bonus bCon,3;
          bonus bPAtk,3;
@@ -46101,7 +46101,7 @@ Body:
           - Scrap_Remodel_Shoes_TW    # 470120
           - Pure_Heart_TW    # 490218
     Script: |
-      if (BaseJob == Job_Merchant) {
+      if (BaseSecond == Job_Merchant) {
          bonus bBaseAtk,150;
          bonus bVariableCastrate,-10;
       }
@@ -46356,7 +46356,7 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_All,50;
       bonus2 bIgnoreDefRaceRate,RC_Player_Doram,-50;
       bonus2 bIgnoreDefRaceRate,RC_Player_Human,-50;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard) {
          bonus bFixedCast,-700;
          if (BaseLevel < 170)
              bonus2 bSkillCooldown,"WL_CRIMSONROCK",-4000;
@@ -46365,7 +46365,7 @@ Body:
              bonus2 bSkillAtk,"WL_CRIMSONROCK",30;
          }
       }
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus bInt,30;
          if (BaseLevel < 170)
              bonus2 bSkillCooldown,"SO_VARETYR_SPEAR",-4000;
@@ -50588,11 +50588,11 @@ Body:
       bonus2 bIgnoreDefRaceRate,RC_Player_Human,-25;
       bonus2 bIgnoreMdefRaceRate,RC_Player_Doram,-25;
       bonus2 bIgnoreMdefRaceRate,RC_Player_Human,-25;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest) {
          bonus2 bVariableCastrate,"AB_JUDEX",-100;
          bonus2 bSkillCooldown,"WL_HELLINFERNO",-2000;
       }
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk) {
          bonus2 bSkillCooldown,"SR_EARTHSHAKER",-2000;
          bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-2000;
          bonus bDelayrate,-20;
@@ -50681,9 +50681,9 @@ Body:
           - Comp_Record_Archer_TH    # 490401
           - Comp_Record_Archer2_TH    # 490431
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter)
          bonus2 bSkillCooldown,"RA_UNLIMIT",-90000;
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
          bonus2 bSkillUseSPrate,"WM_SEVERE_RAINSTORM",60;
          bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000;
       }
@@ -52063,7 +52063,7 @@ Body:
           - Hero    # 29509
           - aegis_313297    # 313297
     Script: |
-      if ((eaclass()&EAJL_FOURTH) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
+      if ((eaclass()&EAJL_FOURTH) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer))
          skill "RA_UNLIMIT",5;
     UnEquipScript: |
       sc_end SC_UNLIMIT;
@@ -52148,7 +52148,7 @@ Body:
           - Hero    # 29509
           - aegis_313309    # 313309
     Script: |
-      if (eaclass()&EAJL_FOURTH && BaseJob == Job_Rogue)
+      if (eaclass()&EAJL_FOURTH && BaseSecond == Job_Rogue)
          skill "RA_UNLIMIT",5;
     UnEquipScript: |
       sc_end SC_UNLIMIT;
@@ -53554,13 +53554,13 @@ Body:
           - Lunar_E_Armor_LT    # 450263
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if ((eaclass()&EAJL_FOURTH) && (BaseJob == Job_Wizard || BaseJob == Job_Sage || BaseJob == Job_Priest)) {
+      if ((eaclass()&EAJL_FOURTH) && (BaseSecond == Job_Wizard || BaseSecond == Job_Sage || BaseSecond == Job_Priest)) {
          bonus2 bMagicAtkEle,Ele_All,20;
          if (.@r>=14) {
              bonus bNearAtkDef,7;
          }
       }
-      if ((eaclass()&EAJL_FOURTH) && (BaseJob == Job_Hunter || BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+      if ((eaclass()&EAJL_FOURTH) && (BaseSecond == Job_Hunter || BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
          bonus bLongAtkRate,20;
          if (.@r>=14) {
              bonus2 bSubSize,Size_Medium,8;
@@ -54893,7 +54893,7 @@ Body:
       bonus bHealPower,20;
       bonus bAddItemHealRate,20;
       autobonus2 "{ bonus bVit,200; }",30,10000,BF_WEAPON;
-      if (eaclass()&EAJL_THIRD && (BaseJob == Job_Priest))
+      if (eaclass()&EAJL_THIRD && (BaseSecond == Job_Priest))
          skill "MG_ENERGYCOAT",1;
   - Combos:
       - Combo:
@@ -54979,7 +54979,7 @@ Body:
           - Pure_Heart_LT_TW    # 490492
           - Infinity_Chip_EX    # 490572
     Script: |
-      if (BaseJob == Job_Merchant) {
+      if (BaseSecond == Job_Merchant) {
          bonus bPow,5;
          bonus bCrt,5;
          bonus bPAtk,5;
@@ -55193,7 +55193,7 @@ Body:
       if (getequiprefinerycnt(EQI_HAND_L)>=13) {
          bonus2 bSubRace,RC_Player_Doram,3;
          bonus2 bSubRace,RC_Player_Human,3;
-         if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
+         if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest) {
               bonus2 bSubRace,RC_Player_Doram,3;
               bonus2 bSubRace,RC_Player_Human,3;
          }
@@ -55294,7 +55294,7 @@ Body:
           - Janus_Armor_LT    # 450391
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (BaseJob == Job_SuperNovice) {
+      if (BaseSecond == Job_SuperNovice) {
          bonus2 bAddSize,Size_All,10+((.@r/2)*3);
          bonus2 bMagicAddSize,Size_All,10+((.@r/2)*3);
       }
@@ -55304,7 +55304,7 @@ Body:
           - Janus_Armor_LT    # 450391
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (BaseJob == Job_SuperNovice) {
+      if (BaseSecond == Job_SuperNovice) {
          bonus2 bAddSize,Size_All,15+((.@r/3)*6);
          bonus2 bMagicAddSize,Size_All,15+((.@r/3)*6);
       }
@@ -55998,7 +55998,7 @@ Body:
       bonus2 bSubSize,Size_Medium,10;
       bonus bShortAtkRate,6*(.@r/2);
       bonus bLongAtkRate,6*(.@r/2);
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Blacksmith || BaseJob == Job_Alchemist))
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Blacksmith || BaseSecond == Job_Alchemist))
          bonus bBaseAtk,200;
   - Combos:
       - Combo:
@@ -56008,11 +56008,11 @@ Body:
       bonus bFixedCast,-200;
       bonus bSMatk,20;
       bonus2 bSkillAtk,"WL_COMET",7*(getequiprefinerycnt(EQI_HEAD_TOP)/2);
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Sage)) {
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Sage)) {
          skill "WL_COMET",3;
          bonus bUseSPrate,30;
       }
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Wizard))
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Wizard))
          bonus2 bSkillCooldown,"WL_COMET",-20000;
   - Combos:
       - Combo:
@@ -56940,7 +56940,7 @@ Body:
           - Janus_Armor    # 450390
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (BaseJob == Job_SuperNovice) {
+      if (BaseSecond == Job_SuperNovice) {
          bonus2 bAddSize,Size_All,6+(3*(.@r/2));
          bonus2 bMagicAddSize,Size_All,6+(3*(.@r/2));
       }
@@ -56950,7 +56950,7 @@ Body:
           - Janus_Armor    # 450390
     Script: |
       .@r = getequiprefinerycnt(EQI_ARMOR);
-      if (BaseJob == Job_SuperNovice) {
+      if (BaseSecond == Job_SuperNovice) {
          bonus2 bAddSize,Size_All,10+(5*(.@r/3));
          bonus2 bMagicAddSize,Size_All,10+(5*(.@r/3));
       }
@@ -57508,10 +57508,10 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_Water,10;
       if (getequiprefinerycnt(EQI_GARMENT)>=14) {
-         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Wizard) {
+         if (eaclass()&EAJL_FOURTH && BaseSecond == Job_Wizard) {
              skill "EM_DIAMOND_STORM",4;
          }
-         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Sage) {
+         if (eaclass()&EAJL_FOURTH && BaseSecond == Job_Sage) {
              skill "AG_RAIN_OF_CRYSTAL",4;
          }
       }
@@ -57522,10 +57522,10 @@ Body:
     Script: |
       bonus2 bMagicAtkEle,Ele_Earth,10;
       if (getequiprefinerycnt(EQI_GARMENT)>=14) {
-         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Wizard) {
+         if (eaclass()&EAJL_FOURTH && BaseSecond == Job_Wizard) {
              skill "EM_TERRA_DRIVE",4;
          }
-         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Sage) {
+         if (eaclass()&EAJL_FOURTH && BaseSecond == Job_Sage) {
              skill "AG_STRANTUM_TREMOR",4;
          }
       }
@@ -57538,11 +57538,11 @@ Body:
       bonus2 bMagicAtkEle,Ele_Water,30;
       bonus2 bSubEle,Ele_All,20;
       if (getequiprefinerycnt(EQI_GARMENT)>=14) {
-         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Wizard) {
+         if (eaclass()&EAJL_FOURTH && BaseSecond == Job_Wizard) {
              skill "EM_DIAMOND_STORM",5;
              skill "EM_TERRA_DRIVE",5;
          }
-         if (eaclass()&EAJL_FOURTH && BaseJob == Job_Sage) {
+         if (eaclass()&EAJL_FOURTH && BaseSecond == Job_Sage) {
              skill "AG_RAIN_OF_CRYSTAL",5;
              skill "AG_STRANTUM_TREMOR",5;
          }
@@ -58615,7 +58615,7 @@ Body:
           - Thanos_Dagger    # 13093
           - TiaraCrown_Magic_BR    # 400646
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus bAspdRate,10;
          bonus2 bSkillAtk,"WZ_METEOR",5*(.@r/2);
@@ -58628,10 +58628,10 @@ Body:
           - TiaraCrown_Magic_BR    # 400646
     Script: |
       bonus2 bMagicAtkEle,Ele_Neutral,10;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest) {
          bonus2 bSkillAtk,"AB_ADORAMUS",5*(getequiprefinerycnt(EQI_HAND_R)/2);
       }
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",5*(getequiprefinerycnt(EQI_HAND_R)/2);
       }
   - Combos:
@@ -58639,7 +58639,7 @@ Body:
           - Thanos_Rod    # 2023
           - TiaraCrown_Magic_BR    # 400646
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus2 bSkillCooldown,"WL_FROSTMISTY",-5000;
          bonus2 bSkillAtk,"WL_FROSTMISTY",5*(.@r/2);
@@ -58662,7 +58662,7 @@ Body:
           - Thanos_Dagger    # 13093
           - TiaraCrown_Melee_BR    # 400647
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus bDelayrate,-10;
          bonus2 bSkillAtk,"RG_BACKSTAP",5*(.@r/2);
@@ -58673,7 +58673,7 @@ Body:
           - Thanos_Katar    # 28000
           - TiaraCrown_Melee_BR    # 400647
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus bDelayrate,-10;
          bonus2 bSkillAtk,"AS_GRIMTOOTH",5*(.@r/2);
@@ -58684,7 +58684,7 @@ Body:
           - Thanos_Great_Sword    # 21009
           - TiaraCrown_Melee_BR    # 400647
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus2 bSkillCooldown,"RK_SONICWAVE",-1500;
          bonus2 bSkillAtk,"KN_BOWLINGBASH",5*(.@r/2);
@@ -58695,7 +58695,7 @@ Body:
           - Thanos_Sword    # 13441
           - TiaraCrown_Melee_BR    # 400647
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus2 bSkillCooldown,"LG_SHIELDPRESS",-1500;
          bonus2 bSkillAtk,"LG_EARTHDRIVE",5*(.@r/2);
@@ -58706,7 +58706,7 @@ Body:
           - Thanos_Axe    # 28100
           - TiaraCrown_Melee_BR    # 400647
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;
          bonus2 bSkillAtk,"NC_POWERSWING",5*(.@r/2);
@@ -58717,7 +58717,7 @@ Body:
           - Thanos_Knuckle    # 1836
           - TiaraCrown_Melee_BR    # 400647
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-1000;
          bonus2 bSkillAtk,"SR_SKYNETBLOW",5*(.@r/2);
@@ -58728,7 +58728,7 @@ Body:
           - Thanos_Bow    # 18119
           - TiaraCrown_Ranged_BR    # 400648
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus2 bSkillCooldown,"RA_ARROWSTORM",-2000;
          bonus2 bSkillAtk,"SN_SHARPSHOOTING",5*(.@r/2);
@@ -58739,7 +58739,7 @@ Body:
           - Thanos_Hammer    # 16028
           - TiaraCrown_Ranged_BR    # 400648
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus2 bSkillCooldown,"GN_SPORE_EXPLOSION",-1000;
          bonus2 bSkillAtk,"GN_CARTCANNON",5*(.@r/2);
@@ -58750,7 +58750,7 @@ Body:
           - Thanos_Long_Spear    # 1496
           - TiaraCrown_Ranged_BR    # 400648
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus2 bSkillCooldown,"LG_CANNONSPEAR",-500;
          bonus2 bSkillAtk,"LG_OVERBRAND",5*(.@r/2);
@@ -58761,7 +58761,7 @@ Body:
           - Thanos_Spear    # 1438
           - TiaraCrown_Ranged_BR    # 400648
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight) {
          .@r = getequiprefinerycnt(EQI_HAND_R);
          bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",-1500;
          bonus2 bSkillAtk,"LK_SPIRALPIERCE",5*(.@r/2);

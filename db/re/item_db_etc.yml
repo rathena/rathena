@@ -5034,7 +5034,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus3 bSPVanishRate,50,10,BF_WEAPON|BF_MAGIC|BF_MISC;
-      if (BaseJob == Job_Sage)
+      if (BaseSecond == Job_Sage)
          bonus bSPDrainValue,1;
   - Id: 4172
     AegisName: The_Paper_Card
@@ -5354,7 +5354,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice)
+      if (BaseSecond == Job_Novice || BaseSecond == Job_SuperNovice)
          bonus3 bAutoSpellWhenHit,"SM_ENDURE",1,200;
   - Id: 4194
     AegisName: Rybio_Card
@@ -6806,7 +6806,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (BaseJob == Job_Novice || BaseJob == Job_SuperNovice)
+      if (BaseSecond == Job_Novice || BaseSecond == Job_SuperNovice)
          bonus3 bAutoSpellWhenHit,"AL_INCAGI",1,100;
   - Id: 4295
     AegisName: Kraben_Card
@@ -6889,7 +6889,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus2 bAddEffWhenHit,Eff_Poison,300+600*(BaseJob == Job_Assassin);
+      bonus2 bAddEffWhenHit,Eff_Poison,300+600*(BaseSecond == Job_Assassin);
   - Id: 4301
     AegisName: Killer_Mantis_Card
     Name: Killer Mantis Card
@@ -8272,7 +8272,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (BaseJob == Job_Priest)
+      if (BaseSecond == Job_Priest)
          bonus3 bAutoSpell,"CR_GRANDCROSS",5,20;
   - Id: 4395
     AegisName: Tha_Maero_Card
@@ -8355,7 +8355,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus3 bAutoSpellWhenHit,"DC_WINKCHARM",1,50+50*(BaseJob == Job_Dancer);
+      bonus3 bAutoSpellWhenHit,"DC_WINKCHARM",1,50+50*(BaseSecond == Job_Dancer);
   - Id: 4401
     AegisName: Alicel_Card
     Name: Alicel Card
@@ -8735,7 +8735,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (BaseJob == Job_Rogue) {
+      if (BaseSecond == Job_Rogue) {
          bonus bMatkRate,10;
          bonus2 bAddClass,Class_All,10;
       }
@@ -10580,7 +10580,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (BaseJob == Job_Rogue) {
+      if (BaseSecond == Job_Rogue) {
          bonus bMatkRate,10;
          bonus2 bAddClass,Class_All,10;
       }
@@ -10877,7 +10877,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bFlee,10;
-      if (BaseJob == Job_Bard) {
+      if (BaseSecond == Job_Bard) {
          bonus bMaxHPrate,10;
          bonus bMaxSPrate,5;
       }
@@ -10964,7 +10964,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus bFlee,10;
-      if (BaseJob == Job_Dancer) {
+      if (BaseSecond == Job_Dancer) {
          bonus bMaxHPrate,10;
          bonus bMaxSPrate,5;
       }
@@ -12236,7 +12236,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus bMaxHPrate,10;
          bonus bMatkRate,10;
       }
@@ -12256,7 +12256,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk) {
          bonus bMaxHPrate,10;
          bonus2 bAddRace,RC_All,10;
       }
@@ -12276,7 +12276,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Bard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Bard) {
          bonus bMaxHPrate,15;
          bonus bMaxSPrate,10;
       }
@@ -12296,7 +12296,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin) {
          bonus bFlee2,10;
          bonus2 bAddRace,RC_All,15;
       }
@@ -12316,7 +12316,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest) {
          bonus bMaxHPrate,10;
          bonus bHealPower,15;
       }
@@ -12336,7 +12336,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter) {
          bonus bCritical,20;
          bonus2 bWeaponDamageRate,W_BOW,15;
       }
@@ -12356,7 +12356,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith) {
          bonus bHit,20;
          bonus2 bAddRace,RC_All,15;
       }
@@ -12376,7 +12376,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard) {
          bonus bMdef,80;
          bonus bMatkRate,15;
       }
@@ -12396,7 +12396,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight) {
          bonus bAspd,2;
          bonus2 bAddRace,RC_All,15;
       }
@@ -12416,7 +12416,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader) {
          bonus bDef,350;
          bonus2 bAddRace,RC_All,10;
       }
@@ -12436,7 +12436,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          bonus bFlee,20;
          bonus2 bAddRace,RC_All,15;
       }
@@ -12456,7 +12456,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue) {
          bonus bMatkRate,15;
          bonus2 bAddRace,RC_All,5;
       }
@@ -12476,7 +12476,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Dancer) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Dancer) {
          bonus bMaxHPrate,10;
          bonus bMaxSPrate,15;
       }
@@ -38350,7 +38350,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus bMaxHPrate,10;
          bonus bMatkRate,10;
       }
@@ -38369,7 +38369,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk) {
          bonus bMaxHPrate,10;
          bonus bAtkRate,10;
       }
@@ -38388,7 +38388,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Bard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Bard) {
          bonus bMaxHPrate,15;
          bonus bMaxSPrate,10;
       }
@@ -38407,7 +38407,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin) {
          bonus bFlee2,10;
          bonus bAtkRate,15;
       }
@@ -38426,7 +38426,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest) {
          bonus bMaxHPrate,10;
          bonus bHealPower,15;
       }
@@ -38445,7 +38445,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter) {
          bonus bCritical,20;
          bonus bLongAtkRate,15;
       }
@@ -38464,7 +38464,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith) {
          bonus bHit,20;
          bonus bAtkRate,15;
       }
@@ -38483,7 +38483,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard) {
          bonus bMdef,80;
          bonus bMatkRate,15;
       }
@@ -38502,7 +38502,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight) {
          bonus bAspd,2;
          bonus bAtkRate,15;
       }
@@ -38521,7 +38521,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader) {
          bonus bDef,350;
          bonus bAtkRate,10;
       }
@@ -38540,7 +38540,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          bonus bFlee,20;
          bonus bAtkRate,15;
       }
@@ -38559,7 +38559,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue) {
          bonus bMatkRate,15;
          bonus bAtkRate,5;
       }
@@ -38578,7 +38578,7 @@ Body:
     Flags:
       DropEffect: CLIENT
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Dancer) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Dancer) {
          bonus bMaxHPrate,10;
          bonus bMaxSPrate,15;
       }
@@ -38977,7 +38977,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (BaseJob == Job_Bard || BaseJob == Job_Dancer) {
+      if (BaseSecond == Job_Bard || BaseSecond == Job_Dancer) {
          bonus bMatk,(15*getrefine());
       }
   - Id: 27107
@@ -41791,7 +41791,7 @@ Body:
     Script: |
       .@p = getitempos();
       bonus bMaxHPrate,50;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_knight) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_knight) {
          if (.@p == EQP_ACC_L) {
             bonus2 bSkillAtk,"RK_DRAGONBREATH",50;
             bonus4 bAddEff,Eff_Heat,50,ATF_WEAPON|ATF_MAGIC,3000;
@@ -42587,7 +42587,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (BaseJob == Job_Summoner) {
+      if (BaseSecond == Job_Summoner) {
          bonus2 bAddEle,Ele_All,25;
          bonus2 bMagicAddEle,Ele_All,25;
          bonus bNoKnockback;
@@ -42601,7 +42601,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Star_Gladiator)
          bonus2 bIgnoreDefRaceRate,RC_All,100;
   - Id: 27404
     AegisName: Latent_Release_SP
@@ -42612,7 +42612,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker) {
          bonus bMaxHPrate,20;
          bonus bMaxSPrate,20;
          skill "HW_GANBANTEIN",1;
@@ -42626,7 +42626,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Kagerou)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Kagerou)
          bonus2 bSkillCooldown,"KO_MEIKYOUSISUI",-290000;
   - Id: 27406
     AegisName: Latent_Release_OB
@@ -42637,7 +42637,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Oboro)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Oboro)
          bonus2 bSkillCooldown,"KO_MEIKYOUSISUI",-290000;
   - Id: 27407
     AegisName: Latent_Release_RL
@@ -42648,7 +42648,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Gunslinger)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Gunslinger)
          bonus2 bHPDrainRate,1000,2;
   - Id: 27408
     AegisName: Immun_Fire
@@ -45242,31 +45242,31 @@ Body:
     SubType: Enchant
     Script: |
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight)
          bonus2 bSkillAtk,"RK_STORMBLAST",100;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader)
          bonus2 bSkillCooldown,"LG_CANNONSPEAR",-1000;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard)
          bonus2 bSkillCooldown,"WL_CRIMSONROCK",-1500;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage)
          bonus bVariableCastrate,-15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter)
          bonus2 bSkillAtk,"RA_WUGSTRIKE",30;
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer))
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer))
          bonus bAllStats,10;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest)
          skill "CR_PROVIDENCE",5;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk)
          bonus bLongAtkRate,10;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin) {
          bonus bDelayrate,-90;
          autobonus3 "{ sc_start SC_WEAPONBLOCKING,50000,1; }",1000,50000,"GC_HALLUCINATIONWALK";
       }
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue)
          bonus bFixedCastrate,-50;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith)
          bonus bAspdRate,20;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          bonus bMaxHPrate,15;
          bonus bBaseAtk,50;
          bonus bMatk,50;
@@ -47447,7 +47447,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Star_Gladiator) {
          bonus bWeaponAtkRate,10;
          bonus2 bVariableCastrate,"SJ_PROMINENCEKICK",-50;
          bonus2 bSkillAtk,"SJ_SOLARBURST",50;
@@ -47458,7 +47458,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Star_Gladiator) {
          bonus bMaxHPrate,20;
          bonus2 bVariableCastrate,"SJ_NEWMOONKICK",-50;
          bonus2 bSkillAtk,"SJ_FULLMOONKICK",50;
@@ -47469,7 +47469,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Star_Gladiator) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Star_Gladiator) {
          bonus bAspdRate,10;
          bonus2 bAddEff,Eff_Stun,1000;
          bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",50;
@@ -47481,7 +47481,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker) {
          bonus bMatk,50;
          bonus2 bSkillAtk,"SP_SHA",BaseLevel/10;
          bonus2 bSkillAtk,"SP_SPA",BaseLevel/10;
@@ -47493,7 +47493,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker) {
          bonus bMatk,50;
          bonus2 bSkillAtk,"SP_CURSEEXPLOSION",BaseLevel/10;
       }
@@ -47503,7 +47503,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Soul_Linker) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Soul_Linker) {
          bonus2 bSubRace,RC_Player_Human,3;
          bonus2 bSubRace,RC_Player_Doram,3;
          skill "SA_DISPELL",5;
@@ -50600,7 +50600,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (BaseJob == JOB_NOVICE) {
+      if (BaseSecond == JOB_NOVICE) {
          bonus bAtkRate,10;
          bonus bMaxHP,1500;
       }
@@ -50615,7 +50615,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      if (BaseJob == JOB_NOVICE) {
+      if (BaseSecond == JOB_NOVICE) {
          bonus bMatkRate,10;
          bonus bMaxSP,500;
       }
@@ -54763,7 +54763,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight) {
          bonus bCritical,20;
          bonus bMaxHPrate,15;
          bonus2 bAddRace,RC_All,15;
@@ -54785,7 +54785,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader) {
          bonus bDef,350;
          bonus bMaxHPrate,15;
          bonus2 bAddRace,RC_All,15;
@@ -54807,7 +54807,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest) {
          bonus bMatkRate,15;
          bonus bMaxHPrate,15;
          bonus2 bMagicAddEle,Ele_All,15;
@@ -54829,7 +54829,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk) {
          bonus bLongAtkRate,15;
          bonus bMaxHPrate,15;
          bonus2 bAddRace,RC_All,15;
@@ -54851,7 +54851,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard) {
          bonus bMatkRate,15;
          bonus bMaxHPrate,15;
          bonus2 bMagicAddRace,RC_All,15;
@@ -54873,7 +54873,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus bMatkRate,15;
          bonus bMaxHPrate,15;
          bonus2 bMagicAddRace,RC_All,15;
@@ -54895,7 +54895,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith) {
          bonus bLongAtkRate,15;
          bonus bMaxHPrate,15;
          bonus2 bAddRace,RC_All,15;
@@ -54917,7 +54917,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          bonus bLongAtkRate,15;
          bonus bMaxHPrate,15;
          bonus2 bAddRace,RC_All,15;
@@ -54939,7 +54939,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin) {
          bonus bCritical,20;
          bonus bLongAtkRate,15;
          bonus2 bAddRace,RC_All,15;
@@ -54962,7 +54962,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue) {
          bonus bMaxHPrate,15;
          bonus2 bAddRace,RC_All,15;
          bonus2 bMagicAddRace,RC_All,15;
@@ -54984,7 +54984,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter) {
          bonus bCritical,20;
          bonus2 bAddRace,RC_All,15;
          bonus2 bWeaponDamageRate,W_BOW,15;
@@ -55006,7 +55006,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
          bonus bMaxHPrate,15;
          bonus bMatkRate,15;
          bonus2 bMagicAddRace,RC_All,15;
@@ -55028,7 +55028,7 @@ Body:
          bonus bAllStats,15;
       if (.@r>=10)
          bonus bAllStats,15;
-      if ((eaclass()&EAJL_THIRD) && (BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+      if ((eaclass()&EAJL_THIRD) && (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
          bonus bMaxHPrate,15;
          bonus bMaxSPrate,15;
          bonus2 bAddRace,RC_All,15;
@@ -58860,7 +58860,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,12;
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Knight)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Knight)
          bonus2 bSubClass,Class_Boss,20;
   - Id: 310311
     AegisName: Latent_Release_LG
@@ -58871,7 +58871,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,12;
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Crusader)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Crusader)
          bonus2 bAddClass,Class_Boss,50;
   - Id: 310312
     AegisName: Latent_Release_SO
@@ -58882,7 +58882,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,12;
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Sage) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Sage) {
          bonus2 bSkillAtk,"SO_VARETYR_SPEAR",50;
          bonus2 bSkillCooldown,"SO_VARETYR_SPEAR",-1000;
       }
@@ -58895,7 +58895,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,12;
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Priest)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Priest)
          autobonus3 "{ bonus2 bResEff,Eff_Sleep,10000; bonus2 bResEff,Eff_Stun,10000; bonus2 bResEff,Eff_Stone,10000; }",1000,30000,"AB_ORATIO";
   - Id: 310314
     AegisName: Latent_Release_SR
@@ -58906,7 +58906,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,12;
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Monk)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Monk)
          bonus bPerfectHitAddRate,20;
   - Id: 310315
     AegisName: Latent_Release_SC
@@ -58917,7 +58917,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,12;
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Rogue)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Rogue)
          bonus2 bSkillCooldown,"SC_ESCAPE",-1500;
   - Id: 310316
     AegisName: Latent_Release_NC
@@ -58928,7 +58928,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,12;
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Blacksmith)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Blacksmith)
          bonus bNoWalkDelay;
   - Id: 310317
     AegisName: Latent_Release_GN
@@ -58939,7 +58939,7 @@ Body:
       bonus2 bSubRace,RC_Player_Human,12;
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Alchemist) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Alchemist) {
          bonus2 bSkillAtk,"CR_ACIDDEMONSTRATION",50;
          bonus2 bSkillAtk,"GN_CRAZYWEED_ATK",50;
       }
@@ -59041,7 +59041,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Wizard)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Wizard)
          bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-80000;
     UnEquipScript: |
       sc_end SC_TELEKINESIS_INTENSE;
@@ -59054,7 +59054,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Assassin)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Assassin)
          autobonus3 "{ bonus bFlee2,100; }",1000,3000,"ASC_METEORASSAULT";
   - Id: 310333
     AegisName: Latent_Release_MI_JP
@@ -59065,7 +59065,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Bard)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Bard)
          skill "RA_UNLIMIT",5;
     UnEquipScript: |
       sc_end SC_UNLIMIT;
@@ -59078,7 +59078,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Hunter) {
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Hunter) {
          bonus bDelayrate,-90;
          bonus2 bSkillCooldown,"RA_UNLIMIT",-180000;
       }
@@ -59093,7 +59093,7 @@ Body:
       bonus2 bSubRace,RC_Player_Doram,12;
       bonus2 bSubRace,RC_Player_Human,12;
       bonus bRestartFullRecover;
-      if (eaclass()&EAJL_THIRD && BaseJob == Job_Dancer)
+      if (eaclass()&EAJL_THIRD && BaseSecond == Job_Dancer)
          skill "RA_UNLIMIT",5;
     UnEquipScript: |
       sc_end SC_UNLIMIT;
@@ -78208,7 +78208,7 @@ Body:
     SubType: Enchant
     Script: |
       bonus2 bAddEle,Ele_All,15;
-      if (eaclass()&EAJL_FOURTH && (BaseJob == Job_Rogue || BaseJob == Job_Hunter || BaseJob == Job_Bard || BaseJob == Job_Dancer))
+      if (eaclass()&EAJL_FOURTH && (BaseSecond == Job_Rogue || BaseSecond == Job_Hunter || BaseSecond == Job_Bard || BaseSecond == Job_Dancer))
          autobonus "{}",10,20000,BF_WEAPON,"{ sc_start SC_UNLIMIT,20000,5; }";
   - Id: 312396
     AegisName: aegis_312396

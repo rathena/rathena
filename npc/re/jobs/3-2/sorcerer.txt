@@ -30,7 +30,7 @@ gef_tower,102,34,5	script	Merito	742,{
 		mes "Wow~ you are a young adventurer. I envy you.";
 		close;
 	}
-	if (BaseJob != Job_Sage) {
+	if (BaseSecond != Job_Sage) {
 		mes "Ahh~ I think you don't need to have a conversation with me.";
 		close;
 	}
@@ -148,7 +148,7 @@ gef_tower,113,161,5	script	Karacas	754,{
 		mes "Is there anything I can do for you?";
 		close;
 	}
-	if (BaseJob != Job_Sage) {
+	if (BaseSecond != Job_Sage) {
 		mes "I belong to the Sorcerer association. I don't think you have any business with me.";
 		close;
 	}

@@ -13113,7 +13113,7 @@ OnTouch:
 		npctalk "Seeker of Truth " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
 		end;
 	case JOB_ARCHER:
-		if (BaseJob == Job_Hunter)
+		if (BaseSecond == Job_Hunter)
 			npctalk "Arrow through the Wind " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;
 		else
 			npctalk "Evangelist of Pleasure " + strcharinfo(0) + ".", "Chamberlain#vip_alimi", bc_area;

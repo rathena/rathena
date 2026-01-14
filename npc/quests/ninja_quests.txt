@@ -12,7 +12,7 @@
 //= 1.0 Ninja Arm Guards only yet [Playtester]
 //= 1.1 Added Kaibara [Playtester]
 //= 1.2 Added Tetsu [Playtester]
-//= 1.2a Kagerou/Oboro support (BaseJob -> BaseClass) [Euphy]
+//= 1.2a Kagerou/Oboro support (BaseSecond -> BaseClass) [Euphy]
 //============================================================
 
 que_ng,28,50,3	script	Boshuu	709,{

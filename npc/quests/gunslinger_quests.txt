@@ -26,7 +26,7 @@
 
 que_ng,182,85,3	script	Garrison	109,{
 
-	if(BaseJob != Job_Gunslinger)
+	if(BaseSecond != Job_Gunslinger)
 	{
 		mes "[Garrison]";
 		mes "You're not a gunslinger.";
@@ -428,7 +428,7 @@ lighthalzen,322,247,6	script	Ravey	86,{
 
 que_ng,187,163,3	script	Ingrid	744,{
 
-	if(BaseJob != Job_Gunslinger)
+	if(BaseSecond != Job_Gunslinger)
 	{
 		mes "[Ingrid]";
 		mes "How are you!";
@@ -601,7 +601,7 @@ SubInferno:
 
 que_ng,185,180,3	script	Vanessa	726,{
 
-	if(BaseJob != Job_Gunslinger)
+	if(BaseSecond != Job_Gunslinger)
 	{
 		mes "[Vanessa]";
 		mes "Hah !Hah !!";
@@ -1236,7 +1236,7 @@ que_ng,149,178,4	script	Lab Director	744,{
 	mes "My name is 'Lab Director'.";
 	mes "Do you need something?";
 	next;
-	if (BaseJob != Job_Gunslinger){
+	if (BaseSecond != Job_Gunslinger){
 		select("Talk to him.");
 		mes "[N. A]";
 		mes "If you see Gunslingers around,";
@@ -1541,7 +1541,7 @@ lighthalzen,205,284,6	script	F. Harrison	85,{
 		close;
 	}
 	else if(gun_na == 0){
-		if(BaseJob != Job_Gunslinger) {
+		if(BaseSecond != Job_Gunslinger) {
 			mes "[F. Harrison]";
 			mes "Man, I'm so bored...";
 			mes "I wonder if there's anything";

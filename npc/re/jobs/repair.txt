@@ -184,31 +184,31 @@ prt_in,38,104,4	script	Valerie	811,{
 
 		// Third job - variable and quests
 		// callsub L_Third, "<variable>", <main quest>, <first quest>, <last quest>{, <additional quest>};
-		if (BaseJob == Job_Assassin)
+		if (BaseSecond == Job_Assassin)
 			callsub L_Third, "job_3rd_gc", 7100, 7091, 7116;
-		else if (BaseJob == Job_Blacksmith)
+		else if (BaseSecond == Job_Blacksmith)
 			callsub L_Third, "job__mechanic", 10101, 10090, 10101;
-		else if (BaseJob == Job_Hunter)
+		else if (BaseSecond == Job_Hunter)
 			callsub L_Third, "job_ranger01", 8262, 8254, 8262;
-		else if (BaseJob == Job_Knight)
+		else if (BaseSecond == Job_Knight)
 			callsub L_Third, "job_rune_edq", 3219, 3200, 3220;
-		else if (BaseJob == Job_Priest)
+		else if (BaseSecond == Job_Priest)
 			callsub L_Third, "job_arch", 2191, 2187, 2191;
-		else if (BaseJob == Job_Wizard)
+		else if (BaseSecond == Job_Wizard)
 			callsub L_Third, "job_wl", 11112, 11106, 11112;
-		else if (BaseJob == Job_Alchemist)
+		else if (BaseSecond == Job_Alchemist)
 			callsub L_Third, "job_gen", 2223, 2209, 2217, 2223;
-		else if (BaseJob == Job_Bard)
+		else if (BaseSecond == Job_Bard)
 			callsub L_Third, "job_min", 11154, 11135, 11154;
-		else if (BaseJob == Job_Crusader)
+		else if (BaseSecond == Job_Crusader)
 			callsub L_Third, "job_royal", 0, 12090, 12094;
-		else if (BaseJob == Job_Dancer)
+		else if (BaseSecond == Job_Dancer)
 			callsub L_Third, "job_wan", 2222, 2218, 2222;
-		else if (BaseJob == Job_Monk)
+		else if (BaseSecond == Job_Monk)
 			callsub L_Third, "job_shu", 11158, 11155, 11158;
-		else if (BaseJob == Job_Rogue)
+		else if (BaseSecond == Job_Rogue)
 			callsub L_Third, "job_sha", 7180, 7160, 7180;
-		else if (BaseJob == Job_Sage)
+		else if (BaseSecond == Job_Sage)
 			callsub L_Third, "job_soc", 12098, 12096, 12098;
 
 		mes "[Valerie]";

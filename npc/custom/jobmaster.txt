@@ -151,8 +151,8 @@ function	Job_Options	{
 	.@second_eac = .@eac&EAJ_SECONDMASK;
 	// Note: These are already set in pc.cpp
 	// BaseClass = roclass(.@eac&EAJ_FIRSTMASK) which is the players First Class
-	// BaseJob = roclass(.@eac&EAJ_SECONDMASK) which is the players Second Class
-	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
+	// BaseSecond = roclass(.@eac&EAJ_SECONDMASK) which is the players Second Class
+	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseSecond ("+BaseSecond+")";
 		
 	// From here on the jobmaster checks the current class
 	// and fills the array `.@job_opt` with possible
@@ -403,8 +403,8 @@ function	Get_Job_Equip	{
 	} else if( .@eac&EAJL_THIRD ) {
 		// Third Class Items
 		getitem 2795,1;	//	Green Apple Ring for every 3rd Class
-		switch(BaseJob) {
-			// BaseJob of Third Cls
+		switch(BaseSecond) {
+			// BaseSecond of Third Cls
 			// For Normal Third, Baby Third and Transcended Third Cls
 			case Job_Knight:
 				getitem 5746,1;	break;	//	Rune Circlet [1]
@@ -437,7 +437,7 @@ function	Get_Job_Equip	{
 		}
 	} else if (.@eac&EAJL_2) {
 		// Second Class (And not Third Class)
-		switch(BaseJob) {
+		switch(BaseSecond) {
 			// Second Class
 			case Job_Knight:
 				getitem 1163,1;	break;	//	Claymore [0]

@@ -74,14 +74,14 @@ geffen_in,164,124,4	script	Mage Guildsman	123,{
 	switch(select("I want to be a Mage.:Tell me the Requirements.:Pretty much nothing.")) {
 	case 1:
 		mes "[Mage Guildsman]";
-		if (BaseJob == Job_Mage) {
+		if (BaseSecond == Job_Mage) {
 			mes "Hey, haven't you realized? You're aleady a Mage, silly!";
 			next;
 			mes "[Mage Guildsman]";
 			mes "One of these days you'll realize the power inside of you when you can make Fire with your mind!";
 			close;
 		}
-		if (BaseJob != Job_Novice) {
+		if (BaseSecond != Job_Novice) {
 			mes "Hey~ C'mon. Quit playing games. You can't be a Mage because you already have another Job.";
 			close;
 		}

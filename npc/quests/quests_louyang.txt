@@ -2737,7 +2737,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 							close;
 						}
 						else {
-							if (BaseJob == Job_Assassin) {
+							if (BaseSecond == Job_Assassin) {
 								mes "[Nagash Arses]";
 								mes "How could you not know what the 'Canine of Desert' is?! Just how long have you been an Assassin?!";
 								next;
@@ -2882,7 +2882,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 						close;
 					}
 					else {
-						if (BaseJob == Job_Assassin) {
+						if (BaseSecond == Job_Assassin) {
 							mes "[Nagash Arses]";
 							mes "How could you not know what the 'Canine of Desert' is?! Just how long have you been an Assassin?!";
 							next;

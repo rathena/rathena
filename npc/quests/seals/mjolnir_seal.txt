@@ -50,43 +50,43 @@ prontera,124,297,3	script	Tialfi	706,{
 			if (god_mjo_0 == 10) {
 				if ((countitem(756) > 49) && (countitem(757) > 49)) {
 					set .@gift,0;
-					if (BaseJob == Job_Knight) {
+					if (BaseSecond == Job_Knight) {
 						set .@gift,1;
 					}
-					else if (BaseJob == Job_Priest) {
+					else if (BaseSecond == Job_Priest) {
 						set .@gift,2;
 					}
-					else if (BaseJob == Job_Wizard){
+					else if (BaseSecond == Job_Wizard){
 						set .@gift,3;
 					}
-					else if (BaseJob == Job_Blacksmith){
+					else if (BaseSecond == Job_Blacksmith){
 						set .@gift,4;
 					}
-					else if (BaseJob == Job_hunter){
+					else if (BaseSecond == Job_hunter){
 						set .@gift,5;
 					}
-					else if (BaseJob == Job_Assassin){
+					else if (BaseSecond == Job_Assassin){
 						set .@gift,6;
 					}
-					else if (BaseJob == Job_Crusader){
+					else if (BaseSecond == Job_Crusader){
 						set .@gift,7;
 					}
-					else if (BaseJob == Job_Monk){
+					else if (BaseSecond == Job_Monk){
 						set .@gift,8;
 					}
-					else if (BaseJob == Job_Sage){
+					else if (BaseSecond == Job_Sage){
 						set .@gift,9;
 					}
-					else if (BaseJob == Job_Alchemist){
+					else if (BaseSecond == Job_Alchemist){
 						set .@gift,10;
 					}
-					else if (BaseJob == Job_Rogue){
+					else if (BaseSecond == Job_Rogue){
 						set .@gift,11;
 					}
-					else if (BaseJob == Job_Bard){
+					else if (BaseSecond == Job_Bard){
 						set .@gift,12;
 					}
-					else if (BaseJob == Job_Hunter){
+					else if (BaseSecond == Job_Hunter){
 						set .@gift,13;
 					}
 					else {

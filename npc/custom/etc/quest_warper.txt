@@ -456,8 +456,8 @@ L_Storage:
 	next;
 	if(!callfunc("F_CanOpenStorage")) goto L_StorageJBlow;
 	set @fee, $QW_S_PRICE;
-	if ($QW_S_PRICE == 60)&&(BaseJob == Job_Novice) set @fee, 30;
-	if ($QW_S_PRICE == 60)&&(BaseJob != Job_Novice) set @fee, 60;
+	if ($QW_S_PRICE == 60)&&(BaseSecond == Job_Novice) set @fee, 30;
+	if ($QW_S_PRICE == 60)&&(BaseSecond != Job_Novice) set @fee, 60;
 	if(Zeny<@fee) callsub L_Short_on_zeny,2;
 	set Zeny, Zeny-@fee;
 	if ($QW_KPoint == 1) set RESRVPTS, RESRVPTS + (@fee/5);

@@ -713,7 +713,7 @@
 		}
 		else {
 			if (countitem(7234) > 0) {
-				if (BaseJob == Job_Knight) {
+				if (BaseSecond == Job_Knight) {
 					mes "[" + .@name$ + "]";
 					mes "Hello," + strcharinfo(0) + ".";
 					mes "So you were the one chosen";
@@ -734,7 +734,7 @@
 				}
 			}
 			else if (countitem(7235) > 0) {
-				if ((guildrelay_q == 88) && (BaseJob == Job_Knight)) {
+				if ((guildrelay_q == 88) && (BaseSecond == Job_Knight)) {
 					mes "[" + .@name$ + "]";
 					mes "Ah," + strcharinfo(0) + "";
 					mes "Congratulations. It looks";
@@ -750,7 +750,7 @@
 					mes "go and ask him again.";
 					close;
 				}
-				else if (BaseJob == Job_Blacksmith) {
+				else if (BaseSecond == Job_Blacksmith) {
 					mes "[" + .@name$ + "]";
 					mes "Hello," + strcharinfo(0) + ".";
 					mes "Ah, I see that you have";
@@ -772,7 +772,7 @@
 				}
 			}
 			else if (countitem(7237) > 0) {
-				if ((guildrelay_q == 87) && (BaseJob == Job_Blacksmith)) {
+				if ((guildrelay_q == 87) && (BaseSecond == Job_Blacksmith)) {
 					mes "[" + .@name$ + "]";
 					mes "Hello," + strcharinfo(0) + ".";
 					mes "I commend you on your work.";
@@ -787,7 +787,7 @@
 					mes "go and ask him again.";
 					close;
 				}
-				else if (BaseJob == Job_Alchemist) {
+				else if (BaseSecond == Job_Alchemist) {
 					mes "[" + .@name$ + "]";
 					mes "Hello, " + strcharinfo(0) + ".";
 					mes "I see that you posess";
@@ -807,7 +807,7 @@
 				}
 			}
 			else if (countitem(7238) > 0) {
-				if ((guildrelay_q == 86) && (BaseJob == Job_Alchemist)) {
+				if ((guildrelay_q == 86) && (BaseSecond == Job_Alchemist)) {
 					mes "[" + .@name$ + "]";
 					mes "Hello," + strcharinfo(0) + ".";
 					mes "I commend you on your work.";
@@ -822,7 +822,7 @@
 					mes "go and ask him again.";
 					close;
 				}
-				else if (BaseJob == Job_Hunter) {
+				else if (BaseSecond == Job_Hunter) {
 					mes "[" + .@name$ + "]";
 					mes "Hello, " + strcharinfo(0) + ".";
 					mes "I see that you posess";
@@ -842,7 +842,7 @@
 				}
 			}
 			else if (countitem(7239) > 0) {
-				if ((guildrelay_q == 85) && (BaseJob == Job_Hunter)) {
+				if ((guildrelay_q == 85) && (BaseSecond == Job_Hunter)) {
 					mes "[" + .@name$ + "]";
 					mes "Hello, " + strcharinfo(0) + ".";
 					mes "Congratulations, it looks";
@@ -863,7 +863,7 @@
 				}
 			}
 			else if (countitem(7240) > 0) {
-				if (BaseJob == Job_Sage) {
+				if (BaseSecond == Job_Sage) {
 					mes "[" + .@name$ + "]";
 					mes "Hello, " + strcharinfo(0) + ".";
 					mes "I see that you possess";
@@ -885,7 +885,7 @@
 				}
 			}
 			else if (countitem(7241) > 0) {
-				if ((guildrelay_q == 71) && (BaseJob == Job_Sage)) {
+				if ((guildrelay_q == 71) && (BaseSecond == Job_Sage)) {
 					mes "[" + .@name$ + "]";
 					mes "Hello," + strcharinfo(0) + ".";
 					mes "I commend you on your work.";
@@ -901,7 +901,7 @@
 					mes "him to tell you again.";
 					close;
 				}
-				else if ((BaseJob == Job_Bard) || (BaseJob == Job_Dancer)) {
+				else if ((BaseSecond == Job_Bard) || (BaseSecond == Job_Dancer)) {
 					mes "[" + .@name$ + "]";
 					mes "Ah, " + strcharinfo(0) + ",";
 					mes "I see that you have the";
@@ -923,7 +923,7 @@
 				}
 			}
 			else if (countitem(7242) > 0) {
-				if ((guildrelay_q == 72) && ((BaseJob == Job_Bard) || (BaseJob == Job_Dancer))) {
+				if ((guildrelay_q == 72) && ((BaseSecond == Job_Bard) || (BaseSecond == Job_Dancer))) {
 					mes "[" + .@name$ + "]";
 					mes "Hello," + strcharinfo(0) + ".";
 					mes "I commend you on your work.";
@@ -939,7 +939,7 @@
 					mes "him to tell you again.";
 					close;
 				}
-				else if (BaseJob == Job_Assassin) {
+				else if (BaseSecond == Job_Assassin) {
 					mes "[" + .@name$ + "]";
 					mes "Ah, " + strcharinfo(0) + ",";
 					mes "I see that you have the Spirit";
@@ -961,7 +961,7 @@
 				}
 			}
 			else if (countitem(7244) > 0) {
-				if ((guildrelay_q == 74) && (BaseJob == Job_Assassin)) {
+				if ((guildrelay_q == 74) && (BaseSecond == Job_Assassin)) {
 					mes "[" + .@name$ + "]";
 					mes "Greetings, " + strcharinfo(0) + ",";
 					mes "did you rest well? Please";
@@ -977,7 +977,7 @@
 					mes "him to tell you again.";
 					close;
 				}
-				else if (BaseJob == Job_Wizard) {
+				else if (BaseSecond == Job_Wizard) {
 					mes "[" + .@name$ + "]";
 					mes "Hello, " + strcharinfo(0) + ",";
 					mes "I see that you've been";
@@ -999,7 +999,7 @@
 				}
 			}
 			else if (countitem(7245) > 0) {
-				if ((guildrelay_q == 75) && (BaseJob == Job_Wizard)) {
+				if ((guildrelay_q == 75) && (BaseSecond == Job_Wizard)) {
 					mes "[" + .@name$ + "]";
 					mes "Ah, " + strcharinfo(0) + ",";
 					mes "congratulations on a job";
@@ -1021,7 +1021,7 @@
 				}
 			}
 			else if (countitem(7246) > 0) {
-				if (BaseJob == Job_Rogue) {
+				if (BaseSecond == Job_Rogue) {
 					mes "[" + .@name$ + "]";
 					mes "Ah, " + strcharinfo(0) + ",";
 					mes "I see that you have the";
@@ -1043,7 +1043,7 @@
 				}
 			}
 			else if (countitem(7247) > 0) {
-				if ((guildrelay_q == 95) && (BaseJob == Job_Priest)) {
+				if ((guildrelay_q == 95) && (BaseSecond == Job_Priest)) {
 					mes "[" + .@name$ + "]";
 					mes "Hello," + strcharinfo(0) + ".";
 					mes "I commend you on your work.";
@@ -1059,7 +1059,7 @@
 					mes "him to tell you again.";
 					close;
 				}
-				else if (BaseJob == Job_Priest) {
+				else if (BaseSecond == Job_Priest) {
 					mes "[" + .@name$ + "]";
 					mes "Ah, " + strcharinfo(0) + ",";
 					mes "please take good care of";
@@ -1078,7 +1078,7 @@
 				}
 			}
 			else if (countitem(7249) > 0) {
-				if ((guildrelay_q == 98) && (BaseJob == Job_Priest)) {
+				if ((guildrelay_q == 98) && (BaseSecond == Job_Priest)) {
 					mes "[" + .@name$ + "]";
 					mes "Hello," + strcharinfo(0) + ".";
 					mes "I commend you on your work.";
@@ -1094,7 +1094,7 @@
 					mes "him to tell you again.";
 					close;
 				}
-				else if (BaseJob == Job_Crusader) {
+				else if (BaseSecond == Job_Crusader) {
 					mes "[" + .@name$ + "]";
 					mes "Ah, " + strcharinfo(0) + ",";
 					mes "please take good care";
@@ -1113,7 +1113,7 @@
 				}
 			}
 			else if (countitem(7250) > 0) {
-				if ((guildrelay_q == 96) && (BaseJob == Job_Crusader)) {
+				if ((guildrelay_q == 96) && (BaseSecond == Job_Crusader)) {
 					mes "[" + .@name$ + "]";
 					mes "Hello," + strcharinfo(0) + ".";
 					mes "I commend you on your work.";
@@ -1129,7 +1129,7 @@
 					mes "him to tell you again.";
 					close;
 				}
-				else if (BaseJob == Job_Monk) {
+				else if (BaseSecond == Job_Monk) {
 					mes "[" + .@name$ + "]";
 					mes "Ah, " + strcharinfo(0) + ",";
 					mes "please take good care";
@@ -1271,7 +1271,7 @@
 			}
 		}
 		else {
-			if ((BaseJob == Job_Knight) && (countitem(7234) > 0)) {
+			if ((BaseSecond == Job_Knight) && (countitem(7234) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "For your first test,";
 				mes "I'll start you off with";
@@ -1328,7 +1328,7 @@
 				getitem 7235,1; //Soul_Of_Courage
 				close;
 			}
-			if ((BaseJob == Job_Knight) && (guildrelay_q == 2)) {
+			if ((BaseSecond == Job_Knight) && (guildrelay_q == 2)) {
 				mes "[" + .@name$ + "]";
 				mes "Did you forget what";
 				mes "to bring me? I wanted";
@@ -1353,7 +1353,7 @@
 				getitem 7235,1; //Soul_Of_Courage
 				close;
 			}
-			if ((BaseJob == Job_Knight) && (guildrelay_q == 3)) {
+			if ((BaseSecond == Job_Knight) && (guildrelay_q == 3)) {
 				mes "[" + .@name$ + "]";
 				mes "Did you forget what";
 				mes "to bring me? I wanted";
@@ -1378,7 +1378,7 @@
 				getitem 7235,1; //Soul_Of_Courage
 				close;
 			}
-			if ((BaseJob == Job_Knight) && (guildrelay_q == 89)) {
+			if ((BaseSecond == Job_Knight) && (guildrelay_q == 89)) {
 				mes "[" + .@name$ + "]";
 				mes "Did you forget what";
 				mes "to bring me? I wanted";
@@ -1388,7 +1388,7 @@
 				mes "Don't forget this time.";
 				close;
 			}
-			if ((BaseJob == Job_Blacksmith) && (countitem(7235) > 0)) {
+			if ((BaseSecond == Job_Blacksmith) && (countitem(7235) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "Wow, you brought the";
 				mes "items sooner than I had";
@@ -1416,7 +1416,7 @@
 				close;
 			}
 			.@time = atoi( gettimestr("%H%M",5) );
-			if ((guildtime > 2259) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+			if ((guildtime > 2259) && (guildrelay_q == 4) && (BaseSecond == Job_Blacksmith)) {
 				if ((.@time > 0201) && (.@time < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "I guess enough time";
@@ -1430,7 +1430,7 @@
 					close;
 				}
 			}
-			if ((guildtime > 2159) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+			if ((guildtime > 2159) && (guildrelay_q == 4) && (BaseSecond == Job_Blacksmith)) {
 				if ((.@time > 0101) && (.@time < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "I guess enough time";
@@ -1444,7 +1444,7 @@
 					close;
 				}
 			}
-			if ((guildtime > 2059) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+			if ((guildtime > 2059) && (guildrelay_q == 4) && (BaseSecond == Job_Blacksmith)) {
 				if ((.@time > 0001) && (.@time < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "I guess enough time";
@@ -1458,7 +1458,7 @@
 					close;
 				}
 			}
-			if ((.@time - guildtime > 0300) && (guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+			if ((.@time - guildtime > 0300) && (guildrelay_q == 4) && (BaseSecond == Job_Blacksmith)) {
 				mes "[" + .@name$ + "]";
 				mes "I guess enough time";
 				mes "has passed. You ready";
@@ -1470,7 +1470,7 @@
 				getitem 7237,1; //Soul_Of_Partnership
 				close;
 			}
-			if ((guildrelay_q == 4) && (BaseJob == Job_Blacksmith)) {
+			if ((guildrelay_q == 4) && (BaseSecond == Job_Blacksmith)) {
 				mes "[" + .@name$ + "]";
 				mes "You must be rarin'";
 				mes "to take on the next";
@@ -1479,7 +1479,7 @@
 				mes "come back to me later.";
 				close;
 			}
-			if ((BaseJob == Job_Alchemist) && (countitem(7237) > 0)) {
+			if ((BaseSecond == Job_Alchemist) && (countitem(7237) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "Oh, you got it, eh?";
 				mes "You might not think this";
@@ -1580,7 +1580,7 @@
 				mes "You have to become stronger!";
 				close;
 			}
-			if ((BaseJob == Job_Hunter) && (countitem(7238) > 0)) {
+			if ((BaseSecond == Job_Hunter) && (countitem(7238) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "Ah, good, you're here.";
 				mes "Now, my request for you";
@@ -1781,7 +1781,7 @@
 			}
 		}
 		else {
-			if ((BaseJob == Job_Sage) && (countitem(7240) > 0)) {
+			if ((BaseSecond == Job_Sage) && (countitem(7240) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "I see that you've brought";
 				mes "the ^42426FSpirit of Trust^000000. Now, the";
@@ -1803,7 +1803,7 @@
 				close;
 			}
 			.@time = atoi( gettimestr("%H%M",5) );
-			if ((guildtime > 2259) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
+			if ((guildtime > 2259) && (guildrelay_q == 9) && (BaseSecond == Job_Sage)) {
 				if ((.@time > 0201) && (.@time < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "So did you spend some";
@@ -1834,7 +1834,7 @@
 					close;
 				}
 			}
-			else if ((guildtime > 2159) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
+			else if ((guildtime > 2159) && (guildrelay_q == 9) && (BaseSecond == Job_Sage)) {
 				if ((.@time > 0101) && (.@time < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "So did you spend some";
@@ -1865,7 +1865,7 @@
 					close;
 				}
 			}
-			else if ((guildtime > 2059) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
+			else if ((guildtime > 2059) && (guildrelay_q == 9) && (BaseSecond == Job_Sage)) {
 				if ((.@time > 0001) && (.@time < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "So did you spend some";
@@ -1896,7 +1896,7 @@
 					close;
 				}
 			}
-			else if ((.@time - guildtime > 0300) && (guildrelay_q == 9) && (BaseJob == Job_Sage)) {
+			else if ((.@time - guildtime > 0300) && (guildrelay_q == 9) && (BaseSecond == Job_Sage)) {
 				mes "[" + .@name$ + "]";
 				mes "So did you spend some";
 				mes "quality time with your";
@@ -1915,7 +1915,7 @@
 				getitem 7241,1; //Soul_Of_Agreement
 				close;
 			}
-			else if ((BaseJob == Job_Sage) && (guildrelay_q == 9)) {
+			else if ((BaseSecond == Job_Sage) && (guildrelay_q == 9)) {
 				mes "[" + .@name$ + "]";
 				mes "Hm? Back so soon?";
 				mes "That hasn't been enough";
@@ -1925,7 +1925,7 @@
 				mes "dreams, passions, and goals!";
 				close;
 			}
-			if (((BaseJob == Job_Bard) || (BaseJob == Job_Dancer)) && (countitem(7241) > 0)) {
+			if (((BaseSecond == Job_Bard) || (BaseSecond == Job_Dancer)) && (countitem(7241) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "For the sake of promoting";
 				mes "teamwork amongst your guild,";
@@ -1996,7 +1996,7 @@
 				delitem 7097,30; //Burning_Heart
 				delitem 7172,30; //Leopard_Talon
 				delitem 920,30; //Claw_Of_Wolves
-				if (BaseJob == Job_Dancer) {
+				if (BaseSecond == Job_Dancer) {
 					set guildrelay_q,72;
 				}
 				else {
@@ -2016,7 +2016,7 @@
 				delitem 7189,30; //Heart_Of_Tree
 				delitem 7194,30; //Soft_Leaf
 				delitem 7155,30; //Poison_Toad's_Skin
-				if (BaseJob == Job_Dancer) {
+				if (BaseSecond == Job_Dancer) {
 					set guildrelay_q,72;
 				}
 				else {
@@ -2036,7 +2036,7 @@
 				delitem 7106,30; //Goat's_Horn
 				delitem 7121,30; //Honey_Jar
 				delitem 1027,30; //Porcupine_Spike
-				if (BaseJob == Job_Dancer) {
+				if (BaseSecond == Job_Dancer) {
 					set guildrelay_q,72;
 				}
 				else {
@@ -2096,7 +2096,7 @@
 				mes "forget. Good luck to you.";
 				close;
 			}
-			if ((BaseJob == Job_Assassin) && (countitem(7242) > 0)) {
+			if ((BaseSecond == Job_Assassin) && (countitem(7242) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "You brought the";
 				mes "Spirit of Combination?";
@@ -2108,7 +2108,7 @@
 				getitem 7244,1; //Soul_Of_Unity
 				close;
 			}
-			if ((BaseJob == Job_Wizard) && (countitem(7244) > 0)) {
+			if ((BaseSecond == Job_Wizard) && (countitem(7244) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "For the sake of your";
 				mes "guild, you must become";
@@ -2243,7 +2243,7 @@
 				getitem 7245,1; //Soul_Of_Friendship
 				close;
 			}
-			if ((guildrelay_q == 12) && (BaseJob == Job_Wizard)) {
+			if ((guildrelay_q == 12) && (BaseSecond == Job_Wizard)) {
 				mes "[" + .@name$ + "]";
 				mes "You're not strong enough";
 				mes "yet for your guild to fully";
@@ -2251,7 +2251,7 @@
 				mes "You must level up!";
 				close;
 			}
-			else if ((guildrelay_q == 13) && (BaseJob == Job_Wizard)) {
+			else if ((guildrelay_q == 13) && (BaseSecond == Job_Wizard)) {
 				mes "[" + .@name$ + "]";
 				mes "You're not strong enough";
 				mes "yet for your guild to fully";
@@ -2259,7 +2259,7 @@
 				mes "You must level up!";
 				close;
 			}
-			else if ((guildrelay_q == 14) && (BaseJob == Job_Wizard)) {
+			else if ((guildrelay_q == 14) && (BaseSecond == Job_Wizard)) {
 				mes "[" + .@name$ + "]";
 				mes "Hmm... I don't think you've";
 				mes "spent enough time leveling";
@@ -2465,7 +2465,7 @@
 			}
 		}
 		else {
-			if ((BaseJob == Job_Rogue) && (countitem(7246) > 0)) {
+			if ((BaseSecond == Job_Rogue) && (countitem(7246) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "So you're the one that's";
 				mes "been entrusted with the";
@@ -2601,7 +2601,7 @@
 					close;
 				}
 			}
-			if ((BaseJob == Job_Priest) && (countitem(7247) > 0)) {
+			if ((BaseSecond == Job_Priest) && (countitem(7247) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "Good work getting the";
 				mes "Spirit of Determination,";
@@ -2743,7 +2743,7 @@
 				getitem 7249,1; //Soul_Of_Service
 				close;
 			}
-			if ((BaseJob == Job_Crusader) && (countitem(7249) > 0)) {
+			if ((BaseSecond == Job_Crusader) && (countitem(7249) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "I see that you possess";
 				mes "the Spirit of Service. Hmm.";
@@ -2773,7 +2773,7 @@
 				close;
 			}
 			.@time = atoi( gettimestr("%H%M",5) );
-			if ((guildtime > 2259) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+			if ((guildtime > 2259) && (guildrelay_q == 21) && (BaseSecond == Job_Crusader)) {
 				if ((.@time > 0201) && (.@time < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "Yes. You've come at just";
@@ -2795,7 +2795,7 @@
 					close;
 				}
 			}
-			if ((guildtime > 2159) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+			if ((guildtime > 2159) && (guildrelay_q == 21) && (BaseSecond == Job_Crusader)) {
 				if ((.@time > 0101) && (.@time < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "Yes. You've come at just";
@@ -2817,7 +2817,7 @@
 					close;
 				}
 			}
-			if ((guildtime > 2059) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+			if ((guildtime > 2059) && (guildrelay_q == 21) && (BaseSecond == Job_Crusader)) {
 				if ((.@time > 0001) && (.@time < guildtime)) {
 					mes "[" + .@name$ + "]";
 					mes "Yes. You've come at just";
@@ -2839,7 +2839,7 @@
 					close;
 				}
 			}
-			if ((.@time - guildtime > 0300) && (guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+			if ((.@time - guildtime > 0300) && (guildrelay_q == 21) && (BaseSecond == Job_Crusader)) {
 				mes "[" + .@name$ + "]";
 				mes "Yes. You've come at just";
 				mes "the right time. Remember";
@@ -2851,14 +2851,14 @@
 				getitem 7250,1; //Soul_Of_Glory
 				close;
 			}
-			if ((guildrelay_q == 21) && (BaseJob == Job_Crusader)) {
+			if ((guildrelay_q == 21) && (BaseSecond == Job_Crusader)) {
 				mes "[" + .@name$ + "]";
 				mes "Not yet. Just wait";
 				mes "a little longer. Relax,";
 				mes "and come back later.";
 				close;
 			}
-			if ((BaseJob == Job_Monk) && (countitem(7250) > 0)) {
+			if ((BaseSecond == Job_Monk) && (countitem(7250) > 0)) {
 				mes "[" + .@name$ + "]";
 				mes "Most of the souls have";
 				mes "been shared, and there is";
@@ -2918,7 +2918,7 @@
 				getitem 7251,1; //Soul_Of_Victory
 				close;
 			}
-			if ((BaseJob == Job_Monk) && (guildrelay_q == 23)) {
+			if ((BaseSecond == Job_Monk) && (guildrelay_q == 23)) {
 				mes "[" + .@name$ + "]";
 				mes "You have to give ^FF0000Transparent Celestial Robe ^00000030ea,";
 				mes "^FF0000Dokebi Horn ^00000030ea, ^FF0000Fish Tail ^00000030ea.";
@@ -2941,7 +2941,7 @@
 				getitem 7251,1; //Soul_Of_Victory
 				close;
 			}
-			if ((BaseJob == Job_Monk) && (guildrelay_q == 24)) {
+			if ((BaseSecond == Job_Monk) && (guildrelay_q == 24)) {
 				mes "[" + .@name$ + "]";
 				mes "Please bring";
 				mes "^FF000030 Rainbow Shells^000000,";
@@ -2966,7 +2966,7 @@
 				getitem 7251,1; //Soul_Of_Victory
 				close;
 			}
-			if ((BaseJob == Job_Monk) && (guildrelay_q == 94)) {
+			if ((BaseSecond == Job_Monk) && (guildrelay_q == 94)) {
 				mes "[" + .@name$ + "]";
 				mes "Please bring";
 				mes "^FF000030 Worn-out Kimonos^000000,";

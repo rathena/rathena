@@ -42,7 +42,7 @@ xmas,162,209,5	script	Aspiring Wanderer, Soy	714,{
 		mes "[Mimi]";
 		mes "But I understand you.";
 		mes "Many people are looking forward to meeting the best Wanderer in the world.";
-		if (BaseJob != Job_Dancer || BaseLevel < 99) close;
+		if (BaseSecond != Job_Dancer || BaseLevel < 99) close;
 		next;
 		select("Dancer Kim?:Wanderer?");
 		emotion ET_HUK, getnpcid(0, "Aspiring Wanderer, Soy");
@@ -895,7 +895,7 @@ OnTouch:
 
 xmas,147,135,5	script	Dancer Kim#xmas	485,{
 	if (job_wan == 9) {
-		if (BaseJob != Job_Dancer && BaseLevel < 99 && JobLevel < 50) {
+		if (BaseSecond != Job_Dancer && BaseLevel < 99 && JobLevel < 50) {
 			mes "- You can't continue the quest because the condition for the quest is not appropriate. -";
 			close;
 		}

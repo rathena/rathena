@@ -15,7 +15,7 @@
 //============================================================
 
 prt_church,111,112,1	script	Sister Linus	79,{
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		if (PRIEST_SK == 100) {
 			if (getskilllv("PR_REDEMPTIO") == 0) {
 				mes "[Sister Linus]";

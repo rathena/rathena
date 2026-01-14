@@ -44,7 +44,7 @@ prt_in,162,24,3	script	Splendid-Looking Knight	470,2,2,{
 			close;
 		}
 		mes "[Rune Knight Manuel]";
-		if (BaseJob == Job_Knight) {
+		if (BaseSecond == Job_Knight) {
 			mes "You walk the way of sword too don't you? Then we can understand each other. Drinks taste better when it's with a fellow Swordman.";
 			next;
 			mes "[Rune Knight Manuel]";
@@ -157,7 +157,7 @@ glast_01,44,363,3	script	Rune Leader Jungberg	468,2,2,{
 			close;
 		}
 	}
-	if (BaseJob != Job_Knight) {
+	if (BaseSecond != Job_Knight) {
 		mes "I am the only knight who's keeping the way of the Swordsman in this cursed place Glast Heim.";
 		next;
 		mes "[Rune Leader Jungberg]";
@@ -278,7 +278,7 @@ gl_knt02,150,55,3	script	Rune Knight Staff	83,2,2,{
 			close;
 		}
 	}
-	if (BaseJob == Job_Knight) {
+	if (BaseSecond == Job_Knight) {
 		if (job_rune_edq == 1) {
 			mes "Ah... this area is off limits, you are prohibited to be here. Please do not do anything to hinder our efforts.";
 			next;
@@ -342,7 +342,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,2,2,{
 		mes "Hey, long time no see, "+strcharinfo(0)+". I don't think you've got any important matters to discuss but make yourself comfortable.";
 		close;
 	}
-	if (BaseJob == Job_Knight) {
+	if (BaseSecond == Job_Knight) {
 		if (job_rune_edq == 2) {
 			mes "A man wearing glorious armor and passion in his eyes is standing in front of me.";
 			next;
@@ -590,7 +590,7 @@ job3_rune01,90,50,3	script	Rune Knight Lunarea	469,2,2,{
 		mes "Then after a moment she puts her face down and seems absorbed with other thoughts.";
 		close;
 	}
-	if (BaseJob == Job_Knight) {
+	if (BaseSecond == Job_Knight) {
 		if (job_rune_edq == 3) {
 			mes "She finally opens her mouth and begins to talk.";
 			next;
@@ -709,7 +709,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 		mes "Until then, I'll be here to discover more candidates just like you.";
 		close;
 	}
-	if (BaseJob == Job_Knight) {
+	if (BaseSecond == Job_Knight) {
 		if (job_rune_edq < 7) {
 			mes "Are you the one who wants to be a Rune Knight? There have been so many today.";
 			next;
@@ -1199,7 +1199,7 @@ mid_camp,238,250,3	script	Rune Knight Sage Guard	468,2,2,{
 		mes "I am very proud as a Rune Knight to serve beside her.";
 		close;
 	}
-	if (BaseJob == Job_Knight) {
+	if (BaseSecond == Job_Knight) {
 		if (job_rune_edq < 11) {
 			mes "You might be walking the way of the sword but you are not a Rune Knight yet. Don't wander around here too much if you know what I mean.";
 			close;
@@ -1223,7 +1223,7 @@ mid_camp,13,138,3	script	Dispatched Rune Knight#1	83,2,2,{
 		mes "Thanks for your work. We will continue our mission for the Rune Knight testers.";
 		close;
 	}
-	if (BaseJob == Job_Knight && job_rune_edq > 10) {
+	if (BaseSecond == Job_Knight && job_rune_edq > 10) {
 		mes "I've been waiting for you Rune Knight candidate. I'm helping the candidates as a favor to Ms. Serpeone.";
 		next;
 		mes "[Dispatched Rune Knight]";
@@ -1277,7 +1277,7 @@ mid_camp,235,250,3	script	Sage Serpeone	435,2,2,{
 		mes "Please be devoted to the Runes and hopefully your life will be illuminated by it.";
 		close;
 	}
-	if (BaseJob == Job_Knight) {
+	if (BaseSecond == Job_Knight) {
 		if (job_rune_edq < 12) {
 			mes "It must be surprising that I, a Laphine, am here in your people's base.";
 			next;
@@ -1435,7 +1435,7 @@ job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
 		mes "You still smell like a fledging. Bring honor to the Rune Knights and raise your power...";
 		close;
 	}
-	if (BaseJob == Job_Knight) {
+	if (BaseSecond == Job_Knight) {
 		if (job_rune_edq < 17) {
 			mes "A very cold feeling Rune Knight dressed in black from head to toe is scowling at me.";
 			next;

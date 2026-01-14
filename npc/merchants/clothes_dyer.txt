@@ -71,7 +71,7 @@ function Dyes;
 
 			// Dyes(<color value>,<dye number>{,...});
 			// Colors: [1]Orange, [2]Violet, [3]Red, [4]Black, [5]Green, [6]Blue, [7]White, [8]Yellow
-			switch(BaseJob) {
+			switch(BaseSecond) {
 			case Job_Novice:
 				if (Sex == SEX_MALE) Dyes(4,1,6,2,5,3); else Dyes(6,1,3,2,5,3,4,4);
 			case Job_Swordman:

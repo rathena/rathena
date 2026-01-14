@@ -54,8 +54,8 @@ geffen_in,164,124,4	script	Mage Guildsman#mage	123,{
 		}
 	}
 	mes "[Mage Guildsman]";
-	if(BaseJob != Job_Novice) {
-		if(BaseJob == Job_Mage) {
+	if(BaseSecond != Job_Novice) {
+		if(BaseSecond == Job_Mage) {
 			mes "Hey, haven't you realized? You're already a Mage, silly!";
 			mes "One of these days you'll realize the power inside of you when you can make Fire with your mind!";
 		} else
