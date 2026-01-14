@@ -1421,11 +1421,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src, bl, SC_STUN, (2 * skill_lv + 10), skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 
-	case AS_GRIMTOOTH:
-		if (dstmd && !status_has_mode(tstatus,MD_STATUSIMMUNE))
-			sc_start(src,bl,SC_QUAGMIRE,100,0,skill_get_time2(skill_id,skill_lv));
-		break;
-
 	case NPC_STORMGUST2:
 		if (skill_lv == 1)
 			sc_start(src,bl,SC_FREEZE,10,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -5379,7 +5374,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	//Splash attack skills.
-	case AS_GRIMTOOTH:
 	case NPC_SPLASHATTACK:
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 		[[fallthrough]];

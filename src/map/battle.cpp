@@ -4753,9 +4753,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case MS_BOWLINGBASH:
 			skillratio += 40 * skill_lv;
 			break;
-		case AS_GRIMTOOTH:
-			skillratio += 20 * skill_lv;
-			break;
 		case AS_SONICBLOW:
 #ifdef RENEWAL
 			skillratio += 100 + 100 * skill_lv;
