@@ -4951,15 +4951,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 100 + 100 * skill_lv;
 #endif
 			break;
-		case AS_SPLASHER:
-#ifdef RENEWAL
-			skillratio += -100 + 400 + 100 * skill_lv;
-#else
-			skillratio += 400 + 50 * skill_lv;
-#endif
-			if(sd)
-				skillratio += 20 * pc_checkskill(sd,AS_POISONREACT);
-			break;
 		case ASC_BREAKER:
 #ifdef RENEWAL
 			skillratio += -100 + 150 * skill_lv + sstatus->str + sstatus->int_; // !TODO: Confirm stat modifier
