@@ -51199,8 +51199,8 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Demon,40;
       bonus2 bAddRace,RC_DemiHuman,40;
-      bonus3 bSubRace,RC_Demon,-30,BF_WEAPON;
-      bonus3 bSubRace,RC_DemiHuman,-30,BF_WEAPON;
+      bonus2 bSubRace,RC_DemiHuman,-30;
+      bonus2 bSubRace,RC_Demon,-30;
   - Id: 300281
     AegisName: R001_Bestia_Card
     Name: R001-Bestia Card
