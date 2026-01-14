@@ -87,7 +87,7 @@ void map_msg_reload(void);
 //These marks the "level" of the job.
 #define JOBL_2_1 0x100
 #define JOBL_2_2 0x200
-#define JOBL_2 0x300
+#define JOBL_2 (JOBL_2_1|JOBL_2_2)
 #define JOBL_THIRD 0x1000
 #define JOBL_FOURTH 0x10000
 
@@ -97,9 +97,9 @@ void map_msg_reload(void);
 
 //For filtering and quick checking.
 #define MAPID_FIRSTMASK 0xff
-#define MAPID_SECONDMASK 0xfff
-#define MAPID_THIRDMASK 0xffff
-#define MAPID_FOURTHMASK 0xfffff
+#define MAPID_SECONDMASK (JOBL_2|MAPID_FIRSTMASK)
+#define MAPID_THIRDMASK (JOBL_THIRD|MAPID_SECONDMASK)
+#define MAPID_FOURTHMASK (JOBL_FOURTH|MAPID_THIRDMASK)
 
 //Note the oddity of the novice:
 //Super Novices are considered the 2-1 version of the novice! Novices are considered a first class type, too...
