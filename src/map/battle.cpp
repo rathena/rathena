@@ -3314,14 +3314,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case ML_PIERCE:
 				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
-			case AS_SONICBLOW:
-				if(sd && pc_checkskill(sd,AS_SONICACCEL) > 0)
-#ifdef RENEWAL
-					hitrate += hitrate * 90 / 100;
-#else
-					hitrate += hitrate * 50 / 100;
-#endif
-				break;
 			case RK_SONICWAVE:
 				hitrate += hitrate * 3 * skill_lv / 100; // !TODO: Confirm the hitrate bonus
 				break;
@@ -4752,17 +4744,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			break;
 		case MS_BOWLINGBASH:
 			skillratio += 40 * skill_lv;
-			break;
-		case AS_SONICBLOW:
-#ifdef RENEWAL
-			skillratio += 100 + 100 * skill_lv;
-			if (tstatus->hp < (tstatus->max_hp / 2))
-				skillratio += skillratio / 2;
-#else
-			skillratio += 200 + 50 * skill_lv;
-			if (sd && pc_checkskill(sd, AS_SONICACCEL) > 0)
-				skillratio += skillratio / 10;
-#endif
 			break;
 		case NPC_PIERCINGATT:
 			skillratio += -25; //75% base damage
