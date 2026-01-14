@@ -48335,7 +48335,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSkillAtk,"RL_FIREDANCE",60;
-      bonus2 bSkillUseSPrate,"RL_FIREDANCE",25;
+      bonus2 bSkillUseSPrate,"RL_FIREDANCE",-25;
   - Id: 300079
     AegisName: Redpepper_Card
     Name: Red Pepper Card
