@@ -9078,14 +9078,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 	}
 
-	case AM_TWILIGHT1:
-		if (sd) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			//Prepare 200 White Potions.
-			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_POTION, 0, 0, 0, 200, -1))
-				clif_skill_fail( *sd, skill_id );
-		}
-		break;
 	case AM_TWILIGHT2:
 		if (sd) {
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);

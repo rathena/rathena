@@ -32,6 +32,7 @@
 #include "summonmarinesphere.hpp"
 #include "synthesizedshield.hpp"
 #include "syntheticarmor.hpp"
+#include "twilightalchemy1.hpp"
 #include "vaporize.hpp"
 #include "weaponperfection.hpp"
 #include "weaponrepair.hpp"
@@ -64,6 +65,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillVaporize>();
 		case AM_SPHEREMINE:
 			return std::make_unique<SkillSummonMarineSphere>();
+		case AM_TWILIGHT1:
+			return std::make_unique<SkillTwilightAlchemy1>();
 		case BO_ACIDIFIED_ZONE_WATER_ATK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case BO_ACIDIFIED_ZONE_GROUND_ATK:
