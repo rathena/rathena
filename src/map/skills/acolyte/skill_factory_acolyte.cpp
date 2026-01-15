@@ -8,6 +8,7 @@
 #include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
+#include "absorbspiritsphere.hpp"
 #include "angelus.hpp"
 #include "aspersio.hpp"
 #include "blessing.hpp"
@@ -97,6 +98,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IQ_THIRD_EXOR_FLAME:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MO_ABSORBSPIRITS:
+			return std::make_unique<SkillAbsordSpiritSphere>();
 		case MO_BLADESTOP:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_CALLSPIRITS:

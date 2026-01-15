@@ -241,6 +241,7 @@
     <ClInclude Include="vending.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="skills/acolyte/absorbspiritsphere.hpp" />
     <ClInclude Include="skills/acolyte/angelus.hpp" />
     <ClInclude Include="skills/acolyte/aspersio.hpp" />
     <ClInclude Include="skills/acolyte/blessing.hpp" />
@@ -471,6 +472,7 @@
     <ClCompile Include="vending.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="skills/acolyte/absorbspiritsphere.cpp" />
     <ClCompile Include="skills/acolyte/angelus.cpp" />
     <ClCompile Include="skills/acolyte/aspersio.cpp" />
     <ClCompile Include="skills/acolyte/blessing.cpp" />
