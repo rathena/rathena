@@ -8939,20 +8939,13 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			skill_castend_damage_id);
 		break;
 
-	case SA_CASTCANCEL:
 	case SO_SPELLFIST:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		unit_skillcastcancel(src,1);
 		if(sd) {
 			int32 sp = skill_get_sp(sd->skill_id_old,sd->skill_lv_old);
-			if( skill_id == SO_SPELLFIST ){
-				sc_start4(src,src,type,100,skill_lv,sd->skill_id_old,sd->skill_lv_old,0,skill_get_time(skill_id,skill_lv));
-				sd->skill_id_old = sd->skill_lv_old = 0;
-				break;
-			}
-			sp = sp * (90 - (skill_lv-1)*20) / 100;
-			if(sp < 0) sp = 0;
-			status_zap(src, 0, sp);
+			sc_start4(src,src,type,100,skill_lv,sd->skill_id_old,sd->skill_lv_old,0,skill_get_time(skill_id,skill_lv));
+			sd->skill_id_old = sd->skill_lv_old = 0;
 		}
 		break;
 	case SA_SPELLBREAKER:
