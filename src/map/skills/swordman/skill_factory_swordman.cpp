@@ -16,6 +16,7 @@
 #include "provoke.hpp"
 #include "selfprovoke.hpp"
 #include "shieldboomerang.hpp"
+#include "shieldreflect.hpp"
 #include "smite.hpp"
 #include "spearboomerang.hpp"
 #include "spearstab.hpp"
@@ -28,6 +29,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case CR_HOLYCROSS:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case CR_REFLECTSHIELD:
+			return std::make_unique<SkillShieldReflect>();
 		case CR_SHIELDBOOMERANG:
 			return std::make_unique<SkillShieldBoomerang>();
 		case CR_SHIELDCHARGE:
