@@ -4821,9 +4821,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 #endif
 			skillratio = min(500000,skillratio); //We stop at roughly 50k SP for overflow protection
 			break;
-		case MO_TRIPLEATTACK:
-			skillratio += 20 * skill_lv;
-			break;
 		case MO_CHAINCOMBO:
 #ifdef RENEWAL
 			skillratio += 150 + 50 * skill_lv;

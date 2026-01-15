@@ -27,6 +27,7 @@
 #include "magnificat.hpp"
 #include "magnusexorcismus.hpp"
 #include "pneuma.hpp"
+#include "ragingtrifectablow.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
 #include "statusrecovery.hpp"
@@ -108,6 +109,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_STEELBODY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MO_TRIPLEATTACK:
+			return std::make_unique<SkillRagingTrifectaBlow>();
 		case SR_CRESCENTELBOW:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SR_CRESCENTELBOW_AUTOSPELL:
