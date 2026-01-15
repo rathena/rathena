@@ -837,6 +837,9 @@
     <ClInclude Include="skills/thief/backstab.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/cloaking.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/closeconfine.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -855,10 +858,16 @@
     <ClInclude Include="skills/thief/divestweapon.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/enchantpoison.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/envenom.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/findstone.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/grimtooth.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/hiding.hpp">
@@ -885,10 +894,22 @@
     <ClInclude Include="skills/thief/snatch.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/sonicblow.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/steal.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/stonefling.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/throwvenomknife.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/venomdust.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/venomsplasher.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/weapon_skill_impl.hpp">
@@ -1361,6 +1382,9 @@
     <ClCompile Include="skills/thief/backstab.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/cloaking.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/closeconfine.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
@@ -1379,10 +1403,16 @@
     <ClCompile Include="skills/thief/divestweapon.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/enchantpoison.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/envenom.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/findstone.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/grimtooth.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/hiding.cpp">
@@ -1409,10 +1439,22 @@
     <ClCompile Include="skills/thief/snatch.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/sonicblow.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/steal.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/stonefling.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/throwvenomknife.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/venomdust.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/venomsplasher.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/weapon_skill_impl.cpp">

@@ -1408,22 +1408,8 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src,bl,SC_STUN,(6*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case AS_VENOMKNIFE:
-	case AS_SPLASHER:
-		sc_start2(src, bl, SC_POISON, 100, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));
-		break;
-
-	case AS_SONICBLOW:
 	case HN_MEGA_SONIC_BLOW:
-		if (!map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND) && sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_ASSASIN)
-			sc_start(src, bl, SC_STUN, (4 * skill_lv + 20), skill_lv, skill_get_time2(skill_id, skill_lv)); //Link gives double stun chance outside GVG/BG
-		else
-			sc_start(src, bl, SC_STUN, (2 * skill_lv + 10), skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-
-	case AS_GRIMTOOTH:
-		if (dstmd && !status_has_mode(tstatus,MD_STATUSIMMUNE))
-			sc_start(src,bl,SC_QUAGMIRE,100,0,skill_get_time2(skill_id,skill_lv));
+		sc_start(src, bl, SC_STUN, (2 * skill_lv + 10), skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 
 	case NPC_STORMGUST2:
@@ -5361,11 +5347,9 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	//Splash attack skills.
-	case AS_GRIMTOOTH:
 	case NPC_SPLASHATTACK:
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 		[[fallthrough]];
-	case AS_SPLASHER:
 	case MA_SHOWER:
 #ifdef RENEWAL
 	case SN_SHARPSHOOTING:
@@ -5830,7 +5814,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			//SD_LEVEL -> Forced splash damage for Auto Blitz-Beat -> count targets
 			//special case: Venom Splasher uses a different range for searching than for splashing
 			if (flag&SD_LEVEL || skill_get_nk(skill_id, NK_SPLASHSPLIT)) {
-				skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, (skill_id == AS_SPLASHER)?1:splash_size, BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+				skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, splash_size, BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
 				// If there are no characters in the area, then it always counts as if there was one target
 				// This happens when targetting skill units such as icewall
 				skill_area_temp[0] = std::max(1, skill_area_temp[0]);
@@ -5841,10 +5825,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 			if (skill_id == RA_ARROWSTORM)
 				status_change_end(src, SC_CAMOUFLAGE);
-			if( skill_id == AS_SPLASHER ) {
-				// Don't consume a second gemstone.
-				return 0;
-			}
 		}
 		break;
 	case NW_THE_VIGILANTE_AT_NIGHT:
@@ -8122,18 +8102,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 */
 
-	case AS_ENCHANTPOISON:
-		if( sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) ) ){
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}else{
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, false );
-
-			if( sd != nullptr ){
-				clif_skill_fail( *sd, skill_id );
-			}
-		}
-		break;
-
 	case LK_TENSIONRELAX:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start4(src,bl,type,100,skill_lv,0,0,skill_get_time2(skill_id,skill_lv),
@@ -8715,7 +8683,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,-1,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 
-	case AS_CLOAKING:
 	case GC_CLOAKINGEXCEED:
 	case LG_FORCEOFVANGUARD:
 	case SC_REPRODUCE:
@@ -9488,22 +9455,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		if (sd)
 			unit_skilluse_id(src, src->id, sd->skill_id_song, sd->skill_lv_song);
-		break;
-
-	case AS_SPLASHER:
-		if( status_has_mode(tstatus,MD_STATUSIMMUNE)
-		// Renewal dropped the 3/4 hp requirement
-#ifndef RENEWAL
-			|| tstatus-> hp > tstatus->max_hp*3/4
-#endif
-				) {
-			if (sd) {
-				clif_skill_fail( *sd, skill_id );
-			}
-			return 1;
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start4(src,bl,type,100,skill_lv,skill_id,src->id,skill_get_time(skill_id,skill_lv),1000));
 		break;
 
 	case PF_MINDBREAKER:
@@ -13273,7 +13224,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MA_LANDMINE:
 	case MA_SANDMAN:
 	case MA_FREEZINGTRAP:
-	case AS_VENOMDUST:
 	case PF_FOGWALL:
 	case PF_SPIDERWEB:
 	case WE_CALLPARTNER:
