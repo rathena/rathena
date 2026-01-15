@@ -598,6 +598,7 @@ void skill_clear_unitgroup(block_list *src);
 int32 skill_clear_group(block_list *bl, uint8 flag);
 void ext_skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick);
 int64 skill_unit_ondamaged(skill_unit *unit,int64 damage);
+std::shared_ptr<s_skill_unit_group> skill_locate_element_field(block_list *bl); // [Skotlex]
 
 // Skill unit visibility [Cydh]
 void skill_getareachar_skillunit_visibilty(skill_unit *su, enum send_target target);
@@ -2876,6 +2877,8 @@ void skill_poisoningweapon( map_session_data& sd, t_itemid nameid );
  * Auto Shadow Spell (Shadow Chaser)
  **/
 void skill_select_menu( map_session_data& sd, uint16 skill_id );
+
+extern AbraDatabase abra_db;
 
 int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, uint16 *item_list ); // Sorcerer Four Elemental Analisys.
 int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list);	// Genetic Change Material.
