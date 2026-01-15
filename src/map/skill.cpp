@@ -7567,11 +7567,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		if (sd)
 			mob_once_spawn(sd, src->m, src->x, src->y,"--ja--", -1, 1, "", SZ_SMALL, AI_NONE);
 		break;
-	case SA_LEVELUP:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (sd && pc_nextbaseexp(sd))
-			pc_gainexp(sd, nullptr, pc_nextbaseexp(sd) * 10 / 100, 0, 0);
-		break;
 
 	case CR_PROVIDENCE:
 		if(sd && dstsd){ //Check they are not another crusader [Skotlex]
