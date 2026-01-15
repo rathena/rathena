@@ -8871,67 +8871,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 	}
 
-	case SA_DISPELL:
-		if (flag&1 || (i = skill_get_splash(skill_id, skill_lv)) < 1) {
-			if (sd && dstsd && !map_flag_vs(sd->m) && (!sd->duel_group || sd->duel_group != dstsd->duel_group) && (!sd->status.party_id || sd->status.party_id != dstsd->status.party_id))
-				break; // Outside PvP it should only affect party members and no skill fail message
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			if((dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_SOUL_LINKER)
-				|| (tsc && tsc->getSCE(SC_SPIRIT) && tsc->getSCE(SC_SPIRIT)->val2 == SL_ROGUE) //Rogue's spirit defends againt32 dispel.
-				|| rnd()%100 >= 50+10*skill_lv)
-			{
-				if (sd)
-					clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			if(status_isimmune(bl))
-				break;
-
-			//Remove bonus_script by Dispell
-			if (dstsd)
-				pc_bonus_script_clear(dstsd,BSF_REM_ON_DISPELL);
-			// Monsters will unlock their target instead
-			else if (dstmd)
-				mob_unlocktarget(dstmd, tick);
-
-			if(tsc == nullptr || tsc->empty())
-				break;
-
-			//Statuses that can't be Dispelled
-			for (const auto &it : status_db) {
-				sc_type status = static_cast<sc_type>(it.first);
-
-				if (!tsc->getSCE(status))
-					continue;
-
-				if (it.second->flag[SCF_NODISPELL])
-					continue;
-				switch (status) {
-					// bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
-					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
-					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
-					case SC_FORTUNE:		case SC_SERVICE4U:
-						if (!battle_config.dispel_song || tsc->getSCE(status)->val4 == 0)
-							continue; //If in song area don't end it, even if config enabled
-						break;
-					case SC_ASSUMPTIO:
-						if( bl->type == BL_MOB )
-							continue;
-						break;
-				}
-				if (status == SC_BERSERK || status == SC_SATURDAYNIGHTFEVER)
-					tsc->getSCE(status)->val2 = 0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
-				status_change_end(bl, status);
-			}
-			break;
-		}
-
-		//Affect all targets on splash area.
-		map_foreachinallrange(skill_area_sub, bl, i, BL_CHAR,
-			src, skill_id, skill_lv, tick, flag|1,
-			skill_castend_damage_id);
-		break;
-
 	case SO_SPELLFIST:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		unit_skillcastcancel(src,1);
