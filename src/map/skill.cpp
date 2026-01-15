@@ -8263,13 +8263,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,i != 0);
 		break;
 
-	case SA_CREATECON:
-		if( sd != nullptr ){
-			clif_elementalconverter_list( *sd );
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
 	//List of self skills that give damage around caster
 	case ASC_METEORASSAULT:
 	case RK_WINDCUTTER:
