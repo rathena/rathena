@@ -152,11 +152,36 @@ bool web_config_read(const char* cfgName, bool normal) {
 			web_config_read(w2, normal);
 		else if (!strcmpi(w1, "allow_gifs"))
 			web_config.allow_gifs = config_switch(w2) == 1;
+		else if (!strcmpi(w1, "allowed_origin_cors"))
+			web_config.allowed_origin_cors = w2;
 	}
 	fclose(fp);
 	ShowInfo("Finished reading %s.\n", cfgName);
 	return true;
 }
+
+/*==========================================
+ * CORS for ROBrowser requests
+ *------------------------------------------*/
+void set_cors_headers(Response& res, const std::string& origin) {
+	res.set_header("Access-Control-Allow-Origin", origin);
+	res.set_header("Vary", "Origin");
+	res.set_header("Access-Control-Allow-Methods", "POST");
+	res.set_header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+}
+
+static httplib::Server::HandlerResponse cors_handler(const httplib::Request& req, httplib::Response& res) {  
+    std::string origin = req.get_header_value("Origin");  
+  
+    if (origin.empty())  
+        return httplib::Server::HandlerResponse::Unhandled;
+
+	if (origin != web_config.allowed_origin_cors)
+		return httplib::Server::HandlerResponse::Unhandled;
+
+    set_cors_headers(res, origin);  
+    return httplib::Server::HandlerResponse::Unhandled;  
+}  
 
 /*==========================================
  * read config file
@@ -446,6 +471,10 @@ bool WebServer::initialize( int32 argc, char* argv[] ){
 	ShowStatus("Starting server...\n");
 
 	http_server = std::make_shared<httplib::Server>();
+
+	// hook func to set up CORS for roBrowser
+	http_server->set_pre_routing_handler(cors_handler);
+
 	// set up routes
 	http_server->Post("/charconfig/load", charconfig_load);
 	http_server->Post("/charconfig/save", charconfig_save);
