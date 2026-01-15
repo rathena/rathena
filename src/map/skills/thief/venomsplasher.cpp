@@ -45,42 +45,17 @@ void SkillVenomSplasher::castendNoDamageId(block_list *src, block_list *target, 
 }
 
 void SkillVenomSplasher::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	if (flag & 1){
-		status_change* tsc = status_get_sc(target);
+	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 
-		// Recursive invocation
-		int32 sflag = skill_area_temp[0] & 0xFFF;
-		std::bitset<INF2_MAX> inf2 = skill_db.find(getSkillId())->inf2;
-
-		if (tsc && tsc->getSCE(SC_HOVERING) && inf2[INF2_IGNOREHOVERING])
-			return; // Under Hovering characters are immune to select trap and ground target skills.
-
-		if (flag & SD_LEVEL)
-			sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
-		if (skill_area_temp[1] != target->id && !inf2[INF2_ISNPC])
-			sflag |= SD_ANIMATION; // original target gets no animation (as well as all NPC skills)
-
-		SkillImplRecursiveDamageSplash::splashDamage(src, target, skill_lv, tick, sflag);
-	}else{
-		skill_area_temp[0] = 0;
-		skill_area_temp[1] = target->id;
-		skill_area_temp[2] = 0;
-
-		// if skill damage should be split among targets, count them
-		// SD_LEVEL -> Forced splash damage -> count targets
-		// Venom Splasher uses a different range for searching than for splashing
-		if (flag & SD_LEVEL || skill_get_nk(getSkillId(), NK_SPLASHSPLIT)){
-			skill_area_temp[0] = map_foreachinallrange(skill_area_sub, target, 1, BL_CHAR, src, getSkillId(), skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-			// If there are no characters in the area, then it always counts as if there was one target
-			// This happens when targetting skill units such as icewall
-			skill_area_temp[0] = std::max(1, skill_area_temp[0]);
-		}
-
-		// recursive invocation of skill_castend_damage_id() with flag|1
-		map_foreachinrange(skill_area_sub, target, SkillImplRecursiveDamageSplash::getSplashSearchSize(skill_lv), SkillImplRecursiveDamageSplash::getSplashTarget(src), src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-
+	if (!(flag & 1)) {
+		// Don't consume a second gemstone.
 		flag |= SKILL_NOCONSUME_REQ;
 	}
+}
+
+int16 SkillVenomSplasher::getSearchSize(uint16 skill_lv) const {
+	// Venom Splasher uses a different range for searching than for splashing
+	return 1;
 }
 
 void SkillVenomSplasher::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
