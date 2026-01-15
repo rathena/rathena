@@ -29,6 +29,7 @@
 #include "magnusexorcismus.hpp"
 #include "occultimpaction.hpp"
 #include "pneuma.hpp"
+#include "ragingquadrupleblow.hpp"
 #include "ragingtrifectablow.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
@@ -113,6 +114,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillSnap>();
 		case MO_CALLSPIRITS:
 			return std::make_unique<SkillSummoningSpiritSphere>();
+		case MO_CHAINCOMBO:
+			return std::make_unique<SkillRagingQuadrupleBlow>();
 		case MO_EXPLOSIONSPIRITS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_FINGEROFFENSIVE:

@@ -4795,15 +4795,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 #endif
 				skillratio += 35 * skill_lv;
 			break;
-		case MO_CHAINCOMBO:
-#ifdef RENEWAL
-			skillratio += 150 + 50 * skill_lv;
-			if (sd && sd->status.weapon == W_KNUCKLE)
-				skillratio *= 2;
-#else
-			skillratio += 50 + 50 * skill_lv;
-#endif
-			break;
 		case MO_COMBOFINISH:
 #ifdef RENEWAL
 			skillratio += 450 + 50 * skill_lv + sstatus->str; // !TODO: How does STR play a role?

@@ -262,6 +262,7 @@
     <ClInclude Include="skills/acolyte/magnusexorcismus.hpp" />
     <ClInclude Include="skills/acolyte/occultimpaction.hpp" />
     <ClInclude Include="skills/acolyte/pneuma.hpp" />
+    <ClInclude Include="skills/acolyte/ragingquadrupleblow.hpp" />
     <ClInclude Include="skills/acolyte/ragingtrifectablow.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/sanctuary.hpp" />
@@ -498,6 +499,7 @@
     <ClCompile Include="skills/acolyte/magnusexorcismus.cpp" />
     <ClCompile Include="skills/acolyte/occultimpaction.cpp" />
     <ClCompile Include="skills/acolyte/pneuma.cpp" />
+    <ClCompile Include="skills/acolyte/ragingquadrupleblow.cpp" />
     <ClCompile Include="skills/acolyte/ragingtrifectablow.cpp" />
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
     <ClCompile Include="skills/acolyte/sanctuary.cpp" />
