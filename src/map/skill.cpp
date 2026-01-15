@@ -7604,14 +7604,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 		}
 		break;
-	case SA_DEATH:
-		if ( sd && dstmd && status_has_mode(&dstmd->status,MD_STATUSIMMUNE) ) {
-			clif_skill_fail( *sd, skill_id );
-			break;
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		status_kill(bl);
-		break;
 	case SA_FORTUNE:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		if(sd) pc_getzeny(sd,status_get_lv(bl)*100,LOG_TYPE_STEAL);
