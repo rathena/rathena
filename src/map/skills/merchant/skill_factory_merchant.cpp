@@ -8,8 +8,15 @@
 #include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
+#include "acidterror.hpp"
 #include "adrenalinerush.hpp"
 #include "advancedadrenalinerush.hpp"
+#include "aidberserkpotion.hpp"
+#include "aidpotion.hpp"
+#include "alchemicalweapon.hpp"
+#include "biochemicalhelm.hpp"
+#include "bomb.hpp"
+#include "callhomunculus.hpp"
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
 #include "changecart.hpp"
@@ -19,14 +26,53 @@
 #include "crazyuproar.hpp"
 #include "mammonite.hpp"
 #include "powerthrust.hpp"
+#include "preparepotion.hpp"
 #include "skill_vending.hpp"
+#include "summonflora.hpp"
+#include "summonmarinesphere.hpp"
+#include "synthesizedshield.hpp"
+#include "syntheticarmor.hpp"
+#include "twilightalchemy1.hpp"
+#include "twilightalchemy2.hpp"
+#include "twilightalchemy3.hpp"
+#include "vaporize.hpp"
 #include "weaponperfection.hpp"
 #include "weaponrepair.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skill_id) const {
 	switch (skill_id) {
 		case AM_ACIDTERROR:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillAcidTerror>();
+		case AM_BERSERKPITCHER:
+			return std::make_unique<SkillAidBerserkPotion>();
+		case AM_CALLHOMUN:
+			return std::make_unique<SkillCallHomunculus>();
+		case AM_CANNIBALIZE:
+			return std::make_unique<SkillSummonFlora>();
+		case AM_CP_ARMOR:
+			return std::make_unique<SkillSyntheticArmor>();
+		case AM_CP_HELM:
+			return std::make_unique<SkillBiochemicalHelm>();
+		case AM_CP_SHIELD:
+			return std::make_unique<SkillSynthesizedShield>();
+		case AM_CP_WEAPON:
+			return std::make_unique<SkillAlchemicalWeapon>();
+		case AM_DEMONSTRATION:
+			return std::make_unique<SkillBomb>();
+		case AM_PHARMACY:
+			return std::make_unique<SkillPreparePotion>();
+		case AM_POTIONPITCHER:
+			return std::make_unique<SkillAidPotion>();
+		case AM_REST:
+			return std::make_unique<SkillVaporize>();
+		case AM_SPHEREMINE:
+			return std::make_unique<SkillSummonMarineSphere>();
+		case AM_TWILIGHT1:
+			return std::make_unique<SkillTwilightAlchemy1>();
+		case AM_TWILIGHT2:
+			return std::make_unique<SkillTwilightAlchemy2>();
+		case AM_TWILIGHT3:
+			return std::make_unique<SkillTwilightAlchemy3>();
 		case BO_ACIDIFIED_ZONE_WATER_ATK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case BO_ACIDIFIED_ZONE_GROUND_ATK:
