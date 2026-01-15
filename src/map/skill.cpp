@@ -7616,12 +7616,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		if(sd) pc_getzeny(sd,status_get_lv(bl)*100,LOG_TYPE_STEAL);
 		break;
-	case SA_TAMINGMONSTER:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (sd != nullptr && dstmd != nullptr) {
-			pet_catch_process_start( *sd, 0, PET_CATCH_UNIVERSAL_ALL );
-		}
-		break;
 
 	case CR_PROVIDENCE:
 		if(sd && dstsd){ //Check they are not another crusader [Skotlex]
