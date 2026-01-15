@@ -16,6 +16,7 @@
 #include "magnum.hpp"
 #include "pierce.hpp"
 #include "provoke.hpp"
+#include "resistantsouls.hpp"
 #include "sacrifice.hpp"
 #include "selfprovoke.hpp"
 #include "shieldboomerang.hpp"
@@ -36,6 +37,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillGrandCross>();
 		case CR_HOLYCROSS:
 			return std::make_unique<SkillHolyCross>();
+		case CR_PROVIDENCE:
+			return std::make_unique<SkillResistantSouls>();
 		case CR_REFLECTSHIELD:
 			return std::make_unique<SkillShieldReflect>();
 		case CR_SHIELDBOOMERANG:
