@@ -7578,8 +7578,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 	case SA_QUESTION:
 		clif_emotion( *src, ET_QUESTION );
-		[[fallthrough]];
-	case SA_GRAVITY:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		break;
 	case SA_CLASSCHANGE:
