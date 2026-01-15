@@ -143,16 +143,22 @@ function	Check_Riding	{
 	// Mounts are considered as another class, which
 	// would make this NPC bigger just to handle with
 	// those special cases.
-	.@string$ = (checkfalcon() ? "falcon" : "");
-	.@string$ += (checkcart() ? (.@string$ != "" ? ", cart" : "cart") : "");
+	.@string$ = (checkfalcon() ? "Falcon" : "");
+	.@string$ += (checkcart() ? (.@string$ != "" ? ", Cart" : "Cart") : "");
 	.@string$ += (checkriding() ? (.@string$ != "" ? ", Peco" : "Peco") : "");
-	.@string$ += (ismounting() ? (.@string$ != "" ? ", mount" : "mount") : "");
+	.@string$ += (ismounting() ? (.@string$ != "" ? ", Mount" : "Mount") : "");
+	.@string$ += (checkdragon() ? (.@string$ != "" ? ", Dragon" : "Dragon") : "");
+	.@string$ += (checkmadogear() ? (.@string$ != "" ? ", Mado" : "Mado") : "");
+	.@string$ += (checkwug() ? (.@string$ != "" ? ", Warg" : "Warg") : "");
+	.@string$ += (checkhomcall() == 0 ? (.@string$ != "" ? ", Homunculus" : "Homunculus") : "");
+
 	if (.@string$ != "") {
 		mes "Please remove your " +.@string$ + " before proceeding.";
 		close;
 	}
 	return;
 }
+	
 function	Check_SkillPoints	{
 	if (.SkillPointCheck && SkillPoint) {
 		mes "Please use all your skill points before proceeding.";
