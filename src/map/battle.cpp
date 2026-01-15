@@ -4798,13 +4798,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case NPC_REVERBERATION_ATK:
 			skillratio += 400 + 200 * skill_lv;
 			break;
-		case CR_SHIELDBOOMERANG:
-#ifdef RENEWAL
-			skillratio += -100 + skill_lv * 80;
-#else
-			skillratio += 30 * skill_lv;
-#endif
-			break;
 		case NPC_DARKCROSS:
 		case CR_HOLYCROSS:
 #ifdef RENEWAL
