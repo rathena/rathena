@@ -35,6 +35,7 @@
 #include "statusrecovery.hpp"
 #include "suffragium.hpp"
 #include "summonspiritsphere.hpp"
+#include "throwspiritsphere.hpp"
 #include "turnundead.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
@@ -111,6 +112,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillSummoningSpiritSphere>();
 		case MO_EXPLOSIONSPIRITS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MO_FINGEROFFENSIVE:
+			return std::make_unique<SkillThrowSpiritSphere>();
 		case MO_INVESTIGATE:
 			return std::make_unique<SkillOccultImpaction>();
 		case MO_STEELBODY:
