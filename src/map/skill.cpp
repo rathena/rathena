@@ -8220,21 +8220,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case MO_KITRANSLATION:
-		if(dstsd && ((dstsd->class_&MAPID_FIRSTMASK) != MAPID_GUNSLINGER && (dstsd->class_&MAPID_SECONDMASK) != MAPID_REBELLION) && dstsd->spiritball < 5) {
-			//Require will define how many spiritballs will be transferred
-			struct s_skill_condition require;
-			require = skill_get_requirement(sd,skill_id,skill_lv);
-			pc_delspiritball(sd,require.spiritball,0);
-			for (i = 0; i < require.spiritball; i++)
-				pc_addspiritball(dstsd,skill_get_time(skill_id,skill_lv),5);
-		} else {
-			if(sd)
-				clif_skill_fail( *sd, skill_id );
-			return 0;
-		}
-		break;
-
 	case MO_BALKYOUNG: //Passive part of the attack. Splash knock-back+stun. [Skotlex]
 		if (skill_area_temp[1] != bl->id) {
 			skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),-1,BLOWN_NONE);

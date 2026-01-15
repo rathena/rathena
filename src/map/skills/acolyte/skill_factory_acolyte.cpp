@@ -23,6 +23,7 @@
 #include "holywater.hpp"
 #include "impositiomanus.hpp"
 #include "incagi.hpp"
+#include "kitranslation.hpp"
 #include "kyrieeleison.hpp"
 #include "lexdivina.hpp"
 #include "magnificat.hpp"
@@ -125,6 +126,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillThrowSpiritSphere>();
 		case MO_INVESTIGATE:
 			return std::make_unique<SkillOccultImpaction>();
+		case MO_KITRANSLATION:
+			return std::make_unique<SkillKiTranslation>();
 		case MO_STEELBODY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_TRIPLEATTACK:
