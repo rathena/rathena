@@ -1452,24 +1452,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case AM_ACIDTERROR:
-		sc_start2(src,bl,SC_BLEEDING,(skill_lv*3),skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
-#ifdef RENEWAL
-		if (skill_break_equip(src,bl, EQP_ARMOR, (1000 * skill_lv + 500) - 1000, BCT_ENEMY))
-#else
-		if (skill_break_equip(src,bl, EQP_ARMOR, 100*skill_get_time(skill_id,skill_lv), BCT_ENEMY))
-#endif
-			clif_emotion( *bl, ET_HUK );
-		break;
-
-	case AM_DEMONSTRATION:
-#ifdef RENEWAL
-		skill_break_equip(src,bl, EQP_WEAPON, 300 * skill_lv, BCT_ENEMY);
-#else
-		skill_break_equip(src,bl, EQP_WEAPON, 100*skill_lv, BCT_ENEMY);
-#endif
-		break;
-
 	case CR_SHIELDCHARGE:
 		sc_start(src,bl,SC_STUN,(15+skill_lv*5),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
@@ -8343,13 +8325,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,i != 0);
 		break;
 
-	case AM_PHARMACY:
-		if(sd) {
-			clif_skill_produce_mix_list( *sd, skill_id, 22 );
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
 	case SA_CREATECON:
 		if( sd != nullptr ){
 			clif_elementalconverter_list( *sd );
@@ -8965,191 +8940,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 	}
 
-	case AM_BERSERKPITCHER:
-	case AM_POTIONPITCHER:
-		{
-			int32 j,hp = 0,sp = 0;
-			if( dstmd && dstmd->mob_id == MOBID_EMPERIUM ) {
-				return 1;
-			}
-			if( sd ) {
-				int32 x,bonus=100;
-				struct s_skill_condition require = skill_get_requirement(sd, skill_id, skill_lv);
-				x = skill_lv%11 - 1;
-				j = pc_search_inventory(sd, require.itemid[x]);
-				if (j < 0 || require.itemid[x] <= 0) {
-					clif_skill_fail( *sd, skill_id );
-					return 1;
-				}
-				if (sd->inventory_data[j] == nullptr || sd->inventory.u.items_inventory[j].amount < require.amount[x]) {
-					clif_skill_fail( *sd, skill_id );
-					return 1;
-				}
-				if( skill_id == AM_BERSERKPITCHER ) {
-					if( dstsd && dstsd->status.base_level < (uint32)sd->inventory_data[j]->elv ) {
-						clif_skill_fail( *sd, skill_id );
-						return 1;
-					}
-				}
-				potion_flag = 1;
-				potion_hp = potion_sp = potion_per_hp = potion_per_sp = 0;
-				potion_target = bl->id;
-				run_script(sd->inventory_data[j]->script,0,sd->id,0);
-				potion_flag = potion_target = 0;
-				if( sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_ALCHEMIST )
-					bonus += sd->status.base_level;
-				if( potion_per_hp > 0 || potion_per_sp > 0 ) {
-					hp = tstatus->max_hp * potion_per_hp / 100;
-					hp = hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-					if( dstsd ) {
-						sp = dstsd->status.max_sp * potion_per_sp / 100;
-						sp = sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-					}
-				} else {
-					if( potion_hp > 0 ) {
-						hp = potion_hp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-						hp = hp * (100 + (tstatus->vit * 2)) / 100;
-						if( dstsd )
-							hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
-					}
-					if( potion_sp > 0 ) {
-						sp = potion_sp * (100 + pc_checkskill(sd,AM_POTIONPITCHER)*10 + pc_checkskill(sd,AM_LEARNINGPOTION)*5)*bonus/10000;
-						sp = sp * (100 + (tstatus->int_ * 2)) / 100;
-						if( dstsd )
-							sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10) / 100;
-					}
-				}
-
-				if ((bonus = pc_get_itemgroup_bonus_group(sd, IG_POTION, sd->itemgrouphealrate))) {
-					hp += hp * bonus / 100;
-				}
-
-				if( ( bonus = pc_get_itemgroup_bonus_group( sd, IG_POTION, sd->itemgroupsphealrate ) ) ){
-					sp += sp * bonus / 100;
-				}
-
-				if( (j = pc_skillheal_bonus(sd, skill_id)) ) {
-					hp += hp * j / 100;
-					sp += sp * j / 100;
-				}
-			} else {
-				//Maybe replace with potion_hp, but I'm unsure how that works [Playtester]
-				switch (skill_lv) {
-					case 1: hp = 45; break;
-					case 2: hp = 105; break;
-					case 3: hp = 175; break;
-					default: hp = 325; break;
-				}
-				hp = (hp + rnd()%(skill_lv*20+1)) * (150 + skill_lv*10) / 100;
-				hp = hp * (100 + (tstatus->vit * 2)) / 100;
-				if( dstsd )
-					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10) / 100;
-			}
-			if( dstsd && (j = pc_skillheal2_bonus(dstsd, skill_id)) ) {
-				hp += hp * j / 100;
-				sp += sp * j / 100;
-			}
-			// Final heal increased by HPlus.
-			// Is this the right place for this??? [Rytech]
-			// Can HPlus also affect SP recovery???
-			if (sd && sstatus->hplus > 0) {
-				hp += hp * sstatus->hplus / 100;
-				sp += sp * sstatus->hplus / 100;
-			}
-			if (tsc != nullptr && !tsc->empty()) {
-				uint8 penalty = 0;
-
-				if (tsc->getSCE(SC_WATER_INSIGNIA) && tsc->getSCE(SC_WATER_INSIGNIA)->val1 == 2) {
-					hp += hp / 10;
-					sp += sp / 10;
-				}
-				if (tsc->getSCE(SC_CRITICALWOUND))
-					penalty += tsc->getSCE(SC_CRITICALWOUND)->val2;
-				if (tsc->getSCE(SC_DEATHHURT) && tsc->getSCE(SC_DEATHHURT)->val3)
-					penalty += 20;
-				if (tsc->getSCE(SC_NORECOVER_STATE))
-					penalty = 100;
-				if (penalty > 0) {
-					hp -= hp * penalty / 100;
-					sp -= sp * penalty / 100;
-				}
-			}
-
-#ifdef RENEWAL
-			if (bl->type == BL_HOM)
-				hp *= 3; // Heal effectiveness is 3x for Homunculus
-#endif
-
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			if( hp > 0 || (skill_id == AM_POTIONPITCHER && sp <= 0) )
-				clif_skill_nodamage(nullptr,*bl,AL_HEAL,hp,1);
-			if( sp > 0 )
-				clif_skill_nodamage(nullptr,*bl,MG_SRECOVERY,sp);
-			if (tsc) {
-#ifdef RENEWAL
-				if (tsc->getSCE(SC_EXTREMITYFIST))
-					sp = 0;
-#endif
-				if (tsc->getSCE(SC_NORECOVER_STATE)) {
-					hp = 0;
-					sp = 0;
-				}
-			}
-			status_heal(bl,hp,sp,0);
-		}
-		break;
-	case AM_CP_WEAPON:
-	case AM_CP_SHIELD:
-	case AM_CP_ARMOR:
-	case AM_CP_HELM:
-		{
-			uint32 equip[] = {EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP};
-
-			if( sd && ( bl->type != BL_PC || ( dstsd && pc_checkequip(dstsd,equip[skill_id - AM_CP_WEAPON]) < 0 ) ) ){
-				clif_skill_fail( *sd, skill_id );
-				return 0;
-			}
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		}
-		break;
-	case AM_TWILIGHT1:
-		if (sd) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			//Prepare 200 White Potions.
-			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_POTION, 0, 0, 0, 200, -1))
-				clif_skill_fail( *sd, skill_id );
-		}
-		break;
-	case AM_TWILIGHT2:
-		if (sd) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			//Prepare 200 Slim White Potions.
-			if (!skill_produce_mix(sd, skill_id, ITEMID_WHITE_SLIM_POTION, 0, 0, 0, 200, -1))
-				clif_skill_fail( *sd, skill_id );
-		}
-		break;
-	case AM_TWILIGHT3:
-		if (sd) {
-			int32 ebottle = pc_search_inventory(sd,ITEMID_EMPTY_BOTTLE);
-			int16 alcohol_idx = -1, acid_idx = -1, fire_idx = -1;
-			if( ebottle >= 0 )
-				ebottle = sd->inventory.u.items_inventory[ebottle].amount;
-			//check if you can produce all three, if not, then fail:
-			if (!(alcohol_idx = skill_can_produce_mix(sd,ITEMID_ALCOHOL,-1, 100)) //100 Alcohol
-				|| !(acid_idx = skill_can_produce_mix(sd,ITEMID_ACID_BOTTLE,-1, 50)) //50 Acid Bottle
-				|| !(fire_idx = skill_can_produce_mix(sd,ITEMID_FIRE_BOTTLE,-1, 50)) //50 Flame Bottle
-				|| ebottle < 200 //200 empty bottle are required at total.
-			) {
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			skill_produce_mix(sd, skill_id, ITEMID_ALCOHOL, 0, 0, 0, 100, alcohol_idx-1);
-			skill_produce_mix(sd, skill_id, ITEMID_ACID_BOTTLE, 0, 0, 0, 50, acid_idx-1);
-			skill_produce_mix(sd, skill_id, ITEMID_FIRE_BOTTLE, 0, 0, 0, 50, fire_idx-1);
-		}
-		break;
 	case SA_DISPELL:
 		if (flag&1 || (i = skill_get_splash(skill_id, skill_lv)) < 1) {
 			if (sd && dstsd && !map_flag_vs(sd->m) && (!sd->duel_group || sd->duel_group != dstsd->duel_group) && (!sd->status.party_id || sd->status.party_id != dstsd->status.party_id))
@@ -10053,24 +9843,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 		}
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		break;
-
-	case AM_CALLHOMUN:	//[orn]
-		if (sd && !hom_call(sd))
-			clif_skill_fail( *sd, skill_id );
-#ifdef RENEWAL
-		else if (sd && hom_is_active(sd->hd))
-			skill_area_temp[0] = 1; // Already passed pre-cast checks
-#endif
-		break;
-
-	case AM_REST:
-		if (sd) {
-			if (hom_vaporize(sd,HOM_ST_REST))
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			else
-				clif_skill_fail( *sd, skill_id );
-		}
 		break;
 
 	case HAMI_CASTLE:	//[orn]
@@ -13452,7 +13224,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MA_LANDMINE:
 	case MA_SANDMAN:
 	case MA_FREEZINGTRAP:
-	case AM_DEMONSTRATION:
 	case PF_FOGWALL:
 	case PF_SPIDERWEB:
 	case WE_CALLPARTNER:
@@ -13680,26 +13451,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		if( map_getcell(src->m,x,y,CELL_CHKREACH) && skill_check_unit_movepos(5, src, x, y, 1, 0) ) //You don't move on GVG grounds.
 			clif_blown(src);
 		status_change_end(src, SC_HIDING);
-		break;
-	case AM_SPHEREMINE:
-	case AM_CANNIBALIZE:
-		{
-			int32 summons[5] = { MOBID_G_MANDRAGORA, MOBID_G_HYDRA, MOBID_G_FLORA, MOBID_G_PARASITE, MOBID_G_GEOGRAPHER };
-			int32 class_ = skill_id==AM_SPHEREMINE?MOBID_MARINE_SPHERE:summons[skill_lv-1];
-			enum mob_ai ai = (skill_id == AM_SPHEREMINE) ? AI_SPHERE : AI_FLORA;
-			mob_data *md;
-
-			// Correct info, don't change any of this! [celest]
-			md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(*src), class_, "", SZ_SMALL, ai);
-			if (md) {
-				md->master_id = src->id;
-				md->special_state.ai = ai;
-				if( md->deletetimer != INVALID_TIMER )
-					delete_timer(md->deletetimer, mob_timer_delete);
-				md->deletetimer = add_timer (gettick() + skill_get_time(skill_id,skill_lv), mob_timer_delete, md->id, 0);
-				mob_spawn (md); //Now it is ready for spawning.
-			}
-		}
 		break;
 
 	// Slim Pitcher [Celest]
