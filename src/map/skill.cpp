@@ -8258,16 +8258,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, 0, 0, skill_lv, 0, skill_get_time(skill_id, skill_lv)));
 		break;
 
-	case MO_CALLSPIRITS:
-		if(sd) {
-			int32 limit = skill_lv;
-			if( sd->sc.getSCE(SC_RAISINGDRAGON) )
-				limit += sd->sc.getSCE(SC_RAISINGDRAGON)->val1;
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			pc_addspiritball(sd,skill_get_time(skill_id,skill_lv),limit);
-		}
-		break;
-
 	case CH_SOULCOLLECT:
 		if(sd) {
 			int32 limit = 5;
