@@ -13018,7 +13018,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case WE_CALLPARTNER:
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
-	case SA_LANDPROTECTOR:
 #ifndef RENEWAL
 	case BD_LULLABY:
 	case BD_RICHMANKIM:
