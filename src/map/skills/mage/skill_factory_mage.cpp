@@ -6,8 +6,11 @@
 #include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
+#include "beastlyhypnosis.hpp"
 #include "castcancel.hpp"
+#include "classchange.hpp"
 #include "coldbolt.hpp"
+#include "coma.hpp"
 #include "createelementalconverter.hpp"
 #include "deluge.hpp"
 #include "dispell.hpp"
@@ -27,18 +30,26 @@
 #include "firewall.hpp"
 #include "frostdiver.hpp"
 #include "frostnova.hpp"
+#include "golddigger.hpp"
+#include "gravity.hpp"
+#include "grimreaper.hpp"
 #include "heavensdrive.hpp"
 #include "hindsight.hpp"
 #include "hocuspocus.hpp"
 #include "icewall.hpp"
 #include "jupitelthunder.hpp"
+#include "leveling.hpp"
 #include "lordofvermilion.hpp"
 #include "magicrod.hpp"
 #include "magneticearth.hpp"
 #include "meteorstorm.hpp"
+#include "monocell.hpp"
+#include "monsterchant.hpp"
 #include "napalmbeat.hpp"
 #include "lightningbolt.hpp"
 #include "quagmire.hpp"
+#include "questioning.hpp"
+#include "rejuvenation.hpp"
 #include "safetywall.hpp"
 #include "sense.hpp"
 #include "sight.hpp"
@@ -48,6 +59,7 @@
 #include "spellbreaker.hpp"
 #include "stonecurse.hpp"
 #include "stormgust.hpp"
+#include "suicide.hpp"
 #include "thunderstorm.hpp"
 #include "volcano.hpp"
 #include "waterball.hpp"
@@ -99,8 +111,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillHindsight>();
 		case SA_CASTCANCEL:
 			return std::make_unique<SkillCastCancel>();
+		case SA_CLASSCHANGE:
+			return std::make_unique<SkillClassChange>();
+		case SA_COMA:
+			return std::make_unique<SkillComa>();
 		case SA_CREATECON:
 			return std::make_unique<SkillCreateElementalConverter>();
+		case SA_DEATH:
+			return std::make_unique<SkillGrimReaper>();
 		case SA_DELUGE:
 			return std::make_unique<SkillDeluge>();
 		case SA_DISPELL:
@@ -115,20 +133,38 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillElementalChangeWind>();
 		case SA_FLAMELAUNCHER:
 			return std::make_unique<SkillEndowBlaze>();
+		case SA_FORTUNE:
+			return std::make_unique<SkillGoldDigger>();
 		case SA_FROSTWEAPON:
 			return std::make_unique<SkillEndowTsunami>();
+		case SA_FULLRECOVERY:
+			return std::make_unique<SkillRejuvenation>();
+		case SA_GRAVITY:
+			return std::make_unique<SkillGravity>();
+		case SA_INSTANTDEATH:
+			return std::make_unique<SkillSuicide>();
 		case SA_LANDPROTECTOR:
 			return std::make_unique<SkillMagneticEarth>();
+		case SA_LEVELUP:
+			return std::make_unique<SkillLeveling>();
 		case SA_LIGHTNINGLOADER:
 			return std::make_unique<SkillEndowTornado>();
 		case SA_MAGICROD:
 			return std::make_unique<SkillMagicRod>();
+		case SA_MONOCELL:
+			return std::make_unique<SkillMonocell>();
+		case SA_QUESTION:
+			return std::make_unique<SkillQuestioning>();
 		case SA_REVERSEORCISH:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SA_SEISMICWEAPON:
 			return std::make_unique<SkillEndowQuake>();
 		case SA_SPELLBREAKER:
 			return std::make_unique<SkillSpellBreaker>();
+		case SA_SUMMONMONSTER:
+			return std::make_unique<SkillMonsterChant>();
+		case SA_TAMINGMONSTER:
+			return std::make_unique<SkillBeastlyHypnosis>();
 		case SA_VIOLENTGALE:
 			return std::make_unique<SkillWhirlwind>();
 		case SA_VOLCANO:
