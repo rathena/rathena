@@ -43,7 +43,7 @@ struct Web_Config {
 	char msgconf_name[256];							/// name of msg_conf config file
 	bool allow_gifs;
 
-	std::string allowed_origin_cors;				// ROBrowser address is running on
+	std::string allowed_origin_cors;				// allowed origin for CORS
 };
 
 struct Inter_Config {

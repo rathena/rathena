@@ -161,7 +161,7 @@ bool web_config_read(const char* cfgName, bool normal) {
 }
 
 /*==========================================
- * CORS for ROBrowser requests
+ * CORS for browser requests
  *------------------------------------------*/
 void set_cors_headers(Response& res, const std::string& origin) {
 	res.set_header("Access-Control-Allow-Origin", origin);
@@ -171,6 +171,10 @@ void set_cors_headers(Response& res, const std::string& origin) {
 }
 
 static httplib::Server::HandlerResponse cors_handler(const httplib::Request& req, httplib::Response& res) {  
+	if (web_config.allowed_origin_cors.empty()) {
+		// CORS not allowed
+		return httplib::Server::HandlerResponse::Unhandled;
+	}
     std::string origin = req.get_header_value("Origin");  
   
     if (origin.empty())  
@@ -472,7 +476,7 @@ bool WebServer::initialize( int32 argc, char* argv[] ){
 
 	http_server = std::make_shared<httplib::Server>();
 
-	// hook func to set up CORS for roBrowser
+	// hook func to set up CORS for browsers
 	http_server->set_pre_routing_handler(cors_handler);
 
 	// set up routes
