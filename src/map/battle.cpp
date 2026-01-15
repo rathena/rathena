@@ -4799,13 +4799,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 400 + 200 * skill_lv;
 			break;
 		case NPC_DARKCROSS:
-		case CR_HOLYCROSS:
-#ifdef RENEWAL
-			if(sd && sd->status.weapon == W_2HSPEAR)
-				skillratio += 70 * skill_lv;
-			else
-#endif
-				skillratio += 35 * skill_lv;
+			skillratio += 35 * skill_lv;
 			break;
 		case AM_DEMONSTRATION:
 			skillratio += 20 * skill_lv;

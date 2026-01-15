@@ -361,6 +361,7 @@
     <ClInclude Include="skills/swordman/bowlingbash.hpp" />
     <ClInclude Include="skills/swordman/brandishspear.hpp" />
     <ClInclude Include="skills/swordman/counterattack.hpp" />
+    <ClInclude Include="skills/swordman/holycross.hpp" />
     <ClInclude Include="skills/swordman/magnum.hpp" />
     <ClInclude Include="skills/swordman/pierce.hpp" />
     <ClInclude Include="skills/swordman/provoke.hpp" />
@@ -570,6 +571,7 @@
     <ClCompile Include="skills/swordman/bowlingbash.cpp" />
     <ClCompile Include="skills/swordman/brandishspear.cpp" />
     <ClCompile Include="skills/swordman/counterattack.cpp" />
+    <ClCompile Include="skills/swordman/holycross.cpp" />
     <ClCompile Include="skills/swordman/magnum.cpp" />
     <ClCompile Include="skills/swordman/pierce.cpp" />
     <ClCompile Include="skills/swordman/provoke.cpp" />
