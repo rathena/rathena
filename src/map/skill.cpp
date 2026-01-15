@@ -1459,12 +1459,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 
-	case CR_GRANDCROSS:
-		//Chance to cause blind status vs demon and undead element, but not against players
-		if(!dstsd && (battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON))
-			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
 	case AM_ACIDTERROR:
 		sc_start2(src,bl,SC_BLEEDING,(skill_lv*3),skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
 #ifdef RENEWAL
@@ -13493,7 +13487,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 
 	// Skill Unit Setting
 	case NPC_GROUNDDRIVE:
-	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
 	case MA_SKIDTRAP:
 	case MA_LANDMINE:

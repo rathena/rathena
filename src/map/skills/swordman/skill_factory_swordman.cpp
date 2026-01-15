@@ -11,6 +11,7 @@
 #include "bowlingbash.hpp"
 #include "brandishspear.hpp"
 #include "counterattack.hpp"
+#include "grandcross.hpp"
 #include "holycross.hpp"
 #include "magnum.hpp"
 #include "pierce.hpp"
@@ -28,6 +29,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case CR_DEFENDER:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case CR_GRANDCROSS:
+			return std::make_unique<SkillGrandCross>();
 		case CR_HOLYCROSS:
 			return std::make_unique<SkillHolyCross>();
 		case CR_REFLECTSHIELD:
