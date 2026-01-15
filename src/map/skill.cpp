@@ -12939,7 +12939,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		break;
 
 	case SA_VOLCANO:
-	case SA_VIOLENTGALE:
 	{	//Does not consumes if the skill is already active. [Skotlex]
 		std::shared_ptr<s_skill_unit_group> sg2;
 		if ((sg2= skill_locate_element_field(src)) != nullptr && ( sg2->skill_id == SA_VOLCANO || sg2->skill_id == SA_DELUGE || sg2->skill_id == SA_VIOLENTGALE ))
