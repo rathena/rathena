@@ -561,10 +561,46 @@
     <ClInclude Include="skills/gunslinger/tripleaction.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/castcancel.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/coldbolt.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/createelementalconverter.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/deluge.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/dispell.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/earthspike.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/elementalchangeearth.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/elementalchangefire.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/elementalchangewater.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/elementalchangewind.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/endowblaze.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/endowquake.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/endowtornado.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/endowtsunami.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/energycoat.hpp">
@@ -591,6 +627,12 @@
     <ClInclude Include="skills/mage/heavensdrive.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/hindsight.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/hocuspocus.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/icewall.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -601,6 +643,12 @@
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/lordofvermilion.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/magicrod.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/magneticearth.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/meteorstorm.hpp">
@@ -633,6 +681,9 @@
     <ClInclude Include="skills/mage/soulstrike.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/spellbreaker.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/stonecurse.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -642,7 +693,13 @@
     <ClInclude Include="skills/mage/thunderstorm.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/volcano.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/waterball.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/whirlwind.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp">
@@ -1106,10 +1163,46 @@
     <ClCompile Include="skills/gunslinger/tripleaction.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/castcancel.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/coldbolt.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/createelementalconverter.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/deluge.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/dispell.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/earthspike.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/elementalchangeearth.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/elementalchangefire.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/elementalchangewater.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/elementalchangewind.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/endowblaze.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/endowquake.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/endowtornado.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/endowtsunami.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/energycoat.cpp">
@@ -1136,6 +1229,12 @@
     <ClCompile Include="skills/mage/heavensdrive.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/hindsight.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/hocuspocus.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/icewall.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
@@ -1146,6 +1245,12 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/lordofvermilion.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/magicrod.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/magneticearth.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/meteorstorm.cpp">
@@ -1178,6 +1283,9 @@
     <ClCompile Include="skills/mage/soulstrike.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/spellbreaker.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/stonecurse.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
@@ -1187,7 +1295,13 @@
     <ClCompile Include="skills/mage/thunderstorm.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/volcano.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/waterball.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/whirlwind.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp">
