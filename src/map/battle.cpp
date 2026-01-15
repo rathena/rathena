@@ -4986,13 +4986,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			}
 			break;
 #endif
-		case MO_BALKYOUNG:
-#ifdef RENEWAL
-			skillratio += 700;
-#else
-			skillratio += 200;
-#endif
-			break;
+
 		case HFLI_MOON: //[orn]
 			skillratio += 10 + 110 * skill_lv;
 			break;

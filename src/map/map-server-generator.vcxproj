@@ -256,6 +256,7 @@
     <ClInclude Include="skills/acolyte/holywater.hpp" />
     <ClInclude Include="skills/acolyte/impositiomanus.hpp" />
     <ClInclude Include="skills/acolyte/incagi.hpp" />
+    <ClInclude Include="skills/acolyte/kiexplosion.hpp" />
     <ClInclude Include="skills/acolyte/kitranslation.hpp" />
     <ClInclude Include="skills/acolyte/kyrieeleison.hpp" />
     <ClInclude Include="skills/acolyte/lexdivina.hpp" />
@@ -495,6 +496,7 @@
     <ClCompile Include="skills/acolyte/holywater.cpp" />
     <ClCompile Include="skills/acolyte/impositiomanus.cpp" />
     <ClCompile Include="skills/acolyte/incagi.cpp" />
+    <ClCompile Include="skills/acolyte/kiexplosion.cpp" />
     <ClCompile Include="skills/acolyte/kitranslation.cpp" />
     <ClCompile Include="skills/acolyte/kyrieeleison.cpp" />
     <ClCompile Include="skills/acolyte/lexdivina.cpp" />

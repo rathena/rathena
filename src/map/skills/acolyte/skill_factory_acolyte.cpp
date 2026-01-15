@@ -23,6 +23,7 @@
 #include "holywater.hpp"
 #include "impositiomanus.hpp"
 #include "incagi.hpp"
+#include "kiexplosion.hpp"
 #include "kitranslation.hpp"
 #include "kyrieeleison.hpp"
 #include "lexdivina.hpp"
@@ -108,8 +109,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_ABSORBSPIRITS:
 			return std::make_unique<SkillAbsordSpiritSphere>();
-		case MO_EXTREMITYFIST:
-			return std::make_unique<SkillAsuraStrike>();
+		case MO_BALKYOUNG:
+			return std::make_unique<SkillKiExplosion>();
 		case MO_BLADESTOP:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_BODYRELOCATION:
@@ -122,6 +123,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillRagingThrust>();
 		case MO_EXPLOSIONSPIRITS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MO_EXTREMITYFIST:
+			return std::make_unique<SkillAsuraStrike>();
 		case MO_FINGEROFFENSIVE:
 			return std::make_unique<SkillThrowSpiritSphere>();
 		case MO_INVESTIGATE:
