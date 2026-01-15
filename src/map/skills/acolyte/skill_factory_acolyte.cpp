@@ -26,6 +26,7 @@
 #include "lexdivina.hpp"
 #include "magnificat.hpp"
 #include "magnusexorcismus.hpp"
+#include "occultimpaction.hpp"
 #include "pneuma.hpp"
 #include "ragingtrifectablow.hpp"
 #include "ruwach.hpp"
@@ -110,6 +111,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillSummoningSpiritSphere>();
 		case MO_EXPLOSIONSPIRITS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MO_INVESTIGATE:
+			return std::make_unique<SkillOccultImpaction>();
 		case MO_STEELBODY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_TRIPLEATTACK:

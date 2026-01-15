@@ -4804,15 +4804,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 50 * skill_lv;
 #endif
 			break;
-		case MO_INVESTIGATE:
-#ifdef RENEWAL
-			skillratio += -100 + 100 * skill_lv;
-			if (tsc && tsc->getSCE(SC_BLADESTOP))
-				skillratio += skillratio / 2;
-#else
-			skillratio += 75 * skill_lv;
-#endif
-			break;
 		case MO_EXTREMITYFIST:
 			skillratio += 700 + sstatus->sp * 10;
 #ifdef RENEWAL
