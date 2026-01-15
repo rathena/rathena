@@ -8175,13 +8175,10 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 	case ML_DEVOTION:
-	case CR_DEVOTION:
 		{
-			int32 count, lv;
-			if( !dstsd || (!sd && !mer) )
+			int32 lv;
+			if( !dstsd || !mer )
 			{ // Only players can be devoted
-				if( sd )
-					clif_skill_fail( *sd, skill_id );
 				break;
 			}
 
@@ -8189,34 +8186,15 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				lv = -lv;
 			if( lv > battle_config.devotion_level_difference || // Level difference requeriments
 				(dstsd->sc.getSCE(type) && dstsd->sc.getSCE(type)->val1 != src->id) || // Cannot Devote a player devoted from another source
-				(skill_id == ML_DEVOTION && (!mer || mer != dstsd->md)) || // Mercenary only can devote owner
+				mer != dstsd->md || // Mercenary only can devote owner
 				(dstsd->class_&MAPID_SECONDMASK) == MAPID_CRUSADER || // Crusader Cannot be devoted
 				(dstsd->sc.getSCE(SC_HELLPOWER))) // Players affected by SC_HELLPOWER cannot be devoted.
 			{
-				if( sd )
-					clif_skill_fail( *sd, skill_id );
 				return 1;
 			}
 
 			i = 0;
-			count = (sd)? min(skill_lv,MAX_DEVOTION) : 1; // Mercenary only can Devote owner
-			if( sd )
-			{ // Player Devoting Player
-				ARR_FIND(0, count, i, sd->devotion[i] == bl->id );
-				if( i == count )
-				{
-					ARR_FIND(0, count, i, sd->devotion[i] == 0 );
-					if( i == count )
-					{ // No free slots, skill Fail
-						clif_skill_fail( *sd, skill_id );
-						return 1;
-					}
-				}
-
-				sd->devotion[i] = bl->id;
-			}
-			else
-				mer->devotion_flag = 1; // Mercenary Devoting Owner
+			mer->devotion_flag = 1; // Mercenary Devoting Owner
 
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv,
 				sc_start4(src, bl, type, 10000, src->id, i, skill_get_range2(src, skill_id, skill_lv, true), 0, skill_get_time2(skill_id, skill_lv)));
