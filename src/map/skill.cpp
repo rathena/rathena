@@ -7572,10 +7572,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		if (sd && pc_nextbaseexp(sd))
 			pc_gainexp(sd, nullptr, pc_nextbaseexp(sd) * 10 / 100, 0, 0);
 		break;
-	case SA_INSTANTDEATH:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		status_kill(src);
-		break;
 	case SA_CLASSCHANGE:
 	case SA_MONOCELL:
 		if (dstmd)
