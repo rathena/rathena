@@ -5268,32 +5268,16 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 #ifndef RENEWAL
 	case NJ_ISSEN:
-#endif
-	case MO_EXTREMITYFIST:
 		{
-			block_list *mbl = bl; // For NJ_ISSEN
 			int16 x, y, i = 2; // Move 2 cells (From target)
 			int16 dir = map_calc_dir(src,bl->x,bl->y);
 
-#ifdef RENEWAL
-			if (skill_id == MO_EXTREMITYFIST && sd && sd->spiritball_old > 5)
-				flag |= 1; // Give +100% damage increase
-#endif
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-			if (skill_id == MO_EXTREMITYFIST) {
-				status_set_sp(src, 0, 0);
-				sc_start(src, src, SC_EXTREMITYFIST, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-				status_change_end(src, SC_EXPLOSIONSPIRITS);
-				status_change_end(src, SC_BLADESTOP);
-			} else {
-				status_set_hp(src, 1, 0);
-				status_change_end(src, SC_NEN);
-				status_change_end(src, SC_HIDING);
-			}
-			if (skill_id == MO_EXTREMITYFIST) {
-				mbl = src; // For MO_EXTREMITYFIST
-				i = 3; // Move 3 cells (From caster)
-			}
+
+			status_set_hp(src, 1, 0);
+			status_change_end(src, SC_NEN);
+			status_change_end(src, SC_HIDING);
+			
 			if (dir > 0 && dir < 4)
 				x = -i;
 			else if (dir > 4)
@@ -5306,14 +5290,15 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				y = i;
 			else
 				y = 0;
-			// Ashura Strike still has slide effect in GVG
-			if ((mbl == src || (!map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND))) &&
-				unit_movepos(src, mbl->x + x, mbl->y + y, 1, 1)) {
+
+			if (!map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND) &&
+				unit_movepos(src, src->x + x, src->y + y, 1, 1)) {
 				clif_blown(src);
 				clif_spiritball(src);
 			}
 		}
 		break;
+#endif
 
 	case SU_PICKYPECK:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);

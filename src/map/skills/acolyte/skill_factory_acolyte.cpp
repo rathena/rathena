@@ -11,6 +11,7 @@
 #include "absorbspiritsphere.hpp"
 #include "angelus.hpp"
 #include "aspersio.hpp"
+#include "asurastrike.hpp"
 #include "blessing.hpp"
 #include "bssacramenti.hpp"
 #include "crucis.hpp"
@@ -104,6 +105,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_ABSORBSPIRITS:
 			return std::make_unique<SkillAbsordSpiritSphere>();
+		case MO_EXTREMITYFIST:
+			return std::make_unique<SkillAsuraStrike>();
 		case MO_BLADESTOP:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_BODYRELOCATION:
