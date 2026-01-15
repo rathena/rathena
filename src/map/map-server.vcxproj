@@ -264,6 +264,7 @@
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/sanctuary.hpp" />
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
+    <ClInclude Include="skills/acolyte/snap.hpp" />
     <ClInclude Include="skills/acolyte/statusrecovery.hpp" />
     <ClInclude Include="skills/acolyte/suffragium.hpp" />
     <ClInclude Include="skills/acolyte/summonspiritsphere.hpp" />
@@ -496,6 +497,7 @@
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
     <ClCompile Include="skills/acolyte/sanctuary.cpp" />
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
+    <ClCompile Include="skills/acolyte/snap.cpp" />
     <ClCompile Include="skills/acolyte/statusrecovery.cpp" />
     <ClCompile Include="skills/acolyte/suffragium.cpp" />
     <ClCompile Include="skills/acolyte/summonspiritsphere.cpp" />

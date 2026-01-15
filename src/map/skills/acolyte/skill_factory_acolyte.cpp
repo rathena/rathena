@@ -30,6 +30,7 @@
 #include "ragingtrifectablow.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
+#include "snap.hpp"
 #include "statusrecovery.hpp"
 #include "suffragium.hpp"
 #include "summonspiritsphere.hpp"
@@ -103,6 +104,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillAbsordSpiritSphere>();
 		case MO_BLADESTOP:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MO_BODYRELOCATION:
+			return std::make_unique<SkillSnap>();
 		case MO_CALLSPIRITS:
 			return std::make_unique<SkillSummoningSpiritSphere>();
 		case MO_EXPLOSIONSPIRITS:

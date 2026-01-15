@@ -13398,17 +13398,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 			status_change_end(src,SC_CURSEDCIRCLE_ATKER);
 		return 0; // not to consume item.
 
-	case MO_BODYRELOCATION:
-		if (unit_movepos(src, x, y, 2, 1)) {
-#if PACKETVER >= 20111005
-			clif_snap(src, src->x, src->y);
-#else
-			clif_skill_poseffect( *src, skill_id, skill_lv, src->x, src->y, tick );
-#endif
-			if (sd)
-				skill_blockpc_start (*sd, MO_EXTREMITYFIST, 2000);
-		}
-		break;
 	case NJ_SHADOWJUMP:
 		if( map_getcell(src->m,x,y,CELL_CHKREACH) && skill_check_unit_movepos(5, src, x, y, 1, 0) ) //You don't move on GVG grounds.
 			clif_blown(src);
