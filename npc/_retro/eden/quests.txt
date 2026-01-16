@@ -4025,14 +4025,14 @@ S_Enchant:
 		// .@2nd = rand(1,12);
 
 		// if (.@1st == 1) .@1st = 4751;// Luck2
-		// else if (.@1st == 2) .@1st = 4787;// Mdef4
-		// else if (.@1st == 3) .@1st = 4791;// Def3
+		// else if (.@1st == 2) .@1st = 4787;// Mdef4 -
+		// else if (.@1st == 3) .@1st = 4791;// Def3 -
 		// else if (.@1st == 4) .@1st = 4701;// Strength2
-		// else if (.@1st == 5) .@1st = 4788;// Mdef6
-		// else if (.@1st == 6) .@1st = 4792;// Def6
+		// else if (.@1st == 5) .@1st = 4788;// Mdef6 -
+		// else if (.@1st == 6) .@1st = 4792;// Def6 -
 		// else if (.@1st == 7) .@1st = 4731;// Agility2
-		// else if (.@1st == 8) .@1st = 4789;// Mdef8
-		// else if (.@1st == 9) .@1st = 4793;// Def9
+		// else if (.@1st == 8) .@1st = 4789;// Mdef8 -
+		// else if (.@1st == 9) .@1st = 4793;// Def9 -
 		// else if (.@1st == 10) .@1st = 4721;// Dexterity2
 		// else if (.@1st == 11) .@1st = 4711;// Inteligence2
 		// else if (.@1st == 12) .@1st = 4741;// Vitality2
