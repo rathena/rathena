@@ -1438,22 +1438,11 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	case NPC_DARKCROSS:
-	case CR_HOLYCROSS:
 		sc_start(src,bl,SC_BLIND,3*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case NPC_GRANDDARKNESS:
 		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-
-	case CR_GRANDCROSS:
-		//Chance to cause blind status vs demon and undead element, but not against players
-		if(!dstsd && (battle_check_undead(tstatus->race,tstatus->def_ele) || tstatus->race == RC_DEMON))
-			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
-	case CR_SHIELDCHARGE:
-		sc_start(src,bl,SC_STUN,(15+skill_lv*5),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
 #ifndef RENEWAL
@@ -7685,17 +7674,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case CR_PROVIDENCE:
-		if(sd && dstsd){ //Check they are not another crusader [Skotlex]
-			if ((dstsd->class_&MAPID_SECONDMASK) == MAPID_CRUSADER) {
-				clif_skill_fail( *sd, skill_id );
-				return 1;
-			}
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-
 	case CG_MARIONETTE:
 		{
 			if( (sd && dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER && dstsd->status.sex == sd->status.sex) || (tsc && (tsc->getSCE(SC_CURSE) || tsc->getSCE(SC_QUAGMIRE))) )
@@ -7857,7 +7835,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case CR_REFLECTSHIELD:
 	case MS_REFLECTSHIELD:
 		if (tsc && tsc->getSCE(SC_DARKCROW)) { // SC_DARKCROW prevents using reflecting skills
 			if (sd)
@@ -8133,13 +8110,10 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 	case ML_DEVOTION:
-	case CR_DEVOTION:
 		{
-			int32 count, lv;
-			if( !dstsd || (!sd && !mer) )
+			int32 lv;
+			if( !dstsd || !mer )
 			{ // Only players can be devoted
-				if( sd )
-					clif_skill_fail( *sd, skill_id );
 				break;
 			}
 
@@ -8147,34 +8121,15 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				lv = -lv;
 			if( lv > battle_config.devotion_level_difference || // Level difference requeriments
 				(dstsd->sc.getSCE(type) && dstsd->sc.getSCE(type)->val1 != src->id) || // Cannot Devote a player devoted from another source
-				(skill_id == ML_DEVOTION && (!mer || mer != dstsd->md)) || // Mercenary only can devote owner
+				mer != dstsd->md || // Mercenary only can devote owner
 				(dstsd->class_&MAPID_SECONDMASK) == MAPID_CRUSADER || // Crusader Cannot be devoted
 				(dstsd->sc.getSCE(SC_HELLPOWER))) // Players affected by SC_HELLPOWER cannot be devoted.
 			{
-				if( sd )
-					clif_skill_fail( *sd, skill_id );
 				return 1;
 			}
 
 			i = 0;
-			count = (sd)? min(skill_lv,MAX_DEVOTION) : 1; // Mercenary only can Devote owner
-			if( sd )
-			{ // Player Devoting Player
-				ARR_FIND(0, count, i, sd->devotion[i] == bl->id );
-				if( i == count )
-				{
-					ARR_FIND(0, count, i, sd->devotion[i] == 0 );
-					if( i == count )
-					{ // No free slots, skill Fail
-						clif_skill_fail( *sd, skill_id );
-						return 1;
-					}
-				}
-
-				sd->devotion[i] = bl->id;
-			}
-			else
-				mer->devotion_flag = 1; // Mercenary Devoting Owner
+			mer->devotion_flag = 1; // Mercenary Devoting Owner
 
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv,
 				sc_start4(src, bl, type, 10000, src->id, i, skill_get_range2(src, skill_id, skill_lv, true), 0, skill_get_time2(skill_id, skill_lv)));
@@ -13218,7 +13173,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 
 	// Skill Unit Setting
 	case NPC_GROUNDDRIVE:
-	case CR_GRANDCROSS:
 	case NPC_GRANDDARKNESS:
 	case MA_SKIDTRAP:
 	case MA_LANDMINE:
