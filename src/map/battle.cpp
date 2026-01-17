@@ -8289,9 +8289,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case SL_STUN:
 						skillratio += 5 * skill_lv;
 						break;
-					case SL_SMA: //Base damage is 40% + lv%
-						skillratio += -60 + status_get_lv(src);
-						break;
 					case NJ_KOUENKA:
 						skillratio -= 10;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
