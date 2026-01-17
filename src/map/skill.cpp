@@ -1583,10 +1583,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_ANKLE,100,0,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case ST_REJECTSWORD:
-		sc_start(src,bl,SC_AUTOCOUNTER,(skill_lv*15),skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
-
 	case PF_FOGWALL:
 		if (src != bl && !tsc->getSCE(SC_DELUGE))
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -8628,7 +8624,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		} else
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
-	case ST_CHASEWALK:
 	case KO_YAMIKUMO:
 		if (tsce)
 		{
@@ -8873,20 +8868,12 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case ST_FULLSTRIP:
 	case GC_WEAPONCRUSH:
 	case SC_STRIPACCESSARY:
 	case ABC_STRIP_SHADOW: {
 		bool i;
 
-		//Special message when trying to use strip on FCP [Jobbie]
-		if( sd && skill_id == ST_FULLSTRIP && tsc && tsc->getSCE(SC_CP_WEAPON) && tsc->getSCE(SC_CP_HELM) && tsc->getSCE(SC_CP_ARMOR) && tsc->getSCE(SC_CP_SHIELD))
-		{
-			clif_gospel_info( *sd, 0x28 );
-			break;
-		}
-
-		if( (i = skill_strip_equip(src, bl, skill_id, skill_lv)) || (skill_id != ST_FULLSTRIP && skill_id != GC_WEAPONCRUSH ) )
+		if( (i = skill_strip_equip(src, bl, skill_id, skill_lv)) || (skill_id != GC_WEAPONCRUSH ) )
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,i);
 
 		//Nothing stripped.

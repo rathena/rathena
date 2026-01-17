@@ -10,7 +10,9 @@
 #include "backstab.hpp"
 #include "cloaking.hpp"
 #include "closeconfine.hpp"
+#include "counterinstinct.hpp"
 #include "detoxify.hpp"
+#include "divestall.hpp"
 #include "divestarmor.hpp"
 #include "divesthelm.hpp"
 #include "divestshield.hpp"
@@ -28,6 +30,7 @@
 #include "snatch.hpp"
 #include "sonicblow.hpp"
 #include "steal.hpp"
+#include "stealth.hpp"
 #include "stonefling.hpp"
 #include "throwvenomknife.hpp"
 #include "venomdust.hpp"
@@ -99,10 +102,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SHC_SHADOW_EXCEED:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case ST_CHASEWALK:
+			return std::make_unique<SkillStealth>();
+		case ST_FULLSTRIP:
+			return std::make_unique<SkillDivestAll>();
 		case ST_PRESERVE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ST_REJECTSWORD:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillCounterInstinct>();
 		case TF_BACKSLIDING:
 			return std::make_unique<SkillBackSlide>();
 		case TF_DETOXIFY:
