@@ -12,7 +12,6 @@ SkillHocusPocus::SkillHocusPocus() : SkillImpl(SA_ABRACADABRA) {
 }
 
 void SkillHocusPocus::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	sc_type type = skill_get_sc(getSkillId());
 	map_session_data* sd = BL_CAST( BL_PC, src );
 
 	if (abra_db.empty()) {

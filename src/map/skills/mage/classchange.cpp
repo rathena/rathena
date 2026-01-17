@@ -14,7 +14,6 @@ SkillClassChange::SkillClassChange() : SkillImpl(SA_CLASSCHANGE) {
 void SkillClassChange::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	mob_data* dstmd = BL_CAST(BL_MOB, target);
 	status_change *tsc = status_get_sc(target);
-	sc_type type = skill_get_sc(getSkillId());
 	map_session_data* sd = BL_CAST( BL_PC, src );
 	int32 i = 0;
 
