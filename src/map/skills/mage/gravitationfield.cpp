@@ -24,6 +24,7 @@ void SkillGravitationField::castendPos2(block_list* src, int32 x, int32 y, uint1
 	skill_unitsetting(src,getSkillId(),skill_lv,x,y,0);
 #else
 	std::shared_ptr<s_skill_unit_group> sg;
+	sc_type type = skill_get_sc(getSkillId());
 
 	if ((sg = skill_unitsetting(src,getSkillId(),skill_lv,x,y,0)))
 		sc_start4(src,src,type,100,skill_lv,0,BCT_SELF,sg->group_id,skill_get_time(getSkillId(),skill_lv));
