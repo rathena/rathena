@@ -4862,22 +4862,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 100 + 100 * skill_lv;
 #endif
 			break;
-		case LK_HEADCRUSH:
-			skillratio += 40 * skill_lv;
-			break;
-		case LK_JOINTBEAT:
-			skillratio += 10 * skill_lv - 50;
-			if (wd->miscflag & BREAK_NECK || (tsc && tsc->getSCE(SC_JOINTBEAT) && tsc->getSCE(SC_JOINTBEAT)->val2 & BREAK_NECK)) // The 2x damage is only for the BREAK_NECK ailment.
-				skillratio *= 2;
-			break;
 #ifdef RENEWAL
-		// Renewal: skill ratio applies to entire damage [helvetica]
-		case LK_SPIRALPIERCE:
-			skillratio += 50 + 50 * skill_lv;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_CHARGINGPIERCE_COUNT) && sc->getSCE(SC_CHARGINGPIERCE_COUNT)->val1 >= 10)
-				skillratio *= 2;
-			break;
 		case ML_SPIRALPIERCE:
 			skillratio += 50 + 50 * skill_lv;
 			RE_LVL_DMOD(100);

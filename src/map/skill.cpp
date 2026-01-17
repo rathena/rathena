@@ -1576,7 +1576,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	}
 		break;
 
-	case LK_SPIRALPIERCE:
 	case ML_SPIRALPIERCE:
 	case HN_SPIRAL_PIERCE_MAX:
 		if( dstsd || ( dstmd && !status_bl_has_mode(bl,MD_STATUSIMMUNE) ) ) //Does not work on status immune
@@ -1590,11 +1589,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case PF_FOGWALL:
 		if (src != bl && !tsc->getSCE(SC_DELUGE))
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
-	case LK_HEADCRUSH: //Headcrush has chance of causing Bleeding status, except on demon and undead element
-		if (!(battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON))
-			sc_start2(src,bl, SC_BLEEDING,50, skill_lv, src->id, skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case ASC_METEORASSAULT:
@@ -5142,23 +5136,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
 		break;
 
-	case LK_HEADCRUSH:
-		if (status_get_class_(bl) == CLASS_BOSS) {
-			if (sd)
-				clif_skill_fail( *sd, skill_id );
-			break;
-		}
-		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-
-	case LK_JOINTBEAT:
-		flag = 1 << rnd() % 6;
-		if (flag != BREAK_NECK && tsc && tsc->getSCE(SC_JOINTBEAT) && tsc->getSCE(SC_JOINTBEAT)->val2 & BREAK_NECK)
-			flag = BREAK_NECK; // Target should always receive double damage if neck is already broken
-		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
-			status_change_start(src, bl, SC_JOINTBEAT, (50 * (skill_lv + 1) - (270 * tstatus->str) / 100) * 10, skill_lv, flag & BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv), SCSTART_NONE);
-		break;
-
 	case MO_COMBOFINISH:
 		if (!(flag&1) && sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_MONK)
 		{	//Becomes a splash attack when Soul Linked.
@@ -8078,12 +8055,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 */
-
-	case LK_TENSIONRELAX:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start4(src,bl,type,100,skill_lv,0,0,skill_get_time2(skill_id,skill_lv),
-				skill_get_time(skill_id,skill_lv)));
-		break;
 
 	case MER_PROVOKE:
 		if( status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele) ) {

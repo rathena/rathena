@@ -16,6 +16,7 @@
 #include "magnum.hpp"
 #include "pierce.hpp"
 #include "provoke.hpp"
+#include "relax.hpp"
 #include "resistantsouls.hpp"
 #include "sacrifice.hpp"
 #include "selfprovoke.hpp"
@@ -24,6 +25,9 @@
 #include "smite.hpp"
 #include "spearboomerang.hpp"
 #include "spearstab.hpp"
+#include "spiralpierce.hpp"
+#include "traumaticblow.hpp"
+#include "vitalstrike.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -99,10 +103,16 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LK_CONCENTRATION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case LK_HEADCRUSH:
+			return std::make_unique<SkillTraumaticBlow>();
+		case LK_JOINTBEAT:
+			return std::make_unique<SkillVitalStrike>();
 		case LK_PARRYING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LK_SPIRALPIERCE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSpiralPierce>();
+		case LK_TENSIONRELAX:
+			return std::make_unique<SkillRelax>();
 		case PA_SACRIFICE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case PA_SHIELDCHAIN:
