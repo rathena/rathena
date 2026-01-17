@@ -9587,15 +9587,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		status_change_end(bl, SC_SOULFAIRY);
 		break;
 
-	case SL_SWOO:
-		if (tsce) {
-			if(sd)
-				clif_skill_fail( *sd, skill_id );
-			status_change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,10000,SCSTART_NORATEDEF);
-			status_change_end(bl, SC_SWOO);
-			break;
-		}
-		[[fallthrough]];
 	case SL_SKA: // [marquis007]
 	case SL_SKE:
 		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
