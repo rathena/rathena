@@ -19,6 +19,8 @@ void SkillGanbantein::castendPos2(block_list* src, int32 x, int32 y, uint16 skil
 		map_foreachinallarea(skill_cell_overlap, src->m, x-i, y-i, x+i, y+i, BL_SKILL, getSkillId(), &dummy, src);
 	} else {
 		if (sd) clif_skill_fail( *sd, getSkillId() );
-		return;	// TODO: castendPos2 should return 1
+	
+		flag |= SKILL_NOCONSUME_REQ;
+		return;
 	}
 }
