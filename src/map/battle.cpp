@@ -4932,9 +4932,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += -100 + 100 * skill_lv;
 #endif
 			break;
-		case PA_SACRIFICE:
-			skillratio += -10 + 10 * skill_lv;
-			break;
 		case PA_SHIELDCHAIN:
 #ifdef RENEWAL
 			skillratio = -100 + 300 + 200 * skill_lv;
@@ -8356,10 +8353,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						break;
 					case HW_GRAVITATION:
 						skillratio += -100 + 100 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case PA_PRESSURE:
-						skillratio += -100 + 500 + 150 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 #endif
