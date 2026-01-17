@@ -241,8 +241,10 @@
     <ClInclude Include="vending.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="skills/acolyte/absorbspiritsphere.hpp" />
     <ClInclude Include="skills/acolyte/angelus.hpp" />
     <ClInclude Include="skills/acolyte/aspersio.hpp" />
+    <ClInclude Include="skills/acolyte/asurastrike.hpp" />
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/bssacramenti.hpp" />
     <ClInclude Include="skills/acolyte/crucis.hpp" />
@@ -254,16 +256,25 @@
     <ClInclude Include="skills/acolyte/holywater.hpp" />
     <ClInclude Include="skills/acolyte/impositiomanus.hpp" />
     <ClInclude Include="skills/acolyte/incagi.hpp" />
+    <ClInclude Include="skills/acolyte/kiexplosion.hpp" />
+    <ClInclude Include="skills/acolyte/kitranslation.hpp" />
     <ClInclude Include="skills/acolyte/kyrieeleison.hpp" />
     <ClInclude Include="skills/acolyte/lexdivina.hpp" />
     <ClInclude Include="skills/acolyte/magnificat.hpp" />
     <ClInclude Include="skills/acolyte/magnusexorcismus.hpp" />
+    <ClInclude Include="skills/acolyte/occultimpaction.hpp" />
     <ClInclude Include="skills/acolyte/pneuma.hpp" />
+    <ClInclude Include="skills/acolyte/ragingquadrupleblow.hpp" />
+    <ClInclude Include="skills/acolyte/ragingthrust.hpp" />
+    <ClInclude Include="skills/acolyte/ragingtrifectablow.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/sanctuary.hpp" />
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
+    <ClInclude Include="skills/acolyte/snap.hpp" />
     <ClInclude Include="skills/acolyte/statusrecovery.hpp" />
     <ClInclude Include="skills/acolyte/suffragium.hpp" />
+    <ClInclude Include="skills/acolyte/summonspiritsphere.hpp" />
+    <ClInclude Include="skills/acolyte/throwspiritsphere.hpp" />
     <ClInclude Include="skills/acolyte/turnundead.hpp" />
     <ClInclude Include="skills/archer/anklesnare.hpp" />
     <ClInclude Include="skills/archer/arrowshower.hpp" />
@@ -477,8 +488,10 @@
     <ClCompile Include="vending.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="skills/acolyte/absorbspiritsphere.cpp" />
     <ClCompile Include="skills/acolyte/angelus.cpp" />
     <ClCompile Include="skills/acolyte/aspersio.cpp" />
+    <ClCompile Include="skills/acolyte/asurastrike.cpp" />
     <ClCompile Include="skills/acolyte/blessing.cpp" />
     <ClCompile Include="skills/acolyte/bssacramenti.cpp" />
     <ClCompile Include="skills/acolyte/crucis.cpp" />
@@ -490,16 +503,25 @@
     <ClCompile Include="skills/acolyte/holywater.cpp" />
     <ClCompile Include="skills/acolyte/impositiomanus.cpp" />
     <ClCompile Include="skills/acolyte/incagi.cpp" />
+    <ClCompile Include="skills/acolyte/kiexplosion.cpp" />
+    <ClCompile Include="skills/acolyte/kitranslation.cpp" />
     <ClCompile Include="skills/acolyte/kyrieeleison.cpp" />
     <ClCompile Include="skills/acolyte/lexdivina.cpp" />
     <ClCompile Include="skills/acolyte/magnificat.cpp" />
     <ClCompile Include="skills/acolyte/magnusexorcismus.cpp" />
+    <ClCompile Include="skills/acolyte/occultimpaction.cpp" />
     <ClCompile Include="skills/acolyte/pneuma.cpp" />
+    <ClCompile Include="skills/acolyte/ragingquadrupleblow.cpp" />
+    <ClCompile Include="skills/acolyte/ragingthrust.cpp" />
+    <ClCompile Include="skills/acolyte/ragingtrifectablow.cpp" />
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
     <ClCompile Include="skills/acolyte/sanctuary.cpp" />
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
+    <ClCompile Include="skills/acolyte/snap.cpp" />
     <ClCompile Include="skills/acolyte/statusrecovery.cpp" />
     <ClCompile Include="skills/acolyte/suffragium.cpp" />
+    <ClCompile Include="skills/acolyte/summonspiritsphere.cpp" />
+    <ClCompile Include="skills/acolyte/throwspiritsphere.cpp" />
     <ClCompile Include="skills/acolyte/turnundead.cpp" />
     <ClCompile Include="skills/archer/anklesnare.cpp" />
     <ClCompile Include="skills/archer/arrowshower.cpp" />
