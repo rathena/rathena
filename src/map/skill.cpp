@@ -6216,7 +6216,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_MISC, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
-	case SL_STIN:
 	case SL_STUN:
 	case SP_SPA:
 		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
