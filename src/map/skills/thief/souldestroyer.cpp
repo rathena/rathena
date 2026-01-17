@@ -3,6 +3,9 @@
 
 #include "souldestroyer.hpp"
 
+#include <config/const.hpp>
+#include <config/core.hpp>
+
 #include "map/status.hpp"
 
 SkillSoulDestroyer::SkillSoulDestroyer() : WeaponSkillImpl(ASC_BREAKER) {
@@ -16,6 +19,6 @@ void SkillSoulDestroyer::calculateSkillRatio(const Damage *wd, const block_list 
 	RE_LVL_DMOD(100);
 #else
 	// Pre-Renewal: skill ratio for weapon part of damage [helvetica]
-	base_skillratio += -100 + 100 * skill_lv;
+	skillratio += -100 + 100 * skill_lv;
 #endif
 }
