@@ -17,9 +17,11 @@ void SkillDivestAll::castendNoDamageId(block_list *src, block_list *target, uint
 	bool i;
 
 	//Special message when trying to use strip on FCP [Jobbie]
-	if( sd && tsc && tsc->getSCE(SC_CP_WEAPON) && tsc->getSCE(SC_CP_HELM) && tsc->getSCE(SC_CP_ARMOR) && tsc->getSCE(SC_CP_SHIELD))
+	if( tsc && tsc->getSCE(SC_CP_WEAPON) && tsc->getSCE(SC_CP_HELM) && tsc->getSCE(SC_CP_ARMOR) && tsc->getSCE(SC_CP_SHIELD))
 	{
-		clif_gospel_info( *sd, 0x28 );
+		if (sd != nullptr) {
+			clif_gospel_info( *sd, 0x28 );
+		}
 		return;
 	}
 
