@@ -9587,18 +9587,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		status_change_end(bl, SC_SOULFAIRY);
 		break;
 
-	case SL_SKA: // [marquis007]
-	case SL_SKE:
-		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
-			clif_skill_fail( *sd, skill_id );
-			status_change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,500,SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
-			break;
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		if (skill_id == SL_SKE)
-			sc_start(src,src,SC_SMA,100,skill_lv,skill_get_time(SL_SMA,skill_lv));
-		break;
-
 	case AG_ENERGY_CONVERSION:
 		if (status_get_sp(src) == status_get_max_sp(src)) {
 			if( sd != nullptr ){
