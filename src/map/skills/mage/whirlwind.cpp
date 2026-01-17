@@ -15,7 +15,8 @@ void SkillWhirlwind::castendPos2(block_list* src, int32 x, int32 y, uint16 skill
 		if (sg2->limit - DIFF_TICK(gettick(), sg2->tick) > 0)
 		{
 			skill_unitsetting(src,getSkillId(),skill_lv,x,y,0);
-			return; // not to consume items
+			flag |= SKILL_NOCONSUME_REQ; // not to consume items
+			return;
 		}
 		else
 			sg2->limit = 0; //Disatargete it.
