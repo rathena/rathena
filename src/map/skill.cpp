@@ -8598,10 +8598,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd, SP_SOULENERGY), skill_get_time(skill_id, skill_lv)));
 		break;
-	case SL_KAITE:
-	case SL_KAAHI:
-	case SL_KAIZEL:
-	case SL_KAUPE:
 	case SP_KAUTE:
 		if (sd) {
 			if (!dstsd || !(
@@ -8610,23 +8606,20 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				dstsd->status.char_id == sd->status.char_id ||
 				dstsd->status.char_id == sd->status.partner_id ||
 				dstsd->status.char_id == sd->status.child ||
-				(skill_id == SP_KAUTE && dstsd->sc.getSCE(SC_SOULUNITY))
+				(dstsd->sc.getSCE(SC_SOULUNITY))
 			)) {
 				status_change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,500,SCSTART_NORATEDEF);
 				clif_skill_fail( *sd, skill_id );
 				break;
 			}
 		}
-		if (skill_id == SP_KAUTE) {
-			if (!status_charge(src, sstatus->max_hp * (10 + 2 * skill_lv) / 100, 0)) {
-				if (sd)
-					clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-				break;
-			}
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_heal(bl, 0, tstatus->max_sp * (10 + 2 * skill_lv) / 100, 2);
-		} else
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+		if (!status_charge(src, sstatus->max_hp * (10 + 2 * skill_lv) / 100, 0)) {
+			if (sd)
+				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
+			break;
+		}
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		status_heal(bl, 0, tstatus->max_sp * (10 + 2 * skill_lv) / 100, 2);
 		break;
 	case ST_CHASEWALK:
 	case KO_YAMIKUMO:
