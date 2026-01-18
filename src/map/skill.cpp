@@ -5213,11 +5213,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-#ifndef RENEWAL
-	case SN_SHARPSHOOTING:
-		flag |= 2; // Flag for specific mob damage formula
-		[[fallthrough]];
-#endif
 	case MA_SHARPSHOOTING:
 	case NJ_KAMAITACHI:
 	case NPC_DARKPIERCING:
