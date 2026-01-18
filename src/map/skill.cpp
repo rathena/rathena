@@ -1620,7 +1620,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src,bl,SC_STUN,5*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case CR_ACIDDEMONSTRATION:
 	case GN_FIRE_EXPANSION_ACID:
 		skill_break_equip(src,bl, EQP_WEAPON|EQP_ARMOR, 100*skill_lv, BCT_ENEMY);
 		break;
@@ -6238,7 +6237,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SN_FALCONASSAULT:
 #ifndef RENEWAL
 	case PA_PRESSURE:
-	case CR_ACIDDEMONSTRATION:
 #endif
 	case NPC_SMOKING:
 	case NJ_ZENYNAGE:
@@ -9465,67 +9463,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				sp1 = tstatus->sp;
 			status_set_sp(src, sp2, 3);
 			status_set_sp(bl, sp1, 3);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
-	// Slim Pitcher
-	case CR_SLIMPITCHER:
-		// Updated to block Slim Pitcher from working on barricades and guardian stones.
-		if (dstmd && (dstmd->mob_id == MOBID_EMPERIUM || status_get_class_(bl) == CLASS_BATTLEFIELD))
-			break;
-		if (potion_hp || potion_sp) {
-			int32 hp = potion_hp, sp = potion_sp;
-			hp = hp * (100 + (tstatus->vit * 2))/100;
-			sp = sp * (100 + (tstatus->int_ * 2))/100;
-			if (dstsd) {
-				if (hp)
-					hp = hp * (100 + pc_checkskill(dstsd,SM_RECOVERY)*10 + pc_skillheal2_bonus(dstsd, skill_id))/100;
-				if (sp)
-					sp = sp * (100 + pc_checkskill(dstsd,MG_SRECOVERY)*10 + pc_skillheal2_bonus(dstsd, skill_id))/100;
-			}
-			if (tsc != nullptr && !tsc->empty()) {
-				uint8 penalty = 0;
-
-				if (tsc->getSCE(SC_WATER_INSIGNIA) && tsc->getSCE(SC_WATER_INSIGNIA)->val1 == 2) {
-					hp += hp / 10;
-					sp += sp / 10;
-				}
-				if (tsc->getSCE(SC_CRITICALWOUND))
-					penalty += tsc->getSCE(SC_CRITICALWOUND)->val2;
-				if (tsc->getSCE(SC_DEATHHURT) && tsc->getSCE(SC_DEATHHURT)->val3 == 1)
-					penalty += 20;
-				if (tsc->getSCE(SC_NORECOVER_STATE))
-					penalty = 100;
-				if (penalty > 0) {
-					hp -= hp * penalty / 100;
-					sp -= sp * penalty / 100;
-				}
-			}
-			if(hp > 0)
-				clif_skill_nodamage(nullptr,*bl,AL_HEAL,hp);
-			if(sp > 0)
-				clif_skill_nodamage(nullptr,*bl,MG_SRECOVERY,sp);
-			status_heal(bl,hp,sp,0);
-		}
-		break;
-	// Full Chemical Protection
-	case CR_FULLPROTECTION:
-		{
-			uint32 equip[] = {EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP};
-			int32 i_eqp, s = 0, skilltime = skill_get_time(skill_id,skill_lv);
-
-			for (i_eqp = 0; i_eqp < 4; i_eqp++) {
-				if( bl->type != BL_PC || ( dstsd && pc_checkequip(dstsd,equip[i_eqp]) < 0 ) )
-					continue;
-				sc_start(src,bl,(sc_type)(SC_CP_WEAPON + i_eqp),100,skill_lv,skilltime);
-				s++;
-			}
-			if( sd && !s ){
-				clif_skill_fail( *sd, skill_id );
-				// Don't consume item requirements
-				return 0;
-			}
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		}
 		break;
@@ -13407,71 +13344,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		status_change_end(src, SC_HIDING);
 		break;
 
-	// Slim Pitcher [Celest]
-	case CR_SLIMPITCHER:
-		if (sd) {
-			int32 i_lv = 0, j = 0;
-			struct s_skill_condition require = skill_get_requirement(sd, skill_id, skill_lv);
-			i_lv = skill_lv%11 - 1;
-			j = pc_search_inventory(sd, require.itemid[i_lv]);
-			if (j < 0 || require.itemid[i_lv] <= 0 || sd->inventory_data[j] == nullptr || sd->inventory.u.items_inventory[j].amount < require.amount[i_lv])
-			{
-				clif_skill_fail( *sd, skill_id );
-				return 1;
-			}
-			potion_flag = 1;
-			potion_hp = 0;
-			potion_sp = 0;
-			run_script(sd->inventory_data[j]->script,0,sd->id,0);
-			potion_flag = 0;
-			//Apply skill bonuses
-			i_lv = pc_checkskill(sd,CR_SLIMPITCHER)*10
-				+ pc_checkskill(sd,AM_POTIONPITCHER)*10
-				+ pc_checkskill(sd,AM_LEARNINGPOTION)*5
-				+ pc_skillheal_bonus(sd, skill_id);
-
-			potion_hp = potion_hp * (100+i_lv)/100;
-			potion_sp = potion_sp * (100+i_lv)/100;
-
-			// Final heal increased by HPlus.
-			// Is this the right place for this??? [Rytech]
-			// Can HPlus also affect SP recovery???
-			status_data* sstatus = status_get_status_data(*src);
-
-			if (sstatus && sstatus->hplus > 0) {
-				potion_hp += potion_hp * sstatus->hplus / 100;
-				potion_sp += potion_sp * sstatus->hplus / 100;
-			}
-
-			if(potion_hp > 0 || potion_sp > 0) {
-				i_lv = skill_get_splash(skill_id, skill_lv);
-				map_foreachinallarea(skill_area_sub,
-					src->m,x-i_lv,y-i_lv,x+i_lv,y+i_lv,BL_CHAR,
-					src,skill_id,skill_lv,tick,flag|BCT_PARTY|BCT_GUILD|1,
-					skill_castend_nodamage_id);
-			}
-		} else {
-			struct item_data *item = itemdb_search(skill_db.find(skill_id)->require.itemid[skill_lv - 1]);
-			int32 id = skill_get_max(CR_SLIMPITCHER) * 10;
-
-			potion_flag = 1;
-			potion_hp = 0;
-			potion_sp = 0;
-			run_script(item->script,0,src->id,0);
-			potion_flag = 0;
-			potion_hp = potion_hp * (100+id)/100;
-			potion_sp = potion_sp * (100+id)/100;
-
-			if(potion_hp > 0 || potion_sp > 0) {
-				id = skill_get_splash(skill_id, skill_lv);
-				map_foreachinallarea(skill_area_sub,
-					src->m,x-id,y-id,x+id,y+id,BL_CHAR,
-					src,skill_id,skill_lv,tick,flag|BCT_PARTY|BCT_GUILD|1,
-						skill_castend_nodamage_id);
-			}
-		}
-		break;
-
 	case HW_GANBANTEIN:
 		if (rnd()%100 < 80) {
 			int32 dummy = 1;
@@ -13491,54 +13363,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		flag|=1;
 		break;
 #endif
-
-	// Plant Cultivation [Celest]
-	case CR_CULTIVATION:
-		if (sd) {
-			if( map_count_oncell(src->m,x,y,BL_CHAR,0) > 0 )
-			{
-				clif_skill_fail( *sd, skill_id );
-				return 1;
-			}
-			clif_skill_poseffect( *src, skill_id, skill_lv, x, y, tick );
-			if (rnd()%100 < 50) {
-				clif_skill_fail( *sd, skill_id );
-			} else {
-				TBL_MOB* md = nullptr;
-				int32 t, mob_id;
-
-				if (skill_lv == 1)
-					mob_id = MOBID_BLACK_MUSHROOM + rnd() % 2;
-				else {
-					int32 rand_val = rnd() % 100;
-
-					if (rand_val < 30)
-						mob_id = MOBID_GREEN_PLANT;
-					else if (rand_val < 55)
-						mob_id = MOBID_RED_PLANT;
-					else if (rand_val < 80)
-						mob_id = MOBID_YELLOW_PLANT;
-					else if (rand_val < 90)
-						mob_id = MOBID_WHITE_PLANT;
-					else if (rand_val < 98)
-						mob_id = MOBID_BLUE_PLANT;
-					else
-						mob_id = MOBID_SHINING_PLANT;
-				}
-
-				md = mob_once_spawn_sub(src, src->m, x, y, "--ja--", mob_id, "", SZ_SMALL, AI_NONE);
-				if (!md)
-					break;
-				if ((t = skill_get_time(skill_id, skill_lv)) > 0)
-				{
-					if( md->deletetimer != INVALID_TIMER )
-						delete_timer(md->deletetimer, mob_timer_delete);
-					md->deletetimer = add_timer (tick + t, mob_timer_delete, md->id, 0);
-				}
-				mob_spawn(md);
-			}
-		}
-		break;
 
 	case SG_SUN_WARM:
 	case SG_MOON_WARM:

@@ -8,23 +8,27 @@
 #include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
+#include "aciddemonstration.hpp"
 #include "acidterror.hpp"
 #include "adrenalinerush.hpp"
 #include "advancedadrenalinerush.hpp"
 #include "aidberserkpotion.hpp"
+#include "aidcondensedpotion.hpp"
 #include "aidpotion.hpp"
 #include "alchemicalweapon.hpp"
 #include "biochemicalhelm.hpp"
 #include "bomb.hpp"
 #include "callhomunculus.hpp"
-#include "decoratecart.hpp"
 #include "cartrevolution.hpp"
 #include "changecart.hpp"
+#include "crazyuproar.hpp"
+#include "decoratecart.hpp"
+#include "fullprotection.hpp"
 #include "greed.hpp"
 #include "hammerfall.hpp"
 #include "itemappraisal.hpp"
-#include "crazyuproar.hpp"
 #include "mammonite.hpp"
+#include "plantcultivation.hpp"
 #include "powerthrust.hpp"
 #include "preparepotion.hpp"
 #include "skill_vending.hpp"
@@ -99,10 +103,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillWeaponRepair>();
 		case BS_WEAPONPERFECT:
 			return std::make_unique<SkillWeaponPerfection>();
-#ifdef RENEWAL
 		case CR_ACIDDEMONSTRATION:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-#endif
+			return std::make_unique<SkillAcidDemonstration>();
+		case CR_CULTIVATION:
+			return std::make_unique<SkillPlantCultivation>();
+		case CR_FULLPROTECTION:
+			return std::make_unique<SkillFullProtection>();
+		case CR_SLIMPITCHER:
+			return std::make_unique<SkillAidCondensedPotion>();
 		case GN_BLOOD_SUCKER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GN_CARTBOOST:

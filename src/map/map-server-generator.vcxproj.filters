@@ -651,6 +651,9 @@
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/aciddemonstration.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/acidterror.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -661,6 +664,9 @@
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/aidberserkpotion.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/aidcondensedpotion.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/aidpotion.hpp">
@@ -690,6 +696,9 @@
     <ClInclude Include="skills/merchant/decoratecart.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/fullprotection.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/greed.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -700,6 +709,9 @@
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/mammonite.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/plantcultivation.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/powerthrust.hpp">
@@ -1217,6 +1229,9 @@
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/aciddemonstration.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/acidterror.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
@@ -1227,6 +1242,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/aidberserkpotion.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/aidcondensedpotion.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/aidpotion.cpp">
@@ -1256,6 +1274,9 @@
     <ClCompile Include="skills/merchant/decoratecart.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/fullprotection.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/greed.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
@@ -1266,6 +1287,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/mammonite.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/plantcultivation.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/powerthrust.cpp">
