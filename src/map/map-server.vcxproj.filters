@@ -681,6 +681,9 @@
     <ClInclude Include="skills/merchant/cartrevolution.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/carttermination.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/changecart.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -733,6 +736,9 @@
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/twilightalchemy3.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/upgradeweapon.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/vaporize.hpp">
@@ -1247,6 +1253,9 @@
     <ClCompile Include="skills/merchant/cartrevolution.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/carttermination.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/changecart.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
@@ -1299,6 +1308,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/twilightalchemy3.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/upgradeweapon.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/vaporize.cpp">

@@ -4960,15 +4960,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_SHIELD_POWER))// Whats the official increase? [Rytech]
 				skillratio += skillratio * 50 / 100;
 			break;
-		case WS_CARTTERMINATION:
-			i = 10 * (16 - skill_lv);
-			if (i < 1) i = 1;
-			//Preserve damage ratio when max cart weight is changed.
-			if (sd && sd->cart_weight)
-				skillratio += sd->cart_weight / i * 80000 / battle_config.max_cart_weight - 100;
-			else if (!sd)
-				skillratio += 80000 / i - 100;
-			break;
 		case NJ_HUUMA:
 #ifdef RENEWAL
 			skillratio += -150 + 250 * skill_lv;
