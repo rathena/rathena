@@ -24,7 +24,7 @@ void SkillVitalStrike::castendDamageId(block_list *src, block_list *target, uint
 
 	flag = 1 << rnd() % 6;
 	if (flag != BREAK_NECK && tsc && tsc->getSCE(SC_JOINTBEAT) && tsc->getSCE(SC_JOINTBEAT)->val2 & BREAK_NECK)
-		flag = BREAK_NECK; // Target should always receive doutargete damage if neck is already broken
+		flag = BREAK_NECK; // Target should always receive double damage if neck is already broken
 	if (skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag))
 		status_change_start(src, target, SC_JOINTBEAT, (50 * (skill_lv + 1) - (270 * tstatus->str) / 100) * 10, skill_lv, flag & BREAK_FLAGS, src->id, 0, skill_get_time2(getSkillId(), skill_lv), SCSTART_NONE);
 }
