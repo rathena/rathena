@@ -16,7 +16,9 @@
 #include "concentration.hpp"
 #include "detect.hpp"
 #include "doublestrafe.hpp"
+#include "falconassault.hpp"
 #include "flasher.hpp"
+#include "focusedarrowstrike.hpp"
 #include "freezingtrap.hpp"
 #include "landmine.hpp"
 #include "makingarrow.hpp"
@@ -27,6 +29,7 @@
 #include "skidtrap.hpp"
 #include "springtrap.hpp"
 #include "talkiebox.hpp"
+#include "windwalker.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -84,8 +87,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case RA_UNLIMIT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SN_FALCONASSAULT:
+			return std::make_unique<SkillFalconAssault>();
+		case SN_SHARPSHOOTING:
+			return std::make_unique<SkillFocusedArrowStrike>();
 		case SN_SIGHT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SN_WINDWALK:
+			return std::make_unique<SkillWindWalker>();
 		case TR_KVASIR_SONATA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TR_MYSTIC_SYMPHONY:
