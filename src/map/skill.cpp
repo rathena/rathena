@@ -9764,14 +9764,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_fail( *sd, skill_id );
 		break;
 
-	case SG_HATE:
-		if (sd) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			if (!pc_set_hate_mob(sd, skill_lv-1, bl))
-				clif_skill_fail( *sd, skill_id );
-		}
-		break;
-
 	case SJ_DOCUMENT:
 		if (sd) {
 			switch (skill_lv) {
