@@ -144,7 +144,7 @@ int32 intif_request_petdata(uint32 account_id,uint32 char_id,int32 pet_id)
  * @param p
  * @return 
  */
-int32 intif_save_petdata(uint32 account_id,struct s_pet *p)
+int32 intif_save_petdata( uint32 account_id, const s_pet* p )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -182,7 +182,7 @@ int32 intif_delete_petdata(int32 pet_id)
  * @param name
  * @return 
  */
-int32 intif_rename(map_session_data *sd, int32 type, char *name)
+int32 intif_rename( const map_session_data* sd, int32 type, char* name )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1197,7 +1197,7 @@ int32 intif_guild_castle_datasave(int32 castle_id,int32 index, int32 value)
  * @param sh : TMp homunlus data
  * @return 0=error, 1=msg_sent
  */
-int32 intif_homunculus_create(uint32 account_id, struct s_homunculus *sh)
+int32 intif_homunculus_create( uint32 account_id, const s_homunculus* sh )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1234,7 +1234,7 @@ int32 intif_homunculus_requestload(uint32 account_id, int32 homun_id)
  * @param sh : homunculus struct
  * @return : 0=error, 1=msg sent
  */
-int32 intif_homunculus_requestsave(uint32 account_id, struct s_homunculus* sh)
+int32 intif_homunculus_requestsave( uint32 account_id, const s_homunculus* sh )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -2282,7 +2282,7 @@ void intif_parse_achievementreward(int32 fd){
 /**
  * Request the achievement rewards from the inter server.
  */
-int32 intif_achievement_reward(map_session_data *sd, struct s_achievement_db *adb){
+int32 intif_achievement_reward( const map_session_data* sd, struct s_achievement_db *adb ){
 	if( CheckForCharServer() ){
 		return 0;
 	}
@@ -3626,7 +3626,7 @@ void intif_parse_StorageInfo_recv(int32 fd) {
  * @param mode: Storage mode
  * @return false - error, true - message sent
  */
-bool intif_storage_request(map_session_data *sd, enum storage_type type, uint8 stor_id, uint8 mode)
+bool intif_storage_request( const map_session_data* sd, enum storage_type type, uint8 stor_id, uint8 mode )
 {
 	if (CheckForCharServer())
 		return false;
@@ -3649,7 +3649,7 @@ bool intif_storage_request(map_session_data *sd, enum storage_type type, uint8 s
  * @param stor: Storage data
  * @ return false - error, true - message sent
  */
-bool intif_storage_save(map_session_data *sd, struct s_storage *stor)
+bool intif_storage_save( const map_session_data* sd, const s_storage* stor )
 {
 	int32 stor_size = sizeof(struct s_storage);
 
