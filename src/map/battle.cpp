@@ -4883,14 +4883,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(100);
 		break;
 #endif
-		case ASC_METEORASSAULT:
-#ifdef RENEWAL
-			skillratio += 100 + 120 * skill_lv;
-			RE_LVL_DMOD(100);
-#else
-			skillratio += -60 + 40 * skill_lv;
-#endif
-			break;
 		case SN_SHARPSHOOTING:
 			if (src->type == BL_MOB) { // TODO: Did these formulas change in the renewal balancing?
 				if (wd->miscflag & 2) // Splash damage bonus
@@ -4921,15 +4913,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(100);
 #else
 			skillratio += 100 + 100 * skill_lv;
-#endif
-			break;
-		case ASC_BREAKER:
-#ifdef RENEWAL
-			skillratio += -100 + 150 * skill_lv + sstatus->str + sstatus->int_; // !TODO: Confirm stat modifier
-			RE_LVL_DMOD(100);
-#else
-			// Pre-Renewal: skill ratio for weapon part of damage [helvetica]
-			skillratio += -100 + 100 * skill_lv;
 #endif
 			break;
 		case PA_SACRIFICE:

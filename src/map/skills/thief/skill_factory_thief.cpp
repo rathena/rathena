@@ -10,16 +10,19 @@
 #include "backstab.hpp"
 #include "cloaking.hpp"
 #include "closeconfine.hpp"
+#include "createdeadlypoison.hpp"
 #include "detoxify.hpp"
 #include "divestarmor.hpp"
 #include "divesthelm.hpp"
 #include "divestshield.hpp"
 #include "divestweapon.hpp"
+#include "enchantdeadlypoison.hpp"
 #include "enchantpoison.hpp"
 #include "envenom.hpp"
 #include "findstone.hpp"
 #include "grimtooth.hpp"
 #include "hiding.hpp"
+#include "meteorassault.hpp"
 #include "mug.hpp"
 #include "remover.hpp"
 #include "sandattack.hpp"
@@ -27,6 +30,7 @@
 #include "sightlessmind.hpp"
 #include "snatch.hpp"
 #include "sonicblow.hpp"
+#include "souldestroyer.hpp"
 #include "steal.hpp"
 #include "stonefling.hpp"
 #include "throwvenomknife.hpp"
@@ -39,6 +43,12 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ABC_CHAIN_REACTION_SHOT_ATK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case ASC_CDP:
+			return std::make_unique<SkillCreateDeadlyPoison>();
+		case ASC_EDP:
+			return std::make_unique<SkillEnchantDeadlyPoison>();
+		case ASC_METEORASSAULT:
+			return std::make_unique<SkillMeteorAssault>();
 		case AS_CLOAKING:
 			return std::make_unique<SkillCloaking>();
 		case AS_ENCHANTPOISON:
@@ -56,7 +66,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 		case AS_VENOMKNIFE:
 			return std::make_unique<SkillThrowVenomKnife>();
 		case ASC_BREAKER:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSoulDestroyer>();
 		case GC_VENOMIMPRESS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GC_VENOMPRESSURE:
