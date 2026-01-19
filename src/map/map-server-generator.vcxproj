@@ -405,8 +405,10 @@
     <ClInclude Include="skills/thief/backstab.hpp" />
     <ClInclude Include="skills/thief/cloaking.hpp" />
     <ClInclude Include="skills/thief/closeconfine.hpp" />
+    <ClInclude Include="skills/thief/counterinstinct.hpp" />
     <ClInclude Include="skills/thief/createdeadlypoison.hpp" />
     <ClInclude Include="skills/thief/detoxify.hpp" />
+    <ClInclude Include="skills/thief/divestall.hpp" />
     <ClInclude Include="skills/thief/divestarmor.hpp" />
     <ClInclude Include="skills/thief/divesthelm.hpp" />
     <ClInclude Include="skills/thief/divestshield.hpp" />
@@ -428,6 +430,7 @@
     <ClInclude Include="skills/thief/sonicblow.hpp" />
     <ClInclude Include="skills/thief/souldestroyer.hpp" />
     <ClInclude Include="skills/thief/steal.hpp" />
+    <ClInclude Include="skills/thief/stealth.hpp" />
     <ClInclude Include="skills/thief/stonefling.hpp" />
     <ClInclude Include="skills/thief/throwvenomknife.hpp" />
     <ClInclude Include="skills/thief/venomdust.hpp" />
@@ -645,8 +648,10 @@
     <ClCompile Include="skills/thief/backstab.cpp" />
     <ClCompile Include="skills/thief/cloaking.cpp" />
     <ClCompile Include="skills/thief/closeconfine.cpp" />
+    <ClCompile Include="skills/thief/counterinstinct.cpp" />
     <ClCompile Include="skills/thief/createdeadlypoison.cpp" />
     <ClCompile Include="skills/thief/detoxify.cpp" />
+    <ClCompile Include="skills/thief/divestall.cpp" />
     <ClCompile Include="skills/thief/divestarmor.cpp" />
     <ClCompile Include="skills/thief/divesthelm.cpp" />
     <ClCompile Include="skills/thief/divestshield.cpp" />
@@ -668,6 +673,7 @@
     <ClCompile Include="skills/thief/sonicblow.cpp" />
     <ClCompile Include="skills/thief/souldestroyer.cpp" />
     <ClCompile Include="skills/thief/steal.cpp" />
+    <ClCompile Include="skills/thief/stealth.cpp" />
     <ClCompile Include="skills/thief/stonefling.cpp" />
     <ClCompile Include="skills/thief/throwvenomknife.cpp" />
     <ClCompile Include="skills/thief/venomdust.cpp" />
