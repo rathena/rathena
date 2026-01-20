@@ -3118,6 +3118,111 @@ enum e_random_item_group {
 	IG_BRILLIANT_HAT_BOX,
 	IG_CHEST_OF_DEATH,
 	IG_SHADOW_CUBE_SAK,
+	IG_AEGIS_100582,
+	IG_AEGIS_100584,
+	IG_DT_COLABO_BOX1,
+	IG_DT_COLABO_BOX2,
+	IG_CLOUD_COSTUME_PACK,
+	IG_COSTUMEMILEPACK_39_1,
+	IG_COSTUMEMILEPACK_39_2,
+	IG_COSTUMEMILEPACK_39_3,
+	IG_RT_CH01_ARMOR_A,
+	IG_RT_CH01_ARMOR_C,
+	IG_RT_CH01_DIMEN_A,
+	IG_RT_CH01_DIMEN_C,
+	IG_RT_CH01_DIMEN_3,
+	IG_RT_CH01_EXTRA_A,
+	IG_RT_CH01_EXTRA_C,
+	IG_RT_CH01_EXTRA_2,
+	IG_RT_CH01_EXTRA_4,
+	IG_RT_CH01_EXTRA_5,
+	IG_AEGIS_104901,
+	IG_AEGIS_105031,
+	IG_23TH_COSTUME_A,
+	IG_23TH_COSTUME_B,
+	IG_23TH_COSTUME_C,
+	IG_AEGIS_105059,
+	IG_AEGIS_105161,
+	IG_AEGIS_105162,
+	IG_AEGIS_105219,
+	IG_AEGIS_105220,
+	IG_SP_COSTUME_COLLECTION,
+	IG_2025ROS_FOR_OFFLINE,
+	IG_AEGIS_105518,
+	IG_AEGIS_105715,
+	IG_LI_NYANGVINE_BOX1_40,
+	IG_LI_NYANGVINE_BOX2_40,
+	IG_LI_NYANGVINE_BOX3_40,
+	IG_23TH_COSTUME_PACK_A,
+	IG_23TH_COSTUME_PACK_B,
+	IG_23TH_COSTUME_PACK_C,
+	IG_23TH_PACKAGE_1,
+	IG_23TH_PACKAGE_2,
+	IG_23TH_PACKAGE_3,
+	IG_23TH_PACKAGE_4,
+	IG_COSTUMEMILEPACK_SP_1,
+	IG_COSTUMEMILEPACK_SP_2,
+	IG_COSTUMEMILEPACK_SP_3,
+	IG_COSTUMEMILEPACK_SP_4,
+	IG_COSTUMEMILEPACK_41_1,
+	IG_COSTUMEMILEPACK_41_2,
+	IG_COSTUMEMILEPACK_41_3,
+	IG_NIFLHEIM_COSTUME_1,
+	IG_NIFLHEIM_COSTUME_2,
+	IG_NIFLHEIM_COSTUME_3,
+	IG_NIFLHEIM_COSTUME_4,
+	IG_AEGIS_14622,
+	IG_ROS_FESTA_BOX,
+	IG_R_EP1921_ALBUM,
+	IG_R_EP1921_BOSS,
+	IG_RT_EP21_GAEBOLG_A,
+	IG_RT_EP21_GAEBOLG_C,
+	IG_RT_EP21_ICY_A,
+	IG_RT_EP21_ICY_C,
+	IG_RT_EP21_ICY_2,
+	IG_RT_EP21_YORKER_A,
+	IG_RT_EP21_YORKER_C,
+	IG_RT_EP21_WORKING_A,
+	IG_RT_EP21_WORKING_C,
+	IG_RT_EP21_ADMIN_A,
+	IG_RT_EP21_ADMIN_C,
+	IG_RT_EP21_ADMIN_2,
+	IG_RT_EP21_PURIFY_A,
+	IG_RT_EP21_PURIFY_C,
+	IG_RT_EP21_PURIFY_3,
+	IG_RT_EP21_PURIFY_5,
+	IG_RT_EP21_AID_A,
+	IG_RT_EP21_AID_C,
+	IG_RT_EP21_AID_2,
+	IG_RT_EP21_AID_4,
+	IG_RT_EP21_COMPANY_A,
+	IG_RT_EP21_COMPANY_C,
+	IG_RT_EP21_COMPANY_3,
+	IG_RT_EP21_COMPANY_5,
+	IG_RT_EP21_HORN_A,
+	IG_RT_EP21_HORN_C,
+	IG_RT_EP21_HORN_3,
+	IG_RT_EP21_HORN_5,
+	IG_RT_EP21_TAN_A,
+	IG_RT_EP21_TAN_C,
+	IG_AEGIS_105828,
+	IG_AEGIS_105829,
+	IG_AEGIS_105832,
+	IG_AEGIS_105833,
+	IG_AEGIS_105834,
+	IG_AEGIS_105835,
+	IG_AEGIS_105836,
+	IG_AEGIS_105917,
+	IG_LI_NYANGVINE_BOX1_SP,
+	IG_LI_NYANGVINE_BOX2_SP,
+	IG_LI_NYANGVINE_BOX3_SP,
+	IG_LI_NYANGVINE_BOX4_SP,
+	IG_2025_DEC_PACKAGE1,
+	IG_2025_DEC_PACKAGE2,
+	IG_CASH_BOOSTER_BOX2,
+	IG_SELECT_DEC_PACK1,
+	IG_SELECT_DEC_PACK2,
+	IG_SELECT_DEC_PACK3,
 
 	IG_MAX
 };
@@ -3299,6 +3404,8 @@ struct s_item_group_entry
 	std::shared_ptr<s_random_opt_group> randomOptionGroup;
 	uint16 refineMinimum;
 	uint16 refineMaximum;
+	uint16 minimumEnchantgrade;
+	uint16 maximumEnchantgrade;
 };
 
 /// Struct of random group
@@ -3417,7 +3524,7 @@ struct item_data
 		this->combos.clear();
 	}
 
-	bool isStackable();
+	bool isStackable() const;
 	int32 inventorySlotNeeded(int32 quantity);
 };
 
@@ -3465,7 +3572,7 @@ extern ItemDatabase item_db;
 
 class ItemGroupDatabase : public TypesafeCachedYamlDatabase<uint16, s_item_group_db> {
 public:
-	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 4, 1) {
+	ItemGroupDatabase() : TypesafeCachedYamlDatabase("ITEM_GROUP_DB", 5, 1) {
 
 	}
 
@@ -3643,6 +3750,7 @@ struct s_item_package_item{
 	uint16 amount;
 	uint16 rentalhours;
 	uint16 refine;
+	uint16 grade;
 	std::shared_ptr<s_random_opt_group> randomOptionGroup;
 };
 
@@ -3658,7 +3766,7 @@ struct s_item_package{
 
 class ItemPackageDatabase : public TypesafeYamlDatabase<t_itemid, s_item_package>{
 public:
-	ItemPackageDatabase() : TypesafeYamlDatabase( "ITEM_PACKAGE_DB", 1 ){
+	ItemPackageDatabase() : TypesafeYamlDatabase( "ITEM_PACKAGE_DB", 2, 1 ){
 
 	}
 
@@ -3699,17 +3807,17 @@ const char *itemdb_typename_ammo (e_ammo_type ammo);
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
 //Item trade restrictions [Skotlex]
-bool itemdb_isdropable_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_cantrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
-bool itemdb_canpartnertrade_sub(struct item_data *itd, int32 gmlv, int32 gmlv2);
-bool itemdb_cansell_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_cancartstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canguildstore_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canmail_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_canauction_sub(struct item_data *itd, int32 gmlv, int32 unused);
-bool itemdb_isrestricted(struct item* item, int32 gmlv, int32 gmlv2, bool (*func)(struct item_data*, int32, int32));
-bool itemdb_ishatched_egg(struct item* item);
+bool itemdb_isdropable_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_cantrade_sub( const item_data *itd, int32 gmlv, int32 gmlv2 );
+bool itemdb_canpartnertrade_sub( const item_data *itd, int32 gmlv, int32 gmlv2 );
+bool itemdb_cansell_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_cancartstore_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_canstore_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_canguildstore_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_canmail_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_canauction_sub( const item_data *itd, int32 gmlv, int32 unused );
+bool itemdb_isrestricted( const item* item, int32 gmlv, int32 gmlv2, bool (*func)(const item_data*, int32, int32) );
+bool itemdb_ishatched_egg( const item* item );
 #define itemdb_isdropable(item, gmlv) itemdb_isrestricted(item, gmlv, 0, itemdb_isdropable_sub)
 #define itemdb_cantrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_cantrade_sub)
 #define itemdb_canpartnertrade(item, gmlv, gmlv2) itemdb_isrestricted(item, gmlv, gmlv2, itemdb_canpartnertrade_sub)
@@ -3720,12 +3828,12 @@ bool itemdb_ishatched_egg(struct item* item);
 #define itemdb_canmail(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canmail_sub)
 #define itemdb_canauction(item, gmlv) itemdb_isrestricted(item , gmlv, 0, itemdb_canauction_sub)
 
-bool itemdb_isequip2(struct item_data *id);
+bool itemdb_isequip2( const item_data *id);
 #define itemdb_isequip(nameid) itemdb_isequip2(itemdb_search(nameid))
 char itemdb_isidentified(t_itemid nameid);
-bool itemdb_isstackable2(struct item_data *id);
+bool itemdb_isstackable2( const item_data *id );
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
-bool itemdb_isNoEquip(struct item_data *id, uint16 m);
+bool itemdb_isNoEquip( const item_data *id, uint16 m);
 
 bool itemdb_parse_roulette_db(void);
 

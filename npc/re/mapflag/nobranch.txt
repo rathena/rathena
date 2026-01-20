@@ -380,6 +380,9 @@ job4_tro	mapflag	nobranch
 // Training Ground outside Prontera
 //============================================================
 tra_fild	mapflag	nobranch
+tra_fild01	mapflag	nobranch
+tra_fild02	mapflag	nobranch
+tra_fild03	mapflag	nobranch
 
 //============================================================
 // Episode 18 - Direction of Prayer
