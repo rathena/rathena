@@ -1498,10 +1498,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		status_zap( bl, 0, rate );
 		} break;
 #endif
-	case SL_STUN:
-		if (tstatus->size==SZ_MEDIUM) //Only stuns mid-sized mobs.
-			sc_start(src,bl,SC_STUN,(30+10*skill_lv),skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
 
 	case NPC_PETRIFYATTACK:
 		sc_start2(src,bl,SC_STONEWAIT,(20*skill_lv),skill_lv,src->id,skill_get_time2(skill_id,skill_lv),skill_get_time(skill_id, skill_lv));
@@ -1574,39 +1570,15 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	}
 		break;
 
-	case LK_SPIRALPIERCE:
 	case ML_SPIRALPIERCE:
 	case HN_SPIRAL_PIERCE_MAX:
 		if( dstsd || ( dstmd && !status_bl_has_mode(bl,MD_STATUSIMMUNE) ) ) //Does not work on status immune
 			sc_start(src,bl,SC_ANKLE,100,0,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case ST_REJECTSWORD:
-		sc_start(src,bl,SC_AUTOCOUNTER,(skill_lv*15),skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
-
 	case PF_FOGWALL:
 		if (src != bl && !tsc->getSCE(SC_DELUGE))
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
-	case LK_HEADCRUSH: //Headcrush has chance of causing Bleeding status, except on demon and undead element
-		if (!(battle_check_undead(tstatus->race, tstatus->def_ele) || tstatus->race == RC_DEMON))
-			sc_start2(src,bl, SC_BLEEDING,50, skill_lv, src->id, skill_get_time2(skill_id,skill_lv));
-		break;
-
-	case ASC_METEORASSAULT:
-		//Any enemies hit by this skill will receive Stun, Darkness, or external bleeding status ailment with a 5%+5*skill_lv% chance.
-		switch(rnd()%3) {
-			case 0:
-				sc_start(src,bl,SC_BLIND,(5+skill_lv*5),skill_lv,skill_get_time2(skill_id,1));
-				break;
-			case 1:
-				sc_start(src,bl,SC_STUN,(5+skill_lv*5),skill_lv,skill_get_time2(skill_id,2));
-				break;
-			default:
-				sc_start2(src,bl,SC_BLEEDING,(5+skill_lv*5),skill_lv,src->id,skill_get_time2(skill_id,3));
-		}
 		break;
 
 	case HN_NAPALM_VULCAN_STRIKE:
@@ -5139,23 +5111,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
 		break;
 
-	case LK_HEADCRUSH:
-		if (status_get_class_(bl) == CLASS_BOSS) {
-			if (sd)
-				clif_skill_fail( *sd, skill_id );
-			break;
-		}
-		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-
-	case LK_JOINTBEAT:
-		flag = 1 << rnd() % 6;
-		if (flag != BREAK_NECK && tsc && tsc->getSCE(SC_JOINTBEAT) && tsc->getSCE(SC_JOINTBEAT)->val2 & BREAK_NECK)
-			flag = BREAK_NECK; // Target should always receive double damage if neck is already broken
-		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
-			status_change_start(src, bl, SC_JOINTBEAT, (50 * (skill_lv + 1) - (270 * tstatus->str) / 100) * 10, skill_lv, flag & BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv), SCSTART_NONE);
-		break;
-
 	case MO_COMBOFINISH:
 		if (!(flag&1) && sc && sc->getSCE(SC_SPIRIT) && sc->getSCE(SC_SPIRIT)->val2 == SL_MONK)
 		{	//Becomes a splash attack when Soul Linked.
@@ -5210,11 +5165,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-#ifndef RENEWAL
-	case SN_SHARPSHOOTING:
-		flag |= 2; // Flag for specific mob damage formula
-		[[fallthrough]];
-#endif
 	case MA_SHARPSHOOTING:
 	case NJ_KAMAITACHI:
 	case NPC_DARKPIERCING:
@@ -5234,10 +5184,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			if (!(map_foreachindir(skill_attack_area, src->m, src->x, src->y, bl->x, bl->y,
 			   skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv), 0, splash_target(src),
 			   skill_get_type(skill_id), src, src, skill_id, skill_lv, tick, flag, BCT_ENEMY))) {
-#ifndef RENEWAL
-			   	if (skill_id == SN_SHARPSHOOTING)
-			   		flag &= ~2; // Only targets in the splash area are affected
-#endif
 
 				//These skills hit at least the target if the AoE doesn't hit
 				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
@@ -5337,11 +5283,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 		[[fallthrough]];
 	case MA_SHOWER:
-#ifdef RENEWAL
-	case SN_SHARPSHOOTING:
-#endif
 	case NJ_HUUMA:
-	case ASC_METEORASSAULT:
 	case NPC_PULSESTRIKE:
 	case NPC_PULSESTRIKE2:
 	case NPC_HELLJUDGEMENT:
@@ -5543,11 +5485,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 						status_heal(src, heal, 0, 0);
 					}
 					break;
-#ifdef RENEWAL
-				case SN_SHARPSHOOTING:
-					status_change_end(src, SC_CAMOUFLAGE);
-					break;
-#endif
 				case SJ_PROMINENCEKICK: // Trigger the 2nd hit. (100% fire damage.)
 					skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag|8|SD_ANIMATION);
 					break;
@@ -6212,11 +6149,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_MISC, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
-	case SL_SMA:
-		status_change_end(src, SC_SMA);
-		[[fallthrough]];
-	case SL_STIN:
-	case SL_STUN:
 	case SP_SPA:
 		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
 			status_change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,500,SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
@@ -6231,7 +6163,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		if (rnd() % 2 == 0)
 			break; // 50% chance
 		[[fallthrough]];
-	case SN_FALCONASSAULT:
 #ifndef RENEWAL
 	case PA_PRESSURE:
 	case CR_ACIDDEMONSTRATION:
@@ -7858,17 +7789,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 		break;
 
-	// EDP also give +25% WATK poison pseudo element to user.
-	case ASC_EDP:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-#ifdef RENEWAL
-		sc_start4(src, src, SC_SUB_WEAPONPROPERTY, 100, ELE_POISON, 25, skill_id, 0, skill_get_time(skill_id, skill_lv));
-#else
-		sc_start4(src, src, SC_WATK_ELEMENT, 100, ELE_POISON, 25, 0, 0, skill_get_time(skill_id, skill_lv));
-#endif
-		break;
-
 	case LG_SHIELDSPELL:
 		if (skill_lv == 1)
 			type = SC_SHIELDSPELL_HP;
@@ -8075,12 +7995,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 */
 
-	case LK_TENSIONRELAX:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start4(src,bl,type,100,skill_lv,0,0,skill_get_time2(skill_id,skill_lv),
-				skill_get_time(skill_id,skill_lv)));
-		break;
-
 	case MER_PROVOKE:
 		if( status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele) ) {
 			return 1;
@@ -8284,7 +8198,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 	//List of self skills that give damage around caster
-	case ASC_METEORASSAULT:
 	case RK_WINDCUTTER:
 	case RK_STORMBLAST:
 	case NC_AXETORNADO:
@@ -8556,7 +8469,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
 		break;
 
-	case SN_WINDWALK:
 	case CASH_BLESSING:
 	case CASH_INCAGI:
 	case CASH_ASSUMPTIO:
@@ -8594,10 +8506,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd, SP_SOULENERGY), skill_get_time(skill_id, skill_lv)));
 		break;
-	case SL_KAITE:
-	case SL_KAAHI:
-	case SL_KAIZEL:
-	case SL_KAUPE:
 	case SP_KAUTE:
 		if (sd) {
 			if (!dstsd || !(
@@ -8606,25 +8514,21 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				dstsd->status.char_id == sd->status.char_id ||
 				dstsd->status.char_id == sd->status.partner_id ||
 				dstsd->status.char_id == sd->status.child ||
-				(skill_id == SP_KAUTE && dstsd->sc.getSCE(SC_SOULUNITY))
+				(dstsd->sc.getSCE(SC_SOULUNITY))
 			)) {
 				status_change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,500,SCSTART_NORATEDEF);
 				clif_skill_fail( *sd, skill_id );
 				break;
 			}
 		}
-		if (skill_id == SP_KAUTE) {
-			if (!status_charge(src, sstatus->max_hp * (10 + 2 * skill_lv) / 100, 0)) {
-				if (sd)
-					clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-				break;
-			}
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_heal(bl, 0, tstatus->max_sp * (10 + 2 * skill_lv) / 100, 2);
-		} else
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+		if (!status_charge(src, sstatus->max_hp * (10 + 2 * skill_lv) / 100, 0)) {
+			if (sd)
+				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
+			break;
+		}
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+		status_heal(bl, 0, tstatus->max_sp * (10 + 2 * skill_lv) / 100, 2);
 		break;
-	case ST_CHASEWALK:
 	case KO_YAMIKUMO:
 		if (tsce)
 		{
@@ -8860,29 +8764,12 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
 
-	case ASC_CDP:
-		if(sd) {
-			if(skill_produce_mix(sd, skill_id, ITEMID_POISON_BOTTLE, 0, 0, 0, 1, -1)) //Produce a Poison Bottle.
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			else
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_STUFF_INSUFFICIENT );
-		}
-		break;
-
-	case ST_FULLSTRIP:
 	case GC_WEAPONCRUSH:
 	case SC_STRIPACCESSARY:
 	case ABC_STRIP_SHADOW: {
 		bool i;
 
-		//Special message when trying to use strip on FCP [Jobbie]
-		if( sd && skill_id == ST_FULLSTRIP && tsc && tsc->getSCE(SC_CP_WEAPON) && tsc->getSCE(SC_CP_HELM) && tsc->getSCE(SC_CP_ARMOR) && tsc->getSCE(SC_CP_SHIELD))
-		{
-			clif_gospel_info( *sd, 0x28 );
-			break;
-		}
-
-		if( (i = skill_strip_equip(src, bl, skill_id, skill_lv)) || (skill_id != ST_FULLSTRIP && skill_id != GC_WEAPONCRUSH ) )
+		if( (i = skill_strip_equip(src, bl, skill_id, skill_lv)) || (skill_id != GC_WEAPONCRUSH ) )
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,i);
 
 		//Nothing stripped.
@@ -9563,39 +9450,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case SL_ALCHEMIST:
-	case SL_ASSASIN:
-	case SL_BARDDANCER:
-	case SL_BLACKSMITH:
-	case SL_CRUSADER:
-	case SL_HUNTER:
-	case SL_KNIGHT:
-	case SL_MONK:
-	case SL_PRIEST:
-	case SL_ROGUE:
-	case SL_SAGE:
-	case SL_SOULLINKER:
-	case SL_STAR:
-	case SL_SUPERNOVICE:
-	case SL_WIZARD:
-	case SL_HIGH:
-		if( sc_start2( src, bl, type, 100, skill_lv, skill_id, skill_get_time( skill_id, skill_lv ) ) ){
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-
-			// 1% chance to erase death count on successful cast
-			if( skill_id == SL_SUPERNOVICE && dstsd && dstsd->die_counter && rnd_chance( 1, 100 )  ){
-				pc_setparam( dstsd, SP_PCDIECOUNTER, 0 );
-				clif_specialeffect( bl, EF_ANGEL2, AREA );
-				status_calc_pc( dstsd, SCO_NONE );
-			}
-
-			sc_start( src, src, SC_SMA, 100, skill_lv, skill_get_time( SL_SMA, skill_lv ) );
-		}else{
-			if( sd ){
-				clif_skill_fail( *sd, skill_id );
-			}
-		}
-		break;
 	case SP_SOULGOLEM:
 	case SP_SOULSHADOW:
 	case SP_SOULFALCON:
@@ -9621,27 +9475,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		status_change_end(bl, SC_SOULSHADOW);
 		status_change_end(bl, SC_SOULFALCON);
 		status_change_end(bl, SC_SOULFAIRY);
-		break;
-
-	case SL_SWOO:
-		if (tsce) {
-			if(sd)
-				clif_skill_fail( *sd, skill_id );
-			status_change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,10000,SCSTART_NORATEDEF);
-			status_change_end(bl, SC_SWOO);
-			break;
-		}
-		[[fallthrough]];
-	case SL_SKA: // [marquis007]
-	case SL_SKE:
-		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
-			clif_skill_fail( *sd, skill_id );
-			status_change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,500,SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
-			break;
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		if (skill_id == SL_SKE)
-			sc_start(src,src,SC_SMA,100,skill_lv,skill_get_time(SL_SMA,skill_lv));
 		break;
 
 	case AG_ENERGY_CONVERSION:
