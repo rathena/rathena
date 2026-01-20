@@ -1113,12 +1113,7 @@ bool chclif_parse_charselect( int32 fd, struct char_session_data& sd ){
 	}
 
 	/* set char as online prior to loading its data so 3rd party applications will realise the sql data is not reliable */
-	// --- P2P-aware: use P2P online state if enabled ---
-	if (charserv_config.p2p_enabled) {
-		char_set_char_online_p2p(-2, char_id, sd.account_id);
-	} else {
-		char_set_char_online(-2, char_id, sd.account_id);
-	}
+	char_set_char_online(-2,char_id,sd.account_id);
 
 	struct mmo_charstatus char_dat;
 	if( !char_mmo_char_fromsql(char_id, &char_dat, true) ) { /* failed? set it back offline */
