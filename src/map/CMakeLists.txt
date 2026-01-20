@@ -22,9 +22,9 @@ endif()
 
 file(GLOB_RECURSE MAP_HEADERS ${MAP_SOURCE_DIR}/*.hpp)
 file(GLOB_RECURSE MAP_SOURCES ${MAP_SOURCE_DIR}/*.cpp)
-set( DEPENDENCIES common ryml)
-set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} zmq ${Python3_LIBRARIES} )
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} ${Python3_INCLUDE_DIRS} )
+set( DEPENDENCIES common ryml httplib)
+set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} zmq ${Python3_LIBRARIES} hiredis )
+set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} ${Python3_INCLUDE_DIRS} ${HTTPLIB_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
 if( WITH_PCRE )
 	message( STATUS "Enabled PCRE code" )
@@ -39,7 +39,16 @@ set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${MAP_HEADERS} ${MAP_
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_utils.cpp
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_native_api.cpp
   ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_native_commands.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_callbacks.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_threadpool.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_types.cpp
   ${CMAKE_SOURCE_DIR}/src/custom/ai_bridge.cpp
+  ${CMAKE_SOURCE_DIR}/src/custom/script_ai_ipc.cpp
+  ${CMAKE_SOURCE_DIR}/src/web/ai_bridge/ai_bridge.cpp
+  ${CMAKE_SOURCE_DIR}/src/web/ai_bridge/config_manager.cpp
+  ${CMAKE_SOURCE_DIR}/src/web/ai_bridge/http_client.cpp
+  ${CMAKE_SOURCE_DIR}/src/web/ai_bridge/event_dispatcher.cpp
+  ${CMAKE_SOURCE_DIR}/src/web/ai_bridge/action_executor.cpp
 )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} )
 source_group( map FILES ${MAP_HEADERS} ${MAP_SOURCES} )

@@ -18,6 +18,7 @@
 #include <map>
 #include <mutex>
 #include <string>
+#include <vector>
 
 namespace AIBridge {
 

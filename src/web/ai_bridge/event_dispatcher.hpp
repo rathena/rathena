@@ -27,6 +27,8 @@
 #include <thread>
 #include <vector>
 
+#include <common/cbasetypes.hpp>
+
 #include "http_client.hpp"
 
 namespace AIBridge {

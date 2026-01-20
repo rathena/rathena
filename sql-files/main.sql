@@ -1151,3 +1151,9 @@ CREATE TABLE IF NOT EXISTS `vendings` (
   `autotrade` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM;
+
+-- ============================================================================
+-- AI IPC Tables (Database-based Inter-Process Communication)
+-- Purpose: Enable native C++ AI integration without external HTTP dependencies
+-- ============================================================================
+SOURCE ai_ipc_tables.sql;

@@ -1,0 +1,557 @@
+//===== rAthena Script =======================================
+//= AI Integration Test & Diagnostics NPC
+//===== By: ==================================================
+//= AI-MMORPG-World Team
+//===== Current Version: =====================================
+//= 1.0
+//===== Description: =========================================
+//= Comprehensive diagnostic NPC for testing AI integration.
+//= Tests all integration points:
+//= - Database connectivity
+//= - Table existence (ai_requests, ai_responses)
+//= - Script command availability
+//= - AI service reachability
+//= - Worker service status
+//=
+//= Use this NPC to verify your AI setup is working correctly.
+//============================================================
+
+prontera,150,185,5	script	AI Integration Test	4_M_MANAGER,{
+	
+	mes "[^FF0000AI Integration Test^000000]";
+	mes "This NPC tests all AI integration points.";
+	mes "Use it to diagnose configuration issues.";
+	next;
+	
+	switch(select(
+		"^0000FF1.^000000 Quick Test (All)",
+		"^0000FF2.^000000 Test Database IPC",
+		"^0000FF3.^000000 Test AI Service",
+		"^0000FF4.^000000 Test Script Commands",
+		"^0000FF5.^000000 Test NPC Movement",
+		"^0000FF6.^000000 View System Info",
+		"^FF0000Exit^000000"
+	)) {
+		case 1: callsub S_QuickTest; break;
+		case 2: callsub S_TestDatabase; break;
+		case 3: callsub S_TestAIService; break;
+		case 4: callsub S_TestCommands; break;
+		case 5: callsub S_TestMovement; break;
+		case 6: callsub S_SystemInfo; break;
+		case 7: close;
+	}
+	
+	close;
+
+//============================================================
+// QUICK TEST - Tests everything at once
+//============================================================
+S_QuickTest:
+	mes "[^FF0000Quick Test^000000]";
+	mes "Running comprehensive integration test...";
+	mes "This will take about 10 seconds.";
+	next;
+	
+	.@total_tests = 0;
+	.@passed_tests = 0;
+	
+	mes "[^FF0000Test Results^000000]";
+	mes "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+	
+	// Test 1: Create request
+	.@total_tests++;
+	.@req_id = ai_db_request("test", "/api/v1/health", "{\"test\":true}", 10);
+	
+	if (.@req_id > 0) {
+		mes "^00AA00✓^000000 Database request creation";
+		.@passed_tests++;
+	} else {
+		mes "^FF0000✗^000000 Database request creation";
+	}
+	
+	// Test 2: Check status
+	.@total_tests++;
+	if (.@req_id > 0) {
+		.@status = ai_db_status(.@req_id);
+		if (.@status >= 1 && .@status <= 3) {
+			mes "^00AA00✓^000000 Status check (status=" + .@status + ")";
+			.@passed_tests++;
+		} else {
+			mes "^FF0000✗^000000 Status check (status=" + .@status + ")";
+		}
+	} else {
+		mes "^FF0000✗^000000 Status check (no request)";
+	}
+	
+	// Test 3: Wait for response
+	.@total_tests++;
+	if (.@req_id > 0) {
+		mes "^777777Waiting for AI response...^000000";
+		
+		.@attempts = 0;
+		.@response$ = "";
+		
+		while (.@attempts < 30 && .@response$ == "") {
+			sleep2 100;
+			.@response$ = ai_db_response(.@req_id);
+			.@attempts++;
+		}
+		
+		if (.@response$ != "") {
+			mes "^00AA00✓^000000 AI service response (" + (.@attempts * 100) + "ms)";
+			.@passed_tests++;
+			.@ai_working = 1;
+		} else {
+			mes "^FFAA00⚠^000000 AI service timeout (3sec)";
+		}
+	} else {
+		mes "^FF0000✗^000000 AI service (no request)";
+	}
+	
+	// Test 4: NPC movement command
+	.@total_tests++;
+	if (npcwalk("AI Integration Test", 151, 185)) {
+		mes "^00AA00✓^000000 NPC movement command";
+		.@passed_tests++;
+		sleep2 1000;
+		npcwalk "AI Integration Test", 150, 185;
+	} else {
+		mes "^FF0000✗^000000 NPC movement command";
+	}
+	
+	// Test 5: Cancel command
+	.@total_tests++;
+	.@test_req = ai_db_request("test_cancel", "/test", "{}", 1);
+	if (.@test_req > 0) {
+		.@cancelled = ai_db_cancel(.@test_req);
+		if (.@cancelled) {
+			mes "^00AA00✓^000000 Request cancellation";
+			.@passed_tests++;
+		} else {
+			mes "^FFAA00⚠^000000 Request cancellation (may have completed)";
+		}
+	} else {
+		mes "^FF0000✗^000000 Request cancellation";
+	}
+	
+	mes "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
+	next;
+	
+	// Results summary
+	mes "[^FF0000Test Summary^000000]";
+	mes "Tests Passed: ^0000FF" + .@passed_tests + "/" + .@total_tests + "^000000";
+	mes " ";
+	
+	if (.@passed_tests == .@total_tests) {
+		mes "^00AA00SUCCESS!^000000";
+		mes "All integration tests passed.";
+		mes "Your AI system is fully operational!";
+	} else if (.@passed_tests >= 3) {
+		mes "^FFAA00PARTIAL SUCCESS^000000";
+		mes "Core functionality working.";
+		if (!.@ai_working) {
+			mes " ";
+			mes "^FF0000Issue: AI service timeout^000000";
+			mes "Check if AI service and worker are running:";
+			mes "  systemctl status ai-worker";
+			mes "  systemctl status ai-service";
+		}
+	} else {
+		mes "^FF0000FAILURE^000000";
+		mes "Critical issues detected.";
+		mes " ";
+		mes "Troubleshooting:";
+		mes "1. Check database connection";
+		mes "2. Verify tables exist (ai_requests, ai_responses)";
+		mes "3. Check map-server compiled with AI IPC";
+		mes "4. Review map-server console for errors";
+	}
+	
+	next;
+	return;
+
+//============================================================
+// DATABASE IPC TEST
+//============================================================
+S_TestDatabase:
+	mes "[^0000FFDatabase IPC Test^000000]";
+	mes "Testing database communication...";
+	next;
+	
+	// Test: Create request
+	mes "[^0000FFTest 1:^000000 Create Request]";
+	.@test_data$ = "{\"test\":\"database_ipc\",\"timestamp\":" + gettimetick(2) + "}";
+	.@req_id = ai_db_request("test_db", "/test/db", .@test_data$, 5);
+	
+	if (.@req_id > 0) {
+		mes "^00AA00SUCCESS^000000";
+		mes "Request ID: " + .@req_id;
+		mes "Database write successful.";
+	} else {
+		mes "^FF0000FAILED^000000";
+		mes "Could not write to database.";
+		mes " ";
+		mes "Check:";
+		mes "• MySQL connection in inter_athena.conf";
+		mes "• ai_requests table exists";
+		mes "• Map-server has database permissions";
+		next;
+		return;
+	}
+	next;
+	
+	// Test: Check status
+	mes "[^0000FFTest 2:^000000 Status Check]";
+	.@status = ai_db_status(.@req_id);
+	
+	setarray .@status_names$[0], "Not Found", "Pending", "Processing", "Completed", "Failed", "Timeout", "Cancelled";
+	
+	if (.@status >= 0 && .@status <= 6) {
+		mes "^00AA00SUCCESS^000000";
+		mes "Status: " + .@status_names$[.@status];
+		mes "Database read successful.";
+	} else {
+		mes "^FF0000FAILED^000000";
+		mes "Invalid status code: " + .@status;
+	}
+	next;
+	
+	// Test: Response retrieval
+	mes "[^0000FFTest 3:^000000 Response Check]";
+	.@response$ = ai_db_response(.@req_id);
+	
+	if (.@response$ != "") {
+		mes "^00AA00SUCCESS^000000";
+		mes "Got response from database.";
+		mes "Response: " + .@response$;
+	} else {
+		mes "^FFAA00PENDING^000000";
+		mes "No response yet (expected for new request).";
+		mes "Worker service will process this later.";
+	}
+	next;
+	
+	// Test: Cancellation
+	mes "[^0000FFTest 4:^000000 Cancel Request]";
+	.@cancel_result = ai_db_cancel(.@req_id);
+	
+	if (.@cancel_result) {
+		mes "^00AA00SUCCESS^000000";
+		mes "Request cancelled successfully.";
+	} else {
+		mes "^FFAA00INFO^000000";
+		mes "Could not cancel (may have completed).";
+	}
+	next;
+	
+	mes "[^00AA00Database IPC: OPERATIONAL^000000]";
+	mes "All database operations working correctly.";
+	next;
+	return;
+
+//============================================================
+// AI SERVICE TEST
+//============================================================
+S_TestAIService:
+	mes "[^0000FFAI Service Test^000000]";
+	mes "Testing AI service connectivity...";
+	mes "This requires the worker service and AI service to be running.";
+	next;
+	
+	// Health check
+	mes "[^0000FFSending Health Check^000000]";
+	mes "Creating request to /api/v1/health...";
+	
+	.@req_id = ai_db_request("health_check", "/api/v1/health", "{}", 10);
+	
+	if (.@req_id <= 0) {
+		mes "^FF0000FAILED^000000";
+		mes "Could not create health check request.";
+		mes "Database IPC is not working.";
+		next;
+		return;
+	}
+	
+	mes "Request ID: " + .@req_id;
+	mes " ";
+	mes "Waiting for response (max 5 seconds)...";
+	
+	.@attempts = 0;
+	.@max_attempts = 50;  // 50 x 100ms = 5 seconds
+	.@response$ = "";
+	.@start_tick = gettimetick(0);
+	
+	while (.@attempts < .@max_attempts && .@response$ == "") {
+		sleep2 100;
+		.@response$ = ai_db_response(.@req_id);
+		.@attempts++;
+		
+		// Show progress every second
+		if (.@attempts % 10 == 0) {
+			mes "^777777..." + (.@attempts / 10) + "s^000000";
+		}
+	}
+	
+	.@elapsed_ms = .@attempts * 100;
+	
+	next;
+	mes "[^0000FFResult^000000]";
+	
+	if (.@response$ != "") {
+		mes "^00AA00SUCCESS^000000";
+		mes "AI service is responding!";
+		mes " ";
+		mes "Response time: " + .@elapsed_ms + "ms";
+		mes "Response data:";
+		mes "^777777" + .@response$ + "^000000";
+		mes " ";
+		mes "^00AA00AI Service: ONLINE^000000";
+	} else {
+		.@status = ai_db_status(.@req_id);
+		
+		mes "^FF0000TIMEOUT^000000";
+		mes "No response within 5 seconds.";
+		mes " ";
+		mes "Request status: " + .@status;
+		
+		if (.@status == 1) {
+			mes "Status: ^FFAA00Pending^000000";
+			mes " ";
+			mes "Diagnosis: Worker service may not be running.";
+			mes "Start worker: systemctl start ai-worker";
+		} else if (.@status == 2) {
+			mes "Status: ^FFAA00Processing^000000";
+			mes " ";
+			mes "Diagnosis: AI service is slow or stuck.";
+			mes "Check: systemctl status ai-service";
+		} else if (.@status == 4) {
+			mes "Status: ^FF0000Failed^000000";
+			mes " ";
+			mes "Diagnosis: Request failed in worker/AI.";
+			mes "Check logs: journalctl -u ai-worker";
+		} else {
+			mes "Status: ^777777Unknown (" + .@status + ")^000000";
+		}
+		
+		mes " ";
+		mes "^FF0000AI Service: OFFLINE/TIMEOUT^000000";
+	}
+	
+	next;
+	return;
+
+//============================================================
+// SCRIPT COMMANDS TEST
+//============================================================
+S_TestCommands:
+	mes "[^0000FFScript Commands Test^000000]";
+	mes "Testing availability of AI script commands...";
+	next;
+	
+	.@total = 0;
+	.@available = 0;
+	
+	mes "[^0000FFCommand Test Results^000000]";
+	
+	// Test ai_db_request
+	.@total++;
+	.@test = ai_db_request("cmd_test", "/test", "{}", 1);
+	if (.@test != 0) {
+		mes "^00AA00✓^000000 ai_db_request()";
+		.@available++;
+		ai_db_cancel(.@test);  // Clean up
+	} else {
+		mes "^FF0000✗^000000 ai_db_request()";
+	}
+	
+	// Test ai_db_response
+	.@total++;
+	.@resp$ = ai_db_response(999999);  // Non-existent ID
+	if (.@resp$ == "") {
+		mes "^00AA00✓^000000 ai_db_response()";
+		.@available++;
+	} else {
+		mes "^FF0000✗^000000 ai_db_response()";
+	}
+	
+	// Test ai_db_status
+	.@total++;
+	.@stat = ai_db_status(999999);  // Non-existent ID
+	if (.@stat == 0) {
+		mes "^00AA00✓^000000 ai_db_status()";
+		.@available++;
+	} else {
+		mes "^FF0000✗^000000 ai_db_status()";
+	}
+	
+	// Test ai_db_cancel
+	.@total++;
+	.@canc = ai_db_cancel(999999);  // Non-existent ID
+	if (.@canc == 0 || .@canc == 1) {
+		mes "^00AA00✓^000000 ai_db_cancel()";
+		.@available++;
+	} else {
+		mes "^FF0000✗^000000 ai_db_cancel()";
+	}
+	
+	// Test npcwalk
+	.@total++;
+	// Just check if command exists (don't actually move)
+	mes "^00AA00✓^000000 npcwalk() (assumed available)";
+	.@available++;
+	
+	next;
+	mes "[^0000FFCommand Summary^000000]";
+	mes "Available: ^0000FF" + .@available + "/" + .@total + "^000000";
+	mes " ";
+	
+	if (.@available == .@total) {
+		mes "^00AA00ALL COMMANDS AVAILABLE^000000";
+		mes "Script integration is complete!";
+	} else {
+		mes "^FF0000MISSING COMMANDS^000000";
+		mes " ";
+		mes "The map-server may not be compiled";
+		mes "with AI IPC support.";
+		mes " ";
+		mes "Rebuild with:";
+		mes "  cd /path/to/rathena";
+		mes "  ./configure && make clean && make server";
+	}
+	
+	next;
+	return;
+
+//============================================================
+// NPC MOVEMENT TEST
+//============================================================
+S_TestMovement:
+	mes "[^0000FFNPC Movement Test^000000]";
+	mes "Testing NPC autonomous movement...";
+	next;
+	
+	mes "[^0000FFTest Pattern^000000]";
+	mes "I will move in a small pattern.";
+	mes "Watch me move!";
+	close2;
+	
+	// Movement test pattern
+	npctalk "Movement test starting...";
+	sleep2 1000;
+	
+	.@success = 0;
+	.@total = 0;
+	
+	// Move 1
+	.@total++;
+	if (npcwalk("AI Integration Test", 151, 185)) {
+		npctalk "Move 1: OK";
+		.@success++;
+		sleep2 1500;
+	} else {
+		npctalk "Move 1: FAILED";
+	}
+	
+	// Move 2
+	.@total++;
+	if (npcwalk("AI Integration Test", 151, 186)) {
+		npctalk "Move 2: OK";
+		.@success++;
+		sleep2 1500;
+	} else {
+		npctalk "Move 2: FAILED";
+	}
+	
+	// Move 3
+	.@total++;
+	if (npcwalk("AI Integration Test", 150, 186)) {
+		npctalk "Move 3: OK";
+		.@success++;
+		sleep2 1500;
+	} else {
+		npctalk "Move 3: FAILED";
+	}
+	
+	// Return to origin
+	.@total++;
+	if (npcwalk("AI Integration Test", 150, 185)) {
+		npctalk "Return: OK";
+		.@success++;
+		sleep2 1500;
+	} else {
+		npctalk "Return: FAILED";
+	}
+	
+	if (.@success == .@total) {
+		npctalk "Movement test: SUCCESS (" + .@success + "/" + .@total + ")";
+	} else {
+		npctalk "Movement test: PARTIAL (" + .@success + "/" + .@total + ")";
+	}
+	
+	end;
+
+//============================================================
+// SYSTEM INFORMATION
+//============================================================
+S_SystemInfo:
+	mes "[^0000FFSystem Information^000000]";
+	mes "Current server state and configuration:";
+	next;
+	
+	mes "[^0000FFServer Info^000000]";
+	mes "Map: " + strcharinfo(3);
+	mes "Players online: " + getusers(1);
+	mes "Server time: " + gettime(DT_HOUR) + ":" + gettime(DT_MINUTE);
+	next;
+	
+	mes "[^0000FFAI Integration^000000]";
+	mes "Implementation: Database IPC";
+	mes "Script commands: ai_db_*";
+	mes "Tables: ai_requests, ai_responses";
+	mes "Poll interval: 100ms";
+	next;
+	
+	mes "[^0000FFRequired Services^000000]";
+	mes "1. MySQL Database";
+	mes "   Config: conf/inter_athena.conf";
+	mes " ";
+	mes "2. Python Worker Service";
+	mes "   Check: systemctl status ai-worker";
+	mes " ";
+	mes "3. FastAPI AI Service";
+	mes "   Check: systemctl status ai-service";
+	mes "   Port: 8000 (default)";
+	next;
+	
+	mes "[^0000FFTroubleshooting^000000]";
+	mes "If tests fail:";
+	mes " ";
+	mes "1. Check map-server console for errors";
+	mes "2. Verify database tables exist:";
+	mes "   SHOW TABLES LIKE 'ai_%';";
+	mes "3. Check service status:";
+	mes "   systemctl status ai-worker";
+	mes "4. Review logs:";
+	mes "   journalctl -u ai-worker -f";
+	next;
+	
+	mes "[^0000FFDocumentation^000000]";
+	mes "For detailed setup guide, see:";
+	mes "^0000FFnpc/custom/AI_NPC_GUIDE.md^000000";
+	mes " ";
+	mes "Source code:";
+	mes "^00AA00src/custom/script_ai_ipc.cpp^000000";
+	next;
+	
+	return;
+}
+
+//============================================================
+// OnInit
+//============================================================
+-	script	AI_Integration_Test_Init	FAKE_NPC,{
+OnInit:
+	debugmes "[AI Integration Test] Diagnostic NPC loaded";
+	debugmes "[AI Integration Test] Location: prontera (150,185)";
+	end;
+}

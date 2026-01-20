@@ -154,11 +154,11 @@ const char* get_current_map_name(struct script_state* st) {
     }
     
     struct npc_data* nd = map_id2nd(st->oid);
-    if (nd == nullptr || nd->bl.m < 0) {
+    if (nd == nullptr || nd->m < 0) {
         return "unknown";
     }
     
-    return map_mapid2mapname(nd->bl.m);
+    return map_mapid2mapname(nd->m);
 }
 
 int check_pending_http_requests() {
@@ -1038,7 +1038,7 @@ BUILDIN_FUNC(npcwalk) {
     
     // Use unit_walktoxy to make the NPC walk
     // Note: This requires the NPC to have movement enabled
-    if (unit_walktoxy(&nd->bl, x, y, 0) == 0) {
+    if (unit_walktoxy((struct block_list *)nd, x, y, 0) == 0) {
         ShowInfo("[AI-IPC] npcwalk: NPC '%s' walking to (%d,%d)\n", npc_name, x, y);
         script_pushint(st, 1);
     } else {
@@ -1076,7 +1076,7 @@ BUILDIN_FUNC(npcwalkid) {
     }
     
     // Use unit_walktoxy to make the NPC walk
-    if (unit_walktoxy(&nd->bl, x, y, 0) == 0) {
+    if (unit_walktoxy((struct block_list *)nd, x, y, 0) == 0) {
         ShowInfo("[AI-IPC] npcwalkid: NPC ID %d walking to (%d,%d)\n", npc_id, x, y);
         script_pushint(st, 1);
     } else {

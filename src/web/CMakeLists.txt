@@ -13,13 +13,24 @@ endif ( NOT ENABLE_WEB_SERVER )
 
 if( BUILD_SERVERS AND ENABLE_WEB_SERVER )
 message( STATUS "Creating target web-server" )
+
+# Find ZMQ library using pkg-config
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(ZMQ REQUIRED libzmq)
+
 file(GLOB WEB_HEADERS ${WEB_SOURCE_DIR}/*.hpp)
 file(GLOB WEB_SOURCES ${WEB_SOURCE_DIR}/*.cpp)
 set( DEPENDENCIES common yaml-cpp httplib)
-set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} hiredis )
-set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} ${HTTPLIB_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} )
+set( LIBRARIES ${GLOBAL_LIBRARIES} ${MYSQL_LIBRARIES} hiredis ${ZMQ_LIBRARIES} )
+set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS} ${HTTPLIB_INCLUDE_DIRS} ${JSON_INCLUDE_DIRS} ${RA_INCLUDE_DIRS} ${MYSQL_INCLUDE_DIRS} ${ZMQ_INCLUDE_DIRS} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
-set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${WEB_HEADERS} ${WEB_SOURCES} )
+set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} ${WEB_HEADERS} ${WEB_SOURCES}
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_ipc.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_utils.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_native_api.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_callbacks.cpp
+  ${CMAKE_SOURCE_DIR}/src/aiworld/aiworld_types.cpp
+)
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_HEADERS} )
 source_group( web FILES ${WEB_HEADERS} ${WEB_SOURCES} )
 include_directories( ${INCLUDE_DIRS} )

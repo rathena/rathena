@@ -10,8 +10,17 @@
 #include <cstdint>
 #include <unordered_map>
 
+// rAthena common includes for type definitions
+#include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp"
+
 // Forward declarations from rAthena
 struct script_state;
+
+// Forward declarations for script macros (actual definitions in script.hpp via implementation file)
+#ifndef BUILDIN_FUNC
+#define BUILDIN_FUNC(x) int buildin_ ## x (struct script_state* st)
+#endif
 
 /**
  * @file script_ai_ipc.hpp
@@ -294,6 +303,34 @@ BUILDIN_FUNC(httpget);
  *   .@result$ = httppost("http://ai-server:8000/api/v1/dialogue", .@json$);
  */
 BUILDIN_FUNC(httppost);
+
+/**
+ * npcwalk("<npc_name>", <x>, <y>)
+ * Make an NPC walk to the specified coordinates
+ *
+ * @param npc_name Name of the NPC
+ * @param x Target X coordinate
+ * @param y Target Y coordinate
+ * @return 1 on success, 0 on failure
+ *
+ * Script usage:
+ *   npcwalk("MyNPC", 150, 200);
+ */
+BUILDIN_FUNC(npcwalk);
+
+/**
+ * npcwalkid(<npc_id>, <x>, <y>)
+ * Make an NPC walk to the specified coordinates using NPC ID
+ *
+ * @param npc_id NPC ID
+ * @param x Target X coordinate
+ * @param y Target Y coordinate
+ * @return 1 on success, 0 on failure
+ *
+ * Script usage:
+ *   npcwalkid(.@npc_id, 150, 200);
+ */
+BUILDIN_FUNC(npcwalkid);
 
 /**
  * httpget_async(url)
