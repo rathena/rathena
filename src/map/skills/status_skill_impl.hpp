@@ -7,8 +7,11 @@
 
 class StatusSkillImpl : public SkillImpl
 {
+private:
+	bool end_if_running;
+
 public:
-	StatusSkillImpl(e_skill skillId);
+	StatusSkillImpl(e_skill skillId, bool end_if_running = false);
 
 	virtual void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };

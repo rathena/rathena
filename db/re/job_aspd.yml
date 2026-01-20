@@ -338,17 +338,14 @@ Body:
       Shield: 7
   - Jobs:
       Gunslinger: true
-      Rebellion: true
       Baby_Gunslinger: true
-      Baby_Rebellion: true
-      Night_Watch: true
     BaseASPD:
-      Fist: 54
-      Revolver: 49
-      Rifle: 59
-      Gatling: 54
-      Shotgun: 94
-      Grenade: 104
+      Fist: 50
+      Revolver: 45
+      Rifle: 55
+      Gatling: 50
+      Shotgun: 90
+      Grenade: 100
       Shield: 6
   - Jobs:
       Ninja: true
@@ -360,48 +357,22 @@ Body:
       Shield: 6
   - Jobs:
       Taekwon: true
-      Star_Gladiator: true
-      Star_Gladiator2: true
       Baby_Taekwon: true
-      Baby_Star_Gladiator: true
-      Baby_Star_Gladiator2: true
-      Star_Emperor: true
-      Star_Emperor2: true
-      Baby_Star_Emperor: true
-      Baby_Star_Emperor2: true
-      Sky_Emperor: true
     BaseASPD:
       Fist: 40
-      Dagger: 50
-      1hSword: 50
-      2hSword: 50
-      1hSpear: 50
-      2hSpear: 50
-      1hAxe: 50
-      2hAxe: 50
-      Mace: 50
-      2hMace: 50
-      Staff: 50
-      Bow: 50
-      Knuckle: 50
-      Musical: 50
-      Whip: 50
+      Shield: 6
+  - Jobs:
+      Star_Gladiator: true
+      Star_Gladiator2: true
+      Baby_Star_Gladiator: true
+      Baby_Star_Gladiator2: true
+    BaseASPD:
+      Fist: 40
       Book: 50
-      Katar: 50
-      Revolver: 50
-      Rifle: 50
-      Gatling: 50
-      Shotgun: 50
-      Grenade: 50
-      Huuma: 50
-      2hStaff: 50
       Shield: 6
   - Jobs:
       Soul_Linker: true
       Baby_Soul_Linker: true
-      Soul_Reaper: true
-      Baby_Soul_Reaper: true
-      Soul_Ascetic: true
     BaseASPD:
       Fist: 50
       Dagger: 50
@@ -611,6 +582,18 @@ Body:
       Huuma: 50
       Shield: 3
   - Jobs:
+      Rebellion: true
+      Baby_Rebellion: true
+      Night_Watch: true
+    BaseASPD:
+      Fist: 45
+      Revolver: 50
+      Rifle: 55
+      Gatling: 48
+      Shotgun: 75
+      Grenade: 80
+      Shield: 10
+  - Jobs:
       Summoner: true
       Baby_Summoner: true
       Spirit_Handler: true
@@ -618,3 +601,24 @@ Body:
       Fist: 40
       Staff: 60
       Shield: 7
+  - Jobs:
+      Star_Emperor: true
+      Star_Emperor2: true
+      Baby_Star_Emperor: true
+      Baby_Star_Emperor2: true
+      Sky_Emperor: true
+      Sky_Emperor2: true
+    BaseASPD:
+      Fist: 40
+      Book: 45
+      Shield: 3
+  - Jobs:
+      Soul_Reaper: true
+      Baby_Soul_Reaper: true
+      Soul_Ascetic: true
+    BaseASPD:
+      Fist: 45
+      Dagger: 40
+      Staff: 50
+      2hStaff: 52 # TODO: Unconfirmed
+      Shield: 5

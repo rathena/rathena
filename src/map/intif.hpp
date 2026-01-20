@@ -74,15 +74,15 @@ void intif_itembound_guild_retrieve(uint32 char_id, uint32 account_id, int32 gui
 
 int32 intif_create_pet(uint32 account_id, uint32 char_id, int16 pet_type, int16 pet_lv, t_itemid pet_egg_id, t_itemid pet_equip, int16 intimate, int16 hungry, char rename_flag, char incubate, const char *pet_name);
 int32 intif_request_petdata(uint32 account_id, uint32 char_id, int32 pet_id);
-int32 intif_save_petdata(uint32 account_id, struct s_pet *p);
+int32 intif_save_petdata( uint32 account_id, const s_pet* p );
 int32 intif_delete_petdata(int32 pet_id);
-int32 intif_rename(map_session_data *sd, int32 type, char *name);
+int32 intif_rename( const map_session_data* sd, int32 type, char* name );
 #define intif_rename_pc(sd, name) intif_rename(sd, 0, name)
 #define intif_rename_pet(sd, name) intif_rename(sd, 1, name)
 #define intif_rename_hom(sd, name) intif_rename(sd, 2, name)
-int32 intif_homunculus_create(uint32 account_id, struct s_homunculus *sh);
+int32 intif_homunculus_create( uint32 account_id, const s_homunculus* sh );
 int32 intif_homunculus_requestload(uint32 account_id, int32 homun_id);
-int32 intif_homunculus_requestsave(uint32 account_id, struct s_homunculus* sh);
+int32 intif_homunculus_requestsave( uint32 account_id, const s_homunculus* sh );
 int32 intif_homunculus_requestdelete(int32 homun_id);
 
 /******QUEST SYTEM*******/
@@ -122,13 +122,13 @@ int32 intif_clan_member_left( int32 clan_id );
 // ACHIEVEMENT SYSTEM
 void intif_request_achievements(uint32 char_id);
 int32 intif_achievement_save(map_session_data *sd);
-int32 intif_achievement_reward(map_session_data *sd, struct s_achievement_db *adb);
+int32 intif_achievement_reward( const map_session_data* sd, struct s_achievement_db *adb );
 
 int32 intif_request_accinfo( int32 u_fd, int32 aid, int32 group_lv, char* query );
 
 // STORAGE
-bool intif_storage_request(map_session_data *sd, enum storage_type type, uint8 stor_id, uint8 mode);
-bool intif_storage_save(map_session_data *sd, struct s_storage *stor);
+bool intif_storage_request( const map_session_data* sd, enum storage_type type, uint8 stor_id, uint8 mode );
+bool intif_storage_save( const map_session_data* sd, const s_storage* stor );
 
 int32 CheckForCharServer(void);
 
