@@ -316,6 +316,8 @@
     <ClInclude Include="skills/mage/firewall.hpp" />
     <ClInclude Include="skills/mage/frostdiver.hpp" />
     <ClInclude Include="skills/mage/frostnova.hpp" />
+    <ClInclude Include="skills/mage/ganbantein.hpp" />
+    <ClInclude Include="skills/mage/gravitationfield.hpp" />
     <ClInclude Include="skills/mage/heavensdrive.hpp" />
     <ClInclude Include="skills/mage/icewall.hpp" />
     <ClInclude Include="skills/mage/jupitelthunder.hpp" />
@@ -323,6 +325,7 @@
     <ClInclude Include="skills/mage/lordofvermilion.hpp" />
     <ClInclude Include="skills/mage/meteorstorm.hpp" />
     <ClInclude Include="skills/mage/napalmbeat.hpp" />
+    <ClInclude Include="skills/mage/napalmvulcan.hpp" />
     <ClInclude Include="skills/mage/quagmire.hpp" />
     <ClInclude Include="skills/mage/safetywall.hpp" />
     <ClInclude Include="skills/mage/sense.hpp" />
@@ -592,6 +595,8 @@
     <ClCompile Include="skills/mage/firewall.cpp" />
     <ClCompile Include="skills/mage/frostdiver.cpp" />
     <ClCompile Include="skills/mage/frostnova.cpp" />
+    <ClCompile Include="skills/mage/ganbantein.cpp" />
+    <ClCompile Include="skills/mage/gravitationfield.cpp" />
     <ClCompile Include="skills/mage/heavensdrive.cpp" />
     <ClCompile Include="skills/mage/icewall.cpp" />
     <ClCompile Include="skills/mage/jupitelthunder.cpp" />
@@ -599,6 +604,7 @@
     <ClCompile Include="skills/mage/lordofvermilion.cpp" />
     <ClCompile Include="skills/mage/meteorstorm.cpp" />
     <ClCompile Include="skills/mage/napalmbeat.cpp" />
+    <ClCompile Include="skills/mage/napalmvulcan.cpp" />
     <ClCompile Include="skills/mage/quagmire.cpp" />
     <ClCompile Include="skills/mage/safetywall.cpp" />
     <ClCompile Include="skills/mage/sense.cpp" />

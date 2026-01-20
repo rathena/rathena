@@ -8234,14 +8234,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if (sd && ad.div_ > 0)
 							ad.div_ *= -1; //For players, damage is divided by number of hits
 						break;
-					case HW_NAPALMVULCAN:
-#ifdef RENEWAL
-						skillratio += -100 + 70 * skill_lv;
-						RE_LVL_DMOD(100);
-#else
-						skillratio += 25;
-#endif
-						break;
 					case NJ_KOUENKA:
 						skillratio -= 10;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
