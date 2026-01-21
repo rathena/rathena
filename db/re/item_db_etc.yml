@@ -85646,9 +85646,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bSkillAtk,"MG_FIREBOLT",50;
-      bonus2 bSkillAtk,"MG_COLDBOLT",50;
-      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",50;
+      if (getskilllv("NV_TRANSCENDENCE")>=5)
+         bonus5 bAutoSpell,"SO_PSYCHIC_WAVE",5,70,BF_SHORT|BF_NORMAL,1;
+      else
+         bonus5 bAutoSpell,"SO_PSYCHIC_WAVE",3,70,BF_SHORT|BF_NORMAL,1;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",30;
   - Id: 313406
     AegisName: Yorscalp_Str1
     Name: Strength of Yorscalp 1Lv
