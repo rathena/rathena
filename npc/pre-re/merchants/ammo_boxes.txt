@@ -16,7 +16,7 @@
 
 que_ng,187,149,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
 	mes "[Kenny]";
-	if (BaseClass == Job_Gunslinger) {
+	if (BaseFirst == Job_Gunslinger) {
 		mes "Welcome to my Magazine Shop.";
 		mes "As you may know, large numbers";
 		mes "of bullets can be carried more";

@@ -34,7 +34,7 @@ alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 			mes "It is cute and refreshing!";
 			close;
 		case 2:
-			if (BaseClass != Job_Merchant) {
+			if (BaseFirst != Job_Merchant) {
 				mes "[Jason]";
 				mes "Why do you want learn Pushcart Decoration? Don't disturb me!";
 				close;
@@ -132,7 +132,7 @@ alberta,47,37,5	script	Cart Remodel Expert	4_M_REPAIR,{
 		mes "[Jason]";
 		mes "Oh? Let me see.";
 		next;
-		if (BaseClass != Job_Merchant) {
+		if (BaseFirst != Job_Merchant) {
 			mes "[Jason]";
 			mes "Please come again after you can use the pushcart!";
 			close;

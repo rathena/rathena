@@ -73,7 +73,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 			close;
 		}
 	}
-	if (BaseJob == Job_Merchant) {
+	if (BaseSecond == Job_Merchant) {
 		mes "[Chief Mahnsoo]";
 		mes "Hello there!";
 		mes "How do you like";
@@ -86,7 +86,7 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 		mes "does it not?";
 		close;
 	}
-	else if (BaseJob != Job_Merchant && BaseJob != Job_Novice) {
+	else if (BaseSecond != Job_Merchant && BaseSecond != Job_Novice) {
 		mes "[Chief Mahnsoo]";
 		mes "We Merchants hate people who are two faced. It's bad for business.";
 		next;
@@ -496,13 +496,13 @@ S_GiveSerial:
 }
 
 alberta_in,28,29,2	script	Merchant Guildsman#mer	83,{
-	if (BaseJob == Job_Merchant) {
+	if (BaseSecond == Job_Merchant) {
 		mes "[Union Staff Kay]";
 		mes "Heya pal.";
 		mes "How ya doin'?";
 		close;
 	}
-	else if (BaseJob != Job_Merchant && BaseJob != Job_Novice) {
+	else if (BaseSecond != Job_Merchant && BaseSecond != Job_Novice) {
 		mes "[Union Staff Kay]";
 		mes "Hey you. We don't have any open positions for part time work. If you wanna earn some zeny, you'll hafta look elsewhere.";
 		close;

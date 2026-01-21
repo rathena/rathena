@@ -45,7 +45,7 @@ OnTouch_:
 			close;
 		}
 	}
-	if (BaseLevel > 94 && (strnpcinfo(0) == "#distorted_space_2" || BaseJob == Job_Wizard)) {
+	if (BaseLevel > 94 && (strnpcinfo(0) == "#distorted_space_2" || BaseSecond == Job_Wizard)) {
 		mes " - There is a strange distortion here - ";
 		next;
 		switch(select("Search the area.:Ignore it.")) {
@@ -119,7 +119,7 @@ function	script	F_Warlock	{
 	mes "[Master]";
 	mes "MushSartas Ir Cyamar";
 	mes "UdenLo";
-	if (BaseJob == Job_Wizard) {
+	if (BaseSecond == Job_Wizard) {
 		next;
 		mes " - The fairy with the green hair chants a spell. - ";
 		mes " - I feel like something special surrounds me. - ";
@@ -671,7 +671,7 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 		mes "My master is meditating now, please follow me.";
 		close;
 	} else if (job_wl == 9) {
-		if (BaseLevel < 99 || BaseJob != Job_Wizard) {
+		if (BaseLevel < 99 || BaseSecond != Job_Wizard) {
 			mes "[Master Egnoloria]";
 			mes "Hm...?";
 			mes "How did you come this far...";

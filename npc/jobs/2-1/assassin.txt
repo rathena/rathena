@@ -98,7 +98,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		warp "in_moc_16",18,14;
 		end;
 	}
-	if (BaseJob == Job_Thief && countitem(1008) == 0 && ASSIN_Q > 7) {
+	if (BaseSecond == Job_Thief && countitem(1008) == 0 && ASSIN_Q > 7) {
 		mes "[Assassin Expert 'Huey']";
 		mes "Hey, what happened...? How come you didn't bring the ^006699Necklace of Oblivion^000000? You're supposed to carry that with you, so where is it?";
 		next;
@@ -109,7 +109,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		mes "When you finally succeed in getting it, bring it to me! ^666666*Sigh...*^000000";
 		close;
 	}
-	if (BaseJob == Job_Thief && countitem(1008) > 0 && ASSIN_Q > 7) {
+	if (BaseSecond == Job_Thief && countitem(1008) > 0 && ASSIN_Q > 7) {
 		mes "[Assassin Expert 'Huey']";
 		mes "Well well well, you got it. Congratulations! But since it's been clearly scratched, I can't accept it. You'll never become an Assassin!";
 		next;
@@ -136,7 +136,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		mes "Now! Do your best to be a great Assassin! Travel with faith and kill with dignity. Come by anytime and pay us a visit. Once again, congratulations.";
 		close;
 	}
-	else if (countitem(1008) > 0 && BaseJob == Job_Thief && ASSIN_Q < 7) {
+	else if (countitem(1008) > 0 && BaseSecond == Job_Thief && ASSIN_Q < 7) {
 		mes "[Ferocious-looking guy]";
 		mes "Eh?";
 		mes "What do you want?";
@@ -166,17 +166,17 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 		mes "What brings you here?";
 		mes "I don't think I like the way you're looking at me... Punk.";
 		next;
-		if (BaseClass == Job_Novice) {
+		if (BaseFirst == Job_Novice) {
 			mes "[Ferocious-looking guy]";
 			mes "Hey Newbie. You should really get out of here as soon as you can. I can't guarantee your safety.";
 			close;
 		}
-		else if (BaseClass == Job_Swordman) {
+		else if (BaseFirst == Job_Swordman) {
 			mes "[Ferocious-looking guy]";
 			mes "What brings a man of the sword to this place? Why don't you try smashing stuff somewhere else, ya lunkhead.";
 			close;
 		}
-		else if (BaseClass == Job_Mage) {
+		else if (BaseFirst == Job_Mage) {
 			mes "[Ferocious-looking guy]";
 			mes "Now what would a magic user be doing here?";
 			next;
@@ -184,7 +184,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 			mes "There's a library in Prontera and Juno where you're welcome, so why don't you make like a magic trick and disappear?";
 			close;
 		}
-		else if (BaseClass == Job_Archer) {
+		else if (BaseFirst == Job_Archer) {
 			mes "[Ferocious-looking guy]";
 			mes "Well well well.";
 			mes "Look at that purdy bow.";
@@ -193,17 +193,17 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 			mes "There aren't many Bowmen with the gall to even come close to this place. Well, what do you think you're doin' here?!";
 			close;
 		}
-		else if (BaseClass == Job_Acolyte) {
+		else if (BaseFirst == Job_Acolyte) {
 			mes "[Ferocious-looking guy]";
 			mes "I thought something smelled funny. What's a servant of God doing in this place? You don't belong here.";
 			close;
 		}
-		else if (BaseClass == Job_Merchant) {
+		else if (BaseFirst == Job_Merchant) {
 			mes "[Ferocious-looking guy]";
 			mes "We don't like greedy people around these parts. You better sell your stuff somewhere else, Moneybags.";
 			close;
 		}
-		else if (BaseJob == Job_Rogue) {
+		else if (BaseSecond == Job_Rogue) {
 			mes "[Ferocious-looking guy]";
 			mes "You look like you don't have a care in the world. Well, I hope you enjoy your rest while you stay here. It's okay, since the Rogue and Assassin Guilds have always gotten along pretty well.";
 			next;
@@ -217,7 +217,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 			mes "We promised that we'd be together forever. ^666666*Sigh...*^000000 I don't even think she remembers that promise anymore. Then again, we were pretty young back then...";
 			close;
 		}
-		else if (BaseJob == Job_Assassin) {
+		else if (BaseSecond == Job_Assassin) {
 			mes "[Assassin Expert 'Huey']";
 			mes "Hey, I remember you~";
 			mes "Wasn't your name, umm, I remember 'cause it sounded funny to me...";
@@ -229,7 +229,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 			mes "Unfortunately, I don't have any requests for you at this time from the guild. Just keep focusing on your training. Till then, see ya.";
 			close;
 		}
-		else if (BaseJob == Job_Thief && JobLevel > 39) {
+		else if (BaseSecond == Job_Thief && JobLevel > 39) {
 			if (SkillPoint) {
 				mes "[Ferocious-looking guy]";
 				mes "You can't change your job if you still have unused skill points from First Job. You better use up those skill points first.";
@@ -1643,7 +1643,7 @@ OnTouch_:
 		savepoint "morocc",100,100,1,1;
 	else
 		savepoint "moc_ruins",79,99,1,1;
-	if (ASSIN_Q == 7 && BaseJob == Job_Thief) {
+	if (ASSIN_Q == 7 && BaseSecond == Job_Thief) {
 		ASSIN_Q = 8;
 		mes "[Guildmaster]";
 		mes "Welcome.";

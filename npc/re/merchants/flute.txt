@@ -20,7 +20,7 @@
 //============================================================
 -	script	Falcon Flute Trader::fflute	-1,{
 	mes "[Falcon Flute Trader]";
-	if (BaseJob == Job_Hunter) {
+	if (BaseSecond == Job_Hunter) {
 		mes "Do you need a Falcon?";
 		mes "With a magical Flute, you can call your Falcon from anywhere!";
 		next;
@@ -79,7 +79,7 @@
 		mes "I'm sorry but you don't have enough money to buy a Falcon Flute, please come back when you have more money!";
 		close;
 	}
-	if (BaseJob == Job_Archer) {
+	if (BaseSecond == Job_Archer) {
 		mes "Hello, young one!";
 		mes "Currently I can't help you,";
 		mes "but why don't you return to me when you've become a great Hunter and learned how to handle Falcons properly?";

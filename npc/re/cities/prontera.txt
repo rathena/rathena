@@ -6,7 +6,7 @@
 //= 1.0 Initial release [kobra_k88]
 //= 1.2 added baby novice check [Lupus]
 //= 1.3 Spellchecked [massdriller]
-//= 1.4 Optimized. Novices > 20 BaseJob can go to Culvert, too [Lupus]
+//= 1.4 Optimized. Novices > 20 BaseSecond can go to Culvert, too [Lupus]
 //= 1.5 Added a Jawaii related npc [MasterOfMuppets]
 //= 1.6 Replaced sewer_prt with (MISC_QUEST & 8) [Lupus]
 //= 1.7 Removed Duplicates [Silent]

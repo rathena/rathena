@@ -336,7 +336,7 @@ function	script	F_KafTele	{
 //===================================================
 function	script	F_KafCart	{
 	// Ensure that the class wanting to rent a pushcart is a merchant
-	if (BaseClass != Job_Merchant) {
+	if (BaseFirst != Job_Merchant) {
 		mes "[Kafra Employee]";
 		mes "I'm sorry, but the";
 		mes "Pushcart rental service";

@@ -15,7 +15,7 @@
 //============================================================
 
 in_moc_16,14,27,5	script	Assassin#realman	884,{
-	if (BaseJob == Job_Assassin && ASSN_SK2 == 1) {
+	if (BaseSecond == Job_Assassin && ASSN_SK2 == 1) {
 		if (getskilllv("AS_VENOMKNIFE") == 0) {
 			mes "[Killtin]";
 			mes "Ah yes, that's why you";
@@ -99,7 +99,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 		close;
 	}
 	else {
-		if (BaseJob == Job_Assassin) {
+		if (BaseSecond == Job_Assassin) {
 			mes "[Killtin]";
 			mes "Hm? Ah, you're definitely";
 			mes "a member of the Assassin";
@@ -267,7 +267,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 				}
 			}
 		}
-		else if (BaseJob == Job_Thief) {
+		else if (BaseSecond == Job_Thief) {
 			mes "[Killtin]";
 			mes "A Thief...? Huh.";
 			mes "That's a respectable";
@@ -287,7 +287,7 @@ in_moc_16,14,27,5	script	Assassin#realman	884,{
 }
 
 in_moc_16,23,27,5	script	Assassin#realgirl	885,{
-	if (BaseJob == Job_Assassin && ASSN_SK == 7) {
+	if (BaseSecond == Job_Assassin && ASSN_SK == 7) {
 		if (getskilllv("AS_SONICACCEL") == 0) {
 			mes "[Esmille]";
 			mes "Mm? Ah, you've transcended";
@@ -709,7 +709,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 		}
 	}
 	else {
-		if (BaseJob == Job_Assassin) {
+		if (BaseSecond == Job_Assassin) {
 			mes "[Assassin]";
 			mes "Ah. Hello, comrade.";
 			mes "Have you heard about";

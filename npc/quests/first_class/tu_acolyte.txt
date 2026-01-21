@@ -28,7 +28,7 @@
 //============================================================
 prt_church,179,15,1	script	Priest Praupin	4_M_MINISTER,{
 	mes "[Priest Praupin]";
-	if(BaseJob != Job_Acolyte){
+	if(BaseSecond != Job_Acolyte){
 		if(tu_acolyte01 == 25){
 			mes "Oh...!";
 			mes "You're "+strcharinfo(0)+" !";
@@ -1328,7 +1328,7 @@ monk_in,103,176,7	script	Karven	1_M_PASTOR,{
 //============================================================
 prt_monk,219,164,3	script	Gloria#tu	4_F_SISTER,{
 	mes "[Gloria]";
-	if(BaseJob != Job_Acolyte){
+	if(BaseSecond != Job_Acolyte){
 		mes "Hi, hi~";
 		mes "I'm Gloria.";
 		mes "You wanna know";
@@ -1401,7 +1401,7 @@ prt_monk,219,164,3	script	Gloria#tu	4_F_SISTER,{
 //============================================================
 prt_monk,153,210,3	script	Cleope Verce	4_F_SISTER,{
 	mes "[Cleope Verce]";
-	if(BaseJob == Job_Acolyte){
+	if(BaseSecond == Job_Acolyte){
 		if (JobLevel < 40) {
 			if (BaseLevel < 26) {
 				mes "Oh my.. ";
@@ -1575,7 +1575,7 @@ prt_monk,153,210,3	script	Cleope Verce	4_F_SISTER,{
 //============================================================
 prt_monk,217,123,0	script	#tu_monk	HIDDEN_WARP_NPC,10,10,{
 OnTouch_:
-	if(BaseJob == Job_Acolyte){
+	if(BaseSecond == Job_Acolyte){
 		switch(tu_acolyte01){
 		case 4:
 		case 10:
@@ -1595,7 +1595,7 @@ OnTouch_:
 // Eavesdrop
 //============================================================
 prt_monk,223,123,3	script	Eavesdrop#tu	HIDDEN_NPC,{
-	if(BaseJob != Job_Acolyte){
+	if(BaseSecond != Job_Acolyte){
 		mes "^3355FFThere's nothing here.^000000";
 		close;
 	}

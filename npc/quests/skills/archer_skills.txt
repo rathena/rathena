@@ -16,7 +16,7 @@
 //============================================================
 
 moc_ruins,118,99,5	script	Roberto	88,{
-	if (BaseClass == Job_Archer) {
+	if (BaseFirst == Job_Archer) {
 		if (getskilllv("AC_MAKINGARROW") == 1) {
 			mes "[Roberto]";
 			mes "Ooh, you're from my home town!";
@@ -34,7 +34,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 			mes "Then byebye~";
 			close;
 		}
-		else if (JobLevel >= 30 || (BaseJob == Job_Hunter || BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+		else if (JobLevel >= 30 || (BaseSecond == Job_Hunter || BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
 			mes "[Roberto]";
 			mes "Eh!";
 			mes " ";
@@ -142,7 +142,7 @@ moc_ruins,118,99,5	script	Roberto	88,{
 }
 
 payon,103,63,3	script	Jason	88,3,3,{
-	if (BaseClass == Job_Archer) {
+	if (BaseFirst == Job_Archer) {
 		if (getskilllv("AC_CHARGEARROW") == 1) {
 			mes "[Jason]";
 			mes "Eh, we meet again.";
@@ -153,7 +153,7 @@ payon,103,63,3	script	Jason	88,3,3,{
 			mes "Ehhhh... don't come any more ehh...";
 			close;
 		}
-		else if (JobLevel >= 35 || (BaseJob == Job_Hunter || BaseJob == Job_Bard || BaseJob == Job_Dancer)) {
+		else if (JobLevel >= 35 || (BaseSecond == Job_Hunter || BaseSecond == Job_Bard || BaseSecond == Job_Dancer)) {
 			mes "[Jason]";
 			mes "Darn... my wound isn't healing.";
 			mes "Bleh.. I was too careless... ";

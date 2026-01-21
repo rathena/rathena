@@ -262,7 +262,7 @@ payon,215,102,3	script	Moohyun#job_star	828,3,3,{
 		mes "I'm expecting great things.";
 		close;
 	}
-	else if (BaseJob == Job_Star_Gladiator) {
+	else if (BaseSecond == Job_Star_Gladiator) {
 		mes "[Moohyun]";
 		mes "Hey, how have you";
 		mes "been doing? Attuned";
@@ -339,7 +339,7 @@ OnTouch_:
 			close;
 		}
 	}
-	else if (BaseJob == Job_Star_Gladiator) {
+	else if (BaseSecond == Job_Star_Gladiator) {
 		mes "[Moohyun]";
 		mes "How's it going, warrior?";
 		mes "Please continue to use";
@@ -735,7 +735,7 @@ comodo,172,230,3	script	Wandering Master#job_sta	730,{
 		mes "be the warrior I'm seeking!";
 		close;
 	}
-	else if (BaseJob == Job_Star_Gladiator) {
+	else if (BaseSecond == Job_Star_Gladiator) {
 		mes "[Moogang]";
 		mes "Oh, it's very nice to";
 		mes "see you again. So where";

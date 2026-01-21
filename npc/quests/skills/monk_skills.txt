@@ -14,7 +14,7 @@
 //============================================================
 
 prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	753,{
-	if (BaseJob == Job_Monk) {
+	if (BaseSecond == Job_Monk) {
 		if (MONK_SK == 7) {
 			mes "[Monk]";
 			mes "To take the time to";
@@ -212,7 +212,7 @@ prt_monk,270,198,3	script	Apprentice Monk#qsk_mo	753,{
 }
 
 monk_test,316,69,5	script	Monk#qsk_mo	823,{
-	if (BaseJob == Job_Monk) {
+	if (BaseSecond == Job_Monk) {
 		if (MONK_SK == 6) {
 			mes "[Monk]";
 			mes "How did you convince";

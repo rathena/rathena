@@ -28,7 +28,7 @@
 //============================================================
 
 prt_church,103,88,3	script	Praying Minister#arch	60,{
-	if (BaseJob != Job_Priest) {
+	if (BaseSecond != Job_Priest) {
 		if (Class == Job_Arch_Bishop || Class == Job_Arch_Bishop_T || Class == Job_Baby_Arch_Bishop) {
 			mes "[Praying Minister]";
 			mes "Ah! An Archbishop.";
@@ -772,7 +772,7 @@ job3_arch01,29,34,3	script	Valkyrie#arch	403,{
 		mes "- and come for the challenge again. -";
 		close;
 	}
-	if ((BaseLevel != 99) || (JobLevel < 50) || (BaseJob != Job_Priest)) {
+	if ((BaseLevel != 99) || (JobLevel < 50) || (BaseSecond != Job_Priest)) {
 		warp "odin_tem02",282,263;
 		end;
 	}
@@ -1426,7 +1426,7 @@ OnKill:
 
 job3_arch02,307,200,0	script	#arch_3_02	139,5,5,{
 OnTouch:
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		mapannounce "job3_arch02","Skogul: You are my guest!",bc_map,"0xFF0000";
 		areamonster "job3_arch02",306,199,308,201,"Skogul",1761,1,"#arch_3_02::OnMyMobDead";
 	}

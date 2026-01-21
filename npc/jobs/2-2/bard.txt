@@ -44,8 +44,8 @@ comodo,226,123,5	script	Wandering Bard	741,{
 		cutin "job_bard_aiolo01",255;
 		end;
 	}
-	else if(BaseJob != Job_Archer) {
-		if(BaseJob == Job_Bard) {
+	else if(BaseSecond != Job_Archer) {
+		if(BaseSecond == Job_Bard) {
 			mes "[Lalo]";
 			mes "Ooh hey! How's your singing these days?";
 			mes "I wonder if your voice got any better.";

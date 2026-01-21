@@ -14,7 +14,7 @@
 //============================================================
 
 prt_in,85,99,3	script	Knight#kabuto	734,{
-	if (BaseJob == Job_Knight) {
+	if (BaseSecond == Job_Knight) {
 		if (KNGT_SK == 10) {
 			mes "[Essofeit]";
 			mes "Ah, it must be grand to";

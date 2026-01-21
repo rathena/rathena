@@ -40,8 +40,8 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 		mes "Congratulations and good luck with your life!";
 		close;
 	}
-	if (BaseJob != Job_Mage) {
-		if (BaseJob == Job_Wizard) {
+	if (BaseSecond != Job_Mage) {
+		if (BaseSecond == Job_Wizard) {
 			mes "[Catherine]";
 			mes "Since you're already a Wizard, you don't have any more business with me...?";
 			mes "Now, excuse me.";
@@ -53,7 +53,7 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 				mes "Well, if you fix me up with a cute guy... I'd appreciate it...hohoho!.";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "[Wizard Guildsman]";
 			mes "Oh my goodness, it's a novice~ ain't you the cutest little thing.";
 			mes "By the way honey, this place is for Wizards.";
@@ -449,8 +449,8 @@ gef_tower,111,37,4	script	Wizard Guildsman	70,{
 }
 
 gef_tower,102,24,2	script	Gloomy Wizard	735,{
-	if (BaseJob != Job_Mage) {
-		if (BaseJob == Job_Wizard) {
+	if (BaseSecond != Job_Mage) {
+		if (BaseSecond == Job_Wizard) {
 			mes "[Raulel]";
 			mes "*Cough* *cough* what do you want?";
 			mes "If you are a person that uses magic, then you need to make sure you are well informed about it.";
@@ -472,7 +472,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			}
 			close;
 		}
-		else if (BaseJob == Job_Priest) {
+		else if (BaseSecond == Job_Priest) {
 			mes "[Raulel]";
 			mes "Go away, one who works for the Church!";
 			mes "Magic repels Holy power, jeez...your messing up my aura.";
@@ -482,7 +482,7 @@ gef_tower,102,24,2	script	Gloomy Wizard	735,{
 			mes "Don't come any closer, just leave!";
 			close;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			mes "[Raulel]";
 			mes "Why did a little one like you come here?!";
 			mes "Get lost! ~Hahahahaha";
@@ -1660,8 +1660,8 @@ OnTimer9000:
 }
 
 gef_tower,107,36,4	script	White Dog#wiz	81,{
-	if (BaseJob != Job_Mage) {
-		if (BaseJob == Job_Wizard) {
+	if (BaseSecond != Job_Mage) {
+		if (BaseSecond == Job_Wizard) {
 			cutin "job_wizard_maria01",2;
 			mes "[Maria]";
 			mes "Instead of sticking around here, wouldn't it be better to go out and test how strong you've become?";
@@ -1672,7 +1672,7 @@ gef_tower,107,36,4	script	White Dog#wiz	81,{
 			cutin "job_wizard_maria01",255;
 			end;
 		}
-		else if (BaseClass == Job_Novice) {
+		else if (BaseFirst == Job_Novice) {
 			cutin "job_wizard_maria01",2;
 			mes "[Dog]";
 			mes "What? Kiddo!";

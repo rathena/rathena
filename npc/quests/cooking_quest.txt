@@ -43,7 +43,7 @@
 		//EnableItemMove;
 		end;
 	}
-	if (BaseJob == Job_Novice) {
+	if (BaseSecond == Job_Novice) {
 		if (Sex == SEX_MALE) {
 			cutin "orleans_5",0;
 			mes "[Charles Orleans]";

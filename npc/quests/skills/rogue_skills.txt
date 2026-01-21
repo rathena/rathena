@@ -132,7 +132,7 @@ OnTouch_:
 }
 
 in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
-	if (BaseJob == Job_Rogue) {
+	if (BaseSecond == Job_Rogue) {
 		if (ROG_SK == 12 && Upper == 1) {
 			mes "[Haijara Greg]";
 			mes "Hm? Ah, amnesia as";
@@ -542,7 +542,7 @@ in_rogue,355,179,0	script	Haijara Greg#rogueguild	46,{
 }
 
 in_rogue,152,29,0	script	Louis Greg#rogueguild	84,{
-	if (BaseJob == Job_Rogue || Class == Job_Thief_High) {
+	if (BaseSecond == Job_Rogue || Class == Job_Thief_High) {
 		if (ROG_SK < 1) {
 			mes "[Louis Greg]";
 			mes "My father just...";
@@ -697,7 +697,7 @@ in_rogue,152,29,0	script	Louis Greg#rogueguild	84,{
 }
 
 in_rogue,268,125,2	script	Thor Greg#rogueguild	86,{
-	if (BaseJob == Job_Rogue || Class == Job_Thief_High) {
+	if (BaseSecond == Job_Rogue || Class == Job_Thief_High) {
 		if (ROG_SK < 1) {
 			mes "[Thor Greg]";
 			mes "Where did father go?";
@@ -889,7 +889,7 @@ in_rogue,268,125,2	script	Thor Greg#rogueguild	86,{
 }
 
 in_rogue,181,114,3	script	Jay Greg#rogueguild	85,{
-	if (BaseJob == Job_Rogue || Class == Job_Thief_High) {
+	if (BaseSecond == Job_Rogue || Class == Job_Thief_High) {
 		if (ROG_SK < 1) {
 			mes "[Jay Greg]";
 			mes "My father must be hidden";

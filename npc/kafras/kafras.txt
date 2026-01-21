@@ -600,7 +600,7 @@ niflheim,202,180,3	script	Kafra Employee::kaf_niflheim	791,{
 // - Byalan Island
 izlu2dun,106,58,8	script	Kafra Employee::kaf_izlu2dun	4_F_KAFRA2,{
 	cutin "kafra_03",2;
-	if (!checkre(0) && BaseJob == Job_Novice && job_merchant_q2 > 0) {
+	if (!checkre(0) && BaseSecond == Job_Novice && job_merchant_q2 > 0) {
 		// Merchant Job Change Quest
 		// function F_MercKafra is found in /pre-re/jobs/1-1/merchant.txt
 		callfunc "F_MercKafra";

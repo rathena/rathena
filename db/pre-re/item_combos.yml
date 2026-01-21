@@ -273,7 +273,7 @@ Body:
       bonus bStr,2;
       bonus bDef,5;
       bonus bMdef,5;
-      if (BaseClass == Job_Swordman)
+      if (BaseFirst == Job_Swordman)
          bonus bDef,6;
   - Combos:
       - Combo:
@@ -821,7 +821,7 @@ Body:
       bonus bMaxSPrate,7;
       bonus2 bSkillAtk,"MC_MAMMONITE",20;
       bonus bSPDrainValue,1;
-      if (BaseJob == Job_Alchemist) {
+      if (BaseSecond == Job_Alchemist) {
          bonus3 bAutoSpell,"BS_ADRENALINE",1,10;
          bonus2 bAddMonsterDropItem,7139,3;
          bonus2 bAddMonsterDropItem,905,10;
@@ -839,7 +839,7 @@ Body:
       bonus2 bSkillAtk,"RG_BACKSTAP",10;
       if (getskilllv("RG_STRIPARMOR") == 5)
          bonus3 bAutoSpell,"RG_STRIPARMOR",5,50;
-         if (BaseJob == Job_Rogue) {
+         if (BaseSecond == Job_Rogue) {
             bonus bUseSPrate,-20;
             bonus3 bAutoSpell,"RG_INTIMIDATE",1,-20;
          }
@@ -890,7 +890,7 @@ Body:
       bonus bAspdRate,5;
       bonus bSpeedRate,25;
       bonus bSPDrainValue,1;
-      if (BaseClass == Job_Thief)
+      if (BaseFirst == Job_Thief)
          bonus bNoGemStone;
   - Combos:
       - Combo:
@@ -904,7 +904,7 @@ Body:
       bonus bDex,3;
       bonus bLongAtkRate,20;
       bonus bPerfectHitAddRate,20;
-      if (BaseClass == Job_Archer) {
+      if (BaseFirst == Job_Archer) {
          bonus2 bExpAddRace,RC_Brute,5;
          bonus2 bComaRace,RC_Brute,100;
          bonus2 bComaRace,RC_Player_Doram,100;
@@ -921,7 +921,7 @@ Body:
       bonus2 bSkillAtk,"CG_ARROWVULCAN",5;
       bonus2 bSkillAtk,"DC_THROWARROW",10;
       bonus2 bSkillAtk,"BA_MUSICALSTRIKE",10;
-      if (BaseJob == Job_Bard || BaseJob == Job_Dancer)
+      if (BaseSecond == Job_Bard || BaseSecond == Job_Dancer)
          bonus3 bAutoSpellWhenHit,"CG_TAROTCARD",2,50;
   - Combos:
       - Combo:
@@ -934,7 +934,7 @@ Body:
       bonus bVit,10;
       bonus bCastrate,-10;
       bonus bUseSPRate,-10;
-      if (BaseClass == Job_Acolyte) {
+      if (BaseFirst == Job_Acolyte) {
          bonus2 bExpAddRace,RC_Undead,5;
          bonus2 bExpAddRace,RC_Demon,5;
          bonus2 bSubRace,RC_Undead,30;
@@ -952,7 +952,7 @@ Body:
       bonus bBaseAtk,25;
       bonus3 bAutoSpell,"AL_CRUCIS",5,10;
       bonus2 bSkillAtk,"MO_EXTREMITYFIST",10;
-      if (BaseJob == Job_Monk) {
+      if (BaseSecond == Job_Monk) {
          bonus bUseSPrate,-10;
          bonus bNoCastCancel;
       }
@@ -967,7 +967,7 @@ Body:
       bonus bLuk,10;
       bonus bSPDrainValue,2;
       bonus2 bSkillAtk,"MC_MAMMONITE",20;
-      if (BaseClass == Job_Merchant) {
+      if (BaseFirst == Job_Merchant) {
          bonus2 bAddMonsterDropItem,617,5;
          bonus bMagicDamageReturn,20;
       }
@@ -986,7 +986,7 @@ Body:
       bonus2 bSkillAtk,"MG_COLDBOLT",10;
       bonus2 bSkillAtk,"MG_FIREBOLT",10;
       bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",10;
-      if (BaseClass == Job_Mage) {
+      if (BaseFirst == Job_Mage) {
          bonus bMatkRate,3;
          bonus bCastrate,-15;
       }
@@ -1008,7 +1008,7 @@ Body:
       bonus bInt,3;
       bonus2 bSkillAtk,"WZ_HEAVENDRIVE",10;
       bonus2 bSkillAtk,"MG_THUNDERSTORM",10;
-      if (BaseJob == Job_Sage) {
+      if (BaseSecond == Job_Sage) {
          bonus bMagicDamageReturn,20;
          bonus2 bAddMonsterDropItem,716,100;
          bonus2 bAddMonsterDropItem,715,100;
@@ -1036,7 +1036,7 @@ Body:
       bonus bHPrecovRate,50;
       bonus3 bAutoSpell,"BS_WEAPONPERFECT",1,3;
       bonus2 bAddMonsterDropItem,501,500;
-      if (BaseClass == Job_Swordman)
+      if (BaseFirst == Job_Swordman)
          bonus2 bAddItemGroupHealRate,IG_Potion,50;
   - Combos:
       - Combo:
@@ -1074,7 +1074,7 @@ Body:
       bonus2 bSkillAtk,"PA_SHIELDCHAIN",10;
       bonus2 bSkillAtk,"PA_SACRIFICE",10;
       bonus bCastrate,-10;
-      if (BaseJob == Job_Crusader)
+      if (BaseSecond == Job_Crusader)
          bonus bDefEle,Ele_Holy;
   - Combos:
       - Combo:

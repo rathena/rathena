@@ -760,7 +760,7 @@ morocc_in,166,76,3	script	Bartender#02	46,{
 //===================================================
 moc_fild16,195,281,4	script	Assassin Guardian#1::SinGuard	707,{
 	mes "[Assassin Guardian]";
-	if(BaseJob == Job_Assassin) {
+	if(BaseSecond == Job_Assassin) {
 		mes "Welcome.";
 		close;
 	}

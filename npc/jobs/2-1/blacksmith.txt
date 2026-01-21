@@ -30,7 +30,7 @@
 //= 2.2 Merged Jfunc, changed job numbers to constants [Lupus]
 //= 2.3 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
 //= 2.4 Several bugfixes with the help of Barron-Monster. [L0ne_W0lf]
-//= 2.4a Changed a BaseJob to baseclass. [L0ne_W0lf]
+//= 2.4a Changed a BaseSecond to baseclass. [L0ne_W0lf]
 //= 2.4b Further bug fixes with teh hel of Barron-Monster. [L0ne_W0lf]
 //= 2.4c More fixes courtosy of Micktu. [L0ne_W0lf]
 //= 2.4d Fixed an incorrect answer in the quiz. (Trojal) [L0ne_W0lf]
@@ -73,10 +73,10 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 	mes "and passion of our souls into";
 	mes "our craft. Our skills of melting metal into new weapons";
 	mes "and tools is truly a form of art!";
-	if (BaseClass >= Job_Thief) close;	// Custom expanded class check.
+	if (BaseFirst >= Job_Thief) close;	// Custom expanded class check.
 	next;
 
-	// Third class check - precedes other BaseClass dialogue.
+	// Third class check - precedes other BaseFirst dialogue.
 	if (Class >= Job_Rune_Knight && Class <= Job_Baby_Mechanic2) {
 		mes "[Altiregen]";
 		mes "You... look like a stranger. But somehow it seems that you're related to our guild. Haha~";
@@ -84,7 +84,7 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		close;
 	}
 
-	if (BaseClass == Job_Novice) {
+	if (BaseFirst == Job_Novice) {
 		mes "[Altiregen]";
 		if (Sex == SEX_FEMALE) {
 			mes "Oh~";
@@ -98,46 +98,46 @@ ein_in01,18,28,4	script	Guildsman#BLS	731,{
 		mes "First, you must become a Merchant before you can become a Blacksmith. Go to the city of Alberta to learn the Merchant trade.";
 		close;
 	}
-	else if (BaseClass == Job_Swordman) {
+	else if (BaseFirst == Job_Swordman) {
 		mes "[Altiregen]";
 		mes "Oh, are you interested in having a weapon forged? I'm sorry to disappoint you, but I actually have a lot of business to attend to.";
 		close;
 	}
-	else if (BaseClass == Job_Archer) {
+	else if (BaseFirst == Job_Archer) {
 		mes "[Altiregen]";
 		mes "Oh...";
 		mes "There's not much we can offer you here. And you can't really help out around here unless you know how to make stuff...";
 		close;
 	}
-	else if (BaseClass == Job_Mage) {
+	else if (BaseFirst == Job_Mage) {
 		mes "[Altiregen]";
 		mes "Oh? What's a magic user doing here? I'm surprised. Usually this kind of rough work is beneath you intellectual types.";
 		close;
 	}
-	else if (BaseClass == Job_Acolyte) {
+	else if (BaseFirst == Job_Acolyte) {
 		mes "[Altiregen]";
 		mes "Oh! Am I correct in assuming you're a member of the Clergy? Would you please bless me before you leave!";
 		close;
 	}
-	else if (BaseClass == Job_Thief) {
+	else if (BaseFirst == Job_Thief) {
 		mes "[Altiregen]";
 		mes "I'm sorry...";
 		mes "But there really isn't anything for you to steal here. Well, there are the Daggers we keep in the back, but...";
 		close;
 	}
-	else if (BaseJob == Job_Alchemist) {
+	else if (BaseSecond == Job_Alchemist) {
 		mes "[Altiregen]";
 		mes "So how's the pharmacy business going on recently?";
 		mes "Well, my forging business does not seem to grow any longer.";
 		close;
 	}
-	else if (BaseJob == Job_Blacksmith) {
+	else if (BaseSecond == Job_Blacksmith) {
 		mes "[Altiregen]";
 		mes "Oh! Long time no see.";
 		mes "Have you come to purchase supplies from Christopher? These days I'm stuck behind this desk. My body's itching to strike the ol' anvil.";
 		close;
 	}
-	else if (BaseJob == Job_Merchant) {
+	else if (BaseSecond == Job_Merchant) {
 		if (SkillPoint) {
 			mes "[Altiregen]";
 			mes "You can't change to the Blacksmith Job Class without first using all your skill points. Please come back after wisely using your skill points.";
@@ -300,7 +300,7 @@ ein_in01,201,27,3	script	Guildsman#alberta	63,{
 	mes "a Blacksmith by trade.";
 	mes "Nice to meet you!";
 	next;
-	if (BaseJob == Job_Merchant) {
+	if (BaseSecond == Job_Merchant) {
 		mes "[Geschupenschte]";
 		mes "Oh ho ho!";
 		mes "You're a Merchant!";

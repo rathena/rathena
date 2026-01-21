@@ -84,11 +84,11 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 	switch(select("Father, I want to be a Acolyte.:Acolyte Requirements.:Just looking around.")) {
 	case 1:
 		mes "[Father Mareusis]";
-		if (BaseJob == Job_Acolyte) {
+		if (BaseSecond == Job_Acolyte) {
 			mes "Are you feeling okay today? I can tell by your attire that you are already an Acolyte. You're not joking around, are you?";
 			close;
 		}
-		else if (BaseJob != Job_Novice) {
+		else if (BaseSecond != Job_Novice) {
 			mes "I'm sorry, but we can only accept Novices as applicants for the job change to Acolyte.";
 			close;
 		}
@@ -249,7 +249,7 @@ prt_church,184,41,4	script	Cleric#aco	60,{
 
 prt_fild03,365,255,2	script	Ascetic#aco	89,{
 	mes "[Father Rubalkabara]";
-	if (BaseJob == Job_Novice) {
+	if (BaseSecond == Job_Novice) {
 		if (job_acolyte_q == 6) {
 			mes "Please take care. They should know that you've met me by the time you arrive at the Prontera Sanctuary.";
 			next;
@@ -304,9 +304,9 @@ prt_fild03,365,255,2	script	Ascetic#aco	89,{
 			close;
 		}
 	}
-	else if (BaseJob == Job_Acolyte) callfunc "F_FatherRub";
+	else if (BaseSecond == Job_Acolyte) callfunc "F_FatherRub";
 	else {
-		if (BaseJob == Job_Priest) {
+		if (BaseSecond == Job_Priest) {
 			mes "Greetings.";
 			next;
 			mes "[Father Rubalkabara]";
@@ -326,7 +326,7 @@ prt_fild03,365,255,2	script	Ascetic#aco	89,{
 
 moc_fild07,41,355,4	script	Ascetic#2aco	95,{
 	mes "[Mother Mathilda]";
-	if (BaseJob == Job_Novice) {
+	if (BaseSecond == Job_Novice) {
 		if (job_acolyte_q == 7) {
 			mes "I will send a carrier pigeon to the Prontera Sanctuary. When you return, the Priest there should already have received my message.";
 			next;
@@ -376,9 +376,9 @@ moc_fild07,41,355,4	script	Ascetic#2aco	95,{
 			close;
 		}
 	}
-	else if (BaseJob == Job_Acolyte) callfunc "F_MotherMart";
+	else if (BaseSecond == Job_Acolyte) callfunc "F_MotherMart";
 	else {
-		if (BaseJob == Job_Priest) {
+		if (BaseSecond == Job_Priest) {
 			mes "Hello there~";
 			next;
 			mes "[Mother Mathilda]";
@@ -395,7 +395,7 @@ moc_fild07,41,355,4	script	Ascetic#2aco	95,{
 
 prt_fild00,208,218,6	script	Ascetic#3aco	98,{
 	mes "[Father Yosuke]";
-	if (BaseJob == Job_Novice) {
+	if (BaseSecond == Job_Novice) {
 		if (job_acolyte_q == 8) {
 			mes "What?";
 			next;
@@ -451,9 +451,9 @@ prt_fild00,208,218,6	script	Ascetic#3aco	98,{
 			close;
 		}
 	}
-	else if (BaseJob == Job_Acolyte) callfunc "F_FatherYos";
+	else if (BaseSecond == Job_Acolyte) callfunc "F_FatherYos";
 	else {
-		if (BaseJob == Job_Priest) {
+		if (BaseSecond == Job_Priest) {
 			mes "Hey...";
 			next;
 			mes "[Father Yosuke]";

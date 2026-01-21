@@ -1825,7 +1825,7 @@ paramk,130,98,3	script	Mist the Hunter#unm03	4_M_JOB_HUNTER,{
 	if (Upper == 1) .@price = 2500; // Scarf Falcon
 	if (Upper == 2) .@price = 2500; // Baby Falcon
 	mes "[Mist, the Hunter]";
-	if (BaseJob == Job_Hunter) {
+	if (BaseSecond == Job_Hunter) {
 		if (checkoption(Option_Wug) || checkoption(Option_Wugrider)) {
 			mes "Um...";
 			mes "You can't rent a Falcon";

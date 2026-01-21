@@ -71,9 +71,9 @@ geffen_in,164,109,0	script	Wizard Stanza	64,{
 	mes "I sense the presence of a mighty spirit. Can it be you...?";
 	next;
 	mes "[Stanza]";
-	if (BaseJob == Job_Mage)
+	if (BaseSecond == Job_Mage)
 		mes "It seems that you are trained in the mystic arts. Magic... Its power is governed by the law of cause and effect.";
-	else if (BaseJob == Job_Acolyte) {
+	else if (BaseSecond == Job_Acolyte) {
 		mes "Ah...";
 		mes "I see that you wield holy power in one way or another. I suppose Holy power may be considered one form of mystical energy.";
 	}
@@ -819,7 +819,7 @@ geffen_in,79,76,2	script	Merchant Daven	120,{
 	next;
 	switch(select("Mages...?:Economy?:Who are you?")) {
 	case 1:
-		if (BaseJob == Job_Mage) {
+		if (BaseSecond == Job_Mage) {
 			mes "[Merchant Daven]";
 			mes "Mages are wielders of magic. But you would know more about that topic now, wouldn't you?";
 		}
@@ -904,7 +904,7 @@ geffen_in,114,73,5	script	Hadenheim	709,{
 	mes "I mean, all these new cities are being discovered by explorers, so import and export trade is really booming!";
 	next;
 	mes "[Hans Handenheim]";
-	if (BaseJob == Job_Merchant)
+	if (BaseSecond == Job_Merchant)
 		mes "You're in the trading business yourself, right? So of course you'd understand that we're in a Golden Age of trade!";
 	else if (Class == Job_Novice) {
 		mes "I guess...";

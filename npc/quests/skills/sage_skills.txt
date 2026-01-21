@@ -15,7 +15,7 @@
 //============================================================
 
 yuno_in03,176,24,3	script	Mischna	755,{
-	if(BaseJob != Job_Sage) {
+	if(BaseSecond != Job_Sage) {
 		mes "[Mishuna]";
 		mes "Good day, I'm Mishuna, one";
 		mes "of the instructors here in the";

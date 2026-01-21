@@ -19,7 +19,7 @@
 
 alberta,196,133,4	script	Bard#job_min	486,{
 	if (job_min == 0) {
-		if (BaseJob == Job_Bard && BaseLevel > 98 && JobLevel > 49) {
+		if (BaseSecond == Job_Bard && BaseLevel > 98 && JobLevel > 49) {
 			mes "[Bard]";
 			mes "The voice of heaven revolves around in my ears";
 			mes "like a wandering wind,";
@@ -1805,7 +1805,7 @@ OnTouch:
 			mes "How did you lose levels?";
 			close;
 		}
-		if (BaseJob != Job_Bard) {
+		if (BaseSecond != Job_Bard) {
 			mes "[Karian]";
 			mes "Hey... you changed your outfit?";
 			mes "How'd you do that?";
@@ -1851,7 +1851,7 @@ prt_in,94,172,4	script	Karian#job_min3	480,{
 			mes "Please unequip your riding pet and try again!";
 			close;
 		}
-		if (BaseJob != Job_Bard) {
+		if (BaseSecond != Job_Bard) {
 			mes "Huh?";
 			close;
 		}

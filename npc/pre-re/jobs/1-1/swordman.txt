@@ -95,12 +95,12 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 	next;
 	switch(select("Job Change:About Swordman.:About the Job requirements.:Cancel.")) {
 	case 1:
-		if (BaseJob == Job_Swordman) {
+		if (BaseSecond == Job_Swordman) {
 			mes "[Swordman]";
 			mes "Job change? Muhahaha! But you're already a Swordman! Be proud and be strong!";
 			close;
 		}
-		else if (BaseJob != Job_Novice) {
+		else if (BaseSecond != Job_Novice) {
 			mes "[Swordman]";
 			mes "Haha! Oh boy. I'm flattered, but you already have another job! Still, I can't blame you...";
 			close;
@@ -179,8 +179,8 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 	case 3:
 		mes "[Swordman]";
 		mes "Hmmm...";
-		if (BaseJob != Job_Novice) {
-			if (BaseJob == Job_Swordman)
+		if (BaseSecond != Job_Novice) {
+			if (BaseSecond == Job_Swordman)
 				mes "But there's no need to tell you the requirements. You've met them and already became a Swordman! Well, anyway...";
 			else
 				mes "It's too late for you to become a Swordman. You already have another job. Still, there's no harm in telling you...";
@@ -205,11 +205,11 @@ izlude_in,74,172,4	script	Swordman#swd_1	119,{
 
 izlude_in,62,170,6	script	Swordman#swd_2	85,{
 	mes "[Swordman]";
-	if (BaseJob == Job_Swordman) {
+	if (BaseSecond == Job_Swordman) {
 		mes "Sorry guy, but I can only allow Novices to enter the Test Hall.";
 		close;
 	}
-	else if (BaseJob != Job_Novice) {
+	else if (BaseSecond != Job_Novice) {
 		mes "Who the hell are you?! Nobody, other than Novices, is permitted to come in here!";
 		close;
 	}
@@ -264,13 +264,13 @@ izlude_in,30,175,4	script	Swordman#swd_3	92,{
 
 izlude_in,30,163,0	script	Test Hall Staff#swd_1	105,{
 	mes "[Test Hall Staff]";
-	if (BaseJob == Job_Swordman) {
+	if (BaseSecond == Job_Swordman) {
 		mes "Hm? How did you get inside? You're not supposed to be in here, so please leave now.";
 		close2;
 		warp "izlude_in",66,170;
 		end;
 	}
-	else if (BaseJob != Job_Novice) {
+	else if (BaseSecond != Job_Novice) {
 		mes "Who are you?! This place is for the Swordman Test! You're not allowed to be in here! Leave now!";
 		close2;
 		warp "izlude_in",66,170;

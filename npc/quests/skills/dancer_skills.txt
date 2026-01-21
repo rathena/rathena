@@ -16,7 +16,7 @@
 //============================================================
 
 comodo,204,172,5	script	Canell#qsk_dan01	724,{
-	if (BaseJob == Job_Dancer && JobLevel > 39) {
+	if (BaseSecond == Job_Dancer && JobLevel > 39) {
 		if (DANCER_SK == 0) {
 			mes "[Canell]";
 			mes "It's well known that we must";
@@ -364,7 +364,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 			close;
 		}
 	}
-	else if (BaseJob == Job_Dancer && JobLevel < 40) {
+	else if (BaseSecond == Job_Dancer && JobLevel < 40) {
 		mes "[Canell]";
 		mes "Oh, you're such an";
 		mes "adorable little girl! Ah,";
@@ -375,7 +375,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 		close;
 	}
 
-	else if (BaseJob != Job_Dancer) {
+	else if (BaseSecond != Job_Dancer) {
 		if (Sex == SEX_FEMALE) {
 			mes "[Canell]";
 			mes "Oh, what a cute";
@@ -401,7 +401,7 @@ comodo,204,172,5	script	Canell#qsk_dan01	724,{
 }
 
 prontera,183,333,1	script	Aelle#qsk_dan02	79,{
-	if (BaseJob == Job_Dancer) {
+	if (BaseSecond == Job_Dancer) {
 		if (DANCER_SK == 3) {
 			mes "[Aelle]";
 			mes "Pssst, hey! I got";

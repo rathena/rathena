@@ -78,7 +78,7 @@ S_Casing:
 	.@bullet_count = countitem(.@bullet_id);
 	.@pack_count = .@bullet_count / 500;
 
-	if (.@bullet_count < 500 || getequipid(EQI_AMMO) != -1 || BaseClass != Job_Gunslinger) {
+	if (.@bullet_count < 500 || getequipid(EQI_AMMO) != -1 || BaseFirst != Job_Gunslinger) {
 		mes "[Kenny]";
 		mes "Hey~ You need the exact amount of items to exchange. Go get some more.";
 		mes "You must have 500 or more of ^FF0000" + .@bullet_str$ + "^000000, ok? Also, make sure not to ^FF0000wear^000000 them if you want to exchange.";
@@ -143,7 +143,7 @@ S_Sphere_Exchange:
 	.@old_count = countitem(.@old_id);
 	.@new_count = .@old_count / 10;
 
-	if (.@old_count < 10 || getequipid(EQI_AMMO) != -1 || BaseClass != Job_Gunslinger) {
+	if (.@old_count < 10 || getequipid(EQI_AMMO) != -1 || BaseFirst != Job_Gunslinger) {
 		mes "[Kenny]";
 		mes "Hey~ You need the exact amount of items to exchange. Go get some more.";
 		mes "You must have 10 or more of ^FF0000" + .@old_str$ + "^000000, ok? Also, make sure not to ^FF0000wear^000000 them if you want to exchange.";
@@ -190,7 +190,7 @@ S_Old_Sphere_Exchange:
 	.@new_str$ = getitemname(.@new_id);
 	.@old_count = countitem(.@old_id);
 
-	if (.@old_count < 1 || getequipid(EQI_AMMO) != -1 || BaseClass != Job_Gunslinger) {
+	if (.@old_count < 1 || getequipid(EQI_AMMO) != -1 || BaseFirst != Job_Gunslinger) {
 		mes "[Kenny]";
 		mes "Hey~ You need the exact amount of items to exchange. Go get some more.";
 		mes "You must have 1 or more of ^FF0000" + .@old_str$ + "^000000, ok? Also, make sure not to ^FF0000wear^000000 them if you want to exchange.";
@@ -238,7 +238,7 @@ S_Slug_Exchange:
 	.@count = countitem(.@slug_id);
 	.@new_count = .@count / .@req_count;
 
-	if (.@count < .@req_count || getequipid(EQI_AMMO) != -1 || BaseClass != Job_Gunslinger) {
+	if (.@count < .@req_count || getequipid(EQI_AMMO) != -1 || BaseFirst != Job_Gunslinger) {
 		mes "[Kenny]";
 		mes "Hey~ You need the exact amount of items to exchange. Go get some more.";
 		mes "You must have " + .@req_count + " or more of ^FF0000" + .@slug_str$ + "^000000, ok? Also, make sure not to ^FF0000wear^000000 them if you want to exchange.";

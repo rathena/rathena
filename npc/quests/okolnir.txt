@@ -420,7 +420,7 @@ OnTouch_:
 	
 	function	SMonster	{
 	
-		switch (BaseClass) {
+		switch (BaseFirst) {
 			case 1: set .@m, 1652; break;
 			case 2: set .@m, 1663; break;
 			case 3: set .@m, 1662; break;

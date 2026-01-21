@@ -19,7 +19,7 @@
 //============================================================
 
 yuno_in04,33,108,4	script	Pisruik#qsk_al	883,{
-	if (BaseJob == Job_Alchemist) {
+	if (BaseSecond == Job_Alchemist) {
 		if (JobLevel < 40) {
 			mes "[Pisruik]";
 			mes "^333333*Cough cough*^000000";
@@ -1150,7 +1150,7 @@ yuno_in04,33,106,4	script	Pile of Books#qsk_al	111,{
 
 // Start Bioethics quest
 lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
-	if (BaseJob == Job_Alchemist && bioeth == 13) {
+	if (BaseSecond == Job_Alchemist && bioeth == 13) {
 		mes "[Kellasus]";
 		mes "Keep up the";
 		mes "good work. I get";
@@ -1159,7 +1159,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "be depending on you...";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 12) {
+	if (BaseSecond == Job_Alchemist && bioeth == 12) {
 		mes "[Kellasus]";
 		mes "Alright then, I'll begin";
 		mes "by teaching you ^FF0000Bioethics^000000,";
@@ -1215,7 +1215,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "the world of Alchemy someday.";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 11) {
+	if (BaseSecond == Job_Alchemist && bioeth == 11) {
 		mes "[Kellasus]";
 		mes "Our viewpoints may be";
 		mes "different, but I'll agree that";
@@ -1259,7 +1259,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "time since I've done this...";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 10) {
+	if (BaseSecond == Job_Alchemist && bioeth == 10) {
 		set bioeth,11;
 		mes "[Kellasus]";
 		mes "^333333*Sigh*^000000";
@@ -1270,7 +1270,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "I should believe...";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 9) {
+	if (BaseSecond == Job_Alchemist && bioeth == 9) {
 		mes "[Kellasus]";
 		mes "Have you come to";
 		mes "ask me again to teach";
@@ -1371,7 +1371,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "some time alone...";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 8) {
+	if (BaseSecond == Job_Alchemist && bioeth == 8) {
 		mes "[Kellasus]";
 		mes "Although I admit that";
 		mes "you're capabile of learning";
@@ -1381,7 +1381,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "sorry, but please give up.";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 7) {
+	if (BaseSecond == Job_Alchemist && bioeth == 7) {
 		mes "[Kellasus]";
 		mes "How many times must I tell";
 		mes "you? I'm sorry, but I can't teach you anything related to Homunculi.";
@@ -1505,7 +1505,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 			close;
 		}
 	}
-	if (BaseJob == Job_Alchemist && bioeth > 3) {
+	if (BaseSecond == Job_Alchemist && bioeth > 3) {
 		mes "[Kellasus]";
 		mes "I'm sorry, but";
 		mes "I refuse to teach";
@@ -1521,7 +1521,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "views are much different now...";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 3) {
+	if (BaseSecond == Job_Alchemist && bioeth == 3) {
 		mes "[Kellasus]";
 		mes "Oh, hello, what";
 		mes "brings you this way?";
@@ -1580,7 +1580,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "more experienced than you.";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 2) {
+	if (BaseSecond == Job_Alchemist && bioeth == 2) {
 		mes "[Kellasus]";
 		mes "Ah, you've returned...";
 		mes "Now, you must be wondering";
@@ -1643,7 +1643,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "and if you work for the greater good of mankind, you'll be fine.";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 1) {
+	if (BaseSecond == Job_Alchemist && bioeth == 1) {
 		mes "[Kellasus]";
 		mes "Ah, it's you again.";
 		mes "Since you're here, let";
@@ -1691,7 +1691,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 		mes "can, and never forget that you have responsibilities to mankind.";
 		close;
 	}
-	if (BaseJob == Job_Alchemist) {
+	if (BaseSecond == Job_Alchemist) {
 		mes "[Kellasus]";
 		mes "You're another";
 		mes "practitioner of";
@@ -1743,7 +1743,7 @@ lhz_in01,224,140,3	script	Kellasus#qsk_al	57,{
 }
 
 lhz_in01,225,122,5	script	Skrajjad#qsk_al	754,{
-	if (BaseJob == Job_Alchemist && bioeth > 4) {
+	if (BaseSecond == Job_Alchemist && bioeth > 4) {
 		mes "[Skrajjad]";
 		mes "I've taught you everything";
 		mes "I can about the Homunculi.";
@@ -1759,7 +1759,7 @@ lhz_in01,225,122,5	script	Skrajjad#qsk_al	754,{
 		mes "way to help young scientists.";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 4) {
+	if (BaseSecond == Job_Alchemist && bioeth == 4) {
 		mes "[Skrajjad]";
 		mes "Ah, you're the one";
 		mes "who had the courage";
@@ -1857,7 +1857,7 @@ lhz_in01,225,122,5	script	Skrajjad#qsk_al	754,{
 }
 
 lhz_in01,204,138,5	script	Keshibien#qsk_al	750,{
-	if (BaseJob == Job_Alchemist && bioeth > 5) {
+	if (BaseSecond == Job_Alchemist && bioeth > 5) {
 		mes "[Keshibien]";
 		mes "I hope that you";
 		mes "can make good use";
@@ -1882,7 +1882,7 @@ lhz_in01,204,138,5	script	Keshibien#qsk_al	750,{
 		mes "alcohol in Lighthalzen?";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 5) {
+	if (BaseSecond == Job_Alchemist && bioeth == 5) {
 		mes "[Keshibien]";
 		mes "Oh! You must be the";
 		mes "one Skrajjad told me";
@@ -1969,7 +1969,7 @@ lhz_in01,204,138,5	script	Keshibien#qsk_al	750,{
 }
 
 lhz_in02,278,273,3	script	Broncher#qsk_al	709,{
-	if (BaseJob == Job_Alchemist && bioeth > 6) {
+	if (BaseSecond == Job_Alchemist && bioeth > 6) {
 		mes "[Broncher]";
 		mes "You again? Didn't I already";
 		mes "teach you the Homunculus";
@@ -1987,7 +1987,7 @@ lhz_in02,278,273,3	script	Broncher#qsk_al	709,{
 		mes "me up! Go on, get outta here!";
 		close;
 	}
-	if (BaseJob == Job_Alchemist && bioeth == 6) {
+	if (BaseSecond == Job_Alchemist && bioeth == 6) {
 		mes "[Broncher]";
 		mes "^333333*Hiccup!*^000000";
 		mes "Oh man...";
@@ -2061,7 +2061,7 @@ lhz_in02,278,273,3	script	Broncher#qsk_al	709,{
 }
 
 lhz_in03,106,34,3	script	Koring#qsk_al	706,{
-	if (BaseJob == Job_Alchemist && bioeth == 8 || bioeth == 9) {
+	if (BaseSecond == Job_Alchemist && bioeth == 8 || bioeth == 9) {
 		mes "[Koring]";
 		mes "My daddy is the bestest";
 		mes "Alchemist! He's sooooo";
@@ -2107,7 +2107,7 @@ lhz_in03,106,34,3	script	Koring#qsk_al	706,{
 }
 
 lhz_in03,109,31,5	script	Beninne#qsk_al	90,{
-	if (BaseJob == Job_Alchemist && bioeth == 8 || bioeth == 9) {
+	if (BaseSecond == Job_Alchemist && bioeth == 8 || bioeth == 9) {
 		mes "[Beninne]";
 		mes "You've met my husband,";
 		mes "Kellasus? He's either a";

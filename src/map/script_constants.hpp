@@ -11,6 +11,8 @@
 	#define export_deprecated_constant(a) script_set_constant(#a,a,false,true)
 	#define export_deprecated_constant2(a,b) script_set_constant(a,b,false,true)
 	#define export_deprecated_constant3(a,b,c) script_set_constant_(a,b,c,false,true)
+	#define export_deprecated_parameter(a,b) script_set_constant(a,b,true,true)
+	#define export_deprecated_parameter2(a,b,c) script_set_constant_(a,b,c,true,true)
 
 	/* min and maximum variable value */
 	export_constant(INT_MIN);
@@ -273,8 +275,10 @@
 	export_constant2("EAJL_UPPER",JOBL_UPPER);
 	export_constant2("EAJL_BABY",JOBL_BABY);
 
-	export_constant2("EAJ_BASEMASK",MAPID_FIRSTMASK);// Update name in future update for item/scripts. (Rytech)
-	export_constant2("EAJ_UPPERMASK",MAPID_SECONDMASK);// Update name in future update for item/scripts. (Rytech)
+	export_deprecated_constant3("EAJ_BASEMASK",MAPID_FIRSTMASK,"EAJ_FIRSTMASK");
+	export_deprecated_constant3("EAJ_UPPERMASK",MAPID_SECONDMASK,"EAJ_SECONDMASK");
+	export_constant2("EAJ_FIRSTMASK", MAPID_FIRSTMASK);
+	export_constant2("EAJ_SECONDMASK", MAPID_SECONDMASK);
 	export_constant2("EAJ_THIRDMASK",MAPID_THIRDMASK);
 	export_constant2("EAJ_FOURTHMASK",MAPID_FOURTHMASK);
 
@@ -593,8 +597,10 @@
 	export_parameter("MaxSp",SP_MAXSP);
 	export_parameter("Ap",SP_AP);
 	export_parameter("MaxAp",SP_MAXAP);
-	export_parameter("BaseJob",SP_BASESECOND);// Update name in future update for item/scripts. (Rytech)
-	export_parameter("BaseClass",SP_BASEFIRST);// Update name in future update for item/scripts. (Rytech)
+	export_deprecated_parameter2("BaseJob",SP_BASESECOND,"BaseSecond");
+	export_deprecated_parameter2("BaseClass",SP_BASEFIRST,"BaseFirst");
+	export_parameter("BaseSecond", SP_BASESECOND);
+	export_parameter("BaseFirst", SP_BASEFIRST);
 	export_parameter("killerrid",SP_KILLERRID);
 	export_parameter("killedrid",SP_KILLEDRID);
 	export_parameter("killedgid",SP_KILLEDGID);

@@ -39,7 +39,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 	mes "Goddess of immortality.";
 	next;
 	mes "[Jet]";
-	if (BaseJob == Job_Archer){
+	if (BaseSecond == Job_Archer){
 		mes "Ooh, you're an Archer?";
 		mes "There was a time when I too";
 		mes "was an Archer. But I've changed jobs, so now I entertain the masses with my songs and humor.";
@@ -105,7 +105,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 		mes "everything and change";
 		mes "jobs so that you can";
 		mes "come play with me!";
-	} else if (BaseJob == Job_Bard){
+	} else if (BaseSecond == Job_Bard){
 		mes "Ooh...!";
 		mes "You're...!";
 		next;
@@ -131,7 +131,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 		mes "and the word Mammonite";
 		mes "sounds-- wait. It's not funny";
 		mes "if I have to explain it, huh?";
-	} else if (BaseJob == Job_Dancer){
+	} else if (BaseSecond == Job_Dancer){
 		mes "Ooh...!";
 		mes "Hello, hello!";
 		mes "Wouldn't it be";
@@ -207,14 +207,14 @@ payon_in02,54,13,3	script	Master Kavaruk	1_M_JOBTESTER,{
 			mes "Since you're an Archer, you might";
 			mes "benefit from going around and listening to everyone else's battle experiences. Becoming familiar with different fight scenarios will help you in the future.";
 		}
-		else if (BaseJob == Job_Hunter){
+		else if (BaseSecond == Job_Hunter){
 			mes "[Master Kavaruk]";
 			mes "Arpesto is waiting";
 			mes "outside. Since he's a";
 			mes "veteran hunter, he can";
 			mes "be of great help to you.";
 		}
-		else if (BaseJob == Job_Dancer){
+		else if (BaseSecond == Job_Dancer){
 			mes "In fact, a few of our";
 			mes "members specialize in";
 			mes "capturing the fascination";
@@ -227,7 +227,7 @@ payon_in02,54,13,3	script	Master Kavaruk	1_M_JOBTESTER,{
 			mes "place for very long. Still, I'm sure of them will turn up here";
 			mes "one of these days.";
 		}
-		else if (BaseJob == Job_Bard){
+		else if (BaseSecond == Job_Bard){
 			mes "In fact, a few of our members";
 			mes "are highly skilled in singing and entertaining their allies, much in the same way you do.";
 			next;
@@ -242,7 +242,7 @@ payon_in02,54,13,3	script	Master Kavaruk	1_M_JOBTESTER,{
 		close;
 	case 2:
 		mes "[Master Kavaruk]";
-		if (BaseJob == Job_Archer) {
+		if (BaseSecond == Job_Archer) {
 			if(tu_archer02 == 0){
 				mes "Oh, it's a good thing";
 				mes "you're here, "+strcharinfo(0)+".";
@@ -323,9 +323,9 @@ payon_in02,54,13,3	script	Master Kavaruk	1_M_JOBTESTER,{
 				mes "So are you";
 				mes "interested in";
 				mes "becoming an Archer?";
-			} else if (Class == Job_Archer_High || BaseJob == Job_Dancer || BaseJob == Job_Bard){
+			} else if (Class == Job_Archer_High || BaseSecond == Job_Dancer || BaseSecond == Job_Bard){
 				mes "Although I can't deny that you're an expert, I suppose it is a good idea to review the basics of archery from time to time. Would you like to try some refresher training?";
-			} else if (BaseJob == Job_Hunter){
+			} else if (BaseSecond == Job_Hunter){
 				mes "[Master Kavaruk]";
 				mes "Arpesto is waiting";
 				mes "outside. Since he's a";
@@ -383,7 +383,7 @@ payon_in02,54,13,3	script	Master Kavaruk	1_M_JOBTESTER,{
 			mes "Did you have a good experience? Learning theory alone is never too enjoyable, but it is necessary.";
 			next;
 			mes "[Master Kavaruk]";
-			if (BaseJob == Job_Archer){
+			if (BaseSecond == Job_Archer){
 				mes "Now it is time to experience the principles you've just learned firsthand. Go speak to ^3131FFReidin Corse^000000, who is just outside of this building, and he'll tell you about the different skills.";
 				tu_archer01 = 4;
 			} else {
@@ -391,7 +391,7 @@ payon_in02,54,13,3	script	Master Kavaruk	1_M_JOBTESTER,{
 				mes "in that.";
 			}
 			close;
-		} else if(tu_archer01 == 4 && BaseJob == Job_Archer) {
+		} else if(tu_archer01 == 4 && BaseSecond == Job_Archer) {
 			mes "Reidin Corse is just outside of this building. Didn't you see him on your way in?";
 			close;
 		}
@@ -419,7 +419,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 		mes "into Kafra Storage...";
 		close;
 	}
-	if(tu_archer01 > 0 && (BaseJob != Job_Hunter && BaseJob != Job_Bard && BaseJob != Job_Dancer || Upper == 2)){
+	if(tu_archer01 > 0 && (BaseSecond != Job_Hunter && BaseSecond != Job_Bard && BaseSecond != Job_Dancer || Upper == 2)){
 		if(tu_archer01 == 4){
 			mes "Ah, what is it?";
 			mes "Can I help you";

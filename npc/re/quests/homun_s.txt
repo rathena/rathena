@@ -115,7 +115,7 @@ job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
 			}
 		}
 	}
-	if (BaseJob == Job_Merchant) {
+	if (BaseSecond == Job_Merchant) {
 		mes "[Viorel]";
 		mes "I used to be a merchant once, just like you.";
 		mes "I'm researching on ^FF4800Homunculus^000000.";
@@ -123,7 +123,7 @@ job3_gen01,12,44,3	script	Viorel#job3_gen01	542,{
 		mes "[Viorel]";
 		mes "If you're interested in ^FF4800Homunculus^000000, become an ^005DFFAlchemist^000000 or a ^005DFFCreator^000000.";
 		close;
- 	} else if (BaseJob == Job_Alchemist && Class < Job_Genetic) {
+ 	} else if (BaseSecond == Job_Alchemist && Class < Job_Genetic) {
 		mes "[Viorel]";
 		mes "I've spent lots of time and energy on Homunculus.";
 		mes "If you feel like you're at a dead end, come back next time with a ^FF4800Homunculus^000000.";

@@ -32,7 +32,7 @@ yuno,129,156,3	script	Chainheart	923,{
 		mes "Continue to grow your knowledge by experiencing what the world has to offer.";
 		close;
 	} else if (job__mechanic == 11) {
-		if (BaseJob == Job_Blacksmith && BaseLevel > 98 && JobLevel > 49 && SkillPoint == 0) {
+		if (BaseSecond == Job_Blacksmith && BaseLevel > 98 && JobLevel > 49 && SkillPoint == 0) {
 			if (ismounting()) {
 				mes "You are on a riding pet,";
 				mes "so you cannot change your job.";
@@ -216,7 +216,7 @@ yuno,129,156,3	script	Chainheart	923,{
 		mes "Anyway if you become one of us you can form your own definition and explanation of Mechanics yourself.";
 		close;
 	}
-	if (BaseJob == Job_Blacksmith) {
+	if (BaseSecond == Job_Blacksmith) {
 		if (BaseLevel > 98 && JobLevel > 49 && SkillPoint == 0) {
 			if (VIP_SCRIPT) {
 				callfunc "VIP_Third_Class";

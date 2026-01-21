@@ -15,7 +15,7 @@
 //============================================================
 
 gef_tower,115,36,4	script	Meow#q_wiz	876,{
-	if (BaseJob == Job_Wizard) {
+	if (BaseSecond == Job_Wizard) {
 		if (WIZ_SK == 100) {
 			if (getskilllv("WZ_SIGHTBLASTER") == 0) {
 				mes "[Meow]";

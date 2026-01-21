@@ -1918,15 +1918,15 @@ morocc,134,111,3	script	Bard#3	741,{
 			mes "Everything's okay.";
 			next;
 			mes "[Mysterious Bard]";
-			if (BaseClass == Job_Swordman) {
+			if (BaseFirst == Job_Swordman) {
 				mes "There's no reason to be scared. The scary people with swords only use them on monsters, okay?";
-			} else if (BaseClass == Job_Acolyte) {
+			} else if (BaseFirst == Job_Acolyte) {
 				mes "You don't need to be scared, that person is a servant of God, okay?";
 			} else if (Class == Job_Thief || Class == Job_Rogue) {
 				mes "There's no reason to be afraid of this riffraff, your Uncle Kino is here, okay?";
-			} else if (BaseClass == Job_Assassin) {
+			} else if (BaseFirst == Job_Assassin) {
 				mes "There's no reason to be afraid. I know that person looks scary, but you're a good girl, so you'll be okay.";
-			} else if (BaseClass == Job_Blacksmith) {
+			} else if (BaseFirst == Job_Blacksmith) {
 				mes "There's no reason to be scared, honey. It's just a Blacksmith.";
 			} else {
 				mes "There's no reason to be scared. See...? That person won't hurt you.";

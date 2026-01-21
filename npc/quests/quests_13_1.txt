@@ -11956,7 +11956,7 @@ mid_camp,255,269,0	script	Wet Firewood#moc2	844,{
 
 morocc,43,108,5	script	Sharp-Looking Boy#dan_07	82,{
 	mes "[Jack]";
-	if (BaseClass == Job_Assassin) {
+	if (BaseFirst == Job_Assassin) {
 		mes "Almost half of this town has been destroyed,";
 		mes "and yet some people still come to visit.";
 		mes "I must say that it's amazing that our stronghold is still intact, and withstood all the devastation.";
@@ -11974,7 +11974,7 @@ morocc,43,108,5	script	Sharp-Looking Boy#dan_07	82,{
 
 morocc,45,110,0	script	que_job01#01	45,2,2,{
 OnTouch_:
-	if (BaseClass == Job_Assassin) {
+	if (BaseFirst == Job_Assassin) {
 		warp "que_job01",9,94;
 		end;
 	}
@@ -12007,7 +12007,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 		mes "to store some of your items.^000000";
 		close;
 	}
-	if (BaseClass == Job_Assassin) {
+	if (BaseFirst == Job_Assassin) {
 		mes "[Karred]";
 		mes "Welcome.";
 		mes "Care for a drink?";
@@ -12033,7 +12033,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 				close;
 			}
 			else {
-				if (BaseClass == Job_Assassin) {
+				if (BaseFirst == Job_Assassin) {
 					if (Zeny < 800) {
 						mes "[Karred]";
 						mes "I can give you a special discount, but";
@@ -12079,7 +12079,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 				close;
 			}
 			else {
-				if (BaseClass == Job_Assassin) {
+				if (BaseFirst == Job_Assassin) {
 					if (Zeny < 800) {
 						mes "[Karred]";
 						mes "I can give you a special discount, but";
@@ -12121,7 +12121,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 			close;
 		}
 	case 2:
-		if (BaseClass == Job_Assassin) {
+		if (BaseFirst == Job_Assassin) {
 			mes "[Karred]";
 			mes "How many I help you?";
 			next;
@@ -12201,7 +12201,7 @@ que_job01,82,95,3	script	Bar Master#moc2_01	46,{
 
 que_job01,80,77,0	script	que_job01#04	45,2,2,{
 OnTouch_:
-	if (BaseClass == Job_Assassin || mao_request > 0 || mao_morocc2 > 4) {
+	if (BaseFirst == Job_Assassin || mao_request > 0 || mao_morocc2 > 4) {
 		warp "que_job01",61,50;
 		end;
 	}
@@ -12309,7 +12309,7 @@ que_job01,81,79,5	script	Idle Knight#dan_08	733,{
 	mes "[Litheron]";
 	mes "What, haven't you seen a Knight before?";
 	mes "You think Knights don't belong here?";
-	if (BaseClass == Job_Knight)
+	if (BaseFirst == Job_Knight)
 		mes "Looks like this is a case of the pot calling the kettle black.";
 	next;
 	mes "[Litheron]";
@@ -12322,7 +12322,7 @@ que_job01,65,50,0	warp	que_job01#05	2,2,que_job01,84,77
 
 que_job01,49,49,5	script	Tao#dan_09	877,{
 	mes "[Tao]";
-	if (BaseClass == Job_Assassin) {
+	if (BaseFirst == Job_Assassin) {
 		mes "Welcome, meow.";
 		mes "Say, how's it like outside? Meow?";
 		next;
@@ -12522,7 +12522,7 @@ OnTouch_:
 
 que_job01,16,21,5	script	Valdes#moc_master_1	55,{
 	mes "[Valdes]";
-	if (BaseClass == Job_Assassin) {
+	if (BaseFirst == Job_Assassin) {
 		mes "What is it? I have nothing to ask you to do.";
 		mes "Could you please leave me alone? I have a bad headache.";
 		next;

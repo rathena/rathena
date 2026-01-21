@@ -1381,7 +1381,7 @@ geffen,83,189,5	script	Seth#1	716,{
 			mes "I'm done!";
 			mes "I did a good job, didn't I?";
 			next;
-			if (BaseJob == Job_Novice || BaseJob == Job_Super_Novice) {
+			if (BaseSecond == Job_Novice || BaseSecond == Job_Super_Novice) {
 				mes "[Seth]";
 				mes "Oh, here's the leftovers. Mommy says that we should always save things. Heh heh~";
 				getitem 935,1; //Shell

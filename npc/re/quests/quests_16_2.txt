@@ -3993,7 +3993,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 				next;
 				switch( select( "Go to the waiting room", "Don't go to the waiting room." ) ) {
 				case 1:
-					if (BaseJob != Job_Priest) {
+					if (BaseSecond != Job_Priest) {
 						mes "[USU commander Elena]";
 						mes "In the waiting room, there is ^0000CDIvan, the person in charge of entrance in arena^000000.";
 						mes "Enter the arena according to the order in reference to Ivan's guide.";
@@ -4244,7 +4244,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 	}
 	cutin "162elena_01.bmp",2;
 	mes "[USU commander Elena]";
-	if (BaseJob == Job_Priest) {
+	if (BaseSecond == Job_Priest) {
 		mes "Hi. What is it now?";
 		mes "Have you met our members?";
 	}
@@ -4290,7 +4290,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 		case 1:
 			mes "[USU commander Elena]";
 			mes "...... Hmm.";
-			if (BaseJob == Job_Priest) {
+			if (BaseSecond == Job_Priest) {
 				mes "Are you sure you have to fight me now?";
 				mes "If you really think so, come back tomorrow. I called it a day now.";
 			}
@@ -4305,7 +4305,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 		}
 		switch( isbegin_quest(16009) ) {
 		case 0:
-			if (BaseJob != Job_Priest) {
+			if (BaseSecond != Job_Priest) {
 				cutin "162elena_02.bmp",2;
 				mes "[USU commander Elena]";
 				mes "Oh, great!";
@@ -4371,7 +4371,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 			mes "Will you give up the fight?";
 			next;
 			if (select( "Give up the fight.", "Do not give up the fight." ) == 2) {
-				if (BaseJob != Job_Priest) {
+				if (BaseSecond != Job_Priest) {
 					mes "[USU commander Elena]";
 					mes "Great, I will be waiting.";
 					mes "I enjoy fighting you.";
@@ -4383,7 +4383,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 				close3;
 			}
 			mes "[USU commander Elena]";
-			if (BaseJob != Job_Priest)
+			if (BaseSecond != Job_Priest)
 				mes "...You made me expect it. And what are you doing now?";
 			else
 				mes "Good idea. You'll be quite sad if you are beat up without having done anything wrong. Won't you?";
@@ -4394,7 +4394,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 		case 2:
 			if (isbegin_quest(16061) != 2) {
 				mes "[USU commander Elena]";
-				if (BaseJob == Job_Priest)
+				if (BaseSecond == Job_Priest)
 					mes "Don't you think you've had enough of it by now? If you want to quit, tell me any time.";
 				else {
 					mes "...Hmm. You're not in a top condition?";
@@ -4403,7 +4403,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 				next;
 				if (select( "Enter the waiting room.", "Do not enter the waiting room." ) == 1) {
 					mes "[USU commander Elena]";
-					if (BaseJob == Job_Priest)
+					if (BaseSecond == Job_Priest)
 						mes "Ho, you have the guts.";
 					else
 						mes "I like it.";
@@ -4415,7 +4415,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 					end;
 				}
 				mes "[USU commander Elena]";
-				if (BaseJob == Job_Priest) {
+				if (BaseSecond == Job_Priest) {
 					mes "You're not in a top condition? Go inside and take some rest.";
 					mes "Shall we stop?";
 				}
@@ -4429,7 +4429,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 				next;
 				if (select( "Give up the fight.", "Do not give up the fight." ) == 2) {
 					mes "[USU commander Elena]";
-					if (BaseJob == Job_Priest)
+					if (BaseSecond == Job_Priest)
 						mes "Hey, you don't have to do this...";
 					else {
 						mes "Great, I will be waiting.";
@@ -4438,7 +4438,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 					close3;
 				}
 				mes "[USU commander Elena]";
-				if (BaseJob == Job_Priest)
+				if (BaseSecond == Job_Priest)
 					mes "Right. Let's stop the fight.";
 				else
 					mes "...We have no choice. Come back later.";
@@ -4447,7 +4447,7 @@ rebel_in,70,78,3	script	Elena Volkova#16.2rm	4_F_ELENA,{
 				erasequest 16061;	// Fair and equitable result
 				close3;
 			}
-			if (BaseJob == Job_Priest) {
+			if (BaseSecond == Job_Priest) {
 				cutin "162elena_01.bmp",2;
 				mes "[USU commander Elena]";
 				mes "I told you that I'd ^0000CDgo easy on you^000000. Although won the fight, you didn't actually win it. Got it?";
@@ -4897,7 +4897,7 @@ rebel_in,200,19,0	script	#job_rmA	HIDDEN_WARP_NPC,12,12,{
 OnTouch:
 	cloakonnpc "#job_rmA";
 	donpcevent "Milo River#16.2rmA::OnStart";
-	.base_job = BaseJob;
+	.base_job = BaseSecond;
 	end;
 OnStart:
 	monster "rebel_in",201,19, "Elena Volkova",3630,1, "#job_rmA::OnMobDead";	// EP16_2_E_BOLKOBA

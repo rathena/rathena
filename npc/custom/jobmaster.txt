@@ -74,7 +74,7 @@ function	Can_Change_Third	{
 		return false; // Already Third Class
 	if( roclass(eaclass()|EAJL_THIRD) < 0 )
 		return false; // Job has no third Class
-	if( (eaclass()&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE )
+	if( (eaclass()&EAJ_SECONDMASK) == EAJ_SUPER_NOVICE )
 		return false; // Exp. Super Novice equals 3rd Cls, but has it's own case
 	if( Is_Baby() && (!.BabyClass || !.BabyThird) )
 		return false; // No Baby (Third) change allowed
@@ -147,12 +147,12 @@ function	Job_Options	{
 	.@fourth_possible = Can_Change_Fourth();
 	.@third_possible = Can_Change_Third();
 	.@rebirth_possible = Can_Rebirth();
-	.@first_eac = .@eac&EAJ_BASEMASK;
-	.@second_eac = .@eac&EAJ_UPPERMASK;
+	.@first_eac = .@eac&EAJ_FIRSTMASK;
+	.@second_eac = .@eac&EAJ_SECONDMASK;
 	// Note: These are already set in pc.cpp
-	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
-	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
-	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
+	// BaseFirst = roclass(.@eac&EAJ_FIRSTMASK) which is the players First Class
+	// BaseSecond = roclass(.@eac&EAJ_SECONDMASK) which is the players Second Class
+	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseFirst ("+BaseFirst+"), BaseSecond ("+BaseSecond+")";
 		
 	// From here on the jobmaster checks the current class
 	// and fills the array `.@job_opt` with possible
@@ -175,7 +175,7 @@ function	Job_Options	{
 	}
 	 
 	if (.SecondExpanded && 
-	   (.@eac&EAJ_UPPERMASK) == EAJ_SUPER_NOVICE && // is Super Novice
+	   (.@eac&EAJ_SECONDMASK) == EAJ_SUPER_NOVICE && // is Super Novice
 	   !(eaclass()&EAJL_THIRD) ) {				 	// not already Expanded SN
 		// (Baby) Super Novice to Expanded (Baby) Super Novice
 	   	if( !Is_Baby(.@eac) || (.BabyClass && .BabyExpanded) ) {
@@ -236,7 +236,7 @@ function	Job_Options	{
 				// Job change after rebirth
 				if( .LastJob && lastJob )
 					Job_Options(.@job_opt,
-						roclass((eaclass(lastJob)&EAJ_BASEMASK)|EAJL_UPPER));
+						roclass((eaclass(lastJob)&EAJ_FIRSTMASK)|EAJL_UPPER));
 				else
 					Job_Options(.@job_opt, 
 						Job_Swordman_High, Job_Mage_High, Job_Archer_High,
@@ -403,8 +403,8 @@ function	Get_Job_Equip	{
 	} else if( .@eac&EAJL_THIRD ) {
 		// Third Class Items
 		getitem 2795,1;	//	Green Apple Ring for every 3rd Class
-		switch(BaseJob) {
-			// BaseJob of Third Cls
+		switch(BaseSecond) {
+			// BaseSecond of Third Cls
 			// For Normal Third, Baby Third and Transcended Third Cls
 			case Job_Knight:
 				getitem 5746,1;	break;	//	Rune Circlet [1]
@@ -437,7 +437,7 @@ function	Get_Job_Equip	{
 		}
 	} else if (.@eac&EAJL_2) {
 		// Second Class (And not Third Class)
-		switch(BaseJob) {
+		switch(BaseSecond) {
 			// Second Class
 			case Job_Knight:
 				getitem 1163,1;	break;	//	Claymore [0]
@@ -475,7 +475,7 @@ function	Get_Job_Equip	{
 	} else {
 		// Neither Second or Third Cls
 		// => First Cls or not covered by the switch
-		switch(BaseClass) {
+		switch(BaseFirst) {
 			// First Class
 			case Job_Swordman:
 				getitem 1108,1;	break;	//	Blade [4]

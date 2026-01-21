@@ -2420,7 +2420,7 @@ alberta,196,146,0	script	Crusader#megin2	751,{
 		}
 	}
 	else {
-		if (BaseClass == Job_Swordman){
+		if (BaseFirst == Job_Swordman){
 			mes "[Jack O]";
 			mes "Hey kid!";
 			mes "Ever think about";

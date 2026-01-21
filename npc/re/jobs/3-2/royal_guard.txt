@@ -42,7 +42,7 @@ prt_cas,172,275,5	script	Middle-aged Gentleman#rg	1_M_LIBRARYMASTER,{
 		mes "You are dragging something. If you're riding something you better dismount it before proceeding.";
 		close;
 	}
-	if (BaseJob != Job_Crusader) {
+	if (BaseSecond != Job_Crusader) {
 		mes "[Middle-aged Gentleman]";
 		mes "I don't have anything to say to you. Find another person.";
 		close;
@@ -355,7 +355,7 @@ glast_01,240,366,5	script	Memory of King Schmidtz	844,{
 		mes " Please unequip your riding pet and try again!";
 		close;
 	}
-	if (BaseJob == Job_Crusader && job_royal == 5) {
+	if (BaseSecond == Job_Crusader && job_royal == 5) {
 		if (countitem(6275) == 0) {
 			mes "^000099You seem to have lost the shield. Go back to Heinrich and ask for help^000000.";
 			close;

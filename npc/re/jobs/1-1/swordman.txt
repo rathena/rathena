@@ -82,8 +82,8 @@ izlude_in,74,172,4	script	Swordman#swd	119,{
 		close;
 	case 2:
 		mes "[Swordman Guildsman]";
-		if(BaseJob != Job_Novice) {
-			if(BaseJob == Job_Swordman) {
+		if(BaseSecond != Job_Novice) {
+			if(BaseSecond == Job_Swordman) {
 				mes "You are already an excellent Swordman, aren't you?";
 				mes "Just devote yourself to be a great Swordman.";
 			}else{
