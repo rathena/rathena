@@ -77,21 +77,21 @@ enum e_log_feeding_type : uint8
 };
 
 /// new logs
-void log_pick_pc(map_session_data* sd, e_log_pick_type type, int32 amount, struct item* itm);
-void log_pick_mob(mob_data* md, e_log_pick_type type, int32 amount, struct item* itm);
-void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int32 amount);
-void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int32 amount );
+void log_pick_pc( const map_session_data* sd, e_log_pick_type type, int32 amount, const item* itm );
+void log_pick_mob( const mob_data* md, e_log_pick_type type, int32 amount, const item* itm);
+void log_zeny( const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int32 amount);
+void log_cash( const map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int32 amount );
 void log_npc( npc_data* nd, const char* message );
-void log_npc(map_session_data* sd, const char *message);
-void log_chat(e_log_chat_type type, int32 type_id, int32 src_charid, int32 src_accid, const char* map, int32 x, int32 y, const char* dst_charname, const char* message);
-void log_atcommand(map_session_data* sd, const char* message);
-void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid);
+void log_npc( map_session_data* sd, const char *message );
+void log_chat( e_log_chat_type type, int32 type_id, int32 src_charid, int32 src_accid, const char* map, int32 x, int32 y, const char* dst_charname, const char* message );
+void log_atcommand( map_session_data* sd, const char* message );
+void log_feeding( const map_session_data* sd, e_log_feeding_type type, t_itemid nameid );
 
 /// old, but useful logs
-void log_branch(map_session_data* sd);
-void log_mvpdrop(map_session_data* sd, int32 monster_id, t_itemid nameid, t_exp exp);
+void log_branch( map_session_data* sd );
+void log_mvpdrop( const map_session_data* sd, int32 monster_id, t_itemid nameid, t_exp exp );
 
-int32 log_config_read(const char* cfgName);
+int32 log_config_read( const char* cfgName );
 
 extern struct Log_Config
 {

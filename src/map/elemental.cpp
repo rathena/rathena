@@ -490,7 +490,7 @@ struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint1
 	return req;
 }
 
-int32 elemental_set_target( map_session_data *sd, block_list *bl ) {
+int32 elemental_set_target( map_session_data *sd, const block_list* bl ) {
 	s_elemental_data *ed = sd->ed;
 
 	nullpo_ret(ed);
