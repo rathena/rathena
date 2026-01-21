@@ -65928,28 +65928,28 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bMatkRate,15+5*getenchantgrade();
+      bonus bMatkRate,10+2*getenchantgrade();
   - Id: 311018
     AegisName: Gear_ASPD
     Name: Clockwork (Delay After Attack)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bAspdRate,15+5*getenchantgrade();
+      bonus bAspdRate,10+2*getenchantgrade();
   - Id: 311019
     AegisName: Gear_CAST
     Name: Clockwork (Variable Casting)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bVariableCastrate,-15-5*getenchantgrade();
+      bonus bVariableCastrate,-10-2*getenchantgrade();
   - Id: 311020
     AegisName: Gear_SKILL
     Name: Clockwork (Delay After Skill)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bDelayrate,-10-5*getenchantgrade();
+      bonus bDelayrate,-10-2*getenchantgrade();
   - Id: 311021
     AegisName: Gear_POW
     Name: Clockwork (POW)
