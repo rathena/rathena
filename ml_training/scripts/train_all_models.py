@@ -503,6 +503,12 @@ def parse_args():
         help='Export trained models to ONNX'
     )
     
+    parser.add_argument(
+        '--auto-deploy',
+        action='store_true',
+        help='Automatically deploy models after training (exports to ONNX and restarts service)'
+    )
+    
     return parser.parse_args()
 
 
@@ -562,10 +568,42 @@ def main():
     logger.info(f"Models Failed: {sum(1 for r in results if r['status'] == 'failed')}")
     
     # Export to ONNX if requested
-    if args.export_onnx:
+    if args.export_onnx or args.auto_deploy:
         logger.info("\nExporting models to ONNX...")
         from scripts.export_to_onnx import export_all_models
         export_all_models(archetypes, model_types)
+    
+    # Auto-deploy if requested
+    if args.auto_deploy:
+        logger.info("\nTriggering automated deployment...")
+        deploy_script = Path(__file__).parent.parent.parent / 'ml_scheduler' / 'auto_deploy.sh'
+        
+        if deploy_script.exists():
+            import subprocess
+            try:
+                result = subprocess.run(
+                    ['bash', str(deploy_script)],
+                    capture_output=True,
+                    text=True,
+                    timeout=300  # 5 minute timeout
+                )
+                
+                if result.returncode == 0:
+                    logger.info("✓ Automated deployment completed successfully")
+                    logger.info(result.stdout)
+                else:
+                    logger.error(f"✗ Deployment failed with code {result.returncode}")
+                    logger.error(result.stderr)
+                    return 1
+            except subprocess.TimeoutExpired:
+                logger.error("Deployment timed out after 5 minutes")
+                return 1
+            except Exception as e:
+                logger.error(f"Deployment error: {e}")
+                return 1
+        else:
+            logger.warning(f"Deployment script not found: {deploy_script}")
+            logger.warning("Skipping automated deployment")
     
     logger.info(f"\nTraining complete! Check logs at /opt/ml_monster_ai/logs/training.log")
     

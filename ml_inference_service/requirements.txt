@@ -4,7 +4,7 @@
 
 # Core ML dependencies
 torch>=2.5.1
-onnxruntime-gpu>=1.23.2  # Use onnxruntime for CPU-only mode
+onnxruntime-gpu>=1.19.0  # GPU version with TensorRT support
 numpy>=1.26.0
 
 # Database drivers

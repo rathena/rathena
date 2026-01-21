@@ -1,0 +1,17 @@
+[Unit]
+Description=ML Model Training Scheduler (Weekly)
+Requires=ml-training-scheduler.service
+
+[Timer]
+# Run every Sunday at 3:00 AM (typical off-peak time)
+OnCalendar=Sun *-*-* 03:00:00
+
+# If system was off at scheduled time, run on next boot
+Persistent=true
+
+# Randomize start time by up to 30 minutes to avoid load spikes
+RandomizedDelaySec=30min
+
+# Start timer after system reaches multi-user.target
+[Install]
+WantedBy=timers.target

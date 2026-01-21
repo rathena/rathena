@@ -1,0 +1,42 @@
+[Unit]
+Description=ML Monster AI Inference Service
+After=network.target postgresql.service redis.service
+Wants=postgresql.service redis.service
+
+[Service]
+Type=simple
+User=lot399
+Group=lot399
+WorkingDirectory=/opt/ml_monster_ai/inference_service
+
+# Environment
+Environment="PATH=/opt/ml_monster_ai/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="PYTHONUNBUFFERED=1"
+Environment="CUDA_VISIBLE_DEVICES=0"
+EnvironmentFile=-/opt/ml_monster_ai/.env
+
+# Execution
+ExecStart=/opt/ml_monster_ai/venv/bin/python /opt/ml_monster_ai/inference_service/main.py
+ExecReload=/bin/kill -HUP $MAINPID
+
+# Restart policy
+Restart=always
+RestartSec=10
+StartLimitInterval=300
+StartLimitBurst=5
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=4096
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ml-inference
+
+# Security (optional hardening)
+# PrivateTmp=true
+# NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

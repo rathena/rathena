@@ -273,7 +273,7 @@ class RequestProcessor:
                 result = await conn.execute("""
                     DELETE FROM ai_requests
                     WHERE status IN ('completed', 'failed', 'timeout')
-                        AND created_at < NOW() - INTERVAL '$1 hours'
+                        AND created_at < NOW() - make_interval(hours => $1)
                 """, hours)
                 
                 # Parse "DELETE N" result
@@ -306,7 +306,7 @@ class RequestProcessor:
                 result = await conn.execute("""
                     DELETE FROM ai_responses
                     WHERE read_at IS NOT NULL
-                        AND created_at < NOW() - INTERVAL '$1 hours'
+                        AND created_at < NOW() - make_interval(hours => $1)
                 """, hours)
                 
                 deleted = int(result.split()[-1]) if result.startswith('DELETE') else 0
