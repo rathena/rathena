@@ -20142,7 +20142,7 @@ Body:
           - Celine_Brooch_K    # 32237
     Script: |
       .@sum = getequiprefinerycnt(EQI_ARMOR);
-      bonus bMatk,10*.@r;
+      bonus bMatk,(10*.@sum);
       if (.@sum >= 9) {
          bonus bVariableCastrate,-5;
          if (.@sum >= 11) {
