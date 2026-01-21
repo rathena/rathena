@@ -75402,6 +75402,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
+      bonus bPAtk,1;
       bonus bSMatk,1;
       if (.@r>=7) {
          bonus2 bMagicAddEle,Ele_All,3;
