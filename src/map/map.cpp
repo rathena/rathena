@@ -6,6 +6,7 @@
 // For more information, see LICENCE in the main folder
 
 #include "map.hpp"
+#include "mob_ml_gateway.hpp"
 
 // Forward declaration for worker pool config loader
 struct WorkerPoolConfig;
@@ -5206,6 +5207,13 @@ void MapServer::finalize(){
 	do_final_homunculus();
 	do_final_mercenary();
 	do_final_mob(false);
+	
+	// Shutdown ML Monster AI Gateway (if enabled)
+	if (battle_config.ml_monster_ai_enabled) {
+		ShowStatus("Shutting down ML Monster AI Gateway...\n");
+		MobMLGateway::shutdown();
+	}
+	
 	do_final_msg();
 	do_final_skill();
 	do_final_status();
@@ -5611,6 +5619,17 @@ bool MapServer::initialize( int32 argc, char *argv[] ){
 	do_init_cashshop();
 	do_init_skill();
 	do_init_mob();
+	
+	// Initialize ML Monster AI Gateway (if enabled)
+	if (battle_config.ml_monster_ai_enabled) {
+		ShowStatus("Initializing ML Monster AI Gateway...\n");
+		if (!MobMLGateway::initialize()) {
+			ShowWarning("ML Monster AI initialization failed, will use traditional AI only\n");
+		} else {
+			ShowStatus("ML Monster AI Gateway initialized successfully\n");
+		}
+	}
+	
 	do_init_pc();
 	do_init_status();
 	do_init_party();

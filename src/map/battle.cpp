@@ -12082,6 +12082,12 @@ static const struct _battle_data {
 	{ "trade_count_stackable",              &battle_config.trade_count_stackable,           1,      0,      1,              },
 	{ "enable_bonus_map_drops",             &battle_config.enable_bonus_map_drops,          1,      0,      1,              },
 	{ "hide_cloaked_units",                 &battle_config.hide_cloaked_units,              0,      0,      BL_ALL,         },
+	// ML Monster AI Configuration
+	{ "ml_monster_ai_enabled",              &battle_config.ml_monster_ai_enabled,           1,      0,      1,              },
+	{ "ml_debug_logging",                   &battle_config.ml_debug_logging,                0,      0,      1,              },
+	{ "ml_cache_enabled",                   &battle_config.ml_cache_enabled,                1,      0,      1,              },
+	{ "ml_max_latency_ms",                  &battle_config.ml_max_latency_ms,              15,      1,      1000,           },
+	{ "ml_health_check_interval",           &battle_config.ml_health_check_interval,       100,     10,     10000,          },
 
 #include <custom/battle_config_init.inc>
 };

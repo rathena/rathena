@@ -1,0 +1,213 @@
+# ML Monster AI - Training Configuration
+# Enhanced ML Monster AI System v2.0
+
+training:
+  # General training parameters
+  batch_size: 256
+  learning_rate: 0.0003
+  epochs: 100
+  
+  # Experience replay
+  replay_buffer_size: 100000
+  min_replay_size: 10000  # Minimum before training starts
+  
+  # Update frequencies
+  update_frequency: 100  # Train every N steps
+  target_update_frequency: 1000  # Update target network
+  
+  # Discount and regularization
+  gamma: 0.99  # Discount factor
+  tau: 0.005  # Soft update coefficient
+  
+  # Gradient clipping
+  grad_clip: 1.0
+  
+  # N-step returns
+  n_step: 5
+  
+  # Validation
+  validation_frequency: 1000
+  validation_episodes: 50
+
+# Archetype-specific configurations
+archetypes:
+  aggressive:
+    reward_scale: 1.5
+    exploration_noise: 0.1
+    learning_rate: 0.0004  # Slightly higher for faster adaptation
+    
+  defensive:
+    reward_scale: 1.2
+    exploration_noise: 0.05  # More conservative
+    learning_rate: 0.0002
+    
+  support:
+    reward_scale: 1.3
+    exploration_noise: 0.08
+    team_reward_weight: 0.7  # Heavy emphasis on team
+    individual_reward_weight: 0.3
+    
+  mage:
+    reward_scale: 1.4
+    exploration_noise: 0.12
+    learning_rate: 0.00035
+    
+  tank:
+    reward_scale: 1.1
+    exploration_noise: 0.05
+    team_reward_weight: 0.7
+    individual_reward_weight: 0.3
+    
+  ranged:
+    reward_scale: 1.3
+    exploration_noise: 0.1
+    learning_rate: 0.0003
+
+# Model-specific configurations
+models:
+  combat_dqn:
+    double_dqn: true
+    dueling: true
+    epsilon_start: 1.0
+    epsilon_end: 0.05
+    epsilon_decay: 0.9995
+    
+  movement_ppo:
+    clip_epsilon: 0.2
+    gae_lambda: 0.97
+    value_loss_coef: 0.5
+    entropy_coef: 0.01
+    n_epochs: 15  # PPO epochs per update
+    
+  soft_actor_critic:
+    auto_alpha: true
+    target_entropy: -10  # -action_dim
+    alpha_lr: 0.0003
+    
+  team_coordination:
+    sequence_length: 10
+    bidirectional: true
+    attention_heads: 8
+    
+  spatial_vit:
+    patch_size: 8
+    num_heads: 3
+    depth: 12
+    
+  temporal_transformer:
+    num_heads: 8
+    num_layers: 4
+    max_seq_len: 500
+    
+  pattern_recognition:
+    num_heads: 16
+    num_layers: 6
+    max_seq_len: 100
+
+# Hardware configuration
+hardware:
+  device: "cuda:0"
+  max_vram_gb: 11.0
+  num_workers: 4
+  pin_memory: true
+  
+  # Automatic mixed precision
+  use_amp: true
+  
+  # Multi-GPU (if available)
+  use_data_parallel: false
+  gpu_ids: [0]
+
+# Checkpoint configuration
+checkpoints:
+  save_dir: "/opt/ml_monster_ai/models"
+  save_frequency: 1000  # Save every N steps
+  keep_last_n: 5  # Keep last N checkpoints
+  save_best: true  # Always save best model
+  
+# Logging configuration
+logging:
+  tensorboard: true
+  tensorboard_dir: "/opt/ml_monster_ai/logs/tensorboard"
+  
+  wandb: false  # Weights & Biases (optional)
+  wandb_project: "ml_monster_ai"
+  wandb_entity: ""
+  
+  log_frequency: 100  # Log every N steps
+  save_logs: true
+  log_dir: "/opt/ml_monster_ai/logs"
+
+# Early stopping
+early_stopping:
+  enabled: true
+  patience: 20
+  min_delta: 0.001
+  metric: "val_loss"
+  mode: "min"
+
+# Learning rate scheduling
+lr_scheduler:
+  enabled: true
+  type: "cosine"  # cosine, reduce_on_plateau, step, exponential
+  
+  # Cosine annealing
+  T_max: 1000
+  eta_min: 0.000001
+  
+  # ReduceLROnPlateau
+  factor: 0.5
+  patience: 10
+  
+  # Step
+  step_size: 100
+  gamma_step: 0.9
+
+# Data augmentation
+augmentation:
+  enabled: true
+  noise_std: 0.01
+  perturbation_prob: 0.1
+
+# Curriculum learning
+curriculum:
+  enabled: true
+  num_levels: 5
+  level_thresholds: [50.0, 100.0, 200.0, 400.0, 800.0]
+
+# PostgreSQL configuration
+database:
+  host: "localhost"
+  port: 5432
+  database: "ragnarok_ml"
+  user: "ml_user"
+  password: "${POSTGRES_PASSWORD}"
+  
+  # Connection pool
+  min_connections: 5
+  max_connections: 20
+  
+  # Tables
+  experience_table: "ml_experience_replay"
+  models_table: "ml_models"
+  episodes_table: "ml_episode_outcomes"
+
+# Model deployment
+deployment:
+  onnx_export: true
+  precision: "fp16"  # fp32, fp16, int8
+  opset_version: 17
+  optimize_onnx: true
+  verify_export: true
+
+# Evaluation
+evaluation:
+  enabled: true
+  frequency: 5  # Evaluate every N epochs
+  num_episodes: 100
+  metrics:
+    - win_rate
+    - avg_reward
+    - avg_episode_length
+    - latency
+    - action_entropy

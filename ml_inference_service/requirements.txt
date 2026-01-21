@@ -1,0 +1,28 @@
+# ML Inference Service Dependencies
+# Phase 12 - ML Monster AI System v2.0
+# Python 3.11+
+
+# Core ML dependencies
+torch>=2.5.1
+onnxruntime-gpu>=1.23.2  # Use onnxruntime for CPU-only mode
+numpy>=1.26.0
+
+# Database drivers
+asyncpg>=0.29.0  # PostgreSQL async driver
+redis>=5.0.1  # Redis/DragonFlyDB client
+
+# Monitoring & Metrics
+prometheus-client>=0.19.0
+
+# System utilities
+psutil>=5.9.8  # System and process utilities
+
+# Configuration
+PyYAML>=6.0.1
+
+# Optional: For TensorRT support (NVIDIA GPUs)
+# nvidia-tensorrt>=8.6.0
+
+# Development/Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0

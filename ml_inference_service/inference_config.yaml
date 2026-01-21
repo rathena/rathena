@@ -1,0 +1,84 @@
+# ML Inference Service Configuration
+# Phase 12 - ML Monster AI System v2.0
+
+models:
+  directory: "/opt/ml_monster_ai/models"
+  format: "onnx"
+  precision: "fp16"  # fp16, int8, or fp32
+  
+  # 6 Monster archetypes
+  archetypes:
+    - aggressive
+    - defensive
+    - support
+    - mage
+    - tank
+    - ranged
+  
+  # 9 Model types per archetype = 54 total models
+  types:
+    - combat_dqn
+    - movement_ppo
+    - skill_dqn
+    - threat_assessment
+    - team_coordination
+    - spatial_vit
+    - temporal_transformer
+    - pattern_recognition
+    - soft_actor_critic
+
+inference:
+  batch_size: 128  # Maximum monsters per batch
+  poll_interval_ms: 10  # Poll PostgreSQL every 10ms
+  max_latency_ms: 15  # Target latency threshold
+  timeout_ms: 100  # Max time to wait for inference
+  primary_model: "combat_dqn"  # Primary model for single-model mode
+
+hardware:
+  device: "cuda:0"  # cuda:0, cuda:1, or cpu
+  max_vram_gb: 6.0  # Maximum VRAM allocation for inference
+  use_tensorrt: false  # Enable TensorRT optimization (optional)
+  num_workers: 4  # Number of async workers
+  cpu_threads: 16  # CPU threads for CPU inference
+
+database:
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "ragnarok_ml"
+    user: "ml_user"
+    password: "${ML_DB_PASSWORD}"  # Set via environment variable
+    min_pool_size: 10
+    max_pool_size: 20
+    command_timeout: 60  # seconds
+    
+  redis:
+    host: "localhost"
+    port: 6379
+    password: null  # Set if Redis requires auth
+    db: 0
+    socket_timeout: 5
+
+caching:
+  enabled: true
+  l2_ttl_seconds: 10  # L2 action cache TTL
+  l3_ttl_seconds: 10  # L3 model output cache TTL
+  max_cache_size_mb: 4096  # 4GB Redis allocation
+
+fallback:
+  enabled: true
+  max_consecutive_errors: 3  # Escalate after 3 consecutive errors
+  recovery_check_interval_seconds: 60  # Check recovery every 60s
+  auto_recovery: true  # Automatically recover to better levels
+
+monitoring:
+  prometheus_port: 9090  # Prometheus metrics endpoint
+  metrics_enabled: true
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+logging:
+  level: "INFO"
+  format: "json"  # json or text
+  file: "/opt/ml_monster_ai/logs/inference_service.log"
+  max_bytes: 104857600  # 100MB
+  backup_count: 10

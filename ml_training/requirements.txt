@@ -1,0 +1,43 @@
+# ML Monster AI - Python Requirements
+# Enhanced ML Monster AI System v2.0
+# Python 3.11+
+
+# Core ML frameworks
+torch==2.5.1
+torchvision==0.20.1
+torchaudio==2.5.1
+
+# ONNX and inference
+onnx==1.17.0
+onnxruntime-gpu==1.19.2
+onnxconverter-common==1.14.0
+
+# Database
+asyncpg==0.30.0
+psycopg2-binary==2.9.10
+
+# Data processing
+numpy==1.26.4
+pandas==2.2.3
+scipy==1.14.1
+
+# Configuration
+pyyaml==6.0.2
+python-dotenv==1.0.1
+
+# Logging and monitoring
+tensorboard==2.18.0
+prometheus-client==0.21.0
+
+# Utilities
+tqdm==4.67.1
+colorlog==6.9.0
+click==8.1.8
+
+# Testing
+pytest==8.3.4
+pytest-asyncio==0.24.0
+
+# Optional but recommended
+# wandb==0.18.7  # Weights & Biases (optional)
+# ray[rllib]==2.40.0  # For distributed training (optional)
