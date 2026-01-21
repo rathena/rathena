@@ -71024,12 +71024,12 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus2 bMagicAddEle,Ele_All,10;
       if (.@r>=9) {
-        bonus2 bMagicAtkEle,Ele_All,10;
+        bonus2 bMagicAddEle,Ele_All,10;
         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
-          bonus2 bMagicAtkEle,Ele_All,15;
+          bonus2 bMagicAddEle,Ele_All,15;
         }
       }
   - Id: 311354
