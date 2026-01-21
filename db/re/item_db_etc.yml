@@ -85390,7 +85390,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"KN_RIDING",2+(getrefine()/2);
+      bonus2 bSkillAtk,"ABC_HIT_AND_SLIDING",2+(getrefine()/2);
   - Id: 313385
     AegisName: ABC_Soul_CB
     Name: Abyss Chaser Soul (Chasing Break)
