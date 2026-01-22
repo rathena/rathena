@@ -8263,15 +8263,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
 							skillratio += 100 * sd->spiritcharm;
 						break;
-					case NJ_RAIGEKISAI:
-#ifdef RENEWAL
-						skillratio += 100 * skill_lv;
-#else
-						skillratio += 60 + 40 * skill_lv;
-#endif
-						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
-							skillratio += 20 * sd->spiritcharm;
-						break;
 					case NJ_HUUJIN:
 #ifdef RENEWAL
 						skillratio += 50;
