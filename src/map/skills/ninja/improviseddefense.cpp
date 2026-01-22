@@ -3,30 +3,23 @@
 
 #include "improviseddefense.hpp"
 
-#include "map/clif.hpp"
-#include "map/status.hpp"
-#include "map/map.hpp"
-#include "map/skill.hpp"
-#include "map/unit.hpp"
+#include <config/core.hpp>
 
-SkillImprovisedDefense::SkillImprovisedDefense() : WeaponSkillImpl(NJ_TATAMIGAESHI) {
+#include "map/status.hpp"
+
+SkillImprovisedDefense::SkillImprovisedDefense() : SkillImpl(NJ_TATAMIGAESHI) {
 }
 
-void SkillImprovisedDefense::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv,
-                                                 int32 &base_skillratio, int32 mflag) const {
+void SkillImprovisedDefense::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 	base_skillratio += 10 * skill_lv;
 #ifdef RENEWAL
 	base_skillratio *= 2;
 #endif
 }
 
-void SkillImprovisedDefense::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
-#ifndef RENEWAL
-	if (skill_get_inf2(this->skill_id_, INF2_ISNPC)) {
-#endif
-		clif_skill_damage(*src, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, this->skill_id_, skill_lv,
-		                  DMG_SINGLE);
-#ifndef RENEWAL
-	}
-#endif
+void SkillImprovisedDefense::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
+	sc_type type = skill_get_sc(getSkillId());
+
+	if (skill_unitsetting(src,getSkillId(),skill_lv,src->x,src->y,0))
+		sc_start(src,src,type,100,skill_lv,skill_get_time2(getSkillId(),skill_lv));
 }
