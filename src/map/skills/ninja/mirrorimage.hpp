@@ -3,13 +3,11 @@
 
 #pragma once
 
-#include "map/skills/skill_impl.hpp"
+#include "../status_skill_impl.hpp"
 
-#include "map/battle.hpp"
-
-class SkillMirrorImage : public SkillImpl {
+class SkillMirrorImage : public StatusSkillImpl {
 public:
 	SkillMirrorImage();
 
-	void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const override;
+	void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };

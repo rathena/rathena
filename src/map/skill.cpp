@@ -7920,12 +7920,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		// Homunculus
 		clif_skill_nodamage(src, *src, skill_id, skill_lv, sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
-	case NJ_BUNSINJYUTSU:
-		status_change_end(bl, SC_BUNSINJYUTSU); // on official recasting cancels existing mirror image [helvetica]
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		status_change_end(bl, SC_NEN);
-		break;
+
 /* Was modified to only affect targetted char.	[Skotlex]
 	case HP_ASSUMPTIO:
 		if (flag&1)

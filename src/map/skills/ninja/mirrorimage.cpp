@@ -3,16 +3,13 @@
 
 #include "mirrorimage.hpp"
 
-#include "map/clif.hpp"
 #include "map/status.hpp"
 
-SkillMirrorImage::SkillMirrorImage() : SkillImpl(NJ_BUNSINJYUTSU) {
+SkillMirrorImage::SkillMirrorImage() : StatusSkillImpl(NJ_BUNSINJYUTSU) {
 }
 
-void SkillMirrorImage::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
+void SkillMirrorImage::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	status_change_end(target, SC_BUNSINJYUTSU); // on official recasting cancels existing mirror image [helvetica]
-	clif_skill_nodamage(src, *target, this->skill_id_, skill_lv,
-	                    sc_start(src, target, SC_BUNSINJYUTSU, 100, skill_lv,
-	                             skill_get_time(this->skill_id_, skill_lv)));
+	StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
 	status_change_end(target, SC_NEN);
 }
