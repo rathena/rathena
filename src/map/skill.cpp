@@ -5216,34 +5216,23 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		status_change_end(src, SC_BLADESTOP);
 		break;
 
-#ifndef RENEWAL
-	case NJ_ISSEN:
-#endif
 	case MO_EXTREMITYFIST:
 		{
-			block_list *mbl = bl; // For NJ_ISSEN
 			int16 x, y, i = 2; // Move 2 cells (From target)
 			int16 dir = map_calc_dir(src,bl->x,bl->y);
 
 #ifdef RENEWAL
-			if (skill_id == MO_EXTREMITYFIST && sd && sd->spiritball_old > 5)
+			if (sd && sd->spiritball_old > 5)
 				flag |= 1; // Give +100% damage increase
 #endif
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-			if (skill_id == MO_EXTREMITYFIST) {
-				status_set_sp(src, 0, 0);
-				sc_start(src, src, SC_EXTREMITYFIST, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-				status_change_end(src, SC_EXPLOSIONSPIRITS);
-				status_change_end(src, SC_BLADESTOP);
-			} else {
-				status_set_hp(src, 1, 0);
-				status_change_end(src, SC_NEN);
-				status_change_end(src, SC_HIDING);
-			}
-			if (skill_id == MO_EXTREMITYFIST) {
-				mbl = src; // For MO_EXTREMITYFIST
-				i = 3; // Move 3 cells (From caster)
-			}
+			status_set_sp(src, 0, 0);
+			sc_start(src, src, SC_EXTREMITYFIST, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			status_change_end(src, SC_EXPLOSIONSPIRITS);
+			status_change_end(src, SC_BLADESTOP);
+			mbl = src; // For MO_EXTREMITYFIST
+			i = 3; // Move 3 cells (From caster)
+
 			if (dir > 0 && dir < 4)
 				x = -i;
 			else if (dir > 4)
@@ -6173,36 +6162,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case RL_B_TRAP:
 		skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-#ifdef RENEWAL
-	case NJ_ISSEN: {
-		int16 x, y;
-		int16 dir = map_calc_dir(src, bl->x, bl->y);
-
-		// Move 2 cells (From target)
-		if (dir > 0 && dir < 4)
-			x = -2;
-		else if (dir > 4)
-			x = 2;
-		else
-			x = 0;
-		if (dir > 2 && dir < 6)
-			y = -2;
-		else if (dir == 7 || dir < 2)
-			y = 2;
-		else
-			y = 0;
-		// Doesn't have slide effect in GVG
-		if (skill_check_unit_movepos(5, src, bl->x + x, bl->y + y, 1, 1)) {
-			clif_blown(src);
-			clif_spiritball(src);
-		}
-		skill_attack(BF_MISC, src, src, bl, skill_id, skill_lv, tick, flag);
-		status_set_hp(src, umax(status_get_max_hp(src) / 100, 1), 0);
-		status_change_end(src, SC_NEN);
-		status_change_end(src, SC_HIDING);
-	}
-	break;
-#endif
 	case RK_DRAGONBREATH_WATER:
 	case RK_DRAGONBREATH:
 	case NPC_DRAGONBREATH:
