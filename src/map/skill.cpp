@@ -12990,7 +12990,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case CG_MOONLIT:
 	case NJ_KAENSIN:
 	case NJ_BAKUENRYU:
-	case NJ_SUITON:
 	case NJ_HYOUSYOURAKU:
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
