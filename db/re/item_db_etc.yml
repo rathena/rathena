@@ -87016,6 +87016,14 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      bonus bSMatk,2;
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      bonus2 bMagicAtkEle,Ele_Neutral,5;
+      bonus2 bMagicAtkEle,Ele_Holy,5;
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      bonus2 bMagicAtkEle,Ele_Dark,5;
+      bonus2 bMagicAtkEle,Ele_Ghost,5;
+      bonus2 bMagicAtkEle,Ele_Undead,5;
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_Holy,6;
          bonus2 bMagicAtkEle,Ele_Fire,6;
