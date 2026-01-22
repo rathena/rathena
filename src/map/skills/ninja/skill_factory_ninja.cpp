@@ -77,7 +77,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 		case NJ_KUNAI:
 			return std::make_unique<SkillThrowKunai>();
 		case NJ_NEN:
-			return std::make_unique<SkillSoul>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NJ_SYURIKEN:
 			return std::make_unique<SkillThrowShuriken>();
 		case NJ_UTSUSEMI:
