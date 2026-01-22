@@ -8258,11 +8258,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
 							skillratio += 20 * sd->spiritcharm;
 						break;
-					case NJ_HYOUSYOURAKU:
-						skillratio += 50 * skill_lv;
-						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
-							skillratio += 100 * sd->spiritcharm;
-						break;
 					case NPC_ENERGYDRAIN:
 						skillratio += 100 * skill_lv;
 						break;

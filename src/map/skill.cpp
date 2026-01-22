@@ -1598,9 +1598,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		if(attack_type&BF_MISC) //70% base stun chance...
 			sc_start(src,bl,SC_STUN,70,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
-	case NJ_HYOUSYOURAKU:
-		sc_start(src,bl,SC_FREEZE,(10+10*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
 	case NPC_EVILLAND:
 		sc_start(src,bl,SC_BLIND,5*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
