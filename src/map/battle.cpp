@@ -4932,9 +4932,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case NJ_SYURIKEN:
 			skillratio += 5 * skill_lv;
 			break;
-		case NJ_KUNAI:
-			skillratio += -100 + 100 * skill_lv;
-			break;
 		case KN_CHARGEATK:
 			skillratio += 600;
 			break;
