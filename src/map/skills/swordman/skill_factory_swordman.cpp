@@ -8,12 +8,15 @@
 
 #include "autoberserk.hpp"
 #include "bash.hpp"
+#include "battlechant.hpp"
 #include "bowlingbash.hpp"
 #include "brandishspear.hpp"
 #include "counterattack.hpp"
+#include "gloriadomini.hpp"
 #include "grandcross.hpp"
 #include "holycross.hpp"
 #include "magnum.hpp"
+#include "martyrsreckoning.hpp"
 #include "pierce.hpp"
 #include "provoke.hpp"
 #include "relax.hpp"
@@ -21,6 +24,7 @@
 #include "sacrifice.hpp"
 #include "selfprovoke.hpp"
 #include "shieldboomerang.hpp"
+#include "shieldchain.hpp"
 #include "shieldreflect.hpp"
 #include "smite.hpp"
 #include "spearboomerang.hpp"
@@ -113,10 +117,14 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillSpiralPierce>();
 		case LK_TENSIONRELAX:
 			return std::make_unique<SkillRelax>();
+		case PA_GOSPEL:
+			return std::make_unique<SkillBattleChant>();
+		case PA_PRESSURE:
+			return std::make_unique<SkillGloriaDomini>();
 		case PA_SACRIFICE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillMartyrsReckoning>();
 		case PA_SHIELDCHAIN:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillShieldChain>();
 		case RK_DEATHBOUND:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RK_SONICWAVE:
