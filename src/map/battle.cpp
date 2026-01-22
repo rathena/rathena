@@ -4941,13 +4941,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio *= 2;
 #endif
 			break;
-		case NJ_KASUMIKIRI:
-#ifdef RENEWAL
-			skillratio += 20 * skill_lv;
-#else
-			skillratio += 10 * skill_lv;
-#endif
-			break;
 #ifdef RENEWAL
 		case NJ_SYURIKEN:
 			skillratio += 5 * skill_lv;

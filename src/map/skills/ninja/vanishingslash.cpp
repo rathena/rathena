@@ -3,16 +3,14 @@
 
 #include "vanishingslash.hpp"
 
-#include "map/clif.hpp"
-#include "map/map.hpp"
-#include "map/skill.hpp"
+#include <config/core.hpp>
+
 #include "map/status.hpp"
 
 SkillVanishingSlash::SkillVanishingSlash() : StatusSkillImpl(NJ_KASUMIKIRI) {
 }
 
-void SkillVanishingSlash::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target,
-                                              uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
+void SkillVanishingSlash::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 #ifdef RENEWAL
 	base_skillratio += 20 * skill_lv;
 #else
@@ -20,13 +18,7 @@ void SkillVanishingSlash::calculateSkillRatio(const Damage *wd, const block_list
 #endif
 }
 
-void SkillVanishingSlash::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
-	if (skill_attack(BF_WEAPON, src, src, target, this->skill_id_, skill_lv, tick, flag) > 0)
-		sc_start(src, src, SC_HIDING, 100, skill_lv, skill_get_time(this->skill_id_, skill_lv));
-}
-
-void SkillVanishingSlash::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
-	clif_skill_nodamage(src, *target, this->skill_id_, skill_lv,
-	                    sc_start(src, target, SC_HIDING, 100, skill_lv, skill_get_time(this->skill_id_, skill_lv)));
-	status_change_end(target, SC_NEN);
+void SkillVanishingSlash::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	if (skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag) > 0)
+		sc_start(src,src,SC_HIDING,100,skill_lv,skill_get_time(getSkillId(),skill_lv));
 }
