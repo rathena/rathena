@@ -6059,7 +6059,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 #ifdef RENEWAL
 	case PA_PRESSURE:
 #endif
-	case NJ_KOUENKA:
 	case AB_HIGHNESSHEAL:
 	case AB_DUPLELIGHT_MAGIC:
 	case WM_METALICSOUND:
