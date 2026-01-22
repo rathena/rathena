@@ -3,16 +3,14 @@
 
 #include "throwhuumashuriken.hpp"
 
-#include "map/clif.hpp"
-#include "map/map.hpp"
-#include "map/skill.hpp"
-#include "map/status.hpp"
+#include <config/core.hpp>
 
-SkillThrowHuumaShuriken::SkillThrowHuumaShuriken() : WeaponSkillImpl(NJ_HUUMA) {
+#include "map/clif.hpp"
+
+SkillThrowHuumaShuriken::SkillThrowHuumaShuriken() : SkillImplRecursiveDamageSplash(NJ_HUUMA) {
 }
 
-void SkillThrowHuumaShuriken::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target,
-                                                  uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
+void SkillThrowHuumaShuriken::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 #ifdef RENEWAL
 	base_skillratio += -150 + 250 * skill_lv;
 #else
@@ -20,13 +18,9 @@ void SkillThrowHuumaShuriken::calculateSkillRatio(const Damage *wd, const block_
 #endif
 }
 
-void SkillThrowHuumaShuriken::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
-#ifndef RENEWAL
-	if (skill_get_inf2(this->skill_id_, INF2_ISNPC)) {
+void SkillImplRecursiveDamageSplash::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+#ifdef RENEWAL
+	clif_skill_damage( *src, *target,tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, getSkillId(), skill_lv, DMG_SINGLE );
 #endif
-		clif_skill_damage(*src, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, this->skill_id_, skill_lv,
-		                  DMG_SINGLE);
-#ifndef RENEWAL
-	}
-#endif
+	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }
