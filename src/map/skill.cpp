@@ -12981,7 +12981,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case DC_SERVICEFORYOU:
 #endif
 	case CG_MOONLIT:
-	case NJ_KAENSIN:
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
 	case NPC_COMET:
