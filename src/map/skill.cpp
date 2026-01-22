@@ -13151,11 +13151,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 				skill_blockpc_start (*sd, MO_EXTREMITYFIST, 2000);
 		}
 		break;
-	case NJ_SHADOWJUMP:
-		if( map_getcell(src->m,x,y,CELL_CHKREACH) && skill_check_unit_movepos(5, src, x, y, 1, 0) ) //You don't move on GVG grounds.
-			clif_blown(src);
-		status_change_end(src, SC_HIDING);
-		break;
 
 	// Slim Pitcher [Celest]
 	case CR_SLIMPITCHER:
