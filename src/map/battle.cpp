@@ -4929,9 +4929,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 80000 / i - 100;
 			break;
 #ifdef RENEWAL
-		case NJ_SYURIKEN:
-			skillratio += 5 * skill_lv;
-			break;
 		case KN_CHARGEATK:
 			skillratio += 600;
 			break;
