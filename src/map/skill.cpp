@@ -5932,12 +5932,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 	}
 
-	//Place units around target
-	case NJ_BAKUENRYU:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		skill_unitsetting(src, skill_id, skill_lv, bl->x, bl->y, 0);
-		break;
-
 	case MS_MAGNUM:
 		if( flag&1 ) {
 			// For players, damage depends on distance, so add it to flag if it is > 1
@@ -12988,7 +12982,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 #endif
 	case CG_MOONLIT:
 	case NJ_KAENSIN:
-	case NJ_BAKUENRYU:
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
 	case NPC_COMET:
