@@ -46,8 +46,6 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 			return std::make_unique<SkillShadowSlash>();
 		case NJ_BUNSINJYUTSU:
 			return std::make_unique<SkillMirrorImage>();
-		case NJ_NINPOU:
-			return std::make_unique<SkillSpiritOfTheBlade>();
 		case NJ_KOUENKA:
 			return std::make_unique<SkillCrimsonFirePetal>();
 		case NJ_KAENSIN:
