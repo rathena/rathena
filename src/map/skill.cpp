@@ -6199,18 +6199,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		if (skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag) > 0)
 			sc_start(src,src,SC_HIDING,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
-	case NJ_KIRIKAGE:
-		if( !map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND) )
-		{	//You don't move on GVG grounds.
-			int16 x, y;
-			map_search_freecell(bl, 0, &x, &y, 1, 1, 0);
-			if (unit_movepos(src, x, y, 0, 0)) {
-				clif_blown(src);
-			}
-		}
-		status_change_end(src, SC_HIDING);
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
+
 	case RK_PHANTOMTHRUST:
 	case NPC_PHANTOMTHRUST:
 		unit_setdir(src,map_calc_dir(src, bl->x, bl->y));
