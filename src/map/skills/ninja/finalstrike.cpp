@@ -3,20 +3,21 @@
 
 #include "finalstrike.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
 #include "map/map.hpp"
-// #include "map/pc.hpp"
 #include "map/status.hpp"
 #include "map/unit.hpp"
 
-SkillFinalStrike::SkillFinalStrike() : SkillImpl(NJ_ISSEN) {
+SkillFinalStrike::SkillFinalStrike() : WeaponSkillImpl(NJ_ISSEN) {
 }
 
 void SkillFinalStrike::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
-#ifdef RENEWAL
 	int16 x, y;
 	int16 dir = map_calc_dir(src, target->x, target->y);
 
+#ifdef RENEWAL
 	// Move 2 cells (From target)
 	if (dir > 0 && dir < 4)
 		x = -2;
@@ -40,11 +41,10 @@ void SkillFinalStrike::castendDamageId(block_list *src, block_list *target, uint
 	status_change_end(src, SC_NEN);
 	status_change_end(src, SC_HIDING);
 #else
-	block_list *mbl = target; // For NJ_ISSEN
-	int16 x, y, i = 2; // Move 2 cells (From target)
-	int16 dir = map_calc_dir(src, target->x, target->y);
+	int16 i = 2; // Move 2 cells (From target)
 
-	skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
+
 	status_set_hp(src, 1, 0);
 	status_change_end(src, SC_NEN);
 	status_change_end(src, SC_HIDING);
@@ -62,8 +62,8 @@ void SkillFinalStrike::castendDamageId(block_list *src, block_list *target, uint
 	else
 		y = 0;
 	// Ashura Strike still has slide effect in GVG
-	if ((mbl == src || (!map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND))) &&
-		unit_movepos(src, mbl->x + x, mbl->y + y, 1, 1)) {
+	if ((!map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND)) &&
+		unit_movepos(src, target->x + x, target->y + y, 1, 1)) {
 		clif_blown(src);
 		clif_spiritball(src);
 	}

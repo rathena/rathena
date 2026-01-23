@@ -383,7 +383,6 @@
     <ClInclude Include="skills/ninja/ragingfiredragon.hpp" />
     <ClInclude Include="skills/ninja/shadowleap.hpp" />
     <ClInclude Include="skills/ninja/shadowslash.hpp" />
-    <ClInclude Include="skills/ninja/shurikentraining.hpp" />
     <ClInclude Include="skills/ninja/skill_factory_ninja.hpp" />
     <ClInclude Include="skills/ninja/spearofice.hpp" />
     <ClInclude Include="skills/ninja/throwhuumashuriken.hpp" />
@@ -682,7 +681,6 @@
     <ClCompile Include="skills/ninja/ragingfiredragon.cpp" />
     <ClCompile Include="skills/ninja/shadowleap.cpp" />
     <ClCompile Include="skills/ninja/shadowslash.cpp" />
-    <ClCompile Include="skills/ninja/shurikentraining.cpp" />
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp" />
     <ClCompile Include="skills/ninja/spearofice.cpp" />
     <ClCompile Include="skills/ninja/throwhuumashuriken.cpp" />

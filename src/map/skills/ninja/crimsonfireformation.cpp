@@ -3,8 +3,8 @@
 
 #include "crimsonfireformation.hpp"
 
+#include "map/map.hpp"
 #include "map/pc.hpp"
-#include "map/status.hpp"
 
 SkillCrimsonFireFormation::SkillCrimsonFireFormation() : SkillImpl(NJ_KAENSIN) {
 }

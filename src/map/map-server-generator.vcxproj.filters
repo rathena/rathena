@@ -798,9 +798,6 @@
     <ClInclude Include="skills/ninja/shadowslash.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
-    <ClInclude Include="skills/ninja/shurikentraining.hpp">
-      <Filter>Header Files\Skills\Ninja</Filter>
-    </ClInclude>
     <ClInclude Include="skills/ninja/skill_factory_ninja.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
@@ -1557,9 +1554,6 @@
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/shadowslash.cpp">
-      <Filter>Source Files\Skills\Ninja</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/ninja/shurikentraining.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp">

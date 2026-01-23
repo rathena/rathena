@@ -3,8 +3,8 @@
 
 #include "crimsonfirepetal.hpp"
 
+#include "map/map.hpp"
 #include "map/pc.hpp"
-#include "map/status.hpp"
 
 SkillCrimsonFirePetal::SkillCrimsonFirePetal() : SkillImpl(NJ_KOUENKA) {
 }

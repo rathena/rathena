@@ -5,6 +5,7 @@
 
 #include <config/core.hpp>
 
+#include "map/map.hpp"
 #include "map/pc.hpp"
 
 SkillWindBlade::SkillWindBlade() : SkillImpl(NJ_HUUJIN) {

@@ -18,7 +18,6 @@
 #include "ragingfiredragon.hpp"
 #include "shadowleap.hpp"
 #include "shadowslash.hpp"
-#include "shurikentraining.hpp"
 #include "spearofice.hpp"
 #include "throwhuumashuriken.hpp"
 #include "throwkunai.hpp"
@@ -71,8 +70,6 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 			return std::make_unique<SkillThrowShuriken>();
 		case NJ_TATAMIGAESHI:
 			return std::make_unique<SkillImprovisedDefense>();
-		case NJ_TOBIDOUGU:
-			return std::make_unique<SkillShurikenTraining>();
 		case NJ_UTSUSEMI:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NJ_ZENYNAGE:

@@ -4,6 +4,7 @@
 #include "shadowleap.hpp"
 
 #include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/status.hpp"
 
 SkillShadowLeap::SkillShadowLeap() : SkillImpl(NJ_SHADOWJUMP) {

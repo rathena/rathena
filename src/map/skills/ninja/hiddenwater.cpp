@@ -3,7 +3,6 @@
 
 #include "hiddenwater.hpp"
 
-
 SkillHiddenWater::SkillHiddenWater() : SkillImpl(NJ_SUITON) {
 }
 

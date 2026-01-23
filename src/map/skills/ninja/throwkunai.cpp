@@ -3,6 +3,7 @@
 
 #include "throwkunai.hpp"
 
+#include <config/core.hpp>
 
 SkillThrowKunai::SkillThrowKunai() : WeaponSkillImpl(NJ_KUNAI) {
 }

@@ -3,6 +3,7 @@
 
 #include "kamaitachi.hpp"
 
+#include "map/map.hpp"
 #include "map/pc.hpp"
 
 SkillKamaitachi::SkillKamaitachi() : SkillImpl(NJ_KAMAITACHI) {
