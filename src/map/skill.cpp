@@ -103,7 +103,6 @@ static int32 skill_check_unit_range2 (block_list *bl, int32 x, int32 y, uint16 s
 static int32 skill_destroy_trap( block_list *bl, va_list ap );
 static int32 skill_check_condition_mob_master_sub (block_list *bl, va_list ap);
 static bool skill_check_condition_sc_required( map_session_data& sd, uint16 skill_id, s_skill_condition& require );
-static bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
 
 // Use this function for splash skills that can't hit icewall when cast by players
 int32 splash_target(block_list* bl) {
@@ -1597,9 +1596,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case MO_BALKYOUNG: //Note: attack_type is passed as BF_WEAPON for the actual target, BF_MISC for the splash-affected mobs.
 		if(attack_type&BF_MISC) //70% base stun chance...
 			sc_start(src,bl,SC_STUN,70,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NJ_HYOUSYOURAKU:
-		sc_start(src,bl,SC_FREEZE,(10+10*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NPC_EVILLAND:
 		sc_start(src,bl,SC_BLIND,5*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -5166,7 +5162,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	case MA_SHARPSHOOTING:
-	case NJ_KAMAITACHI:
 	case NPC_DARKPIERCING:
 	case NPC_ACIDBREATH:
 	case NPC_DARKNESSBREATH:
@@ -5216,34 +5211,22 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		status_change_end(src, SC_BLADESTOP);
 		break;
 
-#ifndef RENEWAL
-	case NJ_ISSEN:
-#endif
 	case MO_EXTREMITYFIST:
 		{
-			block_list *mbl = bl; // For NJ_ISSEN
 			int16 x, y, i = 2; // Move 2 cells (From target)
 			int16 dir = map_calc_dir(src,bl->x,bl->y);
 
 #ifdef RENEWAL
-			if (skill_id == MO_EXTREMITYFIST && sd && sd->spiritball_old > 5)
+			if (sd && sd->spiritball_old > 5)
 				flag |= 1; // Give +100% damage increase
 #endif
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-			if (skill_id == MO_EXTREMITYFIST) {
-				status_set_sp(src, 0, 0);
-				sc_start(src, src, SC_EXTREMITYFIST, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-				status_change_end(src, SC_EXPLOSIONSPIRITS);
-				status_change_end(src, SC_BLADESTOP);
-			} else {
-				status_set_hp(src, 1, 0);
-				status_change_end(src, SC_NEN);
-				status_change_end(src, SC_HIDING);
-			}
-			if (skill_id == MO_EXTREMITYFIST) {
-				mbl = src; // For MO_EXTREMITYFIST
-				i = 3; // Move 3 cells (From caster)
-			}
+			status_set_sp(src, 0, 0);
+			sc_start(src, src, SC_EXTREMITYFIST, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			status_change_end(src, SC_EXPLOSIONSPIRITS);
+			status_change_end(src, SC_BLADESTOP);
+			i = 3; // Move 3 cells (From caster)
+
 			if (dir > 0 && dir < 4)
 				x = -i;
 			else if (dir > 4)
@@ -5257,8 +5240,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			else
 				y = 0;
 			// Ashura Strike still has slide effect in GVG
-			if ((mbl == src || (!map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND))) &&
-				unit_movepos(src, mbl->x + x, mbl->y + y, 1, 1)) {
+			if (unit_movepos(src, src->x + x, src->y + y, 1, 1)) {
 				clif_blown(src);
 				clif_spiritball(src);
 			}
@@ -5283,7 +5265,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 		[[fallthrough]];
 	case MA_SHOWER:
-	case NJ_HUUMA:
 	case NPC_PULSESTRIKE:
 	case NPC_PULSESTRIKE2:
 	case NPC_HELLJUDGEMENT:
@@ -5537,9 +5518,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case SKE_SKY_MOON:
 					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 					break;
-#ifdef RENEWAL
-				case NJ_HUUMA:
-#endif
 				case LG_MOONSLASHER:
 				case MH_XENO_SLASHER:
 					clif_skill_damage( *src, *bl,tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
@@ -5947,12 +5925,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 	}
 
-	//Place units around target
-	case NJ_BAKUENRYU:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		skill_unitsetting(src, skill_id, skill_lv, bl->x, bl->y, 0);
-		break;
-
 	case MS_MAGNUM:
 		if( flag&1 ) {
 			// For players, damage depends on distance, so add it to flag if it is > 1
@@ -6080,9 +6052,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 #ifdef RENEWAL
 	case PA_PRESSURE:
 #endif
-	case NJ_KOUENKA:
-	case NJ_HYOUSENSOU:
-	case NJ_HUUJIN:
 	case AB_HIGHNESSHEAL:
 	case AB_DUPLELIGHT_MAGIC:
 	case WM_METALICSOUND:
@@ -6168,41 +6137,10 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case CR_ACIDDEMONSTRATION:
 #endif
 	case NPC_SMOKING:
-	case NJ_ZENYNAGE:
 	case GN_THORNS_TRAP:
 	case RL_B_TRAP:
 		skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-#ifdef RENEWAL
-	case NJ_ISSEN: {
-		int16 x, y;
-		int16 dir = map_calc_dir(src, bl->x, bl->y);
-
-		// Move 2 cells (From target)
-		if (dir > 0 && dir < 4)
-			x = -2;
-		else if (dir > 4)
-			x = 2;
-		else
-			x = 0;
-		if (dir > 2 && dir < 6)
-			y = -2;
-		else if (dir == 7 || dir < 2)
-			y = 2;
-		else
-			y = 0;
-		// Doesn't have slide effect in GVG
-		if (skill_check_unit_movepos(5, src, bl->x + x, bl->y + y, 1, 1)) {
-			clif_blown(src);
-			clif_spiritball(src);
-		}
-		skill_attack(BF_MISC, src, src, bl, skill_id, skill_lv, tick, flag);
-		status_set_hp(src, umax(status_get_max_hp(src) / 100, 1), 0);
-		status_change_end(src, SC_NEN);
-		status_change_end(src, SC_HIDING);
-	}
-	break;
-#endif
 	case RK_DRAGONBREATH_WATER:
 	case RK_DRAGONBREATH:
 	case NPC_DRAGONBREATH:
@@ -6249,22 +6187,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case NJ_KASUMIKIRI:
-		if (skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag) > 0)
-			sc_start(src,src,SC_HIDING,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
-	case NJ_KIRIKAGE:
-		if( !map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND) )
-		{	//You don't move on GVG grounds.
-			int16 x, y;
-			map_search_freecell(bl, 0, &x, &y, 1, 1, 0);
-			if (unit_movepos(src, x, y, 0, 0)) {
-				clif_blown(src);
-			}
-		}
-		status_change_end(src, SC_HIDING);
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
 	case RK_PHANTOMTHRUST:
 	case NPC_PHANTOMTHRUST:
 		unit_setdir(src,map_calc_dir(src, bl->x, bl->y));
@@ -7974,12 +7896,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		// Homunculus
 		clif_skill_nodamage(src, *src, skill_id, skill_lv, sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
-	case NJ_BUNSINJYUTSU:
-		status_change_end(bl, SC_BUNSINJYUTSU); // on official recasting cancels existing mirror image [helvetica]
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		status_change_end(bl, SC_NEN);
-		break;
+
 /* Was modified to only affect targetted char.	[Skotlex]
 	case HP_ASSUMPTIO:
 		if (flag&1)
@@ -13034,12 +12951,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case DC_SERVICEFORYOU:
 #endif
 	case CG_MOONLIT:
-	case NJ_KAENSIN:
-	case NJ_BAKUENRYU:
-	case NJ_SUITON:
-	case NJ_HYOUSYOURAKU:
-	case NJ_RAIGEKISAI:
-	case NJ_KAMAITACHI:
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
 	case NPC_COMET:
@@ -13227,11 +13138,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 				skill_blockpc_start (*sd, MO_EXTREMITYFIST, 2000);
 		}
 		break;
-	case NJ_SHADOWJUMP:
-		if( map_getcell(src->m,x,y,CELL_CHKREACH) && skill_check_unit_movepos(5, src, x, y, 1, 0) ) //You don't move on GVG grounds.
-			clif_blown(src);
-		status_change_end(src, SC_HIDING);
-		break;
 
 	// Slim Pitcher [Celest]
 	case CR_SLIMPITCHER:
@@ -13370,10 +13276,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 			sc_start4(src,src,type,100,skill_lv,0,sg->group_id,BCT_SELF,skill_get_time(skill_id,skill_lv));
 			clif_skill_poseffect( *src, skill_id, skill_lv, 0, 0, tick ); // PA_GOSPEL music packet
 		}
-		break;
-	case NJ_TATAMIGAESHI:
-		if (skill_unitsetting(src,skill_id,skill_lv,src->x,src->y,0))
-			sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
 	case AM_RESURRECTHOMUN:	//[orn]
@@ -23246,7 +23148,7 @@ int32 skill_get_elemental_type( uint16 skill_id , uint16 skill_lv ) {
  * @param check_flag Flags: 1:Check for BG maps, 2:Check for GVG maps on WOE times, 4:Check for GVG maps regardless Agit flags
  * @return True:If unit can be moved, False:If check on flags are met or unit cannot be moved.
  **/
-static bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath) {
+bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath) {
 	status_change *sc;
 
 	nullpo_retr(false, bl);

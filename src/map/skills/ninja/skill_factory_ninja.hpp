@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../skill_factory.hpp"
+#include "map/skills/skill_factory.hpp"
 
 class SkillFactoryNinja : public SkillFactory {
 public:
