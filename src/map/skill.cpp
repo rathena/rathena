@@ -5342,8 +5342,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case DK_MADNESS_CRUSHER:
 	case DK_HACKANDSLASHER:
 	case DK_DRAGONIC_BREATH:
-	case AG_CRIMSON_ARROW_ATK:
-	case AG_CRYSTAL_IMPACT_ATK:
 	case IQ_OLEUM_SANCTUM:
 	case IQ_MASSIVE_F_BLASTER:
 	case IQ_EXPOSION_BLASTER:
@@ -5594,10 +5592,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					}
 					break;
 				}
-				case AG_CRYSTAL_IMPACT_ATK:
-					if (sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 5)
-						splash_size = 2;// Gives the aftershock hit a 5x5 splash AoE.
-					break;
 				case ABC_CHASING_SHOT:
 				case ABC_CHASING_BREAK: {
 					uint8 dir = DIR_NORTHEAST;
@@ -6066,8 +6060,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case WM_METALICSOUND:
 	case KO_KAIHOU:
 	case MH_ERASER_CUTTER:
-	case AG_ASTRAL_STRIKE_ATK:
-	case AG_DESTRUCTIVE_HURRICANE_CLIMAX:
 	case CD_ARBITRIUM:
 	case HN_METEOR_STORM_BUSTER:
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);

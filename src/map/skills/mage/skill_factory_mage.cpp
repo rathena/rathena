@@ -7,12 +7,18 @@
 #include "../weapon_skill_impl.hpp"
 
 #include "allbloom.hpp"
+#include "allbloomattack.hpp"
+#include "allbloomattack2.hpp"
 #include "astralstrike.hpp"
+#include "astralstrikeattack.hpp"
 #include "coldbolt.hpp"
 #include "crimsonarrow.hpp"
+#include "crimsonarrowattack.hpp"
 #include "crystalimpact.hpp"
+#include "crystalimpactattack.hpp"
 #include "deadlyprojection.hpp"
 #include "destructivehurricane.hpp"
+#include "destructivehurricaneclimax.hpp"
 #include "earthspike.hpp"
 #include "energycoat.hpp"
 #include "energyconversion.hpp"
@@ -52,24 +58,37 @@
 #include "thunderstorm.hpp"
 #include "tornadostorm.hpp"
 #include "violentquake.hpp"
+#include "violentquakeattack.hpp"
 #include "waterball.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id) const {
 	switch (skill_id) {
 		case AG_ALL_BLOOM:
 			return std::make_unique<SkillAllBloom>();
+		case AG_ALL_BLOOM_ATK2:
+			return std::make_unique<SkillAllBloomAttack2>();
+		case AG_ALL_BLOOM_ATK:
+			return std::make_unique<SkillAllBloomAttack>();
 		case AG_ASTRAL_STRIKE:
 			return std::make_unique<SkillAstralStrike>();
+		case AG_ASTRAL_STRIKE_ATK:
+			return std::make_unique<SkillAstralStrikeAttack>();
 		case AG_CLIMAX:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case AG_CRIMSON_ARROW:
 			return std::make_unique<SkillCrimsonArrow>();
+		case AG_CRIMSON_ARROW_ATK:
+			return std::make_unique<SkillCrimsonArrowAttack>();
 		case AG_CRYSTAL_IMPACT:
 			return std::make_unique<SkillCrystalImpact>();
+		case AG_CRYSTAL_IMPACT_ATK:
+			return std::make_unique<SkillCrystalImpactAttack>();
 		case AG_DEADLY_PROJECTION:
 			return std::make_unique<SkillDeadlyProjection>();
 		case AG_DESTRUCTIVE_HURRICANE:
 			return std::make_unique<SkillDestructiveHurricane>();
+		case AG_DESTRUCTIVE_HURRICANE_CLIMAX:
+			return std::make_unique<SkillDestructiveHurricaneClimax>();
 		case AG_ENERGY_CONVERSION:
 			return std::make_unique<SkillEnergyConversion>();
 		case AG_FLORAL_FLARE_ROAD:
@@ -92,6 +111,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillTornadoStorm>();
 		case AG_VIOLENT_QUAKE:
 			return std::make_unique<SkillViolentQuake>();
+		case AG_VIOLENT_QUAKE_ATK:
+			return std::make_unique<SkillViolentQuakeAttack>();
 		case EM_SPELL_ENCHANTING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case HW_GANBANTEIN:
