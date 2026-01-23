@@ -6,6 +6,7 @@
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
+#include "map/status.hpp"
 
 SkillThrowHuumaShuriken::SkillThrowHuumaShuriken() : SkillImplRecursiveDamageSplash(NJ_HUUMA) {
 }
@@ -18,7 +19,7 @@ void SkillThrowHuumaShuriken::calculateSkillRatio(const Damage *wd, const block_
 #endif
 }
 
-void SkillImplRecursiveDamageSplash::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillThrowHuumaShuriken::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 #ifdef RENEWAL
 	clif_skill_damage( *src, *target,tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, getSkillId(), skill_lv, DMG_SINGLE );
 #endif

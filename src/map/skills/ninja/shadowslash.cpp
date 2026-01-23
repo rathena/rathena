@@ -6,6 +6,8 @@
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
+#include "map/status.hpp"
+#include "map/unit.hpp"
 
 SkillShadowSlash::SkillShadowSlash() : WeaponSkillImpl(NJ_KIRIKAGE) {
 }

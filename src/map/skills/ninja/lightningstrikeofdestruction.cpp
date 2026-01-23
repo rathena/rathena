@@ -7,10 +7,10 @@
 
 #include "map/pc.hpp"
 
-SkillLightningStrikeofDestruction::SkillLightningStrikeofDestruction() : SkillImpl(NJ_RAIGEKISAI) {
+SkillLightningStrikeOfDestruction::SkillLightningStrikeOfDestruction() : SkillImpl(NJ_RAIGEKISAI) {
 }
 
-void SkillLightningStrikeofDestruction::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
+void SkillLightningStrikeOfDestruction::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 	const map_session_data* sd = BL_CAST( BL_PC, src );
 
 #ifdef RENEWAL
@@ -22,7 +22,7 @@ void SkillLightningStrikeofDestruction::calculateSkillRatio(const Damage *wd, co
 		base_skillratio += 20 * sd->spiritcharm;
 }
 
-void SkillLightningStrikeofDestruction::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
+void SkillLightningStrikeOfDestruction::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	flag |= 1;
 

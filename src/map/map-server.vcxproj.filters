@@ -762,9 +762,6 @@
     <ClInclude Include="skills/merchant/weaponrepair.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
-    <ClInclude Include="skills/ninja/cicadaskinsheeding.hpp">
-      <Filter>Header Files\Skills\Ninja</Filter>
-    </ClInclude>
     <ClInclude Include="skills/ninja/crimsonfireformation.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
@@ -807,13 +804,7 @@
     <ClInclude Include="skills/ninja/skill_factory_ninja.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
-    <ClInclude Include="skills/ninja/soul.hpp">
-      <Filter>Header Files\Skills\Ninja</Filter>
-    </ClInclude>
     <ClInclude Include="skills/ninja/spearofice.hpp">
-      <Filter>Header Files\Skills\Ninja</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/ninja/spiritoftheblade.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/throwhuumashuriken.hpp">
@@ -1526,9 +1517,6 @@
     <ClCompile Include="skills/merchant/weaponrepair.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
-    <ClCompile Include="skills/ninja/cicadaskinsheeding.cpp">
-      <Filter>Source Files\Skills\Ninja</Filter>
-    </ClCompile>
     <ClCompile Include="skills/ninja/crimsonfireformation.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
@@ -1571,13 +1559,7 @@
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
-    <ClCompile Include="skills/ninja/soul.cpp">
-      <Filter>Source Files\Skills\Ninja</Filter>
-    </ClCompile>
     <ClCompile Include="skills/ninja/spearofice.cpp">
-      <Filter>Source Files\Skills\Ninja</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/ninja/spiritoftheblade.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/throwhuumashuriken.cpp">

@@ -8,10 +8,10 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillSpearofIce::SkillSpearofIce() : SkillImpl(NJ_HYOUSENSOU) {
+SkillSpearOfIce::SkillSpearOfIce() : SkillImpl(NJ_HYOUSENSOU) {
 }
 
-void SkillSpearofIce::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
+void SkillSpearOfIce::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 	const map_session_data* sd = BL_CAST( BL_PC, src );
 
 #ifdef RENEWAL
@@ -25,6 +25,6 @@ void SkillSpearofIce::calculateSkillRatio(const Damage *wd, const block_list *sr
 		base_skillratio += 20 * sd->spiritcharm;
 }
 
-void SkillSpearofIce::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+void SkillSpearOfIce::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	skill_attack(BF_MAGIC,src,src,target,getSkillId(),skill_lv,tick,flag);
 }
