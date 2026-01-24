@@ -1408,9 +1408,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src,bl,SC_STUN,(6*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case HN_MEGA_SONIC_BLOW:
-		sc_start(src, bl, SC_STUN, (2 * skill_lv + 10), skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
 
 	case NPC_STORMGUST2:
 		if (skill_lv == 1)
@@ -1421,9 +1418,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_FREEZE,3,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case HN_METEOR_STORM_BUSTER:
-		sc_start(src,bl,SC_STUN,3*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
 
 	case MA_FREEZINGTRAP:
 		sc_start(src, bl, SC_FREEZE, 100, skill_lv, skill_get_time2(skill_id, skill_lv), sstatus->amotion + 100);
@@ -1570,20 +1564,12 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	}
 		break;
 
-	case ML_SPIRALPIERCE:
-	case HN_SPIRAL_PIERCE_MAX:
-		if( dstsd || ( dstmd && !status_bl_has_mode(bl,MD_STATUSIMMUNE) ) ) //Does not work on status immune
-			sc_start(src,bl,SC_ANKLE,100,0,skill_get_time2(skill_id,skill_lv));
-		break;
 
 	case PF_FOGWALL:
 		if (src != bl && !tsc->getSCE(SC_DELUGE))
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case HN_NAPALM_VULCAN_STRIKE:
-		sc_start(src,bl,SC_CURSE,5*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
 
 	case GN_FIRE_EXPANSION_ACID:
 		skill_break_equip(src,bl, EQP_WEAPON|EQP_ARMOR, 100*skill_lv, BCT_ENEMY);
@@ -2014,11 +2000,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		break;
 	case ABC_HIT_AND_SLIDING:
 		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
-	case HN_SHIELD_CHAIN_RUSH:
-	case HN_JACK_FROST_NOVA:
-	case HN_GROUND_GRAVITATION:
-		sc_start(src, bl, skill_get_sc(skill_id), 100, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 	case SH_HOWLING_OF_CHUL_HO:
 		sc_start(src, bl, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -5057,8 +5038,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case WH_HAWKBOOMERANG:
 	case TR_ROSEBLOSSOM:
 	case TR_RHYTHMSHOOTING:
-	case HN_MEGA_SONIC_BLOW:
-	case HN_SPIRAL_PIERCE_MAX:
 	case SH_CHUL_HO_SONIC_CLAW:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
@@ -5422,7 +5401,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case IG_SHIELD_SHOOTING:
 	case TR_METALIC_FURY:
 	case IG_GRAND_JUDGEMENT:
-	case HN_JUPITEL_THUNDER_STORM:
 	case SH_CHUL_HO_BATTERING:
 	case SH_HYUN_ROK_SPIRIT_POWER:
 	case SOA_EXORCISM_OF_MALICIOUS_SOUL:
@@ -5522,7 +5500,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case DK_DRAGONIC_BREATH:
 				case DK_HACKANDSLASHER:
 				case MT_SPARK_BLASTER:
-				case HN_JUPITEL_THUNDER_STORM:
 				case SH_CHUL_HO_BATTERING:
 				case SH_HYUN_ROK_SPIRIT_POWER:
 				case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
@@ -6087,7 +6064,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case AG_ASTRAL_STRIKE_ATK:
 	case AG_DESTRUCTIVE_HURRICANE_CLIMAX:
 	case CD_ARBITRIUM:
-	case HN_METEOR_STORM_BUSTER:
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
@@ -7003,43 +6979,9 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src, bl, SC_VENOMIMPRESS, 100, skill_lv, skill_get_time(skill_id,skill_lv));
 		break;
 
-	case HN_DOUBLEBOWLINGBASH:
-		if (flag & 1) {
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, skill_area_temp[0] & 0xFFF);
-		} else {
-			int32 splash = skill_get_splash(skill_id, skill_lv);
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-			map_foreachinrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-			sc_start(src, src, SC_HNNOWEAPON, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		}
-		break;
 
-	case HN_SHIELD_CHAIN_RUSH:
-		if (flag & 1) {
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		} else {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-			sc_start(src, src, SC_HNNOWEAPON, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		}
-		break;
 
-	case HN_JACK_FROST_NOVA:
-	case HN_HELLS_DRIVE:
-	case HN_GROUND_GRAVITATION:
-		if (flag & 1)
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
 
-	case HN_NAPALM_VULCAN_STRIKE:
-		if (flag & 1) {
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		} else {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-		}
-		break;
 
 	case NW_MAGAZINE_FOR_ONE:
 	case NW_ONLY_ONE_BULLET:
@@ -9416,11 +9358,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		status_heal(bl, 0, (skill_lv * (skill_lv + 1) / 2) * 40, 1);
 		break;
 
-	case HN_OVERCOMING_CRISIS:
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id,skill_lv));
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		status_percent_heal(bl, 100, 0);
-		break;
 
 	// New guild skills [Celest]
 	case GD_BATTLEORDER:
@@ -11771,10 +11708,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case HN_HELLS_DRIVE:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
-		break;
 
 	case NW_THE_VIGILANTE_AT_NIGHT:
 		i = skill_get_splash(skill_id, skill_lv);
@@ -13549,46 +13482,9 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		}
 		break;
 
-	case HN_JACK_FROST_NOVA:
-	case HN_GROUND_GRAVITATION: {
-			if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
-				if( sd != nullptr ){
-					clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-				}
 
-				return 0;
-			}
 
-			int32 splash = skill_get_splash(skill_id, skill_lv);
 
-			map_foreachinarea(skill_area_sub, src->m, x - splash, y - splash, x + splash, y + splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id);
-			skill_unitsetting(src, skill_id, skill_lv, x, y, flag);
-
-			for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
-				skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
-			}
-		}
-		break;
-
-	case HN_METEOR_STORM_BUSTER: {
-			if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
-				if( sd != nullptr ){
-					clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-				}
-
-				return 0;
-			}
-
-			int32 splash = skill_get_splash(skill_id, skill_lv);
-
-			map_foreachinarea(skill_area_sub, src->m, x - splash, y - splash, x + splash, y + splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id);
-			skill_unitsetting(src, skill_id, skill_lv, x, y, skill_get_unit_interval(skill_id));
-
-			for (i = 1; i <= (skill_get_time(skill_id, skill_lv) / skill_get_time2(skill_id, skill_lv)); i++) {
-				skill_addtimerskill(src, tick + (t_tick)i*skill_get_time2(skill_id, skill_lv), 0, x, y, skill_id, skill_lv, 0, flag);
-			}
-		}
-		break;
 
 	case NW_WILD_FIRE:
 		i = skill_get_splash(skill_id, skill_lv);
