@@ -1167,7 +1167,7 @@ public:
 					base_skillratio += -100 + skillratio;
 					break;
 				case AT_TEMPEST_FLAP:
-					skillratio = 12500 * skill_lv;
+					skillratio = 1250 * skill_lv;
 					skillratio += sstatus->con * 5; // TODO - unknown scaling [munkrej]
 					RE_LVL_DMOD(100);
 					base_skillratio += -100 + skillratio;

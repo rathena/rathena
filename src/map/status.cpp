@@ -13284,10 +13284,13 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 		// New sc
 		sce = sc->createSCE(type);
 	}
-	const bool preserve_body_style = (!sc_isnew && (type == SC_WEREWOLF || type == SC_WERERAPTOR));
+
 	sce->val1 = val1;
 	sce->val2 = val2;
 	sce->val3 = val3;
+
+	//TODO - check if needed: workaround for correct display of SC_WEREWOLF/SC_WERERAPTOR for self in char select / char screen and for others when moving. Maybe something is missing for the transformation to work correctly without this. [munkrej]
+	const bool preserve_body_style = (!sc_isnew && (type == SC_WEREWOLF || type == SC_WERERAPTOR));
 	if (!preserve_body_style) {
 		sce->val4 = val4;
 	}
@@ -13599,7 +13602,6 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 	view_data* vd = status_get_viewdata( bl );
 	std::bitset<SCB_MAX> calc_flag = scdb->calc_flag;
 	status_data* status = status_get_status_data(*bl);
-	int32 restore_body_style = 0;
 
 	switch(type) {
 		case SC_KEEPING:
@@ -13620,8 +13622,11 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 				status_damage(nullptr,bl,damage,0,0,1,0);
 			}
 			break;
+
+		//TODO - check if needed: workaround for correct display of SC_WEREWOLF/SC_WERERAPTOR for self in char select / char screen and for others when moving. Maybe something is missing for the transformation to work correctly without this. [munkrej]
 		case SC_WEREWOLF:
 		case SC_WERERAPTOR:
+			int32 restore_body_style = 0;
 			if (sd != nullptr && vd != nullptr) {
 				restore_body_style = val4;
 				sd->vd.look[LOOK_BODY2] = restore_body_style;
