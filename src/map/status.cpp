@@ -5882,6 +5882,7 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 		status->vit = status_calc_vit(&bl, sc, b_status->vit);
 		flag.set(SCB_DEF2);
 		flag.set(SCB_MDEF2);
+		flag.set(SCB_REGEN);
 		if( bl.type&(BL_PC|BL_HOM|BL_MER|BL_ELEM) )
 			flag.set(SCB_MAXHP);
 		if( bl.type == BL_HOM )
@@ -5892,6 +5893,7 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 		status->int_ = status_calc_int(&bl, sc, b_status->int_);
 		flag.set(SCB_MATK);
 		flag.set(SCB_MDEF2);
+		flag.set(SCB_REGEN);
 		if( bl.type&(BL_PC|BL_HOM|BL_MER|BL_ELEM) )
 			flag.set(SCB_MAXSP);
 		if( bl.type == BL_HOM )
@@ -6215,6 +6217,8 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 			status->hp = status->max_hp;
 			if( sd ) clif_updatestatus(*sd,SP_HP);
 		}
+
+		flag.set( SCB_REGEN );
 	}
 
 	if(flag[SCB_MAXSP]) {
@@ -6233,6 +6237,8 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 			status->sp = status->max_sp;
 			if( sd ) clif_updatestatus(*sd,SP_SP);
 		}
+
+		flag.set( SCB_REGEN );
 	}
 
 	if(flag[SCB_MATK]) {
@@ -6506,11 +6512,10 @@ void status_calc_bl_main(block_list& bl, std::bitset<SCB_MAX> flag)
 	}
 #endif
 
-	if((flag[SCB_VIT] || flag[SCB_MAXHP] || flag[SCB_INT] || flag[SCB_MAXSP]) && bl.type & BL_REGEN)
-		status_calc_regen(&bl, status, status_get_regen_data(&bl));
-
-	if(flag[SCB_REGEN] && bl.type & BL_REGEN)
+	if( flag[SCB_REGEN] && bl.type&BL_REGEN ){
+		status_calc_regen( &bl, status, status_get_regen_data( &bl ) );
 		status_calc_regen_rate(&bl, status_get_regen_data(&bl), sc);
+	}
 }
 
 /**
