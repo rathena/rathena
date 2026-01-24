@@ -5425,11 +5425,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case HN_JUPITEL_THUNDER_STORM:
 	case SH_CHUL_HO_BATTERING:
 	case SH_HYUN_ROK_SPIRIT_POWER:
-	case SOA_EXORCISM_OF_MALICIOUS_SOUL:
-	case SOA_TALISMAN_OF_WHITE_TIGER:
-	case SOA_TALISMAN_OF_RED_PHOENIX:
-	case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
-	case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
 	case SKE_SUNSET_BLAST:
 	case SKE_NOON_BLAST:
 	case SS_KINRYUUHOU:
@@ -5525,7 +5520,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case HN_JUPITEL_THUNDER_STORM:
 				case SH_CHUL_HO_BATTERING:
 				case SH_HYUN_ROK_SPIRIT_POWER:
-				case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 				case SKE_SUNSET_BLAST:
 				case SKE_NOON_BLAST:
 				case SKE_SKY_SUN:
@@ -5706,18 +5700,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case SHC_CROSS_SLASH:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
-					break;
-				case SOA_TALISMAN_OF_RED_PHOENIX:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-					if (sc != nullptr && sc->getSCE(SC_T_SECOND_GOD) != nullptr){
-						sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
-					}
-					break;
-				case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-					sc_start(src,src,skill_get_sc(skill_id),100,skill_lv,skill_get_time(skill_id,skill_lv));
 					break;
 				case SS_KINRYUUHOU:
 				case SS_SEKIENHOU:
@@ -7048,21 +7030,8 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
  		break;
 
-	case SOA_TALISMAN_OF_BLUE_DRAGON:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-		sc_start(src,src,skill_get_sc(skill_id), 100, 1, skill_get_time(skill_id, skill_lv));
-		break;
 
-	case SOA_TALISMAN_OF_SOUL_STEALING:
-		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		if( bl->type != BL_SKILL ){
-			int32 sp = (100 + status_get_lv(src) / 50) * skill_lv;
 
-			status_heal(src, 0, sp, 0, 0);
-			clif_skill_nodamage( src, *src, skill_id, sp );
-		}
-		break;
 
 	default:
 		if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
@@ -7797,7 +7766,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 	case DK_SERVANTWEAPON:
 	case ABC_FROM_THE_ABYSS:
-	case SOA_TALISMAN_OF_PROTECTION:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
 		break;
 
@@ -8223,8 +8191,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case MT_MIGHTY_SMASH:
 	case ABC_ABYSS_DAGGER:
 	case BO_EXPLOSIVE_POWDER:
-	case SOA_EXORCISM_OF_MALICIOUS_SOUL:
-	case SOA_TALISMAN_OF_WHITE_TIGER:
 	case SKE_DAWN_BREAK:
 	case SKE_RISING_MOON:
 	case SKE_MIDNIGHT_KICK:
@@ -8260,20 +8226,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		// TODO: refactor the ifs above into the switch below
 
 		switch( skill_id ){
-			case SOA_EXORCISM_OF_MALICIOUS_SOUL:
-				if( sd != nullptr ){
-					// Remove old souls if any exist.
-					sd->soulball_old = sd->soulball;
-					pc_delsoulball( *sd, sd->soulball, 0 );
-				}
-				break;
-
-			case SOA_TALISMAN_OF_WHITE_TIGER:
-				if (sc != nullptr && sc->getSCE(SC_T_FIRST_GOD) != nullptr) {
-					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
-				}
-				break;
-
 			case SKE_RISING_MOON:
 				if( sc == nullptr || ( sc->getSCE( SC_RISING_MOON ) == nullptr && sc->getSCE( SC_MIDNIGHT_MOON ) == nullptr && sc->getSCE( SC_DAWN_MOON ) == nullptr ) ){
 					sc_start(src, src, SC_RISING_MOON, 100, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -8444,24 +8396,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		status_zap(src, sstatus->hp, 0, 0);
 		break;
 
-	case SOA_SOUL_OF_HEAVEN_AND_EARTH:
-		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
 
-			// Animations don't play when outside visible range
-			if (check_distance_bl(src, bl, AREA_SIZE))
-				clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
-
-			status_percent_heal(bl, 0, 100);
-
-			if( src != bl && sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr ){
-				status_heal(bl, 0, 0, 3 * skill_lv, 0);
-			}
-
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		}
-		else if (sd)
-			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
-		break;
 
 	case CASH_BLESSING:
 	case CASH_INCAGI:
@@ -11821,34 +11756,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
 
-	case SOA_SOUL_GATHERING:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-
-		if( sd != nullptr ){
-			int32 limit = 5 + pc_checkskill(sd, SP_SOULENERGY) * 3;
-			
-			for (i = 0; i < limit; i++)
-				pc_addsoulball(*sd,limit);
-		}
-		break;
-
-	case SOA_TALISMAN_OF_WARRIOR:
-	case SOA_TALISMAN_OF_MAGICIAN:
-	case SOA_TALISMAN_OF_FIVE_ELEMENTS:
-		if( dstsd != nullptr ){
-			int16 index = dstsd->equip_index[EQI_HAND_R];
-
-			if (index >= 0 && dstsd->inventory_data[index] != nullptr && dstsd->inventory_data[index]->type == IT_WEAPON) {
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-				break;
-			}
-		}
-
-		if( sd != nullptr ){
-			clif_skill_fail( *sd, skill_id, USESKILL_FAIL_NEED_WEAPON );
-		}
-		break;
-
 	case SH_HOWLING_OF_CHUL_HO: {
 		int32 range = skill_get_splash(skill_id, skill_lv);
 
@@ -13014,7 +12921,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case EM_VENOM_SWAMP:
 	case EM_CONFLAGRATION:
 	case EM_TERRA_DRIVE:
-	case SOA_TOTEM_OF_TUTELARY:
 	case SH_HYUN_ROKS_BREEZE:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 		[[fallthrough]];
@@ -13647,12 +13553,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		map_foreachinallarea(skill_area_sub, src->m, x - splash, y - splash, x + splash, y + splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
 		} break;
 
-	case SOA_TALISMAN_OF_BLACK_TORTOISE:
-		if (sc != nullptr && sc->getSCE(SC_T_THIRD_GOD) != nullptr){
-			sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		}
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-		break;
 
 	case SKE_TWINKLING_GALAXY:
 		for (i = 0; i < skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id); i++)
