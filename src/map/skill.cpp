@@ -55,6 +55,7 @@ static struct eri *skill_timer_ers = nullptr; //For handling skill_timerskills [
 DBMap* bowling_db = nullptr; // int32 mob_id -> mob_data*
 
 DBMap* skillunit_db = nullptr; // int32 id -> skill_unit*
+static int32 skill_terra_wave_cancel_sub(block_list *bl, va_list ap);
 
 /**
  * Skill Unit Persistency during endack routes (mostly for songs see bugreport:4574)
@@ -3319,6 +3320,9 @@ void skill_attack_blow(block_list *src, block_list *dsrc, block_list *target, ui
 			else
 				dir = map_calc_dir(target, skill_area_temp[4], skill_area_temp[5]);
 			break;
+		case KR_TYPHOON_WING:
+			dir = map_calc_dir(target, skill_area_temp[4], skill_area_temp[5]);
+			break;
 		case HT_PHANTASMIC: // issue #1378
 			if (status_get_hp(target) - damage <= 0) return;
 			break;
@@ -3770,6 +3774,13 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		case DK_HACKANDSLASHER_ATK:
 			clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -1, dmg_type );
 			break;
+		case KR_ICE_PILLAR:
+			if (flag & SKILL_ALTDMG_FLAG) {
+				clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -2, dmg_type );
+			} else {
+				clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, dmg_type );
+			}
+			break;
 		case AG_STORM_CANNON:
 		case AG_CRIMSON_ARROW:
 			clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, DMG_SPLASH );
@@ -3980,6 +3991,42 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
  * then call func with source,target,skill_id,skill_lv,tick,flag
  *------------------------------------------*/
 typedef int32 (*SkillFunc)(block_list *, block_list *, int32, int32, t_tick, int32);
+static bool skill_area_diamond_check(const block_list* src, const block_list* bl, uint16 skill_id, uint16 skill_lv)
+{
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+
+	if (!skill || !skill->inf2[INF2_DIAMOND_SPLASH]) {
+		return true;
+	}
+
+	const block_list* center = nullptr;
+	if (skill->inf & INF_SELF_SKILL) {
+		center = src;
+	} else if (skill_area_temp[1] != 0) {
+		center = map_id2bl(skill_area_temp[1]);
+	}
+
+	if (!center || center->prev == nullptr) {
+		return true;
+	}
+
+	int16 range = skill_get_splash(skill_id, skill_lv);
+	if (range <= 0) {
+		return true;
+	}
+
+	int32 dx = bl->x - center->x;
+	int32 dy = bl->y - center->y;
+	if (dx < 0) {
+		dx = -dx;
+	}
+	if (dy < 0) {
+		dy = -dy;
+	}
+
+	return (dx + dy) <= range;
+}
+
 int32 skill_area_sub(block_list *bl, va_list ap)
 {
 	block_list *src;
@@ -3996,6 +4043,10 @@ int32 skill_area_sub(block_list *bl, va_list ap)
 	tick = va_arg(ap,t_tick);
 	flag = va_arg(ap,int32);
 	func = va_arg(ap,SkillFunc);
+
+	if (!skill_area_diamond_check(src, bl, skill_id, skill_lv)) {
+		return 0;
+	}
 
 	if(battle_check_target(src,bl,flag) > 0) {
 		// several splash skills need this initial dummy packet to display correctly
@@ -4320,6 +4371,10 @@ static int32 skill_check_condition_mercenary(block_list *bl, uint16 skill_id, ui
  *------------------------------------------*/
 int32 skill_area_sub_count (block_list *src, block_list *target, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag)
 {
+	if (!skill_area_diamond_check(src, target, skill_id, skill_lv)) {
+		return 0;
+	}
+
 	return 1;
 }
 
@@ -4586,6 +4641,16 @@ static TIMER_FUNC(skill_timerskill){
 				break;
 			switch( skl->skill_id )
 			{
+				case AT_TERRA_WAVE: {
+						int32 splash = skill_get_splash(skl->skill_id, skl->skill_lv);
+						const int16 cancel_radius = 1;
+
+						map_foreachinarea(skill_terra_wave_cancel_sub, src->m, skl->x - cancel_radius, skl->y - cancel_radius, skl->x + cancel_radius, skl->y + cancel_radius, BL_SKILL);
+						clif_skill_poseffect_nocaster(*src, skl->skill_id, skl->skill_lv, skl->x, skl->y, tick);
+						map_foreachinarea(skill_area_sub, src->m, skl->x - splash, skl->y - splash, skl->x + splash, skl->y + splash, BL_CHAR,
+							src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+					}
+					break;
 				case GN_CRAZYWEED_ATK:
 					{
 						int32 dummy = 1, i = skill_get_unit_range(skl->skill_id,skl->skill_lv);
@@ -12575,6 +12640,10 @@ TIMER_FUNC(skill_castend_id){
 							if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
 								add_ap += 1;
 							break;
+						case AT_ROARING_CHARGE:
+							if (sc && sc->getSCE(SC_THUNDERING_ROD_MAX))
+								add_ap += skill_get_giveap(AT_ROARING_CHARGE_S, ud->skill_lv);
+							break;
 					}
 
 					status_heal(sd, 0, 0, add_ap, 0);
@@ -15374,6 +15443,19 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 		case UNT_JACK_FROST_NOVA:
 			skill_attack( skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, 0 );
 			break;
+		case UNT_ICE_PILLAR:
+			if (battle_check_target(unit, bl, sg->target_flag) <= 0)
+				break;
+			if (battle_check_target(unit, bl, BCT_ENEMY) > 0) {
+				if (DIFF_TICK(tick, sg->tick) < sg->interval)
+					break;
+				skill_attack(skill_get_type(sg->skill_id), ss, unit, bl, sg->skill_id, sg->skill_lv, tick, SD_ANIMATION | SKILL_ALTDMG_FLAG);
+			} else {
+				sc_start(ss, bl, SC_ICE_PILLAR, 100, sg->skill_lv, sg->interval + 100);
+			}
+			break;
+		case UNT_GLACIAL_MONOLITH:
+			break;
 
 		case UNT_DUMMYSKILL:
 			switch (sg->skill_id) {
@@ -17576,6 +17658,38 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			}
 			break;
+		case DR_WEREWOLF:
+			if (sc && (sc->getSCE(SC_WERERAPTOR) ||
+				sc->getSCE(SC_TRUTH_OF_ICE) || sc->getSCE(SC_TRUTH_OF_WIND) || sc->getSCE(SC_TRUTH_OF_EARTH))) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
+		case DR_WERERAPTOR:
+			if (sc && (sc->getSCE(SC_WEREWOLF) ||
+				sc->getSCE(SC_TRUTH_OF_ICE) || sc->getSCE(SC_TRUTH_OF_WIND) || sc->getSCE(SC_TRUTH_OF_EARTH))) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
+		case DR_TRUTH_OF_ICE:
+			if (sc && (sc->getSCE(SC_WEREWOLF) || sc->getSCE(SC_WERERAPTOR))) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
+		case DR_TRUTH_OF_WIND:
+			if (sc && (sc->getSCE(SC_WEREWOLF) || sc->getSCE(SC_WERERAPTOR))) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
+		case DR_TRUTH_OF_EARTH:
+			if (sc && (sc->getSCE(SC_WEREWOLF) || sc->getSCE(SC_WERERAPTOR))) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
 	}
 
 	/* check state required */
@@ -18277,6 +18391,7 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 	struct status_data *status;
 	status_change *sc;
 	int32 i,hp_rate,sp_rate, ap_rate, sp_skill_rate_bonus = 100;
+	const bool ignore_sp_reduction = (skill_id == DR_HUNGER);
 
 	memset(&req,0,sizeof(req));
 
@@ -18317,19 +18432,21 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 		req.sp += (status->sp * sp_rate)/100;
 	else
 		req.sp += (status->max_sp * (-sp_rate))/100;
-	if( sd->dsprate != 100 )
+	if( sd->dsprate != 100 && (!ignore_sp_reduction || sd->dsprate > 100))
 		req.sp = req.sp * sd->dsprate / 100;
 
 	for (auto &it : sd->skillusesprate) {
 		if (it.id == skill_id) {
-			sp_skill_rate_bonus -= it.val;
+			if (!ignore_sp_reduction || it.val < 0)
+				sp_skill_rate_bonus -= it.val;
 			break;
 		}
 	}
 
 	for (auto &it : sd->skillusesp) {
 		if (it.id == skill_id) {
-			req.sp -= it.val;
+			if (!ignore_sp_reduction || it.val < 0)
+				req.sp -= it.val;
 			break;
 		}
 	}
@@ -18346,12 +18463,12 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 			req.sp += req.sp / 4;
 		if( sc->getSCE(SC_OFFERTORIUM))
 			req.sp += req.sp * sc->getSCE(SC_OFFERTORIUM)->val3 / 100;
-		if( sc->getSCE(SC_TELEKINESIS_INTENSE) && skill_get_ele(skill_id, skill_lv) == ELE_GHOST)
+		if( !ignore_sp_reduction && sc->getSCE(SC_TELEKINESIS_INTENSE) && skill_get_ele(skill_id, skill_lv) == ELE_GHOST)
 			req.sp -= req.sp * sc->getSCE(SC_TELEKINESIS_INTENSE)->val2 / 100;
 #ifdef RENEWAL
-		if (sc->getSCE(SC_ADAPTATION) && (skill_get_inf2(skill_id, INF2_ISSONG)))
+		if (!ignore_sp_reduction && sc->getSCE(SC_ADAPTATION) && (skill_get_inf2(skill_id, INF2_ISSONG)))
 			req.sp -= req.sp * 20 / 100;
-		if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_SPCONSUM)
+		if (!ignore_sp_reduction && sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_SPCONSUM)
 			req.sp -= req.sp * 30 / 100;
 #endif
 		if (sc->getSCE(SC_GLOOMYDAY))
@@ -19752,6 +19869,26 @@ static int32 skill_bind_trap(block_list *bl, va_list ap) {
 }
 
 /*==========================================
+ * Cancel overlapping ground skills for Terra Wave.
+ *------------------------------------------*/
+static int32 skill_terra_wave_cancel_sub(block_list *bl, va_list)
+{
+	if (bl->type != BL_SKILL)
+		return 0;
+
+	skill_unit *su = BL_CAST(BL_SKILL, bl);
+	if (su == nullptr || su->group == nullptr)
+		return 0;
+
+	const uint16 unit_skill = su->group->skill_id;
+	if (!(skill_get_inf(unit_skill) & INF_GROUND_SKILL) || skill_get_inf2(unit_skill, INF2_ISTRAP))
+		return 0;
+
+	skill_delunitgroup(su->group);
+	return 1;
+}
+
+/*==========================================
  * Check new skill unit cell when overlapping in other skill unit cell.
  * Catched skill in cell value pushed to *unit pointer.
  * Set (*alive) to 0 will ends 'new unit' check
@@ -20931,6 +21068,17 @@ static int32 skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 		}
 	} else {// skill unit is still active
 		switch( group->unit_id ) {
+			case UNT_GLACIAL_MONOLITH: {
+				block_list* src = map_id2bl(group->src_id);
+				if (src && src->m == unit->m) {
+					const int32 range = skill_get_range(group->skill_id, group->skill_lv);
+					if (range <= 0 || distance_xy(src->x, src->y, unit->x, unit->y) <= range) {
+						const t_tick buff_duration = group->interval > 0 ? group->interval : 1;
+						sc_start4(src, src, SC_GLACIER_SHEILD, 100, group->skill_lv, unit->x, unit->y, unit->m, buff_duration);
+					}
+				}
+				break;
+			}
 			case UNT_BLASTMINE:
 			case UNT_SKIDTRAP:
 			case UNT_LANDMINE:

@@ -2683,6 +2683,8 @@ static int32 battle_range_type(const block_list* src, const block_list* target, 
 		case SS_KUNAIKAITEN:
 		case SS_KUNAIKUSSETSU:
 		case SS_HITOUAKUMU:
+		case DR_FLICKING_TONADO:
+		case KR_FEATHER_SPRINKLE:
 			return BF_LONG;
 		case NJ_KIRIKAGE: // Cast range mimics NJ_SHADOWJUMP but damage is considered melee
 		case GC_CROSSIMPACT: // Cast range is 7 cells and player jumps to target but skill is considered melee
@@ -2698,6 +2700,10 @@ static int32 battle_range_type(const block_list* src, const block_list* target, 
 		case NPC_MAXPAIN_ATK:
 		case SS_SHIMIRU: // 11 cell cast range.
 		case SKE_STAR_LIGHT_KICK: // 7 cell cast range.
+		case DR_CRUEL_BITE:
+		case KR_CLAW_WAVE:
+		case AT_PRIMAL_CLAW:
+		case AT_SAVAGE_LUNGE:
 			return BF_SHORT;
 		case CD_PETITIO: { // Skill range is 2 but damage is melee with books and ranged with mace.
 			const map_session_data* sd = BL_CAST(BL_PC,src);
@@ -3128,6 +3134,30 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 					return false;
 				}
 
+				break;
+			case AT_PRIMAL_CLAW:
+			case AT_FERAL_CLAW:
+			case AT_ALPHA_CLAW:
+			case AT_SAVAGE_LUNGE:
+			case AT_FRENZY_FANG:
+				if( sc == nullptr ){
+					return false;
+				}
+				if( sc->getSCE( SC_ALPHA_PHASE ) == nullptr && sc->getSCE( SC_INSANE3 ) == nullptr ){
+					return false;
+				}
+				break;
+
+			case AT_PINION_SHOT:
+			case AT_QUILL_SPEAR:
+			case AT_QUILL_SPEAR_S:
+			case AT_TEMPEST_FLAP:
+				if( sc == nullptr ){
+					return false;
+				}
+				if( sc->getSCE( SC_APEX_PHASE ) == nullptr){
+					return false;
+				}
 				break;
 		}
 		if(tsd && tsd->bonus.critical_def)
@@ -4525,6 +4555,18 @@ static void battle_calc_multi_attack(struct Damage* wd, block_list *src,block_li
 		case RK_WINDCUTTER:
 			if (sd && sd->weapontype1 == W_2HSWORD)
 				wd->div_ = 2;
+			break;
+		case AT_TEMPEST_FLAP:
+			if (sc && sc->getSCE(SC_APEX_PHASE))
+				wd->div_ = 3;
+			break;
+		case DR_CUTTING_WIND:
+			if (sc && sc->getSCE(SC_TRUTH_OF_WIND))
+				wd->div_ = 4;
+			break;
+		case DR_WIND_BOMB:
+			if (sc && sc->getSCE(SC_TRUTH_OF_WIND))
+				wd->div_ = 6;
 			break;
 		case SC_FATALMENACE:
 			if (sd && sd->weapontype1 == W_DAGGER)
@@ -7377,6 +7419,22 @@ static struct Damage initialize_weapon_data(const block_list* src, const block_l
 #endif
 				}
 				break;
+			case AT_FRENZY_FANG: {
+				int32 hits = 2;
+
+				if (sc) {
+					if (sc->getSCE(SC_ALPHA_PHASE) || sc->getSCE(SC_INSANE3)) {
+						hits = 7;
+					} else if (sc->getSCE(SC_INSANE2)) {
+						hits = 5;
+					} else if (sc->getSCE(SC_INSANE)) {
+						hits = 3;
+					}
+				}
+
+				wd.div_ = hits;
+				break;
+			}
 
 			case KN_PIERCE:
 			case ML_PIERCE:
@@ -8061,6 +8119,14 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 			if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
 				ad.div_ = 2;
 			}
+			break;
+		case DR_CUTTING_WIND:
+			if (sc && sc->getSCE(SC_TRUTH_OF_WIND))
+				ad.div_ = 4;
+			break;
+		case DR_WIND_BOMB:
+			if (sc && sc->getSCE(SC_TRUTH_OF_WIND))
+				ad.div_ = 6;
 			break;
 		case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
 			if (sc != nullptr){
