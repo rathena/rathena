@@ -13625,7 +13625,7 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 
 		//TODO - check if needed: workaround for correct display of SC_WEREWOLF/SC_WERERAPTOR for self in char select / char screen and for others when moving. Maybe something is missing for the transformation to work correctly without this. [munkrej]
 		case SC_WEREWOLF:
-		case SC_WERERAPTOR:
+		case SC_WERERAPTOR: {
 			int32 restore_body_style = 0;
 			if (sd != nullptr && vd != nullptr) {
 				restore_body_style = val4;
@@ -13636,6 +13636,7 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 			if (!status_isdead(*bl)) {
 				sc_start(bl, bl, SC_TRANSFORM_DELAY, 100, 1, 1000);
 			}
+		}
 			break;
 		case SC_RUN:
 		{
