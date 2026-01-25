@@ -1,16 +1,18 @@
 """
 ML Inference Service - Main Entry Point
 Orchestrates polling, caching, inference, and response writing
+Includes HTTP server for hot model reloading
 """
 
 import asyncio
 import logging
 import signal
 import sys
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 import numpy as np
 import time
 from pathlib import Path
+from aiohttp import web
 
 from config import load_config, save_default_config
 from logger import setup_logging, get_logger
@@ -20,6 +22,8 @@ from cache_manager import CacheManager
 from fallback_handler import FallbackHandler, FallbackLevel
 from health_monitor import HealthMonitor
 from metrics import MetricsCollector
+from graph_manager import AGEGraphManager, initialize_graph_manager, AGEConnectionError
+from signal_coordinator import SignalCoordinator
 
 
 class MLInferenceService:
@@ -80,6 +84,14 @@ class MLInferenceService:
             prometheus_port=self.config['monitoring']['prometheus_port']
         )
         
+        # Graph manager (initialized later in initialize())
+        self.graph_manager: Optional[AGEGraphManager] = None
+        self.graph_enabled = self.config.get('graph', {}).get('enabled', False)
+        
+        # Signal coordinator (initialized later in initialize())
+        self.signal_coordinator: Optional[SignalCoordinator] = None
+        self.pack_coordination_enabled = self.config.get('pack_coordination', {}).get('enabled', True)
+        
         # Service state
         self.running = False
         self.requests_processed = 0
@@ -89,6 +101,11 @@ class MLInferenceService:
         self.last_cleanup_time = time.time()
         self.last_health_check_time = time.time()
         self.last_metrics_update_time = time.time()
+        
+        # HTTP server for hot reload (initialized in start_http_server)
+        self.http_app: Optional[web.Application] = None
+        self.http_runner: Optional[web.AppRunner] = None
+        self.http_port = self.config.get('http_server', {}).get('port', 8080)
     
     async def initialize(self) -> None:
         """Initialize all components"""
@@ -142,12 +159,68 @@ class MLInferenceService:
             precision=self.config['models']['precision']
         )
         
+        # Initialize Apache AGE graph manager
+        if self.graph_enabled:
+            try:
+                self.logger.info("Initializing Apache AGE graph manager...")
+                self.graph_manager = await initialize_graph_manager(
+                    db_pool=self.request_processor.pool,
+                    graph_name=self.config.get('graph', {}).get('graph_name', 'monster_ai')
+                )
+                
+                # Get graph statistics
+                graph_stats = await self.graph_manager.get_graph_statistics()
+                self.logger.info(
+                    f"✓ Graph manager initialized: {graph_stats['total_nodes']} nodes, "
+                    f"{graph_stats['total_edges']} edges, "
+                    f"{graph_stats['avg_query_time_ms']:.2f}ms avg query time"
+                )
+            except AGEConnectionError as e:
+                self.logger.error(f"Failed to initialize graph manager: {e}")
+                self.logger.warning("Graph features will be disabled")
+                self.graph_enabled = False
+                self.graph_manager = None
+            except Exception as e:
+                self.logger.error(f"Unexpected error initializing graph manager: {e}", exc_info=True)
+                self.graph_enabled = False
+                self.graph_manager = None
+        else:
+            self.logger.info("Graph integration disabled in configuration")
+        
+        # Initialize signal coordinator (requires graph manager)
+        if self.pack_coordination_enabled and self.graph_enabled and self.graph_manager:
+            try:
+                self.logger.info("Initializing signal coordinator for pack coordination...")
+                self.signal_coordinator = SignalCoordinator(
+                    graph_manager=self.graph_manager,
+                    signal_dim=32,
+                    signal_range=self.config.get('pack_coordination', {}).get('signal_range', 15),
+                    signal_ttl=self.config.get('pack_coordination', {}).get('signal_ttl', 5)
+                )
+                self.logger.info("✓ Signal coordinator initialized")
+            except Exception as e:
+                self.logger.error(f"Failed to initialize signal coordinator: {e}")
+                self.pack_coordination_enabled = False
+                self.signal_coordinator = None
+        else:
+            self.logger.info(
+                f"Pack coordination disabled "
+                f"(pack_enabled={self.pack_coordination_enabled}, "
+                f"graph_enabled={self.graph_enabled})"
+            )
+        
+        # Start HTTP server for hot reload
+        await self.start_http_server()
+        
         self.logger.info("✓ ML Inference Service initialized successfully")
         self.logger.info(f"  Models loaded: {loaded}/{total}")
         self.logger.info(f"  Fallback level: {self.fallback_handler.get_current_level().name}")
         self.logger.info(f"  Cache enabled: {self.config['caching']['enabled']}")
+        self.logger.info(f"  Graph enabled: {self.graph_enabled}")
+        self.logger.info(f"  Pack coordination enabled: {self.pack_coordination_enabled}")
         self.logger.info(f"  Batch size: {self.config['inference']['batch_size']}")
         self.logger.info(f"  Prometheus port: {self.config['monitoring']['prometheus_port']}")
+        self.logger.info(f"  HTTP reload port: {self.http_port}")
     
     async def process_batch(self, requests: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         """
@@ -167,6 +240,30 @@ class MLInferenceService:
         """
         batch_start = time.perf_counter()
         responses = []
+        
+        # Query graph for pack coordination data (if enabled)
+        pack_coordination_data = {}
+        if self.graph_enabled and self.graph_manager and self.config.get('graph', {}).get('use_for_coordination', True):
+            try:
+                for req in requests:
+                    monster_id = req['monster_id']
+                    
+                    # Get pack team info for coordination
+                    team_info = await self.graph_manager.get_monster_team(monster_id)
+                    if team_info:
+                        pack_coordination_data[monster_id] = team_info
+                    
+                    # Get threat network if enabled
+                    if self.config.get('graph', {}).get('use_for_threat_tracking', True):
+                        threats = await self.graph_manager.get_threat_network(monster_id, radius=2)
+                        if threats:
+                            pack_coordination_data[monster_id] = pack_coordination_data.get(monster_id, {})
+                            pack_coordination_data[monster_id]['threats'] = threats
+                
+                self.logger.debug(f"Queried graph data for {len(pack_coordination_data)} monsters")
+            except Exception as e:
+                self.logger.warning(f"Graph query failed (non-critical): {e}")
+                # Don't fail inference if graph queries fail
         
         # Separate cache hits and misses
         cache_hits = []
@@ -319,6 +416,25 @@ class MLInferenceService:
                         'fallback_level': 5  # Force traditional AI on error
                     })
         
+        # Update spatial relationships in graph after inference (if enabled)
+        if self.graph_enabled and self.graph_manager and self.config.get('graph', {}).get('use_for_spatial', True):
+            try:
+                spatial_updates = []
+                for req in requests:
+                    spatial_updates.append({
+                        'monster_id': req['monster_id'],
+                        'x': req['position_x'],
+                        'y': req['position_y'],
+                        'hp_ratio': req['hp_ratio'],
+                        'map_id': req['map_id']
+                    })
+                
+                if spatial_updates:
+                    updated = await self.graph_manager.bulk_update_positions(spatial_updates)
+                    self.logger.debug(f"Updated spatial data for {updated} monsters in graph")
+            except Exception as e:
+                self.logger.warning(f"Failed to update spatial relationships (non-critical): {e}")
+        
         batch_time = (time.perf_counter() - batch_start) * 1000  # ms
         
         self.logger.debug(
@@ -328,6 +444,195 @@ class MLInferenceService:
         )
         
         return responses
+    
+    async def process_batch_with_coordination(
+        self,
+        requests: List[Dict[str, Any]]
+    ) -> List[Dict[str, Any]]:
+        """
+        Process requests with pack coordination
+        
+        Workflow:
+        1. Group requests by pack (using Apache AGE graph)
+        2. For each pack:
+           a. Detect formation
+           b. Process signals
+           c. Coordinate actions
+        3. For solo monsters:
+           a. Standard inference
+        4. Return all responses
+        
+        Args:
+            requests: List of request dictionaries
+        
+        Returns:
+            List of response dictionaries with coordination metadata
+        """
+        batch_start = time.perf_counter()
+        
+        if not self.pack_coordination_enabled or not self.signal_coordinator:
+            # Fall back to standard processing
+            return await self.process_batch(requests)
+        
+        self.logger.debug(f"Processing {len(requests)} requests with pack coordination")
+        
+        # Step 1: Group requests by pack
+        pack_groups = await self._group_requests_by_pack(requests)
+        
+        # Step 2: Process each pack and solo monsters
+        all_responses = []
+        
+        # Process packs (2+ monsters)
+        for pack_id, pack_requests in pack_groups['packs'].items():
+            if len(pack_requests) < 2:
+                continue  # Skip, will be processed as solo
+            
+            try:
+                # Prepare pack monster data
+                pack_monsters = [
+                    {
+                        'monster_id': req['monster_id'],
+                        'state': np.array(req['state_vector'], dtype=np.float32),
+                        'archetype': req['archetype'],
+                        'position_x': req['position_x'],
+                        'position_y': req['position_y']
+                    }
+                    for req in pack_requests
+                ]
+                
+                # Run pack coordination
+                coordinated_actions = await self.inference_engine.infer_pack_coordination(
+                    pack_monsters=pack_monsters,
+                    signal_coordinator=self.signal_coordinator,
+                    graph_manager=self.graph_manager,
+                    coordination_threshold=self.config.get('pack_coordination', {}).get('coordination_threshold', 0.7)
+                )
+                
+                # Convert to responses
+                for req, action_dict in zip(pack_requests, coordinated_actions):
+                    response = {
+                        'request_id': req['request_id'],
+                        'monster_id': req['monster_id'],
+                        'action_type': 'combat',
+                        'action_id': action_dict['action'],
+                        'action_params': {},
+                        'model_outputs': {'pack_coordination': True},
+                        'confidence': 0.9 if action_dict.get('coordinated', False) else 0.7,
+                        'fusion_weights': {},
+                        'coordination_action': action_dict.get('pack_role'),
+                        'coordination_bonus': action_dict.get('coordination_bonus', 0.0),
+                        'pack_id': pack_id,
+                        'pack_size': len(pack_requests),
+                        'target_monster_id': None,
+                        'inference_latency_ms': 0.0,  # Will be updated
+                        'cache_used': False,
+                        'fallback_level': self.fallback_handler.get_current_level().value
+                    }
+                    
+                    all_responses.append(response)
+            
+            except Exception as e:
+                self.logger.error(f"Pack coordination failed for pack {pack_id}: {e}", exc_info=True)
+                
+                # Fall back to individual processing for this pack
+                solo_responses = await self.process_batch(pack_requests)
+                all_responses.extend(solo_responses)
+        
+        # Process solo monsters (no pack)
+        if pack_groups['solo']:
+            solo_responses = await self.process_batch(pack_groups['solo'])
+            all_responses.extend(solo_responses)
+        
+        # Calculate batch metrics
+        batch_time = (time.perf_counter() - batch_start) * 1000  # ms
+        
+        # Update latency for all responses
+        avg_latency = batch_time / len(requests) if requests else 0.0
+        for resp in all_responses:
+            if resp['inference_latency_ms'] == 0.0:
+                resp['inference_latency_ms'] = avg_latency
+        
+        self.logger.debug(
+            f"Pack coordination batch complete: "
+            f"{len(pack_groups['packs'])} packs, "
+            f"{len(pack_groups['solo'])} solo monsters, "
+            f"{batch_time:.2f}ms total"
+        )
+        
+        return all_responses
+    
+    async def _group_requests_by_pack(
+        self,
+        requests: List[Dict[str, Any]]
+    ) -> Dict[str, Any]:
+        """
+        Group requests by pack membership
+        
+        Uses Apache AGE graph to identify pack relationships.
+        
+        Args:
+            requests: List of request dicts
+        
+        Returns:
+            Dict with 'packs' (pack_id -> requests) and 'solo' (list of solo requests)
+        """
+        pack_assignments: Dict[int, int] = {}  # monster_id -> pack_id
+        pack_groups: Dict[int, List[Dict[str, Any]]] = {}
+        solo_monsters: List[Dict[str, Any]] = []
+        
+        if not self.graph_manager:
+            # No graph, all are solo
+            return {'packs': {}, 'solo': requests}
+        
+        # Query pack membership for each monster
+        for req in requests:
+            monster_id = req['monster_id']
+            
+            try:
+                # Get monster's team info
+                team_data = await self.graph_manager.get_monster_team(monster_id)
+                
+                if not team_data:
+                    solo_monsters.append(req)
+                    continue
+                
+                team_info = team_data[0]
+                role = team_info.get('role', 'independent')
+                
+                if role == 'independent':
+                    solo_monsters.append(req)
+                    continue
+                
+                # Determine pack ID (use leader ID as pack ID)
+                leader_id = team_info.get('leader_id')
+                if leader_id:
+                    pack_id = leader_id
+                else:
+                    # No leader, use own ID as pack ID
+                    pack_id = monster_id
+                
+                # Add to pack group
+                if pack_id not in pack_groups:
+                    pack_groups[pack_id] = []
+                
+                pack_groups[pack_id].append(req)
+                pack_assignments[monster_id] = pack_id
+            
+            except Exception as e:
+                self.logger.warning(
+                    f"Failed to get pack info for monster {monster_id}: {e}"
+                )
+                solo_monsters.append(req)
+        
+        self.logger.debug(
+            f"Grouped requests: {len(pack_groups)} packs, {len(solo_monsters)} solo"
+        )
+        
+        return {
+            'packs': pack_groups,
+            'solo': solo_monsters,
+            'assignments': pack_assignments
+        }
     
     async def run_loop(self) -> None:
         """Main service loop - polls, processes, responds"""
@@ -346,8 +651,11 @@ class MLInferenceService:
                 )
                 
                 if requests:
-                    # Process batch
-                    responses = await self.process_batch(requests)
+                    # Process batch (with pack coordination if enabled)
+                    if self.pack_coordination_enabled and len(requests) > 1:
+                        responses = await self.process_batch_with_coordination(requests)
+                    else:
+                        responses = await self.process_batch(requests)
                     
                     # Write responses
                     if responses:
@@ -449,6 +757,18 @@ class MLInferenceService:
         
         fallback_stats = self.fallback_handler.get_statistics()
         self.logger.info(f"  Fallback Level: {fallback_stats['current_level_name']}")
+        
+        # Graph statistics
+        if self.graph_enabled and self.graph_manager:
+            try:
+                graph_stats = await self.graph_manager.get_graph_statistics()
+                graph_perf = self.graph_manager.get_performance_metrics()
+                self.logger.info(f"  Graph Queries: {graph_perf['query_count']}")
+                self.logger.info(f"  Graph Avg Query Time: {graph_perf['avg_query_time_ms']:.2f}ms")
+                self.logger.info(f"  Graph Errors: {graph_perf['error_count']}")
+            except Exception as e:
+                self.logger.warning(f"Could not retrieve graph statistics: {e}")
+        
         self.logger.info("="*80)
         
         # Close connections
@@ -456,10 +776,172 @@ class MLInferenceService:
         self.cache_manager.close()
         self.inference_engine.unload_all_models()
         
+        # Shut down HTTP server
+        await self.stop_http_server()
+        
         # Shut down metrics
         self.metrics.shutdown()
         
         self.logger.info("✓ Shutdown complete")
+    
+    async def start_http_server(self):
+        """Start HTTP server for hot reload and metrics"""
+        self.http_app = web.Application()
+        
+        # Add routes
+        self.http_app.router.add_post('/reload/{archetype}/{model_type}', self.handle_reload_request)
+        self.http_app.router.add_get('/health', self.handle_health_check)
+        self.http_app.router.add_get('/models', self.handle_list_models)
+        self.http_app.router.add_get('/stats', self.handle_stats)
+        
+        # Setup and start
+        self.http_runner = web.AppRunner(self.http_app)
+        await self.http_runner.setup()
+        
+        site = web.TCPSite(self.http_runner, 'localhost', self.http_port)
+        await site.start()
+        
+        self.logger.info(f"✓ HTTP server started on port {self.http_port}")
+    
+    async def stop_http_server(self):
+        """Stop HTTP server"""
+        if self.http_runner:
+            await self.http_runner.cleanup()
+            self.logger.info("✓ HTTP server stopped")
+    
+    async def handle_reload_request(self, request: web.Request) -> web.Response:
+        """
+        Handle model reload HTTP request
+        
+        POST /reload/{archetype}/{model_type}
+        
+        Args:
+            request: aiohttp request
+        
+        Returns:
+            JSON response
+        """
+        archetype = request.match_info['archetype']
+        model_type = request.match_info['model_type']
+        
+        self.logger.info(f"Reload request received: {archetype}/{model_type}")
+        
+        # Optional: get custom model path from request body
+        model_path = None
+        if request.content_type == 'application/json':
+            try:
+                data = await request.json()
+                model_path = data.get('model_path')
+            except Exception:
+                pass
+        
+        # Reload model
+        try:
+            success = await self.inference_engine.reload_single_model(
+                archetype, model_type, model_path
+            )
+            
+            if success:
+                return web.json_response({
+                    'success': True,
+                    'message': f'Model {archetype}/{model_type} reloaded successfully',
+                    'archetype': archetype,
+                    'model_type': model_type,
+                    'timestamp': time.time()
+                })
+            else:
+                return web.json_response({
+                    'success': False,
+                    'message': f'Failed to reload model {archetype}/{model_type}',
+                    'archetype': archetype,
+                    'model_type': model_type
+                }, status=500)
+        
+        except Exception as e:
+            self.logger.error(f"Reload request failed: {e}", exc_info=True)
+            return web.json_response({
+                'success': False,
+                'message': f'Exception during reload: {str(e)}',
+                'archetype': archetype,
+                'model_type': model_type
+            }, status=500)
+    
+    async def handle_health_check(self, request: web.Request) -> web.Response:
+        """
+        Handle health check request
+        
+        GET /health
+        
+        Returns:
+            JSON health status
+        """
+        health = self.inference_engine.health_check()
+        vram = self.inference_engine.get_vram_usage()
+        
+        response_data = {
+            'status': health['status'],
+            'message': health['message'],
+            'models_loaded': health['models_loaded'],
+            'device_available': health['device_available'],
+            'avg_latency_ms': health['avg_latency_ms'],
+            'inference_count': health['inference_count'],
+            'vram': vram,
+            'requests_processed': self.requests_processed,
+            'batch_count': self.batch_count,
+            'fallback_level': self.fallback_handler.get_current_level().value,
+            'uptime_seconds': time.time() - (self.last_cleanup_time - 60)  # Approximate
+        }
+        
+        status_code = 200 if health['status'] == 'healthy' else 503
+        
+        return web.json_response(response_data, status=status_code)
+    
+    async def handle_list_models(self, request: web.Request) -> web.Response:
+        """
+        Handle list models request
+        
+        GET /models
+        
+        Returns:
+            JSON list of loaded models with metadata
+        """
+        models = []
+        metadata_all = self.inference_engine.get_all_model_metadata()
+        
+        for (archetype, model_type), metadata in metadata_all.items():
+            models.append({
+                'archetype': archetype,
+                'model_type': model_type,
+                'model_path': metadata.get('model_path', ''),
+                'loaded_at': metadata.get('loaded_at').isoformat() if metadata.get('loaded_at') else None,
+                'reload_count': metadata.get('reload_count', 0),
+                'input_shape': list(metadata.get('input_shape', [])),
+                'output_shape': list(metadata.get('output_shape', []))
+            })
+        
+        return web.json_response({
+            'models': models,
+            'total_count': len(models)
+        })
+    
+    async def handle_stats(self, request: web.Request) -> web.Response:
+        """
+        Handle statistics request
+        
+        GET /stats
+        
+        Returns:
+            JSON statistics
+        """
+        stats = self.inference_engine.get_statistics()
+        cache_stats = self.cache_manager.get_cache_stats()
+        
+        return web.json_response({
+            'inference': stats,
+            'cache': cache_stats,
+            'requests_processed': self.requests_processed,
+            'batch_count': self.batch_count
+        })
 
 
 async def main():

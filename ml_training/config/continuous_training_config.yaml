@@ -1,0 +1,205 @@
+# Continuous Training Configuration
+# Enables ongoing model improvement from live gameplay data
+# Updated: 2026-01-25
+
+continuous_training:
+  enabled: true
+  mode: continuous  # continuous, scheduled, disabled
+  
+  # Scheduling
+  check_interval_seconds: 300  # Check every 5 minutes for new data
+  min_new_experiences: 1000  # Train when at least 1000 new experiences available
+  training_interval_seconds: 1800  # Minimum 30 minutes between training runs for same model
+  
+  # Resource Management
+  max_cpu_usage: 30  # Pause if CPU > 30% (leave 70% for inference)
+  max_vram_usage: 0.7  # Use max 70% VRAM (leave 30% for inference)
+  max_ram_usage_gb: 8  # Maximum RAM usage for training
+  pause_on_high_load: true
+  resource_check_interval_seconds: 30
+  
+  # Training Configuration
+  batch_size: 256
+  gradient_accumulation_steps: 4  # Effective batch size = 256 * 4 = 1024
+  max_steps_per_iteration: 1000  # Maximum training steps per iteration
+  validation_frequency: 1000  # Validate every 1000 steps
+  early_stopping_patience: 5  # Stop if no improvement for 5 checks
+  
+  # Model Management
+  checkpoint_frequency: 500  # Save checkpoint every 500 steps
+  auto_deploy: true  # Automatically deploy improved models
+  validate_before_deploy: true
+  min_improvement: 0.01  # 1% improvement required for deployment
+  rollback_on_degradation: true
+  performance_monitoring_window_minutes: 30
+  
+  # Experience Replay Configuration
+  experience_retention_days: 30  # Keep experiences for 30 days
+  experience_lookback_days: 7  # Train on last 7 days of data
+  priority_sampling: true  # Use prioritized experience replay
+  priority_threshold: 1.0  # Minimum priority for sampling
+  archetype_balancing: true  # Equal samples per archetype
+  samples_per_archetype: 500  # When balancing
+  
+  # Model Priority (which models to train most frequently)
+  model_priority:
+    high_frequency:  # Train every cycle
+      - combat_dqn
+      - movement_ppo
+      - team_coordination
+      - soft_actor_critic
+    
+    medium_frequency:  # Train every 3rd cycle
+      - skill_dqn
+      - threat_assessment
+    
+    low_frequency:  # Train every 10th cycle
+      - spatial_vit
+      - temporal_transformer
+      - pattern_recognition
+  
+  # Archetype Priority (train in this order)
+  archetype_priority:
+    - aggressive  # Most common, train first
+    - mage
+    - ranged
+    - tank
+    - defensive
+    - support
+  
+  # Hot Reload Configuration
+  hot_reload:
+    enabled: true
+    inference_service_host: localhost
+    inference_service_port: 8080
+    reload_endpoint: /reload/{archetype}/{model_type}
+    verify_after_reload: true
+    rollback_on_reload_failure: true
+  
+  # ONNX Export Configuration
+  onnx_export:
+    opset_version: 17
+    optimize: true
+    quantize_int8: true  # Also create INT8 version for fallback
+    verify_export: true  # Run test inference after export
+  
+  # Logging
+  log_level: INFO
+  log_interval_steps: 100  # Log training progress every 100 steps
+  tensorboard_enabled: true
+  tensorboard_log_dir: /opt/ml_monster_ai/data/tensorboard/continuous_training
+  
+  # Database Configuration
+  database:
+    postgresql:
+      host: ${POSTGRESQL_HOST:localhost}
+      port: ${POSTGRESQL_PORT:5432}
+      database: ${POSTGRESQL_DB:ragnarok_ml}
+      user: ${POSTGRESQL_USER:ml_user}
+      password: ${POSTGRESQL_PASSWORD}
+      pool_min_size: 5
+      pool_max_size: 15
+      command_timeout: 30
+  
+  # Paths
+  paths:
+    checkpoints_dir: /opt/ml_monster_ai/data/checkpoints/continuous
+    models_dir: /opt/ml_monster_ai/models/production
+    logs_dir: /opt/ml_monster_ai/logs/continuous_training
+    temp_dir: /tmp/ml_continuous_training
+  
+  # Training Hyperparameters (per model type)
+  hyperparameters:
+    combat_dqn:
+      learning_rate: 0.0001
+      gamma: 0.99
+      tau: 0.005
+      batch_size: 256
+      max_steps: 1000
+      
+    movement_ppo:
+      learning_rate: 0.00003
+      gamma: 0.995
+      gae_lambda: 0.97
+      clip_epsilon: 0.2
+      n_epochs: 10
+      batch_size: 128
+      
+    team_coordination:
+      learning_rate: 0.0001
+      sequence_length: 10
+      batch_size: 64
+      max_steps: 1000
+      
+    soft_actor_critic:
+      actor_lr: 0.0003
+      critic_lr: 0.0003
+      alpha_lr: 0.0003
+      gamma: 0.99
+      tau: 0.005
+      batch_size: 256
+      
+    skill_dqn:
+      learning_rate: 0.0001
+      gamma: 0.99
+      batch_size: 256
+      
+    threat_assessment:
+      learning_rate: 0.0003
+      batch_size: 128
+      max_steps: 500
+      
+    spatial_vit:
+      learning_rate: 0.0003
+      weight_decay: 0.05
+      warmup_steps: 500
+      batch_size: 64
+      epochs: 5
+      
+    temporal_transformer:
+      learning_rate: 0.0001
+      weight_decay: 0.01
+      warmup_steps: 1000
+      batch_size: 32
+      sequence_batch: 16
+      
+    pattern_recognition:
+      learning_rate: 0.0001
+      weight_decay: 0.1
+      warmup_steps: 2000
+      batch_size: 32
+      epochs: 10
+  
+  # Safety & Quality Gates
+  quality_gates:
+    min_accuracy: 0.3  # At least 30% accuracy
+    min_win_rate: 0.2  # At least 20% win rate
+    max_latency_ms: 50  # Maximum acceptable inference latency
+    min_samples_for_training: 1000  # Minimum experiences needed
+    max_training_time_minutes: 60  # Kill training if exceeds 1 hour
+  
+  # Monitoring & Alerts
+  monitoring:
+    prometheus_enabled: true
+    prometheus_pushgateway: localhost:9091
+    alert_on_deployment: true
+    alert_on_rollback: true
+    alert_on_failure: true
+  
+  # Advanced Options
+  advanced:
+    use_mixed_precision: true  # FP16 training
+    gradient_clipping: 1.0
+    weight_decay: 0.0001
+    lr_scheduler: cosine  # cosine, reduce_on_plateau, step
+    save_optimizer_state: true
+    pin_memory: true  # For faster data transfer
+    num_workers: 4  # Data loading workers
+    prefetch_factor: 2
+    
+  # Debugging
+  debug:
+    enabled: false
+    save_training_samples: false
+    verbose_validation: false
+    dry_run: false  # If true, don't actually deploy models

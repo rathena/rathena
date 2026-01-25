@@ -9,11 +9,50 @@
 #include <chrono>
 #include <cstdint>
 #include <mutex>
+#include <string>
 
 // Forward declarations for external libraries
 typedef struct redisContext redisContext;
 // PGconn is defined in libpq-fe.h, no forward declaration needed
 struct pg_conn;  // Opaque forward declaration only
+
+/**
+ * ML Database Configuration
+ */
+struct MLDatabaseConfig {
+    // PostgreSQL
+    std::string pg_host;
+    uint16 pg_port;
+    std::string pg_database;
+    std::string pg_user;
+    std::string pg_password;
+    int32 pg_connect_timeout;
+    
+    // Redis
+    std::string redis_host;
+    uint16 redis_port;
+    int32 redis_timeout;
+    int32 redis_db;
+    
+    // Behavior
+    int32 cache_ttl;
+    int32 request_priority;
+    
+    MLDatabaseConfig() :
+        pg_host("127.0.0.1"),
+        pg_port(5432),
+        pg_database("ragnarok_ml"),
+        pg_user("ml_user"),
+        pg_password("ml_password"),
+        pg_connect_timeout(10),
+        redis_host("127.0.0.1"),
+        redis_port(6379),
+        redis_timeout(2),
+        redis_db(0),
+        cache_ttl(10),
+        request_priority(5)
+    {}
+};
 
 /**
  * ML Decision Gateway
@@ -108,6 +147,9 @@ public:
     static void health_check();
     
 private:
+    // Configuration
+    static MLDatabaseConfig config_;
+    
     // Initialization state
     static bool initialized_;
     static bool healthy_;
@@ -116,6 +158,9 @@ private:
     // Connections
     static redisContext* redis_ctx_;
     static void* pg_conn_;  // PGconn* (void* to avoid header conflicts)
+    
+    // Configuration reading
+    static bool read_config(const char* config_file);
     
     // Statistics
     static uint64_t total_requests_;

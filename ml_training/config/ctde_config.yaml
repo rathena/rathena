@@ -1,0 +1,331 @@
+# CTDE (Centralized Training, Decentralized Execution) Configuration
+# =====================================================================
+# Configuration for multi-agent pack coordination training and inference
+#
+# Architecture Reference: plans/enhanced_hybrid_ml_monster_ai_architecture_v2.md
+# Section: Inter-Monster Coordination System (CTDE Framework)
+
+ctde:
+  enabled: true
+  
+  # Pack Settings
+  # -------------
+  min_pack_size: 2          # Minimum monsters to form a pack
+  max_pack_size: 5          # Maximum pack size
+  pack_formation_radius: 10  # cells - distance for automatic pack formation
+  
+  # Network Architecture
+  # -------------------
+  
+  # Centralized Critic (used during training only)
+  critic:
+    hidden_dims: [512, 512, 256]
+    activation: relu
+    use_attention: true        # Attention over agent states
+    dropout: 0.2
+    learning_rate: 0.0003
+    weight_decay: 0.0001
+  
+  # Decentralized Actor (used during both training and inference)
+  actor:
+    hidden_dims: [256, 256, 128]
+    activation: relu
+    use_gru: true              # GRU for temporal dynamics
+    dropout: 0.1
+    learning_rate: 0.0001
+    weight_decay: 0.00005
+  
+  # Communication Network (optional, for training)
+  communication:
+    enabled: true
+    type: commnet              # Options: 'commnet', 'attention_commnet'
+    rounds: 3                  # Number of message passing rounds
+    hidden_dim: 128
+    max_neighbors: 4           # Maximum neighbors to communicate with
+    dropout: 0.1
+    learning_rate: 0.0002
+  
+  # QMIX Mixer (optional value decomposition)
+  qmix:
+    enabled: false             # Enable for QMIX algorithm
+    mixing_embed_dim: 32
+    hypernet_embed_dim: 64
+  
+  # Training Parameters
+  # ------------------
+  n_agents: 5                  # Maximum agents per episode
+  state_dim: 64                # State vector dimension
+  signal_dim: 32               # Signal vector dimension
+  action_dim: 7                # Coordination action dimension
+  
+  # RL Hyperparameters
+  gamma: 0.99                  # Discount factor
+  gae_lambda: 0.95             # GAE lambda for advantage estimation
+  clip_epsilon: 0.2            # PPO clip epsilon
+  value_loss_coef: 0.5         # Value loss coefficient
+  entropy_coef: 0.01           # Entropy regularization coefficient
+  max_grad_norm: 1.0           # Gradient clipping threshold
+  
+  # Training Loop
+  n_epochs: 4                  # Epochs per training iteration
+  batch_size: 32               # Episodes per batch
+  episodes_per_iteration: 32   # Episodes to collect before training
+  max_iterations: 10000        # Maximum training iterations
+  
+  # Episode Collection
+  max_episode_length: 200      # Maximum steps per episode
+  min_episode_length: 10       # Minimum steps to be valid
+  
+  # Rewards
+  # -------
+  team_reward_weight: 0.7      # 70% team reward, 30% individual reward
+  coordination_bonus: 0.1      # Bonus for successful coordination
+  
+  # Team Reward Components
+  pack_survival_weight: 10.0   # Weight for pack survival rate
+  coordinated_kill_weight: 5.0 # Weight for coordinated kills
+  formation_quality_weight: 3.0 # Weight for maintaining formation
+  support_effectiveness_weight: 2.0 # Weight for supporting allies
+  
+  # Individual Reward Components
+  damage_dealt_weight: 1.0
+  damage_avoided_weight: 0.5
+  skill_usage_weight: 0.3
+  survival_weight: 2.0
+  
+  # Inference (Decentralized Execution)
+  # -----------------------------------
+  inference:
+    use_signals: true          # Enable signal passing during inference
+    signal_range: 15           # cells - maximum signal transmission range
+    signal_ttl: 5              # seconds - signal time-to-live
+    coordination_threshold: 0.7 # Minimum coordination score for bonus
+    
+    # Signal Processing
+    cache_signals: true        # Cache recent signals
+    signal_cache_ttl: 1.0      # seconds - signal cache duration
+    max_signals_per_monster: 10 # Maximum signals to process per monster
+    
+    # Pack Detection
+    pack_detection_enabled: true
+    pack_detection_interval_ms: 100 # How often to detect pack formations
+    
+    # Performance
+    max_pack_inference_latency_ms: 20 # Maximum latency for pack coordination
+    fallback_to_solo_on_timeout: true # Fall back to solo if pack inference times out
+  
+  # Signal Types Configuration
+  # --------------------------
+  signal_types:
+    attack_target:
+      priority: 2              # Default priority (1=highest, 10=lowest)
+      ttl: 5                   # Time to live in seconds
+      encoding_dims: [0, 7]    # Signal vector dimensions used
+    
+    retreat_call:
+      priority: 1              # Highest priority
+      ttl: 3
+      encoding_dims: [24, 31]
+    
+    formation_command:
+      priority: 3
+      ttl: 10
+      encoding_dims: [8, 15]
+    
+    defend_leader:
+      priority: 2
+      ttl: 5
+      encoding_dims: [16, 23]
+    
+    flank_maneuver:
+      priority: 3
+      ttl: 5
+      encoding_dims: [8, 15]
+    
+    focus_fire:
+      priority: 2
+      ttl: 5
+      encoding_dims: [0, 7]
+    
+    help_request:
+      priority: 4
+      ttl: 5
+      encoding_dims: [16, 23]
+    
+    danger_alert:
+      priority: 2
+      ttl: 3
+      encoding_dims: [24, 31]
+  
+  # Data Collection
+  # ---------------
+  data_collection:
+    enabled: true
+    save_to_database: true     # Save episodes to PostgreSQL
+    save_interval_episodes: 10  # Save every N episodes
+    buffer_size: 1000          # In-memory episode buffer size
+    
+    # Episode Filtering
+    min_team_reward: -10.0     # Minimum reward to save (discard very bad episodes)
+    save_all_outcomes: true    # Save all outcomes or only successful ones
+    
+  # Model Export
+  # ------------
+  export:
+    export_actor_only: true    # Only export actor (critic not needed for inference)
+    onnx_opset_version: 14
+    optimize_for_inference: true
+    quantize_int8: true        # Also export INT8 version for fallback
+    
+  # Monitoring
+  # ----------
+  monitoring:
+    log_training_metrics: true
+    log_interval_steps: 10
+    save_checkpoints: true
+    checkpoint_interval_steps: 100
+    keep_best_n_checkpoints: 3
+    
+    # Metrics to track
+    track_coordination_score: true
+    track_pack_cohesion: true
+    track_signal_usage: true
+    track_formation_quality: true
+  
+  # Advanced Features
+  # -----------------
+  advanced:
+    # Curriculum Learning
+    curriculum_learning: false
+    start_pack_size: 2
+    end_pack_size: 5
+    size_increase_interval: 1000  # iterations
+    
+    # Multi-Task Learning
+    multi_task_learning: false
+    tasks: ['combat', 'exploration', 'defense']
+    
+    # Transfer Learning
+    transfer_from_solo_models: true  # Initialize from solo model weights
+    freeze_early_layers: false       # Freeze first N layers from solo models
+    
+    # Adversarial Training
+    adversarial_opponents: false     # Train against adversarial pack
+    adversarial_strength: 0.5        # Opponent strength (0.0-1.0)
+
+# Pack Coordination Actions
+# -------------------------
+# Coordination action definitions (action_dim=7)
+coordination_actions:
+  0:
+    name: HELP_ALLY
+    description: Move to help low-HP ally
+    priority: high
+    
+  1:
+    name: GROUP_UP
+    description: Move toward pack centroid
+    priority: medium
+    
+  2:
+    name: SPLIT
+    description: Spread out to surround target
+    priority: medium
+    
+  3:
+    name: FOCUS_FIRE
+    description: Attack same target as pack
+    priority: high
+    
+  4:
+    name: PROTECT_WEAK
+    description: Position to protect vulnerable ally
+    priority: high
+    
+  5:
+    name: FLANK_LEFT
+    description: Flank target from left side
+    priority: medium
+    
+  6:
+    name: FLANK_RIGHT
+    description: Flank target from right side
+    priority: medium
+
+# Archetype-Specific Pack Behaviors
+# ----------------------------------
+archetype_behaviors:
+  aggressive:
+    preferred_role: attacker
+    coordination_style: offensive
+    formation_preference: flanking
+    pack_size_preference: [3, 4]  # Optimal pack sizes
+    
+  defensive:
+    preferred_role: protector
+    coordination_style: defensive
+    formation_preference: defensive_circle
+    pack_size_preference: [2, 3]
+    
+  support:
+    preferred_role: support
+    coordination_style: supportive
+    formation_preference: rear_guard
+    pack_size_preference: [3, 5]
+    
+  mage:
+    preferred_role: ranged_dps
+    coordination_style: burst
+    formation_preference: spread_out
+    pack_size_preference: [2, 3]
+    
+  tank:
+    preferred_role: tank
+    coordination_style: anchor
+    formation_preference: front_line
+    pack_size_preference: [2, 4]
+    
+  ranged:
+    preferred_role: ranged_dps
+    coordination_style: kiting
+    formation_preference: v_formation
+    pack_size_preference: [3, 4]
+
+# Database Integration
+# --------------------
+database:
+  # Pack episode table configuration
+  table_name: ml_pack_episodes
+  
+  # Data retention
+  retention_days: 30           # Keep episodes for 30 days
+  cleanup_interval_hours: 24   # Run cleanup daily
+  
+  # Batch operations
+  batch_insert_size: 100       # Insert episodes in batches
+  use_prepared_statements: true
+  
+  # Coordination logging
+  log_coordination_events: true
+  coordination_log_table: ml_coordination_logs
+
+# Performance Tuning
+# ------------------
+performance:
+  # Memory management
+  max_memory_gb: 4.0           # Maximum RAM for episode buffer
+  enable_memory_profiling: false
+  
+  # Compute optimization
+  use_mixed_precision: true    # FP16 training
+  use_gradient_checkpointing: false  # Trade compute for memory
+  compile_models: false        # torch.compile (requires PyTorch 2.0+)
+  
+  # Parallelization
+  num_data_workers: 4
+  prefetch_factor: 2
+  pin_memory: true
+  
+  # Inference optimization
+  batch_pack_inference: true   # Batch multiple packs together
+  max_pack_batch_size: 10      # Maximum packs per batch

@@ -26,6 +26,7 @@ using namespace rathena;
 #define PGCONN() (static_cast<PGconn*>(pg_conn_))
 
 // Static member initialization
+MLDatabaseConfig MobMLGateway::config_;
 bool MobMLGateway::initialized_ = false;
 bool MobMLGateway::healthy_ = false;
 std::mutex MobMLGateway::mutex_;
@@ -39,6 +40,61 @@ float MobMLGateway::avg_latency_ms_ = 0.0f;
 t_tick MobMLGateway::last_health_check_ = 0;
 
 /**
+ * Read ML database configuration from file
+ */
+bool MobMLGateway::read_config(const char* config_file) {
+	FILE* fp = fopen(config_file, "r");
+	if (!fp) {
+		ShowWarning("[ML-GATEWAY] Config file not found: %s, using defaults\n", config_file);
+		return false;
+	}
+	
+	char line[1024], w1[1024], w2[1024];
+	while (fgets(line, sizeof(line), fp)) {
+		if (line[0] == '/' && line[1] == '/') continue;
+		if (sscanf(line, "%1023[^:]: %1023[^\r\n]", w1, w2) != 2) continue;
+		
+		// PostgreSQL settings
+		if (strcmpi(w1, "ml_pg_host") == 0) {
+			config_.pg_host = w2;
+		} else if (strcmpi(w1, "ml_pg_port") == 0) {
+			config_.pg_port = (uint16)atoi(w2);
+		} else if (strcmpi(w1, "ml_pg_database") == 0) {
+			config_.pg_database = w2;
+		} else if (strcmpi(w1, "ml_pg_user") == 0) {
+			config_.pg_user = w2;
+		} else if (strcmpi(w1, "ml_pg_password") == 0) {
+			config_.pg_password = w2;
+		} else if (strcmpi(w1, "ml_pg_connect_timeout") == 0) {
+			config_.pg_connect_timeout = atoi(w2);
+		}
+		// Redis settings
+		else if (strcmpi(w1, "ml_redis_host") == 0) {
+			config_.redis_host = w2;
+		} else if (strcmpi(w1, "ml_redis_port") == 0) {
+			config_.redis_port = (uint16)atoi(w2);
+		} else if (strcmpi(w1, "ml_redis_timeout") == 0) {
+			config_.redis_timeout = atoi(w2);
+		} else if (strcmpi(w1, "ml_redis_db") == 0) {
+			config_.redis_db = atoi(w2);
+		}
+		// Behavior settings
+		else if (strcmpi(w1, "ml_cache_ttl") == 0) {
+			config_.cache_ttl = atoi(w2);
+		} else if (strcmpi(w1, "ml_request_priority") == 0) {
+			config_.request_priority = atoi(w2);
+		}
+		// Import support
+		else if (strcmpi(w1, "import") == 0) {
+			read_config(w2);
+		}
+	}
+	
+	fclose(fp);
+	return true;
+}
+
+/**
  * Initialize ML gateway
  */
 bool MobMLGateway::initialize() {
@@ -50,6 +106,13 @@ bool MobMLGateway::initialize() {
 	}
 	
 	ShowStatus("[ML-GATEWAY] Initializing ML Monster AI Gateway...\n");
+	
+	// Read configuration
+	read_config("conf/ml_db.conf");
+	
+	ShowInfo("[ML-GATEWAY] Config: PG=%s:%d DB=%s, Redis=%s:%d\n",
+	         config_.pg_host.c_str(), config_.pg_port, config_.pg_database.c_str(),
+	         config_.redis_host.c_str(), config_.redis_port);
 	
 	// Connect to Redis
 	if (!connect_redis()) {
@@ -412,10 +475,10 @@ void MobMLGateway::update_cache(const std::vector<float>& state, MLAction action
 	std::ostringstream value;
 	value << (int)action << ":" << std::fixed << std::setprecision(3) << confidence;
 	
-	// Set in Redis with TTL (configurable, default 5-10 seconds)
-	int ttl_seconds = 10;  // 10 second cache
+	// Set in Redis with TTL from config
+	int ttl_seconds = config_.cache_ttl;
 	
-	redisReply* reply = (redisReply*)redisCommand(redis_ctx_, 
+	redisReply* reply = (redisReply*)redisCommand(redis_ctx_,
 	                                               "SETEX ml:action:%s %d %s",
 	                                               cache_key.c_str(),
 	                                               ttl_seconds,
@@ -479,9 +542,16 @@ const char* MobMLGateway::determine_archetype(const struct mob_data* md) {
  * Connect to Redis
  */
 bool MobMLGateway::connect_redis() {
-	// Connect to localhost:6379 (default Redis/DragonFly port)
-	struct timeval timeout = {1, 500000};  // 1.5 seconds
-	redis_ctx_ = redisConnectWithTimeout("127.0.0.1", 6379, timeout);
+	// Skip if Redis host is empty (disabled)
+	if (config_.redis_host.empty()) {
+		ShowInfo("[ML-GATEWAY] Redis disabled (no host configured)\n");
+		return false;
+	}
+	
+	// Connect to configured Redis server
+	struct timeval timeout = {config_.redis_timeout, 0};
+	redis_ctx_ = redisConnectWithTimeout(config_.redis_host.c_str(),
+	                                     config_.redis_port, timeout);
 	
 	if (!redis_ctx_ || redis_ctx_->err) {
 		if (redis_ctx_) {
@@ -511,11 +581,20 @@ bool MobMLGateway::connect_redis() {
  * Connect to PostgreSQL
  */
 bool MobMLGateway::connect_postgresql() {
-	// Connection string (from environment or config)
-	const char* conninfo = "host=localhost port=5432 dbname=ragnarok_ml "
-	                       "user=ml_user connect_timeout=10";
+	// Build connection string from config
+	std::ostringstream conninfo;
+	conninfo << "host=" << config_.pg_host
+	         << " port=" << config_.pg_port
+	         << " dbname=" << config_.pg_database
+	         << " user=" << config_.pg_user;
 	
-	pg_conn_ = static_cast<void*>(PQconnectdb(conninfo));
+	if (!config_.pg_password.empty()) {
+		conninfo << " password=" << config_.pg_password;
+	}
+	
+	conninfo << " connect_timeout=" << config_.pg_connect_timeout;
+	
+	pg_conn_ = static_cast<void*>(PQconnectdb(conninfo.str().c_str()));
 	
 	if (PQstatus(PGCONN()) != CONNECTION_OK) {
 		ShowError("[ML-GATEWAY] PostgreSQL connection error: %s\n", 

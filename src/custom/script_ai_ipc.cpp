@@ -464,6 +464,65 @@ BUILDIN_FUNC(ai_db_cancel) {
     return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * ai_db_cleanup(age_seconds) - Admin command to cleanup old requests/responses
+ */
+BUILDIN_FUNC(ai_db_cleanup) {
+    int age_seconds = script_hasdata(st, 2) ? script_getnum(st, 2) : 3600;
+    
+    // Validate age_seconds (minimum 60 seconds, maximum 30 days)
+    if (age_seconds < 60) age_seconds = 60;
+    if (age_seconds > 2592000) age_seconds = 2592000;
+    
+    ShowInfo("[AI-IPC] ai_db_cleanup: Cleaning up requests older than %d seconds\n", age_seconds);
+    
+    int total_deleted = 0;
+    
+    // First, mark expired pending requests as timeout
+    if (SQL_SUCCESS == Sql_Query(mmysql_handle,
+        "UPDATE `%s` SET `status` = 'timeout', `processed_at` = NOW() "
+        "WHERE `status` = 'pending' AND `expires_at` < NOW()",
+        ai_requests_table))
+    {
+        uint64 marked = Sql_NumRowsAffected(mmysql_handle);
+        ShowInfo("[AI-IPC] ai_db_cleanup: Marked %llu expired requests as timeout\n", (unsigned long long)marked);
+    }
+    
+    // Delete old responses (will cascade delete via FK if constraints exist)
+    if (SQL_SUCCESS == Sql_Query(mmysql_handle,
+        "DELETE resp FROM `%s` resp "
+        "INNER JOIN `%s` req ON resp.`request_id` = req.`id` "
+        "WHERE req.`status` IN ('completed', 'failed', 'timeout', 'cancelled') "
+        "AND req.`created_at` < DATE_SUB(NOW(), INTERVAL %d SECOND)",
+        ai_responses_table, ai_requests_table, age_seconds))
+    {
+        uint64 deleted_responses = Sql_NumRowsAffected(mmysql_handle);
+        ShowInfo("[AI-IPC] ai_db_cleanup: Deleted %llu old responses\n", (unsigned long long)deleted_responses);
+        total_deleted += deleted_responses;
+    }
+    
+    // Delete old requests
+    if (SQL_SUCCESS == Sql_Query(mmysql_handle,
+        "DELETE FROM `%s` "
+        "WHERE `status` IN ('completed', 'failed', 'timeout', 'cancelled') "
+        "AND `created_at` < DATE_SUB(NOW(), INTERVAL %d SECOND)",
+        ai_requests_table, age_seconds))
+    {
+        uint64 deleted_requests = Sql_NumRowsAffected(mmysql_handle);
+        ShowInfo("[AI-IPC] ai_db_cleanup: Deleted %llu old requests\n", (unsigned long long)deleted_requests);
+        total_deleted += deleted_requests;
+    }
+    else
+    {
+        ShowError("[AI-IPC] ai_db_cleanup: Failed to delete old requests\n");
+        Sql_ShowDebug(mmysql_handle);
+    }
+    
+    ShowInfo("[AI-IPC] ai_db_cleanup: Total records cleaned up: %d\n", total_deleted);
+    script_pushint(st, total_deleted);
+    return SCRIPT_CMD_SUCCESS;
+}
+
 // ============================================================================
 // Async HTTP Functions (Non-Blocking, Return Request ID)
 // ============================================================================

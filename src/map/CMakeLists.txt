@@ -21,9 +21,14 @@ else()
 endif()
 
 file(GLOB_RECURSE MAP_HEADERS ${MAP_SOURCE_DIR}/*.hpp)
-file(GLOB_RECURSE MAP_SOURCES ${MAP_SOURCE_DIR}/*.cpp)
+file(GLOB_RECURSE MAP_SOURCES_ALL ${MAP_SOURCE_DIR}/*.cpp)
 
-# ML Monster AI sources
+# Exclude test files from map-server build
+list(FILTER MAP_SOURCES_ALL EXCLUDE REGEX ".*test_.*\\.cpp$")
+set(MAP_SOURCES ${MAP_SOURCES_ALL})
+
+# ML Monster AI sources (already included in MAP_SOURCES via glob)
+# Explicitly listed here for documentation
 set(MAP_ML_SOURCES
     ${MAP_SOURCE_DIR}/mob_ml_encoder.cpp
     ${MAP_SOURCE_DIR}/mob_ml_gateway.cpp

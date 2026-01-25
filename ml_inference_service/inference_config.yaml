@@ -55,9 +55,42 @@ database:
   redis:
     host: "localhost"
     port: 6379
-    password: null  # Set if Redis requires auth
+    password: "${REDIS_PASSWORD}"  # Set via environment variable
     db: 0
     socket_timeout: 5
+  
+  # MariaDB for AI IPC (game database)
+  mariadb:
+    host: "192.168.0.100"  # Game database server
+    port: 3306
+    database: "ragnarok"
+    user: "${DB_USER}"  # Set via environment variable
+    password: "${DB_PASSWORD}"  # Set via environment variable
+    min_pool_size: 5
+    max_pool_size: 20
+    charset: "utf8mb4"
+
+ipc_worker:
+  enabled: true
+  poll_interval_ms: 100  # Poll every 100ms
+  batch_size: 10  # Process 10 requests per batch
+  max_processing_time: 5000  # Max 5 seconds per request
+  cleanup_interval: 60  # Cleanup every 60 seconds
+  timeout_seconds: 30  # Mark requests as timeout after 30s
+  ai_service_base_url: "http://127.0.0.1:8000"  # AI Autonomous World service
+  ai_service_timeout: 10  # HTTP timeout for AI service requests
+
+graph:
+  enabled: true
+  graph_name: "monster_ai"
+  use_for_coordination: true
+  use_for_spatial: true
+  use_for_threat_tracking: true
+  cache_duration: 5  # seconds - cache graph query results
+  max_query_depth: 3  # maximum depth for path traversals
+  retry_attempts: 3
+  retry_delay: 0.1  # seconds, with exponential backoff
+  query_timeout: 10  # seconds
 
 caching:
   enabled: true
@@ -72,9 +105,14 @@ fallback:
   auto_recovery: true  # Automatically recover to better levels
 
 monitoring:
-  prometheus_port: 9090  # Prometheus metrics endpoint
+  prometheus_port: 9091  # Prometheus metrics endpoint (changed from 9090 to avoid conflicts)
   metrics_enabled: true
   log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+http_server:
+  port: 8082  # HTTP API for hot reload and health checks (changed from 8080 to avoid conflicts)
+  host: "localhost"
+  enabled: true
 
 logging:
   level: "INFO"
