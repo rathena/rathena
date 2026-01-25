@@ -597,6 +597,9 @@
     <ClInclude Include="skills/druid/quillspear.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/roaringpiercer.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/sharpengust.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1404,6 +1407,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/quillspear.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/roaringpiercer.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/sharpengust.cpp">

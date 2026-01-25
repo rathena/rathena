@@ -40,6 +40,7 @@
 #include "natureprotection.hpp"
 #include "nomercyclaw.hpp"
 #include "quillspear.hpp"
+#include "roaringpiercer.hpp"
 #include "sharpengust.hpp"
 #include "sharpenhail.hpp"
 #include "shootingfeather.hpp"
@@ -343,31 +344,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_ROARING_PIERCER:
-				case AT_ROARING_PIERCER_S: {
-					if (flag & 1) {
-						SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					} else {
-						const int16 half_width = 2;
-						const int16 half_length = 4;
-						const int32 length = half_length * 2 + 1;
-						int32 offset = distance(target->x - src->x, target->y - src->y) - half_length;
-
-						if (offset < 0) {
-							offset = 0;
-						}
-
-						skill_area_temp[0] = 0;
-						skill_area_temp[1] = target->id;
-						skill_area_temp[2] = 0;
-						map_foreachindir(skill_area_sub, src->m, src->x, src->y, target->x, target->y, half_width, length, offset, splash_target(src),
-								 src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | SD_SPLASH | 1, skill_castend_damage_id);
-					}
-					if (!(flag & 1) && getSkillId() == AT_ROARING_PIERCER) {
-						try_gain_thundering_charge(src, sc, getSkillId(), 1);
-					}
-					return;
-				}
 				case AT_PRIMAL_CLAW: {
 					if (!(flag & 1)) {
 						if (!unit_movepos(src, target->x, target->y, 2, true)) {
@@ -819,22 +795,6 @@ public:
 					skillratio = 8400 + 1500 * (skill_lv - 1);
 					base_skillratio += -100 + skillratio;
 					break;
-				case AT_ROARING_PIERCER:
-					skillratio = 11250 + 700 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
-				case AT_ROARING_PIERCER_S:
-					skillratio = 11250 + 750 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_ROARING_CHARGE:
 					skillratio = 8000 + 400 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
@@ -882,7 +842,6 @@ public:
 
 		int64 splashDamage(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const override {
 			switch (getSkillId()) {
-				case AT_ROARING_PIERCER:
 				case AT_ROARING_CHARGE: {
 					e_skill actual_skill = getSkillId();
 					const status_change *sc = status_get_sc(src);
@@ -895,7 +854,6 @@ public:
 				case AT_ALPHA_CLAW:
 				case AT_TEMPEST_FLAP:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
-				case AT_ROARING_PIERCER_S:
 				case AT_ROARING_CHARGE_S:
 				case AT_GLACIER_MONOLITH:
 				case AT_GLACIER_NOVA:
@@ -1149,9 +1107,9 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_ROARING_CHARGE_S:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_ROARING_PIERCER:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillRoaringPiercer>();
 		case AT_ROARING_PIERCER_S:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillRoaringPiercer>();
 		case AT_SAVAGE_LUNGE:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_SOLID_STOMP:
