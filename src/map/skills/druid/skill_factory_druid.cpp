@@ -1519,15 +1519,50 @@ public:
 
 std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case DR_AROUND_FLOWER:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_BLOOD_HOWLING:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case DR_CRUEL_BITE:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_CUTTING_WIND:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_EARTH_FLOWER:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_ENRAGE_WOLF:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case DR_ENRAGE_RAPTOR:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case DR_FLICKING_TONADO:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_HUNGER:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_ICE_CLOUD:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_ICE_TOTEM:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_LOW_FLIGHT:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_NATURE_SHIELD:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case DR_NOMERCY_CLAW:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_PREENING:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case DR_SHOOTING_FEATHER:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case DR_TRUTH_OF_EARTH:
+			return std::make_unique<SkillDruidTruthImpl>(skill_id);
+		case DR_TRUTH_OF_ICE:
+			return std::make_unique<SkillDruidTruthImpl>(skill_id);
+		case DR_TRUTH_OF_WIND:
+			return std::make_unique<SkillDruidTruthImpl>(skill_id);
+		case DR_WIND_BOMB:
+			return std::make_unique<SkillDruidImpl>(skill_id);
 		case DR_WEREWOLF:
 			return std::make_unique<SkillTransformationBeast>();
 		case DR_WERERAPTOR:
 			return std::make_unique<SkillTransformationRaptor>();
-		case DR_ENRAGE_WOLF:
-		case DR_ENRAGE_RAPTOR:
-		case DR_BLOOD_HOWLING:
-		case DR_PREENING:
-		case DR_NATURE_SHIELD:
 		case KR_IRON_HOWLING:
 		case KR_WIND_VEIL:
 		case AT_ALPHA_PHASE:
@@ -1536,26 +1571,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_APEX_PHASE:
 		case AT_NATURE_HARMONY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
-		case DR_TRUTH_OF_ICE:
-		case DR_TRUTH_OF_WIND:
-		case DR_TRUTH_OF_EARTH:
-			return std::make_unique<SkillDruidTruthImpl>(skill_id);
 		case KR_NATURE_PROTECTION:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case AT_AERO_SYNC:
 			return std::make_unique<SkillAliteaAeroSyncImpl>();
-		case DR_NOMERCY_CLAW:
-		case DR_CRUEL_BITE:
-		case DR_HUNGER:
-		case DR_SHOOTING_FEATHER:
-		case DR_FLICKING_TONADO:
-		case DR_LOW_FLIGHT:
-		case DR_ICE_TOTEM:
-		case DR_ICE_CLOUD:
-		case DR_CUTTING_WIND:
-		case DR_WIND_BOMB:
-		case DR_EARTH_FLOWER:
-		case DR_AROUND_FLOWER:
 		case KR_NASTY_SLASH:
 		case KR_DOUBLE_SLASH:
 		case KR_CLAW_WAVE:
