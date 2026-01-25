@@ -1193,14 +1193,6 @@ public:
 					skillratio = 9800 + 800 * (skill_lv - 1);
 					base_skillratio += -100 + skillratio;
 					break;
-				case DR_WIND_BOMB:
-					skillratio = 50 * skill_lv;
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
 				default:
 					return;
 			}
