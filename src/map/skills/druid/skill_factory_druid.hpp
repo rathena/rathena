@@ -17,6 +17,7 @@ namespace {
 	int32 get_madness_stage(const status_change* sc);
 	int32 apply_splash_outer_sub(block_list* bl, va_list ap);
 	void try_gain_madness(block_list* src);
+	bool get_glacier_center_on_map(const block_list* src, const status_change* sc, int32& gx, int32& gy);
 }
 
 class SkillFactoryDruid : public SkillFactory {

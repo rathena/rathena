@@ -305,6 +305,7 @@
     <ClInclude Include="skills/druid/feralclaw.hpp" />
     <ClInclude Include="skills/druid/flickingtornado.hpp" />
     <ClInclude Include="skills/druid/frenzyfang.hpp" />
+    <ClInclude Include="skills/druid/glacialstomp.hpp" />
     <ClInclude Include="skills/druid/gravityhole.hpp" />
     <ClInclude Include="skills/druid/groundbloom.hpp" />
     <ClInclude Include="skills/druid/hunger.hpp" />
@@ -630,6 +631,7 @@
     <ClCompile Include="skills/druid/feralclaw.cpp" />
     <ClCompile Include="skills/druid/flickingtornado.cpp" />
     <ClCompile Include="skills/druid/frenzyfang.cpp" />
+    <ClCompile Include="skills/druid/glacialstomp.cpp" />
     <ClCompile Include="skills/druid/gravityhole.cpp" />
     <ClCompile Include="skills/druid/groundbloom.cpp" />
     <ClCompile Include="skills/druid/hunger.cpp" />
