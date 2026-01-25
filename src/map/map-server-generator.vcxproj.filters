@@ -603,6 +603,9 @@
     <ClInclude Include="skills/druid/nomercyclaw.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/pinionshot.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/primalclaw.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1428,6 +1431,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/nomercyclaw.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/pinionshot.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/primalclaw.cpp">

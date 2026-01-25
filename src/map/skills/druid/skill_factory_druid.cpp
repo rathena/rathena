@@ -42,6 +42,7 @@
 #include "nastyslash.hpp"
 #include "natureprotection.hpp"
 #include "nomercyclaw.hpp"
+#include "pinionshot.hpp"
 #include "primalclaw.hpp"
 #include "quillspear.hpp"
 #include "roaringpiercer.hpp"
@@ -63,7 +64,6 @@
 
 namespace {
 	constexpr int32 kClawChainDuration = 5000;
-	constexpr int32 kZephyrChargeDuration = 10000;
 	constexpr int32 kThunderingChargeDuration = 10000;
 	constexpr int32 kGrowthDuration = 10000;
 	constexpr int32 kTerraWaveStepMs = 150;
@@ -324,19 +324,6 @@ namespace {
 		return static_cast<int32>(skill_attack(skill_get_type(static_cast<e_skill>(skill_id)), src, src, bl, skill_id, skill_lv, tick, flag | SD_ANIMATION));
 	}
 
-int32 apply_zephyr_link_sub(block_list *bl, va_list ap) {
-	block_list *src = va_arg(ap, block_list *);
-	int32 party_id = va_arg(ap, int32);
-	t_tick tick = va_arg(ap, t_tick);
-	map_session_data *sd = BL_CAST(BL_PC, bl);
-
-	if (!sd || sd->status.party_id != party_id) {
-		return 0;
-	}
-
-	return skill_castend_nodamage_id(src, bl, AT_ZEPHYR_LINK, 1, tick, 0);
-}
-
 class SkillDruidImpl : public SkillImplRecursiveDamageSplash {
 public:
 	explicit SkillDruidImpl(e_skill skill_id) : SkillImplRecursiveDamageSplash(skill_id) {}
@@ -349,31 +336,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_PINION_SHOT: {
-					int32 attack_flag = flag | SD_ANIMATION;
-					skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, attack_flag);
-
-					if (!(flag & 1)) {
-						status_change_entry *charge = sc ? sc->getSCE(SC_ZEPHYR_CHARGE) : nullptr;
-						int32 current = charge ? charge->val1 : 0;
-						if (current >= 5) {
-							map_session_data *sd = BL_CAST(BL_PC, src);
-							if (sd) {
-								int32 party_id = sd->status.party_id;
-								const int16 link_range = skill_get_splash(AT_ZEPHYR_LINK, 1);
-								if (party_id == 0) {
-									skill_castend_nodamage_id(src, src, AT_ZEPHYR_LINK, 1, tick, 0);
-								} else {
-									map_foreachinrange(apply_zephyr_link_sub, src, link_range, BL_PC, src, party_id, tick);
-								}
-							}
-							status_change_end(src, SC_ZEPHYR_CHARGE);
-						} else {
-							sc_start4(src, src, SC_ZEPHYR_CHARGE, 100, current + 1, current + 1, current + 1, 0, kZephyrChargeDuration);
-						}
-					}
-					return;
-				}
 				case AT_SOLID_STOMP: {
 					if (!(flag & 1)) {
 						sc_type type = skill_get_sc(getSkillId());
@@ -581,12 +543,6 @@ public:
 			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
-				case AT_PINION_SHOT:
-					skillratio = 2450 * skill_lv;
-					skillratio += sstatus->con * 5; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_TEMPEST_FLAP:
 					skillratio = 1250 * skill_lv;
 					skillratio += sstatus->con * 5; // TODO - unknown scaling [munkrej]
@@ -920,7 +876,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_NATURE_HARMONY:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case AT_PINION_SHOT:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillPinionShot>();
 		case AT_PRIMAL_CLAW:
 			return std::make_unique<SkillPrimalClaw>();
 		case AT_PULSE_OF_MADNESS:
