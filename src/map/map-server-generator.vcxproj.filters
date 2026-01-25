@@ -558,6 +558,9 @@
     <ClInclude Include="skills/druid/nomercyclaw.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/sharpengust.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/shootingfeather.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1305,6 +1308,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/nomercyclaw.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/sharpengust.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/shootingfeather.cpp">

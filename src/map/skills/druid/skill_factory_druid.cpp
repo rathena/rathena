@@ -27,6 +27,7 @@
 #include "icetotem.hpp"
 #include "lowflight.hpp"
 #include "nomercyclaw.hpp"
+#include "sharpengust.hpp"
 #include "shootingfeather.hpp"
 #include "transformationbeast.hpp"
 #include "transformationraptor.hpp"
@@ -367,36 +368,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case KR_SHARPEN_GUST: {
-					if (flag & 1) {
-						SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-						return;
-					}
-
-					const int16 path_width = 1;
-					const int32 path_length = 7;
-					const uint8 dir = map_calc_dir(src, target->x, target->y);
-					const int16 dir_x = dirx[dir];
-					const int16 dir_y = diry[dir];
-					const int16 start_x = src->x;
-					const int16 start_y = src->y;
-					const int16 end_x = src->x + dir_x;
-					const int16 end_y = src->y + dir_y;
-
-					skill_area_temp[0] = 0;
-					skill_area_temp[1] = target->id;
-					skill_area_temp[2] = 0;
-
-					if (battle_config.skill_eightpath_algorithm) {
-						// Use official AoE algorithm
-						map_foreachindir(skill_area_sub, src->m, start_x, start_y, end_x, end_y, path_width, path_length, 1, splash_target(src),
-									 src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | SD_SPLASH | 1, skill_castend_damage_id);
-					} else {
-						map_foreachindir(skill_area_sub, src->m, start_x, start_y, end_x, end_y, path_width, path_length, 1, splash_target(src),
-									 src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | SD_SPLASH | 1, skill_castend_damage_id);
-					}
-					return;
-				}
 				case KR_NASTY_SLASH: {
 					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 					if (!(flag & 1)) {
@@ -906,16 +877,6 @@ public:
 					base_skillratio += -100 + skillratio;
 					return;
 				}
-				case KR_SHARPEN_GUST: {
-					skillratio = 1000 + 80 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
-						skillratio += 550;
-					}
-					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					return;
-				}
 				case KR_SHARPEN_HAIL: {
 					skillratio = 640 + 40 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
@@ -1230,7 +1191,6 @@ public:
 				case KR_DOUBLE_SLASH:
 				case KR_CLAW_WAVE:
 				case KR_CHOP_CHOP:
-				case KR_SHARPEN_GUST:
 				case KR_SHARPEN_HAIL:
 				case KR_TYPHOON_WING:
 				case KR_FEATHER_SPRINKLE:
@@ -1431,7 +1391,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_NATURE_PROTECTION:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case KR_SHARPEN_GUST:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillSharpenGust>();
 		case KR_SHARPEN_HAIL:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_THUNDERING_CALL:
