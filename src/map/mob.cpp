@@ -10,6 +10,10 @@
 #include <unordered_map>
 #include <vector>
 
+#include "mob_ml_encoder.hpp"
+#include "mob_ml_gateway.hpp"
+#include "mob_ml_executor.hpp"
+
 #include <common/cbasetypes.hpp>
 #include <common/db.hpp>
 #include <common/ers.hpp>
@@ -1865,6 +1869,43 @@ static bool mob_ai_sub_hard(mob_data *md, t_tick tick)
 		md->target_id = md->attacked_id = md->norm_attacked_id = 0;
 		return false;
 	}
+
+	// ============================================================
+	// ML DECISION GATE - Enhanced ML Monster AI v2.0
+	// ============================================================
+	if (battle_config.ml_monster_ai_enabled && MobMLGateway::is_healthy()) {
+		// Get ML decision
+		auto decision = MobMLGateway::get_decision(md);
+		
+		if (decision.success && decision.action != MobMLGateway::MLAction::TRADITIONAL_AI) {
+			// Execute ML action
+			bool executed = MobMLExecutor::execute(md, decision);
+			
+			if (executed) {
+				// Log successful ML decision (if debug enabled)
+				if (battle_config.ml_debug_logging) {
+					ShowInfo("[ML-AI] Mob %d (%s): Action %d, Confidence %.2f, Latency %lldms, Cache %s\n",
+					         md->id, md->db->name.c_str(),
+					         (int)decision.action,
+					         decision.confidence,
+					         (long long)decision.latency.count(),
+					         decision.from_cache ? "HIT" : "MISS");
+				}
+				
+				// ML decision executed successfully, skip traditional AI
+				return true;
+			}
+		}
+		
+		// If ML failed or returned TRADITIONAL_AI, fall through to traditional logic
+		if (!decision.success && battle_config.ml_debug_logging) {
+			ShowWarning("[ML-AI] Mob %d (%s): ML failed (%s), using traditional AI\n",
+			           md->id, md->db->name.c_str(), decision.error_message.c_str());
+		}
+	}
+	// ============================================================
+	// END ML DECISION GATE
+	// ============================================================
 
 	// Before a monster processes its AI, it will check for a skill
 	// It it uses a skill it will not process its AI further until the next interval

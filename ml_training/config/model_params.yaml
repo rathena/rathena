@@ -1,0 +1,298 @@
+# ML Monster AI - Model Parameters Configuration
+# Enhanced ML Monster AI System v2.0
+#
+# Detailed hyperparameters for all 9 model types
+
+models:
+  combat_dqn:
+    architecture: "resnet_dueling_dqn"
+    state_dim: 64
+    action_dim: 10
+    hidden_dims: [1024, 1024, 512, 512, 256, 256, 128, 128, 64, 64]
+    dropout: 0.2
+    use_dueling: true
+    
+    # Training
+    optimizer: "adam"
+    learning_rate: 0.0001
+    weight_decay: 0.0001
+    
+    # DQN-specific
+    gamma: 0.99
+    epsilon_start: 1.0
+    epsilon_end: 0.05
+    epsilon_decay: 0.9995
+    double_dqn: true
+    
+    # Replay buffer
+    buffer_size: 200000
+    batch_size: 256
+    prioritized: true
+    alpha: 0.6
+    beta: 0.4
+    n_step: 5
+    
+    # Target network
+    target_update_frequency: 1000
+    tau: 0.001
+    
+    # Size estimate
+    parameters: 20000000
+    fp16_size_mb: 40
+    fp32_size_mb: 80
+
+  movement_ppo:
+    architecture: "deep_actor_critic"
+    state_dim: 64
+    action_dim: 10
+    hidden_dim: 512
+    shared_layers: 6
+    head_layers: 3
+    dropout: 0.1
+    
+    # Training
+    optimizer: "adam"
+    learning_rate: 0.00003
+    weight_decay: 0.0001
+    
+    # PPO-specific
+    clip_epsilon: 0.2
+    gae_lambda: 0.97
+    gamma: 0.995
+    value_loss_coef: 0.5
+    entropy_coef: 0.01
+    max_grad_norm: 1.0
+    normalize_advantages: true
+    
+    # Rollout
+    n_steps: 4096
+    n_epochs: 15
+    batch_size: 128
+    minibatch_size: 32
+    
+    # Size estimate
+    parameters: 50000000
+    fp16_size_mb: 100
+    fp32_size_mb: 200
+
+  skill_dqn:
+    architecture: "skill_embedding_dqn"
+    state_dim: 64
+    num_skills: 20
+    embedding_dim: 32
+    action_dim: 10
+    hidden_dims: [512, 256, 128]
+    dropout: 0.2
+    
+    # Training
+    optimizer: "adam"
+    learning_rate: 0.0001
+    
+    # DQN parameters
+    gamma: 0.99
+    epsilon_start: 0.8
+    epsilon_end: 0.05
+    epsilon_decay: 0.995
+    
+    # Size estimate
+    parameters: 5000000
+    fp16_size_mb: 10
+    fp32_size_mb: 20
+
+  threat_assessment:
+    architecture: "ensemble"
+    state_dim: 64
+    hidden_dim: 256
+    output_dim: 1
+    num_networks: 3
+    
+    # Training
+    optimizer: "adam"
+    learning_rate: 0.001
+    
+    # Size estimate
+    parameters: 2500000
+    fp16_size_mb: 5
+    fp32_size_mb: 10
+
+  team_coordination:
+    architecture: "multi_head_lstm_attention"
+    state_dim: 64
+    sequence_length: 10
+    hidden_dim: 256
+    num_layers: 3
+    bidirectional: true
+    attention_heads: 8
+    dropout: 0.2
+    action_dim: 10
+    
+    # Training
+    optimizer: "adam"
+    learning_rate: 0.0001
+    
+    # Multi-agent
+    team_reward_weight: 0.4
+    individual_reward_weight: 0.6
+    
+    # Size estimate
+    parameters: 25000000
+    fp16_size_mb: 50
+    fp32_size_mb: 100
+
+  spatial_vit:
+    architecture: "vision_transformer"
+    state_dim: 64
+    patch_size: 8
+    embed_dim: 192
+    depth: 12
+    num_heads: 3
+    mlp_ratio: 4
+    dropout: 0.1
+    action_dim: 10
+    
+    # Training
+    optimizer: "adamw"
+    learning_rate: 0.0003
+    weight_decay: 0.05
+    warmup_steps: 1000
+    
+    # Size estimate
+    parameters: 45000000
+    fp16_size_mb: 90
+    fp32_size_mb: 180
+
+  temporal_transformer:
+    architecture: "transformer_xl"
+    state_dim: 64
+    d_model: 256
+    nhead: 8
+    num_layers: 4
+    dropout: 0.1
+    max_seq_len: 500
+    action_dim: 10
+    
+    # Training
+    optimizer: "adamw"
+    learning_rate: 0.0001
+    weight_decay: 0.01
+    warmup_steps: 2000
+    
+    # Size estimate
+    parameters: 50000000
+    fp16_size_mb: 100
+    fp32_size_mb: 200
+
+  pattern_recognition:
+    architecture: "pattern_recognition_transformer"
+    state_dim: 64
+    d_model: 512
+    nhead: 16
+    num_layers: 6
+    dropout: 0.1
+    max_seq_len: 100
+    action_dim: 10
+    
+    # Training
+    optimizer: "adamw"
+    learning_rate: 0.0001
+    weight_decay: 0.1
+    warmup_steps: 5000
+    
+    # Size estimate
+    parameters: 125000000
+    fp16_size_mb: 250
+    fp32_size_mb: 500
+
+  soft_actor_critic:
+    architecture: "soft_actor_critic"
+    state_dim: 64
+    action_dim: 10
+    hidden_dim: 256
+    num_layers: 3
+    
+    # Training
+    actor_lr: 0.0003
+    critic_lr: 0.0003
+    alpha_lr: 0.0003
+    
+    # SAC-specific
+    gamma: 0.99
+    tau: 0.005
+    alpha: 0.2
+    target_entropy: -10
+    auto_alpha: true
+    
+    # Replay
+    buffer_size: 100000
+    batch_size: 256
+    
+    # Size estimate
+    parameters: 15000000
+    fp16_size_mb: 30
+    fp32_size_mb: 60
+
+# Total resource allocation
+resource_allocation:
+  total_models: 54  # 6 archetypes × 9 models
+  
+  # VRAM allocation (FP16)
+  inference_vram_gb: 6.0
+  training_vram_gb: 4.0
+  safety_margin_gb: 2.0
+  total_vram_target_gb: 11.0
+  
+  # Model sizes (FP16, per archetype)
+  vit_mb: 90
+  transformer_xl_mb: 100
+  pattern_transformer_mb: 250
+  combat_dqn_mb: 40
+  movement_ppo_mb: 100
+  lstm_mb: 50
+  sac_mb: 30
+  skill_dqn_mb: 10
+  threat_assessment_mb: 5
+  
+  # Total per archetype: 675 MB
+  # Total for 6 archetypes: 4050 MB ≈ 4 GB
+  # With inference buffers: 6 GB
+  # With training: 10 GB
+  # With safety margin: 12 GB (within RTX 3060 12GB limit)
+
+# Training strategies
+strategies:
+  # Warm start with supervised learning
+  warm_start:
+    enabled: true
+    supervised_epochs: 10
+    data_source: "traditional_ai_recordings"
+  
+  # Fine-tuning after warm start
+  fine_tuning:
+    enabled: true
+    rl_epochs: 90
+    exploration_decay: true
+  
+  # Continuous learning
+  continuous:
+    enabled: false  # Enable in production
+    update_frequency: "hourly"
+    min_new_experiences: 1000
+    
+  # Transfer learning
+  transfer:
+    enabled: false
+    source_archetype: null
+    target_archetype: null
+    freeze_layers: []  # Which layers to freeze
+
+# Production deployment
+production:
+  inference_only: false  # Set true to disable training
+  continuous_training: false  # Background training
+  hot_reload: true  # Hot reload updated models
+  fallback_enabled: true  # Enable 5-level fallback
+  
+  # Performance targets
+  target_latency_ms: 15
+  target_throughput: 10000  # inferences/sec
+  target_vram_gb: 11.0

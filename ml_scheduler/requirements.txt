@@ -1,0 +1,21 @@
+# ML Training Scheduler Dependencies
+
+# Database drivers
+aiomysql>=0.2.0
+asyncpg>=0.29.0
+
+# Data processing
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Configuration
+PyYAML>=6.0
+
+# System monitoring
+psutil>=5.9.0
+
+# Async support
+asyncio-mqtt>=0.16.0  # Optional: for real-time monitoring
+
+# Logging (standard library, but listing for completeness)
+# logging - built-in

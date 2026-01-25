@@ -266,6 +266,20 @@ BUILDIN_FUNC(ai_db_status);
 BUILDIN_FUNC(ai_db_cancel);
 
 /**
+ * ai_db_cleanup(age_seconds)
+ *
+ * Admin command to cleanup old completed/failed/timeout/cancelled requests and responses.
+ *
+ * @param age_seconds Optional age threshold in seconds (default: 3600, min: 60, max: 2592000)
+ * @return Number of records deleted
+ *
+ * Script usage:
+ *   .@deleted = ai_db_cleanup(3600);  // Clean up records older than 1 hour
+ *   .@deleted = ai_db_cleanup();       // Clean up records older than default (1 hour)
+ */
+BUILDIN_FUNC(ai_db_cleanup);
+
+/**
  * httpget(url)
  *
  * HTTP GET via database IPC with NON-BLOCKING implementation.

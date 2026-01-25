@@ -1,0 +1,87 @@
+# ML Training Scheduler Configuration
+# Automated training with usage pattern analysis
+
+database:
+  # MariaDB (Game Data - for player counts and activity)
+  mariadb_host: 192.168.0.100
+  mariadb_port: 3306
+  mariadb_database: ragnarok
+  mariadb_user: ragnarok
+  mariadb_password: ragnarok
+  
+  # PostgreSQL (ML Data - for system metrics) - Optional
+  postgres_host: localhost
+  postgres_port: 5432
+  postgres_database: ragnarok_ml
+  postgres_user: ml_user
+  postgres_password: ml_secure_password_2026
+
+training:
+  # Training parameters
+  archetypes: all  # 'all' or space-separated: 'aggressive defensive support mage tank ranged'
+  epochs: 50       # Reduced for weekly incremental training (from typical 100)
+  batch_size: 256
+  learning_rate: 0.0003
+  
+  # Resource limits (defer training if exceeded BEFORE starting)
+  max_cpu_before_training: 30      # percent - do not start if CPU > this
+  max_memory_before_training: 70   # percent - do not start if Memory > this
+  max_gpu_memory_before_training: 1024  # MB - do not start if GPU Memory > this
+  
+  # Resource limits (pause training if exceeded DURING training)
+  pause_threshold_cpu: 80          # percent - pause training if CPU > this
+  pause_threshold_memory: 90       # percent - pause training if Memory > this
+  
+  # Monitoring
+  monitor_interval_seconds: 30     # Check resources every 30 seconds during training
+  
+  # Deployment
+  auto_deploy: true                # Automatically deploy models after successful training
+  rollback_on_failure: true        # Rollback to backup models if deployment fails
+
+scheduling:
+  # Time window configuration
+  window_hours: 8                  # Duration of training window (hours)
+  top_n_windows: 3                 # Number of best off-peak windows to identify
+  
+  # Preferred schedule (used by systemd timer)
+  preferred_day: 6                 # Day of week: 0=Monday, 6=Sunday
+  preferred_start_hour: 3          # Hour of day (24-hour format): 3 = 3:00 AM
+  
+  # Safety overrides
+  force_training: false            # DANGEROUS: Skip time window check (use only for testing/emergency)
+
+analysis:
+  # Historical data analysis
+  history_days: 30                 # Days of history to analyze for pattern detection
+  min_data_points: 100             # Minimum data points required for reliable analysis
+  
+  # Usage scoring weights (used to calculate off-peak windows)
+  # Formula: score = player_count * weight_players + cpu * weight_cpu + memory * weight_memory + monsters * weight_monsters
+  weight_players: 2.0              # Player count is most important (highest weight)
+  weight_cpu: 0.5
+  weight_memory: 0.3
+  weight_monsters: 0.2
+
+paths:
+  # File system paths (should match deployment)
+  ml_root: /opt/ml_monster_ai
+  training_scripts: /home/lot399/RagnarokOnlineServer/rathena-AI-world/ml_training
+  models_dir: /opt/ml_monster_ai/models
+  logs_dir: /opt/ml_monster_ai/logs
+  backup_dir: /opt/ml_monster_ai/models_backup
+  venv_python: /opt/ml_monster_ai/venv/bin/python
+
+logging:
+  level: INFO                      # DEBUG, INFO, WARNING, ERROR
+  file: /opt/ml_monster_ai/logs/scheduler.log
+  max_bytes: 104857600             # 100 MB
+  backup_count: 10
+
+# Notes:
+# - This configuration is used by scheduler_main.py
+# - Systemd timer controls WHEN the scheduler runs (e.g., weekly)
+# - Once triggered, scheduler analyzes patterns and decides if NOW is off-peak
+# - Training only starts if: (1) in off-peak window OR force_training=true, AND (2) resources available
+# - During training, resources are monitored and training paused if thresholds exceeded
+# - After training, models are automatically exported to ONNX and deployed (if auto_deploy=true)

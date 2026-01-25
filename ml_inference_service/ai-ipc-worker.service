@@ -1,0 +1,47 @@
+[Unit]
+Description=AI IPC Worker Service - Database-based IPC for NPC-AI Communication
+Documentation=https://github.com/iskandarsulaili/rathena-AI-world
+After=network.target mariadb.service
+Wants=mariadb.service
+
+[Service]
+Type=simple
+User=ml_user
+Group=ml_user
+WorkingDirectory=/opt/ml_monster_ai/inference_service
+
+# Environment variables
+Environment="PYTHONUNBUFFERED=1"
+Environment="DB_HOST=192.168.0.100"
+Environment="DB_PORT=3306"
+Environment="DB_NAME=ragnarok"
+Environment="DB_USER=ragnarok"
+EnvironmentFile=-/opt/ml_monster_ai/inference_service/.env
+
+# Main command
+ExecStart=/opt/ml_monster_ai/venv/bin/python3 ai_ipc_worker.py
+
+# Restart policy
+Restart=always
+RestartSec=5
+StartLimitInterval=300
+StartLimitBurst=5
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=32768
+
+# Security hardening
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ml_monster_ai/logs
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ai-ipc-worker
+
+[Install]
+WantedBy=multi-user.target

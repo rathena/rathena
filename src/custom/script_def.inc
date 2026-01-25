@@ -22,6 +22,7 @@ BUILDIN_DEF(ai_db_response,"i"),      // ai_db_response(request_id) -> response_
 BUILDIN_DEF(ai_db_wait,"ii"),         // ai_db_wait(request_id, timeout_ms) -> response_json
 BUILDIN_DEF(ai_db_status,"i"),        // ai_db_status(request_id) -> status_code
 BUILDIN_DEF(ai_db_cancel,"i"),        // ai_db_cancel(request_id) -> success
+BUILDIN_DEF(ai_db_cleanup,"i?"),      // ai_db_cleanup({age_seconds}) -> deleted_count
 
 // HTTP Compatibility Wrappers (use AI IPC internally, NON-BLOCKING)
 BUILDIN_DEF(httpget,"s"),             // httpget(url) -> response (non-blocking via timer)

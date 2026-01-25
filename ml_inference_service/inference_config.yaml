@@ -1,0 +1,122 @@
+# ML Inference Service Configuration
+# Phase 12 - ML Monster AI System v2.0
+
+models:
+  directory: "/opt/ml_monster_ai/models"
+  format: "onnx"
+  precision: "fp16"  # fp16, int8, or fp32
+  
+  # 6 Monster archetypes
+  archetypes:
+    - aggressive
+    - defensive
+    - support
+    - mage
+    - tank
+    - ranged
+  
+  # 9 Model types per archetype = 54 total models
+  types:
+    - combat_dqn
+    - movement_ppo
+    - skill_dqn
+    - threat_assessment
+    - team_coordination
+    - spatial_vit
+    - temporal_transformer
+    - pattern_recognition
+    - soft_actor_critic
+
+inference:
+  batch_size: 128  # Maximum monsters per batch
+  poll_interval_ms: 10  # Poll PostgreSQL every 10ms
+  max_latency_ms: 15  # Target latency threshold
+  timeout_ms: 100  # Max time to wait for inference
+  primary_model: "combat_dqn"  # Primary model for single-model mode
+
+hardware:
+  device: "cuda:0"  # cuda:0, cuda:1, or cpu
+  max_vram_gb: 6.0  # Maximum VRAM allocation for inference
+  use_tensorrt: false  # Enable TensorRT optimization (optional)
+  num_workers: 4  # Number of async workers
+  cpu_threads: 16  # CPU threads for CPU inference
+
+database:
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "ragnarok_ml"
+    user: "ml_user"
+    password: "${ML_DB_PASSWORD}"  # Set via environment variable
+    min_pool_size: 10
+    max_pool_size: 20
+    command_timeout: 60  # seconds
+    
+  redis:
+    host: "localhost"
+    port: 6379
+    password: "${REDIS_PASSWORD}"  # Set via environment variable
+    db: 0
+    socket_timeout: 5
+  
+  # MariaDB for AI IPC (game database)
+  mariadb:
+    host: "192.168.0.100"  # Game database server
+    port: 3306
+    database: "ragnarok"
+    user: "${DB_USER}"  # Set via environment variable
+    password: "${DB_PASSWORD}"  # Set via environment variable
+    min_pool_size: 5
+    max_pool_size: 20
+    charset: "utf8mb4"
+
+ipc_worker:
+  enabled: true
+  poll_interval_ms: 100  # Poll every 100ms
+  batch_size: 10  # Process 10 requests per batch
+  max_processing_time: 5000  # Max 5 seconds per request
+  cleanup_interval: 60  # Cleanup every 60 seconds
+  timeout_seconds: 30  # Mark requests as timeout after 30s
+  ai_service_base_url: "http://127.0.0.1:8000"  # AI Autonomous World service
+  ai_service_timeout: 10  # HTTP timeout for AI service requests
+
+graph:
+  enabled: true
+  graph_name: "monster_ai"
+  use_for_coordination: true
+  use_for_spatial: true
+  use_for_threat_tracking: true
+  cache_duration: 5  # seconds - cache graph query results
+  max_query_depth: 3  # maximum depth for path traversals
+  retry_attempts: 3
+  retry_delay: 0.1  # seconds, with exponential backoff
+  query_timeout: 10  # seconds
+
+caching:
+  enabled: true
+  l2_ttl_seconds: 10  # L2 action cache TTL
+  l3_ttl_seconds: 10  # L3 model output cache TTL
+  max_cache_size_mb: 4096  # 4GB Redis allocation
+
+fallback:
+  enabled: true
+  max_consecutive_errors: 3  # Escalate after 3 consecutive errors
+  recovery_check_interval_seconds: 60  # Check recovery every 60s
+  auto_recovery: true  # Automatically recover to better levels
+
+monitoring:
+  prometheus_port: 9091  # Prometheus metrics endpoint (changed from 9090 to avoid conflicts)
+  metrics_enabled: true
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+
+http_server:
+  port: 8082  # HTTP API for hot reload and health checks (changed from 8080 to avoid conflicts)
+  host: "localhost"
+  enabled: true
+
+logging:
+  level: "INFO"
+  format: "json"  # json or text
+  file: "/opt/ml_monster_ai/logs/inference_service.log"
+  max_bytes: 104857600  # 100MB
+  backup_count: 10

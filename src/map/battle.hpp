@@ -781,6 +781,13 @@ struct Battle_Config
 	int32 enable_bonus_map_drops;
 	int32 hide_cloaked_units;
 
+	// ML Monster AI Configuration
+	int32 ml_monster_ai_enabled;        // Enable ML monster AI (0=off, 1=on)
+	int32 ml_debug_logging;             // Enable verbose ML logging
+	int32 ml_cache_enabled;             // Enable Redis caching
+	int32 ml_max_latency_ms;            // Maximum ML latency before fallback (default 15ms)
+	int32 ml_health_check_interval;     // Health check interval in ticks (default 100)
+
 #include <custom/battle_config_struct.inc>
 };
 

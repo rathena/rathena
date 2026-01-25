@@ -1,0 +1,33 @@
+# ML Inference Service Dependencies
+# Phase 12 - ML Monster AI System v2.0
+# Python 3.11+
+
+# Core ML dependencies
+torch>=2.5.1
+onnxruntime-gpu>=1.19.0  # GPU version with TensorRT support
+numpy>=1.26.0
+
+# Database drivers
+asyncpg>=0.29.0  # PostgreSQL async driver (supports Apache AGE Cypher queries)
+psycopg2-binary>=2.9.9  # PostgreSQL driver for AGE native operations
+aiomysql>=0.2.0  # MySQL/MariaDB async driver for AI IPC worker
+redis>=5.0.1  # Redis/DragonFlyDB client
+
+# HTTP client for AI IPC worker
+aiohttp>=3.9.0  # Async HTTP client for AI service communication
+
+# Monitoring & Metrics
+prometheus-client>=0.19.0
+
+# System utilities
+psutil>=5.9.8  # System and process utilities
+
+# Configuration
+PyYAML>=6.0.1
+
+# Optional: For TensorRT support (NVIDIA GPUs)
+nvidia-tensorrt>=8.6.0
+
+# Development/Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0

@@ -1,0 +1,42 @@
+[Unit]
+Description=ML Model Training Scheduler Service
+After=network.target postgresql.service mariadb.service redis.service
+Wants=postgresql.service mariadb.service
+
+[Service]
+Type=oneshot
+User=ml_user
+Group=ml_user
+WorkingDirectory=/home/lot399/RagnarokOnlineServer/rathena-AI-world/ml_scheduler
+
+# Environment
+Environment="PATH=/opt/ml_monster_ai/venv/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="PYTHONUNBUFFERED=1"
+Environment="CUDA_VISIBLE_DEVICES=0"
+
+# Main execution
+ExecStart=/opt/ml_monster_ai/venv/bin/python scheduler_main.py --config /opt/ml_monster_ai/configs/scheduler_config.yaml
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ml-training-scheduler
+
+# Resource limits
+CPUQuota=80%
+MemoryLimit=12G
+
+# Restart policy (don't restart on success, restart on failure)
+Restart=on-failure
+RestartSec=60
+
+# Timeout (allow up to 24 hours for training)
+TimeoutStartSec=0
+TimeoutStopSec=300
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

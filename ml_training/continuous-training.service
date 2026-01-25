@@ -1,0 +1,60 @@
+[Unit]
+Description=Continuous ML Training Service for Monster AI
+Documentation=file:///opt/ml_monster_ai/training/CONTINUOUS_TRAINING.md
+After=network.target postgresql.service ml-inference.service
+Requires=postgresql.service
+Wants=ml-inference.service
+
+[Service]
+Type=simple
+User=ml_user
+Group=ml_user
+WorkingDirectory=/opt/ml_monster_ai/training
+
+# Main execution
+ExecStart=/opt/ml_monster_ai/venv/bin/python continuous_training.py --config /opt/ml_monster_ai/configs/continuous_training_config.yaml
+
+# Restart policy
+Restart=always
+RestartSec=30
+StartLimitInterval=300
+StartLimitBurst=5
+
+# Environment
+Environment="CUDA_VISIBLE_DEVICES=0"
+Environment="PYTHONPATH=/opt/ml_monster_ai/training"
+Environment="PYTHONUNBUFFERED=1"
+Environment="OMP_NUM_THREADS=4"
+Environment="MKL_NUM_THREADS=4"
+
+# Resource limits
+# Limit CPU to 30% to leave resources for inference
+CPUQuota=30%
+# Memory limit (8GB for training)
+MemoryLimit=8G
+# Allow VRAM usage (managed by application)
+DeviceAllow=/dev/nvidia0 rw
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/ml_monster_ai/data /opt/ml_monster_ai/models /opt/ml_monster_ai/logs
+
+# Process management
+TimeoutStartSec=120
+TimeoutStopSec=60
+KillMode=mixed
+KillSignal=SIGTERM
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=ml-continuous-training
+
+# Nice level (lower priority than inference)
+Nice=5
+
+[Install]
+WantedBy=multi-user.target
