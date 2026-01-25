@@ -19,6 +19,7 @@
 
 #include "cruelbite.hpp"
 #include "cuttingwind.hpp"
+#include "earthflower.hpp"
 #include "flickingtornado.hpp"
 #include "hunger.hpp"
 #include "icetotem.hpp"
@@ -700,10 +701,9 @@ public:
 					}
 					return;
 				}
-				case DR_EARTH_FLOWER:
 				case KR_EARTH_DRILL: {
 					skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
-					if (!(flag & 1) && getSkillId() == KR_EARTH_DRILL) {
+					if (!(flag & 1)) {
 						try_gain_growth_stacks(src, tick, getSkillId());
 					}
 					return;
@@ -1219,7 +1219,6 @@ public:
 					}
 					base_skillratio += -100 + skillratio;
 					break;
-				case DR_EARTH_FLOWER:
 				case DR_AROUND_FLOWER:
 					skillratio = 100 * skill_lv;
 					if (sc && sc->getSCE(SC_TRUTH_OF_EARTH)) {
@@ -1419,7 +1418,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_CUTTING_WIND:
 			return std::make_unique<SkillCuttingWind>();
 		case DR_EARTH_FLOWER:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillEarthFlower>();
 		case DR_ENRAGE_WOLF:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DR_ENRAGE_RAPTOR:
