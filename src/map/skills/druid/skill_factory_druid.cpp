@@ -25,6 +25,7 @@
 #include "earthflower.hpp"
 #include "feathersprinkle.hpp"
 #include "flickingtornado.hpp"
+#include "groundbloom.hpp"
 #include "hunger.hpp"
 #include "icecloud.hpp"
 #include "icepillar.hpp"
@@ -701,7 +702,6 @@ public:
 					}
 					sc_start(src, target, SC_ZEPHYR_LINK, 100, 0, skill_get_time(getSkillId(), skill_lv));
 					return;
-				case KR_GROUND_BLOOM:
 				case AT_FERAL_CLAW:
 				case AT_ALPHA_CLAW:
 				case AT_GLACIER_STOMP:
@@ -863,15 +863,6 @@ public:
 				}
 				case KR_EARTH_STAMP: {
 					skillratio = 1000 + 70 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					return;
-				}
-				case KR_GROUND_BLOOM: {
-					skillratio = 6000 + 2000 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
@@ -1062,7 +1053,6 @@ public:
 				case KR_TYPHOON_WING:
 				case KR_ICE_SPLASH:
 				case KR_EARTH_STAMP:
-				case KR_GROUND_BLOOM:
 				case AT_ROARING_PIERCER_S:
 				case AT_ROARING_CHARGE_S:
 				case AT_GLACIER_MONOLITH:
@@ -1241,7 +1231,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_FEATHER_SPRINKLE:
 			return std::make_unique<SkillFeatherSprinkle>();
 		case KR_GROUND_BLOOM:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillGroundBloom>();
 		case KR_ICE_PILLAR:
 			return std::make_unique<SkillIcePillar>();
 		case KR_ICE_SPLASH:
