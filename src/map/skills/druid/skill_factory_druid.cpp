@@ -1608,39 +1608,66 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_WIND_VEIL:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
-		
-		case AT_ALPHA_PHASE:
-		case AT_PULSE_OF_MADNESS:
-		case AT_FLIP_FLAP:
-		case AT_APEX_PHASE:
-		case AT_NATURE_HARMONY:
-			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+
 		case AT_AERO_SYNC:
 			return std::make_unique<SkillAliteaAeroSyncImpl>();
-		case AT_PRIMAL_CLAW:
-		case AT_FERAL_CLAW:
 		case AT_ALPHA_CLAW:
-		case AT_SAVAGE_LUNGE:
-		case AT_FRENZY_FANG:
-		case AT_PINION_SHOT:
-		case AT_ZEPHYR_LINK:
-		case AT_QUILL_SPEAR:
-		case AT_QUILL_SPEAR_S:
-		case AT_TEMPEST_FLAP:
-		case AT_GLACIER_MONOLITH:
-		case AT_GLACIER_NOVA:
-		case AT_GLACIER_SHARD:
-		case AT_GLACIER_STOMP:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_ALPHA_PHASE:
+			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+		case AT_APEX_PHASE:
+			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case AT_CHILLING_BLAST:
-		case AT_ROARING_PIERCER:
-		case AT_ROARING_PIERCER_S:
-		case AT_ROARING_CHARGE:
-		case AT_ROARING_CHARGE_S:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_FERAL_CLAW:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_FLIP_FLAP:
+			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+		case AT_FRENZY_FANG:
+			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_FURIOS_STORM:
-		case AT_TERRA_WAVE:
-		case AT_TERRA_HARVEST:
-		case AT_SOLID_STOMP:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_GLACIER_MONOLITH:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_GLACIER_NOVA:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_GLACIER_SHARD:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_GLACIER_STOMP:
+			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_GRAVITY_HOLE:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_NATURE_HARMONY:
+			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+		case AT_PINION_SHOT:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_PRIMAL_CLAW:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_PULSE_OF_MADNESS:
+			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+		case AT_QUILL_SPEAR:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_QUILL_SPEAR_S:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_ROARING_CHARGE:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_ROARING_CHARGE_S:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_ROARING_PIERCER:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_ROARING_PIERCER_S:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_SAVAGE_LUNGE:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_SOLID_STOMP:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_TEMPEST_FLAP:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_TERRA_HARVEST:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_TERRA_WAVE:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case AT_ZEPHYR_LINK:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		default:
 			return nullptr;
