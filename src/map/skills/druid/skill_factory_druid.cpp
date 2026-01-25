@@ -22,6 +22,7 @@
 #include "clawwave.hpp"
 #include "cruelbite.hpp"
 #include "cuttingwind.hpp"
+#include "doubleslash.hpp"
 #include "earthdrill.hpp"
 #include "earthflower.hpp"
 #include "feathersprinkle.hpp"
@@ -813,16 +814,6 @@ public:
 			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
-				case KR_DOUBLE_SLASH: {
-					skillratio = 1200 + 80 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_ENRAGE_WOLF)) {
-						skillratio += 400;
-					}
-					skillratio += sstatus->str; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					return;
-				}
 				case KR_SHARPEN_HAIL: {
 					skillratio = 640 + 40 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
@@ -1038,7 +1029,6 @@ public:
 				case AT_TEMPEST_FLAP:
 				case AT_QUILL_SPEAR_S:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
-				case KR_DOUBLE_SLASH:
 				case KR_SHARPEN_HAIL:
 				case KR_TYPHOON_WING:
 				case KR_ICE_SPLASH:
@@ -1213,7 +1203,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_CLAW_WAVE:
 			return std::make_unique<SkillClawWave>();
 		case KR_DOUBLE_SLASH:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillDoubleSlash>();
 		case KR_EARTH_DRILL:
 			return std::make_unique<SkillEarthDrill>();
 		case KR_EARTH_STAMP:

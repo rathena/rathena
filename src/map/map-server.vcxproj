@@ -296,6 +296,7 @@
     <ClInclude Include="skills/druid/clawwave.hpp" />
     <ClInclude Include="skills/druid/cruelbite.hpp" />
     <ClInclude Include="skills/druid/cuttingwind.hpp" />
+    <ClInclude Include="skills/druid/doubleslash.hpp" />
     <ClInclude Include="skills/druid/earthdrill.hpp" />
     <ClInclude Include="skills/druid/earthflower.hpp" />
     <ClInclude Include="skills/druid/feathersprinkle.hpp" />
@@ -604,6 +605,7 @@
     <ClCompile Include="skills/druid/clawwave.cpp" />
     <ClCompile Include="skills/druid/cruelbite.cpp" />
     <ClCompile Include="skills/druid/cuttingwind.cpp" />
+    <ClCompile Include="skills/druid/doubleslash.cpp" />
     <ClCompile Include="skills/druid/earthdrill.cpp" />
     <ClCompile Include="skills/druid/earthflower.cpp" />
     <ClCompile Include="skills/druid/feathersprinkle.cpp" />
