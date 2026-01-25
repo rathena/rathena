@@ -30,6 +30,7 @@
 #include "shootingfeather.hpp"
 #include "transformationbeast.hpp"
 #include "transformationraptor.hpp"
+#include "truthofearth.hpp"
 #include "windbomb.hpp"
 
 namespace {
@@ -1409,7 +1410,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_SHOOTING_FEATHER:
 			return std::make_unique<SkillShootingFeather>();
 		case DR_TRUTH_OF_EARTH:
-			return std::make_unique<SkillDruidTruthImpl>(skill_id);
+			return std::make_unique<SkillTruthOfEarth>();
 		case DR_TRUTH_OF_ICE:
 			return std::make_unique<SkillDruidTruthImpl>(skill_id);
 		case DR_TRUTH_OF_WIND:
@@ -1526,6 +1527,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_ZEPHYR_LINK:
 			return std::make_unique<SkillDruidImpl>(skill_id);
+
 		default:
 			return nullptr;
 	}
