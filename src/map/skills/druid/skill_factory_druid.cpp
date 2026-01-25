@@ -25,6 +25,7 @@
 #include "hunger.hpp"
 #include "icetotem.hpp"
 #include "lowflight.hpp"
+#include "nomercyclaw.hpp"
 #include "shootingfeather.hpp"
 #include "transformationbeast.hpp"
 #include "transformationraptor.hpp"
@@ -740,7 +741,6 @@ public:
 					}
 					sc_start(src, target, SC_ZEPHYR_LINK, 100, 0, skill_get_time(getSkillId(), skill_lv));
 					return;
-				case DR_NOMERCY_CLAW:
 				case KR_CHOP_CHOP:
 				case KR_FEATHER_SPRINKLE:
 				case KR_THUNDERING_FOCUS:
@@ -1192,16 +1192,6 @@ public:
 					skillratio = 9800 + 800 * (skill_lv - 1);
 					base_skillratio += -100 + skillratio;
 					break;
-
-				case DR_NOMERCY_CLAW:
-					skillratio = 80 * skill_lv;
-					if (sc && sc->getSCE(SC_ENRAGE_WOLF)) {
-						skillratio += 40 * skill_lv;
-					}
-					skillratio += sstatus->str; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case DR_ICE_CLOUD:
 					skillratio = 50 * skill_lv;
 					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
@@ -1427,7 +1417,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_NATURE_SHIELD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DR_NOMERCY_CLAW:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillNoMercyClaw>();
 		case DR_PREENING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DR_SHOOTING_FEATHER:
