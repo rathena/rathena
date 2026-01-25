@@ -34,6 +34,7 @@
 #include "nomercyclaw.hpp"
 #include "sharpengust.hpp"
 #include "shootingfeather.hpp"
+#include "thunderingcall.hpp"
 #include "thunderingfocus.hpp"
 #include "thunderingorb.hpp"
 #include "transformationbeast.hpp"
@@ -860,24 +861,6 @@ public:
 					base_skillratio += -100 + skillratio;
 					return;
 				}
-				case KR_THUNDERING_CALL: {
-					skillratio = 5200 + 200 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					return;
-				}
-				case KR_THUNDERING_CALL_S: {
-					skillratio = 9500 + 500 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					return;
-				}
 				case KR_EARTH_STAMP: {
 					skillratio = 1000 + 70 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
@@ -1054,7 +1037,6 @@ public:
 
 		int64 splashDamage(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const override {
 			switch (getSkillId()) {
-				case KR_THUNDERING_CALL:
 				case AT_ROARING_PIERCER:
 				case AT_ROARING_CHARGE: {
 					e_skill actual_skill = getSkillId();
@@ -1079,7 +1061,6 @@ public:
 				case KR_SHARPEN_HAIL:
 				case KR_TYPHOON_WING:
 				case KR_ICE_SPLASH:
-				case KR_THUNDERING_CALL_S:
 				case KR_EARTH_STAMP:
 				case KR_GROUND_BLOOM:
 				case AT_ROARING_PIERCER_S:
@@ -1276,9 +1257,9 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_SHARPEN_HAIL:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_THUNDERING_CALL:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillThunderingCall>();
 		case KR_THUNDERING_CALL_S:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillThunderingCallS>();
 		case KR_THUNDERING_FOCUS:
 			return std::make_unique<SkillThunderingFocus>();
 		case KR_THUNDERING_FOCUS_S:
