@@ -292,6 +292,7 @@
     <ClInclude Include="skills/archer/windwalker.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
     <ClInclude Include="skills/druid/aroundflower.hpp" />
+    <ClInclude Include="skills/druid/chopchop.hpp" />
     <ClInclude Include="skills/druid/cruelbite.hpp" />
     <ClInclude Include="skills/druid/cuttingwind.hpp" />
     <ClInclude Include="skills/druid/earthdrill.hpp" />
@@ -593,6 +594,7 @@
     <ClCompile Include="skills/archer/windwalker.cpp" />
     <ClCompile Include="skills/custom/skill_factory_custom.cpp" />
     <ClCompile Include="skills/druid/aroundflower.cpp" />
+    <ClCompile Include="skills/druid/chopchop.cpp" />
     <ClCompile Include="skills/druid/cruelbite.cpp" />
     <ClCompile Include="skills/druid/cuttingwind.cpp" />
     <ClCompile Include="skills/druid/earthdrill.cpp" />
