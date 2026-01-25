@@ -33,7 +33,7 @@ void SkillCruelBite::calculateSkillRatio(const Damage* wd, const block_list* src
 	const status_data* sstatus = status_get_status_data(*src);
 
 	int32 skillratio = 60 * skill_lv;
-	if (sc && sc->getSCE(SC_ENRAGE_WOLF)) {
+	if (sc && sc->hasSCE(SC_ENRAGE_WOLF)) {
 		skillratio += 20 * skill_lv;
 	}
 	skillratio += sstatus->str; // TODO - unknown scaling [munkrej]

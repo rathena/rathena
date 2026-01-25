@@ -3139,26 +3139,26 @@ static bool is_attack_critical(struct Damage* wd, block_list *src, const block_l
 			case AT_FERAL_CLAW:
 			case AT_ALPHA_CLAW:
 			case AT_SAVAGE_LUNGE:
-			case AT_FRENZY_FANG:
-				if( sc == nullptr ){
-					return false;
-				}
-				if( sc->getSCE( SC_ALPHA_PHASE ) == nullptr && sc->getSCE( SC_INSANE3 ) == nullptr ){
-					return false;
-				}
-				break;
+				case AT_FRENZY_FANG:
+					if( sc == nullptr ){
+						return false;
+					}
+					if( !sc->hasSCE( SC_ALPHA_PHASE ) && !sc->hasSCE( SC_INSANE3 ) ){
+						return false;
+					}
+					break;
 
 			case AT_PINION_SHOT:
 			case AT_QUILL_SPEAR:
 			case AT_QUILL_SPEAR_S:
-			case AT_TEMPEST_FLAP:
-				if( sc == nullptr ){
-					return false;
-				}
-				if( sc->getSCE( SC_APEX_PHASE ) == nullptr){
-					return false;
-				}
-				break;
+				case AT_TEMPEST_FLAP:
+					if( sc == nullptr ){
+						return false;
+					}
+					if( !sc->hasSCE( SC_APEX_PHASE ) ){
+						return false;
+					}
+					break;
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
@@ -4557,15 +4557,15 @@ static void battle_calc_multi_attack(struct Damage* wd, block_list *src,block_li
 				wd->div_ = 2;
 			break;
 		case AT_TEMPEST_FLAP:
-			if (sc && sc->getSCE(SC_APEX_PHASE))
+			if (sc && sc->hasSCE(SC_APEX_PHASE))
 				wd->div_ = 3;
 			break;
 		case DR_CUTTING_WIND:
-			if (sc && sc->getSCE(SC_TRUTH_OF_WIND))
+			if (sc && sc->hasSCE(SC_TRUTH_OF_WIND))
 				wd->div_ = 4;
 			break;
 		case DR_WIND_BOMB:
-			if (sc && sc->getSCE(SC_TRUTH_OF_WIND))
+			if (sc && sc->hasSCE(SC_TRUTH_OF_WIND))
 				wd->div_ = 6;
 			break;
 		case SC_FATALMENACE:
@@ -7419,18 +7419,18 @@ static struct Damage initialize_weapon_data(const block_list* src, const block_l
 #endif
 				}
 				break;
-			case AT_FRENZY_FANG: {
-				int32 hits = 2;
+				case AT_FRENZY_FANG: {
+					int32 hits = 2;
 
-				if (sc) {
-					if (sc->getSCE(SC_ALPHA_PHASE) || sc->getSCE(SC_INSANE3)) {
-						hits = 7;
-					} else if (sc->getSCE(SC_INSANE2)) {
-						hits = 5;
-					} else if (sc->getSCE(SC_INSANE)) {
-						hits = 3;
+					if (sc) {
+						if (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE3)) {
+							hits = 7;
+						} else if (sc->hasSCE(SC_INSANE2)) {
+							hits = 5;
+						} else if (sc->hasSCE(SC_INSANE)) {
+							hits = 3;
+						}
 					}
-				}
 
 				wd.div_ = hits;
 				break;
@@ -8121,11 +8121,11 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 			}
 			break;
 		case DR_CUTTING_WIND:
-			if (sc && sc->getSCE(SC_TRUTH_OF_WIND))
+			if (sc && sc->hasSCE(SC_TRUTH_OF_WIND))
 				ad.div_ = 4;
 			break;
 		case DR_WIND_BOMB:
-			if (sc && sc->getSCE(SC_TRUTH_OF_WIND))
+			if (sc && sc->hasSCE(SC_TRUTH_OF_WIND))
 				ad.div_ = 6;
 			break;
 		case SOA_TALISMAN_OF_FOUR_BEARING_GOD:

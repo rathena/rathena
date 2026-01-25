@@ -13,15 +13,14 @@ SkillTransformationRaptor::SkillTransformationRaptor() : SkillImpl(DR_WERERAPTOR
 void SkillTransformationRaptor::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const {
 	sc_type type = skill_get_sc(getSkillId());
 	status_change *tsc = status_get_sc(target);
-	status_change_entry *tsce = tsc ? tsc->getSCE(type) : nullptr;
 
-	if (tsce) {
+	if (tsc && tsc->hasSCE(type)) {
 		bool ended = status_change_end(target, type);
 		clif_skill_nodamage(src, *target, getSkillId(), skill_lv, ended);
 		return;
 	}
 
-	if (tsc && tsc->getSCE(SC_TRANSFORM_DELAY)) {
+	if (tsc && tsc->hasSCE(SC_TRANSFORM_DELAY)) {
 		map_session_data *sd = BL_CAST(BL_PC, src);
 		if (sd) {
 			clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);

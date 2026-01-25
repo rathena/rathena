@@ -22,7 +22,7 @@ void SkillShootingFeather::calculateSkillRatio(const Damage* wd, const block_lis
 	const status_data* sstatus = status_get_status_data(*src);
 
 	int32 skillratio = 20 * skill_lv;
-	if (sc && sc->getSCE(SC_ENRAGE_RAPTOR)) {
+	if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
 		skillratio += 20 * skill_lv;
 	}
 	skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]

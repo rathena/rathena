@@ -47,13 +47,13 @@ namespace {
 			return 0;
 		}
 
-		if (sc->getSCE(SC_ALPHA_PHASE) || sc->getSCE(SC_INSANE3)) {
+		if (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE3)) {
 			return 3;
 		}
-		if (sc->getSCE(SC_INSANE2)) {
+		if (sc->hasSCE(SC_INSANE2)) {
 			return 2;
 		}
-		if (sc->getSCE(SC_INSANE)) {
+		if (sc->hasSCE(SC_INSANE)) {
 			return 1;
 		}
 
@@ -74,7 +74,7 @@ namespace {
 	}
 
 	e_skill resolve_thundering_charge_skill(const status_change *sc, e_skill skill_id) {
-		if (!sc || !sc->getSCE(SC_THUNDERING_ROD_MAX)) {
+		if (!sc || !sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
 			return skill_id;
 		}
 
@@ -99,7 +99,7 @@ namespace {
 			return skill_id;
 		}
 
-		if (sc && sc->getSCE(SC_APEX_PHASE)) {
+		if (sc && sc->hasSCE(SC_APEX_PHASE)) {
 			return AT_QUILL_SPEAR_S;
 		}
 
@@ -121,18 +121,18 @@ namespace {
 
 		t_tick duration = skill_get_time2(AT_PULSE_OF_MADNESS, pulse->val1);
 
-		if (sc->getSCE(SC_INSANE3)) {
+		if (sc->hasSCE(SC_INSANE3)) {
 			sc_start(src, src, SC_INSANE3, 100, 1, duration);
 			return;
 		}
 
-		if (sc->getSCE(SC_INSANE2)) {
+		if (sc->hasSCE(SC_INSANE2)) {
 			status_change_end(src, SC_INSANE2);
 			sc_start(src, src, SC_INSANE3, 100, 1, duration);
 			return;
 		}
 
-		if (sc->getSCE(SC_INSANE)) {
+		if (sc->hasSCE(SC_INSANE)) {
 			status_change_end(src, SC_INSANE);
 			sc_start(src, src, SC_INSANE2, 100, 1, duration);
 			return;
@@ -143,7 +143,7 @@ namespace {
 
 	void add_thundering_charge(block_list *src, int32 count) {
 		status_change *sc = status_get_sc(src);
-		if (!sc || sc->getSCE(SC_THUNDERING_ROD_MAX) || count <= 0) {
+		if (!sc || sc->hasSCE(SC_THUNDERING_ROD_MAX) || count <= 0) {
 			return;
 		}
 
@@ -164,7 +164,7 @@ namespace {
 			return;
 		}
 
-		if (sc && sc->getSCE(SC_THUNDERING_ROD_MAX)) {
+		if (sc && sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
 			status_change_end(src, SC_THUNDERING_ROD_MAX);
 		} else {
 			add_thundering_charge(src, gain);
@@ -432,7 +432,7 @@ public:
 					if (flag & 1) {
 						SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 					} else {
-						const bool apex = sc && sc->getSCE(SC_APEX_PHASE);
+						const bool apex = sc && sc->hasSCE(SC_APEX_PHASE);
 						const int16 half_width = (apex || getSkillId() == AT_QUILL_SPEAR_S) ? 2 : 1;
 						const int16 half_length = 3;
 						const int32 length = half_length * 2 + 1;
@@ -511,7 +511,7 @@ public:
 				}
 				case AT_FERAL_CLAW: {
 					if (!(flag & 1)) {
-						if (!sc || !sc->getSCE(SC_PRIMAL_CLAW)) {
+						if (!sc || !sc->hasSCE(SC_PRIMAL_CLAW)) {
 							map_session_data *sd = BL_CAST(BL_PC, src);
 							if (sd) {
 								clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
@@ -546,7 +546,7 @@ public:
 				}
 				case AT_ALPHA_CLAW: {
 					if (!(flag & 1)) {
-						if (!sc || !sc->getSCE(SC_FERAL_CLAW)) {
+						if (!sc || !sc->hasSCE(SC_FERAL_CLAW)) {
 							map_session_data *sd = BL_CAST(BL_PC, src);
 							if (sd) {
 								clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
@@ -863,12 +863,12 @@ public:
 			const status_change *sc = status_get_sc(src);
 			const status_data *sstatus = status_get_status_data(*src);
 			int32 skillratio = 0;
-			const bool madness = sc && (sc->getSCE(SC_ALPHA_PHASE) || sc->getSCE(SC_INSANE) || sc->getSCE(SC_INSANE2) || sc->getSCE(SC_INSANE3));
+			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
 				case KR_NASTY_SLASH: {
 					skillratio = 1150 + 50 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_ENRAGE_WOLF)) {
+					if (sc && sc->hasSCE(SC_ENRAGE_WOLF)) {
 						skillratio += 300;
 					}
 					skillratio += sstatus->str; // TODO - unknown scaling [munkrej]
@@ -878,7 +878,7 @@ public:
 				}
 				case KR_DOUBLE_SLASH: {
 					skillratio = 1200 + 80 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_ENRAGE_WOLF)) {
+					if (sc && sc->hasSCE(SC_ENRAGE_WOLF)) {
 						skillratio += 400;
 					}
 					skillratio += sstatus->str; // TODO - unknown scaling [munkrej]
@@ -888,7 +888,7 @@ public:
 				}
 				case KR_CLAW_WAVE: {
 					skillratio = 880 + 70 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_ENRAGE_WOLF)) {
+					if (sc && sc->hasSCE(SC_ENRAGE_WOLF)) {
 						skillratio += 320;
 					}
 					skillratio += sstatus->str; // TODO - unknown scaling [munkrej]
@@ -898,7 +898,7 @@ public:
 				}
 				case KR_CHOP_CHOP: {
 					skillratio = 740 + 80 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_ENRAGE_WOLF)) {
+					if (sc && sc->hasSCE(SC_ENRAGE_WOLF)) {
 						skillratio += 400;
 					}
 					skillratio += sstatus->str; // TODO - unknown scaling [munkrej]
@@ -908,7 +908,7 @@ public:
 				}
 				case KR_SHARPEN_GUST: {
 					skillratio = 1000 + 80 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_ENRAGE_RAPTOR)) {
+					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
 						skillratio += 550;
 					}
 					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
@@ -918,7 +918,7 @@ public:
 				}
 				case KR_SHARPEN_HAIL: {
 					skillratio = 640 + 40 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_ENRAGE_RAPTOR)) {
+					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
 						skillratio += 300;
 					}
 					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
@@ -928,7 +928,7 @@ public:
 				}
 				case KR_TYPHOON_WING: {
 					skillratio = 600 + 80 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_ENRAGE_RAPTOR)) {
+					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
 						skillratio += 300;
 					}
 					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
@@ -938,7 +938,7 @@ public:
 				}
 				case KR_FEATHER_SPRINKLE: {
 					skillratio = 1100 + 90 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_ENRAGE_RAPTOR)) {
+					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
 						skillratio += 390;
 					}
 					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
@@ -949,7 +949,7 @@ public:
 				case KR_ICE_PILLAR: {
 					const bool alt_damage = (mflag & SKILL_ALTDMG_FLAG) != 0;
 					skillratio = alt_damage ? (450 + 50 * (skill_lv - 1)) : (720 + 120 * (skill_lv - 1));
-					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -958,7 +958,7 @@ public:
 				}
 				case KR_ICE_SPLASH: {
 					skillratio = 1140 + 70 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -967,7 +967,7 @@ public:
 				}
 				case KR_THUNDERING_FOCUS: {
 					skillratio = 840 + 70 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -976,7 +976,7 @@ public:
 				}
 				case KR_THUNDERING_FOCUS_S: {
 					skillratio = 1420 + 70 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -985,7 +985,7 @@ public:
 				}
 				case KR_THUNDERING_ORB: {
 					skillratio = 1400 + 70 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -994,7 +994,7 @@ public:
 				}
 				case KR_THUNDERING_ORB_S: {
 					skillratio = 1750 + 100 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1003,7 +1003,7 @@ public:
 				}
 				case KR_THUNDERING_CALL: {
 					skillratio = 5200 + 200 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1012,7 +1012,7 @@ public:
 				}
 				case KR_THUNDERING_CALL_S: {
 					skillratio = 9500 + 500 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1021,7 +1021,7 @@ public:
 				}
 				case KR_EARTH_DRILL: {
 					skillratio = 1510 + 60 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_EARTH)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1030,7 +1030,7 @@ public:
 				}
 				case KR_EARTH_STAMP: {
 					skillratio = 1000 + 70 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_EARTH)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1039,7 +1039,7 @@ public:
 				}
 				case KR_GROUND_BLOOM: {
 					skillratio = 6000 + 2000 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_EARTH)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1107,7 +1107,7 @@ public:
 					break;
 				case AT_GLACIER_MONOLITH:
 					skillratio = 7100 + 300 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1119,7 +1119,7 @@ public:
 					break;
 				case AT_GLACIER_SHARD:
 					skillratio = 5500 + 300 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1127,7 +1127,7 @@ public:
 					break;
 				case AT_GLACIER_STOMP:
 					skillratio = 6400 + 500 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1139,7 +1139,7 @@ public:
 					break;
 				case AT_ROARING_PIERCER:
 					skillratio = 11250 + 700 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1147,7 +1147,7 @@ public:
 					break;
 				case AT_ROARING_PIERCER_S:
 					skillratio = 11250 + 750 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1155,7 +1155,7 @@ public:
 					break;
 				case AT_ROARING_CHARGE:
 					skillratio = 8000 + 400 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1163,7 +1163,7 @@ public:
 					break;
 				case AT_ROARING_CHARGE_S:
 					skillratio = 11500 + 500 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1175,7 +1175,7 @@ public:
 					break;
 				case AT_TERRA_WAVE:
 					skillratio = 12000 + 300 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_EARTH)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1183,7 +1183,7 @@ public:
 					break;
 				case AT_TERRA_HARVEST:
 					skillratio = 18000 + 500 * (skill_lv - 1);
-					if (sc && sc->getSCE(SC_TRUTH_OF_EARTH)) {
+					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1324,10 +1324,10 @@ public:
 				return;
 			}
 
-			if (!sc->getSCE(SC_WERERAPTOR) || !sc->getSCE(SC_FLIP_FLAP) || sc->getSCE(SC_FLIP_FLAP_TARGET)) {
-				clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
-				return;
-			}
+				if (!sc->hasSCE(SC_WERERAPTOR) || !sc->hasSCE(SC_FLIP_FLAP) || sc->hasSCE(SC_FLIP_FLAP_TARGET)) {
+					clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
+					return;
+				}
 
 			if (sd->status.party_id == 0 || sd->status.party_id != tsd->status.party_id) {
 				clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);

@@ -4349,7 +4349,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 #endif
 
 	// Druid/Karnos passive bonuses affecting max HP/SP and SP recovery.
-	if (!((sc->getSCE(SC_WEREWOLF) != nullptr) || (sc->getSCE(SC_WERERAPTOR) != nullptr)) && (skill = pc_checkskill(sd, KR_EARTH_BUD)) > 0)
+	if (!(sc->hasSCE(SC_WEREWOLF) || sc->hasSCE(SC_WERERAPTOR)) && (skill = pc_checkskill(sd, KR_EARTH_BUD)) > 0)
 		sd->hprate += skill * 2;
 	if ((skill = pc_checkskill(sd, KR_NATURE_VIGOUR)) > 0) {
 		sd->sprate += skill * 2;
@@ -4517,7 +4517,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 
 	if ((skill = pc_checkskill(sd, SU_SOULATTACK)) > 0)
 		base_status->rhw.range += skill_get_range2(sd, SU_SOULATTACK, skill, true);
-	if ((sc->getSCE(SC_WERERAPTOR) != nullptr) && (skill = pc_checkskill(sd, DR_SHARPE_EYES)) > 0)
+	if (sc->hasSCE(SC_WERERAPTOR) && (skill = pc_checkskill(sd, DR_SHARPE_EYES)) > 0)
 		base_status->hit += skill * 5;
 
 // ----- FLEE CALCULATION -----
@@ -4651,7 +4651,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 	else if(pc_isridingdragon(sd))
 		base_status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
 #endif
-	if ((sc->getSCE(SC_WEREWOLF) != nullptr) && (skill = pc_checkskill(sd, DR_BEASTY_NOSE)) > 0) {
+	if (sc->hasSCE(SC_WEREWOLF) && (skill = pc_checkskill(sd, DR_BEASTY_NOSE)) > 0) {
 #ifndef RENEWAL_ASPD
 		base_status->aspd_rate -= 10 * skill;
 #else
@@ -4818,7 +4818,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		sd->indexed_bonus.magic_atk_ele[ELE_WIND] += skill;
 		sd->indexed_bonus.magic_atk_ele[ELE_POISON] += skill;
 	}
-	if ((sc->getSCE(SC_WEREWOLF) != nullptr) && (skill = pc_checkskill(sd, KR_WOLF_INSTINCT)) > 0) {
+	if (sc->hasSCE(SC_WEREWOLF) && (skill = pc_checkskill(sd, KR_WOLF_INSTINCT)) > 0) {
 		static const int16 wolf_instinct_bonus[10][3] = {
 			{ 1, 1, 1 },
 			{ 2, 1, 1 },
@@ -4837,7 +4837,7 @@ int32 status_calc_pc_sub(map_session_data* sd, uint8 opt)
 		pc_bonus2(sd, SP_ADDSIZE, SZ_MEDIUM, wolf_instinct_bonus[idx][1]);
 		pc_bonus2(sd, SP_ADDSIZE, SZ_BIG, wolf_instinct_bonus[idx][2]);
 	}
-	if ((sc->getSCE(SC_WERERAPTOR) != nullptr) && (skill = pc_checkskill(sd, KR_RAPTORIAL_INSTINCT)) > 0) {
+	if (sc->hasSCE(SC_WERERAPTOR) && (skill = pc_checkskill(sd, KR_RAPTORIAL_INSTINCT)) > 0) {
 		static const int16 raptorial_instinct_bonus[10][3] = {
 			{ 1, 1, 1 },
 			{ 1, 1, 2 },
@@ -13231,7 +13231,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 	int32 saved_body_style = 0;
 	bool save_body_style = false;
 	if (sd != nullptr && vd != nullptr && (type == SC_WEREWOLF || type == SC_WERERAPTOR)) {
-		if (sc->getSCE(type) == nullptr) {
+		if (!sc->hasSCE(type)) {
 			saved_body_style = sd->vd.look[LOOK_BODY2];
 			save_body_style = true;
 		}
