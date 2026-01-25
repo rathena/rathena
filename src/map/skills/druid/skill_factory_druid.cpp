@@ -44,6 +44,7 @@
 #include "primalclaw.hpp"
 #include "quillspear.hpp"
 #include "roaringpiercer.hpp"
+#include "savagelunge.hpp"
 #include "sharpengust.hpp"
 #include "sharpenhail.hpp"
 #include "shootingfeather.hpp"
@@ -347,31 +348,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_SAVAGE_LUNGE: {
-					if (!(flag & 1)) {
-						if (!unit_movepos(src, target->x, target->y, 2, true)) {
-							map_session_data *sd = BL_CAST(BL_PC, src);
-							if (sd) {
-								clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
-							}
-							return;
-						}
-						clif_blown(src);
-					}
-
-					int32 attack_flag = flag | SD_ANIMATION;
-					skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, attack_flag);
-
-					if (!(flag & 1)) {
-						const int32 madness_stage = get_madness_stage(sc);
-						if (madness_stage >= 2) {
-							map_foreachinrange(apply_splash_outer_sub, target, 3, BL_CHAR, src, getSkillId(), skill_lv, tick, flag,
-									   target->x, target->y, 0, target->id);
-						}
-						try_gain_madness(src);
-					}
-					return;
-				}
 				case AT_FRENZY_FANG: {
 					skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 					if (!(flag & 1)) {
@@ -611,12 +587,6 @@ public:
 			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
-				case AT_SAVAGE_LUNGE:
-					skillratio = (madness ? 9000 : 7500) + (madness ? 2000 : 1500) * (skill_lv - 1);
-					skillratio += sstatus->pow * 5; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_FRENZY_FANG:
 					skillratio = (madness ? 1750 : 1000) + 250 * (skill_lv - 1);
 					skillratio += sstatus->pow * 5; // TODO - unknown scaling [munkrej]
@@ -980,7 +950,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_ROARING_PIERCER_S:
 			return std::make_unique<SkillRoaringPiercer>();
 		case AT_SAVAGE_LUNGE:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillSavageLunge>();
 		case AT_SOLID_STOMP:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_TEMPEST_FLAP:

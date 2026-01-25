@@ -318,6 +318,7 @@
     <ClInclude Include="skills/druid/primalclaw.hpp" />
     <ClInclude Include="skills/druid/quillspear.hpp" />
     <ClInclude Include="skills/druid/roaringpiercer.hpp" />
+    <ClInclude Include="skills/druid/savagelunge.hpp" />
     <ClInclude Include="skills/druid/sharpengust.hpp" />
     <ClInclude Include="skills/druid/sharpenhail.hpp" />
     <ClInclude Include="skills/druid/shootingfeather.hpp" />
@@ -639,6 +640,7 @@
     <ClCompile Include="skills/druid/primalclaw.cpp" />
     <ClCompile Include="skills/druid/quillspear.cpp" />
     <ClCompile Include="skills/druid/roaringpiercer.cpp" />
+    <ClCompile Include="skills/druid/savagelunge.cpp" />
     <ClCompile Include="skills/druid/sharpengust.cpp" />
     <ClCompile Include="skills/druid/sharpenhail.cpp" />
     <ClCompile Include="skills/druid/shootingfeather.cpp" />

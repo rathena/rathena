@@ -609,6 +609,9 @@
     <ClInclude Include="skills/druid/roaringpiercer.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/savagelunge.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/sharpengust.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1428,6 +1431,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/roaringpiercer.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/savagelunge.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/sharpengust.cpp">
