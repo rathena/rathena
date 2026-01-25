@@ -295,6 +295,7 @@
     <ClInclude Include="skills/druid/flickingtornado.hpp" />
     <ClInclude Include="skills/druid/hunger.hpp" />
     <ClInclude Include="skills/druid/lowflight.hpp" />
+    <ClInclude Include="skills/druid/shootingfeather.hpp" />
     <ClInclude Include="skills/druid/skill_factory_druid.hpp" />
     <ClInclude Include="skills/druid/transformationbeast.hpp" />
     <ClInclude Include="skills/druid/transformationraptor.hpp" />
@@ -581,6 +582,7 @@
     <ClCompile Include="skills/druid/flickingtornado.cpp" />
     <ClCompile Include="skills/druid/hunger.cpp" />
     <ClCompile Include="skills/druid/lowflight.cpp" />
+    <ClCompile Include="skills/druid/shootingfeather.cpp" />
     <ClCompile Include="skills/druid/skill_factory_druid.cpp" />
     <ClCompile Include="skills/druid/transformationbeast.cpp" />
     <ClCompile Include="skills/druid/transformationraptor.cpp" />

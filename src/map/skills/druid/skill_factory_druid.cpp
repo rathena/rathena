@@ -21,6 +21,7 @@
 #include "flickingtornado.hpp"
 #include "hunger.hpp"
 #include "lowflight.hpp"
+#include "shootingfeather.hpp"
 #include "transformationbeast.hpp"
 #include "transformationraptor.hpp"
 
@@ -697,7 +698,6 @@ public:
 					}
 					return;
 				}
-				case DR_SHOOTING_FEATHER:
 				case DR_ICE_TOTEM:
 				case DR_CUTTING_WIND:
 				case DR_EARTH_FLOWER:
@@ -1203,15 +1203,6 @@ public:
 					RE_LVL_DMOD(100);
 					base_skillratio += -100 + skillratio;
 					break;
-				case DR_SHOOTING_FEATHER:
-					skillratio = 20 * skill_lv;
-					if (sc && sc->getSCE(SC_ENRAGE_RAPTOR)) {
-						skillratio += 20 * skill_lv;
-					}
-					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case DR_ICE_TOTEM:
 					skillratio = 100 * skill_lv;
 					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
@@ -1466,7 +1457,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_PREENING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DR_SHOOTING_FEATHER:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillShootingFeather>();
 		case DR_TRUTH_OF_EARTH:
 			return std::make_unique<SkillDruidTruthImpl>(skill_id);
 		case DR_TRUTH_OF_ICE:
