@@ -275,7 +275,9 @@
     <ClInclude Include="skills/archer/concentration.hpp" />
     <ClInclude Include="skills/archer/detect.hpp" />
     <ClInclude Include="skills/archer/doublestrafe.hpp" />
+    <ClInclude Include="skills/archer/falconassault.hpp" />
     <ClInclude Include="skills/archer/flasher.hpp" />
+    <ClInclude Include="skills/archer/focusedarrowstrike.hpp" />
     <ClInclude Include="skills/archer/freezingtrap.hpp" />
     <ClInclude Include="skills/archer/landmine.hpp" />
     <ClInclude Include="skills/archer/makingarrow.hpp" />
@@ -287,6 +289,7 @@
     <ClInclude Include="skills/archer/skill_factory_archer.hpp" />
     <ClInclude Include="skills/archer/springtrap.hpp" />
     <ClInclude Include="skills/archer/talkiebox.hpp" />
+    <ClInclude Include="skills/archer/windwalker.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
     <ClInclude Include="skills/gunslinger/cracker.hpp" />
@@ -313,6 +316,8 @@
     <ClInclude Include="skills/mage/firewall.hpp" />
     <ClInclude Include="skills/mage/frostdiver.hpp" />
     <ClInclude Include="skills/mage/frostnova.hpp" />
+    <ClInclude Include="skills/mage/ganbantein.hpp" />
+    <ClInclude Include="skills/mage/gravitationfield.hpp" />
     <ClInclude Include="skills/mage/heavensdrive.hpp" />
     <ClInclude Include="skills/mage/icewall.hpp" />
     <ClInclude Include="skills/mage/jupitelthunder.hpp" />
@@ -320,6 +325,7 @@
     <ClInclude Include="skills/mage/lordofvermilion.hpp" />
     <ClInclude Include="skills/mage/meteorstorm.hpp" />
     <ClInclude Include="skills/mage/napalmbeat.hpp" />
+    <ClInclude Include="skills/mage/napalmvulcan.hpp" />
     <ClInclude Include="skills/mage/quagmire.hpp" />
     <ClInclude Include="skills/mage/safetywall.hpp" />
     <ClInclude Include="skills/mage/sense.hpp" />
@@ -548,7 +554,9 @@
     <ClCompile Include="skills/archer/concentration.cpp" />
     <ClCompile Include="skills/archer/detect.cpp" />
     <ClCompile Include="skills/archer/doublestrafe.cpp" />
+    <ClCompile Include="skills/archer/falconassault.cpp" />
     <ClCompile Include="skills/archer/flasher.cpp" />
+    <ClCompile Include="skills/archer/focusedarrowstrike.cpp" />
     <ClCompile Include="skills/archer/freezingtrap.cpp" />
     <ClCompile Include="skills/archer/landmine.cpp" />
     <ClCompile Include="skills/archer/makingarrow.cpp" />
@@ -560,6 +568,7 @@
     <ClCompile Include="skills/archer/skill_factory_archer.cpp" />
     <ClCompile Include="skills/archer/springtrap.cpp" />
     <ClCompile Include="skills/archer/talkiebox.cpp" />
+    <ClCompile Include="skills/archer/windwalker.cpp" />
     <ClCompile Include="skills/custom/skill_factory_custom.cpp" />
     <ClCompile Include="skills/gunslinger/bullseye.cpp" />
     <ClCompile Include="skills/gunslinger/cracker.cpp" />
@@ -586,6 +595,8 @@
     <ClCompile Include="skills/mage/firewall.cpp" />
     <ClCompile Include="skills/mage/frostdiver.cpp" />
     <ClCompile Include="skills/mage/frostnova.cpp" />
+    <ClCompile Include="skills/mage/ganbantein.cpp" />
+    <ClCompile Include="skills/mage/gravitationfield.cpp" />
     <ClCompile Include="skills/mage/heavensdrive.cpp" />
     <ClCompile Include="skills/mage/icewall.cpp" />
     <ClCompile Include="skills/mage/jupitelthunder.cpp" />
@@ -593,6 +604,7 @@
     <ClCompile Include="skills/mage/lordofvermilion.cpp" />
     <ClCompile Include="skills/mage/meteorstorm.cpp" />
     <ClCompile Include="skills/mage/napalmbeat.cpp" />
+    <ClCompile Include="skills/mage/napalmvulcan.cpp" />
     <ClCompile Include="skills/mage/quagmire.cpp" />
     <ClCompile Include="skills/mage/safetywall.cpp" />
     <ClCompile Include="skills/mage/sense.cpp" />
