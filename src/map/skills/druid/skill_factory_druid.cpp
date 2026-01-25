@@ -24,6 +24,7 @@
 #include "flickingtornado.hpp"
 #include "hunger.hpp"
 #include "icecloud.hpp"
+#include "icepillar.hpp"
 #include "icetotem.hpp"
 #include "lowflight.hpp"
 #include "nastyslash.hpp"
@@ -369,13 +370,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case KR_ICE_PILLAR: {
-					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					if (!(flag & 1)) {
-						skill_unitsetting(src, getSkillId(), skill_lv, target->x, target->y, 0);
-					}
-					return;
-				}
 				case AT_GRAVITY_HOLE: {
 					if ((flag & 1) || target != src) {
 						apply_gravity_hole_hit(src, target, getSkillId(), skill_lv, tick, flag);
@@ -806,11 +800,6 @@ public:
 					skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
 					break;
 				}
-				case KR_ICE_PILLAR: {
-					SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
-					skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
-					break;
-				}
 				default:
 					SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
 					break;
@@ -887,16 +876,6 @@ public:
 					}
 					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
 					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					return;
-				}
-				case KR_ICE_PILLAR: {
-					const bool alt_damage = (mflag & SKILL_ALTDMG_FLAG) != 0;
-					skillratio = alt_damage ? (450 + 50 * (skill_lv - 1)) : (720 + 120 * (skill_lv - 1));
-					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
 					base_skillratio += -100 + skillratio;
 					return;
 				}
@@ -1176,7 +1155,6 @@ public:
 				case KR_SHARPEN_HAIL:
 				case KR_TYPHOON_WING:
 				case KR_FEATHER_SPRINKLE:
-				case KR_ICE_PILLAR:
 				case KR_ICE_SPLASH:
 				case KR_THUNDERING_FOCUS_S:
 				case KR_THUNDERING_ORB_S:
@@ -1363,7 +1341,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_GROUND_BLOOM:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_ICE_PILLAR:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillIcePillar>();
 		case KR_ICE_SPLASH:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_IRON_HOWLING:
