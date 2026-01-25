@@ -14364,7 +14364,9 @@ void JobDatabase::loadingFinished() {
 			}
 
 			// Extended classes
-			if( ( class_ & MAPID_SECONDMASK ) == MAPID_KAGEROUOBORO || ( class_ & MAPID_SECONDMASK ) == MAPID_REBELLION ){
+			if( ( class_ & MAPID_SECONDMASK ) == MAPID_KAGEROUOBORO ||
+				( class_ & MAPID_SECONDMASK ) == MAPID_REBELLION ||
+				( class_ & MAPID_SECONDMASK ) == MAPID_KARNOS ){
 				max = battle_config.max_extended_parameter;
 				break;
 			}
@@ -15260,7 +15262,9 @@ int16 pc_maxaspd( const map_session_data* sd ) {
 	nullpo_ret(sd);
 
 	return (( sd->class_&JOBL_THIRD) ? battle_config.max_third_aspd : (
-			((sd->class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO || (sd->class_&MAPID_SECONDMASK) == MAPID_REBELLION) ? battle_config.max_extended_aspd : (
+			((sd->class_&MAPID_SECONDMASK) == MAPID_KAGEROUOBORO ||
+			(sd->class_&MAPID_SECONDMASK) == MAPID_REBELLION ||
+			(sd->class_&MAPID_SECONDMASK) == MAPID_KARNOS) ? battle_config.max_extended_aspd : (
 			(sd->class_&MAPID_FIRSTMASK) == MAPID_SUMMONER) ? battle_config.max_summoner_aspd : 
 			battle_config.max_aspd ));
 }
