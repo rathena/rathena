@@ -36,6 +36,7 @@
 #include "icetotem.hpp"
 #include "lowflight.hpp"
 #include "nastyslash.hpp"
+#include "natureprotection.hpp"
 #include "nomercyclaw.hpp"
 #include "sharpengust.hpp"
 #include "shootingfeather.hpp"
@@ -1202,7 +1203,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_NASTY_SLASH:
 			return std::make_unique<SkillNastySlash>();
 		case KR_NATURE_PROTECTION:
-			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+			return std::make_unique<SkillNatureProtection>();
 		case KR_SHARPEN_GUST:
 			return std::make_unique<SkillSharpenGust>();
 		case KR_SHARPEN_HAIL:
