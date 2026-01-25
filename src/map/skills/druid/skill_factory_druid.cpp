@@ -49,6 +49,7 @@
 #include "truthofice.hpp"
 #include "truthofwind.hpp"
 #include "windbomb.hpp"
+#include "windveil.hpp"
 
 namespace {
 	constexpr int32 kClawChainDuration = 5000;
@@ -1223,7 +1224,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_TYPHOON_WING:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_WIND_VEIL:
-			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+			return std::make_unique<SkillWindVeil>();
 
 		case AT_AERO_SYNC:
 			return std::make_unique<SkillAliteaAeroSyncImpl>();
