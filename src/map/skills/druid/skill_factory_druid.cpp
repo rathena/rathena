@@ -17,6 +17,8 @@
 #include "../../unit.hpp"
 #include "../status_skill_impl.hpp"
 
+#include "transformationbeast.hpp"
+
 namespace {
 	constexpr int32 kClawChainDuration = 5000;
 	constexpr int32 kZephyrChargeDuration = 10000;
@@ -1544,6 +1546,7 @@ public:
 std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_id) const {
 	switch (skill_id) {
 		case DR_WEREWOLF:
+			return std::make_unique<SkillTransformationBeast>();
 		case DR_WERERAPTOR:
 			return std::make_unique<SkillDruidTransformImpl>(skill_id);
 		case DR_ENRAGE_WOLF:

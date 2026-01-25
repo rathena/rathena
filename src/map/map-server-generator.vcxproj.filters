@@ -531,6 +531,9 @@
     <ClInclude Include="skills/druid/skill_factory_druid.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/transformationbeast.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/bullseye.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -1227,6 +1230,9 @@
       <Filter>Source Files\Skills\Custom</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/skill_factory_druid.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/transformationbeast.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/bullseye.cpp">
