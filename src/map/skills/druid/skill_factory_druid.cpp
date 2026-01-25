@@ -23,6 +23,7 @@
 #include "earthflower.hpp"
 #include "flickingtornado.hpp"
 #include "hunger.hpp"
+#include "icecloud.hpp"
 #include "icetotem.hpp"
 #include "lowflight.hpp"
 #include "nomercyclaw.hpp"
@@ -1192,14 +1193,6 @@ public:
 					skillratio = 9800 + 800 * (skill_lv - 1);
 					base_skillratio += -100 + skillratio;
 					break;
-				case DR_ICE_CLOUD:
-					skillratio = 50 * skill_lv;
-					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
 				case DR_WIND_BOMB:
 					skillratio = 50 * skill_lv;
 					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
@@ -1409,7 +1402,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_HUNGER:
 			return std::make_unique<SkillHunger>();
 		case DR_ICE_CLOUD:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillIceCloud>();
 		case DR_ICE_TOTEM:
 			return std::make_unique<SkillIceTotem>();
 		case DR_LOW_FLIGHT:
