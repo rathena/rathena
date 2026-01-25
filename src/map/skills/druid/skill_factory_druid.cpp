@@ -32,6 +32,7 @@
 #include "hunger.hpp"
 #include "icecloud.hpp"
 #include "icepillar.hpp"
+#include "icesplash.hpp"
 #include "icetotem.hpp"
 #include "lowflight.hpp"
 #include "nastyslash.hpp"
@@ -834,15 +835,6 @@ public:
 					base_skillratio += -100 + skillratio;
 					return;
 				}
-				case KR_ICE_SPLASH: {
-					skillratio = 1140 + 70 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					return;
-				}
 
 				case AT_PRIMAL_CLAW:
 					skillratio = 1100 + 950 * (skill_lv - 1);
@@ -1022,7 +1014,6 @@ public:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
 				case KR_SHARPEN_HAIL:
 				case KR_TYPHOON_WING:
-				case KR_ICE_SPLASH:
 				case AT_ROARING_PIERCER_S:
 				case AT_ROARING_CHARGE_S:
 				case AT_GLACIER_MONOLITH:
@@ -1205,7 +1196,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_ICE_PILLAR:
 			return std::make_unique<SkillIcePillar>();
 		case KR_ICE_SPLASH:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillIceSplash>();
 		case KR_IRON_HOWLING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case KR_NASTY_SLASH:

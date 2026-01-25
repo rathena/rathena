@@ -306,6 +306,7 @@
     <ClInclude Include="skills/druid/hunger.hpp" />
     <ClInclude Include="skills/druid/icecloud.hpp" />
     <ClInclude Include="skills/druid/icepillar.hpp" />
+    <ClInclude Include="skills/druid/icesplash.hpp" />
     <ClInclude Include="skills/druid/icetotem.hpp" />
     <ClInclude Include="skills/druid/lowflight.hpp" />
     <ClInclude Include="skills/druid/nastyslash.hpp" />
@@ -616,6 +617,7 @@
     <ClCompile Include="skills/druid/hunger.cpp" />
     <ClCompile Include="skills/druid/icecloud.cpp" />
     <ClCompile Include="skills/druid/icepillar.cpp" />
+    <ClCompile Include="skills/druid/icesplash.cpp" />
     <ClCompile Include="skills/druid/icetotem.cpp" />
     <ClCompile Include="skills/druid/lowflight.cpp" />
     <ClCompile Include="skills/druid/nastyslash.cpp" />
