@@ -300,6 +300,7 @@
     <ClInclude Include="skills/druid/icecloud.hpp" />
     <ClInclude Include="skills/druid/icetotem.hpp" />
     <ClInclude Include="skills/druid/lowflight.hpp" />
+    <ClInclude Include="skills/druid/nastyslash.hpp" />
     <ClInclude Include="skills/druid/nomercyclaw.hpp" />
     <ClInclude Include="skills/druid/sharpengust.hpp" />
     <ClInclude Include="skills/druid/shootingfeather.hpp" />
@@ -598,6 +599,7 @@
     <ClCompile Include="skills/druid/icecloud.cpp" />
     <ClCompile Include="skills/druid/icetotem.cpp" />
     <ClCompile Include="skills/druid/lowflight.cpp" />
+    <ClCompile Include="skills/druid/nastyslash.cpp" />
     <ClCompile Include="skills/druid/nomercyclaw.cpp" />
     <ClCompile Include="skills/druid/sharpengust.cpp" />
     <ClCompile Include="skills/druid/shootingfeather.cpp" />

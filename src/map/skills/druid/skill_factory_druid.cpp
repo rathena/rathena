@@ -26,6 +26,7 @@
 #include "icecloud.hpp"
 #include "icetotem.hpp"
 #include "lowflight.hpp"
+#include "nastyslash.hpp"
 #include "nomercyclaw.hpp"
 #include "sharpengust.hpp"
 #include "shootingfeather.hpp"
@@ -368,14 +369,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case KR_NASTY_SLASH: {
-					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					if (!(flag & 1)) {
-						uint8 dir = map_calc_dir(src, target->x, target->y);
-						skill_blown(src, src, 5, dir, BLOWN_IGNORE_NO_KNOCKBACK);
-					}
-					return;
-				}
 				case KR_ICE_PILLAR: {
 					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 					if (!(flag & 1)) {
@@ -837,16 +830,6 @@ public:
 			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
-				case KR_NASTY_SLASH: {
-					skillratio = 1150 + 50 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_ENRAGE_WOLF)) {
-						skillratio += 300;
-					}
-					skillratio += sstatus->str; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					return;
-				}
 				case KR_DOUBLE_SLASH: {
 					skillratio = 1200 + 80 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_ENRAGE_WOLF)) {
@@ -1187,7 +1170,6 @@ public:
 				case AT_TEMPEST_FLAP:
 				case AT_QUILL_SPEAR_S:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
-				case KR_NASTY_SLASH:
 				case KR_DOUBLE_SLASH:
 				case KR_CLAW_WAVE:
 				case KR_CHOP_CHOP:
@@ -1387,7 +1369,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_IRON_HOWLING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case KR_NASTY_SLASH:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillNastySlash>();
 		case KR_NATURE_PROTECTION:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case KR_SHARPEN_GUST:
