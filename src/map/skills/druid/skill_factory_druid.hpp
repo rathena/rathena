@@ -5,8 +5,14 @@
 
 #include "../skill_factory.hpp"
 
+#include "map/map.hpp"
+#include "map/status.hpp"
+#include "map/skill.hpp"
+
 namespace {
 	void try_gain_growth_stacks(block_list* src, t_tick tick, e_skill skill_id);
+	void try_gain_thundering_charge(block_list* src, const status_change* sc, e_skill skill_id, int32 gain);
+	e_skill resolve_thundering_charge_skill(const status_change* sc, e_skill skill_id);
 }
 
 class SkillFactoryDruid : public SkillFactory {

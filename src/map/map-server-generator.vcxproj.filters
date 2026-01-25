@@ -582,6 +582,9 @@
     <ClInclude Include="skills/druid/skill_factory_druid.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/thunderingfocus.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/transformationbeast.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1347,6 +1350,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/skill_factory_druid.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/thunderingfocus.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/transformationbeast.cpp">

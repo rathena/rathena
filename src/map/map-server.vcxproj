@@ -309,6 +309,7 @@
     <ClInclude Include="skills/druid/sharpengust.hpp" />
     <ClInclude Include="skills/druid/shootingfeather.hpp" />
     <ClInclude Include="skills/druid/skill_factory_druid.hpp" />
+    <ClInclude Include="skills/druid/thunderingfocus.hpp" />
     <ClInclude Include="skills/druid/transformationbeast.hpp" />
     <ClInclude Include="skills/druid/transformationraptor.hpp" />
     <ClInclude Include="skills/druid/truthofearth.hpp" />
@@ -612,6 +613,7 @@
     <ClCompile Include="skills/druid/sharpengust.cpp" />
     <ClCompile Include="skills/druid/shootingfeather.cpp" />
     <ClCompile Include="skills/druid/skill_factory_druid.cpp" />
+    <ClCompile Include="skills/druid/thunderingfocus.cpp" />
     <ClCompile Include="skills/druid/transformationbeast.cpp" />
     <ClCompile Include="skills/druid/transformationraptor.cpp" />
     <ClCompile Include="skills/druid/truthofearth.cpp" />
