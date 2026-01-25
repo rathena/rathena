@@ -17,6 +17,7 @@
 #include "../../unit.hpp"
 #include "../status_skill_impl.hpp"
 
+#include "cruelbite.hpp"
 #include "transformationbeast.hpp"
 #include "transformationraptor.hpp"
 
@@ -693,20 +694,6 @@ public:
 					}
 					return;
 				}
-				case DR_CRUEL_BITE: {
-					if (!(flag & 1)) {
-						if (!unit_movepos(src, target->x, target->y, 2, true)) {
-							map_session_data *sd = BL_CAST(BL_PC, src);
-							if (sd) {
-								clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
-							}
-							return;
-						}
-						clif_blown(src);
-					}
-					skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
-					return;
-				}
 				case DR_LOW_FLIGHT: {
 					if (!(flag & 1)) {
 						if (!unit_movepos(src, target->x, target->y, 2, true)) {
@@ -1250,15 +1237,6 @@ public:
 					RE_LVL_DMOD(100);
 					base_skillratio += -100 + skillratio;
 					break;
-				case DR_CRUEL_BITE:
-					skillratio = 60 * skill_lv;
-					if (sc && sc->getSCE(SC_ENRAGE_WOLF)) {
-						skillratio += 20 * skill_lv;
-					}
-					skillratio += sstatus->str; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case DR_HUNGER:
 					skillratio = 80 * skill_lv;
 					if (sc && sc->getSCE(SC_ENRAGE_WOLF)) {
@@ -1524,7 +1502,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_BLOOD_HOWLING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DR_CRUEL_BITE:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillCruelBite>();
 		case DR_CUTTING_WIND:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case DR_EARTH_FLOWER:
