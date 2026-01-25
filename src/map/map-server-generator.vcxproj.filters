@@ -567,6 +567,9 @@
     <ClInclude Include="skills/druid/flickingtornado.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/frenzyfang.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/gravityhole.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1389,6 +1392,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/flickingtornado.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/frenzyfang.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/gravityhole.cpp">

@@ -30,6 +30,7 @@
 #include "feathersprinkle.hpp"
 #include "feralclaw.hpp"
 #include "flickingtornado.hpp"
+#include "frenzyfang.hpp"
 #include "gravityhole.hpp"
 #include "groundbloom.hpp"
 #include "hunger.hpp"
@@ -348,13 +349,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_FRENZY_FANG: {
-					skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
-					if (!(flag & 1)) {
-						try_gain_madness(src);
-					}
-					return;
-				}
 				case AT_PINION_SHOT: {
 					int32 attack_flag = flag | SD_ANIMATION;
 					skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, attack_flag);
@@ -587,12 +581,6 @@ public:
 			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
-				case AT_FRENZY_FANG:
-					skillratio = (madness ? 1750 : 1000) + 250 * (skill_lv - 1);
-					skillratio += sstatus->pow * 5; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_PINION_SHOT:
 					skillratio = 2450 * skill_lv;
 					skillratio += sstatus->con * 5; // TODO - unknown scaling [munkrej]
@@ -916,7 +904,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_FLIP_FLAP:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case AT_FRENZY_FANG:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillFrenzyFang>();
 		case AT_FURIOS_STORM:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_GLACIER_MONOLITH:
