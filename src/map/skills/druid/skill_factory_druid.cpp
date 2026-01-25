@@ -297,7 +297,7 @@ namespace {
 			return 0;
 		}
 
-		return skill_attack(skill_get_type(static_cast<e_skill>(skill_id)), src, src, bl, skill_id, skill_lv, tick, flag | SD_ANIMATION);
+		return static_cast<int32>(skill_attack(skill_get_type(static_cast<e_skill>(skill_id)), src, src, bl, skill_id, skill_lv, tick, flag | SD_ANIMATION));
 	}
 
 	int32 apply_gravity_hole_hit(block_list *src, block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag) {
@@ -315,7 +315,7 @@ namespace {
 				sc_start(src, bl, type, 100, 1, duration);
 			}
 			if (dist > 0) {
-				int16 dir = map_calc_dir(src, bl->x, bl->y);
+				int8 dir = map_calc_dir(src, bl->x, bl->y);
 				skill_blown(src, bl, static_cast<char>(dist), dir, BLOWN_NONE);
 			}
 			return 1;
