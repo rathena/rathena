@@ -25,6 +25,7 @@
 #include "doubleslash.hpp"
 #include "earthdrill.hpp"
 #include "earthflower.hpp"
+#include "earthstamp.hpp"
 #include "feathersprinkle.hpp"
 #include "flickingtornado.hpp"
 #include "groundbloom.hpp"
@@ -683,7 +684,6 @@ public:
 							try_gain_thundering_charge(src, sc, getSkillId(), 1);
 						}
 						switch (getSkillId()) {
-							case KR_EARTH_STAMP:
 							case AT_TERRA_WAVE:
 							case AT_TERRA_HARVEST:
 								try_gain_growth_stacks(src, tick, getSkillId());
@@ -837,15 +837,6 @@ public:
 				case KR_ICE_SPLASH: {
 					skillratio = 1140 + 70 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					return;
-				}
-				case KR_EARTH_STAMP: {
-					skillratio = 1000 + 70 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1032,7 +1023,6 @@ public:
 				case KR_SHARPEN_HAIL:
 				case KR_TYPHOON_WING:
 				case KR_ICE_SPLASH:
-				case KR_EARTH_STAMP:
 				case AT_ROARING_PIERCER_S:
 				case AT_ROARING_CHARGE_S:
 				case AT_GLACIER_MONOLITH:
@@ -1207,7 +1197,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_EARTH_DRILL:
 			return std::make_unique<SkillEarthDrill>();
 		case KR_EARTH_STAMP:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillEarthStamp>();
 		case KR_FEATHER_SPRINKLE:
 			return std::make_unique<SkillFeatherSprinkle>();
 		case KR_GROUND_BLOOM:

@@ -552,6 +552,9 @@
     <ClInclude Include="skills/druid/earthflower.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/earthstamp.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/feathersprinkle.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1335,6 +1338,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/earthflower.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/earthstamp.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/feathersprinkle.cpp">
