@@ -30,6 +30,7 @@
 #include "shootingfeather.hpp"
 #include "transformationbeast.hpp"
 #include "transformationraptor.hpp"
+#include "windbomb.hpp"
 
 namespace {
 	constexpr int32 kClawChainDuration = 5000;
@@ -1414,7 +1415,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_TRUTH_OF_WIND:
 			return std::make_unique<SkillDruidTruthImpl>(skill_id);
 		case DR_WIND_BOMB:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillWindBomb>();
 		case DR_WEREWOLF:
 			return std::make_unique<SkillTransformationBeast>();
 		case DR_WERERAPTOR:
