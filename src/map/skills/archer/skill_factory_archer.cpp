@@ -14,12 +14,19 @@
 #include "chargearrow.hpp"
 #include "claymoretrap.hpp"
 #include "concentration.hpp"
+#include "crescivebolt.hpp"
+#include "deepblindtrap.hpp"
 #include "detect.hpp"
 #include "doublestrafe.hpp"
 #include "falconassault.hpp"
+#include "flametrap.hpp"
 #include "flasher.hpp"
 #include "focusedarrowstrike.hpp"
 #include "freezingtrap.hpp"
+#include "galestorm.hpp"
+#include "hawkboomerang.hpp"
+#include "hawkmastery.hpp"
+#include "hawkrush.hpp"
 #include "landmine.hpp"
 #include "makingarrow.hpp"
 #include "phantasmicarrow.hpp"
@@ -27,8 +34,11 @@
 #include "sandman.hpp"
 #include "shockwavetrap.hpp"
 #include "skidtrap.hpp"
+#include "solidtrap.hpp"
 #include "springtrap.hpp"
+#include "swifttrap.hpp"
 #include "talkiebox.hpp"
+#include "wildwalk.hpp"
 #include "windwalker.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
@@ -101,6 +111,26 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WH_CALAMITYGALE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WH_CRESCIVE_BOLT:
+			return std::make_unique<SkillCresciveBolt>();
+		case WH_DEEPBLINDTRAP:
+			return std::make_unique<SkillDeepBlindTrap>();
+		case WH_FLAMETRAP:
+			return std::make_unique<SkillFlameTrap>();
+		case WH_GALESTORM:
+			return std::make_unique<SkillGaleStorm>();
+		case WH_HAWKBOOMERANG:
+			return std::make_unique<SkillHawkBoomerang>();
+		case WH_HAWKRUSH:
+			return std::make_unique<SkillHawkRush>();
+		case WH_HAWK_M:
+			return std::make_unique<SkillHawkMastery>();
+		case WH_SOLIDTRAP:
+			return std::make_unique<SkillSolidTrap>();
+		case WH_SWIFTTRAP:
+			return std::make_unique<SkillSwiftTrap>();
+		case WH_WILD_WALK:
+			return std::make_unique<SkillWildWalk>();
 		case WH_WIND_SIGN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WM_GREAT_ECHO:
@@ -111,6 +141,5 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		default:
 			return nullptr;
 	}
-
 	return nullptr;
 }
