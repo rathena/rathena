@@ -306,6 +306,7 @@
     <ClInclude Include="skills/druid/transformationbeast.hpp" />
     <ClInclude Include="skills/druid/transformationraptor.hpp" />
     <ClInclude Include="skills/druid/truthofearth.hpp" />
+    <ClInclude Include="skills/druid/truthofice.hpp" />
     <ClInclude Include="skills/druid/windbomb.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
     <ClInclude Include="skills/gunslinger/cracker.hpp" />
@@ -601,6 +602,7 @@
     <ClCompile Include="skills/druid/transformationbeast.cpp" />
     <ClCompile Include="skills/druid/transformationraptor.cpp" />
     <ClCompile Include="skills/druid/truthofearth.cpp" />
+    <ClCompile Include="skills/druid/truthofice.cpp" />
     <ClCompile Include="skills/druid/windbomb.cpp" />
     <ClCompile Include="skills/gunslinger/bullseye.cpp" />
     <ClCompile Include="skills/gunslinger/cracker.cpp" />
