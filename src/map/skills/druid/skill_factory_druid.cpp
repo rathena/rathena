@@ -23,6 +23,7 @@
 #include "cuttingwind.hpp"
 #include "earthdrill.hpp"
 #include "earthflower.hpp"
+#include "feathersprinkle.hpp"
 #include "flickingtornado.hpp"
 #include "hunger.hpp"
 #include "icecloud.hpp"
@@ -668,7 +669,6 @@ public:
 					}
 					return;
 				}
-				case KR_FEATHER_SPRINKLE:
 				case AT_FURIOS_STORM:
 				default:
 					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
@@ -698,7 +698,6 @@ public:
 					}
 					sc_start(src, target, SC_ZEPHYR_LINK, 100, 0, skill_get_time(getSkillId(), skill_lv));
 					return;
-				case KR_FEATHER_SPRINKLE:
 				case KR_THUNDERING_FOCUS:
 				case KR_THUNDERING_FOCUS_S:
 				case KR_GROUND_BLOOM:
@@ -846,16 +845,6 @@ public:
 					skillratio = 600 + 80 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
 						skillratio += 300;
-					}
-					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					return;
-				}
-				case KR_FEATHER_SPRINKLE: {
-					skillratio = 1100 + 90 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
-						skillratio += 390;
 					}
 					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
 					RE_LVL_DMOD(100);
@@ -1127,7 +1116,6 @@ public:
 				case KR_CLAW_WAVE:
 				case KR_SHARPEN_HAIL:
 				case KR_TYPHOON_WING:
-				case KR_FEATHER_SPRINKLE:
 				case KR_ICE_SPLASH:
 				case KR_THUNDERING_FOCUS_S:
 				case KR_THUNDERING_ORB_S:
@@ -1310,7 +1298,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_EARTH_STAMP:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_FEATHER_SPRINKLE:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillFeatherSprinkle>();
 		case KR_GROUND_BLOOM:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_ICE_PILLAR:
