@@ -18,6 +18,7 @@
 #include "../status_skill_impl.hpp"
 
 #include "cruelbite.hpp"
+#include "flickingtornado.hpp"
 #include "hunger.hpp"
 #include "lowflight.hpp"
 #include "transformationbeast.hpp"
@@ -696,15 +697,6 @@ public:
 					}
 					return;
 				}
-				case DR_FLICKING_TONADO: {
-					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					if (!(flag & 1)) {
-						uint8 dir = map_calc_dir(src, target->x, target->y);
-						int32 retreat = skill_lv >= 6 ? 5 : 3;
-						skill_blown(src, src, retreat, dir, BLOWN_IGNORE_NO_KNOCKBACK);
-					}
-					return;
-				}
 				case DR_SHOOTING_FEATHER:
 				case DR_ICE_TOTEM:
 				case DR_CUTTING_WIND:
@@ -1220,15 +1212,6 @@ public:
 					RE_LVL_DMOD(100);
 					base_skillratio += -100 + skillratio;
 					break;
-				case DR_FLICKING_TONADO:
-					skillratio = 100 * skill_lv;
-					if (sc && sc->getSCE(SC_ENRAGE_RAPTOR)) {
-						skillratio += 50 * skill_lv;
-					}
-					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case DR_ICE_TOTEM:
 					skillratio = 100 * skill_lv;
 					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
@@ -1298,7 +1281,6 @@ public:
 				case AT_ALPHA_CLAW:
 				case AT_TEMPEST_FLAP:
 				case AT_QUILL_SPEAR_S:
-				case DR_FLICKING_TONADO:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
 				case KR_NASTY_SLASH:
 				case KR_DOUBLE_SLASH:
@@ -1468,7 +1450,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_ENRAGE_RAPTOR:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DR_FLICKING_TONADO:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillFlickingTornado>();
 		case DR_HUNGER:
 			return std::make_unique<SkillHunger>();
 		case DR_ICE_CLOUD:
