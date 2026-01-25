@@ -1563,37 +1563,60 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 			return std::make_unique<SkillTransformationBeast>();
 		case DR_WERERAPTOR:
 			return std::make_unique<SkillTransformationRaptor>();
+
+		case KR_CHOP_CHOP:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_CLAW_WAVE:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_DOUBLE_SLASH:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_EARTH_DRILL:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_EARTH_STAMP:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_FEATHER_SPRINKLE:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_GROUND_BLOOM:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_ICE_PILLAR:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_ICE_SPLASH:
+			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_IRON_HOWLING:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case KR_NASTY_SLASH:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_NATURE_PROTECTION:
+			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+		case KR_SHARPEN_GUST:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_SHARPEN_HAIL:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_THUNDERING_CALL:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_THUNDERING_CALL_S:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_THUNDERING_FOCUS:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_THUNDERING_FOCUS_S:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_THUNDERING_ORB:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_THUNDERING_ORB_S:
+			return std::make_unique<SkillDruidImpl>(skill_id);
+		case KR_TYPHOON_WING:
+			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_WIND_VEIL:
+			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+		
 		case AT_ALPHA_PHASE:
 		case AT_PULSE_OF_MADNESS:
 		case AT_FLIP_FLAP:
 		case AT_APEX_PHASE:
 		case AT_NATURE_HARMONY:
-			return std::make_unique<StatusSkillImpl>(skill_id);
-		case KR_NATURE_PROTECTION:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case AT_AERO_SYNC:
 			return std::make_unique<SkillAliteaAeroSyncImpl>();
-		case KR_NASTY_SLASH:
-		case KR_DOUBLE_SLASH:
-		case KR_CLAW_WAVE:
-		case KR_CHOP_CHOP:
-		case KR_SHARPEN_GUST:
-		case KR_SHARPEN_HAIL:
-		case KR_TYPHOON_WING:
-		case KR_FEATHER_SPRINKLE:
-		case KR_ICE_PILLAR:
-		case KR_ICE_SPLASH:
-		case KR_THUNDERING_FOCUS:
-		case KR_THUNDERING_FOCUS_S:
-		case KR_THUNDERING_ORB:
-		case KR_THUNDERING_ORB_S:
-		case KR_THUNDERING_CALL:
-		case KR_THUNDERING_CALL_S:
-		case KR_EARTH_DRILL:
-		case KR_EARTH_STAMP:
-		case KR_GROUND_BLOOM:
 		case AT_PRIMAL_CLAW:
 		case AT_FERAL_CLAW:
 		case AT_ALPHA_CLAW:
