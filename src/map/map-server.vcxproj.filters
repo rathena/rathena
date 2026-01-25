@@ -531,6 +531,9 @@
     <ClInclude Include="skills/druid/cruelbite.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/lowflight.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/skill_factory_druid.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1236,6 +1239,9 @@
       <Filter>Source Files\Skills\Custom</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/cruelbite.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/lowflight.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/skill_factory_druid.cpp">
