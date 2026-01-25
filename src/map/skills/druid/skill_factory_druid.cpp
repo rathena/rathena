@@ -39,6 +39,7 @@
 #include "nastyslash.hpp"
 #include "natureprotection.hpp"
 #include "nomercyclaw.hpp"
+#include "primalclaw.hpp"
 #include "quillspear.hpp"
 #include "roaringpiercer.hpp"
 #include "sharpengust.hpp"
@@ -344,38 +345,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_PRIMAL_CLAW: {
-					if (!(flag & 1)) {
-						if (!unit_movepos(src, target->x, target->y, 2, true)) {
-							map_session_data *sd = BL_CAST(BL_PC, src);
-							if (sd) {
-								clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
-							}
-							return;
-						}
-						clif_blown(src);
-					}
-
-					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-
-					if (!(flag & 1)) {
-						status_change_end(src, SC_FERAL_CLAW);
-						sc_start(src, src, SC_PRIMAL_CLAW, 100, skill_lv, kClawChainDuration);
-
-						const int32 madness_stage = get_madness_stage(sc);
-						if (madness_stage >= 2) {
-							int32 base_radius = skill_get_splash(getSkillId(), skill_lv);
-							int32 ring_radius = base_radius + 1;
-							if (ring_radius > base_radius) {
-								map_foreachinrange(apply_splash_outer_sub, target, ring_radius, BL_CHAR, src, getSkillId(), skill_lv, tick, flag,
-											   target->x, target->y, base_radius, target->id);
-							}
-						}
-
-						try_gain_madness(src);
-					}
-					return;
-				}
 				case AT_FERAL_CLAW: {
 					if (!(flag & 1)) {
 						if (!sc || !sc->hasSCE(SC_PRIMAL_CLAW)) {
@@ -712,15 +681,6 @@ public:
 			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
-				case AT_PRIMAL_CLAW:
-					skillratio = 1100 + 950 * (skill_lv - 1);
-					if (madness) {
-						skillratio += 800;
-					}
-					skillratio += sstatus->pow * 5; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_FERAL_CLAW:
 					skillratio = 1600 + 1150 * (skill_lv - 1);
 					if (madness) {
@@ -849,7 +809,6 @@ public:
 
 					return skill_attack(skill_get_type(actual_skill), src, src, target, actual_skill, skill_lv, tick, flag);
 				}
-				case AT_PRIMAL_CLAW:
 				case AT_FERAL_CLAW:
 				case AT_ALPHA_CLAW:
 				case AT_TEMPEST_FLAP:
@@ -1095,7 +1054,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_PINION_SHOT:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_PRIMAL_CLAW:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillPrimalClaw>();
 		case AT_PULSE_OF_MADNESS:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case AT_QUILL_SPEAR:
