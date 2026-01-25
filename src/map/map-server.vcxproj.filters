@@ -627,6 +627,9 @@
     <ClInclude Include="skills/druid/truthofwind.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/typhoonwing.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/windbomb.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1425,6 +1428,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/truthofwind.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/typhoonwing.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/windbomb.cpp">

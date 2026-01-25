@@ -49,6 +49,7 @@
 #include "truthofearth.hpp"
 #include "truthofice.hpp"
 #include "truthofwind.hpp"
+#include "typhoonwing.hpp"
 #include "windbomb.hpp"
 #include "windveil.hpp"
 
@@ -818,17 +819,6 @@ public:
 			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
-				case KR_TYPHOON_WING: {
-					skillratio = 600 + 80 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
-						skillratio += 300;
-					}
-					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					return;
-				}
-
 				case AT_PRIMAL_CLAW:
 					skillratio = 1100 + 950 * (skill_lv - 1);
 					if (madness) {
@@ -1005,7 +995,6 @@ public:
 				case AT_TEMPEST_FLAP:
 				case AT_QUILL_SPEAR_S:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
-				case KR_TYPHOON_WING:
 				case AT_ROARING_PIERCER_S:
 				case AT_ROARING_CHARGE_S:
 				case AT_GLACIER_MONOLITH:
@@ -1212,7 +1201,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_THUNDERING_ORB_S:
 			return std::make_unique<SkillThunderingOrbS>();
 		case KR_TYPHOON_WING:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillTyphoonWing>();
 		case KR_WIND_VEIL:
 			return std::make_unique<SkillWindVeil>();
 
