@@ -32,6 +32,7 @@
 #include "transformationraptor.hpp"
 #include "truthofearth.hpp"
 #include "truthofice.hpp"
+#include "truthofwind.hpp"
 #include "windbomb.hpp"
 
 namespace {
@@ -1263,24 +1264,6 @@ public:
 
 	};
 
-	class SkillDruidTruthImpl : public SkillImpl {
-	public:
-		explicit SkillDruidTruthImpl(e_skill skill_id) : SkillImpl(skill_id) {}
-
-		void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const override {
-			sc_type type = skill_get_sc(getSkillId());
-			status_change *tsc = status_get_sc(target);
-			status_change_entry *tsce = tsc ? tsc->getSCE(type) : nullptr;
-
-			if (tsce) {
-				clif_skill_nodamage(src, *target, getSkillId(), skill_lv, status_change_end(target, type));
-				return;
-			}
-
-			clif_skill_nodamage(src, *target, getSkillId(), skill_lv, sc_start(src, target, type, 100, skill_lv, INFINITE_TICK));
-		}
-	};
-
 	class SkillKarnosNatureProtectionImpl : public SkillImpl {
 	public:
 		SkillKarnosNatureProtectionImpl() : SkillImpl(KR_NATURE_PROTECTION) {}
@@ -1415,7 +1398,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_TRUTH_OF_ICE:
 			return std::make_unique<SkillTruthOfIce>();
 		case DR_TRUTH_OF_WIND:
-			return std::make_unique<SkillDruidTruthImpl>(skill_id);
+			return std::make_unique<SkillTruthOfWind>();
 		case DR_WIND_BOMB:
 			return std::make_unique<SkillWindBomb>();
 		case DR_WEREWOLF:
