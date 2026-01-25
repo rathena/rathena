@@ -20,6 +20,7 @@
 #include "cruelbite.hpp"
 #include "flickingtornado.hpp"
 #include "hunger.hpp"
+#include "icetotem.hpp"
 #include "lowflight.hpp"
 #include "shootingfeather.hpp"
 #include "transformationbeast.hpp"
@@ -698,7 +699,6 @@ public:
 					}
 					return;
 				}
-				case DR_ICE_TOTEM:
 				case DR_CUTTING_WIND:
 				case DR_EARTH_FLOWER:
 				case KR_EARTH_DRILL: {
@@ -1203,14 +1203,6 @@ public:
 					RE_LVL_DMOD(100);
 					base_skillratio += -100 + skillratio;
 					break;
-				case DR_ICE_TOTEM:
-					skillratio = 100 * skill_lv;
-					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
 				case DR_ICE_CLOUD:
 					skillratio = 50 * skill_lv;
 					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
@@ -1447,7 +1439,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_ICE_CLOUD:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case DR_ICE_TOTEM:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillIceTotem>();
 		case DR_LOW_FLIGHT:
 			return std::make_unique<SkillLowFlight>();
 		case DR_NATURE_SHIELD:
