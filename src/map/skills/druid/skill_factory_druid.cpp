@@ -28,6 +28,7 @@
 #include "earthstamp.hpp"
 #include "feathersprinkle.hpp"
 #include "flickingtornado.hpp"
+#include "gravityhole.hpp"
 #include "groundbloom.hpp"
 #include "hunger.hpp"
 #include "icecloud.hpp"
@@ -316,50 +317,6 @@ namespace {
 		return static_cast<int32>(skill_attack(skill_get_type(static_cast<e_skill>(skill_id)), src, src, bl, skill_id, skill_lv, tick, flag | SD_ANIMATION));
 	}
 
-	int32 apply_gravity_hole_hit(block_list *src, block_list *bl, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag) {
-		if (battle_check_target(src, bl, BCT_ENEMY) <= 0) {
-			return 0;
-		}
-
-		int32 sflag = flag | SD_ANIMATION;
-		if (skill_attack(skill_get_type(static_cast<e_skill>(skill_id)), src, src, bl, skill_id, skill_lv, tick, sflag) > 0) {
-			int32 dist = distance_xy(src->x, src->y, bl->x, bl->y) - 1;
-			const sc_type type = skill_get_sc(skill_id);
-			const t_tick duration = skill_get_time(skill_id, skill_lv);
-
-			if (type != SC_NONE && duration > 0) {
-				sc_start(src, bl, type, 100, 1, duration);
-			}
-			if (dist > 0) {
-				int8 dir = map_calc_dir(src, bl->x, bl->y);
-				skill_blown(src, bl, static_cast<char>(dist), dir, BLOWN_NONE);
-			}
-			return 1;
-		}
-
-		return 0;
-	}
-
-int32 apply_gravity_hole_sub(block_list *bl, va_list ap) {
-	block_list *src = va_arg(ap, block_list *);
-	uint16 skill_id = static_cast<uint16>(va_arg(ap, int));
-	uint16 skill_lv = static_cast<uint16>(va_arg(ap, int));
-	t_tick tick = va_arg(ap, t_tick);
-	int32 flag = va_arg(ap, int32);
-	int32 max_targets = va_arg(ap, int32);
-
-		if (skill_area_temp[2] >= max_targets) {
-			return 0;
-		}
-
-		if (apply_gravity_hole_hit(src, bl, skill_id, skill_lv, tick, flag) > 0) {
-			skill_area_temp[2]++;
-			return 1;
-		}
-
-	return 0;
-}
-
 int32 apply_zephyr_link_sub(block_list *bl, va_list ap) {
 	block_list *src = va_arg(ap, block_list *);
 	int32 party_id = va_arg(ap, int32);
@@ -385,21 +342,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_GRAVITY_HOLE: {
-					if ((flag & 1) || target != src) {
-						apply_gravity_hole_hit(src, target, getSkillId(), skill_lv, tick, flag);
-						return;
-					}
-
-					const int32 splash = skill_get_splash(getSkillId(), skill_lv);
-					const int32 max_targets = 5 + skill_lv;
-
-					skill_area_temp[0] = 0;
-					skill_area_temp[1] = 0;
-					skill_area_temp[2] = 0;
-					map_foreachinrange(apply_gravity_hole_sub, src, splash, BL_CHAR, src, getSkillId(), skill_lv, tick, flag, max_targets);
-					return;
-				}
 				case AT_QUILL_SPEAR:
 				case AT_QUILL_SPEAR_S: {
 					if (flag & 1) {
@@ -716,7 +658,6 @@ public:
 				case AT_ROARING_CHARGE:
 				case AT_ROARING_CHARGE_S:
 				case AT_SOLID_STOMP:
-				case AT_GRAVITY_HOLE:
 				case AT_FURIOS_STORM:
 					castendDamageId(src, target, skill_lv, tick, flag);
 					return;
@@ -965,10 +906,6 @@ public:
 					skillratio = 10400 + 800 * (skill_lv - 1);
 					base_skillratio += -100 + skillratio;
 					break;
-				case AT_GRAVITY_HOLE:
-					skillratio = 9800 + 800 * (skill_lv - 1);
-					base_skillratio += -100 + skillratio;
-					break;
 				default:
 					return;
 			}
@@ -1005,8 +942,7 @@ public:
 				case AT_FURIOS_STORM:
 				case AT_TERRA_WAVE:
 				case AT_TERRA_HARVEST:
-				case AT_SOLID_STOMP:
-				case AT_GRAVITY_HOLE: {
+				case AT_SOLID_STOMP: {
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 				}
 				default:
@@ -1232,7 +1168,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_GLACIER_STOMP:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_GRAVITY_HOLE:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillGravityHole>();
 		case AT_NATURE_HARMONY:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case AT_PINION_SHOT:

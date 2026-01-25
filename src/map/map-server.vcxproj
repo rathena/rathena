@@ -302,6 +302,7 @@
     <ClInclude Include="skills/druid/earthstamp.hpp" />
     <ClInclude Include="skills/druid/feathersprinkle.hpp" />
     <ClInclude Include="skills/druid/flickingtornado.hpp" />
+    <ClInclude Include="skills/druid/gravityhole.hpp" />
     <ClInclude Include="skills/druid/groundbloom.hpp" />
     <ClInclude Include="skills/druid/hunger.hpp" />
     <ClInclude Include="skills/druid/icecloud.hpp" />
@@ -617,6 +618,7 @@
     <ClCompile Include="skills/druid/earthstamp.cpp" />
     <ClCompile Include="skills/druid/feathersprinkle.cpp" />
     <ClCompile Include="skills/druid/flickingtornado.cpp" />
+    <ClCompile Include="skills/druid/gravityhole.cpp" />
     <ClCompile Include="skills/druid/groundbloom.cpp" />
     <ClCompile Include="skills/druid/hunger.cpp" />
     <ClCompile Include="skills/druid/icecloud.cpp" />
