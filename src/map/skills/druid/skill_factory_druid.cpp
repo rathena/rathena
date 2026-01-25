@@ -17,6 +17,7 @@
 #include "../../unit.hpp"
 #include "../status_skill_impl.hpp"
 
+#include "aroundflower.hpp"
 #include "cruelbite.hpp"
 #include "cuttingwind.hpp"
 #include "earthflower.hpp"
@@ -711,7 +712,6 @@ public:
 				case KR_CHOP_CHOP:
 				case KR_FEATHER_SPRINKLE:
 				case AT_FURIOS_STORM:
-				case DR_AROUND_FLOWER:
 				default:
 					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 					if (!(flag & 1)) {
@@ -743,7 +743,6 @@ public:
 				case DR_NOMERCY_CLAW:
 				case KR_CHOP_CHOP:
 				case KR_FEATHER_SPRINKLE:
-				case DR_AROUND_FLOWER:
 				case KR_THUNDERING_FOCUS:
 				case KR_THUNDERING_FOCUS_S:
 				case KR_GROUND_BLOOM:
@@ -1219,14 +1218,6 @@ public:
 					}
 					base_skillratio += -100 + skillratio;
 					break;
-				case DR_AROUND_FLOWER:
-					skillratio = 100 * skill_lv;
-					if (sc && sc->getSCE(SC_TRUTH_OF_EARTH)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
 				default:
 					return;
 			}
@@ -1410,7 +1401,7 @@ public:
 std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_id) const {
 	switch (skill_id) {
 		case DR_AROUND_FLOWER:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillAroundFlower>();
 		case DR_BLOOD_HOWLING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DR_CRUEL_BITE:
