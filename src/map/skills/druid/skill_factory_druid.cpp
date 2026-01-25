@@ -19,9 +19,9 @@
 
 namespace {
 	constexpr int32 kClawChainDuration = 5000;
-	constexpr int32 kZephyrChargeDuration = 10000;	   // TODO: confirm charge duration.
-	constexpr int32 kThunderingChargeDuration = 10000; // TODO: confirm charge duration.
-	constexpr int32 kGrowthDuration = 10000;		   // TODO: confirm growth duration.
+	constexpr int32 kZephyrChargeDuration = 10000;
+	constexpr int32 kThunderingChargeDuration = 10000;
+	constexpr int32 kGrowthDuration = 10000;
 	constexpr int32 kTerraWaveStepMs = 150;
 
 	int32 get_madness_stage(const status_change *sc) {
@@ -40,26 +40,6 @@ namespace {
 		}
 
 		return 0;
-	}
-
-	bool is_beast_attack_skill(e_skill skill_id) {
-		switch (skill_id) {
-			case AT_PRIMAL_CLAW:
-			case AT_FERAL_CLAW:
-			case AT_ALPHA_CLAW:
-			case AT_SAVAGE_LUNGE:
-			case AT_FRENZY_FANG:
-			case DR_NOMERCY_CLAW:
-			case DR_CRUEL_BITE:
-			case DR_HUNGER:
-			case KR_NASTY_SLASH:
-			case KR_DOUBLE_SLASH:
-			case KR_CLAW_WAVE:
-			case KR_CHOP_CHOP:
-				return true;
-			default:
-				return false;
-		}
 	}
 
 	bool is_thundering_charge_skill(e_skill skill_id) {
@@ -393,8 +373,7 @@ public:
 						// Use official AoE algorithm
 						map_foreachindir(skill_area_sub, src->m, start_x, start_y, end_x, end_y, path_width, path_length, 1, splash_target(src),
 									 src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | SD_SPLASH | 1, skill_castend_damage_id);
-					}
-					else {
+					} else {
 						map_foreachindir(skill_area_sub, src->m, start_x, start_y, end_x, end_y, path_width, path_length, 1, splash_target(src),
 									 src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | SD_SPLASH | 1, skill_castend_damage_id);
 					}
@@ -434,24 +413,23 @@ public:
 				case AT_QUILL_SPEAR_S: {
 					if (flag & 1) {
 						SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					}
-					else {
+					} else {
 						const bool apex = sc && sc->getSCE(SC_APEX_PHASE);
 						const int16 half_width = (apex || getSkillId() == AT_QUILL_SPEAR_S) ? 2 : 1;
 						const int16 half_length = 3;
-					const int32 length = half_length * 2 + 1;
-					const uint8 dir = map_calc_dir(src, target->x, target->y);
-					const int16 dir_x = dirx[dir];
-					const int16 dir_y = diry[dir];
-					const int16 start_x = target->x - dir_x * half_length;
-					const int16 start_y = target->y - dir_y * half_length;
-					const int16 end_x = target->x;
-					const int16 end_y = target->y;
+						const int32 length = half_length * 2 + 1;
+						const uint8 dir = map_calc_dir(src, target->x, target->y);
+						const int16 dir_x = dirx[dir];
+						const int16 dir_y = diry[dir];
+						const int16 start_x = target->x - dir_x * half_length;
+						const int16 start_y = target->y - dir_y * half_length;
+						const int16 end_x = target->x;
+						const int16 end_y = target->y;
 
 						skill_area_temp[0] = 0;
 						skill_area_temp[1] = target->id;
 						skill_area_temp[2] = 0;
-					map_foreachindir(skill_area_sub, src->m, start_x, start_y, end_x, end_y, half_width, length, 0, splash_target(src),
+						map_foreachindir(skill_area_sub, src->m, start_x, start_y, end_x, end_y, half_width, length, 0, splash_target(src),
 								 src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | SD_SPLASH | 1, skill_castend_damage_id);
 					}
 					return;
@@ -460,8 +438,7 @@ public:
 				case AT_ROARING_PIERCER_S: {
 					if (flag & 1) {
 						SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					}
-					else {
+					} else {
 						const int16 half_width = 2;
 						const int16 half_length = 4;
 						const int32 length = half_length * 2 + 1;
@@ -526,8 +503,7 @@ public:
 					}
 					if (flag & 1) {
 						SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					}
-					else {
+					} else {
 						int32 splash_flag = flag | BCT_WOS;
 						SkillImplRecursiveDamageSplash::castendDamageId(src, src, skill_lv, tick, splash_flag);
 					}
@@ -562,8 +538,7 @@ public:
 					}
 					if (flag & 1) {
 						SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					}
-					else {
+					} else {
 						int32 splash_flag = flag | BCT_WOS;
 						SkillImplRecursiveDamageSplash::castendDamageId(src, src, skill_lv, tick, splash_flag);
 					}
@@ -632,14 +607,12 @@ public:
 								const int16 link_range = skill_get_splash(AT_ZEPHYR_LINK, 1);
 								if (party_id == 0) {
 									skill_castend_nodamage_id(src, src, AT_ZEPHYR_LINK, 1, tick, 0);
-								}
-								else {
+								} else {
 									map_foreachinrange(apply_zephyr_link_sub, src, link_range, BL_PC, src, party_id, tick);
 								}
 							}
 							status_change_end(src, SC_ZEPHYR_CHARGE);
-						}
-						else {
+						} else {
 							sc_start4(src, src, SC_ZEPHYR_CHARGE, 100, current + 1, current + 1, current + 1, 0, kZephyrChargeDuration);
 						}
 					}
@@ -1328,14 +1301,24 @@ public:
 					base_skillratio += -100 + skillratio;
 					break;
 				case DR_ICE_CLOUD:
-				case DR_CUTTING_WIND:
-				case DR_WIND_BOMB:
 					skillratio = 50 * skill_lv;
-					if (getSkillId() == DR_ICE_CLOUD && sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
+					if (sc && sc->getSCE(SC_TRUTH_OF_ICE)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
-					else if ((getSkillId() == DR_CUTTING_WIND || getSkillId() == DR_WIND_BOMB) && sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+					base_skillratio += -100 + skillratio;
+					break;
+				case DR_CUTTING_WIND:
+					skillratio = 50 * skill_lv;
+					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
+						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
+						RE_LVL_DMOD(100);
+					}
+					base_skillratio += -100 + skillratio;
+					break;
+				case DR_WIND_BOMB:
+					skillratio = 50 * skill_lv;
+					if (sc && sc->getSCE(SC_TRUTH_OF_WIND)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
