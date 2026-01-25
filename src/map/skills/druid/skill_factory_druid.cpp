@@ -18,6 +18,7 @@
 #include "../status_skill_impl.hpp"
 
 #include "cruelbite.hpp"
+#include "hunger.hpp"
 #include "lowflight.hpp"
 #include "transformationbeast.hpp"
 #include "transformationraptor.hpp"
@@ -695,20 +696,6 @@ public:
 					}
 					return;
 				}
-				case DR_HUNGER: {
-					int64 damage = skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
-					if (damage > 0) {
-						int32 rate = (skill_lv + 1) / 2;
-						int64 heal = damage * rate / 100;
-
-						if (heal > 100000) {
-							heal = 100000;
-						}
-
-						status_heal(src, heal, 0, 0, 2);
-					}
-					return;
-				}
 				case DR_FLICKING_TONADO: {
 					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 					if (!(flag & 1)) {
@@ -1224,15 +1211,6 @@ public:
 					RE_LVL_DMOD(100);
 					base_skillratio += -100 + skillratio;
 					break;
-				case DR_HUNGER:
-					skillratio = 80 * skill_lv;
-					if (sc && sc->getSCE(SC_ENRAGE_WOLF)) {
-						skillratio += 40 * skill_lv;
-					}
-					skillratio += sstatus->str; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case DR_SHOOTING_FEATHER:
 					skillratio = 20 * skill_lv;
 					if (sc && sc->getSCE(SC_ENRAGE_RAPTOR)) {
@@ -1492,7 +1470,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_FLICKING_TONADO:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case DR_HUNGER:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillHunger>();
 		case DR_ICE_CLOUD:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case DR_ICE_TOTEM:
