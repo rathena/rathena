@@ -39,6 +39,7 @@
 #include "natureprotection.hpp"
 #include "nomercyclaw.hpp"
 #include "sharpengust.hpp"
+#include "sharpenhail.hpp"
 #include "shootingfeather.hpp"
 #include "thunderingcall.hpp"
 #include "thunderingfocus.hpp"
@@ -817,16 +818,6 @@ public:
 			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
-				case KR_SHARPEN_HAIL: {
-					skillratio = 640 + 40 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
-						skillratio += 300;
-					}
-					skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					return;
-				}
 				case KR_TYPHOON_WING: {
 					skillratio = 600 + 80 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
@@ -1014,7 +1005,6 @@ public:
 				case AT_TEMPEST_FLAP:
 				case AT_QUILL_SPEAR_S:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
-				case KR_SHARPEN_HAIL:
 				case KR_TYPHOON_WING:
 				case AT_ROARING_PIERCER_S:
 				case AT_ROARING_CHARGE_S:
@@ -1208,7 +1198,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_SHARPEN_GUST:
 			return std::make_unique<SkillSharpenGust>();
 		case KR_SHARPEN_HAIL:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillSharpenHail>();
 		case KR_THUNDERING_CALL:
 			return std::make_unique<SkillThunderingCall>();
 		case KR_THUNDERING_CALL_S:
