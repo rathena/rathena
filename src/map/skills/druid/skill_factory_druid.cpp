@@ -39,6 +39,7 @@
 #include "nastyslash.hpp"
 #include "natureprotection.hpp"
 #include "nomercyclaw.hpp"
+#include "quillspear.hpp"
 #include "sharpengust.hpp"
 #include "sharpenhail.hpp"
 #include "shootingfeather.hpp"
@@ -342,31 +343,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_QUILL_SPEAR:
-				case AT_QUILL_SPEAR_S: {
-					if (flag & 1) {
-						SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					} else {
-						const bool apex = sc && sc->hasSCE(SC_APEX_PHASE);
-						const int16 half_width = (apex || getSkillId() == AT_QUILL_SPEAR_S) ? 2 : 1;
-						const int16 half_length = 3;
-						const int32 length = half_length * 2 + 1;
-						const uint8 dir = map_calc_dir(src, target->x, target->y);
-						const int16 dir_x = dirx[dir];
-						const int16 dir_y = diry[dir];
-						const int16 start_x = target->x - dir_x * half_length;
-						const int16 start_y = target->y - dir_y * half_length;
-						const int16 end_x = target->x;
-						const int16 end_y = target->y;
-
-						skill_area_temp[0] = 0;
-						skill_area_temp[1] = target->id;
-						skill_area_temp[2] = 0;
-						map_foreachindir(skill_area_sub, src->m, start_x, start_y, end_x, end_y, half_width, length, 0, splash_target(src),
-								 src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | SD_SPLASH | 1, skill_castend_damage_id);
-					}
-					return;
-				}
 				case AT_ROARING_PIERCER:
 				case AT_ROARING_PIERCER_S: {
 					if (flag & 1) {
@@ -805,13 +781,6 @@ public:
 					RE_LVL_DMOD(100);
 					base_skillratio += -100 + skillratio;
 					break;
-				case AT_QUILL_SPEAR:
-				case AT_QUILL_SPEAR_S:
-					skillratio = 2050 * skill_lv;
-					skillratio += sstatus->con * 5; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_TEMPEST_FLAP:
 					skillratio = 1250 * skill_lv;
 					skillratio += sstatus->con * 5; // TODO - unknown scaling [munkrej]
@@ -921,16 +890,10 @@ public:
 
 					return skill_attack(skill_get_type(actual_skill), src, src, target, actual_skill, skill_lv, tick, flag);
 				}
-				case AT_QUILL_SPEAR: {
-					const status_change *sc = status_get_sc(src);
-					e_skill actual_skill = resolve_quill_spear_skill(sc, getSkillId());
-					return skill_attack(skill_get_type(actual_skill), src, src, target, actual_skill, skill_lv, tick, flag | SD_ANIMATION);
-				}
 				case AT_PRIMAL_CLAW:
 				case AT_FERAL_CLAW:
 				case AT_ALPHA_CLAW:
 				case AT_TEMPEST_FLAP:
-				case AT_QUILL_SPEAR_S:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
 				case AT_ROARING_PIERCER_S:
 				case AT_ROARING_CHARGE_S:
@@ -1178,9 +1141,9 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_PULSE_OF_MADNESS:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case AT_QUILL_SPEAR:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillQuillSpear>();
 		case AT_QUILL_SPEAR_S:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillQuillSpearS>();
 		case AT_ROARING_CHARGE:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_ROARING_CHARGE_S:
