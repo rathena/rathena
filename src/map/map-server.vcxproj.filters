@@ -630,6 +630,9 @@
     <ClInclude Include="skills/druid/skill_factory_druid.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/solidstomp.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/thunderingcall.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1458,6 +1461,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/skill_factory_druid.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/solidstomp.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/thunderingcall.cpp">

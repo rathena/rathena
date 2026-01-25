@@ -50,6 +50,7 @@
 #include "sharpengust.hpp"
 #include "sharpenhail.hpp"
 #include "shootingfeather.hpp"
+#include "solidstomp.hpp"
 #include "thunderingcall.hpp"
 #include "thunderingfocus.hpp"
 #include "thunderingorb.hpp"
@@ -336,27 +337,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_SOLID_STOMP: {
-					if (!(flag & 1)) {
-						sc_type type = skill_get_sc(getSkillId());
-						if (type != SC_NONE) {
-							sc_start(src, src, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
-						}
-					}
-
-					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-
-					if (!(flag & 1)) {
-						int64 heal = static_cast<int64>(status_get_max_hp(src)) * skill_lv / 100;
-						if (heal > 0) {
-							status_heal(src, heal, 0, 0);
-						}
-					}
-					if (!(flag & 1)) {
-						try_gain_growth_stacks(src, tick, getSkillId());
-					}
-					return;
-				}
 				case AT_GLACIER_STOMP: {
 					if (!(flag & 1)) {
 						int32 gx = 0;
@@ -440,7 +420,6 @@ public:
 				case AT_CHILLING_BLAST:
 				case AT_ROARING_CHARGE:
 				case AT_ROARING_CHARGE_S:
-				case AT_SOLID_STOMP:
 				case AT_FURIOS_STORM:
 					castendDamageId(src, target, skill_lv, tick, flag);
 					return;
@@ -617,10 +596,6 @@ public:
 					}
 					base_skillratio += -100 + skillratio;
 					break;
-				case AT_SOLID_STOMP:
-					skillratio = 10400 + 800 * (skill_lv - 1);
-					base_skillratio += -100 + skillratio;
-					break;
 				default:
 					return;
 			}
@@ -645,8 +620,7 @@ public:
 				case AT_CHILLING_BLAST:
 				case AT_FURIOS_STORM:
 				case AT_TERRA_WAVE:
-				case AT_TERRA_HARVEST:
-				case AT_SOLID_STOMP: {
+				case AT_TERRA_HARVEST: {
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 				}
 				default:
@@ -896,7 +870,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_SAVAGE_LUNGE:
 			return std::make_unique<SkillSavageLunge>();
 		case AT_SOLID_STOMP:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillSolidStomp>();
 		case AT_TEMPEST_FLAP:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_TERRA_HARVEST:
