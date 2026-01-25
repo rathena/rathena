@@ -294,6 +294,7 @@
     <ClInclude Include="skills/druid/aroundflower.hpp" />
     <ClInclude Include="skills/druid/cruelbite.hpp" />
     <ClInclude Include="skills/druid/cuttingwind.hpp" />
+    <ClInclude Include="skills/druid/earthdrill.hpp" />
     <ClInclude Include="skills/druid/earthflower.hpp" />
     <ClInclude Include="skills/druid/flickingtornado.hpp" />
     <ClInclude Include="skills/druid/hunger.hpp" />
@@ -594,6 +595,7 @@
     <ClCompile Include="skills/druid/aroundflower.cpp" />
     <ClCompile Include="skills/druid/cruelbite.cpp" />
     <ClCompile Include="skills/druid/cuttingwind.cpp" />
+    <ClCompile Include="skills/druid/earthdrill.cpp" />
     <ClCompile Include="skills/druid/earthflower.cpp" />
     <ClCompile Include="skills/druid/flickingtornado.cpp" />
     <ClCompile Include="skills/druid/hunger.cpp" />

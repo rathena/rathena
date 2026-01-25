@@ -20,6 +20,7 @@
 #include "aroundflower.hpp"
 #include "cruelbite.hpp"
 #include "cuttingwind.hpp"
+#include "earthdrill.hpp"
 #include "earthflower.hpp"
 #include "flickingtornado.hpp"
 #include "hunger.hpp"
@@ -666,13 +667,6 @@ public:
 					}
 					return;
 				}
-				case KR_EARTH_DRILL: {
-					skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
-					if (!(flag & 1)) {
-						try_gain_growth_stacks(src, tick, getSkillId());
-					}
-					return;
-				}
 				case KR_CHOP_CHOP:
 				case KR_FEATHER_SPRINKLE:
 				case AT_FURIOS_STORM:
@@ -936,15 +930,6 @@ public:
 				case KR_THUNDERING_CALL_S: {
 					skillratio = 9500 + 500 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					return;
-				}
-				case KR_EARTH_DRILL: {
-					skillratio = 1510 + 60 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
 						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 						RE_LVL_DMOD(100);
 					}
@@ -1333,7 +1318,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_DOUBLE_SLASH:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_EARTH_DRILL:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillEarthDrill>();
 		case KR_EARTH_STAMP:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case KR_FEATHER_SPRINKLE:
