@@ -72,9 +72,6 @@
 #include "thunderingorb.hpp"
 #include "transformationbeast.hpp"
 #include "transformationraptor.hpp"
-#include "truthofearth.hpp"
-#include "truthofice.hpp"
-#include "truthofwind.hpp"
 #include "typhoonwing.hpp"
 #include "windbomb.hpp"
 #include "windveil.hpp"
@@ -356,11 +353,9 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_SHOOTING_FEATHER:
 			return std::make_unique<SkillShootingFeather>();
 		case DR_TRUTH_OF_EARTH:
-			return std::make_unique<SkillTruthOfEarth>();
 		case DR_TRUTH_OF_ICE:
-			return std::make_unique<SkillTruthOfIce>();
 		case DR_TRUTH_OF_WIND:
-			return std::make_unique<SkillTruthOfWind>();
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case DR_WIND_BOMB:
 			return std::make_unique<SkillWindBomb>();
 		case DR_WEREWOLF:

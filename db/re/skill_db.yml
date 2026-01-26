@@ -46511,13 +46511,15 @@ Body:
     Description: Truth of Ice
     MaxLevel: 1
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
     Flags:
       Toggleable: true
-    Range: 1
+    Duration1: -1
     Cooldown: 500
     Requires:
       SpCost: 10
-    Status: TRUTH_OF_ICE
+    Status: Truth_Of_Ice
   - Id: 6539
     Name: DR_ICE_TOTEM
     Description: Ice Totem
@@ -46616,13 +46618,15 @@ Body:
     Description: Truth of Wind
     MaxLevel: 1
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
     Flags:
       Toggleable: true
-    Range: 1
+    Duration1: -1
     Cooldown: 500
     Requires:
       SpCost: 10
-    Status: TRUTH_OF_WIND
+    Status: Truth_Of_Wind
   - Id: 6542
     Name: DR_CUTTING_WIND
     Description: Cutting Wind
@@ -46721,13 +46725,15 @@ Body:
     Description: Truth of Earth
     MaxLevel: 1
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
     Flags:
       Toggleable: true
-    Range: 1
+    Duration1: -1
     Cooldown: 500
     Requires:
       SpCost: 10
-    Status: TRUTH_OF_EARTH
+    Status: Truth_Of_Earth
   - Id: 6545
     Name: DR_EARTH_FLOWER
     Description: Earth Flower

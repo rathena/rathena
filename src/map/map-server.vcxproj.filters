@@ -696,15 +696,6 @@
     <ClInclude Include="skills/druid/transformationraptor.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
-    <ClInclude Include="skills/druid/truthofearth.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/truthofice.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/truthofwind.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
     <ClInclude Include="skills/druid/typhoonwing.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1578,15 +1569,6 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/transformationraptor.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/truthofearth.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/truthofice.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/truthofwind.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/typhoonwing.cpp">
