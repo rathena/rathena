@@ -13634,7 +13634,7 @@ int32 status_change_end( block_list* bl, enum sc_type type, int32 tid ){
 				clif_sprite_change(bl, bl->id, LOOK_BODY2, restore_body_style, 0, SELF);
 			}
 			if (!status_isdead(*bl)) {
-				sc_start(bl, bl, SC_TRANSFORM_DELAY, 100, 1, 1000);
+				sc_start(bl, bl, SC_TRANSFORM_DELAY, 100, 1, 3000);
 			}
 		}
 			break;
