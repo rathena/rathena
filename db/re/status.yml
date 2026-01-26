@@ -9956,7 +9956,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-  - Status: WEREWOLF
+  - Status: Werewolf
     Icon: EFST_WEREWOLF
     Flags:
       BlEffect: true
@@ -9990,7 +9990,7 @@ Body:
       bonus bStr, .@lv * 2;
       bonus bLuk, .@lv * 2;
       bonus bHit, .@lv * 10;
-  - Status: WERERAPTOR
+  - Status: Wereraptor
     Icon: EFST_WERERAPTOR
     Flags:
       BlEffect: true
@@ -10021,7 +10021,7 @@ Body:
       bonus bAgi, .@lv * 2;
       bonus bDex, .@lv * 2;
       bonus bFlee, .@lv * 10;
-  - Status: TRUTH_OF_ICE
+  - Status: Truth_Of_Ice
     Icon: EFST_TRUTH_OF_ICE
     Flags:
       NoSaveInfinite: true
@@ -10029,11 +10029,11 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnStart:
-      TRUTH_OF_WIND: true
-      TRUTH_OF_EARTH: true
+      Truth_Of_Wind: true
+      Truth_Of_Earth: true
     Script: |
       bonus2 bMagicAtkEle, Ele_Water, 10;
-  - Status: TRUTH_OF_WIND
+  - Status: Truth_Of_Wind
     Icon: EFST_TRUTH_OF_WIND
     Flags:
       NoSaveInfinite: true
@@ -10041,11 +10041,11 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnStart:
-      TRUTH_OF_ICE: true
-      TRUTH_OF_EARTH: true
+      Truth_Of_Ice: true
+      Truth_Of_Earth: true
     Script: |
       bonus2 bMagicAtkEle, Ele_Wind, 10;
-  - Status: TRUTH_OF_EARTH
+  - Status: Truth_Of_Earth
     Icon: EFST_TRUTH_OF_EARTH
     Flags:
       NoSaveInfinite: true
@@ -10053,8 +10053,8 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnStart:
-      TRUTH_OF_ICE: true
-      TRUTH_OF_WIND: true
+      Truth_Of_Ice: true
+      Truth_Of_Wind: true
     Script: |
       bonus2 bMagicAtkEle, Ele_Earth, 10;
   - Status: NATURE_SHIELD
@@ -10065,7 +10065,7 @@ Body:
       bonus bMdef, .@lv;
       bonus bInt, .@lv;
       bonus bVit, .@lv;
-  - Status: TRANSFORM_DELAY
+  - Status: Transform_Delay
     Icon: EFST_TRANSFORM_DELAY
     Flags:
       Debuff: true

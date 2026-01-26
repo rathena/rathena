@@ -46089,12 +46089,14 @@ Body:
     Description: Transformation Beast
     MaxLevel: 1
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
     Flags:
       Toggleable: true
-    Range: 1
+    Duration1: -1
     Requires:
       SpCost: 10
-    Status: WEREWOLF
+    Status: Werewolf
   - Id: 6525
     Name: DR_ENRAGE_WOLF
     Description: Enrage Beast
@@ -46270,12 +46272,14 @@ Body:
     Description: Transformation Raptor
     MaxLevel: 1
     TargetType: Self
+    DamageFlags:
+      NoDamage: true
     Flags:
       Toggleable: true
-    Range: 1
+    Duration1: -1
     Requires:
       SpCost: 10
-    Status: WERERAPTOR
+    Status: Wereraptor
   - Id: 6532
     Name: DR_ENRAGE_RAPTOR
     Description: Enrage Raptor

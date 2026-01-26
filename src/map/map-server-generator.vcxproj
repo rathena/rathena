@@ -345,8 +345,6 @@
     <ClInclude Include="skills/druid/thunderingcall.hpp" />
     <ClInclude Include="skills/druid/thunderingfocus.hpp" />
     <ClInclude Include="skills/druid/thunderingorb.hpp" />
-    <ClInclude Include="skills/druid/transformationbeast.hpp" />
-    <ClInclude Include="skills/druid/transformationraptor.hpp" />
     <ClInclude Include="skills/druid/typhoonwing.hpp" />
     <ClInclude Include="skills/druid/windbomb.hpp" />
     <ClInclude Include="skills/druid/windveil.hpp" />
@@ -684,8 +682,6 @@
     <ClCompile Include="skills/druid/thunderingcall.cpp" />
     <ClCompile Include="skills/druid/thunderingfocus.cpp" />
     <ClCompile Include="skills/druid/thunderingorb.cpp" />
-    <ClCompile Include="skills/druid/transformationbeast.cpp" />
-    <ClCompile Include="skills/druid/transformationraptor.cpp" />
     <ClCompile Include="skills/druid/typhoonwing.cpp" />
     <ClCompile Include="skills/druid/windbomb.cpp" />
     <ClCompile Include="skills/druid/windveil.cpp" />

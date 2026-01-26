@@ -70,8 +70,6 @@
 #include "thunderingcall.hpp"
 #include "thunderingfocus.hpp"
 #include "thunderingorb.hpp"
-#include "transformationbeast.hpp"
-#include "transformationraptor.hpp"
 #include "typhoonwing.hpp"
 #include "windbomb.hpp"
 #include "windveil.hpp"
@@ -359,9 +357,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case DR_WIND_BOMB:
 			return std::make_unique<SkillWindBomb>();
 		case DR_WEREWOLF:
-			return std::make_unique<SkillTransformationBeast>();
 		case DR_WERERAPTOR:
-			return std::make_unique<SkillTransformationRaptor>();
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 
 		case KR_CHOP_CHOP:
 			return std::make_unique<SkillChopChop>();

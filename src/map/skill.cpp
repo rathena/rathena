@@ -17659,33 +17659,23 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 			}
 			break;
 		case DR_WEREWOLF:
-			if (sc && (sc->getSCE(SC_WERERAPTOR) ||
-				sc->getSCE(SC_TRUTH_OF_ICE) || sc->getSCE(SC_TRUTH_OF_WIND) || sc->getSCE(SC_TRUTH_OF_EARTH))) {
+			if (sc != nullptr && (sc->hasSCE(SC_WERERAPTOR) || sc->hasSCE(SC_TRANSFORM_DELAY) ||
+				sc->hasSCE(SC_TRUTH_OF_ICE) || sc->hasSCE(SC_TRUTH_OF_WIND) || sc->hasSCE(SC_TRUTH_OF_EARTH))) {
 				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
 				return false;
 			}
 			break;
 		case DR_WERERAPTOR:
-			if (sc && (sc->getSCE(SC_WEREWOLF) ||
-				sc->getSCE(SC_TRUTH_OF_ICE) || sc->getSCE(SC_TRUTH_OF_WIND) || sc->getSCE(SC_TRUTH_OF_EARTH))) {
+			if (sc != nullptr  && (sc->hasSCE(SC_WEREWOLF) || sc->hasSCE(SC_TRANSFORM_DELAY) ||
+				sc->hasSCE(SC_TRUTH_OF_ICE) || sc->hasSCE(SC_TRUTH_OF_WIND) || sc->hasSCE(SC_TRUTH_OF_EARTH))) {
 				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
 				return false;
 			}
 			break;
 		case DR_TRUTH_OF_ICE:
-			if (sc && (sc->getSCE(SC_WEREWOLF) || sc->getSCE(SC_WERERAPTOR))) {
-				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
-				return false;
-			}
-			break;
 		case DR_TRUTH_OF_WIND:
-			if (sc && (sc->getSCE(SC_WEREWOLF) || sc->getSCE(SC_WERERAPTOR))) {
-				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
-				return false;
-			}
-			break;
 		case DR_TRUTH_OF_EARTH:
-			if (sc && (sc->getSCE(SC_WEREWOLF) || sc->getSCE(SC_WERERAPTOR))) {
+			if (sc != nullptr  && (sc->hasSCE(SC_WEREWOLF) || sc->hasSCE(SC_WERERAPTOR))) {
 				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
 				return false;
 			}
