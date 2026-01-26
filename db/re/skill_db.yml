@@ -46241,11 +46241,11 @@ Body:
       - Level: 2
         Time: 120000
       - Level: 3
-        Time: 18000
+        Time: 180000
       - Level: 4
-        Time: 24000
+        Time: 240000
       - Level: 5
-        Time: 30000
+        Time: 300000
     Cooldown: 180000
     Requires:
       SpCost:
@@ -46484,11 +46484,11 @@ Body:
       - Level: 2
         Time: 120000
       - Level: 3
-        Time: 18000
+        Time: 180000
       - Level: 4
-        Time: 24000
+        Time: 240000
       - Level: 5
-        Time: 30000
+        Time: 300000
     Cooldown: 180000
     Requires:
       SpCost:
