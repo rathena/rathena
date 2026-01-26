@@ -17,6 +17,7 @@
 #include "../../unit.hpp"
 #include "../status_skill_impl.hpp"
 
+#include "aerosync.hpp"
 #include "alphaclaw.hpp"
 #include "aroundflower.hpp"
 #include "chillingblast.hpp"
@@ -571,62 +572,6 @@ public:
 			}
 		}
 	};
-
-	class SkillAliteaAeroSyncImpl : public SkillImpl {
-	public:
-		SkillAliteaAeroSyncImpl() : SkillImpl(AT_AERO_SYNC) {}
-
-		void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const override {
-			applyAeroSync(src, target, skill_lv, tick, flag);
-		}
-
-	private:
-		void applyAeroSync(block_list *src, block_list *target, uint16 skill_lv, t_tick, int32 flag) const {
-			if (flag & 1) {
-				return;
-			}
-
-			map_session_data *sd = BL_CAST(BL_PC, src);
-			map_session_data *tsd = BL_CAST(BL_PC, target);
-			status_change *sc = status_get_sc(src);
-
-			if (!sd || !tsd || !sc) {
-				return;
-			}
-
-				if (!sc->hasSCE(SC_WERERAPTOR) || !sc->hasSCE(SC_FLIP_FLAP) || sc->hasSCE(SC_FLIP_FLAP_TARGET)) {
-					clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
-					return;
-				}
-
-			if (sd->status.party_id == 0 || sd->status.party_id != tsd->status.party_id) {
-				clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
-				return;
-			}
-
-			const int32 range = skill_get_range2(src, getSkillId(), skill_lv, true);
-			if (range > 0 && distance_xy(src->x, src->y, target->x, target->y) > range) {
-				clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
-				return;
-			}
-
-			if (!unit_movepos(src, target->x, target->y, 2, true)) {
-				clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
-				return;
-			}
-
-			clif_blown(src);
-			clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-
-			const int32 flip_lv = pc_checkskill(sd, AT_FLIP_FLAP);
-			if (flip_lv <= 0) {
-				return;
-			}
-
-			const t_tick duration = skill_get_time(AT_FLIP_FLAP, flip_lv);
-			sc_start(src, target, SC_FLIP_FLAP_TARGET, 100, flip_lv, duration);
-		}
-	};
 } // namespace
 
 std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_id) const {
@@ -722,7 +667,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 			return std::make_unique<SkillWindVeil>();
 
 		case AT_AERO_SYNC:
-			return std::make_unique<SkillAliteaAeroSyncImpl>();
+			return std::make_unique<SkillAeroSync>();
 		case AT_ALPHA_CLAW:
 			return std::make_unique<SkillAlphaClaw>();
 		case AT_ALPHA_PHASE:
