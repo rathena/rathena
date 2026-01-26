@@ -534,6 +534,9 @@
     <ClInclude Include="skills/druid/alphaclaw.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/alphaphase.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/aroundflower.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1386,6 +1389,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/alphaclaw.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/alphaphase.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/aroundflower.cpp">

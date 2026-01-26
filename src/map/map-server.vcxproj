@@ -293,6 +293,7 @@
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
     <ClInclude Include="skills/druid/aerosync.hpp" />
     <ClInclude Include="skills/druid/alphaclaw.hpp" />
+    <ClInclude Include="skills/druid/alphaphase.hpp" />
     <ClInclude Include="skills/druid/aroundflower.hpp" />
     <ClInclude Include="skills/druid/chillingblast.hpp" />
     <ClInclude Include="skills/druid/chopchop.hpp" />
@@ -625,6 +626,7 @@
     <ClCompile Include="skills/custom/skill_factory_custom.cpp" />
     <ClCompile Include="skills/druid/aerosync.cpp" />
     <ClCompile Include="skills/druid/alphaclaw.cpp" />
+    <ClCompile Include="skills/druid/alphaphase.cpp" />
     <ClCompile Include="skills/druid/aroundflower.cpp" />
     <ClCompile Include="skills/druid/chillingblast.cpp" />
     <ClCompile Include="skills/druid/chopchop.cpp" />
