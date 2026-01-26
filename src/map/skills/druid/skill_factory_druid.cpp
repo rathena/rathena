@@ -68,6 +68,7 @@
 #include "typhoonwing.hpp"
 #include "windbomb.hpp"
 #include "windveil.hpp"
+#include "zephyrlink.hpp"
 
 namespace {
 	constexpr int32 kClawChainDuration = 5000;
@@ -364,12 +365,6 @@ public:
 
 		void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const override {
 			switch (getSkillId()) {
-				case AT_ZEPHYR_LINK:
-					if (!(flag & 1)) {
-						clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-					}
-					sc_start(src, target, SC_ZEPHYR_LINK, 100, 0, skill_get_time(getSkillId(), skill_lv));
-					return;
 				default:
 					if (!(flag & 1)) {
 						clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
@@ -717,7 +712,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_TERRA_WAVE:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_ZEPHYR_LINK:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillZephyrLink>();
 
 		default:
 			return nullptr;

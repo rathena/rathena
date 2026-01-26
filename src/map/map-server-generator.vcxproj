@@ -343,6 +343,7 @@
     <ClInclude Include="skills/druid/typhoonwing.hpp" />
     <ClInclude Include="skills/druid/windbomb.hpp" />
     <ClInclude Include="skills/druid/windveil.hpp" />
+    <ClInclude Include="skills/druid/zephyrlink.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
     <ClInclude Include="skills/gunslinger/cracker.hpp" />
     <ClInclude Include="skills/gunslinger/desperado.hpp" />
@@ -674,6 +675,7 @@
     <ClCompile Include="skills/druid/typhoonwing.cpp" />
     <ClCompile Include="skills/druid/windbomb.cpp" />
     <ClCompile Include="skills/druid/windveil.cpp" />
+    <ClCompile Include="skills/druid/zephyrlink.cpp" />
     <ClCompile Include="skills/gunslinger/bullseye.cpp" />
     <ClCompile Include="skills/gunslinger/cracker.cpp" />
     <ClCompile Include="skills/gunslinger/desperado.cpp" />
