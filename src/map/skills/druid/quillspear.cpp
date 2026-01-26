@@ -23,7 +23,7 @@ void SkillQuillSpear::castendDamageId(block_list* src, block_list* target, uint1
 	if (flag & 1) {
 		SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 	} else {
-		const bool apex = sc && sc->hasSCE(SC_APEX_PHASE);
+		const bool apex = sc != nullptr && sc->hasSCE(SC_APEX_PHASE);
 		const int16 half_width = (apex) ? 2 : 1;
 		const int16 half_length = 3;
 		const int32 length = half_length * 2 + 1;

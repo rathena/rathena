@@ -30,7 +30,7 @@ void SkillFeatherSprinkle::calculateSkillRatio(const Damage* wd, const block_lis
 	const status_data* sstatus = status_get_status_data(*src);
 
 	int32 skillratio = 1100 + 90 * (skill_lv - 1);
-	if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
+	if (sc != nullptr && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
 		skillratio += 390;
 	}
 	skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]

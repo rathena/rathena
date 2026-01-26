@@ -21,7 +21,7 @@ void SkillAeroSync::castendNoDamageId(block_list* src, block_list* target, uint1
 	map_session_data *tsd = BL_CAST(BL_PC, target);
 	status_change *sc = status_get_sc(src);
 
-	if (!sd || !tsd || !sc) {
+	if (sd == nullptr || tsd == nullptr || sc == nullptr) {
 		return;
 	}
 

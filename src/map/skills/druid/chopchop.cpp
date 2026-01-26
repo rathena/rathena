@@ -26,7 +26,7 @@ void SkillChopChop::calculateSkillRatio(const Damage* wd, const block_list* src,
 	const status_data* sstatus = status_get_status_data(*src);
 
 	int32 skillratio = 740 + 80 * (skill_lv - 1);
-	if (sc && sc->hasSCE(SC_ENRAGE_WOLF)) {
+	if (sc != nullptr && sc->hasSCE(SC_ENRAGE_WOLF)) {
 		skillratio += 400;
 	}
 	skillratio += sstatus->str; // TODO - unknown scaling [munkrej]

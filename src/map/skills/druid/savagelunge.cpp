@@ -49,7 +49,7 @@ void SkillSavageLunge::calculateSkillRatio(const Damage*, const block_list* src,
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
+	const bool madness = sc != nullptr && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 	int32 skillratio = (madness ? 9000 : 7500) + (madness ? 2000 : 1500) * (skill_lv - 1);
 	skillratio += sstatus->pow * 5; // TODO - unknown scaling [munkrej]

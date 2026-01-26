@@ -31,7 +31,7 @@ void SkillIcePillar::calculateSkillRatio(const Damage* wd, const block_list* src
 
 	const bool alt_damage = (mflag & SKILL_ALTDMG_FLAG) != 0;
 	int32 skillratio = alt_damage ? (450 + 50 * (skill_lv - 1)) : (720 + 120 * (skill_lv - 1));
-	if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
+	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_ICE)) {
 		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 		RE_LVL_DMOD(100);
 	}

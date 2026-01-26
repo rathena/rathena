@@ -22,7 +22,7 @@ void SkillSharpenHail::calculateSkillRatio(const Damage* wd, const block_list* s
 	const status_data* sstatus = status_get_status_data(*src);
 
 	int32 skillratio = 640 + 40 * (skill_lv - 1);
-	if (sc && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
+	if (sc != nullptr && sc->hasSCE(SC_ENRAGE_RAPTOR)) {
 		skillratio += 300;
 	}
 	skillratio += sstatus->dex; // TODO - unknown scaling [munkrej]

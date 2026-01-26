@@ -32,7 +32,7 @@ void SkillHunger::calculateSkillRatio(const Damage* wd, const block_list* src, c
 	const status_data* sstatus = status_get_status_data(*src);
 
 	int32 skillratio = 80 * skill_lv;
-	if (sc && sc->hasSCE(SC_ENRAGE_WOLF)) {
+	if (sc != nullptr && sc->hasSCE(SC_ENRAGE_WOLF)) {
 		skillratio += 40 * skill_lv;
 	}
 	skillratio += sstatus->str; // TODO - unknown scaling [munkrej]

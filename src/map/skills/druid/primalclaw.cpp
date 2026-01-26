@@ -57,7 +57,7 @@ void SkillPrimalClaw::calculateSkillRatio(const Damage*, const block_list* src, 
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
+	const bool madness = sc != nullptr && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 	int32 skillratio = 1100 + 950 * (skill_lv - 1);
 	if (madness) {

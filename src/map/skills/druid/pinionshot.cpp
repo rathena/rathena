@@ -25,7 +25,7 @@ void SkillPinionShot::castendDamageId(block_list* src, block_list* target, uint1
 	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, attack_flag);
 
 	if (!(flag & 1)) {
-		status_change_entry *charge = sc ? sc->getSCE(SC_ZEPHYR_CHARGE) : nullptr;
+		status_change_entry *charge = sc != nullptr ? sc->getSCE(SC_ZEPHYR_CHARGE) : nullptr;
 		int32 current = charge ? charge->val1 : 0;
 		if (current >= 5) {
 			map_session_data *sd = BL_CAST(BL_PC, src);
@@ -60,7 +60,7 @@ int32 apply_zephyr_link_sub(block_list *bl, va_list ap) {
 	t_tick tick = va_arg(ap, t_tick);
 	map_session_data *sd = BL_CAST(BL_PC, bl);
 
-	if (!sd || sd->status.party_id != party_id) {
+	if (sd == nullptr || sd->status.party_id != party_id) {
 		return 0;
 	}
 

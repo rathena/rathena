@@ -22,7 +22,7 @@ void SkillIceSplash::calculateSkillRatio(const Damage* wd, const block_list* src
 	const status_data* sstatus = status_get_status_data(*src);
 
 	int32 skillratio = 1140 + 70 * (skill_lv - 1);
-	if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
+	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_ICE)) {
 		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
 		RE_LVL_DMOD(100);
 	}

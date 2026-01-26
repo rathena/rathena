@@ -85,7 +85,7 @@
 	constexpr int32 kGrowthDuration = 10000;
 
 	int32 SkillFactoryDruid::get_madness_stage(const status_change *sc) {
-		if (!sc) {
+		if (sc == nullptr) {
 			return 0;
 		}
 
@@ -116,7 +116,7 @@
 	}
 
 	e_skill SkillFactoryDruid::resolve_thundering_charge_skill(const status_change *sc, e_skill skill_id) {
-		if (!sc || !sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
+		if (sc == nullptr || !sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
 			return skill_id;
 		}
 
@@ -141,7 +141,7 @@
 			return skill_id;
 		}
 
-		if (sc && sc->hasSCE(SC_APEX_PHASE)) {
+		if (sc != nullptr && sc->hasSCE(SC_APEX_PHASE)) {
 			return AT_QUILL_SPEAR_S;
 		}
 
@@ -150,9 +150,9 @@
 
 	void SkillFactoryDruid::try_gain_madness(block_list *src) {
 		status_change *sc = status_get_sc(src);
-		status_change_entry *pulse = sc ? sc->getSCE(SC_PULSE_OF_MADNESS) : nullptr;
+		status_change_entry *pulse = sc != nullptr ? sc->getSCE(SC_PULSE_OF_MADNESS) : nullptr;
 
-		if (!pulse) {
+		if (pulse == nullptr) {
 			return;
 		}
 
@@ -185,7 +185,7 @@
 
 	void add_thundering_charge(block_list *src, int32 count) {
 		status_change *sc = status_get_sc(src);
-		if (!sc || sc->hasSCE(SC_THUNDERING_ROD_MAX) || count <= 0) {
+		if (sc == nullptr || sc->hasSCE(SC_THUNDERING_ROD_MAX) || count <= 0) {
 			return;
 		}
 
@@ -206,7 +206,7 @@
 			return;
 		}
 
-		if (sc && sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
+		if (sc != nullptr && sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
 			status_change_end(src, SC_THUNDERING_ROD_MAX);
 		} else {
 			add_thundering_charge(src, gain);
@@ -217,7 +217,7 @@
 		map_session_data *sd = BL_CAST(BL_PC, src);
 		status_change *sc = status_get_sc(src);
 
-		if (!sd || !sc || amount <= 0) {
+		if (sd == nullptr || sc == nullptr || amount <= 0) {
 			return;
 		}
 
@@ -270,12 +270,12 @@
 	}
 
 	bool get_glacier_center(const status_change *sc, int32 &x, int32 &y, int32 &map_id) {
-		if (!sc) {
+		if (sc == nullptr) {
 			return false;
 		}
 
 		const status_change_entry *sce = sc->getSCE(SC_GLACIER_SHEILD);
-		if (!sce) {
+		if (sce == nullptr) {
 			return false;
 		}
 

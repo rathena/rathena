@@ -25,7 +25,7 @@ void SkillAlphaClaw::castendDamageId(block_list* src, block_list* target, uint16
 	}
 
 	if (!(flag & 1)) {
-		if (!sc || !sc->hasSCE(SC_FERAL_CLAW)) {
+		if (sc == nullptr || !sc->hasSCE(SC_FERAL_CLAW)) {
 			map_session_data* sd = BL_CAST(BL_PC, src);
 			if (sd) {
 				clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
@@ -63,7 +63,7 @@ void SkillAlphaClaw::calculateSkillRatio(const Damage*, const block_list* src, c
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
+	const bool madness = sc != nullptr && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 	int32 skillratio = 2200 + 1400 * (skill_lv - 1);
 	if (madness) {
