@@ -27,7 +27,7 @@ void SkillAroundFlower::calculateSkillRatio(const Damage* wd, const block_list* 
 
 	int32 skillratio = 100 * skill_lv;
 	if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
-		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
+		skillratio += 5 * sstatus->int_;
 	}
 	RE_LVL_DMOD(100);
 	base_skillratio += -100 + skillratio;
