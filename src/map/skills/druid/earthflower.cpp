@@ -21,6 +21,7 @@ void SkillEarthFlower::calculateSkillRatio(const Damage* wd, const block_list* s
 		skillratio += 5 * sstatus->int_;
 	}
 
+	// Unlike what the description indicates, the BaseLevel modifier is not part of the condition on SC_TRUTH_OF_EARTH
 	RE_LVL_DMOD(100);
 }
 
