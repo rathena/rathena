@@ -322,6 +322,7 @@
     <ClInclude Include="skills/druid/pinionshot.hpp" />
     <ClInclude Include="skills/druid/primalclaw.hpp" />
     <ClInclude Include="skills/druid/quillspear.hpp" />
+    <ClInclude Include="skills/druid/roaringcharge.hpp" />
     <ClInclude Include="skills/druid/roaringpiercer.hpp" />
     <ClInclude Include="skills/druid/savagelunge.hpp" />
     <ClInclude Include="skills/druid/sharpengust.hpp" />
@@ -650,6 +651,7 @@
     <ClCompile Include="skills/druid/pinionshot.cpp" />
     <ClCompile Include="skills/druid/primalclaw.cpp" />
     <ClCompile Include="skills/druid/quillspear.cpp" />
+    <ClCompile Include="skills/druid/roaringcharge.cpp" />
     <ClCompile Include="skills/druid/roaringpiercer.cpp" />
     <ClCompile Include="skills/druid/savagelunge.cpp" />
     <ClCompile Include="skills/druid/sharpengust.cpp" />

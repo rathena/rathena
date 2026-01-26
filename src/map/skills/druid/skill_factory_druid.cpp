@@ -48,6 +48,7 @@
 #include "pinionshot.hpp"
 #include "primalclaw.hpp"
 #include "quillspear.hpp"
+#include "roaringcharge.hpp"
 #include "roaringpiercer.hpp"
 #include "savagelunge.hpp"
 #include "sharpengust.hpp"
@@ -340,14 +341,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_ROARING_CHARGE:
-				case AT_ROARING_CHARGE_S: {
-					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					if (!(flag & 1) && getSkillId() == AT_ROARING_CHARGE) {
-						try_gain_thundering_charge(src, sc, getSkillId(), 1 + skill_lv);
-					}
-					return;
-				}
 				case AT_FURIOS_STORM:
 				default:
 					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
@@ -376,8 +369,6 @@ public:
 					}
 					sc_start(src, target, SC_ZEPHYR_LINK, 100, 0, skill_get_time(getSkillId(), skill_lv));
 					return;
-				case AT_ROARING_CHARGE:
-				case AT_ROARING_CHARGE_S:
 				case AT_FURIOS_STORM:
 					castendDamageId(src, target, skill_lv, tick, flag);
 					return;
@@ -498,22 +489,6 @@ public:
 					skillratio = 15000;
 					base_skillratio += -100 + skillratio;
 					break;
-				case AT_ROARING_CHARGE:
-					skillratio = 8000 + 400 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
-				case AT_ROARING_CHARGE_S:
-					skillratio = 11500 + 500 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_FURIOS_STORM:
 					skillratio = 7800 + 400 * (skill_lv - 1);
 					base_skillratio += -100 + skillratio;
@@ -541,16 +516,8 @@ public:
 
 		int64 splashDamage(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const override {
 			switch (getSkillId()) {
-				case AT_ROARING_CHARGE: {
-					e_skill actual_skill = getSkillId();
-					const status_change *sc = status_get_sc(src);
-					actual_skill = resolve_thundering_charge_skill(sc, actual_skill);
-
-					return skill_attack(skill_get_type(actual_skill), src, src, target, actual_skill, skill_lv, tick, flag);
-				}
 				case AT_TEMPEST_FLAP:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
-				case AT_ROARING_CHARGE_S:
 				case AT_GLACIER_MONOLITH:
 				case AT_GLACIER_NOVA:
 				case AT_FURIOS_STORM:
@@ -795,9 +762,9 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_QUILL_SPEAR_S:
 			return std::make_unique<SkillQuillSpearS>();
 		case AT_ROARING_CHARGE:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillRoaringCharge>();
 		case AT_ROARING_CHARGE_S:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillRoaringChargeS>();
 		case AT_ROARING_PIERCER:
 			return std::make_unique<SkillRoaringPiercer>();
 		case AT_ROARING_PIERCER_S:
