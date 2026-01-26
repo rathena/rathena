@@ -3,28 +3,29 @@
 
 #include "earthflower.hpp"
 
+#include <config/const.hpp>
+
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
-SkillEarthFlower::SkillEarthFlower() : SkillImplRecursiveDamageSplash(DR_EARTH_FLOWER) {
+SkillEarthFlower::SkillEarthFlower() : SkillImpl(DR_EARTH_FLOWER) {
 }
 
-void SkillEarthFlower::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	}
-
-	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
-}
-
-void SkillEarthFlower::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+void SkillEarthFlower::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	int32 skillratio = 100 * skill_lv;
-	if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
-		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-		RE_LVL_DMOD(100);
+	skillratio += -100 + 100 * skill_lv;
+
+	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
+		skillratio += 5 * sstatus->int_;
 	}
-	base_skillratio += -100 + skillratio;
+
+	RE_LVL_DMOD(100);
+}
+
+void SkillEarthFlower::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+
+	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 }
