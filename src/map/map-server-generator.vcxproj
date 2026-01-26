@@ -322,6 +322,7 @@
     <ClInclude Include="skills/druid/icetotem.hpp" />
     <ClInclude Include="skills/druid/lowflight.hpp" />
     <ClInclude Include="skills/druid/nastyslash.hpp" />
+    <ClInclude Include="skills/druid/natureharmony.hpp" />
     <ClInclude Include="skills/druid/natureprotection.hpp" />
     <ClInclude Include="skills/druid/nomercyclaw.hpp" />
     <ClInclude Include="skills/druid/pinionshot.hpp" />
@@ -657,6 +658,7 @@
     <ClCompile Include="skills/druid/icetotem.cpp" />
     <ClCompile Include="skills/druid/lowflight.cpp" />
     <ClCompile Include="skills/druid/nastyslash.cpp" />
+    <ClCompile Include="skills/druid/natureharmony.cpp" />
     <ClCompile Include="skills/druid/natureprotection.cpp" />
     <ClCompile Include="skills/druid/nomercyclaw.cpp" />
     <ClCompile Include="skills/druid/pinionshot.cpp" />
