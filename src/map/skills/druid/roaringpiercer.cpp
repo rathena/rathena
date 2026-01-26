@@ -13,8 +13,6 @@ SkillRoaringPiercer::SkillRoaringPiercer() : SkillImplRecursiveDamageSplash(AT_R
 }
 
 void SkillRoaringPiercer::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	status_change* sc = status_get_sc(src);
-
 	if (!(flag & 1)) {
 		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	}

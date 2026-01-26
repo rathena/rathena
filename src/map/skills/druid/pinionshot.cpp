@@ -48,7 +48,6 @@ void SkillPinionShot::castendDamageId(block_list* src, block_list* target, uint1
 }
 
 void SkillPinionShot::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
 	int32 skillratio = 2450 * skill_lv;
