@@ -4560,14 +4560,6 @@ static void battle_calc_multi_attack(struct Damage* wd, block_list *src,block_li
 			if (sc && sc->hasSCE(SC_APEX_PHASE))
 				wd->div_ = 3;
 			break;
-		case DR_CUTTING_WIND:
-			if (sc && sc->hasSCE(SC_TRUTH_OF_WIND))
-				wd->div_ = 4;
-			break;
-		case DR_WIND_BOMB:
-			if (sc && sc->hasSCE(SC_TRUTH_OF_WIND))
-				wd->div_ = 6;
-			break;
 		case SC_FATALMENACE:
 			if (sd && sd->weapontype1 == W_DAGGER)
 				wd->div_++;
@@ -8121,11 +8113,11 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 			}
 			break;
 		case DR_CUTTING_WIND:
-			if (sc && sc->hasSCE(SC_TRUTH_OF_WIND))
+			if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND))
 				ad.div_ = 4;
 			break;
 		case DR_WIND_BOMB:
-			if (sc && sc->hasSCE(SC_TRUTH_OF_WIND))
+			if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND))
 				ad.div_ = 6;
 			break;
 		case SOA_TALISMAN_OF_FOUR_BEARING_GOD:

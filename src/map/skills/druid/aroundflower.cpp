@@ -15,12 +15,13 @@ void SkillAroundFlower::calculateSkillRatio(const Damage* wd, const block_list* 
 	const status_change* sc = status_get_sc(src);
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + skillratio = 100 * skill_lv;
+	skillratio += -100 + 100 * skill_lv;
 
 	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
 		skillratio += 5 * sstatus->int_;
 	}
 
+	// Unlike what the description indicates, the BaseLevel modifier is not part of the condition on SC_TRUTH_OF_EARTH
 	RE_LVL_DMOD(100);
 }
 
