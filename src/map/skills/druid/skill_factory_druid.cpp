@@ -33,6 +33,7 @@
 #include "feralclaw.hpp"
 #include "flickingtornado.hpp"
 #include "frenzyfang.hpp"
+#include "furiousstorm.hpp"
 #include "glacialshard.hpp"
 #include "glacialstomp.hpp"
 #include "gravityhole.hpp"
@@ -342,7 +343,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_FURIOS_STORM:
 				default:
 					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 					if (!(flag & 1)) {
@@ -369,9 +369,6 @@ public:
 						clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 					}
 					sc_start(src, target, SC_ZEPHYR_LINK, 100, 0, skill_get_time(getSkillId(), skill_lv));
-					return;
-				case AT_FURIOS_STORM:
-					castendDamageId(src, target, skill_lv, tick, flag);
 					return;
 				default:
 					if (!(flag & 1)) {
@@ -490,10 +487,6 @@ public:
 					skillratio = 15000;
 					base_skillratio += -100 + skillratio;
 					break;
-				case AT_FURIOS_STORM:
-					skillratio = 7800 + 400 * (skill_lv - 1);
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_TERRA_WAVE:
 					skillratio = 12000 + 300 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
@@ -521,7 +514,6 @@ public:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
 				case AT_GLACIER_MONOLITH:
 				case AT_GLACIER_NOVA:
-				case AT_FURIOS_STORM:
 				case AT_TERRA_WAVE:
 				case AT_TERRA_HARVEST: {
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
@@ -683,7 +675,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_FRENZY_FANG:
 			return std::make_unique<SkillFrenzyFang>();
 		case AT_FURIOS_STORM:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillFuriousStorm>();
 		case AT_GLACIER_MONOLITH:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_GLACIER_NOVA:
