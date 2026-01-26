@@ -62,6 +62,7 @@
 #include "sharpenhail.hpp"
 #include "shootingfeather.hpp"
 #include "solidstomp.hpp"
+#include "terraharvest.hpp"
 #include "terrawave.hpp"
 #include "thunderingcall.hpp"
 #include "thunderingfocus.hpp"
@@ -355,13 +356,6 @@ public:
 						if (is_thundering_charge_skill(getSkillId())) {
 							try_gain_thundering_charge(src, sc, getSkillId(), 1);
 						}
-						switch (getSkillId()) {
-							case AT_TERRA_HARVEST:
-								try_gain_growth_stacks(src, tick, getSkillId());
-								break;
-							default:
-								break;
-						}
 					}
 					return;
 			}
@@ -424,14 +418,6 @@ public:
 					skillratio = 15000;
 					base_skillratio += -100 + skillratio;
 					break;
-				case AT_TERRA_HARVEST:
-					skillratio = 18000 + 500 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
 				default:
 					return;
 			}
@@ -442,8 +428,7 @@ public:
 				case AT_TEMPEST_FLAP:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
 				case AT_GLACIER_MONOLITH:
-				case AT_GLACIER_NOVA:
-				case AT_TERRA_HARVEST: {
+				case AT_GLACIER_NOVA: {
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 				}
 				default:
@@ -603,7 +588,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_TEMPEST_FLAP:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_TERRA_HARVEST:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillTerraHarvest>();
 		case AT_TERRA_WAVE:
 			return std::make_unique<SkillTerraWave>();
 		case AT_ZEPHYR_LINK:

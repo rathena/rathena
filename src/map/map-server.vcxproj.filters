@@ -666,6 +666,9 @@
     <ClInclude Include="skills/druid/solidstomp.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/terraharvest.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/terrawave.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1536,6 +1539,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/solidstomp.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/terraharvest.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/terrawave.cpp">
