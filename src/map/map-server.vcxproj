@@ -312,6 +312,7 @@
     <ClInclude Include="skills/druid/frenzyfang.hpp" />
     <ClInclude Include="skills/druid/furiousstorm.hpp" />
     <ClInclude Include="skills/druid/glacialmonolith.hpp" />
+    <ClInclude Include="skills/druid/glacialnova.hpp" />
     <ClInclude Include="skills/druid/glacialshard.hpp" />
     <ClInclude Include="skills/druid/glacialstomp.hpp" />
     <ClInclude Include="skills/druid/gravityhole.hpp" />
@@ -653,6 +654,7 @@
     <ClCompile Include="skills/druid/frenzyfang.cpp" />
     <ClCompile Include="skills/druid/furiousstorm.cpp" />
     <ClCompile Include="skills/druid/glacialmonolith.cpp" />
+    <ClCompile Include="skills/druid/glacialnova.cpp" />
     <ClCompile Include="skills/druid/glacialshard.cpp" />
     <ClCompile Include="skills/druid/glacialstomp.cpp" />
     <ClCompile Include="skills/druid/gravityhole.cpp" />

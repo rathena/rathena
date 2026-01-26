@@ -591,6 +591,9 @@
     <ClInclude Include="skills/druid/glacialmonolith.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/glacialnova.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/glacialshard.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1470,6 +1473,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/glacialmonolith.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/glacialnova.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/glacialshard.cpp">

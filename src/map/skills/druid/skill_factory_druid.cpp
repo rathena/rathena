@@ -38,6 +38,7 @@
 #include "frenzyfang.hpp"
 #include "furiousstorm.hpp"
 #include "glacialmonolith.hpp"
+#include "glacialnova.hpp"
 #include "glacialshard.hpp"
 #include "glacialstomp.hpp"
 #include "gravityhole.hpp"
@@ -320,83 +321,6 @@ namespace {
 
 		return static_cast<int32>(skill_attack(skill_get_type(static_cast<e_skill>(skill_id)), src, src, bl, skill_id, skill_lv, tick, flag | SD_ANIMATION));
 	}
-
-class SkillDruidImpl : public SkillImplRecursiveDamageSplash {
-public:
-	explicit SkillDruidImpl(e_skill skill_id) : SkillImplRecursiveDamageSplash(skill_id) {}
-
-		void castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const override {
-			status_change *sc = status_get_sc(src);
-
-			if (!(flag & 1)) {
-				clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-			}
-
-			switch (getSkillId()) {
-				default:
-					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					if (!(flag & 1)) {
-						if (is_thundering_charge_skill(getSkillId())) {
-							try_gain_thundering_charge(src, sc, getSkillId(), 1);
-						}
-					}
-					return;
-			}
-		}
-
-		void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 &flag) const override {
-			switch (getSkillId()) {
-				default:
-					if (!(flag & 1)) {
-						clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-					}
-					return;
-			}
-		}
-
-		void castendPos2(block_list *src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32 &flag) const override {
-			switch (getSkillId()) {
-				default:
-					SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
-					break;
-			}
-
-			if (!(flag & 1)) {
-				const status_change *sc = status_get_sc(src);
-				try_gain_thundering_charge(src, sc, getSkillId(), 1);
-				try_gain_growth_stacks(src, tick, getSkillId());
-			}
-		}
-
-		void calculateSkillRatio(const Damage *, const block_list *src, const block_list *, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const override {
-			const status_change *sc = status_get_sc(src);
-			const status_data *sstatus = status_get_status_data(*src);
-			int32 skillratio = 0;
-			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
-
-			switch (getSkillId()) {
-				case AT_GLACIER_NOVA:
-					skillratio = 15000;
-					base_skillratio += -100 + skillratio;
-					break;
-				default:
-					return;
-			}
-		}
-
-		int64 splashDamage(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const override {
-			switch (getSkillId()) {
-				case AT_GLACIER_NOVA: {
-					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
-				}
-				default:
-					break;
-			}
-
-			return SkillImplRecursiveDamageSplash::splashDamage(src, target, skill_lv, tick, flag);
-		}
-
-	};
 } // namespace
 
 std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_id) const {
@@ -512,7 +436,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_GLACIER_MONOLITH:
 			return std::make_unique<SkillGlacialMonolith>();
 		case AT_GLACIER_NOVA:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillGlacialNova>();
 		case AT_GLACIER_SHARD:
 			return std::make_unique<SkillGlacialShard>();
 		case AT_GLACIER_STOMP:
