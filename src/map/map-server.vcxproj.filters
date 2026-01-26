@@ -573,6 +573,9 @@
     <ClInclude Include="skills/druid/frenzyfang.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/glacialshard.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/glacialstomp.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1410,6 +1413,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/frenzyfang.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/glacialshard.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/glacialstomp.cpp">

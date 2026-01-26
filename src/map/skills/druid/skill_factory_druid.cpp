@@ -32,6 +32,7 @@
 #include "feralclaw.hpp"
 #include "flickingtornado.hpp"
 #include "frenzyfang.hpp"
+#include "glacialshard.hpp"
 #include "glacialstomp.hpp"
 #include "gravityhole.hpp"
 #include "groundbloom.hpp"
@@ -339,17 +340,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_GLACIER_SHARD: {
-					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-					if (!(flag & 1)) {
-						int32 gx = 0;
-						int32 gy = 0;
-						if (get_glacier_center_on_map(src, sc, gx, gy)) {
-							skill_castend_pos2(src, gx, gy, AT_GLACIER_NOVA, 1, tick, 0);
-						}
-					}
-					return;
-				}
 				case AT_ROARING_CHARGE:
 				case AT_ROARING_CHARGE_S: {
 					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
@@ -508,14 +498,6 @@ public:
 					skillratio = 15000;
 					base_skillratio += -100 + skillratio;
 					break;
-				case AT_GLACIER_SHARD:
-					skillratio = 5500 + 300 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_ROARING_CHARGE:
 					skillratio = 8000 + 400 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
@@ -571,7 +553,6 @@ public:
 				case AT_ROARING_CHARGE_S:
 				case AT_GLACIER_MONOLITH:
 				case AT_GLACIER_NOVA:
-				case AT_GLACIER_SHARD:
 				case AT_FURIOS_STORM:
 				case AT_TERRA_WAVE:
 				case AT_TERRA_HARVEST: {
@@ -796,7 +777,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_GLACIER_NOVA:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_GLACIER_SHARD:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillGlacialShard>();
 		case AT_GLACIER_STOMP:
 			return std::make_unique<SkillGlacialStomp>();
 		case AT_GRAVITY_HOLE:
