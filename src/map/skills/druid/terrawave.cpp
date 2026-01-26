@@ -22,7 +22,7 @@ void SkillTerraWave::castendDamageId(block_list* src, block_list* target, uint16
 
 	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 
-	try_gain_growth_stacks(src, tick, getSkillId());
+	SkillFactoryDruid::try_gain_growth_stacks(src, tick, getSkillId());
 }
 
 void SkillTerraWave::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
@@ -84,7 +84,7 @@ void SkillTerraWave::castendPos2(block_list* src, int32 x, int32 y, uint16 skill
 		skill_addtimerskill(src, step_tick, 0, cx, cy, getSkillId(), skill_lv, 0, wave_flag);
 		placed++;
 	}
-	try_gain_growth_stacks(src, tick, getSkillId());
+	SkillFactoryDruid::try_gain_growth_stacks(src, tick, getSkillId());
 }
 
 void SkillTerraWave::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {

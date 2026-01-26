@@ -55,7 +55,7 @@ void SkillQuillSpear::calculateSkillRatio(const Damage* wd, const block_list* sr
 
 int64 SkillQuillSpear::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	const status_change* sc = status_get_sc(src);
-	e_skill actual_skill = resolve_quill_spear_skill(sc, getSkillId());
+	e_skill actual_skill = SkillFactoryDruid::resolve_quill_spear_skill(sc, getSkillId());
 	return skill_attack(skill_get_type(actual_skill), src, src, target, actual_skill, skill_lv, tick, flag | SD_ANIMATION);
 }
 

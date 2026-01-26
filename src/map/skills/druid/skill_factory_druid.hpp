@@ -9,18 +9,17 @@
 #include "map/status.hpp"
 #include "map/skill.hpp"
 
-namespace {
-	void try_gain_growth_stacks(block_list* src, t_tick tick, e_skill skill_id);
-	void try_gain_thundering_charge(block_list* src, const status_change* sc, e_skill skill_id, int32 gain);
-	e_skill resolve_thundering_charge_skill(const status_change* sc, e_skill skill_id);
-	e_skill resolve_quill_spear_skill(const status_change* sc, e_skill skill_id);
-	int32 get_madness_stage(const status_change* sc);
-	int32 apply_splash_outer_sub(block_list* bl, va_list ap);
-	void try_gain_madness(block_list* src);
-	bool get_glacier_center_on_map(const block_list* src, const status_change* sc, int32& gx, int32& gy);
-}
+int32 apply_splash_outer_sub(block_list* bl, va_list ap);
 
 class SkillFactoryDruid : public SkillFactory {
 public:
 	virtual std::unique_ptr<const SkillImpl> create(const e_skill skill_id) const override;
+
+	static void try_gain_growth_stacks(block_list* src, t_tick tick, e_skill skill_id);
+	static void try_gain_thundering_charge(block_list* src, const status_change* sc, e_skill skill_id, int32 gain);
+	static e_skill resolve_thundering_charge_skill(const status_change* sc, e_skill skill_id);
+	static e_skill resolve_quill_spear_skill(const status_change* sc, e_skill skill_id);
+	static int32 get_madness_stage(const status_change* sc);
+	static void try_gain_madness(block_list* src);
+	static bool get_glacier_center_on_map(const block_list* src, const status_change* sc, int32& gx, int32& gy);
 };

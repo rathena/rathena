@@ -23,7 +23,7 @@ void SkillGlacialShard::castendDamageId(block_list* src, block_list* target, uin
 	if (!(flag & 1)) {
 		int32 gx = 0;
 		int32 gy = 0;
-		if (get_glacier_center_on_map(src, sc, gx, gy)) {
+		if (SkillFactoryDruid::get_glacier_center_on_map(src, sc, gx, gy)) {
 			skill_castend_pos2(src, gx, gy, AT_GLACIER_NOVA, 1, tick, 0);
 		}
 	}

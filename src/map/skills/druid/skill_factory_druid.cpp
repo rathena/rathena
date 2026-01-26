@@ -80,12 +80,11 @@
 #include "windveil.hpp"
 #include "zephyrlink.hpp"
 
-namespace {
 	constexpr int32 kClawChainDuration = 5000;
 	constexpr int32 kThunderingChargeDuration = 10000;
 	constexpr int32 kGrowthDuration = 10000;
 
-	int32 get_madness_stage(const status_change *sc) {
+	int32 SkillFactoryDruid::get_madness_stage(const status_change *sc) {
 		if (!sc) {
 			return 0;
 		}
@@ -116,7 +115,7 @@ namespace {
 		}
 	}
 
-	e_skill resolve_thundering_charge_skill(const status_change *sc, e_skill skill_id) {
+	e_skill SkillFactoryDruid::resolve_thundering_charge_skill(const status_change *sc, e_skill skill_id) {
 		if (!sc || !sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
 			return skill_id;
 		}
@@ -137,7 +136,7 @@ namespace {
 		}
 	}
 
-	e_skill resolve_quill_spear_skill(const status_change *sc, e_skill skill_id) {
+	e_skill SkillFactoryDruid::resolve_quill_spear_skill(const status_change *sc, e_skill skill_id) {
 		if (skill_id != AT_QUILL_SPEAR) {
 			return skill_id;
 		}
@@ -149,7 +148,7 @@ namespace {
 		return skill_id;
 	}
 
-	void try_gain_madness(block_list *src) {
+	void SkillFactoryDruid::try_gain_madness(block_list *src) {
 		status_change *sc = status_get_sc(src);
 		status_change_entry *pulse = sc ? sc->getSCE(SC_PULSE_OF_MADNESS) : nullptr;
 
@@ -202,7 +201,7 @@ namespace {
 		status_change_start(src, src, SC_THUNDERING_ROD, 10000, 0, 0, next, 0, kThunderingChargeDuration, SCSTART_NOAVOID);
 	}
 
-	void try_gain_thundering_charge(block_list *src, const status_change *sc, e_skill skill_id, int32 gain) {
+	void SkillFactoryDruid::try_gain_thundering_charge(block_list *src, const status_change *sc, e_skill skill_id, int32 gain) {
 		if (!is_thundering_charge_skill(skill_id)) {
 			return;
 		}
@@ -249,7 +248,7 @@ namespace {
 		status_change_start(src, src, SC_GROUND_GROW, 10000, 0, 0, next, 0, kGrowthDuration, SCSTART_NOAVOID);
 	}
 
-	void try_gain_growth_stacks(block_list *src, t_tick tick, e_skill skill_id) {
+	void SkillFactoryDruid::try_gain_growth_stacks(block_list *src, t_tick tick, e_skill skill_id) {
 		int32 amount = 0;
 		switch (skill_id) {
 			case KR_EARTH_DRILL:
@@ -286,7 +285,7 @@ namespace {
 		return true;
 	}
 
-	bool get_glacier_center_on_map(const block_list *src, const status_change *sc, int32 &gx, int32 &gy) {
+	bool SkillFactoryDruid::get_glacier_center_on_map(const block_list *src, const status_change *sc, int32 &gx, int32 &gy) {
 		int32 map_id = 0;
 
 		if (!get_glacier_center(sc, gx, gy, map_id)) {
@@ -321,7 +320,6 @@ namespace {
 
 		return static_cast<int32>(skill_attack(skill_get_type(static_cast<e_skill>(skill_id)), src, src, bl, skill_id, skill_lv, tick, flag | SD_ANIMATION));
 	}
-} // namespace
 
 std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_id) const {
 	switch (skill_id) {

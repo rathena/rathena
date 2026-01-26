@@ -37,7 +37,7 @@ void SkillSolidStomp::castendDamageId(block_list* src, block_list* target, uint1
 		}
 	}
 	if (!(flag & 1)) {
-		try_gain_growth_stacks(src, tick, getSkillId());
+		SkillFactoryDruid::try_gain_growth_stacks(src, tick, getSkillId());
 	}
 }
 

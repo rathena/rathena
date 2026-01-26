@@ -36,12 +36,12 @@ void SkillSavageLunge::castendDamageId(block_list* src, block_list* target, uint
 	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, attack_flag);
 
 	if (!(flag & 1)) {
-		const int32 madness_stage = get_madness_stage(sc);
+		const int32 madness_stage = SkillFactoryDruid::get_madness_stage(sc);
 		if (madness_stage >= 2) {
 			map_foreachinrange(apply_splash_outer_sub, target, 3, BL_CHAR, src, getSkillId(), skill_lv, tick, flag,
 						target->x, target->y, 0, target->id);
 		}
-		try_gain_madness(src);
+		SkillFactoryDruid::try_gain_madness(src);
 	}
 }
 

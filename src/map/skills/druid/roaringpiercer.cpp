@@ -38,7 +38,7 @@ void SkillRoaringPiercer::castendDamageId(block_list* src, block_list* target, u
 					src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | SD_SPLASH | 1, skill_castend_damage_id);
 	}
 	if (!(flag & 1)) {
-		try_gain_thundering_charge(src, sc, getSkillId(), 1);
+		SkillFactoryDruid::try_gain_thundering_charge(src, sc, getSkillId(), 1);
 	}
 }
 
@@ -57,7 +57,7 @@ void SkillRoaringPiercer::calculateSkillRatio(const Damage* wd, const block_list
 int64 SkillRoaringPiercer::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	e_skill actual_skill = getSkillId();
 	const status_change* sc = status_get_sc(src);
-	actual_skill = resolve_thundering_charge_skill(sc, actual_skill);
+	actual_skill = SkillFactoryDruid::resolve_thundering_charge_skill(sc, actual_skill);
 
 	return skill_attack(skill_get_type(actual_skill), src, src, target, actual_skill, skill_lv, tick, flag);
 }

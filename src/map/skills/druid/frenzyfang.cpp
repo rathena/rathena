@@ -17,7 +17,7 @@ void SkillFrenzyFang::castendDamageId(block_list* src, block_list* target, uint1
 
 	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 	if (!(flag & 1)) {
-		try_gain_madness(src);
+		SkillFactoryDruid::try_gain_madness(src);
 	}
 }
 

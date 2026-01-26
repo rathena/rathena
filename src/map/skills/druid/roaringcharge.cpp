@@ -25,7 +25,7 @@ void SkillRoaringCharge::castendDamageId(block_list* src, block_list* target, ui
 
 	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 	if (!(flag & 1)) {
-		try_gain_thundering_charge(src, sc, getSkillId(), 1 + skill_lv);
+		SkillFactoryDruid::try_gain_thundering_charge(src, sc, getSkillId(), 1 + skill_lv);
 	}
 }
 
@@ -44,7 +44,7 @@ void SkillRoaringCharge::calculateSkillRatio(const Damage*, const block_list* sr
 int64 SkillRoaringCharge::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	e_skill actual_skill = getSkillId();
 	const status_change* sc = status_get_sc(src);
-	actual_skill = resolve_thundering_charge_skill(sc, actual_skill);
+	actual_skill = SkillFactoryDruid::resolve_thundering_charge_skill(sc, actual_skill);
 
 	return skill_attack(skill_get_type(actual_skill), src, src, target, actual_skill, skill_lv, tick, flag);
 }

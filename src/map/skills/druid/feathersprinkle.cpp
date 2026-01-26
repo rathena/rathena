@@ -22,7 +22,7 @@ void SkillFeatherSprinkle::castendDamageId(block_list* src, block_list* target, 
 
 	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 
-	try_gain_growth_stacks(src, tick, getSkillId());
+	SkillFactoryDruid::try_gain_growth_stacks(src, tick, getSkillId());
 }
 
 void SkillFeatherSprinkle::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {

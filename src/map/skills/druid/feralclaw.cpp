@@ -45,7 +45,7 @@ void SkillFeralClaw::castendDamageId(block_list* src, block_list* target, uint16
 		status_change_end(src, SC_PRIMAL_CLAW);
 		sc_start(src, src, SC_FERAL_CLAW, 100, skill_lv, kClawChainDuration);
 
-		const int32 madness_stage = get_madness_stage(sc);
+		const int32 madness_stage = SkillFactoryDruid::get_madness_stage(sc);
 		if (madness_stage >= 2) {
 			const int32 base_radius = skill_get_splash(getSkillId(), skill_lv);
 			const int32 ring_radius = base_radius + 1;
@@ -55,7 +55,7 @@ void SkillFeralClaw::castendDamageId(block_list* src, block_list* target, uint16
 			}
 		}
 
-		try_gain_madness(src);
+		SkillFactoryDruid::try_gain_madness(src);
 	}
 }
 

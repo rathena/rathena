@@ -18,7 +18,7 @@ void SkillTerraHarvest::castendDamageId(block_list* src, block_list* target, uin
 
 	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 
-	try_gain_growth_stacks(src, tick, getSkillId());
+	SkillFactoryDruid::try_gain_growth_stacks(src, tick, getSkillId());
 }
 
 void SkillTerraHarvest::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
