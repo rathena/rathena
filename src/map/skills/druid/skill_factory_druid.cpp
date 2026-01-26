@@ -62,6 +62,7 @@
 #include "sharpenhail.hpp"
 #include "shootingfeather.hpp"
 #include "solidstomp.hpp"
+#include "tempestflap.hpp"
 #include "terraharvest.hpp"
 #include "terrawave.hpp"
 #include "thunderingcall.hpp"
@@ -400,12 +401,6 @@ public:
 			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
-				case AT_TEMPEST_FLAP:
-					skillratio = 1250 * skill_lv;
-					skillratio += sstatus->con * 5; // TODO - unknown scaling [munkrej]
-					RE_LVL_DMOD(100);
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_GLACIER_MONOLITH:
 					skillratio = 7100 + 300 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
@@ -425,8 +420,6 @@ public:
 
 		int64 splashDamage(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const override {
 			switch (getSkillId()) {
-				case AT_TEMPEST_FLAP:
-					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
 				case AT_GLACIER_MONOLITH:
 				case AT_GLACIER_NOVA: {
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
@@ -586,7 +579,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_SOLID_STOMP:
 			return std::make_unique<SkillSolidStomp>();
 		case AT_TEMPEST_FLAP:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillTempestFlap>();
 		case AT_TERRA_HARVEST:
 			return std::make_unique<SkillTerraHarvest>();
 		case AT_TERRA_WAVE:
