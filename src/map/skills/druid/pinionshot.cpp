@@ -9,8 +9,6 @@
 #include "map/skill.hpp"
 #include "map/status.hpp"
 
-constexpr int32 kZephyrChargeDuration = 10000;
-
 int32 apply_zephyr_link_sub(block_list* bl, va_list ap);
 
 SkillPinionShot::SkillPinionShot() : SkillImplRecursiveDamageSplash(AT_PINION_SHOT) {
@@ -42,7 +40,7 @@ void SkillPinionShot::castendDamageId(block_list* src, block_list* target, uint1
 			}
 			status_change_end(src, SC_ZEPHYR_CHARGE);
 		} else {
-			sc_start4(src, src, SC_ZEPHYR_CHARGE, 100, current + 1, current + 1, current + 1, 0, kZephyrChargeDuration);
+			sc_start4(src, src, SC_ZEPHYR_CHARGE, 100, current + 1, current + 1, current + 1, 0, skill_get_time(getSkillId(), skill_lv));
 		}
 	}
 }
