@@ -19,6 +19,7 @@
 
 #include "alphaclaw.hpp"
 #include "aroundflower.hpp"
+#include "chillingblast.hpp"
 #include "chopchop.hpp"
 #include "clawwave.hpp"
 #include "cruelbite.hpp"
@@ -338,7 +339,6 @@ public:
 			}
 
 			switch (getSkillId()) {
-				case AT_CHILLING_BLAST:
 				case AT_GLACIER_SHARD: {
 					SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
 					if (!(flag & 1)) {
@@ -386,7 +386,6 @@ public:
 					}
 					sc_start(src, target, SC_ZEPHYR_LINK, 100, 0, skill_get_time(getSkillId(), skill_lv));
 					return;
-				case AT_CHILLING_BLAST:
 				case AT_ROARING_CHARGE:
 				case AT_ROARING_CHARGE_S:
 				case AT_FURIOS_STORM:
@@ -517,10 +516,6 @@ public:
 					}
 					base_skillratio += -100 + skillratio;
 					break;
-				case AT_CHILLING_BLAST:
-					skillratio = 8400 + 1500 * (skill_lv - 1);
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_ROARING_CHARGE:
 					skillratio = 8000 + 400 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_TRUTH_OF_WIND)) {
@@ -577,7 +572,6 @@ public:
 				case AT_GLACIER_MONOLITH:
 				case AT_GLACIER_NOVA:
 				case AT_GLACIER_SHARD:
-				case AT_CHILLING_BLAST:
 				case AT_FURIOS_STORM:
 				case AT_TERRA_WAVE:
 				case AT_TERRA_HARVEST: {
@@ -788,7 +782,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_APEX_PHASE:
 			return std::make_unique<SkillKarnosNatureProtectionImpl>();
 		case AT_CHILLING_BLAST:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillChillingBlast>();
 		case AT_FERAL_CLAW:
 			return std::make_unique<SkillFeralClaw>();
 		case AT_FLIP_FLAP:
