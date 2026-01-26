@@ -222,7 +222,7 @@
 		}
 
 		status_change_entry *grow = sc->getSCE(SC_GROUND_GROW);
-		int32 current = grow ? grow->val3 : 0;
+		int32 current = grow != nullptr ? grow->val3 : 0;
 
 		if (current >= 12) {
 			status_change_end(src, SC_GROUND_GROW);
