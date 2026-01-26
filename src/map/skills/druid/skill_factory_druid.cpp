@@ -62,6 +62,7 @@
 #include "sharpenhail.hpp"
 #include "shootingfeather.hpp"
 #include "solidstomp.hpp"
+#include "terrawave.hpp"
 #include "thunderingcall.hpp"
 #include "thunderingfocus.hpp"
 #include "thunderingorb.hpp"
@@ -79,7 +80,6 @@ namespace {
 	constexpr int32 kClawChainDuration = 5000;
 	constexpr int32 kThunderingChargeDuration = 10000;
 	constexpr int32 kGrowthDuration = 10000;
-	constexpr int32 kTerraWaveStepMs = 150;
 
 	int32 get_madness_stage(const status_change *sc) {
 		if (!sc) {
@@ -356,7 +356,6 @@ public:
 							try_gain_thundering_charge(src, sc, getSkillId(), 1);
 						}
 						switch (getSkillId()) {
-							case AT_TERRA_WAVE:
 							case AT_TERRA_HARVEST:
 								try_gain_growth_stacks(src, tick, getSkillId());
 								break;
@@ -380,68 +379,6 @@ public:
 
 		void castendPos2(block_list *src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32 &flag) const override {
 			switch (getSkillId()) {
-				case AT_TERRA_WAVE: {
-					const int32 segment_count = 4;
-					const int32 segment_step = 3;
-					map_session_data *sd = BL_CAST(BL_PC, src);
-					map_data *mapdata = map_getmapdata(src->m);
-					bool blocked = false;
-
-					if (mapdata != nullptr) {
-						for (int32 dx = -1; dx <= 1 && !blocked; ++dx) {
-							for (int32 dy = -1; dy <= 1; ++dy) {
-								const int16 cx = x + dx;
-								const int16 cy = y + dy;
-
-								if (cx < 0 || cy < 0 || cx >= mapdata->xs || cy >= mapdata->ys) {
-									blocked = true;
-									break;
-								}
-								if (map_getcell(src->m, cx, cy, CELL_CHKNOPASS)) {
-									blocked = true;
-									break;
-								}
-							}
-						}
-					}
-
-					if (blocked) {
-						if (sd) {
-							clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
-						}
-						return;
-					}
-
-					const uint8 dir = map_calc_dir(src, x, y);
-					const int32 max_distance = segment_step * (segment_count - 1);
-					const int32 wave_flag = flag & ~SD_ANIMATION;
-					int16 cx = x;
-					int16 cy = y;
-					int32 placed = 0;
-
-					for (int32 dist = 0; dist <= max_distance && placed < segment_count; ++dist) {
-						if (dist > 0) {
-							cx += dirx[dir];
-							cy += diry[dir];
-						}
-
-						if (mapdata && (cx < 0 || cy < 0 || cx >= mapdata->xs || cy >= mapdata->ys)) {
-							break;
-						}
-						if (map_getcell(src->m, cx, cy, CELL_CHKNOPASS)) {
-							break;
-						}
-						if (dist % segment_step != 0) {
-							continue;
-						}
-
-						const t_tick step_tick = tick + kTerraWaveStepMs * (placed + 1);
-						skill_addtimerskill(src, step_tick, 0, cx, cy, getSkillId(), skill_lv, 0, wave_flag);
-						placed++;
-					}
-					try_gain_growth_stacks(src, tick, getSkillId());
-					return;
-				}
 				case AT_GLACIER_MONOLITH: {
 					SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
 					clear_glacier_monolith(src);
@@ -487,14 +424,6 @@ public:
 					skillratio = 15000;
 					base_skillratio += -100 + skillratio;
 					break;
-				case AT_TERRA_WAVE:
-					skillratio = 12000 + 300 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_TERRA_HARVEST:
 					skillratio = 18000 + 500 * (skill_lv - 1);
 					if (sc && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
@@ -514,7 +443,6 @@ public:
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag | SD_ANIMATION);
 				case AT_GLACIER_MONOLITH:
 				case AT_GLACIER_NOVA:
-				case AT_TERRA_WAVE:
 				case AT_TERRA_HARVEST: {
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 				}
@@ -677,7 +605,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_TERRA_HARVEST:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_TERRA_WAVE:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillTerraWave>();
 		case AT_ZEPHYR_LINK:
 			return std::make_unique<SkillZephyrLink>();
 
