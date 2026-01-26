@@ -37,6 +37,7 @@
 #include "flipflap.hpp"
 #include "frenzyfang.hpp"
 #include "furiousstorm.hpp"
+#include "glacialmonolith.hpp"
 #include "glacialshard.hpp"
 #include "glacialstomp.hpp"
 #include "gravityhole.hpp"
@@ -294,25 +295,6 @@ namespace {
 		return src->m == map_id;
 	}
 
-	void clear_glacier_monolith(block_list *src) {
-		unit_data *ud = unit_bl2ud(src);
-
-		if (!ud) {
-			return;
-		}
-
-		for (size_t i = 0; i < ud->skillunits.size();) {
-			std::shared_ptr<s_skill_unit_group> sg = ud->skillunits[i];
-
-			if (sg && (sg->skill_id == AT_GLACIER_MONOLITH || sg->unit_id == UNT_GLACIAL_MONOLITH)) {
-				skill_delunitgroup(sg);
-				continue;
-			}
-
-			++i;
-		}
-	}
-
 	int32 apply_splash_outer_sub(block_list *bl, va_list ap) {
 		block_list *src = va_arg(ap, block_list *);
 		uint16 skill_id = static_cast<uint16>(va_arg(ap, int));
@@ -374,14 +356,6 @@ public:
 
 		void castendPos2(block_list *src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32 &flag) const override {
 			switch (getSkillId()) {
-				case AT_GLACIER_MONOLITH: {
-					SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
-					clear_glacier_monolith(src);
-					const t_tick buff_duration = skill_get_unit_interval(getSkillId());
-					sc_start4(src, src, SC_GLACIER_SHEILD, 100, skill_lv, x, y, src->m, buff_duration);
-					skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
-					break;
-				}
 				default:
 					SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
 					break;
@@ -401,14 +375,6 @@ public:
 			const bool madness = sc && (sc->hasSCE(SC_ALPHA_PHASE) || sc->hasSCE(SC_INSANE) || sc->hasSCE(SC_INSANE2) || sc->hasSCE(SC_INSANE3));
 
 			switch (getSkillId()) {
-				case AT_GLACIER_MONOLITH:
-					skillratio = 7100 + 300 * (skill_lv - 1);
-					if (sc && sc->hasSCE(SC_TRUTH_OF_ICE)) {
-						skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-						RE_LVL_DMOD(100);
-					}
-					base_skillratio += -100 + skillratio;
-					break;
 				case AT_GLACIER_NOVA:
 					skillratio = 15000;
 					base_skillratio += -100 + skillratio;
@@ -420,7 +386,6 @@ public:
 
 		int64 splashDamage(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 flag) const override {
 			switch (getSkillId()) {
-				case AT_GLACIER_MONOLITH:
 				case AT_GLACIER_NOVA: {
 					return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 				}
@@ -545,7 +510,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_FURIOS_STORM:
 			return std::make_unique<SkillFuriousStorm>();
 		case AT_GLACIER_MONOLITH:
-			return std::make_unique<SkillDruidImpl>(skill_id);
+			return std::make_unique<SkillGlacialMonolith>();
 		case AT_GLACIER_NOVA:
 			return std::make_unique<SkillDruidImpl>(skill_id);
 		case AT_GLACIER_SHARD:

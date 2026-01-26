@@ -588,6 +588,9 @@
     <ClInclude Include="skills/druid/furiousstorm.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
+    <ClInclude Include="skills/druid/glacialmonolith.hpp">
+      <Filter>Header Files\Skills\Druid</Filter>
+    </ClInclude>
     <ClInclude Include="skills/druid/glacialshard.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -1464,6 +1467,9 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/furiousstorm.cpp">
+      <Filter>Source Files\Skills\Druid</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/druid/glacialmonolith.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/glacialshard.cpp">
