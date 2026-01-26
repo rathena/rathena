@@ -34,6 +34,7 @@
 #include "feathersprinkle.hpp"
 #include "feralclaw.hpp"
 #include "flickingtornado.hpp"
+#include "flipflap.hpp"
 #include "frenzyfang.hpp"
 #include "furiousstorm.hpp"
 #include "glacialshard.hpp"
@@ -668,7 +669,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_FERAL_CLAW:
 			return std::make_unique<SkillFeralClaw>();
 		case AT_FLIP_FLAP:
-			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+			return std::make_unique<SkillFlipFlap>();
 		case AT_FRENZY_FANG:
 			return std::make_unique<SkillFrenzyFang>();
 		case AT_FURIOS_STORM:

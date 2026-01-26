@@ -308,6 +308,7 @@
     <ClInclude Include="skills/druid/feathersprinkle.hpp" />
     <ClInclude Include="skills/druid/feralclaw.hpp" />
     <ClInclude Include="skills/druid/flickingtornado.hpp" />
+    <ClInclude Include="skills/druid/flipflap.hpp" />
     <ClInclude Include="skills/druid/frenzyfang.hpp" />
     <ClInclude Include="skills/druid/furiousstorm.hpp" />
     <ClInclude Include="skills/druid/glacialshard.hpp" />
@@ -642,6 +643,7 @@
     <ClCompile Include="skills/druid/feathersprinkle.cpp" />
     <ClCompile Include="skills/druid/feralclaw.cpp" />
     <ClCompile Include="skills/druid/flickingtornado.cpp" />
+    <ClCompile Include="skills/druid/flipflap.cpp" />
     <ClCompile Include="skills/druid/frenzyfang.cpp" />
     <ClCompile Include="skills/druid/furiousstorm.cpp" />
     <ClCompile Include="skills/druid/glacialshard.cpp" />
