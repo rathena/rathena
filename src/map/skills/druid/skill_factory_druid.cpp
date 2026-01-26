@@ -20,6 +20,7 @@
 #include "aerosync.hpp"
 #include "alphaclaw.hpp"
 #include "alphaphase.hpp"
+#include "apexphase.hpp"
 #include "aroundflower.hpp"
 #include "chillingblast.hpp"
 #include "chopchop.hpp"
@@ -661,7 +662,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_ALPHA_PHASE:
 			return std::make_unique<SkillAlphaPhase>();
 		case AT_APEX_PHASE:
-			return std::make_unique<SkillKarnosNatureProtectionImpl>();
+			return std::make_unique<SkillApexPhase>();
 		case AT_CHILLING_BLAST:
 			return std::make_unique<SkillChillingBlast>();
 		case AT_FERAL_CLAW:
