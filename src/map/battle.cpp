@@ -7905,107 +7905,12 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 						RE_LVL_DMOD(100);
 						break;
-					case EM_DIAMOND_STORM:
-						skillratio += -100 + 500 + 2400 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-
-						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_DILUVIO ) ){
-							skillratio += 7300 + 200 * skill_lv;
-							skillratio += 5 * sstatus->spl;
-						}
-
-						RE_LVL_DMOD(100);
-						break;
-					case EM_LIGHTNING_LAND:
-						skillratio += -100 + 700 + 1100 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-
-						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_PROCELLA ) ){
-							skillratio += 200 * skill_lv;
-							skillratio += 2 * sstatus->spl;
-						}
-
-						RE_LVL_DMOD(100);
-						break;
-					case EM_VENOM_SWAMP:
-						skillratio += -100 + 700 + 1100 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-
-						if( sc && sc->getSCE( SC_SUMMON_ELEMENTAL_SERPENS ) ){
-							skillratio += 200 * skill_lv;
-							skillratio += 2 * sstatus->spl;
-						}
-
-						RE_LVL_DMOD(100);
-						break;
-					case EM_CONFLAGRATION:
-						skillratio += -100 + 700 + 1100 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-
-						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_ARDOR ) ){
-							skillratio += 200 * skill_lv;
-							skillratio += 2 * sstatus->spl;
-						}
-
-						RE_LVL_DMOD(100);
-						break;
-					case EM_TERRA_DRIVE:
-						skillratio += -100 + 500 + 2400 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-
-						if( sc != nullptr && sc->getSCE( SC_SUMMON_ELEMENTAL_TERREMOTUS ) ){
-							skillratio += 7300 + 200 * skill_lv;
-							skillratio += 5 * sstatus->spl;
-						}
-
-						RE_LVL_DMOD(100);
-						break;
 					case ABC_FROM_THE_ABYSS_ATK:
 						skillratio += -100 + 150 + 650 * skill_lv;
 						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
-					case EM_ELEMENTAL_BUSTER_FIRE:
-					case EM_ELEMENTAL_BUSTER_WATER:
-					case EM_ELEMENTAL_BUSTER_WIND:
-					case EM_ELEMENTAL_BUSTER_GROUND:
-					case EM_ELEMENTAL_BUSTER_POISON:
-						skillratio += -100 + 550 + 2650 * skill_lv;
-						skillratio += 10 * sstatus->spl;
-						if (tstatus->race == RC_FORMLESS || tstatus->race == RC_DRAGON)
-							skillratio += 150 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case EM_EL_FLAMEROCK:
-						skillratio += -100 + 2400;
-						if (ed)
-							skillratio += skillratio * status_get_lv(ed->master) / 100;
-						break;
-					case EM_EL_AGE_OF_ICE:
-						skillratio += -100 + 3700;
-						if (ed)
-							skillratio += skillratio * status_get_lv(ed->master) / 100;
-						break;
-					case EM_EL_STORM_WIND:
-						skillratio += -100 + 2600;
-						if (ed)
-							skillratio += skillratio * status_get_lv(ed->master) / 100;
-						break;
-					case EM_EL_AVALANCHE:
-						skillratio += -100 + 450;
-						if (ed)
-							skillratio += skillratio * status_get_lv(ed->master) / 100;
-						break;
-					case EM_EL_DEADLY_POISON:
-						skillratio += -100 + 700;
-						if (ed)
-							skillratio += skillratio * status_get_lv(ed->master) / 100;
-						break;
-					case EM_PSYCHIC_STREAM:
-						skillratio += -100 + 1000 + 3500 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
+
 					case NPC_RAINOFMETEOR:
 						skillratio += 350;	// unknown ratio
 						break;

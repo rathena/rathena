@@ -404,6 +404,7 @@
     <ClInclude Include="skills/gunslinger/spreadattack.hpp" />
     <ClInclude Include="skills/gunslinger/tracking.hpp" />
     <ClInclude Include="skills/gunslinger/tripleaction.hpp" />
+    <ClInclude Include="skills/mage/activityburn.hpp" />
     <ClInclude Include="skills/mage/allbloom.hpp" />
     <ClInclude Include="skills/mage/astralstrike.hpp" />
     <ClInclude Include="skills/mage/beastlyhypnosis.hpp" />
@@ -414,6 +415,7 @@
     <ClInclude Include="skills/mage/coma.hpp" />
     <ClInclude Include="skills/mage/comet.hpp" />
     <ClInclude Include="skills/mage/createelementalconverter.hpp" />
+    <ClInclude Include="skills/mage/conflagration.hpp" />
     <ClInclude Include="skills/mage/crimsonarrow.hpp" />
     <ClInclude Include="skills/mage/crimsonrock.hpp" />
     <ClInclude Include="skills/mage/crystalimpact.hpp" />
@@ -432,6 +434,12 @@
     <ClInclude Include="skills/mage/endowquake.hpp" />
     <ClInclude Include="skills/mage/endowtornado.hpp" />
     <ClInclude Include="skills/mage/endowtsunami.hpp" />
+    <ClInclude Include="skills/mage/diamondstorm.hpp" />
+    <ClInclude Include="skills/mage/drainlife.hpp" />
+    <ClInclude Include="skills/mage/earthspike.hpp" />
+    <ClInclude Include="skills/mage/earthstrain.hpp" />
+    <ClInclude Include="skills/mage/elementalbuster.hpp" />
+    <ClInclude Include="skills/mage/elementalveil.hpp" />
     <ClInclude Include="skills/mage/energycoat.hpp" />
     <ClInclude Include="skills/mage/energyconversion.hpp" />
     <ClInclude Include="skills/mage/fireball.hpp" />
@@ -453,10 +461,12 @@
     <ClInclude Include="skills/mage/hindsight.hpp" />
     <ClInclude Include="skills/mage/hocuspocus.hpp" />
     <ClInclude Include="skills/mage/icewall.hpp" />
+    <ClInclude Include="skills/mage/increasingactivity.hpp" />
     <ClInclude Include="skills/mage/jackfrost.hpp" />
     <ClInclude Include="skills/mage/jupitelthunder.hpp" />
     <ClInclude Include="skills/mage/leveling.hpp" />
     <ClInclude Include="skills/mage/lightningbolt.hpp" />
+    <ClInclude Include="skills/mage/lightningland.hpp" />
     <ClInclude Include="skills/mage/lordofvermilion.hpp" />
     <ClInclude Include="skills/mage/magicrod.hpp" />
     <ClInclude Include="skills/mage/magneticearth.hpp" />
@@ -466,6 +476,7 @@
     <ClInclude Include="skills/mage/mysteryillusion.hpp" />
     <ClInclude Include="skills/mage/napalmbeat.hpp" />
     <ClInclude Include="skills/mage/napalmvulcan.hpp" />
+    <ClInclude Include="skills/mage/psychicstream.hpp" />
     <ClInclude Include="skills/mage/quagmire.hpp" />
     <ClInclude Include="skills/mage/questioning.hpp" />
     <ClInclude Include="skills/mage/rainofcrystal.hpp" />
@@ -490,13 +501,20 @@
     <ClInclude Include="skills/mage/stormgust.hpp" />
     <ClInclude Include="skills/mage/strantumtremor.hpp" />
     <ClInclude Include="skills/mage/suicide.hpp" />
+    <ClInclude Include="skills/mage/summonelementalardor.hpp" />
+    <ClInclude Include="skills/mage/summonelementaldiluvio.hpp" />
+    <ClInclude Include="skills/mage/summonelementalprocella.hpp" />
+    <ClInclude Include="skills/mage/summonelementalserpens.hpp" />
+    <ClInclude Include="skills/mage/summonelementalterremotus.hpp" />
     <ClInclude Include="skills/mage/summonfireball.hpp" />
     <ClInclude Include="skills/mage/summonlightningball.hpp" />
     <ClInclude Include="skills/mage/summonstone.hpp" />
     <ClInclude Include="skills/mage/summonwaterball.hpp" />
+    <ClInclude Include="skills/mage/terradrive.hpp" />
     <ClInclude Include="skills/mage/tetravortex.hpp" />
     <ClInclude Include="skills/mage/thunderstorm.hpp" />
     <ClInclude Include="skills/mage/tornadostorm.hpp" />
+    <ClInclude Include="skills/mage/venomswamp.hpp" />
     <ClInclude Include="skills/mage/violentquake.hpp" />
     <ClInclude Include="skills/mage/volcano.hpp" />
     <ClInclude Include="skills/mage/waterball.hpp" />
@@ -1319,6 +1337,9 @@
     <ClCompile Include="skills/gunslinger/tripleaction.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/activityburn.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/allbloom.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1347,6 +1368,7 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/createelementalconverter.cpp">
+    <ClCompile Include="skills/mage/conflagration.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/crimsonarrow.cpp">
@@ -1368,6 +1390,7 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/dispell.cpp">
+    <ClCompile Include="skills/mage/diamondstorm.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/drainlife.cpp">
@@ -1401,6 +1424,10 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/endowtsunami.cpp">
+    <ClCompile Include="skills/mage/elementalbuster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/elementalveil.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/energycoat.cpp">
@@ -1466,6 +1493,9 @@
     <ClCompile Include="skills/mage/icewall.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/increasingactivity.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/jackfrost.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1476,6 +1506,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/lightningbolt.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/lightningland.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/lordofvermilion.cpp">
@@ -1503,6 +1536,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/napalmvulcan.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/psychicstream.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/quagmire.cpp">
@@ -1575,6 +1611,19 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/suicide.cpp">
+    <ClCompile Include="skills/mage/summonelementalardor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/summonelementaldiluvio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/summonelementalprocella.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/summonelementalserpens.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/summonelementalterremotus.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/summonfireball.cpp">
@@ -1589,6 +1638,9 @@
     <ClCompile Include="skills/mage/summonwaterball.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/terradrive.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/tetravortex.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1596,6 +1648,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/tornadostorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/venomswamp.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/violentquake.cpp">
