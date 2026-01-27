@@ -27242,13 +27242,13 @@ BUILDIN_FUNC(reputationui) {
 
 	if (script_hasdata(st, 4)) {
 		if (!script_charid2sd(4, sd)) {
-			script_pushint(st, 0);
+			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
 	else if (!script_rid2sd(sd))
 	{	//Player not attached!
-		script_pushint(st, 0);
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -27267,9 +27267,7 @@ BUILDIN_FUNC(reputationui) {
 	if (script_hasdata(st, 3)) {
 		reputation_id = script_getnum64(st, 3);
 
-		std::shared_ptr<s_reputation> reputation = reputation_db.find(reputation_id);
-
-		if (reputation == nullptr) {
+		if (!reputation_db.exists(reputation_id)) {
 			ShowError("buildin_reputationui: Unknown reputation type %" PRIi64 ".\n", reputation_id);
 			script_pushint(st, 0);
 			return SCRIPT_CMD_FAILURE;
