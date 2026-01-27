@@ -415,6 +415,8 @@
     <ClInclude Include="skills/taekwon/estin.hpp" />
     <ClInclude Include="skills/taekwon/estun.hpp" />
     <ClInclude Include="skills/taekwon/eswoo.hpp" />
+    <ClInclude Include="skills/taekwon/feelingthesunmoonandstars.hpp" />
+    <ClInclude Include="skills/taekwon/hatredofthesunmoonandstars.hpp" />
     <ClInclude Include="skills/taekwon/highjump.hpp" />
     <ClInclude Include="skills/taekwon/jumpkick.hpp" />
     <ClInclude Include="skills/taekwon/kaahi.hpp" />
@@ -443,6 +445,9 @@
     <ClInclude Include="skills/taekwon/spiritofthewizard.hpp" />
     <ClInclude Include="skills/taekwon/stormkick.hpp" />
     <ClInclude Include="skills/taekwon/turnkick.hpp" />
+    <ClInclude Include="skills/taekwon/warmthofthemoon.hpp" />
+    <ClInclude Include="skills/taekwon/warmthofthestars.hpp" />
+    <ClInclude Include="skills/taekwon/warmthofthesun.hpp" />
     <ClInclude Include="skills/thief/backslide.hpp" />
     <ClInclude Include="skills/thief/backstab.hpp" />
     <ClInclude Include="skills/thief/cloaking.hpp" />
@@ -700,6 +705,8 @@
     <ClCompile Include="skills/taekwon/estin.cpp" />
     <ClCompile Include="skills/taekwon/estun.cpp" />
     <ClCompile Include="skills/taekwon/eswoo.cpp" />
+    <ClCompile Include="skills/taekwon/feelingthesunmoonandstars.cpp" />
+    <ClCompile Include="skills/taekwon/hatredofthesunmoonandstars.cpp" />
     <ClCompile Include="skills/taekwon/highjump.cpp" />
     <ClCompile Include="skills/taekwon/jumpkick.cpp" />
     <ClCompile Include="skills/taekwon/kaahi.cpp" />
@@ -728,6 +735,9 @@
     <ClCompile Include="skills/taekwon/spiritofthewizard.cpp" />
     <ClCompile Include="skills/taekwon/stormkick.cpp" />
     <ClCompile Include="skills/taekwon/turnkick.cpp" />
+    <ClCompile Include="skills/taekwon/warmthofthemoon.cpp" />
+    <ClCompile Include="skills/taekwon/warmthofthestars.cpp" />
+    <ClCompile Include="skills/taekwon/warmthofthesun.cpp" />
     <ClCompile Include="skills/thief/backslide.cpp" />
     <ClCompile Include="skills/thief/backstab.cpp" />
     <ClCompile Include="skills/thief/cloaking.cpp" />

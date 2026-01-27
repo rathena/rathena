@@ -14,6 +14,8 @@
 #include "estin.hpp"
 #include "estun.hpp"
 #include "eswoo.hpp"
+#include "feelingthesunmoonandstars.hpp"
+#include "hatredofthesunmoonandstars.hpp"
 #include "highjump.hpp"
 #include "jumpkick.hpp"
 #include "kaahi.hpp"
@@ -41,17 +43,30 @@
 #include "spiritofthewizard.hpp"
 #include "stormkick.hpp"
 #include "turnkick.hpp"
+#include "warmthofthemoon.hpp"
+#include "warmthofthestars.hpp"
+#include "warmthofthesun.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case SG_FEEL:
+			return std::make_unique<SkillFeelingtheSunMoonandStars>();
 		case SG_FUSION:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SG_HATE:
+			return std::make_unique<SkillHatredoftheSunMoonandStars>();
 		case SG_MOON_COMFORT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SG_MOON_WARM:
+			return std::make_unique<SkillWarmthoftheMoon>();
 		case SG_STAR_COMFORT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SG_STAR_WARM:
+			return std::make_unique<SkillWarmthoftheStars>();
 		case SG_SUN_COMFORT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SG_SUN_WARM:
+			return std::make_unique<SkillWarmthoftheSun>();
 		case SJ_BOOKOFDIMENSION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SJ_FALLINGSTAR:
