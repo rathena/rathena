@@ -27260,7 +27260,7 @@ BUILDIN_FUNC(reputationui) {
 		group_id = script_getnum64(st, 2);
 		if (group_id < 0) {
 			ShowError("buildin_reputationui: Unknown GroupID %" PRIi64 ".\n", group_id);
-			script_pushint(st, 0);
+			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -27269,7 +27269,7 @@ BUILDIN_FUNC(reputationui) {
 
 		if (!reputation_db.exists(reputation_id)) {
 			ShowError("buildin_reputationui: Unknown reputation type %" PRIi64 ".\n", reputation_id);
-			script_pushint(st, 0);
+			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 		}
 
