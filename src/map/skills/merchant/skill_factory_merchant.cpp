@@ -19,6 +19,7 @@
 #include "callhomunculus.hpp"
 #include "decoratecart.hpp"
 #include "cartrevolution.hpp"
+#include "carttermination.hpp"
 #include "changecart.hpp"
 #include "greed.hpp"
 #include "hammerfall.hpp"
@@ -35,6 +36,7 @@
 #include "twilightalchemy1.hpp"
 #include "twilightalchemy2.hpp"
 #include "twilightalchemy3.hpp"
+#include "upgradeweapon.hpp"
 #include "vaporize.hpp"
 #include "weaponperfection.hpp"
 #include "weaponrepair.hpp"
@@ -148,11 +150,13 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case WS_CARTBOOST:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WS_CARTTERMINATION:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillCartTermination>();
 		case WS_MELTDOWN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WS_OVERTHRUSTMAX:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WS_WEAPONREFINE:
+			return std::make_unique<SkillUpgradeWeapon>();
 
 		default:
 			return nullptr;

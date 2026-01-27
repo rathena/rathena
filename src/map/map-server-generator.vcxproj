@@ -350,6 +350,7 @@
     <ClInclude Include="skills/merchant/bomb.hpp" />
     <ClInclude Include="skills/merchant/callhomunculus.hpp" />
     <ClInclude Include="skills/merchant/cartrevolution.hpp" />
+    <ClInclude Include="skills/merchant/carttermination.hpp" />
     <ClInclude Include="skills/merchant/changecart.hpp" />
     <ClInclude Include="skills/merchant/crazyuproar.hpp" />
     <ClInclude Include="skills/merchant/decoratecart.hpp" />
@@ -368,6 +369,7 @@
     <ClInclude Include="skills/merchant/twilightalchemy1.hpp" />
     <ClInclude Include="skills/merchant/twilightalchemy2.hpp" />
     <ClInclude Include="skills/merchant/twilightalchemy3.hpp" />
+    <ClInclude Include="skills/merchant/upgradeweapon.hpp" />
     <ClInclude Include="skills/merchant/vaporize.hpp" />
     <ClInclude Include="skills/merchant/weaponperfection.hpp" />
     <ClInclude Include="skills/merchant/weaponrepair.hpp" />
@@ -629,6 +631,7 @@
     <ClCompile Include="skills/merchant/bomb.cpp" />
     <ClCompile Include="skills/merchant/callhomunculus.cpp" />
     <ClCompile Include="skills/merchant/cartrevolution.cpp" />
+    <ClCompile Include="skills/merchant/carttermination.cpp" />
     <ClCompile Include="skills/merchant/changecart.cpp" />
     <ClCompile Include="skills/merchant/crazyuproar.cpp" />
     <ClCompile Include="skills/merchant/decoratecart.cpp" />
@@ -647,6 +650,7 @@
     <ClCompile Include="skills/merchant/twilightalchemy1.cpp" />
     <ClCompile Include="skills/merchant/twilightalchemy2.cpp" />
     <ClCompile Include="skills/merchant/twilightalchemy3.cpp" />
+    <ClCompile Include="skills/merchant/upgradeweapon.cpp" />
     <ClCompile Include="skills/merchant/vaporize.cpp" />
     <ClCompile Include="skills/merchant/weaponperfection.cpp" />
     <ClCompile Include="skills/merchant/weaponrepair.cpp" />
