@@ -534,12 +534,6 @@
     <ClInclude Include="skills/druid/alphaclaw.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
-    <ClInclude Include="skills/druid/alphaphase.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/apexphase.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
     <ClInclude Include="skills/druid/aroundflower.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
@@ -577,9 +571,6 @@
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
     <ClInclude Include="skills/druid/flickingtornado.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/flipflap.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
     <ClInclude Include="skills/druid/frenzyfang.hpp">
@@ -625,9 +616,6 @@
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
     <ClInclude Include="skills/druid/nastyslash.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/natureharmony.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
     <ClInclude Include="skills/druid/natureprotection.hpp">
@@ -694,9 +682,6 @@
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
     <ClInclude Include="skills/druid/windbomb.hpp">
-      <Filter>Header Files\Skills\Druid</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/druid/windveil.hpp">
       <Filter>Header Files\Skills\Druid</Filter>
     </ClInclude>
     <ClInclude Include="skills/druid/zephyrlink.hpp">
@@ -1403,12 +1388,6 @@
     <ClCompile Include="skills/druid/alphaclaw.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
-    <ClCompile Include="skills/druid/alphaphase.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/apexphase.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
     <ClCompile Include="skills/druid/aroundflower.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
@@ -1446,9 +1425,6 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/flickingtornado.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/flipflap.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/frenzyfang.cpp">
@@ -1494,9 +1470,6 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/nastyslash.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/natureharmony.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/natureprotection.cpp">
@@ -1563,9 +1536,6 @@
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/windbomb.cpp">
-      <Filter>Source Files\Skills\Druid</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/druid/windveil.cpp">
       <Filter>Source Files\Skills\Druid</Filter>
     </ClCompile>
     <ClCompile Include="skills/druid/zephyrlink.cpp">
