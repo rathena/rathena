@@ -32,7 +32,6 @@
 #include "feathersprinkle.hpp"
 #include "feralclaw.hpp"
 #include "flickingtornado.hpp"
-#include "flipflap.hpp"
 #include "frenzyfang.hpp"
 #include "furiousstorm.hpp"
 #include "glacialmonolith.hpp"
@@ -53,7 +52,6 @@
 #include "nomercyclaw.hpp"
 #include "pinionshot.hpp"
 #include "primalclaw.hpp"
-#include "pulseofmadness.hpp"
 #include "quillspear.hpp"
 #include "roaringcharge.hpp"
 #include "roaringpiercer.hpp"
@@ -70,7 +68,6 @@
 #include "thunderingorb.hpp"
 #include "typhoonwing.hpp"
 #include "windbomb.hpp"
-#include "windveil.hpp"
 #include "zephyrlink.hpp"
 
 	constexpr int32 kClawChainDuration = 5000;
@@ -401,7 +398,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case KR_TYPHOON_WING:
 			return std::make_unique<SkillTyphoonWing>();
 		case KR_WIND_VEIL:
-			return std::make_unique<SkillWindVeil>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 
 		case AT_AERO_SYNC:
 			return std::make_unique<SkillAeroSync>();
@@ -416,7 +413,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_FERAL_CLAW:
 			return std::make_unique<SkillFeralClaw>();
 		case AT_FLIP_FLAP:
-			return std::make_unique<SkillFlipFlap>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case AT_FRENZY_FANG:
 			return std::make_unique<SkillFrenzyFang>();
 		case AT_FURIOS_STORM:
@@ -438,7 +435,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_PRIMAL_CLAW:
 			return std::make_unique<SkillPrimalClaw>();
 		case AT_PULSE_OF_MADNESS:
-			return std::make_unique<SkillPulseOfMadness>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case AT_QUILL_SPEAR:
 			return std::make_unique<SkillQuillSpear>();
 		case AT_QUILL_SPEAR_S:
