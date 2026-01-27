@@ -15,13 +15,16 @@
 #include "firewall.hpp"
 #include "frostdiver.hpp"
 #include "frostnova.hpp"
+#include "ganbantein.hpp"
+#include "gravitationfield.hpp"
 #include "heavensdrive.hpp"
 #include "icewall.hpp"
 #include "jupitelthunder.hpp"
+#include "lightningbolt.hpp"
 #include "lordofvermilion.hpp"
 #include "meteorstorm.hpp"
 #include "napalmbeat.hpp"
-#include "lightningbolt.hpp"
+#include "napalmvulcan.hpp"
 #include "quagmire.hpp"
 #include "safetywall.hpp"
 #include "sense.hpp"
@@ -40,10 +43,16 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case EM_SPELL_ENCHANTING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case HW_GANBANTEIN:
+			return std::make_unique<SkillGanbantein>();
+		case HW_GRAVITATION:
+			return std::make_unique<SkillGravitationField>();
 		case HW_MAGICCRASHER:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case HW_MAGICPOWER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case HW_NAPALMVULCAN:
+			return std::make_unique<SkillNapalmVulcan>();
 		case MG_SAFETYWALL:
 			return std::make_unique<SkillSafetyWall>();
 		case MG_SIGHT:
