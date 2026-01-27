@@ -4862,44 +4862,12 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 100 + 100 * skill_lv;
 #endif
 			break;
-		case LK_HEADCRUSH:
-			skillratio += 40 * skill_lv;
-			break;
-		case LK_JOINTBEAT:
-			skillratio += 10 * skill_lv - 50;
-			if (wd->miscflag & BREAK_NECK || (tsc && tsc->getSCE(SC_JOINTBEAT) && tsc->getSCE(SC_JOINTBEAT)->val2 & BREAK_NECK)) // The 2x damage is only for the BREAK_NECK ailment.
-				skillratio *= 2;
-			break;
 #ifdef RENEWAL
-		// Renewal: skill ratio applies to entire damage [helvetica]
-		case LK_SPIRALPIERCE:
-			skillratio += 50 + 50 * skill_lv;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_CHARGINGPIERCE_COUNT) && sc->getSCE(SC_CHARGINGPIERCE_COUNT)->val1 >= 10)
-				skillratio *= 2;
-			break;
 		case ML_SPIRALPIERCE:
 			skillratio += 50 + 50 * skill_lv;
 			RE_LVL_DMOD(100);
 		break;
 #endif
-		case ASC_METEORASSAULT:
-#ifdef RENEWAL
-			skillratio += 100 + 120 * skill_lv;
-			RE_LVL_DMOD(100);
-#else
-			skillratio += -60 + 40 * skill_lv;
-#endif
-			break;
-		case SN_SHARPSHOOTING:
-			if (src->type == BL_MOB) { // TODO: Did these formulas change in the renewal balancing?
-				if (wd->miscflag & 2) // Splash damage bonus
-					skillratio += -100 + 140 * skill_lv;
-				else
-					skillratio += 100 + 50 * skill_lv;
-				break;
-			}
-			[[fallthrough]];
 		case MA_SHARPSHOOTING:
 #ifdef RENEWAL
 			skillratio += -100 + 300 + 300 * skill_lv;
@@ -4921,15 +4889,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(100);
 #else
 			skillratio += 100 + 100 * skill_lv;
-#endif
-			break;
-		case ASC_BREAKER:
-#ifdef RENEWAL
-			skillratio += -100 + 150 * skill_lv + sstatus->str + sstatus->int_; // !TODO: Confirm stat modifier
-			RE_LVL_DMOD(100);
-#else
-			// Pre-Renewal: skill ratio for weapon part of damage [helvetica]
-			skillratio += -100 + 100 * skill_lv;
 #endif
 			break;
 		case PA_SACRIFICE:
@@ -4959,15 +4918,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 #endif
 			if (sc && sc->getSCE(SC_SHIELD_POWER))// Whats the official increase? [Rytech]
 				skillratio += skillratio * 50 / 100;
-			break;
-		case WS_CARTTERMINATION:
-			i = 10 * (16 - skill_lv);
-			if (i < 1) i = 1;
-			//Preserve damage ratio when max cart weight is changed.
-			if (sd && sd->cart_weight)
-				skillratio += sd->cart_weight / i * 80000 / battle_config.max_cart_weight - 100;
-			else if (!sd)
-				skillratio += 80000 / i - 100;
 			break;
 		case NJ_HUUMA:
 #ifdef RENEWAL
@@ -8274,23 +8224,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						// TODO: Refactor
 						if (sd && ad.div_ > 0)
 							ad.div_ *= -1; //For players, damage is divided by number of hits
-						break;
-					case HW_NAPALMVULCAN:
-#ifdef RENEWAL
-						skillratio += -100 + 70 * skill_lv;
-						RE_LVL_DMOD(100);
-#else
-						skillratio += 25;
-#endif
-						break;
-					case SL_STIN: //Target size must be small (0) for full damage
-						skillratio += (tstatus->size != SZ_SMALL ? -99 : 10 * skill_lv);
-						break;
-					case SL_STUN:
-						skillratio += 5 * skill_lv;
-						break;
-					case SL_SMA: //Base damage is 40% + lv%
-						skillratio += -60 + status_get_lv(src);
 						break;
 					case NJ_KOUENKA:
 						skillratio -= 10;
