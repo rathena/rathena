@@ -47,7 +47,6 @@
 #include "icetotem.hpp"
 #include "lowflight.hpp"
 #include "nastyslash.hpp"
-#include "natureharmony.hpp"
 #include "natureprotection.hpp"
 #include "nomercyclaw.hpp"
 #include "pinionshot.hpp"
@@ -429,7 +428,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryDruid::create(const e_skill skill_i
 		case AT_GRAVITY_HOLE:
 			return std::make_unique<SkillGravityHole>();
 		case AT_NATURE_HARMONY:
-			return std::make_unique<SkillNatureHarmony>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case AT_PINION_SHOT:
 			return std::make_unique<SkillPinionShot>();
 		case AT_PRIMAL_CLAW:
