@@ -27276,7 +27276,6 @@ BUILDIN_FUNC(reputationui) {
 		highlight = true;
 	}
 
-	script_pushint(st, 1);
 	clif_reputation_open(*sd, group_id, static_cast<uint32>(reputation_id), highlight);
 
 	return SCRIPT_CMD_SUCCESS;
