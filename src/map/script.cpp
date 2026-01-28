@@ -27267,7 +27267,7 @@ BUILDIN_FUNC(reputationui) {
 	if (script_hasdata(st, 3)) {
 		reputation_id = script_getnum64(st, 3);
 
-		if (!reputation_db.exists(reputation_id)) {
+		if (reputation_id != 0 && !reputation_db.exists(reputation_id)) {
 			ShowError("buildin_reputationui: Unknown reputation type %" PRIi64 ".\n", reputation_id);
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
