@@ -521,13 +521,21 @@
     <ClInclude Include="skills/taekwon/warmthofthemoon.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthestars.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthesun.hpp" />
+    <ClInclude Include="skills/thief/antidote.hpp" />
     <ClInclude Include="skills/thief/backslide.hpp" />
     <ClInclude Include="skills/thief/backstab.hpp" />
     <ClInclude Include="skills/thief/cloaking.hpp" />
+    <ClInclude Include="skills/thief/cloakingexceed.hpp" />
     <ClInclude Include="skills/thief/closeconfine.hpp" />
     <ClInclude Include="skills/thief/counterinstinct.hpp" />
+    <ClInclude Include="skills/thief/counterslash.hpp" />
     <ClInclude Include="skills/thief/createdeadlypoison.hpp" />
     <ClInclude Include="skills/thief/dancingknife.hpp" />
+    <ClInclude Include="skills/thief/createnewpoison.hpp" />
+    <ClInclude Include="skills/thief/crossimpact.hpp" />
+    <ClInclude Include="skills/thief/crossripperslasher.hpp" />
+    <ClInclude Include="skills/thief/darkclaw.hpp" />
+    <ClInclude Include="skills/thief/darkillusion.hpp" />
     <ClInclude Include="skills/thief/detoxify.hpp" />
     <ClInclude Include="skills/thief/divestall.hpp" />
     <ClInclude Include="skills/thief/divestarmor.hpp" />
@@ -541,11 +549,16 @@
     <ClInclude Include="skills/thief/fatalshadowcrow.hpp" />
     <ClInclude Include="skills/thief/findstone.hpp" />
     <ClInclude Include="skills/thief/grimtooth.hpp" />
+    <ClInclude Include="skills/thief/hallucinationwalk.hpp" />
     <ClInclude Include="skills/thief/hiding.hpp" />
     <ClInclude Include="skills/thief/impactcrater.hpp" />
     <ClInclude Include="skills/thief/meteorassault.hpp" />
     <ClInclude Include="skills/thief/mug.hpp" />
+    <ClInclude Include="skills/thief/phantommenace.hpp" />
+    <ClInclude Include="skills/thief/poisoningweapon.hpp" />
+    <ClInclude Include="skills/thief/poisonsmoke.hpp" />
     <ClInclude Include="skills/thief/remover.hpp" />
+    <ClInclude Include="skills/thief/rollingcutter.hpp" />
     <ClInclude Include="skills/thief/sandattack.hpp" />
     <ClInclude Include="skills/thief/savageimpact.hpp" />
     <ClInclude Include="skills/thief/scribble.hpp" />
@@ -561,7 +574,9 @@
     <ClInclude Include="skills/thief/stonefling.hpp" />
     <ClInclude Include="skills/thief/throwvenomknife.hpp" />
     <ClInclude Include="skills/thief/venomdust.hpp" />
+    <ClInclude Include="skills/thief/venompressure.hpp" />
     <ClInclude Include="skills/thief/venomsplasher.hpp" />
+    <ClInclude Include="skills/thief/weaponcrush.hpp" />
     <ClInclude Include="skills/weapon_skill_impl.hpp" />
   </ItemGroup>
   <ItemGroup>
@@ -891,13 +906,21 @@
     <ClCompile Include="skills/taekwon/warmthofthemoon.cpp" />
     <ClCompile Include="skills/taekwon/warmthofthestars.cpp" />
     <ClCompile Include="skills/taekwon/warmthofthesun.cpp" />
+    <ClCompile Include="skills/thief/antidote.cpp" />
     <ClCompile Include="skills/thief/backslide.cpp" />
     <ClCompile Include="skills/thief/backstab.cpp" />
     <ClCompile Include="skills/thief/cloaking.cpp" />
+    <ClCompile Include="skills/thief/cloakingexceed.cpp" />
     <ClCompile Include="skills/thief/closeconfine.cpp" />
     <ClCompile Include="skills/thief/counterinstinct.cpp" />
+    <ClCompile Include="skills/thief/counterslash.cpp" />
     <ClCompile Include="skills/thief/createdeadlypoison.cpp" />
     <ClCompile Include="skills/thief/dancingknife.cpp" />
+    <ClCompile Include="skills/thief/createnewpoison.cpp" />
+    <ClCompile Include="skills/thief/crossimpact.cpp" />
+    <ClCompile Include="skills/thief/crossripperslasher.cpp" />
+    <ClCompile Include="skills/thief/darkclaw.cpp" />
+    <ClCompile Include="skills/thief/darkillusion.cpp" />
     <ClCompile Include="skills/thief/detoxify.cpp" />
     <ClCompile Include="skills/thief/divestall.cpp" />
     <ClCompile Include="skills/thief/divestarmor.cpp" />
@@ -911,11 +934,16 @@
     <ClCompile Include="skills/thief/fatalshadowcrow.cpp" />
     <ClCompile Include="skills/thief/findstone.cpp" />
     <ClCompile Include="skills/thief/grimtooth.cpp" />
+    <ClCompile Include="skills/thief/hallucinationwalk.cpp" />
     <ClCompile Include="skills/thief/hiding.cpp" />
     <ClCompile Include="skills/thief/impactcrater.cpp" />
     <ClCompile Include="skills/thief/meteorassault.cpp" />
     <ClCompile Include="skills/thief/mug.cpp" />
+    <ClCompile Include="skills/thief/phantommenace.cpp" />
+    <ClCompile Include="skills/thief/poisoningweapon.cpp" />
+    <ClCompile Include="skills/thief/poisonsmoke.cpp" />
     <ClCompile Include="skills/thief/remover.cpp" />
+    <ClCompile Include="skills/thief/rollingcutter.cpp" />
     <ClCompile Include="skills/thief/sandattack.cpp" />
     <ClCompile Include="skills/thief/savageimpact.cpp" />
     <ClCompile Include="skills/thief/scribble.cpp" />
@@ -931,7 +959,9 @@
     <ClCompile Include="skills/thief/stonefling.cpp" />
     <ClCompile Include="skills/thief/throwvenomknife.cpp" />
     <ClCompile Include="skills/thief/venomdust.cpp" />
+    <ClCompile Include="skills/thief/venompressure.cpp" />
     <ClCompile Include="skills/thief/venomsplasher.cpp" />
+    <ClCompile Include="skills/thief/weaponcrush.cpp" />
     <ClCompile Include="skills/weapon_skill_impl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -3325,9 +3325,7 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case LG_BANISHINGPOINT:
 				hitrate += 5 * skill_lv;
 				break;
-			case GC_VENOMPRESSURE:
-				hitrate += 10 + 4 * skill_lv;
-				break;
+
 			case SC_FATALMENACE:
 				if (skill_lv < 6)
 					hitrate -= 35 - 5 * skill_lv;
@@ -5031,37 +5029,13 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(150); // Base level bonus.
 			break;
 		// case NPC_PHANTOMTHRUST:	// ATK = 100% for all level
-		case GC_CROSSIMPACT:
-			skillratio += -100 + 1400 + 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case GC_COUNTERSLASH:
-			//ATK [{(Skill Level x 150) + 300} x Caster's Base Level / 120]% + ATK [(AGI x 2) + (Caster's Job Level x 4)]%
-			skillratio += -100 + 300 + 150 * skill_lv;
-			RE_LVL_DMOD(120);
-			skillratio += sstatus->agi * 2;
-			// If 4th job, job level of your 3rd job counts
-			skillratio += (sd ? (sd->class_&JOBL_FOURTH ? sd->change_level_4th : sd->status.job_level) * 4 : 0);
-			break;
-		case GC_VENOMPRESSURE:
-			skillratio += 900;
-			break;
-		case GC_PHANTOMMENACE:
-			skillratio += 200;
-			break;
-		case GC_ROLLINGCUTTER:
-			skillratio += -100 + 50 + 80 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case GC_CROSSRIPPERSLASHER:
-			skillratio += -100 + 80 * skill_lv + (sstatus->agi * 3);
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_ROLLINGCUTTER))
-				skillratio += sc->getSCE(SC_ROLLINGCUTTER)->val1 * 200;
-			break;
-		case GC_DARKCROW:
-			skillratio += 100 * (skill_lv - 1);
-			break;
+
+
+
+
+
+
+
 		case AB_DUPLELIGHT_MELEE:
 			skillratio += 50 + 15 * skill_lv;
 			break;
