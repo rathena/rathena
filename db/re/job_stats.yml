@@ -7964,6 +7964,7 @@ Body:
         Dex: 1
       - Level: 2
         Str: 1
+        Pow: 1
       - Level: 3
         Agi: 1
         Int: 1
@@ -7974,6 +7975,7 @@ Body:
       - Level: 5
         Str: 1
         Int: 1
+        Pow: 1
       - Level: 6
         Str: 1
       - Level: 7
@@ -7981,6 +7983,7 @@ Body:
         Dex: 1
       - Level: 8
         Dex: 1
+        Crt: 1
       - Level: 9
         Agi: 1
         Vit: 1
@@ -7995,11 +7998,19 @@ Body:
       - Level: 13
         Str: 1
         Vit: 1
+      - Level: 14
+        Crt: 1
+      - Level: 15
+        Wis: 1
       - Level: 16
         Str: 1
       - Level: 17
         Str: 1
         Agi: 1
+      - Level: 18
+        Sta: 1
+      - Level: 19
+        Pow: 1
       - Level: 20
         Str: 1
       - Level: 21
@@ -8016,13 +8027,17 @@ Body:
       - Level: 26
         Dex: 1
         Luk: 1
+      - Level: 27
+        Con: 1
       - Level: 28
         Agi: 1
+        Pow: 1
       - Level: 29
         Vit: 1
         Dex: 1
       - Level: 30
         Luk: 1
+        Con: 1
       - Level: 31
         Agi: 1
         Vit: 1
@@ -8030,3 +8045,55 @@ Body:
         Agi: 1
       - Level: 33
         Vit: 1
+        Sta: 1
+      - Level: 34
+        Pow: 1
+      - Level: 35
+        Sta: 1
+        Con: 1
+      - Level: 36
+        Pow: 1
+      - Level: 37
+        Con: 1
+      - Level: 38
+        Crt: 1
+      - Level: 39
+        Sta: 1
+      - Level: 40
+        Pow: 1
+      - Level: 41
+        Pow: 1
+      - Level: 42
+        Sta: 1
+        Crt: 1
+      - Level: 43
+        Sta: 1
+      - Level: 44
+        Pow: 1
+      - Level: 45
+        Sta: 1
+        Crt: 1
+      - Level: 46
+        Crt: 1
+      - Level: 47
+        Pow: 1
+        Wis: 1
+      - Level: 48
+        Sta: 1
+      - Level: 49
+        Con: 1
+      - Level: 50
+        Pow: 1
+        Crt: 1
+      - Level: 51
+        Sta: 1
+        Con: 1
+      - Level: 53
+        Sta: 1
+      - Level: 55
+        Pow: 1
+        Con: 1
+      - Level: 57
+        Wis: 1
+      - Level: 59
+        Con: 1
