@@ -4910,13 +4910,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 100 + 50 * skill_lv;
 #endif
 			break;
-#ifdef RENEWAL
-		case CR_ACIDDEMONSTRATION:
-			skillratio += -100 + 200 * skill_lv + sstatus->int_ + tstatus->vit; // !TODO: Confirm status bonus
-			if (target->type == BL_PC)
-				skillratio /= 2;
-			break;
-#endif
 		case CG_ARROWVULCAN:
 #ifdef RENEWAL
 			skillratio += 400 + 100 * skill_lv;
@@ -4952,15 +4945,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 #endif
 			if (sc && sc->getSCE(SC_SHIELD_POWER))// Whats the official increase? [Rytech]
 				skillratio += skillratio * 50 / 100;
-			break;
-		case WS_CARTTERMINATION:
-			i = 10 * (16 - skill_lv);
-			if (i < 1) i = 1;
-			//Preserve damage ratio when max cart weight is changed.
-			if (sd && sd->cart_weight)
-				skillratio += sd->cart_weight / i * 80000 / battle_config.max_cart_weight - 100;
-			else if (!sd)
-				skillratio += 80000 / i - 100;
 			break;
 		case NJ_HUUMA:
 #ifdef RENEWAL

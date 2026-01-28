@@ -38175,7 +38175,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bAspdRate,-(1+(BaseLevel>=90)+(BaseLevel>=120));
+      bonus bAspdRate,1+(BaseLevel>=90)+(BaseLevel>=120);
   - Id: 27019
     AegisName: DR815_Card
     Name: DR815 Card
@@ -48335,7 +48335,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSkillAtk,"RL_FIREDANCE",60;
-      bonus2 bSkillUseSPrate,"RL_FIREDANCE",25;
+      bonus2 bSkillUseSPrate,"RL_FIREDANCE",-25;
   - Id: 300079
     AegisName: Redpepper_Card
     Name: Red Pepper Card
@@ -48439,7 +48439,7 @@ Body:
       bonus bStr,2;
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
-      bonus bBaseAtk,getskilllv("TK_POWER");
+      bonus bBaseAtk,getskilllv("TK_POWER")*7;
   - Id: 300086
     AegisName: Alnoldi_Ex_H_Card
     Name: Senior Special Alnoldi Card
@@ -51199,8 +51199,8 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Demon,40;
       bonus2 bAddRace,RC_DemiHuman,40;
-      bonus3 bSubRace,RC_Demon,-30,BF_WEAPON;
-      bonus3 bSubRace,RC_DemiHuman,-30,BF_WEAPON;
+      bonus2 bSubRace,RC_DemiHuman,-30;
+      bonus2 bSubRace,RC_Demon,-30;
   - Id: 300281
     AegisName: R001_Bestia_Card
     Name: R001-Bestia Card
@@ -52930,7 +52930,6 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Neutral,-10;
-      bonus2 bMagicAtkEle,Ele_Neutral,5;
       bonus2 bMagicAtkEle,Ele_All,5+4*(getrefine()/2);
   - Id: 300425
     AegisName: Crux_Card
@@ -65922,7 +65921,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bAtkRate,15+5*getenchantgrade();
+      bonus bAtkRate,10+2*getenchantgrade();
   - Id: 311017
     AegisName: Gear_MATK
     Name: Clockwork (Matk)
