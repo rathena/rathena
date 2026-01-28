@@ -20,10 +20,41 @@ on:
       - '3rdparty/**'
 
 jobs:
+  code-quality:
+    # Only run code quality checks on pull requests
+    if: github.event_name == 'pull_request' && !contains(github.event.head_commit.message, 'ci-skip')
+    runs-on: windows-2022
+    
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for proper diff comparison
+      
+      - name: Install LLVM and Clang
+        uses: KyleMayes/install-llvm-action@v2
+        with:
+          version: "17"
+          directory: ${{ runner.temp }}/llvm
+      
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
+      
+      - uses: lukka/get-cmake@latest
+      
+      - name: Run Code Quality Checks
+        run: |
+          .\tools\code-quality-check.ps1 `
+            -BaseCommit "${{ github.event.pull_request.base.sha }}" `
+            -HeadCommit "${{ github.event.pull_request.head.sha }}" `
+            -Generator "Visual Studio 17 2022"
+        shell: pwsh
+
   build:
     # Github Actions checks for '[ci skip]', '[skip ci]', '[no ci]', '[skip actions]', or '[actions skip]' but not a hyphenated version.
     # It's a catch-all incase a Pull Request has been opened and someone is on auto-pilot.
-    if: "!contains(github.event.head_commit.message, 'ci-skip')"
+    # Depends on code-quality job, but allows build to run even if code-quality is skipped (e.g., on push to master)
+    needs: [code-quality]
+    if: ${{ !cancelled() && !contains(github.event.head_commit.message, 'ci-skip') }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
