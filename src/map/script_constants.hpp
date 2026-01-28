@@ -263,6 +263,12 @@
 	export_constant(JOB_MINSTREL_2ND);
 	export_constant(JOB_WANDERER_2ND);
 
+	export_constant(JOB_DRUID);
+	export_constant(JOB_BABY_DRUID);
+	export_constant(JOB_KARNOS);
+	export_constant(JOB_BABY_KARNOS);
+	export_constant(JOB_ALITEA);
+
 	/* EA jobs */
 	export_constant2("EAJL_2_1",JOBL_2_1);
 	export_constant2("EAJL_2_2",JOBL_2_2);
@@ -290,6 +296,7 @@
 	export_constant2("EAJ_NINJA",MAPID_NINJA);
 	export_constant2("EAJ_SUMMONER",MAPID_SUMMONER);
 	export_constant2("EAJ_GANGSI",MAPID_GANGSI);
+	export_constant2("EAJ_DRUID",MAPID_DRUID);
 
 	export_constant2("EAJ_SUPER_NOVICE",MAPID_SUPER_NOVICE);
 	export_constant2("EAJ_SUPERNOVICE",MAPID_SUPER_NOVICE);
@@ -306,6 +313,7 @@
 	export_constant2("EAJ_SPIRIT_HANDLER",MAPID_SPIRIT_HANDLER);
 	export_constant2("EAJ_DEATH_KNIGHT",MAPID_DEATH_KNIGHT);
 	export_constant2("EAJ_DEATHKNIGHT",MAPID_DEATH_KNIGHT);
+	export_constant2("EAJ_KARNOS",MAPID_KARNOS);
 
 	export_constant2("EAJ_CRUSADER",MAPID_CRUSADER);
 	export_constant2("EAJ_SAGE",MAPID_SAGE);
@@ -351,6 +359,7 @@
 	export_constant2("EAJ_BABY_GUNSLINGER",MAPID_BABY_GUNSLINGER);
 	export_constant2("EAJ_BABY_NINJA",MAPID_BABY_NINJA);
 	export_constant2("EAJ_BABY_SUMMONER",MAPID_BABY_SUMMONER);
+	export_constant2("EAJ_BABY_DRUID",MAPID_BABY_DRUID);
 
 	export_constant2("EAJ_SUPER_BABY",MAPID_SUPER_BABY);
 	export_constant2("EAJ_BABY_KNIGHT",MAPID_BABY_KNIGHT);
@@ -362,6 +371,7 @@
 	export_constant2("EAJ_BABY_STAR_GLADIATOR",MAPID_BABY_STAR_GLADIATOR);
 	export_constant2("EAJ_BABY_REBELLION",MAPID_BABY_REBELLION);
 	export_constant2("EAJ_BABY_KAGEROUOBORO",MAPID_BABY_KAGEROUOBORO);
+	export_constant2("EAJ_BABY_KARNOS",MAPID_BABY_KARNOS);
 
 	export_constant2("EAJ_BABY_CRUSADER",MAPID_BABY_CRUSADER);
 	export_constant2("EAJ_BABY_SAGE",MAPID_BABY_SAGE);
@@ -437,6 +447,7 @@
 	export_constant2("EAJ_BIOLO",MAPID_BIOLO);
 	export_constant2("EAJ_ABYSS_CHASER",MAPID_ABYSS_CHASER);
 	export_constant2("EAJ_SOUL_ASCETIC",MAPID_SOUL_ASCETIC);
+	export_constant2("EAJ_ALITEA", MAPID_ALITEA);
 
 	/* sex */
 	export_constant(SEX_FEMALE);
@@ -2004,6 +2015,39 @@
 	export_constant(SC_WATER_CHARM_POWER);
 	export_constant(SC_WIND_CHARM_POWER);
 	export_constant(SC_GROUND_CHARM_POWER);
+	export_constant(SC_WEREWOLF);
+	export_constant(SC_ENRAGE_WOLF);
+	export_constant(SC_BLOOD_HOWLING);
+	export_constant(SC_WERERAPTOR);
+	export_constant(SC_ENRAGE_RAPTOR);
+	export_constant(SC_PREENING);
+	export_constant(SC_TRUTH_OF_ICE);
+	export_constant(SC_TRUTH_OF_WIND);
+	export_constant(SC_TRUTH_OF_EARTH);
+	export_constant(SC_NATURE_SHIELD);
+	export_constant(SC_TRANSFORM_DELAY);
+	export_constant(SC_IRON_HOWLING);
+	export_constant(SC_WIND_VEIL);
+	export_constant(SC_ICE_PILLAR);
+	export_constant(SC_THUNDERING_ROD);
+	export_constant(SC_THUNDERING_ROD_MAX);
+	export_constant(SC_GROUND_GROW);
+	export_constant(SC_NATURE_PROTECTION);
+	export_constant(SC_INSANE);
+	export_constant(SC_INSANE2);
+	export_constant(SC_INSANE3);
+	export_constant(SC_ALPHA_PHASE);
+	export_constant(SC_FLIP_FLAP);
+	export_constant(SC_FLIP_FLAP_TARGET);
+	export_constant(SC_APEX_PHASE);
+	export_constant(SC_ZEPHYR_CHARGE);
+	export_constant(SC_ZEPHYR_LINK);
+	export_constant(SC_GLACIER_SHEILD);
+	export_constant(SC_SOLID_STOMP);
+	export_constant(SC_NATURE_HARMONY);
+	export_constant(SC_PULSE_OF_MADNESS);
+	export_constant(SC_PRIMAL_CLAW);
+	export_constant(SC_FERAL_CLAW);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
@@ -3474,6 +3518,50 @@
 	export_constant(EFST_C_BUFF_8);
 	export_constant(EFST_C_BUFF_9);
 	export_constant(EFST_BLOCK);
+	export_constant(EFST_WEREWOLF);
+	export_constant(EFST_ENRAGE_WOLF);
+	export_constant(EFST_BLOOD_HOWLING);
+	export_constant(EFST_BEASTY_NOSE);
+	export_constant(EFST_WERERAPTOR);
+	export_constant(EFST_ENRAGE_RAPTOR);
+	export_constant(EFST_PREENING);
+	export_constant(EFST_SHARPE_EYES);
+	export_constant(EFST_TRUTH_OF_ICE);
+	export_constant(EFST_TRUTH_OF_WIND);
+	export_constant(EFST_TRUTH_OF_EARTH);
+	export_constant(EFST_NATURE_SHIELD);
+	export_constant(EFST_NATURE_LOGIC);
+	export_constant(EFST_TRANSFORM_DELAY);
+	export_constant(EFST_IRON_HOWLING);
+	export_constant(EFST_WIND_VEIL);
+	export_constant(EFST_ICE_PILLAR);
+	export_constant(EFST_THUNDERING_ROD);
+	export_constant(EFST_THUNDERING_ROD_MAX);
+	export_constant(EFST_GROUND_GROW);
+	export_constant(EFST_NATURE_PROTECTION);
+	export_constant(EFST_EARTH_BUD);
+	export_constant(EFST_NATURE_VIGOUR);
+	export_constant(EFST_SIXTH_SENSE);
+	export_constant(EFST_INSANE);
+	export_constant(EFST_INSANE2);
+	export_constant(EFST_INSANE3);
+	export_constant(EFST_ALPHA_PHASE);
+	export_constant(EFST_FLIP_FLAP);
+	export_constant(EFST_FLIP_FLAP_TARGET);
+	export_constant(EFST_APEX_PHASE);
+	export_constant(EFST_ZEPHYR_CHARGE);
+	export_constant(EFST_ZEPHYR_LINK);
+	export_constant(EFST_GLACIER_SHEILD);
+	export_constant(EFST_SOLID_STOMP);
+	export_constant(EFST_NATURE_HARMONY);
+	export_constant(EFST_PULSE_OF_MADNESS);
+	export_constant(EFST_PRIMAL_CLAW);
+	export_constant(EFST_FERAL_CLAW);
+	export_constant(EFST_NATURE_AID);
+	export_constant(EFST_WOLF_INSTINCT);
+	export_constant(EFST_RAPTORIAL_INSTINCT);
+	export_constant(EFST_TASK_CHOP_CHOP);
+	export_constant(EFST_TASK_FURIOS_STORM);
 
 /// @APIHOOK_END
 /// Do not modify code above this, since it will be automatically generated by the API again
@@ -10437,6 +10525,7 @@
 	export_constant(INF2_IGNOREGTB);
 	export_constant(INF2_TOGGLEABLE);
 	export_constant(INF2_IGNORENONCRITATKBONUS);
+	export_constant(INF2_DIAMOND_SPLASH);
 
 	/* skill no near npc flags */
 	export_constant(SKILL_NONEAR_WARPPORTAL);
@@ -10690,6 +10779,9 @@
 	export_constant(UNT_KUNAIWAIKYOKU);
 	export_constant(UNT_KUNAIKUSSETSU);
 	export_constant(UNT_SEKIENHOU);
+
+	export_constant(UNT_ICE_PILLAR);
+	export_constant(UNT_GLACIAL_MONOLITH);
 
 	export_constant(UNT_STAR_BURST);
 
