@@ -1353,14 +1353,8 @@ void chclif_delchar( int32 fd ){
 	socket_send( fd, p );
 }
 
-bool chclif_parse_delchar( int fd, struct char_session_data& sd ){
-	const PACKET_CH_DELETE_CHAR* p = reinterpret_cast<PACKET_CH_DELETE_CHAR*>( RFIFOP( fd, 0 ) );
-
-	char email[40];
-	uint32 cid = p->CID;
-
+bool chclif_parse_delchar_sub( int32 fd, struct char_session_data& sd, uint32 cid, char email[40] ){
 	ShowInfo(CL_RED "Request Char Deletion: " CL_GREEN "%u (%u)" CL_RESET "\n", sd.account_id, cid);
-	safestrncpy( email, p->key, sizeof( email ) );
 
 	if (!chclif_delchar_check(&sd, email, charserv_config.char_config.char_del_option)) {
 		chclif_refuse_delchar(fd,0); // 00 = Incorrect Email address
@@ -1388,6 +1382,32 @@ bool chclif_parse_delchar( int fd, struct char_session_data& sd ){
 	}
 
 	return true;
+}
+
+bool chclif_parse_delchar( int fd, struct char_session_data& sd ){
+	const PACKET_CH_DELETE_CHAR* p = reinterpret_cast<PACKET_CH_DELETE_CHAR*>( RFIFOP( fd, 0 ) );
+
+	char email[40];
+	uint32 cid = p->CID;
+
+	safestrncpy( email, p->key, sizeof( email ) );
+
+	return chclif_parse_delchar_sub( fd, sd, cid, email );
+}
+
+bool chclif_parse_delchar2( int fd, struct char_session_data& sd ){
+#if PACKETVER >= 20040419
+	const PACKET_CH_DELETE_CHAR2* p = reinterpret_cast<PACKET_CH_DELETE_CHAR2*>( RFIFOP( fd, 0 ) );
+
+	char email[40];
+	uint32 cid = p->CID;
+
+	safestrncpy( email, p->key, sizeof( email ) );
+
+	return chclif_parse_delchar_sub( fd, sd, cid, email );
+#else
+	return false;
+#endif
 }
 
 // Client keep-alive packet (every 12 seconds)
@@ -1598,6 +1618,9 @@ public:
 		this->add( HEADER_CH_SELECT_CHAR, true, sizeof( PACKET_CH_SELECT_CHAR ), chclif_parse_charselect );
 		this->add( HEADER_CH_MAKE_CHAR, true, sizeof( PACKET_CH_MAKE_CHAR ), chclif_parse_createnewchar );
 		this->add( HEADER_CH_DELETE_CHAR, true, sizeof( PACKET_CH_DELETE_CHAR ), chclif_parse_delchar );
+#if PACKETVER >= 20040419
+		this->add( HEADER_CH_DELETE_CHAR2, true, sizeof( PACKET_CH_DELETE_CHAR2 ), chclif_parse_delchar2 );
+#endif
 		this->add( HEADER_CH_DELETE_CHAR3_CANCEL, true, sizeof( PACKET_CH_DELETE_CHAR3_CANCEL ), chclif_parse_char_delete2_cancel );
 		this->add( HEADER_CH_DELETE_CHAR3, true, sizeof( PACKET_CH_DELETE_CHAR3 ), chclif_parse_char_delete2_accept );
 		this->add( HEADER_CH_DELETE_CHAR3_RESERVED, true, sizeof( PACKET_CH_DELETE_CHAR3_RESERVED ), chclif_parse_char_delete2_req );
