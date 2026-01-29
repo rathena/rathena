@@ -24278,14 +24278,14 @@ void clif_reputation_list( map_session_data& sd ){
 #endif
 }
 
-void clif_reputation_open( map_session_data& sd, uint64 tabID, uint32 repID, bool highlight ) {
+void clif_reputation_open( map_session_data& sd, uint64 tabID, uint64 repID ) {
 #if PACKETVER_RE_NUM >= 20211103 || PACKETVER_MAIN_NUM >= 20220330
 	PACKET_ZC_REPUTE_OPEN p = {};
 
 	p.packetType = HEADER_ZC_REPUTE_OPEN;
 	p.table = tabID;
-	p.type = repID;
-	p.mode = highlight ? 0 : 1; // 0 = red texture
+	p.type = static_cast<decltype(p.type)>(repID);
+	p.mode = (repID == 0); // 0 = red texture
 
 	clif_send(&p, sizeof(p), &sd, SELF);
 #endif
