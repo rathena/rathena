@@ -798,7 +798,82 @@
     <ClInclude Include="skills/status_skill_impl.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
+    <ClInclude Include="skills/summoner/bite.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/bunchofshrimp.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/catnipmeteor.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/catnipmeteor2.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/catnippowdering.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/chattering.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/grooming.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/hiss.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/lope.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/lunaticcarrotbeat.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/lunaticcarrotbeat2.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/meowmeow.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/nyanggrass.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/pickypeck.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/pickypeckdoubleattack.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/powerofflock.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/purring.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/scaroftarou.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/scratch.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/silvervineroottwist.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/silvervinestemspear.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
     <ClInclude Include="skills/summoner/skill_factory_summoner.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/spiritofsavage.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/tastyshrimpparty.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/tunabelly.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/tunaparty.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/autoberserk.hpp">
@@ -1526,7 +1601,82 @@
     <ClCompile Include="skills/status_skill_impl.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
+    <ClCompile Include="skills/summoner/bite.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/bunchofshrimp.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/catnipmeteor.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/catnipmeteor2.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/catnippowdering.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/chattering.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/grooming.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hiss.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/lope.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/lunaticcarrotbeat.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/lunaticcarrotbeat2.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/meowmeow.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/nyanggrass.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/pickypeck.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/pickypeckdoubleattack.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/powerofflock.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/purring.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/scaroftarou.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/scratch.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/silvervineroottwist.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/silvervinestemspear.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
     <ClCompile Include="skills/summoner/skill_factory_summoner.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/spiritofsavage.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/tastyshrimpparty.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/tunabelly.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/tunaparty.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/autoberserk.cpp">
