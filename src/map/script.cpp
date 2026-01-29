@@ -27271,8 +27271,6 @@ BUILDIN_FUNC(reputationui) {
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 		}
-
-		highlight = true;
 	}
 
 	clif_reputation_open(*sd, group_id, reputation_id);
