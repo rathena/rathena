@@ -27254,7 +27254,6 @@ BUILDIN_FUNC(reputationui) {
 
 	int64 group_id = 0;
 	int64 reputation_id = 0;
-	bool highlight = false;
 
 	if (script_hasdata(st, 2)) {
 		group_id = script_getnum64(st, 2);
