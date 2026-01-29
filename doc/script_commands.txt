@@ -8612,7 +8612,7 @@ This command requires packet version 2020-07-24 or newer.
 Opens the reputation UI for the attached character or the player given by the char ID parameter.
 If <group> is passed reputation UI will open in selected group table, 0 = All (Default).
 <type> is the client side index as stored in the Id field of the reputation.yml database files.
-If <type> is above 0 following reputation will be showed in red (Default: 0).
+If <type> is above 0 the specified reputation will be highlighted in red (Default: 0).
 
 ---------------------------------------
 
