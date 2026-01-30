@@ -10,8 +10,6 @@
 #include "catnipmeteor.hpp"
 #include "catnipmeteor2.hpp"
 #include "catnippowdering.hpp"
-#include "chattering.hpp"
-#include "grooming.hpp"
 #include "hiss.hpp"
 #include "lope.hpp"
 #include "lunaticcarrotbeat.hpp"
@@ -42,7 +40,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySummoner::create(const e_skill skil
 		case SU_BUNCHOFSHRIMP:
 			return std::make_unique<SkillBunchofShrimp>();
 		case SU_CHATTERING:
-			return std::make_unique<SkillChattering>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SU_CN_METEOR2:
 			return std::make_unique<SkillCatnipMeteor2>();
 		case SU_CN_METEOR:
@@ -52,7 +50,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySummoner::create(const e_skill skil
 		case SU_FRESHSHRIMP:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SU_GROOMING:
-			return std::make_unique<SkillGrooming>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SU_HIDE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case SU_HISS:

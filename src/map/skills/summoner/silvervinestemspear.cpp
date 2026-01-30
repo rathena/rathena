@@ -12,6 +12,7 @@ SkillSilvervineStemSpear::SkillSilvervineStemSpear() : SkillImpl(SU_SV_STEMSPEAR
 void SkillSilvervineStemSpear::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
 	sc_start2(src, target, SC_BLEEDING, 10, skill_lv, src->id, skill_get_time2(getSkillId(), skill_lv));
 }
+
 void SkillSilvervineStemSpear::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 	base_skillratio += 600;
 }

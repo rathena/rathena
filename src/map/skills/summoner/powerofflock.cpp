@@ -3,6 +3,7 @@
 
 #include "powerofflock.hpp"
 
+#include "map/battle.hpp"
 #include "map/clif.hpp"
 #include "map/status.hpp"
 

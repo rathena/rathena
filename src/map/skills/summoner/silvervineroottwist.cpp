@@ -20,7 +20,7 @@ void SkillSilvervineRootTwist::castendNoDamageId(block_list *src, block_list *ta
 		clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL_TOTARGET );
 		return;
 	}
-	if (tsc != nullptr && tsc->getSCE(type)) // Refresh the status only if it's already active.
+	if (tsc != nullptr && tsc->hasSCE(type)) // Refresh the status only if it's already active.
 		sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 	else {
 		sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));

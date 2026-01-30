@@ -813,12 +813,6 @@
     <ClInclude Include="skills/summoner/catnippowdering.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
-    <ClInclude Include="skills/summoner/chattering.hpp">
-      <Filter>Header Files\Skills\Summoner</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/summoner/grooming.hpp">
-      <Filter>Header Files\Skills\Summoner</Filter>
-    </ClInclude>
     <ClInclude Include="skills/summoner/hiss.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
@@ -1614,12 +1608,6 @@
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/catnippowdering.cpp">
-      <Filter>Source Files\Skills\Summoner</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/summoner/chattering.cpp">
-      <Filter>Source Files\Skills\Summoner</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/summoner/grooming.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/hiss.cpp">

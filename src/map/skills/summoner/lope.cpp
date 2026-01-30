@@ -11,8 +11,6 @@ SkillLope::SkillLope() : SkillImpl(SU_LOPE) {
 }
 
 void SkillLope::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
-	uint8 dir = map_calc_dir(src, x, y);
-
 	// Fails on noteleport maps, except for GvG and BG maps
 	if (map_getmapflag(src->m, MF_NOTELEPORT) && !(map_getmapflag(src->m, MF_BATTLEGROUND) || map_flag_gvg2(src->m))) {
 		x = src->x;

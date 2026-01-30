@@ -31,7 +31,8 @@ void SkillLunaticCarrotBeat::splashSearch(block_list* src, block_list* target, u
 		SkillLunaticCarrotBeat2 lunatic2;
 		lunatic2.splashSearch(src, target, skill_lv, tick, flag);
 	}
-	else
+	else {
 		SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
+	}
 }
 

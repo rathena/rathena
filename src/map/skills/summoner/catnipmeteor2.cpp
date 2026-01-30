@@ -13,6 +13,7 @@ SkillCatnipMeteor2::SkillCatnipMeteor2() : SkillImpl(SU_CN_METEOR2) {
 void SkillCatnipMeteor2::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
 	sc_start(src, target, SC_CURSE, 20, skill_lv, skill_get_time2(getSkillId(), skill_lv));
 }
+
 void SkillCatnipMeteor2::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
