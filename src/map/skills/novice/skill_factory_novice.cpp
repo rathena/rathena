@@ -5,18 +5,21 @@
 
 #include "../status_skill_impl.hpp"
 
+#include "helpangel.hpp"
+
 std::unique_ptr<const SkillImpl> SkillFactoryNovice::create(const e_skill skill_id) const {
 	switch( skill_id ){
 		case HN_BREAKINGLIMIT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case HN_RULEBREAK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NV_HELPANGEL:
+			return std::make_unique<SkillHelpAngel>();
 		case NV_TRICKDEAD:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 
 		default:
 			return nullptr;
 	}
-
 	return nullptr;
 }

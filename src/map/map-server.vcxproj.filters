@@ -783,6 +783,9 @@
     <ClInclude Include="skills/ninja/skill_factory_ninja.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
+    <ClInclude Include="skills/novice/helpangel.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
     <ClInclude Include="skills/novice/skill_factory_novice.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
@@ -1510,6 +1513,9 @@
     </ClCompile>
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/helpangel.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
     </ClCompile>
     <ClCompile Include="skills/novice/skill_factory_novice.cpp">
       <Filter>Source Files\Skills\Novice</Filter>
