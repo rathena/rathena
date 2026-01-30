@@ -6,29 +6,47 @@
 #include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
+#include "acousticrhythm.hpp"
+#include "amp.hpp"
 #include "anklesnare.hpp"
 #include "arrowshower.hpp"
+#include "battletheme.hpp"
 #include "beaststrafing.hpp"
 #include "blastmine.hpp"
 #include "blitzbeat.hpp"
 #include "chargearrow.hpp"
+#include "classicalpluck.hpp"
 #include "claymoretrap.hpp"
 #include "concentration.hpp"
 #include "detect.hpp"
 #include "doublestrafe.hpp"
+#include "downtempo.hpp"
+#include "encore.hpp"
 #include "falconassault.hpp"
 #include "flasher.hpp"
 #include "focusedarrowstrike.hpp"
 #include "freezingtrap.hpp"
+#include "harmoniclick.hpp"
+#include "impressiveriff.hpp"
 #include "landmine.hpp"
+#include "lullaby.hpp"
+#include "magicstrings.hpp"
 #include "makingarrow.hpp"
+#include "melodystrike.hpp"
+#include "mentalsensing.hpp"
+#include "pangvoice.hpp"
+#include "perfecttablature.hpp"
 #include "phantasmicarrow.hpp"
+#include "powerchord.hpp"
 #include "removetrap.hpp"
 #include "sandman.hpp"
 #include "shockwavetrap.hpp"
 #include "skidtrap.hpp"
+#include "songoflutie.hpp"
 #include "springtrap.hpp"
 #include "talkiebox.hpp"
+#include "unbarringoctave.hpp"
+#include "unchainedserenade.hpp"
 #include "windwalker.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
@@ -43,10 +61,42 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillMakingArrow>();
 		case AC_SHOWER:
 			return std::make_unique<SkillArrowShower>();
+		case BA_APPLEIDUN:
+			return std::make_unique<SkillSongofLutie>();
+		case BA_ASSASSINCROSS:
+			return std::make_unique<SkillImpressiveRiff>();
 		case BA_DISSONANCE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillUnchainedSerenade>();
+		case BA_FROSTJOKER:
+			return std::make_unique<SkillUnbarringOctave>();
 		case BA_MUSICALSTRIKE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillMelodyStrike>();
+		case BA_PANGVOICE:
+			return std::make_unique<SkillPangVoice>();
+		case BA_POEMBRAGI:
+			return std::make_unique<SkillMagicStrings>();
+		case BA_WHISTLE:
+			return std::make_unique<SkillPerfectTablature>();
+		case BD_ADAPTATION:
+			return std::make_unique<SkillAmp>();
+		case BD_DRUMBATTLEFIELD:
+			return std::make_unique<SkillBattleTheme>();
+		case BD_ENCORE:
+			return std::make_unique<SkillEncore>();
+		case BD_ETERNALCHAOS:
+			return std::make_unique<SkillDownTempo>();
+		case BD_INTOABYSS:
+			return std::make_unique<SkillPowerChord>();
+		case BD_LULLABY:
+			return std::make_unique<SkillLullaby>();
+		case BD_RICHMANKIM:
+			return std::make_unique<SkillMentalSensing>();
+		case BD_RINGNIBELUNGEN:
+			return std::make_unique<SkillHarmonicLick>();
+		case BD_ROKISWEIL:
+			return std::make_unique<SkillClassicalPluck>();
+		case BD_SIEGFRIED:
+			return std::make_unique<SkillAcousticRhythm>();
 		case CG_ARROWVULCAN:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case DC_THROWARROW:
@@ -111,6 +161,5 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		default:
 			return nullptr;
 	}
-
 	return nullptr;
 }
