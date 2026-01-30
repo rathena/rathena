@@ -14,12 +14,17 @@
 #include "chargearrow.hpp"
 #include "claymoretrap.hpp"
 #include "concentration.hpp"
+#include "dazzler.hpp"
 #include "detect.hpp"
 #include "doublestrafe.hpp"
 #include "falconassault.hpp"
 #include "flasher.hpp"
+#include "focusballet.hpp"
 #include "focusedarrowstrike.hpp"
 #include "freezingtrap.hpp"
+#include "gypsyskiss.hpp"
+#include "hipshaker.hpp"
+#include "ladyluck.hpp"
 #include "landmine.hpp"
 #include "makingarrow.hpp"
 #include "phantasmicarrow.hpp"
@@ -27,9 +32,12 @@
 #include "sandman.hpp"
 #include "shockwavetrap.hpp"
 #include "skidtrap.hpp"
+#include "slingingarrow.hpp"
+#include "slowgrace.hpp"
 #include "springtrap.hpp"
 #include "talkiebox.hpp"
 #include "windwalker.hpp"
+#include "winkofcharm.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -49,8 +57,22 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case CG_ARROWVULCAN:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case DC_DONTFORGETME:
+			return std::make_unique<SkillSlowGrace>();
+		case DC_FORTUNEKISS:
+			return std::make_unique<SkillLadyLuck>();
+		case DC_HUMMING:
+			return std::make_unique<SkillFocusBallet>();
+		case DC_SCREAM:
+			return std::make_unique<SkillDazzler>();
+		case DC_SERVICEFORYOU:
+			return std::make_unique<SkillGypsysKiss>();
 		case DC_THROWARROW:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSlingingArrow>();
+		case DC_UGLYDANCE:
+			return std::make_unique<SkillHipShaker>();
+		case DC_WINKCHARM:
+			return std::make_unique<SkillWinkofCharm>();
 		case HT_ANKLESNARE:
 			return std::make_unique<SkillAnkleSnare>();
 		case HT_BLASTMINE:
@@ -111,6 +133,5 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		default:
 			return nullptr;
 	}
-
 	return nullptr;
 }
