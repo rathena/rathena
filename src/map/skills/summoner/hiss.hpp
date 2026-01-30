@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "../skill_impl.hpp"
+#include "../status_skill_impl.hpp"
 
-class SkillHiss : public SkillImpl {
+class SkillHiss : public StatusSkillImpl {
 public:
 	SkillHiss();
 
