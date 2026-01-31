@@ -30,7 +30,7 @@ void SkillHellsDrive::calculateSkillRatio(const Damage *wd, const block_list *sr
 
 void SkillHellsDrive::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	if (flag & 1)
-	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
+		skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 }
 
 void SkillHellsDrive::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {

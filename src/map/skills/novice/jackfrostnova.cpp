@@ -22,8 +22,6 @@ void SkillJackFrostNova::calculateSkillRatio(const Damage *wd, const block_list 
 		// Initial damage
 		skillratio += -100 + 200 * skill_lv;
 		skillratio += 2 * sstatus->spl;
-		// todo
-		// ad.div_ = 1;	// 1 hit
 	} else {
 		// Explosion damage
 		skillratio += -100 + 400 + 500 * skill_lv;
@@ -46,7 +44,6 @@ void SkillJackFrostNova::castendDamageId(block_list *src, block_list *target, ui
 
 void SkillJackFrostNova::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* sd = BL_CAST( BL_PC, src );
-	int32 i = 0;
 
 	if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
 		if( sd != nullptr ){
@@ -54,7 +51,7 @@ void SkillJackFrostNova::castendPos2(block_list* src, int32 x, int32 y, uint16 s
 		}
 
 		flag |= SKILL_NOCONSUME_REQ;
-		return;	// todo
+		return;
 	}
 
 	int32 splash = skill_get_splash(getSkillId(), skill_lv);
@@ -62,7 +59,7 @@ void SkillJackFrostNova::castendPos2(block_list* src, int32 x, int32 y, uint16 s
 	map_foreachinarea(skill_area_sub, src->m, x - splash, y - splash, x + splash, y + splash, BL_CHAR, src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id);
 	skill_unitsetting(src, getSkillId(), skill_lv, x, y, flag);
 
-	for (i = 1; i <= (skill_get_time(getSkillId(), skill_lv) / skill_get_unit_interval(getSkillId())); i++) {
+	for (int32 i = 1; i <= (skill_get_time(getSkillId(), skill_lv) / skill_get_unit_interval(getSkillId())); i++) {
 		skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(getSkillId()), 0, x, y, getSkillId(), skill_lv, 0, flag);
 	}
 }

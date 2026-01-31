@@ -9,7 +9,7 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillMegaSonicBlow::SkillMegaSonicBlow() : SkillImpl(HN_MEGA_SONIC_BLOW) {
+SkillMegaSonicBlow::SkillMegaSonicBlow() : WeaponSkillImpl(HN_MEGA_SONIC_BLOW) {
 }
 
 void SkillMegaSonicBlow::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {

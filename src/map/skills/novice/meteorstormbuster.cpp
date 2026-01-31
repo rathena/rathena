@@ -21,7 +21,6 @@ void SkillMeteorStormBuster::calculateSkillRatio(const Damage *wd, const block_l
 	if (mflag & SKILL_ALTDMG_FLAG) {
 		// Fall damage
 		skillratio += -100 + 300 + 320 * skill_lv;
-		// ad.div_ = -3;	// todo
 	} else {
 		// Explosion damage
 		skillratio += -100 + 450 + 160 * skill_lv;
@@ -43,7 +42,6 @@ void SkillMeteorStormBuster::castendDamageId(block_list *src, block_list *target
 
 void SkillMeteorStormBuster::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* sd = BL_CAST( BL_PC, src );
-	int32 i = 0;
 
 	if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
 		if( sd != nullptr ){
@@ -51,7 +49,7 @@ void SkillMeteorStormBuster::castendPos2(block_list* src, int32 x, int32 y, uint
 		}
 
 		flag |= SKILL_NOCONSUME_REQ;
-		return;	// todo
+		return;
 	}
 
 	int32 splash = skill_get_splash(getSkillId(), skill_lv);
@@ -59,7 +57,7 @@ void SkillMeteorStormBuster::castendPos2(block_list* src, int32 x, int32 y, uint
 	map_foreachinarea(skill_area_sub, src->m, x - splash, y - splash, x + splash, y + splash, BL_CHAR, src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | SKILL_ALTDMG_FLAG | 1, skill_castend_damage_id);
 	skill_unitsetting(src, getSkillId(), skill_lv, x, y, skill_get_unit_interval(getSkillId()));
 
-	for (i = 1; i <= (skill_get_time(getSkillId(), skill_lv) / skill_get_time2(getSkillId(), skill_lv)); i++) {
+	for (int32 i = 1; i <= (skill_get_time(getSkillId(), skill_lv) / skill_get_time2(getSkillId(), skill_lv)); i++) {
 		skill_addtimerskill(src, tick + (t_tick)i*skill_get_time2(getSkillId(), skill_lv), 0, x, y, getSkillId(), skill_lv, 0, flag);
 	}
 }
