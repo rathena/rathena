@@ -14,6 +14,12 @@
 SkillFatalShadowCrow::SkillFatalShadowCrow() : SkillImplRecursiveDamageSplash(SHC_FATAL_SHADOW_CROW) {
 }
 
+void SkillFatalShadowCrow::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
+	map_session_data* sd = BL_CAST( BL_PC, src );
+
+	sc_start( src, target, SC_DARKCROW, 100, max( 1, pc_checkskill( sd, GC_DARKCROW ) ), skill_get_time( getSkillId(), skill_lv ) );
+}
+
 void SkillFatalShadowCrow::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_data* tstatus = status_get_status_data(*target);
@@ -24,7 +30,7 @@ void SkillFatalShadowCrow::calculateSkillRatio(const Damage *wd, const block_lis
 	RE_LVL_DMOD(100);
 }
 
-void SkillFatalShadowCrow::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
+void SkillFatalShadowCrow::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	uint8 dir = DIR_NORTHEAST;
 
 	if (target->x != src->x || target->y != src->y)
@@ -34,10 +40,6 @@ void SkillFatalShadowCrow::castendDamageId(block_list *src, block_list *target, 
 	if (skill_check_unit_movepos(5, src, target->x + dirx[dir], target->y + diry[dir], 0, 1))
 		clif_blown(src);
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);// Trigger animation
-}
 
-void SkillFatalShadowCrow::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
-	map_session_data* sd = BL_CAST( BL_PC, src );
-
-	sc_start( src, target, SC_DARKCROW, 100, max( 1, pc_checkskill( sd, GC_DARKCROW ) ), skill_get_time( getSkillId(), skill_lv ) );
+	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }

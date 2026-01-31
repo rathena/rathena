@@ -26,7 +26,7 @@ void SkillSavageImpact::calculateSkillRatio(const Damage *wd, const block_list *
 	RE_LVL_DMOD(100);
 }
 
-void SkillSavageImpact::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
+void SkillSavageImpact::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	status_change *sc = status_get_sc(src);
 
 	if( sc && sc->getSCE( SC_CLOAKINGEXCEED ) ){
@@ -43,4 +43,6 @@ void SkillSavageImpact::castendDamageId(block_list *src, block_list *target, uin
 	if (skill_check_unit_movepos(5, src, target->x + dirx[dir], target->y + diry[dir], 0, 1))
 		clif_blown(src);
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+
+	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }

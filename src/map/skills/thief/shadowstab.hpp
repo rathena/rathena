@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "../skill_impl.hpp"
+#include "../weapon_skill_impl.hpp"
 
-class SkillShadowStab : public SkillImpl {
+class SkillShadowStab : public WeaponSkillImpl {
 public:
 	SkillShadowStab();
 

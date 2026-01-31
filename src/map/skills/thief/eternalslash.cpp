@@ -8,7 +8,7 @@
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
-SkillEternalSlash::SkillEternalSlash() : SkillImpl(SHC_ETERNAL_SLASH) {
+SkillEternalSlash::SkillEternalSlash() : WeaponSkillImpl(SHC_ETERNAL_SLASH) {
 }
 
 void SkillEternalSlash::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
@@ -32,5 +32,5 @@ void SkillEternalSlash::castendDamageId(block_list *src, block_list *target, uin
 	else
 		sc_start(src, src, SC_E_SLASH_COUNT, 100, 1, skill_get_time(getSkillId(), skill_lv));
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 }
