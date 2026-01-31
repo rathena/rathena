@@ -21,7 +21,7 @@ void SkillWargBite::castendDamageId(block_list *src, block_list *target, uint16 
 
 	if( path_search(nullptr,src->m,src->x,src->y,target->x,target->y,1,CELL_CHKNOREACH) ) {
 		skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag);
-	}else if( sd ) // Only RA_WUGBITE has the skill fail message.
+	}else if( sd )
 		clif_skill_fail( *sd, getSkillId() );
 }
 

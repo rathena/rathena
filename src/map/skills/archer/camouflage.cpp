@@ -20,7 +20,7 @@ void SkillCamouflage::castendNoDamageId(block_list *src, block_list *target, uin
 	if (tsce) {
 		i = status_change_end(target, type);
 		if( i )
-			clif_skill_nodamage(src,*target,getSkillId(),( getSkillId() == LG_FORCEOFVANGUARD || getSkillId() == RA_CAMOUFLAGE ) ? skill_lv : -1,i);
+			clif_skill_nodamage(src,*target,getSkillId(),skill_lv,i);
 		else if( sd )
 			clif_skill_fail( *sd, getSkillId() );
 		flag |= SKILL_NOCONSUME_REQ;
@@ -28,7 +28,7 @@ void SkillCamouflage::castendNoDamageId(block_list *src, block_list *target, uin
 	}
 	i = sc_start(src,target,type,100,skill_lv,skill_get_time(getSkillId(),skill_lv));
 	if( i )
-		clif_skill_nodamage(src,*target,getSkillId(),( getSkillId() == LG_FORCEOFVANGUARD || getSkillId() == RA_CAMOUFLAGE ) ? skill_lv : -1,i);
+		clif_skill_nodamage(src,*target,getSkillId(),skill_lv,i);
 	else if( sd )
 		clif_skill_fail( *sd, getSkillId(),  USESKILL_FAIL_LEVEL );
 }

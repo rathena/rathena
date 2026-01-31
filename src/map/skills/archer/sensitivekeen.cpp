@@ -51,8 +51,9 @@ void SkillSensitiveKeen::castendNoDamageId(block_list *src, block_list *target, 
 }
 
 void SkillSensitiveKeen::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
-	map_session_data* sd = BL_CAST( BL_PC, src );
-
-	if( rnd()%100 < 8 * skill_lv )
+	if( rnd()%100 < 8 * skill_lv ) {
+		map_session_data* sd = BL_CAST( BL_PC, src );
+	
 		skill_castend_damage_id(src, target, RA_WUGBITE, ((sd) ? pc_checkskill(sd, RA_WUGBITE) : skill_get_max(RA_WUGBITE)), tick, SD_ANIMATION);
+	}
 }
