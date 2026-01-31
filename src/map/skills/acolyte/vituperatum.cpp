@@ -10,8 +10,6 @@ SkillVituperatum::SkillVituperatum() : StatusSkillImpl(AB_VITUPERATUM) {
 }
 
 void SkillVituperatum::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	sc_type type = skill_get_sc(getSkillId());
-
 	if (flag&1)
 		StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
 	else {
