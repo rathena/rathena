@@ -3,8 +3,11 @@
 
 #include "violentquake.hpp"
 
+#include <config/const.hpp>
+
 #include "map/status.hpp"
 
+// AG_VIOLENT_QUAKE
 SkillViolentQuake::SkillViolentQuake() : SkillImpl(AG_VIOLENT_QUAKE) {
 }
 
@@ -48,4 +51,17 @@ void SkillViolentQuake::castendPos2(block_list* src, int32 x, int32 y, uint16 sk
 			skill_unitsetting(src, AG_VIOLENT_QUAKE_ATK, skill_lv, tmpx, tmpy, flag + i * unit_interval);
 		}
 	}
+}
+
+
+// AG_VIOLENT_QUAKE_ATK
+SkillViolentQuakeAttack::SkillViolentQuakeAttack() : SkillImpl(AG_VIOLENT_QUAKE_ATK) {
+}
+
+void SkillViolentQuakeAttack::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
+	const status_data* sstatus = status_get_status_data(*src);
+
+	skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
+	// (climax buff applied with pc_skillatk_bonus)
+	RE_LVL_DMOD(100);
 }

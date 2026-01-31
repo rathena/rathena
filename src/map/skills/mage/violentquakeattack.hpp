@@ -5,6 +5,7 @@
 
 #include "../skill_impl.hpp"
 
+// AG_VIOLENT_QUAKE_ATK
 class SkillViolentQuakeAttack : public SkillImpl {
 public:
 	SkillViolentQuakeAttack();

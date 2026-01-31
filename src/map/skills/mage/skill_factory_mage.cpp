@@ -7,18 +7,12 @@
 #include "../weapon_skill_impl.hpp"
 
 #include "allbloom.hpp"
-#include "allbloomattack.hpp"
-#include "allbloomattack2.hpp"
 #include "astralstrike.hpp"
-#include "astralstrikeattack.hpp"
 #include "coldbolt.hpp"
 #include "crimsonarrow.hpp"
-#include "crimsonarrowattack.hpp"
 #include "crystalimpact.hpp"
-#include "crystalimpactattack.hpp"
 #include "deadlyprojection.hpp"
 #include "destructivehurricane.hpp"
-#include "destructivehurricaneclimax.hpp"
 #include "earthspike.hpp"
 #include "energycoat.hpp"
 #include "energyconversion.hpp"
@@ -58,7 +52,6 @@
 #include "thunderstorm.hpp"
 #include "tornadostorm.hpp"
 #include "violentquake.hpp"
-#include "violentquakeattack.hpp"
 #include "waterball.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id) const {

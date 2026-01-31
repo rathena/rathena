@@ -3,8 +3,11 @@
 
 #include "allbloom.hpp"
 
+#include <config/const.hpp>
+
 #include "map/status.hpp"
 
+// AG_ALL_BLOOM
 SkillAllBloom::SkillAllBloom() : SkillImpl(AG_ALL_BLOOM) {
 }
 
@@ -54,4 +57,27 @@ void SkillAllBloom::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_
 	// all rose buds explode if Climax level 5 is active.
 	if (climax_lv == 5)
 		skill_unitsetting(src, AG_ALL_BLOOM_ATK2, skill_lv, x, y, flag + i * unit_interval);
+}
+
+
+// AG_ALL_BLOOM_ATK
+SkillAllBloomAttack::SkillAllBloomAttack() : SkillImpl(AG_ALL_BLOOM_ATK) {
+}
+
+void SkillAllBloomAttack::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
+	const status_data* sstatus = status_get_status_data(*src);
+
+	skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
+	// (climax buff applied with pc_skillatk_bonus)
+	RE_LVL_DMOD(100);
+}
+
+
+// AG_ALL_BLOOM_ATK2
+SkillAllBloomAttack2::SkillAllBloomAttack2() : SkillImpl(AG_ALL_BLOOM_ATK2) {
+}
+
+void SkillAllBloomAttack2::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
+	base_skillratio += -100 + 85000;
+	// Skill not affected by Baselevel and SPL
 }

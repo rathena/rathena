@@ -8,6 +8,7 @@
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
+// AG_DESTRUCTIVE_HURRICANE
 SkillDestructiveHurricane::SkillDestructiveHurricane() : SkillImplRecursiveDamageSplash(AG_DESTRUCTIVE_HURRICANE) {
 }
 
@@ -55,4 +56,18 @@ void SkillDestructiveHurricane::applyAdditionalEffects(block_list *src, block_li
 	// Targets hit are dealt a additional hit through Climax.
 	if (sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 1)
 		skill_castend_damage_id(src, target, AG_DESTRUCTIVE_HURRICANE_CLIMAX, skill_lv, tick, SD_LEVEL|SD_ANIMATION);
+}
+
+
+// AG_DESTRUCTIVE_HURRICANE_CLIMAX
+SkillDestructiveHurricaneClimax::SkillDestructiveHurricaneClimax() : SkillImpl(AG_DESTRUCTIVE_HURRICANE_CLIMAX) {
+}
+
+void SkillDestructiveHurricaneClimax::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
+	base_skillratio += -100 + 12500;
+	// Skill not affected by Baselevel and SPL
+}
+
+void SkillDestructiveHurricaneClimax::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	skill_attack(BF_MAGIC,src,src,target,getSkillId(),skill_lv,tick,flag);
 }
