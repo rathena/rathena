@@ -7126,7 +7126,7 @@ static int32 skill_apply_songs(block_list* target, va_list ap)
  * @param tick: Timer tick
  * @return Number of targets or 0 otherwise
  */
-static int32 skill_castend_song(block_list* src, uint16 skill_id, uint16 skill_lv, t_tick tick)
+int32 skill_castend_song(block_list* src, uint16 skill_id, uint16 skill_lv, t_tick tick)
 {
 	nullpo_ret(src);
 
@@ -8580,7 +8580,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 #endif
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
-
 
 #ifdef RENEWAL
 	case BD_LULLABY:
