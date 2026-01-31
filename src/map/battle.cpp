@@ -5965,12 +5965,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 15 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
-
-
-
-
-
-
 		case BO_ACIDIFIED_ZONE_WATER:
 		case BO_ACIDIFIED_ZONE_GROUND:
 		case BO_ACIDIFIED_ZONE_WIND:
