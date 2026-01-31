@@ -13,6 +13,14 @@
 SkillSpiralPierceMax::SkillSpiralPierceMax() : WeaponSkillImpl(HN_SPIRAL_PIERCE_MAX) {
 }
 
+void SkillSpiralPierceMax::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
+	map_session_data* dstsd = BL_CAST( BL_PC, target );
+	mob_data *dstmd = BL_CAST(BL_MOB, target);
+
+	if( dstsd || ( dstmd && !status_bl_has_mode(target,MD_STATUSIMMUNE) ) ) //Does not work on status immune
+		sc_start(src,target,SC_ANKLE,100,0,skill_get_time2(getSkillId(),skill_lv));
+}
+
 void SkillSpiralPierceMax::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 	const map_session_data* sd = BL_CAST( BL_PC, src );
@@ -37,12 +45,4 @@ void SkillSpiralPierceMax::calculateSkillRatio(const Damage *wd, const block_lis
 void SkillSpiralPierceMax::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
-}
-
-void SkillSpiralPierceMax::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
-	map_session_data* dstsd = BL_CAST( BL_PC, target );
-	mob_data *dstmd = BL_CAST(BL_MOB, target);
-
-	if( dstsd || ( dstmd && !status_bl_has_mode(target,MD_STATUSIMMUNE) ) ) //Does not work on status immune
-		sc_start(src,target,SC_ANKLE,100,0,skill_get_time2(getSkillId(),skill_lv));
 }

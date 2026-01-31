@@ -8845,6 +8845,27 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_RAINOFMETEOR:
 						skillratio += 350;	// unknown ratio
 						break;
+					case HN_GROUND_GRAVITATION:
+						if (mflag & SKILL_ALTDMG_FLAG) {
+							// Initial damage
+							// TODO: refactor / move elsewhere
+							ad.div_ = -2;
+						}
+						break;
+					case HN_JACK_FROST_NOVA:
+						if (mflag & SKILL_ALTDMG_FLAG) {
+							// Initial damage
+							// TODO: refactor / move elsewhere
+							ad.div_ = 1;	// 1 hit
+						}
+						break;
+					case HN_METEOR_STORM_BUSTER:
+						if (mflag & SKILL_ALTDMG_FLAG) {
+							// Fall damage
+							// TODO: refactor / move elsewhere
+							ad.div_ = -3;
+						}
+						break;
 					case SOA_EXORCISM_OF_MALICIOUS_SOUL:
 						skillratio += -100 + 150 * skill_lv;
 						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 2;

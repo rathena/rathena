@@ -12,6 +12,10 @@
 SkillNapalmVulcanStrike::SkillNapalmVulcanStrike() : SkillImpl(HN_NAPALM_VULCAN_STRIKE) {
 }
 
+void SkillNapalmVulcanStrike::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
+	sc_start(src,target,SC_CURSE,5*skill_lv,skill_lv,skill_get_time2(getSkillId(),skill_lv));
+}
+
 void SkillNapalmVulcanStrike::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_change *sc = status_get_sc(src);
@@ -35,8 +39,4 @@ void SkillNapalmVulcanStrike::castendDamageId(block_list *src, block_list *targe
 		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 		map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), BL_CHAR, src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 	}
-}
-
-void SkillNapalmVulcanStrike::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
-	sc_start(src,target,SC_CURSE,5*skill_lv,skill_lv,skill_get_time2(getSkillId(),skill_lv));
 }

@@ -9,7 +9,11 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillShieldChainRush::SkillShieldChainRush() : SkillImpl(HN_SHIELD_CHAIN_RUSH) {
+SkillShieldChainRush::SkillShieldChainRush() : WeaponSkillImpl(HN_SHIELD_CHAIN_RUSH) {
+}
+
+void SkillShieldChainRush::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
+	sc_start(src, target, skill_get_sc(getSkillId()), 100, 0, skill_get_time2(getSkillId(), skill_lv));
 }
 
 void SkillShieldChainRush::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
@@ -24,14 +28,10 @@ void SkillShieldChainRush::calculateSkillRatio(const Damage *wd, const block_lis
 
 void SkillShieldChainRush::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	if (flag & 1) {
-		skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
+		WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 	} else {
 		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 		map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), BL_CHAR, src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		sc_start(src, src, SC_HNNOWEAPON, 100, skill_lv, skill_get_time2(getSkillId(), skill_lv));
 	}
-}
-
-void SkillShieldChainRush::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
-	sc_start(src, target, skill_get_sc(getSkillId()), 100, 0, skill_get_time2(getSkillId(), skill_lv));
 }
