@@ -8286,8 +8286,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						break;
 #endif
-
-
 					case WL_SOULEXPANSION:
 						skillratio += -100 + 1000 + skill_lv * 200;
 						skillratio += sstatus->int_;

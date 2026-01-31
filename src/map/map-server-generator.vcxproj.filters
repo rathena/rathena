@@ -414,10 +414,7 @@
     <ClInclude Include="skills/acolyte/decagi.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
-    <ClInclude Include="skills/acolyte/duplelightmagic.hpp">
-      <Filter>Header Files\Skills\Acolyte</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/acolyte/duplelightmelee.hpp">
+    <ClInclude Include="skills/acolyte/duplelight.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/epiclesis.hpp">
@@ -1199,10 +1196,7 @@
     <ClCompile Include="skills/acolyte/decagi.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
-    <ClCompile Include="skills/acolyte/duplelightmagic.cpp">
-      <Filter>Source Files\Skills\Acolyte</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/acolyte/duplelightmelee.cpp">
+    <ClCompile Include="skills/acolyte/duplelight.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/epiclesis.cpp">

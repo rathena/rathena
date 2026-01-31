@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "../skill_impl.hpp"
+#include "../status_skill_impl.hpp"
 
-class SkillRenovatio : public SkillImpl {
+class SkillRenovatio : public StatusSkillImpl {
 public:
 	SkillRenovatio();
 

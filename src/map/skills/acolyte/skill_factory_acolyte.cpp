@@ -22,8 +22,7 @@
 #include "crucis.hpp"
 #include "cure.hpp"
 #include "decagi.hpp"
-#include "duplelightmagic.hpp"
-#include "duplelightmelee.hpp"
+#include "duplelight.hpp"
 #include "epiclesis.hpp"
 #include "gloria.hpp"
 #include "heal.hpp"
@@ -73,8 +72,6 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillDupleLightMagic>();
 		case AB_DUPLELIGHT_MELEE:
 			return std::make_unique<SkillDupleLightMelee>();
-		case AB_DUPLELIGHT_MELEE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case AB_EPICLESIS:
 			return std::make_unique<SkillEpiclesis>();
 		case AB_EXPIATIO:

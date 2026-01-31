@@ -18,13 +18,13 @@ void SkillConvenio::castendNoDamageId(block_list *src, block_list *target, uint1
 		party_data *p = party_search(sd->status.party_id);
 		int32 i = 0, count = 0;
 
-		// Only usatargete in party
+		// Only usable in party
 		if (p == nullptr) {
 			clif_skill_fail( *sd, getSkillId() );
 			return;
 		}
 
-		// Only usatargete as party leader.
+		// Only usable as party leader.
 		ARR_FIND(0, MAX_PARTY, i, p->data[i].sd == sd);
 		if (i == MAX_PARTY || !p->party.member[i].leader) {
 			clif_skill_fail( *sd, getSkillId() );

@@ -3,7 +3,6 @@
 
 #include "epiclesis.hpp"
 
-
 SkillEpiclesis::SkillEpiclesis() : SkillImpl(AB_EPICLESIS) {
 }
 
