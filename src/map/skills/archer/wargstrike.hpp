@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "../skill_impl.hpp"
+#include "../weapon_skill_impl.hpp"
 
-class SkillWargStrike : public SkillImpl {
+class SkillWargStrike : public WeaponSkillImpl {
 public:
 	SkillWargStrike();
 

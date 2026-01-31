@@ -3,7 +3,6 @@
 
 #include "clusterbomb.hpp"
 
-
 SkillClusterBomb::SkillClusterBomb() : SkillImpl(RA_CLUSTERBOMB) {
 }
 

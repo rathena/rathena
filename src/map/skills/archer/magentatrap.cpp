@@ -3,7 +3,6 @@
 
 #include "magentatrap.hpp"
 
-
 SkillMagentaTrap::SkillMagentaTrap() : SkillImpl(RA_MAGENTATRAP) {
 }
 

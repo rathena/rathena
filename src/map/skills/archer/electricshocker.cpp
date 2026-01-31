@@ -3,7 +3,6 @@
 
 #include "electricshocker.hpp"
 
-
 SkillElectricShocker::SkillElectricShocker() : SkillImpl(RA_ELECTRICSHOCKER) {
 }
 

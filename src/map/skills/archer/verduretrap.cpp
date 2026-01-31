@@ -3,7 +3,6 @@
 
 #include "verduretrap.hpp"
 
-
 SkillVerdureTrap::SkillVerdureTrap() : SkillImpl(RA_VERDURETRAP) {
 }
 

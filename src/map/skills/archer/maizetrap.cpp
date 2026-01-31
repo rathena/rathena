@@ -3,7 +3,6 @@
 
 #include "maizetrap.hpp"
 
-
 SkillMaizeTrap::SkillMaizeTrap() : SkillImpl(RA_MAIZETRAP) {
 }
 

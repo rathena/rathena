@@ -3,7 +3,6 @@
 
 #include "cobalttrap.hpp"
 
-
 SkillCobaltTrap::SkillCobaltTrap() : SkillImpl(RA_COBALTTRAP) {
 }
 

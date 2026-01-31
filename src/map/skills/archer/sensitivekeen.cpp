@@ -8,7 +8,7 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillSensitiveKeen::SkillSensitiveKeen() : SkillImpl(RA_SENSITIVEKEEN) {
+SkillSensitiveKeen::SkillSensitiveKeen() : WeaponSkillImpl(RA_SENSITIVEKEEN) {
 }
 
 void SkillSensitiveKeen::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
@@ -21,7 +21,7 @@ void SkillSensitiveKeen::castendDamageId(block_list *src, block_list *target, ui
 	if( target->type != BL_SKILL ) { // Only Hits Invisible Targets
 		if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD))) {
 			status_change_end(target, SC_CLOAKINGEXCEED);
-			skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag);
+			WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 		}
 		if (tsc && tsc->getSCE(SC__SHADOWFORM) && rnd() % 100 < 100 - tsc->getSCE(SC__SHADOWFORM)->val1 * 10) // [100 - (Skill Level x 10)] %
 			status_change_end(target, SC__SHADOWFORM); // Should only end, no damage dealt.
