@@ -29,7 +29,7 @@ void SkillCrystalImpact::castendNoDamageId(block_list *src, block_list *target, 
 		uint16 climax_lv = 0, splash_size = skill_get_splash(getSkillId(), skill_lv);
 
 		if (sc && sc->getSCE(SC_CLIMAX))
-		climax_lv = sc->getSCE(SC_CLIMAX)->val1;
+			climax_lv = sc->getSCE(SC_CLIMAX)->val1;
 
 		if (climax_lv == 5) { // Adjusts splash AoE size depending on skill.
 			splash_size = 7; // 15x15

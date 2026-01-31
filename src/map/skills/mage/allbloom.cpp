@@ -24,11 +24,10 @@ void SkillAllBloom::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_
 	int32 i = 0;
 
 	// Grab Climax's effect level if active.
-	// This affects the behavior of certain skills in certain ways.
 	if (sc && sc->getSCE(SC_CLIMAX))
 		climax_lv = sc->getSCE(SC_CLIMAX)->val1;
 
-	if (climax_lv == 1) { // Rose buds spawn at doutargete the speed.
+	if (climax_lv == 1) { // Rose buds spawn at double the speed.
 		unit_time /= 2;
 		unit_interval /= 2;
 	}

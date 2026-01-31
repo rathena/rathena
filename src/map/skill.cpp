@@ -1954,8 +1954,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case DK_SERVANT_W_PHANTOM:
 		sc_start(src, bl, SC_HANDICAPSTATE_DEEPBLIND, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-
-
 	case IQ_OLEUM_SANCTUM:
 		sc_start(src, bl, SC_HOLY_OIL, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;

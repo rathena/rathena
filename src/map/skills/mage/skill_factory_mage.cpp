@@ -65,10 +65,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 	switch (skill_id) {
 		case AG_ALL_BLOOM:
 			return std::make_unique<SkillAllBloom>();
-		case AG_ALL_BLOOM_ATK2:
-			return std::make_unique<SkillAllBloomAttack2>();
 		case AG_ALL_BLOOM_ATK:
 			return std::make_unique<SkillAllBloomAttack>();
+		case AG_ALL_BLOOM_ATK2:
+			return std::make_unique<SkillAllBloomAttack2>();
 		case AG_ASTRAL_STRIKE:
 			return std::make_unique<SkillAstralStrike>();
 		case AG_ASTRAL_STRIKE_ATK:
