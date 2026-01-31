@@ -5589,12 +5589,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
 		case SU_PICKYPECK:
-			skillratio += 100 + 100 * skill_lv;
-			if (status_get_hp(target) < (status_get_max_hp(target) / 2))
-				skillratio *= 2;
-			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
-				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
-			break;
 		case SU_PICKYPECK_DOUBLE_ATK:
 			skillratio += 100 + 100 * skill_lv;
 			if (status_get_hp(target) < (status_get_max_hp(target) / 2))
@@ -5603,13 +5597,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
 		case SU_LUNATICCARROTBEAT:
-			skillratio += 100 + 100 * skill_lv;
-			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
-				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
-			if (status_get_lv(src) > 99)
-				skillratio += sstatus->str;
-			RE_LVL_DMOD(100);
-			break;
 		case SU_LUNATICCARROTBEAT2:
 			skillratio += 100 + 100 * skill_lv;
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
@@ -8524,12 +8511,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += 600;
 						break;
 					case SU_CN_METEOR:
-						skillratio += -100 + 200 + 100 * skill_lv;
-						if (status_get_lv(src) > 99) {
-							skillratio += sstatus->int_ * 5;
-						}
-						RE_LVL_DMOD(100);
-						break;
 					case SU_CN_METEOR2:
 						skillratio += -100 + 200 + 100 * skill_lv;
 						if (status_get_lv(src) > 99) {

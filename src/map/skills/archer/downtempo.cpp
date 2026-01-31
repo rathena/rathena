@@ -13,6 +13,7 @@ void SkillDownTempo::castendNoDamageId(block_list *src, block_list *target, uint
 	skill_castend_song(src, getSkillId(), skill_lv, tick);
 #endif
 }
+
 void SkillDownTempo::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 #ifndef RENEWAL
 	flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).

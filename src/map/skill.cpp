@@ -8577,32 +8577,15 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
-
+#ifdef RENEWAL
 	case DC_UGLYDANCE:
-#ifdef RENEWAL
-		skill_castend_song(src, skill_id, skill_lv, tick);
-#endif
-		break;
 	case DC_HUMMING:
-#ifdef RENEWAL
-		skill_castend_song(src, skill_id, skill_lv, tick);
-#endif
-		break;
 	case DC_DONTFORGETME:
-#ifdef RENEWAL
-		skill_castend_song(src, skill_id, skill_lv, tick);
-#endif
-		break;
 	case DC_FORTUNEKISS:
-#ifdef RENEWAL
-		skill_castend_song(src, skill_id, skill_lv, tick);
-#endif
-		break;
 	case DC_SERVICEFORYOU:
-#ifdef RENEWAL
 		skill_castend_song(src, skill_id, skill_lv, tick);
-#endif
 		break;
+#endif
 
 	case NV_FIRSTAID:
 		clif_skill_nodamage(src,*bl,skill_id,5);
@@ -12862,56 +12845,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	}
 
 	// Skill Unit Setting
-
-
-
-
-
-
-
-
-
-
-
-
-
-	case DC_UGLYDANCE:
-#ifndef RENEWAL
-		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
-		// Ammo should be deleted right away.
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-#endif
-		break;
-	case DC_HUMMING:
-#ifndef RENEWAL
-		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
-		// Ammo should be deleted right away.
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-#endif
-		break;
-	case DC_DONTFORGETME:
-#ifndef RENEWAL
-		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
-		// Ammo should be deleted right away.
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-#endif
-		break;
-	case DC_FORTUNEKISS:
-#ifndef RENEWAL
-		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
-		// Ammo should be deleted right away.
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-#endif
-		break;
-	case DC_SERVICEFORYOU:
-#ifndef RENEWAL
-		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
-		// Ammo should be deleted right away.
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-#endif
-		break;
-
-	// Skill Unit Setting
 	case NPC_GROUNDDRIVE:
 	case NPC_GRANDDARKNESS:
 	case MA_SKIDTRAP:
@@ -12924,6 +12857,13 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
 	case SA_LANDPROTECTOR:
+#ifndef RENEWAL
+	case DC_UGLYDANCE:
+	case DC_HUMMING:
+	case DC_DONTFORGETME:
+	case DC_FORTUNEKISS:
+	case DC_SERVICEFORYOU:
+#endif
 	case CG_MOONLIT:
 	case NJ_KAENSIN:
 	case NJ_BAKUENRYU:
