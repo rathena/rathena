@@ -13,8 +13,6 @@ SkillAmp::SkillAmp() : StatusSkillImpl(BD_ADAPTATION) {
 
 void SkillAmp::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 #ifdef RENEWAL
-	sc_type type = skill_get_sc(getSkillId());
-
 	StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
 #else
 	status_change *tsc = status_get_sc(target);
