@@ -18,10 +18,10 @@ void SkillLullaby::applyAdditionalEffects(block_list *src, block_list *target, u
 	if (sc != nullptr && sc->getSCE(SC_DANCING) != nullptr) {
 		block_list* partner = map_id2bl(sc->getSCE(SC_DANCING)->val4);
 		if (partner == nullptr)
-			break;
+			return;
 		status_data* pstatus = status_get_status_data(*partner);
 		if (pstatus == nullptr)
-			break;
+			return;
 		status_change_start(src, target, skill_get_sc(getSkillId()), (sstatus->int_ + pstatus->int_ + rnd_value(100, 300)) * 10, skill_lv, 0, 0, 0, skill_get_time2(getSkillId(), skill_lv), SCSTART_NONE);
 	}
 #else
