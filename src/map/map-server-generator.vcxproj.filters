@@ -783,7 +783,40 @@
     <ClInclude Include="skills/ninja/skill_factory_ninja.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
+    <ClInclude Include="skills/novice/doublebowlingbash.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/groundgravitation.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/hellsdrive.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/jackfrostnova.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/jupitelthunderstorm.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/megasonicblow.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/meteorstormbuster.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/napalmvulcanstrike.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/overcomingcrisis.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/shieldchainrush.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
     <ClInclude Include="skills/novice/skill_factory_novice.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/spiralpiercemax.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/skill_factory_npc.hpp">
@@ -1556,7 +1589,40 @@
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
+    <ClCompile Include="skills/novice/doublebowlingbash.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/groundgravitation.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/hellsdrive.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/jackfrostnova.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/jupitelthunderstorm.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/megasonicblow.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/meteorstormbuster.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/napalmvulcanstrike.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/overcomingcrisis.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/shieldchainrush.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
     <ClCompile Include="skills/novice/skill_factory_novice.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/spiralpiercemax.cpp">
       <Filter>Source Files\Skills\Novice</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">

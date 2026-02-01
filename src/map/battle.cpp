@@ -6125,43 +6125,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case ABR_INFINITY_BUSTER:// Need official formula.
 			skillratio += -100 + 50000;
 			break;
-		case HN_SPIRAL_PIERCE_MAX:
-			skillratio += -100 + 1000 + 1500 * skill_lv;
-			skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 3 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			switch (status_get_size(target)){
-				case SZ_SMALL:
-					skillratio = skillratio * 150 / 100;
-					break;
-				case SZ_MEDIUM:
-					skillratio = skillratio * 130 / 100;
-					break;
-				case SZ_BIG:
-					skillratio = skillratio * 120 / 100;
-					break;
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case HN_SHIELD_CHAIN_RUSH:
-			skillratio += -100 + 850 + 1050 * skill_lv;
-			skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 3 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case HN_MEGA_SONIC_BLOW:
-			skillratio += -100 + 900 + 750 * skill_lv;
-			skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 5 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			if (status_get_hp(target) < status_get_max_hp(target) / 2)
-				skillratio *= 2;
-			RE_LVL_DMOD(100);
-			break;
-		case HN_DOUBLEBOWLINGBASH:
-			skillratio += -100 + 250 + 400 * skill_lv;
-			skillratio += pc_checkskill(sd, HN_SELFSTUDY_TATICS) * 3 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
 		case NW_HASTY_FIRE_IN_THE_HOLE:
 			skillratio += -100 + 1500 + 1500 * skill_lv;
 			skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 20;
@@ -8882,98 +8845,26 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_RAINOFMETEOR:
 						skillratio += 350;	// unknown ratio
 						break;
-					case HN_NAPALM_VULCAN_STRIKE:
-						skillratio += -100 + 350 + 650 * skill_lv;
-						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 4 * skill_lv;
-						skillratio += 3 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_NAPALM_VULCAN_STRIKE by (2x skill level)%
-						skillratio += skillratio * 2 * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
-						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
-						if (sc && sc->getSCE(SC_RULEBREAK))
-							skillratio += skillratio * 40 / 100;
-						break;
-					case HN_JUPITEL_THUNDER_STORM:
-						skillratio += -100 + 1800 * skill_lv;
-						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 3 * skill_lv;
-						skillratio += 3 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_JUPITEL_THUNDER_STORM by (skill level)%
-						skillratio += skillratio * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
-						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
-						if (sc && sc->getSCE(SC_RULEBREAK))
-							skillratio += skillratio * 70 / 100;
-						break;
-					case HN_HELLS_DRIVE:
-						skillratio += -100 + 1700 + 900 * skill_lv;
-						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 4 * skill_lv;
-						skillratio += 3 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_HELLS_DRIVE by (skill level)%
-						skillratio += skillratio * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
-						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
-						if (sc && sc->getSCE(SC_RULEBREAK))
-							skillratio += skillratio * 70 / 100;
-						break;
 					case HN_GROUND_GRAVITATION:
 						if (mflag & SKILL_ALTDMG_FLAG) {
 							// Initial damage
-							skillratio += -100 + 3000 + 1500 * skill_lv;
-							skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 4 * skill_lv;
-							skillratio += 5 * sstatus->spl;
+							// TODO: refactor / move elsewhere
 							ad.div_ = -2;
-						} else {
-							// Gravitational field damage
-							skillratio += -100 + 800 + 700 * skill_lv;
-							skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 2 * skill_lv;
-							skillratio += 2 * sstatus->spl;
 						}
-						RE_LVL_DMOD(100);
-						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_GROUND_GRAVITATION (gravity field damage) by (skill level)%
-						if (!(mflag & SKILL_ALTDMG_FLAG))
-							skillratio += skillratio * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
-						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
-						if (sc && sc->getSCE(SC_RULEBREAK))
-							skillratio += skillratio * 50 / 100;
 						break;
 					case HN_JACK_FROST_NOVA:
 						if (mflag & SKILL_ALTDMG_FLAG) {
 							// Initial damage
-							skillratio += -100 + 200 * skill_lv;
-							skillratio += 2 * sstatus->spl;
+							// TODO: refactor / move elsewhere
 							ad.div_ = 1;	// 1 hit
-						} else {
-							// Explosion damage
-							skillratio += -100 + 400 + 500 * skill_lv;
-							skillratio += 4 * sstatus->spl;
 						}
-						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 3 * skill_lv;
-						RE_LVL_DMOD(100);
-						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_JACK_FROST_NOVA (explosion damage) by (skill level)%
-						if (!(mflag & SKILL_ALTDMG_FLAG))
-							skillratio += skillratio * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
-						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
-						if (sc && sc->getSCE(SC_RULEBREAK))
-							skillratio += skillratio * 70 / 100;
 						break;
 					case HN_METEOR_STORM_BUSTER:
 						if (mflag & SKILL_ALTDMG_FLAG) {
 							// Fall damage
-							skillratio += -100 + 300 + 320 * skill_lv;
+							// TODO: refactor / move elsewhere
 							ad.div_ = -3;
-						} else {
-							// Explosion damage
-							skillratio += -100 + 450 + 160 * skill_lv;
 						}
-						skillratio += pc_checkskill(sd, HN_SELFSTUDY_SOCERY) * 5 * skill_lv;
-						skillratio += 3 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						// After RE_LVL_DMOD calculation, HN_SELFSTUDY_SOCERY amplifies the skill ratio of HN_METEOR_STORM_BUSTER (fall damage) by (skill level)%
-						if (mflag & SKILL_ALTDMG_FLAG)
-							skillratio += skillratio * pc_checkskill(sd, HN_SELFSTUDY_SOCERY) / 100;
-						// SC_RULEBREAK increases the skill ratio after HN_SELFSTUDY_SOCERY
-						if (sc && sc->getSCE(SC_RULEBREAK))
-							skillratio += skillratio * 50 / 100;
 						break;
 
 
