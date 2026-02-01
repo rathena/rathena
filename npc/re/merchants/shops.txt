@@ -20,6 +20,7 @@
 //= 1.8 Added Rebellion Machines. [Rekiem]
 //= 1.9 Added Renewal Ninja shops. [Euphy]
 //= 2.0 Moved and updated Morocc merchants. [zackdreaver]
+//= 2.1 Moved Pet Groomer merchants. [Haydrich]
 //============================================================
 
 //=======================================================
@@ -82,7 +83,6 @@ izlude_a,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#a	
 izlude_b,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#b	90
 izlude_c,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#c	90
 izlude_d,128,158,7	duplicate(Vendor from Milk Ranch#i)	Vendor from Milk Ranch#d	90
-izlude_in,72,98,3	shop	Pet Groomer#iz	124,537:-1,643:-1,10013:-1,10014:-1,554:-1,6113:-1,6114:-1,6115:-1
 izlude_in,57,110,0	shop	Tool Dealer#iz	47,611:-1,501:-1,502:-1,503:-1,504:-1,506:-1,645:-1,656:-1,601:-1,602:-1,1065:-1,1750:-1
 izlude_in,72,102,3	shop	Trading Merchant#iz	900,13200:-1,13221:-1,13222:-1,13150:-1,13102:-1,13151:-1,13154:-1,13155:-1,13163:-1,13165:-1,13168:-1
 izlude_in,59,113,5	shop	Advanced Potion Merchant#iz	4_F_ALCHE_A,11621:-1,11622:-1,11623:-1,11624:-1
@@ -119,8 +119,6 @@ moc_ruins,91,128,4	shop	Tool Dealer#moc1	93,1750:-1,611:-1,501:-1,502:-1,503:-1,
 moc_ruins,114,63,6	shop	Tool Dealer#moc2	99,1750:-1,611:-1,501:-1,502:-1,503:-1,504:-1,506:-1,645:-1,656:-1,23280:-1,601:-1,602:-1,23288:-1,1065:-1
 morocc,146,103,6	shop	Tool Dealer#moc3	99,1750:-1,611:-1,501:-1,502:-1,503:-1,504:-1,506:-1,645:-1,656:-1,23280:-1,601:-1,602:-1,23288:-1,1065:-1
 morocc,151,241,4	shop	Tool Dealer#moc4	93,1750:-1,611:-1,501:-1,502:-1,503:-1,504:-1,506:-1,645:-1,656:-1,23280:-1,601:-1,602:-1,23288:-1,1065:-1
-moc_ruins,118,170,4	shop	Pet Groomer#moc	125,537:-1,643:-1,10013:-1,10014:-1,554:-1,6114:-1,6113:-1,6110:-1,6115:-1,6100:-1,6098:-1,6112:-1,6104:-1,6108:-1,6111:-1,6095:-1,6099:-1,6096:-1,6097:-1,6094:-1
-morocc,203,87,4	shop	Pet Groomer#moc1	125,537:-1,643:-1,10013:-1,10014:-1,554:-1,6114:-1,6113:-1,6110:-1,6115:-1,6100:-1,6098:-1,6112:-1,6104:-1,6108:-1,6111:-1,6095:-1,6099:-1,6096:-1,6097:-1,6094:-1
 morocc,154,55,6	shop	Jeweler#moc3	99,721:-1,723:-1,726:-1,728:-1,729:-1,719:-1,720:-1,722:-1,1000321:-1,730:-1,2613:-1
 morocc,171,103,4	shop	Item Collector#moc3	85,911:-1,528:-1,919:-1,925:-1
 morocc,205,247,2	shop	Item Collector#moc4	85,911:-1,528:-1,919:-1,925:-1

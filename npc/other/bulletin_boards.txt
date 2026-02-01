@@ -152,7 +152,7 @@ morocc,152,110,5	script	Bulletin Board#11	837,{
 	mes "[Morocc: The Frontier Town]";
 	mes "From Morocc, the ^660000Pyramid Dungeon^000000 can be found to the Northwest, and the ^660000Sphinx Dungeon^000000 can be found to the West. To the Southeast, you may find ^660000Ant Hell^000000.";
 	next;
-	mes "[Morocc: The Frontier Town";
+	mes "[Morocc: The Frontier Town]";
 	mes "The Assassin Guild is rumored to be located to the Southeast. When you head East from Morocc, and then North, you will arrive at ^3355FFProntera^000000.";
 	close;
 }

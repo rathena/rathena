@@ -48,9 +48,7 @@ jobs:
            # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
            languages: cpp
            # Trigger security and quality findings
-           # https://docs.github.com/en/code-security/code-scanning/automatically-scanning-your-code-for-vulnerabilities-and-errors/configuring-code-scanning#using-queries-in-ql-packs
-           # TODO: Resolve the issues and then enable it again
-           #queries: +security-and-quality
+           queries: +security-and-quality
 
       # A simple 'yes' and 'no' can be confusing, so we use names to display in the current job then convert them for use in the compiler.
       - name: Variable Parsing - PRE

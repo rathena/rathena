@@ -181,8 +181,7 @@ struct s_pet_autobonus_wrapper {
 
 extern std::unordered_map<std::string, std::shared_ptr<s_pet_autobonus_wrapper>> pet_autobonuses;
 
-struct pet_data {
-	struct block_list bl;
+struct pet_data : public block_list {
 	struct unit_data ud;
 	struct view_data vd;
 	struct s_pet pet;
@@ -207,7 +206,7 @@ struct pet_data {
 	int32 masterteleport_timer;
 	map_session_data *master;
 
-	std::shared_ptr<s_pet_db> get_pet_db() {
+	auto get_pet_db() const {
 		return pet_db.find(this->pet.class_);
 	}
 
@@ -225,15 +224,15 @@ struct pet_data {
 };
 
 bool pet_create_egg(map_session_data *sd, t_itemid item_id);
-int32 pet_hungry_val(struct pet_data *pd);
-void pet_set_intimate(struct pet_data *pd, int32 value);
-int32 pet_target_check(struct pet_data *pd,struct block_list *bl,int32 type);
-void pet_unlocktarget(struct pet_data *pd);
+int32 pet_hungry_val(pet_data *pd);
+void pet_set_intimate(pet_data *pd, int32 value);
+int32 pet_target_check(pet_data *pd,const block_list* bl,int32 type);
+void pet_unlocktarget(pet_data *pd);
 int32 pet_sc_check(map_session_data *sd, int32 type); //Skotlex
 std::shared_ptr<s_pet_db> pet_db_search(int32 key, enum e_pet_itemtype type);
-int32 pet_hungry_timer_delete(struct pet_data *pd);
+int32 pet_hungry_timer_delete(pet_data *pd);
 bool pet_data_init(map_session_data *sd, struct s_pet *pet);
-bool pet_return_egg( map_session_data *sd, struct pet_data *pd );
+bool pet_return_egg( map_session_data *sd, pet_data *pd );
 int32 pet_birth_process(map_session_data *sd, struct s_pet *pet);
 int32 pet_recv_petdata(uint32 account_id,struct s_pet *p,int32 flag);
 int32 pet_select_egg(map_session_data *sd,int16 egg_index);
@@ -241,18 +240,18 @@ void pet_catch_process_start( map_session_data& sd, t_itemid item_id, e_pet_catc
 void pet_catch_process_end( map_session_data& sd, int32 target_id );
 bool pet_get_egg(uint32 account_id, int16 pet_class, int32 pet_id);
 int32 pet_menu(map_session_data *sd,int32 menunum);
-int32 pet_change_name(map_session_data *sd,char *name);
+int32 pet_change_name( const map_session_data* sd,char* name );
 int32 pet_change_name_ack(map_session_data *sd, char* name, int32 flag);
 int32 pet_equipitem(map_session_data *sd,int32 index);
 void pet_lootitem_drop( pet_data& pd, map_session_data* sd );
-int32 pet_attackskill(struct pet_data *pd, int32 target_id);
+int32 pet_attackskill(pet_data *pd, int32 target_id);
 TIMER_FUNC(pet_skill_support_timer); // [Skotlex]
 TIMER_FUNC(pet_skill_bonus_timer); // [Valaris]
 TIMER_FUNC(pet_recovery_timer); // [Valaris]
 TIMER_FUNC(pet_heal_timer); // [Valaris]
-int32 pet_egg_search(map_session_data *sd, int32 pet_id);
+int32 pet_egg_search( const map_session_data* sd, int32 pet_id );
 void pet_evolution(map_session_data *sd, int16 pet_id);
-int32 pet_food(map_session_data *sd, struct pet_data *pd);
+int32 pet_food(map_session_data *sd, pet_data *pd);
 void pet_clear_support_bonuses(map_session_data *sd);
 
 bool pet_addautobonus(std::vector<std::shared_ptr<s_petautobonus>> &bonus, const std::string &script, int16 rate, uint32 dur, uint16 atk_type, const std::string &other_script, bool onskill);

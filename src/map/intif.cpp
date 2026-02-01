@@ -144,7 +144,7 @@ int32 intif_request_petdata(uint32 account_id,uint32 char_id,int32 pet_id)
  * @param p
  * @return 
  */
-int32 intif_save_petdata(uint32 account_id,struct s_pet *p)
+int32 intif_save_petdata( uint32 account_id, const s_pet* p )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -182,7 +182,7 @@ int32 intif_delete_petdata(int32 pet_id)
  * @param name
  * @return 
  */
-int32 intif_rename(map_session_data *sd, int32 type, char *name)
+int32 intif_rename( const map_session_data* sd, int32 type, char* name )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -294,7 +294,7 @@ int32 intif_main_message(map_session_data* sd, const char* message)
 	intif_broadcast2( output, strlen(output) + 1, 0xFE000000, 0, 0, 0, 0 );
 
 	// log the chat message
-	log_chat( LOG_CHAT_MAINCHAT, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y, nullptr, message );
+	log_chat( LOG_CHAT_MAINCHAT, 0, sd->status.char_id, sd->status.account_id, mapindex_id2name(sd->mapindex), sd->x, sd->y, nullptr, message );
 
 	return 1;
 }
@@ -1197,7 +1197,7 @@ int32 intif_guild_castle_datasave(int32 castle_id,int32 index, int32 value)
  * @param sh : TMp homunlus data
  * @return 0=error, 1=msg_sent
  */
-int32 intif_homunculus_create(uint32 account_id, struct s_homunculus *sh)
+int32 intif_homunculus_create( uint32 account_id, const s_homunculus* sh )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -1234,7 +1234,7 @@ int32 intif_homunculus_requestload(uint32 account_id, int32 homun_id)
  * @param sh : homunculus struct
  * @return : 0=error, 1=msg sent
  */
-int32 intif_homunculus_requestsave(uint32 account_id, struct s_homunculus* sh)
+int32 intif_homunculus_requestsave( uint32 account_id, const s_homunculus* sh )
 {
 	if (CheckForCharServer())
 		return 0;
@@ -2282,7 +2282,7 @@ void intif_parse_achievementreward(int32 fd){
 /**
  * Request the achievement rewards from the inter server.
  */
-int32 intif_achievement_reward(map_session_data *sd, struct s_achievement_db *adb){
+int32 intif_achievement_reward( const map_session_data* sd, struct s_achievement_db *adb ){
 	if( CheckForCharServer() ){
 		return 0;
 	}
@@ -2366,7 +2366,7 @@ int32 intif_parse_Mail_inboxreceived(int32 fd)
 	{
 		char output[128];
 		sprintf(output, msg_txt(sd,510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+		clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 
 	return 1;
@@ -3243,7 +3243,7 @@ void intif_parse_MessageToFD(int32 fd) {
 		int32 aid = RFIFOL(fd,8);
 		map_session_data * sd = (map_session_data *)session[u_fd]->session_data;
 		/* matching e.g. previous fd owner didn't dc during request or is still the same */
-		if( sd->bl.id == aid ) {
+		if( sd->id == aid ) {
 			char msg[512];
 			safestrncpy(msg, RFIFOCP(fd,12), RFIFOW(fd,2) - 12);
 			clif_displaymessage(u_fd,msg);
@@ -3496,7 +3496,7 @@ static bool intif_parse_StorageReceived(int32 fd)
 			}
 #endif
 			//Set here because we need the inventory data for weapon sprite parsing.
-			status_set_viewdata(&sd->bl, sd->status.class_);
+			status_set_viewdata(sd, sd->status.class_);
 			// Set headgear data here, otherwise this is done in loadEndAck
 			if( sd->state.autotrade ){
 				pc_set_costume_view(sd);
@@ -3512,7 +3512,7 @@ static bool intif_parse_StorageReceived(int32 fd)
 			pc_check_available_item(sd, ITMCHK_CART);
 			if (sd->state.autotrade) {
 				clif_parse_LoadEndAck(sd->fd, sd);
-				sd->autotrade_tid = add_timer(gettick() + battle_config.feature_autotrade_open_delay, pc_autotrade_timer, sd->bl.id, 0);
+				sd->autotrade_tid = add_timer(gettick() + battle_config.feature_autotrade_open_delay, pc_autotrade_timer, sd->id, 0);
 			}else if( sd->state.prevend ){
 				clif_clearcart(sd->fd);
 				clif_cartlist(sd);
@@ -3626,7 +3626,7 @@ void intif_parse_StorageInfo_recv(int32 fd) {
  * @param mode: Storage mode
  * @return false - error, true - message sent
  */
-bool intif_storage_request(map_session_data *sd, enum storage_type type, uint8 stor_id, uint8 mode)
+bool intif_storage_request( const map_session_data* sd, enum storage_type type, uint8 stor_id, uint8 mode )
 {
 	if (CheckForCharServer())
 		return false;
@@ -3649,7 +3649,7 @@ bool intif_storage_request(map_session_data *sd, enum storage_type type, uint8 s
  * @param stor: Storage data
  * @ return false - error, true - message sent
  */
-bool intif_storage_save(map_session_data *sd, struct s_storage *stor)
+bool intif_storage_save( const map_session_data* sd, const s_storage* stor )
 {
 	int32 stor_size = sizeof(struct s_storage);
 

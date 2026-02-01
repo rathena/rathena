@@ -105,6 +105,7 @@ IgnoreCicada				- Not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (When TargetType
 ShowScale					- Shows AoE area while casting
 IgnoreGtb					- Not blocked by Golden Thief Bug card.
 Toggleable					- Skill can be toggled on and off. When toggled off the skill doesn't consume HP/SP.
+IgnoreNonCritAtkBonus		- Skill ignores the bonus of bNonCritAtkRate
 
 ---------------------------------------
 
@@ -913,7 +914,7 @@ NoEnemy				- If battle_config::defunit_not_enemy is enabled, the Target is chang
 NoReiteration		- Spell cannot be stacked.
 NoFootSet			- Spell cannot be cast near/on targets.
 NoOverlap			- Spell effects do not overlap.
-PathCheck			- Only cells with a shootable path will be placed.
+PathCheck			- Only cells in a shootable path will be placed. If not set, effects apply through walls for ranged units.
 NoPc				- Spell cannot affect players.
 NoMob				- Spell cannot affect mobs.
 Skill				- Spell can affect skills.

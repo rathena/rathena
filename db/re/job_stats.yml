@@ -77,11 +77,12 @@
 #   BaseAp:                  Base AP per base level.
 #     - Level                Base level.
 #       Ap                   Base AP.
+#   AlternateOutfits:        Alternate Jobs outfits. (Default: empty)
 ###########################################################################
 
 Header:
   Type: JOB_STATS
-  Version: 3
+  Version: 4
 
 Body:
   - Jobs:
@@ -3030,10 +3031,6 @@ Body:
       - Level: 70
         Str: 1
   - Jobs:
-      Baby_Rune_Knight: true
-      Baby_Rune_Knight2: true
-    MaxWeight: 28000
-  - Jobs:
       Warlock: true
       Warlock_T: true
       Baby_Warlock: true
@@ -3127,9 +3124,6 @@ Body:
         Luk: 1
       - Level: 70
         Vit: 1
-  - Jobs:
-      Baby_Warlock: true
-    MaxWeight: 24000
   - Jobs:
       Ranger: true
       Ranger2: true
@@ -3228,10 +3222,6 @@ Body:
       - Level: 70
         Luk: 1
   - Jobs:
-      Baby_Ranger: true
-      Baby_Ranger2: true
-    MaxWeight: 27000
-  - Jobs:
       Arch_Bishop: true
       Arch_Bishop_T: true
       Baby_Arch_Bishop: true
@@ -3325,9 +3315,6 @@ Body:
         Luk: 1
       - Level: 70
         Agi: 1
-  - Jobs:
-      Baby_Arch_Bishop: true
-    MaxWeight: 26000
   - Jobs:
       Mechanic: true
       Mechanic2: true
@@ -3426,10 +3413,6 @@ Body:
       - Level: 70
         Agi: 1
   - Jobs:
-      Baby_Mechanic: true
-      Baby_Mechanic2: true
-    MaxWeight: 30000
-  - Jobs:
       Guillotine_Cross: true
       Guillotine_Cross_T: true
       Baby_Guillotine_Cross: true
@@ -3523,9 +3506,6 @@ Body:
         Luk: 1
       - Level: 70
         Agi: 1
-  - Jobs:
-      Baby_Guillotine_Cross: true
-    MaxWeight: 24000
   - Jobs:
       Royal_Guard: true
       Royal_Guard2: true
@@ -3625,10 +3605,6 @@ Body:
       - Level: 70
         Str: 1
   - Jobs:
-      Baby_Royal_Guard: true
-      Baby_Royal_Guard2: true
-    MaxWeight: 28000
-  - Jobs:
       Sorcerer: true
       Sorcerer_T: true
       Baby_Sorcerer: true
@@ -3722,9 +3698,6 @@ Body:
         Luk: 1
       - Level: 70
         Vit: 1
-  - Jobs:
-      Baby_Sorcerer: true
-    MaxWeight: 24000
   - Jobs:
       Minstrel: true
       Minstrel_T: true
@@ -3821,9 +3794,6 @@ Body:
       - Level: 70
         Luk: 1
   - Jobs:
-      Baby_Minstrel: true
-    MaxWeight: 27000
-  - Jobs:
       Wanderer: true
       Wanderer_T: true
       Baby_Wanderer: true
@@ -3918,9 +3888,6 @@ Body:
         Luk: 1
       - Level: 70
         Str: 1
-  - Jobs:
-      Baby_Wanderer: true
-    MaxWeight: 27000
   - Jobs:
       Sura: true
       Sura_T: true
@@ -4017,9 +3984,6 @@ Body:
       - Level: 70
         Agi: 1
   - Jobs:
-      Baby_Sura: true
-    MaxWeight: 26000
-  - Jobs:
       Genetic: true
       Genetic_T: true
       Baby_Genetic: true
@@ -4114,9 +4078,6 @@ Body:
       - Level: 69
         Vit: 1
   - Jobs:
-      Baby_Genetic: true
-    MaxWeight: 30000
-  - Jobs:
       Shadow_Chaser: true
       Shadow_Chaser_T: true
       Baby_Shadow_Chaser: true
@@ -4210,9 +4171,6 @@ Body:
         Agi: 1
       - Level: 70
         Agi: 1
-  - Jobs:
-      Baby_Shadow_Chaser: true
-    MaxWeight: 24000
   - Jobs:
       Super_Novice_E: true
     HpIncrease: 5000
@@ -4399,99 +4357,8 @@ Body:
         Dex: 1
   - Jobs:
       Kagerou: true
-      Baby_Kagerou: true
-    MaxWeight: 26000
-    HpFactor: 75
-    SpIncrease: 540
-    BonusStats:
-      - Level: 1
-        Dex: 1
-      - Level: 3
-        Int: 1
-      - Level: 5
-        Agi: 1
-      - Level: 6
-        Vit: 1
-      - Level: 8
-        Str: 1
-      - Level: 9
-        Luk: 1
-      - Level: 11
-        Dex: 1
-      - Level: 12
-        Str: 1
-      - Level: 13
-        Agi: 1
-      - Level: 15
-        Int: 1
-      - Level: 16
-        Luk: 1
-      - Level: 17
-        Vit: 1
-      - Level: 19
-        Str: 1
-      - Level: 20
-        Dex: 1
-      - Level: 21
-        Agi: 1
-      - Level: 23
-        Luk: 1
-      - Level: 24
-        Vit: 1
-      - Level: 25
-        Int: 1
-      - Level: 27
-        Dex: 1
-      - Level: 29
-        Agi: 1
-      - Level: 31
-        Str: 1
-      - Level: 32
-        Int: 1
-      - Level: 34
-        Dex: 1
-      - Level: 35
-        Int: 1
-      - Level: 37
-        Vit: 1
-      - Level: 38
-        Dex: 1
-      - Level: 39
-        Str: 1
-      - Level: 41
-        Agi: 1
-      - Level: 42
-        Int: 1
-      - Level: 43
-        Str: 1
-      - Level: 45
-        Dex: 1
-      - Level: 46
-        Luk: 1
-      - Level: 47
-        Agi: 1
-      - Level: 48
-        Str: 1
-      - Level: 50
-        Dex: 1
-      - Level: 55
-        Agi: 1
-      - Level: 60
-        Agi: 1
-      - Level: 61
-        Agi: 1
-      - Level: 63
-        Vit: 1
-      - Level: 65
-        Luk: 1
-      - Level: 66
-        Dex: 1
-      - Level: 68
-        Agi: 1
-      - Level: 70
-        Vit: 1
-  - Jobs:
       Oboro: true
+      Baby_Kagerou: true
       Baby_Oboro: true
     MaxWeight: 26000
     HpFactor: 75
@@ -4567,22 +4434,6 @@ Body:
         Str: 1
       - Level: 50
         Dex: 1
-      - Level: 55
-        Agi: 1
-      - Level: 60
-        Agi: 1
-      - Level: 61
-        Agi: 1
-      - Level: 63
-        Vit: 1
-      - Level: 65
-        Luk: 1
-      - Level: 66
-        Agi: 1
-      - Level: 68
-        Vit: 1
-      - Level: 70
-        Luk: 1
   - Jobs:
       Rebellion: true
       Baby_Rebellion: true
@@ -4679,8 +4530,9 @@ Body:
         Luk: 1
   - Jobs:
       Summoner: true
-    HpFactor: 70
-    SpIncrease: 500
+    HpFactor: 100
+    HpIncrease: 800
+    SpIncrease: 250
     BonusStats:
       - Level: 1
         Dex: 1
@@ -4939,7 +4791,7 @@ Body:
   - Jobs:
       Soul_Reaper: true
       Baby_Soul_Reaper: true
-    MaxWeight: 24000
+    MaxWeight: 28000
     HpFactor: 75
     SpIncrease: 900
     BonusStats:
@@ -5032,9 +4884,11 @@ Body:
   - Jobs:
       Dragon_Knight: true
       Dragon_Knight2: true
-    MaxWeight: 35000
-    HpFactor: 150
-    SpIncrease: 300
+    MaxWeight: 45000
+    HpFactor: 68
+    HpIncrease: 5828
+    SpFactor: 7
+    SpIncrease: 14
     BonusStats:
       - Level: 1
         Str: 1
@@ -5173,9 +5027,11 @@ Body:
   - Jobs:
       Meister: true
       Meister2: true
-    MaxWeight: 38000
-    HpFactor: 90
-    SpIncrease: 400
+    MaxWeight: 48000
+    HpFactor: 76
+    HpIncrease: 4073
+    SpFactor: 3
+    SpIncrease: 552
     BonusStats:
       - Level: 1
         Str: 1
@@ -5318,9 +5174,11 @@ Body:
         Pow: 1
   - Jobs:
       Shadow_Cross: true
-    MaxWeight: 32000
-    HpFactor: 110
-    SpIncrease: 400
+    MaxWeight: 42000
+    HpFactor: 64
+    HpIncrease: 5398
+    SpFactor: 7
+    SpIncrease: 4
     BonusStats:
       - Level: 1
         Str: 1
@@ -5463,9 +5321,11 @@ Body:
         Crt: 1
   - Jobs:
       Arch_Mage: true
-    MaxWeight: 30000
-    HpFactor: 55
-    SpIncrease: 900
+    MaxWeight: 40000
+    HpFactor: 91
+    HpIncrease: 1075
+    SpFactor: 6
+    SpIncrease: 438
     BonusStats:
       - Level: 1
         Int: 1
@@ -5608,9 +5468,11 @@ Body:
         Spl: 1
   - Jobs:
       Cardinal: true
-    MaxWeight: 30000
-    HpFactor: 75
-    SpIncrease: 800
+    MaxWeight: 40000
+    HpFactor: 94
+    HpIncrease: 1047
+    SpFactor: 5
+    SpIncrease: 530
     BonusStats:
       - Level: 1
         Str: 1
@@ -5755,9 +5617,11 @@ Body:
   - Jobs:
       Windhawk: true
       Windhawk2: true
-    MaxWeight: 32000
-    HpFactor: 85
-    SpIncrease: 400
+    MaxWeight: 42000
+    HpFactor: 93
+    HpIncrease: 1121
+    SpFactor: 6
+    SpIncrease: 112
     BonusStats:
       - Level: 1
         Dex: 1
@@ -5901,10 +5765,11 @@ Body:
   - Jobs:
       Imperial_Guard: true
       Imperial_Guard2: true
-    MaxWeight: 35000
-    HpFactor: 110
-    HpIncrease: 700
-    SpIncrease: 400
+    MaxWeight: 45000
+    HpFactor: 94
+    HpIncrease: 2767
+    SpFactor: 3
+    SpIncrease: 504
     BonusStats:
       - Level: 1
         Pow: 1
@@ -6047,9 +5912,11 @@ Body:
         Spl: 1
   - Jobs:
       Biolo: true
-    MaxWeight: 32000
-    HpFactor: 90
-    SpIncrease: 900
+    MaxWeight: 42000
+    HpFactor: 104
+    HpIncrease: 22
+    SpFactor: 0
+    SpIncrease: 890
     BonusStats:
       - Level: 1
         Int: 1
@@ -6192,9 +6059,11 @@ Body:
         Pow: 1
   - Jobs:
       Abyss_Chaser: true
-    MaxWeight: 28000
-    HpFactor: 85
-    SpIncrease: 400
+    MaxWeight: 42000
+    HpFactor: 64
+    HpIncrease: 5503
+    SpFactor: 7
+    SpIncrease: 11
     BonusStats:
       - Level: 1
         Luk: 1
@@ -6337,9 +6206,11 @@ Body:
         Pow: 1
   - Jobs:
       Elemental_Master: true
-    MaxWeight: 30000
-    HpFactor: 75
-    SpIncrease: 900
+    MaxWeight: 40000
+    HpFactor: 104
+    HpIncrease: 40
+    SpFactor: 9
+    SpIncrease: 61
     BonusStats:
       - Level: 1
         Int: 1
@@ -6483,10 +6354,11 @@ Body:
         Con: 1
   - Jobs:
       Inquisitor: true
-    MaxWeight: 30000
+    MaxWeight: 42000
     HpFactor: 90
-    HpIncrease: 650
-    SpIncrease: 400
+    HpIncrease: 2633
+    SpFactor: 7
+    SpIncrease: 33
     BonusStats:
       - Level: 1
         Agi: 1
@@ -6628,10 +6500,11 @@ Body:
         Con: 1
   - Jobs:
       Troubadour: true
-    MaxWeight: 32000
-    HpFactor: 75
-    HpIncrease: 300
-    SpIncrease: 400
+    MaxWeight: 42000
+    HpFactor: 95
+    HpIncrease: 1119
+    SpFactor: 8
+    SpIncrease: 3
     BonusStats:
       - Level: 1
         Int: 1
@@ -6773,10 +6646,11 @@ Body:
         Pow: 1
   - Jobs:
       Trouvere: true
-    MaxWeight: 32000
-    HpFactor: 75
-    HpIncrease: 300
-    SpIncrease: 400
+    MaxWeight: 42000
+    HpFactor: 95
+    HpIncrease: 1119
+    SpFactor: 8
+    SpIncrease: 3
     BonusStats:
       - Level: 1
         Dex: 1
@@ -6919,10 +6793,12 @@ Body:
         Pow: 1
   - Jobs:
       Sky_Emperor: true
+      Sky_Emperor2: true
     MaxWeight: 42000
-    HpFactor: 90
-    HpIncrease: 650
-    SpIncrease: 635
+    HpFactor: 72
+    HpIncrease: 6050
+    SpFactor: 3
+    SpIncrease: 469
     BonusStats:
       - Level: 1
         Str: 1
@@ -7066,9 +6942,10 @@ Body:
   - Jobs:
       Soul_Ascetic: true
     MaxWeight: 42000
-    HpFactor: 75
-    HpIncrease: 850
-    SpIncrease: 860
+    HpFactor: 94
+    HpIncrease: 1058
+    SpFactor: 6
+    SpIncrease: 400
     BonusStats:
       - Level: 1
         Vit: 1
@@ -7203,136 +7080,134 @@ Body:
   - Jobs:
       Shinkiro: true
     MaxWeight: 45000
-    HpFactor: 98
-    SpIncrease: 540
+    HpFactor: 85
+    HpIncrease: 4496
+    SpFactor: 3
+    SpIncrease: 474
     BonusStats:
       - Level: 1
         Str: 1
-        Dex: 1
-        Sta: 1
-      - Level: 2
-        Str: 1
-        Pow: 1
-        Sta: 1
-      - Level: 3
-        Agi: 1
         Int: 1
-        Dex: -1
+      - Level: 2
+        Dex: 1
+      - Level: 3
+        Int: 1
+        Pow: 1
       - Level: 4
         Str: 1
-        Agi: 1
-        Dex: 2
-        Sta: 1
       - Level: 5
-        Str: 1
-        Int: 1
-        Pow: 1
-        Sta: 1
+        Agi: 1
+        Dex: 1
       - Level: 6
-        Str: 1
-        Sta: 1
+        Luk: 1
       - Level: 7
         Str: 1
         Dex: 1
-        Sta: 1
       - Level: 8
-        Dex: 1
-        Crt: 1
-      - Level: 9
         Agi: 1
-        Vit: 1
-      - Level: 10
+      - Level: 9
+        Int: 1
         Dex: 1
+      - Level: 10
+        Crt: 1
       - Level: 11
         Vit: 1
         Int: 1
       - Level: 12
         Str: 1
-        Luk: 1
-        Sta: 1
       - Level: 13
         Str: 1
         Vit: 1
-        Sta: 1
       - Level: 14
-        Crt: 1
+        Sta: 1
       - Level: 15
+        Dex: 1
         Wis: 1
       - Level: 16
         Str: 1
-        Sta: 1
       - Level: 17
         Str: 1
         Agi: 1
-        Sta: 1
+      - Level: 18
+        Dex: 1
       - Level: 19
-        Pow: 1
-      - Level: 20
         Str: 1
-        Sta: 1
+      - Level: 20
+        Agi: 1
       - Level: 21
         Dex: 1
       - Level: 22
+        Str: 1
         Agi: 1
       - Level: 23
-        Agi: 1
-      - Level: 24
-        Str: 1
-        Dex: 1
-        Sta: 1
-      - Level: 25
-        Agi: 1
-      - Level: 26
-        Dex: 1
         Luk: 1
-      - Level: 27
+      - Level: 24
+        Vit: 1
+        Dex: 1
+      - Level: 25
         Con: 1
+      - Level: 26
+        Vit: 1
+        Dex: 1
+      - Level: 27
+        Agi: 1
+        Pow: 1
       - Level: 28
         Agi: 1
-        Pow: 1
-      - Level: 29
         Vit: 1
-        Dex: 1
-      - Level: 30
+      - Level: 29
         Luk: 1
         Con: 1
+      - Level: 30
+        Crt: 1
       - Level: 31
-        Agi: 1
-        Vit: 1
+        Pow: 1
       - Level: 32
         Agi: 1
-      - Level: 33
         Vit: 1
-      - Level: 34
+      - Level: 33
         Pow: 1
+        Sta: 1
+      - Level: 34
+        Wis: 1
       - Level: 35
+        Sta: 1
         Con: 1
       - Level: 36
         Pow: 1
+        Crt: 1
       - Level: 37
         Con: 1
       - Level: 38
-        Crt: 1
-      - Level: 40
+        Sta: 1
+      - Level: 39
+        Str: 1
         Pow: 1
+      - Level: 40
+        Sta: 1
       - Level: 41
         Pow: 1
       - Level: 42
+        Pow: 1
+        Sta: 1
+      - Level: 43
         Crt: 1
       - Level: 44
-        Pow: 1
-      - Level: 45
+        Sta: 1
         Crt: 1
+      - Level: 45
+        Sta: 1
       - Level: 46
         Crt: 1
       - Level: 47
         Pow: 1
         Wis: 1
-      - Level: 49
+      - Level: 48
         Con: 1
+      - Level: 49
+        Crt: 1
       - Level: 50
         Pow: 1
-        Crt: 1
       - Level: 51
         Crt: 1
       - Level: 52
@@ -7354,125 +7229,134 @@ Body:
   - Jobs:
       Shiranui: true
     MaxWeight: 45000
-    HpFactor: 98
-    SpIncrease: 540
+    HpFactor: 85
+    HpIncrease: 4496
+    SpFactor: 3
+    SpIncrease: 474
     BonusStats:
       - Level: 1
-        Vit: 1
+        Str: 1
         Int: 1
       - Level: 2
-        Int: 1
         Dex: 1
       - Level: 3
-        Agi: 1
-        Spl: 1
+        Int: 1
+        Wis: 1
       - Level: 4
-        Int: 1
-        Dex: 1
+        Str: 1
       - Level: 5
-        Int: 1
+        Agi: 1
         Dex: 1
       - Level: 6
-        Dex: 1
-        Spl: 1
+        Luk: 1
       - Level: 7
         Int: 1
         Dex: 1
       - Level: 8
-        Vit: 1
-        Dex: 1
+        Agi: 1
       - Level: 9
         Int: 1
-        Spl: 1
-      - Level: 10
-        Vit: 1
         Dex: 1
+      - Level: 10
+        Crt: 1
       - Level: 11
-        Agi: 1
+        Vit: 1
         Int: 1
       - Level: 12
         Int: 1
-        Dex: 1
       - Level: 13
-        Wis: 1
-        Con: 1
+        Str: 1
+        Vit: 1
       - Level: 14
-        Int: 1
-        Luk: 1
+        Sta: 1
       - Level: 15
-        Vit: 1
-        Int: 1
-      - Level: 16
-        Vit: 1
-        Crt: 1
-      - Level: 17
         Dex: 1
-      - Level: 18
-        Con: 1
-      - Level: 19
         Wis: 1
+      - Level: 16
+        Int: 1
+      - Level: 17
+        Str: 1
+        Agi: 1
+      - Level: 18
+        Dex: 1
+      - Level: 19
+        Int: 1
+      - Level: 20
+        Agi: 1
       - Level: 21
         Dex: 1
       - Level: 22
-        Dex: 1
-        Spl: 1
-      - Level: 23
-        Int: 1
-        Luk: 1
-      - Level: 25
         Agi: 1
+        Int: 1
+      - Level: 23
+        Luk: 1
+      - Level: 24
+        Vit: 1
+        Dex: 1
+      - Level: 25
+        Con: 1
       - Level: 26
-        Spl: 1
+        Vit: 1
+        Dex: 1
       - Level: 27
-        Str: 1
-        Sta: 1
+        Agi: 1
+        Wis: 1
       - Level: 28
         Agi: 1
-        Vit: 1
+        Dex: 1
       - Level: 29
-        Str: 1
-        Agi: 1
-        Sta: 1
+        Luk: 1
+        Con: 1
       - Level: 30
-        Spl: 1
+        Crt: 1
       - Level: 31
         Wis: 1
       - Level: 32
         Agi: 1
-        Dex: 1
-      - Level: 33
-        Con: 1
-      - Level: 34
-        Agi: 1
-      - Level: 35
         Vit: 1
-        Dex: 1
-      - Level: 36
-        Str: 1
+      - Level: 33
+        Pow: 1
         Sta: 1
+      - Level: 34
+        Wis: 1
+      - Level: 35
+        Sta: 1
+        Con: 1
+      - Level: 36
+        Wis: 1
+        Crt: 1
       - Level: 37
-        Spl: 1
+        Con: 1
+      - Level: 38
+        Sta: 1
+      - Level: 39
+        Int: 1
+        Wis: 1
       - Level: 40
-        Crt: 1
+        Sta: 1
+      - Level: 41
+        Wis: 1
+      - Level: 42
+        Pow: 1
+        Sta: 1
       - Level: 43
-        Wis: 1
-        Con: 1
-      - Level: 44
-        Wis: 1
-        Spl: 1
-      - Level: 45
-        Spl: 1
-      - Level: 46
-        Con: 1
-      - Level: 47
-        Spl: 1
-      - Level: 48
         Crt: 1
-      - Level: 49
+      - Level: 44
+        Sta: 1
+        Crt: 1
+      - Level: 45
+        Sta: 1
+      - Level: 46
+        Crt: 1
+      - Level: 47
+        Pow: 1
+        Wis: 1
+      - Level: 48
         Con: 1
+      - Level: 49
+        Crt: 1
       - Level: 50
         Wis: 1
-        Spl: 1
       - Level: 51
         Pow: 1
       - Level: 52
@@ -7493,9 +7377,10 @@ Body:
   - Jobs:
       Night_Watch: true
     MaxWeight: 48000
-    HpFactor: 75
-    HpIncrease: 1800
-    SpIncrease: 800
+    HpFactor: 66
+    HpIncrease: 5603
+    SpFactor: 9
+    SpIncrease: 16
     BonusStats:
       - Level: 1
         Str: 1
@@ -7637,9 +7522,10 @@ Body:
   - Jobs:
       Hyper_Novice: true
     MaxWeight: 40000
-    HpFactor: 55
-    HpIncrease: 900
-    SpIncrease: 600
+    HpFactor: 38
+    HpIncrease: 5584
+    SpFactor: 6
+    SpIncrease: 40
     BonusStats:
       - Level: 1
         Str: 1
@@ -7784,9 +7670,10 @@ Body:
   - Jobs:
       Spirit_Handler: true
     MaxWeight: 42000
-    HpFactor: 80
-    HpIncrease: 1150
-    SpIncrease: 730
+    HpFactor: 16
+    HpIncrease: 11979
+    SpFactor: 7
+    SpIncrease: 84
     BonusStats:
       - Level: 1
         Dex: 1

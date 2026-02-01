@@ -857,7 +857,6 @@ void ShowConfigWarning(config_setting_t *config, const char *string, ...)
 	va_start(ap, string);
 	_vShowMessage(MSG_WARNING, StringBuf_Value(&buf), ap);
 	va_end(ap);
-	StringBuf_Destroy(&buf);
 }
 void ShowDebug(const char *string, ...) {
 	va_list ap;

@@ -74,8 +74,6 @@ void auction_save( std::shared_ptr<struct auction_data> auction ){
 	{
 		SqlStmt_ShowDebug(stmt);
 	}
-
-	StringBuf_Destroy(&buf);
 }
 
 uint32 auction_create( std::shared_ptr<struct auction_data> auction ){
@@ -131,8 +129,6 @@ uint32 auction_create( std::shared_ptr<struct auction_data> auction ){
 
 		auction_db[auction->auction_id] = auction;
 	}
-
-	StringBuf_Destroy(&buf);
 
 	return auction->auction_id;
 }
@@ -203,8 +199,6 @@ void inter_auctions_fromsql(void)
 
 	if( SQL_ERROR == Sql_Query(sql_handle, StringBuf_Value(&buf)) )
 		Sql_ShowDebug(sql_handle);
-
-	StringBuf_Destroy(&buf);
 
 	while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
 	{

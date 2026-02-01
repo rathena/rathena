@@ -6720,6 +6720,11 @@ Body:
             Level: 5
           - Name: DK_TWOHANDDEF
             Level: 10
+      - Name: DK_DRAGONIC_PIERCE
+        MaxLevel: 5
+        Requires:
+          - Name: DK_HACKANDSLASHER
+            Level: 7
   - Job: Meister
     Inherit:
       Novice: true
@@ -7135,6 +7140,13 @@ Body:
             Level: 10
           - Name: CD_FIDUS_ANIMUS
             Level: 5
+      - Name: CD_DIVINUS_FLOS
+        MaxLevel: 5
+        Requires:
+          - Name: AB_ADORAMUS
+            Level: 5
+          - Name: CD_FRAMEN
+            Level: 5
   - Job: Windhawk
     Inherit:
       Novice: true
@@ -7304,6 +7316,13 @@ Body:
           - Name: IG_OVERSLASH
             Level: 3
           - Name: IG_SHIELD_SHOOTING
+            Level: 3
+      - Name: IG_IMPERIAL_PRESSURE
+        MaxLevel: 5
+        Requires:
+          - Name: IG_SPEAR_SWORD_M
+            Level: 7
+          - Name: IG_GUARD_STANCE
             Level: 3
   - Job: Biolo
     Inherit:
@@ -7492,6 +7511,28 @@ Body:
             Level: 3
           - Name: ABC_DAGGER_AND_BOW_M
             Level: 5
+      - Name: ABC_HIT_AND_SLIDING
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_DAGGER_AND_BOW_M
+            Level: 3
+      - Name: ABC_CHASING_BREAK
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_HIT_AND_SLIDING
+            Level: 3
+      - Name: ABC_CHASING_SHOT
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_HIT_AND_SLIDING
+            Level: 3
+      - Name: ABC_ABYSS_FLAME
+        MaxLevel: 5
+        Requires:
+          - Name: ABC_MAGIC_SWORD_M
+            Level: 5
+          - Name: ABC_FROM_THE_ABYSS
+            Level: 3
   - Job: Elemental_Master
     Inherit:
       Novice: true
@@ -7619,6 +7660,21 @@ Body:
         Requires:
           - Name: EM_ELEMENTAL_SPIRIT_M
             Level: 3
+      - Name: EM_PSYCHIC_STREAM
+        MaxLevel: 5
+        Requires:
+          - Name: EM_MAGIC_BOOK_M
+            Level: 5
+          - Name: EM_DIAMOND_STORM
+            Level: 3
+          - Name: EM_CONFLAGRATION
+            Level: 3
+          - Name: EM_LIGHTNING_LAND
+            Level: 3
+          - Name: EM_TERRA_DRIVE
+            Level: 3
+          - Name: EM_VENOM_SWAMP
+            Level: 3
   - Job: Inquisitor
     Inherit:
       Novice: true
@@ -7718,6 +7774,11 @@ Body:
         Requires:
           - Name: IQ_JUDGE
             Level: 1
+      - Name: IQ_BLAZING_FLAME_BLAST
+        MaxLevel: 5
+        Requires:
+          - Name: IQ_MASSIVE_F_BLASTER
+            Level: 7
   - Job: Troubadour
     Inherit:
       Novice: true
@@ -7802,6 +7863,11 @@ Body:
         Requires:
           - Name: TR_AIN_RHAPSODY
             Level: 1
+      - Name: TR_RHYTHMICAL_WAVE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_METALIC_FURY
+            Level: 3
   - Job: Trouvere
     Inherit:
       Novice: true
@@ -7886,6 +7952,11 @@ Body:
         Requires:
           - Name: TR_AIN_RHAPSODY
             Level: 1
+      - Name: TR_RHYTHMICAL_WAVE
+        MaxLevel: 5
+        Requires:
+          - Name: TR_METALIC_FURY
+            Level: 3
   - Job: Windhawk2
     Inherit:
       Novice: true
@@ -8121,6 +8192,24 @@ Body:
             Level: 5
           - Name: NW_GRENADES_DROPPING
             Level: 3
+      - Name: NW_WILD_SHOT
+        MaxLevel: 5
+        Requires:
+          - Name: NW_ONLY_ONE_BULLET
+            Level: 3
+          - Name: NW_SPIRAL_SHOOTING
+            Level: 3
+          - Name: NW_MAGAZINE_FOR_ONE
+            Level: 3
+      - Name: NW_MIDNIGHT_FALLEN
+        MaxLevel: 5
+        Requires:
+          - Name: NW_THE_VIGILANTE_AT_NIGHT
+            Level: 3
+          - Name: NW_MAGAZINE_FOR_ONE
+            Level: 3
+          - Name: NW_WILD_FIRE
+            Level: 3
   - Job: Hyper_Novice
     Inherit:
       Novice: true
@@ -8206,6 +8295,13 @@ Body:
           - Name: HN_GROUND_GRAVITATION
             Level: 5
           - Name: HN_NAPALM_VULCAN_STRIKE
+            Level: 5
+      - Name: HN_OVERCOMING_CRISIS
+        MaxLevel: 5
+        Requires:
+          - Name: HN_SELFSTUDY_TATICS
+            Level: 5
+          - Name: HN_SELFSTUDY_SOCERY
             Level: 5
   - Job: Spirit_Handler
     Inherit:
@@ -8312,6 +8408,20 @@ Body:
             Level: 1
           - Name: SH_MYSTICAL_CREATURE_MASTERY
             Level: 10
+      - Name: SH_CHUL_HO_BATTERING
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_CHUL_HO_SONIC_CLAW
+            Level: 5
+      - Name: SH_HYUN_ROK_SPIRIT_POWER
+        MaxLevel: 7
+        Requires:
+          - Name: SH_MYSTICAL_CREATURE_MASTERY
+            Level: 7
+          - Name: SH_HYUN_ROKS_BREEZE
+            Level: 5
   - Job: Sky_Emperor
     Inherit:
       Novice: true
@@ -8394,6 +8504,33 @@ Body:
         Requires:
           - Name: SKE_SKY_MASTERY
             Level: 5
+      - Name: SKE_SKY_SUN
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_NOON_BLAST
+            Level: 3
+          - Name: SKE_SUNSET_BLAST
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
+      - Name: SKE_SKY_MOON
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_MIDNIGHT_KICK
+            Level: 3
+          - Name: SKE_DAWN_BREAK
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
+      - Name: SKE_STAR_LIGHT_KICK
+        MaxLevel: 5
+        Requires:
+          - Name: SKE_STAR_BURST
+            Level: 3
+          - Name: SKE_STAR_CANNON
+            Level: 3
+          - Name: SKE_ENCHANTING_SKY
+            Level: 7
   - Job: Sky_Emperor2
     Inherit:
       Novice: true
@@ -8504,6 +8641,13 @@ Body:
             Level: 5
           - Name: SS_ANTENPOU
             Level: 5
+      - Name: SS_FOUR_CHARM
+        MaxLevel: 1
+        Requires:
+          - Name: KO_KAIHOU
+            Level: 1
+          - Name: SS_SHINKIROU
+            Level: 1
   - Job: Shiranui
     Inherit:
       Novice: true
@@ -8607,3 +8751,10 @@ Body:
             Level: 5
           - Name: SS_ANTENPOU
             Level: 5
+      - Name: SS_FOUR_CHARM
+        MaxLevel: 1
+        Requires:
+          - Name: KO_KAIHOU
+            Level: 1
+          - Name: SS_SHINKIROU
+            Level: 1

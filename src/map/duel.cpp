@@ -61,7 +61,7 @@ void duel_savetime(map_session_data* sd)
 /*
  * Check if the time elapsed between last duel is enough to launch another.
  */
-bool duel_checktime(map_session_data* sd)
+bool duel_checktime( const map_session_data* sd )
 {
 	int64 diff;
 	time_t timer;
@@ -100,7 +100,7 @@ static int32 duel_showinfo_sub(map_session_data* sd, va_list va)
 
 	char output[256];
 	sprintf(output, "      %d. %s", ++(*p), sd->status.name);
-	clif_messagecolor(&ssd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+	clif_messagecolor(ssd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	return 1;
 }
 
@@ -108,7 +108,7 @@ static int32 duel_showinfo_sub(map_session_data* sd, va_list va)
  * Display duel infos,
  * Number of duely...
  */
-void duel_showinfo(const size_t did, map_session_data* sd)
+void duel_showinfo( const size_t did, const map_session_data* sd )
 {
 	//std::lock_guard<std::recursive_mutex> _(duel_list_mutex); //or shared_ptr	
 	if ( !duel_exist( did ) )
@@ -129,7 +129,7 @@ void duel_showinfo(const size_t did, map_session_data* sd)
 			duel_list[did].members_count,
 			duel_list[did].members_count + duel_list[did].invites_count);
 
-	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+	clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	map_foreachpc(duel_showinfo_sub, sd, &p);
 }
 
@@ -141,13 +141,13 @@ static void duel_set(const size_t did, map_session_data* sd) {
 	sd->state.warping = 1;
 
 	// As you move to a different plane, ground effects need to be cleared
-	skill_clear_unitgroup(&sd->bl);
-	skill_unit_move(&sd->bl, gettick(), 2);
-	skill_cleartimerskill(&sd->bl);
+	skill_clear_unitgroup(sd);
+	skill_unit_move(sd, gettick(), 2);
+	skill_cleartimerskill(sd);
 
 	sd->duel_group = did;
 
-	skill_unit_move(&sd->bl, gettick(), 3);
+	skill_unit_move(sd, gettick(), 3);
 
 	sd->state.changemap = 0;
 	sd->state.warping = 0;
@@ -172,8 +172,8 @@ size_t duel_create(map_session_data* sd, const uint32 maxpl)
 
 	char output[256];
 	strcpy(output, msg_txt(sd,372)); // " -- Duel has been created (@invite/@leave) --"
-	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
+	clif_messagecolor(sd, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE, SELF);
 	//clif_misceffect2(&sd->bl, 159);
 	return lastID;
 }
@@ -196,10 +196,10 @@ bool duel_invite(const size_t did, map_session_data* sd, map_session_data* targe
 	char output[256];
 	// " -- Player %s invites %s to duel --"
 	sprintf(output, msg_txt(sd,373), sd->status.name, target_sd->status.name);
-	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
+	clif_disp_message(sd, output, strlen(output), DUEL_WOS);
 	// "Blue -- Player %s invites you to PVP duel (@accept/@reject) --"
 	sprintf(output, msg_txt(sd,374), sd->status.name);
-	clif_broadcast((struct block_list *)target_sd, output, strlen(output)+1, BC_BLUE, SELF);
+	clif_broadcast((block_list *)target_sd, output, strlen(output)+1, BC_BLUE, SELF);
 	return true;
 }
 
@@ -239,8 +239,8 @@ bool duel_leave(const size_t did, map_session_data* sd)
 	char output[256];
 	// " <- Player %s has left duel --"
 	sprintf(output, msg_txt(sd,375), sd->status.name);
-	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
-	clif_map_property(&sd->bl, MAPPROPERTY_NOTHING, SELF);
+	clif_disp_message(sd, output, strlen(output), DUEL_WOS);
+	clif_map_property(sd, MAPPROPERTY_NOTHING, SELF);
 	return true;
 }
 
@@ -265,8 +265,8 @@ bool duel_accept(const size_t did, map_session_data* sd)
 	char output[256];
 	// " -> Player %s has accepted duel --"
 	sprintf(output, msg_txt(sd,376), sd->status.name);
-	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
-	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
+	clif_disp_message(sd, output, strlen(output), DUEL_WOS);
+	clif_map_property(sd, MAPPROPERTY_FREEPVPZONE, SELF);
 	//clif_misceffect2(&sd->bl, 159);
 	return true;
 }
@@ -290,7 +290,7 @@ bool duel_reject(const size_t did, map_session_data* sd)
 	char output[256];
 	// " -- Player %s has rejected duel --"
 	sprintf(output, msg_txt(sd,377), sd->status.name);
-	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
+	clif_disp_message(sd, output, strlen(output), DUEL_WOS);
 	return true;
 }
 

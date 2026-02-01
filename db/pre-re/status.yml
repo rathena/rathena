@@ -211,7 +211,10 @@ Body:
       Silence: true
   - Status: Confusion
     DurationLookup: NPC_WIDECONFUSE
+    Opt2:
+      Confusion: true
     Flags:
+      SendOption: true
       BossResist: true
       StopWalking: true
     Fail:
@@ -434,11 +437,10 @@ Body:
     DurationLookup: AL_CRUCIS
     CalcFlags:
       Def: true
-    Opt2:
-      SignumCrucis: true
     Flags:
-      SendOption: true
       Debuff: true
+    Fail:
+      Signumcrucis: true
   - Status: Increaseagi
     Icon: EFST_INC_AGI
     DurationLookup: AL_INCAGI
@@ -481,6 +483,8 @@ Body:
   - Status: Slowpoison
     Icon: EFST_SLOWPOISON
     DurationLookup: PR_SLOWPOISON
+    CalcFlags:
+      Regen: true
     Flags:
       NoClearance: true
       RemoveOnHermode: true
@@ -1170,6 +1174,7 @@ Body:
     Flags:
       NoSave: true
       RequireWeapon: true
+      RemoveOnUnequipWeapon: true
       RemoveOnHermode: true
   - Status: Parrying
     Icon: EFST_PARRYING
@@ -1192,6 +1197,7 @@ Body:
       Quicken: true
     Flags:
       NoSave: true
+      RemoveOnUnequip: true
       RemoveOnHermode: true
   - Status: Tensionrelax
     Icon: EFST_TENSIONRELAX
@@ -1723,6 +1729,8 @@ Body:
   - Status: Winkcharm
     Icon: EFST_DC_WINKCHARM
     DurationLookup: DC_WINKCHARM
+    States:
+      NoCastCond: true
     Flags:
       RemoveOnDamaged: true
       Debuff: true
@@ -1855,6 +1863,7 @@ Body:
       Flee: true
       Flee2: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoClearance: true
   - Status: Assncros
@@ -1863,6 +1872,7 @@ Body:
     CalcFlags:
       Aspd: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       FailedMado: true
       NoClearance: true
@@ -1872,6 +1882,7 @@ Body:
     Icon: EFST_POEMBRAGI
     DurationLookup: BA_POEMBRAGI
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoClearance: true
   - Status: Appleidun
@@ -1880,6 +1891,7 @@ Body:
     CalcFlags:
       MaxHp: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoClearance: true
   - Status: Modechange
@@ -1892,6 +1904,7 @@ Body:
     CalcFlags:
       Hit: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoClearance: true
   - Status: Dontforgetme
@@ -1901,6 +1914,7 @@ Body:
       Speed: true
       Aspd: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoClearance: true
     Fail:
@@ -1920,6 +1934,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoClearance: true
   - Status: Service4u
@@ -1928,6 +1943,7 @@ Body:
     CalcFlags:
       All: true
     Flags:
+      NoSave: true
       NoRemoveOnDead: true
       NoClearance: true
   - Status: Stop
@@ -2406,7 +2422,6 @@ Body:
       NoSave: true
       NoClearance: true
       NoBanishingBuster: true
-      NoDispell: true
       RemoveOnHermode: true
   - Status: Bunsinjyutsu
     Icon: EFST_NJ_BUNSINJYUTSU
@@ -2957,7 +2972,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnStart:
-      Intfood: true
+      Dexfood: true
     Script: |
       bonus bDex, getstatus(SC_FOOD_DEX_CASH, 1);
   - Status: Food_Int_Cash
@@ -2969,7 +2984,7 @@ Body:
       NoBanishingBuster: true
       NoClearance: true
     EndOnStart:
-      Dexfood: true
+      Intfood: true
     Script: |
       bonus bInt, getstatus(SC_FOOD_INT_CASH, 1);
   - Status: Food_Luk_Cash
@@ -3985,6 +4000,7 @@ Body:
       BlEffect: true
       DisplayPc: true
       StopAttacking: true
+      RemoveOnDamaged: true
     MinDuration: 10000
     EndOnStart:
       Deepsleep: true
@@ -6814,3 +6830,22 @@ Body:
     Script: |
       bonus bAspdRate, getstatus(SC_ACARAJE, 1);
       bonus bHit, getstatus(SC_ACARAJE, 2);
+  - Status: Noaction
+    Icon: EFST_NOACTION
+    DurationLookup: TK_TURNKICK
+    States:
+      NoMove: true
+      NoPickItem: true
+      NoCast: true
+      NoAttack: true
+      NoInteract: true
+    Flags:
+      NoRemoveOnDead: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+      NoSave: true
+      StopAttacking: true
+      StopCasting: true
+      BossResist: true

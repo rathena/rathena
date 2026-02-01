@@ -201,9 +201,9 @@ static void script_load_mapreg(void)
 
 	skip_insert = true;
 
-	stmt.BindColumn(0, SQLDT_STRING, &varname[0], sizeof(varname), &length, nullptr);
-	stmt.BindColumn(1, SQLDT_UINT32, &index, 0, nullptr, nullptr);
-	stmt.BindColumn(2, SQLDT_STRING, &value[0], sizeof(value), nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_STRING, &varname[0], sizeof(varname), &length);
+	stmt.BindColumn(1, SQLDT_UINT32, &index);
+	stmt.BindColumn(2, SQLDT_STRING, &value[0], sizeof(value));
 
 	while ( SQL_SUCCESS == stmt.NextRow() ) {
 		int32 s = add_str(varname);

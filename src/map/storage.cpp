@@ -364,7 +364,7 @@ void storage_storageadd(map_session_data* sd, struct s_storage *stor, int32 inde
  * @param amount : number of item to take
  * @return 0:fail, 1:success
  */
-void storage_storageget(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount)
+void storage_storageget(map_session_data *sd, struct s_storage *stor, int32 index, int32 amount, bool favorite)
 {
 	unsigned char flag = 0;
 	enum e_storage_add result;
@@ -375,7 +375,7 @@ void storage_storageget(map_session_data *sd, struct s_storage *stor, int32 inde
 	if (result != STORAGE_ADD_OK)
 		return;
 
-	if ((flag = pc_additem(sd,&stor->u.items_storage[index],amount,LOG_TYPE_STORAGE)) == ADDITEM_SUCCESS)
+	if ((flag = pc_additem(sd,&stor->u.items_storage[index],amount,LOG_TYPE_STORAGE, favorite)) == ADDITEM_SUCCESS)
 		storage_delitem(sd,stor,index,amount);
 	else {
 		clif_storageitemremoved( *sd, index, 0 );
@@ -563,8 +563,12 @@ char storage_guild_storageopen(map_session_data* sd)
 		return GSTORAGE_NO_GUILD;
 
 #ifdef OFFICIAL_GUILD_STORAGE
-	if (!guild_checkskill(sd->guild->guild, GD_GUILD_STORAGE))
+	uint16 level = guild_checkskill(sd->guild->guild, GD_GUILD_STORAGE);
+
+	if (level == 0)
 		return GSTORAGE_NO_STORAGE; // Can't open storage if the guild has not learned the skill
+
+	uint16 max = 100 + level * 100; // Lv1..5 => 200..600
 #endif
 
 	if (sd->state.storage_flag == 2)
@@ -586,7 +590,7 @@ char storage_guild_storageopen(map_session_data* sd)
 
 	if((gstor = guild2storage2(sd->status.guild_id)) == nullptr
 #ifdef OFFICIAL_GUILD_STORAGE
-		|| (gstor->max_amount != guild_checkskill(sd->guild->guild, GD_GUILD_STORAGE) * 100)
+		|| (gstor->max_amount != max)
 #endif
 	) {
 		intif_request_guild_storage(sd->status.account_id,sd->status.guild_id);
@@ -633,8 +637,6 @@ void storage_guild_log( map_session_data* sd, struct item* item, int16 amount ){
 
 	if (SQL_SUCCESS != stmt.PrepareStr(StringBuf_Value(&buf)) || SQL_SUCCESS != stmt.Execute())
 		SqlStmt_ShowDebug(stmt);
-
-	StringBuf_Destroy(&buf);
 }
 
 enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::vector<struct guild_log_entry>& log, uint32 max ){
@@ -660,7 +662,6 @@ enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::
 		SQL_ERROR == stmt.Execute() )
 	{
 		SqlStmt_ShowDebug(stmt);
-		StringBuf_Destroy(&buf);
 
 		return GUILDSTORAGE_LOG_FAILED;
 	}
@@ -668,26 +669,26 @@ enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::
 	struct guild_log_entry entry;
 
 	// General data
-	stmt.BindColumn(0, SQLDT_UINT32,      &entry.id,               0, nullptr, nullptr);
-	stmt.BindColumn(1, SQLDT_STRING,    &entry.time, sizeof(entry.time), nullptr, nullptr);
-	stmt.BindColumn(2, SQLDT_STRING,    &entry.name, sizeof(entry.name), nullptr, nullptr);
-	stmt.BindColumn(3, SQLDT_INT16,     &entry.amount,           0, nullptr, nullptr);
+	stmt.BindColumn(0, SQLDT_UINT32, &entry.id);
+	stmt.BindColumn(1, SQLDT_STRING, &entry.time, sizeof(entry.time));
+	stmt.BindColumn(2, SQLDT_STRING, &entry.name, sizeof(entry.name));
+	stmt.BindColumn(3, SQLDT_INT16, &entry.amount);
 
 	// Item data
-	stmt.BindColumn(4, SQLDT_UINT32,      &entry.item.nameid,      0, nullptr, nullptr);
-	stmt.BindColumn(5, SQLDT_CHAR,      &entry.item.identify,    0, nullptr, nullptr);
-	stmt.BindColumn(6, SQLDT_CHAR,      &entry.item.refine,      0, nullptr, nullptr);
-	stmt.BindColumn(7, SQLDT_CHAR,      &entry.item.attribute,   0, nullptr, nullptr);
-	stmt.BindColumn(8, SQLDT_UINT32,      &entry.item.expire_time, 0, nullptr, nullptr);
-	stmt.BindColumn(9, SQLDT_UINT32,      &entry.item.bound,       0, nullptr, nullptr);
-	stmt.BindColumn(10, SQLDT_UINT64,   &entry.item.unique_id,   0, nullptr, nullptr);
-	stmt.BindColumn(11, SQLDT_INT8,     &entry.item.enchantgrade,0, nullptr, nullptr);
+	stmt.BindColumn(4, SQLDT_UINT32, &entry.item.nameid);
+	stmt.BindColumn(5, SQLDT_CHAR, &entry.item.identify);
+	stmt.BindColumn(6, SQLDT_CHAR, &entry.item.refine);
+	stmt.BindColumn(7, SQLDT_CHAR, &entry.item.attribute);
+	stmt.BindColumn(8, SQLDT_UINT32, &entry.item.expire_time);
+	stmt.BindColumn(9, SQLDT_UINT32, &entry.item.bound);
+	stmt.BindColumn(10, SQLDT_UINT64, &entry.item.unique_id);
+	stmt.BindColumn(11, SQLDT_INT8, &entry.item.enchantgrade);
 	for( j = 0; j < MAX_SLOTS; ++j )
-		stmt.BindColumn(12+j, SQLDT_UINT32, &entry.item.card[j], 0, nullptr, nullptr);
+		stmt.BindColumn(12+j, SQLDT_UINT32, &entry.item.card[j]);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
-		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_INT16, &entry.item.option[j].id, 0, nullptr, nullptr);
-		stmt.BindColumn(12+MAX_SLOTS+j*3+1, SQLDT_INT16, &entry.item.option[j].value, 0, nullptr, nullptr);
-		stmt.BindColumn(12+MAX_SLOTS+j*3+2, SQLDT_CHAR, &entry.item.option[j].param, 0, nullptr, nullptr);
+		stmt.BindColumn(12+MAX_SLOTS+j*3, SQLDT_INT16, &entry.item.option[j].id);
+		stmt.BindColumn(12+MAX_SLOTS+j*3+1, SQLDT_INT16, &entry.item.option[j].value);
+		stmt.BindColumn(12+MAX_SLOTS+j*3+2, SQLDT_CHAR, &entry.item.option[j].param);
 	}
 
 	log.reserve(max);
@@ -697,7 +698,6 @@ enum e_guild_storage_log storage_guild_log_read_sub( map_session_data* sd, std::
 	}
 
 	Sql_FreeResult(mmysql_handle);
-	StringBuf_Destroy(&buf);
 
 	if( log.empty() ){
 		return GUILDSTORAGE_LOG_EMPTY;
@@ -911,7 +911,7 @@ void storage_guild_storageadd(map_session_data* sd, int32 index, int32 amount)
  * @param amount : number of item to get
  * @return 1:success, 0:fail
  */
-void storage_guild_storageget(map_session_data* sd, int32 index, int32 amount)
+void storage_guild_storageget(map_session_data* sd, int32 index, int32 amount, bool favorite)
 {
 	struct s_storage *stor;
 	unsigned char flag = 0;
@@ -936,7 +936,7 @@ void storage_guild_storageget(map_session_data* sd, int32 index, int32 amount)
 		return;
 	}
 
-	if((flag = pc_additem(sd,&stor->u.items_guild[index],amount,LOG_TYPE_GSTORAGE)) == 0)
+	if((flag = pc_additem(sd,&stor->u.items_guild[index],amount,LOG_TYPE_GSTORAGE,favorite)) == 0)
 		storage_guild_delitem(sd,stor,index,amount);
 	else { // inform fail
 		clif_storageitemremoved( *sd, index, 0 );

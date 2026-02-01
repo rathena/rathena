@@ -395,8 +395,8 @@ void sale_notify_login( map_session_data* sd ){
 
 	for( i = 0; i < sale_items.count; i++ ){
 		if( sale_items.item[i]->timer_end != INVALID_TIMER ){
-			clif_sale_start( sale_items.item[i], &sd->bl, SELF );
-			clif_sale_amount( sale_items.item[i], &sd->bl, SELF );
+			clif_sale_start( sale_items.item[i], sd, SELF );
+			clif_sale_amount( sale_items.item[i], sd, SELF );
 		}
 	}
 }
@@ -498,7 +498,7 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int32 n, const 
 				// Client tried to buy a higher quantity than is available
 				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
 				// Maybe he did not get refreshed in time -> do it now
-				clif_sale_amount( sale, &sd->bl, SELF );
+				clif_sale_amount( sale, sd, SELF );
 				return false;
 			}
 #else
@@ -569,7 +569,7 @@ bool cashshop_buylist( map_session_data* sd, uint32 kafrapoints, int32 n, const 
 				// Client tried to buy a higher quantity than is available
 				clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKNOWN );
 				// Maybe he did not get refreshed in time -> do it now
-				clif_sale_amount( sale, &sd->bl, SELF );
+				clif_sale_amount( sale, sd, SELF );
 				return false;
 			}
 		}

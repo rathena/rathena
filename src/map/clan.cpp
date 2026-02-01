@@ -74,7 +74,7 @@ struct clan* clan_searchname( const char* name ){
 	return c;
 }
 
-map_session_data* clan_getavailablesd( struct clan& clan ){
+map_session_data* clan_getavailablesd( const clan& clan ){
 	int32 i;
 
 	ARR_FIND( 0, clan.max_member, i, clan.members[i] != nullptr );
@@ -82,7 +82,7 @@ map_session_data* clan_getavailablesd( struct clan& clan ){
 	return ( i < clan.max_member ) ? clan.members[i] : nullptr;
 }
 
-int32 clan_getMemberIndex( struct clan* clan, uint32 account_id ){
+static int32 clan_getMemberIndex( const clan* clan, uint32 account_id ){
 	int32 i;
 
 	nullpo_retr(-1,clan);
@@ -219,7 +219,7 @@ void clan_send_message( map_session_data& sd, const char *mes, size_t len ){
 
 	intif_clan_message( sd.status.clan_id, sd.status.account_id, mes, len );
 	clan_recv_message( sd.status.clan_id, sd.status.account_id, mes, len );
-	log_chat( LOG_CHAT_CLAN, sd.status.clan_id, sd.status.char_id, sd.status.account_id, mapindex_id2name( sd.mapindex ), sd.bl.x, sd.bl.y, nullptr, mes );
+	log_chat( LOG_CHAT_CLAN, sd.status.clan_id, sd.status.char_id, sd.status.account_id, mapindex_id2name( sd.mapindex ), sd.x, sd.y, nullptr, mes );
 }
 
 int32 clan_get_alliance_count( struct clan& clan, int32 flag ){

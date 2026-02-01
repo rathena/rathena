@@ -56,9 +56,9 @@ void chlogif_pincode_start(int32 fd, struct char_session_data* sd){
 		if( sd->pincode[0] == '\0' ){
 			// No PIN code has been set yet
 			if( charserv_config.pincode_config.pincode_force ){
-				chclif_pincode_sendstate( fd, sd, PINCODE_NEW );
+				chclif_pincode_sendstate( fd, *sd, PINCODE_NEW );
 			}else{
-				chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+				chclif_pincode_sendstate( fd, *sd, PINCODE_PASSED );
 			}
 		}else{
 			if( !(charserv_config.pincode_config.pincode_changetime)
@@ -67,20 +67,20 @@ void chlogif_pincode_start(int32 fd, struct char_session_data* sd){
 
 				if( node != nullptr && node->pincode_success ){
 					// User has already passed the check
-					chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );
+					chclif_pincode_sendstate( fd, *sd, PINCODE_PASSED );
 				}else{
 					// Ask user for his PIN code
-					chclif_pincode_sendstate( fd, sd, PINCODE_ASK );
+					chclif_pincode_sendstate( fd, *sd, PINCODE_ASK );
 				}
 			}else{
 				// User hasnt changed his PIN code too long
-				chclif_pincode_sendstate( fd, sd, PINCODE_EXPIRED );
+				chclif_pincode_sendstate( fd, *sd, PINCODE_EXPIRED );
 			}
 		}
 	}else{
 		// PIN code system disabled
 		//ShowInfo("Pincode is disabled.\n");
-		chclif_pincode_sendstate( fd, sd, PINCODE_OK );
+		chclif_pincode_sendstate( fd, *sd, PINCODE_OK );
 	}
 }
 #endif
@@ -360,7 +360,7 @@ int32 chlogif_parse_reqaccdata(int32 fd){
 			chclif_reject(u_fd,0);
 		} else {
 			// send characters to player
-			chclif_mmo_char_send(u_fd, sd);
+			chclif_mmo_char_send( u_fd, *sd );
 #if PACKETVER_SUPPORTS_PINCODE
 			chlogif_pincode_start(u_fd,sd);
 #endif
@@ -459,7 +459,7 @@ void chlogif_parse_change_sex_sub(int32 sex, int32 acc, int32 char_id, int32 cla
 	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `equip` = '0', `equip_switch` = '0' WHERE `char_id` = '%d'", schema_config.inventory_db, char_id))
 		Sql_ShowDebug(sql_handle);
 
-	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class` = '%d', `weapon` = '0', `shield` = '0', `head_top` = '0', `head_mid` = '0', `head_bottom` = '0', `robe` = '0', `sex` = '%c' WHERE `char_id` = '%d'", schema_config.char_db, class_, sex == SEX_MALE ? 'M' : 'F', char_id))
+	if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class` = '%d', `body` = '%d', `weapon` = '0', `shield` = '0', `head_top` = '0', `head_mid` = '0', `head_bottom` = '0', `robe` = '0', `sex` = '%c' WHERE `char_id` = '%d'", schema_config.char_db, class_, class_, sex == SEX_MALE ? 'M' : 'F', char_id))
 		Sql_ShowDebug(sql_handle);
 	if (guild_id) // If there is a guild, update the guild_member data [Skotlex]
 		inter_guild_sex_changed(guild_id, acc, char_id, sex);
@@ -489,9 +489,9 @@ int32 chlogif_parse_ackchangesex(int32 fd)
 				SqlStmt_ShowDebug(stmt);
 			}
 
-			stmt.BindColumn(0, SQLDT_INT32,   &char_id,  0, nullptr, nullptr);
-			stmt.BindColumn(1, SQLDT_INT16, &class_,   0, nullptr, nullptr);
-			stmt.BindColumn(2, SQLDT_INT32,   &guild_id, 0, nullptr, nullptr);
+			stmt.BindColumn(0, SQLDT_INT32, &char_id);
+			stmt.BindColumn(1, SQLDT_INT16, &class_);
+			stmt.BindColumn(2, SQLDT_INT32, &guild_id);
 
 			for (i = 0; i < MAX_CHARS && SQL_SUCCESS == stmt.NextRow(); ++i) {
 				chlogif_parse_change_sex_sub(sex, acc, char_id, class_, guild_id);

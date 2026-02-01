@@ -77,11 +77,12 @@
 #   BaseAp:                  Base AP per base level.
 #     - Level                Base level.
 #       Ap                   Base AP.
+#   AlternateOutfits:        Alternate Jobs outfits. (Default: empty)
 ###########################################################################
 
 Header:
   Type: JOB_STATS
-  Version: 3
+  Version: 4
 
 #Body:
 ###########################################################################

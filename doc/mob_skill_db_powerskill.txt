@@ -21,9 +21,10 @@ If it can't determine a trend it will fill with the last level defined.
 -------------------------------------------------------------------------------
 Skill | rAthena Lv | Explanation
 -------------------------------------------------------------------------------
+6,SM_PROVOKE          |10| Reduces DEF by 100%. No ATK bonus.
 7,SM_MAGNUM           |25| 9x9 AoE. 600% damage at all ranges.
 15,MG_FROSTDIVER      |40| 500% damage. 100% base chance.
-17,MG_FIREBALL        |44| Re: 1020% damage, Pre: 510% damage
+17,MG_FIREBALL        |43| 7x7 AoE. 1000% damage. (In pre-re, level is 93.)
 21,MG_THUNDERSTORM    |20| 7x7 AoE. 3 splash into LP. 20 hits.
 28,AL_HEAL            |11| Heals max_heal HP(see conf/battle/skills.conf)
 30,AL_DECAGI          |48| Reduces Agi by 50. Duration 130 seconds.
@@ -31,7 +32,7 @@ Skill | rAthena Lv | Explanation
 57,KN_BRANDISHSPEAR   |10| 562% damage at all ranges.
 60,KN_TWOHANDQUICKEN  |30| Increases ASPD by 70%. Duration 300 seconds.
 80,WZ_FIREPILLAR      |10| Damage multiplied by number of hits.
-83,WZ_METEOR          |11| Meteors drop in 29x29 AoE. 15 hits per meteor.
+83,WZ_METEOR          |11| Meteors drop in 33x33 AoE. 10 meteors. 15 hits per meteor.
 84,WZ_JUPITEL         |28| 30 hits, knockback out of visible range.
 85,WZ_VERMILION       |21| 15x15 unit placement. 1 splash into LP. 500% damage.
 86,WZ_WATERBALL       |10| 9x9 unit placement. 67 hits.

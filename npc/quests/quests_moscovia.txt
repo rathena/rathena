@@ -7103,16 +7103,21 @@ mosk_dun01,45,259,0	script	Wall#rus04	HIDDEN_NPC,{
 
 OnInit:
 	$@rus_req02 = 0;
+	end;
+
 OnEnable:
 	enablenpc "Wall#rus04";
 	end;
 
+OnDisable:
+	disablenpc "Wall#rus04";
+	end;
+
 OnMyMobDead:
+	donpcevent "Koshei#rus47::OnDisable";
 	$@rus_req02 = 0;
 	// stopnpctimer;
 	announce "Koshei, the Immortal : Keeeek, you, cursed human.. I'll never give up!!! We'll see who's smiling in the end!!!",bc_map,0xCE3131;
-OnDisable:
-	disablenpc "Wall#rus04";
 	end;
 }
 

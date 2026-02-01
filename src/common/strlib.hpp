@@ -140,8 +140,10 @@ struct StringBuf
 	char *buf_;
 	char *ptr_;
 	size_t max_;
+
+	StringBuf();
+	~StringBuf();
 };
-typedef struct StringBuf StringBuf;
 
 StringBuf* _StringBuf_Malloc(const char *file, int32 line, const char *func);
 #define StringBuf_Malloc() _StringBuf_Malloc(ALC_MARK)
@@ -158,7 +160,6 @@ size_t _StringBuf_AppendStr(const char *file, int32 line, const char *func, Stri
 int32 StringBuf_Length(StringBuf* self);
 char* StringBuf_Value(StringBuf* self);
 void StringBuf_Clear(StringBuf* self);
-void StringBuf_Destroy(StringBuf* self);
 void StringBuf_Free(StringBuf* self);
 
 #endif /* STRLIB_HPP */

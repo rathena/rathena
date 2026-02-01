@@ -313,7 +313,7 @@ public:
 	/// and the nul-terminator (an extra byte).
 	///
 	/// @return SQL_SUCCESS or SQL_ERROR
-	int32 BindColumn( size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len, uint32* out_length, int8* out_is_null );
+	int32 BindColumn( size_t idx, SqlDataType buffer_type, void* buffer, size_t buffer_len = 0, uint32* out_length = nullptr, int8* out_is_null = nullptr );
 
 	/// Returns the number of rows in the result.
 	///

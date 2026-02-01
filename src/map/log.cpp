@@ -170,7 +170,7 @@ static bool should_log_item(t_itemid nameid, int32 amount, int32 refine)
 
 
 /// logs items, that summon monsters
-void log_branch(map_session_data* sd)
+void log_branch( map_session_data* sd )
 {
 	nullpo_retv(sd);
 
@@ -204,7 +204,7 @@ void log_branch(map_session_data* sd)
 }
 
 /// logs item transactions (generic)
-void log_pick(int32 id, int16 m, e_log_pick_type type, int32 amount, struct item* itm)
+void log_pick( int32 id, int16 m, e_log_pick_type type, int32 amount, const item* itm )
 {
 	nullpo_retv(itm);
 	if( ( log_config.enable_logs&type ) == 0 )
@@ -241,8 +241,6 @@ void log_pick(int32 id, int16 m, e_log_pick_type type, int32 amount, struct item
 
 		if (SQL_SUCCESS != stmt.PrepareStr(StringBuf_Value(&buf)) || SQL_SUCCESS != stmt.Execute())
 			SqlStmt_ShowDebug(stmt);
-
-		StringBuf_Destroy(&buf);
 	}
 	else
 	{
@@ -260,23 +258,23 @@ void log_pick(int32 id, int16 m, e_log_pick_type type, int32 amount, struct item
 }
 
 /// logs item transactions (players)
-void log_pick_pc(map_session_data* sd, e_log_pick_type type, int32 amount, struct item* itm)
+void log_pick_pc( const map_session_data* sd, e_log_pick_type type, int32 amount, const item* itm )
 {
 	nullpo_retv(sd);
-	log_pick(sd->status.char_id, sd->bl.m, type, amount, itm);
+	log_pick(sd->status.char_id, sd->m, type, amount, itm);
 }
 
 
 /// logs item transactions (monsters)
-void log_pick_mob(struct mob_data* md, e_log_pick_type type, int32 amount, struct item* itm)
+void log_pick_mob( const mob_data* md, e_log_pick_type type, int32 amount, const item* itm )
 {
 	nullpo_retv(md);
-	log_pick(md->mob_id, md->bl.m, type, amount, itm);
+	log_pick(md->mob_id, md->m, type, amount, itm);
 }
 
 /// logs zeny transactions
 // ids are char_ids
-void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int32 amount)
+void log_zeny( const map_session_data &target_sd, e_log_pick_type type, uint32 src_id, int32 amount )
 {
 	if( !log_config.zeny || ( log_config.zeny != 1 && abs(amount) < log_config.zeny ) )
 		return;
@@ -307,7 +305,7 @@ void log_zeny(const map_session_data &target_sd, e_log_pick_type type, uint32 sr
 
 
 /// logs MVP monster rewards
-void log_mvpdrop(map_session_data* sd, int32 monster_id, t_itemid nameid, t_exp exp )
+void log_mvpdrop( const map_session_data* sd, int32 monster_id, t_itemid nameid, t_exp exp )
 {
 	nullpo_retv(sd);
 
@@ -340,7 +338,7 @@ void log_mvpdrop(map_session_data* sd, int32 monster_id, t_itemid nameid, t_exp 
 
 
 /// logs used atcommands
-void log_atcommand(map_session_data* sd, const char* message)
+void log_atcommand( map_session_data* sd, const char* message )
 {
 	nullpo_retv(sd);
 
@@ -377,7 +375,7 @@ void log_atcommand(map_session_data* sd, const char* message)
 }
 
 /// logs messages passed to script command 'logmes'
-void log_npc( struct npc_data* nd, const char* message ){
+void log_npc( npc_data* nd, const char* message ){
 	nullpo_retv(nd);
 
 	if( !log_config.npc )
@@ -387,7 +385,7 @@ void log_npc( struct npc_data* nd, const char* message ){
 	{
 		SqlStmt stmt{ *logmysql_handle };
 
-		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`npc_date`, `char_name`, `map`, `mes`) VALUES (NOW(), ?, '%s', ?)", log_config.log_npc, map_mapid2mapname(nd->bl.m) )
+		if( SQL_SUCCESS != stmt.Prepare(LOG_QUERY " INTO `%s` (`npc_date`, `char_name`, `map`, `mes`) VALUES (NOW(), ?, '%s', ?)", log_config.log_npc, map_mapid2mapname(nd->m) )
 		||  SQL_SUCCESS != stmt.BindParam(0, SQLDT_STRING, nd->name, strnlen(nd->name, NAME_LENGTH))
 		||  SQL_SUCCESS != stmt.BindParam(1, SQLDT_STRING, (char*)message, safestrnlen(message, 255))
 		||  SQL_SUCCESS != stmt.Execute() )
@@ -412,7 +410,7 @@ void log_npc( struct npc_data* nd, const char* message ){
 }
 
 /// logs messages passed to script command 'logmes'
-void log_npc(map_session_data* sd, const char* message)
+void log_npc( map_session_data* sd, const char* message )
 {
 	nullpo_retv(sd);
 
@@ -449,7 +447,7 @@ void log_npc(map_session_data* sd, const char* message)
 
 
 /// logs chat
-void log_chat(e_log_chat_type type, int32 type_id, int32 src_charid, int32 src_accid, const char* mapname, int32 x, int32 y, const char* dst_charname, const char* message)
+void log_chat( e_log_chat_type type, int32 type_id, int32 src_charid, int32 src_accid, const char* mapname, int32 x, int32 y, const char* dst_charname, const char* message )
 {
 	if( ( log_config.chat&type ) == 0 )
 	{// disabled
@@ -493,7 +491,7 @@ void log_chat(e_log_chat_type type, int32 type_id, int32 src_charid, int32 src_a
 }
 
 /// logs cash transactions
-void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int32 amount ){
+void log_cash( const map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_type, int32 amount ){
 	nullpo_retv( sd );
 
 	if( !log_config.cash )
@@ -526,7 +524,7 @@ void log_cash( map_session_data* sd, e_log_pick_type type, e_log_cash_type cash_
  * @param type Log type, @see e_log_feeding_type
  * @param nameid Item used as food
  **/
-void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid) {
+void log_feeding( const map_session_data* sd, e_log_feeding_type type, t_itemid nameid ) {
 	uint32 target_id = 0, intimacy = 0;
 	uint16 target_class = 0;
 
@@ -554,7 +552,7 @@ void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid)
 
 	if (log_config.sql_logs) {
 		if (SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`time`, `char_id`, `target_id`, `target_class`, `type`, `intimacy`, `item_id`, `map`, `x`, `y`) VALUES ( NOW(), '%" PRIu32 "', '%" PRIu32 "', '%hu', '%c', '%" PRIu32 "', '%u', '%s', '%hu', '%hu' )",
-			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y))
+			log_config.log_feeding, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->x, sd->y))
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;
@@ -568,7 +566,7 @@ void log_feeding(map_session_data *sd, e_log_feeding_type type, t_itemid nameid)
 			return;
 		time(&curtime);
 		strftime(timestring, sizeof(timestring), log_timestamp_format, localtime(&curtime));
-		fprintf(logfp, "%s - %s[%d]\t%d\t%d(%c)\t%d\t%u\t%s\t%hu,%hu\n", timestring, sd->status.name, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->bl.x, sd->bl.y);
+		fprintf(logfp, "%s - %s[%d]\t%d\t%d(%c)\t%d\t%u\t%s\t%hu,%hu\n", timestring, sd->status.name, sd->status.char_id, target_id, target_class, log_feedingtype2char(type), intimacy, nameid, mapindex_id2name(sd->mapindex), sd->x, sd->y);
 		fclose(logfp);
 	}
 }
@@ -587,7 +585,7 @@ void log_set_defaults(void)
 }
 
 
-int32 log_config_read(const char* cfgName)
+int32 log_config_read( const char* cfgName )
 {
 	static int32 count = 0;
 	char line[1024], w1[1024], w2[1024];

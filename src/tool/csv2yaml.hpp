@@ -11,18 +11,16 @@
 using rathena::server_core::Core;
 using rathena::server_core::e_core_type;
 
-namespace rathena{
-	namespace tool_csv2yaml{
-		class Csv2YamlTool : public Core{
-			protected:
-				bool initialize( int32 argc, char* argv[] ) override;
+namespace rathena::tool_csv2yaml {
+class Csv2YamlTool : public Core{
+	protected:
+		bool initialize( int32 argc, char* argv[] ) override;
 
-			public:
-				Csv2YamlTool() : Core( e_core_type::TOOL ){
+	public:
+		Csv2YamlTool() : Core( e_core_type::TOOL ){
 
-				}
-		};
-	}
+		}
+};
 }
 
 // Required constant and structure definitions
