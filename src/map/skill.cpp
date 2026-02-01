@@ -1641,23 +1641,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_JACKFROST:
 		sc_start(src,bl,SC_FREEZE,200,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
-	case RA_WUGBITE: {
-			int32 wug_rate = (50 + 10 * skill_lv) + 2 * ((sd) ? pc_checkskill(sd,RA_TOOTHOFWUG)*2 : skill_get_max(RA_TOOTHOFWUG)) - (status_get_agi(bl) / 4);
-			if (wug_rate < 50)
-				wug_rate = 50;
-			sc_start(src,bl, SC_BITE, wug_rate, skill_lv, (skill_get_time(skill_id,skill_lv) + ((sd) ? pc_checkskill(sd,RA_TOOTHOFWUG)*500 : skill_get_max(RA_TOOTHOFWUG))) );
-		}
-		break;
-	case RA_SENSITIVEKEEN:
-		if( rnd()%100 < 8 * skill_lv )
-			skill_castend_damage_id(src, bl, RA_WUGBITE, ((sd) ? pc_checkskill(sd, RA_WUGBITE) : skill_get_max(RA_WUGBITE)), tick, SD_ANIMATION);
-		break;
-	case RA_FIRINGTRAP:
-		sc_start4(src, bl, SC_BURNING, 50 + skill_lv * 10, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
-		break;
-	case RA_ICEBOUNDTRAP:
-		sc_start(src, bl, SC_FREEZING, 50 + skill_lv * 10, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
 	case NC_PILEBUNKER:
 		if( rnd()%100 < 25 + 15*skill_lv ) {
 			status_change_end(bl, SC_KYRIE);
@@ -5276,8 +5259,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case WL_SOULEXPANSION:
 	case WL_CRIMSONROCK:
 	case WL_JACKFROST:
-	case RA_ARROWSTORM:
-	case RA_WUGDASH:
 	case NC_VULCANARM:
 	case NC_COLDSLOWER:
 	case NC_SELFDESTRUCTION:
@@ -5698,9 +5679,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 			// recursive invocation of skill_castend_damage_id() with flag|1
 			map_foreachinrange(skill_area_sub, bl, splash_size, starget, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-
-			if (skill_id == RA_ARROWSTORM)
-				status_change_end(src, SC_CAMOUFLAGE);
 		}
 		break;
 	case NW_THE_VIGILANTE_AT_NIGHT:
@@ -6473,51 +6451,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		} else {
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-		}
-		break;
-	case RA_WUGSTRIKE:
-		if( sd && pc_isridingwug(sd) ){
-			uint8 dir = map_calc_dir(bl, src->x, src->y);
-
-			if( unit_movepos(src, bl->x+dirx[dir], bl->y+diry[dir], 1, 1) ) {
-				clif_blown(src);
-				skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-			}
-			break;
-		}
-		[[fallthrough]];
-	case RA_WUGBITE:
-		if( path_search(nullptr,src->m,src->x,src->y,bl->x,bl->y,1,CELL_CHKNOREACH) ) {
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		}else if( sd && skill_id == RA_WUGBITE ) // Only RA_WUGBITE has the skill fail message.
-			clif_skill_fail( *sd, skill_id );
-
-		break;
-
-	case RA_SENSITIVEKEEN:
-		if( bl->type != BL_SKILL ) { // Only Hits Invisible Targets
-			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD))) {
-				status_change_end(bl, SC_CLOAKINGEXCEED);
-				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-			}
-			if (tsc && tsc->getSCE(SC__SHADOWFORM) && rnd() % 100 < 100 - tsc->getSCE(SC__SHADOWFORM)->val1 * 10) // [100 - (Skill Level x 10)] %
-				status_change_end(bl, SC__SHADOWFORM); // Should only end, no damage dealt.
-		} else {
-			skill_unit *su = BL_CAST(BL_SKILL, bl);
-			std::shared_ptr<s_skill_unit_group> sg;
-
-			if (su && (sg = su->group) && skill_get_inf2(sg->skill_id, INF2_ISTRAP)) {
-				if( !(sg->unit_id == UNT_USED_TRAPS || (sg->unit_id == UNT_ANKLESNARE && sg->val2 != 0 )) )
-				{
-					struct item item_tmp;
-					memset(&item_tmp,0,sizeof(item_tmp));
-					item_tmp.nameid = sg->item_id?sg->item_id:ITEMID_TRAP;
-					item_tmp.identify = 1;
-					if( item_tmp.nameid )
-						map_addflooritem(&item_tmp,1,bl->m,bl->x,bl->y,0,0,0,4,0);
-				}
-				skill_delunit(su);
-			}
 		}
 		break;
 	case NC_INFRAREDSCAN:
@@ -8413,18 +8346,17 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case LG_FORCEOFVANGUARD:
 	case SC_REPRODUCE:
 	case SC_INVISIBILITY:
-	case RA_CAMOUFLAGE:
 		if (tsce) {
 			i = status_change_end(bl, type);
 			if( i )
-				clif_skill_nodamage(src,*bl,skill_id,( skill_id == LG_FORCEOFVANGUARD || skill_id == RA_CAMOUFLAGE ) ? skill_lv : -1,i);
+				clif_skill_nodamage(src,*bl,skill_id,( skill_id == LG_FORCEOFVANGUARD ) ? skill_lv : -1,i);
 			else if( sd )
 				clif_skill_fail( *sd, skill_id );
 			return 0;
 		}
 		i = sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		if( i )
-			clif_skill_nodamage(src,*bl,skill_id,( skill_id == LG_FORCEOFVANGUARD || skill_id == RA_CAMOUFLAGE ) ? skill_lv : -1,i);
+			clif_skill_nodamage(src,*bl,skill_id,( skill_id == LG_FORCEOFVANGUARD ) ? skill_lv : -1,i);
 		else if( sd )
 			clif_skill_fail( *sd, skill_id,  USESKILL_FAIL_LEVEL );
 		break;
@@ -10074,50 +10006,10 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case RA_FEARBREEZE:
-		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		break;
 
-	case RA_WUGMASTERY:
-		if( sd ) {
-			if( !pc_iswug(sd) )
-				pc_setoption(sd,sd->sc.option|OPTION_WUG);
-			else
-				pc_setoption(sd,sd->sc.option&~OPTION_WUG);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
 
-	case RA_WUGRIDER:
-		if( sd ) {
-			if( !pc_isridingwug(sd) && pc_iswug(sd) ) {
-				pc_setoption(sd,sd->sc.option&~OPTION_WUG);
-				pc_setoption(sd,sd->sc.option|OPTION_WUGRIDER);
-			} else if( pc_isridingwug(sd) ) {
-				pc_setoption(sd,sd->sc.option&~OPTION_WUGRIDER);
-				pc_setoption(sd,sd->sc.option|OPTION_WUG);
-			}
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
 
-	case RA_WUGDASH:
-		if( tsce ) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,status_change_end(bl, type));
-			return 0;
-		}
-		if( sd && pc_isridingwug(sd) ) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,unit_getdir(bl),0,0,0));
-			clif_walkok(*sd);
-		}
-		break;
 
-	case RA_SENSITIVEKEEN:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		map_foreachinrange(skill_area_sub,src,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY,skill_castend_damage_id);
-		break;
 
 	case NC_F_SIDESLIDE:
 	case NC_B_SIDESLIDE:
@@ -12797,14 +12689,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case NPC_HELLBURNING:
 	case NPC_REVERBERATION:
 	case WL_COMET:
-	case RA_ELECTRICSHOCKER:
-	case RA_CLUSTERBOMB:
-	case RA_MAGENTATRAP:
-	case RA_COBALTTRAP:
-	case RA_MAIZETRAP:
-	case RA_VERDURETRAP:
-	case RA_FIRINGTRAP:
-	case RA_ICEBOUNDTRAP:
 	case SC_MANHOLE:
 	case SC_DIMENSIONDOOR:
 	case SC_CHAOSPANIC:
@@ -13067,11 +12951,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		}
 		break;
 
-	case RA_DETONATOR:
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinallarea(skill_detonator, src->m, x-i, y-i, x+i, y+i, BL_SKILL, src);
-		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		break;
 
 	case NC_NEUTRALBARRIER:
 	case NC_STEALTHFIELD:
