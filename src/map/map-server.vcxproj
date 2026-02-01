@@ -407,6 +407,7 @@
     <ClInclude Include="skills/swordman/spiralpierce.hpp" />
     <ClInclude Include="skills/swordman/traumaticblow.hpp" />
     <ClInclude Include="skills/swordman/vitalstrike.hpp" />
+    <ClInclude Include="skills/taekwon/circleofdirectionsandelementals.hpp" />
     <ClInclude Include="skills/taekwon/counter.hpp" />
     <ClInclude Include="skills/taekwon/downkick.hpp" />
     <ClInclude Include="skills/taekwon/eska.hpp" />
@@ -417,6 +418,7 @@
     <ClInclude Include="skills/taekwon/eswoo.hpp" />
     <ClInclude Include="skills/taekwon/feelingthesunmoonandstars.hpp" />
     <ClInclude Include="skills/taekwon/hatredofthesunmoonandstars.hpp" />
+    <ClInclude Include="skills/taekwon/exorcismofmalicioussoul.hpp" />
     <ClInclude Include="skills/taekwon/highjump.hpp" />
     <ClInclude Include="skills/taekwon/jumpkick.hpp" />
     <ClInclude Include="skills/taekwon/kaahi.hpp" />
@@ -427,6 +429,8 @@
     <ClInclude Include="skills/taekwon/run.hpp" />
     <ClInclude Include="skills/taekwon/sevenwind.hpp" />
     <ClInclude Include="skills/taekwon/skill_factory_taekwon.hpp" />
+    <ClInclude Include="skills/taekwon/soulgathering.hpp" />
+    <ClInclude Include="skills/taekwon/soulofheavenandearth.hpp" />
     <ClInclude Include="skills/taekwon/spiritofrebirth.hpp" />
     <ClInclude Include="skills/taekwon/spiritofthealchemist.hpp" />
     <ClInclude Include="skills/taekwon/spiritoftheartist.hpp" />
@@ -444,6 +448,17 @@
     <ClInclude Include="skills/taekwon/spiritofthesupernovice.hpp" />
     <ClInclude Include="skills/taekwon/spiritofthewizard.hpp" />
     <ClInclude Include="skills/taekwon/stormkick.hpp" />
+    <ClInclude Include="skills/taekwon/talismanofblacktortoise.hpp" />
+    <ClInclude Include="skills/taekwon/talismanofbluedragon.hpp" />
+    <ClInclude Include="skills/taekwon/talismanoffiveelements.hpp" />
+    <ClInclude Include="skills/taekwon/talismanoffourbearinggod.hpp" />
+    <ClInclude Include="skills/taekwon/talismanofmagician.hpp" />
+    <ClInclude Include="skills/taekwon/talismanofprotection.hpp" />
+    <ClInclude Include="skills/taekwon/talismanofredphoenix.hpp" />
+    <ClInclude Include="skills/taekwon/talismanofsoulstealing.hpp" />
+    <ClInclude Include="skills/taekwon/talismanofwarrior.hpp" />
+    <ClInclude Include="skills/taekwon/talismanofwhitetiger.hpp" />
+    <ClInclude Include="skills/taekwon/totemoftutelary.hpp" />
     <ClInclude Include="skills/taekwon/turnkick.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthemoon.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthestars.hpp" />
@@ -697,6 +712,7 @@
     <ClCompile Include="skills/swordman/spiralpierce.cpp" />
     <ClCompile Include="skills/swordman/traumaticblow.cpp" />
     <ClCompile Include="skills/swordman/vitalstrike.cpp" />
+    <ClCompile Include="skills/taekwon/circleofdirectionsandelementals.cpp" />
     <ClCompile Include="skills/taekwon/counter.cpp" />
     <ClCompile Include="skills/taekwon/downkick.cpp" />
     <ClCompile Include="skills/taekwon/eska.cpp" />
@@ -707,6 +723,7 @@
     <ClCompile Include="skills/taekwon/eswoo.cpp" />
     <ClCompile Include="skills/taekwon/feelingthesunmoonandstars.cpp" />
     <ClCompile Include="skills/taekwon/hatredofthesunmoonandstars.cpp" />
+    <ClCompile Include="skills/taekwon/exorcismofmalicioussoul.cpp" />
     <ClCompile Include="skills/taekwon/highjump.cpp" />
     <ClCompile Include="skills/taekwon/jumpkick.cpp" />
     <ClCompile Include="skills/taekwon/kaahi.cpp" />
@@ -717,6 +734,8 @@
     <ClCompile Include="skills/taekwon/run.cpp" />
     <ClCompile Include="skills/taekwon/sevenwind.cpp" />
     <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp" />
+    <ClCompile Include="skills/taekwon/soulgathering.cpp" />
+    <ClCompile Include="skills/taekwon/soulofheavenandearth.cpp" />
     <ClCompile Include="skills/taekwon/spiritofrebirth.cpp" />
     <ClCompile Include="skills/taekwon/spiritofthealchemist.cpp" />
     <ClCompile Include="skills/taekwon/spiritoftheartist.cpp" />
@@ -734,6 +753,17 @@
     <ClCompile Include="skills/taekwon/spiritofthesupernovice.cpp" />
     <ClCompile Include="skills/taekwon/spiritofthewizard.cpp" />
     <ClCompile Include="skills/taekwon/stormkick.cpp" />
+    <ClCompile Include="skills/taekwon/talismanofblacktortoise.cpp" />
+    <ClCompile Include="skills/taekwon/talismanofbluedragon.cpp" />
+    <ClCompile Include="skills/taekwon/talismanoffiveelements.cpp" />
+    <ClCompile Include="skills/taekwon/talismanoffourbearinggod.cpp" />
+    <ClCompile Include="skills/taekwon/talismanofmagician.cpp" />
+    <ClCompile Include="skills/taekwon/talismanofprotection.cpp" />
+    <ClCompile Include="skills/taekwon/talismanofredphoenix.cpp" />
+    <ClCompile Include="skills/taekwon/talismanofsoulstealing.cpp" />
+    <ClCompile Include="skills/taekwon/talismanofwarrior.cpp" />
+    <ClCompile Include="skills/taekwon/talismanofwhitetiger.cpp" />
+    <ClCompile Include="skills/taekwon/totemoftutelary.cpp" />
     <ClCompile Include="skills/taekwon/turnkick.cpp" />
     <ClCompile Include="skills/taekwon/warmthofthemoon.cpp" />
     <ClCompile Include="skills/taekwon/warmthofthestars.cpp" />

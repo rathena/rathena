@@ -8975,70 +8975,8 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if (sc && sc->getSCE(SC_RULEBREAK))
 							skillratio += skillratio * 50 / 100;
 						break;
-					case SOA_EXORCISM_OF_MALICIOUS_SOUL:
-						skillratio += -100 + 150 * skill_lv;
-						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 2;
-						skillratio += 1 * sstatus->spl;
 
-						if ((tsc != nullptr && tsc->getSCE(SC_SOULCURSE) != nullptr) || (sc != nullptr && sc->getSCE(SC_TOTEM_OF_TUTELARY) != nullptr))
-							skillratio += 100 * skill_lv;
 
-						if (sd != nullptr)
-							skillratio *= sd->soulball_old;
-						RE_LVL_DMOD(100);
-						break;
-					case SOA_TALISMAN_OF_BLUE_DRAGON:
-						skillratio += -100 + 850 + 2250 * skill_lv;
-						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
-							skillratio += 100 + 700 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case SOA_TALISMAN_OF_WHITE_TIGER:
-						skillratio += -100 + 400 + 1000 * skill_lv;
-						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
-							skillratio += 400 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case SOA_TALISMAN_OF_RED_PHOENIX:
-						skillratio += -100 + 1400 + 1450 * skill_lv;
-						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
-							skillratio += 200 + 400 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case SOA_TALISMAN_OF_BLACK_TORTOISE:
-						skillratio += -100 + 2150 + 1600 * skill_lv;
-						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						if (sc != nullptr && sc->getSCE(SC_T_FIFTH_GOD) != nullptr)
-							skillratio += 150 + 500 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
-						skillratio += -100 + 500 + 2000 * skill_lv;
-						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
-						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 15 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
-						skillratio += -100 + 50 + 250 * skill_lv;
-						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 15 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case SOA_TALISMAN_OF_SOUL_STEALING:
-						skillratio += -100 + 500 + 1250 * skill_lv;
-						skillratio += pc_checkskill(sd, SOA_TALISMAN_MASTERY) * 7 * skill_lv;
-						skillratio += pc_checkskill(sd, SOA_SOUL_MASTERY) * 7 * skill_lv;
-						skillratio += 3 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
 					case SH_HYUN_ROKS_BREEZE:
 						skillratio += -100 + 650 + 750 * skill_lv;
 						skillratio += 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
