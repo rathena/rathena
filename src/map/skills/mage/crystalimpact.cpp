@@ -64,24 +64,20 @@ void SkillCrystalImpactAttack::calculateSkillRatio(const Damage *wd, const block
 	RE_LVL_DMOD(100);
 }
 
-void SkillCrystalImpactAttack::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+int16 SkillCrystalImpactAttack::getSearchSize(block_list* src, uint16 skill_lv) const {
 	status_change *sc = status_get_sc(src);
-	int32 splash_size;
 
-	if (sc && sc->getSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 5)
-		splash_size = 2;// Gives the aftershock hit a 5x5 splash AoE.
-	else
-		splash_size = SkillImplRecursiveDamageSplash::getSearchSize(skill_lv);
+	if (sc != nullptr && sc->hasSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 5)
+		return 2;// Gives the aftershock hit a 5x5 splash AoE.
 
-	// if skill damage should be split among targets, count them
-	// SD_LEVEL -> Forced splash damage -> count targets
-	if (flag & SD_LEVEL || skill_get_nk(getSkillId(), NK_SPLASHSPLIT)){
-		skill_area_temp[0] = map_foreachinallrange(skill_area_sub, target, splash_size, BL_CHAR, src, getSkillId(), skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-		// If there are no characters in the area, then it always counts as if there was one target
-		// This happens when targetting skill units such as icewall
-		skill_area_temp[0] = std::max(1, skill_area_temp[0]);
-	}
+	return SkillImplRecursiveDamageSplash::getSearchSize(src, skill_lv);
+}
 
-	// recursive invocation of skill_castend_damage_id() with flag|1
-	map_foreachinrange(skill_area_sub, target, splash_size, SkillImplRecursiveDamageSplash::getSplashTarget(src), src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+int16 SkillCrystalImpactAttack::getSplashSearchSize(block_list* src, uint16 skill_lv) const {
+	status_change *sc = status_get_sc(src);
+
+	if (sc != nullptr && sc->hasSCE(SC_CLIMAX) && sc->getSCE(SC_CLIMAX)->val1 == 5)
+		return 2;// Gives the aftershock hit a 5x5 splash AoE.
+
+	return SkillImplRecursiveDamageSplash::getSplashSearchSize(src, skill_lv);
 }
