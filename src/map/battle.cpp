@@ -7946,24 +7946,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_PULSESTRIKE2:
 						skillratio += 100;
 						break;
-					case SP_CURSEEXPLOSION:
-						if (tsc && tsc->getSCE(SC_SOULCURSE))
-							skillratio += -100 + 1200 + 300 * skill_lv;
-						else
-							skillratio += -100 + 400 + 100 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case SP_SPA:
-						skillratio += 400 + 250 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case SP_SHA:
-						skillratio += -100 + 5 * skill_lv;
-						break;
-					case SP_SWHOO:
-						skillratio += 1000 + 200 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
 					case NPC_STORMGUST2:
 						skillratio += 200 * skill_lv;
 						break;

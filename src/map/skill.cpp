@@ -1775,7 +1775,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case KO_JYUMONJIKIRI:
 		sc_start(src,bl,SC_JYUMONJIKIRI,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
-	case SP_SOULEXPLOSION:
 	case KO_SETSUDAN: // Remove soul link when hit.
 		status_change_end(bl, SC_SPIRIT);
 		status_change_end(bl, SC_SOULGOLEM);
@@ -1886,9 +1885,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		break;
 	case SJ_STAREMPEROR:
 		sc_start(src, bl, SC_SILENCE, 50 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
-	case SP_SHA:
-		sc_start(src, bl, SC_SP_SHA, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case ABC_UNLUCKY_RUSH:
 		sc_start(src, bl, SC_HANDICAPSTATE_MISFORTUNE, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -5167,9 +5163,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SJ_PROMINENCEKICK:
 	case SJ_STAREMPEROR:
 	case SJ_FALLINGSTAR_ATK2:
-	case SP_CURSEEXPLOSION:
-	case SP_SHA:
-	case SP_SWHOO:
 	case ABC_ABYSS_DAGGER:
 	case ABC_CHAIN_REACTION_SHOT:
 	case ABC_DEFT_STAB:
@@ -5231,10 +5224,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			if( skill_area_temp[1] != bl->id && !inf2[INF2_ISNPC] )
 				sflag |= SD_ANIMATION; // original target gets no animation (as well as all NPC skills)
 
-			// If a enemy player is standing next to a mob when splash Es- skill is casted, the player won't get hurt.
-			if ((skill_id == SP_SHA || skill_id == SP_SWHOO) && !battle_config.allow_es_magic_pc && bl->type != BL_MOB)
-				break;
-
 			heal = (int32)skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
 
 			switch (skill_id) {
@@ -5254,15 +5243,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			skill_area_temp[0] = 0;
 			skill_area_temp[1] = bl->id;
 			skill_area_temp[2] = 0;
-
-			if (sd && (skill_id == SP_SHA || skill_id == SP_SWHOO) && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
-				status_change_start(src, bl, SC_STUN, 10000, skill_lv, 0, 0, 0, 500, 10);
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-				break;
-			}
-
-			if (skill_id == SP_SWHOO)
-				status_change_end(src, SC_USE_SKILL_SP_SPA);
 
 			switch ( skill_id ) {
 				case SKE_STAR_LIGHT_KICK: {
@@ -5757,27 +5737,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src, sd, SC_NOVAEXPLOSING, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 		
-	case SP_SOULEXPLOSION:
-		if (!(tsc && (tsc->getSCE(SC_SPIRIT) || tsc->getSCE(SC_SOULGOLEM) || tsc->getSCE(SC_SOULSHADOW) || tsc->getSCE(SC_SOULFALCON) || tsc->getSCE(SC_SOULFAIRY))) || tstatus->hp < 10 * tstatus->max_hp / 100) { // Requires target to have a soul link and more then 10% of MaxHP.
-			// With this skill requiring a soul link, and the target to have more then 10% if MaxHP, I wonder
-			// if the cooldown still happens after it fails. Need a confirm. [Rytech] 
-			if (sd)
-				clif_skill_fail( *sd, skill_id );
-			break;
-		}
-
-		skill_attack(BF_MISC, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-
-	case SP_SPA:
-		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
-			status_change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,500,SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
-			clif_skill_fail( *sd, skill_id );
-			break;
-		}
-		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-
 	case NPC_DARKBREATH:
 		clif_emotion( *src, ET_ANGER );
 		if (rnd() % 2 == 0)
@@ -6691,15 +6650,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sc_start(src,bl, type, (50 + skill_lv * 3 + (status_get_lv(src) + sstatus->int_)/5), skill_lv, skill_get_time(skill_id,skill_lv)));
 		break;
 
-	case SP_SOULCURSE:
-		if (flag&1)
-			sc_start(src, bl, type, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		else {
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}
-		break;
-
 	case MER_LEXDIVINA:
 		if (tsce)
 			status_change_end(bl, type);
@@ -7219,43 +7169,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case SP_SOULUNITY: {
-			int8 count = min(5 + skill_lv, MAX_UNITED_SOULS);
-
-			if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
-				if (!dstsd || !sd) { // Only put player's souls in unity.
-					if (sd)
-						clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-					break;
-				}
-
-				if (dstsd->sc.getSCE(type) && dstsd->sc.getSCE(type)->val2 != src->id) { // Fail if a player is in unity with another source.
-					if (sd)
-						clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-					return 1;
-				}
-
-				if (sd) { // Unite player's soul with caster's soul.
-					i = 0;
-
-					ARR_FIND(0, count, i, sd->united_soul[i] == bl->id);
-					if (i == count) {
-						ARR_FIND(0, count, i, sd->united_soul[i] == 0);
-						if(i == count) { // No more free slots? Fail the skill.
-							clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-							return 1;
-						}
-					}
-
-					sd->united_soul[i] = bl->id;
-				}
-
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, skill_lv, src->id, i, 0, skill_get_time(skill_id, skill_lv)));
-			} else if (sd)
-				party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
-		}
-		break;
-
 	case MO_CALLSPIRITS:
 		if(sd) {
 			int32 limit = skill_lv;
@@ -7547,38 +7460,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case SP_SOULCOLLECT:
-		if( tsce )
-		{
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,status_change_end(bl, type));
-			return 0;
-		}
-
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, pc_checkskill(sd, SP_SOULENERGY), skill_get_time(skill_id, skill_lv)));
-		break;
-	case SP_KAUTE:
-		if (sd) {
-			if (!dstsd || !(
-				(sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SOULLINKER) ||
-				(dstsd->class_&MAPID_SECONDMASK) == MAPID_SOUL_LINKER ||
-				dstsd->status.char_id == sd->status.char_id ||
-				dstsd->status.char_id == sd->status.partner_id ||
-				dstsd->status.char_id == sd->status.child ||
-				(dstsd->sc.getSCE(SC_SOULUNITY))
-			)) {
-				status_change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,500,SCSTART_NORATEDEF);
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-		}
-		if (!status_charge(src, sstatus->max_hp * (10 + 2 * skill_lv) / 100, 0)) {
-			if (sd)
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-			break;
-		}
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		status_heal(bl, 0, tstatus->max_sp * (10 + 2 * skill_lv) / 100, 2);
-		break;
 	case KO_YAMIKUMO:
 		if (tsce)
 		{
@@ -8425,33 +8306,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_specialeffect((card == 6) ? src : bl, EF_TAROTCARD1 + card - 1, AREA);
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		}
-		break;
-
-	case SP_SOULGOLEM:
-	case SP_SOULSHADOW:
-	case SP_SOULFALCON:
-	case SP_SOULFAIRY:
-		if( sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) ) ){
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}else{
-			if( sd ){
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-			}
-		}
-		break;
-
-	case SP_SOULREVOLVE:
-		if (!(tsc && (tsc->getSCE(SC_SPIRIT) || tsc->getSCE(SC_SOULGOLEM) || tsc->getSCE(SC_SOULSHADOW) || tsc->getSCE(SC_SOULFALCON) || tsc->getSCE(SC_SOULFAIRY)))) {
-			if (sd)
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-			break;
-		}
-		status_heal(bl, 0, 50*skill_lv, 2);
-		status_change_end(bl, SC_SPIRIT);
-		status_change_end(bl, SC_SOULGOLEM);
-		status_change_end(bl, SC_SOULSHADOW);
-		status_change_end(bl, SC_SOULFALCON);
-		status_change_end(bl, SC_SOULFAIRY);
 		break;
 
 	// New guild skills [Celest]
@@ -9800,15 +9654,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case OB_ZANGETSU:
 	case KG_KYOMU:
 	case KG_KAGEMUSYA:
-	case SP_SOULDIVISION:
-		if (skill_id == SP_SOULDIVISION) { // Usable only on other players.
-			if (bl->type != BL_PC) {
-				if (sd)
-					clif_skill_fail( *sd, skill_id );
-				break;
-			}
-		}
-
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
