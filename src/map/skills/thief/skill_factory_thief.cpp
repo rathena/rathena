@@ -35,7 +35,7 @@
 #include "savageimpact.hpp"
 #include "scribble.hpp"
 #include "shadowstab.hpp"
-#include "shccrossslash.hpp"
+#include "crossslash.hpp"
 #include "sightlessmind.hpp"
 #include "snatch.hpp"
 #include "sonicblow.hpp"
@@ -114,7 +114,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 		case SC_TRIANGLESHOT:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SHC_CROSS_SLASH:
-			return std::make_unique<SkillShcCrossSlash>();
+			return std::make_unique<SkillCrossSlash>();
 		case SHC_DANCING_KNIFE:
 			return std::make_unique<SkillDancingKnife>();
 		case SHC_ENCHANTING_SHADOW:

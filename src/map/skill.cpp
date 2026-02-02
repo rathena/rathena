@@ -8192,7 +8192,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 			status_change_end(src, SC_DIMENSION);
 		}
-		if (skill_id == IQ_MASSIVE_F_BLASTER || skill_id == SHC_IMPACT_CRATER || skill_id == MT_AXE_STOMP || skill_id == ABC_ABYSS_DAGGER)
+		if (skill_id == IQ_MASSIVE_F_BLASTER || skill_id == MT_AXE_STOMP || skill_id == ABC_ABYSS_DAGGER)
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
 			hom_addspiritball(hd, MAX_SPIRITBALL);

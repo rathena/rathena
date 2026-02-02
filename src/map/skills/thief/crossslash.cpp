@@ -1,17 +1,17 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "shccrossslash.hpp"
+#include "crossslash.hpp"
 
 #include <config/const.hpp>
 
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
-SkillShcCrossSlash::SkillShcCrossSlash() : SkillImplRecursiveDamageSplash(SHC_CROSS_SLASH) {
+SkillCrossSlash::SkillCrossSlash() : SkillImplRecursiveDamageSplash(SHC_CROSS_SLASH) {
 }
 
-void SkillShcCrossSlash::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
+void SkillCrossSlash::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_change *sc = status_get_sc(src);
 
@@ -25,7 +25,7 @@ void SkillShcCrossSlash::calculateSkillRatio(const Damage *wd, const block_list 
 	RE_LVL_DMOD(100);
 }
 
-void SkillShcCrossSlash::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillCrossSlash::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 	sc_start(src, src, skill_get_sc(getSkillId()), 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 

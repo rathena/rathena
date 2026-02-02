@@ -477,7 +477,7 @@
     <ClInclude Include="skills/thief/savageimpact.hpp" />
     <ClInclude Include="skills/thief/scribble.hpp" />
     <ClInclude Include="skills/thief/shadowstab.hpp" />
-    <ClInclude Include="skills/thief/shccrossslash.hpp" />
+    <ClInclude Include="skills/thief/crossslash.hpp" />
     <ClInclude Include="skills/thief/sightlessmind.hpp" />
     <ClInclude Include="skills/thief/skill_factory_thief.hpp" />
     <ClInclude Include="skills/thief/snatch.hpp" />
@@ -774,7 +774,7 @@
     <ClCompile Include="skills/thief/savageimpact.cpp" />
     <ClCompile Include="skills/thief/scribble.cpp" />
     <ClCompile Include="skills/thief/shadowstab.cpp" />
-    <ClCompile Include="skills/thief/shccrossslash.cpp" />
+    <ClCompile Include="skills/thief/crossslash.cpp" />
     <ClCompile Include="skills/thief/sightlessmind.cpp" />
     <ClCompile Include="skills/thief/skill_factory_thief.cpp" />
     <ClCompile Include="skills/thief/snatch.cpp" />

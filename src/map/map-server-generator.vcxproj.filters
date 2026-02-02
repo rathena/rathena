@@ -1080,7 +1080,7 @@
     <ClInclude Include="skills/thief/shadowstab.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
-    <ClInclude Include="skills/thief/shccrossslash.hpp">
+    <ClInclude Include="skills/thief/crossslash.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/sightlessmind.hpp">
@@ -1829,7 +1829,7 @@
     <ClCompile Include="skills/thief/shadowstab.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/shccrossslash.cpp">
+    <ClCompile Include="skills/thief/crossslash.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/sightlessmind.cpp">
