@@ -5753,45 +5753,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 5 * sstatus->con; //!TODO: check con ratio
 			RE_LVL_DMOD(100);
 			break;
-		case SH_CHUL_HO_SONIC_CLAW:
-			skillratio += -100 + 1100 + 2200 * skill_lv;
-			skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-			skillratio += 5 * sstatus->pow;
-
-			if( pc_checkskill( sd, SH_COMMUNE_WITH_CHUL_HO ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
-				skillratio += 400 * skill_lv;
-				skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case SH_HOWLING_OF_CHUL_HO:
-			skillratio += -100 + 600 + 1050 * skill_lv;
-			skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-			skillratio += 5 * sstatus->pow;
-
-			if( pc_checkskill( sd, SH_COMMUNE_WITH_CHUL_HO ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
-				skillratio += 100 + 100 * skill_lv;
-				skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case SH_HOGOGONG_STRIKE:
-			skillratio += -100 + 180 + 200 * skill_lv;
-			skillratio += 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-			skillratio += 5 * sstatus->pow;
-
-			if( pc_checkskill( sd, SH_COMMUNE_WITH_CHUL_HO ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
-				skillratio += 70 + 150 * skill_lv;
-				skillratio += 10 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case SH_CHUL_HO_BATTERING:
-			skillratio += -100 + 480 + 160 * skill_lv;
-			skillratio += 70 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
 		case SKE_MIDNIGHT_KICK:
 			skillratio += -100 + 800 + 1500  * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
@@ -8145,36 +8106,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 							// TODO: refactor / move elsewhere
 							ad.div_ = -3;
 						}
-						break;
-
-
-					case SH_HYUN_ROKS_BREEZE:
-						skillratio += -100 + 650 + 750 * skill_lv;
-						skillratio += 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-						skillratio += 5 * sstatus->spl;
-
-						if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
-							skillratio += 100 + 200 * skill_lv;
-							skillratio += 20 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-						}
-						RE_LVL_DMOD(100);
-						break;
-					case SH_HYUN_ROK_CANNON:
-						skillratio += -100 + 1100 + 2050 * skill_lv;
-						skillratio += 50 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-						skillratio += 5 * sstatus->spl;
-
-						if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) ){
-							skillratio += 400 * skill_lv;
-							skillratio += 25 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-						}
-						RE_LVL_DMOD(100);
-						break;
-					case SH_HYUN_ROK_SPIRIT_POWER:
-						skillratio += -100 + 350 + 200 * skill_lv;
-						skillratio += 30 * pc_checkskill(sd, SH_MYSTICAL_CREATURE_MASTERY);
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
 						break;
 					case SS_TOKEDASU:
 						skillratio += -100 + 700 * skill_lv;
