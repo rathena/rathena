@@ -295,9 +295,6 @@
     <ClInclude Include="skills/archer/hawkrush.hpp" />
     <ClInclude Include="skills/archer/fearbreeze.hpp" />
     <ClInclude Include="skills/archer/firingtrap.hpp" />
-    <ClInclude Include="skills/archer/flasher.hpp" />
-    <ClInclude Include="skills/archer/focusedarrowstrike.hpp" />
-    <ClInclude Include="skills/archer/freezingtrap.hpp" />
     <ClInclude Include="skills/archer/iceboundtrap.hpp" />
     <ClInclude Include="skills/archer/landmine.hpp" />
     <ClInclude Include="skills/archer/magentatrap.hpp" />
@@ -643,9 +640,6 @@
     <ClCompile Include="skills/archer/hawkrush.cpp" />
     <ClCompile Include="skills/archer/fearbreeze.cpp" />
     <ClCompile Include="skills/archer/firingtrap.cpp" />
-    <ClCompile Include="skills/archer/flasher.cpp" />
-    <ClCompile Include="skills/archer/focusedarrowstrike.cpp" />
-    <ClCompile Include="skills/archer/freezingtrap.cpp" />
     <ClCompile Include="skills/archer/iceboundtrap.cpp" />
     <ClCompile Include="skills/archer/landmine.cpp" />
     <ClCompile Include="skills/archer/magentatrap.cpp" />
