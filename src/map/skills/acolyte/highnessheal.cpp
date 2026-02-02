@@ -41,10 +41,8 @@ void SkillHighnessHeal::castendNoDamageId(block_list *src, block_list *target, u
 		else if (tsc->getSCE(SC_BERSERK) || tsc->getSCE(SC_SATURDAYNIGHTFEVER))
 			heal = 0; //Needed so that it actually displays 0 when healing.
 	}
-	if (getSkillId() == AL_HEAL)
-		status_change_end(target, SC_BITESCAR);
 	clif_skill_nodamage(src, *target, getSkillId(), heal);
-	if( tsc && tsc->getSCE(SC_AKAITSUKI) && heal && getSkillId() != HLIF_HEAL )
+	if( tsc && tsc->getSCE(SC_AKAITSUKI) && heal )
 		heal = ~heal + 1;
 	t_exp heal_get_jobexp = status_heal(target,heal,0,0);
 

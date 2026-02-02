@@ -7301,11 +7301,8 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				else if (tsc->getSCE(SC_BERSERK) || tsc->getSCE(SC_SATURDAYNIGHTFEVER))
 					heal = 0; //Needed so that it actually displays 0 when healing.
 			}
-			if (skill_id == AL_HEAL)
-				status_change_end(bl, SC_BITESCAR);
+			status_change_end(bl, SC_BITESCAR);
 			clif_skill_nodamage(src, *bl, skill_id, heal);
-			if( tsc && tsc->getSCE(SC_AKAITSUKI) && heal && skill_id != HLIF_HEAL )
-				heal = ~heal + 1;
 			t_exp heal_get_jobexp = status_heal(bl,heal,0,0);
 
 			if(sd && dstsd && heal > 0 && sd != dstsd && battle_config.heal_exp > 0){
