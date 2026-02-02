@@ -5578,14 +5578,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
-	case SC_FATALMENACE:
-		if( flag&1 )
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		else {
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
-			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		}
-		break;
 	
 	case NPC_FATALMENACE:	// todo should it teleport the target ?
 		if( flag&1 )
@@ -6883,19 +6875,17 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,-1,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 	case LG_FORCEOFVANGUARD:
-	case SC_REPRODUCE:
-	case SC_INVISIBILITY:
 		if (tsce) {
 			i = status_change_end(bl, type);
 			if( i )
-				clif_skill_nodamage(src,*bl,skill_id,( skill_id == LG_FORCEOFVANGUARD ) ? skill_lv : -1,i);
+				clif_skill_nodamage(src,*bl,skill_id,skill_lv,i);
 			else if( sd )
 				clif_skill_fail( *sd, skill_id );
 			return 0;
 		}
 		i = sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		if( i )
-			clif_skill_nodamage(src,*bl,skill_id,( skill_id == LG_FORCEOFVANGUARD ) ? skill_lv : -1,i);
+			clif_skill_nodamage(src,*bl,skill_id,skill_lv,i);
 		else if( sd )
 			clif_skill_fail( *sd, skill_id,  USESKILL_FAIL_LEVEL );
 		break;
@@ -7060,17 +7050,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
-
-	case SC_STRIPACCESSARY: {
-		bool strip_success = skill_strip_equip(src, bl, skill_id, skill_lv);
-
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,strip_success);
-
-		//Nothing stripped.
-		if( sd && !strip_success )
-			clif_skill_fail( *sd, skill_id );
-		break;
-	}
 
 	case SO_SPELLFIST:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
@@ -8007,92 +7986,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		}
 		break;
-	case SC_AUTOSHADOWSPELL:
-		if( sd ) {
-			if( (sd->reproduceskill_idx > 0 && sd->status.skill[sd->reproduceskill_idx].id) ||
-				(sd->cloneskill_idx > 0 && sd->status.skill[sd->cloneskill_idx].id) )
-			{
-				sc_start(src,src,SC_STOP,100,skill_lv,INFINITE_TICK);// The skill_lv is stored in val1 used in skill_select_menu to determine the used skill lvl [Xazax]
-				clif_autoshadowspell_list( *sd );
-				clif_skill_nodamage(src,*bl,skill_id,1);
-			}
-			else
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_IMITATION_SKILL_NONE );
-		}
-		break;
-
-	case SC_SHADOWFORM:
-		if( sd && dstsd && src != bl && !dstsd->shadowform_id ) {
-			if( clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start4(src,src,type,100,skill_lv,bl->id,4+skill_lv,0,skill_get_time(skill_id, skill_lv))) )
-				dstsd->shadowform_id = src->id;
-		}
-		else if( sd )
-			clif_skill_fail( *sd, skill_id );
-		break;
-
-	case SC_BODYPAINT:
-		if( flag&1 ) {
-			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK)) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD))) {
-				status_change_end(bl,SC_HIDING);
-				status_change_end(bl,SC_CLOAKING);
-				status_change_end(bl,SC_CLOAKINGEXCEED);
-				status_change_end(bl,SC_CAMOUFLAGE);
-				status_change_end(bl,SC_NEWMOON);
-				if (tsc && tsc->getSCE(SC__SHADOWFORM) && rnd() % 100 < 100 - tsc->getSCE(SC__SHADOWFORM)->val1 * 10) // [100 - (Skill Level x 10)] %
-					status_change_end(bl, SC__SHADOWFORM);
-			}
-			// Attack Speed decrease and Blind happen to everyone around caster, not just hidden targets.
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			sc_start(src, bl, SC_BLIND, 53 + 2 * skill_lv, skill_lv, skill_get_time2(skill_id, skill_lv));
-		} else {
-			clif_skill_nodamage(src, *bl, skill_id, 0);
-			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR,
-				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-		}
-		break;
-
-	case SC_ENERVATION:
-	case SC_GROOMY:
-	case SC_LAZINESS:
-	case SC_UNLUCKY:
-	case SC_WEAKNESS:
-		if( !(tsc && tsc->getSCE(type)) ) {
-			int32 rate;
-
-			if (status_get_class_(bl) == CLASS_BOSS)
-				break;
-			rate = status_get_lv(src) / 10 + rnd_value(sstatus->dex / 12, sstatus->dex / 4) + ( sd ? sd->status.job_level : 50 ) + 10 * skill_lv
-					   - (status_get_lv(bl) / 10 + rnd_value(tstatus->agi / 6, tstatus->agi / 3) + tstatus->luk / 10 + ( dstsd ? (dstsd->max_weight / 10 - dstsd->weight / 10 ) / 100 : 0));
-			rate = cap_value(rate, skill_lv + sstatus->dex / 20, 100);
-			clif_skill_nodamage(src,*bl,skill_id,0,sc_start(src,bl,type,rate,skill_lv,skill_get_time(skill_id,skill_lv)));
-		} else if( sd )
-			 clif_skill_fail( *sd, skill_id );
-		break;
-
-	case SC_IGNORANCE:
-		if( !(tsc && tsc->getSCE(type)) ) {
-			int32 rate;
-
-			if (status_get_class_(bl) == CLASS_BOSS)
-				break;
-			rate = status_get_lv(src) / 10 + rnd_value(sstatus->dex / 12, sstatus->dex / 4) + ( sd ? sd->status.job_level : 50 ) + 10 * skill_lv
-					   - (status_get_lv(bl) / 10 + rnd_value(tstatus->agi / 6, tstatus->agi / 3) + tstatus->luk / 10 + ( dstsd ? (dstsd->max_weight / 10 - dstsd->weight / 10 ) / 100 : 0));
-			rate = cap_value(rate, skill_lv + sstatus->dex / 20, 100);
-			if (clif_skill_nodamage(src,*bl,skill_id,0,sc_start(src,bl,type,rate,skill_lv,skill_get_time(skill_id,skill_lv)))) {
-				int32 sp = 100 * skill_lv;
-
-				if( dstmd )
-					sp = dstmd->level;
-				if( !dstmd )
-					status_zap(bl, 0, sp);
-
-				status_heal(src, 0, sp / 2, 3);
-			} else if( sd )
-				clif_skill_fail( *sd, skill_id );
-		} else if( sd )
-			clif_skill_fail( *sd, skill_id );
-		break;
-
 	case LG_TRAMPLE:
 		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 		if (rnd()%100 < (25 + 25 * skill_lv))
@@ -10210,11 +10103,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case NPC_FLAMECROSS:
 	case NPC_HELLBURNING:
 	case NPC_REVERBERATION:
-	case SC_MANHOLE:
-	case SC_DIMENSIONDOOR:
-	case SC_CHAOSPANIC:
-	case SC_MAELSTROM:
-	case SC_BLOODYLUST:
 	case WM_POEMOFNETHERWORLD:
 	case SO_PSYCHIC_WAVE:
 	case NPC_PSYCHIC_WAVE:
@@ -10367,28 +10255,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 
 	case NC_MAGICDECOY:
 		if( sd ) clif_magicdecoy_list( *sd, skill_lv, x, y );
-		break;
-
-	case SC_FEINTBOMB: {
-			std::shared_ptr<s_skill_unit_group> group = skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
-
-			if( group == nullptr || group->unit == nullptr ) {
-				if (sd)
-					clif_skill_fail( *sd, skill_id );
-				return 1;
-			}
-			map_foreachinallrange(unit_changetarget, src, AREA_SIZE, BL_MOB, src, group->unit); // Release all targets against the caster
-			skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
-			clif_skill_nodamage(src, *src, skill_id, skill_lv, false);
-			sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		}
-		break;
-
-	case SC_ESCAPE:
-		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-		skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
-		clif_skill_nodamage(src,*src,skill_id,skill_lv);
-		flag |= 1;
 		break;
 
 	case LG_BANDING:

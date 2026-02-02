@@ -764,9 +764,13 @@
     <ClInclude Include="skills/thief/abyssflame.hpp" />
     <ClInclude Include="skills/thief/abysssquare.hpp" />
     <ClInclude Include="skills/thief/antidote.hpp" />
+    <ClInclude Include="skills/thief/autoshadowspell.hpp" />
     <ClInclude Include="skills/thief/backslide.hpp" />
     <ClInclude Include="skills/thief/backstab.hpp" />
+    <ClInclude Include="skills/thief/bloodylust.hpp" />
+    <ClInclude Include="skills/thief/bodypainting.hpp" />
     <ClInclude Include="skills/thief/chainreactionshot.hpp" />
+    <ClInclude Include="skills/thief/chaospanic.hpp" />
     <ClInclude Include="skills/thief/chasingbreak.hpp" />
     <ClInclude Include="skills/thief/chasingshot.hpp" />
     <ClInclude Include="skills/thief/cloaking.hpp" />
@@ -784,16 +788,20 @@
     <ClInclude Include="skills/thief/darkillusion.hpp" />
     <ClInclude Include="skills/thief/deftstab.hpp" />
     <ClInclude Include="skills/thief/detoxify.hpp" />
+    <ClInclude Include="skills/thief/dimensiondoor.hpp" />
     <ClInclude Include="skills/thief/divestall.hpp" />
     <ClInclude Include="skills/thief/divestarmor.hpp" />
     <ClInclude Include="skills/thief/divesthelm.hpp" />
     <ClInclude Include="skills/thief/divestshield.hpp" />
     <ClInclude Include="skills/thief/divestweapon.hpp" />
+    <ClInclude Include="skills/thief/emergencyescape.hpp" />
     <ClInclude Include="skills/thief/enchantdeadlypoison.hpp" />
     <ClInclude Include="skills/thief/enchantpoison.hpp" />
     <ClInclude Include="skills/thief/envenom.hpp" />
     <ClInclude Include="skills/thief/eternalslash.hpp" />
+    <ClInclude Include="skills/thief/fatalmenace.hpp" />
     <ClInclude Include="skills/thief/fatalshadowcrow.hpp" />
+    <ClInclude Include="skills/thief/feintbomb.hpp" />
     <ClInclude Include="skills/thief/findstone.hpp" />
     <ClInclude Include="skills/thief/frenzyshot.hpp" />
     <ClInclude Include="skills/thief/fromtheabyss.hpp" />
@@ -802,6 +810,15 @@
     <ClInclude Include="skills/thief/hiding.hpp" />
     <ClInclude Include="skills/thief/hitandsliding.hpp" />
     <ClInclude Include="skills/thief/impactcrater.hpp" />
+    <ClInclude Include="skills/thief/invisibility.hpp" />
+    <ClInclude Include="skills/thief/maelstrom.hpp" />
+    <ClInclude Include="skills/thief/manhole.hpp" />
+    <ClInclude Include="skills/thief/masqueradeenervation.hpp" />
+    <ClInclude Include="skills/thief/masqueradegloomy.hpp" />
+    <ClInclude Include="skills/thief/masqueradeignorance.hpp" />
+    <ClInclude Include="skills/thief/masqueradelaziness.hpp" />
+    <ClInclude Include="skills/thief/masqueradeunlucky.hpp" />
+    <ClInclude Include="skills/thief/masqueradeweakness.hpp" />
     <ClInclude Include="skills/thief/meteorassault.hpp" />
     <ClInclude Include="skills/thief/mug.hpp" />
     <ClInclude Include="skills/thief/omegaabyssstrike.hpp" />
@@ -809,10 +826,12 @@
     <ClInclude Include="skills/thief/poisoningweapon.hpp" />
     <ClInclude Include="skills/thief/poisonsmoke.hpp" />
     <ClInclude Include="skills/thief/remover.hpp" />
+    <ClInclude Include="skills/thief/reproduce.hpp" />
     <ClInclude Include="skills/thief/rollingcutter.hpp" />
     <ClInclude Include="skills/thief/sandattack.hpp" />
     <ClInclude Include="skills/thief/savageimpact.hpp" />
     <ClInclude Include="skills/thief/scribble.hpp" />
+    <ClInclude Include="skills/thief/shadowform.hpp" />
     <ClInclude Include="skills/thief/shadowstab.hpp" />
     <ClInclude Include="skills/thief/sightlessmind.hpp" />
     <ClInclude Include="skills/thief/skill_factory_thief.hpp" />
@@ -822,8 +841,10 @@
     <ClInclude Include="skills/thief/steal.hpp" />
     <ClInclude Include="skills/thief/stealth.hpp" />
     <ClInclude Include="skills/thief/stonefling.hpp" />
+    <ClInclude Include="skills/thief/stripaccessory.hpp" />
     <ClInclude Include="skills/thief/stripshadow.hpp" />
     <ClInclude Include="skills/thief/throwvenomknife.hpp" />
+    <ClInclude Include="skills/thief/triangleshot.hpp" />
     <ClInclude Include="skills/thief/unluckyrush.hpp" />
     <ClInclude Include="skills/thief/venomdust.hpp" />
     <ClInclude Include="skills/thief/venompressure.hpp" />
@@ -2446,13 +2467,25 @@
     <ClCompile Include="skills/thief/antidote.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/autoshadowspell.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/backslide.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/backstab.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/bloodylust.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/bodypainting.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/chainreactionshot.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/chaospanic.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/chasingbreak.cpp">
@@ -2506,6 +2539,9 @@
     <ClCompile Include="skills/thief/detoxify.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/dimensiondoor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/divestall.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2521,6 +2557,9 @@
     <ClCompile Include="skills/thief/divestweapon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/emergencyescape.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/enchantdeadlypoison.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2533,7 +2572,13 @@
     <ClCompile Include="skills/thief/eternalslash.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/fatalmenace.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/fatalshadowcrow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/feintbomb.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/findstone.cpp">
@@ -2560,6 +2605,33 @@
     <ClCompile Include="skills/thief/impactcrater.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/invisibility.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/maelstrom.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/manhole.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/masqueradeenervation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/masqueradegloomy.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/masqueradeignorance.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/masqueradelaziness.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/masqueradeunlucky.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/masqueradeweakness.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/meteorassault.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2581,6 +2653,9 @@
     <ClCompile Include="skills/thief/remover.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/reproduce.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/rollingcutter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2591,6 +2666,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/scribble.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/shadowform.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/shadowstab.cpp">
@@ -2620,10 +2698,16 @@
     <ClCompile Include="skills/thief/stonefling.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/stripaccessory.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/stripshadow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/throwvenomknife.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/triangleshot.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/unluckyrush.cpp">

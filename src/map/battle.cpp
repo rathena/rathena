@@ -3325,12 +3325,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case LG_BANISHINGPOINT:
 				hitrate += 5 * skill_lv;
 				break;
-			case SC_FATALMENACE:
-				if (skill_lv < 6)
-					hitrate -= 35 - 5 * skill_lv;
-				else if (skill_lv > 6)
-					hitrate += 5 * skill_lv - 30;
-				break;
 			case RL_SLUGSHOT:
 				{
 					int8 dist = distance_bl(src, target);
@@ -4970,23 +4964,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_AXE_STOMP))
 				skillratio += 380;
 			RE_LVL_DMOD(100);
-			break;
-		case SC_FATALMENACE:
-			skillratio += 120 * skill_lv + sstatus->agi; // !TODO: What's the AGI bonus?
-
-			if( sc != nullptr && sc->getSCE( SC_ABYSS_DAGGER ) ){
-				skillratio += 30 * skill_lv;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case SC_TRIANGLESHOT:
-			skillratio += -100 + 230 * skill_lv + 3 * sstatus->agi;
-			RE_LVL_DMOD(100);
-			break;
-		case SC_FEINTBOMB:
-			skillratio += -100 + (skill_lv + 1) * sstatus->dex / 2 * ((sd) ? sd->status.job_level / 10 : 1);
-			RE_LVL_DMOD(120);
 			break;
 		case LG_CANNONSPEAR:
 			skillratio += -100 + skill_lv * ( 120 + sstatus->str );
