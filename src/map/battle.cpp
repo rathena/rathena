@@ -5428,34 +5428,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case RL_AM_BLAST:
 			skillratio += -100 + 3500 + 300 * skill_lv;
 			break;
-		case SJ_FULLMOONKICK:
-			skillratio += 1000 + 100 * skill_lv;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_LIGHTOFMOON))
-				skillratio += skillratio * sc->getSCE(SC_LIGHTOFMOON)->val2 / 100;
-			break;
-		case SJ_NEWMOONKICK:
-			skillratio += 600 + 100 * skill_lv;
-			break;
-		case SJ_STAREMPEROR:
-			skillratio += 700 + 200 * skill_lv;
-			break;
-		case SJ_SOLARBURST:
-			skillratio += 900 + 220 * skill_lv;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_LIGHTOFSUN))
-				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSUN)->val2 / 100;
-			break;
-		case SJ_PROMINENCEKICK:
-				skillratio += 50 + 50 * skill_lv;
-			break;
-		case SJ_FALLINGSTAR_ATK:
-		case SJ_FALLINGSTAR_ATK2:
-			skillratio += 100 * skill_lv;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
-				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
-			break;
 		case ABC_ABYSS_DAGGER:
 			skillratio += -100 + 350 + 1400 * skill_lv;
 			skillratio += 5 * sstatus->pow;
