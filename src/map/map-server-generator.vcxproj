@@ -246,6 +246,8 @@
     <ClInclude Include="skills/acolyte/angelus.hpp" />
     <ClInclude Include="skills/acolyte/arbitrium.hpp" />
     <ClInclude Include="skills/acolyte/aspersio.hpp" />
+    <ClInclude Include="skills/acolyte/assumptio.hpp" />
+    <ClInclude Include="skills/acolyte/basilica.hpp" />
     <ClInclude Include="skills/acolyte/blazingflameblast.hpp" />
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/bssacramenti.hpp" />
@@ -729,6 +731,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/aspersio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/assumptio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/basilica.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/blazingflameblast.cpp">
