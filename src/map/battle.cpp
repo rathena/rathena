@@ -5608,11 +5608,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
-		case DK_SERVANTWEAPON_ATK:
-			skillratio += -100 + 600 + 850 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
 		case DK_SERVANT_W_PHANTOM:
 			skillratio += -100 + 200 + 300 * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
