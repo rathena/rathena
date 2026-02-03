@@ -5608,21 +5608,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
-		case DK_DRAGONIC_BREATH:
-			skillratio += -100 + 50 + 350 * skill_lv;
-			skillratio += 7 * sstatus->pow;
-
-			if (sc && sc->getSCE(SC_DRAGONIC_AURA)) {
-				skillratio += 3 * sstatus->pow;
-				skillratio += (skill_lv * (sstatus->max_hp * 25 / 100) * 7) / 100;	// Skill level x 0.07 x ((MaxHP / 4) + (MaxSP / 2))
-				skillratio += (skill_lv * (sstatus->max_sp * 50 / 100) * 7) / 100;
-			} else {
-				skillratio += (skill_lv * (sstatus->max_hp * 25 / 100) * 5) / 100;	// Skill level x 0.05 x ((MaxHP / 4) + (MaxSP / 2))
-				skillratio += (skill_lv * (sstatus->max_sp * 50 / 100) * 5) / 100;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
 		case DK_DRAGONIC_PIERCE:
 			skillratio += -100 + 850 + 600 * skill_lv;
 			skillratio += 7 * sstatus->pow;	// !TODO: unknown ratio
