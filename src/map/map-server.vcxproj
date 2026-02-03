@@ -570,17 +570,37 @@
     <ClInclude Include="skills/merchant/vaporize.hpp" />
     <ClInclude Include="skills/merchant/weaponperfection.hpp" />
     <ClInclude Include="skills/merchant/weaponrepair.hpp" />
+    <ClInclude Include="skills/ninja/coldbloodedcannon.hpp" />
     <ClInclude Include="skills/ninja/crimsonfireformation.hpp" />
     <ClInclude Include="skills/ninja/crimsonfirepetal.hpp" />
+    <ClInclude Include="skills/ninja/darkdragonnightmare.hpp" />
+    <ClInclude Include="skills/ninja/darkeningcannon.hpp" />
     <ClInclude Include="skills/ninja/finalstrike.hpp" />
+    <ClInclude Include="skills/ninja/fourcolorscharm.hpp" />
+    <ClInclude Include="skills/ninja/goldendragoncannon.hpp" />
     <ClInclude Include="skills/ninja/hiddenwater.hpp" />
+    <ClInclude Include="skills/ninja/huumashurikenconstruct.hpp" />
+    <ClInclude Include="skills/ninja/huumashurikengrasp.hpp" />
     <ClInclude Include="skills/ninja/icemeteor.hpp" />
     <ClInclude Include="skills/ninja/improviseddefense.hpp" />
+    <ClInclude Include="skills/ninja/infiltrate.hpp" />
     <ClInclude Include="skills/ninja/kamaitachi.hpp" />
+    <ClInclude Include="skills/ninja/kunaidistortion.hpp" />
+    <ClInclude Include="skills/ninja/kunainightmare.hpp" />
+    <ClInclude Include="skills/ninja/kunairefraction.hpp" />
+    <ClInclude Include="skills/ninja/kunairotation.hpp" />
     <ClInclude Include="skills/ninja/lightningstrikeofdestruction.hpp" />
+    <ClInclude Include="skills/ninja/meltaway.hpp" />
+    <ClInclude Include="skills/ninja/mirage.hpp" />
     <ClInclude Include="skills/ninja/mirrorimage.hpp" />
+    <ClInclude Include="skills/ninja/nightmareerasion.hpp" />
     <ClInclude Include="skills/ninja/ragingfiredragon.hpp" />
+    <ClInclude Include="skills/ninja/redflamecannon.hpp" />
+    <ClInclude Include="skills/ninja/shadowdance.hpp" />
+    <ClInclude Include="skills/ninja/shadowflash.hpp" />
+    <ClInclude Include="skills/ninja/shadowhunting.hpp" />
     <ClInclude Include="skills/ninja/shadowleap.hpp" />
+    <ClInclude Include="skills/ninja/shadownightmare.hpp" />
     <ClInclude Include="skills/ninja/shadowslash.hpp" />
     <ClInclude Include="skills/ninja/skill_factory_ninja.hpp" />
     <ClInclude Include="skills/ninja/spearofice.hpp" />
@@ -588,6 +608,7 @@
     <ClInclude Include="skills/ninja/throwkunai.hpp" />
     <ClInclude Include="skills/ninja/throwshuriken.hpp" />
     <ClInclude Include="skills/ninja/throwzeny.hpp" />
+    <ClInclude Include="skills/ninja/thunderingcannon.hpp" />
     <ClInclude Include="skills/ninja/vanishingslash.hpp" />
     <ClInclude Include="skills/ninja/windblade.hpp" />
     <ClInclude Include="skills/novice/doublebowlingbash.hpp" />
@@ -1864,16 +1885,37 @@
     <ClCompile Include="skills/merchant/weaponrepair.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/ninja/coldbloodedcannon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/ninja/crimsonfireformation.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/ninja/crimsonfirepetal.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/ninja/darkdragonnightmare.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/darkeningcannon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/ninja/finalstrike.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/ninja/fourcolorscharm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/goldendragoncannon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/ninja/hiddenwater.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/huumashurikenconstruct.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/huumashurikengrasp.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/ninja/icemeteor.cpp">
@@ -1882,19 +1924,58 @@
     <ClCompile Include="skills/ninja/improviseddefense.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/ninja/infiltrate.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/ninja/kamaitachi.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/kunaidistortion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/kunainightmare.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/kunairefraction.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/kunairotation.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/ninja/lightningstrikeofdestruction.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/ninja/meltaway.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/mirage.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/ninja/mirrorimage.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/nightmareerasion.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/ninja/ragingfiredragon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/ninja/redflamecannon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/shadowdance.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/shadowflash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/shadowhunting.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/ninja/shadowleap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/shadownightmare.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/ninja/shadowslash.cpp">
@@ -1916,6 +1997,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/ninja/throwzeny.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/thunderingcannon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/ninja/vanishingslash.cpp">
