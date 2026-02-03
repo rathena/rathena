@@ -71,16 +71,16 @@ void SkillImplRecursiveDamageSplash::castendPos2(block_list* src, int32 x, int32
 	skill_area_temp[4] = x;
 	skill_area_temp[5] = y;
 
-	int16 size = this->getSplashSearchSize(skill_lv);
+	int16 size = this->getSplashSearchSize(src, skill_lv);
 
 	map_foreachinarea(skill_area_sub, src->m, x - size, y - size, x + size, y + size, this->getSplashTarget(src), src, this->getSkillId(), skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
 }
 
-int16 SkillImplRecursiveDamageSplash::getSearchSize(uint16 skill_lv) const {
+int16 SkillImplRecursiveDamageSplash::getSearchSize(block_list* src, uint16 skill_lv) const {
 	return skill_get_splash( this->getSkillId(), skill_lv );
 }
 
-int16 SkillImplRecursiveDamageSplash::getSplashSearchSize(uint16 skill_lv) const {
+int16 SkillImplRecursiveDamageSplash::getSplashSearchSize(block_list* src, uint16 skill_lv) const {
 	return skill_get_splash( this->getSkillId(), skill_lv );
 }
 
@@ -92,14 +92,14 @@ void SkillImplRecursiveDamageSplash::splashSearch(block_list* src, block_list* t
 	// if skill damage should be split among targets, count them
 	// SD_LEVEL -> Forced splash damage -> count targets
 	if (flag & SD_LEVEL || skill_get_nk(getSkillId(), NK_SPLASHSPLIT)){
-		skill_area_temp[0] = map_foreachinallrange(skill_area_sub, target, this->getSearchSize(skill_lv), BL_CHAR, src, getSkillId(), skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
+		skill_area_temp[0] = map_foreachinallrange(skill_area_sub, target, this->getSearchSize(src, skill_lv), BL_CHAR, src, getSkillId(), skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
 		// If there are no characters in the area, then it always counts as if there was one target
 		// This happens when targetting skill units such as icewall
 		skill_area_temp[0] = std::max(1, skill_area_temp[0]);
 	}
 
 	// recursive invocation of skill_castend_damage_id() with flag|1
-	map_foreachinrange(skill_area_sub, target, this->getSplashSearchSize(skill_lv), this->getSplashTarget(src), src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+	map_foreachinrange(skill_area_sub, target, this->getSplashSearchSize(src, skill_lv), this->getSplashTarget(src), src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 }
 
 int64 SkillImplRecursiveDamageSplash::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {

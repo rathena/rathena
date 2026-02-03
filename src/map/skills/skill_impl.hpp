@@ -54,9 +54,9 @@ public:
 
 	virtual void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override;
 
-	virtual int16 getSearchSize(uint16 skill_lv) const;
+	virtual int16 getSearchSize(block_list* src, uint16 skill_lv) const;
 
-	virtual int16 getSplashSearchSize(uint16 skill_lv) const;
+	virtual int16 getSplashSearchSize(block_list* src, uint16 skill_lv) const;
 
 	virtual int32 getSplashTarget(block_list* src) const;
 
