@@ -440,6 +440,7 @@
     <ClInclude Include="skills/swordman/grandcross.hpp" />
     <ClInclude Include="skills/swordman/hackandslasher.hpp" />
     <ClInclude Include="skills/swordman/holycross.hpp" />
+    <ClInclude Include="skills/swordman/madnesscrusher.hpp" />
     <ClInclude Include="skills/swordman/magnum.hpp" />
     <ClInclude Include="skills/swordman/pierce.hpp" />
     <ClInclude Include="skills/swordman/provoke.hpp" />
@@ -798,6 +799,7 @@
     <ClCompile Include="skills/swordman/grandcross.cpp" />
     <ClCompile Include="skills/swordman/hackandslasher.cpp" />
     <ClCompile Include="skills/swordman/holycross.cpp" />
+    <ClCompile Include="skills/swordman/madnesscrusher.cpp" />
     <ClCompile Include="skills/swordman/magnum.cpp" />
     <ClCompile Include="skills/swordman/pierce.cpp" />
     <ClCompile Include="skills/swordman/provoke.cpp" />

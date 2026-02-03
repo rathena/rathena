@@ -15,6 +15,7 @@
 #include "grandcross.hpp"
 #include "hackandslasher.hpp"
 #include "holycross.hpp"
+#include "madnesscrusher.hpp"
 #include "magnum.hpp"
 #include "pierce.hpp"
 #include "provoke.hpp"
@@ -67,6 +68,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillHackAndSlasher>();
 		case DK_HACKANDSLASHER_ATK:
 			return std::make_unique<SkillHackAndSlasherAttack>();
+		case DK_MADNESS_CRUSHER:
+			return std::make_unique<SkillMadnessCrusher>();
 		case DK_SERVANTWEAPON:
 			return std::make_unique<SkillServantWeapon>();
 		case DK_SERVANTWEAPON_ATK:

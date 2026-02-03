@@ -5608,20 +5608,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
-		case DK_MADNESS_CRUSHER:
-			skillratio += -100 + 1000 + 3800 * skill_lv;
-			skillratio += 10 * sstatus->pow;
-			if( sd != nullptr ){
-				int16 index = sd->equip_index[EQI_HAND_R];
-
-				if( index >= 0 && sd->inventory_data[index] != nullptr ){
-					skillratio += sd->inventory_data[index]->weight / 10 * sd->inventory_data[index]->weapon_level;
-				}
-			}
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_CHARGINGPIERCE_COUNT) && sc->getSCE(SC_CHARGINGPIERCE_COUNT)->val1 >= 10)
-				skillratio *= 2;
-			break;
 		case DK_STORMSLASH:
 			skillratio += -100 + 300 + 750 * skill_lv;
 			skillratio += 5 * sstatus->pow;
