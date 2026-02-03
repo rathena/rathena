@@ -26,8 +26,8 @@ void SkillEarthStamp::calculateSkillRatio(const Damage* wd, const block_list* sr
 	RE_LVL_DMOD(100);
 }
 
-void SkillEarthStamp::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillEarthStamp::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	SkillFactoryDruid::try_gain_growth_stacks(src, tick, getSkillId());
 
-	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
+	SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
 }
