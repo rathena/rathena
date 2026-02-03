@@ -21,6 +21,7 @@
 #include "sacrifice.hpp"
 #include "selfprovoke.hpp"
 #include "servantweapon.hpp"
+#include "servantweapondemolition.hpp"
 #include "servantweaponphantom.hpp"
 #include "servantweaponsign.hpp"
 #include "shieldboomerang.hpp"
@@ -62,6 +63,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillServantWeapon>();
 		case DK_SERVANTWEAPON_ATK:
 			return std::make_unique<SkillServantWeaponAttack>();
+		case DK_SERVANT_W_DEMOL:
+			return std::make_unique<SkillServantWeaponDemolition>();
 		case DK_SERVANT_W_PHANTOM:
 			return std::make_unique<SkillServantWeaponPhantom>();
 		case DK_SERVANT_W_SIGN:
