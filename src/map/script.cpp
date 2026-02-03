@@ -27813,10 +27813,9 @@ BUILDIN_FUNC(mesemotiontype){
         }
     } else if (script_hasdata(st, 2)) {
         id = script_getnum(st, 2);
-    } else {
-        id = 0;
     }
 
+	// Validates emotion range
 	if (id < 0 || id >= ET_MAX) {
 		ShowError("buildin_mesemotiontype: Emotion ID %d is invalid.\n", id);
 		script_pushconststr(st, "");
