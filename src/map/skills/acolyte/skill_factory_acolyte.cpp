@@ -32,6 +32,7 @@
 #include "pneuma.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
+#include "secondflame.hpp"
 #include "statusrecovery.hpp"
 #include "suffragium.hpp"
 #include "turnundead.hpp"
@@ -104,6 +105,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillOleumSanctum>();
 		case IQ_POWERFUL_FAITH:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_SECOND_FLAME:
+			return std::make_unique<SkillSecondFlame>();
 		case IQ_SINCERE_FAITH:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IQ_THIRD_EXOR_FLAME:

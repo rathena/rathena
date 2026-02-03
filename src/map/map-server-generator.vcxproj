@@ -265,6 +265,7 @@
     <ClInclude Include="skills/acolyte/pneuma.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/sanctuary.hpp" />
+    <ClInclude Include="skills/acolyte/secondflame.hpp" />
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
     <ClInclude Include="skills/acolyte/statusrecovery.hpp" />
     <ClInclude Include="skills/acolyte/suffragium.hpp" />
@@ -621,6 +622,7 @@
     <ClCompile Include="skills/acolyte/pneuma.cpp" />
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
     <ClCompile Include="skills/acolyte/sanctuary.cpp" />
+    <ClCompile Include="skills/acolyte/secondflame.cpp" />
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
     <ClCompile Include="skills/acolyte/statusrecovery.cpp" />
     <ClCompile Include="skills/acolyte/suffragium.cpp" />
