@@ -5608,12 +5608,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
-		case DK_DRAGONIC_AURA:
-			skillratio += 3650 * skill_lv + 10 * sstatus->pow;
-			if (tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_ANGEL)
-				skillratio += 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
 		case DK_MADNESS_CRUSHER:
 			skillratio += -100 + 1000 + 3800 * skill_lv;
 			skillratio += 10 * sstatus->pow;

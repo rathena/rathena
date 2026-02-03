@@ -11,6 +11,7 @@
 #include "bowlingbash.hpp"
 #include "brandishspear.hpp"
 #include "counterattack.hpp"
+#include "dragonicaura.hpp"
 #include "grandcross.hpp"
 #include "hackandslasher.hpp"
 #include "holycross.hpp"
@@ -60,6 +61,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DK_CHARGINGPIERCE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case DK_DRAGONIC_AURA:
+			return std::make_unique<SkillDragonicAura>();
 		case DK_HACKANDSLASHER:
 			return std::make_unique<SkillHackAndSlasher>();
 		case DK_HACKANDSLASHER_ATK:
