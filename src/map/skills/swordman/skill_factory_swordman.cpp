@@ -12,6 +12,7 @@
 #include "brandishspear.hpp"
 #include "counterattack.hpp"
 #include "grandcross.hpp"
+#include "hackandslasher.hpp"
 #include "holycross.hpp"
 #include "magnum.hpp"
 #include "pierce.hpp"
@@ -59,6 +60,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DK_CHARGINGPIERCE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case DK_HACKANDSLASHER:
+			return std::make_unique<SkillHackAndSlasher>();
 		case DK_SERVANTWEAPON:
 			return std::make_unique<SkillServantWeapon>();
 		case DK_SERVANTWEAPON_ATK:
