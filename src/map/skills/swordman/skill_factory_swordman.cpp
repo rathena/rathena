@@ -20,6 +20,7 @@
 #include "resistantsouls.hpp"
 #include "sacrifice.hpp"
 #include "selfprovoke.hpp"
+#include "servantweapon.hpp"
 #include "shieldboomerang.hpp"
 #include "shieldreflect.hpp"
 #include "smite.hpp"
@@ -55,6 +56,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DK_CHARGINGPIERCE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case DK_SERVANTWEAPON:
+			return std::make_unique<SkillServantWeapon>();
 		case DK_VIGOR:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IG_ATTACK_STANCE:
