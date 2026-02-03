@@ -294,10 +294,46 @@ int32 skill_frostjoke_scream(block_list *bl,va_list ap);
 std::shared_ptr<s_skill_unit_group> skill_locate_element_field(block_list *bl); // [Skotlex]
 static int32 skill_trap_splash(block_list *bl, va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(block_list *bl,std::shared_ptr<s_skill_unit_group> sg,t_tick tick);
+int32 skill_unit_timer_sub_onplace(block_list* bl, va_list ap);
 static int32 skill_unit_onplace(skill_unit *src,block_list *bl,t_tick tick);
 int32 skill_unit_onleft(uint16 skill_id, block_list *bl,t_tick tick);
 static int32 skill_unit_effect(block_list *bl,va_list ap);
 static int32 skill_bind_trap(block_list *bl, va_list ap);
+
+// Ice Pillar fog tick: apply area damage for all unit cells, then refresh caster buff
+// if the caster is within any unit cell range (Duration2).
+void skill_ice_pillar_apply_tick(const std::shared_ptr<s_skill_unit_group>& group, t_tick tick) {
+	if (group == nullptr || group->unit == nullptr)
+		return;
+
+	block_list* src = map_id2bl(group->src_id);
+	const bool src_ready = (src && src->prev != nullptr && !status_isdead(*src));
+	bool in_range = false;
+
+	for (int32 i = 0; i < group->unit_count; ++i) {
+		skill_unit* cell = &group->unit[i];
+		if (!cell->alive || cell->range < 0)
+			continue;
+		if (src_ready && src->m == cell->m &&
+			distance_xy(src->x, src->y, cell->x, cell->y) <= cell->range) {
+			in_range = true;
+		}
+		block_list* cell_bl = cell;
+		if (skill_get_unit_flag(group->skill_id, UF_PATHCHECK))
+			map_foreachinrange(skill_unit_timer_sub_onplace, cell_bl, cell->range, group->bl_flag, cell_bl, tick);
+		else
+			map_foreachinallrange(skill_unit_timer_sub_onplace, cell_bl, cell->range, group->bl_flag, cell_bl, tick);
+	}
+
+	const sc_type buff_sc = skill_get_sc(group->skill_id);
+	if (src_ready && in_range && buff_sc != SC_NONE) {
+		status_change* sc = status_get_sc(src);
+		if (sc && sc->getSCE(buff_sc))
+			status_change_end(src, buff_sc);
+		t_tick buff_duration = skill_get_time2(group->skill_id, group->skill_lv);
+		sc_start(src, src, buff_sc, 100, group->skill_lv, buff_duration);
+	}
+}
 
 e_cast_type skill_get_casttype (uint16 skill_id) {
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
@@ -3771,9 +3807,10 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 			break;
 		case KR_ICE_PILLAR:
 			if (flag & SKILL_ALTDMG_FLAG) {
-				clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -2, dmg_type );
+				dmg.div_ = 1;
+				clif_skill_damage( *src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, DMG_SPLASH );
 			} else {
-				clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, dmg_type );
+				clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, DMG_MULTI_HIT );
 			}
 			break;
 		case AG_STORM_CANNON:
@@ -14730,6 +14767,20 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(block_list *src, uint16 sk
 		return nullptr;
 	}
 
+	if (skill_id == KR_ICE_PILLAR) {
+		skill_unit* su = nullptr;
+		for (int32 idx = 0; idx < group->unit_count; ++idx) {
+			skill_unit* cell = &group->unit[idx];
+			if (cell->alive && cell->range >= 0) {
+				su = cell;
+				break;
+			}
+		}
+		if (su != nullptr) {
+			group->val3 = su->id;
+		}
+	}
+
 	//success, unit created.
 	switch( skill_id ) {
 		case NJ_TATAMIGAESHI: //Store number of tiles.
@@ -15233,11 +15284,7 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 			if (battle_check_target(unit, bl, sg->target_flag) <= 0)
 				break;
 			if (battle_check_target(unit, bl, BCT_ENEMY) > 0) {
-				if (DIFF_TICK(tick, sg->tick) < sg->interval)
-					break;
 				skill_attack(skill_get_type(sg->skill_id), ss, unit, bl, sg->skill_id, sg->skill_lv, tick, SD_ANIMATION | SKILL_ALTDMG_FLAG);
-			} else {
-				sc_start(ss, bl, SC_ICE_PILLAR, 100, sg->skill_lv, sg->interval + 100);
 			}
 			break;
 		case UNT_GLACIAL_MONOLITH:
@@ -20935,27 +20982,44 @@ static int32 skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 
 	if( unit->range >= 0 && group->interval != -1 )
 	{
-		if (skill_get_unit_flag(group->skill_id, UF_PATHCHECK))
-			map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl, tick);
-		else
-			map_foreachinallrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl, tick);
-
-		if(unit->range == -1) //Unit disabled, but it should not be deleted yet.
-			group->unit_id = UNT_USED_TRAPS;
-		else if( group->unit_id == UNT_TATAMIGAESHI ) {
-			unit->range = -1; //Disable processed cell.
-			if (--group->val1 <= 0) { // number of live cells
-				//All tiles were processed, disable skill.
-				group->target_flag=BCT_NOONE;
-				group->bl_flag= BL_NUL;
+		if (group->unit_id == UNT_ICE_PILLAR) {
+			if (unit->id == group->val3) {
+				const int32 elapsed = static_cast<int32>(DIFF_TICK(tick, group->tick));
+				if (group->val2 < 8 && elapsed >= group->val1) {
+					const int32 scheduled = group->val1;
+					const int32 count_before = group->val2;
+					group->val2++;
+					group->val1 = scheduled + (count_before == 0 ? 500 : 1000);
+					if (count_before == 1) {
+						const int32 normal_interval = skill_get_unit_interval(group->skill_id);
+						group->interval = normal_interval > 0 ? normal_interval : 1000;
+					}
+					skill_ice_pillar_apply_tick(group, tick);
+				}
 			}
-		}
-		else if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
-			group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 || group->skill_id == NPC_RAINOFMETEOR ||
-			group->skill_id == HN_METEOR_STORM_BUSTER ||
-			((group->skill_id == CR_GRANDCROSS || group->skill_id == NPC_GRANDDARKNESS) && unit->val1 <= 0)) {
-			skill_delunit(unit);
-			return 0;
+		} else {
+			if (skill_get_unit_flag(group->skill_id, UF_PATHCHECK))
+				map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl, tick);
+			else
+				map_foreachinallrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl, tick);
+
+			if(unit->range == -1) //Unit disabled, but it should not be deleted yet.
+				group->unit_id = UNT_USED_TRAPS;
+			else if( group->unit_id == UNT_TATAMIGAESHI ) {
+				unit->range = -1; //Disable processed cell.
+				if (--group->val1 <= 0) { // number of live cells
+					//All tiles were processed, disable skill.
+					group->target_flag=BCT_NOONE;
+					group->bl_flag= BL_NUL;
+				}
+			}
+			else if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
+				group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2
+				|| group->skill_id == NPC_RAINOFMETEOR || group->skill_id == HN_METEOR_STORM_BUSTER || group->skill_id ==  NPC_LOCKON_LASER_ATK
+				|| ((group->skill_id == CR_GRANDCROSS || group->skill_id == NPC_GRANDDARKNESS) && unit->val1 <= 0)) {
+				skill_delunit(unit);
+				return 0;
+			}
 		}
 	}
 

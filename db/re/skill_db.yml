@@ -47437,7 +47437,8 @@ Body:
         Area: 2
     CastTime: 900
     FixedCastTime: 1200
-    Duration1: 7100
+    Duration1: 7000
+    Duration2: 5000
     Cooldown: 7000
     Unit:
       Id: ICE_PILLAR
@@ -47485,6 +47486,7 @@ Body:
           Amount: 67
         - Level: 10
           Amount: 70
+    Status: Ice_Pillar
   - Id: 6562
     Name: KR_ICE_SPLASH
     Description: Ice Splash

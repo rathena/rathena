@@ -5,7 +5,6 @@
 
 #include <config/const.hpp>
 
-#include "map/clif.hpp"
 #include "map/status.hpp"
 
 SkillIcePillar::SkillIcePillar() : SkillImplRecursiveDamageSplash(KR_ICE_PILLAR) {
@@ -32,18 +31,22 @@ void SkillIcePillar::calculateSkillRatio(const Damage* wd, const block_list* src
 	RE_LVL_DMOD(100);
 }
 
-void SkillIcePillar::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	}
-
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-	if (!(flag & 1)) {
-		skill_unitsetting(src, getSkillId(), skill_lv, target->x, target->y, 0);
-	}
-}
-
 void SkillIcePillar::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
+	if (flag & 1) {
+		SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
+		return;
+	}
+
+	std::shared_ptr<s_skill_unit_group> group = skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
+	if (group == nullptr) {
+		return;
+	}
+
+	group->interval = 500;
 	SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
-	skill_unitsetting(src, getSkillId(), skill_lv, x, y, 0);
+	skill_ice_pillar_apply_tick(group, tick);
+	// Anchor the next fog tick 500ms after the initial fog hit.
+	const t_tick elapsed = DIFF_TICK(tick, group->tick);
+	group->val1 = static_cast<int32>((elapsed > 0 ? elapsed : 0) + 500);
+	group->val2 = 1;
 }

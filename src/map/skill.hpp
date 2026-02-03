@@ -589,6 +589,8 @@ int32 skill_break_equip(block_list *src,block_list *bl, uint16 where, int32 rate
 int32 skill_strip_equip(block_list *src,block_list *bl, uint16 where, int32 rate, int32 lv, int32 time);
 // Skills unit
 std::shared_ptr<s_skill_unit_group> skill_id2group(int32 group_id);
+// Ice Pillar fog tick helper (damage first, then buff refresh if in range).
+void skill_ice_pillar_apply_tick(const std::shared_ptr<s_skill_unit_group>& group, t_tick tick);
 std::shared_ptr<s_skill_unit_group> skill_unitsetting(block_list* src, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, int32 flag);
 skill_unit* skill_initunit(std::shared_ptr<s_skill_unit_group> group, int32 idx, int32 x, int32 y, int32 val1, int32 val2, bool hidden, int32 range, t_tick limit);
 int32 skill_delunit(skill_unit *unit);

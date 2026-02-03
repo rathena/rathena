@@ -10110,13 +10110,15 @@ Body:
       bonus bLongAtkDef, .@reduce;
       bonus bMagicAtkDef, .@reduce;
       bonus bSpeedRate, .@speed;
-  - Status: ICE_PILLAR
+  - Status: Ice_Pillar
     Icon: EFST_ICE_PILLAR
     Script: |
       bonus2 bSkillAtk, "DR_ICE_TOTEM", 15;
       bonus2 bSkillAtk, "DR_ICE_CLOUD", 15;
       bonus2 bSkillAtk, "KR_ICE_PILLAR", 15;
       bonus2 bSkillAtk, "KR_ICE_SPLASH", 15;
+    EndOnStart:
+      Ice_Pillar: true
   - Status: THUNDERING_ROD
     Icon: EFST_THUNDERING_ROD
     Flags:
