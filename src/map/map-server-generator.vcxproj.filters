@@ -897,10 +897,10 @@
     <ClInclude Include="skills/novice/groundgravitation.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
-    <ClInclude Include="skills/novice/helpangel.hpp">
+    <ClInclude Include="skills/novice/hellsdrive.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
-    <ClInclude Include="skills/novice/hellsdrive.hpp">
+    <ClInclude Include="skills/novice/helpangel.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
     <ClInclude Include="skills/novice/jackfrostnova.hpp">
