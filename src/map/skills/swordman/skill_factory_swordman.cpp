@@ -13,6 +13,7 @@
 #include "counterattack.hpp"
 #include "dragonicaura.hpp"
 #include "dragonicbreath.hpp"
+#include "dragonicpierce.hpp"
 #include "grandcross.hpp"
 #include "hackandslasher.hpp"
 #include "holycross.hpp"
@@ -68,6 +69,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillDragonicAura>();
 		case DK_DRAGONIC_BREATH:
 			return std::make_unique<SkillDragonicBreath>();
+		case DK_DRAGONIC_PIERCE:
+			return std::make_unique<SkillDragonicPierce>();
 		case DK_HACKANDSLASHER:
 			return std::make_unique<SkillHackAndSlasher>();
 		case DK_HACKANDSLASHER_ATK:

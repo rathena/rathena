@@ -438,6 +438,7 @@
     <ClInclude Include="skills/swordman/counterattack.hpp" />
     <ClInclude Include="skills/swordman/dragonicaura.hpp" />
     <ClInclude Include="skills/swordman/dragonicbreath.hpp" />
+    <ClInclude Include="skills/swordman/dragonicpierce.hpp" />
     <ClInclude Include="skills/swordman/grandcross.hpp" />
     <ClInclude Include="skills/swordman/hackandslasher.hpp" />
     <ClInclude Include="skills/swordman/holycross.hpp" />
@@ -799,6 +800,7 @@
     <ClCompile Include="skills/swordman/counterattack.cpp" />
     <ClCompile Include="skills/swordman/dragonicaura.cpp" />
     <ClCompile Include="skills/swordman/dragonicbreath.cpp" />
+    <ClCompile Include="skills/swordman/dragonicpierce.cpp" />
     <ClCompile Include="skills/swordman/grandcross.cpp" />
     <ClCompile Include="skills/swordman/hackandslasher.cpp" />
     <ClCompile Include="skills/swordman/holycross.cpp" />
