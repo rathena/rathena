@@ -6,15 +6,24 @@
 #include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
+#include "allbloom.hpp"
+#include "astralstrike.hpp"
 #include "coldbolt.hpp"
+#include "crimsonarrow.hpp"
+#include "crystalimpact.hpp"
+#include "deadlyprojection.hpp"
+#include "destructivehurricane.hpp"
 #include "earthspike.hpp"
 #include "energycoat.hpp"
+#include "energyconversion.hpp"
 #include "fireball.hpp"
 #include "firebolt.hpp"
 #include "firepillar.hpp"
 #include "firewall.hpp"
+#include "floralflareroad.hpp"
 #include "frostdiver.hpp"
 #include "frostnova.hpp"
+#include "frozenslash.hpp"
 #include "ganbantein.hpp"
 #include "gravitationfield.hpp"
 #include "heavensdrive.hpp"
@@ -23,24 +32,80 @@
 #include "lightningbolt.hpp"
 #include "lordofvermilion.hpp"
 #include "meteorstorm.hpp"
+#include "mysteryillusion.hpp"
 #include "napalmbeat.hpp"
 #include "napalmvulcan.hpp"
 #include "quagmire.hpp"
+#include "rainofcrystal.hpp"
+#include "rockdown.hpp"
 #include "safetywall.hpp"
 #include "sense.hpp"
 #include "sight.hpp"
 #include "sightblaster.hpp"
 #include "sightrasher.hpp"
 #include "soulstrike.hpp"
+#include "soulvulcanstrike.hpp"
 #include "stonecurse.hpp"
+#include "stormcannon.hpp"
 #include "stormgust.hpp"
+#include "strantumtremor.hpp"
 #include "thunderstorm.hpp"
+#include "tornadostorm.hpp"
+#include "violentquake.hpp"
 #include "waterball.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case AG_ALL_BLOOM:
+			return std::make_unique<SkillAllBloom>();
+		case AG_ALL_BLOOM_ATK:
+			return std::make_unique<SkillAllBloomAttack>();
+		case AG_ALL_BLOOM_ATK2:
+			return std::make_unique<SkillAllBloomAttack2>();
+		case AG_ASTRAL_STRIKE:
+			return std::make_unique<SkillAstralStrike>();
+		case AG_ASTRAL_STRIKE_ATK:
+			return std::make_unique<SkillAstralStrikeAttack>();
 		case AG_CLIMAX:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case AG_CRIMSON_ARROW:
+			return std::make_unique<SkillCrimsonArrow>();
+		case AG_CRIMSON_ARROW_ATK:
+			return std::make_unique<SkillCrimsonArrowAttack>();
+		case AG_CRYSTAL_IMPACT:
+			return std::make_unique<SkillCrystalImpact>();
+		case AG_CRYSTAL_IMPACT_ATK:
+			return std::make_unique<SkillCrystalImpactAttack>();
+		case AG_DEADLY_PROJECTION:
+			return std::make_unique<SkillDeadlyProjection>();
+		case AG_DESTRUCTIVE_HURRICANE:
+			return std::make_unique<SkillDestructiveHurricane>();
+		case AG_DESTRUCTIVE_HURRICANE_CLIMAX:
+			return std::make_unique<SkillDestructiveHurricaneClimax>();
+		case AG_ENERGY_CONVERSION:
+			return std::make_unique<SkillEnergyConversion>();
+		case AG_FLORAL_FLARE_ROAD:
+			return std::make_unique<SkillFloralFlareRoad>();
+		case AG_FROZEN_SLASH:
+			return std::make_unique<SkillFrozenSlash>();
+		case AG_MYSTERY_ILLUSION:
+			return std::make_unique<SkillMysteryIllusion>();
+		case AG_RAIN_OF_CRYSTAL:
+			return std::make_unique<SkillRainOfCrystal>();
+		case AG_ROCK_DOWN:
+			return std::make_unique<SkillRockDown>();
+		case AG_SOUL_VC_STRIKE:
+			return std::make_unique<SkillSoulVulcanStrike>();
+		case AG_STORM_CANNON:
+			return std::make_unique<SkillStormCannon>();
+		case AG_STRANTUM_TREMOR:
+			return std::make_unique<SkillStrantumTremor>();
+		case AG_TORNADO_STORM:
+			return std::make_unique<SkillTornadoStorm>();
+		case AG_VIOLENT_QUAKE:
+			return std::make_unique<SkillViolentQuake>();
+		case AG_VIOLENT_QUAKE_ATK:
+			return std::make_unique<SkillViolentQuakeAttack>();
 		case EM_SPELL_ENCHANTING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case HW_GANBANTEIN:

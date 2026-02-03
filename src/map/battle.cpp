@@ -8441,108 +8441,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_STORMGUST2:
 						skillratio += 200 * skill_lv;
 						break;
-					case AG_DEADLY_PROJECTION:
-						skillratio += -100 + 2800 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_DESTRUCTIVE_HURRICANE:
-						skillratio += -100 + 600 + 2850 * skill_lv + 5 * sstatus->spl;
-						// (climax buff applied with pc_skillatk_bonus)
-						RE_LVL_DMOD(100);
-						break;
-					case AG_RAIN_OF_CRYSTAL:
-						skillratio += -100 + 180 + 760 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_MYSTERY_ILLUSION:
-						skillratio += -100 + 950 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_VIOLENT_QUAKE_ATK:
-						skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
-						// (climax buff applied with pc_skillatk_bonus)
-						RE_LVL_DMOD(100);
-						break;
-					case AG_SOUL_VC_STRIKE:
-						skillratio += -100 + 300 * skill_lv + 3 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_STRANTUM_TREMOR:
-						skillratio += -100 + 100 + 730 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_ALL_BLOOM_ATK:
-						skillratio += -100 + 200 + 1200 * skill_lv + 5 * sstatus->spl;
-						// (climax buff applied with pc_skillatk_bonus)
-						RE_LVL_DMOD(100);
-						break;
-					case AG_ALL_BLOOM_ATK2:
-						skillratio += -100 + 85000;
-						// Skill not affected by Baselevel and SPL
-						break;
-					case AG_CRYSTAL_IMPACT:
-						skillratio += -100 + 250 + 1300 * skill_lv + 5 * sstatus->spl;
-						// (climax buff applied with pc_skillatk_bonus)
-						RE_LVL_DMOD(100);
-						break;
-					case AG_CRYSTAL_IMPACT_ATK:
-						skillratio += -100 + 250 + 1300 * skill_lv + 5 * sstatus->spl;
-						// (climax buff applied with pc_skillatk_bonus)
-						RE_LVL_DMOD(100);
-						break;
-					case AG_TORNADO_STORM:
-						skillratio += -100 + 100 + 760 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_FLORAL_FLARE_ROAD:
-						skillratio += -100 + 50 + 740 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_ASTRAL_STRIKE:
-						skillratio += -100 + 300 + 1800 * skill_lv + 10 * sstatus->spl;
-						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DRAGON)
-							skillratio += 100 + 300 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_ASTRAL_STRIKE_ATK:
-						skillratio += -100 + 650 * skill_lv + 10 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_ROCK_DOWN:
-						skillratio += -100 + 1550 * skill_lv + 5 * sstatus->spl;
-
-						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
-							skillratio += 300 * skill_lv;
-						}
-
-						RE_LVL_DMOD(100);
-						break;
-					case AG_STORM_CANNON:
-						skillratio += -100 + 1550 * skill_lv + 5 * sstatus->spl;
-
-						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
-							skillratio += 300 * skill_lv;
-						}
-
-						RE_LVL_DMOD(100);
-						break;
-					case AG_CRIMSON_ARROW:
-						skillratio += -100 + 400 * skill_lv + 3 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_CRIMSON_ARROW_ATK:
-						skillratio += -100 + 750 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case AG_FROZEN_SLASH:
-						skillratio += -100 + 450 + 950 * skill_lv + 5 * sstatus->spl;
-
-						if( sc != nullptr && sc->getSCE( SC_CLIMAX ) ){
-							skillratio += 150 + 350 * skill_lv;
-						}
-
-						RE_LVL_DMOD(100);
-						break;
 					case IG_JUDGEMENT_CROSS:
 						skillratio += -100 + 1950 * skill_lv + 10 * sstatus->spl;
 						if (tstatus->race == RC_PLANT || tstatus->race == RC_INSECT)
@@ -8598,10 +8496,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += 70 * pc_checkskill(sd,CD_FIDUS_ANIMUS);
 						skillratio += 10 * sstatus->spl;
 						RE_LVL_DMOD(100);
-						break;
-					case AG_DESTRUCTIVE_HURRICANE_CLIMAX:
-						skillratio += -100 + 12500;
-						// Skill not affected by Baselevel and SPL
 						break;
 					case ABC_ABYSS_STRIKE:
 						skillratio += -100 + 2650 * skill_lv;
