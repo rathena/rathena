@@ -27817,13 +27817,11 @@ BUILDIN_FUNC(mesemotiontype){
         id = 0;
     }
 
-    // Validate emotion range
-    const int32 MAX_EMOTION = 79;
-    if (id < 0 || id > MAX_EMOTION) {
-        ShowError("buildin_mesemotiontype: Emotion ID %d is invalid.\n", id);
-        script_pushconststr(st, "");
-        return SCRIPT_CMD_FAILURE;
-    }
+	if (id < 0 || id >= ET_MAX) {
+		ShowError("buildin_mesemotiontype: Emotion ID %d is invalid.\n", id);
+		script_pushconststr(st, "");
+		return SCRIPT_CMD_FAILURE;
+	}
 
     char buf[32];
     std::snprintf(buf, sizeof(buf), "^e[%d]", id);
