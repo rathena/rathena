@@ -249,6 +249,7 @@
     <ClInclude Include="skills/acolyte/cure.hpp" />
     <ClInclude Include="skills/acolyte/decagi.hpp" />
     <ClInclude Include="skills/acolyte/explosionblaster.hpp" />
+    <ClInclude Include="skills/acolyte/firstbrand.hpp" />
     <ClInclude Include="skills/acolyte/gloria.hpp" />
     <ClInclude Include="skills/acolyte/heal.hpp" />
     <ClInclude Include="skills/acolyte/holylight.hpp" />
@@ -604,6 +605,7 @@
     <ClCompile Include="skills/acolyte/cure.cpp" />
     <ClCompile Include="skills/acolyte/decagi.cpp" />
     <ClCompile Include="skills/acolyte/explosionblaster.cpp" />
+    <ClCompile Include="skills/acolyte/firstbrand.cpp" />
     <ClCompile Include="skills/acolyte/gloria.cpp" />
     <ClCompile Include="skills/acolyte/heal.cpp" />
     <ClCompile Include="skills/acolyte/holylight.cpp" />
