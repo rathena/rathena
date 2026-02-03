@@ -6,29 +6,48 @@
 #include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
+#include "aimedbolt.hpp"
 #include "anklesnare.hpp"
 #include "arrowshower.hpp"
+#include "arrowstorm.hpp"
 #include "beaststrafing.hpp"
 #include "blastmine.hpp"
 #include "blitzbeat.hpp"
+#include "camouflage.hpp"
 #include "chargearrow.hpp"
 #include "claymoretrap.hpp"
+#include "clusterbomb.hpp"
+#include "cobalttrap.hpp"
 #include "concentration.hpp"
 #include "detect.hpp"
+#include "detonator.hpp"
 #include "doublestrafe.hpp"
+#include "electricshocker.hpp"
 #include "falconassault.hpp"
+#include "fearbreeze.hpp"
+#include "firingtrap.hpp"
 #include "flasher.hpp"
 #include "focusedarrowstrike.hpp"
 #include "freezingtrap.hpp"
+#include "iceboundtrap.hpp"
 #include "landmine.hpp"
+#include "magentatrap.hpp"
+#include "maizetrap.hpp"
 #include "makingarrow.hpp"
 #include "phantasmicarrow.hpp"
 #include "removetrap.hpp"
 #include "sandman.hpp"
+#include "sensitivekeen.hpp"
 #include "shockwavetrap.hpp"
 #include "skidtrap.hpp"
 #include "springtrap.hpp"
 #include "talkiebox.hpp"
+#include "verduretrap.hpp"
+#include "wargbite.hpp"
+#include "wargdash.hpp"
+#include "wargmastery.hpp"
+#include "wargrider.hpp"
+#include "wargstrike.hpp"
 #include "windwalker.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
@@ -84,9 +103,45 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		case HT_TALKIEBOX:
 			return std::make_unique<SkillTalkieBox>();
 		case RA_AIMEDBOLT:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillAimedBolt>();
+		case RA_ARROWSTORM:
+			return std::make_unique<SkillArrowStorm>();
+		case RA_CAMOUFLAGE:
+			return std::make_unique<SkillCamouflage>();
+		case RA_CLUSTERBOMB:
+			return std::make_unique<SkillClusterBomb>();
+		case RA_COBALTTRAP:
+			return std::make_unique<SkillCobaltTrap>();
+		case RA_DETONATOR:
+			return std::make_unique<SkillDetonator>();
+		case RA_ELECTRICSHOCKER:
+			return std::make_unique<SkillElectricShocker>();
+		case RA_FEARBREEZE:
+			return std::make_unique<SkillFearBreeze>();
+		case RA_FIRINGTRAP:
+			return std::make_unique<SkillFiringTrap>();
+		case RA_ICEBOUNDTRAP:
+			return std::make_unique<SkillIceboundTrap>();
+		case RA_MAGENTATRAP:
+			return std::make_unique<SkillMagentaTrap>();
+		case RA_MAIZETRAP:
+			return std::make_unique<SkillMaizeTrap>();
+		case RA_SENSITIVEKEEN:
+			return std::make_unique<SkillSensitiveKeen>();
 		case RA_UNLIMIT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case RA_VERDURETRAP:
+			return std::make_unique<SkillVerdureTrap>();
+		case RA_WUGBITE:
+			return std::make_unique<SkillWargBite>();
+		case RA_WUGDASH:
+			return std::make_unique<SkillWargDash>();
+		case RA_WUGMASTERY:
+			return std::make_unique<SkillWargMastery>();
+		case RA_WUGRIDER:
+			return std::make_unique<SkillWargRider>();
+		case RA_WUGSTRIKE:
+			return std::make_unique<SkillWargStrike>();
 		case SN_FALCONASSAULT:
 			return std::make_unique<SkillFalconAssault>();
 		case SN_SHARPSHOOTING:
@@ -111,6 +166,5 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		default:
 			return nullptr;
 	}
-
 	return nullptr;
 }
