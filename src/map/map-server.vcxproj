@@ -446,6 +446,7 @@
     <ClInclude Include="skills/swordman/sacrifice.hpp" />
     <ClInclude Include="skills/swordman/selfprovoke.hpp" />
     <ClInclude Include="skills/swordman/servantweapon.hpp" />
+    <ClInclude Include="skills/swordman/servantweaponsign.hpp" />
     <ClInclude Include="skills/swordman/shieldboomerang.hpp" />
     <ClInclude Include="skills/swordman/shieldreflect.hpp" />
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
@@ -799,6 +800,7 @@
     <ClCompile Include="skills/swordman/sacrifice.cpp" />
     <ClCompile Include="skills/swordman/selfprovoke.cpp" />
     <ClCompile Include="skills/swordman/servantweapon.cpp" />
+    <ClCompile Include="skills/swordman/servantweaponsign.cpp" />
     <ClCompile Include="skills/swordman/shieldboomerang.cpp" />
     <ClCompile Include="skills/swordman/shieldreflect.cpp" />
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp" />

@@ -7853,45 +7853,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case DK_SERVANT_W_SIGN: // Max allowed targets to be marked.
-		// Only players and monsters can be marked....I think??? [Rytech]
-		// Lets only allow players and monsters to use this skill for safety reasons.
-		if ((!dstsd && !dstmd) || !sd && !md) {
-			if (sd)
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-			break;
-		}
-
-		// Check if the target is already marked by another source.
-		if (tsc && tsc->getSCE(type) && tsc->getSCE(type)->val1 != src->id) {
-			if (sd)
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-			return 1;
-		}
-
-		
-		// Mark the target.
-		if( sd ){
-			int8 count = MAX_SERVANT_SIGN;
-
-			ARR_FIND(0, count, i, sd->servant_sign[i] == bl->id);
-			if (i == count) {
-				ARR_FIND(0, count, i, sd->servant_sign[i] == 0);
-				if (i == count) { // Max number of targets marked. Fail the skill.
-					clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-					return 1;
-				}
-
-				// Add the ID of the marked target to the player's sign list.
-				sd->servant_sign[i] = bl->id;
-			}
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			sc_start4(src, bl, type, 100, src->id, i, skill_lv, 0, skill_get_time(skill_id, skill_lv));
-		} else if (md) // Monster's cant track with this skill. Just give the status.
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, 0, 0, skill_lv, 0, skill_get_time(skill_id, skill_lv)));
-		break;
-
 	case MO_CALLSPIRITS:
 		if(sd) {
 			int32 limit = skill_lv;
