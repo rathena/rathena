@@ -3,6 +3,7 @@
 
 #include "skill_impl.hpp"
 
+#include "../clif.hpp"
 #include "../status.hpp"
 
 SkillImpl::SkillImpl(e_skill skill_id){
