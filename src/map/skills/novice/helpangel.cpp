@@ -12,7 +12,6 @@ SkillHelpAngel::SkillHelpAngel() : StatusSkillImpl(NV_HELPANGEL) {
 void SkillHelpAngel::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* sd = BL_CAST( BL_PC, src );
 
-	// Is the animation on this skill correct? Check if its on caster only or all affected. [Rytech]
 	if( sd == nullptr || sd->status.party_id == 0 || (flag & 1) )
 		StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
 	else if (sd)
