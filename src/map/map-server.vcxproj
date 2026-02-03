@@ -459,6 +459,7 @@
     <ClInclude Include="skills/swordman/spearboomerang.hpp" />
     <ClInclude Include="skills/swordman/spearstab.hpp" />
     <ClInclude Include="skills/swordman/spiralpierce.hpp" />
+    <ClInclude Include="skills/swordman/stormslash.hpp" />
     <ClInclude Include="skills/swordman/traumaticblow.hpp" />
     <ClInclude Include="skills/swordman/vitalstrike.hpp" />
     <ClInclude Include="skills/taekwon/circleofdirectionsandelementals.hpp" />
@@ -818,6 +819,7 @@
     <ClCompile Include="skills/swordman/spearboomerang.cpp" />
     <ClCompile Include="skills/swordman/spearstab.cpp" />
     <ClCompile Include="skills/swordman/spiralpierce.cpp" />
+    <ClCompile Include="skills/swordman/stormslash.cpp" />
     <ClCompile Include="skills/swordman/traumaticblow.cpp" />
     <ClCompile Include="skills/swordman/vitalstrike.cpp" />
     <ClCompile Include="skills/taekwon/circleofdirectionsandelementals.cpp" />

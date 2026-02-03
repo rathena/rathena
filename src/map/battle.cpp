@@ -5608,13 +5608,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
-		case DK_STORMSLASH:
-			skillratio += -100 + 300 + 750 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_GIANTGROWTH) && rnd_chance(60, 100))
-				skillratio *= 2;
-			break;
 		case DK_DRAGONIC_BREATH:
 			skillratio += -100 + 50 + 350 * skill_lv;
 			skillratio += 7 * sstatus->pow;

@@ -33,6 +33,7 @@
 #include "spearboomerang.hpp"
 #include "spearstab.hpp"
 #include "spiralpierce.hpp"
+#include "stormslash.hpp"
 #include "traumaticblow.hpp"
 #include "vitalstrike.hpp"
 
@@ -80,6 +81,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillServantWeaponPhantom>();
 		case DK_SERVANT_W_SIGN:
 			return std::make_unique<SkillServantWeaponSign>();
+		case DK_STORMSLASH:
+			return std::make_unique<SkillStormSlash>();
 		case DK_VIGOR:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IG_ATTACK_STANCE:
