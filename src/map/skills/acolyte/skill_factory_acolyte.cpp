@@ -25,6 +25,7 @@
 #include "lexdivina.hpp"
 #include "magnificat.hpp"
 #include "magnusexorcismus.hpp"
+#include "massiveflameblaster.hpp"
 #include "oleumsanctum.hpp"
 #include "pneuma.hpp"
 #include "ruwach.hpp"
@@ -91,6 +92,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IQ_JUDGE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_MASSIVE_F_BLASTER:
+			return std::make_unique<SkillMassiveFlameBlaster>();
 		case IQ_OLEUM_SANCTUM:
 			return std::make_unique<SkillOleumSanctum>();
 		case IQ_POWERFUL_FAITH:

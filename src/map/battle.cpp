@@ -5678,12 +5678,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 
 			RE_LVL_DMOD(100);
 			break;
-		case IQ_MASSIVE_F_BLASTER:
-			skillratio += -100 + 2300 * skill_lv + 15 * sstatus->pow;
-			if (tstatus->race == RC_BRUTE || tstatus->race == RC_DEMON)
-				skillratio += 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
 		case IQ_EXPOSION_BLASTER:
 			skillratio += -100 + 450 + 2600 * skill_lv;
 			skillratio += 10 * sstatus->pow;
