@@ -62,6 +62,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DK_HACKANDSLASHER:
 			return std::make_unique<SkillHackAndSlasher>();
+		case DK_HACKANDSLASHER_ATK:
+			return std::make_unique<SkillHackAndSlasherAttack>();
 		case DK_SERVANTWEAPON:
 			return std::make_unique<SkillServantWeapon>();
 		case DK_SERVANTWEAPON_ATK:
