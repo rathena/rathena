@@ -21,8 +21,6 @@ void SkillTerraWave::castendDamageId(block_list* src, block_list* target, uint16
 	}
 
 	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-
-	SkillFactoryDruid::try_gain_growth_stacks(src, tick, getSkillId());
 }
 
 void SkillTerraWave::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
