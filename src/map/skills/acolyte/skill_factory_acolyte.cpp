@@ -15,6 +15,7 @@
 #include "crucis.hpp"
 #include "cure.hpp"
 #include "decagi.hpp"
+#include "explosionblaster.hpp"
 #include "gloria.hpp"
 #include "heal.hpp"
 #include "holylight.hpp"
@@ -86,6 +87,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 		case HP_BASILICA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 #endif
+		case IQ_EXPOSION_BLASTER:
+			return std::make_unique<SkillExplosionBlaster>();
 		case IQ_FIRM_FAITH:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IQ_FIRST_FAITH_POWER:

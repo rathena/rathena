@@ -5297,7 +5297,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case DK_MADNESS_CRUSHER:
 	case DK_HACKANDSLASHER:
 	case DK_DRAGONIC_BREATH:
-	case IQ_EXPOSION_BLASTER:
 	case IQ_FIRST_BRAND:
 	case IQ_SECOND_FLAME:
 	case IQ_SECOND_FAITH:
@@ -7986,7 +7985,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SJ_STAREMPEROR:
 	case SJ_FALLINGSTAR_ATK:
 	case DK_SERVANT_W_DEMOL:
-	case IQ_EXPOSION_BLASTER:
 	case SHC_IMPACT_CRATER:
 	case MT_AXE_STOMP:
 	case MT_MIGHTY_SMASH:
