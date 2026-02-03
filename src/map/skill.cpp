@@ -1923,9 +1923,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case DK_SERVANT_W_PHANTOM:
 		sc_start(src, bl, SC_HANDICAPSTATE_DEEPBLIND, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case IQ_OLEUM_SANCTUM:
-		sc_start(src, bl, SC_HOLY_OIL, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
 	case IQ_FIRST_BRAND:
 		sc_start(src, bl, SC_FIRST_BRAND, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -5300,7 +5297,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case DK_MADNESS_CRUSHER:
 	case DK_HACKANDSLASHER:
 	case DK_DRAGONIC_BREATH:
-	case IQ_OLEUM_SANCTUM:
 	case IQ_MASSIVE_F_BLASTER:
 	case IQ_EXPOSION_BLASTER:
 	case IQ_FIRST_BRAND:
@@ -7991,7 +7987,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SJ_STAREMPEROR:
 	case SJ_FALLINGSTAR_ATK:
 	case DK_SERVANT_W_DEMOL:
-	case IQ_OLEUM_SANCTUM:
 	case IQ_MASSIVE_F_BLASTER:
 	case IQ_EXPOSION_BLASTER:
 	case SHC_IMPACT_CRATER:
