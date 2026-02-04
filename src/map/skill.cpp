@@ -5997,7 +5997,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case IG_JUDGEMENT_CROSS:
 	case TR_SOUNDBLEND:
 	case SH_HYUN_ROK_CANNON:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);

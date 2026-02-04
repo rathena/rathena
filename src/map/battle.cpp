@@ -8486,14 +8486,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_STORMGUST2:
 						skillratio += 200 * skill_lv;
 						break;
-					case IG_JUDGEMENT_CROSS:
-						skillratio += -100 + 1950 * skill_lv + 10 * sstatus->spl;
-						if (tstatus->race == RC_PLANT || tstatus->race == RC_INSECT)
-							skillratio += 150 * skill_lv;
-						RE_LVL_DMOD(100);
-						if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
-							skillratio += skillratio * i / 100;
-						break;
 					case IG_CROSS_RAIN:
 						if( sc && sc->getSCE( SC_HOLY_S ) ){
 							skillratio += -100 + ( 650 + 15 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
