@@ -5735,16 +5735,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 1500 + 400 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
-		case IG_RADIANT_SPEAR:
-			skillratio += -100 + 3500 + 1150 * skill_lv;
-			skillratio += pc_checkskill(sd, IG_SPEAR_SWORD_M) * 50;
-			skillratio += 5 * sstatus->pow;	// !TODO: check POW ratio
-
-			if( sc != nullptr && sc->getSCE( SC_SPEAR_SCAR ) )
-				skillratio += 250 * skill_lv;
-
-			RE_LVL_DMOD(100);
-			break;
 		case IG_IMPERIAL_CROSS:
 			skillratio += -100 + 1650 + 1350 * skill_lv;
 			skillratio += pc_checkskill(sd, IG_SPEAR_SWORD_M) * 25;

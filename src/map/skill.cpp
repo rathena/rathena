@@ -5310,7 +5310,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case IQ_THIRD_PUNISH:
 	case IQ_THIRD_FLAME_BOMB:
 	case IQ_THIRD_CONSECRATION:
-	case IG_RADIANT_SPEAR:
 	case IG_IMPERIAL_PRESSURE:
 	case CD_ARBITRIUM_ATK:
 	case CD_PETITIO:
@@ -5555,7 +5554,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case IQ_SECOND_FLAME:
 				case IQ_SECOND_FAITH:
 				case IQ_SECOND_JUDGEMENT:
-				case IG_RADIANT_SPEAR:
 				case CD_PETITIO:
 				case CD_FRAMEN:
 				case CD_DIVINUS_FLOS:

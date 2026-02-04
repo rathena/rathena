@@ -21,6 +21,7 @@
 #include "overslash.hpp"
 #include "pierce.hpp"
 #include "provoke.hpp"
+#include "radiantspear.hpp"
 #include "relax.hpp"
 #include "resistantsouls.hpp"
 #include "sacrifice.hpp"
@@ -80,6 +81,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillJudgementCross>();
 		case IG_OVERSLASH:
 			return std::make_unique<SkillOverSlash>();
+		case IG_RADIANT_SPEAR:
+			return std::make_unique<SkillRadiantSpear>();
 		case IG_REBOUND_SHIELD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IG_SHIELD_SHOOTING:
