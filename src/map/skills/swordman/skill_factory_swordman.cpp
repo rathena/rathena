@@ -25,6 +25,7 @@
 #include "selfprovoke.hpp"
 #include "shieldboomerang.hpp"
 #include "shieldreflect.hpp"
+#include "shieldshooting.hpp"
 #include "smite.hpp"
 #include "spearboomerang.hpp"
 #include "spearstab.hpp"
@@ -75,6 +76,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillJudgementCross>();
 		case IG_REBOUND_SHIELD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IG_SHIELD_SHOOTING:
+			return std::make_unique<SkillShieldShooting>();
 		case IG_ULTIMATE_SACRIFICE:
 			return std::make_unique<SkillUltimateSacrifice>();
 		case KN_BOWLINGBASH:
