@@ -10,6 +10,7 @@
 
 #include "angelus.hpp"
 #include "aspersio.hpp"
+#include "blazingflameblast.hpp"
 #include "blessing.hpp"
 #include "bssacramenti.hpp"
 #include "crucis.hpp"
@@ -94,6 +95,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 		case HP_BASILICA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 #endif
+		case IQ_BLAZING_FLAME_BLAST:
+			return std::make_unique<SkillBlazingFlameBlast>();
 		case IQ_EXPOSION_BLASTER:
 			return std::make_unique<SkillExplosionBlaster>();
 		case IQ_FIRM_FAITH:

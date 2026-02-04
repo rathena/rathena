@@ -243,6 +243,7 @@
   <ItemGroup>
     <ClInclude Include="skills/acolyte/angelus.hpp" />
     <ClInclude Include="skills/acolyte/aspersio.hpp" />
+    <ClInclude Include="skills/acolyte/blazingflameblast.hpp" />
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/bssacramenti.hpp" />
     <ClInclude Include="skills/acolyte/crucis.hpp" />
@@ -605,6 +606,7 @@
   <ItemGroup>
     <ClCompile Include="skills/acolyte/angelus.cpp" />
     <ClCompile Include="skills/acolyte/aspersio.cpp" />
+    <ClCompile Include="skills/acolyte/blazingflameblast.cpp" />
     <ClCompile Include="skills/acolyte/blessing.cpp" />
     <ClCompile Include="skills/acolyte/bssacramenti.cpp" />
     <ClCompile Include="skills/acolyte/crucis.cpp" />
