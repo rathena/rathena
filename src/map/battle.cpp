@@ -5735,14 +5735,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 1500 + 400 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
-		case IG_GRAND_JUDGEMENT:
-			skillratio += -100 + 250 + 1500 * skill_lv + 10 * sstatus->pow;
-			if (tstatus->race == RC_PLANT || tstatus->race == RC_INSECT)
-				skillratio += 100 + 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
-				skillratio += skillratio * i / 100;
-			break;
 		case IG_SHIELD_SHOOTING:
 			skillratio += -100 + 1000 + 3500 * skill_lv;
 			skillratio += 10 * sstatus->pow;

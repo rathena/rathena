@@ -5361,7 +5361,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_WIDECRITICALWOUND:
 	case IG_SHIELD_SHOOTING:
 	case TR_METALIC_FURY:
-	case IG_GRAND_JUDGEMENT:
 	case SH_CHUL_HO_BATTERING:
 	case SH_HYUN_ROK_SPIRIT_POWER:
 	case SKE_SUNSET_BLAST:
@@ -5629,7 +5628,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					break;
 				case BO_MYSTERY_POWDER:
 				case IG_SHIELD_SHOOTING:
-				case IG_GRAND_JUDGEMENT:
 				case SHC_CROSS_SLASH:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));

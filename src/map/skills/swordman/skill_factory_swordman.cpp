@@ -12,6 +12,7 @@
 #include "brandishspear.hpp"
 #include "counterattack.hpp"
 #include "grandcross.hpp"
+#include "grandjudgement.hpp"
 #include "guardianshield.hpp"
 #include "holycross.hpp"
 #include "magnum.hpp"
@@ -61,6 +62,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IG_ATTACK_STANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case IG_GRAND_JUDGEMENT:
+			return std::make_unique<SkillGrandJudgement>();
 		case IG_GUARD_STANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case IG_GUARDIAN_SHIELD:
