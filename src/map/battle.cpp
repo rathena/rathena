@@ -5678,10 +5678,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 
 			RE_LVL_DMOD(100);
 			break;
-		case IQ_THIRD_CONSECRATION:
-			skillratio += -100 + 700 * skill_lv + 10 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
 		case IQ_BLAZING_FLAME_BLAST:
 			skillratio += -100 + 2000 + 3800 * skill_lv;
 			skillratio += 10 * sstatus->pow;	// !TODO: unknown ratio
