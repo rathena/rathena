@@ -8464,15 +8464,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_STORMGUST2:
 						skillratio += 200 * skill_lv;
 						break;
-					case IG_CROSS_RAIN:
-						if( sc && sc->getSCE( SC_HOLY_S ) ){
-							skillratio += -100 + ( 650 + 15 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
-						}else{
-							skillratio += -100 + ( 450 + 10 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
-						}
-						skillratio += 7 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
 					case IG_IMPERIAL_PRESSURE:
 						skillratio += -100 + 5600 + 1850 * skill_lv;
 						skillratio += 7 * sstatus->spl;

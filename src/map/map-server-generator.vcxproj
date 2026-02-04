@@ -436,6 +436,7 @@
     <ClInclude Include="skills/swordman/bowlingbash.hpp" />
     <ClInclude Include="skills/swordman/brandishspear.hpp" />
     <ClInclude Include="skills/swordman/counterattack.hpp" />
+    <ClInclude Include="skills/swordman/crossrain.hpp" />
     <ClInclude Include="skills/swordman/grandcross.hpp" />
     <ClInclude Include="skills/swordman/grandjudgement.hpp" />
     <ClInclude Include="skills/swordman/guardianshield.hpp" />
@@ -794,6 +795,7 @@
     <ClCompile Include="skills/swordman/bowlingbash.cpp" />
     <ClCompile Include="skills/swordman/brandishspear.cpp" />
     <ClCompile Include="skills/swordman/counterattack.cpp" />
+    <ClCompile Include="skills/swordman/crossrain.cpp" />
     <ClCompile Include="skills/swordman/grandcross.cpp" />
     <ClCompile Include="skills/swordman/grandjudgement.cpp" />
     <ClCompile Include="skills/swordman/guardianshield.cpp" />
