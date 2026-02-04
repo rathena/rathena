@@ -15,7 +15,7 @@ void SkillWeaponCrush::castendNoDamageId(block_list *src, block_list *target, ui
 
 	bool i;
 
-	if( (i = skill_strip_equip(src, target, getSkillId(), skill_lv)) || (getSkillId() != GC_WEAPONCRUSH ) )
+	if( (i = skill_strip_equip(src, target, getSkillId(), skill_lv)) )
 		clif_skill_nodamage(src,*target,getSkillId(),skill_lv,i);
 
 	//Nothing stripped.

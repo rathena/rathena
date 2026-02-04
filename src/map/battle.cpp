@@ -3325,7 +3325,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case LG_BANISHINGPOINT:
 				hitrate += 5 * skill_lv;
 				break;
-
 			case SC_FATALMENACE:
 				if (skill_lv < 6)
 					hitrate -= 35 - 5 * skill_lv;
@@ -5029,13 +5028,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(150); // Base level bonus.
 			break;
 		// case NPC_PHANTOMTHRUST:	// ATK = 100% for all level
-
-
-
-
-
-
-
 		case AB_DUPLELIGHT_MELEE:
 			skillratio += 50 + 15 * skill_lv;
 			break;

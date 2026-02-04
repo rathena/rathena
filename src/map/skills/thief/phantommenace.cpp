@@ -6,7 +6,7 @@
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
-SkillPhantomMenace::SkillPhantomMenace() : SkillImpl(GC_PHANTOMMENACE) {
+SkillPhantomMenace::SkillPhantomMenace() : WeaponSkillImpl(GC_PHANTOMMENACE) {
 }
 
 void SkillPhantomMenace::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
@@ -19,7 +19,7 @@ void SkillPhantomMenace::castendDamageId(block_list *src, block_list *target, ui
 	if (flag&1) { // Only Hits Invisitargete Targets
 		if(tsc && (tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD))) {
 			status_change_end(target, SC_CLOAKINGEXCEED);
-			skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag);
+			WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 		}
 		if (tsc && tsc->getSCE(SC__SHADOWFORM) && rnd() % 100 < 100 - tsc->getSCE(SC__SHADOWFORM)->val1 * 10) // [100 - (Skill Level x 10)] %
 			status_change_end(target, SC__SHADOWFORM); // Should only end, no damage dealt.

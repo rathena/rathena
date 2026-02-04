@@ -5,7 +5,7 @@
 
 #include "map/status.hpp"
 
-SkillDarkClaw::SkillDarkClaw() : SkillImpl(GC_DARKCROW) {
+SkillDarkClaw::SkillDarkClaw() : WeaponSkillImpl(GC_DARKCROW) {
 }
 
 void SkillDarkClaw::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
@@ -13,6 +13,6 @@ void SkillDarkClaw::calculateSkillRatio(const Damage *wd, const block_list *src,
 }
 
 void SkillDarkClaw::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 	sc_start(src, target, SC_DARKCROW, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)); // Should be applied even on miss
 }

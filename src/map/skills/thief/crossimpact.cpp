@@ -9,7 +9,7 @@
 #include "map/map.hpp"
 #include "map/pc.hpp"
 
-SkillCrossImpact::SkillCrossImpact() : SkillImpl(GC_CROSSIMPACT) {
+SkillCrossImpact::SkillCrossImpact() : WeaponSkillImpl(GC_CROSSIMPACT) {
 }
 
 void SkillCrossImpact::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
@@ -27,7 +27,7 @@ void SkillCrossImpact::castendDamageId(block_list *src, block_list *target, uint
 
 	if (skill_check_unit_movepos(0, src, target->x + dirx[dir], target->y + diry[dir], 1, 1)) {
 		clif_blown(src);
-		skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
+		WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 	} else {
 		if (sd)
 			clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL );

@@ -9,7 +9,7 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillCrossRipperSlasher::SkillCrossRipperSlasher() : SkillImpl(GC_CROSSRIPPERSLASHER) {
+SkillCrossRipperSlasher::SkillCrossRipperSlasher() : WeaponSkillImpl(GC_CROSSRIPPERSLASHER) {
 }
 
 void SkillCrossRipperSlasher::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
@@ -30,6 +30,6 @@ void SkillCrossRipperSlasher::castendDamageId(block_list *src, block_list *targe
 		clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL_CONDITION );
 	else
 	{
-		skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag);
+		WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 	}
 }

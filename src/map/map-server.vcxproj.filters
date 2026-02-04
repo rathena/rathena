@@ -1239,7 +1239,6 @@
     <ClInclude Include="skills/thief/createdeadlypoison.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
-
     <ClInclude Include="skills/thief/createnewpoison.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -2253,7 +2252,6 @@
     <ClCompile Include="skills/thief/createdeadlypoison.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-
     <ClCompile Include="skills/thief/createnewpoison.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>

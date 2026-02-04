@@ -7,7 +7,7 @@
 #include "map/map.hpp"
 #include "map/unit.hpp"
 
-SkillDarkIllusion::SkillDarkIllusion() : SkillImpl(GC_DARKILLUSION) {
+SkillDarkIllusion::SkillDarkIllusion() : WeaponSkillImpl(GC_DARKILLUSION) {
 }
 
 void SkillDarkIllusion::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
@@ -23,7 +23,8 @@ void SkillDarkIllusion::castendDamageId(block_list *src, block_list *target, uin
 
 	if( unit_movepos(src, target->x+x, target->y+y, 1, 1) ) {
 		clif_blown(src);
-		skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag);
+		WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
+
 		if( rnd()%100 < 4 * skill_lv )
 			skill_castend_damage_id(src,target,GC_CROSSIMPACT,skill_lv,tick,flag);
 	}

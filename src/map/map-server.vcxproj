@@ -530,10 +530,10 @@
     <ClInclude Include="skills/thief/counterinstinct.hpp" />
     <ClInclude Include="skills/thief/counterslash.hpp" />
     <ClInclude Include="skills/thief/createdeadlypoison.hpp" />
-    <ClInclude Include="skills/thief/dancingknife.hpp" />
     <ClInclude Include="skills/thief/createnewpoison.hpp" />
     <ClInclude Include="skills/thief/crossimpact.hpp" />
     <ClInclude Include="skills/thief/crossripperslasher.hpp" />
+    <ClInclude Include="skills/thief/dancingknife.hpp" />
     <ClInclude Include="skills/thief/darkclaw.hpp" />
     <ClInclude Include="skills/thief/darkillusion.hpp" />
     <ClInclude Include="skills/thief/detoxify.hpp" />
@@ -915,10 +915,10 @@
     <ClCompile Include="skills/thief/counterinstinct.cpp" />
     <ClCompile Include="skills/thief/counterslash.cpp" />
     <ClCompile Include="skills/thief/createdeadlypoison.cpp" />
-    <ClCompile Include="skills/thief/dancingknife.cpp" />
     <ClCompile Include="skills/thief/createnewpoison.cpp" />
     <ClCompile Include="skills/thief/crossimpact.cpp" />
     <ClCompile Include="skills/thief/crossripperslasher.cpp" />
+    <ClCompile Include="skills/thief/dancingknife.cpp" />
     <ClCompile Include="skills/thief/darkclaw.cpp" />
     <ClCompile Include="skills/thief/darkillusion.cpp" />
     <ClCompile Include="skills/thief/detoxify.cpp" />
