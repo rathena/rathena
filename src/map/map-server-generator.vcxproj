@@ -441,6 +441,7 @@
     <ClInclude Include="skills/swordman/grandjudgement.hpp" />
     <ClInclude Include="skills/swordman/guardianshield.hpp" />
     <ClInclude Include="skills/swordman/holycross.hpp" />
+    <ClInclude Include="skills/swordman/imperialcross.hpp" />
     <ClInclude Include="skills/swordman/judgementcross.hpp" />
     <ClInclude Include="skills/swordman/magnum.hpp" />
     <ClInclude Include="skills/swordman/overslash.hpp" />
@@ -801,6 +802,7 @@
     <ClCompile Include="skills/swordman/grandjudgement.cpp" />
     <ClCompile Include="skills/swordman/guardianshield.cpp" />
     <ClCompile Include="skills/swordman/holycross.cpp" />
+    <ClCompile Include="skills/swordman/imperialcross.cpp" />
     <ClCompile Include="skills/swordman/judgementcross.cpp" />
     <ClCompile Include="skills/swordman/magnum.cpp" />
     <ClCompile Include="skills/swordman/overslash.cpp" />

@@ -16,6 +16,7 @@
 #include "grandjudgement.hpp"
 #include "guardianshield.hpp"
 #include "holycross.hpp"
+#include "imperialcross.hpp"
 #include "judgementcross.hpp"
 #include "magnum.hpp"
 #include "overslash.hpp"
@@ -77,6 +78,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillGuardianShield>();
 		case IG_HOLY_SHIELD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IG_IMPERIAL_CROSS:
+			return std::make_unique<SkillImperialCross>();
 		case IG_JUDGEMENT_CROSS:
 			return std::make_unique<SkillJudgementCross>();
 		case IG_OVERSLASH:
