@@ -5864,59 +5864,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 15 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
-		case WH_HAWKRUSH:
-			skillratio += -100 + 500 * skill_lv + 5 * sstatus->con;
-			if (sd)
-				skillratio += skillratio * pc_checkskill(sd, WH_NATUREFRIENDLY) / 10;
-			RE_LVL_DMOD(100);
-			break;
-		case WH_HAWKBOOMERANG:
-			skillratio += -100 + 600 * skill_lv + 10 * sstatus->con;
-			if (sd)
-				skillratio += skillratio * pc_checkskill(sd, WH_NATUREFRIENDLY) / 10;
-			if (tstatus->race == RC_BRUTE || tstatus->race == RC_FISH)
-				skillratio += skillratio * 50 / 100;
-			RE_LVL_DMOD(100);
-			break;
-		case WH_GALESTORM:
-			skillratio += -100 + 1350 * skill_lv;
-			skillratio += 10 * sstatus->con;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_CALAMITYGALE) && (tstatus->race == RC_BRUTE || tstatus->race == RC_FISH))
-				skillratio += skillratio * 50 / 100;
-			break;
-		case WH_CRESCIVE_BOLT:
-			skillratio += -100 + 500 + 1300 * skill_lv;
-			skillratio += 5 * sstatus->con;
-			RE_LVL_DMOD(100);
-			if (sc) {
-				if (sc->getSCE(SC_CRESCIVEBOLT))
-					skillratio += skillratio * (20 * sc->getSCE(SC_CRESCIVEBOLT)->val1) / 100;
-
-				if (sc->getSCE(SC_CALAMITYGALE)) {
-					skillratio += skillratio * 20 / 100;
-
-					if (tstatus->race == RC_BRUTE || tstatus->race == RC_FISH)
-						skillratio += skillratio * 50 / 100;
-				}
-			}
-			break;
-		case WH_DEEPBLINDTRAP:
-		case WH_SOLIDTRAP:
-		case WH_SWIFTTRAP:
-		case WH_FLAMETRAP:
-			skillratio += -100 + 850 * skill_lv + 5 * sstatus->con;
-			RE_LVL_DMOD(100);
-			skillratio += skillratio * (20 * (sd ? pc_checkskill(sd, WH_ADVANCED_TRAP) : 5)) / 100;
-			break;
-		case WH_WILD_WALK:
-			skillratio += -100 + 1800 + 2800 * skill_lv;
-			// !TODO: unknown con and WH_NATUREFRIENDLY/HT_STEELCROW skills ratio
-			skillratio += 5 * sstatus->con;
-			skillratio += skillratio * pc_checkskill(sd, WH_NATUREFRIENDLY) / 10;
-			skillratio += skillratio * pc_checkskill(sd, HT_STEELCROW) / 10;
-			RE_LVL_DMOD(100);
-			break;
 		case BO_ACIDIFIED_ZONE_WATER:
 		case BO_ACIDIFIED_ZONE_GROUND:
 		case BO_ACIDIFIED_ZONE_WIND:
