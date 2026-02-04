@@ -5728,58 +5728,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += -100 + (1050 + pc_checkskill(sd,CD_MACE_BOOK_M) * 50) * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
-		case SHC_DANCING_KNIFE:
-			skillratio += -100 + 200 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SHC_SAVAGE_IMPACT:
-			skillratio += -100 + 105 * skill_lv + 5 * sstatus->pow;
-
-			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ){
-				skillratio += 20 * skill_lv + 3 * sstatus->pow;	// !TODO: check POW ratio
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case SHC_ETERNAL_SLASH:
-			skillratio += -100 + 300 * skill_lv + 2 * sstatus->pow;
-
-			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ){
-				skillratio += 120 * skill_lv + sstatus->pow;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case SHC_SHADOW_STAB:
-			skillratio += -100 + 550 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-
-			if (wd->miscflag & SKILL_ALTDMG_FLAG) {
-				skillratio += 100 * skill_lv + 2 * sstatus->pow;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case SHC_IMPACT_CRATER:
-			skillratio += -100 + 80 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case SHC_FATAL_SHADOW_CROW:
-			skillratio += -100 + 1300 * skill_lv + 10 * sstatus->pow;
-			if (tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_DRAGON)
-				skillratio += 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case SHC_CROSS_SLASH:
-			skillratio += -100 + 300 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-
-			if( sc != nullptr && sc->getSCE( SC_SHADOW_EXCEED ) ) {
-				skillratio += 60 * skill_lv;
-				skillratio += 2 * sstatus->pow;
-			}
-			RE_LVL_DMOD(100);
-			break;
 		case MT_AXE_STOMP:
 			skillratio += -100 + 450 + 1150 * skill_lv;
 			skillratio += 5 * sstatus->pow;
