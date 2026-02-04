@@ -7,12 +7,12 @@
 #include "map/skill.hpp"
 #include "map/status.hpp"
 
-SkillDragonicAura::SkillDragonicAura() : SkillImpl(DK_DRAGONIC_AURA) {
+SkillDragonicAura::SkillDragonicAura() : WeaponSkillImpl(DK_DRAGONIC_AURA) {
 }
 
 void SkillDragonicAura::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 	sc_start(src, src, skill_get_sc(getSkillId()), 100, skill_lv, skill_get_time(getSkillId(),skill_lv));
 }
 
