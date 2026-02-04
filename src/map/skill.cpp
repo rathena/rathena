@@ -1923,7 +1923,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case DK_SERVANT_W_PHANTOM:
 		sc_start(src, bl, SC_HANDICAPSTATE_DEEPBLIND, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case IQ_THIRD_FLAME_BOMB:
 	case IQ_THIRD_CONSECRATION:
 		status_change_end(bl, SC_SECOND_BRAND);
 		break;
@@ -5288,7 +5287,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case DK_MADNESS_CRUSHER:
 	case DK_HACKANDSLASHER:
 	case DK_DRAGONIC_BREATH:
-	case IQ_THIRD_FLAME_BOMB:
 	case IQ_THIRD_CONSECRATION:
 	case IG_OVERSLASH:
 	case IG_RADIANT_SPEAR:
@@ -5552,11 +5550,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case ABC_CHAIN_REACTION_SHOT:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					map_foreachinrange(skill_area_sub, bl, skill_get_splash(ABC_CHAIN_REACTION_SHOT_ATK, skill_lv), BL_CHAR|BL_SKILL, src, ABC_CHAIN_REACTION_SHOT_ATK, skill_lv, tick + (200 + status_get_amotion(src)), flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-					break;
-				case IQ_THIRD_FLAME_BOMB:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					if (sd && sd->spiritball / 5 > 1)
-						skill_area_temp[0] = sd->spiritball / 5 - 1;
 					break;
 				case IQ_THIRD_CONSECRATION:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
