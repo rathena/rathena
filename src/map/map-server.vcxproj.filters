@@ -981,9 +981,6 @@
     <ClInclude Include="skills/summoner/catnipmeteor.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
-    <ClInclude Include="skills/summoner/catnipmeteor2.hpp">
-      <Filter>Header Files\Skills\Summoner</Filter>
-    </ClInclude>
     <ClInclude Include="skills/summoner/catnippowdering.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
@@ -996,9 +993,6 @@
     <ClInclude Include="skills/summoner/lunaticcarrotbeat.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
-    <ClInclude Include="skills/summoner/lunaticcarrotbeat2.hpp">
-      <Filter>Header Files\Skills\Summoner</Filter>
-    </ClInclude>
     <ClInclude Include="skills/summoner/meowmeow.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
@@ -1006,9 +1000,6 @@
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/summoner/pickypeck.hpp">
-      <Filter>Header Files\Skills\Summoner</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/summoner/pickypeckdoubleattack.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/summoner/powerofflock.hpp">
@@ -1997,9 +1988,6 @@
     <ClCompile Include="skills/summoner/catnipmeteor.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
-    <ClCompile Include="skills/summoner/catnipmeteor2.cpp">
-      <Filter>Source Files\Skills\Summoner</Filter>
-    </ClCompile>
     <ClCompile Include="skills/summoner/catnippowdering.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
@@ -2012,9 +2000,6 @@
     <ClCompile Include="skills/summoner/lunaticcarrotbeat.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
-    <ClCompile Include="skills/summoner/lunaticcarrotbeat2.cpp">
-      <Filter>Source Files\Skills\Summoner</Filter>
-    </ClCompile>
     <ClCompile Include="skills/summoner/meowmeow.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
@@ -2022,9 +2007,6 @@
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/pickypeck.cpp">
-      <Filter>Source Files\Skills\Summoner</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/summoner/pickypeckdoubleattack.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/powerofflock.cpp">

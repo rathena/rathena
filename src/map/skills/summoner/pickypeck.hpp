@@ -5,10 +5,20 @@
 
 #include "../weapon_skill_impl.hpp"
 
+// SU_PICKYPECK
 class SkillPickyPeck : public WeaponSkillImpl {
 public:
 	SkillPickyPeck();
 
 	void calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const override;
 	void castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const override;
+};
+
+
+// SU_PICKYPECK_DOUBLE_ATK
+class SkillPickyPeckDoubleAttack : public SkillImpl {
+public:
+	SkillPickyPeckDoubleAttack();
+
+	void calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const override;
 };
