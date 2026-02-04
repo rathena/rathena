@@ -28,6 +28,7 @@
 #include "spearstab.hpp"
 #include "spiralpierce.hpp"
 #include "traumaticblow.hpp"
+#include "ultimatesacrifice.hpp"
 #include "vitalstrike.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
@@ -68,6 +69,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IG_REBOUND_SHIELD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IG_ULTIMATE_SACRIFICE:
+			return std::make_unique<SkillUltimateSacrifice>();
 		case KN_BOWLINGBASH:
 			return std::make_unique<SkillBowlingBash>();
 		case KN_BRANDISHSPEAR:
