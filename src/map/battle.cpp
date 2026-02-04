@@ -5678,10 +5678,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 
 			RE_LVL_DMOD(100);
 			break;
-		case IQ_SECOND_FAITH:
-			skillratio += -100 + 100 + 2300 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
 		case IQ_SECOND_JUDGEMENT:
 			skillratio += -100 + 150 + 2600 * skill_lv + 7 * sstatus->pow;
 			RE_LVL_DMOD(100);
