@@ -1230,6 +1230,9 @@
     <ClInclude Include="skills/thief/createdeadlypoison.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/dancingknife.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/detoxify.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -1257,6 +1260,12 @@
     <ClInclude Include="skills/thief/envenom.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/eternalslash.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/fatalshadowcrow.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/findstone.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -1264,6 +1273,9 @@
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/hiding.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/impactcrater.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/meteorassault.hpp">
@@ -1278,7 +1290,16 @@
     <ClInclude Include="skills/thief/sandattack.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/savageimpact.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/scribble.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/shadowstab.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/crossslash.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/sightlessmind.hpp">
@@ -2177,6 +2198,9 @@
     <ClCompile Include="skills/thief/createdeadlypoison.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/dancingknife.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/detoxify.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
@@ -2204,6 +2228,12 @@
     <ClCompile Include="skills/thief/envenom.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/eternalslash.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/fatalshadowcrow.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/findstone.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
@@ -2211,6 +2241,9 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/hiding.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/impactcrater.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/meteorassault.cpp">
@@ -2225,7 +2258,16 @@
     <ClCompile Include="skills/thief/sandattack.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/savageimpact.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/scribble.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/shadowstab.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/crossslash.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/sightlessmind.cpp">
