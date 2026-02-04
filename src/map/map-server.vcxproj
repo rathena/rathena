@@ -442,6 +442,7 @@
     <ClInclude Include="skills/swordman/holycross.hpp" />
     <ClInclude Include="skills/swordman/judgementcross.hpp" />
     <ClInclude Include="skills/swordman/magnum.hpp" />
+    <ClInclude Include="skills/swordman/overslash.hpp" />
     <ClInclude Include="skills/swordman/pierce.hpp" />
     <ClInclude Include="skills/swordman/provoke.hpp" />
     <ClInclude Include="skills/swordman/relax.hpp" />
@@ -799,6 +800,7 @@
     <ClCompile Include="skills/swordman/holycross.cpp" />
     <ClCompile Include="skills/swordman/judgementcross.cpp" />
     <ClCompile Include="skills/swordman/magnum.cpp" />
+    <ClCompile Include="skills/swordman/overslash.cpp" />
     <ClCompile Include="skills/swordman/pierce.cpp" />
     <ClCompile Include="skills/swordman/provoke.cpp" />
     <ClCompile Include="skills/swordman/relax.cpp" />

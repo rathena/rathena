@@ -5310,7 +5310,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case IQ_THIRD_PUNISH:
 	case IQ_THIRD_FLAME_BOMB:
 	case IQ_THIRD_CONSECRATION:
-	case IG_OVERSLASH:
 	case IG_RADIANT_SPEAR:
 	case IG_IMPERIAL_PRESSURE:
 	case CD_ARBITRIUM_ATK:
@@ -5594,10 +5593,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case IQ_THIRD_CONSECRATION:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					status_heal(src, status_get_max_hp(src) * skill_lv / 100, status_get_max_sp(src) * skill_lv / 100, 0);
-					break;
-				case IG_OVERSLASH:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
 					break;
 				case WH_GALESTORM:// Give AP if 3 or more targets are hit.
 					if (sd && map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count) >= 3)

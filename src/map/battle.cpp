@@ -5735,14 +5735,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 1500 + 400 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
-		case IG_OVERSLASH:
-			skillratio += -100 + 220 * skill_lv;
-			skillratio += pc_checkskill(sd, IG_SPEAR_SWORD_M) * 50 * skill_lv;
-			skillratio += 7 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
-				skillratio += skillratio * i / 100;
-			break;
 		case IG_RADIANT_SPEAR:
 			skillratio += -100 + 3500 + 1150 * skill_lv;
 			skillratio += pc_checkskill(sd, IG_SPEAR_SWORD_M) * 50;

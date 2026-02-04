@@ -975,6 +975,9 @@
     <ClInclude Include="skills/swordman/magnum.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/overslash.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/pierce.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -1902,6 +1905,9 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/magnum.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/overslash.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/pierce.cpp">
