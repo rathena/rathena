@@ -3,8 +3,11 @@
 
 #include "servantweapondemolition.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
 #include "map/map.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillServantWeaponDemolition::SkillServantWeaponDemolition() : SkillImplRecursiveDamageSplash(DK_SERVANT_W_DEMOL) {

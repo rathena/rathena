@@ -3,7 +3,10 @@
 
 #include "stormslash.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillStormSlash::SkillStormSlash() : WeaponSkillImpl(DK_STORMSLASH) {

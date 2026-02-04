@@ -3,7 +3,10 @@
 
 #include "dragonicpierce.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillDragonicPierce::SkillDragonicPierce() : WeaponSkillImpl(DK_DRAGONIC_PIERCE) {

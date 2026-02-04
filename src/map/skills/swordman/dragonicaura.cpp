@@ -3,8 +3,10 @@
 
 #include "dragonicaura.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
-#include "map/skill.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillDragonicAura::SkillDragonicAura() : WeaponSkillImpl(DK_DRAGONIC_AURA) {
