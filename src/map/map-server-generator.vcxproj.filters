@@ -981,9 +981,6 @@
     <ClInclude Include="skills/summoner/catnipmeteor.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
-    <ClInclude Include="skills/summoner/catnipmeteor2.hpp">
-      <Filter>Header Files\Skills\Summoner</Filter>
-    </ClInclude>
     <ClInclude Include="skills/summoner/catnippowdering.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
@@ -996,9 +993,6 @@
     <ClInclude Include="skills/summoner/lunaticcarrotbeat.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
-    <ClInclude Include="skills/summoner/lunaticcarrotbeat2.hpp">
-      <Filter>Header Files\Skills\Summoner</Filter>
-    </ClInclude>
     <ClInclude Include="skills/summoner/meowmeow.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
@@ -1006,9 +1000,6 @@
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/summoner/pickypeck.hpp">
-      <Filter>Header Files\Skills\Summoner</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/summoner/pickypeckdoubleattack.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/summoner/powerofflock.hpp">
