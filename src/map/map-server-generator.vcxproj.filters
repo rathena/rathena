@@ -930,6 +930,9 @@
     <ClInclude Include="skills/novice/hellsdrive.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
+    <ClInclude Include="skills/novice/helpangel.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
     <ClInclude Include="skills/novice/jackfrostnova.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
@@ -1872,6 +1875,9 @@
       <Filter>Source Files\Skills\Novice</Filter>
     </ClCompile>
     <ClCompile Include="skills/novice/hellsdrive.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/helpangel.cpp">
       <Filter>Source Files\Skills\Novice</Filter>
     </ClCompile>
     <ClCompile Include="skills/novice/jackfrostnova.cpp">

@@ -427,6 +427,7 @@
     <ClInclude Include="skills/novice/doublebowlingbash.hpp" />
     <ClInclude Include="skills/novice/groundgravitation.hpp" />
     <ClInclude Include="skills/novice/hellsdrive.hpp" />
+    <ClInclude Include="skills/novice/helpangel.hpp" />
     <ClInclude Include="skills/novice/jackfrostnova.hpp" />
     <ClInclude Include="skills/novice/jupitelthunderstorm.hpp" />
     <ClInclude Include="skills/novice/megasonicblow.hpp" />
@@ -789,6 +790,7 @@
     <ClCompile Include="skills/novice/doublebowlingbash.cpp" />
     <ClCompile Include="skills/novice/groundgravitation.cpp" />
     <ClCompile Include="skills/novice/hellsdrive.cpp" />
+    <ClCompile Include="skills/novice/helpangel.cpp" />
     <ClCompile Include="skills/novice/jackfrostnova.cpp" />
     <ClCompile Include="skills/novice/jupitelthunderstorm.cpp" />
     <ClCompile Include="skills/novice/megasonicblow.cpp" />
