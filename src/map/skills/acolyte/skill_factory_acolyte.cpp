@@ -37,6 +37,7 @@
 #include "secondjudgement.hpp"
 #include "statusrecovery.hpp"
 #include "suffragium.hpp"
+#include "thirdpunish.hpp"
 #include "turnundead.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
@@ -117,6 +118,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IQ_THIRD_EXOR_FLAME:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_THIRD_PUNISH:
+			return std::make_unique<SkillThirdPunish>();
 		case MO_BLADESTOP:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_EXPLOSIONSPIRITS:
