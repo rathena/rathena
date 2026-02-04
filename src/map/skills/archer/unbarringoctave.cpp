@@ -15,7 +15,7 @@ void SkillUnbarringOctave::applyAdditionalEffects(block_list *src, block_list *t
 	int32 rate = 150 + 50 * skill_lv; // Aegis accuracy (1000 = 100%)
 	int32 duration = skill_get_time2(getSkillId(), skill_lv);
 	if (battle_check_target(src, target, BCT_PARTY) > 0) {
-		// On party members: Chance is divided by 4 and BA_FROSTJOKER duration is fixed to 15000ms
+		// On party members: Chance is divided by 4 and duration is fixed to 15000ms
 		rate /= 4;
 		duration = skill_get_time(getSkillId(), skill_lv);
 	}
