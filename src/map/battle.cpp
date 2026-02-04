@@ -8444,12 +8444,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_STORMGUST2:
 						skillratio += 200 * skill_lv;
 						break;
-					case IG_IMPERIAL_PRESSURE:
-						skillratio += -100 + 5600 + 1850 * skill_lv;
-						skillratio += 7 * sstatus->spl;
-						skillratio += 50 * pc_checkskill( sd, IG_SPEAR_SWORD_M );
-						RE_LVL_DMOD(100);
-						break;
 					case CD_ARBITRIUM:
 						skillratio += -100 + 1000 * skill_lv + 10 * sstatus->spl;
 						skillratio += 10 * pc_checkskill( sd, CD_FIDUS_ANIMUS ) * skill_lv;
