@@ -960,6 +960,9 @@
     <ClInclude Include="skills/swordman/grandcross.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/guardianshield.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/holycross.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -1874,6 +1877,9 @@
     <ClCompile Include="skills/swordman/grandcross.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/guardianshield.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/holycross.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -1952,7 +1958,6 @@
     <ClCompile Include="skills/taekwon/eswoo.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-
     <ClCompile Include="skills/taekwon/exorcismofmalicioussoul.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>

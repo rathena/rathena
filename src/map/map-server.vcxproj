@@ -437,6 +437,7 @@
     <ClInclude Include="skills/swordman/brandishspear.hpp" />
     <ClInclude Include="skills/swordman/counterattack.hpp" />
     <ClInclude Include="skills/swordman/grandcross.hpp" />
+    <ClInclude Include="skills/swordman/guardianshield.hpp" />
     <ClInclude Include="skills/swordman/holycross.hpp" />
     <ClInclude Include="skills/swordman/magnum.hpp" />
     <ClInclude Include="skills/swordman/pierce.hpp" />
@@ -463,9 +464,9 @@
     <ClInclude Include="skills/taekwon/estin.hpp" />
     <ClInclude Include="skills/taekwon/estun.hpp" />
     <ClInclude Include="skills/taekwon/eswoo.hpp" />
+    <ClInclude Include="skills/taekwon/exorcismofmalicioussoul.hpp" />
     <ClInclude Include="skills/taekwon/feelingthesunmoonandstars.hpp" />
     <ClInclude Include="skills/taekwon/hatredofthesunmoonandstars.hpp" />
-    <ClInclude Include="skills/taekwon/exorcismofmalicioussoul.hpp" />
     <ClInclude Include="skills/taekwon/highjump.hpp" />
     <ClInclude Include="skills/taekwon/jumpkick.hpp" />
     <ClInclude Include="skills/taekwon/kaahi.hpp" />
@@ -789,6 +790,7 @@
     <ClCompile Include="skills/swordman/brandishspear.cpp" />
     <ClCompile Include="skills/swordman/counterattack.cpp" />
     <ClCompile Include="skills/swordman/grandcross.cpp" />
+    <ClCompile Include="skills/swordman/guardianshield.cpp" />
     <ClCompile Include="skills/swordman/holycross.cpp" />
     <ClCompile Include="skills/swordman/magnum.cpp" />
     <ClCompile Include="skills/swordman/pierce.cpp" />
@@ -815,9 +817,9 @@
     <ClCompile Include="skills/taekwon/estin.cpp" />
     <ClCompile Include="skills/taekwon/estun.cpp" />
     <ClCompile Include="skills/taekwon/eswoo.cpp" />
+    <ClCompile Include="skills/taekwon/exorcismofmalicioussoul.cpp" />
     <ClCompile Include="skills/taekwon/feelingthesunmoonandstars.cpp" />
     <ClCompile Include="skills/taekwon/hatredofthesunmoonandstars.cpp" />
-    <ClCompile Include="skills/taekwon/exorcismofmalicioussoul.cpp" />
     <ClCompile Include="skills/taekwon/highjump.cpp" />
     <ClCompile Include="skills/taekwon/jumpkick.cpp" />
     <ClCompile Include="skills/taekwon/kaahi.cpp" />
