@@ -46345,7 +46345,8 @@ Body:
     Type: Weapon
     TargetType: Attack
     Range: 3
-    HitCount: 1
+    Hit: Multi_Hit
+    HitCount: -7
     Element: Weapon
     SplashArea:
       - Level: 1
