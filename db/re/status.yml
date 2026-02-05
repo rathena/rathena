@@ -9978,12 +9978,12 @@ Body:
       INSANE3: true
     Script: |
       bonus bMaxHPrate, 10;
-  - Status: ENRAGE_WOLF
+  - Status: Enrage_Wolf
     Icon: EFST_ENRAGE_WOLF
     Script: |
       .@lv = getstatus(SC_ENRAGE_WOLF, 1);
       bonus bShortAtkRate, .@lv * 2;
-  - Status: BLOOD_HOWLING
+  - Status: Blood_Howling
     Icon: EFST_BLOOD_HOWLING
     Script: |
       .@lv = getstatus(SC_BLOOD_HOWLING, 1);
@@ -10009,12 +10009,12 @@ Body:
       ZEPHYR_LINK: true
     Script: |
       bonus bSpeedRate, 25;
-  - Status: ENRAGE_RAPTOR
+  - Status: Enrage_Raptor
     Icon: EFST_ENRAGE_RAPTOR
     Script: |
       .@lv = getstatus(SC_ENRAGE_RAPTOR, 1);
       bonus bLongAtkRate, .@lv * 2;
-  - Status: PREENING
+  - Status: Preening
     Icon: EFST_PREENING
     Script: |
       .@lv = getstatus(SC_PREENING, 1);
@@ -10057,7 +10057,7 @@ Body:
       Truth_Of_Wind: true
     Script: |
       bonus2 bMagicAtkEle, Ele_Earth, 10;
-  - Status: NATURE_SHIELD
+  - Status: Nature_Shield
     Icon: EFST_NATURE_SHIELD
     Script: |
       .@lv = getstatus(SC_NATURE_SHIELD, 1);
@@ -10070,7 +10070,7 @@ Body:
     Flags:
       Debuff: true
       NoSave: true
-  - Status: IRON_HOWLING
+  - Status: Iron_Howling
     Icon: EFST_IRON_HOWLING
     Flags:
       NoDispell: true
@@ -10082,7 +10082,7 @@ Body:
       bonus bNearAtkDef, .@reduce;
       bonus bLongAtkDef, .@reduce;
       bonus bMagicAtkDef, .@reduce;
-  - Status: WIND_VEIL
+  - Status: Wind_Veil
     Icon: EFST_WIND_VEIL
     Flags:
       NoDispell: true
@@ -10119,7 +10119,7 @@ Body:
       bonus2 bSkillAtk, "KR_ICE_SPLASH", 15;
     EndOnStart:
       Ice_Pillar: true
-  - Status: THUNDERING_ROD
+  - Status: Thundering_Rod
     Icon: EFST_THUNDERING_ROD
     Flags:
       BlEffect: true
@@ -10128,7 +10128,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-  - Status: THUNDERING_ROD_MAX
+  - Status: Thundering_Rod_Max
     Icon: EFST_THUNDERING_ROD_MAX
     Flags:
       BlEffect: true
@@ -10136,7 +10136,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-  - Status: GROUND_GROW
+  - Status: Ground_Grow
     Icon: EFST_GROUND_GROW
     Flags:
       BlEffect: true
@@ -10145,7 +10145,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-  - Status: NATURE_PROTECTION
+  - Status: Nature_Protection
     Icon: EFST_NATURE_PROTECTION
     Flags:
       NoDispell: true
@@ -10158,22 +10158,22 @@ Body:
       bonus bNearAtkDef, .@reduce;
       bonus bLongAtkDef, .@reduce;
       bonus bMagicAtkDef, .@reduce;
-  - Status: INSANE
+  - Status: Insane
     Icon: EFST_INSANE
     Flags:
       BlEffect: true
       DisplayPc: true
-  - Status: INSANE2
+  - Status: Insane2
     Icon: EFST_INSANE2
     Flags:
       BlEffect: true
       DisplayPc: true
-  - Status: INSANE3
+  - Status: Insane3
     Icon: EFST_INSANE3
     Flags:
       BlEffect: true
       DisplayPc: true
-  - Status: ALPHA_PHASE
+  - Status: Alpha_Phase
     Icon: EFST_ALPHA_PHASE
     Flags:
       BlEffect: true
@@ -10181,7 +10181,7 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-  - Status: FLIP_FLAP
+  - Status: Flip_Flap
     Icon: EFST_FLIP_FLAP
     Script: |
       .@lv = getstatus(SC_FLIP_FLAP, 1);
@@ -10189,7 +10189,7 @@ Body:
       bonus bCritical, .@lv * 3;
     EndOnStart:
       FLIP_FLAP_TARGET: true
-  - Status: FLIP_FLAP_TARGET
+  - Status: Flip_Flap_Target
     Icon: EFST_FLIP_FLAP_TARGET
     Script: |
       .@lv = getstatus(SC_FLIP_FLAP_TARGET, 1);
@@ -10197,7 +10197,7 @@ Body:
       bonus bCritical, .@lv * 3;
     Fail:
       FLIP_FLAP: true
-  - Status: APEX_PHASE
+  - Status: Apex_Phase
     Icon: EFST_APEX_PHASE
     Flags:
       NoDispell: true
@@ -10208,29 +10208,29 @@ Body:
       bonus2 bSkillAtk, "AT_QUILL_SPEAR", 30;
       bonus2 bSkillAtk, "AT_QUILL_SPEAR_S", 30;
       bonus2 bSkillAtk, "AT_TEMPEST_FLAP", 30;
-  - Status: ZEPHYR_CHARGE
+  - Status: Zephyr_Charge
     Icon: EFST_ZEPHYR_CHARGE
     Flags:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
-  - Status: ZEPHYR_LINK
+  - Status: Zephyr_Link
     Icon: EFST_ZEPHYR_LINK
     Script: |
       .@val = 15;
       bonus bShortAtkRate, .@val;
       bonus bLongAtkRate, .@val;
       bonus2 bMagicAtkEle, Ele_All, .@val;
-  - Status: GLACIER_SHEILD
+  - Status: Glacier_Sheild
     Icon: EFST_GLACIER_SHEILD
-  - Status: SOLID_STOMP
+  - Status: Solid_Stomp
     Icon: EFST_SOLID_STOMP
     Script: |
       .@lv = getstatus(SC_SOLID_STOMP, 1);
       bonus bNearAtkDef, .@lv * 3;
       bonus bLongAtkDef, .@lv * 3;
       bonus2 bMagicAtkEle, Ele_Earth, 15;
-  - Status: NATURE_HARMONY
+  - Status: Nature_Harmony
     Icon: EFST_NATURE_HARMONY
     Flags:
       NoDispell: true
@@ -10245,9 +10245,9 @@ Body:
       bonus2 bSubEle, Ele_Water, -30;
       bonus2 bSubEle, Ele_Wind, -30;
       bonus2 bSubEle, Ele_Earth, -30;
-  - Status: PULSE_OF_MADNESS
+  - Status: Pulse_Of_Madness
     Icon: EFST_PULSE_OF_MADNESS
-  - Status: PRIMAL_CLAW
+  - Status: Primal_Claw
     Icon: EFST_PRIMAL_CLAW
-  - Status: FERAL_CLAW
+  - Status: Feral_Claw
     Icon: EFST_FERAL_CLAW

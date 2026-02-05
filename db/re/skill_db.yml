@@ -46118,8 +46118,8 @@ Body:
         - Level: 5
           Amount: 100
       Status:
-        WEREWOLF: true
-    Status: ENRAGE_WOLF
+        Werewolf: true
+    Status: Enrage_Wolf
   - Id: 6526
     Name: DR_NOMERCY_CLAW
     Description: No Mercy Claw
@@ -46176,7 +46176,7 @@ Body:
         - Level: 10
           Amount: 30
       Status:
-        WEREWOLF: true
+        Werewolf: true
   - Id: 6527
     Name: DR_CRUEL_BITE
     Description: Cruel Bite
@@ -46212,7 +46212,7 @@ Body:
         - Level: 10
           Amount: 30
       Status:
-        WEREWOLF: true
+        Werewolf: true
   - Id: 6528
     Name: DR_HUNGER
     Description: Hunger
@@ -46228,7 +46228,7 @@ Body:
       SpCost: 10
       SpRateCost: 10
       Status:
-        WEREWOLF: true
+        Werewolf: true
   - Id: 6529
     Name: DR_BLOOD_HOWLING
     Description: Blood Howling
@@ -46260,8 +46260,8 @@ Body:
         - Level: 5
           Amount: 60
       Status:
-        WEREWOLF: true
-    Status: BLOOD_HOWLING
+        Werewolf: true
+    Status: Blood_Howling
   - Id: 6530
     Name: DR_BEASTY_NOSE
     Description: Beastly Nose
@@ -46301,8 +46301,8 @@ Body:
         - Level: 5
           Amount: 100
       Status:
-        WERERAPTOR: true
-    Status: ENRAGE_RAPTOR
+        Wereraptor: true
+    Status: Enrage_Raptor
   - Id: 6533
     Name: DR_SHOOTING_FEATHER
     Description: Shooting Feather
@@ -46337,7 +46337,7 @@ Body:
         - Level: 10
           Amount: 30
       Status:
-        WERERAPTOR: true
+        Wereraptor: true
   - Id: 6534
     Name: DR_FLICKING_TONADO
     Description: Flicking Tornado
@@ -46394,7 +46394,7 @@ Body:
         - Level: 10
           Amount: 40
       Status:
-        WERERAPTOR: true
+        Wereraptor: true
   - Id: 6535
     Name: DR_LOW_FLIGHT
     Description: Low Flight
@@ -46471,7 +46471,7 @@ Body:
         - Level: 10
           Amount: 30
       Status:
-        WERERAPTOR: true
+        Wereraptor: true
   - Id: 6536
     Name: DR_PREENING
     Description: Preening
@@ -46503,8 +46503,8 @@ Body:
         - Level: 5
           Amount: 60
       Status:
-        WERERAPTOR: true
-    Status: PREENING
+        Wereraptor: true
+    Status: Preening
   - Id: 6537
     Name: DR_SHARPE_EYES
     Description: Sharp Eyes
@@ -46860,7 +46860,7 @@ Body:
           Amount: 28
         - Level: 10
           Amount: 30
-    Status: NATURE_SHIELD
+    Status: Nature_Shield
   - Id: 6548
     Name: DR_NATURE_LOGIC
     Description: Nature's Logic
@@ -46901,7 +46901,7 @@ Body:
         - Level: 5
           Amount: 40
       Status:
-        WEREWOLF: true
+        Werewolf: true
   - Id: 6550
     Name: KR_DOUBLE_SLASH
     Description: Double Slash
@@ -46958,7 +46958,7 @@ Body:
         - Level: 10
           Amount: 55
       Status:
-        WEREWOLF: true
+        Werewolf: true
   - Id: 6551
     Name: KR_CLAW_WAVE
     Description: Claw Wave
@@ -47017,7 +47017,7 @@ Body:
         - Level: 10
           Amount: 70
       Status:
-        WEREWOLF: true
+        Werewolf: true
   - Id: 6552
     Name: KR_CHOP_CHOP
     Description: Chop Chop
@@ -47074,7 +47074,7 @@ Body:
         - Level: 10
           Amount: 10
       Status:
-        WEREWOLF: true
+        Werewolf: true
   - Id: 6553
     Name: KR_IRON_HOWLING
     Description: Iron Howling
@@ -47106,8 +47106,8 @@ Body:
         - Level: 5
           Amount: 80
       Status:
-        WEREWOLF: true
-    Status: IRON_HOWLING
+        Werewolf: true
+    Status: Iron_Howling
   - Id: 6554
     Name: KR_WOLF_INSTINCT
     Description: Wolf Instinct
@@ -47171,7 +47171,7 @@ Body:
         - Level: 10
           Amount: 60
       Status:
-        WERERAPTOR: true
+        Wereraptor: true
   - Id: 6556
     Name: KR_SHARPEN_HAIL
     Description: Sharpen Hail
@@ -47230,7 +47230,7 @@ Body:
         - Level: 10
           Amount: 90
       Status:
-        WERERAPTOR: true
+        Wereraptor: true
   - Id: 6557
     Name: KR_TYPHOON_WING
     Description: Typhoon Wing
@@ -47328,7 +47328,7 @@ Body:
         - Level: 10
           Amount: 60
       Status:
-        WERERAPTOR: true
+        Wereraptor: true
   - Id: 6558
     Name: KR_FEATHER_SPRINKLE
     Description: Feather Sprinkle
@@ -47365,7 +47365,7 @@ Body:
         - Level: 5
           Amount: 45
       Status:
-        WERERAPTOR: true
+        Wereraptor: true
   - Id: 6559
     Name: KR_WIND_VEIL
     Description: Wind Veil
@@ -47397,8 +47397,8 @@ Body:
         - Level: 5
           Amount: 80
       Status:
-        WERERAPTOR: true
-    Status: WIND_VEIL
+        Wereraptor: true
+    Status: Wind_Veil
   - Id: 6560
     Name: KR_RAPTORIAL_INSTINCT
     Description: Raptorial Instinct
@@ -47988,7 +47988,7 @@ Body:
           Amount: 45
         - Level: 5
           Amount: 50
-    Status: NATURE_PROTECTION
+    Status: Nature_Protection
   - Id: 6574
     Name: KR_GROUND_BLOOM
     Description: Ground Bloom
@@ -48047,8 +48047,8 @@ Body:
         - Level: 5
           Amount: 60
       Status:
-        WEREWOLF: true
-    Status: PULSE_OF_MADNESS
+        Werewolf: true
+    Status: Pulse_Of_Madness
   - Id: 6577
     Name: AT_ALPHA_PHASE
     Description: Alpha Phase
@@ -48081,8 +48081,8 @@ Body:
           Amount: 100
       ApCost: 130
       Status:
-        WEREWOLF: true
-    Status: ALPHA_PHASE
+        Werewolf: true
+    Status: Alpha_Phase
   - Id: 6578
     Name: AT_PRIMAL_CLAW
     Description: Primal Claw
@@ -48121,7 +48121,7 @@ Body:
         - Level: 5
           Amount: 60
       Status:
-        WEREWOLF: true
+        Werewolf: true
   - Id: 6579
     Name: AT_FERAL_CLAW
     Description: Feral Claw
@@ -48160,8 +48160,8 @@ Body:
         - Level: 5
           Amount: 60
       Status:
-        WEREWOLF: true
-        PRIMAL_CLAW: true
+        Werewolf: true
+        Primal_Claw: true
   - Id: 6580
     Name: AT_ALPHA_CLAW
     Description: Alpha Claw
@@ -48201,8 +48201,8 @@ Body:
         - Level: 5
           Amount: 60
       Status:
-        WEREWOLF: true
-        FERAL_CLAW: true
+        Werewolf: true
+        Feral_Claw: true
   - Id: 6581
     Name: AT_SAVAGE_LUNGE
     Description: Savage Lunge
@@ -48239,7 +48239,7 @@ Body:
           Amount: 30
       ApCost: 15
       Status:
-        WEREWOLF: true
+        Werewolf: true
   - Id: 6582
     Name: AT_FRENZY_FANG
     Description: Frenzy Fang
@@ -48268,7 +48268,7 @@ Body:
         - Level: 5
           Amount: 40
       Status:
-        WEREWOLF: true
+        Werewolf: true
   - Id: 6583
     Name: AT_FLIP_FLAP
     Description: Flip Flap
@@ -48300,8 +48300,8 @@ Body:
         - Level: 5
           Amount: 60
       Status:
-        WERERAPTOR: true
-    Status: FLIP_FLAP
+        Wereraptor: true
+    Status: Flip_Flap
   - Id: 6584
     Name: AT_FLIP_FLAP_TARGET
     Description: At Flip Flap Target
@@ -48338,8 +48338,8 @@ Body:
           Amount: 100
       ApCost: 130
       Status:
-        WERERAPTOR: true
-    Status: APEX_PHASE
+        Wereraptor: true
+    Status: Apex_Phase
   - Id: 6586
     Name: AT_PINION_SHOT
     Description: Pinion Shot
@@ -48381,7 +48381,7 @@ Body:
         - Level: 10
           Amount: 40
       Status:
-        WERERAPTOR: true
+        Wereraptor: true
   - Id: 6587
     Name: AT_ZEPHYR_LINK
     Description: Zephyr Link
@@ -48393,7 +48393,7 @@ Body:
     Hit: Single
     HitCount: 1
     Duration1: 5000
-    Status: ZEPHYR_LINK
+    Status: Zephyr_Link
   - Id: 6588
     Name: AT_QUILL_SPEAR
     Description: Quill Spear
@@ -48454,7 +48454,7 @@ Body:
         - Level: 10
           Amount: 100
       Status:
-        WERERAPTOR: true
+        Wereraptor: true
   - Id: 6589
     Name: AT_QUILL_SPEAR_S
     Description: Quill Spear
@@ -48554,7 +48554,7 @@ Body:
           Amount: 50
       ApCost: 20
       Status:
-        WERERAPTOR: true
+        Wereraptor: true
   - Id: 6591
     Name: AT_AERO_SYNC
     Description: Aero Sync
@@ -48600,8 +48600,8 @@ Body:
         - Level: 5
           Amount: 30
       Status:
-        WERERAPTOR: true
-        FLIP_FLAP: true
+        Wereraptor: true
+        Flip_Flap: true
   - Id: 6592
     Name: AT_GLACIER_MONOLITH
     Description: Glacial Monolith
@@ -48798,7 +48798,7 @@ Body:
         - Level: 5
           Amount: 90
       Status:
-        GLACIER_SHEILD: true
+        Glacier_Sheild: true
   - Id: 6596
     Name: AT_CHILLING_BLAST
     Description: Chilling Blast
@@ -49277,7 +49277,7 @@ Body:
           Amount: 17
         - Level: 5
           Amount: 15
-    Status: SOLID_STOMP
+    Status: Solid_Stomp
   - Id: 6605
     Name: AT_GRAVITY_HOLE
     Description: Gravity Hole
@@ -49327,7 +49327,7 @@ Body:
           Amount: 85
         - Level: 5
           Amount: 80
-    Status: STOP
+    Status: Stop
   - Id: 6606
     Name: AT_NATURE_AID
     Description: Nature Aid
@@ -49356,7 +49356,7 @@ Body:
         - Level: 5
           Amount: 100
       ApCost: 40
-    Status: NATURE_HARMONY
+    Status: Nature_Harmony
 #  - Id: 8000
 #    Name: HOMUN_BEGIN
 #    Description: Homun Begin
