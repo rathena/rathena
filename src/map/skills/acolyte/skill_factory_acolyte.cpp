@@ -44,6 +44,7 @@
 #include "magnusexorcismus.hpp"
 #include "medialevotum.hpp"
 #include "oratio.hpp"
+#include "petitio.hpp"
 #include "pneuma.hpp"
 #include "pneumaticusprocella.hpp"
 #include "praefatio.hpp"
@@ -145,6 +146,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillEffligo>();
 		case CD_MEDIALE_VOTUM:
 			return std::make_unique<SkillMedialeVotum>();
+		case CD_PETITIO:
+			return std::make_unique<SkillPetitio>();
 		case CD_PNEUMATICUS_PROCELLA:
 			return std::make_unique<SkillPneumaticusProcella>();
 		case CD_PRESENS_ACIES:
