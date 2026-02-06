@@ -18,6 +18,7 @@
 #include "cantocandidus.hpp"
 #include "clearance.hpp"
 #include "coluceoheal.hpp"
+#include "competentia.hpp"
 #include "convenio.hpp"
 #include "crementia.hpp"
 #include "crucis.hpp"
@@ -134,6 +135,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_BENEDICTUM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case CD_COMPETENTIA:
+			return std::make_unique<SkillCompetentia>();
 		case CD_EFFLIGO:
 			return std::make_unique<SkillEffligo>();
 		case CD_MEDIALE_VOTUM:

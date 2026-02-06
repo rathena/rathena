@@ -251,6 +251,7 @@
     <ClInclude Include="skills/acolyte/cantocandidus.hpp" />
     <ClInclude Include="skills/acolyte/clearance.hpp" />
     <ClInclude Include="skills/acolyte/coluceoheal.hpp" />
+    <ClInclude Include="skills/acolyte/competentia.hpp" />
     <ClInclude Include="skills/acolyte/convenio.hpp" />
     <ClInclude Include="skills/acolyte/crementia.hpp" />
     <ClInclude Include="skills/acolyte/crucis.hpp" />
@@ -668,6 +669,7 @@
     <ClCompile Include="skills/acolyte/cantocandidus.cpp" />
     <ClCompile Include="skills/acolyte/clearance.cpp" />
     <ClCompile Include="skills/acolyte/coluceoheal.cpp" />
+    <ClCompile Include="skills/acolyte/competentia.cpp" />
     <ClCompile Include="skills/acolyte/convenio.cpp" />
     <ClCompile Include="skills/acolyte/crementia.cpp" />
     <ClCompile Include="skills/acolyte/crucis.cpp" />
