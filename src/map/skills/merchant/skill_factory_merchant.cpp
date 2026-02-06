@@ -8,6 +8,7 @@
 #include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
+#include "abrbattlewarior.hpp"
 #include "aciddemonstration.hpp"
 #include "acidterror.hpp"
 #include "adrenalinerush.hpp"
@@ -149,6 +150,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillManufactureMachine>();
 		case MT_RUSH_QUAKE:
 			return std::make_unique<SkillRushQuake>();
+		case MT_SUMMON_ABR_BATTLE_WARIOR:
+			return std::make_unique<SkillAbrBattleWarrior>();
 		case MT_TRIPLE_LASER:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NC_ACCELERATION:
