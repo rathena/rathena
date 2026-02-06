@@ -303,6 +303,8 @@
     <ClInclude Include="skills/archer/doublestrafe.hpp" />
     <ClInclude Include="skills/archer/electricshocker.hpp" />
     <ClInclude Include="skills/archer/falconassault.hpp" />
+    <ClInclude Include="skills/archer/fearbreeze.hpp" />
+    <ClInclude Include="skills/archer/firingtrap.hpp" />
     <ClInclude Include="skills/archer/flametrap.hpp" />
     <ClInclude Include="skills/archer/flasher.hpp" />
     <ClInclude Include="skills/archer/focusedarrowstrike.hpp" />
@@ -311,8 +313,6 @@
     <ClInclude Include="skills/archer/hawkboomerang.hpp" />
     <ClInclude Include="skills/archer/hawkmastery.hpp" />
     <ClInclude Include="skills/archer/hawkrush.hpp" />
-    <ClInclude Include="skills/archer/fearbreeze.hpp" />
-    <ClInclude Include="skills/archer/firingtrap.hpp" />
     <ClInclude Include="skills/archer/iceboundtrap.hpp" />
     <ClInclude Include="skills/archer/landmine.hpp" />
     <ClInclude Include="skills/archer/magentatrap.hpp" />
@@ -329,13 +329,13 @@
     <ClInclude Include="skills/archer/springtrap.hpp" />
     <ClInclude Include="skills/archer/swifttrap.hpp" />
     <ClInclude Include="skills/archer/talkiebox.hpp" />
-    <ClInclude Include="skills/archer/wildwalk.hpp" />
     <ClInclude Include="skills/archer/verduretrap.hpp" />
     <ClInclude Include="skills/archer/wargbite.hpp" />
     <ClInclude Include="skills/archer/wargdash.hpp" />
     <ClInclude Include="skills/archer/wargmastery.hpp" />
     <ClInclude Include="skills/archer/wargrider.hpp" />
     <ClInclude Include="skills/archer/wargstrike.hpp" />
+    <ClInclude Include="skills/archer/wildwalk.hpp" />
     <ClInclude Include="skills/archer/windwalker.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
@@ -412,6 +412,7 @@
     <ClInclude Include="skills/merchant/aidcondensedpotion.hpp" />
     <ClInclude Include="skills/merchant/aidpotion.hpp" />
     <ClInclude Include="skills/merchant/alchemicalweapon.hpp" />
+    <ClInclude Include="skills/merchant/axestomp.hpp" />
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp" />
     <ClInclude Include="skills/merchant/bomb.hpp" />
     <ClInclude Include="skills/merchant/callhomunculus.hpp" />
@@ -561,6 +562,7 @@
     <ClInclude Include="skills/thief/createnewpoison.hpp" />
     <ClInclude Include="skills/thief/crossimpact.hpp" />
     <ClInclude Include="skills/thief/crossripperslasher.hpp" />
+    <ClInclude Include="skills/thief/crossslash.hpp" />
     <ClInclude Include="skills/thief/dancingknife.hpp" />
     <ClInclude Include="skills/thief/darkclaw.hpp" />
     <ClInclude Include="skills/thief/darkillusion.hpp" />
@@ -591,7 +593,6 @@
     <ClInclude Include="skills/thief/savageimpact.hpp" />
     <ClInclude Include="skills/thief/scribble.hpp" />
     <ClInclude Include="skills/thief/shadowstab.hpp" />
-    <ClInclude Include="skills/thief/crossslash.hpp" />
     <ClInclude Include="skills/thief/sightlessmind.hpp" />
     <ClInclude Include="skills/thief/skill_factory_thief.hpp" />
     <ClInclude Include="skills/thief/snatch.hpp" />
@@ -716,6 +717,8 @@
     <ClCompile Include="skills/archer/doublestrafe.cpp" />
     <ClCompile Include="skills/archer/electricshocker.cpp" />
     <ClCompile Include="skills/archer/falconassault.cpp" />
+    <ClCompile Include="skills/archer/fearbreeze.cpp" />
+    <ClCompile Include="skills/archer/firingtrap.cpp" />
     <ClCompile Include="skills/archer/flametrap.cpp" />
     <ClCompile Include="skills/archer/flasher.cpp" />
     <ClCompile Include="skills/archer/focusedarrowstrike.cpp" />
@@ -724,8 +727,6 @@
     <ClCompile Include="skills/archer/hawkboomerang.cpp" />
     <ClCompile Include="skills/archer/hawkmastery.cpp" />
     <ClCompile Include="skills/archer/hawkrush.cpp" />
-    <ClCompile Include="skills/archer/fearbreeze.cpp" />
-    <ClCompile Include="skills/archer/firingtrap.cpp" />
     <ClCompile Include="skills/archer/iceboundtrap.cpp" />
     <ClCompile Include="skills/archer/landmine.cpp" />
     <ClCompile Include="skills/archer/magentatrap.cpp" />
@@ -742,13 +743,13 @@
     <ClCompile Include="skills/archer/springtrap.cpp" />
     <ClCompile Include="skills/archer/swifttrap.cpp" />
     <ClCompile Include="skills/archer/talkiebox.cpp" />
-    <ClCompile Include="skills/archer/wildwalk.cpp" />
     <ClCompile Include="skills/archer/verduretrap.cpp" />
     <ClCompile Include="skills/archer/wargbite.cpp" />
     <ClCompile Include="skills/archer/wargdash.cpp" />
     <ClCompile Include="skills/archer/wargmastery.cpp" />
     <ClCompile Include="skills/archer/wargrider.cpp" />
     <ClCompile Include="skills/archer/wargstrike.cpp" />
+    <ClCompile Include="skills/archer/wildwalk.cpp" />
     <ClCompile Include="skills/archer/windwalker.cpp" />
     <ClCompile Include="skills/custom/skill_factory_custom.cpp" />
     <ClCompile Include="skills/gunslinger/bullseye.cpp" />
@@ -825,6 +826,7 @@
     <ClCompile Include="skills/merchant/aidcondensedpotion.cpp" />
     <ClCompile Include="skills/merchant/aidpotion.cpp" />
     <ClCompile Include="skills/merchant/alchemicalweapon.cpp" />
+    <ClCompile Include="skills/merchant/axestomp.cpp" />
     <ClCompile Include="skills/merchant/biochemicalhelm.cpp" />
     <ClCompile Include="skills/merchant/bomb.cpp" />
     <ClCompile Include="skills/merchant/callhomunculus.cpp" />
@@ -974,6 +976,7 @@
     <ClCompile Include="skills/thief/createnewpoison.cpp" />
     <ClCompile Include="skills/thief/crossimpact.cpp" />
     <ClCompile Include="skills/thief/crossripperslasher.cpp" />
+    <ClCompile Include="skills/thief/crossslash.cpp" />
     <ClCompile Include="skills/thief/dancingknife.cpp" />
     <ClCompile Include="skills/thief/darkclaw.cpp" />
     <ClCompile Include="skills/thief/darkillusion.cpp" />
@@ -1004,7 +1007,6 @@
     <ClCompile Include="skills/thief/savageimpact.cpp" />
     <ClCompile Include="skills/thief/scribble.cpp" />
     <ClCompile Include="skills/thief/shadowstab.cpp" />
-    <ClCompile Include="skills/thief/crossslash.cpp" />
     <ClCompile Include="skills/thief/sightlessmind.cpp" />
     <ClCompile Include="skills/thief/skill_factory_thief.cpp" />
     <ClCompile Include="skills/thief/snatch.cpp" />
