@@ -28,6 +28,7 @@
 #include "duplelight.hpp"
 #include "effligo.hpp"
 #include "epiclesis.hpp"
+#include "framen.hpp"
 #include "gloria.hpp"
 #include "heal.hpp"
 #include "highnessheal.hpp"
@@ -144,6 +145,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillDilectioHeal>();
 		case CD_EFFLIGO:
 			return std::make_unique<SkillEffligo>();
+		case CD_FRAMEN:
+			return std::make_unique<SkillFramen>();
 		case CD_MEDIALE_VOTUM:
 			return std::make_unique<SkillMedialeVotum>();
 		case CD_PETITIO:

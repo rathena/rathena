@@ -8281,14 +8281,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += 50 * pc_checkskill( sd, IG_SPEAR_SWORD_M );
 						RE_LVL_DMOD(100);
 						break;
-					case CD_FRAMEN:
-						skillratio += -100 + 1300 * skill_lv;
-						skillratio += 5 * pc_checkskill(sd,CD_FIDUS_ANIMUS) * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON)
-							skillratio += 50 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
 					case CD_DIVINUS_FLOS:
 						skillratio += -100 + 4000 * skill_lv;
 						skillratio += 70 * pc_checkskill(sd,CD_FIDUS_ANIMUS);

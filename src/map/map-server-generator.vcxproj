@@ -261,6 +261,7 @@
     <ClInclude Include="skills/acolyte/duplelight.hpp" />
     <ClInclude Include="skills/acolyte/effligo.hpp" />
     <ClInclude Include="skills/acolyte/epiclesis.hpp" />
+    <ClInclude Include="skills/acolyte/framen.hpp" />
     <ClInclude Include="skills/acolyte/gloria.hpp" />
     <ClInclude Include="skills/acolyte/heal.hpp" />
     <ClInclude Include="skills/acolyte/highnessheal.hpp" />
@@ -682,6 +683,7 @@
     <ClCompile Include="skills/acolyte/duplelight.cpp" />
     <ClCompile Include="skills/acolyte/effligo.cpp" />
     <ClCompile Include="skills/acolyte/epiclesis.cpp" />
+    <ClCompile Include="skills/acolyte/framen.cpp" />
     <ClCompile Include="skills/acolyte/gloria.cpp" />
     <ClCompile Include="skills/acolyte/heal.cpp" />
     <ClCompile Include="skills/acolyte/highnessheal.cpp" />

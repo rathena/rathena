@@ -5247,7 +5247,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case IG_OVERSLASH:
 	case IG_RADIANT_SPEAR:
 	case IG_IMPERIAL_PRESSURE:
-	case CD_FRAMEN:
 	case CD_DIVINUS_FLOS:
 	case MT_AXE_STOMP:
 	case MT_MIGHTY_SMASH:
@@ -5442,7 +5441,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case IQ_SECOND_FAITH:
 				case IQ_SECOND_JUDGEMENT:
 				case IG_RADIANT_SPEAR:
-				case CD_FRAMEN:
 				case CD_DIVINUS_FLOS:
 				case MT_POWERFUL_SWING:
 				case MT_ENERGY_CANNONADE:
