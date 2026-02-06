@@ -125,6 +125,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillRuwach>();
 		case CD_ARBITRIUM:
 			return std::make_unique<SkillArbitrium>();
+		case CD_ARBITRIUM_ATK:
+			return std::make_unique<SkillArbitriumAttack>();
 		case CD_ARGUTUS_TELUM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_ARGUTUS_VITA:

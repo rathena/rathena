@@ -29,3 +29,15 @@ void SkillArbitrium::applyAdditionalEffects(block_list* src, block_list* target,
 	sc_start(src, target, SC_HANDICAPSTATE_DEEPSILENCE, 20 + 5 * skill_lv, skill_lv, skill_get_time(getSkillId(), skill_lv));
 	skill_castend_damage_id(src, target, CD_ARBITRIUM_ATK, skill_lv, tick, SD_LEVEL);
 }
+
+SkillArbitriumAttack::SkillArbitriumAttack() : SkillImplRecursiveDamageSplash(CD_ARBITRIUM_ATK) {
+}
+
+void SkillArbitriumAttack::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	const map_session_data* sd = BL_CAST(BL_PC, src);
+	const status_data* sstatus = status_get_status_data(*src);
+
+	skillratio += -100 + 1750 * skill_lv + 10 * sstatus->spl;
+	skillratio += 50 * pc_checkskill(sd, CD_FIDUS_ANIMUS) * skill_lv;
+	RE_LVL_DMOD(100);
+}
