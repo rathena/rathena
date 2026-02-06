@@ -103,6 +103,7 @@ static int32 skill_check_unit_range2 (block_list *bl, int32 x, int32 y, uint16 s
 static int32 skill_destroy_trap( block_list *bl, va_list ap );
 static int32 skill_check_condition_mob_master_sub (block_list *bl, va_list ap);
 static bool skill_check_condition_sc_required( map_session_data& sd, uint16 skill_id, s_skill_condition& require );
+bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
 
 // Use this function for splash skills that can't hit icewall when cast by players
 int32 splash_target(block_list* bl) {
@@ -1915,9 +1916,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		break;
 	case SP_SHA:
 		sc_start(src, bl, SC_SP_SHA, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
-	case DK_SERVANT_W_PHANTOM:
-		sc_start(src, bl, SC_HANDICAPSTATE_DEEPBLIND, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case IQ_OLEUM_SANCTUM:
 		sc_start(src, bl, SC_HOLY_OIL, 100, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -4991,13 +4989,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case ITM_TOMAHAWK:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case DK_DRAGONIC_AURA:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id,skill_lv));
-		break;
-	case DK_DRAGONIC_PIERCE:
-	case DK_STORMSLASH:
 	case IG_IMPERIAL_CROSS:
 	case CD_EFFLIGO:
 	case IQ_BLAZING_FLAME_BLAST:
@@ -5253,12 +5244,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SP_CURSEEXPLOSION:
 	case SP_SHA:
 	case SP_SWHOO:
-	case DK_SERVANTWEAPON_ATK:
-	case DK_SERVANT_W_PHANTOM:
-	case DK_SERVANT_W_DEMOL:
-	case DK_MADNESS_CRUSHER:
-	case DK_HACKANDSLASHER:
-	case DK_DRAGONIC_BREATH:
 	case IQ_OLEUM_SANCTUM:
 	case IQ_MASSIVE_F_BLASTER:
 	case IQ_EXPOSION_BLASTER:
@@ -5334,10 +5319,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			if (tsc && tsc->getSCE(SC_HOVERING) && inf2[INF2_IGNOREHOVERING])
 				break; // Under Hovering characters are immune to select trap and ground target skills.
 
-			// Servant Weapon - Demol only hits if the target is marked with a sign by the attacking caster.
-			if (skill_id == DK_SERVANT_W_DEMOL && !(tsc && tsc->getSCE(SC_SERVANT_SIGN) && tsc->getSCE(SC_SERVANT_SIGN)->val1 == src->id))
-				break;
-
 			switch (skill_id) {
 				case ABC_DEFT_STAB:
 					// Deft Stab - Make sure the flag of 2 is passed on when the skill is double casted.
@@ -5403,8 +5384,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case SU_SCRATCH:
 				case IG_IMPERIAL_PRESSURE:
 				case BO_MAYHEMIC_THORNS:
-				case DK_DRAGONIC_BREATH:
-				case DK_HACKANDSLASHER:
 				case MT_SPARK_BLASTER:
 				case SH_CHUL_HO_BATTERING:
 				case SH_HYUN_ROK_SPIRIT_POWER:
@@ -5438,12 +5417,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case SU_LUNATICCARROTBEAT:
 					if (sd && pc_search_inventory(sd, skill_db.find(SU_LUNATICCARROTBEAT)->require.itemid[0]) >= 0)
 						skill_id = SU_LUNATICCARROTBEAT2;
-					break;
-				case DK_SERVANT_W_PHANTOM:
-					// Jump to the target before attacking.
-					if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
-						skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);// Trigger animation on servants.
 					break;
 
 				case EM_PSYCHIC_STREAM:
@@ -7517,7 +7490,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
 
-	case DK_SERVANTWEAPON:
 	case ABC_FROM_THE_ABYSS:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
 		break;
@@ -7765,45 +7737,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case DK_SERVANT_W_SIGN: // Max allowed targets to be marked.
-		// Only players and monsters can be marked....I think??? [Rytech]
-		// Lets only allow players and monsters to use this skill for safety reasons.
-		if ((!dstsd && !dstmd) || !sd && !md) {
-			if (sd)
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-			break;
-		}
-
-		// Check if the target is already marked by another source.
-		if (tsc && tsc->getSCE(type) && tsc->getSCE(type)->val1 != src->id) {
-			if (sd)
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-			return 1;
-		}
-
-		
-		// Mark the target.
-		if( sd ){
-			int8 count = MAX_SERVANT_SIGN;
-
-			ARR_FIND(0, count, i, sd->servant_sign[i] == bl->id);
-			if (i == count) {
-				ARR_FIND(0, count, i, sd->servant_sign[i] == 0);
-				if (i == count) { // Max number of targets marked. Fail the skill.
-					clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-					return 1;
-				}
-
-				// Add the ID of the marked target to the player's sign list.
-				sd->servant_sign[i] = bl->id;
-			}
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			sc_start4(src, bl, type, 100, src->id, i, skill_lv, 0, skill_get_time(skill_id, skill_lv));
-		} else if (md) // Monster's cant track with this skill. Just give the status.
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, 0, 0, skill_lv, 0, skill_get_time(skill_id, skill_lv)));
-		break;
-
 	case MO_CALLSPIRITS:
 		if(sd) {
 			int32 limit = skill_lv;
@@ -7900,7 +7833,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SJ_SOLARBURST:
 	case SJ_STAREMPEROR:
 	case SJ_FALLINGSTAR_ATK:
-	case DK_SERVANT_W_DEMOL:
 	case IQ_OLEUM_SANCTUM:
 	case IQ_MASSIVE_F_BLASTER:
 	case IQ_EXPOSION_BLASTER:
