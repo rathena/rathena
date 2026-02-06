@@ -11,6 +11,7 @@
 #include "adoramus.hpp"
 #include "ancilla.hpp"
 #include "angelus.hpp"
+#include "arbitrium.hpp"
 #include "aspersio.hpp"
 #include "blessing.hpp"
 #include "bssacramenti.hpp"
@@ -122,6 +123,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillPneuma>();
 		case AL_RUWACH:
 			return std::make_unique<SkillRuwach>();
+		case CD_ARBITRIUM:
+			return std::make_unique<SkillArbitrium>();
 		case CD_ARGUTUS_TELUM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_ARGUTUS_VITA:

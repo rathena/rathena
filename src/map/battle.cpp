@@ -8294,11 +8294,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += 50 * pc_checkskill( sd, IG_SPEAR_SWORD_M );
 						RE_LVL_DMOD(100);
 						break;
-					case CD_ARBITRIUM:
-						skillratio += -100 + 1000 * skill_lv + 10 * sstatus->spl;
-						skillratio += 10 * pc_checkskill( sd, CD_FIDUS_ANIMUS ) * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
 					case CD_ARBITRIUM_ATK:
 						skillratio += -100 + 1750 * skill_lv + 10 * sstatus->spl;
 						skillratio += 50 * pc_checkskill( sd, CD_FIDUS_ANIMUS ) * skill_lv;

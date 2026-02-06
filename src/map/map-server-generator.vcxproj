@@ -244,6 +244,7 @@
     <ClInclude Include="skills/acolyte/adoramus.hpp" />
     <ClInclude Include="skills/acolyte/ancilla.hpp" />
     <ClInclude Include="skills/acolyte/angelus.hpp" />
+    <ClInclude Include="skills/acolyte/arbitrium.hpp" />
     <ClInclude Include="skills/acolyte/aspersio.hpp" />
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/bssacramenti.hpp" />
@@ -659,6 +660,7 @@
     <ClCompile Include="skills/acolyte/adoramus.cpp" />
     <ClCompile Include="skills/acolyte/ancilla.cpp" />
     <ClCompile Include="skills/acolyte/angelus.cpp" />
+    <ClCompile Include="skills/acolyte/arbitrium.cpp" />
     <ClCompile Include="skills/acolyte/aspersio.cpp" />
     <ClCompile Include="skills/acolyte/blessing.cpp" />
     <ClCompile Include="skills/acolyte/bssacramenti.cpp" />

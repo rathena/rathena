@@ -1930,10 +1930,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case IQ_THIRD_CONSECRATION:
 		status_change_end(bl, SC_SECOND_BRAND);
 		break;
-	case CD_ARBITRIUM:// Target is Deep Silenced by chance and is then dealt a 2nd splash hit.
-		sc_start(src, bl, SC_HANDICAPSTATE_DEEPSILENCE, 20 + 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		skill_castend_damage_id(src, bl, CD_ARBITRIUM_ATK, skill_lv, tick, SD_LEVEL);
-		break;
 	case ABC_UNLUCKY_RUSH:
 		sc_start(src, bl, SC_HANDICAPSTATE_MISFORTUNE, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -5877,7 +5873,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case WM_METALICSOUND:
 	case KO_KAIHOU:
 	case MH_ERASER_CUTTER:
-	case CD_ARBITRIUM:
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
