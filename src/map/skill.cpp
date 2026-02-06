@@ -1959,9 +1959,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case EM_TERRA_DRIVE:
 		sc_start(src, bl, SC_HANDICAPSTATE_CRYSTALLIZATION, 5, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
-	case MT_RUSH_QUAKE:
-		sc_start( src, bl, SC_RUSH_QUAKE1, 100, skill_lv, skill_get_time( skill_id, skill_lv ) );
-		break;
 	case ABC_HIT_AND_SLIDING:
 		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -5257,7 +5254,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case CD_FRAMEN:
 	case CD_DIVINUS_FLOS:
 	case MT_MIGHTY_SMASH:
-	case MT_RUSH_QUAKE:
 	case MT_A_MACHINE:
 	case MT_SPARK_BLASTER:
 	case MT_RUSH_STRIKE:
@@ -5499,17 +5495,12 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 						skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
 					break;
 				case MT_RUSH_STRIKE:
-				case MT_RUSH_QUAKE:
 					// Jump to the target before attacking.
 					if( skill_check_unit_movepos( 5, src, bl->x, bl->y, 0, 1 ) ){
 						skill_blown( src, src, 1, direction_opposite( static_cast<enum directions>( map_calc_dir( bl, src->x, src->y ) ) ), BLOWN_NONE);
 					}
 					clif_skill_nodamage( src, *bl, skill_id, skill_lv); // Trigger animation
 					clif_blown( src );
-					if (skill_id == MT_RUSH_QUAKE){
-						// TODO: does this buff start before or after dealing damage? [Muh]
-						sc_start( src, src, SC_RUSH_QUAKE2, 100, skill_lv, skill_get_time2( skill_id, skill_lv ) );
-					}
 					break;
 				case BO_MYSTERY_POWDER:
 				case IG_SHIELD_SHOOTING:

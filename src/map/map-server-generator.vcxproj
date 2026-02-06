@@ -429,6 +429,7 @@
     <ClInclude Include="skills/merchant/plantcultivation.hpp" />
     <ClInclude Include="skills/merchant/powerthrust.hpp" />
     <ClInclude Include="skills/merchant/preparepotion.hpp" />
+    <ClInclude Include="skills/merchant/rushquake.hpp" />
     <ClInclude Include="skills/merchant/skill_factory_merchant.hpp" />
     <ClInclude Include="skills/merchant/skill_vending.hpp" />
     <ClInclude Include="skills/merchant/summonflora.hpp" />
@@ -843,6 +844,7 @@
     <ClCompile Include="skills/merchant/plantcultivation.cpp" />
     <ClCompile Include="skills/merchant/powerthrust.cpp" />
     <ClCompile Include="skills/merchant/preparepotion.cpp" />
+    <ClCompile Include="skills/merchant/rushquake.cpp" />
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
     <ClCompile Include="skills/merchant/skill_vending.cpp" />
     <ClCompile Include="skills/merchant/summonflora.cpp" />

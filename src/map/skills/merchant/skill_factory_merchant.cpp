@@ -33,6 +33,7 @@
 #include "plantcultivation.hpp"
 #include "powerthrust.hpp"
 #include "preparepotion.hpp"
+#include "rushquake.hpp"
 #include "skill_vending.hpp"
 #include "summonflora.hpp"
 #include "summonmarinesphere.hpp"
@@ -140,6 +141,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillAxeStomp>();
 		case MT_D_MACHINE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MT_RUSH_QUAKE:
+			return std::make_unique<SkillRushQuake>();
 		case MT_TRIPLE_LASER:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NC_ACCELERATION:
