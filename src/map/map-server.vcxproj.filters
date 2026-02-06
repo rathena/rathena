@@ -945,6 +945,9 @@
     <ClInclude Include="skills/merchant/manufacturemachine.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/mightysmash.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/plantcultivation.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -2070,6 +2073,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/manufacturemachine.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/mightysmash.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/plantcultivation.cpp">

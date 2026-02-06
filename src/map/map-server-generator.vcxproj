@@ -432,6 +432,7 @@
     <ClInclude Include="skills/merchant/itemappraisal.hpp" />
     <ClInclude Include="skills/merchant/mammonite.hpp" />
     <ClInclude Include="skills/merchant/manufacturemachine.hpp" />
+    <ClInclude Include="skills/merchant/mightysmash.hpp" />
     <ClInclude Include="skills/merchant/plantcultivation.hpp" />
     <ClInclude Include="skills/merchant/powerthrust.hpp" />
     <ClInclude Include="skills/merchant/preparepotion.hpp" />
@@ -855,6 +856,7 @@
     <ClCompile Include="skills/merchant/itemappraisal.cpp" />
     <ClCompile Include="skills/merchant/mammonite.cpp" />
     <ClCompile Include="skills/merchant/manufacturemachine.cpp" />
+    <ClCompile Include="skills/merchant/mightysmash.cpp" />
     <ClCompile Include="skills/merchant/plantcultivation.cpp" />
     <ClCompile Include="skills/merchant/powerthrust.cpp" />
     <ClCompile Include="skills/merchant/preparepotion.cpp" />
