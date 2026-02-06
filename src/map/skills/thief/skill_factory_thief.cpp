@@ -6,13 +6,22 @@
 #include "../status_skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
+#include "antidote.hpp"
 #include "backslide.hpp"
 #include "backstab.hpp"
 #include "cloaking.hpp"
+#include "cloakingexceed.hpp"
 #include "closeconfine.hpp"
 #include "counterinstinct.hpp"
+#include "counterslash.hpp"
 #include "createdeadlypoison.hpp"
+
+#include "createnewpoison.hpp"
+#include "crossimpact.hpp"
+#include "crossripperslasher.hpp"
 #include "dancingknife.hpp"
+#include "darkclaw.hpp"
+#include "darkillusion.hpp"
 #include "detoxify.hpp"
 #include "divestall.hpp"
 #include "divestarmor.hpp"
@@ -26,11 +35,16 @@
 #include "fatalshadowcrow.hpp"
 #include "findstone.hpp"
 #include "grimtooth.hpp"
+#include "hallucinationwalk.hpp"
 #include "hiding.hpp"
 #include "impactcrater.hpp"
 #include "meteorassault.hpp"
 #include "mug.hpp"
+#include "phantommenace.hpp"
+#include "poisoningweapon.hpp"
+#include "poisonsmoke.hpp"
 #include "remover.hpp"
+#include "rollingcutter.hpp"
 #include "sandattack.hpp"
 #include "savageimpact.hpp"
 #include "scribble.hpp"
@@ -45,7 +59,9 @@
 #include "stonefling.hpp"
 #include "throwvenomknife.hpp"
 #include "venomdust.hpp"
+#include "venompressure.hpp"
 #include "venomsplasher.hpp"
+#include "weaponcrush.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -77,14 +93,40 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillVenomDust>();
 		case AS_VENOMKNIFE:
 			return std::make_unique<SkillThrowVenomKnife>();
+		case GC_ANTIDOTE:
+			return std::make_unique<SkillAntidote>();
+		case GC_CLOAKINGEXCEED:
+			return std::make_unique<SkillCloakingExceed>();
+		case GC_COUNTERSLASH:
+			return std::make_unique<SkillCounterSlash>();
+		case GC_CREATENEWPOISON:
+			return std::make_unique<SkillCreateNewPoison>();
+		case GC_CROSSIMPACT:
+			return std::make_unique<SkillCrossImpact>();
+		case GC_CROSSRIPPERSLASHER:
+			return std::make_unique<SkillCrossRipperSlasher>();
+		case GC_DARKCROW:
+			return std::make_unique<SkillDarkClaw>();
+		case GC_DARKILLUSION:
+			return std::make_unique<SkillDarkIllusion>();
+		case GC_HALLUCINATIONWALK:
+			return std::make_unique<SkillHallucinationWalk>();
+		case GC_PHANTOMMENACE:
+			return std::make_unique<SkillPhantomMenace>();
+		case GC_POISONINGWEAPON:
+			return std::make_unique<SkillPoisoningWeapon>();
+		case GC_POISONSMOKE:
+			return std::make_unique<SkillPoisonSmoke>();
+		case GC_ROLLINGCUTTER:
+			return std::make_unique<SkillRollingCutter>();
 		case GC_VENOMIMPRESS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GC_VENOMPRESSURE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillVenomPressure>();
 		case GC_WEAPONBLOCKING:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case GC_WEAPONCRUSH:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillWeaponCrush>();
 		case RG_BACKSTAP:
 			return std::make_unique<SkillBackStab>();
 		case RG_CLEANER:
