@@ -5253,7 +5253,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case CD_PETITIO:
 	case CD_FRAMEN:
 	case CD_DIVINUS_FLOS:
-	case MT_RUSH_STRIKE:
 	case MT_POWERFUL_SWING:
 	case MT_ENERGY_CANNONADE:
 	case ABC_ABYSS_DAGGER:
@@ -5489,14 +5488,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					if (bl->type == BL_PC)// Place single cell AoE if hitting a player.
 						skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
-					break;
-				case MT_RUSH_STRIKE:
-					// Jump to the target before attacking.
-					if( skill_check_unit_movepos( 5, src, bl->x, bl->y, 0, 1 ) ){
-						skill_blown( src, src, 1, direction_opposite( static_cast<enum directions>( map_calc_dir( bl, src->x, src->y ) ) ), BLOWN_NONE);
-					}
-					clif_skill_nodamage( src, *bl, skill_id, skill_lv); // Trigger animation
-					clif_blown( src );
 					break;
 				case BO_MYSTERY_POWDER:
 				case IG_SHIELD_SHOOTING:
