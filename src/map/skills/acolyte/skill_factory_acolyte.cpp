@@ -24,6 +24,7 @@
 #include "cure.hpp"
 #include "decagi.hpp"
 #include "duplelight.hpp"
+#include "effligo.hpp"
 #include "epiclesis.hpp"
 #include "gloria.hpp"
 #include "heal.hpp"
@@ -133,6 +134,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_BENEDICTUM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case CD_EFFLIGO:
+			return std::make_unique<SkillEffligo>();
 		case CD_MEDIALE_VOTUM:
 			return std::make_unique<SkillMedialeVotum>();
 		case CD_PRESENS_ACIES:

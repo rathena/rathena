@@ -5678,15 +5678,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 
 			RE_LVL_DMOD(100);
 			break;
-		case CD_EFFLIGO:
-			skillratio += -100 + 1650 * skill_lv + 7 * sstatus->pow;
-			skillratio += 8 * pc_checkskill( sd, CD_MACE_BOOK_M );
-			if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON) {
-				skillratio += 150 * skill_lv;
-				skillratio += 7 * pc_checkskill( sd, CD_MACE_BOOK_M );
-			}
-			RE_LVL_DMOD(100);
-			break;
 		case CD_PETITIO:
 			skillratio += -100 + (1050 + pc_checkskill(sd,CD_MACE_BOOK_M) * 50) * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
