@@ -5254,7 +5254,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case CD_FRAMEN:
 	case CD_DIVINUS_FLOS:
 	case MT_MIGHTY_SMASH:
-	case MT_SPARK_BLASTER:
 	case MT_RUSH_STRIKE:
 	case MT_POWERFUL_SWING:
 	case MT_ENERGY_CANNONADE:
@@ -5373,7 +5372,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case SU_SCRATCH:
 				case IG_IMPERIAL_PRESSURE:
 				case BO_MAYHEMIC_THORNS:
-				case MT_SPARK_BLASTER:
 				case SH_CHUL_HO_BATTERING:
 				case SH_HYUN_ROK_SPIRIT_POWER:
 				case SKE_SUNSET_BLAST:

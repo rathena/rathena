@@ -438,6 +438,7 @@
     <ClInclude Include="skills/merchant/rushquake.hpp" />
     <ClInclude Include="skills/merchant/skill_factory_merchant.hpp" />
     <ClInclude Include="skills/merchant/skill_vending.hpp" />
+    <ClInclude Include="skills/merchant/sparkblaster.hpp" />
     <ClInclude Include="skills/merchant/summonflora.hpp" />
     <ClInclude Include="skills/merchant/summonmarinesphere.hpp" />
     <ClInclude Include="skills/merchant/synthesizedshield.hpp" />
@@ -859,6 +860,7 @@
     <ClCompile Include="skills/merchant/rushquake.cpp" />
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp" />
     <ClCompile Include="skills/merchant/skill_vending.cpp" />
+    <ClCompile Include="skills/merchant/sparkblaster.cpp" />
     <ClCompile Include="skills/merchant/summonflora.cpp" />
     <ClCompile Include="skills/merchant/summonmarinesphere.cpp" />
     <ClCompile Include="skills/merchant/synthesizedshield.cpp" />

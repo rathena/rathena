@@ -41,6 +41,7 @@
 #include "preparepotion.hpp"
 #include "rushquake.hpp"
 #include "skill_vending.hpp"
+#include "sparkblaster.hpp"
 #include "summonflora.hpp"
 #include "summonmarinesphere.hpp"
 #include "synthesizedshield.hpp"
@@ -153,6 +154,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillManufactureMachine>();
 		case MT_RUSH_QUAKE:
 			return std::make_unique<SkillRushQuake>();
+		case MT_SPARK_BLASTER:
+			return std::make_unique<SkillSparkBlaster>();
 		case MT_SUMMON_ABR_BATTLE_WARIOR:
 			return std::make_unique<SkillAbrBattleWarrior>();
 		case MT_SUMMON_ABR_DUAL_CANNON:
