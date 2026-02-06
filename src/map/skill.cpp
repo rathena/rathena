@@ -10817,16 +10817,12 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_fail( *sd, skill_id );
 		break;
 
-	case MT_M_MACHINE:
 	case BO_BIONIC_PHARMACY:
 		if (sd) {
 			sd->skill_id_old = skill_id;
 			sd->skill_lv_old = skill_lv;
 
-			if (skill_id == MT_M_MACHINE)
-				clif_cooking_list( *sd, 31, skill_id, 1, 7 );
-			else // BO_BIONIC_PHARMACY
-				clif_cooking_list( *sd, 32, skill_id, 1, 8 );
+			clif_cooking_list( *sd, 32, skill_id, 1, 8 );
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		}
 		break;
