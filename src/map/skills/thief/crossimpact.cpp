@@ -3,7 +3,7 @@
 
 #include "crossimpact.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/clif.hpp"
 #include "map/map.hpp"

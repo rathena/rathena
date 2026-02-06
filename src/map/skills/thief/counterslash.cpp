@@ -3,7 +3,7 @@
 
 #include "counterslash.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
@@ -29,6 +29,6 @@ void SkillCounterSlash::castendNoDamageId(block_list *src, block_list *target, u
 
 	skill_area_temp[1] = 0;
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
-	bool i = map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), starget,
+	map_foreachinrange(skill_area_sub, target, skill_get_splash(getSkillId(), skill_lv), starget,
 			src, getSkillId(), skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 }
