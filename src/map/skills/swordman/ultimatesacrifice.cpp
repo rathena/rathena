@@ -4,9 +4,9 @@
 #include "ultimatesacrifice.hpp"
 
 #include "map/clif.hpp"
-#include "map/pc.hpp"
 #include "map/party.hpp"
-#include "map/skill.hpp"
+#include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillUltimateSacrifice::SkillUltimateSacrifice() : SkillImpl(IG_ULTIMATE_SACRIFICE) {
 }
