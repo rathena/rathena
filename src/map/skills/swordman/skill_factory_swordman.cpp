@@ -11,8 +11,13 @@
 #include "bowlingbash.hpp"
 #include "brandishspear.hpp"
 #include "counterattack.hpp"
+#include "dragonicaura.hpp"
+#include "dragonicbreath.hpp"
+#include "dragonicpierce.hpp"
 #include "grandcross.hpp"
+#include "hackandslasher.hpp"
 #include "holycross.hpp"
+#include "madnesscrusher.hpp"
 #include "magnum.hpp"
 #include "pierce.hpp"
 #include "provoke.hpp"
@@ -20,12 +25,17 @@
 #include "resistantsouls.hpp"
 #include "sacrifice.hpp"
 #include "selfprovoke.hpp"
+#include "servantweapon.hpp"
+#include "servantweapondemolition.hpp"
+#include "servantweaponphantom.hpp"
+#include "servantweaponsign.hpp"
 #include "shieldboomerang.hpp"
 #include "shieldreflect.hpp"
 #include "smite.hpp"
 #include "spearboomerang.hpp"
 #include "spearstab.hpp"
 #include "spiralpierce.hpp"
+#include "stormslash.hpp"
 #include "traumaticblow.hpp"
 #include "vitalstrike.hpp"
 
@@ -55,6 +65,30 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case DK_CHARGINGPIERCE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case DK_DRAGONIC_AURA:
+			return std::make_unique<SkillDragonicAura>();
+		case DK_DRAGONIC_BREATH:
+			return std::make_unique<SkillDragonicBreath>();
+		case DK_DRAGONIC_PIERCE:
+			return std::make_unique<SkillDragonicPierce>();
+		case DK_HACKANDSLASHER:
+			return std::make_unique<SkillHackAndSlasher>();
+		case DK_HACKANDSLASHER_ATK:
+			return std::make_unique<SkillHackAndSlasherAttack>();
+		case DK_MADNESS_CRUSHER:
+			return std::make_unique<SkillMadnessCrusher>();
+		case DK_SERVANTWEAPON:
+			return std::make_unique<SkillServantWeapon>();
+		case DK_SERVANTWEAPON_ATK:
+			return std::make_unique<SkillServantWeaponAttack>();
+		case DK_SERVANT_W_DEMOL:
+			return std::make_unique<SkillServantWeaponDemolition>();
+		case DK_SERVANT_W_PHANTOM:
+			return std::make_unique<SkillServantWeaponPhantom>();
+		case DK_SERVANT_W_SIGN:
+			return std::make_unique<SkillServantWeaponSign>();
+		case DK_STORMSLASH:
+			return std::make_unique<SkillStormSlash>();
 		case DK_VIGOR:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IG_ATTACK_STANCE:
