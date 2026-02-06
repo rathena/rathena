@@ -10801,15 +10801,14 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case MT_SUMMON_ABR_DUAL_CANNON:
 	case MT_SUMMON_ABR_MOTHER_NET:
 	case MT_SUMMON_ABR_INFINITY: {
-			uint32 abrs[] = { MOBID_ABR_DUAL_CANNON, MOBID_ABR_MOTHER_NET, MOBID_ABR_INFINITY };
+			uint32 abrs[] = { MOBID_ABR_MOTHER_NET, MOBID_ABR_INFINITY };
 
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", abrs[skill_id - MT_SUMMON_ABR_DUAL_CANNON], "", SZ_SMALL, AI_ABR);
+			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", abrs[skill_id - MT_SUMMON_ABR_MOTHER_NET], "", SZ_SMALL, AI_ABR);
 
 			if (md) {
 				md->master_id = src->id;
