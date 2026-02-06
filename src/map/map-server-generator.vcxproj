@@ -434,6 +434,7 @@
     <ClInclude Include="skills/merchant/manufacturemachine.hpp" />
     <ClInclude Include="skills/merchant/mightysmash.hpp" />
     <ClInclude Include="skills/merchant/plantcultivation.hpp" />
+    <ClInclude Include="skills/merchant/powerfulswing.hpp" />
     <ClInclude Include="skills/merchant/powerthrust.hpp" />
     <ClInclude Include="skills/merchant/preparepotion.hpp" />
     <ClInclude Include="skills/merchant/rushquake.hpp" />
@@ -859,6 +860,7 @@
     <ClCompile Include="skills/merchant/manufacturemachine.cpp" />
     <ClCompile Include="skills/merchant/mightysmash.cpp" />
     <ClCompile Include="skills/merchant/plantcultivation.cpp" />
+    <ClCompile Include="skills/merchant/powerfulswing.cpp" />
     <ClCompile Include="skills/merchant/powerthrust.cpp" />
     <ClCompile Include="skills/merchant/preparepotion.cpp" />
     <ClCompile Include="skills/merchant/rushquake.cpp" />

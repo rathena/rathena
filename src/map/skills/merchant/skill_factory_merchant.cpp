@@ -38,6 +38,7 @@
 #include "manufacturemachine.hpp"
 #include "mightysmash.hpp"
 #include "plantcultivation.hpp"
+#include "powerfulswing.hpp"
 #include "powerthrust.hpp"
 #include "preparepotion.hpp"
 #include "rushquake.hpp"
@@ -157,6 +158,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillMightySmash>();
 		case MT_M_MACHINE:
 			return std::make_unique<SkillManufactureMachine>();
+		case MT_POWERFUL_SWING:
+			return std::make_unique<SkillPowerfulSwing>();
 		case MT_RUSH_QUAKE:
 			return std::make_unique<SkillRushQuake>();
 		case MT_RUSH_STRIKE:
