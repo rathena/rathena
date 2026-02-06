@@ -38,6 +38,7 @@
 #include "lexdivina.hpp"
 #include "magnificat.hpp"
 #include "magnusexorcismus.hpp"
+#include "medialevotum.hpp"
 #include "oratio.hpp"
 #include "pneuma.hpp"
 #include "praefatio.hpp"
@@ -127,6 +128,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_BENEDICTUM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case CD_MEDIALE_VOTUM:
+			return std::make_unique<SkillMedialeVotum>();
 		case CD_PRESENS_ACIES:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_RELIGIO:

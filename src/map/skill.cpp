@@ -7415,11 +7415,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
 		break;
 
-
-
-
-
-	case CD_MEDIALE_VOTUM:
 	case CD_DILECTIO_HEAL:
 		if (flag & 1) {
 			if (sd == nullptr || sd->status.party_id == 0 || (flag & 2)) {
@@ -7430,12 +7425,8 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			} else if (sd)
 				party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 3, skill_castend_nodamage_id);
 		} else {
-			if (skill_id == CD_MEDIALE_VOTUM)
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-			else { // Dilectio Heal
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv); // Placed here to display animation on target only.
-				skill_castend_nodamage_id(bl, bl, skill_id, skill_lv, tick, 1);
-			}
+			clif_skill_nodamage(src, *bl, skill_id, skill_lv); // Placed here to display animation on target only.
+			skill_castend_nodamage_id(bl, bl, skill_id, skill_lv, tick, 1);
 		}
 		break;
 
