@@ -16,6 +16,7 @@
 #include "aidcondensedpotion.hpp"
 #include "aidpotion.hpp"
 #include "alchemicalweapon.hpp"
+#include "attackmachine.hpp"
 #include "axestomp.hpp"
 #include "biochemicalhelm.hpp"
 #include "bomb.hpp"
@@ -140,6 +141,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillVending>();
 		case MT_AXE_STOMP:
 			return std::make_unique<SkillAxeStomp>();
+		case MT_A_MACHINE:
+			return std::make_unique<SkillAttackMachine>();
 		case MT_D_MACHINE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MT_M_MACHINE:

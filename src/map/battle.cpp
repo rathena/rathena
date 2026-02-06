@@ -5700,10 +5700,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			}
 			RE_LVL_DMOD(100);
 			break;
-		case MT_A_MACHINE:// Formula unknown. Using Dancing Knife's formula for now. [Rytech]
-			skillratio += -100 + 200 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
 		case MT_SPARK_BLASTER:
 			skillratio += -100 + 600 + 1400 * skill_lv;
 			skillratio += 5 * sstatus->pow;

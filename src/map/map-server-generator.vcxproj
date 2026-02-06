@@ -412,6 +412,7 @@
     <ClInclude Include="skills/merchant/aidcondensedpotion.hpp" />
     <ClInclude Include="skills/merchant/aidpotion.hpp" />
     <ClInclude Include="skills/merchant/alchemicalweapon.hpp" />
+    <ClInclude Include="skills/merchant/attackmachine.hpp" />
     <ClInclude Include="skills/merchant/axestomp.hpp" />
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp" />
     <ClInclude Include="skills/merchant/bomb.hpp" />
@@ -828,6 +829,7 @@
     <ClCompile Include="skills/merchant/aidcondensedpotion.cpp" />
     <ClCompile Include="skills/merchant/aidpotion.cpp" />
     <ClCompile Include="skills/merchant/alchemicalweapon.cpp" />
+    <ClCompile Include="skills/merchant/attackmachine.cpp" />
     <ClCompile Include="skills/merchant/axestomp.cpp" />
     <ClCompile Include="skills/merchant/biochemicalhelm.cpp" />
     <ClCompile Include="skills/merchant/bomb.cpp" />
