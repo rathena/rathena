@@ -277,6 +277,7 @@
     <ClInclude Include="skills/acolyte/medialevotum.hpp" />
     <ClInclude Include="skills/acolyte/oratio.hpp" />
     <ClInclude Include="skills/acolyte/pneuma.hpp" />
+    <ClInclude Include="skills/acolyte/pneumaticusprocella.hpp" />
     <ClInclude Include="skills/acolyte/praefatio.hpp" />
     <ClInclude Include="skills/acolyte/renovatio.hpp" />
     <ClInclude Include="skills/acolyte/reparatio.hpp" />
@@ -695,6 +696,7 @@
     <ClCompile Include="skills/acolyte/medialevotum.cpp" />
     <ClCompile Include="skills/acolyte/oratio.cpp" />
     <ClCompile Include="skills/acolyte/pneuma.cpp" />
+    <ClCompile Include="skills/acolyte/pneumaticusprocella.cpp" />
     <ClCompile Include="skills/acolyte/praefatio.cpp" />
     <ClCompile Include="skills/acolyte/renovatio.cpp" />
     <ClCompile Include="skills/acolyte/reparatio.cpp" />

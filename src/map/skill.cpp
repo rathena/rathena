@@ -12050,7 +12050,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case RL_B_TRAP:
 	case NPC_STORMGUST2:
 	case IG_CROSS_RAIN:
-	case CD_PNEUMATICUS_PROCELLA:
 	case ABC_ABYSS_STRIKE:
 	case ABC_ABYSS_SQUARE:
 	case BO_ACIDIFIED_ZONE_WATER:

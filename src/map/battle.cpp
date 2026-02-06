@@ -8285,15 +8285,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += 50 * pc_checkskill( sd, IG_SPEAR_SWORD_M );
 						RE_LVL_DMOD(100);
 						break;
-					case CD_PNEUMATICUS_PROCELLA:
-						skillratio += -100 + 150 + 2100 * skill_lv + 10 * sstatus->spl;
-						skillratio += 3 * pc_checkskill( sd, CD_FIDUS_ANIMUS );
-						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON) {
-							skillratio += 50 + 150 * skill_lv;
-							skillratio += 2 * pc_checkskill( sd, CD_FIDUS_ANIMUS );
-						}
-						RE_LVL_DMOD(100);
-						break;
 					case CD_FRAMEN:
 						skillratio += -100 + 1300 * skill_lv;
 						skillratio += 5 * pc_checkskill(sd,CD_FIDUS_ANIMUS) * skill_lv;
