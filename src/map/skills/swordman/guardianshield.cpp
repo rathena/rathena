@@ -4,9 +4,10 @@
 #include "guardianshield.hpp"
 
 #include "map/clif.hpp"
-#include "map/pc.hpp"
 #include "map/party.hpp"
+#include "map/pc.hpp"
 #include "map/skill.hpp"
+#include "map/status.hpp"
 
 SkillGuardianShield::SkillGuardianShield() : SkillImpl(IG_GUARDIAN_SHIELD) {
 }
