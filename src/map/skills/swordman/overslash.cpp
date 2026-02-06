@@ -3,7 +3,12 @@
 
 #include "overslash.hpp"
 
+#include <config/core.hpp>
+
+#include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/pc.hpp"
+#include "map/skill.hpp"
 #include "map/status.hpp"
 
 SkillOverSlash::SkillOverSlash() : SkillImplRecursiveDamageSplash(IG_OVERSLASH) {
