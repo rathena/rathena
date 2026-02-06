@@ -30,6 +30,7 @@
 #include "changecart.hpp"
 #include "crazyuproar.hpp"
 #include "decoratecart.hpp"
+#include "energycannonade.hpp"
 #include "fullprotection.hpp"
 #include "greed.hpp"
 #include "hammerfall.hpp"
@@ -154,6 +155,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillAttackMachine>();
 		case MT_D_MACHINE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MT_ENERGY_CANNONADE:
+			return std::make_unique<SkillEnergyCannonade>();
 		case MT_MIGHTY_SMASH:
 			return std::make_unique<SkillMightySmash>();
 		case MT_M_MACHINE:

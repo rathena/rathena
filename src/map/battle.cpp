@@ -5691,11 +5691,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += -100 + (1050 + pc_checkskill(sd,CD_MACE_BOOK_M) * 50) * skill_lv + 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
-		case MT_ENERGY_CANNONADE:
-			skillratio += -100 + 250 + 750 * skill_lv;
-			skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
-			RE_LVL_DMOD(100);
-			break;
 		case ABC_ABYSS_DAGGER:
 			skillratio += -100 + 350 + 1400 * skill_lv;
 			skillratio += 5 * sstatus->pow;
