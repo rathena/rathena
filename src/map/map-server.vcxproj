@@ -406,6 +406,7 @@
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
     <ClInclude Include="skills/merchant/abrbattlewarior.hpp" />
     <ClInclude Include="skills/merchant/abrdualcannon.hpp" />
+    <ClInclude Include="skills/merchant/abrinfinity.hpp" />
     <ClInclude Include="skills/merchant/abrmothernet.hpp" />
     <ClInclude Include="skills/merchant/aciddemonstration.hpp" />
     <ClInclude Include="skills/merchant/acidterror.hpp" />
@@ -826,6 +827,7 @@
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp" />
     <ClCompile Include="skills/merchant/abrbattlewarior.cpp" />
     <ClCompile Include="skills/merchant/abrdualcannon.cpp" />
+    <ClCompile Include="skills/merchant/abrinfinity.cpp" />
     <ClCompile Include="skills/merchant/abrmothernet.cpp" />
     <ClCompile Include="skills/merchant/aciddemonstration.cpp" />
     <ClCompile Include="skills/merchant/acidterror.cpp" />

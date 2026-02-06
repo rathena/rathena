@@ -10801,24 +10801,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case MT_SUMMON_ABR_INFINITY: {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", MOBID_ABR_INFINITY, "", SZ_SMALL, AI_ABR);
-
-			if (md) {
-				md->master_id = src->id;
-				md->special_state.ai = AI_ABR;
-
-				if (md->deletetimer != INVALID_TIMER)
-					delete_timer(md->deletetimer, mob_timer_delete);
-				md->deletetimer = add_timer(gettick() + skill_get_time(skill_id, skill_lv), mob_timer_delete, md->id, 0);
-				mob_spawn(md);
-			}
-		}
-		break;
-
 	case BO_WOODENWARRIOR:
 	case BO_WOODEN_FAIRY:
 	case BO_CREEPER:

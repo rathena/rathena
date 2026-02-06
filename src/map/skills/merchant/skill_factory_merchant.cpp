@@ -10,6 +10,7 @@
 
 #include "abrbattlewarior.hpp"
 #include "abrdualcannon.hpp"
+#include "abrinfinity.hpp"
 #include "abrmothernet.hpp"
 #include "aciddemonstration.hpp"
 #include "acidterror.hpp"
@@ -156,6 +157,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillAbrBattleWarrior>();
 		case MT_SUMMON_ABR_DUAL_CANNON:
 			return std::make_unique<SkillAbrDualCannon>();
+		case MT_SUMMON_ABR_INFINITY:
+			return std::make_unique<SkillAbrInfinity>();
 		case MT_SUMMON_ABR_MOTHER_NET:
 			return std::make_unique<SkillAbrMotherNet>();
 		case MT_TRIPLE_LASER:
