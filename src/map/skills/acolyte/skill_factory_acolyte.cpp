@@ -42,6 +42,7 @@
 #include "pneuma.hpp"
 #include "praefatio.hpp"
 #include "renovatio.hpp"
+#include "reparatio.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
 #include "silentium.hpp"
@@ -130,6 +131,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_RELIGIO:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case CD_REPARATIO:
+			return std::make_unique<SkillReparatio>();
 		case CH_CHAINCRUSH:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case CH_TIGERFIST:
