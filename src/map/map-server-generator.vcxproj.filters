@@ -372,6 +372,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="skills/acolyte/adoramus.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/ancilla.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/angelus.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -384,6 +390,21 @@
     <ClInclude Include="skills/acolyte/bssacramenti.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/cantocandidus.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/clearance.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/coluceoheal.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/convenio.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/crementia.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/crucis.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -393,10 +414,19 @@
     <ClInclude Include="skills/acolyte/decagi.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/duplelight.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/epiclesis.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/gloria.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/heal.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/highnessheal.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/holylight.hpp">
@@ -411,7 +441,16 @@
     <ClInclude Include="skills/acolyte/incagi.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/judex.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/kyrieeleison.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/laudaagnus.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/laudaramus.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/lexdivina.hpp">
@@ -423,13 +462,25 @@
     <ClInclude Include="skills/acolyte/magnusexorcismus.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/oratio.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/pneuma.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/praefatio.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/renovatio.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/ruwach.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/sanctuary.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/silentium.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp">
@@ -442,6 +493,9 @@
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/turnundead.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/vituperatum.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/aimedbolt.hpp">
@@ -990,10 +1044,25 @@
     <ClInclude Include="skills/swordman/counterattack.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/dragonicaura.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/dragonicbreath.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/dragonicpierce.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/grandcross.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/hackandslasher.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/holycross.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/madnesscrusher.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/magnum.hpp">
@@ -1017,6 +1086,18 @@
     <ClInclude Include="skills/swordman/selfprovoke.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/servantweapon.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/servantweapondemolition.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/servantweaponphantom.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/servantweaponsign.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/shieldboomerang.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -1036,6 +1117,9 @@
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/spiralpierce.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/stormslash.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/traumaticblow.hpp">
@@ -1385,6 +1469,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="skills/acolyte/adoramus.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/ancilla.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/angelus.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -1397,6 +1487,21 @@
     <ClCompile Include="skills/acolyte/bssacramenti.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/cantocandidus.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/clearance.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/coluceoheal.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/convenio.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/crementia.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/crucis.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -1406,10 +1511,19 @@
     <ClCompile Include="skills/acolyte/decagi.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/duplelight.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/epiclesis.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/gloria.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/heal.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/highnessheal.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/holylight.cpp">
@@ -1424,7 +1538,16 @@
     <ClCompile Include="skills/acolyte/incagi.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/judex.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/kyrieeleison.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/laudaagnus.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/laudaramus.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/lexdivina.cpp">
@@ -1436,13 +1559,25 @@
     <ClCompile Include="skills/acolyte/magnusexorcismus.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/oratio.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/pneuma.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/praefatio.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/renovatio.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/ruwach.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/sanctuary.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/silentium.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp">
@@ -1455,6 +1590,9 @@
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/turnundead.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/vituperatum.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/aimedbolt.cpp">
@@ -2003,10 +2141,25 @@
     <ClCompile Include="skills/swordman/counterattack.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/dragonicaura.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/dragonicbreath.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/dragonicpierce.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/grandcross.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/hackandslasher.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/holycross.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/madnesscrusher.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/magnum.cpp">
@@ -2030,6 +2183,18 @@
     <ClCompile Include="skills/swordman/selfprovoke.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/servantweapon.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/servantweapondemolition.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/servantweaponphantom.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/servantweaponsign.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/shieldboomerang.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -2049,6 +2214,9 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/spiralpierce.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/stormslash.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/traumaticblow.cpp">
@@ -2084,7 +2252,6 @@
     <ClCompile Include="skills/taekwon/eswoo.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-
     <ClCompile Include="skills/taekwon/exorcismofmalicioussoul.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>

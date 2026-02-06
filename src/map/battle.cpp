@@ -5028,9 +5028,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(150); // Base level bonus.
 			break;
 		// case NPC_PHANTOMTHRUST:	// ATK = 100% for all level
-		case AB_DUPLELIGHT_MELEE:
-			skillratio += 50 + 15 * skill_lv;
-			break;
 		case NPC_ARROWSTORM:
 			if (skill_lv > 4)
 				skillratio += 1900;
@@ -5573,76 +5570,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(100);
 			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
-			break;
-		case DK_SERVANTWEAPON_ATK:
-			skillratio += -100 + 600 + 850 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case DK_SERVANT_W_PHANTOM:
-			skillratio += -100 + 200 + 300 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case DK_SERVANT_W_DEMOL:
-			skillratio += -100 + 500 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case DK_HACKANDSLASHER:
-		case DK_HACKANDSLASHER_ATK:
-			skillratio += -100 + 350 + 820 * skill_lv;
-			skillratio += 7 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case DK_DRAGONIC_AURA:
-			skillratio += 3650 * skill_lv + 10 * sstatus->pow;
-			if (tstatus->race == RC_DEMIHUMAN || tstatus->race == RC_ANGEL)
-				skillratio += 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case DK_MADNESS_CRUSHER:
-			skillratio += -100 + 1000 + 3800 * skill_lv;
-			skillratio += 10 * sstatus->pow;
-			if( sd != nullptr ){
-				int16 index = sd->equip_index[EQI_HAND_R];
-
-				if( index >= 0 && sd->inventory_data[index] != nullptr ){
-					skillratio += sd->inventory_data[index]->weight / 10 * sd->inventory_data[index]->weapon_level;
-				}
-			}
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_CHARGINGPIERCE_COUNT) && sc->getSCE(SC_CHARGINGPIERCE_COUNT)->val1 >= 10)
-				skillratio *= 2;
-			break;
-		case DK_STORMSLASH:
-			skillratio += -100 + 300 + 750 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_GIANTGROWTH) && rnd_chance(60, 100))
-				skillratio *= 2;
-			break;
-		case DK_DRAGONIC_BREATH:
-			skillratio += -100 + 50 + 350 * skill_lv;
-			skillratio += 7 * sstatus->pow;
-
-			if (sc && sc->getSCE(SC_DRAGONIC_AURA)) {
-				skillratio += 3 * sstatus->pow;
-				skillratio += (skill_lv * (sstatus->max_hp * 25 / 100) * 7) / 100;	// Skill level x 0.07 x ((MaxHP / 4) + (MaxSP / 2))
-				skillratio += (skill_lv * (sstatus->max_sp * 50 / 100) * 7) / 100;
-			} else {
-				skillratio += (skill_lv * (sstatus->max_hp * 25 / 100) * 5) / 100;	// Skill level x 0.05 x ((MaxHP / 4) + (MaxSP / 2))
-				skillratio += (skill_lv * (sstatus->max_sp * 50 / 100) * 5) / 100;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case DK_DRAGONIC_PIERCE:
-			skillratio += -100 + 850 + 600 * skill_lv;
-			skillratio += 7 * sstatus->pow;	// !TODO: unknown ratio
-
-			if (sc != nullptr && sc->hasSCE(SC_DRAGONIC_AURA))
-				skillratio += 100 + 50 * skill_lv;
-
-			RE_LVL_DMOD(100);
 			break;
 		case IQ_OLEUM_SANCTUM:
 			skillratio += -100 + 500 + 2000 * skill_lv + 5 * sstatus->pow;
@@ -8082,17 +8009,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						break;
 #endif
-					case AB_JUDEX:
-						skillratio += -100 + 300 + 70 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case AB_ADORAMUS:
-						skillratio += - 100 + 300 + 250 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case AB_DUPLELIGHT_MAGIC:
-						skillratio += 300 + 40 * skill_lv;
-						break;
 					case WL_SOULEXPANSION:
 						skillratio += -100 + 1000 + skill_lv * 200;
 						skillratio += sstatus->int_;
