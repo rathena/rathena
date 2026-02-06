@@ -8281,12 +8281,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += 50 * pc_checkskill( sd, IG_SPEAR_SWORD_M );
 						RE_LVL_DMOD(100);
 						break;
-					case CD_DIVINUS_FLOS:
-						skillratio += -100 + 4000 * skill_lv;
-						skillratio += 70 * pc_checkskill(sd,CD_FIDUS_ANIMUS);
-						skillratio += 10 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
 					case ABC_ABYSS_STRIKE:
 						skillratio += -100 + 2650 * skill_lv;
 						skillratio += 10 * sstatus->spl;
