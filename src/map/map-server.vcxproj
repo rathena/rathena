@@ -443,6 +443,7 @@
     <ClInclude Include="skills/merchant/summonmarinesphere.hpp" />
     <ClInclude Include="skills/merchant/synthesizedshield.hpp" />
     <ClInclude Include="skills/merchant/syntheticarmor.hpp" />
+    <ClInclude Include="skills/merchant/triplelaser.hpp" />
     <ClInclude Include="skills/merchant/twilightalchemy1.hpp" />
     <ClInclude Include="skills/merchant/twilightalchemy2.hpp" />
     <ClInclude Include="skills/merchant/twilightalchemy3.hpp" />
@@ -865,6 +866,7 @@
     <ClCompile Include="skills/merchant/summonmarinesphere.cpp" />
     <ClCompile Include="skills/merchant/synthesizedshield.cpp" />
     <ClCompile Include="skills/merchant/syntheticarmor.cpp" />
+    <ClCompile Include="skills/merchant/triplelaser.cpp" />
     <ClCompile Include="skills/merchant/twilightalchemy1.cpp" />
     <ClCompile Include="skills/merchant/twilightalchemy2.cpp" />
     <ClCompile Include="skills/merchant/twilightalchemy3.cpp" />

@@ -5700,11 +5700,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			}
 			RE_LVL_DMOD(100);
 			break;
-		case MT_TRIPLE_LASER:
-			skillratio += -100 + 650 + 1150 * skill_lv;
-			skillratio += 12 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
 		case MT_RUSH_STRIKE:
 			skillratio += -100 + 3500 * skill_lv;
 			skillratio += 5 * sstatus->pow; // !TODO: check POW ratio

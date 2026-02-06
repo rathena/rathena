@@ -46,6 +46,7 @@
 #include "summonmarinesphere.hpp"
 #include "synthesizedshield.hpp"
 #include "syntheticarmor.hpp"
+#include "triplelaser.hpp"
 #include "twilightalchemy1.hpp"
 #include "twilightalchemy2.hpp"
 #include "twilightalchemy3.hpp"
@@ -165,7 +166,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case MT_SUMMON_ABR_MOTHER_NET:
 			return std::make_unique<SkillAbrMotherNet>();
 		case MT_TRIPLE_LASER:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillTripleLaser>();
 		case NC_ACCELERATION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NC_AXEBOOMERANG:
