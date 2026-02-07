@@ -11376,6 +11376,30 @@ Examples:
 	mes mesitemicon( 1201 ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 	mes mesitemicon( "Knife" ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 
+---------------------------------------
+
+*mesemotiontype(<emotion_id>);
+*mesemotiontype("<emotion_constant>");
+
+Generates an emotion type string that can be used with an NPC’s mes command.
+This allows NPC dialogue to display a client-side emotion icon inline with the message.
+
+If the feature is disabled or the client packet version is too old, the function will
+return an empty string.
+
+The emotion can be specified either by its numeric ID or by using a valid emotion
+constant name.
+
+Invalid emotion IDs or unknown emotion names will return an empty string.
+
+Examples:
+
+	mes mesemotiontype(ET_SMILE) + " Hello there!"; // Displays an NPC message with a smile emotion icon before the text.
+	mes mesemotiontype(3) + " I'm angry!"; // Displays an NPC message using emotion ID 3.
+	mes mesemotiontype("ET_SWEAT") + " That was close..."; // Uses the emotion constant instead of a numeric ID.
+
+---------------------------------------
+
 ========================
 |14.- Channel commands.|
 ========================
