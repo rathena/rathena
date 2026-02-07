@@ -1557,7 +1557,7 @@
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/firstbrand.cpp">
-      <Filter>Header Files\Skills\Acolyte</Filter>
+      <Filter>Source Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClCompile Include="skills/acolyte/gloria.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
