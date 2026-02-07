@@ -3,7 +3,7 @@
 
 #include "summonstone.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"

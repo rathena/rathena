@@ -723,7 +723,13 @@
     <ClInclude Include="skills/mage/coldbolt.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/comet.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/crimsonarrow.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/crimsonrock.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/crystalimpact.hpp">
@@ -733,12 +739,6 @@
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/destructivehurricane.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/comet.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/crimsonrock.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/drainlife.hpp">
@@ -777,10 +777,10 @@
     <ClInclude Include="skills/mage/frostnova.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/frozenslash.hpp">
+    <ClInclude Include="skills/mage/frostymisty.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/frostymisty.hpp">
+    <ClInclude Include="skills/mage/frozenslash.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/ganbantein.hpp">
@@ -828,13 +828,13 @@
     <ClInclude Include="skills/mage/rainofcrystal.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/rockdown.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
     <ClInclude Include="skills/mage/readingspellbook.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/release.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/rockdown.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/safetywall.hpp">
@@ -1389,6 +1389,9 @@
     <ClInclude Include="skills/thief/crossripperslasher.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/crossslash.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/dancingknife.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -1477,9 +1480,6 @@
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/shadowstab.hpp">
-      <Filter>Header Files\Skills\Thief</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/thief/crossslash.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/sightlessmind.hpp">
@@ -1877,7 +1877,13 @@
     <ClCompile Include="skills/mage/coldbolt.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/comet.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/crimsonarrow.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/crimsonrock.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/crystalimpact.cpp">
@@ -1887,12 +1893,6 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/destructivehurricane.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/comet.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/crimsonrock.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/drainlife.cpp">
@@ -1931,10 +1931,10 @@
     <ClCompile Include="skills/mage/frostnova.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mage/frozenslash.cpp">
+    <ClCompile Include="skills/mage/frostymisty.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mage/frostymisty.cpp">
+    <ClCompile Include="skills/mage/frozenslash.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/ganbantein.cpp">
@@ -1982,13 +1982,13 @@
     <ClCompile Include="skills/mage/rainofcrystal.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mage/rockdown.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
     <ClCompile Include="skills/mage/readingspellbook.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/release.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/rockdown.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/safetywall.cpp">
@@ -2543,6 +2543,9 @@
     <ClCompile Include="skills/thief/crossripperslasher.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/crossslash.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/dancingknife.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
@@ -2631,9 +2634,6 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/shadowstab.cpp">
-      <Filter>Source Files\Skills\Thief</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/thief/crossslash.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/sightlessmind.cpp">
