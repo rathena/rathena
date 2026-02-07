@@ -10,7 +10,7 @@ SkillNyangGrass::SkillNyangGrass() : SkillImpl(SU_NYANGGRASS) {
 }
 
 void SkillNyangGrass::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
-	map_session_data* sd = BL_CAST( BL_PC, src );
+	map_session_data* sd = BL_CAST(BL_PC, src);
 
 	if (sd && pc_checkskill(sd, SU_SPIRITOFLAND)) {
 		sc_start(src, src, SC_DORAM_MATK, 100, sd->status.base_level, skill_get_time(SU_SPIRITOFLAND, 1));

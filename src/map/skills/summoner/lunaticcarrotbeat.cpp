@@ -3,7 +3,7 @@
 
 #include "lunaticcarrotbeat.hpp"
 
-#include <config/const.hpp>
+#include <config/core.hpp>
 
 #include "map/pc.hpp"
 #include "map/status.hpp"
@@ -14,7 +14,7 @@ SkillLunaticCarrotBeat::SkillLunaticCarrotBeat() : SkillImplRecursiveDamageSplas
 
 void SkillLunaticCarrotBeat::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
-	const map_session_data* sd = BL_CAST( BL_PC, src );
+	const map_session_data* sd = BL_CAST(BL_PC, src);
 
 	skillratio += 100 + 100 * skill_lv;
 	if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
@@ -25,7 +25,7 @@ void SkillLunaticCarrotBeat::calculateSkillRatio(const Damage *wd, const block_l
 }
 
 void SkillLunaticCarrotBeat::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	map_session_data* sd = BL_CAST( BL_PC, src );
+	map_session_data* sd = BL_CAST(BL_PC, src);
 
 	if (sd && pc_search_inventory(sd, skill_db.find(getSkillId())->require.itemid[0]) >= 0) {
 		SkillLunaticCarrotBeat2 lunatic2;
@@ -43,7 +43,7 @@ SkillLunaticCarrotBeat2::SkillLunaticCarrotBeat2() : SkillImplRecursiveDamageSpl
 
 void SkillLunaticCarrotBeat2::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
-	const map_session_data* sd = BL_CAST( BL_PC, src );
+	const map_session_data* sd = BL_CAST(BL_PC, src);
 
 	skillratio += 100 + 100 * skill_lv;
 	if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))

@@ -13,7 +13,7 @@ SkillTastyShrimpParty::SkillTastyShrimpParty() : SkillImpl(SU_SHRIMPARTY) {
 
 void SkillTastyShrimpParty::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	sc_type type = skill_get_sc(getSkillId());
-	map_session_data* sd = BL_CAST( BL_PC, src );
+	map_session_data* sd = BL_CAST(BL_PC, src);
 	int32 i = 0;
 
 	if (sd == nullptr || sd->status.party_id == 0 || flag&1) {
