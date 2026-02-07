@@ -338,7 +338,6 @@
     <ClInclude Include="skills/gunslinger/tripleaction.hpp" />
     <ClInclude Include="skills/mage/allbloom.hpp" />
     <ClInclude Include="skills/mage/astralstrike.hpp" />
-    <ClInclude Include="skills/mage/coldbolt.hpp" />
     <ClInclude Include="skills/mage/crimsonarrow.hpp" />
     <ClInclude Include="skills/mage/crystalimpact.hpp" />
     <ClInclude Include="skills/mage/deadlyprojection.hpp" />
@@ -728,7 +727,6 @@
     <ClCompile Include="skills/gunslinger/tripleaction.cpp" />
     <ClCompile Include="skills/mage/allbloom.cpp" />
     <ClCompile Include="skills/mage/astralstrike.cpp" />
-    <ClCompile Include="skills/mage/coldbolt.cpp" />
     <ClCompile Include="skills/mage/crimsonarrow.cpp" />
     <ClCompile Include="skills/mage/crystalimpact.cpp" />
     <ClCompile Include="skills/mage/deadlyprojection.cpp" />

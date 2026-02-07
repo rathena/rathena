@@ -344,7 +344,6 @@
     <ClInclude Include="skills/mage/deadlyprojection.hpp" />
     <ClInclude Include="skills/mage/destructivehurricane.hpp" />
     <ClInclude Include="skills/mage/chainlightning.hpp" />
-    <ClInclude Include="skills/mage/coldbolt.hpp" />
     <ClInclude Include="skills/mage/comet.hpp" />
     <ClInclude Include="skills/mage/crimsonrock.hpp" />
     <ClInclude Include="skills/mage/drainlife.hpp" />
@@ -734,7 +733,6 @@
     <ClCompile Include="skills/mage/deadlyprojection.cpp" />
     <ClCompile Include="skills/mage/destructivehurricane.cpp" />
     <ClCompile Include="skills/mage/chainlightning.cpp" />
-    <ClCompile Include="skills/mage/coldbolt.cpp" />
     <ClCompile Include="skills/mage/comet.cpp" />
     <ClCompile Include="skills/mage/crimsonrock.cpp" />
     <ClCompile Include="skills/mage/drainlife.cpp" />
