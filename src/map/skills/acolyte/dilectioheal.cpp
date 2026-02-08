@@ -6,7 +6,6 @@
 #include "map/clif.hpp"
 #include "map/party.hpp"
 #include "map/pc.hpp"
-#include "map/skill.hpp"
 #include "map/status.hpp"
 
 SkillDilectioHeal::SkillDilectioHeal() : SkillImpl(CD_DILECTIO_HEAL) {
