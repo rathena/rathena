@@ -5,6 +5,7 @@
 
 #include <config/core.hpp>
 
+#include "map/status.hpp"
 
 SkillCrimsonRock::SkillCrimsonRock() : SkillImplRecursiveDamageSplash(WL_CRIMSONROCK) {
 }

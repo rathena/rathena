@@ -6,6 +6,7 @@
 #include <config/core.hpp>
 
 #include "map/map.hpp"
+#include "map/status.hpp"
 
 SkillEarthStrain::SkillEarthStrain() : SkillImpl(WL_EARTHSTRAIN) {
 }
