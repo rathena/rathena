@@ -666,6 +666,7 @@
     <ClInclude Include="skills/thief/stonefling.hpp" />
     <ClInclude Include="skills/thief/stripshadow.hpp" />
     <ClInclude Include="skills/thief/throwvenomknife.hpp" />
+    <ClInclude Include="skills/thief/unluckyrush.hpp" />
     <ClInclude Include="skills/thief/venomdust.hpp" />
     <ClInclude Include="skills/thief/venompressure.hpp" />
     <ClInclude Include="skills/thief/venomsplasher.hpp" />
@@ -1991,6 +1992,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/throwvenomknife.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/unluckyrush.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/venomdust.cpp">

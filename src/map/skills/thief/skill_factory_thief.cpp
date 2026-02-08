@@ -60,6 +60,7 @@
 #include "stonefling.cpp"
 #include "stripshadow.cpp"
 #include "throwvenomknife.cpp"
+#include "unluckyrush.cpp"
 #include "venomdust.cpp"
 #include "venompressure.cpp"
 #include "venomsplasher.cpp"
@@ -75,6 +76,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case ABC_STRIP_SHADOW:
 			return std::make_unique<SkillStripShadow>();
+		case ABC_UNLUCKY_RUSH:
+			return std::make_unique<SkillUnluckyRush>();
 		case ASC_BREAKER:
 			return std::make_unique<SkillSoulDestroyer>();
 		case ASC_CDP:
