@@ -1638,6 +1638,9 @@
     <ClInclude Include="skills/thief/stonefling.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/stripshadow.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/throwvenomknife.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -2919,6 +2922,9 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/stonefling.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/stripshadow.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/throwvenomknife.cpp">

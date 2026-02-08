@@ -57,6 +57,7 @@
 #include "steal.cpp"
 #include "stealth.cpp"
 #include "stonefling.cpp"
+#include "stripshadow.cpp"
 #include "throwvenomknife.cpp"
 #include "venomdust.cpp"
 #include "venompressure.cpp"
@@ -69,6 +70,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ABC_CHAIN_REACTION_SHOT_ATK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case ABC_STRIP_SHADOW:
+			return std::make_unique<SkillStripShadow>();
 		case ASC_BREAKER:
 			return std::make_unique<SkillSoulDestroyer>();
 		case ASC_CDP:

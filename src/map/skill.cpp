@@ -7869,8 +7869,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
 
-	case SC_STRIPACCESSARY:
-	case ABC_STRIP_SHADOW: {
+	case SC_STRIPACCESSARY: {
 		bool strip_success = skill_strip_equip(src, bl, skill_id, skill_lv);
 
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,strip_success);
