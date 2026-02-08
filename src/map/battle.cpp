@@ -5678,57 +5678,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 
 			RE_LVL_DMOD(100);
 			break;
-		case MT_AXE_STOMP:
-			skillratio += -100 + 450 + 1150 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_MIGHTY_SMASH:
-			skillratio += -100 + 80 + 240 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			if (sc && sc->getSCE(SC_AXE_STOMP)) {
-				skillratio += 20;
-				skillratio += 5 * sstatus->pow;
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case MT_RUSH_QUAKE:
-			skillratio += -100 + 3600 * skill_lv + 10 * sstatus->pow;
-			if (tstatus->race == RC_FORMLESS || tstatus->race == RC_INSECT)
-				skillratio += 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_A_MACHINE:// Formula unknown. Using Dancing Knife's formula for now. [Rytech]
-			skillratio += -100 + 200 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_SPARK_BLASTER:
-			skillratio += -100 + 600 + 1400 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_TRIPLE_LASER:
-			skillratio += -100 + 650 + 1150 * skill_lv;
-			skillratio += 12 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_RUSH_STRIKE:
-			skillratio += -100 + 3500 * skill_lv;
-			skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
-			RE_LVL_DMOD(100);
-			break;
-		case MT_POWERFUL_SWING:
-			skillratio += -100 + 300 + 850 * skill_lv;
-			skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
-			if (sc && sc->getSCE(SC_AXE_STOMP))
-				skillratio += 100 + 100 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_ENERGY_CANNONADE:
-			skillratio += -100 + 250 + 750 * skill_lv;
-			skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
-			RE_LVL_DMOD(100);
-			break;
 		case ABC_ABYSS_DAGGER:
 			skillratio += -100 + 350 + 1400 * skill_lv;
 			skillratio += 5 * sstatus->pow;
