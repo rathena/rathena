@@ -5210,7 +5210,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SP_CURSEEXPLOSION:
 	case SP_SHA:
 	case SP_SWHOO:
-	case ABC_ABYSS_DAGGER:
 	case ABC_CHAIN_REACTION_SHOT:
 	case ABC_DEFT_STAB:
 	case ABC_CHASING_BREAK:
@@ -7416,7 +7415,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SJ_SOLARBURST:
 	case SJ_STAREMPEROR:
 	case SJ_FALLINGSTAR_ATK:
-	case ABC_ABYSS_DAGGER:
 	case BO_EXPLOSIVE_POWDER:
 	case SKE_DAWN_BREAK:
 	case SKE_RISING_MOON:
@@ -7444,8 +7442,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 			status_change_end(src, SC_DIMENSION);
 		}
-		if (skill_id == ABC_ABYSS_DAGGER)
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
 			hom_addspiritball(hd, MAX_SPIRITBALL);
 		}

@@ -1485,6 +1485,9 @@
     <ClInclude Include="skills/taekwon/warmthofthesun.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/abyssdagger.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/antidote.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -2770,6 +2773,9 @@
     </ClCompile>
     <ClCompile Include="skills/taekwon/warmthofthesun.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/abyssdagger.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/antidote.cpp">
       <Filter>Source Files\Skills\Thief</Filter>

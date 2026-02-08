@@ -7,6 +7,7 @@
 
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
+#include "abyssdagger.cpp"
 #include "antidote.cpp"
 #include "backslide.cpp"
 #include "backstab.cpp"
@@ -66,6 +67,8 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case ABC_ABYSS_DAGGER:
+			return std::make_unique<SkillAbyssDagger>();
 		case ABC_ABYSS_SLAYER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ABC_CHAIN_REACTION_SHOT_ATK:

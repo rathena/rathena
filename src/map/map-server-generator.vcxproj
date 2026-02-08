@@ -612,6 +612,7 @@
     <ClInclude Include="skills/taekwon/warmthofthemoon.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthestars.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthesun.hpp" />
+    <ClInclude Include="skills/thief/abyssdagger.hpp" />
     <ClInclude Include="skills/thief/antidote.hpp" />
     <ClInclude Include="skills/thief/backslide.hpp" />
     <ClInclude Include="skills/thief/backstab.hpp" />
@@ -1828,6 +1829,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/warmthofthesun.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/abyssdagger.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/antidote.cpp">
