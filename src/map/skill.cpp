@@ -5187,9 +5187,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_IGNITIONBREAK:
 	case RK_IGNITIONBREAK:
 	case RK_HUNDREDSPEAR:
-	case WL_SOULEXPANSION:
-	case WL_CRIMSONROCK:
-	case WL_JACKFROST:
 	case NC_VULCANARM:
 	case NC_COLDSLOWER:
 	case NC_SELFDESTRUCTION:
@@ -5401,10 +5398,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case NC_ARMSCANNON:
 					skill_area_temp[1] = 0;
 					starget = splash_target(src);
-					break;
-				case WL_CRIMSONROCK:
-					skill_area_temp[4] = bl->x;
-					skill_area_temp[5] = bl->y;
 					break;
 				case SU_LUNATICCARROTBEAT:
 					if (sd && pc_search_inventory(sd, skill_db.find(SU_LUNATICCARROTBEAT)->require.itemid[0]) >= 0)
