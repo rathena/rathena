@@ -12,7 +12,8 @@ SkillAbrDualCannon::SkillAbrDualCannon() : StatusSkillImpl(MT_SUMMON_ABR_DUAL_CA
 }
 
 void SkillAbrDualCannon::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 
 	mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", MOBID_ABR_DUAL_CANNON, "", SZ_SMALL, AI_ABR);
 

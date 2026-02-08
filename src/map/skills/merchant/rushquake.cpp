@@ -6,7 +6,8 @@
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
-#include "map/skill.hpp"
+#include "map/map.hpp"
+#include "map/path.hpp"
 #include "map/status.hpp"
 
 SkillRushQuake::SkillRushQuake() : SkillImplRecursiveDamageSplash(MT_RUSH_QUAKE) {
