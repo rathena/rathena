@@ -5,7 +5,6 @@
 
 #include "map/clif.hpp"
 #include "map/mob.hpp"
-#include "map/skill.hpp"
 #include "map/status.hpp"
 
 SkillAbrInfinity::SkillAbrInfinity() : StatusSkillImpl(MT_SUMMON_ABR_INFINITY) {
