@@ -1930,10 +1930,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case IQ_THIRD_CONSECRATION:
 		status_change_end(bl, SC_SECOND_BRAND);
 		break;
-	case CD_ARBITRIUM:// Target is Deep Silenced by chance and is then dealt a 2nd splash hit.
-		sc_start(src, bl, SC_HANDICAPSTATE_DEEPSILENCE, 20 + 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		skill_castend_damage_id(src, bl, CD_ARBITRIUM_ATK, skill_lv, tick, SD_LEVEL);
-		break;
 	case ABC_UNLUCKY_RUSH:
 		sc_start(src, bl, SC_HANDICAPSTATE_MISFORTUNE, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -4987,7 +4983,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 	case IG_IMPERIAL_CROSS:
-	case CD_EFFLIGO:
 	case IQ_BLAZING_FLAME_BLAST:
 	case ABC_FRENZY_SHOT:
 	case TR_ROSEBLOSSOM:
@@ -5252,10 +5247,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case IG_OVERSLASH:
 	case IG_RADIANT_SPEAR:
 	case IG_IMPERIAL_PRESSURE:
-	case CD_ARBITRIUM_ATK:
-	case CD_PETITIO:
-	case CD_FRAMEN:
-	case CD_DIVINUS_FLOS:
 	case MT_AXE_STOMP:
 	case MT_MIGHTY_SMASH:
 	case MT_RUSH_QUAKE:
@@ -5449,9 +5440,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case IQ_SECOND_FAITH:
 				case IQ_SECOND_JUDGEMENT:
 				case IG_RADIANT_SPEAR:
-				case CD_PETITIO:
-				case CD_FRAMEN:
-				case CD_DIVINUS_FLOS:
 				case MT_POWERFUL_SWING:
 				case MT_ENERGY_CANNONADE:
 				case BO_DUST_EXPLOSION:
@@ -5877,7 +5865,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case WM_METALICSOUND:
 	case KO_KAIHOU:
 	case MH_ERASER_CUTTER:
-	case CD_ARBITRIUM:
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
@@ -6957,24 +6944,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case CD_REPARATIO: {
-		if (bl->type != BL_PC) { // Only works on players.
-			if (sd)
-				clif_skill_fail( *sd, skill_id );
-			break;
-		}
-
-		int32 heal_amount = 0;
-
-		if (!status_isimmune(bl))
-			heal_amount = tstatus->max_hp;
-
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		clif_skill_nodamage(nullptr, *bl, AL_HEAL, heal_amount);
-		status_heal(bl, heal_amount, 0, 0);
-	}
-	break;
-
 	case PR_REDEMPTIO:
 		if (sd && !(flag&1)) {
 			if (sd->status.party_id == 0) {
@@ -7431,46 +7400,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case TR_SOUNDBLEND:
 		skill_castend_damage_id(src, bl, skill_id, skill_lv, tick, 0);
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
-		break;
-
-
-
-
-
-	case CD_MEDIALE_VOTUM:
-	case CD_DILECTIO_HEAL:
-		if (flag & 1) {
-			if (sd == nullptr || sd->status.party_id == 0 || (flag & 2)) {
-				int32 heal_amount = skill_calc_heal(src, bl, skill_id, skill_lv, 1);
-
-				clif_skill_nodamage(nullptr, *bl, AL_HEAL, heal_amount);
-				status_heal(bl, heal_amount, 0, 0);
-			} else if (sd)
-				party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 3, skill_castend_nodamage_id);
-		} else {
-			if (skill_id == CD_MEDIALE_VOTUM)
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-			else { // Dilectio Heal
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv); // Placed here to display animation on target only.
-				skill_castend_nodamage_id(bl, bl, skill_id, skill_lv, tick, 1);
-			}
-		}
-		break;
-
-	case CD_COMPETENTIA:
-		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
-			int32 hp_amount = tstatus->max_hp * (20 * skill_lv) / 100;
-			int32 sp_amount = tstatus->max_sp * (20 * skill_lv) / 100;
-
-			clif_skill_nodamage(nullptr, *bl, AL_HEAL, hp_amount);
-			status_heal(bl, hp_amount, 0, 0);
-
-			clif_skill_nodamage(nullptr, *bl, MG_SRECOVERY, sp_amount);
-			status_heal(bl, 0, sp_amount, 0);
-
-			clif_skill_nodamage(bl, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		} else if (sd)
-			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		break;
 
 	case BO_ADVANCE_PROTECTION:
@@ -12100,7 +12029,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case RL_B_TRAP:
 	case NPC_STORMGUST2:
 	case IG_CROSS_RAIN:
-	case CD_PNEUMATICUS_PROCELLA:
 	case ABC_ABYSS_STRIKE:
 	case ABC_ABYSS_SQUARE:
 	case BO_ACIDIFIED_ZONE_WATER:

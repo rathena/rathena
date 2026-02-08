@@ -5678,19 +5678,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 
 			RE_LVL_DMOD(100);
 			break;
-		case CD_EFFLIGO:
-			skillratio += -100 + 1650 * skill_lv + 7 * sstatus->pow;
-			skillratio += 8 * pc_checkskill( sd, CD_MACE_BOOK_M );
-			if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON) {
-				skillratio += 150 * skill_lv;
-				skillratio += 7 * pc_checkskill( sd, CD_MACE_BOOK_M );
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case CD_PETITIO:
-			skillratio += -100 + (1050 + pc_checkskill(sd,CD_MACE_BOOK_M) * 50) * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
 		case MT_AXE_STOMP:
 			skillratio += -100 + 450 + 1150 * skill_lv;
 			skillratio += 5 * sstatus->pow;
@@ -8292,39 +8279,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += -100 + 5600 + 1850 * skill_lv;
 						skillratio += 7 * sstatus->spl;
 						skillratio += 50 * pc_checkskill( sd, IG_SPEAR_SWORD_M );
-						RE_LVL_DMOD(100);
-						break;
-					case CD_ARBITRIUM:
-						skillratio += -100 + 1000 * skill_lv + 10 * sstatus->spl;
-						skillratio += 10 * pc_checkskill( sd, CD_FIDUS_ANIMUS ) * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case CD_ARBITRIUM_ATK:
-						skillratio += -100 + 1750 * skill_lv + 10 * sstatus->spl;
-						skillratio += 50 * pc_checkskill( sd, CD_FIDUS_ANIMUS ) * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case CD_PNEUMATICUS_PROCELLA:
-						skillratio += -100 + 150 + 2100 * skill_lv + 10 * sstatus->spl;
-						skillratio += 3 * pc_checkskill( sd, CD_FIDUS_ANIMUS );
-						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON) {
-							skillratio += 50 + 150 * skill_lv;
-							skillratio += 2 * pc_checkskill( sd, CD_FIDUS_ANIMUS );
-						}
-						RE_LVL_DMOD(100);
-						break;
-					case CD_FRAMEN:
-						skillratio += -100 + 1300 * skill_lv;
-						skillratio += 5 * pc_checkskill(sd,CD_FIDUS_ANIMUS) * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						if (tstatus->race == RC_UNDEAD || tstatus->race == RC_DEMON)
-							skillratio += 50 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case CD_DIVINUS_FLOS:
-						skillratio += -100 + 4000 * skill_lv;
-						skillratio += 70 * pc_checkskill(sd,CD_FIDUS_ANIMUS);
-						skillratio += 10 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case ABC_ABYSS_STRIKE:
