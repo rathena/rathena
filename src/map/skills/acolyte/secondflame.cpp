@@ -3,6 +3,8 @@
 
 #include "secondflame.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
 #include "map/status.hpp"
 
