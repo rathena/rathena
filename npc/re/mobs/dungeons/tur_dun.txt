@@ -56,14 +56,18 @@ tur_dun05,0,0	monster	Assaulter	1315,1,5000
 //==================================================
 // Illusion of Turtle
 //==================================================
-tur_d03_i	monster	Ominous Solider	3802,40
-tur_d03_i	monster	Ominous Permeter	3800,50
+tur_d03_i	monster	Ominous Solider	3802,40,5000
+tur_d03_i	monster	Ominous Permeter	3800,50,5000
 
-tur_d04_i	monster	Ominous Permeter	3800,16,5000,0,"illusion_turtle_boss::OnEvent"
-tur_d04_i	monster	Ominous Freezer	3801,36,5000,0,"illusion_turtle_boss::OnEvent"
-tur_d04_i	monster	Ominous Assulter	3799,16,5000,0,"illusion_turtle_boss::OnEvent"
-tur_d04_i	monster	Ominous Solider	3802,16,5000,0,"illusion_turtle_boss::OnEvent"
-tur_d04_i	monster	Ominous Heater	3803,36,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Permeter	3800,20,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Freezer	3801,22,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Freezer	3801,8,8000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Freezer	3801,10,15000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Assulter	3799,20,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Solider	3802,20,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Heater	3803,22,5000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Heater	3803,8,8000,0,"illusion_turtle_boss::OnEvent"
+tur_d04_i	monster	Ominous Heater	3803,10,15000,0,"illusion_turtle_boss::OnEvent"
 
 // boss spawn
 -	script	illusion_turtle_boss	-1,{
