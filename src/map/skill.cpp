@@ -4979,7 +4979,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case ITM_TOMAHAWK:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case IG_IMPERIAL_CROSS:
 	case IQ_BLAZING_FLAME_BLAST:
 	case ABC_FRENZY_SHOT:
 	case TR_ROSEBLOSSOM:
@@ -5241,9 +5240,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case IQ_THIRD_PUNISH:
 	case IQ_THIRD_FLAME_BOMB:
 	case IQ_THIRD_CONSECRATION:
-	case IG_OVERSLASH:
-	case IG_RADIANT_SPEAR:
-	case IG_IMPERIAL_PRESSURE:
 	case ABC_ABYSS_DAGGER:
 	case ABC_CHAIN_REACTION_SHOT:
 	case ABC_DEFT_STAB:
@@ -5272,9 +5268,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case BO_MYSTERY_POWDER:
 	case BO_DUST_EXPLOSION:
 	case NPC_WIDECRITICALWOUND:
-	case IG_SHIELD_SHOOTING:
 	case TR_METALIC_FURY:
-	case IG_GRAND_JUDGEMENT:
 	case SH_CHUL_HO_BATTERING:
 	case SH_HYUN_ROK_SPIRIT_POWER:
 	case SKE_SUNSET_BLAST:
@@ -5357,7 +5351,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				}
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
-				case IG_IMPERIAL_PRESSURE:
 				case BO_MAYHEMIC_THORNS:
 				case SH_CHUL_HO_BATTERING:
 				case SH_HYUN_ROK_SPIRIT_POWER:
@@ -5427,7 +5420,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case IQ_SECOND_FLAME:
 				case IQ_SECOND_FAITH:
 				case IQ_SECOND_JUDGEMENT:
-				case IG_RADIANT_SPEAR:
 				case BO_DUST_EXPLOSION:
 				case ABC_DEFT_STAB:
 				case EM_EL_FLAMEROCK:
@@ -5461,10 +5453,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					status_heal(src, status_get_max_hp(src) * skill_lv / 100, status_get_max_sp(src) * skill_lv / 100, 0);
 					break;
-				case IG_OVERSLASH:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-					break;
 				case BO_ACIDIFIED_ZONE_WATER:
 				case BO_ACIDIFIED_ZONE_GROUND:
 				case BO_ACIDIFIED_ZONE_WIND:
@@ -5474,8 +5462,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 						skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
 					break;
 				case BO_MYSTERY_POWDER:
-				case IG_SHIELD_SHOOTING:
-				case IG_GRAND_JUDGEMENT:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					break;
@@ -5841,7 +5827,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case IG_JUDGEMENT_CROSS:
 	case TR_SOUNDBLEND:
 	case SH_HYUN_ROK_CANNON:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
@@ -7848,14 +7833,10 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case CASH_INCAGI:
 	case CASH_ASSUMPTIO:
 	case WM_FRIGG_SONG:
-	case IG_GUARDIAN_SHIELD:
-	case IG_ULTIMATE_SACRIFICE:// Is the animation on this skill correct? Check if its on caster only or all affected. [Rytech]
 		if( sd == nullptr || sd->status.party_id == 0 || (flag & 1) )
 			clif_skill_nodamage(bl, *bl, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		else if (sd)
 		{
-			if (skill_id == IG_ULTIMATE_SACRIFICE)
-				status_set_hp(src, 1, 0);
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		}
 		break;
@@ -11947,7 +11928,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case SJ_BOOKOFCREATINGSTAR:
 	case RL_B_TRAP:
 	case NPC_STORMGUST2:
-	case IG_CROSS_RAIN:
 	case ABC_ABYSS_STRIKE:
 	case ABC_ABYSS_SQUARE:
 	case BO_ACIDIFIED_ZONE_WATER:
