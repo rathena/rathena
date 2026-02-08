@@ -8,7 +8,6 @@
 #include "map/clif.hpp"
 #include "map/map.hpp"
 #include "map/path.hpp"
-#include "map/skill.hpp"
 #include "map/status.hpp"
 
 SkillRushStrike::SkillRushStrike() : SkillImplRecursiveDamageSplash(MT_RUSH_STRIKE) {
