@@ -6,6 +6,7 @@
 #include "map/clif.hpp"
 #include "map/party.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillMedialeVotum::SkillMedialeVotum() : SkillImpl(CD_MEDIALE_VOTUM) {
 }
