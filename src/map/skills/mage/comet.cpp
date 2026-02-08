@@ -5,7 +5,6 @@
 
 #include <config/core.hpp>
 
-#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillComet::SkillComet() : SkillImpl(WL_COMET) {

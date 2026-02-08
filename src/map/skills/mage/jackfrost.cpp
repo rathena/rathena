@@ -5,7 +5,6 @@
 
 #include <config/core.hpp>
 
-#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillJackFrost::SkillJackFrost() : SkillImplRecursiveDamageSplash(WL_JACKFROST) {

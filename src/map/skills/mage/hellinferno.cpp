@@ -6,7 +6,6 @@
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
-#include "map/pc.hpp"
 
 SkillHellInferno::SkillHellInferno() : SkillImpl(WL_HELLINFERNO) {
 }

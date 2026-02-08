@@ -6,7 +6,6 @@
 #include <config/core.hpp>
 
 #include "map/battle.hpp"
-#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillFrostyMisty::SkillFrostyMisty() : SkillImpl(WL_FROSTMISTY) {
