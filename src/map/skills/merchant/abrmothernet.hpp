@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "../status_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-class SkillAbrMotherNet : public StatusSkillImpl {
+class SkillAbrMotherNet : public SkillImpl {
 public:
 	SkillAbrMotherNet();
 

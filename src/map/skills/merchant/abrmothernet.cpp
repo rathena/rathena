@@ -7,12 +7,12 @@
 #include "map/mob.hpp"
 #include "map/status.hpp"
 
-SkillAbrMotherNet::SkillAbrMotherNet() : StatusSkillImpl(MT_SUMMON_ABR_MOTHER_NET) {
+SkillAbrMotherNet::SkillAbrMotherNet() : SkillImpl(MT_SUMMON_ABR_MOTHER_NET) {
 }
 
 void SkillAbrMotherNet::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
+	sc_start(src, target, skill_get_sc(getSkillId()), 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 
 	mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", MOBID_ABR_MOTHER_NET, "", SZ_SMALL, AI_ABR);
 

@@ -3,9 +3,9 @@
 
 #pragma once
 
-#include "../status_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-class SkillAbrDualCannon : public StatusSkillImpl {
+class SkillAbrDualCannon : public SkillImpl {
 public:
 	SkillAbrDualCannon();
 
