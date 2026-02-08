@@ -5,9 +5,9 @@
 
 #include <config/core.hpp>
 
-#include "map/map.hpp"
+#include "map/battle.hpp"
+#include "map/clif.hpp"
 #include "map/pc.hpp"
-#include "map/skill.hpp"
 #include "map/status.hpp"
 
 SkillAttackMachine::SkillAttackMachine() : SkillImplRecursiveDamageSplash(MT_A_MACHINE) {
