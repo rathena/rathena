@@ -11,6 +11,7 @@
 #include "adoramus.hpp"
 #include "ancilla.hpp"
 #include "angelus.hpp"
+#include "arbitrium.hpp"
 #include "aspersio.hpp"
 #include "blazingflameblast.hpp"
 #include "blessing.hpp"
@@ -18,15 +19,20 @@
 #include "cantocandidus.hpp"
 #include "clearance.hpp"
 #include "coluceoheal.hpp"
+#include "competentia.hpp"
 #include "convenio.hpp"
 #include "crementia.hpp"
 #include "crucis.hpp"
 #include "cure.hpp"
 #include "decagi.hpp"
+#include "dilectioheal.hpp"
+#include "divinusflos.hpp"
 #include "duplelight.hpp"
+#include "effligo.hpp"
 #include "epiclesis.hpp"
 #include "explosionblaster.hpp"
 #include "firstbrand.hpp"
+#include "framen.hpp"
 #include "gloria.hpp"
 #include "heal.hpp"
 #include "highnessheal.hpp"
@@ -42,11 +48,15 @@
 #include "magnificat.hpp"
 #include "magnusexorcismus.hpp"
 #include "massiveflameblaster.hpp"
+#include "medialevotum.hpp"
 #include "oleumsanctum.hpp"
 #include "oratio.hpp"
+#include "petitio.hpp"
 #include "pneuma.hpp"
+#include "pneumaticusprocella.hpp"
 #include "praefatio.hpp"
 #include "renovatio.hpp"
+#include "reparatio.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
 #include "secondfaith.hpp"
@@ -131,16 +141,38 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillPneuma>();
 		case AL_RUWACH:
 			return std::make_unique<SkillRuwach>();
+		case CD_ARBITRIUM:
+			return std::make_unique<SkillArbitrium>();
+		case CD_ARBITRIUM_ATK:
+			return std::make_unique<SkillArbitriumAttack>();
 		case CD_ARGUTUS_TELUM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_ARGUTUS_VITA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_BENEDICTUM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case CD_COMPETENTIA:
+			return std::make_unique<SkillCompetentia>();
+		case CD_DILECTIO_HEAL:
+			return std::make_unique<SkillDilectioHeal>();
+		case CD_DIVINUS_FLOS:
+			return std::make_unique<SkillDivinusFlos>();
+		case CD_EFFLIGO:
+			return std::make_unique<SkillEffligo>();
+		case CD_FRAMEN:
+			return std::make_unique<SkillFramen>();
+		case CD_MEDIALE_VOTUM:
+			return std::make_unique<SkillMedialeVotum>();
+		case CD_PETITIO:
+			return std::make_unique<SkillPetitio>();
+		case CD_PNEUMATICUS_PROCELLA:
+			return std::make_unique<SkillPneumaticusProcella>();
 		case CD_PRESENS_ACIES:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_RELIGIO:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case CD_REPARATIO:
+			return std::make_unique<SkillReparatio>();
 		case CH_CHAINCRUSH:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case CH_TIGERFIST:
