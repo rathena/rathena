@@ -246,6 +246,7 @@
     <ClInclude Include="skills/acolyte/angelus.hpp" />
     <ClInclude Include="skills/acolyte/arbitrium.hpp" />
     <ClInclude Include="skills/acolyte/aspersio.hpp" />
+    <ClInclude Include="skills/acolyte/blazingflameblast.hpp" />
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/bssacramenti.hpp" />
     <ClInclude Include="skills/acolyte/cantocandidus.hpp" />
@@ -262,6 +263,8 @@
     <ClInclude Include="skills/acolyte/duplelight.hpp" />
     <ClInclude Include="skills/acolyte/effligo.hpp" />
     <ClInclude Include="skills/acolyte/epiclesis.hpp" />
+    <ClInclude Include="skills/acolyte/explosionblaster.hpp" />
+    <ClInclude Include="skills/acolyte/firstbrand.hpp" />
     <ClInclude Include="skills/acolyte/framen.hpp" />
     <ClInclude Include="skills/acolyte/gloria.hpp" />
     <ClInclude Include="skills/acolyte/heal.hpp" />
@@ -277,7 +280,9 @@
     <ClInclude Include="skills/acolyte/lexdivina.hpp" />
     <ClInclude Include="skills/acolyte/magnificat.hpp" />
     <ClInclude Include="skills/acolyte/magnusexorcismus.hpp" />
+    <ClInclude Include="skills/acolyte/massiveflameblaster.hpp" />
     <ClInclude Include="skills/acolyte/medialevotum.hpp" />
+    <ClInclude Include="skills/acolyte/oleumsanctum.hpp" />
     <ClInclude Include="skills/acolyte/oratio.hpp" />
     <ClInclude Include="skills/acolyte/petitio.hpp" />
     <ClInclude Include="skills/acolyte/pneuma.hpp" />
@@ -287,10 +292,16 @@
     <ClInclude Include="skills/acolyte/reparatio.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/sanctuary.hpp" />
+    <ClInclude Include="skills/acolyte/secondfaith.hpp" />
+    <ClInclude Include="skills/acolyte/secondflame.hpp" />
+    <ClInclude Include="skills/acolyte/secondjudgement.hpp" />
     <ClInclude Include="skills/acolyte/silentium.hpp" />
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
     <ClInclude Include="skills/acolyte/statusrecovery.hpp" />
     <ClInclude Include="skills/acolyte/suffragium.hpp" />
+    <ClInclude Include="skills/acolyte/thirdconsecration.hpp" />
+    <ClInclude Include="skills/acolyte/thirdflamebomb.hpp" />
+    <ClInclude Include="skills/acolyte/thirdpunish.hpp" />
     <ClInclude Include="skills/acolyte/turnundead.hpp" />
     <ClInclude Include="skills/acolyte/vituperatum.hpp" />
     <ClInclude Include="skills/archer/aimedbolt.hpp" />
@@ -693,6 +704,7 @@
     <ClCompile Include="skills/acolyte/angelus.cpp" />
     <ClCompile Include="skills/acolyte/arbitrium.cpp" />
     <ClCompile Include="skills/acolyte/aspersio.cpp" />
+    <ClCompile Include="skills/acolyte/blazingflameblast.cpp" />
     <ClCompile Include="skills/acolyte/blessing.cpp" />
     <ClCompile Include="skills/acolyte/bssacramenti.cpp" />
     <ClCompile Include="skills/acolyte/cantocandidus.cpp" />
@@ -709,6 +721,8 @@
     <ClCompile Include="skills/acolyte/duplelight.cpp" />
     <ClCompile Include="skills/acolyte/effligo.cpp" />
     <ClCompile Include="skills/acolyte/epiclesis.cpp" />
+    <ClCompile Include="skills/acolyte/explosionblaster.cpp" />
+    <ClCompile Include="skills/acolyte/firstbrand.cpp" />
     <ClCompile Include="skills/acolyte/framen.cpp" />
     <ClCompile Include="skills/acolyte/gloria.cpp" />
     <ClCompile Include="skills/acolyte/heal.cpp" />
@@ -724,7 +738,9 @@
     <ClCompile Include="skills/acolyte/lexdivina.cpp" />
     <ClCompile Include="skills/acolyte/magnificat.cpp" />
     <ClCompile Include="skills/acolyte/magnusexorcismus.cpp" />
+    <ClCompile Include="skills/acolyte/massiveflameblaster.cpp" />
     <ClCompile Include="skills/acolyte/medialevotum.cpp" />
+    <ClCompile Include="skills/acolyte/oleumsanctum.cpp" />
     <ClCompile Include="skills/acolyte/oratio.cpp" />
     <ClCompile Include="skills/acolyte/petitio.cpp" />
     <ClCompile Include="skills/acolyte/pneuma.cpp" />
@@ -734,10 +750,16 @@
     <ClCompile Include="skills/acolyte/reparatio.cpp" />
     <ClCompile Include="skills/acolyte/ruwach.cpp" />
     <ClCompile Include="skills/acolyte/sanctuary.cpp" />
+    <ClCompile Include="skills/acolyte/secondfaith.cpp" />
+    <ClCompile Include="skills/acolyte/secondflame.cpp" />
+    <ClCompile Include="skills/acolyte/secondjudgement.cpp" />
     <ClCompile Include="skills/acolyte/silentium.cpp" />
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp" />
     <ClCompile Include="skills/acolyte/statusrecovery.cpp" />
     <ClCompile Include="skills/acolyte/suffragium.cpp" />
+    <ClCompile Include="skills/acolyte/thirdconsecration.cpp" />
+    <ClCompile Include="skills/acolyte/thirdflamebomb.cpp" />
+    <ClCompile Include="skills/acolyte/thirdpunish.cpp" />
     <ClCompile Include="skills/acolyte/turnundead.cpp" />
     <ClCompile Include="skills/acolyte/vituperatum.cpp" />
     <ClCompile Include="skills/archer/aimedbolt.cpp" />

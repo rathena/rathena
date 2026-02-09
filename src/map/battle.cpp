@@ -5571,63 +5571,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
-		case IQ_OLEUM_SANCTUM:
-			skillratio += -100 + 500 + 2000 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case IQ_MASSIVE_F_BLASTER:
-			skillratio += -100 + 2300 * skill_lv + 15 * sstatus->pow;
-			if (tstatus->race == RC_BRUTE || tstatus->race == RC_DEMON)
-				skillratio += 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case IQ_EXPOSION_BLASTER:
-			skillratio += -100 + 450 + 2600 * skill_lv;
-			skillratio += 10 * sstatus->pow;
-
-			if( tsc != nullptr && tsc->getSCE( SC_HOLY_OIL ) ){
-				skillratio += 950 * skill_lv;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case IQ_FIRST_BRAND:
-			skillratio += -100 + 1200 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case IQ_SECOND_FLAME:
-			skillratio += -100 + 200 + 2900 * skill_lv + 9 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case IQ_SECOND_FAITH:
-			skillratio += -100 + 100 + 2300 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case IQ_SECOND_JUDGEMENT:
-			skillratio += -100 + 150 + 2600 * skill_lv + 7 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case IQ_THIRD_PUNISH:
-			skillratio += -100 + 450 + 1800 * skill_lv;
-			skillratio += 10 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case IQ_THIRD_FLAME_BOMB:
-			skillratio += -100 + 650 * skill_lv + 10 * sstatus->pow;
-			skillratio += sstatus->max_hp * 20 / 100;
-			RE_LVL_DMOD(100);
-			break;
-		case IQ_THIRD_CONSECRATION:
-			skillratio += -100 + 700 * skill_lv + 10 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case IQ_BLAZING_FLAME_BLAST:
-			skillratio += -100 + 2000 + 3800 * skill_lv;
-			skillratio += 10 * sstatus->pow;	// !TODO: unknown ratio
-			if( sc != nullptr && sc->hasSCE( SC_MASSIVE_F_BLASTER ) )
-				skillratio += 1500 + 400 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
 		case ABC_ABYSS_DAGGER:
 			skillratio += -100 + 350 + 1400 * skill_lv;
 			skillratio += 5 * sstatus->pow;
