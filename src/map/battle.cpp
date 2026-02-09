@@ -5628,107 +5628,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 1500 + 400 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
-		case IG_GRAND_JUDGEMENT:
-			skillratio += -100 + 250 + 1500 * skill_lv + 10 * sstatus->pow;
-			if (tstatus->race == RC_PLANT || tstatus->race == RC_INSECT)
-				skillratio += 100 + 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
-				skillratio += skillratio * i / 100;
-			break;
-		case IG_SHIELD_SHOOTING:
-			skillratio += -100 + 1000 + 3500 * skill_lv;
-			skillratio += 10 * sstatus->pow;
-			skillratio += skill_lv * 150 * pc_checkskill( sd, IG_SHIELD_MASTERY );
-			if (sd) { // Damage affected by the shield's weight and refine. Need official formula. [Rytech]
-				int16 index = sd->equip_index[EQI_HAND_L];
-
-				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR) {
-					skillratio += (sd->inventory_data[index]->weight * 7 / 6) / 10;
-					skillratio += sd->inventory.u.items_inventory[index].refine * 100;
-				}
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case IG_OVERSLASH:
-			skillratio += -100 + 220 * skill_lv;
-			skillratio += pc_checkskill(sd, IG_SPEAR_SWORD_M) * 50 * skill_lv;
-			skillratio += 7 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
-				skillratio += skillratio * i / 100;
-			break;
-		case IG_RADIANT_SPEAR:
-			skillratio += -100 + 3500 + 1150 * skill_lv;
-			skillratio += pc_checkskill(sd, IG_SPEAR_SWORD_M) * 50;
-			skillratio += 5 * sstatus->pow;	// !TODO: check POW ratio
-
-			if( sc != nullptr && sc->getSCE( SC_SPEAR_SCAR ) )
-				skillratio += 250 * skill_lv;
-
-			RE_LVL_DMOD(100);
-			break;
-		case IG_IMPERIAL_CROSS:
-			skillratio += -100 + 1650 + 1350 * skill_lv;
-			skillratio += pc_checkskill(sd, IG_SPEAR_SWORD_M) * 25;
-			skillratio += 5 * sstatus->pow;	// !TODO: check POW ratio
-
-			if( sc != nullptr && sc->getSCE( SC_SPEAR_SCAR ) )
-				skillratio += 100 + 300 * skill_lv;
-
-			RE_LVL_DMOD(100);
-			break;
-		case MT_AXE_STOMP:
-			skillratio += -100 + 450 + 1150 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_MIGHTY_SMASH:
-			skillratio += -100 + 80 + 240 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			if (sc && sc->getSCE(SC_AXE_STOMP)) {
-				skillratio += 20;
-				skillratio += 5 * sstatus->pow;
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case MT_RUSH_QUAKE:
-			skillratio += -100 + 3600 * skill_lv + 10 * sstatus->pow;
-			if (tstatus->race == RC_FORMLESS || tstatus->race == RC_INSECT)
-				skillratio += 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_A_MACHINE:// Formula unknown. Using Dancing Knife's formula for now. [Rytech]
-			skillratio += -100 + 200 * skill_lv + 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_SPARK_BLASTER:
-			skillratio += -100 + 600 + 1400 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_TRIPLE_LASER:
-			skillratio += -100 + 650 + 1150 * skill_lv;
-			skillratio += 12 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_RUSH_STRIKE:
-			skillratio += -100 + 3500 * skill_lv;
-			skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
-			RE_LVL_DMOD(100);
-			break;
-		case MT_POWERFUL_SWING:
-			skillratio += -100 + 300 + 850 * skill_lv;
-			skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
-			if (sc && sc->getSCE(SC_AXE_STOMP))
-				skillratio += 100 + 100 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case MT_ENERGY_CANNONADE:
-			skillratio += -100 + 250 + 750 * skill_lv;
-			skillratio += 5 * sstatus->pow; // !TODO: check POW ratio
-			RE_LVL_DMOD(100);
-			break;
 		case ABC_ABYSS_DAGGER:
 			skillratio += -100 + 350 + 1400 * skill_lv;
 			skillratio += 5 * sstatus->pow;
@@ -8257,29 +8156,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						break;
 					case NPC_STORMGUST2:
 						skillratio += 200 * skill_lv;
-						break;
-					case IG_JUDGEMENT_CROSS:
-						skillratio += -100 + 1950 * skill_lv + 10 * sstatus->spl;
-						if (tstatus->race == RC_PLANT || tstatus->race == RC_INSECT)
-							skillratio += 150 * skill_lv;
-						RE_LVL_DMOD(100);
-						if ((i = pc_checkskill_imperial_guard(sd, 3)) > 0)
-							skillratio += skillratio * i / 100;
-						break;
-					case IG_CROSS_RAIN:
-						if( sc && sc->getSCE( SC_HOLY_S ) ){
-							skillratio += -100 + ( 650 + 15 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
-						}else{
-							skillratio += -100 + ( 450 + 10 * pc_checkskill( sd, IG_SPEAR_SWORD_M ) ) * skill_lv;
-						}
-						skillratio += 7 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case IG_IMPERIAL_PRESSURE:
-						skillratio += -100 + 5600 + 1850 * skill_lv;
-						skillratio += 7 * sstatus->spl;
-						skillratio += 50 * pc_checkskill( sd, IG_SPEAR_SWORD_M );
-						RE_LVL_DMOD(100);
 						break;
 					case ABC_ABYSS_STRIKE:
 						skillratio += -100 + 2650 * skill_lv;

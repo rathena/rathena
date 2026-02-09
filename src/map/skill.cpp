@@ -1955,9 +1955,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case EM_TERRA_DRIVE:
 		sc_start(src, bl, SC_HANDICAPSTATE_CRYSTALLIZATION, 5, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
-	case MT_RUSH_QUAKE:
-		sc_start( src, bl, SC_RUSH_QUAKE1, 100, skill_lv, skill_get_time( skill_id, skill_lv ) );
-		break;
 	case ABC_HIT_AND_SLIDING:
 		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -4982,7 +4979,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case ITM_TOMAHAWK:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case IG_IMPERIAL_CROSS:
 	case IQ_BLAZING_FLAME_BLAST:
 	case ABC_FRENZY_SHOT:
 	case TR_ROSEBLOSSOM:
@@ -5244,17 +5240,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case IQ_THIRD_PUNISH:
 	case IQ_THIRD_FLAME_BOMB:
 	case IQ_THIRD_CONSECRATION:
-	case IG_OVERSLASH:
-	case IG_RADIANT_SPEAR:
-	case IG_IMPERIAL_PRESSURE:
-	case MT_AXE_STOMP:
-	case MT_MIGHTY_SMASH:
-	case MT_RUSH_QUAKE:
-	case MT_A_MACHINE:
-	case MT_SPARK_BLASTER:
-	case MT_RUSH_STRIKE:
-	case MT_POWERFUL_SWING:
-	case MT_ENERGY_CANNONADE:
 	case ABC_ABYSS_DAGGER:
 	case ABC_CHAIN_REACTION_SHOT:
 	case ABC_DEFT_STAB:
@@ -5283,9 +5268,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case BO_MYSTERY_POWDER:
 	case BO_DUST_EXPLOSION:
 	case NPC_WIDECRITICALWOUND:
-	case IG_SHIELD_SHOOTING:
 	case TR_METALIC_FURY:
-	case IG_GRAND_JUDGEMENT:
 	case SH_CHUL_HO_BATTERING:
 	case SH_HYUN_ROK_SPIRIT_POWER:
 	case SKE_SUNSET_BLAST:
@@ -5368,9 +5351,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				}
 				case GN_CARTCANNON:
 				case SU_SCRATCH:
-				case IG_IMPERIAL_PRESSURE:
 				case BO_MAYHEMIC_THORNS:
-				case MT_SPARK_BLASTER:
 				case SH_CHUL_HO_BATTERING:
 				case SH_HYUN_ROK_SPIRIT_POWER:
 				case SKE_SUNSET_BLAST:
@@ -5439,9 +5420,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case IQ_SECOND_FLAME:
 				case IQ_SECOND_FAITH:
 				case IQ_SECOND_JUDGEMENT:
-				case IG_RADIANT_SPEAR:
-				case MT_POWERFUL_SWING:
-				case MT_ENERGY_CANNONADE:
 				case BO_DUST_EXPLOSION:
 				case ABC_DEFT_STAB:
 				case EM_EL_FLAMEROCK:
@@ -5475,10 +5453,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					status_heal(src, status_get_max_hp(src) * skill_lv / 100, status_get_max_sp(src) * skill_lv / 100, 0);
 					break;
-				case IG_OVERSLASH:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-					break;
 				case BO_ACIDIFIED_ZONE_WATER:
 				case BO_ACIDIFIED_ZONE_GROUND:
 				case BO_ACIDIFIED_ZONE_WIND:
@@ -5487,22 +5461,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					if (bl->type == BL_PC)// Place single cell AoE if hitting a player.
 						skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
 					break;
-				case MT_RUSH_STRIKE:
-				case MT_RUSH_QUAKE:
-					// Jump to the target before attacking.
-					if( skill_check_unit_movepos( 5, src, bl->x, bl->y, 0, 1 ) ){
-						skill_blown( src, src, 1, direction_opposite( static_cast<enum directions>( map_calc_dir( bl, src->x, src->y ) ) ), BLOWN_NONE);
-					}
-					clif_skill_nodamage( src, *bl, skill_id, skill_lv); // Trigger animation
-					clif_blown( src );
-					if (skill_id == MT_RUSH_QUAKE){
-						// TODO: does this buff start before or after dealing damage? [Muh]
-						sc_start( src, src, SC_RUSH_QUAKE2, 100, skill_lv, skill_get_time2( skill_id, skill_lv ) );
-					}
-					break;
 				case BO_MYSTERY_POWDER:
-				case IG_SHIELD_SHOOTING:
-				case IG_GRAND_JUDGEMENT:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					break;
@@ -5868,7 +5827,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case IG_JUDGEMENT_CROSS:
 	case TR_SOUNDBLEND:
 	case SH_HYUN_ROK_CANNON:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
@@ -7698,8 +7656,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case IQ_OLEUM_SANCTUM:
 	case IQ_MASSIVE_F_BLASTER:
 	case IQ_EXPOSION_BLASTER:
-	case MT_AXE_STOMP:
-	case MT_MIGHTY_SMASH:
 	case ABC_ABYSS_DAGGER:
 	case BO_EXPLOSIVE_POWDER:
 	case SKE_DAWN_BREAK:
@@ -7728,7 +7684,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 			status_change_end(src, SC_DIMENSION);
 		}
-		if (skill_id == IQ_MASSIVE_F_BLASTER || skill_id == MT_AXE_STOMP || skill_id == ABC_ABYSS_DAGGER)
+		if (skill_id == IQ_MASSIVE_F_BLASTER || skill_id == ABC_ABYSS_DAGGER)
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
 			hom_addspiritball(hd, MAX_SPIRITBALL);
@@ -7757,31 +7713,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		if( !i && ( skill_id == RK_WINDCUTTER || skill_id == NC_AXETORNADO || skill_id == LG_CANNONSPEAR || skill_id == SR_SKYNETBLOW || skill_id == KO_HAPPOKUNAI ) )
 			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 	}
-		break;
-
-	case MT_A_MACHINE:
-		if (flag & 1) {
-			skill_area_temp[1] = 0;
-
-			if (sd && pc_issit(sd)) { // Force player to stand before attacking
-				pc_setstand(sd, true);
-				skill_sit(sd, false);
-			}
-
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR | BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_LEVEL | SD_SPLASH, skill_castend_damage_id);
-		} else {
-			if (dstsd) {
-				int32 lv = abs( status_get_lv( src ) - status_get_lv( bl ) );
-
-				if (lv > battle_config.attack_machine_level_difference) {
-					if (sd)
-						clif_skill_fail( *sd, skill_id );
-					return 0;
-				}
-			}
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		}
 		break;
 
 	case EM_ELEMENTAL_BUSTER: {
@@ -7902,14 +7833,10 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case CASH_INCAGI:
 	case CASH_ASSUMPTIO:
 	case WM_FRIGG_SONG:
-	case IG_GUARDIAN_SHIELD:
-	case IG_ULTIMATE_SACRIFICE:// Is the animation on this skill correct? Check if its on caster only or all affected. [Rytech]
 		if( sd == nullptr || sd->status.party_id == 0 || (flag & 1) )
 			clif_skill_nodamage(bl, *bl, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		else if (sd)
 		{
-			if (skill_id == IG_ULTIMATE_SACRIFICE)
-				status_set_hp(src, 1, 0);
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		}
 		break;
@@ -10757,40 +10684,13 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_fail( *sd, skill_id );
 		break;
 
-	case MT_M_MACHINE:
 	case BO_BIONIC_PHARMACY:
 		if (sd) {
 			sd->skill_id_old = skill_id;
 			sd->skill_lv_old = skill_lv;
 
-			if (skill_id == MT_M_MACHINE)
-				clif_cooking_list( *sd, 31, skill_id, 1, 7 );
-			else // BO_BIONIC_PHARMACY
-				clif_cooking_list( *sd, 32, skill_id, 1, 8 );
+			clif_cooking_list( *sd, 32, skill_id, 1, 8 );
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}
-		break;
-
-	case MT_SUMMON_ABR_BATTLE_WARIOR:
-	case MT_SUMMON_ABR_DUAL_CANNON:
-	case MT_SUMMON_ABR_MOTHER_NET:
-	case MT_SUMMON_ABR_INFINITY: {
-			uint32 abrs[4] = { MOBID_ABR_BATTLE_WARIOR, MOBID_ABR_DUAL_CANNON, MOBID_ABR_MOTHER_NET, MOBID_ABR_INFINITY };
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", abrs[3 - (MT_SUMMON_ABR_INFINITY - skill_id)], "", SZ_SMALL, AI_ABR);
-
-			if (md) {
-				md->master_id = src->id;
-				md->special_state.ai = AI_ABR;
-
-				if (md->deletetimer != INVALID_TIMER)
-					delete_timer(md->deletetimer, mob_timer_delete);
-				md->deletetimer = add_timer(gettick() + skill_get_time(skill_id, skill_lv), mob_timer_delete, md->id, 0);
-				mob_spawn(md);
-			}
 		}
 		break;
 
@@ -12028,7 +11928,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case SJ_BOOKOFCREATINGSTAR:
 	case RL_B_TRAP:
 	case NPC_STORMGUST2:
-	case IG_CROSS_RAIN:
 	case ABC_ABYSS_STRIKE:
 	case ABC_ABYSS_SQUARE:
 	case BO_ACIDIFIED_ZONE_WATER:
