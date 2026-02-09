@@ -1454,51 +1454,135 @@
     <ClCompile Include="skills/summoner/skill_factory_summoner.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/swordman/autoberserk.cpp" />
-    <ClCompile Include="skills/swordman/bash.cpp" />
-    <ClCompile Include="skills/swordman/bowlingbash.cpp" />
-    <ClCompile Include="skills/swordman/brandishspear.cpp" />
-    <ClCompile Include="skills/swordman/counterattack.cpp" />
-    <ClCompile Include="skills/swordman/crossrain.cpp" />
-    <ClCompile Include="skills/swordman/dragonicaura.cpp" />
-    <ClCompile Include="skills/swordman/dragonicbreath.cpp" />
-    <ClCompile Include="skills/swordman/dragonicpierce.cpp" />
-    <ClCompile Include="skills/swordman/grandcross.cpp" />
-    <ClCompile Include="skills/swordman/grandjudgement.cpp" />
-    <ClCompile Include="skills/swordman/guardianshield.cpp" />
-    <ClCompile Include="skills/swordman/hackandslasher.cpp" />
-    <ClCompile Include="skills/swordman/holycross.cpp" />
-    <ClCompile Include="skills/swordman/imperialcross.cpp" />
-    <ClCompile Include="skills/swordman/imperialpressure.cpp" />
-    <ClCompile Include="skills/swordman/judgementcross.cpp" />
-    <ClCompile Include="skills/swordman/madnesscrusher.cpp" />
-    <ClCompile Include="skills/swordman/magnum.cpp" />
-    <ClCompile Include="skills/swordman/overslash.cpp" />
-    <ClCompile Include="skills/swordman/pierce.cpp" />
-    <ClCompile Include="skills/swordman/provoke.cpp" />
-    <ClCompile Include="skills/swordman/radiantspear.cpp" />
-    <ClCompile Include="skills/swordman/relax.cpp" />
-    <ClCompile Include="skills/swordman/resistantsouls.cpp" />
-    <ClCompile Include="skills/swordman/sacrifice.cpp" />
-    <ClCompile Include="skills/swordman/selfprovoke.cpp" />
-    <ClCompile Include="skills/swordman/servantweapon.cpp" />
-    <ClCompile Include="skills/swordman/servantweapondemolition.cpp" />
-    <ClCompile Include="skills/swordman/servantweaponphantom.cpp" />
-    <ClCompile Include="skills/swordman/servantweaponsign.cpp" />
-    <ClCompile Include="skills/swordman/shieldboomerang.cpp" />
-    <ClCompile Include="skills/swordman/shieldreflect.cpp" />
-    <ClCompile Include="skills/swordman/shieldshooting.cpp" />
+    <ClCompile Include="skills/swordman/autoberserk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/bash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/bowlingbash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/brandishspear.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/counterattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/crossrain.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/dragonicaura.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/dragonicbreath.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/dragonicpierce.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/grandcross.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/grandjudgement.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/guardianshield.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/hackandslasher.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/holycross.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/imperialcross.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/imperialpressure.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/judgementcross.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/madnesscrusher.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/magnum.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/overslash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/pierce.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/provoke.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/radiantspear.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/relax.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/resistantsouls.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/sacrifice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/selfprovoke.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/servantweapon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/servantweapondemolition.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/servantweaponphantom.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/servantweaponsign.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/shieldboomerang.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/shieldreflect.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/shieldshooting.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/swordman/smite.cpp" />
-    <ClCompile Include="skills/swordman/spearboomerang.cpp" />
-    <ClCompile Include="skills/swordman/spearstab.cpp" />
-    <ClCompile Include="skills/swordman/spiralpierce.cpp" />
-    <ClCompile Include="skills/swordman/stormslash.cpp" />
-    <ClCompile Include="skills/swordman/traumaticblow.cpp" />
-    <ClCompile Include="skills/swordman/ultimatesacrifice.cpp" />
-    <ClCompile Include="skills/swordman/vitalstrike.cpp" />
+    <ClCompile Include="skills/swordman/smite.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/spearboomerang.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/spearstab.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/spiralpierce.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/stormslash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/traumaticblow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/ultimatesacrifice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/vitalstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/circleofdirectionsandelementals.cpp" />
     <ClCompile Include="skills/taekwon/counter.cpp" />
     <ClCompile Include="skills/taekwon/downkick.cpp" />
