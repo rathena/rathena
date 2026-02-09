@@ -5,4 +5,4 @@ queries:
   - uses: security-and-quality
     exclude:
       # We use unity builds/amalgamated builds to optimize compile time for the skill TU
-      - cpp/include-cpp-file
+      - cpp/include-non-header

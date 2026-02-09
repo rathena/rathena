@@ -47,7 +47,7 @@ jobs:
            # CodeQL supports [ 'cpp', 'csharp', 'go', 'java', 'javascript', 'python', 'ruby' ]
            # Learn more about CodeQL language support at https://aka.ms/codeql-docs/language-support
            languages: cpp
-           config-file: .github/codeql/config.yml
+           config-file: tools/ci/codeql_config.yml
 
       # A simple 'yes' and 'no' can be confusing, so we use names to display in the current job then convert them for use in the compiler.
       - name: Variable Parsing - PRE
