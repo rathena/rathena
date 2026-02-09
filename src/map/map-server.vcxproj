@@ -1751,64 +1751,174 @@
     <ClCompile Include="skills/taekwon/warmthofthesun.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/thief/antidote.cpp" />
-    <ClCompile Include="skills/thief/backslide.cpp" />
-    <ClCompile Include="skills/thief/backstab.cpp" />
-    <ClCompile Include="skills/thief/cloaking.cpp" />
-    <ClCompile Include="skills/thief/cloakingexceed.cpp" />
-    <ClCompile Include="skills/thief/closeconfine.cpp" />
-    <ClCompile Include="skills/thief/counterinstinct.cpp" />
-    <ClCompile Include="skills/thief/counterslash.cpp" />
-    <ClCompile Include="skills/thief/createdeadlypoison.cpp" />
-    <ClCompile Include="skills/thief/createnewpoison.cpp" />
-    <ClCompile Include="skills/thief/crossimpact.cpp" />
-    <ClCompile Include="skills/thief/crossripperslasher.cpp" />
-    <ClCompile Include="skills/thief/crossslash.cpp" />
-    <ClCompile Include="skills/thief/dancingknife.cpp" />
-    <ClCompile Include="skills/thief/darkclaw.cpp" />
-    <ClCompile Include="skills/thief/darkillusion.cpp" />
-    <ClCompile Include="skills/thief/detoxify.cpp" />
-    <ClCompile Include="skills/thief/divestall.cpp" />
-    <ClCompile Include="skills/thief/divestarmor.cpp" />
-    <ClCompile Include="skills/thief/divesthelm.cpp" />
-    <ClCompile Include="skills/thief/divestshield.cpp" />
-    <ClCompile Include="skills/thief/divestweapon.cpp" />
-    <ClCompile Include="skills/thief/enchantdeadlypoison.cpp" />
-    <ClCompile Include="skills/thief/enchantpoison.cpp" />
-    <ClCompile Include="skills/thief/envenom.cpp" />
-    <ClCompile Include="skills/thief/eternalslash.cpp" />
-    <ClCompile Include="skills/thief/fatalshadowcrow.cpp" />
-    <ClCompile Include="skills/thief/findstone.cpp" />
-    <ClCompile Include="skills/thief/grimtooth.cpp" />
-    <ClCompile Include="skills/thief/hallucinationwalk.cpp" />
-    <ClCompile Include="skills/thief/hiding.cpp" />
-    <ClCompile Include="skills/thief/impactcrater.cpp" />
-    <ClCompile Include="skills/thief/meteorassault.cpp" />
-    <ClCompile Include="skills/thief/mug.cpp" />
-    <ClCompile Include="skills/thief/phantommenace.cpp" />
-    <ClCompile Include="skills/thief/poisoningweapon.cpp" />
-    <ClCompile Include="skills/thief/poisonsmoke.cpp" />
-    <ClCompile Include="skills/thief/remover.cpp" />
-    <ClCompile Include="skills/thief/rollingcutter.cpp" />
-    <ClCompile Include="skills/thief/sandattack.cpp" />
-    <ClCompile Include="skills/thief/savageimpact.cpp" />
-    <ClCompile Include="skills/thief/scribble.cpp" />
-    <ClCompile Include="skills/thief/shadowstab.cpp" />
-    <ClCompile Include="skills/thief/sightlessmind.cpp" />
+    <ClCompile Include="skills/thief/antidote.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/backslide.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/backstab.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/cloaking.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/cloakingexceed.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/closeconfine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/counterinstinct.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/counterslash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/createdeadlypoison.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/createnewpoison.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/crossimpact.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/crossripperslasher.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/crossslash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/dancingknife.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/darkclaw.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/darkillusion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/detoxify.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/divestall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/divestarmor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/divesthelm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/divestshield.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/divestweapon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/enchantdeadlypoison.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/enchantpoison.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/envenom.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/eternalslash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/fatalshadowcrow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/findstone.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/grimtooth.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/hallucinationwalk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/hiding.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/impactcrater.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/meteorassault.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/mug.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/phantommenace.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/poisoningweapon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/poisonsmoke.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/remover.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/rollingcutter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/sandattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/savageimpact.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/scribble.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/shadowstab.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/sightlessmind.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/skill_factory_thief.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/thief/snatch.cpp" />
-    <ClCompile Include="skills/thief/sonicblow.cpp" />
-    <ClCompile Include="skills/thief/souldestroyer.cpp" />
-    <ClCompile Include="skills/thief/steal.cpp" />
-    <ClCompile Include="skills/thief/stealth.cpp" />
-    <ClCompile Include="skills/thief/stonefling.cpp" />
-    <ClCompile Include="skills/thief/throwvenomknife.cpp" />
-    <ClCompile Include="skills/thief/venomdust.cpp" />
-    <ClCompile Include="skills/thief/venompressure.cpp" />
-    <ClCompile Include="skills/thief/venomsplasher.cpp" />
-    <ClCompile Include="skills/thief/weaponcrush.cpp" />
+    <ClCompile Include="skills/thief/snatch.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/sonicblow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/souldestroyer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/steal.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/stealth.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/stonefling.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/throwvenomknife.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/venomdust.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/venompressure.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/venomsplasher.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/weaponcrush.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
