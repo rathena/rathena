@@ -947,7 +947,9 @@
     <ClCompile Include="skills/novice/skill_factory_novice.cpp" />
     <ClCompile Include="skills/novice/spiralpiercemax.cpp" />
     <ClCompile Include="skills/npc/skill_factory_npc.cpp" />
-    <ClCompile Include="skills/skill_factory.cpp" />
+    <ClCompile Include="skills/skill_factory.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/skill_impl.cpp" />
     <ClCompile Include="skills/summoner/skill_factory_summoner.cpp" />
     <ClCompile Include="skills/swordman/autoberserk.cpp" />
