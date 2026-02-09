@@ -1583,64 +1583,174 @@
     <ClCompile Include="skills/swordman/vitalstrike.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/circleofdirectionsandelementals.cpp" />
-    <ClCompile Include="skills/taekwon/counter.cpp" />
-    <ClCompile Include="skills/taekwon/downkick.cpp" />
-    <ClCompile Include="skills/taekwon/eska.cpp" />
-    <ClCompile Include="skills/taekwon/eske.cpp" />
-    <ClCompile Include="skills/taekwon/esma.cpp" />
-    <ClCompile Include="skills/taekwon/estin.cpp" />
-    <ClCompile Include="skills/taekwon/estun.cpp" />
-    <ClCompile Include="skills/taekwon/eswoo.cpp" />
-    <ClCompile Include="skills/taekwon/exorcismofmalicioussoul.cpp" />
-    <ClCompile Include="skills/taekwon/feelingthesunmoonandstars.cpp" />
-    <ClCompile Include="skills/taekwon/hatredofthesunmoonandstars.cpp" />
-    <ClCompile Include="skills/taekwon/highjump.cpp" />
-    <ClCompile Include="skills/taekwon/jumpkick.cpp" />
-    <ClCompile Include="skills/taekwon/kaahi.cpp" />
-    <ClCompile Include="skills/taekwon/kaite.cpp" />
-    <ClCompile Include="skills/taekwon/kaizel.cpp" />
-    <ClCompile Include="skills/taekwon/kaupe.cpp" />
-    <ClCompile Include="skills/taekwon/mission.cpp" />
-    <ClCompile Include="skills/taekwon/run.cpp" />
-    <ClCompile Include="skills/taekwon/sevenwind.cpp" />
+    <ClCompile Include="skills/taekwon/circleofdirectionsandelementals.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/counter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/downkick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/eska.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/eske.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/esma.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/estin.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/estun.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/eswoo.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/exorcismofmalicioussoul.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/feelingthesunmoonandstars.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/hatredofthesunmoonandstars.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/highjump.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/jumpkick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/kaahi.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/kaite.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/kaizel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/kaupe.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/mission.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/run.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/sevenwind.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/soulgathering.cpp" />
-    <ClCompile Include="skills/taekwon/soulofheavenandearth.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofrebirth.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofthealchemist.cpp" />
-    <ClCompile Include="skills/taekwon/spiritoftheartist.cpp" />
-    <ClCompile Include="skills/taekwon/spiritoftheassasin.cpp" />
-    <ClCompile Include="skills/taekwon/spiritoftheblacksmith.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofthecrusader.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofthehunter.cpp" />
-    <ClCompile Include="skills/taekwon/spiritoftheknight.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofthemonk.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofthepriest.cpp" />
-    <ClCompile Include="skills/taekwon/spiritoftherogue.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofthesage.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofthesoullinker.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofthestargladiator.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofthesupernovice.cpp" />
-    <ClCompile Include="skills/taekwon/spiritofthewizard.cpp" />
-    <ClCompile Include="skills/taekwon/stormkick.cpp" />
-    <ClCompile Include="skills/taekwon/talismanofblacktortoise.cpp" />
-    <ClCompile Include="skills/taekwon/talismanofbluedragon.cpp" />
-    <ClCompile Include="skills/taekwon/talismanoffiveelements.cpp" />
-    <ClCompile Include="skills/taekwon/talismanoffourbearinggod.cpp" />
-    <ClCompile Include="skills/taekwon/talismanofmagician.cpp" />
-    <ClCompile Include="skills/taekwon/talismanofprotection.cpp" />
-    <ClCompile Include="skills/taekwon/talismanofredphoenix.cpp" />
-    <ClCompile Include="skills/taekwon/talismanofsoulstealing.cpp" />
-    <ClCompile Include="skills/taekwon/talismanofwarrior.cpp" />
-    <ClCompile Include="skills/taekwon/talismanofwhitetiger.cpp" />
-    <ClCompile Include="skills/taekwon/totemoftutelary.cpp" />
-    <ClCompile Include="skills/taekwon/turnkick.cpp" />
-    <ClCompile Include="skills/taekwon/warmthofthemoon.cpp" />
-    <ClCompile Include="skills/taekwon/warmthofthestars.cpp" />
-    <ClCompile Include="skills/taekwon/warmthofthesun.cpp" />
+    <ClCompile Include="skills/taekwon/soulgathering.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulofheavenandearth.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofrebirth.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofthealchemist.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritoftheartist.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritoftheassasin.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritoftheblacksmith.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofthecrusader.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofthehunter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritoftheknight.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofthemonk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofthepriest.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritoftherogue.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofthesage.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofthesoullinker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofthestargladiator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofthesupernovice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/spiritofthewizard.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/stormkick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/talismanofblacktortoise.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/talismanofbluedragon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/talismanoffiveelements.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/talismanoffourbearinggod.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/talismanofmagician.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/talismanofprotection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/talismanofredphoenix.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/talismanofsoulstealing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/talismanofwarrior.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/talismanofwhitetiger.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/totemoftutelary.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/turnkick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/warmthofthemoon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/warmthofthestars.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/warmthofthesun.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/antidote.cpp" />
     <ClCompile Include="skills/thief/backslide.cpp" />
     <ClCompile Include="skills/thief/backstab.cpp" />
