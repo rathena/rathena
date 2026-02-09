@@ -8010,37 +8010,31 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sd->state.workinprogress = WIP_DISABLE_ALL;
 			clif_autospell( *sd, skill_lv );
 		} else {
-			int32 maxlv=1,spellid=0;
-			static const int32 spellarray[3] = { MG_COLDBOLT,MG_FIREBOLT,MG_LIGHTNINGBOLT };
-
-			if(skill_lv >= 10) {
-				spellid = MG_FROSTDIVER;
-//				if (tsc && tsc->getSCE(SC_SPIRIT) && tsc->getSCE(SC_SPIRIT)->val2 == SA_SAGE)
-//					maxlv = 10;
-//				else
-					maxlv = skill_lv - 9;
-			}
-			else if(skill_lv >=8) {
-				spellid = MG_FIREBALL;
-				maxlv = skill_lv - 7;
-			}
-			else if(skill_lv >=5) {
-				spellid = MG_SOULSTRIKE;
-				maxlv = skill_lv - 4;
-			}
-			else if(skill_lv >=2) {
-				int32 i_rnd = rnd()%3;
-				spellid = spellarray[i_rnd];
-				maxlv = skill_lv - 1;
-			}
-			else if(skill_lv > 0) {
-				spellid = MG_NAPALMBEAT;
-				maxlv = 3;
-			}
-
-			if(spellid > 0)
-				sc_start4(src,src,SC_AUTOSPELL,100,skill_lv,spellid,maxlv,0,
-					skill_get_time(SA_AUTOSPELL,skill_lv));
+			uint16 spell_id{};
+			constexpr std::array<uint16,3> boltarray = { MG_COLDBOLT,MG_FIREBOLT,MG_LIGHTNINGBOLT };
+#ifdef RENEWAL
+			if(skill_lv >= 10)
+				spell_id = (rnd()%2?MG_THUNDERSTORM:WZ_HEAVENDRIVE);
+			else if(skill_lv >=7)
+				spell_id = (rnd()%2?WZ_EARTHSPIKE:MG_FROSTDIVER);
+			else if(skill_lv >=4)
+				spell_id = (rnd()%2?MG_SOULSTRIKE:MG_FIREBALL);
+			else
+				spell_id = boltarray[rnd()%3];
+#else
+			if(skill_lv >= 10)
+				spell_id = MG_FROSTDIVER;
+			else if(skill_lv >=8)
+				spell_id = MG_FIREBALL;
+			else if(skill_lv >=5)
+				spell_id = MG_SOULSTRIKE;
+			else if(skill_lv >=2) 
+				spell_id = boltarray[rnd()%3];
+			else if(skill_lv > 0) 
+				spell_id = MG_NAPALMBEAT;
+#endif
+			if(spell_id > 0)
+				sc_start2(src,src,SC_AUTOSPELL,100,skill_lv,spell_id,skill_get_time(SA_AUTOSPELL,skill_lv));
 		}
 		break;
 
@@ -17444,38 +17438,33 @@ int32 skill_autospell(map_session_data *sd, uint16 skill_id)
 
 	if (skill_lv == 0 || lv == 0)
 		return 0; // Player must learn the skill before doing auto-spell [Lance]
-
 #ifdef RENEWAL
-	if ((skill_id == MG_COLDBOLT || skill_id == MG_FIREBOLT || skill_id == MG_LIGHTNINGBOLT) && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SAGE)
-		maxlv = 10; //Soul Linker bonus. [Skotlex]
-	else
-		maxlv = skill_lv / 2; // Half of Autospell's level unless player learned a lower level (capped below)
+	 constexpr std::array<e_skill,9> autospell_skills = {
+		MG_FIREBOLT,
+		MG_COLDBOLT,
+		MG_LIGHTNINGBOLT,
+		MG_SOULSTRIKE,
+		MG_FIREBALL,
+		WZ_EARTHSPIKE,
+		MG_FROSTDIVER,
+		MG_THUNDERSTORM,
+		WZ_HEAVENDRIVE
+	};
 #else
-	if(skill_id==MG_NAPALMBEAT)	maxlv=3;
-	else if(skill_id==MG_COLDBOLT || skill_id==MG_FIREBOLT || skill_id==MG_LIGHTNINGBOLT){
-		if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SAGE)
-			maxlv = 10; //Soul Linker bonus. [Skotlex]
-		else if(skill_lv==2) maxlv=1;
-		else if(skill_lv==3) maxlv=2;
-		else if(skill_lv>=4) maxlv=3;
-	}
-	else if(skill_id==MG_SOULSTRIKE){
-		if(skill_lv==5) maxlv=1;
-		else if(skill_lv==6) maxlv=2;
-		else if(skill_lv>=7) maxlv=3;
-	}
-	else if(skill_id==MG_FIREBALL){
-		if(skill_lv==8) maxlv=1;
-		else if(skill_lv>=9) maxlv=2;
-	}
-	else if(skill_id==MG_FROSTDIVER) maxlv=1;
-	else return 0;
+	constexpr std::array<e_skill,7> autospell_skills = {
+		MG_NAPALMBEAT,
+		MG_COLDBOLT,
+		MG_LIGHTNINGBOLT,
+		MG_FIREBOLT,
+		MG_SOULSTRIKE,
+		MG_FIREBALL,
+		MG_FROSTDIVER
+	};
 #endif
+	if(std::find(autospell_skills.begin(),autospell_skills.end(),skill_id) == autospell_skills.end())
+		return 0;
+	sc_start2(sd,sd,SC_AUTOSPELL,100,skill_lv,skill_id,skill_get_time(SA_AUTOSPELL,skill_lv));
 
-	maxlv = min(lv, maxlv);
-
-	sc_start4(sd,sd,SC_AUTOSPELL,100,skill_lv,skill_id,maxlv,0,
-		skill_get_time(SA_AUTOSPELL,skill_lv));
 	return 0;
 }
 
