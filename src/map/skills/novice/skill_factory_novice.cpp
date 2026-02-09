@@ -3,7 +3,7 @@
 
 #include "skill_factory_novice.hpp"
 
-#include "../status_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 #include "doublebowlingbash.hpp"
 #include "groundgravitation.hpp"

@@ -1128,9 +1128,6 @@
     <ClInclude Include="skills/skill_impl.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
-    <ClInclude Include="skills/status_skill_impl.hpp">
-      <Filter>Header Files\Skills</Filter>
-    </ClInclude>
     <ClInclude Include="skills/summoner/skill_factory_summoner.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
@@ -2358,9 +2355,6 @@
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
     <ClCompile Include="skills/skill_impl.cpp">
-      <Filter>Source Files\Skills</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/status_skill_impl.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/skill_factory_summoner.cpp">

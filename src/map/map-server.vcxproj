@@ -493,7 +493,6 @@
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/skill_impl.hpp" />
-    <ClInclude Include="skills/status_skill_impl.hpp" />
     <ClInclude Include="skills/summoner/skill_factory_summoner.hpp" />
     <ClInclude Include="skills/swordman/autoberserk.hpp" />
     <ClInclude Include="skills/swordman/bash.hpp" />
@@ -951,7 +950,6 @@
     <ClCompile Include="skills/npc/skill_factory_npc.cpp" />
     <ClCompile Include="skills/skill_factory.cpp" />
     <ClCompile Include="skills/skill_impl.cpp" />
-    <ClCompile Include="skills/status_skill_impl.cpp" />
     <ClCompile Include="skills/summoner/skill_factory_summoner.cpp" />
     <ClCompile Include="skills/swordman/autoberserk.cpp" />
     <ClCompile Include="skills/swordman/bash.cpp" />

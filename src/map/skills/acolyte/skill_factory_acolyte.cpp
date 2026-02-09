@@ -5,7 +5,7 @@
 
 #include <config/core.hpp>
 
-#include "../status_skill_impl.hpp"
+#include "../skill_impl.hpp"
 #include "../weapon_skill_impl.hpp"
 
 #include "adoramus.hpp"
