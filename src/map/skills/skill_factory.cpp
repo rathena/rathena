@@ -8,6 +8,7 @@
 
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
+#include "./skill_impl.cpp"
 #include "./acolyte/skill_factory_acolyte.cpp"
 #include "./archer/skill_factory_archer.cpp"
 #include "./custom/skill_factory_custom.cpp"

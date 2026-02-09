@@ -1450,7 +1450,9 @@
     <ClCompile Include="skills/skill_factory.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/skill_impl.cpp" />
+    <ClCompile Include="skills/skill_impl.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/summoner/skill_factory_summoner.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
