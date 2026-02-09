@@ -1243,7 +1243,9 @@
     <ClCompile Include="skills/mage/waterball.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenary_bash.cpp" />
+    <ClCompile Include="skills/mercenary/mercenary_bash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
