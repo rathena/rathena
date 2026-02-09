@@ -697,71 +697,195 @@
     <ClCompile Include="vending.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="skills/acolyte/adoramus.cpp" />
-    <ClCompile Include="skills/acolyte/ancilla.cpp" />
-    <ClCompile Include="skills/acolyte/angelus.cpp" />
-    <ClCompile Include="skills/acolyte/arbitrium.cpp" />
-    <ClCompile Include="skills/acolyte/aspersio.cpp" />
-    <ClCompile Include="skills/acolyte/blazingflameblast.cpp" />
-    <ClCompile Include="skills/acolyte/blessing.cpp" />
-    <ClCompile Include="skills/acolyte/bssacramenti.cpp" />
-    <ClCompile Include="skills/acolyte/cantocandidus.cpp" />
-    <ClCompile Include="skills/acolyte/clearance.cpp" />
-    <ClCompile Include="skills/acolyte/coluceoheal.cpp" />
-    <ClCompile Include="skills/acolyte/competentia.cpp" />
-    <ClCompile Include="skills/acolyte/convenio.cpp" />
-    <ClCompile Include="skills/acolyte/crementia.cpp" />
-    <ClCompile Include="skills/acolyte/crucis.cpp" />
-    <ClCompile Include="skills/acolyte/cure.cpp" />
-    <ClCompile Include="skills/acolyte/decagi.cpp" />
-    <ClCompile Include="skills/acolyte/dilectioheal.cpp" />
-    <ClCompile Include="skills/acolyte/divinusflos.cpp" />
-    <ClCompile Include="skills/acolyte/duplelight.cpp" />
-    <ClCompile Include="skills/acolyte/effligo.cpp" />
-    <ClCompile Include="skills/acolyte/epiclesis.cpp" />
-    <ClCompile Include="skills/acolyte/explosionblaster.cpp" />
-    <ClCompile Include="skills/acolyte/firstbrand.cpp" />
-    <ClCompile Include="skills/acolyte/framen.cpp" />
-    <ClCompile Include="skills/acolyte/gloria.cpp" />
-    <ClCompile Include="skills/acolyte/heal.cpp" />
-    <ClCompile Include="skills/acolyte/highnessheal.cpp" />
-    <ClCompile Include="skills/acolyte/holylight.cpp" />
-    <ClCompile Include="skills/acolyte/holywater.cpp" />
-    <ClCompile Include="skills/acolyte/impositiomanus.cpp" />
-    <ClCompile Include="skills/acolyte/incagi.cpp" />
-    <ClCompile Include="skills/acolyte/judex.cpp" />
-    <ClCompile Include="skills/acolyte/kyrieeleison.cpp" />
-    <ClCompile Include="skills/acolyte/laudaagnus.cpp" />
-    <ClCompile Include="skills/acolyte/laudaramus.cpp" />
-    <ClCompile Include="skills/acolyte/lexdivina.cpp" />
-    <ClCompile Include="skills/acolyte/magnificat.cpp" />
-    <ClCompile Include="skills/acolyte/magnusexorcismus.cpp" />
-    <ClCompile Include="skills/acolyte/massiveflameblaster.cpp" />
-    <ClCompile Include="skills/acolyte/medialevotum.cpp" />
-    <ClCompile Include="skills/acolyte/oleumsanctum.cpp" />
-    <ClCompile Include="skills/acolyte/oratio.cpp" />
-    <ClCompile Include="skills/acolyte/petitio.cpp" />
-    <ClCompile Include="skills/acolyte/pneuma.cpp" />
-    <ClCompile Include="skills/acolyte/pneumaticusprocella.cpp" />
-    <ClCompile Include="skills/acolyte/praefatio.cpp" />
-    <ClCompile Include="skills/acolyte/renovatio.cpp" />
-    <ClCompile Include="skills/acolyte/reparatio.cpp" />
-    <ClCompile Include="skills/acolyte/ruwach.cpp" />
-    <ClCompile Include="skills/acolyte/sanctuary.cpp" />
-    <ClCompile Include="skills/acolyte/secondfaith.cpp" />
-    <ClCompile Include="skills/acolyte/secondflame.cpp" />
-    <ClCompile Include="skills/acolyte/secondjudgement.cpp" />
-    <ClCompile Include="skills/acolyte/silentium.cpp" />
+    <ClCompile Include="skills/acolyte/adoramus.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/ancilla.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/angelus.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/arbitrium.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/aspersio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/blazingflameblast.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/blessing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/bssacramenti.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/cantocandidus.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/clearance.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/coluceoheal.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/competentia.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/convenio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/crementia.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/crucis.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/cure.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/decagi.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/dilectioheal.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/divinusflos.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/duplelight.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/effligo.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/epiclesis.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/explosionblaster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/firstbrand.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/framen.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/gloria.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/heal.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/highnessheal.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/holylight.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/holywater.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/impositiomanus.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/incagi.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/judex.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/kyrieeleison.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/laudaagnus.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/laudaramus.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/lexdivina.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/magnificat.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/magnusexorcismus.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/massiveflameblaster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/medialevotum.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/oleumsanctum.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/oratio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/petitio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/pneuma.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/pneumaticusprocella.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/praefatio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/renovatio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/reparatio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/ruwach.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/sanctuary.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/secondfaith.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/secondflame.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/secondjudgement.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/silentium.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/acolyte/statusrecovery.cpp" />
-    <ClCompile Include="skills/acolyte/suffragium.cpp" />
-    <ClCompile Include="skills/acolyte/thirdconsecration.cpp" />
-    <ClCompile Include="skills/acolyte/thirdflamebomb.cpp" />
-    <ClCompile Include="skills/acolyte/thirdpunish.cpp" />
-    <ClCompile Include="skills/acolyte/turnundead.cpp" />
-    <ClCompile Include="skills/acolyte/vituperatum.cpp" />
+    <ClCompile Include="skills/acolyte/statusrecovery.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/suffragium.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/thirdconsecration.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/thirdflamebomb.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/thirdpunish.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/turnundead.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/vituperatum.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/aimedbolt.cpp" />
     <ClCompile Include="skills/archer/anklesnare.cpp" />
     <ClCompile Include="skills/archer/arrowshower.cpp" />
