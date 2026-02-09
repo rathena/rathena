@@ -24,15 +24,18 @@ void SkillLunaticCarrotBeat::calculateSkillRatio(const Damage *wd, const block_l
 	RE_LVL_DMOD(100);
 }
 
-void SkillLunaticCarrotBeat::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	map_session_data* sd = BL_CAST(BL_PC, src);
+void SkillLunaticCarrotBeat::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	if (!(flag & 1)) {
+		map_session_data* sd = BL_CAST(BL_PC, src);
 
-	if (sd && pc_search_inventory(sd, skill_db.find(getSkillId())->require.itemid[0]) >= 0) {
-		SkillLunaticCarrotBeat2 lunatic2;
-		lunatic2.splashSearch(src, target, skill_lv, tick, flag);
-	}
-	else {
-		SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
+		// FIX ME: missing check of required item
+		if (sd && pc_search_inventory(sd, skill_db.find(getSkillId())->require.itemid[0]) >= 0) {
+			SkillLunaticCarrotBeat2 lunatic2;
+			lunatic2.castendDamageId(src, target, skill_lv, tick, flag);
+		}
+		else {
+			SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
+		}
 	}
 }
 

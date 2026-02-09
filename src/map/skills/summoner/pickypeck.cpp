@@ -29,6 +29,7 @@ void SkillPickyPeck::castendDamageId(block_list *src, block_list *target, uint16
 
 
 // SU_PICKYPECK_DOUBLE_ATK
+// FIX ME: this skill is never triggered
 SkillPickyPeckDoubleAttack::SkillPickyPeckDoubleAttack() : SkillImpl(SU_PICKYPECK_DOUBLE_ATK) {
 }
 

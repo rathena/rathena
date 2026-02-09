@@ -13,5 +13,5 @@ void SkillGrooming::castendNoDamageId(block_list *src, block_list *target, uint1
 	sc_type type = skill_get_sc(getSkillId());
 
 	clif_skill_nodamage(target,*target,getSkillId(),skill_lv,
-	sc_start(src,target,type,100,skill_lv,skill_get_time(getSkillId(),skill_lv)));
+		sc_start(src,target,type,100,skill_lv,skill_get_time(getSkillId(),skill_lv)));
 }

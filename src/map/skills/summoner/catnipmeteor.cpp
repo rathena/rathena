@@ -27,6 +27,7 @@ void SkillCatnipMeteor::castendPos2(block_list* src, int32 x, int32 y, uint16 sk
 	e_skill skill_id = getSkillId();
 
 	if (sd) {
+		// FIX ME: missing check of required item
 		if (pc_search_inventory(sd, skill_db.find(SU_CN_METEOR)->require.itemid[0]) >= 0)
 			skill_id = SU_CN_METEOR2;
 		if (pc_checkskill(sd, SU_SPIRITOFLAND))
