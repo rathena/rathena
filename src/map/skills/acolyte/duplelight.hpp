@@ -4,7 +4,7 @@
 #pragma once
 
 #include "../skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 // AB_DUPLELIGHT_MAGIC
 class SkillDupleLightMagic : public SkillImpl {

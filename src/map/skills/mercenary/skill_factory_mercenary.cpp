@@ -4,7 +4,7 @@
 #include "skill_factory_mercenary.hpp"
 
 #include "../skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 #include "mercenary_bash.hpp"
 

@@ -57,6 +57,13 @@ public:
 	virtual void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };
 
+class WeaponSkillImpl : public SkillImpl {
+public:
+	WeaponSkillImpl(e_skill skill_id);
+
+	virtual void castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
+};
+
 class SkillImplRecursiveDamageSplash : public SkillImpl{
 public:
 	explicit SkillImplRecursiveDamageSplash(e_skill skill_id);

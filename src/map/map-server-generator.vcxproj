@@ -649,7 +649,6 @@
     <ClInclude Include="skills/thief/venompressure.hpp" />
     <ClInclude Include="skills/thief/venomsplasher.hpp" />
     <ClInclude Include="skills/thief/weaponcrush.hpp" />
-    <ClInclude Include="skills/weapon_skill_impl.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="achievement.cpp" />
@@ -1106,7 +1105,6 @@
     <ClCompile Include="skills/thief/venompressure.cpp" />
     <ClCompile Include="skills/thief/venomsplasher.cpp" />
     <ClCompile Include="skills/thief/weaponcrush.cpp" />
-    <ClCompile Include="skills/weapon_skill_impl.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

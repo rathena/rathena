@@ -6,7 +6,7 @@
 #include <config/core.hpp>
 
 #include "../skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 #include "abrbattlewarior.hpp"
 #include "abrdualcannon.hpp"
