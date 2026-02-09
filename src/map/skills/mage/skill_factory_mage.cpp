@@ -4,7 +4,6 @@
 #include "skill_factory_mage.hpp"
 
 #include "../skill_impl.hpp"
-#include "../skill_impl.hpp"
 
 #include "allbloom.hpp"
 #include "astralstrike.hpp"

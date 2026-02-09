@@ -4,7 +4,6 @@
 #include "skill_factory_swordman.hpp"
 
 #include "../skill_impl.hpp"
-#include "../skill_impl.hpp"
 
 #include "autoberserk.hpp"
 #include "bash.hpp"

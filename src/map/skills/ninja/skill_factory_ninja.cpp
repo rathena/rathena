@@ -4,7 +4,6 @@
 #include "skill_factory_ninja.hpp"
 
 #include "../skill_impl.hpp"
-#include "../skill_impl.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_id) const {
 	switch( skill_id ){

@@ -4,7 +4,6 @@
 #include "skill_factory_thief.hpp"
 
 #include "../skill_impl.hpp"
-#include "../skill_impl.hpp"
 
 #include "antidote.hpp"
 #include "backslide.hpp"
