@@ -886,62 +886,168 @@
     <ClCompile Include="skills/acolyte/vituperatum.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/archer/aimedbolt.cpp" />
-    <ClCompile Include="skills/archer/anklesnare.cpp" />
-    <ClCompile Include="skills/archer/arrowshower.cpp" />
-    <ClCompile Include="skills/archer/arrowstorm.cpp" />
-    <ClCompile Include="skills/archer/beaststrafing.cpp" />
-    <ClCompile Include="skills/archer/blastmine.cpp" />
-    <ClCompile Include="skills/archer/blitzbeat.cpp" />
-    <ClCompile Include="skills/archer/camouflage.cpp" />
-    <ClCompile Include="skills/archer/chargearrow.cpp" />
-    <ClCompile Include="skills/archer/claymoretrap.cpp" />
-    <ClCompile Include="skills/archer/clusterbomb.cpp" />
-    <ClCompile Include="skills/archer/cobalttrap.cpp" />
-    <ClCompile Include="skills/archer/concentration.cpp" />
-    <ClCompile Include="skills/archer/crescivebolt.cpp" />
-    <ClCompile Include="skills/archer/deepblindtrap.cpp" />
-    <ClCompile Include="skills/archer/detect.cpp" />
-    <ClCompile Include="skills/archer/detonator.cpp" />
-    <ClCompile Include="skills/archer/doublestrafe.cpp" />
-    <ClCompile Include="skills/archer/electricshocker.cpp" />
-    <ClCompile Include="skills/archer/falconassault.cpp" />
-    <ClCompile Include="skills/archer/fearbreeze.cpp" />
-    <ClCompile Include="skills/archer/firingtrap.cpp" />
-    <ClCompile Include="skills/archer/flametrap.cpp" />
-    <ClCompile Include="skills/archer/flasher.cpp" />
-    <ClCompile Include="skills/archer/focusedarrowstrike.cpp" />
-    <ClCompile Include="skills/archer/freezingtrap.cpp" />
-    <ClCompile Include="skills/archer/galestorm.cpp" />
-    <ClCompile Include="skills/archer/hawkboomerang.cpp" />
-    <ClCompile Include="skills/archer/hawkmastery.cpp" />
-    <ClCompile Include="skills/archer/hawkrush.cpp" />
-    <ClCompile Include="skills/archer/iceboundtrap.cpp" />
-    <ClCompile Include="skills/archer/landmine.cpp" />
-    <ClCompile Include="skills/archer/magentatrap.cpp" />
-    <ClCompile Include="skills/archer/maizetrap.cpp" />
-    <ClCompile Include="skills/archer/makingarrow.cpp" />
-    <ClCompile Include="skills/archer/phantasmicarrow.cpp" />
-    <ClCompile Include="skills/archer/removetrap.cpp" />
-    <ClCompile Include="skills/archer/sandman.cpp" />
-    <ClCompile Include="skills/archer/sensitivekeen.cpp" />
-    <ClCompile Include="skills/archer/shockwavetrap.cpp" />
-    <ClCompile Include="skills/archer/skidtrap.cpp" />
+    <ClCompile Include="skills/archer/aimedbolt.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/anklesnare.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/arrowshower.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/arrowstorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/beaststrafing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/blastmine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/blitzbeat.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/camouflage.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/chargearrow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/claymoretrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/clusterbomb.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/cobalttrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/concentration.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/crescivebolt.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/deepblindtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/detect.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/detonator.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/doublestrafe.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/electricshocker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/falconassault.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/fearbreeze.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/firingtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/flametrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/flasher.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/focusedarrowstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/freezingtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/galestorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/hawkboomerang.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/hawkmastery.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/hawkrush.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/iceboundtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/landmine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/magentatrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/maizetrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/makingarrow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/phantasmicarrow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/removetrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/sandman.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/sensitivekeen.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/shockwavetrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/skidtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/skill_factory_archer.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/archer/solidtrap.cpp" />
-    <ClCompile Include="skills/archer/springtrap.cpp" />
-    <ClCompile Include="skills/archer/swifttrap.cpp" />
-    <ClCompile Include="skills/archer/talkiebox.cpp" />
-    <ClCompile Include="skills/archer/verduretrap.cpp" />
-    <ClCompile Include="skills/archer/wargbite.cpp" />
-    <ClCompile Include="skills/archer/wargdash.cpp" />
-    <ClCompile Include="skills/archer/wargmastery.cpp" />
-    <ClCompile Include="skills/archer/wargrider.cpp" />
-    <ClCompile Include="skills/archer/wargstrike.cpp" />
-    <ClCompile Include="skills/archer/wildwalk.cpp" />
-    <ClCompile Include="skills/archer/windwalker.cpp" />
+    <ClCompile Include="skills/archer/solidtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/springtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/swifttrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/talkiebox.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/verduretrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/wargbite.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/wargdash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/wargmastery.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/wargrider.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/wargstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/wildwalk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/windwalker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/custom/skill_factory_custom.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
