@@ -1249,59 +1249,159 @@
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/abrbattlewarior.cpp" />
-    <ClCompile Include="skills/merchant/abrdualcannon.cpp" />
-    <ClCompile Include="skills/merchant/abrinfinity.cpp" />
-    <ClCompile Include="skills/merchant/abrmothernet.cpp" />
-    <ClCompile Include="skills/merchant/aciddemonstration.cpp" />
-    <ClCompile Include="skills/merchant/acidterror.cpp" />
-    <ClCompile Include="skills/merchant/adrenalinerush.cpp" />
-    <ClCompile Include="skills/merchant/advancedadrenalinerush.cpp" />
-    <ClCompile Include="skills/merchant/aidberserkpotion.cpp" />
-    <ClCompile Include="skills/merchant/aidcondensedpotion.cpp" />
-    <ClCompile Include="skills/merchant/aidpotion.cpp" />
-    <ClCompile Include="skills/merchant/alchemicalweapon.cpp" />
-    <ClCompile Include="skills/merchant/attackmachine.cpp" />
-    <ClCompile Include="skills/merchant/axestomp.cpp" />
-    <ClCompile Include="skills/merchant/biochemicalhelm.cpp" />
-    <ClCompile Include="skills/merchant/bomb.cpp" />
-    <ClCompile Include="skills/merchant/callhomunculus.cpp" />
-    <ClCompile Include="skills/merchant/cartrevolution.cpp" />
-    <ClCompile Include="skills/merchant/carttermination.cpp" />
-    <ClCompile Include="skills/merchant/changecart.cpp" />
-    <ClCompile Include="skills/merchant/crazyuproar.cpp" />
-    <ClCompile Include="skills/merchant/decoratecart.cpp" />
-    <ClCompile Include="skills/merchant/energycannonade.cpp" />
-    <ClCompile Include="skills/merchant/fullprotection.cpp" />
-    <ClCompile Include="skills/merchant/greed.cpp" />
-    <ClCompile Include="skills/merchant/hammerfall.cpp" />
-    <ClCompile Include="skills/merchant/itemappraisal.cpp" />
-    <ClCompile Include="skills/merchant/mammonite.cpp" />
-    <ClCompile Include="skills/merchant/manufacturemachine.cpp" />
-    <ClCompile Include="skills/merchant/mightysmash.cpp" />
-    <ClCompile Include="skills/merchant/plantcultivation.cpp" />
-    <ClCompile Include="skills/merchant/powerfulswing.cpp" />
-    <ClCompile Include="skills/merchant/powerthrust.cpp" />
-    <ClCompile Include="skills/merchant/preparepotion.cpp" />
-    <ClCompile Include="skills/merchant/rushquake.cpp" />
-    <ClCompile Include="skills/merchant/rushstrike.cpp" />
+    <ClCompile Include="skills/merchant/abrbattlewarior.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/abrdualcannon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/abrinfinity.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/abrmothernet.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/aciddemonstration.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/acidterror.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/adrenalinerush.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/advancedadrenalinerush.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/aidberserkpotion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/aidcondensedpotion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/aidpotion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/alchemicalweapon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/attackmachine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/axestomp.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/biochemicalhelm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/bomb.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/callhomunculus.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/cartrevolution.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/carttermination.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/changecart.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/crazyuproar.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/decoratecart.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/energycannonade.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/fullprotection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/greed.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/hammerfall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/itemappraisal.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/mammonite.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/manufacturemachine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/mightysmash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/plantcultivation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/powerfulswing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/powerthrust.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/preparepotion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/rushquake.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/rushstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/skill_vending.cpp" />
-    <ClCompile Include="skills/merchant/sparkblaster.cpp" />
-    <ClCompile Include="skills/merchant/summonflora.cpp" />
-    <ClCompile Include="skills/merchant/summonmarinesphere.cpp" />
-    <ClCompile Include="skills/merchant/synthesizedshield.cpp" />
-    <ClCompile Include="skills/merchant/syntheticarmor.cpp" />
-    <ClCompile Include="skills/merchant/triplelaser.cpp" />
-    <ClCompile Include="skills/merchant/twilightalchemy1.cpp" />
-    <ClCompile Include="skills/merchant/twilightalchemy2.cpp" />
-    <ClCompile Include="skills/merchant/twilightalchemy3.cpp" />
-    <ClCompile Include="skills/merchant/upgradeweapon.cpp" />
-    <ClCompile Include="skills/merchant/vaporize.cpp" />
-    <ClCompile Include="skills/merchant/weaponperfection.cpp" />
-    <ClCompile Include="skills/merchant/weaponrepair.cpp" />
+    <ClCompile Include="skills/merchant/skill_vending.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/sparkblaster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/summonflora.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/summonmarinesphere.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/synthesizedshield.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/syntheticarmor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/triplelaser.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/twilightalchemy1.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/twilightalchemy2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/twilightalchemy3.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/upgradeweapon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/vaporize.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/weaponperfection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/weaponrepair.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
