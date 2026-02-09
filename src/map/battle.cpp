@@ -7838,15 +7838,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						break;
 #endif
-					case WL_SOULEXPANSION:
-						skillratio += -100 + 1000 + skill_lv * 200;
-						skillratio += sstatus->int_;
-						RE_LVL_DMOD(100);
-						break;
-					case WL_FROSTMISTY:
-						skillratio += -100 + 200 + 100 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
 					case NPC_JACKFROST:
 						if (tsc && tsc->getSCE(SC_FREEZING)) {
 							skillratio += 900 + 300 * skill_lv;
@@ -7855,54 +7846,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 							skillratio += 400 + 100 * skill_lv;
 							RE_LVL_DMOD(150);
 						}
-						break;
-					case WL_JACKFROST:
-						if (tsc && tsc->getSCE(SC_MISTY_FROST))
-							skillratio += -100 + 1200 + 600 * skill_lv;
-						else
-							skillratio += -100 + 1000 + 300 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case WL_DRAINLIFE:
-						skillratio += -100 + 200 * skill_lv + sstatus->int_;
-						RE_LVL_DMOD(100);
-						break;
-					case WL_CRIMSONROCK:
-						skillratio += -100 + 700 + 600 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case WL_HELLINFERNO:
-						skillratio += -100 + 400 * skill_lv;
-						if (mflag & 2) // ELE_DARK
-							skillratio += 200 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case WL_COMET:
-						skillratio += -100 + 2500 + 700 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case WL_CHAINLIGHTNING_ATK:
-						skillratio += 400 + 100 * skill_lv;
-						RE_LVL_DMOD(100);
-						if (mflag > 0)
-							skillratio += 100 * mflag;
-						break;
-					case WL_EARTHSTRAIN:
-						skillratio += -100 + 1000 + 600 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case WL_TETRAVORTEX_FIRE:
-					case WL_TETRAVORTEX_WATER:
-					case WL_TETRAVORTEX_WIND:
-					case WL_TETRAVORTEX_GROUND:
-						skillratio += -100 + 800 + 400 * skill_lv;
-						break;
-					case WL_SUMMON_ATK_FIRE:
-					case WL_SUMMON_ATK_WATER:
-					case WL_SUMMON_ATK_WIND:
-					case WL_SUMMON_ATK_GROUND:
-						skillratio += 200;
-						RE_LVL_DMOD(100);
 						break;
 					case LG_RAYOFGENESIS:
 						skillratio += -100 + 350 * skill_lv;
