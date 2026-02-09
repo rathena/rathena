@@ -5,39 +5,60 @@
 
 #include <config/core.hpp>
 
-#include "../status_skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-#include "acidterror.hpp"
-#include "adrenalinerush.hpp"
-#include "advancedadrenalinerush.hpp"
-#include "aidberserkpotion.hpp"
-#include "aidpotion.hpp"
-#include "alchemicalweapon.hpp"
-#include "biochemicalhelm.hpp"
-#include "bomb.hpp"
-#include "callhomunculus.hpp"
-#include "decoratecart.hpp"
-#include "cartrevolution.hpp"
-#include "changecart.hpp"
-#include "greed.hpp"
-#include "hammerfall.hpp"
-#include "itemappraisal.hpp"
-#include "crazyuproar.hpp"
-#include "mammonite.hpp"
-#include "powerthrust.hpp"
-#include "preparepotion.hpp"
-#include "skill_vending.hpp"
-#include "summonflora.hpp"
-#include "summonmarinesphere.hpp"
-#include "synthesizedshield.hpp"
-#include "syntheticarmor.hpp"
-#include "twilightalchemy1.hpp"
-#include "twilightalchemy2.hpp"
-#include "twilightalchemy3.hpp"
-#include "vaporize.hpp"
-#include "weaponperfection.hpp"
-#include "weaponrepair.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "abrbattlewarior.cpp"
+#include "abrdualcannon.cpp"
+#include "abrinfinity.cpp"
+#include "abrmothernet.cpp"
+#include "aciddemonstration.cpp"
+#include "acidterror.cpp"
+#include "adrenalinerush.cpp"
+#include "advancedadrenalinerush.cpp"
+#include "aidberserkpotion.cpp"
+#include "aidcondensedpotion.cpp"
+#include "aidpotion.cpp"
+#include "alchemicalweapon.cpp"
+#include "attackmachine.cpp"
+#include "axestomp.cpp"
+#include "biochemicalhelm.cpp"
+#include "bomb.cpp"
+#include "callhomunculus.cpp"
+#include "cartrevolution.cpp"
+#include "carttermination.cpp"
+#include "changecart.cpp"
+#include "crazyuproar.cpp"
+#include "decoratecart.cpp"
+#include "energycannonade.cpp"
+#include "fullprotection.cpp"
+#include "greed.cpp"
+#include "hammerfall.cpp"
+#include "itemappraisal.cpp"
+#include "mammonite.cpp"
+#include "manufacturemachine.cpp"
+#include "mightysmash.cpp"
+#include "plantcultivation.cpp"
+#include "powerfulswing.cpp"
+#include "powerthrust.cpp"
+#include "preparepotion.cpp"
+#include "rushquake.cpp"
+#include "rushstrike.cpp"
+#include "skill_vending.cpp"
+#include "sparkblaster.cpp"
+#include "summonflora.cpp"
+#include "summonmarinesphere.cpp"
+#include "synthesizedshield.cpp"
+#include "syntheticarmor.cpp"
+#include "triplelaser.cpp"
+#include "twilightalchemy1.cpp"
+#include "twilightalchemy2.cpp"
+#include "twilightalchemy3.cpp"
+#include "upgradeweapon.cpp"
+#include "vaporize.cpp"
+#include "weaponperfection.cpp"
+#include "weaponrepair.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -99,10 +120,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillWeaponRepair>();
 		case BS_WEAPONPERFECT:
 			return std::make_unique<SkillWeaponPerfection>();
-#ifdef RENEWAL
 		case CR_ACIDDEMONSTRATION:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-#endif
+			return std::make_unique<SkillAcidDemonstration>();
+		case CR_CULTIVATION:
+			return std::make_unique<SkillPlantCultivation>();
+		case CR_FULLPROTECTION:
+			return std::make_unique<SkillFullProtection>();
+		case CR_SLIMPITCHER:
+			return std::make_unique<SkillAidCondensedPotion>();
 		case GN_BLOOD_SUCKER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GN_CARTBOOST:
@@ -125,10 +150,36 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillMammonite>();
 		case MC_VENDING:
 			return std::make_unique<SkillVending>();
+		case MT_AXE_STOMP:
+			return std::make_unique<SkillAxeStomp>();
+		case MT_A_MACHINE:
+			return std::make_unique<SkillAttackMachine>();
 		case MT_D_MACHINE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MT_ENERGY_CANNONADE:
+			return std::make_unique<SkillEnergyCannonade>();
+		case MT_MIGHTY_SMASH:
+			return std::make_unique<SkillMightySmash>();
+		case MT_M_MACHINE:
+			return std::make_unique<SkillManufactureMachine>();
+		case MT_POWERFUL_SWING:
+			return std::make_unique<SkillPowerfulSwing>();
+		case MT_RUSH_QUAKE:
+			return std::make_unique<SkillRushQuake>();
+		case MT_RUSH_STRIKE:
+			return std::make_unique<SkillRushStrike>();
+		case MT_SPARK_BLASTER:
+			return std::make_unique<SkillSparkBlaster>();
+		case MT_SUMMON_ABR_BATTLE_WARIOR:
+			return std::make_unique<SkillAbrBattleWarrior>();
+		case MT_SUMMON_ABR_DUAL_CANNON:
+			return std::make_unique<SkillAbrDualCannon>();
+		case MT_SUMMON_ABR_INFINITY:
+			return std::make_unique<SkillAbrInfinity>();
+		case MT_SUMMON_ABR_MOTHER_NET:
+			return std::make_unique<SkillAbrMotherNet>();
 		case MT_TRIPLE_LASER:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillTripleLaser>();
 		case NC_ACCELERATION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NC_AXEBOOMERANG:
@@ -148,11 +199,13 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case WS_CARTBOOST:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WS_CARTTERMINATION:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillCartTermination>();
 		case WS_MELTDOWN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WS_OVERTHRUSTMAX:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WS_WEAPONREFINE:
+			return std::make_unique<SkillUpgradeWeapon>();
 
 		default:
 			return nullptr;

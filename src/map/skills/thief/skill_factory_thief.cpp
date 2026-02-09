@@ -3,35 +3,65 @@
 
 #include "skill_factory_thief.hpp"
 
-#include "../status_skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-#include "backslide.hpp"
-#include "backstab.hpp"
-#include "cloaking.hpp"
-#include "closeconfine.hpp"
-#include "detoxify.hpp"
-#include "divestarmor.hpp"
-#include "divesthelm.hpp"
-#include "divestshield.hpp"
-#include "divestweapon.hpp"
-#include "enchantpoison.hpp"
-#include "envenom.hpp"
-#include "findstone.hpp"
-#include "grimtooth.hpp"
-#include "hiding.hpp"
-#include "mug.hpp"
-#include "remover.hpp"
-#include "sandattack.hpp"
-#include "scribble.hpp"
-#include "sightlessmind.hpp"
-#include "snatch.hpp"
-#include "sonicblow.hpp"
-#include "steal.hpp"
-#include "stonefling.hpp"
-#include "throwvenomknife.hpp"
-#include "venomdust.hpp"
-#include "venomsplasher.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "antidote.cpp"
+#include "backslide.cpp"
+#include "backstab.cpp"
+#include "cloaking.cpp"
+#include "cloakingexceed.cpp"
+#include "closeconfine.cpp"
+#include "counterinstinct.cpp"
+#include "counterslash.cpp"
+#include "createdeadlypoison.cpp"
+#include "createnewpoison.cpp"
+#include "crossimpact.cpp"
+#include "crossripperslasher.cpp"
+#include "dancingknife.cpp"
+#include "darkclaw.cpp"
+#include "darkillusion.cpp"
+#include "detoxify.cpp"
+#include "divestall.cpp"
+#include "divestarmor.cpp"
+#include "divesthelm.cpp"
+#include "divestshield.cpp"
+#include "divestweapon.cpp"
+#include "enchantdeadlypoison.cpp"
+#include "enchantpoison.cpp"
+#include "envenom.cpp"
+#include "eternalslash.cpp"
+#include "fatalshadowcrow.cpp"
+#include "findstone.cpp"
+#include "grimtooth.cpp"
+#include "hallucinationwalk.cpp"
+#include "hiding.cpp"
+#include "impactcrater.cpp"
+#include "meteorassault.cpp"
+#include "mug.cpp"
+#include "phantommenace.cpp"
+#include "poisoningweapon.cpp"
+#include "poisonsmoke.cpp"
+#include "remover.cpp"
+#include "rollingcutter.cpp"
+#include "sandattack.cpp"
+#include "savageimpact.cpp"
+#include "scribble.cpp"
+#include "shadowstab.cpp"
+#include "crossslash.cpp"
+#include "sightlessmind.cpp"
+#include "snatch.cpp"
+#include "sonicblow.cpp"
+#include "souldestroyer.cpp"
+#include "steal.cpp"
+#include "stealth.cpp"
+#include "stonefling.cpp"
+#include "throwvenomknife.cpp"
+#include "venomdust.cpp"
+#include "venompressure.cpp"
+#include "venomsplasher.cpp"
+#include "weaponcrush.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -39,6 +69,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ABC_CHAIN_REACTION_SHOT_ATK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case ASC_BREAKER:
+			return std::make_unique<SkillSoulDestroyer>();
+		case ASC_CDP:
+			return std::make_unique<SkillCreateDeadlyPoison>();
+		case ASC_EDP:
+			return std::make_unique<SkillEnchantDeadlyPoison>();
+		case ASC_METEORASSAULT:
+			return std::make_unique<SkillMeteorAssault>();
 		case AS_CLOAKING:
 			return std::make_unique<SkillCloaking>();
 		case AS_ENCHANTPOISON:
@@ -55,16 +93,40 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillVenomDust>();
 		case AS_VENOMKNIFE:
 			return std::make_unique<SkillThrowVenomKnife>();
-		case ASC_BREAKER:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case GC_ANTIDOTE:
+			return std::make_unique<SkillAntidote>();
+		case GC_CLOAKINGEXCEED:
+			return std::make_unique<SkillCloakingExceed>();
+		case GC_COUNTERSLASH:
+			return std::make_unique<SkillCounterSlash>();
+		case GC_CREATENEWPOISON:
+			return std::make_unique<SkillCreateNewPoison>();
+		case GC_CROSSIMPACT:
+			return std::make_unique<SkillCrossImpact>();
+		case GC_CROSSRIPPERSLASHER:
+			return std::make_unique<SkillCrossRipperSlasher>();
+		case GC_DARKCROW:
+			return std::make_unique<SkillDarkClaw>();
+		case GC_DARKILLUSION:
+			return std::make_unique<SkillDarkIllusion>();
+		case GC_HALLUCINATIONWALK:
+			return std::make_unique<SkillHallucinationWalk>();
+		case GC_PHANTOMMENACE:
+			return std::make_unique<SkillPhantomMenace>();
+		case GC_POISONINGWEAPON:
+			return std::make_unique<SkillPoisoningWeapon>();
+		case GC_POISONSMOKE:
+			return std::make_unique<SkillPoisonSmoke>();
+		case GC_ROLLINGCUTTER:
+			return std::make_unique<SkillRollingCutter>();
 		case GC_VENOMIMPRESS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GC_VENOMPRESSURE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillVenomPressure>();
 		case GC_WEAPONBLOCKING:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case GC_WEAPONCRUSH:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillWeaponCrush>();
 		case RG_BACKSTAP:
 			return std::make_unique<SkillBackStab>();
 		case RG_CLEANER:
@@ -79,42 +141,60 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillSightlessMind>();
 		case RG_STEALCOIN:
 			return std::make_unique<SkillMug>();
-		case RG_STRIPWEAPON:
-			return std::make_unique<SkillDivestWeapon>();
-		case RG_STRIPSHIELD:
-			return std::make_unique<SkillDivestShield>();
 		case RG_STRIPARMOR:
 			return std::make_unique<SkillDivestArmor>();
 		case RG_STRIPHELM:
 			return std::make_unique<SkillDivestHelm>();
+		case RG_STRIPSHIELD:
+			return std::make_unique<SkillDivestShield>();
+		case RG_STRIPWEAPON:
+			return std::make_unique<SkillDivestWeapon>();
 		case SC_DEADLYINFECT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SC_FEINTBOMB:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SC_TRIANGLESHOT:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SHC_CROSS_SLASH:
+			return std::make_unique<SkillCrossSlash>();
+		case SHC_DANCING_KNIFE:
+			return std::make_unique<SkillDancingKnife>();
 		case SHC_ENCHANTING_SHADOW:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SHC_ETERNAL_SLASH:
+			return std::make_unique<SkillEternalSlash>();
+		case SHC_FATAL_SHADOW_CROW:
+			return std::make_unique<SkillFatalShadowCrow>();
+		case SHC_IMPACT_CRATER:
+			return std::make_unique<SkillImpactCrater>();
 		case SHC_POTENT_VENOM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SHC_SAVAGE_IMPACT:
+			return std::make_unique<SkillSavageImpact>();
 		case SHC_SHADOW_EXCEED:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SHC_SHADOW_STAB:
+			return std::make_unique<SkillShadowStab>();
+		case ST_CHASEWALK:
+			return std::make_unique<SkillStealth>();
+		case ST_FULLSTRIP:
+			return std::make_unique<SkillDivestAll>();
 		case ST_PRESERVE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ST_REJECTSWORD:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillCounterInstinct>();
 		case TF_BACKSLIDING:
 			return std::make_unique<SkillBackSlide>();
 		case TF_DETOXIFY:
 			return std::make_unique<SkillDetoxify>();
 		case TF_DOUBLE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case TF_POISON:
-			return std::make_unique<SkillEnvenom>();
-		case TF_PICKSTONE:
-			return std::make_unique<SkillFindStone>();
 		case TF_HIDING:
 			return std::make_unique<SkillHiding>();
+		case TF_PICKSTONE:
+			return std::make_unique<SkillFindStone>();
+		case TF_POISON:
+			return std::make_unique<SkillEnvenom>();
 		case TF_SPRINKLESAND:
 			return std::make_unique<SkillSandAttack>();
 		case TF_STEAL:

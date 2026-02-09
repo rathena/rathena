@@ -8,10 +8,10 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillAbsordSpiritSphere::SkillAbsordSpiritSphere() : SkillImpl(MO_ABSORBSPIRITS) {
+SkillAbsorbSpiritSphere::SkillAbsorbSpiritSphere() : SkillImpl(MO_ABSORBSPIRITS) {
 }
 
-void SkillAbsordSpiritSphere::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+void SkillAbsorbSpiritSphere::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* sd = BL_CAST(BL_PC, src);
 	map_session_data* dstsd = BL_CAST(BL_PC, target);
 	mob_data* dstmd = BL_CAST(BL_MOB, target);
