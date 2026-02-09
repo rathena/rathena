@@ -7,21 +7,23 @@
 
 #include "../skill_impl.hpp"
 
-#include "bullseye.hpp"
-#include "cracker.hpp"
-#include "desperado.hpp"
-#include "disarm.hpp"
-#include "dust.hpp"
-#include "fling.hpp"
-#include "fullbuster.hpp"
-#include "gatlingfever.hpp"
-#include "glittering.hpp"
-#include "grounddrift.hpp"
-#include "piercingshot.hpp"
-#include "rapidshower.hpp"
-#include "spreadattack.hpp"
-#include "tracking.hpp"
-#include "tripleaction.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "bullseye.cpp"
+#include "cracker.cpp"
+#include "desperado.cpp"
+#include "disarm.cpp"
+#include "dust.cpp"
+#include "fling.cpp"
+#include "fullbuster.cpp"
+#include "gatlingfever.cpp"
+#include "glittering.cpp"
+#include "grounddrift.cpp"
+#include "piercingshot.cpp"
+#include "rapidshower.cpp"
+#include "spreadattack.cpp"
+#include "tracking.cpp"
+#include "tripleaction.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill skill_id) const {
 	switch (skill_id) {
