@@ -13,6 +13,7 @@
 #include "angelus.hpp"
 #include "arbitrium.hpp"
 #include "aspersio.hpp"
+#include "blazingflameblast.hpp"
 #include "blessing.hpp"
 #include "bssacramenti.hpp"
 #include "cantocandidus.hpp"
@@ -29,6 +30,8 @@
 #include "duplelight.hpp"
 #include "effligo.hpp"
 #include "epiclesis.hpp"
+#include "explosionblaster.hpp"
+#include "firstbrand.hpp"
 #include "framen.hpp"
 #include "gloria.hpp"
 #include "heal.hpp"
@@ -44,7 +47,9 @@
 #include "lexdivina.hpp"
 #include "magnificat.hpp"
 #include "magnusexorcismus.hpp"
+#include "massiveflameblaster.hpp"
 #include "medialevotum.hpp"
+#include "oleumsanctum.hpp"
 #include "oratio.hpp"
 #include "petitio.hpp"
 #include "pneuma.hpp"
@@ -54,9 +59,15 @@
 #include "reparatio.hpp"
 #include "ruwach.hpp"
 #include "sanctuary.hpp"
+#include "secondfaith.hpp"
+#include "secondflame.hpp"
+#include "secondjudgement.hpp"
 #include "silentium.hpp"
 #include "statusrecovery.hpp"
 #include "suffragium.hpp"
+#include "thirdconsecration.hpp"
+#include "thirdflamebomb.hpp"
+#include "thirdpunish.hpp"
 #include "turnundead.hpp"
 #include "vituperatum.hpp"
 
@@ -170,18 +181,40 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 		case HP_BASILICA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 #endif
+		case IQ_BLAZING_FLAME_BLAST:
+			return std::make_unique<SkillBlazingFlameBlast>();
+		case IQ_EXPOSION_BLASTER:
+			return std::make_unique<SkillExplosionBlaster>();
 		case IQ_FIRM_FAITH:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_FIRST_BRAND:
+			return std::make_unique<SkillFirstBrand>();
 		case IQ_FIRST_FAITH_POWER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IQ_JUDGE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_MASSIVE_F_BLASTER:
+			return std::make_unique<SkillMassiveFlameBlaster>();
+		case IQ_OLEUM_SANCTUM:
+			return std::make_unique<SkillOleumSanctum>();
 		case IQ_POWERFUL_FAITH:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_SECOND_FAITH:
+			return std::make_unique<SkillSecondFaith>();
+		case IQ_SECOND_FLAME:
+			return std::make_unique<SkillSecondFlame>();
+		case IQ_SECOND_JUDGEMENT:
+			return std::make_unique<SkillSecondJudgement>();
 		case IQ_SINCERE_FAITH:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_THIRD_CONSECRATION:
+			return std::make_unique<SkillThirdConsecration>();
 		case IQ_THIRD_EXOR_FLAME:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_THIRD_FLAME_BOMB:
+			return std::make_unique<SkillThirdFlameBomb>();
+		case IQ_THIRD_PUNISH:
+			return std::make_unique<SkillThirdPunish>();
 		case MO_BLADESTOP:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MO_EXPLOSIONSPIRITS:
