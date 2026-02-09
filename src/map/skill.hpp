@@ -202,6 +202,7 @@ enum e_skill_display {
 	SD_ANIMATION = 0x2000, // skill_attack will use '5' instead of the skill's 'type' (this makes skills show an animation). Also being used in skill_attack for splash skill (NK_SPLASH) to check status_check_skilluse
 	SD_SPLASH    = 0x4000, // skill_area_sub will count targets in skill_area_temp[2]
 	SD_PREAMBLE  = 0x8000, // skill_area_sub will transmit a 'magic' damage packet (-30000 dmg) for the first target selected
+	SD_NODISPLAY = 0x10000, // skill_attack will skip the display switch, caller handles display
 };
 
 #define MAX_SKILL_ITEM_REQUIRE	10 /// Maximum required items

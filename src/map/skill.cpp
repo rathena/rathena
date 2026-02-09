@@ -3557,6 +3557,8 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 	skill_combo(src,dsrc,bl,skill_id,skill_lv,tick);
 
 	//Display damage.
+	// If SD_NODISPLAY is set, caller handles display - skip the switch entirely
+	if (!(flag & SD_NODISPLAY))
 	switch( skill_id ) {
 		case PA_GOSPEL: //Should look like Holy Cross [Skotlex]
 			clif_skill_damage( *src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, CR_HOLYCROSS, -1, DMG_SPLASH );
@@ -3652,10 +3654,6 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 			[[fallthrough]];
 		case HT_LANDMINE:
 			clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -1, dmg_type );
-			break;
-		case WZ_SIGHTBLASTER:
-			//Sightblaster should never call clif_skill_damage twice
-			clif_skill_damage( *src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, (flag&SD_LEVEL) ? -1 : skill_lv, DMG_SPLASH );
 			break;
 		case RL_R_TRIP_PLUSATK:
 		case RL_S_STORM:
