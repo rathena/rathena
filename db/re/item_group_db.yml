@@ -133073,7 +133073,7 @@ Body:
             Item: aegis_105836
             Amount: 5
           - Index: 4
-            Item: aegis_480629
+            Item: C_Clock_Rod
           - Index: 5
             Item: Select_Costume_DEC_2
   - Group: SELECT_DEC_PACK3
@@ -133087,7 +133087,7 @@ Body:
           - Index: 1
             Item: C_Blink_Eyes_WH_Serpent
           - Index: 2
-            Item: aegis_420516
+            Item: C_Forest_Friends
           - Index: 3
             Item: Select_Costume_DEC_3
           - Index: 4

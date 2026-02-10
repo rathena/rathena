@@ -9,8 +9,6 @@
 
 #include "skill_factory_druid.hpp"
 
-constexpr int32 kClawChainDuration = 5000;
-
 SkillFeralClaw::SkillFeralClaw() : SkillImplRecursiveDamageSplash(AT_FERAL_CLAW) {
 }
 

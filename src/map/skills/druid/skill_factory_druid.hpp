@@ -9,6 +9,8 @@
 #include "map/status.hpp"
 #include "map/skill.hpp"
 
+constexpr int32 kClawChainDuration = 5000;
+
 int32 apply_splash_outer_sub(block_list* bl, va_list ap);
 
 class SkillFactoryDruid : public SkillFactory {

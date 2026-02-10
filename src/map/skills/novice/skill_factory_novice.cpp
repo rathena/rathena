@@ -3,19 +3,22 @@
 
 #include "skill_factory_novice.hpp"
 
-#include "../status_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-#include "doublebowlingbash.hpp"
-#include "groundgravitation.hpp"
-#include "hellsdrive.hpp"
-#include "jackfrostnova.hpp"
-#include "jupitelthunderstorm.hpp"
-#include "megasonicblow.hpp"
-#include "meteorstormbuster.hpp"
-#include "napalmvulcanstrike.hpp"
-#include "overcomingcrisis.hpp"
-#include "shieldchainrush.hpp"
-#include "spiralpiercemax.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "doublebowlingbash.cpp"
+#include "groundgravitation.cpp"
+#include "hellsdrive.cpp"
+#include "helpangel.cpp"
+#include "jackfrostnova.cpp"
+#include "jupitelthunderstorm.cpp"
+#include "megasonicblow.cpp"
+#include "meteorstormbuster.cpp"
+#include "napalmvulcanstrike.cpp"
+#include "overcomingcrisis.cpp"
+#include "shieldchainrush.cpp"
+#include "spiralpiercemax.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNovice::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -45,6 +48,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNovice::create(const e_skill skill_
 			return std::make_unique<SkillShieldChainRush>();
 		case HN_SPIRAL_PIERCE_MAX:
 			return std::make_unique<SkillSpiralPierceMax>();
+		case NV_HELPANGEL:
+			return std::make_unique<SkillHelpAngel>();
 		case NV_TRICKDEAD:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 

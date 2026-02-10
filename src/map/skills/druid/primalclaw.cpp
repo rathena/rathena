@@ -10,8 +10,6 @@
 
 #include "skill_factory_druid.hpp"
 
-constexpr int32 kClawChainDuration = 5000;
-
 SkillPrimalClaw::SkillPrimalClaw() : SkillImplRecursiveDamageSplash(AT_PRIMAL_CLAW) {
 }
 
