@@ -3,7 +3,8 @@
 
 #include "skill_impl.hpp"
 
-#include "../status.hpp"
+#include "map/clif.hpp"
+#include "map/status.hpp"
 
 SkillImpl::SkillImpl(e_skill skill_id){
 	this->skill_id_ = skill_id;
@@ -35,6 +36,37 @@ void SkillImpl::modifyHitRate(int16&, const block_list*, const block_list*, uint
 
 void SkillImpl::applyAdditionalEffects(block_list*, block_list*, uint16, t_tick, int32, enum damage_lv) const {
 	// no-op
+}
+
+StatusSkillImpl::StatusSkillImpl(e_skill skillId, bool end_if_running) : SkillImpl(skillId) {
+	this->end_if_running = end_if_running;
+};
+
+void StatusSkillImpl::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const
+{
+	sc_type type = skill_get_sc(getSkillId());
+
+	if (type == SC_NONE) {
+		return;
+	}
+
+	if (this->end_if_running) {
+		status_change* tsc = status_get_sc(target);
+
+		if (tsc != nullptr && tsc->hasSCE(type)) {
+			clif_skill_nodamage(src, *target, getSkillId(), skill_lv, status_change_end(target, type));
+			return;
+		}
+	}
+
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv, sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)));
+}
+
+WeaponSkillImpl::WeaponSkillImpl(e_skill skill_id) : SkillImpl(skill_id) {
+}
+
+void WeaponSkillImpl::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
 }
 
 SkillImplRecursiveDamageSplash::SkillImplRecursiveDamageSplash(e_skill skill_id) : SkillImpl(skill_id){

@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 // SU_PICKYPECK
 class SkillPickyPeck : public WeaponSkillImpl {

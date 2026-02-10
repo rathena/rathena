@@ -1185,9 +1185,6 @@
     <ClInclude Include="skills/skill_impl.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
-    <ClInclude Include="skills/status_skill_impl.hpp">
-      <Filter>Header Files\Skills</Filter>
-    </ClInclude>
     <ClInclude Include="skills/summoner/bite.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
@@ -1721,9 +1718,6 @@
     </ClInclude>
     <ClInclude Include="skills/thief/weaponcrush.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/weapon_skill_impl.hpp">
-      <Filter>Header Files\Skills</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2540,9 +2534,6 @@
     <ClCompile Include="skills/skill_impl.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
-    <ClCompile Include="skills/status_skill_impl.cpp">
-      <Filter>Source Files\Skills</Filter>
-    </ClCompile>
     <ClCompile Include="skills/summoner/bite.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
@@ -3076,9 +3067,6 @@
     </ClCompile>
     <ClCompile Include="skills/thief/weaponcrush.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/weapon_skill_impl.cpp">
-      <Filter>Source Files\Skills</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -25,7 +25,9 @@ MAP_H = $(shell find ../ -type f -name "*.hpp") \
 	$(shell ls ../config/*.hpp) \
 	../custom/battle_config_struct.inc
 
-MAP_OBJ = $(shell find . -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" -e "s/^\.\///")
+MAP_OBJ = $(shell find . -type f -name "*.cpp" \
+			-not -path "./skills/*" \
+			| sed -e "s/\.cpp/\.o/g" -e "s/^\.\///")
 #MAP_OBJ += $(shell ls *.c | sed -e "s/\.c/\.o/g")
 MAP_DIR_OBJ = $(MAP_OBJ:%=obj/%)
 MAP_GEN_DIR_OBJ = $(MAP_OBJ:%=obj-gen/%)
