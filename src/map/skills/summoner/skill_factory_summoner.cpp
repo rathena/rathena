@@ -3,7 +3,7 @@
 
 #include "skill_factory_summoner.hpp"
 
-#include "../status_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySummoner::create(const e_skill skill_id) const {
 	switch( skill_id ){
