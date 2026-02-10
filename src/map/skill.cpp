@@ -1442,15 +1442,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 
-#ifndef RENEWAL
-	case PA_PRESSURE:
-		status_percent_damage(src, bl, 0, 15+5*skill_lv, false);
-		//Pressure can trigger physical autospells
-		attack_type |= BF_NORMAL;
-		attack_type |= BF_WEAPON;
-		break;
-#endif
-
 	case BA_FROSTJOKER:
 	case DC_SCREAM:
 	{
@@ -5757,9 +5748,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_DARKSTRIKE:
 	case NPC_DARKTHUNDER:
 	case NPC_FIRESTORM:
-#ifdef RENEWAL
-	case PA_PRESSURE:
-#endif
 	case NJ_KOUENKA:
 	case NJ_HYOUSENSOU:
 	case NJ_HUUJIN:
@@ -5831,9 +5819,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		if (rnd() % 2 == 0)
 			break; // 50% chance
 		[[fallthrough]];
-#ifndef RENEWAL
-	case PA_PRESSURE:
-#endif
 	case NPC_SMOKING:
 	case NJ_ZENYNAGE:
 	case GN_THORNS_TRAP:
@@ -7082,7 +7067,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			break;
 		}
 		[[fallthrough]];
-	case PA_SACRIFICE:
 	case ALL_FULL_THROTTLE:
 	case ALL_ODINS_POWER:
 	case ALL_REVERSEORCISH:
@@ -11691,22 +11675,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		status_change_end(src, SC_HIDING);
 		break;
 
-	case PA_GOSPEL:
-		if (sce && sce->val4 == BCT_SELF)
-		{
-			status_change_end(src, SC_GOSPEL);
-			return 0;
-		}
-		else
-		{
-			sg = skill_unitsetting(src,skill_id,skill_lv,src->x,src->y,0);
-			if (!sg) break;
-			if (sce)
-				status_change_end(src, type); //Was under someone else's Gospel. [Skotlex]
-			sc_start4(src,src,type,100,skill_lv,0,sg->group_id,BCT_SELF,skill_get_time(skill_id,skill_lv));
-			clif_skill_poseffect( *src, skill_id, skill_lv, 0, 0, tick ); // PA_GOSPEL music packet
-		}
-		break;
 	case NJ_TATAMIGAESHI:
 		if (skill_unitsetting(src,skill_id,skill_lv,src->x,src->y,0))
 			sc_start(src,src,type,100,skill_lv,skill_get_time2(skill_id,skill_lv));

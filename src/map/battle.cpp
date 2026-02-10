@@ -4881,34 +4881,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 100 + 100 * skill_lv;
 #endif
 			break;
-		case PA_SACRIFICE:
-			skillratio += -10 + 10 * skill_lv;
-			break;
-		case PA_SHIELDCHAIN:
-#ifdef RENEWAL
-			skillratio = -100 + 300 + 200 * skill_lv;
-
-			if( sd != nullptr ){
-				int16 index = sd->equip_index[EQI_HAND_L];
-
-				// Damage affected by the shield's weight and refine.
-				if( index >= 0 && sd->inventory_data[index] != nullptr && sd->inventory_data[index]->type == IT_ARMOR ){
-					skillratio += sd->inventory_data[index]->weight / 10 + 4 * sd->inventory.u.items_inventory[index].refine;
-				}
-
-				// Damage affected by shield mastery
-				if( sc != nullptr && sc->getSCE( SC_SHIELD_POWER ) ){
-					skillratio += skill_lv * 14 * pc_checkskill( sd, IG_SHIELD_MASTERY );
-				}
-			}
-
-			RE_LVL_DMOD(100);
-#else
-			skillratio += 30 * skill_lv;
-#endif
-			if (sc && sc->getSCE(SC_SHIELD_POWER))// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
-			break;
 		case NJ_HUUMA:
 #ifdef RENEWAL
 			skillratio += -150 + 250 * skill_lv;
@@ -7831,10 +7803,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						break;
 					case HW_GRAVITATION:
 						skillratio += -100 + 100 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case PA_PRESSURE:
-						skillratio += -100 + 500 + 150 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 #endif
