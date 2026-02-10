@@ -17,7 +17,7 @@ void SkillBasilica::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_
 	status_change *sc = status_get_sc(src);
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
-	if( sc->getSCE(SC_BASILICA) ) {
+	if( sc && sc->getSCE(SC_BASILICA) ) {
 		status_change_end(src, SC_BASILICA); // Cancel Basilica and return so requirement isn't consumed again
 		flag |= SKILL_NOCONSUME_REQ;
 		return;
