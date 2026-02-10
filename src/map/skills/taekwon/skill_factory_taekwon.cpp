@@ -3,29 +3,86 @@
 
 #include "skill_factory_taekwon.hpp"
 
-#include "../status_skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-#include "counter.hpp"
-#include "downkick.hpp"
-#include "highjump.hpp"
-#include "jumpkick.hpp"
-#include "mission.hpp"
-#include "run.hpp"
-#include "sevenwind.hpp"
-#include "stormkick.hpp"
-#include "turnkick.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "circleofdirectionsandelementals.cpp"
+#include "counter.cpp"
+#include "downkick.cpp"
+#include "eska.cpp"
+#include "eske.cpp"
+#include "esma.cpp"
+#include "estin.cpp"
+#include "estun.cpp"
+#include "eswoo.cpp"
+#include "exorcismofmalicioussoul.cpp"
+#include "feelingthesunmoonandstars.cpp"
+#include "hatredofthesunmoonandstars.cpp"
+#include "highjump.cpp"
+#include "jumpkick.cpp"
+#include "kaahi.cpp"
+#include "kaite.cpp"
+#include "kaizel.cpp"
+#include "kaupe.cpp"
+#include "mission.cpp"
+#include "run.cpp"
+#include "sevenwind.cpp"
+#include "soulgathering.cpp"
+#include "soulofheavenandearth.cpp"
+#include "spiritofrebirth.cpp"
+#include "spiritofthealchemist.cpp"
+#include "spiritoftheartist.cpp"
+#include "spiritoftheassasin.cpp"
+#include "spiritoftheblacksmith.cpp"
+#include "spiritofthecrusader.cpp"
+#include "spiritofthehunter.cpp"
+#include "spiritoftheknight.cpp"
+#include "spiritofthemonk.cpp"
+#include "spiritofthepriest.cpp"
+#include "spiritoftherogue.cpp"
+#include "spiritofthesage.cpp"
+#include "spiritofthesoullinker.cpp"
+#include "spiritofthestargladiator.cpp"
+#include "spiritofthesupernovice.cpp"
+#include "spiritofthewizard.cpp"
+#include "stormkick.cpp"
+#include "talismanofblacktortoise.cpp"
+#include "talismanofbluedragon.cpp"
+#include "talismanoffiveelements.cpp"
+#include "talismanoffourbearinggod.cpp"
+#include "talismanofmagician.cpp"
+#include "talismanofprotection.cpp"
+#include "talismanofredphoenix.cpp"
+#include "talismanofsoulstealing.cpp"
+#include "talismanofwarrior.cpp"
+#include "talismanofwhitetiger.cpp"
+#include "totemoftutelary.cpp"
+#include "turnkick.cpp"
+#include "warmthofthemoon.cpp"
+#include "warmthofthestars.cpp"
+#include "warmthofthesun.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case SG_FEEL:
+			return std::make_unique<SkillFeelingtheSunMoonandStars>();
 		case SG_FUSION:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SG_HATE:
+			return std::make_unique<SkillHatredoftheSunMoonandStars>();
 		case SG_MOON_COMFORT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SG_MOON_WARM:
+			return std::make_unique<SkillWarmthoftheMoon>();
 		case SG_STAR_COMFORT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SG_STAR_WARM:
+			return std::make_unique<SkillWarmthoftheStars>();
 		case SG_SUN_COMFORT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SG_SUN_WARM:
+			return std::make_unique<SkillWarmthoftheSun>();
 		case SJ_BOOKOFDIMENSION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SJ_FALLINGSTAR:
@@ -38,9 +95,9 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SJ_LUNARSTANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
-		case SJ_SUNSTANCE:
-			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case SJ_STARSTANCE:
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SJ_SUNSTANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case SJ_UNIVERSESTANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
@@ -52,6 +109,88 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SKE_RISING_MOON:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SL_ALCHEMIST:
+			return std::make_unique<SkillSpiritoftheAlchemist>();
+		case SL_ASSASIN:
+			return std::make_unique<SkillSpiritoftheAssasin>();
+		case SL_BARDDANCER:
+			return std::make_unique<SkillSpiritoftheArtist>();
+		case SL_BLACKSMITH:
+			return std::make_unique<SkillSpiritoftheBlacksmith>();
+		case SL_CRUSADER:
+			return std::make_unique<SkillSpiritoftheCrusader>();
+		case SL_HIGH:
+			return std::make_unique<SkillSpiritofRebirth>();
+		case SL_HUNTER:
+			return std::make_unique<SkillSpiritoftheHunter>();
+		case SL_KAAHI:
+			return std::make_unique<SkillKaahi>();
+		case SL_KAITE:
+			return std::make_unique<SkillKaite>();
+		case SL_KAIZEL:
+			return std::make_unique<SkillKaizel>();
+		case SL_KAUPE:
+			return std::make_unique<SkillKaupe>();
+		case SL_KNIGHT:
+			return std::make_unique<SkillSpiritoftheKnight>();
+		case SL_MONK:
+			return std::make_unique<SkillSpiritoftheMonk>();
+		case SL_PRIEST:
+			return std::make_unique<SkillSpiritofthePriest>();
+		case SL_ROGUE:
+			return std::make_unique<SkillSpiritoftheRogue>();
+		case SL_SAGE:
+			return std::make_unique<SkillSpiritoftheSage>();
+		case SL_SKA:
+			return std::make_unique<SkillEska>();
+		case SL_SKE:
+			return std::make_unique<SkillEske>();
+		case SL_SMA:
+			return std::make_unique<SkillEsma>();
+		case SL_SOULLINKER:
+			return std::make_unique<SkillSpiritoftheSoulLinker>();
+		case SL_STAR:
+			return std::make_unique<SkillSpiritoftheStarGladiator>();
+		case SL_STIN:
+			return std::make_unique<SkillEstin>();
+		case SL_STUN:
+			return std::make_unique<SkillEstun>();
+		case SL_SUPERNOVICE:
+			return std::make_unique<SkillSpiritoftheSupernovice>();
+		case SL_SWOO:
+			return std::make_unique<SkillEswoo>();
+		case SL_WIZARD:
+			return std::make_unique<SkillSpiritoftheWizard>();
+		case SOA_CIRCLE_OF_DIRECTIONS_AND_ELEMENTALS:
+			return std::make_unique<SkillCircleOfDirectionsAndElementals>();
+		case SOA_EXORCISM_OF_MALICIOUS_SOUL:
+			return std::make_unique<SkillExorcismOfMaliciousSoul>();
+		case SOA_SOUL_GATHERING:
+			return std::make_unique<SkillSoulGathering>();
+		case SOA_SOUL_OF_HEAVEN_AND_EARTH:
+			return std::make_unique<SkillSoulOfHeavenAndEarth>();
+		case SOA_TALISMAN_OF_BLACK_TORTOISE:
+			return std::make_unique<SkillTalismanOfBlackTortoise>();
+		case SOA_TALISMAN_OF_BLUE_DRAGON:
+			return std::make_unique<SkillTalismanOfBlueDragon>();
+		case SOA_TALISMAN_OF_FIVE_ELEMENTS:
+			return std::make_unique<SkillTalismanOfFiveElements>();
+		case SOA_TALISMAN_OF_FOUR_BEARING_GOD:
+			return std::make_unique<SkillTalismanOfFourBearingGod>();
+		case SOA_TALISMAN_OF_MAGICIAN:
+			return std::make_unique<SkillTalismanOfMagician>();
+		case SOA_TALISMAN_OF_PROTECTION:
+			return std::make_unique<SkillTalismanOfProtection>();
+		case SOA_TALISMAN_OF_RED_PHOENIX:
+			return std::make_unique<SkillTalismanOfRedPhoenix>();
+		case SOA_TALISMAN_OF_SOUL_STEALING:
+			return std::make_unique<SkillTalismanOfSoulStealing>();
+		case SOA_TALISMAN_OF_WARRIOR:
+			return std::make_unique<SkillTalismanOfWarrior>();
+		case SOA_TALISMAN_OF_WHITE_TIGER:
+			return std::make_unique<SkillTalismanOfWhiteTiger>();
+		case SOA_TOTEM_OF_TUTELARY:
+			return std::make_unique<SkillTotemOfTutelary>();
 		case SP_SOULREAPER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TK_COUNTER:
