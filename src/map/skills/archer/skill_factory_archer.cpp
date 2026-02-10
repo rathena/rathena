@@ -7,15 +7,19 @@
 
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
+#include "acousticrhythm.cpp"
 #include "aimedbolt.cpp"
+#include "amp.cpp"
 #include "anklesnare.cpp"
 #include "arrowshower.cpp"
 #include "arrowstorm.cpp"
+#include "battletheme.cpp"
 #include "beaststrafing.cpp"
 #include "blastmine.cpp"
 #include "blitzbeat.cpp"
 #include "camouflage.cpp"
 #include "chargearrow.cpp"
+#include "classicalpluck.cpp"
 #include "claymoretrap.cpp"
 #include "clusterbomb.cpp"
 #include "cobalttrap.cpp"
@@ -26,7 +30,9 @@
 #include "detect.cpp"
 #include "detonator.cpp"
 #include "doublestrafe.cpp"
+#include "downtempo.cpp"
 #include "electricshocker.cpp"
+#include "encore.cpp"
 #include "falconassault.cpp"
 #include "fearbreeze.cpp"
 #include "firingtrap.cpp"
@@ -37,17 +43,26 @@
 #include "freezingtrap.cpp"
 #include "galestorm.cpp"
 #include "gypsyskiss.cpp"
+#include "harmoniclick.cpp"
 #include "hawkboomerang.cpp"
 #include "hawkmastery.cpp"
 #include "hawkrush.cpp"
 #include "hipshaker.cpp"
 #include "iceboundtrap.cpp"
+#include "impressiveriff.cpp"
 #include "ladyluck.cpp"
 #include "landmine.cpp"
+#include "lullaby.cpp"
 #include "magentatrap.cpp"
+#include "magicstrings.cpp"
 #include "maizetrap.cpp"
 #include "makingarrow.cpp"
+#include "melodystrike.cpp"
+#include "mentalsensing.cpp"
+#include "pangvoice.cpp"
+#include "perfecttablature.cpp"
 #include "phantasmicarrow.cpp"
+#include "powerchord.cpp"
 #include "removetrap.cpp"
 #include "sandman.cpp"
 #include "sensitivekeen.cpp"
@@ -56,9 +71,12 @@
 #include "slingingarrow.cpp"
 #include "slowgrace.cpp"
 #include "solidtrap.cpp"
+#include "songoflutie.cpp"
 #include "springtrap.cpp"
 #include "swifttrap.cpp"
 #include "talkiebox.cpp"
+#include "unbarringoctave.cpp"
+#include "unchainedserenade.cpp"
 #include "verduretrap.cpp"
 #include "wargbite.cpp"
 #include "wargdash.cpp"
@@ -81,10 +99,42 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillMakingArrow>();
 		case AC_SHOWER:
 			return std::make_unique<SkillArrowShower>();
+		case BA_APPLEIDUN:
+			return std::make_unique<SkillSongofLutie>();
+		case BA_ASSASSINCROSS:
+			return std::make_unique<SkillImpressiveRiff>();
 		case BA_DISSONANCE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillUnchainedSerenade>();
+		case BA_FROSTJOKER:
+			return std::make_unique<SkillUnbarringOctave>();
 		case BA_MUSICALSTRIKE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillMelodyStrike>();
+		case BA_PANGVOICE:
+			return std::make_unique<SkillPangVoice>();
+		case BA_POEMBRAGI:
+			return std::make_unique<SkillMagicStrings>();
+		case BA_WHISTLE:
+			return std::make_unique<SkillPerfectTablature>();
+		case BD_ADAPTATION:
+			return std::make_unique<SkillAmp>();
+		case BD_DRUMBATTLEFIELD:
+			return std::make_unique<SkillBattleTheme>();
+		case BD_ENCORE:
+			return std::make_unique<SkillEncore>();
+		case BD_ETERNALCHAOS:
+			return std::make_unique<SkillDownTempo>();
+		case BD_INTOABYSS:
+			return std::make_unique<SkillPowerChord>();
+		case BD_LULLABY:
+			return std::make_unique<SkillLullaby>();
+		case BD_RICHMANKIM:
+			return std::make_unique<SkillMentalSensing>();
+		case BD_RINGNIBELUNGEN:
+			return std::make_unique<SkillHarmonicLick>();
+		case BD_ROKISWEIL:
+			return std::make_unique<SkillClassicalPluck>();
+		case BD_SIEGFRIED:
+			return std::make_unique<SkillAcousticRhythm>();
 		case CG_ARROWVULCAN:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case DC_DONTFORGETME:

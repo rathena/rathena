@@ -4823,13 +4823,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc->getSCE(SC_GT_ENERGYGAIN))
 				skillratio += skillratio * 50 / 100;
 			break;
-		case BA_MUSICALSTRIKE:
-#ifdef RENEWAL
-			skillratio += 10 + 40 * skill_lv;
-#else
-			skillratio += -40 + 40 * skill_lv;
-#endif
-			break;
 		case CH_TIGERFIST:
 #ifdef RENEWAL
 			skillratio += 400 + 150 * skill_lv;
@@ -4879,34 +4872,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 #else
 			skillratio += 100 + 100 * skill_lv;
 #endif
-			break;
-		case PA_SACRIFICE:
-			skillratio += -10 + 10 * skill_lv;
-			break;
-		case PA_SHIELDCHAIN:
-#ifdef RENEWAL
-			skillratio = -100 + 300 + 200 * skill_lv;
-
-			if( sd != nullptr ){
-				int16 index = sd->equip_index[EQI_HAND_L];
-
-				// Damage affected by the shield's weight and refine.
-				if( index >= 0 && sd->inventory_data[index] != nullptr && sd->inventory_data[index]->type == IT_ARMOR ){
-					skillratio += sd->inventory_data[index]->weight / 10 + 4 * sd->inventory.u.items_inventory[index].refine;
-				}
-
-				// Damage affected by shield mastery
-				if( sc != nullptr && sc->getSCE( SC_SHIELD_POWER ) ){
-					skillratio += skill_lv * 14 * pc_checkskill( sd, IG_SHIELD_MASTERY );
-				}
-			}
-
-			RE_LVL_DMOD(100);
-#else
-			skillratio += 30 * skill_lv;
-#endif
-			if (sc && sc->getSCE(SC_SHIELD_POWER))// Whats the official increase? [Rytech]
-				skillratio += skillratio * 50 / 100;
 			break;
 		case NJ_HUUMA:
 #ifdef RENEWAL
@@ -5508,39 +5473,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case RL_FIRE_RAIN:
 		case RL_AM_BLAST:
 			skillratio += -100 + 3500 + 300 * skill_lv;
-			break;
-		case SU_BITE:
-			skillratio += 100;
-			break;
-		case SU_SCRATCH:
-			skillratio += -50 + 50 * skill_lv;
-			break;
-		case SU_SCAROFTAROU:
-			skillratio += -100 + 100 * skill_lv;
-			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
-				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
-			break;
-		case SU_PICKYPECK:
-		case SU_PICKYPECK_DOUBLE_ATK:
-			skillratio += 100 + 100 * skill_lv;
-			if (status_get_hp(target) < (status_get_max_hp(target) / 2))
-				skillratio *= 2;
-			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
-				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
-			break;
-		case SU_LUNATICCARROTBEAT:
-		case SU_LUNATICCARROTBEAT2:
-			skillratio += 100 + 100 * skill_lv;
-			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
-				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
-			if (status_get_lv(src) > 99)
-				skillratio += sstatus->str;
-			RE_LVL_DMOD(100);
-			break;
-		case SU_SVG_SPIRIT:
-			skillratio += 150 + 150 * skill_lv;
-			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
-				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
 		case SJ_FULLMOONKICK:
 			skillratio += 1000 + 100 * skill_lv;
@@ -7823,17 +7755,8 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_GROUNDDRIVE:
 						skillratio += 25;
 						break;
-					case BA_DISSONANCE:
-						skillratio += 10 + skill_lv * 50;
-						if (sd != nullptr)
-							skillratio = skillratio * sd->status.job_level / 10;
-						break;
 					case HW_GRAVITATION:
 						skillratio += -100 + 100 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case PA_PRESSURE:
-						skillratio += -100 + 500 + 150 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 #endif
@@ -7992,17 +7915,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						break;
 					case MH_POISON_MIST:
 						skillratio += -100 + 200 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // ! TODO: Confirm DEX bonus
-						break;
-					case SU_SV_STEMSPEAR:
-						skillratio += 600;
-						break;
-					case SU_CN_METEOR:
-					case SU_CN_METEOR2:
-						skillratio += -100 + 200 + 100 * skill_lv;
-						if (status_get_lv(src) > 99) {
-							skillratio += sstatus->int_ * 5;
-						}
-						RE_LVL_DMOD(100);
 						break;
 					case NPC_VENOMFOG:
 						skillratio += 600 + 100 * skill_lv;
