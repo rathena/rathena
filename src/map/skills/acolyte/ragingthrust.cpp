@@ -24,8 +24,6 @@ void SkillRagingThrust::castendDamageId(block_list* src, block_list* target, uin
 }
 
 void SkillRagingThrust::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	const status_change* sc = status_get_sc(src);
-
 #ifdef RENEWAL
 	const status_data* sstatus = status_get_status_data(*src);
 
@@ -34,6 +32,6 @@ void SkillRagingThrust::calculateSkillRatio(const Damage* wd, const block_list* 
 	base_skillratio += 140 + 60 * skill_lv;
 #endif
 
-	if (sc != nullptr && sc->getSCE(SC_GT_ENERGYGAIN))
+	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->getSCE(SC_GT_ENERGYGAIN))
 		base_skillratio += base_skillratio * 50 / 100;
 }
