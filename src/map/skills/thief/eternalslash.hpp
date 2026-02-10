@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 class SkillEternalSlash : public WeaponSkillImpl {
 public:

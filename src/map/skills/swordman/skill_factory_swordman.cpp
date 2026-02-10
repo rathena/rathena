@@ -3,41 +3,52 @@
 
 #include "skill_factory_swordman.hpp"
 
-#include "../status_skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-#include "autoberserk.hpp"
-#include "bash.hpp"
-#include "bowlingbash.hpp"
-#include "brandishspear.hpp"
-#include "counterattack.hpp"
-#include "dragonicaura.hpp"
-#include "dragonicbreath.hpp"
-#include "dragonicpierce.hpp"
-#include "grandcross.hpp"
-#include "hackandslasher.hpp"
-#include "holycross.hpp"
-#include "madnesscrusher.hpp"
-#include "magnum.hpp"
-#include "pierce.hpp"
-#include "provoke.hpp"
-#include "relax.hpp"
-#include "resistantsouls.hpp"
-#include "sacrifice.hpp"
-#include "selfprovoke.hpp"
-#include "servantweapon.hpp"
-#include "servantweapondemolition.hpp"
-#include "servantweaponphantom.hpp"
-#include "servantweaponsign.hpp"
-#include "shieldboomerang.hpp"
-#include "shieldreflect.hpp"
-#include "smite.hpp"
-#include "spearboomerang.hpp"
-#include "spearstab.hpp"
-#include "spiralpierce.hpp"
-#include "stormslash.hpp"
-#include "traumaticblow.hpp"
-#include "vitalstrike.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "autoberserk.cpp"
+#include "bash.cpp"
+#include "bowlingbash.cpp"
+#include "brandishspear.cpp"
+#include "counterattack.cpp"
+#include "crossrain.cpp"
+#include "dragonicaura.cpp"
+#include "dragonicbreath.cpp"
+#include "dragonicpierce.cpp"
+#include "grandcross.cpp"
+#include "grandjudgement.cpp"
+#include "guardianshield.cpp"
+#include "hackandslasher.cpp"
+#include "holycross.cpp"
+#include "imperialcross.cpp"
+#include "imperialpressure.cpp"
+#include "judgementcross.cpp"
+#include "madnesscrusher.cpp"
+#include "magnum.cpp"
+#include "overslash.cpp"
+#include "pierce.cpp"
+#include "provoke.cpp"
+#include "radiantspear.cpp"
+#include "relax.cpp"
+#include "resistantsouls.cpp"
+#include "sacrifice.cpp"
+#include "selfprovoke.cpp"
+#include "servantweapon.cpp"
+#include "servantweapondemolition.cpp"
+#include "servantweaponphantom.cpp"
+#include "servantweaponsign.cpp"
+#include "shieldboomerang.cpp"
+#include "shieldreflect.cpp"
+#include "shieldshooting.cpp"
+#include "smite.cpp"
+#include "spearboomerang.cpp"
+#include "spearstab.cpp"
+#include "spiralpierce.cpp"
+#include "stormslash.cpp"
+#include "traumaticblow.cpp"
+#include "ultimatesacrifice.cpp"
+#include "vitalstrike.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -93,12 +104,32 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IG_ATTACK_STANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case IG_CROSS_RAIN:
+			return std::make_unique<SkillCrossRain>();
+		case IG_GRAND_JUDGEMENT:
+			return std::make_unique<SkillGrandJudgement>();
 		case IG_GUARD_STANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case IG_GUARDIAN_SHIELD:
+			return std::make_unique<SkillGuardianShield>();
 		case IG_HOLY_SHIELD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IG_IMPERIAL_CROSS:
+			return std::make_unique<SkillImperialCross>();
+		case IG_IMPERIAL_PRESSURE:
+			return std::make_unique<SkillImperialPressure>();
+		case IG_JUDGEMENT_CROSS:
+			return std::make_unique<SkillJudgementCross>();
+		case IG_OVERSLASH:
+			return std::make_unique<SkillOverSlash>();
+		case IG_RADIANT_SPEAR:
+			return std::make_unique<SkillRadiantSpear>();
 		case IG_REBOUND_SHIELD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IG_SHIELD_SHOOTING:
+			return std::make_unique<SkillShieldShooting>();
+		case IG_ULTIMATE_SACRIFICE:
+			return std::make_unique<SkillUltimateSacrifice>();
 		case KN_BOWLINGBASH:
 			return std::make_unique<SkillBowlingBash>();
 		case KN_BRANDISHSPEAR:
