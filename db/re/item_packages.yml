@@ -1222,15 +1222,15 @@ Body:
     Groups:
       - Group: 0
         Items:
-          - Item: aegis_420570
+          - Item: C_Feather_Hair_TT
       - Group: 1
         Items:
-          - Item: aegis_420571
+          - Item: C_Feather_Hair_BD
   - Item: Select_Costume_DEC_3
     Groups:
       - Group: 0
         Items:
-          - Item: aegis_420515
+          - Item: C_Wonderful_Long
       - Group: 1
         Items:
-          - Item: aegis_420514
+          - Item: C_Wonderful_Long_N

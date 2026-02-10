@@ -3,41 +3,71 @@
 
 #include "skill_factory_archer.hpp"
 
-#include "../status_skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-#include "anklesnare.hpp"
-#include "arrowshower.hpp"
-#include "beaststrafing.hpp"
-#include "blastmine.hpp"
-#include "blitzbeat.hpp"
-#include "chargearrow.hpp"
-#include "claymoretrap.hpp"
-#include "concentration.hpp"
-#include "dazzler.hpp"
-#include "detect.hpp"
-#include "doublestrafe.hpp"
-#include "falconassault.hpp"
-#include "flasher.hpp"
-#include "focusballet.hpp"
-#include "focusedarrowstrike.hpp"
-#include "freezingtrap.hpp"
-#include "gypsyskiss.hpp"
-#include "hipshaker.hpp"
-#include "ladyluck.hpp"
-#include "landmine.hpp"
-#include "makingarrow.hpp"
-#include "phantasmicarrow.hpp"
-#include "removetrap.hpp"
-#include "sandman.hpp"
-#include "shockwavetrap.hpp"
-#include "skidtrap.hpp"
-#include "slingingarrow.hpp"
-#include "slowgrace.hpp"
-#include "springtrap.hpp"
-#include "talkiebox.hpp"
-#include "windwalker.hpp"
-#include "winkofcharm.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "aimedbolt.cpp"
+#include "anklesnare.cpp"
+#include "arrowshower.cpp"
+#include "arrowstorm.cpp"
+#include "beaststrafing.cpp"
+#include "blastmine.cpp"
+#include "blitzbeat.cpp"
+#include "camouflage.cpp"
+#include "chargearrow.cpp"
+#include "claymoretrap.cpp"
+#include "clusterbomb.cpp"
+#include "cobalttrap.cpp"
+#include "concentration.cpp"
+#include "crescivebolt.cpp"
+#include "dazzler.cpp"
+#include "deepblindtrap.cpp"
+#include "detect.cpp"
+#include "detonator.cpp"
+#include "doublestrafe.cpp"
+#include "electricshocker.cpp"
+#include "falconassault.cpp"
+#include "fearbreeze.cpp"
+#include "firingtrap.cpp"
+#include "flametrap.cpp"
+#include "flasher.cpp"
+#include "focusballet.cpp"
+#include "focusedarrowstrike.cpp"
+#include "freezingtrap.cpp"
+#include "galestorm.cpp"
+#include "gypsyskiss.cpp"
+#include "hawkboomerang.cpp"
+#include "hawkmastery.cpp"
+#include "hawkrush.cpp"
+#include "hipshaker.cpp"
+#include "iceboundtrap.cpp"
+#include "ladyluck.cpp"
+#include "landmine.cpp"
+#include "magentatrap.cpp"
+#include "maizetrap.cpp"
+#include "makingarrow.cpp"
+#include "phantasmicarrow.cpp"
+#include "removetrap.cpp"
+#include "sandman.cpp"
+#include "sensitivekeen.cpp"
+#include "shockwavetrap.cpp"
+#include "skidtrap.cpp"
+#include "slingingarrow.cpp"
+#include "slowgrace.cpp"
+#include "solidtrap.cpp"
+#include "springtrap.cpp"
+#include "swifttrap.cpp"
+#include "talkiebox.cpp"
+#include "verduretrap.cpp"
+#include "wargbite.cpp"
+#include "wargdash.cpp"
+#include "wargmastery.cpp"
+#include "wargrider.cpp"
+#include "wargstrike.cpp"
+#include "wildwalk.cpp"
+#include "windwalker.cpp"
+#include "winkofcharm.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -106,9 +136,45 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		case HT_TALKIEBOX:
 			return std::make_unique<SkillTalkieBox>();
 		case RA_AIMEDBOLT:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillAimedBolt>();
+		case RA_ARROWSTORM:
+			return std::make_unique<SkillArrowStorm>();
+		case RA_CAMOUFLAGE:
+			return std::make_unique<SkillCamouflage>();
+		case RA_CLUSTERBOMB:
+			return std::make_unique<SkillClusterBomb>();
+		case RA_COBALTTRAP:
+			return std::make_unique<SkillCobaltTrap>();
+		case RA_DETONATOR:
+			return std::make_unique<SkillDetonator>();
+		case RA_ELECTRICSHOCKER:
+			return std::make_unique<SkillElectricShocker>();
+		case RA_FEARBREEZE:
+			return std::make_unique<SkillFearBreeze>();
+		case RA_FIRINGTRAP:
+			return std::make_unique<SkillFiringTrap>();
+		case RA_ICEBOUNDTRAP:
+			return std::make_unique<SkillIceboundTrap>();
+		case RA_MAGENTATRAP:
+			return std::make_unique<SkillMagentaTrap>();
+		case RA_MAIZETRAP:
+			return std::make_unique<SkillMaizeTrap>();
+		case RA_SENSITIVEKEEN:
+			return std::make_unique<SkillSensitiveKeen>();
 		case RA_UNLIMIT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case RA_VERDURETRAP:
+			return std::make_unique<SkillVerdureTrap>();
+		case RA_WUGBITE:
+			return std::make_unique<SkillWargBite>();
+		case RA_WUGDASH:
+			return std::make_unique<SkillWargDash>();
+		case RA_WUGMASTERY:
+			return std::make_unique<SkillWargMastery>();
+		case RA_WUGRIDER:
+			return std::make_unique<SkillWargRider>();
+		case RA_WUGSTRIKE:
+			return std::make_unique<SkillWargStrike>();
 		case SN_FALCONASSAULT:
 			return std::make_unique<SkillFalconAssault>();
 		case SN_SHARPSHOOTING:
@@ -123,6 +189,26 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WH_CALAMITYGALE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WH_CRESCIVE_BOLT:
+			return std::make_unique<SkillCresciveBolt>();
+		case WH_DEEPBLINDTRAP:
+			return std::make_unique<SkillDeepBlindTrap>();
+		case WH_FLAMETRAP:
+			return std::make_unique<SkillFlameTrap>();
+		case WH_GALESTORM:
+			return std::make_unique<SkillGaleStorm>();
+		case WH_HAWKBOOMERANG:
+			return std::make_unique<SkillHawkBoomerang>();
+		case WH_HAWKRUSH:
+			return std::make_unique<SkillHawkRush>();
+		case WH_HAWK_M:
+			return std::make_unique<SkillHawkMastery>();
+		case WH_SOLIDTRAP:
+			return std::make_unique<SkillSolidTrap>();
+		case WH_SWIFTTRAP:
+			return std::make_unique<SkillSwiftTrap>();
+		case WH_WILD_WALK:
+			return std::make_unique<SkillWildWalk>();
 		case WH_WIND_SIGN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WM_GREAT_ECHO:

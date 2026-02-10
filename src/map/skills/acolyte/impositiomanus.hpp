@@ -6,7 +6,6 @@
 #include <config/core.hpp>
 
 #include "../skill_impl.hpp"
-#include "../status_skill_impl.hpp"
 
 #ifdef RENEWAL
 class SkillImpositioManus : public SkillImpl {
