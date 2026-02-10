@@ -1442,7 +1442,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 
-	case BA_FROSTJOKER:
 	case DC_SCREAM:
 	{
 		int32 rate = 150 + 50 * skill_lv; // Aegis accuracy (1000 = 100%)
@@ -1455,23 +1454,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		}
 		status_change_start(src, bl, skill_get_sc(skill_id), rate*10, skill_lv, 0, 0, 0, duration, SCSTART_NONE);
 	}
-		break;
-
-	case BD_LULLABY:
-#ifndef RENEWAL
-		if (sc != nullptr && sc->getSCE(SC_DANCING) != nullptr) {
-			block_list* partner = map_id2bl(sc->getSCE(SC_DANCING)->val4);
-			if (partner == nullptr)
-				break;
-			status_data* pstatus = status_get_status_data(*partner);
-			if (pstatus == nullptr)
-				break;
-			status_change_start(src, bl, skill_get_sc(skill_id), (sstatus->int_ + pstatus->int_ + rnd_value(100, 300)) * 10, skill_lv, 0, 0, 0, skill_get_time2(skill_id, skill_lv), SCSTART_NONE);
-		}
-#else
-		// In renewal the chance is simply 100% and uses the original song duration as sleep duration
-		sc_start(src, bl, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
-#endif
 		break;
 
 #ifdef RENEWAL
@@ -6421,7 +6403,7 @@ static int32 skill_apply_songs(block_list* target, va_list ap)
  * @param tick: Timer tick
  * @return Number of targets or 0 otherwise
  */
-static int32 skill_castend_song(block_list* src, uint16 skill_id, uint16 skill_lv, t_tick tick)
+int32 skill_castend_song(block_list* src, uint16 skill_id, uint16 skill_lv, t_tick tick)
 {
 	nullpo_ret(src);
 
@@ -7612,19 +7594,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case BD_ADAPTATION:
-#ifdef RENEWAL
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-#else
-		if(tsc && tsc->getSCE(SC_DANCING)){
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			status_change_end(bl, SC_DANCING);
-		}
-#endif
-		break;
-
-	case BA_FROSTJOKER:
 	case DC_SCREAM:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		skill_addtimerskill(src,tick+3000,bl->id,src->x,src->y,skill_id,skill_lv,0,flag);
@@ -7636,18 +7605,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			snprintf(temp, sizeof(temp), "%s : %s !!",md->name,skill_get_desc(skill_id));
 			clif_disp_overhead(md,temp);
 		}
-		break;
-
-	case BA_PANGVOICE:
-#ifdef RENEWAL
-		// In Renewal it causes Confusion and Bleeding to 100% base chance
-		sc_start(src, bl, SC_CONFUSION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		sc_start(src, bl, SC_BLEEDING, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-#else
-		// In Pre-renewal it causes Confusion to 70% base chance
-		sc_start(src, bl, SC_CONFUSION, 70, skill_lv, skill_get_time(skill_id, skill_lv));
-#endif
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
 	case DC_WINKCHARM:
@@ -7674,19 +7631,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 #ifdef RENEWAL
-	case BD_LULLABY:
-	case BD_RICHMANKIM:
-	case BD_ETERNALCHAOS:
-	case BD_DRUMBATTLEFIELD:
-	case BD_RINGNIBELUNGEN:
-	case BD_ROKISWEIL:
-	case BD_INTOABYSS:
-	case BD_SIEGFRIED:
-	case BA_DISSONANCE:
-	case BA_POEMBRAGI:
-	case BA_WHISTLE:
-	case BA_ASSASSINCROSS:
-	case BA_APPLEIDUN:
 	case DC_UGLYDANCE:
 	case DC_HUMMING:
 	case DC_DONTFORGETME:
@@ -8316,14 +8260,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				skill_delunit(su);
 			}
 
-		}
-		break;
-	case BD_ENCORE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (sd != nullptr) {
-			unit_skilluse_id(src,src->id,sd->skill_id_dance,sd->skill_lv_dance);
-			// Need to remove remembered skill to prevent permanent halving of SP cost
-			sd->skill_id_old = 0;
 		}
 		break;
 
@@ -11360,19 +11296,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case WE_CALLBABY:
 	case SA_LANDPROTECTOR:
 #ifndef RENEWAL
-	case BD_LULLABY:
-	case BD_RICHMANKIM:
-	case BD_ETERNALCHAOS:
-	case BD_DRUMBATTLEFIELD:
-	case BD_RINGNIBELUNGEN:
-	case BD_ROKISWEIL:
-	case BD_INTOABYSS:
-	case BD_SIEGFRIED:
-	case BA_DISSONANCE:
-	case BA_POEMBRAGI:
-	case BA_WHISTLE:
-	case BA_ASSASSINCROSS:
-	case BA_APPLEIDUN:
 	case DC_UGLYDANCE:
 	case DC_HUMMING:
 	case DC_DONTFORGETME:

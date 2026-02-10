@@ -4823,7 +4823,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc->getSCE(SC_GT_ENERGYGAIN))
 				skillratio += skillratio * 50 / 100;
 			break;
-		case BA_MUSICALSTRIKE:
 		case DC_THROWARROW:
 #ifdef RENEWAL
 			skillratio += 10 + 40 * skill_lv;
@@ -7762,11 +7761,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 #ifdef RENEWAL
 					case NPC_GROUNDDRIVE:
 						skillratio += 25;
-						break;
-					case BA_DISSONANCE:
-						skillratio += 10 + skill_lv * 50;
-						if (sd != nullptr)
-							skillratio = skillratio * sd->status.job_level / 10;
 						break;
 					case HW_GRAVITATION:
 						skillratio += -100 + 100 * skill_lv;
