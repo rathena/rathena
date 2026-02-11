@@ -5989,11 +5989,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
-		case ABC_HIT_AND_SLIDING:
-			skillratio += -100 + 3500 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
 		case ABC_CHASING_BREAK:
 			skillratio += -100 + 1550 + 450 * skill_lv;
 			skillratio += 5 * sstatus->pow;

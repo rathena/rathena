@@ -44,6 +44,7 @@
 #include "grimtooth.cpp"
 #include "hallucinationwalk.cpp"
 #include "hiding.cpp"
+#include "hitandsliding.cpp"
 #include "impactcrater.cpp"
 #include "meteorassault.cpp"
 #include "mug.cpp"
@@ -94,6 +95,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillFromTheAbyss>();
 		case ABC_FROM_THE_ABYSS_ATK:
 			return std::make_unique<SkillFromTheAbyssAttack>();
+		case ABC_HIT_AND_SLIDING:
+			return std::make_unique<SkillHitAndSliding>();
 		case ABC_STRIP_SHADOW:
 			return std::make_unique<SkillStripShadow>();
 		case ABC_UNLUCKY_RUSH:

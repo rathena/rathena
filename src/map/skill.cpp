@@ -1936,9 +1936,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case EM_TERRA_DRIVE:
 		sc_start(src, bl, SC_HANDICAPSTATE_CRYSTALLIZATION, 5, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
-	case ABC_HIT_AND_SLIDING:
-		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
 	case SH_HOWLING_OF_CHUL_HO:
 		sc_start(src, bl, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -5960,29 +5957,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			clif_blown(src);
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-
-	case ABC_HIT_AND_SLIDING: {
-		uint8 dir = DIR_NORTHEAST;
-
-		// Total backslide = skill level + distance between player and target
-		int32 total_backslide = skill_lv + distance_bl(src, bl);
-
-		if (bl->x != src->x || bl->y != src->y)
-			dir = map_calc_dir(bl, src->x, src->y);
-
-		if (skill_check_unit_movepos(0, src, bl->x + dirx[dir] * total_backslide, bl->y + diry[dir] * total_backslide, 1, 1)) {
-			clif_blown(src);
-			unit_setdir(src, map_calc_dir(src, bl->x, bl->y)); // Set the player's direction to face the target
-			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		} else { //Is this the right behavior? [Haydrich]
-			if (sd != nullptr)
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-		}
-
-		// Trigger skill animation
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
-		break;
-	}
 
 	case SR_KNUCKLEARROW:
 		// Holds current direction of bl/target to src/attacker before the src is moved to bl location

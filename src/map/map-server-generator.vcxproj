@@ -649,6 +649,7 @@
     <ClInclude Include="skills/thief/grimtooth.hpp" />
     <ClInclude Include="skills/thief/hallucinationwalk.hpp" />
     <ClInclude Include="skills/thief/hiding.hpp" />
+    <ClInclude Include="skills/thief/hitandsliding.hpp" />
     <ClInclude Include="skills/thief/impactcrater.hpp" />
     <ClInclude Include="skills/thief/meteorassault.hpp" />
     <ClInclude Include="skills/thief/mug.hpp" />
@@ -1947,6 +1948,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/hiding.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/hitandsliding.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/impactcrater.cpp">
