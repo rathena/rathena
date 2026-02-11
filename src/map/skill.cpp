@@ -1863,9 +1863,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case SJ_STAREMPEROR:
 		sc_start(src, bl, SC_SILENCE, 50 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case ABC_UNLUCKY_RUSH:
-		sc_start(src, bl, SC_HANDICAPSTATE_MISFORTUNE, 30 + 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
 	case TR_ROSEBLOSSOM:// Rose blossom seed can only bloom if the target is hit.
 		sc_start4(src, bl, SC_ROSEBLOSSOM, 100, skill_lv, TR_ROSEBLOSSOM_ATK, src->id, 0, skill_get_time(skill_id, skill_lv));
 		[[fallthrough]];
@@ -1887,9 +1884,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		break;
 	case EM_TERRA_DRIVE:
 		sc_start(src, bl, SC_HANDICAPSTATE_CRYSTALLIZATION, 5, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case ABC_HIT_AND_SLIDING:
-		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
 	case SS_KAGEGARI:
 	case SS_FUUMASHOUAKU:
@@ -4432,10 +4426,6 @@ static TIMER_FUNC(skill_timerskill){
 				case NPC_PULSESTRIKE2:
 					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 					break;
-				case ABC_DEFT_STAB:
-				case ABC_FRENZY_SHOT:
-					skill_castend_damage_id(src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
-					break;
 				case HVAN_EXPLOSION:
 					status_kill(src);
 					break;
@@ -4909,18 +4899,8 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case ITM_TOMAHAWK:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case ABC_FRENZY_SHOT:
 	case TR_ROSEBLOSSOM:
 	case TR_RHYTHMSHOOTING:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-
-	case ABC_UNLUCKY_RUSH:
-		// Jump to the target before attacking.
-		if (skill_check_unit_movepos(5, src, bl->x, bl->y, 0, 1))
-			skill_blown(src, src, 1, (map_calc_dir(bl, src->x, src->y) + 4) % 8, BLOWN_NONE);
-
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
@@ -5087,18 +5067,11 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SJ_PROMINENCEKICK:
 	case SJ_STAREMPEROR:
 	case SJ_FALLINGSTAR_ATK2:
-	case ABC_ABYSS_DAGGER:
-	case ABC_CHAIN_REACTION_SHOT:
-	case ABC_DEFT_STAB:
-	case ABC_CHASING_BREAK:
-	case ABC_CHASING_SHOT:
 	case BO_ACIDIFIED_ZONE_WATER:
 	case BO_ACIDIFIED_ZONE_GROUND:
 	case BO_ACIDIFIED_ZONE_WIND:
 	case BO_ACIDIFIED_ZONE_FIRE:
 	case TR_ROSEBLOSSOM_ATK:
-	case ABC_FROM_THE_ABYSS_ATK:
-	case ABC_ABYSS_FLAME_ATK:
 	case EM_ELEMENTAL_BUSTER_FIRE:
 	case EM_ELEMENTAL_BUSTER_WATER:
 	case EM_ELEMENTAL_BUSTER_WIND:
@@ -5132,14 +5105,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 			if (tsc && tsc->getSCE(SC_HOVERING) && inf2[INF2_IGNOREHOVERING])
 				break; // Under Hovering characters are immune to select trap and ground target skills.
-
-			switch (skill_id) {
-				case ABC_DEFT_STAB:
-					// Deft Stab - Make sure the flag of 2 is passed on when the skill is double casted.
-					if (flag&2)
-						sflag |= 2;
-					break;
-			}
 
 			if( flag&SD_LEVEL )
 				sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
@@ -5196,11 +5161,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case MH_XENO_SLASHER:
 					clif_skill_damage( *src, *bl,tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 					break;
-				case ABC_ABYSS_FLAME_ATK:
-					clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE);
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
-					break;
 				case NPC_REVERBERATION_ATK:
 				case NC_ARMSCANNON:
 					skill_area_temp[1] = 0;
@@ -5225,30 +5185,13 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					}
 					break;
 				}
-				case ABC_CHASING_SHOT:
-				case ABC_CHASING_BREAK: {
-					uint8 dir = DIR_NORTHEAST;
-
-					if (bl->x != src->x || bl->y != src->y)
-						dir = map_calc_dir(bl, src->x, src->y);
-
-					if (skill_check_unit_movepos(0, src, bl->x + dirx[dir], bl->y + diry[dir], 1, 1))
-						clif_blown(src);
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
-					break;
-				}
 				case BO_DUST_EXPLOSION:
-				case ABC_DEFT_STAB:
 				case EM_EL_FLAMEROCK:
 				case EM_EL_AGE_OF_ICE:
 				case EM_EL_STORM_WIND:
 				case EM_EL_AVALANCHE:
 				case EM_EL_DEADLY_POISON:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					break;
-				case ABC_CHAIN_REACTION_SHOT:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					map_foreachinrange(skill_area_sub, bl, skill_get_splash(ABC_CHAIN_REACTION_SHOT_ATK, skill_lv), BL_CHAR|BL_SKILL, src, ABC_CHAIN_REACTION_SHOT_ATK, skill_lv, tick + (200 + status_get_amotion(src)), flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 					break;
 				case BO_ACIDIFIED_ZONE_WATER:
 				case BO_ACIDIFIED_ZONE_GROUND:
@@ -5606,13 +5549,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
-	case ABC_ABYSS_FLAME:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE);
-		skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-
-
 	case NPC_MAGICALATTACK:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		sc_start(src,src,SC_MAGICALATTACK,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -5801,29 +5737,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			clif_blown(src);
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-
-	case ABC_HIT_AND_SLIDING: {
-		uint8 dir = DIR_NORTHEAST;
-
-		// Total backslide = skill level + distance between player and target
-		int32 total_backslide = skill_lv + distance_bl(src, bl);
-
-		if (bl->x != src->x || bl->y != src->y)
-			dir = map_calc_dir(bl, src->x, src->y);
-
-		if (skill_check_unit_movepos(0, src, bl->x + dirx[dir] * total_backslide, bl->y + diry[dir] * total_backslide, 1, 1)) {
-			clif_blown(src);
-			unit_setdir(src, map_calc_dir(src, bl->x, bl->y)); // Set the player's direction to face the target
-			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		} else { //Is this the right behavior? [Haydrich]
-			if (sd != nullptr)
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-		}
-
-		// Trigger skill animation
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
-		break;
-	}
 
 	case SR_KNUCKLEARROW:
 		// Holds current direction of bl/target to src/attacker before the src is moved to bl location
@@ -6741,10 +6654,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 		break;
 
-	case ABC_FROM_THE_ABYSS:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
-		break;
-
 	case TR_SOUNDBLEND:
 		skill_castend_damage_id(src, bl, skill_id, skill_lv, tick, 0);
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
@@ -6921,7 +6830,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SJ_SOLARBURST:
 	case SJ_STAREMPEROR:
 	case SJ_FALLINGSTAR_ATK:
-	case ABC_ABYSS_DAGGER:
 	case BO_EXPLOSIVE_POWDER:
 	case SKE_DAWN_BREAK:
 	case SKE_RISING_MOON:
@@ -6949,8 +6857,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 			status_change_end(src, SC_DIMENSION);
 		}
-		if (skill_id == ABC_ABYSS_DAGGER)
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
 			hom_addspiritball(hd, MAX_SPIRITBALL);
 		}
@@ -7304,8 +7210,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
 
-	case SC_STRIPACCESSARY:
-	case ABC_STRIP_SHADOW: {
+	case SC_STRIPACCESSARY: {
 		bool strip_success = skill_strip_equip(src, bl, skill_id, skill_lv);
 
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,strip_success);
@@ -8140,10 +8045,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 			break;
 		}
-	case ABC_ABYSS_FLAME:
-		map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR | BL_SKILL, src, skill_id, skill_lv, tick, (flag | BCT_ENEMY | SD_SPLASH) & ~BCT_SELF, skill_castend_damage_id);
-		skill_castend_damage_id(src, bl, ABC_ABYSS_FLAME_ATK, skill_lv, tick, flag);
-		break;
 
 	case NPC_CHEAL:
 		if( flag&1 ) {
@@ -10534,8 +10435,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case SJ_BOOKOFCREATINGSTAR:
 	case RL_B_TRAP:
 	case NPC_STORMGUST2:
-	case ABC_ABYSS_STRIKE:
-	case ABC_ABYSS_SQUARE:
 	case BO_ACIDIFIED_ZONE_WATER:
 	case BO_ACIDIFIED_ZONE_GROUND:
 	case BO_ACIDIFIED_ZONE_WIND:

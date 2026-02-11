@@ -5456,39 +5456,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
-		case ABC_ABYSS_DAGGER:
-			skillratio += -100 + 350 + 1400 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case ABC_UNLUCKY_RUSH:
-			skillratio += -100 + 100 + 300 * skill_lv + 5 * sstatus->pow;
-			if (sc != nullptr && sc->hasSCE(SC_CHASING))
-				skillratio += 2500 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case ABC_CHAIN_REACTION_SHOT:
-			skillratio += -100 + 850 * skill_lv;
-			skillratio += 15 * sstatus->con;
-			RE_LVL_DMOD(100);
-			break;
-		case ABC_CHAIN_REACTION_SHOT_ATK:
-			skillratio += -100 + 800 + 2550 * skill_lv;
-			skillratio += 15 * sstatus->con;
-			if (sc != nullptr && sc->hasSCE(SC_CHASING))
-				skillratio += 700 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case ABC_DEFT_STAB:
-			skillratio += -100 + 700 + 550 * skill_lv;
-			skillratio += 7 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case ABC_FRENZY_SHOT:
-			skillratio += -100 + 250 + 800 * skill_lv;
-			skillratio += 15 * sstatus->con;
-			RE_LVL_DMOD(100);
-			break;
 		case BO_ACIDIFIED_ZONE_WATER:
 		case BO_ACIDIFIED_ZONE_GROUND:
 		case BO_ACIDIFIED_ZONE_WIND:
@@ -5866,25 +5833,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += -100 + 400 + 200 * skill_lv;
 			skillratio += skill_lv * 5 * pc_checkskill( sd, SKE_SKY_MASTERY );
 			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case ABC_HIT_AND_SLIDING:
-			skillratio += -100 + 3500 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-		case ABC_CHASING_BREAK:
-			skillratio += -100 + 1550 + 450 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			if (sc != nullptr && sc->hasSCE(SC_CHASING))
-				skillratio += 200 + 50 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case ABC_CHASING_SHOT:
-			skillratio += -100 + 1500 + 700 * skill_lv;
-			skillratio += 5 * sstatus->con;
-			if (sc != nullptr && sc->hasSCE(SC_CHASING))
-				skillratio += 250 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 	}
@@ -7851,31 +7799,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_STORMGUST2:
 						skillratio += 200 * skill_lv;
 						break;
-					case ABC_ABYSS_STRIKE:
-						skillratio += -100 + 2650 * skill_lv;
-						skillratio += 10 * sstatus->spl;
-						if (tstatus->race == RC_DEMON || tstatus->race == RC_ANGEL)
-							skillratio += 200 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
-					case ABC_ABYSS_SQUARE:
-						skillratio += -100 + 750 * skill_lv;
-						skillratio += 40 * pc_checkskill( sd, ABC_MAGIC_SWORD_M ) * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
-					case ABC_ABYSS_FLAME:
-						skillratio += -100 + 500 * skill_lv;
-						skillratio += 10 * sstatus->spl;
-						skillratio += 15 * skill_lv * pc_checkskill( sd, ABC_MAGIC_SWORD_M );
-						RE_LVL_DMOD(100);
-						break;
-					case ABC_ABYSS_FLAME_ATK:
-						skillratio += -100 + 820 * skill_lv;
-						skillratio += 10 * sstatus->spl;
-						skillratio += 30 * skill_lv * pc_checkskill( sd, ABC_MAGIC_SWORD_M );
-						RE_LVL_DMOD(100);
-						break;
 					case TR_METALIC_FURY:
 						skillratio += -100 + 3850 * skill_lv;
 						// !Todo: skill affected by SPL (without SC_SOUNDBLEND) as well?
@@ -7958,11 +7881,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 							skillratio += 5 * sstatus->spl;
 						}
 
-						RE_LVL_DMOD(100);
-						break;
-					case ABC_FROM_THE_ABYSS_ATK:
-						skillratio += -100 + 150 + 650 * skill_lv;
-						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
 					case EM_ELEMENTAL_BUSTER_FIRE:
