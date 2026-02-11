@@ -8129,11 +8129,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 
 						RE_LVL_DMOD(100);
 						break;
-					case ABC_FROM_THE_ABYSS_ATK:
-						skillratio += -100 + 150 + 650 * skill_lv;
-						skillratio += 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						break;
 					case EM_ELEMENTAL_BUSTER_FIRE:
 					case EM_ELEMENTAL_BUSTER_WATER:
 					case EM_ELEMENTAL_BUSTER_WIND:
