@@ -7,7 +7,7 @@
 
 #include "map/status.hpp"
 
-SkillRagingThrust::SkillRagingThrust() : SkillImpl(MO_COMBOFINISH) {
+SkillRagingThrust::SkillRagingThrust() : WeaponSkillImpl(MO_COMBOFINISH) {
 }
 
 void SkillRagingThrust::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
@@ -20,7 +20,7 @@ void SkillRagingThrust::castendDamageId(block_list* src, block_list* target, uin
 			src,getSkillId(),skill_lv,tick, flag|BCT_ENEMY|1,
 			skill_castend_damage_id);
 	} else
-		skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag);
+		WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 }
 
 void SkillRagingThrust::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {

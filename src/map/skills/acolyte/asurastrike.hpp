@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillAsuraStrike : public SkillImpl {
+class SkillAsuraStrike : public WeaponSkillImpl {
 public:
 	SkillAsuraStrike();
 

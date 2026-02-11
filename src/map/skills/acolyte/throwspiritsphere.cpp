@@ -8,13 +8,13 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillThrowSpiritSphere::SkillThrowSpiritSphere() : SkillImpl(MO_FINGEROFFENSIVE) {
+SkillThrowSpiritSphere::SkillThrowSpiritSphere() : WeaponSkillImpl(MO_FINGEROFFENSIVE) {
 }
 
 void SkillThrowSpiritSphere::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
-	skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag);
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 	if (battle_config.finger_offensive_type && sd) {
 		for (int32 i = 1; i < sd->spiritball_old; i++)
 			skill_addtimerskill(src, tick + i * 200, target->id, 0, 0, getSkillId(), skill_lv, BF_WEAPON, flag);

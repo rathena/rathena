@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillThrowSpiritSphere : public SkillImpl {
+class SkillThrowSpiritSphere : public WeaponSkillImpl {
 public:
 	SkillThrowSpiritSphere();
 

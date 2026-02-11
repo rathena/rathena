@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillOccultImpaction : public SkillImpl {
+class SkillOccultImpaction : public WeaponSkillImpl {
 public:
 	SkillOccultImpaction();
 

@@ -7,11 +7,11 @@
 
 #include "map/pc.hpp"
 
-SkillRagingQuadrupleBlow::SkillRagingQuadrupleBlow() : SkillImpl(MO_CHAINCOMBO) {
+SkillRagingQuadrupleBlow::SkillRagingQuadrupleBlow() : WeaponSkillImpl(MO_CHAINCOMBO) {
 }
 
 void SkillRagingQuadrupleBlow::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag);
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 	status_change_end(src, SC_BLADESTOP);
 }
 

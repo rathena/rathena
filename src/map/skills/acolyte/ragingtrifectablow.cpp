@@ -3,11 +3,13 @@
 
 #include "ragingtrifectablow.hpp"
 
-SkillRagingTrifectaBlow::SkillRagingTrifectaBlow() : SkillImpl(MO_TRIPLEATTACK) {
+SkillRagingTrifectaBlow::SkillRagingTrifectaBlow() : WeaponSkillImpl(MO_TRIPLEATTACK) {
 }
 
 void SkillRagingTrifectaBlow::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag|SD_ANIMATION);
+	int32 sflag = flag|SD_ANIMATION;
+
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, sflag);
 }
 
 void SkillRagingTrifectaBlow::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {

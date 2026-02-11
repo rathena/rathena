@@ -10,7 +10,7 @@
 #include "map/status.hpp"
 #include "map/unit.hpp"
 
-SkillAsuraStrike::SkillAsuraStrike() : SkillImpl(MO_EXTREMITYFIST) {
+SkillAsuraStrike::SkillAsuraStrike() : WeaponSkillImpl(MO_EXTREMITYFIST) {
 }
 
 void SkillAsuraStrike::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
@@ -23,7 +23,7 @@ void SkillAsuraStrike::castendDamageId(block_list* src, block_list* target, uint
 	if (sd && sd->spiritball_old > 5)
 		flag |= 1; // Give +100% damage increase
 #endif
-	skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag);
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 
 	status_set_sp(src, 0, 0);
 	sc_start(src, src, SC_EXTREMITYFIST, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));

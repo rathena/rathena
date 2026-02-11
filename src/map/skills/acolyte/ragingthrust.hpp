@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillRagingThrust : public SkillImpl {
+class SkillRagingThrust : public WeaponSkillImpl {
 public:
 	SkillRagingThrust();
 
