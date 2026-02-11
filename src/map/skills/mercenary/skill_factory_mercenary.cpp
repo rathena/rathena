@@ -3,10 +3,11 @@
 
 #include "skill_factory_mercenary.hpp"
 
-#include "../status_skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-#include "mercenary_bash.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "mercenary_bash.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMercenary::create(const e_skill skill_id) const {
 	switch( skill_id ){

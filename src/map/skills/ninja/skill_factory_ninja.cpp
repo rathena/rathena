@@ -3,8 +3,7 @@
 
 #include "skill_factory_ninja.hpp"
 
-#include "../status_skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
 #include "crimsonfireformation.hpp"
 #include "crimsonfirepetal.hpp"

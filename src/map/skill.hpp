@@ -598,6 +598,7 @@ void skill_clear_unitgroup(block_list *src);
 int32 skill_clear_group(block_list *bl, uint8 flag);
 void ext_skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick);
 int64 skill_unit_ondamaged(skill_unit *unit,int64 damage);
+std::shared_ptr<s_skill_unit_group> skill_locate_element_field(block_list *bl); // [Skotlex]
 bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
 
 // Skill unit visibility [Cydh]
@@ -628,6 +629,7 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 int32 skill_unit_move(block_list *bl,t_tick tick,int32 flag);
 void skill_unit_move_unit_group( std::shared_ptr<s_skill_unit_group> group, int16 m,int16 dx,int16 dy);
 void skill_unit_move_unit(block_list *bl, int32 dx, int32 dy);
+bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
 
 int32 skill_sit(map_session_data *sd, bool sitting);
 void skill_repairweapon( map_session_data& sd, int32 idx );
@@ -662,6 +664,7 @@ int32 skill_castend_pos2( block_list *src, int32 x,int32 y,uint16 skill_id,uint1
 int32 skill_area_sub(block_list *bl, va_list ap);
 int32 skill_area_sub_count(block_list* src, block_list* target, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag);
 extern int32 skill_area_temp[8];
+int32 skill_castend_song(block_list* src, uint16 skill_id, uint16 skill_lv, t_tick tick);
 
 bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick);
 void skill_blockpc_clear(map_session_data &sd);
@@ -2877,6 +2880,8 @@ void skill_poisoningweapon( map_session_data& sd, t_itemid nameid );
  * Auto Shadow Spell (Shadow Chaser)
  **/
 void skill_select_menu( map_session_data& sd, uint16 skill_id );
+
+extern AbraDatabase abra_db;
 
 int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, uint16 *item_list ); // Sorcerer Four Elemental Analisys.
 int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list);	// Genetic Change Material.
