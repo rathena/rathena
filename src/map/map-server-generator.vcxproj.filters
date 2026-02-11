@@ -1596,6 +1596,9 @@
     <ClInclude Include="skills/thief/mug.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/omegaabyssstrike.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/phantommenace.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -2892,6 +2895,9 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/mug.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/omegaabyssstrike.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/phantommenace.cpp">

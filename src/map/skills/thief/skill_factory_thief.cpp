@@ -21,6 +21,7 @@
 #include "createnewpoison.cpp"
 #include "crossimpact.cpp"
 #include "crossripperslasher.cpp"
+#include "crossslash.cpp"
 #include "dancingknife.cpp"
 #include "darkclaw.cpp"
 #include "darkillusion.cpp"
@@ -43,6 +44,7 @@
 #include "impactcrater.cpp"
 #include "meteorassault.cpp"
 #include "mug.cpp"
+#include "omegaabyssstrike.cpp"
 #include "phantommenace.cpp"
 #include "poisoningweapon.cpp"
 #include "poisonsmoke.cpp"
@@ -52,7 +54,6 @@
 #include "savageimpact.cpp"
 #include "scribble.cpp"
 #include "shadowstab.cpp"
-#include "crossslash.cpp"
 #include "sightlessmind.cpp"
 #include "snatch.cpp"
 #include "sonicblow.cpp"
@@ -74,6 +75,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillAbyssDagger>();
 		case ABC_ABYSS_SLAYER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case ABC_ABYSS_STRIKE:
+			return std::make_unique<SkillOmegaAbyssStrike>();
 		case ABC_CHAIN_REACTION_SHOT:
 			return std::make_unique<SkillChainReactionShot>();
 		case ABC_CHAIN_REACTION_SHOT_ATK:

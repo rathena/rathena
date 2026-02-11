@@ -649,6 +649,7 @@
     <ClInclude Include="skills/thief/impactcrater.hpp" />
     <ClInclude Include="skills/thief/meteorassault.hpp" />
     <ClInclude Include="skills/thief/mug.hpp" />
+    <ClInclude Include="skills/thief/omegaabyssstrike.hpp" />
     <ClInclude Include="skills/thief/phantommenace.hpp" />
     <ClInclude Include="skills/thief/poisoningweapon.hpp" />
     <ClInclude Include="skills/thief/poisonsmoke.hpp" />
@@ -1943,6 +1944,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/mug.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/omegaabyssstrike.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/phantommenace.cpp">

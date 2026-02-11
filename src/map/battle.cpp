@@ -8020,13 +8020,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_STORMGUST2:
 						skillratio += 200 * skill_lv;
 						break;
-					case ABC_ABYSS_STRIKE:
-						skillratio += -100 + 2650 * skill_lv;
-						skillratio += 10 * sstatus->spl;
-						if (tstatus->race == RC_DEMON || tstatus->race == RC_ANGEL)
-							skillratio += 200 * skill_lv;
-						RE_LVL_DMOD(100);
-						break;
 					case ABC_ABYSS_SQUARE:
 						skillratio += -100 + 750 * skill_lv;
 						skillratio += 40 * pc_checkskill( sd, ABC_MAGIC_SWORD_M ) * skill_lv;
