@@ -27,6 +27,7 @@ void SkillBasilica::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_
 		status_change_end(src, SC_BASILICA); // Cancel Basilica and return so requirement isn't consumed again
 		flag |= SKILL_NOCONSUME_REQ;
 		return;
+	}
 	if( map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR) ) {
 		if (sd)
 			clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL );
