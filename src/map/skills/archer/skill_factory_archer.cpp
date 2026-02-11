@@ -48,6 +48,7 @@
 #include "hawkrush.cpp"
 #include "iceboundtrap.cpp"
 #include "impressiveriff.cpp"
+#include "jawaiiserenade.cpp"
 #include "landmine.cpp"
 #include "lullaby.cpp"
 #include "magentatrap.cpp"
@@ -224,6 +225,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillAinRhapsody>();
 		case TR_GEF_NOCTURN:
 			return std::make_unique<SkillGeffeniaNocturn>();
+		case TR_JAWAII_SERENADE:
+			return std::make_unique<SkillJawaiiSerenade>();
 		case TR_KVASIR_SONATA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TR_METALIC_FURY:
