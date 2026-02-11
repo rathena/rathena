@@ -5596,12 +5596,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case ABR_INFINITY_BUSTER:// Need official formula.
 			skillratio += -100 + 50000;
 			break;
-		case NW_GRENADES_DROPPING:
-			skillratio += -100 + 550 + 850 * skill_lv;
-			skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 30;
-			skillratio += 5 * sstatus->con;
-			RE_LVL_DMOD(100);
-			break;
 		case NW_MISSION_BOMBARD:
 			if( wd->miscflag&SKILL_ALTDMG_FLAG ){
 				skillratio += -100 + 5000 + 1800 * skill_lv;

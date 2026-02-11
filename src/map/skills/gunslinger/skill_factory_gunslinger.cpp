@@ -20,6 +20,7 @@
 #include "gatlingfever.cpp"
 #include "glittering.cpp"
 #include "grenadefragment.cpp"
+#include "grenadesdropping.cpp"
 #include "grounddrift.cpp"
 #include "hastyfireinthehole.cpp"
 #include "intensiveaim.cpp"
@@ -86,6 +87,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillBasicGrenade>();
 		case NW_GRENADE_FRAGMENT:
 			return std::make_unique<SkillGrenadeFragment>();
+		case NW_GRENADES_DROPPING:
+			return std::make_unique<SkillGrenadesDropping>();
 		case NW_HASTY_FIRE_IN_THE_HOLE:
 			return std::make_unique<SkillHastyFireInTheHole>();
 		case NW_HIDDEN_CARD:

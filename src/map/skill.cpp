@@ -10815,15 +10815,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		}
 		break;
 
-	case NW_GRENADES_DROPPING: {
-			uint16 splash = skill_get_splash(skill_id, skill_lv);
-			uint16 tmpx = rnd_value( x - splash, x + splash );
-			uint16 tmpy = rnd_value( y - splash, y + splash );
-			skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag);
-			for (i = 0; i <= (skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id)); i++) {
-				skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
-			}
-		} break;
 	case NW_MISSION_BOMBARD:
 		i = skill_get_splash(skill_id,skill_lv);
 		map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SKILL_ALTDMG_FLAG|1,skill_castend_damage_id);
