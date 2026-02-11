@@ -5090,7 +5090,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_WIDECRITICALWOUND:
 	case TR_METALIC_FURY:
 	case SKE_SUNSET_BLAST:
-	case SKE_NOON_BLAST:
 	case SS_KINRYUUHOU:
 	case SKE_SKY_SUN:
 	case SKE_SKY_MOON:
@@ -5149,7 +5148,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case GN_CARTCANNON:
 				case BO_MAYHEMIC_THORNS:
 				case SKE_SUNSET_BLAST:
-				case SKE_NOON_BLAST:
 				case SKE_SKY_SUN:
 				case SKE_SKY_MOON:
 					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
