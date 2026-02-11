@@ -241,11 +241,13 @@
     <ClInclude Include="vending.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="skills/acolyte/absorbspiritsphere.hpp" />
     <ClInclude Include="skills/acolyte/adoramus.hpp" />
     <ClInclude Include="skills/acolyte/ancilla.hpp" />
     <ClInclude Include="skills/acolyte/angelus.hpp" />
     <ClInclude Include="skills/acolyte/arbitrium.hpp" />
     <ClInclude Include="skills/acolyte/aspersio.hpp" />
+    <ClInclude Include="skills/acolyte/asurastrike.hpp" />
     <ClInclude Include="skills/acolyte/blazingflameblast.hpp" />
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/bssacramenti.hpp" />
@@ -274,6 +276,8 @@
     <ClInclude Include="skills/acolyte/impositiomanus.hpp" />
     <ClInclude Include="skills/acolyte/incagi.hpp" />
     <ClInclude Include="skills/acolyte/judex.hpp" />
+    <ClInclude Include="skills/acolyte/kiexplosion.hpp" />
+    <ClInclude Include="skills/acolyte/kitranslation.hpp" />
     <ClInclude Include="skills/acolyte/kyrieeleison.hpp" />
     <ClInclude Include="skills/acolyte/laudaagnus.hpp" />
     <ClInclude Include="skills/acolyte/laudaramus.hpp" />
@@ -282,12 +286,16 @@
     <ClInclude Include="skills/acolyte/magnusexorcismus.hpp" />
     <ClInclude Include="skills/acolyte/massiveflameblaster.hpp" />
     <ClInclude Include="skills/acolyte/medialevotum.hpp" />
+    <ClInclude Include="skills/acolyte/occultimpaction.hpp" />
     <ClInclude Include="skills/acolyte/oleumsanctum.hpp" />
     <ClInclude Include="skills/acolyte/oratio.hpp" />
     <ClInclude Include="skills/acolyte/petitio.hpp" />
     <ClInclude Include="skills/acolyte/pneuma.hpp" />
     <ClInclude Include="skills/acolyte/pneumaticusprocella.hpp" />
     <ClInclude Include="skills/acolyte/praefatio.hpp" />
+    <ClInclude Include="skills/acolyte/ragingquadrupleblow.hpp" />
+    <ClInclude Include="skills/acolyte/ragingthrust.hpp" />
+    <ClInclude Include="skills/acolyte/ragingtrifectablow.hpp" />
     <ClInclude Include="skills/acolyte/renovatio.hpp" />
     <ClInclude Include="skills/acolyte/reparatio.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
@@ -297,11 +305,14 @@
     <ClInclude Include="skills/acolyte/secondjudgement.hpp" />
     <ClInclude Include="skills/acolyte/silentium.hpp" />
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
+    <ClInclude Include="skills/acolyte/snap.hpp" />
     <ClInclude Include="skills/acolyte/statusrecovery.hpp" />
     <ClInclude Include="skills/acolyte/suffragium.hpp" />
+    <ClInclude Include="skills/acolyte/summonspiritsphere.hpp" />
     <ClInclude Include="skills/acolyte/thirdconsecration.hpp" />
     <ClInclude Include="skills/acolyte/thirdflamebomb.hpp" />
     <ClInclude Include="skills/acolyte/thirdpunish.hpp" />
+    <ClInclude Include="skills/acolyte/throwspiritsphere.hpp" />
     <ClInclude Include="skills/acolyte/turnundead.hpp" />
     <ClInclude Include="skills/acolyte/vituperatum.hpp" />
     <ClInclude Include="skills/archer/acousticrhythm.hpp" />
@@ -810,6 +821,9 @@
     <ClCompile Include="vending.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="skills/acolyte/absorbspiritsphere.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/adoramus.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -823,6 +837,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/aspersio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/asurastrike.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/blazingflameblast.cpp">
@@ -909,6 +926,12 @@
     <ClCompile Include="skills/acolyte/judex.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/kiexplosion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/kitranslation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/kyrieeleison.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -933,6 +956,9 @@
     <ClCompile Include="skills/acolyte/medialevotum.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/occultimpaction.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/oleumsanctum.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -949,6 +975,15 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/praefatio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/ragingquadrupleblow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/ragingthrust.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/ragingtrifectablow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/renovatio.cpp">
@@ -978,10 +1013,16 @@
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/snap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/statusrecovery.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/suffragium.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/summonspiritsphere.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/thirdconsecration.cpp">
@@ -991,6 +1032,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/thirdpunish.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/throwspiritsphere.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/turnundead.cpp">

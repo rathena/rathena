@@ -4776,53 +4776,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case NPC_DARKCROSS:
 			skillratio += 35 * skill_lv;
 			break;
-		case MO_FINGEROFFENSIVE:
-#ifdef RENEWAL
-			skillratio += 500 + skill_lv * 200;
-			if (tsc && tsc->getSCE(SC_BLADESTOP))
-				skillratio += skillratio / 2;
-#else
-			skillratio += 50 * skill_lv;
-#endif
-			break;
-		case MO_INVESTIGATE:
-#ifdef RENEWAL
-			skillratio += -100 + 100 * skill_lv;
-			if (tsc && tsc->getSCE(SC_BLADESTOP))
-				skillratio += skillratio / 2;
-#else
-			skillratio += 75 * skill_lv;
-#endif
-			break;
-		case MO_EXTREMITYFIST:
-			skillratio += 700 + sstatus->sp * 10;
-#ifdef RENEWAL
-			if (wd->miscflag&1)
-				skillratio *= 2; // More than 5 spirit balls active
-#endif
-			skillratio = min(500000,skillratio); //We stop at roughly 50k SP for overflow protection
-			break;
-		case MO_TRIPLEATTACK:
-			skillratio += 20 * skill_lv;
-			break;
-		case MO_CHAINCOMBO:
-#ifdef RENEWAL
-			skillratio += 150 + 50 * skill_lv;
-			if (sd && sd->status.weapon == W_KNUCKLE)
-				skillratio *= 2;
-#else
-			skillratio += 50 + 50 * skill_lv;
-#endif
-			break;
-		case MO_COMBOFINISH:
-#ifdef RENEWAL
-			skillratio += 450 + 50 * skill_lv + sstatus->str; // !TODO: How does STR play a role?
-#else
-			skillratio += 140 + 60 * skill_lv;
-#endif
-			if (sc->getSCE(SC_GT_ENERGYGAIN))
-				skillratio += skillratio * 50 / 100;
-			break;
 		case DC_THROWARROW:
 #ifdef RENEWAL
 			skillratio += 10 + 40 * skill_lv;
@@ -4895,13 +4848,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			}
 			break;
 #endif
-		case MO_BALKYOUNG:
-#ifdef RENEWAL
-			skillratio += 700;
-#else
-			skillratio += 200;
-#endif
-			break;
+
 		case HFLI_MOON: //[orn]
 			skillratio += 10 + 110 * skill_lv;
 			break;
