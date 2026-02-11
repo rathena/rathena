@@ -3,7 +3,6 @@
 
 #include "magneticearth.hpp"
 
-
 SkillMagneticEarth::SkillMagneticEarth() : SkillImpl(SA_LANDPROTECTOR) {
 }
 

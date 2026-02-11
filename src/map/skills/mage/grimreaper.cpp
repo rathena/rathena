@@ -6,6 +6,7 @@
 #include "map/clif.hpp"
 #include "map/mob.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillGrimReaper::SkillGrimReaper() : SkillImpl(SA_DEATH) {
 }

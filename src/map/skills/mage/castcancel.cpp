@@ -5,6 +5,8 @@
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
+#include "map/unit.hpp"
 
 SkillCastCancel::SkillCastCancel() : SkillImpl(SA_CASTCANCEL) {
 }

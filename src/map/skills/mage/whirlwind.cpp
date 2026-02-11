@@ -3,7 +3,6 @@
 
 #include "whirlwind.hpp"
 
-
 SkillWhirlwind::SkillWhirlwind() : SkillImpl(SA_VIOLENTGALE) {
 }
 
@@ -19,7 +18,7 @@ void SkillWhirlwind::castendPos2(block_list* src, int32 x, int32 y, uint16 skill
 			return;
 		}
 		else
-			sg2->limit = 0; //Disatargete it.
+			sg2->limit = 0; //Disable it.
 	}
 	skill_unitsetting(src,getSkillId(),skill_lv,x,y,0);
 }

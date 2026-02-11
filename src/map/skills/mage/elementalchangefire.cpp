@@ -4,6 +4,7 @@
 #include "elementalchangefire.hpp"
 
 #include "map/clif.hpp"
+#include "map/mob.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 

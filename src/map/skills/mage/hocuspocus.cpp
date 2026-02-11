@@ -7,6 +7,7 @@
 #include "map/pc.hpp"
 #include "map/pet.hpp"
 #include "map/status.hpp"
+#include "map/unit.hpp"
 
 SkillHocusPocus::SkillHocusPocus() : SkillImpl(SA_ABRACADABRA) {
 }

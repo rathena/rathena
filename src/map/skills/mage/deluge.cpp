@@ -3,7 +3,6 @@
 
 #include "deluge.hpp"
 
-
 SkillDeluge::SkillDeluge() : SkillImpl(SA_DELUGE) {
 }
 
@@ -19,7 +18,7 @@ void SkillDeluge::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv
 			return;
 		}
 		else
-			sg2->limit = 0; //Disatargete it.
+			sg2->limit = 0; //Disable it.
 	}
 	skill_unitsetting(src,getSkillId(),skill_lv,x,y,0);
 }

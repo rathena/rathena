@@ -4,6 +4,7 @@
 #include "monsterchant.hpp"
 
 #include "map/clif.hpp"
+#include "map/mob.hpp"
 #include "map/pc.hpp"
 
 SkillMonsterChant::SkillMonsterChant() : SkillImpl(SA_SUMMONMONSTER) {
