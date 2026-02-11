@@ -39,6 +39,7 @@
 #include "eternalslash.cpp"
 #include "fatalshadowcrow.cpp"
 #include "findstone.cpp"
+#include "frenzyshot.cpp"
 #include "fromtheabyss.cpp"
 #include "grimtooth.cpp"
 #include "hallucinationwalk.cpp"
@@ -87,6 +88,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillChainReactionShotAttack>();
 		case ABC_DEFT_STAB:
 			return std::make_unique<SkillDeftStab>();
+		case ABC_FRENZY_SHOT:
+			return std::make_unique<SkillFrenzyShot>();
 		case ABC_FROM_THE_ABYSS:
 			return std::make_unique<SkillFromTheAbyss>();
 		case ABC_FROM_THE_ABYSS_ATK:

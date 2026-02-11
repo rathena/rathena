@@ -4483,9 +4483,6 @@ static TIMER_FUNC(skill_timerskill){
 				case NPC_PULSESTRIKE2:
 					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 					break;
-				case ABC_FRENZY_SHOT:
-					skill_castend_damage_id(src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
-					break;
 				case HVAN_EXPLOSION:
 					status_kill(src);
 					break;
@@ -4959,7 +4956,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case ITM_TOMAHAWK:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case ABC_FRENZY_SHOT:
 	case TR_ROSEBLOSSOM:
 	case TR_RHYTHMSHOOTING:
 	case SH_CHUL_HO_SONIC_CLAW:

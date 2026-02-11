@@ -5571,11 +5571,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
-		case ABC_FRENZY_SHOT:
-			skillratio += -100 + 250 + 800 * skill_lv;
-			skillratio += 15 * sstatus->con;
-			RE_LVL_DMOD(100);
-			break;
 		case BO_ACIDIFIED_ZONE_WATER:
 		case BO_ACIDIFIED_ZONE_GROUND:
 		case BO_ACIDIFIED_ZONE_WIND:
