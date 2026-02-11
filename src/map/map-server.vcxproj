@@ -741,9 +741,15 @@
     <ClInclude Include="skills/taekwon/warmthofthemoon.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthestars.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthesun.hpp" />
+    <ClInclude Include="skills/thief/abyssdagger.hpp" />
+    <ClInclude Include="skills/thief/abyssflame.hpp" />
+    <ClInclude Include="skills/thief/abysssquare.hpp" />
     <ClInclude Include="skills/thief/antidote.hpp" />
     <ClInclude Include="skills/thief/backslide.hpp" />
     <ClInclude Include="skills/thief/backstab.hpp" />
+    <ClInclude Include="skills/thief/chainreactionshot.hpp" />
+    <ClInclude Include="skills/thief/chasingbreak.hpp" />
+    <ClInclude Include="skills/thief/chasingshot.hpp" />
     <ClInclude Include="skills/thief/cloaking.hpp" />
     <ClInclude Include="skills/thief/cloakingexceed.hpp" />
     <ClInclude Include="skills/thief/closeconfine.hpp" />
@@ -757,6 +763,7 @@
     <ClInclude Include="skills/thief/dancingknife.hpp" />
     <ClInclude Include="skills/thief/darkclaw.hpp" />
     <ClInclude Include="skills/thief/darkillusion.hpp" />
+    <ClInclude Include="skills/thief/deftstab.hpp" />
     <ClInclude Include="skills/thief/detoxify.hpp" />
     <ClInclude Include="skills/thief/divestall.hpp" />
     <ClInclude Include="skills/thief/divestarmor.hpp" />
@@ -769,12 +776,16 @@
     <ClInclude Include="skills/thief/eternalslash.hpp" />
     <ClInclude Include="skills/thief/fatalshadowcrow.hpp" />
     <ClInclude Include="skills/thief/findstone.hpp" />
+    <ClInclude Include="skills/thief/frenzyshot.hpp" />
+    <ClInclude Include="skills/thief/fromtheabyss.hpp" />
     <ClInclude Include="skills/thief/grimtooth.hpp" />
     <ClInclude Include="skills/thief/hallucinationwalk.hpp" />
     <ClInclude Include="skills/thief/hiding.hpp" />
+    <ClInclude Include="skills/thief/hitandsliding.hpp" />
     <ClInclude Include="skills/thief/impactcrater.hpp" />
     <ClInclude Include="skills/thief/meteorassault.hpp" />
     <ClInclude Include="skills/thief/mug.hpp" />
+    <ClInclude Include="skills/thief/omegaabyssstrike.hpp" />
     <ClInclude Include="skills/thief/phantommenace.hpp" />
     <ClInclude Include="skills/thief/poisoningweapon.hpp" />
     <ClInclude Include="skills/thief/poisonsmoke.hpp" />
@@ -792,7 +803,9 @@
     <ClInclude Include="skills/thief/steal.hpp" />
     <ClInclude Include="skills/thief/stealth.hpp" />
     <ClInclude Include="skills/thief/stonefling.hpp" />
+    <ClInclude Include="skills/thief/stripshadow.hpp" />
     <ClInclude Include="skills/thief/throwvenomknife.hpp" />
+    <ClInclude Include="skills/thief/unluckyrush.hpp" />
     <ClInclude Include="skills/thief/venomdust.hpp" />
     <ClInclude Include="skills/thief/venompressure.hpp" />
     <ClInclude Include="skills/thief/venomsplasher.hpp" />
@@ -2345,6 +2358,15 @@
     <ClCompile Include="skills/taekwon/warmthofthesun.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/abyssdagger.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/abyssflame.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/abysssquare.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/antidote.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2352,6 +2374,15 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/backstab.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/chainreactionshot.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/chasingbreak.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/chasingshot.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/cloaking.cpp">
@@ -2393,6 +2424,9 @@
     <ClCompile Include="skills/thief/darkillusion.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/deftstab.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/detoxify.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2429,6 +2463,12 @@
     <ClCompile Include="skills/thief/findstone.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/frenzyshot.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/fromtheabyss.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/grimtooth.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2438,6 +2478,9 @@
     <ClCompile Include="skills/thief/hiding.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/hitandsliding.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/impactcrater.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2445,6 +2488,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/mug.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/omegaabyssstrike.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/phantommenace.cpp">
@@ -2498,7 +2544,13 @@
     <ClCompile Include="skills/thief/stonefling.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/thief/stripshadow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/thief/throwvenomknife.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/unluckyrush.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/venomdust.cpp">
