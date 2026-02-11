@@ -12,11 +12,12 @@ SkillDazzler::SkillDazzler() : SkillImpl(DC_SCREAM) {
 }
 
 void SkillDazzler::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
-	int32 rate = 150 + 50 * skill_lv; // Aegis accuracy (1000 = 100%)
+	int32 rate = 150 + 50 * skill_lv + 100; // Aegis accuracy (1000 = 100%). DC_SCREAM has a 10% higher base chance than BA_FROSTJOKER
 	int32 duration = skill_get_time2(getSkillId(), skill_lv);
-	rate += 100; // DC_SCREAM has a 10% higher base chance
 	if (battle_check_target(src, target, BCT_PARTY) > 0) {
-		// On party members: Chance is divided by 4 and BA_FROSTJOKER duration is fixed to 15000ms
+		// TODO: check DC_SCREAM rate and duration.
+		// DC_SCREAM and BA_FROSTJOKER initially shared the same code but the original comment only applies to BA_FROSTJOKER :
+		// "On party members: Chance is divided by 4 and BA_FROSTJOKER duration is fixed to 15000ms"
 		rate /= 4;
 		duration = skill_get_time(getSkillId(), skill_lv);
 	}
