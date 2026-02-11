@@ -19,7 +19,7 @@ void SkillAbsorbSpiritSphere::castendNoDamageId(block_list* src, block_list* tar
 
 	int32 i = 0;
 	if (dstsd && (battle_check_target(src, target, BCT_SELF) > 0 || (battle_check_target(src, target, BCT_ENEMY) > 0 && (map_flag_vs(src->m) || (sd && sd->duel_group && sd->duel_group == dstsd->duel_group)))) && // Only works on self and enemies
-		((dstsd->class_&MAPID_FIRSTMASK) != MAPID_GUNSLINGER || (dstsd->class_&MAPID_SECONDMASK) != MAPID_REBELLION)) { // split the if for readability, and included gunslingers in the check so that their coins cannot be removed [Reddozen]
+		(dstsd->class_&MAPID_FIRSTMASK) != MAPID_GUNSLINGER ) { // split the if for readability, and included gunslingers in the check so that their coins cannot be removed [Reddozen]
 		if (dstsd->spiritball > 0) {
 			i = dstsd->spiritball * 7;
 			pc_delspiritball(dstsd,dstsd->spiritball,0);
