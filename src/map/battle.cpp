@@ -5534,42 +5534,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 200 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
-		case TR_ROSEBLOSSOM:
-			skillratio += -100 + 200 + 2000 * skill_lv;
-
-			if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
-				skillratio += 3 * sstatus->con;
-
-			if( tsc != nullptr && tsc->getSCE( SC_SOUNDBLEND ) ){
-				skillratio += 200 * skill_lv;
-			}
-
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {
-				skillratio *= 2;
-
-				if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
-					skillratio += skillratio * 50 / 100;
-			}
-			break;
-		case TR_ROSEBLOSSOM_ATK:
-			skillratio += -100 + 250 + 2800 * skill_lv;
-
-			if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
-				skillratio += 3 * sstatus->con;
-
-			if( tsc != nullptr && tsc->getSCE( SC_SOUNDBLEND ) ){
-				skillratio += 200 * skill_lv;
-			}
-
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {
-				skillratio *= 2;
-
-				if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
-					skillratio += skillratio * 50 / 100;
-			}
-			break;
 		case TR_RHYTHMSHOOTING:
 			skillratio += -100 + 550 + 950 * skill_lv;
 

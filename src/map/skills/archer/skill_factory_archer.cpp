@@ -60,6 +60,7 @@
 #include "powerchord.cpp"
 #include "removetrap.cpp"
 #include "retrospection.cpp"
+#include "roseblossom.cpp"
 #include "sandman.cpp"
 #include "sensitivekeen.cpp"
 #include "shockwavetrap.cpp"
@@ -218,6 +219,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TR_RETROSPECTION:
 			return std::make_unique<SkillRetrospection>();
+		case TR_ROSEBLOSSOM:
+			return std::make_unique<SkillRoseBlossom>();
+		case TR_ROSEBLOSSOM_ATK:
+			return std::make_unique<SkillRoseBlossomAttack>();
 		case WH_CALAMITYGALE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WH_CRESCIVE_BOLT:
