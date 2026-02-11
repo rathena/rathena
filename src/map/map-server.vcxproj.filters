@@ -1503,6 +1503,9 @@
     <ClInclude Include="skills/thief/chainreactionshot.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/chasingbreak.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/cloaking.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -2814,6 +2817,9 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/chainreactionshot.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/chasingbreak.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/cloaking.cpp">

@@ -5190,7 +5190,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SP_CURSEEXPLOSION:
 	case SP_SHA:
 	case SP_SWHOO:
-	case ABC_CHASING_BREAK:
 	case ABC_CHASING_SHOT:
 	case BO_ACIDIFIED_ZONE_WATER:
 	case BO_ACIDIFIED_ZONE_GROUND:
@@ -5338,8 +5337,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					}
 					break;
 				}
-				case ABC_CHASING_SHOT:
-				case ABC_CHASING_BREAK: {
+				case ABC_CHASING_SHOT: {
 					uint8 dir = DIR_NORTHEAST;
 
 					if (bl->x != src->x || bl->y != src->y)
