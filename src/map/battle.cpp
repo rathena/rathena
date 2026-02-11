@@ -5534,25 +5534,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 200 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
-		case TR_RHYTHMSHOOTING:
-			skillratio += -100 + 550 + 950 * skill_lv;
-
-			if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
-				skillratio += 5 * sstatus->con;
-
-			if (tsc && tsc->getSCE(SC_SOUNDBLEND)) {
-				skillratio += 300 + 100 * skill_lv;
-				skillratio += 2 * sstatus->con;
-			}
-
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {
-				skillratio *= 2;
-
-				if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
-					skillratio += skillratio * 50 / 100;
-			}
-			break;
 		case ABR_BATTLE_BUSTER:// Need official formula.
 		case ABR_DUAL_CANNON_FIRE:// Need official formula.
 			skillratio += -100 + 8000;
