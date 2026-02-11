@@ -7910,7 +7910,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						skillratio += 5 * sstatus->spl;
 						RE_LVL_DMOD(100);
 						break;
-
 					case NPC_RAINOFMETEOR:
 						skillratio += 350;	// unknown ratio
 						break;

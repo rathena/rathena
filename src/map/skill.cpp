@@ -1873,11 +1873,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case WM_REVERBERATION:
 		status_change_end(bl, SC_SOUNDBLEND);
 		break;
-
-
-
-
-
 	case ABC_HIT_AND_SLIDING:
 		sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -6714,10 +6709,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) ) );
 		break;
-
-
-
-
 
 	case SJ_GRAVITYCONTROL: {
 			int32 fall_damage = sstatus->batk + sstatus->rhw.atk - tstatus->def2;
