@@ -183,11 +183,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 		case HP_ASSUMPTIO:
 			return std::make_unique<SkillAssumptio>();
 		case HP_BASILICA:
-#ifdef RENEWAL
-			return std::make_unique<StatusSkillImpl>(skill_id);
-#else
 			return std::make_unique<SkillBasilica>();
-#endif
 		case IQ_BLAZING_FLAME_BLAST:
 			return std::make_unique<SkillBlazingFlameBlast>();
 		case IQ_EXPOSION_BLASTER:

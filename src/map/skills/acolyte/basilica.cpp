@@ -10,7 +10,13 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillBasilica::SkillBasilica() : SkillImpl(HP_BASILICA) {
+SkillBasilica::SkillBasilica() : StatusSkillImpl(HP_BASILICA) {
+}
+
+void SkillBasilica::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
+#ifdef RENEWAL
+	StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
+#endif
 }
 
 void SkillBasilica::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {

@@ -5,9 +5,10 @@
 
 #include "../skill_impl.hpp"
 
-class SkillBasilica : public SkillImpl {
+class SkillBasilica : public StatusSkillImpl {
 public:
 	SkillBasilica();
 
+	void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 	void castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };
