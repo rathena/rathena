@@ -21,6 +21,7 @@
 #include "glittering.cpp"
 #include "grenadefragment.cpp"
 #include "grounddrift.cpp"
+#include "hastyfireinthehole.cpp"
 #include "intensiveaim.cpp"
 #include "magazineforone.cpp"
 #include "onlyonebullet.cpp"
@@ -86,7 +87,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 		case NW_GRENADE_FRAGMENT:
 			return std::make_unique<SkillGrenadeFragment>();
 		case NW_HASTY_FIRE_IN_THE_HOLE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillHastyFireInTheHole>();
 		case NW_HIDDEN_CARD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NW_INTENSIVE_AIM:
