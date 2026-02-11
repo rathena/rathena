@@ -1620,7 +1620,13 @@
     <ClInclude Include="skills/taekwon/counter.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/curseexplosion.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/downkick.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/esha.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/eska.hpp">
@@ -1632,10 +1638,16 @@
     <ClInclude Include="skills/taekwon/esma.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/espa.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/estin.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/estun.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/eswhoo.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/eswoo.hpp">
@@ -1644,7 +1656,16 @@
     <ClInclude Include="skills/taekwon/exorcismofmalicioussoul.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/fairyssoul.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/falconssoul.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/feelingthesunmoonandstars.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/golemssoul.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/hatredofthesunmoonandstars.hpp">
@@ -1668,6 +1689,9 @@
     <ClInclude Include="skills/taekwon/kaupe.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/kaute.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/mission.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
@@ -1677,13 +1701,34 @@
     <ClInclude Include="skills/taekwon/sevenwind.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/shadowssoul.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/skill_factory_taekwon.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/soulcollect.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/soulcurse.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/souldivision.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/soulexplosion.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/soulgathering.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/soulofheavenandearth.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/soulrevolution.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/soulunity.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/spiritofrebirth.hpp">
@@ -3239,7 +3284,13 @@
     <ClCompile Include="skills/taekwon/counter.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/curseexplosion.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/downkick.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/esha.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/eska.cpp">
@@ -3251,10 +3302,16 @@
     <ClCompile Include="skills/taekwon/esma.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/espa.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/estin.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/estun.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/eswhoo.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/eswoo.cpp">
@@ -3263,7 +3320,16 @@
     <ClCompile Include="skills/taekwon/exorcismofmalicioussoul.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/fairyssoul.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/falconssoul.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/feelingthesunmoonandstars.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/golemssoul.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/hatredofthesunmoonandstars.cpp">
@@ -3287,6 +3353,9 @@
     <ClCompile Include="skills/taekwon/kaupe.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/kaute.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/mission.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
@@ -3296,13 +3365,34 @@
     <ClCompile Include="skills/taekwon/sevenwind.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/shadowssoul.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulcollect.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulcurse.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/souldivision.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulexplosion.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/soulgathering.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/soulofheavenandearth.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulrevolution.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulunity.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/spiritofrebirth.cpp">
