@@ -5563,17 +5563,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case ABR_INFINITY_BUSTER:// Need official formula.
 			skillratio += -100 + 50000;
 			break;
-		case SKE_MIDNIGHT_KICK:
-			skillratio += -100 + 800 + 1500  * skill_lv;
-			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-
-			if( sc != nullptr && ( sc->getSCE( SC_MIDNIGHT_MOON ) != nullptr || sc->getSCE( SC_SKY_ENCHANT ) != nullptr ) ){
-				skillratio += 950 + 250 * skill_lv;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
 
 		case SKE_ALL_IN_THE_SKY:
 			skillratio += -100 + 250 + 1200 * skill_lv;

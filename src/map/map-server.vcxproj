@@ -696,6 +696,7 @@
     <ClInclude Include="skills/taekwon/kaizel.hpp" />
     <ClInclude Include="skills/taekwon/kaupe.hpp" />
     <ClInclude Include="skills/taekwon/kaute.hpp" />
+    <ClInclude Include="skills/taekwon/midnightkick.hpp" />
     <ClInclude Include="skills/taekwon/mission.hpp" />
     <ClInclude Include="skills/taekwon/noonblast.hpp" />
     <ClInclude Include="skills/taekwon/risingmoon.hpp" />
@@ -2225,6 +2226,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/kaute.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/midnightkick.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/mission.cpp">

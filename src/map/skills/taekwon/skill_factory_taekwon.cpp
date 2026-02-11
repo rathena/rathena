@@ -33,6 +33,7 @@
 #include "kaizel.cpp"
 #include "kaupe.cpp"
 #include "kaute.cpp"
+#include "midnightkick.cpp"
 #include "mission.cpp"
 #include "noonblast.cpp"
 #include "risingmoon.cpp"
@@ -125,7 +126,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 		case SKE_ENCHANTING_SKY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SKE_MIDNIGHT_KICK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillMidnightKick>();
 		case SKE_NOON_BLAST:
 			return std::make_unique<SkillNoonBlast>();
 		case SKE_RISING_MOON:
