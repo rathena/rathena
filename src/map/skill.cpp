@@ -5284,19 +5284,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			map_foreachinrange(skill_area_sub, bl, splash_size, starget, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
-	case NW_WILD_SHOT:
-		if (flag & 1) {
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		} else {
-			int32 splash = skill_get_splash(skill_id, skill_lv);
-
-			if (sd != nullptr && sd->weapontype1 == W_RIFLE)
-				splash += 1;
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
-			map_foreachinrange(skill_area_sub, bl, splash, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-
-		}
-		break;
 
 	case SKE_RISING_SUN:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
