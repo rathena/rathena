@@ -6769,7 +6769,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SJ_FALLINGSTAR_ATK:
 	case BO_EXPLOSIVE_POWDER:
 	case SKE_DAWN_BREAK:
-	case SKE_RISING_MOON:
 	case SKE_MIDNIGHT_KICK:
 	case SKE_SKY_SUN:
 	{
@@ -6796,22 +6795,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
 			hom_addspiritball(hd, MAX_SPIRITBALL);
-		}
-
-		// TODO: refactor the ifs above into the switch below
-
-		switch( skill_id ){
-			case SKE_RISING_MOON:
-				if( sc == nullptr || ( sc->getSCE( SC_RISING_MOON ) == nullptr && sc->getSCE( SC_MIDNIGHT_MOON ) == nullptr && sc->getSCE( SC_DAWN_MOON ) == nullptr ) ){
-					sc_start(src, src, SC_RISING_MOON, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-				}else if( sc->getSCE( SC_MIDNIGHT_MOON ) == nullptr && sc->getSCE( SC_DAWN_MOON ) == nullptr ){
-					sc_start(src, src, SC_MIDNIGHT_MOON, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-				}else if( sc->getSCE( SC_DAWN_MOON ) == nullptr ){
-					sc_start(src, src, SC_DAWN_MOON, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-				}else if( sc->getSCE( SC_RISING_SUN ) != nullptr ){
-					status_change_end(bl, SC_DAWN_MOON);
-				}
-				break;
 		}
 
 		skill_area_temp[1] = 0;
