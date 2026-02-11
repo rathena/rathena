@@ -5989,13 +5989,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 5 * sstatus->pow;
 			RE_LVL_DMOD(100);
 			break;
-		case ABC_CHASING_SHOT:
-			skillratio += -100 + 1500 + 700 * skill_lv;
-			skillratio += 5 * sstatus->con;
-			if (sc != nullptr && sc->hasSCE(SC_CHASING))
-				skillratio += 250 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
 	}
 	return skillratio;
 }

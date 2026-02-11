@@ -619,6 +619,7 @@
     <ClInclude Include="skills/thief/backstab.hpp" />
     <ClInclude Include="skills/thief/chainreactionshot.hpp" />
     <ClInclude Include="skills/thief/chasingbreak.hpp" />
+    <ClInclude Include="skills/thief/chasingshot.hpp" />
     <ClInclude Include="skills/thief/cloaking.hpp" />
     <ClInclude Include="skills/thief/cloakingexceed.hpp" />
     <ClInclude Include="skills/thief/closeconfine.hpp" />
@@ -1859,6 +1860,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/chasingbreak.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/chasingshot.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/cloaking.cpp">

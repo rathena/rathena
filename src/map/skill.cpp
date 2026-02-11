@@ -5190,7 +5190,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SP_CURSEEXPLOSION:
 	case SP_SHA:
 	case SP_SWHOO:
-	case ABC_CHASING_SHOT:
 	case BO_ACIDIFIED_ZONE_WATER:
 	case BO_ACIDIFIED_ZONE_GROUND:
 	case BO_ACIDIFIED_ZONE_WIND:
@@ -5335,17 +5334,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 						if (sd != nullptr)
 							clif_skill_fail(*sd, skill_id, USESKILL_FAIL);
 					}
-					break;
-				}
-				case ABC_CHASING_SHOT: {
-					uint8 dir = DIR_NORTHEAST;
-
-					if (bl->x != src->x || bl->y != src->y)
-						dir = map_calc_dir(bl, src->x, src->y);
-
-					if (skill_check_unit_movepos(0, src, bl->x + dirx[dir], bl->y + diry[dir], 1, 1))
-						clif_blown(src);
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv, 1);
 					break;
 				}
 				case BO_DUST_EXPLOSION:
