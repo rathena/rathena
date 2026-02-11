@@ -28588,7 +28588,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(permission_add, "permission_remove", "i?"),
 
 	BUILDIN_DEF( mesitemicon, "v??" ),
-	BUILDIN_DEF(mesemotiontype,"v"),
+	BUILDIN_DEF(mesemotiontype,"i"),
 
 #include <custom/script_def.inc>
 
