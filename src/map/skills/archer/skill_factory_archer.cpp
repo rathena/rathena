@@ -64,6 +64,7 @@
 #include "perfecttablature.cpp"
 #include "phantasmicarrow.cpp"
 #include "powerchord.cpp"
+#include "pronmarch.cpp"
 #include "removetrap.cpp"
 #include "retrospection.cpp"
 #include "rhythmshooting.cpp"
@@ -238,6 +239,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillMusicalInterlude>();
 		case TR_NIPELHEIM_REQUIEM:
 			return std::make_unique<SkillNipelheimRequiem>();
+		case TR_PRON_MARCH:
+			return std::make_unique<SkillPronMarch>();
 		case TR_RETROSPECTION:
 			return std::make_unique<SkillRetrospection>();
 		case TR_RHYTHMSHOOTING:

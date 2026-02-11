@@ -372,6 +372,7 @@
     <ClInclude Include="skills/archer/perfecttablature.hpp" />
     <ClInclude Include="skills/archer/phantasmicarrow.hpp" />
     <ClInclude Include="skills/archer/powerchord.hpp" />
+    <ClInclude Include="skills/archer/pronmarch.hpp" />
     <ClInclude Include="skills/archer/removetrap.hpp" />
     <ClInclude Include="skills/archer/retrospection.hpp" />
     <ClInclude Include="skills/archer/rhythmshooting.hpp" />
@@ -1232,6 +1233,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/powerchord.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/pronmarch.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/removetrap.cpp">
