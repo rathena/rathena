@@ -406,6 +406,7 @@
     <ClInclude Include="skills/gunslinger/piercingshot.hpp" />
     <ClInclude Include="skills/gunslinger/rapidshower.hpp" />
     <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp" />
+    <ClInclude Include="skills/gunslinger/spiralshooting.hpp" />
     <ClInclude Include="skills/gunslinger/spreadattack.hpp" />
     <ClInclude Include="skills/gunslinger/thevigilanteatnight.hpp" />
     <ClInclude Include="skills/gunslinger/tracking.hpp" />
@@ -1329,6 +1330,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/spiralshooting.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/spreadattack.cpp">
