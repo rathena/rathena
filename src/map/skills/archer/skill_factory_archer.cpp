@@ -40,6 +40,7 @@
 #include "focusedarrowstrike.cpp"
 #include "freezingtrap.cpp"
 #include "galestorm.cpp"
+#include "geffenianocturn.cpp"
 #include "harmoniclick.cpp"
 #include "hawkboomerang.cpp"
 #include "hawkmastery.cpp"
@@ -216,6 +217,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SN_WINDWALK:
 			return std::make_unique<SkillWindWalker>();
+		case TR_GEF_NOCTURN:
+			return std::make_unique<SkillGeffeniaNocturn>();
 		case TR_KVASIR_SONATA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TR_METALIC_FURY:

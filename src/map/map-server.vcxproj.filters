@@ -693,6 +693,9 @@
     <ClInclude Include="skills/archer/galestorm.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/geffenianocturn.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/harmoniclick.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -2331,6 +2334,9 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/galestorm.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/geffenianocturn.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/harmoniclick.cpp">

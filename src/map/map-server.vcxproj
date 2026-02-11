@@ -348,6 +348,7 @@
     <ClInclude Include="skills/archer/focusedarrowstrike.hpp" />
     <ClInclude Include="skills/archer/freezingtrap.hpp" />
     <ClInclude Include="skills/archer/galestorm.hpp" />
+    <ClInclude Include="skills/archer/geffenianocturn.hpp" />
     <ClInclude Include="skills/archer/harmoniclick.hpp" />
     <ClInclude Include="skills/archer/hawkboomerang.hpp" />
     <ClInclude Include="skills/archer/hawkmastery.hpp" />
@@ -1154,6 +1155,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/galestorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/geffenianocturn.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/harmoniclick.cpp">
