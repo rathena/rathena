@@ -27816,7 +27816,7 @@ BUILDIN_FUNC(mesemotiontype){
     }
 
 	// Validates emotion range
-	if (id < 0 || id >= ET_MAX) {
+	if (id < ET_SURPRISE || id >= ET_MAX) {
 		ShowError("buildin_mesemotiontype: Emotion ID %d is invalid.\n", id);
 		script_pushconststr(st, "");
 		return SCRIPT_CMD_FAILURE;
