@@ -1368,6 +1368,9 @@
     <ClInclude Include="skills/summoner/bite.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
+    <ClInclude Include="skills/summoner/blessingofmysticalcreatures.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
     <ClInclude Include="skills/summoner/bunchofshrimp.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
@@ -1380,16 +1383,49 @@
     <ClInclude Include="skills/summoner/chattering.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
+    <ClInclude Include="skills/summoner/chulhobattering.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/chulhosonicclaw.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/colorsofhyunrok.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
     <ClInclude Include="skills/summoner/grooming.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/summoner/hiss.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
+    <ClInclude Include="skills/summoner/hogogongstrike.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/howlingofchulho.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/hyunrokbreeze.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/hyunrokcannon.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/hyunrokspiritpower.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/kisulrampage.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/kisulwaterspraying.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
     <ClInclude Include="skills/summoner/lope.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/summoner/lunaticcarrotbeat.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/marinefestivalofkisul.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/summoner/meowmeow.hpp">
@@ -1405,6 +1441,9 @@
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/summoner/purring.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/sandyfestivalofkisul.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/summoner/scaroftarou.hpp">
@@ -2909,6 +2948,9 @@
     <ClCompile Include="skills/summoner/bite.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
+    <ClCompile Include="skills/summoner/blessingofmysticalcreatures.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
     <ClCompile Include="skills/summoner/bunchofshrimp.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
@@ -2921,16 +2963,49 @@
     <ClCompile Include="skills/summoner/chattering.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
+    <ClCompile Include="skills/summoner/chulhobattering.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/chulhosonicclaw.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/colorsofhyunrok.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
     <ClCompile Include="skills/summoner/grooming.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/hiss.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
+    <ClCompile Include="skills/summoner/hogogongstrike.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/howlingofchulho.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hyunrokbreeze.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hyunrokcannon.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hyunrokspiritpower.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/kisulrampage.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/kisulwaterspraying.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
     <ClCompile Include="skills/summoner/lope.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/lunaticcarrotbeat.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/marinefestivalofkisul.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/meowmeow.cpp">
@@ -2946,6 +3021,9 @@
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/purring.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/sandyfestivalofkisul.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/scaroftarou.cpp">

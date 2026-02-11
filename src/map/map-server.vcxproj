@@ -573,19 +573,32 @@
     <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/skill_impl.hpp" />
     <ClInclude Include="skills/summoner/bite.hpp" />
+    <ClInclude Include="skills/summoner/blessingofmysticalcreatures.hpp" />
     <ClInclude Include="skills/summoner/bunchofshrimp.hpp" />
     <ClInclude Include="skills/summoner/catnipmeteor.hpp" />
     <ClInclude Include="skills/summoner/catnippowdering.hpp" />
     <ClInclude Include="skills/summoner/chattering.hpp" />
+    <ClInclude Include="skills/summoner/chulhobattering.hpp" />
+    <ClInclude Include="skills/summoner/chulhosonicclaw.hpp" />
+    <ClInclude Include="skills/summoner/colorsofhyunrok.hpp" />
     <ClInclude Include="skills/summoner/grooming.hpp" />
     <ClInclude Include="skills/summoner/hiss.hpp" />
+    <ClInclude Include="skills/summoner/hogogongstrike.hpp" />
+    <ClInclude Include="skills/summoner/howlingofchulho.hpp" />
+    <ClInclude Include="skills/summoner/hyunrokbreeze.hpp" />
+    <ClInclude Include="skills/summoner/hyunrokcannon.hpp" />
+    <ClInclude Include="skills/summoner/hyunrokspiritpower.hpp" />
+    <ClInclude Include="skills/summoner/kisulrampage.hpp" />
+    <ClInclude Include="skills/summoner/kisulwaterspraying.hpp" />
     <ClInclude Include="skills/summoner/lope.hpp" />
     <ClInclude Include="skills/summoner/lunaticcarrotbeat.hpp" />
+    <ClInclude Include="skills/summoner/marinefestivalofkisul.hpp" />
     <ClInclude Include="skills/summoner/meowmeow.hpp" />
     <ClInclude Include="skills/summoner/nyanggrass.hpp" />
     <ClInclude Include="skills/summoner/pickypeck.hpp" />
     <ClInclude Include="skills/summoner/powerofflock.hpp" />
     <ClInclude Include="skills/summoner/purring.hpp" />
+    <ClInclude Include="skills/summoner/sandyfestivalofkisul.hpp" />
     <ClInclude Include="skills/summoner/scaroftarou.hpp" />
     <ClInclude Include="skills/summoner/scratch.hpp" />
     <ClInclude Include="skills/summoner/silvervineroottwist.hpp" />
@@ -1798,6 +1811,9 @@
     <ClCompile Include="skills/summoner/bite.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/summoner/blessingofmysticalcreatures.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/summoner/bunchofshrimp.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1810,16 +1826,49 @@
     <ClCompile Include="skills/summoner/chattering.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/summoner/chulhobattering.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/chulhosonicclaw.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/colorsofhyunrok.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/summoner/grooming.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/summoner/hiss.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/summoner/hogogongstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/howlingofchulho.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hyunrokbreeze.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hyunrokcannon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hyunrokspiritpower.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/kisulrampage.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/kisulwaterspraying.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/summoner/lope.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/summoner/lunaticcarrotbeat.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/marinefestivalofkisul.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/summoner/meowmeow.cpp">
@@ -1835,6 +1884,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/summoner/purring.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/sandyfestivalofkisul.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/summoner/scaroftarou.cpp">
