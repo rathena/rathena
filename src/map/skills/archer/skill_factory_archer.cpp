@@ -54,6 +54,7 @@
 #include "makingarrow.cpp"
 #include "melodystrike.cpp"
 #include "mentalsensing.cpp"
+#include "metallicfury.cpp"
 #include "pangvoice.cpp"
 #include "perfecttablature.cpp"
 #include "phantasmicarrow.cpp"
@@ -216,6 +217,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillWindWalker>();
 		case TR_KVASIR_SONATA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case TR_METALIC_FURY:
+			return std::make_unique<SkillMetallicFury>();
 		case TR_MYSTIC_SYMPHONY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TR_RETROSPECTION:
