@@ -293,7 +293,6 @@ int32 skill_tree_get_max(uint16 skill_id, int32 b_class) {
 }
 
 int32 skill_frostjoke_scream(block_list *bl,va_list ap);
-std::shared_ptr<s_skill_unit_group> skill_locate_element_field(block_list *bl); // [Skotlex]
 static int32 skill_trap_splash(block_list *bl, va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(block_list *bl,std::shared_ptr<s_skill_unit_group> sg,t_tick tick);
 static int32 skill_unit_onplace(skill_unit *src,block_list *bl,t_tick tick);
@@ -6690,77 +6689,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
 
-	case SA_ABRACADABRA:
-		if (abra_db.empty()) {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			break;
-		}
-		else {
-			int32 abra_skill_id = 0, abra_skill_lv;
-			size_t checked = 0, checked_max = abra_db.size() * 3;
-
-			do {
-				auto abra_spell = abra_db.random();
-
-				abra_skill_id = abra_spell->skill_id;
-				abra_skill_lv = min(skill_lv, skill_get_max(abra_skill_id));
-
-				if( rnd() % 10000 < abra_spell->per[max(skill_lv - 1, 0)] ){
-					break;
-				}
-			} while (checked++ < checked_max);
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-
-			if( sd )
-			{// player-casted
-				sd->state.abra_flag = 1;
-				sd->skillitem = abra_skill_id;
-				sd->skillitemlv = abra_skill_lv;
-				sd->skillitem_keep_requirement = false;
-				clif_item_skill(sd, abra_skill_id, abra_skill_lv);
-			}
-			else
-			{// mob-casted
-				struct unit_data *ud = unit_bl2ud(src);
-				int32 inf = skill_get_inf(abra_skill_id);
-				if (!ud) break;
-				if (inf&INF_SELF_SKILL || inf&INF_SUPPORT_SKILL) {
-					if (src->type == BL_PET)
-						bl = (block_list*)((TBL_PET*)src)->master;
-					if (!bl) bl = src;
-					unit_skilluse_id(src, bl->id, abra_skill_id, abra_skill_lv);
-				} else {	//Assume offensive skills
-					int32 target_id = 0;
-					if (ud->target)
-						target_id = ud->target;
-					else switch (src->type) {
-						case BL_MOB: target_id = ((TBL_MOB*)src)->target_id; break;
-						case BL_PET: target_id = ((TBL_PET*)src)->target_id; break;
-					}
-					if (!target_id)
-						break;
-					if (skill_get_casttype(abra_skill_id) == CAST_GROUND) {
-						bl = map_id2bl(target_id);
-						if (!bl) bl = src;
-						unit_skilluse_pos(src, bl->x, bl->y, abra_skill_id, abra_skill_lv);
-					} else
-						unit_skilluse_id(src, target_id, abra_skill_id, abra_skill_lv);
-				}
-			}
-		}
-		break;
-
-	case SA_COMA:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time2(skill_id,skill_lv)));
-		break;
-	case SA_FULLRECOVERY:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (status_isimmune(bl))
-			break;
-		status_percent_heal(bl, 100, 100);
-		break;
 	case NPC_ALLHEAL:
 		{
 			int32 heal;
@@ -6772,66 +6700,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			{ // Reset Damage Logs
 				dstmd->dmglog.clear();
 			}
-		}
-		break;
-	case SA_SUMMONMONSTER:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (sd)
-			mob_once_spawn(sd, src->m, src->x, src->y,"--ja--", -1, 1, "", SZ_SMALL, AI_NONE);
-		break;
-	case SA_LEVELUP:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (sd && pc_nextbaseexp(sd))
-			pc_gainexp(sd, nullptr, pc_nextbaseexp(sd) * 10 / 100, 0, 0);
-		break;
-	case SA_INSTANTDEATH:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		status_kill(src);
-		break;
-	case SA_QUESTION:
-		clif_emotion( *src, ET_QUESTION );
-		[[fallthrough]];
-	case SA_GRAVITY:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-	case SA_CLASSCHANGE:
-	case SA_MONOCELL:
-		if (dstmd)
-		{
-			int32 class_;
-
-			if ( sd && status_has_mode(&dstmd->status,MD_STATUSIMMUNE) ) {
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			class_ = (skill_id == SA_MONOCELL ? MOBID_PORING : mob_get_random_id(MOBG_CLASSCHANGE, RMF_DB_RATE, 0));
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			mob_class_change(dstmd,class_);
-			if( tsc && status_has_mode(&dstmd->status,MD_STATUSIMMUNE) ) {
-				const enum sc_type scs[] = { SC_QUAGMIRE, SC_PROVOKE, SC_ROKISWEIL, SC_GRAVITATION, SC_SUITON, SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC_BLADESTOP };
-				for (i = SC_COMMON_MIN; i <= SC_COMMON_MAX; i++)
-					if (tsc->getSCE(i)) status_change_end(bl, (sc_type)i);
-				for (i = 0; i < ARRAYLENGTH(scs); i++)
-					if (tsc->getSCE(scs[i])) status_change_end(bl, scs[i]);
-			}
-		}
-		break;
-	case SA_DEATH:
-		if ( sd && dstmd && status_has_mode(&dstmd->status,MD_STATUSIMMUNE) ) {
-			clif_skill_fail( *sd, skill_id );
-			break;
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		status_kill(bl);
-		break;
-	case SA_FORTUNE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if(sd) pc_getzeny(sd,status_get_lv(bl)*100,LOG_TYPE_STEAL);
-		break;
-	case SA_TAMINGMONSTER:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (sd != nullptr && dstmd != nullptr) {
-			pet_catch_process_start( *sd, 0, PET_CATCH_UNIVERSAL_ALL );
 		}
 		break;
 
@@ -6867,32 +6735,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				}
 			}
 		}
-		break;
-
-	case SA_FLAMELAUNCHER:	// added failure chance and chance to break weapon if turned on [Valaris]
-	case SA_FROSTWEAPON:
-	case SA_LIGHTNINGLOADER:
-	case SA_SEISMICWEAPON:
-		if (dstsd && dstsd->status.weapon == W_FIST) {
-			if (sd)
-				clif_skill_fail( *sd, skill_id );
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,false);
-			break;
-		}
-#ifdef RENEWAL
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-#else
-		// 100% success rate at lv4 & 5, but lasts longer at lv5
-		if(!clif_skill_nodamage(src,*bl,skill_id,skill_lv, sc_start(src,bl,type,(60+skill_lv*10),skill_lv, skill_get_time(skill_id,skill_lv)))) {
-			if (dstsd){
-				int16 index = dstsd->equip_index[EQI_HAND_R];
-				if (index != -1 && dstsd->inventory_data[index] && dstsd->inventory_data[index]->type == IT_WEAPON)
-					pc_unequipitem(dstsd, index, 3); //Must unequip the weapon instead of breaking it [Daegaladh]
-			}
-			if (sd)
-				clif_skill_fail( *sd, skill_id );
-		}
-#endif
 		break;
 
 	case ITEM_ENCHANTARMS:
@@ -7303,13 +7145,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		if (i) status_heal(src, 0, i, 3);
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,i != 0);
-		break;
-
-	case SA_CREATECON:
-		if( sd != nullptr ){
-			clif_elementalconverter_list( *sd );
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
 		break;
 
 	//List of self skills that give damage around caster
@@ -7760,179 +7595,15 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 	}
 
-	case SA_DISPELL:
-		if (flag&1 || (i = skill_get_splash(skill_id, skill_lv)) < 1) {
-			if (sd && dstsd && !map_flag_vs(sd->m) && (!sd->duel_group || sd->duel_group != dstsd->duel_group) && (!sd->status.party_id || sd->status.party_id != dstsd->status.party_id))
-				break; // Outside PvP it should only affect party members and no skill fail message
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			if((dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_SOUL_LINKER)
-				|| (tsc && tsc->getSCE(SC_SPIRIT) && tsc->getSCE(SC_SPIRIT)->val2 == SL_ROGUE) //Rogue's spirit defends againt32 dispel.
-				|| rnd()%100 >= 50+10*skill_lv)
-			{
-				if (sd)
-					clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			if(status_isimmune(bl))
-				break;
-
-			//Remove bonus_script by Dispell
-			if (dstsd)
-				pc_bonus_script_clear(dstsd,BSF_REM_ON_DISPELL);
-			// Monsters will unlock their target instead
-			else if (dstmd)
-				mob_unlocktarget(dstmd, tick);
-
-			if(tsc == nullptr || tsc->empty())
-				break;
-
-			//Statuses that can't be Dispelled
-			for (const auto &it : status_db) {
-				sc_type status = static_cast<sc_type>(it.first);
-
-				if (!tsc->getSCE(status))
-					continue;
-
-				if (it.second->flag[SCF_NODISPELL])
-					continue;
-				switch (status) {
-					// bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
-					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
-					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
-					case SC_FORTUNE:		case SC_SERVICE4U:
-						if (!battle_config.dispel_song || tsc->getSCE(status)->val4 == 0)
-							continue; //If in song area don't end it, even if config enabled
-						break;
-					case SC_ASSUMPTIO:
-						if( bl->type == BL_MOB )
-							continue;
-						break;
-				}
-				if (status == SC_BERSERK || status == SC_SATURDAYNIGHTFEVER)
-					tsc->getSCE(status)->val2 = 0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
-				status_change_end(bl, status);
-			}
-			break;
-		}
-
-		//Affect all targets on splash area.
-		map_foreachinallrange(skill_area_sub, bl, i, BL_CHAR,
-			src, skill_id, skill_lv, tick, flag|1,
-			skill_castend_damage_id);
-		break;
-
-	case SA_CASTCANCEL:
 	case SO_SPELLFIST:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		unit_skillcastcancel(src,1);
 		if(sd) {
 			int32 sp = skill_get_sp(sd->skill_id_old,sd->skill_lv_old);
-			if( skill_id == SO_SPELLFIST ){
-				sc_start4(src,src,type,100,skill_lv,sd->skill_id_old,sd->skill_lv_old,0,skill_get_time(skill_id,skill_lv));
-				sd->skill_id_old = sd->skill_lv_old = 0;
-				break;
-			}
-			sp = sp * (90 - (skill_lv-1)*20) / 100;
-			if(sp < 0) sp = 0;
-			status_zap(src, 0, sp);
+			sc_start4(src,src,type,100,skill_lv,sd->skill_id_old,sd->skill_lv_old,0,skill_get_time(skill_id,skill_lv));
+			sd->skill_id_old = sd->skill_lv_old = 0;
 		}
 		break;
-	case SA_SPELLBREAKER:
-		{
-			int32 sp;
-			if (dstsd && tsc && tsc->getSCE(SC_MAGICROD)) {
-				// If target enemy player has Magic Rod, then 20% of your SP is transferred to that player
-				sp = status_percent_damage(bl, src, 0, -20, false);
-				status_heal(bl, 0, sp, 2);
-			}
-			else {
-				struct unit_data* ud = unit_bl2ud(bl);
-				if (!ud || ud->skilltimer == INVALID_TIMER)
-					break; //Nothing to cancel.
-				int32 hp = 0;
-				if (status_has_mode(tstatus, MD_STATUSIMMUNE)) { //Only 10% success chance against status immune. [Skotlex]
-					if (rnd_chance(90, 100))
-					{
-						if (sd) clif_skill_fail( *sd, skill_id );
-						break;
-					}
-				}
-#ifdef RENEWAL
-				else // HP damage does not work on bosses in renewal
-#endif
-					if (skill_lv >= 5 && (!dstsd || map_flag_vs(bl->m))) //HP damage only on pvp-maps when against players.
-						hp = tstatus->max_hp / 50; //Siphon 2% HP at level 5
-
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-				unit_skillcastcancel(bl, 0);
-				sp = skill_get_sp(ud->skill_id, ud->skill_lv);
-				status_zap(bl, 0, sp);
-				// Recover some of the SP used
-				status_heal(src, 0, sp * (25 * (skill_lv - 1)) / 100, 2);
-
-				// If damage would be lethal, it does not deal damage
-				if (hp && hp < tstatus->hp) {
-					clif_damage(*src, *bl, tick, 0, 0, hp, 0, DMG_NORMAL, 0, false);
-					status_zap(bl, hp, 0);
-					// Recover 50% of damage dealt
-					status_heal(src, hp / 2, 0, 2);
-				}
-			}
-		}
-		break;
-	case SA_MAGICROD:
-#ifdef RENEWAL
-		clif_skill_nodamage(src,*src,SA_MAGICROD,skill_lv);
-#endif
-		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
-	case SA_AUTOSPELL:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (sd) {
-			sd->state.workinprogress = WIP_DISABLE_ALL;
-			clif_autospell( *sd, skill_lv );
-		} else {
-			int32 maxlv=1,spellid=0;
-			static const int32 spellarray[3] = { MG_COLDBOLT,MG_FIREBOLT,MG_LIGHTNINGBOLT };
-
-			if(skill_lv >= 10) {
-				spellid = MG_FROSTDIVER;
-//				if (tsc && tsc->getSCE(SC_SPIRIT) && tsc->getSCE(SC_SPIRIT)->val2 == SA_SAGE)
-//					maxlv = 10;
-//				else
-					maxlv = skill_lv - 9;
-			}
-			else if(skill_lv >=8) {
-				spellid = MG_FIREBALL;
-				maxlv = skill_lv - 7;
-			}
-			else if(skill_lv >=5) {
-				spellid = MG_SOULSTRIKE;
-				maxlv = skill_lv - 4;
-			}
-			else if(skill_lv >=2) {
-				int32 i_rnd = rnd()%3;
-				spellid = spellarray[i_rnd];
-				maxlv = skill_lv - 1;
-			}
-			else if(skill_lv > 0) {
-				spellid = MG_NAPALMBEAT;
-				maxlv = 3;
-			}
-
-			if(spellid > 0)
-				sc_start4(src,src,SC_AUTOSPELL,100,skill_lv,spellid,maxlv,0,
-					skill_get_time(SA_AUTOSPELL,skill_lv));
-		}
-		break;
-
-	case SA_ELEMENTWATER:
-	case SA_ELEMENTFIRE:
-	case SA_ELEMENTGROUND:
-	case SA_ELEMENTWIND:
-		if (sd && (!dstmd || status_has_mode(tstatus,MD_STATUSIMMUNE))) // Only works on monsters (Except status immune monsters).
-			break;
-		[[fallthrough]];
 	case NPC_ATTRICHANGE:
 	case NPC_CHANGEWATER:
 	case NPC_CHANGEGROUND:
@@ -11263,25 +10934,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 			PR_LEXAETERNA, 1, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 		break;
 
-	case SA_VOLCANO:
-	case SA_DELUGE:
-	case SA_VIOLENTGALE:
-	{	//Does not consumes if the skill is already active. [Skotlex]
-		std::shared_ptr<s_skill_unit_group> sg2;
-		if ((sg2= skill_locate_element_field(src)) != nullptr && ( sg2->skill_id == SA_VOLCANO || sg2->skill_id == SA_DELUGE || sg2->skill_id == SA_VIOLENTGALE ))
-		{
-			if (sg2->limit - DIFF_TICK(gettick(), sg2->tick) > 0)
-			{
-				skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-				return 0; // not to consume items
-			}
-			else
-				sg2->limit = 0; //Disable it.
-		}
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-		break;
-	}
-
 	// Skill Unit Setting
 	case NPC_GROUNDDRIVE:
 	case NPC_GRANDDARKNESS:
@@ -11294,7 +10946,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case WE_CALLPARTNER:
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
-	case SA_LANDPROTECTOR:
 #ifndef RENEWAL
 	case DC_UGLYDANCE:
 	case DC_HUMMING:
