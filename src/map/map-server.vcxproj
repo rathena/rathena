@@ -375,6 +375,7 @@
     <ClInclude Include="skills/archer/pronmarch.hpp" />
     <ClInclude Include="skills/archer/removetrap.hpp" />
     <ClInclude Include="skills/archer/retrospection.hpp" />
+    <ClInclude Include="skills/archer/rhythmicalwave.hpp" />
     <ClInclude Include="skills/archer/rhythmshooting.hpp" />
     <ClInclude Include="skills/archer/rokicapriccio.hpp" />
     <ClInclude Include="skills/archer/roseblossom.hpp" />
@@ -1242,6 +1243,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/retrospection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/rhythmicalwave.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/rhythmshooting.cpp">

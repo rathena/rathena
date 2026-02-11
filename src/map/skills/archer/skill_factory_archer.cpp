@@ -68,6 +68,7 @@
 #include "removetrap.cpp"
 #include "retrospection.cpp"
 #include "rhythmshooting.cpp"
+#include "rhythmicalwave.cpp"
 #include "rokicapriccio.cpp"
 #include "roseblossom.cpp"
 #include "sandman.cpp"
@@ -245,6 +246,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillRetrospection>();
 		case TR_RHYTHMSHOOTING:
 			return std::make_unique<SkillRhythmShooting>();
+		case TR_RHYTHMICAL_WAVE:
+			return std::make_unique<SkillRhythmicalWave>();
 		case TR_ROKI_CAPRICCIO:
 			return std::make_unique<SkillRokiCapriccio>();
 		case TR_ROSEBLOSSOM:

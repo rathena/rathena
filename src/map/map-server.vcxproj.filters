@@ -774,6 +774,9 @@
     <ClInclude Include="skills/archer/retrospection.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/rhythmicalwave.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/rhythmshooting.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -2433,6 +2436,9 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/retrospection.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/rhythmicalwave.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/rhythmshooting.cpp">
