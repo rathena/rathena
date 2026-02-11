@@ -25,6 +25,7 @@
 #include "dancingknife.cpp"
 #include "darkclaw.cpp"
 #include "darkillusion.cpp"
+#include "deftstab.cpp"
 #include "detoxify.cpp"
 #include "divestall.cpp"
 #include "divestarmor.cpp"
@@ -81,6 +82,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillChainReactionShot>();
 		case ABC_CHAIN_REACTION_SHOT_ATK:
 			return std::make_unique<SkillChainReactionShotAttack>();
+		case ABC_DEFT_STAB:
+			return std::make_unique<SkillDeftStab>();
 		case ABC_FROM_THE_ABYSS:
 			return std::make_unique<SkillFromTheAbyss>();
 		case ABC_FROM_THE_ABYSS_ATK:

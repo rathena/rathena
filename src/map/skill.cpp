@@ -4483,7 +4483,6 @@ static TIMER_FUNC(skill_timerskill){
 				case NPC_PULSESTRIKE2:
 					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag);
 					break;
-				case ABC_DEFT_STAB:
 				case ABC_FRENZY_SHOT:
 					skill_castend_damage_id(src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
 					break;
@@ -5198,7 +5197,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SP_CURSEEXPLOSION:
 	case SP_SHA:
 	case SP_SWHOO:
-	case ABC_DEFT_STAB:
 	case ABC_CHASING_BREAK:
 	case ABC_CHASING_SHOT:
 	case BO_ACIDIFIED_ZONE_WATER:
@@ -5242,14 +5240,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 			if (tsc && tsc->getSCE(SC_HOVERING) && inf2[INF2_IGNOREHOVERING])
 				break; // Under Hovering characters are immune to select trap and ground target skills.
-
-			switch (skill_id) {
-				case ABC_DEFT_STAB:
-					// Deft Stab - Make sure the flag of 2 is passed on when the skill is double casted.
-					if (flag&2)
-						sflag |= 2;
-					break;
-			}
 
 			if( flag&SD_LEVEL )
 				sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
@@ -5368,7 +5358,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					break;
 				}
 				case BO_DUST_EXPLOSION:
-				case ABC_DEFT_STAB:
 				case EM_EL_FLAMEROCK:
 				case EM_EL_AGE_OF_ICE:
 				case EM_EL_STORM_WIND:

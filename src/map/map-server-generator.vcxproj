@@ -630,6 +630,7 @@
     <ClInclude Include="skills/thief/dancingknife.hpp" />
     <ClInclude Include="skills/thief/darkclaw.hpp" />
     <ClInclude Include="skills/thief/darkillusion.hpp" />
+    <ClInclude Include="skills/thief/deftstab.hpp" />
     <ClInclude Include="skills/thief/detoxify.hpp" />
     <ClInclude Include="skills/thief/divestall.hpp" />
     <ClInclude Include="skills/thief/divestarmor.hpp" />
@@ -1887,6 +1888,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/darkillusion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/thief/deftstab.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/thief/detoxify.cpp">
