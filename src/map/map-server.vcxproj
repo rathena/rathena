@@ -402,6 +402,7 @@
     <ClInclude Include="skills/gunslinger/grenadefragment.hpp" />
     <ClInclude Include="skills/gunslinger/grounddrift.hpp" />
     <ClInclude Include="skills/gunslinger/intensiveaim.hpp" />
+    <ClInclude Include="skills/gunslinger/onlyonebullet.hpp" />
     <ClInclude Include="skills/gunslinger/piercingshot.hpp" />
     <ClInclude Include="skills/gunslinger/rapidshower.hpp" />
     <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp" />
@@ -1316,6 +1317,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/intensiveaim.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/onlyonebullet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/piercingshot.cpp">

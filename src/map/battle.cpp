@@ -5641,16 +5641,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 200 + 1100 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
-		case NW_ONLY_ONE_BULLET:
-			skillratio += -100 + 1200 + 3000 * skill_lv;
-			skillratio += 5 * sstatus->con;
-			if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
-				skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 350 * skill_lv;
-			if (sd && sd->weapontype1 == W_REVOLVER) {
-				skillratio += 400 * skill_lv;
-			}
-			RE_LVL_DMOD(100);
-			break;
 		case NW_MISSION_BOMBARD:
 			if( wd->miscflag&SKILL_ALTDMG_FLAG ){
 				skillratio += -100 + 5000 + 1800 * skill_lv;
