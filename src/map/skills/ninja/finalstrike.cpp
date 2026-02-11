@@ -61,9 +61,8 @@ void SkillFinalStrike::castendDamageId(block_list *src, block_list *target, uint
 		y = i;
 	else
 		y = 0;
-	// Ashura Strike still has slide effect in GVG
-	if ((!map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND)) &&
-		unit_movepos(src, target->x + x, target->y + y, 1, 1)) {
+
+	if ((!map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND)) && unit_movepos(src, target->x + x, target->y + y, 1, 1)) {
 		clif_blown(src);
 		clif_spiritball(src);
 	}

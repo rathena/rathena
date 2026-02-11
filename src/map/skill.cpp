@@ -106,7 +106,6 @@ static int32 skill_check_unit_range2 (block_list *bl, int32 x, int32 y, uint16 s
 static int32 skill_destroy_trap( block_list *bl, va_list ap );
 static int32 skill_check_condition_mob_master_sub (block_list *bl, va_list ap);
 static bool skill_check_condition_sc_required( map_session_data& sd, uint16 skill_id, s_skill_condition& require );
-bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
 
 // Use this function for splash skills that can't hit icewall when cast by players
 int32 splash_target(block_list* bl) {

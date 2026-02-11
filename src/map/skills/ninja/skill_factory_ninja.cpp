@@ -5,28 +5,30 @@
 
 #include "../skill_impl.hpp"
 
-#include "crimsonfireformation.hpp"
-#include "crimsonfirepetal.hpp"
-#include "finalstrike.hpp"
-#include "hiddenwater.hpp"
-#include "icemeteor.hpp"
-#include "improviseddefense.hpp"
-#include "kamaitachi.hpp"
-#include "lightningstrikeofdestruction.hpp"
-#include "mirrorimage.hpp"
-#include "ragingfiredragon.hpp"
-#include "shadowleap.hpp"
-#include "shadowslash.hpp"
-#include "spearofice.hpp"
-#include "throwhuumashuriken.hpp"
-#include "throwkunai.hpp"
-#include "throwshuriken.hpp"
-#include "throwzeny.hpp"
-#include "vanishingslash.hpp"
-#include "windblade.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "crimsonfireformation.cpp"
+#include "crimsonfirepetal.cpp"
+#include "finalstrike.cpp"
+#include "hiddenwater.cpp"
+#include "icemeteor.cpp"
+#include "improviseddefense.cpp"
+#include "kamaitachi.cpp"
+#include "lightningstrikeofdestruction.cpp"
+#include "mirrorimage.cpp"
+#include "ragingfiredragon.cpp"
+#include "shadowleap.cpp"
+#include "shadowslash.cpp"
+#include "spearofice.cpp"
+#include "throwhuumashuriken.cpp"
+#include "throwkunai.cpp"
+#include "throwshuriken.cpp"
+#include "throwzeny.cpp"
+#include "vanishingslash.cpp"
+#include "windblade.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_id) const {
-	switch (skill_id) {
+	switch( skill_id ){
 		case KO_MEIKYOUSISUI:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case KO_SETSUDAN:

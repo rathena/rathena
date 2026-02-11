@@ -3,14 +3,13 @@
 
 #include "kamaitachi.hpp"
 
-#include "map/map.hpp"
 #include "map/pc.hpp"
 
 SkillKamaitachi::SkillKamaitachi() : SkillImpl(NJ_KAMAITACHI) {
 }
 
 void SkillKamaitachi::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
-	const map_session_data* sd = BL_CAST( BL_PC, src );
+	const map_session_data* sd = BL_CAST(BL_PC, src);
 
 	base_skillratio += 100 * skill_lv;
 	if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)

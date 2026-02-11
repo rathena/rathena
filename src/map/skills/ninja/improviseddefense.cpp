@@ -18,8 +18,6 @@ void SkillImprovisedDefense::calculateSkillRatio(const Damage *wd, const block_l
 }
 
 void SkillImprovisedDefense::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
-	sc_type type = skill_get_sc(getSkillId());
-
 	if (skill_unitsetting(src,getSkillId(),skill_lv,src->x,src->y,0))
-		sc_start(src,src,type,100,skill_lv,skill_get_time2(getSkillId(),skill_lv));
+		sc_start(src,src,skill_get_sc(getSkillId()),100,skill_lv,skill_get_time2(getSkillId(),skill_lv));
 }
