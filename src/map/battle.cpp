@@ -5596,19 +5596,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case ABR_INFINITY_BUSTER:// Need official formula.
 			skillratio += -100 + 50000;
 			break;
-		case NW_MIDNIGHT_FALLEN:
-			skillratio += -100 + 2400 + 800 * skill_lv;
-			if (sd != nullptr && sc != nullptr && sc->hasSCE(SC_HIDDEN_CARD)) {
-				if (sd->weapontype1 == W_GATLING)
-					skillratio += 200 * skill_lv;
-				else if (sd->weapontype1 == W_GRENADE)
-					skillratio += 340 * skill_lv;
-				else if (sd->weapontype1 == W_SHOTGUN)
-					skillratio += 400 * skill_lv;
-			}
-			skillratio += 5 * sstatus->con; //!TODO: check con ratio
-			RE_LVL_DMOD(100);
-			break;
 		case SKE_MIDNIGHT_KICK:
 			skillratio += -100 + 800 + 1500  * skill_lv;
 			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
