@@ -69,6 +69,7 @@
 #include "skidtrap.cpp"
 #include "solidtrap.cpp"
 #include "songoflutie.cpp"
+#include "soundblend.cpp"
 #include "springtrap.cpp"
 #include "swifttrap.cpp"
 #include "talkiebox.cpp"
@@ -229,6 +230,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillRoseBlossom>();
 		case TR_ROSEBLOSSOM_ATK:
 			return std::make_unique<SkillRoseBlossomAttack>();
+		case TR_SOUNDBLEND:
+			return std::make_unique<SkillSoundBlend>();
 		case WH_CALAMITYGALE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WH_CRESCIVE_BOLT:
