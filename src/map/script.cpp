@@ -27797,23 +27797,7 @@ BUILDIN_FUNC(mesitemicon){
  * mesemotiontype(<emotion_id>);
  */
 BUILDIN_FUNC(mesemotiontype){
-    int32 id = 0;
-
-    if (script_isstring(st, 2)) {
-        const char *name = script_getstr(st, 2);
-
-        // Check constant name first
-        int64 value;
-        if (script_get_constant(name, &value)) {
-            id = (int32)value;
-        } else {
-            ShowError("buildin_mesemotiontype: Unknown emotion constant '%s'.\n", name);
-            script_pushconststr(st, "");
-            return SCRIPT_CMD_FAILURE;
-        }
-    } else if (script_hasdata(st, 2)) {
-        id = script_getnum(st, 2);
-    }
+    int32 id = script_getnum(st, 2);
 
 	// Validates emotion range
 	if (id < ET_SURPRISE || id >= ET_MAX) {
