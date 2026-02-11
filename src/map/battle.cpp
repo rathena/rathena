@@ -5602,12 +5602,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 5 * sstatus->con;
 			RE_LVL_DMOD(100);
 			break;
-		case NW_BASIC_GRENADE:
-			skillratio += -100 + 1500 + 2100 * skill_lv;
-			skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 50;
-			skillratio += 5 * sstatus->con;
-			RE_LVL_DMOD(100);
-			break;
 		case NW_GRENADES_DROPPING:
 			skillratio += -100 + 550 + 850 * skill_lv;
 			skillratio += pc_checkskill( sd, NW_GRENADE_MASTERY ) * 30;

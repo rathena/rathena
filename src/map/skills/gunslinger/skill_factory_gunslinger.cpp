@@ -9,6 +9,7 @@
 
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
+#include "basicgrenade.cpp"
 #include "bullseye.cpp"
 #include "cracker.cpp"
 #include "desperado.cpp"
@@ -81,7 +82,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 		case NW_AUTO_FIRING_LAUNCHER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NW_BASIC_GRENADE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillBasicGrenade>();
 		case NW_GRENADE_FRAGMENT:
 			return std::make_unique<SkillGrenadeFragment>();
 		case NW_HASTY_FIRE_IN_THE_HOLE:
