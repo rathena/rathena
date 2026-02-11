@@ -19,6 +19,7 @@
 #include "gatlingfever.cpp"
 #include "glittering.cpp"
 #include "grounddrift.cpp"
+#include "intensiveaim.cpp"
 #include "piercingshot.cpp"
 #include "rapidshower.cpp"
 #include "spreadattack.cpp"
@@ -79,6 +80,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NW_HIDDEN_CARD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NW_INTENSIVE_AIM:
+			return std::make_unique<SkillIntensiveAim>();
 		case NW_MIDNIGHT_FALLEN:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NW_MISSION_BOMBARD:

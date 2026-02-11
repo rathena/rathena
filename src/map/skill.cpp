@@ -9550,17 +9550,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
 		break;
 
-	case NW_INTENSIVE_AIM:
-		if (tsc && tsc->getSCE(type)) {
-			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
-			status_change_end(bl, type);
-		} else {
-			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		}
-		clif_skill_nodamage(src, *src, skill_id, skill_lv);
-		break;
-
 	case NW_GRENADE_FRAGMENT:
 		status_change_end(src, type);
 		if (skill_lv < 7)
