@@ -9356,29 +9356,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case TR_NIPELHEIM_REQUIEM:
-		if (flag & 1) { // Need official success chances.
-			uint16 success_chance = 5 * skill_lv;
-
-			if (flag & 2)
-				success_chance *= 2;
-
-			// Is it a chance to inflect so and so, or seprate chances for inflicting each status? [Rytech]
-			sc_start(src, bl, SC_CURSE, 4 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-			sc_start(src, bl, SC_HANDICAPSTATE_DEPRESSION, success_chance, skill_lv, skill_get_time2(skill_id, skill_lv));
-		} else if (sd) {
-			clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
-
-			sd->skill_id_song = skill_id;
-			sd->skill_lv_song = skill_lv;
-
-			if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-				flag |= 2;
-
-			map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_nodamage_id);
-		}
-		break;
-
 	case ABR_NET_REPAIR:
 	case ABR_NET_SUPPORT:
 		if (flag & 1) {
