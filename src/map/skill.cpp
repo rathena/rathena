@@ -9340,7 +9340,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case TR_MUSICAL_INTERLUDE:
 	case TR_JAWAII_SERENADE:
 	case TR_PRON_MARCH:
 		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1))
