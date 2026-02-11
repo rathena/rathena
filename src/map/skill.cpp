@@ -7677,12 +7677,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case TR_RETROSPECTION:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		if (sd)
-			unit_skilluse_id(src, src->id, sd->skill_id_song, sd->skill_lv_song);
-		break;
-
 	case PF_MINDBREAKER:
 		{
 			if(status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele)) {
