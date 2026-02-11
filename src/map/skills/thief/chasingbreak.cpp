@@ -6,8 +6,9 @@
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
+#include "map/map.hpp"
+#include "map/path.hpp"
 #include "map/status.hpp"
-#include "map/unit.hpp"
 
 SkillChasingBreak::SkillChasingBreak() : SkillImplRecursiveDamageSplash(ABC_CHASING_BREAK) {
 }

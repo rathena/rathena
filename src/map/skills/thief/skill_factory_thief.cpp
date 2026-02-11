@@ -82,6 +82,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillAbyssDagger>();
 		case ABC_ABYSS_FLAME:
 			return std::make_unique<SkillAbyssFlame>();
+		case ABC_ABYSS_FLAME_ATK:
+			return std::make_unique<SkillAbyssFlameAttack>();
 		case ABC_ABYSS_SLAYER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case ABC_ABYSS_SQUARE:
