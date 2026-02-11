@@ -34,6 +34,7 @@
 #include "kaupe.cpp"
 #include "kaute.cpp"
 #include "mission.cpp"
+#include "risingsun.cpp"
 #include "run.cpp"
 #include "sevenwind.cpp"
 #include "shadowssoul.cpp"
@@ -124,6 +125,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SKE_RISING_MOON:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SKE_RISING_SUN:
+			return std::make_unique<SkillRisingSun>();
 		case SL_ALCHEMIST:
 			return std::make_unique<SkillSpiritoftheAlchemist>();
 		case SL_ASSASIN:
