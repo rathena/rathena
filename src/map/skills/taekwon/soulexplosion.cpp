@@ -11,6 +11,7 @@ SkillSoulExplosion::SkillSoulExplosion() : SkillImpl(SP_SOULEXPLOSION) {
 }
 
 void SkillSoulExplosion::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
+	// Remove soul link when hit.
 	status_change_end(target, SC_SPIRIT);
 	status_change_end(target, SC_SOULGOLEM);
 	status_change_end(target, SC_SOULSHADOW);
