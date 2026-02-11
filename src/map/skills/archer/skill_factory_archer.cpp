@@ -9,6 +9,7 @@
 // For reference see unity builds or amalgamated builds
 #include "acousticrhythm.cpp"
 #include "aimedbolt.cpp"
+#include "ainrhapsody.cpp"
 #include "amp.cpp"
 #include "anklesnare.cpp"
 #include "arrowshower.cpp"
@@ -218,6 +219,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SN_WINDWALK:
 			return std::make_unique<SkillWindWalker>();
+		case TR_AIN_RHAPSODY:
+			return std::make_unique<SkillAinRhapsody>();
 		case TR_GEF_NOCTURN:
 			return std::make_unique<SkillGeffeniaNocturn>();
 		case TR_KVASIR_SONATA:
