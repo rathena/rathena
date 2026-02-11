@@ -11,6 +11,7 @@
 #include "antidote.cpp"
 #include "backslide.cpp"
 #include "backstab.cpp"
+#include "chainreactionshot.cpp"
 #include "cloaking.cpp"
 #include "cloakingexceed.cpp"
 #include "closeconfine.cpp"
@@ -72,8 +73,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillAbyssDagger>();
 		case ABC_ABYSS_SLAYER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case ABC_CHAIN_REACTION_SHOT:
+			return std::make_unique<SkillChainReactionShot>();
 		case ABC_CHAIN_REACTION_SHOT_ATK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillChainReactionShotAttack>();
 		case ABC_STRIP_SHADOW:
 			return std::make_unique<SkillStripShadow>();
 		case ABC_UNLUCKY_RUSH:

@@ -5198,7 +5198,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case SP_CURSEEXPLOSION:
 	case SP_SHA:
 	case SP_SWHOO:
-	case ABC_CHAIN_REACTION_SHOT:
 	case ABC_DEFT_STAB:
 	case ABC_CHASING_BREAK:
 	case ABC_CHASING_SHOT:
@@ -5377,10 +5376,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case EM_EL_AVALANCHE:
 				case EM_EL_DEADLY_POISON:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					break;
-				case ABC_CHAIN_REACTION_SHOT:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					map_foreachinrange(skill_area_sub, bl, skill_get_splash(ABC_CHAIN_REACTION_SHOT_ATK, skill_lv), BL_CHAR|BL_SKILL, src, ABC_CHAIN_REACTION_SHOT_ATK, skill_lv, tick + (200 + status_get_amotion(src)), flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 					break;
 				case BO_ACIDIFIED_ZONE_WATER:
 				case BO_ACIDIFIED_ZONE_GROUND:
