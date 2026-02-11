@@ -24,6 +24,7 @@
 #include "piercingshot.cpp"
 #include "rapidshower.cpp"
 #include "spreadattack.cpp"
+#include "thevigilanteatnight.cpp"
 #include "tracking.cpp"
 #include "tripleaction.cpp"
 
@@ -89,6 +90,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NW_MISSION_BOMBARD:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NW_THE_VIGILANTE_AT_NIGHT:
+			return std::make_unique<SkillTheVigilanteAtNight>();
 		case NW_WILD_FIRE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case RL_AM_BLAST:

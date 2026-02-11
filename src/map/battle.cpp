@@ -5651,19 +5651,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			}
 			RE_LVL_DMOD(100);
 			break;
-		case NW_THE_VIGILANTE_AT_NIGHT:
-			if (sd && sd->weapontype1 == W_GATLING) {
-				skillratio += -100 + 300 * skill_lv;
-				if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
-					skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 100 * skill_lv;
-			} else {
-				skillratio += -100 + 800 + 700 * skill_lv;
-				if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
-					skillratio += sc->getSCE(SC_INTENSIVE_AIM_COUNT)->val1 * 200 * skill_lv;
-			}
-			skillratio += 5 * sstatus->con;
-			RE_LVL_DMOD(100);
-			break;
 		case NW_MISSION_BOMBARD:
 			if( wd->miscflag&SKILL_ALTDMG_FLAG ){
 				skillratio += -100 + 5000 + 1800 * skill_lv;

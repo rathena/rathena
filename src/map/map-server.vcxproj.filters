@@ -867,6 +867,9 @@
     <ClInclude Include="skills/gunslinger/spreadattack.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/gunslinger/thevigilanteatnight.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/tracking.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -2502,6 +2505,9 @@
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/spreadattack.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/thevigilanteatnight.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/tracking.cpp">

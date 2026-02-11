@@ -5284,10 +5284,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			map_foreachinrange(skill_area_sub, bl, splash_size, starget, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
-	case NW_THE_VIGILANTE_AT_NIGHT:
-		if (flag & 1)
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
 	case NW_SPIRAL_SHOOTING:
 		if (flag & 1) {
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
@@ -9531,23 +9527,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			map_foreachinallrange( skill_area_sub, bl, skill_get_splash( skill_id, skill_lv ), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | 1, skill_castend_nodamage_id );
 		}
-		break;
-
-
-	case NW_THE_VIGILANTE_AT_NIGHT:
-		i = skill_get_splash(skill_id, skill_lv);
-		skill_area_temp[0] = 0;
-		skill_area_temp[1] = bl->id;
-		skill_area_temp[2] = 0;
-
-		if (sd && sd->weapontype1 == W_GATLING) {
-			i = 5; // 11x11
-			clif_skill_nodamage(src, *bl, NW_THE_VIGILANTE_AT_NIGHT_GUN_GATLING, skill_lv);
-		} else
-			clif_skill_nodamage(src, *bl, NW_THE_VIGILANTE_AT_NIGHT_GUN_SHOTGUN, skill_lv);
-		map_foreachinrange(skill_area_sub, bl, i, BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-		if (sc && sc->getSCE(SC_INTENSIVE_AIM_COUNT))
-			status_change_end(src, SC_INTENSIVE_AIM_COUNT);
 		break;
 
 	case ALL_EVENT_20TH_ANNIVERSARY:
