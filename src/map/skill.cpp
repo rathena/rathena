@@ -14817,12 +14817,14 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 
 			// Skills that requires servants.
 			case DK_SERVANT_W_SIGN:
-			case DK_SERVANT_W_PHANTOM:
 			case DK_SERVANT_W_DEMOL:
 				if (sd.servantball < require.spiritball) {
 					clif_skill_fail( sd, skill_id, USESKILL_FAIL_SPIRITS );
 					return false;
 				}
+				break;
+			case DK_SERVANT_W_PHANTOM:
+				//Can be used without servantballs but if there are any they will be consumed.
 				break;
 
 			default: // Skills that require spirit/coin spheres.

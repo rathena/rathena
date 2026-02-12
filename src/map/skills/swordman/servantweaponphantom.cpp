@@ -24,10 +24,17 @@ void SkillServantWeaponPhantom::applyAdditionalEffects(block_list* src, block_li
 }
 
 void SkillServantWeaponPhantom::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	status_change* tsc = status_get_sc(target);
+
 	// Jump to the target before attacking.
 	if (skill_check_unit_movepos(5, src, target->x, target->y, 0, 1))
 		skill_blown(src, src, 1, (map_calc_dir(target, src->x, src->y) + 4) % 8, BLOWN_NONE);
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);// Trigger animation on servants.
+	clif_blown(src);
+
+	// Deal no damage if no Servant Sign on Enemy
+	if (tsc == nullptr || tsc->getSCE(SC_SERVANT_SIGN) == nullptr || tsc->getSCE(SC_SERVANT_SIGN)->val1 != src->id)
+		return;
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 }
