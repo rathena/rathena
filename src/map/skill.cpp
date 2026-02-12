@@ -6768,7 +6768,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SJ_STAREMPEROR:
 	case SJ_FALLINGSTAR_ATK:
 	case BO_EXPLOSIVE_POWDER:
-	case SKE_DAWN_BREAK:
 	case SKE_SKY_SUN:
 	{
 		int32 starget = BL_CHAR|BL_SKILL;

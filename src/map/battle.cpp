@@ -5592,18 +5592,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(100);
 			break;
 
-		case SKE_DAWN_BREAK:
-			skillratio += -100 + 600 + 700 * skill_lv;
-			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 5 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-
-			if( sc != nullptr && ( sc->getSCE( SC_DAWN_MOON ) != nullptr || sc->getSCE( SC_SKY_ENCHANT ) != nullptr ) ){
-				skillratio += 200 * skill_lv;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-
 		case SS_SHIMIRU:
 			skillratio += -100 + 700 * skill_lv;
 			skillratio += 5 * sstatus->con;

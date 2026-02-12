@@ -10,6 +10,7 @@
 #include "circleofdirectionsandelementals.cpp"
 #include "counter.cpp"
 #include "curseexplosion.cpp"
+#include "dawnbreak.cpp"
 #include "downkick.cpp"
 #include "esha.cpp"
 #include "eska.cpp"
@@ -122,7 +123,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 		case SJ_UNIVERSESTANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case SKE_DAWN_BREAK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillDawnBreak>();
 		case SKE_ENCHANTING_SKY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SKE_MIDNIGHT_KICK:
