@@ -372,6 +372,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="skills/acolyte/absorbspiritsphere.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/adoramus.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -381,7 +384,22 @@
     <ClInclude Include="skills/acolyte/angelus.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/arbitrium.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/aspersio.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/assumptio.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/asurastrike.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/basilica.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/blazingflameblast.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/blessing.hpp">
@@ -399,6 +417,9 @@
     <ClInclude Include="skills/acolyte/coluceoheal.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/competentia.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/convenio.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -414,10 +435,28 @@
     <ClInclude Include="skills/acolyte/decagi.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/dilectioheal.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/divinusflos.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/duplelight.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/effligo.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/epiclesis.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/explosionblaster.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/firstbrand.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/framen.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/gloria.hpp">
@@ -444,6 +483,12 @@
     <ClInclude Include="skills/acolyte/judex.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/kiexplosion.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/kitranslation.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/kyrieeleison.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -462,16 +507,46 @@
     <ClInclude Include="skills/acolyte/magnusexorcismus.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/massiveflameblaster.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/medialevotum.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/occultimpaction.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/oleumsanctum.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/oratio.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/petitio.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/pneuma.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/pneumaticusprocella.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/praefatio.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/ragingquadrupleblow.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/ragingthrust.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/ragingtrifectablow.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/renovatio.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/reparatio.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/ruwach.hpp">
@@ -480,10 +555,22 @@
     <ClInclude Include="skills/acolyte/sanctuary.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/secondfaith.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/secondflame.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/secondjudgement.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/silentium.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/snap.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/statusrecovery.hpp">
@@ -492,13 +579,34 @@
     <ClInclude Include="skills/acolyte/suffragium.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/summonspiritsphere.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/thirdconsecration.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/thirdflamebomb.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/thirdpunish.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/throwspiritsphere.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/turnundead.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/vituperatum.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/acousticrhythm.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/aimedbolt.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/amp.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/anklesnare.hpp">
@@ -508,6 +616,9 @@
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/arrowstorm.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/battletheme.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/beaststrafing.hpp">
@@ -523,6 +634,9 @@
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/chargearrow.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/classicalpluck.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/claymoretrap.hpp">
@@ -552,7 +666,13 @@
     <ClInclude Include="skills/archer/doublestrafe.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/downtempo.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/electricshocker.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/encore.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/falconassault.hpp">
@@ -579,6 +699,9 @@
     <ClInclude Include="skills/archer/galestorm.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/harmoniclick.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/hawkboomerang.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -591,10 +714,19 @@
     <ClInclude Include="skills/archer/iceboundtrap.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/impressiveriff.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/landmine.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/lullaby.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/magentatrap.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/magicstrings.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/maizetrap.hpp">
@@ -603,7 +735,22 @@
     <ClInclude Include="skills/archer/makingarrow.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/melodystrike.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/mentalsensing.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/pangvoice.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/perfecttablature.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/phantasmicarrow.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/powerchord.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/removetrap.hpp">
@@ -627,6 +774,9 @@
     <ClInclude Include="skills/archer/solidtrap.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/songoflutie.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/springtrap.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -634,6 +784,12 @@
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/talkiebox.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/unbarringoctave.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/unchainedserenade.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/verduretrap.hpp">
@@ -663,6 +819,9 @@
     <ClInclude Include="skills/custom/skill_factory_custom.hpp">
       <Filter>Header Files\Skills\Custom</Filter>
     </ClInclude>
+    <ClInclude Include="skills/gunslinger/basicgrenade.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/bullseye.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -690,7 +849,31 @@
     <ClInclude Include="skills/gunslinger/glittering.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/gunslinger/grenadefragment.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/grenadesdropping.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/grounddrift.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/hastyfireinthehole.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/intensiveaim.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/magazineforone.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/midnightfallen.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/missionbombard.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/onlyonebullet.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
     <ClInclude Include="skills/gunslinger/piercingshot.hpp">
@@ -702,7 +885,13 @@
     <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/gunslinger/spiralshooting.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/spreadattack.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/thevigilanteatnight.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
     <ClInclude Include="skills/gunslinger/tracking.hpp">
@@ -711,16 +900,46 @@
     <ClInclude Include="skills/gunslinger/tripleaction.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/gunslinger/wildfire.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/wildshot.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/allbloom.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/astralstrike.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/beastlyhypnosis.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/castcancel.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/chainlightning.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/classchange.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/coldbolt.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/coma.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/comet.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/createelementalconverter.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/crimsonarrow.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/crimsonrock.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/crystalimpact.hpp">
@@ -729,10 +948,46 @@
     <ClInclude Include="skills/mage/deadlyprojection.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/deluge.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/destructivehurricane.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/dispell.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/drainlife.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/earthspike.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/earthstrain.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/elementalchangeearth.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/elementalchangefire.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/elementalchangewater.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/elementalchangewind.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/endowblaze.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/endowquake.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/endowtornado.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/endowtsunami.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/energycoat.hpp">
@@ -762,22 +1017,49 @@
     <ClInclude Include="skills/mage/frostnova.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/frostymisty.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/frozenslash.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/ganbantein.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/golddigger.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/gravitationfield.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/gravity.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/grimreaper.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/heavensdrive.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/hellinferno.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/hindsight.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/hocuspocus.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/icewall.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/jackfrost.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/jupitelthunder.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/leveling.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/lightningbolt.hpp">
@@ -786,7 +1068,19 @@
     <ClInclude Include="skills/mage/lordofvermilion.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/magicrod.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/magneticearth.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/meteorstorm.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/monocell.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/monsterchant.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/mysteryillusion.hpp">
@@ -801,7 +1095,19 @@
     <ClInclude Include="skills/mage/quagmire.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/questioning.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/rainofcrystal.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/readingspellbook.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/rejuvenation.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/release.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/rockdown.hpp">
@@ -811,6 +1117,9 @@
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/sense.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/siennaexecrate.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/sight.hpp">
@@ -825,10 +1134,19 @@
     <ClInclude Include="skills/mage/skill_factory_mage.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/soulexpansion.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/soulstrike.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/soulvulcanstrike.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/spellbreaker.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/stasis.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/stonecurse.hpp">
@@ -843,6 +1161,24 @@
     <ClInclude Include="skills/mage/strantumtremor.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/suicide.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/summonfireball.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/summonlightningball.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/summonstone.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/summonwaterball.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/tetravortex.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/thunderstorm.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -852,7 +1188,16 @@
     <ClInclude Include="skills/mage/violentquake.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/volcano.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/waterball.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/whirlwind.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/whiteimprison.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp">
@@ -860,6 +1205,18 @@
     </ClInclude>
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/abrbattlewarior.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/abrdualcannon.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/abrinfinity.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/abrmothernet.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/aciddemonstration.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
@@ -883,6 +1240,12 @@
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/alchemicalweapon.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/attackmachine.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/axestomp.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp">
@@ -909,6 +1272,9 @@
     <ClInclude Include="skills/merchant/decoratecart.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/energycannonade.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/fullprotection.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -924,7 +1290,16 @@
     <ClInclude Include="skills/merchant/mammonite.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/manufacturemachine.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/mightysmash.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/plantcultivation.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/powerfulswing.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/powerthrust.hpp">
@@ -933,10 +1308,19 @@
     <ClInclude Include="skills/merchant/preparepotion.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/rushquake.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/rushstrike.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/skill_factory_merchant.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/skill_vending.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/sparkblaster.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/summonflora.hpp">
@@ -949,6 +1333,9 @@
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/syntheticarmor.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/triplelaser.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/twilightalchemy1.hpp">
@@ -1023,16 +1410,121 @@
     <ClInclude Include="skills/skill_impl.hpp">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
-    <ClInclude Include="skills/status_skill_impl.hpp">
-      <Filter>Header Files\Skills</Filter>
+    <ClInclude Include="skills/summoner/bite.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/blessingofmysticalcreatures.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/bunchofshrimp.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/catnipmeteor.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/catnippowdering.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/chattering.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/chulhobattering.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/chulhosonicclaw.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/colorsofhyunrok.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/grooming.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/hiss.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/hogogongstrike.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/howlingofchulho.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/hyunrokbreeze.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/hyunrokcannon.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/hyunrokspiritpower.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/kisulrampage.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/kisulwaterspraying.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/lope.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/lunaticcarrotbeat.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/marinefestivalofkisul.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/meowmeow.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/nyanggrass.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/pickypeck.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/powerofflock.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/purring.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/sandyfestivalofkisul.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/scaroftarou.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/scratch.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/silvervineroottwist.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/silvervinestemspear.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/summoner/skill_factory_summoner.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/spiritofsavage.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/tastyshrimpparty.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/tunabelly.hpp">
+      <Filter>Header Files\Skills\Summoner</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/summoner/tunaparty.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/autoberserk.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/bash.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/battlechant.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/bowlingbash.hpp">
@@ -1044,6 +1536,9 @@
     <ClInclude Include="skills/swordman/counterattack.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/crossrain.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/dragonicaura.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -1053,7 +1548,16 @@
     <ClInclude Include="skills/swordman/dragonicpierce.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/gloriadomini.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/grandcross.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/grandjudgement.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/guardianshield.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/hackandslasher.hpp">
@@ -1062,16 +1566,34 @@
     <ClInclude Include="skills/swordman/holycross.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/imperialcross.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/imperialpressure.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/judgementcross.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/madnesscrusher.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/magnum.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/martyrsreckoning.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/overslash.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/pierce.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/provoke.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/radiantspear.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/relax.hpp">
@@ -1101,7 +1623,13 @@
     <ClInclude Include="skills/swordman/shieldboomerang.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/shieldchain.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/shieldreflect.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/shieldshooting.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp">
@@ -1125,6 +1653,9 @@
     <ClInclude Include="skills/swordman/traumaticblow.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/ultimatesacrifice.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/vitalstrike.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -1134,7 +1665,13 @@
     <ClInclude Include="skills/taekwon/counter.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/curseexplosion.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/downkick.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/esha.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/eska.hpp">
@@ -1146,10 +1683,16 @@
     <ClInclude Include="skills/taekwon/esma.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/espa.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/estin.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/estun.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/eswhoo.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/eswoo.hpp">
@@ -1158,7 +1701,16 @@
     <ClInclude Include="skills/taekwon/exorcismofmalicioussoul.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/fairyssoul.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/falconssoul.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/feelingthesunmoonandstars.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/golemssoul.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/hatredofthesunmoonandstars.hpp">
@@ -1182,6 +1734,9 @@
     <ClInclude Include="skills/taekwon/kaupe.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/kaute.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/mission.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
@@ -1191,13 +1746,34 @@
     <ClInclude Include="skills/taekwon/sevenwind.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/shadowssoul.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/skill_factory_taekwon.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/soulcollect.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/soulcurse.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/souldivision.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/soulexplosion.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/soulgathering.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/soulofheavenandearth.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/soulrevolution.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/taekwon/soulunity.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/spiritofrebirth.hpp">
@@ -1296,6 +1872,15 @@
     <ClInclude Include="skills/taekwon/warmthofthesun.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/abyssdagger.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/abyssflame.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/abysssquare.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/antidote.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -1303,6 +1888,15 @@
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/backstab.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/chainreactionshot.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/chasingbreak.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/chasingshot.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/cloaking.hpp">
@@ -1332,6 +1926,9 @@
     <ClInclude Include="skills/thief/crossripperslasher.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/crossslash.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/dancingknife.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -1339,6 +1936,9 @@
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/darkillusion.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/deftstab.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/detoxify.hpp">
@@ -1377,6 +1977,12 @@
     <ClInclude Include="skills/thief/findstone.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/frenzyshot.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/fromtheabyss.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/grimtooth.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -1386,6 +1992,9 @@
     <ClInclude Include="skills/thief/hiding.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/hitandsliding.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/impactcrater.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -1393,6 +2002,9 @@
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/mug.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/omegaabyssstrike.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/phantommenace.hpp">
@@ -1422,9 +2034,6 @@
     <ClInclude Include="skills/thief/shadowstab.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
-    <ClInclude Include="skills/thief/crossslash.hpp">
-      <Filter>Header Files\Skills\Thief</Filter>
-    </ClInclude>
     <ClInclude Include="skills/thief/sightlessmind.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
@@ -1449,7 +2058,13 @@
     <ClInclude Include="skills/thief/stonefling.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
+    <ClInclude Include="skills/thief/stripshadow.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
     <ClInclude Include="skills/thief/throwvenomknife.hpp">
+      <Filter>Header Files\Skills\Thief</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/thief/unluckyrush.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
     <ClInclude Include="skills/thief/venomdust.hpp">
@@ -1464,11 +2079,11 @@
     <ClInclude Include="skills/thief/weaponcrush.hpp">
       <Filter>Header Files\Skills\Thief</Filter>
     </ClInclude>
-    <ClInclude Include="skills/weapon_skill_impl.hpp">
-      <Filter>Header Files\Skills</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="skills/acolyte/absorbspiritsphere.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/adoramus.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -1478,7 +2093,22 @@
     <ClCompile Include="skills/acolyte/angelus.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/arbitrium.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/aspersio.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/assumptio.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/asurastrike.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/basilica.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/blazingflameblast.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/blessing.cpp">
@@ -1496,6 +2126,9 @@
     <ClCompile Include="skills/acolyte/coluceoheal.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/competentia.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/convenio.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -1511,10 +2144,28 @@
     <ClCompile Include="skills/acolyte/decagi.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/dilectioheal.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/divinusflos.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/duplelight.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/effligo.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/epiclesis.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/explosionblaster.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/firstbrand.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/framen.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/gloria.cpp">
@@ -1541,6 +2192,12 @@
     <ClCompile Include="skills/acolyte/judex.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/kiexplosion.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/kitranslation.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/kyrieeleison.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -1559,16 +2216,46 @@
     <ClCompile Include="skills/acolyte/magnusexorcismus.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/massiveflameblaster.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/medialevotum.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/occultimpaction.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/oleumsanctum.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/oratio.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/petitio.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/pneuma.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/pneumaticusprocella.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/praefatio.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/ragingquadrupleblow.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/ragingthrust.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/ragingtrifectablow.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/renovatio.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/reparatio.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/ruwach.cpp">
@@ -1577,10 +2264,22 @@
     <ClCompile Include="skills/acolyte/sanctuary.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/secondfaith.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/secondflame.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/secondjudgement.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/silentium.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/snap.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/statusrecovery.cpp">
@@ -1589,13 +2288,34 @@
     <ClCompile Include="skills/acolyte/suffragium.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/summonspiritsphere.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/thirdconsecration.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/thirdflamebomb.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/thirdpunish.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/throwspiritsphere.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/turnundead.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/vituperatum.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/archer/acousticrhythm.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
     <ClCompile Include="skills/archer/aimedbolt.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/amp.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/anklesnare.cpp">
@@ -1605,6 +2325,9 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/arrowstorm.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/battletheme.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/beaststrafing.cpp">
@@ -1620,6 +2343,9 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/chargearrow.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/classicalpluck.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/claymoretrap.cpp">
@@ -1649,7 +2375,13 @@
     <ClCompile Include="skills/archer/doublestrafe.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
+    <ClCompile Include="skills/archer/downtempo.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
     <ClCompile Include="skills/archer/electricshocker.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/encore.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/falconassault.cpp">
@@ -1676,6 +2408,9 @@
     <ClCompile Include="skills/archer/galestorm.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
+    <ClCompile Include="skills/archer/harmoniclick.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
     <ClCompile Include="skills/archer/hawkboomerang.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
@@ -1688,10 +2423,19 @@
     <ClCompile Include="skills/archer/iceboundtrap.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
+    <ClCompile Include="skills/archer/impressiveriff.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
     <ClCompile Include="skills/archer/landmine.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
+    <ClCompile Include="skills/archer/lullaby.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
     <ClCompile Include="skills/archer/magentatrap.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/magicstrings.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/maizetrap.cpp">
@@ -1700,7 +2444,22 @@
     <ClCompile Include="skills/archer/makingarrow.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
+    <ClCompile Include="skills/archer/melodystrike.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/mentalsensing.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/pangvoice.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/perfecttablature.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
     <ClCompile Include="skills/archer/phantasmicarrow.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/powerchord.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/removetrap.cpp">
@@ -1724,6 +2483,9 @@
     <ClCompile Include="skills/archer/solidtrap.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
+    <ClCompile Include="skills/archer/songoflutie.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
     <ClCompile Include="skills/archer/springtrap.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
@@ -1731,6 +2493,12 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/talkiebox.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/unbarringoctave.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/unchainedserenade.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/verduretrap.cpp">
@@ -1760,6 +2528,9 @@
     <ClCompile Include="skills/custom/skill_factory_custom.cpp">
       <Filter>Source Files\Skills\Custom</Filter>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/basicgrenade.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/bullseye.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
@@ -1787,7 +2558,31 @@
     <ClCompile Include="skills/gunslinger/glittering.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/grenadefragment.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/grenadesdropping.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/grounddrift.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/hastyfireinthehole.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/intensiveaim.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/magazineforone.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/midnightfallen.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/missionbombard.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/onlyonebullet.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/piercingshot.cpp">
@@ -1799,7 +2594,13 @@
     <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/spiralshooting.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/spreadattack.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/thevigilanteatnight.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/tracking.cpp">
@@ -1808,16 +2609,46 @@
     <ClCompile Include="skills/gunslinger/tripleaction.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/wildfire.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/wildshot.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/allbloom.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/astralstrike.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/beastlyhypnosis.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/castcancel.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/chainlightning.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/classchange.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/coldbolt.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/coma.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/comet.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/createelementalconverter.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/crimsonarrow.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/crimsonrock.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/crystalimpact.cpp">
@@ -1826,10 +2657,46 @@
     <ClCompile Include="skills/mage/deadlyprojection.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/deluge.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/destructivehurricane.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/dispell.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/drainlife.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/earthspike.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/earthstrain.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/elementalchangeearth.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/elementalchangefire.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/elementalchangewater.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/elementalchangewind.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/endowblaze.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/endowquake.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/endowtornado.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/endowtsunami.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/energycoat.cpp">
@@ -1859,22 +2726,49 @@
     <ClCompile Include="skills/mage/frostnova.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/frostymisty.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/frozenslash.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/ganbantein.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/golddigger.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/gravitationfield.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/gravity.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/grimreaper.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/heavensdrive.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/hellinferno.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/hindsight.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/hocuspocus.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/icewall.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/jackfrost.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/jupitelthunder.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/leveling.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/lightningbolt.cpp">
@@ -1883,7 +2777,19 @@
     <ClCompile Include="skills/mage/lordofvermilion.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/magicrod.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/magneticearth.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/meteorstorm.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/monocell.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/monsterchant.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/mysteryillusion.cpp">
@@ -1898,7 +2804,19 @@
     <ClCompile Include="skills/mage/quagmire.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/questioning.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/rainofcrystal.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/readingspellbook.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/rejuvenation.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/release.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/rockdown.cpp">
@@ -1908,6 +2826,9 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/sense.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/siennaexecrate.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/sight.cpp">
@@ -1922,10 +2843,19 @@
     <ClCompile Include="skills/mage/skill_factory_mage.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/soulexpansion.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/soulstrike.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/soulvulcanstrike.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/spellbreaker.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/stasis.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/stonecurse.cpp">
@@ -1940,6 +2870,24 @@
     <ClCompile Include="skills/mage/strantumtremor.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/suicide.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/summonfireball.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/summonlightningball.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/summonstone.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/summonwaterball.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/tetravortex.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/thunderstorm.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
@@ -1949,7 +2897,16 @@
     <ClCompile Include="skills/mage/violentquake.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/volcano.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/waterball.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/whirlwind.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/whiteimprison.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp">
@@ -1957,6 +2914,18 @@
     </ClCompile>
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/abrbattlewarior.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/abrdualcannon.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/abrinfinity.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/abrmothernet.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/aciddemonstration.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
@@ -1980,6 +2949,12 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/alchemicalweapon.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/attackmachine.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/axestomp.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/biochemicalhelm.cpp">
@@ -2006,6 +2981,9 @@
     <ClCompile Include="skills/merchant/decoratecart.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/energycannonade.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/fullprotection.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
@@ -2021,7 +2999,16 @@
     <ClCompile Include="skills/merchant/mammonite.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/manufacturemachine.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/mightysmash.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/plantcultivation.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/powerfulswing.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/powerthrust.cpp">
@@ -2030,10 +3017,19 @@
     <ClCompile Include="skills/merchant/preparepotion.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/rushquake.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/rushstrike.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/skill_vending.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/sparkblaster.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/summonflora.cpp">
@@ -2046,6 +3042,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/syntheticarmor.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/triplelaser.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/twilightalchemy1.cpp">
@@ -2120,16 +3119,121 @@
     <ClCompile Include="skills/skill_impl.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
-    <ClCompile Include="skills/status_skill_impl.cpp">
-      <Filter>Source Files\Skills</Filter>
+    <ClCompile Include="skills/summoner/bite.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/blessingofmysticalcreatures.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/bunchofshrimp.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/catnipmeteor.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/catnippowdering.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/chattering.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/chulhobattering.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/chulhosonicclaw.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/colorsofhyunrok.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/grooming.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hiss.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hogogongstrike.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/howlingofchulho.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hyunrokbreeze.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hyunrokcannon.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/hyunrokspiritpower.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/kisulrampage.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/kisulwaterspraying.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/lope.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/lunaticcarrotbeat.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/marinefestivalofkisul.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/meowmeow.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/nyanggrass.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/pickypeck.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/powerofflock.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/purring.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/sandyfestivalofkisul.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/scaroftarou.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/scratch.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/silvervineroottwist.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/silvervinestemspear.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/summoner/skill_factory_summoner.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/spiritofsavage.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/tastyshrimpparty.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/tunabelly.cpp">
+      <Filter>Source Files\Skills\Summoner</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/summoner/tunaparty.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/autoberserk.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/bash.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/battlechant.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/bowlingbash.cpp">
@@ -2141,6 +3245,9 @@
     <ClCompile Include="skills/swordman/counterattack.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/crossrain.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/dragonicaura.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -2150,7 +3257,16 @@
     <ClCompile Include="skills/swordman/dragonicpierce.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/gloriadomini.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/grandcross.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/grandjudgement.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/guardianshield.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/hackandslasher.cpp">
@@ -2159,16 +3275,34 @@
     <ClCompile Include="skills/swordman/holycross.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/imperialcross.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/imperialpressure.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/judgementcross.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/madnesscrusher.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/magnum.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/martyrsreckoning.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/overslash.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/pierce.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/provoke.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/radiantspear.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/relax.cpp">
@@ -2198,7 +3332,13 @@
     <ClCompile Include="skills/swordman/shieldboomerang.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/shieldchain.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/shieldreflect.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/shieldshooting.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp">
@@ -2222,6 +3362,9 @@
     <ClCompile Include="skills/swordman/traumaticblow.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/ultimatesacrifice.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/vitalstrike.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -2231,7 +3374,13 @@
     <ClCompile Include="skills/taekwon/counter.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/curseexplosion.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/downkick.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/esha.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/eska.cpp">
@@ -2243,10 +3392,16 @@
     <ClCompile Include="skills/taekwon/esma.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/espa.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/estin.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/estun.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/eswhoo.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/eswoo.cpp">
@@ -2255,7 +3410,16 @@
     <ClCompile Include="skills/taekwon/exorcismofmalicioussoul.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/fairyssoul.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/falconssoul.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/feelingthesunmoonandstars.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/golemssoul.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/hatredofthesunmoonandstars.cpp">
@@ -2279,6 +3443,9 @@
     <ClCompile Include="skills/taekwon/kaupe.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/kaute.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/mission.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
@@ -2288,13 +3455,34 @@
     <ClCompile Include="skills/taekwon/sevenwind.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/taekwon/shadowssoul.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulcollect.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulcurse.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/souldivision.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulexplosion.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/soulgathering.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/soulofheavenandearth.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulrevolution.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/soulunity.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/spiritofrebirth.cpp">
@@ -2393,6 +3581,15 @@
     <ClCompile Include="skills/taekwon/warmthofthesun.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/abyssdagger.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/abyssflame.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/abysssquare.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/antidote.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
@@ -2400,6 +3597,15 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/backstab.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/chainreactionshot.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/chasingbreak.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/chasingshot.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/cloaking.cpp">
@@ -2429,6 +3635,9 @@
     <ClCompile Include="skills/thief/crossripperslasher.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/crossslash.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/dancingknife.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
@@ -2436,6 +3645,9 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/darkillusion.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/deftstab.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/detoxify.cpp">
@@ -2474,6 +3686,12 @@
     <ClCompile Include="skills/thief/findstone.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/frenzyshot.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/fromtheabyss.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/grimtooth.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
@@ -2483,6 +3701,9 @@
     <ClCompile Include="skills/thief/hiding.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/hitandsliding.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/impactcrater.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
@@ -2490,6 +3711,9 @@
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/mug.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/omegaabyssstrike.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/phantommenace.cpp">
@@ -2519,9 +3743,6 @@
     <ClCompile Include="skills/thief/shadowstab.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
-    <ClCompile Include="skills/thief/crossslash.cpp">
-      <Filter>Source Files\Skills\Thief</Filter>
-    </ClCompile>
     <ClCompile Include="skills/thief/sightlessmind.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
@@ -2546,7 +3767,13 @@
     <ClCompile Include="skills/thief/stonefling.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
+    <ClCompile Include="skills/thief/stripshadow.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
     <ClCompile Include="skills/thief/throwvenomknife.cpp">
+      <Filter>Source Files\Skills\Thief</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/thief/unluckyrush.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
     </ClCompile>
     <ClCompile Include="skills/thief/venomdust.cpp">
@@ -2560,9 +3787,6 @@
     </ClCompile>
     <ClCompile Include="skills/thief/weaponcrush.cpp">
       <Filter>Source Files\Skills\Thief</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/weapon_skill_impl.cpp">
-      <Filter>Source Files\Skills</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

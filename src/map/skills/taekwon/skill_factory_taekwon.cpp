@@ -3,64 +3,80 @@
 
 #include "skill_factory_taekwon.hpp"
 
-#include "../status_skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-#include "circleofdirectionsandelementals.hpp"
-#include "counter.hpp"
-#include "downkick.hpp"
-#include "eska.hpp"
-#include "eske.hpp"
-#include "esma.hpp"
-#include "estin.hpp"
-#include "estun.hpp"
-#include "eswoo.hpp"
-#include "exorcismofmalicioussoul.hpp"
-#include "feelingthesunmoonandstars.hpp"
-#include "hatredofthesunmoonandstars.hpp"
-#include "highjump.hpp"
-#include "jumpkick.hpp"
-#include "kaahi.hpp"
-#include "kaite.hpp"
-#include "kaizel.hpp"
-#include "kaupe.hpp"
-#include "mission.hpp"
-#include "run.hpp"
-#include "sevenwind.hpp"
-#include "soulgathering.hpp"
-#include "soulofheavenandearth.hpp"
-#include "spiritofrebirth.hpp"
-#include "spiritofthealchemist.hpp"
-#include "spiritoftheartist.hpp"
-#include "spiritoftheassasin.hpp"
-#include "spiritoftheblacksmith.hpp"
-#include "spiritofthecrusader.hpp"
-#include "spiritofthehunter.hpp"
-#include "spiritoftheknight.hpp"
-#include "spiritofthemonk.hpp"
-#include "spiritofthepriest.hpp"
-#include "spiritoftherogue.hpp"
-#include "spiritofthesage.hpp"
-#include "spiritofthesoullinker.hpp"
-#include "spiritofthestargladiator.hpp"
-#include "spiritofthesupernovice.hpp"
-#include "spiritofthewizard.hpp"
-#include "stormkick.hpp"
-#include "talismanofblacktortoise.hpp"
-#include "talismanofbluedragon.hpp"
-#include "talismanoffiveelements.hpp"
-#include "talismanoffourbearinggod.hpp"
-#include "talismanofmagician.hpp"
-#include "talismanofprotection.hpp"
-#include "talismanofredphoenix.hpp"
-#include "talismanofsoulstealing.hpp"
-#include "talismanofwarrior.hpp"
-#include "talismanofwhitetiger.hpp"
-#include "totemoftutelary.hpp"
-#include "turnkick.hpp"
-#include "warmthofthemoon.hpp"
-#include "warmthofthestars.hpp"
-#include "warmthofthesun.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "circleofdirectionsandelementals.cpp"
+#include "counter.cpp"
+#include "curseexplosion.cpp"
+#include "downkick.cpp"
+#include "esha.cpp"
+#include "eska.cpp"
+#include "eske.cpp"
+#include "esma.cpp"
+#include "espa.cpp"
+#include "estin.cpp"
+#include "estun.cpp"
+#include "eswhoo.cpp"
+#include "eswoo.cpp"
+#include "exorcismofmalicioussoul.cpp"
+#include "fairyssoul.cpp"
+#include "falconssoul.cpp"
+#include "feelingthesunmoonandstars.cpp"
+#include "golemssoul.cpp"
+#include "hatredofthesunmoonandstars.cpp"
+#include "highjump.cpp"
+#include "jumpkick.cpp"
+#include "kaahi.cpp"
+#include "kaite.cpp"
+#include "kaizel.cpp"
+#include "kaupe.cpp"
+#include "kaute.cpp"
+#include "mission.cpp"
+#include "run.cpp"
+#include "sevenwind.cpp"
+#include "shadowssoul.cpp"
+#include "soulcollect.cpp"
+#include "soulcurse.cpp"
+#include "souldivision.cpp"
+#include "soulexplosion.cpp"
+#include "soulgathering.cpp"
+#include "soulofheavenandearth.cpp"
+#include "soulrevolution.cpp"
+#include "soulunity.cpp"
+#include "spiritofrebirth.cpp"
+#include "spiritofthealchemist.cpp"
+#include "spiritoftheartist.cpp"
+#include "spiritoftheassasin.cpp"
+#include "spiritoftheblacksmith.cpp"
+#include "spiritofthecrusader.cpp"
+#include "spiritofthehunter.cpp"
+#include "spiritoftheknight.cpp"
+#include "spiritofthemonk.cpp"
+#include "spiritofthepriest.cpp"
+#include "spiritoftherogue.cpp"
+#include "spiritofthesage.cpp"
+#include "spiritofthesoullinker.cpp"
+#include "spiritofthestargladiator.cpp"
+#include "spiritofthesupernovice.cpp"
+#include "spiritofthewizard.cpp"
+#include "stormkick.cpp"
+#include "talismanofblacktortoise.cpp"
+#include "talismanofbluedragon.cpp"
+#include "talismanoffiveelements.cpp"
+#include "talismanoffourbearinggod.cpp"
+#include "talismanofmagician.cpp"
+#include "talismanofprotection.cpp"
+#include "talismanofredphoenix.cpp"
+#include "talismanofsoulstealing.cpp"
+#include "talismanofwarrior.cpp"
+#include "talismanofwhitetiger.cpp"
+#include "totemoftutelary.cpp"
+#include "turnkick.cpp"
+#include "warmthofthemoon.cpp"
+#include "warmthofthestars.cpp"
+#include "warmthofthesun.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -190,8 +206,38 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<SkillTalismanOfWhiteTiger>();
 		case SOA_TOTEM_OF_TUTELARY:
 			return std::make_unique<SkillTotemOfTutelary>();
+		case SP_CURSEEXPLOSION:
+			return std::make_unique<SkillCurseExplosion>();
+		case SP_KAUTE:
+			return std::make_unique<SkillKaute>();
+		case SP_SHA:
+			return std::make_unique<SkillEsha>();
+		case SP_SOULCOLLECT:
+			return std::make_unique<SkillSoulCollect>();
+		case SP_SOULCURSE:
+			return std::make_unique<SkillSoulCurse>();
+		case SP_SOULDIVISION:
+			return std::make_unique<SkillSoulDivision>();
+		case SP_SOULEXPLOSION:
+			return std::make_unique<SkillSoulExplosion>();
+		case SP_SOULFAIRY:
+			return std::make_unique<SkillFairysSoul>();
+		case SP_SOULFALCON:
+			return std::make_unique<SkillFalconsSoul>();
+		case SP_SOULGOLEM:
+			return std::make_unique<SkillGolemsSoul>();
 		case SP_SOULREAPER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SP_SOULREVOLVE:
+			return std::make_unique<SkillSoulRevolution>();
+		case SP_SOULSHADOW:
+			return std::make_unique<SkillShadowsSoul>();
+		case SP_SOULUNITY:
+			return std::make_unique<SkillSoulUnity>();
+		case SP_SPA:
+			return std::make_unique<SkillEspa>();
+		case SP_SWHOO:
+			return std::make_unique<SkillEswhoo>();
 		case TK_COUNTER:
 			return std::make_unique<SkillCounter>();
 		case TK_DODGE:
