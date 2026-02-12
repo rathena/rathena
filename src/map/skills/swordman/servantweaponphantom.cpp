@@ -33,7 +33,7 @@ void SkillServantWeaponPhantom::splashSearch(block_list* src, block_list* target
 	clif_blown(src);
 
 	// Deal no damage if no Servant Sign on Enemy
-	if (tsc == nullptr || tsc->getSCE(SC_SERVANT_SIGN) == nullptr || tsc->getSCE(SC_SERVANT_SIGN)->val1 != src->id)
+	if (tsc == nullptr || !tsc->hasSCE(SC_SERVANT_SIGN) || tsc->getSCE(SC_SERVANT_SIGN)->val1 != src->id)
 		return;
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
