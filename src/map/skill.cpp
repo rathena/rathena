@@ -5224,7 +5224,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case SKE_TWINKLING_GALAXY:
 	case SKE_STAR_CANNON:
 		if (flag & 1)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
@@ -10664,12 +10663,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		}
 		break;
 
-	case SKE_TWINKLING_GALAXY:
-		for (i = 0; i < skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id); i++)
-			skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
-		flag |= 1;
-		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-		break;
 	case SKE_STAR_BURST:
 		flag |= 1;
 		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);

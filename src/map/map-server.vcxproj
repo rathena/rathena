@@ -744,6 +744,7 @@
     <ClInclude Include="skills/taekwon/talismanofwhitetiger.hpp" />
     <ClInclude Include="skills/taekwon/totemoftutelary.hpp" />
     <ClInclude Include="skills/taekwon/turnkick.hpp" />
+    <ClInclude Include="skills/taekwon/twinklinggalaxy.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthemoon.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthestars.hpp" />
     <ClInclude Include="skills/taekwon/warmthofthesun.hpp" />
@@ -2371,6 +2372,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/turnkick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/twinklinggalaxy.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/warmthofthemoon.cpp">

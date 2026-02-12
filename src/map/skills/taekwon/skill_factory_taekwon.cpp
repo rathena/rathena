@@ -80,6 +80,7 @@
 #include "talismanofwhitetiger.cpp"
 #include "totemoftutelary.cpp"
 #include "turnkick.cpp"
+#include "twinklinggalaxy.cpp"
 #include "warmthofthemoon.cpp"
 #include "warmthofthestars.cpp"
 #include "warmthofthesun.cpp"
@@ -136,6 +137,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<SkillRisingSun>();
 		case SKE_SUNSET_BLAST:
 			return std::make_unique<SkillSunsetBlast>();
+		case SKE_TWINKLING_GALAXY:
+			return std::make_unique<SkillTwinklingGalaxy>();
 		case SL_ALCHEMIST:
 			return std::make_unique<SkillSpiritoftheAlchemist>();
 		case SL_ASSASIN:
