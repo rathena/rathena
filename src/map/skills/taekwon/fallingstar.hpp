@@ -5,6 +5,15 @@
 
 #include "../skill_impl.hpp"
 
+// SJ_FALLINGSTAR
+class SkillFallingStar : public StatusSkillImpl {
+public:
+	SkillFallingStar();
+
+	void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const override;
+};
+
+
 // SJ_FALLINGSTAR_ATK2
 class SkillFallingStarAttack : public WeaponSkillImpl {
 public:

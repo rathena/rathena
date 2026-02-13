@@ -25,7 +25,7 @@
 #include "exorcismofmalicioussoul.cpp"
 #include "fairyssoul.cpp"
 #include "falconssoul.cpp"
-#include "fallingstarattack.cpp"
+#include "fallingstar.cpp"
 #include "feelingthesunmoonandstars.cpp"
 #include "flashkick.cpp"
 #include "fullmoonkick.cpp"
@@ -116,7 +116,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 		case SJ_DOCUMENT:
 			return std::make_unique<SkillDocumentofSunMoonAndStar>();
 		case SJ_FALLINGSTAR:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillFallingStar>();
 		case SJ_FALLINGSTAR_ATK:
 			return std::make_unique<SkillFallingStarAttack>();
 		case SJ_FALLINGSTAR_ATK2:

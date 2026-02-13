@@ -675,7 +675,7 @@
     <ClInclude Include="skills/taekwon/exorcismofmalicioussoul.hpp" />
     <ClInclude Include="skills/taekwon/fairyssoul.hpp" />
     <ClInclude Include="skills/taekwon/falconssoul.hpp" />
-    <ClInclude Include="skills/taekwon/fallingstarattack.hpp" />
+    <ClInclude Include="skills/taekwon/fallingstar.hpp" />
     <ClInclude Include="skills/taekwon/feelingthesunmoonandstars.hpp" />
     <ClInclude Include="skills/taekwon/flashkick.hpp" />
     <ClInclude Include="skills/taekwon/fullmoonkick.hpp" />
@@ -2145,7 +2145,7 @@
     <ClCompile Include="skills/taekwon/falconssoul.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/fallingstarattack.cpp">
+    <ClCompile Include="skills/taekwon/fallingstar.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/feelingthesunmoonandstars.cpp">

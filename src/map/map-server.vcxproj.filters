@@ -1674,7 +1674,7 @@
     <ClInclude Include="skills/taekwon/falconssoul.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
-    <ClInclude Include="skills/taekwon/fallingstarattack.hpp">
+    <ClInclude Include="skills/taekwon/fallingstar.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/feelingthesunmoonandstars.hpp">
@@ -3338,7 +3338,7 @@
     <ClCompile Include="skills/taekwon/falconssoul.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/fallingstarattack.cpp">
+    <ClCompile Include="skills/taekwon/fallingstar.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/feelingthesunmoonandstars.cpp">
