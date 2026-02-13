@@ -735,6 +735,7 @@
     <ClInclude Include="skills/taekwon/spiritofthewizard.hpp" />
     <ClInclude Include="skills/taekwon/starburst.hpp" />
     <ClInclude Include="skills/taekwon/starcannon.hpp" />
+    <ClInclude Include="skills/taekwon/starlightkick.hpp" />
     <ClInclude Include="skills/taekwon/stormkick.hpp" />
     <ClInclude Include="skills/taekwon/sunsetblast.hpp" />
     <ClInclude Include="skills/taekwon/talismanofblacktortoise.hpp" />
@@ -2350,6 +2351,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/starcannon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/starlightkick.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/stormkick.cpp">

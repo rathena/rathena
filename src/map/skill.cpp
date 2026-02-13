@@ -5090,7 +5090,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_WIDECRITICALWOUND:
 	case TR_METALIC_FURY:
 	case SS_KINRYUUHOU:
-	case SKE_STAR_LIGHT_KICK:
 	case SS_KAGEGISSEN:
 	case SS_SEKIENHOU:
 	case SS_RAIDENPOU:
@@ -5128,20 +5127,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			skill_area_temp[2] = 0;
 
 			switch ( skill_id ) {
-				case SKE_STAR_LIGHT_KICK: {
-					uint8 dir = DIR_NORTHEAST;
-					if (bl->x != src->x || bl->y != src->y)
-						dir = map_calc_dir(bl, src->x, src->y);	// dir based on target as we move player based on target location
-					if (skill_check_unit_movepos(0, src, bl->x + dirx[dir], bl->y + diry[dir], 1, 1)) {
-						clif_skill_nodamage(src,*bl,skill_id,skill_lv,1);
-						clif_blown(src);
-						skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-					} else {
-						if (sd != nullptr)
-							clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-					}
-					break;
-				}
 				case GN_CARTCANNON:
 				case BO_MAYHEMIC_THORNS:
 					clif_skill_nodamage(src,*bl,skill_id,skill_lv);

@@ -5642,12 +5642,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (wd->miscflag & SKILL_ALTDMG_FLAG)
 				skillratio = skillratio * 3 / 10;
 			break;
-		case SKE_STAR_LIGHT_KICK:
-			skillratio += -100 + 400 + 200 * skill_lv;
-			skillratio += skill_lv * 5 * pc_checkskill( sd, SKE_SKY_MASTERY );
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
 	}
 	return skillratio;
 }
