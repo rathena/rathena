@@ -707,6 +707,7 @@
     <ClInclude Include="skills/taekwon/sevenwind.hpp" />
     <ClInclude Include="skills/taekwon/shadowssoul.hpp" />
     <ClInclude Include="skills/taekwon/skill_factory_taekwon.hpp" />
+    <ClInclude Include="skills/taekwon/skymoon.hpp" />
     <ClInclude Include="skills/taekwon/skysun.hpp" />
     <ClInclude Include="skills/taekwon/soulcollect.hpp" />
     <ClInclude Include="skills/taekwon/soulcurse.hpp" />
@@ -2265,6 +2266,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/skill_factory_taekwon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/skymoon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/skysun.cpp">
