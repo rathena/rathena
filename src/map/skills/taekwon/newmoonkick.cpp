@@ -4,6 +4,7 @@
 #include "newmoonkick.hpp"
 
 #include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/status.hpp"
 
 SkillNewMoonKick::SkillNewMoonKick() : SkillImplRecursiveDamageSplash(SJ_NEWMOONKICK) {

@@ -57,7 +57,7 @@ void SkillFallingStarAttack::castendNoDamageId(block_list *src, block_list *targ
 
 
 // SJ_FALLINGSTAR_ATK2
-SkillFallingStarAttack2::SkillFallingStarAttack2() : SkillImpl(SJ_FALLINGSTAR_ATK2) {
+SkillFallingStarAttack2::SkillFallingStarAttack2() : SkillImplRecursiveDamageSplash(SJ_FALLINGSTAR_ATK2) {
 }
 
 void SkillFallingStarAttack2::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {

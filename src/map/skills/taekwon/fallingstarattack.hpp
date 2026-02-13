@@ -17,7 +17,7 @@ public:
 
 
 // SJ_FALLINGSTAR_ATK2
-class SkillFallingStarAttack2 : public SkillImpl {
+class SkillFallingStarAttack2 : public SkillImplRecursiveDamageSplash {
 public:
 	SkillFallingStarAttack2();
 

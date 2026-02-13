@@ -6,6 +6,7 @@
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/status.hpp"
 
 SkillFullMoonKick::SkillFullMoonKick() : SkillImplRecursiveDamageSplash(SJ_FULLMOONKICK) {
