@@ -43,6 +43,7 @@
 #include "run.cpp"
 #include "sevenwind.cpp"
 #include "shadowssoul.cpp"
+#include "skysun.cpp"
 #include "soulcollect.cpp"
 #include "soulcurse.cpp"
 #include "souldivision.cpp"
@@ -140,6 +141,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<SkillRisingMoon>();
 		case SKE_RISING_SUN:
 			return std::make_unique<SkillRisingSun>();
+		case SKE_SKY_SUN:
+			return std::make_unique<SkillSkySun>();
 		case SKE_STAR_BURST:
 			return std::make_unique<SkillStarBurst>();
 		case SKE_STAR_CANNON:

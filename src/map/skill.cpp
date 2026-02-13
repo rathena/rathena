@@ -5090,7 +5090,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_WIDECRITICALWOUND:
 	case TR_METALIC_FURY:
 	case SS_KINRYUUHOU:
-	case SKE_SKY_SUN:
 	case SKE_SKY_MOON:
 	case SKE_STAR_LIGHT_KICK:
 	case SS_KAGEGISSEN:
@@ -5146,7 +5145,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				}
 				case GN_CARTCANNON:
 				case BO_MAYHEMIC_THORNS:
-				case SKE_SKY_SUN:
 				case SKE_SKY_MOON:
 					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 					break;
@@ -6703,7 +6701,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SJ_STAREMPEROR:
 	case SJ_FALLINGSTAR_ATK:
 	case BO_EXPLOSIVE_POWDER:
-	case SKE_SKY_SUN:
 	{
 		int32 starget = BL_CHAR|BL_SKILL;
 
