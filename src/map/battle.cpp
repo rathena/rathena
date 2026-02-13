@@ -4803,14 +4803,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc->getSCE(SC_GT_ENERGYGAIN))
 				skillratio += skillratio * 50 / 100;
 			break;
-		case CH_PALMSTRIKE:
-#ifdef RENEWAL
-			skillratio += 100 + 100 * skill_lv + sstatus->str; // !TODO: How does STR play a role?
-			RE_LVL_DMOD(100);
-#else
-			skillratio += 100 + 100 * skill_lv;
-#endif
-			break;
 #ifdef RENEWAL
 		case ML_SPIRALPIERCE:
 			skillratio += 50 + 50 * skill_lv;

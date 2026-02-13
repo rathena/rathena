@@ -63,6 +63,7 @@
 #include "pneuma.cpp"
 #include "pneumaticusprocella.cpp"
 #include "praefatio.cpp"
+#include "ragingpalmstrike.cpp"
 #include "ragingquadrupleblow.cpp"
 #include "ragingthrust.cpp"
 #include "ragingtrifectablow.cpp"
@@ -189,6 +190,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillReparatio>();
 		case CH_CHAINCRUSH:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case CH_PALMSTRIKE:
+			return std::make_unique<SkillRagingPalmStrike>();
 		case CH_TIGERFIST:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case HP_ASSUMPTIO:
