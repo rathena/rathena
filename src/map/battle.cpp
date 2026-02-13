@@ -5578,13 +5578,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(100);
 			break;
 
-		case SKE_STAR_BURST:
-			skillratio += -100 + 500 + 400 * skill_lv;
-			skillratio += pc_checkskill( sd, SKE_SKY_MASTERY ) * 3 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			RE_LVL_DMOD(100);
-			break;
-
 		case SS_SHIMIRU:
 			skillratio += -100 + 700 * skill_lv;
 			skillratio += 5 * sstatus->con;

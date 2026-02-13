@@ -10,6 +10,7 @@
 #include <common/cbasetypes.hpp>
 #include <common/database.hpp>
 #include <common/db.hpp>
+#include <common/ers.hpp>
 #include <common/mmo.hpp> // MAX_SKILL, struct square
 #include <common/timer.hpp>
 
@@ -28,6 +29,7 @@ struct status_change_entry;
 class status_change;
 class SkillImpl;
 
+extern struct eri* skill_timer_ers;
 extern DBMap* bowling_db;
 
 #ifndef TIMERSKILL_INTERVAL
@@ -662,6 +664,7 @@ int32 skill_castend_damage_id( block_list* src, block_list *bl,uint16 skill_id,u
 int32 skill_castend_pos2( block_list *src, int32 x,int32 y,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag);
 int32 skill_area_sub(block_list *bl, va_list ap);
 int32 skill_area_sub_count(block_list* src, block_list* target, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag);
+TIMER_FUNC(skill_timerskill);
 extern int32 skill_area_temp[8];
 int32 skill_castend_song(block_list* src, uint16 skill_id, uint16 skill_lv, t_tick tick);
 
