@@ -5224,11 +5224,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case SKE_STAR_CANNON:
-		if (flag & 1)
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-
 	case SKE_ALL_IN_THE_SKY:
 		if (bl->type == BL_PC)
 			status_zap(bl, 0, 0, status_get_ap(bl));
@@ -10612,49 +10607,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 			}
 		}
 		break;
-
-	case SKE_STAR_CANNON: {
-			unit_data* ud = unit_bl2ud( src );
-
-			if( ud == nullptr ){
-				break;
-			}
-
-			for( const std::shared_ptr<s_skill_unit_group>& sug : ud->skillunits ){
-				if( sug->skill_id != SKE_TWINKLING_GALAXY ){
-					continue;
-				}
-
-				skill_unit* su = sug->unit;
-
-				if( distance_xy( x, y, su->x, su->y ) > skill_get_unit_range( sug->skill_id, sug->skill_lv ) ){
-					continue;
-				}
-
-				std::shared_ptr<s_skill_unit_group> sg = su->group;
-				
-				for( int32 i = 0; i< MAX_SKILLTIMERSKILL; i++ ){
-					if( ud->skilltimerskill[i] == nullptr ){
-						continue;
-					}
-
-					if( ud->skilltimerskill[i]->skill_id != SKE_TWINKLING_GALAXY ){
-						continue;
-					}
-						
-					delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
-					ers_free(skill_timer_ers, ud->skilltimerskill[i]);
-					ud->skilltimerskill[i] = nullptr;
-				}
-
-				skill_delunitgroup(sg);
-
-				for (i = 0; i < skill_get_time(skill_id, skill_lv) / skill_get_unit_interval(skill_id); i++)
-					skill_addtimerskill(src, tick + (t_tick)i*skill_get_unit_interval(skill_id), 0, x, y, skill_id, skill_lv, 0, flag);
-				flag |= 1;
-				skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-			}
-		} break;
 
 	case SS_KUNAIKUSSETSU:
 		map_foreachinallrange(skill_detonator, src, skill_get_splash(skill_id, skill_lv), BL_SKILL, src, skill_lv);

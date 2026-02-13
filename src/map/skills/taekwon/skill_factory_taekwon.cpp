@@ -67,6 +67,7 @@
 #include "spiritofthesupernovice.cpp"
 #include "spiritofthewizard.cpp"
 #include "starburst.cpp"
+#include "starcannon.cpp"
 #include "stormkick.cpp"
 #include "sunsetblast.cpp"
 #include "talismanofblacktortoise.cpp"
@@ -138,6 +139,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<SkillRisingSun>();
 		case SKE_STAR_BURST:
 			return std::make_unique<SkillStarBurst>();
+		case SKE_STAR_CANNON:
+			return std::make_unique<SkillStarCannon>();
 		case SKE_SUNSET_BLAST:
 			return std::make_unique<SkillSunsetBlast>();
 		case SKE_TWINKLING_GALAXY:
