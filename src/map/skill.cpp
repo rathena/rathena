@@ -5224,15 +5224,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case SKE_ALL_IN_THE_SKY:
-		if (bl->type == BL_PC)
-			status_zap(bl, 0, 0, status_get_ap(bl));
-		if( unit_movepos( src, bl->x, bl->y, 2, true ) ){
-			clif_snap(src, src->x, src->y);
-		}
-		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-
 	case SS_KAGEGARI:
 	case SS_TOKEDASU:
 	case SS_KAGEAKUMU:

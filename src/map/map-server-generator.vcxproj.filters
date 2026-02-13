@@ -1659,6 +1659,9 @@
     <ClInclude Include="skills/swordman/vitalstrike.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/taekwon/allinthesky.hpp">
+      <Filter>Header Files\Skills\Taekwon</Filter>
+    </ClInclude>
     <ClInclude Include="skills/taekwon/circleofdirectionsandelementals.hpp">
       <Filter>Header Files\Skills\Taekwon</Filter>
     </ClInclude>
@@ -3394,6 +3397,9 @@
     </ClCompile>
     <ClCompile Include="skills/swordman/vitalstrike.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/allinthesky.cpp">
+      <Filter>Source Files\Skills\Taekwon</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/circleofdirectionsandelementals.cpp">
       <Filter>Source Files\Skills\Taekwon</Filter>

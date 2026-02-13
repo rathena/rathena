@@ -7,6 +7,7 @@
 
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
+#include "allinthesky.cpp"
 #include "circleofdirectionsandelementals.cpp"
 #include "counter.cpp"
 #include "curseexplosion.cpp"
@@ -125,6 +126,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case SJ_UNIVERSESTANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SKE_ALL_IN_THE_SKY:
+			return std::make_unique<SkillAllInTheSky>();
 		case SKE_DAWN_BREAK:
 			return std::make_unique<SkillDawnBreak>();
 		case SKE_ENCHANTING_SKY:

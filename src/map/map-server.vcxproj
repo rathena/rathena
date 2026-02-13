@@ -670,6 +670,7 @@
     <ClInclude Include="skills/swordman/traumaticblow.hpp" />
     <ClInclude Include="skills/swordman/ultimatesacrifice.hpp" />
     <ClInclude Include="skills/swordman/vitalstrike.hpp" />
+    <ClInclude Include="skills/taekwon/allinthesky.hpp" />
     <ClInclude Include="skills/taekwon/circleofdirectionsandelementals.hpp" />
     <ClInclude Include="skills/taekwon/counter.hpp" />
     <ClInclude Include="skills/taekwon/curseexplosion.hpp" />
@@ -2152,6 +2153,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/vitalstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/allinthesky.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/circleofdirectionsandelementals.cpp">
