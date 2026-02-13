@@ -19,6 +19,7 @@ void SkillVanishingSlash::calculateSkillRatio(const Damage *wd, const block_list
 }
 
 void SkillVanishingSlash::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	// TODO: refactor into applyAdditionalEffects
 	if (skill_attack(BF_WEAPON,src,src,target,getSkillId(),skill_lv,tick,flag) > 0)
 		sc_start(src,src,SC_HIDING,100,skill_lv,skill_get_time(getSkillId(),skill_lv));
 }

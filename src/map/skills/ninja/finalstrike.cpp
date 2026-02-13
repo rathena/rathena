@@ -17,37 +17,7 @@ void SkillFinalStrike::castendDamageId(block_list *src, block_list *target, uint
 	int16 x, y;
 	int16 dir = map_calc_dir(src, target->x, target->y);
 
-#ifdef RENEWAL
-	// Move 2 cells (From target)
-	if (dir > 0 && dir < 4)
-		x = -2;
-	else if (dir > 4)
-		x = 2;
-	else
-		x = 0;
-	if (dir > 2 && dir < 6)
-		y = -2;
-	else if (dir == 7 || dir < 2)
-		y = 2;
-	else
-		y = 0;
-	// Doesn't have slide effect in GVG
-	if (skill_check_unit_movepos(5, src, target->x + x, target->y + y, 1, 1)) {
-		clif_blown(src);
-		clif_spiritball(src);
-	}
-	skill_attack(BF_MISC, src, src, target, getSkillId(), skill_lv, tick, flag);
-	status_set_hp(src, umax(status_get_max_hp(src) / 100, 1), 0);
-	status_change_end(src, SC_NEN);
-	status_change_end(src, SC_HIDING);
-#else
 	int16 i = 2; // Move 2 cells (From target)
-
-	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
-
-	status_set_hp(src, 1, 0);
-	status_change_end(src, SC_NEN);
-	status_change_end(src, SC_HIDING);
 
 	if (dir > 0 && dir < 4)
 		x = -i;
@@ -62,7 +32,25 @@ void SkillFinalStrike::castendDamageId(block_list *src, block_list *target, uint
 	else
 		y = 0;
 
-	if ((!map_flag_gvg2(src->m) && !map_getmapflag(src->m, MF_BATTLEGROUND)) && unit_movepos(src, target->x + x, target->y + y, 1, 1)) {
+#ifdef RENEWAL
+	// Doesn't have slide effect in GVG
+	if (skill_check_unit_movepos(5, src, target->x + x, target->y + y, 1, 1)) {
+		clif_blown(src);
+		clif_spiritball(src);
+	}
+	skill_attack(BF_MISC, src, src, target, getSkillId(), skill_lv, tick, flag);
+	status_set_hp(src, umax(status_get_max_hp(src) / 100, 1), 0);
+	status_change_end(src, SC_NEN);
+	status_change_end(src, SC_HIDING);
+#else
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
+
+	status_set_hp(src, 1, 0);
+	status_change_end(src, SC_NEN);
+	status_change_end(src, SC_HIDING);
+
+	// Doesn't have slide effect in GVG
+	if (skill_check_unit_movepos(5, src, target->x + x, target->y + y, 1, 1)) {
 		clif_blown(src);
 		clif_spiritball(src);
 	}
