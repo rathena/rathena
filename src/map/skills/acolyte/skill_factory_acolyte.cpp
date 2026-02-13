@@ -15,7 +15,9 @@
 #include "angelus.cpp"
 #include "arbitrium.cpp"
 #include "aspersio.cpp"
+#include "assumptio.cpp"
 #include "asurastrike.cpp"
+#include "basilica.cpp"
 #include "blazingflameblast.cpp"
 #include "blessing.cpp"
 #include "bssacramenti.cpp"
@@ -189,10 +191,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case CH_TIGERFIST:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
-#ifdef RENEWAL
+		case HP_ASSUMPTIO:
+			return std::make_unique<SkillAssumptio>();
 		case HP_BASILICA:
-			return std::make_unique<StatusSkillImpl>(skill_id);
-#endif
+			return std::make_unique<SkillBasilica>();
 		case IQ_BLAZING_FLAME_BLAST:
 			return std::make_unique<SkillBlazingFlameBlast>();
 		case IQ_EXPOSION_BLASTER:

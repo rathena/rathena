@@ -8,19 +8,32 @@
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
 #include "bite.cpp"
+#include "blessingofmysticalcreatures.cpp"
 #include "bunchofshrimp.cpp"
 #include "catnipmeteor.cpp"
 #include "catnippowdering.cpp"
 #include "chattering.cpp"
+#include "chulhobattering.cpp"
+#include "chulhosonicclaw.cpp"
+#include "colorsofhyunrok.cpp"
 #include "grooming.cpp"
 #include "hiss.cpp"
+#include "hogogongstrike.cpp"
+#include "howlingofchulho.cpp"
+#include "hyunrokbreeze.cpp"
+#include "hyunrokcannon.cpp"
+#include "hyunrokspiritpower.cpp"
+#include "kisulrampage.cpp"
+#include "kisulwaterspraying.cpp"
 #include "lope.cpp"
 #include "lunaticcarrotbeat.cpp"
+#include "marinefestivalofkisul.cpp"
 #include "meowmeow.cpp"
 #include "nyanggrass.cpp"
 #include "pickypeck.cpp"
 #include "powerofflock.cpp"
 #include "purring.cpp"
+#include "sandyfestivalofkisul.cpp"
 #include "scaroftarou.cpp"
 #include "scratch.cpp"
 #include "silvervineroottwist.cpp"
@@ -32,6 +45,32 @@
 
 std::unique_ptr<const SkillImpl> SkillFactorySummoner::create(const e_skill skill_id) const {
 	switch( skill_id ){
+		case SH_BLESSING_OF_MYSTICAL_CREATURES:
+			return std::make_unique<SkillBlessingofMysticalCreatures>();
+		case SH_CHUL_HO_BATTERING:
+			return std::make_unique<SkillChulhoBattering>();
+		case SH_CHUL_HO_SONIC_CLAW:
+			return std::make_unique<SkillChulhoSonicClaw>();
+		case SH_COLORS_OF_HYUN_ROK:
+			return std::make_unique<SkillColorsofHyunrok>();
+		case SH_HOGOGONG_STRIKE:
+			return std::make_unique<SkillHogogongStrike>();
+		case SH_HOWLING_OF_CHUL_HO:
+			return std::make_unique<SkillHowlingofChulho>();
+		case SH_HYUN_ROKS_BREEZE:
+			return std::make_unique<SkillHyunrokBreeze>();
+		case SH_HYUN_ROK_CANNON:
+			return std::make_unique<SkillHyunrokCannon>();
+		case SH_HYUN_ROK_SPIRIT_POWER:
+			return std::make_unique<SkillHyunrokSpiritPower>();
+		case SH_KI_SUL_RAMPAGE:
+			return std::make_unique<SkillKisulRampage>();
+		case SH_KI_SUL_WATER_SPRAYING:
+			return std::make_unique<SkillKisulWaterSpraying>();
+		case SH_MARINE_FESTIVAL_OF_KI_SUL:
+			return std::make_unique<SkillMarineFestivalofKisul>();
+		case SH_SANDY_FESTIVAL_OF_KI_SUL:
+			return std::make_unique<SkillSandyFestivalofKisul>();
 		case SH_TEMPORARY_COMMUNION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SU_ARCLOUSEDASH:
