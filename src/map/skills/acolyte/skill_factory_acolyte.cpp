@@ -38,6 +38,7 @@
 #include "explosionblaster.cpp"
 #include "firstbrand.cpp"
 #include "framen.cpp"
+#include "glacierfist.cpp"
 #include "gloria.cpp"
 #include "heal.cpp"
 #include "highnessheal.cpp"
@@ -193,7 +194,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 		case CH_PALMSTRIKE:
 			return std::make_unique<SkillRagingPalmStrike>();
 		case CH_TIGERFIST:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillGlacierFist>();
 		case HP_ASSUMPTIO:
 			return std::make_unique<SkillAssumptio>();
 		case HP_BASILICA:

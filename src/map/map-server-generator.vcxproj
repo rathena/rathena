@@ -270,6 +270,7 @@
     <ClInclude Include="skills/acolyte/explosionblaster.hpp" />
     <ClInclude Include="skills/acolyte/firstbrand.hpp" />
     <ClInclude Include="skills/acolyte/framen.hpp" />
+    <ClInclude Include="skills/acolyte/glacierfist.hpp" />
     <ClInclude Include="skills/acolyte/gloria.hpp" />
     <ClInclude Include="skills/acolyte/heal.hpp" />
     <ClInclude Include="skills/acolyte/highnessheal.hpp" />
@@ -944,6 +945,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/framen.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/glacierfist.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/gloria.cpp">

@@ -1528,18 +1528,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		skill_break_equip(src,bl, EQP_SHIELD, 150*skill_lv, BCT_ENEMY);
 		break;
 
-	case CH_TIGERFIST: {
-		t_tick basetime = skill_get_time(skill_id, skill_lv);
-		t_tick mintime = 15 * (status_get_lv(src) + 100);
-
-		if (status_bl_has_mode(bl, MD_STATUSIMMUNE))
-			basetime /= 5;
-		basetime = std::max((basetime * status_get_agi(bl)) / -200 + basetime, mintime);
-		sc_start(src, bl, SC_ANKLE, (1 + skill_lv) * 10, 0, basetime);
-	}
-		break;
-
-
 	case PF_FOGWALL:
 		if (src != bl && !tsc->getSCE(SC_DELUGE))
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
