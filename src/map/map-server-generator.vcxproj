@@ -254,6 +254,7 @@
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/bssacramenti.hpp" />
     <ClInclude Include="skills/acolyte/cantocandidus.hpp" />
+    <ClInclude Include="skills/acolyte/chaincrushcombo.hpp" />
     <ClInclude Include="skills/acolyte/clearance.hpp" />
     <ClInclude Include="skills/acolyte/coluceoheal.hpp" />
     <ClInclude Include="skills/acolyte/competentia.hpp" />
@@ -897,6 +898,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/cantocandidus.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/chaincrushcombo.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/clearance.cpp">

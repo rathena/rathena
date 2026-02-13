@@ -22,6 +22,7 @@
 #include "blessing.cpp"
 #include "bssacramenti.cpp"
 #include "cantocandidus.cpp"
+#include "chaincrushcombo.cpp"
 #include "clearance.cpp"
 #include "coluceoheal.cpp"
 #include "competentia.cpp"
@@ -190,7 +191,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 		case CD_REPARATIO:
 			return std::make_unique<SkillReparatio>();
 		case CH_CHAINCRUSH:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillChainCrushCombo>();
 		case CH_PALMSTRIKE:
 			return std::make_unique<SkillRagingPalmStrike>();
 		case CH_TIGERFIST:
