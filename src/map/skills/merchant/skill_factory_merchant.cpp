@@ -41,6 +41,7 @@
 #include "mammonite.cpp"
 #include "manufacturemachine.cpp"
 #include "mightysmash.cpp"
+#include "pilebunker.cpp"
 #include "plantcultivation.cpp"
 #include "powerfulswing.cpp"
 #include "powerthrust.cpp"
@@ -195,7 +196,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case NC_MAGMA_ERUPTION:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NC_PILEBUNKER:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillPileBunker>();
 		case NC_POWERSWING:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NC_SHAPESHIFT:
