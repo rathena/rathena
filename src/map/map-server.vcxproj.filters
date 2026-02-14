@@ -822,6 +822,9 @@
     <ClInclude Include="skills/gunslinger/basicgrenade.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/gunslinger/banishingbuster.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/bullseye.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -2625,6 +2628,9 @@
       <Filter>Source Files\Skills\Custom</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/basicgrenade.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/banishingbuster.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/bullseye.cpp">

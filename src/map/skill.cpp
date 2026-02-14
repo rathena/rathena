@@ -1795,54 +1795,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case RL_SLUGSHOT:
 		sc_start(src,bl,SC_STUN,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
-	case RL_BANISHING_BUSTER: {
-			if (tsc == nullptr || tsc->empty())
-				break;
-
-			if (status_isimmune(bl))
-				break;
-
-			if ((dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_SOUL_LINKER) || rnd()%100 >= 50 + 5 * skill_lv) {
-				if (sd)
-					clif_skill_fail( *sd, skill_id );
-				break;
-			}
-
-			uint16 n = skill_lv;
-
-			for (const auto &it : status_db) {
-				sc_type status = static_cast<sc_type>(it.first);
-
-				if (n <= 0)
-					break;
-				if (!tsc->getSCE(status))
-					continue;
-				
-				if (it.second->flag[SCF_NOBANISHINGBUSTER])
-					continue;
-
-				switch (status) {
-					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
-					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
-					case SC_FORTUNE:		case SC_SERVICE4U:
-						if (!battle_config.dispel_song || tsc->getSCE(status)->val4 == 0)
-							continue; //If in song area don't end it, even if config enabled
-						break;
-					case SC_ASSUMPTIO:
-						if( bl->type == BL_MOB )
-							continue;
-						break;
-				}
-				if( status == SC_BERSERK || status == SC_SATURDAYNIGHTFEVER )
-					tsc->getSCE(status)->val2 = 0;
-				status_change_end(bl,status);
-				n--;
-			}
-			//Remove bonus_script by Banishing Buster
-			if (dstsd)
-				pc_bonus_script_clear(dstsd,BSF_REM_ON_BANISHING_BUSTER);
-		}
-		break;
 	case RL_S_STORM:
 		//kRO update 2014-02-12. Break a headgear by minimum chance 5%/10%/15%/20%/25%
 		skill_break_equip(src, bl, EQP_HEAD_TOP, max(skill_lv * 500, (sstatus->dex * skill_lv * 10) - (tstatus->agi * 20)), BCT_ENEMY); //! TODO: Figure out break chance formula
