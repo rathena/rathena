@@ -627,9 +627,6 @@
     <ClInclude Include="skills/archer/blastmine.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
-    <ClInclude Include="skills/archer/blitzbeat.hpp">
-      <Filter>Header Files\Skills\Archer</Filter>
-    </ClInclude>
     <ClInclude Include="skills/archer/camouflage.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -2442,9 +2439,6 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/blastmine.cpp">
-      <Filter>Source Files\Skills\Archer</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/archer/blitzbeat.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/camouflage.cpp">
