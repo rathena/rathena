@@ -42,6 +42,7 @@
 #include "decoratecart.cpp"
 #include "energycannonade.cpp"
 #include "emergencycool.cpp"
+#include "fawmagicdecoy.cpp"
 #include "fawsilversniper.cpp"
 #include "flamelauncher.cpp"
 #include "frontsideslide.cpp"
@@ -259,6 +260,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillAxeTornado>();
 		case NC_SILVERSNIPER:
 			return std::make_unique<SkillFawSilverSniper>();
+		case NC_MAGICDECOY:
+			return std::make_unique<SkillFawMagicDecoy>();
 		case NC_RESEARCHFE:
 			return std::make_unique<SkillResearchFireEarth>();
 		case NC_SHAPESHIFT:

@@ -10245,10 +10245,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 		break;
 
-	case NC_MAGICDECOY:
-		if( sd ) clif_magicdecoy_list( *sd, skill_lv, x, y );
-		break;
-
 	case SC_FEINTBOMB: {
 			std::shared_ptr<s_skill_unit_group> group = skill_unitsetting(src,skill_id,skill_lv,x,y,0); // Set bomb on current Position
 
