@@ -36,6 +36,7 @@
 #include "greed.cpp"
 #include "hammerfall.cpp"
 #include "itemappraisal.cpp"
+#include "madolicense.cpp"
 #include "mammonite.cpp"
 #include "manufacturemachine.cpp"
 #include "mightysmash.cpp"
@@ -188,6 +189,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NC_HOVERING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NC_MADOLICENCE:
+			return std::make_unique<SkillMadoLicense>();
 		case NC_MAGMA_ERUPTION:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NC_PILEBUNKER:
