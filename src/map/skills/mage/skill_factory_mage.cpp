@@ -21,6 +21,7 @@
 #include "crimsonrock.cpp"
 #include "crystalimpact.cpp"
 #include "deadlyprojection.cpp"
+#include "diamonddust.cpp"
 #include "destructivehurricane.cpp"
 #include "deluge.cpp"
 #include "dispell.cpp"
@@ -227,6 +228,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillEarthGrave>();
 		case SO_ELECTRICWALK:
 			return std::make_unique<SkillElectricWalk>();
+		case SO_DIAMONDDUST:
+			return std::make_unique<SkillDiamondDust>();
 		case SO_SPELLFIST:
 			return std::make_unique<SkillSpellFist>();
 		case SA_ELEMENTFIRE:

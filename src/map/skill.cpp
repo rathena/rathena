@@ -1686,12 +1686,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src,bl,SC_STUN, 25 + 5 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
 		status_change_end(bl, SC_SV_ROOTTWIST);
 		break;
-	case SO_DIAMONDDUST: {
-		int32 rate = 5 + 5 * skill_lv;
-		if( sc && sc->getSCE(SC_COOLER_OPTION) )
-			rate += (sd ? sd->status.job_level / 5 : 0);
-		sc_start(src,bl, SC_CRYSTALIZE, rate, skill_lv, skill_get_time2(skill_id, skill_lv));
-		} break;
 	case SO_VARETYR_SPEAR:
 		sc_start(src,bl, SC_STUN, 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;

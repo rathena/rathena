@@ -433,6 +433,7 @@
     <ClInclude Include="skills/mage/crimsonrock.hpp" />
     <ClInclude Include="skills/mage/crystalimpact.hpp" />
     <ClInclude Include="skills/mage/deadlyprojection.hpp" />
+    <ClInclude Include="skills/mage/diamonddust.hpp" />
     <ClInclude Include="skills/mage/deluge.hpp" />
     <ClInclude Include="skills/mage/destructivehurricane.hpp" />
     <ClInclude Include="skills/mage/dispell.hpp" />
@@ -1466,6 +1467,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/deadlyprojection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/diamonddust.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/deluge.cpp">

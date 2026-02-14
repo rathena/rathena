@@ -948,6 +948,9 @@
     <ClInclude Include="skills/mage/deadlyprojection.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/diamonddust.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/deluge.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -2757,6 +2760,9 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/deadlyprojection.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/diamonddust.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/deluge.cpp">
