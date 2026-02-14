@@ -59,6 +59,7 @@
 #include "powerfulswing.cpp"
 #include "powerthrust.cpp"
 #include "preparepotion.cpp"
+#include "repair.cpp"
 #include "rushquake.cpp"
 #include "rushstrike.cpp"
 #include "selfdestruction.cpp"
@@ -244,6 +245,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillNeutralBarrier>();
 		case NC_STEALTHFIELD:
 			return std::make_unique<SkillStealthField>();
+		case NC_REPAIR:
+			return std::make_unique<SkillRepair>();
 		case NC_SHAPESHIFT:
 			return std::make_unique<SkillShapeShift>();
 		case WS_CARTBOOST:

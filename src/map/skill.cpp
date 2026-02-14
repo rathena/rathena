@@ -7909,26 +7909,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
 
-	case NC_REPAIR:
-		if( sd ) {
-			int32 heal, hp = 0;
-			if( !dstsd || !pc_ismadogear(dstsd) ) {
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL_TOTARGET );
-				break;
-			}
-			switch(skill_lv) {
-				case 1: hp = 4; break;
-				case 2: hp = 7; break;
-				case 3: hp = 13; break;
-				case 4: hp = 17; break;
-				case 5: default: hp = 23; break;
-			}
-			heal = dstsd->status.max_hp * hp / 100;
-			status_heal(bl,heal,0,2);
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, heal != 0);
-		}
-		break;
-
 	case NC_DISJOINT:
 		{
 			if( bl->type != BL_MOB ) break;
