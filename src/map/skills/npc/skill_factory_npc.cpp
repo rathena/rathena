@@ -13,6 +13,7 @@
 #include "wideweb.cpp"
 #include "piercingattack.cpp"
 #include "spiritdestruction.cpp"
+#include "standoffattack.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -93,7 +94,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_RANDOMATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_RANGEATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillStandOffAttack>();
 		case NPC_RELIEVE_OFF:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_RELIEVE_ON:
