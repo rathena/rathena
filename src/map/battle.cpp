@@ -7604,9 +7604,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_FIRESTORM:
 						skillratio += 200;
 						break;
-					case NPC_HELLBURNING:
-						skillratio += 900;
-						break;
 					case NPC_PULSESTRIKE2:
 						skillratio += 100;
 						break;

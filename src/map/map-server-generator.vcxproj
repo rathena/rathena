@@ -605,6 +605,7 @@
     <ClInclude Include="skills/novice/spiralpiercemax.hpp" />
     <ClInclude Include="skills/npc/darkpiercing.hpp" />
     <ClInclude Include="skills/npc/deathsummon.hpp" />
+    <ClInclude Include="skills/npc/hellburning.hpp" />
     <ClInclude Include="skills/npc/maxpainattack.hpp" />
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
@@ -1970,6 +1971,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/deathsummon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/hellburning.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/maxpainattack.cpp">
