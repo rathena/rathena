@@ -71,6 +71,7 @@
 #include "unbarringoctave.cpp"
 #include "unchainedserenade.cpp"
 #include "verduretrap.cpp"
+#include "vulcanarrow.cpp"
 #include "wargbite.cpp"
 #include "wargdash.cpp"
 #include "wargmastery.cpp"
@@ -128,7 +129,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		case BD_SIEGFRIED:
 			return std::make_unique<SkillAcousticRhythm>();
 		case CG_ARROWVULCAN:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillVulcanArrow>();
 		case DC_THROWARROW:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case HT_ANKLESNARE:

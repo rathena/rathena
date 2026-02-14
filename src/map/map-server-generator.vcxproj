@@ -382,6 +382,7 @@
     <ClInclude Include="skills/archer/unbarringoctave.hpp" />
     <ClInclude Include="skills/archer/unchainedserenade.hpp" />
     <ClInclude Include="skills/archer/verduretrap.hpp" />
+    <ClInclude Include="skills/archer/vulcanarrow.hpp" />
     <ClInclude Include="skills/archer/wargbite.hpp" />
     <ClInclude Include="skills/archer/wargdash.hpp" />
     <ClInclude Include="skills/archer/wargmastery.hpp" />
@@ -1309,6 +1310,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/verduretrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/vulcanarrow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/wargbite.cpp">
