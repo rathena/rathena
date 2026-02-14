@@ -5067,11 +5067,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += sstatus->vit / 6; // !TODO: What's the VIT bonus?
 			RE_LVL_DMOD(100);
 			break;
-		case SR_FALLENEMPIRE:
-			// ATK [(Skill Level x 300 + 100) x Caster Base Level / 150] %
-			skillratio += 300 * skill_lv;
-			RE_LVL_DMOD(150);
- 			break;
 		case SR_TIGERCANNON:
 			{
 				uint32 hp = sstatus->max_hp * (10 + (skill_lv * 2)) / 100,

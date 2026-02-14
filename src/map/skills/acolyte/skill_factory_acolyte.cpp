@@ -36,6 +36,7 @@
 #include "duplelight.cpp"
 #include "earthshaker.cpp"
 #include "effligo.cpp"
+#include "fallenempire.cpp"
 #include "epiclesis.cpp"
 #include "explosionblaster.cpp"
 #include "firstbrand.cpp"
@@ -296,7 +297,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 		case SR_EARTHSHAKER:
 			return std::make_unique<SkillEarthShaker>();
 		case SR_FALLENEMPIRE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillFallenEmpire>();
 		case SR_GATEOFHELL:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SR_GENTLETOUCH_CHANGE:

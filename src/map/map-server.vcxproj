@@ -268,6 +268,7 @@
     <ClInclude Include="skills/acolyte/duplelight.hpp" />
     <ClInclude Include="skills/acolyte/earthshaker.hpp" />
     <ClInclude Include="skills/acolyte/effligo.hpp" />
+    <ClInclude Include="skills/acolyte/fallenempire.hpp" />
     <ClInclude Include="skills/acolyte/epiclesis.hpp" />
     <ClInclude Include="skills/acolyte/explosionblaster.hpp" />
     <ClInclude Include="skills/acolyte/firstbrand.hpp" />
@@ -969,6 +970,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/effligo.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/fallenempire.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/epiclesis.cpp">
