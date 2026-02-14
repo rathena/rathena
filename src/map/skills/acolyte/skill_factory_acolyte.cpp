@@ -87,6 +87,7 @@
 #include "throwspiritsphere.cpp"
 #include "turnundead.cpp"
 #include "vituperatum.cpp"
+#include "zen.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -194,6 +195,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillChainCrushCombo>();
 		case CH_PALMSTRIKE:
 			return std::make_unique<SkillRagingPalmStrike>();
+		case CH_SOULCOLLECT:
+			return std::make_unique<SkillZen>();
 		case CH_TIGERFIST:
 			return std::make_unique<SkillGlacierFist>();
 		case HP_ASSUMPTIO:
