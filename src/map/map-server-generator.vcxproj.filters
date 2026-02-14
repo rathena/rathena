@@ -1254,6 +1254,9 @@
     <ClInclude Include="skills/merchant/axestomp.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/backsideslide.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -3048,6 +3051,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/axestomp.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/backsideslide.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/biochemicalhelm.cpp">

@@ -25,6 +25,7 @@
 #include "armcannon.cpp"
 #include "attackmachine.cpp"
 #include "axestomp.cpp"
+#include "backsideslide.cpp"
 #include "biochemicalhelm.cpp"
 #include "boostknuckle.cpp"
 #include "bomb.cpp"
@@ -206,6 +207,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillHovering>();
 		case NC_F_SIDESLIDE:
 			return std::make_unique<SkillFrontSideSlide>();
+		case NC_B_SIDESLIDE:
+			return std::make_unique<SkillBackSideSlide>();
 		case NC_MADOLICENCE:
 			return std::make_unique<SkillMadoLicense>();
 		case NC_MAGMA_ERUPTION:
