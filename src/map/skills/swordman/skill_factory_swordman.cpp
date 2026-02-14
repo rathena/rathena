@@ -34,6 +34,7 @@
 #include "martyrsreckoning.cpp"
 #include "overslash.cpp"
 #include "pierce.cpp"
+#include "piety.cpp"
 #include "pinpointattack.cpp"
 #include "provoke.cpp"
 #include "rageburst.cpp"
@@ -184,6 +185,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillForceOfVanguard>();
 		case LG_SHIELDSPELL:
 			return std::make_unique<SkillShieldSpell>();
+		case LG_PIETY:
+			return std::make_unique<SkillPiety>();
 		case LK_AURABLADE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LK_BERSERK:

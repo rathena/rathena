@@ -7905,16 +7905,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_fail( *sd, skill_id );
 		break;
 
-	case LG_PIETY:
-		if( flag&1 )
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		else {
-			skill_area_temp[2] = 0;
-			map_foreachinallrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_PC,src,skill_id,skill_lv,tick,flag|SD_PREAMBLE|BCT_PARTY|BCT_SELF|1,skill_castend_nodamage_id);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
 	case SR_CURSEDCIRCLE:
 		if( flag&1 ) {
 			if( status_get_class_(bl) == CLASS_BOSS )
