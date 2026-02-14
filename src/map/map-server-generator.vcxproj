@@ -341,6 +341,7 @@
     <ClInclude Include="skills/archer/doublestrafe.hpp" />
     <ClInclude Include="skills/archer/downtempo.hpp" />
     <ClInclude Include="skills/archer/electricshocker.hpp" />
+    <ClInclude Include="skills/archer/echosong.hpp" />
     <ClInclude Include="skills/archer/encore.hpp" />
     <ClInclude Include="skills/archer/falconassault.hpp" />
     <ClInclude Include="skills/archer/fearbreeze.hpp" />
@@ -1187,6 +1188,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/electricshocker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/echosong.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/encore.cpp">

@@ -31,6 +31,7 @@
 #include "doublestrafe.cpp"
 #include "downtempo.cpp"
 #include "electricshocker.cpp"
+#include "echosong.cpp"
 #include "encore.cpp"
 #include "falconassault.cpp"
 #include "fearbreeze.cpp"
@@ -244,6 +245,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case MI_RUSH_WINDMILL:
 			return std::make_unique<SkillWindmillRushAttack>();
+		case MI_ECHOSONG:
+			return std::make_unique<SkillEchoSong>();
 		case WM_SEVERE_RAINSTORM_MELEE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 
