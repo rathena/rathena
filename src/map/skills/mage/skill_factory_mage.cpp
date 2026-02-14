@@ -10,6 +10,7 @@
 #include "allbloom.cpp"
 #include "astralstrike.cpp"
 #include "beastlyhypnosis.cpp"
+#include "blindingmist.cpp"
 #include "castcancel.cpp"
 #include "chainlightning.cpp"
 #include "classchange.cpp"
@@ -203,6 +204,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillIndulge>();
 		case PF_DOUBLECASTING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case PF_FOGWALL:
+			return std::make_unique<SkillBlindingMist>();
 		case PF_MINDBREAKER:
 			return std::make_unique<SkillMindBreaker>();
 		case PF_MEMORIZE:
