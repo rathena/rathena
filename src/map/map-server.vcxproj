@@ -406,6 +406,7 @@
     <ClInclude Include="skills/gunslinger/hastyfireinthehole.hpp" />
     <ClInclude Include="skills/gunslinger/intensiveaim.hpp" />
     <ClInclude Include="skills/gunslinger/magazineforone.hpp" />
+    <ClInclude Include="skills/gunslinger/massspiral.hpp" />
     <ClInclude Include="skills/gunslinger/midnightfallen.hpp" />
     <ClInclude Include="skills/gunslinger/missionbombard.hpp" />
     <ClInclude Include="skills/gunslinger/onlyonebullet.hpp" />
@@ -1382,6 +1383,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/magazineforone.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/massspiral.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/midnightfallen.cpp">
