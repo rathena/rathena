@@ -30,6 +30,7 @@
 #include "cartrevolution.cpp"
 #include "carttermination.cpp"
 #include "changecart.cpp"
+#include "coldslower.cpp"
 #include "crazyuproar.cpp"
 #include "decoratecart.cpp"
 #include "energycannonade.cpp"
@@ -191,6 +192,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NC_BOOSTKNUCKLE:
 			return std::make_unique<SkillBoostKnuckle>();
+		case NC_COLDSLOWER:
+			return std::make_unique<SkillColdSlower>();
 		case NC_FLAMELAUNCHER:
 			return std::make_unique<SkillFlameLauncher>();
 		case NC_HOVERING:
