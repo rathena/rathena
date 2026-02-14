@@ -609,6 +609,7 @@
     <ClInclude Include="skills/npc/jackfrost2.hpp" />
     <ClInclude Include="skills/npc/maxpainattack.hpp" />
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
+    <ClInclude Include="skills/npc/wideweb.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/skill_impl.hpp" />
     <ClInclude Include="skills/summoner/bite.hpp" />
@@ -1984,6 +1985,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/wideweb.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/skill_factory.cpp">

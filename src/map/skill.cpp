@@ -7743,7 +7743,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case NPC_WIDECOLD:
 	case NPC_WIDE_DEEP_SLEEP:
 	case NPC_WIDESIREN:
-	case NPC_WIDEWEB:
 	case NPC_DEADLYCURSE2:
 		if (flag&1){
 			switch ( type ) {

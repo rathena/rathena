@@ -9,6 +9,7 @@
 #include "hellburning.cpp"
 #include "jackfrost2.cpp"
 #include "maxpainattack.cpp"
+#include "wideweb.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -108,6 +109,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_WATERATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NPC_WIDEWEB:
+			return std::make_unique<SkillWideWeb>();
 		case NPC_WEAPONBRAKER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_WINDATTACK:
