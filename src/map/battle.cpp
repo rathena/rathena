@@ -7445,12 +7445,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case NPC_ELECTRICWALK:
 						skillratio += -100 + 100 * skill_lv;
 						break;
-					case SO_EARTHGRAVE:
-						skillratio += -100 + 2 * sstatus->int_ + 300 * pc_checkskill(sd, SA_SEISMICWEAPON) + sstatus->int_ * skill_lv;
-						RE_LVL_DMOD(100);
-						if( sc && sc->getSCE(SC_CURSED_SOIL_OPTION) )
-							skillratio += (sd ? sd->status.job_level * 5 : 0);
-						break;
 					case SO_DIAMONDDUST:
 						skillratio += -100 + 2 * sstatus->int_ + 300 * pc_checkskill(sd, SA_FROSTWEAPON) + sstatus->int_ * skill_lv;
 						RE_LVL_DMOD(100);

@@ -437,6 +437,7 @@
     <ClInclude Include="skills/mage/destructivehurricane.hpp" />
     <ClInclude Include="skills/mage/dispell.hpp" />
     <ClInclude Include="skills/mage/drainlife.hpp" />
+    <ClInclude Include="skills/mage/earthgrave.hpp" />
     <ClInclude Include="skills/mage/earthspike.hpp" />
     <ClInclude Include="skills/mage/earthstrain.hpp" />
     <ClInclude Include="skills/mage/electricwalk.hpp" />
@@ -1477,6 +1478,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/drainlife.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/earthgrave.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/earthspike.cpp">
