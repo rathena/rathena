@@ -647,6 +647,7 @@
     <ClInclude Include="skills/swordman/battlechant.hpp" />
     <ClInclude Include="skills/swordman/bowlingbash.hpp" />
     <ClInclude Include="skills/swordman/brandishspear.hpp" />
+    <ClInclude Include="skills/swordman/cannonspear.hpp" />
     <ClInclude Include="skills/swordman/counterattack.hpp" />
     <ClInclude Include="skills/swordman/crossrain.hpp" />
     <ClInclude Include="skills/swordman/dragonicaura.hpp" />
@@ -2104,6 +2105,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/brandishspear.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/cannonspear.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/counterattack.cpp">

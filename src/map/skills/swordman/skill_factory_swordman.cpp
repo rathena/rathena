@@ -12,6 +12,7 @@
 #include "battlechant.cpp"
 #include "bowlingbash.cpp"
 #include "brandishspear.cpp"
+#include "cannonspear.cpp"
 #include "counterattack.cpp"
 #include "crossrain.cpp"
 #include "dragonicaura.cpp"
@@ -150,6 +151,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillSpearStab>();
 		case KN_TWOHANDQUICKEN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case LG_CANNONSPEAR:
+			return std::make_unique<SkillCannonSpear>();
 		case LG_BANISHINGPOINT:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case LG_EXEEDBREAK:
