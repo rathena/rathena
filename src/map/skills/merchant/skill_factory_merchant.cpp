@@ -26,6 +26,7 @@
 #include "armcannon.cpp"
 #include "attackmachine.cpp"
 #include "axestomp.cpp"
+#include "axetraining.cpp"
 #include "backsideslide.cpp"
 #include "biochemicalhelm.cpp"
 #include "boostknuckle.cpp"
@@ -247,6 +248,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillStealthField>();
 		case NC_REPAIR:
 			return std::make_unique<SkillRepair>();
+		case NC_TRAININGAXE:
+			return std::make_unique<SkillAxeTraining>();
 		case NC_SHAPESHIFT:
 			return std::make_unique<SkillShapeShift>();
 		case WS_CARTBOOST:
