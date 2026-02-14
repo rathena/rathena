@@ -567,6 +567,7 @@
     <ClInclude Include="skills/merchant/rushquake.hpp" />
     <ClInclude Include="skills/merchant/rushstrike.hpp" />
     <ClInclude Include="skills/merchant/selfdestruction.hpp" />
+    <ClInclude Include="skills/merchant/shapeshift.hpp" />
     <ClInclude Include="skills/merchant/skill_factory_merchant.hpp" />
     <ClInclude Include="skills/merchant/skill_vending.hpp" />
     <ClInclude Include="skills/merchant/sparkblaster.hpp" />
@@ -1866,6 +1867,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/selfdestruction.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/shapeshift.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp">
