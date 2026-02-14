@@ -59,6 +59,7 @@
 #include "pilebunker.cpp"
 #include "plantcultivation.cpp"
 #include "powerfulswing.cpp"
+#include "powerswing.cpp"
 #include "powerthrust.cpp"
 #include "preparepotion.cpp"
 #include "repair.cpp"
@@ -231,7 +232,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case NC_PILEBUNKER:
 			return std::make_unique<SkillPileBunker>();
 		case NC_POWERSWING:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillPowerSwing>();
 		case NC_VULCANARM:
 			return std::make_unique<SkillVulcanArm>();
 		case NC_SELFDESTRUCTION:
