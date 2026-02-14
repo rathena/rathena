@@ -4925,10 +4925,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			else
 				skillratio += 500 + 500 * skill_lv;	// Level 1-5 is using fire element, like RK_DRAGONBREATH
 			break;
-		case NC_VULCANARM:
-			skillratio += -100 + 230 * skill_lv + sstatus->dex; // !TODO: What's the DEX bonus?
-			RE_LVL_DMOD(100);
-			break;
 		case NC_FLAMELAUNCHER:
 		case NC_COLDSLOWER:
 			skillratio += 200 + 300 * skill_lv;

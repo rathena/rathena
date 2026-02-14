@@ -60,6 +60,7 @@
 #include "twilightalchemy3.cpp"
 #include "upgradeweapon.cpp"
 #include "vaporize.cpp"
+#include "vulcanarm.cpp"
 #include "weaponperfection.cpp"
 #include "weaponrepair.cpp"
 
@@ -199,6 +200,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillPileBunker>();
 		case NC_POWERSWING:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NC_VULCANARM:
+			return std::make_unique<SkillVulcanArm>();
 		case NC_SHAPESHIFT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WS_CARTBOOST:
