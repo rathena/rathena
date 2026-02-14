@@ -1008,6 +1008,9 @@
     <ClInclude Include="skills/mage/firewall.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/firewalk.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/floralflareroad.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -2805,6 +2808,9 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/firewall.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/firewalk.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/floralflareroad.cpp">

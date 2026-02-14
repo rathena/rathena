@@ -453,6 +453,7 @@
     <ClInclude Include="skills/mage/firebolt.hpp" />
     <ClInclude Include="skills/mage/firepillar.hpp" />
     <ClInclude Include="skills/mage/firewall.hpp" />
+    <ClInclude Include="skills/mage/firewalk.hpp" />
     <ClInclude Include="skills/mage/floralflareroad.hpp" />
     <ClInclude Include="skills/mage/frostdiver.hpp" />
     <ClInclude Include="skills/mage/frostnova.hpp" />
@@ -1522,6 +1523,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/firewall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/firewalk.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/floralflareroad.cpp">

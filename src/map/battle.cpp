@@ -7441,12 +7441,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if (tsc && tsc->getSCE(SC_SOUNDBLEND))
 							skillratio += skillratio * 50 / 100;
 						break;
-					case SO_FIREWALK:
-						skillratio += -100 + 60 * skill_lv;
-						RE_LVL_DMOD(100);
-						if( sc && sc->getSCE(SC_HEATER_OPTION) )
-							skillratio += (sd ? sd->status.job_level / 2 : 0);
-						break;
 					case SO_ELECTRICWALK:
 						skillratio += -100 + 60 * skill_lv;
 						RE_LVL_DMOD(100);

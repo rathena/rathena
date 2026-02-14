@@ -10328,7 +10328,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		}
 		break;
 
-	case SO_FIREWALK:
 	case SO_ELECTRICWALK:
 	case NPC_FIREWALK:
 	case NPC_ELECTRICWALK:

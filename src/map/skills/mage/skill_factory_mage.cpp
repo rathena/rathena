@@ -41,6 +41,7 @@
 #include "firebolt.cpp"
 #include "firepillar.cpp"
 #include "firewall.cpp"
+#include "firewalk.cpp"
 #include "floralflareroad.cpp"
 #include "frostdiver.cpp"
 #include "frostnova.cpp"
@@ -179,6 +180,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillFireBolt>();
 		case MG_FIREWALL:
 			return std::make_unique<SkillFireWall>();
+		case SO_FIREWALK:
+			return std::make_unique<SkillFireWalk>();
 		case MG_FROSTDIVER:
 			return std::make_unique<SkillFrostDiver>();
 		case MG_LIGHTNINGBOLT:
