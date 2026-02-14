@@ -7925,18 +7925,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
 
-	case NC_SELFDESTRUCTION:
-		if( sd ) {
-			if( pc_ismadogear(sd) )
-				pc_setmadogear(sd, false);
-			skill_area_temp[1] = 0;
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-			status_set_sp(src, 0, 0);
-			skill_clear_unitgroup(src);
-		}
-		break;
-
 	case NC_EMERGENCYCOOL:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		if (sd) {

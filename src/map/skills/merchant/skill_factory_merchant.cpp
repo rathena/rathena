@@ -56,6 +56,7 @@
 #include "preparepotion.cpp"
 #include "rushquake.cpp"
 #include "rushstrike.cpp"
+#include "selfdestruction.cpp"
 #include "skill_vending.cpp"
 #include "sparkblaster.cpp"
 #include "summonflora.cpp"
@@ -222,6 +223,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NC_VULCANARM:
 			return std::make_unique<SkillVulcanArm>();
+		case NC_SELFDESTRUCTION:
+			return std::make_unique<SkillSelfDestruction>();
 		case NC_SHAPESHIFT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WS_CARTBOOST:
