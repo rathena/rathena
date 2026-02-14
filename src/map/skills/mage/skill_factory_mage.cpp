@@ -38,6 +38,7 @@
 #include "endowtsunami.cpp"
 #include "energycoat.cpp"
 #include "energyconversion.cpp"
+#include "fiberlock.cpp"
 #include "fireball.cpp"
 #include "firebolt.cpp"
 #include "firepillar.cpp"
@@ -214,6 +215,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillSoulExhale>();
 		case PF_SOULBURN:
 			return std::make_unique<SkillSoulSiphon>();
+		case PF_SPIDERWEB:
+			return std::make_unique<SkillFiberLock>();
 		case SA_ABRACADABRA:
 			return std::make_unique<SkillHocusPocus>();
 		case SA_AUTOSPELL:

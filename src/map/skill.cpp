@@ -9950,7 +9950,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MA_SANDMAN:
 	case MA_FREEZINGTRAP:
 	case PF_FOGWALL:
-	case PF_SPIDERWEB:
 	case WE_CALLPARTNER:
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
