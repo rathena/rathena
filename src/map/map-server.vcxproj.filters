@@ -1602,6 +1602,9 @@
     <ClInclude Include="skills/swordman/dragonicbreath.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/dragonhowling.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/dragonicpierce.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -3405,6 +3408,9 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/dragonicbreath.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/dragonhowling.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/dragonicpierce.cpp">

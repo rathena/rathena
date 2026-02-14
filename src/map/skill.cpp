@@ -7670,20 +7670,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv, buyingstore_setup(sd, MAX_BUYINGSTORE_SLOTS) == 0);
 		}
 		break;
-	case RK_DRAGONHOWLING:
-		if( flag&1)
-			sc_start(src,bl,type,50 + 6 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
-		else
-		{
-			skill_area_temp[2] = 0;
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			map_foreachinallrange(skill_area_sub, src,
-				skill_get_splash(skill_id,skill_lv),BL_CHAR,
-				src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_PREAMBLE|1,
-				skill_castend_nodamage_id);
-		}
-		break;
-
 	case LG_EARTHDRIVE: {
 			int32 dummy = 1;
 

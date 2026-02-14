@@ -16,6 +16,7 @@
 #include "crossrain.cpp"
 #include "dragonicaura.cpp"
 #include "dragonicbreath.cpp"
+#include "dragonhowling.cpp"
 #include "dragonicpierce.cpp"
 #include "enchantblade.cpp"
 #include "gloriadomini.cpp"
@@ -196,6 +197,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillEnchantBlade>();
 		case RK_DEATHBOUND:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case RK_DRAGONHOWLING:
+			return std::make_unique<SkillDragonHowling>();
 		case RK_DRAGONTRAINING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RK_RUNEMASTERY:
