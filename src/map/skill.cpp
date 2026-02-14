@@ -9074,12 +9074,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-#ifdef RENEWAL
-	case CG_HERMODE:
-		skill_castend_song(src, skill_id, skill_lv, tick);
-		break;
-#endif
-
 	case NPC_LEASH:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 
@@ -10080,15 +10074,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case NPC_EARTHQUAKE:
 		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, -1, DMG_SINGLE );
 		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-		break;
-#ifndef RENEWAL
-	case CG_HERMODE:
-		skill_clear_unitgroup(src);
-		if ((sg = skill_unitsetting(src,skill_id,skill_lv,x,y,0)))
-			sc_start4(src,src,SC_DANCING,100,
-				skill_id,0,skill_lv,sg->group_id,skill_get_time(skill_id,skill_lv));
-		flag|=1;
-#endif
 		break;
 
 	case SO_WARMER:

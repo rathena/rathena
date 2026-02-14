@@ -74,6 +74,7 @@
 #include "unchainedserenade.cpp"
 #include "verduretrap.cpp"
 #include "vulcanarrow.cpp"
+#include "wandofhermode.cpp"
 #include "wargbite.cpp"
 #include "wargdash.cpp"
 #include "wargmastery.cpp"
@@ -136,6 +137,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillShelteringBliss>();
 		case CG_MARIONETTE:
 			return std::make_unique<SkillMarionetteControl>();
+		case CG_HERMODE:
+			return std::make_unique<SkillWandOfHermode>();
 		case DC_THROWARROW:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case HT_ANKLESNARE:
