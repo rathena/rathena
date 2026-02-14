@@ -7301,36 +7301,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case PF_SOULCHANGE:
-		{
-			uint32 sp1 = 0, sp2 = 0;
-			if (dstmd) {
-				if (dstmd->state.soul_change_flag) {
-					if(sd) clif_skill_fail( *sd, skill_id );
-					break;
-				}
-				dstmd->state.soul_change_flag = 1;
-				sp2 = sstatus->max_sp * 3 /100;
-				status_heal(src, 0, sp2, 2);
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-				break;
-			}
-			sp1 = sstatus->sp;
-			sp2 = tstatus->sp;
-#ifdef	RENEWAL
-			sp1 = sp1 / 2;
-			sp2 = sp2 / 2;
-			if (tsc && tsc->getSCE(SC_EXTREMITYFIST))
-				sp1 = tstatus->sp;
-#endif
-			if (tsc && tsc->getSCE(SC_NORECOVER_STATE))
-				sp1 = tstatus->sp;
-			status_set_sp(src, sp2, 3);
-			status_set_sp(bl, sp1, 3);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
 #ifndef RENEWAL
 	case CG_LONGINGFREEDOM:
 		{
