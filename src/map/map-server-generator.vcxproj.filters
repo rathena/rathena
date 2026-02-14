@@ -1491,6 +1491,9 @@
     <ClInclude Include="skills/npc/maxpainattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/multistageattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/poisonattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -3315,6 +3318,9 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/maxpainattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/multistageattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/poisonattributechange.cpp">

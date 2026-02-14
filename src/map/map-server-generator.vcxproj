@@ -614,6 +614,7 @@
     <ClInclude Include="skills/npc/holyattributechange.hpp" />
     <ClInclude Include="skills/npc/jackfrost2.hpp" />
     <ClInclude Include="skills/npc/maxpainattack.hpp" />
+    <ClInclude Include="skills/npc/multistageattack.hpp" />
     <ClInclude Include="skills/npc/poisonattributechange.hpp" />
     <ClInclude Include="skills/npc/piercingattack.hpp" />
     <ClInclude Include="skills/npc/shadowattributechange.hpp" />
@@ -2014,6 +2015,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/maxpainattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/multistageattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/poisonattributechange.cpp">
