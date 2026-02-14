@@ -5618,16 +5618,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case SR_TIGERCANNON:
-		if (flag & 1) {
-			skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag | SD_ANIMATION);
-		} else if (sd) {
-			if (sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == SR_FALLENEMPIRE && !sc->getSCE(SC_FLASHCOMBO))
-				flag |= 8; // Only apply Combo bonus when Tiger Cannon is not used through Flash Combo
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR | BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-		}
-		break;
-
 	case WM_REVERBERATION:
 	case TR_RHYTHMICAL_WAVE:
 		if (flag & 1)

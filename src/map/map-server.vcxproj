@@ -318,6 +318,7 @@
     <ClInclude Include="skills/acolyte/thirdflamebomb.hpp" />
     <ClInclude Include="skills/acolyte/thirdpunish.hpp" />
     <ClInclude Include="skills/acolyte/throwspiritsphere.hpp" />
+    <ClInclude Include="skills/acolyte/tigercannon.hpp" />
     <ClInclude Include="skills/acolyte/turnundead.hpp" />
     <ClInclude Include="skills/acolyte/vituperatum.hpp" />
     <ClInclude Include="skills/archer/acousticrhythm.hpp" />
@@ -1120,6 +1121,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/throwspiritsphere.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/tigercannon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/turnundead.cpp">

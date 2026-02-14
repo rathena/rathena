@@ -5067,22 +5067,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += sstatus->vit / 6; // !TODO: What's the VIT bonus?
 			RE_LVL_DMOD(100);
 			break;
-		case SR_TIGERCANNON:
-			{
-				uint32 hp = sstatus->max_hp * (10 + (skill_lv * 2)) / 100,
-							 sp = sstatus->max_sp * (5 + skill_lv) / 100;
-
-				if (wd->miscflag&8)
-					// Base_Damage = [((Caster consumed HP + SP) / 2) x Caster Base Level / 100] %
-					skillratio += -100 + (hp + sp) / 2;
-				else
-					// Base_Damage = [((Caster consumed HP + SP) / 4) x Caster Base Level / 100] %
-					skillratio += -100 + (hp + sp) / 4;
-				RE_LVL_DMOD(100);
-			}
-			if (sc->getSCE(SC_GT_REVITALIZE))
-				skillratio += skillratio * 30 / 100;
-			break;
 		case SR_SKYNETBLOW:
 			//ATK [{(Skill Level x 200) + (Caster AGI)} x Caster Base Level / 100] %
 			skillratio += -100 + 200 * skill_lv + sstatus->agi / 6; // !TODO: Confirm AGI bonus

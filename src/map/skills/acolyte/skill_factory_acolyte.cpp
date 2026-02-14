@@ -85,6 +85,7 @@
 #include "thirdflamebomb.cpp"
 #include "thirdpunish.cpp"
 #include "throwspiritsphere.cpp"
+#include "tigercannon.cpp"
 #include "turnundead.cpp"
 #include "vituperatum.cpp"
 
@@ -298,6 +299,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillEarthShaker>();
 		case SR_FALLENEMPIRE:
 			return std::make_unique<SkillFallenEmpire>();
+		case SR_TIGERCANNON:
+			return std::make_unique<SkillTigerCannon>();
 		case SR_GATEOFHELL:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SR_GENTLETOUCH_CHANGE:
