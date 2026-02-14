@@ -126638,11 +126638,11 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_400963
+            Item: C_Ear_Of_Nyar_WH
           - Index: 1
-            Item: aegis_410456
+            Item: C_WH_Cat_Eyes
           - Index: 2
-            Item: aegis_420553
+            Item: C_Snug_Nyar_Hair
           - Index: 3
             Item: Nyar_Foot_BU_Robe
   - Group: 23TH_COSTUME_B
@@ -126651,9 +126651,9 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_400964
+            Item: C_Ear_Of_Nyar_GY
           - Index: 1
-            Item: aegis_410457
+            Item: C_YL_Cat_Eyes
           - Index: 2
             Item: C_Waggy_Nyar_Hair
           - Index: 3
