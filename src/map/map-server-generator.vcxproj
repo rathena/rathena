@@ -468,6 +468,7 @@
     <ClInclude Include="skills/mage/hindsight.hpp" />
     <ClInclude Include="skills/mage/hocuspocus.hpp" />
     <ClInclude Include="skills/mage/icewall.hpp" />
+    <ClInclude Include="skills/mage/indulge.hpp" />
     <ClInclude Include="skills/mage/jackfrost.hpp" />
     <ClInclude Include="skills/mage/jupitelthunder.hpp" />
     <ClInclude Include="skills/mage/leveling.hpp" />
@@ -1567,6 +1568,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/icewall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/indulge.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/jackfrost.cpp">

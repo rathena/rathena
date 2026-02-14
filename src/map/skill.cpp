@@ -7252,20 +7252,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case PF_HPCONVERSION:
-		{
-			int32 hp, sp;
-			hp = sstatus->max_hp/10;
-			sp = hp * 10 * skill_lv / 100;
-			if (!status_charge(src,hp,0)) {
-				if (sd) clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_heal(bl,0,sp,2);
-		}
-		break;
-
 	case MA_REMOVETRAP:
 		{
 			skill_unit* su = BL_CAST(BL_SKILL, bl);

@@ -56,6 +56,7 @@
 #include "hindsight.cpp"
 #include "hocuspocus.cpp"
 #include "icewall.cpp"
+#include "indulge.cpp"
 #include "jackfrost.cpp"
 #include "jupitelthunder.cpp"
 #include "leveling.cpp"
@@ -195,6 +196,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillStoneCurse>();
 		case MG_THUNDERSTORM:
 			return std::make_unique<SkillThunderStorm>();
+		case PF_HPCONVERSION:
+			return std::make_unique<SkillIndulge>();
 		case PF_DOUBLECASTING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case PF_MEMORIZE:
