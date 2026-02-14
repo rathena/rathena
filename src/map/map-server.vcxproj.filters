@@ -966,6 +966,9 @@
     <ClInclude Include="skills/mage/earthstrain.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/electricwalk.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/elementalchangeearth.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -2766,6 +2769,9 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/earthstrain.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/electricwalk.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/elementalchangeearth.cpp">

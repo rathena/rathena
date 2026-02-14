@@ -27,6 +27,7 @@
 #include "drainlife.cpp"
 #include "earthspike.cpp"
 #include "earthstrain.cpp"
+#include "electricwalk.cpp"
 #include "elementalchangeearth.cpp"
 #include "elementalchangefire.cpp"
 #include "elementalchangewater.cpp"
@@ -220,6 +221,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillDeluge>();
 		case SA_DISPELL:
 			return std::make_unique<SkillDispell>();
+		case SO_ELECTRICWALK:
+			return std::make_unique<SkillElectricWalk>();
 		case SA_ELEMENTFIRE:
 			return std::make_unique<SkillElementalChangeFire>();
 		case SA_ELEMENTGROUND:

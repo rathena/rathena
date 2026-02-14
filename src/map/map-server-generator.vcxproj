@@ -439,6 +439,7 @@
     <ClInclude Include="skills/mage/drainlife.hpp" />
     <ClInclude Include="skills/mage/earthspike.hpp" />
     <ClInclude Include="skills/mage/earthstrain.hpp" />
+    <ClInclude Include="skills/mage/electricwalk.hpp" />
     <ClInclude Include="skills/mage/elementalchangeearth.hpp" />
     <ClInclude Include="skills/mage/elementalchangefire.hpp" />
     <ClInclude Include="skills/mage/elementalchangewater.hpp" />
@@ -1481,6 +1482,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/earthstrain.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/electricwalk.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/elementalchangeearth.cpp">
