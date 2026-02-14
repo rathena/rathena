@@ -27,6 +27,7 @@
 #include "attackmachine.cpp"
 #include "axeboomerang.cpp"
 #include "axestomp.cpp"
+#include "axetornado.cpp"
 #include "axetraining.cpp"
 #include "backsideslide.cpp"
 #include "biochemicalhelm.cpp"
@@ -253,6 +254,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillRepair>();
 		case NC_TRAININGAXE:
 			return std::make_unique<SkillAxeTraining>();
+		case NC_AXETORNADO:
+			return std::make_unique<SkillAxeTornado>();
 		case NC_RESEARCHFE:
 			return std::make_unique<SkillResearchFireEarth>();
 		case NC_SHAPESHIFT:

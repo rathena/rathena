@@ -4928,12 +4928,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case NC_MAGMA_ERUPTION: // 'Slam' damage
 			skillratio += 350 + 50 * skill_lv;
 			break;
-		case NC_AXETORNADO:
-			skillratio += -100 + 200 + 180 * skill_lv + sstatus->vit * 2;
-			if (sc && sc->getSCE(SC_AXE_STOMP))
-				skillratio += 380;
-			RE_LVL_DMOD(100);
-			break;
 		case SC_FATALMENACE:
 			skillratio += 120 * skill_lv + sstatus->agi; // !TODO: What's the AGI bonus?
 
