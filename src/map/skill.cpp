@@ -1630,27 +1630,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case NC_POWERSWING:
 		sc_start(src,bl, SC_STUN, 10, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case LG_PINPOINTATTACK: {
-		int32 rate = 30 + 5 * ((sd) ? pc_checkskill(sd,LG_PINPOINTATTACK) : skill_lv) + (status_get_agi(src) + status_get_lv(src)) / 10;
-		switch( skill_lv ) {
-			case 1:
-				sc_start2(src,bl,SC_BLEEDING,rate,skill_lv,src->id,skill_get_time(skill_id,skill_lv));
-				break;
-			case 2:
-				skill_break_equip(src, bl, EQP_HELM, rate * 100, BCT_ENEMY);
-				break;
-			case 3:
-				skill_break_equip(src, bl, EQP_SHIELD, rate * 100, BCT_ENEMY);
-				break;
-			case 4:
-				skill_break_equip(src, bl, EQP_ARMOR, rate * 100, BCT_ENEMY);
-				break;
-			case 5:
-				skill_break_equip(src, bl, EQP_WEAPON, rate * 100, BCT_ENEMY);
-				break;
-		}
-		} break;
-
 	case LG_MOONSLASHER:
 		sc_start(src,src,SC_OVERBRANDREADY,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
@@ -5577,12 +5556,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 	
-	case LG_PINPOINTATTACK:
-		if (skill_check_unit_movepos(5, src, bl->x, bl->y, 1, 1))
-			clif_blown(src);
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-
 	case SR_KNUCKLEARROW:
 		// Holds current direction of bl/target to src/attacker before the src is moved to bl location
 		dir_ka = map_calc_dir(bl, src->x, src->y);

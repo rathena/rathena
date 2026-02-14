@@ -4985,10 +4985,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += -100 + (skill_lv + 1) * sstatus->dex / 2 * ((sd) ? sd->status.job_level / 10 : 1);
 			RE_LVL_DMOD(120);
 			break;
-		case LG_PINPOINTATTACK:
-			skillratio += -100 + 100 * skill_lv + 5 * status_get_agi(src);
-			RE_LVL_DMOD(120);
-			break;
 		case LG_RAGEBURST:
 			if (sd && sd->spiritball_old)
 				skillratio += -100 + 200 * sd->spiritball_old + (status_get_max_hp(src) - status_get_hp(src)) / 100;

@@ -668,6 +668,7 @@
     <ClInclude Include="skills/swordman/martyrsreckoning.hpp" />
     <ClInclude Include="skills/swordman/overslash.hpp" />
     <ClInclude Include="skills/swordman/pierce.hpp" />
+    <ClInclude Include="skills/swordman/pinpointattack.hpp" />
     <ClInclude Include="skills/swordman/provoke.hpp" />
     <ClInclude Include="skills/swordman/radiantspear.hpp" />
     <ClInclude Include="skills/swordman/relax.hpp" />
@@ -2171,6 +2172,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/pierce.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/pinpointattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/provoke.cpp">

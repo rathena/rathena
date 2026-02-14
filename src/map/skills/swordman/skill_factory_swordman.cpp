@@ -33,6 +33,7 @@
 #include "martyrsreckoning.cpp"
 #include "overslash.cpp"
 #include "pierce.cpp"
+#include "pinpointattack.cpp"
 #include "provoke.cpp"
 #include "radiantspear.cpp"
 #include "relax.cpp"
@@ -172,6 +173,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case LG_REFLECTDAMAGE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case LG_PINPOINTATTACK:
+			return std::make_unique<SkillPinpointAttack>();
 		case LG_SHIELDPRESS:
 			return std::make_unique<SkillShieldPress>();
 		case LK_AURABLADE:
