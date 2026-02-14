@@ -44,6 +44,7 @@
 #include "greed.cpp"
 #include "hammerfall.cpp"
 #include "hovering.cpp"
+#include "infraredscan.cpp"
 #include "itemappraisal.cpp"
 #include "mainframerestructure.cpp"
 #include "madolicense.cpp"
@@ -229,6 +230,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillSelfDestruction>();
 		case NC_EMERGENCYCOOL:
 			return std::make_unique<SkillEmergencyCool>();
+		case NC_INFRAREDSCAN:
+			return std::make_unique<SkillInfraredScan>();
 		case NC_SHAPESHIFT:
 			return std::make_unique<SkillShapeShift>();
 		case WS_CARTBOOST:
