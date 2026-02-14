@@ -7944,27 +7944,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case SR_CURSEDCIRCLE:
-		if( flag&1 ) {
-			if( status_get_class_(bl) == CLASS_BOSS )
-				break;
-			if( sc_start2(src,bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv))) {
-				if( bl->type == BL_MOB )
-					mob_unlocktarget((TBL_MOB*)bl,gettick());
-				clif_bladestop( *src, bl->id, true );
-				return 1;
-			}
-		} else {
-			int32 count = 0;
-			clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-			count = map_forcountinrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv), (sd)?sd->spiritball_old:15, // Assume 15 spiritballs in non-charactors
-				BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-			if( sd ) pc_delspiritball(sd, count, 0);
-			clif_skill_nodamage(src, *src, skill_id, skill_lv,
-				sc_start2(src,src, SC_CURSEDCIRCLE_ATKER, 100, skill_lv, count, skill_get_time(skill_id,skill_lv)));
-		}
-		break;
-
 	case NPC_SR_CURSEDCIRCLE:
 		if( flag&1 ) {
 			if( status_get_class_(bl) == CLASS_BOSS )

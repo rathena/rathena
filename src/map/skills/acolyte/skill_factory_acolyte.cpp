@@ -28,6 +28,7 @@
 #include "convenio.cpp"
 #include "crementia.cpp"
 #include "crucis.cpp"
+#include "cursedcircle.cpp"
 #include "cure.cpp"
 #include "decagi.cpp"
 #include "dilectioheal.cpp"
@@ -294,6 +295,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SR_CRESCENTELBOW_AUTOSPELL:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SR_CURSEDCIRCLE:
+			return std::make_unique<SkillCursedCircle>();
 		case SR_DRAGONCOMBO:
 			return std::make_unique<SkillDragonCombo>();
 		case SR_EARTHSHAKER:
