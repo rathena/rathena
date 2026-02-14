@@ -42,6 +42,7 @@
 #include "freezingtrap.cpp"
 #include "galestorm.cpp"
 #include "harmoniclick.cpp"
+#include "harmonize.cpp"
 #include "hawkboomerang.cpp"
 #include "hawkmastery.cpp"
 #include "hawkrush.cpp"
@@ -247,6 +248,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillWindmillRushAttack>();
 		case MI_ECHOSONG:
 			return std::make_unique<SkillEchoSong>();
+		case MI_HARMONIZE:
+			return std::make_unique<SkillHarmonize>();
 		case WM_SEVERE_RAINSTORM_MELEE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 
