@@ -13,10 +13,6 @@
 SkillFallingStar::SkillFallingStar() : StatusSkillImpl(SJ_FALLINGSTAR) {
 }
 
-void SkillFallingStar::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
-}
-
 
 // SJ_FALLINGSTAR_ATK
 SkillFallingStarAttack::SkillFallingStarAttack() : WeaponSkillImpl(SJ_FALLINGSTAR_ATK) {
