@@ -36,7 +36,6 @@
 #include "endowquake.cpp"
 #include "endowtornado.cpp"
 #include "endowtsunami.cpp"
-#include "energycoat.cpp"
 #include "energyconversion.cpp"
 #include "fiberlock.cpp"
 #include "fireball.cpp"
@@ -178,7 +177,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 		case MG_COLDBOLT:
 			return std::make_unique<SkillColdBolt>();
 		case MG_ENERGYCOAT:
-			return std::make_unique<SkillEnergyCoat>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MG_FIREBALL:
 			return std::make_unique<SkillFireBall>();
 		case MG_FIREBOLT:
