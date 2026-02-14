@@ -4925,16 +4925,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			else
 				skillratio += 500 + 500 * skill_lv;	// Level 1-5 is using fire element, like RK_DRAGONBREATH
 			break;
-		case NC_AXEBOOMERANG:
-			skillratio += 150 + 50 * skill_lv;
-			if (sd) {
-				int16 index = sd->equip_index[EQI_HAND_R];
-
-				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_WEAPON)
-					skillratio += sd->inventory_data[index]->weight / 10;// Weight is divided by 10 since 10 weight in coding make 1 whole actual weight. [Rytech]
-			}
-			RE_LVL_DMOD(100);
-			break;
 		case NC_POWERSWING: // According to current sources, only the str + dex gets modified by level [Akinari]
 			skillratio += -100 + ((sstatus->str + sstatus->dex)/ 2) + 300 + 100 * skill_lv;
 			RE_LVL_DMOD(100);

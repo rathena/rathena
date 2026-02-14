@@ -25,6 +25,7 @@
 #include "analyze.cpp"
 #include "armcannon.cpp"
 #include "attackmachine.cpp"
+#include "axeboomerang.cpp"
 #include "axestomp.cpp"
 #include "axetraining.cpp"
 #include "backsideslide.cpp"
@@ -206,7 +207,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case NC_ACCELERATION:
 			return std::make_unique<SkillAcceleration>();
 		case NC_AXEBOOMERANG:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillAxeBoomerang>();
 		case NC_BOOSTKNUCKLE:
 			return std::make_unique<SkillBoostKnuckle>();
 		case NC_COLDSLOWER:

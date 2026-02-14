@@ -537,6 +537,7 @@
     <ClInclude Include="skills/merchant/attackmachine.hpp" />
     <ClInclude Include="skills/merchant/axestomp.hpp" />
     <ClInclude Include="skills/merchant/axetraining.hpp" />
+    <ClInclude Include="skills/merchant/axeboomerang.hpp" />
     <ClInclude Include="skills/merchant/backsideslide.hpp" />
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp" />
     <ClInclude Include="skills/merchant/boostknuckle.hpp" />
@@ -1786,6 +1787,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/axetraining.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/axeboomerang.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/backsideslide.cpp">
