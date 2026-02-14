@@ -47,6 +47,7 @@
 #include "hovering.cpp"
 #include "infraredscan.cpp"
 #include "itemappraisal.cpp"
+#include "magneticfield.cpp"
 #include "mainframerestructure.cpp"
 #include "madolicense.cpp"
 #include "mammonite.cpp"
@@ -235,6 +236,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillInfraredScan>();
 		case NC_ANALYZE:
 			return std::make_unique<SkillAnalyze>();
+		case NC_MAGNETICFIELD:
+			return std::make_unique<SkillMagneticField>();
 		case NC_SHAPESHIFT:
 			return std::make_unique<SkillShapeShift>();
 		case WS_CARTBOOST:
