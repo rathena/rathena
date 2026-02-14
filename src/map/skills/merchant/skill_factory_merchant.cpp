@@ -24,6 +24,7 @@
 #include "attackmachine.cpp"
 #include "axestomp.cpp"
 #include "biochemicalhelm.cpp"
+#include "boostknuckle.cpp"
 #include "bomb.cpp"
 #include "callhomunculus.cpp"
 #include "cartrevolution.cpp"
@@ -186,7 +187,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case NC_AXEBOOMERANG:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NC_BOOSTKNUCKLE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillBoostKnuckle>();
 		case NC_HOVERING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NC_MADOLICENCE:

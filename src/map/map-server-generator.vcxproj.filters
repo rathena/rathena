@@ -1251,6 +1251,9 @@
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/boostknuckle.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/bomb.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -3018,6 +3021,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/biochemicalhelm.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/boostknuckle.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/bomb.cpp">

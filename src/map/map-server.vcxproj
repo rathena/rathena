@@ -534,6 +534,7 @@
     <ClInclude Include="skills/merchant/attackmachine.hpp" />
     <ClInclude Include="skills/merchant/axestomp.hpp" />
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp" />
+    <ClInclude Include="skills/merchant/boostknuckle.hpp" />
     <ClInclude Include="skills/merchant/bomb.hpp" />
     <ClInclude Include="skills/merchant/callhomunculus.hpp" />
     <ClInclude Include="skills/merchant/cartrevolution.hpp" />
@@ -1755,6 +1756,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/biochemicalhelm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/boostknuckle.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/bomb.cpp">
