@@ -1257,9 +1257,6 @@
     <ClInclude Include="skills/merchant/axetornado.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
-    <ClInclude Include="skills/merchant/axetraining.hpp">
-      <Filter>Header Files\Skills\Merchant</Filter>
-    </ClInclude>
     <ClInclude Include="skills/merchant/axeboomerang.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -1381,9 +1378,6 @@
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/selfdestruction.hpp">
-      <Filter>Header Files\Skills\Merchant</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/merchant/shapeshift.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/skill_factory_merchant.hpp">
@@ -3101,9 +3095,6 @@
     <ClCompile Include="skills/merchant/axetornado.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
-    <ClCompile Include="skills/merchant/axetraining.cpp">
-      <Filter>Source Files\Skills\Merchant</Filter>
-    </ClCompile>
     <ClCompile Include="skills/merchant/axeboomerang.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
@@ -3225,9 +3216,6 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/selfdestruction.cpp">
-      <Filter>Source Files\Skills\Merchant</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/shapeshift.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/skill_factory_merchant.cpp">

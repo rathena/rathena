@@ -27,7 +27,6 @@
 #include "axeboomerang.cpp"
 #include "axestomp.cpp"
 #include "axetornado.cpp"
-#include "axetraining.cpp"
 #include "backsideslide.cpp"
 #include "biochemicalhelm.cpp"
 #include "boostknuckle.cpp"
@@ -68,7 +67,6 @@
 #include "rushquake.cpp"
 #include "rushstrike.cpp"
 #include "selfdestruction.cpp"
-#include "shapeshift.cpp"
 #include "skill_vending.cpp"
 #include "sparkblaster.cpp"
 #include "stealthfield.cpp"
@@ -251,7 +249,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case NC_REPAIR:
 			return std::make_unique<SkillRepair>();
 		case NC_TRAININGAXE:
-			return std::make_unique<SkillAxeTraining>();
+			return std::make_unique<SkillImpl>(skill_id);
 		case NC_AXETORNADO:
 			return std::make_unique<SkillAxeTornado>();
 		case NC_SILVERSNIPER:
@@ -261,7 +259,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case NC_DISJOINT:
 			return std::make_unique<SkillFawRemoval>();
 		case NC_SHAPESHIFT:
-			return std::make_unique<SkillShapeShift>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WS_CARTBOOST:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WS_CARTTERMINATION:
