@@ -550,6 +550,7 @@
     <ClInclude Include="skills/merchant/fullprotection.hpp" />
     <ClInclude Include="skills/merchant/greed.hpp" />
     <ClInclude Include="skills/merchant/hammerfall.hpp" />
+    <ClInclude Include="skills/merchant/hovering.hpp" />
     <ClInclude Include="skills/merchant/itemappraisal.hpp" />
     <ClInclude Include="skills/merchant/madolicense.hpp" />
     <ClInclude Include="skills/merchant/mammonite.hpp" />
@@ -1810,6 +1811,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/hammerfall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/hovering.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/itemappraisal.cpp">
