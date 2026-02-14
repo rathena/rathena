@@ -7945,13 +7945,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_fail( *sd, skill_id );
 		break;
 
-	case LG_TRAMPLE:
-		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		if (rnd()%100 < (25 + 25 * skill_lv))
-			map_foreachinallrange(skill_destroy_trap,bl,skill_get_splash(skill_id,skill_lv),BL_SKILL,tick);
-		status_change_end(bl, SC_SV_ROOTTWIST);
-		break;
-
 	case LG_PIETY:
 		if( flag&1 )
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -19043,6 +19036,10 @@ static int32 skill_destroy_trap(block_list *bl, va_list ap)
 	}
 
 	return 0;
+}
+
+void skill_trample_destroy_traps(block_list* center, uint16 skill_lv, t_tick tick) {
+	map_foreachinallrange(skill_destroy_trap, center, skill_get_splash(LG_TRAMPLE, skill_lv), BL_SKILL, tick);
 }
 
 /*==========================================

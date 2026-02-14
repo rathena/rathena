@@ -52,6 +52,7 @@
 #include "spearstab.cpp"
 #include "spiralpierce.cpp"
 #include "stormslash.cpp"
+#include "trample.cpp"
 #include "traumaticblow.cpp"
 #include "ultimatesacrifice.cpp"
 #include "vitalstrike.cpp"
@@ -156,6 +157,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillCannonSpear>();
 		case LG_BANISHINGPOINT:
 			return std::make_unique<SkillBanishingPoint>();
+		case LG_TRAMPLE:
+			return std::make_unique<SkillTrample>();
 		case LG_EXEEDBREAK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LG_HESPERUSLIT:
