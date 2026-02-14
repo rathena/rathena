@@ -6725,20 +6725,19 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		clif_skill_nodamage(src,*bl,skill_id,-1,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-	case LG_FORCEOFVANGUARD:
 	case SC_REPRODUCE:
 	case SC_INVISIBILITY:
 		if (tsce) {
 			i = status_change_end(bl, type);
 			if( i )
-				clif_skill_nodamage(src,*bl,skill_id,( skill_id == LG_FORCEOFVANGUARD ) ? skill_lv : -1,i);
+				clif_skill_nodamage(src,*bl,skill_id,-1,i);
 			else if( sd )
 				clif_skill_fail( *sd, skill_id );
 			return 0;
 		}
 		i = sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		if( i )
-			clif_skill_nodamage(src,*bl,skill_id,( skill_id == LG_FORCEOFVANGUARD ) ? skill_lv : -1,i);
+			clif_skill_nodamage(src,*bl,skill_id,-1,i);
 		else if( sd )
 			clif_skill_fail( *sd, skill_id,  USESKILL_FAIL_LEVEL );
 		break;
