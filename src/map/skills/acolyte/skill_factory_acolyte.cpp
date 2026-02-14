@@ -66,6 +66,7 @@
 #include "pneuma.cpp"
 #include "pneumaticusprocella.cpp"
 #include "praefatio.cpp"
+#include "rampageblaster.cpp"
 #include "ragingquadrupleblow.cpp"
 #include "ragingthrust.cpp"
 #include "ragingtrifectablow.cpp"
@@ -313,6 +314,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SR_LIGHTNINGWALK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SR_RAMPAGEBLASTER:
+			return std::make_unique<SkillRampageBlaster>();
 
 		default:
 			return nullptr;

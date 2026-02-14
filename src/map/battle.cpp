@@ -5073,17 +5073,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			RE_LVL_DMOD(100);
 			break;
 
-		case SR_RAMPAGEBLASTER:
-			if (tsc && tsc->getSCE(SC_EARTHSHAKER)) {
-				skillratio += 1400 + 550 * skill_lv;
-				RE_LVL_DMOD(120);
-			} else {
-				skillratio += 900 + 350 * skill_lv;
-				RE_LVL_DMOD(150);
-			}
-			if (sc->getSCE(SC_GT_CHANGE))
-				skillratio += skillratio * 30 / 100;
-			break;
 		case SR_KNUCKLEARROW:
 			if (wd->miscflag&4) { // ATK [(Skill Level x 150) + (1000 x Target current weight / Maximum weight) + (Target Base Level x 5) x (Caster Base Level / 150)] %
 				skillratio += -100 + 150 * skill_lv + status_get_lv(target) * 5;

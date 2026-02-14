@@ -298,6 +298,7 @@
     <ClInclude Include="skills/acolyte/pneuma.hpp" />
     <ClInclude Include="skills/acolyte/pneumaticusprocella.hpp" />
     <ClInclude Include="skills/acolyte/praefatio.hpp" />
+    <ClInclude Include="skills/acolyte/rampageblaster.hpp" />
     <ClInclude Include="skills/acolyte/ragingquadrupleblow.hpp" />
     <ClInclude Include="skills/acolyte/ragingthrust.hpp" />
     <ClInclude Include="skills/acolyte/ragingtrifectablow.hpp" />
@@ -1061,6 +1062,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/praefatio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/rampageblaster.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/ragingquadrupleblow.cpp">
