@@ -680,6 +680,7 @@
     <ClInclude Include="skills/swordman/servantweaponsign.hpp" />
     <ClInclude Include="skills/swordman/shieldboomerang.hpp" />
     <ClInclude Include="skills/swordman/shieldchain.hpp" />
+    <ClInclude Include="skills/swordman/shieldpress.hpp" />
     <ClInclude Include="skills/swordman/shieldreflect.hpp" />
     <ClInclude Include="skills/swordman/shieldshooting.hpp" />
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
@@ -2206,6 +2207,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/shieldchain.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/shieldpress.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/shieldreflect.cpp">

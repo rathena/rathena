@@ -45,6 +45,7 @@
 #include "servantweaponsign.cpp"
 #include "shieldboomerang.cpp"
 #include "shieldchain.cpp"
+#include "shieldpress.cpp"
 #include "shieldreflect.cpp"
 #include "shieldshooting.cpp"
 #include "smite.cpp"
@@ -172,7 +173,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 		case LG_REFLECTDAMAGE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case LG_SHIELDPRESS:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillShieldPress>();
 		case LK_AURABLADE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LK_BERSERK:
