@@ -3869,7 +3869,7 @@ static void battle_calc_element_damage(struct Damage* wd, block_list *src, block
 #endif
 			case MC_CARTREVOLUTION:
 			case HW_MAGICCRASHER:
-			case SR_FALLENEMPIRE:
+		case SR_FALLENEMPIRE:
 			case SR_CRESCENTELBOW_AUTOSPELL:
 			case SR_GATEOFHELL:
 			case GN_FIRE_EXPANSION_ACID:
@@ -5080,11 +5080,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			}
 			break;
 
-		case SR_DRAGONCOMBO:
-			skillratio += 100 + 80 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case SR_FALLENEMPIRE:
+			case SR_FALLENEMPIRE:
 			// ATK [(Skill Level x 300 + 100) x Caster Base Level / 150] %
 			skillratio += 300 * skill_lv;
 			RE_LVL_DMOD(150);

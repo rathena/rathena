@@ -32,6 +32,7 @@
 #include "decagi.cpp"
 #include "dilectioheal.cpp"
 #include "divinusflos.cpp"
+#include "dragoncombo.cpp"
 #include "duplelight.cpp"
 #include "effligo.cpp"
 #include "epiclesis.cpp"
@@ -290,7 +291,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 		case SR_CRESCENTELBOW_AUTOSPELL:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SR_DRAGONCOMBO:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillDragonCombo>();
 		case SR_FALLENEMPIRE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SR_GATEOFHELL:
