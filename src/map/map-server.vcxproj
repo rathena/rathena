@@ -564,6 +564,7 @@
     <ClInclude Include="skills/merchant/infraredscan.hpp" />
     <ClInclude Include="skills/merchant/itemappraisal.hpp" />
     <ClInclude Include="skills/merchant/mainframerestructure.hpp" />
+    <ClInclude Include="skills/merchant/magmaeruption.hpp" />
     <ClInclude Include="skills/merchant/magneticfield.hpp" />
     <ClInclude Include="skills/merchant/madolicense.hpp" />
     <ClInclude Include="skills/merchant/mammonite.hpp" />
@@ -1873,6 +1874,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/mainframerestructure.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/magmaeruption.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/magneticfield.cpp">

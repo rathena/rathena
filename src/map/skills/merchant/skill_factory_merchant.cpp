@@ -54,6 +54,7 @@
 #include "infraredscan.cpp"
 #include "itemappraisal.cpp"
 #include "magneticfield.cpp"
+#include "magmaeruption.cpp"
 #include "mainframerestructure.cpp"
 #include "madolicense.cpp"
 #include "mammonite.cpp"
@@ -232,7 +233,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case NC_MADOLICENCE:
 			return std::make_unique<SkillMadoLicense>();
 		case NC_MAGMA_ERUPTION:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillMagmaEruption>();
 		case NC_PILEBUNKER:
 			return std::make_unique<SkillPileBunker>();
 		case NC_POWERSWING:
