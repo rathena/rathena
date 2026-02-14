@@ -10192,7 +10192,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
 	case NPC_COMET:
-	case NPC_WIDESUCK:
 	case NPC_ICEMINE:
 	case NPC_FLAMECROSS:
 	case NPC_REVERBERATION:
