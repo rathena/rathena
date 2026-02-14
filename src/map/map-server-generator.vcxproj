@@ -608,6 +608,7 @@
     <ClInclude Include="skills/npc/deathsummon.hpp" />
     <ClInclude Include="skills/npc/earthattributechange.hpp" />
     <ClInclude Include="skills/npc/fireattributechange.hpp" />
+    <ClInclude Include="skills/npc/ghostattributechange.hpp" />
     <ClInclude Include="skills/npc/hellburning.hpp" />
     <ClInclude Include="skills/npc/holyattributechange.hpp" />
     <ClInclude Include="skills/npc/jackfrost2.hpp" />
@@ -1994,6 +1995,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/fireattributechange.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/ghostattributechange.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/hellburning.cpp">

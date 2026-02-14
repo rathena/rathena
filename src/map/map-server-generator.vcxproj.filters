@@ -1473,6 +1473,9 @@
     <ClInclude Include="skills/npc/fireattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/ghostattributechange.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/hellburning.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -3291,6 +3294,9 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/fireattributechange.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/ghostattributechange.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/hellburning.cpp">
