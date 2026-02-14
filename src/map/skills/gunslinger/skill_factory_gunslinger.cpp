@@ -21,7 +21,6 @@
 #include "firedance.cpp"
 #include "fling.cpp"
 #include "fullbuster.cpp"
-#include "gatlingfever.cpp"
 #include "glittering.cpp"
 #include "grenadefragment.cpp"
 #include "grenadesdropping.cpp"
@@ -67,7 +66,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 		case GS_FULLBUSTER:
 			return std::make_unique<SkillFullBuster>();
 		case GS_GATLINGFEVER:
-			return std::make_unique<SkillGatlingfever>();
+			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case GS_GLITTERING:
 			return std::make_unique<SkillGlittering>();
 		case GS_GROUNDDRIFT:
