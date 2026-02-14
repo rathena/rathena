@@ -28,6 +28,7 @@
 #include "imperialcross.cpp"
 #include "imperialpressure.cpp"
 #include "judgementcross.cpp"
+#include "luxanima.cpp"
 #include "madnesscrusher.cpp"
 #include "magnum.cpp"
 #include "martyrsreckoning.cpp"
@@ -201,6 +202,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillDragonHowling>();
 		case RK_DRAGONTRAINING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case RK_LUXANIMA:
+			return std::make_unique<SkillLuxAnima>();
 		case RK_RUNEMASTERY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RK_SONICWAVE:
