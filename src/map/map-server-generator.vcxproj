@@ -498,6 +498,7 @@
     <ClInclude Include="skills/mage/skill_factory_mage.hpp" />
     <ClInclude Include="skills/mage/soulexhale.hpp" />
     <ClInclude Include="skills/mage/soulexpansion.hpp" />
+    <ClInclude Include="skills/mage/soulsiphon.hpp" />
     <ClInclude Include="skills/mage/soulstrike.hpp" />
     <ClInclude Include="skills/mage/soulvulcanstrike.hpp" />
     <ClInclude Include="skills/mage/spellbreaker.hpp" />
@@ -1659,6 +1660,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/soulexpansion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/soulsiphon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/soulstrike.cpp">

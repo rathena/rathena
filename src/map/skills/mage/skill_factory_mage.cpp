@@ -85,6 +85,7 @@
 #include "sightrasher.cpp"
 #include "soulexhale.cpp"
 #include "soulexpansion.cpp"
+#include "soulsiphon.cpp"
 #include "soulstrike.cpp"
 #include "soulvulcanstrike.cpp"
 #include "spellbreaker.cpp"
@@ -205,6 +206,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case PF_SOULCHANGE:
 			return std::make_unique<SkillSoulExhale>();
+		case PF_SOULBURN:
+			return std::make_unique<SkillSoulSiphon>();
 		case SA_ABRACADABRA:
 			return std::make_unique<SkillHocusPocus>();
 		case SA_AUTOSPELL:
