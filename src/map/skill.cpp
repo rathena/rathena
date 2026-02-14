@@ -7065,7 +7065,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sd->skill_id_old = sd->skill_lv_old = 0;
 		}
 		break;
-	case NPC_CHANGEGROUND:
 	case NPC_CHANGEFIRE:
 	case NPC_CHANGEWIND:
 	case NPC_CHANGEPOISON:
