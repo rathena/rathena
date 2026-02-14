@@ -4978,7 +4978,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_HELLJUDGEMENT:
 	case NPC_HELLJUDGEMENT2:
 	case NPC_VAMPIRE_GIFT:
-	case NPC_MAXPAIN_ATK:
 	case NPC_JACKFROST:
 	case NPC_REVERBERATION_ATK:
 	case NPC_ARROWSTORM:
