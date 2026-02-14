@@ -37,6 +37,7 @@
 #include "crazyuproar.cpp"
 #include "decoratecart.cpp"
 #include "energycannonade.cpp"
+#include "emergencycool.cpp"
 #include "flamelauncher.cpp"
 #include "frontsideslide.cpp"
 #include "fullprotection.cpp"
@@ -226,6 +227,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillVulcanArm>();
 		case NC_SELFDESTRUCTION:
 			return std::make_unique<SkillSelfDestruction>();
+		case NC_EMERGENCYCOOL:
+			return std::make_unique<SkillEmergencyCool>();
 		case NC_SHAPESHIFT:
 			return std::make_unique<SkillShapeShift>();
 		case WS_CARTBOOST:

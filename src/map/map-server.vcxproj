@@ -547,6 +547,7 @@
     <ClInclude Include="skills/merchant/crazyuproar.hpp" />
     <ClInclude Include="skills/merchant/decoratecart.hpp" />
     <ClInclude Include="skills/merchant/energycannonade.hpp" />
+    <ClInclude Include="skills/merchant/emergencycool.hpp" />
     <ClInclude Include="skills/merchant/flamelauncher.hpp" />
     <ClInclude Include="skills/merchant/frontsideslide.hpp" />
     <ClInclude Include="skills/merchant/fullprotection.hpp" />
@@ -1807,6 +1808,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/energycannonade.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/emergencycool.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/flamelauncher.cpp">

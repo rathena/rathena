@@ -7925,22 +7925,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		map_foreachinrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR|BL_SKILL,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
 		break;
 
-	case NC_EMERGENCYCOOL:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		if (sd) {
-			struct s_skill_condition req = skill_get_requirement(sd, skill_id, skill_lv);
-			int16 limit[] = { -45, -75, -105 };
-
-			i = 0;
-			for (const auto &reqItem : req.eqItem) {
-				if (pc_search_inventory(sd, reqItem) != -1)
-					break;
-				i++;
-			}
-			pc_overheat(*sd, limit[min(i, 2)]);
-		}
-		break;
-
 	case NC_ANALYZE:
 		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 		sc_start(src,bl,type, 30 + 12 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
