@@ -198,6 +198,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RK_DRAGONTRAINING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case RK_RUNEMASTERY:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RK_SONICWAVE:
 			return std::make_unique<SkillSonicWave>();
 		case SM_AUTOBERSERK:
