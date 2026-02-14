@@ -523,6 +523,7 @@
     <ClInclude Include="skills/merchant/abrdualcannon.hpp" />
     <ClInclude Include="skills/merchant/abrinfinity.hpp" />
     <ClInclude Include="skills/merchant/abrmothernet.hpp" />
+    <ClInclude Include="skills/merchant/acceleration.hpp" />
     <ClInclude Include="skills/merchant/aciddemonstration.hpp" />
     <ClInclude Include="skills/merchant/acidterror.hpp" />
     <ClInclude Include="skills/merchant/adrenalinerush.hpp" />
@@ -1728,6 +1729,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/abrmothernet.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/acceleration.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/aciddemonstration.cpp">
