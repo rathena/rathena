@@ -10268,15 +10268,14 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 		break;
 
-	case NC_NEUTRALBARRIER:
 	case NC_STEALTHFIELD:
-		if( (sc->getSCE(SC_NEUTRALBARRIER_MASTER) && skill_id == NC_NEUTRALBARRIER) || (sc->getSCE(SC_STEALTHFIELD_MASTER) && skill_id == NC_STEALTHFIELD) ) {
+		if (sc->getSCE(SC_STEALTHFIELD_MASTER)) {
 			skill_clear_unitgroup(src);
 			return 0;
 		}
 		skill_clear_unitgroup(src); // To remove previous skills - cannot used combined
-		if( (sg = skill_unitsetting(src,skill_id,skill_lv,src->x,src->y,0)) != nullptr ) {
-			sc_start2(src,src,skill_id == NC_NEUTRALBARRIER ? SC_NEUTRALBARRIER_MASTER : SC_STEALTHFIELD_MASTER,100,skill_lv,sg->group_id,skill_get_time(skill_id,skill_lv));
+		if ((sg = skill_unitsetting(src, skill_id, skill_lv, src->x, src->y, 0)) != nullptr) {
+			sc_start2(src, src, SC_STEALTHFIELD_MASTER, 100, skill_lv, sg->group_id, skill_get_time(skill_id, skill_lv));
 		}
 		break;
 

@@ -53,6 +53,7 @@
 #include "mammonite.cpp"
 #include "manufacturemachine.cpp"
 #include "mightysmash.cpp"
+#include "neutralbarrier.cpp"
 #include "pilebunker.cpp"
 #include "plantcultivation.cpp"
 #include "powerfulswing.cpp"
@@ -238,6 +239,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillAnalyze>();
 		case NC_MAGNETICFIELD:
 			return std::make_unique<SkillMagneticField>();
+		case NC_NEUTRALBARRIER:
+			return std::make_unique<SkillNeutralBarrier>();
 		case NC_SHAPESHIFT:
 			return std::make_unique<SkillShapeShift>();
 		case WS_CARTBOOST:
