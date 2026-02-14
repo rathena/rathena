@@ -1440,33 +1440,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 
-	case DC_SCREAM:
-	{
-		int32 rate = 150 + 50 * skill_lv; // Aegis accuracy (1000 = 100%)
-		int32 duration = skill_get_time2(skill_id, skill_lv);
-		if (skill_id == DC_SCREAM) rate += 100; // DC_SCREAM has a 10% higher base chance
-		if (battle_check_target(src, bl, BCT_PARTY) > 0) {
-			// On party members: Chance is divided by 4 and BA_FROSTJOKER duration is fixed to 15000ms
-			rate /= 4;
-			duration = skill_get_time(skill_id, skill_lv);
-		}
-		status_change_start(src, bl, skill_get_sc(skill_id), rate*10, skill_lv, 0, 0, 0, duration, SCSTART_NONE);
-	}
-		break;
-
-#ifdef RENEWAL
-	case DC_UGLYDANCE:
-		// !TODO: How does caster's DEX/AGI play a role?
-		status_zap( bl, 0, 2 * skill_lv + 10 );
-		break;
-#else
-	case DC_UGLYDANCE: {
-		int32 rate = 5 + 5 * skill_lv;
-		rate += skill_lv * pc_checkskill(sd, DC_DANCINGLESSON);
-		status_zap( bl, 0, rate );
-		} break;
-#endif
-
 	case NPC_PETRIFYATTACK:
 		sc_start2(src,bl,SC_STONEWAIT,(20*skill_lv),skill_lv,src->id,skill_get_time2(skill_id,skill_lv),skill_get_time(skill_id, skill_lv));
 		break;
@@ -6778,52 +6751,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case DC_SCREAM:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		skill_addtimerskill(src,tick+3000,bl->id,src->x,src->y,skill_id,skill_lv,0,flag);
-
-		if (md) {
-			// custom hack to make the mob display the skill, because these skills don't show the skill use text themselves
-			//NOTE: mobs don't have the sprite animation that is used when performing this skill (will cause glitches)
-			char temp[70];
-			snprintf(temp, sizeof(temp), "%s : %s !!",md->name,skill_get_desc(skill_id));
-			clif_disp_overhead(md,temp);
-		}
-		break;
-
-	case DC_WINKCHARM:
-		if( dstsd ) {
-#ifdef RENEWAL
-			// In Renewal it causes Confusion and Hallucination to 100% base chance
-			sc_start(src, bl, SC_CONFUSION, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			sc_start(src, bl, SC_HALLUCINATION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-#else
-			// In Pre-Renewal it only causes Wink Charm, if Confusion was successfully started
-			if (sc_start(src, bl, SC_CONFUSION, 10, skill_lv, skill_get_time(skill_id, skill_lv)))
-				sc_start(src, bl, type, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-#endif
-		} else
-		if( dstmd )
-		{
-			// For monsters it causes Wink Charm with a chance depending on the level difference
-			if (sc_start2(src, bl, type, (status_get_lv(src) - status_get_lv(bl)) + 40, skill_lv, src->id, skill_get_time2(skill_id, skill_lv))) {
-				// This triggers a 0 damage event and might make the monster switch target to caster
-				battle_damage(src, bl, 0, 1, skill_lv, 0, ATK_DEF, BF_WEAPON|BF_LONG|BF_NORMAL, true, tick, false);
-			}
-		}
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		break;
-
-#ifdef RENEWAL
-	case DC_UGLYDANCE:
-	case DC_HUMMING:
-	case DC_DONTFORGETME:
-	case DC_FORTUNEKISS:
-	case DC_SERVICEFORYOU:
-		skill_castend_song(src, skill_id, skill_lv, tick);
-		break;
-#endif
-
 	case NV_FIRSTAID:
 		clif_skill_nodamage(src,*bl,skill_id,5);
 		status_heal(bl,5,0,0);
@@ -10047,13 +9974,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case WE_CALLPARTNER:
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
-#ifndef RENEWAL
-	case DC_UGLYDANCE:
-	case DC_HUMMING:
-	case DC_DONTFORGETME:
-	case DC_FORTUNEKISS:
-	case DC_SERVICEFORYOU:
-#endif
 	case CG_MOONLIT:
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
