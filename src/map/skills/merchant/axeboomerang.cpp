@@ -9,7 +9,7 @@ SkillAxeBoomerang::SkillAxeBoomerang() : WeaponSkillImpl(NC_AXEBOOMERANG) {
 }
 
 void SkillAxeBoomerang::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32) const {
-	map_session_data* sd = BL_CAST(BL_PC, src);
+	const map_session_data* sd = BL_CAST(BL_PC, src);
 
 	skillratio += 150 + 50 * skill_lv;
 	if (sd) {
