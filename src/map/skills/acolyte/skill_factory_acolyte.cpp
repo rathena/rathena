@@ -67,6 +67,7 @@
 #include "petitio.cpp"
 #include "pneuma.cpp"
 #include "pneumaticusprocella.cpp"
+#include "powervelocity.cpp"
 #include "praefatio.cpp"
 #include "rampageblaster.cpp"
 #include "ragingquadrupleblow.cpp"
@@ -321,6 +322,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillAssimilatePower>();
 		case SR_LIGHTNINGWALK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SR_POWERVELOCITY:
+			return std::make_unique<SkillPowerVelocity>();
 		case SR_RAMPAGEBLASTER:
 			return std::make_unique<SkillRampageBlaster>();
 		case SR_RAISINGDRAGON:
