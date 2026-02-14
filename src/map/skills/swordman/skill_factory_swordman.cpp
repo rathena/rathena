@@ -17,6 +17,7 @@
 #include "dragonicaura.cpp"
 #include "dragonicbreath.cpp"
 #include "dragonicpierce.cpp"
+#include "enchantblade.cpp"
 #include "gloriadomini.cpp"
 #include "grandcross.cpp"
 #include "grandjudgement.cpp"
@@ -190,6 +191,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillMartyrsReckoning>();
 		case PA_SHIELDCHAIN:
 			return std::make_unique<SkillShieldChain>();
+		case RK_ENCHANTBLADE:
+			return std::make_unique<SkillEnchantBlade>();
 		case RK_DEATHBOUND:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RK_SONICWAVE:
