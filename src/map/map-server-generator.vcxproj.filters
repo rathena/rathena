@@ -1344,6 +1344,9 @@
     <ClInclude Include="skills/merchant/magmaeruption.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/magmaeruptiondotdamage.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/magneticfield.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -3198,6 +3201,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/magmaeruption.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/magmaeruptiondotdamage.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/magneticfield.cpp">

@@ -1780,9 +1780,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_MAGMA_ERUPTION:
 		sc_start(src, bl, SC_STUN, 90, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
-	case NC_MAGMA_ERUPTION_DOTDAMAGE: // Burning effect from 'eruption'
-		sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
-		break;
 	case GN_ILLUSIONDOPING:
 		if( sc_start(src,bl,SC_ILLUSIONDOPING,100 - skill_lv * 10,skill_lv,skill_get_time(skill_id,skill_lv)) )
 			sc_start(src,bl,SC_HALLUCINATION,100,skill_lv,skill_get_time(skill_id,skill_lv));
