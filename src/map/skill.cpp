@@ -6943,15 +6943,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 	}
 
-	case SO_SPELLFIST:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		unit_skillcastcancel(src,1);
-		if(sd) {
-			int32 sp = skill_get_sp(sd->skill_id_old,sd->skill_lv_old);
-			sc_start4(src,src,type,100,skill_lv,sd->skill_id_old,sd->skill_lv_old,0,skill_get_time(skill_id,skill_lv));
-			sd->skill_id_old = sd->skill_lv_old = 0;
-		}
-		break;
 	case NPC_ATTRICHANGE:
 	case NPC_CHANGEWATER:
 	case NPC_CHANGEGROUND:

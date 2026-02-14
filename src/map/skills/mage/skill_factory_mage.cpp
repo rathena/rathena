@@ -88,6 +88,7 @@
 #include "soulstrike.cpp"
 #include "soulvulcanstrike.cpp"
 #include "spellbreaker.cpp"
+#include "spellfist.cpp"
 #include "stasis.cpp"
 #include "stonecurse.cpp"
 #include "stormcannon.cpp"
@@ -223,6 +224,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillDispell>();
 		case SO_ELECTRICWALK:
 			return std::make_unique<SkillElectricWalk>();
+		case SO_SPELLFIST:
+			return std::make_unique<SkillSpellFist>();
 		case SA_ELEMENTFIRE:
 			return std::make_unique<SkillElementalChangeFire>();
 		case SA_ELEMENTGROUND:
