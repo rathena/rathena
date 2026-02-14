@@ -16,7 +16,6 @@
 #include "battletheme.cpp"
 #include "beaststrafing.cpp"
 #include "blastmine.cpp"
-#include "blitzbeat.cpp"
 #include "camouflage.cpp"
 #include "chargearrow.cpp"
 #include "classicalpluck.cpp"
@@ -139,7 +138,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		case HT_BLASTMINE:
 			return std::make_unique<SkillBlastMine>();
 		case HT_BLITZBEAT:
-			return std::make_unique<SkillBlitzBeat>();
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
 		case HT_CLAYMORETRAP:
 			return std::make_unique<SkillClaymoreTrap>();
 		case HT_DETECTING:
