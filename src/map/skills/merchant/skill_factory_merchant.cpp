@@ -37,6 +37,7 @@
 #include "decoratecart.cpp"
 #include "energycannonade.cpp"
 #include "flamelauncher.cpp"
+#include "frontsideslide.cpp"
 #include "fullprotection.cpp"
 #include "greed.cpp"
 #include "hammerfall.cpp"
@@ -203,6 +204,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillFlameLauncher>();
 		case NC_HOVERING:
 			return std::make_unique<SkillHovering>();
+		case NC_F_SIDESLIDE:
+			return std::make_unique<SkillFrontSideSlide>();
 		case NC_MADOLICENCE:
 			return std::make_unique<SkillMadoLicense>();
 		case NC_MAGMA_ERUPTION:
