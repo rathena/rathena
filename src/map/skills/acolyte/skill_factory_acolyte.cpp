@@ -71,6 +71,7 @@
 #include "ragingquadrupleblow.cpp"
 #include "ragingthrust.cpp"
 #include "ragingtrifectablow.cpp"
+#include "raisingdragon.cpp"
 #include "renovatio.cpp"
 #include "reparatio.cpp"
 #include "ruwach.cpp"
@@ -319,6 +320,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SR_RAMPAGEBLASTER:
 			return std::make_unique<SkillRampageBlaster>();
+		case SR_RAISINGDRAGON:
+			return std::make_unique<SkillRaisingDragon>();
 
 		default:
 			return nullptr;
