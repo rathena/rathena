@@ -18,6 +18,7 @@
 #include "spiritdestruction.cpp"
 #include "standoffattack.cpp"
 #include "waterattributechange.cpp"
+#include "windattributechange.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -41,6 +42,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_CHANGEWATER:
 			return std::make_unique<SkillWaterAttributeChange>();
+		case NPC_CHANGEWIND:
+			return std::make_unique<SkillWindAttributeChange>();
 		case NPC_COMBOATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_CRITICALSLASH:
