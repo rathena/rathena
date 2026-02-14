@@ -70,6 +70,7 @@
 #include "springtrap.cpp"
 #include "swifttrap.cpp"
 #include "talkiebox.cpp"
+#include "tarotcardoffate.cpp"
 #include "unbarringoctave.cpp"
 #include "unchainedserenade.cpp"
 #include "verduretrap.cpp"
@@ -139,6 +140,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillMarionetteControl>();
 		case CG_HERMODE:
 			return std::make_unique<SkillWandOfHermode>();
+		case CG_TAROTCARD:
+			return std::make_unique<SkillTarotCardOfFate>();
 		case DC_THROWARROW:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case HT_ANKLESNARE:

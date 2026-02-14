@@ -792,6 +792,9 @@
     <ClInclude Include="skills/archer/talkiebox.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/tarotcardoffate.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/unbarringoctave.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -2601,6 +2604,9 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/talkiebox.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/tarotcardoffate.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/unbarringoctave.cpp">

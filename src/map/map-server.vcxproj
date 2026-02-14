@@ -381,6 +381,7 @@
     <ClInclude Include="skills/archer/springtrap.hpp" />
     <ClInclude Include="skills/archer/swifttrap.hpp" />
     <ClInclude Include="skills/archer/talkiebox.hpp" />
+    <ClInclude Include="skills/archer/tarotcardoffate.hpp" />
     <ClInclude Include="skills/archer/unbarringoctave.hpp" />
     <ClInclude Include="skills/archer/unchainedserenade.hpp" />
     <ClInclude Include="skills/archer/verduretrap.hpp" />
@@ -1310,6 +1311,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/talkiebox.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/tarotcardoffate.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/unbarringoctave.cpp">

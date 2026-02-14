@@ -7324,30 +7324,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 #endif
 
-	case CG_TAROTCARD:
-		{
-			int32 card = -1;
-			if (tsc && tsc->getSCE(SC_TAROTCARD)) {
-				//Target currently has the SUN tarot card effect and is immune to any other effect
-				return 0;
-			}
-			if( rnd() % 100 > skill_lv * 8 ||
-#ifndef RENEWAL
-			(tsc && tsc->getSCE(SC_BASILICA)) ||
-#endif
-			(dstmd && ((dstmd->guardian_data && dstmd->mob_id == MOBID_EMPERIUM) || status_get_class_(bl) == CLASS_BATTLEFIELD)) ) {
-				if( sd )
-					clif_skill_fail( *sd, skill_id );
-
-				return 0;
-			}
-			status_zap(src,0,skill_get_sp(skill_id,skill_lv)); // consume sp only if succeeded [Inkfish]
-			card = skill_tarotcard(src, bl, skill_id, skill_lv, tick); // actual effect is executed here
-			clif_specialeffect((card == 6) ? src : bl, EF_TAROTCARD1 + card - 1, AREA);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
 	// New guild skills [Celest]
 	case GD_BATTLEORDER:
 	case GD_REGENERATION:
