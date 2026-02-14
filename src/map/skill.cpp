@@ -6737,13 +6737,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_fail( *sd, skill_id,  USESKILL_FAIL_LEVEL );
 		break;
 
-	case CG_SPECIALSINGER:
-		if (tsc && tsc->getSCE(SC_ENSEMBLEFATIGUE)) {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_change_end(bl, SC_ENSEMBLEFATIGUE);
-		}
-		break;
-
 	case DC_SCREAM:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		skill_addtimerskill(src,tick+3000,bl->id,src->x,src->y,skill_id,skill_lv,0,flag);

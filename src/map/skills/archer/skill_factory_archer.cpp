@@ -65,6 +65,7 @@
 #include "shelteringbliss.cpp"
 #include "shockwavetrap.cpp"
 #include "skidtrap.cpp"
+#include "skilledspecialsinger.cpp"
 #include "solidtrap.cpp"
 #include "songoflutie.cpp"
 #include "springtrap.cpp"
@@ -142,6 +143,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillWandOfHermode>();
 		case CG_TAROTCARD:
 			return std::make_unique<SkillTarotCardOfFate>();
+		case CG_SPECIALSINGER:
+			return std::make_unique<SkillSkilledSpecialSinger>();
 		case DC_THROWARROW:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case HT_ANKLESNARE:

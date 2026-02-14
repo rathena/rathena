@@ -375,6 +375,7 @@
     <ClInclude Include="skills/archer/shelteringbliss.hpp" />
     <ClInclude Include="skills/archer/shockwavetrap.hpp" />
     <ClInclude Include="skills/archer/skidtrap.hpp" />
+    <ClInclude Include="skills/archer/skilledspecialsinger.hpp" />
     <ClInclude Include="skills/archer/skill_factory_archer.hpp" />
     <ClInclude Include="skills/archer/solidtrap.hpp" />
     <ClInclude Include="skills/archer/songoflutie.hpp" />
@@ -1293,6 +1294,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/skidtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/skilledspecialsinger.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/skill_factory_archer.cpp">
