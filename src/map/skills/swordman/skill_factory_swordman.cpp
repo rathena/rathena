@@ -47,6 +47,7 @@
 #include "shieldreflect.cpp"
 #include "shieldshooting.cpp"
 #include "smite.cpp"
+#include "sonicwave.cpp"
 #include "spearboomerang.cpp"
 #include "spearstab.cpp"
 #include "spiralpierce.cpp"
@@ -196,7 +197,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 		case RK_DEATHBOUND:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RK_SONICWAVE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSonicWave>();
 		case SM_AUTOBERSERK:
 			return std::make_unique<SkillAutoBerserk>();
 		case SM_BASH:

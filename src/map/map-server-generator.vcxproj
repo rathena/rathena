@@ -683,6 +683,7 @@
     <ClInclude Include="skills/swordman/shieldshooting.hpp" />
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
     <ClInclude Include="skills/swordman/smite.hpp" />
+    <ClInclude Include="skills/swordman/sonicwave.hpp" />
     <ClInclude Include="skills/swordman/spearboomerang.hpp" />
     <ClInclude Include="skills/swordman/spearstab.hpp" />
     <ClInclude Include="skills/swordman/spiralpierce.hpp" />
@@ -2213,6 +2214,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/smite.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/sonicwave.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/spearboomerang.cpp">

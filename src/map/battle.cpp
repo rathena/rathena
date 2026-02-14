@@ -3314,9 +3314,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case ML_PIERCE:
 				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
-			case RK_SONICWAVE:
-				hitrate += hitrate * 3 * skill_lv / 100; // !TODO: Confirm the hitrate bonus
-				break;
 			case GN_CART_TORNADO:
 			case GN_CARTCANNON:
 				if (sd && pc_checkskill(sd, GN_REMODELING_CART))
@@ -4857,10 +4854,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			break;
 		case NPC_VAMPIRE_GIFT:
 			skillratio += ((skill_lv - 1) % 5 + 1) * 100;
-			break;
-		case RK_SONICWAVE:
-			skillratio += -100 + 1050 + 150 * skill_lv;
-			RE_LVL_DMOD(100);
 			break;
 		case RK_HUNDREDSPEAR:
 			skillratio += -100 + 600 + 200 * skill_lv;
