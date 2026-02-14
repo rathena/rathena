@@ -54,7 +54,6 @@
 #include "magneticfield.cpp"
 #include "magmaeruption.cpp"
 #include "magmaeruptiondotdamage.cpp"
-#include "mainframerestructure.cpp"
 #include "mammonite.cpp"
 #include "manufacturemachine.cpp"
 #include "mightysmash.cpp"
@@ -226,8 +225,6 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillFrontSideSlide>();
 		case NC_B_SIDESLIDE:
 			return std::make_unique<SkillBackSideSlide>();
-		case NC_MAINFRAME:
-			return std::make_unique<SkillMainframeRestructure>();
 		case NC_MAGMA_ERUPTION:
 			return std::make_unique<SkillMagmaEruption>();
 		case NC_MAGMA_ERUPTION_DOTDAMAGE:

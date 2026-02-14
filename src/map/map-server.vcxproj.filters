@@ -1332,9 +1332,6 @@
     <ClInclude Include="skills/merchant/itemappraisal.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
-    <ClInclude Include="skills/merchant/mainframerestructure.hpp">
-      <Filter>Header Files\Skills\Merchant</Filter>
-    </ClInclude>
     <ClInclude Include="skills/merchant/magmaeruption.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -3180,9 +3177,6 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/itemappraisal.cpp">
-      <Filter>Source Files\Skills\Merchant</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/mainframerestructure.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/magmaeruption.cpp">
