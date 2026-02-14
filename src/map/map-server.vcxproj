@@ -388,6 +388,7 @@
     <ClInclude Include="skills/archer/wargrider.hpp" />
     <ClInclude Include="skills/archer/wargstrike.hpp" />
     <ClInclude Include="skills/archer/wildwalk.hpp" />
+    <ClInclude Include="skills/archer/windmillrushattack.hpp" />
     <ClInclude Include="skills/archer/windwalker.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
     <ClInclude Include="skills/gunslinger/basicgrenade.hpp" />
@@ -1327,6 +1328,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/wildwalk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/windmillrushattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/windwalker.cpp">

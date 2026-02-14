@@ -813,6 +813,9 @@
     <ClInclude Include="skills/archer/wildwalk.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/windmillrushattack.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/windwalker.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -2610,6 +2613,9 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/wildwalk.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/windmillrushattack.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/windwalker.cpp">

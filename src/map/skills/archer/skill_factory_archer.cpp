@@ -77,6 +77,7 @@
 #include "wargrider.cpp"
 #include "wargstrike.cpp"
 #include "wildwalk.cpp"
+#include "windmillrushattack.cpp"
 #include "windwalker.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
@@ -241,6 +242,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WM_GREAT_ECHO:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case MI_RUSH_WINDMILL:
+			return std::make_unique<SkillWindmillRushAttack>();
 		case WM_SEVERE_RAINSTORM_MELEE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 
