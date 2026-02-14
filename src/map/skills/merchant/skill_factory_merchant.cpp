@@ -65,6 +65,7 @@
 #include "shapeshift.cpp"
 #include "skill_vending.cpp"
 #include "sparkblaster.cpp"
+#include "stealthfield.cpp"
 #include "summonflora.cpp"
 #include "summonmarinesphere.cpp"
 #include "synthesizedshield.cpp"
@@ -241,6 +242,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillMagneticField>();
 		case NC_NEUTRALBARRIER:
 			return std::make_unique<SkillNeutralBarrier>();
+		case NC_STEALTHFIELD:
+			return std::make_unique<SkillStealthField>();
 		case NC_SHAPESHIFT:
 			return std::make_unique<SkillShapeShift>();
 		case WS_CARTBOOST:
