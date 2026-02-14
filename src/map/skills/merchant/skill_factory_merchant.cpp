@@ -21,6 +21,7 @@
 #include "aidcondensedpotion.cpp"
 #include "aidpotion.cpp"
 #include "alchemicalweapon.cpp"
+#include "armcannon.cpp"
 #include "attackmachine.cpp"
 #include "axestomp.cpp"
 #include "biochemicalhelm.cpp"
@@ -194,6 +195,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillBoostKnuckle>();
 		case NC_COLDSLOWER:
 			return std::make_unique<SkillColdSlower>();
+		case NC_ARMSCANNON:
+			return std::make_unique<SkillArmCannon>();
 		case NC_FLAMELAUNCHER:
 			return std::make_unique<SkillFlameLauncher>();
 		case NC_HOVERING:
