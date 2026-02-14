@@ -610,6 +610,7 @@
     <ClInclude Include="skills/npc/maxpainattack.hpp" />
     <ClInclude Include="skills/npc/piercingattack.hpp" />
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
+    <ClInclude Include="skills/npc/spiritdestruction.hpp" />
     <ClInclude Include="skills/npc/widesuck.hpp" />
     <ClInclude Include="skills/npc/wideweb.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
@@ -1984,10 +1985,15 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/maxpainattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/piercingattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/spiritdestruction.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/widesuck.cpp">

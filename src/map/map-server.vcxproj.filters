@@ -1471,10 +1471,15 @@
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/maxpainattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/piercingattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/skill_factory_npc.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/spiritdestruction.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/widesuck.hpp">
@@ -3259,10 +3264,15 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/maxpainattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/piercingattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/spiritdestruction.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/widesuck.cpp">

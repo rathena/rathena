@@ -1506,16 +1506,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_ICEBREATH2:
 		sc_start(src,bl,SC_FREEZE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
-	case NPC_MENTALBREAKER:
-		{	//Based on observations by Tharis, Mental Breaker should do SP damage
-			//equal to Matk*skLevel.
-			int32 rate = sstatus->matk_min;
-			if (rate < sstatus->matk_max)
-				rate += rnd()%(sstatus->matk_max - sstatus->matk_min);
-			rate*=skill_lv;
-			status_zap(bl, 0, rate);
-			break;
-		}
 	// Equipment breaking monster skills [Celest]
 	case NPC_ARMORBRAKE:
 		skill_break_equip(src,bl, EQP_ARMOR, 150*skill_lv, BCT_ENEMY);
