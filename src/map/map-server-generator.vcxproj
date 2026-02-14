@@ -571,6 +571,7 @@
     <ClInclude Include="skills/merchant/powerthrust.hpp" />
     <ClInclude Include="skills/merchant/preparepotion.hpp" />
     <ClInclude Include="skills/merchant/repair.hpp" />
+    <ClInclude Include="skills/merchant/researchfireearth.hpp" />
     <ClInclude Include="skills/merchant/rushquake.hpp" />
     <ClInclude Include="skills/merchant/rushstrike.hpp" />
     <ClInclude Include="skills/merchant/selfdestruction.hpp" />
@@ -1887,6 +1888,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/repair.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/researchfireearth.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/rushquake.cpp">
