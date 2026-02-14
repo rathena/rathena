@@ -603,6 +603,7 @@
     <ClInclude Include="skills/novice/shieldchainrush.hpp" />
     <ClInclude Include="skills/novice/skill_factory_novice.hpp" />
     <ClInclude Include="skills/novice/spiralpiercemax.hpp" />
+    <ClInclude Include="skills/npc/darkpiercing.hpp" />
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/skill_impl.hpp" />
@@ -1961,6 +1962,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/novice/spiralpiercemax.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/darkpiercing.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">

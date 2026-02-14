@@ -1458,6 +1458,9 @@
     <ClInclude Include="skills/novice/spiralpiercemax.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/darkpiercing.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/skill_factory_npc.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -3223,6 +3226,9 @@
     </ClCompile>
     <ClCompile Include="skills/novice/spiralpiercemax.cpp">
       <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/darkpiercing.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">
       <Filter>Source Files\Skills\Npc</Filter>

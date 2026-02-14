@@ -4,6 +4,7 @@
 #include "skill_factory_npc.hpp"
 
 #include "../skill_impl.hpp"
+#include "darkpiercing.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -33,6 +34,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_DARKNESSATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NPC_DARKPIERCING:
+			return std::make_unique<SkillDarkPiercing>();
 		case NPC_DEFENDER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_FIREATTACK:
