@@ -4742,9 +4742,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case MS_BOWLINGBASH:
 			skillratio += 40 * skill_lv;
 			break;
-		case NPC_PIERCINGATT:
-			skillratio += -25; //75% base damage
-			break;
 		case NPC_COMBOATTACK:
 			skillratio += 25 * skill_lv;
 			break;

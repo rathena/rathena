@@ -1471,6 +1471,7 @@
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/maxpainattack.hpp">
+    <ClInclude Include="skills/npc/piercingattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/skill_factory_npc.hpp">
@@ -3258,6 +3259,7 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/maxpainattack.cpp">
+    <ClCompile Include="skills/npc/piercingattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">

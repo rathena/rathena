@@ -11,6 +11,7 @@
 #include "maxpainattack.cpp"
 #include "widesuck.cpp"
 #include "wideweb.cpp"
+#include "piercingattack.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -83,7 +84,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_PETRIFYATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_PIERCINGATT:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillPiercingAttack>();
 		case NPC_POISON:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_POISONATTACK:
