@@ -7965,28 +7965,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case SR_ASSIMILATEPOWER:
-		if (flag&1) {
-			i = 0;
-			if (dstsd && (sd == dstsd || map_flag_vs(src->m)) && (dstsd->class_&MAPID_FIRSTMASK)!=MAPID_GUNSLINGER) {
-				if (dstsd->spiritball > 0) {
-					i = dstsd->spiritball;
-					pc_delspiritball(dstsd,dstsd->spiritball,0);
-				}
-				if (dstsd->spiritcharm_type != CHARM_TYPE_NONE && dstsd->spiritcharm > 0) {
-					i += dstsd->spiritcharm;
-					pc_delspiritcharm(dstsd,dstsd->spiritcharm,dstsd->spiritcharm_type);
-				}
-			}
-			if (i)
-				status_percent_heal(src, 0, i);
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv, i != 0);
-		} else {
-			clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|BCT_SELF|SD_SPLASH|1, skill_castend_nodamage_id);
-		}
-		break;
-
 	case SR_POWERVELOCITY:
 		if( !dstsd )
 			break;

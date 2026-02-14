@@ -14,6 +14,7 @@
 #include "ancilla.cpp"
 #include "angelus.cpp"
 #include "arbitrium.cpp"
+#include "assimilatepower.cpp"
 #include "aspersio.cpp"
 #include "assumptio.cpp"
 #include "asurastrike.cpp"
@@ -316,6 +317,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SR_GENTLETOUCH_REVITALIZE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SR_ASSIMILATEPOWER:
+			return std::make_unique<SkillAssimilatePower>();
 		case SR_LIGHTNINGWALK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SR_RAMPAGEBLASTER:

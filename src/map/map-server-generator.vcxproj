@@ -246,6 +246,7 @@
     <ClInclude Include="skills/acolyte/ancilla.hpp" />
     <ClInclude Include="skills/acolyte/angelus.hpp" />
     <ClInclude Include="skills/acolyte/arbitrium.hpp" />
+    <ClInclude Include="skills/acolyte/assimilatepower.hpp" />
     <ClInclude Include="skills/acolyte/aspersio.hpp" />
     <ClInclude Include="skills/acolyte/assumptio.hpp" />
     <ClInclude Include="skills/acolyte/asurastrike.hpp" />
@@ -908,6 +909,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/arbitrium.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/assimilatepower.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/aspersio.cpp">
