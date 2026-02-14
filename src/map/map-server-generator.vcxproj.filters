@@ -1488,6 +1488,9 @@
     <ClInclude Include="skills/npc/standoffattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/waterattributechange.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/widesuck.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -3285,6 +3288,9 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/standoffattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/waterattributechange.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/widesuck.cpp">

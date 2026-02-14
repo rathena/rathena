@@ -613,6 +613,7 @@
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
     <ClInclude Include="skills/npc/spiritdestruction.hpp" />
     <ClInclude Include="skills/npc/standoffattack.hpp" />
+    <ClInclude Include="skills/npc/waterattributechange.hpp" />
     <ClInclude Include="skills/npc/widesuck.hpp" />
     <ClInclude Include="skills/npc/wideweb.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
@@ -2002,6 +2003,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/standoffattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/waterattributechange.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/widesuck.cpp">
