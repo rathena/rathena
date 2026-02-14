@@ -34,6 +34,7 @@
 #include "divinusflos.cpp"
 #include "dragoncombo.cpp"
 #include "duplelight.cpp"
+#include "earthshaker.cpp"
 #include "effligo.cpp"
 #include "epiclesis.cpp"
 #include "explosionblaster.cpp"
@@ -292,6 +293,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SR_DRAGONCOMBO:
 			return std::make_unique<SkillDragonCombo>();
+		case SR_EARTHSHAKER:
+			return std::make_unique<SkillEarthShaker>();
 		case SR_FALLENEMPIRE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case SR_GATEOFHELL:

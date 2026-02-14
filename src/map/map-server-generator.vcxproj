@@ -266,6 +266,7 @@
     <ClInclude Include="skills/acolyte/divinusflos.hpp" />
     <ClInclude Include="skills/acolyte/dragoncombo.hpp" />
     <ClInclude Include="skills/acolyte/duplelight.hpp" />
+    <ClInclude Include="skills/acolyte/earthshaker.hpp" />
     <ClInclude Include="skills/acolyte/effligo.hpp" />
     <ClInclude Include="skills/acolyte/epiclesis.hpp" />
     <ClInclude Include="skills/acolyte/explosionblaster.hpp" />
@@ -962,6 +963,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/duplelight.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/earthshaker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/effligo.cpp">
