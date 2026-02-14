@@ -7,6 +7,7 @@
 #include "darkpiercing.cpp"
 #include "deathsummon.cpp"
 #include "hellburning.cpp"
+#include "jackfrost2.cpp"
 #include "maxpainattack.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id) const {
@@ -61,6 +62,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_INVINCIBLE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NPC_JACKFROST:
+			return std::make_unique<SkillJackFrost2>();
 		case NPC_KEEPING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_KILLING_AURA:

@@ -7437,15 +7437,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						break;
 #endif
-					case NPC_JACKFROST:
-						if (tsc && tsc->getSCE(SC_FREEZING)) {
-							skillratio += 900 + 300 * skill_lv;
-							RE_LVL_DMOD(100);
-						} else {
-							skillratio += 400 + 100 * skill_lv;
-							RE_LVL_DMOD(150);
-						}
-						break;
 					case LG_RAYOFGENESIS:
 						skillratio += -100 + 350 * skill_lv;
 						skillratio += sstatus->int_ * 3;
