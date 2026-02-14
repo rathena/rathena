@@ -477,6 +477,7 @@
     <ClInclude Include="skills/mage/magicrod.hpp" />
     <ClInclude Include="skills/mage/magneticearth.hpp" />
     <ClInclude Include="skills/mage/meteorstorm.hpp" />
+    <ClInclude Include="skills/mage/mindbreaker.hpp" />
     <ClInclude Include="skills/mage/monocell.hpp" />
     <ClInclude Include="skills/mage/monsterchant.hpp" />
     <ClInclude Include="skills/mage/mysteryillusion.hpp" />
@@ -1597,6 +1598,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/meteorstorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/mindbreaker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/monocell.cpp">

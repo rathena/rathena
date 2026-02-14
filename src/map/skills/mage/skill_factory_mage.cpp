@@ -65,6 +65,7 @@
 #include "magicrod.cpp"
 #include "magneticearth.cpp"
 #include "meteorstorm.cpp"
+#include "mindbreaker.cpp"
 #include "monocell.cpp"
 #include "monsterchant.cpp"
 #include "mysteryillusion.cpp"
@@ -202,6 +203,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillIndulge>();
 		case PF_DOUBLECASTING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case PF_MINDBREAKER:
+			return std::make_unique<SkillMindBreaker>();
 		case PF_MEMORIZE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case PF_SOULCHANGE:

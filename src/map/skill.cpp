@@ -7259,33 +7259,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			unit_skilluse_id(src, src->id, sd->skill_id_song, sd->skill_lv_song);
 		break;
 
-	case PF_MINDBREAKER:
-		{
-			if(status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele)) {
-				return 1;
-			}
-
-			if (tsce)
-			{	//HelloKitty2 (?) explained that this silently fails when target is
-				//already inflicted. [Skotlex]
-				return 1;
-			}
-
-			//Has a 55% + skill_lv*5% success chance.
-			if (!clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-				sc_start(src,bl,type,55+5*skill_lv,skill_lv,skill_get_time(skill_id,skill_lv))))
-			{
-				if (sd) clif_skill_fail( *sd, skill_id );
-				return 0;
-			}
-
-			unit_skillcastcancel(bl,0);
-
-			if (dstmd)
-				mob_target(dstmd, src, skill_get_range2(src, skill_id, skill_lv, true));
-		}
-		break;
-
 #ifndef RENEWAL
 	case CG_LONGINGFREEDOM:
 		{
