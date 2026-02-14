@@ -16,6 +16,7 @@
 #include "desperado.cpp"
 #include "disarm.cpp"
 #include "dust.cpp"
+#include "flicker.cpp"
 #include "fling.cpp"
 #include "fullbuster.cpp"
 #include "gatlingfever.cpp"
@@ -125,6 +126,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillImpl>(skill_id);
 		case RL_E_CHAIN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case RL_FLICKER:
+			return std::make_unique<SkillFlicker>();
 		case RL_HEAT_BARREL:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RL_MASS_SPIRAL:
