@@ -4,6 +4,7 @@
 #include "skill_factory_npc.hpp"
 
 #include "../skill_impl.hpp"
+#include "attributechange.cpp"
 #include "darkpiercing.cpp"
 #include "deathsummon.cpp"
 #include "hellburning.cpp"
@@ -19,6 +20,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 	switch( skill_id ){
 		case NPC_ARMORBRAKE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NPC_ATTRICHANGE:
+			return std::make_unique<SkillAttributeChange>();
 		case NPC_BARRIER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_BLEEDING:
