@@ -4833,40 +4833,7 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 100 + 100 * skill_lv;
 #endif
 			break;
-		case NJ_HUUMA:
 #ifdef RENEWAL
-			skillratio += -150 + 250 * skill_lv;
-#else
-			skillratio += 50 + 150 * skill_lv;
-#endif
-			break;
-		case NJ_TATAMIGAESHI:
-			skillratio += 10 * skill_lv;
-#ifdef RENEWAL
-			skillratio *= 2;
-#endif
-			break;
-		case NJ_KASUMIKIRI:
-#ifdef RENEWAL
-			skillratio += 20 * skill_lv;
-#else
-			skillratio += 10 * skill_lv;
-#endif
-			break;
-		case NJ_KIRIKAGE:
-#ifdef RENEWAL
-			skillratio += -50 + 150 * skill_lv;
-#else
-			skillratio += 100 * (skill_lv - 1);
-#endif
-			break;
-#ifdef RENEWAL
-		case NJ_SYURIKEN:
-			skillratio += 5 * skill_lv;
-			break;
-		case NJ_KUNAI:
-			skillratio += -100 + 100 * skill_lv;
-			break;
 		case KN_CHARGEATK:
 			skillratio += 600;
 			break;
@@ -7457,56 +7424,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						// TODO: Refactor
 						if (sd && ad.div_ > 0)
 							ad.div_ *= -1; //For players, damage is divided by number of hits
-						break;
-					case NJ_KOUENKA:
-						skillratio -= 10;
-						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
-							skillratio += 10 * sd->spiritcharm;
-						break;
-					case NJ_KAENSIN:
-						skillratio -= 50;
-						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
-							skillratio += 20 * sd->spiritcharm;
-						break;
-					case NJ_BAKUENRYU:
-						skillratio += 50 + 150 * skill_lv;
-						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
-							skillratio += 100 * sd->spiritcharm;
-						break;
-					case NJ_HYOUSENSOU:
-#ifdef RENEWAL
-						skillratio -= 30;
-						if (sc && sc->getSCE(SC_SUITON))
-							skillratio += 2 * skill_lv;
-#endif
-						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
-							skillratio += 20 * sd->spiritcharm;
-						break;
-					case NJ_HYOUSYOURAKU:
-						skillratio += 50 * skill_lv;
-						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
-							skillratio += 100 * sd->spiritcharm;
-						break;
-					case NJ_RAIGEKISAI:
-#ifdef RENEWAL
-						skillratio += 100 * skill_lv;
-#else
-						skillratio += 60 + 40 * skill_lv;
-#endif
-						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
-							skillratio += 20 * sd->spiritcharm;
-						break;
-					case NJ_KAMAITACHI:
-						skillratio += 100 * skill_lv;
-						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
-							skillratio += 100 * sd->spiritcharm;
-						break;
-					case NJ_HUUJIN:
-#ifdef RENEWAL
-						skillratio += 50;
-#endif
-						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
-							skillratio += 10 * sd->spiritcharm;
 						break;
 					case NPC_ENERGYDRAIN:
 						skillratio += 100 * skill_lv;
