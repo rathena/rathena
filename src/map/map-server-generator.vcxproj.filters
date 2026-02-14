@@ -729,6 +729,9 @@
     <ClInclude Include="skills/archer/magicstrings.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/marionettecontrol.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/maizetrap.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -2532,6 +2535,9 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/magicstrings.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/marionettecontrol.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/maizetrap.cpp">

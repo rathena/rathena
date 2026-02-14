@@ -360,6 +360,7 @@
     <ClInclude Include="skills/archer/lullaby.hpp" />
     <ClInclude Include="skills/archer/magentatrap.hpp" />
     <ClInclude Include="skills/archer/magicstrings.hpp" />
+    <ClInclude Include="skills/archer/marionettecontrol.hpp" />
     <ClInclude Include="skills/archer/maizetrap.hpp" />
     <ClInclude Include="skills/archer/makingarrow.hpp" />
     <ClInclude Include="skills/archer/melodystrike.hpp" />
@@ -1245,6 +1246,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/magicstrings.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/marionettecontrol.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/maizetrap.cpp">

@@ -6246,40 +6246,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case CG_MARIONETTE:
-		{
-			if( (sd && dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER && dstsd->status.sex == sd->status.sex) || (tsc && (tsc->getSCE(SC_CURSE) || tsc->getSCE(SC_QUAGMIRE))) )
-			{// Cannot cast on another bard/dancer-type class of the same gender as caster, or targets under Curse/Quagmire
-				clif_skill_fail( *sd, skill_id );
-				return 1;
-			}
-
-			if( sc && tsc )
-			{
-				if( !sc->getSCE(SC_MARIONETTE) && !tsc->getSCE(SC_MARIONETTE2) )
-				{
-					sc_start(src,src,SC_MARIONETTE,100,bl->id,skill_get_time(skill_id,skill_lv));
-					sc_start(src,bl,SC_MARIONETTE2,100,src->id,skill_get_time(skill_id,skill_lv));
-					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-				}
-				else
-				if(  sc->getSCE(SC_MARIONETTE ) &&  sc->getSCE(SC_MARIONETTE )->val1 == bl->id &&
-					tsc->getSCE(SC_MARIONETTE2) && tsc->getSCE(SC_MARIONETTE2)->val1 == src->id )
-				{
-					status_change_end(src, SC_MARIONETTE);
-					status_change_end(bl, SC_MARIONETTE2);
-				}
-				else
-				{
-					if( sd )
-						clif_skill_fail( *sd, skill_id );
-
-					return 1;
-				}
-			}
-		}
-		break;
-
 	case ITEM_ENCHANTARMS:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_get_ele(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)));
 		break;

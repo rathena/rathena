@@ -50,6 +50,7 @@
 #include "lullaby.cpp"
 #include "magentatrap.cpp"
 #include "magicstrings.cpp"
+#include "marionettecontrol.cpp"
 #include "maizetrap.cpp"
 #include "makingarrow.cpp"
 #include "melodystrike.cpp"
@@ -133,6 +134,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillVulcanArrow>();
 		case CG_MOONLIT:
 			return std::make_unique<SkillShelteringBliss>();
+		case CG_MARIONETTE:
+			return std::make_unique<SkillMarionetteControl>();
 		case DC_THROWARROW:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case HT_ANKLESNARE:
