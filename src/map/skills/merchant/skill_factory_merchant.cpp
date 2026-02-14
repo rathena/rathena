@@ -49,7 +49,6 @@
 #include "fullprotection.cpp"
 #include "greed.cpp"
 #include "hammerfall.cpp"
-#include "hovering.cpp"
 #include "infraredscan.cpp"
 #include "itemappraisal.cpp"
 #include "magneticfield.cpp"
@@ -223,7 +222,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case NC_FLAMELAUNCHER:
 			return std::make_unique<SkillFlameLauncher>();
 		case NC_HOVERING:
-			return std::make_unique<SkillHovering>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NC_F_SIDESLIDE:
 			return std::make_unique<SkillFrontSideSlide>();
 		case NC_B_SIDESLIDE:
