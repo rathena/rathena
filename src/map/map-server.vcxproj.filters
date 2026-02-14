@@ -1707,6 +1707,9 @@
     <ClInclude Include="skills/swordman/shieldshooting.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/shieldspell.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -3525,6 +3528,9 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/shieldshooting.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/shieldspell.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/skill_factory_swordman.cpp">
