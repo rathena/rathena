@@ -8778,33 +8778,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case RL_C_MARKER:
-		if (sd) {
-			// If marked by someone else remove it
-			if (tsce && tsce->val2 != src->id)
-				status_change_end(bl, type);
-
-			// Check if marked before
-			ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == bl->id);
-			if (i == MAX_SKILL_CRIMSON_MARKER) {
-				// Find empty slot
-				ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, !sd->c_marker[i]);
-				if (i == MAX_SKILL_CRIMSON_MARKER) {
-					clif_skill_fail( *sd, skill_id );
-					break;
-				}
-			}
-
-			sd->c_marker[i] = bl->id;
-			status_change_start(src, bl, type, 10000, skill_lv, src->id, 0, 0, skill_get_time(skill_id,skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}
-		// If mob casts this, at least SC_C_MARKER as debuff
-		else {
-			status_change_start(src, bl, type, 10000, skill_lv, src->id, 0, 0, skill_get_time(skill_id,skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}
-		break;
 	case SO_ELEMENTAL_SHIELD:
 		if (!sd || sd->status.party_id == 0 || flag&1) {
 			if (sd && sd->status.party_id == 0) {
