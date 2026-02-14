@@ -565,7 +565,6 @@
     <ClInclude Include="skills/merchant/magmaeruption.hpp" />
     <ClInclude Include="skills/merchant/magmaeruptiondotdamage.hpp" />
     <ClInclude Include="skills/merchant/magneticfield.hpp" />
-    <ClInclude Include="skills/merchant/madolicense.hpp" />
     <ClInclude Include="skills/merchant/mammonite.hpp" />
     <ClInclude Include="skills/merchant/manufacturemachine.hpp" />
     <ClInclude Include="skills/merchant/mightysmash.hpp" />
@@ -1876,9 +1875,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/magneticfield.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/madolicense.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/mammonite.cpp">
