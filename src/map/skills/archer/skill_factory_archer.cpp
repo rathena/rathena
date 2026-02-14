@@ -61,6 +61,7 @@
 #include "removetrap.cpp"
 #include "sandman.cpp"
 #include "sensitivekeen.cpp"
+#include "shelteringbliss.cpp"
 #include "shockwavetrap.cpp"
 #include "skidtrap.cpp"
 #include "solidtrap.cpp"
@@ -130,6 +131,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillAcousticRhythm>();
 		case CG_ARROWVULCAN:
 			return std::make_unique<SkillVulcanArrow>();
+		case CG_MOONLIT:
+			return std::make_unique<SkillShelteringBliss>();
 		case DC_THROWARROW:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case HT_ANKLESNARE:
