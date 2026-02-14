@@ -33,6 +33,7 @@
 #include "crazyuproar.cpp"
 #include "decoratecart.cpp"
 #include "energycannonade.cpp"
+#include "flamelauncher.cpp"
 #include "fullprotection.cpp"
 #include "greed.cpp"
 #include "hammerfall.cpp"
@@ -190,6 +191,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NC_BOOSTKNUCKLE:
 			return std::make_unique<SkillBoostKnuckle>();
+		case NC_FLAMELAUNCHER:
+			return std::make_unique<SkillFlameLauncher>();
 		case NC_HOVERING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NC_MADOLICENCE:
