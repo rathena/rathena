@@ -1218,9 +1218,6 @@
     <ClInclude Include="skills/merchant/abrmothernet.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
-    <ClInclude Include="skills/merchant/acceleration.hpp">
-      <Filter>Header Files\Skills\Merchant</Filter>
-    </ClInclude>
     <ClInclude Include="skills/merchant/aciddemonstration.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -3075,9 +3072,6 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/abrmothernet.cpp">
-      <Filter>Source Files\Skills\Merchant</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/acceleration.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/aciddemonstration.cpp">

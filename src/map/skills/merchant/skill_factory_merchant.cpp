@@ -13,7 +13,6 @@
 #include "abrdualcannon.cpp"
 #include "abrinfinity.cpp"
 #include "abrmothernet.cpp"
-#include "acceleration.cpp"
 #include "aciddemonstration.cpp"
 #include "acidterror.cpp"
 #include "adrenalinerush.cpp"
@@ -212,7 +211,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 		case MT_TRIPLE_LASER:
 			return std::make_unique<SkillTripleLaser>();
 		case NC_ACCELERATION:
-			return std::make_unique<SkillAcceleration>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NC_AXEBOOMERANG:
 			return std::make_unique<SkillAxeBoomerang>();
 		case NC_BOOSTKNUCKLE:
