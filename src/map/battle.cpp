@@ -5423,51 +5423,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
 				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
-		case BO_ACIDIFIED_ZONE_WATER:
-		case BO_ACIDIFIED_ZONE_GROUND:
-		case BO_ACIDIFIED_ZONE_WIND:
-		case BO_ACIDIFIED_ZONE_FIRE:
-		case BO_ACIDIFIED_ZONE_WATER_ATK:// These deal the same damage? [Rytech]
-		case BO_ACIDIFIED_ZONE_GROUND_ATK:
-		case BO_ACIDIFIED_ZONE_WIND_ATK:
-		case BO_ACIDIFIED_ZONE_FIRE_ATK:
-			skillratio += -100 + 400 * skill_lv + 5 * sstatus->pow;
-
-			if( sc != nullptr && sc->getSCE( SC_RESEARCHREPORT ) ){
-				skillratio += skillratio * 50 / 100;
-
-				if (tstatus->race == RC_FORMLESS || tstatus->race == RC_PLANT)
-					skillratio += skillratio * 50 / 100;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case BO_EXPLOSIVE_POWDER:
-			skillratio += -100 + 500 + 650 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			if (sc && sc->getSCE(SC_RESEARCHREPORT))
-				skillratio += 100 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case BO_MAYHEMIC_THORNS:
-			skillratio += -100 + 200 + 300 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			if (sc && sc->getSCE(SC_RESEARCHREPORT))
-				skillratio += 150;
-			RE_LVL_DMOD(100);
-			break;
-		case BO_MYSTERY_POWDER:
-			skillratio += -100 + 1500 + 4000 * skill_lv;
-			skillratio += 5 * sstatus->pow;	// !TODO: check POW ratio
-			RE_LVL_DMOD(100);
-			break;
-		case BO_DUST_EXPLOSION:
-			skillratio += -100 + 450 + 600 * skill_lv;
-			skillratio += 5 * sstatus->pow;	// !TODO: check POW ratio
-			if (sc && sc->getSCE(SC_RESEARCHREPORT))
-				skillratio += 200 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
 		case TR_ROSEBLOSSOM:
 			skillratio += -100 + 200 + 2000 * skill_lv;
 

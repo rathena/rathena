@@ -1221,6 +1221,18 @@
     <ClInclude Include="skills/merchant/aciddemonstration.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/acidifiedzonefire.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/acidifiedzoneground.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/acidifiedzonewater.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/acidifiedzonewind.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/acidterror.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -1228,6 +1240,9 @@
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/advancedadrenalinerush.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/advanceprotection.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/aidberserkpotion.hpp">
@@ -1251,6 +1266,9 @@
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/bionicpharmacy.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/bomb.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -1269,10 +1287,19 @@
     <ClInclude Include="skills/merchant/crazyuproar.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/creeper.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/decoratecart.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/dustexplosion.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/energycannonade.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/explosivepowder.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/fullprotection.hpp">
@@ -1284,6 +1311,9 @@
     <ClInclude Include="skills/merchant/hammerfall.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/helltree.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/itemappraisal.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -1293,7 +1323,13 @@
     <ClInclude Include="skills/merchant/manufacturemachine.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/mayhemicthorns.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/mightysmash.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/mysterypowder.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/plantcultivation.hpp">
@@ -1335,6 +1371,9 @@
     <ClInclude Include="skills/merchant/syntheticarmor.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/thewholeprotection.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/triplelaser.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -1357,6 +1396,12 @@
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/weaponrepair.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/woodenfairy.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/merchant/woodenwarrior.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/crimsonfireformation.hpp">
@@ -2987,6 +3032,18 @@
     <ClCompile Include="skills/merchant/aciddemonstration.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/acidifiedzonefire.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/acidifiedzoneground.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/acidifiedzonewater.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/acidifiedzonewind.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/acidterror.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
@@ -2994,6 +3051,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/advancedadrenalinerush.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/advanceprotection.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/aidberserkpotion.cpp">
@@ -3017,6 +3077,9 @@
     <ClCompile Include="skills/merchant/biochemicalhelm.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/bionicpharmacy.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/bomb.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
@@ -3035,10 +3098,19 @@
     <ClCompile Include="skills/merchant/crazyuproar.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/creeper.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/decoratecart.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/dustexplosion.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/energycannonade.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/explosivepowder.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/fullprotection.cpp">
@@ -3050,6 +3122,9 @@
     <ClCompile Include="skills/merchant/hammerfall.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/helltree.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/itemappraisal.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
@@ -3059,7 +3134,13 @@
     <ClCompile Include="skills/merchant/manufacturemachine.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/mayhemicthorns.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/mightysmash.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/mysterypowder.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/plantcultivation.cpp">
@@ -3101,6 +3182,9 @@
     <ClCompile Include="skills/merchant/syntheticarmor.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/thewholeprotection.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/triplelaser.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
@@ -3123,6 +3207,12 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/weaponrepair.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/woodenfairy.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/woodenwarrior.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/crimsonfireformation.cpp">
