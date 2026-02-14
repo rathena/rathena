@@ -32,6 +32,7 @@
 #include "missionbombard.cpp"
 #include "onlyonebullet.cpp"
 #include "piercingshot.cpp"
+#include "quickdrawshot.cpp"
 #include "rapidshower.cpp"
 #include "richscoin.cpp"
 #include "shatterstorm.cpp"
@@ -135,6 +136,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillMassSpiral>();
 		case RL_P_ALTER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case RL_QD_SHOT:
+			return std::make_unique<SkillQuickDrawShot>();
 		case RL_RICHS_COIN:
 			return std::make_unique<SkillRichSCoin>();
 		case RL_S_STORM:

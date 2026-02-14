@@ -5773,11 +5773,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			flag |= 1; // Don't consume requirement
 		break;
 
-	case RL_QD_SHOT:
-		// Except for main target, only units marked with crimson marker are valid targets
-		if (skill_area_temp[1] == bl->id || (tsc != nullptr && tsc->getSCE(SC_C_MARKER) != nullptr))
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
 	case RL_D_TAIL:
 	case RL_HAMMER_OF_GOD:
 		if (flag&1)
@@ -8809,15 +8804,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			status_change_start(src, bl, type, 10000, skill_lv, src->id, 0, 0, skill_get_time(skill_id,skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		}
-		break;
-	case RL_QD_SHOT:
-		// Remember main target as it will always be hit by this skill
-		skill_area_temp[1] = bl->id;
-		// Iterate through all enemies in the area
-		map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
-		// End here to prevent spamming of the skill onto the target
-		status_change_end(src, SC_QD_SHOT_READY);
-		skill_area_temp[1] = 0;
 		break;
 	case SO_ELEMENTAL_SHIELD:
 		if (!sd || sd->status.party_id == 0 || flag&1) {
