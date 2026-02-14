@@ -7065,7 +7065,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sd->skill_id_old = sd->skill_lv_old = 0;
 		}
 		break;
-	case NPC_CHANGEDARKNESS:
 	case NPC_CHANGETELEKINESIS:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start2(src,bl, type, 100, skill_lv, skill_get_ele(skill_id,skill_lv),

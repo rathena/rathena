@@ -14,6 +14,7 @@
 #include "jackfrost2.cpp"
 #include "maxpainattack.cpp"
 #include "poisonattributechange.cpp"
+#include "shadowattributechange.cpp"
 #include "widesuck.cpp"
 #include "wideweb.cpp"
 #include "piercingattack.cpp"
@@ -50,6 +51,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<SkillPoisonAttributeChange>();
 		case NPC_CHANGEHOLY:
 			return std::make_unique<SkillHolyAttributeChange>();
+		case NPC_CHANGEDARKNESS:
+			return std::make_unique<SkillShadowAttributeChange>();
 		case NPC_COMBOATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_CRITICALSLASH:
