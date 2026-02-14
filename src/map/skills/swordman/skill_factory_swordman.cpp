@@ -36,6 +36,7 @@
 #include "pierce.cpp"
 #include "pinpointattack.cpp"
 #include "provoke.cpp"
+#include "rageburst.cpp"
 #include "radiantspear.cpp"
 #include "relax.cpp"
 #include "resistantsouls.cpp"
@@ -171,7 +172,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 		case LG_PRESTIGE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LG_RAGEBURST:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillRageBurst>();
 		case LG_REFLECTDAMAGE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case LG_PINPOINTATTACK:

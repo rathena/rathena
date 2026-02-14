@@ -671,6 +671,7 @@
     <ClInclude Include="skills/swordman/pierce.hpp" />
     <ClInclude Include="skills/swordman/pinpointattack.hpp" />
     <ClInclude Include="skills/swordman/provoke.hpp" />
+    <ClInclude Include="skills/swordman/rageburst.hpp" />
     <ClInclude Include="skills/swordman/radiantspear.hpp" />
     <ClInclude Include="skills/swordman/relax.hpp" />
     <ClInclude Include="skills/swordman/resistantsouls.hpp" />
@@ -2182,6 +2183,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/provoke.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/rageburst.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/radiantspear.cpp">
