@@ -44406,11 +44406,6 @@ Body:
     Name: Heaven & Earth
     Type: Card
     SubType: Enchant
-    Buy: 10
-    Locations:
-      Shoes: true
-    Flags:
-      DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Brute,15;
       bonus2 bAddRace,RC_Player_Doram,15;
