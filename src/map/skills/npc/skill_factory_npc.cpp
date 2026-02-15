@@ -27,6 +27,7 @@
 #include "petrifyattack.cpp"
 #include "piercingattack.cpp"
 #include "randomattack.cpp"
+#include "shadowattributeattack.cpp"
 #include "shadowattributechange.cpp"
 #include "splashattack.cpp"
 #include "silenceattack.cpp"
@@ -88,7 +89,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_DARKCROSS:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_DARKNESSATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillShadowAttributeAttack>();
 		case NPC_DARKPIERCING:
 			return std::make_unique<SkillDarkPiercing>();
 		case NPC_DEATHSUMMON:
