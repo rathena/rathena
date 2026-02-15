@@ -21,12 +21,15 @@
 #include "crimsonrock.cpp"
 #include "crystalimpact.cpp"
 #include "deadlyprojection.cpp"
+#include "diamonddust.cpp"
 #include "destructivehurricane.cpp"
 #include "deluge.cpp"
 #include "dispell.cpp"
 #include "drainlife.cpp"
+#include "earthgrave.cpp"
 #include "earthspike.cpp"
 #include "earthstrain.cpp"
+#include "electricwalk.cpp"
 #include "elementalchangeearth.cpp"
 #include "elementalchangefire.cpp"
 #include "elementalchangewater.cpp"
@@ -35,12 +38,12 @@
 #include "endowquake.cpp"
 #include "endowtornado.cpp"
 #include "endowtsunami.cpp"
-#include "energycoat.cpp"
 #include "energyconversion.cpp"
 #include "fireball.cpp"
 #include "firebolt.cpp"
 #include "firepillar.cpp"
 #include "firewall.cpp"
+#include "firewalk.cpp"
 #include "floralflareroad.cpp"
 #include "frostdiver.cpp"
 #include "frostnova.cpp"
@@ -86,6 +89,7 @@
 #include "soulstrike.cpp"
 #include "soulvulcanstrike.cpp"
 #include "spellbreaker.cpp"
+#include "spellfist.cpp"
 #include "stasis.cpp"
 #include "stonecurse.cpp"
 #include "stormcannon.cpp"
@@ -172,13 +176,15 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 		case MG_COLDBOLT:
 			return std::make_unique<SkillColdBolt>();
 		case MG_ENERGYCOAT:
-			return std::make_unique<SkillEnergyCoat>();
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MG_FIREBALL:
 			return std::make_unique<SkillFireBall>();
 		case MG_FIREBOLT:
 			return std::make_unique<SkillFireBolt>();
 		case MG_FIREWALL:
 			return std::make_unique<SkillFireWall>();
+		case SO_FIREWALK:
+			return std::make_unique<SkillFireWalk>();
 		case MG_FROSTDIVER:
 			return std::make_unique<SkillFrostDiver>();
 		case MG_LIGHTNINGBOLT:
@@ -217,6 +223,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillDeluge>();
 		case SA_DISPELL:
 			return std::make_unique<SkillDispell>();
+		case SO_EARTHGRAVE:
+			return std::make_unique<SkillEarthGrave>();
+		case SO_ELECTRICWALK:
+			return std::make_unique<SkillElectricWalk>();
+		case SO_DIAMONDDUST:
+			return std::make_unique<SkillDiamondDust>();
+		case SO_SPELLFIST:
+			return std::make_unique<SkillSpellFist>();
 		case SA_ELEMENTFIRE:
 			return std::make_unique<SkillElementalChangeFire>();
 		case SA_ELEMENTGROUND:

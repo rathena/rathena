@@ -1647,15 +1647,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src,bl,SC_STUN, 25 + 5 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
 		status_change_end(bl, SC_SV_ROOTTWIST);
 		break;
-	case SO_EARTHGRAVE:
-		sc_start2(src,bl, SC_BLEEDING, 5 * skill_lv, skill_lv, src->id, skill_get_time2(skill_id, skill_lv));	// Need official rate. [LimitLine]
-		break;
-	case SO_DIAMONDDUST: {
-		int32 rate = 5 + 5 * skill_lv;
-		if( sc && sc->getSCE(SC_COOLER_OPTION) )
-			rate += (sd ? sd->status.job_level / 5 : 0);
-		sc_start(src,bl, SC_CRYSTALIZE, rate, skill_lv, skill_get_time2(skill_id, skill_lv));
-		} break;
 	case SO_VARETYR_SPEAR:
 		sc_start(src,bl, SC_STUN, 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -6841,15 +6832,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 	}
 
-	case SO_SPELLFIST:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		unit_skillcastcancel(src,1);
-		if(sd) {
-			int32 sp = skill_get_sp(sd->skill_id_old,sd->skill_lv_old);
-			sc_start4(src,src,type,100,skill_lv,sd->skill_id_old,sd->skill_lv_old,0,skill_get_time(skill_id,skill_lv));
-			sd->skill_id_old = sd->skill_lv_old = 0;
-		}
-		break;
 	case NPC_ATTRICHANGE:
 	case NPC_CHANGEWATER:
 	case NPC_CHANGEGROUND:
@@ -10219,8 +10201,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		}
 		break;
 
-	case SO_FIREWALK:
-	case SO_ELECTRICWALK:
 	case NPC_FIREWALK:
 	case NPC_ELECTRICWALK:
 		if( sc && sc->getSCE(type) )
