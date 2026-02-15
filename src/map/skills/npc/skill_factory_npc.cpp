@@ -155,7 +155,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_STUNATTACK:
 			return std::make_unique<SkillStunAttack>();
 		case NPC_SUICIDE:
-			return std::make_unique<SkillSuicide>();
+			return std::make_unique<SkillNpcSuicide>();
 		case NPC_TELEKINESISATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_UNDEADATTACK:
