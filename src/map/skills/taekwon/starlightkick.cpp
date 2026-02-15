@@ -10,10 +10,10 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillStarlightKick::SkillStarlightKick() : SkillImplRecursiveDamageSplash(SKE_STAR_LIGHT_KICK) {
+SkillStarLightKick::SkillStarLightKick() : SkillImplRecursiveDamageSplash(SKE_STAR_LIGHT_KICK) {
 }
 
-void SkillStarlightKick::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+void SkillStarLightKick::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_data* sstatus = status_get_status_data(*src);
 
@@ -23,7 +23,7 @@ void SkillStarlightKick::calculateSkillRatio(const Damage* wd, const block_list*
 	RE_LVL_DMOD(100);
 }
 
-void SkillStarlightKick::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillStarLightKick::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
 	uint8 dir = DIR_NORTHEAST;

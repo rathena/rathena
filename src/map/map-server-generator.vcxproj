@@ -698,14 +698,11 @@
     <ClInclude Include="skills/swordman/ultimatesacrifice.hpp" />
     <ClInclude Include="skills/swordman/vitalstrike.hpp" />
     <ClInclude Include="skills/taekwon/allinthesky.hpp" />
-    <ClInclude Include="skills/taekwon/circleofdirectionsandelementals.hpp" />
-    <ClInclude Include="skills/taekwon/counter.hpp" />
-    <ClInclude Include="skills/taekwon/curseexplosion.hpp" />
-    <ClInclude Include="skills/taekwon/dawnbreak.hpp" />
     <ClInclude Include="skills/taekwon/bookofcreatingstar.hpp" />
     <ClInclude Include="skills/taekwon/circleofdirectionsandelementals.hpp" />
     <ClInclude Include="skills/taekwon/counter.hpp" />
     <ClInclude Include="skills/taekwon/curseexplosion.hpp" />
+    <ClInclude Include="skills/taekwon/dawnbreak.hpp" />
     <ClInclude Include="skills/taekwon/documentofsunmoonandstar.hpp" />
     <ClInclude Include="skills/taekwon/downkick.hpp" />
     <ClInclude Include="skills/taekwon/esha.hpp" />
@@ -736,12 +733,12 @@
     <ClInclude Include="skills/taekwon/kaute.hpp" />
     <ClInclude Include="skills/taekwon/midnightkick.hpp" />
     <ClInclude Include="skills/taekwon/mission.hpp" />
-    <ClInclude Include="skills/taekwon/noonblast.hpp" />
-    <ClInclude Include="skills/taekwon/risingmoon.hpp" />
-    <ClInclude Include="skills/taekwon/risingsun.hpp" />
     <ClInclude Include="skills/taekwon/newmoonkick.hpp" />
+    <ClInclude Include="skills/taekwon/noonblast.hpp" />
     <ClInclude Include="skills/taekwon/novaexplosion.hpp" />
     <ClInclude Include="skills/taekwon/prominencekick.hpp" />
+    <ClInclude Include="skills/taekwon/risingmoon.hpp" />
+    <ClInclude Include="skills/taekwon/risingsun.hpp" />
     <ClInclude Include="skills/taekwon/run.hpp" />
     <ClInclude Include="skills/taekwon/sevenwind.hpp" />
     <ClInclude Include="skills/taekwon/shadowssoul.hpp" />
@@ -775,8 +772,8 @@
     <ClInclude Include="skills/taekwon/spiritofthewizard.hpp" />
     <ClInclude Include="skills/taekwon/starburst.hpp" />
     <ClInclude Include="skills/taekwon/starcannon.hpp" />
-    <ClInclude Include="skills/taekwon/starlightkick.hpp" />
     <ClInclude Include="skills/taekwon/staremperoradvent.hpp" />
+    <ClInclude Include="skills/taekwon/starlightkick.hpp" />
     <ClInclude Include="skills/taekwon/stormkick.hpp" />
     <ClInclude Include="skills/taekwon/sunsetblast.hpp" />
     <ClInclude Include="skills/taekwon/talismanofblacktortoise.hpp" />
@@ -2281,6 +2278,8 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/allinthesky.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/bookofcreatingstar.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2294,6 +2293,8 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/dawnbreak.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/documentofsunmoonandstar.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2384,20 +2385,22 @@
     <ClCompile Include="skills/taekwon/mission.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/noonblast.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/taekwon/risingmoon.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/taekwon/risingsun.cpp">
     <ClCompile Include="skills/taekwon/newmoonkick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/noonblast.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/novaexplosion.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/prominencekick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/risingmoon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/risingsun.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/run.cpp">
@@ -2416,6 +2419,8 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/skysun.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/taekwon/solarburst.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2497,8 +2502,10 @@
     <ClCompile Include="skills/taekwon/starcannon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/taekwon/starlightkick.cpp">
     <ClCompile Include="skills/taekwon/staremperoradvent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/taekwon/starlightkick.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/stormkick.cpp">
