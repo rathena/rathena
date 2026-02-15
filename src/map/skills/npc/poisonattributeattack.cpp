@@ -11,8 +11,5 @@ void SkillPoisonAttributeAttack::calculateSkillRatio(const Damage* wd, const blo
 }
 
 void SkillPoisonAttributeAttack::modifyHitRate(int16& hit_rate, const block_list* src, const block_list* target, uint16 skill_lv) const {
-	nullpo_retv(src);
-	nullpo_retv(target);
-	(void)skill_lv;
 	hit_rate += hit_rate * 20 / 100;
 }

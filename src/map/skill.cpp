@@ -4918,15 +4918,8 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 	//Splash attack skills.
 	case MA_SHOWER:
-	case NPC_PULSESTRIKE:
-	case NPC_PULSESTRIKE2:
-	case NPC_HELLJUDGEMENT:
-	case NPC_HELLJUDGEMENT2:
 	case NPC_VAMPIRE_GIFT:
 	case NPC_REVERBERATION_ATK:
-	case NPC_ARROWSTORM:
-	case NPC_KILLING_AURA:
-	case NPC_IGNITIONBREAK:
 	case RK_IGNITIONBREAK:
 	case RK_HUNDREDSPEAR:
 	case NC_VULCANARM:
@@ -4937,7 +4930,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case LG_OVERBRAND:
 	case LG_MOONSLASHER:
 	case LG_RAYOFGENESIS:
-	case NPC_RAYOFGENESIS:
 	case LG_EARTHDRIVE:
 	case SR_RAMPAGEBLASTER:
 	case SR_SKYNETBLOW:
@@ -4983,7 +4975,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case BO_MAYHEMIC_THORNS:
 	case BO_MYSTERY_POWDER:
 	case BO_DUST_EXPLOSION:
-	case NPC_WIDECRITICALWOUND:
 	case TR_METALIC_FURY:
 	case SKE_SUNSET_BLAST:
 	case SKE_NOON_BLAST:

@@ -107,6 +107,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_HELLBURNING:
 			return std::make_unique<SkillHellBurning>();
+		case NPC_HELLJUDGEMENT:
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
+		case NPC_HELLJUDGEMENT2:
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
 		case NPC_HELLPOWER:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_HELMBRAKE:
@@ -120,7 +124,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_KEEPING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_KILLING_AURA:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
 		case NPC_MAGICMIRROR:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_MAGICALATTACK:
@@ -129,6 +133,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<SkillMetamorphosis>();
 		case NPC_MAGMA_ERUPTION:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NPC_IGNITIONBREAK:
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
 		case NPC_MAXPAIN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_MAXPAIN_ATK:
@@ -145,12 +151,18 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<SkillPoisonAttributeAttack>();
 		case NPC_PROVOCATION:
 			return std::make_unique<SkillProvocation>();
+		case NPC_PULSESTRIKE:
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
+		case NPC_PULSESTRIKE2:
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
 		case NPC_RANDOMATTACK:
 			return std::make_unique<SkillRandomAttack>();
 		case NPC_RANGEATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_SELFDESTRUCTION:
 			return std::make_unique<SkillSuicideBombing>();
+		case NPC_RAYOFGENESIS:
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
 		case NPC_RELIEVE_OFF:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_RELIEVE_ON:
@@ -177,10 +189,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<SkillWideWeb>();
 		case NPC_WIDESUCK:
 			return std::make_unique<SkillWideSuck>();
+		case NPC_WIDECRITICALWOUND:
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
 		case NPC_WEAPONBRAKER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_WINDATTACK:
 			return std::make_unique<SkillWindAttributeAttack>();
+		case NPC_ARROWSTORM:
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
 
 		default:
 			return nullptr;
