@@ -623,6 +623,7 @@
     <ClInclude Include="skills/npc/poisonattributechange.hpp" />
     <ClInclude Include="skills/npc/shadowattributechange.hpp" />
     <ClInclude Include="skills/npc/silenceattack.hpp" />
+    <ClInclude Include="skills/npc/sleepattack.hpp" />
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
     <ClInclude Include="skills/npc/splashattack.hpp" />
     <ClInclude Include="skills/npc/spiritdestruction.hpp" />
@@ -2051,6 +2052,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/silenceattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/sleepattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">
