@@ -10,9 +10,9 @@ SkillDiamondDust::SkillDiamondDust() : SkillImpl(SO_DIAMONDDUST) {
 }
 
 void SkillDiamondDust::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
-	map_session_data* sd = BL_CAST(BL_PC, src);
-	status_change* sc = status_get_sc(src);
-	status_data* sstatus = status_get_status_data(*src);
+	const map_session_data* sd = BL_CAST(BL_PC, src);
+	const status_change* sc = status_get_sc(src);
+	const status_data* sstatus = status_get_status_data(*src);
 
 	skillratio += -100 + 2 * sstatus->int_ + 300 * pc_checkskill(sd, SA_FROSTWEAPON) + sstatus->int_ * skill_lv;
 	RE_LVL_DMOD(100);
