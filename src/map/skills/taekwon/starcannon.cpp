@@ -39,7 +39,7 @@ void SkillStarCannon::castendPos2(block_list* src, int32 x, int32 y, uint16 skil
 		}
 
 		std::shared_ptr<s_skill_unit_group> sg = su->group;
-				
+
 		for( int32 i = 0; i< MAX_SKILLTIMERSKILL; i++ ){
 			if( ud->skilltimerskill[i] == nullptr ){
 				continue;
@@ -48,7 +48,7 @@ void SkillStarCannon::castendPos2(block_list* src, int32 x, int32 y, uint16 skil
 			if( ud->skilltimerskill[i]->skill_id != SKE_TWINKLING_GALAXY ){
 				continue;
 			}
-						
+
 			delete_timer(ud->skilltimerskill[i]->timer, skill_timerskill);
 			ers_free(skill_timer_ers, ud->skilltimerskill[i]);
 			ud->skilltimerskill[i] = nullptr;
