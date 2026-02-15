@@ -3282,7 +3282,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case MS_MAGNUM:
 				hitrate += hitrate * 10 * skill_lv / 100;
 				break;
-			case NPC_TELEKINESISATTACK:
 			case NPC_UNDEADATTACK:
 				case NPC_CHANGEUNDEAD:
 				case NPC_BLEEDING:
@@ -4729,7 +4728,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 40 * skill_lv;
 			break;
 		case NPC_UNDEADATTACK:
-		case NPC_TELEKINESISATTACK:
 		case NPC_BLOODDRAIN:
 		case NPC_ACIDBREATH:
 		case NPC_DARKNESSBREATH:

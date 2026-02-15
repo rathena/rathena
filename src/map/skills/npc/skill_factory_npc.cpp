@@ -14,6 +14,7 @@
 #include "earthattributechange.cpp"
 #include "fireattributeattack.cpp"
 #include "fireattributechange.cpp"
+#include "ghostattributeattack.cpp"
 #include "ghostattributechange.cpp"
 #include "hellburning.cpp"
 #include "holyattributeattack.cpp"
@@ -161,7 +162,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_SUICIDE:
 			return std::make_unique<SkillNpcSuicide>();
 		case NPC_TELEKINESISATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillGhostAttributeAttack>();
 		case NPC_UNDEADATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_WATERATTACK:
