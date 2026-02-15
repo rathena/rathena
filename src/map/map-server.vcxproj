@@ -254,6 +254,7 @@
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/bssacramenti.hpp" />
     <ClInclude Include="skills/acolyte/cantocandidus.hpp" />
+    <ClInclude Include="skills/acolyte/chaincrushcombo.hpp" />
     <ClInclude Include="skills/acolyte/clearance.hpp" />
     <ClInclude Include="skills/acolyte/coluceoheal.hpp" />
     <ClInclude Include="skills/acolyte/competentia.hpp" />
@@ -270,6 +271,7 @@
     <ClInclude Include="skills/acolyte/explosionblaster.hpp" />
     <ClInclude Include="skills/acolyte/firstbrand.hpp" />
     <ClInclude Include="skills/acolyte/framen.hpp" />
+    <ClInclude Include="skills/acolyte/glacierfist.hpp" />
     <ClInclude Include="skills/acolyte/gloria.hpp" />
     <ClInclude Include="skills/acolyte/heal.hpp" />
     <ClInclude Include="skills/acolyte/highnessheal.hpp" />
@@ -295,6 +297,7 @@
     <ClInclude Include="skills/acolyte/pneuma.hpp" />
     <ClInclude Include="skills/acolyte/pneumaticusprocella.hpp" />
     <ClInclude Include="skills/acolyte/praefatio.hpp" />
+    <ClInclude Include="skills/acolyte/ragingpalmstrike.hpp" />
     <ClInclude Include="skills/acolyte/ragingquadrupleblow.hpp" />
     <ClInclude Include="skills/acolyte/ragingthrust.hpp" />
     <ClInclude Include="skills/acolyte/ragingtrifectablow.hpp" />
@@ -317,6 +320,7 @@
     <ClInclude Include="skills/acolyte/throwspiritsphere.hpp" />
     <ClInclude Include="skills/acolyte/turnundead.hpp" />
     <ClInclude Include="skills/acolyte/vituperatum.hpp" />
+    <ClInclude Include="skills/acolyte/zen.hpp" />
     <ClInclude Include="skills/archer/acousticrhythm.hpp" />
     <ClInclude Include="skills/archer/aimedbolt.hpp" />
     <ClInclude Include="skills/archer/amp.hpp" />
@@ -935,6 +939,9 @@
     <ClCompile Include="skills/acolyte/cantocandidus.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/chaincrushcombo.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/clearance.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -981,6 +988,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/framen.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/glacierfist.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/gloria.cpp">
@@ -1058,6 +1068,9 @@
     <ClCompile Include="skills/acolyte/praefatio.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/ragingpalmstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/ragingquadrupleblow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1122,6 +1135,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/vituperatum.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/zen.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/acousticrhythm.cpp">

@@ -411,6 +411,9 @@
     <ClInclude Include="skills/acolyte/cantocandidus.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/chaincrushcombo.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/clearance.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -457,6 +460,9 @@
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/framen.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/glacierfist.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/gloria.hpp">
@@ -534,6 +540,9 @@
     <ClInclude Include="skills/acolyte/praefatio.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/ragingpalmstrike.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/ragingquadrupleblow.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -598,6 +607,9 @@
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/vituperatum.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/zen.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/acousticrhythm.hpp">
@@ -2234,6 +2246,9 @@
     <ClCompile Include="skills/acolyte/cantocandidus.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/chaincrushcombo.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/clearance.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -2280,6 +2295,9 @@
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/framen.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/glacierfist.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/gloria.cpp">
@@ -2357,6 +2375,9 @@
     <ClCompile Include="skills/acolyte/praefatio.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/ragingpalmstrike.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/ragingquadrupleblow.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -2421,6 +2442,9 @@
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/vituperatum.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/zen.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/acousticrhythm.cpp">

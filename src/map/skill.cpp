@@ -1500,18 +1500,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		skill_break_equip(src,bl, EQP_SHIELD, 150*skill_lv, BCT_ENEMY);
 		break;
 
-	case CH_TIGERFIST: {
-		t_tick basetime = skill_get_time(skill_id, skill_lv);
-		t_tick mintime = 15 * (status_get_lv(src) + 100);
-
-		if (status_bl_has_mode(bl, MD_STATUSIMMUNE))
-			basetime /= 5;
-		basetime = std::max((basetime * status_get_agi(bl)) / -200 + basetime, mintime);
-		sc_start(src, bl, SC_ANKLE, (1 + skill_lv) * 10, 0, basetime);
-	}
-		break;
-
-
 	case PF_FOGWALL:
 		if (src != bl && !tsc->getSCE(SC_DELUGE))
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -5398,12 +5386,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case CH_PALMSTRIKE: //	Palm Strike takes effect 1sec after casting. [Skotlex]
-	//	clif_skill_nodamage(src,*bl,skill_id,skill_lv,false); //Can't make this one display the correct attack animation delay :/
-		clif_damage(*src,*bl,tick,status_get_amotion(src),0,-1,1,DMG_ENDURE,0,false); //Display an absorbed damage attack.
-		skill_addtimerskill(src, tick + (1000+status_get_amotion(src)), bl->id, 0, 0, skill_id, skill_lv, BF_WEAPON, flag);
-		break;
-
 	case ALL_RESURRECTION:
 		if (!battle_check_undead(tstatus->race, tstatus->def_ele))
 			break;
@@ -6512,17 +6494,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv,
 				sc_start4(src, bl, type, 10000, src->id, i, skill_get_range2(src, skill_id, skill_lv, true), 0, skill_get_time2(skill_id, skill_lv)));
 			clif_devotion(src, nullptr);
-		}
-		break;
-
-	case CH_SOULCOLLECT:
-		if(sd) {
-			int32 limit = 5;
-			if( sd->sc.getSCE(SC_RAISINGDRAGON) )
-				limit += sd->sc.getSCE(SC_RAISINGDRAGON)->val1;
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			for (i = 0; i < limit; i++)
-				pc_addspiritball(sd,skill_get_time(skill_id,skill_lv),limit);
 		}
 		break;
 
