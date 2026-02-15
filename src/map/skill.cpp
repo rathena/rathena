@@ -7005,11 +7005,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sd->skill_id_old = sd->skill_lv_old = 0;
 		}
 		break;
-	case NPC_PROVOCATION:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if (md) mob_unlocktarget(md, tick);
-		break;
-
 	case NPC_REBIRTH:
 		if( md && md->state.rebirth )
 			break; // only works once
