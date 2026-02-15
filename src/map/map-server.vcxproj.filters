@@ -1476,6 +1476,9 @@
     <ClInclude Include="skills/npc/defensedisregardattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/earthattributeattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/earthattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -3339,6 +3342,9 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/defensedisregardattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/earthattributeattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/earthattributechange.cpp">

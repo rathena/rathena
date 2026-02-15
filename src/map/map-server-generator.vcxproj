@@ -609,6 +609,7 @@
     <ClInclude Include="skills/npc/darkpiercing.hpp" />
     <ClInclude Include="skills/npc/deathsummon.hpp" />
     <ClInclude Include="skills/npc/defensedisregardattack.hpp" />
+    <ClInclude Include="skills/npc/earthattributeattack.hpp" />
     <ClInclude Include="skills/npc/earthattributechange.hpp" />
     <ClInclude Include="skills/npc/fireattributechange.hpp" />
     <ClInclude Include="skills/npc/ghostattributechange.hpp" />
@@ -2012,6 +2013,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/defensedisregardattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/earthattributeattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/earthattributechange.cpp">

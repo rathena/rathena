@@ -3282,7 +3282,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case MS_MAGNUM:
 				hitrate += hitrate * 10 * skill_lv / 100;
 				break;
-			case NPC_GROUNDATTACK:
 			case NPC_FIREATTACK:
 			case NPC_WINDATTACK:
 			case NPC_POISONATTACK:
@@ -4734,7 +4733,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case MS_BOWLINGBASH:
 			skillratio += 40 * skill_lv;
 			break;
-		case NPC_GROUNDATTACK:
 		case NPC_FIREATTACK:
 		case NPC_WINDATTACK:
 		case NPC_POISONATTACK:

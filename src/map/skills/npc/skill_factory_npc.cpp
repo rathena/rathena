@@ -10,6 +10,7 @@
 #include "darkpiercing.cpp"
 #include "deathsummon.cpp"
 #include "defensedisregardattack.cpp"
+#include "earthattributeattack.cpp"
 #include "earthattributechange.cpp"
 #include "fireattributechange.cpp"
 #include "ghostattributechange.cpp"
@@ -93,7 +94,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_FIREATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_GROUNDATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillEarthAttributeAttack>();
 		case NPC_GUIDEDATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_HALLUCINATIONWALK:
