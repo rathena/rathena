@@ -16,6 +16,7 @@
 #include "fireattributechange.cpp"
 #include "ghostattributechange.cpp"
 #include "hellburning.cpp"
+#include "holyattributeattack.cpp"
 #include "holyattributechange.cpp"
 #include "jackfrost2.cpp"
 #include "maxpainattack.cpp"
@@ -109,7 +110,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_HELMBRAKE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_HOLYATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillHolyAttributeAttack>();
 		case NPC_INVINCIBLE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_JACKFROST:
