@@ -24,6 +24,7 @@
 #include "cobalttrap.cpp"
 #include "concentration.cpp"
 #include "crescivebolt.cpp"
+#include "dazzler.cpp"
 #include "deepblindtrap.cpp"
 #include "detect.cpp"
 #include "detonator.cpp"
@@ -36,15 +37,19 @@
 #include "firingtrap.cpp"
 #include "flametrap.cpp"
 #include "flasher.cpp"
+#include "focusballet.cpp"
 #include "focusedarrowstrike.cpp"
 #include "freezingtrap.cpp"
 #include "galestorm.cpp"
+#include "gypsyskiss.cpp"
 #include "harmoniclick.cpp"
 #include "hawkboomerang.cpp"
 #include "hawkmastery.cpp"
 #include "hawkrush.cpp"
+#include "hipshaker.cpp"
 #include "iceboundtrap.cpp"
 #include "impressiveriff.cpp"
+#include "ladyluck.cpp"
 #include "landmine.cpp"
 #include "lullaby.cpp"
 #include "magentatrap.cpp"
@@ -65,6 +70,8 @@
 #include "shockwavetrap.cpp"
 #include "skidtrap.cpp"
 #include "skilledspecialsinger.cpp"
+#include "slingingarrow.cpp"
+#include "slowgrace.cpp"
 #include "solidtrap.cpp"
 #include "songoflutie.cpp"
 #include "springtrap.cpp"
@@ -83,6 +90,7 @@
 #include "wargstrike.cpp"
 #include "wildwalk.cpp"
 #include "windwalker.cpp"
+#include "winkofcharm.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -144,8 +152,22 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillTarotCardOfFate>();
 		case CG_SPECIALSINGER:
 			return std::make_unique<SkillSkilledSpecialSinger>();
+		case DC_DONTFORGETME:
+			return std::make_unique<SkillSlowGrace>();
+		case DC_FORTUNEKISS:
+			return std::make_unique<SkillLadyLuck>();
+		case DC_HUMMING:
+			return std::make_unique<SkillFocusBallet>();
+		case DC_SCREAM:
+			return std::make_unique<SkillDazzler>();
+		case DC_SERVICEFORYOU:
+			return std::make_unique<SkillGypsysKiss>();
 		case DC_THROWARROW:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSlingingArrow>();
+		case DC_UGLYDANCE:
+			return std::make_unique<SkillHipShaker>();
+		case DC_WINKCHARM:
+			return std::make_unique<SkillWinkofCharm>();
 		case HT_ANKLESNARE:
 			return std::make_unique<SkillAnkleSnare>();
 		case HT_BLASTMINE:

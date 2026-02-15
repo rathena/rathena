@@ -254,6 +254,7 @@
     <ClInclude Include="skills/acolyte/blessing.hpp" />
     <ClInclude Include="skills/acolyte/bssacramenti.hpp" />
     <ClInclude Include="skills/acolyte/cantocandidus.hpp" />
+    <ClInclude Include="skills/acolyte/chaincrushcombo.hpp" />
     <ClInclude Include="skills/acolyte/clearance.hpp" />
     <ClInclude Include="skills/acolyte/coluceoheal.hpp" />
     <ClInclude Include="skills/acolyte/competentia.hpp" />
@@ -270,6 +271,7 @@
     <ClInclude Include="skills/acolyte/explosionblaster.hpp" />
     <ClInclude Include="skills/acolyte/firstbrand.hpp" />
     <ClInclude Include="skills/acolyte/framen.hpp" />
+    <ClInclude Include="skills/acolyte/glacierfist.hpp" />
     <ClInclude Include="skills/acolyte/gloria.hpp" />
     <ClInclude Include="skills/acolyte/heal.hpp" />
     <ClInclude Include="skills/acolyte/highnessheal.hpp" />
@@ -295,6 +297,7 @@
     <ClInclude Include="skills/acolyte/pneuma.hpp" />
     <ClInclude Include="skills/acolyte/pneumaticusprocella.hpp" />
     <ClInclude Include="skills/acolyte/praefatio.hpp" />
+    <ClInclude Include="skills/acolyte/ragingpalmstrike.hpp" />
     <ClInclude Include="skills/acolyte/ragingquadrupleblow.hpp" />
     <ClInclude Include="skills/acolyte/ragingthrust.hpp" />
     <ClInclude Include="skills/acolyte/ragingtrifectablow.hpp" />
@@ -317,6 +320,7 @@
     <ClInclude Include="skills/acolyte/throwspiritsphere.hpp" />
     <ClInclude Include="skills/acolyte/turnundead.hpp" />
     <ClInclude Include="skills/acolyte/vituperatum.hpp" />
+    <ClInclude Include="skills/acolyte/zen.hpp" />
     <ClInclude Include="skills/archer/acousticrhythm.hpp" />
     <ClInclude Include="skills/archer/aimedbolt.hpp" />
     <ClInclude Include="skills/archer/amp.hpp" />
@@ -334,6 +338,7 @@
     <ClInclude Include="skills/archer/cobalttrap.hpp" />
     <ClInclude Include="skills/archer/concentration.hpp" />
     <ClInclude Include="skills/archer/crescivebolt.hpp" />
+    <ClInclude Include="skills/archer/dazzler.hpp" />
     <ClInclude Include="skills/archer/deepblindtrap.hpp" />
     <ClInclude Include="skills/archer/detect.hpp" />
     <ClInclude Include="skills/archer/detonator.hpp" />
@@ -346,15 +351,19 @@
     <ClInclude Include="skills/archer/firingtrap.hpp" />
     <ClInclude Include="skills/archer/flametrap.hpp" />
     <ClInclude Include="skills/archer/flasher.hpp" />
+    <ClInclude Include="skills/archer/focusballet.hpp" />
     <ClInclude Include="skills/archer/focusedarrowstrike.hpp" />
     <ClInclude Include="skills/archer/freezingtrap.hpp" />
     <ClInclude Include="skills/archer/galestorm.hpp" />
+    <ClInclude Include="skills/archer/gypsyskiss.hpp" />
     <ClInclude Include="skills/archer/harmoniclick.hpp" />
     <ClInclude Include="skills/archer/hawkboomerang.hpp" />
     <ClInclude Include="skills/archer/hawkmastery.hpp" />
     <ClInclude Include="skills/archer/hawkrush.hpp" />
+    <ClInclude Include="skills/archer/hipshaker.hpp" />
     <ClInclude Include="skills/archer/iceboundtrap.hpp" />
     <ClInclude Include="skills/archer/impressiveriff.hpp" />
+    <ClInclude Include="skills/archer/ladyluck.hpp" />
     <ClInclude Include="skills/archer/landmine.hpp" />
     <ClInclude Include="skills/archer/lullaby.hpp" />
     <ClInclude Include="skills/archer/magentatrap.hpp" />
@@ -376,6 +385,8 @@
     <ClInclude Include="skills/archer/skidtrap.hpp" />
     <ClInclude Include="skills/archer/skilledspecialsinger.hpp" />
     <ClInclude Include="skills/archer/skill_factory_archer.hpp" />
+    <ClInclude Include="skills/archer/slingingarrow.hpp" />
+    <ClInclude Include="skills/archer/slowgrace.hpp" />
     <ClInclude Include="skills/archer/solidtrap.hpp" />
     <ClInclude Include="skills/archer/songoflutie.hpp" />
     <ClInclude Include="skills/archer/springtrap.hpp" />
@@ -394,6 +405,7 @@
     <ClInclude Include="skills/archer/wargstrike.hpp" />
     <ClInclude Include="skills/archer/wildwalk.hpp" />
     <ClInclude Include="skills/archer/windwalker.hpp" />
+    <ClInclude Include="skills/archer/winkofcharm.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
     <ClInclude Include="skills/gunslinger/basicgrenade.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
@@ -932,6 +944,9 @@
     <ClCompile Include="skills/acolyte/cantocandidus.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/chaincrushcombo.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/clearance.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -978,6 +993,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/framen.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/glacierfist.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/gloria.cpp">
@@ -1055,6 +1073,9 @@
     <ClCompile Include="skills/acolyte/praefatio.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/ragingpalmstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/ragingquadrupleblow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1121,6 +1142,9 @@
     <ClCompile Include="skills/acolyte/vituperatum.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/zen.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/acousticrhythm.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1172,6 +1196,9 @@
     <ClCompile Include="skills/archer/crescivebolt.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/dazzler.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/deepblindtrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1208,6 +1235,9 @@
     <ClCompile Include="skills/archer/flasher.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/focusballet.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/focusedarrowstrike.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1215,6 +1245,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/galestorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/gypsyskiss.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/harmoniclick.cpp">
@@ -1229,10 +1262,16 @@
     <ClCompile Include="skills/archer/hawkrush.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/hipshaker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/iceboundtrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/impressiveriff.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/ladyluck.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/landmine.cpp">
@@ -1298,6 +1337,12 @@
     <ClCompile Include="skills/archer/skill_factory_archer.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/slingingarrow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/slowgrace.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/solidtrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1350,6 +1395,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/windwalker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/winkofcharm.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/custom/skill_factory_custom.cpp">
