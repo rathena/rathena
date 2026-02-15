@@ -19,6 +19,7 @@
 #include "poisonattributechange.cpp"
 #include "shadowattributechange.cpp"
 #include "piercingattack.cpp"
+#include "splashattack.cpp"
 #include "spiritdestruction.cpp"
 #include "standoffattack.cpp"
 #include "suicidebombing.cpp"
@@ -135,6 +136,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_SILENCEATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case NPC_SPLASHATTACK:
+			return std::make_unique<SkillSplashAttack>();
 		case NPC_SLEEPATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_STUNATTACK:

@@ -619,6 +619,7 @@
     <ClInclude Include="skills/npc/piercingattack.hpp" />
     <ClInclude Include="skills/npc/shadowattributechange.hpp" />
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
+    <ClInclude Include="skills/npc/splashattack.hpp" />
     <ClInclude Include="skills/npc/spiritdestruction.hpp" />
     <ClInclude Include="skills/npc/standoffattack.hpp" />
     <ClInclude Include="skills/npc/suicidebombing.hpp" />
@@ -2031,6 +2032,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/splashattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/spiritdestruction.cpp">
