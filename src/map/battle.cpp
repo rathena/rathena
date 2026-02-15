@@ -3291,9 +3291,8 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case NPC_DARKNESSATTACK:
 			case NPC_TELEKINESISATTACK:
 			case NPC_UNDEADATTACK:
-			case NPC_CHANGEUNDEAD:
-			case NPC_POISON:
-			case NPC_BLINDATTACK:
+				case NPC_CHANGEUNDEAD:
+				case NPC_BLINDATTACK:
 			case NPC_SILENCEATTACK:
 			case NPC_STUNATTACK:
 			case NPC_PETRIFYATTACK:

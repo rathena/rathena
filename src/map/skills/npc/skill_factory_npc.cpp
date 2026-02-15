@@ -16,6 +16,7 @@
 #include "jackfrost2.cpp"
 #include "maxpainattack.cpp"
 #include "multistageattack.cpp"
+#include "poisonattack.cpp"
 #include "poisonattributechange.cpp"
 #include "shadowattributechange.cpp"
 #include "piercingattack.cpp"
@@ -120,7 +121,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_PIERCINGATT:
 			return std::make_unique<SkillPiercingAttack>();
 		case NPC_POISON:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillPoisonAttack>();
 		case NPC_POISONATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_RANDOMATTACK:
