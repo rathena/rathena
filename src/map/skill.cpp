@@ -4641,7 +4641,7 @@ void skill_reveal_trap_inarea(block_list *src, int32 range, int32 x, int32 y) {
 * @param tick: Processing tick time
 * @return Card number
 *------------------------------------------*/
-static int32 skill_tarotcard(block_list* src, block_list *target, uint16 skill_id, uint16 skill_lv, t_tick tick)
+int32 skill_tarotcard(block_list* src, block_list *target, uint16 skill_id, uint16 skill_lv, t_tick tick)
 {
 	int32 card = 0;
 
