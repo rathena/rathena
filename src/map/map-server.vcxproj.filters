@@ -1512,6 +1512,9 @@
     <ClInclude Include="skills/npc/poisonattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/randomattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/shadowattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -3369,6 +3372,9 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/poisonattributechange.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/randomattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/shadowattributechange.cpp">

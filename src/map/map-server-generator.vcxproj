@@ -621,6 +621,7 @@
     <ClInclude Include="skills/npc/piercingattack.hpp" />
     <ClInclude Include="skills/npc/poisonattack.hpp" />
     <ClInclude Include="skills/npc/poisonattributechange.hpp" />
+    <ClInclude Include="skills/npc/randomattack.hpp" />
     <ClInclude Include="skills/npc/shadowattributechange.hpp" />
     <ClInclude Include="skills/npc/silenceattack.hpp" />
     <ClInclude Include="skills/npc/sleepattack.hpp" />
@@ -2046,6 +2047,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/poisonattributechange.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/randomattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/shadowattributechange.cpp">
