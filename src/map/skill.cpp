@@ -5493,10 +5493,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case NPC_SELFDESTRUCTION:
-		if( tsc && tsc->getSCE(SC_HIDING) )
-			break;
-		[[fallthrough]];
 	case HVAN_EXPLOSION:
 		if (src != bl)
 			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
@@ -6807,33 +6803,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 0,
 			skill_castend_damage_id);
 		break;
-
-	case NPC_SELFDESTRUCTION:
-		//Self Destruction hits everyone in range (allies+enemies)
-		//Except for Summoned Marine spheres on non-versus maps, where it's just enemies and your own slaves.
-		if ((md == nullptr || md->special_state.ai == AI_SPHERE) && !map_flag_vs(src->m)) {
-			// Enable Marine Spheres to damage own Homunculus and summons outside PVP
-			if (battle_config.alchemist_summon_setting&8)
-				i = BCT_ENEMY|BCT_SLAVE;
-			else
-				i = BCT_ENEMY;
-		} else {
-			i = BCT_ALL;
-		}
-		clif_skill_nodamage(src, *src, skill_id, skill_lv);
-		map_delblock(src); //Required to prevent chain-self-destructions hitting back.
-		map_foreachinshootrange(skill_area_sub, bl,
-			skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL,
-			src, skill_id, skill_lv, tick, flag|i,
-			skill_castend_damage_id);
-		if(map_addblock(src)) {
-			return 1;
-		}
-		// Won't display the damage, but drop items and give exp
-		status_zap(src, sstatus->hp, 0, 0);
-		break;
-
-
 
 	case CASH_BLESSING:
 	case CASH_INCAGI:
