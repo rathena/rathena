@@ -636,6 +636,7 @@
     <ClInclude Include="skills/npc/suicidebombing.hpp" />
     <ClInclude Include="skills/npc/waterattributeattack.hpp" />
     <ClInclude Include="skills/npc/waterattributechange.hpp" />
+    <ClInclude Include="skills/npc/windattributeattack.hpp" />
     <ClInclude Include="skills/npc/windattributechange.hpp" />
     <ClInclude Include="skills/npc/widesuck.hpp" />
     <ClInclude Include="skills/npc/wideweb.hpp" />
@@ -2095,6 +2096,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/waterattributechange.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/windattributeattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/windattributechange.cpp">

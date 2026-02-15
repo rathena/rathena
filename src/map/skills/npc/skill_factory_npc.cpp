@@ -36,6 +36,7 @@
 #include "suicidebombing.cpp"
 #include "waterattributeattack.cpp"
 #include "waterattributechange.cpp"
+#include "windattributeattack.cpp"
 #include "windattributechange.cpp"
 #include "widesuck.cpp"
 #include "wideweb.cpp"
@@ -169,7 +170,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_WEAPONBRAKER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_WINDATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillWindAttributeAttack>();
 
 		default:
 			return nullptr;
