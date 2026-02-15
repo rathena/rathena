@@ -297,7 +297,6 @@ struct skill_unit_group_tickset *skill_unitgrouptickset_search(block_list *bl,st
 static int32 skill_unit_onplace(skill_unit *src,block_list *bl,t_tick tick);
 int32 skill_unit_onleft(uint16 skill_id, block_list *bl,t_tick tick);
 static int32 skill_unit_effect(block_list *bl,va_list ap);
-static int32 skill_bind_trap(block_list *bl, va_list ap);
 
 e_cast_type skill_get_casttype (uint16 skill_id) {
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
@@ -16181,7 +16180,7 @@ int32 skill_banding_count(map_session_data *sd)
  * Rebellion's Bind Trap explosion
  * @author [Cydh]
  */
-static int32 skill_bind_trap(block_list *bl, va_list ap) {
+int32 skill_bind_trap(block_list *bl, va_list ap) {
 	skill_unit *su = nullptr;
 	block_list *src = nullptr;
 

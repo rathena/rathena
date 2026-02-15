@@ -600,6 +600,7 @@ void ext_skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick);
 int64 skill_unit_ondamaged(skill_unit *unit,int64 damage);
 std::shared_ptr<s_skill_unit_group> skill_locate_element_field(block_list *bl); // [Skotlex]
 bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
+int32 skill_bind_trap(block_list *bl, va_list ap);
 
 // Skill unit visibility [Cydh]
 void skill_getareachar_skillunit_visibilty(skill_unit *su, enum send_target target);
