@@ -608,6 +608,7 @@
     <ClInclude Include="skills/npc/curseattack.hpp" />
     <ClInclude Include="skills/npc/darkpiercing.hpp" />
     <ClInclude Include="skills/npc/deathsummon.hpp" />
+    <ClInclude Include="skills/npc/demonshockattack.hpp" />
     <ClInclude Include="skills/npc/defensedisregardattack.hpp" />
     <ClInclude Include="skills/npc/earthattributeattack.hpp" />
     <ClInclude Include="skills/npc/earthattributechange.hpp" />
@@ -2016,6 +2017,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/deathsummon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/demonshockattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/defensedisregardattack.cpp">

@@ -9,6 +9,7 @@
 #include "curseattack.cpp"
 #include "darkpiercing.cpp"
 #include "deathsummon.cpp"
+#include "demonshockattack.cpp"
 #include "defensedisregardattack.cpp"
 #include "earthattributeattack.cpp"
 #include "earthattributechange.cpp"
@@ -123,6 +124,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_MAGICMIRROR:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case NPC_MAGICALATTACK:
+			return std::make_unique<SkillDemonShockAttack>();
 		case NPC_MAGMA_ERUPTION:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_MAXPAIN:

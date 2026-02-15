@@ -1473,6 +1473,9 @@
     <ClInclude Include="skills/npc/deathsummon.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/demonshockattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/defensedisregardattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -3357,6 +3360,9 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/deathsummon.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/demonshockattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/defensedisregardattack.cpp">
