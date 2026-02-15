@@ -7053,11 +7053,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sc_start(src,bl,type,(skill_lv*20),skill_lv,skill_get_time2(skill_id,skill_lv)));
 		break;
 
-	case NPC_SUICIDE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		status_kill(src); //When suiciding, neither exp nor drops is given.
-		break;
-
 	case NPC_SUMMONSLAVE:
 	case NPC_SUMMONMONSTER:
 		if(md && md->skill_idx >= 0)
