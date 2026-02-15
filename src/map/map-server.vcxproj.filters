@@ -1464,6 +1464,9 @@
     <ClInclude Include="skills/npc/blindattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/curseattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/darkpiercing.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -3315,6 +3318,9 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/blindattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/curseattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/darkpiercing.cpp">

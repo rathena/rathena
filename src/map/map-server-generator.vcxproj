@@ -605,6 +605,7 @@
     <ClInclude Include="skills/novice/spiralpiercemax.hpp" />
     <ClInclude Include="skills/npc/attributechange.hpp" />
     <ClInclude Include="skills/npc/blindattack.hpp" />
+    <ClInclude Include="skills/npc/curseattack.hpp" />
     <ClInclude Include="skills/npc/darkpiercing.hpp" />
     <ClInclude Include="skills/npc/deathsummon.hpp" />
     <ClInclude Include="skills/npc/defensedisregardattack.hpp" />
@@ -1996,6 +1997,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/blindattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/curseattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/darkpiercing.cpp">

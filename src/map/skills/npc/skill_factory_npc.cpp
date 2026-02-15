@@ -6,6 +6,7 @@
 #include "../skill_impl.hpp"
 #include "attributechange.cpp"
 #include "blindattack.cpp"
+#include "curseattack.cpp"
 #include "darkpiercing.cpp"
 #include "deathsummon.cpp"
 #include "defensedisregardattack.cpp"
@@ -73,7 +74,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_CRITICALWOUND:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_CURSEATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillCurseAttack>();
 		case NPC_DAMAGE_HEAL:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_DARKCROSS:
