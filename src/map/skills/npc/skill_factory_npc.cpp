@@ -25,6 +25,7 @@
 #include "silenceattack.cpp"
 #include "spiritdestruction.cpp"
 #include "standoffattack.cpp"
+#include "stunattack.cpp"
 #include "suicide.cpp"
 #include "suicidebombing.cpp"
 #include "waterattributechange.cpp"
@@ -145,7 +146,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_SLEEPATTACK:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_STUNATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillStunAttack>();
 		case NPC_SUICIDE:
 			return std::make_unique<SkillSuicide>();
 		case NPC_TELEKINESISATTACK:

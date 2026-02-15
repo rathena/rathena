@@ -625,6 +625,7 @@
     <ClInclude Include="skills/npc/splashattack.hpp" />
     <ClInclude Include="skills/npc/spiritdestruction.hpp" />
     <ClInclude Include="skills/npc/standoffattack.hpp" />
+    <ClInclude Include="skills/npc/stunattack.hpp" />
     <ClInclude Include="skills/npc/suicide.hpp" />
     <ClInclude Include="skills/npc/suicidebombing.hpp" />
     <ClInclude Include="skills/npc/waterattributechange.hpp" />
@@ -2054,6 +2055,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/standoffattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/stunattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/suicide.cpp">
