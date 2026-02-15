@@ -4746,41 +4746,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case NPC_DARKCROSS:
 			skillratio += 35 * skill_lv;
 			break;
-		case DC_THROWARROW:
-#ifdef RENEWAL
-			skillratio += 10 + 40 * skill_lv;
-#else
-			skillratio += -40 + 40 * skill_lv;
-#endif
-			break;
-		case CH_TIGERFIST:
-#ifdef RENEWAL
-			skillratio += 400 + 150 * skill_lv;
-			RE_LVL_DMOD(100);
-#else
-			skillratio += -60 + 100 * skill_lv;
-#endif
-			if (sc->getSCE(SC_GT_ENERGYGAIN))
-				skillratio += skillratio * 50 / 100;
-			break;
-		case CH_CHAINCRUSH:
-#ifdef RENEWAL
-			skillratio += -100 + 200 * skill_lv;
-			RE_LVL_DMOD(100);
-#else
-			skillratio += 300 + 100 * skill_lv;
-#endif
-			if (sc->getSCE(SC_GT_ENERGYGAIN))
-				skillratio += skillratio * 50 / 100;
-			break;
-		case CH_PALMSTRIKE:
-#ifdef RENEWAL
-			skillratio += 100 + 100 * skill_lv + sstatus->str; // !TODO: How does STR play a role?
-			RE_LVL_DMOD(100);
-#else
-			skillratio += 100 + 100 * skill_lv;
-#endif
-			break;
 #ifdef RENEWAL
 		case ML_SPIRALPIERCE:
 			skillratio += 50 + 50 * skill_lv;
@@ -5364,34 +5329,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case RL_FIRE_RAIN:
 		case RL_AM_BLAST:
 			skillratio += -100 + 3500 + 300 * skill_lv;
-			break;
-		case SJ_FULLMOONKICK:
-			skillratio += 1000 + 100 * skill_lv;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_LIGHTOFMOON))
-				skillratio += skillratio * sc->getSCE(SC_LIGHTOFMOON)->val2 / 100;
-			break;
-		case SJ_NEWMOONKICK:
-			skillratio += 600 + 100 * skill_lv;
-			break;
-		case SJ_STAREMPEROR:
-			skillratio += 700 + 200 * skill_lv;
-			break;
-		case SJ_SOLARBURST:
-			skillratio += 900 + 220 * skill_lv;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_LIGHTOFSUN))
-				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSUN)->val2 / 100;
-			break;
-		case SJ_PROMINENCEKICK:
-				skillratio += 50 + 50 * skill_lv;
-			break;
-		case SJ_FALLINGSTAR_ATK:
-		case SJ_FALLINGSTAR_ATK2:
-			skillratio += 100 * skill_lv;
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_LIGHTOFSTAR))
-				skillratio += skillratio * sc->getSCE(SC_LIGHTOFSTAR)->val2 / 100;
 			break;
 		case BO_ACIDIFIED_ZONE_WATER:
 		case BO_ACIDIFIED_ZONE_GROUND:
