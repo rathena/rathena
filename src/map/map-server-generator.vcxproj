@@ -621,7 +621,6 @@
     <ClInclude Include="skills/npc/darkpiercing.hpp" />
     <ClInclude Include="skills/npc/deathsummon.hpp" />
     <ClInclude Include="skills/npc/demonshockattack.hpp" />
-    <ClInclude Include="skills/npc/defensedisregardattack.hpp" />
     <ClInclude Include="skills/npc/earthattributeattack.hpp" />
     <ClInclude Include="skills/npc/earthattributechange.hpp" />
     <ClInclude Include="skills/npc/fireattributeattack.hpp" />
@@ -632,7 +631,6 @@
     <ClInclude Include="skills/npc/holyattributeattack.hpp" />
     <ClInclude Include="skills/npc/holyattributechange.hpp" />
     <ClInclude Include="skills/npc/jackfrost2.hpp" />
-    <ClInclude Include="skills/npc/maxpainattack.hpp" />
     <ClInclude Include="skills/npc/metamorphosis.hpp" />
     <ClInclude Include="skills/npc/multistageattack.hpp" />
     <ClInclude Include="skills/npc/petrifyattack.hpp" />
@@ -649,7 +647,6 @@
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
     <ClInclude Include="skills/npc/splashattack.hpp" />
     <ClInclude Include="skills/npc/spiritdestruction.hpp" />
-    <ClInclude Include="skills/npc/standoffattack.hpp" />
     <ClInclude Include="skills/npc/stunattack.hpp" />
     <ClInclude Include="skills/npc/suicide.hpp" />
     <ClInclude Include="skills/npc/suicidebombing.hpp" />
@@ -2083,9 +2080,6 @@
     <ClCompile Include="skills/npc/demonshockattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/npc/defensedisregardattack.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="skills/npc/earthattributeattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2114,9 +2108,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/jackfrost2.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/npc/maxpainattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/metamorphosis.cpp">
@@ -2165,9 +2156,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/spiritdestruction.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/npc/standoffattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/stunattack.cpp">

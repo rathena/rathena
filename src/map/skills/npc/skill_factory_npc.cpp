@@ -10,7 +10,6 @@
 #include "darkpiercing.cpp"
 #include "deathsummon.cpp"
 #include "demonshockattack.cpp"
-#include "defensedisregardattack.cpp"
 #include "earthattributeattack.cpp"
 #include "earthattributechange.cpp"
 #include "fireattributeattack.cpp"
@@ -21,7 +20,6 @@
 #include "holyattributeattack.cpp"
 #include "holyattributechange.cpp"
 #include "jackfrost2.cpp"
-#include "maxpainattack.cpp"
 #include "metamorphosis.cpp"
 #include "multistageattack.cpp"
 #include "poisonattack.cpp"
@@ -37,7 +35,6 @@
 #include "silenceattack.cpp"
 #include "sleepattack.cpp"
 #include "spiritdestruction.cpp"
-#include "standoffattack.cpp"
 #include "stunattack.cpp"
 #include "suicide.cpp"
 #include "suicidebombing.cpp"
@@ -83,7 +80,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_COMBOATTACK:
 			return std::make_unique<SkillMultiStageAttack>();
 		case NPC_CRITICALSLASH:
-			return std::make_unique<SkillDefenseDisregardAttack>();
+			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_CRITICALWOUND:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_CURSEATTACK:
@@ -135,7 +132,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_MAXPAIN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_MAXPAIN_ATK:
-			return std::make_unique<SkillMaxPainAttack>();
+			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
 		case NPC_MENTALBREAKER:
 			return std::make_unique<SkillSpiritDestruction>();
 		case NPC_PETRIFYATTACK:
@@ -151,7 +148,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_RANDOMATTACK:
 			return std::make_unique<SkillRandomAttack>();
 		case NPC_RANGEATTACK:
-			return std::make_unique<SkillStandOffAttack>();
+			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_SELFDESTRUCTION:
 			return std::make_unique<SkillSuicideBombing>();
 		case NPC_RELIEVE_OFF:

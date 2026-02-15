@@ -1512,9 +1512,6 @@
     <ClInclude Include="skills/npc/demonshockattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="skills/npc/defensedisregardattack.hpp">
-      <Filter>Header Files\Skills\Npc</Filter>
-    </ClInclude>
     <ClInclude Include="skills/npc/earthattributeattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -1543,9 +1540,6 @@
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/jackfrost2.hpp">
-      <Filter>Header Files\Skills\Npc</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/npc/maxpainattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/metamorphosis.hpp">
@@ -1594,9 +1588,6 @@
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/spiritdestruction.hpp">
-      <Filter>Header Files\Skills\Npc</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/npc/standoffattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/stunattack.hpp">
@@ -3476,9 +3467,6 @@
     <ClCompile Include="skills/npc/demonshockattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="skills/npc/defensedisregardattack.cpp">
-      <Filter>Source Files\Skills\Npc</Filter>
-    </ClCompile>
     <ClCompile Include="skills/npc/earthattributeattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
@@ -3507,9 +3495,6 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/jackfrost2.cpp">
-      <Filter>Source Files\Skills\Npc</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/npc/maxpainattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/metamorphosis.cpp">
@@ -3558,9 +3543,6 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/spiritdestruction.cpp">
-      <Filter>Source Files\Skills\Npc</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/npc/standoffattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/stunattack.cpp">

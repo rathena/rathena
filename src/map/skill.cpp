@@ -1467,27 +1467,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		} break;
 #endif
 
-	case NPC_PETRIFYATTACK:
-		sc_start2(src,bl,SC_STONEWAIT,(20*skill_lv),skill_lv,src->id,skill_get_time2(skill_id,skill_lv),skill_get_time(skill_id, skill_lv));
-		break;
-	case NPC_CURSEATTACK:
-		sc_start(src,bl,SC_CURSE,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_SLEEPATTACK:
-		sc_start(src,bl,SC_SLEEP,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_BLINDATTACK:
-		sc_start(src,bl,SC_BLIND,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_POISON:
-		sc_start(src,bl,SC_POISON,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_SILENCEATTACK:
-		sc_start(src,bl,SC_SILENCE,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_STUNATTACK:
-		sc_start(src,bl,SC_STUN,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
 	case NPC_BLEEDING:
 		sc_start(src,bl,SC_BLEEDING,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
