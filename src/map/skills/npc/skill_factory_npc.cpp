@@ -12,6 +12,7 @@
 #include "defensedisregardattack.cpp"
 #include "earthattributeattack.cpp"
 #include "earthattributechange.cpp"
+#include "fireattributeattack.cpp"
 #include "fireattributechange.cpp"
 #include "ghostattributechange.cpp"
 #include "hellburning.cpp"
@@ -92,7 +93,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_DEFENDER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_FIREATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillFireAttributeAttack>();
 		case NPC_GROUNDATTACK:
 			return std::make_unique<SkillEarthAttributeAttack>();
 		case NPC_GUIDEDATTACK:

@@ -611,6 +611,7 @@
     <ClInclude Include="skills/npc/defensedisregardattack.hpp" />
     <ClInclude Include="skills/npc/earthattributeattack.hpp" />
     <ClInclude Include="skills/npc/earthattributechange.hpp" />
+    <ClInclude Include="skills/npc/fireattributeattack.hpp" />
     <ClInclude Include="skills/npc/fireattributechange.hpp" />
     <ClInclude Include="skills/npc/ghostattributechange.hpp" />
     <ClInclude Include="skills/npc/hellburning.hpp" />
@@ -2019,6 +2020,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/earthattributechange.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/fireattributeattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/fireattributechange.cpp">
