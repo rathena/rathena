@@ -1515,6 +1515,9 @@
     <ClInclude Include="skills/npc/poisonattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/poisonattributeattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/poisonattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -3387,6 +3390,9 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/poisonattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/poisonattributeattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/poisonattributechange.cpp">

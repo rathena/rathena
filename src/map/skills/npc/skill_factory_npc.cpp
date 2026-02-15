@@ -21,6 +21,7 @@
 #include "maxpainattack.cpp"
 #include "multistageattack.cpp"
 #include "poisonattack.cpp"
+#include "poisonattributeattack.cpp"
 #include "poisonattributechange.cpp"
 #include "petrifyattack.cpp"
 #include "piercingattack.cpp"
@@ -134,7 +135,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 		case NPC_POISON:
 			return std::make_unique<SkillPoisonAttack>();
 		case NPC_POISONATTACK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillPoisonAttributeAttack>();
 		case NPC_RANDOMATTACK:
 			return std::make_unique<SkillRandomAttack>();
 		case NPC_RANGEATTACK:
