@@ -7106,7 +7106,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 	case NPC_TRANSFORMATION:
-	case NPC_METAMORPHOSIS:
 		if(md && md->skill_idx >= 0) {
 			int32 class_ = mob_random_class (md->db->skill[md->skill_idx]->val,0);
 			if (skill_lv > 1) //Multiply the rest of mobs. [Skotlex]

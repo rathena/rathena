@@ -22,6 +22,7 @@
 #include "holyattributechange.cpp"
 #include "jackfrost2.cpp"
 #include "maxpainattack.cpp"
+#include "metamorphosis.cpp"
 #include "multistageattack.cpp"
 #include "poisonattack.cpp"
 #include "poisonattributeattack.cpp"
@@ -126,6 +127,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_MAGICALATTACK:
 			return std::make_unique<SkillDemonShockAttack>();
+		case NPC_METAMORPHOSIS:
+			return std::make_unique<SkillMetamorphosis>();
 		case NPC_MAGMA_ERUPTION:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case NPC_MAXPAIN:
