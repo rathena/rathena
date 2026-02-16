@@ -32,6 +32,7 @@
 #include "imperialcross.cpp"
 #include "imperialpressure.cpp"
 #include "judgementcross.cpp"
+#include "kingsgrace.cpp"
 #include "madnesscrusher.cpp"
 #include "magnum.cpp"
 #include "martyrsreckoning.cpp"
@@ -139,6 +140,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillImperialPressure>();
 		case IG_JUDGEMENT_CROSS:
 			return std::make_unique<SkillJudgementCross>();
+		case LG_KINGS_GRACE:
+			return std::make_unique<SkillKingsGrace>();
 		case IG_OVERSLASH:
 			return std::make_unique<SkillOverSlash>();
 		case IG_RADIANT_SPEAR:

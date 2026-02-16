@@ -9766,7 +9766,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MH_POISON_MIST:
 	case MH_STEINWAND:
 	case MH_XENO_SLASHER:
-	case LG_KINGS_GRACE:
 	case RL_B_TRAP:
 	case NPC_STORMGUST2:
 	case BO_ACIDIFIED_ZONE_WATER:
