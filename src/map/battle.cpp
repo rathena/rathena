@@ -4950,14 +4950,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += -100 + (skill_lv + 1) * sstatus->dex / 2 * ((sd) ? sd->status.job_level / 10 : 1);
 			RE_LVL_DMOD(120);
 			break;
-		case LG_HESPERUSLIT:
-			if (sc && sc->getSCE(SC_INSPIRATION))
-				skillratio += -100 + 450 * skill_lv;
-			else
-				skillratio += -100 + 300 * skill_lv;
-			skillratio += sstatus->vit / 6; // !TODO: What's the VIT bonus?
-			RE_LVL_DMOD(100);
-			break;
 		case SR_EARTHSHAKER:
 			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD) || tsc->getSCE(SC__SHADOWFORM))) {
 				//[(Skill Level x 300) x (Caster Base Level / 100) + (Caster STR x 3)] %

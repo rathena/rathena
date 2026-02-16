@@ -27,6 +27,7 @@
 #include "grandjudgement.cpp"
 #include "guardianshield.cpp"
 #include "hackandslasher.cpp"
+#include "hesperuslit.cpp"
 #include "holycross.cpp"
 #include "imperialcross.cpp"
 #include "imperialpressure.cpp"
@@ -177,7 +178,7 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 		case LG_FORCEOFVANGUARD:
 			return std::make_unique<SkillForceOfVanguard>();
 		case LG_HESPERUSLIT:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillHesperuslit>();
 		case LG_INSPIRATION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LG_MOONSLASHER:

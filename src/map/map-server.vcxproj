@@ -674,6 +674,7 @@
     <ClInclude Include="skills/swordman/grandjudgement.hpp" />
     <ClInclude Include="skills/swordman/guardianshield.hpp" />
     <ClInclude Include="skills/swordman/hackandslasher.hpp" />
+    <ClInclude Include="skills/swordman/hesperuslit.hpp" />
     <ClInclude Include="skills/swordman/holycross.hpp" />
     <ClInclude Include="skills/swordman/imperialcross.hpp" />
     <ClInclude Include="skills/swordman/imperialpressure.hpp" />
@@ -2224,6 +2225,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/hackandslasher.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/hesperuslit.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/holycross.cpp">
