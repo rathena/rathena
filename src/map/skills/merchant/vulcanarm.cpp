@@ -7,12 +7,12 @@
 
 #include "map/status.hpp"
 
-SkillVulcanArm::SkillVulcanArm() : WeaponSkillImpl(NC_VULCANARM) {
+SkillVulcanArm::SkillVulcanArm() : SkillImplRecursiveDamageSplash(NC_VULCANARM) {
 }
 
 void SkillVulcanArm::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	skillratio += -100 + 230 * skill_lv + sstatus->dex;
+	skillratio += -100 + 230 * skill_lv + sstatus->dex; // !TODO: What's the DEX bonus?
 	RE_LVL_DMOD(100);
 }

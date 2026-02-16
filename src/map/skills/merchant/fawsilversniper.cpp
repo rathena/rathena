@@ -3,10 +3,12 @@
 
 #include "fawsilversniper.hpp"
 
+#include "map/mob.hpp"
+
 SkillFawSilverSniper::SkillFawSilverSniper() : SkillImpl(NC_SILVERSNIPER) {
 }
 
-void SkillFawSilverSniper::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick, int32&) const {
+void SkillFawSilverSniper::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	mob_data* md = mob_once_spawn_sub(src, src->m, x, y, status_get_name(*src), MOBID_SILVERSNIPER, "", SZ_SMALL, AI_NONE);
 	if (md) {
 		md->master_id = src->id;

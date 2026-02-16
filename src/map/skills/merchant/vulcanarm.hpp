@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillVulcanArm : public WeaponSkillImpl {
+class SkillVulcanArm : public SkillImplRecursiveDamageSplash {
 public:
 	SkillVulcanArm();
 

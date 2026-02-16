@@ -3,7 +3,13 @@
 
 #include "selfdestruction.hpp"
 
-SkillSelfDestruction::SkillSelfDestruction() : WeaponSkillImpl(NC_SELFDESTRUCTION) {
+#include "map/battle.hpp"
+#include "map/clif.hpp"
+#include "map/map.hpp"
+#include "map/pc.hpp"
+#include "map/status.hpp"
+
+SkillSelfDestruction::SkillSelfDestruction() : SkillImplRecursiveDamageSplash(NC_SELFDESTRUCTION) {
 }
 
 void SkillSelfDestruction::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

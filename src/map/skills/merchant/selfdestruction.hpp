@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillSelfDestruction : public WeaponSkillImpl {
+class SkillSelfDestruction : public SkillImplRecursiveDamageSplash {
 public:
 	SkillSelfDestruction();
 

@@ -3,10 +3,14 @@
 
 #include "repair.hpp"
 
+#include "map/clif.hpp"
+#include "map/pc.hpp"
+#include "map/status.hpp"
+
 SkillRepair::SkillRepair() : SkillImpl(NC_REPAIR) {
 }
 
-void SkillRepair::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick, int32&) const {
+void SkillRepair::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* sd = BL_CAST(BL_PC, src);
 	map_session_data* dstsd = BL_CAST(BL_PC, target);
 

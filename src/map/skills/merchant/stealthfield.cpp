@@ -3,14 +3,17 @@
 
 #include "stealthfield.hpp"
 
+#include "map/status.hpp"
+
 SkillStealthField::SkillStealthField() : SkillImpl(NC_STEALTHFIELD) {
 }
 
-void SkillStealthField::castendPos2(block_list* src, int32, int32, uint16 skill_lv, t_tick, int32&) const {
+void SkillStealthField::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	status_change* sc = status_get_sc(src);
 
 	if (sc != nullptr && sc->getSCE(SC_STEALTHFIELD_MASTER)) {
 		skill_clear_unitgroup(src);
+		flag |= SKILL_NOCONSUME_REQ;
 		return;
 	}
 

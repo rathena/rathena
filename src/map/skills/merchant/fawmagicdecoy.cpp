@@ -3,10 +3,13 @@
 
 #include "fawmagicdecoy.hpp"
 
+#include "map/clif.hpp"
+#include "map/pc.hpp"
+
 SkillFawMagicDecoy::SkillFawMagicDecoy() : SkillImpl(NC_MAGICDECOY) {
 }
 
-void SkillFawMagicDecoy::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick, int32&) const {
+void SkillFawMagicDecoy::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
 	if (sd) {

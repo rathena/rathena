@@ -546,13 +546,13 @@
     <ClInclude Include="skills/merchant/analyze.hpp" />
     <ClInclude Include="skills/merchant/armcannon.hpp" />
     <ClInclude Include="skills/merchant/attackmachine.hpp" />
+    <ClInclude Include="skills/merchant/axeboomerang.hpp" />
     <ClInclude Include="skills/merchant/axestomp.hpp" />
     <ClInclude Include="skills/merchant/axetornado.hpp" />
-    <ClInclude Include="skills/merchant/axeboomerang.hpp" />
     <ClInclude Include="skills/merchant/backsideslide.hpp" />
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp" />
-    <ClInclude Include="skills/merchant/boostknuckle.hpp" />
     <ClInclude Include="skills/merchant/bomb.hpp" />
+    <ClInclude Include="skills/merchant/boostknuckle.hpp" />
     <ClInclude Include="skills/merchant/callhomunculus.hpp" />
     <ClInclude Include="skills/merchant/cartrevolution.hpp" />
     <ClInclude Include="skills/merchant/carttermination.hpp" />
@@ -560,8 +560,8 @@
     <ClInclude Include="skills/merchant/coldslower.hpp" />
     <ClInclude Include="skills/merchant/crazyuproar.hpp" />
     <ClInclude Include="skills/merchant/decoratecart.hpp" />
-    <ClInclude Include="skills/merchant/energycannonade.hpp" />
     <ClInclude Include="skills/merchant/emergencycool.hpp" />
+    <ClInclude Include="skills/merchant/energycannonade.hpp" />
     <ClInclude Include="skills/merchant/fawmagicdecoy.hpp" />
     <ClInclude Include="skills/merchant/fawremoval.hpp" />
     <ClInclude Include="skills/merchant/fawsilversniper.hpp" />
@@ -573,7 +573,6 @@
     <ClInclude Include="skills/merchant/infraredscan.hpp" />
     <ClInclude Include="skills/merchant/itemappraisal.hpp" />
     <ClInclude Include="skills/merchant/magmaeruption.hpp" />
-    <ClInclude Include="skills/merchant/magmaeruptiondotdamage.hpp" />
     <ClInclude Include="skills/merchant/magneticfield.hpp" />
     <ClInclude Include="skills/merchant/mammonite.hpp" />
     <ClInclude Include="skills/merchant/manufacturemachine.hpp" />
@@ -1852,13 +1851,13 @@
     <ClCompile Include="skills/merchant/attackmachine.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/merchant/axeboomerang.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/merchant/axestomp.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/axetornado.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/axeboomerang.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/backsideslide.cpp">
@@ -1867,10 +1866,10 @@
     <ClCompile Include="skills/merchant/biochemicalhelm.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/boostknuckle.cpp">
+    <ClCompile Include="skills/merchant/bomb.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/bomb.cpp">
+    <ClCompile Include="skills/merchant/boostknuckle.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/callhomunculus.cpp">
@@ -1894,10 +1893,10 @@
     <ClCompile Include="skills/merchant/decoratecart.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/energycannonade.cpp">
+    <ClCompile Include="skills/merchant/emergencycool.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/emergencycool.cpp">
+    <ClCompile Include="skills/merchant/energycannonade.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/fawmagicdecoy.cpp">
@@ -1931,9 +1930,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/magmaeruption.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/magmaeruptiondotdamage.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/magneticfield.cpp">

@@ -1287,13 +1287,13 @@
     <ClInclude Include="skills/merchant/attackmachine.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/axeboomerang.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/axestomp.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/axetornado.hpp">
-      <Filter>Header Files\Skills\Merchant</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/merchant/axeboomerang.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/backsideslide.hpp">
@@ -1302,10 +1302,10 @@
     <ClInclude Include="skills/merchant/biochemicalhelm.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
-    <ClInclude Include="skills/merchant/boostknuckle.hpp">
+    <ClInclude Include="skills/merchant/bomb.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
-    <ClInclude Include="skills/merchant/bomb.hpp">
+    <ClInclude Include="skills/merchant/boostknuckle.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/callhomunculus.hpp">
@@ -1329,10 +1329,10 @@
     <ClInclude Include="skills/merchant/decoratecart.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
-    <ClInclude Include="skills/merchant/energycannonade.hpp">
+    <ClInclude Include="skills/merchant/emergencycool.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
-    <ClInclude Include="skills/merchant/emergencycool.hpp">
+    <ClInclude Include="skills/merchant/energycannonade.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/fawmagicdecoy.hpp">
@@ -1366,9 +1366,6 @@
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/magmaeruption.hpp">
-      <Filter>Header Files\Skills\Merchant</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/merchant/magmaeruptiondotdamage.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/magneticfield.hpp">
@@ -3233,13 +3230,13 @@
     <ClCompile Include="skills/merchant/attackmachine.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/axeboomerang.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/axestomp.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/axetornado.cpp">
-      <Filter>Source Files\Skills\Merchant</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/axeboomerang.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/backsideslide.cpp">
@@ -3248,10 +3245,10 @@
     <ClCompile Include="skills/merchant/biochemicalhelm.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
-    <ClCompile Include="skills/merchant/boostknuckle.cpp">
+    <ClCompile Include="skills/merchant/bomb.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
-    <ClCompile Include="skills/merchant/bomb.cpp">
+    <ClCompile Include="skills/merchant/boostknuckle.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/callhomunculus.cpp">
@@ -3275,10 +3272,10 @@
     <ClCompile Include="skills/merchant/decoratecart.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
-    <ClCompile Include="skills/merchant/energycannonade.cpp">
+    <ClCompile Include="skills/merchant/emergencycool.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
-    <ClCompile Include="skills/merchant/emergencycool.cpp">
+    <ClCompile Include="skills/merchant/energycannonade.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/fawmagicdecoy.cpp">
@@ -3312,9 +3309,6 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/magmaeruption.cpp">
-      <Filter>Source Files\Skills\Merchant</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/magmaeruptiondotdamage.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/magneticfield.cpp">
