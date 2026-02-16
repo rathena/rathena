@@ -44406,11 +44406,6 @@ Body:
     Name: Heaven & Earth
     Type: Card
     SubType: Enchant
-    Buy: 10
-    Locations:
-      Shoes: true
-    Flags:
-      DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Brute,15;
       bonus2 bAddRace,RC_Player_Doram,15;
@@ -44422,7 +44417,7 @@ Body:
       bonus2 bAddEle,Ele_Earth,15;
       bonus2 bMagicAddEle,Ele_Wind,15;
       bonus2 bMagicAddEle,Ele_Earth,15;
-      autobonus "{ bonus bVariableCastrate,-70;bonus bDelayrate,-70; bonus bIgnoreDefRace,RC_All; bonus2 bIgnoreMdefRaceRate,RC_All,100; }",5,10000;
+      autobonus "{ bonus bVariableCastrate,-70; bonus bDelayrate,-70; bonus bIgnoreDefRace,RC_All; bonus2 bIgnoreMdefRaceRate,RC_All,100; }",5,10000,BF_WEAPON|BF_MAGIC;
   - Id: 29177
     AegisName: Kyoukou1
     Name: Dream Blessing 1
