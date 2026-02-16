@@ -20,6 +20,7 @@
 #include "dragonicaura.cpp"
 #include "dragonicbreath.cpp"
 #include "dragonicpierce.cpp"
+#include "earthdrive.cpp"
 #include "forceofvanguard.cpp"
 #include "gloriadomini.cpp"
 #include "grandcross.cpp"
@@ -169,6 +170,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillBanishingPoint>();
 		case LG_CANNONSPEAR:
 			return std::make_unique<SkillCannonSpear>();
+		case LG_EARTHDRIVE:
+			return std::make_unique<SkillEarthDrive>();
 		case LG_EXEEDBREAK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LG_FORCEOFVANGUARD:
