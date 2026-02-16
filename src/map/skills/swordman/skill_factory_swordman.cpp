@@ -8,31 +8,44 @@
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
 #include "autoberserk.cpp"
+#include "banding.cpp"
+#include "banishingpoint.cpp"
 #include "bash.cpp"
 #include "battlechant.cpp"
 #include "bowlingbash.cpp"
 #include "brandishspear.cpp"
+#include "cannonspear.cpp"
 #include "counterattack.cpp"
 #include "crossrain.cpp"
 #include "dragonicaura.cpp"
 #include "dragonicbreath.cpp"
 #include "dragonicpierce.cpp"
+#include "earthdrive.cpp"
+#include "forceofvanguard.cpp"
 #include "gloriadomini.cpp"
 #include "grandcross.cpp"
 #include "grandjudgement.cpp"
 #include "guardianshield.cpp"
 #include "hackandslasher.cpp"
+#include "hesperuslit.cpp"
 #include "holycross.cpp"
 #include "imperialcross.cpp"
 #include "imperialpressure.cpp"
 #include "judgementcross.cpp"
+#include "kingsgrace.cpp"
 #include "madnesscrusher.cpp"
 #include "magnum.cpp"
 #include "martyrsreckoning.cpp"
+#include "moonslasher.cpp"
+#include "overbrand.cpp"
 #include "overslash.cpp"
 #include "pierce.cpp"
+#include "piety.cpp"
+#include "pinpointattack.cpp"
 #include "provoke.cpp"
 #include "radiantspear.cpp"
+#include "rageburst.cpp"
+#include "rayofgenesis.cpp"
 #include "relax.cpp"
 #include "resistantsouls.cpp"
 #include "sacrifice.cpp"
@@ -43,13 +56,16 @@
 #include "servantweaponsign.cpp"
 #include "shieldboomerang.cpp"
 #include "shieldchain.cpp"
+#include "shieldpress.cpp"
 #include "shieldreflect.cpp"
 #include "shieldshooting.cpp"
+#include "shieldspell.cpp"
 #include "smite.cpp"
 #include "spearboomerang.cpp"
 #include "spearstab.cpp"
 #include "spiralpierce.cpp"
 #include "stormslash.cpp"
+#include "trample.cpp"
 #include "traumaticblow.cpp"
 #include "ultimatesacrifice.cpp"
 #include "vitalstrike.cpp"
@@ -150,22 +166,46 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillSpearStab>();
 		case KN_TWOHANDQUICKEN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case LG_BANDING:
+			return std::make_unique<SkillBanding>();
 		case LG_BANISHINGPOINT:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillBanishingPoint>();
+		case LG_CANNONSPEAR:
+			return std::make_unique<SkillCannonSpear>();
+		case LG_EARTHDRIVE:
+			return std::make_unique<SkillEarthDrive>();
 		case LG_EXEEDBREAK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case LG_FORCEOFVANGUARD:
+			return std::make_unique<SkillForceOfVanguard>();
 		case LG_HESPERUSLIT:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillHesperusLit>();
 		case LG_INSPIRATION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case LG_KINGS_GRACE:
+			return std::make_unique<SkillKingsGrace>();
+		case LG_MOONSLASHER:
+			return std::make_unique<SkillMoonSlasher>();
+		case LG_OVERBRAND:
+			return std::make_unique<SkillOverBrand>();
+		case LG_PIETY:
+			return std::make_unique<SkillPiety>();
+		case LG_PINPOINTATTACK:
+			return std::make_unique<SkillPinpointAttack>();
 		case LG_PRESTIGE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LG_RAGEBURST:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillRageBurst>();
+		case LG_RAYOFGENESIS:
+			return std::make_unique<SkillRayOfGenesis>();
 		case LG_REFLECTDAMAGE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case LG_SHIELDPRESS:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillShieldPress>();
+		case LG_SHIELDSPELL:
+			return std::make_unique<SkillShieldSpell>();
+		case LG_TRAMPLE:
+			return std::make_unique<SkillTrample>();
 		case LK_AURABLADE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LK_BERSERK:
