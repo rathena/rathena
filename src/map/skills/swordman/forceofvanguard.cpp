@@ -4,6 +4,7 @@
 #include "forceofvanguard.hpp"
 
 #include "map/clif.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillForceOfVanguard::SkillForceOfVanguard() : SkillImpl(LG_FORCEOFVANGUARD) {
@@ -23,6 +24,7 @@ void SkillForceOfVanguard::castendNoDamageId(block_list* src, block_list* target
 		} else if (sd != nullptr) {
 			clif_skill_fail(*sd, getSkillId());
 		}
+		flag |= SKILL_NOCONSUME_REQ;
 		return;
 	}
 

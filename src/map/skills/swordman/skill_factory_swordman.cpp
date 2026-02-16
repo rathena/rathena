@@ -43,8 +43,8 @@
 #include "piety.cpp"
 #include "pinpointattack.cpp"
 #include "provoke.cpp"
-#include "rageburst.cpp"
 #include "radiantspear.cpp"
+#include "rageburst.cpp"
 #include "rayofgenesis.cpp"
 #include "relax.cpp"
 #include "resistantsouls.cpp"
@@ -140,8 +140,6 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillImperialPressure>();
 		case IG_JUDGEMENT_CROSS:
 			return std::make_unique<SkillJudgementCross>();
-		case LG_KINGS_GRACE:
-			return std::make_unique<SkillKingsGrace>();
 		case IG_OVERSLASH:
 			return std::make_unique<SkillOverSlash>();
 		case IG_RADIANT_SPEAR:
@@ -181,19 +179,21 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 		case LG_FORCEOFVANGUARD:
 			return std::make_unique<SkillForceOfVanguard>();
 		case LG_HESPERUSLIT:
-			return std::make_unique<SkillHesperuslit>();
+			return std::make_unique<SkillHesperusLit>();
 		case LG_INSPIRATION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case LG_KINGS_GRACE:
+			return std::make_unique<SkillKingsGrace>();
 		case LG_MOONSLASHER:
 			return std::make_unique<SkillMoonSlasher>();
 		case LG_OVERBRAND:
-			return std::make_unique<SkillOverbrand>();
-		case LG_PRESTIGE:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillOverBrand>();
 		case LG_PIETY:
 			return std::make_unique<SkillPiety>();
 		case LG_PINPOINTATTACK:
 			return std::make_unique<SkillPinpointAttack>();
+		case LG_PRESTIGE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LG_RAGEBURST:
 			return std::make_unique<SkillRageBurst>();
 		case LG_RAYOFGENESIS:

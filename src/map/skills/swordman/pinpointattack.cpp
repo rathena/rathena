@@ -5,9 +5,11 @@
 
 #include <config/core.hpp>
 
+#include "map/battle.hpp"
 #include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
+#include "map/unit.hpp"
 
 SkillPinpointAttack::SkillPinpointAttack() : WeaponSkillImpl(LG_PINPOINTATTACK) {
 }
