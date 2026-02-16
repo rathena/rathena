@@ -292,7 +292,6 @@ int32 skill_tree_get_max(uint16 skill_id, int32 b_class) {
 }
 
 int32 skill_frostjoke_scream(block_list *bl,va_list ap);
-static int32 skill_trap_splash(block_list *bl, va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(block_list *bl,std::shared_ptr<s_skill_unit_group> sg,t_tick tick);
 static int32 skill_unit_onplace(skill_unit *src,block_list *bl,t_tick tick);
 int32 skill_unit_onleft(uint16 skill_id, block_list *bl,t_tick tick);
