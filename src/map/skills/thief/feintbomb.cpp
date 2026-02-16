@@ -21,7 +21,6 @@ void SkillFeintBomb::calculateSkillRatio(const Damage *wd, const block_list *src
 }
 
 void SkillFeintBomb::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
-	sc_type type = skill_get_sc(getSkillId());
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
 	std::shared_ptr<s_skill_unit_group> group = skill_unitsetting(src,getSkillId(),skill_lv,x,y,0); // Set bomb on current Position
@@ -35,5 +34,5 @@ void SkillFeintBomb::castendPos2(block_list* src, int32 x, int32 y, uint16 skill
 	map_foreachinallrange(unit_changetarget, src, AREA_SIZE, BL_MOB, src, group->unit); // Release all targets against the caster
 	skill_blown(src, src, skill_get_blewcount(getSkillId(), skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
 	clif_skill_nodamage(src, *src, getSkillId(), skill_lv, false);
-	sc_start(src, src, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
+	sc_start(src, src, skill_get_sc(getSkillId()), 100, skill_lv, skill_get_time(getSkillId(), skill_lv));
 }
