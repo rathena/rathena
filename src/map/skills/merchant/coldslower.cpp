@@ -19,7 +19,7 @@ void SkillColdSlower::applyAdditionalEffects(block_list *src, block_list *target
 	// Status chances are applied officially through a check
 	// The skill first trys to give the frozen status to targets that are hit
 	sc_start(src, target, SC_FREEZE, 10 * skill_lv, skill_lv, skill_get_time(getSkillId(), skill_lv));
-	if (!tsc->getSCE(SC_FREEZE)) // If it fails to give the frozen status, it will attempt to give the freezing status
+	if (tsc && !tsc->getSCE(SC_FREEZE)) // If it fails to give the frozen status, it will attempt to give the freezing status
 		sc_start(src, target, SC_FREEZING, 20 + skill_lv * 10, skill_lv, skill_get_time2(getSkillId(), skill_lv));
 }
 
