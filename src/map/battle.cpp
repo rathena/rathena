@@ -7228,11 +7228,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 							RE_LVL_DMOD(150);
 						}
 						break;
-					case LG_RAYOFGENESIS:
-						skillratio += -100 + 350 * skill_lv;
-						skillratio += sstatus->int_ * 3;
-						RE_LVL_DMOD(100);
-						break;
 					case NPC_RAYOFGENESIS:
 						skillratio += -100 + 200 * skill_lv;
 						break;
