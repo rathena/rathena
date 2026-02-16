@@ -4922,7 +4922,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NC_COLDSLOWER:
 	case NC_SELFDESTRUCTION:
 	case NC_AXETORNADO:
-	case LG_OVERBRAND:
 	case LG_RAYOFGENESIS:
 	case NPC_RAYOFGENESIS:
 	case LG_EARTHDRIVE:
@@ -6357,7 +6356,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SR_SKYNETBLOW:
 	case SR_RAMPAGEBLASTER:
 	case SR_HOWLINGOFLION:
-	case LG_OVERBRAND:
 	case NPC_RAYOFGENESIS:
 	case LG_RAYOFGENESIS:
 	case MH_THE_ONE_FIGHTER_RISES:
