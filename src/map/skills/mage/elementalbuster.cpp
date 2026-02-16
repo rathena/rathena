@@ -4,7 +4,10 @@
 #include "elementalbuster.hpp"
 
 #include "map/clif.hpp"
+#include "map/elemental.hpp"
+#include "map/map.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 // EM_ELEMENTAL_BUSTER
 SkillElementalBuster::SkillElementalBuster() : SkillImpl(EM_ELEMENTAL_BUSTER) {
@@ -43,14 +46,14 @@ void SkillElementalBuster::castendNoDamageId(block_list *src, block_list *target
 	}
 
 	skill_area_temp[1] = 0;
-	clif_skill_nodamage(src, *target, buster_element, skill_lv);// Animation for the triggered targetaster element.
-	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);// Triggered after targetaster animation to make correct skill name scream appear.
+	clif_skill_nodamage(src, *target, buster_element, skill_lv);// Animation for the triggered blaster element.
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);// Triggered after blaster animation to make correct skill name scream appear.
 	map_foreachinrange(skill_area_sub, target, 6, BL_CHAR | BL_SKILL, src, buster_element, skill_lv, tick, flag | BCT_ENEMY | SD_LEVEL | SD_SPLASH | 1, skill_castend_damage_id);
 }
 
 
 // EM_ELEMENTAL_BUSTER_FIRE
-SkillElementalBusterFire::SkillElementalBusterFire() : SkillImpl(EM_ELEMENTAL_BUSTER_FIRE) {
+SkillElementalBusterFire::SkillElementalBusterFire() : SkillImplRecursiveDamageSplash(EM_ELEMENTAL_BUSTER_FIRE) {
 }
 
 void SkillElementalBusterFire::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
@@ -66,7 +69,7 @@ void SkillElementalBusterFire::calculateSkillRatio(const Damage *wd, const block
 
 
 // EM_ELEMENTAL_BUSTER_GROUND
-SkillElementalBusterGround::SkillElementalBusterGround() : SkillImpl(EM_ELEMENTAL_BUSTER_GROUND) {
+SkillElementalBusterGround::SkillElementalBusterGround() : SkillImplRecursiveDamageSplash(EM_ELEMENTAL_BUSTER_GROUND) {
 }
 
 void SkillElementalBusterGround::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
@@ -82,7 +85,7 @@ void SkillElementalBusterGround::calculateSkillRatio(const Damage *wd, const blo
 
 
 // EM_ELEMENTAL_BUSTER_POISON
-SkillElementalBusterPoison::SkillElementalBusterPoison() : SkillImpl(EM_ELEMENTAL_BUSTER_POISON) {
+SkillElementalBusterPoison::SkillElementalBusterPoison() : SkillImplRecursiveDamageSplash(EM_ELEMENTAL_BUSTER_POISON) {
 }
 
 void SkillElementalBusterPoison::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
@@ -98,7 +101,7 @@ void SkillElementalBusterPoison::calculateSkillRatio(const Damage *wd, const blo
 
 
 // EM_ELEMENTAL_BUSTER_WATER
-SkillElementalBusterWater::SkillElementalBusterWater() : SkillImpl(EM_ELEMENTAL_BUSTER_WATER) {
+SkillElementalBusterWater::SkillElementalBusterWater() : SkillImplRecursiveDamageSplash(EM_ELEMENTAL_BUSTER_WATER) {
 }
 
 void SkillElementalBusterWater::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
@@ -114,7 +117,7 @@ void SkillElementalBusterWater::calculateSkillRatio(const Damage *wd, const bloc
 
 
 // EM_ELEMENTAL_BUSTER_WIND
-SkillElementalBusterWind::SkillElementalBusterWind() : SkillImpl(EM_ELEMENTAL_BUSTER_WIND) {
+SkillElementalBusterWind::SkillElementalBusterWind() : SkillImplRecursiveDamageSplash(EM_ELEMENTAL_BUSTER_WIND) {
 }
 
 void SkillElementalBusterWind::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {

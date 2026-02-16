@@ -7,6 +7,7 @@
 
 #include "map/clif.hpp"
 #include "map/map.hpp"
+#include "map/path.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 #include "map/unit.hpp"
@@ -38,6 +39,8 @@ void SkillPsychicStream::splashSearch(block_list* src, block_list* target, uint1
 	else {
 		if (sd != nullptr)
 			clif_skill_fail(*sd, getSkillId(), USESKILL_FAIL);
+
+		// TODO: Should we return here?
 	}
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);

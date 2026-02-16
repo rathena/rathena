@@ -24,7 +24,6 @@
 #include "crystalimpact.cpp"
 #include "deadlyprojection.cpp"
 #include "destructivehurricane.cpp"
-
 #include "deluge.cpp"
 #include "diamondstorm.cpp"
 #include "dispell.cpp"

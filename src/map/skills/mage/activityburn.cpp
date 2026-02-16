@@ -5,6 +5,7 @@
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillActivityBurn::SkillActivityBurn() : SkillImpl(EM_ACTIVITY_BURN) {
 }
