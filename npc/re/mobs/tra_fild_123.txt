@@ -15,7 +15,10 @@ tra_fild01,24,93	monster	Dummy (Small)	21064,1	// S_DUMMY_100_SMALL
 tra_fild01,43,36	monster	Dummy (Medium)	22560,1	// S_DUMMY_MEDIUM_R30
 tra_fild01,43,55	monster	Dummy (Medium)	22556,1	// S_DUMMY_MEDIUM_R20
 tra_fild01,43,74	monster	Dummy (Medium)	22552,1	// S_DUMMY_MEDIUM_R10
+
 tra_fild01,43,93	monster	Dummy (Medium)	21065,1	// S_DUMMY_100_MEDIUM
+tra_fild01,41,93	monster	Dummy (Medium)	21065,1	// S_DUMMY_100_MEDIUM
+
 tra_fild01,62,36	monster	Dummy (Large)	22668,1	// S_DUMMY_LARGE_R30
 tra_fild01,62,55	monster	Dummy (Large)	22557,1	// S_DUMMY_LARGE_R20
 tra_fild01,62,74	monster	Dummy (Large)	22553,1	// S_DUMMY_LARGE_R10
