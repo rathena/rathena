@@ -16124,7 +16124,7 @@ int32 skill_cell_overlap(block_list *bl, va_list ap)
  * Splash effect for skill unit 'trap type'.
  * Chance triggered when damaged, timeout, or char step on it.
  *------------------------------------------*/
-static int32 skill_trap_splash(block_list *bl, va_list ap)
+int32 skill_trap_splash(block_list *bl, va_list ap)
 {
 	block_list *src = va_arg(ap,block_list *);
 	skill_unit *unit = nullptr;
@@ -18663,49 +18663,6 @@ int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list) {
 		clif_msg_skill( *sd, GN_CHANGEMATERIAL, MSI_SKILL_RECIPE_NOTEXIST );
 
 	return 0;
-}
-
-/**
- * For Royal Guard's LG_TRAMPLE
- */
-static int32 skill_destroy_trap(block_list *bl, va_list ap)
-{
-	skill_unit *su = (skill_unit *)bl;
-
-	nullpo_ret(su);
-
-	std::shared_ptr<s_skill_unit_group> sg;
-	t_tick tick = va_arg(ap, t_tick);
-
-	if (su->alive && (sg = su->group) && skill_get_inf2(sg->skill_id, INF2_ISTRAP)) {
-		switch( sg->unit_id ) {
-			case UNT_CLAYMORETRAP:
-			case UNT_FIRINGTRAP:
-			case UNT_ICEBOUNDTRAP:
-				map_foreachinrange(skill_trap_splash,su, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag|BL_SKILL|~BCT_SELF, su,tick);
-				break;
-			case UNT_LANDMINE:
-			case UNT_BLASTMINE:
-			case UNT_SHOCKWAVE:
-			case UNT_SANDMAN:
-			case UNT_FLASHER:
-			case UNT_FREEZINGTRAP:
-			case UNT_CLUSTERBOMB:
-				if (battle_config.skill_wall_check && !skill_get_nk(sg->skill_id, NK_NODAMAGE))
-					map_foreachinshootrange(skill_trap_splash,su, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, su,tick);
-				else
-					map_foreachinallrange(skill_trap_splash,su, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, su,tick);
-				break;
-		}
-		// Traps aren't recovered.
-		skill_delunit(su);
-	}
-
-	return 0;
-}
-
-void skill_trample_destroy_traps(block_list* center, uint16 skill_lv, t_tick tick) {
-	map_foreachinallrange(skill_destroy_trap, center, skill_get_splash(LG_TRAMPLE, skill_lv), BL_SKILL, tick);
 }
 
 /*==========================================
