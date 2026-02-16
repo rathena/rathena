@@ -159,14 +159,14 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillSpearStab>();
 		case KN_TWOHANDQUICKEN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
-		case LG_CANNONSPEAR:
-			return std::make_unique<SkillCannonSpear>();
 		case LG_BANISHINGPOINT:
 			return std::make_unique<SkillBanishingPoint>();
-		case LG_TRAMPLE:
-			return std::make_unique<SkillTrample>();
+		case LG_CANNONSPEAR:
+			return std::make_unique<SkillCannonSpear>();
 		case LG_EXEEDBREAK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case LG_FORCEOFVANGUARD:
+			return std::make_unique<SkillForceOfVanguard>();
 		case LG_HESPERUSLIT:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case LG_INSPIRATION:
@@ -177,16 +177,16 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillRageBurst>();
 		case LG_REFLECTDAMAGE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case LG_PIETY:
+			return std::make_unique<SkillPiety>();
 		case LG_PINPOINTATTACK:
 			return std::make_unique<SkillPinpointAttack>();
 		case LG_SHIELDPRESS:
 			return std::make_unique<SkillShieldPress>();
-		case LG_FORCEOFVANGUARD:
-			return std::make_unique<SkillForceOfVanguard>();
 		case LG_SHIELDSPELL:
 			return std::make_unique<SkillShieldSpell>();
-		case LG_PIETY:
-			return std::make_unique<SkillPiety>();
+		case LG_TRAMPLE:
+			return std::make_unique<SkillTrample>();
 		case LK_AURABLADE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LK_BERSERK:
