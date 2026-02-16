@@ -55,7 +55,7 @@ void SkillTrample::castendNoDamageId(block_list* src, block_list* target, uint16
 	clif_skill_damage(*src, *target, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, getSkillId(), skill_lv, DMG_SINGLE);
 
 	if (rnd() % 100 < (25 + 25 * skill_lv)) {
-		map_foreachinallrange(skill_destroy_trap, target, skill_get_splash(LG_TRAMPLE, skill_lv), BL_SKILL, tick);
+		map_foreachinallrange(skill_destroy_trap, target, skill_get_splash(getSkillId(), skill_lv), BL_SKILL, tick);
 	}
 
 	status_change_end(target, SC_SV_ROOTTWIST);
