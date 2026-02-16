@@ -6,9 +6,10 @@
 #include <config/core.hpp>
 
 #include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/status.hpp"
 
-SkillCannonSpear::SkillCannonSpear() : SkillImpl(LG_CANNONSPEAR) {
+SkillCannonSpear::SkillCannonSpear() : SkillImplRecursiveDamageSplash(LG_CANNONSPEAR) {
 }
 
 void SkillCannonSpear::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {

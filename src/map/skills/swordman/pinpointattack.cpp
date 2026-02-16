@@ -5,6 +5,7 @@
 
 #include <config/core.hpp>
 
+#include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
@@ -16,7 +17,7 @@ void SkillPinpointAttack::castendDamageId(block_list* src, block_list* target, u
 		clif_blown(src);
 	}
 
-	skill_attack(BF_WEAPON, src, src, target, getSkillId(), skill_lv, tick, flag);
+	WeaponSkillImpl::castendDamageId(src, target, skill_lv, tick, flag);
 }
 
 void SkillPinpointAttack::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {

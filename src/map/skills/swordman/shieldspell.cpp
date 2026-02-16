@@ -3,6 +3,8 @@
 
 #include "shieldspell.hpp"
 
+#include "map/clif.hpp"
+#include "map/status.hpp"
 SkillShieldSpell::SkillShieldSpell() : SkillImpl(LG_SHIELDSPELL) {
 }
 

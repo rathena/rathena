@@ -3,6 +3,9 @@
 
 #include "piety.hpp"
 
+#include "map/clif.hpp"
+#include "map/map.hpp"
+#include "map/status.hpp"
 SkillPiety::SkillPiety() : SkillImpl(LG_PIETY) {
 }
 

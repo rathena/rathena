@@ -3,6 +3,7 @@
 
 #include "trample.hpp"
 
+#include "map/clif.hpp"
 #include "map/skill.hpp"
 #include "map/status.hpp"
 

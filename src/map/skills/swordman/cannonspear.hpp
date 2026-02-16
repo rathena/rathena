@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillCannonSpear : public SkillImpl {
+class SkillCannonSpear : public SkillImplRecursiveDamageSplash {
 public:
 	SkillCannonSpear();
 
