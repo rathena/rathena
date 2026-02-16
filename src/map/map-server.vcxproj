@@ -655,6 +655,7 @@
     <ClInclude Include="skills/summoner/tunabelly.hpp" />
     <ClInclude Include="skills/summoner/tunaparty.hpp" />
     <ClInclude Include="skills/swordman/autoberserk.hpp" />
+    <ClInclude Include="skills/swordman/banding.hpp" />
     <ClInclude Include="skills/swordman/banishingpoint.hpp" />
     <ClInclude Include="skills/swordman/bash.hpp" />
     <ClInclude Include="skills/swordman/battlechant.hpp" />
@@ -2164,6 +2165,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/autoberserk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/banding.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/banishingpoint.cpp">

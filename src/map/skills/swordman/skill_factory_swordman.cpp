@@ -8,6 +8,7 @@
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
 #include "autoberserk.cpp"
+#include "banding.cpp"
 #include "banishingpoint.cpp"
 #include "bash.cpp"
 #include "battlechant.cpp"
@@ -161,6 +162,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<SkillSpearStab>();
 		case KN_TWOHANDQUICKEN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case LG_BANDING:
+			return std::make_unique<SkillBanding>();
 		case LG_BANISHINGPOINT:
 			return std::make_unique<SkillBanishingPoint>();
 		case LG_CANNONSPEAR:
