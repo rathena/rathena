@@ -6,6 +6,10 @@
 #include <memory>
 #include <vector>
 
+// map-server-generator does not need concrete skill implementations
+// This will save compile time
+#ifndef MAP_GENERATOR
+
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
 #include "./skill_impl.cpp"
@@ -52,3 +56,11 @@ std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id
 
 	return nullptr;
 }
+
+#else
+
+std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id) const {
+	return nullptr;
+}
+
+#endif
