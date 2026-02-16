@@ -32,6 +32,7 @@
 #include "madnesscrusher.cpp"
 #include "magnum.cpp"
 #include "martyrsreckoning.cpp"
+#include "moonslasher.cpp"
 #include "overslash.cpp"
 #include "pierce.cpp"
 #include "piety.cpp"
@@ -171,6 +172,8 @@ std::unique_ptr<const SkillImpl> SkillFactorySwordman::create(const e_skill skil
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case LG_INSPIRATION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case LG_MOONSLASHER:
+			return std::make_unique<SkillMoonSlasher>();
 		case LG_PRESTIGE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case LG_RAGEBURST:
