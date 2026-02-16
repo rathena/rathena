@@ -5,6 +5,7 @@
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillIncreasingActivity::SkillIncreasingActivity() : SkillImpl(EM_INCREASING_ACTIVITY) {
 }

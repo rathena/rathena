@@ -15,7 +15,7 @@ public:
 
 
 // EM_ELEMENTAL_BUSTER_FIRE
-class SkillElementalBusterFire : public SkillImpl {
+class SkillElementalBusterFire : public SkillImplRecursiveDamageSplash {
 public:
 	SkillElementalBusterFire();
 
@@ -24,7 +24,7 @@ public:
 
 
 // EM_ELEMENTAL_BUSTER_GROUND
-class SkillElementalBusterGround : public SkillImpl {
+class SkillElementalBusterGround : public SkillImplRecursiveDamageSplash {
 public:
 	SkillElementalBusterGround();
 
@@ -33,7 +33,7 @@ public:
 
 
 // EM_ELEMENTAL_BUSTER_POISON
-class SkillElementalBusterPoison : public SkillImpl {
+class SkillElementalBusterPoison : public SkillImplRecursiveDamageSplash {
 public:
 	SkillElementalBusterPoison();
 
@@ -42,7 +42,7 @@ public:
 
 
 // EM_ELEMENTAL_BUSTER_WATER
-class SkillElementalBusterWater : public SkillImpl {
+class SkillElementalBusterWater : public SkillImplRecursiveDamageSplash {
 public:
 	SkillElementalBusterWater();
 
@@ -51,7 +51,7 @@ public:
 
 
 // EM_ELEMENTAL_BUSTER_WIND
-class SkillElementalBusterWind : public SkillImpl {
+class SkillElementalBusterWind : public SkillImplRecursiveDamageSplash {
 public:
 	SkillElementalBusterWind();
 
