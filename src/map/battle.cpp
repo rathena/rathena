@@ -3322,9 +3322,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 				if (sd && pc_checkskill(sd, GN_REMODELING_CART))
 					hitrate += pc_checkskill(sd, GN_REMODELING_CART) * 4;
 				break;
-			case LG_BANISHINGPOINT:
-				hitrate += 5 * skill_lv;
-				break;
 			case SC_FATALMENACE:
 				if (skill_lv < 6)
 					hitrate -= 35 - 5 * skill_lv;
@@ -4952,85 +4949,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case SC_FEINTBOMB:
 			skillratio += -100 + (skill_lv + 1) * sstatus->dex / 2 * ((sd) ? sd->status.job_level / 10 : 1);
 			RE_LVL_DMOD(120);
-			break;
-		case LG_CANNONSPEAR:
-			skillratio += -100 + skill_lv * ( 120 + sstatus->str );
-
-			if( sc != nullptr && sc->getSCE( SC_SPEAR_SCAR ) ){
-				skillratio += 400;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case LG_BANISHINGPOINT:
-			skillratio += -100 + ( 100 * skill_lv );
-
-			if( sd != nullptr ){
-				skillratio += pc_checkskill( sd, SM_BASH ) * 70;
-			}
-
-			if( sc != nullptr && sc->getSCE( SC_SPEAR_SCAR ) ){
-				skillratio += 800;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case LG_SHIELDPRESS:
-			skillratio += -100 + 200 * skill_lv;
-			if (sd) {
-				// Shield Press only considers base STR without job bonus
-				skillratio += sd->status.str;
-
-				if( sc != nullptr && sc->getSCE( SC_SHIELD_POWER ) ){
-					skillratio += skill_lv * 15 * pc_checkskill( sd, IG_SHIELD_MASTERY );
-				}
-
-				int16 index = sd->equip_index[EQI_HAND_L];
-
-				if (index >= 0 && sd->inventory_data[index] && sd->inventory_data[index]->type == IT_ARMOR)
-					skillratio += sd->inventory_data[index]->weight / 10;
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case LG_PINPOINTATTACK:
-			skillratio += -100 + 100 * skill_lv + 5 * status_get_agi(src);
-			RE_LVL_DMOD(120);
-			break;
-		case LG_RAGEBURST:
-			if (sd && sd->spiritball_old)
-				skillratio += -100 + 200 * sd->spiritball_old + (status_get_max_hp(src) - status_get_hp(src)) / 100;
-			else
-				skillratio += 2900 + (status_get_max_hp(src) - status_get_hp(src));
-			RE_LVL_DMOD(100);
-			break;
-		case LG_MOONSLASHER:
-			skillratio += -100 + 120 * skill_lv + ((sd) ? pc_checkskill(sd,LG_OVERBRAND) * 80 : 0);
-			RE_LVL_DMOD(100);
-			break;
-		case LG_OVERBRAND:
-			if(sc && sc->getSCE(SC_OVERBRANDREADY))
-				skillratio += -100 + 500 * skill_lv;
-			else
-				skillratio += -100 + 350 * skill_lv;
-			skillratio += ((sd) ? pc_checkskill(sd, CR_SPEARQUICKEN) * 50 : 0);
-			RE_LVL_DMOD(100);
-			break;
-		case LG_EARTHDRIVE:
-			skillratio += -100 + 380 * skill_lv + sstatus->str + sstatus->vit; // !TODO: What's the STR/VIT bonus?
-
-			if( sc != nullptr && sc->getSCE( SC_SHIELD_POWER ) ){
-				skillratio += skill_lv * 37 * pc_checkskill( sd, IG_SHIELD_MASTERY );
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case LG_HESPERUSLIT:
-			if (sc && sc->getSCE(SC_INSPIRATION))
-				skillratio += -100 + 450 * skill_lv;
-			else
-				skillratio += -100 + 300 * skill_lv;
-			skillratio += sstatus->vit / 6; // !TODO: What's the VIT bonus?
-			RE_LVL_DMOD(100);
 			break;
 		case SR_EARTHSHAKER:
 			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD) || tsc->getSCE(SC__SHADOWFORM))) {
@@ -7292,11 +7210,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 							skillratio += 400 + 100 * skill_lv;
 							RE_LVL_DMOD(150);
 						}
-						break;
-					case LG_RAYOFGENESIS:
-						skillratio += -100 + 350 * skill_lv;
-						skillratio += sstatus->int_ * 3;
-						RE_LVL_DMOD(100);
 						break;
 					case NPC_RAYOFGENESIS:
 						skillratio += -100 + 200 * skill_lv;
