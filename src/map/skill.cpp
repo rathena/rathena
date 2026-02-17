@@ -1788,21 +1788,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case WM_REVERBERATION:
 		status_change_end(bl, SC_SOUNDBLEND);
 		break;
-	case EM_DIAMOND_STORM:
-		sc_start(src, bl, SC_HANDICAPSTATE_FROSTBITE, 5, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case EM_LIGHTNING_LAND:
-		sc_start(src, bl, SC_HANDICAPSTATE_LIGHTNINGSTRIKE, 3, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case EM_VENOM_SWAMP:
-		sc_start(src, bl, SC_HANDICAPSTATE_DEADLYPOISON, 3, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case EM_CONFLAGRATION:
-		sc_start(src, bl, SC_HANDICAPSTATE_CONFLAGRATION, 3, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case EM_TERRA_DRIVE:
-		sc_start(src, bl, SC_HANDICAPSTATE_CRYSTALLIZATION, 5, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
 	case SS_KAGEGARI:
 	case SS_FUUMASHOUAKU:
 	case SS_KUNAIWAIKYOKU:
@@ -4943,17 +4928,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case BO_ACIDIFIED_ZONE_WIND:
 	case BO_ACIDIFIED_ZONE_FIRE:
 	case TR_ROSEBLOSSOM_ATK:
-	case EM_ELEMENTAL_BUSTER_FIRE:
-	case EM_ELEMENTAL_BUSTER_WATER:
-	case EM_ELEMENTAL_BUSTER_WIND:
-	case EM_ELEMENTAL_BUSTER_GROUND:
-	case EM_ELEMENTAL_BUSTER_POISON:
-	case EM_EL_FLAMEROCK:
-	case EM_EL_AGE_OF_ICE:
-	case EM_EL_STORM_WIND:
-	case EM_EL_AVALANCHE:
-	case EM_EL_DEADLY_POISON:
-	case EM_PSYCHIC_STREAM:
 	case BO_EXPLOSIVE_POWDER:
 	case BO_MAYHEMIC_THORNS:
 	case BO_MYSTERY_POWDER:
@@ -5008,30 +4982,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					starget = splash_target(src);
 					break;
 
-				case EM_PSYCHIC_STREAM:
-				{
-					uint8 dir = DIR_NORTHEAST;
-
-					if (bl->x != src->x || bl->y != src->y)
-						dir = map_calc_dir(bl, src->x, src->y);	// dir based on target as we move player based on target location
-
-					if (skill_check_unit_movepos(0, src, bl->x + dirx[dir], bl->y + diry[dir], 1, 1)) {
-						clif_blown(src);
-						skill_attack(BF_MAGIC, src, src, bl, skill_id, skill_lv, tick, flag);
-						clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					}
-					else {
-						if (sd != nullptr)
-							clif_skill_fail(*sd, skill_id, USESKILL_FAIL);
-					}
-					break;
-				}
 				case BO_DUST_EXPLOSION:
-				case EM_EL_FLAMEROCK:
-				case EM_EL_AGE_OF_ICE:
-				case EM_EL_STORM_WIND:
-				case EM_EL_AVALANCHE:
-				case EM_EL_DEADLY_POISON:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					break;
 				case BO_ACIDIFIED_ZONE_WATER:
@@ -6226,24 +6177,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) ) );
 		break;
 
-	case EM_ACTIVITY_BURN:
-		if (bl->type == BL_PC && rnd() % 100 < 20 + 10 * skill_lv) {
-			uint8 ap_burn[5] = { 20, 30, 50, 60, 70 };
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_zap(bl, 0, 0, ap_burn[skill_lv - 1]);
-		} else if (sd)
-			clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-		break;
-
-	case EM_INCREASING_ACTIVITY:
-		if (bl->type == BL_PC) {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_heal(bl, 0, 0, 10 * skill_lv, 0);
-		} else if (sd)
-			clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-		break;
-
 	case NPC_HALLUCINATION:
 	case NPC_HELLPOWER:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv,
@@ -6369,42 +6302,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 	}
 		break;
-
-	case EM_ELEMENTAL_BUSTER: {
-		if (sd == nullptr)
-			break;
-
-		if (!sd->ed || !(sd->ed->elemental.class_ >= ELEMENTALID_DILUVIO && sd->ed->elemental.class_ <= ELEMENTALID_SERPENS)) {
-			clif_skill_fail( *sd, skill_id );
-			return 0;
-		}
-
-		uint16 buster_element;
-
-		switch (sd->ed->elemental.class_) {
-			case ELEMENTALID_ARDOR:
-				buster_element = EM_ELEMENTAL_BUSTER_FIRE;
-				break;
-			case ELEMENTALID_DILUVIO:
-				buster_element = EM_ELEMENTAL_BUSTER_WATER;
-				break;
-			case ELEMENTALID_PROCELLA:
-				buster_element = EM_ELEMENTAL_BUSTER_WIND;
-				break;
-			case ELEMENTALID_TERREMOTUS:
-				buster_element = EM_ELEMENTAL_BUSTER_GROUND;
-				break;
-			case ELEMENTALID_SERPENS:
-				buster_element = EM_ELEMENTAL_BUSTER_POISON;
-				break;
-		}
-
-		skill_area_temp[1] = 0;
-		clif_skill_nodamage(src, *bl, buster_element, skill_lv);// Animation for the triggered blaster element.
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);// Triggered after blaster animation to make correct skill name scream appear.
-		map_foreachinrange(skill_area_sub, bl, 6, BL_CHAR | BL_SKILL, src, buster_element, skill_lv, tick, flag | BCT_ENEMY | SD_LEVEL | SD_SPLASH | 1, skill_castend_damage_id);
-	}
-	break;
 
 	case NPC_IGNITIONBREAK:
 	case RK_IGNITIONBREAK:
@@ -8248,16 +8145,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case EL_SOLID_SKIN:
 	case EL_STONE_SHIELD:
 	case EL_WIND_STEP:
-	case EM_EL_FLAMETECHNIC:
-	case EM_EL_FLAMEARMOR:
-	case EM_EL_COLD_FORCE:
-	case EM_EL_CRYSTAL_ARMOR:
-	case EM_EL_GRACE_BREEZE:
-	case EM_EL_EYES_OF_STORM:
-	case EM_EL_EARTH_CARE:
-	case EM_EL_STRONG_PROTECTION:
-	case EM_EL_DEEP_POISONING:
-	case EM_EL_POISON_SHIELD:
 	{
 			s_elemental_data *ele = BL_CAST(BL_ELEM, src);
 			if( ele ) {
@@ -8269,8 +8156,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 					status_change_end(bl,type2);
 				} else {
 					clif_skill_nodamage(src,*src,skill_id,skill_lv);
-					if (!(skill_id >= EM_EL_FLAMETECHNIC && skill_id <= EM_EL_DEADLY_POISON))
-						clif_skill_damage( *src, ( skill_id == EL_GUST || skill_id == EL_BLAST || skill_id == EL_WILD_STORM ) ? *src : *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
+					clif_skill_damage( *src, ( skill_id == EL_GUST || skill_id == EL_BLAST || skill_id == EL_WILD_STORM ) ? *src : *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 					if( skill_id == EL_WIND_STEP )	// There aren't teleport, just push the master away.
 						skill_blown(src,bl,(rnd()%skill_get_blewcount(skill_id,skill_lv))+1,rnd()%8,BLOWN_NONE);
 					sc_start(src,src,type2,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -8714,51 +8600,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ALLY | SD_SPLASH | 1, skill_castend_nodamage_id);
 		}
-		break;
-
-	case EM_SUMMON_ELEMENTAL_ARDOR:
-	case EM_SUMMON_ELEMENTAL_DILUVIO:
-	case EM_SUMMON_ELEMENTAL_PROCELLA:
-	case EM_SUMMON_ELEMENTAL_TERREMOTUS:
-	case EM_SUMMON_ELEMENTAL_SERPENS: {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-
-			if (sd == nullptr)
-				break;
-
-			uint16 em_elem[5] = { ELEMENTALID_ARDOR, ELEMENTALID_DILUVIO, ELEMENTALID_PROCELLA, ELEMENTALID_TERREMOTUS, ELEMENTALID_SERPENS };
-			uint16 so_elem[5] = { ELEMENTALID_AGNI_L, ELEMENTALID_AQUA_L, ELEMENTALID_VENTUS_L, ELEMENTALID_TERA_L, 0 };
-			uint8 elem_value = 4 - (EM_SUMMON_ELEMENTAL_SERPENS - skill_id);
-
-			if (sd->ed && ((skill_id >= EM_SUMMON_ELEMENTAL_ARDOR && skill_id <= EM_SUMMON_ELEMENTAL_TERREMOTUS && sd->ed->elemental.class_ == so_elem[elem_value]) ||
-						   (skill_id == EM_SUMMON_ELEMENTAL_SERPENS &&
-							(sd->ed->elemental.class_ == ELEMENTALID_AGNI_L || sd->ed->elemental.class_ == ELEMENTALID_AQUA_L ||
-							 sd->ed->elemental.class_ == ELEMENTALID_VENTUS_L || sd->ed->elemental.class_ == ELEMENTALID_TERA_L)))) {
-				// Remove the old elemental before summoning the super one.
-				elemental_delete(sd->ed);
-
-				if (!elemental_create(sd, em_elem[elem_value], skill_get_time(skill_id, skill_lv))) {
-					clif_skill_fail( *sd, skill_id );
-					break;
-				} else // Elemental summoned. Buff the player with the bonus.
-					sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			} else {
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-		}
-		break;
-
-	case EM_ELEMENTAL_VEIL:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-
-		if (sd == nullptr)
-			break;
-
-		if (sd->ed && sd->ed->elemental.class_ >= ELEMENTALID_DILUVIO && sd->ed->elemental.class_ <= ELEMENTALID_SERPENS)
-			sc_start(src, sd->ed, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		else
-			clif_skill_fail( *sd, skill_id );
 		break;
 
 	case BO_BIONIC_PHARMACY:
@@ -9771,11 +9612,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case BO_ACIDIFIED_ZONE_GROUND:
 	case BO_ACIDIFIED_ZONE_WIND:
 	case BO_ACIDIFIED_ZONE_FIRE:
-	case EM_DIAMOND_STORM:
-	case EM_LIGHTNING_LAND:
-	case EM_VENOM_SWAMP:
-	case EM_CONFLAGRATION:
-	case EM_TERRA_DRIVE:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 		[[fallthrough]];
 	// Ammo should be deleted right away.
