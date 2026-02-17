@@ -5,45 +5,138 @@
 
 #include <config/core.hpp>
 
-#include "../status_skill_impl.hpp"
-#include "../weapon_skill_impl.hpp"
+#include "../skill_impl.hpp"
 
-#include "angelus.hpp"
-#include "aspersio.hpp"
-#include "blessing.hpp"
-#include "bssacramenti.hpp"
-#include "crucis.hpp"
-#include "cure.hpp"
-#include "decagi.hpp"
-#include "gloria.hpp"
-#include "heal.hpp"
-#include "holylight.hpp"
-#include "holywater.hpp"
-#include "impositiomanus.hpp"
-#include "incagi.hpp"
-#include "kyrieeleison.hpp"
-#include "lexdivina.hpp"
-#include "magnificat.hpp"
-#include "magnusexorcismus.hpp"
-#include "pneuma.hpp"
-#include "ruwach.hpp"
-#include "sanctuary.hpp"
-#include "statusrecovery.hpp"
-#include "suffragium.hpp"
-#include "turnundead.hpp"
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "absorbspiritsphere.cpp"
+#include "adoramus.cpp"
+#include "ancilla.cpp"
+#include "angelus.cpp"
+#include "arbitrium.cpp"
+#include "aspersio.cpp"
+#include "assumptio.cpp"
+#include "asurastrike.cpp"
+#include "basilica.cpp"
+#include "blazingflameblast.cpp"
+#include "blessing.cpp"
+#include "bssacramenti.cpp"
+#include "cantocandidus.cpp"
+#include "chaincrushcombo.cpp"
+#include "clearance.cpp"
+#include "coluceoheal.cpp"
+#include "competentia.cpp"
+#include "convenio.cpp"
+#include "crementia.cpp"
+#include "crucis.cpp"
+#include "cure.cpp"
+#include "decagi.cpp"
+#include "dilectioheal.cpp"
+#include "divinusflos.cpp"
+#include "duplelight.cpp"
+#include "effligo.cpp"
+#include "epiclesis.cpp"
+#include "explosionblaster.cpp"
+#include "firstbrand.cpp"
+#include "framen.cpp"
+#include "glacierfist.cpp"
+#include "gloria.cpp"
+#include "heal.cpp"
+#include "highnessheal.cpp"
+#include "holylight.cpp"
+#include "holywater.cpp"
+#include "impositiomanus.cpp"
+#include "incagi.cpp"
+#include "judex.cpp"
+#include "kiexplosion.cpp"
+#include "kitranslation.cpp"
+#include "kyrieeleison.cpp"
+#include "laudaagnus.cpp"
+#include "laudaramus.cpp"
+#include "lexdivina.cpp"
+#include "magnificat.cpp"
+#include "magnusexorcismus.cpp"
+#include "massiveflameblaster.cpp"
+#include "medialevotum.cpp"
+#include "occultimpaction.cpp"
+#include "oleumsanctum.cpp"
+#include "oratio.cpp"
+#include "petitio.cpp"
+#include "pneuma.cpp"
+#include "pneumaticusprocella.cpp"
+#include "praefatio.cpp"
+#include "ragingpalmstrike.cpp"
+#include "ragingquadrupleblow.cpp"
+#include "ragingthrust.cpp"
+#include "ragingtrifectablow.cpp"
+#include "renovatio.cpp"
+#include "reparatio.cpp"
+#include "ruwach.cpp"
+#include "sanctuary.cpp"
+#include "secondfaith.cpp"
+#include "secondflame.cpp"
+#include "secondjudgement.cpp"
+#include "silentium.cpp"
+#include "snap.cpp"
+#include "statusrecovery.cpp"
+#include "suffragium.cpp"
+#include "summonspiritsphere.cpp"
+#include "thirdconsecration.cpp"
+#include "thirdflamebomb.cpp"
+#include "thirdpunish.cpp"
+#include "throwspiritsphere.cpp"
+#include "turnundead.cpp"
+#include "vituperatum.cpp"
+#include "zen.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
 	switch( skill_id ){
+		case AB_ADORAMUS:
+			return std::make_unique<SkillAdoramus>();
+		case AB_ANCILLA:
+			return std::make_unique<SkillAncilla>();
+		case AB_CANTO:
+			return std::make_unique<SkillCantoCandidus>();
+		case AB_CHEAL:
+			return std::make_unique<SkillColuceoHeal>();
+		case AB_CLEARANCE:
+			return std::make_unique<SkillClearance>();
+		case AB_CLEMENTIA:
+			return std::make_unique<SkillCrementia>();
+		case AB_CONVENIO:
+			return std::make_unique<SkillConvenio>();
 		case AB_DUPLELIGHT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case AB_DUPLELIGHT_MAGIC:
+			return std::make_unique<SkillDupleLightMagic>();
 		case AB_DUPLELIGHT_MELEE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillDupleLightMelee>();
+		case AB_EPICLESIS:
+			return std::make_unique<SkillEpiclesis>();
 		case AB_EXPIATIO:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case AB_HIGHNESSHEAL:
+			return std::make_unique<SkillHighnessHeal>();
+		case AB_JUDEX:
+			return std::make_unique<SkillJudex>();
+		case AB_LAUDAAGNUS:
+			return std::make_unique<SkillLaudaAgnus>();
+		case AB_LAUDARAMUS:
+			return std::make_unique<SkillLaudaRamus>();
 		case AB_OFFERTORIUM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case AB_ORATIO:
+			return std::make_unique<SkillOratio>();
+		case AB_PRAEFATIO:
+			return std::make_unique<SkillPraefatio>();
+		case AB_RENOVATIO:
+			return std::make_unique<SkillRenovatio>();
 		case AB_SECRAMENT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case AB_SILENTIUM:
+			return std::make_unique<SkillSilentium>();
+		case AB_VITUPERATUM:
+			return std::make_unique<SkillVituperatum>();
 		case AL_ANGELUS:
 			return std::make_unique<SkillAngelus>();
 		case AL_BLESSING:
@@ -66,62 +159,112 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillPneuma>();
 		case AL_RUWACH:
 			return std::make_unique<SkillRuwach>();
+		case CD_ARBITRIUM:
+			return std::make_unique<SkillArbitrium>();
+		case CD_ARBITRIUM_ATK:
+			return std::make_unique<SkillArbitriumAttack>();
 		case CD_ARGUTUS_TELUM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_ARGUTUS_VITA:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_BENEDICTUM:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case CD_COMPETENTIA:
+			return std::make_unique<SkillCompetentia>();
+		case CD_DILECTIO_HEAL:
+			return std::make_unique<SkillDilectioHeal>();
+		case CD_DIVINUS_FLOS:
+			return std::make_unique<SkillDivinusFlos>();
+		case CD_EFFLIGO:
+			return std::make_unique<SkillEffligo>();
+		case CD_FRAMEN:
+			return std::make_unique<SkillFramen>();
+		case CD_MEDIALE_VOTUM:
+			return std::make_unique<SkillMedialeVotum>();
+		case CD_PETITIO:
+			return std::make_unique<SkillPetitio>();
+		case CD_PNEUMATICUS_PROCELLA:
+			return std::make_unique<SkillPneumaticusProcella>();
 		case CD_PRESENS_ACIES:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case CD_RELIGIO:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case CD_REPARATIO:
+			return std::make_unique<SkillReparatio>();
 		case CH_CHAINCRUSH:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillChainCrushCombo>();
+		case CH_PALMSTRIKE:
+			return std::make_unique<SkillRagingPalmStrike>();
+		case CH_SOULCOLLECT:
+			return std::make_unique<SkillZen>();
 		case CH_TIGERFIST:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-#ifdef RENEWAL
+			return std::make_unique<SkillGlacierFist>();
+		case HP_ASSUMPTIO:
+			return std::make_unique<SkillAssumptio>();
 		case HP_BASILICA:
-			return std::make_unique<StatusSkillImpl>(skill_id);
-#endif
+			return std::make_unique<SkillBasilica>();
+		case IQ_BLAZING_FLAME_BLAST:
+			return std::make_unique<SkillBlazingFlameBlast>();
+		case IQ_EXPOSION_BLASTER:
+			return std::make_unique<SkillExplosionBlaster>();
 		case IQ_FIRM_FAITH:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_FIRST_BRAND:
+			return std::make_unique<SkillFirstBrand>();
 		case IQ_FIRST_FAITH_POWER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case IQ_JUDGE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_MASSIVE_F_BLASTER:
+			return std::make_unique<SkillMassiveFlameBlaster>();
+		case IQ_OLEUM_SANCTUM:
+			return std::make_unique<SkillOleumSanctum>();
 		case IQ_POWERFUL_FAITH:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_SECOND_FAITH:
+			return std::make_unique<SkillSecondFaith>();
+		case IQ_SECOND_FLAME:
+			return std::make_unique<SkillSecondFlame>();
+		case IQ_SECOND_JUDGEMENT:
+			return std::make_unique<SkillSecondJudgement>();
 		case IQ_SINCERE_FAITH:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_THIRD_CONSECRATION:
+			return std::make_unique<SkillThirdConsecration>();
 		case IQ_THIRD_EXOR_FLAME:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case IQ_THIRD_FLAME_BOMB:
+			return std::make_unique<SkillThirdFlameBomb>();
+		case IQ_THIRD_PUNISH:
+			return std::make_unique<SkillThirdPunish>();
+		case MO_ABSORBSPIRITS:
+			return std::make_unique<SkillAbsorbSpiritSphere>();
+		case MO_BALKYOUNG:
+			return std::make_unique<SkillKiExplosion>();
 		case MO_BLADESTOP:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MO_BODYRELOCATION:
+			return std::make_unique<SkillSnap>();
+		case MO_CALLSPIRITS:
+			return std::make_unique<SkillSummoningSpiritSphere>();
+		case MO_CHAINCOMBO:
+			return std::make_unique<SkillRagingQuadrupleBlow>();
+		case MO_COMBOFINISH:
+			return std::make_unique<SkillRagingThrust>();
 		case MO_EXPLOSIONSPIRITS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MO_EXTREMITYFIST:
+			return std::make_unique<SkillAsuraStrike>();
+		case MO_FINGEROFFENSIVE:
+			return std::make_unique<SkillThrowSpiritSphere>();
+		case MO_INVESTIGATE:
+			return std::make_unique<SkillOccultImpaction>();
+		case MO_KITRANSLATION:
+			return std::make_unique<SkillKiTranslation>();
 		case MO_STEELBODY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
-		case SR_CRESCENTELBOW:
-			return std::make_unique<StatusSkillImpl>(skill_id);
-		case SR_CRESCENTELBOW_AUTOSPELL:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case SR_DRAGONCOMBO:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case SR_FALLENEMPIRE:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case SR_GATEOFHELL:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case SR_GENTLETOUCH_CHANGE:
-			return std::make_unique<StatusSkillImpl>(skill_id);
-		case SR_GENTLETOUCH_ENERGYGAIN:
-			return std::make_unique<StatusSkillImpl>(skill_id);
-		case SR_GENTLETOUCH_QUIET:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case SR_GENTLETOUCH_REVITALIZE:
-			return std::make_unique<StatusSkillImpl>(skill_id);
-		case SR_LIGHTNINGWALK:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+		case MO_TRIPLEATTACK:
+			return std::make_unique<SkillRagingTrifectaBlow>();
 		case PR_ASPERSIO:
 			return std::make_unique<SkillAspersio>();
 		case PR_BENEDICTIO:
@@ -150,10 +293,29 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillSuffragium>();
 		case PR_TURNUNDEAD:
 			return std::make_unique<SkillTurnUndead>();
+		case SR_CRESCENTELBOW:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SR_CRESCENTELBOW_AUTOSPELL:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SR_DRAGONCOMBO:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SR_FALLENEMPIRE:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SR_GATEOFHELL:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SR_GENTLETOUCH_CHANGE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SR_GENTLETOUCH_ENERGYGAIN:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SR_GENTLETOUCH_QUIET:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case SR_GENTLETOUCH_REVITALIZE:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SR_LIGHTNINGWALK:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 
 		default:
 			return nullptr;
 	}
-
 	return nullptr;
 }

@@ -38175,7 +38175,7 @@ Body:
       BuyingStore: true
       DropEffect: CLIENT
     Script: |
-      bonus bAspdRate,-(1+(BaseLevel>=90)+(BaseLevel>=120));
+      bonus bAspdRate,1+(BaseLevel>=90)+(BaseLevel>=120);
   - Id: 27019
     AegisName: DR815_Card
     Name: DR815 Card
@@ -44406,11 +44406,6 @@ Body:
     Name: Heaven & Earth
     Type: Card
     SubType: Enchant
-    Buy: 10
-    Locations:
-      Shoes: true
-    Flags:
-      DropEffect: CLIENT
     Script: |
       bonus2 bAddRace,RC_Brute,15;
       bonus2 bAddRace,RC_Player_Doram,15;
@@ -44422,7 +44417,7 @@ Body:
       bonus2 bAddEle,Ele_Earth,15;
       bonus2 bMagicAddEle,Ele_Wind,15;
       bonus2 bMagicAddEle,Ele_Earth,15;
-      autobonus "{ bonus bVariableCastrate,-70;bonus bDelayrate,-70; bonus bIgnoreDefRace,RC_All; bonus2 bIgnoreMdefRaceRate,RC_All,100; }",5,10000;
+      autobonus "{ bonus bVariableCastrate,-70; bonus bDelayrate,-70; bonus bIgnoreDefRace,RC_All; bonus2 bIgnoreMdefRaceRate,RC_All,100; }",5,10000,BF_WEAPON|BF_MAGIC;
   - Id: 29177
     AegisName: Kyoukou1
     Name: Dream Blessing 1
@@ -48335,7 +48330,7 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSkillAtk,"RL_FIREDANCE",60;
-      bonus2 bSkillUseSPrate,"RL_FIREDANCE",25;
+      bonus2 bSkillUseSPrate,"RL_FIREDANCE",-25;
   - Id: 300079
     AegisName: Redpepper_Card
     Name: Red Pepper Card
@@ -48439,7 +48434,7 @@ Body:
       bonus bStr,2;
       bonus bMaxHPrate,10;
       bonus bMaxSPrate,10;
-      bonus bBaseAtk,getskilllv("TK_POWER");
+      bonus bBaseAtk,getskilllv("TK_POWER")*7;
   - Id: 300086
     AegisName: Alnoldi_Ex_H_Card
     Name: Senior Special Alnoldi Card
@@ -51199,8 +51194,8 @@ Body:
     Script: |
       bonus2 bAddRace,RC_Demon,40;
       bonus2 bAddRace,RC_DemiHuman,40;
-      bonus3 bSubRace,RC_Demon,-30,BF_WEAPON;
-      bonus3 bSubRace,RC_DemiHuman,-30,BF_WEAPON;
+      bonus2 bSubRace,RC_DemiHuman,-30;
+      bonus2 bSubRace,RC_Demon,-30;
   - Id: 300281
     AegisName: R001_Bestia_Card
     Name: R001-Bestia Card
@@ -52930,7 +52925,6 @@ Body:
       DropEffect: CLIENT
     Script: |
       bonus2 bSubEle,Ele_Neutral,-10;
-      bonus2 bMagicAtkEle,Ele_Neutral,5;
       bonus2 bMagicAtkEle,Ele_All,5+4*(getrefine()/2);
   - Id: 300425
     AegisName: Crux_Card
@@ -65922,35 +65916,35 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bAtkRate,15+5*getenchantgrade();
+      bonus bAtkRate,10+2*getenchantgrade();
   - Id: 311017
     AegisName: Gear_MATK
     Name: Clockwork (Matk)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bMatkRate,15+5*getenchantgrade();
+      bonus bMatkRate,10+2*getenchantgrade();
   - Id: 311018
     AegisName: Gear_ASPD
     Name: Clockwork (Delay After Attack)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bAspdRate,15+5*getenchantgrade();
+      bonus bAspdRate,10+2*getenchantgrade();
   - Id: 311019
     AegisName: Gear_CAST
     Name: Clockwork (Variable Casting)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bVariableCastrate,-15-5*getenchantgrade();
+      bonus bVariableCastrate,-10-2*getenchantgrade();
   - Id: 311020
     AegisName: Gear_SKILL
     Name: Clockwork (Delay After Skill)
     Type: Card
     SubType: Enchant
     Script: |
-      bonus bDelayrate,-10-5*getenchantgrade();
+      bonus bDelayrate,-10-2*getenchantgrade();
   - Id: 311021
     AegisName: Gear_POW
     Name: Clockwork (POW)
@@ -70920,7 +70914,7 @@ Body:
         bonus bAspdRate,8;
         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
-          bonus bAspdRate,5;
+          bonus bAspd,1;
         }
       }
   - Id: 311347
@@ -71025,12 +71019,12 @@ Body:
     SubType: Enchant
     Script: |
       .@r = getrefine();
-      bonus2 bMagicAtkEle,Ele_All,10;
+      bonus2 bMagicAddEle,Ele_All,10;
       if (.@r>=9) {
-        bonus2 bMagicAtkEle,Ele_All,10;
+        bonus2 bMagicAddEle,Ele_All,10;
         .@i = getiteminfo(getequipid(EQI_HAND_R), ITEMINFO_VIEW);
         if (.@i == W_2HSWORD || .@i == W_2HSPEAR || .@i == W_2HSTAFF || .@i == W_2HAXE || .@i == W_KATAR || .@i == W_BOW || .@i == W_HUUMA || .@i == W_REVOLVER || .@i == W_RIFLE || .@i == W_GATLING || .@i == W_SHOTGUN || .@i == W_GRENADE) {
-          bonus2 bMagicAtkEle,Ele_All,15;
+          bonus2 bMagicAddEle,Ele_All,15;
         }
       }
   - Id: 311354
@@ -75403,6 +75397,7 @@ Body:
     Script: |
       .@g = getenchantgrade();
       .@r = getrefine();
+      bonus bPAtk,1;
       bonus bSMatk,1;
       if (.@r>=7) {
          bonus2 bMagicAddEle,Ele_All,3;
@@ -85390,7 +85385,7 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
-      bonus2 bSkillAtk,"KN_RIDING",2+(getrefine()/2);
+      bonus2 bSkillAtk,"ABC_HIT_AND_SLIDING",2+(getrefine()/2);
   - Id: 313385
     AegisName: ABC_Soul_CB
     Name: Abyss Chaser Soul (Chasing Break)
@@ -85646,9 +85641,11 @@ Body:
       NoMail: true
       NoAuction: true
     Script: |
-      bonus2 bSkillAtk,"MG_FIREBOLT",50;
-      bonus2 bSkillAtk,"MG_COLDBOLT",50;
-      bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",50;
+      if (getskilllv("NV_TRANSCENDENCE")>=5)
+         bonus5 bAutoSpell,"SO_PSYCHIC_WAVE",5,70,BF_SHORT|BF_NORMAL,1;
+      else
+         bonus5 bAutoSpell,"SO_PSYCHIC_WAVE",3,70,BF_SHORT|BF_NORMAL,1;
+      bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",30;
   - Id: 313406
     AegisName: Yorscalp_Str1
     Name: Strength of Yorscalp 1Lv
@@ -87014,6 +87011,14 @@ Body:
     Type: Card
     SubType: Enchant
     Script: |
+      bonus bSMatk,2;
+      bonus2 bMagicAtkEle,Ele_Fire,5;
+      bonus2 bMagicAtkEle,Ele_Neutral,5;
+      bonus2 bMagicAtkEle,Ele_Holy,5;
+      bonus2 bMagicAtkEle,Ele_Wind,5;
+      bonus2 bMagicAtkEle,Ele_Dark,5;
+      bonus2 bMagicAtkEle,Ele_Ghost,5;
+      bonus2 bMagicAtkEle,Ele_Undead,5;
       if (.@r>=7) {
          bonus2 bMagicAtkEle,Ele_Holy,6;
          bonus2 bMagicAtkEle,Ele_Fire,6;

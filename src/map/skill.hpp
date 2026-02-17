@@ -10,6 +10,7 @@
 #include <common/cbasetypes.hpp>
 #include <common/database.hpp>
 #include <common/db.hpp>
+#include <common/ers.hpp>
 #include <common/mmo.hpp> // MAX_SKILL, struct square
 #include <common/timer.hpp>
 
@@ -28,6 +29,7 @@ struct status_change_entry;
 class status_change;
 class SkillImpl;
 
+extern struct eri* skill_timer_ers;
 extern DBMap* bowling_db;
 
 #ifndef TIMERSKILL_INTERVAL
@@ -598,6 +600,8 @@ void skill_clear_unitgroup(block_list *src);
 int32 skill_clear_group(block_list *bl, uint8 flag);
 void ext_skill_unit_onplace(skill_unit *unit, block_list *bl, t_tick tick);
 int64 skill_unit_ondamaged(skill_unit *unit,int64 damage);
+std::shared_ptr<s_skill_unit_group> skill_locate_element_field(block_list *bl); // [Skotlex]
+bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
 
 // Skill unit visibility [Cydh]
 void skill_getareachar_skillunit_visibilty(skill_unit *su, enum send_target target);
@@ -627,6 +631,7 @@ int32 skill_check_pc_partner(map_session_data *sd, uint16 skill_id, uint16 *skil
 int32 skill_unit_move(block_list *bl,t_tick tick,int32 flag);
 void skill_unit_move_unit_group( std::shared_ptr<s_skill_unit_group> group, int16 m,int16 dx,int16 dy);
 void skill_unit_move_unit(block_list *bl, int32 dx, int32 dy);
+bool skill_check_unit_movepos(uint8 check_flag, block_list *bl, int16 dst_x, int16 dst_y, int32 easy, bool checkpath);
 
 int32 skill_sit(map_session_data *sd, bool sitting);
 void skill_repairweapon( map_session_data& sd, int32 idx );
@@ -636,6 +641,7 @@ int32 skill_autospell(map_session_data *md,uint16 skill_id);
 
 int32 skill_calc_heal(block_list *src, block_list *target, uint16 skill_id, uint16 skill_lv, bool heal);
 
+int32 skill_trap_splash(block_list* bl, va_list ap);
 bool skill_check_cloaking(block_list *bl, struct status_change_entry *sce);
 int8 skill_isCopyable(map_session_data *sd, uint16 skill_id);
 
@@ -660,7 +666,9 @@ int32 skill_castend_damage_id( block_list* src, block_list *bl,uint16 skill_id,u
 int32 skill_castend_pos2( block_list *src, int32 x,int32 y,uint16 skill_id,uint16 skill_lv,t_tick tick,int32 flag);
 int32 skill_area_sub(block_list *bl, va_list ap);
 int32 skill_area_sub_count(block_list* src, block_list* target, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag);
+TIMER_FUNC(skill_timerskill);
 extern int32 skill_area_temp[8];
+int32 skill_castend_song(block_list* src, uint16 skill_id, uint16 skill_lv, t_tick tick);
 
 bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick);
 void skill_blockpc_clear(map_session_data &sd);
@@ -2877,6 +2885,8 @@ void skill_poisoningweapon( map_session_data& sd, t_itemid nameid );
  **/
 void skill_select_menu( map_session_data& sd, uint16 skill_id );
 
+extern AbraDatabase abra_db;
+
 int32 skill_elementalanalysis( map_session_data& sd, int32 n, uint16 skill_lv, uint16 *item_list ); // Sorcerer Four Elemental Analisys.
 int32 skill_changematerial(map_session_data *sd, int32 n, uint16 *item_list);	// Genetic Change Material.
 int32 skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
@@ -2890,6 +2900,9 @@ void skill_combo(block_list* src,block_list *dsrc, block_list *bl, uint16 skill_
 enum sc_type skill_get_sc(int16 skill_id);
 void skill_reveal_trap_inarea(block_list *src, int32 range, int32 x, int32 y);
 int32 skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv);
+
+bool skill_mirage_cast( block_list& src, block_list* bl, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, t_tick tick, int32 flag );
+int32 skill_shimiru_check_cell( block_list* target, va_list ap );
 
 /// Variable name of copied skill by Plagiarism
 #define SKILL_VAR_PLAGIARISM "CLONE_SKILL"

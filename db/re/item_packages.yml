@@ -1136,26 +1136,26 @@ Body:
     Groups:
       - Group: 0
         Items:
-          - Item: aegis_401000
+          - Item: C_Liamette_Hair_Band
       - Group: 1
         Items:
-          - Item: aegis_410474
+          - Item: C_Chained_Bear
   - Item: Niflheim_Select_2
     Groups:
       - Group: 0
         Items:
-          - Item: aegis_401001
+          - Item: C_N_Piamette_Bonnet
       - Group: 1
         Items:
-          - Item: aegis_420575
+          - Item: C_N_Piamette_RollHair
   - Item: Niflheim_Select_3
     Groups:
       - Group: 0
         Items:
-          - Item: aegis_420576
+          - Item: C_Nightmare_Chain
       - Group: 1
         Items:
-          - Item: aegis_480632
+          - Item: C_N_Mad_Bunny
   - Item: aegis_105830
     Groups:
       - Group: 0
@@ -1222,15 +1222,15 @@ Body:
     Groups:
       - Group: 0
         Items:
-          - Item: aegis_420570
+          - Item: C_Feather_Hair_TT
       - Group: 1
         Items:
-          - Item: aegis_420571
+          - Item: C_Feather_Hair_BD
   - Item: Select_Costume_DEC_3
     Groups:
       - Group: 0
         Items:
-          - Item: aegis_420515
+          - Item: C_Wonderful_Long
       - Group: 1
         Items:
-          - Item: aegis_420514
+          - Item: C_Wonderful_Long_N
