@@ -7,17 +7,32 @@
 
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
+#include "allinthesky.cpp"
+#include "bookofcreatingstar.cpp"
 #include "circleofdirectionsandelementals.cpp"
 #include "counter.cpp"
+#include "curseexplosion.cpp"
+#include "dawnbreak.cpp"
+#include "documentofsunmoonandstar.cpp"
 #include "downkick.cpp"
+#include "esha.cpp"
 #include "eska.cpp"
 #include "eske.cpp"
 #include "esma.cpp"
+#include "espa.cpp"
 #include "estin.cpp"
 #include "estun.cpp"
+#include "eswhoo.cpp"
 #include "eswoo.cpp"
 #include "exorcismofmalicioussoul.cpp"
+#include "fairyssoul.cpp"
+#include "falconssoul.cpp"
+#include "fallingstar.cpp"
 #include "feelingthesunmoonandstars.cpp"
+#include "flashkick.cpp"
+#include "fullmoonkick.cpp"
+#include "golemssoul.cpp"
+#include "gravitycontrol.cpp"
 #include "hatredofthesunmoonandstars.cpp"
 #include "highjump.cpp"
 #include "jumpkick.cpp"
@@ -25,11 +40,29 @@
 #include "kaite.cpp"
 #include "kaizel.cpp"
 #include "kaupe.cpp"
+#include "kaute.cpp"
+#include "midnightkick.cpp"
 #include "mission.cpp"
+#include "newmoonkick.cpp"
+#include "noonblast.cpp"
+#include "novaexplosion.cpp"
+#include "prominencekick.cpp"
+#include "risingmoon.cpp"
+#include "risingsun.cpp"
 #include "run.cpp"
 #include "sevenwind.cpp"
+#include "shadowssoul.cpp"
+#include "skymoon.cpp"
+#include "skysun.cpp"
+#include "solarburst.cpp"
+#include "soulcollect.cpp"
+#include "soulcurse.cpp"
+#include "souldivision.cpp"
+#include "soulexplosion.cpp"
 #include "soulgathering.cpp"
 #include "soulofheavenandearth.cpp"
+#include "soulrevolution.cpp"
+#include "soulunity.cpp"
 #include "spiritofrebirth.cpp"
 #include "spiritofthealchemist.cpp"
 #include "spiritoftheartist.cpp"
@@ -46,7 +79,12 @@
 #include "spiritofthestargladiator.cpp"
 #include "spiritofthesupernovice.cpp"
 #include "spiritofthewizard.cpp"
+#include "starburst.cpp"
+#include "starcannon.cpp"
+#include "staremperoradvent.cpp"
+#include "starlightkick.cpp"
 #include "stormkick.cpp"
+#include "sunsetblast.cpp"
 #include "talismanofblacktortoise.cpp"
 #include "talismanofbluedragon.cpp"
 #include "talismanoffiveelements.cpp"
@@ -59,6 +97,7 @@
 #include "talismanofwhitetiger.cpp"
 #include "totemoftutelary.cpp"
 #include "turnkick.cpp"
+#include "twinklinggalaxy.cpp"
 #include "warmthofthemoon.cpp"
 #include "warmthofthestars.cpp"
 #include "warmthofthesun.cpp"
@@ -83,10 +122,24 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SG_SUN_WARM:
 			return std::make_unique<SkillWarmthoftheSun>();
+		case SJ_BOOKOFCREATINGSTAR:
+			return std::make_unique<SkillBookofCreatingStar>();
 		case SJ_BOOKOFDIMENSION:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SJ_DOCUMENT:
+			return std::make_unique<SkillDocumentofSunMoonAndStar>();
 		case SJ_FALLINGSTAR:
-			return std::make_unique<StatusSkillImpl>(skill_id);
+			return std::make_unique<SkillFallingStar>();
+		case SJ_FALLINGSTAR_ATK:
+			return std::make_unique<SkillFallingStarAttack>();
+		case SJ_FALLINGSTAR_ATK2:
+			return std::make_unique<SkillFallingStarAttack2>();
+		case SJ_FLASHKICK:
+			return std::make_unique<SkillFlashKick>();
+		case SJ_FULLMOONKICK:
+			return std::make_unique<SkillFullMoonKick>();
+		case SJ_GRAVITYCONTROL:
+			return std::make_unique<SkillGravityControl>();
 		case SJ_LIGHTOFMOON:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SJ_LIGHTOFSTAR:
@@ -95,20 +148,50 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SJ_LUNARSTANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SJ_NEWMOONKICK:
+			return std::make_unique<SkillNewMoonKick>();
+		case SJ_NOVAEXPLOSING:
+			return std::make_unique<SkillNovaExplosion>();
+		case SJ_PROMINENCEKICK:
+			return std::make_unique<SkillProminenceKick>();
+		case SJ_SOLARBURST:
+			return std::make_unique<SkillSolarBurst>();
+		case SJ_STAREMPEROR:
+			return std::make_unique<SkillStarEmperorAdvent>();
 		case SJ_STARSTANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case SJ_SUNSTANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
 		case SJ_UNIVERSESTANCE:
 			return std::make_unique<StatusSkillImpl>(skill_id, true);
+		case SKE_ALL_IN_THE_SKY:
+			return std::make_unique<SkillAllInTheSky>();
 		case SKE_DAWN_BREAK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillDawnBreak>();
 		case SKE_ENCHANTING_SKY:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case SKE_MIDNIGHT_KICK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillMidnightKick>();
+		case SKE_NOON_BLAST:
+			return std::make_unique<SkillNoonBlast>();
 		case SKE_RISING_MOON:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillRisingMoon>();
+		case SKE_RISING_SUN:
+			return std::make_unique<SkillRisingSun>();
+		case SKE_SKY_MOON:
+			return std::make_unique<SkillSkyMoon>();
+		case SKE_SKY_SUN:
+			return std::make_unique<SkillSkySun>();
+		case SKE_STAR_BURST:
+			return std::make_unique<SkillStarBurst>();
+		case SKE_STAR_CANNON:
+			return std::make_unique<SkillStarCannon>();
+		case SKE_STAR_LIGHT_KICK:
+			return std::make_unique<SkillStarLightKick>();
+		case SKE_SUNSET_BLAST:
+			return std::make_unique<SkillSunsetBlast>();
+		case SKE_TWINKLING_GALAXY:
+			return std::make_unique<SkillTwinklingGalaxy>();
 		case SL_ALCHEMIST:
 			return std::make_unique<SkillSpiritoftheAlchemist>();
 		case SL_ASSASIN:
@@ -191,8 +274,38 @@ std::unique_ptr<const SkillImpl> SkillFactoryTaekwon::create(const e_skill skill
 			return std::make_unique<SkillTalismanOfWhiteTiger>();
 		case SOA_TOTEM_OF_TUTELARY:
 			return std::make_unique<SkillTotemOfTutelary>();
+		case SP_CURSEEXPLOSION:
+			return std::make_unique<SkillCurseExplosion>();
+		case SP_KAUTE:
+			return std::make_unique<SkillKaute>();
+		case SP_SHA:
+			return std::make_unique<SkillEsha>();
+		case SP_SOULCOLLECT:
+			return std::make_unique<SkillSoulCollect>();
+		case SP_SOULCURSE:
+			return std::make_unique<SkillSoulCurse>();
+		case SP_SOULDIVISION:
+			return std::make_unique<SkillSoulDivision>();
+		case SP_SOULEXPLOSION:
+			return std::make_unique<SkillSoulExplosion>();
+		case SP_SOULFAIRY:
+			return std::make_unique<SkillFairysSoul>();
+		case SP_SOULFALCON:
+			return std::make_unique<SkillFalconsSoul>();
+		case SP_SOULGOLEM:
+			return std::make_unique<SkillGolemsSoul>();
 		case SP_SOULREAPER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SP_SOULREVOLVE:
+			return std::make_unique<SkillSoulRevolution>();
+		case SP_SOULSHADOW:
+			return std::make_unique<SkillShadowsSoul>();
+		case SP_SOULUNITY:
+			return std::make_unique<SkillSoulUnity>();
+		case SP_SPA:
+			return std::make_unique<SkillEspa>();
+		case SP_SWHOO:
+			return std::make_unique<SkillEswhoo>();
 		case TK_COUNTER:
 			return std::make_unique<SkillCounter>();
 		case TK_DODGE:

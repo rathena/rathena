@@ -7,9 +7,19 @@
 
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
+#include "abyssdagger.cpp"
+#include "abyssflame.cpp"
+#include "abysssquare.cpp"
 #include "antidote.cpp"
+#include "autoshadowspell.cpp"
 #include "backslide.cpp"
 #include "backstab.cpp"
+#include "bloodylust.cpp"
+#include "bodypainting.cpp"
+#include "chainreactionshot.cpp"
+#include "chaospanic.cpp"
+#include "chasingbreak.cpp"
+#include "chasingshot.cpp"
 #include "cloaking.cpp"
 #include "cloakingexceed.cpp"
 #include "closeconfine.cpp"
@@ -19,37 +29,57 @@
 #include "createnewpoison.cpp"
 #include "crossimpact.cpp"
 #include "crossripperslasher.cpp"
+#include "crossslash.cpp"
 #include "dancingknife.cpp"
 #include "darkclaw.cpp"
 #include "darkillusion.cpp"
+#include "deftstab.cpp"
 #include "detoxify.cpp"
+#include "dimensiondoor.cpp"
 #include "divestall.cpp"
 #include "divestarmor.cpp"
 #include "divesthelm.cpp"
 #include "divestshield.cpp"
 #include "divestweapon.cpp"
+#include "emergencyescape.cpp"
 #include "enchantdeadlypoison.cpp"
 #include "enchantpoison.cpp"
 #include "envenom.cpp"
 #include "eternalslash.cpp"
+#include "fatalmenace.cpp"
 #include "fatalshadowcrow.cpp"
+#include "feintbomb.cpp"
 #include "findstone.cpp"
+#include "frenzyshot.cpp"
+#include "fromtheabyss.cpp"
 #include "grimtooth.cpp"
 #include "hallucinationwalk.cpp"
 #include "hiding.cpp"
+#include "hitandsliding.cpp"
 #include "impactcrater.cpp"
+#include "invisibility.cpp"
+#include "maelstrom.cpp"
+#include "manhole.cpp"
+#include "masqueradeenervation.cpp"
+#include "masqueradegloomy.cpp"
+#include "masqueradeignorance.cpp"
+#include "masqueradelaziness.cpp"
+#include "masqueradeunlucky.cpp"
+#include "masqueradeweakness.cpp"
 #include "meteorassault.cpp"
 #include "mug.cpp"
+#include "omegaabyssstrike.cpp"
 #include "phantommenace.cpp"
 #include "poisoningweapon.cpp"
 #include "poisonsmoke.cpp"
 #include "remover.cpp"
+#include "reproduce.cpp"
 #include "rollingcutter.cpp"
 #include "sandattack.cpp"
 #include "savageimpact.cpp"
 #include "scribble.cpp"
+#include "shadowform.cpp"
 #include "shadowstab.cpp"
-#include "crossslash.cpp"
 #include "sightlessmind.cpp"
 #include "snatch.cpp"
 #include "sonicblow.cpp"
@@ -57,7 +87,11 @@
 #include "steal.cpp"
 #include "stealth.cpp"
 #include "stonefling.cpp"
+#include "stripaccessory.cpp"
+#include "stripshadow.cpp"
 #include "throwvenomknife.cpp"
+#include "triangleshot.cpp"
+#include "unluckyrush.cpp"
 #include "venomdust.cpp"
 #include "venompressure.cpp"
 #include "venomsplasher.cpp"
@@ -65,10 +99,40 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case ABC_ABYSS_DAGGER:
+			return std::make_unique<SkillAbyssDagger>();
+		case ABC_ABYSS_FLAME:
+			return std::make_unique<SkillAbyssFlame>();
+		case ABC_ABYSS_FLAME_ATK:
+			return std::make_unique<SkillAbyssFlameAttack>();
 		case ABC_ABYSS_SLAYER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case ABC_ABYSS_SQUARE:
+			return std::make_unique<SkillAbyssSquare>();
+		case ABC_ABYSS_STRIKE:
+			return std::make_unique<SkillOmegaAbyssStrike>();
+		case ABC_CHAIN_REACTION_SHOT:
+			return std::make_unique<SkillChainReactionShot>();
 		case ABC_CHAIN_REACTION_SHOT_ATK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillChainReactionShotAttack>();
+		case ABC_CHASING_BREAK:
+			return std::make_unique<SkillChasingBreak>();
+		case ABC_CHASING_SHOT:
+			return std::make_unique<SkillChasingShot>();
+		case ABC_DEFT_STAB:
+			return std::make_unique<SkillDeftStab>();
+		case ABC_FRENZY_SHOT:
+			return std::make_unique<SkillFrenzyShot>();
+		case ABC_FROM_THE_ABYSS:
+			return std::make_unique<SkillFromTheAbyss>();
+		case ABC_FROM_THE_ABYSS_ATK:
+			return std::make_unique<SkillFromTheAbyssAttack>();
+		case ABC_HIT_AND_SLIDING:
+			return std::make_unique<SkillHitAndSliding>();
+		case ABC_STRIP_SHADOW:
+			return std::make_unique<SkillStripShadow>();
+		case ABC_UNLUCKY_RUSH:
+			return std::make_unique<SkillUnluckyRush>();
 		case ASC_BREAKER:
 			return std::make_unique<SkillSoulDestroyer>();
 		case ASC_CDP:
@@ -149,12 +213,50 @@ std::unique_ptr<const SkillImpl> SkillFactoryThief::create(const e_skill skill_i
 			return std::make_unique<SkillDivestShield>();
 		case RG_STRIPWEAPON:
 			return std::make_unique<SkillDivestWeapon>();
+		case SC_AUTOSHADOWSPELL:
+			return std::make_unique<SkillAutoShadowSpell>();
+		case SC_BLOODYLUST:
+			return std::make_unique<SkillBloodyLust>();
+		case SC_BODYPAINT:
+			return std::make_unique<SkillBodyPainting>();
+		case SC_CHAOSPANIC:
+			return std::make_unique<SkillChaosPanic>();
 		case SC_DEADLYINFECT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case SC_DIMENSIONDOOR:
+			return std::make_unique<SkillDimensionDoor>();
+		case SC_ENERVATION:
+			return std::make_unique<SkillMasqueradeEnervation>();
+		case SC_ESCAPE:
+			return std::make_unique<SkillEmergencyEscape>();
+		case SC_FATALMENACE:
+			return std::make_unique<SkillFatalMenace>();
 		case SC_FEINTBOMB:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillFeintBomb>();
+		case SC_GROOMY:
+			return std::make_unique<SkillMasqueradeGloomy>();
+		case SC_IGNORANCE:
+			return std::make_unique<SkillMasqueradeIgnorance>();
+		case SC_INVISIBILITY:
+			return std::make_unique<SkillInvisibility>();
+		case SC_LAZINESS:
+			return std::make_unique<SkillMasqueradeLaziness>();
+		case SC_MAELSTROM:
+			return std::make_unique<SkillMaelstrom>();
+		case SC_MANHOLE:
+			return std::make_unique<SkillManHole>();
+		case SC_REPRODUCE:
+			return std::make_unique<SkillReproduce>();
+		case SC_SHADOWFORM:
+			return std::make_unique<SkillShadowForm>();
+		case SC_STRIPACCESSARY:
+			return std::make_unique<SkillStripAccessory>();
 		case SC_TRIANGLESHOT:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillTriangleShot>();
+		case SC_UNLUCKY:
+			return std::make_unique<SkillMasqueradeUnlucky>();
+		case SC_WEAKNESS:
+			return std::make_unique<SkillMasqueradeWeakness>();
 		case SHC_CROSS_SLASH:
 			return std::make_unique<SkillCrossSlash>();
 		case SHC_DANCING_KNIFE:
