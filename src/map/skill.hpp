@@ -641,6 +641,7 @@ int32 skill_autospell(map_session_data *md,uint16 skill_id);
 
 int32 skill_calc_heal(block_list *src, block_list *target, uint16 skill_id, uint16 skill_lv, bool heal);
 
+int32 skill_trap_splash(block_list* bl, va_list ap);
 bool skill_check_cloaking(block_list *bl, struct status_change_entry *sce);
 int8 skill_isCopyable(map_session_data *sd, uint16 skill_id);
 
