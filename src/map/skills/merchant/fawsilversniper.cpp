@@ -3,6 +3,8 @@
 
 #include "fawsilversniper.hpp"
 
+#include <common/timer.hpp>
+
 #include "map/mob.hpp"
 
 SkillFawSilverSniper::SkillFawSilverSniper() : SkillImpl(NC_SILVERSNIPER) {
