@@ -51,8 +51,10 @@ void SkillInfiltrate::castendDamageId(block_list *src, block_list *target, uint1
 			dir = dir < 4 ? dir+4 : dir-4; // change direction [Celest]
 			unit_setdir(target,dir);
 			clif_blown(src);
-		} else if (sd) {
-			clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL_TARGET_SHADOW_SPACE );
+		} else {
+			if (sd != nullptr) {
+				clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL_TARGET_SHADOW_SPACE );
+			}
 			return;
 		}
 	}

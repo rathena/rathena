@@ -5473,7 +5473,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (status_get_race(target) == RC_DEMIHUMAN || status_get_race(target) == RC_DEMON)
 				wd->div_ = 3;
 			break;
-
 	}
 	return skillratio;
 }

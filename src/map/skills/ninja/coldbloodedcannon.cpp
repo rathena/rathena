@@ -39,7 +39,9 @@ void SkillColdBloodedCannon::castendPos2(block_list* src, int32 x, int32 y, uint
 
 	skill_mirage_cast(*src, nullptr, SS_ANTENPOU, skill_lv, 0, 0, tick, flag | BCT_WOS);
 	if (map_getcell(src->m, x, y, CELL_CHKLANDPROTECTOR)) {
-		clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL );
+		if (sd != nullptr) {
+			clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL );
+		}
 		flag |= SKILL_NOCONSUME_REQ;
 		return;
 	}
