@@ -26,5 +26,6 @@ void SkillHuumaShurikenGrasp::calculateSkillRatio(const Damage *wd, const block_
 }
 
 void SkillHuumaShurikenGrasp::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
+	// Ammo should be deleted right away.
 	skill_unitsetting(src,getSkillId(),skill_lv,x,y,0);
 }
