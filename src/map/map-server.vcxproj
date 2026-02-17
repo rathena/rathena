@@ -1669,6 +1669,8 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/druid/zephyrlink.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/basicgrenade.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
