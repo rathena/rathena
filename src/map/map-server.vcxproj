@@ -472,10 +472,9 @@
     <ClInclude Include="skills/mage/endowquake.hpp" />
     <ClInclude Include="skills/mage/endowtornado.hpp" />
     <ClInclude Include="skills/mage/endowtsunami.hpp" />
-    <ClInclude Include="skills/mage/energycoat.hpp" />
     <ClInclude Include="skills/mage/energyconversion.hpp" />
-    <ClInclude Include="skills/mage/fiberlock.hpp" />
     <ClInclude Include="skills/mage/eyesofstorm.hpp" />
+    <ClInclude Include="skills/mage/fiberlock.hpp" />
     <ClInclude Include="skills/mage/fireball.hpp" />
     <ClInclude Include="skills/mage/firebolt.hpp" />
     <ClInclude Include="skills/mage/firepillar.hpp" />
@@ -499,8 +498,8 @@
     <ClInclude Include="skills/mage/hindsight.hpp" />
     <ClInclude Include="skills/mage/hocuspocus.hpp" />
     <ClInclude Include="skills/mage/icewall.hpp" />
-    <ClInclude Include="skills/mage/indulge.hpp" />
     <ClInclude Include="skills/mage/increasingactivity.hpp" />
+    <ClInclude Include="skills/mage/indulge.hpp" />
     <ClInclude Include="skills/mage/jackfrost.hpp" />
     <ClInclude Include="skills/mage/jupitelthunder.hpp" />
     <ClInclude Include="skills/mage/leveling.hpp" />
@@ -1723,14 +1722,13 @@
     <ClCompile Include="skills/mage/endowtsunami.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/mage/energycoat.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="skills/mage/energyconversion.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/mage/fiberlock.cpp">
     <ClCompile Include="skills/mage/eyesofstorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/fiberlock.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/fireball.cpp">
@@ -1802,8 +1800,10 @@
     <ClCompile Include="skills/mage/icewall.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/mage/indulge.cpp">
     <ClCompile Include="skills/mage/increasingactivity.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/indulge.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/jackfrost.cpp">

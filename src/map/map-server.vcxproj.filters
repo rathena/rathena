@@ -960,6 +960,9 @@
     <ClInclude Include="skills/mage/beastlyhypnosis.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/blindingmist.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/castcancel.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -1062,13 +1065,13 @@
     <ClInclude Include="skills/mage/endowtsunami.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/energycoat.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
     <ClInclude Include="skills/mage/energyconversion.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/eyesofstorm.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/fiberlock.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/fireball.hpp">
@@ -1143,6 +1146,9 @@
     <ClInclude Include="skills/mage/increasingactivity.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/indulge.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/jackfrost.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -1168,6 +1174,9 @@
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/meteorstorm.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/mindbreaker.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/monocell.hpp">
@@ -1233,7 +1242,13 @@
     <ClInclude Include="skills/mage/skill_factory_mage.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mage/soulexhale.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/soulexpansion.hpp">
+      <Filter>Header Files\Skills\Mage</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mage/soulsiphon.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/soulstrike.hpp">
@@ -3167,6 +3182,9 @@
     <ClCompile Include="skills/mage/beastlyhypnosis.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/blindingmist.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/castcancel.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
@@ -3269,13 +3287,13 @@
     <ClCompile Include="skills/mage/endowtsunami.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mage/energycoat.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
     <ClCompile Include="skills/mage/energyconversion.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/eyesofstorm.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/fiberlock.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/fireball.cpp">
@@ -3350,6 +3368,9 @@
     <ClCompile Include="skills/mage/increasingactivity.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/indulge.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/jackfrost.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
@@ -3375,6 +3396,9 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/meteorstorm.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/mindbreaker.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/monocell.cpp">
@@ -3440,7 +3464,13 @@
     <ClCompile Include="skills/mage/skill_factory_mage.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mage/soulexhale.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mage/soulexpansion.cpp">
+      <Filter>Source Files\Skills\Mage</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mage/soulsiphon.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/soulstrike.cpp">

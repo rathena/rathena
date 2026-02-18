@@ -300,20 +300,20 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillStoneCurse>();
 		case MG_THUNDERSTORM:
 			return std::make_unique<SkillThunderStorm>();
-		case PF_HPCONVERSION:
-			return std::make_unique<SkillIndulge>();
 		case PF_DOUBLECASTING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case PF_FOGWALL:
 			return std::make_unique<SkillBlindingMist>();
-		case PF_MINDBREAKER:
-			return std::make_unique<SkillMindBreaker>();
+		case PF_HPCONVERSION:
+			return std::make_unique<SkillIndulge>();
 		case PF_MEMORIZE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
-		case PF_SOULCHANGE:
-			return std::make_unique<SkillSoulExhale>();
+		case PF_MINDBREAKER:
+			return std::make_unique<SkillMindBreaker>();
 		case PF_SOULBURN:
 			return std::make_unique<SkillSoulSiphon>();
+		case PF_SOULCHANGE:
+			return std::make_unique<SkillSoulExhale>();
 		case PF_SPIDERWEB:
 			return std::make_unique<SkillFiberLock>();
 		case SA_ABRACADABRA:
