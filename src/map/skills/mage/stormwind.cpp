@@ -5,6 +5,7 @@
 
 #include "map/clif.hpp"
 #include "map/elemental.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillStormWind::SkillStormWind() : SkillImplRecursiveDamageSplash(EM_EL_STORM_WIND) {
