@@ -9,6 +9,7 @@
 #include "map/map.hpp"
 #include "map/path.hpp"
 #include "map/status.hpp"
+#include "map/unit.hpp"
 
 SkillChasingShot::SkillChasingShot() : SkillImplRecursiveDamageSplash(ABC_CHASING_SHOT) {
 }
