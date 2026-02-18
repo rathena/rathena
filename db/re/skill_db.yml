@@ -47026,7 +47026,7 @@ Body:
     Type: Weapon
     TargetType: Self
     Range: 1
-    HitCount: 1
+    HitCount: -2
     Element: Weapon
     SplashArea:
       - Level: 1
