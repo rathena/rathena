@@ -144,7 +144,6 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillFullProtection>();
 		case CR_SLIMPITCHER:
 			return std::make_unique<SkillAidCondensedPotion>();
-
 		case GN_BLOOD_SUCKER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GN_CARTBOOST:
@@ -189,7 +188,6 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillThornTrap>();
 		case GN_WALLOFTHORN:
 			return std::make_unique<SkillWallOfThorns>();
-
 		case MC_CARTDECORATE:
 			return std::make_unique<SkillDecorateCart>();
 		case MC_CARTREVOLUTION:

@@ -6,6 +6,7 @@
 #include <config/core.hpp>
 
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillDemonicFire::SkillDemonicFire() : SkillImplRecursiveDamageSplash(GN_DEMONIC_FIRE) {
 }
@@ -23,5 +24,6 @@ void SkillDemonicFire::calculateSkillRatio(const Damage *wd, const block_list *s
 }
 
 void SkillDemonicFire::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
+	// Ammo should be deleted right away.
 	skill_unitsetting(src,getSkillId(),skill_lv,x,y,0);
 }

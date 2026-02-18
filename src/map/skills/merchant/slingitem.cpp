@@ -3,7 +3,6 @@
 
 #include "slingitem.hpp"
 
-#include "map/battle.hpp"
 #include "map/clif.hpp"
 #include "map/itemdb.hpp"
 #include "map/map.hpp"

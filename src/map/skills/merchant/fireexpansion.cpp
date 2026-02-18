@@ -3,7 +3,9 @@
 
 #include "fireexpansion.hpp"
 
+#include "map/map.hpp"
 #include "map/pc.hpp"
+#include "map/unit.hpp"
 
 // GN_FIRE_EXPANSION
 SkillFireExpansion::SkillFireExpansion() : SkillImpl(GN_FIRE_EXPANSION) {

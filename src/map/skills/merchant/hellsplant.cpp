@@ -12,11 +12,6 @@
 SkillHellsPlant::SkillHellsPlant() : StatusSkillImpl(GN_HELLS_PLANT) {
 }
 
-void SkillHellsPlant::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
-}
-
-
 // GN_HELLS_PLANT_ATK
 SkillHellsPlantAttack::SkillHellsPlantAttack() : SkillImplRecursiveDamageSplash(GN_HELLS_PLANT_ATK) {
 }
