@@ -10533,7 +10533,7 @@
 	export_constant(INF2_IGNOREGTB);
 	export_constant(INF2_TOGGLEABLE);
 	export_constant(INF2_IGNORENONCRITATKBONUS);
-	export_constant(INF2_DIAMOND_SPLASH);
+	export_constant(INF2_DIAMONDSPLASH);
 
 	/* skill no near npc flags */
 	export_constant(SKILL_NONEAR_WARPPORTAL);

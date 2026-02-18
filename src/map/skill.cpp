@@ -3792,7 +3792,7 @@ static bool skill_area_diamond_check(const block_list* src, const block_list* bl
 {
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
-	if (!skill || !skill->inf2[INF2_DIAMOND_SPLASH]) {
+	if (!skill || !skill->inf2[INF2_DIAMONDSPLASH]) {
 		return true;
 	}
 

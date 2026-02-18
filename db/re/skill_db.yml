@@ -47050,7 +47050,7 @@ Body:
       - Level: 10
         Area: 4
     Flags:
-      DIAMOND_SPLASH: true
+      DiamondSplash: true
     AfterCastActDelay: 200
     Requires:
       SpCost:
@@ -48733,7 +48733,7 @@ Body:
       - Level: 10
         Area: 3
     Flags:
-      DIAMOND_SPLASH: true
+      DiamondSplash: true
     CastTime: 1000
     FixedCastTime: 1500
     AfterCastActDelay: 200
@@ -49090,7 +49090,7 @@ Body:
       - Level: 5
         Area: 6
     Flags:
-      DIAMOND_SPLASH: true
+      DiamondSplash: true
     AfterCastActDelay: 200
     Requires:
       SpCost:

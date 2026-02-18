@@ -127,7 +127,7 @@ enum e_skill_inf2 : uint8 {
 	INF2_IGNOREGTB, // Skill ignores effect of GTB
 	INF2_TOGGLEABLE, // Skill can be toggled on and off (won't consume HP/SP when toggled off)
 	INF2_IGNORENONCRITATKBONUS, // Skill ignores the bonus of bNonCritAtkRate
-	INF2_DIAMOND_SPLASH, // Skill uses diamond-shaped splash area.
+	INF2_DIAMONDSPLASH, // Skill uses diamond-shaped splash area.
 	INF2_MAX,
 };
 
