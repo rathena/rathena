@@ -4,6 +4,7 @@
 #include "indulge.hpp"
 
 #include "map/clif.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillIndulge::SkillIndulge() : SkillImpl(PF_HPCONVERSION) {
