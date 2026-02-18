@@ -22,6 +22,7 @@
 #include "blessing.cpp"
 #include "bssacramenti.cpp"
 #include "cantocandidus.cpp"
+#include "chaincrushcombo.cpp"
 #include "clearance.cpp"
 #include "coluceoheal.cpp"
 #include "competentia.cpp"
@@ -38,6 +39,7 @@
 #include "explosionblaster.cpp"
 #include "firstbrand.cpp"
 #include "framen.cpp"
+#include "glacierfist.cpp"
 #include "gloria.cpp"
 #include "heal.cpp"
 #include "highnessheal.cpp"
@@ -63,6 +65,7 @@
 #include "pneuma.cpp"
 #include "pneumaticusprocella.cpp"
 #include "praefatio.cpp"
+#include "ragingpalmstrike.cpp"
 #include "ragingquadrupleblow.cpp"
 #include "ragingthrust.cpp"
 #include "ragingtrifectablow.cpp"
@@ -84,6 +87,7 @@
 #include "throwspiritsphere.cpp"
 #include "turnundead.cpp"
 #include "vituperatum.cpp"
+#include "zen.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill_id) const {
 	switch( skill_id ){
@@ -188,9 +192,13 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 		case CD_REPARATIO:
 			return std::make_unique<SkillReparatio>();
 		case CH_CHAINCRUSH:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillChainCrushCombo>();
+		case CH_PALMSTRIKE:
+			return std::make_unique<SkillRagingPalmStrike>();
+		case CH_SOULCOLLECT:
+			return std::make_unique<SkillZen>();
 		case CH_TIGERFIST:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillGlacierFist>();
 		case HP_ASSUMPTIO:
 			return std::make_unique<SkillAssumptio>();
 		case HP_BASILICA:
