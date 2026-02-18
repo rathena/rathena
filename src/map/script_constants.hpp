@@ -273,8 +273,10 @@
 	export_constant2("EAJL_UPPER",JOBL_UPPER);
 	export_constant2("EAJL_BABY",JOBL_BABY);
 
-	export_constant2("EAJ_BASEMASK",MAPID_FIRSTMASK);// Update name in future update for item/scripts. (Rytech)
-	export_constant2("EAJ_UPPERMASK",MAPID_SECONDMASK);// Update name in future update for item/scripts. (Rytech)
+	export_constant2("EAJ_BASEMASK",MAPID_FIRSTMASK);// Use EAJ_FIRSTMASK instead.
+	export_constant2("EAJ_UPPERMASK",MAPID_SECONDMASK);// Use EAJ_SECONDMASK instead.
+	export_constant2("EAJ_FIRSTMASK",MAPID_FIRSTMASK);
+	export_constant2("EAJ_SECONDMASK",MAPID_SECONDMASK);
 	export_constant2("EAJ_THIRDMASK",MAPID_THIRDMASK);
 	export_constant2("EAJ_FOURTHMASK",MAPID_FOURTHMASK);
 
@@ -593,8 +595,18 @@
 	export_parameter("MaxSp",SP_MAXSP);
 	export_parameter("Ap",SP_AP);
 	export_parameter("MaxAp",SP_MAXAP);
-	export_parameter("BaseJob",SP_BASESECOND);// Update name in future update for item/scripts. (Rytech)
-	export_parameter("BaseClass",SP_BASEFIRST);// Update name in future update for item/scripts. (Rytech)
+	export_parameter("BaseJob",SP_BASESECOND);// Use BaseSecond instead.
+	export_parameter("BaseClass",SP_BASEFIRST);// Use BaseFirst instead.
+	export_parameter("BaseFirst",SP_BASEFIRST);
+	export_parameter("BaseSecond",SP_BASESECOND);
+	export_parameter("BaseThird",SP_BASETHIRD);
+	export_parameter("BaseFourth",SP_BASEFOURTH);
+	export_parameter("IsPrimaryThird",SP_PRIMARY_THIRD);
+	export_parameter("IsPrimaryFourth",SP_PRIMARY_FOURTH);
+	export_parameter("IsUpperExpandedFirst",SP_UPPER_EXPANDED_FIRST);
+	export_parameter("IsUpperExpandedSecond",SP_UPPER_EXPANDED_SECOND);
+	export_parameter("IsRenewalJob",SP_RENEWAL_JOB);
+	export_parameter("IsTraitJob",SP_TRAIT_JOB);
 	export_parameter("killerrid",SP_KILLERRID);
 	export_parameter("killedrid",SP_KILLEDRID);
 	export_parameter("killedgid",SP_KILLEDGID);
@@ -10721,16 +10733,18 @@
 	export_constant(BG_INFO_DESERTER_TIME);
 
 	/* item job classes */
-	export_constant(ITEMJ_NORMAL);
+	export_constant(ITEMJ_NORMAL);// Pointless. Should be removed.
 	export_constant(ITEMJ_UPPER);
 	export_constant(ITEMJ_BABY);
-	export_constant(ITEMJ_THIRD);
-	export_constant(ITEMJ_THIRD_UPPER);
-	export_constant(ITEMJ_THIRD_BABY);
-	export_constant(ITEMJ_FOURTH);
-	export_constant(ITEMJ_ALL_UPPER);
-	export_constant(ITEMJ_ALL_BABY);
-	export_constant(ITEMJ_ALL_THIRD);
+	export_constant(ITEMJ_THIRD);// Use ITEMJ_RENEWAL_JOB instead.
+	export_constant(ITEMJ_THIRD_UPPER);// Use ITEMJ_RENEWAL_JOB instead.
+	export_constant(ITEMJ_THIRD_BABY);// Use ITEMJ_RENEWAL_JOB instead.
+	export_constant(ITEMJ_FOURTH);// Use ITEMJ_TRAIT_JOB instead.
+	export_constant(ITEMJ_RENEWAL_JOB);
+	export_constant(ITEMJ_TRAIT_JOB);
+	export_constant(ITEMJ_ALL_UPPER);// Note: Deprecated.
+	export_constant(ITEMJ_ALL_BABY);// Note: Deprecated.
+	export_constant(ITEMJ_ALL_THIRD);// Use ITEMJ_RENEWAL_JOB instead.
 
 	/* item drop effects */
 	export_constant(DROPEFFECT_NONE);
