@@ -4,6 +4,7 @@
 #include "howlingofmandragora.hpp"
 
 #include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/status.hpp"
 
 SkillHowlingOfMandragora::SkillHowlingOfMandragora() : SkillImpl(GN_MANDRAGORA) {
