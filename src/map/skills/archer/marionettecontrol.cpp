@@ -3,8 +3,6 @@
 
 #include "marionettecontrol.hpp"
 
-#include <config/const.hpp>
-
 #include "map/clif.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
@@ -24,6 +22,7 @@ void SkillMarionetteControl::castendNoDamageId(block_list *src, block_list *targ
 		if (sd != nullptr) {
 			clif_skill_fail(*sd, getSkillId());
 		}
+		flag |= SKILL_NOCONSUME_REQ;
 		return;
 	}
 
@@ -40,6 +39,8 @@ void SkillMarionetteControl::castendNoDamageId(block_list *src, block_list *targ
 			if (sd != nullptr) {
 				clif_skill_fail(*sd, getSkillId());
 			}
+			flag |= SKILL_NOCONSUME_REQ;
+			return;
 		}
 	}
 }

@@ -3,8 +3,9 @@
 
 #include "wandofhermode.hpp"
 
-#include <config/const.hpp>
 #include <config/core.hpp>
+
+#include "map/status.hpp"
 
 SkillWandOfHermode::SkillWandOfHermode() : SkillImpl(CG_HERMODE) {
 }

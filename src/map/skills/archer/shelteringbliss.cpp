@@ -3,8 +3,6 @@
 
 #include "shelteringbliss.hpp"
 
-#include <config/const.hpp>
-
 SkillShelteringBliss::SkillShelteringBliss() : SkillImpl(CG_MOONLIT) {
 }
 

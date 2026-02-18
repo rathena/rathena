@@ -365,12 +365,13 @@
     <ClInclude Include="skills/archer/impressiveriff.hpp" />
     <ClInclude Include="skills/archer/ladyluck.hpp" />
     <ClInclude Include="skills/archer/landmine.hpp" />
+    <ClInclude Include="skills/archer/longingforfreedom.hpp" />
     <ClInclude Include="skills/archer/lullaby.hpp" />
     <ClInclude Include="skills/archer/magentatrap.hpp" />
     <ClInclude Include="skills/archer/magicstrings.hpp" />
-    <ClInclude Include="skills/archer/marionettecontrol.hpp" />
     <ClInclude Include="skills/archer/maizetrap.hpp" />
     <ClInclude Include="skills/archer/makingarrow.hpp" />
+    <ClInclude Include="skills/archer/marionettecontrol.hpp" />
     <ClInclude Include="skills/archer/melodystrike.hpp" />
     <ClInclude Include="skills/archer/mentalsensing.hpp" />
     <ClInclude Include="skills/archer/pangvoice.hpp" />
@@ -383,8 +384,8 @@
     <ClInclude Include="skills/archer/shelteringbliss.hpp" />
     <ClInclude Include="skills/archer/shockwavetrap.hpp" />
     <ClInclude Include="skills/archer/skidtrap.hpp" />
-    <ClInclude Include="skills/archer/skilledspecialsinger.hpp" />
     <ClInclude Include="skills/archer/skill_factory_archer.hpp" />
+    <ClInclude Include="skills/archer/skilledspecialsinger.hpp" />
     <ClInclude Include="skills/archer/slingingarrow.hpp" />
     <ClInclude Include="skills/archer/slowgrace.hpp" />
     <ClInclude Include="skills/archer/solidtrap.hpp" />
@@ -1401,6 +1402,9 @@
     <ClCompile Include="skills/archer/landmine.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/longingforfreedom.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/lullaby.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1410,13 +1414,13 @@
     <ClCompile Include="skills/archer/magicstrings.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/archer/marionettecontrol.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="skills/archer/maizetrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/makingarrow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/marionettecontrol.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/melodystrike.cpp">
@@ -1455,10 +1459,10 @@
     <ClCompile Include="skills/archer/skidtrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/archer/skilledspecialsinger.cpp">
+    <ClCompile Include="skills/archer/skill_factory_archer.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/archer/skill_factory_archer.cpp">
+    <ClCompile Include="skills/archer/skilledspecialsinger.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/slingingarrow.cpp">

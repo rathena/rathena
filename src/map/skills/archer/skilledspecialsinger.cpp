@@ -3,8 +3,6 @@
 
 #include "skilledspecialsinger.hpp"
 
-#include <config/const.hpp>
-
 #include "map/clif.hpp"
 #include "map/status.hpp"
 

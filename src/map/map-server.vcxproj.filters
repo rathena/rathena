@@ -744,6 +744,9 @@
     <ClInclude Include="skills/archer/landmine.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/longingforfreedom.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/lullaby.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -753,13 +756,13 @@
     <ClInclude Include="skills/archer/magicstrings.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
-    <ClInclude Include="skills/archer/marionettecontrol.hpp">
-      <Filter>Header Files\Skills\Archer</Filter>
-    </ClInclude>
     <ClInclude Include="skills/archer/maizetrap.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/makingarrow.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/marionettecontrol.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/melodystrike.hpp">
@@ -798,10 +801,10 @@
     <ClInclude Include="skills/archer/skidtrap.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
-    <ClInclude Include="skills/archer/skilledspecialsinger.hpp">
+    <ClInclude Include="skills/archer/skill_factory_archer.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
-    <ClInclude Include="skills/archer/skill_factory_archer.hpp">
+    <ClInclude Include="skills/archer/skilledspecialsinger.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/slingingarrow.hpp">
@@ -2966,6 +2969,9 @@
     <ClCompile Include="skills/archer/landmine.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
+    <ClCompile Include="skills/archer/longingforfreedom.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
     <ClCompile Include="skills/archer/lullaby.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
@@ -2975,13 +2981,13 @@
     <ClCompile Include="skills/archer/magicstrings.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
-    <ClCompile Include="skills/archer/marionettecontrol.cpp">
-      <Filter>Source Files\Skills\Archer</Filter>
-    </ClCompile>
     <ClCompile Include="skills/archer/maizetrap.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/makingarrow.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/marionettecontrol.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/melodystrike.cpp">
@@ -3020,10 +3026,10 @@
     <ClCompile Include="skills/archer/skidtrap.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
-    <ClCompile Include="skills/archer/skilledspecialsinger.cpp">
+    <ClCompile Include="skills/archer/skill_factory_archer.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
-    <ClCompile Include="skills/archer/skill_factory_archer.cpp">
+    <ClCompile Include="skills/archer/skilledspecialsinger.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/slingingarrow.cpp">
