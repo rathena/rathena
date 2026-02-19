@@ -472,6 +472,7 @@
     <ClInclude Include="skills/mage/endowquake.hpp" />
     <ClInclude Include="skills/mage/endowtornado.hpp" />
     <ClInclude Include="skills/mage/endowtsunami.hpp" />
+    <ClInclude Include="skills/mage/energycoat.hpp" />
     <ClInclude Include="skills/mage/energyconversion.hpp" />
     <ClInclude Include="skills/mage/eyesofstorm.hpp" />
     <ClInclude Include="skills/mage/fiberlock.hpp" />
@@ -1720,6 +1721,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/endowtsunami.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/energycoat.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/energyconversion.cpp">

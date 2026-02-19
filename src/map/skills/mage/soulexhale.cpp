@@ -41,11 +41,11 @@ void SkillSoulExhale::castendNoDamageId(block_list* src, block_list* target, uin
 #ifdef RENEWAL
 	sp1 /= 2;
 	sp2 /= 2;
-	if (tsc != nullptr && tsc->getSCE(SC_EXTREMITYFIST) != nullptr) {
+	if (tsc != nullptr && tsc->hasSCE(SC_EXTREMITYFIST)) {
 		sp1 = tstatus->sp;
 	}
 #endif
-	if (tsc != nullptr && tsc->getSCE(SC_NORECOVER_STATE) != nullptr) {
+	if (tsc != nullptr && tsc->hasSCE(SC_NORECOVER_STATE)) {
 		sp1 = tstatus->sp;
 	}
 
