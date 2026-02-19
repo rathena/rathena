@@ -3,8 +3,8 @@
 
 #include "enchantblade.hpp"
 
-#include "../../clif.hpp"
-#include "../../status.hpp"
+#include "map/clif.hpp"
+#include "map/status.hpp"
 
 SkillEnchantBlade::SkillEnchantBlade() : SkillImpl(RK_ENCHANTBLADE) {
 }

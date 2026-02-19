@@ -3,7 +3,9 @@
 
 #include "sonicwave.hpp"
 
-#include "../../status.hpp"
+#include <config/core.hpp>
+
+#include "map/status.hpp"
 
 SkillSonicWave::SkillSonicWave() : WeaponSkillImpl(RK_SONICWAVE) {
 }

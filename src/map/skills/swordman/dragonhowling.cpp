@@ -3,7 +3,9 @@
 
 #include "dragonhowling.hpp"
 
-#include "../../clif.hpp"
+#include "map/clif.hpp"
+#include "map/map.hpp"
+#include "map/status.hpp"
 
 SkillDragonHowling::SkillDragonHowling() : SkillImpl(RK_DRAGONHOWLING) {
 }

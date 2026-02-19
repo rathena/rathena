@@ -3,7 +3,8 @@
 
 #include "luxanima.hpp"
 
-#include "../../clif.hpp"
+#include "map/clif.hpp"
+#include "map/status.hpp"
 
 SkillLuxAnima::SkillLuxAnima() : SkillImpl(RK_LUXANIMA) {
 }
