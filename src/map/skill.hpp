@@ -669,7 +669,6 @@ int32 skill_area_sub_count(block_list* src, block_list* target, uint16 skill_id,
 TIMER_FUNC(skill_timerskill);
 extern int32 skill_area_temp[8];
 int32 skill_castend_song(block_list* src, uint16 skill_id, uint16 skill_lv, t_tick tick);
-int32 skill_tarotcard(block_list* src, block_list* target, uint16 skill_id, uint16 skill_lv, t_tick tick);
 
 bool skill_blockpc_start(map_session_data &sd, uint16 skill_id, t_tick tick);
 void skill_blockpc_clear(map_session_data &sd);
