@@ -1764,22 +1764,94 @@
     <ClInclude Include="skills/novice/spiralpiercemax.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/acidbreath.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/agilityup.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/antimagic.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/attributechange.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/bleeding.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/bleeding2.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/blindattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/breakarmor.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/breakhelm.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/breakshield.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/caneofevileye.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/changelocation.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/cloudkill.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/comet2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/criticalwounds.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/crossofdarkness.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/curseattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/cursedcircle.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/dancingblade.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/darkblessing.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/darkbreath.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/darknessbreath.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/darknessjupitel.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/darkpiercing.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/deadlycurse.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/deadlycurse2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/deathsummon.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/decreaseallstats.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/demonshockattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/dragonfear.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/earthattributeattack.hpp">
@@ -1788,10 +1860,52 @@
     <ClInclude Include="skills/npc/earthattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/earthquake.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/electricwalk.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/emotion.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/emotionon.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/energydrain.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/evilland.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/expulsion.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/fatalmenace.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/fireattributeattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/fireattributechange.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/firebreath.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/firestorm.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/firewalk.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/flamecross.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/followersummons.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/fullheal.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/ghostattributeattack.hpp">
@@ -1800,7 +1914,28 @@
     <ClInclude Include="skills/npc/ghostattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/grandcrossofdarkness.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/grounddrive.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/hallucination.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/hellburning.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/helldignity.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/hellpower.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/hellsjudgement.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/hellsjudgement2.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/holyattributeattack.hpp">
@@ -1809,16 +1944,73 @@
     <ClInclude Include="skills/npc/holyattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/icebreath.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/icebreath2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/icemine.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/ignitionbreak.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/increasedgravity.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/invincibleoff.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/jackfrost2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/leash.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/lexaeterna2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/lick.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/metamorphosis.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/milleniumshield2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/monstersummons.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/multistageattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/npcarrowstorm.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/npccoluceoheal.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/npcdragonbreath.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/npchowlingofmandragora.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/npcmagmaeruption.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/npcrayofgenesis.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/npcvenomimpress.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/petrifyattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/phantomthrust.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/piercingattack.hpp">
@@ -1833,10 +2025,49 @@
     <ClInclude Include="skills/npc/poisonattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/poisonbuster.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/powerup.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/propertyimmune.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/provocation.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/psychicwave.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/pulsestrike.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/pulsestrike2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/rainofmeteor.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/randomattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/randommove.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/rebirth.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/recallslaves.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/revenge.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/reverberation2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/run.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/shadowattributeattack.hpp">
@@ -1848,19 +2079,43 @@
     <ClInclude Include="skills/npc/silenceattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="skills/npc/sleepattack.hpp">
-      <Filter>Header Files\Skills\Npc</Filter>
-    </ClInclude>
     <ClInclude Include="skills/npc/skill_factory_npc.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="skills/npc/splashattack.hpp">
+    <ClInclude Include="skills/npc/sleepattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/slowcast.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/smoking.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/soulstrikeofdarkness.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/speedup.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/spiritdestruction.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/splashattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/stoneskin.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/stop.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/stormgust2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/stunattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/suckingblood.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/suicide.hpp">
@@ -1869,22 +2124,103 @@
     <ClInclude Include="skills/npc/suicidebombing.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/talk.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/thunderbreath.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/transformation.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/undeadattributechange.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/undeadelementattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/vampiregift.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/venomfog.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/waterattributeattack.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/waterattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="skills/npc/windattributeattack.hpp">
+    <ClInclude Include="skills/npc/widebleeding.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
-    <ClInclude Include="skills/npc/windattributechange.hpp">
+    <ClInclude Include="skills/npc/widebleeding2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/wideconfusion.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/wideconfusion2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widecriticalwounds.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widecurse.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widecurse2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widefreeze.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widefreeze2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/wideleash.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widepetrify.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widepetrify2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widesight.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widesilence.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widesilence2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widesleep.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widesleep2.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widesouldrain.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widestun.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/widestun2.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/widesuck.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/wideweb.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/windattributeattack.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/windattributechange.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/skill_factory.hpp">
@@ -4139,22 +4475,94 @@
     <ClCompile Include="skills/novice/spiralpiercemax.cpp">
       <Filter>Source Files\Skills\Novice</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/acidbreath.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/agilityup.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/antimagic.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/attributechange.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/bleeding.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/bleeding2.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/blindattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/breakarmor.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/breakhelm.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/breakshield.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/caneofevileye.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/changelocation.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/cloudkill.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/comet2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/criticalwounds.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/crossofdarkness.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/curseattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/cursedcircle.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/dancingblade.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/darkblessing.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/darkbreath.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/darknessbreath.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/darknessjupitel.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/darkpiercing.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/deadlycurse.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/deadlycurse2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/deathsummon.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/decreaseallstats.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/demonshockattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/dragonfear.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/earthattributeattack.cpp">
@@ -4163,10 +4571,52 @@
     <ClCompile Include="skills/npc/earthattributechange.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/earthquake.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/electricwalk.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/emotion.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/emotionon.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/energydrain.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/evilland.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/expulsion.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/fatalmenace.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/fireattributeattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/fireattributechange.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/firebreath.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/firestorm.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/firewalk.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/flamecross.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/followersummons.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/fullheal.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/ghostattributeattack.cpp">
@@ -4175,7 +4625,28 @@
     <ClCompile Include="skills/npc/ghostattributechange.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/grandcrossofdarkness.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/grounddrive.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/hallucination.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/hellburning.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/helldignity.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/hellpower.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/hellsjudgement.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/hellsjudgement2.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/holyattributeattack.cpp">
@@ -4184,16 +4655,73 @@
     <ClCompile Include="skills/npc/holyattributechange.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/icebreath.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/icebreath2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/icemine.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/ignitionbreak.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/increasedgravity.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/invincibleoff.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/jackfrost2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/leash.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/lexaeterna2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/lick.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/metamorphosis.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/milleniumshield2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/monstersummons.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/multistageattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/npcarrowstorm.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npccoluceoheal.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npcdragonbreath.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npchowlingofmandragora.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npcmagmaeruption.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npcrayofgenesis.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npcvenomimpress.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/petrifyattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/phantomthrust.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/piercingattack.cpp">
@@ -4208,10 +4736,49 @@
     <ClCompile Include="skills/npc/poisonattributechange.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/poisonbuster.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/powerup.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/propertyimmune.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/provocation.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/psychicwave.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/pulsestrike.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/pulsestrike2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/rainofmeteor.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/randomattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/randommove.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/rebirth.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/recallslaves.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/revenge.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/reverberation2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/run.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/shadowattributeattack.cpp">
@@ -4223,19 +4790,43 @@
     <ClCompile Include="skills/npc/silenceattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="skills/npc/sleepattack.cpp">
-      <Filter>Source Files\Skills\Npc</Filter>
-    </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="skills/npc/splashattack.cpp">
+    <ClCompile Include="skills/npc/sleepattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/slowcast.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/smoking.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/soulstrikeofdarkness.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/speedup.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/spiritdestruction.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/splashattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/stoneskin.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/stop.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/stormgust2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/stunattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/suckingblood.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/suicide.cpp">
@@ -4244,22 +4835,103 @@
     <ClCompile Include="skills/npc/suicidebombing.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/talk.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/thunderbreath.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/transformation.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/undeadattributechange.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/undeadelementattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/vampiregift.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/venomfog.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/waterattributeattack.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/waterattributechange.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="skills/npc/windattributeattack.cpp">
+    <ClCompile Include="skills/npc/widebleeding.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
-    <ClCompile Include="skills/npc/windattributechange.cpp">
+    <ClCompile Include="skills/npc/widebleeding2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/wideconfusion.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/wideconfusion2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widecriticalwounds.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widecurse.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widecurse2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widefreeze.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widefreeze2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/wideleash.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widepetrify.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widepetrify2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesight.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesilence.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesilence2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesleep.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesleep2.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesouldrain.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widestun.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widestun2.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/widesuck.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/wideweb.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/windattributeattack.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/windattributechange.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/skill_factory.cpp">

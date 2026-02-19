@@ -705,47 +705,159 @@
     <ClInclude Include="skills/novice/shieldchainrush.hpp" />
     <ClInclude Include="skills/novice/skill_factory_novice.hpp" />
     <ClInclude Include="skills/novice/spiralpiercemax.hpp" />
+    <ClInclude Include="skills/npc/acidbreath.hpp" />
+    <ClInclude Include="skills/npc/agilityup.hpp" />
+    <ClInclude Include="skills/npc/antimagic.hpp" />
     <ClInclude Include="skills/npc/attributechange.hpp" />
+    <ClInclude Include="skills/npc/bleeding.hpp" />
+    <ClInclude Include="skills/npc/bleeding2.hpp" />
     <ClInclude Include="skills/npc/blindattack.hpp" />
+    <ClInclude Include="skills/npc/breakarmor.hpp" />
+    <ClInclude Include="skills/npc/breakhelm.hpp" />
+    <ClInclude Include="skills/npc/breakshield.hpp" />
+    <ClInclude Include="skills/npc/caneofevileye.hpp" />
+    <ClInclude Include="skills/npc/changelocation.hpp" />
+    <ClInclude Include="skills/npc/cloudkill.hpp" />
+    <ClInclude Include="skills/npc/comet2.hpp" />
+    <ClInclude Include="skills/npc/criticalwounds.hpp" />
+    <ClInclude Include="skills/npc/crossofdarkness.hpp" />
     <ClInclude Include="skills/npc/curseattack.hpp" />
+    <ClInclude Include="skills/npc/cursedcircle.hpp" />
+    <ClInclude Include="skills/npc/dancingblade.hpp" />
+    <ClInclude Include="skills/npc/darkblessing.hpp" />
+    <ClInclude Include="skills/npc/darkbreath.hpp" />
+    <ClInclude Include="skills/npc/darknessbreath.hpp" />
+    <ClInclude Include="skills/npc/darknessjupitel.hpp" />
     <ClInclude Include="skills/npc/darkpiercing.hpp" />
+    <ClInclude Include="skills/npc/deadlycurse.hpp" />
+    <ClInclude Include="skills/npc/deadlycurse2.hpp" />
     <ClInclude Include="skills/npc/deathsummon.hpp" />
+    <ClInclude Include="skills/npc/decreaseallstats.hpp" />
     <ClInclude Include="skills/npc/demonshockattack.hpp" />
+    <ClInclude Include="skills/npc/dragonfear.hpp" />
     <ClInclude Include="skills/npc/earthattributeattack.hpp" />
     <ClInclude Include="skills/npc/earthattributechange.hpp" />
+    <ClInclude Include="skills/npc/earthquake.hpp" />
+    <ClInclude Include="skills/npc/electricwalk.hpp" />
+    <ClInclude Include="skills/npc/emotion.hpp" />
+    <ClInclude Include="skills/npc/emotionon.hpp" />
+    <ClInclude Include="skills/npc/energydrain.hpp" />
+    <ClInclude Include="skills/npc/evilland.hpp" />
+    <ClInclude Include="skills/npc/expulsion.hpp" />
+    <ClInclude Include="skills/npc/fatalmenace.hpp" />
     <ClInclude Include="skills/npc/fireattributeattack.hpp" />
     <ClInclude Include="skills/npc/fireattributechange.hpp" />
+    <ClInclude Include="skills/npc/firebreath.hpp" />
+    <ClInclude Include="skills/npc/firestorm.hpp" />
+    <ClInclude Include="skills/npc/firewalk.hpp" />
+    <ClInclude Include="skills/npc/flamecross.hpp" />
+    <ClInclude Include="skills/npc/followersummons.hpp" />
+    <ClInclude Include="skills/npc/fullheal.hpp" />
     <ClInclude Include="skills/npc/ghostattributeattack.hpp" />
     <ClInclude Include="skills/npc/ghostattributechange.hpp" />
+    <ClInclude Include="skills/npc/grandcrossofdarkness.hpp" />
+    <ClInclude Include="skills/npc/grounddrive.hpp" />
+    <ClInclude Include="skills/npc/hallucination.hpp" />
     <ClInclude Include="skills/npc/hellburning.hpp" />
+    <ClInclude Include="skills/npc/helldignity.hpp" />
+    <ClInclude Include="skills/npc/hellpower.hpp" />
+    <ClInclude Include="skills/npc/hellsjudgement.hpp" />
+    <ClInclude Include="skills/npc/hellsjudgement2.hpp" />
     <ClInclude Include="skills/npc/holyattributeattack.hpp" />
     <ClInclude Include="skills/npc/holyattributechange.hpp" />
+    <ClInclude Include="skills/npc/icebreath.hpp" />
+    <ClInclude Include="skills/npc/icebreath2.hpp" />
+    <ClInclude Include="skills/npc/icemine.hpp" />
+    <ClInclude Include="skills/npc/ignitionbreak.hpp" />
+    <ClInclude Include="skills/npc/increasedgravity.hpp" />
+    <ClInclude Include="skills/npc/invincibleoff.hpp" />
     <ClInclude Include="skills/npc/jackfrost2.hpp" />
+    <ClInclude Include="skills/npc/leash.hpp" />
+    <ClInclude Include="skills/npc/lexaeterna2.hpp" />
+    <ClInclude Include="skills/npc/lick.hpp" />
     <ClInclude Include="skills/npc/metamorphosis.hpp" />
+    <ClInclude Include="skills/npc/milleniumshield2.hpp" />
+    <ClInclude Include="skills/npc/monstersummons.hpp" />
     <ClInclude Include="skills/npc/multistageattack.hpp" />
+    <ClInclude Include="skills/npc/npcarrowstorm.hpp" />
+    <ClInclude Include="skills/npc/npccoluceoheal.hpp" />
+    <ClInclude Include="skills/npc/npcdragonbreath.hpp" />
+    <ClInclude Include="skills/npc/npchowlingofmandragora.hpp" />
+    <ClInclude Include="skills/npc/npcmagmaeruption.hpp" />
+    <ClInclude Include="skills/npc/npcrayofgenesis.hpp" />
+    <ClInclude Include="skills/npc/npcvenomimpress.hpp" />
     <ClInclude Include="skills/npc/petrifyattack.hpp" />
+    <ClInclude Include="skills/npc/phantomthrust.hpp" />
     <ClInclude Include="skills/npc/piercingattack.hpp" />
     <ClInclude Include="skills/npc/poisonattack.hpp" />
     <ClInclude Include="skills/npc/poisonattributeattack.hpp" />
     <ClInclude Include="skills/npc/poisonattributechange.hpp" />
+    <ClInclude Include="skills/npc/poisonbuster.hpp" />
+    <ClInclude Include="skills/npc/powerup.hpp" />
+    <ClInclude Include="skills/npc/propertyimmune.hpp" />
     <ClInclude Include="skills/npc/provocation.hpp" />
+    <ClInclude Include="skills/npc/psychicwave.hpp" />
+    <ClInclude Include="skills/npc/pulsestrike.hpp" />
+    <ClInclude Include="skills/npc/pulsestrike2.hpp" />
+    <ClInclude Include="skills/npc/rainofmeteor.hpp" />
     <ClInclude Include="skills/npc/randomattack.hpp" />
+    <ClInclude Include="skills/npc/randommove.hpp" />
+    <ClInclude Include="skills/npc/rebirth.hpp" />
+    <ClInclude Include="skills/npc/recallslaves.hpp" />
+    <ClInclude Include="skills/npc/revenge.hpp" />
+    <ClInclude Include="skills/npc/reverberation2.hpp" />
+    <ClInclude Include="skills/npc/run.hpp" />
     <ClInclude Include="skills/npc/shadowattributeattack.hpp" />
     <ClInclude Include="skills/npc/shadowattributechange.hpp" />
     <ClInclude Include="skills/npc/silenceattack.hpp" />
-    <ClInclude Include="skills/npc/sleepattack.hpp" />
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
-    <ClInclude Include="skills/npc/splashattack.hpp" />
+    <ClInclude Include="skills/npc/sleepattack.hpp" />
+    <ClInclude Include="skills/npc/slowcast.hpp" />
+    <ClInclude Include="skills/npc/smoking.hpp" />
+    <ClInclude Include="skills/npc/soulstrikeofdarkness.hpp" />
+    <ClInclude Include="skills/npc/speedup.hpp" />
     <ClInclude Include="skills/npc/spiritdestruction.hpp" />
+    <ClInclude Include="skills/npc/splashattack.hpp" />
+    <ClInclude Include="skills/npc/stoneskin.hpp" />
+    <ClInclude Include="skills/npc/stop.hpp" />
+    <ClInclude Include="skills/npc/stormgust2.hpp" />
     <ClInclude Include="skills/npc/stunattack.hpp" />
+    <ClInclude Include="skills/npc/suckingblood.hpp" />
     <ClInclude Include="skills/npc/suicide.hpp" />
     <ClInclude Include="skills/npc/suicidebombing.hpp" />
+    <ClInclude Include="skills/npc/talk.hpp" />
+    <ClInclude Include="skills/npc/thunderbreath.hpp" />
+    <ClInclude Include="skills/npc/transformation.hpp" />
+    <ClInclude Include="skills/npc/undeadattributechange.hpp" />
+    <ClInclude Include="skills/npc/undeadelementattack.hpp" />
+    <ClInclude Include="skills/npc/vampiregift.hpp" />
+    <ClInclude Include="skills/npc/venomfog.hpp" />
     <ClInclude Include="skills/npc/waterattributeattack.hpp" />
     <ClInclude Include="skills/npc/waterattributechange.hpp" />
-    <ClInclude Include="skills/npc/windattributeattack.hpp" />
-    <ClInclude Include="skills/npc/windattributechange.hpp" />
+    <ClInclude Include="skills/npc/widebleeding.hpp" />
+    <ClInclude Include="skills/npc/widebleeding2.hpp" />
+    <ClInclude Include="skills/npc/wideconfusion.hpp" />
+    <ClInclude Include="skills/npc/wideconfusion2.hpp" />
+    <ClInclude Include="skills/npc/widecriticalwounds.hpp" />
+    <ClInclude Include="skills/npc/widecurse.hpp" />
+    <ClInclude Include="skills/npc/widecurse2.hpp" />
+    <ClInclude Include="skills/npc/widefreeze.hpp" />
+    <ClInclude Include="skills/npc/widefreeze2.hpp" />
+    <ClInclude Include="skills/npc/wideleash.hpp" />
+    <ClInclude Include="skills/npc/widepetrify.hpp" />
+    <ClInclude Include="skills/npc/widepetrify2.hpp" />
+    <ClInclude Include="skills/npc/widesight.hpp" />
+    <ClInclude Include="skills/npc/widesilence.hpp" />
+    <ClInclude Include="skills/npc/widesilence2.hpp" />
+    <ClInclude Include="skills/npc/widesleep.hpp" />
+    <ClInclude Include="skills/npc/widesleep2.hpp" />
+    <ClInclude Include="skills/npc/widesouldrain.hpp" />
+    <ClInclude Include="skills/npc/widestun.hpp" />
+    <ClInclude Include="skills/npc/widestun2.hpp" />
     <ClInclude Include="skills/npc/widesuck.hpp" />
     <ClInclude Include="skills/npc/wideweb.hpp" />
+    <ClInclude Include="skills/npc/windattributeattack.hpp" />
+    <ClInclude Include="skills/npc/windattributechange.hpp" />
     <ClInclude Include="skills/skill_factory.hpp" />
     <ClInclude Include="skills/skill_impl.hpp" />
     <ClInclude Include="skills/summoner/bite.hpp" />
@@ -2472,22 +2584,94 @@
     <ClCompile Include="skills/novice/spiralpiercemax.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/acidbreath.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/agilityup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/antimagic.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/attributechange.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/bleeding.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/bleeding2.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/blindattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/breakarmor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/breakhelm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/breakshield.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/caneofevileye.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/changelocation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/cloudkill.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/comet2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/criticalwounds.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/crossofdarkness.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/curseattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/cursedcircle.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/dancingblade.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/darkblessing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/darkbreath.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/darknessbreath.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/darknessjupitel.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/darkpiercing.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/deadlycurse.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/deadlycurse2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/deathsummon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/decreaseallstats.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/demonshockattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/dragonfear.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/earthattributeattack.cpp">
@@ -2496,10 +2680,52 @@
     <ClCompile Include="skills/npc/earthattributechange.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/earthquake.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/electricwalk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/emotion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/emotionon.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/energydrain.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/evilland.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/expulsion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/fatalmenace.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/fireattributeattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/fireattributechange.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/firebreath.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/firestorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/firewalk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/flamecross.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/followersummons.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/fullheal.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/ghostattributeattack.cpp">
@@ -2508,7 +2734,28 @@
     <ClCompile Include="skills/npc/ghostattributechange.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/grandcrossofdarkness.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/grounddrive.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/hallucination.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/hellburning.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/helldignity.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/hellpower.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/hellsjudgement.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/hellsjudgement2.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/holyattributeattack.cpp">
@@ -2517,16 +2764,73 @@
     <ClCompile Include="skills/npc/holyattributechange.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/icebreath.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/icebreath2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/icemine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/ignitionbreak.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/increasedgravity.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/invincibleoff.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/jackfrost2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/leash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/lexaeterna2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/lick.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/metamorphosis.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/milleniumshield2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/monstersummons.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/multistageattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/npcarrowstorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npccoluceoheal.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npcdragonbreath.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npchowlingofmandragora.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npcmagmaeruption.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npcrayofgenesis.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/npcvenomimpress.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/petrifyattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/phantomthrust.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/piercingattack.cpp">
@@ -2541,10 +2845,49 @@
     <ClCompile Include="skills/npc/poisonattributechange.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/poisonbuster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/powerup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/propertyimmune.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/provocation.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/psychicwave.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/pulsestrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/pulsestrike2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/rainofmeteor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/randomattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/randommove.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/rebirth.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/recallslaves.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/revenge.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/reverberation2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/run.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/shadowattributeattack.cpp">
@@ -2556,19 +2899,43 @@
     <ClCompile Include="skills/npc/silenceattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/npc/sleepattack.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="skills/npc/skill_factory_npc.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/npc/splashattack.cpp">
+    <ClCompile Include="skills/npc/sleepattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/slowcast.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/smoking.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/soulstrikeofdarkness.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/speedup.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/spiritdestruction.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/splashattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/stoneskin.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/stop.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/stormgust2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/stunattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/suckingblood.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/suicide.cpp">
@@ -2577,22 +2944,103 @@
     <ClCompile Include="skills/npc/suicidebombing.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/talk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/thunderbreath.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/transformation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/undeadattributechange.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/undeadelementattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/vampiregift.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/venomfog.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/waterattributeattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/waterattributechange.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/npc/windattributeattack.cpp">
+    <ClCompile Include="skills/npc/widebleeding.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/npc/windattributechange.cpp">
+    <ClCompile Include="skills/npc/widebleeding2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/wideconfusion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/wideconfusion2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widecriticalwounds.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widecurse.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widecurse2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widefreeze.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widefreeze2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/wideleash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widepetrify.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widepetrify2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesight.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesilence.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesilence2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesleep.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesleep2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widesouldrain.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widestun.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/widestun2.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/widesuck.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/wideweb.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/windattributeattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/windattributechange.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/skill_factory.cpp">
