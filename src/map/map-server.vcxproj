@@ -757,7 +757,6 @@
     <ClInclude Include="skills/swordman/crossrain.hpp" />
     <ClInclude Include="skills/swordman/crushstrike.hpp" />
     <ClInclude Include="skills/swordman/dragonbreath.hpp" />
-    <ClInclude Include="skills/swordman/dragonbreathwater.hpp" />
     <ClInclude Include="skills/swordman/dragonhowling.hpp" />
     <ClInclude Include="skills/swordman/dragonicaura.hpp" />
     <ClInclude Include="skills/swordman/dragonicbreath.hpp" />
@@ -2605,9 +2604,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/dragonbreath.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/swordman/dragonbreathwater.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/dragonhowling.cpp">
