@@ -1408,17 +1408,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		sc_start(src,bl,SC_STUN,(6*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-
-	case NPC_STORMGUST2:
-		if (skill_lv == 1)
-			sc_start(src,bl,SC_FREEZE,10,skill_lv,skill_get_time2(skill_id,skill_lv));
-		else if (skill_lv == 2)
-			sc_start(src,bl,SC_FREEZE,7,skill_lv,skill_get_time2(skill_id,skill_lv));
-		else
-			sc_start(src,bl,SC_FREEZE,3,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
-
 	case MA_FREEZINGTRAP:
 		sc_start(src, bl, SC_FREEZE, 100, skill_lv, skill_get_time2(skill_id, skill_lv), sstatus->amotion + 100);
 		break;
@@ -1430,131 +1419,16 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case MA_SANDMAN:
 		sc_start(src, bl, SC_SLEEP, (10 * skill_lv + 40), skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
 		break;
-
-	case NPC_DARKCROSS:
-		sc_start(src,bl,SC_BLIND,3*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
-	case NPC_GRANDDARKNESS:
-		sc_start(src, bl, SC_BLIND, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-
-	case DC_SCREAM:
-	{
-		int32 rate = 150 + 50 * skill_lv; // Aegis accuracy (1000 = 100%)
-		int32 duration = skill_get_time2(skill_id, skill_lv);
-		if (skill_id == DC_SCREAM) rate += 100; // DC_SCREAM has a 10% higher base chance
-		if (battle_check_target(src, bl, BCT_PARTY) > 0) {
-			// On party members: Chance is divided by 4 and BA_FROSTJOKER duration is fixed to 15000ms
-			rate /= 4;
-			duration = skill_get_time(skill_id, skill_lv);
-		}
-		status_change_start(src, bl, skill_get_sc(skill_id), rate*10, skill_lv, 0, 0, 0, duration, SCSTART_NONE);
-	}
-		break;
-
-#ifdef RENEWAL
-	case DC_UGLYDANCE:
-		// !TODO: How does caster's DEX/AGI play a role?
-		status_zap( bl, 0, 2 * skill_lv + 10 );
-		break;
-#else
-	case DC_UGLYDANCE: {
-		int32 rate = 5 + 5 * skill_lv;
-		rate += skill_lv * pc_checkskill(sd, DC_DANCINGLESSON);
-		status_zap( bl, 0, rate );
-		} break;
-#endif
-
-	case NPC_BLEEDING:
-		sc_start(src,bl,SC_BLEEDING,(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_BLEEDING2:
-		sc_start(src,bl,SC_BLEEDING,(50+10*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_CHANGEUNDEAD:
-		sc_start(src, bl, SC_CHANGEUNDEAD, (10 * skill_lv), skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	case NPC_ACIDBREATH:
-		sc_start(src,bl,SC_POISON,70,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_ICEBREATH:
-		sc_start(src,bl,SC_FREEZE,70,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_ICEBREATH2:
-		sc_start(src,bl,SC_FREEZE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	// Equipment breaking monster skills [Celest]
-	case NPC_ARMORBRAKE:
-		skill_break_equip(src,bl, EQP_ARMOR, 150*skill_lv, BCT_ENEMY);
-		break;
-	case NPC_HELMBRAKE:
-		skill_break_equip(src,bl, EQP_HELM, 150*skill_lv, BCT_ENEMY);
-		break;
-	case NPC_SHIELDBRAKE:
-		skill_break_equip(src,bl, EQP_SHIELD, 150*skill_lv, BCT_ENEMY);
-		break;
-
 	case PF_FOGWALL:
 		if (src != bl && !tsc->getSCE(SC_DELUGE))
 			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case NPC_EVILLAND:
-		sc_start(src,bl,SC_BLIND,5*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_HELLJUDGEMENT:
-		sc_start(src,bl,SC_CURSE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_HELLJUDGEMENT2:
-		switch(rnd()%6) {
-		case 0:
-			sc_start(src,bl,SC_SLEEP,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-			break;
-		case 1:
-			sc_start(src,bl,SC_CONFUSION,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-			break;
-		case 2:
-			sc_start(src,bl,SC_HALLUCINATION,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-			break;
-		case 3:
-			sc_start(src,bl,SC_STUN,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-			break;
-		case 4:
-			sc_start(src,bl,SC_FEAR,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-			break;
-		default:
-			sc_start(src,bl,SC_CURSE,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-			break;
-		}
-		break;
-	case NPC_CRITICALWOUND:
-	case NPC_WIDECRITICALWOUND:
-		sc_start(src,bl,SC_CRITICALWOUND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_FIRESTORM:
-		sc_start(src,bl,SC_BURNT,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
 	case RK_DRAGONBREATH:
 		sc_start4(src,bl,SC_BURNING,15,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
 		break;
 	case RK_DRAGONBREATH_WATER:
 		sc_start(src,bl,SC_FREEZING,15,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
-	case NPC_DRAGONBREATH:
-		if (skill_lv > 5)
-			sc_start4(src,bl,SC_FREEZING,50,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
-		else
-			sc_start4(src,bl,SC_BURNING,50,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
-		break;
-	case NPC_COMET:
-		sc_start4(src,bl,SC_BURNING,100,skill_lv,1000,src->id,0,skill_get_time2(skill_id,skill_lv));
-		break;
-	case NPC_RAYOFGENESIS:
-		if (skill_lv < 8)
-			sc_start(src,bl, SC_BLIND, 50, skill_lv, skill_get_time(skill_id,skill_lv));
-		else
-			sc_start(src,bl, SC_BLIND, 100, skill_lv, skill_get_time(skill_id,skill_lv));
 		break;
 	case SR_DRAGONCOMBO:
 		sc_start(src,bl, SC_STUN, 1 + skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
@@ -1638,10 +1512,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 		break;
 	case MH_XENO_SLASHER:
 		sc_start4(src, bl, SC_BLEEDING, skill_lv, skill_lv, src->id, 0, 0, skill_get_time2(skill_id, skill_lv));
-		break;
-	case NPC_MAGMA_ERUPTION:
-		// Stun effect from 'slam'
-		sc_start(src, bl, SC_STUN, 90, skill_lv, skill_get_time2(skill_id, skill_lv));
 		break;
 	case RL_MASS_SPIRAL:
 		sc_start2(src,bl,SC_BLEEDING,30 + 10 * skill_lv,skill_lv,src->id,skill_get_time(skill_id,skill_lv));
@@ -4750,12 +4620,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	case MA_SHARPSHOOTING:
-	case NPC_ACIDBREATH:
-	case NPC_DARKNESSBREATH:
-	case NPC_FIREBREATH:
-	case NPC_ICEBREATH:
-	case NPC_ICEBREATH2:
-	case NPC_THUNDERBREATH:
 		skill_area_temp[1] = bl->id;
 		if (battle_config.skill_eightpath_algorithm) {
 			//Use official AoE algorithm
@@ -4775,8 +4639,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 	//Splash attack skills.
 	case MA_SHOWER:
-	case NPC_VAMPIRE_GIFT:
-	case NPC_REVERBERATION_ATK:
 	case RK_IGNITIONBREAK:
 	case RK_HUNDREDSPEAR:
 	case SR_RAMPAGEBLASTER:
@@ -4819,15 +4681,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				sflag |= SD_ANIMATION; // original target gets no animation (as well as all NPC skills)
 
 			heal = (int32)skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
-
-			switch (skill_id) {
-				case NPC_VAMPIRE_GIFT:
-					if (heal > 0) {
-						clif_skill_nodamage(nullptr, *src, AL_HEAL, heal);
-						status_heal(src, heal, 0, 0);
-					}
-					break;
-			}
 		} else {
 			int32 starget = BL_CHAR|BL_SKILL, splash_size = skill_get_splash(skill_id, skill_lv);
 
@@ -4842,11 +4695,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 				case MH_XENO_SLASHER:
 					clif_skill_damage( *src, *bl,tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 					break;
-				case NPC_REVERBERATION_ATK:
-					skill_area_temp[1] = 0;
-					starget = splash_target(src);
-					break;
-
 				case BO_DUST_EXPLOSION:
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					break;
@@ -4983,10 +4831,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			break;
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-
-	case NPC_DARKSTRIKE:
-	case NPC_DARKTHUNDER:
-	case NPC_FIRESTORM:
 	case WM_METALICSOUND:
 	case KO_KAIHOU:
 	case MH_ERASER_CUTTER:
@@ -4997,7 +4841,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
-
 	case HVAN_CAPRICE:
 		{
 			static const std::array<e_skill, 4> subskills = { MG_COLDBOLT, MG_FIREBOLT, MG_LIGHTNINGBOLT, WZ_EARTHSPIKE };
@@ -5005,26 +4848,17 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			skill_attack(skill_get_type(subskill_id), src, src, bl, subskill_id, skill_lv, tick, flag);
 		}
 		break;
-
-	case NPC_DARKBREATH:
-		clif_emotion( *src, ET_ANGER );
-		if (rnd() % 2 == 0)
-			break; // 50% chance
-		[[fallthrough]];
-	case NPC_SMOKING:
 	case RL_B_TRAP:
 		skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 	case RK_DRAGONBREATH_WATER:
 	case RK_DRAGONBREATH:
-	case NPC_DRAGONBREATH:
 		if( tsc && tsc->getSCE(SC_HIDING) )
 			clif_skill_nodamage(src,*src,skill_id,skill_lv);
 		else {
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		}
 		break;
-
 	case HVAN_EXPLOSION:
 		if (src != bl)
 			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
@@ -5044,21 +4878,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			status_percent_damage(src, src, 0, 100, false);
 		}
 		break;
-
-	case NPC_BLOODDRAIN:
-	case NPC_ENERGYDRAIN:
-		{
-			int32 heal = (int32)skill_attack( (skill_id == NPC_BLOODDRAIN) ? BF_WEAPON : BF_MAGIC,
-					src, src, bl, skill_id, skill_lv, tick, flag);
-			if (heal > 0){
-				clif_skill_nodamage(nullptr, *src, AL_HEAL, heal);
-				status_heal(src, heal, 0, 0);
-			}
-		}
-		break;
-
 	case RK_PHANTOMTHRUST:
-	case NPC_PHANTOMTHRUST:
 		unit_setdir(src,map_calc_dir(src, bl->x, bl->y));
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 
@@ -5075,22 +4895,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			map_foreachinallrange(skill_area_sub, bl,skill_get_splash(skill_id, skill_lv),BL_CHAR,src,skill_id,skill_lv,tick, flag|BCT_ENEMY|1,skill_castend_nodamage_id);
 		}
 		break;
-	
-	case NPC_FATALMENACE:	// todo should it teleport the target ?
-		if( flag&1 )
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		else {
-			int16 x, y;
-			map_search_freecell(src, 0, &x, &y, -1, -1, 0);
-			// Destination area
-			skill_area_temp[4] = x;
-			skill_area_temp[5] = y;
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
-			skill_addtimerskill(src,tick + 800,src->id,x,y,skill_id,skill_lv,0,flag); // To teleport Self
-			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		}
-		break;
-	
 	case SR_KNUCKLEARROW:
 		// Holds current direction of bl/target to src/attacker before the src is moved to bl location
 		dir_ka = map_calc_dir(bl, src->x, src->y);
@@ -5155,16 +4959,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			battle_consume_ammo(sd, skill_id, skill_lv); // Consume here since Magic/Misc attacks reset arrow_atk
 		}
 		break;
-
-	case NPC_POISON_BUSTER:
-		if( tsc && tsc->getSCE(SC_POISON) ) {
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-			status_change_end(bl, SC_POISON);
-		}
-		else if( sd )
-			clif_skill_fail( *sd, skill_id );
-		break;
-
 	case KO_JYUMONJIKIRI: {
 			int16 x, y;
 			int16 dir = map_calc_dir(src,bl->x,bl->y);
@@ -5379,12 +5173,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			}
 		}
 		break;
-
-	case NPC_VENOMIMPRESS:
-		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
-			sc_start(src, bl, SC_VENOMIMPRESS, 100, skill_lv, skill_get_time(skill_id,skill_lv));
-		break;
-
 	default:
 		if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
 			skill->impl->castendDamageId(src, bl, skill_lv, tick, flag);
@@ -5739,21 +5527,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			skill_addtimerskill(src, tick+1000, bl->id, 0, 0, skill_id, skill_lv, 100, flag);
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
-
-	case NPC_ALLHEAL:
-		{
-			int32 heal;
-			if( status_isimmune(bl) )
-				break;
-			heal = status_percent_heal(bl, 100, 0);
-			clif_skill_nodamage(nullptr, *bl, AL_HEAL, heal);
-			if( dstmd )
-			{ // Reset Damage Logs
-				dstmd->dmglog.clear();
-			}
-		}
-		break;
-
 	case CG_MARIONETTE:
 		{
 			if( (sd && dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER && dstsd->status.sex == sd->status.sex) || (tsc && (tsc->getSCE(SC_CURSE) || tsc->getSCE(SC_QUAGMIRE))) )
@@ -5791,45 +5564,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case ITEM_ENCHANTARMS:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_get_ele(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)));
 		break;
-
-	case NPC_MOVE_COORDINATE:
-		{
-			int16 px = bl->x, py = bl->y;
-			if (!skill_check_unit_movepos(0, bl, src->x, src->y, 1, 1)) {
-				return 0;
-			}
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-			clif_blown(bl);
-
-			// If caster is not a boss, switch coordinates with the target
-			if (status_get_class_(src) != CLASS_BOSS) {
-				if (!skill_check_unit_movepos(0, src, px, py, 1, 1)) {
-					return 0;
-				}
-
-				clif_blown(src);
-			}
-		}
-		break;
-
-	case NPC_IMMUNE_PROPERTY:
-		switch (skill_lv) {
-			case 1: type = SC_IMMUNE_PROPERTY_NOTHING; break;
-			case 2: type = SC_IMMUNE_PROPERTY_WATER; break;
-			case 3: type = SC_IMMUNE_PROPERTY_GROUND; break;
-			case 4: type = SC_IMMUNE_PROPERTY_FIRE; break;
-			case 5: type = SC_IMMUNE_PROPERTY_WIND; break;
-			case 6: type = SC_IMMUNE_PROPERTY_DARKNESS; break;
-			case 7: type = SC_IMMUNE_PROPERTY_SAINT; break;
-			case 8: type = SC_IMMUNE_PROPERTY_POISON; break;
-			case 9: type = SC_IMMUNE_PROPERTY_TELEKINESIS; break;
-			case 10: type = SC_IMMUNE_PROPERTY_UNDEAD; break;
-		}
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-
 	case MER_KYRIE:
 	case ALL_RAY_OF_PROTECTION:
 		clif_skill_nodamage(bl,*bl,skill_id,skill_lv,
@@ -5884,19 +5618,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-
-	case NPC_GRADUAL_GRAVITY:
-	case NPC_DEADLYCURSE:
-		status_change_start(src, bl, type, 10000, skill_lv, 0, 0, 0, skill_get_time(skill_id, skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		break;
-
-	case NPC_ALL_STAT_DOWN: 
-		status_change_start(src, bl, type, 10000, skill_lv, 0, 0, 0, skill_get_time(skill_id, skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		break;
-
 	case TR_SOUNDBLEND:
 		skill_castend_damage_id(src, bl, skill_id, skill_lv, tick, 0);
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
@@ -5910,13 +5631,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) ) );
 		break;
-
-	case NPC_HALLUCINATION:
-	case NPC_HELLPOWER:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv,
-			sc_start(src, bl, type, skill_lv*20, skill_lv, skill_get_time2(skill_id, skill_lv)));
-		break;
-
 	case SO_STRIKING:
 		if (battle_check_target(src, bl, BCT_SELF|BCT_PARTY) > 0) {
 			int32 bonus = 0;
@@ -5932,16 +5646,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		} else if (sd)
 			clif_skill_fail( *sd, skill_id, USESKILL_FAIL_TOTARGET );
 		break;
-
-	case NPC_STOP:
-		if( clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time(skill_id,skill_lv)) ) )
-			sc_start2(src,src,type,100,skill_lv,bl->id,skill_get_time(skill_id,skill_lv));
-		break;
 	case MER_SIGHT:
-	case NPC_WIDESIGHT:
-	case NPC_STONESKIN:
-	case NPC_ANTIMAGIC:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start2(src,bl,type,100,skill_lv,skill_id,skill_get_time(skill_id,skill_lv)));
 		break;
@@ -6011,7 +5716,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case SR_SKYNETBLOW:
 	case SR_RAMPAGEBLASTER:
 	case SR_HOWLINGOFLION:
-	case NPC_RAYOFGENESIS:
 	case MH_THE_ONE_FIGHTER_RISES:
 	case MH_HEILIGE_PFERD:
 	case KO_HAPPOKUNAI:
@@ -6036,7 +5740,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	}
 		break;
 
-	case NPC_IGNITIONBREAK:
 	case RK_IGNITIONBREAK:
 		skill_area_temp[1] = 0;
 #if PACKETVER >= 20180207
@@ -6052,14 +5755,8 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		[[fallthrough]];
 	case SR_EARTHSHAKER:
-	case NPC_VAMPIRE_GIFT:
-	case NPC_HELLJUDGEMENT:
-	case NPC_HELLJUDGEMENT2:
-	case NPC_PULSESTRIKE:
-	case NPC_WIDECRITICALWOUND:
 		skill_castend_damage_id(src, src, skill_id, skill_lv, tick, flag);
 		break;
-
 	case ML_BRANDISH:
 		skill_area_temp[1] = bl->id;
 
@@ -6225,12 +5922,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		} else
 			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
-
-	case NPC_EXPULSION:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
-		break;
-
 	case SO_SPELLFIST:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		unit_skillcastcancel(src,1);
@@ -6240,165 +5931,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sd->skill_id_old = sd->skill_lv_old = 0;
 		}
 		break;
-	case NPC_REBIRTH:
-		if( md && md->state.rebirth )
-			break; // only works once
-		sc_start(src,bl,type,100,skill_lv,INFINITE_TICK);
-		break;
-
-	case NPC_DARKBLESSING:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,(50+skill_lv*5),skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv)));
-		break;
-
-	case NPC_LICK:
-		status_zap(bl, 0, 100);
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,(skill_lv*20),skill_lv,skill_get_time2(skill_id,skill_lv)));
-		break;
-
-	case NPC_SUMMONSLAVE:
-	case NPC_SUMMONMONSTER:
-		if(md && md->skill_idx >= 0)
-			mob_summonslave(md,md->db->skill[md->skill_idx]->val,skill_lv,skill_id);
-		break;
-
-	case NPC_CALLSLAVE:
-		mob_warpslave(src,MOB_SLAVEDISTANCE);
-		break;
-
-	case NPC_RANDOMMOVE:
-		if (md != nullptr) {
-			// This skill creates fake casting state where a monster moves while showing a cast bar
-			int32 tricktime = MOB_SKILL_INTERVAL * 3;
-			md->trickcasting = tick + tricktime;
-			clif_skillcasting(*src, src, 0, 0, skill_id, skill_lv, ELE_FIRE, tricktime + MOB_SKILL_INTERVAL / 2);
-			// Monster cannot be stopped while moving
-			md->state.can_escape = 1;
-			// Move up to 8 cells
-			unit_escape(md, bl, 8, 3);
-		}
-		break;
-
-	case NPC_SPEEDUP:
-		if (md != nullptr) {
-			// Officially, trickcasting continues as long as there are more than 700ms left
-			int32 trickstop = (MOB_SKILL_INTERVAL * 7) / 10;
-			if (DIFF_TICK(md->trickcasting, tick) >= trickstop) {
-				// This skill directly modifies a monster's base speed value
-				md->base_status->speed = std::max(md->base_status->speed - 250, MIN_WALK_SPEED);
-				// Need to recalc speed based on new base value
-				status_calc_bl(md, { SCB_SPEED });
-				// We use skills only on each full cell, to fix the inaccuracy we do this on last move interval
-				if (DIFF_TICK(md->trickcasting, tick) < trickstop + MOB_SKILL_INTERVAL)
-					md->last_skillcheck = tick + 100;
-			}
-			else {
-				// Synchronize skill usage
-				md->last_skillcheck = md->trickcasting;
-				// Causes monster to stop and get ready for next alchemist skill
-				md->trickcasting = 0;
-				md->state.can_escape = 0;
-			}
-		}
-		break;
-
-	case NPC_REVENGE:
-		// not really needed... but adding here anyway ^^
-		if (md && md->master_id > 0) {
-			block_list *mbl, *tbl;
-			if ((mbl = map_id2bl(md->master_id)) == nullptr ||
-				(tbl = battle_gettargeted(mbl)) == nullptr)
-				break;
-			md->state.provoke_flag = tbl->id;
-			mob_target(md, tbl, sstatus->rhw.range);
-		}
-		break;
-
-	case NPC_RUN:
-		if (md) {
-			block_list* tbl = map_id2bl(md->target_id);
-
-			if (tbl) {
-				md->state.can_escape = 1;
-				mob_unlocktarget(md, tick);
-				// Official distance is 7, if level > 1, distance = level
-				t_tick time = unit_escape(src, tbl, skill_lv > 1 ? skill_lv : 7, 3);
-
-				if (time) {
-					// Need to set state here as it's not set otherwise
-					mob_setstate(*md, MSS_WALK);
-					// Set AI to inactive for the duration of this movement
-					md->next_thinktime = tick + time;
-				}
-			}
-		}
-		break;
-
-	case NPC_TRANSFORMATION:
-		if(md && md->skill_idx >= 0) {
-			int32 class_ = mob_random_class (md->db->skill[md->skill_idx]->val,0);
-			if (skill_lv > 1) //Multiply the rest of mobs. [Skotlex]
-				mob_summonslave(md,md->db->skill[md->skill_idx]->val,skill_lv-1,skill_id);
-			if (class_) mob_class_change(md, class_);
-		}
-		break;
-
-	case NPC_EMOTION_ON:
-	case NPC_EMOTION:
-		//val[0] is the emotion to use.
-		//NPC_EMOTION & NPC_EMOTION_ON can change a mob's mode 'permanently' [Skotlex]
-		//val[1] 'sets' the mode
-		//val[2] adds to the current mode
-		//val[3] removes from the current mode
-		//val[4] if set, asks to delete the previous mode change.
-		if(md && md->skill_idx >= 0 && tsc)
-		{
-			clif_emotion( *bl, static_cast<emotion_type>( md->db->skill[md->skill_idx]->val[0] ) );
-			if(md->db->skill[md->skill_idx]->val[4] && tsce)
-				status_change_end(bl, type);
-
-			//If mode gets set by NPC_EMOTION then the target should be reset [Playtester]
-			if (!battle_config.npc_emotion_behavior && skill_id == NPC_EMOTION
-				&& md->state.skillstate != MSS_IDLE && md->state.skillstate != MSS_WALK
-				&& md->db->skill[md->skill_idx]->val[1])
-				mob_unlocktarget(md, tick);
-
-			if(md->db->skill[md->skill_idx]->val[1] || md->db->skill[md->skill_idx]->val[2])
-				sc_start4(src,src, type, 100, skill_lv,
-					md->db->skill[md->skill_idx]->val[1],
-					md->db->skill[md->skill_idx]->val[2],
-					md->db->skill[md->skill_idx]->val[3],
-					skill_get_time(skill_id, skill_lv));
-
-			//Reset aggressive state depending on resulting mode
-			if (!battle_config.npc_emotion_behavior)
-				md->state.aggressive = status_has_mode(&md->status,MD_ANGRY)?1:0;
-		}
-		break;
-
-	case NPC_POWERUP:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,200,100,skill_get_time(skill_id, skill_lv)));
-		break;
-
-	case NPC_AGIUP:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,50,100,skill_get_time(skill_id, skill_lv)));
-		break;
-
-	case NPC_INVISIBLE:
-		//Have val4 passed as 6 is for "infinite cloak" (do not end on attack/skill use).
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start4(src,bl,type,100,skill_lv,0,0,6,skill_get_time(skill_id,skill_lv)));
-		break;
-
-	case NPC_SIEGEMODE:
-		// Not implemented/used: Gives EFST_SIEGEMODE which reduces speed to 1000.
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-
-	case NPC_INVINCIBLEOFF:
 	case MER_INVINCIBLEOFF2:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		status_change_end(bl, SC_INVINCIBLE);
@@ -6826,46 +6358,12 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 
-	case NPC_DRAGONFEAR:
-		if (flag&1) {
-			const enum sc_type sc[] = { SC_STUN, SC_SILENCE, SC_CONFUSION, SC_BLEEDING };
-			int32 j;
-			j = i = rnd()%ARRAYLENGTH(sc);
-			while ( !sc_start2(src,bl,sc[i],100,skill_lv,src->id,skill_get_time2(skill_id,i+1)) ) {
-				i++;
-				if ( i == ARRAYLENGTH(sc) )
-					i = 0;
-				if (i == j)
-					break;
-			}
-			break;
-		}
-		[[fallthrough]];
-	case NPC_WIDEBLEEDING:
-	case NPC_WIDEBLEEDING2:
-	case NPC_WIDECONFUSE:
-	case NPC_WIDECONFUSE2:
-	case NPC_WIDECURSE:
-	case NPC_WIDECURSE2:
-	case NPC_WIDEFREEZE:
-	case NPC_WIDEFREEZE2:
-	case NPC_WIDESLEEP:
-	case NPC_WIDESLEEP2:
-	case NPC_WIDESILENCE:
-	case NPC_WIDESILENCE2:
-	case NPC_WIDESTONE:
-	case NPC_WIDESTONE2:
-	case NPC_WIDESTUN:
-	case NPC_WIDESTUN2:
-	case NPC_SLOWCAST:
-	case NPC_WIDEHELLDIGNITY:
-	case NPC_WIDEHEALTHFEAR:
+	case NPC_WIDEHEALTHFEAR:	// TODO: skills undefined in skill_db.yml
 	case NPC_WIDEBODYBURNNING:
 	case NPC_WIDEFROSTMISTY:
 	case NPC_WIDECOLD:
 	case NPC_WIDE_DEEP_SLEEP:
 	case NPC_WIDESIREN:
-	case NPC_DEADLYCURSE2:
 		if (flag&1){
 			switch ( type ) {
 			case SC_BURNING:
@@ -6887,28 +6385,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				skill_castend_nodamage_id);
 		}
 		break;
-	case NPC_WIDESOULDRAIN:
-		if (flag&1)
-			status_percent_damage(src,bl,0,((skill_lv-1)%5+1)*20,false);
-		else {
-			skill_area_temp[2] = 0; //For SD_PREAMBLE
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			map_foreachinallrange(skill_area_sub, bl,
-				skill_get_splash(skill_id, skill_lv),BL_CHAR,
-				src,skill_id,skill_lv,tick, flag|BCT_ENEMY|SD_PREAMBLE|1,
-				skill_castend_nodamage_id);
-		}
-		break;
-	case NPC_FIRESTORM: {
-		int32 sflag = flag;
-
-		if( skill_lv > 1 )
-			sflag |= 4;
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		map_foreachinshootrange(skill_area_sub,src,skill_get_splash(skill_id,skill_lv),splash_target(src),src,
-			skill_id,skill_lv,tick,sflag|BCT_ENEMY|SD_ANIMATION|1,skill_castend_damage_id);
-		}
-		break;
 	case ALL_PARTYFLEE:
 		if( sd  && !(flag&1) ) {
 			if( !sd->status.party_id ) {
@@ -6919,7 +6395,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		} else
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-	case NPC_TALK:
 	case ALL_WEWISH:
 	case ALL_CATCRY:
 	case ALL_DREAM_SUMMERNIGHT:
@@ -6984,12 +6459,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				clif_skill_fail( *sd, skill_id );
  		}
  		break;
-
-	case NPC_MILLENNIUMSHIELD:
-		if (sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)))
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
- 		break;
-
 	case RK_FIGHTINGSPIRIT: {
 			uint8 runemastery_skill_lv = (sd ? pc_checkskill(sd, RK_RUNEMASTERY) : skill_get_max(RK_RUNEMASTERY));
 
@@ -6999,30 +6468,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 			break;
 		}
-
-	case NPC_CHEAL:
-		if( flag&1 ) {
-			if( tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) && !tsc->getSCE(SC_BERSERK) ) {
-				i = skill_calc_heal(src, bl, AL_HEAL, 10, true);
-				if (status_isimmune(bl))
-					i = 0;
-				clif_skill_nodamage(src, *bl, skill_id, i);
-				if( tsc && tsc->getSCE(SC_AKAITSUKI) && i )
-					i = ~i + 1;
-				status_heal(bl, i, 0, 0);
-			}
-		}
-		else {
-			map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_MOB,
-				src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}
-		break;
-
-	case NPC_DANCINGBLADE:
-		skill_addtimerskill(src, tick + status_get_amotion(src), bl->id, 0, 0, NPC_DANCINGBLADE_ATK, skill_lv, 0, 0);
-		break;
-
 	case SR_CURSEDCIRCLE:
 		if( flag&1 ) {
 			if( status_get_class_(bl) == CLASS_BOSS )
@@ -7043,28 +6488,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				sc_start2(src,src, SC_CURSEDCIRCLE_ATKER, 100, skill_lv, count, skill_get_time(skill_id,skill_lv)));
 		}
 		break;
-
-	case NPC_SR_CURSEDCIRCLE:
-		if( flag&1 ) {
-			if( status_get_class_(bl) == CLASS_BOSS )
-				break;
-			if( sc_start2(src,bl, type, 50, skill_lv, src->id, skill_get_time(skill_id, skill_lv))) {
-				if( bl->type == BL_MOB )
-					mob_unlocktarget((TBL_MOB*)bl,gettick());
-				clif_bladestop( *src, bl->id, true );
-				return 1;
-			}
-		} else {
-			int32 count = 0;
-			clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-			count = map_forcountinrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv), (sd)?sd->spiritball_old:15, // Assume 15 spiritballs in non-charactors
-				BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-			if( sd ) pc_delspiritball(sd, count, 0);
-			clif_skill_nodamage(src, *src, skill_id, skill_lv,
-				sc_start2(src,src, SC_CURSEDCIRCLE_ATKER, 50, skill_lv, count, skill_get_time(skill_id,skill_lv)));
-		}
-		break;
-
 	case SR_RAISINGDRAGON:
 		if( sd ) {
 			int16 max = 5 + skill_lv;
@@ -7512,26 +6935,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_itemlistwindow(sd,skill_id,skill_lv);
 		}
 		break;
-
-	case NPC_MANDRAGORA:
-		if( flag&1 ) {
-			int32 rate;
-			rate = (20 * skill_lv) - (tstatus->vit + tstatus->luk) / 5;
-
-			if (rate < 10)
-				rate = 10;
-			if (bl->type == BL_MOB || (tsc && tsc->getSCE(type)))
-				break; // Don't activate if target is a monster or zap SP if target already has Mandragora active.
-			if (rnd()%100 < rate) {
-				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-				status_zap(bl,0,status_get_max_sp(bl) * (25 + 5 * skill_lv) / 100);
-			}
-		} else {
-			map_foreachinallrange(skill_area_sub,bl,skill_get_splash(skill_id,skill_lv),BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_nodamage_id);
-			clif_skill_nodamage(src,*src,skill_id,skill_lv);
-		}
-		break;
-
 	case EL_CIRCLE_OF_FIRE:
 	case EL_PYROTECHNIC:
 	case EL_HEATER:
@@ -7903,12 +7306,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 		}
 		break;
-
-	case NPC_PULSESTRIKE2:
-		for (int32 i = 0; i < 3; i++)
-			skill_addtimerskill(src, tick + (t_tick)skill_get_time(skill_id, skill_lv) * i, bl->id, 0, 0, skill_id, skill_lv, skill_get_type(skill_id), flag);
-		break;
-
 	case BO_THE_WHOLE_PROTECTION:
 		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
 			uint32 equip[] = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP };
@@ -8046,30 +7443,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		skill_castend_song(src, skill_id, skill_lv, tick);
 		break;
 #endif
-
-	case NPC_LEASH:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-
-		if( !skill_check_unit_movepos( 0, bl, src->x, src->y, 1, 1 ) ){
-			return 0;
-		}
-
-		clif_blown( bl );
-		break;
-
-	case NPC_WIDELEASH:
-		if( flag & 1 ){
-			if( !skill_check_unit_movepos( 0, bl, src->x, src->y, 1, 1 ) ){
-				return 0;
-			}
-
-			clif_blown( bl );
-		}else{
-			skill_area_temp[2] = 0; // For SD_PREAMBLE
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			map_foreachinallrange( skill_area_sub, bl, skill_get_splash( skill_id, skill_lv ), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | 1, skill_castend_nodamage_id );
-		}
-		break;
 
 	case ALL_EVENT_20TH_ANNIVERSARY:
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
@@ -8938,15 +8311,7 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
 		break;
 
-	case NPC_LEX_AETERNA:
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinallarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR, src,
-			PR_LEXAETERNA, 1, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-		break;
-
 	// Skill Unit Setting
-	case NPC_GROUNDDRIVE:
-	case NPC_GRANDDARKNESS:
 	case MA_SKIDTRAP:
 	case MA_LANDMINE:
 	case MA_SANDMAN:
@@ -8957,15 +8322,8 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
 	case CG_MOONLIT:
-	case NPC_EVILLAND:
-	case NPC_VENOMFOG:
-	case NPC_COMET:
-	case NPC_ICEMINE:
-	case NPC_FLAMECROSS:
-	case NPC_REVERBERATION:
 	case WM_POEMOFNETHERWORLD:
 	case SO_PSYCHIC_WAVE:
-	case NPC_PSYCHIC_WAVE:
 	case SO_VACUUM_EXTREME:
 	case SO_EARTHGRAVE:
 	case SO_DIAMONDDUST:
@@ -8981,7 +8339,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MH_STEINWAND:
 	case MH_XENO_SLASHER:
 	case RL_B_TRAP:
-	case NPC_STORMGUST2:
 	case BO_ACIDIFIED_ZONE_WATER:
 	case BO_ACIDIFIED_ZONE_GROUND:
 	case BO_ACIDIFIED_ZONE_WIND:
@@ -8989,15 +8346,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 		// Ammo should be deleted right away.
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-		break;
-	case NPC_CANE_OF_EVIL_EYE:
-		flag|=1;
-		if(skill_unitsetting(src,skill_id,skill_lv,x,y,0))
-			clif_skill_poseffect( *src, skill_id, skill_lv, x, y, tick );
-		break;
-	case NPC_EARTHQUAKE:
-		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, -1, DMG_SINGLE );
-		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
 		break;
 #ifndef RENEWAL
 	case CG_HERMODE:
@@ -9011,11 +8359,9 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 
 	case SO_WARMER:
 	case SO_CLOUD_KILL:
-	case NPC_CLOUD_KILL:
 		flag |= (skill_id == SO_WARMER) ? 8 : 4;
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
-
 	case AL_WARP:
 		if(sd != nullptr) {
 			std::vector<std::string> maps( MAX_MEMOPOINTS + 1 );
@@ -9056,7 +8402,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MA_SHOWER:
 	case RK_DRAGONBREATH:
 	case RK_DRAGONBREATH_WATER:
-	case NPC_DRAGONBREATH:
 	case RL_HAMMER_OF_GOD:
 		// Cast center might be relevant later (e.g. for knockback direction)
 		skill_area_temp[4] = x;
@@ -9090,13 +8435,10 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 
 	case SO_FIREWALK:
 	case SO_ELECTRICWALK:
-	case NPC_FIREWALK:
-	case NPC_ELECTRICWALK:
 		if( sc && sc->getSCE(type) )
 			status_change_end(src,type);
 		sc_start2(src, src, type, 100, skill_id, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-
 	case KO_MAKIBISHI:
 		for( i = 0; i < (skill_lv+2); i++ ) {
 			x = src->x - 1 + rnd()%3;
@@ -9154,41 +8496,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 			}
 		}
 		break;
-
-	case NPC_MAGMA_ERUPTION:
-		// 1st, AoE 'slam' damage
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR,
-			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_ANIMATION|1, skill_castend_damage_id);
-		// 2nd, AoE 'eruption' unit
-		skill_addtimerskill(src,tick + status_get_amotion(src) * 2,0,x,y,skill_id,skill_lv,0,flag);
-		break;
-
-	case NPC_RAINOFMETEOR:
-		{
-			int32 area = skill_get_splash(skill_id, skill_lv);
-			int16 tmpx = 0, tmpy = 0;
-
-			for (i = 1; i <= (skill_get_time(skill_id, skill_lv)/skill_get_unit_interval(skill_id)); i++) {
-				// Casts a double meteor in the first interval.
-				if (i == 1) {
-					// The first meteor is at the center
-					skill_unitsetting(src, skill_id, skill_lv, x, y, flag+skill_get_unit_interval(skill_id));
-
-					// The second meteor is near the first
-					tmpx = x - 1 + rnd()%3;
-					tmpy = y - 1 + rnd()%3;
-					skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag+skill_get_unit_interval(skill_id));
-				}
-				else {	// Casts 1 meteor per interval in the splash area
-					tmpx = x - area + rnd()%(area * 2 + 1);
-					tmpy = y - area + rnd()%(area * 2 + 1);
-					skill_unitsetting(src, skill_id, skill_lv, tmpx, tmpy, flag+i*skill_get_unit_interval(skill_id));
-				}
-			}
-		}
-		break;
-
 
 	default:
 		if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
