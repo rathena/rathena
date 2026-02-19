@@ -330,6 +330,7 @@
     <ClInclude Include="skills/archer/battletheme.hpp" />
     <ClInclude Include="skills/archer/beaststrafing.hpp" />
     <ClInclude Include="skills/archer/blastmine.hpp" />
+    <ClInclude Include="skills/archer/blitzbeat.hpp" />
     <ClInclude Include="skills/archer/camouflage.hpp" />
     <ClInclude Include="skills/archer/chargearrow.hpp" />
     <ClInclude Include="skills/archer/classicalpluck.hpp" />
@@ -1295,6 +1296,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/blastmine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/blitzbeat.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/camouflage.cpp">
