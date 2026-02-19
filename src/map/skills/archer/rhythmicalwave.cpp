@@ -3,8 +3,11 @@
 
 #include "rhythmicalwave.hpp"
 
+#include <config/core.hpp>
+
 #include "map/battle.hpp"
 #include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 

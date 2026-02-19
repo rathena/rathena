@@ -72,8 +72,8 @@
 #include "pronmarch.cpp"
 #include "removetrap.cpp"
 #include "retrospection.cpp"
-#include "rhythmshooting.cpp"
 #include "rhythmicalwave.cpp"
+#include "rhythmshooting.cpp"
 #include "rokicapriccio.cpp"
 #include "roseblossom.cpp"
 #include "sandman.cpp"
@@ -256,20 +256,20 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TR_METALIC_FURY:
 			return std::make_unique<SkillMetallicFury>();
-		case TR_MYSTIC_SYMPHONY:
-			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TR_MUSICAL_INTERLUDE:
 			return std::make_unique<SkillMusicalInterlude>();
+		case TR_MYSTIC_SYMPHONY:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case TR_NIPELHEIM_REQUIEM:
 			return std::make_unique<SkillNipelheimRequiem>();
 		case TR_PRON_MARCH:
 			return std::make_unique<SkillPronMarch>();
 		case TR_RETROSPECTION:
 			return std::make_unique<SkillRetrospection>();
-		case TR_RHYTHMSHOOTING:
-			return std::make_unique<SkillRhythmShooting>();
 		case TR_RHYTHMICAL_WAVE:
 			return std::make_unique<SkillRhythmicalWave>();
+		case TR_RHYTHMSHOOTING:
+			return std::make_unique<SkillRhythmShooting>();
 		case TR_ROKI_CAPRICCIO:
 			return std::make_unique<SkillRokiCapriccio>();
 		case TR_ROSEBLOSSOM:
