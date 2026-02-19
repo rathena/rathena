@@ -1544,12 +1544,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_FIRESTORM:
 		sc_start(src,bl,SC_BURNT,100,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
-	case RK_DRAGONBREATH:
-		sc_start4(src,bl,SC_BURNING,15,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
-		break;
-	case RK_DRAGONBREATH_WATER:
-		sc_start(src,bl,SC_FREEZING,15,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
 	case NPC_DRAGONBREATH:
 		if (skill_lv > 5)
 			sc_start4(src,bl,SC_FREEZING,50,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
@@ -4836,8 +4830,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_ARROWSTORM:
 	case NPC_KILLING_AURA:
 	case NPC_IGNITIONBREAK:
-	case RK_IGNITIONBREAK:
-	case RK_HUNDREDSPEAR:
 	case NPC_RAYOFGENESIS:
 	case SR_RAMPAGEBLASTER:
 	case SR_SKYNETBLOW:
@@ -5090,8 +5082,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case RL_B_TRAP:
 		skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case RK_DRAGONBREATH_WATER:
-	case RK_DRAGONBREATH:
 	case NPC_DRAGONBREATH:
 		if( tsc && tsc->getSCE(SC_HIDING) )
 			clif_skill_nodamage(src,*src,skill_id,skill_lv);
@@ -5136,7 +5126,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case RK_PHANTOMTHRUST:
 	case NPC_PHANTOMTHRUST:
 		unit_setdir(src,map_calc_dir(src, bl->x, bl->y));
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
@@ -5144,15 +5133,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_blown(src,bl,distance_bl(src,bl)-1,unit_getdir(src),BLOWN_NONE);
 		if( battle_check_target(src,bl,BCT_ENEMY) > 0 )
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-	case RK_WINDCUTTER:
-	case RK_STORMBLAST:
-		if( flag&1 )
-			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-		else {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			map_foreachinallrange(skill_area_sub, bl,skill_get_splash(skill_id, skill_lv),BL_CHAR,src,skill_id,skill_lv,tick, flag|BCT_ENEMY|1,skill_castend_nodamage_id);
-		}
 		break;
 	
 	case NPC_FATALMENACE:	// todo should it teleport the target ?
@@ -6085,8 +6065,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 	//List of self skills that give damage around caster
-	case RK_WINDCUTTER:
-	case RK_STORMBLAST:
 	case SR_SKYNETBLOW:
 	case SR_RAMPAGEBLASTER:
 	case SR_HOWLINGOFLION:
@@ -6110,13 +6088,12 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		i = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget,
 				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		if( !i && ( skill_id == RK_WINDCUTTER || skill_id == SR_SKYNETBLOW || skill_id == KO_HAPPOKUNAI ) )
+		if( !i && ( skill_id == SR_SKYNETBLOW || skill_id == KO_HAPPOKUNAI ) )
 			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 	}
 		break;
 
 	case NPC_IGNITIONBREAK:
-	case RK_IGNITIONBREAK:
 		skill_area_temp[1] = 0;
 #if PACKETVER >= 20180207
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
@@ -7065,53 +7042,10 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv, buyingstore_setup(sd, MAX_BUYINGSTORE_SLOTS) == 0);
 		}
 		break;
-		break;
-	case RK_GIANTGROWTH:
-	case RK_STONEHARDSKIN:
-	case RK_VITALITYACTIVATION:
-	case RK_ABUNDANCE:
-	case RK_CRUSHSTRIKE:
-	case RK_REFRESH:
-	case RK_MILLENNIUMSHIELD:
-		if (sd) {
-			uint8 rune_level = 1; // RK_GIANTGROWTH
-
-			if (skill_id == RK_VITALITYACTIVATION)
- 				rune_level = 2;
-			else if (skill_id == RK_STONEHARDSKIN)
-				rune_level = 4;
-			else if (skill_id == RK_ABUNDANCE)
- 				rune_level = 6;
-			else if (skill_id == RK_CRUSHSTRIKE)
- 				rune_level = 7;
-			else if (skill_id == RK_REFRESH)
-				rune_level = 8;
-			else if (skill_id == RK_MILLENNIUMSHIELD)
-				rune_level = 9;
-			if (pc_checkskill(sd, RK_RUNEMASTERY) >= rune_level) {
-				if (sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)))
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-				else if (skill_id == RK_STONEHARDSKIN)
-					clif_skill_fail( *sd, skill_id, USESKILL_FAIL_HP_INSUFFICIENT );
-			} else
-				clif_skill_fail( *sd, skill_id );
- 		}
- 		break;
-
 	case NPC_MILLENNIUMSHIELD:
 		if (sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)))
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
  		break;
-
-	case RK_FIGHTINGSPIRIT: {
-			uint8 runemastery_skill_lv = (sd ? pc_checkskill(sd, RK_RUNEMASTERY) : skill_get_max(RK_RUNEMASTERY));
-
-			// val1: ATKBonus: ? // !TODO: Confirm new ATK formula
-			// val2: ASPD boost: [RK_RUNEMASTERYlevel * 4 / 10] * 10 ==> RK_RUNEMASTERYlevel * 4
-			sc_start2(src,bl,type,100,70 + 7 * runemastery_skill_lv,4 * runemastery_skill_lv,skill_get_time(skill_id,skill_lv));
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			break;
-		}
 
 	case NPC_CHEAL:
 		if( flag&1 ) {
@@ -9250,8 +9184,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		break;
 
 	case MA_SHOWER:
-	case RK_DRAGONBREATH:
-	case RK_DRAGONBREATH_WATER:
 	case NPC_DRAGONBREATH:
 	case RL_HAMMER_OF_GOD:
 		// Cast center might be relevant later (e.g. for knockback direction)
