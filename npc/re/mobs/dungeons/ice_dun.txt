@@ -42,7 +42,7 @@ ice_dun03,0,0	monster	Snowier	1775,15,5000
 //==================================================
 // ice_d03_i - Illusion of Frozen
 //==================================================
-ice_d03_i	monster	Angry Gazeti	3792,30
-ice_d03_i	monster	Angry Snowier	3793,30
-ice_d03_i	monster	Angry Ice Titan	3794,20
-ice_d03_i	monster	Solid Icicle	3795,20
+ice_d03_i	monster	Angry Gazeti	3792,30,5000
+ice_d03_i	monster	Angry Snowier	3793,30,5000
+ice_d03_i	monster	Angry Ice Titan	3794,20,5000
+ice_d03_i	monster	Solid Icicle	3795,20,5000
