@@ -7463,21 +7463,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		status_change_end(src, SC_QD_SHOT_READY);
 		skill_area_temp[1] = 0;
 		break;
-	case RL_FLICKER:
-		if (sd) {
-			sd->flicker = true;
-			skill_area_temp[1] = 0;
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			// Detonate RL_B_TRAP
-			if (pc_checkskill(sd, RL_B_TRAP))
-				map_foreachinallrange(skill_bind_trap, src, AREA_SIZE, BL_SKILL, src);
-			// Detonate RL_H_MINE
-			if ((i = pc_checkskill(sd, RL_H_MINE)))
-				map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, RL_H_MINE, i, tick, flag|BCT_ENEMY|SD_SPLASH, skill_castend_damage_id);
-			sd->flicker = false;
-		}
-		break;
-
 	case SO_ELEMENTAL_SHIELD:
 		if (!sd || sd->status.party_id == 0 || flag&1) {
 			if (sd && sd->status.party_id == 0) {

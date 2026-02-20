@@ -936,6 +936,9 @@
     <ClInclude Include="skills/gunslinger/dust.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/gunslinger/flicker.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/fling.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -3330,6 +3333,9 @@
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/dust.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/flicker.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/fling.cpp">
