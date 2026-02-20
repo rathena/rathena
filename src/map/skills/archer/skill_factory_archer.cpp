@@ -16,6 +16,7 @@
 #include "battletheme.cpp"
 #include "beaststrafing.cpp"
 #include "blastmine.cpp"
+#include "blitzbeat.cpp"
 #include "camouflage.cpp"
 #include "chargearrow.cpp"
 #include "classicalpluck.cpp"
@@ -160,7 +161,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		case HT_BLASTMINE:
 			return std::make_unique<SkillBlastMine>();
 		case HT_BLITZBEAT:
-			return std::make_unique<SkillImplRecursiveDamageSplash>(skill_id);
+			return std::make_unique<SkillBlitzBeat>();
 		case HT_CLAYMORETRAP:
 			return std::make_unique<SkillClaymoreTrap>();
 		case HT_DETECTING:
@@ -265,12 +266,12 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WM_GREAT_ECHO:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case MI_RUSH_WINDMILL:
-			return std::make_unique<SkillWindmillRushAttack>();
 		case MI_ECHOSONG:
 			return std::make_unique<SkillEchoSong>();
 		case MI_HARMONIZE:
 			return std::make_unique<SkillHarmonize>();
+		case MI_RUSH_WINDMILL:
+			return std::make_unique<SkillWindmillRushAttack>();
 		case WM_SEVERE_RAINSTORM_MELEE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 
