@@ -221,6 +221,8 @@ int32 skill_get_state( uint16 skill_id )                             { skill_get
 size_t skill_get_status_count( uint16 skill_id )                   { skill_get(skill_id, skill_db.find(skill_id)->require.status.size()); }
 int32 skill_get_spiritball( uint16 skill_id, uint16 skill_lv )       { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->require.spiritball); }
 sc_type skill_get_sc(int16 skill_id)                               { if (!skill_check(skill_id)) return SC_NONE; return skill_db.find(skill_id)->sc; }
+uint8 skill_get_autospell_unlocked_at(uint16 skill_id)               { skill_get(skill_id, skill_db.find(skill_id)->autospell_unlocked_at); }
+uint8 skill_get_autospell_mob_max_cast_level(uint16 skill_id)        { skill_get(skill_id, skill_db.find(skill_id)->autospell_mob_max_cast_level); }
 
 int32 skill_get_splash( uint16 skill_id , uint16 skill_lv ) {
 	int32 splash = skill_get_splash_(skill_id, skill_lv);
@@ -11139,38 +11141,25 @@ int32 skill_autospell(map_session_data *sd, uint16 skill_id)
 	if (skill_id == 0 || skill_db.get_index(skill_id, true, __FUNCTION__, __FILE__, __LINE__) == 0 || SKILL_CHK_GUILD(skill_id))
 		return 0;
 
+	// Server-side validation: reject skills not available for SA_AUTOSPELL
+	uint8 autospell_req_lv = skill_get_autospell_unlocked_at(skill_id);
+	if (autospell_req_lv == 0)
+		return 0;
+
 	uint16 lv = pc_checkskill(sd, skill_id), skill_lv = sd->menuskill_val;
-	uint16 maxlv = 1;
 
 	if (skill_lv == 0 || lv == 0)
 		return 0; // Player must learn the skill before doing auto-spell [Lance]
 
-#ifdef RENEWAL
+	if (skill_lv < autospell_req_lv)
+		return 0; // SA_AUTOSPELL level insufficient for this spell tier
+
+	// MobMaxCastLevel is NPC-only — player cast level is always skill_lv / 2, minimum 1.
+	uint16 maxlv;
 	if ((skill_id == MG_COLDBOLT || skill_id == MG_FIREBOLT || skill_id == MG_LIGHTNINGBOLT) && sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SAGE)
-		maxlv = 10; //Soul Linker bonus. [Skotlex]
+		maxlv = 10; // Soul Linker bonus. [Skotlex]
 	else
-		maxlv = skill_lv / 2; // Half of Autospell's level unless player learned a lower level (capped below)
-#else
-	if(skill_id==MG_NAPALMBEAT)	maxlv=3;
-	else if(skill_id==MG_COLDBOLT || skill_id==MG_FIREBOLT || skill_id==MG_LIGHTNINGBOLT){
-		if (sd->sc.getSCE(SC_SPIRIT) && sd->sc.getSCE(SC_SPIRIT)->val2 == SL_SAGE)
-			maxlv = 10; //Soul Linker bonus. [Skotlex]
-		else if(skill_lv==2) maxlv=1;
-		else if(skill_lv==3) maxlv=2;
-		else if(skill_lv>=4) maxlv=3;
-	}
-	else if(skill_id==MG_SOULSTRIKE){
-		if(skill_lv==5) maxlv=1;
-		else if(skill_lv==6) maxlv=2;
-		else if(skill_lv>=7) maxlv=3;
-	}
-	else if(skill_id==MG_FIREBALL){
-		if(skill_lv==8) maxlv=1;
-		else if(skill_lv>=9) maxlv=2;
-	}
-	else if(skill_id==MG_FROSTDIVER) maxlv=1;
-	else return 0;
-#endif
+		maxlv = (uint16)max(skill_lv / 2, 1); // floor at 1 — SA_AUTOSPELL Lv1 would otherwise give 0
 
 	maxlv = min(lv, maxlv);
 
@@ -16125,6 +16114,43 @@ uint64 SkillDatabase::parseBodyNode(const ryml::NodeRef& node) {
 				// By default, target just characters.
 				skill->unit_target |= BL_CHAR;
 			}
+		}
+	}
+
+	if (this->nodeExists(node, "AutoSpell")) {
+		const ryml::NodeRef& autoSpellNode = node["AutoSpell"];
+
+		if (this->nodeExists(autoSpellNode, "UnlockedAtLevel")) {
+			uint16 lv;
+			if (!this->asUInt16(autoSpellNode, "UnlockedAtLevel", lv))
+				return 0;
+			if (lv > MAX_SKILL_LEVEL) {
+				this->invalidWarning(autoSpellNode["UnlockedAtLevel"], "AutoSpell/UnlockedAtLevel %hu exceeds maximum skill level %d.\n", lv, MAX_SKILL_LEVEL);
+				return 0;
+			}
+			skill->autospell_unlocked_at = static_cast<uint8>(lv);
+		} else {
+			if (!exists)
+				skill->autospell_unlocked_at = 0;
+		}
+
+		if (this->nodeExists(autoSpellNode, "MobMaxCastLevel")) {
+			uint16 lv;
+			if (!this->asUInt16(autoSpellNode, "MobMaxCastLevel", lv))
+				return 0;
+			if (lv > MAX_SKILL_LEVEL) {
+				this->invalidWarning(autoSpellNode["MobMaxCastLevel"], "AutoSpell/MobMaxCastLevel %hu exceeds maximum skill level %d.\n", lv, MAX_SKILL_LEVEL);
+				return 0;
+			}
+			skill->autospell_mob_max_cast_level = static_cast<uint8>(lv);
+		} else {
+			if (!exists)
+				skill->autospell_mob_max_cast_level = 0;
+		}
+	} else {
+		if (!exists) {
+			skill->autospell_unlocked_at = 0;
+			skill->autospell_mob_max_cast_level = 0;
 		}
 	}
 
