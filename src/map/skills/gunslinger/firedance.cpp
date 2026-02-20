@@ -1,11 +1,12 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <config/core.hpp>
-
 #include "firedance.hpp"
 
+#include <config/core.hpp>
+
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillFireDance::SkillFireDance() : WeaponSkillImpl(RL_FIREDANCE) {
 }

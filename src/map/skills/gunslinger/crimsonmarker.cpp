@@ -5,6 +5,7 @@
 
 #include "map/clif.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillCrimsonMarker::SkillCrimsonMarker() : SkillImpl(RL_C_MARKER) {
 }

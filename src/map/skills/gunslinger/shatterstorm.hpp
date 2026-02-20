@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillShatterStorm : public WeaponSkillImpl {
+class SkillShatterStorm : public SkillImplRecursiveDamageSplash {
 public:
 	SkillShatterStorm();
 

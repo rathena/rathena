@@ -4,6 +4,7 @@
 #include "flicker.hpp"
 
 #include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/pc.hpp"
 
 SkillFlicker::SkillFlicker() : SkillImpl(RL_FLICKER) {

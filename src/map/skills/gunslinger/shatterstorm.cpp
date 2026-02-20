@@ -5,7 +5,7 @@
 
 #include <algorithm>
 
-SkillShatterStorm::SkillShatterStorm() : WeaponSkillImpl(RL_S_STORM) {
+SkillShatterStorm::SkillShatterStorm() : SkillImplRecursiveDamageSplash(RL_S_STORM) {
 }
 
 void SkillShatterStorm::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {

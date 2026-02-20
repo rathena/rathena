@@ -3,6 +3,9 @@
 
 #include "quickdrawshot.hpp"
 
+#include "map/map.hpp"
+#include "map/status.hpp"
+
 SkillQuickDrawShot::SkillQuickDrawShot() : SkillImpl(RL_QD_SHOT) {
 }
 
