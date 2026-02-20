@@ -3,6 +3,7 @@
 
 #include "powervelocity.hpp"
 
+#include "map/clif.hpp"
 #include "map/pc.hpp"
 
 SkillPowerVelocity::SkillPowerVelocity() : SkillImpl(SR_POWERVELOCITY) {

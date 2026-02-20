@@ -7,7 +7,7 @@
 
 #include "map/status.hpp"
 
-SkillRampageBlaster::SkillRampageBlaster() : WeaponSkillImpl(SR_RAMPAGEBLASTER) {
+SkillRampageBlaster::SkillRampageBlaster() : SkillImplRecursiveDamageSplash(SR_RAMPAGEBLASTER) {
 }
 
 void SkillRampageBlaster::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {

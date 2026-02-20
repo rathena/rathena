@@ -5,6 +5,8 @@
 
 #include <config/core.hpp>
 
+#include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/mob.hpp"
 #include "map/status.hpp"
 

@@ -3,7 +3,10 @@
 
 #include "assimilatepower.hpp"
 
+#include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillAssimilatePower::SkillAssimilatePower() : SkillImpl(SR_ASSIMILATEPOWER) {
 }

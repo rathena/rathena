@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillRampageBlaster : public WeaponSkillImpl {
+class SkillRampageBlaster : public SkillImplRecursiveDamageSplash {
 public:
 	SkillRampageBlaster();
 

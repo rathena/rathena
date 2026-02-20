@@ -3869,7 +3869,7 @@ static void battle_calc_element_damage(struct Damage* wd, block_list *src, block
 #endif
 			case MC_CARTREVOLUTION:
 			case HW_MAGICCRASHER:
-		case SR_FALLENEMPIRE:
+			case SR_FALLENEMPIRE:
 			case SR_CRESCENTELBOW_AUTOSPELL:
 			case SR_GATEOFHELL:
 			case GN_FIRE_EXPANSION_ACID:

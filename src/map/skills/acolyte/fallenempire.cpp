@@ -5,6 +5,8 @@
 
 #include <config/core.hpp>
 
+#include "map/status.hpp"
+
 SkillFallenEmpire::SkillFallenEmpire() : WeaponSkillImpl(SR_FALLENEMPIRE) {
 }
 
