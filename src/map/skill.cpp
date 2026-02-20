@@ -7478,13 +7478,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case RL_RICHS_COIN:
-		if (sd) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			for (i = 0; i < 10; i++)
-				pc_addspiritball(sd,skill_get_time(skill_id,skill_lv),10);
-		}
-		break;
 	case RL_C_MARKER:
 		if (sd) {
 			// If marked by someone else remove it
