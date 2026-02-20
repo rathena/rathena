@@ -427,6 +427,7 @@
     <ClInclude Include="skills/archer/winkofcharm.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
     <ClInclude Include="skills/gunslinger/basicgrenade.hpp" />
+    <ClInclude Include="skills/gunslinger/banishingbuster.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
     <ClInclude Include="skills/gunslinger/cracker.hpp" />
     <ClInclude Include="skills/gunslinger/desperado.hpp" />
@@ -1634,6 +1635,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/basicgrenade.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/banishingbuster.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/bullseye.cpp">
