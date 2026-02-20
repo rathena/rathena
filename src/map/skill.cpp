@@ -4682,17 +4682,12 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			skill_area_temp[2] = 0;
 
 			switch ( skill_id ) {
-					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-					break;
 				case MH_XENO_SLASHER:
 					clif_skill_damage( *src, *bl,tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 					break;
 				case NPC_REVERBERATION_ATK:
 					skill_area_temp[1] = 0;
 					starget = splash_target(src);
-					break;
-
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 					break;
 			}
 
