@@ -250,8 +250,8 @@
     <ClInclude Include="skills/acolyte/ancilla.hpp" />
     <ClInclude Include="skills/acolyte/angelus.hpp" />
     <ClInclude Include="skills/acolyte/arbitrium.hpp" />
-    <ClInclude Include="skills/acolyte/assimilatepower.hpp" />
     <ClInclude Include="skills/acolyte/aspersio.hpp" />
+    <ClInclude Include="skills/acolyte/assimilatepower.hpp" />
     <ClInclude Include="skills/acolyte/assumptio.hpp" />
     <ClInclude Include="skills/acolyte/asurastrike.hpp" />
     <ClInclude Include="skills/acolyte/basilica.hpp" />
@@ -265,9 +265,10 @@
     <ClInclude Include="skills/acolyte/competentia.hpp" />
     <ClInclude Include="skills/acolyte/convenio.hpp" />
     <ClInclude Include="skills/acolyte/crementia.hpp" />
+    <ClInclude Include="skills/acolyte/crescentelbowautospell.hpp" />
     <ClInclude Include="skills/acolyte/crucis.hpp" />
-    <ClInclude Include="skills/acolyte/cursedcircle.hpp" />
     <ClInclude Include="skills/acolyte/cure.hpp" />
+    <ClInclude Include="skills/acolyte/cursedcircle.hpp" />
     <ClInclude Include="skills/acolyte/decagi.hpp" />
     <ClInclude Include="skills/acolyte/dilectioheal.hpp" />
     <ClInclude Include="skills/acolyte/divinusflos.hpp" />
@@ -275,22 +276,28 @@
     <ClInclude Include="skills/acolyte/duplelight.hpp" />
     <ClInclude Include="skills/acolyte/earthshaker.hpp" />
     <ClInclude Include="skills/acolyte/effligo.hpp" />
-    <ClInclude Include="skills/acolyte/fallenempire.hpp" />
     <ClInclude Include="skills/acolyte/epiclesis.hpp" />
     <ClInclude Include="skills/acolyte/explosionblaster.hpp" />
+    <ClInclude Include="skills/acolyte/fallenempire.hpp" />
     <ClInclude Include="skills/acolyte/firstbrand.hpp" />
+    <ClInclude Include="skills/acolyte/flashcombo.hpp" />
     <ClInclude Include="skills/acolyte/framen.hpp" />
+    <ClInclude Include="skills/acolyte/gateofhell.hpp" />
+    <ClInclude Include="skills/acolyte/gentletouchcure.hpp" />
+    <ClInclude Include="skills/acolyte/gentletouchquiet.hpp" />
     <ClInclude Include="skills/acolyte/glacierfist.hpp" />
     <ClInclude Include="skills/acolyte/gloria.hpp" />
     <ClInclude Include="skills/acolyte/heal.hpp" />
     <ClInclude Include="skills/acolyte/highnessheal.hpp" />
     <ClInclude Include="skills/acolyte/holylight.hpp" />
     <ClInclude Include="skills/acolyte/holywater.hpp" />
+    <ClInclude Include="skills/acolyte/howlingoflion.hpp" />
     <ClInclude Include="skills/acolyte/impositiomanus.hpp" />
     <ClInclude Include="skills/acolyte/incagi.hpp" />
     <ClInclude Include="skills/acolyte/judex.hpp" />
     <ClInclude Include="skills/acolyte/kiexplosion.hpp" />
     <ClInclude Include="skills/acolyte/kitranslation.hpp" />
+    <ClInclude Include="skills/acolyte/knucklearrow.hpp" />
     <ClInclude Include="skills/acolyte/kyrieeleison.hpp" />
     <ClInclude Include="skills/acolyte/laudaagnus.hpp" />
     <ClInclude Include="skills/acolyte/laudaramus.hpp" />
@@ -307,14 +314,15 @@
     <ClInclude Include="skills/acolyte/pneumaticusprocella.hpp" />
     <ClInclude Include="skills/acolyte/powervelocity.hpp" />
     <ClInclude Include="skills/acolyte/praefatio.hpp" />
-    <ClInclude Include="skills/acolyte/rampageblaster.hpp" />
     <ClInclude Include="skills/acolyte/ragingpalmstrike.hpp" />
     <ClInclude Include="skills/acolyte/ragingquadrupleblow.hpp" />
     <ClInclude Include="skills/acolyte/ragingthrust.hpp" />
     <ClInclude Include="skills/acolyte/ragingtrifectablow.hpp" />
     <ClInclude Include="skills/acolyte/raisingdragon.hpp" />
+    <ClInclude Include="skills/acolyte/rampageblaster.hpp" />
     <ClInclude Include="skills/acolyte/renovatio.hpp" />
     <ClInclude Include="skills/acolyte/reparatio.hpp" />
+    <ClInclude Include="skills/acolyte/rideinlightening.hpp" />
     <ClInclude Include="skills/acolyte/ruwach.hpp" />
     <ClInclude Include="skills/acolyte/sanctuary.hpp" />
     <ClInclude Include="skills/acolyte/secondfaith.hpp" />
@@ -322,6 +330,7 @@
     <ClInclude Include="skills/acolyte/secondjudgement.hpp" />
     <ClInclude Include="skills/acolyte/silentium.hpp" />
     <ClInclude Include="skills/acolyte/skill_factory_acolyte.hpp" />
+    <ClInclude Include="skills/acolyte/skynetblow.hpp" />
     <ClInclude Include="skills/acolyte/snap.hpp" />
     <ClInclude Include="skills/acolyte/statusrecovery.hpp" />
     <ClInclude Include="skills/acolyte/suffragium.hpp" />
@@ -333,6 +342,7 @@
     <ClInclude Include="skills/acolyte/tigercannon.hpp" />
     <ClInclude Include="skills/acolyte/turnundead.hpp" />
     <ClInclude Include="skills/acolyte/vituperatum.hpp" />
+    <ClInclude Include="skills/acolyte/windmill.hpp" />
     <ClInclude Include="skills/acolyte/zen.hpp" />
     <ClInclude Include="skills/archer/acousticrhythm.hpp" />
     <ClInclude Include="skills/archer/aimedbolt.hpp" />
@@ -1112,10 +1122,10 @@
     <ClCompile Include="skills/acolyte/arbitrium.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/acolyte/assimilatepower.cpp">
+    <ClCompile Include="skills/acolyte/aspersio.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/acolyte/aspersio.cpp">
+    <ClCompile Include="skills/acolyte/assimilatepower.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/assumptio.cpp">
@@ -1157,13 +1167,16 @@
     <ClCompile Include="skills/acolyte/crementia.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/crescentelbowautospell.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/crucis.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/acolyte/cursedcircle.cpp">
+    <ClCompile Include="skills/acolyte/cure.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/acolyte/cure.cpp">
+    <ClCompile Include="skills/acolyte/cursedcircle.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/decagi.cpp">
@@ -1187,19 +1200,31 @@
     <ClCompile Include="skills/acolyte/effligo.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/acolyte/fallenempire.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="skills/acolyte/epiclesis.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/explosionblaster.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/fallenempire.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/firstbrand.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/flashcombo.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/framen.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/gateofhell.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/gentletouchcure.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/gentletouchquiet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/glacierfist.cpp">
@@ -1220,6 +1245,9 @@
     <ClCompile Include="skills/acolyte/holywater.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/howlingoflion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/impositiomanus.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1233,6 +1261,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/kitranslation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/knucklearrow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/kyrieeleison.cpp">
@@ -1283,7 +1314,6 @@
     <ClCompile Include="skills/acolyte/praefatio.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/acolyte/rampageblaster.cpp">
     <ClCompile Include="skills/acolyte/ragingpalmstrike.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1299,10 +1329,16 @@
     <ClCompile Include="skills/acolyte/raisingdragon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/rampageblaster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/renovatio.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/reparatio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/rideinlightening.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/ruwach.cpp">
@@ -1324,6 +1360,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/skill_factory_acolyte.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/skynetblow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/snap.cpp">
@@ -1357,6 +1396,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/vituperatum.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/windmill.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/zen.cpp">

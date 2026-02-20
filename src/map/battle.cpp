@@ -4823,55 +4823,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			else
 				skillratio += 500 + 500 * skill_lv;	// Level 1-5 is using fire element, like RK_DRAGONBREATH
 			break;
-		case SR_SKYNETBLOW:
-			//ATK [{(Skill Level x 200) + (Caster AGI)} x Caster Base Level / 100] %
-			skillratio += -100 + 200 * skill_lv + sstatus->agi / 6; // !TODO: Confirm AGI bonus
-			RE_LVL_DMOD(100);
-			break;
-
-		case SR_KNUCKLEARROW:
-			if (wd->miscflag&4) { // ATK [(Skill Level x 150) + (1000 x Target current weight / Maximum weight) + (Target Base Level x 5) x (Caster Base Level / 150)] %
-				skillratio += -100 + 150 * skill_lv + status_get_lv(target) * 5;
-				if (tsd && tsd->weight)
-					skillratio += pc_getpercentweight(*tsd);
-				RE_LVL_DMOD(150);
-			} else {
-				if (status_get_class_(target) == CLASS_BOSS)
-					skillratio += 400 + 200 * skill_lv;
-				else // ATK [(Skill Level x 100 + 500) x Caster Base Level / 100] %
-					skillratio += 400 + 100 * skill_lv;
-				RE_LVL_DMOD(100);
-			}
-			if (sc->getSCE(SC_GT_CHANGE))
-				skillratio += skillratio * 30 / 100;
-			break;
-		case SR_WINDMILL: // ATK [(Caster Base Level + Caster DEX) x Caster Base Level / 100] %
-			skillratio += -100 + status_get_lv(src) + sstatus->dex;
-			RE_LVL_DMOD(100);
-			break;
-		case SR_GATEOFHELL:
-			if (sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == SR_FALLENEMPIRE)
-				skillratio += -100 + 800 * skill_lv;
-			else
-				skillratio += -100 + 500 * skill_lv;
-			RE_LVL_DMOD(100);
-			if (sc->getSCE(SC_GT_REVITALIZE))
-				skillratio += skillratio * 30 / 100;
-			break;
-		case SR_GENTLETOUCH_QUIET:
-			skillratio += -100 + 100 * skill_lv + sstatus->dex;
-			RE_LVL_DMOD(100);
-			break;
-		case SR_HOWLINGOFLION:
-			skillratio += -100 + 500 * skill_lv;
-			RE_LVL_DMOD(100);	
-			break;
-		case SR_RIDEINLIGHTNING: 
-			skillratio += -100 + 40 * skill_lv;
-			if (sd && sd->status.weapon == W_KNUCKLE)
-				skillratio += 50 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
 		case WM_SEVERE_RAINSTORM_MELEE:
 			//ATK [{(Caster DEX / 300 + AGI / 200)} x Caster Base Level / 100] %
 			skillratio += -100 + 100 * skill_lv + (sstatus->dex / 300 + sstatus->agi / 200);
