@@ -121,6 +121,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case RL_BANISHING_BUSTER:
 			return std::make_unique<SkillBanishingBuster>();
+		case RL_B_TRAP:
+			return std::make_unique<SkillImpl>(skill_id);
 		case RL_E_CHAIN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RL_HEAT_BARREL:
