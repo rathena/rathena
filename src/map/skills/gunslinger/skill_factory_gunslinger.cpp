@@ -25,6 +25,7 @@
 #include "hastyfireinthehole.cpp"
 #include "intensiveaim.cpp"
 #include "magazineforone.cpp"
+#include "massspiral.cpp"
 #include "midnightfallen.cpp"
 #include "missionbombard.cpp"
 #include "onlyonebullet.cpp"
@@ -124,7 +125,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 		case RL_HEAT_BARREL:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RL_MASS_SPIRAL:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillMassSpiral>();
 		case RL_P_ALTER:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RL_RICHS_COIN:
