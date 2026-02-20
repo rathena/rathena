@@ -1941,6 +1941,9 @@
     <ClInclude Include="skills/summoner/tunaparty.hpp">
       <Filter>Header Files\Skills\Summoner</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/abundance.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/autoberserk.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -1971,6 +1974,15 @@
     <ClInclude Include="skills/swordman/crossrain.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/crushstrike.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/dragonbreath.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/dragonhowling.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/dragonicaura.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -1983,7 +1995,16 @@
     <ClInclude Include="skills/swordman/earthdrive.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/enchantblade.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/fightingspirit.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/forceofvanguard.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/giantgrowth.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/gloriadomini.hpp">
@@ -2007,6 +2028,12 @@
     <ClInclude Include="skills/swordman/holycross.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/hundredspear.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/ignitionbreak.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/imperialcross.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -2019,6 +2046,9 @@
     <ClInclude Include="skills/swordman/kingsgrace.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/luxanima.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/madnesscrusher.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -2028,6 +2058,9 @@
     <ClInclude Include="skills/swordman/martyrsreckoning.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/milleniumshield.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/moonslasher.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -2035,6 +2068,9 @@
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/overslash.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/phantomthrust.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/pierce.hpp">
@@ -2056,6 +2092,9 @@
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/rayofgenesis.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/refresh.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/relax.hpp">
@@ -2106,6 +2145,9 @@
     <ClInclude Include="skills/swordman/smite.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/sonicwave.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/spearboomerang.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
@@ -2113,6 +2155,12 @@
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/spiralpierce.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/stonehardskin.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/stormblast.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/stormslash.hpp">
@@ -2127,7 +2175,13 @@
     <ClInclude Include="skills/swordman/ultimatesacrifice.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
+    <ClInclude Include="skills/swordman/vitalityactivation.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
     <ClInclude Include="skills/swordman/vitalstrike.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/windcutter.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/taekwon/allinthesky.hpp">
@@ -4256,6 +4310,9 @@
     <ClCompile Include="skills/summoner/tunaparty.cpp">
       <Filter>Source Files\Skills\Summoner</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/abundance.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/autoberserk.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -4286,6 +4343,15 @@
     <ClCompile Include="skills/swordman/crossrain.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/crushstrike.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/dragonbreath.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/dragonhowling.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/dragonicaura.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -4298,7 +4364,16 @@
     <ClCompile Include="skills/swordman/earthdrive.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/enchantblade.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/fightingspirit.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/forceofvanguard.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/giantgrowth.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/gloriadomini.cpp">
@@ -4322,6 +4397,12 @@
     <ClCompile Include="skills/swordman/holycross.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/hundredspear.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/ignitionbreak.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/imperialcross.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -4334,6 +4415,9 @@
     <ClCompile Include="skills/swordman/kingsgrace.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/luxanima.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/madnesscrusher.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -4343,6 +4427,9 @@
     <ClCompile Include="skills/swordman/martyrsreckoning.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/milleniumshield.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/moonslasher.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -4350,6 +4437,9 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/overslash.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/phantomthrust.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/pierce.cpp">
@@ -4371,6 +4461,9 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/rayofgenesis.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/refresh.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/relax.cpp">
@@ -4421,6 +4514,9 @@
     <ClCompile Include="skills/swordman/smite.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/sonicwave.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/spearboomerang.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
@@ -4428,6 +4524,12 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/spiralpierce.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/stonehardskin.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/stormblast.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/stormslash.cpp">
@@ -4442,7 +4544,13 @@
     <ClCompile Include="skills/swordman/ultimatesacrifice.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
+    <ClCompile Include="skills/swordman/vitalityactivation.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
     <ClCompile Include="skills/swordman/vitalstrike.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/windcutter.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/taekwon/allinthesky.cpp">
