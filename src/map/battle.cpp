@@ -5043,9 +5043,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 20 : 0);
 			RE_LVL_DMOD(100);
 			break;
-		case RL_S_STORM:
-			skillratio += -100 + 1700 + 200 * skill_lv;
-			break;
 		case RL_SLUGSHOT:
 			if (target->type == BL_MOB)
 				skillratio += -100 + 1200 * skill_lv;
