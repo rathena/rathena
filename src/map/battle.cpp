@@ -3285,9 +3285,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case ML_PIERCE:
 				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
-			case RK_SONICWAVE:
-				hitrate += hitrate * 3 * skill_lv / 100; // !TODO: Confirm the hitrate bonus
-				break;
 			case RL_SLUGSHOT:
 				{
 					int8 dist = distance_bl(src, target);
@@ -4713,14 +4710,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 100 + 50 * skill_lv;
 #endif
 			break;
-		case CG_ARROWVULCAN:
-#ifdef RENEWAL
-			skillratio += 400 + 100 * skill_lv;
-			RE_LVL_DMOD(100);
-#else
-			skillratio += 100 + 100 * skill_lv;
-#endif
-			break;
 #ifdef RENEWAL
 		case KN_CHARGEATK:
 			skillratio += 600;
@@ -4742,48 +4731,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			break;
 		case HFLI_SBR44: //[orn]
 			skillratio += 100 * (skill_lv - 1);
-			break;
-		case RK_SONICWAVE:
-			skillratio += -100 + 1050 + 150 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case RK_HUNDREDSPEAR:
-			skillratio += -100 + 600 + 200 * skill_lv;
-			if (sd)
-				skillratio += 50 * pc_checkskill(sd,LK_SPIRALPIERCE);
-			if (sc) {
-				if( sc->getSCE( SC_DRAGONIC_AURA ) ){
-					skillratio += sc->getSCE( SC_DRAGONIC_AURA )->val1 * 160;
-				}
-
-				if (sc->getSCE(SC_CHARGINGPIERCE_COUNT) && sc->getSCE(SC_CHARGINGPIERCE_COUNT)->val1 >= 10)
-					skillratio *= 2;
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case RK_WINDCUTTER:
-			if (sd) {
-				if (sd->weapontype1 == W_2HSWORD)
-					skillratio += -100 + 250 * skill_lv;
-				else if (sd->weapontype1 == W_1HSPEAR || sd->weapontype1 == W_2HSPEAR)
-					skillratio += -100 + 400 * skill_lv;
-				else
-					skillratio += -100 + 300 * skill_lv;
-			} else
-				skillratio += -100 + 300 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case RK_IGNITIONBREAK:
-			skillratio += -100 + 450 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case RK_STORMBLAST:
-			skillratio += -100 + (((sd) ? pc_checkskill(sd,RK_RUNEMASTERY) : 0) + sstatus->str / 6) * 100; // ATK = [{Rune Mastery Skill Level + (Caster's STR / 6)} x 100] %
-			RE_LVL_DMOD(100);
-			break;
-		case RK_PHANTOMTHRUST: // ATK = [{(Skill Level x 50) + (Spear Master Level x 10)} x Caster's Base Level / 150] %
-			skillratio += -100 + 50 * skill_lv + 10 * (sd ? pc_checkskill(sd,KN_SPEARMASTERY) : 5);
-			RE_LVL_DMOD(150); // Base level bonus.
 			break;
 		case SR_EARTHSHAKER:
 			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC_STEALTHFIELD) || tsc->getSCE(SC__SHADOWFORM))) {
@@ -5099,61 +5046,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			if (sc && sc->getSCE(SC_RESEARCHREPORT))
 				skillratio += 200 * skill_lv;
 			RE_LVL_DMOD(100);
-			break;
-		case TR_ROSEBLOSSOM:
-			skillratio += -100 + 200 + 2000 * skill_lv;
-
-			if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
-				skillratio += 3 * sstatus->con;
-
-			if( tsc != nullptr && tsc->getSCE( SC_SOUNDBLEND ) ){
-				skillratio += 200 * skill_lv;
-			}
-
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {
-				skillratio *= 2;
-
-				if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
-					skillratio += skillratio * 50 / 100;
-			}
-			break;
-		case TR_ROSEBLOSSOM_ATK:
-			skillratio += -100 + 250 + 2800 * skill_lv;
-
-			if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
-				skillratio += 3 * sstatus->con;
-
-			if( tsc != nullptr && tsc->getSCE( SC_SOUNDBLEND ) ){
-				skillratio += 200 * skill_lv;
-			}
-
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {
-				skillratio *= 2;
-
-				if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
-					skillratio += skillratio * 50 / 100;
-			}
-			break;
-		case TR_RHYTHMSHOOTING:
-			skillratio += -100 + 550 + 950 * skill_lv;
-
-			if (sd && pc_checkskill(sd, TR_STAGE_MANNER) > 0)
-				skillratio += 5 * sstatus->con;
-
-			if (tsc && tsc->getSCE(SC_SOUNDBLEND)) {
-				skillratio += 300 + 100 * skill_lv;
-				skillratio += 2 * sstatus->con;
-			}
-
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {
-				skillratio *= 2;
-
-				if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
-					skillratio += skillratio * 50 / 100;
-			}
 			break;
 		case ABR_BATTLE_BUSTER:// Need official formula.
 		case ABR_DUAL_CANNON_FIRE:// Need official formula.
@@ -7016,35 +6908,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						break;
 					case MH_POISON_MIST:
 						skillratio += -100 + 200 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // ! TODO: Confirm DEX bonus
-						break;
-					case TR_METALIC_FURY:
-						skillratio += -100 + 3850 * skill_lv;
-						// !Todo: skill affected by SPL (without SC_SOUNDBLEND) as well?
-						if (tsc && tsc->getSCE(SC_SOUNDBLEND)) {
-							skillratio += 800 * skill_lv;
-							skillratio += 2 * pc_checkskill(sd, TR_STAGE_MANNER) * sstatus->spl;
-						}
-						RE_LVL_DMOD(100);
-						break;
-					case TR_SOUNDBLEND:
-						skillratio += -100 + 120 * skill_lv + 5 * sstatus->spl;
-						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_MYSTIC_SYMPHONY)) {
-							skillratio += skillratio * 100 / 100;
-
-							if (tstatus->race == RC_FISH || tstatus->race == RC_DEMIHUMAN)
-								skillratio += skillratio * 50 / 100;
-						}
-						break;
-					case TR_RHYTHMICAL_WAVE:
-						skillratio += -100 + 250 + 3650 * skill_lv;
-						skillratio += pc_checkskill(sd, TR_STAGE_MANNER) * 25; // !TODO: check Stage Manner ratio
-						skillratio += 5 * sstatus->spl;	// !TODO: check SPL ratio
-
-						if (sc != nullptr && sc->hasSCE(SC_MYSTIC_SYMPHONY))
-							skillratio += 200 + 1000 * skill_lv;
-
-						RE_LVL_DMOD(100);
 						break;
 					case HN_GROUND_GRAVITATION:
 						if (mflag & SKILL_ALTDMG_FLAG) {

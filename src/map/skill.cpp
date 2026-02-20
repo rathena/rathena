@@ -1419,17 +1419,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case MA_SANDMAN:
 		sc_start(src, bl, SC_SLEEP, (10 * skill_lv + 40), skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
 		break;
-	case PF_FOGWALL:
-		if (src != bl && !tsc->getSCE(SC_DELUGE))
-			sc_start(src,bl,SC_BLIND,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
-	case RK_DRAGONBREATH:
-		sc_start4(src,bl,SC_BURNING,15,skill_lv,1000,src->id,0,skill_get_time(skill_id,skill_lv));
-		break;
-	case RK_DRAGONBREATH_WATER:
-		sc_start(src,bl,SC_FREEZING,15,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
 	case SR_DRAGONCOMBO:
 		sc_start(src,bl, SC_STUN, 1 + skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -1574,9 +1563,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case RL_AM_BLAST:
 		sc_start(src,bl,SC_ANTI_M_BLAST,20 + 10 * skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
-	case TR_ROSEBLOSSOM:// Rose blossom seed can only bloom if the target is hit.
-		sc_start4(src, bl, SC_ROSEBLOSSOM, 100, skill_lv, TR_ROSEBLOSSOM_ATK, src->id, 0, skill_get_time(skill_id, skill_lv));
-		[[fallthrough]];
 	case WM_METALICSOUND:
 	case WM_REVERBERATION:
 		status_change_end(bl, SC_SOUNDBLEND);
@@ -4327,150 +4313,6 @@ void skill_reveal_trap_inarea(block_list *src, int32 range, int32 x, int32 y) {
 	map_foreachinallarea(skill_reveal_trap, src->m, x-range, y-range, x+range, y+range, BL_SKILL);
 }
 
-/*========================================== [Playtester]
-* Process tarot card's effects
-* @param src: Source of the tarot card effect
-* @param target: Target of the tartor card effect
-* @param skill_id: ID of the skill used
-* @param skill_lv: Level of the skill used
-* @param tick: Processing tick time
-* @return Card number
-*------------------------------------------*/
-static int32 skill_tarotcard(block_list* src, block_list *target, uint16 skill_id, uint16 skill_lv, t_tick tick)
-{
-	int32 card = 0;
-
-	if (battle_config.tarotcard_equal_chance) {
-		//eAthena equal chances
-		card = rnd() % 14 + 1;
-	}
-	else {
-		//Official chances
-		int32 rate = rnd() % 100;
-		if (rate < 10) card = 1; // THE FOOL
-		else if (rate < 20) card = 2; // THE MAGICIAN
-		else if (rate < 30) card = 3; // THE HIGH PRIESTESS
-		else if (rate < 37) card = 4; // THE CHARIOT
-		else if (rate < 47) card = 5; // STRENGTH
-		else if (rate < 62) card = 6; // THE LOVERS
-		else if (rate < 63) card = 7; // WHEEL OF FORTUNE
-		else if (rate < 69) card = 8; // THE HANGED MAN
-		else if (rate < 74) card = 9; // DEATH
-		else if (rate < 82) card = 10; // TEMPERANCE
-		else if (rate < 83) card = 11; // THE DEVIL
-		else if (rate < 85) card = 12; // THE TOWER
-		else if (rate < 90) card = 13; // THE STAR
-		else card = 14; // THE SUN
-	}
-
-	switch (card) {
-	case 1: // THE FOOL - heals SP to 0
-	{
-		status_percent_damage(src, target, 0, 100, false);
-		break;
-	}
-	case 2: // THE MAGICIAN - matk halved
-	{
-		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		break;
-	}
-	case 3: // THE HIGH PRIESTESS - all buffs removed
-	{
-		status_change_clear_buffs(target, SCCB_BUFFS | SCCB_CHEM_PROTECT);
-		break;
-	}
-	case 4: // THE CHARIOT - 1000 damage, random armor destroyed
-	{
-		battle_fix_damage(src, target, 1000, 0, skill_id);
-		clif_damage(*src, *target, tick, 0, 0, 1000, 0, DMG_NORMAL, 0, false);
-		if (!status_isdead(*target))
-		{
-			uint16 where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
-			skill_break_equip(src, target, where[rnd() % 3], 10000, BCT_ENEMY);
-		}
-		break;
-	}
-	case 5: // STRENGTH - atk halved
-	{
-		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		break;
-	}
-	case 6: // THE LOVERS - 2000HP heal, random teleported
-	{
-		status_heal(target, 2000, 0, 0);
-		if (!map_flag_vs(target->m))
-			unit_warp(target, -1, -1, -1, CLR_TELEPORT);
-		break;
-	}
-	case 7: // WHEEL OF FORTUNE - random 2 other effects
-	{
-		// Recursive call
-		skill_tarotcard(src, target, skill_id, skill_lv, tick);
-		skill_tarotcard(src, target, skill_id, skill_lv, tick);
-		break;
-	}
-	case 8: // THE HANGED MAN - ankle, freeze or stoned
-	{
-		enum sc_type sc[] = { SC_ANKLE, SC_FREEZE, SC_STONEWAIT };
-		uint8 rand_eff = rnd() % 3;
-		int32 time = ((rand_eff == 0) ? skill_get_time2(skill_id, skill_lv) : skill_get_time2(status_db.getSkill(sc[rand_eff]), 1));
-
-		if (sc[rand_eff] == SC_STONEWAIT)
-			sc_start2(src, target, SC_STONEWAIT, 100, skill_lv, src->id, time, skill_get_time(status_db.getSkill(SC_STONEWAIT), 1));
-		else
-			sc_start(src, target, sc[rand_eff], 100, skill_lv, time);
-		break;
-	}
-	case 9: // DEATH - curse, coma and poison
-	{
-		status_change_start(src, target, SC_COMA, 10000, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
-		sc_start(src, target, SC_CURSE, 100, skill_lv, skill_get_time2(status_db.getSkill(SC_CURSE), 1));
-		sc_start2(src, target, SC_POISON, 100, skill_lv, src->id, skill_get_time2(status_db.getSkill(SC_POISON), 1));
-		break;
-	}
-	case 10: // TEMPERANCE - confusion
-	{
-		sc_start(src, target, SC_CONFUSION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	}
-	case 11: // THE DEVIL - 6666 damage, atk and matk halved, cursed
-	{
-		battle_fix_damage(src, target, 6666, 0, skill_id);
-		clif_damage(*src, *target, tick, 0, 0, 6666, 0, DMG_NORMAL, 0, false);
-		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_CURSE, skill_lv, 100, skill_get_time2(status_db.getSkill(SC_CURSE), 1));
-		break;
-	}
-	case 12: // THE TOWER - 4444 damage
-	{
-		battle_fix_damage(src, target, 4444, 0, skill_id);
-		clif_damage(*src, *target, tick, 0, 0, 4444, 0, DMG_NORMAL, 0, false);
-		break;
-	}
-	case 13: // THE STAR - stun
-	{
-		sc_start(src, target, SC_STUN, 100, skill_lv, skill_get_time2(status_db.getSkill(SC_STUN), 1));
-		break;
-	}
-	default: // THE SUN - atk, matk, hit, flee and def reduced, immune to more tarot card effects
-	{
-#ifdef RENEWAL
-		//In renewal, this card gives the SC_TAROTCARD status change which makes you immune to other cards
-		sc_start(src, target, SC_TAROTCARD, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-#endif
-		sc_start(src, target, SC_INCATKRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCMATKRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCHITRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCFLEERATE, 100, -20, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCDEFRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
-		return 14; //To make sure a valid number is returned
-	}
-	}
-
-	return card;
-}
-
 bool skill_mirage_cast( block_list& src, block_list* bl, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, t_tick tick, int32 flag ){
 	unit_data* ud = unit_bl2ud( &src );
 
@@ -4584,11 +4426,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case ITM_TOMAHAWK:
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case TR_ROSEBLOSSOM:
-	case TR_RHYTHMSHOOTING:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
 
 	case KN_CHARGEATK:
 		{
@@ -4639,8 +4476,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 	//Splash attack skills.
 	case MA_SHOWER:
-	case RK_IGNITIONBREAK:
-	case RK_HUNDREDSPEAR:
 	case SR_RAMPAGEBLASTER:
 	case SR_SKYNETBLOW:
 	case SR_WINDMILL:
@@ -4661,12 +4496,10 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case BO_ACIDIFIED_ZONE_GROUND:
 	case BO_ACIDIFIED_ZONE_WIND:
 	case BO_ACIDIFIED_ZONE_FIRE:
-	case TR_ROSEBLOSSOM_ATK:
 	case BO_EXPLOSIVE_POWDER:
 	case BO_MAYHEMIC_THORNS:
 	case BO_MYSTERY_POWDER:
 	case BO_DUST_EXPLOSION:
-	case TR_METALIC_FURY:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
 			int32 heal = 0;
@@ -4836,11 +4669,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case MH_ERASER_CUTTER:
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-
-	case TR_SOUNDBLEND:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
 	case HVAN_CAPRICE:
 		{
 			static const std::array<e_skill, 4> subskills = { MG_COLDBOLT, MG_FIREBOLT, MG_LIGHTNINGBOLT, WZ_EARTHSPIKE };
@@ -4851,50 +4679,11 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case RL_B_TRAP:
 		skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-	case RK_DRAGONBREATH_WATER:
-	case RK_DRAGONBREATH:
-		if( tsc && tsc->getSCE(SC_HIDING) )
-			clif_skill_nodamage(src,*src,skill_id,skill_lv);
-		else {
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		}
-		break;
 	case HVAN_EXPLOSION:
 		if (src != bl)
 			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	// Celest
-	case PF_SOULBURN:
-		if (rnd()%100 < (skill_lv < 5 ? 30 + skill_lv * 10 : 70)) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			if (skill_lv == 5)
-				skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-			status_percent_damage(src, bl, 0, 100, false);
-		} else {
-			clif_skill_nodamage(src,*src,skill_id,skill_lv);
-			if (skill_lv == 5)
-				skill_attack(BF_MAGIC,src,src,src,skill_id,skill_lv,tick,flag);
-			status_percent_damage(src, src, 0, 100, false);
-		}
-		break;
-	case RK_PHANTOMTHRUST:
-		unit_setdir(src,map_calc_dir(src, bl->x, bl->y));
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-
-		skill_blown(src,bl,distance_bl(src,bl)-1,unit_getdir(src),BLOWN_NONE);
-		if( battle_check_target(src,bl,BCT_ENEMY) > 0 )
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-	case RK_WINDCUTTER:
-	case RK_STORMBLAST:
-		if( flag&1 )
-			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-		else {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			map_foreachinallrange(skill_area_sub, bl,skill_get_splash(skill_id, skill_lv),BL_CHAR,src,skill_id,skill_lv,tick, flag|BCT_ENEMY|1,skill_castend_nodamage_id);
-		}
-		break;
 	case SR_KNUCKLEARROW:
 		// Holds current direction of bl/target to src/attacker before the src is moved to bl location
 		dir_ka = map_calc_dir(bl, src->x, src->y);
@@ -4950,7 +4739,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	case WM_REVERBERATION:
-	case TR_RHYTHMICAL_WAVE:
 		if (flag & 1)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		else {
@@ -5527,40 +5315,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			skill_addtimerskill(src, tick+1000, bl->id, 0, 0, skill_id, skill_lv, 100, flag);
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		break;
-	case CG_MARIONETTE:
-		{
-			if( (sd && dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER && dstsd->status.sex == sd->status.sex) || (tsc && (tsc->getSCE(SC_CURSE) || tsc->getSCE(SC_QUAGMIRE))) )
-			{// Cannot cast on another bard/dancer-type class of the same gender as caster, or targets under Curse/Quagmire
-				clif_skill_fail( *sd, skill_id );
-				return 1;
-			}
-
-			if( sc && tsc )
-			{
-				if( !sc->getSCE(SC_MARIONETTE) && !tsc->getSCE(SC_MARIONETTE2) )
-				{
-					sc_start(src,src,SC_MARIONETTE,100,bl->id,skill_get_time(skill_id,skill_lv));
-					sc_start(src,bl,SC_MARIONETTE2,100,src->id,skill_get_time(skill_id,skill_lv));
-					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-				}
-				else
-				if(  sc->getSCE(SC_MARIONETTE ) &&  sc->getSCE(SC_MARIONETTE )->val1 == bl->id &&
-					tsc->getSCE(SC_MARIONETTE2) && tsc->getSCE(SC_MARIONETTE2)->val1 == src->id )
-				{
-					status_change_end(src, SC_MARIONETTE);
-					status_change_end(bl, SC_MARIONETTE2);
-				}
-				else
-				{
-					if( sd )
-						clif_skill_fail( *sd, skill_id );
-
-					return 1;
-				}
-			}
-		}
-		break;
-
 	case ITEM_ENCHANTARMS:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_get_ele(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)));
 		break;
@@ -5618,11 +5372,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-	case TR_SOUNDBLEND:
-		skill_castend_damage_id(src, bl, skill_id, skill_lv, tick, 0);
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start2(src, bl, type, 100, skill_lv, src->id, skill_get_time(skill_id, skill_lv)));
-		break;
-
 	case BO_ADVANCE_PROTECTION:
 		if( sd && ( !dstsd || pc_checkequip( dstsd, EQP_SHADOW_GEAR ) < 0 ) ){
 			clif_skill_fail( *sd, skill_id );
@@ -5711,8 +5460,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 	//List of self skills that give damage around caster
-	case RK_WINDCUTTER:
-	case RK_STORMBLAST:
 	case SR_SKYNETBLOW:
 	case SR_RAMPAGEBLASTER:
 	case SR_HOWLINGOFLION:
@@ -5735,21 +5482,10 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		i = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget,
 				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		if( !i && ( skill_id == RK_WINDCUTTER || skill_id == SR_SKYNETBLOW || skill_id == KO_HAPPOKUNAI ) )
+		if( !i && ( skill_id == SR_SKYNETBLOW || skill_id == KO_HAPPOKUNAI ) )
 			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 	}
 		break;
-
-	case RK_IGNITIONBREAK:
-		skill_area_temp[1] = 0;
-#if PACKETVER >= 20180207
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-#else
-		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-#endif
-		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		break;
-
 	case SR_TIGERCANNON:
 	case SR_WINDMILL:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
@@ -5811,13 +5547,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			return 0;
 		}
 		clif_skill_nodamage(src,*bl,skill_id,-1,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-
-	case CG_SPECIALSINGER:
-		if (tsc && tsc->getSCE(SC_ENSEMBLEFATIGUE)) {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_change_end(bl, SC_ENSEMBLEFATIGUE);
-		}
 		break;
 
 	case NV_FIRSTAID:
@@ -6046,20 +5775,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case PF_HPCONVERSION:
-		{
-			int32 hp, sp;
-			hp = sstatus->max_hp/10;
-			sp = hp * 10 * skill_lv / 100;
-			if (!status_charge(src,hp,0)) {
-				if (sd) clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_heal(bl,0,sp,2);
-		}
-		break;
-
 	case MA_REMOVETRAP:
 		{
 			skill_unit* su = BL_CAST(BL_SKILL, bl);
@@ -6073,106 +5788,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				skill_delunit(su);
 			}
 
-		}
-		break;
-
-	case TR_RETROSPECTION:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		if (sd)
-			unit_skilluse_id(src, src->id, sd->skill_id_song, sd->skill_lv_song);
-		break;
-
-	case PF_MINDBREAKER:
-		{
-			if(status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele)) {
-				return 1;
-			}
-
-			if (tsce)
-			{	//HelloKitty2 (?) explained that this silently fails when target is
-				//already inflicted. [Skotlex]
-				return 1;
-			}
-
-			//Has a 55% + skill_lv*5% success chance.
-			if (!clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-				sc_start(src,bl,type,55+5*skill_lv,skill_lv,skill_get_time(skill_id,skill_lv))))
-			{
-				if (sd) clif_skill_fail( *sd, skill_id );
-				return 0;
-			}
-
-			unit_skillcastcancel(bl,0);
-
-			if (dstmd)
-				mob_target(dstmd, src, skill_get_range2(src, skill_id, skill_lv, true));
-		}
-		break;
-
-	case PF_SOULCHANGE:
-		{
-			uint32 sp1 = 0, sp2 = 0;
-			if (dstmd) {
-				if (dstmd->state.soul_change_flag) {
-					if(sd) clif_skill_fail( *sd, skill_id );
-					break;
-				}
-				dstmd->state.soul_change_flag = 1;
-				sp2 = sstatus->max_sp * 3 /100;
-				status_heal(src, 0, sp2, 2);
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-				break;
-			}
-			sp1 = sstatus->sp;
-			sp2 = tstatus->sp;
-#ifdef	RENEWAL
-			sp1 = sp1 / 2;
-			sp2 = sp2 / 2;
-			if (tsc && tsc->getSCE(SC_EXTREMITYFIST))
-				sp1 = tstatus->sp;
-#endif
-			if (tsc && tsc->getSCE(SC_NORECOVER_STATE))
-				sp1 = tstatus->sp;
-			status_set_sp(src, sp2, 3);
-			status_set_sp(bl, sp1, 3);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
-#ifndef RENEWAL
-	case CG_LONGINGFREEDOM:
-		{
-			if (tsc && !tsce && (tsce=tsc->getSCE(SC_DANCING)) && tsce->val4
-				&& (tsce->val1&0xFFFF) != CG_MOONLIT) //Can't use Longing for Freedom while under Moonlight Petals. [Skotlex]
-			{
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-					sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-			}
-		}
-		break;
-#endif
-
-	case CG_TAROTCARD:
-		{
-			int32 card = -1;
-			if (tsc && tsc->getSCE(SC_TAROTCARD)) {
-				//Target currently has the SUN tarot card effect and is immune to any other effect
-				return 0;
-			}
-			if( rnd() % 100 > skill_lv * 8 ||
-#ifndef RENEWAL
-			(tsc && tsc->getSCE(SC_BASILICA)) ||
-#endif
-			(dstmd && ((dstmd->guardian_data && dstmd->mob_id == MOBID_EMPERIUM) || status_get_class_(bl) == CLASS_BATTLEFIELD)) ) {
-				if( sd )
-					clif_skill_fail( *sd, skill_id );
-
-				return 0;
-			}
-			status_zap(src,0,skill_get_sp(skill_id,skill_lv)); // consume sp only if succeeded [Inkfish]
-			card = skill_tarotcard(src, bl, skill_id, skill_lv, tick); // actual effect is executed here
-			clif_specialeffect((card == 6) ? src : bl, EF_TAROTCARD1 + card - 1, AREA);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		}
 		break;
 
@@ -6406,68 +6021,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv, buyingstore_setup(sd, MAX_BUYINGSTORE_SLOTS) == 0);
 		}
 		break;
-	case RK_ENCHANTBLADE:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,skill_lv,((100+20*skill_lv)*status_get_lv(src))/100+sstatus->int_,skill_get_time(skill_id,skill_lv)));
-		break;
-	case RK_DRAGONHOWLING:
-		if( flag&1)
-			sc_start(src,bl,type,50 + 6 * skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
-		else
-		{
-			skill_area_temp[2] = 0;
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			map_foreachinallrange(skill_area_sub, src,
-				skill_get_splash(skill_id,skill_lv),BL_CHAR,
-				src,skill_id,skill_lv,tick,flag|BCT_ENEMY|SD_PREAMBLE|1,
-				skill_castend_nodamage_id);
-		}
-		break;
-	case RK_LUXANIMA:
-		status_change_clear_buffs(bl, SCCB_LUXANIMA); // For bonus_script
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		break;
-	case RK_GIANTGROWTH:
-	case RK_STONEHARDSKIN:
-	case RK_VITALITYACTIVATION:
-	case RK_ABUNDANCE:
-	case RK_CRUSHSTRIKE:
-	case RK_REFRESH:
-	case RK_MILLENNIUMSHIELD:
-		if (sd) {
-			uint8 rune_level = 1; // RK_GIANTGROWTH
-
-			if (skill_id == RK_VITALITYACTIVATION)
- 				rune_level = 2;
-			else if (skill_id == RK_STONEHARDSKIN)
-				rune_level = 4;
-			else if (skill_id == RK_ABUNDANCE)
- 				rune_level = 6;
-			else if (skill_id == RK_CRUSHSTRIKE)
- 				rune_level = 7;
-			else if (skill_id == RK_REFRESH)
-				rune_level = 8;
-			else if (skill_id == RK_MILLENNIUMSHIELD)
-				rune_level = 9;
-			if (pc_checkskill(sd, RK_RUNEMASTERY) >= rune_level) {
-				if (sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)))
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-				else if (skill_id == RK_STONEHARDSKIN)
-					clif_skill_fail( *sd, skill_id, USESKILL_FAIL_HP_INSUFFICIENT );
-			} else
-				clif_skill_fail( *sd, skill_id );
- 		}
- 		break;
-	case RK_FIGHTINGSPIRIT: {
-			uint8 runemastery_skill_lv = (sd ? pc_checkskill(sd, RK_RUNEMASTERY) : skill_get_max(RK_RUNEMASTERY));
-
-			// val1: ATKBonus: ? // !TODO: Confirm new ATK formula
-			// val2: ASPD boost: [RK_RUNEMASTERYlevel * 4 / 10] * 10 ==> RK_RUNEMASTERYlevel * 4
-			sc_start2(src,bl,type,100,70 + 7 * runemastery_skill_lv,4 * runemastery_skill_lv,skill_get_time(skill_id,skill_lv));
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			break;
-		}
 	case SR_CURSEDCIRCLE:
 		if( flag&1 ) {
 			if( status_get_class_(bl) == CLASS_BOSS )
@@ -7321,70 +6874,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case TR_MUSICAL_INTERLUDE:
-	case TR_JAWAII_SERENADE:
-	case TR_PRON_MARCH:
-		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1))
-			sc_start4(src, bl, type, 100, skill_lv, 0, flag, 0, skill_get_time(skill_id, skill_lv));
-		else if (sd) {
-			clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
-
-			sd->skill_id_song = skill_id;
-			sd->skill_lv_song = skill_lv;
-
-			if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-				flag |= 2;
-
-			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
-		}
-		break;
-
-	case TR_GEF_NOCTURN:
-	case TR_AIN_RHAPSODY:
-		if (flag & 1)
-			sc_start4(src, bl, type, 100, skill_lv, 0, flag, 0, skill_get_time(skill_id, skill_lv));
-		else if (sd) {
-			clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
-
-			sd->skill_id_song = skill_id;
-			sd->skill_lv_song = skill_lv;
-
-			if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-				flag |= 2;
-
-			map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_nodamage_id);
-		}
-		break;
-
-	case TR_ROKI_CAPRICCIO:
-	case TR_NIPELHEIM_REQUIEM:
-		if (flag & 1) { // Need official success chances.
-			uint16 success_chance = 5 * skill_lv;
-
-			if (flag & 2)
-				success_chance *= 2;
-
-			// Is it a chance to inflect so and so, or seprate chances for inflicting each status? [Rytech]
-			if (skill_id == TR_ROKI_CAPRICCIO) {
-				sc_start(src, bl, SC_CONFUSION, 4 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-				sc_start(src, bl, SC_HANDICAPSTATE_MISFORTUNE, success_chance, skill_lv, skill_get_time2(skill_id, skill_lv));
-			} else { // TR_NIPELHEIM_REQUIEM
-				sc_start(src, bl, SC_CURSE, 4 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-				sc_start(src, bl, SC_HANDICAPSTATE_DEPRESSION, success_chance, skill_lv, skill_get_time2(skill_id, skill_lv));
-			}
-		} else if (sd) {
-			clif_skill_nodamage(bl, *bl, skill_id, skill_lv);
-
-			sd->skill_id_song = skill_id;
-			sd->skill_lv_song = skill_lv;
-
-			if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-				flag |= 2;
-
-			map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_nodamage_id);
-		}
-		break;
-
 	case ABR_NET_REPAIR:
 	case ABR_NET_SUPPORT:
 		if (flag & 1) {
@@ -7437,13 +6926,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 		}
 		break;
-
-#ifdef RENEWAL
-	case CG_HERMODE:
-		skill_castend_song(src, skill_id, skill_lv, tick);
-		break;
-#endif
-
 	case ALL_EVENT_20TH_ANNIVERSARY:
 		clif_skill_nodamage(src, *src, skill_id, skill_lv);
 		break;
@@ -8316,12 +7798,9 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MA_LANDMINE:
 	case MA_SANDMAN:
 	case MA_FREEZINGTRAP:
-	case PF_FOGWALL:
-	case PF_SPIDERWEB:
 	case WE_CALLPARTNER:
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
-	case CG_MOONLIT:
 	case WM_POEMOFNETHERWORLD:
 	case SO_PSYCHIC_WAVE:
 	case SO_VACUUM_EXTREME:
@@ -8347,16 +7826,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		// Ammo should be deleted right away.
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
-#ifndef RENEWAL
-	case CG_HERMODE:
-		skill_clear_unitgroup(src);
-		if ((sg = skill_unitsetting(src,skill_id,skill_lv,x,y,0)))
-			sc_start4(src,src,SC_DANCING,100,
-				skill_id,0,skill_lv,sg->group_id,skill_get_time(skill_id,skill_lv));
-		flag|=1;
-#endif
-		break;
-
 	case SO_WARMER:
 	case SO_CLOUD_KILL:
 		flag |= (skill_id == SO_WARMER) ? 8 : 4;
@@ -8400,8 +7869,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		break;
 
 	case MA_SHOWER:
-	case RK_DRAGONBREATH:
-	case RK_DRAGONBREATH_WATER:
 	case RL_HAMMER_OF_GOD:
 		// Cast center might be relevant later (e.g. for knockback direction)
 		skill_area_temp[4] = x;

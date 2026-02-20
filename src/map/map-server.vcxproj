@@ -114,6 +114,7 @@
       <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)\3rdparty\pcre\include;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\mysql\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +135,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)\3rdparty\pcre\include;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\mysql\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -156,6 +158,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)\3rdparty\pcre\include;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\mysql\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -181,6 +184,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <AdditionalIncludeDirectories>$(SolutionDir)src;$(SolutionDir)\3rdparty\rapidyaml\src;$(SolutionDir)\3rdparty\rapidyaml\ext\c4core\src;$(SolutionDir)\3rdparty\pcre\include;$(SolutionDir)3rdparty\libconfig\;$(SolutionDir)3rdparty\mysql\include\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -323,6 +327,7 @@
     <ClInclude Include="skills/acolyte/zen.hpp" />
     <ClInclude Include="skills/archer/acousticrhythm.hpp" />
     <ClInclude Include="skills/archer/aimedbolt.hpp" />
+    <ClInclude Include="skills/archer/ainrhapsody.hpp" />
     <ClInclude Include="skills/archer/amp.hpp" />
     <ClInclude Include="skills/archer/anklesnare.hpp" />
     <ClInclude Include="skills/archer/arrowshower.hpp" />
@@ -356,6 +361,7 @@
     <ClInclude Include="skills/archer/focusedarrowstrike.hpp" />
     <ClInclude Include="skills/archer/freezingtrap.hpp" />
     <ClInclude Include="skills/archer/galestorm.hpp" />
+    <ClInclude Include="skills/archer/geffenianocturn.hpp" />
     <ClInclude Include="skills/archer/gypsyskiss.hpp" />
     <ClInclude Include="skills/archer/harmoniclick.hpp" />
     <ClInclude Include="skills/archer/hawkboomerang.hpp" />
@@ -364,35 +370,53 @@
     <ClInclude Include="skills/archer/hipshaker.hpp" />
     <ClInclude Include="skills/archer/iceboundtrap.hpp" />
     <ClInclude Include="skills/archer/impressiveriff.hpp" />
+    <ClInclude Include="skills/archer/jawaiiserenade.hpp" />
     <ClInclude Include="skills/archer/ladyluck.hpp" />
     <ClInclude Include="skills/archer/landmine.hpp" />
+    <ClInclude Include="skills/archer/longingforfreedom.hpp" />
     <ClInclude Include="skills/archer/lullaby.hpp" />
     <ClInclude Include="skills/archer/magentatrap.hpp" />
     <ClInclude Include="skills/archer/magicstrings.hpp" />
     <ClInclude Include="skills/archer/maizetrap.hpp" />
     <ClInclude Include="skills/archer/makingarrow.hpp" />
+    <ClInclude Include="skills/archer/marionettecontrol.hpp" />
     <ClInclude Include="skills/archer/melodystrike.hpp" />
     <ClInclude Include="skills/archer/mentalsensing.hpp" />
+    <ClInclude Include="skills/archer/metallicfury.hpp" />
+    <ClInclude Include="skills/archer/musicalinterlude.hpp" />
+    <ClInclude Include="skills/archer/nipelheimrequiem.hpp" />
     <ClInclude Include="skills/archer/pangvoice.hpp" />
     <ClInclude Include="skills/archer/perfecttablature.hpp" />
     <ClInclude Include="skills/archer/phantasmicarrow.hpp" />
     <ClInclude Include="skills/archer/powerchord.hpp" />
+    <ClInclude Include="skills/archer/pronmarch.hpp" />
     <ClInclude Include="skills/archer/removetrap.hpp" />
+    <ClInclude Include="skills/archer/retrospection.hpp" />
+    <ClInclude Include="skills/archer/rhythmicalwave.hpp" />
+    <ClInclude Include="skills/archer/rhythmshooting.hpp" />
+    <ClInclude Include="skills/archer/rokicapriccio.hpp" />
+    <ClInclude Include="skills/archer/roseblossom.hpp" />
     <ClInclude Include="skills/archer/sandman.hpp" />
     <ClInclude Include="skills/archer/sensitivekeen.hpp" />
+    <ClInclude Include="skills/archer/shelteringbliss.hpp" />
     <ClInclude Include="skills/archer/shockwavetrap.hpp" />
     <ClInclude Include="skills/archer/skidtrap.hpp" />
     <ClInclude Include="skills/archer/skill_factory_archer.hpp" />
+    <ClInclude Include="skills/archer/skilledspecialsinger.hpp" />
     <ClInclude Include="skills/archer/slingingarrow.hpp" />
     <ClInclude Include="skills/archer/slowgrace.hpp" />
     <ClInclude Include="skills/archer/solidtrap.hpp" />
     <ClInclude Include="skills/archer/songoflutie.hpp" />
+    <ClInclude Include="skills/archer/soundblend.hpp" />
     <ClInclude Include="skills/archer/springtrap.hpp" />
     <ClInclude Include="skills/archer/swifttrap.hpp" />
     <ClInclude Include="skills/archer/talkiebox.hpp" />
+    <ClInclude Include="skills/archer/tarotcardoffate.hpp" />
     <ClInclude Include="skills/archer/unbarringoctave.hpp" />
     <ClInclude Include="skills/archer/unchainedserenade.hpp" />
     <ClInclude Include="skills/archer/verduretrap.hpp" />
+    <ClInclude Include="skills/archer/vulcanarrow.hpp" />
+    <ClInclude Include="skills/archer/wandofhermode.hpp" />
     <ClInclude Include="skills/archer/wargbite.hpp" />
     <ClInclude Include="skills/archer/wargdash.hpp" />
     <ClInclude Include="skills/archer/wargmastery.hpp" />
@@ -437,6 +461,7 @@
     <ClInclude Include="skills/mage/astralstrike.hpp" />
     <ClInclude Include="skills/mage/avalanche.hpp" />
     <ClInclude Include="skills/mage/beastlyhypnosis.hpp" />
+    <ClInclude Include="skills/mage/blindingmist.hpp" />
     <ClInclude Include="skills/mage/castcancel.hpp" />
     <ClInclude Include="skills/mage/chainlightning.hpp" />
     <ClInclude Include="skills/mage/classchange.hpp" />
@@ -474,6 +499,7 @@
     <ClInclude Include="skills/mage/energycoat.hpp" />
     <ClInclude Include="skills/mage/energyconversion.hpp" />
     <ClInclude Include="skills/mage/eyesofstorm.hpp" />
+    <ClInclude Include="skills/mage/fiberlock.hpp" />
     <ClInclude Include="skills/mage/fireball.hpp" />
     <ClInclude Include="skills/mage/firebolt.hpp" />
     <ClInclude Include="skills/mage/firepillar.hpp" />
@@ -498,6 +524,7 @@
     <ClInclude Include="skills/mage/hocuspocus.hpp" />
     <ClInclude Include="skills/mage/icewall.hpp" />
     <ClInclude Include="skills/mage/increasingactivity.hpp" />
+    <ClInclude Include="skills/mage/indulge.hpp" />
     <ClInclude Include="skills/mage/jackfrost.hpp" />
     <ClInclude Include="skills/mage/jupitelthunder.hpp" />
     <ClInclude Include="skills/mage/leveling.hpp" />
@@ -507,6 +534,7 @@
     <ClInclude Include="skills/mage/magicrod.hpp" />
     <ClInclude Include="skills/mage/magneticearth.hpp" />
     <ClInclude Include="skills/mage/meteorstorm.hpp" />
+    <ClInclude Include="skills/mage/mindbreaker.hpp" />
     <ClInclude Include="skills/mage/monocell.hpp" />
     <ClInclude Include="skills/mage/monsterchant.hpp" />
     <ClInclude Include="skills/mage/mysteryillusion.hpp" />
@@ -528,7 +556,9 @@
     <ClInclude Include="skills/mage/sightblaster.hpp" />
     <ClInclude Include="skills/mage/sightrasher.hpp" />
     <ClInclude Include="skills/mage/skill_factory_mage.hpp" />
+    <ClInclude Include="skills/mage/soulexhale.hpp" />
     <ClInclude Include="skills/mage/soulexpansion.hpp" />
+    <ClInclude Include="skills/mage/soulsiphon.hpp" />
     <ClInclude Include="skills/mage/soulstrike.hpp" />
     <ClInclude Include="skills/mage/soulvulcanstrike.hpp" />
     <ClInclude Include="skills/mage/spellbreaker.hpp" />
@@ -896,6 +926,7 @@
     <ClInclude Include="skills/summoner/tastyshrimpparty.hpp" />
     <ClInclude Include="skills/summoner/tunabelly.hpp" />
     <ClInclude Include="skills/summoner/tunaparty.hpp" />
+    <ClInclude Include="skills/swordman/abundance.hpp" />
     <ClInclude Include="skills/swordman/autoberserk.hpp" />
     <ClInclude Include="skills/swordman/banding.hpp" />
     <ClInclude Include="skills/swordman/banishingpoint.hpp" />
@@ -906,11 +937,17 @@
     <ClInclude Include="skills/swordman/cannonspear.hpp" />
     <ClInclude Include="skills/swordman/counterattack.hpp" />
     <ClInclude Include="skills/swordman/crossrain.hpp" />
+    <ClInclude Include="skills/swordman/crushstrike.hpp" />
+    <ClInclude Include="skills/swordman/dragonbreath.hpp" />
+    <ClInclude Include="skills/swordman/dragonhowling.hpp" />
     <ClInclude Include="skills/swordman/dragonicaura.hpp" />
     <ClInclude Include="skills/swordman/dragonicbreath.hpp" />
     <ClInclude Include="skills/swordman/dragonicpierce.hpp" />
     <ClInclude Include="skills/swordman/earthdrive.hpp" />
+    <ClInclude Include="skills/swordman/enchantblade.hpp" />
+    <ClInclude Include="skills/swordman/fightingspirit.hpp" />
     <ClInclude Include="skills/swordman/forceofvanguard.hpp" />
+    <ClInclude Include="skills/swordman/giantgrowth.hpp" />
     <ClInclude Include="skills/swordman/gloriadomini.hpp" />
     <ClInclude Include="skills/swordman/grandcross.hpp" />
     <ClInclude Include="skills/swordman/grandjudgement.hpp" />
@@ -918,16 +955,21 @@
     <ClInclude Include="skills/swordman/hackandslasher.hpp" />
     <ClInclude Include="skills/swordman/hesperuslit.hpp" />
     <ClInclude Include="skills/swordman/holycross.hpp" />
+    <ClInclude Include="skills/swordman/hundredspear.hpp" />
+    <ClInclude Include="skills/swordman/ignitionbreak.hpp" />
     <ClInclude Include="skills/swordman/imperialcross.hpp" />
     <ClInclude Include="skills/swordman/imperialpressure.hpp" />
     <ClInclude Include="skills/swordman/judgementcross.hpp" />
     <ClInclude Include="skills/swordman/kingsgrace.hpp" />
+    <ClInclude Include="skills/swordman/luxanima.hpp" />
     <ClInclude Include="skills/swordman/madnesscrusher.hpp" />
     <ClInclude Include="skills/swordman/magnum.hpp" />
     <ClInclude Include="skills/swordman/martyrsreckoning.hpp" />
+    <ClInclude Include="skills/swordman/milleniumshield.hpp" />
     <ClInclude Include="skills/swordman/moonslasher.hpp" />
     <ClInclude Include="skills/swordman/overbrand.hpp" />
     <ClInclude Include="skills/swordman/overslash.hpp" />
+    <ClInclude Include="skills/swordman/phantomthrust.hpp" />
     <ClInclude Include="skills/swordman/pierce.hpp" />
     <ClInclude Include="skills/swordman/piety.hpp" />
     <ClInclude Include="skills/swordman/pinpointattack.hpp" />
@@ -935,6 +977,7 @@
     <ClInclude Include="skills/swordman/radiantspear.hpp" />
     <ClInclude Include="skills/swordman/rageburst.hpp" />
     <ClInclude Include="skills/swordman/rayofgenesis.hpp" />
+    <ClInclude Include="skills/swordman/refresh.hpp" />
     <ClInclude Include="skills/swordman/relax.hpp" />
     <ClInclude Include="skills/swordman/resistantsouls.hpp" />
     <ClInclude Include="skills/swordman/sacrifice.hpp" />
@@ -951,14 +994,19 @@
     <ClInclude Include="skills/swordman/shieldspell.hpp" />
     <ClInclude Include="skills/swordman/skill_factory_swordman.hpp" />
     <ClInclude Include="skills/swordman/smite.hpp" />
+    <ClInclude Include="skills/swordman/sonicwave.hpp" />
     <ClInclude Include="skills/swordman/spearboomerang.hpp" />
     <ClInclude Include="skills/swordman/spearstab.hpp" />
     <ClInclude Include="skills/swordman/spiralpierce.hpp" />
+    <ClInclude Include="skills/swordman/stonehardskin.hpp" />
+    <ClInclude Include="skills/swordman/stormblast.hpp" />
     <ClInclude Include="skills/swordman/stormslash.hpp" />
     <ClInclude Include="skills/swordman/trample.hpp" />
     <ClInclude Include="skills/swordman/traumaticblow.hpp" />
     <ClInclude Include="skills/swordman/ultimatesacrifice.hpp" />
+    <ClInclude Include="skills/swordman/vitalityactivation.hpp" />
     <ClInclude Include="skills/swordman/vitalstrike.hpp" />
+    <ClInclude Include="skills/swordman/windcutter.hpp" />
     <ClInclude Include="skills/taekwon/allinthesky.hpp" />
     <ClInclude Include="skills/taekwon/bookofcreatingstar.hpp" />
     <ClInclude Include="skills/taekwon/circleofdirectionsandelementals.hpp" />
@@ -1438,6 +1486,9 @@
     <ClCompile Include="skills/archer/aimedbolt.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/ainrhapsody.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/amp.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1537,6 +1588,9 @@
     <ClCompile Include="skills/archer/galestorm.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/geffenianocturn.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/gypsyskiss.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1561,10 +1615,16 @@
     <ClCompile Include="skills/archer/impressiveriff.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/jawaiiserenade.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/ladyluck.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/landmine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/longingforfreedom.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/lullaby.cpp">
@@ -1582,10 +1642,22 @@
     <ClCompile Include="skills/archer/makingarrow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/marionettecontrol.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/melodystrike.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/mentalsensing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/metallicfury.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/musicalinterlude.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/nipelheimrequiem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/pangvoice.cpp">
@@ -1600,13 +1672,34 @@
     <ClCompile Include="skills/archer/powerchord.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/pronmarch.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/removetrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/retrospection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/rhythmicalwave.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/rhythmshooting.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/rokicapriccio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/roseblossom.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/sandman.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/sensitivekeen.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/shelteringbliss.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/shockwavetrap.cpp">
@@ -1616,6 +1709,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/skill_factory_archer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/skilledspecialsinger.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/slingingarrow.cpp">
@@ -1630,6 +1726,9 @@
     <ClCompile Include="skills/archer/songoflutie.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/soundblend.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/springtrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1639,6 +1738,9 @@
     <ClCompile Include="skills/archer/talkiebox.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/tarotcardoffate.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/unbarringoctave.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1646,6 +1748,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/verduretrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/vulcanarrow.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/wandofhermode.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/wargbite.cpp">
@@ -1780,6 +1888,9 @@
     <ClCompile Include="skills/mage/beastlyhypnosis.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/blindingmist.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/castcancel.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1891,6 +2002,9 @@
     <ClCompile Include="skills/mage/eyesofstorm.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/fiberlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/fireball.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1963,6 +2077,9 @@
     <ClCompile Include="skills/mage/increasingactivity.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/indulge.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/jackfrost.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1988,6 +2105,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/meteorstorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/mindbreaker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/monocell.cpp">
@@ -2053,7 +2173,13 @@
     <ClCompile Include="skills/mage/skill_factory_mage.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/soulexhale.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/soulexpansion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/soulsiphon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/soulstrike.cpp">
@@ -3157,6 +3283,9 @@
     <ClCompile Include="skills/summoner/tunaparty.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/swordman/abundance.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/swordman/autoberserk.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3187,6 +3316,15 @@
     <ClCompile Include="skills/swordman/crossrain.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/swordman/crushstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/dragonbreath.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/dragonhowling.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/swordman/dragonicaura.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3199,7 +3337,16 @@
     <ClCompile Include="skills/swordman/earthdrive.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/swordman/enchantblade.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/fightingspirit.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/swordman/forceofvanguard.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/giantgrowth.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/gloriadomini.cpp">
@@ -3223,6 +3370,12 @@
     <ClCompile Include="skills/swordman/holycross.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/swordman/hundredspear.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/ignitionbreak.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/swordman/imperialcross.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3235,6 +3388,9 @@
     <ClCompile Include="skills/swordman/kingsgrace.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/swordman/luxanima.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/swordman/madnesscrusher.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3244,6 +3400,9 @@
     <ClCompile Include="skills/swordman/martyrsreckoning.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/swordman/milleniumshield.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/swordman/moonslasher.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3251,6 +3410,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/overslash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/phantomthrust.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/pierce.cpp">
@@ -3272,6 +3434,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/rayofgenesis.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/refresh.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/relax.cpp">
@@ -3322,6 +3487,9 @@
     <ClCompile Include="skills/swordman/smite.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/swordman/sonicwave.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/swordman/spearboomerang.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3329,6 +3497,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/spiralpierce.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/stonehardskin.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/stormblast.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/stormslash.cpp">
@@ -3343,7 +3517,13 @@
     <ClCompile Include="skills/swordman/ultimatesacrifice.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/swordman/vitalityactivation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/swordman/vitalstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/windcutter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/taekwon/allinthesky.cpp">
