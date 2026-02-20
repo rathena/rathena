@@ -55,11 +55,13 @@
 #include "jawaiiserenade.cpp"
 #include "ladyluck.cpp"
 #include "landmine.cpp"
+#include "longingforfreedom.cpp"
 #include "lullaby.cpp"
 #include "magentatrap.cpp"
 #include "magicstrings.cpp"
 #include "maizetrap.cpp"
 #include "makingarrow.cpp"
+#include "marionettecontrol.cpp"
 #include "melodystrike.cpp"
 #include "mentalsensing.cpp"
 #include "metallicfury.cpp"
@@ -78,8 +80,10 @@
 #include "roseblossom.cpp"
 #include "sandman.cpp"
 #include "sensitivekeen.cpp"
+#include "shelteringbliss.cpp"
 #include "shockwavetrap.cpp"
 #include "skidtrap.cpp"
+#include "skilledspecialsinger.cpp"
 #include "slingingarrow.cpp"
 #include "slowgrace.cpp"
 #include "solidtrap.cpp"
@@ -88,9 +92,12 @@
 #include "springtrap.cpp"
 #include "swifttrap.cpp"
 #include "talkiebox.cpp"
+#include "tarotcardoffate.cpp"
 #include "unbarringoctave.cpp"
 #include "unchainedserenade.cpp"
 #include "verduretrap.cpp"
+#include "vulcanarrow.cpp"
+#include "wandofhermode.cpp"
 #include "wargbite.cpp"
 #include "wargdash.cpp"
 #include "wargmastery.cpp"
@@ -149,7 +156,19 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 		case BD_SIEGFRIED:
 			return std::make_unique<SkillAcousticRhythm>();
 		case CG_ARROWVULCAN:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillVulcanArrow>();
+		case CG_HERMODE:
+			return std::make_unique<SkillWandOfHermode>();
+		case CG_LONGINGFREEDOM:
+			return std::make_unique<SkillLongingForFreedom>();
+		case CG_MARIONETTE:
+			return std::make_unique<SkillMarionetteControl>();
+		case CG_MOONLIT:
+			return std::make_unique<SkillShelteringBliss>();
+		case CG_SPECIALSINGER:
+			return std::make_unique<SkillSkilledSpecialSinger>();
+		case CG_TAROTCARD:
+			return std::make_unique<SkillTarotCardOfFate>();
 		case DC_DONTFORGETME:
 			return std::make_unique<SkillSlowGrace>();
 		case DC_FORTUNEKISS:

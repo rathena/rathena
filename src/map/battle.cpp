@@ -4776,14 +4776,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			skillratio += 100 + 50 * skill_lv;
 #endif
 			break;
-		case CG_ARROWVULCAN:
-#ifdef RENEWAL
-			skillratio += 400 + 100 * skill_lv;
-			RE_LVL_DMOD(100);
-#else
-			skillratio += 100 + 100 * skill_lv;
-#endif
-			break;
 #ifdef RENEWAL
 		case KN_CHARGEATK:
 			skillratio += 600;
