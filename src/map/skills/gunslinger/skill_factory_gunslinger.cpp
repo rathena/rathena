@@ -16,6 +16,7 @@
 #include "crimsonmarker.cpp"
 #include "desperado.cpp"
 #include "disarm.cpp"
+#include "dragontail.cpp"
 #include "dust.cpp"
 #include "flicker.cpp"
 #include "fallenangel.cpp"
@@ -133,6 +134,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillImpl>(skill_id);
 		case RL_C_MARKER:
 			return std::make_unique<SkillCrimsonMarker>();
+		case RL_D_TAIL:
+			return std::make_unique<SkillDragonTail>();
 		case RL_E_CHAIN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RL_FIREDANCE:

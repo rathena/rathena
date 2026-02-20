@@ -5085,7 +5085,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case RL_D_TAIL:
 	case RL_HAMMER_OF_GOD:
 		if (flag&1)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
@@ -5099,10 +5098,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 					flag |= 8;
 			}
 
-			if (skill_id == RL_HAMMER_OF_GOD)
-				clif_skill_poseffect( *src, skill_id, 1, bl->x, bl->y, gettick() );
-			else
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
+			clif_skill_poseffect( *src, skill_id, 1, bl->x, bl->y, gettick() );
 
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}

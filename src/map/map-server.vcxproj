@@ -433,6 +433,7 @@
     <ClInclude Include="skills/gunslinger/crimsonmarker.hpp" />
     <ClInclude Include="skills/gunslinger/desperado.hpp" />
     <ClInclude Include="skills/gunslinger/disarm.hpp" />
+    <ClInclude Include="skills/gunslinger/dragontail.hpp" />
     <ClInclude Include="skills/gunslinger/dust.hpp" />
     <ClInclude Include="skills/gunslinger/fallenangel.hpp" />
     <ClInclude Include="skills/gunslinger/flicker.hpp" />
@@ -1661,6 +1662,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/disarm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/dragontail.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/dust.cpp">
