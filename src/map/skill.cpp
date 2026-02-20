@@ -4461,150 +4461,6 @@ void skill_reveal_trap_inarea(block_list *src, int32 range, int32 x, int32 y) {
 	map_foreachinallarea(skill_reveal_trap, src->m, x-range, y-range, x+range, y+range, BL_SKILL);
 }
 
-/*========================================== [Playtester]
-* Process tarot card's effects
-* @param src: Source of the tarot card effect
-* @param target: Target of the tartor card effect
-* @param skill_id: ID of the skill used
-* @param skill_lv: Level of the skill used
-* @param tick: Processing tick time
-* @return Card number
-*------------------------------------------*/
-static int32 skill_tarotcard(block_list* src, block_list *target, uint16 skill_id, uint16 skill_lv, t_tick tick)
-{
-	int32 card = 0;
-
-	if (battle_config.tarotcard_equal_chance) {
-		//eAthena equal chances
-		card = rnd() % 14 + 1;
-	}
-	else {
-		//Official chances
-		int32 rate = rnd() % 100;
-		if (rate < 10) card = 1; // THE FOOL
-		else if (rate < 20) card = 2; // THE MAGICIAN
-		else if (rate < 30) card = 3; // THE HIGH PRIESTESS
-		else if (rate < 37) card = 4; // THE CHARIOT
-		else if (rate < 47) card = 5; // STRENGTH
-		else if (rate < 62) card = 6; // THE LOVERS
-		else if (rate < 63) card = 7; // WHEEL OF FORTUNE
-		else if (rate < 69) card = 8; // THE HANGED MAN
-		else if (rate < 74) card = 9; // DEATH
-		else if (rate < 82) card = 10; // TEMPERANCE
-		else if (rate < 83) card = 11; // THE DEVIL
-		else if (rate < 85) card = 12; // THE TOWER
-		else if (rate < 90) card = 13; // THE STAR
-		else card = 14; // THE SUN
-	}
-
-	switch (card) {
-	case 1: // THE FOOL - heals SP to 0
-	{
-		status_percent_damage(src, target, 0, 100, false);
-		break;
-	}
-	case 2: // THE MAGICIAN - matk halved
-	{
-		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		break;
-	}
-	case 3: // THE HIGH PRIESTESS - all buffs removed
-	{
-		status_change_clear_buffs(target, SCCB_BUFFS | SCCB_CHEM_PROTECT);
-		break;
-	}
-	case 4: // THE CHARIOT - 1000 damage, random armor destroyed
-	{
-		battle_fix_damage(src, target, 1000, 0, skill_id);
-		clif_damage(*src, *target, tick, 0, 0, 1000, 0, DMG_NORMAL, 0, false);
-		if (!status_isdead(*target))
-		{
-			uint16 where[] = { EQP_ARMOR, EQP_SHIELD, EQP_HELM };
-			skill_break_equip(src, target, where[rnd() % 3], 10000, BCT_ENEMY);
-		}
-		break;
-	}
-	case 5: // STRENGTH - atk halved
-	{
-		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		break;
-	}
-	case 6: // THE LOVERS - 2000HP heal, random teleported
-	{
-		status_heal(target, 2000, 0, 0);
-		if (!map_flag_vs(target->m))
-			unit_warp(target, -1, -1, -1, CLR_TELEPORT);
-		break;
-	}
-	case 7: // WHEEL OF FORTUNE - random 2 other effects
-	{
-		// Recursive call
-		skill_tarotcard(src, target, skill_id, skill_lv, tick);
-		skill_tarotcard(src, target, skill_id, skill_lv, tick);
-		break;
-	}
-	case 8: // THE HANGED MAN - ankle, freeze or stoned
-	{
-		enum sc_type sc[] = { SC_ANKLE, SC_FREEZE, SC_STONEWAIT };
-		uint8 rand_eff = rnd() % 3;
-		int32 time = ((rand_eff == 0) ? skill_get_time2(skill_id, skill_lv) : skill_get_time2(status_db.getSkill(sc[rand_eff]), 1));
-
-		if (sc[rand_eff] == SC_STONEWAIT)
-			sc_start2(src, target, SC_STONEWAIT, 100, skill_lv, src->id, time, skill_get_time(status_db.getSkill(SC_STONEWAIT), 1));
-		else
-			sc_start(src, target, sc[rand_eff], 100, skill_lv, time);
-		break;
-	}
-	case 9: // DEATH - curse, coma and poison
-	{
-		status_change_start(src, target, SC_COMA, 10000, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
-		sc_start(src, target, SC_CURSE, 100, skill_lv, skill_get_time2(status_db.getSkill(SC_CURSE), 1));
-		sc_start2(src, target, SC_POISON, 100, skill_lv, src->id, skill_get_time2(status_db.getSkill(SC_POISON), 1));
-		break;
-	}
-	case 10: // TEMPERANCE - confusion
-	{
-		sc_start(src, target, SC_CONFUSION, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-		break;
-	}
-	case 11: // THE DEVIL - 6666 damage, atk and matk halved, cursed
-	{
-		battle_fix_damage(src, target, 6666, 0, skill_id);
-		clif_damage(*src, *target, tick, 0, 0, 6666, 0, DMG_NORMAL, 0, false);
-		sc_start(src, target, SC_INCATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCMATKRATE, 100, -50, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_CURSE, skill_lv, 100, skill_get_time2(status_db.getSkill(SC_CURSE), 1));
-		break;
-	}
-	case 12: // THE TOWER - 4444 damage
-	{
-		battle_fix_damage(src, target, 4444, 0, skill_id);
-		clif_damage(*src, *target, tick, 0, 0, 4444, 0, DMG_NORMAL, 0, false);
-		break;
-	}
-	case 13: // THE STAR - stun
-	{
-		sc_start(src, target, SC_STUN, 100, skill_lv, skill_get_time2(status_db.getSkill(SC_STUN), 1));
-		break;
-	}
-	default: // THE SUN - atk, matk, hit, flee and def reduced, immune to more tarot card effects
-	{
-#ifdef RENEWAL
-		//In renewal, this card gives the SC_TAROTCARD status change which makes you immune to other cards
-		sc_start(src, target, SC_TAROTCARD, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
-#endif
-		sc_start(src, target, SC_INCATKRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCMATKRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCHITRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCFLEERATE, 100, -20, skill_get_time2(skill_id, skill_lv));
-		sc_start(src, target, SC_INCDEFRATE, 100, -20, skill_get_time2(skill_id, skill_lv));
-		return 14; //To make sure a valid number is returned
-	}
-	}
-
-	return card;
-}
-
 bool skill_mirage_cast( block_list& src, block_list* bl, uint16 skill_id, uint16 skill_lv, int16 x, int16 y, t_tick tick, int32 flag ){
 	unit_data* ud = unit_bl2ud( &src );
 
@@ -5769,40 +5625,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case CG_MARIONETTE:
-		{
-			if( (sd && dstsd && (dstsd->class_&MAPID_SECONDMASK) == MAPID_BARDDANCER && dstsd->status.sex == sd->status.sex) || (tsc && (tsc->getSCE(SC_CURSE) || tsc->getSCE(SC_QUAGMIRE))) )
-			{// Cannot cast on another bard/dancer-type class of the same gender as caster, or targets under Curse/Quagmire
-				clif_skill_fail( *sd, skill_id );
-				return 1;
-			}
-
-			if( sc && tsc )
-			{
-				if( !sc->getSCE(SC_MARIONETTE) && !tsc->getSCE(SC_MARIONETTE2) )
-				{
-					sc_start(src,src,SC_MARIONETTE,100,bl->id,skill_get_time(skill_id,skill_lv));
-					sc_start(src,bl,SC_MARIONETTE2,100,src->id,skill_get_time(skill_id,skill_lv));
-					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-				}
-				else
-				if(  sc->getSCE(SC_MARIONETTE ) &&  sc->getSCE(SC_MARIONETTE )->val1 == bl->id &&
-					tsc->getSCE(SC_MARIONETTE2) && tsc->getSCE(SC_MARIONETTE2)->val1 == src->id )
-				{
-					status_change_end(src, SC_MARIONETTE);
-					status_change_end(bl, SC_MARIONETTE2);
-				}
-				else
-				{
-					if( sd )
-						clif_skill_fail( *sd, skill_id );
-
-					return 1;
-				}
-			}
-		}
-		break;
-
 	case ITEM_ENCHANTARMS:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_get_ele(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)));
 		break;
@@ -6151,13 +5973,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			return 0;
 		}
 		clif_skill_nodamage(src,*bl,skill_id,-1,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-
-	case CG_SPECIALSINGER:
-		if (tsc && tsc->getSCE(SC_ENSEMBLEFATIGUE)) {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			status_change_end(bl, SC_ENSEMBLEFATIGUE);
-		}
 		break;
 
 	case NV_FIRSTAID:
@@ -6660,43 +6475,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				sp1 = tstatus->sp;
 			status_set_sp(src, sp2, 3);
 			status_set_sp(bl, sp1, 3);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
-#ifndef RENEWAL
-	case CG_LONGINGFREEDOM:
-		{
-			if (tsc && !tsce && (tsce=tsc->getSCE(SC_DANCING)) && tsce->val4
-				&& (tsce->val1&0xFFFF) != CG_MOONLIT) //Can't use Longing for Freedom while under Moonlight Petals. [Skotlex]
-			{
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-					sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-			}
-		}
-		break;
-#endif
-
-	case CG_TAROTCARD:
-		{
-			int32 card = -1;
-			if (tsc && tsc->getSCE(SC_TAROTCARD)) {
-				//Target currently has the SUN tarot card effect and is immune to any other effect
-				return 0;
-			}
-			if( rnd() % 100 > skill_lv * 8 ||
-#ifndef RENEWAL
-			(tsc && tsc->getSCE(SC_BASILICA)) ||
-#endif
-			(dstmd && ((dstmd->guardian_data && dstmd->mob_id == MOBID_EMPERIUM) || status_get_class_(bl) == CLASS_BATTLEFIELD)) ) {
-				if( sd )
-					clif_skill_fail( *sd, skill_id );
-
-				return 0;
-			}
-			status_zap(src,0,skill_get_sp(skill_id,skill_lv)); // consume sp only if succeeded [Inkfish]
-			card = skill_tarotcard(src, bl, skill_id, skill_lv, tick); // actual effect is executed here
-			clif_specialeffect((card == 6) ? src : bl, EF_TAROTCARD1 + card - 1, AREA);
 			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		}
 		break;
@@ -8040,12 +7818,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-#ifdef RENEWAL
-	case CG_HERMODE:
-		skill_castend_song(src, skill_id, skill_lv, tick);
-		break;
-#endif
-
 	case NPC_LEASH:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 
@@ -8955,7 +8727,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case WE_CALLPARTNER:
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
-	case CG_MOONLIT:
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
 	case NPC_COMET:
@@ -8999,15 +8770,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case NPC_EARTHQUAKE:
 		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, -1, DMG_SINGLE );
 		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-		break;
-#ifndef RENEWAL
-	case CG_HERMODE:
-		skill_clear_unitgroup(src);
-		if ((sg = skill_unitsetting(src,skill_id,skill_lv,x,y,0)))
-			sc_start4(src,src,SC_DANCING,100,
-				skill_id,0,skill_lv,sg->group_id,skill_get_time(skill_id,skill_lv));
-		flag|=1;
-#endif
 		break;
 
 	case SO_WARMER:
