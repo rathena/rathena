@@ -4,12 +4,10 @@
 #pragma once
 
 #include "../skill_impl.hpp"
-#include "../../battle.hpp"
 
-class SkillPiercingAttack : public WeaponSkillImpl
-{
+class SkillPiercingAttack : public WeaponSkillImpl {
 public:
 	SkillPiercingAttack();
 
-	void calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const override;
+	void calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const override;
 };

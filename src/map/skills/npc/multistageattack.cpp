@@ -6,6 +6,6 @@
 SkillMultiStageAttack::SkillMultiStageAttack() : WeaponSkillImpl(NPC_COMBOATTACK) {
 }
 
-void SkillMultiStageAttack::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+void SkillMultiStageAttack::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 	base_skillratio += 25 * skill_lv;
 }
