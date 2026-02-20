@@ -8550,34 +8550,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		}
 		break;
 
-	case RL_FIRE_RAIN: {
-			int32 w, wave = skill_lv + 5, dir = map_calc_dir(src,x,y);
-			int32 sx = x = src->x, sy = y = src->y;
-
-			for (w = 0; w <= wave; w++) {
-				switch (dir) {
-					case DIR_NORTH:
-					case DIR_NORTHWEST:
-					case DIR_NORTHEAST:
-						sy = y + w;
-						break;
-					case DIR_WEST:
-						sx = x - w;
-						break;
-					case DIR_SOUTHWEST:
-					case DIR_SOUTH:
-					case DIR_SOUTHEAST:
-						sy = y - w;
-						break;
-					case DIR_EAST:
-						sx = x + w;
-						break;
-				}
-				skill_addtimerskill(src,gettick() + (80 * w),0,sx,sy,skill_id,skill_lv,dir,flag);
-			}
-		}
-		break;
-
 	case NPC_MAGMA_ERUPTION:
 		// 1st, AoE 'slam' damage
 		i = skill_get_splash(skill_id, skill_lv);
