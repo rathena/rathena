@@ -31,6 +31,7 @@
 #include "grenadesdropping.cpp"
 #include "grounddrift.cpp"
 #include "hastyfireinthehole.cpp"
+#include "hammerofgod.cpp"
 #include "howlingmine.cpp"
 #include "intensiveaim.cpp"
 #include "magazineforone.cpp"
@@ -149,6 +150,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillFallenAngel>();
 		case RL_FLICKER:
 			return std::make_unique<SkillFlicker>();
+		case RL_HAMMER_OF_GOD:
+			return std::make_unique<SkillHammerOfGod>();
 		case RL_HEAT_BARREL:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RL_H_MINE:
