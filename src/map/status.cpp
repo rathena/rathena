@@ -10984,11 +10984,7 @@ static bool status_change_start_post_delay(block_list* src, block_list* bl, sc_t
 			// Val1 Skill LV of Autospell
 			// Val2 Skill ID to cast
 			// Val3 Max Lv to cast
-#ifdef RENEWAL
-			val4 = val1 * 2; // Chance of casting
-#else
-			val4 = 5 + val1*2; // Chance of casting
-#endif
+			val4 = val1 * 2; // Chance of casting (2% per level, RE and pre-RE)
 			break;
 		case SC_VOLCANO:
 			{
