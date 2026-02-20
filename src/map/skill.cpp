@@ -4616,10 +4616,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_KILLING_AURA:
 	case NPC_IGNITIONBREAK:
 	case NPC_RAYOFGENESIS:
-	case SR_RAMPAGEBLASTER:
-	case SR_SKYNETBLOW:
-	case SR_WINDMILL:
-	case SR_RIDEINLIGHTNING:
 	case SO_VARETYR_SPEAR:
 	case SO_POISON_BUSTER:
 	case KO_HAPPOKUNAI:

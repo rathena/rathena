@@ -23,6 +23,7 @@ void SkillCursedCircle::castendNoDamageId(block_list* src, block_list* target, u
 			if (target->type == BL_MOB)
 				mob_unlocktarget((TBL_MOB*)target, gettick());
 			clif_bladestop(*src, target->id, true);
+			flag |= SKILL_NOCONSUME_REQ;
 		}
 		return;
 	}

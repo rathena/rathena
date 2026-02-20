@@ -265,7 +265,6 @@
     <ClInclude Include="skills/acolyte/competentia.hpp" />
     <ClInclude Include="skills/acolyte/convenio.hpp" />
     <ClInclude Include="skills/acolyte/crementia.hpp" />
-    <ClInclude Include="skills/acolyte/crescentelbowautospell.hpp" />
     <ClInclude Include="skills/acolyte/crucis.hpp" />
     <ClInclude Include="skills/acolyte/cure.hpp" />
     <ClInclude Include="skills/acolyte/cursedcircle.hpp" />
@@ -1165,9 +1164,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/crementia.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/acolyte/crescentelbowautospell.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/crucis.cpp">

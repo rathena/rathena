@@ -432,9 +432,6 @@
     <ClInclude Include="skills/acolyte/crementia.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
-    <ClInclude Include="skills/acolyte/crescentelbowautospell.hpp">
-      <Filter>Header Files\Skills\Acolyte</Filter>
-    </ClInclude>
     <ClInclude Include="skills/acolyte/crucis.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -2874,9 +2871,6 @@
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/crementia.cpp">
-      <Filter>Source Files\Skills\Acolyte</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/acolyte/crescentelbowautospell.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/crucis.cpp">

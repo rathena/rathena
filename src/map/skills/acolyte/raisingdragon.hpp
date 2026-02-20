@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillRaisingDragon : public SkillImpl {
+class SkillRaisingDragon : public StatusSkillImpl {
 public:
 	SkillRaisingDragon();
 
