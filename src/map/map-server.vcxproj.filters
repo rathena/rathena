@@ -1020,6 +1020,9 @@
     <ClInclude Include="skills/gunslinger/roundtrip.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/gunslinger/roundtripplusattack.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/shatterstorm.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -3453,6 +3456,9 @@
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/roundtrip.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/roundtripplusattack.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/shatterstorm.cpp">

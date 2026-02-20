@@ -461,6 +461,7 @@
     <ClInclude Include="skills/gunslinger/rapidshower.hpp" />
     <ClInclude Include="skills/gunslinger/richscoin.hpp" />
     <ClInclude Include="skills/gunslinger/roundtrip.hpp" />
+    <ClInclude Include="skills/gunslinger/roundtripplusattack.hpp" />
     <ClInclude Include="skills/gunslinger/shatterstorm.hpp" />
     <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp" />
     <ClInclude Include="skills/gunslinger/slugshot.hpp" />
@@ -1750,6 +1751,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/roundtrip.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/roundtripplusattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/shatterstorm.cpp">

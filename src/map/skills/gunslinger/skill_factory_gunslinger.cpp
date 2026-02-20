@@ -44,6 +44,7 @@
 #include "rapidshower.cpp"
 #include "richscoin.cpp"
 #include "roundtrip.cpp"
+#include "roundtripplusattack.cpp"
 #include "shatterstorm.cpp"
 #include "slugshot.cpp"
 #include "spiralshooting.cpp"
@@ -164,6 +165,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<SkillQuickDrawShot>();
 		case RL_R_TRIP:
 			return std::make_unique<SkillRoundTrip>();
+		case RL_R_TRIP_PLUSATK:
+			return std::make_unique<SkillRoundTripPlusAttack>();
 		case RL_RICHS_COIN:
 			return std::make_unique<SkillRichSCoin>();
 		case RL_S_STORM:
