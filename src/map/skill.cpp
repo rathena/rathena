@@ -8554,15 +8554,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		}
 		break;
 
-	case RL_FALLEN_ANGEL:
-		if (unit_movepos(src,x,y,1,1)) {
-			clif_snap(src, src->x, src->y);
-			sc_start(src, src, type, 100, skill_id, skill_get_time(skill_id, skill_lv));
-		} else {
-			if (sd)
-				clif_skill_fail( *sd, skill_id );
-		}
-		break;
 	case RL_FIRE_RAIN: {
 			int32 w, wave = skill_lv + 5, dir = map_calc_dir(src,x,y);
 			int32 sx = x = src->x, sy = y = src->y;

@@ -18,6 +18,7 @@
 #include "disarm.cpp"
 #include "dust.cpp"
 #include "flicker.cpp"
+#include "fallenangel.cpp"
 #include "firedance.cpp"
 #include "fling.cpp"
 #include "fullbuster.cpp"
@@ -135,6 +136,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case RL_FIREDANCE:
 			return std::make_unique<SkillFireDance>();
+		case RL_FALLEN_ANGEL:
+			return std::make_unique<SkillFallenAngel>();
 		case RL_FLICKER:
 			return std::make_unique<SkillFlicker>();
 		case RL_HEAT_BARREL:
