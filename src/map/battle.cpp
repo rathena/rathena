@@ -5051,10 +5051,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio *= 2;
 			RE_LVL_DMOD(100);
 			break;
-		case RL_R_TRIP:
-			skillratio += -100 + 350 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
 		case RL_R_TRIP_PLUSATK:
 			skillratio += -100 + 300 + 300 * skill_lv;
 			break;
