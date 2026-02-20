@@ -10,6 +10,7 @@
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
 #include "basicgrenade.cpp"
+#include "antimaterialblast.cpp"
 #include "banishingbuster.cpp"
 #include "bullseye.cpp"
 #include "cracker.cpp"
@@ -128,7 +129,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 		case NW_WILD_SHOT:
 			return std::make_unique<SkillWildShot>();
 		case RL_AM_BLAST:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillAntiMaterialBlast>();
 		case RL_BANISHING_BUSTER:
 			return std::make_unique<SkillBanishingBuster>();
 		case RL_B_TRAP:
