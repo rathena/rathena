@@ -44,6 +44,7 @@
 #include "richscoin.cpp"
 #include "roundtrip.cpp"
 #include "shatterstorm.cpp"
+#include "slugshot.cpp"
 #include "spiralshooting.cpp"
 #include "spreadattack.cpp"
 #include "thevigilanteatnight.cpp"
@@ -165,7 +166,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryGunslinger::create(const e_skill sk
 		case RL_S_STORM:
 			return std::make_unique<SkillShatterStorm>();
 		case RL_SLUGSHOT:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillSlugShot>();
 
 		default:
 			return nullptr;
