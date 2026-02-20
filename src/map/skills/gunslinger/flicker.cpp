@@ -6,6 +6,8 @@
 #include "map/clif.hpp"
 #include "map/pc.hpp"
 
+static int32 skill_bind_trap(block_list* bl, va_list ap);
+
 SkillFlicker::SkillFlicker() : SkillImpl(RL_FLICKER) {
 }
 
