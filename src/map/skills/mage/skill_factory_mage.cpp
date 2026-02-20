@@ -13,6 +13,7 @@
 #include "astralstrike.cpp"
 #include "avalanche.cpp"
 #include "beastlyhypnosis.cpp"
+#include "blindingmist.cpp"
 #include "castcancel.cpp"
 #include "chainlightning.cpp"
 #include "classchange.cpp"
@@ -50,6 +51,7 @@
 #include "energycoat.cpp"
 #include "energyconversion.cpp"
 #include "eyesofstorm.cpp"
+#include "fiberlock.cpp"
 #include "fireball.cpp"
 #include "firebolt.cpp"
 #include "firepillar.cpp"
@@ -74,6 +76,7 @@
 #include "hocuspocus.cpp"
 #include "icewall.cpp"
 #include "increasingactivity.cpp"
+#include "indulge.cpp"
 #include "jackfrost.cpp"
 #include "jupitelthunder.cpp"
 #include "leveling.cpp"
@@ -83,6 +86,7 @@
 #include "magicrod.cpp"
 #include "magneticearth.cpp"
 #include "meteorstorm.cpp"
+#include "mindbreaker.cpp"
 #include "monocell.cpp"
 #include "monsterchant.cpp"
 #include "mysteryillusion.cpp"
@@ -103,7 +107,9 @@
 #include "sight.cpp"
 #include "sightblaster.cpp"
 #include "sightrasher.cpp"
+#include "soulexhale.cpp"
 #include "soulexpansion.cpp"
+#include "soulsiphon.cpp"
 #include "soulstrike.cpp"
 #include "soulvulcanstrike.cpp"
 #include "spellbreaker.cpp"
@@ -297,8 +303,20 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillThunderStorm>();
 		case PF_DOUBLECASTING:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case PF_FOGWALL:
+			return std::make_unique<SkillBlindingMist>();
+		case PF_HPCONVERSION:
+			return std::make_unique<SkillIndulge>();
 		case PF_MEMORIZE:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case PF_MINDBREAKER:
+			return std::make_unique<SkillMindBreaker>();
+		case PF_SOULBURN:
+			return std::make_unique<SkillSoulSiphon>();
+		case PF_SOULCHANGE:
+			return std::make_unique<SkillSoulExhale>();
+		case PF_SPIDERWEB:
+			return std::make_unique<SkillFiberLock>();
 		case SA_ABRACADABRA:
 			return std::make_unique<SkillHocusPocus>();
 		case SA_AUTOSPELL:

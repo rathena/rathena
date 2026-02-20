@@ -461,6 +461,7 @@
     <ClInclude Include="skills/mage/astralstrike.hpp" />
     <ClInclude Include="skills/mage/avalanche.hpp" />
     <ClInclude Include="skills/mage/beastlyhypnosis.hpp" />
+    <ClInclude Include="skills/mage/blindingmist.hpp" />
     <ClInclude Include="skills/mage/castcancel.hpp" />
     <ClInclude Include="skills/mage/chainlightning.hpp" />
     <ClInclude Include="skills/mage/classchange.hpp" />
@@ -498,6 +499,7 @@
     <ClInclude Include="skills/mage/energycoat.hpp" />
     <ClInclude Include="skills/mage/energyconversion.hpp" />
     <ClInclude Include="skills/mage/eyesofstorm.hpp" />
+    <ClInclude Include="skills/mage/fiberlock.hpp" />
     <ClInclude Include="skills/mage/fireball.hpp" />
     <ClInclude Include="skills/mage/firebolt.hpp" />
     <ClInclude Include="skills/mage/firepillar.hpp" />
@@ -522,6 +524,7 @@
     <ClInclude Include="skills/mage/hocuspocus.hpp" />
     <ClInclude Include="skills/mage/icewall.hpp" />
     <ClInclude Include="skills/mage/increasingactivity.hpp" />
+    <ClInclude Include="skills/mage/indulge.hpp" />
     <ClInclude Include="skills/mage/jackfrost.hpp" />
     <ClInclude Include="skills/mage/jupitelthunder.hpp" />
     <ClInclude Include="skills/mage/leveling.hpp" />
@@ -531,6 +534,7 @@
     <ClInclude Include="skills/mage/magicrod.hpp" />
     <ClInclude Include="skills/mage/magneticearth.hpp" />
     <ClInclude Include="skills/mage/meteorstorm.hpp" />
+    <ClInclude Include="skills/mage/mindbreaker.hpp" />
     <ClInclude Include="skills/mage/monocell.hpp" />
     <ClInclude Include="skills/mage/monsterchant.hpp" />
     <ClInclude Include="skills/mage/mysteryillusion.hpp" />
@@ -552,7 +556,9 @@
     <ClInclude Include="skills/mage/sightblaster.hpp" />
     <ClInclude Include="skills/mage/sightrasher.hpp" />
     <ClInclude Include="skills/mage/skill_factory_mage.hpp" />
+    <ClInclude Include="skills/mage/soulexhale.hpp" />
     <ClInclude Include="skills/mage/soulexpansion.hpp" />
+    <ClInclude Include="skills/mage/soulsiphon.hpp" />
     <ClInclude Include="skills/mage/soulstrike.hpp" />
     <ClInclude Include="skills/mage/soulvulcanstrike.hpp" />
     <ClInclude Include="skills/mage/spellbreaker.hpp" />
@@ -1730,6 +1736,9 @@
     <ClCompile Include="skills/mage/beastlyhypnosis.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/blindingmist.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/castcancel.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1841,6 +1850,9 @@
     <ClCompile Include="skills/mage/eyesofstorm.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/fiberlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/fireball.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1913,6 +1925,9 @@
     <ClCompile Include="skills/mage/increasingactivity.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/indulge.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/jackfrost.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1938,6 +1953,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/meteorstorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/mindbreaker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/monocell.cpp">
@@ -2003,7 +2021,13 @@
     <ClCompile Include="skills/mage/skill_factory_mage.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mage/soulexhale.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mage/soulexpansion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mage/soulsiphon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/soulstrike.cpp">
