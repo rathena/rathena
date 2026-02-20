@@ -6,8 +6,6 @@
 #include "map/clif.hpp"
 #include "map/pc.hpp"
 
-static int32 skill_bind_trap(block_list* bl, va_list ap);
-
 SkillFlicker::SkillFlicker() : SkillImpl(RL_FLICKER) {
 }
 
@@ -26,4 +24,28 @@ void SkillFlicker::castendNoDamageId(block_list* src, block_list* target, uint16
 		}
 		sd->flicker = false;
 	}
+}
+
+/**
+ * Rebellion's Bind Trap explosion
+ * @author [Cydh]
+ */
+static int32 skill_bind_trap(block_list *bl, va_list ap) {
+	skill_unit *su = nullptr;
+	block_list *src = nullptr;
+
+	nullpo_ret(bl);
+
+	src = va_arg(ap,block_list *);
+
+	if (bl->type != BL_SKILL || !(su = (skill_unit *)bl) || !(su->group))
+		return 0;
+	if (su->group->unit_id != UNT_B_TRAP || su->group->src_id != src->id)
+		return 0;
+
+	map_foreachinallrange(skill_trap_splash, bl, su->range, BL_CHAR, bl,su->group->tick);
+	clif_changetraplook(bl, UNT_USED_TRAPS);
+	su->group->unit_id = UNT_USED_TRAPS;
+	su->group->limit = DIFF_TICK(gettick(), su->group->tick) + 500;
+	return 1;
 }

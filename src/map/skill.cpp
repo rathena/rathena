@@ -14306,30 +14306,6 @@ int32 skill_banding_count(map_session_data *sd)
  	return cap_value(party_foreachsamemap(party_sub_count, sd, skill_get_splash(LG_BANDING, 1)), 0, MAX_PARTY);
 }
 
-/**
- * Rebellion's Bind Trap explosion
- * @author [Cydh]
- */
-static int32 skill_bind_trap(block_list *bl, va_list ap) {
-	skill_unit *su = nullptr;
-	block_list *src = nullptr;
-
-	nullpo_ret(bl);
-
-	src = va_arg(ap,block_list *);
-
-	if (bl->type != BL_SKILL || !(su = (skill_unit *)bl) || !(su->group))
-		return 0;
-	if (su->group->unit_id != UNT_B_TRAP || su->group->src_id != src->id)
-		return 0;
-
-	map_foreachinallrange(skill_trap_splash, bl, su->range, BL_CHAR, bl,su->group->tick);
-	clif_changetraplook(bl, UNT_USED_TRAPS);
-	su->group->unit_id = UNT_USED_TRAPS;
-	su->group->limit = DIFF_TICK(gettick(), su->group->tick) + 500;
-	return 1;
-}
-
 /*==========================================
  * Check new skill unit cell when overlapping in other skill unit cell.
  * Catched skill in cell value pushed to *unit pointer.
