@@ -14,7 +14,7 @@ void SkillQuickDrawShot::castendNoDamageId(block_list* src, block_list* target, 
 }
 
 void SkillQuickDrawShot::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	status_change* tsc = status_get_sc(*target);
+	status_change* tsc = status_get_sc(target);
 
 	if (skill_area_temp[1] == target->id || (tsc != nullptr && tsc->getSCE(SC_C_MARKER) != nullptr)) {
 		skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
