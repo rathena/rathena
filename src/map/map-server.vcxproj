@@ -628,21 +628,15 @@
     <ClInclude Include="skills/merchant/changematerial.hpp" />
     <ClInclude Include="skills/merchant/coldslower.hpp" />
     <ClInclude Include="skills/merchant/crazyuproar.hpp" />
-    <ClInclude Include="skills/merchant/creeper.hpp" />
-    <ClInclude Include="skills/merchant/decoratecart.hpp" />
-    <ClInclude Include="skills/merchant/dustexplosion.hpp" />
-    <ClInclude Include="skills/merchant/energycannonade.hpp" />
-    <ClInclude Include="skills/merchant/explosivepowder.hpp" />
-    <ClInclude Include="skills/merchant/fullprotection.hpp" />
-    <ClInclude Include="skills/merchant/greed.hpp" />
-    <ClInclude Include="skills/merchant/hammerfall.hpp" />
-    <ClInclude Include="skills/merchant/helltree.hpp" />
     <ClInclude Include="skills/merchant/crazyweed.hpp" />
     <ClInclude Include="skills/merchant/createbomb.hpp" />
+    <ClInclude Include="skills/merchant/creeper.hpp" />
     <ClInclude Include="skills/merchant/decoratecart.hpp" />
     <ClInclude Include="skills/merchant/demonicfire.hpp" />
+    <ClInclude Include="skills/merchant/dustexplosion.hpp" />
     <ClInclude Include="skills/merchant/emergencycool.hpp" />
     <ClInclude Include="skills/merchant/energycannonade.hpp" />
+    <ClInclude Include="skills/merchant/explosivepowder.hpp" />
     <ClInclude Include="skills/merchant/fawmagicdecoy.hpp" />
     <ClInclude Include="skills/merchant/fawremoval.hpp" />
     <ClInclude Include="skills/merchant/fawsilversniper.hpp" />
@@ -653,6 +647,7 @@
     <ClInclude Include="skills/merchant/greed.hpp" />
     <ClInclude Include="skills/merchant/hammerfall.hpp" />
     <ClInclude Include="skills/merchant/hellsplant.hpp" />
+    <ClInclude Include="skills/merchant/helltree.hpp" />
     <ClInclude Include="skills/merchant/howlingofmandragora.hpp" />
     <ClInclude Include="skills/merchant/illusiondoping.hpp" />
     <ClInclude Include="skills/merchant/infraredscan.hpp" />
@@ -663,8 +658,8 @@
     <ClInclude Include="skills/merchant/manufacturemachine.hpp" />
     <ClInclude Include="skills/merchant/mayhemicthorns.hpp" />
     <ClInclude Include="skills/merchant/mightysmash.hpp" />
-    <ClInclude Include="skills/merchant/mysterypowder.hpp" />
     <ClInclude Include="skills/merchant/mixcooking.hpp" />
+    <ClInclude Include="skills/merchant/mysterypowder.hpp" />
     <ClInclude Include="skills/merchant/neutralbarrier.hpp" />
     <ClInclude Include="skills/merchant/pilebunker.hpp" />
     <ClInclude Include="skills/merchant/plantcultivation.hpp" />
@@ -699,7 +694,9 @@
     <ClInclude Include="skills/merchant/wallofthorns.hpp" />
     <ClInclude Include="skills/merchant/weaponperfection.hpp" />
     <ClInclude Include="skills/merchant/weaponrepair.hpp" />
+    <ClInclude Include="skills/merchant/woodenattack.hpp" />
     <ClInclude Include="skills/merchant/woodenfairy.hpp" />
+    <ClInclude Include="skills/merchant/woodenthrowrock.hpp" />
     <ClInclude Include="skills/merchant/woodenwarrior.hpp" />
     <ClInclude Include="skills/ninja/coldbloodedcannon.hpp" />
     <ClInclude Include="skills/ninja/crimsonfireformation.hpp" />
@@ -2257,18 +2254,22 @@
     <ClCompile Include="skills/merchant/crazyuproar.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/creeper.cpp">
     <ClCompile Include="skills/merchant/crazyweed.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/createbomb.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/merchant/creeper.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/merchant/decoratecart.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/dustexplosion.cpp">
     <ClCompile Include="skills/merchant/demonicfire.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/dustexplosion.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/emergencycool.cpp">
@@ -2278,6 +2279,8 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/explosivepowder.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/merchant/fawmagicdecoy.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2305,8 +2308,10 @@
     <ClCompile Include="skills/merchant/hammerfall.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/helltree.cpp">
     <ClCompile Include="skills/merchant/hellsplant.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/helltree.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/howlingofmandragora.cpp">
@@ -2339,8 +2344,10 @@
     <ClCompile Include="skills/merchant/mightysmash.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/mysterypowder.cpp">
     <ClCompile Include="skills/merchant/mixcooking.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/mysterypowder.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/neutralbarrier.cpp">
@@ -2410,6 +2417,8 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/thewholeprotection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/merchant/thorntrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2443,10 +2452,18 @@
     <ClCompile Include="skills/merchant/weaponrepair.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/merchant/woodenattack.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/merchant/woodenfairy.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/merchant/woodenthrowrock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/merchant/woodenwarrior.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/ninja/coldbloodedcannon.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>

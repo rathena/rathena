@@ -13,11 +13,13 @@ void SkillAdvanceProtection::castendNoDamageId(block_list *src, block_list *targ
 	map_session_data* sd = BL_CAST(BL_PC, src);
 	map_session_data* dstsd = BL_CAST(BL_PC, target);
 
+	// TODO : Logical error if casted by non-pc
 	if( sd && ( !dstsd || pc_checkequip( dstsd, EQP_SHADOW_GEAR ) < 0 ) ){
 		clif_skill_fail( *sd, getSkillId() );
 		// Don't consume item requirements
 		flag |= SKILL_NOCONSUME_REQ;
 		return;
 	}
+
 	StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
 }
