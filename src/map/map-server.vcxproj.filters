@@ -2073,6 +2073,9 @@
     <ClInclude Include="skills/npc/invincibleoff.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
+    <ClInclude Include="skills/npc/invisible.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
     <ClInclude Include="skills/npc/jackfrost2.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
@@ -2206,6 +2209,9 @@
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/shadowattributechange.hpp">
+      <Filter>Header Files\Skills\Npc</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/npc/siegemode.hpp">
       <Filter>Header Files\Skills\Npc</Filter>
     </ClInclude>
     <ClInclude Include="skills/npc/silenceattack.hpp">
@@ -4967,6 +4973,9 @@
     <ClCompile Include="skills/npc/invincibleoff.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
+    <ClCompile Include="skills/npc/invisible.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
     <ClCompile Include="skills/npc/jackfrost2.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
@@ -5100,6 +5109,9 @@
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/shadowattributechange.cpp">
+      <Filter>Source Files\Skills\Npc</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/npc/siegemode.cpp">
       <Filter>Source Files\Skills\Npc</Filter>
     </ClCompile>
     <ClCompile Include="skills/npc/silenceattack.cpp">

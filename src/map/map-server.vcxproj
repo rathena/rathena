@@ -812,6 +812,7 @@
     <ClInclude Include="skills/npc/icemine.hpp" />
     <ClInclude Include="skills/npc/increasedgravity.hpp" />
     <ClInclude Include="skills/npc/invincibleoff.hpp" />
+    <ClInclude Include="skills/npc/invisible.hpp" />
     <ClInclude Include="skills/npc/jackfrost2.hpp" />
     <ClInclude Include="skills/npc/leash.hpp" />
     <ClInclude Include="skills/npc/lexaeterna2.hpp" />
@@ -857,6 +858,7 @@
     <ClInclude Include="skills/npc/reverberation2.hpp" />
     <ClInclude Include="skills/npc/shadowattributeattack.hpp" />
     <ClInclude Include="skills/npc/shadowattributechange.hpp" />
+    <ClInclude Include="skills/npc/siegemode.hpp" />
     <ClInclude Include="skills/npc/silenceattack.hpp" />
     <ClInclude Include="skills/npc/skill_factory_npc.hpp" />
     <ClInclude Include="skills/npc/sleepattack.hpp" />
@@ -2958,6 +2960,9 @@
     <ClCompile Include="skills/npc/invincibleoff.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/npc/invisible.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/npc/jackfrost2.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3091,6 +3096,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/shadowattributechange.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/npc/siegemode.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/npc/silenceattack.cpp">

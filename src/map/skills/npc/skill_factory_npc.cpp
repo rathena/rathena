@@ -67,6 +67,7 @@
 #include "icemine.cpp"
 #include "increasedgravity.cpp"
 #include "invincibleoff.cpp"
+#include "invisible.cpp"
 #include "jackfrost2.cpp"
 #include "leash.cpp"
 #include "lexaeterna2.cpp"
@@ -112,6 +113,7 @@
 #include "reverberation2.cpp"
 #include "shadowattributeattack.cpp"
 #include "shadowattributechange.cpp"
+#include "siegemode.cpp"
 #include "silenceattack.cpp"
 #include "sleepattack.cpp"
 #include "slowcast.cpp"
@@ -322,6 +324,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case NPC_INVINCIBLEOFF:
 			return std::make_unique<SkillInvincibleOff>();
+		case NPC_INVISIBLE:
+			return std::make_unique<SkillInvisible>();
 		case NPC_JACKFROST:
 			return std::make_unique<SkillJackFrost2>();
 		case NPC_KEEPING:
@@ -404,6 +408,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNpc::create(const e_skill skill_id)
 			return std::make_unique<SkillSuicideBombing>();
 		case NPC_SHIELDBRAKE:
 			return std::make_unique<SkillBreakShield>();
+		case NPC_SIEGEMODE:
+			return std::make_unique<SkillSiegeMode>();
 		case NPC_SILENCEATTACK:
 			return std::make_unique<SkillSilenceAttack>();
 		case NPC_SLEEPATTACK:
