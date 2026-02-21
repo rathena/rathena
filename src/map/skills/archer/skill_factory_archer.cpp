@@ -33,6 +33,7 @@
 #include "doublestrafe.cpp"
 #include "downtempo.cpp"
 #include "electricshocker.cpp"
+#include "echosong.cpp"
 #include "encore.cpp"
 #include "falconassault.cpp"
 #include "fearbreeze.cpp"
@@ -46,6 +47,7 @@
 #include "geffenianocturn.cpp"
 #include "gypsyskiss.cpp"
 #include "harmoniclick.cpp"
+#include "harmonize.cpp"
 #include "hawkboomerang.cpp"
 #include "hawkmastery.cpp"
 #include "hawkrush.cpp"
@@ -104,6 +106,7 @@
 #include "wargrider.cpp"
 #include "wargstrike.cpp"
 #include "wildwalk.cpp"
+#include "windmillrushattack.cpp"
 #include "windwalker.cpp"
 #include "winkofcharm.cpp"
 
@@ -323,6 +326,12 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case WM_GREAT_ECHO:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case MI_ECHOSONG:
+			return std::make_unique<SkillEchoSong>();
+		case MI_HARMONIZE:
+			return std::make_unique<SkillHarmonize>();
+		case MI_RUSH_WINDMILL:
+			return std::make_unique<SkillWindmillRushAttack>();
 		case WM_SEVERE_RAINSTORM_MELEE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 
