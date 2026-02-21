@@ -133,16 +133,16 @@ run-map:
 
 # Create an admin account (defaults: admin/admin, group 99)
 # Usage: make admin [NAME=username] [PASS=password] [SEX=M|F|S] [EMAIL=email]
-admin: NAME ?= admin
-admin: PASS ?= admin
+admin: NAME ?= admin123
+admin: PASS ?= admin123
 admin: SEX ?= M
 admin: EMAIL ?= admin@rathena.dev
 admin:
 	@echo "Creating admin account..."
 	@docker compose exec db mariadb -uragnarok -pragnarok ragnarok -e \
 		"INSERT INTO login (account_id, userid, user_pass, sex, email, group_id, birthdate) \
-		VALUES (2000000, '$(NAME)', MD5('$(PASS)'), '$(SEX)', '$(EMAIL)', 99, CURDATE()) \
-		ON DUPLICATE KEY UPDATE userid='$(NAME)', user_pass=MD5('$(PASS)'), sex='$(SEX)', email='$(EMAIL)', group_id=99, birthdate=CURDATE();"
+		VALUES (2000000, '$(NAME)', '$(PASS)', '$(SEX)', '$(EMAIL)', 99, CURDATE()) \
+		ON DUPLICATE KEY UPDATE userid='$(NAME)', user_pass='$(PASS)', sex='$(SEX)', email='$(EMAIL)', group_id=99, birthdate=CURDATE();"
 	@echo "Admin account created/updated (ID: 2000000):"
 	@echo "  Username: $(NAME)"
 	@echo "  Password: $(PASS)"
@@ -161,8 +161,8 @@ account:
 	@echo "Creating account..."
 	@docker compose exec db mariadb -uragnarok -pragnarok ragnarok -e \
 		"INSERT INTO login (userid, user_pass, sex, email, group_id, birthdate) \
-		VALUES ('$(NAME)', MD5('$(PASS)'), '$(SEX)', '$(EMAIL)', $(or $(GROUP),0), CURDATE()) \
-		ON DUPLICATE KEY UPDATE user_pass=MD5('$(PASS)'), sex='$(SEX)', email='$(EMAIL)', group_id=$(or $(GROUP),0), birthdate=CURDATE();"
+		VALUES ('$(NAME)', '$(PASS)', '$(SEX)', '$(EMAIL)', $(or $(GROUP),0), CURDATE()) \
+		ON DUPLICATE KEY UPDATE user_pass='$(PASS)', sex='$(SEX)', email='$(EMAIL)', group_id=$(or $(GROUP),0), birthdate=CURDATE();"
 	@echo "Account created/updated:"
 	@echo "  Username: $(NAME)"
 	@echo "  Password: $(PASS)"
