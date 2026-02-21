@@ -97,7 +97,7 @@ int32 wallofthorn_unit_pos;
 
 struct s_skill_nounit_layout skill_nounit_layout[MAX_SKILL_UNIT_LAYOUT2];
 
-static char dir_ka = -1; // Holds temporary direction to the target for SR_KNUCKLEARROW
+char dir_ka = -1; // Holds temporary direction to the target for SR_KNUCKLEARROW
 
 //Early declaration
 bool skill_strip_equip(block_list *src, block_list *target, uint16 skill_id, uint16 skill_lv);
