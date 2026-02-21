@@ -6,6 +6,7 @@
 #include "map/clif.hpp"
 #include "map/itemdb.hpp"
 #include "map/map.hpp"
+#include "map/npc.hpp"
 #include "map/pc.hpp"
 #include "map/status.hpp"
 #include "map/script.hpp"
