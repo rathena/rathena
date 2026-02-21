@@ -16,5 +16,7 @@ void SkillShatterStorm::applyAdditionalEffects(block_list* src, block_list* targ
 	const status_data* sstatus = status_get_status_data(*src);
 	const status_data* tstatus = status_get_status_data(*target);
 
+	//kRO update 2014-02-12. Break a headgear by minimum chance 5%/10%/15%/20%/25%
 	skill_break_equip(src, target, EQP_HEAD_TOP, std::max(skill_lv * 500, (sstatus->dex * skill_lv * 10) - (tstatus->agi * 20)), BCT_ENEMY);
+	//! TODO: Figure out break chance formula
 }

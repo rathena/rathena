@@ -25,7 +25,8 @@ void SkillSlugShot::modifyHitRate(int16& hit_rate, const block_list* src, const 
 	int8 dist = distance_bl(src, target);
 
 	if (dist > 3) {
-		// Reduce hit rate for each cell after initial 3 cells.
+		// Reduce n hitrate for each cell after initial 3 cells. Different each level
+		// -10:-9:-8:-7:-6
 		dist -= 3;
 		hit_rate -= ((11 - skill_lv) * dist);
 	}

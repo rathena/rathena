@@ -16,9 +16,11 @@ void SkillFlicker::castendNoDamageId(block_list* src, block_list* target, uint16
 		sd->flicker = true;
 		skill_area_temp[1] = 0;
 		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+		// Detonate RL_B_TRAP
 		if (pc_checkskill(sd, RL_B_TRAP)) {
 			map_foreachinallrange(skill_bind_trap, src, AREA_SIZE, BL_SKILL, src);
 		}
+		// Detonate RL_H_MINE
 		if (int32 mine_lv = pc_checkskill(sd, RL_H_MINE)) {
 			map_foreachinallrange(skill_area_sub, src, skill_get_splash(getSkillId(), skill_lv), BL_CHAR, src, RL_H_MINE, mine_lv, tick, flag | BCT_ENEMY | SD_SPLASH, skill_castend_damage_id);
 		}

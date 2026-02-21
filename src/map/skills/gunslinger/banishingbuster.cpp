@@ -59,6 +59,7 @@ void SkillBanishingBuster::applyAdditionalEffects(block_list* src, block_list* t
 			case SC_APPLEIDUN: case SC_HUMMING: case SC_DONTFORGETME:
 			case SC_FORTUNE: case SC_SERVICE4U:
 				if (!battle_config.dispel_song || sce->val4 == 0) {
+					//If in song area don't end it, even if config enabled
 					continue;
 				}
 				break;
@@ -77,6 +78,7 @@ void SkillBanishingBuster::applyAdditionalEffects(block_list* src, block_list* t
 	}
 
 	if (dstsd) {
+		//Remove bonus_script by Banishing Buster
 		pc_bonus_script_clear(dstsd, BSF_REM_ON_BANISHING_BUSTER);
 	}
 }
