@@ -90,8 +90,9 @@
 #include "songoflutie.cpp"
 #include "soundblend.cpp"
 #include "springtrap.cpp"
-#include "swingdance.cpp"
 #include "swifttrap.cpp"
+#include "swingdance.cpp"
+#include "symphonyoflovers.cpp"
 #include "talkiebox.cpp"
 #include "tarotcardoffate.cpp"
 #include "unbarringoctave.cpp"
@@ -322,12 +323,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillWildWalk>();
 		case WH_WIND_SIGN:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case WA_SWING_DANCE:
+			return std::make_unique<SkillSwingDance>();
+		case WA_SYMPHONY_OF_LOVER:
+			return std::make_unique<SkillSymphonyOfLovers>();
 		case WM_GREAT_ECHO:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case WM_SEVERE_RAINSTORM_MELEE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case WA_SWING_DANCE:
-			return std::make_unique<SkillSwingDance>();
 
 		default:
 			return nullptr;
