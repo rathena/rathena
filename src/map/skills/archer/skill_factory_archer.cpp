@@ -65,6 +65,7 @@
 #include "melodystrike.cpp"
 #include "mentalsensing.cpp"
 #include "metallicfury.cpp"
+#include "moonlitserenade.cpp"
 #include "musicalinterlude.cpp"
 #include "nipelheimrequiem.cpp"
 #include "pangvoice.cpp"
@@ -327,6 +328,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<SkillSwingDance>();
 		case WA_SYMPHONY_OF_LOVER:
 			return std::make_unique<SkillSymphonyOfLovers>();
+		case WA_MOONLIT_SERENADE:
+			return std::make_unique<SkillMoonlitSerenade>();
 		case WM_GREAT_ECHO:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case WM_SEVERE_RAINSTORM_MELEE:

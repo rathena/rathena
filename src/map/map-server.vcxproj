@@ -383,6 +383,7 @@
     <ClInclude Include="skills/archer/melodystrike.hpp" />
     <ClInclude Include="skills/archer/mentalsensing.hpp" />
     <ClInclude Include="skills/archer/metallicfury.hpp" />
+    <ClInclude Include="skills/archer/moonlitserenade.hpp" />
     <ClInclude Include="skills/archer/musicalinterlude.hpp" />
     <ClInclude Include="skills/archer/nipelheimrequiem.hpp" />
     <ClInclude Include="skills/archer/pangvoice.hpp" />
@@ -1519,6 +1520,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/metallicfury.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/moonlitserenade.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/musicalinterlude.cpp">
