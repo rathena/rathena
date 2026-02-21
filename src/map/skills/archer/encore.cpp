@@ -15,7 +15,5 @@ void SkillEncore::castendNoDamageId(block_list *src, block_list *target, uint16 
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
 	if (sd != nullptr) {
 		unit_skilluse_id(src,src->id,sd->skill_id_dance,sd->skill_lv_dance);
-		// Need to remove remembered skill to prevent permanent halving of SP cost
-		sd->skill_id_old = 0;
 	}
 }
