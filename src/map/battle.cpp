@@ -4591,7 +4591,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 	status_data* sstatus = status_get_status_data(*src);
 	status_data* tstatus = status_get_status_data(*target);
 	int32 skillratio = 100;
-	int32 i;
 
 	//Skill damage modifiers that stack linearly
 	if(sc && skill_id != PA_SACRIFICE) {
