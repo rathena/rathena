@@ -1,0 +1,31 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "terraharvest.hpp"
+
+#include "map/clif.hpp"
+#include "map/skill.hpp"
+
+#include "skill_factory_druid.hpp"
+
+SkillTerraHarvest::SkillTerraHarvest() : SkillImplRecursiveDamageSplash(AT_TERRA_HARVEST) {
+}
+
+void SkillTerraHarvest::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+	const status_change* sc = status_get_sc(src);
+	const status_data* sstatus = status_get_status_data(*src);
+
+	int32 skillratio = 18000 + 500 * (skill_lv - 1);
+	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_EARTH)) {
+		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
+		RE_LVL_DMOD(100);
+	}
+	base_skillratio += -100 + skillratio;
+}
+
+void SkillTerraHarvest::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	SkillFactoryDruid::try_gain_growth_stacks(src, tick, getSkillId());
+
+	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
+}

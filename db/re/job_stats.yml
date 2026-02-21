@@ -7815,3 +7815,285 @@ Body:
         Spl: 1
       - Level: 59
         Pow: 1
+  - Jobs:
+      Druid: true
+      Baby_Druid: true
+    MaxWeight: 28000 #TODO: Unknown Value
+    HpFactor: 90 #TODO: Unknown Value
+    HpIncrease: 650 #TODO: Unknown Value
+    SpIncrease: 469 #TODO: Unknown Value
+    BonusStats:
+      - Level: 1
+        Str: 1
+      - Level: 2
+        Str: 1
+      - Level: 10
+        Int: 1
+      - Level: 11
+        Int: 1
+      - Level: 21
+        Dex: 1
+      - Level: 22
+        Vit: 1
+      - Level: 23
+        Str: 1
+      - Level: 29
+        Dex: 1
+      - Level: 30
+        Int: 1
+      - Level: 31
+        Vit: 1
+      - Level: 32
+        Agi: 1
+      - Level: 40
+        Str: 1
+      - Level: 41
+        Int: 1
+      - Level: 42
+        Dex: 1
+      - Level: 43
+        Luk: 1
+      - Level: 50
+        Str: 1
+      - Level: 51
+        Int: 1
+      - Level: 52
+        Dex: 1
+      - Level: 53
+        Vit: 1
+      - Level: 59
+        Str: 1
+      - Level: 60
+        Int: 1
+      - Level: 61
+        Dex: 1
+      - Level: 62
+        Dex: 1
+      - Level: 63
+        Luk: 1
+      - Level: 64
+        Agi: 1
+  - Jobs:
+      Karnos: true
+      Baby_Karnos: true
+    MaxWeight: 28000 #TODO: Unknown Value
+    HpFactor: 90 #TODO: Unknown Value
+    HpIncrease: 650 #TODO: Unknown Value
+    SpIncrease: 469 #TODO: Unknown Value
+    BonusStats:
+      - Level: 1
+        Dex: 1
+      - Level: 3
+        Int: 1
+      - Level: 5
+        Agi: 1
+      - Level: 6
+        Vit: 1
+      - Level: 8
+        Str: 1
+      - Level: 9
+        Luk: 1
+      - Level: 11
+        Dex: 1
+      - Level: 12
+        Str: 1
+      - Level: 13
+        Agi: 1
+      - Level: 15
+        Int: 1
+      - Level: 16
+        Luk: 1
+      - Level: 17
+        Vit: 1
+      - Level: 19
+        Str: 1
+      - Level: 20
+        Dex: 1
+      - Level: 21
+        Agi: 1
+      - Level: 23
+        Luk: 1
+      - Level: 24
+        Vit: 1
+      - Level: 25
+        Int: 1
+      - Level: 27
+        Dex: 1
+      - Level: 29
+        Agi: 1
+      - Level: 31
+        Str: 1
+      - Level: 32
+        Int: 1
+      - Level: 34
+        Dex: 1
+      - Level: 35
+        Int: 1
+      - Level: 37
+        Vit: 1
+      - Level: 38
+        Dex: 1
+      - Level: 39
+        Str: 1
+      - Level: 41
+        Agi: 1
+      - Level: 42
+        Int: 1
+      - Level: 43
+        Str: 1
+      - Level: 45
+        Dex: 1
+      - Level: 46
+        Luk: 1
+      - Level: 47
+        Vit: 1
+      - Level: 48
+        Str: 1
+      - Level: 50
+        Int: 1
+  - Jobs:
+      Alitea: true
+    MaxWeight: 48000 #TODO: Unknown Value
+    HpFactor: 66 #TODO: Unknown Value
+    HpIncrease: 5603 #TODO: Unknown Value
+    SpFactor: 9 #TODO: Unknown Value
+    SpIncrease: 16 #TODO: Unknown Value
+    BonusStats:
+      - Level: 1
+        Str: 1
+        Dex: 1
+      - Level: 2
+        Str: 1
+        Pow: 1
+      - Level: 3
+        Agi: 1
+        Int: 1
+      - Level: 4
+        Str: 1
+        Agi: 1
+        Dex: 1
+      - Level: 5
+        Str: 1
+        Int: 1
+        Pow: 1
+      - Level: 6
+        Str: 1
+      - Level: 7
+        Str: 1
+        Dex: 1
+      - Level: 8
+        Dex: 1
+        Crt: 1
+      - Level: 9
+        Agi: 1
+        Vit: 1
+      - Level: 10
+        Dex: 1
+      - Level: 11
+        Vit: 1
+        Int: 1
+      - Level: 12
+        Str: 1
+        Luk: 1
+      - Level: 13
+        Str: 1
+        Vit: 1
+      - Level: 14
+        Crt: 1
+      - Level: 15
+        Wis: 1
+      - Level: 16
+        Str: 1
+      - Level: 17
+        Str: 1
+        Agi: 1
+      - Level: 18
+        Sta: 1
+      - Level: 19
+        Pow: 1
+      - Level: 20
+        Str: 1
+      - Level: 21
+        Dex: 1
+      - Level: 22
+        Agi: 1
+      - Level: 23
+        Agi: 1
+      - Level: 24
+        Str: 1
+        Dex: 1
+      - Level: 25
+        Agi: 1
+      - Level: 26
+        Dex: 1
+        Luk: 1
+      - Level: 27
+        Con: 1
+      - Level: 28
+        Agi: 1
+        Pow: 1
+      - Level: 29
+        Vit: 1
+        Dex: 1
+      - Level: 30
+        Luk: 1
+        Con: 1
+      - Level: 31
+        Agi: 1
+        Vit: 1
+      - Level: 32
+        Agi: 1
+      - Level: 33
+        Vit: 1
+        Sta: 1
+      - Level: 34
+        Pow: 1
+      - Level: 35
+        Sta: 1
+        Con: 1
+      - Level: 36
+        Pow: 1
+      - Level: 37
+        Con: 1
+      - Level: 38
+        Crt: 1
+      - Level: 39
+        Sta: 1
+      - Level: 40
+        Pow: 1
+      - Level: 41
+        Pow: 1
+      - Level: 42
+        Sta: 1
+        Crt: 1
+      - Level: 43
+        Sta: 1
+      - Level: 44
+        Pow: 1
+      - Level: 45
+        Sta: 1
+        Crt: 1
+      - Level: 46
+        Crt: 1
+      - Level: 47
+        Pow: 1
+        Wis: 1
+      - Level: 48
+        Sta: 1
+      - Level: 49
+        Con: 1
+      - Level: 50
+        Pow: 1
+        Crt: 1
+      - Level: 51
+        Sta: 1
+        Con: 1
+      - Level: 53
+        Sta: 1
+      - Level: 55
+        Pow: 1
+        Con: 1
+      - Level: 57
+        Wis: 1
+      - Level: 59
+        Con: 1
