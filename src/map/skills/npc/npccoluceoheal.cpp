@@ -3,22 +3,21 @@
 
 #include "npccoluceoheal.hpp"
 
+#include "map/battle.hpp"
 #include "map/clif.hpp"
 #include "map/map.hpp"
-#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillNpcColuceoHeal::SkillNpcColuceoHeal() : SkillImpl(NPC_CHEAL) {
 }
 
 void SkillNpcColuceoHeal::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	status_data* tstatus = status_get_status_data(*target);
-	status_change *tsc = status_get_sc(target);
-	int32 i = 0;
-
 	if( flag&1 ) {
-		if( tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) && !tsc->getSCE(SC_BERSERK) ) {
-			i = skill_calc_heal(src, target, AL_HEAL, 10, true);
+		status_data* tstatus = status_get_status_data(*target);
+		status_change *tsc = status_get_sc(target);
+
+		if( tstatus && !battle_check_undead(tstatus->race, tstatus->def_ele) && tsc != nullptr && !tsc->hasSCE(SC_BERSERK) ) {
+			int32 i = skill_calc_heal(src, target, AL_HEAL, 10, true);
 			if (status_isimmune(target))
 				i = 0;
 			clif_skill_nodamage(src, *target, getSkillId(), i);

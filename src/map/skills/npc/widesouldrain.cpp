@@ -5,6 +5,7 @@
 
 #include "map/clif.hpp"
 #include "map/map.hpp"
+#include "map/status.hpp"
 
 SkillWideSoulDrain::SkillWideSoulDrain() : SkillImpl(NPC_WIDESOULDRAIN) {
 }

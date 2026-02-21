@@ -10,8 +10,6 @@ SkillDeadlyCurse::SkillDeadlyCurse() : SkillImpl(NPC_DEADLYCURSE) {
 }
 
 void SkillDeadlyCurse::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	sc_type type = skill_get_sc(getSkillId());
-
-	status_change_start(src, target, type, 10000, skill_lv, 0, 0, 0, skill_get_time(getSkillId(), skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
+	status_change_start(src, target, skill_get_sc(getSkillId()), 10000, skill_lv, 0, 0, 0, skill_get_time(getSkillId(), skill_lv), SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
 	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 }

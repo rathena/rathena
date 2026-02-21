@@ -11,19 +11,8 @@ SkillWideCurse2::SkillWideCurse2() : SkillImpl(NPC_WIDECURSE2) {
 }
 
 void SkillWideCurse2::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	sc_type type = skill_get_sc(getSkillId());
-
 	if (flag&1){
-		switch ( type ) {
-		case SC_BURNING:
-			sc_start4(src,target,type,100,skill_lv,1000,src->id,0,skill_get_time2(getSkillId(),skill_lv));
-			break;
-		case SC_STONEWAIT:
-			sc_start2(src,target,type,100,skill_lv,src->id,skill_get_time2(getSkillId(),skill_lv),skill_get_time(getSkillId(), skill_lv));
-			break;
-		default:
-			sc_start2(src,target,type,100,skill_lv,src->id,skill_get_time2(getSkillId(),skill_lv));
-		}
+		sc_start2(src,target,skill_get_sc(getSkillId()),100,skill_lv,src->id,skill_get_time2(getSkillId(),skill_lv));
 	}
 	else {
 		skill_area_temp[2] = 0; //For SD_PREAMBLE

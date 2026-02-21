@@ -4,7 +4,6 @@
 #include "leash.hpp"
 
 #include "map/clif.hpp"
-#include "map/unit.hpp"
 
 SkillLeash::SkillLeash() : SkillImpl(NPC_LEASH) {
 }

@@ -4,6 +4,7 @@
 #include "speedup.hpp"
 
 #include "map/mob.hpp"
+#include "map/status.hpp"
 
 SkillSpeedUp::SkillSpeedUp() : SkillImpl(NPC_SPEEDUP) {
 }

@@ -15,9 +15,8 @@ void SkillComet2::applyAdditionalEffects(block_list *src, block_list *target, ui
 
 void SkillComet2::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &base_skillratio, int32 mflag) const {
 	const status_change *sc = status_get_sc(src);
-	int32 i = 0;
 
-	i = (sc ? distance_xy(target->x, target->y, sc->comet_x, sc->comet_y) : 8) / 2;
+	int32 i = (sc ? distance_xy(target->x, target->y, sc->comet_x, sc->comet_y) : 8) / 2;
 	i = cap_value(i, 1, 4);
 	base_skillratio = 2500 + ((skill_lv - i + 1) * 500);
 }

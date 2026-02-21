@@ -3,6 +3,8 @@
 
 #include "spiritdestruction.hpp"
 
+#include <common/random.hpp>
+
 #include "map/status.hpp"
 
 SkillSpiritDestruction::SkillSpiritDestruction() : WeaponSkillImpl(NPC_MENTALBREAKER) {

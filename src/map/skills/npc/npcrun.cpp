@@ -4,6 +4,7 @@
 #include "npcrun.hpp"
 
 #include "map/mob.hpp"
+#include "map/unit.hpp"
 
 SkillNpcRun::SkillNpcRun() : SkillImpl(NPC_RUN) {
 }

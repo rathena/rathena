@@ -3,6 +3,8 @@
 
 #include "dragonfear.hpp"
 
+#include <common/random.hpp>
+
 #include "map/clif.hpp"
 #include "map/map.hpp"
 #include "map/pc.hpp"

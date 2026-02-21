@@ -3,6 +3,7 @@
 
 #include "revenge.hpp"
 
+#include "map/battle.hpp"
 #include "map/mob.hpp"
 #include "map/status.hpp"
 

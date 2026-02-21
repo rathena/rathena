@@ -10,8 +10,6 @@ SkillMilleniumShield2::SkillMilleniumShield2() : SkillImpl(NPC_MILLENNIUMSHIELD)
 }
 
 void SkillMilleniumShield2::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	sc_type type = skill_get_sc(getSkillId());
-
-	if (sc_start(src, target, type, 100, skill_lv, skill_get_time(getSkillId(), skill_lv)))
-	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	if (sc_start(src, target, skill_get_sc(getSkillId()), 100, skill_lv, skill_get_time(getSkillId(), skill_lv)))
+		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 }

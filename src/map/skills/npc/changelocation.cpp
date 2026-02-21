@@ -5,7 +5,6 @@
 
 #include "map/clif.hpp"
 #include "map/status.hpp"
-#include "map/unit.hpp"
 
 SkillChangeLocation::SkillChangeLocation() : SkillImpl(NPC_MOVE_COORDINATE) {
 }

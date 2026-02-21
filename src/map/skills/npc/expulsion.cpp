@@ -4,6 +4,7 @@
 #include "expulsion.hpp"
 
 #include "map/clif.hpp"
+#include "map/unit.hpp"
 
 SkillExpulsion::SkillExpulsion() : SkillImpl(NPC_EXPULSION) {
 }

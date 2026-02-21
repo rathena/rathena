@@ -3,6 +3,8 @@
 
 #include "recallslaves.hpp"
 
+#include "map/mob.hpp"
+
 SkillRecallSlaves::SkillRecallSlaves() : SkillImpl(NPC_CALLSLAVE) {
 }
 

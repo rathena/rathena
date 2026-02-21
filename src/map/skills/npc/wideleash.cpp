@@ -5,7 +5,6 @@
 
 #include "map/clif.hpp"
 #include "map/map.hpp"
-#include "map/unit.hpp"
 
 SkillWideLeash::SkillWideLeash() : SkillImpl(NPC_WIDELEASH) {
 }

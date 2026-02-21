@@ -5,6 +5,7 @@
 
 #include "map/clif.hpp"
 #include "map/mob.hpp"
+#include "map/unit.hpp"
 
 SkillRandomMove::SkillRandomMove() : SkillImpl(NPC_RANDOMMOVE) {
 }

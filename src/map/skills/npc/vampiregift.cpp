@@ -4,6 +4,7 @@
 #include "vampiregift.hpp"
 
 #include "map/clif.hpp"
+#include "map/status.hpp"
 
 SkillVampireGift::SkillVampireGift() : SkillImplRecursiveDamageSplash(NPC_VAMPIRE_GIFT) {
 }

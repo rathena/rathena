@@ -4,7 +4,6 @@
 #include "npcmagmaeruption.hpp"
 
 #include "map/map.hpp"
-#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillNpcMagmaEruption::SkillNpcMagmaEruption() : WeaponSkillImpl(NPC_MAGMA_ERUPTION) {
@@ -16,10 +15,8 @@ void SkillNpcMagmaEruption::applyAdditionalEffects(block_list *src, block_list *
 }
 
 void SkillNpcMagmaEruption::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
-	int32 i = 0;
-
 	// 1st, AoE 'slam' damage
-	i = skill_get_splash(getSkillId(), skill_lv);
+	int32 i = skill_get_splash(getSkillId(), skill_lv);
 	map_foreachinarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR,
 		src, getSkillId(), skill_lv, tick, flag|BCT_ENEMY|SD_ANIMATION|1, skill_castend_damage_id);
 	// 2nd, AoE 'eruption' unit

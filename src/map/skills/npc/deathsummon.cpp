@@ -12,5 +12,5 @@ void SkillDeathSummon::castendNoDamageId(block_list *src, block_list *target, ui
 	mob_data* md = BL_CAST(BL_MOB, src);
 
 	if(md && md->skill_idx >= 0)
-	mob_summonslave(md,md->db->skill[md->skill_idx]->val,skill_lv,getSkillId());
+		mob_summonslave(md,md->db->skill[md->skill_idx]->val,skill_lv,getSkillId());
 }

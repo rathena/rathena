@@ -3,7 +3,7 @@
 
 #include "rainofmeteor.hpp"
 
-#include "map/pc.hpp"
+#include <common/random.hpp>
 
 SkillRainOfMeteor::SkillRainOfMeteor() : SkillImpl(NPC_RAINOFMETEOR) {
 }
@@ -13,12 +13,11 @@ void SkillRainOfMeteor::calculateSkillRatio(const Damage *wd, const block_list *
 }
 
 void SkillRainOfMeteor::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
-	int32 i = 0;
-
 	int32 area = skill_get_splash(getSkillId(), skill_lv);
-	int16 tmpx = 0, tmpy = 0;
+	int16 tmpx = 0;
+	int16 tmpy = 0;
 
-	for (i = 1; i <= (skill_get_time(getSkillId(), skill_lv)/skill_get_unit_interval(getSkillId())); i++) {
+	for (int32 i = 1; i <= (skill_get_time(getSkillId(), skill_lv)/skill_get_unit_interval(getSkillId())); i++) {
 		// Casts a double meteor in the first interval.
 		if (i == 1) {
 			// The first meteor is at the center

@@ -4,6 +4,7 @@
 #include "npcsuicide.hpp"
 
 #include "map/clif.hpp"
+#include "map/status.hpp"
 
 SkillNpcSuicide::SkillNpcSuicide() : SkillImpl(NPC_SUICIDE) {
 }
