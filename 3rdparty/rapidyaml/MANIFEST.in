@@ -1,3 +1,0 @@
-# MANIFEST.in must be in root directory.
-# See https://github.com/pypa/setuptools/issues/2615
-graft ext

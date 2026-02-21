@@ -60,6 +60,24 @@ Database | [MySQL Workbench 5 or newer](http://www.mysql.com/downloads/workbench
   * [Debian](https://github.com/rathena/rathena/wiki/Install-on-Debian)
   * [FreeBSD](https://github.com/rathena/rathena/wiki/Install-on-FreeBSD)
 
+### CMake Build With vcpkg
+
+rAthena now supports external dependency resolution via `vcpkg` (manifest: `vcpkg.json`).
+
+```bash
+# One-time setup (if not already installed)
+git clone https://github.com/microsoft/vcpkg.git "$HOME/vcpkg"
+"$HOME/vcpkg/bootstrap-vcpkg.sh"
+
+# Optional: persist this in your shell profile
+export VCPKG_ROOT="$HOME/vcpkg"
+
+cmake --preset dev-vcpkg
+cmake --build --preset build-vcpkg -j
+```
+
+If you cloned vcpkg into `./vcpkg` (inside this repo), `cmake --preset dev` also auto-detects it.
+
 ## 3. Troubleshooting
 
 If you're having problems with starting your server, the first thing you should
