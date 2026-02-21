@@ -3,6 +3,8 @@
 
 #include "massspiral.hpp"
 
+#include "map/status.hpp"
+
 SkillMassSpiral::SkillMassSpiral() : WeaponSkillImpl(RL_MASS_SPIRAL) {
 }
 

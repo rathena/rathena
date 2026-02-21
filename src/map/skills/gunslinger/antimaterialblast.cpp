@@ -3,6 +3,8 @@
 
 #include "antimaterialblast.hpp"
 
+#include "map/status.hpp"
+
 SkillAntiMaterialBlast::SkillAntiMaterialBlast() : WeaponSkillImpl(RL_AM_BLAST) {
 }
 
