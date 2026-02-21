@@ -27237,6 +27237,47 @@ BUILDIN_FUNC(set_reputation_points){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(reputationui) {
+	map_session_data* sd;
+
+	if (script_hasdata(st, 4)) {
+		if (!script_charid2sd(4, sd)) {
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	else if (!script_rid2sd(sd))
+	{	//Player not attached!
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int64 group_id = 0;
+	int64 reputation_id = 0;
+
+	if (script_hasdata(st, 2)) {
+		group_id = script_getnum64(st, 2);
+		if (group_id < 0) {
+			ShowError("buildin_reputationui: Unknown GroupID %" PRIi64 ".\n", group_id);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	if (script_hasdata(st, 3)) {
+		reputation_id = script_getnum64(st, 3);
+
+		if (reputation_id != 0 && !reputation_db.exists(reputation_id)) {
+			ShowError("buildin_reputationui: Unknown reputation type %" PRIi64 ".\n", reputation_id);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+
+	clif_reputation_open(*sd, group_id, reputation_id);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(get_reputation_points){
 	map_session_data* sd;
 
@@ -28541,6 +28582,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getjobexp_ratio, "i??"),
 	BUILDIN_DEF(enchantgradeui, "?" ),
 
+	BUILDIN_DEF(reputationui, "???"),
 	BUILDIN_DEF(set_reputation_points, "ii?"),
 	BUILDIN_DEF(get_reputation_points, "i?"),
 	BUILDIN_DEF(add_reputation_points, "ii?"),
