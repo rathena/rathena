@@ -4650,14 +4650,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case MH_XENO_SLASHER:
 	case MH_HEILIGE_PFERD:
 	case MH_THE_ONE_FIGHTER_RISES:
-	case BO_ACIDIFIED_ZONE_WATER:
-	case BO_ACIDIFIED_ZONE_GROUND:
-	case BO_ACIDIFIED_ZONE_WIND:
-	case BO_ACIDIFIED_ZONE_FIRE:
-	case BO_EXPLOSIVE_POWDER:
-	case BO_MAYHEMIC_THORNS:
-	case BO_MYSTERY_POWDER:
-	case BO_DUST_EXPLOSION:
 	case NPC_WIDECRITICALWOUND:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
@@ -4690,31 +4682,12 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			skill_area_temp[2] = 0;
 
 			switch ( skill_id ) {
-				case BO_MAYHEMIC_THORNS:
-					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-					break;
 				case MH_XENO_SLASHER:
 					clif_skill_damage( *src, *bl,tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 					break;
 				case NPC_REVERBERATION_ATK:
 					skill_area_temp[1] = 0;
 					starget = splash_target(src);
-					break;
-
-				case BO_DUST_EXPLOSION:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					break;
-				case BO_ACIDIFIED_ZONE_WATER:
-				case BO_ACIDIFIED_ZONE_GROUND:
-				case BO_ACIDIFIED_ZONE_WIND:
-				case BO_ACIDIFIED_ZONE_FIRE:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					if (bl->type == BL_PC)// Place single cell AoE if hitting a player.
-						skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
-					break;
-				case BO_MYSTERY_POWDER:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					break;
 			}
 
@@ -5693,15 +5666,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 		break;
 
-	case BO_ADVANCE_PROTECTION:
-		if( sd && ( !dstsd || pc_checkequip( dstsd, EQP_SHADOW_GEAR ) < 0 ) ){
-			clif_skill_fail( *sd, skill_id );
-			// Don't consume item requirements
-			return 0;
-		}
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) ) );
-		break;
-
 	case NPC_HALLUCINATION:
 	case NPC_HELLPOWER:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv,
@@ -5806,7 +5770,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case KO_HAPPOKUNAI:
 	case RL_FIREDANCE:
 	case RL_R_TRIP:
-	case BO_EXPLOSIVE_POWDER:
 	{
 		int32 starget = BL_CHAR|BL_SKILL;
 
@@ -7571,21 +7534,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			skill_addtimerskill(src, tick + (t_tick)skill_get_time(skill_id, skill_lv) * i, bl->id, 0, 0, skill_id, skill_lv, skill_get_type(skill_id), flag);
 		break;
 
-	case BO_THE_WHOLE_PROTECTION:
-		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
-			uint32 equip[] = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP };
-
-			for (uint8 i_eqp = 0; i_eqp < 4; i_eqp++) {
-				if (bl->type != BL_PC || (dstsd && pc_checkequip(dstsd, equip[i_eqp]) < 0))
-					continue;
-				sc_start(src, bl, (sc_type)(SC_CP_WEAPON + i_eqp), 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			}
-		} else if (sd) {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
-		}
-		break;
-
 	case ABR_NET_REPAIR:
 	case ABR_NET_SUPPORT:
 		if (flag & 1) {
@@ -7603,39 +7551,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		} else {
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ALLY | SD_SPLASH | 1, skill_castend_nodamage_id);
-		}
-		break;
-
-	case BO_BIONIC_PHARMACY:
-		if (sd) {
-			sd->skill_id_old = skill_id;
-			sd->skill_lv_old = skill_lv;
-
-			clif_cooking_list( *sd, 32, skill_id, 1, 8 );
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}
-		break;
-
-	case BO_WOODENWARRIOR:
-	case BO_WOODEN_FAIRY:
-	case BO_CREEPER:
-	case BO_HELLTREE: { // A poring is used in the 4th slot as a dummy since the Research Report skill is in between the Creeper and Hell Tree skills.
-			uint32 bionics[5] = { MOBID_BIONIC_WOODENWARRIOR, MOBID_BIONIC_WOODEN_FAIRY, MOBID_BIONIC_CREEPER, MOBID_PORING, MOBID_BIONIC_HELLTREE };
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", bionics[4 - (BO_HELLTREE - skill_id)], "", SZ_SMALL, AI_BIONIC);
-
-			if (md) {
-				md->master_id = src->id;
-				md->special_state.ai = AI_BIONIC;
-
-				if (md->deletetimer != INVALID_TIMER)
-					delete_timer(md->deletetimer, mob_timer_delete);
-				md->deletetimer = add_timer(gettick() + skill_get_time(skill_id, skill_lv), mob_timer_delete, md->id, 0);
-				mob_spawn(md);
-			}
 		}
 		break;
 
@@ -8573,10 +8488,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MH_XENO_SLASHER:
 	case RL_B_TRAP:
 	case NPC_STORMGUST2:
-	case BO_ACIDIFIED_ZONE_WATER:
-	case BO_ACIDIFIED_ZONE_GROUND:
-	case BO_ACIDIFIED_ZONE_WIND:
-	case BO_ACIDIFIED_ZONE_FIRE:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 		// Ammo should be deleted right away.
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
