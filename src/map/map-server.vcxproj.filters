@@ -864,6 +864,9 @@
     <ClInclude Include="skills/archer/springtrap.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/swingdance.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/swifttrap.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -3300,6 +3303,9 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/springtrap.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/swingdance.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/swifttrap.cpp">

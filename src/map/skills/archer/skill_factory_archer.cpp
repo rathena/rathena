@@ -90,6 +90,7 @@
 #include "songoflutie.cpp"
 #include "soundblend.cpp"
 #include "springtrap.cpp"
+#include "swingdance.cpp"
 #include "swifttrap.cpp"
 #include "talkiebox.cpp"
 #include "tarotcardoffate.cpp"
@@ -325,6 +326,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryArcher::create(const e_skill skill_
 			return std::make_unique<WeaponSkillImpl>(skill_id);
 		case WM_SEVERE_RAINSTORM_MELEE:
 			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case WA_SWING_DANCE:
+			return std::make_unique<SkillSwingDance>();
 
 		default:
 			return nullptr;
