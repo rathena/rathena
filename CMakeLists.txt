@@ -25,6 +25,15 @@
 set( CMAKE_LEGACY_CYGWIN_WIN32 0 )
 cmake_minimum_required( VERSION 3.13 )
 
+# Extract the pinned vcpkg baseline commit from vcpkg.json (if present).
+set( _VCPKG_BASELINE "" )
+if( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" )
+	file( STRINGS "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg.json" _VCPKG_BASELINE_LINE REGEX "\"builtin-baseline\"[ \t]*:[ \t]*\"[0-9a-f]+\"" )
+	if( _VCPKG_BASELINE_LINE )
+		string( REGEX REPLACE ".*\"builtin-baseline\"[ \t]*:[ \t]*\"([0-9a-f]+)\".*" "\\1" _VCPKG_BASELINE "${_VCPKG_BASELINE_LINE}" )
+	endif()
+endif()
+
 # Auto-wire vcpkg when available (env var or local clone) so configure commands
 # do not need user-specific absolute paths.
 if( NOT DEFINED CMAKE_TOOLCHAIN_FILE )
@@ -34,6 +43,46 @@ if( NOT DEFINED CMAKE_TOOLCHAIN_FILE )
 		set( CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/.vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "vcpkg toolchain file" )
 	elseif( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" )
 		set( CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "vcpkg toolchain file" )
+	elseif( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/.git" )
+		set( _LOCAL_VCPKG_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/.vcpkg" )
+		message( STATUS "vcpkg toolchain not found, bootstrapping local clone at ${_LOCAL_VCPKG_ROOT}" )
+		execute_process(
+			COMMAND git clone https://github.com/microsoft/vcpkg.git "${_LOCAL_VCPKG_ROOT}"
+			RESULT_VARIABLE _VCPKG_CLONE_RESULT
+			OUTPUT_QUIET
+			ERROR_QUIET
+		)
+		if( NOT _VCPKG_CLONE_RESULT EQUAL 0 )
+			message( FATAL_ERROR "Unable to clone vcpkg automatically. Set CMAKE_TOOLCHAIN_FILE manually or clone vcpkg to ${_LOCAL_VCPKG_ROOT}." )
+		endif()
+		if( _VCPKG_BASELINE )
+			execute_process(
+				COMMAND git -C "${_LOCAL_VCPKG_ROOT}" checkout "${_VCPKG_BASELINE}"
+				RESULT_VARIABLE _VCPKG_CHECKOUT_RESULT
+				OUTPUT_QUIET
+				ERROR_QUIET
+			)
+			if( NOT _VCPKG_CHECKOUT_RESULT EQUAL 0 )
+				message( WARNING "Could not checkout vcpkg baseline ${_VCPKG_BASELINE}; continuing with default branch." )
+			endif()
+		endif()
+		if( WIN32 )
+			execute_process(
+				COMMAND cmd /c bootstrap-vcpkg.bat -disableMetrics
+				WORKING_DIRECTORY "${_LOCAL_VCPKG_ROOT}"
+				RESULT_VARIABLE _VCPKG_BOOTSTRAP_RESULT
+			)
+		else()
+			execute_process(
+				COMMAND sh ./bootstrap-vcpkg.sh -disableMetrics
+				WORKING_DIRECTORY "${_LOCAL_VCPKG_ROOT}"
+				RESULT_VARIABLE _VCPKG_BOOTSTRAP_RESULT
+			)
+		endif()
+		if( NOT _VCPKG_BOOTSTRAP_RESULT EQUAL 0 )
+			message( FATAL_ERROR "vcpkg bootstrap failed in ${_LOCAL_VCPKG_ROOT}. Please run bootstrap-vcpkg manually." )
+		endif()
+		set( CMAKE_TOOLCHAIN_FILE "${_LOCAL_VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "vcpkg toolchain file" )
 	endif()
 endif()
 
