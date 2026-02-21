@@ -1,0 +1,1865 @@
+//===== rAthena Script =======================================
+//= Instance from Main quest.
+//===== Description: =========================================
+//- [Walkthrough conversion]
+//- Instance of episode 19.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+// Main Quest: Step 70
+jor_que,32,37,5	script	Lehar#i19ms21	EP19_RGAN_D,5,5,{
+	if (ep19_main == 59) {
+		mes "[Lehar]";
+		mes "You came just in time!!!";
+		next;
+		select( "Anything happened?" );
+		cloakoffnpcself( "Aurelie#i19ms21" );
+		npctalk "I was here", "Aurelie#i19ms21", bc_self;
+		mes "[Lazy]";
+		mes "It's getting pretty bad here.";
+		next;
+		mes "[Rgan]";
+		mes "Please don't hurt me... I'm begging you...";
+		next;
+		mes "[Lazy]";
+		mes "Did you see it?";
+		next;
+		select( "Why is this? Why is the entrance blocked?" );
+		mes "[Aurelie]";
+		mes "Isn't it said that all the rgans above the advanced level have moved to the advanced area?";
+		next;
+		mes "[Lazy]";
+		mes "I mean? That's what I've heard.";
+		mes "So I was on my way to join the meeting. What's blocking this?";
+		next;
+		mes "[Lehar]";
+		mes "That's it. These organs were tidying up in the upper section where the upper class Rgan moved in a hurry, but it seems that the upper class Rgan has suddenly attacked somewhere.";
+		next;
+		mes "[Aurelie]";
+		mes "What? Suddenly?";
+		next;
+		mes "[Lehar]";
+		mes "From what I've heard, it's not like your usual upper class Rgan.";
+		next;
+		select( "I've heard this a lot somewhere" );
+		npctalk "Isn't it?", "Lazy#i19ms21", bc_self;
+		mes "[Lehar]";
+		mes "That's why they blocked the entrance so that the higher class rgans couldn't come and go.";
+		next;
+		mes "[Aurelie]";
+		mes "Then, Bagot, Rasgand, and a group of high-ranking rgans are all out there?";
+		next;
+		mes "[Lehar]";
+		mes "I think that's it at first. I think I'll be able to do anything if I break through this first.";
+		next;
+		select( "What are you trying to do?" );
+		mes "[Lazy]";
+		mes "Perhaps something that you can't speak in front of your little nephew?";
+		next;
+		mes "[Aurelie]";
+		mes "If you make good use of this... you can put them in one place and process them all at once.";
+		next;
+		cloakoffnpcself( "Horr#i19ms21" );
+		mes "[Horr]";
+		mes "That's why I called support.";
+		next;
+		cloakoffnpcself( "Voglinde#i19ms21" );
+		cloakoffnpcself( "Leon#i19ms21" );
+		sleep2 500;
+		npctalk "How's the situation?", "Voglinde#i19ms21", bc_self;
+		npctalk "Isn't it already started?", "Leon#i19ms21", bc_self;
+		sleep2 500;
+		cloakoffnpcself( "Miriam#i19ms21" );
+		sleep2 500;
+		npctalk "Are you late?", "Miriam#i19ms21", bc_self;
+		sleep2 500;
+		cloakoffnpcself( "Iwin#i19ms21" );
+		cloakoffnpcself( "Iwin#i19ms22" );
+		sleep2 500;
+		npctalk "Squad! Arrived!", "Iwin#i19ms21", bc_self;
+		npctalk "Squad! Arrived!", "Iwin#i19ms22", bc_self;
+		mes "[Lazy]";
+		mes "Come on, stand in line. A brief summary.";
+		next;
+		mes "[Lazy]";
+		mes "Rasgand, Bagot, and Lgans above the ranks are said to have gathered over there by Rasgand's command.";
+		mes "Did everyone understand this far?";
+		next;
+		mes "[Lazy]";
+		mes "By the way, beyond this wall lies the living quarters of the higher rgans.";
+		next;
+		mes "[Lazy]";
+		mes "However, Illusion released it after doing something that was supposed to be a body modification to the higher-ranking rgans.";
+		next;
+		mes "[Voglinde]";
+		mes "It will be a runaway state, but the control will not be fine.";
+		mes "Anyway, you mean you have to defeat Rgan over there in order to meet Rasgand?";
+		next;
+		mes "[Horr]";
+		mes "Tear down the entrance, form a group and enter one by one. We Iwin will lead the way.";
+		next;
+		mes "[Lehar]";
+		mes "Are you ready? Come in now.";
+		npctalk "Let's see from the inside.", "Horr#i19ms21", bc_self;
+		next;
+		cloakonnpcself( "Horr#i19ms21" );
+		sleep2 500;
+		cloakonnpcself( "Iwin#i19ms21" );
+		cloakonnpcself( "Iwin#i19ms22" );
+		mes "[Aurelie]";
+		mes "It's my turn this time. Leon, let's go.";
+		next;
+		cloakonnpcself( "Leon#i19ms21" );
+		cloakonnpcself( "Aurelie#i19ms21" );
+		mes "[Voglinde]";
+		mes "Lehar, you better stay here and watch the situation and wait. Miriam, shall we go?";
+		next;
+		npctalk "Don't worry. I'll wait with you.", "Lazy#i19ms21", bc_self;
+		sleep2 500;
+		cloakonnpcself( "Voglinde#i19ms21" );
+		cloakonnpcself( "Miriam#i19ms21" );
+		mes "[Lazy]";
+		mes "Now it's adventurer's turn. I'm getting ready.";
+		erasequest 17647;
+		setquest 17648;
+		ep19_main = 60;
+		close;
+	}
+	if (ep19_main == 60) {
+		.@md_name$ = "Confused Snake's Nest";
+		mes "[Lehar]";
+		mes "Are you ready? When you are ready, I will send you a signal to confirm that the person who entered has moved.";
+		next;
+		switch( select( "Yes, signal.", "I'll go in.", "I need to get ready." ) ) {
+		case 1:
+			mes "[Lehar]";
+			mes "I will open the entrance as soon as there is a traffic signal. Please wait a moment.";
+			instance_create(.@md_name$);
+			close;
+		case 2:
+			switch( instance_enter(.@md_name$) ) {
+			case IE_OTHER:
+				mes "An unknown error occurred.";
+				close;
+			case IE_NOINSTANCE:
+				mes "[Lehar]";
+				mes "Are you not ready yet? I'll wait.";
+				close;
+			case IE_NOMEMBER:
+				mes "[Lehar]";
+				mes "^ff0000Only a member of the party can enter the Memorial Dungeon.^000000";
+				close;
+			case IE_OK:
+				mes "[Lehar]";
+				mes "I just got a signal that I can enter! You can enter!";
+				mapannounce "jor_que", "Operation 3" + strcharinfo(0) + "You and your party" + getpartyname( getcharid(1) ) + "All enter the confused snake's nest.", bc_map, 0xFF99;
+				// warp "1@jorchs",272,20;
+				end;
+			}
+			end;
+		case 3:
+			mes "[Lehar]";
+			mes "Please tell me to send a signal when you're ready. Otherwise, the operation inside may be messed up.";
+			close;
+		}
+		end;
+	}
+	end;
+
+OnTouch:
+	end;
+
+OnInit:
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(17647) == 1" );
+	questinfo( QTYPE_QUEST2, QMARK_YELLOW, "isbegin_quest(17648) == 1" );
+	cloakonnpc();
+	end;
+}
+
+1@jorchs,1,1,3	script	ep19_jorchs_main	-1,{
+	end;
+OnInstanceInit:
+	'map_jorchs$ = instance_mapname("1@jorchs");
+
+	'event = 0;
+
+	'area_1[0] = 'area_1[1] = 0;
+	'special_area_1[0] = 'special_area_1[1] = 0;
+	'area_2[0] = 'area_2[1] = 0;
+	'special_area_2[0] = 'special_area_2[1] = 0;
+	'count_area_3_2 = 0;
+	'area_4[0] = 'area_4[1] = 'area_4[2] = 0;
+	'area_5[0] = 'area_5[1] = 'area_5[2] = 0;
+	'ep19_jorchs_area_5_2[0] = 'ep19_jorchs_area_5_2[1] = 'ep19_jorchs_area_5_2[2] = 0;
+
+	// Special mobs area 1
+	disablenpc instance_npcname("Rgan the Scared#19m00");
+	disablenpc instance_npcname("Rgan the Scared#19m01");
+	disablenpc instance_npcname("Rgan the Scared#19m50");
+	disablenpc instance_npcname("Rgan the Scared#19m51");
+
+	// Special mobs area 2
+	disablenpc instance_npcname("Rgan with feet#19m10");
+	disablenpc instance_npcname("Rgan with feet#19m11");
+	disablenpc instance_npcname("Rgan with feet tied#19m60");
+	disablenpc instance_npcname("Rgan with feet#19m61");
+
+	// Final area 1
+	disablenpc instance_npcname("Iwin#19m10");
+	disablenpc instance_npcname("Horr#19m10");
+	disablenpc instance_npcname("Voglinde#19m10");
+	disablenpc instance_npcname("Iwin#19m11");
+	disablenpc instance_npcname("Miriam#19m10");
+	disablenpc instance_npcname("Aurelie#19m10");
+	disablenpc instance_npcname("Leon#19m10");
+
+	setcell 'map_jorchs$,139,59,139,59,cell_walkable,0;
+	setcell 'map_jorchs$,138,58,138,58,cell_walkable,0;
+	setcell 'map_jorchs$,137,57,137,57,cell_walkable,0;
+
+	// Final area 2
+	disablenpc instance_npcname("Horr#19m20");
+	disablenpc instance_npcname("Iwin#19m20");
+	disablenpc instance_npcname("Horr#19m21");
+	disablenpc instance_npcname("Iwin#19m22");
+	disablenpc instance_npcname("Iwin#19m23");
+
+	setcell 'map_jorchs$,120,129,120,129,cell_walkable,0;
+	setcell 'map_jorchs$,121,128,121,128,cell_walkable,0;
+	setcell 'map_jorchs$,122,127,122,127,cell_walkable,0;
+	setcell 'map_jorchs$,123,127,123,127,cell_walkable,0;
+	setcell 'map_jorchs$,124,126,124,126,cell_walkable,0;
+	setcell 'map_jorchs$,125,125,125,125,cell_walkable,0;
+	setcell 'map_jorchs$,126,125,126,125,cell_walkable,0;
+
+	// Area 3
+	disablenpc instance_npcname("Miriam#19m30");
+	disablenpc instance_npcname("Voglinde#19m30");
+	disablenpc instance_npcname("#e19p01");
+	disablenpc instance_npcname("Injection device#19m30");
+
+	setcell 'map_jorchs$,242,174,242,174,cell_walkable,0;
+	setcell 'map_jorchs$,244,176,244,176,cell_walkable,0;
+	setcell 'map_jorchs$,247,176,247,176,cell_walkable,0;
+	setcell 'map_jorchs$,248,176,248,176,cell_walkable,0;
+	setcell 'map_jorchs$,243,175,243,175,cell_walkable,0;
+	setcell 'map_jorchs$,245,176,245,176,cell_walkable,0;
+	setcell 'map_jorchs$,246,176,246,176,cell_walkable,0;
+	setcell 'map_jorchs$,249,177,249,177,cell_walkable,0;
+
+	// Area 4
+	disablenpc instance_npcname("Injection device#19m32");
+	disablenpc instance_npcname("Injection device#19m31");
+	disablenpc instance_npcname("Aurelie#19m40");
+	disablenpc instance_npcname("Injection device#19m40");
+
+	setcell 'map_jorchs$,140,183,140,183,cell_walkable,0;
+	setcell 'map_jorchs$,140,182,140,182,cell_walkable,0;
+	setcell 'map_jorchs$,139,181,139,181,cell_walkable,0;
+	setcell 'map_jorchs$,139,180,139,180,cell_walkable,0;
+	setcell 'map_jorchs$,138,179,138,179,cell_walkable,0;
+	setcell 'map_jorchs$,138,178,138,178,cell_walkable,0;
+
+	// Area 5
+	disablenpc instance_npcname("#e19p03");
+	disablenpc instance_npcname("Heart hunter#19m50");
+	disablenpc instance_npcname("Center door#19m61");
+	disablenpc instance_npcname("#19m60");
+
+	setcell 'map_jorchs$,34,255,43,255,cell_walkable,0;
+	end;
+}
+
+// Area 1
+
+// Main Quest: Step 71
+1@jorchs,261,34,3	script	Aurelie#19m00	4_EP19_AURELIE,5,5,{
+	end;
+OnTouch:
+	if ('event != 0)
+		end;
+	'event = 1;	// note: player can move
+	npctalk "There's no reason to pretend to be a ragan here.";
+	sleep 1000;
+	npctalk "Once Iwin's troops have advanced in the area, they have cleared up the nearby ragans.", instance_npcname("Horr#19m00");
+	sleep 1500;
+	npctalk "Now we need to go deeper and clean up.", instance_npcname("Voglinde#19m00");
+	sleep 3000;
+	npctalk "The goal is to secure Rasgand and Bagot and the heart of Ymir.";
+	sleep 3000;
+	npctalk "You must go in and block the escape route. Speed ??matters.", instance_npcname("Horr#19m00");
+	sleep 3000;
+	npctalk "There's only one entrance, but we'll have to search through it all to see if there are any we don't know about.";
+	sleep 3000;
+	npctalk "Do I have to remove the Rgan first to find their tracks?", instance_npcname("Horr#19m00");
+	sleep 3000;
+	npctalk "According to the story of the advanced units, they are different from the regular Rgans, so you should prepare well.", instance_npcname("Horr#19m00");
+	sleep 3000;
+	npctalk "Be careful, your opponents are rgans who are good at magic magic.";
+	sleep 3000;
+	npctalk "Good luck everyone!", instance_npcname("Horr#19m00");
+	sleep 500;
+	disablenpc();
+	disablenpc instance_npcname("Leon#19m00");
+	disablenpc instance_npcname("Miriam#19m00");
+	disablenpc instance_npcname("Voglinde#19m00");
+	disablenpc instance_npcname("Horr#19m00");
+	disablenpc instance_npcname("Iwin#19m00");
+	disablenpc instance_npcname("Iwin#19m01");
+	donpcevent instance_npcname("ep19_jorchs_area_1") + "::OnStart";
+	end;
+}
+1@jorchs,256,31,7	duplicate(dummy_npc)	Iwin#19m00	EP19_NPC_IWIN_SG
+1@jorchs,256,34,5	duplicate(dummy_npc)	Miriam#19m00	4_EP18_MIRIAM
+1@jorchs,257,35,5	duplicate(dummy_npc)	Voglinde#19m00	4_EP19_VOGLINDE
+1@jorchs,258,32,7	duplicate(dummy_npc)	Horr#19m00	EP19_NPC_IWIN_SR
+1@jorchs,259,31,7	duplicate(dummy_npc)	Iwin#19m01	EP19_NPC_IWIN_SG
+1@jorchs,260,35,3	duplicate(dummy_npc)	Leon#19m00	4_EP19_LEON
+
+
+// Main Quest: Step 72
+1@jorchs,249,79,7	script	Rgan the Scared#19m00	EP19_RE_RGAN_E,5,5,{
+	end;
+OnTouch:
+	// note: no need to kill the monsters in the area to trigger the event
+	// note: player can move while the npc is talking
+	disablenpc();
+	donpcevent instance_npcname("Rgan the Scared#19m50") + "::OnEvent";
+	end;
+}
+
+1@jorchs,249,79,7	script	Rgan the Scared#19m50	EP19_RE_RGAN_E,{
+	end;
+OnEvent:
+	enablenpc();
+	npctalk "I'm scared... Why is my body doing this?";
+	sleep 1500;
+	npctalk "That's... a human??? Is this all yours?? What did you do to me?!";
+	sleep 200;
+	npctalk "On a dirty human subject! Come on, restore me...! Ah...!!";
+	sleep 500;
+	specialeffect EF_FOOD02;
+	sleep 500;
+	disablenpc();
+	monster 'map_jorchs$,249,79,"Rgan the Scared",21534,1, instance_npcname("ep19_jorchs_area_1") + "::OnSpecialMob1";	// EP19_MD_RGAN_E
+	end;
+}
+
+
+// Main Quest: Step 73
+1@jorchs,114,20,3	script	Rgan the Scared#19m01	EP19_RE_RGAN_E,5,5,{
+	end;
+OnTouch:
+	disablenpc();
+	donpcevent instance_npcname("Rgan the Scared#19m51") + "::OnEvent";
+	end;
+}
+
+1@jorchs,114,20,3	script	Rgan the Scared#19m51	EP19_RE_RGAN_E,{
+	end;
+OnEvent:
+	enablenpc();
+	npctalk "I, am I not like that too?...?";
+	sleep 2000;
+	npctalk "I lived a good life, what the hell did those humans do to me...";
+	sleep 2000;
+	npctalk "Ah... it's cold...";
+	sleep 2500;
+	npctalk "...?! Human? Human?? The human who made me like this???";
+	sleep 500;
+	specialeffect EF_FOOD02;
+	disablenpc();
+	monster 'map_jorchs$,114,20,"Rgan the Scared",21534,1, instance_npcname("ep19_jorchs_area_1") + "::OnSpecialMob2";	// EP19_MD_RGAN_E
+	end;
+}
+
+
+1@jorchs,1,1,3	script	ep19_jorchs_area_1	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("Rgan the Scared#19m00");	// trigger spawn special mobs
+	enablenpc instance_npcname("Rgan the Scared#19m01");
+
+	.@event$ = instance_npcname("ep19_jorchs_area_1") + "::OnNormalMob";
+	monster 'map_jorchs$,237,61,"Combined Logan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,221,37,"Divided Logan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,242,66,"Smashed Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,204,38,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,181,48,"Smashed Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,135,29,"Combined Logan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,124,26,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	end;
+
+OnNormalMob:
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_1") + "::OnNormalMob" ) > 0)
+		end;
+	mapannounce 'map_jorchs$, "Wait, everyone. I need to clear things up.", bc_map, 0xFFCC;
+	'area_1[0] = 1;
+	donpcevent instance_npcname("ep19_jorchs_area_1") + "::OnAreaClear";
+	end;
+
+OnSpecialMob1: callsub( S_Check, 0 );
+OnSpecialMob2: callsub( S_Check, 1 );
+S_Check:
+	.@current_area = getarg(0);
+	.@other_area = !.@current_area;
+
+	'special_area_1[.@current_area] = 1;
+	if ('special_area_1[.@other_area] == 1) {	// the 2 mobs special are dead
+		'special_area_1[0] = 'special_area_1[1] = 2;	// just to make sure
+		'area_1[1] = 1;
+		mapannounce 'map_jorchs$, "You'd better do a more thorough search.", bc_map, 0xFFCC;
+		donpcevent instance_npcname("ep19_jorchs_area_1") + "::OnAreaClear";
+		end;
+	}
+	end;
+
+OnAreaClear:	// check if area clear
+	if ('area_1[0] == 0 || 'area_1[1] == 0)
+		end;
+	if ('event != 1)
+		end;
+	'area_1[0] = 'area_1[1] = 0;	// just to make sure
+	'event = 2;
+
+	// dialog final step area 1
+	disablenpc instance_npcname("Iwin#19m13");
+	disablenpc instance_npcname("Iwin#19m12");
+
+	enablenpc instance_npcname("Iwin#19m10");
+	enablenpc instance_npcname("Horr#19m10");
+	enablenpc instance_npcname("Voglinde#19m10");
+	enablenpc instance_npcname("Iwin#19m11");
+	enablenpc instance_npcname("Miriam#19m10");
+	enablenpc instance_npcname("Aurelie#19m10");
+	enablenpc instance_npcname("Leon#19m10");
+	end;
+}
+
+
+// Main Quest: Step 74
+1@jorchs,140,58,5	script	Iwin#19m13	EP19_NPC_IWIN_SB,5,5,{
+	end;
+OnTouch:
+	if ('event < 2) {
+		npctalk "Beyond this, no search party has been dispatched.", instance_npcname("Iwin#19m12");
+		sleep 1500;
+		npctalk "We will gather information and gather here before entering, so please focus on your search around this area.";
+		end;
+	}
+	end;
+}
+1@jorchs,140,56,5	duplicate(dummy_npc)	Iwin#19m12	EP19_NPC_IWIN_SB
+
+
+1@jorchs,142,58,5	script	Horr#19m10	EP19_NPC_IWIN_SR,5,5,{
+	end;
+OnTouch:
+	if ('event != 2)
+		end;
+	'event = 3;
+	npctalk "What the heck is a Rgan!! I've never seen a Rgan like this in my life!", instance_npcname("Horr#19m10");
+	sleep 2500;
+	npctalk "It looks like an intermediate Rgan, but I can't figure it out, so I can't be sure.", instance_npcname("Leon#19m10");
+	sleep 2000;
+	npctalk "Why is the intermediate Rgan like this? Isn't it the highest level?", instance_npcname("Aurelie#19m10");
+	sleep 2500;
+	npctalk "Illusions mainly do remodeling, so I think it has something to do with it.", instance_npcname("Miriam#19m10");
+	sleep 2000;
+	npctalk "Doesn't mods make things better? No matter how you look at them...", instance_npcname("Horr#19m10");
+	sleep 2500;
+	npctalk "You must be caught up in something like this, or use it and throw it away.", instance_npcname("Leon#19m10");
+	sleep 2000;
+	npctalk "It's not unusual, so let's go inside.", instance_npcname("Voglinde#19m10");
+	sleep 3000;
+	npctalk "This place is complicated, so it's best to disperse and search.", instance_npcname("Horr#19m10");
+	sleep 3000;
+	npctalk "The Rgan that Rasgand collected is most likely in Rasgand's residence.", instance_npcname("Miriam#19m10");
+	sleep 3000;
+	npctalk "Bagot was also researched, so I'll have to check Illusion's residence and laboratory.", instance_npcname("Horr#19m10");
+	sleep 2500;
+	npctalk "It's probably the innermost.", instance_npcname("Leon#19m10");
+	sleep 2500;
+	npctalk "What the hell are you doing?", instance_npcname("Aurelie#19m10");
+	setcell 'map_jorchs$,139,59,139,59,cell_walkable,1;
+	setcell 'map_jorchs$,138,58,138,58,cell_walkable,1;
+	setcell 'map_jorchs$,137,57,137,57,cell_walkable,1;
+	disablenpc instance_npcname("Iwin#19m10");
+	disablenpc instance_npcname("Horr#19m10");
+	disablenpc instance_npcname("Voglinde#19m10");
+	disablenpc instance_npcname("Iwin#19m11");
+	disablenpc instance_npcname("Miriam#19m10");
+	disablenpc instance_npcname("Aurelie#19m10");
+	disablenpc instance_npcname("Leon#19m10");
+	donpcevent instance_npcname("ep19_jorchs_area_2_A") + "::OnStart";	// mob spawn
+	end;
+}
+1@jorchs,143,60,5	duplicate(Horr#19m10)	Iwin#19m11	EP19_NPC_IWIN_SG,5,5
+
+1@jorchs,140,57,5	duplicate(dummy_npc)	Iwin#19m10	EP19_NPC_IWIN_SG
+1@jorchs,143,56,1	duplicate(dummy_npc)	Voglinde#19m10	4_EP19_VOGLINDE
+1@jorchs,145,56,1	duplicate(dummy_npc)	Miriam#19m10	4_EP18_MIRIAM
+1@jorchs,145,59,3	duplicate(dummy_npc)	Aurelie#19m10	4_EP19_AURELIE
+1@jorchs,146,58,3	duplicate(dummy_npc)	Leon#19m10	4_EP19_LEON
+
+
+
+
+// Area 2
+1@jorchs,1,1,3	script	ep19_jorchs_area_2_A	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("Rgan with feet#19m10");	// to spawn special mobs
+	enablenpc instance_npcname("Rgan with feet#19m11");
+
+	.@event$ = instance_npcname("ep19_jorchs_area_2_A") + "::OnNormalMob";
+	monster 'map_jorchs$,96,64,"Troubled Ragan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,75,23,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,51,45,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,39,76,"Uncomfortable RGAN","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,31,59,"Smashed Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,26,90,"Combined Logan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,119,80,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,118,103,"Combined Logan","EP19_MD_RGAN_D",1, .@event$;
+	end;
+
+OnNormalMob:
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_2_A") + "::OnNormalMob" ) > 0)
+		end;
+	mapannounce 'map_jorchs$, "Wow!!! What is this!!!", bc_map, 0xFFCC;
+	'area_2[0] = 1;
+	donpcevent instance_npcname("ep19_jorchs_area_2_A") + "::OnAreaClear";
+	end;
+
+OnSpecialMob1: callsub( S_Check, 0 );
+OnSpecialMob2: callsub( S_Check, 1 );
+S_Check:
+	.@current_area = getarg(0);
+	.@other_area = !.@current_area;
+
+	'special_area_2[.@current_area] = 1;
+	if ('special_area_2[.@other_area] == 1) {
+		'special_area_2[0] = 'special_area_2[1] = 0;
+		'area_2[1] = 1;
+		mapannounce 'map_jorchs$, "There's still some Rgan left in the search area, so we'd better clean it up quickly.", bc_map, 0xFFCC;
+		donpcevent instance_npcname("ep19_jorchs_area_2_A") + "::OnAreaClear";
+		end;
+	}
+	end;
+
+OnAreaClear:	// check if area clear
+	if ('area_2[0] == 0 || 'area_2[1] == 0)
+		end;
+	if ('event != 3)
+		end;
+	'area_2[0] = 'area_2[1] = 0;
+	'event = 4;
+
+	enablenpc instance_npcname("Horr#19m20");
+	enablenpc instance_npcname("Iwin#19m20");
+	end;
+}
+
+
+// Main Quest: Step 75
+1@jorchs,23,57,5	script	Rgan with feet#19m10	EP19_RE_RGAN_E,5,5,{
+	end;
+OnTouch:
+	disablenpc();
+	donpcevent instance_npcname("Rgan with feet tied#19m60") + "::OnEvent";
+	end;
+}
+
+1@jorchs,23,57,5	script	Rgan with feet tied#19m60	EP19_RE_RGAN_E,{
+	end;
+OnEvent:
+	enablenpc();
+	npctalk "Where did everyone go... They told me to guard the eggs, but I can't go out like this...";
+	sleep 2000;
+	npctalk "Human? Humans are not allowed here! Come on!";
+	sleep 1500;
+	npctalk "Damn!! Your body...! It's a nutritional supplement...? Isn't it? ?...!!";
+	sleep 1000;
+	specialeffect EF_FOOD02;
+	disablenpc();
+	monster 'map_jorchs$,23,57,"Rgan with Feet",21534,1, instance_npcname("ep19_jorchs_area_2_A") + "::OnSpecialMob1";	// EP19_MD_RGAN_E
+	end;
+}
+
+
+// Main Quest: Step 76
+1@jorchs,21,97,5	script	Rgan with feet#19m11	EP19_RE_RGAN_E,5,5,{
+	end;
+OnTouch:
+	disablenpc();
+	donpcevent instance_npcname("Rgan with feet#19m61") + "::OnEvent";
+	end;
+}
+
+1@jorchs,21,97,5	script	Rgan with feet#19m61	EP19_RE_RGAN_E,5,5,{
+	end;
+OnEvent:
+	enablenpc();
+	npctalk "I need to get to the center quickly, but how do I get through it? I've been hearing strange noises from a while ago...";
+	sleep 1500;
+	npctalk "When are you going to transform? You have to transform before you can break through.";
+	sleep 2000;
+	specialeffect EF_FOOD02;
+	npctalk "Oh! Finally!!! My chance to become a bishop level...!!! ?!!!";
+	disablenpc();
+	monster 'map_jorchs$,21,97,"Rgans with feet",21534,1, instance_npcname("ep19_jorchs_area_2_A") + "::OnSpecialMob2";	// EP19_MD_RGAN_E
+	end;
+}
+
+
+// Main Quest: Step 77
+1@jorchs,120,127,3	duplicate(dummy_npc)	Smashed Rgan#19m21	EP19_MD_RGAN_D
+1@jorchs,120,129,1	duplicate(dummy_npc)	Warped Rgan#19m20	EP19_MD_RGAN_D
+1@jorchs,122,127,3	duplicate(dummy_npc)	Howling Rgan#19m22	EP19_MD_RGAN_D
+1@jorchs,124,126,3	duplicate(dummy_npc)	Painful Rgan#19m24	EP19_MD_RGAN_D
+1@jorchs,125,125,3	duplicate(dummy_npc)	Combined Rgan#19m25	EP19_MD_RGAN_D
+1@jorchs,126,125,3	duplicate(dummy_npc)	Twisted Rgan#19m26	EP19_MD_RGAN_D
+1@jorchs,123,127,1	duplicate(dummy_npc)	Modified Advanced Ligan#19m23	EP19_MD_RGAN_E
+
+1@jorchs,118,127,7	duplicate(dummy_npc)	Horr#19m21	EP19_NPC_IWIN_SR
+1@jorchs,122,126,7	duplicate(dummy_npc)	Iwin#19m22	EP19_NPC_IWIN_SG
+1@jorchs,124,124,7	duplicate(dummy_npc)	Iwin#19m23	EP19_NPC_IWIN_SG
+
+1@jorchs,114,119,3	script	Iwin#19m21	EP19_NPC_IWIN_SG,3,3,{
+	end;
+OnTouch:
+	if ('event < 4) {
+		npctalk "Are you here! These rgans are impenetrable, non-attacking, and strange. They're looking for a way, so focus on your search!";
+		end;
+	}
+	end;
+}
+1@jorchs,112,116,7	duplicate(dummy_npc)	Iwin#19m20	EP19_NPC_IWIN_SG
+
+1@jorchs,119,123,3	duplicate(dummy_disabled_npc)	Heart hunter#19m20	EP19_MD_HEARTHUNTER_AT
+1@jorchs,116,124,3	duplicate(dummy_disabled_npc)	Heart hunter#19m21	EP19_MD_HEARTHUNTER_AT
+1@jorchs,123,124,3	duplicate(dummy_disabled_npc)	Heart hunter#19m22	EP19_MD_HEARTHUNTER_AT
+
+1@jorchs,112,119,5	script	Horr#19m20	EP19_NPC_IWIN_SR,5,5,{
+	end;
+OnTouch:
+	if ('event == 4) {
+		'event = 5;
+		// note: player can walk
+		.@hunter_1$ = instance_npcname("Heart hunter#19m20");
+
+		npctalk "You can keep going like this!";
+		sleep 2000;
+		npctalk "Wait!! There are a lot of Rgan in front!", instance_npcname("Iwin#19m20");
+		sleep 2000;
+		npctalk "You can pierce it!";
+		sleep 1000;
+		disablenpc();
+		sleep 500;
+		disablenpc instance_npcname("Iwin#19m20");
+		disablenpc instance_npcname("Iwin#19m21");
+		sleep 1000;
+		enablenpc instance_npcname("Horr#19m21");
+		enablenpc instance_npcname("Iwin#19m22");
+		enablenpc instance_npcname("Iwin#19m23");
+		sleep 1000;
+		specialeffect EF_HYOUSYOURAKU, AREA, instance_npcname("Horr#19m21");
+		sleep 500;
+		specialeffect EF_HYOUSYOURAKU, AREA, instance_npcname("Iwin#19m22");
+		specialeffect EF_HYOUSYOURAKU, AREA, instance_npcname("Iwin#19m23");
+		specialeffect EF_HFLIMOON3, AREA, instance_npcname("Horr#19m21");
+		specialeffect EF_HFLIMOON3, AREA, instance_npcname("Iwin#19m22");
+		specialeffect EF_HFLIMOON3, AREA, instance_npcname("Iwin#19m23");
+		specialeffect EF_M03, AREA, instance_npcname("Horr#19m21");
+		specialeffect EF_M03, AREA, instance_npcname("Iwin#19m22");
+		specialeffect EF_M03, AREA, instance_npcname("Iwin#19m23");
+		npctalk "?!!!", instance_npcname("Horr#19m21");
+		sleep 1000;
+		disablenpc instance_npcname("Horr#19m21");
+		disablenpc instance_npcname("Iwin#19m22");
+		disablenpc instance_npcname("Iwin#19m23");
+		sleep 1000;
+		enablenpc();
+		sleep 500;
+		enablenpc instance_npcname("Iwin#19m20");
+		enablenpc instance_npcname("Iwin#19m21");
+		npctalk "No way! Too many!!! How do you get through that?";
+		sleep 1500;
+		npctalk "But isn't that a bit odd?", instance_npcname("Iwin#19m20");
+		sleep 2500;
+		npctalk "We've been watching and they're not attacking us!", instance_npcname("Iwin#19m21");
+		sleep 2000;
+		enablenpc .@hunter_1$;
+		sleep 500;
+		npctalk "All you have to do is turn it on, what? Everyone is already here?", .@hunter_1$;
+		sleep 1500;
+		npctalk "Are you late already? Well, it doesn't matter.", .@hunter_1$;
+		sleep 2500;
+		npctalk "What else is that? Are those Illusions the heart hunter Suhara said?";
+		sleep 2000;
+		npctalk "This is the 5th line of defense, please support.", .@hunter_1$;
+		sleep 2500;
+		npctalk "There are intruders. There are obstacles, so it is difficult to expand the defense line. Again, please support.", .@hunter_1$;
+		sleep 2500;
+		npctalk "Called for support!!";
+		sleep 2000;
+		enablenpc instance_npcname("Heart hunter#19m21");
+		enablenpc instance_npcname("Heart hunter#19m22");
+		npctalk "What's the obstacle?", instance_npcname("Heart hunter#19m22");
+		sleep 2000;
+		npctalk "As you can see, the adventurers have already come this far.", .@hunter_1$;
+		sleep 2500;
+		npctalk "What? Aren't these organs really united? As Bagot said.", instance_npcname("Heart hunter#19m21");
+		sleep 2000;
+		npctalk "Yeah. Well-worked and strong rgans took care of blocking the entrance!", .@hunter_1$;
+		sleep 2500;
+		npctalk "By the way, why are there so many people here? Can I get rid of that?", instance_npcname("Heart hunter#19m22");
+		sleep 2000;
+		npctalk "I tried to start and block the device before it came in, but it did.", .@hunter_1$;
+		sleep 2500;
+		npctalk "You control your device, we'll take care of this.", .@hunter_1$;
+		npctalk "I do", instance_npcname("Heart hunter#19m22");
+		sleep 2000;
+		disablenpc instance_npcname("Heart hunter#19m22");
+		npctalk "Uh-huh?! Splitting? Adventurer! We'll take care of that over there, so take care of these guys!";
+		sleep 500;
+		disablenpc();
+		disablenpc instance_npcname("Iwin#19m20");
+		disablenpc instance_npcname("Iwin#19m21");
+		disablenpc .@hunter_1$;
+		disablenpc instance_npcname("Heart hunter#19m21");
+		cloakonnpc instance_npcname("Smashed Rgan#19m21");
+		cloakonnpc instance_npcname("Painful Rgan#19m24");
+		.@event$ = instance_npcname("ep19_jorchs_area_2_B") + "::OnMobFinal1";
+		monster 'map_jorchs$,119,123,"A modified Heart Hunter",21536,1, .@event$;	// EP19_MD_HEARTHUNTER_AT
+		monster 'map_jorchs$,123,124,"A modified heart hunter",21536,1, .@event$;	// EP19_MD_HEARTHUNTER_AT
+		monster 'map_jorchs$,120,126,"Smashed Rgan","EP19_MD_RGAN_D",1, .@event$;
+		monster 'map_jorchs$,124,125,"Painful Rgan","EP19_MD_RGAN_D",1, .@event$;
+		end;
+	}
+	if ('event == 7) {
+		'event = 8;
+		npctalk "Hu- I've dealt with all of that. However, there were a lot of unknown devices here and there.", instance_npcname("Horr#19m20");
+		sleep 2000;
+		npctalk "He caught a hearthunter trying to manipulate it, what the hell was he trying to do?", instance_npcname("Horr#19m20");
+		sleep 2500;
+		npctalk "How did a hearthunter get through that ragan pile?", instance_npcname("Iwin#19m20");
+		sleep 2500;
+		npctalk "Perhaps a hearthunter has something to dodge or control the rgans.", instance_npcname("Horr#19m20");
+		sleep 2000;
+		npctalk "So, once you dealt with Hearthunter, the wall of rgans has been dismantled!", instance_npcname("Iwin#19m21");
+		sleep 2500;
+		npctalk "It won't be easy. Adventurer, we'll share this with others. Go first.", instance_npcname("Horr#19m20");
+		sleep 500;
+		disablenpc instance_npcname("Horr#19m20");
+		disablenpc instance_npcname("Iwin#19m20");
+		disablenpc instance_npcname("Iwin#19m21");
+
+		setcell 'map_jorchs$,120,129,120,129,cell_walkable,1;
+		setcell 'map_jorchs$,121,128,121,128,cell_walkable,1;
+		setcell 'map_jorchs$,122,127,122,127,cell_walkable,1;
+		setcell 'map_jorchs$,123,127,123,127,cell_walkable,1;
+		setcell 'map_jorchs$,124,126,124,126,cell_walkable,1;
+		setcell 'map_jorchs$,125,125,125,125,cell_walkable,1;
+		setcell 'map_jorchs$,126,125,126,125,cell_walkable,1;
+
+		specialeffect EF_WIND, AREA, instance_npcname("Warped Rgan#19m20");
+		specialeffect EF_WIND, AREA, instance_npcname("Smashed Rgan#19m21");
+		specialeffect EF_WIND, AREA, instance_npcname("Howling Rgan#19m22");
+		specialeffect EF_WIND, AREA, instance_npcname("Modified Advanced Ligan#19m23");
+		specialeffect EF_WIND, AREA, instance_npcname("Painful Rgan#19m24");
+		specialeffect EF_WIND, AREA, instance_npcname("Combined Rgan#19m25");
+
+		donpcevent instance_npcname("ep19_jorchs_area_3_1") + "::OnStart";	// mob spawn area 3
+		end;
+	}
+	end;
+}
+
+1@jorchs,1,1,3	script	ep19_jorchs_area_2_B	-1,{
+	end;
+OnMobFinal1:
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_2_B") + "::OnMobFinal1" ) > 0)
+		end;
+	if ('event != 5)
+		end;
+	'event = 6;
+	mapannounce 'map_jorchs$, "- Do you think this will end like this? It's not like we didn't prepare anything!", bc_map, 0xFFCC;
+	sleep 2000;
+	cloakonnpc instance_npcname("Warped Rgan#19m20");	// to display effect on rAthena (officially disabled)
+	cloakonnpc instance_npcname("Howling Rgan#19m22");
+	cloakonnpc instance_npcname("Combined Rgan#19m25");
+	disablenpc instance_npcname("Twisted Rgan#19m26");
+	cloakonnpc instance_npcname("Modified Advanced Ligan#19m23");
+
+	.@event$ = instance_npcname("ep19_jorchs_area_2_B") + "::OnMobFinal2";
+	monster 'map_jorchs$,120,128,"Howling Lgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,122,126,"Combined Logan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,125,124,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,126,124,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,123,126,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	end;
+
+OnMobFinal2:
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_2_B") + "::OnMobFinal2" ) > 0)
+		end;
+	if ('event != 6)
+		end;
+	'event = 7;
+	enablenpc instance_npcname("Horr#19m20");
+	enablenpc instance_npcname("Iwin#19m20");
+	enablenpc instance_npcname("Iwin#19m21");
+	end;
+
+}
+
+
+// Area 3
+1@jorchs,1,1,3	script	ep19_jorchs_area_3_1	-1,{
+	end;
+OnStart:
+	.@event$ = instance_npcname("ep19_jorchs_area_3_1") + "::OnNormalMob";
+	monster 'map_jorchs$,142,144,"Howling RGAN","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,159,151,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,180,139,"Painful Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,200,131,"Combined Logan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,216,135,"Smashed Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,226,141,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,236,151,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	end;
+
+OnNormalMob:
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_3_1") + "::OnNormalMob" ) > 0)
+		end;
+	if ('event != 8)
+		end;
+	'event = 9;
+	mapannounce 'map_jorchs$, "Were you here?", bc_map, 0xFFCC;
+	enablenpc instance_npcname("Miriam#19m30");
+	enablenpc instance_npcname("Voglinde#19m30");
+	end;
+}
+
+// Wall of monsters
+1@jorchs,242,174,3	duplicate(dummy_npc)	Warped Rgan#19m37	EP19_MD_RGAN_D
+1@jorchs,244,176,3	duplicate(dummy_npc)	Smashed Rgan#19m35	EP19_MD_RGAN_D
+1@jorchs,247,176,3	duplicate(dummy_npc)	Combined Rgan#19m32	EP19_MD_RGAN_D
+1@jorchs,248,176,3	duplicate(dummy_npc)	Warped Rgan#19m31	EP19_MD_RGAN_D
+
+1@jorchs,243,175,3	duplicate(dummy_npc)	Modified Greater RGAN#19m36	EP19_MD_RGAN_E
+1@jorchs,245,176,3	duplicate(dummy_npc)	Modified Advanced Rgan#19m34	EP19_MD_RGAN_E
+1@jorchs,246,176,1	duplicate(dummy_npc)	Modified Advanced Rgan#19m33	EP19_MD_RGAN_E,5,5
+1@jorchs,249,177,1	duplicate(dummy_npc)	Modified Advanced Rgan#19m30	EP19_MD_RGAN_E
+
+
+// Area 3 - Step 2
+
+// Main Quest: Step 78
+1@jorchs,248,173,5	duplicate(dummy_disabled_npc)	Heart hunter#19m30	EP19_MD_HEARTHUNTER_AT
+1@jorchs,246,173,5	duplicate(dummy_disabled_npc)	Heart hunter#19m31	EP19_MD_HEARTHUNTER_AT
+1@jorchs,243,173,5	duplicate(dummy_disabled_npc)	Heart hunter#19m32	EP19_MD_HEARTHUNTER_AT
+
+1@jorchs,249,170,1	duplicate(dummy_disabled_npc)	Miriam#19m30	4_EP18_MIRIAM
+
+1@jorchs,251,171,1	script	Voglinde#19m30	4_EP19_VOGLINDE,5,5,{
+	end;
+OnTouch:
+	if ('event != 9)
+		end;
+	'event = 10;
+	npctalk "Adventurer! You're safe.", instance_npcname("Miriam#19m30");
+	sleep 2000;
+	npctalk "You mean the Rgan in front of you is controlled by Hearthunter?", instance_npcname("Voglinde#19m30");
+	// missing 1 npctalk
+	sleep 1500;
+	npctalk "If you had such a conscience, you wouldn't have created Heart Hunter in the first place.", instance_npcname("Voglinde#19m30");
+	sleep 2000;
+	enablenpc instance_npcname("Heart hunter#19m30");
+	enablenpc instance_npcname("Heart hunter#19m31");
+	enablenpc instance_npcname("Heart hunter#19m32");
+	npctalk "Are you talking about us? Don't worry. We did this because we wanted to.", instance_npcname("Heart hunter#19m30");
+	sleep 2500;
+	npctalk "So are these advanced rgans here.", instance_npcname("Heart hunter#19m31");
+	sleep 1500;
+	npctalk "They said it was a chance to become the best, so both of you were lining up.", instance_npcname("Heart hunter#19m32");
+	sleep 2500;
+	npctalk "What happened to those intermediate organs?", instance_npcname("Voglinde#19m30");
+	sleep 1500;
+	npctalk "Um... those intermediates couldn't help it.", instance_npcname("Heart hunter#19m30");
+	sleep 2000;
+	npctalk "Is it wrong if I accidentally happened to be in a dangerous place at an odd time...?", instance_npcname("Heart hunter#19m32");
+	sleep 2000;
+	npctalk "Where have you all gone? What are you doing together?", instance_npcname("Miriam#19m30");
+	sleep 2000;
+	npctalk "Why do we tell you that. I'm not that kind.", instance_npcname("Heart hunter#19m32");
+	sleep 2000;
+	npctalk "Then stop talking nonsense and get out of here.", instance_npcname("Miriam#19m30");
+	sleep 2500;
+	npctalk "Everyone in Arunafeltz is so straightforward.", instance_npcname("Heart hunter#19m31");
+	npctalk "You can't just let it pass. This is the body that has been ordered.", instance_npcname("Heart hunter#19m30");
+	sleep 2500;
+	npctalk "It's about stopping you. So I have prepared something... uh...", instance_npcname("Heart hunter#19m32");
+	sleep 2500;
+	npctalk "Are you turning off the time now?", instance_npcname("Voglinde#19m30");
+	sleep 2000;
+	npctalk "How did you know? There should be more, but I don't know! Eight!!!", instance_npcname("Heart hunter#19m30");
+	sleep 1500;
+	specialeffect EF_SCREEN_QUAKE, AREA, instance_npcname("Heart hunter#19m32");
+	npctalk "I told you to use this at a time like this. It looks like you couldn't use it in front of me?", instance_npcname("Heart hunter#19m30");
+	mapannounce 'map_jorchs$, "Injection unit started.", bc_map, 0xFFCC;
+	sleep 2500;
+	npctalk "They gave birth to an advanced egg in an instant as a modified advanced Rgan.", instance_npcname("Heart hunter#19m32");
+	specialeffect EF_CLOUD4, AREA, instance_npcname("Heart hunter#19m32");
+	sleep 1500;
+	npctalk "You're going to meet a lot of rgans?", instance_npcname("Heart hunter#19m31");
+	sleep 2500;
+	npctalk "As long as the power supply continues, it will continue to come out.", instance_npcname("Heart hunter#19m32");
+	sleep 2000;
+	npctalk "You sound like you can cut off the supply? You're kinder than I thought.", instance_npcname("Voglinde#19m30");
+	emotion ET_HUK, getnpcid(0,"Heart hunter#19m30");
+	emotion ET_HUK, getnpcid(0,"Heart hunter#19m31");
+	emotion ET_HUK, getnpcid(0,"Heart hunter#19m32");
+	sleep 2500;
+	npctalk "Hey, it wouldn't be that easy to find? Plus, I called support!!", instance_npcname("Heart hunter#19m31");
+	sleep 1500;
+	npctalk "We are on our way to the next goal!", instance_npcname("Heart hunter#19m30");
+	sleep 2000;
+	disablenpc instance_npcname("Heart hunter#19m30");
+	disablenpc instance_npcname("Heart hunter#19m31");
+	disablenpc instance_npcname("Heart hunter#19m32");
+	npctalk "Adventurer, we'll track you down, get rid of Rgan and get the device...!", instance_npcname("Voglinde#19m30");
+	sleep 2000;
+	disablenpc instance_npcname("Voglinde#19m30");
+	disablenpc instance_npcname("Miriam#19m30");
+	enablenpc instance_npcname("#e19p01");
+	'event = 11;
+	end;
+}
+
+1@jorchs,243,166,0	script	#e19p01	HIDDEN_WARP_NPC,7,7,{
+	end;
+OnTouch:
+	if ('event == 11) {
+		'event = 12;
+		donpcevent instance_npcname("ep19_jorchs_area_3_2") + "::OnStart";	// spawn mobs
+		end;
+	}
+	if ('event == 12 || 'event == 13 || 'event == 14) {
+		viewpoint 1,219,148,1,0xFF3355;
+		end;
+	}
+	end;
+}
+
+1@jorchs,1,1,3	script	ep19_jorchs_area_3_2	-1,{
+	end;
+OnStart:
+	.@event$ = instance_npcname("ep19_jorchs_area_3_2") + "::OnNormalMob";
+
+	disablenpc instance_npcname("Modified Advanced Rgan#19m30");
+	disablenpc instance_npcname("Warped Rgan#19m37");
+	monster 'map_jorchs$,250,177,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,243,174,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	sleep 3000;
+	disablenpc instance_npcname("Warped Rgan#19m31");
+	disablenpc instance_npcname("Smashed Rgan#19m35");
+	monster 'map_jorchs$,249,176,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,245,176,"Smashed Rgan","EP19_MD_RGAN_D",1, .@event$;
+	sleep 3000;
+	disablenpc instance_npcname("Combined Rgan#19m32");
+	disablenpc instance_npcname("Modified Advanced Rgan#19m34");
+	monster 'map_jorchs$,248,176,"Combined Logan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,246,176,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	sleep 3000;
+	disablenpc instance_npcname("Modified Greater RGAN#19m36");
+	disablenpc instance_npcname("Modified Advanced Rgan#19m33");
+	monster 'map_jorchs$,244,175,"Combined Logan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,247,176,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	if ('event == 12)
+		'event = 13;
+	end;
+
+OnNormalMob:
+	'count_area_3_2++;
+	if ('count_area_3_2 < 8)
+		end;
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_3_2") + "::OnNormalMob" ) > 0)
+		end;
+	if ('event != 13)
+		end;
+	'event = 14;
+	mapannounce 'map_jorchs$, "Infuse Greater L'gann's eggs with mixed energy.", bc_map, 0xFFCC;
+	enablenpc instance_npcname("Injection device#19m30");
+
+	donpcevent instance_npcname("#e19c01") + "::OnStart";	// spawn temporary mobs
+	end;
+}
+
+// Main Quest: Step 79
+1@jorchs,219,148,5	script	Injection device#19m30	4_ENERGY_BLUE,3,3,{
+	if ('event != 14)
+		end;
+	'event = 15;
+	disablenpc();
+	viewpoint 2,219,148,1,0xFF3355;
+	npctalk "Release Injection device";
+	donpcevent instance_npcname("ep19_jorchs_area_3_3") + "::OnStart";
+	donpcevent instance_npcname("#e19c01") + "::OnStop";	// stop spawn temporary mobs
+	initnpctimer;
+	end;
+OnTimer10000:
+	stopnpctimer;
+	donpcevent instance_npcname("#e19c01") + "::OnKill";
+	end;
+}
+
+1@jorchs,1,1,3	script	ep19_jorchs_area_3_3	-1,{
+	end;
+OnStart:
+	.@event$ = instance_npcname("ep19_jorchs_area_3_3") + "::OnNormalMob";
+
+	monster 'map_jorchs$,224,151,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	unittalk $@mobid[0], "The device is operational, but only one has been modified and born?";
+	monster 'map_jorchs$,225,141,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	unittalk $@mobid[0], "Did you turn off the device? You said that if you turn it off, it will wither and die soon!!!";
+	monster 'map_jorchs$,217,141,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	unittalk $@mobid[0], "What? Where have you all gone? Did you all go first after calling?";
+	end;
+OnNormalMob:
+	if ('event != 15)
+		end;
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_3_3") + "::OnNormalMob" ) > 0)
+		end;
+	'event = 16;
+	mapannounce 'map_jorchs$, "Additional injection unit up.", bc_map, 0xFFCC;
+
+	setcell 'map_jorchs$,242,174,242,174,cell_walkable,1;
+	setcell 'map_jorchs$,244,176,244,176,cell_walkable,1;
+	setcell 'map_jorchs$,247,176,247,176,cell_walkable,1;
+	setcell 'map_jorchs$,248,176,248,176,cell_walkable,1;
+	setcell 'map_jorchs$,243,175,243,175,cell_walkable,1;
+	setcell 'map_jorchs$,245,176,245,176,cell_walkable,1;
+	setcell 'map_jorchs$,246,176,246,176,cell_walkable,1;
+	setcell 'map_jorchs$,249,177,249,177,cell_walkable,1;
+
+	donpcevent instance_npcname("ep19_jorchs_area_4_1") + "::OnStart";	// spawn mobs next area
+	end;
+}
+
+1@jorchs,230,160,0	script	#e19c01	HIDDEN_WARP_NPC,{
+	end;
+OnStart:
+	initnpctimer;
+	end;
+OnTimer30000:
+	specialeffect EF_AGIUP;
+	specialeffect EF_GUARD2;
+
+	getmapxy .@map$,.@x,.@y, BL_NPC;
+	monster 'map_jorchs$,.@x,.@y,"Unstable mod Rgan","EP19_MD_RGAN_E",1, instance_npcname( strnpcinfo(0) ) + "::OnTemporaryMob";
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+OnTemporaryMob:
+	end;
+OnKill:
+	stopnpctimer;
+	killmonster 'map_jorchs$, instance_npcname( strnpcinfo(0) ) + "::OnTemporaryMob";
+	end;
+}
+
+
+// Area 4
+1@jorchs,244,176,0	script	#e19p04	HIDDEN_WARP_NPC,7,7,{
+	end;
+OnTouch:
+	if ('event == 16) {
+		viewpoint 2,219,148,1,0xFF3355;
+		if ('area_4[1] == 0)
+			viewpoint 1,226,244,1,0xFF3355;
+		if ('area_4[0] == 0)
+			viewpoint 1,191,203,2,0xFF3355;
+		end;
+	}
+	end;
+}
+
+1@jorchs,1,1,3	script	ep19_jorchs_area_4_1	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("Injection device#19m32");
+	enablenpc instance_npcname("Injection device#19m31");
+
+	.@event$ = instance_npcname("ep19_jorchs_area_4_1") + "::OnNormalMob";
+
+	monster 'map_jorchs$,270,198,"Modified Advanced Lgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,228,211,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,210,204,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,194,200,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,173,179,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,245,235,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,273,254,"Howling Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,247,278,"Combined Logan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,224,273,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,238,258,"Unstable Augmented Logan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,198,272,"Smashed Rgan","EP19_MD_RGAN_D",1, .@event$;
+
+	donpcevent instance_npcname("#e19c02") + "::OnStart";	// spawn temporary mobs
+	donpcevent instance_npcname("#e19c03") + "::OnStart";
+	end;
+OnNormalMob:
+	if ('event != 16)
+		end;
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_4_1") + "::OnNormalMob" ) > 0)
+		end;
+	if ('area_4[2] != 0)
+		end;
+	'area_4[2] = 2;
+	mapannounce 'map_jorchs$, "Oh, teachers, talk about this.", bc_map, 0xFFCC;
+	donpcevent instance_npcname("ep19_jorchs_area_4_1") + "::OnCheck";	// check if we should trigger the next step
+	end;
+OnSpecialMob:
+	if ('event != 16)
+		end;
+	if ('area_4[0] == 1 && 'area_4[1] == 1) {
+		'area_4[0] = 'area_4[1] = 2;
+		mapannounce 'map_jorchs$, "There are still Rgans over there!", bc_map, 0xFFCC;
+		donpcevent instance_npcname("ep19_jorchs_area_4_1") + "::OnCheck";	// check if we should trigger the next step
+		end;
+	}
+	end;
+OnCheck:
+	if ('area_4[0] == 2 && 'area_4[1] == 2 && 'area_4[2] == 2) {
+		'event = 17;
+		enablenpc instance_npcname("Heart hunter#19m41");
+		enablenpc instance_npcname("Heart hunter#19m40");
+		enablenpc instance_npcname("Leon#19m40");
+		enablenpc instance_npcname("Heart hunter#19m42");
+		enablenpc instance_npcname("Aurelie#19m40");
+		end;
+	}
+	end;
+}
+
+1@jorchs,198,205,0	duplicate(#e19c01)	#e19c03	HIDDEN_WARP_NPC
+
+// Main Quest: Step 80
+1@jorchs,191,203,7	script	Injection device#19m32	4_ENERGY_BLUE,{
+	if ('event != 16)
+		end;
+	if ('area_4[0] != 0)
+		end;
+	'area_4[0] = 1;
+	viewpoint 2,191,203,2,0xFF3355;
+	npctalk "Release Injection device";
+	disablenpc();
+	donpcevent instance_npcname("#e19c03") + "::OnStop";	// stop spawn temporary mobs
+	donpcevent instance_npcname("ep19_jorchs_area_4_1") + "::OnSpecialMob";	// announce if the 2 temporary spots are disabled
+	initnpctimer;
+	end;
+OnTimer10000:	// the temporary mobs are killed after ~10s
+	stopnpctimer;
+	donpcevent instance_npcname("#e19c03") + "::OnKill";
+	end;
+}
+
+
+1@jorchs,239,255,0	duplicate(#e19c01)	#e19c02	HIDDEN_WARP_NPC
+
+// Main Quest: Step 81
+1@jorchs,226,244,7	script	Injection device#19m31	4_ENERGY_BLUE,{
+	if ('event != 16)
+		end;
+	if ('area_4[1] != 0)
+		end;
+	'area_4[1] = 1;
+	viewpoint 2,226,244,1,0xFF3355;
+	npctalk "Release Injection device";
+	disablenpc();
+	donpcevent instance_npcname("#e19c03") + "::OnStop";	// stop spawn temporary mobs
+	donpcevent instance_npcname("ep19_jorchs_area_4_1") + "::OnSpecialMob";	// announce if the 2 temporary spots are disabled
+	initnpctimer;
+	end;
+OnTimer10000:	// the temporary mobs are killed after ~10s
+	stopnpctimer;
+	donpcevent instance_npcname("#e19c02") + "::OnKill";
+	end;
+}
+
+
+// Wall of monsters
+1@jorchs,139,181,3	script	Modified Advanced Rgan#19m42	EP19_MD_RGAN_E,5,5,{
+	unittalk getcharid(3), "" + strcharinfo(0) + " : Looks like you can't get past the Rgan wall yet. I'll have to finish the search.";
+	end;
+}
+1@jorchs,138,178,3	duplicate(dummy_npc)	Modified Greater Rgan#19m45	EP19_MD_RGAN_E
+1@jorchs,138,179,3	duplicate(dummy_npc)	Warped Rgan#19m44	EP19_MD_RGAN_D
+1@jorchs,139,180,1	duplicate(dummy_npc)	Modified Advanced Rgan#19m43	EP19_MD_RGAN_E
+1@jorchs,140,182,3	duplicate(dummy_npc)	Smashed Rgan#19m41	EP19_MD_RGAN_D
+1@jorchs,140,183,1	duplicate(dummy_npc)	Modified Advanced Rgan#19m40	EP19_MD_RGAN_E
+
+
+1@jorchs,149,178,5	duplicate(dummy_disabled_npc)	Heart hunter#19m41	EP19_MD_HEARTHUNTER_AT
+1@jorchs,149,179,5	duplicate(dummy_disabled_npc)	Heart hunter#19m40	EP19_MD_HEARTHUNTER_AT
+1@jorchs,150,180,5	duplicate(dummy_disabled_npc)	Heart hunter#19m42	EP19_MD_HEARTHUNTER_AT
+1@jorchs,150,177,1	duplicate(dummy_disabled_npc)	Leon#19m40	4_EP19_LEON,3,3
+
+// Main Quest: Step 82, 84
+1@jorchs,151,179,1	script	Aurelie#19m40	4_EP19_AURELIE,5,5,{
+	if ('event == 17) {
+		'event = 18;
+		specialeffect EF_NPC_STOP, AREA, instance_npcname("Heart hunter#19m40");
+		specialeffect EF_NPC_STOP, AREA, instance_npcname("Heart hunter#19m41");
+		specialeffect EF_NPC_STOP, AREA, instance_npcname("Heart hunter#19m42");
+		npctalk "What's the problem with you guys? They say they can't join, but they don't cover it and cause problems?", instance_npcname("Aurelie#19m40");
+		sleep 3000;
+		npctalk "I'm not saying what I'm saying, it's because I don't understand.", instance_npcname("Aurelie#19m40");
+		sleep 1500;
+		npctalk "Adventurers, are we here...", instance_npcname("Leon#19m40");
+		mapannounce 'map_jorchs$, "Injection unit is up.", bc_map, 0xFFCC;
+		sleep 3000;
+		npctalk "We'll hold the interest, so it's better to find the device first and turn it offI will.", instance_npcname("Aurelie#19m40");
+		sleep 2000;
+		npctalk "What did you do a while ago and then restart it?", instance_npcname("Leon#19m40");
+		sleep 2000;
+		npctalk "Let's talk about this, teachers.", instance_npcname("Heart hunter#19m40");
+		sleep 2000;
+		npctalk "What the hell is this, why can't I move it?", instance_npcname("Heart hunter#19m41");
+		sleep 2000;
+		npctalk "It's because I'm a little crazy", instance_npcname("Aurelie#19m40");
+		sleep 2000;
+		npctalk "Now, shall we finish what we were talking about?", instance_npcname("Leon#19m40");
+		sleep 3000;
+		npctalk "Leave this to us.", instance_npcname("Aurelie#19m40");
+		npctalk "Adventurers, don't just go and convince them!", instance_npcname("Heart hunter#19m42");
+		'event = 19;
+		enablenpc instance_npcname("Injection device#19m40");
+		enablenpc instance_npcname("#e19p02");
+		donpcevent instance_npcname("#e19c04") + "::OnStart";	// spawn temporary mobs
+		end;
+	}
+	if ('event == 19) {
+		npctalk "Leave us here and turn off the device.", instance_npcname("Aurelie#19m40");
+		end;
+	}
+	if ('event == 21) {
+		'event = 22;
+		npctalk "Come here. These guys are well packaged, so you can go ahead.", instance_npcname("Aurelie#19m40");
+		sleep 1500;
+		npctalk "They say that they have summoned all the rgans of higher rank and higher to Rasgand's residence.", instance_npcname("Aurelie#19m40");
+		sleep 3000;
+		npctalk "That... don't say we said that. Please.", instance_npcname("Heart hunter#19m40");
+		sleep 2000;
+		npctalk "They say there's only one entrance. Can't believe it?", instance_npcname("Leon#19m40");
+		npctalk "We only tell the truth. Trust me.", instance_npcname("Heart hunter#19m41");
+		sleep 2000;
+		npctalk "Either way, it's clear that what Rasgand and Bagot want to achieve is just around the corner.", instance_npcname("Aurelie#19m40");
+		sleep 2000;
+		npctalk "I must hurry", instance_npcname("Aurelie#19m40");
+		sleep 1500;
+		npctalk "Teachers, we, leave us out. We've told you everything we know.", instance_npcname("Heart hunter#19m42");
+		sleep 1500;
+		npctalk "apart from that...", instance_npcname("Leon#19m40");
+		emotion ET_SURPRISE, getnpcid(0,"Leon#19m40");
+		specialeffect EF_SCREEN_QUAKE, AREA, instance_npcname("Leon#19m40");
+		mapannounce 'map_jorchs$, "Power up the horsepower booster.", bc_map, 0xFFCC;
+		sleep 2000;
+		npctalk "Huh? The flow of magic is a bit strange?", instance_npcname("Leon#19m40");
+		sleep 2000;
+		npctalk "Yeah. I don't think kids can handle this.", instance_npcname("Aurelie#19m40");
+		sleep 2000;
+		npctalk "Adventurer, can I leave this to an adventurer?", instance_npcname("Leon#19m40");
+		sleep 3000;
+		npctalk "Is it better to deal with it quickly? It's not unusual. Let's go first.", instance_npcname("Leon#19m40");
+		sleep 2000;
+		npctalk "Ha! Really! Do we look so good?", instance_npcname("Heart hunter#19m40");
+		disablenpc instance_npcname("Aurelie#19m40");
+		disablenpc instance_npcname("Leon#19m40");
+		sleep 2000;
+		npctalk "If the scary brothers disappear, we can do it too!", instance_npcname("Heart hunter#19m41");
+		sleep 2000;
+		npctalk "You'd better tie that mouth up first. Then, I'll ask you.", instance_npcname("Aurelie#19m40");
+		donpcevent instance_npcname("ep19_jorchs_area_4_3") + "::OnStart";	// spawn mobs
+		end;
+	}
+	end;
+}
+
+
+1@jorchs,156,177,0	script	#e19p02	HIDDEN_WARP_NPC,7,7,{
+	end;
+OnTouch:
+	if ('event == 19) {
+		viewpoint 1,192,206,3,0xFF3355;
+		end;
+	}
+	end;
+}
+
+1@jorchs,199,197,0	duplicate(#e19c01)	#e19c04	HIDDEN_WARP_NPC
+
+// Main Quest: Step 83
+1@jorchs,192,206,5	script	Injection device#19m40	4_ENERGY_BLUE,3,3,{
+	if ('event == 19) {
+		'event = 20;
+		viewpoint 2,192,206,3,0xFF3355;
+		npctalk "remove device";
+		disablenpc();
+		donpcevent instance_npcname("#e19c04") + "::OnKill";	// stop spawn and kill temporary mobs
+		mapannounce 'map_jorchs$, "Come here when the device is off.", bc_map, 0xFFCC;
+		donpcevent instance_npcname("ep19_jorchs_area_4_2") + "::OnStart";
+		end;
+	}
+	end;
+OnTouch:	// unknown effect
+	end;
+}
+
+1@jorchs,1,1,3	script	ep19_jorchs_area_4_2	-1,{
+	end;
+OnStart:
+	.@event$ = instance_npcname("ep19_jorchs_area_4_2") + "::OnNormalMob";
+
+	monster 'map_jorchs$,191,199,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	unittalk $@mobid[0], "I told you to keep that off";
+	monster 'map_jorchs$,199,197,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	unittalk $@mobid[0], "Is it better to get out of there?";
+	monster 'map_jorchs$,202,207,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	unittalk $@mobid[0], "You're a big deal.";
+	end;
+OnNormalMob:
+	if ('event != 20)
+		end;
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_4_2") + "::OnNormalMob" ) > 0)
+		end;
+	'event = 21;
+	end;
+}
+
+// Main Quest: Step 84
+// 1@jorchs,151,179,1	script	Aureli#19m40	4_EP19_AURELIE,5,5,{
+
+1@jorchs,1,1,3	script	ep19_jorchs_area_4_3	-1,{
+	end;
+OnStart:
+	.@event$ = instance_npcname("ep19_jorchs_area_4_3") + "::OnNormalMob";
+	'ep19_jorchs_area_4_3 = 0;
+
+	disablenpc instance_npcname("Smashed Rgan#19m41");
+	disablenpc instance_npcname("Heart hunter#19m41");
+	monster 'map_jorchs$,141,182,"Smashed Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,149,178,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	sleep 3000;
+	disablenpc instance_npcname("Modified Advanced Rgan#19m40");
+	disablenpc instance_npcname("Warped Rgan#19m44");
+	monster 'map_jorchs$,141,183,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,139,179,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	sleep 3000;
+	disablenpc instance_npcname("Modified Advanced Rgan#19m42");
+	disablenpc instance_npcname("Modified Advanced Rgan#19m43");
+	monster 'map_jorchs$,140,181,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,140,180,"Modified Advanced Lgan","EP19_MD_RGAN_E",1, .@event$;
+	sleep 1000;
+	disablenpc instance_npcname("Heart hunter#19m42");
+	disablenpc instance_npcname("Heart hunter#19m40");
+	monster 'map_jorchs$,150,180,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	monster 'map_jorchs$,149,179,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	sleep 1000;
+	disablenpc instance_npcname("Modified Greater Rgan#19m45");
+	monster 'map_jorchs$,139,178,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	end;
+OnNormalMob:
+	if ('event != 22)
+		end;
+	'ep19_jorchs_area_4_3++;
+	if ('ep19_jorchs_area_4_3 < 9)
+		end;
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_4_3") + "::OnNormalMob" ) > 0)
+		end;
+	'event = 23;
+	mapannounce 'map_jorchs$, "Illusion Sector is unusual. Somebody...!", bc_map, 0xFFCC;
+	enablenpc instance_npcname("#e19p03");
+	setcell 'map_jorchs$,140,183,140,183,cell_walkable,1;
+	setcell 'map_jorchs$,140,182,140,182,cell_walkable,1;
+	setcell 'map_jorchs$,139,181,139,181,cell_walkable,1;
+	setcell 'map_jorchs$,139,180,139,180,cell_walkable,1;
+	setcell 'map_jorchs$,138,179,138,179,cell_walkable,1;
+	setcell 'map_jorchs$,138,178,138,178,cell_walkable,1;
+
+	donpcevent instance_npcname("ep19_jorchs_area_5_1") + "::OnStart";	// spawn mobs next area
+	end;
+}
+
+
+// Area 5
+1@jorchs,137,181,0	script	#e19p03	HIDDEN_WARP_NPC,7,7,{
+	end;
+OnTouch:
+	if ('event == 23) {
+		if ('area_5[1] == 0)
+			viewpoint 1,20,195,4,0xFF3355;
+		if ('area_5[0] == 0)
+			viewpoint 1,24,142,5,0xFF3355;
+		end;
+	}
+	end;
+}
+
+
+// Main Quest: Step 85
+
+1@jorchs,1,1,3	script	ep19_jorchs_area_5_1	-1,{
+	end;
+OnStart:
+	enablenpc instance_npcname("Research device#19m41");
+
+	.@event$ = instance_npcname("ep19_jorchs_area_5_1") + "::OnNormalMob";
+
+	monster 'map_jorchs$,121,190,"Smashed Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,103,215,"Modified Advanced Ligan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,82,221,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,86,165,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,79,154,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,45,153,"Twisted Rgan","EP19_MD_RGAN_D",1, .@event$;
+	monster 'map_jorchs$,32,135,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,18,133,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,25,172,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,24,188,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+
+	donpcevent instance_npcname("#e19c06") + "::OnStart";	// spawn temporary mobs
+	donpcevent instance_npcname("#e19c05") + "::OnStart";
+	end;
+OnNormalMob:
+	if ('event != 23)
+		end;
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_5_1") + "::OnNormalMob" ) > 0)
+		end;
+	if ('area_5[2] != 0)
+		end;
+	'area_5[2] = 1;
+	donpcevent instance_npcname("ep19_jorchs_area_5_1") + "::OnCheck";
+	end;
+OnCheck:
+	if ('event == 23 && 'area_5[0] == 1 && 'area_5[1] == 1 && 'area_5[2] == 1) {
+		'event = 24;
+		mapannounce 'map_jorchs$, "Who will arrive first?", bc_map, 0xFFCC;
+		enablenpc instance_npcname("Heart hunter#19m50");
+		enablenpc instance_npcname("Heart hunter#19m52");
+		enablenpc instance_npcname("Heart hunter#19m51");
+	}
+	end;
+}
+
+// Area 5 - South
+1@jorchs,17,133,0	duplicate(#e19c01)	#e19c06	HIDDEN_WARP_NPC
+
+1@jorchs,24,142,7	script	Research device#19m41	4_ENERGY_BLUE,{
+	if ('event == 23 && 'area_5[0] == 0) {
+		'area_5[0] = 1;
+		disablenpc();
+		viewpoint 2,24,142,5,0xFF3355;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Is this... important?";
+		.@event$ = instance_npcname("Research device#19m41") + "::OnNormalMob";
+		monster 'map_jorchs$,20,136,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+		unittalk $@mobid[0], "You pretended to be a ragan, so you came here to soak up your memories?";
+		monster 'map_jorchs$,30,139,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+		unittalk $@mobid[0], "I told you not to touch it!";
+		initnpctimer;
+		end;
+	}
+	end;
+OnNormalMob:
+	end;
+OnTimer10000:	// the hunters and the temporary mobs are killed after 10s
+	stopnpctimer;
+	donpcevent instance_npcname("#e19c06") + "::OnKill";
+	killmonster 'map_jorchs$, instance_npcname("Research device#19m41") + "::OnNormalMob";
+	donpcevent instance_npcname("ep19_jorchs_area_5_1") + "::OnCheck";
+	end;
+}
+
+1@jorchs,16,135,3	script	Laboratory trace#19m40	4_ENERGY_BLUE,{
+	unittalk getcharid(3), "" + strcharinfo(0) + " : few left";
+	end;
+}
+
+
+// Area 5 - Middle
+1@jorchs,17,188,0	duplicate(#e19c01)	#e19c05	HIDDEN_WARP_NPC
+
+1@jorchs,20,195,7	script	Research device#19m40	4_ENERGY_BLUE,{
+	if ('event == 23 && 'area_5[1] == 0) {
+		'area_5[1] = 1;
+		disablenpc();
+		viewpoint 2,20,195,4,0xFF3355;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Ymir's heart... Of course not... I don't see any useful research data.";
+		mapannounce 'map_jorchs$, "We still have tons of Rgan to deal with!", bc_map, 0xFFCC;
+		.@event$ = instance_npcname("Research device#19m40") + "::OnNormalMob";
+		monster 'map_jorchs$,26,194,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+		unittalk $@mobid[0], "Are you really looking for data?";
+		monster 'map_jorchs$,26,188,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+		unittalk $@mobid[0], "Raise your hand!!";
+		monster 'map_jorchs$,19,185,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+		unittalk $@mobid[0], "Can you see?";
+		initnpctimer;
+		end;
+	}
+	end;
+OnNormalMob:
+	end;
+OnTimer20000:	// the hunters and the temporary mobs are killed after 20s
+	stopnpctimer;
+	donpcevent instance_npcname("#e19c05") + "::OnKill";
+	killmonster 'map_jorchs$, instance_npcname("Research device#19m40") + "::OnNormalMob";
+	donpcevent instance_npcname("ep19_jorchs_area_5_1") + "::OnCheck";
+	end;
+}
+
+
+// Area 5 - North
+
+// Wall
+1@jorchs,34,255,1	duplicate(dummy_npc)	Modified Advanced Ligan#19m50	EP19_MD_RGAN_E
+1@jorchs,35,255,3	duplicate(dummy_npc)	Modified Advanced Rgan#19m51	EP19_MD_RGAN_E
+1@jorchs,36,255,3	duplicate(dummy_npc)	Modified Greater Rgan#19m52	EP19_MD_RGAN_E
+1@jorchs,37,255,1	duplicate(dummy_npc)	Modified Advanced Rgan#19m53	EP19_MD_RGAN_E
+1@jorchs,38,255,3	duplicate(dummy_npc)	Modified Advanced Rgan#19m54	EP19_MD_RGAN_E,5,5
+1@jorchs,39,255,3	duplicate(dummy_npc)	Modified Advanced Ligan#19m55	EP19_MD_RGAN_E
+1@jorchs,40,255,1	duplicate(dummy_npc)	Modified Advanced Rgan#19m56	EP19_MD_RGAN_E
+1@jorchs,41,255,3	duplicate(dummy_npc)	Modified Advanced Ligan#19m57	EP19_MD_RGAN_E
+1@jorchs,42,255,3	duplicate(dummy_npc)	Modified Advanced Rgan#19m58	EP19_MD_RGAN_E
+1@jorchs,43,255,3	duplicate(dummy_npc)	Modified Advanced Lgan#19m59	EP19_MD_RGAN_E
+1@jorchs,35,256,5	duplicate(dummy_npc)	Modified Advanced Rgan#19m61	EP19_MD_RGAN_E
+1@jorchs,37,256,1	duplicate(dummy_npc)	Modified Advanced Rgan#19m63	EP19_MD_RGAN_E
+
+1@jorchs,38,256,5	script	Modified Advanced Rgan#19m64	EP19_MD_RGAN_E,5,5,{
+	if ('event < 24) {
+		unittalk getcharid(3), "" + strcharinfo(0) + " : This is the wall of the Rgan. I must search first and then come back.";
+		end;
+	}
+	end;
+}
+1@jorchs,39,256,3	duplicate(dummy_npc)	Modified Advanced Rgan#19m65	EP19_MD_RGAN_E
+1@jorchs,41,256,1	duplicate(dummy_npc)	Modified Advanced Rgan#19m67	EP19_MD_RGAN_E
+1@jorchs,42,256,5	duplicate(dummy_npc)	Modified Advanced Rgan#19m68	EP19_MD_RGAN_E
+
+
+1@jorchs,39,251,5	script	Heart hunter#19m50	EP19_MD_HEARTHUNTER_AT,5,5,{
+	end;
+OnTouch:
+	if ('event == 24) {
+		'event = 25;
+		npctalk "Who is that?", instance_npcname("Heart hunter#19m50");
+		sleep 1500;
+		npctalk "Adventurer?", instance_npcname("Heart hunter#19m52");
+		sleep 2000;
+		npctalk "Did the adventurers arrive first?", instance_npcname("Heart hunter#19m51");
+		sleep 1500;
+		npctalk "Who will get here first?", instance_npcname("Heart hunter#19m52");
+		npctalk "I won", instance_npcname("Heart hunter#19m50");
+		sleep 2000;
+		enablenpc instance_npcname("Bagot#19m50");
+		npctalk "Are you the only adventurers here?", instance_npcname("Bagot#19m50");
+		sleep 2000;
+		npctalk "Yeah. The others seem to be dealing with Magic Runaway Rgan.", instance_npcname("Heart hunter#19m50");
+		sleep 2000;
+		npctalk "Yeah? Still, this place wanted to meet some adventurers?", instance_npcname("Bagot#19m50");
+		sleep 3000;
+		npctalk "You must have fooled Bagot with cute tricks the other day?!", instance_npcname("Bagot#19m50");
+		sleep 3000;
+		npctalk "So I prepared a present for you. This is it.", instance_npcname("Bagot#19m50");
+		sleep 3000;
+		npctalk "It looks like they met with other people. The paths crossed.", instance_npcname("Bagot#19m50");
+		enablenpc instance_npcname("Rgan the Berserk#19m50");
+		enablenpc instance_npcname("Rgan the Berserk#19m51");
+		enablenpc instance_npcname("Rgan the Berserk#19m52");
+		enablenpc instance_npcname("Rgan the Berserk#19m53");
+		enablenpc instance_npcname("Rgan the Berserk#19m54");
+		enablenpc instance_npcname("Rgan the Berserk#19m55");
+		enablenpc instance_npcname("Rgan the Berserk#19m56");
+		npctalk "Uh---", instance_npcname("Rgan the Berserk#19m50");
+		npctalk "Greuk--- rumbling---", instance_npcname("Rgan the Berserk#19m51");
+		npctalk "Do... go... a..", instance_npcname("Rgan the Berserk#19m52");
+		npctalk ".........", instance_npcname("Rgan the Berserk#19m53");
+		npctalk "ma... ah... .not...", instance_npcname("Rgan the Berserk#19m54");
+		npctalk "uh-uh--- uh---", instance_npcname("Rgan the Berserk#19m55");
+		npctalk "I... also...", instance_npcname("Rgan the Berserk#19m56");
+		specialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m50");
+		specialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m51");
+		specialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m52");
+		specialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m53");
+		specialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m54");
+		specialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m55");
+		specialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m56");
+		specialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m50");
+		specialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m51");
+		specialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m52");
+		specialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m53");
+		specialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m54");
+		specialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m55");
+		specialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m56");
+		sleep 2500;
+		npctalk "But it doesn't matter. I'm glad I could give it to you myself.", instance_npcname("Bagot#19m50");
+		sleep 3000;
+		npctalk "You must have wondered what Bagot was going to do? It must have prompted you to do that for Juncea.", instance_npcname("Bagot#19m50");
+		sleep 2500;
+		npctalk "But it doesn't go beyond that shallow number.", instance_npcname("Bagot#19m50");
+		sleep 3000;
+		npctalk "Because Bagot will tell you. To do that, I sprinkled some unnecessary crumbs and followed him.", instance_npcname("Bagot#19m50");
+		sleep 1500;
+		npctalk "It's a bit annoying to think that flies will keep getting stuck in the new world that Bagot will create.", instance_npcname("Bagot#19m50");
+		sleep 2500;
+		npctalk "You mean Rasgand is also very angry with the humans who deceived him?", instance_npcname("Bagot#19m50");
+		sleep 2500;
+		npctalk "Now, it's a gift from Bagot, so I'll just have to get this and leave here.", instance_npcname("Bagot#19m50");
+		sleep 500;
+		disablenpc instance_npcname("Bagot#19m50");
+		donpcevent instance_npcname("ep19_jorchs_area_5_2") + "::OnWave1";
+		end;
+	}
+	end;
+}
+1@jorchs,41,253,5	duplicate(dummy_disabled_npc)	Heart hunter#19m52	EP19_MD_HEARTHUNTER_AT
+1@jorchs,36,251,5	duplicate(dummy_disabled_npc)	Heart hunter#19m51	EP19_MD_HEARTHUNTER_AT
+
+1@jorchs,37,252,5	duplicate(dummy_disabled_npc)	Bagot#19m50	4_EP18_BAGOT
+
+1@jorchs,31,249,5	duplicate(dummy_disabled_npc)	Rgan the Berserk#19m50	EP19_MD_RGAN_ES
+1@jorchs,47,237,1	duplicate(dummy_disabled_npc)	Rgan the Berserk#19m51	EP19_MD_RGAN_ES
+1@jorchs,47,249,3	duplicate(dummy_disabled_npc)	Rgan the Berserk#19m52	EP19_MD_RGAN_ES
+1@jorchs,31,237,7	duplicate(dummy_disabled_npc)	Rgan the Berserk#19m53	EP19_MD_RGAN_ES
+1@jorchs,27,243,5	duplicate(dummy_disabled_npc)	Rgan the Berserk#19m54	EP19_MD_RGAN_ES
+1@jorchs,50,243,3	duplicate(dummy_disabled_npc)	Rgan the Berserk#19m55	EP19_MD_RGAN_ES
+1@jorchs,39,235,1	duplicate(dummy_disabled_npc)	Rgan the Berserk#19m56	EP19_MD_RGAN_ES
+
+
+1@jorchs,1,1,3	script	ep19_jorchs_area_5_2	-1,{
+	end;
+OnWave1:
+	.@event$ = instance_npcname("ep19_jorchs_area_5_2") + "::OnWave2";
+
+	mapannounce 'map_jorchs$, "Prepare for enchantment. Phase 1 enchantment begins.", bc_map, 0xFFCC;
+	disablenpc instance_npcname("Modified Advanced Rgan#19m51");
+	disablenpc instance_npcname("Modified Advanced Rgan#19m58");
+	monster 'map_jorchs$,35,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,42,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	sleep 4000;
+	disablenpc instance_npcname("Modified Advanced Rgan#19m53");
+	disablenpc instance_npcname("Modified Advanced Rgan#19m56");
+	monster 'map_jorchs$,37,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,40,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	sleep 4000;
+	disablenpc instance_npcname("Rgan the Berserk#19m50");
+	disablenpc instance_npcname("Rgan the Berserk#19m51");
+	monster 'map_jorchs$,31,249,"Rgan the Wild","EP19_MD_RGAN_ES",1, .@event$;
+	monster 'map_jorchs$,47,237,"Rgan","EP19_MD_RGAN_ES",1, .@event$;
+	removespecialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m50");
+	removespecialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m51");
+	removespecialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m50");
+	removespecialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m51");
+	end;
+OnWave2:
+	if ('event != 25)
+		end;
+	'ep19_jorchs_area_5_2[0]++;
+	if ('ep19_jorchs_area_5_2[0] < 6)
+		end;
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_5_2") + "::OnWave2" ) > 0)
+		end;
+	.@event$ = instance_npcname("ep19_jorchs_area_5_2") + "::OnWave3";
+
+	mapannounce 'map_jorchs$, "Prepare for enchantment. Phase 2 enchantment begins.", bc_map, 0xFFCC;
+	sleep 6000;
+	disablenpc instance_npcname("Modified Advanced Ligan#19m50");
+	disablenpc instance_npcname("Modified Advanced Lgan#19m59");
+	monster 'map_jorchs$,34,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,43,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	sleep 4000;
+	disablenpc instance_npcname("Modified Advanced Rgan#19m54");
+	disablenpc instance_npcname("Modified Advanced Ligan#19m55");
+	monster 'map_jorchs$,38,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,39,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	sleep 4000;
+	disablenpc instance_npcname("Modified Greater Rgan#19m52");
+	disablenpc instance_npcname("Modified Advanced Ligan#19m57");
+	monster 'map_jorchs$,36,254,"Modified Advanced Lgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,41,254,"Modified Advanced Lgan","EP19_MD_RGAN_E",1, .@event$;
+	sleep 4000;
+	disablenpc instance_npcname("Rgan the Berserk#19m52");
+	disablenpc instance_npcname("Rgan the Berserk#19m53");
+	monster 'map_jorchs$,47,249,"Frenzy Rgan","EP19_MD_RGAN_ES",1, .@event$;
+	monster 'map_jorchs$,31,237,"Frenzy Rgan","EP19_MD_RGAN_ES",1, .@event$;
+	removespecialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m52");
+	removespecialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m53");
+	removespecialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m52");
+	removespecialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m53");
+	end;
+OnWave3:
+	if ('event != 25)
+		end;
+	'ep19_jorchs_area_5_2[1]++;
+	if ('ep19_jorchs_area_5_2[1] < 8)
+		end;
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_5_2") + "::OnWave3" ) > 0)
+		end;
+	.@event$ = instance_npcname("ep19_jorchs_area_5_2") + "::OnWave4";
+
+	mapannounce 'map_jorchs$, "Prepare for enchantment. Phase 3 enchantment begins.", bc_map, 0xFFCC;
+	sleep 6000;
+	disablenpc instance_npcname("Modified Advanced Rgan#19m61");
+	disablenpc instance_npcname("Modified Advanced Rgan#19m65");
+	monster 'map_jorchs$,35,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,39,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	sleep 4000;
+	disablenpc instance_npcname("Modified Advanced Rgan#19m63");
+	disablenpc instance_npcname("Modified Advanced Rgan#19m67");
+	monster 'map_jorchs$,37,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,41,254,"Modified Advanced Lgan","EP19_MD_RGAN_E",1, .@event$;
+	sleep 4000;
+	disablenpc instance_npcname("Modified Advanced Rgan#19m64");
+	disablenpc instance_npcname("Modified Advanced Rgan#19m68");
+	monster 'map_jorchs$,38,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	monster 'map_jorchs$,42,254,"Modified Advanced Rgan","EP19_MD_RGAN_E",1, .@event$;
+	sleep 4000;
+	disablenpc instance_npcname("Heart hunter#19m50");
+	disablenpc instance_npcname("Heart hunter#19m52");
+	disablenpc instance_npcname("Heart hunter#19m51");
+	monster 'map_jorchs$,39,250,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	monster 'map_jorchs$,36,250,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	monster 'map_jorchs$,41,252,"Heart hunter","EP19_MD_HEARTHUNTER_AT",1, .@event$;
+	sleep 4000;
+	disablenpc instance_npcname("Rgan the Berserk#19m54");
+	disablenpc instance_npcname("Rgan the Berserk#19m55");
+	disablenpc instance_npcname("Rgan the Berserk#19m56");
+	monster 'map_jorchs$,27,243,"Rgan","EP19_MD_RGAN_ES",1, .@event$;
+	monster 'map_jorchs$,50,243,"Rgan","EP19_MD_RGAN_ES",1, .@event$;
+	monster 'map_jorchs$,39,235,"Frenzy Rgan","EP19_MD_RGAN_ES",1, .@event$;
+	// Note: only the 5th take 10% dmg
+	unitskilluseid $@mobid[0], 771, 9;	// NPC_RELIEVE_ON
+	removespecialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m54");
+	removespecialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m55");
+	removespecialeffect EF_NPC_STOP, AREA, instance_npcname("Rgan the Berserk#19m56");
+	removespecialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m54");
+	removespecialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m55");
+	removespecialeffect EF_GLASSWALL3, AREA, instance_npcname("Rgan the Berserk#19m56");
+	end;
+OnWave4:
+	if ('event != 25)
+		end;
+	'ep19_jorchs_area_5_2[2]++;
+	if ('ep19_jorchs_area_5_2[2] < 12)
+		end;
+	if (mobcount( 'map_jorchs$, instance_npcname("ep19_jorchs_area_5_2") + "::OnWave4" ) > 0)
+		end;
+	'event = 26;
+	mapannounce 'map_jorchs$, "Is that Rasgand's abode?", bc_map, 0xFFCC;
+	enablenpc instance_npcname("Center door#19m61");
+	setcell 'map_jorchs$,34,255,43,255,cell_walkable,1;
+	end;
+}
+
+
+1@jorchs,21,254,5	duplicate(dummy_disabled_npc)	Iwin#19m60	EP19_NPC_IWIN_SG
+1@jorchs,35,271,7	duplicate(dummy_disabled_npc)	Miriam#19m60	4_EP18_MIRIAM
+1@jorchs,36,272,7	duplicate(dummy_disabled_npc)	Voglinde#19m60	4_EP19_VOGLINDE
+1@jorchs,38,272,1	duplicate(dummy_disabled_npc)	Aureli#19m60	4_EP19_AURELIE
+1@jorchs,39,271,1	duplicate(dummy_disabled_npc)	Leon#19m60	4_EP19_LEON
+1@jorchs,40,274,1	duplicate(dummy_disabled_npc)	Horr#19m60	EP19_NPC_IWIN_SR
+
+
+
+1@jorchs,37,274,5	script	Center door#19m61	4_ENERGY_BLUE,3,3,{
+	if ('event == 26) {
+		'event = 27;
+		enablenpc instance_npcname("Aureli#19m60");
+		sleep 500;
+		enablenpc instance_npcname("Leon#19m60");
+		npctalk "Adventurer, you are safe.", instance_npcname("Aureli#19m60");
+		sleep 1000;
+		npctalk "Suddenly, a high-ranking Rgan, who was bursting with magical power, attacked me and was stranded.", instance_npcname("Leon#19m60");
+		sleep 2000;
+		enablenpc instance_npcname("Horr#19m60");
+		npctalk "My~ true. Fortunes are so wild! What are all those things?", instance_npcname("Horr#19m60");
+		sleep 1000;
+		enablenpc instance_npcname("Voglinde#19m60");
+		sleep 500;
+		enablenpc instance_npcname("Miriam#19m60");
+		npctalk "Looks like everyone has met it.", instance_npcname("Voglinde#19m60");
+		sleep 1000;
+		npctalk "Have you had any harvest?", instance_npcname("Miriam#19m60");
+		sleep 2000;
+		npctalk "Licking through this complex place, I couldn't find any traces.", instance_npcname("Horr#19m60");
+		sleep 2000;
+		npctalk "All of Illusion's research has been sorted out, and now this is the only place left.", instance_npcname("Aureli#19m60");
+		sleep 2500;
+		npctalk "Even if you grab the Heart Hunter and ask, they all have moved to the center.", instance_npcname("Voglinde#19m60");
+		sleep 1500;
+		npctalk "No one escaped from the airship. They couldn't have done it.", instance_npcname("Miriam#19m60");
+		sleep 2000;
+		npctalk "Isn't this the rest of the place, isn't it?", instance_npcname("Leon#19m60");
+		sleep 2000;
+		npctalk "Then if you open this door, you can capture both Illusion and Rasgand?", instance_npcname("Horr#19m60");
+		sleep 1500;
+		npctalk "Abandoned all the high-ranking rgans and moved to a place where no one could enter?", instance_npcname("Aureli#19m60");
+		sleep 2000;
+		npctalk "why?", instance_npcname("Leon#19m60");
+		sleep 1500;
+		npctalk "Let's open and see. You can ask directly.", instance_npcname("Horr#19m60");
+		sleep 1000;
+		specialeffect EF_SCREEN_QUAKE, AREA, instance_npcname("Center door#19m61");
+		sleep 500;
+		npctalk "Is it locked too tight?", instance_npcname("Leon#19m60");
+		sleep 2000;
+		npctalk "Isn't this just a bunch of nonsense? Take out everything you have.", instance_npcname("Horr#19m60");
+		sleep 2500;
+		specialeffect EF_M03, AREA, instance_npcname("Center door#19m61");
+		sleep 500;
+		specialeffect EF_NPC_EARTHQUAKE, AREA, instance_npcname("Center door#19m61");
+		sleep 500;
+		specialeffect EF_HYOUSYOURAKU, AREA, instance_npcname("Center door#19m61");
+		specialeffect EF_DESPERADO, AREA, instance_npcname("Center door#19m61");
+		specialeffect EF_SPREADATTACK, AREA, instance_npcname("Center door#19m61");
+		specialeffect EF_DRAGONFEAR, AREA, instance_npcname("Center door#19m61");
+		sleep 1000;
+		npctalk "What the hell did you do to the door? Open it! Open it!!! I know everything inside!!", instance_npcname("Horr#19m60");
+		sleep 2000;
+		npctalk "I couldn't even open it with the key I got from Hearthunter.", instance_npcname("Voglinde#19m60");
+		sleep 1500;
+		npctalk "The same goes for infusion of magic.", instance_npcname("Aureli#19m60");
+		sleep 1500;
+		npctalk "Isn't that an impregnable fortress?", instance_npcname("Horr#19m60");
+		sleep 2000;
+		npctalk "Then I'll set up a watch here and get out of here today.", instance_npcname("Voglinde#19m60");
+		sleep 2000;
+		npctalk "What about Rgan's Lair? Burn it?", instance_npcname("Horr#19m60");
+		sleep 2000;
+		npctalk "Well, you better leave it here.", instance_npcname("Aureli#19m60");
+		sleep 2500;
+		npctalk "To believe we gave up and left?", instance_npcname("Leon#19m60");
+		sleep 2000;
+		npctalk "Yeah. Then, at some point, I might open the door and come out.", instance_npcname("Aureli#19m60");
+		sleep 1500;
+		npctalk "I don't like it very much, but there's no other way, so I'll have to strengthen the monitoring here.", instance_npcname("Horr#19m60");
+		sleep 2000;
+		npctalk "Take it easy. I'll open a warp portal down there, so let's go back comfortably.", instance_npcname("Aureli#19m60");
+		sleep 500;
+		enablenpc instance_npcname("#19m60");
+		specialeffect EF_ELECTRIC4, AREA, instance_npcname("#19m60");
+		specialeffect EF_YELLOWFLY3, AREA, instance_npcname("#19m60");
+		end;
+	}
+	end;
+}
+
+1@jorchs,36,257,0	script	#19m60	WARPNPC,2,2,{
+	if ('event == 27 && ep19_main == 60) {
+		erasequest 17648;
+		setquest 17649;
+		ep19_main = 61;
+	}
+	warp "jor_back3",67,316;
+	end;
+}

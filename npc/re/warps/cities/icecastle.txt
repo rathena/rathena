@@ -1,0 +1,44 @@
+//===== rAthena Script ======================================= 
+//= Icecastle warps script
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+icas_in,33,109,0	warp2	#out_house1	1,1,icecastle,60,211
+icecastle,62,137,0	warp2	#in_house5	1,1,icas_in,249,112
+icas_in,249,109,0	warp2	#out_house5	1,1,icecastle,62,134
+icecastle,64,225,0	warp2	#in_house2	1,1,icas_in,85,112
+icas_in,85,109,0	warp2	#out_house2	1,1,icecastle,67,222
+icecastle,88,241,0	warp2	#in_house3	1,1,icas_in,138,112
+icas_in,138,109,0	warp2	#out_house3	1,1,icecastle,88,238
+icecastle,159,243,0	warp2	#in_house4	1,1,icas_in,191,112
+icas_in,191,109,0	warp2	#out_house4	1,1,icecastle,159,241
+icecastle,186,222,0	warp2	#in_barracks	1,1,icas_in,108,32
+icas_in,92,60,0	warp2	#in_barracks_L	1,1,icas_in,56,60
+icas_in,59,60,0	warp2	#out_barracks)L	1,1,icas_in,95,60
+icas_in,125,60,0	warp2	#in_barracks_R	1,1,icas_in,161,60
+icas_in,158,60,0	warp2	#out_barracks_R	1,1,icas_in,122,60
+icas_in,108,29,0	warp2	#out_barracks	1,1,icecastle,186,218
+icas_in,85,257,0	warp2	#in_icas_room_L	1,1,icas_in,49,258
+icas_in,53,258,0	warp2	#out_icas_romm_L	1,1,icas_in,89,257
+icas_in,193,257,0	warp2	#in_icas_room_R	1,1,icas_in,226,258
+icas_in,222,258,0	warp2	#out_icas_romm_R	1,1,icas_in,189,257
+icas_in,83,233,0	warp2	#in_dining	1,1,icas_in,25,169
+icas_in,25,166,0	warp2	#out_dining	1,1,icas_in,83,229
+icas_in,193,233,0	warp2	#in_bedroom	1,1,icas_in,253,169
+icas_in,253,166,0	warp2	#icas_in__	1,1,icas_in,193,229
+icas_in,138,183,0	warp2	#out_icas	1,1,icecastle,208,168
+icecastle,124,171,0	warp2	#in_restaurant	1,1,icas_in,243,36
+icas_in,243,33,0	warp2	#out_restaurant	1,1,icecastle,123,168
+icecastle,213,175,0	warp2	#to_icas_in	1,1,icas_in,138,187
+
+icecastle,59,213,0	script	#in_house1	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (ep19_side_saint < 18) {
+		mes "- The door seems locked. -";
+		close;
+	}
+	warp "icas_in",33,112;
+	end;
+}

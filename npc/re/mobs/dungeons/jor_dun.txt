@@ -1,0 +1,20 @@
+//===== rAthena Script =======================================
+//= jor_dun Monsters Spawn Script
+//===== Current Version: =====================================
+//= 1.0
+//===== Additional Comments: =================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+jor_dun01	monster	--ja--	21526,80
+jor_dun01	monster	--ja--	21527,50
+jor_dun01	monster	--ja--	21528,20
+jor_dun01	monster	--ja--	21599,10
+
+jor_dun02	monster	--ja--	21527,60
+jor_dun02	monster	--ja--	21528,50
+jor_dun02	monster	--ja--	21529,15
+jor_dun02	monster	--ja--	21599,10
+
+jor_que	monster	--ja--	21534,3
+jor_que	monster	--ja--	21535,5

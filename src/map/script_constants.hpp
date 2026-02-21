@@ -536,6 +536,8 @@
 	export_constant(MF_SPECIALPOPUP);
 	export_constant(MF_NOMACROCHECKER);
 	export_constant(MF_INVINCIBLE_TIME);
+	export_constant(MF_NOLOOTNORMALMOB);
+	export_constant(MF_NO_NPC_SELFDESTRUCTION_ON_ALL);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -2004,6 +2006,7 @@
 	export_constant(SC_WATER_CHARM_POWER);
 	export_constant(SC_WIND_CHARM_POWER);
 	export_constant(SC_GROUND_CHARM_POWER);
+	export_constant(SC_MTP_W_POTION_100);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
@@ -7397,6 +7400,7 @@
 	export_constant(IG_SELECT_DEC_PACK1);
 	export_constant(IG_SELECT_DEC_PACK2);
 	export_constant(IG_SELECT_DEC_PACK3);
+	export_constant(IG_D_GW_EXTRACTOR);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
