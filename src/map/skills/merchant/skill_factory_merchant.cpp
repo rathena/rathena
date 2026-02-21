@@ -14,9 +14,14 @@
 #include "abrinfinity.cpp"
 #include "abrmothernet.cpp"
 #include "aciddemonstration.cpp"
+#include "acidifiedzonefire.cpp"
+#include "acidifiedzoneground.cpp"
+#include "acidifiedzonewater.cpp"
+#include "acidifiedzonewind.cpp"
 #include "acidterror.cpp"
 #include "adrenalinerush.cpp"
 #include "advancedadrenalinerush.cpp"
+#include "advanceprotection.cpp"
 #include "aidberserkpotion.cpp"
 #include "aidcondensedpotion.cpp"
 #include "aidpotion.cpp"
@@ -29,6 +34,7 @@
 #include "axetornado.cpp"
 #include "backsideslide.cpp"
 #include "biochemicalhelm.cpp"
+#include "bionicpharmacy.cpp"
 #include "bomb.cpp"
 #include "boostknuckle.cpp"
 #include "callhomunculus.cpp"
@@ -42,10 +48,13 @@
 #include "crazyuproar.cpp"
 #include "crazyweed.cpp"
 #include "createbomb.cpp"
+#include "creeper.cpp"
 #include "decoratecart.cpp"
 #include "demonicfire.cpp"
+#include "dustexplosion.cpp"
 #include "emergencycool.cpp"
 #include "energycannonade.cpp"
+#include "explosivepowder.cpp"
 #include "fawmagicdecoy.cpp"
 #include "fawremoval.cpp"
 #include "fawsilversniper.cpp"
@@ -56,6 +65,7 @@
 #include "greed.cpp"
 #include "hammerfall.cpp"
 #include "hellsplant.cpp"
+#include "helltree.cpp"
 #include "howlingofmandragora.cpp"
 #include "illusiondoping.cpp"
 #include "infraredscan.cpp"
@@ -64,8 +74,11 @@
 #include "magneticfield.cpp"
 #include "mammonite.cpp"
 #include "manufacturemachine.cpp"
+#include "mayhemicthorns.cpp"
 #include "mightysmash.cpp"
+
 #include "mixcooking.cpp"
+#include "mysterypowder.cpp"
 #include "neutralbarrier.cpp"
 #include "pilebunker.cpp"
 #include "plantcultivation.cpp"
@@ -87,6 +100,7 @@
 #include "summonmarinesphere.cpp"
 #include "synthesizedshield.cpp"
 #include "syntheticarmor.cpp"
+#include "thewholeprotection.cpp"
 #include "thorntrap.cpp"
 #include "triplelaser.cpp"
 #include "twilightalchemy1.cpp"
@@ -98,6 +112,8 @@
 #include "wallofthorns.cpp"
 #include "weaponperfection.cpp"
 #include "weaponrepair.cpp"
+#include "woodenfairy.cpp"
+#include "woodenwarrior.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -133,15 +149,49 @@ std::unique_ptr<const SkillImpl> SkillFactoryMerchant::create(const e_skill skil
 			return std::make_unique<SkillTwilightAlchemy2>();
 		case AM_TWILIGHT3:
 			return std::make_unique<SkillTwilightAlchemy3>();
-		case BO_ACIDIFIED_ZONE_WATER_ATK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case BO_ACIDIFIED_ZONE_GROUND_ATK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
-		case BO_ACIDIFIED_ZONE_WIND_ATK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case BO_ACIDIFIED_ZONE_FIRE:
+			return std::make_unique<SkillAcidifiedZoneFire>();
 		case BO_ACIDIFIED_ZONE_FIRE_ATK:
-			return std::make_unique<WeaponSkillImpl>(skill_id);
+			return std::make_unique<SkillActifiedZoneFireAttack>();
+		case BO_ACIDIFIED_ZONE_GROUND:
+			return std::make_unique<SkillAcidifiedZoneGround>();
+		case BO_ACIDIFIED_ZONE_GROUND_ATK:
+			return std::make_unique<SkillActifiedZoneGroundAttack>();
+		case BO_ACIDIFIED_ZONE_WATER:
+			return std::make_unique<SkillAcidifiedZoneWater>();
+		case BO_ACIDIFIED_ZONE_WATER_ATK:
+			return std::make_unique<SkillActifiedZoneWaterAttack>();
+		case BO_ACIDIFIED_ZONE_WIND:
+			return std::make_unique<SkillAcidifiedZoneWind>();
+		case BO_ACIDIFIED_ZONE_WIND_ATK:
+			return std::make_unique<SkillActifiedZoneWindAttack>();
+		case BO_ADVANCE_PROTECTION:
+			return std::make_unique<SkillAdvanceProtection>();
+		case BO_BIONIC_PHARMACY:
+			return std::make_unique<SkillBionicPharmacy>();
+		case BO_CREEPER:
+			return std::make_unique<SkillCreeper>();
+		case BO_DUST_EXPLOSION:
+			return std::make_unique<SkillDustExplosion>();
+		case BO_EXPLOSIVE_POWDER:
+			return std::make_unique<SkillExplosivePowder>();
+		case BO_HELLTREE:
+			return std::make_unique<SkillHellTree>();
+		case BO_MAYHEMIC_THORNS:
+			return std::make_unique<SkillMayhemicThorns>();
+		case BO_MYSTERY_POWDER:
+			return std::make_unique<SkillMysteryPowder>();
 		case BO_RESEARCHREPORT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case BO_THE_WHOLE_PROTECTION:
+			return std::make_unique<SkillTheWholeProtection>();
+		case BO_WOODENWARRIOR:
+			return std::make_unique<SkillWoodenWarrior>();
+		case BO_WOODEN_ATTACK:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case BO_WOODEN_FAIRY:
+			return std::make_unique<SkillWoodenFairy>();
+		case BO_WOODEN_THROWROCK:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case BS_ADRENALINE:
 			return std::make_unique<SkillAdrenalineRush>();
