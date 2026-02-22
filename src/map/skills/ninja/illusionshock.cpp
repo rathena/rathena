@@ -9,7 +9,7 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillIllusionShock::SkillIllusionShock() : SkillImpl(KO_KYOUGAKU) {
+SkillIllusionShock::SkillIllusionShock() : StatusSkillImpl(KO_KYOUGAKU) {
 }
 
 void SkillIllusionShock::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
@@ -20,8 +20,7 @@ void SkillIllusionShock::castendNoDamageId(block_list *src, block_list *target, 
 	map_session_data* dstsd = BL_CAST(BL_PC, target);
 
 	if( dstsd && tsc && !tsc->getSCE(type) && rnd()%100 < tstatus->int_/2 ){
-		clif_skill_nodamage(src,*target,getSkillId(),skill_lv,
-			sc_start(src,target,type,100,skill_lv,skill_get_time(getSkillId(),skill_lv)));
+		StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
 	}else if( sd )
 		clif_skill_fail( *sd, getSkillId() );
 }

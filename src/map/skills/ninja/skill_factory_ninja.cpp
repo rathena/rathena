@@ -167,8 +167,6 @@ std::unique_ptr<const SkillImpl> SkillFactoryNinja::create(const e_skill skill_i
 			return std::make_unique<SkillOminousMoonlight>();
 		case OB_OBOROGENSOU:
 			return std::make_unique<SkillMoonlightFantasy>();
-		case OB_OBOROGENSOU_TRANSITION_ATK:
-			return std::make_unique<SkillImpl>(skill_id);
 		case OB_ZANGETSU:
 			return std::make_unique<SkillDistortedCrescent>();
 		case SS_AKUMUKESU:

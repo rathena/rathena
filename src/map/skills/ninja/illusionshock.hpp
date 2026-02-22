@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillIllusionShock : public SkillImpl {
+class SkillIllusionShock : public StatusSkillImpl {
 public:
 	SkillIllusionShock();
 
