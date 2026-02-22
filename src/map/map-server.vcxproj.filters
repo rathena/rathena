@@ -792,6 +792,9 @@
     <ClInclude Include="skills/archer/metallicfury.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
+    <ClInclude Include="skills/archer/moonlitserenade.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
     <ClInclude Include="skills/archer/musicalinterlude.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
@@ -871,6 +874,12 @@
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/swifttrap.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/swingdance.hpp">
+      <Filter>Header Files\Skills\Archer</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/archer/symphonyoflovers.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/talkiebox.hpp">
@@ -1818,6 +1827,12 @@
     <ClInclude Include="skills/merchant/woodenwarrior.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/ninja/16thnight.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/castninjaspell.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
     <ClInclude Include="skills/ninja/coldbloodedcannon.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
@@ -1833,7 +1848,19 @@
     <ClInclude Include="skills/ninja/darkeningcannon.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
+    <ClInclude Include="skills/ninja/distortedcrescent.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/earthcharm.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/emptyshadow.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
     <ClInclude Include="skills/ninja/finalstrike.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/firecharm.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/fourcolorscharm.hpp">
@@ -1851,7 +1878,22 @@
     <ClInclude Include="skills/ninja/huumashurikengrasp.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
+    <ClInclude Include="skills/ninja/icecharm.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
     <ClInclude Include="skills/ninja/icemeteor.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/illusionbewitch.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/illusiondeath.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/illusionshadow.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/illusionshock.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/improviseddefense.hpp">
@@ -1863,7 +1905,13 @@
     <ClInclude Include="skills/ninja/kamaitachi.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
+    <ClInclude Include="skills/ninja/kocrossslash.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
     <ClInclude Include="skills/ninja/kunaidistortion.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/kunaiexplosion.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/kunainightmare.hpp">
@@ -1875,7 +1923,13 @@
     <ClInclude Include="skills/ninja/kunairotation.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
+    <ClInclude Include="skills/ninja/kunaisplash.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
     <ClInclude Include="skills/ninja/lightningstrikeofdestruction.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/makibishi.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/meltaway.hpp">
@@ -1887,19 +1941,34 @@
     <ClInclude Include="skills/ninja/mirrorimage.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
+    <ClInclude Include="skills/ninja/moonlightfantasy.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
     <ClInclude Include="skills/ninja/nightmareerasion.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/ominousmoonlight.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/ragingfiredragon.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
+    <ClInclude Include="skills/ninja/rapidthrow.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
     <ClInclude Include="skills/ninja/redflamecannon.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/releaseninjaspell.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/shadowdance.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/shadowflash.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/shadowhiding.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/shadowhunting.hpp">
@@ -1914,10 +1983,22 @@
     <ClInclude Include="skills/ninja/shadowslash.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
+    <ClInclude Include="skills/ninja/shadowtrampling.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/shadowwarrior.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
     <ClInclude Include="skills/ninja/skill_factory_ninja.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
+    <ClInclude Include="skills/ninja/soulcutter.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
     <ClInclude Include="skills/ninja/spearofice.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/swirlingpetal.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/throwhuumashuriken.hpp">
@@ -1939,6 +2020,9 @@
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/ninja/windblade.hpp">
+      <Filter>Header Files\Skills\Ninja</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/ninja/windcharm.hpp">
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/novice/doublebowlingbash.hpp">
@@ -3317,6 +3401,9 @@
     <ClCompile Include="skills/archer/metallicfury.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
+    <ClCompile Include="skills/archer/moonlitserenade.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
     <ClCompile Include="skills/archer/musicalinterlude.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
@@ -3396,6 +3483,12 @@
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/swifttrap.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/swingdance.cpp">
+      <Filter>Source Files\Skills\Archer</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/archer/symphonyoflovers.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/talkiebox.cpp">
@@ -4343,6 +4436,12 @@
     <ClCompile Include="skills/merchant/woodenwarrior.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/ninja/16thnight.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/castninjaspell.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
     <ClCompile Include="skills/ninja/coldbloodedcannon.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
@@ -4358,7 +4457,19 @@
     <ClCompile Include="skills/ninja/darkeningcannon.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
+    <ClCompile Include="skills/ninja/distortedcrescent.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/earthcharm.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/emptyshadow.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
     <ClCompile Include="skills/ninja/finalstrike.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/firecharm.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/fourcolorscharm.cpp">
@@ -4376,7 +4487,22 @@
     <ClCompile Include="skills/ninja/huumashurikengrasp.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
+    <ClCompile Include="skills/ninja/icecharm.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
     <ClCompile Include="skills/ninja/icemeteor.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/illusionbewitch.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/illusiondeath.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/illusionshadow.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/illusionshock.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/improviseddefense.cpp">
@@ -4388,7 +4514,13 @@
     <ClCompile Include="skills/ninja/kamaitachi.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
+    <ClCompile Include="skills/ninja/kocrossslash.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
     <ClCompile Include="skills/ninja/kunaidistortion.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/kunaiexplosion.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/kunainightmare.cpp">
@@ -4400,7 +4532,13 @@
     <ClCompile Include="skills/ninja/kunairotation.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
+    <ClCompile Include="skills/ninja/kunaisplash.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
     <ClCompile Include="skills/ninja/lightningstrikeofdestruction.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/makibishi.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/meltaway.cpp">
@@ -4412,19 +4550,34 @@
     <ClCompile Include="skills/ninja/mirrorimage.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
+    <ClCompile Include="skills/ninja/moonlightfantasy.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
     <ClCompile Include="skills/ninja/nightmareerasion.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/ominousmoonlight.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/ragingfiredragon.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
+    <ClCompile Include="skills/ninja/rapidthrow.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
     <ClCompile Include="skills/ninja/redflamecannon.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/releaseninjaspell.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/shadowdance.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/shadowflash.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/shadowhiding.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/shadowhunting.cpp">
@@ -4439,10 +4592,22 @@
     <ClCompile Include="skills/ninja/shadowslash.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
+    <ClCompile Include="skills/ninja/shadowtrampling.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/shadowwarrior.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
     <ClCompile Include="skills/ninja/skill_factory_ninja.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
+    <ClCompile Include="skills/ninja/soulcutter.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
     <ClCompile Include="skills/ninja/spearofice.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/swirlingpetal.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/throwhuumashuriken.cpp">
@@ -4464,6 +4629,9 @@
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/ninja/windblade.cpp">
+      <Filter>Source Files\Skills\Ninja</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/ninja/windcharm.cpp">
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/novice/doublebowlingbash.cpp">
