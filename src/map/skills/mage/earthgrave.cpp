@@ -12,7 +12,7 @@ SkillEarthGrave::SkillEarthGrave() : SkillImpl(SO_EARTHGRAVE) {
 }
 
 void SkillEarthGrave::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
-	sc_start2(src, target, SC_BLEEDING, 5 * skill_lv, skill_lv, src->id, skill_get_time2(getSkillId(), skill_lv));	// Need official rate. [LimitLine]
+	sc_start2(src, target, SC_BLEEDING, 5 * skill_lv, skill_lv, src->id, skill_get_time2(getSkillId(), skill_lv)); // Need official rate. [LimitLine]
 }
 
 void SkillEarthGrave::calculateSkillRatio(const Damage *wd, const block_list *src, const block_list *target, uint16 skill_lv, int32 &skillratio, int32 mflag) const {
@@ -27,6 +27,6 @@ void SkillEarthGrave::calculateSkillRatio(const Damage *wd, const block_list *sr
 }
 
 void SkillEarthGrave::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
-	flag|=1;	// Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
+	flag|=1; // Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 	skill_unitsetting(src,getSkillId(),skill_lv,x,y,0);
 }
