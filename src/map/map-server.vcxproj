@@ -351,6 +351,7 @@
     <ClInclude Include="skills/archer/doublestrafe.hpp" />
     <ClInclude Include="skills/archer/downtempo.hpp" />
     <ClInclude Include="skills/archer/electricshocker.hpp" />
+    <ClInclude Include="skills/archer/echosong.hpp" />
     <ClInclude Include="skills/archer/encore.hpp" />
     <ClInclude Include="skills/archer/falconassault.hpp" />
     <ClInclude Include="skills/archer/fearbreeze.hpp" />
@@ -364,6 +365,7 @@
     <ClInclude Include="skills/archer/geffenianocturn.hpp" />
     <ClInclude Include="skills/archer/gypsyskiss.hpp" />
     <ClInclude Include="skills/archer/harmoniclick.hpp" />
+    <ClInclude Include="skills/archer/harmonize.hpp" />
     <ClInclude Include="skills/archer/hawkboomerang.hpp" />
     <ClInclude Include="skills/archer/hawkmastery.hpp" />
     <ClInclude Include="skills/archer/hawkrush.hpp" />
@@ -423,6 +425,7 @@
     <ClInclude Include="skills/archer/wargrider.hpp" />
     <ClInclude Include="skills/archer/wargstrike.hpp" />
     <ClInclude Include="skills/archer/wildwalk.hpp" />
+    <ClInclude Include="skills/archer/windmillrushattack.hpp" />
     <ClInclude Include="skills/archer/windwalker.hpp" />
     <ClInclude Include="skills/archer/winkofcharm.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
@@ -1423,6 +1426,9 @@
     <ClCompile Include="skills/archer/electricshocker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/archer/echosong.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/archer/encore.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1460,6 +1466,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/harmoniclick.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/harmonize.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/hawkboomerang.cpp">
@@ -1637,6 +1646,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/wildwalk.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/archer/windmillrushattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/windwalker.cpp">
