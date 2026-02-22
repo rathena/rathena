@@ -16,7 +16,7 @@ SkillEarthShaker::SkillEarthShaker() : WeaponSkillImpl(SR_EARTHSHAKER) {
 void SkillEarthShaker::applyAdditionalEffects(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32 attack_type, enum damage_lv dmg_lv) const {
 	mob_data* dstmd = BL_CAST(BL_MOB, target);
 
-	if (dstmd != nullptr && dstmd->guardian_data == nullptr)    // Target is a mob (boss included) and not a guardian type. [Atemo]
+	if (dstmd != nullptr && dstmd->guardian_data == nullptr) // Target is a mob (boss included) and not a guardian type. [Atemo]
 		sc_start(src, target, SC_EARTHSHAKER, 100, skill_lv, skill_get_time2(getSkillId(), skill_lv));
 	sc_start(src,target,SC_STUN, 25 + 5 * skill_lv,skill_lv,skill_get_time(getSkillId(),skill_lv));
 	status_change_end(target, SC_SV_ROOTTWIST);

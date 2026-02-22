@@ -43,9 +43,7 @@ void SkillHowlingOfLion::castendDamageId(block_list *src, block_list *target, ui
 }
 
 void SkillHowlingOfLion::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	int32 starget = BL_CHAR|BL_SKILL;
-
-	starget = splash_target(src);
+	int32 starget = splash_target(src);
 
 	skill_area_temp[1] = 0;
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);
