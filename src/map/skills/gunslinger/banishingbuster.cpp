@@ -3,6 +3,8 @@
 
 #include "banishingbuster.hpp"
 
+#include <common/random.hpp>
+
 #include <config/core.hpp>
 
 #include "map/battle.hpp"

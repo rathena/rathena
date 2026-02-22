@@ -3,6 +3,9 @@
 
 #include "slugshot.hpp"
 
+#include "map/path.hpp"
+#include "map/status.hpp"
+
 SkillSlugShot::SkillSlugShot() : WeaponSkillImpl(RL_SLUGSHOT) {
 }
 

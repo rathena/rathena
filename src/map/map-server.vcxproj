@@ -350,8 +350,8 @@
     <ClInclude Include="skills/archer/detonator.hpp" />
     <ClInclude Include="skills/archer/doublestrafe.hpp" />
     <ClInclude Include="skills/archer/downtempo.hpp" />
-    <ClInclude Include="skills/archer/electricshocker.hpp" />
     <ClInclude Include="skills/archer/echosong.hpp" />
+    <ClInclude Include="skills/archer/electricshocker.hpp" />
     <ClInclude Include="skills/archer/encore.hpp" />
     <ClInclude Include="skills/archer/falconassault.hpp" />
     <ClInclude Include="skills/archer/fearbreeze.hpp" />
@@ -430,8 +430,9 @@
     <ClInclude Include="skills/archer/winkofcharm.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
     <ClInclude Include="skills/gunslinger/antimaterialblast.hpp" />
-    <ClInclude Include="skills/gunslinger/basicgrenade.hpp" />
     <ClInclude Include="skills/gunslinger/banishingbuster.hpp" />
+    <ClInclude Include="skills/gunslinger/basicgrenade.hpp" />
+    <ClInclude Include="skills/gunslinger/bindtrap.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
     <ClInclude Include="skills/gunslinger/cracker.hpp" />
     <ClInclude Include="skills/gunslinger/crimsonmarker.hpp" />
@@ -440,9 +441,9 @@
     <ClInclude Include="skills/gunslinger/dragontail.hpp" />
     <ClInclude Include="skills/gunslinger/dust.hpp" />
     <ClInclude Include="skills/gunslinger/fallenangel.hpp" />
-    <ClInclude Include="skills/gunslinger/flicker.hpp" />
     <ClInclude Include="skills/gunslinger/firedance.hpp" />
     <ClInclude Include="skills/gunslinger/firerain.hpp" />
+    <ClInclude Include="skills/gunslinger/flicker.hpp" />
     <ClInclude Include="skills/gunslinger/fling.hpp" />
     <ClInclude Include="skills/gunslinger/fullbuster.hpp" />
     <ClInclude Include="skills/gunslinger/gatlingfever.hpp" />
@@ -464,7 +465,6 @@
     <ClInclude Include="skills/gunslinger/rapidshower.hpp" />
     <ClInclude Include="skills/gunslinger/richscoin.hpp" />
     <ClInclude Include="skills/gunslinger/roundtrip.hpp" />
-    <ClInclude Include="skills/gunslinger/roundtripplusattack.hpp" />
     <ClInclude Include="skills/gunslinger/shatterstorm.hpp" />
     <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp" />
     <ClInclude Include="skills/gunslinger/slugshot.hpp" />
@@ -1440,10 +1440,10 @@
     <ClCompile Include="skills/archer/downtempo.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/archer/electricshocker.cpp">
+    <ClCompile Include="skills/archer/echosong.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/archer/echosong.cpp">
+    <ClCompile Include="skills/archer/electricshocker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/archer/encore.cpp">
@@ -1680,10 +1680,13 @@
     <ClCompile Include="skills/gunslinger/antimaterialblast.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/banishingbuster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/basicgrenade.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/gunslinger/banishingbuster.cpp">
+    <ClCompile Include="skills/gunslinger/bindtrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/bullseye.cpp">
@@ -1710,13 +1713,13 @@
     <ClCompile Include="skills/gunslinger/fallenangel.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/gunslinger/flicker.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="skills/gunslinger/firedance.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/firerain.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/flicker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/fling.cpp">
@@ -1780,9 +1783,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/roundtrip.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/gunslinger/roundtripplusattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/shatterstorm.cpp">

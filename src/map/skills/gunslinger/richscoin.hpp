@@ -5,9 +5,9 @@
 
 #include "../skill_impl.hpp"
 
-class SkillRichSCoin : public SkillImpl {
+class SkillRichsCoin : public SkillImpl {
 public:
-	SkillRichSCoin();
+	SkillRichsCoin();
 
-	void castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const override;
+	void castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const override;
 };

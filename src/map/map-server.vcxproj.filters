@@ -687,10 +687,10 @@
     <ClInclude Include="skills/archer/downtempo.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
-    <ClInclude Include="skills/archer/electricshocker.hpp">
+    <ClInclude Include="skills/archer/echosong.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
-    <ClInclude Include="skills/archer/echosong.hpp">
+    <ClInclude Include="skills/archer/electricshocker.hpp">
       <Filter>Header Files\Skills\Archer</Filter>
     </ClInclude>
     <ClInclude Include="skills/archer/encore.hpp">
@@ -927,10 +927,13 @@
     <ClInclude Include="skills/gunslinger/antimaterialblast.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/gunslinger/banishingbuster.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/basicgrenade.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
-    <ClInclude Include="skills/gunslinger/banishingbuster.hpp">
+    <ClInclude Include="skills/gunslinger/bindtrap.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
     <ClInclude Include="skills/gunslinger/bullseye.hpp">
@@ -957,13 +960,13 @@
     <ClInclude Include="skills/gunslinger/fallenangel.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
-    <ClInclude Include="skills/gunslinger/flicker.hpp">
-      <Filter>Header Files\Skills\Gunslinger</Filter>
-    </ClInclude>
     <ClInclude Include="skills/gunslinger/firedance.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
     <ClInclude Include="skills/gunslinger/firerain.hpp">
+      <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/gunslinger/flicker.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
     <ClInclude Include="skills/gunslinger/fling.hpp">
@@ -1027,9 +1030,6 @@
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
     <ClInclude Include="skills/gunslinger/roundtrip.hpp">
-      <Filter>Header Files\Skills\Gunslinger</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/gunslinger/roundtripplusattack.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
     <ClInclude Include="skills/gunslinger/shatterstorm.hpp">
@@ -3185,10 +3185,10 @@
     <ClCompile Include="skills/archer/downtempo.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
-    <ClCompile Include="skills/archer/electricshocker.cpp">
+    <ClCompile Include="skills/archer/echosong.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
-    <ClCompile Include="skills/archer/echosong.cpp">
+    <ClCompile Include="skills/archer/electricshocker.cpp">
       <Filter>Source Files\Skills\Archer</Filter>
     </ClCompile>
     <ClCompile Include="skills/archer/encore.cpp">
@@ -3425,10 +3425,13 @@
     <ClCompile Include="skills/gunslinger/antimaterialblast.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/banishingbuster.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/basicgrenade.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
-    <ClCompile Include="skills/gunslinger/banishingbuster.cpp">
+    <ClCompile Include="skills/gunslinger/bindtrap.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/bullseye.cpp">
@@ -3455,13 +3458,13 @@
     <ClCompile Include="skills/gunslinger/fallenangel.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
-    <ClCompile Include="skills/gunslinger/flicker.cpp">
-      <Filter>Source Files\Skills\Gunslinger</Filter>
-    </ClCompile>
     <ClCompile Include="skills/gunslinger/firedance.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/firerain.cpp">
+      <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/flicker.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/fling.cpp">
@@ -3525,9 +3528,6 @@
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/roundtrip.cpp">
-      <Filter>Source Files\Skills\Gunslinger</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/gunslinger/roundtripplusattack.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/shatterstorm.cpp">
