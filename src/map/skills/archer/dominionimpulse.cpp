@@ -9,7 +9,6 @@
 
 static int32 skill_active_reverberation(block_list *bl, va_list ap);
 
-
 SkillDominionImpulse::SkillDominionImpulse() : SkillImpl(WM_DOMINION_IMPULSE) {
 }
 
