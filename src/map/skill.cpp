@@ -1699,10 +1699,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case RL_AM_BLAST:
 		sc_start(src,bl,SC_ANTI_M_BLAST,20 + 10 * skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
-	case WM_METALICSOUND:
-	case WM_REVERBERATION:
-		status_change_end(bl, SC_SOUNDBLEND);
-		break;
 	} //end switch skill_id
 
 	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai && md->special_state.ai != AI_ABR && md->special_state.ai != AI_BIONIC)
@@ -4398,23 +4394,6 @@ int32 skill_cleartimerskill (block_list *src)
 	}
 	return 1;
 }
-static int32 skill_active_reverberation(block_list *bl, va_list ap) {
-	skill_unit *su = (skill_unit*)bl;
-
-	nullpo_ret(su);
-
-	if (bl->type != BL_SKILL)
-		return 0;
-
-	std::shared_ptr<s_skill_unit_group> sg = su->group;
-
-	if (su->alive && sg && sg->skill_id == NPC_REVERBERATION) {
-		map_foreachinallrange(skill_trap_splash, bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, bl, gettick());
-		su->limit = DIFF_TICK(gettick(), sg->tick);
-		sg->unit_id = UNT_USED_TRAPS;
-	}
-	return 1;
-}
 
 /**
  * Reveal hidden trap
@@ -4814,12 +4793,8 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_DARKSTRIKE:
 	case NPC_DARKTHUNDER:
 	case NPC_FIRESTORM:
-	case WM_METALICSOUND:
 	case KO_KAIHOU:
 	case MH_ERASER_CUTTER:
-		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-
 	case NPC_MAGICALATTACK:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		sc_start(src,src,SC_MAGICALATTACK,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -4946,16 +4921,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			if (sc && sc->getSCE(SC_COMBO) && sc->getSCE(SC_COMBO)->val1 == SR_FALLENEMPIRE && !sc->getSCE(SC_FLASHCOMBO))
 				flag |= 8; // Only apply Combo bonus when Tiger Cannon is not used through Flash Combo
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR | BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
-		}
-		break;
-
-	case WM_REVERBERATION:
-		if (flag & 1)
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		else {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-			battle_consume_ammo(sd, skill_id, skill_lv); // Consume here since Magic/Misc attacks reset arrow_atk
 		}
 		break;
 
@@ -5865,7 +5830,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case CASH_BLESSING:
 	case CASH_INCAGI:
 	case CASH_ASSUMPTIO:
-	case WM_FRIGG_SONG:
 		if( sd == nullptr || sd->status.party_id == 0 || (flag & 1) )
 			clif_skill_nodamage(bl, *bl, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		else if (sd)
@@ -6772,116 +6736,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	}
 	break;
 
-	case WM_DEADHILLHERE:
-		if( bl->type == BL_PC ) {
-			if( !status_isdead(*bl) )
-				break;
-
-			tstatus->hp = max(tstatus->sp, 1);
-			tstatus->sp -= tstatus->sp * ( 60 - 10 * skill_lv ) / 100;
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			pc_revive(reinterpret_cast<map_session_data*>(bl),true,true);
-			clif_resurrection( *bl );
-		}
-		break;
-
-	case WM_VOICEOFSIREN:
-		if (flag&1)
-			sc_start2(src,bl,type,skill_area_temp[5],skill_lv,src->id,skill_area_temp[6]);
-		else {
-			// Success chance: (Skill Level x 6) + (Voice Lesson Skill Level x 2) + (Caster's Job Level / 2) %
-			skill_area_temp[5] = skill_lv * 6 + ((sd) ? pc_checkskill(sd, WM_LESSON) : 1) * 2 + (sd ? sd->status.job_level : 50) / 2;
-			skill_area_temp[6] = skill_get_time(skill_id,skill_lv);
-			map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ALL|BCT_WOS|1, skill_castend_nodamage_id);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
-	case WM_GLOOMYDAY:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		if( dstsd && ( pc_checkskill(dstsd,KN_BRANDISHSPEAR) || pc_checkskill(dstsd,LK_SPIRALPIERCE) ||
-				pc_checkskill(dstsd,CR_SHIELDCHARGE) || pc_checkskill(dstsd,CR_SHIELDBOOMERANG) ||
-				pc_checkskill(dstsd,PA_SHIELDCHAIN) || pc_checkskill(dstsd,LG_SHIELDPRESS) ) )
-			{ // !TODO: Which skills aren't boosted anymore?
-				sc_start(src,bl,SC_GLOOMYDAY_SK,100,skill_lv,skill_get_time(skill_id,skill_lv));
-				break;
-			}
-		sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
-
-	case WM_SATURDAY_NIGHT_FEVER:
-		if( flag&1 ) {
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		} else if (sd) {
-			if( rnd()%100 < sstatus->int_ / 6 + sd->status.job_level / 5 + skill_lv * 4 + pc_checkskill(sd, WM_LESSON) ) { // !TODO: What's the Lesson bonus?
-				map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv),BL_PC, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			}
-		}
-		break;
-
-	case WM_SIRCLEOFNATURE:
-	case WM_SONG_OF_MANA:
-	case WM_DANCE_WITH_WUG:
-	case WM_LERADS_DEW:
-	case WM_UNLIMITED_HUMMING_VOICE:
-		if( flag&1 ) {	// These affect to to all party members near the caster.
-			if( sc && sc->getSCE(type) ) {
-				sc_start2(src,bl,type,100,skill_lv,pc_checkskill(sd, WM_LESSON),skill_get_time(skill_id,skill_lv));
-			}
-		} else if( sd ) {
-			if( sc_start2(src,bl,type,100,skill_lv,pc_checkskill(sd, WM_LESSON),skill_get_time(skill_id,skill_lv)) )
-				party_foreachsamemap(skill_area_sub,sd,skill_get_splash(skill_id,skill_lv),src,skill_id,skill_lv,tick,flag|BCT_PARTY|1,skill_castend_nodamage_id);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
-	case WM_MELODYOFSINK:
-		if( flag&1 ) {
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		} else {	// These affect to all targets around the caster.
-			if( rnd()%100 < 5 + 5 * skill_lv + pc_checkskill(sd, WM_LESSON) ) { // !TODO: What's the Lesson bonus?
-				map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv),BL_PC, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			}
-		}
-		break;
-
-	case WM_BEYOND_OF_WARCRY:
-		if( flag&1 ) {
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		} else {	// These affect to all targets around the caster.
-			if( rnd()%100 < 12 + 3 * skill_lv + (sd ? pc_checkskill(sd, WM_LESSON) : 0) ) { // !TODO: What's the Lesson bonus?
-				map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id,skill_lv),BL_PC, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			}
-		}
-		break;
-
-	case WM_SOUND_OF_DESTRUCTION:
-		if (flag&1) {
-			sc_start(src, bl, type, 100, skill_lv, (sd ? pc_checkskill(sd, WM_LESSON) * 500 : 0) + skill_get_time(skill_id, skill_lv)); // !TODO: Confirm Lesson increase
-		} else {
-			map_foreachinallrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv),BL_PC, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}
-		break;
-
-	case WM_RANDOMIZESPELL:
-		if (rnd() % 100 < 30 + (10 * skill_lv)) {
-			status_change_end(bl, SC_SONGOFMANA);
-			status_change_end(bl, SC_DANCEWITHWUG);
-			status_change_end(bl, SC_LERADSDEW);
-			status_change_end(bl, SC_SATURDAYNIGHTFEVER);
-			status_change_end(bl, SC_BEYONDOFWARCRY);
-			status_change_end(bl, SC_MELODYOFSINK);
-			status_change_end(bl, SC_BEYONDOFWARCRY);
-			status_change_end(bl, SC_UNLIMITEDHUMMINGVOICE);
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}
-		break;
-
 	case RETURN_TO_ELDICASTES:
 	case ALL_GUARDIAN_RECALL:
 	case ECLAGE_RECALL:
@@ -7009,18 +6863,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			sc_start(src, bl, type, rate, skill_lv, skill_get_time(skill_id, skill_lv));
-		}
-		break;
-
-	case WM_LULLABY_DEEPSLEEP:
-		if (flag&1) {
-			int32 rate = 4 * skill_lv + (sd ? pc_checkskill(sd, WM_LESSON) * 2 : 0) + status_get_lv(src) / 15 + (sd ? sd->status.job_level / 5 : 0);
-			int32 duration = skill_get_time(skill_id, skill_lv) - (status_get_base_status(bl)->int_ * 50 + status_get_lv(bl) * 50); // Duration reduction for Deep Sleep Lullaby is doubled
-
-			sc_start(src, bl, type, rate, skill_lv, duration);
-		} else {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			map_foreachinallrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 		}
 		break;
 
@@ -8448,7 +8290,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case NPC_FLAMECROSS:
 	case NPC_HELLBURNING:
 	case NPC_REVERBERATION:
-	case WM_POEMOFNETHERWORLD:
 	case SO_PSYCHIC_WAVE:
 	case NPC_PSYCHIC_WAVE:
 	case SO_VACUUM_EXTREME:
@@ -8539,23 +8380,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		i = skill_get_splash(skill_id,skill_lv);
 		map_foreachinallarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR,
 			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-		break;
-
-	case WM_DOMINION_IMPULSE:
-		i = skill_get_splash(skill_id, skill_lv);
-		map_foreachinallarea(skill_active_reverberation, src->m, x-i, y-i, x+i,y+i,BL_SKILL);
-		break;
-
-	case WM_GREAT_ECHO:
-		i = skill_get_splash(skill_id,skill_lv);
-		map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-		break;
-
-	case WM_SEVERE_RAINSTORM:
-		flag |= 1;
-		if (sd)
-			sd->canequip_tick = tick + skill_get_time(skill_id, skill_lv); // Can't switch equips for the duration of the skill.
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
 
 	case SO_FIREWALK:

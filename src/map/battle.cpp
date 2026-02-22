@@ -4921,22 +4921,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 				skillratio += 50 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
-		case WM_SEVERE_RAINSTORM_MELEE:
-			//ATK [{(Caster DEX / 300 + AGI / 200)} x Caster Base Level / 100] %
-			skillratio += -100 + 100 * skill_lv + (sstatus->dex / 300 + sstatus->agi / 200);
-			if (wd->miscflag&4) // Whip/Instrument equipped
-				skillratio += 20 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case WM_GREAT_ECHO:
-			skillratio += -100 + 250 + 500 * skill_lv;
-			if (sd) {
-				skillratio += pc_checkskill(sd, WM_LESSON) * 50; // !TODO: Confirm bonus
-				if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-					skillratio *= 2;
-			}
-			RE_LVL_DMOD(100);
-			break;
 		// Physical Elemantal Spirits Attack Skills
 		case EL_CIRCLE_OF_FIRE:
 		case EL_FIRE_BOMB_ATK:
@@ -6855,21 +6839,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						break;
 					case NPC_RAYOFGENESIS:
 						skillratio += -100 + 200 * skill_lv;
-						break;
-					case WM_METALICSOUND:
-						skillratio += -100 + 120 * skill_lv + 60 * ((sd) ? pc_checkskill(sd, WM_LESSON) : 1);
-						if (tsc && tsc->getSCE(SC_SLEEP))
-							skillratio += 100; // !TODO: Confirm target sleeping bonus
-						RE_LVL_DMOD(100);
-						if (tsc && tsc->getSCE(SC_SOUNDBLEND))
-							skillratio += skillratio * 50 / 100;
-						break;
-					case WM_REVERBERATION:
-						// MATK [{(Skill Level x 300) + 400} x Casters Base Level / 100] %
-						skillratio += -100 + 700 + 300 * skill_lv;
-						RE_LVL_DMOD(100);
-						if (tsc && tsc->getSCE(SC_SOUNDBLEND))
-							skillratio += skillratio * 50 / 100;
 						break;
 					case SO_FIREWALK:
 						skillratio += -100 + 60 * skill_lv;
