@@ -4,6 +4,7 @@
 #include "spellfist.hpp"
 
 #include "map/clif.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillSpellFist::SkillSpellFist() : SkillImpl(SO_SPELLFIST) {

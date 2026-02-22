@@ -3,6 +3,9 @@
 
 #include "electricwalk.hpp"
 
+#include <config/core.hpp>
+
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillElectricWalk::SkillElectricWalk() : SkillImpl(SO_ELECTRICWALK) {

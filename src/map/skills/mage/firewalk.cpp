@@ -3,6 +3,9 @@
 
 #include "firewalk.hpp"
 
+#include <config/core.hpp>
+
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillFireWalk::SkillFireWalk() : SkillImpl(SO_FIREWALK) {
