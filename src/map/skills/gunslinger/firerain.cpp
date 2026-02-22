@@ -3,6 +3,9 @@
 
 #include "firerain.hpp"
 
+#include "map/map.hpp"
+#include "map/path.hpp"
+
 SkillFireRain::SkillFireRain() : SkillImpl(RL_FIRE_RAIN) {
 }
 

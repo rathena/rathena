@@ -5,7 +5,10 @@
 
 #include "firedance.hpp"
 
+#include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillFireDance::SkillFireDance() : WeaponSkillImpl(RL_FIREDANCE) {
 }

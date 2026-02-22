@@ -3,7 +3,10 @@
 
 #include "flicker.hpp"
 
+#include <common/nullpo.hpp>
+
 #include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/pc.hpp"
 
 static int32 skill_bind_trap(block_list* bl, va_list ap);
