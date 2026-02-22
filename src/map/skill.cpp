@@ -1581,19 +1581,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case EL_TYPOON_MIS:
 		sc_start(src,bl,SC_SILENCE,10*skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
-	case KO_JYUMONJIKIRI:
-		sc_start(src,bl,SC_JYUMONJIKIRI,100,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
-	case KO_SETSUDAN: // Remove soul link when hit.
-		status_change_end(bl, SC_SPIRIT);
-		status_change_end(bl, SC_SOULGOLEM);
-		status_change_end(bl, SC_SOULSHADOW);
-		status_change_end(bl, SC_SOULFALCON);
-		status_change_end(bl, SC_SOULFAIRY);
-		break;
-	case KO_MAKIBISHI:
-		sc_start(src,bl, SC_STUN, 10 * skill_lv, skill_lv, skill_get_time2(skill_id,skill_lv));
-		break;
 	case MH_EQC:
 		{
 			homun_data *hd = BL_CAST(BL_HOM, src);
@@ -4618,24 +4605,12 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_RAYOFGENESIS:
 	case SO_VARETYR_SPEAR:
 	case SO_POISON_BUSTER:
-	case KO_HAPPOKUNAI:
-	case KO_HUUMARANKA:
-	case KO_MUCHANAGE:
-	case KO_BAKURETSU:
 	case RL_FIREDANCE:
 	case RL_S_STORM:
 	case RL_R_TRIP:
 	case MH_XENO_SLASHER:
 	case MH_HEILIGE_PFERD:
 	case MH_THE_ONE_FIGHTER_RISES:
-	case BO_ACIDIFIED_ZONE_WATER:
-	case BO_ACIDIFIED_ZONE_GROUND:
-	case BO_ACIDIFIED_ZONE_WIND:
-	case BO_ACIDIFIED_ZONE_FIRE:
-	case BO_EXPLOSIVE_POWDER:
-	case BO_MAYHEMIC_THORNS:
-	case BO_MYSTERY_POWDER:
-	case BO_DUST_EXPLOSION:
 	case NPC_WIDECRITICALWOUND:
 		if( flag&1 ) {//Recursive invocation
 			int32 sflag = skill_area_temp[0] & 0xFFF;
@@ -4668,31 +4643,12 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			skill_area_temp[2] = 0;
 
 			switch ( skill_id ) {
-				case BO_MAYHEMIC_THORNS:
-					clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-					break;
 				case MH_XENO_SLASHER:
 					clif_skill_damage( *src, *bl,tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 					break;
 				case NPC_REVERBERATION_ATK:
 					skill_area_temp[1] = 0;
 					starget = splash_target(src);
-					break;
-
-				case BO_DUST_EXPLOSION:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					break;
-				case BO_ACIDIFIED_ZONE_WATER:
-				case BO_ACIDIFIED_ZONE_GROUND:
-				case BO_ACIDIFIED_ZONE_WIND:
-				case BO_ACIDIFIED_ZONE_FIRE:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					if (bl->type == BL_PC)// Place single cell AoE if hitting a player.
-						skill_castend_pos2(src, bl->x, bl->y, skill_id, skill_lv, tick, 0);
-					break;
-				case BO_MYSTERY_POWDER:
-					clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-					sc_start(src, src, skill_get_sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 					break;
 			}
 
@@ -4820,11 +4776,9 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_DARKTHUNDER:
 	case NPC_FIRESTORM:
 	case WM_METALICSOUND:
-	case KO_KAIHOU:
 	case MH_ERASER_CUTTER:
 		skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
-
 	case NPC_MAGICALATTACK:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		sc_start(src,src,SC_MAGICALATTACK,100,skill_lv,skill_get_time(skill_id,skill_lv));
@@ -4917,30 +4871,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		else if( sd )
 			clif_skill_fail( *sd, skill_id );
 		break;
-
-	case KO_JYUMONJIKIRI: {
-			int16 x, y;
-			int16 dir = map_calc_dir(src,bl->x,bl->y);
-
-			if (dir > 0 && dir < 4)
-				x = 2;
-			else if (dir > 4)
-				x = -2;
-			else
-				x = 0;
-			if (dir > 2 && dir < 6)
-				y = 2;
-			else if (dir == 7 || dir < 2)
-				y = -2;
-			else
-				y = 0;
-			if (unit_movepos(src,bl->x + x,bl->y + y,1,1)) {
-				clif_blown(src);
-				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-			}
-		}
-		break;
-
 	case EL_FIRE_BOMB:
 	case EL_FIRE_WAVE:
 	case EL_WATER_SCREW:
@@ -5616,15 +5546,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 		break;
 
-	case BO_ADVANCE_PROTECTION:
-		if( sd && ( !dstsd || pc_checkequip( dstsd, EQP_SHADOW_GEAR ) < 0 ) ){
-			clif_skill_fail( *sd, skill_id );
-			// Don't consume item requirements
-			return 0;
-		}
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start( src, bl, type, 100, skill_lv, skill_get_time( skill_id, skill_lv ) ) );
-		break;
-
 	case NPC_HALLUCINATION:
 	case NPC_HELLPOWER:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv,
@@ -5723,10 +5644,8 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case NPC_RAYOFGENESIS:
 	case MH_THE_ONE_FIGHTER_RISES:
 	case MH_HEILIGE_PFERD:
-	case KO_HAPPOKUNAI:
 	case RL_FIREDANCE:
 	case RL_R_TRIP:
-	case BO_EXPLOSIVE_POWDER:
 	{
 		int32 starget = BL_CHAR|BL_SKILL;
 
@@ -5738,8 +5657,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
 		i = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget,
 				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		if( !i && ( skill_id == KO_HAPPOKUNAI ) )
-			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
 	}
 		break;
 
@@ -5834,16 +5751,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				clif_skill_nodamage(src, *mer->master, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		}
 		break;
-
-	case KO_YAMIKUMO:
-		if (tsce)
-		{
-			clif_skill_nodamage(src,*bl,skill_id,-1,status_change_end(bl, type)); //Hide skill-scream animation.
-			return 0;
-		}
-		clif_skill_nodamage(src,*bl,skill_id,-1,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-
 	case NV_FIRSTAID:
 		clif_skill_nodamage(src,*bl,skill_id,5);
 		status_heal(bl,5,0,0);
@@ -6619,27 +6526,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case WA_SWING_DANCE:
-	case WA_MOONLIT_SERENADE:
-	case WA_SYMPHONY_OF_LOVER:
-	case MI_RUSH_WINDMILL:
-	case MI_ECHOSONG:
-		if( !sd || !sd->status.party_id || (flag & 1) ) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			sc_start2(src,bl,type,100,skill_lv,((sd) ? pc_checkskill(sd,WM_LESSON) : skill_get_max(WM_LESSON)),skill_get_time(skill_id,skill_lv));
-		} else if( sd ) {
-			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
-			sc_start2(src,bl,type,100,skill_lv,((sd) ? pc_checkskill(sd,WM_LESSON) : skill_get_max(WM_LESSON)),skill_get_time(skill_id,skill_lv));
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		}
-		break;
-
-	case MI_HARMONIZE:
-		if( src != bl )
-			clif_skill_nodamage(src, *src, skill_id, skill_lv, sc_start(src,src, type, 100, skill_lv, skill_get_time(skill_id,skill_lv)));
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id,skill_lv)));
-		break;
-
 	case WM_DEADHILLHERE:
 		if( bl->type == BL_PC ) {
 			if( !status_isdead(*bl) )
@@ -7068,121 +6954,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				}
 			}
 		}
-		break;	
-
-	case KO_KAHU_ENTEN:
-	case KO_HYOUHU_HUBUKI:
-	case KO_KAZEHU_SEIRAN:
-	case KO_DOHU_KOUKAI:
-		if (sd) {
-			int32 ele_type = skill_get_ele(skill_id,skill_lv);
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			pc_addspiritcharm(sd,skill_get_time(skill_id,skill_lv),MAX_SPIRITCHARM,ele_type);
-		}
 		break;
-	case KO_ZANZOU:
-		if(sd){
-			mob_data *md2;
-
-			md2 = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(*src), MOBID_ZANZOU, "", SZ_SMALL, AI_NONE);
-			if( md2 )
-			{
-				md2->master_id = src->id;
-				md2->special_state.ai = AI_ZANZOU;
-				if( md2->deletetimer != INVALID_TIMER )
-					delete_timer(md2->deletetimer, mob_timer_delete);
-				md2->deletetimer = add_timer (gettick() + skill_get_time(skill_id, skill_lv), mob_timer_delete, md2->id, 0);
-				mob_spawn( md2 );
-				map_foreachinallrange(unit_changetarget, src, AREA_SIZE, BL_MOB, src, md2);
-				clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-				skill_blown(src,bl,skill_get_blewcount(skill_id,skill_lv),unit_getdir(bl),BLOWN_NONE);
-			}
-		}
-		break;
-
-	case KO_KYOUGAKU:
-		if( dstsd && tsc && !tsc->getSCE(type) && rnd()%100 < tstatus->int_/2 ){
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-				sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		}else if( sd )
-			clif_skill_fail( *sd, skill_id );
-		break;
-	case KO_JYUSATSU:
-		if( dstsd && tsc && !tsc->getSCE(type) &&
-			rnd()%100 < ((45+5*skill_lv) + skill_lv*5 - status_get_int(bl)/2) ){//[(Base chance of success) + (Skill Level x 5) - (int32 / 2)]%.
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-				status_change_start(src,bl,type,10000,skill_lv,0,0,0,skill_get_time(skill_id,skill_lv),SCSTART_NOAVOID|SCSTART_NOTICKDEF));
-			status_percent_damage(src, bl, tstatus->hp * skill_lv * 5, 0, false); // Does not kill the target.
-			if( status_get_lv(bl) <= status_get_lv(src) )
-				status_change_start(src,bl,SC_COMA,10,skill_lv,0,src->id,0,0,SCSTART_NONE);
-		}else if( sd )
-			clif_skill_fail( *sd, skill_id );
-		break;
-	case KO_GENWAKU:
-		if ((dstsd || dstmd) && !status_has_mode(tstatus,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) && battle_check_target(src,bl,BCT_ENEMY) > 0) {
-			int32 x = src->x, y = src->y;
-
-			if (sd && rnd()%100 > ((45+5*skill_lv) - status_get_int(bl)/10)) { //[(Base chance of success) - (Intelligence Objectives / 10)]%.
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-
-			// Confusion is still inflicted (but rate isn't reduced), no matter map type.
-			status_change_start(src, src, SC_CONFUSION, 2500, skill_lv, 0, 0, 0, skill_get_time(skill_id, skill_lv), SCSTART_NORATEDEF);
-			status_change_start(src, bl, SC_CONFUSION, 7500, skill_lv, 0, 0, 0, skill_get_time(skill_id, skill_lv), SCSTART_NORATEDEF);
-
-			if (skill_check_unit_movepos(5,src,bl->x,bl->y,0,0)) {
-				clif_skill_nodamage(src, *src, skill_id, skill_lv);
-				clif_blown(src);
-				if (!unit_blown_immune(bl, 0x1)) {
-					unit_movepos(bl,x,y,0,0);
-					if (bl->type == BL_PC && pc_issit((TBL_PC*)bl))
-						clif_sitting(*bl); //Avoid sitting sync problem
-					clif_blown(bl);
-					map_foreachinallrange(unit_changetarget, src, AREA_SIZE, BL_CHAR, src, bl);
-				}
-			}
-		}
-		break;
-	case OB_AKAITSUKI:
-	case OB_OBOROGENSOU:
-		if( sd && ( (skill_id == OB_OBOROGENSOU && bl->type == BL_MOB) // This skill does not work on monsters.
-			|| status_bl_has_mode(bl,MD_STATUSIMMUNE) ) ){ // Does not work on status immune monsters.
-			clif_skill_fail( *sd, skill_id );
-			break;
-		}
-		[[fallthrough]];
-	case KO_IZAYOI:
-	case OB_ZANGETSU:
-	case KG_KYOMU:
-	case KG_KAGEMUSYA:
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		break;
-	case KG_KAGEHUMI:
-		if( flag&1 ){
-			if (bl->type != BL_PC)
-				break;
-			if (tsc && (tsc->option & (OPTION_CLOAK | OPTION_HIDE) || tsc->getSCE(SC_CAMOUFLAGE) || tsc->getSCE(SC__SHADOWFORM) || tsc->getSCE(SC_MARIONETTE) || tsc->getSCE(SC_HARMONIZE))) {
-					status_change_end(bl, SC_HIDING);
-					status_change_end(bl, SC_CLOAKING);
-					status_change_end(bl, SC_CLOAKINGEXCEED);
-					status_change_end(bl, SC_CAMOUFLAGE);
-					status_change_end(bl, SC_NEWMOON);
-					if (tsc && tsc->getSCE(SC__SHADOWFORM) && rnd() % 100 < 100 - tsc->getSCE(SC__SHADOWFORM)->val1 * 10) // [100 - (Skill Level x 10)] %
-						status_change_end(bl, SC__SHADOWFORM);
-					status_change_end(bl, SC_MARIONETTE);
-					status_change_end(bl, SC_HARMONIZE);
-					sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			}
-		}else{
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
-			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}
-		break;
-
 	case MH_SILENT_BREEZE:
 		{
 			int32 heal = 5 * status_get_lv(hd) +
@@ -7381,21 +7153,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			skill_addtimerskill(src, tick + (t_tick)skill_get_time(skill_id, skill_lv) * i, bl->id, 0, 0, skill_id, skill_lv, skill_get_type(skill_id), flag);
 		break;
 
-	case BO_THE_WHOLE_PROTECTION:
-		if (sd == nullptr || sd->status.party_id == 0 || (flag & 1)) {
-			uint32 equip[] = { EQP_WEAPON, EQP_SHIELD, EQP_ARMOR, EQP_HEAD_TOP };
-
-			for (uint8 i_eqp = 0; i_eqp < 4; i_eqp++) {
-				if (bl->type != BL_PC || (dstsd && pc_checkequip(dstsd, equip[i_eqp]) < 0))
-					continue;
-				sc_start(src, bl, (sc_type)(SC_CP_WEAPON + i_eqp), 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			}
-		} else if (sd) {
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag | BCT_PARTY | 1, skill_castend_nodamage_id);
-		}
-		break;
-
 	case ABR_NET_REPAIR:
 	case ABR_NET_SUPPORT:
 		if (flag & 1) {
@@ -7413,39 +7170,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		} else {
 			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag | BCT_ALLY | SD_SPLASH | 1, skill_castend_nodamage_id);
-		}
-		break;
-
-	case BO_BIONIC_PHARMACY:
-		if (sd) {
-			sd->skill_id_old = skill_id;
-			sd->skill_lv_old = skill_lv;
-
-			clif_cooking_list( *sd, 32, skill_id, 1, 8 );
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		}
-		break;
-
-	case BO_WOODENWARRIOR:
-	case BO_WOODEN_FAIRY:
-	case BO_CREEPER:
-	case BO_HELLTREE: { // A poring is used in the 4th slot as a dummy since the Research Report skill is in between the Creeper and Hell Tree skills.
-			uint32 bionics[5] = { MOBID_BIONIC_WOODENWARRIOR, MOBID_BIONIC_WOODEN_FAIRY, MOBID_BIONIC_CREEPER, MOBID_PORING, MOBID_BIONIC_HELLTREE };
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, "--ja--", bionics[4 - (BO_HELLTREE - skill_id)], "", SZ_SMALL, AI_BIONIC);
-
-			if (md) {
-				md->master_id = src->id;
-				md->special_state.ai = AI_BIONIC;
-
-				if (md->deletetimer != INVALID_TIMER)
-					delete_timer(md->deletetimer, mob_timer_delete);
-				md->deletetimer = add_timer(gettick() + skill_get_time(skill_id, skill_lv), mob_timer_delete, md->id, 0);
-				mob_spawn(md);
-			}
 		}
 		break;
 
@@ -8368,7 +8092,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case SO_WATER_INSIGNIA:
 	case SO_WIND_INSIGNIA:
 	case SO_EARTH_INSIGNIA:
-	case KO_ZENKAI:
 	case MH_LAVA_SLIDE:
 	case MH_VOLCANIC_ASH:
 	case MH_BLAST_FORGE:
@@ -8377,10 +8100,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	case MH_XENO_SLASHER:
 	case RL_B_TRAP:
 	case NPC_STORMGUST2:
-	case BO_ACIDIFIED_ZONE_WATER:
-	case BO_ACIDIFIED_ZONE_GROUND:
-	case BO_ACIDIFIED_ZONE_WIND:
-	case BO_ACIDIFIED_ZONE_FIRE:
 		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
 		// Ammo should be deleted right away.
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
@@ -8480,28 +8199,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 			status_change_end(src,type);
 		sc_start2(src, src, type, 100, skill_id, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-
-	case KO_MAKIBISHI:
-		for( i = 0; i < (skill_lv+2); i++ ) {
-			x = src->x - 1 + rnd()%3;
-			y = src->y - 1 + rnd()%3;
-			skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-		}
-		break;
-	case KO_MUCHANAGE: {
-			int32 rate = 0;
-
-			status_data* sstatus = status_get_status_data(*src);
-			i = skill_get_splash(skill_id,skill_lv);
-			rate = (100 - (1000 / (sstatus->dex + sstatus->luk) * 5)) * (skill_lv / 2 + 5) / 10;
-			if( rate < 0 )
-				rate = 0;
-			skill_area_temp[0] = map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR,src,skill_id,skill_lv,tick,BCT_ENEMY,skill_area_sub_count);
-			if( rnd()%100 < rate )
-				map_foreachinarea(skill_area_sub,src->m,x-i,y-i,x+i,y+i,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-		}
-		break;
-
 	case RL_FALLEN_ANGEL:
 		if (unit_movepos(src,x,y,1,1)) {
 			clif_snap(src, src->x, src->y);

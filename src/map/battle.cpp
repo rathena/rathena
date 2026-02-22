@@ -4867,40 +4867,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case EL_ROCK_CRUSHER:
 			skillratio += 700;
 			break;
-		case KO_JYUMONJIKIRI:
-			skillratio += -100 + 200 * skill_lv;
-			RE_LVL_DMOD(120);
-			if(tsc && tsc->getSCE(SC_JYUMONJIKIRI))
-				skillratio += skill_lv * status_get_lv(src);
-			if (sc && sc->getSCE(SC_KAGEMUSYA))
-				skillratio += skillratio * sc->getSCE(SC_KAGEMUSYA)->val2 / 100;
-			break;
-		case KO_HUUMARANKA:
-			skillratio += -100 + 150 * skill_lv + sstatus->str + (sd ? pc_checkskill(sd,NJ_HUUMA) * 100 : 0);
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_KAGEMUSYA))
-				skillratio += skillratio * sc->getSCE(SC_KAGEMUSYA)->val2 / 100;
-			break;
-		case KO_SETSUDAN:
-			skillratio += 100 * (skill_lv - 1);
-			RE_LVL_DMOD(100);
-			if (tsc) {
-				struct status_change_entry *sce;
-
-				if ((sce = tsc->getSCE(SC_SPIRIT)) || (sce = tsc->getSCE(SC_SOULGOLEM)) || (sce = tsc->getSCE(SC_SOULSHADOW)) || (sce = tsc->getSCE(SC_SOULFALCON)) || (sce = tsc->getSCE(SC_SOULFAIRY))) // Bonus damage added when target is soul linked.
-					skillratio += 200 * sce->val1;
-			}
-			break;
-		case KO_BAKURETSU:
-			skillratio += -100 + (sd ? pc_checkskill(sd,NJ_TOBIDOUGU) : 1) * (50 + sstatus->dex / 4) * skill_lv * 4 / 10;
-			RE_LVL_DMOD(120);
-			skillratio += 10 * (sd ? sd->status.job_level : 1);
-			if (sc && sc->getSCE(SC_KAGEMUSYA))
-				skillratio += skillratio * sc->getSCE(SC_KAGEMUSYA)->val2 / 100;
-			break;
-		case KO_MAKIBISHI:
-			skillratio += -100 + 20 * skill_lv;
-			break;
 		case MH_NEEDLE_OF_PARALYZE:
 			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
 			break;
@@ -4994,51 +4960,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case RL_FIRE_RAIN:
 		case RL_AM_BLAST:
 			skillratio += -100 + 3500 + 300 * skill_lv;
-			break;
-		case BO_ACIDIFIED_ZONE_WATER:
-		case BO_ACIDIFIED_ZONE_GROUND:
-		case BO_ACIDIFIED_ZONE_WIND:
-		case BO_ACIDIFIED_ZONE_FIRE:
-		case BO_ACIDIFIED_ZONE_WATER_ATK:// These deal the same damage? [Rytech]
-		case BO_ACIDIFIED_ZONE_GROUND_ATK:
-		case BO_ACIDIFIED_ZONE_WIND_ATK:
-		case BO_ACIDIFIED_ZONE_FIRE_ATK:
-			skillratio += -100 + 400 * skill_lv + 5 * sstatus->pow;
-
-			if( sc != nullptr && sc->getSCE( SC_RESEARCHREPORT ) ){
-				skillratio += skillratio * 50 / 100;
-
-				if (tstatus->race == RC_FORMLESS || tstatus->race == RC_PLANT)
-					skillratio += skillratio * 50 / 100;
-			}
-
-			RE_LVL_DMOD(100);
-			break;
-		case BO_EXPLOSIVE_POWDER:
-			skillratio += -100 + 500 + 650 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			if (sc && sc->getSCE(SC_RESEARCHREPORT))
-				skillratio += 100 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case BO_MAYHEMIC_THORNS:
-			skillratio += -100 + 200 + 300 * skill_lv;
-			skillratio += 5 * sstatus->pow;
-			if (sc && sc->getSCE(SC_RESEARCHREPORT))
-				skillratio += 150;
-			RE_LVL_DMOD(100);
-			break;
-		case BO_MYSTERY_POWDER:
-			skillratio += -100 + 1500 + 4000 * skill_lv;
-			skillratio += 5 * sstatus->pow;	// !TODO: check POW ratio
-			RE_LVL_DMOD(100);
-			break;
-		case BO_DUST_EXPLOSION:
-			skillratio += -100 + 450 + 600 * skill_lv;
-			skillratio += 5 * sstatus->pow;	// !TODO: check POW ratio
-			if (sc && sc->getSCE(SC_RESEARCHREPORT))
-				skillratio += 200 * skill_lv;
-			RE_LVL_DMOD(100);
 			break;
 		case ABR_BATTLE_BUSTER:// Need official formula.
 		case ABR_DUAL_CANNON_FIRE:// Need official formula.
@@ -6888,13 +6809,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						if (sc && sc->getSCE(SC_BLAST_OPTION))
 							skillratio += (sd ? sd->status.job_level * 5 : 0);
-						break;
-					case KO_KAIHOU:
-						if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0) {
-							skillratio += -100 + 200 * sd->spiritcharm;
-							RE_LVL_DMOD(100);
-							pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
-						}
 						break;
 					// Magical Elemental Spirits Attack Skills
 					case EL_FIRE_MANTLE:
