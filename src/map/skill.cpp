@@ -1404,11 +1404,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			}
 			break;
 
-	case MER_CRASH:
-		sc_start(src,bl,SC_STUN,(6*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-		break;
-
-
 	case NPC_STORMGUST2:
 		if (skill_lv == 1)
 			sc_start(src,bl,SC_FREEZE,10,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -1418,18 +1413,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			sc_start(src,bl,SC_FREEZE,3,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 
-
-	case MA_FREEZINGTRAP:
-		sc_start(src, bl, SC_FREEZE, 100, skill_lv, skill_get_time2(skill_id, skill_lv), sstatus->amotion + 100);
-		break;
-
-	case MA_LANDMINE:
-		sc_start(src, bl, SC_STUN, 10, skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
-		break;
-
-	case MA_SANDMAN:
-		sc_start(src, bl, SC_SLEEP, (10 * skill_lv + 40), skill_lv, skill_get_time2(skill_id, skill_lv), 1000);
-		break;
 
 	case NPC_DARKCROSS:
 		sc_start(src,bl,SC_BLIND,3*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -4546,7 +4529,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case MA_SHARPSHOOTING:
 	case NPC_DARKPIERCING:
 	case NPC_ACIDBREATH:
 	case NPC_DARKNESSBREATH:
@@ -4575,7 +4557,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case NPC_SPLASHATTACK:
 		flag |= SD_PREAMBLE; // a fake packet will be sent for the first target to be hit
 		[[fallthrough]];
-	case MA_SHOWER:
 	case NPC_PULSESTRIKE:
 	case NPC_PULSESTRIKE2:
 	case NPC_HELLJUDGEMENT:
@@ -4650,104 +4631,19 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case MS_MAGNUM:
-		if( flag&1 ) {
-			// For players, damage depends on distance, so add it to flag if it is > 1
-			// Cannot hit hidden targets
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION|(sd?distance_bl(src, bl):0));
-		}
-		break;
-
 #ifdef RENEWAL
 	case KN_BRANDISHSPEAR:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 #else
 	case KN_BRANDISHSPEAR:
-#endif
-	case ML_BRANDISH:
 		//Coded apart for it needs the flag passed to the damage calculation.
 		if (skill_area_temp[1] != bl->id)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
 		else
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
-
-	case MS_BOWLINGBASH:
-		{
-			int32 min_x,max_x,min_y,max_y,i,c,dir,tx,ty;
-			// Chain effect and check range gets reduction by recursive depth, as this can reach 0, we don't use blowcount
-			c = (skill_lv-(flag&0xFFF)+1)/2;
-			// Determine the Bowling Bash area depending on configuration
-			if (battle_config.bowling_bash_area == 0) {
-				// Gutter line system
-				min_x = ((src->x)-c) - ((src->x)-c)%40;
-				if(min_x < 0) min_x = 0;
-				max_x = min_x + 39;
-				min_y = ((src->y)-c) - ((src->y)-c)%40;
-				if(min_y < 0) min_y = 0;
-				max_y = min_y + 39;
-			} else if (battle_config.bowling_bash_area == 1) {
-				// Gutter line system without demi gutter bug
-				min_x = src->x - (src->x)%40;
-				max_x = min_x + 39;
-				min_y = src->y - (src->y)%40;
-				max_y = min_y + 39;
-			} else {
-				// Area around caster
-				min_x = src->x - battle_config.bowling_bash_area;
-				max_x = src->x + battle_config.bowling_bash_area;
-				min_y = src->y - battle_config.bowling_bash_area;
-				max_y = src->y + battle_config.bowling_bash_area;
-			}
-			// Initialization, break checks, direction
-			if((flag&0xFFF) > 0) {
-				// Ignore monsters outside area
-				if(bl->x < min_x || bl->x > max_x || bl->y < min_y || bl->y > max_y)
-					break;
-				// Ignore monsters already in list
-				if(idb_exists(bowling_db, bl->id))
-					break;
-				// Random direction
-				dir = rnd()%8;
-			} else {
-				// Create an empty list of already hit targets
-				db_clear(bowling_db);
-				// Direction is walkpath
-				dir = (unit_getdir(src)+4)%8;
-			}
-			// Add current target to the list of already hit targets
-			idb_put(bowling_db, bl->id, bl);
-			// Keep moving target in direction square by square
-			tx = bl->x;
-			ty = bl->y;
-			for(i=0;i<c;i++) {
-				// Target coordinates (get changed even if knockback fails)
-				tx -= dirx[dir];
-				ty -= diry[dir];
-				// If target cell is a wall then break
-				if(map_getcell(bl->m,tx,ty,CELL_CHKWALL))
-					break;
-				skill_blown(src,bl,1,dir,BLOWN_NONE);
-
-				int32 count;
-
-				// Splash around target cell, but only cells inside area; we first have to check the area is not negative
-				if((max(min_x,tx-1) <= min(max_x,tx+1)) &&
-					(max(min_y,ty-1) <= min(max_y,ty+1)) &&
-					(count = map_foreachinallarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY, skill_area_sub_count))) {
-					// Recursive call
-					map_foreachinallarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, (flag|BCT_ENEMY)+1, skill_castend_damage_id);
-					// Self-collision
-					if(bl->x >= min_x && bl->x <= max_x && bl->y >= min_y && bl->y <= max_y)
-						skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION|count:count);
-					break;
-				}
-			}
-			// Original hit or chain hit depending on flag
-			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION:0);
-		}
-		break;
+#endif
 
 	case ALL_RESURRECTION:
 		if (!battle_check_undead(tstatus->race, tstatus->def_ele))
@@ -5393,19 +5289,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case MER_DECAGI:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv,
-			sc_start(src,bl, type, (50 + skill_lv * 3 + (status_get_lv(src) + sstatus->int_)/5), skill_lv, skill_get_time(skill_id,skill_lv)));
-		break;
-
-	case MER_LEXDIVINA:
-		if (tsce)
-			status_change_end(bl, type);
-		else
-			skill_addtimerskill(src, tick+1000, bl->id, 0, 0, skill_id, skill_lv, 100, flag);
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		break;
-
 	case NPC_ALLHEAL:
 		{
 			int32 heal;
@@ -5462,24 +5345,11 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 
-	case MER_KYRIE:
 	case ALL_RAY_OF_PROTECTION:
 		clif_skill_nodamage(bl,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 	//Passive Magnum, should had been casted on yourself.
-	case MS_MAGNUM:
-		skill_area_temp[1] = 0;
-		map_foreachinshootrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_SKILL|BL_CHAR,
-			src,skill_id,skill_lv,tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
-		clif_skill_nodamage(src, *src,skill_id,skill_lv);
-		// Initiate 20% of your damage becomes fire element.
-#ifdef RENEWAL
-		sc_start4(src,src,SC_SUB_WEAPONPROPERTY,100,ELE_FIRE,20,skill_id,0,skill_get_time2(skill_id, skill_lv));
-#else
-		sc_start4(src,src,SC_WATK_ELEMENT,100,ELE_FIRE,20,0,0,skill_get_time2(skill_id, skill_lv));
-#endif
-		break;
 
 	case MH_BLAZING_AND_FURIOUS:
 		/* Check if the target is an enemy; if not, skill should fail so the character doesn't unit_movepos (exploitable) */
@@ -5493,23 +5363,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case MER_INCAGI:
-	case MER_BLESSING:
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		if (dstsd != nullptr && tsc && tsc->getSCE(SC_CHANGEUNDEAD)) {
-			if (tstatus->hp > 1)
-				skill_attack(BF_MISC,src,src,bl,skill_id,skill_lv,tick,flag);
-			break;
-		}
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
-	case MS_REFLECTSHIELD:
-		if (tsc && tsc->getSCE(SC_DARKCROW)) { // SC_DARKCROW prevents using reflecting skills
-			if (sd)
-				clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-			break;
-		}
-		[[fallthrough]];
 	case ALL_FULL_THROTTLE:
 	case ALL_ODINS_POWER:
 	case ALL_REVERSEORCISH:
@@ -5539,7 +5392,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sc_start2(src,bl,type,100,skill_lv,src->id,skill_get_time(skill_id,skill_lv)) ) )
 			sc_start2(src,src,type,100,skill_lv,bl->id,skill_get_time(skill_id,skill_lv));
 		break;
-	case MER_SIGHT:
 	case NPC_WIDESIGHT:
 	case NPC_STONESKIN:
 	case NPC_ANTIMAGIC:
@@ -5552,58 +5404,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		// Homunculus
 		clif_skill_nodamage(src, *src, skill_id, skill_lv, sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		break;
-
-	case MER_PROVOKE:
-		if( status_has_mode(tstatus,MD_STATUSIMMUNE) || battle_check_undead(tstatus->race,tstatus->def_ele) ) {
-			return 1;
-		}
-		// Official chance is 70% + 3%*skill_lv + srcBaseLevel% - tarBaseLevel%
-		if(!(i = sc_start(src, bl, type, 70 + 3 * skill_lv + status_get_lv(src) - status_get_lv(bl), skill_lv, skill_get_time(skill_id, skill_lv))))
-		{
-			if( sd )
-				clif_skill_fail( *sd, skill_id );
-			return 0;
-		}
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv, i != 0);
-		unit_skillcastcancel(bl, 2);
-
-		if( dstmd )
-		{
-			dstmd->state.provoke_flag = src->id;
-			mob_target(dstmd, src, skill_get_range2(src, skill_id, skill_lv, true));
-		}
-		// Provoke can cause Coma even though it's a nodamage skill
-		if (sd && battle_check_coma(*sd, *bl, BF_MISC))
-			status_change_start(src, bl, SC_COMA, 10000, skill_lv, 0, src->id, 0, 0, SCSTART_NONE);
-		break;
-
-	case ML_DEVOTION:
-		{
-			int32 lv;
-			if( !dstsd || !mer )
-			{ // Only players can be devoted
-				break;
-			}
-
-			if( (lv = status_get_lv(src) - dstsd->status.base_level) < 0 )
-				lv = -lv;
-			if( lv > battle_config.devotion_level_difference || // Level difference requeriments
-				(dstsd->sc.getSCE(type) && dstsd->sc.getSCE(type)->val1 != src->id) || // Cannot Devote a player devoted from another source
-				mer != dstsd->md || // Mercenary only can devote owner
-				(dstsd->class_&MAPID_SECONDMASK) == MAPID_CRUSADER || // Crusader Cannot be devoted
-				(dstsd->sc.getSCE(SC_HELLPOWER))) // Players affected by SC_HELLPOWER cannot be devoted.
-			{
-				return 1;
-			}
-
-			i = 0;
-			mer->devotion_flag = 1; // Mercenary Devoting Owner
-
-			clif_skill_nodamage(src, *bl, skill_id, skill_lv,
-				sc_start4(src, bl, type, 10000, src->id, i, skill_get_range2(src, skill_id, skill_lv, true), 0, skill_get_time2(skill_id, skill_lv)));
-			clif_devotion(src, nullptr);
-		}
 		break;
 
 	//List of self skills that give damage around caster
@@ -5644,29 +5444,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		skill_castend_damage_id(src, src, skill_id, skill_lv, tick, flag);
 		break;
 
-	case ML_BRANDISH:
-		skill_area_temp[1] = bl->id;
-
-		if(skill_lv >= 10)
-			map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
-				skill_get_splash(skill_id, skill_lv), 1, skill_get_maxcount(skill_id, skill_lv)-1, splash_target(src),
-				src, skill_id, skill_lv, tick, flag | BCT_ENEMY | (sd?3:0),
-				skill_castend_damage_id);
-		if(skill_lv >= 7)
-			map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
-				skill_get_splash(skill_id, skill_lv), 1, skill_get_maxcount(skill_id, skill_lv)-2, splash_target(src),
-				src, skill_id, skill_lv, tick, flag | BCT_ENEMY | (sd?2:0),
-				skill_castend_damage_id);
-		if(skill_lv >= 4)
-			map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
-				skill_get_splash(skill_id, skill_lv), 1, skill_get_maxcount(skill_id, skill_lv)-3, splash_target(src),
-				src, skill_id, skill_lv, tick, flag | BCT_ENEMY | (sd?1:0),
-				skill_castend_damage_id);
-		map_foreachindir(skill_area_sub, src->m, src->x, src->y, bl->x, bl->y,
-			skill_get_splash(skill_id, skill_lv), skill_get_maxcount(skill_id, skill_lv)-3, 0, splash_target(src),
-			src, skill_id, skill_lv, tick, flag | BCT_ENEMY | 0,
-			skill_castend_damage_id);
-		break;
 
 	case NPC_SELFDESTRUCTION:
 		//Self Destruction hits everyone in range (allies+enemies)
@@ -5707,78 +5484,12 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case MER_MAGNIFICAT:
-		if( mer != nullptr )
-		{
-			clif_skill_nodamage(bl, *bl, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-			if( mer->master && mer->master->status.party_id != 0 && !(flag&1) )
-				party_foreachsamemap(skill_area_sub, mer->master, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
-			else if( mer->master && !(flag&1) )
-				clif_skill_nodamage(src, *mer->master, skill_id, skill_lv, sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		}
-		break;
 	case NV_FIRSTAID:
 		clif_skill_nodamage(src,*bl,skill_id,5);
 		status_heal(bl,5,0,0);
 		break;
 
 	// Mercenary Supportive Skills
-	case MER_BENEDICTION:
-		status_change_end(bl, SC_CURSE);
-		status_change_end(bl, SC_BLIND);
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-	case MER_COMPRESS:
-		status_change_end(bl, SC_BLEEDING);
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-	case MER_MENTALCURE:
-		status_change_end(bl, SC_CONFUSION);
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-	case MER_RECUPERATE:
-		status_change_end(bl, SC_POISON);
-		status_change_end(bl, SC_DPOISON);
-		status_change_end(bl, SC_SILENCE);
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-	case MER_REGAIN:
-		status_change_end(bl, SC_SLEEP);
-		status_change_end(bl, SC_STUN);
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-	case MER_TENDER:
-		status_change_end(bl, SC_FREEZE);
-		status_change_end(bl, SC_STONE);
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		break;
-
-	case MER_SCAPEGOAT:
-		if( mer && mer->master )
-		{
-			status_heal(mer->master, mer->battle_status.hp, 0, 2);
-			status_damage(src, src, mer->battle_status.max_hp, 0, 0, 1, skill_id);
-		}
-		break;
-
-	case MER_ESTIMATION:
-		if( !mer )
-			break;
-		sd = mer->master;
-		if( sd == nullptr )
-			break;
-		if( dstsd )
-		{ // Fail on Players
-			clif_skill_fail( *sd, skill_id );
-			break;
-		}
-
-		if (dstmd != nullptr)
-			clif_skill_estimation( *sd, *dstmd );
-		sd = nullptr;
-		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		break;
-
 	case AL_TELEPORT:
 	case ALL_ODINS_RECALL:
 		if(sd != nullptr)
@@ -6009,7 +5720,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		break;
 
 	case NPC_INVINCIBLEOFF:
-	case MER_INVINCIBLEOFF2:
 		clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		status_change_end(bl, SC_INVINCIBLE);
 		break;
@@ -6121,22 +5831,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 					clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
 			} else
 				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_PC, src, skill_id, skill_lv, tick, flag|BCT_ALL|1, skill_castend_nodamage_id);
-		}
-		break;
-
-	case MA_REMOVETRAP:
-		{
-			skill_unit* su = BL_CAST(BL_SKILL, bl);
-			std::shared_ptr<s_skill_unit_group> sg;
-			std::shared_ptr<s_skill_db> skill_group;
-
-			// Mercenaries can remove any trap
-			if( su && (sg = su->group) && ( skill_group = skill_db.find(sg->skill_id) ) && skill_group->inf2[INF2_ISTRAP] )
-			{
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-				skill_delunit(su);
-			}
-
 		}
 		break;
 
@@ -7900,10 +7594,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 	// Skill Unit Setting
 	case NPC_GROUNDDRIVE:
 	case NPC_GRANDDARKNESS:
-	case MA_SKIDTRAP:
-	case MA_LANDMINE:
-	case MA_SANDMAN:
-	case MA_FREEZINGTRAP:
 	case WE_CALLPARTNER:
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
@@ -7981,7 +7671,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		}
 		break;
 
-	case MA_SHOWER:
 	case NPC_DRAGONBREATH:
 	case RL_HAMMER_OF_GOD:
 		// Cast center might be relevant later (e.g. for knockback direction)
