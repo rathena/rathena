@@ -4,6 +4,7 @@
 #include "valleyofdeath.hpp"
 
 #include "map/clif.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillValleyOfDeath::SkillValleyOfDeath() : SkillImpl(WM_DEADHILLHERE) {
