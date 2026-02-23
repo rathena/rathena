@@ -23,6 +23,15 @@
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
       }
+    },
+    {
+      "name": "msvs",
+      "displayName": "Visual Studio 2022 + vcpkg",
+      "generator": "Visual Studio 17 2022",
+      "binaryDir": "${sourceDir}/build-msvs",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/.vcpkg/scripts/buildsystems/vcpkg.cmake"
+      }
     }
   ],
   "buildPresets": [
@@ -33,6 +42,11 @@
     {
       "name": "build-vcpkg",
       "configurePreset": "dev-vcpkg"
+    },
+    {
+      "name": "build-msvs",
+      "configurePreset": "msvs",
+      "configuration": "Release"
     }
   ]
 }

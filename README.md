@@ -78,6 +78,26 @@ cmake --build --preset build-vcpkg -j
 
 If you cloned vcpkg into `./vcpkg` (inside this repo), `cmake --preset dev` also auto-detects it.
 
+### Legacy `configure` / `make` Compatibility
+
+`./configure` and `make` are now compatibility wrappers around the CMake build.
+This keeps common commands working while using external dependencies via vcpkg.
+
+```bash
+./configure
+make all -j10
+```
+
+### Visual Studio (CMake Preset)
+
+Use the CMake Visual Studio preset instead of the legacy `rAthena.sln`.
+The preset generates a fresh solution in `build-msvs/` and uses vcpkg manifest mode.
+
+```powershell
+cmake --preset msvs
+cmake --build --preset build-msvs
+```
+
 ## 3. Troubleshooting
 
 If you're having problems with starting your server, the first thing you should
