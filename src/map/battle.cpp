@@ -4965,40 +4965,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case EL_ROCK_CRUSHER:
 			skillratio += 700;
 			break;
-		case KO_JYUMONJIKIRI:
-			skillratio += -100 + 200 * skill_lv;
-			RE_LVL_DMOD(120);
-			if(tsc && tsc->getSCE(SC_JYUMONJIKIRI))
-				skillratio += skill_lv * status_get_lv(src);
-			if (sc && sc->getSCE(SC_KAGEMUSYA))
-				skillratio += skillratio * sc->getSCE(SC_KAGEMUSYA)->val2 / 100;
-			break;
-		case KO_HUUMARANKA:
-			skillratio += -100 + 150 * skill_lv + sstatus->str + (sd ? pc_checkskill(sd,NJ_HUUMA) * 100 : 0);
-			RE_LVL_DMOD(100);
-			if (sc && sc->getSCE(SC_KAGEMUSYA))
-				skillratio += skillratio * sc->getSCE(SC_KAGEMUSYA)->val2 / 100;
-			break;
-		case KO_SETSUDAN:
-			skillratio += 100 * (skill_lv - 1);
-			RE_LVL_DMOD(100);
-			if (tsc) {
-				struct status_change_entry *sce;
-
-				if ((sce = tsc->getSCE(SC_SPIRIT)) || (sce = tsc->getSCE(SC_SOULGOLEM)) || (sce = tsc->getSCE(SC_SOULSHADOW)) || (sce = tsc->getSCE(SC_SOULFALCON)) || (sce = tsc->getSCE(SC_SOULFAIRY))) // Bonus damage added when target is soul linked.
-					skillratio += 200 * sce->val1;
-			}
-			break;
-		case KO_BAKURETSU:
-			skillratio += -100 + (sd ? pc_checkskill(sd,NJ_TOBIDOUGU) : 1) * (50 + sstatus->dex / 4) * skill_lv * 4 / 10;
-			RE_LVL_DMOD(120);
-			skillratio += 10 * (sd ? sd->status.job_level : 1);
-			if (sc && sc->getSCE(SC_KAGEMUSYA))
-				skillratio += skillratio * sc->getSCE(SC_KAGEMUSYA)->val2 / 100;
-			break;
-		case KO_MAKIBISHI:
-			skillratio += -100 + 20 * skill_lv;
-			break;
 		case MH_NEEDLE_OF_PARALYZE:
 			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
 			break;
@@ -6871,83 +6837,18 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if (tsc && tsc->getSCE(SC_SOUNDBLEND))
 							skillratio += skillratio * 50 / 100;
 						break;
-					case SO_FIREWALK:
-						skillratio += -100 + 60 * skill_lv;
-						RE_LVL_DMOD(100);
-						if( sc && sc->getSCE(SC_HEATER_OPTION) )
-							skillratio += (sd ? sd->status.job_level / 2 : 0);
-						break;
-					case SO_ELECTRICWALK:
-						skillratio += -100 + 60 * skill_lv;
-						RE_LVL_DMOD(100);
-						if( sc && sc->getSCE(SC_BLAST_OPTION) )
-							skillratio += (sd ? sd->status.job_level / 2 : 0);
-						break;
 					case NPC_FIREWALK:
 					case NPC_ELECTRICWALK:
 						skillratio += -100 + 100 * skill_lv;
 						break;
-					case SO_EARTHGRAVE:
-						skillratio += -100 + 2 * sstatus->int_ + 300 * pc_checkskill(sd, SA_SEISMICWEAPON) + sstatus->int_ * skill_lv;
-						RE_LVL_DMOD(100);
-						if( sc && sc->getSCE(SC_CURSED_SOIL_OPTION) )
-							skillratio += (sd ? sd->status.job_level * 5 : 0);
-						break;
-					case SO_DIAMONDDUST:
-						skillratio += -100 + 2 * sstatus->int_ + 300 * pc_checkskill(sd, SA_FROSTWEAPON) + sstatus->int_ * skill_lv;
-						RE_LVL_DMOD(100);
-						if( sc && sc->getSCE(SC_COOLER_OPTION) )
-							skillratio += (sd ? sd->status.job_level * 5 : 0);
-						break;
-					case SO_POISON_BUSTER:
-						skillratio += -100 + 1000 + 300 * skill_lv;
-						skillratio += sstatus->int_;
-						if( tsc && tsc->getSCE(SC_CLOUD_POISON) )
-							skillratio += 200 * skill_lv;
-						RE_LVL_DMOD(100);
-						if( sc && sc->getSCE(SC_CURSED_SOIL_OPTION) )
-							skillratio += (sd ? sd->status.job_level * 5 : 0);
-						break;
 					case NPC_POISON_BUSTER:
 						skillratio += -100 + 1500 * skill_lv;
-						break;
-					case SO_PSYCHIC_WAVE:
-						skillratio += -100 + 70 * skill_lv + 3 * sstatus->int_;
-						RE_LVL_DMOD(100);
-						if (sc && (sc->getSCE(SC_HEATER_OPTION) || sc->getSCE(SC_COOLER_OPTION) ||
-							sc->getSCE(SC_BLAST_OPTION) || sc->getSCE(SC_CURSED_SOIL_OPTION)))
-							skillratio += 20;
 						break;
 					case NPC_PSYCHIC_WAVE:
 						skillratio += -100 + 500 * skill_lv;
 						break;
-					case SO_CLOUD_KILL:
-						skillratio += -100 + 40 * skill_lv;
-						skillratio += sstatus->int_ * 3;
-						RE_LVL_DMOD(100);
-						if (sc) {
-							if (sc->getSCE(SC_CURSED_SOIL_OPTION))
-								skillratio += (sd ? sd->status.job_level : 0);
-
-							if (sc->getSCE(SC_DEEP_POISONING_OPTION))
-								skillratio += skillratio * 1500 / 100;
-						}
-						break;
 					case NPC_CLOUD_KILL:
 						skillratio += -100 + 50 * skill_lv;
-						break;
-					case SO_VARETYR_SPEAR:
-						skillratio += -100 + (2 * sstatus->int_ + 150 * (pc_checkskill(sd, SO_STRIKING) + pc_checkskill(sd, SA_LIGHTNINGLOADER)) + sstatus->int_ * skill_lv / 2) / 3;
-						RE_LVL_DMOD(100);
-						if (sc && sc->getSCE(SC_BLAST_OPTION))
-							skillratio += (sd ? sd->status.job_level * 5 : 0);
-						break;
-					case KO_KAIHOU:
-						if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0) {
-							skillratio += -100 + 200 * sd->spiritcharm;
-							RE_LVL_DMOD(100);
-							pc_delspiritcharm(sd, sd->spiritcharm, sd->spiritcharm_type);
-						}
 						break;
 					// Magical Elemental Spirits Attack Skills
 					case EL_FIRE_MANTLE:
