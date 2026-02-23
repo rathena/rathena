@@ -47124,27 +47124,7 @@ Body:
     Hit: Multi_Hit
     HitCount: 2
     Element: Weapon
-    SplashArea:
-      - Level: 1
-        Area: 3
-      - Level: 2
-        Area: 3
-      - Level: 3
-        Area: 3
-      - Level: 4
-        Area: 3
-      - Level: 5
-        Area: 3
-      - Level: 6
-        Area: 3
-      - Level: 7
-        Area: 3
-      - Level: 8
-        Area: 3
-      - Level: 9
-        Area: 3
-      - Level: 10
-        Area: 3
+    SplashArea: 1
     CastTime: 300
     FixedCastTime: 200
     AfterCastActDelay: 300
