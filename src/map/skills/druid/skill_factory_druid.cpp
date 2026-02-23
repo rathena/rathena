@@ -70,7 +70,6 @@
 #include "windbomb.cpp"
 #include "zephyrlink.cpp"
 
-	constexpr int32 kThunderingChargeDuration = 10000;
 	constexpr int32 kGrowthDuration = 10000;
 
 	int32 SkillFactoryDruid::get_madness_stage(const status_change *sc) {
@@ -120,40 +119,6 @@
 		}
 	}
 
-	bool is_thundering_charge_skill(e_skill skill_id) {
-		switch (skill_id) {
-			case KR_THUNDERING_FOCUS:
-			case KR_THUNDERING_ORB:
-			case KR_THUNDERING_CALL:
-			case AT_ROARING_PIERCER:
-			case AT_ROARING_CHARGE:
-				return true;
-			default:
-				return false;
-		}
-	}
-
-	e_skill SkillFactoryDruid::resolve_thundering_charge_skill(const status_change *sc, e_skill skill_id) {
-		if (sc == nullptr || !sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
-			return skill_id;
-		}
-
-		switch (skill_id) {
-			case KR_THUNDERING_FOCUS:
-				return KR_THUNDERING_FOCUS_S;
-			case KR_THUNDERING_ORB:
-				return KR_THUNDERING_ORB_S;
-			case KR_THUNDERING_CALL:
-				return KR_THUNDERING_CALL_S;
-			case AT_ROARING_PIERCER:
-				return AT_ROARING_PIERCER_S;
-			case AT_ROARING_CHARGE:
-				return AT_ROARING_CHARGE_S;
-			default:
-				return skill_id;
-		}
-	}
-
 	e_skill SkillFactoryDruid::resolve_quill_spear_skill(const status_change *sc, e_skill skill_id) {
 		if (skill_id != AT_QUILL_SPEAR) {
 			return skill_id;
@@ -199,36 +164,6 @@
 		}
 
 		sc_start(src, src, SC_INSANE, 100, 1, duration);
-	}
-
-	void add_thundering_charge(block_list *src, int32 count) {
-		status_change *sc = status_get_sc(src);
-		if (sc == nullptr || sc->hasSCE(SC_THUNDERING_ROD_MAX) || count <= 0) {
-			return;
-		}
-
-		status_change_entry *charge = sc->getSCE(SC_THUNDERING_ROD);
-		int32 current = charge ? charge->val3 : 0;
-		int32 next = current + count;
-
-		if (next > 5) {
-			status_change_end(src, SC_THUNDERING_ROD);
-			status_change_start(src, src, SC_THUNDERING_ROD_MAX, 10000, 1, 0, 0, 0, kThunderingChargeDuration, SCSTART_NOAVOID);
-			return;
-		}
-		status_change_start(src, src, SC_THUNDERING_ROD, 10000, 0, 0, next, 0, kThunderingChargeDuration, SCSTART_NOAVOID);
-	}
-
-	void SkillFactoryDruid::try_gain_thundering_charge(block_list *src, const status_change *sc, e_skill skill_id, int32 gain) {
-		if (!is_thundering_charge_skill(skill_id)) {
-			return;
-		}
-
-		if (sc != nullptr && sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
-			status_change_end(src, SC_THUNDERING_ROD_MAX);
-		} else {
-			add_thundering_charge(src, gain);
-		}
 	}
 
 	void add_growth_stacks(block_list *src, t_tick tick, int32 amount) {

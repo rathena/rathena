@@ -48838,30 +48838,11 @@ Body:
     Hit: Multi_Hit
     HitCount: 2
     Element: Wind
-    SplashArea:
-      - Level: 1
-        Area: 4
-      - Level: 2
-        Area: 4
-      - Level: 3
-        Area: 4
-      - Level: 4
-        Area: 4
-      - Level: 5
-        Area: 4
-      - Level: 6
-        Area: 4
-      - Level: 7
-        Area: 4
-      - Level: 8
-        Area: 4
-      - Level: 9
-        Area: 4
-      - Level: 10
-        Area: 4
+    SplashArea: 2
     CastTime: 1300
     FixedCastTime: 1500
     AfterCastActDelay: 400
+    Duration1: 10000
     Cooldown: 500
     Requires:
       SpCost:
@@ -48885,6 +48866,7 @@ Body:
           Amount: 117
         - Level: 10
           Amount: 120
+    Status: Thundering_Rod
   - Id: 6598
     Name: AT_ROARING_PIERCER_S
     Description: Enhanced Roaring Piercer
@@ -48896,27 +48878,7 @@ Body:
     Hit: Multi_Hit
     HitCount: 3
     Element: Wind
-    SplashArea:
-      - Level: 1
-        Area: 4
-      - Level: 2
-        Area: 4
-      - Level: 3
-        Area: 4
-      - Level: 4
-        Area: 4
-      - Level: 5
-        Area: 4
-      - Level: 6
-        Area: 4
-      - Level: 7
-        Area: 4
-      - Level: 8
-        Area: 4
-      - Level: 9
-        Area: 4
-      - Level: 10
-        Area: 4
+    SplashArea: 2
     CastTime: 1300
     FixedCastTime: 1500
     AfterCastActDelay: 400

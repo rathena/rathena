@@ -3,105 +3,89 @@
 
 #include "roaringpiercer.hpp"
 
+#include <config/core.hpp>
+
+#include "map/battle.hpp"
 #include "map/clif.hpp"
 #include "map/map.hpp"
 #include "map/status.hpp"
 
 #include "skill_factory_druid.hpp"
 
-SkillRoaringPiercer::SkillRoaringPiercer() : SkillImplRecursiveDamageSplash(AT_ROARING_PIERCER) {
+// AT_ROARING_PIERCER
+SkillRoaringPiercer::SkillRoaringPiercer() : SkillImpl(AT_ROARING_PIERCER) {
+}
+
+void SkillRoaringPiercer::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	skillratio += -100 + 11250 + 700 * (skill_lv - 1);
+
+	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND)) {
+		const status_data* sstatus = status_get_status_data(*src);
+
+		skillratio += 5 * sstatus->spl;
+	}
+
+	// Unlike what the description indicates, the BaseLevel modifier is not part of the condition on SC_TRUTH_OF_WIND
+	RE_LVL_DMOD(100);
 }
 
 void SkillRoaringPiercer::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	status_change* sc = status_get_sc(src);
-
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	if (status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
+		SkillRoaringPiercerS skill_overcharged;
+		skill_overcharged.castendDamageId(src, target, skill_lv, tick, flag);
+		return;
 	}
 
-	if (flag & 1) {
-		SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
+	SkillFactoryDruid::addThunderingCharge(src, getSkillId(), skill_lv, 1);
+
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+
+	skill_area_temp[1] = target->id;
+
+	if (battle_config.skill_eightpath_algorithm) {
+		// Use official AoE algorithm
+		map_foreachindir(skill_attack_area, src->m, src->x, src->y, target->x, target->y,
+			skill_get_splash(getSkillId(), skill_lv), skill_get_range(getSkillId(), skill_lv)+2, 0, splash_target(src),
+			skill_get_type(getSkillId()), src, src, getSkillId(), skill_lv, tick, flag, BCT_ENEMY);
 	} else {
-		const int16 half_width = 2;
-		const int16 half_length = 4;
-		const int32 length = half_length * 2 + 1;
-		int32 offset = distance(target->x - src->x, target->y - src->y) - half_length;
-
-		if (offset < 0) {
-			offset = 0;
-		}
-
-		skill_area_temp[0] = 0;
-		skill_area_temp[1] = target->id;
-		skill_area_temp[2] = 0;
-		map_foreachindir(skill_area_sub, src->m, src->x, src->y, target->x, target->y, half_width, length, offset, splash_target(src),
-					src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | SD_SPLASH | 1, skill_castend_damage_id);
-	}
-	if (!(flag & 1)) {
-		SkillFactoryDruid::try_gain_thundering_charge(src, sc, getSkillId(), 1);
+		map_foreachinpath(skill_attack_area, src->m, src->x, src->y, target->x, target->y,
+			skill_get_splash(getSkillId(), skill_lv), skill_get_range(getSkillId(), skill_lv)+2, splash_target(src),
+			skill_get_type(getSkillId()), src, src, getSkillId(), skill_lv, tick, flag, BCT_ENEMY);
 	}
 }
 
-void SkillRoaringPiercer::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	const status_change* sc = status_get_sc(src);
+
+// AT_ROARING_PIERCER_S
+SkillRoaringPiercerS::SkillRoaringPiercerS() : SkillImpl(AT_ROARING_PIERCER_S) {
+}
+
+void SkillRoaringPiercerS::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	int32 skillratio = 11250 + 700 * (skill_lv - 1);
-	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-		RE_LVL_DMOD(100);
-	}
-	base_skillratio += -100 + skillratio;
-}
+	skillratio += -100 + 11250 + 750 * (skill_lv - 1);
 
-int64 SkillRoaringPiercer::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	e_skill actual_skill = getSkillId();
-	const status_change* sc = status_get_sc(src);
-	actual_skill = SkillFactoryDruid::resolve_thundering_charge_skill(sc, actual_skill);
+	// SPL and BaseLevel ratio do not depend on SC_TRUTH_OF_WIND
+	skillratio += 9 * sstatus->spl;
 
-	return skill_attack(skill_get_type(actual_skill), src, src, target, actual_skill, skill_lv, tick, flag);
-}
-
-SkillRoaringPiercerS::SkillRoaringPiercerS() : SkillImplRecursiveDamageSplash(AT_ROARING_PIERCER_S) {
+	RE_LVL_DMOD(100);
 }
 
 void SkillRoaringPiercerS::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	}
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 
-	if (flag & 1) {
-		SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
+	status_change_end(src, SC_THUNDERING_ROD);
+	status_change_end(src, SC_THUNDERING_ROD_MAX);
+
+	skill_area_temp[1] = target->id;
+
+	if (battle_config.skill_eightpath_algorithm) {
+		// Use official AoE algorithm
+		map_foreachindir(skill_attack_area, src->m, src->x, src->y, target->x, target->y,
+			skill_get_splash(getSkillId(), skill_lv), skill_get_range(getSkillId(), skill_lv)+2, 0, splash_target(src),
+			skill_get_type(getSkillId()), src, src, getSkillId(), skill_lv, tick, flag, BCT_ENEMY);
 	} else {
-		const int16 half_width = 2;
-		const int16 half_length = 4;
-		const int32 length = half_length * 2 + 1;
-		int32 offset = distance(target->x - src->x, target->y - src->y) - half_length;
-
-		if (offset < 0) {
-			offset = 0;
-		}
-
-		skill_area_temp[0] = 0;
-		skill_area_temp[1] = target->id;
-		skill_area_temp[2] = 0;
-		map_foreachindir(skill_area_sub, src->m, src->x, src->y, target->x, target->y, half_width, length, offset, splash_target(src),
-					src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | SD_PREAMBLE | SD_SPLASH | 1, skill_castend_damage_id);
+		map_foreachinpath(skill_attack_area, src->m, src->x, src->y, target->x, target->y,
+			skill_get_splash(getSkillId(), skill_lv), skill_get_range(getSkillId(), skill_lv)+2, splash_target(src),
+			skill_get_type(getSkillId()), src, src, getSkillId(), skill_lv, tick, flag, BCT_ENEMY);
 	}
-}
-
-void SkillRoaringPiercerS::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	const status_change* sc = status_get_sc(src);
-	const status_data* sstatus = status_get_status_data(*src);
-
-	int32 skillratio = 11250 + 750 * (skill_lv - 1);
-	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-		RE_LVL_DMOD(100);
-	}
-	base_skillratio += -100 + skillratio;
-}
-
-int64 SkillRoaringPiercerS::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
 }
