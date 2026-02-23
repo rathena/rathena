@@ -47558,6 +47558,7 @@ Body:
     CastTime: 700
     FixedCastTime: 1000
     AfterCastActDelay: 400
+    Duration1: 10000
     Cooldown: 300
     Requires:
       SpCost:
@@ -47581,6 +47582,7 @@ Body:
           Amount: 23
         - Level: 10
           Amount: 25
+    Status: Thundering_Rod
   - Id: 6564
     Name: KR_THUNDERING_FOCUS_S
     Description: Enhanced Thundering Focus

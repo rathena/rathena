@@ -17,6 +17,7 @@ class SkillFactoryDruid : public SkillFactory {
 public:
 	virtual std::unique_ptr<const SkillImpl> create(const e_skill skill_id) const override;
 
+	static void addThunderingCharge(block_list* src, uint16 skill_id, uint16 skill_lv, int32 charge);
 	static void try_gain_growth_stacks(block_list* src, t_tick tick, e_skill skill_id);
 	static void try_gain_thundering_charge(block_list* src, const status_change* sc, e_skill skill_id, int32 gain);
 	static e_skill resolve_thundering_charge_skill(const status_change* sc, e_skill skill_id);

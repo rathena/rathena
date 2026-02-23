@@ -3,76 +3,65 @@
 
 #include "thunderingfocus.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
+#include "map/status.hpp"
 
 #include "skill_factory_druid.hpp"
 
+// KR_THUNDERING_FOCUS
 SkillThunderingFocus::SkillThunderingFocus() : SkillImplRecursiveDamageSplash(KR_THUNDERING_FOCUS) {
 }
 
+void SkillThunderingFocus::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	skillratio += -100 + 840 + 70 * (skill_lv - 1);
+
+	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND)) {
+		const status_data* sstatus = status_get_status_data(*src);
+
+		skillratio += 4 * sstatus->int_;
+	}
+
+	// Unlike what the description indicates, the BaseLevel modifier is not part of the condition on SC_TRUTH_OF_WIND
+	RE_LVL_DMOD(100);
+}
+
 void SkillThunderingFocus::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	castendDamageId(src, target, skill_lv, tick, flag);
-}
-
-void SkillThunderingFocus::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	status_change* sc = status_get_sc(src);
-
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	if (status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
+		SkillThunderingFocusS skill_overcharged;
+		skill_overcharged.castendNoDamageId(src, target, skill_lv, tick, flag);
+		return;
 	}
 
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 
-	SkillFactoryDruid::try_gain_thundering_charge(src, sc, getSkillId(), 1);
+	SkillFactoryDruid::addThunderingCharge(src, getSkillId(), skill_lv, 1);
+
+	this->castendDamageId(src, target, skill_lv, tick, flag);
 }
 
-void SkillThunderingFocus::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	const status_change* sc = status_get_sc(src);
-	const status_data* sstatus = status_get_status_data(*src);
 
-	int32 skillratio = 840 + 70 * (skill_lv - 1);
-	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-		RE_LVL_DMOD(100);
-	}
-	base_skillratio += -100 + skillratio;
-}
-
-int64 SkillThunderingFocus::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	e_skill actual_skill = getSkillId();
-	const status_change* sc = status_get_sc(src);
-	actual_skill = SkillFactoryDruid::resolve_thundering_charge_skill(sc, actual_skill);
-
-	return skill_attack(skill_get_type(actual_skill), src, src, target, actual_skill, skill_lv, tick, flag);
-}
-
+// KR_THUNDERING_FOCUS_S
 SkillThunderingFocusS::SkillThunderingFocusS() : SkillImplRecursiveDamageSplash(KR_THUNDERING_FOCUS_S) {
 }
 
-void SkillThunderingFocusS::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	castendDamageId(src, target, skill_lv, tick, flag);
-}
-
-void SkillThunderingFocusS::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	}
-
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-}
-
-void SkillThunderingFocusS::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	const status_change* sc = status_get_sc(src);
+void SkillThunderingFocusS::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& skillratio, int32 mflag) const {
 	const status_data* sstatus = status_get_status_data(*src);
 
-	int32 skillratio = 1420 + 70 * (skill_lv - 1);
-	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-		RE_LVL_DMOD(100);
-	}
-	base_skillratio += -100 + skillratio;
+	skillratio += -100 + 1420 + 70 * (skill_lv - 1);
+
+	// INT and BaseLevel ratio do not depend on SC_TRUTH_OF_WIND
+	skillratio += 7 * sstatus->int_;
+
+	RE_LVL_DMOD(100);
 }
 
-int64 SkillThunderingFocusS::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
+void SkillThunderingFocusS::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+
+	status_change_end(src, SC_THUNDERING_ROD);
+	status_change_end(src, SC_THUNDERING_ROD_MAX);
+
+	this->castendDamageId(src, target, skill_lv, tick, flag);
 }

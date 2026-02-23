@@ -91,6 +91,35 @@
 		return 0;
 	}
 
+	void SkillFactoryDruid::addThunderingCharge(block_list *src, uint16 skill_id, uint16 skill_lv, int32 charge) {
+		if (charge <= 0)
+			return;
+
+		status_change* sc = status_get_sc(src);
+
+		if (sc == nullptr)
+			return;
+
+		sc_type type = skill_get_sc(skill_id);
+
+		if (type == SC_NONE)
+			return;
+
+		int32 duration = skill_get_time(skill_id, skill_lv);
+
+		if (sc->hasSCE(type)) {
+			charge += sc->getSCE(type)->val3;
+		}
+		
+		charge = std::min(6, charge);
+
+		sc_start4(src, src, type, 100, skill_id, skill_lv, charge, 0, duration);
+
+		if (charge == 6) {
+			sc_start(src, src, SC_THUNDERING_ROD_MAX, 100, 1, duration);
+		}
+	}
+
 	bool is_thundering_charge_skill(e_skill skill_id) {
 		switch (skill_id) {
 			case KR_THUNDERING_FOCUS:
