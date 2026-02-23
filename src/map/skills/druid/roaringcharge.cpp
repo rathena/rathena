@@ -3,79 +3,66 @@
 
 #include "roaringcharge.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
-#include "map/skill.hpp"
 #include "map/status.hpp"
 
 #include "skill_factory_druid.hpp"
 
+// AT_ROARING_CHARGE
 SkillRoaringCharge::SkillRoaringCharge() : SkillImplRecursiveDamageSplash(AT_ROARING_CHARGE) {
 }
 
+void SkillRoaringCharge::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	skillratio += -100 + 8000 + 400 * (skill_lv - 1);
+
+	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND)) {
+		const status_data* sstatus = status_get_status_data(*src);
+
+		skillratio += 4 * sstatus->spl;
+	}
+
+	// Unlike what the description indicates, the BaseLevel modifier is not part of the condition on SC_TRUTH_OF_WIND
+	RE_LVL_DMOD(100);
+}
+
 void SkillRoaringCharge::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	castendDamageId(src, target, skill_lv, tick, flag);
-}
-
-void SkillRoaringCharge::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	status_change* sc = status_get_sc(src);
-
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	if (status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
+		SkillRoaringChargeS skill_overcharged;
+		skill_overcharged.castendNoDamageId(src, target, skill_lv, tick, flag);
+		return;
 	}
 
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-	if (!(flag & 1)) {
-		SkillFactoryDruid::try_gain_thundering_charge(src, sc, getSkillId(), 1 + skill_lv);
-	}
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	SkillFactoryDruid::addThunderingCharge(src, getSkillId(), skill_lv, skill_lv + 1);
+	this->castendDamageId(src, target, skill_lv, tick, flag);
 }
 
-void SkillRoaringCharge::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	const status_change* sc = status_get_sc(src);
-	const status_data* sstatus = status_get_status_data(*src);
 
-	int32 skillratio = 8000 + 400 * (skill_lv - 1);
-	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-		RE_LVL_DMOD(100);
-	}
-	base_skillratio += -100 + skillratio;
-}
-
-int64 SkillRoaringCharge::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	e_skill actual_skill = getSkillId();
-	const status_change* sc = status_get_sc(src);
-	actual_skill = SkillFactoryDruid::resolve_thundering_charge_skill(sc, actual_skill);
-
-	return skill_attack(skill_get_type(actual_skill), src, src, target, actual_skill, skill_lv, tick, flag);
-}
-
+// AT_ROARING_CHARGE_S
 SkillRoaringChargeS::SkillRoaringChargeS() : SkillImplRecursiveDamageSplash(AT_ROARING_CHARGE_S) {
 }
 
-void SkillRoaringChargeS::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	}
+void SkillRoaringChargeS::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	const status_data* sstatus = status_get_status_data(*src);
 
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
+	skillratio += -100 + 11500 + 500 * (skill_lv - 1);
+
+	// SPL and BaseLevel ratio do not depend on SC_TRUTH_OF_WIND
+	skillratio += 7 * sstatus->spl;
+
+	RE_LVL_DMOD(100);
 }
 
 void SkillRoaringChargeS::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	castendDamageId(src, target, skill_lv, tick, flag);
-}
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 
-void SkillRoaringChargeS::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	const status_change* sc = status_get_sc(src);
-	const status_data* sstatus = status_get_status_data(*src);
+	status_change_end(src, SC_THUNDERING_ROD);
+	status_change_end(src, SC_THUNDERING_ROD_MAX);
 
-	int32 skillratio = 11500 + 500 * (skill_lv - 1);
-	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_WIND)) {
-		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-		RE_LVL_DMOD(100);
-	}
-	base_skillratio += -100 + skillratio;
-}
+	// The skill re-starts SC_THUNDERING_ROD_MAX
+	sc_start4(src, src, SC_THUNDERING_ROD_MAX, 100, getSkillId(), skill_lv, 0, 0, skill_get_time(getSkillId(), skill_lv));
 
-int64 SkillRoaringChargeS::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
+	this->castendDamageId(src, target, skill_lv, tick, flag);
 }

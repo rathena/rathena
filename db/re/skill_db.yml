@@ -47766,7 +47766,6 @@ Body:
     CastTime: 2000
     FixedCastTime: 1500
     AfterCastActDelay: 400
-    Duration1: 10000
     Cooldown: 3000
     Requires:
       SpCost:
@@ -47790,7 +47789,6 @@ Body:
           Amount: 77
         - Level: 10
           Amount: 80
-    Status: Thundering_Rod
   - Id: 6568
     Name: KR_THUNDERING_CALL_S
     Description: Enhanced Thundering Call
@@ -48980,6 +48978,7 @@ Body:
     CastTime: 1400
     FixedCastTime: 1500
     AfterCastActDelay: 400
+    Duration1: 10000
     Cooldown:
       - Level: 1
         Time: 30000
@@ -49003,6 +49002,7 @@ Body:
           Amount: 95
         - Level: 5
           Amount: 100
+    Status: Thundering_Rod
   - Id: 6600
     Name: AT_ROARING_CHARGE_S
     Description: Enhanced Roaring Charge
@@ -49028,6 +49028,7 @@ Body:
     CastTime: 1400
     FixedCastTime: 1500
     AfterCastActDelay: 400
+    Duration1: 10000
     Cooldown:
       - Level: 1
         Time: 30000
