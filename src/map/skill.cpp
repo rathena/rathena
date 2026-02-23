@@ -12095,6 +12095,9 @@ void skill_consume_requirement(map_session_data *sd, uint16 skill_id, uint16 ski
 			default:
 				if(sd->state.autocast)
 					require.sp = 0;
+				// Need to remove remembered Encore skill to prevent permanent halving of SP cost
+				if (sd->skill_id_old == BD_ENCORE && skill_id == sd->skill_id_dance)
+					sd->skill_id_old = 0;
 			break;
 		}
 		if(require.hp || require.sp || require.ap)
