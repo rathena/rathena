@@ -8389,6 +8389,10 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(block_list *src, uint16 sk
 			val1 += pc_checkskill(sd, BA_MUSICALLESSON) / 2;
 			val2 += pc_checkskill(sd, BA_MUSICALLESSON) / 5;
 		}
+		// If val2 is 9, you get +0 Lucky Dodge
+		// If val2 is 10, you get +1 Lucky Dodge
+		// To prevent 0.1 steps we divide it by 10 here and then multiply by 10 when it's applied
+		val2 /= 10;
 		break;
 	case DC_HUMMING:
 		val1 = 1 + 2 * skill_lv + status->dex / 10; // Hit increase
