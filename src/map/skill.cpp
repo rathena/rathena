@@ -4930,11 +4930,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case NV_FIRSTAID:
-		clif_skill_nodamage(src,*bl,skill_id,5);
-		status_heal(bl,5,0,0);
-		break;
-
 	case ALL_ODINS_RECALL:
 		if(sd != nullptr)
 		{

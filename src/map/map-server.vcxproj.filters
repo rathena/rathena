@@ -2301,6 +2301,9 @@
     <ClInclude Include="skills/novice/doublebowlingbash.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
+    <ClInclude Include="skills/novice/firstaid.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
     <ClInclude Include="skills/novice/groundgravitation.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
@@ -5643,6 +5646,9 @@
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/novice/doublebowlingbash.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/firstaid.cpp">
       <Filter>Source Files\Skills\Novice</Filter>
     </ClCompile>
     <ClCompile Include="skills/novice/groundgravitation.cpp">
