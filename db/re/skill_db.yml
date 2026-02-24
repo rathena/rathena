@@ -47558,6 +47558,7 @@ Body:
     CastTime: 700
     FixedCastTime: 1000
     AfterCastActDelay: 400
+    Duration1: 10000
     Cooldown: 300
     Requires:
       SpCost:
@@ -47581,6 +47582,7 @@ Body:
           Amount: 23
         - Level: 10
           Amount: 25
+    Status: Thundering_Rod
   - Id: 6564
     Name: KR_THUNDERING_FOCUS_S
     Description: Enhanced Thundering Focus
@@ -47652,6 +47654,7 @@ Body:
     CastTime: 1200
     FixedCastTime: 1200
     AfterCastActDelay: 400
+    Duration1: 10000
     Cooldown: 300
     Requires:
       SpCost:
@@ -47675,6 +47678,7 @@ Body:
           Amount: 62
         - Level: 10
           Amount: 65
+    Status: Thundering_Rod
   - Id: 6566
     Name: KR_THUNDERING_ORB_S
     Description: Enhanced Thundering Orb
@@ -47766,6 +47770,7 @@ Body:
     CastTime: 2000
     FixedCastTime: 1500
     AfterCastActDelay: 400
+    Duration1: 10000
     Cooldown: 3000
     Requires:
       SpCost:
@@ -47789,6 +47794,7 @@ Body:
           Amount: 77
         - Level: 10
           Amount: 80
+    Status: Thundering_Rod
   - Id: 6568
     Name: KR_THUNDERING_CALL_S
     Description: Enhanced Thundering Call

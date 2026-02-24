@@ -27,18 +27,16 @@ void SkillThunderingOrb::calculateSkillRatio(const Damage* wd, const block_list*
 	RE_LVL_DMOD(100);
 }
 
-void SkillThunderingOrb::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	if (!(flag & 1)) {
-		if (status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
-			SkillThunderingOrbS skill_overcharged;
-			skill_overcharged.castendDamageId(src, target, skill_lv, tick, flag);
-			return;
-		}
-
-		SkillFactoryDruid::addThunderingCharge(src, getSkillId(), skill_lv, 1);
+void SkillThunderingOrb::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
+	if (status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_THUNDERING_ROD_MAX)) {
+		SkillThunderingOrbS skill_overcharged;
+		skill_overcharged.castendPos2(src, x, y, skill_lv, tick, flag);
+		return;
 	}
 
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
+	SkillFactoryDruid::addThunderingCharge(src, getSkillId(), skill_lv, 1);
+
+	SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
 }
 
 
@@ -57,9 +55,9 @@ void SkillThunderingOrbS::calculateSkillRatio(const Damage* wd, const block_list
 	RE_LVL_DMOD(100);
 }
 
-void SkillThunderingOrbS::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+void SkillThunderingOrbS::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
 	status_change_end(src, SC_THUNDERING_ROD);
 	status_change_end(src, SC_THUNDERING_ROD_MAX);
 
-	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
+	SkillImplRecursiveDamageSplash::castendPos2(src, x, y, skill_lv, tick, flag);
 }
