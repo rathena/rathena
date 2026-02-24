@@ -3314,17 +3314,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case ML_PIERCE:
 				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
-			case RL_SLUGSHOT:
-				{
-					int8 dist = distance_bl(src, target);
-					if (dist > 3) {
-						// Reduce n hitrate for each cell after initial 3 cells. Different each level
-						// -10:-9:-8:-7:-6
-						dist -= 3;
-						hitrate -= ((11 - skill_lv) * dist);
-					}
-				}
-				break;
 		}
 	} else if (sd && wd->type&DMG_MULTI_HIT && wd->div_ == 2) // +1 hit per level of Double Attack on a successful double attack (making sure other multi attack skills do not trigger this) [helvetica]
 		hitrate += pc_checkskill(sd,TF_DOUBLE);
@@ -4889,61 +4878,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			break;
 		case MH_MAGMA_FLOW:
 			skillratio += -100 + (100 * skill_lv + 3 * status_get_lv(src)) * status_get_lv(src) / 120;
-			break;
-		case RL_MASS_SPIRAL:
-			skillratio += -100 + 200 * skill_lv;
-			break;
-		case RL_FIREDANCE:
-			skillratio += 100 + 100 * skill_lv;
-			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 20 : 0);
-			RE_LVL_DMOD(100);
-			break;
-		case RL_BANISHING_BUSTER:
-			skillratio += -100 + 1000 + 200 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case RL_S_STORM:
-			skillratio += -100 + 1700 + 200 * skill_lv;
-			break;
-		case RL_SLUGSHOT:
-			if (target->type == BL_MOB)
-				skillratio += -100 + 1200 * skill_lv;
-			else
-				skillratio += -100 + 2000 * skill_lv;
-			skillratio *= 2 + tstatus->size;
-			break;
-		case RL_D_TAIL:
-			skillratio += -100 + 500 + 200 * skill_lv;
-			if (sd && (wd->miscflag & 8))
-				skillratio *= 2;
-			RE_LVL_DMOD(100);
-			break;
-		case RL_R_TRIP:
-			skillratio += -100 + 350 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case RL_R_TRIP_PLUSATK:
-			skillratio += -100 + 300 + 300 * skill_lv;
-			break;
-		case RL_H_MINE:
-			if (sd && sd->flicker) // Flicker explosion damage: 500 + 300 * SkillLv
-				skillratio += -100 + 500 + 300 * skill_lv;
-			else // 200 + 200 * SkillLv
-				skillratio += -100 + 200 + 200 * skill_lv;
-			break;
-		case RL_HAMMER_OF_GOD:
-			skillratio += -100 + 100 * skill_lv;
-			if (sd) {
-				if (wd->miscflag & 8)
-					skillratio += 400 * sd->spiritball_old;
-				else
-					skillratio += 150 * sd->spiritball_old;
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case RL_FIRE_RAIN:
-		case RL_AM_BLAST:
-			skillratio += -100 + 3500 + 300 * skill_lv;
 			break;
 		case ABR_BATTLE_BUSTER:// Need official formula.
 		case ABR_DUAL_CANNON_FIRE:// Need official formula.
