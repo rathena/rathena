@@ -529,6 +529,7 @@
     <ClInclude Include="skills/homunculus/homunculus_overedboost.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_painkiller.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_poisonmist.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_pyroclastic.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_silentbreeze.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_silverveinrush.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_sonicclaw.hpp" />
@@ -2276,6 +2277,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_poisonmist.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_pyroclastic.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_silentbreeze.cpp">

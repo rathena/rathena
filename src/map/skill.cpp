@@ -5451,13 +5451,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 		}
 		break;
-	case MH_PYROCLASTIC:
-		if(hd) {
-			block_list *s_bl = battle_get_master(src);
-			if(s_bl) sc_start2(src, s_bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv)); //start on master
-			sc_start2(src, bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
-	     }
-	     break;
 	case MH_GOLDENE_TONE:
 	case MH_TEMPERING: {
 		block_list* master_bl = battle_get_master(src);
