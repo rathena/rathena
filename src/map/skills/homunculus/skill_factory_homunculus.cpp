@@ -17,6 +17,7 @@
 #include "homunculus_silentbreeze.cpp"
 #include "homunculus_silverveinrush.cpp"
 #include "homunculus_sonicclaw.cpp"
+#include "homunculus_steelhorn.cpp"
 #include "homunculus_stylechange.cpp"
 #include "homunculus_summonlegion.cpp"
 
@@ -42,6 +43,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillSilverveinRush>();
 		case MH_SONIC_CRAW:
 			return std::make_unique<SkillSonicClaw>();
+		case MH_STAHL_HORN:
+			return std::make_unique<SkillSteelHorn>();
 		case MH_STYLE_CHANGE:
 			return std::make_unique<SkillStyleChange>();
 		case MH_SUMMON_LEGION:

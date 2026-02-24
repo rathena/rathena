@@ -527,6 +527,7 @@
     <ClInclude Include="skills/homunculus/homunculus_silentbreeze.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_silverveinrush.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_sonicclaw.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_steelhorn.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_stylechange.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_summonlegion.hpp" />
     <ClInclude Include="skills/homunculus/skill_factory_homunculus.hpp" />
@@ -2263,6 +2264,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_sonicclaw.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_steelhorn.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_stylechange.cpp">

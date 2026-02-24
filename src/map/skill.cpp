@@ -1428,9 +1428,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 			}
 		}
 		break;
-	case MH_STAHL_HORN:
-		sc_start(src,bl, SC_STUN, 20 + 2 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
 	case MH_TOXIN_OF_MANDARA:
 		sc_start(src,bl, SC_TOXIN_OF_MANDARA, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -4474,7 +4471,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 
 	case MH_TWISTER_CUTTER:
 	case MH_GLANZEN_SPIES:
-	case MH_STAHL_HORN:
 	case MH_NEEDLE_STINGER:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
