@@ -20,6 +20,9 @@
     <Filter Include="Source Files\Skills\Gunslinger">
       <UniqueIdentifier>{129a9804-44ab-4d14-b769-ca170935d84e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Skills\Homunculus">
+      <UniqueIdentifier>{bb30f94b-9535-4216-90f0-68fca6c0f2f7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Skills\Mage">
       <UniqueIdentifier>{3612b198-b428-4041-870d-c0e3aec08184}</UniqueIdentifier>
     </Filter>
@@ -68,6 +71,9 @@
     </Filter>
     <Filter Include="Header Files\Skills\Gunslinger">
       <UniqueIdentifier>{8ff19f85-a0c3-4705-a6e3-3aa79f9b3b5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Homunculus">
+      <UniqueIdentifier>{b6122658-e6ec-4d32-a990-9d44aaec2750}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Skills\Mage">
       <UniqueIdentifier>{52aa6b4e-d378-48b4-86e5-c2ae706afb8b}</UniqueIdentifier>
@@ -1187,6 +1193,12 @@
     </ClInclude>
     <ClInclude Include="skills/gunslinger/wildshot.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_summonlegion.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/skill_factory_homunculus.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/activityburn.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
@@ -4528,6 +4540,12 @@
     </ClCompile>
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_summonlegion.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/skill_factory_homunculus.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/activityburn.cpp">
       <Filter>Source Files\Skills\Mage</Filter>

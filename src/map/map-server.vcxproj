@@ -517,6 +517,8 @@
     <ClInclude Include="skills/gunslinger/tripleaction.hpp" />
     <ClInclude Include="skills/gunslinger/wildfire.hpp" />
     <ClInclude Include="skills/gunslinger/wildshot.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_summonlegion.hpp" />
+    <ClInclude Include="skills/homunculus/skill_factory_homunculus.hpp" />
     <ClInclude Include="skills/mage/activityburn.hpp" />
     <ClInclude Include="skills/mage/ageofice.hpp" />
     <ClInclude Include="skills/mage/allbloom.hpp" />
@@ -2220,6 +2222,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_summonlegion.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/skill_factory_homunculus.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/activityburn.cpp">

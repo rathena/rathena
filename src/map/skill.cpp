@@ -5582,33 +5582,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	case MH_MAGMA_FLOW:
 	   sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 	   break;
-	case MH_SUMMON_LEGION: {
-		int32 summons[5] = {MOBID_S_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_GIANT_HORNET, MOBID_S_LUCIOLA_VESPA, MOBID_S_LUCIOLA_VESPA};
-		int32 qty[5] =     {3   , 3   , 4   , 4   , 5};
-		mob_data *sum_md;
-		int32 i_slave,c=0;
-
-		int32 maxcount = qty[skill_lv-1];
-		i_slave = map_foreachinmap(skill_check_condition_mob_master_sub ,hd->m, BL_MOB, hd->id, summons[skill_lv-1], skill_id, &c);
-		if(c >= maxcount) {
-			return 0; //max qty already spawned
-		}
-
-		for(i_slave=0; i_slave<qty[skill_lv - 1]; i_slave++){ //easy way
-			sum_md = mob_once_spawn_sub(src, src->m, src->x, src->y, status_get_name(*src), summons[skill_lv - 1], "", SZ_SMALL, AI_ATTACK);
-			if (sum_md) {
-				sum_md->master_id =  src->id;
-				sum_md->special_state.ai = AI_LEGION;
-				if (sum_md->deletetimer != INVALID_TIMER)
-					delete_timer(sum_md->deletetimer, mob_timer_delete);
-				sum_md->deletetimer = add_timer(gettick() + skill_get_time(skill_id, skill_lv), mob_timer_delete, sum_md->id, 0);
-				mob_spawn(sum_md); //Now it is ready for spawning.
-				sc_start4(sum_md,sum_md, SC_MODECHANGE, 100, 1, 0, MD_CANATTACK|MD_AGGRESSIVE, 0, 60000);
-			}
-		}
-		}
-		break;
-
 	case ALL_EQSWITCH:
 		if( sd ){
 			clif_equipswitch_reply( sd, false );
