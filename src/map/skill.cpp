@@ -5451,8 +5451,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 		}
 		break;
-	case MH_GOLDENE_TONE:
-	case MH_TEMPERING: {
+	case MH_GOLDENE_TONE: {
 		block_list* master_bl = battle_get_master(src);
 		
 		if (master_bl != nullptr){
