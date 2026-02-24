@@ -4459,7 +4459,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case MH_TOXIN_OF_MANDARA:
 	case MH_BLAZING_AND_FURIOUS:
 	case MH_MAGMA_FLOW:
-	case MH_HEILIGE_STANGE:
 		if(flag&1){
 			if((skill_id == MH_MAGMA_FLOW) && ((rnd()%100)>(3*skill_lv)) )
 				break;//chance to not trigger atk for magma

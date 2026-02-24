@@ -8,6 +8,7 @@
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
 #include "homunculus_needleofparalyze.cpp"
+#include "homunculus_holypole.cpp"
 #include "homunculus_lightofregene.cpp"
 #include "homunculus_midnightfrenzy.cpp"
 #include "homunculus_erasercutter.cpp"
@@ -25,6 +26,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 	switch (skill_id) {
 		case MH_ERASER_CUTTER:
 			return std::make_unique<SkillEraserCutter>();
+		case MH_HEILIGE_STANGE:
+			return std::make_unique<SkillHolyPole>();
 		case MH_LIGHT_OF_REGENE:
 			return std::make_unique<SkillLightOfRegene>();
 		case MH_MIDNIGHT_FRENZY:
