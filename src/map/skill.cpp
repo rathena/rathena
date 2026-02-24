@@ -4788,40 +4788,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case PR_REDEMPTIO:
-		if (sd && !(flag&1)) {
-			if (sd->status.party_id == 0) {
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			skill_area_temp[0] = 0;
-			party_foreachsamemap(skill_area_sub,
-				sd,skill_get_splash(skill_id, skill_lv),
-				src,skill_id,skill_lv,tick, flag|BCT_PARTY|1,
-				skill_castend_nodamage_id);
-			if (skill_area_temp[0] == 0) {
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-#ifndef RENEWAL
-			skill_area_temp[0] = battle_config.exp_cost_redemptio_limit - skill_area_temp[0]; // The actual penalty...
-			if (skill_area_temp[0] > 0 && !map_getmapflag(src->m, MF_NOEXPPENALTY) && battle_config.exp_cost_redemptio) { //Apply penalty
-				//If total penalty is 1% => reduced 0.2% penalty per each revived player
-				pc_lostexp(sd, u64min(sd->status.base_exp, (pc_nextbaseexp(sd) * skill_area_temp[0] * battle_config.exp_cost_redemptio / battle_config.exp_cost_redemptio_limit) / 100), 0);
-			}
-			status_set_sp(src, 0, 0);
-#endif
-			status_set_hp(src, 1, 0);
-			break;
-		} else if (!(status_isdead(*bl) && flag&1)) { 
-			//Invalid target, skip resurrection.
-			break;
-		}
-		//Revive
-		skill_area_temp[0]++; //Count it in, then fall-through to the Resurrection code.
-		skill_lv = 3; //Resurrection level 3 is used
-		[[fallthrough]];
-
 	case ALL_RESURRECTION:
 		if(sd && (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND)))
 		{	//No reviving in WoE grounds!

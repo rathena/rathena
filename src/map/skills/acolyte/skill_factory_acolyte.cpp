@@ -83,6 +83,7 @@
 #include "ragingtrifectablow.cpp"
 #include "raisingdragon.cpp"
 #include "rampageblaster.cpp"
+#include "redemptio.cpp"
 #include "renovatio.cpp"
 #include "reparatio.cpp"
 #include "rideinlightening.cpp"
@@ -307,6 +308,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillMagnificat>();
 		case PR_MAGNUS:
 			return std::make_unique<SkillMagnusExorcismus>();
+		case PR_REDEMPTIO:
+			return std::make_unique<SkillRedemptio>();
 		case PR_SANCTUARY:
 			return std::make_unique<SkillSanctuary>();
 		case PR_SLOWPOISON:

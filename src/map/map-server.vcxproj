@@ -319,6 +319,7 @@
     <ClInclude Include="skills/acolyte/ragingtrifectablow.hpp" />
     <ClInclude Include="skills/acolyte/raisingdragon.hpp" />
     <ClInclude Include="skills/acolyte/rampageblaster.hpp" />
+    <ClInclude Include="skills/acolyte/redemptio.hpp" />
     <ClInclude Include="skills/acolyte/renovatio.hpp" />
     <ClInclude Include="skills/acolyte/reparatio.hpp" />
     <ClInclude Include="skills/acolyte/rideinlightening.hpp" />
@@ -1628,6 +1629,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/rampageblaster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/redemptio.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/renovatio.cpp">
