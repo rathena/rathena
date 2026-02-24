@@ -13,7 +13,7 @@ void SkillEnergyDrain::calculateSkillRatio(const Damage *wd, const block_list *s
 }
 
 void SkillEnergyDrain::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	int32 heal = (int32)skill_attack( BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag);
+	int32 heal = (int32)skill_attack(BF_MAGIC, src, src, target, getSkillId(), skill_lv, tick, flag);
 	if (heal > 0){
 		clif_skill_nodamage(nullptr, *src, AL_HEAL, heal);
 		status_heal(src, heal, 0, 0);

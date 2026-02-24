@@ -4,7 +4,6 @@
 #include "lexaeterna2.hpp"
 
 #include "map/map.hpp"
-#include "map/pc.hpp"
 
 SkillLexAeterna2::SkillLexAeterna2() : SkillImpl(NPC_LEX_AETERNA) {
 }
