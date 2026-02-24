@@ -28,6 +28,7 @@
 #include "homunculus_tinderbreaker.cpp"
 #include "homunculus_continualbreakcombo.cpp"
 #include "homunculus_tempering.cpp"
+#include "homunculus_twistercutter.cpp"
 #include "homunculus_blastforge.cpp"
 #include "homunculus_eternalquickcombo.cpp"
 
@@ -79,6 +80,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillTempering>();
 		case MH_TINDER_BREAKER:
 			return std::make_unique<SkillTinderBreaker>();
+		case MH_TWISTER_CUTTER:
+			return std::make_unique<SkillTwisterCutter>();
 		case MH_ANGRIFFS_MODUS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MH_GOLDENE_FERSE:

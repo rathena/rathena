@@ -540,6 +540,7 @@
     <ClInclude Include="skills/homunculus/homunculus_summonlegion.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_tempering.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_tinderbreaker.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_twistercutter.hpp" />
     <ClInclude Include="skills/homunculus/skill_factory_homunculus.hpp" />
     <ClInclude Include="skills/mage/activityburn.hpp" />
     <ClInclude Include="skills/mage/ageofice.hpp" />
@@ -2313,6 +2314,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_tinderbreaker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_twistercutter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/skill_factory_homunculus.cpp">
