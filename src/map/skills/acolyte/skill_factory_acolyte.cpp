@@ -104,6 +104,7 @@
 #include "tigercannon.cpp"
 #include "turnundead.cpp"
 #include "vituperatum.cpp"
+#include "warpportal.cpp"
 #include "windmill.cpp"
 #include "zen.cpp"
 
@@ -177,6 +178,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillPneuma>();
 		case AL_RUWACH:
 			return std::make_unique<SkillRuwach>();
+		case AL_WARP:
+			return std::make_unique<SkillWarpPortal>();
 		case CD_ARBITRIUM:
 			return std::make_unique<SkillArbitrium>();
 		case CD_ARBITRIUM_ATK:

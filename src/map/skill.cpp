@@ -6512,30 +6512,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		// Ammo should be deleted right away.
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
-	case AL_WARP:
-		if(sd != nullptr) {
-			std::vector<std::string> maps( MAX_MEMOPOINTS + 1 );
-
-			maps.push_back( sd->status.save_point.map );
-
-			if( skill_lv >= 2 ){
-				maps.push_back( sd->status.memo_point[0].map );
-
-				if( skill_lv >= 3 ){
-					maps.push_back( sd->status.memo_point[1].map );
-
-					if( skill_lv >= 4 ){
-						maps.push_back( sd->status.memo_point[2].map );
-					}
-				}
-			}
-
-			clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
-		}
-		if( sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER) ) //Should only remove after the skill has been casted.
-			status_change_end(src,SC_CURSEDCIRCLE_ATKER);
-		return 0; // not to consume item.
-
 	case AM_RESURRECTHOMUN:	//[orn]
 		if (sd)
 		{

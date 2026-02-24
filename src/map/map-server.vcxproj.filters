@@ -660,6 +660,9 @@
     <ClInclude Include="skills/acolyte/vituperatum.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/warpportal.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/windmill.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -2085,13 +2088,7 @@
     <ClInclude Include="skills/merchant/weaponrepair.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
-    <ClInclude Include="skills/merchant/woodenattack.hpp">
-      <Filter>Header Files\Skills\Merchant</Filter>
-    </ClInclude>
     <ClInclude Include="skills/merchant/woodenfairy.hpp">
-      <Filter>Header Files\Skills\Merchant</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/merchant/woodenthrowrock.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/woodenwarrior.hpp">
@@ -4001,6 +3998,9 @@
     <ClCompile Include="skills/acolyte/vituperatum.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/warpportal.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/windmill.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -5426,13 +5426,7 @@
     <ClCompile Include="skills/merchant/weaponrepair.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
-    <ClCompile Include="skills/merchant/woodenattack.cpp">
-      <Filter>Source Files\Skills\Merchant</Filter>
-    </ClCompile>
     <ClCompile Include="skills/merchant/woodenfairy.cpp">
-      <Filter>Source Files\Skills\Merchant</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/woodenthrowrock.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/woodenwarrior.cpp">
