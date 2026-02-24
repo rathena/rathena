@@ -3,41 +3,36 @@
 
 #include "chillingblast.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
-#include "map/skill.hpp"
 #include "map/status.hpp"
 
-#include "skill_factory_druid.hpp"
+#include "glacialnova.hpp"
 
 SkillChillingBlast::SkillChillingBlast() : SkillImplRecursiveDamageSplash(AT_CHILLING_BLAST) {
 }
 
+void SkillChillingBlast::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	const status_data* sstatus = status_get_status_data(*src);
+
+	skillratio += -100 + 8400 + 1500 * (skill_lv - 1);
+
+	// SPL and BaseLevel ratio do not depend on SC_TRUTH_OF_ICE
+	skillratio += 20 * sstatus->spl;
+
+	RE_LVL_DMOD(100);
+}
+
 void SkillChillingBlast::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	castendDamageId(src, target, skill_lv, tick, flag);
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+
+	this->castendDamageId(src, target, skill_lv, tick, flag);
 }
 
-void SkillChillingBlast::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	status_change* sc = status_get_sc(src);
+void SkillChillingBlast::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
-	}
-
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-	if (!(flag & 1)) {
-		int32 gx = 0;
-		int32 gy = 0;
-		if (SkillFactoryDruid::get_glacier_center_on_map(src, sc, gx, gy)) {
-			skill_castend_pos2(src, gx, gy, AT_GLACIER_NOVA, 1, tick, 0);
-		}
-	}
-}
-
-void SkillChillingBlast::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	int32 skillratio = 8400 + 1500 * (skill_lv - 1);
-	base_skillratio += -100 + skillratio;
-}
-
-int64 SkillChillingBlast::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
+	SkillGlacialNova skillnova;
+	skillnova.castendPos2(src, 0, 0, 1, tick, flag);
 }
