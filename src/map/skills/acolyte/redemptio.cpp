@@ -59,42 +59,41 @@ void SkillRedemptio::castendNoDamageId(block_list* src, block_list* target, uint
 	}
 	if (!status_isdead(*target))
 		return;
+
+	int32 per = 0, sper = 0;
+	if (tsc && tsc->getSCE(SC_HELLPOWER)) {
+		clif_skill_nodamage(src, *target, ALL_RESURRECTION, skill_lv);
+		return;
+	}
+
+	if (map_getmapflag(target->m, MF_PVP) && dstsd && dstsd->pvp_point < 0)
+		return;
+
+	switch(skill_lv){
+	case 1: per=10; break;
+	case 2: per=30; break;
+	case 3: per=50; break;
+	case 4: per=80; break;
+	}
+	if(dstsd && dstsd->special_state.restart_full_recover)
+		per = sper = 100;
+	if (status_revive(target, per, sper))
 	{
-		int32 per = 0, sper = 0;
-		if (tsc && tsc->getSCE(SC_HELLPOWER)) {
-			clif_skill_nodamage(src, *target, ALL_RESURRECTION, skill_lv);
-			return;
-		}
-
-		if (map_getmapflag(target->m, MF_PVP) && dstsd && dstsd->pvp_point < 0)
-			return;
-
-		switch(skill_lv){
-		case 1: per=10; break;
-		case 2: per=30; break;
-		case 3: per=50; break;
-		case 4: per=80; break;
-		}
-		if(dstsd && dstsd->special_state.restart_full_recover)
-			per = sper = 100;
-		if (status_revive(target, per, sper))
+		clif_skill_nodamage(src,*target,ALL_RESURRECTION,skill_lv); //Both Redemptio and Res show this skill-animation.
+		if(sd && dstsd && battle_config.resurrection_exp > 0)
 		{
-			clif_skill_nodamage(src,*target,ALL_RESURRECTION,skill_lv); //Both Redemptio and Res show this skill-animation.
-			if(sd && dstsd && battle_config.resurrection_exp > 0)
-			{
-				t_exp exp = 0,jexp = 0;
-				int32 lv = dstsd->status.base_level - sd->status.base_level, jlv = dstsd->status.job_level - sd->status.job_level;
-				if(lv > 0 && pc_nextbaseexp(dstsd)) {
-					exp = (t_exp)(dstsd->status.base_exp * lv * battle_config.resurrection_exp / 1000000.);
-					if (exp < 1) exp = 1;
-				}
-				if(jlv > 0 && pc_nextjobexp(dstsd)) {
-					jexp = (t_exp)(dstsd->status.job_exp * lv * battle_config.resurrection_exp / 1000000.);
-					if (jexp < 1) jexp = 1;
-				}
-				if(exp > 0 || jexp > 0)
-					pc_gainexp (sd, target, exp, jexp, 0);
+			t_exp exp = 0,jexp = 0;
+			int32 lv = dstsd->status.base_level - sd->status.base_level, jlv = dstsd->status.job_level - sd->status.job_level;
+			if(lv > 0 && pc_nextbaseexp(dstsd)) {
+				exp = (t_exp)(dstsd->status.base_exp * lv * battle_config.resurrection_exp / 1000000.);
+				if (exp < 1) exp = 1;
 			}
+			if(jlv > 0 && pc_nextjobexp(dstsd)) {
+				jexp = (t_exp)(dstsd->status.job_exp * lv * battle_config.resurrection_exp / 1000000.);
+				if (jexp < 1) jexp = 1;
+			}
+			if(exp > 0 || jexp > 0)
+				pc_gainexp (sd, target, exp, jexp, 0);
 		}
 	}
 }
