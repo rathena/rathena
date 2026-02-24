@@ -4448,10 +4448,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case MH_ABSOLUTE_ZEPHYR:
 	case MH_TOXIN_OF_MANDARA:
 	case MH_BLAZING_AND_FURIOUS:
-	case MH_MAGMA_FLOW:
 		if(flag&1){
-			if((skill_id == MH_MAGMA_FLOW) && ((rnd()%100)>(3*skill_lv)) )
-				break;//chance to not trigger atk for magma
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		}
 		else
@@ -5471,9 +5468,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sc_start(src, master_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 		} break;
-	case MH_MAGMA_FLOW:
-	   sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-	   break;
 	case ALL_EQSWITCH:
 		if( sd ){
 			clif_equipswitch_reply( sd, false );

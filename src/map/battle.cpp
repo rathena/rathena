@@ -4699,9 +4699,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case MH_THE_ONE_FIGHTER_RISES:
 			skillratio += -100 + 580 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
 			break;
-		case MH_MAGMA_FLOW:
-			skillratio += -100 + (100 * skill_lv + 3 * status_get_lv(src)) * status_get_lv(src) / 120;
-			break;
 		case ABR_BATTLE_BUSTER:// Need official formula.
 		case ABR_DUAL_CANNON_FIRE:// Need official formula.
 			skillratio += -100 + 8000;

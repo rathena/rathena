@@ -522,6 +522,7 @@
     <ClInclude Include="skills/homunculus/homunculus_eternalquickcombo.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_holypole.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_lightofregene.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_magmaflow.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_midnightfrenzy.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_needleofparalyze.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_overedboost.hpp" />
@@ -2253,6 +2254,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_lightofregene.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_magmaflow.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_midnightfrenzy.cpp">
