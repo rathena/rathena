@@ -5,6 +5,7 @@
 
 #include "map/clif.hpp"
 #include "map/elemental.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillFlameRock::SkillFlameRock() : SkillImplRecursiveDamageSplash(EM_EL_FLAMEROCK) {

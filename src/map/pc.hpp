@@ -277,7 +277,7 @@ struct weapon_data {
 	int16 sp_drain_class[CLASS_MAX];
 
 	struct drain_data {
-		int16 rate; ///< Success rate 10000 = 100%
+		int16 rate; ///< Success rate 1000 = 100%
 		int16 per;  ///< Drain value/rate per attack
 	} hp_drain_rate, sp_drain_rate;
 

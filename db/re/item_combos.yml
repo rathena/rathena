@@ -53762,10 +53762,10 @@ Body:
       bonus2 bMagicAddSize,Size_Medium,20;
   - Combos:
       - Combo:
-          - aegis_490670    # 490670
+          - Memento_ME_CD    # 490670
           - Thanos_Hammer_AD    # 590020
       - Combo:
-          - aegis_490671    # 490671
+          - Comp_Memento_ME_CD    # 490671
           - Thanos_Hammer_AD    # 590020
     Script: |
       bonus2 bAddSize,Size_All,15;
@@ -53780,10 +53780,10 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490674    # 490674
+          - Memento_ME_EM    # 490674
           - Thanos_Staff_AD    # 550023
       - Combo:
-          - aegis_490675    # 490675
+          - Comp_Memento_ME_EM    # 490675
           - Thanos_Staff_AD    # 550023
     Script: |
       bonus2 bMagicAddSize,Size_All,15;
@@ -53798,10 +53798,10 @@ Body:
       }
   - Combos:
       - Combo:
-          - aegis_490658    # 490658
+          - Memento_ME_IQ    # 490658
           - Thanos_Knuckle_AD    # 560017
       - Combo:
-          - aegis_490659    # 490659
+          - Comp_Memento_ME_IQ    # 490659
           - Thanos_Knuckle_AD    # 560017
     Script: |
       bonus2 bAddSize,Size_All,15;
@@ -53853,10 +53853,10 @@ Body:
   - Combos:
       - Combo:
           - Thanos_Helm4_LT    # 400151
-          - aegis_490676    # 490676
+          - Memento_MI_CD    # 490676
       - Combo:
           - Thanos_Helm4_LT    # 400151
-          - aegis_490677    # 490677
+          - Comp_Memento_MI_CD    # 490677
     Script: |
       bonus2 bAddSize,Size_All,15;
       bonus2 bSkillAtk,"CD_PETITIO",5;
@@ -53871,10 +53871,10 @@ Body:
   - Combos:
       - Combo:
           - Thanos_Helm3_LT    # 400145
-          - aegis_490672    # 490672
+          - Memento_MI_EM    # 490672
       - Combo:
           - Thanos_Helm3_LT    # 400145
-          - aegis_490673    # 490673
+          - Comp_Memento_MI_EM    # 490673
     Script: |
       bonus2 bMagicAddSize,Size_All,15;
       bonus2 bSkillAtk,"EM_LIGHTNING_LAND",5;
@@ -53892,7 +53892,7 @@ Body:
           - Memento_MI_WH    # 490660
       - Combo:
           - Thanos_Helm2_LT    # 400142
-          - aegis_490661    # 490661
+          - Comp_Memento_MI_WH    # 490661
     Script: |
       bonus2 bAddSize,Size_All,15;
       bonus2 bSkillAtk,"WH_CRESCIVE_BOLT",5;
