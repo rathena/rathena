@@ -4678,9 +4678,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case EL_ROCK_CRUSHER:
 			skillratio += 700;
 			break;
-		case MH_NEEDLE_OF_PARALYZE:
-			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
-			break;
 		case MH_TOXIN_OF_MANDARA:
 			skillratio += -100 + 400 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
 			break;

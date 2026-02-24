@@ -517,6 +517,7 @@
     <ClInclude Include="skills/gunslinger/tripleaction.hpp" />
     <ClInclude Include="skills/gunslinger/wildfire.hpp" />
     <ClInclude Include="skills/gunslinger/wildshot.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_needleofparalyze.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_summonlegion.hpp" />
     <ClInclude Include="skills/homunculus/skill_factory_homunculus.hpp" />
     <ClInclude Include="skills/mage/activityburn.hpp" />
@@ -2222,6 +2223,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_needleofparalyze.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_summonlegion.cpp">
