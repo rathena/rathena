@@ -22,6 +22,7 @@ void SkillHammerOfGod::castendPos2(block_list* src, int32 x, int32 y, uint16 ski
 	map_foreachinarea(skill_area_sub, src->m, x - size, y - size, x + size, y + size, BL_CHAR | BL_SKILL, src, getSkillId(), skill_lv, tick, flag | BCT_ENEMY | 1, skill_castend_damage_id);
 }
 
+// TODO: refactor to SkillImplRecursiveDamageSplash
 void SkillHammerOfGod::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	const map_session_data* sd = BL_CAST(BL_PC, src);
 	const status_change* tsc = status_get_sc(target);
