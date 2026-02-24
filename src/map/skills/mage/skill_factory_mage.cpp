@@ -10,6 +10,7 @@
 #include "activityburn.cpp"
 #include "ageofice.cpp"
 #include "allbloom.cpp"
+#include "arrullo.cpp"
 #include "astralstrike.cpp"
 #include "avalanche.cpp"
 #include "beastlyhypnosis.cpp"
@@ -17,6 +18,7 @@
 #include "castcancel.cpp"
 #include "chainlightning.cpp"
 #include "classchange.cpp"
+#include "cloudkill.cpp"
 #include "coldbolt.cpp"
 #include "coldforce.cpp"
 #include "coma.cpp"
@@ -32,17 +34,23 @@
 #include "deeppoisoning.cpp"
 #include "deluge.cpp"
 #include "destructivehurricane.cpp"
+#include "diamonddust.cpp"
 #include "diamondstorm.cpp"
 #include "dispell.cpp"
 #include "drainlife.cpp"
 #include "earthcare.cpp"
+#include "earthgrave.cpp"
+#include "earthinsignia.cpp"
 #include "earthspike.cpp"
 #include "earthstrain.cpp"
+#include "electricwalk.cpp"
+#include "elementalaction.cpp"
 #include "elementalbuster.cpp"
 #include "elementalchangeearth.cpp"
 #include "elementalchangefire.cpp"
 #include "elementalchangewater.cpp"
 #include "elementalchangewind.cpp"
+#include "elementalshield.cpp"
 #include "elementalveil.cpp"
 #include "endowblaze.cpp"
 #include "endowquake.cpp"
@@ -54,12 +62,15 @@
 #include "fiberlock.cpp"
 #include "fireball.cpp"
 #include "firebolt.cpp"
+#include "fireinsignia.cpp"
 #include "firepillar.cpp"
+#include "firewalk.cpp"
 #include "firewall.cpp"
 #include "flamearmor.cpp"
 #include "flamerock.cpp"
 #include "flametechnic.cpp"
 #include "floralflareroad.cpp"
+#include "fourspiritanalysis.cpp"
 #include "frostdiver.cpp"
 #include "frostnova.cpp"
 #include "frostymisty.cpp"
@@ -92,8 +103,10 @@
 #include "mysteryillusion.cpp"
 #include "napalmbeat.cpp"
 #include "napalmvulcan.cpp"
+#include "poisonbuster.cpp"
 #include "poisonshield.cpp"
 #include "psychicstream.cpp"
+#include "psychicwave.cpp"
 #include "quagmire.cpp"
 #include "questioning.cpp"
 #include "rainofcrystal.cpp"
@@ -113,33 +126,46 @@
 #include "soulstrike.cpp"
 #include "soulvulcanstrike.cpp"
 #include "spellbreaker.cpp"
+#include "spellfist.cpp"
+#include "spiritcontrol.cpp"
+#include "spiritrecovery.cpp"
 #include "stasis.cpp"
 #include "stonecurse.cpp"
 #include "stormcannon.cpp"
 #include "stormgust.cpp"
 #include "stormwind.cpp"
 #include "strantumtremor.cpp"
+#include "striking.cpp"
 #include "strongprotection.cpp"
 #include "suicide.cpp"
+#include "summonearthspirittera.cpp"
 #include "summonelementalardor.cpp"
 #include "summonelementaldiluvio.cpp"
 #include "summonelementalprocella.cpp"
 #include "summonelementalserpens.cpp"
 #include "summonelementalterremotus.cpp"
 #include "summonfireball.cpp"
+#include "summonfirespiritagni.cpp"
 #include "summonlightningball.cpp"
 #include "summonstone.cpp"
 #include "summonwaterball.cpp"
+#include "summonwaterspiritaqua.cpp"
+#include "summonwindspiritventus.cpp"
 #include "terradrive.cpp"
 #include "tetravortex.cpp"
 #include "thunderstorm.cpp"
 #include "tornadostorm.cpp"
+#include "vacuumextreme.cpp"
+#include "varetyrspear.cpp"
 #include "venomswamp.cpp"
 #include "violentquake.cpp"
 #include "volcano.cpp"
+#include "warmer.cpp"
 #include "waterball.cpp"
+#include "waterinsignia.cpp"
 #include "whirlwind.cpp"
 #include "whiteimprison.cpp"
+#include "windinsignia.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -381,6 +407,58 @@ std::unique_ptr<const SkillImpl> SkillFactoryMage::create(const e_skill skill_id
 			return std::make_unique<SkillWhirlwind>();
 		case SA_VOLCANO:
 			return std::make_unique<SkillVolcano>();
+		case SO_ARRULLO:
+			return std::make_unique<SkillArrullo>();
+		case SO_CLOUD_KILL:
+			return std::make_unique<SkillCloudKill>();
+		case SO_DIAMONDDUST:
+			return std::make_unique<SkillDiamondDust>();
+		case SO_EARTHGRAVE:
+			return std::make_unique<SkillEarthGrave>();
+		case SO_EARTH_INSIGNIA:
+			return std::make_unique<SkillEarthInsignia>();
+		case SO_ELECTRICWALK:
+			return std::make_unique<SkillElectricWalk>();
+		case SO_ELEMENTAL_SHIELD:
+			return std::make_unique<SkillElementalShield>();
+		case SO_EL_ACTION:
+			return std::make_unique<SkillElementalAction>();
+		case SO_EL_ANALYSIS:
+			return std::make_unique<SkillFourSpiritAnalysis>();
+		case SO_EL_CONTROL:
+			return std::make_unique<SkillSpiritControl>();
+		case SO_EL_CURE:
+			return std::make_unique<SkillSpiritRecovery>();
+		case SO_FIREWALK:
+			return std::make_unique<SkillFireWalk>();
+		case SO_FIRE_INSIGNIA:
+			return std::make_unique<SkillFireInsignia>();
+		case SO_POISON_BUSTER:
+			return std::make_unique<SkillPoisonBuster>();
+		case SO_PSYCHIC_WAVE:
+			return std::make_unique<SkillPsychicWave>();
+		case SO_SPELLFIST:
+			return std::make_unique<SkillSpellFist>();
+		case SO_STRIKING:
+			return std::make_unique<SkillStriking>();
+		case SO_SUMMON_AGNI:
+			return std::make_unique<SkillSummonFireSpiritAgni>();
+		case SO_SUMMON_AQUA:
+			return std::make_unique<SkillSummonWaterSpiritAqua>();
+		case SO_SUMMON_TERA:
+			return std::make_unique<SkillSummonEarthSpiritTera>();
+		case SO_SUMMON_VENTUS:
+			return std::make_unique<SkillSummonWindSpiritVentus>();
+		case SO_VACUUM_EXTREME:
+			return std::make_unique<SkillVacuumExtreme>();
+		case SO_VARETYR_SPEAR:
+			return std::make_unique<SkillVaretyrSpear>();
+		case SO_WARMER:
+			return std::make_unique<SkillWarmer>();
+		case SO_WATER_INSIGNIA:
+			return std::make_unique<SkillWaterInsignia>();
+		case SO_WIND_INSIGNIA:
+			return std::make_unique<SkillWindInsignia>();
 		case WL_CHAINLIGHTNING:
 			return std::make_unique<SkillChainLightning>();
 		case WL_CHAINLIGHTNING_ATK:
