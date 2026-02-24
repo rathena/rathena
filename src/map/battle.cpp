@@ -3279,9 +3279,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 		}
 
 		switch(skill_id) { //Hit skill modifiers
-			case MS_MAGNUM:
-				hitrate += hitrate * 10 * skill_lv / 100;
-				break;
 			case NPC_WATERATTACK:
 			case NPC_GROUNDATTACK:
 			case NPC_FIREATTACK:
@@ -3310,9 +3307,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case NPC_ACIDBREATH:
 			case NPC_DARKNESSBREATH:
 				hitrate *= 2;
-				break;
-			case ML_PIERCE:
-				hitrate += hitrate * 5 * skill_lv / 100;
 				break;
 		}
 	} else if (sd && wd->type&DMG_MULTI_HIT && wd->div_ == 2) // +1 hit per level of Double Attack on a successful double attack (making sure other multi attack skills do not trigger this) [helvetica]
@@ -4667,53 +4661,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 	}
 
 	switch(skill_id) {
-		case MS_MAGNUM:
-			if(wd->miscflag == 1)
-				skillratio += 20 * skill_lv; //Inner 3x3 circle takes 100%+20%*level damage [Playtester]
-			else
-				skillratio += 10 * skill_lv; //Outer 5x5 circle takes 100%+10%*level damage [Playtester]
-			break;
-		case MA_DOUBLE:
-			skillratio += 10 * (skill_lv - 1);
-			break;
-		case MA_SHOWER:
-#ifdef RENEWAL
-			skillratio += 50 + 10 * skill_lv;
-#else
-			skillratio += -25 + 5 * skill_lv;
-#endif
-			break;
-		case MA_CHARGEARROW:
-			skillratio += 50;
-			break;
-		case ML_PIERCE:
-			skillratio += 10 * skill_lv;
-			break;
-		case MER_CRASH:
-			skillratio += 10 * skill_lv;
-			break;
-		case ML_BRANDISH:
-			{
-				int32 ratio = 100 + 20 * skill_lv;
-
-				skillratio += -100 + ratio;
-				if(skill_lv > 3 && wd->miscflag == 0)
-					skillratio += ratio / 2;
-				if(skill_lv > 6 && wd->miscflag == 0)
-					skillratio += ratio / 4;
-				if(skill_lv > 9 && wd->miscflag == 0)
-					skillratio += ratio / 8;
-				if(skill_lv > 6 && wd->miscflag == 1)
-					skillratio += ratio / 2;
-				if(skill_lv > 9 && wd->miscflag == 1)
-					skillratio += ratio / 4;
-				if(skill_lv > 9 && wd->miscflag == 2)
-					skillratio += ratio / 2;
-			}
-			break;
-		case MS_BOWLINGBASH:
-			skillratio += 40 * skill_lv;
-			break;
 		case NPC_PIERCINGATT:
 			skillratio += -25; //75% base damage
 			break;
@@ -4747,20 +4694,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			break;
 		case NPC_DARKCROSS:
 			skillratio += 35 * skill_lv;
-			break;
-#ifdef RENEWAL
-		case ML_SPIRALPIERCE:
-			skillratio += 50 + 50 * skill_lv;
-			RE_LVL_DMOD(100);
-		break;
-#endif
-		case MA_SHARPSHOOTING:
-#ifdef RENEWAL
-			skillratio += -100 + 300 + 300 * skill_lv;
-			RE_LVL_DMOD(100);
-#else
-			skillratio += 100 + 50 * skill_lv;
-#endif
 			break;
 #ifdef RENEWAL
 		case KN_CHARGEATK:

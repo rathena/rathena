@@ -677,7 +677,41 @@
     <ClInclude Include="skills/mage/whirlwind.hpp" />
     <ClInclude Include="skills/mage/whiteimprison.hpp" />
     <ClInclude Include="skills/mage/windinsignia.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_arrowrepel.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_arrowshower.hpp" />
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_benediction.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_blessing.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_bowlingbash.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_brandishspear.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_compress.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_crash.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_decreaseagi.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_doublestrafe.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_focusedarrowstrike.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_freezingtrap.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_increaseagility.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_kyrieeleison.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_landmine.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_lexdivina.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_magnificat.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_magnumbreak.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_mentalcure.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_mindblaster.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_pierce.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_provoke.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_recuperate.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_regain.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_removetrap.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_sacrifice.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_sandman.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_scapegoat.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_sense.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_shieldreflect.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_sight.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_skidtrap.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_spiralpierce.hpp" />
+    <ClInclude Include="skills/mercenary/mercenary_tender.hpp" />
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp" />
     <ClInclude Include="skills/merchant/abrbattlewarior.hpp" />
     <ClInclude Include="skills/merchant/abrdualcannon.hpp" />
@@ -2514,7 +2548,109 @@
     <ClCompile Include="skills/mage/windinsignia.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_arrowrepel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_arrowshower.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_benediction.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_blessing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_bowlingbash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_brandishspear.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_compress.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_crash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_decreaseagi.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_doublestrafe.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_focusedarrowstrike.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_freezingtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_increaseagility.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_kyrieeleison.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_landmine.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_lexdivina.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_magnificat.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_magnumbreak.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_mentalcure.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_mindblaster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_pierce.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_provoke.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_recuperate.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_regain.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_removetrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_sacrifice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_sandman.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_scapegoat.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_sense.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_shieldreflect.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_sight.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_skidtrap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_spiralpierce.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_tender.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
