@@ -5570,11 +5570,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sc_start(src, master_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 		} break;
-	case MH_PAIN_KILLER:
-		bl = battle_get_master(src);
-		if (bl != nullptr)
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
 	case MH_MAGMA_FLOW:
 	   sc_start(src,bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 	   break;
