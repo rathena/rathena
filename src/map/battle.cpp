@@ -3277,38 +3277,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 		if (skill != nullptr && skill->impl != nullptr) {
 			skill->impl->modifyHitRate(hitrate, src, target, skill_lv);
 		}
-
-		switch(skill_id) { //Hit skill modifiers
-			case NPC_WATERATTACK:
-			case NPC_GROUNDATTACK:
-			case NPC_FIREATTACK:
-			case NPC_WINDATTACK:
-			case NPC_POISONATTACK:
-			case NPC_HOLYATTACK:
-			case NPC_DARKNESSATTACK:
-			case NPC_TELEKINESISATTACK:
-			case NPC_UNDEADATTACK:
-			case NPC_CHANGEUNDEAD:
-			case NPC_POISON:
-			case NPC_BLINDATTACK:
-			case NPC_SILENCEATTACK:
-			case NPC_STUNATTACK:
-			case NPC_PETRIFYATTACK:
-			case NPC_CURSEATTACK:
-			case NPC_SLEEPATTACK:
-			case NPC_BLEEDING:
-			case NPC_BLEEDING2:
-				hitrate += hitrate * 20 / 100;
-				break;
-			case NPC_FIREBREATH:
-			case NPC_ICEBREATH:
-			case NPC_ICEBREATH2:
-			case NPC_THUNDERBREATH:
-			case NPC_ACIDBREATH:
-			case NPC_DARKNESSBREATH:
-				hitrate *= 2;
-				break;
-		}
 	} else if (sd && wd->type&DMG_MULTI_HIT && wd->div_ == 2) // +1 hit per level of Double Attack on a successful double attack (making sure other multi attack skills do not trigger this) [helvetica]
 		hitrate += pc_checkskill(sd,TF_DOUBLE);
 
@@ -4603,7 +4571,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 	status_data* sstatus = status_get_status_data(*src);
 	status_data* tstatus = status_get_status_data(*target);
 	int32 skillratio = 100;
-	int32 i;
 
 	//Skill damage modifiers that stack linearly
 	if(sc && skill_id != PA_SACRIFICE) {
@@ -4661,40 +4628,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 	}
 
 	switch(skill_id) {
-		case NPC_PIERCINGATT:
-			skillratio += -25; //75% base damage
-			break;
-		case NPC_COMBOATTACK:
-			skillratio += 25 * skill_lv;
-			break;
-		case NPC_RANDOMATTACK:
-		case NPC_WATERATTACK:
-		case NPC_GROUNDATTACK:
-		case NPC_FIREATTACK:
-		case NPC_WINDATTACK:
-		case NPC_POISONATTACK:
-		case NPC_HOLYATTACK:
-		case NPC_DARKNESSATTACK:
-		case NPC_UNDEADATTACK:
-		case NPC_TELEKINESISATTACK:
-		case NPC_BLOODDRAIN:
-		case NPC_ACIDBREATH:
-		case NPC_DARKNESSBREATH:
-		case NPC_FIREBREATH:
-		case NPC_ICEBREATH:
-		case NPC_ICEBREATH2:
-		case NPC_THUNDERBREATH:
-		case NPC_HELLJUDGEMENT:
-		case NPC_HELLJUDGEMENT2:
-		case NPC_PULSESTRIKE:
-			skillratio += 100 * (skill_lv - 1);
-			break;
-		case NPC_REVERBERATION_ATK:
-			skillratio += 400 + 200 * skill_lv;
-			break;
-		case NPC_DARKCROSS:
-			skillratio += 35 * skill_lv;
-			break;
 #ifdef RENEWAL
 		case KN_CHARGEATK:
 			skillratio += 600;
@@ -4716,34 +4649,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			break;
 		case HFLI_SBR44: //[orn]
 			skillratio += 100 * (skill_lv - 1);
-			break;
-		case NPC_VAMPIRE_GIFT:
-			skillratio += ((skill_lv - 1) % 5 + 1) * 100;
-			break;
-		case NPC_IGNITIONBREAK:
-			// 3x3 cell Damage   = 1000  1500  2000  2500  3000 %
-			// 7x7 cell Damage   = 750   1250  1750  2250  2750 %
-			// 11x11 cell Damage = 500   1000  1500  2000  2500 %
-			i = distance_bl(src,target);
-			if (i < 2)
-				skillratio += -100 + 500 * (skill_lv + 1);
-			else if (i < 4)
-				skillratio += -100 + 250 + 500 * skill_lv;
-			else
-				skillratio += -100 + 500 * skill_lv;
-			break;
-		// case NPC_PHANTOMTHRUST:	// ATK = 100% for all level
-		case NPC_ARROWSTORM:
-			if (skill_lv > 4)
-				skillratio += 1900;
-			else
-				skillratio += 900;
-			break;
-		case NPC_DRAGONBREATH:
-			if (skill_lv > 5)
-				skillratio += 500 + 500 * (skill_lv - 5);	// Level 6-10 is using water element, like RK_DRAGONBREATH_WATER
-			else
-				skillratio += 500 + 500 * skill_lv;	// Level 1-5 is using fire element, like RK_DRAGONBREATH
 			break;
 		// Physical Elemantal Spirits Attack Skills
 		case EL_CIRCLE_OF_FIRE:
@@ -6551,43 +6456,12 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						if (sd && ad.div_ > 0)
 							ad.div_ *= -1; //For players, damage is divided by number of hits
 						break;
-					case NPC_ENERGYDRAIN:
-						skillratio += 100 * skill_lv;
-						break;
 #ifdef RENEWAL
-					case NPC_GROUNDDRIVE:
-						skillratio += 25;
-						break;
 					case HW_GRAVITATION:
 						skillratio += -100 + 100 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 #endif
-					case NPC_JACKFROST:
-						if (tsc && tsc->getSCE(SC_FREEZING)) {
-							skillratio += 900 + 300 * skill_lv;
-							RE_LVL_DMOD(100);
-						} else {
-							skillratio += 400 + 100 * skill_lv;
-							RE_LVL_DMOD(150);
-						}
-						break;
-					case NPC_RAYOFGENESIS:
-						skillratio += -100 + 200 * skill_lv;
-						break;
-					case NPC_FIREWALK:
-					case NPC_ELECTRICWALK:
-						skillratio += -100 + 100 * skill_lv;
-						break;
-					case NPC_POISON_BUSTER:
-						skillratio += -100 + 1500 * skill_lv;
-						break;
-					case NPC_PSYCHIC_WAVE:
-						skillratio += -100 + 500 * skill_lv;
-						break;
-					case NPC_CLOUD_KILL:
-						skillratio += -100 + 50 * skill_lv;
-						break;
 					// Magical Elemental Spirits Attack Skills
 					case EL_FIRE_MANTLE:
 					case EL_WATER_SCREW:
@@ -6624,29 +6498,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						break;
 					case MH_POISON_MIST:
 						skillratio += -100 + 200 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // ! TODO: Confirm DEX bonus
-						break;
-					case NPC_VENOMFOG:
-						skillratio += 600 + 100 * skill_lv;
-						break;
-					case NPC_COMET:
-						i = (sc ? distance_xy(target->x, target->y, sc->comet_x, sc->comet_y) : 8) / 2;
-						i = cap_value(i, 1, 4);
-						skillratio = 2500 + ((skill_lv - i + 1) * 500);
-						break;
-					case NPC_FIRESTORM:
-						skillratio += 200;
-						break;
-					case NPC_HELLBURNING:
-						skillratio += 900;
-						break;
-					case NPC_PULSESTRIKE2:
-						skillratio += 100;
-						break;
-					case NPC_STORMGUST2:
-						skillratio += 200 * skill_lv;
-						break;
-					case NPC_RAINOFMETEOR:
-						skillratio += 350;	// unknown ratio
 						break;
 					case HN_GROUND_GRAVITATION:
 						if (mflag & SKILL_ALTDMG_FLAG) {
