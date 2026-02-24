@@ -21,6 +21,7 @@
 #include "homunculus_steelhorn.cpp"
 #include "homunculus_stylechange.cpp"
 #include "homunculus_summonlegion.cpp"
+#include "homunculus_tinderbreaker.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -52,6 +53,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillStyleChange>();
 		case MH_SUMMON_LEGION:
 			return std::make_unique<SkillSummonLegion>();
+		case MH_TINDER_BREAKER:
+			return std::make_unique<SkillTinderBreaker>();
 		case MH_ANGRIFFS_MODUS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MH_GOLDENE_FERSE:

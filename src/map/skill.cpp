@@ -4473,21 +4473,13 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case MH_NEEDLE_STINGER:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
-	case MH_TINDER_BREAKER:
 	case MH_CBC:
 	case MH_EQC:
 		{
-			TBL_HOM *hd = BL_CAST(BL_HOM,src);
 			int32 duration = max(skill_lv, (status_get_str(src) / 7 - status_get_str(bl) / 10)) * 1000; //Yommy formula
 			sc_type type;
 
-			if( skill_id == MH_TINDER_BREAKER ){
-				type = SC_TINDER_BREAKER2;
-				if( unit_movepos(src, bl->x, bl->y, 1, 1) ){
-					clif_blown(src);
-					clif_skill_poseffect( *src, skill_id, skill_lv, bl->x, bl->y, tick );
-				}
-			}else if( skill_id == MH_CBC ){
+			if( skill_id == MH_CBC ){
 				type = SC_CBC;
 			}else if( skill_id == MH_EQC ){
 				type = SC_EQC;
