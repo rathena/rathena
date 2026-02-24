@@ -771,6 +771,7 @@
     <ClInclude Include="skills/merchant/hammerfall.hpp" />
     <ClInclude Include="skills/merchant/hellsplant.hpp" />
     <ClInclude Include="skills/merchant/helltree.hpp" />
+    <ClInclude Include="skills/merchant/homunculusresurrection.hpp" />
     <ClInclude Include="skills/merchant/howlingofmandragora.hpp" />
     <ClInclude Include="skills/merchant/illusiondoping.hpp" />
     <ClInclude Include="skills/merchant/infraredscan.hpp" />
@@ -2981,6 +2982,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/helltree.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/homunculusresurrection.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/howlingofmandragora.cpp">

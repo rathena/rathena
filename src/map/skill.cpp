@@ -6512,17 +6512,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		// Ammo should be deleted right away.
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
-	case AM_RESURRECTHOMUN:	//[orn]
-		if (sd)
-		{
-			if (!hom_ressurect(sd, 20*skill_lv, x, y))
-			{
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-		}
-		break;
-
 	default:
 		if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
 			skill->impl->castendPos2(src, x, y, skill_lv, tick, flag);

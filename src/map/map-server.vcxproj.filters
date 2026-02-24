@@ -1950,6 +1950,9 @@
     <ClInclude Include="skills/merchant/helltree.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/homunculusresurrection.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/howlingofmandragora.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -5286,6 +5289,9 @@
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/helltree.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/merchant/homunculusresurrection.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/howlingofmandragora.cpp">
