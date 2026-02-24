@@ -48679,13 +48679,13 @@ Body:
     MaxLevel: 1
     Type: Magic
     TargetType: Ground
+    DamageFlags:
+      Splash: true
     Range: 1
     Hit: Multi_Hit
     HitCount: -2
     Element: Water
-    SplashArea:
-      - Level: 1
-        Area: 4
+    SplashArea: 4
   - Id: 6594
     Name: AT_GLACIER_SHARD
     Description: Glacial Shard
