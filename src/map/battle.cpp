@@ -6493,9 +6493,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case MH_HEILIGE_PFERD:
 						skillratio += -100 + 1200 + 350 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
 						break;
-					case MH_POISON_MIST:
-						skillratio += -100 + 200 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // ! TODO: Confirm DEX bonus
-						break;
 					case HN_GROUND_GRAVITATION:
 						if (mflag & SKILL_ALTDMG_FLAG) {
 							// Initial damage
