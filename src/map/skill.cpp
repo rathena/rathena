@@ -1418,16 +1418,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case EL_TYPOON_MIS:
 		sc_start(src,bl,SC_SILENCE,10*skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
-	case MH_EQC:
-		{
-			homun_data *hd = BL_CAST(BL_HOM, src);
-
-			if (hd) {
-				sc_start2(src, bl, SC_STUN, 100, skill_lv, bl->id, 1000 * hd->homunculus.level / 50 + 500 * skill_lv);
-				status_change_end(bl, SC_TINDER_BREAKER2);
-			}
-		}
-		break;
 	case MH_TOXIN_OF_MANDARA:
 		sc_start(src,bl, SC_TOXIN_OF_MANDARA, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
@@ -4473,20 +4463,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case MH_NEEDLE_STINGER:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
-	case MH_EQC:
-		{
-			int32 duration = max(skill_lv, (status_get_str(src) / 7 - status_get_str(bl) / 10)) * 1000; //Yommy formula
-			sc_type type;
-
-			if( skill_id == MH_EQC ){
-				type = SC_EQC;
-			}
-
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv,sc_start4(src,bl,type,100,skill_lv,src->id,0,0,duration));
-			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-		}
-		break;
-
 	case 0:/* no skill - basic/normal attack */
 		if(sd) {
 			if (flag & 3){
