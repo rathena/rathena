@@ -5505,21 +5505,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			sc_start2(src, bl, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
 	     }
 	     break;
-	case MH_STYLE_CHANGE:
-		if(hd){
-			struct status_change_entry *sce;
-			if((sce=hd->sc.getSCE(SC_STYLE_CHANGE))!=nullptr){ //in preparation for other bl usage
-				if(sce->val1 == MH_MD_FIGHTING) sce->val1 = MH_MD_GRAPPLING;
-				else sce->val1 = MH_MD_FIGHTING;
-				//if(hd->master && hd->sc.getSCE(SC_STYLE_CHANGE)) { // Aegis does not show any message when switching fighting style
-				//	char output[128];
-				//	safesnprintf(output,sizeof(output),msg_txt(sd,378),(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
-				//	clif_messagecolor(hd->master, color_table[COLOR_RED], output, false, SELF);
-				//}
-			}
-			else sc_start(hd,hd, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
-		}
-		break;
 	case MH_GOLDENE_TONE:
 	case MH_TEMPERING: {
 		block_list* master_bl = battle_get_master(src);
