@@ -4476,7 +4476,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case MH_GLANZEN_SPIES:
 	case MH_STAHL_HORN:
 	case MH_NEEDLE_STINGER:
-	case MH_MIDNIGHT_FRENZY:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 	case MH_TINDER_BREAKER:

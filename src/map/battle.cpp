@@ -4702,9 +4702,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case MH_THE_ONE_FIGHTER_RISES:
 			skillratio += -100 + 580 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
 			break;
-		case MH_MIDNIGHT_FRENZY:
-			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 150 + sstatus->str; // !TODO: Confirm STR bonus
-			break;
 		case MH_MAGMA_FLOW:
 			skillratio += -100 + (100 * skill_lv + 3 * status_get_lv(src)) * status_get_lv(src) / 120;
 			break;
