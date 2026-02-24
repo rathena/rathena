@@ -1403,21 +1403,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 				}
 			}
 			break;
-	case EL_WIND_SLASH:	// Non confirmed rate.
-		sc_start2(src,bl, SC_BLEEDING, 25, skill_lv, src->id, skill_get_time(skill_id,skill_lv));
-		break;
-	case EL_STONE_HAMMER:
-		sc_start(src, bl, SC_STUN, 10 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
-		break;
-	case EL_ROCK_CRUSHER:
-		sc_start(src,bl, SC_ROCK_CRUSHER,50,skill_lv,skill_get_time(EL_ROCK_CRUSHER,skill_lv));
-		break;
-	case EL_ROCK_CRUSHER_ATK:
-		sc_start(src,bl,SC_ROCK_CRUSHER_ATK,50,skill_lv,skill_get_time(EL_ROCK_CRUSHER,skill_lv));
-		break;
-	case EL_TYPOON_MIS:
-		sc_start(src,bl,SC_SILENCE,10*skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
-		break;
 	case MH_EQC:
 		{
 			homun_data *hd = BL_CAST(BL_HOM, src);
@@ -4312,6 +4297,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
+	//Splash attack skills.
 	case MH_XENO_SLASHER:
 	case MH_HEILIGE_PFERD:
 	case MH_THE_ONE_FIGHTER_RISES:
@@ -4389,78 +4375,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case HVAN_EXPLOSION:
 		if (src != bl)
 			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-
-	case EL_FIRE_BOMB:
-	case EL_FIRE_WAVE:
-	case EL_WATER_SCREW:
-	case EL_HURRICANE:
-	case EL_TYPOON_MIS:
-		if( flag&1 )
-			skill_attack(skill_get_type(skill_id+1),src,src,bl,skill_id+1,skill_lv,tick,flag);
-		else {
-			int32 i = skill_get_splash(skill_id,skill_lv);
-			clif_skill_nodamage(src,*battle_get_master(src),skill_id,skill_lv);
-			clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-			if( rnd()%100 < 30 )
-				map_foreachinrange(skill_area_sub,bl,i,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-			else
-				skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-		}
-		break;
-
-	case EL_ROCK_CRUSHER:
-		clif_skill_nodamage(src,*battle_get_master(src),skill_id,skill_lv);
-		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		if( rnd()%100 < 50 )
-			skill_attack(BF_MAGIC,src,src,bl,skill_id,skill_lv,tick,flag);
-		else
-			skill_attack(BF_WEAPON,src,src,bl,EL_ROCK_CRUSHER_ATK,skill_lv,tick,flag);
-		break;
-
-	case EL_STONE_RAIN:
-		if( flag&1 )
-			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-		else {
-			int32 i = skill_get_splash(skill_id,skill_lv);
-			clif_skill_nodamage(src,*battle_get_master(src),skill_id,skill_lv);
-			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-			if( rnd()%100 < 30 )
-				map_foreachinrange(skill_area_sub,bl,i,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
-			else
-				skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-		}
-		break;
-
-	case EL_FIRE_ARROW:
-	case EL_ICE_NEEDLE:
-	case EL_WIND_SLASH:
-	case EL_STONE_HAMMER:
-		clif_skill_nodamage(src,*battle_get_master(src),skill_id,skill_lv);
-		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-		break;
-
-	case EL_TIDAL_WEAPON:
-		if( src->type == BL_ELEM ) {
-			s_elemental_data *ele = BL_CAST(BL_ELEM,src);
-			status_change *tsc_ele = status_get_sc(ele);
-			sc_type type = SC_TIDAL_WEAPON_OPTION, type2 = SC_TIDAL_WEAPON;
-
-			clif_skill_nodamage(src,*battle_get_master(src),skill_id,skill_lv);
-			clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-			if( (tsc_ele && tsc_ele->getSCE(type2)) || (tsc && tsc->getSCE(type)) ) {
-				status_change_end(battle_get_master(src),type);
-				status_change_end(src,type2);
-			}
-			if( rnd()%100 < 50 )
-				skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
-			else {
-				sc_start(src,src,type2,100,skill_lv,skill_get_time(skill_id,skill_lv));
-				sc_start(src,battle_get_master(src),type,100,ele->id,skill_get_time(skill_id,skill_lv));
-			}
-			clif_skill_nodamage(src,*src,skill_id,skill_lv);
-		}
 		break;
 
 	//recursive homon skill
@@ -4868,6 +4782,10 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				}
 			}
 		}
+		break;
+
+	case ITEM_ENCHANTARMS:
+		clif_skill_nodamage(src, *bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_get_ele(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)));
 		break;
 
 	case ALL_RAY_OF_PROTECTION:
@@ -5439,71 +5357,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
       
-	case EL_CIRCLE_OF_FIRE:
-	case EL_PYROTECHNIC:
-	case EL_HEATER:
-	case EL_TROPIC:
-	case EL_AQUAPLAY:
-	case EL_COOLER:
-	case EL_CHILLY_AIR:
-	case EL_GUST:
-	case EL_BLAST:
-	case EL_WILD_STORM:
-	case EL_PETROLOGY:
-	case EL_CURSED_SOIL:
-	case EL_UPHEAVAL:
-	case EL_FIRE_CLOAK:
-	case EL_WATER_DROP:
-	case EL_WIND_CURTAIN:
-	case EL_SOLID_SKIN:
-	case EL_STONE_SHIELD:
-	case EL_WIND_STEP:
-	{
-			s_elemental_data *ele = BL_CAST(BL_ELEM, src);
-			if( ele ) {
-				sc_type type2 = (sc_type)(type-1);
-				status_change *esc = status_get_sc(ele);
-
-				if( (esc && esc->getSCE(type2)) || (tsc && tsc->getSCE(type)) ) {
-					status_change_end(src,type);
-					status_change_end(bl,type2);
-				} else {
-					clif_skill_nodamage(src,*src,skill_id,skill_lv);
-					clif_skill_damage( *src, ( skill_id == EL_GUST || skill_id == EL_BLAST || skill_id == EL_WILD_STORM ) ? *src : *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-					if( skill_id == EL_WIND_STEP )	// There aren't teleport, just push the master away.
-						skill_blown(src,bl,(rnd()%skill_get_blewcount(skill_id,skill_lv))+1,rnd()%8,BLOWN_NONE);
-					sc_start(src,src,type2,100,skill_lv,skill_get_time(skill_id,skill_lv));
-					sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv));
-				}
-			}
-		}
-		break;
-	case EL_FIRE_MANTLE:
-	case EL_WATER_BARRIER:
-	case EL_ZEPHYR:
-	case EL_POWER_OF_GAIA:
-		clif_skill_damage( *src, *bl, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-		skill_unitsetting(src,skill_id,skill_lv,bl->x,bl->y,0);
-		break;
-	case EL_WATER_SCREEN: {
-			s_elemental_data *ele = BL_CAST(BL_ELEM, src);
-			if( ele ) {
-				status_change *esc = status_get_sc(ele);
-				sc_type type2 = (sc_type)(type-1);
-
-				clif_skill_nodamage(src,*src,skill_id,skill_lv);
-				if( (esc && esc->getSCE(type2)) || (tsc && tsc->getSCE(type)) ) {
-					status_change_end(bl,type);
-					status_change_end(src,type2);
-				} else {
-					// This not heals at the end.
-					clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-					sc_start(src,src,type2,100,skill_lv,skill_get_time(skill_id,skill_lv));
-					sc_start(src,bl,type,100,src->id,skill_get_time(skill_id,skill_lv));
-				}
-			}
-		}
-		break;
 	case MH_SILENT_BREEZE:
 		{
 			int32 heal = 5 * status_get_lv(hd) +
