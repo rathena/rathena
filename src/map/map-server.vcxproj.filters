@@ -1194,6 +1194,9 @@
     <ClInclude Include="skills/gunslinger/wildshot.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_erasercutter.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_lightofregene.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
@@ -4555,6 +4558,9 @@
     </ClCompile>
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_erasercutter.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_lightofregene.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>

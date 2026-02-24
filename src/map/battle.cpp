@@ -6477,7 +6477,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 					case EL_TYPOON_MIS_ATK:
 						skillratio += 1100;
 						break;
-					case MH_ERASER_CUTTER:
 					case MH_XENO_SLASHER:
 						skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
 						break;

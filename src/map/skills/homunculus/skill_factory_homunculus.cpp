@@ -9,6 +9,7 @@
 // For reference see unity builds or amalgamated builds
 #include "homunculus_needleofparalyze.cpp"
 #include "homunculus_lightofregene.cpp"
+#include "homunculus_erasercutter.cpp"
 #include "homunculus_overedboost.cpp"
 #include "homunculus_painkiller.cpp"
 #include "homunculus_poisonmist.cpp"
@@ -16,6 +17,8 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case MH_ERASER_CUTTER:
+			return std::make_unique<SkillEraserCutter>();
 		case MH_LIGHT_OF_REGENE:
 			return std::make_unique<SkillLightOfRegene>();
 		case MH_NEEDLE_OF_PARALYZE:
