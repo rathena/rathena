@@ -4473,15 +4473,12 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 	case MH_NEEDLE_STINGER:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
-	case MH_CBC:
 	case MH_EQC:
 		{
 			int32 duration = max(skill_lv, (status_get_str(src) / 7 - status_get_str(bl) / 10)) * 1000; //Yommy formula
 			sc_type type;
 
-			if( skill_id == MH_CBC ){
-				type = SC_CBC;
-			}else if( skill_id == MH_EQC ){
+			if( skill_id == MH_EQC ){
 				type = SC_EQC;
 			}
 
