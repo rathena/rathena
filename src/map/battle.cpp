@@ -3308,17 +3308,6 @@ static bool is_attack_hitting(struct Damage* wd, block_list *src, block_list *ta
 			case NPC_DARKNESSBREATH:
 				hitrate *= 2;
 				break;
-			case RL_SLUGSHOT:
-				{
-					int8 dist = distance_bl(src, target);
-					if (dist > 3) {
-						// Reduce n hitrate for each cell after initial 3 cells. Different each level
-						// -10:-9:-8:-7:-6
-						dist -= 3;
-						hitrate -= ((11 - skill_lv) * dist);
-					}
-				}
-				break;
 		}
 	} else if (sd && wd->type&DMG_MULTI_HIT && wd->div_ == 2) // +1 hit per level of Double Attack on a successful double attack (making sure other multi attack skills do not trigger this) [helvetica]
 		hitrate += pc_checkskill(sd,TF_DOUBLE);
@@ -4756,22 +4745,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			else
 				skillratio += 500 + 500 * skill_lv;	// Level 1-5 is using fire element, like RK_DRAGONBREATH
 			break;
-		case WM_SEVERE_RAINSTORM_MELEE:
-			//ATK [{(Caster DEX / 300 + AGI / 200)} x Caster Base Level / 100] %
-			skillratio += -100 + 100 * skill_lv + (sstatus->dex / 300 + sstatus->agi / 200);
-			if (wd->miscflag&4) // Whip/Instrument equipped
-				skillratio += 20 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case WM_GREAT_ECHO:
-			skillratio += -100 + 250 + 500 * skill_lv;
-			if (sd) {
-				skillratio += pc_checkskill(sd, WM_LESSON) * 50; // !TODO: Confirm bonus
-				if (skill_check_pc_partner(sd, skill_id, &skill_lv, AREA_SIZE, 0) > 0)
-					skillratio *= 2;
-			}
-			RE_LVL_DMOD(100);
-			break;
 		// Physical Elemantal Spirits Attack Skills
 		case EL_CIRCLE_OF_FIRE:
 		case EL_FIRE_BOMB_ATK:
@@ -4838,61 +4811,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 			break;
 		case MH_MAGMA_FLOW:
 			skillratio += -100 + (100 * skill_lv + 3 * status_get_lv(src)) * status_get_lv(src) / 120;
-			break;
-		case RL_MASS_SPIRAL:
-			skillratio += -100 + 200 * skill_lv;
-			break;
-		case RL_FIREDANCE:
-			skillratio += 100 + 100 * skill_lv;
-			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 20 : 0);
-			RE_LVL_DMOD(100);
-			break;
-		case RL_BANISHING_BUSTER:
-			skillratio += -100 + 1000 + 200 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case RL_S_STORM:
-			skillratio += -100 + 1700 + 200 * skill_lv;
-			break;
-		case RL_SLUGSHOT:
-			if (target->type == BL_MOB)
-				skillratio += -100 + 1200 * skill_lv;
-			else
-				skillratio += -100 + 2000 * skill_lv;
-			skillratio *= 2 + tstatus->size;
-			break;
-		case RL_D_TAIL:
-			skillratio += -100 + 500 + 200 * skill_lv;
-			if (sd && (wd->miscflag & 8))
-				skillratio *= 2;
-			RE_LVL_DMOD(100);
-			break;
-		case RL_R_TRIP:
-			skillratio += -100 + 350 * skill_lv;
-			RE_LVL_DMOD(100);
-			break;
-		case RL_R_TRIP_PLUSATK:
-			skillratio += -100 + 300 + 300 * skill_lv;
-			break;
-		case RL_H_MINE:
-			if (sd && sd->flicker) // Flicker explosion damage: 500 + 300 * SkillLv
-				skillratio += -100 + 500 + 300 * skill_lv;
-			else // 200 + 200 * SkillLv
-				skillratio += -100 + 200 + 200 * skill_lv;
-			break;
-		case RL_HAMMER_OF_GOD:
-			skillratio += -100 + 100 * skill_lv;
-			if (sd) {
-				if (wd->miscflag & 8)
-					skillratio += 400 * sd->spiritball_old;
-				else
-					skillratio += 150 * sd->spiritball_old;
-			}
-			RE_LVL_DMOD(100);
-			break;
-		case RL_FIRE_RAIN:
-		case RL_AM_BLAST:
-			skillratio += -100 + 3500 + 300 * skill_lv;
 			break;
 		case ABR_BATTLE_BUSTER:// Need official formula.
 		case ABR_DUAL_CANNON_FIRE:// Need official formula.
@@ -6656,21 +6574,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						break;
 					case NPC_RAYOFGENESIS:
 						skillratio += -100 + 200 * skill_lv;
-						break;
-					case WM_METALICSOUND:
-						skillratio += -100 + 120 * skill_lv + 60 * ((sd) ? pc_checkskill(sd, WM_LESSON) : 1);
-						if (tsc && tsc->getSCE(SC_SLEEP))
-							skillratio += 100; // !TODO: Confirm target sleeping bonus
-						RE_LVL_DMOD(100);
-						if (tsc && tsc->getSCE(SC_SOUNDBLEND))
-							skillratio += skillratio * 50 / 100;
-						break;
-					case WM_REVERBERATION:
-						// MATK [{(Skill Level x 300) + 400} x Casters Base Level / 100] %
-						skillratio += -100 + 700 + 300 * skill_lv;
-						RE_LVL_DMOD(100);
-						if (tsc && tsc->getSCE(SC_SOUNDBLEND))
-							skillratio += skillratio * 50 / 100;
 						break;
 					case NPC_FIREWALK:
 					case NPC_ELECTRICWALK:
