@@ -14,6 +14,7 @@
 #include "homunculus_painkiller.cpp"
 #include "homunculus_poisonmist.cpp"
 #include "homunculus_silentbreeze.cpp"
+#include "homunculus_sonicclaw.cpp"
 #include "homunculus_stylechange.cpp"
 #include "homunculus_summonlegion.cpp"
 
@@ -33,6 +34,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillPoisonMist>();
 		case MH_SILENT_BREEZE:
 			return std::make_unique<SkillSilentBreeze>();
+		case MH_SONIC_CRAW:
+			return std::make_unique<SkillSonicClaw>();
 		case MH_STYLE_CHANGE:
 			return std::make_unique<SkillStyleChange>();
 		case MH_SUMMON_LEGION:

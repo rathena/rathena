@@ -4696,9 +4696,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case MH_BLAST_FORGE:
 			skillratio += -100 + 70 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
 			break;
-		case MH_SONIC_CRAW:
-			skillratio += -100 + 60 * skill_lv * status_get_lv(src) / 150;
-			break;
 		case MH_BLAZING_AND_FURIOUS:
 			skillratio += -100 + 80 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
 			break;
