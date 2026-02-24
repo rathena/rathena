@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillMercenaryBowlingBash : public SkillImpl {
+class SkillMercenaryBowlingBash : public WeaponSkillImpl {
 public:
 	SkillMercenaryBowlingBash();
 

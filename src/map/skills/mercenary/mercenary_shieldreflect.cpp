@@ -7,12 +7,11 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillMercenaryShieldReflect::SkillMercenaryShieldReflect() : SkillImpl(MS_REFLECTSHIELD) {
+SkillMercenaryShieldReflect::SkillMercenaryShieldReflect() : StatusSkillImpl(MS_REFLECTSHIELD) {
 }
 
 void SkillMercenaryShieldReflect::castendNoDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	status_change *tsc = status_get_sc(target);
-	sc_type type = skill_get_sc(getSkillId());
 	map_session_data* sd = BL_CAST(BL_PC, src);
 
 	if (tsc && tsc->getSCE(SC_DARKCROW)) { // SC_DARKCROW prevents using reflecting skills
@@ -20,6 +19,5 @@ void SkillMercenaryShieldReflect::castendNoDamageId(block_list *src, block_list 
 			clif_skill_fail( *sd, getSkillId(), USESKILL_FAIL );
 		return;
 	}
-	clif_skill_nodamage(src,*target,getSkillId(),skill_lv,
-		sc_start(src,target,type,100,skill_lv,skill_get_time(getSkillId(),skill_lv)));
+	StatusSkillImpl::castendNoDamageId(src, target, skill_lv, tick, flag);
 }

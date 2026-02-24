@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillMercenaryShieldReflect : public SkillImpl {
+class SkillMercenaryShieldReflect : public StatusSkillImpl {
 public:
 	SkillMercenaryShieldReflect();
 
