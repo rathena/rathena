@@ -9956,3 +9956,298 @@ Body:
       NoDispell: true
       NoBanishingBuster: true
       NoClearance: true
+  - Status: Werewolf
+    Icon: EFST_WEREWOLF
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnEnd:
+      ENRAGE_WOLF: true
+      BLOOD_HOWLING: true
+      IRON_HOWLING: true
+      ALPHA_PHASE: true
+      PULSE_OF_MADNESS: true
+      PRIMAL_CLAW: true
+      FERAL_CLAW: true
+      INSANE: true
+      INSANE2: true
+      INSANE3: true
+    Script: |
+      bonus bMaxHPrate, 10;
+  - Status: Enrage_Wolf
+    Icon: EFST_ENRAGE_WOLF
+    Script: |
+      .@lv = getstatus(SC_ENRAGE_WOLF, 1);
+      bonus bShortAtkRate, .@lv * 2;
+  - Status: Blood_Howling
+    Icon: EFST_BLOOD_HOWLING
+    Script: |
+      .@lv = getstatus(SC_BLOOD_HOWLING, 1);
+      bonus bStr, .@lv * 2;
+      bonus bLuk, .@lv * 2;
+      bonus bHit, .@lv * 10;
+  - Status: Wereraptor
+    Icon: EFST_WERERAPTOR
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoClearbuff: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnEnd:
+      ENRAGE_RAPTOR: true
+      PREENING: true
+      WIND_VEIL: true
+      FLIP_FLAP: true
+      APEX_PHASE: true
+      ZEPHYR_CHARGE: true
+      ZEPHYR_LINK: true
+    Script: |
+      bonus bSpeedRate, 25;
+  - Status: Enrage_Raptor
+    Icon: EFST_ENRAGE_RAPTOR
+    Script: |
+      .@lv = getstatus(SC_ENRAGE_RAPTOR, 1);
+      bonus bLongAtkRate, .@lv * 2;
+  - Status: Preening
+    Icon: EFST_PREENING
+    Script: |
+      .@lv = getstatus(SC_PREENING, 1);
+      bonus bAgi, .@lv * 2;
+      bonus bDex, .@lv * 2;
+      bonus bFlee, .@lv * 10;
+  - Status: Truth_Of_Ice
+    Icon: EFST_TRUTH_OF_ICE
+    Flags:
+      NoSaveInfinite: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Truth_Of_Wind: true
+      Truth_Of_Earth: true
+    Script: |
+      bonus2 bMagicAtkEle, Ele_Water, 10;
+  - Status: Truth_Of_Wind
+    Icon: EFST_TRUTH_OF_WIND
+    Flags:
+      NoSaveInfinite: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Truth_Of_Ice: true
+      Truth_Of_Earth: true
+    Script: |
+      bonus2 bMagicAtkEle, Ele_Wind, 10;
+  - Status: Truth_Of_Earth
+    Icon: EFST_TRUTH_OF_EARTH
+    Flags:
+      NoSaveInfinite: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    EndOnStart:
+      Truth_Of_Ice: true
+      Truth_Of_Wind: true
+    Script: |
+      bonus2 bMagicAtkEle, Ele_Earth, 10;
+  - Status: Nature_Shield
+    Icon: EFST_NATURE_SHIELD
+    Script: |
+      .@lv = getstatus(SC_NATURE_SHIELD, 1);
+      bonus bDef, .@lv * 10;
+      bonus bMdef, .@lv;
+      bonus bInt, .@lv;
+      bonus bVit, .@lv;
+  - Status: Transform_Delay
+    Icon: EFST_TRANSFORM_DELAY
+    Flags:
+      Debuff: true
+      NoSave: true
+  - Status: Iron_Howling
+    Icon: EFST_IRON_HOWLING
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@lv = getstatus(SC_IRON_HOWLING, 1);
+      .@reduce = 5 + (.@lv * 5);
+      bonus bNearAtkDef, .@reduce;
+      bonus bLongAtkDef, .@reduce;
+      bonus bMagicAtkDef, .@reduce;
+  - Status: Wind_Veil
+    Icon: EFST_WIND_VEIL
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@lv = getstatus(SC_WIND_VEIL, 1);
+      if (.@lv == 1) {
+        .@reduce = 5;
+        .@speed = 50;
+      } else if (.@lv == 2) {
+        .@reduce = 7;
+        .@speed = 75;
+      } else if (.@lv == 3) {
+        .@reduce = 9;
+        .@speed = 100;
+      } else if (.@lv == 4) {
+        .@reduce = 12;
+        .@speed = 125;
+      } else {
+        .@reduce = 15;
+        .@speed = 150;
+      }
+      bonus bNearAtkDef, .@reduce;
+      bonus bLongAtkDef, .@reduce;
+      bonus bMagicAtkDef, .@reduce;
+      bonus bSpeedRate, .@speed;
+  - Status: Ice_Pillar
+    Icon: EFST_ICE_PILLAR
+    Script: |
+      bonus2 bSkillAtk, "DR_ICE_TOTEM", 15;
+      bonus2 bSkillAtk, "DR_ICE_CLOUD", 15;
+      bonus2 bSkillAtk, "KR_ICE_PILLAR", 15;
+      bonus2 bSkillAtk, "KR_ICE_SPLASH", 15;
+    EndOnStart:
+      Ice_Pillar: true
+  - Status: Thundering_Rod
+    Icon: EFST_THUNDERING_ROD
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      SendVal3: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Thundering_Rod_Max
+    Icon: EFST_THUNDERING_ROD_MAX
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Ground_Grow
+    Icon: EFST_GROUND_GROW
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      SendVal3: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Nature_Protection
+    Icon: EFST_NATURE_PROTECTION
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    States:
+      NoMove: true
+    Script: |
+      .@reduce = getstatus(SC_NATURE_PROTECTION, 1);
+      bonus bNearAtkDef, .@reduce;
+      bonus bLongAtkDef, .@reduce;
+      bonus bMagicAtkDef, .@reduce;
+  - Status: Insane
+    Icon: EFST_INSANE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Insane2
+    Icon: EFST_INSANE2
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Insane3
+    Icon: EFST_INSANE3
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+  - Status: Alpha_Phase
+    Icon: EFST_ALPHA_PHASE
+    Flags:
+      BlEffect: true
+      DisplayPc: true
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Flip_Flap
+    Icon: EFST_FLIP_FLAP
+    Script: |
+      .@lv = getstatus(SC_FLIP_FLAP, 1);
+      bonus bLongAtkRate, .@lv * 6;
+      bonus bCritical, .@lv * 3;
+    EndOnStart:
+      FLIP_FLAP_TARGET: true
+  - Status: Flip_Flap_Target
+    Icon: EFST_FLIP_FLAP_TARGET
+    Script: |
+      .@lv = getstatus(SC_FLIP_FLAP_TARGET, 1);
+      bonus bLongAtkRate, .@lv * 6;
+      bonus bCritical, .@lv * 3;
+    Fail:
+      FLIP_FLAP: true
+  - Status: Apex_Phase
+    Icon: EFST_APEX_PHASE
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      bonus2 bSkillAtk, "AT_PINION_SHOT", 30;
+      bonus2 bSkillAtk, "AT_QUILL_SPEAR", 30;
+      bonus2 bSkillAtk, "AT_QUILL_SPEAR_S", 30;
+      bonus2 bSkillAtk, "AT_TEMPEST_FLAP", 30;
+  - Status: Zephyr_Charge
+    Icon: EFST_ZEPHYR_CHARGE
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+  - Status: Zephyr_Link
+    Icon: EFST_ZEPHYR_LINK
+    Script: |
+      .@val = 15;
+      bonus bShortAtkRate, .@val;
+      bonus bLongAtkRate, .@val;
+      bonus2 bMagicAtkEle, Ele_All, .@val;
+  - Status: Glacier_Sheild
+    Icon: EFST_GLACIER_SHEILD
+  - Status: Solid_Stomp
+    Icon: EFST_SOLID_STOMP
+    Script: |
+      .@lv = getstatus(SC_SOLID_STOMP, 1);
+      bonus bNearAtkDef, .@lv * 3;
+      bonus bLongAtkDef, .@lv * 3;
+      bonus2 bMagicAtkEle, Ele_Earth, 15;
+  - Status: Nature_Harmony
+    Icon: EFST_NATURE_HARMONY
+    Flags:
+      NoDispell: true
+      NoBanishingBuster: true
+      NoClearance: true
+    Script: |
+      .@lv = getstatus(SC_NATURE_HARMONY, 1);
+      .@val = .@lv * 30;
+      bonus2 bMagicAtkEle, Ele_Water, .@val;
+      bonus2 bMagicAtkEle, Ele_Wind, .@val;
+      bonus2 bMagicAtkEle, Ele_Earth, .@val;
+      bonus2 bSubEle, Ele_Water, -30;
+      bonus2 bSubEle, Ele_Wind, -30;
+      bonus2 bSubEle, Ele_Earth, -30;
+  - Status: Pulse_Of_Madness
+    Icon: EFST_PULSE_OF_MADNESS
+  - Status: Primal_Claw
+    Icon: EFST_PRIMAL_CLAW
+  - Status: Feral_Claw
+    Icon: EFST_FERAL_CLAW

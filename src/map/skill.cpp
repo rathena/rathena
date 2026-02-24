@@ -58,6 +58,7 @@ struct eri *skill_timer_ers = nullptr; //For handling skill_timerskills [Skotlex
 DBMap* bowling_db = nullptr; // int32 mob_id -> mob_data*
 
 DBMap* skillunit_db = nullptr; // int32 id -> skill_unit*
+static int32 skill_terra_wave_cancel_sub(block_list *bl, va_list ap);
 
 /**
  * Skill Unit Persistency during endack routes (mostly for songs see bugreport:4574)
@@ -293,10 +294,46 @@ int32 skill_tree_get_max(uint16 skill_id, int32 b_class) {
 
 int32 skill_frostjoke_scream(block_list *bl,va_list ap);
 struct skill_unit_group_tickset *skill_unitgrouptickset_search(block_list *bl,std::shared_ptr<s_skill_unit_group> sg,t_tick tick);
+int32 skill_unit_timer_sub_onplace(block_list* bl, va_list ap);
 static int32 skill_unit_onplace(skill_unit *src,block_list *bl,t_tick tick);
 int32 skill_unit_onleft(uint16 skill_id, block_list *bl,t_tick tick);
 static int32 skill_unit_effect(block_list *bl,va_list ap);
 static int32 skill_bind_trap(block_list *bl, va_list ap);
+
+// Ice Pillar fog tick: apply area damage for all unit cells, then refresh caster buff
+// if the caster is within any unit cell range (Duration2).
+void skill_ice_pillar_apply_tick(const std::shared_ptr<s_skill_unit_group>& group, t_tick tick) {
+	if (group == nullptr || group->unit == nullptr)
+		return;
+
+	block_list* src = map_id2bl(group->src_id);
+	const bool src_ready = (src && src->prev != nullptr && !status_isdead(*src));
+	bool in_range = false;
+
+	for (int32 i = 0; i < group->unit_count; ++i) {
+		skill_unit* cell = &group->unit[i];
+		if (!cell->alive || cell->range < 0)
+			continue;
+		if (src_ready && src->m == cell->m &&
+			distance_xy(src->x, src->y, cell->x, cell->y) <= cell->range) {
+			in_range = true;
+		}
+		block_list* cell_bl = cell;
+		if (skill_get_unit_flag(group->skill_id, UF_PATHCHECK))
+			map_foreachinrange(skill_unit_timer_sub_onplace, cell_bl, cell->range, group->bl_flag, cell_bl, tick);
+		else
+			map_foreachinallrange(skill_unit_timer_sub_onplace, cell_bl, cell->range, group->bl_flag, cell_bl, tick);
+	}
+
+	const sc_type buff_sc = skill_get_sc(group->skill_id);
+	if (src_ready && in_range && buff_sc != SC_NONE) {
+		status_change* sc = status_get_sc(src);
+		if (sc && sc->getSCE(buff_sc))
+			status_change_end(src, buff_sc);
+		t_tick buff_duration = skill_get_time2(group->skill_id, group->skill_lv);
+		sc_start(src, src, buff_sc, 100, group->skill_lv, buff_duration);
+	}
+}
 
 e_cast_type skill_get_casttype (uint16 skill_id) {
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
@@ -2933,6 +2970,9 @@ void skill_attack_blow(block_list *src, block_list *dsrc, block_list *target, ui
 			else
 				dir = map_calc_dir(target, skill_area_temp[4], skill_area_temp[5]);
 			break;
+		case KR_TYPHOON_WING:
+			dir = map_calc_dir(target, skill_area_temp[4], skill_area_temp[5]);
+			break;
 		case HT_PHANTASMIC: // issue #1378
 			if (status_get_hp(target) - damage <= 0) return;
 			break;
@@ -3384,6 +3424,14 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 		case DK_HACKANDSLASHER_ATK:
 			clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, -1, dmg_type );
 			break;
+		case KR_ICE_PILLAR:
+			if (flag & SKILL_ALTDMG_FLAG) {
+				dmg.div_ = 1;
+				clif_skill_damage( *src, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, DMG_SPLASH );
+			} else {
+				clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, DMG_MULTI_HIT );
+			}
+			break;
 		case AG_STORM_CANNON:
 		case AG_CRIMSON_ARROW:
 			clif_skill_damage( *dsrc, *bl, tick, dmg.amotion, dmg.dmotion, damage, dmg.div_, skill_id, skill_lv, DMG_SPLASH );
@@ -3594,6 +3642,42 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
  * then call func with source,target,skill_id,skill_lv,tick,flag
  *------------------------------------------*/
 typedef int32 (*SkillFunc)(block_list *, block_list *, int32, int32, t_tick, int32);
+static bool skill_area_diamond_check(const block_list* src, const block_list* bl, uint16 skill_id, uint16 skill_lv)
+{
+	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
+
+	if (!skill || !skill->inf2[INF2_DIAMONDSPLASH]) {
+		return true;
+	}
+
+	const block_list* center = nullptr;
+	if (skill->inf & INF_SELF_SKILL) {
+		center = src;
+	} else if (skill_area_temp[1] != 0) {
+		center = map_id2bl(skill_area_temp[1]);
+	}
+
+	if (!center || center->prev == nullptr) {
+		return true;
+	}
+
+	int16 range = skill_get_splash(skill_id, skill_lv);
+	if (range <= 0) {
+		return true;
+	}
+
+	int32 dx = bl->x - center->x;
+	int32 dy = bl->y - center->y;
+	if (dx < 0) {
+		dx = -dx;
+	}
+	if (dy < 0) {
+		dy = -dy;
+	}
+
+	return (dx + dy) <= range;
+}
+
 int32 skill_area_sub(block_list *bl, va_list ap)
 {
 	block_list *src;
@@ -3610,6 +3694,10 @@ int32 skill_area_sub(block_list *bl, va_list ap)
 	tick = va_arg(ap,t_tick);
 	flag = va_arg(ap,int32);
 	func = va_arg(ap,SkillFunc);
+
+	if (!skill_area_diamond_check(src, bl, skill_id, skill_lv)) {
+		return 0;
+	}
 
 	if(battle_check_target(src,bl,flag) > 0) {
 		// several splash skills need this initial dummy packet to display correctly
@@ -3934,6 +4022,10 @@ static int32 skill_check_condition_mercenary(block_list *bl, uint16 skill_id, ui
  *------------------------------------------*/
 int32 skill_area_sub_count (block_list *src, block_list *target, uint16 skill_id, uint16 skill_lv, t_tick tick, int32 flag)
 {
+	if (!skill_area_diamond_check(src, target, skill_id, skill_lv)) {
+		return 0;
+	}
+
 	return 1;
 }
 
@@ -4196,6 +4288,16 @@ TIMER_FUNC(skill_timerskill){
 				break;
 			switch( skl->skill_id )
 			{
+				case AT_TERRA_WAVE: {
+						int32 splash = skill_get_splash(skl->skill_id, skl->skill_lv);
+						const int16 cancel_radius = 1;
+
+						map_foreachinarea(skill_terra_wave_cancel_sub, src->m, skl->x - cancel_radius, skl->y - cancel_radius, skl->x + cancel_radius, skl->y + cancel_radius, BL_SKILL);
+						clif_skill_poseffect_nocaster(*src, skl->skill_id, skl->skill_lv, skl->x, skl->y, tick);
+						map_foreachinarea(skill_area_sub, src->m, skl->x - splash, skl->y - splash, skl->x + splash, skl->y + splash, BL_CHAR,
+							src, skl->skill_id, skl->skill_lv, tick, skl->flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
+					}
+					break;
 				case GN_CRAZYWEED_ATK:
 					{
 						int32 dummy = 1, i = skill_get_unit_range(skl->skill_id,skl->skill_lv);
@@ -7345,6 +7447,10 @@ TIMER_FUNC(skill_castend_id){
 							if( pc_checkskill( sd, SH_COMMUNE_WITH_HYUN_ROK ) > 0 || ( sc != nullptr && sc->getSCE( SC_TEMPORARY_COMMUNION ) != nullptr ) )
 								add_ap += 1;
 							break;
+						case AT_ROARING_CHARGE:
+							if (sc && sc->getSCE(SC_THUNDERING_ROD_MAX))
+								add_ap += skill_get_giveap(AT_ROARING_CHARGE_S, ud->skill_lv);
+							break;
 					}
 
 					status_heal(sd, 0, 0, add_ap, 0);
@@ -8811,6 +8917,20 @@ std::shared_ptr<s_skill_unit_group> skill_unitsetting(block_list *src, uint16 sk
 		return nullptr;
 	}
 
+	if (skill_id == KR_ICE_PILLAR) {
+		skill_unit* su = nullptr;
+		for (int32 idx = 0; idx < group->unit_count; ++idx) {
+			skill_unit* cell = &group->unit[idx];
+			if (cell->alive && cell->range >= 0) {
+				su = cell;
+				break;
+			}
+		}
+		if (su != nullptr) {
+			group->val3 = su->id;
+		}
+	}
+
 	//success, unit created.
 	switch( skill_id ) {
 		case NJ_TATAMIGAESHI: //Store number of tiles.
@@ -9309,6 +9429,15 @@ int32 skill_unit_onplace_timer(skill_unit *unit, block_list *bl, t_tick tick)
 		case UNT_GROUND_GRAVITATION:
 		case UNT_JACK_FROST_NOVA:
 			skill_attack( skill_get_type(sg->skill_id), ss, ss, bl, sg->skill_id, sg->skill_lv, tick, 0 );
+			break;
+		case UNT_ICE_PILLAR:
+			if (battle_check_target(unit, bl, sg->target_flag) <= 0)
+				break;
+			if (battle_check_target(unit, bl, BCT_ENEMY) > 0) {
+				skill_attack(skill_get_type(sg->skill_id), ss, unit, bl, sg->skill_id, sg->skill_lv, tick, SD_ANIMATION | SKILL_ALTDMG_FLAG);
+			}
+			break;
+		case UNT_GLACIAL_MONOLITH:
 			break;
 
 		case UNT_DUMMYSKILL:
@@ -11512,6 +11641,28 @@ bool skill_check_condition_castbegin( map_session_data& sd, uint16 skill_id, uin
 				return false;
 			}
 			break;
+		case DR_WEREWOLF:
+			if (sc != nullptr && (sc->hasSCE(SC_WERERAPTOR) || sc->hasSCE(SC_TRANSFORM_DELAY) ||
+				sc->hasSCE(SC_TRUTH_OF_ICE) || sc->hasSCE(SC_TRUTH_OF_WIND) || sc->hasSCE(SC_TRUTH_OF_EARTH))) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
+		case DR_WERERAPTOR:
+			if (sc != nullptr  && (sc->hasSCE(SC_WEREWOLF) || sc->hasSCE(SC_TRANSFORM_DELAY) ||
+				sc->hasSCE(SC_TRUTH_OF_ICE) || sc->hasSCE(SC_TRUTH_OF_WIND) || sc->hasSCE(SC_TRUTH_OF_EARTH))) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
+		case DR_TRUTH_OF_ICE:
+		case DR_TRUTH_OF_WIND:
+		case DR_TRUTH_OF_EARTH:
+			if (sc != nullptr  && (sc->hasSCE(SC_WEREWOLF) || sc->hasSCE(SC_WERERAPTOR))) {
+				clif_skill_fail( sd, skill_id, USESKILL_FAIL );
+				return false;
+			}
+			break;
 	}
 
 	/* check state required */
@@ -12218,6 +12369,7 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 	struct status_data *status;
 	status_change *sc;
 	int32 i,hp_rate,sp_rate, ap_rate, sp_skill_rate_bonus = 100;
+	const bool ignore_sp_reduction = (skill_id == DR_HUNGER);
 
 	memset(&req,0,sizeof(req));
 
@@ -12258,19 +12410,21 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 		req.sp += (status->sp * sp_rate)/100;
 	else
 		req.sp += (status->max_sp * (-sp_rate))/100;
-	if( sd->dsprate != 100 )
+	if( sd->dsprate != 100 && (!ignore_sp_reduction || sd->dsprate > 100))
 		req.sp = req.sp * sd->dsprate / 100;
 
 	for (auto &it : sd->skillusesprate) {
 		if (it.id == skill_id) {
-			sp_skill_rate_bonus -= it.val;
+			if (!ignore_sp_reduction || it.val < 0)
+				sp_skill_rate_bonus -= it.val;
 			break;
 		}
 	}
 
 	for (auto &it : sd->skillusesp) {
 		if (it.id == skill_id) {
-			req.sp -= it.val;
+			if (!ignore_sp_reduction || it.val < 0)
+				req.sp -= it.val;
 			break;
 		}
 	}
@@ -12287,12 +12441,12 @@ struct s_skill_condition skill_get_requirement(map_session_data* sd, uint16 skil
 			req.sp += req.sp / 4;
 		if( sc->getSCE(SC_OFFERTORIUM))
 			req.sp += req.sp * sc->getSCE(SC_OFFERTORIUM)->val3 / 100;
-		if( sc->getSCE(SC_TELEKINESIS_INTENSE) && skill_get_ele(skill_id, skill_lv) == ELE_GHOST)
+		if( !ignore_sp_reduction && sc->getSCE(SC_TELEKINESIS_INTENSE) && skill_get_ele(skill_id, skill_lv) == ELE_GHOST)
 			req.sp -= req.sp * sc->getSCE(SC_TELEKINESIS_INTENSE)->val2 / 100;
 #ifdef RENEWAL
-		if (sc->getSCE(SC_ADAPTATION) && (skill_get_inf2(skill_id, INF2_ISSONG)))
+		if (!ignore_sp_reduction && sc->getSCE(SC_ADAPTATION) && (skill_get_inf2(skill_id, INF2_ISSONG)))
 			req.sp -= req.sp * 20 / 100;
-		if (sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_SPCONSUM)
+		if (!ignore_sp_reduction && sc->getSCE(SC_NIBELUNGEN) && sc->getSCE(SC_NIBELUNGEN)->val2 == RINGNBL_SPCONSUM)
 			req.sp -= req.sp * 30 / 100;
 #endif
 		if (sc->getSCE(SC_GLOOMYDAY))
@@ -13693,6 +13847,26 @@ static int32 skill_bind_trap(block_list *bl, va_list ap) {
 }
 
 /*==========================================
+ * Cancel overlapping ground skills for Terra Wave.
+ *------------------------------------------*/
+static int32 skill_terra_wave_cancel_sub(block_list *bl, va_list)
+{
+	if (bl->type != BL_SKILL)
+		return 0;
+
+	skill_unit *su = BL_CAST(BL_SKILL, bl);
+	if (su == nullptr || su->group == nullptr)
+		return 0;
+
+	const uint16 unit_skill = su->group->skill_id;
+	if (!(skill_get_inf(unit_skill) & INF_GROUND_SKILL) || skill_get_inf2(unit_skill, INF2_ISTRAP))
+		return 0;
+
+	skill_delunitgroup(su->group);
+	return 1;
+}
+
+/*==========================================
  * Check new skill unit cell when overlapping in other skill unit cell.
  * Catched skill in cell value pushed to *unit pointer.
  * Set (*alive) to 0 will ends 'new unit' check
@@ -14872,6 +15046,17 @@ static int32 skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 		}
 	} else {// skill unit is still active
 		switch( group->unit_id ) {
+			case UNT_GLACIAL_MONOLITH: {
+				block_list* src = map_id2bl(group->src_id);
+				if (src && src->m == unit->m) {
+					const int32 range = skill_get_range(group->skill_id, group->skill_lv);
+					if (range <= 0 || distance_xy(src->x, src->y, unit->x, unit->y) <= range) {
+						const t_tick buff_duration = group->interval > 0 ? group->interval : 1;
+						sc_start4(src, src, SC_GLACIER_SHEILD, 100, group->skill_lv, unit->x, unit->y, unit->m, buff_duration);
+					}
+				}
+				break;
+			}
 			case UNT_BLASTMINE:
 			case UNT_SKIDTRAP:
 			case UNT_LANDMINE:
@@ -14952,27 +15137,44 @@ static int32 skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 
 	if( unit->range >= 0 && group->interval != -1 )
 	{
-		if (skill_get_unit_flag(group->skill_id, UF_PATHCHECK))
-			map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl, tick);
-		else
-			map_foreachinallrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl, tick);
-
-		if(unit->range == -1) //Unit disabled, but it should not be deleted yet.
-			group->unit_id = UNT_USED_TRAPS;
-		else if( group->unit_id == UNT_TATAMIGAESHI ) {
-			unit->range = -1; //Disable processed cell.
-			if (--group->val1 <= 0) { // number of live cells
-				//All tiles were processed, disable skill.
-				group->target_flag=BCT_NOONE;
-				group->bl_flag= BL_NUL;
+		if (group->unit_id == UNT_ICE_PILLAR) {
+			if (unit->id == group->val3) {
+				const int32 elapsed = static_cast<int32>(DIFF_TICK(tick, group->tick));
+				if (group->val2 < 8 && elapsed >= group->val1) {
+					const int32 scheduled = group->val1;
+					const int32 count_before = group->val2;
+					group->val2++;
+					group->val1 = scheduled + (count_before == 0 ? 500 : 1000);
+					if (count_before == 1) {
+						const int32 normal_interval = skill_get_unit_interval(group->skill_id);
+						group->interval = normal_interval > 0 ? normal_interval : 1000;
+					}
+					skill_ice_pillar_apply_tick(group, tick);
+				}
 			}
-		}
-		else if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
-			group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2 || group->skill_id == NPC_RAINOFMETEOR ||
-			group->skill_id == HN_METEOR_STORM_BUSTER ||
-			((group->skill_id == CR_GRANDCROSS || group->skill_id == NPC_GRANDDARKNESS) && unit->val1 <= 0)) {
-			skill_delunit(unit);
-			return 0;
+		} else {
+			if (skill_get_unit_flag(group->skill_id, UF_PATHCHECK))
+				map_foreachinrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl, tick);
+			else
+				map_foreachinallrange(skill_unit_timer_sub_onplace, bl, unit->range, group->bl_flag, bl, tick);
+
+			if(unit->range == -1) //Unit disabled, but it should not be deleted yet.
+				group->unit_id = UNT_USED_TRAPS;
+			else if( group->unit_id == UNT_TATAMIGAESHI ) {
+				unit->range = -1; //Disable processed cell.
+				if (--group->val1 <= 0) { // number of live cells
+					//All tiles were processed, disable skill.
+					group->target_flag=BCT_NOONE;
+					group->bl_flag= BL_NUL;
+				}
+			}
+			else if (group->skill_id == WZ_METEOR || group->skill_id == SU_CN_METEOR || group->skill_id == SU_CN_METEOR2 || 
+				group->skill_id == AG_VIOLENT_QUAKE_ATK || group->skill_id == AG_ALL_BLOOM_ATK || group->skill_id == AG_ALL_BLOOM_ATK2
+				|| group->skill_id == NPC_RAINOFMETEOR || group->skill_id == HN_METEOR_STORM_BUSTER || group->skill_id ==  NPC_LOCKON_LASER_ATK
+				|| ((group->skill_id == CR_GRANDCROSS || group->skill_id == NPC_GRANDDARKNESS) && unit->val1 <= 0)) {
+				skill_delunit(unit);
+				return 0;
+			}
 		}
 	}
 

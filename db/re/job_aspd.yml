@@ -622,3 +622,16 @@ Body:
       Staff: 50
       2hStaff: 52 # TODO: Unconfirmed
       Shield: 5
+  - Jobs:
+      Druid: true
+      Baby_Druid: true
+      Karnos: true
+      Baby_Karnos: true
+      Alitea: true
+    BaseASPD: # TODO: Unconfirmed
+      Fist: 45
+      Dagger: 40
+      1hAxe: 48
+      2hAxe: 51
+      Mace: 50
+      Shield: 5

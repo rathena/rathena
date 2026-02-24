@@ -471,6 +471,58 @@
     <ClInclude Include="skills/archer/windwalker.hpp" />
     <ClInclude Include="skills/archer/winkofcharm.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
+    <ClInclude Include="skills/druid/aerosync.hpp" />
+    <ClInclude Include="skills/druid/alphaclaw.hpp" />
+    <ClInclude Include="skills/druid/aroundflower.hpp" />
+    <ClInclude Include="skills/druid/chillingblast.hpp" />
+    <ClInclude Include="skills/druid/chopchop.hpp" />
+    <ClInclude Include="skills/druid/clawwave.hpp" />
+    <ClInclude Include="skills/druid/cruelbite.hpp" />
+    <ClInclude Include="skills/druid/cuttingwind.hpp" />
+    <ClInclude Include="skills/druid/doubleslash.hpp" />
+    <ClInclude Include="skills/druid/earthdrill.hpp" />
+    <ClInclude Include="skills/druid/earthflower.hpp" />
+    <ClInclude Include="skills/druid/earthstamp.hpp" />
+    <ClInclude Include="skills/druid/feathersprinkle.hpp" />
+    <ClInclude Include="skills/druid/feralclaw.hpp" />
+    <ClInclude Include="skills/druid/flickingtornado.hpp" />
+    <ClInclude Include="skills/druid/frenzyfang.hpp" />
+    <ClInclude Include="skills/druid/furiousstorm.hpp" />
+    <ClInclude Include="skills/druid/glacialmonolith.hpp" />
+    <ClInclude Include="skills/druid/glacialnova.hpp" />
+    <ClInclude Include="skills/druid/glacialshard.hpp" />
+    <ClInclude Include="skills/druid/glacialstomp.hpp" />
+    <ClInclude Include="skills/druid/gravityhole.hpp" />
+    <ClInclude Include="skills/druid/groundbloom.hpp" />
+    <ClInclude Include="skills/druid/hunger.hpp" />
+    <ClInclude Include="skills/druid/icecloud.hpp" />
+    <ClInclude Include="skills/druid/icepillar.hpp" />
+    <ClInclude Include="skills/druid/icesplash.hpp" />
+    <ClInclude Include="skills/druid/icetotem.hpp" />
+    <ClInclude Include="skills/druid/lowflight.hpp" />
+    <ClInclude Include="skills/druid/nastyslash.hpp" />
+    <ClInclude Include="skills/druid/natureprotection.hpp" />
+    <ClInclude Include="skills/druid/nomercyclaw.hpp" />
+    <ClInclude Include="skills/druid/pinionshot.hpp" />
+    <ClInclude Include="skills/druid/primalclaw.hpp" />
+    <ClInclude Include="skills/druid/quillspear.hpp" />
+    <ClInclude Include="skills/druid/roaringcharge.hpp" />
+    <ClInclude Include="skills/druid/roaringpiercer.hpp" />
+    <ClInclude Include="skills/druid/savagelunge.hpp" />
+    <ClInclude Include="skills/druid/sharpengust.hpp" />
+    <ClInclude Include="skills/druid/sharpenhail.hpp" />
+    <ClInclude Include="skills/druid/shootingfeather.hpp" />
+    <ClInclude Include="skills/druid/skill_factory_druid.hpp" />
+    <ClInclude Include="skills/druid/solidstomp.hpp" />
+    <ClInclude Include="skills/druid/tempestflap.hpp" />
+    <ClInclude Include="skills/druid/terraharvest.hpp" />
+    <ClInclude Include="skills/druid/terrawave.hpp" />
+    <ClInclude Include="skills/druid/thunderingcall.hpp" />
+    <ClInclude Include="skills/druid/thunderingfocus.hpp" />
+    <ClInclude Include="skills/druid/thunderingorb.hpp" />
+    <ClInclude Include="skills/druid/typhoonwing.hpp" />
+    <ClInclude Include="skills/druid/windbomb.hpp" />
+    <ClInclude Include="skills/druid/zephyrlink.hpp" />
     <ClInclude Include="skills/gunslinger/basicgrenade.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
     <ClInclude Include="skills/gunslinger/cracker.hpp" />
@@ -1877,6 +1929,162 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/custom/skill_factory_custom.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/aerosync.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/alphaclaw.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/aroundflower.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/chillingblast.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/chopchop.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/clawwave.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/cruelbite.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/cuttingwind.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/doubleslash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/earthdrill.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/earthflower.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/earthstamp.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/feathersprinkle.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/feralclaw.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/flickingtornado.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/frenzyfang.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/furiousstorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/glacialmonolith.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/glacialnova.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/glacialshard.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/glacialstomp.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/gravityhole.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/groundbloom.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/hunger.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/icecloud.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/icepillar.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/icesplash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/icetotem.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/lowflight.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/nastyslash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/natureprotection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/nomercyclaw.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/pinionshot.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/primalclaw.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/quillspear.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/roaringcharge.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/roaringpiercer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/savagelunge.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/sharpengust.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/sharpenhail.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/shootingfeather.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/skill_factory_druid.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/solidstomp.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/tempestflap.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/terraharvest.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/terrawave.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/thunderingcall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/thunderingfocus.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/thunderingorb.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/typhoonwing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/windbomb.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/druid/zephyrlink.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/basicgrenade.cpp">
