@@ -9,6 +9,7 @@
 // For reference see unity builds or amalgamated builds
 #include "homunculus_needleofparalyze.cpp"
 #include "homunculus_holypole.cpp"
+#include "homunculus_lavaslide.cpp"
 #include "homunculus_graniticarmor.cpp"
 #include "homunculus_lightofregene.cpp"
 #include "homunculus_magmaflow.cpp"
@@ -40,6 +41,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillGraniticArmor>();
 		case MH_HEILIGE_STANGE:
 			return std::make_unique<SkillHolyPole>();
+		case MH_LAVA_SLIDE:
+			return std::make_unique<SkillLavaSlide>();
 		case MH_LIGHT_OF_REGENE:
 			return std::make_unique<SkillLightOfRegene>();
 		case MH_MAGMA_FLOW:

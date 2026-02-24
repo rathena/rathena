@@ -4687,9 +4687,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case MH_GLANZEN_SPIES:
 			skillratio += -100 + 300 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
 			break;
-		case MH_LAVA_SLIDE:
-			skillratio += -100 + 50 * skill_lv;
-			break;
 		case MH_BLAST_FORGE:
 			skillratio += -100 + 70 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
 			break;
