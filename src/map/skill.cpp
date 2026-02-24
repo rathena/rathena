@@ -4445,7 +4445,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	//recursive homon skill
-	case MH_ABSOLUTE_ZEPHYR:
 	case MH_TOXIN_OF_MANDARA:
 	case MH_BLAZING_AND_FURIOUS:
 		if(flag&1){

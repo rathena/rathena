@@ -518,6 +518,7 @@
     <ClInclude Include="skills/gunslinger/wildfire.hpp" />
     <ClInclude Include="skills/gunslinger/wildshot.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_erasercutter.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_absolutezephyr.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_blastforge.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_continualbreakcombo.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_eternalquickcombo.hpp" />
@@ -2248,6 +2249,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_erasercutter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_absolutezephyr.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_blastforge.cpp">
