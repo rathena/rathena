@@ -5525,12 +5525,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 		}
 		break;
-	case MH_OVERED_BOOST:
-		if (hd && battle_get_master(src)) {
-			sc_start(src, battle_get_master(src), type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		}
-		break;
 	case MH_GRANITIC_ARMOR:
 	case MH_PYROCLASTIC:
 		if(hd) {

@@ -519,6 +519,7 @@
     <ClInclude Include="skills/gunslinger/wildshot.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_lightofregene.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_needleofparalyze.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_overedboost.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_painkiller.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_poisonmist.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_summonlegion.hpp" />
@@ -2232,6 +2233,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_needleofparalyze.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_overedboost.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_painkiller.cpp">
