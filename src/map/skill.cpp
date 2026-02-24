@@ -4283,35 +4283,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case KN_CHARGEATK:
-		{
-		bool path = path_search_long(nullptr, src->m, src->x, src->y, bl->x, bl->y,CELL_CHKWALL);
-#ifdef RENEWAL
-		int32 dist = skill_get_blewcount(skill_id, skill_lv);
-#else
-		// Charge attack in pre-renewal calculates the distance mathetically
-		int32 dist = static_cast<int32>(distance_math_bl(src, bl));
-#endif
-		uint8 dir = map_calc_dir(bl, src->x, src->y);
-
-		// teleport to target (if not on WoE grounds)
-		if (skill_check_unit_movepos(5, src, bl->x + dirx[dir], bl->y + diry[dir], 0, true))
-			clif_blown(src);
-
-		// cause damage and knockback if the path to target was a straight one
-		if (path) {
-			if(skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, dist)) {
-#ifdef RENEWAL
-				if (map_getmapdata(src->m)->getMapFlag(MF_PVP))
-					dist += 2; // Knockback is 4 on PvP maps
-#endif
-				skill_blown(src, bl, dist, dir, BLOWN_NONE);
-			}
-		}
-
-		}
-		break;
-
 	case MH_XENO_SLASHER:
 	case MH_HEILIGE_PFERD:
 	case MH_THE_ONE_FIGHTER_RISES:
