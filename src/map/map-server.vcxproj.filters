@@ -1554,112 +1554,109 @@
     <ClInclude Include="skills/mage/windinsignia.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
+    <ClInclude Include="skills/mercenary/mercenary_arrowrepel.hpp">
+      <Filter>Header Files\Skills\Mercenary</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/mercenary/mercenary_arrowshower.hpp">
+      <Filter>Header Files\Skills\Mercenary</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mercenary/mercenary_bash.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryarrowrepel.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_benediction.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryarrowshower.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_blessing.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarybash.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_bowlingbash.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarybenediction.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_brandishspear.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryblessing.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_compress.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarybowlingbash.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_crash.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarybrandishspear.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_decreaseagi.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarycompress.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_doublestrafe.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarycrash.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_focusedarrowstrike.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarydecreaseagi.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_freezingtrap.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarydoublestrafe.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_increaseagility.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryfocusedarrowstrike.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_kyrieeleison.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryfreezingtrap.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_landmine.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryincreaseagility.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_lexdivina.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarykyrieeleison.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_magnificat.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarylandmine.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_magnumbreak.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarylexdivina.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_mentalcure.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarymagnificat.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_mindblaster.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarymagnumbreak.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_pierce.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarymentalcure.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_provoke.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarymindblaster.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_recuperate.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarypierce.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_regain.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryprovoke.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_removetrap.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryrecuperate.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_sacrifice.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryregain.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_sandman.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryremovetrap.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_scapegoat.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarysacrifice.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_sense.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarysandman.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_shieldreflect.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryscapegoat.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_sight.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarysense.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_skidtrap.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryshieldreflect.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_spiralpierce.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarysight.hpp">
-      <Filter>Header Files\Skills\Mercenary</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryskidtrap.hpp">
-      <Filter>Header Files\Skills\Mercenary</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenaryspiralpierce.hpp">
-      <Filter>Header Files\Skills\Mercenary</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mercenary/mercenarytender.hpp">
+    <ClInclude Include="skills/mercenary/mercenary_tender.hpp">
       <Filter>Header Files\Skills\Mercenary</Filter>
     </ClInclude>
     <ClInclude Include="skills/mercenary/skill_factory_mercenary.hpp">
@@ -4322,112 +4319,109 @@
     <ClCompile Include="skills/mage/windinsignia.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_arrowrepel.cpp">
+      <Filter>Source Files\Skills\Mercenary</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/mercenary/mercenary_arrowshower.cpp">
+      <Filter>Source Files\Skills\Mercenary</Filter>
+    </ClCompile>
     <ClCompile Include="skills/mercenary/mercenary_bash.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryarrowrepel.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_benediction.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryarrowshower.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_blessing.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarybash.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_bowlingbash.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarybenediction.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_brandishspear.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryblessing.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_compress.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarybowlingbash.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_crash.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarybrandishspear.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_decreaseagi.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarycompress.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_doublestrafe.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarycrash.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_focusedarrowstrike.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarydecreaseagi.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_freezingtrap.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarydoublestrafe.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_increaseagility.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryfocusedarrowstrike.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_kyrieeleison.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryfreezingtrap.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_landmine.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryincreaseagility.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_lexdivina.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarykyrieeleison.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_magnificat.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarylandmine.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_magnumbreak.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarylexdivina.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_mentalcure.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarymagnificat.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_mindblaster.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarymagnumbreak.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_pierce.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarymentalcure.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_provoke.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarymindblaster.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_recuperate.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarypierce.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_regain.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryprovoke.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_removetrap.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryrecuperate.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_sacrifice.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryregain.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_sandman.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryremovetrap.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_scapegoat.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarysacrifice.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_sense.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarysandman.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_shieldreflect.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryscapegoat.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_sight.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarysense.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_skidtrap.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryshieldreflect.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_spiralpierce.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarysight.cpp">
-      <Filter>Source Files\Skills\Mercenary</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryskidtrap.cpp">
-      <Filter>Source Files\Skills\Mercenary</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenaryspiralpierce.cpp">
-      <Filter>Source Files\Skills\Mercenary</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mercenary/mercenarytender.cpp">
+    <ClCompile Include="skills/mercenary/mercenary_tender.cpp">
       <Filter>Source Files\Skills\Mercenary</Filter>
     </ClCompile>
     <ClCompile Include="skills/mercenary/skill_factory_mercenary.cpp">
