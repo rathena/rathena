@@ -6,6 +6,7 @@
 #include "map/clif.hpp"
 #include "map/mercenary.hpp"
 #include "map/party.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillMercenaryMagnificat::SkillMercenaryMagnificat() : SkillImpl(MER_MAGNIFICAT) {

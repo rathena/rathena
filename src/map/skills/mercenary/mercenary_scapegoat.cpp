@@ -4,6 +4,8 @@
 #include "mercenary_scapegoat.hpp"
 
 #include "map/mercenary.hpp"
+#include "map/pc.hpp"
+#include "map/status.hpp"
 
 SkillMercenaryScapegoat::SkillMercenaryScapegoat() : SkillImpl(MER_SCAPEGOAT) {
 }
