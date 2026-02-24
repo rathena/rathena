@@ -10,6 +10,7 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
+// TODO: refactor to SkillImplRecursiveDamageSplash
 SkillDragonTail::SkillDragonTail() : SkillImpl(RL_D_TAIL) {
 }
 

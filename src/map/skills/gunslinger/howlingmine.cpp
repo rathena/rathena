@@ -7,6 +7,7 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
+// TODO: Refactor to SkillImplRecursiveDamageSplash
 SkillHowlingMine::SkillHowlingMine() : SkillImpl(RL_H_MINE) {
 }
 

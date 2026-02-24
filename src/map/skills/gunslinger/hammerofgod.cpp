@@ -10,7 +10,7 @@
 #include "map/pc.hpp"
 #include "map/status.hpp"
 
-SkillHammerOfGod::SkillHammerOfGod() : SkillImpl(RL_HAMMER_OF_GOD) {
+SkillHammerOfGod::SkillHammerOfGod() : SkillImplRecursiveDamageSplash(RL_HAMMER_OF_GOD) {
 }
 
 void SkillHammerOfGod::castendPos2(block_list* src, int32 x, int32 y, uint16 skill_lv, t_tick tick, int32& flag) const {
