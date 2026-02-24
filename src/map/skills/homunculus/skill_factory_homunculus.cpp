@@ -27,10 +27,13 @@
 #include "homunculus_summonlegion.cpp"
 #include "homunculus_tinderbreaker.cpp"
 #include "homunculus_continualbreakcombo.cpp"
+#include "homunculus_blastforge.cpp"
 #include "homunculus_eternalquickcombo.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case MH_BLAST_FORGE:
+			return std::make_unique<SkillBlastForge>();
 		case MH_CBC:
 			return std::make_unique<SkillContinualBreakCombo>();
 		case MH_EQC:
