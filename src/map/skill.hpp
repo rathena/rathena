@@ -32,6 +32,8 @@ class SkillImpl;
 extern struct eri* skill_timer_ers;
 extern DBMap* bowling_db;
 
+extern char dir_ka;
+
 #ifndef TIMERSKILL_INTERVAL
 	#define TIMERSKILL_INTERVAL	150
 #endif
