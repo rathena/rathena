@@ -3223,6 +3223,7 @@ enum e_random_item_group {
 	IG_SELECT_DEC_PACK1,
 	IG_SELECT_DEC_PACK2,
 	IG_SELECT_DEC_PACK3,
+	IG_D_GW_EXTRACTOR,
 
 	IG_MAX
 };

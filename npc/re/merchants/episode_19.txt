@@ -1,0 +1,97 @@
+//===== rAthena Script =======================================
+//= Episode 19 NPCs.
+//===== Description: =========================================
+//- [Walkthrough conversion]
+//- Related to new content.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+icas_in,192,57,3	script	Incineration Furnace#ep19	4_POINT_RED,{
+	mes "There is a brazier where you can feel the heat.";
+	mes "If you have useless Dim Glacier weapons, put them in and melt them.";
+	close2;
+	laphine_synthesis("Dim Glacier Extractor");
+	end;
+}
+
+icas_in,188,60,3	script	Forr#ep19	4_EP19_IWIN,{
+	cutin "ep19_iwin11.png",2;
+	mes "[Forr]";
+	mes "Did you know that weapons are being found in recently abandoned pits and the like?";
+	mes "It is called Dim Glacier because it is an object imbued with unusual magical powers.";
+	next;
+	mes "[Forr]";
+	mes "I've done some research with Vellgunde, and I've found that it has the magical powers of mutated Jormungand.";
+	mes "If you have Dim Glacier, try adjusting your magic to increase the weapon's performance.";
+	next;
+	mes "[Forr]";
+	mes "I need some tricky refining materials, but how about exchanging them appropriately for what I'm lacking?";
+	next;
+	switch( select( "Exchange materials.", "Awaken Dim Glacier's potential.", "What do you do with unnecessary weapons?", "Okay." ) ) {
+	case 1:
+		mes "[Forr]";
+		mes "The amethyst shards brought by Maram helped make various containers.";
+		mes "It's something you can't get here, so you might ask for it often.";
+		close2;
+		cutin "",255;
+		callshop "barter_ep19_new_content";
+		end;
+	case 2:
+		mes "[Forr]";
+		mes "I wish you good luck";
+		close2;
+		cutin "",255;
+		item_enchant(47);
+		end;
+	case 3:
+		mes "[Forr]";
+		mes "Can you see the brazier down there?";
+		mes "I made it for the incineration of useless things that have been researched.";
+		next;
+		mes "[Forr]";
+		mes "If you're going to throw it away, use that incinerator.";
+		mes "Dim Glacier has magical powers, so if you melt it, whatever comes out will come out.";
+		close3;
+	case 4:
+		mes "[Forr]";
+		mes "I will stay for a while to help Vellgunde-sama.";
+		mes "Come to me anytime.";
+		close3;
+	}
+}
+
+// Storage
+icas_in,169,70,3	script	Card#ep19	4_POINT_BLUE,{
+	.@total_storage = 1;	// by default rAthena just open the basic storage (but 3 on kRO)
+
+	cutin "ep19_iwin02.png",2;
+	mes "[Hoyoyo]";
+	mes "Are you going to use the closet?";
+	mes "Hyo, hy, hyo, put in a coin from the continent.";
+	mes "Hey... Would you like to put 500zeny in it?";
+	next;
+	cutin "",255;
+	for ( .@i = 0; .@i < .@total_storage; .@i++ )
+		.@menu$ += "Storage " + (.@i+1) + ":";
+	.@menu$ += "Stop.";
+	.@s = select( .@menu$ ) - 2;
+
+	if (.@s == (.@total_storage - 1)) {
+		mes "I decided to use it next time.";
+		close;
+	}
+
+	if (Zeny < 500) {
+		mes "Looks like you have to put 500 zeny to use the closet.";
+		close3;
+	}
+	mes "When a coin was inserted, the cabinet opened with a rattling sound.";
+	close2;
+	Zeny -= 500;
+	if (.@s == -1)	// basic storage
+		openstorage;
+	else	// "premium" storage starting from index 0
+		openstorage2 .@s, STOR_MODE_GET|STOR_MODE_PUT;	// note: opened before close button
+	end;
+}

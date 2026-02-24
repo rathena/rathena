@@ -1,0 +1,11 @@
+//===== rAthena Script =======================================
+//= Warps Points for "jor" dungeons
+//===== Additional Comments: =================================
+//= 1.0 First version. [Atemo]
+//============================================================
+
+jor_dun02,286,87,0	warp2	#to_jor_dun01_B	1,1,jor_dun01,12,238
+jor_dun02,18,31,0	warp2	#to_jor_nest	1,1,jor_nest,278,18
+jor_ab01,113,7,0	warp2	#to_jor_back2_C	1,1,jor_back2,261,313
+jor_nest,282,18,0	warp2	#jor_nest_to_jor_dun02	1,1,jor_dun02,21,32
+jor_dun03,58,48,0	warp2	#hw_ep19re3_	2,2,jor_nest,62,255
