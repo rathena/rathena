@@ -334,6 +334,7 @@
     <ClInclude Include="skills/acolyte/statusrecovery.hpp" />
     <ClInclude Include="skills/acolyte/suffragium.hpp" />
     <ClInclude Include="skills/acolyte/summonspiritsphere.hpp" />
+    <ClInclude Include="skills/acolyte/teleport.hpp" />
     <ClInclude Include="skills/acolyte/thirdconsecration.hpp" />
     <ClInclude Include="skills/acolyte/thirdflamebomb.hpp" />
     <ClInclude Include="skills/acolyte/thirdpunish.hpp" />
@@ -1671,6 +1672,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/summonspiritsphere.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/teleport.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/thirdconsecration.cpp">

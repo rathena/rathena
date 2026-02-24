@@ -97,6 +97,7 @@
 #include "statusrecovery.cpp"
 #include "suffragium.cpp"
 #include "summonspiritsphere.cpp"
+#include "teleport.cpp"
 #include "thirdconsecration.cpp"
 #include "thirdflamebomb.cpp"
 #include "thirdpunish.cpp"
@@ -178,6 +179,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillPneuma>();
 		case AL_RUWACH:
 			return std::make_unique<SkillRuwach>();
+		case AL_TELEPORT:
+			return std::make_unique<SkillTeleport>();
 		case AL_WARP:
 			return std::make_unique<SkillWarpPortal>();
 		case CD_ARBITRIUM:

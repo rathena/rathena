@@ -4935,8 +4935,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		status_heal(bl,5,0,0);
 		break;
 
-	// Mercenary Supportive Skills
-	case AL_TELEPORT:
 	case ALL_ODINS_RECALL:
 		if(sd != nullptr)
 		{
@@ -4945,7 +4943,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				break;
 			}
 			if(!battle_config.duel_allow_teleport && sd->duel_group && skill_lv <= 2) { // duel restriction [LuzZza]
-				char output[128]; sprintf(output, msg_txt(sd,365), skill_get_name(AL_TELEPORT));
+				char output[128]; sprintf(output, msg_txt(sd,365), skill_get_name(ALL_ODINS_RECALL));
 				clif_displaymessage(sd->fd, output); //"Duel: Can't use %s in duel."
 				break;
 			}
@@ -4966,13 +4964,9 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				"Random"
 			};
 
-			if( skill_lv == 1 && skill_id != ALL_ODINS_RECALL ){
-				clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
-			}else{
-				maps.push_back( sd->status.save_point.map );
+			maps.push_back( sd->status.save_point.map );
 
-				clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
-			}
+			clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
 		} else
 			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
