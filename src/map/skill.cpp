@@ -4283,35 +4283,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
 		break;
 
-	case KN_CHARGEATK:
-		{
-		bool path = path_search_long(nullptr, src->m, src->x, src->y, bl->x, bl->y,CELL_CHKWALL);
-#ifdef RENEWAL
-		int32 dist = skill_get_blewcount(skill_id, skill_lv);
-#else
-		// Charge attack in pre-renewal calculates the distance mathetically
-		int32 dist = static_cast<int32>(distance_math_bl(src, bl));
-#endif
-		uint8 dir = map_calc_dir(bl, src->x, src->y);
-
-		// teleport to target (if not on WoE grounds)
-		if (skill_check_unit_movepos(5, src, bl->x + dirx[dir], bl->y + diry[dir], 0, true))
-			clif_blown(src);
-
-		// cause damage and knockback if the path to target was a straight one
-		if (path) {
-			if(skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, dist)) {
-#ifdef RENEWAL
-				if (map_getmapdata(src->m)->getMapFlag(MF_PVP))
-					dist += 2; // Knockback is 4 on PvP maps
-#endif
-				skill_blown(src, bl, dist, dir, BLOWN_NONE);
-			}
-		}
-
-		}
-		break;
-
 	case MH_XENO_SLASHER:
 	case MH_HEILIGE_PFERD:
 	case MH_THE_ONE_FIGHTER_RISES:
@@ -4356,20 +4327,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			map_foreachinrange(skill_area_sub, bl, splash_size, starget, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
-
-#ifdef RENEWAL
-	case KN_BRANDISHSPEAR:
-		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-#else
-	case KN_BRANDISHSPEAR:
-		//Coded apart for it needs the flag passed to the damage calculation.
-		if (skill_area_temp[1] != bl->id)
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
-		else
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
-#endif
 
 	case ALL_RESURRECTION:
 		if (!battle_check_undead(tstatus->race, tstatus->def_ele))
@@ -4788,40 +4745,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case PR_REDEMPTIO:
-		if (sd && !(flag&1)) {
-			if (sd->status.party_id == 0) {
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-			skill_area_temp[0] = 0;
-			party_foreachsamemap(skill_area_sub,
-				sd,skill_get_splash(skill_id, skill_lv),
-				src,skill_id,skill_lv,tick, flag|BCT_PARTY|1,
-				skill_castend_nodamage_id);
-			if (skill_area_temp[0] == 0) {
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-#ifndef RENEWAL
-			skill_area_temp[0] = battle_config.exp_cost_redemptio_limit - skill_area_temp[0]; // The actual penalty...
-			if (skill_area_temp[0] > 0 && !map_getmapflag(src->m, MF_NOEXPPENALTY) && battle_config.exp_cost_redemptio) { //Apply penalty
-				//If total penalty is 1% => reduced 0.2% penalty per each revived player
-				pc_lostexp(sd, u64min(sd->status.base_exp, (pc_nextbaseexp(sd) * skill_area_temp[0] * battle_config.exp_cost_redemptio / battle_config.exp_cost_redemptio_limit) / 100), 0);
-			}
-			status_set_sp(src, 0, 0);
-#endif
-			status_set_hp(src, 1, 0);
-			break;
-		} else if (!(status_isdead(*bl) && flag&1)) { 
-			//Invalid target, skip resurrection.
-			break;
-		}
-		//Revive
-		skill_area_temp[0]++; //Count it in, then fall-through to the Resurrection code.
-		skill_lv = 3; //Resurrection level 3 is used
-		[[fallthrough]];
-
 	case ALL_RESURRECTION:
 		if(sd && (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND)))
 		{	//No reviving in WoE grounds!
@@ -4930,13 +4853,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	case NV_FIRSTAID:
-		clif_skill_nodamage(src,*bl,skill_id,5);
-		status_heal(bl,5,0,0);
-		break;
-
-	// Mercenary Supportive Skills
-	case AL_TELEPORT:
 	case ALL_ODINS_RECALL:
 		if(sd != nullptr)
 		{
@@ -4945,7 +4861,7 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				break;
 			}
 			if(!battle_config.duel_allow_teleport && sd->duel_group && skill_lv <= 2) { // duel restriction [LuzZza]
-				char output[128]; sprintf(output, msg_txt(sd,365), skill_get_name(AL_TELEPORT));
+				char output[128]; sprintf(output, msg_txt(sd,365), skill_get_name(ALL_ODINS_RECALL));
 				clif_displaymessage(sd->fd, output); //"Duel: Can't use %s in duel."
 				break;
 			}
@@ -4966,13 +4882,9 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				"Random"
 			};
 
-			if( skill_lv == 1 && skill_id != ALL_ODINS_RECALL ){
-				clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
-			}else{
-				maps.push_back( sd->status.save_point.map );
+			maps.push_back( sd->status.save_point.map );
 
-				clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
-			}
+			clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
 		} else
 			unit_warp(bl,-1,-1,-1,CLR_TELEPORT);
 		break;
@@ -6512,41 +6424,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 		// Ammo should be deleted right away.
 		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
 		break;
-	case AL_WARP:
-		if(sd != nullptr) {
-			std::vector<std::string> maps( MAX_MEMOPOINTS + 1 );
-
-			maps.push_back( sd->status.save_point.map );
-
-			if( skill_lv >= 2 ){
-				maps.push_back( sd->status.memo_point[0].map );
-
-				if( skill_lv >= 3 ){
-					maps.push_back( sd->status.memo_point[1].map );
-
-					if( skill_lv >= 4 ){
-						maps.push_back( sd->status.memo_point[2].map );
-					}
-				}
-			}
-
-			clif_skill_warppoint( *sd, skill_id, skill_lv, maps );
-		}
-		if( sc && sc->getSCE(SC_CURSEDCIRCLE_ATKER) ) //Should only remove after the skill has been casted.
-			status_change_end(src,SC_CURSEDCIRCLE_ATKER);
-		return 0; // not to consume item.
-
-	case AM_RESURRECTHOMUN:	//[orn]
-		if (sd)
-		{
-			if (!hom_ressurect(sd, 20*skill_lv, x, y))
-			{
-				clif_skill_fail( *sd, skill_id );
-				break;
-			}
-		}
-		break;
-
 	default:
 		if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
 			skill->impl->castendPos2(src, x, y, skill_lv, tick, flag);

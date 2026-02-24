@@ -8,6 +8,7 @@
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
 #include "doublebowlingbash.cpp"
+#include "firstaid.cpp"
 #include "groundgravitation.cpp"
 #include "hellsdrive.cpp"
 #include "helpangel.cpp"
@@ -48,6 +49,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryNovice::create(const e_skill skill_
 			return std::make_unique<SkillShieldChainRush>();
 		case HN_SPIRAL_PIERCE_MAX:
 			return std::make_unique<SkillSpiralPierceMax>();
+		case NV_FIRSTAID:
+			return std::make_unique<SkillFirstAid>();
 		case NV_HELPANGEL:
 			return std::make_unique<SkillHelpAngel>();
 		case NV_TRICKDEAD:

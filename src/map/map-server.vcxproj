@@ -319,6 +319,7 @@
     <ClInclude Include="skills/acolyte/ragingtrifectablow.hpp" />
     <ClInclude Include="skills/acolyte/raisingdragon.hpp" />
     <ClInclude Include="skills/acolyte/rampageblaster.hpp" />
+    <ClInclude Include="skills/acolyte/redemptio.hpp" />
     <ClInclude Include="skills/acolyte/renovatio.hpp" />
     <ClInclude Include="skills/acolyte/reparatio.hpp" />
     <ClInclude Include="skills/acolyte/rideinlightening.hpp" />
@@ -334,6 +335,7 @@
     <ClInclude Include="skills/acolyte/statusrecovery.hpp" />
     <ClInclude Include="skills/acolyte/suffragium.hpp" />
     <ClInclude Include="skills/acolyte/summonspiritsphere.hpp" />
+    <ClInclude Include="skills/acolyte/teleport.hpp" />
     <ClInclude Include="skills/acolyte/thirdconsecration.hpp" />
     <ClInclude Include="skills/acolyte/thirdflamebomb.hpp" />
     <ClInclude Include="skills/acolyte/thirdpunish.hpp" />
@@ -341,6 +343,7 @@
     <ClInclude Include="skills/acolyte/tigercannon.hpp" />
     <ClInclude Include="skills/acolyte/turnundead.hpp" />
     <ClInclude Include="skills/acolyte/vituperatum.hpp" />
+    <ClInclude Include="skills/acolyte/warpportal.hpp" />
     <ClInclude Include="skills/acolyte/windmill.hpp" />
     <ClInclude Include="skills/acolyte/zen.hpp" />
     <ClInclude Include="skills/archer/acousticrhythm.hpp" />
@@ -770,6 +773,7 @@
     <ClInclude Include="skills/merchant/hammerfall.hpp" />
     <ClInclude Include="skills/merchant/hellsplant.hpp" />
     <ClInclude Include="skills/merchant/helltree.hpp" />
+    <ClInclude Include="skills/merchant/homunculusresurrection.hpp" />
     <ClInclude Include="skills/merchant/howlingofmandragora.hpp" />
     <ClInclude Include="skills/merchant/illusiondoping.hpp" />
     <ClInclude Include="skills/merchant/infraredscan.hpp" />
@@ -816,9 +820,7 @@
     <ClInclude Include="skills/merchant/wallofthorns.hpp" />
     <ClInclude Include="skills/merchant/weaponperfection.hpp" />
     <ClInclude Include="skills/merchant/weaponrepair.hpp" />
-    <ClInclude Include="skills/merchant/woodenattack.hpp" />
     <ClInclude Include="skills/merchant/woodenfairy.hpp" />
-    <ClInclude Include="skills/merchant/woodenthrowrock.hpp" />
     <ClInclude Include="skills/merchant/woodenwarrior.hpp" />
     <ClInclude Include="skills/ninja/16thnight.hpp" />
     <ClInclude Include="skills/ninja/castninjaspell.hpp" />
@@ -887,6 +889,7 @@
     <ClInclude Include="skills/ninja/windblade.hpp" />
     <ClInclude Include="skills/ninja/windcharm.hpp" />
     <ClInclude Include="skills/novice/doublebowlingbash.hpp" />
+    <ClInclude Include="skills/novice/firstaid.hpp" />
     <ClInclude Include="skills/novice/groundgravitation.hpp" />
     <ClInclude Include="skills/novice/hellsdrive.hpp" />
     <ClInclude Include="skills/novice/helpangel.hpp" />
@@ -1101,6 +1104,7 @@
     <ClInclude Include="skills/swordman/bowlingbash.hpp" />
     <ClInclude Include="skills/swordman/brandishspear.hpp" />
     <ClInclude Include="skills/swordman/cannonspear.hpp" />
+    <ClInclude Include="skills/swordman/chargeattack.hpp" />
     <ClInclude Include="skills/swordman/counterattack.hpp" />
     <ClInclude Include="skills/swordman/crossrain.hpp" />
     <ClInclude Include="skills/swordman/crushstrike.hpp" />
@@ -1628,6 +1632,9 @@
     <ClCompile Include="skills/acolyte/rampageblaster.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/redemptio.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/renovatio.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1673,6 +1680,9 @@
     <ClCompile Include="skills/acolyte/summonspiritsphere.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/teleport.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/thirdconsecration.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1692,6 +1702,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/vituperatum.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/warpportal.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/acolyte/windmill.cpp">
@@ -2981,6 +2994,9 @@
     <ClCompile Include="skills/merchant/helltree.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/merchant/homunculusresurrection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/merchant/howlingofmandragora.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3119,13 +3135,7 @@
     <ClCompile Include="skills/merchant/weaponrepair.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/woodenattack.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="skills/merchant/woodenfairy.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/woodenthrowrock.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/woodenwarrior.cpp">
@@ -3330,6 +3340,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/novice/doublebowlingbash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/novice/firstaid.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/novice/groundgravitation.cpp">
@@ -3972,6 +3985,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/cannonspear.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/chargeattack.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/swordman/counterattack.cpp">
