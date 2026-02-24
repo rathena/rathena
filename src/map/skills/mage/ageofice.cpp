@@ -5,6 +5,7 @@
 
 #include "map/clif.hpp"
 #include "map/elemental.hpp"
+#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillAgeOfIce::SkillAgeOfIce() : SkillImplRecursiveDamageSplash(EM_EL_AGE_OF_ICE) {

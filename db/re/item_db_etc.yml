@@ -83035,6 +83035,15 @@ Body:
       hateffect FOOTPRINT_EF_BASE,true;
     UnEquipScript: |
       hateffect FOOTPRINT_EF_BASE,false;
+  - Id: 313066
+    AegisName: aegis_313066
+    Name: Whirlwind Footprint    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_STR_BASE,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_STR_BASE,false;
   - Id: 313067
     AegisName: aegis_313067
     Name: Purple Star Footprint
@@ -86108,16 +86117,28 @@ Body:
     Name: Dumpling Footprint
     Type: Card
     SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_DUMPLING,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_DUMPLING,false;
   - Id: 313559
     AegisName: aegis_313559
     Name: Panda Basic Footprint
     Type: Card
     SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_PANDA_BASIC,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_PANDA_BASIC,false;
   - Id: 313560
     AegisName: aegis_313560
     Name: Panda Color Footprint
     Type: Card
     SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_PANDA_COLOR,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_PANDA_COLOR,false;
   - Id: 313561
     AegisName: DK_Soul_DP
     Name: Dragon Knight Soul (Dragonic Pierce)
@@ -89869,12 +89890,14 @@ Body:
       bonus2 bMagicAddRace,RC_Player_Human,-3*(getskilllv("SOA_SOUL_MASTERY")/2);
       bonus2 bMagicAddRace,RC_Player_Doram,-3*(getskilllv("SOA_SOUL_MASTERY")/2);
   - Id: 314066
-    AegisName: aegis_314066
-    Name: ROS2025 Commemorative Footprints    # !todo check english name
+    AegisName: ROS2025Victory_Foot
+    Name: ROS 2025 Footprint
     Type: Card
     SubType: Enchant
-#   Script: |
-#     /* TODO */
+    Script: |
+      hateffect FOOTPRINT_EF_VICTORY2025,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_VICTORY2025,false;
   - Id: 314094
     AegisName: aegis_314094
     Name: Blue Fighting Spirit Effect    # !todo check english name
@@ -90474,6 +90497,33 @@ Body:
       .@m = getskilllv("SJ_LIGHTOFSTAR");
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK",.@m*4;
       bonus2 bSkillAtk,"SJ_FALLINGSTAR_ATK2",.@m*4;
+  - Id: 314813
+    AegisName: aegis_314813
+    Name: Phoenix Operation Footprints    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_PHOENIX,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_PHOENIX,false;
+  - Id: 314846
+    AegisName: aegis_314846
+    Name: Blue Star Footprints
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_BLUESTAR,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_BLUESTAR,false;
+  - Id: 314847
+    AegisName: aegis_314847
+    Name: Sacred Blue Light Footprints    # !todo check english name
+    Type: Card
+    SubType: Enchant
+    Script: |
+      hateffect FOOTPRINT_EF_DIVINE_BLUE,true;
+    UnEquipScript: |
+      hateffect FOOTPRINT_EF_DIVINE_BLUE,false;
   - Id: 1000000
     AegisName: IDTest_event
     Name: IDTest event
@@ -98035,6 +98085,11 @@ Body:
     Name: Footprint Effect (Garment)
     Type: Etc
     Weight: 100
+  - Id: 1001616
+    AegisName: aegis_1001616
+    Name: Whirlwind Footprint (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
   - Id: 1001617
     AegisName: PurpleStar_Foot_Robe
     Name: Purple Star Footprint (Garment)
@@ -100557,7 +100612,7 @@ Body:
     Weight: 100
   - Id: 1002286
     AegisName: ROS2025Vic_Foot_Robe
-    Name: ROS2025 Commemorative Footprints (Garment)    # !todo check english name
+    Name: ROS 2025 Footprint (Garment)
     Type: Etc
     Weight: 100
   - Id: 1002289
@@ -100584,7 +100639,7 @@ Body:
     Weight: 100
   - Id: 1002296
     AegisName: Divine_L_Foot_Robe
-    Name: Divine Light Footprints (Garments
+    Name: Divine Light Footprints (Garment)
     Type: Etc
     Weight: 100
   - Id: 1002331
@@ -100666,7 +100721,7 @@ Body:
       NoAuction: true
   - Id: 1002394
     AegisName: aegis_1002394
-    Name: Yellow Butterfly Footprints (Garment)    # !todo check english name
+    Name: Yellow Butterfly Footprints (Garment)
     Type: Etc
     Weight: 100
   - Id: 1002395
@@ -100881,6 +100936,21 @@ Body:
       NoGuildStorage: true
       NoMail: true
       NoAuction: true
+  - Id: 1002623
+    AegisName: aegis_1002623
+    Name: Blue Star Footprints (Garment)
+    Type: Etc
+    Weight: 100
+  - Id: 1002624
+    AegisName: aegis_1002624
+    Name: Sacred Blue Light Footprints (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
+  - Id: 1002642
+    AegisName: aegis_1002642
+    Name: Phoenix Operation Footprints (Garment)    # !todo check english name
+    Type: Etc
+    Weight: 100
   - Id: 1200000
     AegisName: IDTest_arrow
     Name: IDTest arrow
