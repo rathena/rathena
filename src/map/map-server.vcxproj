@@ -471,12 +471,21 @@
     <ClInclude Include="skills/archer/windwalker.hpp" />
     <ClInclude Include="skills/archer/winkofcharm.hpp" />
     <ClInclude Include="skills/custom/skill_factory_custom.hpp" />
+    <ClInclude Include="skills/gunslinger/antimaterialblast.hpp" />
+    <ClInclude Include="skills/gunslinger/banishingbuster.hpp" />
     <ClInclude Include="skills/gunslinger/basicgrenade.hpp" />
+    <ClInclude Include="skills/gunslinger/bindtrap.hpp" />
     <ClInclude Include="skills/gunslinger/bullseye.hpp" />
     <ClInclude Include="skills/gunslinger/cracker.hpp" />
+    <ClInclude Include="skills/gunslinger/crimsonmarker.hpp" />
     <ClInclude Include="skills/gunslinger/desperado.hpp" />
     <ClInclude Include="skills/gunslinger/disarm.hpp" />
+    <ClInclude Include="skills/gunslinger/dragontail.hpp" />
     <ClInclude Include="skills/gunslinger/dust.hpp" />
+    <ClInclude Include="skills/gunslinger/fallenangel.hpp" />
+    <ClInclude Include="skills/gunslinger/firedance.hpp" />
+    <ClInclude Include="skills/gunslinger/firerain.hpp" />
+    <ClInclude Include="skills/gunslinger/flicker.hpp" />
     <ClInclude Include="skills/gunslinger/fling.hpp" />
     <ClInclude Include="skills/gunslinger/fullbuster.hpp" />
     <ClInclude Include="skills/gunslinger/gatlingfever.hpp" />
@@ -484,15 +493,23 @@
     <ClInclude Include="skills/gunslinger/grenadefragment.hpp" />
     <ClInclude Include="skills/gunslinger/grenadesdropping.hpp" />
     <ClInclude Include="skills/gunslinger/grounddrift.hpp" />
+    <ClInclude Include="skills/gunslinger/hammerofgod.hpp" />
     <ClInclude Include="skills/gunslinger/hastyfireinthehole.hpp" />
+    <ClInclude Include="skills/gunslinger/howlingmine.hpp" />
     <ClInclude Include="skills/gunslinger/intensiveaim.hpp" />
     <ClInclude Include="skills/gunslinger/magazineforone.hpp" />
+    <ClInclude Include="skills/gunslinger/massspiral.hpp" />
     <ClInclude Include="skills/gunslinger/midnightfallen.hpp" />
     <ClInclude Include="skills/gunslinger/missionbombard.hpp" />
     <ClInclude Include="skills/gunslinger/onlyonebullet.hpp" />
     <ClInclude Include="skills/gunslinger/piercingshot.hpp" />
+    <ClInclude Include="skills/gunslinger/quickdrawshot.hpp" />
     <ClInclude Include="skills/gunslinger/rapidshower.hpp" />
+    <ClInclude Include="skills/gunslinger/richscoin.hpp" />
+    <ClInclude Include="skills/gunslinger/roundtrip.hpp" />
+    <ClInclude Include="skills/gunslinger/shatterstorm.hpp" />
     <ClInclude Include="skills/gunslinger/skill_factory_gunslinger.hpp" />
+    <ClInclude Include="skills/gunslinger/slugshot.hpp" />
     <ClInclude Include="skills/gunslinger/spiralshooting.hpp" />
     <ClInclude Include="skills/gunslinger/spreadattack.hpp" />
     <ClInclude Include="skills/gunslinger/thevigilanteatnight.hpp" />
@@ -1879,7 +1896,16 @@
     <ClCompile Include="skills/custom/skill_factory_custom.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/antimaterialblast.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/banishingbuster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/basicgrenade.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/bindtrap.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/bullseye.cpp">
@@ -1888,13 +1914,31 @@
     <ClCompile Include="skills/gunslinger/cracker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/crimsonmarker.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/desperado.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/disarm.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/dragontail.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/dust.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/fallenangel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/firedance.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/firerain.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/flicker.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/fling.cpp">
@@ -1918,13 +1962,22 @@
     <ClCompile Include="skills/gunslinger/grounddrift.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/hammerofgod.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/hastyfireinthehole.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/howlingmine.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/intensiveaim.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/magazineforone.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/massspiral.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/midnightfallen.cpp">
@@ -1939,10 +1992,25 @@
     <ClCompile Include="skills/gunslinger/piercingshot.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/quickdrawshot.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/rapidshower.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/gunslinger/richscoin.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/roundtrip.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/shatterstorm.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/skill_factory_gunslinger.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/gunslinger/slugshot.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/spiralshooting.cpp">
