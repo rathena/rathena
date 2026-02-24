@@ -3,44 +3,34 @@
 
 #include "glacialshard.hpp"
 
+#include <config/core.hpp>
+
 #include "map/clif.hpp"
-#include "map/skill.hpp"
 #include "map/status.hpp"
 
-#include "skill_factory_druid.hpp"
+#include "glacialnova.hpp"
 
 SkillGlacialShard::SkillGlacialShard() : SkillImplRecursiveDamageSplash(AT_GLACIER_SHARD) {
 }
 
-void SkillGlacialShard::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	status_change* sc = status_get_sc(src);
+void SkillGlacialShard::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& skillratio, int32 mflag) const {
+	skillratio += -100 + 5500 + 300 * (skill_lv - 1);
 
-	if (!(flag & 1)) {
-		clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
+	if (const status_change* sc = status_get_sc(src); sc != nullptr && sc->hasSCE(SC_TRUTH_OF_ICE)) {
+		const status_data* sstatus = status_get_status_data(*src);
+
+		skillratio += 12 * sstatus->spl;
 	}
 
-	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);
-	if (!(flag & 1)) {
-		int32 gx = 0;
-		int32 gy = 0;
-		if (SkillFactoryDruid::get_glacier_center_on_map(src, sc, gx, gy)) {
-			skill_castend_pos2(src, gx, gy, AT_GLACIER_NOVA, 1, tick, 0);
-		}
-	}
+	// Unlike what the description indicates, the BaseLevel modifier is not part of the condition on SC_TRUTH_OF_ICE
+	RE_LVL_DMOD(100);
 }
 
-void SkillGlacialShard::calculateSkillRatio(const Damage*, const block_list* src, const block_list*, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
-	const status_change* sc = status_get_sc(src);
-	const status_data* sstatus = status_get_status_data(*src);
+void SkillGlacialShard::splashSearch(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
+	clif_skill_nodamage(src, *target, getSkillId(), skill_lv);
 
-	int32 skillratio = 5500 + 300 * (skill_lv - 1);
-	if (sc != nullptr && sc->hasSCE(SC_TRUTH_OF_ICE)) {
-		skillratio += sstatus->int_; // TODO - unknown scaling [munkrej]
-		RE_LVL_DMOD(100);
-	}
-	base_skillratio += -100 + skillratio;
-}
+	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 
-int64 SkillGlacialShard::splashDamage(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32 flag) const {
-	return skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
+	SkillGlacialNova skillnova;
+	skillnova.castendPos2(src, 0, 0, 1, tick, flag);
 }
