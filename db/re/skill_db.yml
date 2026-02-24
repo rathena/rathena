@@ -48673,6 +48673,7 @@ Body:
           Amount: 126
         - Level: 10
           Amount: 130
+    Status: Glacier_Sheild
   - Id: 6593
     Name: AT_GLACIER_NOVA
     Description: Glacial Nova

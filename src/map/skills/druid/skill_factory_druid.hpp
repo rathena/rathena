@@ -22,5 +22,4 @@ public:
 	static e_skill resolve_quill_spear_skill(const status_change* sc, e_skill skill_id);
 	static int32 get_madness_stage(const status_change* sc);
 	static void try_gain_madness(block_list* src);
-	static bool get_glacier_center_on_map(const block_list* src, const status_change* sc, int32& gx, int32& gy);
 };

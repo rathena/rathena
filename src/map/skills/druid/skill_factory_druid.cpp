@@ -222,32 +222,6 @@
 		add_growth_stacks(src, tick, amount);
 	}
 
-	bool get_glacier_center(const status_change *sc, int32 &x, int32 &y, int32 &map_id) {
-		if (sc == nullptr) {
-			return false;
-		}
-
-		const status_change_entry *sce = sc->getSCE(SC_GLACIER_SHEILD);
-		if (sce == nullptr) {
-			return false;
-		}
-
-		x = sce->val2;
-		y = sce->val3;
-		map_id = sce->val4;
-		return true;
-	}
-
-	bool SkillFactoryDruid::get_glacier_center_on_map(const block_list *src, const status_change *sc, int32 &gx, int32 &gy) {
-		int32 map_id = 0;
-
-		if (!get_glacier_center(sc, gx, gy, map_id)) {
-			return false;
-		}
-
-		return src->m == map_id;
-	}
-
 	int32 apply_splash_outer_sub(block_list *bl, va_list ap) {
 		block_list *src = va_arg(ap, block_list *);
 		uint16 skill_id = static_cast<uint16>(va_arg(ap, int));
