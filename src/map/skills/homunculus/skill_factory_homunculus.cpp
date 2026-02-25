@@ -50,30 +50,28 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case HAMI_BLOODLUST:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case HAMI_CASTLE:
+			return std::make_unique<SkillCastling>();
+		case HAMI_DEFENCE:
+			return std::make_unique<SkillDefense>();
 		case MH_BLAZING_AND_FURIOUS:
 			return std::make_unique<SkillBlazingAndFurious>();
 		case HVAN_CHAOTIC:
 			return std::make_unique<SkillBenedictionOfChaos>();
 		case HVAN_EXPLOSION:
 			return std::make_unique<SkillBioExplosion>();
-			case MH_BLAST_FORGE:
-				return std::make_unique<SkillBlastForge>();
-			case MH_CBC:
-				return std::make_unique<SkillContinualBreakCombo>();
-			case HVAN_CAPRICE:
-				return std::make_unique<SkillCaprice>();
-			case HAMI_CASTLE:
-				return std::make_unique<SkillCastling>();
-			case HLIF_CHANGE:
-				return std::make_unique<SkillChange>();
-			case HAMI_DEFENCE:
-				return std::make_unique<SkillDefense>();
-			case HAMI_SKIN:
-				return std::make_unique<StatusSkillImpl>(skill_id);
-			case HAMI_BLOODLUST:
-				return std::make_unique<StatusSkillImpl>(skill_id);
-			case MH_EQC:
-				return std::make_unique<SkillEternalQuickCombo>();
+		case MH_BLAST_FORGE:
+			return std::make_unique<SkillBlastForge>();
+		case MH_CBC:
+			return std::make_unique<SkillContinualBreakCombo>();
+		case HVAN_CAPRICE:
+			return std::make_unique<SkillCaprice>();
+		case HLIF_CHANGE:
+			return std::make_unique<SkillChange>();
+		case MH_EQC:
+			return std::make_unique<SkillEternalQuickCombo>();
 		case MH_ERASER_CUTTER:
 			return std::make_unique<SkillEraserCutter>();
 		case MH_GRANITIC_ARMOR:
