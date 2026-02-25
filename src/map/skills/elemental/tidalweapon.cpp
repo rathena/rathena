@@ -17,14 +17,12 @@ void SkillTidalWeapon::calculateSkillRatio(const Damage *wd, const block_list *s
 }
 
 void SkillTidalWeapon::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	s_elemental_data *ele = BL_CAST(BL_ELEM, src);
-	status_change *tsc = status_get_sc(target);
-	sc_type type = skill_get_sc(getSkillId());
-
 	if( src->type == BL_ELEM ) {
+		status_change *tsc = status_get_sc(target);
 		s_elemental_data *ele = BL_CAST(BL_ELEM,src);
 		status_change *tsc_ele = status_get_sc(ele);
-		sc_type type = SC_TIDAL_WEAPON_OPTION, type2 = SC_TIDAL_WEAPON;
+		sc_type type = SC_TIDAL_WEAPON_OPTION;
+		sc_type type2 = SC_TIDAL_WEAPON;
 
 		clif_skill_nodamage(src,*battle_get_master(src),getSkillId(),skill_lv);
 		clif_skill_damage( *src, *src, tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, getSkillId(), skill_lv, DMG_SINGLE );
