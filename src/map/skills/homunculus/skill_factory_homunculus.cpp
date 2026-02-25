@@ -38,6 +38,7 @@
 #include "homunculus_blastforge.cpp"
 #include "homunculus_castling.cpp"
 #include "homunculus_change.cpp"
+#include "homunculus_defense.cpp"
 #include "homunculus_eternalquickcombo.cpp"
 #include "homunculus_needlestinger.cpp"
 #include "homunculus_blazingandfurious.cpp"
@@ -57,14 +58,16 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillBioExplosion>();
 		case MH_BLAST_FORGE:
 			return std::make_unique<SkillBlastForge>();
-		case MH_CBC:
-			return std::make_unique<SkillContinualBreakCombo>();
+			case MH_CBC:
+				return std::make_unique<SkillContinualBreakCombo>();
 			case HVAN_CAPRICE:
 				return std::make_unique<SkillCaprice>();
 			case HAMI_CASTLE:
 				return std::make_unique<SkillCastling>();
 			case HLIF_CHANGE:
 				return std::make_unique<SkillChange>();
+			case HAMI_DEFENCE:
+				return std::make_unique<SkillDefense>();
 		case MH_EQC:
 			return std::make_unique<SkillEternalQuickCombo>();
 		case MH_ERASER_CUTTER:

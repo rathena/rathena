@@ -4776,13 +4776,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-	case HAMI_DEFENCE:
-		// Master
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		// Homunculus
-		clif_skill_nodamage(src, *src, skill_id, skill_lv, sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		break;
-
 	//List of self skills that give damage around caster
 	case MH_THE_ONE_FIGHTER_RISES:
 	case MH_HEILIGE_PFERD:
