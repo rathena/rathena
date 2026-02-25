@@ -5,7 +5,6 @@
 
 #include "map/clif.hpp"
 #include "map/elemental.hpp"
-#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillGust::SkillGust() : SkillImpl(EL_GUST) {

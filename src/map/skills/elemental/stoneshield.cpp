@@ -5,7 +5,6 @@
 
 #include "map/clif.hpp"
 #include "map/elemental.hpp"
-#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillStoneShield::SkillStoneShield() : SkillImpl(EL_STONE_SHIELD) {

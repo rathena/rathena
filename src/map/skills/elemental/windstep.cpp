@@ -7,7 +7,6 @@
 
 #include "map/clif.hpp"
 #include "map/elemental.hpp"
-#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillWindStep::SkillWindStep() : SkillImpl(EL_WIND_STEP) {

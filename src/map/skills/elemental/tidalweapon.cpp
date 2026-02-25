@@ -7,7 +7,6 @@
 
 #include "map/clif.hpp"
 #include "map/elemental.hpp"
-#include "map/pc.hpp"
 #include "map/status.hpp"
 
 SkillTidalWeapon::SkillTidalWeapon() : SkillImpl(EL_TIDAL_WEAPON) {

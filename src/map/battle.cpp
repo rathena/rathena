@@ -4650,7 +4650,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case HFLI_SBR44: //[orn]
 			skillratio += 100 * (skill_lv - 1);
 			break;
-		// Physical Elemantal Spirits Attack Skills
 		case MH_NEEDLE_OF_PARALYZE:
 			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
 			break;
@@ -6435,7 +6434,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						break;
 #endif
-					// Magical Elemental Spirits Attack Skills
 					case MH_ERASER_CUTTER:
 					case MH_XENO_SLASHER:
 						skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
