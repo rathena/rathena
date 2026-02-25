@@ -5,6 +5,8 @@
 
 #include <array>
 
+#include <common/random.hpp>
+
 SkillCaprice::SkillCaprice() : SkillImpl(HVAN_CAPRICE) {
 }
 

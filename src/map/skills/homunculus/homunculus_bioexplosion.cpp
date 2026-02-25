@@ -3,6 +3,10 @@
 
 #include "homunculus_bioexplosion.hpp"
 
+#include "map/clif.hpp"
+#include "map/homunculus.hpp"
+#include "map/map.hpp"
+
 SkillBioExplosion::SkillBioExplosion() : SkillImpl(HVAN_EXPLOSION) {
 }
 

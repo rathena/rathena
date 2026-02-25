@@ -5,6 +5,12 @@
 
 #include <array>
 
+#include <common/random.hpp>
+
+#include "map/battle.hpp"
+#include "map/clif.hpp"
+#include "map/status.hpp"
+
 SkillBenedictionOfChaos::SkillBenedictionOfChaos() : SkillImpl(HVAN_CHAOTIC) {
 }
 
