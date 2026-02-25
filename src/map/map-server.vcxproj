@@ -519,12 +519,20 @@
     <ClInclude Include="skills/gunslinger/wildshot.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_erasercutter.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_absolutezephyr.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_avoid.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_blazingandfurious.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_benedictionofchaos.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_bioexplosion.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_blastforge.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_caprice.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_castling.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_change.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_continualbreakcombo.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_defense.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_eternalquickcombo.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_glanzenspies.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_goldenetone.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_healingtouch.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_heiligepferd.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_graniticarmor.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_holypole.hpp" />
@@ -2261,13 +2269,34 @@
     <ClCompile Include="skills/homunculus/homunculus_absolutezephyr.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_avoid.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_blazingandfurious.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_benedictionofchaos.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_bioexplosion.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_blastforge.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_caprice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_castling.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_change.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_continualbreakcombo.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_defense.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_eternalquickcombo.cpp">
@@ -2277,6 +2306,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_goldenetone.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_healingtouch.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_heiligepferd.cpp">

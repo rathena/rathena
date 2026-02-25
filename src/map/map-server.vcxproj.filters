@@ -1200,13 +1200,34 @@
     <ClInclude Include="skills/homunculus/homunculus_absolutezephyr.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_avoid.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_blazingandfurious.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_benedictionofchaos.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_bioexplosion.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_blastforge.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_caprice.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_castling.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_change.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_continualbreakcombo.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_defense.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_eternalquickcombo.hpp">
@@ -1216,6 +1237,9 @@
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_goldenetone.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_healingtouch.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_heiligepferd.hpp">
@@ -4640,13 +4664,34 @@
     <ClCompile Include="skills/homunculus/homunculus_absolutezephyr.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_avoid.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_blazingandfurious.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_benedictionofchaos.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_bioexplosion.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_blastforge.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_caprice.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_castling.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_change.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_continualbreakcombo.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_defense.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_eternalquickcombo.cpp">
@@ -4656,6 +4701,9 @@
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_goldenetone.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_healingtouch.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_heiligepferd.cpp">
