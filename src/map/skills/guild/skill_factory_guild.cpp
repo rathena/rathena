@@ -9,6 +9,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_i
 	switch (static_cast<uint16>(skill_id)) {
 		case GD_APPROVAL:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case GD_KAFRACONTRACT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 
 		default:
 			return nullptr;
