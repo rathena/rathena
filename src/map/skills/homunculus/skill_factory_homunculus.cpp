@@ -7,16 +7,31 @@
 
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
-#include "homunculus_needleofparalyze.cpp"
-#include "homunculus_holypole.cpp"
-#include "homunculus_lavaslide.cpp"
-#include "homunculus_graniticarmor.cpp"
+#include "homunculus_absolutezephyr.cpp"
+#include "homunculus_avoid.cpp"
+#include "homunculus_benedictionofchaos.cpp"
+#include "homunculus_bioexplosion.cpp"
+#include "homunculus_blastforge.cpp"
+#include "homunculus_blazingandfurious.cpp"
+#include "homunculus_caprice.cpp"
+#include "homunculus_castling.cpp"
+#include "homunculus_change.cpp"
+#include "homunculus_continualbreakcombo.cpp"
+#include "homunculus_defense.cpp"
+#include "homunculus_erasercutter.cpp"
+#include "homunculus_eternalquickcombo.cpp"
 #include "homunculus_glanzenspies.cpp"
 #include "homunculus_goldenetone.cpp"
+#include "homunculus_graniticarmor.cpp"
+#include "homunculus_healingtouch.cpp"
+#include "homunculus_heiligepferd.cpp"
+#include "homunculus_holypole.cpp"
+#include "homunculus_lavaslide.cpp"
 #include "homunculus_lightofregene.cpp"
 #include "homunculus_magmaflow.cpp"
 #include "homunculus_midnightfrenzy.cpp"
-#include "homunculus_erasercutter.cpp"
+#include "homunculus_needleofparalyze.cpp"
+#include "homunculus_needlestinger.cpp"
 #include "homunculus_overedboost.cpp"
 #include "homunculus_painkiller.cpp"
 #include "homunculus_poisonmist.cpp"
@@ -27,24 +42,26 @@
 #include "homunculus_steelhorn.cpp"
 #include "homunculus_stylechange.cpp"
 #include "homunculus_summonlegion.cpp"
-#include "homunculus_tinderbreaker.cpp"
-#include "homunculus_continualbreakcombo.cpp"
 #include "homunculus_tempering.cpp"
-#include "homunculus_twistercutter.cpp"
-#include "homunculus_absolutezephyr.cpp"
-#include "homunculus_toxinofmandara.cpp"
-#include "homunculus_blastforge.cpp"
-#include "homunculus_eternalquickcombo.cpp"
-#include "homunculus_needlestinger.cpp"
-#include "homunculus_blazingandfurious.cpp"
-#include "homunculus_benedictionofchaos.cpp"
-#include "homunculus_bioexplosion.cpp"
 #include "homunculus_theonefighterrises.cpp"
-#include "homunculus_heiligepferd.cpp"
-#include "homunculus_caprice.cpp"
+#include "homunculus_tinderbreaker.cpp"
+#include "homunculus_toxinofmandara.cpp"
+#include "homunculus_twistercutter.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case HAMI_BLOODLUST:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case HAMI_CASTLE:
+			return std::make_unique<SkillCastling>();
+		case HAMI_DEFENCE:
+			return std::make_unique<SkillDefense>();
+		case HLIF_AVOID:
+			return std::make_unique<SkillAvoid>();
+		case HLIF_CHANGE:
+			return std::make_unique<SkillChange>();
+		case HLIF_HEAL:
+			return std::make_unique<SkillHealingTouch>();
 		case MH_BLAZING_AND_FURIOUS:
 			return std::make_unique<SkillBlazingAndFurious>();
 		case HVAN_CHAOTIC:

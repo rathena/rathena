@@ -4670,40 +4670,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 	FreeBlockLock freeLock;
 	switch(skill_id)
 	{
-	case HLIF_HEAL:	//[orn]
-		{
-			int32 heal = skill_calc_heal(src, bl, skill_id, skill_lv, true);
-
-			if (status_isimmune(bl) || (dstmd && (status_get_class(bl) == MOBID_EMPERIUM || status_get_class_(bl) == CLASS_BATTLEFIELD)))
-				heal = 0;
-
-			if( tsc != nullptr && !tsc->empty() ) {
-				if( tsc->getSCE(SC_KAITE) && !status_has_mode(sstatus,MD_STATUSIMMUNE) ) { //Bounce back heal
-					if (--tsc->getSCE(SC_KAITE)->val2 <= 0)
-						status_change_end(bl, SC_KAITE);
-					if (src == bl)
-						heal=0; //When you try to heal yourself under Kaite, the heal is voided.
-					else {
-						bl = src;
-						dstsd = sd;
-					}
-				}
-				else if (tsc->getSCE(SC_BERSERK) || tsc->getSCE(SC_SATURDAYNIGHTFEVER))
-					heal = 0; //Needed so that it actually displays 0 when healing.
-			}
-			status_change_end(bl, SC_BITESCAR);
-			clif_skill_nodamage(src, *bl, skill_id, heal);
-			t_exp heal_get_jobexp = status_heal(bl,heal,0,0);
-
-			if(sd && dstsd && heal > 0 && sd != dstsd && battle_config.heal_exp > 0){
-				heal_get_jobexp = heal_get_jobexp * battle_config.heal_exp / 100;
-				if (heal_get_jobexp <= 0)
-					heal_get_jobexp = 1;
-				pc_gainexp (sd, bl, 0, heal_get_jobexp, 0);
-			}
-		}
-		break;
-
 	case PR_REDEMPTIO:
 		if (sd && !(flag&1)) {
 			if (sd->status.party_id == 0) {
@@ -4810,14 +4776,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-	case HLIF_AVOID:
-	case HAMI_DEFENCE:
-		// Master
-		sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		// Homunculus
-		clif_skill_nodamage(src, *src, skill_id, skill_lv, sc_start(src, src, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
-		break;
-
 	//List of self skills that give damage around caster
 	case MH_THE_ONE_FIGHTER_RISES:
 	case MH_HEILIGE_PFERD:
@@ -5098,39 +5056,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
 		} else if (sd)
 			clif_skill_fail( *sd, skill_id );
-		break;
-
-	case HAMI_CASTLE:	//[orn]
-		if (src != bl && rnd_chance(20 * skill_lv, 100)) {
-			// Get one of the monsters targeting the player and set the homunculus as its new target
-			if (block_list* tbl = battle_gettargeted(bl); tbl != nullptr && tbl->type == BL_MOB) {
-				if (unit_data* ud = unit_bl2ud(tbl); ud != nullptr)
-					unit_changetarget_sub(*ud, *src);
-			}
-
-			int16 x = src->x, y = src->y;
-			// Move homunculus
-			if (unit_movepos(src, bl->x, bl->y, 0, false)) {
-				clif_blown(src);
-				// Move player
-				if (unit_movepos(bl, x, y, 0, false))
-					clif_blown(bl);
-				// Show the animation on the homunculus only
-				clif_skill_nodamage(src, *src, skill_id, skill_lv);
-			}
-		}
-		else if (hd != nullptr && hd->master != nullptr)
-			clif_skill_fail( *hd->master, skill_id );
-		else if (sd != nullptr)
-			clif_skill_fail( *sd, skill_id );
-		break;
-	// Homun single-target support skills [orn]
-	case HLIF_CHANGE:
-#ifndef RENEWAL
-		status_percent_heal(bl, 100, 100);
-#endif
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
 
 	case NPC_WIDEHEALTHFEAR:	// TODO: skills undefined in skill_db.yml
