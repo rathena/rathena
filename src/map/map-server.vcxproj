@@ -528,6 +528,7 @@
     <ClInclude Include="skills/guild/restoration.hpp" />
     <ClInclude Include="skills/guild/sharpgaze.hpp" />
     <ClInclude Include="skills/guild/skill_factory_guild.hpp" />
+    <ClInclude Include="skills/guild/urgentcall.hpp" />
     <ClInclude Include="skills/mage/activityburn.hpp" />
     <ClInclude Include="skills/mage/ageofice.hpp" />
     <ClInclude Include="skills/mage/allbloom.hpp" />
@@ -2265,6 +2266,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/guild/skill_factory_guild.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/urgentcall.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/activityburn.cpp">

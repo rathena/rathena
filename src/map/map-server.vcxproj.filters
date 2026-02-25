@@ -1227,6 +1227,9 @@
     <ClInclude Include="skills/guild/skill_factory_guild.hpp">
       <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
+    <ClInclude Include="skills/guild/urgentcall.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
     <ClInclude Include="skills/mage/activityburn.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -4602,6 +4605,9 @@
       <Filter>Source Files\Skills\Guild</Filter>
     </ClCompile>
     <ClCompile Include="skills/guild/skill_factory_guild.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/urgentcall.cpp">
       <Filter>Source Files\Skills\Guild</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/activityburn.cpp">

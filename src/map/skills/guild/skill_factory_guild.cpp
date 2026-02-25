@@ -14,6 +14,7 @@
 #include "regeneration.cpp"
 #include "restoration.cpp"
 #include "sharpgaze.cpp"
+#include "urgentcall.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_id) const {
 	switch (static_cast<uint16>(skill_id)) {
@@ -43,6 +44,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_i
 			return std::make_unique<SkillRegeneration>();
 		case GD_RESTORE:
 			return std::make_unique<SkillRestoration>();
+		case GD_EMERGENCYCALL:
+			return std::make_unique<SkillUrgentCall>();
 
 		default:
 			return nullptr;

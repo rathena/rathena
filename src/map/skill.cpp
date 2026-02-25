@@ -5022,7 +5022,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 #endif
 		}
 		break;
-	case GD_EMERGENCYCALL:
 	case GD_ITEMEMERGENCYCALL:
 		{
 			int8 dx[9] = {-1, 1, 0, 0,-1, 1,-1, 1, 0};
