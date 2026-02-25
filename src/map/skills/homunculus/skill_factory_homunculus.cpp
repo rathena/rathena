@@ -59,6 +59,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillCastling>();
 		case HAMI_DEFENCE:
 			return std::make_unique<SkillDefense>();
+		case HFLI_FLEET:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case HFLI_MOON:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case HFLI_SBR44:
+			return std::make_unique<WeaponSkillImpl>(skill_id);
+		case HFLI_SPEED:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case HLIF_AVOID:
 			return std::make_unique<SkillAvoid>();
 		case HLIF_CHANGE:
