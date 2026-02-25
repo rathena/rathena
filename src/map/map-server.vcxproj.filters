@@ -1209,6 +1209,9 @@
     <ClInclude Include="skills/homunculus/homunculus_eternalquickcombo.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_glanzenspies.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_graniticarmor.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
@@ -4632,6 +4635,9 @@
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_eternalquickcombo.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_glanzenspies.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_graniticarmor.cpp">

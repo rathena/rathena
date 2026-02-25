@@ -522,6 +522,7 @@
     <ClInclude Include="skills/homunculus/homunculus_blastforge.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_continualbreakcombo.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_eternalquickcombo.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_glanzenspies.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_graniticarmor.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_holypole.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_lavaslide.hpp" />
@@ -2263,6 +2264,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_eternalquickcombo.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_glanzenspies.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_graniticarmor.cpp">

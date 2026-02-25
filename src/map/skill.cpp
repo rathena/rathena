@@ -4450,9 +4450,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag | BCT_ENEMY | SD_SPLASH | 1, skill_castend_damage_id);
 		break;
 
-	case MH_GLANZEN_SPIES:
-		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-		break;
 	case 0:/* no skill - basic/normal attack */
 		if(sd) {
 			if (flag & 3){
