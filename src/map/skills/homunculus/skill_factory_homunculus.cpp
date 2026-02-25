@@ -112,6 +112,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillAbsoluteZephyr>();
 		case MH_TOXIN_OF_MANDARA:
 			return std::make_unique<SkillToxinOfMandara>();
+		case HVAN_INSTRUCT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MH_ANGRIFFS_MODUS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MH_GOLDENE_FERSE:
