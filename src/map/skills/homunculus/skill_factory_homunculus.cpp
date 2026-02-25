@@ -39,6 +39,7 @@
 #include "homunculus_blazingandfurious.cpp"
 #include "homunculus_theonefighterrises.cpp"
 #include "homunculus_heiligepferd.cpp"
+#include "homunculus_caprice.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -48,6 +49,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillBlastForge>();
 		case MH_CBC:
 			return std::make_unique<SkillContinualBreakCombo>();
+		case HVAN_CAPRICE:
+			return std::make_unique<SkillCaprice>();
 		case MH_EQC:
 			return std::make_unique<SkillEternalQuickCombo>();
 		case MH_ERASER_CUTTER:
