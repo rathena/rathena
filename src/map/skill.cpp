@@ -5441,14 +5441,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 			}
 		}
 		break;
-	case MH_GOLDENE_TONE: {
-		block_list* master_bl = battle_get_master(src);
-		
-		if (master_bl != nullptr){
-			clif_skill_nodamage(src,*master_bl,skill_id,skill_lv);
-			sc_start(src, master_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
-		}
-		} break;
 	case ALL_EQSWITCH:
 		if( sd ){
 			clif_equipswitch_reply( sd, false );
