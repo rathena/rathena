@@ -12,6 +12,7 @@
 #include "gloriouswounds.cpp"
 #include "greatleadership.cpp"
 #include "regeneration.cpp"
+#include "restoration.cpp"
 #include "sharpgaze.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_id) const {
@@ -40,6 +41,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_i
 			return std::make_unique<SkillBattleOrders>();
 		case GD_REGENERATION:
 			return std::make_unique<SkillRegeneration>();
+		case GD_RESTORE:
+			return std::make_unique<SkillRestoration>();
 
 		default:
 			return nullptr;
