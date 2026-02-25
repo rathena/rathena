@@ -5,6 +5,10 @@
 
 #include "../skill_impl.hpp"
 
+// Include .cpp files into the TU to optimize compile time
+// For reference see unity builds or amalgamated builds
+#include "greatleadership.cpp"
+
 std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_id) const {
 	switch (static_cast<uint16>(skill_id)) {
 		case GD_APPROVAL:
@@ -19,6 +23,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_i
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GD_GLORYGUILD:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case GD_LEADERSHIP:
+			return std::make_unique<SkillGreatLeadership>();
 
 		default:
 			return nullptr;
