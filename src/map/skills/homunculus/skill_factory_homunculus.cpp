@@ -66,10 +66,12 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 				return std::make_unique<SkillCastling>();
 			case HLIF_CHANGE:
 				return std::make_unique<SkillChange>();
-			case HAMI_DEFENCE:
-				return std::make_unique<SkillDefense>();
-		case MH_EQC:
-			return std::make_unique<SkillEternalQuickCombo>();
+				case HAMI_DEFENCE:
+					return std::make_unique<SkillDefense>();
+				case HAMI_SKIN:
+					return std::make_unique<StatusSkillImpl>(skill_id);
+			case MH_EQC:
+				return std::make_unique<SkillEternalQuickCombo>();
 		case MH_ERASER_CUTTER:
 			return std::make_unique<SkillEraserCutter>();
 		case MH_GRANITIC_ARMOR:
