@@ -7,6 +7,7 @@
 
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
+#include "coldheart.cpp"
 #include "gloriouswounds.cpp"
 #include "greatleadership.cpp"
 
@@ -28,6 +29,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_i
 			return std::make_unique<SkillGreatLeadership>();
 		case GD_GLORYWOUNDS:
 			return std::make_unique<SkillGloriousWounds>();
+		case GD_SOULCOLD:
+			return std::make_unique<SkillColdHeart>();
 
 		default:
 			return nullptr;

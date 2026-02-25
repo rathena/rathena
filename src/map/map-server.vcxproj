@@ -520,6 +520,7 @@
     <ClInclude Include="skills/gunslinger/tripleaction.hpp" />
     <ClInclude Include="skills/gunslinger/wildfire.hpp" />
     <ClInclude Include="skills/gunslinger/wildshot.hpp" />
+    <ClInclude Include="skills/guild/coldheart.hpp" />
     <ClInclude Include="skills/guild/gloriouswounds.hpp" />
     <ClInclude Include="skills/guild/greatleadership.hpp" />
     <ClInclude Include="skills/guild/skill_factory_guild.hpp" />
@@ -2236,6 +2237,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/coldheart.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/guild/gloriouswounds.cpp">
