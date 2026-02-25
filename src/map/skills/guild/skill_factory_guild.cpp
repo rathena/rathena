@@ -11,6 +11,7 @@
 #include "coldheart.cpp"
 #include "gloriouswounds.cpp"
 #include "greatleadership.cpp"
+#include "itememergencycall.cpp"
 #include "regeneration.cpp"
 #include "restoration.cpp"
 #include "sharpgaze.cpp"
@@ -48,6 +49,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_i
 			return std::make_unique<SkillUrgentCall>();
 		case GD_DEVELOPMENT:
 			return std::make_unique<StatusSkillImpl>(skill_id);
+		case GD_ITEMEMERGENCYCALL:
+			return std::make_unique<SkillItemEmergencyCall>();
 
 		default:
 			return nullptr;

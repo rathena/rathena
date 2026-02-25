@@ -5022,49 +5022,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 #endif
 		}
 		break;
-	case GD_ITEMEMERGENCYCALL:
-		{
-			int8 dx[9] = {-1, 1, 0, 0,-1, 1,-1, 1, 0};
-			int8 dy[9] = { 0, 0, 1,-1, 1,-1,-1, 1, 0};
-			uint8 j = 0, calls = 0, called = 0;
-			// i don't know if it actually summons in a circle, but oh well. ;P
-			auto g = sd?sd->guild:guild_search(status_get_guild_id(src));
-			if (!g)
-				break;
-
-			if (skill_id == GD_ITEMEMERGENCYCALL)
-				switch (skill_lv) {
-					case 1:	calls = 7; break;
-					case 2:	calls = 12; break;
-					case 3:	calls = 20; break;
-					default: calls = 0;	break;
-				}
-
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			for (i = 0; i < g->guild.max_member && (!calls || (calls && called < calls)); i++, j++) {
-				if (j > 8)
-					j = 0;
-				if ((dstsd = g->guild.member[i].sd) != nullptr && sd != dstsd && !dstsd->state.autotrade && !pc_isdead(dstsd)) {
-					if (dstsd->status.disable_call)
-						continue;
-					if (map_getmapflag(dstsd->m, MF_NOWARP) && !map_flag_gvg2(dstsd->m))
-						continue;
-					if (!pc_job_can_entermap((enum e_job)dstsd->status.class_, src->m, pc_get_group_level(dstsd)))
-						continue;
-					if(map_getcell(src->m,src->x+dx[j],src->y+dy[j],CELL_CHKNOREACH))
-						dx[j] = dy[j] = 0;
-					if (!pc_setpos(dstsd, map_id2index(src->m), src->x+dx[j], src->y+dy[j], CLR_RESPAWN))
-						called++;
-				}
-			}
-			if (sd)
-#ifdef RENEWAL
-				skill_blockpc_start(*sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-#else
-				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
-#endif
-		}
-		break;
 	case GD_CHARGESHOUT_FLAG:
 		if (sd && sd->guild && sd->state.gmaster_flag == 1) {
 			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, sd->guild->guild.name, MOBID_GUILD_SKILL_FLAG, nullptr, SZ_SMALL, AI_GUILD);
