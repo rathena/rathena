@@ -3,6 +3,10 @@
 
 #include "homunculus_lightofregene.hpp"
 
+#include "map/battle.hpp"
+#include "map/homunculus.hpp"
+#include "map/status.hpp"
+
 SkillLightOfRegene::SkillLightOfRegene() : SkillImpl(MH_LIGHT_OF_REGENE) {
 }
 

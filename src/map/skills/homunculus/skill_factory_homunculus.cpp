@@ -40,6 +40,7 @@
 #include "homunculus_silverveinrush.cpp"
 #include "homunculus_sonicclaw.cpp"
 #include "homunculus_steelhorn.cpp"
+#include "homunculus_stonewall.cpp"
 #include "homunculus_stylechange.cpp"
 #include "homunculus_summonlegion.cpp"
 #include "homunculus_tempering.cpp"
@@ -47,6 +48,8 @@
 #include "homunculus_tinderbreaker.cpp"
 #include "homunculus_toxinofmandara.cpp"
 #include "homunculus_twistercutter.cpp"
+#include "homunculus_volcanicash.cpp"
+#include "homunculus_xenoslasher.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -124,6 +127,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillSonicClaw>();
 		case MH_STAHL_HORN:
 			return std::make_unique<SkillSteelHorn>();
+		case MH_STEINWAND:
+			return std::make_unique<SkillStoneWall>();
 		case MH_STYLE_CHANGE:
 			return std::make_unique<SkillStyleChange>();
 		case MH_SUMMON_LEGION:
@@ -138,6 +143,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillToxinOfMandara>();
 		case MH_TWISTER_CUTTER:
 			return std::make_unique<SkillTwisterCutter>();
+		case MH_VOLCANIC_ASH:
+			return std::make_unique<SkillVolcanicAsh>();
+		case MH_XENO_SLASHER:
+			return std::make_unique<SkillXenoSlasher>();
 
 		default:
 			return nullptr;

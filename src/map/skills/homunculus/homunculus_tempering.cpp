@@ -3,6 +3,10 @@
 
 #include "homunculus_tempering.hpp"
 
+#include "map/battle.hpp"
+#include "map/clif.hpp"
+#include "map/status.hpp"
+
 SkillTempering::SkillTempering() : SkillImpl(MH_TEMPERING) {
 }
 

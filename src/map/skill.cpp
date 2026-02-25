@@ -1418,9 +1418,6 @@ int32 skill_additional_effect( block_list* src, block_list *bl, uint16 skill_id,
 	case EL_TYPOON_MIS:
 		sc_start(src,bl,SC_SILENCE,10*skill_lv,skill_lv,skill_get_time(skill_id,skill_lv));
 		break;
-	case MH_XENO_SLASHER:
-		sc_start4(src, bl, SC_BLEEDING, skill_lv, skill_lv, src->id, 0, 0, skill_get_time2(skill_id, skill_lv));
-		break;
 	} //end switch skill_id
 
 	if (md && battle_config.summons_trigger_autospells && md->master_id && md->special_state.ai && md->special_state.ai != AI_ABR && md->special_state.ai != AI_BIONIC)
@@ -4293,51 +4290,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		}
 		break;
 
-	case MH_XENO_SLASHER:
-	case MH_HEILIGE_PFERD:
-	case MH_THE_ONE_FIGHTER_RISES:
-		if( flag&1 ) {//Recursive invocation
-			int32 sflag = skill_area_temp[0] & 0xFFF;
-			int32 heal = 0;
-			std::bitset<INF2_MAX> inf2 = skill_db.find(skill_id)->inf2;
-
-			if (tsc && tsc->getSCE(SC_HOVERING) && inf2[INF2_IGNOREHOVERING])
-				break; // Under Hovering characters are immune to select trap and ground target skills.
-
-			if( flag&SD_LEVEL )
-				sflag |= SD_LEVEL; // -1 will be used in packets instead of the skill level
-			if( skill_area_temp[1] != bl->id && !inf2[INF2_ISNPC] )
-				sflag |= SD_ANIMATION; // original target gets no animation (as well as all NPC skills)
-
-			heal = (int32)skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
-		} else {
-			int32 starget = BL_CHAR|BL_SKILL, splash_size = skill_get_splash(skill_id, skill_lv);
-
-			skill_area_temp[0] = 0;
-			skill_area_temp[1] = bl->id;
-			skill_area_temp[2] = 0;
-
-			switch ( skill_id ) {
-				case MH_XENO_SLASHER:
-					clif_skill_damage( *src, *bl,tick, status_get_amotion(src), 0, DMGVAL_IGNORE, 1, skill_id, skill_lv, DMG_SINGLE );
-					break;
-			}
-
-			// if skill damage should be split among targets, count them
-			//SD_LEVEL -> Forced splash damage for Auto Blitz-Beat -> count targets
-			//special case: Venom Splasher uses a different range for searching than for splashing
-			if (flag&SD_LEVEL || skill_get_nk(skill_id, NK_SPLASHSPLIT)) {
-				skill_area_temp[0] = map_foreachinallrange(skill_area_sub, bl, splash_size, BL_CHAR, src, skill_id, skill_lv, tick, BCT_ENEMY, skill_area_sub_count);
-				// If there are no characters in the area, then it always counts as if there was one target
-				// This happens when targetting skill units such as icewall
-				skill_area_temp[0] = std::max(1, skill_area_temp[0]);
-			}
-
-			// recursive invocation of skill_castend_damage_id() with flag|1
-			map_foreachinrange(skill_area_sub, bl, splash_size, starget, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		}
-		break;
-
 #ifdef RENEWAL
 	case KN_BRANDISHSPEAR:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
@@ -4756,41 +4708,12 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		clif_skill_nodamage(bl,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
 		break;
-	//Passive Magnum, should had been casted on yourself.
-
-	case MH_BLAZING_AND_FURIOUS:
-		/* Check if the target is an enemy; if not, skill should fail so the character doesn't unit_movepos (exploitable) */
-		if( battle_check_target(src, bl, BCT_ENEMY) > 0 ) {
-			if( unit_movepos(src, bl->x, bl->y, 2, 1) ) {
-				skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
-				clif_blown(src);
-			}
-		}else if( sd ){
-			clif_skill_fail( *sd, skill_id, USESKILL_FAIL );
-		}
-		break;
 
 	case ALL_FULL_THROTTLE:
 	case ALL_ODINS_POWER:
 	case ALL_REVERSEORCISH:
 		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
 			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-	//List of self skills that give damage around caster
-	case MH_THE_ONE_FIGHTER_RISES:
-	case MH_HEILIGE_PFERD:
-	{
-		int32 starget = BL_CHAR|BL_SKILL;
-
-		if (skill_id == MH_THE_ONE_FIGHTER_RISES) {
-			hom_addspiritball(hd, MAX_SPIRITBALL);
-		}
-
-		skill_area_temp[1] = 0;
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-		i = map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), starget,
-				src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-	}
 		break;
 
 	case CASH_BLESSING:
@@ -6185,17 +6108,6 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 
 	switch(skill_id)
 	{
-	// Skill Unit Setting
-	case MH_LAVA_SLIDE:
-	case MH_VOLCANIC_ASH:
-	case MH_BLAST_FORGE:
-	case MH_POISON_MIST:
-	case MH_STEINWAND:
-	case MH_XENO_SLASHER:
-		flag|=1;//Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
-		// Ammo should be deleted right away.
-		skill_unitsetting(src,skill_id,skill_lv,x,y,0);
-		break;
 	case AL_WARP:
 		if(sd != nullptr) {
 			std::vector<std::string> maps( MAX_MEMOPOINTS + 1 );

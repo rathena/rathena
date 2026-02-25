@@ -3,6 +3,9 @@
 
 #include "homunculus_tinderbreaker.hpp"
 
+#include "map/clif.hpp"
+#include "map/status.hpp"
+
 SkillTinderBreaker::SkillTinderBreaker() : SkillImpl(MH_TINDER_BREAKER) {
 }
 

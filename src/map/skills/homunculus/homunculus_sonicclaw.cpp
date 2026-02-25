@@ -3,6 +3,8 @@
 
 #include "homunculus_sonicclaw.hpp"
 
+#include "map/status.hpp"
+
 SkillSonicClaw::SkillSonicClaw() : SkillImpl(MH_SONIC_CRAW) {
 }
 

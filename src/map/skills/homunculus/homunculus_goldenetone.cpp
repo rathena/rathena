@@ -3,6 +3,10 @@
 
 #include "homunculus_goldenetone.hpp"
 
+#include "map/battle.hpp"
+#include "map/clif.hpp"
+#include "map/status.hpp"
+
 SkillGoldeneTone::SkillGoldeneTone() : SkillImpl(MH_GOLDENE_TONE) {
 }
 

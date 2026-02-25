@@ -517,31 +517,31 @@
     <ClInclude Include="skills/gunslinger/tripleaction.hpp" />
     <ClInclude Include="skills/gunslinger/wildfire.hpp" />
     <ClInclude Include="skills/gunslinger/wildshot.hpp" />
-    <ClInclude Include="skills/homunculus/homunculus_erasercutter.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_absolutezephyr.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_avoid.hpp" />
-    <ClInclude Include="skills/homunculus/homunculus_blazingandfurious.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_benedictionofchaos.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_bioexplosion.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_blastforge.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_blazingandfurious.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_caprice.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_castling.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_change.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_continualbreakcombo.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_defense.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_erasercutter.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_eternalquickcombo.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_glanzenspies.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_goldenetone.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_graniticarmor.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_healingtouch.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_heiligepferd.hpp" />
-    <ClInclude Include="skills/homunculus/homunculus_graniticarmor.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_holypole.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_lavaslide.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_lightofregene.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_magmaflow.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_midnightfrenzy.hpp" />
-    <ClInclude Include="skills/homunculus/homunculus_needlestinger.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_needleofparalyze.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_needlestinger.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_overedboost.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_painkiller.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_poisonmist.hpp" />
@@ -550,6 +550,7 @@
     <ClInclude Include="skills/homunculus/homunculus_silverveinrush.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_sonicclaw.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_steelhorn.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_stonewall.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_stylechange.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_summonlegion.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_tempering.hpp" />
@@ -557,6 +558,8 @@
     <ClInclude Include="skills/homunculus/homunculus_tinderbreaker.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_toxinofmandara.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_twistercutter.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_volcanicash.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_xenoslasher.hpp" />
     <ClInclude Include="skills/homunculus/skill_factory_homunculus.hpp" />
     <ClInclude Include="skills/mage/activityburn.hpp" />
     <ClInclude Include="skills/mage/ageofice.hpp" />
@@ -857,9 +860,7 @@
     <ClInclude Include="skills/merchant/wallofthorns.hpp" />
     <ClInclude Include="skills/merchant/weaponperfection.hpp" />
     <ClInclude Include="skills/merchant/weaponrepair.hpp" />
-    <ClInclude Include="skills/merchant/woodenattack.hpp" />
     <ClInclude Include="skills/merchant/woodenfairy.hpp" />
-    <ClInclude Include="skills/merchant/woodenthrowrock.hpp" />
     <ClInclude Include="skills/merchant/woodenwarrior.hpp" />
     <ClInclude Include="skills/ninja/16thnight.hpp" />
     <ClInclude Include="skills/ninja/castninjaspell.hpp" />
@@ -2263,16 +2264,10 @@
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/homunculus/homunculus_erasercutter.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_absolutezephyr.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_avoid.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/homunculus/homunculus_blazingandfurious.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_benedictionofchaos.cpp">
@@ -2282,6 +2277,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_blastforge.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_blazingandfurious.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_caprice.cpp">
@@ -2299,6 +2297,9 @@
     <ClCompile Include="skills/homunculus/homunculus_defense.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_erasercutter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_eternalquickcombo.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2308,13 +2309,13 @@
     <ClCompile Include="skills/homunculus/homunculus_goldenetone.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_graniticarmor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_healingtouch.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_heiligepferd.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/homunculus/homunculus_graniticarmor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_holypole.cpp">
@@ -2332,10 +2333,10 @@
     <ClCompile Include="skills/homunculus/homunculus_midnightfrenzy.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/homunculus/homunculus_needlestinger.cpp">
+    <ClCompile Include="skills/homunculus/homunculus_needleofparalyze.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/homunculus/homunculus_needleofparalyze.cpp">
+    <ClCompile Include="skills/homunculus/homunculus_needlestinger.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_overedboost.cpp">
@@ -2362,6 +2363,9 @@
     <ClCompile Include="skills/homunculus/homunculus_steelhorn.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_stonewall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_stylechange.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2381,6 +2385,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_twistercutter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_volcanicash.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_xenoslasher.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/skill_factory_homunculus.cpp">
@@ -3283,13 +3293,7 @@
     <ClCompile Include="skills/merchant/weaponrepair.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="skills/merchant/woodenattack.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="skills/merchant/woodenfairy.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/woodenthrowrock.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/merchant/woodenwarrior.cpp">

@@ -3,6 +3,9 @@
 
 #include "homunculus_silentbreeze.hpp"
 
+#include <config/core.hpp>
+
+#include "map/homunculus.hpp"
 #include "map/status.hpp"
 
 SkillSilentBreeze::SkillSilentBreeze() : SkillImpl(MH_SILENT_BREEZE) {

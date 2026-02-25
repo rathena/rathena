@@ -3,6 +3,10 @@
 
 #include "homunculus_pyroclastic.hpp"
 
+#include "map/battle.hpp"
+#include "map/homunculus.hpp"
+#include "map/status.hpp"
+
 SkillPyroclastic::SkillPyroclastic() : SkillImpl(MH_PYROCLASTIC) {
 }
 

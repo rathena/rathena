@@ -1194,16 +1194,10 @@
     <ClInclude Include="skills/gunslinger/wildshot.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
-    <ClInclude Include="skills/homunculus/homunculus_erasercutter.hpp">
-      <Filter>Header Files\Skills\Homunculus</Filter>
-    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_absolutezephyr.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_avoid.hpp">
-      <Filter>Header Files\Skills\Homunculus</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/homunculus/homunculus_blazingandfurious.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_benedictionofchaos.hpp">
@@ -1213,6 +1207,9 @@
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_blastforge.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_blazingandfurious.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_caprice.hpp">
@@ -1230,6 +1227,9 @@
     <ClInclude Include="skills/homunculus/homunculus_defense.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_erasercutter.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_eternalquickcombo.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
@@ -1239,13 +1239,13 @@
     <ClInclude Include="skills/homunculus/homunculus_goldenetone.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_graniticarmor.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_healingtouch.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_heiligepferd.hpp">
-      <Filter>Header Files\Skills\Homunculus</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/homunculus/homunculus_graniticarmor.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_holypole.hpp">
@@ -1263,10 +1263,10 @@
     <ClInclude Include="skills/homunculus/homunculus_midnightfrenzy.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
-    <ClInclude Include="skills/homunculus/homunculus_needlestinger.hpp">
+    <ClInclude Include="skills/homunculus/homunculus_needleofparalyze.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
-    <ClInclude Include="skills/homunculus/homunculus_needleofparalyze.hpp">
+    <ClInclude Include="skills/homunculus/homunculus_needlestinger.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_overedboost.hpp">
@@ -1293,6 +1293,9 @@
     <ClInclude Include="skills/homunculus/homunculus_steelhorn.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_stonewall.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_stylechange.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
@@ -1312,6 +1315,12 @@
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_twistercutter.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_volcanicash.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_xenoslasher.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/skill_factory_homunculus.hpp">
@@ -2214,13 +2223,7 @@
     <ClInclude Include="skills/merchant/weaponrepair.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
-    <ClInclude Include="skills/merchant/woodenattack.hpp">
-      <Filter>Header Files\Skills\Merchant</Filter>
-    </ClInclude>
     <ClInclude Include="skills/merchant/woodenfairy.hpp">
-      <Filter>Header Files\Skills\Merchant</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/merchant/woodenthrowrock.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
     <ClInclude Include="skills/merchant/woodenwarrior.hpp">
@@ -4658,16 +4661,10 @@
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
-    <ClCompile Include="skills/homunculus/homunculus_erasercutter.cpp">
-      <Filter>Source Files\Skills\Homunculus</Filter>
-    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_absolutezephyr.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_avoid.cpp">
-      <Filter>Source Files\Skills\Homunculus</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/homunculus/homunculus_blazingandfurious.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_benedictionofchaos.cpp">
@@ -4677,6 +4674,9 @@
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_blastforge.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_blazingandfurious.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_caprice.cpp">
@@ -4694,6 +4694,9 @@
     <ClCompile Include="skills/homunculus/homunculus_defense.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_erasercutter.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_eternalquickcombo.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
@@ -4703,13 +4706,13 @@
     <ClCompile Include="skills/homunculus/homunculus_goldenetone.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_graniticarmor.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_healingtouch.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_heiligepferd.cpp">
-      <Filter>Source Files\Skills\Homunculus</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/homunculus/homunculus_graniticarmor.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_holypole.cpp">
@@ -4727,10 +4730,10 @@
     <ClCompile Include="skills/homunculus/homunculus_midnightfrenzy.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
-    <ClCompile Include="skills/homunculus/homunculus_needlestinger.cpp">
+    <ClCompile Include="skills/homunculus/homunculus_needleofparalyze.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
-    <ClCompile Include="skills/homunculus/homunculus_needleofparalyze.cpp">
+    <ClCompile Include="skills/homunculus/homunculus_needlestinger.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_overedboost.cpp">
@@ -4757,6 +4760,9 @@
     <ClCompile Include="skills/homunculus/homunculus_steelhorn.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_stonewall.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_stylechange.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
@@ -4776,6 +4782,12 @@
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_twistercutter.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_volcanicash.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_xenoslasher.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/skill_factory_homunculus.cpp">
@@ -5678,13 +5690,7 @@
     <ClCompile Include="skills/merchant/weaponrepair.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
-    <ClCompile Include="skills/merchant/woodenattack.cpp">
-      <Filter>Source Files\Skills\Merchant</Filter>
-    </ClCompile>
     <ClCompile Include="skills/merchant/woodenfairy.cpp">
-      <Filter>Source Files\Skills\Merchant</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/merchant/woodenthrowrock.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
     <ClCompile Include="skills/merchant/woodenwarrior.cpp">

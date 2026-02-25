@@ -3,6 +3,10 @@
 
 #include "homunculus_overedboost.hpp"
 
+#include "map/battle.hpp"
+#include "map/homunculus.hpp"
+#include "map/status.hpp"
+
 SkillOveredBoost::SkillOveredBoost() : SkillImpl(MH_OVERED_BOOST) {
 }
 

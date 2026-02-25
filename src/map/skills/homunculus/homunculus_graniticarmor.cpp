@@ -3,6 +3,10 @@
 
 #include "homunculus_graniticarmor.hpp"
 
+#include "map/battle.hpp"
+#include "map/homunculus.hpp"
+#include "map/status.hpp"
+
 SkillGraniticArmor::SkillGraniticArmor() : SkillImpl(MH_GRANITIC_ARMOR) {
 }
 

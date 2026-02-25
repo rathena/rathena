@@ -3,6 +3,9 @@
 
 #include "homunculus_continualbreakcombo.hpp"
 
+#include "map/clif.hpp"
+#include "map/status.hpp"
+
 SkillContinualBreakCombo::SkillContinualBreakCombo() : SkillImpl(MH_CBC) {
 }
 

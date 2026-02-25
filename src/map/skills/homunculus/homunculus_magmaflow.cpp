@@ -3,6 +3,10 @@
 
 #include "homunculus_magmaflow.hpp"
 
+#include <common/random.hpp>
+
+#include "map/status.hpp"
+
 SkillMagmaFlow::SkillMagmaFlow() : SkillImplRecursiveDamageSplash(MH_MAGMA_FLOW) {
 }
 
@@ -14,7 +18,7 @@ void SkillMagmaFlow::castendNoDamageId(block_list* src, block_list* target, uint
 
 void SkillMagmaFlow::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	if ((flag & 1) && ((rnd() % 100) > (3 * skill_lv))) {
-		return; // chance to not trigger atk for magma
+		return; // chance to not trigger atk
 	}
 
 	SkillImplRecursiveDamageSplash::castendDamageId(src, target, skill_lv, tick, flag);

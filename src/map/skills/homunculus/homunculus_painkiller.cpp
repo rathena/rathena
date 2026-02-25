@@ -3,6 +3,9 @@
 
 #include "homunculus_painkiller.hpp"
 
+#include "map/battle.hpp"
+#include "map/status.hpp"
+
 SkillPainKiller::SkillPainKiller() : SkillImpl(MH_PAIN_KILLER) {
 }
 

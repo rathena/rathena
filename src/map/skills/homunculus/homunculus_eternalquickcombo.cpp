@@ -3,6 +3,10 @@
 
 #include "homunculus_eternalquickcombo.hpp"
 
+#include "map/clif.hpp"
+#include "map/homunculus.hpp"
+#include "map/status.hpp"
+
 SkillEternalQuickCombo::SkillEternalQuickCombo() : SkillImpl(MH_EQC) {
 }
 
