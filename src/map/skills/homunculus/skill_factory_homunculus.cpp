@@ -36,6 +36,7 @@
 #include "homunculus_avoid.cpp"
 #include "homunculus_toxinofmandara.cpp"
 #include "homunculus_blastforge.cpp"
+#include "homunculus_change.cpp"
 #include "homunculus_eternalquickcombo.cpp"
 #include "homunculus_needlestinger.cpp"
 #include "homunculus_blazingandfurious.cpp"
@@ -59,6 +60,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillContinualBreakCombo>();
 		case HVAN_CAPRICE:
 			return std::make_unique<SkillCaprice>();
+		case HLIF_CHANGE:
+			return std::make_unique<SkillChange>();
 		case MH_EQC:
 			return std::make_unique<SkillEternalQuickCombo>();
 		case MH_ERASER_CUTTER:

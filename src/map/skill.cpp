@@ -5089,15 +5089,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		else if (sd != nullptr)
 			clif_skill_fail( *sd, skill_id );
 		break;
-	// Homun single-target support skills [orn]
-	case HLIF_CHANGE:
-#ifndef RENEWAL
-		status_percent_heal(bl, 100, 100);
-#endif
-		clif_skill_nodamage(src,*bl,skill_id,skill_lv,
-			sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id,skill_lv)));
-		break;
-
 	case NPC_WIDEHEALTHFEAR:	// TODO: skills undefined in skill_db.yml
 	case NPC_WIDEBODYBURNNING:
 	case NPC_WIDEFROSTMISTY:
