@@ -37,6 +37,7 @@
 #include "homunculus_eternalquickcombo.cpp"
 #include "homunculus_needlestinger.cpp"
 #include "homunculus_blazingandfurious.cpp"
+#include "homunculus_theonefighterrises.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -94,6 +95,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillTempering>();
 		case MH_TINDER_BREAKER:
 			return std::make_unique<SkillTinderBreaker>();
+		case MH_THE_ONE_FIGHTER_RISES:
+			return std::make_unique<SkillTheOneFighterRises>();
 		case MH_TWISTER_CUTTER:
 			return std::make_unique<SkillTwisterCutter>();
 		case MH_ABSOLUTE_ZEPHYR:

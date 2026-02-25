@@ -544,6 +544,7 @@
     <ClInclude Include="skills/homunculus/homunculus_stylechange.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_summonlegion.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_tempering.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_theonefighterrises.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_tinderbreaker.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_toxinofmandara.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_twistercutter.hpp" />
@@ -2332,6 +2333,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_tempering.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_theonefighterrises.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_tinderbreaker.cpp">
