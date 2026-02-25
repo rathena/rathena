@@ -4628,22 +4628,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 	}
 
 	switch(skill_id) {
-#ifdef RENEWAL
-		case KN_CHARGEATK:
-			skillratio += 600;
-			break;
-#else
-		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
-				int32 k = (wd->miscflag-1)/3;
-				if (k < 0)
-					k = 0;
-				else if (k > 4)
-					k = 4;
-				skillratio += 100 * k;
-			}
-			break;
-#endif
-
 		case HFLI_MOON: //[orn]
 			skillratio += 10 + 110 * skill_lv;
 			break;
