@@ -30,6 +30,7 @@
 #include "homunculus_tempering.cpp"
 #include "homunculus_twistercutter.cpp"
 #include "homunculus_absolutezephyr.cpp"
+#include "homunculus_toxinofmandara.cpp"
 #include "homunculus_blastforge.cpp"
 #include "homunculus_eternalquickcombo.cpp"
 
@@ -85,6 +86,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillTwisterCutter>();
 		case MH_ABSOLUTE_ZEPHYR:
 			return std::make_unique<SkillAbsoluteZephyr>();
+		case MH_TOXIN_OF_MANDARA:
+			return std::make_unique<SkillToxinOfMandara>();
 		case MH_ANGRIFFS_MODUS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MH_GOLDENE_FERSE:
