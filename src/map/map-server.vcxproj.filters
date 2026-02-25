@@ -1218,10 +1218,16 @@
     <ClInclude Include="skills/homunculus/homunculus_caprice.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_castling.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_change.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_continualbreakcombo.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_defense.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_eternalquickcombo.hpp">
@@ -4676,10 +4682,16 @@
     <ClCompile Include="skills/homunculus/homunculus_caprice.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_castling.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_change.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_continualbreakcombo.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_defense.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_eternalquickcombo.cpp">

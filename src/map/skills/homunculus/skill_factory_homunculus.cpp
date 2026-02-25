@@ -36,7 +36,9 @@
 #include "homunculus_avoid.cpp"
 #include "homunculus_toxinofmandara.cpp"
 #include "homunculus_blastforge.cpp"
+#include "homunculus_castling.cpp"
 #include "homunculus_change.cpp"
+#include "homunculus_defense.cpp"
 #include "homunculus_eternalquickcombo.cpp"
 #include "homunculus_needlestinger.cpp"
 #include "homunculus_blazingandfurious.cpp"
@@ -48,6 +50,12 @@
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case HAMI_BLOODLUST:
+			return std::make_unique<StatusSkillImpl>(skill_id);
+		case HAMI_CASTLE:
+			return std::make_unique<SkillCastling>();
+		case HAMI_DEFENCE:
+			return std::make_unique<SkillDefense>();
 		case MH_BLAZING_AND_FURIOUS:
 			return std::make_unique<SkillBlazingAndFurious>();
 		case HVAN_CHAOTIC:
