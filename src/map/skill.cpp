@@ -6018,14 +6018,9 @@ int32 skill_castend_pos2(block_list* src, int32 x, int32 y, uint16 skill_id, uin
 				clif_skill_poseffect( *src, skill_id, skill_lv, x, y, tick );
 	}
 
-	switch(skill_id)
-	{
-	default:
-		if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
-			skill->impl->castendPos2(src, x, y, skill_lv, tick, flag);
-			break;
-		}
-
+	if (std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id); skill != nullptr && skill->impl != nullptr) {
+		skill->impl->castendPos2(src, x, y, skill_lv, tick, flag);
+	}else{
 		ShowWarning("skill_castend_pos2: Unknown skill used:%d\n",skill_id);
 		return 1;
 	}
