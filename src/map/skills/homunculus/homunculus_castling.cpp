@@ -3,11 +3,16 @@
 
 #include "homunculus_castling.hpp"
 
+#include "map/battle.hpp"
+#include "map/clif.hpp"
+#include "map/homunculus.hpp"
+#include "map/pc.hpp"
+#include "map/unit.hpp"
+
 SkillCastling::SkillCastling() : SkillImpl(HAMI_CASTLE) {
 }
 
 void SkillCastling::castendNoDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
-	//[orn]
 	if (src != target && rnd_chance(20 * skill_lv, 100)) {
 		// Get one of the monsters targeting the player and set the homunculus as its new target
 		if (block_list* tbl = battle_gettargeted(target); tbl != nullptr && tbl->type == BL_MOB) {

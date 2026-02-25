@@ -3,6 +3,9 @@
 
 #include "homunculus_defense.hpp"
 
+#include "map/clif.hpp"
+#include "map/status.hpp"
+
 SkillDefense::SkillDefense() : SkillImpl(HAMI_DEFENCE) {
 }
 
