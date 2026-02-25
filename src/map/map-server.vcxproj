@@ -525,6 +525,7 @@
     <ClInclude Include="skills/homunculus/homunculus_eternalquickcombo.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_glanzenspies.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_goldenetone.hpp" />
+    <ClInclude Include="skills/homunculus/homunculus_heiligepferd.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_graniticarmor.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_holypole.hpp" />
     <ClInclude Include="skills/homunculus/homunculus_lavaslide.hpp" />
@@ -2276,6 +2277,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_goldenetone.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_heiligepferd.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_graniticarmor.cpp">

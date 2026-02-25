@@ -38,6 +38,7 @@
 #include "homunculus_needlestinger.cpp"
 #include "homunculus_blazingandfurious.cpp"
 #include "homunculus_theonefighterrises.cpp"
+#include "homunculus_heiligepferd.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -57,6 +58,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillGlanzenSpies>();
 		case MH_GOLDENE_TONE:
 			return std::make_unique<SkillGoldeneTone>();
+		case MH_HEILIGE_PFERD:
+			return std::make_unique<SkillHeiligePferd>();
 		case MH_HEILIGE_STANGE:
 			return std::make_unique<SkillHolyPole>();
 		case MH_LAVA_SLIDE:
