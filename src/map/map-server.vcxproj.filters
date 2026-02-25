@@ -600,6 +600,9 @@
     <ClInclude Include="skills/acolyte/rampageblaster.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/redemptio.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/renovatio.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -645,6 +648,9 @@
     <ClInclude Include="skills/acolyte/summonspiritsphere.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
+    <ClInclude Include="skills/acolyte/teleport.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
     <ClInclude Include="skills/acolyte/thirdconsecration.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
@@ -664,6 +670,9 @@
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/vituperatum.hpp">
+      <Filter>Header Files\Skills\Acolyte</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/acolyte/warpportal.hpp">
       <Filter>Header Files\Skills\Acolyte</Filter>
     </ClInclude>
     <ClInclude Include="skills/acolyte/windmill.hpp">
@@ -2085,6 +2094,9 @@
     <ClInclude Include="skills/merchant/helltree.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
+    <ClInclude Include="skills/merchant/homunculusresurrection.hpp">
+      <Filter>Header Files\Skills\Merchant</Filter>
+    </ClInclude>
     <ClInclude Include="skills/merchant/howlingofmandragora.hpp">
       <Filter>Header Files\Skills\Merchant</Filter>
     </ClInclude>
@@ -2428,6 +2440,9 @@
       <Filter>Header Files\Skills\Ninja</Filter>
     </ClInclude>
     <ClInclude Include="skills/novice/doublebowlingbash.hpp">
+      <Filter>Header Files\Skills\Novice</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/novice/firstaid.hpp">
       <Filter>Header Files\Skills\Novice</Filter>
     </ClInclude>
     <ClInclude Include="skills/novice/groundgravitation.hpp">
@@ -3070,6 +3085,9 @@
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/cannonspear.hpp">
+      <Filter>Header Files\Skills\Swordman</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/swordman/chargeattack.hpp">
       <Filter>Header Files\Skills\Swordman</Filter>
     </ClInclude>
     <ClInclude Include="skills/swordman/counterattack.hpp">
@@ -4067,6 +4085,9 @@
     <ClCompile Include="skills/acolyte/rampageblaster.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/redemptio.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/renovatio.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -4112,6 +4133,9 @@
     <ClCompile Include="skills/acolyte/summonspiritsphere.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
+    <ClCompile Include="skills/acolyte/teleport.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
     <ClCompile Include="skills/acolyte/thirdconsecration.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
@@ -4131,6 +4155,9 @@
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/vituperatum.cpp">
+      <Filter>Source Files\Skills\Acolyte</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/acolyte/warpportal.cpp">
       <Filter>Source Files\Skills\Acolyte</Filter>
     </ClCompile>
     <ClCompile Include="skills/acolyte/windmill.cpp">
@@ -5552,6 +5579,9 @@
     <ClCompile Include="skills/merchant/helltree.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
+    <ClCompile Include="skills/merchant/homunculusresurrection.cpp">
+      <Filter>Source Files\Skills\Merchant</Filter>
+    </ClCompile>
     <ClCompile Include="skills/merchant/howlingofmandragora.cpp">
       <Filter>Source Files\Skills\Merchant</Filter>
     </ClCompile>
@@ -5895,6 +5925,9 @@
       <Filter>Source Files\Skills\Ninja</Filter>
     </ClCompile>
     <ClCompile Include="skills/novice/doublebowlingbash.cpp">
+      <Filter>Source Files\Skills\Novice</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/novice/firstaid.cpp">
       <Filter>Source Files\Skills\Novice</Filter>
     </ClCompile>
     <ClCompile Include="skills/novice/groundgravitation.cpp">
@@ -6537,6 +6570,9 @@
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/cannonspear.cpp">
+      <Filter>Source Files\Skills\Swordman</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/swordman/chargeattack.cpp">
       <Filter>Source Files\Skills\Swordman</Filter>
     </ClCompile>
     <ClCompile Include="skills/swordman/counterattack.cpp">

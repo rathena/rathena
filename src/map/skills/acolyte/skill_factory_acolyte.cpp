@@ -83,6 +83,7 @@
 #include "ragingtrifectablow.cpp"
 #include "raisingdragon.cpp"
 #include "rampageblaster.cpp"
+#include "redemptio.cpp"
 #include "renovatio.cpp"
 #include "reparatio.cpp"
 #include "rideinlightening.cpp"
@@ -97,6 +98,7 @@
 #include "statusrecovery.cpp"
 #include "suffragium.cpp"
 #include "summonspiritsphere.cpp"
+#include "teleport.cpp"
 #include "thirdconsecration.cpp"
 #include "thirdflamebomb.cpp"
 #include "thirdpunish.cpp"
@@ -104,6 +106,7 @@
 #include "tigercannon.cpp"
 #include "turnundead.cpp"
 #include "vituperatum.cpp"
+#include "warpportal.cpp"
 #include "windmill.cpp"
 #include "zen.cpp"
 
@@ -177,6 +180,10 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillPneuma>();
 		case AL_RUWACH:
 			return std::make_unique<SkillRuwach>();
+		case AL_TELEPORT:
+			return std::make_unique<SkillTeleport>();
+		case AL_WARP:
+			return std::make_unique<SkillWarpPortal>();
 		case CD_ARBITRIUM:
 			return std::make_unique<SkillArbitrium>();
 		case CD_ARBITRIUM_ATK:
@@ -301,6 +308,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryAcolyte::create(const e_skill skill
 			return std::make_unique<SkillMagnificat>();
 		case PR_MAGNUS:
 			return std::make_unique<SkillMagnusExorcismus>();
+		case PR_REDEMPTIO:
+			return std::make_unique<SkillRedemptio>();
 		case PR_SANCTUARY:
 			return std::make_unique<SkillSanctuary>();
 		case PR_SLOWPOISON:
