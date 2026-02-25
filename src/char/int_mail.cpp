@@ -245,6 +245,11 @@ bool mail_loadmessage(int32 mail_id, struct mail_message* msg)
 }
 
 int32 mail_timer_sub( int32 limit, enum mail_inbox_type type ){
+	// Server is configured to never delete or return mails
+	if( limit == 0 ){
+		return 0;
+	}
+
 	// Start by deleting all expired mails sent by the server
 	if( SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s`WHERE `type` = '%d' AND `send_id` = '0' AND `time` <= UNIX_TIMESTAMP( NOW() - INTERVAL %d DAY )", schema_config.mail_db, type, limit ) ){
 		Sql_ShowDebug( sql_handle );
