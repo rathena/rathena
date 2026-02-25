@@ -36,9 +36,12 @@
 #include "homunculus_blastforge.cpp"
 #include "homunculus_eternalquickcombo.cpp"
 #include "homunculus_needlestinger.cpp"
+#include "homunculus_blazingandfurious.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
+		case MH_BLAZING_AND_FURIOUS:
+			return std::make_unique<SkillBlazingAndFurious>();
 		case MH_BLAST_FORGE:
 			return std::make_unique<SkillBlastForge>();
 		case MH_CBC:

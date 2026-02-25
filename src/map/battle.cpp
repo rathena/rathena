@@ -4678,9 +4678,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case EL_ROCK_CRUSHER:
 			skillratio += 700;
 			break;
-		case MH_BLAZING_AND_FURIOUS:
-			skillratio += -100 + 80 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
-			break;
 		case MH_THE_ONE_FIGHTER_RISES:
 			skillratio += -100 + 580 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
 			break;

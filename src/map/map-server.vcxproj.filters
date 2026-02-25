@@ -1200,6 +1200,9 @@
     <ClInclude Include="skills/homunculus/homunculus_absolutezephyr.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_blazingandfurious.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_blastforge.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
@@ -4629,6 +4632,9 @@
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_absolutezephyr.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_blazingandfurious.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_blastforge.cpp">
