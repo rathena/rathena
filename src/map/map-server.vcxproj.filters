@@ -1203,6 +1203,9 @@
     <ClInclude Include="skills/gunslinger/wildshot.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
+    <ClInclude Include="skills/guild/battleorders.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
     <ClInclude Include="skills/guild/coldheart.hpp">
       <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
@@ -4570,6 +4573,9 @@
     </ClCompile>
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/battleorders.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
     </ClCompile>
     <ClCompile Include="skills/guild/coldheart.cpp">
       <Filter>Source Files\Skills\Guild</Filter>
