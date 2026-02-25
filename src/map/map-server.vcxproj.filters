@@ -1203,6 +1203,9 @@
     <ClInclude Include="skills/homunculus/homunculus_blazingandfurious.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_benedictionofchaos.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_blastforge.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
@@ -4644,6 +4647,9 @@
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_blazingandfurious.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_benedictionofchaos.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_blastforge.cpp">

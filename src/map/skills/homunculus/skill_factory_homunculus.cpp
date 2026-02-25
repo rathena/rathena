@@ -37,6 +37,7 @@
 #include "homunculus_eternalquickcombo.cpp"
 #include "homunculus_needlestinger.cpp"
 #include "homunculus_blazingandfurious.cpp"
+#include "homunculus_benedictionofchaos.cpp"
 #include "homunculus_theonefighterrises.cpp"
 #include "homunculus_heiligepferd.cpp"
 #include "homunculus_caprice.cpp"
@@ -45,6 +46,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 	switch (skill_id) {
 		case MH_BLAZING_AND_FURIOUS:
 			return std::make_unique<SkillBlazingAndFurious>();
+		case HVAN_CHAOTIC:
+			return std::make_unique<SkillBenedictionOfChaos>();
 		case MH_BLAST_FORGE:
 			return std::make_unique<SkillBlastForge>();
 		case MH_CBC:

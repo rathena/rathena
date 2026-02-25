@@ -5129,47 +5129,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		else if (sd != nullptr)
 			clif_skill_fail( *sd, skill_id );
 		break;
-	case HVAN_CHAOTIC:
-		{
-			// Chance per skill level
-			static const std::array<uint8, 5> chance_homunculus = {
-				20,
-				50,
-				25,
-				50,
-				34
-			};
-			static const std::array<uint8, 5> chance_master = {
-				static_cast<uint8>(chance_homunculus[0] + 30),
-				static_cast<uint8>(chance_homunculus[1] + 10),
-				static_cast<uint8>(chance_homunculus[2] + 50),
-				static_cast<uint8>(chance_homunculus[3] + 4),
-				static_cast<uint8>(chance_homunculus[4] + 33)
-			};
-
-			uint8 chance = rnd_value(1, 100);
-
-			// Homunculus
-			if (chance <= chance_homunculus[skill_lv - 1])
-				bl = src;
-			// Master
-			else if (chance <= chance_master[skill_lv - 1])
-				bl = battle_get_master(src);
-			// Enemy (A random enemy targeting the master)
-			else
-				bl = battle_gettargeted(battle_get_master(src));
-
-			// If there's no enemy the chance reverts to the homunculus
-			if (bl == nullptr)
-				bl = src;
-
-			int32 heal = skill_calc_heal(src, bl, skill_id, rnd_value<uint16>(1, skill_lv), true);
-
-			// Official servers send the Heal skill packet with the healed amount, and then the skill packet with 1 as healed amount
-			clif_skill_nodamage(src, *bl, AL_HEAL, heal);
-			clif_skill_nodamage(src, *bl, skill_id, 1);
-			status_heal(bl, heal, 0, 0);
-		} break;
 	case HVAN_EXPLOSION:
 		if( hd != nullptr ){
 			clif_skill_nodamage(src, *src, skill_id, skill_lv, 1);
