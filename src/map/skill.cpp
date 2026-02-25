@@ -4999,30 +4999,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-	// New guild skills [Celest]
-	case GD_EMERGENCY_MOVE:
-		if(flag&1) {
-			if (status_get_guild_id(src) == status_get_guild_id(bl)) {				
-				if( skill_id == GD_RESTORE )
-					clif_skill_nodamage(src,*bl,AL_HEAL,status_percent_heal(bl,90,90));
-				else
-					sc_start(src,bl,type,100,skill_lv,skill_get_time(skill_id, skill_lv));
-			}
-		} else if (status_get_guild_id(src)) {
-			clif_skill_nodamage(src,*bl,skill_id,skill_lv);
-			map_foreachinallrange(skill_area_sub, src,
-				skill_get_splash(skill_id, skill_lv), BL_PC,
-				src,skill_id,skill_lv,tick, flag|BCT_GUILD|1,
-				skill_castend_nodamage_id);
-			if (sd)
-#ifdef RENEWAL
-				skill_blockpc_start(*sd, skill_id, skill_get_cooldown(skill_id, skill_lv));
-#else
-				guild_block_skill(sd, skill_get_time2(skill_id, skill_lv));
-#endif
-		}
-		break;
-
 	case HAMI_CASTLE:	//[orn]
 		if (src != bl && rnd_chance(20 * skill_lv, 100)) {
 			// Get one of the monsters targeting the player and set the homunculus as its new target

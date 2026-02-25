@@ -11,6 +11,7 @@
 #include "chargeshoutbeating.cpp"
 #include "chargeshoutflag.cpp"
 #include "coldheart.cpp"
+#include "emergencymove.cpp"
 #include "gloriouswounds.cpp"
 #include "greatleadership.cpp"
 #include "itememergencycall.cpp"
@@ -59,6 +60,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_i
 			return std::make_unique<SkillChargeShoutFlag>();
 		case GD_CHARGESHOUT_BEATING:
 			return std::make_unique<SkillChargeShoutBeating>();
+		case GD_EMERGENCY_MOVE:
+			return std::make_unique<SkillEmergencyMove>();
 
 		default:
 			return nullptr;

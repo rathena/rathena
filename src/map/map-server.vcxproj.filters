@@ -1215,6 +1215,9 @@
     <ClInclude Include="skills/guild/coldheart.hpp">
       <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
+    <ClInclude Include="skills/guild/emergencymove.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
     <ClInclude Include="skills/guild/gloriouswounds.hpp">
       <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
@@ -4602,6 +4605,9 @@
       <Filter>Source Files\Skills\Guild</Filter>
     </ClCompile>
     <ClCompile Include="skills/guild/coldheart.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/emergencymove.cpp">
       <Filter>Source Files\Skills\Guild</Filter>
     </ClCompile>
     <ClCompile Include="skills/guild/gloriouswounds.cpp">

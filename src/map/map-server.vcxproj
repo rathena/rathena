@@ -524,6 +524,7 @@
     <ClInclude Include="skills/guild/chargeshoutbeating.hpp" />
     <ClInclude Include="skills/guild/chargeshoutflag.hpp" />
     <ClInclude Include="skills/guild/coldheart.hpp" />
+    <ClInclude Include="skills/guild/emergencymove.hpp" />
     <ClInclude Include="skills/guild/gloriouswounds.hpp" />
     <ClInclude Include="skills/guild/greatleadership.hpp" />
     <ClInclude Include="skills/guild/itememergencycall.hpp" />
@@ -2257,6 +2258,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/guild/coldheart.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/emergencymove.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/guild/gloriouswounds.cpp">
