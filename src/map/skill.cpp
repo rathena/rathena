@@ -5022,21 +5022,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 #endif
 		}
 		break;
-	case GD_CHARGESHOUT_FLAG:
-		if (sd && sd->guild && sd->state.gmaster_flag == 1) {
-			mob_data *md = mob_once_spawn_sub(src, src->m, src->x, src->y, sd->guild->guild.name, MOBID_GUILD_SKILL_FLAG, nullptr, SZ_SMALL, AI_GUILD);
-
-			if (md) {
-				sd->guild->chargeshout_flag_id = md->id;
-				md->master_id = src->id;
-
-				if (md->deletetimer != INVALID_TIMER)
-					delete_timer(md->deletetimer, mob_timer_delete);
-				md->deletetimer = add_timer(gettick() + skill_get_time(GD_CHARGESHOUT_FLAG, skill_lv), mob_timer_delete, md->id, 0);
-				mob_spawn(md);
-			}
-		}
-		break;
 	case GD_CHARGESHOUT_BEATING:
 		if (sd && sd->guild && map_blid_exists(sd->guild->chargeshout_flag_id)) {
 			block_list *mob_bl = map_id2bl(sd->guild->chargeshout_flag_id);

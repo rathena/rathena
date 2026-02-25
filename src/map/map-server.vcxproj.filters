@@ -1206,6 +1206,9 @@
     <ClInclude Include="skills/guild/battleorders.hpp">
       <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
+    <ClInclude Include="skills/guild/chargeshoutflag.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
     <ClInclude Include="skills/guild/coldheart.hpp">
       <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
@@ -4587,6 +4590,9 @@
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
     <ClCompile Include="skills/guild/battleorders.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/chargeshoutflag.cpp">
       <Filter>Source Files\Skills\Guild</Filter>
     </ClCompile>
     <ClCompile Include="skills/guild/coldheart.cpp">
