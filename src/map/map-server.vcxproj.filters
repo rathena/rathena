@@ -20,6 +20,9 @@
     <Filter Include="Source Files\Skills\Gunslinger">
       <UniqueIdentifier>{129a9804-44ab-4d14-b769-ca170935d84e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Skills\Guild">
+      <UniqueIdentifier>{4a9b0d7e-0ecd-4f5f-a1ec-a9bb7f4d61d3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Skills\Mage">
       <UniqueIdentifier>{3612b198-b428-4041-870d-c0e3aec08184}</UniqueIdentifier>
     </Filter>
@@ -68,6 +71,9 @@
     </Filter>
     <Filter Include="Header Files\Skills\Gunslinger">
       <UniqueIdentifier>{8ff19f85-a0c3-4705-a6e3-3aa79f9b3b5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Guild">
+      <UniqueIdentifier>{85263634-a57b-4ced-8cf1-2d751f5c889e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Skills\Mage">
       <UniqueIdentifier>{52aa6b4e-d378-48b4-86e5-c2ae706afb8b}</UniqueIdentifier>
@@ -1196,6 +1202,9 @@
     </ClInclude>
     <ClInclude Include="skills/gunslinger/wildshot.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/guild/skill_factory_guild.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/activityburn.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
@@ -4549,6 +4558,9 @@
     </ClCompile>
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/skill_factory_guild.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/activityburn.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
