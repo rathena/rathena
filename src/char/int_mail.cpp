@@ -438,13 +438,9 @@ void mapif_parse_Mail_getattach(int32 fd)
 bool mapif_Mail_delete( int32 fd, uint32 char_id, int32 mail_id, uint32 account_id ){
 	bool failed = false;
 
-	if( SQL_ERROR == Sql_QueryStr( sql_handle, "START TRANSACTION" ) ||
-		SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id ) ||
-		SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_attachment_db, mail_id ) ||
-		SQL_ERROR == Sql_QueryStr( sql_handle, "COMMIT" ) ){
-
+	// The Foreign Key will automatically delete all attachments
+	if( SQL_ERROR == Sql_Query( sql_handle, "DELETE FROM `%s` WHERE `id` = '%d'", schema_config.mail_db, mail_id ) ){
 		Sql_ShowDebug( sql_handle );
-		Sql_QueryStr( sql_handle, "ROLLBACK" );
 
 		// We do not want to trigger failure messages, if the map server did not send a request
 		if( fd <= 0 ){
