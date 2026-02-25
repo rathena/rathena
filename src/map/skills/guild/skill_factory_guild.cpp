@@ -46,6 +46,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_i
 			return std::make_unique<SkillRestoration>();
 		case GD_EMERGENCYCALL:
 			return std::make_unique<SkillUrgentCall>();
+		case GD_DEVELOPMENT:
+			return std::make_unique<StatusSkillImpl>(skill_id);
 
 		default:
 			return nullptr;
