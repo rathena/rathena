@@ -5,7 +5,7 @@
 
 #include "../skill_impl.hpp"
 
-class SkillChange : public SkillImpl {
+class SkillChange : public StatusSkillImpl {
 public:
 	SkillChange();
 

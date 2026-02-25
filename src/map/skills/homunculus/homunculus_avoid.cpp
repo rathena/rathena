@@ -3,6 +3,9 @@
 
 #include "homunculus_avoid.hpp"
 
+#include "map/clif.hpp"
+#include "map/status.hpp"
+
 SkillAvoid::SkillAvoid() : SkillImpl(HLIF_AVOID) {
 }
 
