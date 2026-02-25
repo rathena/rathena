@@ -13,6 +13,7 @@
 #include "homunculus_graniticarmor.cpp"
 #include "homunculus_glanzenspies.cpp"
 #include "homunculus_goldenetone.cpp"
+#include "homunculus_healingtouch.cpp"
 #include "homunculus_lightofregene.cpp"
 #include "homunculus_magmaflow.cpp"
 #include "homunculus_midnightfrenzy.cpp"
@@ -67,6 +68,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillGlanzenSpies>();
 		case MH_GOLDENE_TONE:
 			return std::make_unique<SkillGoldeneTone>();
+		case HLIF_HEAL:
+			return std::make_unique<SkillHealingTouch>();
 		case MH_HEILIGE_PFERD:
 			return std::make_unique<SkillHeiligePferd>();
 		case MH_HEILIGE_STANGE:

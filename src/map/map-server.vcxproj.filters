@@ -1227,6 +1227,9 @@
     <ClInclude Include="skills/homunculus/homunculus_goldenetone.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
+    <ClInclude Include="skills/homunculus/homunculus_healingtouch.hpp">
+      <Filter>Header Files\Skills\Homunculus</Filter>
+    </ClInclude>
     <ClInclude Include="skills/homunculus/homunculus_heiligepferd.hpp">
       <Filter>Header Files\Skills\Homunculus</Filter>
     </ClInclude>
@@ -4674,6 +4677,9 @@
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_goldenetone.cpp">
+      <Filter>Source Files\Skills\Homunculus</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/homunculus/homunculus_healingtouch.cpp">
       <Filter>Source Files\Skills\Homunculus</Filter>
     </ClCompile>
     <ClCompile Include="skills/homunculus/homunculus_heiligepferd.cpp">
