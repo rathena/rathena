@@ -10,6 +10,7 @@
 #include "coldheart.cpp"
 #include "gloriouswounds.cpp"
 #include "greatleadership.cpp"
+#include "sharpgaze.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_id) const {
 	switch (static_cast<uint16>(skill_id)) {
@@ -31,6 +32,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_i
 			return std::make_unique<SkillGloriousWounds>();
 		case GD_SOULCOLD:
 			return std::make_unique<SkillColdHeart>();
+		case GD_HAWKEYES:
+			return std::make_unique<SkillSharpGaze>();
 
 		default:
 			return nullptr;

@@ -1212,6 +1212,9 @@
     <ClInclude Include="skills/guild/greatleadership.hpp">
       <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
+    <ClInclude Include="skills/guild/sharpgaze.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
     <ClInclude Include="skills/guild/skill_factory_guild.hpp">
       <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
@@ -4575,6 +4578,9 @@
       <Filter>Source Files\Skills\Guild</Filter>
     </ClCompile>
     <ClCompile Include="skills/guild/greatleadership.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/sharpgaze.cpp">
       <Filter>Source Files\Skills\Guild</Filter>
     </ClCompile>
     <ClCompile Include="skills/guild/skill_factory_guild.cpp">

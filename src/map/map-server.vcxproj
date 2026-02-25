@@ -523,6 +523,7 @@
     <ClInclude Include="skills/guild/coldheart.hpp" />
     <ClInclude Include="skills/guild/gloriouswounds.hpp" />
     <ClInclude Include="skills/guild/greatleadership.hpp" />
+    <ClInclude Include="skills/guild/sharpgaze.hpp" />
     <ClInclude Include="skills/guild/skill_factory_guild.hpp" />
     <ClInclude Include="skills/mage/activityburn.hpp" />
     <ClInclude Include="skills/mage/ageofice.hpp" />
@@ -2246,6 +2247,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/guild/greatleadership.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/sharpgaze.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/guild/skill_factory_guild.cpp">
