@@ -4451,7 +4451,6 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		break;
 
 	case MH_GLANZEN_SPIES:
-	case MH_NEEDLE_STINGER:
 		skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 	case 0:/* no skill - basic/normal attack */

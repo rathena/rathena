@@ -4678,9 +4678,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case EL_ROCK_CRUSHER:
 			skillratio += 700;
 			break;
-		case MH_NEEDLE_STINGER:
-			skillratio += -100 + 200 + 500 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
-			break;
 		case MH_GLANZEN_SPIES:
 			skillratio += -100 + 300 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
 			break;

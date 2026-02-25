@@ -33,6 +33,7 @@
 #include "homunculus_toxinofmandara.cpp"
 #include "homunculus_blastforge.cpp"
 #include "homunculus_eternalquickcombo.cpp"
+#include "homunculus_needlestinger.cpp"
 
 std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill skill_id) const {
 	switch (skill_id) {
@@ -56,6 +57,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillMagmaFlow>();
 		case MH_MIDNIGHT_FRENZY:
 			return std::make_unique<SkillMidnightFrenzy>();
+		case MH_NEEDLE_STINGER:
+			return std::make_unique<SkillNeedleStinger>();
 		case MH_NEEDLE_OF_PARALYZE:
 			return std::make_unique<SkillNeedleOfParalyze>();
 		case MH_OVERED_BOOST:
