@@ -5022,17 +5022,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 #endif
 		}
 		break;
-	case GD_CHARGESHOUT_BEATING:
-		if (sd && sd->guild && map_blid_exists(sd->guild->chargeshout_flag_id)) {
-			block_list *mob_bl = map_id2bl(sd->guild->chargeshout_flag_id);
-
-			if (pc_setpos(sd, map_id2index(mob_bl->m), mob_bl->x, mob_bl->y, CLR_RESPAWN) != SETPOS_OK)
-				clif_skill_fail( *sd, skill_id );
-			else
-				clif_skill_nodamage(src, *bl, skill_id, skill_lv);
-		} else if (sd)
-			clif_skill_fail( *sd, skill_id );
-		break;
 
 	case HAMI_CASTLE:	//[orn]
 		if (src != bl && rnd_chance(20 * skill_lv, 100)) {

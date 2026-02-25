@@ -8,6 +8,7 @@
 // Include .cpp files into the TU to optimize compile time
 // For reference see unity builds or amalgamated builds
 #include "battleorders.cpp"
+#include "chargeshoutbeating.cpp"
 #include "chargeshoutflag.cpp"
 #include "coldheart.cpp"
 #include "gloriouswounds.cpp"
@@ -56,6 +57,8 @@ std::unique_ptr<const SkillImpl> SkillFactoryGuild::create(const e_skill skill_i
 			return std::make_unique<StatusSkillImpl>(skill_id);
 		case GD_CHARGESHOUT_FLAG:
 			return std::make_unique<SkillChargeShoutFlag>();
+		case GD_CHARGESHOUT_BEATING:
+			return std::make_unique<SkillChargeShoutBeating>();
 
 		default:
 			return nullptr;

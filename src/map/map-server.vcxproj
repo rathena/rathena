@@ -521,6 +521,7 @@
     <ClInclude Include="skills/gunslinger/wildfire.hpp" />
     <ClInclude Include="skills/gunslinger/wildshot.hpp" />
     <ClInclude Include="skills/guild/battleorders.hpp" />
+    <ClInclude Include="skills/guild/chargeshoutbeating.hpp" />
     <ClInclude Include="skills/guild/chargeshoutflag.hpp" />
     <ClInclude Include="skills/guild/coldheart.hpp" />
     <ClInclude Include="skills/guild/gloriouswounds.hpp" />
@@ -2247,6 +2248,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/guild/battleorders.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/chargeshoutbeating.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/guild/chargeshoutflag.cpp">
