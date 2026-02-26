@@ -526,6 +526,15 @@
     <ClInclude Include="skills/elemental/windslasher.hpp" />
     <ClInclude Include="skills/elemental/windstep.hpp" />
     <ClInclude Include="skills/elemental/zephyr.hpp" />
+    <ClInclude Include="skills/guild/battleorders.hpp" />
+    <ClInclude Include="skills/guild/chargeshoutbeating.hpp" />
+    <ClInclude Include="skills/guild/chargeshoutflag.hpp" />
+    <ClInclude Include="skills/guild/emergencymove.hpp" />
+    <ClInclude Include="skills/guild/itememergencycall.hpp" />
+    <ClInclude Include="skills/guild/regeneration.hpp" />
+    <ClInclude Include="skills/guild/restoration.hpp" />
+    <ClInclude Include="skills/guild/skill_factory_guild.hpp" />
+    <ClInclude Include="skills/guild/urgentcall.hpp" />
     <ClInclude Include="skills/gunslinger/antimaterialblast.hpp" />
     <ClInclude Include="skills/gunslinger/banishingbuster.hpp" />
     <ClInclude Include="skills/gunslinger/basicgrenade.hpp" />
@@ -572,19 +581,6 @@
     <ClInclude Include="skills/gunslinger/tripleaction.hpp" />
     <ClInclude Include="skills/gunslinger/wildfire.hpp" />
     <ClInclude Include="skills/gunslinger/wildshot.hpp" />
-    <ClInclude Include="skills/guild/battleorders.hpp" />
-    <ClInclude Include="skills/guild/chargeshoutbeating.hpp" />
-    <ClInclude Include="skills/guild/chargeshoutflag.hpp" />
-    <ClInclude Include="skills/guild/coldheart.hpp" />
-    <ClInclude Include="skills/guild/emergencymove.hpp" />
-    <ClInclude Include="skills/guild/gloriouswounds.hpp" />
-    <ClInclude Include="skills/guild/greatleadership.hpp" />
-    <ClInclude Include="skills/guild/itememergencycall.hpp" />
-    <ClInclude Include="skills/guild/regeneration.hpp" />
-    <ClInclude Include="skills/guild/restoration.hpp" />
-    <ClInclude Include="skills/guild/sharpgaze.hpp" />
-    <ClInclude Include="skills/guild/skill_factory_guild.hpp" />
-    <ClInclude Include="skills/guild/urgentcall.hpp" />
     <ClInclude Include="skills/mage/activityburn.hpp" />
     <ClInclude Include="skills/mage/allbloom.hpp" />
     <ClInclude Include="skills/mage/arrullo.hpp" />
@@ -2303,6 +2299,33 @@
     <ClCompile Include="skills/elemental/zephyr.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="skills/guild/battleorders.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/chargeshoutbeating.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/chargeshoutflag.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/emergencymove.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/itememergencycall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/regeneration.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/restoration.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/skill_factory_guild.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="skills/guild/urgentcall.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/antimaterialblast.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2439,45 +2462,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/battleorders.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/chargeshoutbeating.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/chargeshoutflag.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/coldheart.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/emergencymove.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/gloriouswounds.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/greatleadership.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/itememergencycall.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/regeneration.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/restoration.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/sharpgaze.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/skill_factory_guild.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="skills/guild/urgentcall.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="skills/mage/activityburn.cpp">

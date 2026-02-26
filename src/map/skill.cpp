@@ -4917,6 +4917,15 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
+
+
+
+
+
+
+
+
+
 	case HAMI_CASTLE:	//[orn]
 		if (src != bl && rnd_chance(20 * skill_lv, 100)) {
 			// Get one of the monsters targeting the player and set the homunculus as its new target

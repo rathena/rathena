@@ -20,11 +20,11 @@
     <Filter Include="Source Files\Skills\Elemental">
       <UniqueIdentifier>{dc6cc832-cad7-43e8-a3d4-e4d24e264a30}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Skills\Gunslinger">
-      <UniqueIdentifier>{129a9804-44ab-4d14-b769-ca170935d84e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Skills\Guild">
       <UniqueIdentifier>{4a9b0d7e-0ecd-4f5f-a1ec-a9bb7f4d61d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills\Gunslinger">
+      <UniqueIdentifier>{129a9804-44ab-4d14-b769-ca170935d84e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Skills\Mage">
       <UniqueIdentifier>{3612b198-b428-4041-870d-c0e3aec08184}</UniqueIdentifier>
@@ -75,11 +75,11 @@
     <Filter Include="Header Files\Skills\Elemental">
       <UniqueIdentifier>{facd6257-a493-4f54-a017-abc2b45fd776}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Skills\Gunslinger">
-      <UniqueIdentifier>{8ff19f85-a0c3-4705-a6e3-3aa79f9b3b5a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Skills\Guild">
       <UniqueIdentifier>{85263634-a57b-4ced-8cf1-2d751f5c889e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Gunslinger">
+      <UniqueIdentifier>{8ff19f85-a0c3-4705-a6e3-3aa79f9b3b5a}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Skills\Mage">
       <UniqueIdentifier>{52aa6b4e-d378-48b4-86e5-c2ae706afb8b}</UniqueIdentifier>
@@ -1167,6 +1167,9 @@
     <ClInclude Include="skills/elemental/rocklauncher.hpp">
       <Filter>Header Files\Skills\Elemental</Filter>
     </ClInclude>
+    <ClInclude Include="skills/elemental/skill_factory_elemental.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
     <ClInclude Include="skills/elemental/solidskin.hpp">
       <Filter>Header Files\Skills\Elemental</Filter>
     </ClInclude>
@@ -1180,9 +1183,6 @@
       <Filter>Header Files\Skills\Elemental</Filter>
     </ClInclude>
     <ClInclude Include="skills/elemental/stormwind.hpp">
-      <Filter>Header Files\Skills\Elemental</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/elemental/skill_factory_elemental.hpp">
       <Filter>Header Files\Skills\Elemental</Filter>
     </ClInclude>
     <ClInclude Include="skills/elemental/strongprotection.hpp">
@@ -1226,6 +1226,33 @@
     </ClInclude>
     <ClInclude Include="skills/elemental/zephyr.hpp">
       <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/guild/battleorders.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/guild/chargeshoutbeating.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/guild/chargeshoutflag.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/guild/emergencymove.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/guild/itememergencycall.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/guild/regeneration.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/guild/restoration.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/guild/skill_factory_guild.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/guild/urgentcall.hpp">
+      <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
     <ClInclude Include="skills/gunslinger/antimaterialblast.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
@@ -1364,45 +1391,6 @@
     </ClInclude>
     <ClInclude Include="skills/gunslinger/wildshot.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/battleorders.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/chargeshoutbeating.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/chargeshoutflag.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/coldheart.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/emergencymove.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/gloriouswounds.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/greatleadership.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/itememergencycall.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/regeneration.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/restoration.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/sharpgaze.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/skill_factory_guild.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/guild/urgentcall.hpp">
-      <Filter>Header Files\Skills\Guild</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/activityburn.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
@@ -4730,6 +4718,33 @@
     <ClCompile Include="skills/elemental/zephyr.cpp">
       <Filter>Source Files\Skills\Elemental</Filter>
     </ClCompile>
+    <ClCompile Include="skills/guild/battleorders.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/chargeshoutbeating.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/chargeshoutflag.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/emergencymove.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/itememergencycall.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/regeneration.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/restoration.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/skill_factory_guild.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/guild/urgentcall.cpp">
+      <Filter>Source Files\Skills\Guild</Filter>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/antimaterialblast.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
@@ -4867,45 +4882,6 @@
     </ClCompile>
     <ClCompile Include="skills/gunslinger/wildshot.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/battleorders.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/chargeshoutbeating.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/chargeshoutflag.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/coldheart.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/emergencymove.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/gloriouswounds.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/greatleadership.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/itememergencycall.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/regeneration.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/restoration.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/sharpgaze.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/skill_factory_guild.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/guild/urgentcall.cpp">
-      <Filter>Source Files\Skills\Guild</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/activityburn.cpp">
       <Filter>Source Files\Skills\Mage</Filter>

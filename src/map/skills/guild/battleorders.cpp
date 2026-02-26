@@ -3,6 +3,14 @@
 
 #include "battleorders.hpp"
 
+#include <config/core.hpp>
+
+#include "map/clif.hpp"
+#include "map/guild.hpp"
+#include "map/map.hpp"
+#include "map/pc.hpp"
+#include "map/status.hpp"
+
 SkillBattleOrders::SkillBattleOrders() : SkillImpl(static_cast<e_skill>(GD_BATTLEORDER)) {
 }
 

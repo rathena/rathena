@@ -3,6 +3,9 @@
 
 #include "chargeshoutflag.hpp"
 
+#include "map/mob.hpp"
+#include "map/pc.hpp"
+
 SkillChargeShoutFlag::SkillChargeShoutFlag() : SkillImpl(static_cast<e_skill>(GD_CHARGESHOUT_FLAG)) {
 }
 
