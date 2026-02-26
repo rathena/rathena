@@ -1206,6 +1206,25 @@ Similarly, you can create links to websites that launch in a new window:
 
 	<URL>Display Name<INFO>http://www.example.com/</INFO></URL>";
 
+Where <Display Name> is the text shown in the NPC dialogue and the
+<INFO> tag contains the web address that will be opened when clicked.
+
+The protocol (http:// or https://) is not required.
+
+We created the script command "meshyperlink" that allows you to generate the correct
+URL syntax automatically. We recommend that you use this script command
+instead of hardcoding the HTML-like tags.
+
+Syntax:
+
+	*meshyperlink(<display_text>,<url>);
+
+Example:
+
+	mes "Visit our " + meshyperlink("Website","example.com") + ".";
+	// Displays: Visit our Website.
+	// "Website" will be clickable and opens the specified URL.
+
 Quests
 ------
 You can link to a quest:
@@ -11375,6 +11394,41 @@ Examples:
 
 	mes mesitemicon( 1201 ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
 	mes mesitemicon( "Knife" ); // Will display a Knife icon and will be clickable. If clicked it opens the description for Knife [3]
+
+---------------------------------------
+
+*meshyperlink(<display_text>,<url>);
+
+Generates a clickable hyperlink string that can be used with the NPC's mes
+command. The NPC message will show the <display_text> as a clickable link.
+When clicked, it will open the specified <url> in the player's default web browser
+(if supported by the client).
+
+This command is intended for use inside mes dialogues only. The client must
+support the <URL> and <INFO> tags in order for the link to function properly.
+
+Parameters:
+
+	<display_text> : The text that will be shown in the NPC dialogue.
+	<url>          : The web address that will be opened when the link is clicked.
+	                 The protocol (http:// or https://) is not required.
+
+Examples:
+
+	mes meshyperlink("Visit our website","example.com");
+	// Displays "Visit our website" as a clickable link.
+
+	mes "For more information, click " + meshyperlink("here","example.com") + ".";
+	// Displays: For more information, click here.
+	// The word "here" will be clickable and opens the URL.
+
+	mes meshyperlink("Join our Discord","discord.gg/kMeMXWEvSV");
+	// Displays "Join our Discord" as a clickable link.
+
+Notes:
+
+	- The protocol (http:// or https://) is optional.
+	- This command returns a string and must be used together with mes.
 
 ========================
 |14.- Channel commands.|
