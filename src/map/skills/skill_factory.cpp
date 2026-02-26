@@ -16,6 +16,7 @@
 #include "./acolyte/skill_factory_acolyte.cpp"
 #include "./archer/skill_factory_archer.cpp"
 #include "./custom/skill_factory_custom.cpp"
+#include "./elemental/skill_factory_elemental.cpp"
 #include "./gunslinger/skill_factory_gunslinger.cpp"
 #include "./guild/skill_factory_guild.cpp"
 #include "./mage/skill_factory_mage.cpp"
@@ -36,6 +37,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id
 		// Normal Skills
 		std::make_shared<SkillFactoryAcolyte>(),
 		std::make_shared<SkillFactoryArcher>(),
+		std::make_shared<SkillFactoryElemental>(),
 		std::make_shared<SkillFactoryGunslinger>(),
 		std::make_shared<SkillFactoryGuild>(),
 		std::make_shared<SkillFactoryMage>(),
