@@ -1652,7 +1652,7 @@ int32 skill_onskillusage(map_session_data *sd, block_list *bl, uint16 skill_id, 
 		sd->state.autocast = 0;
 	}
 
-	// Check for player and pet autobonuses when being attacked by skill_id
+	// Check for player and pet autobonuses after casting skill_id
 	if (sd != nullptr) {
 		// Player
 		if (!sd->autobonus3.empty()) {
@@ -3308,8 +3308,6 @@ int64 skill_attack (int32 attack_type, block_list* src, block_list *dsrc, block_
 				}
 				break;
 		}
-		if( sd )
-			skill_onskillusage(sd, bl, skill_id, tick);
 	}
 
 	if (!(flag&2)) {
@@ -4293,7 +4291,7 @@ int32 skill_castend_damage_id (block_list* src, block_list *bl, uint16 skill_id,
 		{// consume arrow on last invocation to this skill.
 			battle_consume_ammo(sd, skill_id, skill_lv);
 		}
-
+		skill_onskillusage(sd,bl,skill_id,tick);
 		// perform skill requirement consumption
 		if (!(flag&SKILL_NOCONSUME_REQ))
 			skill_consume_requirement(sd,skill_id,skill_lv,2);
