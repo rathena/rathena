@@ -3,6 +3,8 @@
 
 #include "trample.hpp"
 
+#include <common/nullpo.hpp>
+
 #include "map/battle.hpp"
 #include "map/clif.hpp"
 #include "map/map.hpp"
