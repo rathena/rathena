@@ -32,6 +32,8 @@ void SkillFlickingTornado::splashSearch(block_list* src, block_list* target, uin
 
 	SkillImplRecursiveDamageSplash::splashSearch(src, target, skill_lv, tick, flag);
 
+	// TODO : the direction should be opposite to the direction the player is facing (before casting the skill)
+
 	uint8 dir = map_calc_dir(src, target->x, target->y);
 	int32 retreat = skill_lv >= 6 ? 5 : 3;
 	skill_blown(src, src, retreat, dir, BLOWN_IGNORE_NO_KNOCKBACK);

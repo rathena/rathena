@@ -47025,7 +47025,10 @@ Body:
     MaxLevel: 10
     Type: Weapon
     TargetType: Self
+    DamageFlags:
+      Splash: true
     Range: 1
+    Hit: Multi_Hit
     HitCount: -2
     Element: Weapon
     SplashArea:

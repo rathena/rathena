@@ -57,7 +57,7 @@ void SkillGlacialStomp::castendNoDamageId(block_list* src, block_list* target, u
 	}
 
 	// TODO : Should the distance to the player be checked?
-	// TODO : the player should be teleported to one case from the center
+	// TODO : the player should be teleported to one cell from the center
 
 	if (!unit_movepos(src, sce->val2, sce->val3, 2, true)) {
 		if (map_session_data* sd = BL_CAST(BL_PC, src); sd != nullptr) {
