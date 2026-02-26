@@ -33,10 +33,10 @@
 -	script	Agit_Event	-1,{
 	end;
 
-OnClock2100:	//start time for Tuesday and Thursday
-OnClock2300:	//end time for Tuesday and Thursday
-OnClock1600:	//start time for Saturday
-OnClock1800:	//end time for Saturday
+//OnClock2100:	//start time for Tuesday and Thursday
+//OnClock2300:	//end time for Tuesday and Thursday
+//OnClock1600:	//start time for Saturday
+//OnClock1800:	//end time for Saturday
 
 OnAgitInit:
 	// starting time checks

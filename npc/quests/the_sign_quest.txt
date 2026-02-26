@@ -60,7 +60,7 @@ OnInit:
 	
 	// Set the time zone of the server.
 	// - Not official but seemed like a nice way to handle it.
-	set $timezonestring$,"^FF0000GMT^000000";
+	set $timezonestring$,"^FF0000Mountain Time^000000";
 	end;
 }
 
@@ -3095,7 +3095,7 @@ OnTouch_:
 
 prt_maze02,25,161,0	script	#music	-1,7,7,{
 OnTouch_:
-	soundeffect "effect\\¼®¾çÀÇ ¾î½Ø½Å.wav",1;
+	soundeffect "effect\\ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ø½ï¿½.wav",1;
 	end;
 }
 
