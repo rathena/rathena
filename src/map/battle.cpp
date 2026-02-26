@@ -4634,45 +4634,6 @@ static int32 battle_calc_attack_skill_ratio(struct Damage* wd, block_list *src,b
 		case HFLI_SBR44: //[orn]
 			skillratio += 100 * (skill_lv - 1);
 			break;
-		case MH_NEEDLE_OF_PARALYZE:
-			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
-			break;
-		case MH_TOXIN_OF_MANDARA:
-			skillratio += -100 + 400 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
-			break;
-		case MH_NEEDLE_STINGER:
-			skillratio += -100 + 200 + 500 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // !TODO: Confirm Base Level and DEX bonus
-			break;
-		case MH_STAHL_HORN:
-			skillratio += -100 + 1000 + 300 * skill_lv * status_get_lv(src) / 150 + sstatus->vit; // !TODO: Confirm VIT bonus
-			break;
-		case MH_GLANZEN_SPIES:
-			skillratio += -100 + 300 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
-			break;
-		case MH_LAVA_SLIDE:
-			skillratio += -100 + 50 * skill_lv;
-			break;
-		case MH_BLAST_FORGE:
-			skillratio += -100 + 70 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
-			break;
-		case MH_SONIC_CRAW:
-			skillratio += -100 + 60 * skill_lv * status_get_lv(src) / 150;
-			break;
-		case MH_BLAZING_AND_FURIOUS:
-			skillratio += -100 + 80 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
-			break;
-		case MH_THE_ONE_FIGHTER_RISES:
-			skillratio += -100 + 580 * skill_lv * status_get_lv(src) / 100 + sstatus->str;
-			break;
-		case MH_SILVERVEIN_RUSH:
-			skillratio += -100 + 250 * skill_lv * status_get_lv(src) / 100 + sstatus->str; // !TODO: Confirm STR bonus
-			break;
-		case MH_MIDNIGHT_FRENZY:
-			skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 150 + sstatus->str; // !TODO: Confirm STR bonus
-			break;
-		case MH_MAGMA_FLOW:
-			skillratio += -100 + (100 * skill_lv + 3 * status_get_lv(src)) * status_get_lv(src) / 120;
-			break;
 		case ABR_BATTLE_BUSTER:// Need official formula.
 		case ABR_DUAL_CANNON_FIRE:// Need official formula.
 			skillratio += -100 + 8000;
@@ -6418,25 +6379,6 @@ struct Damage battle_calc_magic_attack(block_list *src,block_list *target,uint16
 						RE_LVL_DMOD(100);
 						break;
 #endif
-					case MH_ERASER_CUTTER:
-					case MH_XENO_SLASHER:
-						skillratio += -100 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
-						break;
-					case MH_TWISTER_CUTTER:
-						skillratio += -100 + 480 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
-						break;
-					case MH_ABSOLUTE_ZEPHYR:
-						skillratio += -100 + 1000 + 450 * skill_lv * status_get_lv(src) / 100 + sstatus->int_; // !TODO: Confirm Base Level and INT bonus
-						break;
-					case MH_HEILIGE_STANGE:
-						skillratio += -100 + 1500 + 250 * skill_lv * status_get_lv(src) / 150 + sstatus->vit; // !TODO: Confirm VIT bonus
-						break;
-					case MH_HEILIGE_PFERD:
-						skillratio += -100 + 1200 + 350 * skill_lv * status_get_lv(src) / 100 + sstatus->vit; // !TODO: Confirm VIT bonus
-						break;
-					case MH_POISON_MIST:
-						skillratio += -100 + 200 * skill_lv * status_get_lv(src) / 100 + sstatus->dex; // ! TODO: Confirm DEX bonus
-						break;
 					case HN_GROUND_GRAVITATION:
 						if (mflag & SKILL_ALTDMG_FLAG) {
 							// Initial damage
