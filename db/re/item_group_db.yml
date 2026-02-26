@@ -117078,22 +117078,22 @@ Body:
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_420376
+            Item: C_Traditors_Low_Tail
           - Index: 1
-            Item: aegis_400725
+            Item: C_G_S_Captain_Hat
           - Index: 2
-            Item: aegis_430010
+            Item: C_Yorker_Hood
   - Group: EP21_COSTUME_BOX2
     SubGroups:
       - SubGroup: 0
         Algorithm: All
         List:
           - Index: 0
-            Item: aegis_420377
+            Item: C_Braids_Wave
           - Index: 1
-            Item: aegis_440017
+            Item: C_Jormun_Cape
           - Index: 2
-            Item: aegis_440018
+            Item: C_Helm_Of_Galaxia
   - Group: AEGIS_103537
     SubGroups:
       - SubGroup: 6
