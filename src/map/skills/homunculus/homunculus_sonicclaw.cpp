@@ -1,0 +1,17 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "homunculus_sonicclaw.hpp"
+
+#include "map/status.hpp"
+
+SkillSonicClaw::SkillSonicClaw() : SkillImpl(MH_SONIC_CRAW) {
+}
+
+void SkillSonicClaw::castendDamageId(block_list* src, block_list* target, uint16 skill_lv, t_tick tick, int32& flag) const {
+	skill_attack(skill_get_type(getSkillId()), src, src, target, getSkillId(), skill_lv, tick, flag);
+}
+
+void SkillSonicClaw::calculateSkillRatio(const Damage* wd, const block_list* src, const block_list* target, uint16 skill_lv, int32& base_skillratio, int32 mflag) const {
+	base_skillratio += -100 + 60 * skill_lv * status_get_lv(src) / 150;
+}
