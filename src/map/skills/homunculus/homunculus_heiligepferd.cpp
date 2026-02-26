@@ -3,6 +3,8 @@
 
 #include "homunculus_heiligepferd.hpp"
 
+#include "map/clif.hpp"
+#include "map/map.hpp"
 #include "map/status.hpp"
 
 SkillHeiligePferd::SkillHeiligePferd() : SkillImplRecursiveDamageSplash(MH_HEILIGE_PFERD) {
