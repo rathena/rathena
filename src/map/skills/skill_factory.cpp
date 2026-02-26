@@ -19,6 +19,7 @@
 #include "./elemental/skill_factory_elemental.cpp"
 #include "./gunslinger/skill_factory_gunslinger.cpp"
 #include "./guild/skill_factory_guild.cpp"
+#include "./homunculus/skill_factory_homunculus.cpp"
 #include "./mage/skill_factory_mage.cpp"
 #include "./mercenary/skill_factory_mercenary.cpp"
 #include "./merchant/skill_factory_merchant.cpp"
@@ -40,6 +41,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryImpl::create(const e_skill skill_id
 		std::make_shared<SkillFactoryElemental>(),
 		std::make_shared<SkillFactoryGunslinger>(),
 		std::make_shared<SkillFactoryGuild>(),
+		std::make_shared<SkillFactoryHomunculus>(),
 		std::make_shared<SkillFactoryMage>(),
 		std::make_shared<SkillFactoryMercenary>(),
 		std::make_shared<SkillFactoryMerchant>(),
