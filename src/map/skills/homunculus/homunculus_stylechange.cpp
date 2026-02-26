@@ -20,6 +20,11 @@ void SkillStyleChange::castendNoDamageId(block_list* src, block_list* target, ui
 			} else {
 				sce->val1 = MH_MD_FIGHTING;
 			}
+			//if(hd->master && hd->sc.getSCE(SC_STYLE_CHANGE)) { // Aegis does not show any message when switching fighting style
+			//	char output[128];
+			//	safesnprintf(output,sizeof(output),msg_txt(sd,378),(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
+			//	clif_messagecolor(hd->master, color_table[COLOR_RED], output, false, SELF);
+			//}
 		} else {
 			sc_start(hd, hd, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
 		}

@@ -20,6 +20,7 @@ void SkillSummonLegion::castendNoDamageId(block_list *src, block_list *target, u
 
 	map_foreachinmap(summon_legion_count_sub, src->m, BL_MOB, src->id, summons[skill_lv - 1], &count);
 	if (count >= maxcount) {
+		flag |= SKILL_NOCONSUME_REQ;
 		return; //max qty already spawned
 	}
 

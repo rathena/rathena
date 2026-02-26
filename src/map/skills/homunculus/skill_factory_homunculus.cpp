@@ -79,16 +79,14 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 			return std::make_unique<SkillBenedictionOfChaos>();
 		case HVAN_EXPLOSION:
 			return std::make_unique<SkillBioExplosion>();
-		case HVAN_INSTRUCT:
-			return std::make_unique<StatusSkillImpl>(skill_id);
 		case MH_ABSOLUTE_ZEPHYR:
 			return std::make_unique<SkillAbsoluteZephyr>();
 		case MH_ANGRIFFS_MODUS:
 			return std::make_unique<StatusSkillImpl>(skill_id);
-		case MH_BLAZING_AND_FURIOUS:
-			return std::make_unique<SkillBlazingAndFurious>();
 		case MH_BLAST_FORGE:
 			return std::make_unique<SkillBlastForge>();
+		case MH_BLAZING_AND_FURIOUS:
+			return std::make_unique<SkillBlazingAndFurious>();
 		case MH_CBC:
 			return std::make_unique<SkillContinualBreakCombo>();
 		case MH_EQC:
@@ -130,7 +128,7 @@ std::unique_ptr<const SkillImpl> SkillFactoryHomunculus::create(const e_skill sk
 		case MH_SILENT_BREEZE:
 			return std::make_unique<SkillSilentBreeze>();
 		case MH_SILVERVEIN_RUSH:
-			return std::make_unique<SkillSilverveinRush>();
+			return std::make_unique<SkillSilverVeinRush>();
 		case MH_SONIC_CRAW:
 			return std::make_unique<SkillSonicClaw>();
 		case MH_STAHL_HORN:

@@ -1167,6 +1167,9 @@
     <ClInclude Include="skills/elemental/rocklauncher.hpp">
       <Filter>Header Files\Skills\Elemental</Filter>
     </ClInclude>
+    <ClInclude Include="skills/elemental/skill_factory_elemental.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
     <ClInclude Include="skills/elemental/solidskin.hpp">
       <Filter>Header Files\Skills\Elemental</Filter>
     </ClInclude>
@@ -1180,9 +1183,6 @@
       <Filter>Header Files\Skills\Elemental</Filter>
     </ClInclude>
     <ClInclude Include="skills/elemental/stormwind.hpp">
-      <Filter>Header Files\Skills\Elemental</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/elemental/skill_factory_elemental.hpp">
       <Filter>Header Files\Skills\Elemental</Filter>
     </ClInclude>
     <ClInclude Include="skills/elemental/strongprotection.hpp">
