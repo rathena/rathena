@@ -4713,15 +4713,6 @@ int32 skill_castend_nodamage_id (block_list *src, block_list *bl, uint16 skill_i
 		}
 		break;
 
-
-
-
-
-
-
-
-
-
 	case NPC_WIDEHEALTHFEAR:	// TODO: skills undefined in skill_db.yml
 	case NPC_WIDEBODYBURNNING:
 	case NPC_WIDEFROSTMISTY:
