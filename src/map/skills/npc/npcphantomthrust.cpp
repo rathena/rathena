@@ -11,6 +11,8 @@
 SkillNpcPhantomThrust::SkillNpcPhantomThrust() : WeaponSkillImpl(NPC_PHANTOMTHRUST) {
 }
 
+// SkillNpcPhantomThrust::calculateSkillRatio : ATK = 100% for all level
+
 void SkillNpcPhantomThrust::castendDamageId(block_list *src, block_list *target, uint16 skill_lv, t_tick tick, int32& flag) const {
 	unit_setdir(src,map_calc_dir(src, target->x, target->y));
 	clif_skill_nodamage(src,*target,getSkillId(),skill_lv);

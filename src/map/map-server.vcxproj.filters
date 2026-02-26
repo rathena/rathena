@@ -17,6 +17,9 @@
     <Filter Include="Source Files\Skills\Custom">
       <UniqueIdentifier>{607a6bff-94f6-4e8c-bc7a-2189dfd4c1ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Skills\Elemental">
+      <UniqueIdentifier>{dc6cc832-cad7-43e8-a3d4-e4d24e264a30}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Skills\Gunslinger">
       <UniqueIdentifier>{129a9804-44ab-4d14-b769-ca170935d84e}</UniqueIdentifier>
     </Filter>
@@ -65,6 +68,9 @@
     </Filter>
     <Filter Include="Header Files\Skills\Custom">
       <UniqueIdentifier>{38c2586b-7a8c-4f30-92aa-f53fc17ee519}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Skills\Elemental">
+      <UniqueIdentifier>{facd6257-a493-4f54-a017-abc2b45fd776}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Skills\Gunslinger">
       <UniqueIdentifier>{8ff19f85-a0c3-4705-a6e3-3aa79f9b3b5a}</UniqueIdentifier>
@@ -1059,6 +1065,162 @@
     <ClInclude Include="skills/custom/skill_factory_custom.hpp">
       <Filter>Header Files\Skills\Custom</Filter>
     </ClInclude>
+    <ClInclude Include="skills/elemental/ageofice.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/aquaplay.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/avalanche.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/blast.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/circleoffire.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/coldforce.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/coolair.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/cooler.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/crystalarmor.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/cursedsoil.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/deadlypoison.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/deeppoisoning.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/earthcare.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/eyesofstorm.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/firearrow.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/firebomb.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/firecloak.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/firemantle.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/firewave.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/flamearmor.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/flamerock.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/flametechnic.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/gracebreeze.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/gust.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/heater.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/hurricanerage.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/iceneedle.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/petrology.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/poisonshield.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/powerofgaia.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/pyrotechnic.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/rocklauncher.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/solidskin.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/stonehammer.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/stonerain.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/stoneshield.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/stormwind.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/skill_factory_elemental.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/strongprotection.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/tidalweapon.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/tropic.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/typhoonmissile.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/upheaval.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/waterbarrier.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/waterdrop.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/waterscreen.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/waterscrew.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/wildstorm.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/windcurtain.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/windslasher.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/windstep.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
+    <ClInclude Include="skills/elemental/zephyr.hpp">
+      <Filter>Header Files\Skills\Elemental</Filter>
+    </ClInclude>
     <ClInclude Include="skills/gunslinger/antimaterialblast.hpp">
       <Filter>Header Files\Skills\Gunslinger</Filter>
     </ClInclude>
@@ -1200,9 +1362,6 @@
     <ClInclude Include="skills/mage/activityburn.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/ageofice.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
     <ClInclude Include="skills/mage/allbloom.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -1210,9 +1369,6 @@
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/astralstrike.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/avalanche.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/beastlyhypnosis.hpp">
@@ -1236,9 +1392,6 @@
     <ClInclude Include="skills/mage/coldbolt.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/coldforce.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
     <ClInclude Include="skills/mage/coma.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -1257,19 +1410,10 @@
     <ClInclude Include="skills/mage/crimsonrock.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/crystalarmor.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
     <ClInclude Include="skills/mage/crystalimpact.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/deadlypoison.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
     <ClInclude Include="skills/mage/deadlyprojection.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/deeppoisoning.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/deluge.hpp">
@@ -1288,9 +1432,6 @@
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/drainlife.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/earthcare.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/earthgrave.hpp">
@@ -1350,9 +1491,6 @@
     <ClInclude Include="skills/mage/energyconversion.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/eyesofstorm.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
     <ClInclude Include="skills/mage/fiberlock.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
@@ -1372,15 +1510,6 @@
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/firewall.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/flamearmor.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/flamerock.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/flametechnic.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/floralflareroad.hpp">
@@ -1405,9 +1534,6 @@
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/golddigger.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/gracebreeze.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/gravitationfield.hpp">
@@ -1486,9 +1612,6 @@
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/poisonbuster.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/poisonshield.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/psychicstream.hpp">
@@ -1578,16 +1701,10 @@
     <ClInclude Include="skills/mage/stormgust.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
-    <ClInclude Include="skills/mage/stormwind.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
     <ClInclude Include="skills/mage/strantumtremor.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/striking.hpp">
-      <Filter>Header Files\Skills\Mage</Filter>
-    </ClInclude>
-    <ClInclude Include="skills/mage/strongprotection.hpp">
       <Filter>Header Files\Skills\Mage</Filter>
     </ClInclude>
     <ClInclude Include="skills/mage/suicide.hpp">
@@ -4412,6 +4529,162 @@
     <ClCompile Include="skills/custom/skill_factory_custom.cpp">
       <Filter>Source Files\Skills\Custom</Filter>
     </ClCompile>
+    <ClCompile Include="skills/elemental/ageofice.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/aquaplay.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/avalanche.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/blast.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/circleoffire.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/coldforce.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/coolair.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/cooler.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/crystalarmor.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/cursedsoil.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/deadlypoison.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/deeppoisoning.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/earthcare.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/eyesofstorm.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/firearrow.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/firebomb.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/firecloak.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/firemantle.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/firewave.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/flamearmor.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/flamerock.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/flametechnic.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/gracebreeze.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/gust.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/heater.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/hurricanerage.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/iceneedle.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/petrology.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/poisonshield.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/powerofgaia.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/pyrotechnic.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/rocklauncher.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/skill_factory_elemental.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/solidskin.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/stonehammer.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/stonerain.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/stoneshield.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/stormwind.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/strongprotection.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/tidalweapon.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/tropic.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/typhoonmissile.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/upheaval.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/waterbarrier.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/waterdrop.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/waterscreen.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/waterscrew.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/wildstorm.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/windcurtain.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/windslasher.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/windstep.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
+    <ClCompile Include="skills/elemental/zephyr.cpp">
+      <Filter>Source Files\Skills\Elemental</Filter>
+    </ClCompile>
     <ClCompile Include="skills/gunslinger/antimaterialblast.cpp">
       <Filter>Source Files\Skills\Gunslinger</Filter>
     </ClCompile>
@@ -4553,9 +4826,6 @@
     <ClCompile Include="skills/mage/activityburn.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mage/ageofice.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
     <ClCompile Include="skills/mage/allbloom.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
@@ -4563,9 +4833,6 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/astralstrike.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/avalanche.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/beastlyhypnosis.cpp">
@@ -4589,9 +4856,6 @@
     <ClCompile Include="skills/mage/coldbolt.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mage/coldforce.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
     <ClCompile Include="skills/mage/coma.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
@@ -4610,19 +4874,10 @@
     <ClCompile Include="skills/mage/crimsonrock.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mage/crystalarmor.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
     <ClCompile Include="skills/mage/crystalimpact.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mage/deadlypoison.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
     <ClCompile Include="skills/mage/deadlyprojection.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/deeppoisoning.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/deluge.cpp">
@@ -4641,9 +4896,6 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/drainlife.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/earthcare.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/earthgrave.cpp">
@@ -4703,9 +4955,6 @@
     <ClCompile Include="skills/mage/energyconversion.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mage/eyesofstorm.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
     <ClCompile Include="skills/mage/fiberlock.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
@@ -4725,15 +4974,6 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/firewall.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/flamearmor.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/flamerock.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/flametechnic.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/floralflareroad.cpp">
@@ -4758,9 +4998,6 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/golddigger.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/gracebreeze.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/gravitationfield.cpp">
@@ -4839,9 +5076,6 @@
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/poisonbuster.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/poisonshield.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/psychicstream.cpp">
@@ -4931,16 +5165,10 @@
     <ClCompile Include="skills/mage/stormgust.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
-    <ClCompile Include="skills/mage/stormwind.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
     <ClCompile Include="skills/mage/strantumtremor.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/striking.cpp">
-      <Filter>Source Files\Skills\Mage</Filter>
-    </ClCompile>
-    <ClCompile Include="skills/mage/strongprotection.cpp">
       <Filter>Source Files\Skills\Mage</Filter>
     </ClCompile>
     <ClCompile Include="skills/mage/suicide.cpp">
